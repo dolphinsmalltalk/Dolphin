@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RBSourceFormatter subclass: #RBConfigurableFormatter
 	instanceVariableNames: 'lookaheadCode originalSource'
@@ -410,46 +410,48 @@ writeString: aString
 	codeStream nextPutAll: aString.
 	index > 0 
 		ifTrue: [lineStart := codeStream position - (aString size - index)]! !
-!RBConfigurableFormatter categoriesFor: #addNewLinesBeforeStatementStartingAt:!helpers!private! !
-!RBConfigurableFormatter categoriesFor: #format:!operations!public! !
-!RBConfigurableFormatter categoriesFor: #formatArray:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #formatBinaryMessage:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #formatBlock:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #formatBlockArgumentsFor:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #formatCommentsFor:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #formatMethodBodyFor:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #formatMethodCommentFor:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #formatMethodPatternFor:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #formatSelectorAndArguments:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #formatSelectorAndArguments:firstSeparator:restSeparator:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #formatSequenceCommentsFor:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #formatSequenceNodeStatementsFor:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #formatStatementCommentsFor:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #formattedSourceFor:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #formatTemporariesFor:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #indentAround:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #initialize!initializing!private! !
-!RBConfigurableFormatter categoriesFor: #isMultilineBlock:!helpers!private! !
-!RBConfigurableFormatter categoriesFor: #isMultiLineMessage:!helpers!private! !
-!RBConfigurableFormatter categoriesFor: #needsParenthesisFor:!helpers!private! !
-!RBConfigurableFormatter categoriesFor: #newLine!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #newLines:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #newLinesBeforeStartingAt:!formatting!private! !
-!RBConfigurableFormatter categoriesFor: #precedenceOf:greaterThan:!helpers!private! !
-!RBConfigurableFormatter categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #visitNode:!formatting!private!visiting! !
-!RBConfigurableFormatter categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #visitPatternBlockNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #visitReturnNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
-!RBConfigurableFormatter categoriesFor: #willBeMultiline:!helpers!private! !
-!RBConfigurableFormatter categoriesFor: #with:and:do:separatedBy:!formatting!private!utility! !
-!RBConfigurableFormatter categoriesFor: #writeString:!formatting!private! !
+!RBConfigurableFormatter categoriesForMethods!
+addNewLinesBeforeStatementStartingAt:!helpers!private! !
+format:!operations!public! !
+formatArray:!formatting!private! !
+formatBinaryMessage:!formatting!private! !
+formatBlock:!formatting!private! !
+formatBlockArgumentsFor:!formatting!private! !
+formatCommentsFor:!formatting!private! !
+formatMethodBodyFor:!formatting!private! !
+formatMethodCommentFor:!formatting!private! !
+formatMethodPatternFor:!formatting!private! !
+formatSelectorAndArguments:!formatting!private! !
+formatSelectorAndArguments:firstSeparator:restSeparator:!formatting!private! !
+formatSequenceCommentsFor:!formatting!private! !
+formatSequenceNodeStatementsFor:!formatting!private! !
+formatStatementCommentsFor:!formatting!private! !
+formattedSourceFor:!formatting!private! !
+formatTemporariesFor:!formatting!private! !
+indentAround:!formatting!private! !
+initialize!initializing!private! !
+isMultilineBlock:!helpers!private! !
+isMultiLineMessage:!helpers!private! !
+needsParenthesisFor:!helpers!private! !
+newLine!formatting!private! !
+newLines:!formatting!private! !
+newLinesBeforeStartingAt:!formatting!private! !
+precedenceOf:greaterThan:!helpers!private! !
+visitAssignmentNode:!public!visitor/double dispatching! !
+visitBlockNode:!public!visitor/double dispatching! !
+visitCascadeNode:!public!visitor/double dispatching! !
+visitLiteralArrayNode:!public!visitor/double dispatching! !
+visitLiteralNode:!public!visitor/double dispatching! !
+visitMessageNode:!public!visitor/double dispatching! !
+visitNode:!formatting!private!visiting! !
+visitOptimizedNode:!public!visitor/double dispatching! !
+visitPatternBlockNode:!public!visitor/double dispatching! !
+visitReturnNode:!public!visitor/double dispatching! !
+visitSequenceNode:!public!visitor/double dispatching! !
+willBeMultiline:!helpers!private! !
+with:and:do:separatedBy:!formatting!private!utility! !
+writeString:!formatting!private! !
+!
 
 !RBConfigurableFormatter class methodsFor!
 
@@ -615,49 +617,51 @@ useTraditionalBinaryPrecedenceForParentheses
 
 useTraditionalBinaryPrecedenceForParentheses: aBoolean 
 	UseTraditionalBinaryPrecedenceForParentheses := aBoolean! !
-!RBConfigurableFormatter class categoriesFor: #format:!public!public interface! !
-!RBConfigurableFormatter class categoriesFor: #format:withIndents:!public!public interface! !
-!RBConfigurableFormatter class categoriesFor: #formatCommentWithStatements!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #formatCommentWithStatements:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #indentsForKeywords!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #indentsForKeywords:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #indentString!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #indentString:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #initialize!initializing!public! !
-!RBConfigurableFormatter class categoriesFor: #lineUpBlockBrackets!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #lineUpBlockBrackets:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #methodSignatureOnMultipleLines!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #methodSignatureOnMultipleLines:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #minimumNewLinesBetweenStatements!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #minimumNewLinesBetweenStatements:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #newLineAfterCascade!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #newLineAfterCascade:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #newLineBeforeFirstCascade!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #newLineBeforeFirstCascade:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #newLineBeforeFirstKeyword!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #newLineBeforeFirstKeyword:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #newLinesAfterMethodComment!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #newLinesAfterMethodComment:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #newLinesAfterMethodPattern!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #newLinesAfterMethodPattern:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #newLinesAfterTemporaries!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #newLinesAfterTemporaries:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #numberOfArgumentsForMultiLine!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #numberOfArgumentsForMultiLine:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #periodsAsTerminators!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #periodsAsTerminators:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #periodsAtEndOfBlock!public! !
-!RBConfigurableFormatter class categoriesFor: #periodsAtEndOfBlock:!public! !
-!RBConfigurableFormatter class categoriesFor: #retainBlankLinesBetweenStatements!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #retainBlankLinesBetweenStatements:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #stringFollowingReturn!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #stringFollowingReturn:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #stringInsideBlocks!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #stringInsideBlocks:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #stringInsideParentheses!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #stringInsideParentheses:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #traditionalBinaryPrecedence!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #traditionalBinaryPrecedence:!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #useTraditionalBinaryPrecedenceForParentheses!public!settings! !
-!RBConfigurableFormatter class categoriesFor: #useTraditionalBinaryPrecedenceForParentheses:!public!settings! !
+!RBConfigurableFormatter class categoriesForMethods!
+format:!public!public interface! !
+format:withIndents:!public!public interface! !
+formatCommentWithStatements!public!settings! !
+formatCommentWithStatements:!public!settings! !
+indentsForKeywords!public!settings! !
+indentsForKeywords:!public!settings! !
+indentString!public!settings! !
+indentString:!public!settings! !
+initialize!initializing!public! !
+lineUpBlockBrackets!public!settings! !
+lineUpBlockBrackets:!public!settings! !
+methodSignatureOnMultipleLines!public!settings! !
+methodSignatureOnMultipleLines:!public!settings! !
+minimumNewLinesBetweenStatements!public!settings! !
+minimumNewLinesBetweenStatements:!public!settings! !
+newLineAfterCascade!public!settings! !
+newLineAfterCascade:!public!settings! !
+newLineBeforeFirstCascade!public!settings! !
+newLineBeforeFirstCascade:!public!settings! !
+newLineBeforeFirstKeyword!public!settings! !
+newLineBeforeFirstKeyword:!public!settings! !
+newLinesAfterMethodComment!public!settings! !
+newLinesAfterMethodComment:!public!settings! !
+newLinesAfterMethodPattern!public!settings! !
+newLinesAfterMethodPattern:!public!settings! !
+newLinesAfterTemporaries!public!settings! !
+newLinesAfterTemporaries:!public!settings! !
+numberOfArgumentsForMultiLine!public!settings! !
+numberOfArgumentsForMultiLine:!public!settings! !
+periodsAsTerminators!public!settings! !
+periodsAsTerminators:!public!settings! !
+periodsAtEndOfBlock!public! !
+periodsAtEndOfBlock:!public! !
+retainBlankLinesBetweenStatements!public!settings! !
+retainBlankLinesBetweenStatements:!public!settings! !
+stringFollowingReturn!public!settings! !
+stringFollowingReturn:!public!settings! !
+stringInsideBlocks!public!settings! !
+stringInsideBlocks:!public!settings! !
+stringInsideParentheses!public!settings! !
+stringInsideParentheses:!public!settings! !
+traditionalBinaryPrecedence!public!settings! !
+traditionalBinaryPrecedence:!public!settings! !
+useTraditionalBinaryPrecedenceForParentheses!public!settings! !
+useTraditionalBinaryPrecedenceForParentheses:!public!settings! !
+!
 

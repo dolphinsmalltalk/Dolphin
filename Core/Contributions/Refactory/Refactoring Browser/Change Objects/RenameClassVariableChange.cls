@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RenameVariableChange subclass: #RenameClassVariableChange
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ RenameClassVariableChange comment: ''!
 renameVariable
 	#rbFix.	"Added to implement this change as a rename, rather than an add, copy value, remove sequence"
 	self changeClass renameClassVar: oldName to: newName! !
-!RenameClassVariableChange categoriesFor: #renameVariable!private! !
+!RenameClassVariableChange categoriesForMethods!
+renameVariable!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #AbstractLOGFONT
 	instanceVariableNames: ''
@@ -152,33 +152,35 @@ lfWidth: anInteger
 	"Set the receiver's 'lfWidth' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_lfWidth put: anInteger! !
-!AbstractLOGFONT categoriesFor: #createFont!private!realizing/unrealizing! !
-!AbstractLOGFONT categoriesFor: #faceName!accessing!public! !
-!AbstractLOGFONT categoriesFor: #faceName:!accessing!public! !
-!AbstractLOGFONT categoriesFor: #getData:!accessing!public! !
-!AbstractLOGFONT categoriesFor: #isFixedWidth!public! !
-!AbstractLOGFONT categoriesFor: #lfCharSet!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfCharSet:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfEscapement!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfEscapement:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfFaceName!public! !
-!AbstractLOGFONT categoriesFor: #lfFaceName:!accessing!public! !
-!AbstractLOGFONT categoriesFor: #lfHeight!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfHeight:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfItalic!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfItalic:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfPitchAndFamily!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfPitchAndFamily:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfQuality!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfQuality:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfStrikeOut!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfStrikeOut:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfUnderline!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfUnderline:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfWeight!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfWeight:!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfWidth!**compiled accessors**!public! !
-!AbstractLOGFONT categoriesFor: #lfWidth:!**compiled accessors**!public! !
+!AbstractLOGFONT categoriesForMethods!
+createFont!private!realizing/unrealizing! !
+faceName!accessing!public! !
+faceName:!accessing!public! !
+getData:!accessing!public! !
+isFixedWidth!public! !
+lfCharSet!**compiled accessors**!public! !
+lfCharSet:!**compiled accessors**!public! !
+lfEscapement!**compiled accessors**!public! !
+lfEscapement:!**compiled accessors**!public! !
+lfFaceName!public! !
+lfFaceName:!accessing!public! !
+lfHeight!**compiled accessors**!public! !
+lfHeight:!**compiled accessors**!public! !
+lfItalic!**compiled accessors**!public! !
+lfItalic:!**compiled accessors**!public! !
+lfPitchAndFamily!**compiled accessors**!public! !
+lfPitchAndFamily:!**compiled accessors**!public! !
+lfQuality!**compiled accessors**!public! !
+lfQuality:!**compiled accessors**!public! !
+lfStrikeOut!**compiled accessors**!public! !
+lfStrikeOut:!**compiled accessors**!public! !
+lfUnderline!**compiled accessors**!public! !
+lfUnderline:!**compiled accessors**!public! !
+lfWeight!**compiled accessors**!public! !
+lfWeight:!**compiled accessors**!public! !
+lfWidth!**compiled accessors**!public! !
+lfWidth:!**compiled accessors**!public! !
+!
 
 !AbstractLOGFONT class methodsFor!
 
@@ -204,6 +206,8 @@ defineFields
 
 getFieldNames
 	^#(#lfHeight #lfWidth #lfEscapement #lfOrientation #lfWeight #lfItalic #lfUnderline #lfStrikeOut #lfCharSet #lfOutPrecision #lfClipPrecision #lfQuality #lfPitchAndFamily #lfFaceName)! !
-!AbstractLOGFONT class categoriesFor: #defineFields!public!template definition! !
-!AbstractLOGFONT class categoriesFor: #getFieldNames!constants!private! !
+!AbstractLOGFONT class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!constants!private! !
+!
 

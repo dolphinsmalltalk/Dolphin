@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_MULTIPLE_KNOWN_HEADERS
 	instanceVariableNames: ''
@@ -73,14 +73,16 @@ KnownHeaders: aStructureArray
 
 	bytes uintPtrAtOffset: _OffsetOf_KnownHeaders put: aStructureArray yourAddress.
 	self KnownHeaderCount: aStructureArray size! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #Flags!**compiled accessors**!public! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #Flags:!**compiled accessors**!public! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #HeaderId!**compiled accessors**!public! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #HeaderId:!**compiled accessors**!public! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #KnownHeaderCount!**compiled accessors**!public! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #KnownHeaderCount:!**compiled accessors**!public! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #KnownHeaders!**compiled accessors**!public! !
-!HTTP_MULTIPLE_KNOWN_HEADERS categoriesFor: #KnownHeaders:!**compiled accessors**!public! !
+!HTTP_MULTIPLE_KNOWN_HEADERS categoriesForMethods!
+Flags!**compiled accessors**!public! !
+Flags:!**compiled accessors**!public! !
+HeaderId!**compiled accessors**!public! !
+HeaderId:!**compiled accessors**!public! !
+KnownHeaderCount!**compiled accessors**!public! !
+KnownHeaderCount:!**compiled accessors**!public! !
+KnownHeaders!**compiled accessors**!public! !
+KnownHeaders:!**compiled accessors**!public! !
+!
 
 !HTTP_MULTIPLE_KNOWN_HEADERS class methodsFor!
 
@@ -107,6 +109,8 @@ defineFields
 
 getFieldNames
 	^#(#HeaderId #Flags #KnownHeaderCount #KnownHeaders)! !
-!HTTP_MULTIPLE_KNOWN_HEADERS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_MULTIPLE_KNOWN_HEADERS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_MULTIPLE_KNOWN_HEADERS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

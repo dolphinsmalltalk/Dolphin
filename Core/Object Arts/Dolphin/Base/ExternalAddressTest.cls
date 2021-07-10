@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ExternalAddressTest
 	instanceVariableNames: ''
@@ -40,9 +40,11 @@ testStringsFromAddress
 			self stringFromAddressTestClass: each.
 			self assertIsNil: (each fromAddress: nil).
 			self assertIsNil: (each fromAddress: 0)]! !
-!ExternalAddressTest categoriesFor: #stringFromAddressTestClass:!helpers!public! !
-!ExternalAddressTest categoriesFor: #testExternalAddressAtAddress!public!unit tests! !
-!ExternalAddressTest categoriesFor: #testExternalAddressFromAddress!public!unit tests! !
-!ExternalAddressTest categoriesFor: #testREFGUIDfromAddress!public!unit tests! !
-!ExternalAddressTest categoriesFor: #testStringsFromAddress!public!unit tests! !
+!ExternalAddressTest categoriesForMethods!
+stringFromAddressTestClass:!helpers!public! !
+testExternalAddressAtAddress!public!unit tests! !
+testExternalAddressFromAddress!public!unit tests! !
+testREFGUIDfromAddress!public!unit tests! !
+testStringsFromAddress!public!unit tests! !
+!
 

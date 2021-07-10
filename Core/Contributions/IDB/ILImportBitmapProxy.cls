@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ILImportBitmapProxy
 	instanceVariableNames: 'bitmapInfoHeader colorTable imageBytes'
@@ -36,13 +36,15 @@ setBitmapInfoHeader: aBITMAPINFOHEADER colorTable: aStructureArray imageBytes: a
 
 width
 	^bitmapInfoHeader biWidth! !
-!ILImportBitmapProxy categoriesFor: #colorDepth!accessing!public! !
-!ILImportBitmapProxy categoriesFor: #colorTable!accessing!public! !
-!ILImportBitmapProxy categoriesFor: #height!accessing!public! !
-!ILImportBitmapProxy categoriesFor: #imageBytes!accessing!public! !
-!ILImportBitmapProxy categoriesFor: #isTopDown!public!testing! !
-!ILImportBitmapProxy categoriesFor: #setBitmapInfoHeader:colorTable:imageBytes:!initializing!public! !
-!ILImportBitmapProxy categoriesFor: #width!accessing!public! !
+!ILImportBitmapProxy categoriesForMethods!
+colorDepth!accessing!public! !
+colorTable!accessing!public! !
+height!accessing!public! !
+imageBytes!accessing!public! !
+isTopDown!public!testing! !
+setBitmapInfoHeader:colorTable:imageBytes:!initializing!public! !
+width!accessing!public! !
+!
 
 !ILImportBitmapProxy class methodsFor!
 
@@ -51,5 +53,7 @@ bitmapInfoHeader: aBITMAPINFOHEADER colorTable: aStructureArray imageBytes: aByt
 		setBitmapInfoHeader: aBITMAPINFOHEADER
 		colorTable: aStructureArray
 		imageBytes: aByteArray! !
-!ILImportBitmapProxy class categoriesFor: #bitmapInfoHeader:colorTable:imageBytes:!instance creation!public! !
+!ILImportBitmapProxy class categoriesForMethods!
+bitmapInfoHeader:colorTable:imageBytes:!instance creation!public! !
+!
 

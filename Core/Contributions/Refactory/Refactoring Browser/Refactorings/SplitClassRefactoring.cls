@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Refactoring subclass: #SplitClassRefactoring
 	instanceVariableNames: 'class instanceVariables newClassName referenceVariableName newClass'
@@ -98,16 +98,18 @@ transform
 		createNewClass;
 		createReference;
 		abstractVariableReferences! !
-!SplitClassRefactoring categoriesFor: #abstractReferenceTo:!private!transforming! !
-!SplitClassRefactoring categoriesFor: #abstractVariableReferences!public!transforming! !
-!SplitClassRefactoring categoriesFor: #addClass!private!transforming! !
-!SplitClassRefactoring categoriesFor: #addInstanceVariables!private!transforming! !
-!SplitClassRefactoring categoriesFor: #class:instanceVariables:newClassName:referenceVariableName:!initialize/release!public! !
-!SplitClassRefactoring categoriesFor: #createNewClass!public!transforming! !
-!SplitClassRefactoring categoriesFor: #createReference!public!transforming! !
-!SplitClassRefactoring categoriesFor: #preconditions!preconditions!public! !
-!SplitClassRefactoring categoriesFor: #storeOn:!printing!public! !
-!SplitClassRefactoring categoriesFor: #transform!public!transforming! !
+!SplitClassRefactoring categoriesForMethods!
+abstractReferenceTo:!private!transforming! !
+abstractVariableReferences!public!transforming! !
+addClass!private!transforming! !
+addInstanceVariables!private!transforming! !
+class:instanceVariables:newClassName:referenceVariableName:!initialize/release!public! !
+createNewClass!public!transforming! !
+createReference!public!transforming! !
+preconditions!preconditions!public! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !SplitClassRefactoring class methodsFor!
 
@@ -127,6 +129,8 @@ model: aRBNamespace class: class instanceVariables: instVars newClassName: class
 			newClassName: className
 			referenceVariableName: newVariable;
 		yourself! !
-!SplitClassRefactoring class categoriesFor: #class:instanceVariables:newClassName:referenceVariableName:!instance creation!public! !
-!SplitClassRefactoring class categoriesFor: #model:class:instanceVariables:newClassName:referenceVariableName:!instance creation!public! !
+!SplitClassRefactoring class categoriesForMethods!
+class:instanceVariables:newClassName:referenceVariableName:!instance creation!public! !
+model:class:instanceVariables:newClassName:referenceVariableName:!instance creation!public! !
+!
 

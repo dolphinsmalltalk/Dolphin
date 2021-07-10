@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRCREATEDIBPATTERNBRUSHPT
 	instanceVariableNames: ''
@@ -93,18 +93,20 @@ offBmi: anInteger
 	"Set the receiver's 'offBmi' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_offBmi put: anInteger! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #cbBits!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #cbBits:!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #cbBmi!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #cbBmi:!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #ihBrush!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #ihBrush:!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #iUsage!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #iUsage:!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #offBits!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #offBits:!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #offBmi!**compiled accessors**!public! !
-!EMRCREATEDIBPATTERNBRUSHPT categoriesFor: #offBmi:!**compiled accessors**!public! !
+!EMRCREATEDIBPATTERNBRUSHPT categoriesForMethods!
+cbBits!**compiled accessors**!public! !
+cbBits:!**compiled accessors**!public! !
+cbBmi!**compiled accessors**!public! !
+cbBmi:!**compiled accessors**!public! !
+ihBrush!**compiled accessors**!public! !
+ihBrush:!**compiled accessors**!public! !
+iUsage!**compiled accessors**!public! !
+iUsage:!**compiled accessors**!public! !
+offBits!**compiled accessors**!public! !
+offBits:!**compiled accessors**!public! !
+offBmi!**compiled accessors**!public! !
+offBmi:!**compiled accessors**!public! !
+!
 
 !EMRCREATEDIBPATTERNBRUSHPT class methodsFor!
 
@@ -142,7 +144,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATEDIBPATTERNBRUSHPT! !
-!EMRCREATEDIBPATTERNBRUSHPT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRCREATEDIBPATTERNBRUSHPT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRCREATEDIBPATTERNBRUSHPT class categoriesFor: #iTypes!constants!public! !
+!EMRCREATEDIBPATTERNBRUSHPT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

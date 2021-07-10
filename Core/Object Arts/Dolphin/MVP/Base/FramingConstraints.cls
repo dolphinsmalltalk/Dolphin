@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #FramingConstraints
 	instanceVariableNames: 'leftFraming leftOffset rightFraming rightOffset topFraming topOffset bottomFraming bottomOffset'
@@ -274,32 +274,34 @@ updateFor: aView rectangle: aRectangle layoutContext: aLayoutContext
 				parentRectangle: parentRect.
 	context rectangle: aRectangle.
 	self updateFor: aView context: context! !
-!FramingConstraints categoriesFor: #bottomFraming!accessing!public! !
-!FramingConstraints categoriesFor: #bottomFraming:!accessing!public! !
-!FramingConstraints categoriesFor: #bottomOffset!accessing!public! !
-!FramingConstraints categoriesFor: #bottomOffset:!accessing!public! !
-!FramingConstraints categoriesFor: #errorCantFixEdgeToItself!exceptions!private! !
-!FramingConstraints categoriesFor: #errorNoIndepentEdge!exceptions!private! !
-!FramingConstraints categoriesFor: #framings!accessing!public! !
-!FramingConstraints categoriesFor: #initialize!initializing!private! !
-!FramingConstraints categoriesFor: #leftFraming!accessing!public! !
-!FramingConstraints categoriesFor: #leftFraming:!accessing!public! !
-!FramingConstraints categoriesFor: #leftOffset!accessing!public! !
-!FramingConstraints categoriesFor: #leftOffset:!accessing!public! !
-!FramingConstraints categoriesFor: #messages!accessing!public! !
-!FramingConstraints categoriesFor: #offsets!accessing!public! !
-!FramingConstraints categoriesFor: #rectangleFor:within:context:!operations!private! !
-!FramingConstraints categoriesFor: #resolutionScaledBy:!geometry!private! !
-!FramingConstraints categoriesFor: #rightFraming!accessing!public! !
-!FramingConstraints categoriesFor: #rightFraming:!accessing!public! !
-!FramingConstraints categoriesFor: #rightOffset!accessing!public! !
-!FramingConstraints categoriesFor: #rightOffset:!accessing!public! !
-!FramingConstraints categoriesFor: #topFraming!accessing!public! !
-!FramingConstraints categoriesFor: #topFraming:!accessing!public! !
-!FramingConstraints categoriesFor: #topOffset!accessing!public! !
-!FramingConstraints categoriesFor: #topOffset:!accessing!public! !
-!FramingConstraints categoriesFor: #updateFor:context:!geometry!private! !
-!FramingConstraints categoriesFor: #updateFor:rectangle:layoutContext:!geometry!private! !
+!FramingConstraints categoriesForMethods!
+bottomFraming!accessing!public! !
+bottomFraming:!accessing!public! !
+bottomOffset!accessing!public! !
+bottomOffset:!accessing!public! !
+errorCantFixEdgeToItself!exceptions!private! !
+errorNoIndepentEdge!exceptions!private! !
+framings!accessing!public! !
+initialize!initializing!private! !
+leftFraming!accessing!public! !
+leftFraming:!accessing!public! !
+leftOffset!accessing!public! !
+leftOffset:!accessing!public! !
+messages!accessing!public! !
+offsets!accessing!public! !
+rectangleFor:within:context:!operations!private! !
+resolutionScaledBy:!geometry!private! !
+rightFraming!accessing!public! !
+rightFraming:!accessing!public! !
+rightOffset!accessing!public! !
+rightOffset:!accessing!public! !
+topFraming!accessing!public! !
+topFraming:!accessing!public! !
+topOffset!accessing!public! !
+topOffset:!accessing!public! !
+updateFor:context:!geometry!private! !
+updateFor:rectangle:layoutContext:!geometry!private! !
+!
 
 FramingConstraints methodProtocol: #messageSender attributes: #(#readOnly) selectors: #(#messages)!
 
@@ -366,11 +368,13 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
-!FramingConstraints class categoriesFor: #calculationClass!constants!private! !
-!FramingConstraints class categoriesFor: #new!instance creation!public! !
-!FramingConstraints class categoriesFor: #stbConvert:fromVersion:!binary filing!private! !
-!FramingConstraints class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!FramingConstraints class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
-!FramingConstraints class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!FramingConstraints class categoriesFor: #stbVersion!binary filing!public! !
+!FramingConstraints class categoriesForMethods!
+calculationClass!constants!private! !
+new!instance creation!public! !
+stbConvert:fromVersion:!binary filing!private! !
+stbConvertFrom:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

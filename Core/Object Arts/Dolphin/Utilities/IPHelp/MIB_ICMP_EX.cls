@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #MIB_ICMP_EX
 	instanceVariableNames: ''
@@ -34,8 +34,10 @@ icmpOutStats
 	"Answer the <MIBICMPSTATS_EX> value of the receiver's 'icmpOutStats' field."
 
 	^MIBICMPSTATS_EX fromAddress: bytes yourAddress + _OffsetOf_icmpOutStats! !
-!MIB_ICMP_EX categoriesFor: #icmpInStats!**compiled accessors**!public! !
-!MIB_ICMP_EX categoriesFor: #icmpOutStats!**compiled accessors**!public! !
+!MIB_ICMP_EX categoriesForMethods!
+icmpInStats!**compiled accessors**!public! !
+icmpOutStats!**compiled accessors**!public! !
+!
 
 !MIB_ICMP_EX class methodsFor!
 
@@ -65,6 +67,8 @@ defineFields
 
 getFieldNames
 	^#(#icmpInStats #icmpOutStats)! !
-!MIB_ICMP_EX class categoriesFor: #defineFields!initializing!public! !
-!MIB_ICMP_EX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MIB_ICMP_EX class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

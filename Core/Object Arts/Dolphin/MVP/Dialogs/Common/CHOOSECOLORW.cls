@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CommonDialogStructure subclass: #CHOOSECOLORW
 	instanceVariableNames: ''
@@ -104,19 +104,21 @@ rgbResult: anInteger
 	"Set the receiver's 'rgbResult' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_rgbResult put: anInteger! !
-!CHOOSECOLORW categoriesFor: #color!accessing!public! !
-!CHOOSECOLORW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!CHOOSECOLORW categoriesFor: #flags!**compiled accessors**!public! !
-!CHOOSECOLORW categoriesFor: #flags:!**compiled accessors**!public! !
-!CHOOSECOLORW categoriesFor: #hInstance:!**compiled accessors**!public! !
-!CHOOSECOLORW categoriesFor: #hookFlag!constants!public! !
-!CHOOSECOLORW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!CHOOSECOLORW categoriesFor: #lpCustColors!**compiled accessors**!public! !
-!CHOOSECOLORW categoriesFor: #lpCustColors:!**compiled accessors**!public! !
-!CHOOSECOLORW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
-!CHOOSECOLORW categoriesFor: #ownerView:!accessing!public! !
-!CHOOSECOLORW categoriesFor: #rgbResult!**compiled accessors**!public! !
-!CHOOSECOLORW categoriesFor: #rgbResult:!**compiled accessors**!public! !
+!CHOOSECOLORW categoriesForMethods!
+color!accessing!public! !
+dwSize:!**compiled accessors**!public! !
+flags!**compiled accessors**!public! !
+flags:!**compiled accessors**!public! !
+hInstance:!**compiled accessors**!public! !
+hookFlag!constants!public! !
+hwndOwner:!**compiled accessors**!public! !
+lpCustColors!**compiled accessors**!public! !
+lpCustColors:!**compiled accessors**!public! !
+lpfnHook:!**compiled accessors**!public! !
+ownerView:!accessing!public! !
+rgbResult!**compiled accessors**!public! !
+rgbResult:!**compiled accessors**!public! !
+!
 
 !CHOOSECOLORW class methodsFor!
 
@@ -153,6 +155,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hInstance #rgbResult #lpCustColors #flags #lpfnHook)! !
-!CHOOSECOLORW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!CHOOSECOLORW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!CHOOSECOLORW class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

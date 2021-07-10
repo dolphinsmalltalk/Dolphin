@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IEnumXXXX subclass: #IEnumUnknown
 	instanceVariableNames: ''
@@ -26,7 +26,9 @@ Next: celt rgelt: rgelt pceltFetched: pceltFetched
 
 	<virtual stdcall: hresult 4 dword IUnknown** dword*>
 	^self invalidCall: _failureCode! !
-!IEnumUnknown categoriesFor: #Next:rgelt:pceltFetched:!**auto generated**!COM Interfaces-OBJIDL.IEnumUnknown!primitives!public! !
+!IEnumUnknown categoriesForMethods!
+Next:rgelt:pceltFetched:!**auto generated**!COM Interfaces-OBJIDL.IEnumUnknown!primitives!public! !
+!
 
 !IEnumUnknown class methodsFor!
 
@@ -41,6 +43,8 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^IUnknown! !
-!IEnumUnknown class categoriesFor: #defineFunctions!initializing!public! !
-!IEnumUnknown class categoriesFor: #elementClass!constants!public! !
+!IEnumUnknown class categoriesForMethods!
+defineFunctions!initializing!public! !
+elementClass!constants!public! !
+!
 

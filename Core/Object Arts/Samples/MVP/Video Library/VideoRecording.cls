@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #VideoRecording
 	instanceVariableNames: 'title date time length'
@@ -133,19 +133,21 @@ title: titleString
 	Accessor Method"
 
 	title := titleString! !
-!VideoRecording categoriesFor: #date!accessing!public! !
-!VideoRecording categoriesFor: #date:!accessing!public! !
-!VideoRecording categoriesFor: #defaultLength!constants!private! !
-!VideoRecording categoriesFor: #defaultTitle!constants!private! !
-!VideoRecording categoriesFor: #displayOn:!printing!public! !
-!VideoRecording categoriesFor: #initialize!initializing!private! !
-!VideoRecording categoriesFor: #length!accessing!public! !
-!VideoRecording categoriesFor: #length:!accessing!public! !
-!VideoRecording categoriesFor: #printOn:!printing!public! !
-!VideoRecording categoriesFor: #time!accessing!public! !
-!VideoRecording categoriesFor: #time:!accessing!public! !
-!VideoRecording categoriesFor: #title!accessing!public! !
-!VideoRecording categoriesFor: #title:!accessing!public! !
+!VideoRecording categoriesForMethods!
+date!accessing!public! !
+date:!accessing!public! !
+defaultLength!constants!private! !
+defaultTitle!constants!private! !
+displayOn:!printing!public! !
+initialize!initializing!private! !
+length!accessing!public! !
+length:!accessing!public! !
+printOn:!printing!public! !
+time!accessing!public! !
+time:!accessing!public! !
+title!accessing!public! !
+title:!accessing!public! !
+!
 
 !VideoRecording class methodsFor!
 
@@ -162,6 +164,8 @@ new
 	"
 
 	^super new initialize! !
-!VideoRecording class categoriesFor: #icon!constants!public! !
-!VideoRecording class categoriesFor: #new!instance creation!public! !
+!VideoRecording class categoriesForMethods!
+icon!constants!public! !
+new!instance creation!public! !
+!
 

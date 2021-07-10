@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #PushDownInstanceVariableTest
 	instanceVariableNames: ''
@@ -70,9 +70,11 @@ testPushDownInstanceVariable
 	self executeRefactoring: refactoring.
 	(refactoring model classNamed: #LintRuleTest) withAllSubclasses 
 		do: [:each | self deny: (each directlyDefinesInstanceVariable: 'foo1')]! !
-!PushDownInstanceVariableTest categoriesFor: #testModelPushDownToMetaclass!public!tests! !
-!PushDownInstanceVariableTest categoriesFor: #testModelPushDownToMultipleSubclasses!public!tests! !
-!PushDownInstanceVariableTest categoriesFor: #testModelRemoveUnusedVariable!public!tests! !
-!PushDownInstanceVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
-!PushDownInstanceVariableTest categoriesFor: #testPushDownInstanceVariable!public!tests! !
+!PushDownInstanceVariableTest categoriesForMethods!
+testModelPushDownToMetaclass!public!tests! !
+testModelPushDownToMultipleSubclasses!public!tests! !
+testModelRemoveUnusedVariable!public!tests! !
+testNonExistantName!failure tests!public! !
+testPushDownInstanceVariable!public!tests! !
+!
 

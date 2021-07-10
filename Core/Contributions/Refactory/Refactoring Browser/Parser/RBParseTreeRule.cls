@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #RBParseTreeRule
 	instanceVariableNames: 'searchTree owner'
@@ -40,14 +40,16 @@ searchString: aString
 
 sentMessages
 	^searchTree sentMessages! !
-!RBParseTreeRule categoriesFor: #canMatch:!matching!public! !
-!RBParseTreeRule categoriesFor: #context!accessing!private! !
-!RBParseTreeRule categoriesFor: #foundMatchFor:!matching!public! !
-!RBParseTreeRule categoriesFor: #methodSearchString:!initialize/release!public! !
-!RBParseTreeRule categoriesFor: #owner:!initialize/release!public! !
-!RBParseTreeRule categoriesFor: #performOn:!matching!public! !
-!RBParseTreeRule categoriesFor: #searchString:!initialize/release!public! !
-!RBParseTreeRule categoriesFor: #sentMessages!accessing!public! !
+!RBParseTreeRule categoriesForMethods!
+canMatch:!matching!public! !
+context!accessing!private! !
+foundMatchFor:!matching!public! !
+methodSearchString:!initialize/release!public! !
+owner:!initialize/release!public! !
+performOn:!matching!public! !
+searchString:!initialize/release!public! !
+sentMessages!accessing!public! !
+!
 
 !RBParseTreeRule class methodsFor!
 
@@ -65,7 +67,9 @@ search: aString
 	^(self new)
 		searchString: aString;
 		yourself! !
-!RBParseTreeRule class categoriesFor: #methodSearch:!instance creation!public! !
-!RBParseTreeRule class categoriesFor: #new!instance creation!public! !
-!RBParseTreeRule class categoriesFor: #search:!instance creation!public! !
+!RBParseTreeRule class categoriesForMethods!
+methodSearch:!instance creation!public! !
+new!instance creation!public! !
+search:!instance creation!public! !
+!
 

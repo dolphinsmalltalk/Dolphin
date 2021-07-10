@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 FileDialog subclass: #FileSaveDialog
 	instanceVariableNames: ''
@@ -19,8 +19,10 @@ overwritePrompt
 
 	self style: self style | OFN_OVERWRITEPROMPT.
 ! !
-!FileSaveDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!FileSaveDialog categoriesFor: #overwritePrompt!public! !
+!FileSaveDialog categoriesForMethods!
+basicShowModal!private!realizing/unrealizing! !
+overwritePrompt!public! !
+!
 
 !FileSaveDialog class methodsFor!
 
@@ -30,5 +32,7 @@ initialize
 	"
 
 	self initializeDefaultHooks! !
-!FileSaveDialog class categoriesFor: #initialize!development!initializing!private! !
+!FileSaveDialog class categoriesForMethods!
+initialize!development!initializing!private! !
+!
 

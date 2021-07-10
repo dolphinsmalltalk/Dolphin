@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #MoenContour
 	instanceVariableNames: 'lowerHead lowerTail upperHead upperTail'
@@ -56,13 +56,15 @@ upperTail
 
 upperTail: aMoenLink
 	upperTail := aMoenLink! !
-!MoenContour categoriesFor: #lowerHead!accessing!private! !
-!MoenContour categoriesFor: #lowerHead:!accessing!private! !
-!MoenContour categoriesFor: #lowerTail!accessing!private! !
-!MoenContour categoriesFor: #lowerTail:!accessing!private! !
-!MoenContour categoriesFor: #printOn:!development!printing!public! !
-!MoenContour categoriesFor: #upperHead!accessing!private! !
-!MoenContour categoriesFor: #upperHead:!accessing!private! !
-!MoenContour categoriesFor: #upperTail!accessing!private! !
-!MoenContour categoriesFor: #upperTail:!accessing!private! !
+!MoenContour categoriesForMethods!
+lowerHead!accessing!private! !
+lowerHead:!accessing!private! !
+lowerTail!accessing!private! !
+lowerTail:!accessing!private! !
+printOn:!development!printing!public! !
+upperHead!accessing!private! !
+upperHead:!accessing!private! !
+upperTail!accessing!private! !
+upperTail:!accessing!private! !
+!
 

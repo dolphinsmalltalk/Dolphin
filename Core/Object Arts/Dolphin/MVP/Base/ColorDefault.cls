@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ColorRef subclass: #ColorDefault
 	instanceVariableNames: ''
@@ -79,17 +79,19 @@ shallowCopy
 
 species
 	^##(self)! !
-!ColorDefault categoriesFor: #=!comparing!public! !
-!ColorDefault categoriesFor: #alpha!public! !
-!ColorDefault categoriesFor: #blue!accessing!public! !
-!ColorDefault categoriesFor: #brush!converting!public! !
-!ColorDefault categoriesFor: #green!accessing!public! !
-!ColorDefault categoriesFor: #hash!comparing!public! !
-!ColorDefault categoriesFor: #isDefault!public!testing! !
-!ColorDefault categoriesFor: #name!accessing!public! !
-!ColorDefault categoriesFor: #normalizedAlpha!public! !
-!ColorDefault categoriesFor: #pen!converting!public! !
-!ColorDefault categoriesFor: #red!accessing!public! !
-!ColorDefault categoriesFor: #shallowCopy!copying!public! !
-!ColorDefault categoriesFor: #species!accessing!public! !
+!ColorDefault categoriesForMethods!
+=!comparing!public! !
+alpha!public! !
+blue!accessing!public! !
+brush!converting!public! !
+green!accessing!public! !
+hash!comparing!public! !
+isDefault!public!testing! !
+name!accessing!public! !
+normalizedAlpha!public! !
+pen!converting!public! !
+red!accessing!public! !
+shallowCopy!copying!public! !
+species!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IXMLDOMParseError
 	instanceVariableNames: ''
@@ -174,24 +174,26 @@ value
 
 	^self errorCode
 ! !
-!IXMLDOMParseError categoriesFor: #displayOn:!printing!public! !
-!IXMLDOMParseError categoriesFor: #errorCode!**auto generated**!properties!public! !
-!IXMLDOMParseError categoriesFor: #filepos!**auto generated**!properties!public! !
-!IXMLDOMParseError categoriesFor: #get_errorCode:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!IXMLDOMParseError categoriesFor: #get_filepos:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!IXMLDOMParseError categoriesFor: #get_line:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!IXMLDOMParseError categoriesFor: #get_linepos:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!IXMLDOMParseError categoriesFor: #get_reason:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!IXMLDOMParseError categoriesFor: #get_srcText:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!IXMLDOMParseError categoriesFor: #get_url:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
-!IXMLDOMParseError categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IXMLDOMParseError categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IXMLDOMParseError categoriesFor: #line!**auto generated**!properties!public! !
-!IXMLDOMParseError categoriesFor: #linepos!**auto generated**!properties!public! !
-!IXMLDOMParseError categoriesFor: #reason!**auto generated**!properties!public! !
-!IXMLDOMParseError categoriesFor: #srcText!**auto generated**!properties!public! !
-!IXMLDOMParseError categoriesFor: #url!**auto generated**!properties!public! !
-!IXMLDOMParseError categoriesFor: #value!**auto generated**!properties!public! !
+!IXMLDOMParseError categoriesForMethods!
+displayOn:!printing!public! !
+errorCode!**auto generated**!properties!public! !
+filepos!**auto generated**!properties!public! !
+get_errorCode:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+get_filepos:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+get_line:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+get_linepos:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+get_reason:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+get_srcText:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+get_url:!**auto generated**!COM Interfaces-IXMLDOMParseError!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+line!**auto generated**!properties!public! !
+linepos!**auto generated**!properties!public! !
+reason!**auto generated**!properties!public! !
+srcText!**auto generated**!properties!public! !
+url!**auto generated**!properties!public! !
+value!**auto generated**!properties!public! !
+!
 
 !IXMLDOMParseError class methodsFor!
 
@@ -218,6 +220,8 @@ defineFunctions
 
 icon
 	^Error icon! !
-!IXMLDOMParseError class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IXMLDOMParseError class categoriesFor: #icon!public! !
+!IXMLDOMParseError class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+icon!public! !
+!
 

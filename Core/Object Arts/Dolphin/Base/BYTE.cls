@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalInteger subclass: #BYTE
 	instanceVariableNames: ''
@@ -39,11 +39,13 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes byteAtOffset: _OffsetOf_value put: anInteger! !
-!BYTE categoriesFor: #asSignedInteger!converting!public! !
-!BYTE categoriesFor: #asUnsignedInteger!converting!public! !
-!BYTE categoriesFor: #unsignedValue:!accessing!public! !
-!BYTE categoriesFor: #value!**compiled accessors**!public! !
-!BYTE categoriesFor: #value:!**compiled accessors**!public! !
+!BYTE categoriesForMethods!
+asSignedInteger!converting!public! !
+asUnsignedInteger!converting!public! !
+unsignedValue:!accessing!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !BYTE class methodsFor!
 
@@ -64,7 +66,9 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!BYTE class categoriesFor: #defineFields!public!template definition! !
-!BYTE class categoriesFor: #initialize!development!initializing!private! !
-!BYTE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!BYTE class categoriesForMethods!
+defineFields!public!template definition! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

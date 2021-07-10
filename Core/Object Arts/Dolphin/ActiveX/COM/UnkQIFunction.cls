@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 COMFunctionAbstract subclass: #UnkQIFunction
 	instanceVariableNames: ''
@@ -41,9 +41,11 @@ selector
 	"Private - Answer the selector sent when the receiver is evaluated."
 
 	^#QueryInterface:ppvObject:! !
-!UnkQIFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
-!UnkQIFunction categoriesFor: #descriptor!accessing!private! !
-!UnkQIFunction categoriesFor: #selector!accessing!private! !
+!UnkQIFunction categoriesForMethods!
+callback:interface:withArgumentsAt:!evaluating!private! !
+descriptor!accessing!private! !
+selector!accessing!private! !
+!
 
 !UnkQIFunction class methodsFor!
 
@@ -65,6 +67,8 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Descriptor := nil! !
-!UnkQIFunction class categoriesFor: #initialize!development!initializing!private! !
-!UnkQIFunction class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UnkQIFunction class categoriesForMethods!
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

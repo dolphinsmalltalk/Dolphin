@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #AddParameterTest
 	instanceVariableNames: ''
@@ -171,15 +171,17 @@ testPrimitiveMethods
 				newSelector: #at:foo:
 				initializer: '1'.
 	self shouldFail: refactoring.! !
-!AddParameterTest categoriesFor: #setUp!public!set up! !
-!AddParameterTest categoriesFor: #testAddParameterForTwoArgumentMessage!public!tests! !
-!AddParameterTest categoriesFor: #testAddParameterThatReferencesGlobalAndLiteral!public!tests! !
-!AddParameterTest categoriesFor: #testAddParameterThatReferencesInstanceVariable!public! !
-!AddParameterTest categoriesFor: #testAddParameterThatReferencesModelGlobal!public!tests! !
-!AddParameterTest categoriesFor: #testAddParameterThatReferencesSelf!public!tests! !
-!AddParameterTest categoriesFor: #testBadInitializationCode!failure tests!public! !
-!AddParameterTest categoriesFor: #testModelBadInitializationCode!failure tests!public! !
-!AddParameterTest categoriesFor: #testModelNonExistantName!failure tests!public! !
-!AddParameterTest categoriesFor: #testNonExistantName!failure tests!public! !
-!AddParameterTest categoriesFor: #testPrimitiveMethods!failure tests!public! !
+!AddParameterTest categoriesForMethods!
+setUp!public!set up! !
+testAddParameterForTwoArgumentMessage!public!tests! !
+testAddParameterThatReferencesGlobalAndLiteral!public!tests! !
+testAddParameterThatReferencesInstanceVariable!public! !
+testAddParameterThatReferencesModelGlobal!public!tests! !
+testAddParameterThatReferencesSelf!public!tests! !
+testBadInitializationCode!failure tests!public! !
+testModelBadInitializationCode!failure tests!public! !
+testModelNonExistantName!failure tests!public! !
+testNonExistantName!failure tests!public! !
+testPrimitiveMethods!failure tests!public! !
+!
 

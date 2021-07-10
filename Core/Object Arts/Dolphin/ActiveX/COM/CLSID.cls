@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GUID variableByteSubclass: #CLSID
 	instanceVariableNames: ''
@@ -33,8 +33,10 @@ progID
 	pProgId := COMTaskMemory new.
 	OLELibrary default progIDFromCLSID: self lplpszProgID: pProgId.
 	^(Utf16String fromAddress: pProgId) asString! !
-!CLSID categoriesFor: #displayOn:!displaying!public! !
-!CLSID categoriesFor: #progID!displaying!public! !
+!CLSID categoriesForMethods!
+displayOn:!displaying!public! !
+progID!displaying!public! !
+!
 
 !CLSID class methodsFor!
 
@@ -64,7 +66,9 @@ initialize
 	"
 
 	self extraInstanceSpec: self byteSize! !
-!CLSID class categoriesFor: #fromProgID:!instance creation!public! !
-!CLSID class categoriesFor: #fromString:!instance creation!public! !
-!CLSID class categoriesFor: #initialize!development!initializing!private! !
+!CLSID class categoriesForMethods!
+fromProgID:!instance creation!public! !
+fromString:!instance creation!public! !
+initialize!development!initializing!private! !
+!
 

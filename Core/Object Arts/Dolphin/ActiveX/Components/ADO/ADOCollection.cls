@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequenceableCollection subclass: #ADOCollection
 	instanceVariableNames: 'interface'
@@ -95,18 +95,20 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 			[:i | 
 			subscript sdword: i - 1.
 			aDyadicValuable value: i value: (interface item: subscript)]! !
-!ADOCollection categoriesFor: #add:!adding!public! !
-!ADOCollection categoriesFor: #at:!accessing!public! !
-!ADOCollection categoriesFor: #at:put:!accessing!public! !
-!ADOCollection categoriesFor: #basicFree!private!realizing/unrealizing! !
-!ADOCollection categoriesFor: #free!public!realizing/unrealizing! !
-!ADOCollection categoriesFor: #interface!accessing!public! !
-!ADOCollection categoriesFor: #interface:!accessing!private! !
-!ADOCollection categoriesFor: #item:!accessing!public! !
-!ADOCollection categoriesFor: #reset!methods!public! !
-!ADOCollection categoriesFor: #size!accessing!public! !
-!ADOCollection categoriesFor: #species!constants!public! !
-!ADOCollection categoriesFor: #uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!ADOCollection categoriesForMethods!
+add:!adding!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+free!public!realizing/unrealizing! !
+interface!accessing!public! !
+interface:!accessing!private! !
+item:!accessing!public! !
+reset!methods!public! !
+size!accessing!public! !
+species!constants!public! !
+uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+!
 
 !ADOCollection class methodsFor!
 
@@ -118,5 +120,7 @@ on: anADO_Collection
 		interface: anADO_Collection
 
 	! !
-!ADOCollection class categoriesFor: #on:!instance creation!public! !
+!ADOCollection class categoriesForMethods!
+on:!instance creation!public! !
+!
 

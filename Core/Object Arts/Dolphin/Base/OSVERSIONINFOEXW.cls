@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #OSVERSIONINFOEXW
 	instanceVariableNames: ''
@@ -132,24 +132,26 @@ wSuiteMask: anInteger
 	"Set the receiver's 'wSuiteMask' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_wSuiteMask put: anInteger! !
-!OSVERSIONINFOEXW categoriesFor: #dwBuildNumber!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #dwBuildNumber:!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #dwMajorVersion!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #dwMajorVersion:!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #dwMinorVersion!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #dwMinorVersion:!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #dwPlatformId!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #dwPlatformId:!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #szCSDVersion!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #wProductType!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #wProductType:!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #wServicePackMajor!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #wServicePackMajor:!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #wServicePackMinor!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #wServicePackMinor:!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #wSuiteMask!**compiled accessors**!public! !
-!OSVERSIONINFOEXW categoriesFor: #wSuiteMask:!**compiled accessors**!public! !
+!OSVERSIONINFOEXW categoriesForMethods!
+dwBuildNumber!**compiled accessors**!public! !
+dwBuildNumber:!**compiled accessors**!public! !
+dwMajorVersion!**compiled accessors**!public! !
+dwMajorVersion:!**compiled accessors**!public! !
+dwMinorVersion!**compiled accessors**!public! !
+dwMinorVersion:!**compiled accessors**!public! !
+dwPlatformId!**compiled accessors**!public! !
+dwPlatformId:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+szCSDVersion!**compiled accessors**!public! !
+wProductType!**compiled accessors**!public! !
+wProductType:!**compiled accessors**!public! !
+wServicePackMajor!**compiled accessors**!public! !
+wServicePackMajor:!**compiled accessors**!public! !
+wServicePackMinor!**compiled accessors**!public! !
+wServicePackMinor:!**compiled accessors**!public! !
+wSuiteMask!**compiled accessors**!public! !
+wSuiteMask:!**compiled accessors**!public! !
+!
 
 !OSVERSIONINFOEXW class methodsFor!
 
@@ -190,6 +192,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwMajorVersion #dwMinorVersion #dwBuildNumber #dwPlatformId #szCSDVersion #wServicePackMajor #wServicePackMinor #wSuiteMask #wProductType)! !
-!OSVERSIONINFOEXW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OSVERSIONINFOEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OSVERSIONINFOEXW class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SelectableItemsPresenter subclass: #ClassSelector
 	instanceVariableNames: 'flags classesPresenter searchEnvironment'
@@ -836,78 +836,80 @@ systemModel
 
 testBrowserClass
 	^self systemModel testBrowserClass! !
-!ClassSelector categoriesFor: #actualClass!accessing!public! !
-!ClassSelector categoriesFor: #actualClass:!accessing!public! !
-!ClassSelector categoriesFor: #actualClass:ifAbsent:!accessing!public! !
-!ClassSelector categoriesFor: #browseChangedMethods!commands!public! !
-!ClassSelector categoriesFor: #browseClass!commands!public! !
-!ClassSelector categoriesFor: #browseClassPackage!commands!public! !
-!ClassSelector categoriesFor: #browseClassReferences!commands!public! !
-!ClassSelector categoriesFor: #browseClassVariables!commands!public! !
-!ClassSelector categoriesFor: #browseHierarchy!commands!public! !
-!ClassSelector categoriesFor: #browseInstanceVariables!commands!public! !
-!ClassSelector categoriesFor: #browseIt!commands!public! !
-!ClassSelector categoriesFor: #browseItCommand!helpers!private! !
-!ClassSelector categoriesFor: #browsePackages!commands!public! !
-!ClassSelector categoriesFor: #browsePublishedAspects!commands!public! !
-!ClassSelector categoriesFor: #browsePublishedEvents!commands!public! !
-!ClassSelector categoriesFor: #browseReferences!commands!public! !
-!ClassSelector categoriesFor: #browserEnvironment!public! !
-!ClassSelector categoriesFor: #browseSystem!commands!public! !
-!ClassSelector categoriesFor: #browseVariablesMenu!public! !
-!ClassSelector categoriesFor: #buildAllVariablesMenu:!menus!private! !
-!ClassSelector categoriesFor: #buildViewsMenu:command:!menus!private! !
-!ClassSelector categoriesFor: #canRefactor!public!testing! !
-!ClassSelector categoriesFor: #categorizeClass!commands!public! !
-!ClassSelector categoriesFor: #chooseVariables:caption:!commands!private!refactoring! !
-!ClassSelector categoriesFor: #classPackage!commands!public! !
-!ClassSelector categoriesFor: #clearSelection!commands!private! !
-!ClassSelector categoriesFor: #copyClass!commands!private! !
-!ClassSelector categoriesFor: #createInstanceVariableAccessors!commands!public!refactoring! !
-!ClassSelector categoriesFor: #createSchematicWiring!initializing!public! !
-!ClassSelector categoriesFor: #createVariableAccessors:!commands!public!refactoring! !
-!ClassSelector categoriesFor: #deleteClassHierarchy!commands!private! !
-!ClassSelector categoriesFor: #deleteItCommand!helpers!private! !
-!ClassSelector categoriesFor: #dropClass:onto:changes:!operations!private! !
-!ClassSelector categoriesFor: #dropMethod:onto:changes:!helpers!private! !
-!ClassSelector categoriesFor: #editView:!commands!public! !
-!ClassSelector categoriesFor: #fileInClass!commands!public! !
-!ClassSelector categoriesFor: #fileOutClass!commands!public! !
-!ClassSelector categoriesFor: #findClass!commands!public! !
-!ClassSelector categoriesFor: #initialize!initializing!private! !
-!ClassSelector categoriesFor: #inspectIt!commands!public! !
-!ClassSelector categoriesFor: #isInstanceMode!modes!public! !
-!ClassSelector categoriesFor: #isInstanceMode:!modes!public! !
-!ClassSelector categoriesFor: #maximumVariableMenuEntries!menus!private! !
-!ClassSelector categoriesFor: #model:!accessing!public! !
-!ClassSelector categoriesFor: #newView!commands!public! !
-!ClassSelector categoriesFor: #onAboutToDisplayMenu:!event handling!menus!public! !
-!ClassSelector categoriesFor: #onClass:renamedTo:!event handling!public! !
-!ClassSelector categoriesFor: #onClass:renameTo:accept:!event handling!public! !
-!ClassSelector categoriesFor: #onDrag:!event handling!private! !
-!ClassSelector categoriesFor: #onDragOver:!event handling!private! !
-!ClassSelector categoriesFor: #onDropOver:!event handling!private! !
-!ClassSelector categoriesFor: #onSelectionChanged!event handling!public! !
-!ClassSelector categoriesFor: #onSelectionChanging:!event handling!public! !
-!ClassSelector categoriesFor: #onTipTextRequired:!event handling!private! !
-!ClassSelector categoriesFor: #packages:!accessing!public! !
-!ClassSelector categoriesFor: #performDropChanges:target:!helpers!private! !
-!ClassSelector categoriesFor: #permitSelectionChange!helpers!private! !
-!ClassSelector categoriesFor: #populateVarMenu:class:command:variables:format:!menus!private! !
-!ClassSelector categoriesFor: #queryCommand:!commands!private! !
-!ClassSelector categoriesFor: #queryMoveClass:toPackage:!operations!private! !
-!ClassSelector categoriesFor: #renameClass!commands!private!refactoring! !
-!ClassSelector categoriesFor: #renameClassVariable!commands!private!refactoring! !
-!ClassSelector categoriesFor: #renameInstanceVariable!commands!private!refactoring! !
-!ClassSelector categoriesFor: #searchEnvironment!commands!private! !
-!ClassSelector categoriesFor: #searchEnvironment:!public! !
-!ClassSelector categoriesFor: #selectableItems!accessing!private! !
-!ClassSelector categoriesFor: #selectionEnvironment!accessing!private! !
-!ClassSelector categoriesFor: #setInitialFocus!operations!public! !
-!ClassSelector categoriesFor: #showPresenter:!commands!public! !
-!ClassSelector categoriesFor: #sourceControl!accessing!private! !
-!ClassSelector categoriesFor: #systemModel!commands!private! !
-!ClassSelector categoriesFor: #testBrowserClass!constants!private! !
+!ClassSelector categoriesForMethods!
+actualClass!accessing!public! !
+actualClass:!accessing!public! !
+actualClass:ifAbsent:!accessing!public! !
+browseChangedMethods!commands!public! !
+browseClass!commands!public! !
+browseClassPackage!commands!public! !
+browseClassReferences!commands!public! !
+browseClassVariables!commands!public! !
+browseHierarchy!commands!public! !
+browseInstanceVariables!commands!public! !
+browseIt!commands!public! !
+browseItCommand!helpers!private! !
+browsePackages!commands!public! !
+browsePublishedAspects!commands!public! !
+browsePublishedEvents!commands!public! !
+browseReferences!commands!public! !
+browserEnvironment!public! !
+browseSystem!commands!public! !
+browseVariablesMenu!public! !
+buildAllVariablesMenu:!menus!private! !
+buildViewsMenu:command:!menus!private! !
+canRefactor!public!testing! !
+categorizeClass!commands!public! !
+chooseVariables:caption:!commands!private!refactoring! !
+classPackage!commands!public! !
+clearSelection!commands!private! !
+copyClass!commands!private! !
+createInstanceVariableAccessors!commands!public!refactoring! !
+createSchematicWiring!initializing!public! !
+createVariableAccessors:!commands!public!refactoring! !
+deleteClassHierarchy!commands!private! !
+deleteItCommand!helpers!private! !
+dropClass:onto:changes:!operations!private! !
+dropMethod:onto:changes:!helpers!private! !
+editView:!commands!public! !
+fileInClass!commands!public! !
+fileOutClass!commands!public! !
+findClass!commands!public! !
+initialize!initializing!private! !
+inspectIt!commands!public! !
+isInstanceMode!modes!public! !
+isInstanceMode:!modes!public! !
+maximumVariableMenuEntries!menus!private! !
+model:!accessing!public! !
+newView!commands!public! !
+onAboutToDisplayMenu:!event handling!menus!public! !
+onClass:renamedTo:!event handling!public! !
+onClass:renameTo:accept:!event handling!public! !
+onDrag:!event handling!private! !
+onDragOver:!event handling!private! !
+onDropOver:!event handling!private! !
+onSelectionChanged!event handling!public! !
+onSelectionChanging:!event handling!public! !
+onTipTextRequired:!event handling!private! !
+packages:!accessing!public! !
+performDropChanges:target:!helpers!private! !
+permitSelectionChange!helpers!private! !
+populateVarMenu:class:command:variables:format:!menus!private! !
+queryCommand:!commands!private! !
+queryMoveClass:toPackage:!operations!private! !
+renameClass!commands!private!refactoring! !
+renameClassVariable!commands!private!refactoring! !
+renameInstanceVariable!commands!private!refactoring! !
+searchEnvironment!commands!private! !
+searchEnvironment:!public! !
+selectableItems!accessing!private! !
+selectionEnvironment!accessing!private! !
+setInitialFocus!operations!public! !
+showPresenter:!commands!public! !
+sourceControl!accessing!private! !
+systemModel!commands!private! !
+testBrowserClass!constants!private! !
+!
 
 !ClassSelector class methodsFor!
 
@@ -923,7 +925,9 @@ initialize
 
 setCommandQueryHandlers: anArray 
 	commandQueryHandlers := anArray! !
-!ClassSelector class categoriesFor: #getCommandQueryHandlers!accessing!private! !
-!ClassSelector class categoriesFor: #initialize!initializing!private! !
-!ClassSelector class categoriesFor: #setCommandQueryHandlers:!accessing!private! !
+!ClassSelector class categoriesForMethods!
+getCommandQueryHandlers!accessing!private! !
+initialize!initializing!private! !
+setCommandQueryHandlers:!accessing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_REQUEST_V1
 	instanceVariableNames: ''
@@ -314,47 +314,49 @@ Version: aHTTP_VERSION
 		from: ##(_OffsetOf_Version + 1)
 		to: ##(_OffsetOf_Version + HTTP_VERSION basicByteSize)
 		startingAt: 1! !
-!HTTP_REQUEST_V1 categoriesFor: #Address!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #Address:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #BytesReceived!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #BytesReceived:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #ConnectionId!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #ConnectionId:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #CookedUrl!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #CookedUrl:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #EntityChunkCount!**compiled accessors**!private! !
-!HTTP_REQUEST_V1 categoriesFor: #EntityChunkCount:!**compiled accessors**!private! !
-!HTTP_REQUEST_V1 categoriesFor: #Flags!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #Flags:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #Headers!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #Headers:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #maxPrint!constants!private! !
-!HTTP_REQUEST_V1 categoriesFor: #nameOfVerb:!constants!public! !
-!HTTP_REQUEST_V1 categoriesFor: #pEntityChunks!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #pEntityChunks:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #pRawUrl!**compiled accessors**!private! !
-!HTTP_REQUEST_V1 categoriesFor: #pRawUrl:!**compiled accessors**!private! !
-!HTTP_REQUEST_V1 categoriesFor: #printableFields!development!printing!private! !
-!HTTP_REQUEST_V1 categoriesFor: #printFields:on:limit:!development!printing!private! !
-!HTTP_REQUEST_V1 categoriesFor: #pSslInfo!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #pSslInfo:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #pUnknownVerb!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #pUnknownVerb:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #RawConnectionId!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #RawConnectionId:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #RawUrlLength!**compiled accessors**!private! !
-!HTTP_REQUEST_V1 categoriesFor: #RawUrlLength:!**compiled accessors**!private! !
-!HTTP_REQUEST_V1 categoriesFor: #RequestId!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #RequestId:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #UnknownVerbLength!**compiled accessors**!private! !
-!HTTP_REQUEST_V1 categoriesFor: #UnknownVerbLength:!**compiled accessors**!private! !
-!HTTP_REQUEST_V1 categoriesFor: #UrlContext!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #UrlContext:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #verb!accessing!public! !
-!HTTP_REQUEST_V1 categoriesFor: #Verb!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #Verb:!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #Version!**compiled accessors**!public! !
-!HTTP_REQUEST_V1 categoriesFor: #Version:!**compiled accessors**!public! !
+!HTTP_REQUEST_V1 categoriesForMethods!
+Address!**compiled accessors**!public! !
+Address:!**compiled accessors**!public! !
+BytesReceived!**compiled accessors**!public! !
+BytesReceived:!**compiled accessors**!public! !
+ConnectionId!**compiled accessors**!public! !
+ConnectionId:!**compiled accessors**!public! !
+CookedUrl!**compiled accessors**!public! !
+CookedUrl:!**compiled accessors**!public! !
+EntityChunkCount!**compiled accessors**!private! !
+EntityChunkCount:!**compiled accessors**!private! !
+Flags!**compiled accessors**!public! !
+Flags:!**compiled accessors**!public! !
+Headers!**compiled accessors**!public! !
+Headers:!**compiled accessors**!public! !
+maxPrint!constants!private! !
+nameOfVerb:!constants!public! !
+pEntityChunks!**compiled accessors**!public! !
+pEntityChunks:!**compiled accessors**!public! !
+pRawUrl!**compiled accessors**!private! !
+pRawUrl:!**compiled accessors**!private! !
+printableFields!development!printing!private! !
+printFields:on:limit:!development!printing!private! !
+pSslInfo!**compiled accessors**!public! !
+pSslInfo:!**compiled accessors**!public! !
+pUnknownVerb!**compiled accessors**!public! !
+pUnknownVerb:!**compiled accessors**!public! !
+RawConnectionId!**compiled accessors**!public! !
+RawConnectionId:!**compiled accessors**!public! !
+RawUrlLength!**compiled accessors**!private! !
+RawUrlLength:!**compiled accessors**!private! !
+RequestId!**compiled accessors**!public! !
+RequestId:!**compiled accessors**!public! !
+UnknownVerbLength!**compiled accessors**!private! !
+UnknownVerbLength:!**compiled accessors**!private! !
+UrlContext!**compiled accessors**!public! !
+UrlContext:!**compiled accessors**!public! !
+verb!accessing!public! !
+Verb!**compiled accessors**!public! !
+Verb:!**compiled accessors**!public! !
+Version!**compiled accessors**!public! !
+Version:!**compiled accessors**!public! !
+!
 
 !HTTP_REQUEST_V1 class methodsFor!
 
@@ -409,6 +411,8 @@ defineFields
 
 getFieldNames
 	^#(#Flags #ConnectionId #RequestId #UrlContext #Version #Verb #UnknownVerbLength #RawUrlLength #pUnknownVerb #pRawUrl #CookedUrl #Address #Headers #BytesReceived #EntityChunkCount #pEntityChunks #RawConnectionId #pSslInfo)! !
-!HTTP_REQUEST_V1 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_REQUEST_V1 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_REQUEST_V1 class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

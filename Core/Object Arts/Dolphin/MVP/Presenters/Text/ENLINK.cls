@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMHDR subclass: #ENLINK
 	instanceVariableNames: ''
@@ -49,10 +49,12 @@ wParam
 	"Answer the <Integer> value of the receiver's 'wParam' field."
 
 	^bytes uintPtrAtOffset: _OffsetOf_wParam! !
-!ENLINK categoriesFor: #chrg!**compiled accessors**!public! !
-!ENLINK categoriesFor: #lParam!**compiled accessors**!public! !
-!ENLINK categoriesFor: #msg!**compiled accessors**!public! !
-!ENLINK categoriesFor: #wParam!**compiled accessors**!public! !
+!ENLINK categoriesForMethods!
+chrg!**compiled accessors**!public! !
+lParam!**compiled accessors**!public! !
+msg!**compiled accessors**!public! !
+wParam!**compiled accessors**!public! !
+!
 
 !ENLINK class methodsFor!
 
@@ -80,6 +82,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #msg #wParam #lParam #chrg)! !
-!ENLINK class categoriesFor: #defineFields!public!template definition! !
-!ENLINK class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!ENLINK class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

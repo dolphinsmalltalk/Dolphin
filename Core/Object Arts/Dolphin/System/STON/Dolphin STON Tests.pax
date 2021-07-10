@@ -75,7 +75,9 @@ asDictionary
 	It is here only for the STON tests."
 
 	^Dictionary withAll: self! !
-!Array categoriesFor: #asDictionary!private! !
+!Array categoriesForMethods!
+asDictionary!private! !
+!
 
 !ByteArrayTest methodsFor!
 
@@ -90,7 +92,9 @@ testHex
 	self
 		assert: (ByteArray readHexFrom: '7a2bd507')
 		equals: #[122 43 213 7]! !
-!ByteArrayTest categoriesFor: #testHex!public! !
+!ByteArrayTest categoriesForMethods!
+testHex!public! !
+!
 
 !Collection methodsFor!
 
@@ -100,7 +104,9 @@ atRandom
 	i := 1.
 	self do: [:each | i == r ifTrue: [^each]].
 	^self errorEmptyCollection! !
-!Collection categoriesFor: #atRandom!public! !
+!Collection categoriesForMethods!
+atRandom!public! !
+!
 
 !Integer methodsFor!
 
@@ -108,7 +114,9 @@ atRandom
 	"Answer a random integer from 1 to self."
 
 	^(Random default next * self) truncated + 1! !
-!Integer categoriesFor: #atRandom!public! !
+!Integer categoriesForMethods!
+atRandom!public! !
+!
 
 !SequenceableCollection methodsFor!
 
@@ -125,10 +133,12 @@ doWithIndex: aDyadicValuable
 	"For Pharo compatibility; #keysAndValuesDo: is preferred (and faster)"
 
 	self keysAndValuesDo: [:index :value | aDyadicValuable value: value value: index]! !
-!SequenceableCollection categoriesFor: #asFloatArray!public! !
-!SequenceableCollection categoriesFor: #asIntegerArray!public! !
-!SequenceableCollection categoriesFor: #atRandom!public! !
-!SequenceableCollection categoriesFor: #doWithIndex:!public! !
+!SequenceableCollection categoriesForMethods!
+asFloatArray!public! !
+asIntegerArray!public! !
+atRandom!public! !
+doWithIndex:!public! !
+!
 
 !STONReaderTest methodsFor!
 
@@ -152,9 +162,11 @@ testSymbolMultiByte
 	self assert: (self materialize: '#''€''') equals: Character euro asSymbol.
 	self assert: (self materialize: '#''你好''') equals: #'你好'.
 	self assert: (self materialize: '#''🐬''') equals: #'🐬'! !
-!STONReaderTest categoriesFor: #testColorInvalid!public!tests! !
-!STONReaderTest categoriesFor: #testReferenceCycle2!public!tests! !
-!STONReaderTest categoriesFor: #testSymbolMultiByte!public!tests! !
+!STONReaderTest categoriesForMethods!
+testColorInvalid!public!tests! !
+testReferenceCycle2!public!tests! !
+testSymbolMultiByte!public!tests! !
+!
 
 !STONTestDomainObject class methodsFor!
 
@@ -162,7 +174,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^STONTest icon! !
-!STONTestDomainObject class categoriesFor: #icon!constants!public! !
+!STONTestDomainObject class categoriesForMethods!
+icon!constants!public! !
+!
 
 !STONTestKnownObject class methodsFor!
 
@@ -170,7 +184,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^STONTest icon! !
-!STONTestKnownObject class categoriesFor: #icon!constants!public! !
+!STONTestKnownObject class categoriesForMethods!
+icon!constants!public! !
+!
 
 !STONTestUser class methodsFor!
 
@@ -178,7 +194,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^STONTest icon! !
-!STONTestUser class categoriesFor: #icon!constants!public! !
+!STONTestUser class categoriesForMethods!
+icon!constants!public! !
+!
 
 !STONWriteReadTest methodsFor!
 
@@ -218,14 +236,16 @@ testSearchPolicy
 
 testSystemDictionary
 	self serializeAndMaterialize: {'Foo'. Smalltalk. 'Bar'}! !
-!STONWriteReadTest categoriesFor: #testCompiledMethodsAndBlocks!public!tests! !
-!STONWriteReadTest categoriesFor: #testExtendedCharacters!public!tests! !
-!STONWriteReadTest categoriesFor: #testFramingCalculation!public!tests! !
-!STONWriteReadTest categoriesFor: #testNamedColors!public!tests! !
-!STONWriteReadTest categoriesFor: #testPluggableColors!public!tests! !
-!STONWriteReadTest categoriesFor: #testProcessor!public!tests! !
-!STONWriteReadTest categoriesFor: #testSearchPolicy!public!tests! !
-!STONWriteReadTest categoriesFor: #testSystemDictionary!public!tests! !
+!STONWriteReadTest categoriesForMethods!
+testCompiledMethodsAndBlocks!public!tests! !
+testExtendedCharacters!public!tests! !
+testFramingCalculation!public!tests! !
+testNamedColors!public!tests! !
+testPluggableColors!public!tests! !
+testProcessor!public!tests! !
+testSearchPolicy!public!tests! !
+testSystemDictionary!public!tests! !
+!
 
 !STONWriterTest methodsFor!
 
@@ -261,24 +281,30 @@ testSymbolMultiByte
 	self assert: (self serialize: Character euro asSymbol) equals: '#''€'''.
 	self assert: (self serialize: #'你好') equals: '#''你好'''.
 	self assert: (self serialize: #'🐬') equals: '#''🐬'''! !
-!STONWriterTest categoriesFor: #testFramingCalculation!public!tests! !
-!STONWriterTest categoriesFor: #testIsSimpleSymbol2!public!tests! !
-!STONWriterTest categoriesFor: #testLegacyDate!public!tests! !
-!STONWriterTest categoriesFor: #testProcessor!public!tests! !
-!STONWriterTest categoriesFor: #testSearchPolicy!public!tests! !
-!STONWriterTest categoriesFor: #testSymbolMultiByte!public!tests! !
+!STONWriterTest categoriesForMethods!
+testFramingCalculation!public!tests! !
+testIsSimpleSymbol2!public!tests! !
+testLegacyDate!public!tests! !
+testProcessor!public!tests! !
+testSearchPolicy!public!tests! !
+testSymbolMultiByte!public!tests! !
+!
 
 !String class methodsFor!
 
 crlf
 	^##(AnsiString with: $\r with: $\n)! !
-!String class categoriesFor: #crlf!public! !
+!String class categoriesForMethods!
+crlf!public! !
+!
 
 !Symbol class methodsFor!
 
 hasInterned: aString ifTrue: aMonadicValuable 
 	^(self findInterned: aString) ifNil: [false] ifNotNil: [:symbol | aMonadicValuable value: symbol. true]! !
-!Symbol class categoriesFor: #hasInterned:ifTrue:!public! !
+!Symbol class categoriesForMethods!
+hasInterned:ifTrue:!public! !
+!
 
 !Time class methodsFor!
 
@@ -287,8 +313,10 @@ hour: anInteger minute: anInteger2 second: anInteger3
 
 hour: hoursInteger minute: minutesInteger second: secondsInteger nanoSecond: nanosInteger
 	^self fromSeconds: (hoursInteger * 60 + minutesInteger) * 60 + secondsInteger + (nanosInteger / 1e9)! !
-!Time class categoriesFor: #hour:minute:second:!public! !
-!Time class categoriesFor: #hour:minute:second:nanoSecond:!public! !
+!Time class categoriesForMethods!
+hour:minute:second:!public! !
+hour:minute:second:nanoSecond:!public! !
+!
 
 "End of package definition"!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ScintillaListItem
 	instanceVariableNames: 'text icon'
@@ -30,11 +30,13 @@ text
 text: aString icon: anIcon
 	text := aString.
 	icon := anIcon! !
-!ScintillaListItem categoriesFor: #displayOn:!displaying!public! !
-!ScintillaListItem categoriesFor: #displayString!displaying!public! !
-!ScintillaListItem categoriesFor: #icon!accessing!public! !
-!ScintillaListItem categoriesFor: #text!accessing!public! !
-!ScintillaListItem categoriesFor: #text:icon:!initializing!private! !
+!ScintillaListItem categoriesForMethods!
+displayOn:!displaying!public! !
+displayString!displaying!public! !
+icon!accessing!public! !
+text!accessing!public! !
+text:icon:!initializing!private! !
+!
 
 !ScintillaListItem class methodsFor!
 
@@ -43,6 +45,8 @@ icon
 
 text: aString icon: anIcon
 	^self new text: aString icon: anIcon! !
-!ScintillaListItem class categoriesFor: #icon!constants!development!public! !
-!ScintillaListItem class categoriesFor: #text:icon:!initializing!public! !
+!ScintillaListItem class categoriesForMethods!
+icon!constants!development!public! !
+text:icon:!initializing!public! !
+!
 

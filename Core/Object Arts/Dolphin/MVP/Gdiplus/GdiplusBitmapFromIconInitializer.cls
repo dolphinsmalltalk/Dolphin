@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusBitmapFromIconInitializer
 	instanceVariableNames: 'icon'
@@ -29,9 +29,11 @@ gdiplusConstructorErrorDescription
 
 icon: anIcon
 	icon := anIcon! !
-!GdiplusBitmapFromIconInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusBitmapFromIconInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusBitmapFromIconInitializer categoriesFor: #icon:!initializing!private! !
+!GdiplusBitmapFromIconInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+icon:!initializing!private! !
+!
 
 !GdiplusBitmapFromIconInitializer class methodsFor!
 
@@ -39,5 +41,7 @@ icon: anIcon
 	"Creates a Bitmap object based on an icon."
 
 	^self new icon: anIcon! !
-!GdiplusBitmapFromIconInitializer class categoriesFor: #icon:!instance creation!public! !
+!GdiplusBitmapFromIconInitializer class categoriesForMethods!
+icon:!instance creation!public! !
+!
 

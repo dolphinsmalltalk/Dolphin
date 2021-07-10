@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #SUnitAbsModel
 	instanceVariableNames: 'configuration listItems selectedItems builder browser state'
@@ -254,56 +254,58 @@ useDisplayNames
 useDisplayNames: aBoolean
 
 	self configuration useDisplayNames: aBoolean! !
-!SUnitAbsModel categoriesFor: #basicSelectedItems!accessing!private! !
-!SUnitAbsModel categoriesFor: #browser!accessing!private! !
-!SUnitAbsModel categoriesFor: #browser:!accessing!private! !
-!SUnitAbsModel categoriesFor: #builder!accessing!public! !
-!SUnitAbsModel categoriesFor: #builder:!accessing!public! !
-!SUnitAbsModel categoriesFor: #canInspect!public!querying! !
-!SUnitAbsModel categoriesFor: #canRemove!public!querying! !
-!SUnitAbsModel categoriesFor: #colorSymbolFor:!displaying!public! !
-!SUnitAbsModel categoriesFor: #configuration!accessing!private! !
-!SUnitAbsModel categoriesFor: #configuration:!accessing!private! !
-!SUnitAbsModel categoriesFor: #configurationClass!accessing!private! !
-!SUnitAbsModel categoriesFor: #detailState!displaying!public! !
-!SUnitAbsModel categoriesFor: #hasBrowser!private!querying! !
-!SUnitAbsModel categoriesFor: #hasSelectedItems!private!querying! !
-!SUnitAbsModel categoriesFor: #iconSymbolFor:!displaying!public! !
-!SUnitAbsModel categoriesFor: #initialize!initializing!private! !
-!SUnitAbsModel categoriesFor: #isOneBrowsableItemSelected!public!querying! !
-!SUnitAbsModel categoriesFor: #isOneItemSelected!private!querying! !
-!SUnitAbsModel categoriesFor: #listItems!accessing!public! !
-!SUnitAbsModel categoriesFor: #listItems:!accessing!private! !
-!SUnitAbsModel categoriesFor: #nameSortBlock!private!running! !
-!SUnitAbsModel categoriesFor: #removeListItems:!actions!private! !
-!SUnitAbsModel categoriesFor: #removeSelectedInList!actions!public! !
-!SUnitAbsModel categoriesFor: #reset!actions!public! !
-!SUnitAbsModel categoriesFor: #resultStateColorSymbol!displaying!public! !
-!SUnitAbsModel categoriesFor: #selectedItem!accessing!public! !
-!SUnitAbsModel categoriesFor: #selectedItems!accessing!public! !
-!SUnitAbsModel categoriesFor: #selectedItems:!accessing!private! !
-!SUnitAbsModel categoriesFor: #selectItems:!actions!public! !
-!SUnitAbsModel categoriesFor: #showBackgroundColors!configuring!public! !
-!SUnitAbsModel categoriesFor: #showBackgroundColors:!configuring!public! !
-!SUnitAbsModel categoriesFor: #showIcons!configuring!public! !
-!SUnitAbsModel categoriesFor: #showIcons:!configuring!public! !
-!SUnitAbsModel categoriesFor: #showToolbar!configuring!public! !
-!SUnitAbsModel categoriesFor: #showToolbar:!configuring!public! !
-!SUnitAbsModel categoriesFor: #signalResetList!private!signalling! !
-!SUnitAbsModel categoriesFor: #signalSelectedItems:!private!signalling! !
-!SUnitAbsModel categoriesFor: #signalToggledShowBackgroundColors!private!signalling! !
-!SUnitAbsModel categoriesFor: #signalToggledShowIcons!private!signalling! !
-!SUnitAbsModel categoriesFor: #signalToggledShowToolbar!private!signalling! !
-!SUnitAbsModel categoriesFor: #signalToggledUseDisplayNames!private!signalling! !
-!SUnitAbsModel categoriesFor: #state!accessing!public! !
-!SUnitAbsModel categoriesFor: #state:!accessing!private! !
-!SUnitAbsModel categoriesFor: #stateClass!accessing!private! !
-!SUnitAbsModel categoriesFor: #toggleShowBackgroundColors!configuring!public! !
-!SUnitAbsModel categoriesFor: #toggleShowIcons!configuring!public! !
-!SUnitAbsModel categoriesFor: #toggleShowToolbar!configuring!public! !
-!SUnitAbsModel categoriesFor: #toggleUseDisplayNames!configuring!public! !
-!SUnitAbsModel categoriesFor: #useDisplayNames!configuring!public! !
-!SUnitAbsModel categoriesFor: #useDisplayNames:!configuring!public! !
+!SUnitAbsModel categoriesForMethods!
+basicSelectedItems!accessing!private! !
+browser!accessing!private! !
+browser:!accessing!private! !
+builder!accessing!public! !
+builder:!accessing!public! !
+canInspect!public!querying! !
+canRemove!public!querying! !
+colorSymbolFor:!displaying!public! !
+configuration!accessing!private! !
+configuration:!accessing!private! !
+configurationClass!accessing!private! !
+detailState!displaying!public! !
+hasBrowser!private!querying! !
+hasSelectedItems!private!querying! !
+iconSymbolFor:!displaying!public! !
+initialize!initializing!private! !
+isOneBrowsableItemSelected!public!querying! !
+isOneItemSelected!private!querying! !
+listItems!accessing!public! !
+listItems:!accessing!private! !
+nameSortBlock!private!running! !
+removeListItems:!actions!private! !
+removeSelectedInList!actions!public! !
+reset!actions!public! !
+resultStateColorSymbol!displaying!public! !
+selectedItem!accessing!public! !
+selectedItems!accessing!public! !
+selectedItems:!accessing!private! !
+selectItems:!actions!public! !
+showBackgroundColors!configuring!public! !
+showBackgroundColors:!configuring!public! !
+showIcons!configuring!public! !
+showIcons:!configuring!public! !
+showToolbar!configuring!public! !
+showToolbar:!configuring!public! !
+signalResetList!private!signalling! !
+signalSelectedItems:!private!signalling! !
+signalToggledShowBackgroundColors!private!signalling! !
+signalToggledShowIcons!private!signalling! !
+signalToggledShowToolbar!private!signalling! !
+signalToggledUseDisplayNames!private!signalling! !
+state!accessing!public! !
+state:!accessing!private! !
+stateClass!accessing!private! !
+toggleShowBackgroundColors!configuring!public! !
+toggleShowIcons!configuring!public! !
+toggleShowToolbar!configuring!public! !
+toggleUseDisplayNames!configuring!public! !
+useDisplayNames!configuring!public! !
+useDisplayNames:!configuring!public! !
+!
 
 !SUnitAbsModel class methodsFor!
 
@@ -391,21 +393,23 @@ useDisplayNames
 useDisplayNames: aBoolean
 
 	self defaultConfiguration useDisplayNames: aBoolean! !
-!SUnitAbsModel class categoriesFor: #basicDefaultConfiguration!configuring!public! !
-!SUnitAbsModel class categoriesFor: #configurationClass!constants!public! !
-!SUnitAbsModel class categoriesFor: #defaultConfiguration!configuring!public! !
-!SUnitAbsModel class categoriesFor: #defaultConfiguration:!configuring!public! !
-!SUnitAbsModel class categoriesFor: #initializeDefaultConfiguration!initializing!public! !
-!SUnitAbsModel class categoriesFor: #new!instantiating!public! !
-!SUnitAbsModel class categoriesFor: #newForUI:!instantiating!public! !
-!SUnitAbsModel class categoriesFor: #newForUI:builder:!instantiating!public! !
-!SUnitAbsModel class categoriesFor: #releaseDefaultConfiguration!initializing!public! !
-!SUnitAbsModel class categoriesFor: #showBackgroundColors!configuring!public! !
-!SUnitAbsModel class categoriesFor: #showBackgroundColors:!configuring!public! !
-!SUnitAbsModel class categoriesFor: #showIcons!configuring!public! !
-!SUnitAbsModel class categoriesFor: #showIcons:!configuring!public! !
-!SUnitAbsModel class categoriesFor: #showToolbar!configuring!public! !
-!SUnitAbsModel class categoriesFor: #showToolbar:!configuring!public! !
-!SUnitAbsModel class categoriesFor: #useDisplayNames!configuring!public! !
-!SUnitAbsModel class categoriesFor: #useDisplayNames:!configuring!public! !
+!SUnitAbsModel class categoriesForMethods!
+basicDefaultConfiguration!configuring!public! !
+configurationClass!constants!public! !
+defaultConfiguration!configuring!public! !
+defaultConfiguration:!configuring!public! !
+initializeDefaultConfiguration!initializing!public! !
+new!instantiating!public! !
+newForUI:!instantiating!public! !
+newForUI:builder:!instantiating!public! !
+releaseDefaultConfiguration!initializing!public! !
+showBackgroundColors!configuring!public! !
+showBackgroundColors:!configuring!public! !
+showIcons!configuring!public! !
+showIcons:!configuring!public! !
+showToolbar!configuring!public! !
+showToolbar:!configuring!public! !
+useDisplayNames!configuring!public! !
+useDisplayNames:!configuring!public! !
+!
 

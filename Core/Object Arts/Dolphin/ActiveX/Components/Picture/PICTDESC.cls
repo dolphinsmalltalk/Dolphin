@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #PICTDESC
 	instanceVariableNames: ''
@@ -59,15 +59,17 @@ picType: anInteger
 	"Set the receiver's 'picType' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_picType put: anInteger! !
-!PICTDESC categoriesFor: #dw1!**compiled accessors**!public! !
-!PICTDESC categoriesFor: #dw1:!**compiled accessors**!public! !
-!PICTDESC categoriesFor: #dw2!**compiled accessors**!public! !
-!PICTDESC categoriesFor: #dw2:!**compiled accessors**!public! !
-!PICTDESC categoriesFor: #dwSize:!**compiled accessors**!public! !
-!PICTDESC categoriesFor: #handle!**compiled accessors**!public! !
-!PICTDESC categoriesFor: #handle:!**compiled accessors**!public! !
-!PICTDESC categoriesFor: #picType!**compiled accessors**!public! !
-!PICTDESC categoriesFor: #picType:!**compiled accessors**!public! !
+!PICTDESC categoriesForMethods!
+dw1!**compiled accessors**!public! !
+dw1:!**compiled accessors**!public! !
+dw2!**compiled accessors**!public! !
+dw2:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+handle!**compiled accessors**!public! !
+handle:!**compiled accessors**!public! !
+picType!**compiled accessors**!public! !
+picType:!**compiled accessors**!public! !
+!
 
 !PICTDESC class methodsFor!
 
@@ -133,7 +135,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^OLEPicture icon! !
-!PICTDESC class categoriesFor: #defineFields!public!template definition! !
-!PICTDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!PICTDESC class categoriesFor: #icon!constants!public! !
+!PICTDESC class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+icon!constants!public! !
+!
 

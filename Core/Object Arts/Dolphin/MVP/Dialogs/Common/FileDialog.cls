@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CommonDialog subclass: #FileDialog
 	instanceVariableNames: 'style fileTypes validationBlock'
@@ -334,42 +334,44 @@ wmNotify: msgInteger wParam: wParamInteger lParam: lParamInteger
 		yourself) lookup: ##(CDN_FIRST + 1) - (ptr sdwordAtOffset: 8))
 		ifNil: [0]
 		ifNotNil: [:action | self perform: action with: ptr]! !
-!FileDialog categoriesFor: #allFilesType!constants!private! !
-!FileDialog categoriesFor: #averageFilenameLength!constants!private! !
-!FileDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!FileDialog categoriesFor: #caption:!accessing!public! !
-!FileDialog categoriesFor: #cdnFileOk:!event handling-win32!private! !
-!FileDialog categoriesFor: #cdnFolderChange:!event handling-win32!private! !
-!FileDialog categoriesFor: #cdnHelp:!event handling-win32!private! !
-!FileDialog categoriesFor: #cdnIncludeItem:!event handling-win32!private! !
-!FileDialog categoriesFor: #cdnInitDone:!event handling-win32!private! !
-!FileDialog categoriesFor: #cdnSelChange:!event handling-win32!private! !
-!FileDialog categoriesFor: #cdnShareViolation:!event handling-win32!private! !
-!FileDialog categoriesFor: #cdnTypeChange:!event handling-win32!private! !
-!FileDialog categoriesFor: #commonDialogSelector!constants!private! !
-!FileDialog categoriesFor: #defaultExtension!accessing!public! !
-!FileDialog categoriesFor: #defaultExtension:!accessing!public! !
-!FileDialog categoriesFor: #defaultStyle!constants!public! !
-!FileDialog categoriesFor: #extractPathNames:!helpers!private! !
-!FileDialog categoriesFor: #extractResult:!helpers!private! !
-!FileDialog categoriesFor: #fileTypes!accessing!public! !
-!FileDialog categoriesFor: #fileTypes:!accessing!public! !
-!FileDialog categoriesFor: #fileTypesStringFromSpecs:!helpers!private! !
-!FileDialog categoriesFor: #filterIndex!accessing!public! !
-!FileDialog categoriesFor: #filterIndex:!accessing!public! !
-!FileDialog categoriesFor: #getFilePath!operations!private! !
-!FileDialog categoriesFor: #getFileSpec!operations!private! !
-!FileDialog categoriesFor: #initialDirectory:!accessing!public! !
-!FileDialog categoriesFor: #initialize!initializing!private! !
-!FileDialog categoriesFor: #maxFileCount!accessing!public! !
-!FileDialog categoriesFor: #prepareStruct!helpers!private! !
-!FileDialog categoriesFor: #style!accessing!public! !
-!FileDialog categoriesFor: #style:!accessing!public! !
-!FileDialog categoriesFor: #validationBlock!accessing!public! !
-!FileDialog categoriesFor: #validationBlock:!initializing!public! !
-!FileDialog categoriesFor: #winStructClass!accessing!private! !
-!FileDialog categoriesFor: #wmInitDialog:wParam:lParam:!event handling-win32!private! !
-!FileDialog categoriesFor: #wmNotify:wParam:lParam:!private! !
+!FileDialog categoriesForMethods!
+allFilesType!constants!private! !
+averageFilenameLength!constants!private! !
+basicShowModal!private!realizing/unrealizing! !
+caption:!accessing!public! !
+cdnFileOk:!event handling-win32!private! !
+cdnFolderChange:!event handling-win32!private! !
+cdnHelp:!event handling-win32!private! !
+cdnIncludeItem:!event handling-win32!private! !
+cdnInitDone:!event handling-win32!private! !
+cdnSelChange:!event handling-win32!private! !
+cdnShareViolation:!event handling-win32!private! !
+cdnTypeChange:!event handling-win32!private! !
+commonDialogSelector!constants!private! !
+defaultExtension!accessing!public! !
+defaultExtension:!accessing!public! !
+defaultStyle!constants!public! !
+extractPathNames:!helpers!private! !
+extractResult:!helpers!private! !
+fileTypes!accessing!public! !
+fileTypes:!accessing!public! !
+fileTypesStringFromSpecs:!helpers!private! !
+filterIndex!accessing!public! !
+filterIndex:!accessing!public! !
+getFilePath!operations!private! !
+getFileSpec!operations!private! !
+initialDirectory:!accessing!public! !
+initialize!initializing!private! !
+maxFileCount!accessing!public! !
+prepareStruct!helpers!private! !
+style!accessing!public! !
+style:!accessing!public! !
+validationBlock!accessing!public! !
+validationBlock:!initializing!public! !
+winStructClass!accessing!private! !
+wmInitDialog:wParam:lParam:!event handling-win32!private! !
+wmNotify:wParam:lParam:!private! !
+!
 
 !FileDialog class methodsFor!
 
@@ -394,9 +396,11 @@ initializeDefaultHooks
 
 textFilesType
 	^#('Text Files (*.txt)' '*.txt')! !
-!FileDialog class categoriesFor: #allFilesType!constants!private! !
-!FileDialog class categoriesFor: #defaultModel!models!public! !
-!FileDialog class categoriesFor: #icon!constants!public! !
-!FileDialog class categoriesFor: #initializeDefaultHooks!initializing!must not strip!private! !
-!FileDialog class categoriesFor: #textFilesType!public! !
+!FileDialog class categoriesForMethods!
+allFilesType!constants!private! !
+defaultModel!models!public! !
+icon!constants!public! !
+initializeDefaultHooks!initializing!must not strip!private! !
+textFilesType!public! !
+!
 

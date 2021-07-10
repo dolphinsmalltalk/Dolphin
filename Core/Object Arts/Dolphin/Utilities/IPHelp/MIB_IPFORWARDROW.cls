@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #MIB_IPFORWARDROW
 	instanceVariableNames: ''
@@ -118,20 +118,22 @@ dwForwardType
 	"Answer the <Integer> value of the receiver's 'dwForwardType' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwForwardType! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardAge!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardDest!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardIfIndex!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardMask!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardMetric1!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardMetric2!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardMetric3!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardMetric4!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardMetric5!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardNextHop!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardNextHopAS!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardPolicy!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardProto!**compiled accessors**!public! !
-!MIB_IPFORWARDROW categoriesFor: #dwForwardType!**compiled accessors**!public! !
+!MIB_IPFORWARDROW categoriesForMethods!
+dwForwardAge!**compiled accessors**!public! !
+dwForwardDest!**compiled accessors**!public! !
+dwForwardIfIndex!**compiled accessors**!public! !
+dwForwardMask!**compiled accessors**!public! !
+dwForwardMetric1!**compiled accessors**!public! !
+dwForwardMetric2!**compiled accessors**!public! !
+dwForwardMetric3!**compiled accessors**!public! !
+dwForwardMetric4!**compiled accessors**!public! !
+dwForwardMetric5!**compiled accessors**!public! !
+dwForwardNextHop!**compiled accessors**!public! !
+dwForwardNextHopAS!**compiled accessors**!public! !
+dwForwardPolicy!**compiled accessors**!public! !
+dwForwardProto!**compiled accessors**!public! !
+dwForwardType!**compiled accessors**!public! !
+!
 
 !MIB_IPFORWARDROW class methodsFor!
 
@@ -205,6 +207,8 @@ defineFields
 
 getFieldNames
 	^#(#dwForwardDest #dwForwardMask #dwForwardPolicy #dwForwardNextHop #dwForwardIfIndex #dwForwardType #dwForwardProto #dwForwardAge #dwForwardNextHopAS #dwForwardMetric1 #dwForwardMetric2 #dwForwardMetric3 #dwForwardMetric4 #dwForwardMetric5)! !
-!MIB_IPFORWARDROW class categoriesFor: #defineFields!initializing!public! !
-!MIB_IPFORWARDROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MIB_IPFORWARDROW class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

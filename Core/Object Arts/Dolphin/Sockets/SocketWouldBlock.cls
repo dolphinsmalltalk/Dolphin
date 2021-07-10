@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SocketError subclass: #SocketWouldBlock
 	instanceVariableNames: ''
@@ -18,7 +18,9 @@ initialize
 
 uninitialize
 	ErrorClasses removeKey: self errorCode ifAbsent: []! !
-!SocketWouldBlock class categoriesFor: #errorCode!constants!private! !
-!SocketWouldBlock class categoriesFor: #initialize!initializing!public! !
-!SocketWouldBlock class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!SocketWouldBlock class categoriesForMethods!
+errorCode!constants!private! !
+initialize!initializing!public! !
+uninitialize!class hierarchy-removing!public! !
+!
 

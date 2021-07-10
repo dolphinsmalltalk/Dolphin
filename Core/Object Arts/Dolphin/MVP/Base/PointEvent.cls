@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 WindowsEvent subclass: #PointEvent
 	instanceVariableNames: ''
@@ -35,9 +35,11 @@ y
 	"Answer the y-position of the pointer."
 
 	^self lParamY! !
-!PointEvent categoriesFor: #position!accessing!public! !
-!PointEvent categoriesFor: #printLParamOn:!printing!private! !
-!PointEvent categoriesFor: #screenPosition!accessing!public! !
-!PointEvent categoriesFor: #x!accessing!public! !
-!PointEvent categoriesFor: #y!accessing!public! !
+!PointEvent categoriesForMethods!
+position!accessing!public! !
+printLParamOn:!printing!private! !
+screenPosition!accessing!public! !
+x!accessing!public! !
+y!accessing!public! !
+!
 

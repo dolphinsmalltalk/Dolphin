@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #PushUpMethodTest
 	instanceVariableNames: ''
@@ -111,11 +111,13 @@ testPushUpWithSuperSendThatCannotBeCopiedDown
 				model: model
 				pushUp: #(#foo)
 				from: class)! !
-!PushUpMethodTest categoriesFor: #testPushUpAndCopyDown!public!tests! !
-!PushUpMethodTest categoriesFor: #testPushUpClassMethod!failure tests!public! !
-!PushUpMethodTest categoriesFor: #testPushUpMethodWithCopyOverriddenMethodsDown!public!tests! !
-!PushUpMethodTest categoriesFor: #testPushUpReferencesInstVar!failure tests!public! !
-!PushUpMethodTest categoriesFor: #testPushUpWithInvalidSuperSend!failure tests!public! !
-!PushUpMethodTest categoriesFor: #testPushUpWithMethodThatCannotBePushedDown!failure tests!public! !
-!PushUpMethodTest categoriesFor: #testPushUpWithSuperSendThatCannotBeCopiedDown!failure tests!public! !
+!PushUpMethodTest categoriesForMethods!
+testPushUpAndCopyDown!public!tests! !
+testPushUpClassMethod!failure tests!public! !
+testPushUpMethodWithCopyOverriddenMethodsDown!public!tests! !
+testPushUpReferencesInstVar!failure tests!public! !
+testPushUpWithInvalidSuperSend!failure tests!public! !
+testPushUpWithMethodThatCannotBePushedDown!failure tests!public! !
+testPushUpWithSuperSendThatCannotBeCopiedDown!failure tests!public! !
+!
 

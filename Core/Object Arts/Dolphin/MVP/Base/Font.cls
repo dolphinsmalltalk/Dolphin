@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GraphicsTool subclass: #Font
 	instanceVariableNames: 'logfont resolution'
@@ -242,43 +242,45 @@ weight: anInteger
 	logfont lfWeight: anInteger.
 	"Cause the receiver to be re-realized"
 	self free! !
-!Font categoriesFor: #=!comparing!public! !
-!Font categoriesFor: #beBold!accessing!public! !
-!Font categoriesFor: #beItalic!accessing!public! !
-!Font categoriesFor: #beUnderlined!accessing!public! !
-!Font categoriesFor: #characterSet!accessing!public! !
-!Font categoriesFor: #characterSet:!accessing!public! !
-!Font categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Font categoriesFor: #desktopResolution!initializing!private! !
-!Font categoriesFor: #displayOn:!displaying!public! !
-!Font categoriesFor: #handle:!accessing!public! !
-!Font categoriesFor: #hash!comparing!public! !
-!Font categoriesFor: #initialize!initializing!public! !
-!Font categoriesFor: #isBold!public!testing! !
-!Font categoriesFor: #isBold:!modes!public! !
-!Font categoriesFor: #isDefault!public!testing! !
-!Font categoriesFor: #isItalic!public!testing! !
-!Font categoriesFor: #isItalic:!modes!public! !
-!Font categoriesFor: #isStruckThrough!public!testing! !
-!Font categoriesFor: #isStruckThrough:!accessing!public! !
-!Font categoriesFor: #isUnderlined!public!testing! !
-!Font categoriesFor: #isUnderlined:!modes!public! !
-!Font categoriesFor: #logFont!accessing!public! !
-!Font categoriesFor: #logFont:!accessing!public! !
-!Font categoriesFor: #name!accessing!public! !
-!Font categoriesFor: #name:!accessing!public! !
-!Font categoriesFor: #pixelFromPoints:!mapping!private! !
-!Font categoriesFor: #pixelSize!accessing!public! !
-!Font categoriesFor: #pixelSize:!accessing!public! !
-!Font categoriesFor: #pointFromPixels:!mapping!private! !
-!Font categoriesFor: #pointSize!accessing!public! !
-!Font categoriesFor: #pointSize:!accessing!public! !
-!Font categoriesFor: #postCopy!copying!public! !
-!Font categoriesFor: #printOn:!development!printing!public! !
-!Font categoriesFor: #resolution!accessing!public! !
-!Font categoriesFor: #resolution:!accessing!public! !
-!Font categoriesFor: #weight!accessing!public! !
-!Font categoriesFor: #weight:!accessing!public! !
+!Font categoriesForMethods!
+=!comparing!public! !
+beBold!accessing!public! !
+beItalic!accessing!public! !
+beUnderlined!accessing!public! !
+characterSet!accessing!public! !
+characterSet:!accessing!public! !
+createHandle!private!realizing/unrealizing! !
+desktopResolution!initializing!private! !
+displayOn:!displaying!public! !
+handle:!accessing!public! !
+hash!comparing!public! !
+initialize!initializing!public! !
+isBold!public!testing! !
+isBold:!modes!public! !
+isDefault!public!testing! !
+isItalic!public!testing! !
+isItalic:!modes!public! !
+isStruckThrough!public!testing! !
+isStruckThrough:!accessing!public! !
+isUnderlined!public!testing! !
+isUnderlined:!modes!public! !
+logFont!accessing!public! !
+logFont:!accessing!public! !
+name!accessing!public! !
+name:!accessing!public! !
+pixelFromPoints:!mapping!private! !
+pixelSize!accessing!public! !
+pixelSize:!accessing!public! !
+pointFromPixels:!mapping!private! !
+pointSize!accessing!public! !
+pointSize:!accessing!public! !
+postCopy!copying!public! !
+printOn:!development!printing!public! !
+resolution!accessing!public! !
+resolution:!accessing!public! !
+weight!accessing!public! !
+weight:!accessing!public! !
+!
 
 !Font class methodsFor!
 
@@ -348,15 +350,17 @@ uninitialize
 	"Uninitialize the class variables of the receiver as it is about to be removed from the system."
 
 	System := nil! !
-!Font class categoriesFor: #default!instance creation!public! !
-!Font class categoriesFor: #defaultPointSize!constants!private! !
-!Font class categoriesFor: #fromLogFont:!instance creation!public! !
-!Font class categoriesFor: #icon!constants!public! !
-!Font class categoriesFor: #name:!instance creation!public! !
-!Font class categoriesFor: #name:pixelSize:!instance creation!public! !
-!Font class categoriesFor: #name:pointSize:!instance creation!public! !
-!Font class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Font class categoriesFor: #reset!instance creation!public! !
-!Font class categoriesFor: #system!instance creation!public! !
-!Font class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Font class categoriesForMethods!
+default!instance creation!public! !
+defaultPointSize!constants!private! !
+fromLogFont:!instance creation!public! !
+icon!constants!public! !
+name:!instance creation!public! !
+name:pixelSize:!instance creation!public! !
+name:pointSize:!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+reset!instance creation!public! !
+system!instance creation!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

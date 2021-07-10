@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalArrayTest subclass: #GenericExternalArrayTest
 	instanceVariableNames: ''
@@ -38,11 +38,13 @@ testInvalidLength
 	"#1051."
 
 	self should: [self arrayClass length: -1 elementClass: DWORD] raise: Error! !
-!GenericExternalArrayTest categoriesFor: #arrayValueString:!private!unit tests! !
-!GenericExternalArrayTest categoriesFor: #elementClassNames!constants!private! !
-!GenericExternalArrayTest categoriesFor: #elementFromValue:!private!unit tests! !
-!GenericExternalArrayTest categoriesFor: #elementToValue:!private!unit tests! !
-!GenericExternalArrayTest categoriesFor: #numericElementClass!constants!private! !
-!GenericExternalArrayTest categoriesFor: #testElementSize!public!unit tests! !
-!GenericExternalArrayTest categoriesFor: #testInvalidLength!public!unit tests! !
+!GenericExternalArrayTest categoriesForMethods!
+arrayValueString:!private!unit tests! !
+elementClassNames!constants!private! !
+elementFromValue:!private!unit tests! !
+elementToValue:!private!unit tests! !
+numericElementClass!constants!private! !
+testElementSize!public!unit tests! !
+testInvalidLength!public!unit tests! !
+!
 

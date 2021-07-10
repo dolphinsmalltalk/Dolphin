@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StableSortAlgorithmTest subclass: #InsertionSortAlgorithmTest
 	instanceVariableNames: ''
@@ -17,6 +17,8 @@ integerSortSize
 	"Insertion sort is very slow, so be a bit less ambitious"
 
 	^500! !
-!InsertionSortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!InsertionSortAlgorithmTest categoriesFor: #integerSortSize!constants!private! !
+!InsertionSortAlgorithmTest categoriesForMethods!
+algorithmToTest!private!unit tests! !
+integerSortSize!constants!private! !
+!
 

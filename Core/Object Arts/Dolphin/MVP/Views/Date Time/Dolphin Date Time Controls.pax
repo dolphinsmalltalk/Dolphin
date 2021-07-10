@@ -94,8 +94,10 @@ resource_Picker_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DateTimePicker) 34 16 nil nil 34 2 8 1140916230 1 416 721990 2 ##(Smalltalk.ValueHolder) nil nil 1376774 ##(Smalltalk.PluggableSearchPolicy) 459270 ##(Smalltalk.Message) #= 8 #() 546 #hash 8 #() 262406 ##(Smalltalk.Date) 70769 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1904605520 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 850 521 51 416 802 #text: 34 1 8 '17 November 1997' 416 802 #range: 34 1 8 #(nil nil) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 131 8 0 0 35 0 0 0] 8 #() 850 193 193 nil 27 )! !
-!DatePresenter class categoriesFor: #resource_Month_calendar_view!public!resources-views! !
-!DatePresenter class categoriesFor: #resource_Picker_view!public!resources-views! !
+!DatePresenter class categoriesForMethods!
+resource_Month_calendar_view!public!resources-views! !
+resource_Picker_view!public!resources-views! !
+!
 
 !TimePresenter class methodsFor!
 
@@ -108,7 +110,9 @@ resource_Picker_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DateTimePicker) 34 16 nil nil 34 2 8 1140916235 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1904605520 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 3 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 738 251 51 416 690 #text: 34 1 8 '21:29:40' 416 690 #range: 34 1 8 #(nil nil) 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 252 7 0 0 35 0 0 0] 8 #() 738 193 193 nil 27 )! !
-!TimePresenter class categoriesFor: #resource_Picker_view!public!resources-views! !
+!TimePresenter class categoriesForMethods!
+resource_Picker_view!public!resources-views! !
+!
 
 "End of package definition"!
 

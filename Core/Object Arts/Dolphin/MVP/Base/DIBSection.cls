@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Bitmap subclass: #DIBSection
 	instanceVariableNames: 'depth imageBits'
@@ -194,19 +194,21 @@ width: w height: h depth: d
 
 	extent := w@h.
 	depth := d! !
-!DIBSection categoriesFor: #baseLoadFlags!constants!public! !
-!DIBSection categoriesFor: #cacheInfo!helpers!private! !
-!DIBSection categoriesFor: #clearCached!initializing!private! !
-!DIBSection categoriesFor: #copyToGlobalHeap!accessing!private! !
-!DIBSection categoriesFor: #createHandle!private!realizing/unrealizing! !
-!DIBSection categoriesFor: #depth!accessing!public! !
-!DIBSection categoriesFor: #erase!drawing!private! !
-!DIBSection categoriesFor: #errorInappropriateColorTable:!exceptions!public! !
-!DIBSection categoriesFor: #getColorTable!accessing!public! !
-!DIBSection categoriesFor: #getDIBSECTION!accessing!public! !
-!DIBSection categoriesFor: #imageBits!accessing!public! !
-!DIBSection categoriesFor: #setColorTable:!accessing!public! !
-!DIBSection categoriesFor: #width:height:depth:!initializing!private! !
+!DIBSection categoriesForMethods!
+baseLoadFlags!constants!public! !
+cacheInfo!helpers!private! !
+clearCached!initializing!private! !
+copyToGlobalHeap!accessing!private! !
+createHandle!private!realizing/unrealizing! !
+depth!accessing!public! !
+erase!drawing!private! !
+errorInappropriateColorTable:!exceptions!public! !
+getColorTable!accessing!public! !
+getDIBSECTION!accessing!public! !
+imageBits!accessing!public! !
+setColorTable:!accessing!public! !
+width:height:depth:!initializing!private! !
+!
 
 !DIBSection class methodsFor!
 
@@ -260,7 +262,9 @@ width: width height: height depth: depth
 		height: height 
 		depth: depth
 		! !
-!DIBSection class categoriesFor: #fromGlobalHandle:!instance creation!public! !
-!DIBSection class categoriesFor: #width:height:!instance creation!public! !
-!DIBSection class categoriesFor: #width:height:depth:!instance creation!public! !
+!DIBSection class categoriesForMethods!
+fromGlobalHandle:!instance creation!public! !
+width:height:!instance creation!public! !
+width:height:depth:!instance creation!public! !
+!
 

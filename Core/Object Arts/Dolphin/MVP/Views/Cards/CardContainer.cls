@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractCardContainer subclass: #CardContainer
 	instanceVariableNames: 'tabs'
@@ -356,51 +356,53 @@ wmPrint: message wParam: wParam lParam: lParam
 		lParam: lParam.
 	canvas windowOrigin: prev.
 	^result! !
-!CardContainer categoriesFor: #arrangementOf:put:!accessing!public! !
-!CardContainer categoriesFor: #backcolor:!accessing!public! !
-!CardContainer categoriesFor: #createTabs!helpers!private! !
-!CardContainer categoriesFor: #defaultBackcolor!public! !
-!CardContainer categoriesFor: #defaultViewClass!constants!public! !
-!CardContainer categoriesFor: #ensureTabsAtBack!operations!private! !
-!CardContainer categoriesFor: #getImageBlock!adapters!public! !
-!CardContainer categoriesFor: #getImageBlock:!adapters!public! !
-!CardContainer categoriesFor: #getTextBlock!adapters!public! !
-!CardContainer categoriesFor: #getTextBlock:!adapters!public! !
-!CardContainer categoriesFor: #hasButtons!accessing-styles!public! !
-!CardContainer categoriesFor: #hasButtons:!accessing-styles!public! !
-!CardContainer categoriesFor: #hasHotTracking!accessing-styles!public! !
-!CardContainer categoriesFor: #hasHotTracking:!accessing-styles!public! !
-!CardContainer categoriesFor: #hasOwnTabs!public!testing! !
-!CardContainer categoriesFor: #implicitInsets:!accessing!private! !
-!CardContainer categoriesFor: #isDropTarget:!accessing!public! !
-!CardContainer categoriesFor: #isInverted!accessing-styles!public! !
-!CardContainer categoriesFor: #isInverted:!accessing-styles!public! !
-!CardContainer categoriesFor: #isMultiline!accessing!public! !
-!CardContainer categoriesFor: #isMultiline:!accessing!public! !
-!CardContainer categoriesFor: #isTabStop!accessing!public! !
-!CardContainer categoriesFor: #isTabStop:!accessing-styles!public! !
-!CardContainer categoriesFor: #isVertical!accessing-styles!public! !
-!CardContainer categoriesFor: #isVertical:!accessing-styles!public! !
-!CardContainer categoriesFor: #layout:!geometry!public! !
-!CardContainer categoriesFor: #newTabs!helpers!private! !
-!CardContainer categoriesFor: #onCurrentCardChanged!event handling!private! !
-!CardContainer categoriesFor: #onEraseRequired:!event handling!public! !
-!CardContainer categoriesFor: #onSubViewAdded:!event handling!private! !
-!CardContainer categoriesFor: #onTabChanged!event handling!private! !
-!CardContainer categoriesFor: #onTabChanging:!event handling!private! !
-!CardContainer categoriesFor: #onViewCreated!event handling!private! !
-!CardContainer categoriesFor: #onZOrderChanged!event handling!private! !
-!CardContainer categoriesFor: #preTranslateKeyboardInput:!public! !
-!CardContainer categoriesFor: #queryCommand:!commands!public! !
-!CardContainer categoriesFor: #refreshTabs!public!updating! !
-!CardContainer categoriesFor: #removeSubView:!public! !
-!CardContainer categoriesFor: #tabOrientation!accessing-styles!public! !
-!CardContainer categoriesFor: #tabOrientation:!accessing-styles!public! !
-!CardContainer categoriesFor: #tabs!accessing!private! !
-!CardContainer categoriesFor: #updateTabs!public!updating! !
-!CardContainer categoriesFor: #viewMode!accessing!public! !
-!CardContainer categoriesFor: #viewMode:!accessing!public! !
-!CardContainer categoriesFor: #wmPrint:wParam:lParam:!private! !
+!CardContainer categoriesForMethods!
+arrangementOf:put:!accessing!public! !
+backcolor:!accessing!public! !
+createTabs!helpers!private! !
+defaultBackcolor!public! !
+defaultViewClass!constants!public! !
+ensureTabsAtBack!operations!private! !
+getImageBlock!adapters!public! !
+getImageBlock:!adapters!public! !
+getTextBlock!adapters!public! !
+getTextBlock:!adapters!public! !
+hasButtons!accessing-styles!public! !
+hasButtons:!accessing-styles!public! !
+hasHotTracking!accessing-styles!public! !
+hasHotTracking:!accessing-styles!public! !
+hasOwnTabs!public!testing! !
+implicitInsets:!accessing!private! !
+isDropTarget:!accessing!public! !
+isInverted!accessing-styles!public! !
+isInverted:!accessing-styles!public! !
+isMultiline!accessing!public! !
+isMultiline:!accessing!public! !
+isTabStop!accessing!public! !
+isTabStop:!accessing-styles!public! !
+isVertical!accessing-styles!public! !
+isVertical:!accessing-styles!public! !
+layout:!geometry!public! !
+newTabs!helpers!private! !
+onCurrentCardChanged!event handling!private! !
+onEraseRequired:!event handling!public! !
+onSubViewAdded:!event handling!private! !
+onTabChanged!event handling!private! !
+onTabChanging:!event handling!private! !
+onViewCreated!event handling!private! !
+onZOrderChanged!event handling!private! !
+preTranslateKeyboardInput:!public! !
+queryCommand:!commands!public! !
+refreshTabs!public!updating! !
+removeSubView:!public! !
+tabOrientation!accessing-styles!public! !
+tabOrientation:!accessing-styles!public! !
+tabs!accessing!private! !
+updateTabs!public!updating! !
+viewMode!accessing!public! !
+viewMode:!accessing!public! !
+wmPrint:wParam:lParam:!private! !
+!
 
 !CardContainer class methodsFor!
 
@@ -413,5 +415,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.CardContainer) 34 16 nil nil 34 2 8 1409286144 131073 416 nil 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 656710 1 ##(Smalltalk.CardLayout) 138 144 8 #() nil nil nil nil 170 192 560 nil 410 ##(Smalltalk.TabViewXP) 34 28 nil 416 34 2 8 1140916736 1 592 590662 2 ##(Smalltalk.ListModel) 138 144 560 nil 1310726 ##(Smalltalk.IdentitySearchPolicy) nil nil 1 nil nil nil 592 nil 8 1921705120 787814 3 ##(Smalltalk.BlockClosure) 0 nil 918822 ##(Smalltalk.CompiledMethod) 2 3 ##(Smalltalk.ListControlView) #defaultGetTextBlock 575230339 8 #[30 105 226 0 106] #displayString 768 7 257 nil 754 0 nil 786 2 3 ##(Smalltalk.IconicListAbstract) #defaultGetImageBlock 579598755 8 #[30 105 226 0 106] #iconImageIndex 832 7 257 nil 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil #noIcons nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 1026 701 501 592 978 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 592 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 1026 193 193 nil 27 914 138 144 34 1 978 #createAt:extent: 34 2 1026 3839 21 1026 701 501 416 1106 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 4 1 0 0] 34 1 592 1168 nil 27 )! !
-!CardContainer class categoriesFor: #resource_Default_view!public!resources-views! !
+!CardContainer class categoriesForMethods!
+resource_Default_view!public!resources-views! !
+!
 

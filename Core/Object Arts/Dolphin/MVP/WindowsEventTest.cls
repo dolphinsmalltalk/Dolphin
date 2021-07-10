@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #WindowsEventTest
 	instanceVariableNames: ''
@@ -37,7 +37,9 @@ testPrintString
 	instance := self newEvent: 999.
 	self assert: instance printString
 		equals: ('a WindowsEvent(<1p> 16r3E7 3 4)' expandMacrosWith: instance window)! !
-!WindowsEventTest categoriesFor: #newEvent:!private!unit tests! !
-!WindowsEventTest categoriesFor: #testInstanceCreation!public!unit tests! !
-!WindowsEventTest categoriesFor: #testPrintString!public!unit tests! !
+!WindowsEventTest categoriesForMethods!
+newEvent:!private!unit tests! !
+testInstanceCreation!public!unit tests! !
+testPrintString!public!unit tests! !
+!
 

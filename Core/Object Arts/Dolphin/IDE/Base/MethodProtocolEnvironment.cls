@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BrowserEnvironmentWrapper subclass: #MethodProtocolEnvironment
 	instanceVariableNames: 'protocols'
@@ -51,11 +51,13 @@ storeOn: aStream
 		space.
 	(protocols asArray collect: [:each | each name]) storeOn: aStream.
 	aStream nextPut: $)! !
-!MethodProtocolEnvironment categoriesFor: #defaultLabel!constants!private! !
-!MethodProtocolEnvironment categoriesFor: #includesClass:!public!testing! !
-!MethodProtocolEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!MethodProtocolEnvironment categoriesFor: #protocols:!accessing!private! !
-!MethodProtocolEnvironment categoriesFor: #storeOn:!printing!public! !
+!MethodProtocolEnvironment categoriesForMethods!
+defaultLabel!constants!private! !
+includesClass:!public!testing! !
+includesSelector:in:!public!testing! !
+protocols:!accessing!private! !
+storeOn:!printing!public! !
+!
 
 !MethodProtocolEnvironment class methodsFor!
 
@@ -63,5 +65,7 @@ onEnvironment: anEnvironment protocols: aCollection
 	^(self onEnvironment: anEnvironment)
 		protocols: aCollection;
 		yourself! !
-!MethodProtocolEnvironment class categoriesFor: #onEnvironment:protocols:!instance creation!public! !
+!MethodProtocolEnvironment class categoriesForMethods!
+onEnvironment:protocols:!instance creation!public! !
+!
 

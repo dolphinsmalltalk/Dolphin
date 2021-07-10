@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #DBError
 	instanceVariableNames: ''
@@ -20,6 +20,8 @@ signal
 
 	self tag buildErrorInfo.
 	super signal! !
-!DBError categoriesFor: #_descriptionFormat!displaying!public! !
-!DBError categoriesFor: #signal!public!signalling! !
+!DBError categoriesForMethods!
+_descriptionFormat!displaying!public! !
+signal!public!signalling! !
+!
 

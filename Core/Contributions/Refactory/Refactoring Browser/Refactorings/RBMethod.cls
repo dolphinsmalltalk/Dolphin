@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #RBMethod
 	instanceVariableNames: 'class compiledMethod source selector'
@@ -90,20 +90,22 @@ source
 
 source: aString 
 	source := aString! !
-!RBMethod categoriesFor: #literal:containsReferenceTo:!private! !
-!RBMethod categoriesFor: #method!accessing!public! !
-!RBMethod categoriesFor: #method:!accessing!public! !
-!RBMethod categoriesFor: #modelClass!accessing!public! !
-!RBMethod categoriesFor: #modelClass:!accessing!public! !
-!RBMethod categoriesFor: #parseTree!accessing!public! !
-!RBMethod categoriesFor: #printOn:!printing!public! !
-!RBMethod categoriesFor: #refersToClassNamed:!public!testing! !
-!RBMethod categoriesFor: #refersToSymbol:!public!testing! !
-!RBMethod categoriesFor: #refersToVariable:!public!testing! !
-!RBMethod categoriesFor: #selector!accessing!public! !
-!RBMethod categoriesFor: #selector:!accessing!public! !
-!RBMethod categoriesFor: #source!accessing!public! !
-!RBMethod categoriesFor: #source:!accessing!public! !
+!RBMethod categoriesForMethods!
+literal:containsReferenceTo:!private! !
+method!accessing!public! !
+method:!accessing!public! !
+modelClass!accessing!public! !
+modelClass:!accessing!public! !
+parseTree!accessing!public! !
+printOn:!printing!public! !
+refersToClassNamed:!public!testing! !
+refersToSymbol:!public!testing! !
+refersToVariable:!public!testing! !
+selector!accessing!public! !
+selector:!accessing!public! !
+source!accessing!public! !
+source:!accessing!public! !
+!
 
 !RBMethod class methodsFor!
 
@@ -120,6 +122,8 @@ for: aRBClass source: aString selector: aSelector
 		selector: aSelector;
 		source: aString;
 		yourself! !
-!RBMethod class categoriesFor: #for:fromMethod:andSelector:!instance creation!public! !
-!RBMethod class categoriesFor: #for:source:selector:!instance creation!public! !
+!RBMethod class categoriesForMethods!
+for:fromMethod:andSelector:!instance creation!public! !
+for:source:selector:!instance creation!public! !
+!
 

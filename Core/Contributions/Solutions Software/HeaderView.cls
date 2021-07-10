@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ControlView subclass: #HeaderView
 	instanceVariableNames: 'columnHeaders'
@@ -153,25 +153,27 @@ nmNotify: pNMHDR
 rectangleForColumnIndex: anInteger
 
 	^(self hdmGetItemRect: anInteger - 1) asRectangle! !
-!HeaderView categoriesFor: #columnHeader:!accessing!public! !
-!HeaderView categoriesFor: #columnHeaderFrom:!helpers!private! !
-!HeaderView categoriesFor: #hdmGetItem:index:!helpers!private! !
-!HeaderView categoriesFor: #hdmGetItemRect:!helpers!private! !
-!HeaderView categoriesFor: #hdmSetItem:index:!helpers!private! !
-!HeaderView categoriesFor: #hdnBeginDrag:!event handling-win32!private! !
-!HeaderView categoriesFor: #hdnBeginTrack:!event handling-win32!private! !
-!HeaderView categoriesFor: #hdnDividerDblClick:!event handling-win32!private! !
-!HeaderView categoriesFor: #hdnDropDown:!event handling-win32!private! !
-!HeaderView categoriesFor: #hdnEndDrag:!event handling-win32!private! !
-!HeaderView categoriesFor: #hdnEndTrack:!event handling-win32!private! !
-!HeaderView categoriesFor: #hdnItemClick:!event handling-win32!private! !
-!HeaderView categoriesFor: #hdnItemDblClick:!event handling-win32!private! !
-!HeaderView categoriesFor: #hdnItemStateIconClick:!event handling-win32!private! !
-!HeaderView categoriesFor: #initialize!initializing!private! !
-!HeaderView categoriesFor: #isCheckBoxesStyle!public!style! !
-!HeaderView categoriesFor: #isCheckBoxesStyle:!public!style! !
-!HeaderView categoriesFor: #nmNotify:!event handling-win32!private! !
-!HeaderView categoriesFor: #rectangleForColumnIndex:!geometry!private! !
+!HeaderView categoriesForMethods!
+columnHeader:!accessing!public! !
+columnHeaderFrom:!helpers!private! !
+hdmGetItem:index:!helpers!private! !
+hdmGetItemRect:!helpers!private! !
+hdmSetItem:index:!helpers!private! !
+hdnBeginDrag:!event handling-win32!private! !
+hdnBeginTrack:!event handling-win32!private! !
+hdnDividerDblClick:!event handling-win32!private! !
+hdnDropDown:!event handling-win32!private! !
+hdnEndDrag:!event handling-win32!private! !
+hdnEndTrack:!event handling-win32!private! !
+hdnItemClick:!event handling-win32!private! !
+hdnItemDblClick:!event handling-win32!private! !
+hdnItemStateIconClick:!event handling-win32!private! !
+initialize!initializing!private! !
+isCheckBoxesStyle!public!style! !
+isCheckBoxesStyle:!public!style! !
+nmNotify:!event handling-win32!private! !
+rectangleForColumnIndex:!geometry!private! !
+!
 
 !HeaderView class methodsFor!
 
@@ -198,7 +200,9 @@ initializeNotificationMap
 
 winClassName
 	^'BUTTON'! !
-!HeaderView class categoriesFor: #initialize!initializing!must not strip!private! !
-!HeaderView class categoriesFor: #initializeNotificationMap!initializing!must not strip!private! !
-!HeaderView class categoriesFor: #winClassName!constants!public! !
+!HeaderView class categoriesForMethods!
+initialize!initializing!must not strip!private! !
+initializeNotificationMap!initializing!must not strip!private! !
+winClassName!constants!public! !
+!
 

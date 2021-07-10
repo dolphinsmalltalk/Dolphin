@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #RefactoringManager
 	instanceVariableNames: 'refactorings'
@@ -28,9 +28,11 @@ printOn: aStream
 				nextPutAll: '		';
 				nextPutAll: name;
 				cr]! !
-!RefactoringManager categoriesFor: #addRefactoring:!public!public access! !
-!RefactoringManager categoriesFor: #initialize!initialize/release!public! !
-!RefactoringManager categoriesFor: #printOn:!printing!public! !
+!RefactoringManager categoriesForMethods!
+addRefactoring:!public!public access! !
+initialize!initialize/release!public! !
+printOn:!printing!public! !
+!
 
 !RefactoringManager class methodsFor!
 
@@ -57,10 +59,12 @@ preUnloadActionFor: aParcel
 
 uninitialize
 	self nuke! !
-!RefactoringManager class categoriesFor: #instance!instance creation!public! !
-!RefactoringManager class categoriesFor: #new!instance creation!public! !
-!RefactoringManager class categoriesFor: #nuke!public!public access! !
-!RefactoringManager class categoriesFor: #onPreStripImage!class hierarchy-removing!public! !
-!RefactoringManager class categoriesFor: #preUnloadActionFor:!parcel load/unload/save!public! !
-!RefactoringManager class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!RefactoringManager class categoriesForMethods!
+instance!instance creation!public! !
+new!instance creation!public! !
+nuke!public!public access! !
+onPreStripImage!class hierarchy-removing!public! !
+preUnloadActionFor:!parcel load/unload/save!public! !
+uninitialize!class hierarchy-removing!public! !
+!
 

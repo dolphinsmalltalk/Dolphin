@@ -74,7 +74,9 @@ fromOleFont: pFont
 		lfPitchAndFamily:
 "		faceName: pFont name;
 		yourself! !
-!AbstractLOGFONT class categoriesFor: #fromOleFont:!instance creation!public! !
+!AbstractLOGFONT class categoriesForMethods!
+fromOleFont:!instance creation!public! !
+!
 
 !Font class methodsFor!
 
@@ -83,7 +85,9 @@ fromOleFont: pFont
 	<IFont>|<IFontDisp> argument, anIFont, is an interface."
 
 	^self fromLogFont: (LOGFONTW fromOleFont: pFont)! !
-!Font class categoriesFor: #fromOleFont:!instance creation!public! !
+!Font class categoriesForMethods!
+fromOleFont:!instance creation!public! !
+!
 
 "End of package definition"!
 

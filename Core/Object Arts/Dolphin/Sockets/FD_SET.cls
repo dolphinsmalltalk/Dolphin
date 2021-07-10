@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #FD_SET
 	instanceVariableNames: ''
@@ -34,9 +34,11 @@ fd_count: anInteger
 	"Set the receiver's 'fd_count' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_fd_count put: anInteger! !
-!FD_SET categoriesFor: #fd_array!**compiled accessors**!public! !
-!FD_SET categoriesFor: #fd_count!**compiled accessors**!public! !
-!FD_SET categoriesFor: #fd_count:!**compiled accessors**!public! !
+!FD_SET categoriesForMethods!
+fd_array!**compiled accessors**!public! !
+fd_count!**compiled accessors**!public! !
+fd_count:!**compiled accessors**!public! !
+!
 
 !FD_SET class methodsFor!
 
@@ -56,6 +58,8 @@ defineFields
 
 getFieldNames
 	^#(#fd_count #fd_array)! !
-!FD_SET class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!FD_SET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!FD_SET class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

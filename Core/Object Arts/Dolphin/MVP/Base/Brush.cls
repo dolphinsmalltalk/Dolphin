@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GraphicsTool subclass: #Brush
 	instanceVariableNames: 'logBrush'
@@ -55,10 +55,12 @@ printOn: aPuttableStream
 				print: self logBrush;
 				nextPut: $)]
 ! !
-!Brush categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Brush categoriesFor: #logBrush!accessing!private! !
-!Brush categoriesFor: #logBrush:!accessing!private! !
-!Brush categoriesFor: #printOn:!printing!public! !
+!Brush categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+logBrush!accessing!private! !
+logBrush:!accessing!private! !
+printOn:!printing!public! !
+!
 
 !Brush class methodsFor!
 
@@ -199,30 +201,32 @@ withStyle: styleFlags color: aColour hatch: hatchObject
 				color: aColour;
 				hatch: hatchObject;
 				yourself)! !
-!Brush class categoriesFor: #bitmap:!instance creation!public! !
-!Brush class categoriesFor: #black!instance creation!public! !
-!Brush class categoriesFor: #color:!instance creation!public! !
-!Brush class categoriesFor: #cross!instance creation!public! !
-!Brush class categoriesFor: #cross:!instance creation!public! !
-!Brush class categoriesFor: #darkGray!instance creation!public! !
-!Brush class categoriesFor: #diagonal!instance creation!public! !
-!Brush class categoriesFor: #diagonal:!instance creation!public! !
-!Brush class categoriesFor: #diamond!instance creation!public! !
-!Brush class categoriesFor: #diamond:!instance creation!public! !
-!Brush class categoriesFor: #fromLogBrush:!instance creation!public! !
-!Brush class categoriesFor: #gray!instance creation!public! !
-!Brush class categoriesFor: #horizontal!instance creation!public! !
-!Brush class categoriesFor: #horizontal:!instance creation!public! !
-!Brush class categoriesFor: #icon!constants!public! !
-!Brush class categoriesFor: #logBrushClass!constants!private! !
-!Brush class categoriesFor: #newColor:!instance creation!private! !
-!Brush class categoriesFor: #reverseDiagonal!instance creation!public! !
-!Brush class categoriesFor: #reverseDiagonal:!instance creation!public! !
-!Brush class categoriesFor: #silver!instance creation!public! !
-!Brush class categoriesFor: #sysColorBrushClass!instance creation!public! !
-!Brush class categoriesFor: #transparent!instance creation!public! !
-!Brush class categoriesFor: #vertical!instance creation!public! !
-!Brush class categoriesFor: #vertical:!instance creation!public! !
-!Brush class categoriesFor: #white!instance creation!public! !
-!Brush class categoriesFor: #withStyle:color:hatch:!instance creation!public! !
+!Brush class categoriesForMethods!
+bitmap:!instance creation!public! !
+black!instance creation!public! !
+color:!instance creation!public! !
+cross!instance creation!public! !
+cross:!instance creation!public! !
+darkGray!instance creation!public! !
+diagonal!instance creation!public! !
+diagonal:!instance creation!public! !
+diamond!instance creation!public! !
+diamond:!instance creation!public! !
+fromLogBrush:!instance creation!public! !
+gray!instance creation!public! !
+horizontal!instance creation!public! !
+horizontal:!instance creation!public! !
+icon!constants!public! !
+logBrushClass!constants!private! !
+newColor:!instance creation!private! !
+reverseDiagonal!instance creation!public! !
+reverseDiagonal:!instance creation!public! !
+silver!instance creation!public! !
+sysColorBrushClass!instance creation!public! !
+transparent!instance creation!public! !
+vertical!instance creation!public! !
+vertical:!instance creation!public! !
+white!instance creation!public! !
+withStyle:color:hatch:!instance creation!public! !
+!
 

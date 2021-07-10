@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SelectorEnvironment subclass: #ParseTreeEnvironment
 	instanceVariableNames: 'matcher'
@@ -12,5 +12,7 @@ ParseTreeEnvironment comment: ''!
 
 matcher: aParseTreeSearcher
 	matcher := aParseTreeSearcher! !
-!ParseTreeEnvironment categoriesFor: #matcher:!initialize/release!public! !
+!ParseTreeEnvironment categoriesForMethods!
+matcher:!initialize/release!public! !
+!
 

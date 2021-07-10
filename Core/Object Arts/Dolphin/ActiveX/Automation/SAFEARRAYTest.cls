@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GenericExternalArrayTest subclass: #SAFEARRAYTest
 	instanceVariableNames: ''
@@ -158,13 +158,15 @@ threePoints: recordClass
 				x: each;
 				y: each].
 	^sa! !
-!SAFEARRAYTest categoriesFor: #arrayClass!constants!private! !
-!SAFEARRAYTest categoriesFor: #elementClassNames!constants!private! !
-!SAFEARRAYTest categoriesFor: #newArrayOfIntegers:!helpers!private! !
-!SAFEARRAYTest categoriesFor: #testAXRecords!public!unit tests! !
-!SAFEARRAYTest categoriesFor: #testBounds!public!unit tests! !
-!SAFEARRAYTest categoriesFor: #testElementAt!public!unit tests! !
-!SAFEARRAYTest categoriesFor: #testElementClasses!public!unit tests! !
-!SAFEARRAYTest categoriesFor: #testRecordInfo!public!unit tests! !
-!SAFEARRAYTest categoriesFor: #threePoints:!public!unit tests! !
+!SAFEARRAYTest categoriesForMethods!
+arrayClass!constants!private! !
+elementClassNames!constants!private! !
+newArrayOfIntegers:!helpers!private! !
+testAXRecords!public!unit tests! !
+testBounds!public!unit tests! !
+testElementAt!public!unit tests! !
+testElementClasses!public!unit tests! !
+testRecordInfo!public!unit tests! !
+threePoints:!public!unit tests! !
+!
 

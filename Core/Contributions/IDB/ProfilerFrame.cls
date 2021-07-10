@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ProfilerFrame
 	instanceVariableNames: 'compiledCode receiverClass ip isBlock'
@@ -164,23 +164,25 @@ setFrame: aStackFrame
 	ip := aStackFrame ip.
 	isBlock := aStackFrame isBlockFrame.
 	^self! !
-!ProfilerFrame categoriesFor: #coloredSource!displaying!public! !
-!ProfilerFrame categoriesFor: #compiledCode!accessing!public! !
-!ProfilerFrame categoriesFor: #disassemblySelectionLine!displaying!public! !
-!ProfilerFrame categoriesFor: #disassemblySource!displaying!public! !
-!ProfilerFrame categoriesFor: #doClassAndSelectorMatch:!public!testing! !
-!ProfilerFrame categoriesFor: #icon!accessing!public! !
-!ProfilerFrame categoriesFor: #ip!accessing!public! !
-!ProfilerFrame categoriesFor: #isCompiledExpression!public!testing! !
-!ProfilerFrame categoriesFor: #isInSystemPackage!public!testing! !
-!ProfilerFrame categoriesFor: #isSameFrameAs:!public!testing! !
-!ProfilerFrame categoriesFor: #methodClass!accessing!public! !
-!ProfilerFrame categoriesFor: #printOn:!ANSI protocols-Object!protocols-Object!public! !
-!ProfilerFrame categoriesFor: #profilerIconIndex!accessing!public! !
-!ProfilerFrame categoriesFor: #selectionRange!displaying!public! !
-!ProfilerFrame categoriesFor: #selector!accessing!public! !
-!ProfilerFrame categoriesFor: #selectorDescription!accessing!public! !
-!ProfilerFrame categoriesFor: #setFrame:!initializing!public! !
+!ProfilerFrame categoriesForMethods!
+coloredSource!displaying!public! !
+compiledCode!accessing!public! !
+disassemblySelectionLine!displaying!public! !
+disassemblySource!displaying!public! !
+doClassAndSelectorMatch:!public!testing! !
+icon!accessing!public! !
+ip!accessing!public! !
+isCompiledExpression!public!testing! !
+isInSystemPackage!public!testing! !
+isSameFrameAs:!public!testing! !
+methodClass!accessing!public! !
+printOn:!ANSI protocols-Object!protocols-Object!public! !
+profilerIconIndex!accessing!public! !
+selectionRange!displaying!public! !
+selector!accessing!public! !
+selectorDescription!accessing!public! !
+setFrame:!initializing!public! !
+!
 
 !ProfilerFrame class methodsFor!
 
@@ -199,7 +201,9 @@ new
 	"Should only create a new instance using #frame:"
 
 	^self shouldNotImplement! !
-!ProfilerFrame class categoriesFor: #frame:!instance creation!public! !
-!ProfilerFrame class categoriesFor: #icon!constants!public! !
-!ProfilerFrame class categoriesFor: #new!instance creation!protocols-instantiator!protocols-Object class!public! !
+!ProfilerFrame class categoriesForMethods!
+frame:!instance creation!public! !
+icon!constants!public! !
+new!instance creation!protocols-instantiator!protocols-Object class!public! !
+!
 

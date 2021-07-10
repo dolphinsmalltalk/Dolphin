@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RenameClassVariableRefactoring subclass: #RenameClassVariableAndAccessorsRefactoring
 	instanceVariableNames: 'accessorsRefactoring'
@@ -38,7 +38,9 @@ transform
 	super transform.
 	self performComponentRefactoring: accessorsRefactoring.
 			! !
-!RenameClassVariableAndAccessorsRefactoring categoriesFor: #initializeAccessorsRefactoring!initialize-release!public! !
-!RenameClassVariableAndAccessorsRefactoring categoriesFor: #rename:to:in:!initialize/release!public! !
-!RenameClassVariableAndAccessorsRefactoring categoriesFor: #transform!public!transform! !
+!RenameClassVariableAndAccessorsRefactoring categoriesForMethods!
+initializeAccessorsRefactoring!initialize-release!public! !
+rename:to:in:!initialize/release!public! !
+transform!public!transform! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #BrowserEnvironment
 	instanceVariableNames: 'label searchStrings search filter'
@@ -379,75 +379,77 @@ whichProtocolsInclude: aSelector in: aClass
 	^(aClass compiledMethodAt: aSelector ifAbsent: []) 
 		ifNil: [#()]
 		ifNotNil: [:method | method realCategories collect: [:each | each name asSymbol]]! !
-!BrowserEnvironment categoriesFor: #&!environments!public! !
-!BrowserEnvironment categoriesFor: #|!environments!public! !
-!BrowserEnvironment categoriesFor: #addSearchString:!accessing!public! !
-!BrowserEnvironment categoriesFor: #allClasses!enumerating!public! !
-!BrowserEnvironment categoriesFor: #associationAt:!accessing/classes!accessing-classes!public! !
-!BrowserEnvironment categoriesFor: #at:!accessing/classes!public! !
-!BrowserEnvironment categoriesFor: #at:ifAbsent:!accessing/classes!public! !
-!BrowserEnvironment categoriesFor: #categories!accessing!public! !
-!BrowserEnvironment categoriesFor: #classes!accessing/classes!public! !
-!BrowserEnvironment categoriesFor: #classesAndSelectorsDo:!accessing!public! !
-!BrowserEnvironment categoriesFor: #classesDo:!accessing/classes!public! !
-!BrowserEnvironment categoriesFor: #classNames!accessing/classes!public! !
-!BrowserEnvironment categoriesFor: #classNamesFor:!accessing!public! !
-!BrowserEnvironment categoriesFor: #classVariablesFor:!accessing!public! !
-!BrowserEnvironment categoriesFor: #classVarRefsTo:in:!environments!public! !
-!BrowserEnvironment categoriesFor: #copyEmpty!copying!public! !
-!BrowserEnvironment categoriesFor: #defaultLabel!constants!private! !
-!BrowserEnvironment categoriesFor: #definesClass:!public!testing! !
-!BrowserEnvironment categoriesFor: #environment!public! !
-!BrowserEnvironment categoriesFor: #filter!accessing!private! !
-!BrowserEnvironment categoriesFor: #filter:!accessing!private! !
-!BrowserEnvironment categoriesFor: #forCategories:!environments!public! !
-!BrowserEnvironment categoriesFor: #forClass:protocols:!environments!public! !
-!BrowserEnvironment categoriesFor: #forClass:selectors:!environments!public! !
-!BrowserEnvironment categoriesFor: #forClasses:!environments!public! !
-!BrowserEnvironment categoriesFor: #forClassHierarchyOf:!environments!public! !
-!BrowserEnvironment categoriesFor: #forMethods:!environments!public! !
-!BrowserEnvironment categoriesFor: #forMethodsIn:!environments!public! !
-!BrowserEnvironment categoriesFor: #implementorsMatching:!environments!public! !
-!BrowserEnvironment categoriesFor: #implementorsOf:!environments!public! !
-!BrowserEnvironment categoriesFor: #includesCategory:!public!testing! !
-!BrowserEnvironment categoriesFor: #includesClass:!public!testing! !
-!BrowserEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
-!BrowserEnvironment categoriesFor: #includesResource:!public!testing! !
-!BrowserEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!BrowserEnvironment categoriesFor: #instanceVariablesFor:!accessing!public! !
-!BrowserEnvironment categoriesFor: #instVarReadersTo:in:!environments!public! !
-!BrowserEnvironment categoriesFor: #instVarRefsTo:in:!environments!public! !
-!BrowserEnvironment categoriesFor: #instVarWritersTo:in:!environments!public! !
-!BrowserEnvironment categoriesFor: #isClassEnvironment!public!testing! !
-!BrowserEnvironment categoriesFor: #isEmpty!public!testing! !
-!BrowserEnvironment categoriesFor: #isSelectorEnvironment!public!testing! !
-!BrowserEnvironment categoriesFor: #isSystem!public!testing! !
-!BrowserEnvironment categoriesFor: #keys!accessing/classes!accessing-classes!public! !
-!BrowserEnvironment categoriesFor: #label!accessing!private! !
-!BrowserEnvironment categoriesFor: #label:!initialize/release!public! !
-!BrowserEnvironment categoriesFor: #lookup:!accessing/classes!public! !
-!BrowserEnvironment categoriesFor: #matches:!environments!public! !
-!BrowserEnvironment categoriesFor: #methodsDo:!public! !
-!BrowserEnvironment categoriesFor: #not!environments!public! !
-!BrowserEnvironment categoriesFor: #notEmpty!public!testing! !
-!BrowserEnvironment categoriesFor: #numberClasses!accessing!public! !
-!BrowserEnvironment categoriesFor: #numberSelectors!accessing!public! !
-!BrowserEnvironment categoriesFor: #printOn:!printing!public! !
-!BrowserEnvironment categoriesFor: #problemCount!accessing!public! !
-!BrowserEnvironment categoriesFor: #protocolsFor:!accessing!public! !
-!BrowserEnvironment categoriesFor: #referencesTo:!environments!public! !
-!BrowserEnvironment categoriesFor: #referencesTo:in:!environments!public! !
-!BrowserEnvironment categoriesFor: #searchStrings!accessing!public! !
-!BrowserEnvironment categoriesFor: #searchStrings:!accessing!public! !
-!BrowserEnvironment categoriesFor: #selectMethods:!environments!public! !
-!BrowserEnvironment categoriesFor: #selectorsDo:!enumerating!public! !
-!BrowserEnvironment categoriesFor: #selectorsFor:in:!accessing!public! !
-!BrowserEnvironment categoriesFor: #selectorsForClass:!accessing!public! !
-!BrowserEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
-!BrowserEnvironment categoriesFor: #storeOn:!printing!public! !
-!BrowserEnvironment categoriesFor: #whichCategoryIncludes:!accessing!public! !
-!BrowserEnvironment categoriesFor: #whichProtocolIncludes:in:!accessing!public! !
-!BrowserEnvironment categoriesFor: #whichProtocolsInclude:in:!accessing!public! !
+!BrowserEnvironment categoriesForMethods!
+&!environments!public! !
+|!environments!public! !
+addSearchString:!accessing!public! !
+allClasses!enumerating!public! !
+associationAt:!accessing/classes!accessing-classes!public! !
+at:!accessing/classes!public! !
+at:ifAbsent:!accessing/classes!public! !
+categories!accessing!public! !
+classes!accessing/classes!public! !
+classesAndSelectorsDo:!accessing!public! !
+classesDo:!accessing/classes!public! !
+classNames!accessing/classes!public! !
+classNamesFor:!accessing!public! !
+classVariablesFor:!accessing!public! !
+classVarRefsTo:in:!environments!public! !
+copyEmpty!copying!public! !
+defaultLabel!constants!private! !
+definesClass:!public!testing! !
+environment!public! !
+filter!accessing!private! !
+filter:!accessing!private! !
+forCategories:!environments!public! !
+forClass:protocols:!environments!public! !
+forClass:selectors:!environments!public! !
+forClasses:!environments!public! !
+forClassHierarchyOf:!environments!public! !
+forMethods:!environments!public! !
+forMethodsIn:!environments!public! !
+implementorsMatching:!environments!public! !
+implementorsOf:!environments!public! !
+includesCategory:!public!testing! !
+includesClass:!public!testing! !
+includesProtocol:in:!public!testing! !
+includesResource:!public!testing! !
+includesSelector:in:!public!testing! !
+instanceVariablesFor:!accessing!public! !
+instVarReadersTo:in:!environments!public! !
+instVarRefsTo:in:!environments!public! !
+instVarWritersTo:in:!environments!public! !
+isClassEnvironment!public!testing! !
+isEmpty!public!testing! !
+isSelectorEnvironment!public!testing! !
+isSystem!public!testing! !
+keys!accessing/classes!accessing-classes!public! !
+label!accessing!private! !
+label:!initialize/release!public! !
+lookup:!accessing/classes!public! !
+matches:!environments!public! !
+methodsDo:!public! !
+not!environments!public! !
+notEmpty!public!testing! !
+numberClasses!accessing!public! !
+numberSelectors!accessing!public! !
+printOn:!printing!public! !
+problemCount!accessing!public! !
+protocolsFor:!accessing!public! !
+referencesTo:!environments!public! !
+referencesTo:in:!environments!public! !
+searchStrings!accessing!public! !
+searchStrings:!accessing!public! !
+selectMethods:!environments!public! !
+selectorsDo:!enumerating!public! !
+selectorsFor:in:!accessing!public! !
+selectorsForClass:!accessing!public! !
+selectorsForClass:do:!accessing!public! !
+storeOn:!printing!public! !
+whichCategoryIncludes:!accessing!public! !
+whichProtocolIncludes:in:!accessing!public! !
+whichProtocolsInclude:in:!accessing!public! !
+!
 
 !BrowserEnvironment class methodsFor!
 
@@ -455,5 +457,7 @@ new
 	^(super new)
 		initialize;
 		yourself! !
-!BrowserEnvironment class categoriesFor: #new!instance creation!public! !
+!BrowserEnvironment class categoriesForMethods!
+new!instance creation!public! !
+!
 

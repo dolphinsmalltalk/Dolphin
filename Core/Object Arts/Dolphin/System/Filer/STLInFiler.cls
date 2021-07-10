@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STBInFiler subclass: #STLInFiler
 	instanceVariableNames: ''
@@ -44,13 +44,15 @@ registerPredefinedObjects
 	"Private - Post version 3 the out filer stores everything."
 
 	version < 4 ifTrue: [super registerPredefinedObjects] ifFalse: [self registerPredefinedClasses]! !
-!STLInFiler categoriesFor: #basicNext!accessing!private! !
-!STLInFiler categoriesFor: #readClassLocator:!helpers!private! !
-!STLInFiler categoriesFor: #readInteger!helpers!private! !
-!STLInFiler categoriesFor: #readLiteralData!private! !
-!STLInFiler categoriesFor: #readObjectWithPrefix:!accessing!private! !
-!STLInFiler categoriesFor: #readVersion!initializing!private! !
-!STLInFiler categoriesFor: #registerPredefinedObjects!initializing!private! !
+!STLInFiler categoriesForMethods!
+basicNext!accessing!private! !
+readClassLocator:!helpers!private! !
+readInteger!helpers!private! !
+readLiteralData!private! !
+readObjectWithPrefix:!accessing!private! !
+readVersion!initializing!private! !
+registerPredefinedObjects!initializing!private! !
+!
 
 !STLInFiler class methodsFor!
 
@@ -71,6 +73,8 @@ signature
 	being in Smalltalk Literal (STL) format."
 
 	^#'!!STL'! !
-!STLInFiler class categoriesFor: #peekForSignatureIn:!public!testing! !
-!STLInFiler class categoriesFor: #signature!constants!private! !
+!STLInFiler class categoriesForMethods!
+peekForSignatureIn:!public!testing! !
+signature!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Model subclass: #ChunkBrowserModel
 	instanceVariableNames: 'chunks'
@@ -67,16 +67,18 @@ pickedChunks
 
 unpickAll
 	chunks do: [:each | each picked: false]! !
-!ChunkBrowserModel categoriesFor: #chunkClass!accessing!public! !
-!ChunkBrowserModel categoriesFor: #chunkCount!helpers!public! !
-!ChunkBrowserModel categoriesFor: #filteredUsing:!operations!public! !
-!ChunkBrowserModel categoriesFor: #hasAnyChunksPicked!public!testing! !
-!ChunkBrowserModel categoriesFor: #hasChunks!public!testing! !
-!ChunkBrowserModel categoriesFor: #indexOfLastImageSave!helpers!public! !
-!ChunkBrowserModel categoriesFor: #initialize!initializing!public! !
-!ChunkBrowserModel categoriesFor: #loadFromFile:!operations!public! !
-!ChunkBrowserModel categoriesFor: #loadFromPatchFile:!operations!public! !
-!ChunkBrowserModel categoriesFor: #loadFromText:!operations!public! !
-!ChunkBrowserModel categoriesFor: #pickedChunks!accessing!public! !
-!ChunkBrowserModel categoriesFor: #unpickAll!operations!public! !
+!ChunkBrowserModel categoriesForMethods!
+chunkClass!accessing!public! !
+chunkCount!helpers!public! !
+filteredUsing:!operations!public! !
+hasAnyChunksPicked!public!testing! !
+hasChunks!public!testing! !
+indexOfLastImageSave!helpers!public! !
+initialize!initializing!public! !
+loadFromFile:!operations!public! !
+loadFromPatchFile:!operations!public! !
+loadFromText:!operations!public! !
+pickedChunks!accessing!public! !
+unpickAll!operations!public! !
+!
 

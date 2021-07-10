@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #FileTest
 	instanceVariableNames: 'tempFile'
@@ -550,31 +550,33 @@ testSplitStemFrom
 	self printFilenameOfLength: CRTConstants._MAX_FNAME * 2 on: path.
 	path := path contents.
 	self assert: (File splitStemFrom: path) equals: ((path copyFrom: 4) upTo: $.)! !
-!FileTest categoriesFor: #buildTestPathOfLength:!helpers!private! !
-!FileTest categoriesFor: #createTestDirectories!helpers!private! !
-!FileTest categoriesFor: #deleteDirectory:!helpers!public! !
-!FileTest categoriesFor: #deleteTestDirectories!private!Running! !
-!FileTest categoriesFor: #printFilenameOfLength:on:!helpers!private! !
-!FileTest categoriesFor: #relativePathOf:to:!helpers!public! !
-!FileTest categoriesFor: #removeDirectory:!helpers!private! !
-!FileTest categoriesFor: #tearDown!private!Running! !
-!FileTest categoriesFor: #test64BitSeek!public!unit tests! !
-!FileTest categoriesFor: #testClassAppendPathSeparator!public!unit tests! !
-!FileTest categoriesFor: #testClassDefaultExtension!public!unit tests! !
-!FileTest categoriesFor: #testClassPathExtension!public!unit tests! !
-!FileTest categoriesFor: #testClassRelativePathOfTo!public!unit tests! !
-!FileTest categoriesFor: #testCommonPrefixOfAnd!public!unit tests! !
-!FileTest categoriesFor: #testDeleteDirectory!public!unit tests! !
-!FileTest categoriesFor: #testForDirectoriesIn!public!unit tests! !
-!FileTest categoriesFor: #testMakePath!public!unit tests! !
-!FileTest categoriesFor: #testPathName!public!unit tests! !
-!FileTest categoriesFor: #testRemoveDirectory!public!unit tests! !
-!FileTest categoriesFor: #testRemoveExtension!public!unit tests! !
-!FileTest categoriesFor: #testRemovePathDelimiter!public!unit tests! !
-!FileTest categoriesFor: #testShortPath!public!unit tests! !
-!FileTest categoriesFor: #testSniffEncoding!public!unit tests! !
-!FileTest categoriesFor: #testSplitDriveFrom!public!unit tests! !
-!FileTest categoriesFor: #testSplitExtensionFrom!public!unit tests! !
-!FileTest categoriesFor: #testSplitFilenameFrom!public!unit tests! !
-!FileTest categoriesFor: #testSplitStemFrom!public!unit tests! !
+!FileTest categoriesForMethods!
+buildTestPathOfLength:!helpers!private! !
+createTestDirectories!helpers!private! !
+deleteDirectory:!helpers!public! !
+deleteTestDirectories!private!Running! !
+printFilenameOfLength:on:!helpers!private! !
+relativePathOf:to:!helpers!public! !
+removeDirectory:!helpers!private! !
+tearDown!private!Running! !
+test64BitSeek!public!unit tests! !
+testClassAppendPathSeparator!public!unit tests! !
+testClassDefaultExtension!public!unit tests! !
+testClassPathExtension!public!unit tests! !
+testClassRelativePathOfTo!public!unit tests! !
+testCommonPrefixOfAnd!public!unit tests! !
+testDeleteDirectory!public!unit tests! !
+testForDirectoriesIn!public!unit tests! !
+testMakePath!public!unit tests! !
+testPathName!public!unit tests! !
+testRemoveDirectory!public!unit tests! !
+testRemoveExtension!public!unit tests! !
+testRemovePathDelimiter!public!unit tests! !
+testShortPath!public!unit tests! !
+testSniffEncoding!public!unit tests! !
+testSplitDriveFrom!public!unit tests! !
+testSplitExtensionFrom!public!unit tests! !
+testSplitFilenameFrom!public!unit tests! !
+testSplitStemFrom!public!unit tests! !
+!
 

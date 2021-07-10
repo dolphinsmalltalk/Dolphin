@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusTestInitializer
 	instanceVariableNames: 'mockHandle arg1'
@@ -33,17 +33,21 @@ hash
 initialize
 	super initialize.
 	mockHandle := self! !
-!GdiplusTestInitializer categoriesFor: #=!accessing!comparison!public! !
-!GdiplusTestInitializer categoriesFor: #arg1!accessing!public! !
-!GdiplusTestInitializer categoriesFor: #arg1:!accessing!public! !
-!GdiplusTestInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusTestInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!public! !
-!GdiplusTestInitializer categoriesFor: #hash!accessing!public! !
-!GdiplusTestInitializer categoriesFor: #initialize!initializing!public! !
+!GdiplusTestInitializer categoriesForMethods!
+=!accessing!comparison!public! !
+arg1!accessing!public! !
+arg1:!accessing!public! !
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!public! !
+hash!accessing!public! !
+initialize!initializing!public! !
+!
 
 !GdiplusTestInitializer class methodsFor!
 
 new
 	^self basicNew initialize! !
-!GdiplusTestInitializer class categoriesFor: #new!instance creation!public! !
+!GdiplusTestInitializer class categoriesForMethods!
+new!instance creation!public! !
+!
 

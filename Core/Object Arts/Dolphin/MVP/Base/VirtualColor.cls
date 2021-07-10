@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Color subclass: #VirtualColor
 	instanceVariableNames: ''
@@ -40,10 +40,12 @@ rgbCode
 	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (blue, green, red) order."
 
 	^self actualColor rgbCode! !
-!VirtualColor categoriesFor: #argbCode!converting!public! !
-!VirtualColor categoriesFor: #asParameter!converting!public! !
-!VirtualColor categoriesFor: #asRGB!converting!public! !
-!VirtualColor categoriesFor: #isDefault!public!testing! !
-!VirtualColor categoriesFor: #isNone!public!testing! !
-!VirtualColor categoriesFor: #rgbCode!converting!public! !
+!VirtualColor categoriesForMethods!
+argbCode!converting!public! !
+asParameter!converting!public! !
+asRGB!converting!public! !
+isDefault!public!testing! !
+isNone!public!testing! !
+rgbCode!converting!public! !
+!
 

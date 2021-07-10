@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #DolphinTest
 	instanceVariableNames: ''
@@ -86,17 +86,19 @@ shouldRaiseZeroDivide: aBlock
 
 versionFromParts: versionNumbers
 	^versionNumbers inject: 0 into: [:sum :each | (sum << 16) + each]! !
-!DolphinTest categoriesFor: #assertIs:deepCopyOf:!public!unit tests! !
-!DolphinTest categoriesFor: #assertIs:deepCopyOf:visited:!private!unit tests! !
-!DolphinTest categoriesFor: #compare:to:epsilon:!comparing!public! !
-!DolphinTest categoriesFor: #createPackage:!helpers!public! !
-!DolphinTest categoriesFor: #createTestPackage!helpers!public! !
-!DolphinTest categoriesFor: #failureLog!Accessing!public! !
-!DolphinTest categoriesFor: #isAtLeastVmVersion:!private!testing! !
-!DolphinTest categoriesFor: #isLogging!Accessing!public! !
-!DolphinTest categoriesFor: #isOnline!public!unit tests! !
-!DolphinTest categoriesFor: #methodContextClass!constants!private! !
-!DolphinTest categoriesFor: #runKnownBug:test:!public!unit tests! !
-!DolphinTest categoriesFor: #shouldRaiseZeroDivide:!Accessing!public! !
-!DolphinTest categoriesFor: #versionFromParts:!public!unit tests! !
+!DolphinTest categoriesForMethods!
+assertIs:deepCopyOf:!public!unit tests! !
+assertIs:deepCopyOf:visited:!private!unit tests! !
+compare:to:epsilon:!comparing!public! !
+createPackage:!helpers!public! !
+createTestPackage!helpers!public! !
+failureLog!Accessing!public! !
+isAtLeastVmVersion:!private!testing! !
+isLogging!Accessing!public! !
+isOnline!public!unit tests! !
+methodContextClass!constants!private! !
+runKnownBug:test:!public!unit tests! !
+shouldRaiseZeroDivide:!Accessing!public! !
+versionFromParts:!public!unit tests! !
+!
 

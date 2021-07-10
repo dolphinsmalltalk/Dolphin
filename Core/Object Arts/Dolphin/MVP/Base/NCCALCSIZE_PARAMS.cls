@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #NCCALCSIZE_PARAMS
 	instanceVariableNames: ''
@@ -53,10 +53,12 @@ rgrc: aStructureArrayOfRECT
 		from: ##(_OffsetOf_rgrc + 1)
 		to: size
 		startingAt: 1! !
-!NCCALCSIZE_PARAMS categoriesFor: #lppos!**compiled accessors**!public! !
-!NCCALCSIZE_PARAMS categoriesFor: #lppos:!**compiled accessors**!public! !
-!NCCALCSIZE_PARAMS categoriesFor: #rgrc!**compiled accessors**!public! !
-!NCCALCSIZE_PARAMS categoriesFor: #rgrc:!**compiled accessors**!public! !
+!NCCALCSIZE_PARAMS categoriesForMethods!
+lppos!**compiled accessors**!public! !
+lppos:!**compiled accessors**!public! !
+rgrc!**compiled accessors**!public! !
+rgrc:!**compiled accessors**!public! !
+!
 
 !NCCALCSIZE_PARAMS class methodsFor!
 
@@ -78,6 +80,8 @@ defineFields
 
 getFieldNames
 	^#(#rgrc #lppos)! !
-!NCCALCSIZE_PARAMS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!NCCALCSIZE_PARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NCCALCSIZE_PARAMS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

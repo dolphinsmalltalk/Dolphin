@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HTTP_SERVICE_BINDING_BASE subclass: #HTTP_SERVICE_BINDING_W
 	instanceVariableNames: ''
@@ -47,10 +47,12 @@ BufferSize: anInteger
 	"Set the receiver's 'BufferSize' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_BufferSize put: anInteger! !
-!HTTP_SERVICE_BINDING_W categoriesFor: #Buffer!**compiled accessors**!public! !
-!HTTP_SERVICE_BINDING_W categoriesFor: #Buffer:!**compiled accessors**!public! !
-!HTTP_SERVICE_BINDING_W categoriesFor: #BufferSize!**compiled accessors**!private! !
-!HTTP_SERVICE_BINDING_W categoriesFor: #BufferSize:!**compiled accessors**!private! !
+!HTTP_SERVICE_BINDING_W categoriesForMethods!
+Buffer!**compiled accessors**!public! !
+Buffer:!**compiled accessors**!public! !
+BufferSize!**compiled accessors**!private! !
+BufferSize:!**compiled accessors**!private! !
+!
 
 !HTTP_SERVICE_BINDING_W class methodsFor!
 
@@ -75,6 +77,8 @@ defineFields
 
 getFieldNames
 	^#(#Type #Buffer #BufferSize)! !
-!HTTP_SERVICE_BINDING_W class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVICE_BINDING_W class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_SERVICE_BINDING_W class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

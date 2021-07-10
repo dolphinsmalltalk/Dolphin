@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #SmalltalkParserTest
 	instanceVariableNames: ''
@@ -212,19 +212,23 @@ testFloatScanning
 	#('5.1234a' '0.5e' '1.5e2e3' '1.5e2e-3' '1.5e-Integer zero' '1.5e-' '1.5e+' '1.7976931348623158+e308')
 		do: [:each | self scanNonNumericEnd: each class: StNumberLiteralToken].
 	self scanNonNumericEnd: '5.F' class: StNumberLiteralToken! !
-!SmalltalkParserTest categoriesFor: #assertToken:isChar:!helpers!private! !
-!SmalltalkParserTest categoriesFor: #parserClass!constants!private! !
-!SmalltalkParserTest categoriesFor: #scannerClass!constants!private! !
-!SmalltalkParserTest categoriesFor: #scanNonNumericEnd:class:!public! !
-!SmalltalkParserTest categoriesFor: #testCharacterScanning!public!unit tests! !
-!SmalltalkParserTest categoriesFor: #testExpressionSolver!public! !
-!SmalltalkParserTest categoriesFor: #testExternalCallEquality!public!unit tests! !
-!SmalltalkParserTest categoriesFor: #testExternalCalls!public!unit tests! !
-!SmalltalkParserTest categoriesFor: #testFloatScanning!public!unit tests! !
+!SmalltalkParserTest categoriesForMethods!
+assertToken:isChar:!helpers!private! !
+parserClass!constants!private! !
+scannerClass!constants!private! !
+scanNonNumericEnd:class:!public! !
+testCharacterScanning!public!unit tests! !
+testExpressionSolver!public! !
+testExternalCallEquality!public!unit tests! !
+testExternalCalls!public!unit tests! !
+testFloatScanning!public!unit tests! !
+!
 
 !SmalltalkParserTest class methodsFor!
 
 parserClass
 	^SmalltalkParser! !
-!SmalltalkParserTest class categoriesFor: #parserClass!accessing!public! !
+!SmalltalkParserTest class categoriesForMethods!
+parserClass!accessing!public! !
+!
 

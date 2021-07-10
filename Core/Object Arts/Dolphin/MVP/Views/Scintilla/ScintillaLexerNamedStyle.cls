@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScintillaLexerMetadata subclass: #ScintillaLexerNamedStyle
 	instanceVariableNames: 'name'
@@ -30,10 +30,12 @@ tags
 view: aScintillaView id: anInteger
 	view := aScintillaView.
 	id := anInteger! !
-!ScintillaLexerNamedStyle categoriesFor: #getDescription!accessing!private! !
-!ScintillaLexerNamedStyle categoriesFor: #getName!accessing!private! !
-!ScintillaLexerNamedStyle categoriesFor: #getTags!accessing!private! !
-!ScintillaLexerNamedStyle categoriesFor: #name!accessing!public! !
-!ScintillaLexerNamedStyle categoriesFor: #tags!accessing!public! !
-!ScintillaLexerNamedStyle categoriesFor: #view:id:!initializing!private! !
+!ScintillaLexerNamedStyle categoriesForMethods!
+getDescription!accessing!private! !
+getName!accessing!private! !
+getTags!accessing!private! !
+name!accessing!public! !
+tags!accessing!public! !
+view:id:!initializing!private! !
+!
 

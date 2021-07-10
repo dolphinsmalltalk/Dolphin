@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinSureCertificate subclass: #DolphinSurePersonalCertificate
 	instanceVariableNames: ''
@@ -36,9 +36,11 @@ purpose
 	"Answers the purpose of this certificate"
 
 	^'This certificate ensures that the content is from a known individual and guarantees that it has not been modified since it was originally created.'! !
-!DolphinSurePersonalCertificate categoriesFor: #backgroundImageFile!constants!private! !
-!DolphinSurePersonalCertificate categoriesFor: #imageAttributes!drawing!helpers!private! !
-!DolphinSurePersonalCertificate categoriesFor: #purpose!accessing!public! !
+!DolphinSurePersonalCertificate categoriesForMethods!
+backgroundImageFile!constants!private! !
+imageAttributes!drawing!helpers!private! !
+purpose!accessing!public! !
+!
 
 !DolphinSurePersonalCertificate class methodsFor!
 
@@ -47,5 +49,7 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^1! !
-!DolphinSurePersonalCertificate class categoriesFor: #validYears!constants!private! !
+!DolphinSurePersonalCertificate class categoriesForMethods!
+validYears!constants!private! !
+!
 

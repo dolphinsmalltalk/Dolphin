@@ -134,11 +134,13 @@ unmapViewOfFile: lpBaseAddress
 
 	<stdcall: sdword UnmapViewOfFile void*>
 	^self invalidCall: _failureCode! !
-!KernelLibrary categoriesFor: #createFileMapping:lpAttributes:flProtect:dwMaximumSizeHigh:dwMaximumSizeLow:lpName:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #flushViewOfFile:dwNumberOfBytesToFlush:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #mapViewOfFile:dwDesiredAccess:dwFileOffsetHigh:dwFileOffsetLow:dwNumberOfBytesToMap:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #openFileMapping:bInheritHandle:lpName:!public!win32 functions-memory management! !
-!KernelLibrary categoriesFor: #unmapViewOfFile:!public!win32 functions-memory management! !
+!KernelLibrary categoriesForMethods!
+createFileMapping:lpAttributes:flProtect:dwMaximumSizeHigh:dwMaximumSizeLow:lpName:!public!win32 functions-file management! !
+flushViewOfFile:dwNumberOfBytesToFlush:!public!win32 functions-memory management! !
+mapViewOfFile:dwDesiredAccess:dwFileOffsetHigh:dwFileOffsetLow:dwNumberOfBytesToMap:!public!win32 functions-memory management! !
+openFileMapping:bInheritHandle:lpName:!public!win32 functions-memory management! !
+unmapViewOfFile:!public!win32 functions-memory management! !
+!
 
 "End of package definition"!
 

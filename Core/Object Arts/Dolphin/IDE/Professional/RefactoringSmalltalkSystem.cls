@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ProfessionalSmalltalkSystem subclass: #RefactoringSmalltalkSystem
 	instanceVariableNames: 'isOAD'
@@ -1342,106 +1342,108 @@ validateRenameTemp: aStVariableNode to: aString in: aClass
 	((definingNode whoDefines: aString) notNil or: [definingNode allDefinedVariables includes: aString])
 		ifTrue: [refactoring refactoringError: ('<1p> is already defined' expandMacrosWith: aString)].
 	refactoring checkPreconditions! !
-!RefactoringSmalltalkSystem categoriesFor: #abstractClassVariable:in:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #abstractClassVariables:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #abstractInstanceVariable:in:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #abstractInstanceVariables:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #addClassVariable:to:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #addClassVariableTo:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #addFilteredMethod:forLintRule:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #addGlobalVariable:!public! !
-!RefactoringSmalltalkSystem categoriesFor: #addInstanceVariable:to:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #addInstanceVariableTo:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #addParameterName:initializer:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #addParameterToMethod:!commands!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #addParameterToMethod:inPackages:caption:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #basicCreateSubclass:of:subclasses:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #browseMethodsIn:!browsing!public! !
-!RefactoringSmalltalkSystem categoriesFor: #browseMethodsInEnvironments:!browsing!public! !
-!RefactoringSmalltalkSystem categoriesFor: #browseSelectors:caption:environment:!browsing!private! !
-!RefactoringSmalltalkSystem categoriesFor: #canRefactor!public!testing! !
-!RefactoringSmalltalkSystem categoriesFor: #chooseMethodFromEnvironment:caption:!public! !
-!RefactoringSmalltalkSystem categoriesFor: #chooseSelectorInEnvironment:caption:!public! !
-!RefactoringSmalltalkSystem categoriesFor: #cloneClass:as:under:in:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #convertTemporaryToInstanceVariable:in:selector:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #convertToSibling:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #createInstanceVariableAccessors:in:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #createVariableAccessors:classVariables:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #duplicateOf:in:!helpers!private! !
-!RefactoringSmalltalkSystem categoriesFor: #duplicateSuperclassMethodsOf:!enquiries!private! !
-!RefactoringSmalltalkSystem categoriesFor: #executeVariableRefactoring:variables:within:!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #extendMethodBrowserMenus:!browsing!private! !
-!RefactoringSmalltalkSystem categoriesFor: #extractMethod:from:in:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #extractToComponent:from:in:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #extractToTemporary:from:in:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #handleRefactoringError:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #handleRefactoringException:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #inlineAllSelfSendsOf:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #inlineMessage:inMethod:of:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #inlineParameter:from:in:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #inlineTemporary:from:in:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #isOAD!accessing!private!product! !
-!RefactoringSmalltalkSystem categoriesFor: #isOAD:!accessing!private!product! !
-!RefactoringSmalltalkSystem categoriesFor: #isValidClassVarName:for:!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #isValidInstanceVariableName:for:!enquiries!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #moveAllTempsToInnerScope:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #moveAllTempsToInnerScopeIn:!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #moveAllTempsToInnerScopeIn:selector:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #moveTempToInnerScope:in:selector:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #moveToComponent:in:variable:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #newCodeRefactoringToolFor:!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #newMethodRefactoringToolFor:!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #nukeChangeHistory!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #promptForInitializationExpression:in:caption:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #promptForMethodName:caption:allowExisting:!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #promptForMethodRename:caption:allowExisting:!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #promptForNewClassName:caption:!helpers!private! !
-!RefactoringSmalltalkSystem categoriesFor: #protectInstanceVariable:in:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #protectInstanceVariables:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pullUpClassVariable:into:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pullUpClassVariable:into:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pullUpInstanceVariable:into:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pullUpInstanceVariable:into:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pushDownClassVariable:in:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pushDownClassVariable:in:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pushDownInstanceVariable:in:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pushDownInstanceVariable:in:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pushDownInstanceVariables:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pushDownMethods:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pushMethods:up:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #pushUpMethods:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #queryCommand:!commands!private! !
-!RefactoringSmalltalkSystem categoriesFor: #refactoringAborted!constants!private! !
-!RefactoringSmalltalkSystem categoriesFor: #refactoringError!constants!private! !
-!RefactoringSmalltalkSystem categoriesFor: #removeClassVariable:from:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #removeClassVariables:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #removeFilteredMethod:forLintRule:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #removeInstanceVariable:from:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #removeInstanceVariables:within:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #removeMethodsDuplicatedInSuperclassOf:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #removeMethodsIn:within:!commands!private! !
-!RefactoringSmalltalkSystem categoriesFor: #removeParameter:from:in:environment:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameClass:to:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameClassVariable:to:in:within:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameInstanceVariable:to:in:within:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameMethod:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameMethod:to:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameMethodReferences:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameMethodReferences:to:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameTemporary:to:in:selector:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #renameVariable:to:in:classVariable:within:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #safeRemoveClass:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #safeRemoveMethod:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #safeRemoveMethods:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #safeRemoveMethods:within:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #safeRemoveMethodsIn:within:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #safeRemoveSelectors:from:inEnvironment:!public!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #scopeToRenameAccessorsFor:in:classVariable:within:!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #selectTargetVariableOf:parseTree:!helpers!private!refactoring! !
-!RefactoringSmalltalkSystem categoriesFor: #validateRenameClass:to:!helpers!private! !
-!RefactoringSmalltalkSystem categoriesFor: #validateRenameClassVar:to:in:!helpers!private! !
-!RefactoringSmalltalkSystem categoriesFor: #validateRenameInstVar:to:in:!helpers!private! !
-!RefactoringSmalltalkSystem categoriesFor: #validateRenameTemp:to:in:!helpers!private!refactoring! !
+!RefactoringSmalltalkSystem categoriesForMethods!
+abstractClassVariable:in:within:!public!refactoring! !
+abstractClassVariables:within:!public!refactoring! !
+abstractInstanceVariable:in:within:!public!refactoring! !
+abstractInstanceVariables:within:!public!refactoring! !
+addClassVariable:to:!public!refactoring! !
+addClassVariableTo:!public!refactoring! !
+addFilteredMethod:forLintRule:!public!refactoring! !
+addGlobalVariable:!public! !
+addInstanceVariable:to:!public!refactoring! !
+addInstanceVariableTo:!public!refactoring! !
+addParameterName:initializer:!public!refactoring! !
+addParameterToMethod:!commands!public!refactoring! !
+addParameterToMethod:inPackages:caption:!public!refactoring! !
+basicCreateSubclass:of:subclasses:!private!refactoring! !
+browseMethodsIn:!browsing!public! !
+browseMethodsInEnvironments:!browsing!public! !
+browseSelectors:caption:environment:!browsing!private! !
+canRefactor!public!testing! !
+chooseMethodFromEnvironment:caption:!public! !
+chooseSelectorInEnvironment:caption:!public! !
+cloneClass:as:under:in:!private!refactoring! !
+convertTemporaryToInstanceVariable:in:selector:!public!refactoring! !
+convertToSibling:!public!refactoring! !
+createInstanceVariableAccessors:in:within:!public!refactoring! !
+createVariableAccessors:classVariables:within:!public!refactoring! !
+duplicateOf:in:!helpers!private! !
+duplicateSuperclassMethodsOf:!enquiries!private! !
+executeVariableRefactoring:variables:within:!helpers!private!refactoring! !
+extendMethodBrowserMenus:!browsing!private! !
+extractMethod:from:in:!public!refactoring! !
+extractToComponent:from:in:!public!refactoring! !
+extractToTemporary:from:in:!public!refactoring! !
+handleRefactoringError:!private!refactoring! !
+handleRefactoringException:!private!refactoring! !
+inlineAllSelfSendsOf:within:!public!refactoring! !
+inlineMessage:inMethod:of:!public!refactoring! !
+inlineParameter:from:in:!public!refactoring! !
+inlineTemporary:from:in:!public!refactoring! !
+isOAD!accessing!private!product! !
+isOAD:!accessing!private!product! !
+isValidClassVarName:for:!helpers!private!refactoring! !
+isValidInstanceVariableName:for:!enquiries!helpers!private!refactoring! !
+moveAllTempsToInnerScope:!public!refactoring! !
+moveAllTempsToInnerScopeIn:!helpers!private!refactoring! !
+moveAllTempsToInnerScopeIn:selector:!private!refactoring! !
+moveTempToInnerScope:in:selector:!public!refactoring! !
+moveToComponent:in:variable:!public!refactoring! !
+newCodeRefactoringToolFor:!helpers!private!refactoring! !
+newMethodRefactoringToolFor:!helpers!private!refactoring! !
+nukeChangeHistory!private!refactoring! !
+promptForInitializationExpression:in:caption:!private!refactoring! !
+promptForMethodName:caption:allowExisting:!helpers!private!refactoring! !
+promptForMethodRename:caption:allowExisting:!helpers!private!refactoring! !
+promptForNewClassName:caption:!helpers!private! !
+protectInstanceVariable:in:!public!refactoring! !
+protectInstanceVariables:!public!refactoring! !
+pullUpClassVariable:into:!public!refactoring! !
+pullUpClassVariable:into:within:!public!refactoring! !
+pullUpInstanceVariable:into:!public!refactoring! !
+pullUpInstanceVariable:into:within:!public!refactoring! !
+pushDownClassVariable:in:!public!refactoring! !
+pushDownClassVariable:in:within:!public!refactoring! !
+pushDownInstanceVariable:in:!public!refactoring! !
+pushDownInstanceVariable:in:within:!public!refactoring! !
+pushDownInstanceVariables:!public!refactoring! !
+pushDownMethods:!public!refactoring! !
+pushMethods:up:!private!refactoring! !
+pushUpMethods:!public!refactoring! !
+queryCommand:!commands!private! !
+refactoringAborted!constants!private! !
+refactoringError!constants!private! !
+removeClassVariable:from:within:!public!refactoring! !
+removeClassVariables:within:!public!refactoring! !
+removeFilteredMethod:forLintRule:!public!refactoring! !
+removeInstanceVariable:from:within:!public!refactoring! !
+removeInstanceVariables:within:!public!refactoring! !
+removeMethodsDuplicatedInSuperclassOf:!private!refactoring! !
+removeMethodsIn:within:!commands!private! !
+removeParameter:from:in:environment:!public!refactoring! !
+renameClass:to:!public!refactoring! !
+renameClassVariable:to:in:within:!private!refactoring! !
+renameInstanceVariable:to:in:within:!private!refactoring! !
+renameMethod:!public!refactoring! !
+renameMethod:to:!public!refactoring! !
+renameMethodReferences:!public!refactoring! !
+renameMethodReferences:to:!private!refactoring! !
+renameTemporary:to:in:selector:!public!refactoring! !
+renameVariable:to:in:classVariable:within:!private!refactoring! !
+safeRemoveClass:!public!refactoring! !
+safeRemoveMethod:!public!refactoring! !
+safeRemoveMethods:!public!refactoring! !
+safeRemoveMethods:within:!private!refactoring! !
+safeRemoveMethodsIn:within:!private!refactoring! !
+safeRemoveSelectors:from:inEnvironment:!public!refactoring! !
+scopeToRenameAccessorsFor:in:classVariable:within:!private!refactoring! !
+selectTargetVariableOf:parseTree:!helpers!private!refactoring! !
+validateRenameClass:to:!helpers!private! !
+validateRenameClassVar:to:in:!helpers!private! !
+validateRenameInstVar:to:in:!helpers!private! !
+validateRenameTemp:to:in:!helpers!private!refactoring! !
+!
 
 !RefactoringSmalltalkSystem class methodsFor!
 
@@ -1460,6 +1462,8 @@ uninitialize
 		do: [:each | (Smalltalk at: each) removeCommandQueryHandler: #queryRefactoringCommand:].
 	MethodCategory removeCategory: '*-RB fixes'.
 	self uninstallCurrent! !
-!RefactoringSmalltalkSystem class categoriesFor: #initialize!class hierarchy-removing!private! !
-!RefactoringSmalltalkSystem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!RefactoringSmalltalkSystem class categoriesForMethods!
+initialize!class hierarchy-removing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

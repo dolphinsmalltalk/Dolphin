@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LPVOID subclass: #ExternalPointer
 	instanceVariableNames: 'byteSize'
@@ -33,8 +33,10 @@ size
 
 	^byteSize
 	! !
-!ExternalPointer categoriesFor: #byteSize!accessing!public! !
-!ExternalPointer categoriesFor: #byteSize:!accessing!public! !
-!ExternalPointer categoriesFor: #initialize:!initializing!public! !
-!ExternalPointer categoriesFor: #size!accessing!public! !
+!ExternalPointer categoriesForMethods!
+byteSize!accessing!public! !
+byteSize:!accessing!public! !
+initialize:!initializing!public! !
+size!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #StyledGradientBrush
 	instanceVariableNames: 'startColor endColor startPoint endPoint'
@@ -78,19 +78,21 @@ startPoint
 
 startPoint: aPoint 
 	startPoint := aPoint! !
-!StyledGradientBrush categoriesFor: #asBackgroundGdiplusBrushFor:!converting!public! !
-!StyledGradientBrush categoriesFor: #endColor!accessing!public! !
-!StyledGradientBrush categoriesFor: #endColor:!accessing!public! !
-!StyledGradientBrush categoriesFor: #endColorARGB!converting!public! !
-!StyledGradientBrush categoriesFor: #endPoint!accessing!public! !
-!StyledGradientBrush categoriesFor: #endPoint:!accessing!public! !
-!StyledGradientBrush categoriesFor: #isPartlyTransparent!public!testing! !
-!StyledGradientBrush categoriesFor: #printOn:!printing!public! !
-!StyledGradientBrush categoriesFor: #startColor!accessing!public! !
-!StyledGradientBrush categoriesFor: #startColor:!accessing!public! !
-!StyledGradientBrush categoriesFor: #startColorARGB!converting!public! !
-!StyledGradientBrush categoriesFor: #startPoint!accessing!public! !
-!StyledGradientBrush categoriesFor: #startPoint:!accessing!public! !
+!StyledGradientBrush categoriesForMethods!
+asBackgroundGdiplusBrushFor:!converting!public! !
+endColor!accessing!public! !
+endColor:!accessing!public! !
+endColorARGB!converting!public! !
+endPoint!accessing!public! !
+endPoint:!accessing!public! !
+isPartlyTransparent!public!testing! !
+printOn:!printing!public! !
+startColor!accessing!public! !
+startColor:!accessing!public! !
+startColorARGB!converting!public! !
+startPoint!accessing!public! !
+startPoint:!accessing!public! !
+!
 
 !StyledGradientBrush class methodsFor!
 
@@ -141,13 +143,15 @@ new
 
 white
 	^self color: Color white! !
-!StyledGradientBrush class categoriesFor: #black!instance creation!public! !
-!StyledGradientBrush class categoriesFor: #color:!instance creation!public! !
-!StyledGradientBrush class categoriesFor: #face3dLeftToRightFade!instance creation!public! !
-!StyledGradientBrush class categoriesFor: #face3dTopLeftToBottomRightFade!instance creation!public! !
-!StyledGradientBrush class categoriesFor: #face3dTopToBottomFade!instance creation!public! !
-!StyledGradientBrush class categoriesFor: #from:at:to:at:!instance creation!public! !
-!StyledGradientBrush class categoriesFor: #icon!constants!development!public! !
-!StyledGradientBrush class categoriesFor: #new!instance creation!public! !
-!StyledGradientBrush class categoriesFor: #white!instance creation!public! !
+!StyledGradientBrush class categoriesForMethods!
+black!instance creation!public! !
+color:!instance creation!public! !
+face3dLeftToRightFade!instance creation!public! !
+face3dTopLeftToBottomRightFade!instance creation!public! !
+face3dTopToBottomFade!instance creation!public! !
+from:at:to:at:!instance creation!public! !
+icon!constants!development!public! !
+new!instance creation!public! !
+white!instance creation!public! !
+!
 

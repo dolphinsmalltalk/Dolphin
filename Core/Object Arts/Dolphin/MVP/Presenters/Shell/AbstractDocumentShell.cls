@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Shell subclass: #AbstractDocumentShell
 	instanceVariableNames: 'filename'
@@ -318,41 +318,43 @@ updateCaption
 				nextPutAll: suffix].
 	self isModified ifTrue: [stream nextPut: $*].
 	self caption: stream contents! !
-!AbstractDocumentShell categoriesFor: #addToRecentList:!public! !
-!AbstractDocumentShell categoriesFor: #basicCaption!accessing!private! !
-!AbstractDocumentShell categoriesFor: #canSave!public!testing! !
-!AbstractDocumentShell categoriesFor: #canSaveState!private!saved state! !
-!AbstractDocumentShell categoriesFor: #createSchematicWiring!initializing!public! !
-!AbstractDocumentShell categoriesFor: #fileClearRecentList!commands!public! !
-!AbstractDocumentShell categoriesFor: #fileLoad!commands!public! !
-!AbstractDocumentShell categoriesFor: #filename!accessing!public! !
-!AbstractDocumentShell categoriesFor: #filename:!accessing!public! !
-!AbstractDocumentShell categoriesFor: #fileOpen!commands!public! !
-!AbstractDocumentShell categoriesFor: #fileRevert!commands!public! !
-!AbstractDocumentShell categoriesFor: #fileSave!commands!public! !
-!AbstractDocumentShell categoriesFor: #fileSaveAs!commands!public! !
-!AbstractDocumentShell categoriesFor: #getDocumentData!accessing!private! !
-!AbstractDocumentShell categoriesFor: #getRecentList!private! !
-!AbstractDocumentShell categoriesFor: #hasContents!public! !
-!AbstractDocumentShell categoriesFor: #hasFilename!public!testing! !
-!AbstractDocumentShell categoriesFor: #isModified!public!testing! !
-!AbstractDocumentShell categoriesFor: #isModified:!modes!not an aspect!public! !
-!AbstractDocumentShell categoriesFor: #isText!public!testing! !
-!AbstractDocumentShell categoriesFor: #onAboutToDisplayMenu:!event handling!private! !
-!AbstractDocumentShell categoriesFor: #onCloseRequested:!event handling!private! !
-!AbstractDocumentShell categoriesFor: #onPromptToSaveChanges:!private!testing! !
-!AbstractDocumentShell categoriesFor: #openOn:!public! !
-!AbstractDocumentShell categoriesFor: #promptToSaveChanges!commands!private! !
-!AbstractDocumentShell categoriesFor: #queryCommand:!commands!private! !
-!AbstractDocumentShell categoriesFor: #saveChangesPrompt!private! !
-!AbstractDocumentShell categoriesFor: #saveDocument!operations!private! !
-!AbstractDocumentShell categoriesFor: #saveDocumentAs!operations!private! !
-!AbstractDocumentShell categoriesFor: #setDocumentData:!accessing!private! !
-!AbstractDocumentShell categoriesFor: #setRecentList:!private! !
-!AbstractDocumentShell categoriesFor: #shortCaption!accessing!public! !
-!AbstractDocumentShell categoriesFor: #streamIn:!private!streaming! !
-!AbstractDocumentShell categoriesFor: #streamOut:!private!streaming! !
-!AbstractDocumentShell categoriesFor: #updateCaption!private!updating! !
+!AbstractDocumentShell categoriesForMethods!
+addToRecentList:!public! !
+basicCaption!accessing!private! !
+canSave!public!testing! !
+canSaveState!private!saved state! !
+createSchematicWiring!initializing!public! !
+fileClearRecentList!commands!public! !
+fileLoad!commands!public! !
+filename!accessing!public! !
+filename:!accessing!public! !
+fileOpen!commands!public! !
+fileRevert!commands!public! !
+fileSave!commands!public! !
+fileSaveAs!commands!public! !
+getDocumentData!accessing!private! !
+getRecentList!private! !
+hasContents!public! !
+hasFilename!public!testing! !
+isModified!public!testing! !
+isModified:!modes!not an aspect!public! !
+isText!public!testing! !
+onAboutToDisplayMenu:!event handling!private! !
+onCloseRequested:!event handling!private! !
+onPromptToSaveChanges:!private!testing! !
+openOn:!public! !
+promptToSaveChanges!commands!private! !
+queryCommand:!commands!private! !
+saveChangesPrompt!private! !
+saveDocument!operations!private! !
+saveDocumentAs!operations!private! !
+setDocumentData:!accessing!private! !
+setRecentList:!private! !
+shortCaption!accessing!public! !
+streamIn:!private!streaming! !
+streamOut:!private!streaming! !
+updateCaption!private!updating! !
+!
 
 AbstractDocumentShell methodProtocol: #documentPresenter attributes: #(#readOnly) selectors: #(#ensureVisible #fileLoad #filename #filename: #fileOpen #fileRevert #fileSave #fileSaveAs #getDocumentData #hasFilename #isModified #isModified: #isText #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setDocumentData: #setFocus #show #streamIn: #streamOut: #topShell #view)!
 
@@ -406,11 +408,13 @@ openOn: aStringFilename
 	^(self show)
 		openOn: aStringFilename;
 		yourself! !
-!AbstractDocumentShell class categoriesFor: #defaultFileExtension!constants!public! !
-!AbstractDocumentShell class categoriesFor: #filename:!instance creation!public! !
-!AbstractDocumentShell class categoriesFor: #fileTypes!constants!public! !
-!AbstractDocumentShell class categoriesFor: #getFilename!instance creation!private! !
-!AbstractDocumentShell class categoriesFor: #icon!constants!public! !
-!AbstractDocumentShell class categoriesFor: #open!instance creation!public! !
-!AbstractDocumentShell class categoriesFor: #openOn:!instance creation!public! !
+!AbstractDocumentShell class categoriesForMethods!
+defaultFileExtension!constants!public! !
+filename:!instance creation!public! !
+fileTypes!constants!public! !
+getFilename!instance creation!private! !
+icon!constants!public! !
+open!instance creation!public! !
+openOn:!instance creation!public! !
+!
 

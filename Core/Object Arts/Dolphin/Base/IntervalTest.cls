@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequenceableCollectionTest subclass: #IntervalTest
 	instanceVariableNames: ''
@@ -208,22 +208,24 @@ testStoreOn
 			expr := each storeString.
 			copy := Compiler evaluate: expr.
 			self assert: copy equals: each]! !
-!IntervalTest categoriesFor: #assimilate:!public!unit tests! !
-!IntervalTest categoriesFor: #assimilateResultElement:!helpers!private! !
-!IntervalTest categoriesFor: #collectionClass!helpers!private! !
-!IntervalTest categoriesFor: #newCollection:!private!unit tests! !
-!IntervalTest categoriesFor: #testCollect!public!unit tests! !
-!IntervalTest categoriesFor: #testEquals!public!testing! !
-!IntervalTest categoriesFor: #testEquals2!public!testing! !
-!IntervalTest categoriesFor: #testEquals3!public!testing! !
-!IntervalTest categoriesFor: #testEquals4!public!testing! !
-!IntervalTest categoriesFor: #testEquals5!public!testing! !
-!IntervalTest categoriesFor: #testEquals6!public!unit tests! !
-!IntervalTest categoriesFor: #testFromToBy!public!unit tests! !
-!IntervalTest categoriesFor: #testIncludes!public!unit tests! !
-!IntervalTest categoriesFor: #testIsEmpty!public!unit tests! !
-!IntervalTest categoriesFor: #testPrintString!public!unit tests! !
-!IntervalTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
-!IntervalTest categoriesFor: #testResize!public!unit tests! !
-!IntervalTest categoriesFor: #testStoreOn!public!unit tests! !
+!IntervalTest categoriesForMethods!
+assimilate:!public!unit tests! !
+assimilateResultElement:!helpers!private! !
+collectionClass!helpers!private! !
+newCollection:!private!unit tests! !
+testCollect!public!unit tests! !
+testEquals!public!testing! !
+testEquals2!public!testing! !
+testEquals3!public!testing! !
+testEquals4!public!testing! !
+testEquals5!public!testing! !
+testEquals6!public!unit tests! !
+testFromToBy!public!unit tests! !
+testIncludes!public!unit tests! !
+testIsEmpty!public!unit tests! !
+testPrintString!public!unit tests! !
+testReplaceFromToWithStartingAt!public!unit tests! !
+testResize!public!unit tests! !
+testStoreOn!public!unit tests! !
+!
 

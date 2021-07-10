@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VariableRefactoring subclass: #RenameClassVariableRefactoring
 	instanceVariableNames: 'newName'
@@ -56,11 +56,13 @@ transform
 		renameClassVariable: variableName
 		to: newName
 		around: [self renameReferences]! !
-!RenameClassVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!RenameClassVariableRefactoring categoriesFor: #rename:to:in:!initialize/release!public! !
-!RenameClassVariableRefactoring categoriesFor: #renameReferences!public!transforming! !
-!RenameClassVariableRefactoring categoriesFor: #storeOn:!printing!public! !
-!RenameClassVariableRefactoring categoriesFor: #transform!public!transforming! !
+!RenameClassVariableRefactoring categoriesForMethods!
+preconditions!preconditions!public! !
+rename:to:in:!initialize/release!public! !
+renameReferences!public!transforming! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !RenameClassVariableRefactoring class methodsFor!
 
@@ -77,6 +79,8 @@ rename: aVarName to: aName in: aClass
 		rename: aVarName
 		to: aName
 		in: aClass! !
-!RenameClassVariableRefactoring class categoriesFor: #model:rename:to:in:!instance creation!public! !
-!RenameClassVariableRefactoring class categoriesFor: #rename:to:in:!instance creation!public! !
+!RenameClassVariableRefactoring class categoriesForMethods!
+model:rename:to:in:!instance creation!public! !
+rename:to:in:!instance creation!public! !
+!
 

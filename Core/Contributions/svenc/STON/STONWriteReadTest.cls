@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #STONWriteReadTest
 	instanceVariableNames: ''
@@ -286,35 +286,37 @@ testUUIDs
 		UUID new.
 		UUID nilUUID }.
 	self serializeAndMaterialize: uuids! !
-!STONWriteReadTest categoriesFor: #environment!private! !
-!STONWriteReadTest categoriesFor: #materialize:!private! !
-!STONWriteReadTest categoriesFor: #serialize:!private! !
-!STONWriteReadTest categoriesFor: #serializeAndMaterialize:!private! !
-!STONWriteReadTest categoriesFor: #serializeAndMaterializeJsonMode:!private! !
-!STONWriteReadTest categoriesFor: #serializeJson:!private! !
-!STONWriteReadTest categoriesFor: #testAssociations!public!tests! !
-!STONWriteReadTest categoriesFor: #testCharacters!public!tests! !
-!STONWriteReadTest categoriesFor: #testClasses!public!tests! !
-!STONWriteReadTest categoriesFor: #testCollections!public!tests! !
-!STONWriteReadTest categoriesFor: #testCollectionsStructured!public!tests! !
-!STONWriteReadTest categoriesFor: #testColors!public!tests! !
-!STONWriteReadTest categoriesFor: #testCustomAssociations!public!tests! !
-!STONWriteReadTest categoriesFor: #testDatesAndTimes!public!tests! !
-!STONWriteReadTest categoriesFor: #testDomainObject!public!tests! !
-!STONWriteReadTest categoriesFor: #testEmpty!public!tests! !
-!STONWriteReadTest categoriesFor: #testFloats!public!tests! !
-!STONWriteReadTest categoriesFor: #testFractions!public!tests! !
-!STONWriteReadTest categoriesFor: #testIdentityCollections!public!tests! !
-!STONWriteReadTest categoriesFor: #testIntervals!public!tests! !
-!STONWriteReadTest categoriesFor: #testJsonMode!public!tests! !
-!STONWriteReadTest categoriesFor: #testOrderedDictionary!public!tests! !
-!STONWriteReadTest categoriesFor: #testPrimitives!public!tests! !
-!STONWriteReadTest categoriesFor: #testSmallDictionary!public!tests! !
-!STONWriteReadTest categoriesFor: #testSmallIntegers!public!tests! !
-!STONWriteReadTest categoriesFor: #testSpecialCharacters!public!tests! !
-!STONWriteReadTest categoriesFor: #testStrings!public!tests! !
-!STONWriteReadTest categoriesFor: #testSymbols!public!tests! !
-!STONWriteReadTest categoriesFor: #testUser!public!tests! !
-!STONWriteReadTest categoriesFor: #testUser2!public!tests! !
-!STONWriteReadTest categoriesFor: #testUUIDs!public!tests! !
+!STONWriteReadTest categoriesForMethods!
+environment!private! !
+materialize:!private! !
+serialize:!private! !
+serializeAndMaterialize:!private! !
+serializeAndMaterializeJsonMode:!private! !
+serializeJson:!private! !
+testAssociations!public!tests! !
+testCharacters!public!tests! !
+testClasses!public!tests! !
+testCollections!public!tests! !
+testCollectionsStructured!public!tests! !
+testColors!public!tests! !
+testCustomAssociations!public!tests! !
+testDatesAndTimes!public!tests! !
+testDomainObject!public!tests! !
+testEmpty!public!tests! !
+testFloats!public!tests! !
+testFractions!public!tests! !
+testIdentityCollections!public!tests! !
+testIntervals!public!tests! !
+testJsonMode!public!tests! !
+testOrderedDictionary!public!tests! !
+testPrimitives!public!tests! !
+testSmallDictionary!public!tests! !
+testSmallIntegers!public!tests! !
+testSpecialCharacters!public!tests! !
+testStrings!public!tests! !
+testSymbols!public!tests! !
+testUser!public!tests! !
+testUser2!public!tests! !
+testUUIDs!public!tests! !
+!
 

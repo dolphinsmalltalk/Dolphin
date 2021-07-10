@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
 	instanceVariableNames: ''
@@ -44,10 +44,12 @@ RealmLength: anInteger
 	"Set the receiver's 'RealmLength' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_RealmLength put: anInteger! !
-!HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS categoriesFor: #Realm!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS categoriesFor: #Realm:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS categoriesFor: #RealmLength!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS categoriesFor: #RealmLength:!**compiled accessors**!public! !
+!HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS categoriesForMethods!
+Realm!**compiled accessors**!public! !
+Realm:!**compiled accessors**!public! !
+RealmLength!**compiled accessors**!public! !
+RealmLength:!**compiled accessors**!public! !
+!
 
 !HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS class methodsFor!
 
@@ -70,6 +72,8 @@ defineFields
 
 getFieldNames
 	^#(#RealmLength #Realm)! !
-!HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

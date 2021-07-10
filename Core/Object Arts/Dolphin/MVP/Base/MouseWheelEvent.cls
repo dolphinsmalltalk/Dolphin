@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MouseEvent subclass: #MouseWheelEvent
 	instanceVariableNames: ''
@@ -19,6 +19,8 @@ wheelRotation
 	"Answer the <number> of notches that the mouse wheel was rotated to generate this event."
 
 	^wParam highPartSigned / WHEEL_DELTA! !
-!MouseWheelEvent categoriesFor: #isVertical!public! !
-!MouseWheelEvent categoriesFor: #wheelRotation!public! !
+!MouseWheelEvent categoriesForMethods!
+isVertical!public! !
+wheelRotation!public! !
+!
 

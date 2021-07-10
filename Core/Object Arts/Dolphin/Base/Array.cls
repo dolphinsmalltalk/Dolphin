@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ArrayedCollection variableSubclass: #Array
 	instanceVariableNames: ''
@@ -98,14 +98,16 @@ storeOn: aStream
 			aStream nextPut: ${.
 			self do: [:each | each storeOn: aStream] separatedBy: [aStream nextPutAll: '. '].
 			aStream nextPut: $}]! !
-!Array categoriesFor: #addAnsweringIndex:!adding!public! !
-!Array categoriesFor: #asArray!converting!public! !
-!Array categoriesFor: #isLiteral!public!testing! !
-!Array categoriesFor: #printPrefixOn:!printing!private! !
-!Array categoriesFor: #refersToLiteral:!private!testing! !
-!Array categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
-!Array categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!Array categoriesFor: #storeOn:!printing!public! !
+!Array categoriesForMethods!
+addAnsweringIndex:!adding!public! !
+asArray!converting!public! !
+isLiteral!public!testing! !
+printPrefixOn:!printing!private! !
+refersToLiteral:!private!testing! !
+replaceElementsOf:from:to:startingAt:!private!replacing! !
+replaceFrom:to:with:startingAt:!public!replacing! !
+storeOn:!printing!public! !
+!
 
 Array methodProtocol: #Array attributes: #(#ansi #readOnly) selectors: #(#, #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:put: #atAll:put: #atAllPut: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #replaceFrom:to:with: #replaceFrom:to:with:startingAt: #replaceFrom:to:withObject: #reverse #reverseDo: #select: #size #with:do:)!
 
@@ -164,11 +166,13 @@ with: element1 with: element2 with: element3 with: element4 with: element5
 
 	<primitive: 157>
 	^{element1. element2. element3. element4. element5}! !
-!Array class categoriesFor: #empty!instance creation!public! !
-!Array class categoriesFor: #newFromStack:!instance creation!must not strip!private! !
-!Array class categoriesFor: #with:!instance creation!public! !
-!Array class categoriesFor: #with:with:!instance creation!public! !
-!Array class categoriesFor: #with:with:with:!instance creation!public! !
-!Array class categoriesFor: #with:with:with:with:!instance creation!public! !
-!Array class categoriesFor: #with:with:with:with:with:!instance creation!public! !
+!Array class categoriesForMethods!
+empty!instance creation!public! !
+newFromStack:!instance creation!must not strip!private! !
+with:!instance creation!public! !
+with:with:!instance creation!public! !
+with:with:with:!instance creation!public! !
+with:with:with:with:!instance creation!public! !
+with:with:with:with:with:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StVariable subclass: #StSpecialVariable
 	instanceVariableNames: ''
@@ -15,5 +15,7 @@ isConstant
 	variables self, super and thisContext, cannot be assigned to."
 
 	^true! !
-!StSpecialVariable categoriesFor: #isConstant!public!testing! !
+!StSpecialVariable categoriesForMethods!
+isConstant!public!testing! !
+!
 

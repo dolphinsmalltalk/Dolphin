@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TreeModel subclass: #ExpandingTreeModel
 	instanceVariableNames: 'getChildrenBlock hasChildrenBlock'
@@ -111,17 +111,19 @@ size
 	count the number of nodes in the tree when fully expanded."
 
 	^self countElements! !
-!ExpandingTreeModel categoriesFor: #approxSize!accessing!private! !
-!ExpandingTreeModel categoriesFor: #childrenOfNode:!hierarchy!private! !
-!ExpandingTreeModel categoriesFor: #defaultGetChildrenBlock!initializing!private! !
-!ExpandingTreeModel categoriesFor: #expandNodeChildren:!hierarchy!private! !
-!ExpandingTreeModel categoriesFor: #getChildrenBlock!accessing!public! !
-!ExpandingTreeModel categoriesFor: #getChildrenBlock:!accessing!public! !
-!ExpandingTreeModel categoriesFor: #getChildrenOfNode:!hierarchy!private! !
-!ExpandingTreeModel categoriesFor: #hasChildren:!hierarchy!public!testing! !
-!ExpandingTreeModel categoriesFor: #hasChildrenBlock!accessing!public! !
-!ExpandingTreeModel categoriesFor: #hasChildrenBlock:!accessing!public! !
-!ExpandingTreeModel categoriesFor: #initialize!initializing!private! !
-!ExpandingTreeModel categoriesFor: #roots!hierarchy!public! !
-!ExpandingTreeModel categoriesFor: #size!accessing!public! !
+!ExpandingTreeModel categoriesForMethods!
+approxSize!accessing!private! !
+childrenOfNode:!hierarchy!private! !
+defaultGetChildrenBlock!initializing!private! !
+expandNodeChildren:!hierarchy!private! !
+getChildrenBlock!accessing!public! !
+getChildrenBlock:!accessing!public! !
+getChildrenOfNode:!hierarchy!private! !
+hasChildren:!hierarchy!public!testing! !
+hasChildrenBlock!accessing!public! !
+hasChildrenBlock:!accessing!public! !
+initialize!initializing!private! !
+roots!hierarchy!public! !
+size!accessing!public! !
+!
 

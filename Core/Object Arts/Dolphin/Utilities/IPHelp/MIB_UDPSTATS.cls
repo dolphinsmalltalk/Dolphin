@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #MIB_UDPSTATS
 	instanceVariableNames: ''
@@ -55,11 +55,13 @@ dwOutDatagrams
 	"Answer the <Integer> value of the receiver's 'dwOutDatagrams' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwOutDatagrams! !
-!MIB_UDPSTATS categoriesFor: #dwInDatagrams!**compiled accessors**!public! !
-!MIB_UDPSTATS categoriesFor: #dwInErrors!**compiled accessors**!public! !
-!MIB_UDPSTATS categoriesFor: #dwNoPorts!**compiled accessors**!public! !
-!MIB_UDPSTATS categoriesFor: #dwNumAddrs!**compiled accessors**!public! !
-!MIB_UDPSTATS categoriesFor: #dwOutDatagrams!**compiled accessors**!public! !
+!MIB_UDPSTATS categoriesForMethods!
+dwInDatagrams!**compiled accessors**!public! !
+dwInErrors!**compiled accessors**!public! !
+dwNoPorts!**compiled accessors**!public! !
+dwNumAddrs!**compiled accessors**!public! !
+dwOutDatagrams!**compiled accessors**!public! !
+!
 
 !MIB_UDPSTATS class methodsFor!
 
@@ -87,6 +89,8 @@ defineFields
 
 getFieldNames
 	^#(#dwInDatagrams #dwNoPorts #dwInErrors #dwOutDatagrams #dwNumAddrs)! !
-!MIB_UDPSTATS class categoriesFor: #defineFields!initializing!public! !
-!MIB_UDPSTATS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MIB_UDPSTATS class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

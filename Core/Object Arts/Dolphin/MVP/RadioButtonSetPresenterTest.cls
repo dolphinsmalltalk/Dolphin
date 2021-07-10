@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #RadioButtonSetPresenterTest
 	instanceVariableNames: 'radioSet'
@@ -76,12 +76,14 @@ testValueSelection
 	radioSet value: nil.
 	self assertIsNil: radioSet value.
 	self assertIsNil: self selectedButton! !
-!RadioButtonSetPresenterTest categoriesFor: #selectedButton!private!unit tests! !
-!RadioButtonSetPresenterTest categoriesFor: #selectedButtons!private!unit tests! !
-!RadioButtonSetPresenterTest categoriesFor: #setUp!public!running! !
-!RadioButtonSetPresenterTest categoriesFor: #tearDown!public!running! !
-!RadioButtonSetPresenterTest categoriesFor: #testDisableEnableAll!public!unit tests! !
-!RadioButtonSetPresenterTest categoriesFor: #testEvents!public!unit tests! !
-!RadioButtonSetPresenterTest categoriesFor: #testInitialValue!public!unit tests! !
-!RadioButtonSetPresenterTest categoriesFor: #testValueSelection!public!unit tests! !
+!RadioButtonSetPresenterTest categoriesForMethods!
+selectedButton!private!unit tests! !
+selectedButtons!private!unit tests! !
+setUp!public!running! !
+tearDown!public!running! !
+testDisableEnableAll!public!unit tests! !
+testEvents!public!unit tests! !
+testInitialValue!public!unit tests! !
+testValueSelection!public!unit tests! !
+!
 

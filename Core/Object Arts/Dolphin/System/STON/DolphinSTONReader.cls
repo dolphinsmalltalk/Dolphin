@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STONReader subclass: #DolphinSTONReader
 	instanceVariableNames: 'classInstVarMaps currentCharacter objectProperties renamedClasses'
@@ -412,52 +412,54 @@ storeReference: object
 
 stringStreamContents: block
 	self shouldNotImplement! !
-!DolphinSTONReader categoriesFor: #atEnd!private!testing! !
-!DolphinSTONReader categoriesFor: #consumeWhitespace!helpers!private! !
-!DolphinSTONReader categoriesFor: #error:!error handling!private! !
-!DolphinSTONReader categoriesFor: #expectChar:!helpers!private! !
-!DolphinSTONReader categoriesFor: #initialize!initialize/release!private! !
-!DolphinSTONReader categoriesFor: #instVarMapFor:!private! !
-!DolphinSTONReader categoriesFor: #isClassChar:!helpers!private! !
-!DolphinSTONReader categoriesFor: #isClassStartChar:!helpers!private! !
-!DolphinSTONReader categoriesFor: #isList!public!testing! !
-!DolphinSTONReader categoriesFor: #lookupClass:!helpers!private! !
-!DolphinSTONReader categoriesFor: #match:do:!helpers!private! !
-!DolphinSTONReader categoriesFor: #matchChar:!helpers!private! !
-!DolphinSTONReader categoriesFor: #newReference!helpers!private! !
-!DolphinSTONReader categoriesFor: #next!public! !
-!DolphinSTONReader categoriesFor: #objectProperties!private! !
-!DolphinSTONReader categoriesFor: #on:!initialize/release!private! !
-!DolphinSTONReader categoriesFor: #parseCharacter!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseCharacterConvertingNewLinesOn:!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseCharacterHexDigit!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseClass!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseConstant!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseEscapedCharacter!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseList!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseListDo:!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseListSingleton!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseMapDo:!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseMapOrListRepresentation!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseNamedInstVarsFor:!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseNumber!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseNumberExponent!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseNumberFraction!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseNumberInteger!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseObject!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseReference!public! !
-!DolphinSTONReader categoriesFor: #parseSimpleValue!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseStringInternal!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseSymbol!parsing!private! !
-!DolphinSTONReader categoriesFor: #parseTrailingSurrogateHexEscape!parsing!private! !
-!DolphinSTONReader categoriesFor: #peekFor:!operations!private! !
-!DolphinSTONReader categoriesFor: #processSubObjectsOf:!private! !
-!DolphinSTONReader categoriesFor: #registerNewObject:!parsing!private! !
-!DolphinSTONReader categoriesFor: #renamedClasses!helpers!private! !
-!DolphinSTONReader categoriesFor: #resolveReference:!private! !
-!DolphinSTONReader categoriesFor: #resolveReferenceIndex:!private! !
-!DolphinSTONReader categoriesFor: #storeReference:!helpers!private! !
-!DolphinSTONReader categoriesFor: #stringStreamContents:!helpers!private! !
+!DolphinSTONReader categoriesForMethods!
+atEnd!private!testing! !
+consumeWhitespace!helpers!private! !
+error:!error handling!private! !
+expectChar:!helpers!private! !
+initialize!initialize/release!private! !
+instVarMapFor:!private! !
+isClassChar:!helpers!private! !
+isClassStartChar:!helpers!private! !
+isList!public!testing! !
+lookupClass:!helpers!private! !
+match:do:!helpers!private! !
+matchChar:!helpers!private! !
+newReference!helpers!private! !
+next!public! !
+objectProperties!private! !
+on:!initialize/release!private! !
+parseCharacter!parsing!private! !
+parseCharacterConvertingNewLinesOn:!parsing!private! !
+parseCharacterHexDigit!parsing!private! !
+parseClass!parsing!private! !
+parseConstant!parsing!private! !
+parseEscapedCharacter!parsing!private! !
+parseList!parsing!private! !
+parseListDo:!parsing!private! !
+parseListSingleton!parsing!private! !
+parseMapDo:!parsing!private! !
+parseMapOrListRepresentation!parsing!private! !
+parseNamedInstVarsFor:!parsing!private! !
+parseNumber!parsing!private! !
+parseNumberExponent!parsing!private! !
+parseNumberFraction!parsing!private! !
+parseNumberInteger!parsing!private! !
+parseObject!parsing!private! !
+parseReference!public! !
+parseSimpleValue!parsing!private! !
+parseStringInternal!parsing!private! !
+parseSymbol!parsing!private! !
+parseTrailingSurrogateHexEscape!parsing!private! !
+peekFor:!operations!private! !
+processSubObjectsOf:!private! !
+registerNewObject:!parsing!private! !
+renamedClasses!helpers!private! !
+resolveReference:!private! !
+resolveReferenceIndex:!private! !
+storeReference:!helpers!private! !
+stringStreamContents:!helpers!private! !
+!
 
 !DolphinSTONReader class methodsFor!
 
@@ -489,6 +491,8 @@ initializeHexDigitValues
 	$a codePoint to: $f codePoint
 		do: [:each | digitValues at: each + 1 put: each - ##($a codePoint - 10)].
 	self addClassConstant: 'HexDigitValues' value: digitValues! !
-!DolphinSTONReader class categoriesFor: #initialize!initializing!public! !
-!DolphinSTONReader class categoriesFor: #initializeHexDigitValues!initializing!private! !
+!DolphinSTONReader class categoriesForMethods!
+initialize!initializing!public! !
+initializeHexDigitValues!initializing!private! !
+!
 

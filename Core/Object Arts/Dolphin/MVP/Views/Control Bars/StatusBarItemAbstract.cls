@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #StatusBarItemAbstract
 	instanceVariableNames: 'border width parentView model'
@@ -213,38 +213,40 @@ width: widthInteger
 
 	width := widthInteger.
 	self update! !
-!StatusBarItemAbstract categoriesFor: #beFullWidth!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #border!accessing!private! !
-!StatusBarItemAbstract categoriesFor: #border:!accessing!private! !
-!StatusBarItemAbstract categoriesFor: #borderStyle!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #borderStyle:!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #drawItem:bounding:!drawing!private! !
-!StatusBarItemAbstract categoriesFor: #extent:!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #getText!private!updating! !
-!StatusBarItemAbstract categoriesFor: #getTipText!private!updating! !
-!StatusBarItemAbstract categoriesFor: #hasParentView!private!views! !
-!StatusBarItemAbstract categoriesFor: #initialize!initializing!private! !
-!StatusBarItemAbstract categoriesFor: #invalidate!drawing!public! !
-!StatusBarItemAbstract categoriesFor: #model!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #model:!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #name!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #name:!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #onClick:!event handling!public! !
-!StatusBarItemAbstract categoriesFor: #onDoubleClick:!event handling!public! !
-!StatusBarItemAbstract categoriesFor: #onRightClick:!event handling!public! !
-!StatusBarItemAbstract categoriesFor: #onValueChanged!event handling!public! !
-!StatusBarItemAbstract categoriesFor: #onViewOpened!event handling!public! !
-!StatusBarItemAbstract categoriesFor: #parentView!accessing!private! !
-!StatusBarItemAbstract categoriesFor: #parentView:!accessing!private! !
-!StatusBarItemAbstract categoriesFor: #presenter:!initializing!public! !
-!StatusBarItemAbstract categoriesFor: #presenterConnectionPoint!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #rectangle!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #refreshContents!public!updating! !
-!StatusBarItemAbstract categoriesFor: #style!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #update!private!updating! !
-!StatusBarItemAbstract categoriesFor: #updateTipText!private!updating! !
-!StatusBarItemAbstract categoriesFor: #width!accessing!public! !
-!StatusBarItemAbstract categoriesFor: #width:!accessing!public! !
+!StatusBarItemAbstract categoriesForMethods!
+beFullWidth!accessing!public! !
+border!accessing!private! !
+border:!accessing!private! !
+borderStyle!accessing!public! !
+borderStyle:!accessing!public! !
+drawItem:bounding:!drawing!private! !
+extent:!accessing!public! !
+getText!private!updating! !
+getTipText!private!updating! !
+hasParentView!private!views! !
+initialize!initializing!private! !
+invalidate!drawing!public! !
+model!accessing!public! !
+model:!accessing!public! !
+name!accessing!public! !
+name:!accessing!public! !
+onClick:!event handling!public! !
+onDoubleClick:!event handling!public! !
+onRightClick:!event handling!public! !
+onValueChanged!event handling!public! !
+onViewOpened!event handling!public! !
+parentView!accessing!private! !
+parentView:!accessing!private! !
+presenter:!initializing!public! !
+presenterConnectionPoint!accessing!public! !
+rectangle!accessing!public! !
+refreshContents!public!updating! !
+style!accessing!public! !
+update!private!updating! !
+updateTipText!private!updating! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 !StatusBarItemAbstract class methodsFor!
 
@@ -272,7 +274,9 @@ separator: width
 		width: width;
 		borderStyle: #noBorder;
 		yourself! !
-!StatusBarItemAbstract class categoriesFor: #initialize!development!initializing!private! !
-!StatusBarItemAbstract class categoriesFor: #new!instance creation!public! !
-!StatusBarItemAbstract class categoriesFor: #separator:!instance creation!public! !
+!StatusBarItemAbstract class categoriesForMethods!
+initialize!development!initializing!private! !
+new!instance creation!public! !
+separator:!instance creation!public! !
+!
 

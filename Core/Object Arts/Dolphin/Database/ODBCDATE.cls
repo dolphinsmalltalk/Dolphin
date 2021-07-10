@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #ODBCDATE
 	instanceVariableNames: ''
@@ -60,14 +60,16 @@ year: anInteger
 	"Set the receiver's 'year' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_year put: anInteger! !
-!ODBCDATE categoriesFor: #asDate!converting!public! !
-!ODBCDATE categoriesFor: #date:!accessing!public! !
-!ODBCDATE categoriesFor: #day!**compiled accessors**!public! !
-!ODBCDATE categoriesFor: #day:!**compiled accessors**!public! !
-!ODBCDATE categoriesFor: #month!**compiled accessors**!public! !
-!ODBCDATE categoriesFor: #month:!**compiled accessors**!public! !
-!ODBCDATE categoriesFor: #year!**compiled accessors**!public! !
-!ODBCDATE categoriesFor: #year:!**compiled accessors**!public! !
+!ODBCDATE categoriesForMethods!
+asDate!converting!public! !
+date:!accessing!public! !
+day!**compiled accessors**!public! !
+day:!**compiled accessors**!public! !
+month!**compiled accessors**!public! !
+month:!**compiled accessors**!public! !
+year!**compiled accessors**!public! !
+year:!**compiled accessors**!public! !
+!
 
 !ODBCDATE class methodsFor!
 
@@ -94,7 +96,9 @@ fromDate: aDate
 
 getFieldNames
 	^#(#year #month #day)! !
-!ODBCDATE class categoriesFor: #defineFields!public!template definition! !
-!ODBCDATE class categoriesFor: #fromDate:!instance creation!public! !
-!ODBCDATE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!ODBCDATE class categoriesForMethods!
+defineFields!public!template definition! !
+fromDate:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

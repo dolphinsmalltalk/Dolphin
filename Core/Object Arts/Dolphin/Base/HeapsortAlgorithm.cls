@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PluggableSortAlgorithm subclass: #HeapsortAlgorithm
 	instanceVariableNames: ''
@@ -21,5 +21,7 @@ sort: anObject from: startInteger to: stopInteger
 		heapsort: anObject
 		from: startInteger
 		to: stopInteger! !
-!HeapsortAlgorithm categoriesFor: #sort:from:to:!operations!public! !
+!HeapsortAlgorithm categoriesForMethods!
+sort:from:to:!operations!public! !
+!
 

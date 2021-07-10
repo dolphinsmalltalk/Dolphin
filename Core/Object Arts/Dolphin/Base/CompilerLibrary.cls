@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #CompilerLibrary
 	instanceVariableNames: ''
@@ -27,8 +27,10 @@ compileForEvaluation: aCompiler source: aString in: aClass evaluationPools: anAr
 
 	<stdcall: oop CompileForEval oop lpvoid ote ote sdword oop>
 	^self invalidCall: _failureCode! !
-!CompilerLibrary categoriesFor: #compile:source:in:flags:notifying:!compiling!private! !
-!CompilerLibrary categoriesFor: #compileForEvaluation:source:in:evaluationPools:flags:notifying:!compiling!private! !
+!CompilerLibrary categoriesForMethods!
+compile:source:in:flags:notifying:!compiling!private! !
+compileForEvaluation:source:in:evaluationPools:flags:notifying:!compiling!private! !
+!
 
 !CompilerLibrary class methodsFor!
 
@@ -37,5 +39,7 @@ fileName
 	the receiver represents."
 
 	^VMLibrary default compilerFileName! !
-!CompilerLibrary class categoriesFor: #fileName!constants!public! !
+!CompilerLibrary class categoriesForMethods!
+fileName!constants!public! !
+!
 

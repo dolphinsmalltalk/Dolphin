@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMREXCLUDECLIPRECT
 	instanceVariableNames: ''
@@ -37,8 +37,10 @@ rclClip: aRECT
 		from: ##(_OffsetOf_rclClip + 1)
 		to: ##(_OffsetOf_rclClip + RECT basicByteSize)
 		startingAt: 1! !
-!EMREXCLUDECLIPRECT categoriesFor: #rclClip!**compiled accessors**!public! !
-!EMREXCLUDECLIPRECT categoriesFor: #rclClip:!**compiled accessors**!public! !
+!EMREXCLUDECLIPRECT categoriesForMethods!
+rclClip!**compiled accessors**!public! !
+rclClip:!**compiled accessors**!public! !
+!
 
 !EMREXCLUDECLIPRECT class methodsFor!
 
@@ -66,7 +68,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXCLUDECLIPRECT with: EMR_INTERSECTCLIPRECT! !
-!EMREXCLUDECLIPRECT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMREXCLUDECLIPRECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMREXCLUDECLIPRECT class categoriesFor: #iTypes!constants!public! !
+!EMREXCLUDECLIPRECT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

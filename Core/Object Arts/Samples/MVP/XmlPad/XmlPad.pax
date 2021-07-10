@@ -108,19 +108,25 @@ XmlDomVisitor subclass: #XmlFormatter
 
 formatAsText
 	^false! !
-!IXMLDOMComment categoriesFor: #formatAsText!public! !
+!IXMLDOMComment categoriesForMethods!
+formatAsText!public! !
+!
 
 !IXMLDOMEntityReference methodsFor!
 
 formatAsText
 	^true! !
-!IXMLDOMEntityReference categoriesFor: #formatAsText!public! !
+!IXMLDOMEntityReference categoriesForMethods!
+formatAsText!public! !
+!
 
 !IXMLDOMNode methodsFor!
 
 formatAsText
 	^self isText! !
-!IXMLDOMNode categoriesFor: #formatAsText!public! !
+!IXMLDOMNode categoriesForMethods!
+formatAsText!public! !
+!
 
 "End of package definition"!
 

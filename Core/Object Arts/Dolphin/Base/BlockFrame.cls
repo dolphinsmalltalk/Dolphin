@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StackFrame subclass: #BlockFrame
 	instanceVariableNames: ''
@@ -50,9 +50,11 @@ method: aCompiledMethod
 			block := block shallowCopy.
 			self environment: block].
 	block method: aCompiledMethod! !
-!BlockFrame categoriesFor: #argumentCount!accessing!public! !
-!BlockFrame categoriesFor: #block!accessing!private! !
-!BlockFrame categoriesFor: #displayOn:!printing!public! !
-!BlockFrame categoriesFor: #isBlockFrame!private!testing! !
-!BlockFrame categoriesFor: #method:!accessing!private! !
+!BlockFrame categoriesForMethods!
+argumentCount!accessing!public! !
+block!accessing!private! !
+displayOn:!printing!public! !
+isBlockFrame!private!testing! !
+method:!accessing!private! !
+!
 

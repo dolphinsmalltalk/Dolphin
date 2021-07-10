@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusTests subclass: #GdiplusInitializerTests
 	instanceVariableNames: 'constructorArgs'
@@ -22,7 +22,9 @@ testIsPersistent
 	"By default initializers can be persisted"
 
 	self assert: model isPersistent! !
-!GdiplusInitializerTests categoriesFor: #assertLastArgIsHandle!asserting!public! !
-!GdiplusInitializerTests categoriesFor: #testErrorWith!public!unit tests! !
-!GdiplusInitializerTests categoriesFor: #testIsPersistent!public!unit tests! !
+!GdiplusInitializerTests categoriesForMethods!
+assertLastArgIsHandle!asserting!public! !
+testErrorWith!public!unit tests! !
+testIsPersistent!public!unit tests! !
+!
 

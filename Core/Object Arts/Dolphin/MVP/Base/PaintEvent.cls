@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 WindowsEvent subclass: #PaintEvent
 	instanceVariableNames: 'hdc paintStruct'
@@ -42,11 +42,13 @@ window: aView wParam: anInteger hdc: dcExternalHandle paintStruct: aPAINTSTRUCT
 	lParam := 0.
 	hdc := dcExternalHandle.
 	paintStruct := aPAINTSTRUCT! !
-!PaintEvent categoriesFor: #canvas!accessing!public! !
-!PaintEvent categoriesFor: #hdc!accessing!public! !
-!PaintEvent categoriesFor: #paintStruct!accessing!public! !
-!PaintEvent categoriesFor: #printOn:!development!printing!public! !
-!PaintEvent categoriesFor: #window:wParam:hdc:paintStruct:!accessing!private! !
+!PaintEvent categoriesForMethods!
+canvas!accessing!public! !
+hdc!accessing!public! !
+paintStruct!accessing!public! !
+printOn:!development!printing!public! !
+window:wParam:hdc:paintStruct:!accessing!private! !
+!
 
 !PaintEvent class methodsFor!
 
@@ -58,5 +60,7 @@ window: aView wParam: wParam hdc: hdc paintStruct: ps
 		wParam: wParam
 		hdc: hdc
 		paintStruct: ps! !
-!PaintEvent class categoriesFor: #window:wParam:hdc:paintStruct:!instance creation!public! !
+!PaintEvent class categoriesForMethods!
+window:wParam:hdc:paintStruct:!instance creation!public! !
+!
 

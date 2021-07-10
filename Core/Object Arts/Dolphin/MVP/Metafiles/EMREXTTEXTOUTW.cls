@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 EMREXTTEXTOUT subclass: #EMREXTTEXTOUTW
 	instanceVariableNames: ''
@@ -27,8 +27,10 @@ text: anObject
 		to: _OffsetOf_text + size
 		startingAt: 1.
 	bytes wordAtOffset: _OffsetOf_text + size put: 0! !
-!EMREXTTEXTOUTW categoriesFor: #text!public! !
-!EMREXTTEXTOUTW categoriesFor: #text:!public! !
+!EMREXTTEXTOUTW categoriesForMethods!
+text!public! !
+text:!public! !
+!
 
 !EMREXTTEXTOUTW class methodsFor!
 
@@ -48,7 +50,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXTTEXTOUTW! !
-!EMREXTTEXTOUTW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMREXTTEXTOUTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMREXTTEXTOUTW class categoriesFor: #iTypes!constants!public! !
+!EMREXTTEXTOUTW class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

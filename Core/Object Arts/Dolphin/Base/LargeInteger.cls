@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Integer variableByteSubclass: #LargeInteger
 	instanceVariableNames: ''
@@ -475,50 +475,52 @@ subtractFromInteger: anInteger
 	and therefore it is better to send #+ that #addToInteger:."
 
 	^self negated + anInteger! !
-!LargeInteger categoriesFor: #-!arithmetic!public! !
-!LargeInteger categoriesFor: #*!arithmetic!public! !
-!LargeInteger categoriesFor: #/!arithmetic!public! !
-!LargeInteger categoriesFor: #//!arithmetic!public! !
-!LargeInteger categoriesFor: #\\!arithmetic!public! !
-!LargeInteger categoriesFor: #+!arithmetic!public! !
-!LargeInteger categoriesFor: #<!comparing!public! !
-!LargeInteger categoriesFor: #<=!comparing!public! !
-!LargeInteger categoriesFor: #=!comparing!public! !
-!LargeInteger categoriesFor: #>!comparing!public! !
-!LargeInteger categoriesFor: #>=!comparing!public! !
-!LargeInteger categoriesFor: #addToInteger:!double dispatch!private! !
-!LargeInteger categoriesFor: #asFloat!converting!public! !
-!LargeInteger categoriesFor: #bitAnd:!bit manipulation!public! !
-!LargeInteger categoriesFor: #bitInvert!bit manipulation!public! !
-!LargeInteger categoriesFor: #bitOr:!bit manipulation!public! !
-!LargeInteger categoriesFor: #bitShift:!bit manipulation!public! !
-!LargeInteger categoriesFor: #bitXor:!bit manipulation!public! !
-!LargeInteger categoriesFor: #byteAt:!accessing!private! !
-!LargeInteger categoriesFor: #byteSize!accessing!private! !
-!LargeInteger categoriesFor: #digitAt:!accessing!public! !
-!LargeInteger categoriesFor: #digitLength!accessing!public! !
-!LargeInteger categoriesFor: #dwordAtOffset:!accessing!primitives!private! !
-!LargeInteger categoriesFor: #dwordAtOffset:put:!accessing!primitives!private! !
-!LargeInteger categoriesFor: #gcd:!factorization!public! !
-!LargeInteger categoriesFor: #generality!coercing!private! !
-!LargeInteger categoriesFor: #greaterThanInteger:!double dispatch!private! !
-!LargeInteger categoriesFor: #hash!comparing!public! !
-!LargeInteger categoriesFor: #highBit!bit manipulation!public! !
-!LargeInteger categoriesFor: #intPtrAtOffset:put:!initializing!primitives!private! !
-!LargeInteger categoriesFor: #isZero!public!testing! !
-!LargeInteger categoriesFor: #limbSize!accessing!private! !
-!LargeInteger categoriesFor: #multiplyByInteger:!double dispatch!private! !
-!LargeInteger categoriesFor: #negated!arithmetic!public! !
-!LargeInteger categoriesFor: #normalize!converting!private! !
-!LargeInteger categoriesFor: #printOn:base:!printing!private! !
-!LargeInteger categoriesFor: #printOn:base:nDigits:!printing!private! !
-!LargeInteger categoriesFor: #quo:!arithmetic!public! !
-!LargeInteger categoriesFor: #quotientFromInteger:!double dispatch!private! !
-!LargeInteger categoriesFor: #reciprocal!arithmetic!public! !
-!LargeInteger categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
-!LargeInteger categoriesFor: #sdwordAtOffset:!accessing!private! !
-!LargeInteger categoriesFor: #signBit!private!testing! !
-!LargeInteger categoriesFor: #subtractFromInteger:!double dispatch!private! !
+!LargeInteger categoriesForMethods!
+-!arithmetic!public! !
+*!arithmetic!public! !
+/!arithmetic!public! !
+//!arithmetic!public! !
+\\!arithmetic!public! !
++!arithmetic!public! !
+<!comparing!public! !
+<=!comparing!public! !
+=!comparing!public! !
+>!comparing!public! !
+>=!comparing!public! !
+addToInteger:!double dispatch!private! !
+asFloat!converting!public! !
+bitAnd:!bit manipulation!public! !
+bitInvert!bit manipulation!public! !
+bitOr:!bit manipulation!public! !
+bitShift:!bit manipulation!public! !
+bitXor:!bit manipulation!public! !
+byteAt:!accessing!private! !
+byteSize!accessing!private! !
+digitAt:!accessing!public! !
+digitLength!accessing!public! !
+dwordAtOffset:!accessing!primitives!private! !
+dwordAtOffset:put:!accessing!primitives!private! !
+gcd:!factorization!public! !
+generality!coercing!private! !
+greaterThanInteger:!double dispatch!private! !
+hash!comparing!public! !
+highBit!bit manipulation!public! !
+intPtrAtOffset:put:!initializing!primitives!private! !
+isZero!public!testing! !
+limbSize!accessing!private! !
+multiplyByInteger:!double dispatch!private! !
+negated!arithmetic!public! !
+normalize!converting!private! !
+printOn:base:!printing!private! !
+printOn:base:nDigits:!printing!private! !
+quo:!arithmetic!public! !
+quotientFromInteger:!double dispatch!private! !
+reciprocal!arithmetic!public! !
+replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
+sdwordAtOffset:!accessing!private! !
+signBit!private!testing! !
+subtractFromInteger:!double dispatch!private! !
+!
 
 !LargeInteger class methodsFor!
 
@@ -554,8 +556,10 @@ new64
 	N.B. The answer is not a valid LargeInteger since zero is a SmallInteger."
 
 	^self basicNew: 8! !
-!LargeInteger class categoriesFor: #fromBytes:!instance creation!public! !
-!LargeInteger class categoriesFor: #fromSmallInteger:!instance creation!private! !
-!LargeInteger class categoriesFor: #new:!instance creation!private! !
-!LargeInteger class categoriesFor: #new64!instance creation!private! !
+!LargeInteger class categoriesForMethods!
+fromBytes:!instance creation!public! !
+fromSmallInteger:!instance creation!private! !
+new:!instance creation!private! !
+new64!instance creation!private! !
+!
 

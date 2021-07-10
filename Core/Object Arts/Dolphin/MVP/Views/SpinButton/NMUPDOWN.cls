@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMHDR subclass: #NMUPDOWN
 	instanceVariableNames: 'allow'
@@ -48,11 +48,13 @@ newPosition
 	receiver be accepted."
 
 	^self iPos + self iDelta! !
-!NMUPDOWN categoriesFor: #allow!accessing!public! !
-!NMUPDOWN categoriesFor: #allow:!accessing!public! !
-!NMUPDOWN categoriesFor: #iDelta!**compiled accessors**!public! !
-!NMUPDOWN categoriesFor: #iPos!**compiled accessors**!public! !
-!NMUPDOWN categoriesFor: #newPosition!accessing!public! !
+!NMUPDOWN categoriesForMethods!
+allow!accessing!public! !
+allow:!accessing!public! !
+iDelta!**compiled accessors**!public! !
+iPos!**compiled accessors**!public! !
+newPosition!accessing!public! !
+!
 
 !NMUPDOWN class methodsFor!
 
@@ -74,6 +76,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iPos #iDelta)! !
-!NMUPDOWN class categoriesFor: #defineFields!public!template definition! !
-!NMUPDOWN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NMUPDOWN class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

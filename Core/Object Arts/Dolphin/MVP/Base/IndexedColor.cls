@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Color subclass: #IndexedColor
 	instanceVariableNames: 'index'
@@ -133,20 +133,22 @@ stbSaveOn: anSTBOutFiler
 
 	"IndexedColors are soft-deprecated - upgrade them to equivalent named colours on save."
 	anSTBOutFiler nextPut: self asRGB! !
-!IndexedColor categoriesFor: #asCOLORREF!accessing!public! !
-!IndexedColor categoriesFor: #asParameter!converting!public! !
-!IndexedColor categoriesFor: #asRGB!converting!public!wine fix! !
-!IndexedColor categoriesFor: #asRGBUsingNoPalette!converting!public! !
-!IndexedColor categoriesFor: #asRGBUsingPalette:!converting!public! !
-!IndexedColor categoriesFor: #index!accessing!public! !
-!IndexedColor categoriesFor: #name!accessing!public! !
-!IndexedColor categoriesFor: #printOn:!development!printing!public! !
-!IndexedColor categoriesFor: #rgbCode!converting!public! !
-!IndexedColor categoriesFor: #rgbCodeFromPalette:!converting!public! !
-!IndexedColor categoriesFor: #rgbCodeFromStdPalette!converting!public! !
-!IndexedColor categoriesFor: #setIndex:!accessing!private! !
-!IndexedColor categoriesFor: #shallowCopy!copying!public! !
-!IndexedColor categoriesFor: #stbSaveOn:!binary filing!public! !
+!IndexedColor categoriesForMethods!
+asCOLORREF!accessing!public! !
+asParameter!converting!public! !
+asRGB!converting!public!wine fix! !
+asRGBUsingNoPalette!converting!public! !
+asRGBUsingPalette:!converting!public! !
+index!accessing!public! !
+name!accessing!public! !
+printOn:!development!printing!public! !
+rgbCode!converting!public! !
+rgbCodeFromPalette:!converting!public! !
+rgbCodeFromStdPalette!converting!public! !
+setIndex:!accessing!private! !
+shallowCopy!copying!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 !IndexedColor class methodsFor!
 
@@ -203,10 +205,12 @@ withIndex: anInteger
 	"Answer the unique <IndexedColor> whose index is the <integer> argument."
 
 	^InstancesByIndex at: anInteger! !
-!IndexedColor class categoriesFor: #black!common colors!public! !
-!IndexedColor class categoriesFor: #initialize!development!initializing!public! !
-!IndexedColor class categoriesFor: #named:!instance creation!named colors!public! !
-!IndexedColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!IndexedColor class categoriesFor: #white!common colors!public! !
-!IndexedColor class categoriesFor: #withIndex:!instance creation!public! !
+!IndexedColor class categoriesForMethods!
+black!common colors!public! !
+initialize!development!initializing!public! !
+named:!instance creation!named colors!public! !
+stbReadFrom:format:!binary filing!public! !
+white!common colors!public! !
+withIndex:!instance creation!public! !
+!
 

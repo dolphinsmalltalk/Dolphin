@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLECountedArray subclass: #CADWORD
 	instanceVariableNames: ''
@@ -14,7 +14,9 @@ CADWORD is a counted array of 32-bit unsigned integers. For an example usage see
 
 getElements
 	^DWORDArray fromAddress: self pElems length: self cElems! !
-!CADWORD categoriesFor: #getElements!accessing!private! !
+!CADWORD categoriesForMethods!
+getElements!accessing!private! !
+!
 
 !CADWORD class methodsFor!
 
@@ -39,6 +41,8 @@ elementClass
 
 	^DWORD
 ! !
-!CADWORD class categoriesFor: #defineFields!public!template definition! !
-!CADWORD class categoriesFor: #elementClass!constants!public! !
+!CADWORD class categoriesForMethods!
+defineFields!public!template definition! !
+elementClass!constants!public! !
+!
 

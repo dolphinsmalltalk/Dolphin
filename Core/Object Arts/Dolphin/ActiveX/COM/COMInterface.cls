@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #COMInterface
 	instanceVariableNames: 'implementor'
@@ -317,43 +317,45 @@ vtbl: anExternalAddress
 	"Set the receiver's 'vtbl' field to the value of the argument, anExternalAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_vtbl put: anExternalAddress! !
-!COMInterface categoriesFor: #_addRef!methods!private! !
-!COMInterface categoriesFor: #=!comparing!public! !
-!COMInterface categoriesFor: #AddRef!methods!public! !
-!COMInterface categoriesFor: #argSizes:!**compiled accessors**!public! !
-!COMInterface categoriesFor: #asParameter!converting!public! !
-!COMInterface categoriesFor: #attach:!initializing!public! !
-!COMInterface categoriesFor: #basicFree!private!realizing/unrealizing! !
-!COMInterface categoriesFor: #callback:vfn:withArgumentsAt:!evaluating!private! !
-!COMInterface categoriesFor: #copy!copying!public! !
-!COMInterface categoriesFor: #detach!public!realizing/unrealizing! !
-!COMInterface categoriesFor: #free!private!realizing/unrealizing! !
-!COMInterface categoriesFor: #getExtendedErrorInfo:!exceptions!private! !
-!COMInterface categoriesFor: #hash!comparing!public! !
-!COMInterface categoriesFor: #hresultError:!exceptions!public! !
-!COMInterface categoriesFor: #identity!accessing!public! !
-!COMInterface categoriesFor: #iid!constants!public! !
-!COMInterface categoriesFor: #implementor!accessing!public! !
-!COMInterface categoriesFor: #implementor:!accessing!public! !
-!COMInterface categoriesFor: #initialize:!initializing!private! !
-!COMInterface categoriesFor: #initializeAtAddress:!initializing!private! !
-!COMInterface categoriesFor: #interfaceCookie:!**compiled accessors**!public! !
-!COMInterface categoriesFor: #isSameCOMObject:!public!testing! !
-!COMInterface categoriesFor: #objectCookie:!**compiled accessors**!public! !
-!COMInterface categoriesFor: #onExit!event handling!public! !
-!COMInterface categoriesFor: #onStartup!event handling!public! !
-!COMInterface categoriesFor: #postCopy!copying!public! !
-!COMInterface categoriesFor: #printOn:!development!printing!public! !
-!COMInterface categoriesFor: #queryInterface:!accessing-interfaces!public! !
-!COMInterface categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
-!COMInterface categoriesFor: #QueryInterface:ppvObject:!methods!public! !
-!COMInterface categoriesFor: #referenceCount!development!private! !
-!COMInterface categoriesFor: #Release!methods!public! !
-!COMInterface categoriesFor: #supportsErrorInfo!public!testing! !
-!COMInterface categoriesFor: #supportsErrorInfo:!public!testing! !
-!COMInterface categoriesFor: #supportsIID:!public!testing! !
-!COMInterface categoriesFor: #supportsInterface:!public!testing! !
-!COMInterface categoriesFor: #vtbl:!**compiled accessors**!public! !
+!COMInterface categoriesForMethods!
+_addRef!methods!private! !
+=!comparing!public! !
+AddRef!methods!public! !
+argSizes:!**compiled accessors**!public! !
+asParameter!converting!public! !
+attach:!initializing!public! !
+basicFree!private!realizing/unrealizing! !
+callback:vfn:withArgumentsAt:!evaluating!private! !
+copy!copying!public! !
+detach!public!realizing/unrealizing! !
+free!private!realizing/unrealizing! !
+getExtendedErrorInfo:!exceptions!private! !
+hash!comparing!public! !
+hresultError:!exceptions!public! !
+identity!accessing!public! !
+iid!constants!public! !
+implementor!accessing!public! !
+implementor:!accessing!public! !
+initialize:!initializing!private! !
+initializeAtAddress:!initializing!private! !
+interfaceCookie:!**compiled accessors**!public! !
+isSameCOMObject:!public!testing! !
+objectCookie:!**compiled accessors**!public! !
+onExit!event handling!public! !
+onStartup!event handling!public! !
+postCopy!copying!public! !
+printOn:!development!printing!public! !
+queryInterface:!accessing-interfaces!public! !
+queryInterface:ifNone:!accessing-interfaces!public! !
+QueryInterface:ppvObject:!methods!public! !
+referenceCount!development!private! !
+Release!methods!public! !
+supportsErrorInfo!public!testing! !
+supportsErrorInfo:!public!testing! !
+supportsIID:!public!testing! !
+supportsInterface:!public!testing! !
+vtbl:!**compiled accessors**!public! !
+!
 
 !COMInterface class methodsFor!
 
@@ -1054,70 +1056,72 @@ unregister
 	significance."
 
 	InterfaceClasses removeKey: self iid ifAbsent: []! !
-!COMInterface class categoriesFor: #addFunction:selector:descriptor:!automatic generation!public! !
-!COMInterface class categoriesFor: #argSizes!initializing!private! !
-!COMInterface class categoriesFor: #atAddress:!instance creation!public! !
-!COMInterface class categoriesFor: #attach:!instance creation!public! !
-!COMInterface class categoriesFor: #attachInterface:!instance creation!public! !
-!COMInterface class categoriesFor: #calcArgSizes!initializing!private! !
-!COMInterface class categoriesFor: #classForIID:!enquiries!public! !
-!COMInterface class categoriesFor: #classForIID:ifNone:!enquiries!public! !
-!COMInterface class categoriesFor: #clear:!public!realizing/unrealizing! !
-!COMInterface class categoriesFor: #clsid!accessing!public! !
-!COMInterface class categoriesFor: #comObjectClass!constants!public! !
-!COMInterface class categoriesFor: #compileFunction:!automatic generation!development!private! !
-!COMInterface class categoriesFor: #compileFunctions!automatic generation!development!public! !
-!COMInterface class categoriesFor: #compileFunctionsIntoImplementor:!automatic generation!development!public! !
-!COMInterface class categoriesFor: #createContextFlags!constants!public! !
-!COMInterface class categoriesFor: #createObject:!instance creation!public! !
-!COMInterface class categoriesFor: #defineFields!automatic generation!public!template definition! !
-!COMInterface class categoriesFor: #defineFunction:!automatic generation!public! !
-!COMInterface class categoriesFor: #defineFunction:argumentTypes:!automatic generation!public! !
-!COMInterface class categoriesFor: #defineFunction:descriptor:!automatic generation!public! !
-!COMInterface class categoriesFor: #defineFunction:returnType:!automatic generation!public! !
-!COMInterface class categoriesFor: #defineFunction:returnType:argumentTypes:!automatic generation!public! !
-!COMInterface class categoriesFor: #defineFunction:type:returnType:argumentTypes:!automatic generation!public! !
-!COMInterface class categoriesFor: #defineFunctions!initializing!public! !
-!COMInterface class categoriesFor: #defineTemplate!public!template definition! !
-!COMInterface class categoriesFor: #defineVTable!automatic generation!public! !
-!COMInterface class categoriesFor: #elementSize!accessing!public! !
-!COMInterface class categoriesFor: #functions!initializing!private! !
-!COMInterface class categoriesFor: #generatedFunctionCategories!constants!public! !
-!COMInterface class categoriesFor: #getFieldNames!constants!private! !
-!COMInterface class categoriesFor: #getObject:!instance creation!public! !
-!COMInterface class categoriesFor: #icon!constants!public! !
-!COMInterface class categoriesFor: #iid!accessing!public! !
-!COMInterface class categoriesFor: #implementor:!instance creation!private! !
-!COMInterface class categoriesFor: #initialize!development!initializing!private! !
-!COMInterface class categoriesFor: #initializeAfterLoad!initializing!public! !
-!COMInterface class categoriesFor: #initializeInterface!initializing!private! !
-!COMInterface class categoriesFor: #initializeRegister!initializing!private! !
-!COMInterface class categoriesFor: #initializeTypeLib!initializing!private! !
-!COMInterface class categoriesFor: #interfaceClasses!accessing!private! !
-!COMInterface class categoriesFor: #new!instance creation!public! !
-!COMInterface class categoriesFor: #newBuffer!instance creation!public! !
-!COMInterface class categoriesFor: #newInternal!instance creation!public! !
-!COMInterface class categoriesFor: #on:!instance creation!public! !
-!COMInterface class categoriesFor: #on:implementor:!instance creation!public! !
-!COMInterface class categoriesFor: #on:implementor:outerUnknown:!instance creation!private! !
-!COMInterface class categoriesFor: #onCLSID:!instance creation!public! !
-!COMInterface class categoriesFor: #onCLSID:hostName:!instance creation!public! !
-!COMInterface class categoriesFor: #onCLSID:outerIUnknown:!instance creation!public! !
-!COMInterface class categoriesFor: #onCLSID:outerIUnknown:hostName:!instance creation!public! !
-!COMInterface class categoriesFor: #onCLSID:outerIUnknown:hostName:licenseKey:!instance creation!public! !
-!COMInterface class categoriesFor: #onExit!event handling!public! !
-!COMInterface class categoriesFor: #onStartup!drawing!public! !
-!COMInterface class categoriesFor: #queryOn:!instance creation!public! !
-!COMInterface class categoriesFor: #recompileReferences!development!private! !
-!COMInterface class categoriesFor: #register!adding!public! !
-!COMInterface class categoriesFor: #registerClass:forIID:!adding!public! !
-!COMInterface class categoriesFor: #registerSubclasses!initializing!public! !
-!COMInterface class categoriesFor: #removeCompiledFunctions!automatic generation!development!public! !
-!COMInterface class categoriesFor: #setGuid:!accessing!private! !
-!COMInterface class categoriesFor: #stdMethodCallType!constants!private! !
-!COMInterface class categoriesFor: #stdMethodReturnType!constants!private! !
-!COMInterface class categoriesFor: #supportsInterface:!public!testing! !
-!COMInterface class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!COMInterface class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
-!COMInterface class categoriesFor: #unregister!public!removing! !
+!COMInterface class categoriesForMethods!
+addFunction:selector:descriptor:!automatic generation!public! !
+argSizes!initializing!private! !
+atAddress:!instance creation!public! !
+attach:!instance creation!public! !
+attachInterface:!instance creation!public! !
+calcArgSizes!initializing!private! !
+classForIID:!enquiries!public! !
+classForIID:ifNone:!enquiries!public! !
+clear:!public!realizing/unrealizing! !
+clsid!accessing!public! !
+comObjectClass!constants!public! !
+compileFunction:!automatic generation!development!private! !
+compileFunctions!automatic generation!development!public! !
+compileFunctionsIntoImplementor:!automatic generation!development!public! !
+createContextFlags!constants!public! !
+createObject:!instance creation!public! !
+defineFields!automatic generation!public!template definition! !
+defineFunction:!automatic generation!public! !
+defineFunction:argumentTypes:!automatic generation!public! !
+defineFunction:descriptor:!automatic generation!public! !
+defineFunction:returnType:!automatic generation!public! !
+defineFunction:returnType:argumentTypes:!automatic generation!public! !
+defineFunction:type:returnType:argumentTypes:!automatic generation!public! !
+defineFunctions!initializing!public! !
+defineTemplate!public!template definition! !
+defineVTable!automatic generation!public! !
+elementSize!accessing!public! !
+functions!initializing!private! !
+generatedFunctionCategories!constants!public! !
+getFieldNames!constants!private! !
+getObject:!instance creation!public! !
+icon!constants!public! !
+iid!accessing!public! !
+implementor:!instance creation!private! !
+initialize!development!initializing!private! !
+initializeAfterLoad!initializing!public! !
+initializeInterface!initializing!private! !
+initializeRegister!initializing!private! !
+initializeTypeLib!initializing!private! !
+interfaceClasses!accessing!private! !
+new!instance creation!public! !
+newBuffer!instance creation!public! !
+newInternal!instance creation!public! !
+on:!instance creation!public! !
+on:implementor:!instance creation!public! !
+on:implementor:outerUnknown:!instance creation!private! !
+onCLSID:!instance creation!public! !
+onCLSID:hostName:!instance creation!public! !
+onCLSID:outerIUnknown:!instance creation!public! !
+onCLSID:outerIUnknown:hostName:!instance creation!public! !
+onCLSID:outerIUnknown:hostName:licenseKey:!instance creation!public! !
+onExit!event handling!public! !
+onStartup!drawing!public! !
+queryOn:!instance creation!public! !
+recompileReferences!development!private! !
+register!adding!public! !
+registerClass:forIID:!adding!public! !
+registerSubclasses!initializing!public! !
+removeCompiledFunctions!automatic generation!development!public! !
+setGuid:!accessing!private! !
+stdMethodCallType!constants!private! !
+stdMethodReturnType!constants!private! !
+supportsInterface:!public!testing! !
+uninitialize!class hierarchy-removing!private! !
+uninitializeBeforeRemove!class hierarchy-removing!public! !
+unregister!public!removing! !
+!
 

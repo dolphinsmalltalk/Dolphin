@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #StackFrameTest
 	instanceVariableNames: ''
@@ -23,5 +23,7 @@ testOnProcessIndex
 	"Invoke the method directly so we don't need to install it."
 	frame2 := testMethod value: StackFrame withArguments: {topFrame process. topFrame index}.
 	self assert: frame2 equals: topFrame! !
-!StackFrameTest categoriesFor: #testOnProcessIndex!public!unit tests! !
+!StackFrameTest categoriesForMethods!
+testOnProcessIndex!public!unit tests! !
+!
 

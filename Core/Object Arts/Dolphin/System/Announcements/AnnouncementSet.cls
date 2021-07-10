@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Set variableSubclass: #AnnouncementSet
 	instanceVariableNames: ''
@@ -22,6 +22,8 @@ Motivation example: Often the UI is built after/independently from the model. Yo
 handlesAnnouncement: anAnnouncement
 	"If any of the set handles the announcements, subscribers should receive it."
 	^ self anySatisfy: [ :each | each handlesAnnouncement: anAnnouncement ]! !
-!AnnouncementSet categoriesFor: #,!adding!public! !
-!AnnouncementSet categoriesFor: #handlesAnnouncement:!public!testing! !
+!AnnouncementSet categoriesForMethods!
+,!adding!public! !
+handlesAnnouncement:!public!testing! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #AbstractInstanceVariableTest
 	instanceVariableNames: ''
@@ -124,11 +124,13 @@ testMetaclassInstanceVariables
 testNonExistantName
 	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'foo'
 				class: BasicLintRuleTest)! !
-!AbstractInstanceVariableTest categoriesFor: #setUp!public!set up! !
-!AbstractInstanceVariableTest categoriesFor: #testAbstractInstanceVariable!public!tests! !
-!AbstractInstanceVariableTest categoriesFor: #testAbstractWithAssignmentUsed!public!tests! !
-!AbstractInstanceVariableTest categoriesFor: #testAbstractWithDefaultNamesUsed!public!tests! !
-!AbstractInstanceVariableTest categoriesFor: #testInheritedName!failure tests!public! !
-!AbstractInstanceVariableTest categoriesFor: #testMetaclassInstanceVariables!public!tests! !
-!AbstractInstanceVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
+!AbstractInstanceVariableTest categoriesForMethods!
+setUp!public!set up! !
+testAbstractInstanceVariable!public!tests! !
+testAbstractWithAssignmentUsed!public!tests! !
+testAbstractWithDefaultNamesUsed!public!tests! !
+testInheritedName!failure tests!public! !
+testMetaclassInstanceVariables!public!tests! !
+testNonExistantName!failure tests!public! !
+!
 

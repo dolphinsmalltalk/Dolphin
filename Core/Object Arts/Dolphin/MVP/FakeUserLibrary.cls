@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 UserLibrary subclass: #FakeUserLibrary
 	instanceVariableNames: 'user32 getForegroundWindowBlock getActiveWindowBlock getCursorPosBlock'
@@ -52,14 +52,16 @@ open
 	handle := user32 handle.
 	self beFinalizable.
 	UserLibrary setDefault: self! !
-!FakeUserLibrary categoriesFor: #close!public!realizing/unrealizing! !
-!FakeUserLibrary categoriesFor: #free!finalizing!public!realizing/unrealizing! !
-!FakeUserLibrary categoriesFor: #getActiveWindow!public!win32 functions-keyboard input! !
-!FakeUserLibrary categoriesFor: #getActiveWindowBlock:!initializing!private! !
-!FakeUserLibrary categoriesFor: #getCursorPos:!public!win32 functions-cursor! !
-!FakeUserLibrary categoriesFor: #getCursorPosBlock:!initializing!private! !
-!FakeUserLibrary categoriesFor: #getForegroundWindow!public!win32 functions-keyboard input! !
-!FakeUserLibrary categoriesFor: #getForegroundWindowBlock:!initializing!private! !
-!FakeUserLibrary categoriesFor: #initializeForDesktopActive!initializing!public! !
-!FakeUserLibrary categoriesFor: #open!private!realizing/unrealizing! !
+!FakeUserLibrary categoriesForMethods!
+close!public!realizing/unrealizing! !
+free!finalizing!public!realizing/unrealizing! !
+getActiveWindow!public!win32 functions-keyboard input! !
+getActiveWindowBlock:!initializing!private! !
+getCursorPos:!public!win32 functions-cursor! !
+getCursorPosBlock:!initializing!private! !
+getForegroundWindow!public!win32 functions-keyboard input! !
+getForegroundWindowBlock:!initializing!private! !
+initializeForDesktopActive!initializing!public! !
+open!private!realizing/unrealizing! !
+!
 

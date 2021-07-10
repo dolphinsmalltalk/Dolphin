@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #LintRule
 	instanceVariableNames: 'name'
@@ -90,29 +90,33 @@ rules
 
 viewResults
 	self subclassResponsibility! !
-!LintRule categoriesFor: #allRules!accessing!public! !
-!LintRule categoriesFor: #checkClass:!accessing!public! !
-!LintRule categoriesFor: #checkMethod:!accessing!public! !
-!LintRule categoriesFor: #displayName!printing!public! !
-!LintRule categoriesFor: #displayOn:!printing!public! !
-!LintRule categoriesFor: #failedMethodsSorted!accessing!private! !
-!LintRule categoriesFor: #failedRules!private! !
-!LintRule categoriesFor: #hasConflicts!public!testing! !
-!LintRule categoriesFor: #initialize!initialize/release!public! !
-!LintRule categoriesFor: #isComposite!public!testing! !
-!LintRule categoriesFor: #isEmpty!public!testing! !
-!LintRule categoriesFor: #name!accessing!public! !
-!LintRule categoriesFor: #name:!accessing!public! !
-!LintRule categoriesFor: #notEmpty!public!testing! !
-!LintRule categoriesFor: #printOn:!printing!public! !
-!LintRule categoriesFor: #problemCount!accessing!public! !
-!LintRule categoriesFor: #resetResult!initialize/release!public! !
-!LintRule categoriesFor: #rules!accessing!public! !
-!LintRule categoriesFor: #viewResults!private! !
+!LintRule categoriesForMethods!
+allRules!accessing!public! !
+checkClass:!accessing!public! !
+checkMethod:!accessing!public! !
+displayName!printing!public! !
+displayOn:!printing!public! !
+failedMethodsSorted!accessing!private! !
+failedRules!private! !
+hasConflicts!public!testing! !
+initialize!initialize/release!public! !
+isComposite!public!testing! !
+isEmpty!public!testing! !
+name!accessing!public! !
+name:!accessing!public! !
+notEmpty!public!testing! !
+printOn:!printing!public! !
+problemCount!accessing!public! !
+resetResult!initialize/release!public! !
+rules!accessing!public! !
+viewResults!private! !
+!
 
 !LintRule class methodsFor!
 
 new
 	^super new initialize! !
-!LintRule class categoriesFor: #new!instance creation!public! !
+!LintRule class categoriesForMethods!
+new!instance creation!public! !
+!
 

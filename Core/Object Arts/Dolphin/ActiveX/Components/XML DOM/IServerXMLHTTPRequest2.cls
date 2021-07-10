@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IServerXMLHTTPRequest subclass: #IServerXMLHTTPRequest2
 	instanceVariableNames: ''
@@ -78,10 +78,12 @@ SetProxyCredentials: bstrUserName bstrPassword: bstrPassword
 
 	<virtual stdcall: hresult 27 bstr bstr>
 	^self invalidCall: _failureCode! !
-!IServerXMLHTTPRequest2 categoriesFor: #setProxy:!**auto generated**!methods!public! !
-!IServerXMLHTTPRequest2 categoriesFor: #setProxy:varProxyServer:varBypassList:!**auto generated**!methods!public! !
-!IServerXMLHTTPRequest2 categoriesFor: #SetProxy:varProxyServer:varBypassList:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest2!private! !
-!IServerXMLHTTPRequest2 categoriesFor: #SetProxyCredentials:bstrPassword:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest2!public! !
+!IServerXMLHTTPRequest2 categoriesForMethods!
+setProxy:!**auto generated**!methods!public! !
+setProxy:varProxyServer:varBypassList:!**auto generated**!methods!public! !
+SetProxy:varProxyServer:varBypassList:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest2!private! !
+SetProxyCredentials:bstrPassword:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest2!public! !
+!
 
 !IServerXMLHTTPRequest2 class methodsFor!
 
@@ -107,7 +109,9 @@ newServerXMLHTTP60
 
 	^self onCLSID: (CLSID fromString: '{88D96A0B-F192-11D4-A65F-0040963251E5}')
 ! !
-!IServerXMLHTTPRequest2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IServerXMLHTTPRequest2 class categoriesFor: #newServerXMLHTTP40!**auto generated**!instance creation!public! !
-!IServerXMLHTTPRequest2 class categoriesFor: #newServerXMLHTTP60!**auto generated**!instance creation!public! !
+!IServerXMLHTTPRequest2 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+newServerXMLHTTP40!**auto generated**!instance creation!public! !
+newServerXMLHTTP60!**auto generated**!instance creation!public! !
+!
 

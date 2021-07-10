@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #SerialNumberProtector
 	instanceVariableNames: 'key'
@@ -56,14 +56,16 @@ stringFromData: anObject
 	"Private - Answer a human-readable String representing the given raw encrypted data."
 	
 	^ self subclassResponsibility.! !
-!SerialNumberProtector categoriesFor: #dataFromString:!helpers!private! !
-!SerialNumberProtector categoriesFor: #decrypt:!operations!public! !
-!SerialNumberProtector categoriesFor: #decryptFromString:!operations!public! !
-!SerialNumberProtector categoriesFor: #encrypt:!operations!public! !
-!SerialNumberProtector categoriesFor: #encryptToString:!operations!public! !
-!SerialNumberProtector categoriesFor: #key!initializing!public! !
-!SerialNumberProtector categoriesFor: #key:!initializing!private! !
-!SerialNumberProtector categoriesFor: #stringFromData:!helpers!public! !
+!SerialNumberProtector categoriesForMethods!
+dataFromString:!helpers!private! !
+decrypt:!operations!public! !
+decryptFromString:!operations!public! !
+encrypt:!operations!public! !
+encryptToString:!operations!public! !
+key!initializing!public! !
+key:!initializing!private! !
+stringFromData:!helpers!public! !
+!
 
 SerialNumberProtector methodProtocol: #SerialNumberProtector attributes: #() selectors: #(#decryptFromString: #encryptToString:)!
 
@@ -133,8 +135,10 @@ withKey: anInteger
 	^ (self new)
 		key: anInteger;
 		yourself.! !
-!SerialNumberProtector class categoriesFor: #integerFromReadableString:!helpers!private! !
-!SerialNumberProtector class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
-!SerialNumberProtector class categoriesFor: #readableStringFromInteger:!helpers!private! !
-!SerialNumberProtector class categoriesFor: #withKey:!instance creation!public! !
+!SerialNumberProtector class categoriesForMethods!
+integerFromReadableString:!helpers!private! !
+isSafeToEncryptWithProductProtection!constants!public!testing! !
+readableStringFromInteger:!helpers!private! !
+withKey:!instance creation!public! !
+!
 

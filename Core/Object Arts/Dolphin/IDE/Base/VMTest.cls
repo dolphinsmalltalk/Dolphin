@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #VMTest
 	instanceVariableNames: 'expiryHandler'
@@ -3513,161 +3513,165 @@ verifyPrimitiveNextPutAllOnUtfStrings: method
 								value: eachTarget
 								value: eachArg
 								value: each]]]! !
-!VMTest categoriesFor: #assertImmutableAtPut:!private!unit tests! !
-!VMTest categoriesFor: #assertImmutableBasicAtPut:!private!unit tests! !
-!VMTest categoriesFor: #assertImmutableInstVarAtPut:!private!unit tests! !
-!VMTest categoriesFor: #assertImmutableResize:!private!unit tests! !
-!VMTest categoriesFor: #compile:in:!helpers!private! !
-!VMTest categoriesFor: #createPrimitiveMethod:in:argCount:!helpers!private! !
-!VMTest categoriesFor: #createPrimitiveMethodLike:!helpers!private! !
-!VMTest categoriesFor: #earlyTermination:!helpers!private! !
-!VMTest categoriesFor: #elementsExpired:of:!helpers!private! !
-!VMTest categoriesFor: #exerciseReplaceElementsOf:from:to:with:startingAt:!private!unit tests! !
-!VMTest categoriesFor: #exerciseReplaceElementsOf:with:!private!unit tests! !
-!VMTest categoriesFor: #findCaller:in:!helpers!private! !
-!VMTest categoriesFor: #findFaultInterruptFrame:!helpers!private! !
-!VMTest categoriesFor: #firstVmVersionRespectingNonInstantiable!constants!private! !
-!VMTest categoriesFor: #hashBytes:!helpers!private! !
-!VMTest categoriesFor: #immutableTestSubjects!constants!private!unit tests! !
-!VMTest categoriesFor: #isFault:raisedIn:receiver:!helpers!private! !
-!VMTest categoriesFor: #isGPF:reading:address:!helpers!private! !
-!VMTest categoriesFor: #skipIfVMDoesNotSupportArgumentConversionsThatAllocateMemoryInOverlappedCalls!helpers!private! !
-!VMTest categoriesFor: #suspendAndTerminate!helpers!private! !
-!VMTest categoriesFor: #testAllReferences!public!unit tests! !
-!VMTest categoriesFor: #testAllReferencesWeak!public! !
-!VMTest categoriesFor: #testBSTRArg!public!unit tests! !
-!VMTest categoriesFor: #testCRTFault!public!unit tests! !
-!VMTest categoriesFor: #testDwordAtOffsetPut!public!unit tests! !
-!VMTest categoriesFor: #testEvaluationOrder!public!unit tests! !
-!VMTest categoriesFor: #testExtCallArgBstr!public!unit tests! !
-!VMTest categoriesFor: #testExtCallArgLppvoid!public!unit tests! !
-!VMTest categoriesFor: #testExtCallArgLpwstr!public!unit tests! !
-!VMTest categoriesFor: #testExtCallCrtFault!public! !
-!VMTest categoriesFor: #testExtCallFpFault!public! !
-!VMTest categoriesFor: #testExtCallGpf!public! !
-!VMTest categoriesFor: #testExtCallIntDivZero!public! !
-!VMTest categoriesFor: #testExtCallOverlappedArgLppvoid!public!unit tests! !
-!VMTest categoriesFor: #testExtCallOverlappedArgLpwstr!public!unit tests! !
-!VMTest categoriesFor: #testExtCallOverlappedCrtFault!public! !
-!VMTest categoriesFor: #testExtCallOverlappedFpFault!public! !
-!VMTest categoriesFor: #testExtCallOverlappedGC!public!unit tests! !
-!VMTest categoriesFor: #testExtCallOverlappedGpf!public! !
-!VMTest categoriesFor: #testExtCallOverlappedIntDivZero!public! !
-!VMTest categoriesFor: #testExtCallOverlappedRetHRESULT!public!unit tests! !
-!VMTest categoriesFor: #testExtCallOverlappedRetLpwstr!public!unit tests! !
-!VMTest categoriesFor: #testExtCallOverlappedRetNtStatus!public!unit tests! !
-!VMTest categoriesFor: #testExtCallOverlappedSuspendAndTerminate!public!unit tests! !
-!VMTest categoriesFor: #testExtCallOverlappedTermination!public!unit tests! !
-!VMTest categoriesFor: #testExtCallRetHRESULT!public!unit tests! !
-!VMTest categoriesFor: #testExtCallRetLpwstr!public!unit tests! !
-!VMTest categoriesFor: #testExtCallRetNtStatus!public!unit tests! !
-!VMTest categoriesFor: #testExtendedCharsInCrashDump!public!unit tests! !
-!VMTest categoriesFor: #testFPFaultInPrimitive!public!unit tests! !
-!VMTest categoriesFor: #testFPStatus!public!unit tests! !
-!VMTest categoriesFor: #testGPFTrap!public!unit tests! !
-!VMTest categoriesFor: #testImmutableAtPut!public!unit tests! !
-!VMTest categoriesFor: #testImmutableBasicAtPut!public!unit tests! !
-!VMTest categoriesFor: #testImmutableBufferAtPuts!public!unit tests! !
-!VMTest categoriesFor: #testImmutableInstVarAtPut!public!unit tests! !
-!VMTest categoriesFor: #testImmutableNextPut!public!unit tests! !
-!VMTest categoriesFor: #testImmutableNextPutAll!public!unit tests! !
-!VMTest categoriesFor: #testImmutableReplacePrimitives!public!unit tests! !
-!VMTest categoriesFor: #testImmutableResize!public!unit tests! !
-!VMTest categoriesFor: #testImmutableStringCompare!public!unit tests! !
-!VMTest categoriesFor: #testImmutableWriteAccessors!public!unit tests! !
-!VMTest categoriesFor: #testIndirectByteAtOffsetPrimitives!public!unit tests! !
-!VMTest categoriesFor: #testIndirectDwordAtOffsetPrimitives!public!unit tests! !
-!VMTest categoriesFor: #testIndirectSdwordAtOffsetPrimitives!public!unit tests! !
-!VMTest categoriesFor: #testIndirectSwordAtOffsetPrimitives!public!unit tests! !
-!VMTest categoriesFor: #testIndirectWordAtOffsetPrimitives!public!unit tests! !
-!VMTest categoriesFor: #testIntDivideByZero!public!unit tests! !
-!VMTest categoriesFor: #testMakeLargeUnsigned!public!unit tests! !
-!VMTest categoriesFor: #testMustBeBoolean!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveAdd!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveAllInstances!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveAllMask!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveAnyMask!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveAt!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveAtPut!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveBasicAt!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveBasicAtPut!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveBitShift!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveBytesEqual!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveBytesIsNull!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveChangeBehavior!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveCopyFromTo!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveDiv!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveDivide!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveEnableInterrupts!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveEqual!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveExtraInstanceSpec!public! !
-!VMTest categoriesFor: #testPrimitiveFindString!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveGreaterOrEqual!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveGreaterThan!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveHashBytes!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveHighBit!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveIdentical!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveIndexOfSp!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveInstanceCounts!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveInstanceCounts2!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveInstVarAt!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveInstVarAtPut!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveIsKindOf!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveLessOrEqual!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveLessThan!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveLookupMethod!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveMakePoint!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveMod!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveMultiply!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveNewColonFailure!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveNewFailure!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveNewFixedFailure!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveNewInitializedFailure!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveNewVirtualFailure!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveNextPut!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveNextPutAll!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveObjectCount!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveQuo!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveReplaceElements!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveResume!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveSetMutableInstVar!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveSetSpecialBehavior!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveShallowCopy!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveSize!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveSmallIntegerByteAt!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveStringAt!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveStringAtPut!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveStringCmp!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveStringCollate!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveStringNextIndexOfFromTo!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveStructIsNull!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveSubtract!public!unit tests! !
-!VMTest categoriesFor: #testPrimitiveYourAddress!public!unit tests! !
-!VMTest categoriesFor: #testQwordAtOffset!public!unit tests! !
-!VMTest categoriesFor: #testSignedFromUnsigned!public!unit tests! !
-!VMTest categoriesFor: #testSqwordAtOffset!public!unit tests! !
-!VMTest categoriesFor: #testVMPointersImmutable!public!unit tests! !
-!VMTest categoriesFor: #testWeakMournerNotifications!public!unit tests! !
-!VMTest categoriesFor: #verifyBinaryPrimitive:forCases:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallArgLppvoid:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallArgLpwstr:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallCrtFault:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallFpFault:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallGpf:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallIntDivZero:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallRetHRESULT:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallRetLpwstr:!helpers!private! !
-!VMTest categoriesFor: #verifyExtCallRetNtStatus:!helpers!private! !
-!VMTest categoriesFor: #verifyPrimitiveAt:performBlock:!helpers!private! !
-!VMTest categoriesFor: #verifyPrimitiveAtPut:performBlock:!helpers!private! !
-!VMTest categoriesFor: #verifyPrimitiveNextPutAllOnAnsiString:!helpers!private! !
-!VMTest categoriesFor: #verifyPrimitiveNextPutAllOnArray:!helpers!private! !
-!VMTest categoriesFor: #verifyPrimitiveNextPutAllOnByteArray:!helpers!private! !
-!VMTest categoriesFor: #verifyPrimitiveNextPutAllOnUtfStrings:!helpers!private! !
+!VMTest categoriesForMethods!
+assertImmutableAtPut:!private!unit tests! !
+assertImmutableBasicAtPut:!private!unit tests! !
+assertImmutableInstVarAtPut:!private!unit tests! !
+assertImmutableResize:!private!unit tests! !
+compile:in:!helpers!private! !
+createPrimitiveMethod:in:argCount:!helpers!private! !
+createPrimitiveMethodLike:!helpers!private! !
+earlyTermination:!helpers!private! !
+elementsExpired:of:!helpers!private! !
+exerciseReplaceElementsOf:from:to:with:startingAt:!private!unit tests! !
+exerciseReplaceElementsOf:with:!private!unit tests! !
+findCaller:in:!helpers!private! !
+findFaultInterruptFrame:!helpers!private! !
+firstVmVersionRespectingNonInstantiable!constants!private! !
+hashBytes:!helpers!private! !
+immutableTestSubjects!constants!private!unit tests! !
+isFault:raisedIn:receiver:!helpers!private! !
+isGPF:reading:address:!helpers!private! !
+skipIfVMDoesNotSupportArgumentConversionsThatAllocateMemoryInOverlappedCalls!helpers!private! !
+suspendAndTerminate!helpers!private! !
+testAllReferences!public!unit tests! !
+testAllReferencesWeak!public! !
+testBSTRArg!public!unit tests! !
+testCRTFault!public!unit tests! !
+testDwordAtOffsetPut!public!unit tests! !
+testEvaluationOrder!public!unit tests! !
+testExtCallArgBstr!public!unit tests! !
+testExtCallArgLppvoid!public!unit tests! !
+testExtCallArgLpwstr!public!unit tests! !
+testExtCallCrtFault!public! !
+testExtCallFpFault!public! !
+testExtCallGpf!public! !
+testExtCallIntDivZero!public! !
+testExtCallOverlappedArgLppvoid!public!unit tests! !
+testExtCallOverlappedArgLpwstr!public!unit tests! !
+testExtCallOverlappedCrtFault!public! !
+testExtCallOverlappedFpFault!public! !
+testExtCallOverlappedGC!public!unit tests! !
+testExtCallOverlappedGpf!public! !
+testExtCallOverlappedIntDivZero!public! !
+testExtCallOverlappedRetHRESULT!public!unit tests! !
+testExtCallOverlappedRetLpwstr!public!unit tests! !
+testExtCallOverlappedRetNtStatus!public!unit tests! !
+testExtCallOverlappedSuspendAndTerminate!public!unit tests! !
+testExtCallOverlappedTermination!public!unit tests! !
+testExtCallRetHRESULT!public!unit tests! !
+testExtCallRetLpwstr!public!unit tests! !
+testExtCallRetNtStatus!public!unit tests! !
+testExtendedCharsInCrashDump!public!unit tests! !
+testFPFaultInPrimitive!public!unit tests! !
+testFPStatus!public!unit tests! !
+testGPFTrap!public!unit tests! !
+testImmutableAtPut!public!unit tests! !
+testImmutableBasicAtPut!public!unit tests! !
+testImmutableBufferAtPuts!public!unit tests! !
+testImmutableInstVarAtPut!public!unit tests! !
+testImmutableNextPut!public!unit tests! !
+testImmutableNextPutAll!public!unit tests! !
+testImmutableReplacePrimitives!public!unit tests! !
+testImmutableResize!public!unit tests! !
+testImmutableStringCompare!public!unit tests! !
+testImmutableWriteAccessors!public!unit tests! !
+testIndirectByteAtOffsetPrimitives!public!unit tests! !
+testIndirectDwordAtOffsetPrimitives!public!unit tests! !
+testIndirectSdwordAtOffsetPrimitives!public!unit tests! !
+testIndirectSwordAtOffsetPrimitives!public!unit tests! !
+testIndirectWordAtOffsetPrimitives!public!unit tests! !
+testIntDivideByZero!public!unit tests! !
+testMakeLargeUnsigned!public!unit tests! !
+testMustBeBoolean!public!unit tests! !
+testPrimitiveAdd!public!unit tests! !
+testPrimitiveAllInstances!public!unit tests! !
+testPrimitiveAllMask!public!unit tests! !
+testPrimitiveAnyMask!public!unit tests! !
+testPrimitiveAt!public!unit tests! !
+testPrimitiveAtPut!public!unit tests! !
+testPrimitiveBasicAt!public!unit tests! !
+testPrimitiveBasicAtPut!public!unit tests! !
+testPrimitiveBitShift!public!unit tests! !
+testPrimitiveBytesEqual!public!unit tests! !
+testPrimitiveBytesIsNull!public!unit tests! !
+testPrimitiveChangeBehavior!public!unit tests! !
+testPrimitiveCopyFromTo!public!unit tests! !
+testPrimitiveDiv!public!unit tests! !
+testPrimitiveDivide!public!unit tests! !
+testPrimitiveEnableInterrupts!public!unit tests! !
+testPrimitiveEqual!public!unit tests! !
+testPrimitiveExtraInstanceSpec!public! !
+testPrimitiveFindString!public!unit tests! !
+testPrimitiveGreaterOrEqual!public!unit tests! !
+testPrimitiveGreaterThan!public!unit tests! !
+testPrimitiveHashBytes!public!unit tests! !
+testPrimitiveHighBit!public!unit tests! !
+testPrimitiveIdentical!public!unit tests! !
+testPrimitiveIndexOfSp!public!unit tests! !
+testPrimitiveInstanceCounts!public!unit tests! !
+testPrimitiveInstanceCounts2!public!unit tests! !
+testPrimitiveInstVarAt!public!unit tests! !
+testPrimitiveInstVarAtPut!public!unit tests! !
+testPrimitiveIsKindOf!public!unit tests! !
+testPrimitiveLessOrEqual!public!unit tests! !
+testPrimitiveLessThan!public!unit tests! !
+testPrimitiveLookupMethod!public!unit tests! !
+testPrimitiveMakePoint!public!unit tests! !
+testPrimitiveMod!public!unit tests! !
+testPrimitiveMultiply!public!unit tests! !
+testPrimitiveNewColonFailure!public!unit tests! !
+testPrimitiveNewFailure!public!unit tests! !
+testPrimitiveNewFixedFailure!public!unit tests! !
+testPrimitiveNewInitializedFailure!public!unit tests! !
+testPrimitiveNewVirtualFailure!public!unit tests! !
+testPrimitiveNextPut!public!unit tests! !
+testPrimitiveNextPutAll!public!unit tests! !
+testPrimitiveObjectCount!public!unit tests! !
+testPrimitiveQuo!public!unit tests! !
+testPrimitiveReplaceElements!public!unit tests! !
+testPrimitiveResume!public!unit tests! !
+testPrimitiveSetMutableInstVar!public!unit tests! !
+testPrimitiveSetSpecialBehavior!public!unit tests! !
+testPrimitiveShallowCopy!public!unit tests! !
+testPrimitiveSize!public!unit tests! !
+testPrimitiveSmallIntegerByteAt!public!unit tests! !
+testPrimitiveStringAt!public!unit tests! !
+testPrimitiveStringAtPut!public!unit tests! !
+testPrimitiveStringCmp!public!unit tests! !
+testPrimitiveStringCollate!public!unit tests! !
+testPrimitiveStringNextIndexOfFromTo!public!unit tests! !
+testPrimitiveStructIsNull!public!unit tests! !
+testPrimitiveSubtract!public!unit tests! !
+testPrimitiveYourAddress!public!unit tests! !
+testQwordAtOffset!public!unit tests! !
+testSignedFromUnsigned!public!unit tests! !
+testSqwordAtOffset!public!unit tests! !
+testVMPointersImmutable!public!unit tests! !
+testWeakMournerNotifications!public!unit tests! !
+verifyBinaryPrimitive:forCases:!helpers!private! !
+verifyExtCallArgLppvoid:!helpers!private! !
+verifyExtCallArgLpwstr:!helpers!private! !
+verifyExtCallCrtFault:!helpers!private! !
+verifyExtCallFpFault:!helpers!private! !
+verifyExtCallGpf:!helpers!private! !
+verifyExtCallIntDivZero:!helpers!private! !
+verifyExtCallRetHRESULT:!helpers!private! !
+verifyExtCallRetLpwstr:!helpers!private! !
+verifyExtCallRetNtStatus:!helpers!private! !
+verifyPrimitiveAt:performBlock:!helpers!private! !
+verifyPrimitiveAtPut:performBlock:!helpers!private! !
+verifyPrimitiveNextPutAllOnAnsiString:!helpers!private! !
+verifyPrimitiveNextPutAllOnArray:!helpers!private! !
+verifyPrimitiveNextPutAllOnByteArray:!helpers!private! !
+verifyPrimitiveNextPutAllOnUtfStrings:!helpers!private! !
+!
 
 !VMTest class methodsFor!
 
 resources
 	^{MustBeBooleanTestClasses}! !
-!VMTest class categoriesFor: #resources!Accessing!public! !
+!VMTest class categoriesForMethods!
+resources!Accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #BrushTest
 	instanceVariableNames: ''
@@ -92,8 +92,10 @@ testStbConversion2
 				b: 250).
 	self assert: brush logBrush hatch equals: HS_BDIAGONAL.
 	self assert: brush logBrush style equals: BS_HATCHED! !
-!BrushTest categoriesFor: #testBitmapBrush!public!unit tests! !
-!BrushTest categoriesFor: #testPrintString!public!unit tests! !
-!BrushTest categoriesFor: #testStbConversion!public!unit tests! !
-!BrushTest categoriesFor: #testStbConversion2!public!unit tests! !
+!BrushTest categoriesForMethods!
+testBitmapBrush!public!unit tests! !
+testPrintString!public!unit tests! !
+testStbConversion!public!unit tests! !
+testStbConversion2!public!unit tests! !
+!
 

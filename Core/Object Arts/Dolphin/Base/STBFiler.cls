@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #STBFiler
 	instanceVariableNames: 'stream context version'
@@ -85,20 +85,22 @@ version
 
 version: anInteger
 	version := anInteger! !
-!STBFiler categoriesFor: #atEnd!public!testing! !
-!STBFiler categoriesFor: #context!accessing!public! !
-!STBFiler categoriesFor: #context:!accessing!public! !
-!STBFiler categoriesFor: #initialize!initializing!private! !
-!STBFiler categoriesFor: #position:!operations!public! !
-!STBFiler categoriesFor: #register:!helpers!public! !
-!STBFiler categoriesFor: #registerPredefinedClasses!initializing!private! !
-!STBFiler categoriesFor: #registerPredefinedObjects!initializing!private! !
-!STBFiler categoriesFor: #reset!initializing!private! !
-!STBFiler categoriesFor: #setRefOffset:!initializing!private! !
-!STBFiler categoriesFor: #stream!accessing!public! !
-!STBFiler categoriesFor: #stream:!accessing!public! !
-!STBFiler categoriesFor: #version!accessing!public! !
-!STBFiler categoriesFor: #version:!accessing!public! !
+!STBFiler categoriesForMethods!
+atEnd!public!testing! !
+context!accessing!public! !
+context:!accessing!public! !
+initialize!initializing!private! !
+position:!operations!public! !
+register:!helpers!public! !
+registerPredefinedClasses!initializing!private! !
+registerPredefinedObjects!initializing!private! !
+reset!initializing!private! !
+setRefOffset:!initializing!private! !
+stream!accessing!public! !
+stream:!accessing!public! !
+version!accessing!public! !
+version:!accessing!public! !
+!
 
 !STBFiler class methodsFor!
 
@@ -168,10 +170,12 @@ version
 
 	^4
 ! !
-!STBFiler class categoriesFor: #errorInconsistentSTB:!exceptions!private! !
-!STBFiler class categoriesFor: #errorUnrecognisedClass:version:!exceptions!private! !
-!STBFiler class categoriesFor: #fixedClasses!constants!public! !
-!STBFiler class categoriesFor: #on:!instance creation!public! !
-!STBFiler class categoriesFor: #signature!constants!private! !
-!STBFiler class categoriesFor: #version!constants!private! !
+!STBFiler class categoriesForMethods!
+errorInconsistentSTB:!exceptions!private! !
+errorUnrecognisedClass:version:!exceptions!private! !
+fixedClasses!constants!public! !
+on:!instance creation!public! !
+signature!constants!private! !
+version!constants!private! !
+!
 

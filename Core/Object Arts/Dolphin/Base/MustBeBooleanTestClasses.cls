@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTestClassResource subclass: #MustBeBooleanTestClasses
 	instanceVariableNames: 'trueClass falseClass'
@@ -36,9 +36,11 @@ tearDown
 
 trueClass
 	^trueClass! !
-!MustBeBooleanTestClasses categoriesFor: #createClasses!public!unit tests! !
-!MustBeBooleanTestClasses categoriesFor: #falseClass!accessing!public! !
-!MustBeBooleanTestClasses categoriesFor: #isAvailable!public!Testing! !
-!MustBeBooleanTestClasses categoriesFor: #tearDown!public!Running! !
-!MustBeBooleanTestClasses categoriesFor: #trueClass!accessing!public! !
+!MustBeBooleanTestClasses categoriesForMethods!
+createClasses!public!unit tests! !
+falseClass!accessing!public! !
+isAvailable!public!Testing! !
+tearDown!public!Running! !
+trueClass!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MultilineTextEdit subclass: #EmbeddedMultilineTextEdit
 	instanceVariableNames: 'column'
@@ -150,29 +150,31 @@ verticalAlignment
 verticalAlignment: aSymbol
 
 	column := aSymbol! !
-!EmbeddedMultilineTextEdit categoriesFor: #column!accessing!private! !
-!EmbeddedMultilineTextEdit categoriesFor: #column:!accessing!private! !
-!EmbeddedMultilineTextEdit categoriesFor: #createEmbeddedIn:!initialize/release!public! !
-!EmbeddedMultilineTextEdit categoriesFor: #cueBanner!accessing!public! !
-!EmbeddedMultilineTextEdit categoriesFor: #cueBanner:!accessing!public! !
-!EmbeddedMultilineTextEdit categoriesFor: #defaultWindowExStyle!constants!private! !
-!EmbeddedMultilineTextEdit categoriesFor: #defaultWindowStyle!constants!private! !
-!EmbeddedMultilineTextEdit categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!drawing!public! !
-!EmbeddedMultilineTextEdit categoriesFor: #displayOnFormats!binary filing!public! !
-!EmbeddedMultilineTextEdit categoriesFor: #expectsText!public!testing! !
-!EmbeddedMultilineTextEdit categoriesFor: #hasCueBanner!public!testing! !
-!EmbeddedMultilineTextEdit categoriesFor: #hasEmbeddedHotTracking!public!testing! !
-!EmbeddedMultilineTextEdit categoriesFor: #horzDisplayOffset!accessing!public! !
-!EmbeddedMultilineTextEdit categoriesFor: #isDisplayOwnerDrawn!public!testing! !
-!EmbeddedMultilineTextEdit categoriesFor: #onCursoredLeft!event handling!public! !
-!EmbeddedMultilineTextEdit categoriesFor: #onKillFocus!event handling!public! !
-!EmbeddedMultilineTextEdit categoriesFor: #onRequestDeactivate!event handling!public! !
-!EmbeddedMultilineTextEdit categoriesFor: #preTranslateKeyboardInput:!event handling!public! !
-!EmbeddedMultilineTextEdit categoriesFor: #show!operations!public! !
-!EmbeddedMultilineTextEdit categoriesFor: #showIn:!operations!public! !
-!EmbeddedMultilineTextEdit categoriesFor: #stbSaveOn:!binary filing!public! !
-!EmbeddedMultilineTextEdit categoriesFor: #verticalAlignment!accessing!public! !
-!EmbeddedMultilineTextEdit categoriesFor: #verticalAlignment:!accessing!public! !
+!EmbeddedMultilineTextEdit categoriesForMethods!
+column!accessing!private! !
+column:!accessing!private! !
+createEmbeddedIn:!initialize/release!public! !
+cueBanner!accessing!public! !
+cueBanner:!accessing!public! !
+defaultWindowExStyle!constants!private! !
+defaultWindowStyle!constants!private! !
+display:in:on:forecolor:backcolor:editable:hot:!drawing!public! !
+displayOnFormats!binary filing!public! !
+expectsText!public!testing! !
+hasCueBanner!public!testing! !
+hasEmbeddedHotTracking!public!testing! !
+horzDisplayOffset!accessing!public! !
+isDisplayOwnerDrawn!public!testing! !
+onCursoredLeft!event handling!public! !
+onKillFocus!event handling!public! !
+onRequestDeactivate!event handling!public! !
+preTranslateKeyboardInput:!event handling!public! !
+show!operations!public! !
+showIn:!operations!public! !
+stbSaveOn:!binary filing!public! !
+verticalAlignment!accessing!public! !
+verticalAlignment:!accessing!public! !
+!
 
 !EmbeddedMultilineTextEdit class methodsFor!
 
@@ -188,6 +190,8 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^20! !
-!EmbeddedMultilineTextEdit class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!EmbeddedMultilineTextEdit class categoriesFor: #stbVersion!binary filing!public! !
+!EmbeddedMultilineTextEdit class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

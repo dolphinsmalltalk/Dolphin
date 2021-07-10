@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SearchPolicy subclass: #PluggableSearchPolicy
 	instanceVariableNames: 'compareBlock hashBlock'
@@ -32,9 +32,11 @@ hash: operand
 	"Answer a suitable hash value for the <Object>, operand, under this search policy."
 
 	^hashBlock value: operand! !
-!PluggableSearchPolicy categoriesFor: #compare:with:!comparing!public! !
-!PluggableSearchPolicy categoriesFor: #compareBlock:hashBlock:!accessing!initializing!public! !
-!PluggableSearchPolicy categoriesFor: #hash:!comparing!public! !
+!PluggableSearchPolicy categoriesForMethods!
+compare:with:!comparing!public! !
+compareBlock:hashBlock:!accessing!initializing!public! !
+hash:!comparing!public! !
+!
 
 !PluggableSearchPolicy class methodsFor!
 
@@ -50,6 +52,8 @@ newCompareBlock: discriminator hashBlock: hasher
 
 	^super new
 		compareBlock: discriminator hashBlock: hasher! !
-!PluggableSearchPolicy class categoriesFor: #new!instance creation!public! !
-!PluggableSearchPolicy class categoriesFor: #newCompareBlock:hashBlock:!instance creation!public! !
+!PluggableSearchPolicy class categoriesForMethods!
+new!instance creation!public! !
+newCompareBlock:hashBlock:!instance creation!public! !
+!
 

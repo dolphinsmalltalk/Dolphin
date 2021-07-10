@@ -51,7 +51,9 @@ publishedAspectsOfInstances
 		add: (Aspect integer: #rowHeight);
 		add: (Aspect name: #smallImageExtent);
 		yourself! !
-!EditableListView class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!EditableListView class categoriesForMethods!
+publishedAspectsOfInstances!constants!development!public! !
+!
 
 !EditableListViewColumn class methodsFor!
 
@@ -79,7 +81,9 @@ publishedAspectsOfInstances
 		add: (Aspect string: #infoTip);
 		add: (Aspect block: #isValidContentsBlock);
     		yourself! !
-!EditableListViewColumn class categoriesFor: #publishedAspectsOfInstances!development!public! !
+!EditableListViewColumn class categoriesForMethods!
+publishedAspectsOfInstances!development!public! !
+!
 
 !EmbeddedCheckBox class methodsFor!
 
@@ -89,7 +93,9 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect boolean: #is3State);
 		yourself! !
-!EmbeddedCheckBox class categoriesFor: #publishedAspectsOfInstances!development!public! !
+!EmbeddedCheckBox class categoriesForMethods!
+publishedAspectsOfInstances!development!public! !
+!
 
 !EmbeddedCheckButton class methodsFor!
 
@@ -99,7 +105,9 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect boolean: #isAlwaysDrawnEnabled);
 		yourself! !
-!EmbeddedCheckButton class categoriesFor: #publishedAspectsOfInstances!development!public! !
+!EmbeddedCheckButton class categoriesForMethods!
+publishedAspectsOfInstances!development!public! !
+!
 
 !EmbeddedComboBox class methodsFor!
 
@@ -109,7 +117,9 @@ publishedAspectsOfInstances
     	^(super publishedAspectsOfInstances)
     		add: (Aspect boolean: #allowNilSelection);
     		yourself! !
-!EmbeddedComboBox class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!EmbeddedComboBox class categoriesForMethods!
+publishedAspectsOfInstances!constants!development!public! !
+!
 
 !EmbeddedTextEdit class methodsFor!
 
@@ -119,7 +129,9 @@ publishedAspectsOfInstances
     	^super publishedAspectsOfInstances 
 		add: (Aspect name: #offset);
     		yourself! !
-!EmbeddedTextEdit class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!EmbeddedTextEdit class categoriesForMethods!
+publishedAspectsOfInstances!constants!development!public! !
+!
 
 !FormattedTextEdit class methodsFor!
 
@@ -131,7 +143,9 @@ publishedAspectsOfInstances
     		add: (Aspect string: #separatorChars);
     		add: (Aspect set: #placeholderChar);
     		yourself! !
-!FormattedTextEdit class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!FormattedTextEdit class categoriesForMethods!
+publishedAspectsOfInstances!constants!development!public! !
+!
 
 !OwnerDrawnButton class methodsFor!
 
@@ -143,7 +157,9 @@ publishedAspectsOfInstances
 		add: (Aspect boolean: #isRightButton);
 		add: (Aspect dictionary: #transitionDurations);
 		yourself! !
-!OwnerDrawnButton class categoriesFor: #publishedAspectsOfInstances!development!public! !
+!OwnerDrawnButton class categoriesForMethods!
+publishedAspectsOfInstances!development!public! !
+!
 
 !TextAndImageButton class methodsFor!
 
@@ -154,7 +170,9 @@ publishedAspectsOfInstances
 		add: (Aspect name: #imageExtent);
 		add: (Aspect menu: #dropDownMenu);
 		yourself! !
-!TextAndImageButton class categoriesFor: #publishedAspectsOfInstances!development!public! !
+!TextAndImageButton class categoriesForMethods!
+publishedAspectsOfInstances!development!public! !
+!
 
 "End of package definition"!
 

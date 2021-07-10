@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #RefactoryChange
 	instanceVariableNames: 'name'
@@ -69,25 +69,29 @@ renameChangesForClass: aClassName to: newClassName
 	name to perform the compiles."
 
 	self subclassResponsibility! !
-!RefactoryChange categoriesFor: #addMethodChangeClass!constants!public! !
-!RefactoryChange categoriesFor: #changeForClass:selector:!accessing!public! !
-!RefactoryChange categoriesFor: #changeForMetaclass:selector:!accessing!public! !
-!RefactoryChange categoriesFor: #changes!accessing!public! !
-!RefactoryChange categoriesFor: #changesSize!accessing!public! !
-!RefactoryChange categoriesFor: #changeString!printing!public! !
-!RefactoryChange categoriesFor: #displayString!printing!public! !
-!RefactoryChange categoriesFor: #execute!performing/changes!public! !
-!RefactoryChange categoriesFor: #executeNotifying:!private! !
-!RefactoryChange categoriesFor: #flattenedChanges!accessing!private! !
-!RefactoryChange categoriesFor: #flattenOnto:!private! !
-!RefactoryChange categoriesFor: #initialize!initialize/release!public! !
-!RefactoryChange categoriesFor: #name!accessing!public! !
-!RefactoryChange categoriesFor: #name:!initialize/release!public! !
-!RefactoryChange categoriesFor: #renameChangesForClass:to:!accessing!public! !
+!RefactoryChange categoriesForMethods!
+addMethodChangeClass!constants!public! !
+changeForClass:selector:!accessing!public! !
+changeForMetaclass:selector:!accessing!public! !
+changes!accessing!public! !
+changesSize!accessing!public! !
+changeString!printing!public! !
+displayString!printing!public! !
+execute!performing/changes!public! !
+executeNotifying:!private! !
+flattenedChanges!accessing!private! !
+flattenOnto:!private! !
+initialize!initialize/release!public! !
+name!accessing!public! !
+name:!initialize/release!public! !
+renameChangesForClass:to:!accessing!public! !
+!
 
 !RefactoryChange class methodsFor!
 
 new
 	^super new initialize! !
-!RefactoryChange class categoriesFor: #new!instance creation!public! !
+!RefactoryChange class categoriesForMethods!
+new!instance creation!public! !
+!
 

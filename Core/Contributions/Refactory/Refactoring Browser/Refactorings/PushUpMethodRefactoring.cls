@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodRefactoring subclass: #PushUpMethodRefactoring
 	instanceVariableNames: 'removeDuplicates selectors'
@@ -223,27 +223,29 @@ transform
 		pushUpMethods;
 		removePushedUpMethods;
 		removeDuplicateMethods! !
-!PushUpMethodRefactoring categoriesFor: #checkBackReferencesTo:!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkClassVars!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkClassVarsFor:!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkInstVars!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkInstVarsFor:!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkSiblingSuperSendsFrom:!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkSuperclass!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkSuperMessages!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkSuperSendsFromPushedUpMethods!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #checkSuperSendsFromSiblings!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #copyDownMethod:!public! !
-!PushUpMethodRefactoring categoriesFor: #copyDownMethods!public!transforming! !
-!PushUpMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!PushUpMethodRefactoring categoriesFor: #pushUp:!public!transforming! !
-!PushUpMethodRefactoring categoriesFor: #pushUp:from:!initialize/release!public! !
-!PushUpMethodRefactoring categoriesFor: #pushUpMethods!public!transforming! !
-!PushUpMethodRefactoring categoriesFor: #removeDuplicateMethods!public!transforming! !
-!PushUpMethodRefactoring categoriesFor: #removeDuplicatesOf:!public!transforming! !
-!PushUpMethodRefactoring categoriesFor: #removePushedUpMethods!public!transforming! !
-!PushUpMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!PushUpMethodRefactoring categoriesFor: #transform!public!transforming! !
+!PushUpMethodRefactoring categoriesForMethods!
+checkBackReferencesTo:!preconditions!public! !
+checkClassVars!preconditions!public! !
+checkClassVarsFor:!preconditions!public! !
+checkInstVars!preconditions!public! !
+checkInstVarsFor:!preconditions!public! !
+checkSiblingSuperSendsFrom:!preconditions!public! !
+checkSuperclass!preconditions!public! !
+checkSuperMessages!preconditions!public! !
+checkSuperSendsFromPushedUpMethods!preconditions!public! !
+checkSuperSendsFromSiblings!preconditions!public! !
+copyDownMethod:!public! !
+copyDownMethods!public!transforming! !
+preconditions!preconditions!public! !
+pushUp:!public!transforming! !
+pushUp:from:!initialize/release!public! !
+pushUpMethods!public!transforming! !
+removeDuplicateMethods!public!transforming! !
+removeDuplicatesOf:!public!transforming! !
+removePushedUpMethods!public!transforming! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !PushUpMethodRefactoring class methodsFor!
 
@@ -255,6 +257,8 @@ model: aRBNamespace pushUp: selectorCollection from: aClass
 
 pushUp: selectorCollection from: aClass 
 	^self new pushUp: selectorCollection from: aClass! !
-!PushUpMethodRefactoring class categoriesFor: #model:pushUp:from:!instance creation!public! !
-!PushUpMethodRefactoring class categoriesFor: #pushUp:from:!instance creation!public! !
+!PushUpMethodRefactoring class categoriesForMethods!
+model:pushUp:from:!instance creation!public! !
+pushUp:from:!instance creation!public! !
+!
 

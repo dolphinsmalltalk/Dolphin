@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringBrowserTest subclass: #SmalllintTest
 	instanceVariableNames: ''
@@ -236,60 +236,62 @@ testWhileTrue
 
 testYourselfNotUsed
 	self parseTreeRuleFor: self currentSelector! !
-!SmalllintTest categoriesFor: #blockRuleFor:!public!set up! !
-!SmalllintTest categoriesFor: #blockRuleFor:plusSelectors:!public!set up! !
-!SmalllintTest categoriesFor: #checkRule:isEqualTo:!public!set up! !
-!SmalllintTest categoriesFor: #compare:to:!public!set up! !
-!SmalllintTest categoriesFor: #currentSelector!public!set up! !
-!SmalllintTest categoriesFor: #parseTreeRuleFor:!public!set up! !
-!SmalllintTest categoriesFor: #parseTreeRuleFor:plusSelectors:!public!set up! !
-!SmalllintTest categoriesFor: #refactoryTestAppEnvironment!public!set up! !
-!SmalllintTest categoriesFor: #testAnySatisfy!public!tests! !
-!SmalllintTest categoriesFor: #testAsOrderedCollectionNotNeeded!public!tests! !
-!SmalllintTest categoriesFor: #testAssignmentInBlock!public!tests! !
-!SmalllintTest categoriesFor: #testAssignmentInIfTrue!public!tests! !
-!SmalllintTest categoriesFor: #testAtIfAbsent!public!tests! !
-!SmalllintTest categoriesFor: #testBadMessage!public!tests! !
-!SmalllintTest categoriesFor: #testBooleanPrecedence!public!tests! !
-!SmalllintTest categoriesFor: #testCollectionMessagesToExternalObject!public!tests! !
-!SmalllintTest categoriesFor: #testCollectionProtocol!public!tests! !
-!SmalllintTest categoriesFor: #testCollectSelectNotUsed!public!tests! !
-!SmalllintTest categoriesFor: #testConsistencyCheck!public!tests! !
-!SmalllintTest categoriesFor: #testDetectAnySatisfy!public!tests! !
-!SmalllintTest categoriesFor: #testEndTrueFalse!public!tests! !
-!SmalllintTest categoriesFor: #testEqualNotUsed!public!tests! !
-!SmalllintTest categoriesFor: #testEqualsTrue!public!tests! !
-!SmalllintTest categoriesFor: #testEquivalentSuperclassMethods!public!tests! !
-!SmalllintTest categoriesFor: #testExtraBlock!public!tests! !
-!SmalllintTest categoriesFor: #testFileBlocks!public!tests! !
-!SmalllintTest categoriesFor: #testFullBlocks!public!tests! !
-!SmalllintTest categoriesFor: #testGuardingClause!public!tests! !
-!SmalllintTest categoriesFor: #testIfTrueBlocks!public!tests! !
-!SmalllintTest categoriesFor: #testIfTrueReturns!public!tests! !
-!SmalllintTest categoriesFor: #testJustSendsSuper!public!tests! !
-!SmalllintTest categoriesFor: #testLiteralArrayCharacters!public!tests! !
-!SmalllintTest categoriesFor: #testLongMethods!public!tests! !
-!SmalllintTest categoriesFor: #testMinMax!public!tests! !
-!SmalllintTest categoriesFor: #testMissingYourself!public!tests! !
-!SmalllintTest categoriesFor: #testModifiesCollection!public!tests! !
-!SmalllintTest categoriesFor: #testOverridesSpecialMessage!public!tests! !
-!SmalllintTest categoriesFor: #testPrecedence!public!tests! !
-!SmalllintTest categoriesFor: #testRefersToClass!public!tests! !
-!SmalllintTest categoriesFor: #testReturnInEnsure!public!tests! !
-!SmalllintTest categoriesFor: #testReturnsBooleanAndOther!public!tests! !
-!SmalllintTest categoriesFor: #testReturnsIfTrue!public!tests! !
-!SmalllintTest categoriesFor: #testSearchingLiteral!public!tests! !
-!SmalllintTest categoriesFor: #testSendsDifferentSuper!public!tests! !
-!SmalllintTest categoriesFor: #testSizeCheck!public!tests! !
-!SmalllintTest categoriesFor: #testStringConcatenation!public!tests! !
-!SmalllintTest categoriesFor: #testSuperSends!public!tests! !
-!SmalllintTest categoriesFor: #testTempsReadBeforeWritten!public!tests! !
-!SmalllintTest categoriesFor: #testTempVarOverridesInstVar!public!tests! !
-!SmalllintTest categoriesFor: #testThreeElementPoint!public!tests! !
-!SmalllintTest categoriesFor: #testToDo!public!tests! !
-!SmalllintTest categoriesFor: #testToDoCollect!public!tests! !
-!SmalllintTest categoriesFor: #testToDoWithIncrement!public!tests! !
-!SmalllintTest categoriesFor: #testUsesAdd!public!tests! !
-!SmalllintTest categoriesFor: #testWhileTrue!public!tests! !
-!SmalllintTest categoriesFor: #testYourselfNotUsed!public!tests! !
+!SmalllintTest categoriesForMethods!
+blockRuleFor:!public!set up! !
+blockRuleFor:plusSelectors:!public!set up! !
+checkRule:isEqualTo:!public!set up! !
+compare:to:!public!set up! !
+currentSelector!public!set up! !
+parseTreeRuleFor:!public!set up! !
+parseTreeRuleFor:plusSelectors:!public!set up! !
+refactoryTestAppEnvironment!public!set up! !
+testAnySatisfy!public!tests! !
+testAsOrderedCollectionNotNeeded!public!tests! !
+testAssignmentInBlock!public!tests! !
+testAssignmentInIfTrue!public!tests! !
+testAtIfAbsent!public!tests! !
+testBadMessage!public!tests! !
+testBooleanPrecedence!public!tests! !
+testCollectionMessagesToExternalObject!public!tests! !
+testCollectionProtocol!public!tests! !
+testCollectSelectNotUsed!public!tests! !
+testConsistencyCheck!public!tests! !
+testDetectAnySatisfy!public!tests! !
+testEndTrueFalse!public!tests! !
+testEqualNotUsed!public!tests! !
+testEqualsTrue!public!tests! !
+testEquivalentSuperclassMethods!public!tests! !
+testExtraBlock!public!tests! !
+testFileBlocks!public!tests! !
+testFullBlocks!public!tests! !
+testGuardingClause!public!tests! !
+testIfTrueBlocks!public!tests! !
+testIfTrueReturns!public!tests! !
+testJustSendsSuper!public!tests! !
+testLiteralArrayCharacters!public!tests! !
+testLongMethods!public!tests! !
+testMinMax!public!tests! !
+testMissingYourself!public!tests! !
+testModifiesCollection!public!tests! !
+testOverridesSpecialMessage!public!tests! !
+testPrecedence!public!tests! !
+testRefersToClass!public!tests! !
+testReturnInEnsure!public!tests! !
+testReturnsBooleanAndOther!public!tests! !
+testReturnsIfTrue!public!tests! !
+testSearchingLiteral!public!tests! !
+testSendsDifferentSuper!public!tests! !
+testSizeCheck!public!tests! !
+testStringConcatenation!public!tests! !
+testSuperSends!public!tests! !
+testTempsReadBeforeWritten!public!tests! !
+testTempVarOverridesInstVar!public!tests! !
+testThreeElementPoint!public!tests! !
+testToDo!public!tests! !
+testToDoCollect!public!tests! !
+testToDoWithIncrement!public!tests! !
+testUsesAdd!public!tests! !
+testWhileTrue!public!tests! !
+testYourselfNotUsed!public!tests! !
+!
 

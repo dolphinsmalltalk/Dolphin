@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BasicInspector subclass: #CompiledMethodInspector
 	instanceVariableNames: ''
@@ -34,10 +34,12 @@ text
 	^(index between: 2 and: self headerSize)
 		ifTrue: [ field ]
 		ifFalse: [ field printString ]! !
-!CompiledMethodInspector categoriesFor: #disassemblyText!accessing!private! !
-!CompiledMethodInspector categoriesFor: #source!accessing!public! !
-!CompiledMethodInspector categoriesFor: #sourceText!accessing!private! !
-!CompiledMethodInspector categoriesFor: #text!accessing!private! !
+!CompiledMethodInspector categoriesForMethods!
+disassemblyText!accessing!private! !
+source!accessing!public! !
+sourceText!accessing!private! !
+text!accessing!private! !
+!
 
 !CompiledMethodInspector class methodsFor!
 
@@ -65,6 +67,8 @@ initialize
 		'Return instance variable'
 		'Set instance variable').
 ! !
-!CompiledMethodInspector class categoriesFor: #headerList!constants!public! !
-!CompiledMethodInspector class categoriesFor: #initialize!initializing!private! !
+!CompiledMethodInspector class categoriesForMethods!
+headerList!constants!public! !
+initialize!initializing!private! !
+!
 

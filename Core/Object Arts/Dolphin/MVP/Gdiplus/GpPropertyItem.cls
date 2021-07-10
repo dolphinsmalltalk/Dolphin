@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #GpPropertyItem
 	instanceVariableNames: ''
@@ -103,17 +103,19 @@ valueArray
 	"Next line won't work with an arary returned, i.e., if length > 8."
 	type == 10 ifTrue: [^(address sdwordAtOffset: 0) / (address sdwordAtOffset: 4)].
 	self error: 'unrecognised type'! !
-!GpPropertyItem categoriesFor: #id!**compiled accessors**!public! !
-!GpPropertyItem categoriesFor: #id:!**compiled accessors**!public! !
-!GpPropertyItem categoriesFor: #length!**compiled accessors**!public! !
-!GpPropertyItem categoriesFor: #length:!**compiled accessors**!public! !
-!GpPropertyItem categoriesFor: #name!accessing!public! !
-!GpPropertyItem categoriesFor: #Type!**compiled accessors**!public! !
-!GpPropertyItem categoriesFor: #Type:!**compiled accessors**!public! !
-!GpPropertyItem categoriesFor: #typeName!accessing!public! !
-!GpPropertyItem categoriesFor: #Value!**compiled accessors**!public! !
-!GpPropertyItem categoriesFor: #Value:!**compiled accessors**!public! !
-!GpPropertyItem categoriesFor: #valueArray!accessing!public! !
+!GpPropertyItem categoriesForMethods!
+id!**compiled accessors**!public! !
+id:!**compiled accessors**!public! !
+length!**compiled accessors**!public! !
+length:!**compiled accessors**!public! !
+name!accessing!public! !
+Type!**compiled accessors**!public! !
+Type:!**compiled accessors**!public! !
+typeName!accessing!public! !
+Value!**compiled accessors**!public! !
+Value:!**compiled accessors**!public! !
+valueArray!accessing!public! !
+!
 
 !GpPropertyItem class methodsFor!
 
@@ -139,6 +141,8 @@ defineFields
 
 getFieldNames
 	^#(#id #length #Type #Value)! !
-!GpPropertyItem class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GpPropertyItem class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!GpPropertyItem class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

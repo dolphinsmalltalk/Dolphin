@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringBrowserTest subclass: #RefactoringTest
 	instanceVariableNames: 'manager changeSet model'
@@ -123,18 +123,20 @@ testPrintRefactoringManager
 		show: RefactoringManager instance printString;
 		cr;
 		flush! !
-!RefactoringTest categoriesFor: #readFile:!public!set up! !
-!RefactoringTest categoriesFor: #setUp!public!set up! !
-!RefactoringTest categoriesFor: #setupImplementorToInlineFor:toReturn:!public!set up! !
-!RefactoringTest categoriesFor: #setupInlineExpressionFor:toReturn:!public!set up! !
-!RefactoringTest categoriesFor: #setupMethodNameFor:toReturn:!public!set up! !
-!RefactoringTest categoriesFor: #setupMethodNameFor:toReturn:withArguments:!public!set up! !
-!RefactoringTest categoriesFor: #setupSelfArgumentNameFor:toReturn:!public!set up! !
-!RefactoringTest categoriesFor: #setupVariableToMoveToFor:toReturn:!public!set up! !
-!RefactoringTest categoriesFor: #setupVariableTypesFor:toReturn:!public!set up! !
-!RefactoringTest categoriesFor: #shouldFail:!private! !
-!RefactoringTest categoriesFor: #shouldWarn:!private! !
-!RefactoringTest categoriesFor: #tearDown!public!set up! !
-!RefactoringTest categoriesFor: #testConditions!public!tests! !
-!RefactoringTest categoriesFor: #testPrintRefactoringManager!public!tests! !
+!RefactoringTest categoriesForMethods!
+readFile:!public!set up! !
+setUp!public!set up! !
+setupImplementorToInlineFor:toReturn:!public!set up! !
+setupInlineExpressionFor:toReturn:!public!set up! !
+setupMethodNameFor:toReturn:!public!set up! !
+setupMethodNameFor:toReturn:withArguments:!public!set up! !
+setupSelfArgumentNameFor:toReturn:!public!set up! !
+setupVariableToMoveToFor:toReturn:!public!set up! !
+setupVariableTypesFor:toReturn:!public!set up! !
+shouldFail:!private! !
+shouldWarn:!private! !
+tearDown!public!set up! !
+testConditions!public!tests! !
+testPrintRefactoringManager!public!tests! !
+!
 

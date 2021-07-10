@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IXMLDOMNode subclass: #IXMLDOMDocumentType
 	instanceVariableNames: ''
@@ -70,12 +70,14 @@ notations
 	answer := IXMLDOMNamedNodeMap newPointer.
 	self get_notations: answer.
 	^DOMNotationsMap onInterface: answer parentNode: self! !
-!IXMLDOMDocumentType categoriesFor: #entities!properties!public! !
-!IXMLDOMDocumentType categoriesFor: #get_entities:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
-!IXMLDOMDocumentType categoriesFor: #get_name:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
-!IXMLDOMDocumentType categoriesFor: #get_notations:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
-!IXMLDOMDocumentType categoriesFor: #name!**auto generated**!properties!public! !
-!IXMLDOMDocumentType categoriesFor: #notations!properties!public! !
+!IXMLDOMDocumentType categoriesForMethods!
+entities!properties!public! !
+get_entities:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
+get_name:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
+get_notations:!**auto generated**!COM Interfaces-IXMLDOMDocumentType!private! !
+name!**auto generated**!properties!public! !
+notations!properties!public! !
+!
 
 !IXMLDOMDocumentType class methodsFor!
 
@@ -91,5 +93,7 @@ defineFunctions
 		defineFunction: #get_notations:
 			argumentTypes: 'IXMLDOMNamedNodeMap**'
 ! !
-!IXMLDOMDocumentType class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IXMLDOMDocumentType class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusFromBytesInitializer
 	instanceVariableNames: 'bytes'
@@ -25,15 +25,19 @@ iStream
 
 setBytes: aByteArray 
 	bytes := aByteArray! !
-!GdiplusFromBytesInitializer categoriesFor: #=!comparing!public! !
-!GdiplusFromBytesInitializer categoriesFor: #bytes!accessing!public! !
-!GdiplusFromBytesInitializer categoriesFor: #hash!comparing!public! !
-!GdiplusFromBytesInitializer categoriesFor: #iStream!public!realizing/unrealizing! !
-!GdiplusFromBytesInitializer categoriesFor: #setBytes:!initializing!private! !
+!GdiplusFromBytesInitializer categoriesForMethods!
+=!comparing!public! !
+bytes!accessing!public! !
+hash!comparing!public! !
+iStream!public!realizing/unrealizing! !
+setBytes:!initializing!private! !
+!
 
 !GdiplusFromBytesInitializer class methodsFor!
 
 bytes: aByteArray 
 	^self new setBytes: aByteArray! !
-!GdiplusFromBytesInitializer class categoriesFor: #bytes:!instance creation!public! !
+!GdiplusFromBytesInitializer class categoriesForMethods!
+bytes:!instance creation!public! !
+!
 

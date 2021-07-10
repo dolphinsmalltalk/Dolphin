@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRPOLYDRAW16
 	instanceVariableNames: ''
@@ -93,15 +93,17 @@ rclBounds: aRECT
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
-!EMRPOLYDRAW16 categoriesFor: #abTypes!public! !
-!EMRPOLYDRAW16 categoriesFor: #abTypes:!public! !
-!EMRPOLYDRAW16 categoriesFor: #abTypesOffset!accessing!private! !
-!EMRPOLYDRAW16 categoriesFor: #apts!**compiled accessors**!public! !
-!EMRPOLYDRAW16 categoriesFor: #apts:!**compiled accessors**!public! !
-!EMRPOLYDRAW16 categoriesFor: #cpts!**compiled accessors**!public! !
-!EMRPOLYDRAW16 categoriesFor: #cpts:!**compiled accessors**!public! !
-!EMRPOLYDRAW16 categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRPOLYDRAW16 categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!EMRPOLYDRAW16 categoriesForMethods!
+abTypes!public! !
+abTypes:!public! !
+abTypesOffset!accessing!private! !
+apts!**compiled accessors**!public! !
+apts:!**compiled accessors**!public! !
+cpts!**compiled accessors**!public! !
+cpts:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+!
 
 !EMRPOLYDRAW16 class methodsFor!
 
@@ -143,7 +145,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_POLYDRAW16! !
-!EMRPOLYDRAW16 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRPOLYDRAW16 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRPOLYDRAW16 class categoriesFor: #iTypes!constants!public! !
+!EMRPOLYDRAW16 class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Dialog subclass: #MenuItemDialog
 	instanceVariableNames: 'titlePresenter commandPresenter iconPresenter imageModel iconIdPresenter inspector cardsPresenter'
@@ -84,15 +84,17 @@ queryCommand: aCommandQuery
 			[aCommandQuery isEnabled: imageModel value notNil.
 			^true].
 	^super queryCommand: aCommandQuery ! !
-!MenuItemDialog categoriesFor: #chooseIcon!commands!private! !
-!MenuItemDialog categoriesFor: #clearIcon!commands!private! !
-!MenuItemDialog categoriesFor: #createComponents!public! !
-!MenuItemDialog categoriesFor: #createSchematicWiring!initializing!public! !
-!MenuItemDialog categoriesFor: #model:!public! !
-!MenuItemDialog categoriesFor: #onCardChanged!event handling!private! !
-!MenuItemDialog categoriesFor: #onInspecteeChanged!event handling!private! !
-!MenuItemDialog categoriesFor: #onViewOpened!event handling!public! !
-!MenuItemDialog categoriesFor: #queryCommand:!public! !
+!MenuItemDialog categoriesForMethods!
+chooseIcon!commands!private! !
+clearIcon!commands!private! !
+createComponents!public! !
+createSchematicWiring!initializing!public! !
+model:!public! !
+onCardChanged!event handling!private! !
+onInspecteeChanged!event handling!private! !
+onViewOpened!event handling!public! !
+queryCommand:!public! !
+!
 
 !MenuItemDialog class methodsFor!
 
@@ -101,5 +103,7 @@ icon
 
 	^Menu icon
 ! !
-!MenuItemDialog class categoriesFor: #icon!constants!public! !
+!MenuItemDialog class categoriesForMethods!
+icon!constants!public! !
+!
 

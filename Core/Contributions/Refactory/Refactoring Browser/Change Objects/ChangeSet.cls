@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ChangeSet
 	instanceVariableNames: ''
@@ -16,5 +16,7 @@ changed: anAspectSymbol with: aParameter
 
 	ChangeSet changed: anAspectSymbol with: aParameter.
 	super changed: anAspectSymbol with: aParameter! !
-!ChangeSet categoriesFor: #changed:with:!public!RefactoringBrowser! !
+!ChangeSet categoriesForMethods!
+changed:with:!public!RefactoringBrowser! !
+!
 

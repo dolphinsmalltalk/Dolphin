@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ADODBConnection15 subclass: #ADODB_Connection
 	instanceVariableNames: ''
@@ -37,7 +37,9 @@ Cancel
 
 	<virtual stdcall: hresult 37>
 	^self invalidCall: _failureCode! !
-!ADODB_Connection categoriesFor: #Cancel!**auto generated**!COM Interfaces-_Connection!public! !
+!ADODB_Connection categoriesForMethods!
+Cancel!**auto generated**!COM Interfaces-_Connection!public! !
+!
 
 !ADODB_Connection class methodsFor!
 
@@ -54,6 +56,8 @@ defineFunctions
 	self
 		defineFunction: #Cancel
 ! !
-!ADODB_Connection class categoriesFor: #clsid!**auto generated**!constants!private! !
-!ADODB_Connection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB_Connection class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!public! !
+!
 

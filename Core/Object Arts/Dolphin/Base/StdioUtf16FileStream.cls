@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StdioUnicodeFileStream subclass: #StdioUtf16FileStream
 	instanceVariableNames: ''
@@ -32,8 +32,10 @@ size
 	"Answer the size of the file in wide characters, excluding the BOM."
 
 	^super size - offset bitShift: -1! !
-!StdioUtf16FileStream categoriesFor: #contentsSpecies!constants!private! !
-!StdioUtf16FileStream categoriesFor: #position!accessing!public! !
-!StdioUtf16FileStream categoriesFor: #position:!positioning!public! !
-!StdioUtf16FileStream categoriesFor: #size!accessing!public! !
+!StdioUtf16FileStream categoriesForMethods!
+contentsSpecies!constants!private! !
+position!accessing!public! !
+position:!positioning!public! !
+size!accessing!public! !
+!
 

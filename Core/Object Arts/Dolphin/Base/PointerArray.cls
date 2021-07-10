@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 UINT_PTRArray subclass: #PointerArray
 	instanceVariableNames: 'elementClass'
@@ -36,10 +36,12 @@ uncheckedAt: anInteger
 uncheckedAt: anInteger put: newValue 
 	super uncheckedAt: anInteger put: newValue yourAddress.
 	^newValue! !
-!PointerArray categoriesFor: #elementClass!accessing!public! !
-!PointerArray categoriesFor: #elementClass:!accessing!private! !
-!PointerArray categoriesFor: #uncheckedAt:!accessing!private! !
-!PointerArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!PointerArray categoriesForMethods!
+elementClass!accessing!public! !
+elementClass:!accessing!private! !
+uncheckedAt:!accessing!private! !
+uncheckedAt:put:!accessing!private! !
+!
 
 !PointerArray class methodsFor!
 
@@ -63,6 +65,8 @@ length: anInteger elementClass: elementClass
 	of sufficient size to contain anInteger elements of type, elementClass."
 
 	^(self length: anInteger elementSize: self elementSize) elementClass: elementClass! !
-!PointerArray class categoriesFor: #fromAddress:length:elementClass:!instance creation!public! !
-!PointerArray class categoriesFor: #length:elementClass:!instance creation!public! !
+!PointerArray class categoriesForMethods!
+fromAddress:length:elementClass:!instance creation!public! !
+length:elementClass:!instance creation!public! !
+!
 

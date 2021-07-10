@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ShellView subclass: #Splash
 	instanceVariableNames: 'splashDelay bitmap overlayWith'
@@ -128,22 +128,24 @@ showWindow
 
 	super show.
 	self beTopMost; update! !
-!Splash categoriesFor: #bitmap:!accessing!initializing!private! !
-!Splash categoriesFor: #close!operations!public! !
-!Splash categoriesFor: #defaultExtent!constants!public! !
-!Splash categoriesFor: #defaultSplashDelay!constants!public! !
-!Splash categoriesFor: #defaultWindowExStyle!constants!private! !
-!Splash categoriesFor: #defaultWindowStyle!constants!private! !
-!Splash categoriesFor: #forceClose!event handling!private! !
-!Splash categoriesFor: #initialize!initializing!private! !
-!Splash categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!Splash categoriesFor: #onPaintRequired:!event handling!public! !
-!Splash categoriesFor: #overlayWith!accessing!public! !
-!Splash categoriesFor: #overlayWith:!accessing!public! !
-!Splash categoriesFor: #show!operations!public! !
-!Splash categoriesFor: #showTimed!operations!public! !
-!Splash categoriesFor: #showTimed:!operations!public! !
-!Splash categoriesFor: #showWindow!operations!private! !
+!Splash categoriesForMethods!
+bitmap:!accessing!initializing!private! !
+close!operations!public! !
+defaultExtent!constants!public! !
+defaultSplashDelay!constants!public! !
+defaultWindowExStyle!constants!private! !
+defaultWindowStyle!constants!private! !
+forceClose!event handling!private! !
+initialize!initializing!private! !
+onLeftButtonPressed:!event handling!public! !
+onPaintRequired:!event handling!public! !
+overlayWith!accessing!public! !
+overlayWith:!accessing!public! !
+show!operations!public! !
+showTimed!operations!public! !
+showTimed:!operations!public! !
+showWindow!operations!private! !
+!
 
 !Splash class methodsFor!
 
@@ -164,6 +166,8 @@ bitmap: aBitmap overlayWith: aBlock
 		create;
 		yourself
 	! !
-!Splash class categoriesFor: #bitmap:!instance creation!public! !
-!Splash class categoriesFor: #bitmap:overlayWith:!instance creation!public! !
+!Splash class categoriesForMethods!
+bitmap:!instance creation!public! !
+bitmap:overlayWith:!instance creation!public! !
+!
 

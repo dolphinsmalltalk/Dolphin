@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IErrorLog
 	instanceVariableNames: ''
@@ -27,8 +27,10 @@ AddError: pszPropName pExcepInfo: pExcepInfo
 
 	<virtual stdcall: hresult 4 lpwstr EXCEPINFO*>
 	^self invalidCall: _failureCode! !
-!IErrorLog categoriesFor: #addError:pExcepInfo:!**auto generated**!methods!public! !
-!IErrorLog categoriesFor: #AddError:pExcepInfo:!**auto generated**!COM Interfaces-IErrorLog!private! !
+!IErrorLog categoriesForMethods!
+addError:pExcepInfo:!**auto generated**!methods!public! !
+AddError:pExcepInfo:!**auto generated**!COM Interfaces-IErrorLog!private! !
+!
 
 IErrorLog methodProtocol: #IErrorLog attributes: #(#readOnly) selectors: #(#AddError:pExcepInfo:)!
 
@@ -43,5 +45,7 @@ defineFunctions
 		defineFunction: #AddError:pExcepInfo:
 			argumentTypes: 'lpwstr EXCEPINFO*'
 ! !
-!IErrorLog class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IErrorLog class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

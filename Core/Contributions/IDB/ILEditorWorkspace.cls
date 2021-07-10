@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 View subclass: #ILEditorWorkspace
 	instanceVariableNames: 'zoom location zone zoneBrushes'
@@ -330,40 +330,42 @@ zoomDescription
 		nextPutAll: ' Zoom: ';
 		display: zoom;
 		contents! !
-!ILEditorWorkspace categoriesFor: #clearZone!event handling!public! !
-!ILEditorWorkspace categoriesFor: #connectModel!models!public! !
-!ILEditorWorkspace categoriesFor: #continueTrackingAt:from:!event handling!public! !
-!ILEditorWorkspace categoriesFor: #cursor!constants!public! !
-!ILEditorWorkspace categoriesFor: #drawImageOn:in:!drawing!public! !
-!ILEditorWorkspace categoriesFor: #drawZoneOn:show:!event handling!public! !
-!ILEditorWorkspace categoriesFor: #endTrackingAt:!event handling!public! !
-!ILEditorWorkspace categoriesFor: #hasZone!public!testing! !
-!ILEditorWorkspace categoriesFor: #hideZone!event handling!public! !
-!ILEditorWorkspace categoriesFor: #imagePixelFor:!calculations!public! !
-!ILEditorWorkspace categoriesFor: #imageRectangleFor:!calculations!public! !
-!ILEditorWorkspace categoriesFor: #initialize!initializing!public! !
-!ILEditorWorkspace categoriesFor: #isZoomed!public!testing! !
-!ILEditorWorkspace categoriesFor: #locationDescription!displaying!public! !
-!ILEditorWorkspace categoriesFor: #margin!constants!public! !
-!ILEditorWorkspace categoriesFor: #onImageChanged:!event handling!public! !
-!ILEditorWorkspace categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!ILEditorWorkspace categoriesFor: #onMiddleButtonPressed:!event handling!public! !
-!ILEditorWorkspace categoriesFor: #onMouseMoved:!event handling!public! !
-!ILEditorWorkspace categoriesFor: #onMouseWheel:!event handling!public! !
-!ILEditorWorkspace categoriesFor: #onPaintRequired:!event handling!public! !
-!ILEditorWorkspace categoriesFor: #onRightButtonPressed:!event handling!public! !
-!ILEditorWorkspace categoriesFor: #preferredExtent!geometry!public! !
-!ILEditorWorkspace categoriesFor: #showZone!event handling!public! !
-!ILEditorWorkspace categoriesFor: #startTrackingAt:!event handling!public! !
-!ILEditorWorkspace categoriesFor: #viewRectangleForPoint:!calculations!public! !
-!ILEditorWorkspace categoriesFor: #viewRectangleForRectangle:!calculations!public! !
-!ILEditorWorkspace categoriesFor: #zoneBrushes!event handling!public! !
-!ILEditorWorkspace categoriesFor: #zoneDescription!displaying!public! !
-!ILEditorWorkspace categoriesFor: #zonePerimeterPixels!event handling!public! !
-!ILEditorWorkspace categoriesFor: #zoneRectangle!accessing!public! !
-!ILEditorWorkspace categoriesFor: #zoom:!accessing!public! !
-!ILEditorWorkspace categoriesFor: #zoomBy:!accessing!public! !
-!ILEditorWorkspace categoriesFor: #zoomDescription!displaying!public! !
+!ILEditorWorkspace categoriesForMethods!
+clearZone!event handling!public! !
+connectModel!models!public! !
+continueTrackingAt:from:!event handling!public! !
+cursor!constants!public! !
+drawImageOn:in:!drawing!public! !
+drawZoneOn:show:!event handling!public! !
+endTrackingAt:!event handling!public! !
+hasZone!public!testing! !
+hideZone!event handling!public! !
+imagePixelFor:!calculations!public! !
+imageRectangleFor:!calculations!public! !
+initialize!initializing!public! !
+isZoomed!public!testing! !
+locationDescription!displaying!public! !
+margin!constants!public! !
+onImageChanged:!event handling!public! !
+onLeftButtonPressed:!event handling!public! !
+onMiddleButtonPressed:!event handling!public! !
+onMouseMoved:!event handling!public! !
+onMouseWheel:!event handling!public! !
+onPaintRequired:!event handling!public! !
+onRightButtonPressed:!event handling!public! !
+preferredExtent!geometry!public! !
+showZone!event handling!public! !
+startTrackingAt:!event handling!public! !
+viewRectangleForPoint:!calculations!public! !
+viewRectangleForRectangle:!calculations!public! !
+zoneBrushes!event handling!public! !
+zoneDescription!displaying!public! !
+zonePerimeterPixels!event handling!public! !
+zoneRectangle!accessing!public! !
+zoom:!accessing!public! !
+zoomBy:!accessing!public! !
+zoomDescription!displaying!public! !
+!
 
 !ILEditorWorkspace class methodsFor!
 
@@ -376,5 +378,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(ILEditorWorkspace)  98 16 0 0 98 2 8 1140850688 1 416 0 721158 ##(SystemColor)  31 0 519 0 0 0 416 0 0 0 0 983302 ##(MessageSequence)  202 208 98 1 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 658 225 201 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 117 0 0 0 105 0 0 0] 98 0 658 193 193 0 27 )! !
-!ILEditorWorkspace class categoriesFor: #resource_Default_view!public!resources-views! !
+!ILEditorWorkspace class categoriesForMethods!
+resource_Default_view!public!resources-views! !
+!
 

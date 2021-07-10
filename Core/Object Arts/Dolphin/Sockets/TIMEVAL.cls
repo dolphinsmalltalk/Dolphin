@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #TIMEVAL
 	instanceVariableNames: ''
@@ -43,10 +43,12 @@ tv_usec: anInteger
 	"Set the receiver's 'tv_usec' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_tv_usec put: anInteger! !
-!TIMEVAL categoriesFor: #tv_sec!**compiled accessors**!public! !
-!TIMEVAL categoriesFor: #tv_sec:!**compiled accessors**!public! !
-!TIMEVAL categoriesFor: #tv_usec!**compiled accessors**!public! !
-!TIMEVAL categoriesFor: #tv_usec:!**compiled accessors**!public! !
+!TIMEVAL categoriesForMethods!
+tv_sec!**compiled accessors**!public! !
+tv_sec:!**compiled accessors**!public! !
+tv_usec!**compiled accessors**!public! !
+tv_usec:!**compiled accessors**!public! !
+!
 
 !TIMEVAL class methodsFor!
 
@@ -66,6 +68,8 @@ defineFields
 
 getFieldNames
 	^#(#tv_sec #tv_usec)! !
-!TIMEVAL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!TIMEVAL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!TIMEVAL class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

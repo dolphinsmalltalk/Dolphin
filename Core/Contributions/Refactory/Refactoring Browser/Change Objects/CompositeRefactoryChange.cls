@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoryChange subclass: #CompositeRefactoryChange
 	instanceVariableNames: 'changes'
@@ -144,37 +144,39 @@ renameChangesForClass: aClassName to: newClassName
 
 renameClass: class to: newName 
 	^self addChange: (RenameClassChange rename: class name to: newName)! !
-!CompositeRefactoryChange categoriesFor: #=!comparing!public! !
-!CompositeRefactoryChange categoriesFor: #addChange:!accessing!public! !
-!CompositeRefactoryChange categoriesFor: #addChangeFirst:!accessing!public! !
-!CompositeRefactoryChange categoriesFor: #addClassVariable:to:!public!refactory/changes! !
-!CompositeRefactoryChange categoriesFor: #addInstanceVariable:to:!public!refactory/changes! !
-!CompositeRefactoryChange categoriesFor: #addPool:to:!public!refactory/changes! !
-!CompositeRefactoryChange categoriesFor: #basicExecuteNotifying:!private! !
-!CompositeRefactoryChange categoriesFor: #changeForClass:selector:!accessing!public! !
-!CompositeRefactoryChange categoriesFor: #changeForMetaclass:selector:!accessing!public! !
-!CompositeRefactoryChange categoriesFor: #changes!inspector accessing!private! !
-!CompositeRefactoryChange categoriesFor: #changes:!inspector accessing!private! !
-!CompositeRefactoryChange categoriesFor: #changesSize!accessing!public! !
-!CompositeRefactoryChange categoriesFor: #compile:in:!public!refactory/changes! !
-!CompositeRefactoryChange categoriesFor: #compile:in:categories:!public! !
-!CompositeRefactoryChange categoriesFor: #compile:in:classified:!public!refactory/changes! !
-!CompositeRefactoryChange categoriesFor: #defineClass:!public!refactory/changes! !
-!CompositeRefactoryChange categoriesFor: #executeNotifying:!private! !
-!CompositeRefactoryChange categoriesFor: #flattenOnto:!private! !
-!CompositeRefactoryChange categoriesFor: #hash!comparing!public! !
-!CompositeRefactoryChange categoriesFor: #initialize!initializing!public! !
-!CompositeRefactoryChange categoriesFor: #postCopy!copying!public! !
-!CompositeRefactoryChange categoriesFor: #printOn:!printing!public! !
-!CompositeRefactoryChange categoriesFor: #problemCount!accessing!public! !
-!CompositeRefactoryChange categoriesFor: #removeChange:!inspector accessing!private! !
-!CompositeRefactoryChange categoriesFor: #removeClass:!public!refactory/changes! !
-!CompositeRefactoryChange categoriesFor: #removeClassNamed:!public!refactory/changes! !
-!CompositeRefactoryChange categoriesFor: #removeClassVariable:from:!public!refactory/changes! !
-!CompositeRefactoryChange categoriesFor: #removeInstanceVariable:from:!public!refactory/changes! !
-!CompositeRefactoryChange categoriesFor: #removeMethod:from:!public!refactory/changes! !
-!CompositeRefactoryChange categoriesFor: #renameChangesForClass:to:!accessing!public! !
-!CompositeRefactoryChange categoriesFor: #renameClass:to:!public!refactory/changes! !
+!CompositeRefactoryChange categoriesForMethods!
+=!comparing!public! !
+addChange:!accessing!public! !
+addChangeFirst:!accessing!public! !
+addClassVariable:to:!public!refactory/changes! !
+addInstanceVariable:to:!public!refactory/changes! !
+addPool:to:!public!refactory/changes! !
+basicExecuteNotifying:!private! !
+changeForClass:selector:!accessing!public! !
+changeForMetaclass:selector:!accessing!public! !
+changes!inspector accessing!private! !
+changes:!inspector accessing!private! !
+changesSize!accessing!public! !
+compile:in:!public!refactory/changes! !
+compile:in:categories:!public! !
+compile:in:classified:!public!refactory/changes! !
+defineClass:!public!refactory/changes! !
+executeNotifying:!private! !
+flattenOnto:!private! !
+hash!comparing!public! !
+initialize!initializing!public! !
+postCopy!copying!public! !
+printOn:!printing!public! !
+problemCount!accessing!public! !
+removeChange:!inspector accessing!private! !
+removeClass:!public!refactory/changes! !
+removeClassNamed:!public!refactory/changes! !
+removeClassVariable:from:!public!refactory/changes! !
+removeInstanceVariable:from:!public!refactory/changes! !
+removeMethod:from:!public!refactory/changes! !
+renameChangesForClass:to:!accessing!public! !
+renameClass:to:!public!refactory/changes! !
+!
 
 !CompositeRefactoryChange class methodsFor!
 
@@ -182,5 +184,7 @@ named: aString
 	^(self new)
 		name: aString;
 		yourself! !
-!CompositeRefactoryChange class categoriesFor: #named:!instance creation!public! !
+!CompositeRefactoryChange class categoriesForMethods!
+named:!instance creation!public! !
+!
 

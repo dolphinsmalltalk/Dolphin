@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Utf8StringTest subclass: #SymbolTest
 	instanceVariableNames: ''
@@ -119,21 +119,23 @@ testResize
 
 testSymbolTable
 	Symbol.Table do: [:each | self assert: (each isNil or: [each isWeak])]! !
-!SymbolTest categoriesFor: #assimilateString:!helpers!private! !
-!SymbolTest categoriesFor: #collectionClass!helpers!private! !
-!SymbolTest categoriesFor: #newCollection:!helpers!private! !
-!SymbolTest categoriesFor: #newCopy:!helpers!private! !
-!SymbolTest categoriesFor: #newEmptyCollection:!public! !
-!SymbolTest categoriesFor: #testAsString!helpers!public! !
-!SymbolTest categoriesFor: #testAtPut!public!unit tests! !
-!SymbolTest categoriesFor: #testEncodeOnPut!public!unit tests! !
-!SymbolTest categoriesFor: #testInstVarAtPut!public!unit tests! !
-!SymbolTest categoriesFor: #testKeywords!public!unit tests! !
-!SymbolTest categoriesFor: #testPrintLiteral!public!unit tests! !
-!SymbolTest categoriesFor: #testPrintString!helpers!public! !
-!SymbolTest categoriesFor: #testRefersToLiteral!public!unit tests! !
-!SymbolTest categoriesFor: #testReplaceFromToWithStartingAt!public!unit tests! !
-!SymbolTest categoriesFor: #testReplaceIdentityWith!public!unit tests! !
-!SymbolTest categoriesFor: #testResize!public!unit tests! !
-!SymbolTest categoriesFor: #testSymbolTable!public!unit tests! !
+!SymbolTest categoriesForMethods!
+assimilateString:!helpers!private! !
+collectionClass!helpers!private! !
+newCollection:!helpers!private! !
+newCopy:!helpers!private! !
+newEmptyCollection:!public! !
+testAsString!helpers!public! !
+testAtPut!public!unit tests! !
+testEncodeOnPut!public!unit tests! !
+testInstVarAtPut!public!unit tests! !
+testKeywords!public!unit tests! !
+testPrintLiteral!public!unit tests! !
+testPrintString!helpers!public! !
+testRefersToLiteral!public!unit tests! !
+testReplaceFromToWithStartingAt!public!unit tests! !
+testReplaceIdentityWith!public!unit tests! !
+testResize!public!unit tests! !
+testSymbolTable!public!unit tests! !
+!
 

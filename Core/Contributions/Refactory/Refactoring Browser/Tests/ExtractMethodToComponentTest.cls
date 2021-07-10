@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #ExtractMethodToComponentTest
 	instanceVariableNames: ''
@@ -102,9 +102,11 @@ testNonExistantSelector
 				extract: (10 to: 20)
 				from: #checkClass1:
 				in: BasicLintRuleTest)! !
-!ExtractMethodToComponentTest categoriesFor: #testBadInterval!failure tests!public! !
-!ExtractMethodToComponentTest categoriesFor: #testExtractFailure!failure tests!public! !
-!ExtractMethodToComponentTest categoriesFor: #testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !
-!ExtractMethodToComponentTest categoriesFor: #testMoveWithoutSelfReference!public!tests! !
-!ExtractMethodToComponentTest categoriesFor: #testNonExistantSelector!failure tests!public! !
+!ExtractMethodToComponentTest categoriesForMethods!
+testBadInterval!failure tests!public! !
+testExtractFailure!failure tests!public! !
+testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !
+testMoveWithoutSelfReference!public!tests! !
+testNonExistantSelector!failure tests!public! !
+!
 

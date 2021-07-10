@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #ExternalRectangle
 	instanceVariableNames: ''
@@ -114,28 +114,30 @@ width
 	"Answer the width of the receiver."
 
 	^self right - self left! !
-!ExternalRectangle categoriesFor: #area!accessing!public! !
-!ExternalRectangle categoriesFor: #asObject!converting!public! !
-!ExternalRectangle categoriesFor: #asRectangle!converting!public! !
-!ExternalRectangle categoriesFor: #bottom!accessing!public! !
-!ExternalRectangle categoriesFor: #bottom:!accessing!public! !
-!ExternalRectangle categoriesFor: #bottomRight!accessing!public! !
-!ExternalRectangle categoriesFor: #center!accessing!public! !
-!ExternalRectangle categoriesFor: #centerX!accessing!public! !
-!ExternalRectangle categoriesFor: #centerY!accessing!public! !
-!ExternalRectangle categoriesFor: #corner!accessing!public! !
-!ExternalRectangle categoriesFor: #extent!accessing!public! !
-!ExternalRectangle categoriesFor: #extent:!accessing!public! !
-!ExternalRectangle categoriesFor: #height!accessing!public! !
-!ExternalRectangle categoriesFor: #left!accessing!public! !
-!ExternalRectangle categoriesFor: #left:!accessing!public! !
-!ExternalRectangle categoriesFor: #origin!accessing!public! !
-!ExternalRectangle categoriesFor: #right!accessing!public! !
-!ExternalRectangle categoriesFor: #right:!accessing!public! !
-!ExternalRectangle categoriesFor: #top!accessing!public! !
-!ExternalRectangle categoriesFor: #top:!accessing!public! !
-!ExternalRectangle categoriesFor: #topLeft!accessing!public! !
-!ExternalRectangle categoriesFor: #width!accessing!public! !
+!ExternalRectangle categoriesForMethods!
+area!accessing!public! !
+asObject!converting!public! !
+asRectangle!converting!public! !
+bottom!accessing!public! !
+bottom:!accessing!public! !
+bottomRight!accessing!public! !
+center!accessing!public! !
+centerX!accessing!public! !
+centerY!accessing!public! !
+corner!accessing!public! !
+extent!accessing!public! !
+extent:!accessing!public! !
+height!accessing!public! !
+left!accessing!public! !
+left:!accessing!public! !
+origin!accessing!public! !
+right!accessing!public! !
+right:!accessing!public! !
+top!accessing!public! !
+top:!accessing!public! !
+topLeft!accessing!public! !
+width!accessing!public! !
+!
 
 !ExternalRectangle class methodsFor!
 
@@ -190,11 +192,13 @@ origin: originPoint extent: extentPoint
 		top: originPoint y
 		width: extentPoint x
 		height: extentPoint y! !
-!ExternalRectangle class categoriesFor: #extent:!instance creation!public! !
-!ExternalRectangle class categoriesFor: #fromRectangle:!instance creation!public! !
-!ExternalRectangle class categoriesFor: #icon!constants!public! !
-!ExternalRectangle class categoriesFor: #left:top:right:bottom:!instance creation!public! !
-!ExternalRectangle class categoriesFor: #left:top:width:height:!instance creation!public! !
-!ExternalRectangle class categoriesFor: #origin:corner:!instance creation!public! !
-!ExternalRectangle class categoriesFor: #origin:extent:!instance creation!public! !
+!ExternalRectangle class categoriesForMethods!
+extent:!instance creation!public! !
+fromRectangle:!instance creation!public! !
+icon!constants!public! !
+left:top:right:bottom:!instance creation!public! !
+left:top:width:height:!instance creation!public! !
+origin:corner:!instance creation!public! !
+origin:extent:!instance creation!public! !
+!
 

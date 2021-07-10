@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #STONReference
 	instanceVariableNames: 'index'
@@ -29,12 +29,14 @@ isStonReference
 printOn: stream
 	super printOn: stream.
 	stream nextPut: $(; print: index; nextPut: $)! !
-!STONReference categoriesFor: #=!comparing!public! !
-!STONReference categoriesFor: #hash!comparing!public! !
-!STONReference categoriesFor: #index!accessing!public! !
-!STONReference categoriesFor: #index:!accessing!public! !
-!STONReference categoriesFor: #isStonReference!public!testing! !
-!STONReference categoriesFor: #printOn:!printing!public! !
+!STONReference categoriesForMethods!
+=!comparing!public! !
+hash!comparing!public! !
+index!accessing!public! !
+index:!accessing!public! !
+isStonReference!public!testing! !
+printOn:!printing!public! !
+!
 
 !STONReference class methodsFor!
 
@@ -42,5 +44,7 @@ index: integer
 	^ self new
 		index: integer;
 		yourself! !
-!STONReference class categoriesFor: #index:!instance creation!public! !
+!STONReference class categoriesForMethods!
+index:!instance creation!public! !
+!
 

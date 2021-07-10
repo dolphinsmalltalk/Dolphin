@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Bytecode
 	instanceVariableNames: 'instruction args jumpTarget ip'
@@ -48,15 +48,17 @@ setInstruction: aSymbol arguments: anArray ip: aSmallInteger
 	args := anArray.
 	ip := aSmallInteger.
 ! !
-!Bytecode categoriesFor: #args!accessing!public! !
-!Bytecode categoriesFor: #instruction!accessing!public! !
-!Bytecode categoriesFor: #instruction:!accessing!public! !
-!Bytecode categoriesFor: #ip!accessing!public! !
-!Bytecode categoriesFor: #ip:!accessing!public! !
-!Bytecode categoriesFor: #jumpOffset:!accessing!public! !
-!Bytecode categoriesFor: #jumpTarget!accessing!public! !
-!Bytecode categoriesFor: #jumpTarget:!accessing!public! !
-!Bytecode categoriesFor: #setInstruction:arguments:ip:!initializing!private! !
+!Bytecode categoriesForMethods!
+args!accessing!public! !
+instruction!accessing!public! !
+instruction:!accessing!public! !
+ip!accessing!public! !
+ip:!accessing!public! !
+jumpOffset:!accessing!public! !
+jumpTarget!accessing!public! !
+jumpTarget:!accessing!public! !
+setInstruction:arguments:ip:!initializing!private! !
+!
 
 !Bytecode class methodsFor!
 
@@ -65,5 +67,7 @@ instruction: bytecodeInteger arguments: anArray ip: aSmallInteger
 		setInstruction: bytecodeInteger
 		arguments: anArray
 		ip: aSmallInteger! !
-!Bytecode class categoriesFor: #instruction:arguments:ip:!instance creation!public! !
+!Bytecode class categoriesForMethods!
+instruction:arguments:ip:!instance creation!public! !
+!
 

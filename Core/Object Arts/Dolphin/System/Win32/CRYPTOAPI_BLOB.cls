@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #CRYPTOAPI_BLOB
 	instanceVariableNames: 'localData'
@@ -79,16 +79,18 @@ pbData: anExternalArray
 
 	bytes uintPtrAtOffset: _OffsetOf_pbData put: anExternalArray yourAddress.
 	self cbData: anExternalArray size! !
-!CRYPTOAPI_BLOB categoriesFor: #basicFree!private!realizing/unrealizing! !
-!CRYPTOAPI_BLOB categoriesFor: #basicPbData!private!realizing/unrealizing! !
-!CRYPTOAPI_BLOB categoriesFor: #cbData!**compiled accessors**!private! !
-!CRYPTOAPI_BLOB categoriesFor: #cbData:!**compiled accessors**!private! !
-!CRYPTOAPI_BLOB categoriesFor: #data!public! !
-!CRYPTOAPI_BLOB categoriesFor: #data:!public! !
-!CRYPTOAPI_BLOB categoriesFor: #initialize!initializing!private! !
-!CRYPTOAPI_BLOB categoriesFor: #needsFree!private!realizing/unrealizing! !
-!CRYPTOAPI_BLOB categoriesFor: #pbData!**compiled accessors**!public! !
-!CRYPTOAPI_BLOB categoriesFor: #pbData:!**compiled accessors**!public! !
+!CRYPTOAPI_BLOB categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+basicPbData!private!realizing/unrealizing! !
+cbData!**compiled accessors**!private! !
+cbData:!**compiled accessors**!private! !
+data!public! !
+data:!public! !
+initialize!initializing!private! !
+needsFree!private!realizing/unrealizing! !
+pbData!**compiled accessors**!public! !
+pbData:!**compiled accessors**!public! !
+!
 
 !CRYPTOAPI_BLOB class methodsFor!
 
@@ -119,7 +121,9 @@ fromBytes: aByteObject
 
 getFieldNames
 	^#(#cbData #pbData)! !
-!CRYPTOAPI_BLOB class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!CRYPTOAPI_BLOB class categoriesFor: #fromBytes:!public! !
-!CRYPTOAPI_BLOB class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!CRYPTOAPI_BLOB class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+fromBytes:!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

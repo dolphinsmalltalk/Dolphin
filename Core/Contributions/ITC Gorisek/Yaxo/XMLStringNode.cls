@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 XMLNode subclass: #XMLStringNode
 	instanceVariableNames: 'string'
@@ -24,15 +24,19 @@ string
 
 string: aString
 	string := aString! !
-!XMLStringNode categoriesFor: #characterData!accessing!public! !
-!XMLStringNode categoriesFor: #isText!public!testing! !
-!XMLStringNode categoriesFor: #printXMLOn:!printing!public! !
-!XMLStringNode categoriesFor: #string!accessing!public! !
-!XMLStringNode categoriesFor: #string:!accessing!public! !
+!XMLStringNode categoriesForMethods!
+characterData!accessing!public! !
+isText!public!testing! !
+printXMLOn:!printing!public! !
+string!accessing!public! !
+string:!accessing!public! !
+!
 
 !XMLStringNode class methodsFor!
 
 string: aString
 	^self new string: aString! !
-!XMLStringNode class categoriesFor: #string:!instance creation!public! !
+!XMLStringNode class categoriesForMethods!
+string:!instance creation!public! !
+!
 

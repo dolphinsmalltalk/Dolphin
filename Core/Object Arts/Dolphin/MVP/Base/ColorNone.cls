@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ColorRef subclass: #ColorNone
 	instanceVariableNames: ''
@@ -102,20 +102,22 @@ shallowCopy
 	"The receiver has a singleton instance."
 
 	^self! !
-!ColorNone categoriesFor: #alpha!accessing!public! !
-!ColorNone categoriesFor: #alphaMask!accessing!private! !
-!ColorNone categoriesFor: #argbCode!accessing!public! !
-!ColorNone categoriesFor: #brush!converting!public! !
-!ColorNone categoriesFor: #hls!converting!public! !
-!ColorNone categoriesFor: #hslSaturation!accessing!public! !
-!ColorNone categoriesFor: #hsv!converting!public! !
-!ColorNone categoriesFor: #hsvSaturation!accessing!public! !
-!ColorNone categoriesFor: #hue!public! !
-!ColorNone categoriesFor: #isNone!public!testing! !
-!ColorNone categoriesFor: #luminance!public! !
-!ColorNone categoriesFor: #name!accessing!public! !
-!ColorNone categoriesFor: #normalizedAlpha!public! !
-!ColorNone categoriesFor: #pen!converting!public! !
-!ColorNone categoriesFor: #rgbCode!accessing!public! !
-!ColorNone categoriesFor: #shallowCopy!copying!public! !
+!ColorNone categoriesForMethods!
+alpha!accessing!public! !
+alphaMask!accessing!private! !
+argbCode!accessing!public! !
+brush!converting!public! !
+hls!converting!public! !
+hslSaturation!accessing!public! !
+hsv!converting!public! !
+hsvSaturation!accessing!public! !
+hue!public! !
+isNone!public!testing! !
+luminance!public! !
+name!accessing!public! !
+normalizedAlpha!public! !
+pen!converting!public! !
+rgbCode!accessing!public! !
+shallowCopy!copying!public! !
+!
 

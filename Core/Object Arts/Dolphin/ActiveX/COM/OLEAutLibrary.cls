@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #OLEAutLibrary
 	instanceVariableNames: ''
@@ -61,11 +61,13 @@ sysStringLen: aBSTR
 
 	<stdcall: hresult SysStringLen bstr>
 	^self invalidCall: _failureCode! !
-!OLEAutLibrary categoriesFor: #getErrorInfo:pperrinfo:!Automation Functions-Error Handling API!primitives!public! !
-!OLEAutLibrary categoriesFor: #sysAllocString:!Automation Functions-String Manipulation!primitives!public! !
-!OLEAutLibrary categoriesFor: #sysFreeString:!Automation Functions-String Manipulation!primitives!public! !
-!OLEAutLibrary categoriesFor: #sysStringByteLen:!Automation Functions-String Manipulation!primitives!public! !
-!OLEAutLibrary categoriesFor: #sysStringLen:!Automation Functions-String Manipulation!primitives!public! !
+!OLEAutLibrary categoriesForMethods!
+getErrorInfo:pperrinfo:!Automation Functions-Error Handling API!primitives!public! !
+sysAllocString:!Automation Functions-String Manipulation!primitives!public! !
+sysFreeString:!Automation Functions-String Manipulation!primitives!public! !
+sysStringByteLen:!Automation Functions-String Manipulation!primitives!public! !
+sysStringLen:!Automation Functions-String Manipulation!primitives!public! !
+!
 
 !OLEAutLibrary class methodsFor!
 
@@ -74,5 +76,7 @@ fileName
 	the receiver represents."
 
 	^'OLEAUT32'! !
-!OLEAutLibrary class categoriesFor: #fileName!constants!public! !
+!OLEAutLibrary class categoriesForMethods!
+fileName!constants!public! !
+!
 

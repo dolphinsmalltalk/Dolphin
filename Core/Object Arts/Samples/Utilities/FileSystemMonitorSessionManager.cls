@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RuntimeSessionManager subclass: #FileSystemMonitorSessionManager
 	instanceVariableNames: ''
@@ -18,7 +18,9 @@ main
 			[| path |
 			path := self argv at: 2.
 			(File isDirectory: path) ifTrue: [fsm directory: path]]! !
-!FileSystemMonitorSessionManager categoriesFor: #main!operations!public! !
+!FileSystemMonitorSessionManager categoriesForMethods!
+main!operations!public! !
+!
 
 !FileSystemMonitorSessionManager class methodsFor!
 
@@ -26,5 +28,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^FileSystemMonitor! !
-!FileSystemMonitorSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!FileSystemMonitorSessionManager class categoriesForMethods!
+mainShellClass!constants!public! !
+!
 

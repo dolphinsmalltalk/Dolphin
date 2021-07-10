@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #FONTDESC
 	instanceVariableNames: 'name'
@@ -115,25 +115,27 @@ sWeight: anInteger
 	"Set the receiver's 'sWeight' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_sWeight put: anInteger! !
-!FONTDESC categoriesFor: #cySize!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #cySize:!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #dwSize:!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #faceName!accessing!public! !
-!FONTDESC categoriesFor: #faceName:!accessing!public! !
-!FONTDESC categoriesFor: #fItalic!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #fItalic:!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #fStrikethrough!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #fStrikethrough:!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #fUnderline!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #fUnderline:!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #lpstrName!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #lpstrName:!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #pointSize!accessing!public! !
-!FONTDESC categoriesFor: #pointSize:!accessing!public! !
-!FONTDESC categoriesFor: #sCharset!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #sCharset:!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #sWeight!**compiled accessors**!public! !
-!FONTDESC categoriesFor: #sWeight:!**compiled accessors**!public! !
+!FONTDESC categoriesForMethods!
+cySize!**compiled accessors**!public! !
+cySize:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+faceName!accessing!public! !
+faceName:!accessing!public! !
+fItalic!**compiled accessors**!public! !
+fItalic:!**compiled accessors**!public! !
+fStrikethrough!**compiled accessors**!public! !
+fStrikethrough:!**compiled accessors**!public! !
+fUnderline!**compiled accessors**!public! !
+fUnderline:!**compiled accessors**!public! !
+lpstrName!**compiled accessors**!public! !
+lpstrName:!**compiled accessors**!public! !
+pointSize!accessing!public! !
+pointSize:!accessing!public! !
+sCharset!**compiled accessors**!public! !
+sCharset:!**compiled accessors**!public! !
+sWeight!**compiled accessors**!public! !
+sWeight:!**compiled accessors**!public! !
+!
 
 !FONTDESC class methodsFor!
 
@@ -183,7 +185,9 @@ fromFont: font
 
 getFieldNames
 	^#(#dwSize #lpstrName #cySize #sWeight #sCharset #fItalic #fUnderline #fStrikethrough)! !
-!FONTDESC class categoriesFor: #defineFields!public!template definition! !
-!FONTDESC class categoriesFor: #fromFont:!instance creation!public! !
-!FONTDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!FONTDESC class categoriesForMethods!
+defineFields!public!template definition! !
+fromFont:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

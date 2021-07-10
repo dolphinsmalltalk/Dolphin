@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #STON
 	instanceVariableNames: ''
@@ -235,23 +235,25 @@ toStringPretty: object
 
 writer
 	^ STONWriter new! !
-!STON class categoriesFor: #associationClass!accessing!public! !
-!STON class categoriesFor: #classNameKey!accessing!public! !
-!STON class categoriesFor: #fromStream:!convencience!public! !
-!STON class categoriesFor: #fromStreamWithComments:!convencience!public! !
-!STON class categoriesFor: #fromString:!convencience!public! !
-!STON class categoriesFor: #fromStringWithComments:!convencience!public! !
-!STON class categoriesFor: #jsonWriter!accessing!public! !
-!STON class categoriesFor: #listClass!accessing!public! !
-!STON class categoriesFor: #mapClass!accessing!public! !
-!STON class categoriesFor: #put:asJsonOnStream:!convencience!public! !
-!STON class categoriesFor: #put:asJsonOnStreamPretty:!convencience!public! !
-!STON class categoriesFor: #put:onStream:!convencience!public! !
-!STON class categoriesFor: #put:onStreamPretty:!convencience!public! !
-!STON class categoriesFor: #reader!accessing!public! !
-!STON class categoriesFor: #toJsonString:!convencience!public! !
-!STON class categoriesFor: #toJsonStringPretty:!convencience!public! !
-!STON class categoriesFor: #toString:!convencience!public! !
-!STON class categoriesFor: #toStringPretty:!convencience!public! !
-!STON class categoriesFor: #writer!accessing!public! !
+!STON class categoriesForMethods!
+associationClass!accessing!public! !
+classNameKey!accessing!public! !
+fromStream:!convencience!public! !
+fromStreamWithComments:!convencience!public! !
+fromString:!convencience!public! !
+fromStringWithComments:!convencience!public! !
+jsonWriter!accessing!public! !
+listClass!accessing!public! !
+mapClass!accessing!public! !
+put:asJsonOnStream:!convencience!public! !
+put:asJsonOnStreamPretty:!convencience!public! !
+put:onStream:!convencience!public! !
+put:onStreamPretty:!convencience!public! !
+reader!accessing!public! !
+toJsonString:!convencience!public! !
+toJsonStringPretty:!convencience!public! !
+toString:!convencience!public! !
+toStringPretty:!convencience!public! !
+writer!accessing!public! !
+!
 

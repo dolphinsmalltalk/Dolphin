@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusBase subclass: #GdiplusStringFormat
 	instanceVariableNames: ''
@@ -185,25 +185,27 @@ trimming: aStringTrimmingConstant
 	(status := GdiplusLibrary default gdipSetStringFormatTrimming: self asParameter
 				trimming: aStringTrimmingConstant) == Ok 
 		ifFalse: [GdiplusError signal: 'GdipSetStringFormatTrimming failed' with: status]! !
-!GdiplusStringFormat categoriesFor: #alignment!accessing!public! !
-!GdiplusStringFormat categoriesFor: #alignment:!accessing!public! !
-!GdiplusStringFormat categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GdiplusStringFormat categoriesFor: #centered!accessing!public! !
-!GdiplusStringFormat categoriesFor: #clone!copying!public! !
-!GdiplusStringFormat categoriesFor: #far!accessing!public! !
-!GdiplusStringFormat categoriesFor: #flags!accessing!public! !
-!GdiplusStringFormat categoriesFor: #flags:!accessing!public! !
-!GdiplusStringFormat categoriesFor: #getTabOffsets!accessing!private! !
-!GdiplusStringFormat categoriesFor: #lineAlignment!accessing!public! !
-!GdiplusStringFormat categoriesFor: #lineAlignment:!accessing!public! !
-!GdiplusStringFormat categoriesFor: #near!accessing!public! !
-!GdiplusStringFormat categoriesFor: #printOn:!public! !
-!GdiplusStringFormat categoriesFor: #setTabStops:first:!accessing!private! !
-!GdiplusStringFormat categoriesFor: #tabOffsets!accessing!public! !
-!GdiplusStringFormat categoriesFor: #tabOffsets:!accessing!public! !
-!GdiplusStringFormat categoriesFor: #tabStopCount!accessing!private! !
-!GdiplusStringFormat categoriesFor: #trimming!accessing!public! !
-!GdiplusStringFormat categoriesFor: #trimming:!accessing!public! !
+!GdiplusStringFormat categoriesForMethods!
+alignment!accessing!public! !
+alignment:!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+centered!accessing!public! !
+clone!copying!public! !
+far!accessing!public! !
+flags!accessing!public! !
+flags:!accessing!public! !
+getTabOffsets!accessing!private! !
+lineAlignment!accessing!public! !
+lineAlignment:!accessing!public! !
+near!accessing!public! !
+printOn:!public! !
+setTabStops:first:!accessing!private! !
+tabOffsets!accessing!public! !
+tabOffsets:!accessing!public! !
+tabStopCount!accessing!private! !
+trimming!accessing!public! !
+trimming:!accessing!public! !
+!
 
 !GdiplusStringFormat class methodsFor!
 
@@ -377,18 +379,20 @@ onPreStripImage
 
 uninitialize
 	GenericDefault := GenericTypographic := nil! !
-!GdiplusStringFormat class categoriesFor: #centered!instance creation!public! !
-!GdiplusStringFormat class categoriesFor: #exampleGdipSFFormatText!examples!public!sunit! !
-!GdiplusStringFormat class categoriesFor: #exampleGdipSFGenerics!examples!public!sunit! !
-!GdiplusStringFormat class categoriesFor: #exampleGdipSFTabs!examples!public!sunit! !
-!GdiplusStringFormat class categoriesFor: #exampleGdipSFTrimming!examples!public!sunit! !
-!GdiplusStringFormat class categoriesFor: #far!instance creation!public! !
-!GdiplusStringFormat class categoriesFor: #flags:!instance creation!public! !
-!GdiplusStringFormat class categoriesFor: #flags:language:!instance creation!public! !
-!GdiplusStringFormat class categoriesFor: #genericDefault!instance creation!public! !
-!GdiplusStringFormat class categoriesFor: #genericTypographic!instance creation!public! !
-!GdiplusStringFormat class categoriesFor: #near!instance creation!public! !
-!GdiplusStringFormat class categoriesFor: #new!instance creation!public! !
-!GdiplusStringFormat class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!GdiplusStringFormat class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!GdiplusStringFormat class categoriesForMethods!
+centered!instance creation!public! !
+exampleGdipSFFormatText!examples!public!sunit! !
+exampleGdipSFGenerics!examples!public!sunit! !
+exampleGdipSFTabs!examples!public!sunit! !
+exampleGdipSFTrimming!examples!public!sunit! !
+far!instance creation!public! !
+flags:!instance creation!public! !
+flags:language:!instance creation!public! !
+genericDefault!instance creation!public! !
+genericTypographic!instance creation!public! !
+near!instance creation!public! !
+new!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

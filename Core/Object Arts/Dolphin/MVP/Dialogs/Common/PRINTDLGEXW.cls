@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CommonDialogStructure subclass: #PRINTDLGEXW
 	instanceVariableNames: ''
@@ -272,48 +272,50 @@ nStartPage: anInteger
 	"Set the receiver's 'nStartPage' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_nStartPage put: anInteger! !
-!PRINTDLGEXW categoriesFor: #dwResultAction!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #dwResultAction:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #ExclusionFlags!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #ExclusionFlags:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #flags!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #flags:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #Flags2!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #Flags2:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hDC!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hDC:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hDevMode!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hDevMode:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hDevNames!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hDevNames:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hInstance!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hInstance:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hwndOwner!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lpCallback!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lpCallback:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lphPropertyPages!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lphPropertyPages:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lpPageRanges!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lpPageRanges:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lpPrintTemplateName!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lpPrintTemplateName:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lStructSize!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #lStructSize:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nCopies!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nCopies:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nMaxPage!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nMaxPage:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nMaxPageRanges!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nMaxPageRanges:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nMinPage!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nMinPage:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nPageRanges!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nPageRanges:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nPropertyPages!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nPropertyPages:!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nStartPage!**compiled accessors**!public! !
-!PRINTDLGEXW categoriesFor: #nStartPage:!**compiled accessors**!public! !
+!PRINTDLGEXW categoriesForMethods!
+dwResultAction!**compiled accessors**!public! !
+dwResultAction:!**compiled accessors**!public! !
+ExclusionFlags!**compiled accessors**!public! !
+ExclusionFlags:!**compiled accessors**!public! !
+flags!**compiled accessors**!public! !
+flags:!**compiled accessors**!public! !
+Flags2!**compiled accessors**!public! !
+Flags2:!**compiled accessors**!public! !
+hDC!**compiled accessors**!public! !
+hDC:!**compiled accessors**!public! !
+hDevMode!**compiled accessors**!public! !
+hDevMode:!**compiled accessors**!public! !
+hDevNames!**compiled accessors**!public! !
+hDevNames:!**compiled accessors**!public! !
+hInstance!**compiled accessors**!public! !
+hInstance:!**compiled accessors**!public! !
+hwndOwner!**compiled accessors**!public! !
+hwndOwner:!**compiled accessors**!public! !
+lpCallback!**compiled accessors**!public! !
+lpCallback:!**compiled accessors**!public! !
+lphPropertyPages!**compiled accessors**!public! !
+lphPropertyPages:!**compiled accessors**!public! !
+lpPageRanges!**compiled accessors**!public! !
+lpPageRanges:!**compiled accessors**!public! !
+lpPrintTemplateName!**compiled accessors**!public! !
+lpPrintTemplateName:!**compiled accessors**!public! !
+lStructSize!**compiled accessors**!public! !
+lStructSize:!**compiled accessors**!public! !
+nCopies!**compiled accessors**!public! !
+nCopies:!**compiled accessors**!public! !
+nMaxPage!**compiled accessors**!public! !
+nMaxPage:!**compiled accessors**!public! !
+nMaxPageRanges!**compiled accessors**!public! !
+nMaxPageRanges:!**compiled accessors**!public! !
+nMinPage!**compiled accessors**!public! !
+nMinPage:!**compiled accessors**!public! !
+nPageRanges!**compiled accessors**!public! !
+nPageRanges:!**compiled accessors**!public! !
+nPropertyPages!**compiled accessors**!public! !
+nPropertyPages:!**compiled accessors**!public! !
+nStartPage!**compiled accessors**!public! !
+nStartPage:!**compiled accessors**!public! !
+!
 
 !PRINTDLGEXW class methodsFor!
 
@@ -373,6 +375,8 @@ defineFields
 
 getFieldNames
 	^#(#lStructSize #hwndOwner #hDevMode #hDevNames #hDC #flags #Flags2 #ExclusionFlags #nPageRanges #nMaxPageRanges #lpPageRanges #nMinPage #nMaxPage #nCopies #hInstance #lpPrintTemplateName #lpCallback #nPropertyPages #lphPropertyPages #nStartPage #dwResultAction)! !
-!PRINTDLGEXW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!PRINTDLGEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!PRINTDLGEXW class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

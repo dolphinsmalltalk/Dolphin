@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ResourceIdentifier
 	instanceVariableNames: 'owningClass selector'
@@ -167,33 +167,35 @@ storeOn: aStream
 		nextPutAll: ' name: ';
 		print: self name;
 		nextPut: $)! !
-!ResourceIdentifier categoriesFor: #<=!comparing!public! !
-!ResourceIdentifier categoriesFor: #=!comparing!public! !
-!ResourceIdentifier categoriesFor: #compiledMethod!accessing!public! !
-!ResourceIdentifier categoriesFor: #copy!copying!public! !
-!ResourceIdentifier categoriesFor: #editExpression!helpers!private! !
-!ResourceIdentifier categoriesFor: #emitMethodHeaderFor:on:!accessing!private! !
-!ResourceIdentifier categoriesFor: #exists!public!testing! !
-!ResourceIdentifier categoriesFor: #exportedFileName!accessing!development!private! !
-!ResourceIdentifier categoriesFor: #hash!comparing!public! !
-!ResourceIdentifier categoriesFor: #hiddenObjects!accessing!private! !
-!ResourceIdentifier categoriesFor: #icon:!accessing!public! !
-!ResourceIdentifier categoriesFor: #isChanged!development!public!source filing!testing! !
-!ResourceIdentifier categoriesFor: #isChanged:!development!public!source filing! !
-!ResourceIdentifier categoriesFor: #load!operations!public! !
-!ResourceIdentifier categoriesFor: #name!accessing!public! !
-!ResourceIdentifier categoriesFor: #name:!accessing!public! !
-!ResourceIdentifier categoriesFor: #owningClass!accessing!public! !
-!ResourceIdentifier categoriesFor: #owningClass:!initializing!public! !
-!ResourceIdentifier categoriesFor: #owningPackage!accessing!public! !
-!ResourceIdentifier categoriesFor: #owningPackage:!accessing!development!public! !
-!ResourceIdentifier categoriesFor: #printOn:!printing!public! !
-!ResourceIdentifier categoriesFor: #resource!accessing!public! !
-!ResourceIdentifier categoriesFor: #resourceMethodComment!accessing!constants!private! !
-!ResourceIdentifier categoriesFor: #resourceOrNil!accessing!public! !
-!ResourceIdentifier categoriesFor: #selector!accessing!public! !
-!ResourceIdentifier categoriesFor: #selector:!initializing!public! !
-!ResourceIdentifier categoriesFor: #storeOn:!printing!public! !
+!ResourceIdentifier categoriesForMethods!
+<=!comparing!public! !
+=!comparing!public! !
+compiledMethod!accessing!public! !
+copy!copying!public! !
+editExpression!helpers!private! !
+emitMethodHeaderFor:on:!accessing!private! !
+exists!public!testing! !
+exportedFileName!accessing!development!private! !
+hash!comparing!public! !
+hiddenObjects!accessing!private! !
+icon:!accessing!public! !
+isChanged!development!public!source filing!testing! !
+isChanged:!development!public!source filing! !
+load!operations!public! !
+name!accessing!public! !
+name:!accessing!public! !
+owningClass!accessing!public! !
+owningClass:!initializing!public! !
+owningPackage!accessing!public! !
+owningPackage:!accessing!development!public! !
+printOn:!printing!public! !
+resource!accessing!public! !
+resourceMethodComment!accessing!constants!private! !
+resourceOrNil!accessing!public! !
+selector!accessing!public! !
+selector:!initializing!public! !
+storeOn:!printing!public! !
+!
 
 !ResourceIdentifier class methodsFor!
 
@@ -306,20 +308,22 @@ value: a value: b
 
 viewResourceCategoryName
 	^'resources-views'! !
-!ResourceIdentifier class categoriesFor: #allResourceIdentifiers!accessing!public! !
-!ResourceIdentifier class categoriesFor: #allResourceIdentifiersDo:!accessing!enumerating!public! !
-!ResourceIdentifier class categoriesFor: #class:!instance creation!public! !
-!ResourceIdentifier class categoriesFor: #class:name:!instance creation!public! !
-!ResourceIdentifier class categoriesFor: #class:selector:!instance creation!public! !
-!ResourceIdentifier class categoriesFor: #exportFileExtension!constants!public! !
-!ResourceIdentifier class categoriesFor: #forMethod:!instance creation!public! !
-!ResourceIdentifier class categoriesFor: #initialize!class initialization!public! !
-!ResourceIdentifier class categoriesFor: #nameFromSelector:!helpers!public! !
-!ResourceIdentifier class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!ResourceIdentifier class categoriesFor: #removeResource:!public!removing! !
-!ResourceIdentifier class categoriesFor: #selectorFromName:!helpers!public! !
-!ResourceIdentifier class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!ResourceIdentifier class categoriesFor: #stbVersion!binary filing!public! !
-!ResourceIdentifier class categoriesFor: #value:value:!helpers!private! !
-!ResourceIdentifier class categoriesFor: #viewResourceCategoryName!constants!private! !
+!ResourceIdentifier class categoriesForMethods!
+allResourceIdentifiers!accessing!public! !
+allResourceIdentifiersDo:!accessing!enumerating!public! !
+class:!instance creation!public! !
+class:name:!instance creation!public! !
+class:selector:!instance creation!public! !
+exportFileExtension!constants!public! !
+forMethod:!instance creation!public! !
+initialize!class initialization!public! !
+nameFromSelector:!helpers!public! !
+onPreStripImage!class hierarchy-removing!private! !
+removeResource:!public!removing! !
+selectorFromName:!helpers!public! !
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!public! !
+value:value:!helpers!private! !
+viewResourceCategoryName!constants!private! !
+!
 

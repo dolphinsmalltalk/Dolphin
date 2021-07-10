@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StMethodNode subclass: #RBPatternMethodNode
 	instanceVariableNames: 'isList'
@@ -81,14 +81,16 @@ matchSelectorAgainst: aNode inContext: aDictionary
 selectorParts: tokenCollection arguments: variableNodes 
 	super selectorParts: tokenCollection arguments: variableNodes.
 	isList := (tokenCollection first value at: 2) == self listCharacter! !
-!RBPatternMethodNode categoriesFor: #copyInContext:!matching!public! !
-!RBPatternMethodNode categoriesFor: #isPatternNode!public!testing/matching! !
-!RBPatternMethodNode categoriesFor: #isSelectorList!public!testing! !
-!RBPatternMethodNode categoriesFor: #match:inContext:!matching!public! !
-!RBPatternMethodNode categoriesFor: #matchArgumentsAgainst:inContext:!matching!public! !
-!RBPatternMethodNode categoriesFor: #matchingClass!constants!public! !
-!RBPatternMethodNode categoriesFor: #matchSelectorAgainst:inContext:!matching!public! !
-!RBPatternMethodNode categoriesFor: #selectorParts:arguments:!initialize/release!public! !
+!RBPatternMethodNode categoriesForMethods!
+copyInContext:!matching!public! !
+isPatternNode!public!testing/matching! !
+isSelectorList!public!testing! !
+match:inContext:!matching!public! !
+matchArgumentsAgainst:inContext:!matching!public! !
+matchingClass!constants!public! !
+matchSelectorAgainst:inContext:!matching!public! !
+selectorParts:arguments:!initialize/release!public! !
+!
 
 !RBPatternMethodNode class methodsFor!
 
@@ -97,5 +99,7 @@ selectorParts: tokenCollection arguments: variableNodes
 		ifTrue: [super selectorParts: tokenCollection arguments: variableNodes]
 		ifFalse: 
 			[RBMethodNode selectorParts: tokenCollection arguments: variableNodes]! !
-!RBPatternMethodNode class categoriesFor: #selectorParts:arguments:!instance creation!public! !
+!RBPatternMethodNode class categoriesForMethods!
+selectorParts:arguments:!instance creation!public! !
+!
 

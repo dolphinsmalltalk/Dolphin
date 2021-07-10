@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalArray subclass: #DWORDArray
 	instanceVariableNames: ''
@@ -18,8 +18,10 @@ uncheckedAt: anInteger
 
 uncheckedAt: indexInteger put: valueInteger 
 	^bytes dwordAtOffset: (indexInteger - 1) * 4 put: valueInteger! !
-!DWORDArray categoriesFor: #uncheckedAt:!accessing!private! !
-!DWORDArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!DWORDArray categoriesForMethods!
+uncheckedAt:!accessing!private! !
+uncheckedAt:put:!accessing!private! !
+!
 
 !DWORDArray class methodsFor!
 
@@ -27,5 +29,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^DWORD! !
-!DWORDArray class categoriesFor: #elementClass!constants!public! !
+!DWORDArray class categoriesForMethods!
+elementClass!constants!public! !
+!
 

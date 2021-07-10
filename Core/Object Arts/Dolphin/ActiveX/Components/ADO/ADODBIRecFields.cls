@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #ADODBIRecFields
 	instanceVariableNames: ''
@@ -21,7 +21,9 @@ ADOCheck
 
 	<virtual stdcall: hresult 4>
 	^self invalidCall: _failureCode! !
-!ADODBIRecFields categoriesFor: #ADOCheck!**auto generated**!COM Interfaces-IRecFields!public! !
+!ADODBIRecFields categoriesForMethods!
+ADOCheck!**auto generated**!COM Interfaces-IRecFields!public! !
+!
 
 !ADODBIRecFields class methodsFor!
 
@@ -32,5 +34,7 @@ defineFunctions
 	self
 		defineFunction: #ADOCheck
 ! !
-!ADODBIRecFields class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBIRecFields class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StaticView subclass: #FontView
 	instanceVariableNames: 'previewText'
@@ -33,10 +33,12 @@ previewText: aString
 	which details the font name and point size."
 
 	previewText := aString! !
-!FontView categoriesFor: #displayValue!private!updating! !
-!FontView categoriesFor: #displayValue:!private!updating! !
-!FontView categoriesFor: #previewText!accessing!public! !
-!FontView categoriesFor: #previewText:!accessing!public! !
+!FontView categoriesForMethods!
+displayValue!private!updating! !
+displayValue:!private!updating! !
+previewText!accessing!public! !
+previewText:!accessing!public! !
+!
 
 !FontView class methodsFor!
 
@@ -44,5 +46,7 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!FontView class categoriesFor: #icon!constants!public! !
+!FontView class categoriesForMethods!
+icon!constants!public! !
+!
 

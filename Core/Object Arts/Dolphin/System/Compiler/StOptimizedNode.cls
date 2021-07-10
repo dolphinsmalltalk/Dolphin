@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StValueNode subclass: #StOptimizedNode
 	instanceVariableNames: 'left right body value methodClass source'
@@ -101,30 +101,32 @@ value
 
 value: anObject
 	value := anObject! !
-!StOptimizedNode categoriesFor: #=!comparing!public! !
-!StOptimizedNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StOptimizedNode categoriesFor: #argumentCount!public! !
-!StOptimizedNode categoriesFor: #arguments!accessing!public! !
-!StOptimizedNode categoriesFor: #body!accessing!public! !
-!StOptimizedNode categoriesFor: #body:!accessing!public! !
-!StOptimizedNode categoriesFor: #childrenDo:!accessing!public! !
-!StOptimizedNode categoriesFor: #evaluateStatements!helpers!private! !
-!StOptimizedNode categoriesFor: #hash!comparing!public! !
-!StOptimizedNode categoriesFor: #initialize!public! !
-!StOptimizedNode categoriesFor: #isImmediateNode!public!testing! !
-!StOptimizedNode categoriesFor: #isInlined!public! !
-!StOptimizedNode categoriesFor: #left:body:right:!initializing!public! !
-!StOptimizedNode categoriesFor: #methodClass!accessing!private! !
-!StOptimizedNode categoriesFor: #methodClass:!accessing!private! !
-!StOptimizedNode categoriesFor: #needsParenthesis!public!testing! !
-!StOptimizedNode categoriesFor: #postCopy!copying!public! !
-!StOptimizedNode categoriesFor: #precedence!accessing!public! !
-!StOptimizedNode categoriesFor: #source!accessing!public! !
-!StOptimizedNode categoriesFor: #source:!accessing!private! !
-!StOptimizedNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StOptimizedNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!StOptimizedNode categoriesFor: #value!accessing!public! !
-!StOptimizedNode categoriesFor: #value:!accessing!public! !
+!StOptimizedNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+argumentCount!public! !
+arguments!accessing!public! !
+body!accessing!public! !
+body:!accessing!public! !
+childrenDo:!accessing!public! !
+evaluateStatements!helpers!private! !
+hash!comparing!public! !
+initialize!public! !
+isImmediateNode!public!testing! !
+isInlined!public! !
+left:body:right:!initializing!public! !
+methodClass!accessing!private! !
+methodClass:!accessing!private! !
+needsParenthesis!public!testing! !
+postCopy!copying!public! !
+precedence!accessing!public! !
+source!accessing!public! !
+source:!accessing!private! !
+startWithoutParentheses!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !StOptimizedNode class methodsFor!
 
@@ -143,8 +145,10 @@ left: leftInteger body: aSequenceNode right: rightInteger
 
 new
 	^super new initialize! !
-!StOptimizedNode class categoriesFor: #body:!instance creation!public! !
-!StOptimizedNode class categoriesFor: #initialize!public! !
-!StOptimizedNode class categoriesFor: #left:body:right:!instance creation!public! !
-!StOptimizedNode class categoriesFor: #new!instance creation!public! !
+!StOptimizedNode class categoriesForMethods!
+body:!instance creation!public! !
+initialize!public! !
+left:body:right:!instance creation!public! !
+new!instance creation!public! !
+!
 

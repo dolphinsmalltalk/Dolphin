@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STBInFiler subclass: #STBValidatingInFiler
 	instanceVariableNames: ''
@@ -40,10 +40,12 @@ validationBlock: aMonadicValuable
 	of this class are valid for loading from the receiver."
 
 	self classLocator validationBlock: aMonadicValuable.! !
-!STBValidatingInFiler categoriesFor: #classAt:!accessing!private! !
-!STBValidatingInFiler categoriesFor: #defaultClassLocatorClass!constants!private! !
-!STBValidatingInFiler categoriesFor: #validationBlock!accessing!private! !
-!STBValidatingInFiler categoriesFor: #validationBlock:!accessing!public! !
+!STBValidatingInFiler categoriesForMethods!
+classAt:!accessing!private! !
+defaultClassLocatorClass!constants!private! !
+validationBlock!accessing!private! !
+validationBlock:!accessing!public! !
+!
 
 !STBValidatingInFiler class methodsFor!
 
@@ -51,5 +53,7 @@ errorInvalidClass: aClassName
 	"Private - Signal an exception to warn that an input stream contains an invalid class."
 
 	STBError signal: ('Input stream contains an invalid class (<1s>)' expandMacrosWith: aClassName)! !
-!STBValidatingInFiler class categoriesFor: #errorInvalidClass:!exceptions!private! !
+!STBValidatingInFiler class categoriesForMethods!
+errorInvalidClass:!exceptions!private! !
+!
 

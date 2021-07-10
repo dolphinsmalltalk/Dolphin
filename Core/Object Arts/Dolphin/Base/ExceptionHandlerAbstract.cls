@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ExceptionHandlerAbstract
 	instanceVariableNames: 'outer protectedBlock returnContinuation'
@@ -89,15 +89,17 @@ try: niladicBlock
 			ensure: [process exceptionEnvironment: old].
 	returnContinuation := nil.
 	^answer! !
-!ExceptionHandlerAbstract categoriesFor: #actionFor:!helpers!private! !
-!ExceptionHandlerAbstract categoriesFor: #markAndTry!debugger-step through!evaluating!private! !
-!ExceptionHandlerAbstract categoriesFor: #on:do:!initializing!private! !
-!ExceptionHandlerAbstract categoriesFor: #outer!debugger-step over!private! !
-!ExceptionHandlerAbstract categoriesFor: #printOn:!development!printing!public! !
-!ExceptionHandlerAbstract categoriesFor: #retry!debugger-step through!handler responses!private! !
-!ExceptionHandlerAbstract categoriesFor: #retryUsing:!debugger-step through!handler responses!private! !
-!ExceptionHandlerAbstract categoriesFor: #return:!debugger-step through!handler responses!private! !
-!ExceptionHandlerAbstract categoriesFor: #try:!debugger-step through!evaluating!private! !
+!ExceptionHandlerAbstract categoriesForMethods!
+actionFor:!helpers!private! !
+markAndTry!debugger-step through!evaluating!private! !
+on:do:!initializing!private! !
+outer!debugger-step over!private! !
+printOn:!development!printing!public! !
+retry!debugger-step through!handler responses!private! !
+retryUsing:!debugger-step through!handler responses!private! !
+return:!debugger-step through!handler responses!private! !
+try:!debugger-step through!evaluating!private! !
+!
 
 !ExceptionHandlerAbstract class methodsFor!
 
@@ -111,6 +113,8 @@ on: selector do: action
 	selector, and <monadicBlock> exception handler, action."
 
 	^self new on: selector do: action! !
-!ExceptionHandlerAbstract class categoriesFor: #initialize!development!initializing!public! !
-!ExceptionHandlerAbstract class categoriesFor: #on:do:!debugger-step through!instance creation!private! !
+!ExceptionHandlerAbstract class categoriesForMethods!
+initialize!development!initializing!public! !
+on:do:!debugger-step through!instance creation!private! !
+!
 

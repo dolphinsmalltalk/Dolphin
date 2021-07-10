@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Presenter subclass: #SmalltalkWorkspace
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles'
@@ -1528,171 +1528,173 @@ wrapLinesInRange: anInterval indent: anInteger
 				indent: anInteger
 				tabWidth: scintilla tabWidth.
 	scintilla replaceTarget: justified! !
-!SmalltalkWorkspace categoriesFor: #allDefinedVariablesDo:!autocompletion!enumerating!private! !
-!SmalltalkWorkspace categoriesFor: #allPools!accessing!private! !
-!SmalltalkWorkspace categoriesFor: #applyOptions!operations!options!private! !
-!SmalltalkWorkspace categoriesFor: #areVariableTipsEnabled!public!testing! !
-!SmalltalkWorkspace categoriesFor: #areVariableTipsEnabled:!public!testing! !
-!SmalltalkWorkspace categoriesFor: #autoComplete:at:maxItems:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #basicFindNext!commands!public! !
-!SmalltalkWorkspace categoriesFor: #basicInspectIt!commands!public! !
-!SmalltalkWorkspace categoriesFor: #browseDefinitions!commands!public! !
-!SmalltalkWorkspace categoriesFor: #browseDefinitionsCommand!commands!private! !
-!SmalltalkWorkspace categoriesFor: #browseIt!commands!public! !
-!SmalltalkWorkspace categoriesFor: #browseReferences!commands!public! !
-!SmalltalkWorkspace categoriesFor: #browseReferencesCommand!commands!private! !
-!SmalltalkWorkspace categoriesFor: #cancelAutoCompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #caretPosition:!accessing!caret!public! !
-!SmalltalkWorkspace categoriesFor: #chooseEvaluationPools!commands!public! !
-!SmalltalkWorkspace categoriesFor: #chunkFilerClass!constants!public! !
-!SmalltalkWorkspace categoriesFor: #classForIdentifier:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #classForToken:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #clear!operations!public! !
-!SmalltalkWorkspace categoriesFor: #clearErrors!operations!public! !
-!SmalltalkWorkspace categoriesFor: #clearStatus!operations!public! !
-!SmalltalkWorkspace categoriesFor: #cloneNew!commands!public! !
-!SmalltalkWorkspace categoriesFor: #compilationErrors!accessing!private! !
-!SmalltalkWorkspace categoriesFor: #compileAll!commands!public! !
-!SmalltalkWorkspace categoriesFor: #compileAllIfFail:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #compileIt!commands!public! !
-!SmalltalkWorkspace categoriesFor: #compileItIfFail:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #compileRange:ifFail:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #compileRange:ifFail:debug:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #compilerNotification:offset:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #completeWord!autocompletion!commands!public! !
-!SmalltalkWorkspace categoriesFor: #completeWordAt:with:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #completionListSortBlock!autocompletion!constants!private! !
-!SmalltalkWorkspace categoriesFor: #completionStringFor:at:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #copySelection!commands!public! !
-!SmalltalkWorkspace categoriesFor: #createComponents!initializing!private! !
-!SmalltalkWorkspace categoriesFor: #createSchematicWiring!initializing!private! !
-!SmalltalkWorkspace categoriesFor: #debugIt!commands!public! !
-!SmalltalkWorkspace categoriesFor: #debugItIfFail:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #defaultCompilerFlags!constants!private! !
-!SmalltalkWorkspace categoriesFor: #defaultStylerClass!constants!private! !
-!SmalltalkWorkspace categoriesFor: #displayIt!commands!public! !
-!SmalltalkWorkspace categoriesFor: #dragOver:!drag & drop!public! !
-!SmalltalkWorkspace categoriesFor: #drop:!drag & drop!public! !
-!SmalltalkWorkspace categoriesFor: #dropObjectRef:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #errorModel!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #errorModel:!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #evaluateAndDisplay:!commands!public! !
-!SmalltalkWorkspace categoriesFor: #evaluateIt!commands!public! !
-!SmalltalkWorkspace categoriesFor: #evaluateItIfFail:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #evaluateItIfFail:debug:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #evaluateRange:ifFail:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #evaluateRange:ifFail:debug:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #evaluationContext!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #evaluationContext:!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #evaluationPools!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #evaluationPools:!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #fileItIn!commands!public! !
-!SmalltalkWorkspace categoriesFor: #findDetails!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #findDetails:!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #firstError!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #getCompletionSignatureFor:at:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #hasErrors!public!testing! !
-!SmalltalkWorkspace categoriesFor: #hasSelection!public!testing! !
-!SmalltalkWorkspace categoriesFor: #hasSmalltalkStyler!commands!private! !
-!SmalltalkWorkspace categoriesFor: #highlightCompilationErrors:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #identifierAt:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #identifiersStartingWith:maxItems:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #indicatorStyles!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #indicatorStyles:!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #initialize!initializing!private! !
-!SmalltalkWorkspace categoriesFor: #insertCompletion:at:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #insertKeywordCompletion:startingAt:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #inspectIt!commands!public! !
-!SmalltalkWorkspace categoriesFor: #inspectWorkspacePool!commands!private! !
-!SmalltalkWorkspace categoriesFor: #isAutoCompletionCaseInsensitive!public!testing! !
-!SmalltalkWorkspace categoriesFor: #isAutoCompletionEnabled!autocompletion!private!testing! !
-!SmalltalkWorkspace categoriesFor: #isAutoCompletionEnabled:!accessing!autocompletion!private! !
-!SmalltalkWorkspace categoriesFor: #isAutoCompletionTruncating!public!testing! !
-!SmalltalkWorkspace categoriesFor: #isEditable!private!testing! !
-!SmalltalkWorkspace categoriesFor: #isModified!public!testing! !
-!SmalltalkWorkspace categoriesFor: #isModified:!modes!public! !
-!SmalltalkWorkspace categoriesFor: #isReadOnly!public!testing! !
-!SmalltalkWorkspace categoriesFor: #isReadOnly:!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #isSpecialToken:oneOf:!public!testing! !
-!SmalltalkWorkspace categoriesFor: #isSyntaxColoringEnabled!private!testing! !
-!SmalltalkWorkspace categoriesFor: #isWhitespaceAt:!accessing!autocompletion!private! !
-!SmalltalkWorkspace categoriesFor: #killAutocompleteTimer!autocompletion!private! !
-!SmalltalkWorkspace categoriesFor: #maxAutoCompletionListSize!autocompletion!constants!private! !
-!SmalltalkWorkspace categoriesFor: #maxCompletionListSize!autocompletion!constants!private! !
-!SmalltalkWorkspace categoriesFor: #maybeExtendingQualifiedNameAt:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #maybeShowCompletionList!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #messagesForToken:startingWith:maxItems:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #modifiedModel!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #modifiedModel:!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #newVariablePool!operations!private! !
-!SmalltalkWorkspace categoriesFor: #onAutoComplete:startingAt:accept:!autocompletion!event handling!private! !
-!SmalltalkWorkspace categoriesFor: #onCharAdded:!autocompletion!event handling!private! !
-!SmalltalkWorkspace categoriesFor: #onHoverEnd:!event handling!private! !
-!SmalltalkWorkspace categoriesFor: #onHoverStart:!event handling!private! !
-!SmalltalkWorkspace categoriesFor: #onRightButtonReleased:!event handling!public! !
-!SmalltalkWorkspace categoriesFor: #onTimerTick:!event handling!private! !
-!SmalltalkWorkspace categoriesFor: #onTipTextRequired:!event handling!private! !
-!SmalltalkWorkspace categoriesFor: #onViewOpened!event handling!private! !
-!SmalltalkWorkspace categoriesFor: #parseContext!commands!public! !
-!SmalltalkWorkspace categoriesFor: #plainText!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #plainTextRange:!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #printIt!public! !
-!SmalltalkWorkspace categoriesFor: #prompt:toSaveChanges:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #promptForVariableName:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #publishedAspects!public! !
-!SmalltalkWorkspace categoriesFor: #queryCommand:!commands!private! !
-!SmalltalkWorkspace categoriesFor: #rangeToCompleteAt:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #reformatComment!commands!public! !
-!SmalltalkWorkspace categoriesFor: #reformatSource!commands!public! !
-!SmalltalkWorkspace categoriesFor: #replaceSelection:!operations!public! !
-!SmalltalkWorkspace categoriesFor: #resolveIdentifier:ifDefined:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #searchEnvironment!commands!public! !
-!SmalltalkWorkspace categoriesFor: #searchEnvironment:!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #selectedWord!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #selectEvaluationRange!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #selection!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #selectionRange!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #selectionRange:!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #selectLine:!operations!public! !
-!SmalltalkWorkspace categoriesFor: #selectNext!commands!public! !
-!SmalltalkWorkspace categoriesFor: #selectorsStartingWith:maxItems:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #selectPrev!commands!public! !
-!SmalltalkWorkspace categoriesFor: #selfClass!accessing!autocompletion!private! !
-!SmalltalkWorkspace categoriesFor: #setBackcolor!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #setCaretColor!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #setFont!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #setTabWidth!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #setWordWrap!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #showCompletionList:prefixLength:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #showCompletionListAfterToken:maxItems:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #showError:offset:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #showFirstError:!operations!private! !
-!SmalltalkWorkspace categoriesFor: #showIdentifierCompletionListAt:maxItems:start:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #showMessageCompletionListAt:maxItems:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #showResult:at:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #showSelectorCompletionListAt:maxItems:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #showSymbolCompletionListAt:maxItems:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #showTipForIdentifier:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #showTipForIndicators:!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #startAutocompleteTimer!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #stylerClass:!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #symbolsStartingWith:maxItems:!autocompletion!helpers!private! !
-!SmalltalkWorkspace categoriesFor: #systemModel!constants!private! !
-!SmalltalkWorkspace categoriesFor: #text!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #text:!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #textLength!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #textStyles!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #textStyles:!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #toggleAutoCompletion!commands!public! !
-!SmalltalkWorkspace categoriesFor: #toggleStyling!commands!public! !
-!SmalltalkWorkspace categoriesFor: #tokenBefore:!accessing!autocompletion!private! !
-!SmalltalkWorkspace categoriesFor: #tokenRangeAt:!accessing!autocompletion!private! !
-!SmalltalkWorkspace categoriesFor: #tokenStartAt:!accessing!autocompletion!private! !
-!SmalltalkWorkspace categoriesFor: #updateErrorStatus!operations!public! !
-!SmalltalkWorkspace categoriesFor: #validateUserInterface!operations!public! !
-!SmalltalkWorkspace categoriesFor: #workspacePool!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #workspacePool:!accessing!public! !
-!SmalltalkWorkspace categoriesFor: #wrapLinesInRange:indent:!helpers!private! !
+!SmalltalkWorkspace categoriesForMethods!
+allDefinedVariablesDo:!autocompletion!enumerating!private! !
+allPools!accessing!private! !
+applyOptions!operations!options!private! !
+areVariableTipsEnabled!public!testing! !
+areVariableTipsEnabled:!public!testing! !
+autoComplete:at:maxItems:!autocompletion!helpers!private! !
+basicFindNext!commands!public! !
+basicInspectIt!commands!public! !
+browseDefinitions!commands!public! !
+browseDefinitionsCommand!commands!private! !
+browseIt!commands!public! !
+browseReferences!commands!public! !
+browseReferencesCommand!commands!private! !
+cancelAutoCompletion!helpers!private! !
+caretPosition:!accessing!caret!public! !
+chooseEvaluationPools!commands!public! !
+chunkFilerClass!constants!public! !
+classForIdentifier:!autocompletion!helpers!private! !
+classForToken:!autocompletion!helpers!private! !
+clear!operations!public! !
+clearErrors!operations!public! !
+clearStatus!operations!public! !
+cloneNew!commands!public! !
+compilationErrors!accessing!private! !
+compileAll!commands!public! !
+compileAllIfFail:!helpers!private! !
+compileIt!commands!public! !
+compileItIfFail:!helpers!private! !
+compileRange:ifFail:!helpers!private! !
+compileRange:ifFail:debug:!helpers!private! !
+compilerNotification:offset:!helpers!private! !
+completeWord!autocompletion!commands!public! !
+completeWordAt:with:!autocompletion!helpers!private! !
+completionListSortBlock!autocompletion!constants!private! !
+completionStringFor:at:!autocompletion!helpers!private! !
+copySelection!commands!public! !
+createComponents!initializing!private! !
+createSchematicWiring!initializing!private! !
+debugIt!commands!public! !
+debugItIfFail:!helpers!private! !
+defaultCompilerFlags!constants!private! !
+defaultStylerClass!constants!private! !
+displayIt!commands!public! !
+dragOver:!drag & drop!public! !
+drop:!drag & drop!public! !
+dropObjectRef:!helpers!private! !
+errorModel!accessing!public! !
+errorModel:!accessing!public! !
+evaluateAndDisplay:!commands!public! !
+evaluateIt!commands!public! !
+evaluateItIfFail:!helpers!private! !
+evaluateItIfFail:debug:!helpers!private! !
+evaluateRange:ifFail:!helpers!private! !
+evaluateRange:ifFail:debug:!helpers!private! !
+evaluationContext!accessing!public! !
+evaluationContext:!accessing!public! !
+evaluationPools!accessing!public! !
+evaluationPools:!accessing!public! !
+fileItIn!commands!public! !
+findDetails!accessing!public! !
+findDetails:!accessing!public! !
+firstError!helpers!private! !
+getCompletionSignatureFor:at:!autocompletion!helpers!private! !
+hasErrors!public!testing! !
+hasSelection!public!testing! !
+hasSmalltalkStyler!commands!private! !
+highlightCompilationErrors:!helpers!private! !
+identifierAt:!helpers!private! !
+identifiersStartingWith:maxItems:!autocompletion!helpers!private! !
+indicatorStyles!accessing!public! !
+indicatorStyles:!accessing!public! !
+initialize!initializing!private! !
+insertCompletion:at:!autocompletion!helpers!private! !
+insertKeywordCompletion:startingAt:!autocompletion!helpers!private! !
+inspectIt!commands!public! !
+inspectWorkspacePool!commands!private! !
+isAutoCompletionCaseInsensitive!public!testing! !
+isAutoCompletionEnabled!autocompletion!private!testing! !
+isAutoCompletionEnabled:!accessing!autocompletion!private! !
+isAutoCompletionTruncating!public!testing! !
+isEditable!private!testing! !
+isModified!public!testing! !
+isModified:!modes!public! !
+isReadOnly!public!testing! !
+isReadOnly:!accessing!public! !
+isSpecialToken:oneOf:!public!testing! !
+isSyntaxColoringEnabled!private!testing! !
+isWhitespaceAt:!accessing!autocompletion!private! !
+killAutocompleteTimer!autocompletion!private! !
+maxAutoCompletionListSize!autocompletion!constants!private! !
+maxCompletionListSize!autocompletion!constants!private! !
+maybeExtendingQualifiedNameAt:!autocompletion!helpers!private! !
+maybeShowCompletionList!autocompletion!helpers!private! !
+messagesForToken:startingWith:maxItems:!autocompletion!helpers!private! !
+modifiedModel!accessing!public! !
+modifiedModel:!accessing!public! !
+newVariablePool!operations!private! !
+onAutoComplete:startingAt:accept:!autocompletion!event handling!private! !
+onCharAdded:!autocompletion!event handling!private! !
+onHoverEnd:!event handling!private! !
+onHoverStart:!event handling!private! !
+onRightButtonReleased:!event handling!public! !
+onTimerTick:!event handling!private! !
+onTipTextRequired:!event handling!private! !
+onViewOpened!event handling!private! !
+parseContext!commands!public! !
+plainText!accessing!public! !
+plainTextRange:!accessing!public! !
+printIt!public! !
+prompt:toSaveChanges:!helpers!private! !
+promptForVariableName:!helpers!private! !
+publishedAspects!public! !
+queryCommand:!commands!private! !
+rangeToCompleteAt:!autocompletion!helpers!private! !
+reformatComment!commands!public! !
+reformatSource!commands!public! !
+replaceSelection:!operations!public! !
+resolveIdentifier:ifDefined:!autocompletion!helpers!private! !
+searchEnvironment!commands!public! !
+searchEnvironment:!accessing!public! !
+selectedWord!helpers!private! !
+selectEvaluationRange!helpers!private! !
+selection!accessing!public! !
+selectionRange!accessing!public! !
+selectionRange:!accessing!public! !
+selectLine:!operations!public! !
+selectNext!commands!public! !
+selectorsStartingWith:maxItems:!autocompletion!helpers!private! !
+selectPrev!commands!public! !
+selfClass!accessing!autocompletion!private! !
+setBackcolor!helpers!private! !
+setCaretColor!helpers!private! !
+setFont!helpers!private! !
+setTabWidth!helpers!private! !
+setWordWrap!helpers!private! !
+showCompletionList:prefixLength:!autocompletion!helpers!private! !
+showCompletionListAfterToken:maxItems:!autocompletion!helpers!private! !
+showError:offset:!helpers!private! !
+showFirstError:!operations!private! !
+showIdentifierCompletionListAt:maxItems:start:!autocompletion!helpers!private! !
+showMessageCompletionListAt:maxItems:!autocompletion!helpers!private! !
+showResult:at:!helpers!private! !
+showSelectorCompletionListAt:maxItems:!autocompletion!helpers!private! !
+showSymbolCompletionListAt:maxItems:!autocompletion!helpers!private! !
+showTipForIdentifier:!helpers!private! !
+showTipForIndicators:!helpers!private! !
+startAutocompleteTimer!autocompletion!helpers!private! !
+stylerClass:!accessing!public! !
+symbolsStartingWith:maxItems:!autocompletion!helpers!private! !
+systemModel!constants!private! !
+text!accessing!public! !
+text:!accessing!public! !
+textLength!accessing!public! !
+textStyles!accessing!public! !
+textStyles:!accessing!public! !
+toggleAutoCompletion!commands!public! !
+toggleStyling!commands!public! !
+tokenBefore:!accessing!autocompletion!private! !
+tokenRangeAt:!accessing!autocompletion!private! !
+tokenStartAt:!accessing!autocompletion!private! !
+updateErrorStatus!operations!public! !
+validateUserInterface!operations!public! !
+workspacePool!accessing!public! !
+workspacePool:!accessing!public! !
+wrapLinesInRange:indent:!helpers!private! !
+!
 
 SmalltalkWorkspace methodProtocol: #textPresenter attributes: #() selectors: #(#clear #findDetails #findDetails: #hasSelection #isModified #isModified: #replaceSelection: #selectionRange #selectionRange:)!
 
@@ -2252,61 +2254,63 @@ wrapIndentMode
 
 wrapIndentMode: aSymbol 
 	WrapIndentMode := aSymbol! !
-!SmalltalkWorkspace class categoriesFor: #actualFont!accessing!options!public! !
-!SmalltalkWorkspace class categoriesFor: #annotationMode!accessing!options!public! !
-!SmalltalkWorkspace class categoriesFor: #annotationMode:!accessing!options!public! !
-!SmalltalkWorkspace class categoriesFor: #autoCompleteDwell!accessing!autocompletion!public! !
-!SmalltalkWorkspace class categoriesFor: #autoCompleteDwell:!accessing!autocompletion!public! !
-!SmalltalkWorkspace class categoriesFor: #customEditorKeyBindings!options!private! !
-!SmalltalkWorkspace class categoriesFor: #defaultAdditionalAccelerators!constants!private! !
-!SmalltalkWorkspace class categoriesFor: #defaultBackcolor!accessing!options!public! !
-!SmalltalkWorkspace class categoriesFor: #defaultBackcolor:!accessing!options!public! !
-!SmalltalkWorkspace class categoriesFor: #defaultCaretColor!accessing!options!public! !
-!SmalltalkWorkspace class categoriesFor: #defaultCaretColor:!accessing!options!public! !
-!SmalltalkWorkspace class categoriesFor: #defaultEditorKeyBindings!constants!options!public! !
-!SmalltalkWorkspace class categoriesFor: #defaultFont!accessing!options!public! !
-!SmalltalkWorkspace class categoriesFor: #defaultFont:!accessing!options!public! !
-!SmalltalkWorkspace class categoriesFor: #defaultIndicatorStyles!constants!public! !
-!SmalltalkWorkspace class categoriesFor: #defaultKeywordCompletions!autocompletion!private! !
-!SmalltalkWorkspace class categoriesFor: #defaultTabWidth!accessing!public! !
-!SmalltalkWorkspace class categoriesFor: #defaultTabWidth:!accessing!public! !
-!SmalltalkWorkspace class categoriesFor: #defaultTextStyle!private! !
-!SmalltalkWorkspace class categoriesFor: #defaultTextStyles!constants!public! !
-!SmalltalkWorkspace class categoriesFor: #defaultUnaryReturnTypes!autocompletion!private! !
-!SmalltalkWorkspace class categoriesFor: #editorKeyBindings!accessing!public! !
-!SmalltalkWorkspace class categoriesFor: #editorKeyBindings:!accessing!public! !
-!SmalltalkWorkspace class categoriesFor: #fontQuality!accessing!public! !
-!SmalltalkWorkspace class categoriesFor: #fontQuality:!accessing!public! !
-!SmalltalkWorkspace class categoriesFor: #getAdditionalKeyBindings!accessing!private! !
-!SmalltalkWorkspace class categoriesFor: #getCommandQueryHandlers!accessing!private! !
-!SmalltalkWorkspace class categoriesFor: #icon!constants!public! !
-!SmalltalkWorkspace class categoriesFor: #indicatorStyles!accessing!public! !
-!SmalltalkWorkspace class categoriesFor: #indicatorStyles:!accessing!public! !
-!SmalltalkWorkspace class categoriesFor: #indicatorStylesAspect!private! !
-!SmalltalkWorkspace class categoriesFor: #initialize!initializing!public! !
-!SmalltalkWorkspace class categoriesFor: #isAutoCompletionCaseInsensitive!accessing!autocompletion!public! !
-!SmalltalkWorkspace class categoriesFor: #isAutoCompletionCaseInsensitive:!accessing!autocompletion!public! !
-!SmalltalkWorkspace class categoriesFor: #isAutoCompletionEnabled!accessing!autocompletion!public! !
-!SmalltalkWorkspace class categoriesFor: #isAutoCompletionEnabled:!accessing!autocompletion!public! !
-!SmalltalkWorkspace class categoriesFor: #isAutoCompletionSpaceAdded!accessing!autocompletion!public! !
-!SmalltalkWorkspace class categoriesFor: #isAutoCompletionSpaceAdded:!accessing!autocompletion!public! !
-!SmalltalkWorkspace class categoriesFor: #isAutoCompletionTruncating!accessing!autocompletion!public! !
-!SmalltalkWorkspace class categoriesFor: #isAutoCompletionTruncating:!accessing!autocompletion!public! !
-!SmalltalkWorkspace class categoriesFor: #maxAutoCompletionListSize!accessing!autocompletion!public! !
-!SmalltalkWorkspace class categoriesFor: #maxAutoCompletionListSize:!accessing!autocompletion!public! !
-!SmalltalkWorkspace class categoriesFor: #publishedAspects!public! !
-!SmalltalkWorkspace class categoriesFor: #publishedEventsOfInstances!events!public! !
-!SmalltalkWorkspace class categoriesFor: #resource_Default_view!public!resources-views! !
-!SmalltalkWorkspace class categoriesFor: #setAdditionalKeyBindings:!accessing!private! !
-!SmalltalkWorkspace class categoriesFor: #setCommandQueryHandlers:!accessing!private! !
-!SmalltalkWorkspace class categoriesFor: #textStyles!accessing!public! !
-!SmalltalkWorkspace class categoriesFor: #textStyles:!accessing!public! !
-!SmalltalkWorkspace class categoriesFor: #textStylesAspect!private! !
-!SmalltalkWorkspace class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!SmalltalkWorkspace class categoriesFor: #useDirectWrite!options!public! !
-!SmalltalkWorkspace class categoriesFor: #useDirectWrite:!options!public! !
-!SmalltalkWorkspace class categoriesFor: #wordWrap!accessing!options!public! !
-!SmalltalkWorkspace class categoriesFor: #wordWrap:!accessing!options!public! !
-!SmalltalkWorkspace class categoriesFor: #wrapIndentMode!accessing!options!public! !
-!SmalltalkWorkspace class categoriesFor: #wrapIndentMode:!accessing!options!public! !
+!SmalltalkWorkspace class categoriesForMethods!
+actualFont!accessing!options!public! !
+annotationMode!accessing!options!public! !
+annotationMode:!accessing!options!public! !
+autoCompleteDwell!accessing!autocompletion!public! !
+autoCompleteDwell:!accessing!autocompletion!public! !
+customEditorKeyBindings!options!private! !
+defaultAdditionalAccelerators!constants!private! !
+defaultBackcolor!accessing!options!public! !
+defaultBackcolor:!accessing!options!public! !
+defaultCaretColor!accessing!options!public! !
+defaultCaretColor:!accessing!options!public! !
+defaultEditorKeyBindings!constants!options!public! !
+defaultFont!accessing!options!public! !
+defaultFont:!accessing!options!public! !
+defaultIndicatorStyles!constants!public! !
+defaultKeywordCompletions!autocompletion!private! !
+defaultTabWidth!accessing!public! !
+defaultTabWidth:!accessing!public! !
+defaultTextStyle!private! !
+defaultTextStyles!constants!public! !
+defaultUnaryReturnTypes!autocompletion!private! !
+editorKeyBindings!accessing!public! !
+editorKeyBindings:!accessing!public! !
+fontQuality!accessing!public! !
+fontQuality:!accessing!public! !
+getAdditionalKeyBindings!accessing!private! !
+getCommandQueryHandlers!accessing!private! !
+icon!constants!public! !
+indicatorStyles!accessing!public! !
+indicatorStyles:!accessing!public! !
+indicatorStylesAspect!private! !
+initialize!initializing!public! !
+isAutoCompletionCaseInsensitive!accessing!autocompletion!public! !
+isAutoCompletionCaseInsensitive:!accessing!autocompletion!public! !
+isAutoCompletionEnabled!accessing!autocompletion!public! !
+isAutoCompletionEnabled:!accessing!autocompletion!public! !
+isAutoCompletionSpaceAdded!accessing!autocompletion!public! !
+isAutoCompletionSpaceAdded:!accessing!autocompletion!public! !
+isAutoCompletionTruncating!accessing!autocompletion!public! !
+isAutoCompletionTruncating:!accessing!autocompletion!public! !
+maxAutoCompletionListSize!accessing!autocompletion!public! !
+maxAutoCompletionListSize:!accessing!autocompletion!public! !
+publishedAspects!public! !
+publishedEventsOfInstances!events!public! !
+resource_Default_view!public!resources-views! !
+setAdditionalKeyBindings:!accessing!private! !
+setCommandQueryHandlers:!accessing!private! !
+textStyles!accessing!public! !
+textStyles:!accessing!public! !
+textStylesAspect!private! !
+uninitialize!class hierarchy-removing!private! !
+useDirectWrite!options!public! !
+useDirectWrite:!options!public! !
+wordWrap!accessing!options!public! !
+wordWrap:!accessing!options!public! !
+wrapIndentMode!accessing!options!public! !
+wrapIndentMode:!accessing!options!public! !
+!
 

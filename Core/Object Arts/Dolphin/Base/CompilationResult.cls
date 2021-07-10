@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #CompilationResult
 	instanceVariableNames: 'method rawTextMap rawTempsMap textMap tempsMap oldMethod package'
@@ -94,22 +94,24 @@ textMap
 
 	textMap isNil ifTrue: [self buildTextMap].
 	^textMap! !
-!CompilationResult categoriesFor: #buildTempsMap!development!private! !
-!CompilationResult categoriesFor: #buildTextMap!development!private! !
-!CompilationResult categoriesFor: #fireSystemUpdateEvent!helpers!private! !
-!CompilationResult categoriesFor: #isNew!accessing!public! !
-!CompilationResult categoriesFor: #method!accessing!public! !
-!CompilationResult categoriesFor: #method:!accessing!private! !
-!CompilationResult categoriesFor: #method:rawTextMap:rawTempsMap:!initializing!private! !
-!CompilationResult categoriesFor: #oldMethod!accessing!public! !
-!CompilationResult categoriesFor: #oldMethod:!accessing!public! !
-!CompilationResult categoriesFor: #package!accessing!public! !
-!CompilationResult categoriesFor: #package:!accessing!public! !
-!CompilationResult categoriesFor: #rawTempsMap:!accessing!private! !
-!CompilationResult categoriesFor: #rawTextMap:!accessing!private! !
-!CompilationResult categoriesFor: #tempsAtIp:!accessing!development!private! !
-!CompilationResult categoriesFor: #tempsMap!accessing!development!public! !
-!CompilationResult categoriesFor: #textMap!accessing!development!public! !
+!CompilationResult categoriesForMethods!
+buildTempsMap!development!private! !
+buildTextMap!development!private! !
+fireSystemUpdateEvent!helpers!private! !
+isNew!accessing!public! !
+method!accessing!public! !
+method:!accessing!private! !
+method:rawTextMap:rawTempsMap:!initializing!private! !
+oldMethod!accessing!public! !
+oldMethod:!accessing!public! !
+package!accessing!public! !
+package:!accessing!public! !
+rawTempsMap:!accessing!private! !
+rawTextMap:!accessing!private! !
+tempsAtIp:!accessing!development!private! !
+tempsMap!accessing!development!public! !
+textMap!accessing!development!public! !
+!
 
 !CompilationResult class methodsFor!
 
@@ -119,5 +121,7 @@ method: aCompiledMethod rawTextMap: textArray rawTempsMap: tempsArray
 		method: aCompiledMethod
 		rawTextMap: textArray
 		rawTempsMap: tempsArray! !
-!CompilationResult class categoriesFor: #method:rawTextMap:rawTempsMap:!instance creation!public! !
+!CompilationResult class categoriesForMethods!
+method:rawTextMap:rawTempsMap:!instance creation!public! !
+!
 

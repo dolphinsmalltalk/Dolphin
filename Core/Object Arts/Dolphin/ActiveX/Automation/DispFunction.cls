@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 COMFunction subclass: #DispFunction
 	instanceVariableNames: ''
@@ -31,5 +31,7 @@ callback: stub interface: aCOMInterface withArgumentsAt: anAddress
 				withArgumentsAt: anAddress
 				descriptor: descriptor]
 		ifNil: [E_NOTIMPL]! !
-!DispFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
+!DispFunction categoriesForMethods!
+callback:interface:withArgumentsAt:!evaluating!private! !
+!
 

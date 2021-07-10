@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 COMInterfaceImp subclass: #OLELockBytesAbstract
 	instanceVariableNames: ''
@@ -121,19 +121,21 @@ WriteAt: offset pv: pBuf cb: cb pcbWritten: pcbWritten
 		with: pBuf.
 	pcbWritten value: cb.
 	^S_OK! !
-!OLELockBytesAbstract categoriesFor: #contents!accessing!public! !
-!OLELockBytesAbstract categoriesFor: #copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #Flush!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #LockRegion:cb:dwLockType:!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #ReadAt:pv:cb:pcbRead:!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #replaceFrom:to:with:!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #resize:!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #SetSize:!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #size!accessing!public! !
-!OLELockBytesAbstract categoriesFor: #Stat:grfStatFlag:!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #supportedInterfaces!constants!public! !
-!OLELockBytesAbstract categoriesFor: #UnlockRegion:cb:dwLockType:!COM Interfaces-ILockBytes!private! !
-!OLELockBytesAbstract categoriesFor: #WriteAt:pv:cb:pcbWritten:!COM Interfaces-ILockBytes!private! !
+!OLELockBytesAbstract categoriesForMethods!
+contents!accessing!public! !
+copyBytesInto:from:to:!COM Interfaces-ILockBytes!private! !
+Flush!COM Interfaces-ILockBytes!private! !
+LockRegion:cb:dwLockType:!COM Interfaces-ILockBytes!private! !
+ReadAt:pv:cb:pcbRead:!COM Interfaces-ILockBytes!private! !
+replaceFrom:to:with:!COM Interfaces-ILockBytes!private! !
+resize:!COM Interfaces-ILockBytes!private! !
+SetSize:!COM Interfaces-ILockBytes!private! !
+size!accessing!public! !
+Stat:grfStatFlag:!COM Interfaces-ILockBytes!private! !
+supportedInterfaces!constants!public! !
+UnlockRegion:cb:dwLockType:!COM Interfaces-ILockBytes!private! !
+WriteAt:pv:cb:pcbWritten:!COM Interfaces-ILockBytes!private! !
+!
 
 OLELockBytesAbstract methodProtocol: #ILockBytes attributes: #() selectors: #(#Flush #LockRegion:cb:dwLockType: #ReadAt:pv:cb:pcbRead: #SetSize: #Stat:grfStatFlag: #UnlockRegion:cb:dwLockType: #WriteAt:pv:cb:pcbWritten:)!
 

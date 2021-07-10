@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #ScintillaLibrary
 	instanceVariableNames: ''
@@ -37,11 +37,13 @@ versionFormatString
 	"
 
 	^'%2!!d!!.%3!!d!!.%4!!d!!'! !
-!ScintillaLibrary categoriesFor: #directFunction:msg:wParam:lParam:!operations!private! !
-!ScintillaLibrary categoriesFor: #directFunction:msg:wParam:lpParam:!operations!private! !
-!ScintillaLibrary categoriesFor: #directFunction:msg:wpParam:lParam:!operations!private! !
-!ScintillaLibrary categoriesFor: #directFunction:msg:wpParam:lpParam:!operations!private! !
-!ScintillaLibrary categoriesFor: #versionFormatString!constants!private! !
+!ScintillaLibrary categoriesForMethods!
+directFunction:msg:wParam:lParam:!operations!private! !
+directFunction:msg:wParam:lpParam:!operations!private! !
+directFunction:msg:wpParam:lParam:!operations!private! !
+directFunction:msg:wpParam:lpParam:!operations!private! !
+versionFormatString!constants!private! !
+!
 
 !ScintillaLibrary class methodsFor!
 
@@ -54,6 +56,8 @@ versionString
 	"Answer the version of the Scintilla control for which this library was generated."
 
 	^'4.4.4'! !
-!ScintillaLibrary class categoriesFor: #fileName!constants!public! !
-!ScintillaLibrary class categoriesFor: #versionString!**auto generated**!constants!public!scintilla interface! !
+!ScintillaLibrary class categoriesForMethods!
+fileName!constants!public! !
+versionString!**auto generated**!constants!public!scintilla interface! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_SSL_CLIENT_CERT_INFO
 	instanceVariableNames: ''
@@ -73,14 +73,16 @@ Token: anExternalHandle
 	"Set the receiver's 'Token' field to the value of the argument, anExternalHandle"
 
 	bytes uintPtrAtOffset: _OffsetOf_Token put: anExternalHandle! !
-!HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #CertEncodedSize!**compiled accessors**!private! !
-!HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #CertEncodedSize:!**compiled accessors**!private! !
-!HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #CertFlags!**compiled accessors**!public! !
-!HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #CertFlags:!**compiled accessors**!public! !
-!HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #pCertEncoded!**compiled accessors**!public! !
-!HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #pCertEncoded:!**compiled accessors**!public! !
-!HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #Token!**compiled accessors**!public! !
-!HTTP_SSL_CLIENT_CERT_INFO categoriesFor: #Token:!**compiled accessors**!public! !
+!HTTP_SSL_CLIENT_CERT_INFO categoriesForMethods!
+CertEncodedSize!**compiled accessors**!private! !
+CertEncodedSize:!**compiled accessors**!private! !
+CertFlags!**compiled accessors**!public! !
+CertFlags:!**compiled accessors**!public! !
+pCertEncoded!**compiled accessors**!public! !
+pCertEncoded:!**compiled accessors**!public! !
+Token!**compiled accessors**!public! !
+Token:!**compiled accessors**!public! !
+!
 
 !HTTP_SSL_CLIENT_CERT_INFO class methodsFor!
 
@@ -109,6 +111,8 @@ defineFields
 
 getFieldNames
 	^#(#CertFlags #CertEncodedSize #pCertEncoded #Token)! !
-!HTTP_SSL_CLIENT_CERT_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SSL_CLIENT_CERT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_SSL_CLIENT_CERT_INFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

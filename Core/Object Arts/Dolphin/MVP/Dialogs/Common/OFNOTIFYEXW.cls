@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMHDR subclass: #OFNOTIFYEXW
 	instanceVariableNames: ''
@@ -42,9 +42,11 @@ psf
 	"Answer the <ExternalAddress> value of the receiver's 'psf' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_psf) asExternalAddress! !
-!OFNOTIFYEXW categoriesFor: #lpOFN!**compiled accessors**!public! !
-!OFNOTIFYEXW categoriesFor: #pidl!**compiled accessors**!public! !
-!OFNOTIFYEXW categoriesFor: #psf!**compiled accessors**!public! !
+!OFNOTIFYEXW categoriesForMethods!
+lpOFN!**compiled accessors**!public! !
+pidl!**compiled accessors**!public! !
+psf!**compiled accessors**!public! !
+!
 
 !OFNOTIFYEXW class methodsFor!
 
@@ -70,6 +72,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #lpOFN #psf #pidl)! !
-!OFNOTIFYEXW class categoriesFor: #defineFields!public!template definition! !
-!OFNOTIFYEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OFNOTIFYEXW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

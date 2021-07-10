@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #COMObjectRegistration
 	instanceVariableNames: 'clsid name toolboxImage'
@@ -123,17 +123,19 @@ toolboxImage
 							toolboxImage := Bitmap fromId: id in: resLib.
 							toolboxImage setMap3DColors: true]]].
 	^toolboxImage! !
-!COMObjectRegistration categoriesFor: #=!comparing!public! !
-!COMObjectRegistration categoriesFor: #clsid!accessing!public! !
-!COMObjectRegistration categoriesFor: #clsid:!accessing!public! !
-!COMObjectRegistration categoriesFor: #defaultToolboxBitmap!accessing!public! !
-!COMObjectRegistration categoriesFor: #description!accessing!public! !
-!COMObjectRegistration categoriesFor: #displayOn:!displaying!public! !
-!COMObjectRegistration categoriesFor: #getUserType:!accessing!private! !
-!COMObjectRegistration categoriesFor: #hash!comparing!public! !
-!COMObjectRegistration categoriesFor: #name!accessing!public! !
-!COMObjectRegistration categoriesFor: #printOn:!printing!public! !
-!COMObjectRegistration categoriesFor: #toolboxImage!accessing!public! !
+!COMObjectRegistration categoriesForMethods!
+=!comparing!public! !
+clsid!accessing!public! !
+clsid:!accessing!public! !
+defaultToolboxBitmap!accessing!public! !
+description!accessing!public! !
+displayOn:!displaying!public! !
+getUserType:!accessing!private! !
+hash!comparing!public! !
+name!accessing!public! !
+printOn:!printing!public! !
+toolboxImage!accessing!public! !
+!
 
 !COMObjectRegistration class methodsFor!
 
@@ -141,5 +143,7 @@ clsid: aCLSID
 	"Answer a new instance of the receiver for the specified class id."
 
 	^self new clsid: aCLSID; yourself! !
-!COMObjectRegistration class categoriesFor: #clsid:!instance creation!public! !
+!COMObjectRegistration class categoriesForMethods!
+clsid:!instance creation!public! !
+!
 

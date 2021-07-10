@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IMXSchemaDeclHandler
 	instanceVariableNames: ''
@@ -51,9 +51,11 @@ SchemaElementDecl: oSchemaElement
 
 	<virtual stdcall: hresult 8 ISchemaElement*>
 	^self invalidCall: _failureCode! !
-!IMXSchemaDeclHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IMXSchemaDeclHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IMXSchemaDeclHandler categoriesFor: #SchemaElementDecl:!**auto generated**!COM Interfaces-IMXSchemaDeclHandler!public! !
+!IMXSchemaDeclHandler categoriesForMethods!
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+SchemaElementDecl:!**auto generated**!COM Interfaces-IMXSchemaDeclHandler!public! !
+!
 
 !IMXSchemaDeclHandler class methodsFor!
 
@@ -65,5 +67,7 @@ defineFunctions
 		defineFunction: #SchemaElementDecl:
 			argumentTypes: 'ISchemaElement*'
 ! !
-!IMXSchemaDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IMXSchemaDeclHandler class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #AttributeDescriptor
 	instanceVariableNames: 'flags'
@@ -165,31 +165,33 @@ writeInto: subjectObject value: valueObject
 	to valueObject."
 
 	^self subclassResponsibility! !
-!AttributeDescriptor categoriesFor: #beCompiled!modes!public! !
-!AttributeDescriptor categoriesFor: #beImmutable!modes!public! !
-!AttributeDescriptor categoriesFor: #beInaccessible!modes!public! !
-!AttributeDescriptor categoriesFor: #beMutable!modes!public! !
-!AttributeDescriptor categoriesFor: #beNonBrowsable!modes!public! !
-!AttributeDescriptor categoriesFor: #beOverride!modes!public! !
-!AttributeDescriptor categoriesFor: #beReadOnly!modes!public! !
-!AttributeDescriptor categoriesFor: #beUncompiled!modes!public! !
-!AttributeDescriptor categoriesFor: #beWriteOnly!modes!public! !
-!AttributeDescriptor categoriesFor: #canGenerateAccessor!private!testing! !
-!AttributeDescriptor categoriesFor: #canGenerateAccessors!private!testing! !
-!AttributeDescriptor categoriesFor: #canGenerateMutator!private!testing! !
-!AttributeDescriptor categoriesFor: #defaultFlags!initializing!private! !
-!AttributeDescriptor categoriesFor: #initialize!initializing!private! !
-!AttributeDescriptor categoriesFor: #isBrowsable!public!testing! !
-!AttributeDescriptor categoriesFor: #isInaccessible!public!testing! !
-!AttributeDescriptor categoriesFor: #isMutable!public!testing! !
-!AttributeDescriptor categoriesFor: #isNonBrowsable!public!testing! !
-!AttributeDescriptor categoriesFor: #isNullable!public!testing! !
-!AttributeDescriptor categoriesFor: #isNullable:!modes!public! !
-!AttributeDescriptor categoriesFor: #isOverride!public!testing! !
-!AttributeDescriptor categoriesFor: #isReadable!public!testing! !
-!AttributeDescriptor categoriesFor: #isWriteable!public!testing! !
-!AttributeDescriptor categoriesFor: #readFrom:!indirect accessing!private! !
-!AttributeDescriptor categoriesFor: #writeInto:value:!indirect accessing!private! !
+!AttributeDescriptor categoriesForMethods!
+beCompiled!modes!public! !
+beImmutable!modes!public! !
+beInaccessible!modes!public! !
+beMutable!modes!public! !
+beNonBrowsable!modes!public! !
+beOverride!modes!public! !
+beReadOnly!modes!public! !
+beUncompiled!modes!public! !
+beWriteOnly!modes!public! !
+canGenerateAccessor!private!testing! !
+canGenerateAccessors!private!testing! !
+canGenerateMutator!private!testing! !
+defaultFlags!initializing!private! !
+initialize!initializing!private! !
+isBrowsable!public!testing! !
+isInaccessible!public!testing! !
+isMutable!public!testing! !
+isNonBrowsable!public!testing! !
+isNullable!public!testing! !
+isNullable:!modes!public! !
+isOverride!public!testing! !
+isReadable!public!testing! !
+isWriteable!public!testing! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !AttributeDescriptor class methodsFor!
 
@@ -222,9 +224,11 @@ writeOnly
 	which cannot be read, only written."
 
 	^self new beWriteOnly! !
-!AttributeDescriptor class categoriesFor: #inaccessible!instance creation!private! !
-!AttributeDescriptor class categoriesFor: #new!instance creation!public! !
-!AttributeDescriptor class categoriesFor: #readOnly!instance creation!public! !
-!AttributeDescriptor class categoriesFor: #uncompiled!instance creation!public! !
-!AttributeDescriptor class categoriesFor: #writeOnly!instance creation!public! !
+!AttributeDescriptor class categoriesForMethods!
+inaccessible!instance creation!private! !
+new!instance creation!public! !
+readOnly!instance creation!public! !
+uncompiled!instance creation!public! !
+writeOnly!instance creation!public! !
+!
 

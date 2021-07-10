@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BatchAspectAccessor subclass: #IndexedInstVarBatchAccessor
 	instanceVariableNames: ''
@@ -36,10 +36,12 @@ keys
 
 subjectIncludesKey: nextKey
 	^nextKey <= self subject basicSize! !
-!IndexedInstVarBatchAccessor categoriesFor: #aspectClass!public! !
-!IndexedInstVarBatchAccessor categoriesFor: #getBatchAccessors!accessing!public! !
-!IndexedInstVarBatchAccessor categoriesFor: #keys!accessing!public! !
-!IndexedInstVarBatchAccessor categoriesFor: #subjectIncludesKey:!accessing!private! !
+!IndexedInstVarBatchAccessor categoriesForMethods!
+aspectClass!public! !
+getBatchAccessors!accessing!public! !
+keys!accessing!public! !
+subjectIncludesKey:!accessing!private! !
+!
 
 !IndexedInstVarBatchAccessor class methodsFor!
 
@@ -52,5 +54,7 @@ subject: anObject batchSize: sizeInteger
 		keys: (1 to: anObject basicSize)
 		startingAt: 1
 		batchSize: sizeInteger! !
-!IndexedInstVarBatchAccessor class categoriesFor: #subject:batchSize:!instance creation!public! !
+!IndexedInstVarBatchAccessor class categoriesForMethods!
+subject:batchSize:!instance creation!public! !
+!
 

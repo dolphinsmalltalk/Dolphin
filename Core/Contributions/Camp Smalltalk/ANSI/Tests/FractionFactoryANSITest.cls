@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #FractionFactoryANSITest
 	instanceVariableNames: ''
@@ -19,7 +19,9 @@ protocol
 testXnumeratorXdenominatorX
 	" <Fraction factory>#numerator:denominator: "
 	#'Numeric'.! !
-!FractionFactoryANSITest categoriesFor: #canonicalObject!public! !
-!FractionFactoryANSITest categoriesFor: #protocol!public! !
-!FractionFactoryANSITest categoriesFor: #testXnumeratorXdenominatorX!public! !
+!FractionFactoryANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXnumeratorXdenominatorX!public! !
+!
 

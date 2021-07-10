@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ArrayField subclass: #StructureArrayField
 	instanceVariableNames: ''
@@ -59,12 +59,14 @@ valueParameterName
 	the field described by the receiver."
 
 	^'aStructureArrayOf' , self elementClass name! !
-!StructureArrayField categoriesFor: #alignment!constants!public! !
-!StructureArrayField categoriesFor: #arrayClass!constants!private! !
-!StructureArrayField categoriesFor: #elementClass!accessing!private! !
-!StructureArrayField categoriesFor: #elementSize!accessing!private! !
-!StructureArrayField categoriesFor: #fieldClassName!accessing!private! !
-!StructureArrayField categoriesFor: #printElementSizeExpressionBodyOn:!automatic generation!private! !
-!StructureArrayField categoriesFor: #readFrom:!indirect accessing!private! !
-!StructureArrayField categoriesFor: #valueParameterName!automatic generation!constants!development!private! !
+!StructureArrayField categoriesForMethods!
+alignment!constants!public! !
+arrayClass!constants!private! !
+elementClass!accessing!private! !
+elementSize!accessing!private! !
+fieldClassName!accessing!private! !
+printElementSizeExpressionBodyOn:!automatic generation!private! !
+readFrom:!indirect accessing!private! !
+valueParameterName!automatic generation!constants!development!private! !
+!
 

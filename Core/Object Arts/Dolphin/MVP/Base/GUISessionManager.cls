@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SessionManager subclass: #GUISessionManager
 	instanceVariableNames: 'savedWindows'
@@ -182,28 +182,30 @@ windowSystemStartup
 	env := self class environment.
 	#(#Canvas #GraphicsTool #Clipboard #View #ToolbarIconButton #Command) 
 		do: [:s | env at: s ifPresent: [:c | c onStartup]]! !
-!GUISessionManager categoriesFor: #allocConsole!operations!private! !
-!GUISessionManager categoriesFor: #basicShutdown!operations-shutdown!private! !
-!GUISessionManager categoriesFor: #basicTertiaryStartup!operations-startup!public! !
-!GUISessionManager categoriesFor: #clearSessionState!operations!public! !
-!GUISessionManager categoriesFor: #clearWindowState!operations-saving!private! !
-!GUISessionManager categoriesFor: #commandLineParser!helpers!private! !
-!GUISessionManager categoriesFor: #disableWindowGhosting!helpers!public! !
-!GUISessionManager categoriesFor: #inputStateClass!constants!private! !
-!GUISessionManager categoriesFor: #isUnattended!public!testing! !
-!GUISessionManager categoriesFor: #onSettingChanged:!event handling!private! !
-!GUISessionManager categoriesFor: #parseCmdLineFlags!operations-startup!private! !
-!GUISessionManager categoriesFor: #resourceManager!accessing!public! !
-!GUISessionManager categoriesFor: #restoreWindowState!operations-startup!private! !
-!GUISessionManager categoriesFor: #saveSessionState!operations!public! !
-!GUISessionManager categoriesFor: #saveWindowState!operations-saving!private! !
-!GUISessionManager categoriesFor: #showSplash!operations!public! !
-!GUISessionManager categoriesFor: #startUI!operations-startup!public! !
-!GUISessionManager categoriesFor: #tertiaryStartup!operations-startup!public! !
-!GUISessionManager categoriesFor: #topLevelWindows!accessing!public! !
-!GUISessionManager categoriesFor: #topLevelWindowsInZOrder!accessing!public! !
-!GUISessionManager categoriesFor: #windowSystemShutdown!operations-shutdown!private! !
-!GUISessionManager categoriesFor: #windowSystemStartup!operations-startup!private! !
+!GUISessionManager categoriesForMethods!
+allocConsole!operations!private! !
+basicShutdown!operations-shutdown!private! !
+basicTertiaryStartup!operations-startup!public! !
+clearSessionState!operations!public! !
+clearWindowState!operations-saving!private! !
+commandLineParser!helpers!private! !
+disableWindowGhosting!helpers!public! !
+inputStateClass!constants!private! !
+isUnattended!public!testing! !
+onSettingChanged:!event handling!private! !
+parseCmdLineFlags!operations-startup!private! !
+resourceManager!accessing!public! !
+restoreWindowState!operations-startup!private! !
+saveSessionState!operations!public! !
+saveWindowState!operations-saving!private! !
+showSplash!operations!public! !
+startUI!operations-startup!public! !
+tertiaryStartup!operations-startup!public! !
+topLevelWindows!accessing!public! !
+topLevelWindowsInZOrder!accessing!public! !
+windowSystemShutdown!operations-shutdown!private! !
+windowSystemStartup!operations-startup!private! !
+!
 
 !GUISessionManager class methodsFor!
 
@@ -217,6 +219,8 @@ isConsoleApplication
 	(as opposed to a GUI application, which is a completely separate thing under Windows)."
 
 	^false! !
-!GUISessionManager class categoriesFor: #icon!constants!development!public! !
-!GUISessionManager class categoriesFor: #isConsoleApplication!public!testing! !
+!GUISessionManager class categoriesForMethods!
+icon!constants!development!public! !
+isConsoleApplication!public!testing! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Bag subclass: #IdentityBag
 	instanceVariableNames: ''
@@ -21,6 +21,8 @@ new
 	which uses equality as the comparison for identifying duplicate elements."
 
 	^self identityNew! !
-!IdentityBag class categoriesFor: #identityNew:!instance creation!public! !
-!IdentityBag class categoriesFor: #new!instance creation!public! !
+!IdentityBag class categoriesForMethods!
+identityNew:!instance creation!public! !
+new!instance creation!public! !
+!
 

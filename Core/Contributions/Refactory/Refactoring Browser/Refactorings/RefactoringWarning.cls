@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Warning subclass: #RefactoringWarning
 	instanceVariableNames: 'refactoring'
@@ -20,9 +20,11 @@ refactoring
 
 refactoring: anObject
 	refactoring := anObject! !
-!RefactoringWarning categoriesFor: #defaultAction!actions!private! !
-!RefactoringWarning categoriesFor: #refactoring!accessing!public! !
-!RefactoringWarning categoriesFor: #refactoring:!accessing!private! !
+!RefactoringWarning categoriesForMethods!
+defaultAction!actions!private! !
+refactoring!accessing!public! !
+refactoring:!accessing!private! !
+!
 
 !RefactoringWarning class methodsFor!
 
@@ -35,6 +37,8 @@ refactoring: aRefactoring signal: messageText with: tag
 	^(self new)
 		refactoring: aRefactoring;
 		signal: messageText with: tag! !
-!RefactoringWarning class categoriesFor: #refactoring:signal:!public! !
-!RefactoringWarning class categoriesFor: #refactoring:signal:with:!public! !
+!RefactoringWarning class categoriesForMethods!
+refactoring:signal:!public! !
+refactoring:signal:with:!public! !
+!
 

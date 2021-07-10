@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMROFFSETCLIPRGN
 	instanceVariableNames: ''
@@ -37,8 +37,10 @@ ptlOffset: aPOINTL
 		from: ##(_OffsetOf_ptlOffset + 1)
 		to: ##(_OffsetOf_ptlOffset + POINTL basicByteSize)
 		startingAt: 1! !
-!EMROFFSETCLIPRGN categoriesFor: #ptlOffset!**compiled accessors**!public! !
-!EMROFFSETCLIPRGN categoriesFor: #ptlOffset:!**compiled accessors**!public! !
+!EMROFFSETCLIPRGN categoriesForMethods!
+ptlOffset!**compiled accessors**!public! !
+ptlOffset:!**compiled accessors**!public! !
+!
 
 !EMROFFSETCLIPRGN class methodsFor!
 
@@ -68,7 +70,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_OFFSETCLIPRGN! !
-!EMROFFSETCLIPRGN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMROFFSETCLIPRGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMROFFSETCLIPRGN class categoriesFor: #iTypes!constants!public! !
+!EMROFFSETCLIPRGN class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

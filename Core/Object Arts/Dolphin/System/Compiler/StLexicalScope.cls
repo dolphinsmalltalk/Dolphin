@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StSemanticScope subclass: #StLexicalScope
 	instanceVariableNames: 'locals node thisContextVariable flags'
@@ -130,36 +130,40 @@ unreferencedArguments
 			["All arguments to primitive methods are implicitly referenced"
 			#()]
 		ifFalse: [locals select: [:each | each isArgument and: [each isRead not]]]! !
-!StLexicalScope categoriesFor: #argumentCount!accessing!public! !
-!StLexicalScope categoriesFor: #declareArgument:!helpers!private! !
-!StLexicalScope categoriesFor: #declareLocalVariable:!helpers!private! !
-!StLexicalScope categoriesFor: #declareTemp:!helpers!private! !
-!StLexicalScope categoriesFor: #envTempCount!accessing!development!public! !
-!StLexicalScope categoriesFor: #hasFarReturn!accessing!public! !
-!StLexicalScope categoriesFor: #includesArg:!enquiries!public! !
-!StLexicalScope categoriesFor: #includesLocal:!enquiries!public! !
-!StLexicalScope categoriesFor: #includesTemp:!enquiries!public! !
-!StLexicalScope categoriesFor: #initialize!initializing!private! !
-!StLexicalScope categoriesFor: #isInlined!accessing!public! !
-!StLexicalScope categoriesFor: #localCount!accessing!public! !
-!StLexicalScope categoriesFor: #locals!accessing!public! !
-!StLexicalScope categoriesFor: #lookupVariable:!operations!public! !
-!StLexicalScope categoriesFor: #markFarReturn!public!visiting! !
-!StLexicalScope categoriesFor: #markNeedsSelf!public!visiting! !
-!StLexicalScope categoriesFor: #needsContext!accessing!public! !
-!StLexicalScope categoriesFor: #needsSelf!accessing!public! !
-!StLexicalScope categoriesFor: #node!accessing!public! !
-!StLexicalScope categoriesFor: #printOn:!printing!public! !
-!StLexicalScope categoriesFor: #realScope!public! !
-!StLexicalScope categoriesFor: #setNode:outer:!initializing!private! !
-!StLexicalScope categoriesFor: #temporaries!accessing!private! !
-!StLexicalScope categoriesFor: #thisContextVariable!public! !
-!StLexicalScope categoriesFor: #unreferencedArguments!accessing!public! !
+!StLexicalScope categoriesForMethods!
+argumentCount!accessing!public! !
+declareArgument:!helpers!private! !
+declareLocalVariable:!helpers!private! !
+declareTemp:!helpers!private! !
+envTempCount!accessing!development!public! !
+hasFarReturn!accessing!public! !
+includesArg:!enquiries!public! !
+includesLocal:!enquiries!public! !
+includesTemp:!enquiries!public! !
+initialize!initializing!private! !
+isInlined!accessing!public! !
+localCount!accessing!public! !
+locals!accessing!public! !
+lookupVariable:!operations!public! !
+markFarReturn!public!visiting! !
+markNeedsSelf!public!visiting! !
+needsContext!accessing!public! !
+needsSelf!accessing!public! !
+node!accessing!public! !
+printOn:!printing!public! !
+realScope!public! !
+setNode:outer:!initializing!private! !
+temporaries!accessing!private! !
+thisContextVariable!public! !
+unreferencedArguments!accessing!public! !
+!
 
 !StLexicalScope class methodsFor!
 
 initialize
 	self addClassConstant: 'NeedsSelfMask' value: 16r1.
 	self addClassConstant: 'FarReturnMask' value: 16r2! !
-!StLexicalScope class categoriesFor: #initialize!class initialization!development!public! !
+!StLexicalScope class categoriesForMethods!
+initialize!class initialization!development!public! !
+!
 

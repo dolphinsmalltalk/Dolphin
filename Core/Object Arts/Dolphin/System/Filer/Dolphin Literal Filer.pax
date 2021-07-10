@@ -75,19 +75,25 @@ literalPrintOn: aWriteStream
 	self printPrefixOn: aWriteStream.
 	self do: [:each | each literalPrintOn: aWriteStream] separatedBy: [aWriteStream space].
 	self printSuffixOn: aWriteStream! !
-!ArrayedCollection categoriesFor: #literalPrintOn:!public! !
+!ArrayedCollection categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !Boolean methodsFor!
 
 literalPrintOn: aWriteStream
 	self printOn: aWriteStream! !
-!Boolean categoriesFor: #literalPrintOn:!public! !
+!Boolean categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !Character methodsFor!
 
 literalPrintOn: aWriteStream
 	self printOn: aWriteStream! !
-!Character categoriesFor: #literalPrintOn:!public! !
+!Character categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !Class methodsFor!
 
@@ -96,13 +102,17 @@ literalPrintOn: aWriteStream
 		nextPutAll: '##(Smalltalk.';
 		display: self name;
 		nextPutAll: ')'! !
-!Class categoriesFor: #literalPrintOn:!public! !
+!Class categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !Number methodsFor!
 
 literalPrintOn: aWriteStream 
 	self printOn: aWriteStream! !
-!Number categoriesFor: #literalPrintOn:!public! !
+!Number categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !Object methodsFor!
 
@@ -149,10 +159,12 @@ literalStoreOn: aStream
 	method to perform such isolation"
 
 	(STLOutFiler on: aStream) nextPut: self! !
-!Object categoriesFor: #literalStoreArray!literal filing!public! !
-!Object categoriesFor: #literalStoreEvaluationOn:!literal filing!public! !
-!Object categoriesFor: #literalStoreEvaluationString!literal filing!public! !
-!Object categoriesFor: #literalStoreOn:!literal filing!public! !
+!Object categoriesForMethods!
+literalStoreArray!literal filing!public! !
+literalStoreEvaluationOn:!literal filing!public! !
+literalStoreEvaluationString!literal filing!public! !
+literalStoreOn:!literal filing!public! !
+!
 
 !Object class methodsFor!
 
@@ -187,10 +199,12 @@ literalReadFrom: aStream context: anObject
 	^(STLInFiler on: aStream)
 		context: anObject;
 		next! !
-!Object class categoriesFor: #fromLiteralStoreArray:!literal filing!public! !
-!Object class categoriesFor: #fromLiteralStoreArray:context:!literal filing!public! !
-!Object class categoriesFor: #literalReadFrom:!literal filing!public! !
-!Object class categoriesFor: #literalReadFrom:context:!binary filing!literal filing!public! !
+!Object class categoriesForMethods!
+fromLiteralStoreArray:!literal filing!public! !
+fromLiteralStoreArray:context:!literal filing!public! !
+literalReadFrom:!literal filing!public! !
+literalReadFrom:context:!binary filing!literal filing!public! !
+!
 
 !PoolConstantsDictionary methodsFor!
 
@@ -199,13 +213,17 @@ literalPrintOn: aWriteStream
 		nextPutAll: '##(Smalltalk.';
 		display: self name;
 		nextPutAll: ') '! !
-!PoolConstantsDictionary categoriesFor: #literalPrintOn:!public! !
+!PoolConstantsDictionary categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !ProcessorScheduler methodsFor!
 
 literalPrintOn: aWriteStream
 	aWriteStream nextPutAll: '##(Smalltalk.Processor)'! !
-!ProcessorScheduler categoriesFor: #literalPrintOn:!public! !
+!ProcessorScheduler categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !String methodsFor!
 
@@ -215,25 +233,33 @@ literalPrintOn: aWriteStream
 	Prints incorrectly, so trim nulls"
 
 	self trimNulls printOn: aWriteStream! !
-!String categoriesFor: #literalPrintOn:!public! !
+!String categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !Symbol methodsFor!
 
 literalPrintOn: aWriteStream 
 	self printOn: aWriteStream! !
-!Symbol categoriesFor: #literalPrintOn:!public! !
+!Symbol categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !SystemDictionary methodsFor!
 
 literalPrintOn: aWriteStream
 	aWriteStream nextPutAll: '##(Smalltalk)'! !
-!SystemDictionary categoriesFor: #literalPrintOn:!public! !
+!SystemDictionary categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 !UndefinedObject methodsFor!
 
 literalPrintOn: aWriteStream
 	self printOn: aWriteStream! !
-!UndefinedObject categoriesFor: #literalPrintOn:!public! !
+!UndefinedObject categoriesForMethods!
+literalPrintOn:!public! !
+!
 
 "End of package definition"!
 

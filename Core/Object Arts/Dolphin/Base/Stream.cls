@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Stream
 	instanceVariableNames: ''
@@ -245,37 +245,39 @@ upToEnd
 	remainder := self contentsSpecies writeStream: 128.
 	[self atEnd] whileFalse: [remainder nextPut: self next].
 	^remainder contents! !
-!Stream categoriesFor: #atEnd!public!testing! !
-!Stream categoriesFor: #basicContentsSpecies!accessing!private! !
-!Stream categoriesFor: #basicNext!accessing!public! !
-!Stream categoriesFor: #basicNext:!accessing!private! !
-!Stream categoriesFor: #basicNext:into:startingAt:!accessing!private! !
-!Stream categoriesFor: #basicNextAvailable:!accessing!private! !
-!Stream categoriesFor: #close!operations!public! !
-!Stream categoriesFor: #contentsSpecies!constants!private! !
-!Stream categoriesFor: #display:!printing!public! !
-!Stream categoriesFor: #do:!enumerating!public! !
-!Stream categoriesFor: #elementSize!constants!public! !
-!Stream categoriesFor: #encoding!constants!public! !
-!Stream categoriesFor: #errorEndOfStream!exceptions!public! !
-!Stream categoriesFor: #errorNotPositionable!exceptions!private! !
-!Stream categoriesFor: #errorNotReadable!exceptions!private! !
-!Stream categoriesFor: #isPositionable!public!testing! !
-!Stream categoriesFor: #isReadable!public!testing! !
-!Stream categoriesFor: #isWriteable!public!testing! !
-!Stream categoriesFor: #next!accessing!public! !
-!Stream categoriesFor: #next:!accessing!public! !
-!Stream categoriesFor: #next:into:startingAt:!accessing!public! !
-!Stream categoriesFor: #nextAvailable!accessing!public! !
-!Stream categoriesFor: #nextAvailable:!accessing!public! !
-!Stream categoriesFor: #nextInto:!accessing!public! !
-!Stream categoriesFor: #nextMatchFor:!accessing!public! !
-!Stream categoriesFor: #print:!printing!public! !
-!Stream categoriesFor: #skipThrough:!positioning!public! !
-!Stream categoriesFor: #skipTo:!positioning!public! !
-!Stream categoriesFor: #store:!printing!public! !
-!Stream categoriesFor: #upTo:!accessing!public! !
-!Stream categoriesFor: #upToEnd!accessing!public! !
+!Stream categoriesForMethods!
+atEnd!public!testing! !
+basicContentsSpecies!accessing!private! !
+basicNext!accessing!public! !
+basicNext:!accessing!private! !
+basicNext:into:startingAt:!accessing!private! !
+basicNextAvailable:!accessing!private! !
+close!operations!public! !
+contentsSpecies!constants!private! !
+display:!printing!public! !
+do:!enumerating!public! !
+elementSize!constants!public! !
+encoding!constants!public! !
+errorEndOfStream!exceptions!public! !
+errorNotPositionable!exceptions!private! !
+errorNotReadable!exceptions!private! !
+isPositionable!public!testing! !
+isReadable!public!testing! !
+isWriteable!public!testing! !
+next!accessing!public! !
+next:!accessing!public! !
+next:into:startingAt:!accessing!public! !
+nextAvailable!accessing!public! !
+nextAvailable:!accessing!public! !
+nextInto:!accessing!public! !
+nextMatchFor:!accessing!public! !
+print:!printing!public! !
+skipThrough:!positioning!public! !
+skipTo:!positioning!public! !
+store:!printing!public! !
+upTo:!accessing!public! !
+upToEnd!accessing!public! !
+!
 
 !Stream class methodsFor!
 
@@ -299,7 +301,9 @@ new
 	"Streams must be instantiated onto something."
 
 	^self shouldNotImplement! !
-!Stream class categoriesFor: #endOfStreamSignal!constants!public! !
-!Stream class categoriesFor: #initialize!development!initializing!private! !
-!Stream class categoriesFor: #new!instance creation!public! !
+!Stream class categoriesForMethods!
+endOfStreamSignal!constants!public! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+!
 

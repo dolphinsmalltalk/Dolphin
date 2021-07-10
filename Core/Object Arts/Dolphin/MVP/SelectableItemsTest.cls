@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PresenterTest subclass: #SelectableItemsTest
 	instanceVariableNames: ''
@@ -29,6 +29,8 @@ denyContains: anObject
 	sel := presenter selectionOrNil.
 	[self should: [presenter selection: anObject] raise: NotFoundError] 
 		ensure: [presenter selectionOrNil: sel]! !
-!SelectableItemsTest categoriesFor: #assertContains:!helpers!private! !
-!SelectableItemsTest categoriesFor: #denyContains:!helpers!private! !
+!SelectableItemsTest categoriesForMethods!
+assertContains:!helpers!private! !
+denyContains:!helpers!private! !
+!
 

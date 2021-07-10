@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #IP_ADDR_STRING
 	instanceVariableNames: ''
@@ -48,10 +48,12 @@ Next
 	"Answer the <IP_ADDR_STRING> value of the receiver's 'Next' field."
 
 	^IP_ADDR_STRING fromAddress: (bytes intPtrAtOffset: _OffsetOf_Next)! !
-!IP_ADDR_STRING categoriesFor: #Context!**compiled accessors**!public! !
-!IP_ADDR_STRING categoriesFor: #IpAddress!**compiled accessors**!public! !
-!IP_ADDR_STRING categoriesFor: #IpMask!**compiled accessors**!public! !
-!IP_ADDR_STRING categoriesFor: #Next!**compiled accessors**!public! !
+!IP_ADDR_STRING categoriesForMethods!
+Context!**compiled accessors**!public! !
+IpAddress!**compiled accessors**!public! !
+IpMask!**compiled accessors**!public! !
+Next!**compiled accessors**!public! !
+!
 
 !IP_ADDR_STRING class methodsFor!
 
@@ -91,6 +93,8 @@ defineFields
 
 getFieldNames
 	^#(#Next #IpAddress #IpMask #Context)! !
-!IP_ADDR_STRING class categoriesFor: #defineFields!initializing!public! !
-!IP_ADDR_STRING class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!IP_ADDR_STRING class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

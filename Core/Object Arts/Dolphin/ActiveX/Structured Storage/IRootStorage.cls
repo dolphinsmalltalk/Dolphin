@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IRootStorage
 	instanceVariableNames: ''
@@ -22,7 +22,9 @@ SwitchToFile: pszFile
 
 	<virtual stdcall: hresult 4 lpwstr>
 	^self invalidCall: _failureCode! !
-!IRootStorage categoriesFor: #SwitchToFile:!**auto generated**!COM Interfaces-OBJIDL.IRootStorage!primitives!public! !
+!IRootStorage categoriesForMethods!
+SwitchToFile:!**auto generated**!COM Interfaces-OBJIDL.IRootStorage!primitives!public! !
+!
 
 IRootStorage methodProtocol: #IRootStorage attributes: #(#readOnly) selectors: #(#SwitchToFile:)!
 
@@ -34,5 +36,7 @@ defineFunctions
 	"
 
 	self defineFunction: #SwitchToFile: argumentTypes: 'lpwstr'! !
-!IRootStorage class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IRootStorage class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

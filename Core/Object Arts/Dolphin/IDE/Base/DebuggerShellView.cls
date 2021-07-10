@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ShellView subclass: #DebuggerShellView
 	instanceVariableNames: ''
@@ -28,5 +28,7 @@ primHookWindowCreate: hookBoolean
 			"Now retry"
 			super primHookWindowCreate: hookBoolean]
 		ifFalse: [self primitiveFailed: _failureCode]! !
-!DebuggerShellView categoriesFor: #primHookWindowCreate:!helpers!private! !
+!DebuggerShellView categoriesForMethods!
+primHookWindowCreate:!helpers!private! !
+!
 

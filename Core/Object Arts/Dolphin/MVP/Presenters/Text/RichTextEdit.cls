@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MultilineTextEdit subclass: #RichTextEdit
 	instanceVariableNames: 'streamIn winStruct'
@@ -884,106 +884,108 @@ wmInitMenu: message wParam: wParam lParam: lParam
 
 	Cursor arrow setCursor.
 	^super wmInitMenu: message wParam: wParam lParam: lParam! !
-!RichTextEdit categoriesFor: #ansiText!public!streaming! !
-!RichTextEdit categoriesFor: #ansiText:!public!streaming! !
-!RichTextEdit categoriesFor: #basicLineFromPosition:!accessing!private! !
-!RichTextEdit categoriesFor: #basicSelectionRange!helpers!private! !
-!RichTextEdit categoriesFor: #basicSelectionStart:end:!helpers!private! !
-!RichTextEdit categoriesFor: #beBold!modes!public! !
-!RichTextEdit categoriesFor: #beItalic!modes!public! !
-!RichTextEdit categoriesFor: #beNonBold!modes!public! !
-!RichTextEdit categoriesFor: #beNonItalic!modes!public! !
-!RichTextEdit categoriesFor: #beNonUnderlined!modes!public! !
-!RichTextEdit categoriesFor: #bePlain!modes!public! !
-!RichTextEdit categoriesFor: #beUnderlined!modes!public! !
-!RichTextEdit categoriesFor: #calculateExtent:!geometry!private! !
-!RichTextEdit categoriesFor: #canPaste!public!testing! !
-!RichTextEdit categoriesFor: #canRedo!public!testing!undo & redo! !
-!RichTextEdit categoriesFor: #charNearestPosition:!accessing!public! !
-!RichTextEdit categoriesFor: #clear!operations!public! !
-!RichTextEdit categoriesFor: #color:!helpers!private! !
-!RichTextEdit categoriesFor: #defaultCharFormat!accessing!private! !
-!RichTextEdit categoriesFor: #defaultCharFormat:!accessing!private! !
-!RichTextEdit categoriesFor: #defaultNotificationMask!constants!private! !
-!RichTextEdit categoriesFor: #defaultWindowStyle!constants!private! !
-!RichTextEdit categoriesFor: #displayValue!private!updating! !
-!RichTextEdit categoriesFor: #displayValue:!private!updating! !
-!RichTextEdit categoriesFor: #enLink:!event handling-win32!private! !
-!RichTextEdit categoriesFor: #enSelChange:!event handling-win32!private! !
-!RichTextEdit categoriesFor: #eventMask!accessing!private! !
-!RichTextEdit categoriesFor: #eventMask:!accessing!private! !
-!RichTextEdit categoriesFor: #eventMask:set:!accessing!private! !
-!RichTextEdit categoriesFor: #filerProxy!binary filing!private! !
-!RichTextEdit categoriesFor: #find:range:!private!searching and replacing! !
-!RichTextEdit categoriesFor: #find:range:flags:!public!searching and replacing! !
-!RichTextEdit categoriesFor: #forecolor:!accessing!public! !
-!RichTextEdit categoriesFor: #getCharFormat:!helpers!private! !
-!RichTextEdit categoriesFor: #getWindowText:length:!accessing!private! !
-!RichTextEdit categoriesFor: #initialize!initializing!private! !
-!RichTextEdit categoriesFor: #isBold!helpers!public! !
-!RichTextEdit categoriesFor: #isBold:!helpers!private! !
-!RichTextEdit categoriesFor: #isItalic!helpers!public! !
-!RichTextEdit categoriesFor: #isItalic:!helpers!private! !
-!RichTextEdit categoriesFor: #isSelectionKept!accessing!public! !
-!RichTextEdit categoriesFor: #isSelectionKept:!accessing!public! !
-!RichTextEdit categoriesFor: #isUnderlined!helpers!public! !
-!RichTextEdit categoriesFor: #isUnderlined:!helpers!public! !
-!RichTextEdit categoriesFor: #isUrlDetectionEnabled!public!testing! !
-!RichTextEdit categoriesFor: #isUrlDetectionEnabled:!accessing!public! !
-!RichTextEdit categoriesFor: #nmNotify:!event handling-win32!private! !
-!RichTextEdit categoriesFor: #onRightButtonReleased:!event handling!public! !
-!RichTextEdit categoriesFor: #onViewCreated!event handling!public! !
-!RichTextEdit categoriesFor: #onViewOpened!event handling!public! !
-!RichTextEdit categoriesFor: #paragraphAlignment!accessing!public! !
-!RichTextEdit categoriesFor: #paragraphAlignment:!accessing!public! !
-!RichTextEdit categoriesFor: #paragraphIndent!accessing!public! !
-!RichTextEdit categoriesFor: #paragraphIndent:!accessing!public! !
-!RichTextEdit categoriesFor: #paragraphOffset!accessing!public! !
-!RichTextEdit categoriesFor: #paragraphOffset:!accessing!public! !
-!RichTextEdit categoriesFor: #pastePlainText!commands!public! !
-!RichTextEdit categoriesFor: #plainText!accessing!public! !
-!RichTextEdit categoriesFor: #plainTextFrom:to:!accessing!public! !
-!RichTextEdit categoriesFor: #pointSize:!accessing!private! !
-!RichTextEdit categoriesFor: #positionAtLine:!accessing!public! !
-!RichTextEdit categoriesFor: #positionOfChar:!accessing!public! !
-!RichTextEdit categoriesFor: #privGetRichText!private!updating! !
-!RichTextEdit categoriesFor: #queryCommand:!commands!private! !
-!RichTextEdit categoriesFor: #resetCharFormat!operations!public! !
-!RichTextEdit categoriesFor: #richText!accessing!public! !
-!RichTextEdit categoriesFor: #richText:!accessing!private! !
-!RichTextEdit categoriesFor: #rtfText!public!streaming! !
-!RichTextEdit categoriesFor: #rtfText:!public!streaming! !
-!RichTextEdit categoriesFor: #selection!accessing!public! !
-!RichTextEdit categoriesFor: #selectionCharFormat!accessing!private! !
-!RichTextEdit categoriesFor: #selectionCharFormat:!accessing!private! !
-!RichTextEdit categoriesFor: #selectionColor!accessing!public! !
-!RichTextEdit categoriesFor: #selectionColor:!operations!public! !
-!RichTextEdit categoriesFor: #selectionFont!accessing!public! !
-!RichTextEdit categoriesFor: #selectionFont:!operations!public! !
-!RichTextEdit categoriesFor: #selectionParaFormat!accessing!private! !
-!RichTextEdit categoriesFor: #selectionParaFormat:!accessing!private! !
-!RichTextEdit categoriesFor: #selectionPlainText:!private!selection! !
-!RichTextEdit categoriesFor: #selectionRichText!private!selection! !
-!RichTextEdit categoriesFor: #selectionRichText:!private!selection! !
-!RichTextEdit categoriesFor: #selectionRtf!private!selection! !
-!RichTextEdit categoriesFor: #selectionUrtf!private!selection! !
-!RichTextEdit categoriesFor: #setAutoUrlDetection:!helpers!private! !
-!RichTextEdit categoriesFor: #setCharFormat:flags:!helpers!private! !
-!RichTextEdit categoriesFor: #setControlBackcolor:!helpers!private! !
-!RichTextEdit categoriesFor: #setFont:!font!helpers!private! !
-!RichTextEdit categoriesFor: #setMaxTextLimit!operations!private! !
-!RichTextEdit categoriesFor: #setWindowText:!accessing!private! !
-!RichTextEdit categoriesFor: #state!accessing!private! !
-!RichTextEdit categoriesFor: #streamInFrom:format:!private!streaming! !
-!RichTextEdit categoriesFor: #streamOutOn:format:!private!streaming! !
-!RichTextEdit categoriesFor: #text!accessing!public! !
-!RichTextEdit categoriesFor: #textLength!accessing!private! !
-!RichTextEdit categoriesFor: #textLimit:!operations!public! !
-!RichTextEdit categoriesFor: #urtfText!public!streaming! !
-!RichTextEdit categoriesFor: #utfText!public!streaming! !
-!RichTextEdit categoriesFor: #utfText:!public!streaming! !
-!RichTextEdit categoriesFor: #winFinalize!event handling!private! !
-!RichTextEdit categoriesFor: #wmInitMenu:wParam:lParam:!event handling-win32!private! !
+!RichTextEdit categoriesForMethods!
+ansiText!public!streaming! !
+ansiText:!public!streaming! !
+basicLineFromPosition:!accessing!private! !
+basicSelectionRange!helpers!private! !
+basicSelectionStart:end:!helpers!private! !
+beBold!modes!public! !
+beItalic!modes!public! !
+beNonBold!modes!public! !
+beNonItalic!modes!public! !
+beNonUnderlined!modes!public! !
+bePlain!modes!public! !
+beUnderlined!modes!public! !
+calculateExtent:!geometry!private! !
+canPaste!public!testing! !
+canRedo!public!testing!undo & redo! !
+charNearestPosition:!accessing!public! !
+clear!operations!public! !
+color:!helpers!private! !
+defaultCharFormat!accessing!private! !
+defaultCharFormat:!accessing!private! !
+defaultNotificationMask!constants!private! !
+defaultWindowStyle!constants!private! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+enLink:!event handling-win32!private! !
+enSelChange:!event handling-win32!private! !
+eventMask!accessing!private! !
+eventMask:!accessing!private! !
+eventMask:set:!accessing!private! !
+filerProxy!binary filing!private! !
+find:range:!private!searching and replacing! !
+find:range:flags:!public!searching and replacing! !
+forecolor:!accessing!public! !
+getCharFormat:!helpers!private! !
+getWindowText:length:!accessing!private! !
+initialize!initializing!private! !
+isBold!helpers!public! !
+isBold:!helpers!private! !
+isItalic!helpers!public! !
+isItalic:!helpers!private! !
+isSelectionKept!accessing!public! !
+isSelectionKept:!accessing!public! !
+isUnderlined!helpers!public! !
+isUnderlined:!helpers!public! !
+isUrlDetectionEnabled!public!testing! !
+isUrlDetectionEnabled:!accessing!public! !
+nmNotify:!event handling-win32!private! !
+onRightButtonReleased:!event handling!public! !
+onViewCreated!event handling!public! !
+onViewOpened!event handling!public! !
+paragraphAlignment!accessing!public! !
+paragraphAlignment:!accessing!public! !
+paragraphIndent!accessing!public! !
+paragraphIndent:!accessing!public! !
+paragraphOffset!accessing!public! !
+paragraphOffset:!accessing!public! !
+pastePlainText!commands!public! !
+plainText!accessing!public! !
+plainTextFrom:to:!accessing!public! !
+pointSize:!accessing!private! !
+positionAtLine:!accessing!public! !
+positionOfChar:!accessing!public! !
+privGetRichText!private!updating! !
+queryCommand:!commands!private! !
+resetCharFormat!operations!public! !
+richText!accessing!public! !
+richText:!accessing!private! !
+rtfText!public!streaming! !
+rtfText:!public!streaming! !
+selection!accessing!public! !
+selectionCharFormat!accessing!private! !
+selectionCharFormat:!accessing!private! !
+selectionColor!accessing!public! !
+selectionColor:!operations!public! !
+selectionFont!accessing!public! !
+selectionFont:!operations!public! !
+selectionParaFormat!accessing!private! !
+selectionParaFormat:!accessing!private! !
+selectionPlainText:!private!selection! !
+selectionRichText!private!selection! !
+selectionRichText:!private!selection! !
+selectionRtf!private!selection! !
+selectionUrtf!private!selection! !
+setAutoUrlDetection:!helpers!private! !
+setCharFormat:flags:!helpers!private! !
+setControlBackcolor:!helpers!private! !
+setFont:!font!helpers!private! !
+setMaxTextLimit!operations!private! !
+setWindowText:!accessing!private! !
+state!accessing!private! !
+streamInFrom:format:!private!streaming! !
+streamOutOn:format:!private!streaming! !
+text!accessing!public! !
+textLength!accessing!private! !
+textLimit:!operations!public! !
+urtfText!public!streaming! !
+utfText!public!streaming! !
+utfText:!public!streaming! !
+winFinalize!event handling!private! !
+wmInitMenu:wParam:lParam:!event handling-win32!private! !
+!
 
 !RichTextEdit class methodsFor!
 
@@ -1026,9 +1028,11 @@ winClassName
 
 	self registerClass.
 	^'RichEdit20W'! !
-!RichTextEdit class categoriesFor: #initialize!development!initializing!private! !
-!RichTextEdit class categoriesFor: #maxTextLimit!constants!private! !
-!RichTextEdit class categoriesFor: #registerClass!initializing!private! !
-!RichTextEdit class categoriesFor: #richEditDllName!constants!private! !
-!RichTextEdit class categoriesFor: #winClassName!constants!private! !
+!RichTextEdit class categoriesForMethods!
+initialize!development!initializing!private! !
+maxTextLimit!constants!private! !
+registerClass!initializing!private! !
+richEditDllName!constants!private! !
+winClassName!constants!private! !
+!
 

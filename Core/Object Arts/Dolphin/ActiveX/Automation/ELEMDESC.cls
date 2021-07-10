@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractELEMDESC subclass: #ELEMDESC
 	instanceVariableNames: 'param'
@@ -66,14 +66,16 @@ paramdesc
 	"Answer the <PARAMDESC> value of the receiver's 'paramdesc' field."
 
 	^PARAMDESC fromAddress: bytes yourAddress + _OffsetOf_paramdesc! !
-!ELEMDESC categoriesFor: #defaultValue!accessing!public! !
-!ELEMDESC categoriesFor: #hasDefaultValue!development!helpers!private! !
-!ELEMDESC categoriesFor: #isIn!public!testing! !
-!ELEMDESC categoriesFor: #isOptional!public!testing! !
-!ELEMDESC categoriesFor: #isOut!public!testing! !
-!ELEMDESC categoriesFor: #isRetVal!public!testing! !
-!ELEMDESC categoriesFor: #param!accessing!public! !
-!ELEMDESC categoriesFor: #paramdesc!**compiled accessors**!public! !
+!ELEMDESC categoriesForMethods!
+defaultValue!accessing!public! !
+hasDefaultValue!development!helpers!private! !
+isIn!public!testing! !
+isOptional!public!testing! !
+isOut!public!testing! !
+isRetVal!public!testing! !
+param!accessing!public! !
+paramdesc!**compiled accessors**!public! !
+!
 
 !ELEMDESC class methodsFor!
 
@@ -94,6 +96,8 @@ defineFields
 
 getFieldNames
 	^#(#tdescElem #paramdesc)! !
-!ELEMDESC class categoriesFor: #defineFields!public!template definition! !
-!ELEMDESC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!ELEMDESC class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

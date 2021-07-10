@@ -843,7 +843,9 @@ setDefault: anExternalLibrary
 	"Set the default instance of the receiver. For testing purposes only. The 'default' instance of permanent libraries should not normally be changed."
 
 	default := anExternalLibrary! !
-!PermanentLibrary class categoriesFor: #setDefault:!accessing!public! !
+!PermanentLibrary class categoriesForMethods!
+setDefault:!accessing!public! !
+!
 
 !SmalltalkSystem methodsFor!
 
@@ -1020,13 +1022,15 @@ writeJunitTestLog: aTestSuite result: aTestResult
 				stem: suiteName
 				extension: 'xml').
 	doc free! !
-!SmalltalkSystem categoriesFor: #baselinedSlowTests!accessing!public! !
-!SmalltalkSystem categoriesFor: #regressionTestsLogFilename!public!tests! !
-!SmalltalkSystem categoriesFor: #regressionTestSuite!private!tests! !
-!SmalltalkSystem categoriesFor: #runRegressionTests!public!tests! !
-!SmalltalkSystem categoriesFor: #runRegressionTests:logTo:verbose:!public!tests! !
-!SmalltalkSystem categoriesFor: #setTestAttributes:id:name:duration:tests:failures:errors:skipped:!helpers!private! !
-!SmalltalkSystem categoriesFor: #writeJunitTestLog:result:!helpers!private! !
+!SmalltalkSystem categoriesForMethods!
+baselinedSlowTests!accessing!public! !
+regressionTestsLogFilename!public!tests! !
+regressionTestSuite!private!tests! !
+runRegressionTests!public!tests! !
+runRegressionTests:logTo:verbose:!public!tests! !
+setTestAttributes:id:name:duration:tests:failures:errors:skipped:!helpers!private! !
+writeJunitTestLog:result:!helpers!private! !
+!
 
 "End of package definition"!
 

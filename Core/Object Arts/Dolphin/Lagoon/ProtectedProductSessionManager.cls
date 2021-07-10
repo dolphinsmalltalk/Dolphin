@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RuntimeSessionManager subclass: #ProtectedProductSessionManager
 	instanceVariableNames: 'encryptedClasses'
@@ -134,19 +134,21 @@ unlock
 		unlockClasses: self encryptedClasses
 		using: sn.
 ! !
-!ProtectedProductSessionManager categoriesFor: #encryptedClasses!accessing!public! !
-!ProtectedProductSessionManager categoriesFor: #encryptedClasses:!accessing!private! !
-!ProtectedProductSessionManager categoriesFor: #encryptedPackageNames!accessing!public! !
-!ProtectedProductSessionManager categoriesFor: #initialize!initializing!private! !
-!ProtectedProductSessionManager categoriesFor: #initializeFromSessionManager:!initializing!private! !
-!ProtectedProductSessionManager categoriesFor: #isSafeToEncrypt:!helpers!private! !
-!ProtectedProductSessionManager categoriesFor: #lock!operations!public! !
-!ProtectedProductSessionManager categoriesFor: #main!operations!public! !
-!ProtectedProductSessionManager categoriesFor: #productRegistrationKey!constants!public! !
-!ProtectedProductSessionManager categoriesFor: #promptForSerialNumber!operations!public! !
-!ProtectedProductSessionManager categoriesFor: #serialNumberClass!constants!public! !
-!ProtectedProductSessionManager categoriesFor: #shouldEncryptMetaclasses!constants!public!testing! !
-!ProtectedProductSessionManager categoriesFor: #unlock!operations!public! !
+!ProtectedProductSessionManager categoriesForMethods!
+encryptedClasses!accessing!public! !
+encryptedClasses:!accessing!private! !
+encryptedPackageNames!accessing!public! !
+initialize!initializing!private! !
+initializeFromSessionManager:!initializing!private! !
+isSafeToEncrypt:!helpers!private! !
+lock!operations!public! !
+main!operations!public! !
+productRegistrationKey!constants!public! !
+promptForSerialNumber!operations!public! !
+serialNumberClass!constants!public! !
+shouldEncryptMetaclasses!constants!public!testing! !
+unlock!operations!public! !
+!
 
 !ProtectedProductSessionManager class methodsFor!
 
@@ -155,5 +157,7 @@ isSafeToEncryptWithProductProtection
 	the deployment of a Protected Product application."
 
 	^ false.! !
-!ProtectedProductSessionManager class categoriesFor: #isSafeToEncryptWithProductProtection!constants!public!testing! !
+!ProtectedProductSessionManager class categoriesForMethods!
+isSafeToEncryptWithProductProtection!constants!public!testing! !
+!
 

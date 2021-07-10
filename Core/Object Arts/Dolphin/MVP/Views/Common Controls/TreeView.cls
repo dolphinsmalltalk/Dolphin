@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IconicListAbstract subclass: #TreeView
 	instanceVariableNames: 'handleObjectMap indentSeparation viewMode tvFlags objectHandleMap'
@@ -1223,134 +1223,136 @@ wmKeyDown: message wParam: wParam lParam: lParam
 				wmKeyDown: message
 				wParam: wParam
 				lParam: lParam].! !
-!TreeView categoriesFor: #addNonVirtualItems:insertStruct:!adding!private! !
-!TreeView categoriesFor: #addRoot:!adding!private! !
-!TreeView categoriesFor: #addVirtualItems:insertStruct:!adding!private! !
-!TreeView categoriesFor: #applyImageLists!image management!private! !
-!TreeView categoriesFor: #basicAdd:atIndex:!adding!private! !
-!TreeView categoriesFor: #basicAddAll:inHandle:afterHandle:!adding!private! !
-!TreeView categoriesFor: #basicClear!operations!private! !
-!TreeView categoriesFor: #basicEditItemLabel:!operations!private! !
-!TreeView categoriesFor: #basicItemFromPoint:!accessing!private! !
-!TreeView categoriesFor: #basicParentOf:!accessing!private! !
-!TreeView categoriesFor: #basicRefresh:handle:!private!updating! !
-!TreeView categoriesFor: #basicRefreshContents!private!updating! !
-!TreeView categoriesFor: #basicRemove:!private!removing! !
-!TreeView categoriesFor: #basicRemoveAtIndex:!private!removing! !
-!TreeView categoriesFor: #basicResetSelection!private!selection! !
-!TreeView categoriesFor: #beDefaultThemed!modes!public! !
-!TreeView categoriesFor: #beNoIcons!modes!public! !
-!TreeView categoriesFor: #collapse:!expanding/collapsing!public! !
-!TreeView categoriesFor: #collapseHandle:!expanding/collapsing!private! !
-!TreeView categoriesFor: #connectModel!models!public! !
-!TreeView categoriesFor: #customDrawContextClass!constants!private! !
-!TreeView categoriesFor: #defaultWindowStyle!constants!private! !
-!TreeView categoriesFor: #displayedContents!accessing!public! !
-!TreeView categoriesFor: #editLabelStyle!constants!private! !
-!TreeView categoriesFor: #ensureVisible:!drawing!public! !
-!TreeView categoriesFor: #expand:!expanding/collapsing!public! !
-!TreeView categoriesFor: #expandAll!commands!public! !
-!TreeView categoriesFor: #expandAll:!expanding/collapsing!public! !
-!TreeView categoriesFor: #expandHandle:!expanding/collapsing!private! !
-!TreeView categoriesFor: #forecolor:!accessing!public! !
-!TreeView categoriesFor: #getIndent!accessing!private! !
-!TreeView categoriesFor: #getItemState:!helpers!private! !
-!TreeView categoriesFor: #getItemText:!accessing!private! !
-!TreeView categoriesFor: #getSelectionsByIndex!private!selection! !
-!TreeView categoriesFor: #getSingleSelection!private!selection! !
-!TreeView categoriesFor: #handleFromObject:ifAbsent:!accessing!private! !
-!TreeView categoriesFor: #hasButtons!accessing-styles!public! !
-!TreeView categoriesFor: #hasButtons:!accessing-styles!public! !
-!TreeView categoriesFor: #hasCheckBoxes!accessing-styles!public! !
-!TreeView categoriesFor: #hasCheckBoxes:!accessing-styles!public! !
-!TreeView categoriesFor: #hasFullRowSelect!accessing-styles!public! !
-!TreeView categoriesFor: #hasFullRowSelect:!accessing-styles!public! !
-!TreeView categoriesFor: #hasHotTracking!accessing-styles!public! !
-!TreeView categoriesFor: #hasHotTracking:!accessing-styles!public! !
-!TreeView categoriesFor: #hasInfoTips!accessing-styles!public! !
-!TreeView categoriesFor: #hasInfoTips:!accessing-styles!public! !
-!TreeView categoriesFor: #hasLines!accessing-styles!public!testing! !
-!TreeView categoriesFor: #hasLines:!accessing-styles!public! !
-!TreeView categoriesFor: #hasLinesAtRoot!accessing-styles!public!testing! !
-!TreeView categoriesFor: #hasLinesAtRoot:!accessing-styles!public! !
-!TreeView categoriesFor: #hideDropHighlight!drag & drop!private! !
-!TreeView categoriesFor: #includesItem:!enquiries!public! !
-!TreeView categoriesFor: #indentSeparation!accessing!public! !
-!TreeView categoriesFor: #indentSeparation:!accessing!public! !
-!TreeView categoriesFor: #initialize!initializing!private! !
-!TreeView categoriesFor: #isExpandAllEnabled!accessing!public! !
-!TreeView categoriesFor: #isExpandAllEnabled:!accessing!public! !
-!TreeView categoriesFor: #isExpanded:!public!testing! !
-!TreeView categoriesFor: #isLargeIcons!public!testing! !
-!TreeView categoriesFor: #isMonoExpandable!accessing-styles!public! !
-!TreeView categoriesFor: #isMonoExpandable:!accessing-styles!public! !
-!TreeView categoriesFor: #isSelected:!public!testing! !
-!TreeView categoriesFor: #isSmallIcons!public!testing! !
-!TreeView categoriesFor: #isVirtual!accessing-styles!private! !
-!TreeView categoriesFor: #itemCount!accessing!public! !
-!TreeView categoriesFor: #itemFromNMHDRW:!event handling-win32!private! !
-!TreeView categoriesFor: #itemRect:textOnly:!enquiries!public! !
-!TreeView categoriesFor: #minimumIndent!constants!public! !
-!TreeView categoriesFor: #newMaps!helpers!private! !
-!TreeView categoriesFor: #nmDeleteItem:!event handling-win32!private! !
-!TreeView categoriesFor: #nmNotify:!event handling!event handling-win32!private! !
-!TreeView categoriesFor: #nmRClick:!event handling-win32!public! !
-!TreeView categoriesFor: #notificationClass!constants!private! !
-!TreeView categoriesFor: #objectFromHandle:ifAbsent:!accessing!private! !
-!TreeView categoriesFor: #onAdd:atIndex:!event handling!private! !
-!TreeView categoriesFor: #onDestroyed!event handling!private! !
-!TreeView categoriesFor: #onDisplayDetailsRequired:!event handling!private! !
-!TreeView categoriesFor: #onItem:addedAtIndex:!event handling!public! !
-!TreeView categoriesFor: #onItem:addedInParent:!event handling!public! !
-!TreeView categoriesFor: #onItem:movedToParent:!event handling!public! !
-!TreeView categoriesFor: #onItem:removedAtIndex:!event handling!public! !
-!TreeView categoriesFor: #onItem:removedFromParent:!event handling!public! !
-!TreeView categoriesFor: #onItem:updatedAtIndex:!event handling!public! !
-!TreeView categoriesFor: #onItemUpdated:!event handling!public! !
-!TreeView categoriesFor: #onSelChanging:!event handling!private! !
-!TreeView categoriesFor: #onSelChangingFrom:to:cause:!event handling!helpers!private! !
-!TreeView categoriesFor: #onTreeChanged:!event handling!public! !
-!TreeView categoriesFor: #onViewCreated!event handling!public! !
-!TreeView categoriesFor: #refreshContents!public!updating! !
-!TreeView categoriesFor: #refreshHasChildren:!private!updating! !
-!TreeView categoriesFor: #resetSelection!public!selection! !
-!TreeView categoriesFor: #resolutionScaledBy:!geometry!private! !
-!TreeView categoriesFor: #restoreSelection:!binary filing!private!selection! !
-!TreeView categoriesFor: #selection:ifAbsent:!public!selection! !
-!TreeView categoriesFor: #selectionByIndex!private!selection! !
-!TreeView categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
-!TreeView categoriesFor: #selectionFromPoint:!event handling!private! !
-!TreeView categoriesFor: #selectionIfNone:!public!selection! !
-!TreeView categoriesFor: #selectionState!binary filing!private!selection! !
-!TreeView categoriesFor: #setControlBackcolor:!accessing!private! !
-!TreeView categoriesFor: #setSingleSelection:!public!selection! !
-!TreeView categoriesFor: #setViewMode:!accessing!private! !
-!TreeView categoriesFor: #showDropHighlight:!drag & drop!private! !
-!TreeView categoriesFor: #showsSelAlways!accessing-styles!public! !
-!TreeView categoriesFor: #showsSelAlways:!accessing-styles!public! !
-!TreeView categoriesFor: #tvmDeleteItem:!accessing!private! !
-!TreeView categoriesFor: #tvmExpand:code:!expanding/collapsing!private! !
-!TreeView categoriesFor: #tvmGetItem:!accessing!private! !
-!TreeView categoriesFor: #tvmGetItemRect:textOnly:!geometry!private! !
-!TreeView categoriesFor: #tvmGetNextItem:code:!accessing!private! !
-!TreeView categoriesFor: #tvmSetImageList:type:!image management!private! !
-!TreeView categoriesFor: #tvmSetItem:!accessing!private! !
-!TreeView categoriesFor: #tvnGetInfoTip:!event handling-win32!private! !
-!TreeView categoriesFor: #tvnItemChanged:!event handling-win32!private! !
-!TreeView categoriesFor: #tvnItemChanging:!event handling-win32!private! !
-!TreeView categoriesFor: #tvnItemExpanded:!event handling-win32!private! !
-!TreeView categoriesFor: #tvnItemExpanding:!event handling-win32!private! !
-!TreeView categoriesFor: #tvnSelChanging:!event handling-win32!private! !
-!TreeView categoriesFor: #updateAllNonVirtual!private!updating! !
-!TreeView categoriesFor: #updateAllVirtual!private!updating! !
-!TreeView categoriesFor: #updateIndentation!private!updating! !
-!TreeView categoriesFor: #updateItem:!event handling!public! !
-!TreeView categoriesFor: #updateMode!accessing!public! !
-!TreeView categoriesFor: #updateMode:!accessing!public! !
-!TreeView categoriesFor: #viewMode!accessing!public! !
-!TreeView categoriesFor: #viewModeChanged!accessing!private! !
-!TreeView categoriesFor: #wantCustomDrawItemNotifications:!event handling-win32!private! !
-!TreeView categoriesFor: #wmKeyDown:wParam:lParam:!event handling-win32!private! !
+!TreeView categoriesForMethods!
+addNonVirtualItems:insertStruct:!adding!private! !
+addRoot:!adding!private! !
+addVirtualItems:insertStruct:!adding!private! !
+applyImageLists!image management!private! !
+basicAdd:atIndex:!adding!private! !
+basicAddAll:inHandle:afterHandle:!adding!private! !
+basicClear!operations!private! !
+basicEditItemLabel:!operations!private! !
+basicItemFromPoint:!accessing!private! !
+basicParentOf:!accessing!private! !
+basicRefresh:handle:!private!updating! !
+basicRefreshContents!private!updating! !
+basicRemove:!private!removing! !
+basicRemoveAtIndex:!private!removing! !
+basicResetSelection!private!selection! !
+beDefaultThemed!modes!public! !
+beNoIcons!modes!public! !
+collapse:!expanding/collapsing!public! !
+collapseHandle:!expanding/collapsing!private! !
+connectModel!models!public! !
+customDrawContextClass!constants!private! !
+defaultWindowStyle!constants!private! !
+displayedContents!accessing!public! !
+editLabelStyle!constants!private! !
+ensureVisible:!drawing!public! !
+expand:!expanding/collapsing!public! !
+expandAll!commands!public! !
+expandAll:!expanding/collapsing!public! !
+expandHandle:!expanding/collapsing!private! !
+forecolor:!accessing!public! !
+getIndent!accessing!private! !
+getItemState:!helpers!private! !
+getItemText:!accessing!private! !
+getSelectionsByIndex!private!selection! !
+getSingleSelection!private!selection! !
+handleFromObject:ifAbsent:!accessing!private! !
+hasButtons!accessing-styles!public! !
+hasButtons:!accessing-styles!public! !
+hasCheckBoxes!accessing-styles!public! !
+hasCheckBoxes:!accessing-styles!public! !
+hasFullRowSelect!accessing-styles!public! !
+hasFullRowSelect:!accessing-styles!public! !
+hasHotTracking!accessing-styles!public! !
+hasHotTracking:!accessing-styles!public! !
+hasInfoTips!accessing-styles!public! !
+hasInfoTips:!accessing-styles!public! !
+hasLines!accessing-styles!public!testing! !
+hasLines:!accessing-styles!public! !
+hasLinesAtRoot!accessing-styles!public!testing! !
+hasLinesAtRoot:!accessing-styles!public! !
+hideDropHighlight!drag & drop!private! !
+includesItem:!enquiries!public! !
+indentSeparation!accessing!public! !
+indentSeparation:!accessing!public! !
+initialize!initializing!private! !
+isExpandAllEnabled!accessing!public! !
+isExpandAllEnabled:!accessing!public! !
+isExpanded:!public!testing! !
+isLargeIcons!public!testing! !
+isMonoExpandable!accessing-styles!public! !
+isMonoExpandable:!accessing-styles!public! !
+isSelected:!public!testing! !
+isSmallIcons!public!testing! !
+isVirtual!accessing-styles!private! !
+itemCount!accessing!public! !
+itemFromNMHDRW:!event handling-win32!private! !
+itemRect:textOnly:!enquiries!public! !
+minimumIndent!constants!public! !
+newMaps!helpers!private! !
+nmDeleteItem:!event handling-win32!private! !
+nmNotify:!event handling!event handling-win32!private! !
+nmRClick:!event handling-win32!public! !
+notificationClass!constants!private! !
+objectFromHandle:ifAbsent:!accessing!private! !
+onAdd:atIndex:!event handling!private! !
+onDestroyed!event handling!private! !
+onDisplayDetailsRequired:!event handling!private! !
+onItem:addedAtIndex:!event handling!public! !
+onItem:addedInParent:!event handling!public! !
+onItem:movedToParent:!event handling!public! !
+onItem:removedAtIndex:!event handling!public! !
+onItem:removedFromParent:!event handling!public! !
+onItem:updatedAtIndex:!event handling!public! !
+onItemUpdated:!event handling!public! !
+onSelChanging:!event handling!private! !
+onSelChangingFrom:to:cause:!event handling!helpers!private! !
+onTreeChanged:!event handling!public! !
+onViewCreated!event handling!public! !
+refreshContents!public!updating! !
+refreshHasChildren:!private!updating! !
+resetSelection!public!selection! !
+resolutionScaledBy:!geometry!private! !
+restoreSelection:!binary filing!private!selection! !
+selection:ifAbsent:!public!selection! !
+selectionByIndex!private!selection! !
+selectionByIndex:ifAbsent:!public!selection! !
+selectionFromPoint:!event handling!private! !
+selectionIfNone:!public!selection! !
+selectionState!binary filing!private!selection! !
+setControlBackcolor:!accessing!private! !
+setSingleSelection:!public!selection! !
+setViewMode:!accessing!private! !
+showDropHighlight:!drag & drop!private! !
+showsSelAlways!accessing-styles!public! !
+showsSelAlways:!accessing-styles!public! !
+tvmDeleteItem:!accessing!private! !
+tvmExpand:code:!expanding/collapsing!private! !
+tvmGetItem:!accessing!private! !
+tvmGetItemRect:textOnly:!geometry!private! !
+tvmGetNextItem:code:!accessing!private! !
+tvmSetImageList:type:!image management!private! !
+tvmSetItem:!accessing!private! !
+tvnGetInfoTip:!event handling-win32!private! !
+tvnItemChanged:!event handling-win32!private! !
+tvnItemChanging:!event handling-win32!private! !
+tvnItemExpanded:!event handling-win32!private! !
+tvnItemExpanding:!event handling-win32!private! !
+tvnSelChanging:!event handling-win32!private! !
+updateAllNonVirtual!private!updating! !
+updateAllVirtual!private!updating! !
+updateIndentation!private!updating! !
+updateItem:!event handling!public! !
+updateMode!accessing!public! !
+updateMode:!accessing!public! !
+viewMode!accessing!public! !
+viewModeChanged!accessing!private! !
+wantCustomDrawItemNotifications:!event handling-win32!private! !
+wmKeyDown:wParam:lParam:!event handling-win32!private! !
+!
 
 TreeView methodProtocol: #treeView attributes: #(#readOnly) selectors: #(#collapse: #expand: #expandAll: #includesItem: #onItem:addedInParent: #onItem:movedToParent: #onItem:removedFromParent: #onItemUpdated: #onTreeChanged: #updateItem: #viewMode #viewMode:)!
 
@@ -1403,11 +1405,13 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysTreeView32'! !
-!TreeView class categoriesFor: #defaultModel!models!public! !
-!TreeView class categoriesFor: #icon!constants!public! !
-!TreeView class categoriesFor: #initialize!development!initializing!private! !
-!TreeView class categoriesFor: #stbConvertFromVersion10:!binary filing!private! !
-!TreeView class categoriesFor: #themePartName!constants!public! !
-!TreeView class categoriesFor: #updateModes!accessing!private! !
-!TreeView class categoriesFor: #winClassName!constants!private! !
+!TreeView class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+stbConvertFromVersion10:!binary filing!private! !
+themePartName!constants!public! !
+updateModes!accessing!private! !
+winClassName!constants!private! !
+!
 

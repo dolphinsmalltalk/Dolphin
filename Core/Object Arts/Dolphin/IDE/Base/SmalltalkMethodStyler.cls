@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalltalkStyler subclass: #SmalltalkMethodStyler
 	instanceVariableNames: ''
@@ -23,8 +23,10 @@ initialLiteralStyle: aStLiteralToken
 
 initialUnaryStyle
 	^#unarySelector! !
-!SmalltalkMethodStyler categoriesFor: #initialBinaryStyle:!constants!private! !
-!SmalltalkMethodStyler categoriesFor: #initialKeywordStyle!constants!private! !
-!SmalltalkMethodStyler categoriesFor: #initialLiteralStyle:!helpers!private! !
-!SmalltalkMethodStyler categoriesFor: #initialUnaryStyle!constants!private! !
+!SmalltalkMethodStyler categoriesForMethods!
+initialBinaryStyle:!constants!private! !
+initialKeywordStyle!constants!private! !
+initialLiteralStyle:!helpers!private! !
+initialUnaryStyle!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #BP_ANIMATIONPARAMS
 	instanceVariableNames: ''
@@ -63,13 +63,15 @@ style: anInteger
 	"Set the receiver's 'style' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_style put: anInteger! !
-!BP_ANIMATIONPARAMS categoriesFor: #dwDuration!**compiled accessors**!public! !
-!BP_ANIMATIONPARAMS categoriesFor: #dwDuration:!**compiled accessors**!public! !
-!BP_ANIMATIONPARAMS categoriesFor: #dwFlags!**compiled accessors**!public! !
-!BP_ANIMATIONPARAMS categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!BP_ANIMATIONPARAMS categoriesFor: #dwSize:!**compiled accessors**!public! !
-!BP_ANIMATIONPARAMS categoriesFor: #style!**compiled accessors**!public! !
-!BP_ANIMATIONPARAMS categoriesFor: #style:!**compiled accessors**!public! !
+!BP_ANIMATIONPARAMS categoriesForMethods!
+dwDuration!**compiled accessors**!public! !
+dwDuration:!**compiled accessors**!public! !
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+style!**compiled accessors**!public! !
+style:!**compiled accessors**!public! !
+!
 
 !BP_ANIMATIONPARAMS class methodsFor!
 
@@ -95,6 +97,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwFlags #style #dwDuration)! !
-!BP_ANIMATIONPARAMS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!BP_ANIMATIONPARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!BP_ANIMATIONPARAMS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

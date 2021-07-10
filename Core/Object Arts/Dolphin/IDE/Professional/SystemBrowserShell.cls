@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassBrowserAbstract subclass: #SystemBrowserShell
 	instanceVariableNames: ''
@@ -141,21 +141,23 @@ selectionEnvironment
 
 slideyPinNames
 	^super slideyPinNames , #('packagesSlidey')! !
-!SystemBrowserShell categoriesFor: #canSaveMethod!commands!private! !
-!SystemBrowserShell categoriesFor: #createComponents!initializing!public! !
-!SystemBrowserShell categoriesFor: #createSchematicWiring!initializing!public! !
-!SystemBrowserShell categoriesFor: #hasPackageSelected!public!testing! !
-!SystemBrowserShell categoriesFor: #isEditableMethod:!modes!public! !
-!SystemBrowserShell categoriesFor: #onPackageSelected!event handling!private! !
-!SystemBrowserShell categoriesFor: #packageForNewMethod!operations!private! !
-!SystemBrowserShell categoriesFor: #packageNames!accessing!public! !
-!SystemBrowserShell categoriesFor: #packages!accessing!public! !
-!SystemBrowserShell categoriesFor: #queryCommand:!commands!private! !
-!SystemBrowserShell categoriesFor: #resetForFoundClass:!commands!private! !
-!SystemBrowserShell categoriesFor: #saveStateOn:!private!saved state! !
-!SystemBrowserShell categoriesFor: #searchForPackage:!operations!public! !
-!SystemBrowserShell categoriesFor: #selectionEnvironment!accessing!public! !
-!SystemBrowserShell categoriesFor: #slideyPinNames!accessing!private! !
+!SystemBrowserShell categoriesForMethods!
+canSaveMethod!commands!private! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+hasPackageSelected!public!testing! !
+isEditableMethod:!modes!public! !
+onPackageSelected!event handling!private! !
+packageForNewMethod!operations!private! !
+packageNames!accessing!public! !
+packages!accessing!public! !
+queryCommand:!commands!private! !
+resetForFoundClass:!commands!private! !
+saveStateOn:!private!saved state! !
+searchForPackage:!operations!public! !
+selectionEnvironment!accessing!public! !
+slideyPinNames!accessing!private! !
+!
 
 !SystemBrowserShell class methodsFor!
 
@@ -217,13 +219,15 @@ uninitialize
 	| devsys |
 	devsys := Smalltalk developmentSystem.
 	devsys systemBrowserClass == self ifTrue: [devsys systemBrowserClass: nil]! !
-!SystemBrowserShell class categoriesFor: #autoSelectPackages!accessing!private! !
-!SystemBrowserShell class categoriesFor: #autoSelectPackages:!accessing!private! !
-!SystemBrowserShell class categoriesFor: #displayOn:!displaying!public! !
-!SystemBrowserShell class categoriesFor: #icon!constants!public! !
-!SystemBrowserShell class categoriesFor: #initialize!initializing!private! !
-!SystemBrowserShell class categoriesFor: #publishedAspects!public! !
-!SystemBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!SystemBrowserShell class categoriesFor: #toolsFolderHelpId!constants!public! !
-!SystemBrowserShell class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!SystemBrowserShell class categoriesForMethods!
+autoSelectPackages!accessing!private! !
+autoSelectPackages:!accessing!private! !
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!constants!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

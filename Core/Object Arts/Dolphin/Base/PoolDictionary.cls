@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Dictionary variableSubclass: #PoolDictionary
 	instanceVariableNames: ''
@@ -106,17 +106,19 @@ owningPackage: aPackage
 	"Set the receiver's <Package> to be the argument. Any current package association is lost."
 
 	aPackage addGlobalNamed: self name! !
-!PoolDictionary categoriesFor: #associationClass!constants!private! !
-!PoolDictionary categoriesFor: #displayOn:!displaying!public! !
-!PoolDictionary categoriesFor: #environment!constants!public! !
-!PoolDictionary categoriesFor: #fileOutName!development!public!source filing! !
-!PoolDictionary categoriesFor: #initializerFor:!development!public!source filing-sif! !
-!PoolDictionary categoriesFor: #isChanged!development!public!source filing!testing! !
-!PoolDictionary categoriesFor: #isChanged:!development!public!source filing! !
-!PoolDictionary categoriesFor: #name!accessing!public! !
-!PoolDictionary categoriesFor: #name:!accessing!private! !
-!PoolDictionary categoriesFor: #owningPackage!development!public!source filing! !
-!PoolDictionary categoriesFor: #owningPackage:!accessing!development!public! !
+!PoolDictionary categoriesForMethods!
+associationClass!constants!private! !
+displayOn:!displaying!public! !
+environment!constants!public! !
+fileOutName!development!public!source filing! !
+initializerFor:!development!public!source filing-sif! !
+isChanged!development!public!source filing!testing! !
+isChanged:!development!public!source filing! !
+name!accessing!public! !
+name:!accessing!private! !
+owningPackage!development!public!source filing! !
+owningPackage:!accessing!development!public! !
+!
 
 !PoolDictionary class methodsFor!
 
@@ -124,5 +126,7 @@ named: aSymbol
 	^(self new)
 		name: aSymbol;
 		yourself! !
-!PoolDictionary class categoriesFor: #named:!instance creation!public! !
+!PoolDictionary class categoriesForMethods!
+named:!instance creation!public! !
+!
 

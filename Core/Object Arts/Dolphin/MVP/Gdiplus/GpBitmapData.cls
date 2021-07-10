@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #GpBitmapData
 	instanceVariableNames: ''
@@ -82,16 +82,18 @@ Width: anInteger
 	"Set the receiver's 'Width' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Width put: anInteger! !
-!GpBitmapData categoriesFor: #Height!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #Height:!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #PixelFormat!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #PixelFormat:!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #Scan0!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #Scan0:!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #Stride!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #Stride:!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #Width!**compiled accessors**!public! !
-!GpBitmapData categoriesFor: #Width:!**compiled accessors**!public! !
+!GpBitmapData categoriesForMethods!
+Height!**compiled accessors**!public! !
+Height:!**compiled accessors**!public! !
+PixelFormat!**compiled accessors**!public! !
+PixelFormat:!**compiled accessors**!public! !
+Scan0!**compiled accessors**!public! !
+Scan0:!**compiled accessors**!public! !
+Stride!**compiled accessors**!public! !
+Stride:!**compiled accessors**!public! !
+Width!**compiled accessors**!public! !
+Width:!**compiled accessors**!public! !
+!
 
 !GpBitmapData class methodsFor!
 
@@ -121,6 +123,8 @@ defineFields
 
 getFieldNames
 	^#(#Width #Height #Stride #PixelFormat #Scan0)! !
-!GpBitmapData class categoriesFor: #defineFields!public!template definition! !
-!GpBitmapData class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!GpBitmapData class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

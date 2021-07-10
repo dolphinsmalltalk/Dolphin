@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBAbstractStatement subclass: #DBStatement
 	instanceVariableNames: 'sqlString'
@@ -55,10 +55,12 @@ sqlString: aString
 	or lazily by examing the result set) has no effect."
 
 	sqlString := aString! !
-!DBStatement categoriesFor: #defaultCursorType!constants!public! !
-!DBStatement categoriesFor: #exec:!operations!public! !
-!DBStatement categoriesFor: #executeStatement!operations!private! !
-!DBStatement categoriesFor: #printOn:!printing!public! !
-!DBStatement categoriesFor: #sqlString!accessing!public! !
-!DBStatement categoriesFor: #sqlString:!accessing!private! !
+!DBStatement categoriesForMethods!
+defaultCursorType!constants!public! !
+exec:!operations!public! !
+executeStatement!operations!private! !
+printOn:!printing!public! !
+sqlString!accessing!public! !
+sqlString:!accessing!private! !
+!
 

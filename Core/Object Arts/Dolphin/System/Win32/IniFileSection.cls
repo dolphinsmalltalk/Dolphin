@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IniFileAbstract subclass: #IniFileSection
 	instanceVariableNames: 'name'
@@ -114,23 +114,27 @@ removeKey: aString ifAbsent: aNiladicValuable
 setFilename: filenameString section: sectionNameString
 	filename := filenameString asUtf16String.
 	name := sectionNameString asUtf16String shallowCopy! !
-!IniFileSection categoriesFor: #=!comparing!public! !
-!IniFileSection categoriesFor: #at:ifAbsent:!adding!public! !
-!IniFileSection categoriesFor: #at:put:!adding!public! !
-!IniFileSection categoriesFor: #errorNilKey!exceptions!private! !
-!IniFileSection categoriesFor: #getValue:!accessing!public! !
-!IniFileSection categoriesFor: #hash!comparing!public! !
-!IniFileSection categoriesFor: #keysClass!constants!private! !
-!IniFileSection categoriesFor: #keysDo:!enumerating!public! !
-!IniFileSection categoriesFor: #name!accessing!public! !
-!IniFileSection categoriesFor: #printPrefixOn:!printing!private! !
-!IniFileSection categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!IniFileSection categoriesFor: #setFilename:section:!initializing!private! !
+!IniFileSection categoriesForMethods!
+=!comparing!public! !
+at:ifAbsent:!adding!public! !
+at:put:!adding!public! !
+errorNilKey!exceptions!private! !
+getValue:!accessing!public! !
+hash!comparing!public! !
+keysClass!constants!private! !
+keysDo:!enumerating!public! !
+name!accessing!public! !
+printPrefixOn:!printing!private! !
+removeKey:ifAbsent:!public!removing! !
+setFilename:section:!initializing!private! !
+!
 
 !IniFileSection class methodsFor!
 
 open: filenameString section: sectionNameString
 	^self new
 		setFilename: filenameString section: sectionNameString! !
-!IniFileSection class categoriesFor: #open:section:!public! !
+!IniFileSection class categoriesForMethods!
+open:section:!public! !
+!
 

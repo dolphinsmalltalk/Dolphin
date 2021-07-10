@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StBlockNode subclass: #RBPatternBlockNode
 	instanceVariableNames: 'valueBlock'
@@ -103,17 +103,19 @@ replacingBlock
 
 sentMessages
 	^OrderedCollection new! !
-!RBPatternBlockNode categoriesFor: #acceptVisitor:!public!visitor! !
-!RBPatternBlockNode categoriesFor: #addArgumentWithNameBasedOn:to:!matching!public! !
-!RBPatternBlockNode categoriesFor: #constructLookupNodeFor:in:!matching!public! !
-!RBPatternBlockNode categoriesFor: #copyInContext:!matching!public! !
-!RBPatternBlockNode categoriesFor: #createBlockFor:!matching!public! !
-!RBPatternBlockNode categoriesFor: #createMatchingBlock!matching!public! !
-!RBPatternBlockNode categoriesFor: #createReplacingBlock!matching!public! !
-!RBPatternBlockNode categoriesFor: #lookupMatchFor:in:!matching!public! !
-!RBPatternBlockNode categoriesFor: #match:inContext:!matching!public! !
-!RBPatternBlockNode categoriesFor: #matchingBlock!matching!public! !
-!RBPatternBlockNode categoriesFor: #replacePatternNodesIn:!matching!public! !
-!RBPatternBlockNode categoriesFor: #replacingBlock!matching!public! !
-!RBPatternBlockNode categoriesFor: #sentMessages!accessing!public! !
+!RBPatternBlockNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+addArgumentWithNameBasedOn:to:!matching!public! !
+constructLookupNodeFor:in:!matching!public! !
+copyInContext:!matching!public! !
+createBlockFor:!matching!public! !
+createMatchingBlock!matching!public! !
+createReplacingBlock!matching!public! !
+lookupMatchFor:in:!matching!public! !
+match:inContext:!matching!public! !
+matchingBlock!matching!public! !
+replacePatternNodesIn:!matching!public! !
+replacingBlock!matching!public! !
+sentMessages!accessing!public! !
+!
 

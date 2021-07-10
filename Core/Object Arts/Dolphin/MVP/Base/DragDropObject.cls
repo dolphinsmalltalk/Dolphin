@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #DragDropObject
 	instanceVariableNames: ''
@@ -73,17 +73,19 @@ printOn: aStream
 		nextPut: $(;
 		print: self object;
 		nextPut: $)! !
-!DragDropObject categoriesFor: #availableFormats!accessing!public! !
-!DragDropObject categoriesFor: #format:!accessing!public! !
-!DragDropObject categoriesFor: #format:data:!accessing!public!testing! !
-!DragDropObject categoriesFor: #format:ifAbsent:!accessing!public! !
-!DragDropObject categoriesFor: #isFormatAvailable:!public!testing! !
-!DragDropObject categoriesFor: #isObjectAvailable!public!testing! !
-!DragDropObject categoriesFor: #isObjectKindAvailable:!public!testing! !
-!DragDropObject categoriesFor: #object!accessing!public! !
-!DragDropObject categoriesFor: #object:!accessing!public! !
-!DragDropObject categoriesFor: #objectIfAbsent:!accessing!public! !
-!DragDropObject categoriesFor: #printOn:!printing!public! !
+!DragDropObject categoriesForMethods!
+availableFormats!accessing!public! !
+format:!accessing!public! !
+format:data:!accessing!public!testing! !
+format:ifAbsent:!accessing!public! !
+isFormatAvailable:!public!testing! !
+isObjectAvailable!public!testing! !
+isObjectKindAvailable:!public!testing! !
+object!accessing!public! !
+object:!accessing!public! !
+objectIfAbsent:!accessing!public! !
+printOn:!printing!public! !
+!
 
 !DragDropObject class methodsFor!
 
@@ -98,6 +100,8 @@ object: anObject
 	^self new
 		object: anObject;
 		yourself! !
-!DragDropObject class categoriesFor: #new!instance creation!public! !
-!DragDropObject class categoriesFor: #object:!instance creation!public! !
+!DragDropObject class categoriesForMethods!
+new!instance creation!public! !
+object:!instance creation!public! !
+!
 

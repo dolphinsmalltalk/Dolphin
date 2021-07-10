@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CCITEM subclass: #TCITEMW
 	instanceVariableNames: ''
@@ -119,24 +119,26 @@ textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
 
 	^_OffsetOf_pszText! !
-!TCITEMW categoriesFor: #cchTextMax!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #cchTextMax:!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #cchTextMaxOffset!constants!private! !
-!TCITEMW categoriesFor: #dwState!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #dwState:!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #handle!accessing!public! !
-!TCITEMW categoriesFor: #iImage!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #iImage:!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #lParam!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #lParam:!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #paramValidMask!constants!private! !
-!TCITEMW categoriesFor: #pszText!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #pszText:!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #stateMask!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #stateMask:!**compiled accessors**!public! !
-!TCITEMW categoriesFor: #stateValidMask!constants!private! !
-!TCITEMW categoriesFor: #text!accessing!public! !
-!TCITEMW categoriesFor: #textPointerOffset!constants!private! !
+!TCITEMW categoriesForMethods!
+cchTextMax!**compiled accessors**!public! !
+cchTextMax:!**compiled accessors**!public! !
+cchTextMaxOffset!constants!private! !
+dwState!**compiled accessors**!public! !
+dwState:!**compiled accessors**!public! !
+handle!accessing!public! !
+iImage!**compiled accessors**!public! !
+iImage:!**compiled accessors**!public! !
+lParam!**compiled accessors**!public! !
+lParam:!**compiled accessors**!public! !
+paramValidMask!constants!private! !
+pszText!**compiled accessors**!public! !
+pszText:!**compiled accessors**!public! !
+stateMask!**compiled accessors**!public! !
+stateMask:!**compiled accessors**!public! !
+stateValidMask!constants!private! !
+text!accessing!public! !
+textPointerOffset!constants!private! !
+!
 
 !TCITEMW class methodsFor!
 
@@ -167,6 +169,8 @@ defineFields
 
 getFieldNames
 	^#(#mask #dwState #stateMask #pszText #cchTextMax #iImage #lParam)! !
-!TCITEMW class categoriesFor: #defineFields!public!template definition! !
-!TCITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!TCITEMW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

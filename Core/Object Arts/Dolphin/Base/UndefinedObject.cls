@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #UndefinedObject
 	instanceVariableNames: ''
@@ -197,31 +197,33 @@ yourAddress
 	Nil is treated like a NULL pointer."
 
 	^0! !
-!UndefinedObject categoriesFor: #??!converting!public! !
-!UndefinedObject categoriesFor: #_deepCopy:!copying!private! !
-!UndefinedObject categoriesFor: #bindingFor:!binding!public! !
-!UndefinedObject categoriesFor: #deepCopy!copying!public! !
-!UndefinedObject categoriesFor: #displayOn:!displaying!public! !
-!UndefinedObject categoriesFor: #ifNil:!control flow!public! !
-!UndefinedObject categoriesFor: #ifNil:ifNotNil:!control flow!public! !
-!UndefinedObject categoriesFor: #ifNotNil:!control flow!public! !
-!UndefinedObject categoriesFor: #ifNotNil:ifNil:!control flow!public! !
-!UndefinedObject categoriesFor: #includesBehavior:!class hierarchy-testing!public! !
-!UndefinedObject categoriesFor: #isAtomic!public!testing! !
-!UndefinedObject categoriesFor: #isLiteral!public!testing! !
-!UndefinedObject categoriesFor: #isNil!public!testing! !
-!UndefinedObject categoriesFor: #isNull!private!testing! !
-!UndefinedObject categoriesFor: #name!accessing!public! !
-!UndefinedObject categoriesFor: #newClassBuilder:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!private! !
-!UndefinedObject categoriesFor: #notNil!public!testing! !
-!UndefinedObject categoriesFor: #notNull!private!testing! !
-!UndefinedObject categoriesFor: #printOn:!printing!public! !
-!UndefinedObject categoriesFor: #printString!printing!public! !
-!UndefinedObject categoriesFor: #shallowCopy!copying!public! !
-!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
-!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
-!UndefinedObject categoriesFor: #subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
-!UndefinedObject categoriesFor: #yourAddress!accessing!private! !
+!UndefinedObject categoriesForMethods!
+??!converting!public! !
+_deepCopy:!copying!private! !
+bindingFor:!binding!public! !
+deepCopy!copying!public! !
+displayOn:!displaying!public! !
+ifNil:!control flow!public! !
+ifNil:ifNotNil:!control flow!public! !
+ifNotNil:!control flow!public! !
+ifNotNil:ifNil:!control flow!public! !
+includesBehavior:!class hierarchy-testing!public! !
+isAtomic!public!testing! !
+isLiteral!public!testing! !
+isNil!public!testing! !
+isNull!private!testing! !
+name!accessing!public! !
+newClassBuilder:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!private! !
+notNil!public!testing! !
+notNull!private!testing! !
+printOn:!printing!public! !
+printString!printing!public! !
+shallowCopy!copying!public! !
+subclass:instanceVariableNames:classVariableNames:poolDictionaries:!class hierarchy-adding!public! !
+subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
+subclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
+yourAddress!accessing!private! !
+!
 
 !UndefinedObject class methodsFor!
 
@@ -230,5 +232,7 @@ new
 	There can be only one!!"
 
 	^nil! !
-!UndefinedObject class categoriesFor: #new!instance creation!public! !
+!UndefinedObject class categoriesForMethods!
+new!instance creation!public! !
+!
 

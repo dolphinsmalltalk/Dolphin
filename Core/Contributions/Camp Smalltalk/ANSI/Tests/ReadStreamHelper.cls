@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCaseHelper subclass: #ReadStreamHelper
 	instanceVariableNames: ''
@@ -48,16 +48,20 @@ testXupToX
 	self value: [self canonicalObject upTo: $a]
 		should: [:r | r isEmpty]
 		conformTo: self protocol selector: #upTo:.! !
-!ReadStreamHelper categoriesFor: #canonicalObject!public! !
-!ReadStreamHelper categoriesFor: #object:!public! !
-!ReadStreamHelper categoriesFor: #protocol!public! !
-!ReadStreamHelper categoriesFor: #testXnextX!public! !
-!ReadStreamHelper categoriesFor: #testXupToX!public! !
+!ReadStreamHelper categoriesForMethods!
+canonicalObject!public! !
+object:!public! !
+protocol!public! !
+testXnextX!public! !
+testXupToX!public! !
+!
 
 !ReadStreamHelper class methodsFor!
 
 initialize
 	"ReadStreamHelper  initialize"
 	super initialize! !
-!ReadStreamHelper class categoriesFor: #initialize!public! !
+!ReadStreamHelper class categoriesForMethods!
+initialize!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #CURRENCY
 	instanceVariableNames: ''
@@ -43,11 +43,13 @@ value: newValue
 	"Set the receiver's value to the <Number>, newValue."
 
 	self cy: (newValue * 10000) asInteger! !
-!CURRENCY categoriesFor: #asVariant!converting!public! !
-!CURRENCY categoriesFor: #cy!**compiled accessors**!public! !
-!CURRENCY categoriesFor: #cy:!**compiled accessors**!public! !
-!CURRENCY categoriesFor: #value!accessing!public! !
-!CURRENCY categoriesFor: #value:!accessing!public! !
+!CURRENCY categoriesForMethods!
+asVariant!converting!public! !
+cy!**compiled accessors**!public! !
+cy:!**compiled accessors**!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 CURRENCY methodProtocol: #variantCompatible attributes: #(#readOnly) selectors: #(#asVariant)!
 
@@ -95,12 +97,14 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_CY! !
-!CURRENCY class categoriesFor: #defineFields!public!template definition! !
-!CURRENCY class categoriesFor: #epsilon!constants!public! !
-!CURRENCY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!CURRENCY class categoriesFor: #initialize!development!initializing!private! !
-!CURRENCY class categoriesFor: #maximum!constants!public! !
-!CURRENCY class categoriesFor: #minimum!constants!public! !
-!CURRENCY class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!CURRENCY class categoriesFor: #vt!constants!public! !
+!CURRENCY class categoriesForMethods!
+defineFields!public!template definition! !
+epsilon!constants!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!development!initializing!private! !
+maximum!constants!public! !
+minimum!constants!public! !
+uninitialize!class hierarchy-removing!private! !
+vt!constants!public! !
+!
 

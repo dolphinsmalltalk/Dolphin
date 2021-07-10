@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IProvideClassInfo
 	instanceVariableNames: ''
@@ -32,8 +32,10 @@ GetClassInfo: ppTI
 
 	<virtual stdcall: hresult 4 ITypeInfo**>
 	^self invalidCall: _failureCode! !
-!IProvideClassInfo categoriesFor: #getClassInfo!**auto generated**!public! !
-!IProvideClassInfo categoriesFor: #GetClassInfo:!COM Interfaces-OCIDL.IProvideClassInfo!private! !
+!IProvideClassInfo categoriesForMethods!
+getClassInfo!**auto generated**!public! !
+GetClassInfo:!COM Interfaces-OCIDL.IProvideClassInfo!private! !
+!
 
 IProvideClassInfo methodProtocol: #IProvideClassInfo attributes: #(#readOnly) selectors: #(#GetClassInfo:)!
 
@@ -48,5 +50,7 @@ defineFunctions
 		defineFunction: #GetClassInfo:
 			argumentTypes: 'ITypeInfo**'
 ! !
-!IProvideClassInfo class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IProvideClassInfo class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

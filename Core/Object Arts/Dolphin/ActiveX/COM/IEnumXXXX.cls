@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IEnumXXXX
 	instanceVariableNames: ''
@@ -227,30 +227,32 @@ upToEndDo: operation
 	elems do: [:e | operation value: e].
 	elems size < count] 
 			whileFalse! !
-!IEnumXXXX categoriesFor: #batchSize!constants!public! !
-!IEnumXXXX categoriesFor: #Clone:!COM Interfaces-IEnumXXXX!primitives!private! !
-!IEnumXXXX categoriesFor: #collect:!enumerating!public! !
-!IEnumXXXX categoriesFor: #contents!accessing!public! !
-!IEnumXXXX categoriesFor: #copy!copying!public! !
-!IEnumXXXX categoriesFor: #do:!enumerating!public! !
-!IEnumXXXX categoriesFor: #elementClass!constants!private! !
-!IEnumXXXX categoriesFor: #errorEndOfStream!exceptions!public! !
-!IEnumXXXX categoriesFor: #newElement!helpers!private! !
-!IEnumXXXX categoriesFor: #newElements:!helpers!private! !
-!IEnumXXXX categoriesFor: #next!accessing!public! !
-!IEnumXXXX categoriesFor: #next:!accessing!public! !
-!IEnumXXXX categoriesFor: #Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!primitives!private! !
-!IEnumXXXX categoriesFor: #nextAvailable!accessing!public! !
-!IEnumXXXX categoriesFor: #nextAvailable:!accessing!public! !
-!IEnumXXXX categoriesFor: #position:!positioning!public! !
-!IEnumXXXX categoriesFor: #printContentsOn:!printing!private! !
-!IEnumXXXX categoriesFor: #reset!positioning!public! !
-!IEnumXXXX categoriesFor: #Reset!COM Interfaces-IEnumXXXX!primitives!private! !
-!IEnumXXXX categoriesFor: #select:!enumerating!public! !
-!IEnumXXXX categoriesFor: #skip:!positioning!public! !
-!IEnumXXXX categoriesFor: #Skip:!COM Interfaces-IEnumXXXX!primitives!private! !
-!IEnumXXXX categoriesFor: #upToEnd!accessing!public! !
-!IEnumXXXX categoriesFor: #upToEndDo:!helpers!private! !
+!IEnumXXXX categoriesForMethods!
+batchSize!constants!public! !
+Clone:!COM Interfaces-IEnumXXXX!primitives!private! !
+collect:!enumerating!public! !
+contents!accessing!public! !
+copy!copying!public! !
+do:!enumerating!public! !
+elementClass!constants!private! !
+errorEndOfStream!exceptions!public! !
+newElement!helpers!private! !
+newElements:!helpers!private! !
+next!accessing!public! !
+next:!accessing!public! !
+Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!primitives!private! !
+nextAvailable!accessing!public! !
+nextAvailable:!accessing!public! !
+position:!positioning!public! !
+printContentsOn:!printing!private! !
+reset!positioning!public! !
+Reset!COM Interfaces-IEnumXXXX!primitives!private! !
+select:!enumerating!public! !
+skip:!positioning!public! !
+Skip:!COM Interfaces-IEnumXXXX!primitives!private! !
+upToEnd!accessing!public! !
+upToEndDo:!helpers!private! !
+!
 
 IEnumXXXX methodProtocol: #IEnumXXXX attributes: #() selectors: #(#Clone: #Next:rgelt:pceltFetched: #Reset #Skip:)!
 
@@ -278,6 +280,8 @@ elementClass
 
 	^self subclassResponsibility
 ! !
-!IEnumXXXX class categoriesFor: #defineFunctions!initializing!public! !
-!IEnumXXXX class categoriesFor: #elementClass!constants!private! !
+!IEnumXXXX class categoriesForMethods!
+defineFunctions!initializing!public! !
+elementClass!constants!private! !
+!
 

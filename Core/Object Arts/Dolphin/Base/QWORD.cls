@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalInteger subclass: #QWORD
 	instanceVariableNames: ''
@@ -59,15 +59,17 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes qwordAtOffset: _OffsetOf_value put: anInteger! !
-!QWORD categoriesFor: #asSignedInteger!converting!public! !
-!QWORD categoriesFor: #asUnsignedInteger!converting!public! !
-!QWORD categoriesFor: #displayOn:!displaying!public! !
-!QWORD categoriesFor: #highPart!**compiled accessors**!public! !
-!QWORD categoriesFor: #highPart:!**compiled accessors**!public! !
-!QWORD categoriesFor: #lowPart!**compiled accessors**!public! !
-!QWORD categoriesFor: #lowPart:!**compiled accessors**!public! !
-!QWORD categoriesFor: #value!**compiled accessors**!public! !
-!QWORD categoriesFor: #value:!**compiled accessors**!public! !
+!QWORD categoriesForMethods!
+asSignedInteger!converting!public! !
+asUnsignedInteger!converting!public! !
+displayOn:!displaying!public! !
+highPart!**compiled accessors**!public! !
+highPart:!**compiled accessors**!public! !
+lowPart!**compiled accessors**!public! !
+lowPart:!**compiled accessors**!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !QWORD class methodsFor!
 
@@ -101,6 +103,8 @@ defineTemplate
 
 	super defineTemplate.
 	self assert: [self alignment = 8]! !
-!QWORD class categoriesFor: #defineFields!public!template definition! !
-!QWORD class categoriesFor: #defineTemplate!public!template definition! !
+!QWORD class categoriesForMethods!
+defineFields!public!template definition! !
+defineTemplate!public!template definition! !
+!
 

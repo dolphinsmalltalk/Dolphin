@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Warning subclass: #ConfirmationRequiredWarning
 	instanceVariableNames: 'confirmBlock refuseBlock cancelBlock'
@@ -65,16 +65,18 @@ refuseBlock
 
 refuseBlock: aNiladicValuable
 	refuseBlock := aNiladicValuable! !
-!ConfirmationRequiredWarning categoriesFor: #cancel!handler responses!public! !
-!ConfirmationRequiredWarning categoriesFor: #cancelBlock!accessing!public! !
-!ConfirmationRequiredWarning categoriesFor: #cancelBlock:!accessing!public! !
-!ConfirmationRequiredWarning categoriesFor: #confirm!handler responses!public! !
-!ConfirmationRequiredWarning categoriesFor: #confirmBlock!accessing!public! !
-!ConfirmationRequiredWarning categoriesFor: #confirmBlock:!accessing!public! !
-!ConfirmationRequiredWarning categoriesFor: #defaultAction!handling!public! !
-!ConfirmationRequiredWarning categoriesFor: #refuse!handler responses!public! !
-!ConfirmationRequiredWarning categoriesFor: #refuseBlock!accessing!public! !
-!ConfirmationRequiredWarning categoriesFor: #refuseBlock:!accessing!public! !
+!ConfirmationRequiredWarning categoriesForMethods!
+cancel!handler responses!public! !
+cancelBlock!accessing!public! !
+cancelBlock:!accessing!public! !
+confirm!handler responses!public! !
+confirmBlock!accessing!public! !
+confirmBlock:!accessing!public! !
+defaultAction!handling!public! !
+refuse!handler responses!public! !
+refuseBlock!accessing!public! !
+refuseBlock:!accessing!public! !
+!
 
 !ConfirmationRequiredWarning class methodsFor!
 
@@ -88,5 +90,7 @@ signal: aString onYes: confirmValuable onNo: refuseValuable onCancel: cancelValu
 		refuseBlock: refuseValuable;
 		cancelBlock: cancelValuable;
 		signal: aString! !
-!ConfirmationRequiredWarning class categoriesFor: #signal:onYes:onNo:onCancel:!instance creation!public! !
+!ConfirmationRequiredWarning class categoriesForMethods!
+signal:onYes:onNo:onCancel:!instance creation!public! !
+!
 

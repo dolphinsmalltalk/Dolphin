@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #STONCStyleCommentsSkipStream
 	instanceVariableNames: 'stream peekedCharacter delimiter escape'
@@ -211,31 +211,33 @@ upToEnd
 
 wrappedStream
 	^ stream! !
-!STONCStyleCommentsSkipStream categoriesFor: #atEnd!public!testing! !
-!STONCStyleCommentsSkipStream categoriesFor: #close!initialize/release!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #collectionSpecies!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #consumeComment!private! !
-!STONCStyleCommentsSkipStream categoriesFor: #consumeToCommentEnd!private! !
-!STONCStyleCommentsSkipStream categoriesFor: #consumeToEOL!private! !
-!STONCStyleCommentsSkipStream categoriesFor: #escape!private! !
-!STONCStyleCommentsSkipStream categoriesFor: #handleStringDelimiter:!private! !
-!STONCStyleCommentsSkipStream categoriesFor: #insideString!private! !
-!STONCStyleCommentsSkipStream categoriesFor: #isBinary!public!testing! !
-!STONCStyleCommentsSkipStream categoriesFor: #next!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #next:!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #next:into:!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #next:into:startingAt:!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #nextLine!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #nextNonCommentChar!private! !
-!STONCStyleCommentsSkipStream categoriesFor: #on:!initialize/release!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #peek!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #peekFor:!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #position!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #readInto:startingAt:count:!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #skip:!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #upTo:!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #upToEnd!accessing!public! !
-!STONCStyleCommentsSkipStream categoriesFor: #wrappedStream!accessing!public! !
+!STONCStyleCommentsSkipStream categoriesForMethods!
+atEnd!public!testing! !
+close!initialize/release!public! !
+collectionSpecies!accessing!public! !
+consumeComment!private! !
+consumeToCommentEnd!private! !
+consumeToEOL!private! !
+escape!private! !
+handleStringDelimiter:!private! !
+insideString!private! !
+isBinary!public!testing! !
+next!accessing!public! !
+next:!accessing!public! !
+next:into:!accessing!public! !
+next:into:startingAt:!accessing!public! !
+nextLine!accessing!public! !
+nextNonCommentChar!private! !
+on:!initialize/release!public! !
+peek!accessing!public! !
+peekFor:!accessing!public! !
+position!accessing!public! !
+readInto:startingAt:count:!accessing!public! !
+skip:!accessing!public! !
+upTo:!accessing!public! !
+upToEnd!accessing!public! !
+wrappedStream!accessing!public! !
+!
 
 !STONCStyleCommentsSkipStream class methodsFor!
 
@@ -243,5 +245,7 @@ on: readStream
 	^ self new
 		on: readStream;
 		yourself! !
-!STONCStyleCommentsSkipStream class categoriesFor: #on:!instance creation!public! !
+!STONCStyleCommentsSkipStream class categoriesForMethods!
+on:!instance creation!public! !
+!
 

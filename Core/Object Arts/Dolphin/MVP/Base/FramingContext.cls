@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #FramingContext
 	instanceVariableNames: 'layoutContext view rectangle parentRect'
@@ -86,30 +86,32 @@ top
 
 width
 	^rectangle width! !
-!FramingContext categoriesFor: #bottom!accessing!public! !
-!FramingContext categoriesFor: #height!accessing!public! !
-!FramingContext categoriesFor: #left!accessing!public! !
-!FramingContext categoriesFor: #parentBottom!accessing!public! !
-!FramingContext categoriesFor: #parentExtent!accessing!public! !
-!FramingContext categoriesFor: #parentHeight!accessing!public! !
-!FramingContext categoriesFor: #parentLeft!accessing!public! !
-!FramingContext categoriesFor: #parentRectangle!accessing!public! !
-!FramingContext categoriesFor: #parentRight!accessing!public! !
-!FramingContext categoriesFor: #parentTop!accessing!public! !
-!FramingContext categoriesFor: #parentView!accessing!public! !
-!FramingContext categoriesFor: #parentWidth!accessing!public! !
-!FramingContext categoriesFor: #previousBottom!accessing!public! !
-!FramingContext categoriesFor: #previousLeft!accessing!public! !
-!FramingContext categoriesFor: #previousRectangle!accessing!public! !
-!FramingContext categoriesFor: #previousRight!accessing!public! !
-!FramingContext categoriesFor: #previousSibling!accessing!public! !
-!FramingContext categoriesFor: #previousTop!accessing!public! !
-!FramingContext categoriesFor: #rectangle!accessing!public! !
-!FramingContext categoriesFor: #rectangle:!accessing!public! !
-!FramingContext categoriesFor: #right!accessing!public! !
-!FramingContext categoriesFor: #setLayoutContext:view:parentRectangle:!initializing!private! !
-!FramingContext categoriesFor: #top!accessing!public! !
-!FramingContext categoriesFor: #width!accessing!public! !
+!FramingContext categoriesForMethods!
+bottom!accessing!public! !
+height!accessing!public! !
+left!accessing!public! !
+parentBottom!accessing!public! !
+parentExtent!accessing!public! !
+parentHeight!accessing!public! !
+parentLeft!accessing!public! !
+parentRectangle!accessing!public! !
+parentRight!accessing!public! !
+parentTop!accessing!public! !
+parentView!accessing!public! !
+parentWidth!accessing!public! !
+previousBottom!accessing!public! !
+previousLeft!accessing!public! !
+previousRectangle!accessing!public! !
+previousRight!accessing!public! !
+previousSibling!accessing!public! !
+previousTop!accessing!public! !
+rectangle!accessing!public! !
+rectangle:!accessing!public! !
+right!accessing!public! !
+setLayoutContext:view:parentRectangle:!initializing!private! !
+top!accessing!public! !
+width!accessing!public! !
+!
 
 !FramingContext class methodsFor!
 
@@ -119,5 +121,7 @@ layoutContext: aLayoutContext view: aView parentRectangle: aRectangle
 			view: aView
 			parentRectangle: aRectangle;
 		yourself! !
-!FramingContext class categoriesFor: #layoutContext:view:parentRectangle:!instance creation!public! !
+!FramingContext class categoriesForMethods!
+layoutContext:view:parentRectangle:!instance creation!public! !
+!
 

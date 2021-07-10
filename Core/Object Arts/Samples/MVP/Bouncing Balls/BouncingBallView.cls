@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DoubleBufferedView subclass: #BouncingBallView
 	instanceVariableNames: 'balls stepProcess'
@@ -100,16 +100,18 @@ step
 
 stepProcess
 	^stepProcess! !
-!BouncingBallView categoriesFor: #ballExtent!constants!private! !
-!BouncingBallView categoriesFor: #balls!accessing!private! !
-!BouncingBallView categoriesFor: #defaultExtent!constants!private! !
-!BouncingBallView categoriesFor: #frameRate!constants!public! !
-!BouncingBallView categoriesFor: #initialize!initializing!private! !
-!BouncingBallView categoriesFor: #numberOfBalls!constants!public! !
-!BouncingBallView categoriesFor: #onDestroyed!event handling!private! !
-!BouncingBallView categoriesFor: #render!operations!private! !
-!BouncingBallView categoriesFor: #step!operations!public! !
-!BouncingBallView categoriesFor: #stepProcess!accessing!private! !
+!BouncingBallView categoriesForMethods!
+ballExtent!constants!private! !
+balls!accessing!private! !
+defaultExtent!constants!private! !
+frameRate!constants!public! !
+initialize!initializing!private! !
+numberOfBalls!constants!public! !
+onDestroyed!event handling!private! !
+render!operations!private! !
+step!operations!public! !
+stepProcess!accessing!private! !
+!
 
 !BouncingBallView class methodsFor!
 
@@ -143,9 +145,11 @@ show
 	"Answer and show an instance of the receiver"
 
 	^super show topShell text: self displayString; yourself! !
-!BouncingBallView class categoriesFor: #defaultModel!models!public! !
-!BouncingBallView class categoriesFor: #displayOn:!displaying!public! !
-!BouncingBallView class categoriesFor: #icon!constants!public! !
-!BouncingBallView class categoriesFor: #initialize!development!initializing!private! !
-!BouncingBallView class categoriesFor: #show!operations!public! !
+!BouncingBallView class categoriesForMethods!
+defaultModel!models!public! !
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+show!operations!public! !
+!
 

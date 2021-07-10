@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Magnitude subclass: #TimeStamp
 	instanceVariableNames: 'date time'
@@ -151,31 +151,33 @@ time
 
 year
 	^date year! !
-!TimeStamp categoriesFor: #<!comparing!public! !
-!TimeStamp categoriesFor: #=!comparing!public! !
-!TimeStamp categoriesFor: #addSeconds:!arithmetic!comparing!public! !
-!TimeStamp categoriesFor: #asDateAndTime!public! !
-!TimeStamp categoriesFor: #asMilliseconds!converting!public! !
-!TimeStamp categoriesFor: #asParameter!converting!public! !
-!TimeStamp categoriesFor: #asSeconds!converting!public! !
-!TimeStamp categoriesFor: #asTimeStamp!converting!public! !
-!TimeStamp categoriesFor: #date!accessing!public! !
-!TimeStamp categoriesFor: #dayOfMonth!accessing!public! !
-!TimeStamp categoriesFor: #dayOfWeek!public! !
-!TimeStamp categoriesFor: #hash!comparing!public! !
-!TimeStamp categoriesFor: #hour!accessing!public! !
-!TimeStamp categoriesFor: #hour12!accessing!public! !
-!TimeStamp categoriesFor: #hour24!accessing!public! !
-!TimeStamp categoriesFor: #minute!accessing!public! !
-!TimeStamp categoriesFor: #month!accessing!public! !
-!TimeStamp categoriesFor: #printOn:!printing!public! !
-!TimeStamp categoriesFor: #printOn:format:!printing!public! !
-!TimeStamp categoriesFor: #printStringFormat:!printing!public! !
-!TimeStamp categoriesFor: #second!accessing!public! !
-!TimeStamp categoriesFor: #setDate:time:!accessing!initializing!private! !
-!TimeStamp categoriesFor: #storeOn:!printing!public! !
-!TimeStamp categoriesFor: #time!accessing!public! !
-!TimeStamp categoriesFor: #year!accessing!public! !
+!TimeStamp categoriesForMethods!
+<!comparing!public! !
+=!comparing!public! !
+addSeconds:!arithmetic!comparing!public! !
+asDateAndTime!public! !
+asMilliseconds!converting!public! !
+asParameter!converting!public! !
+asSeconds!converting!public! !
+asTimeStamp!converting!public! !
+date!accessing!public! !
+dayOfMonth!accessing!public! !
+dayOfWeek!public! !
+hash!comparing!public! !
+hour!accessing!public! !
+hour12!accessing!public! !
+hour24!accessing!public! !
+minute!accessing!public! !
+month!accessing!public! !
+printOn:!printing!public! !
+printOn:format:!printing!public! !
+printStringFormat:!printing!public! !
+second!accessing!public! !
+setDate:time:!accessing!initializing!private! !
+storeOn:!printing!public! !
+time!accessing!public! !
+year!accessing!public! !
+!
 
 !TimeStamp class methodsFor!
 
@@ -255,15 +257,17 @@ time: aTime
 	"Answer a new instance of the receiver based on aTime."
 
 	^self date: (Date fromDays: 0) time: aTime! !
-!TimeStamp class categoriesFor: #current!instance creation!public! !
-!TimeStamp class categoriesFor: #currentUTC!instance creation!public! !
-!TimeStamp class categoriesFor: #date:!instance creation!public! !
-!TimeStamp class categoriesFor: #date:time:!instance creation!public! !
-!TimeStamp class categoriesFor: #fromDateAndTime:!instance creation!public! !
-!TimeStamp class categoriesFor: #fromMilliseconds:!public! !
-!TimeStamp class categoriesFor: #fromSeconds:!instance creation!public! !
-!TimeStamp class categoriesFor: #fromString:!public! !
-!TimeStamp class categoriesFor: #fromSYSTEMTIME:!instance creation!public! !
-!TimeStamp class categoriesFor: #new!instance creation!public! !
-!TimeStamp class categoriesFor: #time:!instance creation!public! !
+!TimeStamp class categoriesForMethods!
+current!instance creation!public! !
+currentUTC!instance creation!public! !
+date:!instance creation!public! !
+date:time:!instance creation!public! !
+fromDateAndTime:!instance creation!public! !
+fromMilliseconds:!public! !
+fromSeconds:!instance creation!public! !
+fromString:!public! !
+fromSYSTEMTIME:!instance creation!public! !
+new!instance creation!public! !
+time:!instance creation!public! !
+!
 

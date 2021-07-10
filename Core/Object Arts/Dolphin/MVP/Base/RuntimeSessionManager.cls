@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GUISessionManager subclass: #RuntimeSessionManager
 	instanceVariableNames: ''
@@ -33,8 +33,10 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^self class mainShellClass! !
-!RuntimeSessionManager categoriesFor: #keepAlive!idling!public! !
-!RuntimeSessionManager categoriesFor: #mainShellClass!constants!public! !
+!RuntimeSessionManager categoriesForMethods!
+keepAlive!idling!public! !
+mainShellClass!constants!public! !
+!
 
 !RuntimeSessionManager class methodsFor!
 
@@ -60,8 +62,10 @@ new
 	"Private -  Use #createExecutable:"
 
 	self shouldNotImplement! !
-!RuntimeSessionManager class categoriesFor: #icon!constants!public! !
-!RuntimeSessionManager class categoriesFor: #isRuntime!public!testing! !
-!RuntimeSessionManager class categoriesFor: #mainShellClass!constants!public! !
-!RuntimeSessionManager class categoriesFor: #new!instance creation!private! !
+!RuntimeSessionManager class categoriesForMethods!
+icon!constants!public! !
+isRuntime!public!testing! !
+mainShellClass!constants!public! !
+new!instance creation!private! !
+!
 

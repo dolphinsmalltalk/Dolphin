@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusFontFromFontFamilyInitializer
 	instanceVariableNames: 'fontFamily emSize style unit'
@@ -30,9 +30,11 @@ fontFamily: aFontFamily emSize: aNumberSize style: aNumberStyle unit: aNumberUni
 
 gdiplusConstructorErrorDescription
 	^'Error creating Font'! !
-!GdiplusFontFromFontFamilyInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusFontFromFontFamilyInitializer categoriesFor: #fontFamily:emSize:style:unit:!initializing!private! !
-!GdiplusFontFromFontFamilyInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!GdiplusFontFromFontFamilyInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+fontFamily:emSize:style:unit:!initializing!private! !
+gdiplusConstructorErrorDescription!constants!private! !
+!
 
 !GdiplusFontFromFontFamilyInitializer class methodsFor!
 
@@ -42,5 +44,7 @@ fontFamily: fontFamily emSize: emSize style: style unit: unit
 		emSize: emSize
 		style: style
 		unit: unit! !
-!GdiplusFontFromFontFamilyInitializer class categoriesFor: #fontFamily:emSize:style:unit:!instance creation!public! !
+!GdiplusFontFromFontFamilyInitializer class categoriesForMethods!
+fontFamily:emSize:style:unit:!instance creation!public! !
+!
 

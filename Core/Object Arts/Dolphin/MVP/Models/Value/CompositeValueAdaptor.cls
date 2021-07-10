@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueAdaptor subclass: #CompositeValueAdaptor
 	instanceVariableNames: ''
@@ -43,9 +43,11 @@ value
 	by sending a message to the receiver's subject."
 
 	^subject! !
-!CompositeValueAdaptor categoriesFor: #aspectValue:!accessing!public! !
-!CompositeValueAdaptor categoriesFor: #displayOn:!displaying!public! !
-!CompositeValueAdaptor categoriesFor: #onAspectChanged!event handling!private! !
-!CompositeValueAdaptor categoriesFor: #setValue:!accessing!private! !
-!CompositeValueAdaptor categoriesFor: #value!accessing!public! !
+!CompositeValueAdaptor categoriesForMethods!
+aspectValue:!accessing!public! !
+displayOn:!displaying!public! !
+onAspectChanged!event handling!private! !
+setValue:!accessing!private! !
+value!accessing!public! !
+!
 

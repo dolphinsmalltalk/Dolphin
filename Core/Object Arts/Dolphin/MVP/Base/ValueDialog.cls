@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Dialog subclass: #ValueDialog
 	instanceVariableNames: ''
@@ -55,13 +55,15 @@ value: anObject
 	is received"
 
 	self model value: anObject.! !
-!ValueDialog categoriesFor: #answer!accessing!public! !
-!ValueDialog categoriesFor: #bufferClass!accessing!private! !
-!ValueDialog categoriesFor: #bufferedModelFor:!accessing!private! !
-!ValueDialog categoriesFor: #model:!accessing!public! !
-!ValueDialog categoriesFor: #onValueChanged!event handling!public! !
-!ValueDialog categoriesFor: #value!accessing!public! !
-!ValueDialog categoriesFor: #value:!accessing!public! !
+!ValueDialog categoriesForMethods!
+answer!accessing!public! !
+bufferClass!accessing!private! !
+bufferedModelFor:!accessing!private! !
+model:!accessing!public! !
+onValueChanged!event handling!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 ValueDialog methodProtocol: #value attributes: #(#readOnly) selectors: #(#value #value:)!
 ValueDialog methodProtocol: #valueDialogPresenter attributes: #(#readOnly) selectors: #(#apply #cancel #caption #caption: #clearCommandHistory #ensureVisible #hasCommandHistory #hasCommandHistory: #ok #onAboutToDisplayMenu: #onAboutToDisplaySystemMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewMinimized: #onViewOpened #onViewRestored: #parentPresenter #performAction #redo #revert #setFocus #show #topShell #undo #updateCaption #value #value: #view)!
@@ -80,6 +82,8 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!ValueDialog class categoriesFor: #defaultModel!models!public! !
-!ValueDialog class categoriesFor: #icon!constants!public! !
+!ValueDialog class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+!
 

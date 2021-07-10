@@ -240,15 +240,19 @@ causeName
 
 	#deprecated.	"Could be more than one cause"
 	^self causeNames last! !
-!_FPIEEE_RECORD categoriesFor: #causeCode!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #causeName!accessing!public! !
+!_FPIEEE_RECORD categoriesForMethods!
+causeCode!accessing!public! !
+causeName!accessing!public! !
+!
 
 !_FPIEEE_VALUE methodsFor!
 
 valueType
 	#deprecated.
 	^self format! !
-!_FPIEEE_VALUE categoriesFor: #valueType!accessing!public! !
+!_FPIEEE_VALUE categoriesForMethods!
+valueType!accessing!public! !
+!
 
 !ArithmeticValue methodsFor!
 
@@ -257,7 +261,9 @@ quoAndRem: aNumber
 	Notification deprecated.
 	quo := self quo: aNumber.
 	^{quo. self - (quo * aNumber)}! !
-!ArithmeticValue categoriesFor: #quoAndRem:!arithmetic!public! !
+!ArithmeticValue categoriesForMethods!
+quoAndRem:!arithmetic!public! !
+!
 
 !Behavior methodsFor!
 
@@ -268,15 +274,19 @@ makeIndirect
 makeNullTerminated
 	Notification deprecated.
 	self isNullTerminated: true! !
-!Behavior categoriesFor: #makeIndirect!instance specification-accessing!private! !
-!Behavior categoriesFor: #makeNullTerminated!instance specification-accessing!private! !
+!Behavior categoriesForMethods!
+makeIndirect!instance specification-accessing!private! !
+makeNullTerminated!instance specification-accessing!private! !
+!
 
 !ByteCodeDispatcher methodsFor!
 
 byteCodeSegments
 	#deprecated.
 	^self segments! !
-!ByteCodeDispatcher categoriesFor: #byteCodeSegments!accessing!public! !
+!ByteCodeDispatcher categoriesForMethods!
+byteCodeSegments!accessing!public! !
+!
 
 !Category class methodsFor!
 
@@ -284,14 +294,18 @@ categoryIcon
 	"Answer an Icon representing the Category objects which the receiver collects." 
 
 	^self icon! !
-!Category class categoriesFor: #categoryIcon!constants!public! !
+!Category class categoriesForMethods!
+categoryIcon!constants!public! !
+!
 
 !Character class methodsFor!
 
 safeCodePoint: anInteger
 	Notification deprecated.
 	^self codePoint: anInteger ifInvalid: [Utf8Default]! !
-!Character class categoriesFor: #safeCodePoint:!instance creation!public! !
+!Character class categoriesForMethods!
+safeCodePoint:!instance creation!public! !
+!
 
 !Class methodsFor!
 
@@ -304,8 +318,10 @@ noClassCategoryName
 	category has been set for a Class."
 
 	^self classCategoryClass unclassifiedName! !
-!Class categoriesFor: #addClassVarName:!class variables!public! !
-!Class categoriesFor: #noClassCategoryName!constants!public! !
+!Class categoriesForMethods!
+addClassVarName:!class variables!public! !
+noClassCategoryName!constants!public! !
+!
 
 !ClassDescription methodsFor!
 
@@ -318,14 +334,18 @@ defaultIconFrom: anExternalResourceLibrary
 	^(self environment at: #Icon) fromId: self defaultIconName in: anExternalResourceLibrary.
 
 	! !
-!ClassDescription categoriesFor: #defaultIconFrom:!constants!public! !
+!ClassDescription categoriesForMethods!
+defaultIconFrom:!constants!public! !
+!
 
 !CompilerNotification methodsFor!
 
 extra
 	#deprecated.
 	^extras isEmpty ifFalse: [extras anyOne]! !
-!CompilerNotification categoriesFor: #extra!accessing!public! !
+!CompilerNotification categoriesForMethods!
+extra!accessing!public! !
+!
 
 !CRTLibrary methodsFor!
 
@@ -587,58 +607,60 @@ thread_errno
 	<overlap cdecl: sdword _errno>
 	#deprecated. "Use CRTLibraryNonBlocking>>errno"
 	^self invalidCall: _failureCode! !
-!CRTLibrary categoriesFor: #_controlfp:mask:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_ecvt:count:dec:sign:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_eof:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_filelength:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_finite:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_fpclass:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_gcvt:count:buffer:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_gcvt_s:bufferSize:value:digits:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_i64toa:string:radix:!CRT functions-data conversion!public! !
-!CRTLibrary categoriesFor: #_logb:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #_ltoa:string:radix:!CRT functions-data conversion!public! !
-!CRTLibrary categoriesFor: #_makepath:drive:dir:fname:ext:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_putenv:!CRT functions-process and environment control!public! !
-!CRTLibrary categoriesFor: #_rotl:shift:!CRT functions-bit manipulation!public! !
-!CRTLibrary categoriesFor: #_rotr:shift:!CRT functions-bit manipulation!public! !
-!CRTLibrary categoriesFor: #_splitpath:drive:dir:fname:ext:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #_stricoll:string2:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #acos:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #asin:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #atan:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #atan:x:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #ceil:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #chmod:pmode:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #cos:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #exp:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #fabs:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #floor:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #fopen:mode:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #fopen_s:filename:mode:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #fread:size:count:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #freopen:mode:stream:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #frexp:expptr:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #fseek:offset:origin:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #ftell:!CRT functions-stream I/O!public! !
-!CRTLibrary categoriesFor: #getenv:!CRT functions-process and environment control!public! !
-!CRTLibrary categoriesFor: #iswspace:!CRT functions-character classification!public! !
-!CRTLibrary categoriesFor: #ldexp:exp:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #log:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #log10:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #log2:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #memcpy:src:count:!CRT functions-buffer manipulation!public! !
-!CRTLibrary categoriesFor: #memmove:src:count:!CRT functions-buffer manipulation!public! !
-!CRTLibrary categoriesFor: #modf:intptr:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #pow:y:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #sin:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #sqrt:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #strcat:strSource:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #strerror:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #strncpy:strSource:count:!CRT functions-string manipulation!public! !
-!CRTLibrary categoriesFor: #tan:!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #thread_chmod:pmode:!CRT functions-file handling!public! !
-!CRTLibrary categoriesFor: #thread_errno!CRT functions-process and environment control!public! !
+!CRTLibrary categoriesForMethods!
+_controlfp:mask:!CRT functions-floating point support!public! !
+_ecvt:count:dec:sign:!CRT functions-floating point support!public! !
+_eof:!CRT functions-file handling!public! !
+_filelength:!CRT functions-file handling!public! !
+_finite:!CRT functions-floating point support!public! !
+_fpclass:!CRT functions-floating point support!public! !
+_gcvt:count:buffer:!CRT functions-floating point support!public! !
+_gcvt_s:bufferSize:value:digits:!CRT functions-floating point support!public! !
+_i64toa:string:radix:!CRT functions-data conversion!public! !
+_logb:!CRT functions-floating point support!public! !
+_ltoa:string:radix:!CRT functions-data conversion!public! !
+_makepath:drive:dir:fname:ext:!CRT functions-file handling!public! !
+_putenv:!CRT functions-process and environment control!public! !
+_rotl:shift:!CRT functions-bit manipulation!public! !
+_rotr:shift:!CRT functions-bit manipulation!public! !
+_splitpath:drive:dir:fname:ext:!CRT functions-file handling!public! !
+_stricoll:string2:!CRT functions-string manipulation!public! !
+acos:!CRT functions-floating point support!public! !
+asin:!CRT functions-floating point support!public! !
+atan:!CRT functions-floating point support!public! !
+atan:x:!CRT functions-floating point support!public! !
+ceil:!CRT functions-floating point support!public! !
+chmod:pmode:!CRT functions-file handling!public! !
+cos:!CRT functions-floating point support!public! !
+exp:!CRT functions-floating point support!public! !
+fabs:!CRT functions-floating point support!public! !
+floor:!CRT functions-floating point support!public! !
+fopen:mode:!CRT functions-stream I/O!public! !
+fopen_s:filename:mode:!CRT functions-stream I/O!public! !
+fread:size:count:stream:!CRT functions-stream I/O!public! !
+freopen:mode:stream:!CRT functions-stream I/O!public! !
+frexp:expptr:!CRT functions-floating point support!public! !
+fseek:offset:origin:!CRT functions-stream I/O!public! !
+ftell:!CRT functions-stream I/O!public! !
+getenv:!CRT functions-process and environment control!public! !
+iswspace:!CRT functions-character classification!public! !
+ldexp:exp:!CRT functions-floating point support!public! !
+log:!CRT functions-floating point support!public! !
+log10:!CRT functions-floating point support!public! !
+log2:!CRT functions-floating point support!public! !
+memcpy:src:count:!CRT functions-buffer manipulation!public! !
+memmove:src:count:!CRT functions-buffer manipulation!public! !
+modf:intptr:!CRT functions-floating point support!public! !
+pow:y:!CRT functions-floating point support!public! !
+sin:!CRT functions-floating point support!public! !
+sqrt:!CRT functions-floating point support!public! !
+strcat:strSource:!CRT functions-string manipulation!public! !
+strerror:!CRT functions-string manipulation!public! !
+strncpy:strSource:count:!CRT functions-string manipulation!public! !
+tan:!CRT functions-floating point support!public! !
+thread_chmod:pmode:!CRT functions-file handling!public! !
+thread_errno!CRT functions-process and environment control!public! !
+!
 
 !Date methodsFor!
 
@@ -657,10 +679,12 @@ weekday
 weekdayIndex
 	Notification deprecated.
 	^(self asDays + 1) \\ 7 + 1! !
-!Date categoriesFor: #evaluateYYMMDD:!helpers!public! !
-!Date categoriesFor: #monthIndex!accessing!public! !
-!Date categoriesFor: #weekday!accessing!public! !
-!Date categoriesFor: #weekdayIndex!accessing!public! !
+!Date categoriesForMethods!
+evaluateYYMMDD:!helpers!public! !
+monthIndex!accessing!public! !
+weekday!accessing!public! !
+weekdayIndex!accessing!public! !
+!
 
 !Date class methodsFor!
 
@@ -697,12 +721,14 @@ shortNameOfDay: dayIndex
 shortNameOfMonth: monthIndex
 	Notification deprecated.
 	^self monthAbbreviation: monthIndex! !
-!Date class categoriesFor: #dateAndTimeNow!enquiries!public! !
-!Date class categoriesFor: #dayOfWeek:!enquiries!public! !
-!Date class categoriesFor: #nameOfDay:!enquiries!public! !
-!Date class categoriesFor: #nameOfMonth:!enquiries!public! !
-!Date class categoriesFor: #shortNameOfDay:!enquiries!public! !
-!Date class categoriesFor: #shortNameOfMonth:!enquiries!public! !
+!Date class categoriesForMethods!
+dateAndTimeNow!enquiries!public! !
+dayOfWeek:!enquiries!public! !
+nameOfDay:!enquiries!public! !
+nameOfMonth:!enquiries!public! !
+shortNameOfDay:!enquiries!public! !
+shortNameOfMonth:!enquiries!public! !
+!
 
 !ExternalCallback class methodsFor!
 
@@ -728,10 +754,12 @@ receiver: anObject selector: aSymbol
 receiver: anObject selector: aSymbol closure: extraObject
 	#deprecated.	"Use #receiver:selector:descriptor: and #closure:"
 	^(self receiver: anObject selector: aSymbol) closure: extraObject! !
-!ExternalCallback class categoriesFor: #receiver:prototype:!instance creation!public! !
-!ExternalCallback class categoriesFor: #receiver:prototype:closure:!instance creation!public! !
-!ExternalCallback class categoriesFor: #receiver:selector:!instance creation!public! !
-!ExternalCallback class categoriesFor: #receiver:selector:closure:!instance creation!public! !
+!ExternalCallback class categoriesForMethods!
+receiver:prototype:!instance creation!public! !
+receiver:prototype:closure:!instance creation!public! !
+receiver:selector:!instance creation!public! !
+receiver:selector:closure:!instance creation!public! !
+!
 
 !ExternalDescriptor class methodsFor!
 
@@ -741,7 +769,9 @@ oneStringArg
 
 	#deprecated.
 	^self argumentTypes: 'lpstr'! !
-!ExternalDescriptor class categoriesFor: #oneStringArg!instance creation!public! !
+!ExternalDescriptor class categoriesForMethods!
+oneStringArg!instance creation!public! !
+!
 
 !ExternalLibrary methodsFor!
 
@@ -750,7 +780,9 @@ invalidCall
 
 	Notification deprecated. 
 	^self invalidCall: 0! !
-!ExternalLibrary categoriesFor: #invalidCall!exceptions!public! !
+!ExternalLibrary categoriesForMethods!
+invalidCall!exceptions!public! !
+!
 
 !ExternalStructure methodsFor!
 
@@ -761,8 +793,10 @@ do: aOneArgumentBlock
 do: operation separatedBy: separator 
 	#deprecated.
 	self fieldsDo: operation separatedBy: separator! !
-!ExternalStructure categoriesFor: #do:!enumerating!public! !
-!ExternalStructure categoriesFor: #do:separatedBy:!enumerating!public! !
+!ExternalStructure categoriesForMethods!
+do:!enumerating!public! !
+do:separatedBy:!enumerating!public! !
+!
 
 !File methodsFor!
 
@@ -775,7 +809,9 @@ readCharacter
 	#deprecated.	"May read a partial character - better to open a stream on the file and read next character from that."
 	string := String new: 1.
 	^(self read: string count: 1) == 0 ifTrue: [nil] ifFalse: [string at: 1]! !
-!File categoriesFor: #readCharacter!operations!public! !
+!File categoriesForMethods!
+readCharacter!operations!public! !
+!
 
 !File class methodsFor!
 
@@ -789,8 +825,10 @@ for: matchString inAndBelow: dirString do: operation
 		forAll: matchString
 		in: dirString
 		do: [:each | operation value: each directory value: each]! !
-!File class categoriesFor: #change:extension:!filename manipulation!public! !
-!File class categoriesFor: #for:inAndBelow:do:!enumerating!public! !
+!File class categoriesForMethods!
+change:extension:!filename manipulation!public! !
+for:inAndBelow:do:!enumerating!public! !
+!
 
 !Integer methodsFor!
 
@@ -811,9 +849,11 @@ lowSWord
 	#deprecated.
 	^(DWORD fromInteger: self) lowSWord
 ! !
-!Integer categoriesFor: #digitSize!accessing!public! !
-!Integer categoriesFor: #highSWord!bit manipulation!public! !
-!Integer categoriesFor: #lowSWord!bit manipulation!public! !
+!Integer categoriesForMethods!
+digitSize!accessing!public! !
+highSWord!bit manipulation!public! !
+lowSWord!bit manipulation!public! !
+!
 
 !KernelLibrary methodsFor!
 
@@ -865,14 +905,16 @@ setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddre
 	<stdcall: dword SetFilePointer handle dword lpvoid dword>
 	#deprecated. "Use #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:"
 	^self invalidCall: _failureCode! !
-!KernelLibrary categoriesFor: #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #getFileSize:lpFileSizeHigh:!public!win32 functions-file management! !
-!KernelLibrary categoriesFor: #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-national language support! !
-!KernelLibrary categoriesFor: #getVersionEx:!public!win32 functions-system information! !
-!KernelLibrary categoriesFor: #lstrcmp:lpString2:!public!win32 functions-string manipulation! !
-!KernelLibrary categoriesFor: #lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
-!KernelLibrary categoriesFor: #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file management! !
+!KernelLibrary categoriesForMethods!
+compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:!public!win32 functions-national language support! !
+getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-national language support! !
+getFileSize:lpFileSizeHigh:!public!win32 functions-file management! !
+getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-national language support! !
+getVersionEx:!public!win32 functions-system information! !
+lstrcmp:lpString2:!public!win32 functions-string manipulation! !
+lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
+setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file management! !
+!
 
 !KernelLibrary class methodsFor!
 
@@ -883,7 +925,9 @@ clear
 	super clear.
 	OSVERSIONINFO clear
 ! !
-!KernelLibrary class categoriesFor: #clear!initializing!private! !
+!KernelLibrary class categoriesForMethods!
+clear!initializing!private! !
+!
 
 !Locale methodsFor!
 
@@ -908,9 +952,11 @@ isMonthBeforeDay
 
 	Notification deprecated. "Use dateFormat"
 	^self dateOrder ~= 1! !
-!Locale categoriesFor: #dateOrder!constants!public! !
-!Locale categoriesFor: #dateSeparator!constants!public! !
-!Locale categoriesFor: #isMonthBeforeDay!helpers!public! !
+!Locale categoriesForMethods!
+dateOrder!constants!public! !
+dateSeparator!constants!public! !
+isMonthBeforeDay!helpers!public! !
+!
 
 !MessageBox methodsFor!
 
@@ -957,17 +1003,19 @@ yesNo
 yesNoCancel
 	#deprecated.
 	self buttonStyle: #yesNoCancel! !
-!MessageBox categoriesFor: #abortRetryIgnore!accessing-styles!public! !
-!MessageBox categoriesFor: #error!modes!public! !
-!MessageBox categoriesFor: #fatalError!accessing-styles!public! !
-!MessageBox categoriesFor: #ok!accessing-styles!public! !
-!MessageBox categoriesFor: #okCancel!accessing-styles!public! !
-!MessageBox categoriesFor: #prompt!accessing-styles!public! !
-!MessageBox categoriesFor: #retryCancel!accessing-styles!public! !
-!MessageBox categoriesFor: #systemModal!accessing-styles!public! !
-!MessageBox categoriesFor: #taskModal!accessing-styles!public! !
-!MessageBox categoriesFor: #yesNo!accessing-styles!public! !
-!MessageBox categoriesFor: #yesNoCancel!accessing-styles!public! !
+!MessageBox categoriesForMethods!
+abortRetryIgnore!accessing-styles!public! !
+error!modes!public! !
+fatalError!accessing-styles!public! !
+ok!accessing-styles!public! !
+okCancel!accessing-styles!public! !
+prompt!accessing-styles!public! !
+retryCancel!accessing-styles!public! !
+systemModal!accessing-styles!public! !
+taskModal!accessing-styles!public! !
+yesNo!accessing-styles!public! !
+yesNoCancel!accessing-styles!public! !
+!
 
 !MessageBoxAbstract methodsFor!
 
@@ -978,8 +1026,10 @@ notify
 warning
 	#deprecated.
 	self iconStyle: #warning! !
-!MessageBoxAbstract categoriesFor: #notify!modes!public! !
-!MessageBoxAbstract categoriesFor: #warning!modes!public! !
+!MessageBoxAbstract categoriesForMethods!
+notify!modes!public! !
+warning!modes!public! !
+!
 
 !Process methodsFor!
 
@@ -990,15 +1040,19 @@ fpeMask
 fpeMask: anInteger
 	#deprecated.	"Use Float>>exceptionMask: or #setFpControl:mask:"
 	^self setFpControl: anInteger mask: CRTConstants._MCW_EM! !
-!Process categoriesFor: #fpeMask!accessing!public! !
-!Process categoriesFor: #fpeMask:!accessing!private! !
+!Process categoriesForMethods!
+fpeMask!accessing!public! !
+fpeMask:!accessing!private! !
+!
 
 !SortAlgorithm class methodsFor!
 
 sortBlock: aDyadicValuable
 	Notification deprecated.
 	^self newSortBlock: aDyadicValuable! !
-!SortAlgorithm class categoriesFor: #sortBlock:!instance creation!public! !
+!SortAlgorithm class categoriesForMethods!
+sortBlock:!instance creation!public! !
+!
 
 !SortedCollection class methodsFor!
 
@@ -1009,28 +1063,36 @@ value: anObject1 value: anObject2
 
 	Notification deprecated.
 	^anObject1 <= anObject2! !
-!SortedCollection class categoriesFor: #value:value:!evaluating!private! !
+!SortedCollection class categoriesForMethods!
+value:value:!evaluating!private! !
+!
 
 !STBClassProxy class methodsFor!
 
 for: aClass 
 	#deprecated.
 	^self forClass: aClass! !
-!STBClassProxy class categoriesFor: #for:!instance creation!public! !
+!STBClassProxy class categoriesForMethods!
+for:!instance creation!public! !
+!
 
 !STBCollectionProxy class methodsFor!
 
 for: aCollection 
 	#deprecated.
 	^self forCollection: aCollection! !
-!STBCollectionProxy class categoriesFor: #for:!instance creation!public! !
+!STBCollectionProxy class categoriesForMethods!
+for:!instance creation!public! !
+!
 
 !STBPrefix methodsFor!
 
 isLiteralPrefix
 	#deprecated.
 	^dword anyMask: LiteralPrefixMask! !
-!STBPrefix categoriesFor: #isLiteralPrefix!public!testing! !
+!STBPrefix categoriesForMethods!
+isLiteralPrefix!public!testing! !
+!
 
 !STBSingletonProxy class methodsFor!
 
@@ -1041,15 +1103,19 @@ for: aClass
 for: aClass using: aSelectorSymbol 
 	#deprecated.
 	^self forClass: aClass using: aSelectorSymbol! !
-!STBSingletonProxy class categoriesFor: #for:!instance creation!public! !
-!STBSingletonProxy class categoriesFor: #for:using:!instance creation!public! !
+!STBSingletonProxy class categoriesForMethods!
+for:!instance creation!public! !
+for:using:!instance creation!public! !
+!
 
 !Stream methodsFor!
 
 nextOrNil
 	#deprecated.
 	^self nextAvailable! !
-!Stream categoriesFor: #nextOrNil!accessing!public! !
+!Stream categoriesForMethods!
+nextOrNil!accessing!public! !
+!
 
 !String methodsFor!
 
@@ -1060,8 +1126,10 @@ asUnicodeString
 equals: comperand
 	Notification deprecated.	"As of v7.1.6, Strings and Symbols with the same characters are always equal."
 	^self = comperand! !
-!String categoriesFor: #asUnicodeString!converting!public! !
-!String categoriesFor: #equals:!comparing!public! !
+!String categoriesForMethods!
+asUnicodeString!converting!public! !
+equals:!comparing!public! !
+!
 
 !String class methodsFor!
 
@@ -1072,8 +1140,10 @@ fromUnicodeString: anAddressOrUnicodeString
 unicodeClass
 	#deprecated.
 	^self utf16Class! !
-!String class categoriesFor: #fromUnicodeString:!instance creation!public! !
-!String class categoriesFor: #unicodeClass!constants!public! !
+!String class categoriesForMethods!
+fromUnicodeString:!instance creation!public! !
+unicodeClass!constants!public! !
+!
 
 !Time methodsFor!
 
@@ -1088,9 +1158,11 @@ milliseconds
 minutes
 	Notification deprecated.
 	^self minute! !
-!Time categoriesFor: #hours!accessing!public! !
-!Time categoriesFor: #milliseconds!accessing!public! !
-!Time categoriesFor: #minutes!accessing!public! !
+!Time categoriesForMethods!
+hours!accessing!public! !
+milliseconds!accessing!public! !
+minutes!accessing!public! !
+!
 
 !Time class methodsFor!
 
@@ -1109,8 +1181,10 @@ microsecondsToRun: timedBlock
 	(including the overhead)."
 
 	^timedBlock timeToRun asMicroseconds asInteger! !
-!Time class categoriesFor: #dateAndTimeNow!accessing!public! !
-!Time class categoriesFor: #microsecondsToRun:!operations!public! !
+!Time class categoriesForMethods!
+dateAndTimeNow!accessing!public! !
+microsecondsToRun:!operations!public! !
+!
 
 !TimeStamp methodsFor!
 
@@ -1135,9 +1209,11 @@ time: aTime
 	self isImmutable: false.
 	time := aTime
 ! !
-!TimeStamp categoriesFor: #date:!accessing!public! !
-!TimeStamp categoriesFor: #dateAndTime!accessing!public! !
-!TimeStamp categoriesFor: #time:!accessing!public! !
+!TimeStamp categoriesForMethods!
+date:!accessing!public! !
+dateAndTime!accessing!public! !
+time:!accessing!public! !
+!
 
 !WindowsLocale methodsFor!
 
@@ -1146,7 +1222,9 @@ timeSeparator
 
 	Notification deprecated. "Use timeFormat"
 	^self getStringInfo: LOCALE_STIME! !
-!WindowsLocale categoriesFor: #timeSeparator!constants!public! !
+!WindowsLocale categoriesForMethods!
+timeSeparator!constants!public! !
+!
 
 !WinMMLibrary methodsFor!
 
@@ -1154,7 +1232,9 @@ timeGetTime
 	<stdcall: dword timeGetTime>
 	#deprecated.	"Use Time class>>millisecondClockValue (which is highly accurate, and does not wrap after ~49.7 days either)"
 	^self invalidCall: _failureCode! !
-!WinMMLibrary categoriesFor: #timeGetTime!public!win32 functions-timer! !
+!WinMMLibrary categoriesForMethods!
+timeGetTime!public!win32 functions-timer! !
+!
 
 "End of package definition"!
 

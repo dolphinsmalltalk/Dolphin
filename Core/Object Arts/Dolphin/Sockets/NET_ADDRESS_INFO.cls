@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #NET_ADDRESS_INFO
 	instanceVariableNames: ''
@@ -125,19 +125,21 @@ NamedAddress_Port: aWORDArray
 		from: ##(_OffsetOf_NamedAddress_Port + 1)
 		to: _OffsetOf_NamedAddress_Port + size
 		startingAt: 1! !
-!NET_ADDRESS_INFO categoriesFor: #Format!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #Format:!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #getValidFields!accessing!private! !
-!NET_ADDRESS_INFO categoriesFor: #IpAddress!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #IpAddress:!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #Ipv4Address!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #Ipv4Address:!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #Ipv6Address!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #Ipv6Address:!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #NamedAddress_Address!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #NamedAddress_Address:!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #NamedAddress_Port!**compiled accessors**!public! !
-!NET_ADDRESS_INFO categoriesFor: #NamedAddress_Port:!**compiled accessors**!public! !
+!NET_ADDRESS_INFO categoriesForMethods!
+Format!**compiled accessors**!public! !
+Format:!**compiled accessors**!public! !
+getValidFields!accessing!private! !
+IpAddress!**compiled accessors**!public! !
+IpAddress:!**compiled accessors**!public! !
+Ipv4Address!**compiled accessors**!public! !
+Ipv4Address:!**compiled accessors**!public! !
+Ipv6Address!**compiled accessors**!public! !
+Ipv6Address:!**compiled accessors**!public! !
+NamedAddress_Address!**compiled accessors**!public! !
+NamedAddress_Address:!**compiled accessors**!public! !
+NamedAddress_Port!**compiled accessors**!public! !
+NamedAddress_Port:!**compiled accessors**!public! !
+!
 
 !NET_ADDRESS_INFO class methodsFor!
 
@@ -172,6 +174,8 @@ defineFields
 
 getFieldNames
 	^#(#Format)! !
-!NET_ADDRESS_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!NET_ADDRESS_INFO class categoriesFor: #getFieldNames!accessing!private! !
+!NET_ADDRESS_INFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!accessing!private! !
+!
 

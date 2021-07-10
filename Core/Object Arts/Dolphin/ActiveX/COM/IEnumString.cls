@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IEnumXXXX subclass: #IEnumString
 	instanceVariableNames: ''
@@ -25,6 +25,8 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^LPWSTR! !
-!IEnumString class categoriesFor: #defineFunctions!initializing!public! !
-!IEnumString class categoriesFor: #elementClass!constants!public! !
+!IEnumString class categoriesForMethods!
+defineFunctions!initializing!public! !
+elementClass!constants!public! !
+!
 

@@ -609,9 +609,11 @@ testShellReadWrite
 			[shell1 destroy.
 			shell2 destroy].
 ! !
-!STLFilerTest categoriesFor: #testRectangleReadWrite!public!unit tests! !
-!STLFilerTest categoriesFor: #testResourceReadWrite!public!unit tests! !
-!STLFilerTest categoriesFor: #testShellReadWrite!public!unit tests! !
+!STLFilerTest categoriesForMethods!
+testRectangleReadWrite!public!unit tests! !
+testResourceReadWrite!public!unit tests! !
+testShellReadWrite!public!unit tests! !
+!
 
 "End of package definition"!
 

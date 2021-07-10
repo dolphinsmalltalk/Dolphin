@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TypeConverter subclass: #PluggableTypeConverter
 	instanceVariableNames: 'leftToRightBlock rightToLeftBlock'
@@ -45,13 +45,15 @@ setLeftToRightBlock: leftMonadicValuable rightToLeftBlock: rightMonadicValuable
 	noop := [:obj | obj].
 	leftToRightBlock := leftMonadicValuable ?? noop.
 	rightToLeftBlock := rightMonadicValuable ?? noop! !
-!PluggableTypeConverter categoriesFor: #leftToRight:!operations!private! !
-!PluggableTypeConverter categoriesFor: #leftToRightBlock!accessing!public! !
-!PluggableTypeConverter categoriesFor: #leftToRightBlock:!accessing!public! !
-!PluggableTypeConverter categoriesFor: #rightToLeft:!operations!private! !
-!PluggableTypeConverter categoriesFor: #rightToLeftBlock!accessing!public! !
-!PluggableTypeConverter categoriesFor: #rightToLeftBlock:!accessing!public! !
-!PluggableTypeConverter categoriesFor: #setLeftToRightBlock:rightToLeftBlock:!initializing!private! !
+!PluggableTypeConverter categoriesForMethods!
+leftToRight:!operations!private! !
+leftToRightBlock!accessing!public! !
+leftToRightBlock:!accessing!public! !
+rightToLeft:!operations!private! !
+rightToLeftBlock!accessing!public! !
+rightToLeftBlock:!accessing!public! !
+setLeftToRightBlock:rightToLeftBlock:!initializing!private! !
+!
 
 !PluggableTypeConverter class methodsFor!
 
@@ -67,6 +69,8 @@ leftToRight: leftMonadicValuable rightToLeft: rightMonadicValuable
 
 new
 	^self leftToRight: [:left | left] rightToLeft: [:right | right]! !
-!PluggableTypeConverter class categoriesFor: #leftToRight:rightToLeft:!instance creation!public! !
-!PluggableTypeConverter class categoriesFor: #new!public! !
+!PluggableTypeConverter class categoriesForMethods!
+leftToRight:rightToLeft:!instance creation!public! !
+new!public! !
+!
 

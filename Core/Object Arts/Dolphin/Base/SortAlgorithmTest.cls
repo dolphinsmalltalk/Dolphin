@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #SortAlgorithmTest
 	instanceVariableNames: ''
@@ -258,22 +258,24 @@ testSortIntegers
 	self sortMagnitudes: collection.
 	collection := 1 to: self integerSortSize.
 	self sortMagnitudes: collection! !
-!SortAlgorithmTest categoriesFor: #add:sortBlock:!helpers!private! !
-!SortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!SortAlgorithmTest categoriesFor: #assertSorted:!helpers!private! !
-!SortAlgorithmTest categoriesFor: #assertSorted:by:!helpers!private! !
-!SortAlgorithmTest categoriesFor: #bigStringSort!private!unit tests! !
-!SortAlgorithmTest categoriesFor: #integerSortSize!constants!private! !
-!SortAlgorithmTest categoriesFor: #newAscending:!private!unit tests! !
-!SortAlgorithmTest categoriesFor: #newDescending:!private!unit tests! !
-!SortAlgorithmTest categoriesFor: #partialSort:using:!private!testing! !
-!SortAlgorithmTest categoriesFor: #sort:sortBlock:!helpers!private! !
-!SortAlgorithmTest categoriesFor: #sortMagnitudes:!private!unit tests! !
-!SortAlgorithmTest categoriesFor: #testAdd!public!unit tests! !
-!SortAlgorithmTest categoriesFor: #testDefault!public!testing! !
-!SortAlgorithmTest categoriesFor: #testExtremeSortBlocks!public!unit tests! !
-!SortAlgorithmTest categoriesFor: #testIncludes!public!unit tests! !
-!SortAlgorithmTest categoriesFor: #testPartialSort!public!testing! !
-!SortAlgorithmTest categoriesFor: #testRandomSort!public!unit tests! !
-!SortAlgorithmTest categoriesFor: #testSortIntegers!public!unit tests! !
+!SortAlgorithmTest categoriesForMethods!
+add:sortBlock:!helpers!private! !
+algorithmToTest!private!unit tests! !
+assertSorted:!helpers!private! !
+assertSorted:by:!helpers!private! !
+bigStringSort!private!unit tests! !
+integerSortSize!constants!private! !
+newAscending:!private!unit tests! !
+newDescending:!private!unit tests! !
+partialSort:using:!private!testing! !
+sort:sortBlock:!helpers!private! !
+sortMagnitudes:!private!unit tests! !
+testAdd!public!unit tests! !
+testDefault!public!testing! !
+testExtremeSortBlocks!public!unit tests! !
+testIncludes!public!unit tests! !
+testPartialSort!public!testing! !
+testRandomSort!public!unit tests! !
+testSortIntegers!public!unit tests! !
+!
 

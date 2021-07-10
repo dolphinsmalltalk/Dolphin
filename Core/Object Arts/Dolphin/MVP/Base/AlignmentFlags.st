@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Smalltalk at: #AlignmentFlags put: (PoolConstantsDictionary named: #AlignmentFlags)!
 AlignmentFlags at: 'AlignBottom' put: 16r8!

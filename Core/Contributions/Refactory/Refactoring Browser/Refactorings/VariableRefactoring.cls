@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Refactoring subclass: #VariableRefactoring
 	instanceVariableNames: 'class variableName'
@@ -26,8 +26,10 @@ variable: aVarName class: aClass
 	variableName := aVarName.
 	class := self classObjectFor: aClass.
 ! !
-!VariableRefactoring categoriesFor: #storeOn:!printing!public! !
-!VariableRefactoring categoriesFor: #variable:class:!initialize/release!public! !
+!VariableRefactoring categoriesForMethods!
+storeOn:!printing!public! !
+variable:class:!initialize/release!public! !
+!
 
 !VariableRefactoring class methodsFor!
 
@@ -39,6 +41,8 @@ model: aRBNamespace variable: aVarName class: aClass
 
 variable: aVarName class: aClass
 	^self new variable: aVarName class: aClass! !
-!VariableRefactoring class categoriesFor: #model:variable:class:!instance creation!public! !
-!VariableRefactoring class categoriesFor: #variable:class:!instance creation!public! !
+!VariableRefactoring class categoriesForMethods!
+model:variable:class:!instance creation!public! !
+variable:class:!instance creation!public! !
+!
 

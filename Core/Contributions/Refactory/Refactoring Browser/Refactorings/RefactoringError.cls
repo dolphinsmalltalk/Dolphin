@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #RefactoringError
 	instanceVariableNames: 'refactoring'
@@ -15,8 +15,10 @@ refactoring
 
 refactoring: anObject
 	refactoring := anObject! !
-!RefactoringError categoriesFor: #refactoring!accessing!public! !
-!RefactoringError categoriesFor: #refactoring:!accessing!private! !
+!RefactoringError categoriesForMethods!
+refactoring!accessing!public! !
+refactoring:!accessing!private! !
+!
 
 !RefactoringError class methodsFor!
 
@@ -29,6 +31,8 @@ refactoring: aRefactoring signal: messageText with: tag
 	^(self new)
 		refactoring: aRefactoring;
 		signal: messageText with: tag! !
-!RefactoringError class categoriesFor: #refactoring:signal:!public! !
-!RefactoringError class categoriesFor: #refactoring:signal:with:!public! !
+!RefactoringError class categoriesForMethods!
+refactoring:signal:!public! !
+refactoring:signal:with:!public! !
+!
 

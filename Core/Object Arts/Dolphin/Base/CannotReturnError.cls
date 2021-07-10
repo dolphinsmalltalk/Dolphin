@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #CannotReturnError
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ CannotReturnError comment: ''!
 
 description
 	^'Cannot return ' , self tag basicPrintString , ' to expired context or across Processes'! !
-!CannotReturnError categoriesFor: #description!displaying!public! !
+!CannotReturnError categoriesForMethods!
+description!displaying!public! !
+!
 

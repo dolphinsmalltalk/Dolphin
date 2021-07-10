@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #ISAXDeclHandler
 	instanceVariableNames: ''
@@ -115,10 +115,12 @@ InternalEntityDecl: pwchName cchName: cchName pwchValue: pwchValue cchValue: cch
 
 	<virtual stdcall: hresult 6 word* sdword word* sdword>
 	^self invalidCall: _failureCode! !
-!ISAXDeclHandler categoriesFor: #AttributeDecl:cchElementName:pwchAttributeName:cchAttributeName:pwchType:cchType:pwchValueDefault:cchValueDefault:pwchValue:cchValue:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
-!ISAXDeclHandler categoriesFor: #ElementDecl:cchName:pwchModel:cchModel:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
-!ISAXDeclHandler categoriesFor: #ExternalEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
-!ISAXDeclHandler categoriesFor: #InternalEntityDecl:cchName:pwchValue:cchValue:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
+!ISAXDeclHandler categoriesForMethods!
+AttributeDecl:cchElementName:pwchAttributeName:cchAttributeName:pwchType:cchType:pwchValueDefault:cchValueDefault:pwchValue:cchValue:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
+ElementDecl:cchName:pwchModel:cchModel:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
+ExternalEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
+InternalEntityDecl:cchName:pwchValue:cchValue:!**auto generated**!COM Interfaces-ISAXDeclHandler!public! !
+!
 
 !ISAXDeclHandler class methodsFor!
 
@@ -136,5 +138,7 @@ defineFunctions
 		defineFunction: #ExternalEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:
 			argumentTypes: 'word* sdword word* sdword word* sdword'
 ! !
-!ISAXDeclHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISAXDeclHandler class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRSETICMPROFILE
 	instanceVariableNames: ''
@@ -78,15 +78,17 @@ dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger! !
-!EMRSETICMPROFILE categoriesFor: #cbData!**compiled accessors**!public! !
-!EMRSETICMPROFILE categoriesFor: #cbData:!**compiled accessors**!public! !
-!EMRSETICMPROFILE categoriesFor: #cbName!**compiled accessors**!public! !
-!EMRSETICMPROFILE categoriesFor: #cbName:!**compiled accessors**!public! !
-!EMRSETICMPROFILE categoriesFor: #Data!**compiled accessors**!public! !
-!EMRSETICMPROFILE categoriesFor: #Data:!**compiled accessors**!public! !
-!EMRSETICMPROFILE categoriesFor: #dataLength!accessing!public! !
-!EMRSETICMPROFILE categoriesFor: #dwFlags!**compiled accessors**!public! !
-!EMRSETICMPROFILE categoriesFor: #dwFlags:!**compiled accessors**!public! !
+!EMRSETICMPROFILE categoriesForMethods!
+cbData!**compiled accessors**!public! !
+cbData:!**compiled accessors**!public! !
+cbName!**compiled accessors**!public! !
+cbName:!**compiled accessors**!public! !
+Data!**compiled accessors**!public! !
+Data:!**compiled accessors**!public! !
+dataLength!accessing!public! !
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+!
 
 !EMRSETICMPROFILE class methodsFor!
 
@@ -128,7 +130,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETICMPROFILEA with: EMR_SETICMPROFILEW! !
-!EMRSETICMPROFILE class categoriesFor: #defineFields!public!template definition! !
-!EMRSETICMPROFILE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETICMPROFILE class categoriesFor: #iTypes!constants!public! !
+!EMRSETICMPROFILE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

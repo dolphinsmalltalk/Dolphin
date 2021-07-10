@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SelectionChangeEvent subclass: #SelectionChangingEvent
 	instanceVariableNames: 'permit'
@@ -22,14 +22,18 @@ value
 
 value: aBoolean
 	permit := aBoolean! !
-!SelectionChangingEvent categoriesFor: #canIntercept!public!testing! !
-!SelectionChangingEvent categoriesFor: #setSource:!initializing!private! !
-!SelectionChangingEvent categoriesFor: #value!accessing!public! !
-!SelectionChangingEvent categoriesFor: #value:!accessing!public! !
+!SelectionChangingEvent categoriesForMethods!
+canIntercept!public!testing! !
+setSource:!initializing!private! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !SelectionChangingEvent class methodsFor!
 
 new
 	^self shouldNotImplement! !
-!SelectionChangingEvent class categoriesFor: #new!instance creation!public! !
+!SelectionChangingEvent class categoriesForMethods!
+new!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusTests subclass: #GdiplusLinearGradientBrushTest
 	instanceVariableNames: ''
@@ -104,13 +104,15 @@ testPersistentArgument
 	self assert: brush isRealized.
 	self assert: pen initializer brush identicalTo: brush
 	"for gc reasons .. the pen must always hold a reference to the brush"! !
-!GdiplusLinearGradientBrushTest categoriesFor: #setSample1!accessing!public! !
-!GdiplusLinearGradientBrushTest categoriesFor: #testClone!public!unit tests! !
-!GdiplusLinearGradientBrushTest categoriesFor: #testConstructor1!public!unit tests! !
-!GdiplusLinearGradientBrushTest categoriesFor: #testConstructor2!public!unit tests! !
-!GdiplusLinearGradientBrushTest categoriesFor: #testFillingHorizontal!public!unit tests! !
-!GdiplusLinearGradientBrushTest categoriesFor: #testGetBlend!public!unit tests! !
-!GdiplusLinearGradientBrushTest categoriesFor: #testGetBlendCount!public!unit tests! !
-!GdiplusLinearGradientBrushTest categoriesFor: #testIsGammaCorrected!public!unit tests! !
-!GdiplusLinearGradientBrushTest categoriesFor: #testPersistentArgument!public!unit tests! !
+!GdiplusLinearGradientBrushTest categoriesForMethods!
+setSample1!accessing!public! !
+testClone!public!unit tests! !
+testConstructor1!public!unit tests! !
+testConstructor2!public!unit tests! !
+testFillingHorizontal!public!unit tests! !
+testGetBlend!public!unit tests! !
+testGetBlendCount!public!unit tests! !
+testIsGammaCorrected!public!unit tests! !
+testPersistentArgument!public!unit tests! !
+!
 

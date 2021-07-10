@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassDescriptionTest subclass: #MetaclassTest
 	instanceVariableNames: ''
@@ -75,8 +75,10 @@ testName
 			[:root |
 			root class
 				allSubclassesDo: [:each | self assert: each name equals: each instanceClass name , ' class']]! !
-!MetaclassTest categoriesFor: #allClassHierarchyInstancesDo:!helpers!private! !
-!MetaclassTest categoriesFor: #testInstances!public!unit tests! !
-!MetaclassTest categoriesFor: #testLessOrEqual!public!unit tests! !
-!MetaclassTest categoriesFor: #testName!public!unit tests! !
+!MetaclassTest categoriesForMethods!
+allClassHierarchyInstancesDo:!helpers!private! !
+testInstances!public!unit tests! !
+testLessOrEqual!public!unit tests! !
+testName!public!unit tests! !
+!
 

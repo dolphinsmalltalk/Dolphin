@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 WindowsEvent subclass: #SizeEvent
 	instanceVariableNames: ''
@@ -29,8 +29,10 @@ width
 	"Answer the width of the client area after the size event."
 
 	^self lParamX! !
-!SizeEvent categoriesFor: #extent!accessing!public! !
-!SizeEvent categoriesFor: #height!accessing!public! !
-!SizeEvent categoriesFor: #type!accessing!public! !
-!SizeEvent categoriesFor: #width!accessing!public! !
+!SizeEvent categoriesForMethods!
+extent!accessing!public! !
+height!accessing!public! !
+type!accessing!public! !
+width!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LookupTable variableSubclass: #IdentityDictionary
 	instanceVariableNames: ''
@@ -40,10 +40,12 @@ searchPolicy
 	"Answer the receiver's <searchPolicy>."
 
 	^SearchPolicy identity! !
-!IdentityDictionary categoriesFor: #findKeyOrNil:!private!searching! !
-!IdentityDictionary categoriesFor: #hash:max:!private!searching! !
-!IdentityDictionary categoriesFor: #keysClass!constants!public! !
-!IdentityDictionary categoriesFor: #searchPolicy!constants!public! !
+!IdentityDictionary categoriesForMethods!
+findKeyOrNil:!private!searching! !
+hash:max:!private!searching! !
+keysClass!constants!public! !
+searchPolicy!constants!public! !
+!
 
 IdentityDictionary class methodProtocol: #'IdentityDictionary factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #withAll:)!
 

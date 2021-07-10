@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CollectionTest subclass: #SequencedReadableCollectionTest
 	instanceVariableNames: 'canonicalObjects'
@@ -17,5 +17,7 @@ canonicalObjects
 	helper := helpers detect: [ :each | each class == SequencedReadableCollectionHelper ].
 	canonicalObjects := helper canonicalObjects.
 	^canonicalObjects! !
-!SequencedReadableCollectionTest categoriesFor: #canonicalObjects!public! !
+!SequencedReadableCollectionTest categoriesForMethods!
+canonicalObjects!public! !
+!
 

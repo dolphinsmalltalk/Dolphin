@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #DOCINFOW
 	instanceVariableNames: 'docName'
@@ -45,12 +45,14 @@ lpszOutput: anUtf16String
 	"Set the receiver's 'lpszOutput' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpszOutput put: anUtf16String yourAddress! !
-!DOCINFOW categoriesFor: #docName:!accessing!public! !
-!DOCINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!DOCINFOW categoriesFor: #fwType:!**compiled accessors**!public! !
-!DOCINFOW categoriesFor: #lpszDatatype:!**compiled accessors**!public! !
-!DOCINFOW categoriesFor: #lpszDocName:!**compiled accessors**!public! !
-!DOCINFOW categoriesFor: #lpszOutput:!**compiled accessors**!public! !
+!DOCINFOW categoriesForMethods!
+docName:!accessing!public! !
+dwSize:!**compiled accessors**!public! !
+fwType:!**compiled accessors**!public! !
+lpszDatatype:!**compiled accessors**!public! !
+lpszDocName:!**compiled accessors**!public! !
+lpszOutput:!**compiled accessors**!public! !
+!
 
 !DOCINFOW class methodsFor!
 
@@ -76,6 +78,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #lpszDocName #lpszOutput #lpszDatatype #fwType)! !
-!DOCINFOW class categoriesFor: #defineFields!public!template definition! !
-!DOCINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!DOCINFOW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

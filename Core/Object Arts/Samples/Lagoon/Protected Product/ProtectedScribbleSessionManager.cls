@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ProtectedProductSessionManager subclass: #ProtectedScribbleSessionManager
 	instanceVariableNames: ''
@@ -26,9 +26,11 @@ serialNumberClass
 	"Answer the class of the <ProtectedProductSerialNumber> used to encrypt the receiver"
 
 	^MyCompanySerialNumber! !
-!ProtectedScribbleSessionManager categoriesFor: #encryptedPackageNames!constants!public! !
-!ProtectedScribbleSessionManager categoriesFor: #productRegistrationKey!constants!public! !
-!ProtectedScribbleSessionManager categoriesFor: #serialNumberClass!constants!public! !
+!ProtectedScribbleSessionManager categoriesForMethods!
+encryptedPackageNames!constants!public! !
+productRegistrationKey!constants!public! !
+serialNumberClass!constants!public! !
+!
 
 !ProtectedScribbleSessionManager class methodsFor!
 
@@ -36,5 +38,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^Scribble! !
-!ProtectedScribbleSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!ProtectedScribbleSessionManager class categoriesForMethods!
+mainShellClass!constants!public! !
+!
 

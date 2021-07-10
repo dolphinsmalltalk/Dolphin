@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Interactor subclass: #CapturingInteractor
 	instanceVariableNames: 'oldInteractor stateFlags'
@@ -228,43 +228,45 @@ setCapture
 	source := self view.
 	oldInteractor := source interactor: self.
 	source setCapture! !
-!CapturingInteractor categoriesFor: #buttonsReleased!event handling!private! !
-!CapturingInteractor categoriesFor: #captureMouse!initializing!public! !
-!CapturingInteractor categoriesFor: #captureReleased!event handling!private! !
-!CapturingInteractor categoriesFor: #changeHotState:!helpers!private! !
-!CapturingInteractor categoriesFor: #initialize!initializing!public! !
-!CapturingInteractor categoriesFor: #isHot!public!testing! !
-!CapturingInteractor categoriesFor: #isHot:!accessing!public! !
-!CapturingInteractor categoriesFor: #isLeftButtonDown!public!testing! !
-!CapturingInteractor categoriesFor: #isLeftButtonDown:!accessing!public! !
-!CapturingInteractor categoriesFor: #isMiddleButtonDown!public!testing! !
-!CapturingInteractor categoriesFor: #isMiddleButtonDown:!accessing!public! !
-!CapturingInteractor categoriesFor: #isRightButtonDown!public!testing! !
-!CapturingInteractor categoriesFor: #isRightButtonDown:!accessing!public! !
-!CapturingInteractor categoriesFor: #onCaptureChanged:!event handling!public! !
-!CapturingInteractor categoriesFor: #onKeyPressed:!event handling!public! !
-!CapturingInteractor categoriesFor: #onKeyReleased:!event handling!public! !
-!CapturingInteractor categoriesFor: #onKeyTyped:!event handling!public! !
-!CapturingInteractor categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!CapturingInteractor categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!CapturingInteractor categoriesFor: #onLeftButtonReleased:!event handling!public! !
-!CapturingInteractor categoriesFor: #onMiddleButtonDoubleClicked:!event handling!public! !
-!CapturingInteractor categoriesFor: #onMiddleButtonPressed:!event handling!public! !
-!CapturingInteractor categoriesFor: #onMiddleButtonReleased:!event handling!public! !
-!CapturingInteractor categoriesFor: #onMouseLeave:!event handling!public! !
-!CapturingInteractor categoriesFor: #onMouseMoved:!event handling!public! !
-!CapturingInteractor categoriesFor: #onMouseWheeled:!event handling!public! !
-!CapturingInteractor categoriesFor: #onRightButtonDoubleClicked:!event handling!public! !
-!CapturingInteractor categoriesFor: #onRightButtonPressed:!event handling!public! !
-!CapturingInteractor categoriesFor: #onRightButtonReleased:!event handling!public! !
-!CapturingInteractor categoriesFor: #onSysKeyPressed:!event handling!public! !
-!CapturingInteractor categoriesFor: #onSysKeyReleased:!event handling!public! !
-!CapturingInteractor categoriesFor: #onSysKeyTyped:!event handling!public! !
-!CapturingInteractor categoriesFor: #onXButtonDoubleClicked:!event handling!public! !
-!CapturingInteractor categoriesFor: #onXButtonPressed:!event handling!public! !
-!CapturingInteractor categoriesFor: #onXButtonReleased:!event handling!public! !
-!CapturingInteractor categoriesFor: #releaseCapture!helpers!private! !
-!CapturingInteractor categoriesFor: #setCapture!helpers!private! !
+!CapturingInteractor categoriesForMethods!
+buttonsReleased!event handling!private! !
+captureMouse!initializing!public! !
+captureReleased!event handling!private! !
+changeHotState:!helpers!private! !
+initialize!initializing!public! !
+isHot!public!testing! !
+isHot:!accessing!public! !
+isLeftButtonDown!public!testing! !
+isLeftButtonDown:!accessing!public! !
+isMiddleButtonDown!public!testing! !
+isMiddleButtonDown:!accessing!public! !
+isRightButtonDown!public!testing! !
+isRightButtonDown:!accessing!public! !
+onCaptureChanged:!event handling!public! !
+onKeyPressed:!event handling!public! !
+onKeyReleased:!event handling!public! !
+onKeyTyped:!event handling!public! !
+onLeftButtonDoubleClicked:!event handling!public! !
+onLeftButtonPressed:!event handling!public! !
+onLeftButtonReleased:!event handling!public! !
+onMiddleButtonDoubleClicked:!event handling!public! !
+onMiddleButtonPressed:!event handling!public! !
+onMiddleButtonReleased:!event handling!public! !
+onMouseLeave:!event handling!public! !
+onMouseMoved:!event handling!public! !
+onMouseWheeled:!event handling!public! !
+onRightButtonDoubleClicked:!event handling!public! !
+onRightButtonPressed:!event handling!public! !
+onRightButtonReleased:!event handling!public! !
+onSysKeyPressed:!event handling!public! !
+onSysKeyReleased:!event handling!public! !
+onSysKeyTyped:!event handling!public! !
+onXButtonDoubleClicked:!event handling!public! !
+onXButtonPressed:!event handling!public! !
+onXButtonReleased:!event handling!public! !
+releaseCapture!helpers!private! !
+setCapture!helpers!private! !
+!
 
 !CapturingInteractor class methodsFor!
 
@@ -276,5 +278,7 @@ stbConvertToVersion1: instVars
 		at: 3 put: 0.
 	converted replaceFrom: 4 to: converted size with: instVars startingAt: 3.
 	^converted! !
-!CapturingInteractor class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
+!CapturingInteractor class categoriesForMethods!
+stbConvertToVersion1:!binary filing!private! !
+!
 

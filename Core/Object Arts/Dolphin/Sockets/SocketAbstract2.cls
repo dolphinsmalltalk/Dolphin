@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #SocketAbstract2
 	instanceVariableNames: 'port descriptor'
@@ -104,18 +104,20 @@ socketErrorOverlap
 	"Private - Raise a <SocketError> in response to an error in an overlapped socket library call."
 
 	SocketError signalWith: Processor activeProcess lastError! !
-!SocketAbstract2 categoriesFor: #asParameter!converting!public! !
-!SocketAbstract2 categoriesFor: #close!operations!public! !
-!SocketAbstract2 categoriesFor: #create!operations!private! !
-!SocketAbstract2 categoriesFor: #descriptor:!initializing!private! !
-!SocketAbstract2 categoriesFor: #errorSocketClosed!operations!private! !
-!SocketAbstract2 categoriesFor: #finalize!finalizing!private! !
-!SocketAbstract2 categoriesFor: #initialize!initializing!private! !
-!SocketAbstract2 categoriesFor: #isOpen!public!testing! !
-!SocketAbstract2 categoriesFor: #port!accessing!public! !
-!SocketAbstract2 categoriesFor: #port:!accessing!private! !
-!SocketAbstract2 categoriesFor: #printOn:!printing!public! !
-!SocketAbstract2 categoriesFor: #queryPort!accessing!public! !
-!SocketAbstract2 categoriesFor: #socketError!exceptions!private! !
-!SocketAbstract2 categoriesFor: #socketErrorOverlap!operations!private! !
+!SocketAbstract2 categoriesForMethods!
+asParameter!converting!public! !
+close!operations!public! !
+create!operations!private! !
+descriptor:!initializing!private! !
+errorSocketClosed!operations!private! !
+finalize!finalizing!private! !
+initialize!initializing!private! !
+isOpen!public!testing! !
+port!accessing!public! !
+port:!accessing!private! !
+printOn:!printing!public! !
+queryPort!accessing!public! !
+socketError!exceptions!private! !
+socketErrorOverlap!operations!private! !
+!
 

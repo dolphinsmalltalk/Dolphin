@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BrowserEnvironmentWrapper subclass: #SelectorEnvironment
 	instanceVariableNames: 'classSelectors metaClassSelectors'
@@ -193,32 +193,34 @@ storeOn: aStream
 	aStream nextPutAll: ') metaClasses: #('.
 	metaClassSelectors keysAndValuesDo: classBlock.
 	aStream nextPutAll: '))'! !
-!SelectorEnvironment categoriesFor: #addClass:!adding!public! !
-!SelectorEnvironment categoriesFor: #addClass:selector:!adding!public! !
-!SelectorEnvironment categoriesFor: #addClass:selectors:!adding!public! !
-!SelectorEnvironment categoriesFor: #classes:metaClasses:!initialize/release!public! !
-!SelectorEnvironment categoriesFor: #classesAndSelectorsDo:!accessing!public! !
-!SelectorEnvironment categoriesFor: #classesDo:!accessing/classes!public! !
-!SelectorEnvironment categoriesFor: #classNames!accessing/classes!public! !
-!SelectorEnvironment categoriesFor: #classSelectors:metaClassSelectors:!initialize/release!public! !
-!SelectorEnvironment categoriesFor: #defaultLabel!constants!private! !
-!SelectorEnvironment categoriesFor: #includesCategory:!public!testing! !
-!SelectorEnvironment categoriesFor: #includesClass:!public!testing! !
-!SelectorEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
-!SelectorEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!SelectorEnvironment categoriesFor: #initialize!initialize/release!public! !
-!SelectorEnvironment categoriesFor: #isEmpty!public!testing! !
-!SelectorEnvironment categoriesFor: #isSelectorEnvironment!public!testing! !
-!SelectorEnvironment categoriesFor: #numberSelectors!accessing!public! !
-!SelectorEnvironment categoriesFor: #on:!initialize/release!public! !
-!SelectorEnvironment categoriesFor: #postCopy!copying!public! !
-!SelectorEnvironment categoriesFor: #privateIncludesSelector:inClass:!private!testing! !
-!SelectorEnvironment categoriesFor: #privateSelectorsForClass:!accessing!private! !
-!SelectorEnvironment categoriesFor: #privateSelectorsForClassAdd:!adding!private! !
-!SelectorEnvironment categoriesFor: #removeClass:!public!removing! !
-!SelectorEnvironment categoriesFor: #removeClass:selector:!public!removing! !
-!SelectorEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
-!SelectorEnvironment categoriesFor: #storeOn:!printing!public! !
+!SelectorEnvironment categoriesForMethods!
+addClass:!adding!public! !
+addClass:selector:!adding!public! !
+addClass:selectors:!adding!public! !
+classes:metaClasses:!initialize/release!public! !
+classesAndSelectorsDo:!accessing!public! !
+classesDo:!accessing/classes!public! !
+classNames!accessing/classes!public! !
+classSelectors:metaClassSelectors:!initialize/release!public! !
+defaultLabel!constants!private! !
+includesCategory:!public!testing! !
+includesClass:!public!testing! !
+includesProtocol:in:!public!testing! !
+includesSelector:in:!public!testing! !
+initialize!initialize/release!public! !
+isEmpty!public!testing! !
+isSelectorEnvironment!public!testing! !
+numberSelectors!accessing!public! !
+on:!initialize/release!public! !
+postCopy!copying!public! !
+privateIncludesSelector:inClass:!private!testing! !
+privateSelectorsForClass:!accessing!private! !
+privateSelectorsForClassAdd:!adding!private! !
+removeClass:!public!removing! !
+removeClass:selector:!public!removing! !
+selectorsForClass:do:!accessing!public! !
+storeOn:!printing!public! !
+!
 
 !SelectorEnvironment class methodsFor!
 
@@ -304,10 +306,12 @@ referencesTo: aLiteral in: aBrowserEnvironment
 		label: label;
 		searchStrings: (Array with: aLiteral printString);
 		yourself! !
-!SelectorEnvironment class categoriesFor: #implementorsMatching:in:!instance creation!public! !
-!SelectorEnvironment class categoriesFor: #implementorsOf:in:!instance creation!public! !
-!SelectorEnvironment class categoriesFor: #matches:in:!instance creation!public! !
-!SelectorEnvironment class categoriesFor: #onMethods:forClass:in:!instance creation!public! !
-!SelectorEnvironment class categoriesFor: #onMethods:in:!instance creation!public! !
-!SelectorEnvironment class categoriesFor: #referencesTo:in:!instance creation!public! !
+!SelectorEnvironment class categoriesForMethods!
+implementorsMatching:in:!instance creation!public! !
+implementorsOf:in:!instance creation!public! !
+matches:in:!instance creation!public! !
+onMethods:forClass:in:!instance creation!public! !
+onMethods:in:!instance creation!public! !
+referencesTo:in:!instance creation!public! !
+!
 

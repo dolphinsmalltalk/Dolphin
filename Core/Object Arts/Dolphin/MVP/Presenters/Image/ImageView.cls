@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ImageViewAbstract subclass: #ImageView
 	instanceVariableNames: ''
@@ -38,5 +38,7 @@ paintImageOn: aCanvas
 		drawBorderOn: aCanvas
 		imageRect: imageRect
 		displayRect: displayRect! !
-!ImageView categoriesFor: #paintImageOn:!drawing!event handling!private! !
+!ImageView categoriesForMethods!
+paintImageOn:!drawing!event handling!private! !
+!
 

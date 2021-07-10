@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Notification subclass: #HRESULTNotification
 	instanceVariableNames: ''
@@ -26,7 +26,9 @@ hresult
 	"Answer the HRESULT error code associated with the receiver."
 
 	^self tag! !
-!HRESULTNotification categoriesFor: #_descriptionArguments!displaying!public! !
-!HRESULTNotification categoriesFor: #_descriptionFormat!displaying!public! !
-!HRESULTNotification categoriesFor: #hresult!accessing!public! !
+!HRESULTNotification categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+hresult!accessing!public! !
+!
 

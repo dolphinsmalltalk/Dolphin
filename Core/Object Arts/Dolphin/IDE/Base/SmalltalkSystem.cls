@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Model subclass: #SmalltalkSystem
 	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize displayItLocale'
@@ -4229,437 +4229,439 @@ wrapText: aString toWidth: max indent: colInteger tabWidth: tabInteger
 					[lines - 1 timesRepeat: [justified cr].
 					newline value]].
 	^justified contents! !
-!SmalltalkSystem categoriesFor: #aboutBoxClass!constants!private! !
-!SmalltalkSystem categoriesFor: #aboutBoxClass:!constants!private! !
-!SmalltalkSystem categoriesFor: #aboutDolphin!commands!public! !
-!SmalltalkSystem categoriesFor: #actualFont!accessing!options!public! !
-!SmalltalkSystem categoriesFor: #add:toProtocolWarning:!operations!private!protocols! !
-!SmalltalkSystem categoriesFor: #addAdditionalToolsFolderIcon:!operations!public! !
-!SmalltalkSystem categoriesFor: #addAdditionalToolsFolderIconFor:description:!operations!public! !
-!SmalltalkSystem categoriesFor: #addClass:toProtocol:!private!protocols! !
-!SmalltalkSystem categoriesFor: #addGlobalName:!operations!public! !
-!SmalltalkSystem categoriesFor: #additionalToolsFolder!accessing!private! !
-!SmalltalkSystem categoriesFor: #addMethod:toProtocol:!operations!protocols!public! !
-!SmalltalkSystem categoriesFor: #addProtocolSelectors:toProtocol:!operations!private!protocols! !
-!SmalltalkSystem categoriesFor: #addSamplesFolderIcon:!operations!public! !
-!SmalltalkSystem categoriesFor: #addSamplesFolderIconFor:description:!operations!public! !
-!SmalltalkSystem categoriesFor: #addSamplesFolderIconFor:description:helpId:!operations!public! !
-!SmalltalkSystem categoriesFor: #addSamplesFolderIconFor:helpId:!operations!public! !
-!SmalltalkSystem categoriesFor: #addSelectors:toProtocol:!operations!protocols!public! !
-!SmalltalkSystem categoriesFor: #addSystemFolderIcon:!operations!public! !
-!SmalltalkSystem categoriesFor: #addSystemFolderIcon:to:!operations!public! !
-!SmalltalkSystem categoriesFor: #allResourceIdentifiers!public! !
-!SmalltalkSystem categoriesFor: #allSelectors!accessing!public! !
-!SmalltalkSystem categoriesFor: #allSelectorsImplementedIn:!enquiries!public! !
-!SmalltalkSystem categoriesFor: #allSelectorsSentIn:!enquiries!public! !
-!SmalltalkSystem categoriesFor: #allSymbolsReferencedIn:!enquiries!public! !
-!SmalltalkSystem categoriesFor: #allUnimplementedSelectors!enquiries!public! !
-!SmalltalkSystem categoriesFor: #applyOptionsToTool:!private! !
-!SmalltalkSystem categoriesFor: #applyPublishedAspectsLiteralMap:to:!operations!private!theming! !
-!SmalltalkSystem categoriesFor: #argumentClasses!accessing!private! !
-!SmalltalkSystem categoriesFor: #argumentClasses:!accessing!private! !
-!SmalltalkSystem categoriesFor: #autoFormatMethodSource!options!public! !
-!SmalltalkSystem categoriesFor: #autoFormatMethodSource:!options!public! !
-!SmalltalkSystem categoriesFor: #availablePools!accessing!public! !
-!SmalltalkSystem categoriesFor: #backupOnImageSave!accessing!public! !
-!SmalltalkSystem categoriesFor: #backupOnImageSave:!accessing!public! !
-!SmalltalkSystem categoriesFor: #basicCreateSubclass:of:subclasses:!private!refactoring! !
-!SmalltalkSystem categoriesFor: #basicRemoveMethods:!helpers!private! !
-!SmalltalkSystem categoriesFor: #beginDrag:methods:!event handling!helpers!private! !
-!SmalltalkSystem categoriesFor: #beNotChanged!operations!private! !
-!SmalltalkSystem categoriesFor: #binaryClassFilesType!constants!private! !
-!SmalltalkSystem categoriesFor: #browseAllChangedMethods!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #browseAllUnimplementedSelectors!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #browseChangedMethodsOf:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseChangedMethodsOfClasses:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseClass!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #browseClass:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseClass:with:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseClassHierarchyOfMethod:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseClassReferences:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseClassReferences:in:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseClassVariables:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseCompilationFailures!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseCompilationFailuresIn:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseCompilationIssues!public! !
-!SmalltalkSystem categoriesFor: #browseCompilationIssuesIn:!public! !
-!SmalltalkSystem categoriesFor: #browseContainingText!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #browseContainingText:!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #browseContainingText:in:prompt:!browsing!private! !
-!SmalltalkSystem categoriesFor: #browseContainingTextIn:!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #browseDefinitionsMatching:in:!browsing!private! !
-!SmalltalkSystem categoriesFor: #browseDefinitionsMatching:inHierarchyOf:within:!browsing!private! !
-!SmalltalkSystem categoriesFor: #browseDefinitionsOf:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseDefinitionsOfSelector:in:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseEnvironment:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseFolder:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseGlobalReferences:in:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseHierarchy!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #browseHierarchy:!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #browseInstanceVariables:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseInstanceVariables:action:in:!browsing!private! !
-!SmalltalkSystem categoriesFor: #browseMessageDefinitions:in:!commands!private! !
-!SmalltalkSystem categoriesFor: #browseMessageDefinitionsIn:!commands!private! !
-!SmalltalkSystem categoriesFor: #browseMessageReferences:in:!commands!private! !
-!SmalltalkSystem categoriesFor: #browseMessageReferencesIn:!commands!private! !
-!SmalltalkSystem categoriesFor: #browseMessageReferencesInHierarchyOf:within:!commands!private! !
-!SmalltalkSystem categoriesFor: #browseMessagesMatching:in:!browsing!private! !
-!SmalltalkSystem categoriesFor: #browseMessagesSentBy:in:!browsing!operations!private! !
-!SmalltalkSystem categoriesFor: #browseMethod:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseMethod:with:!browsing!private! !
-!SmalltalkSystem categoriesFor: #browseMethodCategories:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseMethodCategories:in:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseMethodCategory!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseMethodHierarchyFrom:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseMethodProtocols:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseMethodsIn:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseMethodsIn:filter:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseMethodsInEnvironments:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseMethodsWithCompilationIssuesIn:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseMethodsWithFullBlocks!public!utilities! !
-!SmalltalkSystem categoriesFor: #browseMethodsWithNewBytecodes!browsing!public! !
-!SmalltalkSystem categoriesFor: #browsePackages!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #browsePackages:!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #browsePoolConstantsDictionary:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseProtocols!browsing!commands!protocols!public! !
-!SmalltalkSystem categoriesFor: #browseReferencesMatching:in:!browsing!private! !
-!SmalltalkSystem categoriesFor: #browseReferencesTo:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseReferencesToClassVar:inHierarchyOf:within:!browsing!private! !
-!SmalltalkSystem categoriesFor: #browseReferencesToGlobal:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseReferencesToGlobal:in:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseReferencesToInstVar:inHierarchyOf:within:!browsing!private! !
-!SmalltalkSystem categoriesFor: #browseReferencesToLiteral:in:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseReferencesToVariable:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browserEnvFromDom:!helpers!private! !
-!SmalltalkSystem categoriesFor: #browserEnvironmentForClasses:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseResourceIdentifier:!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #browseResources!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #browseResourcesReferencingView:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseSelectors:caption:environment:!browsing!private! !
-!SmalltalkSystem categoriesFor: #browseSystem!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #browseSystem:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseSystemOnMethod:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseSystemPackages:!browsing!public! !
-!SmalltalkSystem categoriesFor: #browseTests!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #browseViewHierarchy:!browsing!public! !
-!SmalltalkSystem categoriesFor: #buildAllSelectors!helpers!private! !
-!SmalltalkSystem categoriesFor: #buildMessageMenu:forMethods:browseSelector:extraArgs:browseOtherSelector:!helpers!menus!private! !
-!SmalltalkSystem categoriesFor: #buildSimpleSignatureFor:!autocompletion!helpers!private! !
-!SmalltalkSystem categoriesFor: #buildSystemFolder!accessing!private! !
-!SmalltalkSystem categoriesFor: #canRefactor!public!testing! !
-!SmalltalkSystem categoriesFor: #changedIcon!constants!private! !
-!SmalltalkSystem categoriesFor: #changedMethodCategory!constants!private! !
-!SmalltalkSystem categoriesFor: #changedMethodsIn:!public!searching! !
-!SmalltalkSystem categoriesFor: #changedMethodsOfClasses:!browsing!public! !
-!SmalltalkSystem categoriesFor: #changedResources!public!searching! !
-!SmalltalkSystem categoriesFor: #changeHistorySize!accessing!public! !
-!SmalltalkSystem categoriesFor: #changeHistorySize:!accessing!public! !
-!SmalltalkSystem categoriesFor: #changeManager!accessing!public! !
-!SmalltalkSystem categoriesFor: #chooseClass!helpers!public! !
-!SmalltalkSystem categoriesFor: #chooseClass:caption:allowNil:!operations!public! !
-!SmalltalkSystem categoriesFor: #chooseDefaultPackage!commands!public! !
-!SmalltalkSystem categoriesFor: #chooseSelectorsInProtocol:forClass:!operations!private!protocols! !
-!SmalltalkSystem categoriesFor: #chooseViewOf:!commands!public! !
-!SmalltalkSystem categoriesFor: #classBrowserClasses!accessing!public! !
-!SmalltalkSystem categoriesFor: #classChanged:!accessing!private! !
-!SmalltalkSystem categoriesFor: #classChooserClass!options!public! !
-!SmalltalkSystem categoriesFor: #classChooserClass:!options!public! !
-!SmalltalkSystem categoriesFor: #classesReferencingPool:!enquiries!public! !
-!SmalltalkSystem categoriesFor: #classesReferencingPoolNamed:!enquiries!public! !
-!SmalltalkSystem categoriesFor: #classFileIn:!public!source filing! !
-!SmalltalkSystem categoriesFor: #classFileOut:!public!source filing! !
-!SmalltalkSystem categoriesFor: #classFilesType!constants!private! !
-!SmalltalkSystem categoriesFor: #classHierarchy!accessing!public! !
-!SmalltalkSystem categoriesFor: #clearChangeHistory!public!refactoring! !
-!SmalltalkSystem categoriesFor: #clearSystemFolder!initializing!private! !
-!SmalltalkSystem categoriesFor: #cloneClass:as:under:in:!private!refactoring! !
-!SmalltalkSystem categoriesFor: #closeAll!commands!public! !
-!SmalltalkSystem categoriesFor: #compilationFailuresCategory!constants!private! !
-!SmalltalkSystem categoriesFor: #compilationWarningClass!constants!private! !
-!SmalltalkSystem categoriesFor: #compile:in:categories:package:extraFlags:!operations!public! !
-!SmalltalkSystem categoriesFor: #compilerNotification:!exceptions!private! !
-!SmalltalkSystem categoriesFor: #compressChanges!commands!public! !
-!SmalltalkSystem categoriesFor: #compressSources!commands!public! !
-!SmalltalkSystem categoriesFor: #copyAllMethodsOf:to:changes:!private!refactoring! !
-!SmalltalkSystem categoriesFor: #copyClass:!public!refactoring! !
-!SmalltalkSystem categoriesFor: #createClassVariableAccessors:in:within:!public!refactoring! !
-!SmalltalkSystem categoriesFor: #createSubclass:of:package:subclasses:!public!refactoring! !
-!SmalltalkSystem categoriesFor: #createSubclassOf:!public!refactoring! !
-!SmalltalkSystem categoriesFor: #createSubclassOf:inPackage:!public!refactoring! !
-!SmalltalkSystem categoriesFor: #createVariableAccessors:classVariables:within:!public!refactoring! !
-!SmalltalkSystem categoriesFor: #debuggerClass!options!public! !
-!SmalltalkSystem categoriesFor: #debuggerClass:!options!public! !
-!SmalltalkSystem categoriesFor: #defaultBrowserClass!options!public! !
-!SmalltalkSystem categoriesFor: #defaultBrowserClass:!options!public! !
-!SmalltalkSystem categoriesFor: #defaultFont!accessing!options!public! !
-!SmalltalkSystem categoriesFor: #defaultFont:!accessing!options!public! !
-!SmalltalkSystem categoriesFor: #defaultInspectorClass!options!public! !
-!SmalltalkSystem categoriesFor: #defaultInspectorClass:!options!public! !
-!SmalltalkSystem categoriesFor: #defaultMaxStack!accessing!public! !
-!SmalltalkSystem categoriesFor: #defaultMaxStack:!accessing!public! !
-!SmalltalkSystem categoriesFor: #defaultMethodCategories!accessing!public! !
-!SmalltalkSystem categoriesFor: #defaultPackage!accessing!public! !
-!SmalltalkSystem categoriesFor: #defaultPackage:!accessing!public! !
-!SmalltalkSystem categoriesFor: #defaultPublishedAspectsLiteralsMapOf:!accessing!private!theming! !
-!SmalltalkSystem categoriesFor: #definitionsMatching:in:!browsing!private! !
-!SmalltalkSystem categoriesFor: #definitionsMatching:inHierarchyOf:within:!browsing!private! !
-!SmalltalkSystem categoriesFor: #definitionsOf:!browsing!private! !
-!SmalltalkSystem categoriesFor: #deleteClassHierarchy:!operations!public! !
-!SmalltalkSystem categoriesFor: #deleteResource:!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #deprecatedIcon!constants!private! !
-!SmalltalkSystem categoriesFor: #disassembleMethod:!public! !
-!SmalltalkSystem categoriesFor: #disassemblyStylerClass!constants!public! !
-!SmalltalkSystem categoriesFor: #displayItLocale!options!public! !
-!SmalltalkSystem categoriesFor: #displayItLocale:!options!public! !
-!SmalltalkSystem categoriesFor: #displayOn:!displaying!public! !
-!SmalltalkSystem categoriesFor: #dolphinNewsgroup!commands!public! !
-!SmalltalkSystem categoriesFor: #dolphinNewsgroupUrl!public! !
-!SmalltalkSystem categoriesFor: #dolphinWikiUrl!public! !
-!SmalltalkSystem categoriesFor: #dolphinWikiWeb!commands!public! !
-!SmalltalkSystem categoriesFor: #dropClassFile:!commands!private! !
-!SmalltalkSystem categoriesFor: #dropFile:!commands!private! !
-!SmalltalkSystem categoriesFor: #dropPackageFile:!commands!private! !
-!SmalltalkSystem categoriesFor: #dropScriptFile:!commands!private! !
-!SmalltalkSystem categoriesFor: #dropTextFile:!commands!private! !
-!SmalltalkSystem categoriesFor: #dropXmlFile:!commands!private! !
-!SmalltalkSystem categoriesFor: #educationCenter!commands!public! !
-!SmalltalkSystem categoriesFor: #environment!constants!public! !
-!SmalltalkSystem categoriesFor: #expressionStylerClass!constants!public! !
-!SmalltalkSystem categoriesFor: #fileFileIn!commands!public! !
-!SmalltalkSystem categoriesFor: #fileNew!commands!public! !
-!SmalltalkSystem categoriesFor: #fileOpen!commands!public! !
-!SmalltalkSystem categoriesFor: #findDetails!accessing!private! !
-!SmalltalkSystem categoriesFor: #findMatchingClass:in:!helpers!private! !
-!SmalltalkSystem categoriesFor: #findSelectorValidationBlock!accessing!private! !
-!SmalltalkSystem categoriesFor: #formatterClass!accessing!public! !
-!SmalltalkSystem categoriesFor: #formatterClass:!accessing!public! !
-!SmalltalkSystem categoriesFor: #globalVariableNamed:!accessing!private! !
-!SmalltalkSystem categoriesFor: #hardResetGUI!commands!public! !
-!SmalltalkSystem categoriesFor: #hasRedoableOperations!public!testing! !
-!SmalltalkSystem categoriesFor: #hasUndoableOperations!public!testing! !
-!SmalltalkSystem categoriesFor: #helpContents!commands!operations!public! !
-!SmalltalkSystem categoriesFor: #helpContentsTopic!constants!public! !
-!SmalltalkSystem categoriesFor: #helpGuidedTour!commands!operations!public! !
-!SmalltalkSystem categoriesFor: #helpGuidedTourTopic!public! !
-!SmalltalkSystem categoriesFor: #helpRootUrl!constants!public! !
-!SmalltalkSystem categoriesFor: #helpTutorials!commands!operations!public! !
-!SmalltalkSystem categoriesFor: #helpTutorialsTopic!constants!public! !
-!SmalltalkSystem categoriesFor: #helpWhatsNew!commands!operations!public! !
-!SmalltalkSystem categoriesFor: #helpWhatsNewTopic!constants!public! !
-!SmalltalkSystem categoriesFor: #helpWhatsThis!commands!public! !
-!SmalltalkSystem categoriesFor: #hierarchyBrowserClass!options!public! !
-!SmalltalkSystem categoriesFor: #hierarchyBrowserClass:!options!public! !
-!SmalltalkSystem categoriesFor: #iconForMethod:!helpers!public! !
-!SmalltalkSystem categoriesFor: #ideaSpaceFilesType!constants!private! !
-!SmalltalkSystem categoriesFor: #imageFilesType!constants!private! !
-!SmalltalkSystem categoriesFor: #initialize!initializing!private! !
-!SmalltalkSystem categoriesFor: #initializeArgumentClasses!initializing!private! !
-!SmalltalkSystem categoriesFor: #initializeFrom:!public! !
-!SmalltalkSystem categoriesFor: #initializeSystemFolder!initializing!private! !
-!SmalltalkSystem categoriesFor: #inspect:!operations!public! !
-!SmalltalkSystem categoriesFor: #inspectVisualObject!commands!public! !
-!SmalltalkSystem categoriesFor: #installPackage:!commands!private! !
-!SmalltalkSystem categoriesFor: #instVarAccessFilter:in:!helpers!private! !
-!SmalltalkSystem categoriesFor: #instVarReaderFilter:in:!helpers!private! !
-!SmalltalkSystem categoriesFor: #instVarWriterFilter:in:!helpers!private! !
-!SmalltalkSystem categoriesFor: #interruptHotKey!options!public! !
-!SmalltalkSystem categoriesFor: #interruptHotKey:!options!public! !
-!SmalltalkSystem categoriesFor: #isOAD!accessing!private!product! !
-!SmalltalkSystem categoriesFor: #isRegisteredTool:!public!testing! !
-!SmalltalkSystem categoriesFor: #isValidClassVarName:for:!enquiries!helpers!private!refactoring! !
-!SmalltalkSystem categoriesFor: #isValidInstanceVariableName:for:!enquiries!helpers!private! !
-!SmalltalkSystem categoriesFor: #isValidNewClassVarName:for:!enquiries!helpers!private!refactoring! !
-!SmalltalkSystem categoriesFor: #keywordsAndArgsForSelector:!autocompletion!helpers!private! !
-!SmalltalkSystem categoriesFor: #keywordsAndArgsOfMethod:!autocompletion!helpers!private! !
-!SmalltalkSystem categoriesFor: #loadViewResource:inContext:!helpers!private! !
-!SmalltalkSystem categoriesFor: #messagesMatching:in:!browsing!private! !
-!SmalltalkSystem categoriesFor: #methodCategorizationPolicy!constants!private! !
-!SmalltalkSystem categoriesFor: #methodExplorerClass!options!public! !
-!SmalltalkSystem categoriesFor: #methodExplorerClass:!options!public! !
-!SmalltalkSystem categoriesFor: #methodsContainingText:in:prompt:!private!searching! !
-!SmalltalkSystem categoriesFor: #methodsThatFailedToCompileIn:!browsing!public! !
-!SmalltalkSystem categoriesFor: #methodStylerClass!constants!public! !
-!SmalltalkSystem categoriesFor: #methodsWithBytecode:in:!browsing!private! !
-!SmalltalkSystem categoriesFor: #methodsWithCompilationIssuesIn:!private!searching! !
-!SmalltalkSystem categoriesFor: #methodsWithNewBytecodes!browsing!private! !
-!SmalltalkSystem categoriesFor: #methodsWithNewBytecodesIn:!browsing!private! !
-!SmalltalkSystem categoriesFor: #methodWorkspaceClass!options!public! !
-!SmalltalkSystem categoriesFor: #minimizeAll!commands!public! !
-!SmalltalkSystem categoriesFor: #myDolphinAccount!accessing!public! !
-!SmalltalkSystem categoriesFor: #nameForArgument:!helpers!private! !
-!SmalltalkSystem categoriesFor: #nameForBlockOfArity:!helpers!private! !
-!SmalltalkSystem categoriesFor: #newCodeRefactoringToolFor:!helpers!public!refactoring! !
-!SmalltalkSystem categoriesFor: #newMethodRefactoringToolFor:!helpers!public!refactoring! !
-!SmalltalkSystem categoriesFor: #newWorkspace!commands!public! !
-!SmalltalkSystem categoriesFor: #nonDefaultPublishedAspectsLiteralsMapOf:!private!theming! !
-!SmalltalkSystem categoriesFor: #nonDefaultSystemOptionsLiteralsMap!private!theming! !
-!SmalltalkSystem categoriesFor: #nukeChangeHistory!private!refactoring! !
-!SmalltalkSystem categoriesFor: #objectArtsHomePage!commands!public! !
-!SmalltalkSystem categoriesFor: #objectArtsUrl!constants!private! !
-!SmalltalkSystem categoriesFor: #okToInstallPatchLevel:!patching!private! !
-!SmalltalkSystem categoriesFor: #onAboutToDisplayMenu:!event handling!public! !
-!SmalltalkSystem categoriesFor: #onClassAdded:!event handling!public! !
-!SmalltalkSystem categoriesFor: #onClassCategorized:!event handling!public! !
-!SmalltalkSystem categoriesFor: #onClassCommented:!event handling!public! !
-!SmalltalkSystem categoriesFor: #onClassRemoved:!event handling!public! !
-!SmalltalkSystem categoriesFor: #onClassUpdated:!event handling!public! !
-!SmalltalkSystem categoriesFor: #onDragOverProtocol:!event handling!operations!protocols!public! !
-!SmalltalkSystem categoriesFor: #onDropFiles:over:!event handling!private! !
-!SmalltalkSystem categoriesFor: #onDropOverProtocol:!event handling!operations!protocols!public! !
-!SmalltalkSystem categoriesFor: #onFileDropped:over:!event handling!private! !
-!SmalltalkSystem categoriesFor: #onGlobalRemoved:!event handling!public! !
-!SmalltalkSystem categoriesFor: #onGlobalRenamed:from:!events!public! !
-!SmalltalkSystem categoriesFor: #onMethodAdded:!event handling!public! !
-!SmalltalkSystem categoriesFor: #onMethodCategorized:!event handling!public! !
-!SmalltalkSystem categoriesFor: #onMethodRemoved:!event handling!public! !
-!SmalltalkSystem categoriesFor: #onMethodUpdated:!event handling!public! !
-!SmalltalkSystem categoriesFor: #onProtocolRemoved:!event handling!operations!protocols!public! !
-!SmalltalkSystem categoriesFor: #onProtocolUpdated:!event handling!operations!protocols!public! !
-!SmalltalkSystem categoriesFor: #onSessionStopped!event handling!public! !
-!SmalltalkSystem categoriesFor: #onTipTextRequired:!event handling!public! !
-!SmalltalkSystem categoriesFor: #openHelpTopic:!operations!public! !
-!SmalltalkSystem categoriesFor: #openHelpTopicForTool:!operations!public! !
-!SmalltalkSystem categoriesFor: #openHelpUrl:!operations!public! !
-!SmalltalkSystem categoriesFor: #openLocalHelpUrl:style:!operations!public! !
-!SmalltalkSystem categoriesFor: #openTool:!commands!private! !
-!SmalltalkSystem categoriesFor: #openUrl:!operations!public! !
-!SmalltalkSystem categoriesFor: #openViewComposer!commands!public! !
-!SmalltalkSystem categoriesFor: #openViewComposerEmpty!commands!public! !
-!SmalltalkSystem categoriesFor: #openViewComposerOn:!browsing!public! !
-!SmalltalkSystem categoriesFor: #openViewComposerOnNewViewFor:!commands!public! !
-!SmalltalkSystem categoriesFor: #openViewComposerOnViewOf:!commands!public! !
-!SmalltalkSystem categoriesFor: #openWorkspace!commands!public! !
-!SmalltalkSystem categoriesFor: #openXmlFile:!commands!private! !
-!SmalltalkSystem categoriesFor: #overlappingObjectsError:!exceptions!private! !
-!SmalltalkSystem categoriesFor: #pacFileDialogType!constants!private! !
-!SmalltalkSystem categoriesFor: #packageBrowserClass!options!public! !
-!SmalltalkSystem categoriesFor: #packageBrowserClass:!options!public! !
-!SmalltalkSystem categoriesFor: #packagedResourceIdentifierDialogClass!options!public! !
-!SmalltalkSystem categoriesFor: #packageFilesType!constants!private! !
-!SmalltalkSystem categoriesFor: #packageInstallWarning:!commands!private! !
-!SmalltalkSystem categoriesFor: #packageManager!accessing!private! !
-!SmalltalkSystem categoriesFor: #packageOpenFileDialogTypes!constants!private! !
-!SmalltalkSystem categoriesFor: #panic!commands!public! !
-!SmalltalkSystem categoriesFor: #patchLevel!patching!public! !
-!SmalltalkSystem categoriesFor: #patchLevel:!patching!private! !
-!SmalltalkSystem categoriesFor: #paxFileDialogType!constants!private! !
-!SmalltalkSystem categoriesFor: #playSaveImageSound!commands!private! !
-!SmalltalkSystem categoriesFor: #poolDictionariesFolder!accessing!private! !
-!SmalltalkSystem categoriesFor: #populateMenu:tree:items:!operations!private! !
-!SmalltalkSystem categoriesFor: #populateMessagesMenus:fromMethods:environment:!event handling!menus!private! !
-!SmalltalkSystem categoriesFor: #populateToolsMenu:!operations!private! !
-!SmalltalkSystem categoriesFor: #populateWindowMenu:!operations!private! !
-!SmalltalkSystem categoriesFor: #populateWindowMenu:withShells:ofClasses:!operations!private! !
-!SmalltalkSystem categoriesFor: #preferAlternateInspectors!accessing!public! !
-!SmalltalkSystem categoriesFor: #preferAlternateInspectors:!accessing!public! !
-!SmalltalkSystem categoriesFor: #printBlockStatsOn:!public!utilities! !
-!SmalltalkSystem categoriesFor: #printSignatureForKeywordsAndArgs:on:!autocompletion!helpers!private! !
-!SmalltalkSystem categoriesFor: #privateMethodIcon!constants!private! !
-!SmalltalkSystem categoriesFor: #privatePrefix!constants!private! !
-!SmalltalkSystem categoriesFor: #privatizeMethod:!operations!private! !
-!SmalltalkSystem categoriesFor: #promptForClass!enquiries!public! !
-!SmalltalkSystem categoriesFor: #promptForClassIn:!enquiries!public! !
-!SmalltalkSystem categoriesFor: #promptForClassName:!helpers!private! !
-!SmalltalkSystem categoriesFor: #promptForClassVarName:in:prompt:caption:!helpers!private!refactoring! !
-!SmalltalkSystem categoriesFor: #promptForInstVarName:in:prompt:caption:!helpers!private! !
-!SmalltalkSystem categoriesFor: #promptForReferencesToGlobal:in:!browsing!private! !
-!SmalltalkSystem categoriesFor: #promptForSearchString:caption:!browsing!commands!private! !
-!SmalltalkSystem categoriesFor: #promptForSelector:caption:!helpers!private! !
-!SmalltalkSystem categoriesFor: #protocolBrowserClass!options!public! !
-!SmalltalkSystem categoriesFor: #protocolBrowserClass:!options!public! !
-!SmalltalkSystem categoriesFor: #publicizeMethod:!operations!private! !
-!SmalltalkSystem categoriesFor: #publicMethodIcon!constants!private! !
-!SmalltalkSystem categoriesFor: #queryCommand:!commands!private! !
-!SmalltalkSystem categoriesFor: #redoChange!commands!public! !
-!SmalltalkSystem categoriesFor: #referencesMatching:in:!browsing!private! !
-!SmalltalkSystem categoriesFor: #referencesTo:!enquiries!public! !
-!SmalltalkSystem categoriesFor: #referencesTo:in:!enquiries!public! !
-!SmalltalkSystem categoriesFor: #referencesToClassVar:inHierarchyOf:within:!browsing!private! !
-!SmalltalkSystem categoriesFor: #referencesToLiteral:in:!browsing!public! !
-!SmalltalkSystem categoriesFor: #referencesToVariable:in:!enquiries!private! !
-!SmalltalkSystem categoriesFor: #reformatAllMethodsIn:!commands!private! !
-!SmalltalkSystem categoriesFor: #reformatSource:in:!commands!private! !
-!SmalltalkSystem categoriesFor: #registerSystemEvents!initializing!private! !
-!SmalltalkSystem categoriesFor: #registerTool:!accessing!public! !
-!SmalltalkSystem categoriesFor: #removeClass:fromProtocol:!operations!private!protocols! !
-!SmalltalkSystem categoriesFor: #removeGlobalNamed:!operations!public! !
-!SmalltalkSystem categoriesFor: #removeMethod:!operations!public! !
-!SmalltalkSystem categoriesFor: #removeMethod:changes:!operations!private! !
-!SmalltalkSystem categoriesFor: #removeMethods:!commands!public! !
-!SmalltalkSystem categoriesFor: #removeMethodsIn:!helpers!private! !
-!SmalltalkSystem categoriesFor: #removeMethodsIn:within:!commands!private! !
-!SmalltalkSystem categoriesFor: #removeSelector:fromProtocol:!operations!protocols!public! !
-!SmalltalkSystem categoriesFor: #removeSelectors:fromProtocol:!operations!protocols!public! !
-!SmalltalkSystem categoriesFor: #removeSystemFolderIcon:!operations!public! !
-!SmalltalkSystem categoriesFor: #removeSystemFolderIconNamed:!operations!public! !
-!SmalltalkSystem categoriesFor: #removeSystemFolderIconsForClass:!event handling!private! !
-!SmalltalkSystem categoriesFor: #renameClass:!operations!public! !
-!SmalltalkSystem categoriesFor: #renameClass:to:!operations!public! !
-!SmalltalkSystem categoriesFor: #renameClassVariable:in:!public!refactoring! !
-!SmalltalkSystem categoriesFor: #renameClassVariable:in:within:!public!refactoring! !
-!SmalltalkSystem categoriesFor: #renameClassVariable:to:in:within:!private!refactoring! !
-!SmalltalkSystem categoriesFor: #renameGlobal:to:!operations!public! !
-!SmalltalkSystem categoriesFor: #renameInstanceVariable:in:!public!refactoring! !
-!SmalltalkSystem categoriesFor: #renameInstanceVariable:in:within:!public!refactoring! !
-!SmalltalkSystem categoriesFor: #renameInstanceVariable:to:in:within:!private!refactoring! !
-!SmalltalkSystem categoriesFor: #requestPackageFileName:!operations!private! !
-!SmalltalkSystem categoriesFor: #requiresDolphinPro:!browsing!public! !
-!SmalltalkSystem categoriesFor: #resaveViewResourcesMatching:do:!public! !
-!SmalltalkSystem categoriesFor: #resetPublishedAspectsToDefaultsFor:!operations!private!theming! !
-!SmalltalkSystem categoriesFor: #resetSystemOptionsToDefaults!operations!private!theming! !
-!SmalltalkSystem categoriesFor: #resourceBrowserClass!options!public! !
-!SmalltalkSystem categoriesFor: #resourceBrowserClass:!options!public! !
-!SmalltalkSystem categoriesFor: #resourceIdentifierDialogClass!options!public! !
-!SmalltalkSystem categoriesFor: #resourceIdentifierDialogClass:!accessing!public! !
-!SmalltalkSystem categoriesFor: #resourceManager!private! !
-!SmalltalkSystem categoriesFor: #samplesFolder!accessing!private! !
-!SmalltalkSystem categoriesFor: #samplesFolderIcon!initializing!private! !
-!SmalltalkSystem categoriesFor: #saveDefaultPublishedAspectsOf:!operations!private!theming! !
-!SmalltalkSystem categoriesFor: #saveImage!commands!public! !
-!SmalltalkSystem categoriesFor: #saveImageAs!commands!public! !
-!SmalltalkSystem categoriesFor: #selectMethods:in:!enquiries!private! !
-!SmalltalkSystem categoriesFor: #selectMethods:in:withProgress:!private!searching! !
-!SmalltalkSystem categoriesFor: #sessionManager!accessing!private! !
-!SmalltalkSystem categoriesFor: #showPrerequisitesForPackage:!helpers!public! !
-!SmalltalkSystem categoriesFor: #showShellWithHandle:!commands!private! !
-!SmalltalkSystem categoriesFor: #showTranscript!commands!public! !
-!SmalltalkSystem categoriesFor: #signatureOfMethod:!autocompletion!helpers!private! !
-!SmalltalkSystem categoriesFor: #smalltalkExit!commands!public! !
-!SmalltalkSystem categoriesFor: #smalltalkFilesType!constants!private! !
-!SmalltalkSystem categoriesFor: #sourceManager!commands!public! !
-!SmalltalkSystem categoriesFor: #splashShowAtStartup!accessing!public! !
-!SmalltalkSystem categoriesFor: #splashShowAtStartup:!accessing!public! !
-!SmalltalkSystem categoriesFor: #stbSaveOn:!binary filing!public! !
-!SmalltalkSystem categoriesFor: #suggestedWord:!helpers!private! !
-!SmalltalkSystem categoriesFor: #systemEnvironment!commands!private! !
-!SmalltalkSystem categoriesFor: #systemFolder!accessing!public! !
-!SmalltalkSystem categoriesFor: #systemFolderClass!constants!public! !
-!SmalltalkSystem categoriesFor: #systemFolderClass:!constants!public! !
-!SmalltalkSystem categoriesFor: #systemFolderNamed:!accessing!private! !
-!SmalltalkSystem categoriesFor: #systemOptions!commands!public! !
-!SmalltalkSystem categoriesFor: #testBrowserClass!options!public! !
-!SmalltalkSystem categoriesFor: #toolBackgroundColor!accessing!public! !
-!SmalltalkSystem categoriesFor: #toolBackgroundColor:!accessing!public! !
-!SmalltalkSystem categoriesFor: #toolbarBitmapSize!accessing!public! !
-!SmalltalkSystem categoriesFor: #toolbarBitmapSize:!accessing!public! !
-!SmalltalkSystem categoriesFor: #typeForArgumentClass:!helpers!private! !
-!SmalltalkSystem categoriesFor: #undoChange!commands!public! !
-!SmalltalkSystem categoriesFor: #unimplementedSelectorsIn:!enquiries!public! !
-!SmalltalkSystem categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!SmalltalkSystem categoriesFor: #unregisterTool:!accessing!public! !
-!SmalltalkSystem categoriesFor: #upgradeAllResourcesReferencingClassNamed:!browsing!commands!public! !
-!SmalltalkSystem categoriesFor: #userPreferencesIcon!initializing!private! !
-!SmalltalkSystem categoriesFor: #validateRenameInstVar:to:in:!helpers!private! !
-!SmalltalkSystem categoriesFor: #viewComposerClass!constants!public! !
-!SmalltalkSystem categoriesFor: #viewComposerClass:!options!public! !
-!SmalltalkSystem categoriesFor: #viewResourcesMatching:do:!private!utilities! !
-!SmalltalkSystem categoriesFor: #warnOfUndefinedSelectorsSentBy:!helpers!private! !
-!SmalltalkSystem categoriesFor: #workspaceClass!options!public! !
-!SmalltalkSystem categoriesFor: #workspaceClass:!options!public! !
-!SmalltalkSystem categoriesFor: #workspaceShellClass!options!public! !
-!SmalltalkSystem categoriesFor: #workspaceShellClass:!options!public! !
-!SmalltalkSystem categoriesFor: #wrapText:indent:tabWidth:!public!utilities! !
-!SmalltalkSystem categoriesFor: #wrapText:toWidth:indent:tabWidth:!public!utilities! !
+!SmalltalkSystem categoriesForMethods!
+aboutBoxClass!constants!private! !
+aboutBoxClass:!constants!private! !
+aboutDolphin!commands!public! !
+actualFont!accessing!options!public! !
+add:toProtocolWarning:!operations!private!protocols! !
+addAdditionalToolsFolderIcon:!operations!public! !
+addAdditionalToolsFolderIconFor:description:!operations!public! !
+addClass:toProtocol:!private!protocols! !
+addGlobalName:!operations!public! !
+additionalToolsFolder!accessing!private! !
+addMethod:toProtocol:!operations!protocols!public! !
+addProtocolSelectors:toProtocol:!operations!private!protocols! !
+addSamplesFolderIcon:!operations!public! !
+addSamplesFolderIconFor:description:!operations!public! !
+addSamplesFolderIconFor:description:helpId:!operations!public! !
+addSamplesFolderIconFor:helpId:!operations!public! !
+addSelectors:toProtocol:!operations!protocols!public! !
+addSystemFolderIcon:!operations!public! !
+addSystemFolderIcon:to:!operations!public! !
+allResourceIdentifiers!public! !
+allSelectors!accessing!public! !
+allSelectorsImplementedIn:!enquiries!public! !
+allSelectorsSentIn:!enquiries!public! !
+allSymbolsReferencedIn:!enquiries!public! !
+allUnimplementedSelectors!enquiries!public! !
+applyOptionsToTool:!private! !
+applyPublishedAspectsLiteralMap:to:!operations!private!theming! !
+argumentClasses!accessing!private! !
+argumentClasses:!accessing!private! !
+autoFormatMethodSource!options!public! !
+autoFormatMethodSource:!options!public! !
+availablePools!accessing!public! !
+backupOnImageSave!accessing!public! !
+backupOnImageSave:!accessing!public! !
+basicCreateSubclass:of:subclasses:!private!refactoring! !
+basicRemoveMethods:!helpers!private! !
+beginDrag:methods:!event handling!helpers!private! !
+beNotChanged!operations!private! !
+binaryClassFilesType!constants!private! !
+browseAllChangedMethods!browsing!commands!public! !
+browseAllUnimplementedSelectors!browsing!commands!public! !
+browseChangedMethodsOf:!browsing!public! !
+browseChangedMethodsOfClasses:!browsing!public! !
+browseClass!browsing!commands!public! !
+browseClass:!browsing!public! !
+browseClass:with:!browsing!public! !
+browseClassHierarchyOfMethod:!browsing!public! !
+browseClassReferences:!browsing!public! !
+browseClassReferences:in:!browsing!public! !
+browseClassVariables:!browsing!public! !
+browseCompilationFailures!browsing!public! !
+browseCompilationFailuresIn:!browsing!public! !
+browseCompilationIssues!public! !
+browseCompilationIssuesIn:!public! !
+browseContainingText!browsing!commands!public! !
+browseContainingText:!browsing!commands!public! !
+browseContainingText:in:prompt:!browsing!private! !
+browseContainingTextIn:!browsing!commands!public! !
+browseDefinitionsMatching:in:!browsing!private! !
+browseDefinitionsMatching:inHierarchyOf:within:!browsing!private! !
+browseDefinitionsOf:!browsing!public! !
+browseDefinitionsOfSelector:in:!browsing!public! !
+browseEnvironment:!browsing!public! !
+browseFolder:!browsing!public! !
+browseGlobalReferences:in:!browsing!public! !
+browseHierarchy!browsing!commands!public! !
+browseHierarchy:!browsing!commands!public! !
+browseInstanceVariables:!browsing!public! !
+browseInstanceVariables:action:in:!browsing!private! !
+browseMessageDefinitions:in:!commands!private! !
+browseMessageDefinitionsIn:!commands!private! !
+browseMessageReferences:in:!commands!private! !
+browseMessageReferencesIn:!commands!private! !
+browseMessageReferencesInHierarchyOf:within:!commands!private! !
+browseMessagesMatching:in:!browsing!private! !
+browseMessagesSentBy:in:!browsing!operations!private! !
+browseMethod:!browsing!public! !
+browseMethod:with:!browsing!private! !
+browseMethodCategories:!browsing!public! !
+browseMethodCategories:in:!browsing!public! !
+browseMethodCategory!browsing!public! !
+browseMethodHierarchyFrom:!browsing!public! !
+browseMethodProtocols:!browsing!public! !
+browseMethodsIn:!browsing!public! !
+browseMethodsIn:filter:!browsing!public! !
+browseMethodsInEnvironments:!browsing!public! !
+browseMethodsWithCompilationIssuesIn:!browsing!public! !
+browseMethodsWithFullBlocks!public!utilities! !
+browseMethodsWithNewBytecodes!browsing!public! !
+browsePackages!browsing!commands!public! !
+browsePackages:!browsing!commands!public! !
+browsePoolConstantsDictionary:!browsing!public! !
+browseProtocols!browsing!commands!protocols!public! !
+browseReferencesMatching:in:!browsing!private! !
+browseReferencesTo:!browsing!public! !
+browseReferencesToClassVar:inHierarchyOf:within:!browsing!private! !
+browseReferencesToGlobal:!browsing!public! !
+browseReferencesToGlobal:in:!browsing!public! !
+browseReferencesToInstVar:inHierarchyOf:within:!browsing!private! !
+browseReferencesToLiteral:in:!browsing!public! !
+browseReferencesToVariable:!browsing!public! !
+browserEnvFromDom:!helpers!private! !
+browserEnvironmentForClasses:!browsing!public! !
+browseResourceIdentifier:!browsing!commands!public! !
+browseResources!browsing!commands!public! !
+browseResourcesReferencingView:!browsing!public! !
+browseSelectors:caption:environment:!browsing!private! !
+browseSystem!browsing!commands!public! !
+browseSystem:!browsing!public! !
+browseSystemOnMethod:!browsing!public! !
+browseSystemPackages:!browsing!public! !
+browseTests!browsing!commands!public! !
+browseViewHierarchy:!browsing!public! !
+buildAllSelectors!helpers!private! !
+buildMessageMenu:forMethods:browseSelector:extraArgs:browseOtherSelector:!helpers!menus!private! !
+buildSimpleSignatureFor:!autocompletion!helpers!private! !
+buildSystemFolder!accessing!private! !
+canRefactor!public!testing! !
+changedIcon!constants!private! !
+changedMethodCategory!constants!private! !
+changedMethodsIn:!public!searching! !
+changedMethodsOfClasses:!browsing!public! !
+changedResources!public!searching! !
+changeHistorySize!accessing!public! !
+changeHistorySize:!accessing!public! !
+changeManager!accessing!public! !
+chooseClass!helpers!public! !
+chooseClass:caption:allowNil:!operations!public! !
+chooseDefaultPackage!commands!public! !
+chooseSelectorsInProtocol:forClass:!operations!private!protocols! !
+chooseViewOf:!commands!public! !
+classBrowserClasses!accessing!public! !
+classChanged:!accessing!private! !
+classChooserClass!options!public! !
+classChooserClass:!options!public! !
+classesReferencingPool:!enquiries!public! !
+classesReferencingPoolNamed:!enquiries!public! !
+classFileIn:!public!source filing! !
+classFileOut:!public!source filing! !
+classFilesType!constants!private! !
+classHierarchy!accessing!public! !
+clearChangeHistory!public!refactoring! !
+clearSystemFolder!initializing!private! !
+cloneClass:as:under:in:!private!refactoring! !
+closeAll!commands!public! !
+compilationFailuresCategory!constants!private! !
+compilationWarningClass!constants!private! !
+compile:in:categories:package:extraFlags:!operations!public! !
+compilerNotification:!exceptions!private! !
+compressChanges!commands!public! !
+compressSources!commands!public! !
+copyAllMethodsOf:to:changes:!private!refactoring! !
+copyClass:!public!refactoring! !
+createClassVariableAccessors:in:within:!public!refactoring! !
+createSubclass:of:package:subclasses:!public!refactoring! !
+createSubclassOf:!public!refactoring! !
+createSubclassOf:inPackage:!public!refactoring! !
+createVariableAccessors:classVariables:within:!public!refactoring! !
+debuggerClass!options!public! !
+debuggerClass:!options!public! !
+defaultBrowserClass!options!public! !
+defaultBrowserClass:!options!public! !
+defaultFont!accessing!options!public! !
+defaultFont:!accessing!options!public! !
+defaultInspectorClass!options!public! !
+defaultInspectorClass:!options!public! !
+defaultMaxStack!accessing!public! !
+defaultMaxStack:!accessing!public! !
+defaultMethodCategories!accessing!public! !
+defaultPackage!accessing!public! !
+defaultPackage:!accessing!public! !
+defaultPublishedAspectsLiteralsMapOf:!accessing!private!theming! !
+definitionsMatching:in:!browsing!private! !
+definitionsMatching:inHierarchyOf:within:!browsing!private! !
+definitionsOf:!browsing!private! !
+deleteClassHierarchy:!operations!public! !
+deleteResource:!browsing!commands!public! !
+deprecatedIcon!constants!private! !
+disassembleMethod:!public! !
+disassemblyStylerClass!constants!public! !
+displayItLocale!options!public! !
+displayItLocale:!options!public! !
+displayOn:!displaying!public! !
+dolphinNewsgroup!commands!public! !
+dolphinNewsgroupUrl!public! !
+dolphinWikiUrl!public! !
+dolphinWikiWeb!commands!public! !
+dropClassFile:!commands!private! !
+dropFile:!commands!private! !
+dropPackageFile:!commands!private! !
+dropScriptFile:!commands!private! !
+dropTextFile:!commands!private! !
+dropXmlFile:!commands!private! !
+educationCenter!commands!public! !
+environment!constants!public! !
+expressionStylerClass!constants!public! !
+fileFileIn!commands!public! !
+fileNew!commands!public! !
+fileOpen!commands!public! !
+findDetails!accessing!private! !
+findMatchingClass:in:!helpers!private! !
+findSelectorValidationBlock!accessing!private! !
+formatterClass!accessing!public! !
+formatterClass:!accessing!public! !
+globalVariableNamed:!accessing!private! !
+hardResetGUI!commands!public! !
+hasRedoableOperations!public!testing! !
+hasUndoableOperations!public!testing! !
+helpContents!commands!operations!public! !
+helpContentsTopic!constants!public! !
+helpGuidedTour!commands!operations!public! !
+helpGuidedTourTopic!public! !
+helpRootUrl!constants!public! !
+helpTutorials!commands!operations!public! !
+helpTutorialsTopic!constants!public! !
+helpWhatsNew!commands!operations!public! !
+helpWhatsNewTopic!constants!public! !
+helpWhatsThis!commands!public! !
+hierarchyBrowserClass!options!public! !
+hierarchyBrowserClass:!options!public! !
+iconForMethod:!helpers!public! !
+ideaSpaceFilesType!constants!private! !
+imageFilesType!constants!private! !
+initialize!initializing!private! !
+initializeArgumentClasses!initializing!private! !
+initializeFrom:!public! !
+initializeSystemFolder!initializing!private! !
+inspect:!operations!public! !
+inspectVisualObject!commands!public! !
+installPackage:!commands!private! !
+instVarAccessFilter:in:!helpers!private! !
+instVarReaderFilter:in:!helpers!private! !
+instVarWriterFilter:in:!helpers!private! !
+interruptHotKey!options!public! !
+interruptHotKey:!options!public! !
+isOAD!accessing!private!product! !
+isRegisteredTool:!public!testing! !
+isValidClassVarName:for:!enquiries!helpers!private!refactoring! !
+isValidInstanceVariableName:for:!enquiries!helpers!private! !
+isValidNewClassVarName:for:!enquiries!helpers!private!refactoring! !
+keywordsAndArgsForSelector:!autocompletion!helpers!private! !
+keywordsAndArgsOfMethod:!autocompletion!helpers!private! !
+loadViewResource:inContext:!helpers!private! !
+messagesMatching:in:!browsing!private! !
+methodCategorizationPolicy!constants!private! !
+methodExplorerClass!options!public! !
+methodExplorerClass:!options!public! !
+methodsContainingText:in:prompt:!private!searching! !
+methodsThatFailedToCompileIn:!browsing!public! !
+methodStylerClass!constants!public! !
+methodsWithBytecode:in:!browsing!private! !
+methodsWithCompilationIssuesIn:!private!searching! !
+methodsWithNewBytecodes!browsing!private! !
+methodsWithNewBytecodesIn:!browsing!private! !
+methodWorkspaceClass!options!public! !
+minimizeAll!commands!public! !
+myDolphinAccount!accessing!public! !
+nameForArgument:!helpers!private! !
+nameForBlockOfArity:!helpers!private! !
+newCodeRefactoringToolFor:!helpers!public!refactoring! !
+newMethodRefactoringToolFor:!helpers!public!refactoring! !
+newWorkspace!commands!public! !
+nonDefaultPublishedAspectsLiteralsMapOf:!private!theming! !
+nonDefaultSystemOptionsLiteralsMap!private!theming! !
+nukeChangeHistory!private!refactoring! !
+objectArtsHomePage!commands!public! !
+objectArtsUrl!constants!private! !
+okToInstallPatchLevel:!patching!private! !
+onAboutToDisplayMenu:!event handling!public! !
+onClassAdded:!event handling!public! !
+onClassCategorized:!event handling!public! !
+onClassCommented:!event handling!public! !
+onClassRemoved:!event handling!public! !
+onClassUpdated:!event handling!public! !
+onDragOverProtocol:!event handling!operations!protocols!public! !
+onDropFiles:over:!event handling!private! !
+onDropOverProtocol:!event handling!operations!protocols!public! !
+onFileDropped:over:!event handling!private! !
+onGlobalRemoved:!event handling!public! !
+onGlobalRenamed:from:!events!public! !
+onMethodAdded:!event handling!public! !
+onMethodCategorized:!event handling!public! !
+onMethodRemoved:!event handling!public! !
+onMethodUpdated:!event handling!public! !
+onProtocolRemoved:!event handling!operations!protocols!public! !
+onProtocolUpdated:!event handling!operations!protocols!public! !
+onSessionStopped!event handling!public! !
+onTipTextRequired:!event handling!public! !
+openHelpTopic:!operations!public! !
+openHelpTopicForTool:!operations!public! !
+openHelpUrl:!operations!public! !
+openLocalHelpUrl:style:!operations!public! !
+openTool:!commands!private! !
+openUrl:!operations!public! !
+openViewComposer!commands!public! !
+openViewComposerEmpty!commands!public! !
+openViewComposerOn:!browsing!public! !
+openViewComposerOnNewViewFor:!commands!public! !
+openViewComposerOnViewOf:!commands!public! !
+openWorkspace!commands!public! !
+openXmlFile:!commands!private! !
+overlappingObjectsError:!exceptions!private! !
+pacFileDialogType!constants!private! !
+packageBrowserClass!options!public! !
+packageBrowserClass:!options!public! !
+packagedResourceIdentifierDialogClass!options!public! !
+packageFilesType!constants!private! !
+packageInstallWarning:!commands!private! !
+packageManager!accessing!private! !
+packageOpenFileDialogTypes!constants!private! !
+panic!commands!public! !
+patchLevel!patching!public! !
+patchLevel:!patching!private! !
+paxFileDialogType!constants!private! !
+playSaveImageSound!commands!private! !
+poolDictionariesFolder!accessing!private! !
+populateMenu:tree:items:!operations!private! !
+populateMessagesMenus:fromMethods:environment:!event handling!menus!private! !
+populateToolsMenu:!operations!private! !
+populateWindowMenu:!operations!private! !
+populateWindowMenu:withShells:ofClasses:!operations!private! !
+preferAlternateInspectors!accessing!public! !
+preferAlternateInspectors:!accessing!public! !
+printBlockStatsOn:!public!utilities! !
+printSignatureForKeywordsAndArgs:on:!autocompletion!helpers!private! !
+privateMethodIcon!constants!private! !
+privatePrefix!constants!private! !
+privatizeMethod:!operations!private! !
+promptForClass!enquiries!public! !
+promptForClassIn:!enquiries!public! !
+promptForClassName:!helpers!private! !
+promptForClassVarName:in:prompt:caption:!helpers!private!refactoring! !
+promptForInstVarName:in:prompt:caption:!helpers!private! !
+promptForReferencesToGlobal:in:!browsing!private! !
+promptForSearchString:caption:!browsing!commands!private! !
+promptForSelector:caption:!helpers!private! !
+protocolBrowserClass!options!public! !
+protocolBrowserClass:!options!public! !
+publicizeMethod:!operations!private! !
+publicMethodIcon!constants!private! !
+queryCommand:!commands!private! !
+redoChange!commands!public! !
+referencesMatching:in:!browsing!private! !
+referencesTo:!enquiries!public! !
+referencesTo:in:!enquiries!public! !
+referencesToClassVar:inHierarchyOf:within:!browsing!private! !
+referencesToLiteral:in:!browsing!public! !
+referencesToVariable:in:!enquiries!private! !
+reformatAllMethodsIn:!commands!private! !
+reformatSource:in:!commands!private! !
+registerSystemEvents!initializing!private! !
+registerTool:!accessing!public! !
+removeClass:fromProtocol:!operations!private!protocols! !
+removeGlobalNamed:!operations!public! !
+removeMethod:!operations!public! !
+removeMethod:changes:!operations!private! !
+removeMethods:!commands!public! !
+removeMethodsIn:!helpers!private! !
+removeMethodsIn:within:!commands!private! !
+removeSelector:fromProtocol:!operations!protocols!public! !
+removeSelectors:fromProtocol:!operations!protocols!public! !
+removeSystemFolderIcon:!operations!public! !
+removeSystemFolderIconNamed:!operations!public! !
+removeSystemFolderIconsForClass:!event handling!private! !
+renameClass:!operations!public! !
+renameClass:to:!operations!public! !
+renameClassVariable:in:!public!refactoring! !
+renameClassVariable:in:within:!public!refactoring! !
+renameClassVariable:to:in:within:!private!refactoring! !
+renameGlobal:to:!operations!public! !
+renameInstanceVariable:in:!public!refactoring! !
+renameInstanceVariable:in:within:!public!refactoring! !
+renameInstanceVariable:to:in:within:!private!refactoring! !
+requestPackageFileName:!operations!private! !
+requiresDolphinPro:!browsing!public! !
+resaveViewResourcesMatching:do:!public! !
+resetPublishedAspectsToDefaultsFor:!operations!private!theming! !
+resetSystemOptionsToDefaults!operations!private!theming! !
+resourceBrowserClass!options!public! !
+resourceBrowserClass:!options!public! !
+resourceIdentifierDialogClass!options!public! !
+resourceIdentifierDialogClass:!accessing!public! !
+resourceManager!private! !
+samplesFolder!accessing!private! !
+samplesFolderIcon!initializing!private! !
+saveDefaultPublishedAspectsOf:!operations!private!theming! !
+saveImage!commands!public! !
+saveImageAs!commands!public! !
+selectMethods:in:!enquiries!private! !
+selectMethods:in:withProgress:!private!searching! !
+sessionManager!accessing!private! !
+showPrerequisitesForPackage:!helpers!public! !
+showShellWithHandle:!commands!private! !
+showTranscript!commands!public! !
+signatureOfMethod:!autocompletion!helpers!private! !
+smalltalkExit!commands!public! !
+smalltalkFilesType!constants!private! !
+sourceManager!commands!public! !
+splashShowAtStartup!accessing!public! !
+splashShowAtStartup:!accessing!public! !
+stbSaveOn:!binary filing!public! !
+suggestedWord:!helpers!private! !
+systemEnvironment!commands!private! !
+systemFolder!accessing!public! !
+systemFolderClass!constants!public! !
+systemFolderClass:!constants!public! !
+systemFolderNamed:!accessing!private! !
+systemOptions!commands!public! !
+testBrowserClass!options!public! !
+toolBackgroundColor!accessing!public! !
+toolBackgroundColor:!accessing!public! !
+toolbarBitmapSize!accessing!public! !
+toolbarBitmapSize:!accessing!public! !
+typeForArgumentClass:!helpers!private! !
+undoChange!commands!public! !
+unimplementedSelectorsIn:!enquiries!public! !
+uninitialize!class hierarchy-removing!private! !
+unregisterTool:!accessing!public! !
+upgradeAllResourcesReferencingClassNamed:!browsing!commands!public! !
+userPreferencesIcon!initializing!private! !
+validateRenameInstVar:to:in:!helpers!private! !
+viewComposerClass!constants!public! !
+viewComposerClass:!options!public! !
+viewResourcesMatching:do:!private!utilities! !
+warnOfUndefinedSelectorsSentBy:!helpers!private! !
+workspaceClass!options!public! !
+workspaceClass:!options!public! !
+workspaceShellClass!options!public! !
+workspaceShellClass:!options!public! !
+wrapText:indent:tabWidth:!public!utilities! !
+wrapText:toWidth:indent:tabWidth:!public!utilities! !
+!
 
 SmalltalkSystem methodProtocol: #commandTarget attributes: #(#readOnly) selectors: #(#queryCommand:)!
 
@@ -4781,18 +4783,20 @@ unregisterTool: aToolClass
 	(aToolClass class conformsToProtocol: #installableSystemTool) 
 		ifTrue: [aToolClass unregisterAsToolWith: self].
 	self registeredTools remove: aToolClass ifAbsent: []! !
-!SmalltalkSystem class categoriesFor: #current!instance creation!public! !
-!SmalltalkSystem class categoriesFor: #help:!operations!public! !
-!SmalltalkSystem class categoriesFor: #icon!constants!public! !
-!SmalltalkSystem class categoriesFor: #initialize!initializing!public! !
-!SmalltalkSystem class categoriesFor: #initializeFileDrops!initializing!private! !
-!SmalltalkSystem class categoriesFor: #new!instance creation!private! !
-!SmalltalkSystem class categoriesFor: #publishedAspectsOfInstances!constants!public! !
-!SmalltalkSystem class categoriesFor: #publishedEventsOfInstances!events!public! !
-!SmalltalkSystem class categoriesFor: #registeredTools!accessing!public! !
-!SmalltalkSystem class categoriesFor: #registerTool:!accessing!public! !
-!SmalltalkSystem class categoriesFor: #reset!initializing!public! !
-!SmalltalkSystem class categoriesFor: #toolBackgroundColor!accessing!public! !
-!SmalltalkSystem class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!SmalltalkSystem class categoriesFor: #unregisterTool:!accessing!public! !
+!SmalltalkSystem class categoriesForMethods!
+current!instance creation!public! !
+help:!operations!public! !
+icon!constants!public! !
+initialize!initializing!public! !
+initializeFileDrops!initializing!private! !
+new!instance creation!private! !
+publishedAspectsOfInstances!constants!public! !
+publishedEventsOfInstances!events!public! !
+registeredTools!accessing!public! !
+registerTool:!accessing!public! !
+reset!initializing!public! !
+toolBackgroundColor!accessing!public! !
+uninitialize!class hierarchy-removing!private! !
+unregisterTool:!accessing!public! !
+!
 

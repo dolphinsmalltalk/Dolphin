@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #DolphinCollectionTest
 	instanceVariableNames: ''
@@ -147,15 +147,17 @@ testFold
 			[:i |
 			result := (1 to: i) fold: [:product :each | product * each].
 			self assert: result equals: i factorial]! !
-!DolphinCollectionTest categoriesFor: #assimilate:!private!unit tests! !
-!DolphinCollectionTest categoriesFor: #assimilateElements:!helpers!private! !
-!DolphinCollectionTest categoriesFor: #collectionClass!constants!private! !
-!DolphinCollectionTest categoriesFor: #newCollection:!helpers!private! !
-!DolphinCollectionTest categoriesFor: #shouldnt:implement:!helpers!private! !
-!DolphinCollectionTest categoriesFor: #testAllSatisfy!public!unit tests! !
-!DolphinCollectionTest categoriesFor: #testAnyone!public!unit tests! !
-!DolphinCollectionTest categoriesFor: #testAnySatisfy!public!unit tests! !
-!DolphinCollectionTest categoriesFor: #testCount!public!unit tests! !
-!DolphinCollectionTest categoriesFor: #testDistinct!public!unit tests! !
-!DolphinCollectionTest categoriesFor: #testFold!public!unit tests! !
+!DolphinCollectionTest categoriesForMethods!
+assimilate:!private!unit tests! !
+assimilateElements:!helpers!private! !
+collectionClass!constants!private! !
+newCollection:!helpers!private! !
+shouldnt:implement:!helpers!private! !
+testAllSatisfy!public!unit tests! !
+testAnyone!public!unit tests! !
+testAnySatisfy!public!unit tests! !
+testCount!public!unit tests! !
+testDistinct!public!unit tests! !
+testFold!public!unit tests! !
+!
 

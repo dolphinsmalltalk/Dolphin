@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBAbstractRow subclass: #DBRowBuffer
 	instanceVariableNames: ''
@@ -45,10 +45,12 @@ sizeInBytes
 
 status
 	^status value! !
-!DBRowBuffer categoriesFor: #asObject!converting!private! !
-!DBRowBuffer categoriesFor: #bind:!operations!private! !
-!DBRowBuffer categoriesFor: #contents!accessing!public! !
-!DBRowBuffer categoriesFor: #objects!accessing!private! !
-!DBRowBuffer categoriesFor: #sizeInBytes!accessing!public! !
-!DBRowBuffer categoriesFor: #status!accessing!private! !
+!DBRowBuffer categoriesForMethods!
+asObject!converting!private! !
+bind:!operations!private! !
+contents!accessing!public! !
+objects!accessing!private! !
+sizeInBytes!accessing!public! !
+status!accessing!private! !
+!
 

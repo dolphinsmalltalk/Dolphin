@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IpHlpApiTableStruct subclass: #IP_INTERFACE_INFO
 	instanceVariableNames: ''
@@ -31,7 +31,9 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: IP_ADAPTER_INDEX_MAP! !
-!IP_INTERFACE_INFO categoriesFor: #table!**compiled accessors**!public! !
+!IP_INTERFACE_INFO categoriesForMethods!
+table!**compiled accessors**!public! !
+!
 
 !IP_INTERFACE_INFO class methodsFor!
 
@@ -57,6 +59,8 @@ defineFields
 
 getFieldNames
 	^#(#dwNumEntries #table)! !
-!IP_INTERFACE_INFO class categoriesFor: #defineFields!initializing!public! !
-!IP_INTERFACE_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!IP_INTERFACE_INFO class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

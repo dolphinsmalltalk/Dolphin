@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TreeModelAbstract subclass: #VirtualTreeModel
 	instanceVariableNames: 'roots getChildrenBlock getParentBlock hasChildrenBlock filter'
@@ -226,28 +226,30 @@ roots
 	"Answer the roots of the receiver's hierarchies."
 
 	^roots select: filter! !
-!VirtualTreeModel categoriesFor: #add:asChildOf:!adding!public! !
-!VirtualTreeModel categoriesFor: #basicRoots:!accessing!private! !
-!VirtualTreeModel categoriesFor: #clear!public!removing! !
-!VirtualTreeModel categoriesFor: #collapse:ifAbsent:!public!removing! !
-!VirtualTreeModel categoriesFor: #defaultFilterBlock!constants!private! !
-!VirtualTreeModel categoriesFor: #defaultGetChildrenBlock!constants!private! !
-!VirtualTreeModel categoriesFor: #defaultGetParentBlock!constants!private! !
-!VirtualTreeModel categoriesFor: #defaultHasChildrenBlock!constants!private! !
-!VirtualTreeModel categoriesFor: #filter!accessing!public! !
-!VirtualTreeModel categoriesFor: #filter:!accessing!public! !
-!VirtualTreeModel categoriesFor: #getChildrenBlock:!adapters!public! !
-!VirtualTreeModel categoriesFor: #getChildrenOf:!hierarchy!private! !
-!VirtualTreeModel categoriesFor: #getParentBlock:!adapters!public! !
-!VirtualTreeModel categoriesFor: #hasChildren:!hierarchy!public!testing! !
-!VirtualTreeModel categoriesFor: #hasChildrenBlock:!adapters!public! !
-!VirtualTreeModel categoriesFor: #hasRoot:!hierarchy!public!testing! !
-!VirtualTreeModel categoriesFor: #includes:!hierarchy!public!searching! !
-!VirtualTreeModel categoriesFor: #initialize!initializing!private! !
-!VirtualTreeModel categoriesFor: #move:asChildOf:!public!updating! !
-!VirtualTreeModel categoriesFor: #notifyAdded:toParent:!events!private! !
-!VirtualTreeModel categoriesFor: #notifyRemove:around:!events!private! !
-!VirtualTreeModel categoriesFor: #parentOf:!hierarchy!public! !
-!VirtualTreeModel categoriesFor: #remove:ifAbsent:!public!removing! !
-!VirtualTreeModel categoriesFor: #roots!accessing!public! !
+!VirtualTreeModel categoriesForMethods!
+add:asChildOf:!adding!public! !
+basicRoots:!accessing!private! !
+clear!public!removing! !
+collapse:ifAbsent:!public!removing! !
+defaultFilterBlock!constants!private! !
+defaultGetChildrenBlock!constants!private! !
+defaultGetParentBlock!constants!private! !
+defaultHasChildrenBlock!constants!private! !
+filter!accessing!public! !
+filter:!accessing!public! !
+getChildrenBlock:!adapters!public! !
+getChildrenOf:!hierarchy!private! !
+getParentBlock:!adapters!public! !
+hasChildren:!hierarchy!public!testing! !
+hasChildrenBlock:!adapters!public! !
+hasRoot:!hierarchy!public!testing! !
+includes:!hierarchy!public!searching! !
+initialize!initializing!private! !
+move:asChildOf:!public!updating! !
+notifyAdded:toParent:!events!private! !
+notifyRemove:around:!events!private! !
+parentOf:!hierarchy!public! !
+remove:ifAbsent:!public!removing! !
+roots!accessing!public! !
+!
 

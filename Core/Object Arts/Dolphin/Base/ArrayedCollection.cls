@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequenceableCollection subclass: #ArrayedCollection
 	instanceVariableNames: ''
@@ -219,29 +219,31 @@ sortUsing: aSortAlgorithm
 		sort: self
 		from: 1
 		to: self size! !
-!ArrayedCollection categoriesFor: #add:!adding!public! !
-!ArrayedCollection categoriesFor: #allSatisfy:!enumerating!public! !
-!ArrayedCollection categoriesFor: #anySatisfy:!enumerating!public! !
-!ArrayedCollection categoriesFor: #at:!accessing!public! !
-!ArrayedCollection categoriesFor: #at:ifAbsent:!accessing!public! !
-!ArrayedCollection categoriesFor: #at:put:!accessing!public! !
-!ArrayedCollection categoriesFor: #copyFrom:to:!public! !
-!ArrayedCollection categoriesFor: #decodeAt:!encode/decode!private! !
-!ArrayedCollection categoriesFor: #decodeNextFrom:!encode/decode!private! !
-!ArrayedCollection categoriesFor: #do:!debugger-step through!enumerating!public! !
-!ArrayedCollection categoriesFor: #findFirst:!public!searching! !
-!ArrayedCollection categoriesFor: #identityIncludes:!public!searching! !
-!ArrayedCollection categoriesFor: #includes:!public!searching! !
-!ArrayedCollection categoriesFor: #inject:into:!enumerating!public! !
-!ArrayedCollection categoriesFor: #lookup:!accessing!public! !
-!ArrayedCollection categoriesFor: #nextIdentityIndexOf:from:to:!public!searching! !
-!ArrayedCollection categoriesFor: #nextIndexOf:from:to:!public!searching! !
-!ArrayedCollection categoriesFor: #removeAll!public! !
-!ArrayedCollection categoriesFor: #replaceIdentity:with:!public!replacing! !
-!ArrayedCollection categoriesFor: #resize:!mutating!public! !
-!ArrayedCollection categoriesFor: #size!accessing!public! !
-!ArrayedCollection categoriesFor: #sort!public!sorting! !
-!ArrayedCollection categoriesFor: #sortUsing:!public!sorting! !
+!ArrayedCollection categoriesForMethods!
+add:!adding!public! !
+allSatisfy:!enumerating!public! !
+anySatisfy:!enumerating!public! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+copyFrom:to:!public! !
+decodeAt:!encode/decode!private! !
+decodeNextFrom:!encode/decode!private! !
+do:!debugger-step through!enumerating!public! !
+findFirst:!public!searching! !
+identityIncludes:!public!searching! !
+includes:!public!searching! !
+inject:into:!enumerating!public! !
+lookup:!accessing!public! !
+nextIdentityIndexOf:from:to:!public!searching! !
+nextIndexOf:from:to:!public!searching! !
+removeAll!public! !
+replaceIdentity:with:!public!replacing! !
+resize:!mutating!public! !
+size!accessing!public! !
+sort!public!sorting! !
+sortUsing:!public!sorting! !
+!
 
 !ArrayedCollection class methodsFor!
 
@@ -319,14 +321,16 @@ withAll: newElements
 	answer := self new: newElements size.
 	newElements inject: 1 into: [:i :elem | answer at: i put: elem. i + 1].
 	^answer! !
-!ArrayedCollection class categoriesFor: #new!instance creation!public! !
-!ArrayedCollection class categoriesFor: #new:withAll:!instance creation!public! !
-!ArrayedCollection class categoriesFor: #with:!instance creation!public! !
-!ArrayedCollection class categoriesFor: #with:with:!instance creation!public! !
-!ArrayedCollection class categoriesFor: #with:with:with:!instance creation!public! !
-!ArrayedCollection class categoriesFor: #with:with:with:with:!instance creation!public! !
-!ArrayedCollection class categoriesFor: #with:with:with:with:with:!instance creation!public! !
-!ArrayedCollection class categoriesFor: #withAll:!instance creation!public! !
+!ArrayedCollection class categoriesForMethods!
+new!instance creation!public! !
+new:withAll:!instance creation!public! !
+with:!instance creation!public! !
+with:with:!instance creation!public! !
+with:with:with:!instance creation!public! !
+with:with:with:with:!instance creation!public! !
+with:with:with:with:with:!instance creation!public! !
+withAll:!instance creation!public! !
+!
 
 ArrayedCollection class methodProtocol: #'Array factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
 

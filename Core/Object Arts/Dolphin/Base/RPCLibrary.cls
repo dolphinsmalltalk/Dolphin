@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #RPCLibrary
 	instanceVariableNames: ''
@@ -71,12 +71,14 @@ uuidToString: uuid stringUuid: lppstr
 
 	<stdcall: sdword UuidToStringA void* char**>
 	^self invalidCall: _failureCode! !
-!RPCLibrary categoriesFor: #rpcStringFree:!primitives!public!win32 functions-rpc! !
-!RPCLibrary categoriesFor: #uuidCompare:uuid2:status:!primitives!public!win32 functions-rpc! !
-!RPCLibrary categoriesFor: #uuidCreate:!primitives!public!win32 functions-rpc! !
-!RPCLibrary categoriesFor: #uuidFromString:uuid:!primitives!public!win32 functions-rpc! !
-!RPCLibrary categoriesFor: #uuidHash:status:!primitives!public!win32 functions-rpc! !
-!RPCLibrary categoriesFor: #uuidToString:stringUuid:!primitives!public!win32 functions-rpc! !
+!RPCLibrary categoriesForMethods!
+rpcStringFree:!primitives!public!win32 functions-rpc! !
+uuidCompare:uuid2:status:!primitives!public!win32 functions-rpc! !
+uuidCreate:!primitives!public!win32 functions-rpc! !
+uuidFromString:uuid:!primitives!public!win32 functions-rpc! !
+uuidHash:status:!primitives!public!win32 functions-rpc! !
+uuidToString:stringUuid:!primitives!public!win32 functions-rpc! !
+!
 
 !RPCLibrary class methodsFor!
 
@@ -84,5 +86,7 @@ fileName
 	"Answer the host system file name of the external library which the receiver represents"
 
 	^'RPCRT4'! !
-!RPCLibrary class categoriesFor: #fileName!constants!public! !
+!RPCLibrary class categoriesForMethods!
+fileName!constants!public! !
+!
 

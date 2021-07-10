@@ -50,7 +50,9 @@ testEditableListViewDemo
 
 	self verifyPackageClosure: (self environmentForAppDeployment: {EditableListViewDemo owningPackage})
 		missing: #(#defineTemplate #evaluate:)! !
-!PackageClosureTests categoriesFor: #testEditableListViewDemo!public!unit tests! !
+!PackageClosureTests categoriesForMethods!
+testEditableListViewDemo!public!unit tests! !
+!
 
 "End of package definition"!
 

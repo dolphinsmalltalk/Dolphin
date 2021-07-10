@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #CDOIMessages
 	instanceVariableNames: ''
@@ -135,18 +135,20 @@ item: index
 		ppMessage: answer.
 	^answer asObject
 ! !
-!CDOIMessages categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!CDOIMessages categoriesFor: #count!**auto generated**!properties!public! !
-!CDOIMessages categoriesFor: #Delete:!**auto generated**!COM Interfaces-IMessages!public! !
-!CDOIMessages categoriesFor: #DeleteAll!**auto generated**!COM Interfaces-IMessages!public! !
-!CDOIMessages categoriesFor: #fileName:!**auto generated**!properties!public! !
-!CDOIMessages categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IMessages!private! !
-!CDOIMessages categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IMessages!private! !
-!CDOIMessages categoriesFor: #get_FileName:FileName:!**auto generated**!COM Interfaces-IMessages!private! !
-!CDOIMessages categoriesFor: #get_Item:ppMessage:!**auto generated**!COM Interfaces-IMessages!private! !
-!CDOIMessages categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDOIMessages categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDOIMessages categoriesFor: #item:!**auto generated**!properties!public! !
+!CDOIMessages categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+count!**auto generated**!properties!public! !
+Delete:!**auto generated**!COM Interfaces-IMessages!public! !
+DeleteAll!**auto generated**!COM Interfaces-IMessages!public! !
+fileName:!**auto generated**!properties!public! !
+get__NewEnum:!**auto generated**!COM Interfaces-IMessages!private! !
+get_Count:!**auto generated**!COM Interfaces-IMessages!private! !
+get_FileName:FileName:!**auto generated**!COM Interfaces-IMessages!private! !
+get_Item:ppMessage:!**auto generated**!COM Interfaces-IMessages!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+!
 
 !CDOIMessages class methodsFor!
 
@@ -175,6 +177,8 @@ initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
-!CDOIMessages class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDOIMessages class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDOIMessages class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

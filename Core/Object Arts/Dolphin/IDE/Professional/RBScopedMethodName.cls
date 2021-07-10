@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RBMethodName subclass: #RBScopedMethodName
 	instanceVariableNames: 'methodClass originalArguments originalSelector scope scopes'
@@ -90,21 +90,23 @@ setSelector: aSymbol arguments: anArray
 	super setSelector: aSymbol arguments: anArray.
 	scopes := LookupTable new.
 	self addScope: BrowserEnvironment new name: 'Global'! !
-!RBScopedMethodName categoriesFor: #addScope:!adding!public! !
-!RBScopedMethodName categoriesFor: #addScope:name:!adding!public! !
-!RBScopedMethodName categoriesFor: #addScopesForMethod:!initializing!private! !
-!RBScopedMethodName categoriesFor: #defaultScope!initializing!public! !
-!RBScopedMethodName categoriesFor: #hasNewSignature!commands!private! !
-!RBScopedMethodName categoriesFor: #initializeForMethod:!initializing!private! !
-!RBScopedMethodName categoriesFor: #methodClass!accessing!public! !
-!RBScopedMethodName categoriesFor: #originalArguments!accessing!public! !
-!RBScopedMethodName categoriesFor: #originalSelector!accessing!public! !
-!RBScopedMethodName categoriesFor: #packages:!accessing!public! !
-!RBScopedMethodName categoriesFor: #permutation!accessing!public! !
-!RBScopedMethodName categoriesFor: #scope!accessing!public! !
-!RBScopedMethodName categoriesFor: #scope:!accessing!public! !
-!RBScopedMethodName categoriesFor: #scopeNames!constants!public! !
-!RBScopedMethodName categoriesFor: #setSelector:arguments:!initializing!private! !
+!RBScopedMethodName categoriesForMethods!
+addScope:!adding!public! !
+addScope:name:!adding!public! !
+addScopesForMethod:!initializing!private! !
+defaultScope!initializing!public! !
+hasNewSignature!commands!private! !
+initializeForMethod:!initializing!private! !
+methodClass!accessing!public! !
+originalArguments!accessing!public! !
+originalSelector!accessing!public! !
+packages:!accessing!public! !
+permutation!accessing!public! !
+scope!accessing!public! !
+scope:!accessing!public! !
+scopeNames!constants!public! !
+setSelector:arguments:!initializing!private! !
+!
 
 !RBScopedMethodName class methodsFor!
 
@@ -112,5 +114,7 @@ fromMethod: aCompiledMethod
 	^(self new)
 		initializeForMethod: aCompiledMethod;
 		yourself! !
-!RBScopedMethodName class categoriesFor: #fromMethod:!instance creation!public! !
+!RBScopedMethodName class categoriesForMethods!
+fromMethod:!instance creation!public! !
+!
 

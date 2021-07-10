@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CompilerNotification subclass: #CompilerWarningNotification
 	instanceVariableNames: ''
@@ -20,6 +20,8 @@ severityClass
 	"Answer an exception class describing the severity of the notification."
 
 	^Warning! !
-!CompilerWarningNotification class categoriesFor: #severity!constants!operations!public! !
-!CompilerWarningNotification class categoriesFor: #severityClass!constants!public! !
+!CompilerWarningNotification class categoriesForMethods!
+severity!constants!operations!public! !
+severityClass!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #DiskVolumeInformationTest
 	instanceVariableNames: ''
@@ -16,5 +16,7 @@ testFileSystemFlags
 	self deny: subject fileSystemFlags equals: 0.
 	self skipUnless: [subject fileSystemName = 'NTFS'].
 	self assert: subject isSparseFileCapable! !
-!DiskVolumeInformationTest categoriesFor: #testFileSystemFlags!public! !
+!DiskVolumeInformationTest categoriesForMethods!
+testFileSystemFlags!public! !
+!
 

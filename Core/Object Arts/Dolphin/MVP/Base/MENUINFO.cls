@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #MENUINFO
 	instanceVariableNames: ''
@@ -68,17 +68,19 @@ maskIn: anInteger
 style: anInteger 
 	self dwStyle: anInteger.
 	self maskIn: MIM_STYLE! !
-!MENUINFO categoriesFor: #cyMax!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #cyMax:!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #dwContextHelpID!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #dwContextHelpID:!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #dwStyle!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #dwStyle:!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #fMask!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #fMask:!**compiled accessors**!public! !
-!MENUINFO categoriesFor: #maskIn:!accessing!private! !
-!MENUINFO categoriesFor: #style:!accessing!public! !
+!MENUINFO categoriesForMethods!
+cyMax!**compiled accessors**!public! !
+cyMax:!**compiled accessors**!public! !
+dwContextHelpID!**compiled accessors**!public! !
+dwContextHelpID:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+dwStyle!**compiled accessors**!public! !
+dwStyle:!**compiled accessors**!public! !
+fMask!**compiled accessors**!public! !
+fMask:!**compiled accessors**!public! !
+maskIn:!accessing!private! !
+style:!accessing!public! !
+!
 
 !MENUINFO class methodsFor!
 
@@ -110,6 +112,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fMask #dwStyle #cyMax #dwContextHelpID)! !
-!MENUINFO class categoriesFor: #defineFields!public!template definition! !
-!MENUINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MENUINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

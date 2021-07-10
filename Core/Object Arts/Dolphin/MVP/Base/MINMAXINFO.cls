@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #MINMAXINFO
 	instanceVariableNames: ''
@@ -57,10 +57,12 @@ ptMinTrackSize: aPOINTL
 		from: ##(_OffsetOf_ptMinTrackSize + 1)
 		to: ##(_OffsetOf_ptMinTrackSize + POINTL basicByteSize)
 		startingAt: 1! !
-!MINMAXINFO categoriesFor: #ptMaxTrackSize!**compiled accessors**!public! !
-!MINMAXINFO categoriesFor: #ptMaxTrackSize:!**compiled accessors**!public! !
-!MINMAXINFO categoriesFor: #ptMinTrackSize!**compiled accessors**!public! !
-!MINMAXINFO categoriesFor: #ptMinTrackSize:!**compiled accessors**!public! !
+!MINMAXINFO categoriesForMethods!
+ptMaxTrackSize!**compiled accessors**!public! !
+ptMaxTrackSize:!**compiled accessors**!public! !
+ptMinTrackSize!**compiled accessors**!public! !
+ptMinTrackSize:!**compiled accessors**!public! !
+!
 
 !MINMAXINFO class methodsFor!
 
@@ -86,6 +88,8 @@ defineFields
 
 getFieldNames
 	^#(#ptMaxSize #ptMaxPosition #ptMinTrackSize #ptMaxTrackSize)! !
-!MINMAXINFO class categoriesFor: #defineFields!public!template definition! !
-!MINMAXINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MINMAXINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

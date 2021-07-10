@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #METAHEADER
 	instanceVariableNames: ''
@@ -104,20 +104,22 @@ mtVersion: anInteger
 	"Set the receiver's 'mtVersion' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_mtVersion put: anInteger! !
-!METAHEADER categoriesFor: #mtHeaderSize!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtHeaderSize:!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtMaxRecord!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtMaxRecord:!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtNoObjects!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtNoObjects:!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtNoParameters!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtNoParameters:!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtSize!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtSize:!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtType!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtType:!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtVersion!**compiled accessors**!public! !
-!METAHEADER categoriesFor: #mtVersion:!**compiled accessors**!public! !
+!METAHEADER categoriesForMethods!
+mtHeaderSize!**compiled accessors**!public! !
+mtHeaderSize:!**compiled accessors**!public! !
+mtMaxRecord!**compiled accessors**!public! !
+mtMaxRecord:!**compiled accessors**!public! !
+mtNoObjects!**compiled accessors**!public! !
+mtNoObjects:!**compiled accessors**!public! !
+mtNoParameters!**compiled accessors**!public! !
+mtNoParameters:!**compiled accessors**!public! !
+mtSize!**compiled accessors**!public! !
+mtSize:!**compiled accessors**!public! !
+mtType!**compiled accessors**!public! !
+mtType:!**compiled accessors**!public! !
+mtVersion!**compiled accessors**!public! !
+mtVersion:!**compiled accessors**!public! !
+!
 
 !METAHEADER class methodsFor!
 
@@ -149,6 +151,8 @@ defineFields
 
 getFieldNames
 	^#(#mtType #mtHeaderSize #mtVersion #mtSize #mtNoObjects #mtMaxRecord #mtNoParameters)! !
-!METAHEADER class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!METAHEADER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!METAHEADER class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

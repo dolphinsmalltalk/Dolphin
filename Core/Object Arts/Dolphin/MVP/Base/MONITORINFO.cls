@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #MONITORINFO
 	instanceVariableNames: ''
@@ -55,11 +55,13 @@ rcWork
 	"Answer the <RECTL> value of the receiver's 'rcWork' field."
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcWork! !
-!MONITORINFO categoriesFor: #dwFlags!**compiled accessors**!public! !
-!MONITORINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
-!MONITORINFO categoriesFor: #isPrimary!public!testing! !
-!MONITORINFO categoriesFor: #rcMonitor!**compiled accessors**!public! !
-!MONITORINFO categoriesFor: #rcWork!**compiled accessors**!public! !
+!MONITORINFO categoriesForMethods!
+dwFlags!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+isPrimary!public!testing! !
+rcMonitor!**compiled accessors**!public! !
+rcWork!**compiled accessors**!public! !
+!
 
 !MONITORINFO class methodsFor!
 
@@ -86,6 +88,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #rcMonitor #rcWork #dwFlags)! !
-!MONITORINFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!MONITORINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MONITORINFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

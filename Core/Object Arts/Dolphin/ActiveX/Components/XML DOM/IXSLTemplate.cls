@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IXSLTemplate
 	instanceVariableNames: ''
@@ -103,14 +103,16 @@ stylesheet
 	self get_stylesheet: answer.
 	^answer asObject
 ! !
-!IXSLTemplate categoriesFor: #createProcessor!**auto generated**!methods!public! !
-!IXSLTemplate categoriesFor: #CreateProcessor:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
-!IXSLTemplate categoriesFor: #get_stylesheet:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
-!IXSLTemplate categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IXSLTemplate categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IXSLTemplate categoriesFor: #putref_stylesheet:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
-!IXSLTemplate categoriesFor: #setStylesheet:!**auto generated**!properties!public! !
-!IXSLTemplate categoriesFor: #stylesheet!**auto generated**!properties!public! !
+!IXSLTemplate categoriesForMethods!
+createProcessor!**auto generated**!methods!public! !
+CreateProcessor:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
+get_stylesheet:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+putref_stylesheet:!**auto generated**!COM Interfaces-IXSLTemplate!private! !
+setStylesheet:!**auto generated**!properties!public! !
+stylesheet!**auto generated**!properties!public! !
+!
 
 !IXSLTemplate class methodsFor!
 
@@ -156,10 +158,12 @@ newXSLTemplate60
 
 	^self onCLSID: (CLSID fromString: '{88D96A08-F192-11D4-A65F-0040963251E5}')
 ! !
-!IXSLTemplate class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IXSLTemplate class categoriesFor: #newXSLTemplate!**auto generated**!instance creation!public! !
-!IXSLTemplate class categoriesFor: #newXSLTemplate26!**auto generated**!instance creation!public! !
-!IXSLTemplate class categoriesFor: #newXSLTemplate30!**auto generated**!instance creation!public! !
-!IXSLTemplate class categoriesFor: #newXSLTemplate40!**auto generated**!instance creation!public! !
-!IXSLTemplate class categoriesFor: #newXSLTemplate60!**auto generated**!instance creation!public! !
+!IXSLTemplate class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+newXSLTemplate!**auto generated**!instance creation!public! !
+newXSLTemplate26!**auto generated**!instance creation!public! !
+newXSLTemplate30!**auto generated**!instance creation!public! !
+newXSLTemplate40!**auto generated**!instance creation!public! !
+newXSLTemplate60!**auto generated**!instance creation!public! !
+!
 

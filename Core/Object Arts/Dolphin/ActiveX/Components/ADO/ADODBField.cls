@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ADODBField20 subclass: #ADODBField
 	instanceVariableNames: ''
@@ -49,8 +49,10 @@ status
 	answer := SDWORD new.
 	self get_Status: answer.
 	^answer asObject! !
-!ADODBField categoriesFor: #get_Status:!**auto generated**!COM Interfaces-Field!private! !
-!ADODBField categoriesFor: #status!**auto generated**!properties!public! !
+!ADODBField categoriesForMethods!
+get_Status:!**auto generated**!COM Interfaces-Field!private! !
+status!**auto generated**!properties!public! !
+!
 
 !ADODBField class methodsFor!
 
@@ -62,5 +64,7 @@ defineFunctions
 		defineFunction: #get_Status:
 			argumentTypes: 'sdword*'
 ! !
-!ADODBField class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBField class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STBCollectionProxy subclass: #STBSortedCollectionProxy
 	instanceVariableNames: 'sortAlgorithm'
@@ -30,9 +30,11 @@ value
 		setSortAlgorithm: sortAlgorithm;
 		addAllWithoutSorting: array;
 		yourself! !
-!STBSortedCollectionProxy categoriesFor: #sortAlgorithm!accessing!private! !
-!STBSortedCollectionProxy categoriesFor: #sortAlgorithm:!accessing!private! !
-!STBSortedCollectionProxy categoriesFor: #value!converting!public! !
+!STBSortedCollectionProxy categoriesForMethods!
+sortAlgorithm!accessing!private! !
+sortAlgorithm:!accessing!private! !
+value!converting!public! !
+!
 
 !STBSortedCollectionProxy class methodsFor!
 
@@ -61,7 +63,9 @@ stbVersion
 		1 - sortBlock becomes sortAlgorithm"
 
 	^1! !
-!STBSortedCollectionProxy class categoriesFor: #forCollection:!instance creation!public! !
-!STBSortedCollectionProxy class categoriesFor: #stbConvertFrom:!instance creation!public! !
-!STBSortedCollectionProxy class categoriesFor: #stbVersion!instance creation!public! !
+!STBSortedCollectionProxy class categoriesForMethods!
+forCollection:!instance creation!public! !
+stbConvertFrom:!instance creation!public! !
+stbVersion!instance creation!public! !
+!
 

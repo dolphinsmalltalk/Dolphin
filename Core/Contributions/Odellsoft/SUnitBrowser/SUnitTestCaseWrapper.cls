@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SUnitAbsWrapper subclass: #SUnitTestCaseWrapper
 	instanceVariableNames: ''
@@ -64,19 +64,21 @@ testCase
 testCase: anObject
 
 	self subject: anObject! !
-!SUnitTestCaseWrapper categoriesFor: #allTests!accessing!public! !
-!SUnitTestCaseWrapper categoriesFor: #debug!actions!public! !
-!SUnitTestCaseWrapper categoriesFor: #isFor:withResult:!public! !
-!SUnitTestCaseWrapper categoriesFor: #name!accessing!public! !
-!SUnitTestCaseWrapper categoriesFor: #numberCorrect!accessing!public! !
-!SUnitTestCaseWrapper categoriesFor: #numberErrors!accessing!public! !
-!SUnitTestCaseWrapper categoriesFor: #numberFailures!accessing!public! !
-!SUnitTestCaseWrapper categoriesFor: #numberNotYetRun!accessing!public! !
-!SUnitTestCaseWrapper categoriesFor: #numberTests!accessing!public! !
-!SUnitTestCaseWrapper categoriesFor: #selector!accessing!public! !
-!SUnitTestCaseWrapper categoriesFor: #step!actions!public! !
-!SUnitTestCaseWrapper categoriesFor: #testCase!accessing!private! !
-!SUnitTestCaseWrapper categoriesFor: #testCase:!accessing!private! !
+!SUnitTestCaseWrapper categoriesForMethods!
+allTests!accessing!public! !
+debug!actions!public! !
+isFor:withResult:!public! !
+name!accessing!public! !
+numberCorrect!accessing!public! !
+numberErrors!accessing!public! !
+numberFailures!accessing!public! !
+numberNotYetRun!accessing!public! !
+numberTests!accessing!public! !
+selector!accessing!public! !
+step!actions!public! !
+testCase!accessing!private! !
+testCase:!accessing!private! !
+!
 
 !SUnitTestCaseWrapper class methodsFor!
 
@@ -85,5 +87,7 @@ newOn: aTestCase model: anSUnitBrowserModel
 	^(self newOn: anSUnitBrowserModel)
 		testCase: aTestCase;
 		yourself! !
-!SUnitTestCaseWrapper class categoriesFor: #newOn:model:!instantiating!public! !
+!SUnitTestCaseWrapper class categoriesForMethods!
+newOn:model:!instantiating!public! !
+!
 

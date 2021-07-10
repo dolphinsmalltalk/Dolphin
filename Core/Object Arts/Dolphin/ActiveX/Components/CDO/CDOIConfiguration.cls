@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #CDOIConfiguration
 	instanceVariableNames: ''
@@ -92,14 +92,16 @@ value
 
 	^self fields
 ! !
-!CDOIConfiguration categoriesFor: #fields!properties!public! !
-!CDOIConfiguration categoriesFor: #get_Fields:!**auto generated**!COM Interfaces-IConfiguration!private! !
-!CDOIConfiguration categoriesFor: #getInterface:!**auto generated**!methods!public! !
-!CDOIConfiguration categoriesFor: #GetInterface:ppUnknown:!**auto generated**!COM Interfaces-IConfiguration!private! !
-!CDOIConfiguration categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDOIConfiguration categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDOIConfiguration categoriesFor: #Load:URL:!**auto generated**!COM Interfaces-IConfiguration!public! !
-!CDOIConfiguration categoriesFor: #value!**auto generated**!properties!public! !
+!CDOIConfiguration categoriesForMethods!
+fields!properties!public! !
+get_Fields:!**auto generated**!COM Interfaces-IConfiguration!private! !
+getInterface:!**auto generated**!methods!public! !
+GetInterface:ppUnknown:!**auto generated**!COM Interfaces-IConfiguration!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+Load:URL:!**auto generated**!COM Interfaces-IConfiguration!public! !
+value!**auto generated**!properties!public! !
+!
 
 !CDOIConfiguration class methodsFor!
 
@@ -130,7 +132,9 @@ initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
-!CDOIConfiguration class categoriesFor: #clsid!**auto generated**!constants!private! !
-!CDOIConfiguration class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDOIConfiguration class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDOIConfiguration class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!public! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

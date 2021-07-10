@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PluggableSortAlgorithm subclass: #IntrosortAlgorithm
 	instanceVariableNames: ''
@@ -113,6 +113,8 @@ sort: anObject from: startInteger to: stopInteger limit: limitInteger
 		insertionSort: anObject
 		from: lo
 		to: up! !
-!IntrosortAlgorithm categoriesFor: #sort:from:to:!operations!public! !
-!IntrosortAlgorithm categoriesFor: #sort:from:to:limit:!operations!private! !
+!IntrosortAlgorithm categoriesForMethods!
+sort:from:to:!operations!public! !
+sort:from:to:limit:!operations!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_QOS_SETTING_INFO
 	instanceVariableNames: 'setting'
@@ -66,14 +66,16 @@ value: aHttpQosPropertyInfo
 	self
 		QosType: aHttpQosPropertyInfo qosType;
 		QosSetting: aHttpQosPropertyInfo yourAddress! !
-!HTTP_QOS_SETTING_INFO categoriesFor: #printFields:on:limit:!development!printing!private! !
-!HTTP_QOS_SETTING_INFO categoriesFor: #propertyId!constants!public! !
-!HTTP_QOS_SETTING_INFO categoriesFor: #QosSetting!**compiled accessors**!public! !
-!HTTP_QOS_SETTING_INFO categoriesFor: #QosSetting:!**compiled accessors**!public! !
-!HTTP_QOS_SETTING_INFO categoriesFor: #QosType!**compiled accessors**!public! !
-!HTTP_QOS_SETTING_INFO categoriesFor: #QosType:!**compiled accessors**!public! !
-!HTTP_QOS_SETTING_INFO categoriesFor: #value!accessing!public! !
-!HTTP_QOS_SETTING_INFO categoriesFor: #value:!accessing!public! !
+!HTTP_QOS_SETTING_INFO categoriesForMethods!
+printFields:on:limit:!development!printing!private! !
+propertyId!constants!public! !
+QosSetting!**compiled accessors**!public! !
+QosSetting:!**compiled accessors**!public! !
+QosType!**compiled accessors**!public! !
+QosType:!**compiled accessors**!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !HTTP_QOS_SETTING_INFO class methodsFor!
 
@@ -110,10 +112,12 @@ qosSetting: anHttpQosSetting
 	^(self new)
 		value: anHttpQosSetting;
 		yourself! !
-!HTTP_QOS_SETTING_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_QOS_SETTING_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HTTP_QOS_SETTING_INFO class categoriesFor: #maxBandwidth:!instance creation!public! !
-!HTTP_QOS_SETTING_INFO class categoriesFor: #maxConnections:!instance creation!public! !
-!HTTP_QOS_SETTING_INFO class categoriesFor: #propertyId!constants!public! !
-!HTTP_QOS_SETTING_INFO class categoriesFor: #qosSetting:!instance creation!public! !
+!HTTP_QOS_SETTING_INFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+maxBandwidth:!instance creation!public! !
+maxConnections:!instance creation!public! !
+propertyId!constants!public! !
+qosSetting:!instance creation!public! !
+!
 

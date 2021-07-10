@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #RefactoringBrowserTest
 	instanceVariableNames: ''
@@ -44,10 +44,12 @@ proceedThroughWarning: aBlock
 "	aBlock on: RefactoringWarning do: [:ex | ex proceed]"
 	aBlock on: RefactoringWarning do: [:ex | ex resume]
 ! !
-!RefactoringBrowserTest categoriesFor: #convertInterval:for:!private! !
-!RefactoringBrowserTest categoriesFor: #executeRefactoring:!private! !
-!RefactoringBrowserTest categoriesFor: #objectClassVariable!private! !
-!RefactoringBrowserTest categoriesFor: #proceedThroughWarning:!private! !
+!RefactoringBrowserTest categoriesForMethods!
+convertInterval:for:!private! !
+executeRefactoring:!private! !
+objectClassVariable!private! !
+proceedThroughWarning:!private! !
+!
 
 !RefactoringBrowserTest class methodsFor!
 
@@ -55,5 +57,7 @@ shouldInheritSelectors
 	"answer true to inherit selectors from superclasses"
 
 	^false! !
-!RefactoringBrowserTest class categoriesFor: #shouldInheritSelectors!public!Testing! !
+!RefactoringBrowserTest class categoriesForMethods!
+shouldInheritSelectors!public!Testing! !
+!
 

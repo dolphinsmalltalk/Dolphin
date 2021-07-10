@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Magnitude subclass: #Date
 	instanceVariableNames: 'days'
@@ -332,44 +332,46 @@ yyyymmdd
 		on: stream
 		format: 'yyyy-MM-dd'.
 	^stream grabContents! !
-!Date categoriesFor: #<!comparing!public! !
-!Date categoriesFor: #=!comparing!public! !
-!Date categoriesFor: #addDays:!arithmetic!public! !
-!Date categoriesFor: #addMonths:!arithmetic!public! !
-!Date categoriesFor: #addMonths:desiredDay:!arithmetic!public! !
-!Date categoriesFor: #addYears:!arithmetic!public! !
-!Date categoriesFor: #addYears:desiredDay:!arithmetic!public! !
-!Date categoriesFor: #asDateAndTime!converting!public! !
-!Date categoriesFor: #asDays!converting!public! !
-!Date categoriesFor: #asMilliseconds!converting!public! !
-!Date categoriesFor: #asParameter!converting!public! !
-!Date categoriesFor: #asSeconds!converting!public! !
-!Date categoriesFor: #asSYSTEMTIME!converting!public! !
-!Date categoriesFor: #asTimeStamp!converting!public! !
-!Date categoriesFor: #day!accessing!public! !
-!Date categoriesFor: #dayMonthYearDo:!accessing!public! !
-!Date categoriesFor: #dayOfMonth!accessing!public! !
-!Date categoriesFor: #dayOfWeek!accessing!public! !
-!Date categoriesFor: #dayOfYear!accessing!public! !
-!Date categoriesFor: #firstDayOfMonth!operations!public! !
-!Date categoriesFor: #firstDayOfMonthIndex:!operations!private! !
-!Date categoriesFor: #hash!comparing!public! !
-!Date categoriesFor: #isLeapYear!public!testing! !
-!Date categoriesFor: #month!accessing!public! !
-!Date categoriesFor: #monthName!accessing!public! !
-!Date categoriesFor: #monthsSince:!arithmetic!public! !
-!Date categoriesFor: #printOn:!printing!public! !
-!Date categoriesFor: #printOn:format:!printing!public! !
-!Date categoriesFor: #printOn:longPicture:!printing!public! !
-!Date categoriesFor: #printStringFormat:!printing!public! !
-!Date categoriesFor: #seconds!accessing!public! !
-!Date categoriesFor: #setDays:!accessing!private! !
-!Date categoriesFor: #storeOn:!printing!public! !
-!Date categoriesFor: #subtractDate:!arithmetic!public! !
-!Date categoriesFor: #subtractDays:!arithmetic!public! !
-!Date categoriesFor: #year!accessing!public! !
-!Date categoriesFor: #yearsSince:!arithmetic!public! !
-!Date categoriesFor: #yyyymmdd!accessing!public! !
+!Date categoriesForMethods!
+<!comparing!public! !
+=!comparing!public! !
+addDays:!arithmetic!public! !
+addMonths:!arithmetic!public! !
+addMonths:desiredDay:!arithmetic!public! !
+addYears:!arithmetic!public! !
+addYears:desiredDay:!arithmetic!public! !
+asDateAndTime!converting!public! !
+asDays!converting!public! !
+asMilliseconds!converting!public! !
+asParameter!converting!public! !
+asSeconds!converting!public! !
+asSYSTEMTIME!converting!public! !
+asTimeStamp!converting!public! !
+day!accessing!public! !
+dayMonthYearDo:!accessing!public! !
+dayOfMonth!accessing!public! !
+dayOfWeek!accessing!public! !
+dayOfYear!accessing!public! !
+firstDayOfMonth!operations!public! !
+firstDayOfMonthIndex:!operations!private! !
+hash!comparing!public! !
+isLeapYear!public!testing! !
+month!accessing!public! !
+monthName!accessing!public! !
+monthsSince:!arithmetic!public! !
+printOn:!printing!public! !
+printOn:format:!printing!public! !
+printOn:longPicture:!printing!public! !
+printStringFormat:!printing!public! !
+seconds!accessing!public! !
+setDays:!accessing!private! !
+storeOn:!printing!public! !
+subtractDate:!arithmetic!public! !
+subtractDays:!arithmetic!public! !
+year!accessing!public! !
+yearsSince:!arithmetic!public! !
+yyyymmdd!accessing!public! !
+!
 
 !Date class methodsFor!
 
@@ -685,44 +687,46 @@ yearPivot: anInteger
 
 yesterday
 	^self today subtractDays: 1! !
-!Date class categoriesFor: #dateOrderFromFormat:!helpers!private! !
-!Date class categoriesFor: #day:inYear:!enquiries!private! !
-!Date class categoriesFor: #daysInMonth:forYear:!enquiries!public! !
-!Date class categoriesFor: #daysInMonthIndex:forYear:!enquiries!private! !
-!Date class categoriesFor: #daysInYear:!enquiries!public! !
-!Date class categoriesFor: #daysUntilMonth:inYear:!enquiries!private! !
-!Date class categoriesFor: #defaultLongFormat!enquiries!public! !
-!Date class categoriesFor: #defaultLongPicture:!printing!private! !
-!Date class categoriesFor: #defaultShortFormat!enquiries!public! !
-!Date class categoriesFor: #defaultYearPivot!constants!public! !
-!Date class categoriesFor: #errorInvalidFormat!exceptions!private! !
-!Date class categoriesFor: #fromDays:!instance creation!public! !
-!Date class categoriesFor: #fromSeconds:!instance creation!public! !
-!Date class categoriesFor: #fromString:!instance creation!public! !
-!Date class categoriesFor: #fromString:format:!instance creation!public! !
-!Date class categoriesFor: #fromSYSTEMTIME:!instance creation!private! !
-!Date class categoriesFor: #indexOfMonth:!enquiries!public! !
-!Date class categoriesFor: #initialize!development!initializing!private! !
-!Date class categoriesFor: #leapYear:!operations!public! !
-!Date class categoriesFor: #longFormats!enquiries!public! !
-!Date class categoriesFor: #monthAbbreviation:!enquiries!public! !
-!Date class categoriesFor: #monthIndexOfDay:inYear:!enquiries!private! !
-!Date class categoriesFor: #new!instance creation!public! !
-!Date class categoriesFor: #newDay:month:year:!instance creation!public! !
-!Date class categoriesFor: #newDay:monthIndex:year:!instance creation!public! !
-!Date class categoriesFor: #newDay:monthNumber:year:!instance creation!public! !
-!Date class categoriesFor: #newDay:year:!instance creation!public! !
-!Date class categoriesFor: #readDayFrom:!helpers!private! !
-!Date class categoriesFor: #readFrom:!instance creation!public! !
-!Date class categoriesFor: #readFrom:format:!instance creation!public! !
-!Date class categoriesFor: #readMonthFrom:!helpers!private! !
-!Date class categoriesFor: #readYearFrom:!helpers!private! !
-!Date class categoriesFor: #shortFormats!enquiries!private! !
-!Date class categoriesFor: #today!instance creation!public! !
-!Date class categoriesFor: #tomorrow!instance creation!public! !
-!Date class categoriesFor: #year:month:day:!instance creation!public! !
-!Date class categoriesFor: #yearAsDays:!converting!private! !
-!Date class categoriesFor: #yearPivot!accessing!public! !
-!Date class categoriesFor: #yearPivot:!accessing!not an aspect!public! !
-!Date class categoriesFor: #yesterday!instance creation!public! !
+!Date class categoriesForMethods!
+dateOrderFromFormat:!helpers!private! !
+day:inYear:!enquiries!private! !
+daysInMonth:forYear:!enquiries!public! !
+daysInMonthIndex:forYear:!enquiries!private! !
+daysInYear:!enquiries!public! !
+daysUntilMonth:inYear:!enquiries!private! !
+defaultLongFormat!enquiries!public! !
+defaultLongPicture:!printing!private! !
+defaultShortFormat!enquiries!public! !
+defaultYearPivot!constants!public! !
+errorInvalidFormat!exceptions!private! !
+fromDays:!instance creation!public! !
+fromSeconds:!instance creation!public! !
+fromString:!instance creation!public! !
+fromString:format:!instance creation!public! !
+fromSYSTEMTIME:!instance creation!private! !
+indexOfMonth:!enquiries!public! !
+initialize!development!initializing!private! !
+leapYear:!operations!public! !
+longFormats!enquiries!public! !
+monthAbbreviation:!enquiries!public! !
+monthIndexOfDay:inYear:!enquiries!private! !
+new!instance creation!public! !
+newDay:month:year:!instance creation!public! !
+newDay:monthIndex:year:!instance creation!public! !
+newDay:monthNumber:year:!instance creation!public! !
+newDay:year:!instance creation!public! !
+readDayFrom:!helpers!private! !
+readFrom:!instance creation!public! !
+readFrom:format:!instance creation!public! !
+readMonthFrom:!helpers!private! !
+readYearFrom:!helpers!private! !
+shortFormats!enquiries!private! !
+today!instance creation!public! !
+tomorrow!instance creation!public! !
+year:month:day:!instance creation!public! !
+yearAsDays:!converting!private! !
+yearPivot!accessing!public! !
+yearPivot:!accessing!not an aspect!public! !
+yesterday!instance creation!public! !
+!
 

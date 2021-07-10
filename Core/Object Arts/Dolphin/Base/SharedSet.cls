@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Set variableSubclass: #SharedSet
 	instanceVariableNames: 'mutex'
@@ -183,22 +183,24 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	mutex critical: [super stbSaveOn: anSTBOutFiler]! !
-!SharedSet categoriesFor: #add:!adding!public! !
-!SharedSet categoriesFor: #addAll:!adding!public! !
-!SharedSet categoriesFor: #asArray!converting!public! !
-!SharedSet categoriesFor: #asByteArray!converting!public! !
-!SharedSet categoriesFor: #do:!enumerating!public! !
-!SharedSet categoriesFor: #find:ifAbsent:!public!searching! !
-!SharedSet categoriesFor: #identityIncludes:!public!searching! !
-!SharedSet categoriesFor: #includes:!public!searching! !
-!SharedSet categoriesFor: #initialize!initializing!public! !
-!SharedSet categoriesFor: #mutex!accessing!private! !
-!SharedSet categoriesFor: #mutex:!initializing!private! !
-!SharedSet categoriesFor: #postCopy!copying!public! !
-!SharedSet categoriesFor: #preResize:!adding!public! !
-!SharedSet categoriesFor: #printOn:!printing!public! !
-!SharedSet categoriesFor: #remove:ifAbsent:!public!removing! !
-!SharedSet categoriesFor: #resize:!mutating!private! !
-!SharedSet categoriesFor: #shrink!mutating!public! !
-!SharedSet categoriesFor: #stbSaveOn:!binary filing!public! !
+!SharedSet categoriesForMethods!
+add:!adding!public! !
+addAll:!adding!public! !
+asArray!converting!public! !
+asByteArray!converting!public! !
+do:!enumerating!public! !
+find:ifAbsent:!public!searching! !
+identityIncludes:!public!searching! !
+includes:!public!searching! !
+initialize!initializing!public! !
+mutex!accessing!private! !
+mutex:!initializing!private! !
+postCopy!copying!public! !
+preResize:!adding!public! !
+printOn:!printing!public! !
+remove:ifAbsent:!public!removing! !
+resize:!mutating!private! !
+shrink!mutating!public! !
+stbSaveOn:!binary filing!public! !
+!
 

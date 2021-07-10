@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #MIB_IPNETROW
 	instanceVariableNames: ''
@@ -55,11 +55,13 @@ dwType
 	"Answer the <Integer> value of the receiver's 'dwType' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwType! !
-!MIB_IPNETROW categoriesFor: #bPhysAddr!**compiled accessors**!public! !
-!MIB_IPNETROW categoriesFor: #dwAddr!**compiled accessors**!public! !
-!MIB_IPNETROW categoriesFor: #dwIndex!**compiled accessors**!public! !
-!MIB_IPNETROW categoriesFor: #dwPhysAddrLen!**compiled accessors**!public! !
-!MIB_IPNETROW categoriesFor: #dwType!**compiled accessors**!public! !
+!MIB_IPNETROW categoriesForMethods!
+bPhysAddr!**compiled accessors**!public! !
+dwAddr!**compiled accessors**!public! !
+dwIndex!**compiled accessors**!public! !
+dwPhysAddrLen!**compiled accessors**!public! !
+dwType!**compiled accessors**!public! !
+!
 
 !MIB_IPNETROW class methodsFor!
 
@@ -99,6 +101,8 @@ defineFields
 
 getFieldNames
 	^#(#dwIndex #dwPhysAddrLen #bPhysAddr #dwAddr #dwType)! !
-!MIB_IPNETROW class categoriesFor: #defineFields!initializing!public! !
-!MIB_IPNETROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MIB_IPNETROW class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

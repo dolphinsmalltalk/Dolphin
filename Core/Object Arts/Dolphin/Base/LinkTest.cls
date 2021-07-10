@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #LinkTest
 	instanceVariableNames: ''
@@ -23,5 +23,7 @@ testClassNextLink
 	"Invoke the method directly so we don't need to install it."
 	link1 := testMethod value: Link withArguments: {link2}.
 	self assert: link1 nextLink identicalTo: link2! !
-!LinkTest categoriesFor: #testClassNextLink!public!unit tests! !
+!LinkTest categoriesForMethods!
+testClassNextLink!public!unit tests! !
+!
 

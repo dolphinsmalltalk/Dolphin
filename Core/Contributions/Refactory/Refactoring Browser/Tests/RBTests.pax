@@ -356,13 +356,17 @@ RBFormatter1 := RBConfigurableFormatter!
 isEqualTo: aBlockClosure
 	self class = aBlockClosure class ifFalse: [^false].
 	^self method isEqualTo: aBlockClosure method! !
-!BlockClosure categoriesFor: #isEqualTo:!public!testing! !
+!BlockClosure categoriesForMethods!
+isEqualTo:!public!testing! !
+!
 
 !ByteArray methodsFor!
 
 isEqualTo: aByteArray
 	^self = aByteArray! !
-!ByteArray categoriesFor: #isEqualTo:!comparing!public! !
+!ByteArray categoriesForMethods!
+isEqualTo:!comparing!public! !
+!
 
 !Collection methodsFor!
 
@@ -375,7 +379,9 @@ isEqualTo: anObject
 							[:each | 
 							(anObject detect: [:eachOther | each isEqualTo: eachOther]
 								ifNone: [notFound]) ~~ notFound]]]! !
-!Collection categoriesFor: #isEqualTo:!comparing!public! !
+!Collection categoriesForMethods!
+isEqualTo:!comparing!public! !
+!
 
 !CompiledCode methodsFor!
 
@@ -399,19 +405,25 @@ isEqualTo: aMethod
 				ifTrue: [(b class == BlockClosure and: [b method == aMethod]) ifFalse: [^false]]
 				ifFalse: [(a isEqualTo: b) ifFalse: [^false]]].
 	^true! !
-!CompiledCode categoriesFor: #isEqualTo:!public!testing! !
+!CompiledCode categoriesForMethods!
+isEqualTo:!public!testing! !
+!
 
 !Interval methodsFor!
 
 isEqualTo: anObject
 	^self class == anObject class and: [self = anObject]! !
-!Interval categoriesFor: #isEqualTo:!public! !
+!Interval categoriesForMethods!
+isEqualTo:!public! !
+!
 
 !Object methodsFor!
 
 isEqualTo: anObject
 	^self = anObject! !
-!Object categoriesFor: #isEqualTo:!public!testing! !
+!Object categoriesForMethods!
+isEqualTo:!public!testing! !
+!
 
 !String methodsFor!
 
@@ -423,14 +435,18 @@ withCRs
 	stream := self class writeStream: self size.
 	self do: [:each | each = $\ ifTrue: [stream nextPutAll: self class lineDelimiter] ifFalse: [stream nextPut: each]].
 	^stream contents! !
-!String categoriesFor: #isEqualTo:!comparing!public! !
-!String categoriesFor: #withCRs!converting!public! !
+!String categoriesForMethods!
+isEqualTo:!comparing!public! !
+withCRs!converting!public! !
+!
 
 !SystemDictionary methodsFor!
 
 isEqualTo: aSystemDictionary 
 	^aSystemDictionary == self! !
-!SystemDictionary categoriesFor: #isEqualTo:!public! !
+!SystemDictionary categoriesForMethods!
+isEqualTo:!public! !
+!
 
 "End of package definition"!
 

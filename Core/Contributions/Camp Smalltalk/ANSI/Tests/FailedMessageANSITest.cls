@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #FailedMessageANSITest
 	instanceVariableNames: 'failedMsg'
@@ -71,9 +71,11 @@ testXselector
 		conformTo: #'failedMessage' selector: #'selector'.
 
 ???"! !
-!FailedMessageANSITest categoriesFor: #canonicalObject!public! !
-!FailedMessageANSITest categoriesFor: #protocol!public! !
-!FailedMessageANSITest categoriesFor: #setUp!public! !
-!FailedMessageANSITest categoriesFor: #testXarguments!public! !
-!FailedMessageANSITest categoriesFor: #testXselector!public! !
+!FailedMessageANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+setUp!public! !
+testXarguments!public! !
+testXselector!public! !
+!
 

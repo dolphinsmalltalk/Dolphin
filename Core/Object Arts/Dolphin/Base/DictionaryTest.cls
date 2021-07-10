@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractDictionaryTest subclass: #DictionaryTest
 	instanceVariableNames: ''
@@ -33,7 +33,9 @@ testAtIfAbsentPutValue
 	self assert: dictionary size identicalTo: initialSize + 1.
 	self assert: (dictionary at: f ifAbsentPutValue: 2) identicalTo: f.
 	self assert: dictionary size identicalTo: initialSize + 1! !
-!DictionaryTest categoriesFor: #collectionClass!helpers!private! !
-!DictionaryTest categoriesFor: #testAllInstancesValid!public!unit tests! !
-!DictionaryTest categoriesFor: #testAtIfAbsentPutValue!public!unit tests! !
+!DictionaryTest categoriesForMethods!
+collectionClass!helpers!private! !
+testAllInstancesValid!public!unit tests! !
+testAtIfAbsentPutValue!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IRecordInfo
 	instanceVariableNames: ''
@@ -279,29 +279,31 @@ typeInfo
 		GetTypeInfo: answer.
 	^answer asObject
 ! !
-!IRecordInfo categoriesFor: #byteSize!accessing!public! !
-!IRecordInfo categoriesFor: #getField:from:ifAbsent:!accessing!private! !
-!IRecordInfo categoriesFor: #GetField:szFieldName:pvarField:!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #getFieldNames!accessing!public! !
-!IRecordInfo categoriesFor: #GetFieldNames:rgBstrNames:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #GetGuid:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #GetName:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #GetSize:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #GetTypeInfo:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #guid!accessing!public! !
-!IRecordInfo categoriesFor: #IsMatchingType:!**auto generated**!COM Interfaces-IRecordInfo!public! !
-!IRecordInfo categoriesFor: #name!accessing!public! !
-!IRecordInfo categoriesFor: #PutField:pvData:szFieldName:pvarField:!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #PutFieldNoCopy:pvData:szFieldName:pvarField:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #RecordClear:!**auto generated**!COM Interfaces-IRecordInfo!public! !
-!IRecordInfo categoriesFor: #RecordCopy:pvNew:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #RecordCreate!**auto generated**!COM Interfaces-IRecordInfo!public! !
-!IRecordInfo categoriesFor: #RecordCreateCopy:ppvDest:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #RecordDestroy:!**auto generated**!COM Interfaces-IRecordInfo!public! !
-!IRecordInfo categoriesFor: #RecordInit:!**auto generated**!COM Interfaces-IRecordInfo!private! !
-!IRecordInfo categoriesFor: #setField:value:into:ifAbsent:!accessing!private! !
-!IRecordInfo categoriesFor: #typeInfo!methods!public! !
+!IRecordInfo categoriesForMethods!
+byteSize!accessing!public! !
+getField:from:ifAbsent:!accessing!private! !
+GetField:szFieldName:pvarField:!COM Interfaces-IRecordInfo!private! !
+getFieldNames!accessing!public! !
+GetFieldNames:rgBstrNames:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+GetGuid:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+GetName:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+GetSize:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+GetTypeInfo:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+guid!accessing!public! !
+IsMatchingType:!**auto generated**!COM Interfaces-IRecordInfo!public! !
+name!accessing!public! !
+PutField:pvData:szFieldName:pvarField:!COM Interfaces-IRecordInfo!private! !
+PutFieldNoCopy:pvData:szFieldName:pvarField:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+RecordClear:!**auto generated**!COM Interfaces-IRecordInfo!public! !
+RecordCopy:pvNew:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+RecordCreate!**auto generated**!COM Interfaces-IRecordInfo!public! !
+RecordCreateCopy:ppvDest:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+RecordDestroy:!**auto generated**!COM Interfaces-IRecordInfo!public! !
+RecordInit:!**auto generated**!COM Interfaces-IRecordInfo!private! !
+setField:value:into:ifAbsent:!accessing!private! !
+typeInfo!methods!public! !
+!
 
 IRecordInfo methodProtocol: #IRecordInfo attributes: #(#readOnly) selectors: #(#GetField:szFieldName:pvarField: #GetFieldNames:rgBstrNames: #GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray: #GetGuid: #GetName: #GetSize: #GetTypeInfo: #IsMatchingType: #PutField:pvData:szFieldName:pvarField: #PutFieldNoCopy:pvData:szFieldName:pvarField: #RecordClear: #RecordCopy:pvNew: #RecordCreate #RecordCreateCopy:ppvDest: #RecordDestroy: #RecordInit:)!
 
@@ -349,5 +351,7 @@ defineFunctions
 		defineFunction: #RecordDestroy:
 			argumentTypes: 'void*'
 ! !
-!IRecordInfo class categoriesFor: #defineFunctions!initializing!public! !
+!IRecordInfo class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

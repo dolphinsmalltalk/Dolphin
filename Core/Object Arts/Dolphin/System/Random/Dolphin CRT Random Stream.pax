@@ -48,8 +48,10 @@ rand
 srand: anInteger
 	<cdecl: void srand dword>
 	^self invalidCall: _failureCode! !
-!CRTLibrary categoriesFor: #rand!CRT functions-floating point support!public! !
-!CRTLibrary categoriesFor: #srand:!CRT functions-floating point support!public! !
+!CRTLibrary categoriesForMethods!
+rand!CRT functions-floating point support!public! !
+srand:!CRT functions-floating point support!public! !
+!
 
 "End of package definition"!
 

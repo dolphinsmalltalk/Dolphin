@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Fault subclass: #GPFault
 	instanceVariableNames: ''
@@ -30,8 +30,10 @@ isReading
 	"Answer whether the fault occurred attempting to read from memory (as opposed to writing)."
 
 	^(exceptionRecord information at: 1) == 0! !
-!GPFault categoriesFor: #_descriptionArguments!displaying!public! !
-!GPFault categoriesFor: #_descriptionFormat!displaying!public! !
-!GPFault categoriesFor: #inaccessibleAddress!accessing!public! !
-!GPFault categoriesFor: #isReading!accessing!public! !
+!GPFault categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+inaccessibleAddress!accessing!public! !
+isReading!accessing!public! !
+!
 

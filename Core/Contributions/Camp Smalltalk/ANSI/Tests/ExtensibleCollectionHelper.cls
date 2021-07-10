@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCaseHelper subclass: #ExtensibleCollectionHelper
 	instanceVariableNames: ''
@@ -84,11 +84,13 @@ testXremoveXifAbsentX
 		should: [:result | result = #foo ]
 		conformTo: #extensibleCollection
 		selector: #remove:ifAbsent:! !
-!ExtensibleCollectionHelper categoriesFor: #object!public! !
-!ExtensibleCollectionHelper categoriesFor: #object:!public! !
-!ExtensibleCollectionHelper categoriesFor: #testXaddAllX!public! !
-!ExtensibleCollectionHelper categoriesFor: #testXaddX!public! !
-!ExtensibleCollectionHelper categoriesFor: #testXremoveAllX!public! !
-!ExtensibleCollectionHelper categoriesFor: #testXremoveX!public! !
-!ExtensibleCollectionHelper categoriesFor: #testXremoveXifAbsentX!public! !
+!ExtensibleCollectionHelper categoriesForMethods!
+object!public! !
+object:!public! !
+testXaddAllX!public! !
+testXaddX!public! !
+testXremoveAllX!public! !
+testXremoveX!public! !
+testXremoveXifAbsentX!public! !
+!
 

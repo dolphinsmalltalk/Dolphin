@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #GUIDTest
 	instanceVariableNames: ''
@@ -117,17 +117,19 @@ testUniqueness
 	generated := Set new: size.
 	size timesRepeat: [generated add: self subjectClass newUnique].
 	self assert: generated size equals: size! !
-!GUIDTest categoriesFor: #assertNull:!private!unit tests! !
-!GUIDTest categoriesFor: #subjectClass!constants!private! !
-!GUIDTest categoriesFor: #testAsByteArray!public!unit tests! !
-!GUIDTest categoriesFor: #testAsInteger!public!unit tests! !
-!GUIDTest categoriesFor: #testComparison!public!unit tests! !
-!GUIDTest categoriesFor: #testDisplayString!public!unit tests! !
-!GUIDTest categoriesFor: #testFromString!public!unit tests! !
-!GUIDTest categoriesFor: #testFromStringNull!public!unit tests! !
-!GUIDTest categoriesFor: #testNewUnique!public!unit tests! !
-!GUIDTest categoriesFor: #testNull!public!unit tests! !
-!GUIDTest categoriesFor: #testOrder!public!unit tests! !
-!GUIDTest categoriesFor: #testStoreOn!public!unit tests! !
-!GUIDTest categoriesFor: #testUniqueness!public!unit tests! !
+!GUIDTest categoriesForMethods!
+assertNull:!private!unit tests! !
+subjectClass!constants!private! !
+testAsByteArray!public!unit tests! !
+testAsInteger!public!unit tests! !
+testComparison!public!unit tests! !
+testDisplayString!public!unit tests! !
+testFromString!public!unit tests! !
+testFromStringNull!public!unit tests! !
+testNewUnique!public!unit tests! !
+testNull!public!unit tests! !
+testOrder!public!unit tests! !
+testStoreOn!public!unit tests! !
+testUniqueness!public!unit tests! !
+!
 

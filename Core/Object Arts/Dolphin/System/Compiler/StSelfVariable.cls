@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StSpecialVariable subclass: #StSelfVariable
 	instanceVariableNames: ''
@@ -14,5 +14,7 @@ name
 	"Answer the <readableString> identifier of the variable described by the receiver."
 
 	^'self'! !
-!StSelfVariable categoriesFor: #name!accessing!public! !
+!StSelfVariable categoriesForMethods!
+name!accessing!public! !
+!
 

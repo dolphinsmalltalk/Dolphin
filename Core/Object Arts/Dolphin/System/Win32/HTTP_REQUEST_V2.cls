@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HTTP_REQUEST_V1 subclass: #HTTP_REQUEST_V2
 	instanceVariableNames: ''
@@ -56,11 +56,13 @@ RequestInfoCount: anInteger
 	"Set the receiver's 'RequestInfoCount' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_RequestInfoCount put: anInteger! !
-!HTTP_REQUEST_V2 categoriesFor: #pRequestInfo!**compiled accessors**!public! !
-!HTTP_REQUEST_V2 categoriesFor: #pRequestInfo:!**compiled accessors**!public! !
-!HTTP_REQUEST_V2 categoriesFor: #printableFields!development!printing!private! !
-!HTTP_REQUEST_V2 categoriesFor: #RequestInfoCount!**compiled accessors**!private! !
-!HTTP_REQUEST_V2 categoriesFor: #RequestInfoCount:!**compiled accessors**!private! !
+!HTTP_REQUEST_V2 categoriesForMethods!
+pRequestInfo!**compiled accessors**!public! !
+pRequestInfo:!**compiled accessors**!public! !
+printableFields!development!printing!private! !
+RequestInfoCount!**compiled accessors**!private! !
+RequestInfoCount:!**compiled accessors**!private! !
+!
 
 !HTTP_REQUEST_V2 class methodsFor!
 
@@ -85,6 +87,8 @@ defineFields
 
 getFieldNames
 	^#(#Flags #ConnectionId #RequestId #UrlContext #Version #Verb #UnknownVerbLength #RawUrlLength #pUnknownVerb #pRawUrl #CookedUrl #Address #Headers #BytesReceived #EntityChunkCount #pEntityChunks #RawConnectionId #pSslInfo #RequestInfoCount #pRequestInfo)! !
-!HTTP_REQUEST_V2 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_REQUEST_V2 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_REQUEST_V2 class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

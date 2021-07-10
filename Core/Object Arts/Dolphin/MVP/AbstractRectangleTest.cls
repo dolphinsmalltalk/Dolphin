@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #AbstractRectangleTest
 	instanceVariableNames: 'desktop oddDesktop unary'
@@ -61,15 +61,17 @@ testTop
 
 testWidth
 	self assert: oddDesktop width equals: 1280! !
-!AbstractRectangleTest categoriesFor: #setUp!public!Running! !
-!AbstractRectangleTest categoriesFor: #subjectClass!constants!private! !
-!AbstractRectangleTest categoriesFor: #testBottom!public!unit tests! !
-!AbstractRectangleTest categoriesFor: #testCenter!public!unit tests! !
-!AbstractRectangleTest categoriesFor: #testCenterX!public!unit tests! !
-!AbstractRectangleTest categoriesFor: #testHeight!public!unit tests! !
-!AbstractRectangleTest categoriesFor: #testLeft!public!unit tests! !
-!AbstractRectangleTest categoriesFor: #testOriginCorner!public!unit tests! !
-!AbstractRectangleTest categoriesFor: #testRight!public!unit tests! !
-!AbstractRectangleTest categoriesFor: #testTop!public!unit tests! !
-!AbstractRectangleTest categoriesFor: #testWidth!public!unit tests! !
+!AbstractRectangleTest categoriesForMethods!
+setUp!public!Running! !
+subjectClass!constants!private! !
+testBottom!public!unit tests! !
+testCenter!public!unit tests! !
+testCenterX!public!unit tests! !
+testHeight!public!unit tests! !
+testLeft!public!unit tests! !
+testOriginCorner!public!unit tests! !
+testRight!public!unit tests! !
+testTop!public!unit tests! !
+testWidth!public!unit tests! !
+!
 

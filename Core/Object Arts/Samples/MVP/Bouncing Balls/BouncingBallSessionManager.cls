@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RuntimeSessionManager subclass: #BouncingBallSessionManager
 	instanceVariableNames: ''
@@ -14,5 +14,7 @@ main
 	"Start up the sample application"
 
 	BouncingBallView new showShell! !
-!BouncingBallSessionManager categoriesFor: #main!operations-startup!public! !
+!BouncingBallSessionManager categoriesForMethods!
+main!operations-startup!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 QWORD subclass: #LARGE_INTEGER
 	instanceVariableNames: ''
@@ -41,11 +41,13 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes sqwordAtOffset: _OffsetOf_value put: anInteger! !
-!LARGE_INTEGER categoriesFor: #highPart!**compiled accessors**!public! !
-!LARGE_INTEGER categoriesFor: #highPart:!**compiled accessors**!public! !
-!LARGE_INTEGER categoriesFor: #isSigned!public!testing! !
-!LARGE_INTEGER categoriesFor: #value!**compiled accessors**!public! !
-!LARGE_INTEGER categoriesFor: #value:!**compiled accessors**!public! !
+!LARGE_INTEGER categoriesForMethods!
+highPart!**compiled accessors**!public! !
+highPart:!**compiled accessors**!public! !
+isSigned!public!testing! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !LARGE_INTEGER class methodsFor!
 
@@ -68,5 +70,7 @@ defineFields
 		defineField: #highPart
 			type: SDWORDField new beOverride
 			offset: 4! !
-!LARGE_INTEGER class categoriesFor: #defineFields!public!template definition! !
+!LARGE_INTEGER class categoriesForMethods!
+defineFields!public!template definition! !
+!
 

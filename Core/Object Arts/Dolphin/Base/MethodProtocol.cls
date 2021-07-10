@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #MethodProtocol
 	instanceVariableNames: 'name comment selectors flags'
@@ -389,46 +389,48 @@ updateBaseClasses
 
 	self baseBehaviors do: [:each | each isChanged: true]
 ! !
-!MethodProtocol categoriesFor: #<=!comparing!public! !
-!MethodProtocol categoriesFor: #=!comparing!public! !
-!MethodProtocol categoriesFor: #addAllSelectors:!adding!public! !
-!MethodProtocol categoriesFor: #addClass:!adding!public! !
-!MethodProtocol categoriesFor: #addClass:selector:!adding!private! !
-!MethodProtocol categoriesFor: #addMethodSilently:!adding!private! !
-!MethodProtocol categoriesFor: #addProtocol:!adding!public! !
-!MethodProtocol categoriesFor: #addSelector:!adding!public! !
-!MethodProtocol categoriesFor: #ansi!modes!public! !
-!MethodProtocol categoriesFor: #asSymbol!converting!public! !
-!MethodProtocol categoriesFor: #attributes!accessing!public! !
-!MethodProtocol categoriesFor: #attributes:!accessing!private! !
-!MethodProtocol categoriesFor: #baseBehaviors!accessing!public! !
-!MethodProtocol categoriesFor: #behaviors!accessing!public! !
-!MethodProtocol categoriesFor: #comment!accessing!public! !
-!MethodProtocol categoriesFor: #comment:!accessing!public! !
-!MethodProtocol categoriesFor: #compileStub:into:!adding!private! !
-!MethodProtocol categoriesFor: #contents!enumerating!public! !
-!MethodProtocol categoriesFor: #displayOn:!displaying!public! !
-!MethodProtocol categoriesFor: #hash!comparing!public! !
-!MethodProtocol categoriesFor: #includesMethod:!public!testing! !
-!MethodProtocol categoriesFor: #includesSelector:!public!testing! !
-!MethodProtocol categoriesFor: #initialize!initializing!private! !
-!MethodProtocol categoriesFor: #isANSI!public!testing! !
-!MethodProtocol categoriesFor: #isANSI:!modes!public! !
-!MethodProtocol categoriesFor: #isReadOnly!public!testing! !
-!MethodProtocol categoriesFor: #isReadOnly:!modes!public! !
-!MethodProtocol categoriesFor: #methodsInBehavior:!enumerating!public! !
-!MethodProtocol categoriesFor: #name!accessing!public! !
-!MethodProtocol categoriesFor: #printOn:!printing!public! !
-!MethodProtocol categoriesFor: #protocolUpdated!private!updating! !
-!MethodProtocol categoriesFor: #readOnly!modes!public! !
-!MethodProtocol categoriesFor: #removeAllSelectors:!public!removing! !
-!MethodProtocol categoriesFor: #removeClass:!public!removing! !
-!MethodProtocol categoriesFor: #removeSelector:!public!removing! !
-!MethodProtocol categoriesFor: #removeSelector:ifAbsent:!public!removing! !
-!MethodProtocol categoriesFor: #rename:!operations!public! !
-!MethodProtocol categoriesFor: #selectors!accessing!public! !
-!MethodProtocol categoriesFor: #setName:!accessing!private! !
-!MethodProtocol categoriesFor: #updateBaseClasses!private!updating! !
+!MethodProtocol categoriesForMethods!
+<=!comparing!public! !
+=!comparing!public! !
+addAllSelectors:!adding!public! !
+addClass:!adding!public! !
+addClass:selector:!adding!private! !
+addMethodSilently:!adding!private! !
+addProtocol:!adding!public! !
+addSelector:!adding!public! !
+ansi!modes!public! !
+asSymbol!converting!public! !
+attributes!accessing!public! !
+attributes:!accessing!private! !
+baseBehaviors!accessing!public! !
+behaviors!accessing!public! !
+comment!accessing!public! !
+comment:!accessing!public! !
+compileStub:into:!adding!private! !
+contents!enumerating!public! !
+displayOn:!displaying!public! !
+hash!comparing!public! !
+includesMethod:!public!testing! !
+includesSelector:!public!testing! !
+initialize!initializing!private! !
+isANSI!public!testing! !
+isANSI:!modes!public! !
+isReadOnly!public!testing! !
+isReadOnly:!modes!public! !
+methodsInBehavior:!enumerating!public! !
+name!accessing!public! !
+printOn:!printing!public! !
+protocolUpdated!private!updating! !
+readOnly!modes!public! !
+removeAllSelectors:!public!removing! !
+removeClass:!public!removing! !
+removeSelector:!public!removing! !
+removeSelector:ifAbsent:!public!removing! !
+rename:!operations!public! !
+selectors!accessing!public! !
+setName:!accessing!private! !
+updateBaseClasses!private!updating! !
+!
 
 !MethodProtocol class methodsFor!
 
@@ -518,15 +520,17 @@ stubAddedSignal
 	automatically in order to keep a class' protocol implementation complete."
 
 	^StubAddedSignal! !
-!MethodProtocol class categoriesFor: #allMethodProtocols!accessing!public! !
-!MethodProtocol class categoriesFor: #existing:!instance creation!public! !
-!MethodProtocol class categoriesFor: #exists:!public!testing! !
-!MethodProtocol class categoriesFor: #initialize!development!initializing!private! !
-!MethodProtocol class categoriesFor: #initializeProtocols!initializing!private! !
-!MethodProtocol class categoriesFor: #name:!instance creation!public! !
-!MethodProtocol class categoriesFor: #new!instance creation!public! !
-!MethodProtocol class categoriesFor: #purgeUnused!operations!public! !
-!MethodProtocol class categoriesFor: #removeProtocol:!public!removing! !
-!MethodProtocol class categoriesFor: #separator!constants!private! !
-!MethodProtocol class categoriesFor: #stubAddedSignal!accessing!private! !
+!MethodProtocol class categoriesForMethods!
+allMethodProtocols!accessing!public! !
+existing:!instance creation!public! !
+exists:!public!testing! !
+initialize!development!initializing!private! !
+initializeProtocols!initializing!private! !
+name:!instance creation!public! !
+new!instance creation!public! !
+purgeUnused!operations!public! !
+removeProtocol:!public!removing! !
+separator!constants!private! !
+stubAddedSignal!accessing!private! !
+!
 

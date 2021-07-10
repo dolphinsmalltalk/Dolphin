@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IXMLDOMNode subclass: #IXMLDOMCharacterData
 	instanceVariableNames: ''
@@ -157,22 +157,24 @@ SubstringData: offset count: count data: data
 
 	<virtual stdcall: hresult 47 sdword sdword bstr*>
 	^self invalidCall: _failureCode! !
-!IXMLDOMCharacterData categoriesFor: #=!comparing!public! !
-!IXMLDOMCharacterData categoriesFor: #AppendData:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
-!IXMLDOMCharacterData categoriesFor: #attributes!properties!public! !
-!IXMLDOMCharacterData categoriesFor: #childNodes!properties!public! !
-!IXMLDOMCharacterData categoriesFor: #data!**auto generated**!properties!public! !
-!IXMLDOMCharacterData categoriesFor: #data:!**auto generated**!properties!public! !
-!IXMLDOMCharacterData categoriesFor: #DeleteData:count:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
-!IXMLDOMCharacterData categoriesFor: #get_data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
-!IXMLDOMCharacterData categoriesFor: #get_length:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
-!IXMLDOMCharacterData categoriesFor: #InsertData:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
-!IXMLDOMCharacterData categoriesFor: #isText!public!testing! !
-!IXMLDOMCharacterData categoriesFor: #length!**auto generated**!properties!public! !
-!IXMLDOMCharacterData categoriesFor: #put_data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
-!IXMLDOMCharacterData categoriesFor: #ReplaceData:count:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
-!IXMLDOMCharacterData categoriesFor: #substringData:count:!**auto generated**!methods!public! !
-!IXMLDOMCharacterData categoriesFor: #SubstringData:count:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
+!IXMLDOMCharacterData categoriesForMethods!
+=!comparing!public! !
+AppendData:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
+attributes!properties!public! !
+childNodes!properties!public! !
+data!**auto generated**!properties!public! !
+data:!**auto generated**!properties!public! !
+DeleteData:count:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
+get_data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
+get_length:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
+InsertData:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
+isText!public!testing! !
+length!**auto generated**!properties!public! !
+put_data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
+ReplaceData:count:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!public! !
+substringData:count:!**auto generated**!methods!public! !
+SubstringData:count:data:!**auto generated**!COM Interfaces-IXMLDOMCharacterData!private! !
+!
 
 !IXMLDOMCharacterData class methodsFor!
 
@@ -198,5 +200,7 @@ defineFunctions
 		defineFunction: #ReplaceData:count:data:
 			argumentTypes: 'sdword sdword bstr'
 ! !
-!IXMLDOMCharacterData class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IXMLDOMCharacterData class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

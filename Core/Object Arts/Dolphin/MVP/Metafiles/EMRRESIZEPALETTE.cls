@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRRESIZEPALETTE
 	instanceVariableNames: ''
@@ -45,10 +45,12 @@ ihPal: anInteger
 	"Set the receiver's 'ihPal' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_ihPal put: anInteger! !
-!EMRRESIZEPALETTE categoriesFor: #cEntries!**compiled accessors**!public! !
-!EMRRESIZEPALETTE categoriesFor: #cEntries:!**compiled accessors**!public! !
-!EMRRESIZEPALETTE categoriesFor: #ihPal!**compiled accessors**!public! !
-!EMRRESIZEPALETTE categoriesFor: #ihPal:!**compiled accessors**!public! !
+!EMRRESIZEPALETTE categoriesForMethods!
+cEntries!**compiled accessors**!public! !
+cEntries:!**compiled accessors**!public! !
+ihPal!**compiled accessors**!public! !
+ihPal:!**compiled accessors**!public! !
+!
 
 !EMRRESIZEPALETTE class methodsFor!
 
@@ -82,7 +84,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_RESIZEPALETTE! !
-!EMRRESIZEPALETTE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRRESIZEPALETTE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRRESIZEPALETTE class categoriesFor: #iTypes!constants!public! !
+!EMRRESIZEPALETTE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

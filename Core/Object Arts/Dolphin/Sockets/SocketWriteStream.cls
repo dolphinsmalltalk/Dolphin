@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 WriteStream subclass: #SocketWriteStream
 	instanceVariableNames: 'socket dirty'
@@ -107,19 +107,21 @@ socket: aSocket
 	"Private - Sets the socket instance variable to aSocket."
 
 	socket := aSocket! !
-!SocketWriteStream categoriesFor: #close!operations!public! !
-!SocketWriteStream categoriesFor: #flush!buffer!public! !
-!SocketWriteStream categoriesFor: #growCollection!operations!private! !
-!SocketWriteStream categoriesFor: #isBinary!public!testing! !
-!SocketWriteStream categoriesFor: #isText!public!testing! !
-!SocketWriteStream categoriesFor: #isText:!modes!public! !
-!SocketWriteStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!SocketWriteStream categoriesFor: #nextPut:!accessing!public! !
-!SocketWriteStream categoriesFor: #nextPutAll:!accessing!public! !
-!SocketWriteStream categoriesFor: #on:!initializing!private! !
-!SocketWriteStream categoriesFor: #primitiveNextPut:!accessing!private! !
-!SocketWriteStream categoriesFor: #socket!accessing!private! !
-!SocketWriteStream categoriesFor: #socket:!accessing!private! !
+!SocketWriteStream categoriesForMethods!
+close!operations!public! !
+flush!buffer!public! !
+growCollection!operations!private! !
+isBinary!public!testing! !
+isText!public!testing! !
+isText:!modes!public! !
+next:putAll:startingAt:!accessing!public! !
+nextPut:!accessing!public! !
+nextPutAll:!accessing!public! !
+on:!initializing!private! !
+primitiveNextPut:!accessing!private! !
+socket!accessing!private! !
+socket:!accessing!private! !
+!
 
 !SocketWriteStream class methodsFor!
 
@@ -141,7 +143,9 @@ on: aSocket text: aBoolean
 		socket: aSocket;
 		on: ((aBoolean ifTrue: [String] ifFalse: [ByteArray]) newFixed: self bufferSize);
 		yourself! !
-!SocketWriteStream class categoriesFor: #bufferSize!constants!public! !
-!SocketWriteStream class categoriesFor: #on:!instance creation!public! !
-!SocketWriteStream class categoriesFor: #on:text:!instance creation!public! !
+!SocketWriteStream class categoriesForMethods!
+bufferSize!constants!public! !
+on:!instance creation!public! !
+on:text:!instance creation!public! !
+!
 

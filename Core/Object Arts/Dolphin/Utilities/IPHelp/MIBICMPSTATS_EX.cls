@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #MIBICMPSTATS_EX
 	instanceVariableNames: ''
@@ -41,9 +41,11 @@ rgdwTypeCount
 	"Answer the <DWORDArray> value of the receiver's 'rgdwTypeCount' field."
 
 	^DWORDArray fromAddress: bytes yourAddress + _OffsetOf_rgdwTypeCount length: 256! !
-!MIBICMPSTATS_EX categoriesFor: #dwErrors!**compiled accessors**!public! !
-!MIBICMPSTATS_EX categoriesFor: #dwMsgs!**compiled accessors**!public! !
-!MIBICMPSTATS_EX categoriesFor: #rgdwTypeCount!**compiled accessors**!public! !
+!MIBICMPSTATS_EX categoriesForMethods!
+dwErrors!**compiled accessors**!public! !
+dwMsgs!**compiled accessors**!public! !
+rgdwTypeCount!**compiled accessors**!public! !
+!
 
 !MIBICMPSTATS_EX class methodsFor!
 
@@ -75,6 +77,8 @@ defineFields
 
 getFieldNames
 	^#(#dwMsgs #dwErrors #rgdwTypeCount)! !
-!MIBICMPSTATS_EX class categoriesFor: #defineFields!initializing!public! !
-!MIBICMPSTATS_EX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MIBICMPSTATS_EX class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

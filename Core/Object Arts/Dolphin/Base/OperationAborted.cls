@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #OperationAborted
 	instanceVariableNames: ''
@@ -14,5 +14,7 @@ messageText
 	"Answer the <readableString> message text for the receiver."
 
 	^messageText ?? 'Operation aborted'! !
-!OperationAborted categoriesFor: #messageText!accessing!public! !
+!OperationAborted categoriesForMethods!
+messageText!accessing!public! !
+!
 

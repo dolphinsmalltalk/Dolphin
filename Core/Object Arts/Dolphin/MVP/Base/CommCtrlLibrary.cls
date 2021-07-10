@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #CommCtrlLibrary
 	instanceVariableNames: ''
@@ -309,31 +309,33 @@ loadIconWithScaleDown: hInst pszName: pszName cx: cx cy: cy phico: phico
 
 	<stdcall: sdword LoadIconWithScaleDown handle lpvoid sdword sdword handle*>
 	^self invalidCall: _failureCode! !
-!CommCtrlLibrary categoriesFor: #imageList_AddMasked:hbmImage:crMask:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_BeginDrag:iTrack:dxHotspot:dyHotspot:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_Create:cy:flags:cInitial:cGrow:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_Destroy:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_DragEnter:x:y:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_DragLeave:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_DragMove:y:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_DragShowNolock:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_Draw:i:hdcDst:x:y:fStyle:!primitives!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_DrawEx:i:hdcDst:x:y:dx:dy:rgbBk:rgbFg:fStyle:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_Duplicate:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_EndDrag!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_GetBkColor:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_GetIcon:i:flags:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_GetIconSize:cx:cy:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_GetImageCount:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_LoadImage:lpbmp:cx:cGrow:crMask:uType:uFlags:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_ReplaceIcon:i:hicon:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_SetBkColor:clrBk:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_SetDragCursorImage:iDrag:dxHotspot:dyHotspot:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #imageList_SetIconSize:cx:cy:!**auto generated**!public!win32 functions-image list! !
-!CommCtrlLibrary categoriesFor: #initCommonControlsEx:!initializing!primitives!public! !
-!CommCtrlLibrary categoriesFor: #initialize!initializing!private! !
-!CommCtrlLibrary categoriesFor: #loadIconMetric:pszName:lims:phico:!**auto generated**!public! !
-!CommCtrlLibrary categoriesFor: #loadIconWithScaleDown:pszName:cx:cy:phico:!**auto generated**!public! !
+!CommCtrlLibrary categoriesForMethods!
+imageList_AddMasked:hbmImage:crMask:!**auto generated**!public!win32 functions-image list! !
+imageList_BeginDrag:iTrack:dxHotspot:dyHotspot:!**auto generated**!public!win32 functions-image list! !
+imageList_Create:cy:flags:cInitial:cGrow:!**auto generated**!public!win32 functions-image list! !
+imageList_Destroy:!**auto generated**!public!win32 functions-image list! !
+imageList_DragEnter:x:y:!**auto generated**!public!win32 functions-image list! !
+imageList_DragLeave:!**auto generated**!public!win32 functions-image list! !
+imageList_DragMove:y:!**auto generated**!public!win32 functions-image list! !
+imageList_DragShowNolock:!**auto generated**!public!win32 functions-image list! !
+imageList_Draw:i:hdcDst:x:y:fStyle:!primitives!public!win32 functions-image list! !
+imageList_DrawEx:i:hdcDst:x:y:dx:dy:rgbBk:rgbFg:fStyle:!**auto generated**!public!win32 functions-image list! !
+imageList_Duplicate:!**auto generated**!public!win32 functions-image list! !
+imageList_EndDrag!**auto generated**!public!win32 functions-image list! !
+imageList_GetBkColor:!**auto generated**!public!win32 functions-image list! !
+imageList_GetIcon:i:flags:!**auto generated**!public!win32 functions-image list! !
+imageList_GetIconSize:cx:cy:!**auto generated**!public!win32 functions-image list! !
+imageList_GetImageCount:!**auto generated**!public!win32 functions-image list! !
+imageList_LoadImage:lpbmp:cx:cGrow:crMask:uType:uFlags:!**auto generated**!public!win32 functions-image list! !
+imageList_ReplaceIcon:i:hicon:!**auto generated**!public!win32 functions-image list! !
+imageList_SetBkColor:clrBk:!**auto generated**!public!win32 functions-image list! !
+imageList_SetDragCursorImage:iDrag:dxHotspot:dyHotspot:!**auto generated**!public!win32 functions-image list! !
+imageList_SetIconSize:cx:cy:!**auto generated**!public!win32 functions-image list! !
+initCommonControlsEx:!initializing!primitives!public! !
+initialize!initializing!private! !
+loadIconMetric:pszName:lims:phico:!**auto generated**!public! !
+loadIconWithScaleDown:pszName:cx:cy:phico:!**auto generated**!public! !
+!
 
 !CommCtrlLibrary class methodsFor!
 
@@ -361,9 +363,11 @@ initFlags
 
 initFlags: anInteger 
 	InitFlags := anInteger! !
-!CommCtrlLibrary class categoriesFor: #closeDefault!private!realizing/unrealizing! !
-!CommCtrlLibrary class categoriesFor: #defaultInitFlags!accessing!private! !
-!CommCtrlLibrary class categoriesFor: #fileName!constants!public! !
-!CommCtrlLibrary class categoriesFor: #initFlags!accessing!public! !
-!CommCtrlLibrary class categoriesFor: #initFlags:!accessing!not an aspect!public! !
+!CommCtrlLibrary class categoriesForMethods!
+closeDefault!private!realizing/unrealizing! !
+defaultInitFlags!accessing!private! !
+fileName!constants!public! !
+initFlags!accessing!public! !
+initFlags:!accessing!not an aspect!public! !
+!
 

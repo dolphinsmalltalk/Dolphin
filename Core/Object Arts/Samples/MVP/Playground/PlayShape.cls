@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #PlayShape
 	instanceVariableNames: 'playground'
@@ -51,8 +51,10 @@ redraw
 
 	playground invalidate; update.
 	self delay! !
-!PlayShape categoriesFor: #delay!operations!public! !
-!PlayShape categoriesFor: #drawOn:!drawing!private! !
-!PlayShape categoriesFor: #playground:!accessing!private! !
-!PlayShape categoriesFor: #redraw!operations!public! !
+!PlayShape categoriesForMethods!
+delay!operations!public! !
+drawOn:!drawing!private! !
+playground:!accessing!private! !
+redraw!operations!public! !
+!
 

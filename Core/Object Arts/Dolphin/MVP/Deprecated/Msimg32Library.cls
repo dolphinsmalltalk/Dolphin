@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #Msimg32Library
 	instanceVariableNames: ''
@@ -49,9 +49,11 @@ transparentBlt: hdcDest nXOriginDest: nXOriginDest nYOriginDest: nYOriginDest nW
 		wSrc: nWidthSrc
 		hSrc: nHeightSrc
 		crTransparent: crTransparent! !
-!Msimg32Library categoriesFor: #alphaBlend:nXOriginDest:nYOriginDest:nWidthDest:nHeightDest:hdcSrc:nXOriginSrc:nYOriginSrc:nWidthSrc:nHeightSrc:blend:!public!win32 functions-bitmap! !
-!Msimg32Library categoriesFor: #gradientFill:pVertex:dwNumVertex:pMesh:dwNumMesh:dwMode:!**auto generated**!public! !
-!Msimg32Library categoriesFor: #transparentBlt:nXOriginDest:nYOriginDest:nWidthDest:nHeightDest:hdcSrc:nXOriginSrc:nYOriginSrc:nWidthSrc:nHeightSrc:crTransparent:!**auto generated**!public! !
+!Msimg32Library categoriesForMethods!
+alphaBlend:nXOriginDest:nYOriginDest:nWidthDest:nHeightDest:hdcSrc:nXOriginSrc:nYOriginSrc:nWidthSrc:nHeightSrc:blend:!public!win32 functions-bitmap! !
+gradientFill:pVertex:dwNumVertex:pMesh:dwNumMesh:dwMode:!**auto generated**!public! !
+transparentBlt:nXOriginDest:nYOriginDest:nWidthDest:nHeightDest:hdcSrc:nXOriginSrc:nYOriginSrc:nWidthSrc:nHeightSrc:crTransparent:!**auto generated**!public! !
+!
 
 !Msimg32Library class methodsFor!
 
@@ -60,5 +62,7 @@ fileName
 	receiver represents"
 
 	^'msimg32'! !
-!Msimg32Library class categoriesFor: #fileName!constants!public! !
+!Msimg32Library class categoriesForMethods!
+fileName!constants!public! !
+!
 

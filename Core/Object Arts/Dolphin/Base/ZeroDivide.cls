@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ArithmeticError subclass: #ZeroDivide
 	instanceVariableNames: ''
@@ -37,9 +37,11 @@ isResumable
 		- Integer division by zero is not continuable, so resumption is disallowed."
 
 	^self dividend isInteger not! !
-!ZeroDivide categoriesFor: #_descriptionFormat!displaying!public! !
-!ZeroDivide categoriesFor: #dividend!accessing!public! !
-!ZeroDivide categoriesFor: #isResumable!public!testing! !
+!ZeroDivide categoriesForMethods!
+_descriptionFormat!displaying!public! !
+dividend!accessing!public! !
+isResumable!public!testing! !
+!
 
 ZeroDivide methodProtocol: #ZeroDivide attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #dividend #isNested #isResumable #messageText #messageText: #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
 
@@ -49,7 +51,9 @@ dividend: argument
 	"Signal the occurrence of an integer division by zero."
 
 	^self signalWith: argument! !
-!ZeroDivide class categoriesFor: #dividend:!instance creation!public! !
+!ZeroDivide class categoriesForMethods!
+dividend:!instance creation!public! !
+!
 
 ZeroDivide class methodProtocol: #'ZeroDivide factory' attributes: #(#ansi #readOnly) selectors: #(#, #dividend: #handles: #new #signal #signal:)!
 

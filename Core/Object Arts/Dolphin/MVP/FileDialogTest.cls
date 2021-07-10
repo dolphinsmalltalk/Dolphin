@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #FileDialogTest
 	instanceVariableNames: ''
@@ -42,7 +42,9 @@ testPrepareStructWithUtf8String
 	lpstrFile := subject winStruct lpstrFile.
 	self assert: lpstrFile isKindOf: Utf16String.
 	self assert: lpstrFile equals: utf8String! !
-!FileDialogTest categoriesFor: #testExtractPathnames!public! !
-!FileDialogTest categoriesFor: #testPrepareStructWithNil!public! !
-!FileDialogTest categoriesFor: #testPrepareStructWithUtf8String!public! !
+!FileDialogTest categoriesForMethods!
+testExtractPathnames!public! !
+testPrepareStructWithNil!public! !
+testPrepareStructWithUtf8String!public! !
+!
 

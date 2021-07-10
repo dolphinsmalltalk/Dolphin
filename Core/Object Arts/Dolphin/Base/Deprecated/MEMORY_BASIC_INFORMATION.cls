@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 	instanceVariableNames: ''
@@ -32,9 +32,11 @@ moduleFileName
 	maps. Only relevant for text segments."
 
 	^ExternalLibrary moduleFileName: self AllocationBase! !
-!MEMORY_BASIC_INFORMATION categoriesFor: #AllocationBase!**compiled accessors**!public! !
-!MEMORY_BASIC_INFORMATION categoriesFor: #BaseAddress!**compiled accessors**!public! !
-!MEMORY_BASIC_INFORMATION categoriesFor: #moduleFileName!accessing!public! !
+!MEMORY_BASIC_INFORMATION categoriesForMethods!
+AllocationBase!**compiled accessors**!public! !
+BaseAddress!**compiled accessors**!public! !
+moduleFileName!accessing!public! !
+!
 
 !MEMORY_BASIC_INFORMATION class methodsFor!
 
@@ -77,7 +79,9 @@ forAddress: anAddress
 
 getFieldNames
 	^#(#BaseAddress #AllocationBase #AllocationProtect #RegionSize #State #Protect #Type)! !
-!MEMORY_BASIC_INFORMATION class categoriesFor: #defineFields!public!template definition! !
-!MEMORY_BASIC_INFORMATION class categoriesFor: #forAddress:!instance creation!public! !
-!MEMORY_BASIC_INFORMATION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MEMORY_BASIC_INFORMATION class categoriesForMethods!
+defineFields!public!template definition! !
+forAddress:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBConnectionTest subclass: #SQLServerDBTest
 	instanceVariableNames: ''
@@ -114,19 +114,23 @@ testViewsQuery
 				types: '''VIEW'''.
 	self assert: (views
 				noDifference: #('Alphabetical list of products' 'Category Sales for 1997' 'Current Product List' 'Customer and Suppliers by City' 'Invoices' 'Order Details Extended' 'Order Subtotals' 'Orders Qry' 'Product Sales for 1997' 'Products Above Average Price' 'Products by Category' 'Quarterly Orders' 'Sales by Category' 'Sales Totals by Amount' 'Summary of Sales by Quarter' 'Summary of Sales by Year'))! !
-!SQLServerDBTest categoriesFor: #databaseResource!private! !
-!SQLServerDBTest categoriesFor: #dbmsFeaturesMap!private! !
-!SQLServerDBTest categoriesFor: #queryColumns!private!unit tests! !
-!SQLServerDBTest categoriesFor: #testForeignKeysQuery!public!unit tests! !
-!SQLServerDBTest categoriesFor: #testPrimaryKeysQuery!public!unit tests! !
-!SQLServerDBTest categoriesFor: #testProceduresQuery!public!unit tests! !
-!SQLServerDBTest categoriesFor: #testSQLServerConnectionAttributes!public!unit tests! !
-!SQLServerDBTest categoriesFor: #testTablesQuery!public! !
-!SQLServerDBTest categoriesFor: #testViewsQuery!public! !
+!SQLServerDBTest categoriesForMethods!
+databaseResource!private! !
+dbmsFeaturesMap!private! !
+queryColumns!private!unit tests! !
+testForeignKeysQuery!public!unit tests! !
+testPrimaryKeysQuery!public!unit tests! !
+testProceduresQuery!public!unit tests! !
+testSQLServerConnectionAttributes!public!unit tests! !
+testTablesQuery!public! !
+testViewsQuery!public! !
+!
 
 !SQLServerDBTest class methodsFor!
 
 resources
 	^{SQLServerNorthwindDB}! !
-!SQLServerDBTest class categoriesFor: #resources!public! !
+!SQLServerDBTest class categoriesForMethods!
+resources!public! !
+!
 

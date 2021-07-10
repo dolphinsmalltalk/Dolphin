@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StAbstractVariableNode subclass: #StVariableNode
 	instanceVariableNames: 'name'
@@ -26,8 +26,10 @@ name
 setName: aString start: anInteger
 	name := aString.
 	start := anInteger! !
-!StVariableNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StVariableNode categoriesFor: #identifierToken:!initializing!private! !
-!StVariableNode categoriesFor: #name!accessing!public! !
-!StVariableNode categoriesFor: #setName:start:!initializing!private! !
+!StVariableNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+identifierToken:!initializing!private! !
+name!accessing!public! !
+setName:start:!initializing!private! !
+!
 

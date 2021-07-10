@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #STBTest
 	instanceVariableNames: ''
@@ -136,14 +136,16 @@ testTranscript
 	t := Object fromBinaryStoreBytes: stb.
 	self assert: t identityHash equals: i.
 	self assert: t identicalTo: Transcript! !
-!STBTest categoriesFor: #testByteArray!public!unit tests! !
-!STBTest categoriesFor: #testCharacters!public!unit tests! !
-!STBTest categoriesFor: #testEmptyStream!public!unit tests! !
-!STBTest categoriesFor: #testExistentClass!public!unit tests! !
-!STBTest categoriesFor: #testInvalidStream!public!unit tests! !
-!STBTest categoriesFor: #testNonExistentClass!public!unit tests! !
-!STBTest categoriesFor: #testSortedCollection!public!unit tests! !
-!STBTest categoriesFor: #testStrings!public!unit tests! !
-!STBTest categoriesFor: #testSymbols!public!unit tests! !
-!STBTest categoriesFor: #testTranscript!public!unit tests! !
+!STBTest categoriesForMethods!
+testByteArray!public!unit tests! !
+testCharacters!public!unit tests! !
+testEmptyStream!public!unit tests! !
+testExistentClass!public!unit tests! !
+testInvalidStream!public!unit tests! !
+testNonExistentClass!public!unit tests! !
+testSortedCollection!public!unit tests! !
+testStrings!public!unit tests! !
+testSymbols!public!unit tests! !
+testTranscript!public!unit tests! !
+!
 

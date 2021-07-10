@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Category subclass: #IntermediateCategory
 	instanceVariableNames: ''
@@ -67,17 +67,19 @@ removeClass: class
 	"Remove the <ClassDescription>, class, from the classes 'held' by the receiver."
 
 	^self shouldNotImplement! !
-!IntermediateCategory categoriesFor: #acceptsAdditions!public!testing! !
-!IntermediateCategory categoriesFor: #addClass:!adding!public! !
-!IntermediateCategory categoriesFor: #addMethod:!adding!public! !
-!IntermediateCategory categoriesFor: #addMethodSilently:!adding!private! !
-!IntermediateCategory categoriesFor: #contents!enumerating!public! !
-!IntermediateCategory categoriesFor: #includesMethod:!public!testing! !
-!IntermediateCategory categoriesFor: #isEmpty!public!testing! !
-!IntermediateCategory categoriesFor: #isIntermediate!private!testing! !
-!IntermediateCategory categoriesFor: #methodsInBehavior:!enumerating!public! !
-!IntermediateCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
-!IntermediateCategory categoriesFor: #removeClass:!public!removing! !
+!IntermediateCategory categoriesForMethods!
+acceptsAdditions!public!testing! !
+addClass:!adding!public! !
+addMethod:!adding!public! !
+addMethodSilently:!adding!private! !
+contents!enumerating!public! !
+includesMethod:!public!testing! !
+isEmpty!public!testing! !
+isIntermediate!private!testing! !
+methodsInBehavior:!enumerating!public! !
+methodsInBehavior:do:!enumerating!public! !
+removeClass:!public!removing! !
+!
 
 !IntermediateCategory class methodsFor!
 
@@ -86,5 +88,7 @@ name: categoryName
 	<readableString> name, categoryName."
 
 	^self newNamed: categoryName! !
-!IntermediateCategory class categoriesFor: #name:!instance creation!public! !
+!IntermediateCategory class categoriesForMethods!
+name:!instance creation!public! !
+!
 

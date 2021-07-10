@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #WNDCLASS
 	instanceVariableNames: 'menuName className'
@@ -86,18 +86,20 @@ style: anInteger
 	"Set the receiver's 'style' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_style put: anInteger! !
-!WNDCLASS categoriesFor: #className:!accessing!public! !
-!WNDCLASS categoriesFor: #hbrBackground:!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #hCursor:!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #hIcon:!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #hInstance:!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #lpfnWndProc:!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #lpszClassName!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #lpszClassName:!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #lpszMenuName!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #lpszMenuName:!**compiled accessors**!public! !
-!WNDCLASS categoriesFor: #menuName:!accessing!public! !
-!WNDCLASS categoriesFor: #style:!**compiled accessors**!public! !
+!WNDCLASS categoriesForMethods!
+className:!accessing!public! !
+hbrBackground:!**compiled accessors**!public! !
+hCursor:!**compiled accessors**!public! !
+hIcon:!**compiled accessors**!public! !
+hInstance:!**compiled accessors**!public! !
+lpfnWndProc:!**compiled accessors**!public! !
+lpszClassName!**compiled accessors**!public! !
+lpszClassName:!**compiled accessors**!public! !
+lpszMenuName!**compiled accessors**!public! !
+lpszMenuName:!**compiled accessors**!public! !
+menuName:!accessing!public! !
+style:!**compiled accessors**!public! !
+!
 
 !WNDCLASS class methodsFor!
 
@@ -136,6 +138,8 @@ defineFields
 
 getFieldNames
 	^#(#style #lpfnWndProc #hInstance #hIcon #hCursor #hbrBackground #lpszMenuName #lpszClassName)! !
-!WNDCLASS class categoriesFor: #defineFields!public!template definition! !
-!WNDCLASS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WNDCLASS class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

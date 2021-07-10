@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HRESULTError subclass: #Win32Error
 	instanceVariableNames: ''
@@ -26,9 +26,11 @@ initialize
 	by a system library (i.e. that retried by KernelLibrary>>getLastError)."
 
 	self tag: (HRESULT status: KernelLibrary default getLastError facility: FACILITY_WIN32)! !
-!Win32Error categoriesFor: #_descriptionArguments!displaying!public! !
-!Win32Error categoriesFor: #_descriptionFormat!displaying!public! !
-!Win32Error categoriesFor: #initialize!initializing!private! !
+!Win32Error categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+initialize!initializing!private! !
+!
 
 !Win32Error class methodsFor!
 
@@ -38,5 +40,7 @@ signal: aString with: anInteger
 	^(self fromHRESULT: (HRESULT win32Error: anInteger))
 		messageText: aString;
 		signal! !
-!Win32Error class categoriesFor: #signal:with:!instance creation!public! !
+!Win32Error class categoriesForMethods!
+signal:with:!instance creation!public! !
+!
 

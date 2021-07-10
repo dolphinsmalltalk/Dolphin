@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValuePresenter subclass: #BasicInspector
 	instanceVariableNames: 'variableNamesPresenter sourcePresenter'
@@ -389,47 +389,49 @@ variableNamesList
 	inspected objects variables."
 
 	^variableNamesPresenter list! !
-!BasicInspector categoriesFor: #accept!commands!public! !
-!BasicInspector categoriesFor: #browseClass!commands!private! !
-!BasicInspector categoriesFor: #browseHierarchy!commands!private! !
-!BasicInspector categoriesFor: #browseIt!commands!public! !
-!BasicInspector categoriesFor: #browseObject!accessing!private! !
-!BasicInspector categoriesFor: #browseSystem!commands!public! !
-!BasicInspector categoriesFor: #createComponents!initializing!public! !
-!BasicInspector categoriesFor: #createSchematicWiring!initializing!public! !
-!BasicInspector categoriesFor: #currentField!accessing!private! !
-!BasicInspector categoriesFor: #errorModel:!accessing!public! !
-!BasicInspector categoriesFor: #extraFields!accessing!private! !
-!BasicInspector categoriesFor: #fieldIndexFromVariableIndex:!accessing!private! !
-!BasicInspector categoriesFor: #fields!accessing!private! !
-!BasicInspector categoriesFor: #getField:!accessing!private! !
-!BasicInspector categoriesFor: #getFieldExtra:!accessing!private! !
-!BasicInspector categoriesFor: #getFieldList!accessing!private! !
-!BasicInspector categoriesFor: #headerList!accessing!private! !
-!BasicInspector categoriesFor: #headerSize!accessing!private! !
-!BasicInspector categoriesFor: #infoTipForVariable:!accessing!public! !
-!BasicInspector categoriesFor: #inspectIt!commands!public! !
-!BasicInspector categoriesFor: #inspectReferences!commands!public! !
-!BasicInspector categoriesFor: #model:!accessing!public! !
-!BasicInspector categoriesFor: #nilVariable!commands!private! !
-!BasicInspector categoriesFor: #object!accessing!public! !
-!BasicInspector categoriesFor: #object:!accessing!public! !
-!BasicInspector categoriesFor: #onValueChanged!accessing!public! !
-!BasicInspector categoriesFor: #onVariableNameSelected!event handling!private! !
-!BasicInspector categoriesFor: #onViewOpened!event handling!public! !
-!BasicInspector categoriesFor: #queryCommand:!commands!private! !
-!BasicInspector categoriesFor: #refresh!commands!private! !
-!BasicInspector categoriesFor: #selfField!accessing!private! !
-!BasicInspector categoriesFor: #setField:to:!accessing!private! !
-!BasicInspector categoriesFor: #source!accessing!public! !
-!BasicInspector categoriesFor: #systemModel!accessing!private! !
-!BasicInspector categoriesFor: #unableToDisplayVariableErrorFormatString!constants!private! !
-!BasicInspector categoriesFor: #variable!accessing!public! !
-!BasicInspector categoriesFor: #variableAtIndex:!accessing!private! !
-!BasicInspector categoriesFor: #variableIndex!accessing!private! !
-!BasicInspector categoriesFor: #variableName!accessing!private! !
-!BasicInspector categoriesFor: #variableName:!accessing!private! !
-!BasicInspector categoriesFor: #variableNamesList!accessing!public! !
+!BasicInspector categoriesForMethods!
+accept!commands!public! !
+browseClass!commands!private! !
+browseHierarchy!commands!private! !
+browseIt!commands!public! !
+browseObject!accessing!private! !
+browseSystem!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+currentField!accessing!private! !
+errorModel:!accessing!public! !
+extraFields!accessing!private! !
+fieldIndexFromVariableIndex:!accessing!private! !
+fields!accessing!private! !
+getField:!accessing!private! !
+getFieldExtra:!accessing!private! !
+getFieldList!accessing!private! !
+headerList!accessing!private! !
+headerSize!accessing!private! !
+infoTipForVariable:!accessing!public! !
+inspectIt!commands!public! !
+inspectReferences!commands!public! !
+model:!accessing!public! !
+nilVariable!commands!private! !
+object!accessing!public! !
+object:!accessing!public! !
+onValueChanged!accessing!public! !
+onVariableNameSelected!event handling!private! !
+onViewOpened!event handling!public! !
+queryCommand:!commands!private! !
+refresh!commands!private! !
+selfField!accessing!private! !
+setField:to:!accessing!private! !
+source!accessing!public! !
+systemModel!accessing!private! !
+unableToDisplayVariableErrorFormatString!constants!private! !
+variable!accessing!public! !
+variableAtIndex:!accessing!private! !
+variableIndex!accessing!private! !
+variableName!accessing!private! !
+variableName:!accessing!private! !
+variableNamesList!accessing!public! !
+!
 
 !BasicInspector class methodsFor!
 
@@ -476,9 +478,11 @@ shellOn: anObject
 	shell view validateLayout.
 	shell show setInitialFocus.
 	^inspector! !
-!BasicInspector class categoriesFor: #headerList!constants!public! !
-!BasicInspector class categoriesFor: #icon!constants!public! !
-!BasicInspector class categoriesFor: #publishedEventsOfInstances!events!public! !
-!BasicInspector class categoriesFor: #resource_Default_view!public!resources-views! !
-!BasicInspector class categoriesFor: #shellOn:!instance creation!public! !
+!BasicInspector class categoriesForMethods!
+headerList!constants!public! !
+icon!constants!public! !
+publishedEventsOfInstances!events!public! !
+resource_Default_view!public!resources-views! !
+shellOn:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ClassBuilder
 	instanceVariableNames: 'currentClass className instanceVariables superclass instanceSpec classVariables sharedPools comment flags categories'
@@ -927,103 +927,105 @@ validateSuperclassIsSubclassable
 		ifTrue: [
 			((superclass isKindOf: Class) not or: [Unsubclassable includes: superclass])
 				ifTrue: [self error: 'Proposed superclass is not subclassable.']].! !
-!ClassBuilder categoriesFor: #beBytes!class type!private! !
-!ClassBuilder categoriesFor: #beFixed!class type!private! !
-!ClassBuilder categoriesFor: #beIndirectBytes!class type!private! !
-!ClassBuilder categoriesFor: #beNullTerminatedBytes!class type!private! !
-!ClassBuilder categoriesFor: #beVariable!class type!private! !
-!ClassBuilder categoriesFor: #canMutateInSitu!mutating!private! !
-!ClassBuilder categoriesFor: #categories!accessing!private! !
-!ClassBuilder categoriesFor: #categories:!accessing!private! !
-!ClassBuilder categoriesFor: #categoryNames:!accessing!public! !
-!ClassBuilder categoriesFor: #checkNoInstances!private!validation! !
-!ClassBuilder categoriesFor: #checkNoSubclasses!private!validation! !
-!ClassBuilder categoriesFor: #class:!accessing!private! !
-!ClassBuilder categoriesFor: #classCategoryClass!accessing!private! !
-!ClassBuilder categoriesFor: #className:!accessing!private! !
-!ClassBuilder categoriesFor: #classVariables!class variables!private! !
-!ClassBuilder categoriesFor: #classVariables:!class variables!public! !
-!ClassBuilder categoriesFor: #classVariableString:!class variables!public! !
-!ClassBuilder categoriesFor: #comment:!comments!private! !
-!ClassBuilder categoriesFor: #createNewClass!operations!private! !
-!ClassBuilder categoriesFor: #createProper!helpers!private! !
-!ClassBuilder categoriesFor: #currentClass!accessing!public! !
-!ClassBuilder categoriesFor: #environment!environment!private! !
-!ClassBuilder categoriesFor: #errorInvalidRemove:!exceptions!private! !
-!ClassBuilder categoriesFor: #fundamentalTypeIsBeingChanged!private!testing! !
-!ClassBuilder categoriesFor: #generateGUID!operations!private! !
-!ClassBuilder categoriesFor: #generateInstanceSpecFor:superclass:!class type!private! !
-!ClassBuilder categoriesFor: #generateMapFrom:to:!mutating!private! !
-!ClassBuilder categoriesFor: #ignoreInstances!accessing!private! !
-!ClassBuilder categoriesFor: #ignoreInstances:!accessing!private! !
-!ClassBuilder categoriesFor: #initialize!initializing!private! !
-!ClassBuilder categoriesFor: #initializeCopy:fromClass:superclass:!mutating!private! !
-!ClassBuilder categoriesFor: #install:!environment!private! !
-!ClassBuilder categoriesFor: #installInSuperclass:!helpers!private! !
-!ClassBuilder categoriesFor: #installNewClass!environment!private! !
-!ClassBuilder categoriesFor: #instanceShapeIsBeingChanged!private!testing! !
-!ClassBuilder categoriesFor: #instanceSpec:!class type!private! !
-!ClassBuilder categoriesFor: #instanceVariables!instance variables!private! !
-!ClassBuilder categoriesFor: #instanceVariables:!instance variables!public! !
-!ClassBuilder categoriesFor: #instanceVariablesAreBeingChanged!private!testing! !
-!ClassBuilder categoriesFor: #instanceVariableString:!instance variables!public! !
-!ClassBuilder categoriesFor: #isFixedInitialLayout!public!testing! !
-!ClassBuilder categoriesFor: #isFixedLayout!public!testing! !
-!ClassBuilder categoriesFor: #isFixedType!public!testing! !
-!ClassBuilder categoriesFor: #isModifyAction!private!testing! !
-!ClassBuilder categoriesFor: #modifyExistingClass!operations!private! !
-!ClassBuilder categoriesFor: #modifyOrCreate!operations!public! !
-!ClassBuilder categoriesFor: #modifyPrivate!operations!private! !
-!ClassBuilder categoriesFor: #modifyProper!private! !
-!ClassBuilder categoriesFor: #mutateClass:toBeASubclassOf:!mutating!private! !
-!ClassBuilder categoriesFor: #mutateInSitu!mutating!private! !
-!ClassBuilder categoriesFor: #mutateInstances:of:toBeInstancesOf:!mutating!private! !
-!ClassBuilder categoriesFor: #mutateMetaclass:toBeASubclassOf:!mutating!private! !
-!ClassBuilder categoriesFor: #mutateToNewClass!mutating!private! !
-!ClassBuilder categoriesFor: #newClassLike:superclass:!mutating!private! !
-!ClassBuilder categoriesFor: #newMetaclassLike:superclass:!mutating!private! !
-!ClassBuilder categoriesFor: #notifyClassCreated!public!updating! !
-!ClassBuilder categoriesFor: #notifyClassRenamed!operations!private! !
-!ClassBuilder categoriesFor: #notifyClassUpdated!private!updating! !
-!ClassBuilder categoriesFor: #recompilationRequired!accessing!private! !
-!ClassBuilder categoriesFor: #recompilationRequired:!accessing!private! !
-!ClassBuilder categoriesFor: #remove!operations!private! !
-!ClassBuilder categoriesFor: #removeUnimplementedProtocols!helpers!private! !
-!ClassBuilder categoriesFor: #rename!operations!private! !
-!ClassBuilder categoriesFor: #requiresMutation!mutating!private! !
-!ClassBuilder categoriesFor: #setClassVariablesOf:!class variables!private! !
-!ClassBuilder categoriesFor: #setCommentOf:!comments!private! !
-!ClassBuilder categoriesFor: #setInstanceVariablesOf:!instance variables!private! !
-!ClassBuilder categoriesFor: #setNewClassCategories!helpers!public! !
-!ClassBuilder categoriesFor: #setSharedPoolsOf:!pool dictionaries!private! !
-!ClassBuilder categoriesFor: #sharedPools!pool dictionaries!private! !
-!ClassBuilder categoriesFor: #sharedPools:!pool dictionaries!public! !
-!ClassBuilder categoriesFor: #sharedPoolString:!pool dictionaries!public! !
-!ClassBuilder categoriesFor: #superclass:!accessing!private! !
-!ClassBuilder categoriesFor: #superclassIsBeingChanged!private!testing! !
-!ClassBuilder categoriesFor: #translateInstance:intoANewInstanceOf:via:!mutating!private! !
-!ClassBuilder categoriesFor: #updateVMRegistryWith:!mutating!private! !
-!ClassBuilder categoriesFor: #validateClass!private!validation! !
-!ClassBuilder categoriesFor: #validateClassForRename!private!validation! !
-!ClassBuilder categoriesFor: #validateClassInstanceVars!private!validation! !
-!ClassBuilder categoriesFor: #validateClassName!private!validation! !
-!ClassBuilder categoriesFor: #validateClassVarsForCreate!private!validation! !
-!ClassBuilder categoriesFor: #validateClassVarsForModify!private!validation! !
-!ClassBuilder categoriesFor: #validateForCreate!private!validation! !
-!ClassBuilder categoriesFor: #validateForModify!private!validation! !
-!ClassBuilder categoriesFor: #validateForRemove!private!validation! !
-!ClassBuilder categoriesFor: #validateForRename!private!validation! !
-!ClassBuilder categoriesFor: #validateInstanceSpec!private!validation! !
-!ClassBuilder categoriesFor: #validateInstanceSpecForModify!private!validation! !
-!ClassBuilder categoriesFor: #validateInstanceVarsForCreate!private!validation! !
-!ClassBuilder categoriesFor: #validateInstanceVarsForModify!private!validation! !
-!ClassBuilder categoriesFor: #validatePoolNames!private!validation! !
-!ClassBuilder categoriesFor: #validateSubclassesOf:againstInstanceSpec:!private!validation! !
-!ClassBuilder categoriesFor: #validateSubclassInstanceSpecs!private!validation! !
-!ClassBuilder categoriesFor: #validateSuperclassChainForCreate!private!validation! !
-!ClassBuilder categoriesFor: #validateSuperclassChainForModify!private!validation! !
-!ClassBuilder categoriesFor: #validateSuperclassForModify!private!validation! !
-!ClassBuilder categoriesFor: #validateSuperclassIsSubclassable!private!validation! !
+!ClassBuilder categoriesForMethods!
+beBytes!class type!private! !
+beFixed!class type!private! !
+beIndirectBytes!class type!private! !
+beNullTerminatedBytes!class type!private! !
+beVariable!class type!private! !
+canMutateInSitu!mutating!private! !
+categories!accessing!private! !
+categories:!accessing!private! !
+categoryNames:!accessing!public! !
+checkNoInstances!private!validation! !
+checkNoSubclasses!private!validation! !
+class:!accessing!private! !
+classCategoryClass!accessing!private! !
+className:!accessing!private! !
+classVariables!class variables!private! !
+classVariables:!class variables!public! !
+classVariableString:!class variables!public! !
+comment:!comments!private! !
+createNewClass!operations!private! !
+createProper!helpers!private! !
+currentClass!accessing!public! !
+environment!environment!private! !
+errorInvalidRemove:!exceptions!private! !
+fundamentalTypeIsBeingChanged!private!testing! !
+generateGUID!operations!private! !
+generateInstanceSpecFor:superclass:!class type!private! !
+generateMapFrom:to:!mutating!private! !
+ignoreInstances!accessing!private! !
+ignoreInstances:!accessing!private! !
+initialize!initializing!private! !
+initializeCopy:fromClass:superclass:!mutating!private! !
+install:!environment!private! !
+installInSuperclass:!helpers!private! !
+installNewClass!environment!private! !
+instanceShapeIsBeingChanged!private!testing! !
+instanceSpec:!class type!private! !
+instanceVariables!instance variables!private! !
+instanceVariables:!instance variables!public! !
+instanceVariablesAreBeingChanged!private!testing! !
+instanceVariableString:!instance variables!public! !
+isFixedInitialLayout!public!testing! !
+isFixedLayout!public!testing! !
+isFixedType!public!testing! !
+isModifyAction!private!testing! !
+modifyExistingClass!operations!private! !
+modifyOrCreate!operations!public! !
+modifyPrivate!operations!private! !
+modifyProper!private! !
+mutateClass:toBeASubclassOf:!mutating!private! !
+mutateInSitu!mutating!private! !
+mutateInstances:of:toBeInstancesOf:!mutating!private! !
+mutateMetaclass:toBeASubclassOf:!mutating!private! !
+mutateToNewClass!mutating!private! !
+newClassLike:superclass:!mutating!private! !
+newMetaclassLike:superclass:!mutating!private! !
+notifyClassCreated!public!updating! !
+notifyClassRenamed!operations!private! !
+notifyClassUpdated!private!updating! !
+recompilationRequired!accessing!private! !
+recompilationRequired:!accessing!private! !
+remove!operations!private! !
+removeUnimplementedProtocols!helpers!private! !
+rename!operations!private! !
+requiresMutation!mutating!private! !
+setClassVariablesOf:!class variables!private! !
+setCommentOf:!comments!private! !
+setInstanceVariablesOf:!instance variables!private! !
+setNewClassCategories!helpers!public! !
+setSharedPoolsOf:!pool dictionaries!private! !
+sharedPools!pool dictionaries!private! !
+sharedPools:!pool dictionaries!public! !
+sharedPoolString:!pool dictionaries!public! !
+superclass:!accessing!private! !
+superclassIsBeingChanged!private!testing! !
+translateInstance:intoANewInstanceOf:via:!mutating!private! !
+updateVMRegistryWith:!mutating!private! !
+validateClass!private!validation! !
+validateClassForRename!private!validation! !
+validateClassInstanceVars!private!validation! !
+validateClassName!private!validation! !
+validateClassVarsForCreate!private!validation! !
+validateClassVarsForModify!private!validation! !
+validateForCreate!private!validation! !
+validateForModify!private!validation! !
+validateForRemove!private!validation! !
+validateForRename!private!validation! !
+validateInstanceSpec!private!validation! !
+validateInstanceSpecForModify!private!validation! !
+validateInstanceVarsForCreate!private!validation! !
+validateInstanceVarsForModify!private!validation! !
+validatePoolNames!private!validation! !
+validateSubclassesOf:againstInstanceSpec:!private!validation! !
+validateSubclassInstanceSpecs!private!validation! !
+validateSuperclassChainForCreate!private!validation! !
+validateSuperclassChainForModify!private!validation! !
+validateSuperclassForModify!private!validation! !
+validateSuperclassIsSubclassable!private!validation! !
+!
 
 !ClassBuilder class methodsFor!
 
@@ -1342,36 +1344,38 @@ validateSpecAsVariablePointers: spec size: anInteger superclass: proposedSupercl
 	(spec anyMask: Behavior._NullTermMask)
 		ifTrue: [self error: 'Null-terminated subclasses must contain bytes.'].
 	^spec! !
-!ClassBuilder class categoriesFor: #allClassVarNamesOf:!helpers!private! !
-!ClassBuilder class categoriesFor: #allInstVarNamesOf:!helpers!private! !
-!ClassBuilder class categoriesFor: #classOf:!helpers!private! !
-!ClassBuilder class categoriesFor: #forModifying:!instance creation!public! !
-!ClassBuilder class categoriesFor: #fundamentalTypeOf:!class type!private! !
-!ClassBuilder class categoriesFor: #initialize!development!initializing!public! !
-!ClassBuilder class categoriesFor: #instanceSpecIsBytes:!class type!private! !
-!ClassBuilder class categoriesFor: #instanceSpecWithFixedPointers:!class type!private! !
-!ClassBuilder class categoriesFor: #instanceSpecWithIndirectBytes!class type!private! !
-!ClassBuilder class categoriesFor: #instanceSpecWithNullTerminatedBytes!class type!private! !
-!ClassBuilder class categoriesFor: #instanceSpecWithVariableBytes:!class type!private! !
-!ClassBuilder class categoriesFor: #instanceSpecWithVariablePointers:!class type!private! !
-!ClassBuilder class categoriesFor: #instSizeOf:!helpers!private! !
-!ClassBuilder class categoriesFor: #invalidRemoveError!constants!private! !
-!ClassBuilder class categoriesFor: #isFixedLayout:!enquiries!public! !
-!ClassBuilder class categoriesFor: #isValidClassName:!private!testing! !
-!ClassBuilder class categoriesFor: #isValidIdentifier:!private!testing! !
-!ClassBuilder class categoriesFor: #isValidIdentifierChar:!private!testing! !
-!ClassBuilder class categoriesFor: #isValidInitialIdentifierChar:!private!testing! !
-!ClassBuilder class categoriesFor: #moveClass:toSuperclass:!operations!public! !
-!ClassBuilder class categoriesFor: #new!instance creation!public! !
-!ClassBuilder class categoriesFor: #removeClass:!operations!public! !
-!ClassBuilder class categoriesFor: #removeClass:ignoreInstances:!operations!public! !
-!ClassBuilder class categoriesFor: #renameClass:to:!operations!public! !
-!ClassBuilder class categoriesFor: #validateClassVarName:using:!private!validation! !
-!ClassBuilder class categoriesFor: #validateClassVars:againstSuperclass:!private!validation! !
-!ClassBuilder class categoriesFor: #validateInstanceSpec:size:superclass:!private!validation! !
-!ClassBuilder class categoriesFor: #validateInstanceVars:againstSuperclass:!private!validation! !
-!ClassBuilder class categoriesFor: #validateInstVarName:using:!private!validation! !
-!ClassBuilder class categoriesFor: #validateSpecAsFixedPointers:size:superclass:!private!validation! !
-!ClassBuilder class categoriesFor: #validateSpecAsVariableBytes:size:superclass:!private!validation! !
-!ClassBuilder class categoriesFor: #validateSpecAsVariablePointers:size:superclass:!private!validation! !
+!ClassBuilder class categoriesForMethods!
+allClassVarNamesOf:!helpers!private! !
+allInstVarNamesOf:!helpers!private! !
+classOf:!helpers!private! !
+forModifying:!instance creation!public! !
+fundamentalTypeOf:!class type!private! !
+initialize!development!initializing!public! !
+instanceSpecIsBytes:!class type!private! !
+instanceSpecWithFixedPointers:!class type!private! !
+instanceSpecWithIndirectBytes!class type!private! !
+instanceSpecWithNullTerminatedBytes!class type!private! !
+instanceSpecWithVariableBytes:!class type!private! !
+instanceSpecWithVariablePointers:!class type!private! !
+instSizeOf:!helpers!private! !
+invalidRemoveError!constants!private! !
+isFixedLayout:!enquiries!public! !
+isValidClassName:!private!testing! !
+isValidIdentifier:!private!testing! !
+isValidIdentifierChar:!private!testing! !
+isValidInitialIdentifierChar:!private!testing! !
+moveClass:toSuperclass:!operations!public! !
+new!instance creation!public! !
+removeClass:!operations!public! !
+removeClass:ignoreInstances:!operations!public! !
+renameClass:to:!operations!public! !
+validateClassVarName:using:!private!validation! !
+validateClassVars:againstSuperclass:!private!validation! !
+validateInstanceSpec:size:superclass:!private!validation! !
+validateInstanceVars:againstSuperclass:!private!validation! !
+validateInstVarName:using:!private!validation! !
+validateSpecAsFixedPointers:size:superclass:!private!validation! !
+validateSpecAsVariableBytes:size:superclass:!private!validation! !
+validateSpecAsVariablePointers:size:superclass:!private!validation! !
+!
 

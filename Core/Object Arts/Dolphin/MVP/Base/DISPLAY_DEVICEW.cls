@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #DISPLAY_DEVICEW
 	instanceVariableNames: ''
@@ -71,13 +71,15 @@ StateFlags
 	"Answer the <Integer> value of the receiver's 'StateFlags' field."
 
 	^bytes dwordAtOffset: _OffsetOf_StateFlags! !
-!DISPLAY_DEVICEW categoriesFor: #DeviceID!**compiled accessors**!public! !
-!DISPLAY_DEVICEW categoriesFor: #DeviceName!**compiled accessors**!public! !
-!DISPLAY_DEVICEW categoriesFor: #DeviceString!**compiled accessors**!public! !
-!DISPLAY_DEVICEW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!DISPLAY_DEVICEW categoriesFor: #isAttachedToDesktop!public!testing! !
-!DISPLAY_DEVICEW categoriesFor: #isPrimaryAdaptor!public!testing! !
-!DISPLAY_DEVICEW categoriesFor: #StateFlags!**compiled accessors**!public! !
+!DISPLAY_DEVICEW categoriesForMethods!
+DeviceID!**compiled accessors**!public! !
+DeviceName!**compiled accessors**!public! !
+DeviceString!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+isAttachedToDesktop!public!testing! !
+isPrimaryAdaptor!public!testing! !
+StateFlags!**compiled accessors**!public! !
+!
 
 !DISPLAY_DEVICEW class methodsFor!
 
@@ -108,6 +110,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #DeviceName #DeviceString #StateFlags #DeviceID)! !
-!DISPLAY_DEVICEW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!DISPLAY_DEVICEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!DISPLAY_DEVICEW class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

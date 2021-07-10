@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SDWORD subclass: #BOOL
 	instanceVariableNames: ''
@@ -23,8 +23,10 @@ value: aBoolean
 	"Set the receiver's 'value' field to the value of the argument, aBoolean"
 
 	bytes dwordAtOffset: _OffsetOf_value put: aBoolean asParameter! !
-!BOOL categoriesFor: #value!**compiled accessors**!public! !
-!BOOL categoriesFor: #value:!**compiled accessors**!public! !
+!BOOL categoriesForMethods!
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !BOOL class methodsFor!
 
@@ -43,5 +45,7 @@ defineFields
 		type: ((BOOLField new)
 				beOverride;
 				yourself)! !
-!BOOL class categoriesFor: #defineFields!public!template definition! !
+!BOOL class categoriesForMethods!
+defineFields!public!template definition! !
+!
 

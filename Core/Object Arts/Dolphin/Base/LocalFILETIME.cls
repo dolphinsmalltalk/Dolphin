@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 FILETIME subclass: #LocalFILETIME
 	instanceVariableNames: ''
@@ -25,9 +25,11 @@ asUTC
 
 	^FILETIME fromLocalTime: self
 ! !
-!LocalFILETIME categoriesFor: #asLocalTime!converting!public! !
-!LocalFILETIME categoriesFor: #asSYSTEMTIME!converting!public! !
-!LocalFILETIME categoriesFor: #asUTC!converting!public! !
+!LocalFILETIME categoriesForMethods!
+asLocalTime!converting!public! !
+asSYSTEMTIME!converting!public! !
+asUTC!converting!public! !
+!
 
 !LocalFILETIME class methodsFor!
 
@@ -55,6 +57,8 @@ now
 	"We can get away with passing in the same buffer for output as the input"
 	(lib fileTimeToLocalTime: answer lpLocalFileTime: answer) ifFalse: [lib systemError].
 	^answer! !
-!LocalFILETIME class categoriesFor: #fromSYSTEMTIME:!instance creation!public! !
-!LocalFILETIME class categoriesFor: #now!instance creation!public! !
+!LocalFILETIME class categoriesForMethods!
+fromSYSTEMTIME:!instance creation!public! !
+now!instance creation!public! !
+!
 

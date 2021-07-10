@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #GpEncoderParameters
 	instanceVariableNames: ''
@@ -59,11 +59,13 @@ Parameter: aStructureArrayOfGpEncoderParameter
 		to: _OffsetOf_Parameter + size
 		startingAt: 1.
 	self Count: aStructureArrayOfGpEncoderParameter size! !
-!GpEncoderParameters categoriesFor: #byteSize!accessing!public! !
-!GpEncoderParameters categoriesFor: #Count!**compiled accessors**!public! !
-!GpEncoderParameters categoriesFor: #Count:!**compiled accessors**!public! !
-!GpEncoderParameters categoriesFor: #Parameter!**compiled accessors**!public! !
-!GpEncoderParameters categoriesFor: #Parameter:!**compiled accessors**!public! !
+!GpEncoderParameters categoriesForMethods!
+byteSize!accessing!public! !
+Count!**compiled accessors**!public! !
+Count:!**compiled accessors**!public! !
+Parameter!**compiled accessors**!public! !
+Parameter:!**compiled accessors**!public! !
+!
 
 !GpEncoderParameters class methodsFor!
 
@@ -99,7 +101,9 @@ length: anInteger
 	^(self new: self byteSize + ((anInteger - 1) * GpEncoderParameter byteSize))
 		Count: anInteger;
 		yourself! !
-!GpEncoderParameters class categoriesFor: #defineFields!public!template definition! !
-!GpEncoderParameters class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!GpEncoderParameters class categoriesFor: #length:!public! !
+!GpEncoderParameters class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+length:!public! !
+!
 

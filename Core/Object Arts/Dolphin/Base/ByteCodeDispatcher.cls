@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ByteCodeDispatcher
 	instanceVariableNames: 'byteCodes method ip interpreter instructionLength byteCode instructions'
@@ -388,43 +388,45 @@ writesStatic: anAssociation
 						or: 
 							[(#(#longPopStoreStatic:with: #longStoreStatic:with:) identityIncludes: selector) 
 								and: [offset == (args first + (args last * 256))]]]]! !
-!ByteCodeDispatcher categoriesFor: #accessesInstVarAt:!public!testing! !
-!ByteCodeDispatcher categoriesFor: #accessesInstVarAtAnyOf:!public!testing! !
-!ByteCodeDispatcher categoriesFor: #accessToInstVarAt:!public!testing! !
-!ByteCodeDispatcher categoriesFor: #atEnd!private!testing! !
-!ByteCodeDispatcher categoriesFor: #byteCodes!accessing!public! !
-!ByteCodeDispatcher categoriesFor: #containsInstruction:!public!testing! !
-!ByteCodeDispatcher categoriesFor: #dispatchAll!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #dispatchNext!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #fetch!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #indexOfInstVarAccess:!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #indexOfInstVarRead:!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #indexOfInstVarWrite:!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #indexOfIP:!accessing!private! !
-!ByteCodeDispatcher categoriesFor: #instruction:do:!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #instructions!interpreting!public! !
-!ByteCodeDispatcher categoriesFor: #instructions:!public! !
-!ByteCodeDispatcher categoriesFor: #instructionsDo:!interpreting!public! !
-!ByteCodeDispatcher categoriesFor: #interpreter:!accessing!private! !
-!ByteCodeDispatcher categoriesFor: #ip!accessing!public! !
-!ByteCodeDispatcher categoriesFor: #ip:!accessing!public! !
-!ByteCodeDispatcher categoriesFor: #method!accessing!public! !
-!ByteCodeDispatcher categoriesFor: #method:!accessing!private! !
-!ByteCodeDispatcher categoriesFor: #next!accessing!public! !
-!ByteCodeDispatcher categoriesFor: #nextInstructionDo:!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #peekForSelector!interpreting!public! !
-!ByteCodeDispatcher categoriesFor: #prevIP:!accessing!public! !
-!ByteCodeDispatcher categoriesFor: #readsInstVarAt:!public!testing! !
-!ByteCodeDispatcher categoriesFor: #readsStatic:!public!testing! !
-!ByteCodeDispatcher categoriesFor: #reset!interpreting!public! !
-!ByteCodeDispatcher categoriesFor: #segments!accessing!public! !
-!ByteCodeDispatcher categoriesFor: #selectorOfMessageSend:!interpreting!private! !
-!ByteCodeDispatcher categoriesFor: #selectorOfSpecialSend:!enquiries!private! !
-!ByteCodeDispatcher categoriesFor: #selectorOfSpecialSendEx:!accessing!private! !
-!ByteCodeDispatcher categoriesFor: #sendsSpecialSelector:!public!testing! !
-!ByteCodeDispatcher categoriesFor: #specialMessages!accessing!private! !
-!ByteCodeDispatcher categoriesFor: #writesInstVarAt:!public!testing! !
-!ByteCodeDispatcher categoriesFor: #writesStatic:!public!testing! !
+!ByteCodeDispatcher categoriesForMethods!
+accessesInstVarAt:!public!testing! !
+accessesInstVarAtAnyOf:!public!testing! !
+accessToInstVarAt:!public!testing! !
+atEnd!private!testing! !
+byteCodes!accessing!public! !
+containsInstruction:!public!testing! !
+dispatchAll!interpreting!private! !
+dispatchNext!interpreting!private! !
+fetch!interpreting!private! !
+indexOfInstVarAccess:!interpreting!private! !
+indexOfInstVarRead:!interpreting!private! !
+indexOfInstVarWrite:!interpreting!private! !
+indexOfIP:!accessing!private! !
+instruction:do:!interpreting!private! !
+instructions!interpreting!public! !
+instructions:!public! !
+instructionsDo:!interpreting!public! !
+interpreter:!accessing!private! !
+ip!accessing!public! !
+ip:!accessing!public! !
+method!accessing!public! !
+method:!accessing!private! !
+next!accessing!public! !
+nextInstructionDo:!interpreting!private! !
+peekForSelector!interpreting!public! !
+prevIP:!accessing!public! !
+readsInstVarAt:!public!testing! !
+readsStatic:!public!testing! !
+reset!interpreting!public! !
+segments!accessing!public! !
+selectorOfMessageSend:!interpreting!private! !
+selectorOfSpecialSend:!enquiries!private! !
+selectorOfSpecialSendEx:!accessing!private! !
+sendsSpecialSelector:!public!testing! !
+specialMessages!accessing!private! !
+writesInstVarAt:!public!testing! !
+writesStatic:!public!testing! !
+!
 
 !ByteCodeDispatcher class methodsFor!
 
@@ -494,12 +496,14 @@ on: aCompiledCode for: anInstructionInterpreter
 	^(self on: aCompiledCode)
 		interpreter: anInstructionInterpreter;
 		yourself! !
-!ByteCodeDispatcher class categoriesFor: #bytecodeRuns!constants!must not strip!private! !
-!ByteCodeDispatcher class categoriesFor: #decodeLongJump:byte2:!helpers!public! !
-!ByteCodeDispatcher class categoriesFor: #indexOfIP:in:!interpreting!private! !
-!ByteCodeDispatcher class categoriesFor: #initialize!development!initializing!public! !
-!ByteCodeDispatcher class categoriesFor: #instructions!accessing!public! !
-!ByteCodeDispatcher class categoriesFor: #lengthOfInstruction:!interpreting!private! !
-!ByteCodeDispatcher class categoriesFor: #on:!instance creation!public! !
-!ByteCodeDispatcher class categoriesFor: #on:for:!instance creation!public! !
+!ByteCodeDispatcher class categoriesForMethods!
+bytecodeRuns!constants!must not strip!private! !
+decodeLongJump:byte2:!helpers!public! !
+indexOfIP:in:!interpreting!private! !
+initialize!development!initializing!public! !
+instructions!accessing!public! !
+lengthOfInstruction:!interpreting!private! !
+on:!instance creation!public! !
+on:for:!instance creation!public! !
+!
 

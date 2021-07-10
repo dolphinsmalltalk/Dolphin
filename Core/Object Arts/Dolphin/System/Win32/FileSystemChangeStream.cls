@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 FileSystemChangeReader subclass: #FileSystemChangeStream
 	instanceVariableNames: 'queue'
@@ -43,8 +43,10 @@ next
 	next := queue next.
 	next isInteger ifTrue: [^Win32Error signalWith: next].
 	^next! !
-!FileSystemChangeStream categoriesFor: #handleError:!helpers!private! !
-!FileSystemChangeStream categoriesFor: #handleNotifications:!private! !
-!FileSystemChangeStream categoriesFor: #initialize!initializing!private! !
-!FileSystemChangeStream categoriesFor: #next!public! !
+!FileSystemChangeStream categoriesForMethods!
+handleError:!helpers!private! !
+handleNotifications:!private! !
+initialize!initializing!private! !
+next!public! !
+!
 

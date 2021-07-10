@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Shell subclass: #WebBrowserShell
 	instanceVariableNames: 'address browser statusModel commandStates'
@@ -175,22 +175,24 @@ queryCommand: query
 
 	^super queryCommand: query.
 ! !
-!WebBrowserShell categoriesFor: #createComponents!initializing!public! !
-!WebBrowserShell categoriesFor: #createSchematicWiring!initializing!public! !
-!WebBrowserShell categoriesFor: #historyBack:!commands!public! !
-!WebBrowserShell categoriesFor: #historyForward:!commands!public! !
-!WebBrowserShell categoriesFor: #home!commands!public! !
-!WebBrowserShell categoriesFor: #homePage!commands!private! !
-!WebBrowserShell categoriesFor: #initialize!initializing!private! !
-!WebBrowserShell categoriesFor: #navigate!commands!public! !
-!WebBrowserShell categoriesFor: #OnBeforeNavigate2:URL:Flags:TargetFrameName:PostData:Headers:Cancel:!event handling!public! !
-!WebBrowserShell categoriesFor: #OnCommandStateChange:Enable:!event handling!public! !
-!WebBrowserShell categoriesFor: #OnDocumentComplete:URL:!event handling!public! !
-!WebBrowserShell categoriesFor: #OnNavigateComplete2:URL:!event handling!public! !
-!WebBrowserShell categoriesFor: #OnNewWindow2:Cancel:!event handling!public! !
-!WebBrowserShell categoriesFor: #onViewOpened!event handling!public! !
-!WebBrowserShell categoriesFor: #openUrl:!operations!public! !
-!WebBrowserShell categoriesFor: #queryCommand:!commands!public! !
+!WebBrowserShell categoriesForMethods!
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+historyBack:!commands!public! !
+historyForward:!commands!public! !
+home!commands!public! !
+homePage!commands!private! !
+initialize!initializing!private! !
+navigate!commands!public! !
+OnBeforeNavigate2:URL:Flags:TargetFrameName:PostData:Headers:Cancel:!event handling!public! !
+OnCommandStateChange:Enable:!event handling!public! !
+OnDocumentComplete:URL:!event handling!public! !
+OnNavigateComplete2:URL:!event handling!public! !
+OnNewWindow2:Cancel:!event handling!public! !
+onViewOpened!event handling!public! !
+openUrl:!operations!public! !
+queryCommand:!commands!public! !
+!
 
 !WebBrowserShell class methodsFor!
 
@@ -232,9 +234,11 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
-!WebBrowserShell class categoriesFor: #displayOn:!printing!public! !
-!WebBrowserShell class categoriesFor: #icon!constants!public! !
-!WebBrowserShell class categoriesFor: #initialize!development!initializing!private! !
-!WebBrowserShell class categoriesFor: #resource_Default_view!public!resources-views! !
-!WebBrowserShell class categoriesFor: #shutdownOnExit!public!testing! !
+!WebBrowserShell class categoriesForMethods!
+displayOn:!printing!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+resource_Default_view!public!resources-views! !
+shutdownOnExit!public!testing! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRCOLORMATCHTOTARGET
 	instanceVariableNames: ''
@@ -92,17 +92,19 @@ dwFlags: anInteger
 	"Set the receiver's 'dwFlags' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_dwFlags put: anInteger! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #cbData!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #cbData:!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #cbName!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #cbName:!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #Data!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #Data:!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #dataLength!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #dwAction!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #dwAction:!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #dwFlags!**compiled accessors**!public! !
-!EMRCOLORMATCHTOTARGET categoriesFor: #dwFlags:!**compiled accessors**!public! !
+!EMRCOLORMATCHTOTARGET categoriesForMethods!
+cbData!**compiled accessors**!public! !
+cbData:!**compiled accessors**!public! !
+cbName!**compiled accessors**!public! !
+cbName:!**compiled accessors**!public! !
+Data!**compiled accessors**!public! !
+Data:!**compiled accessors**!public! !
+dataLength!public! !
+dwAction!**compiled accessors**!public! !
+dwAction:!**compiled accessors**!public! !
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+!
 
 !EMRCOLORMATCHTOTARGET class methodsFor!
 
@@ -148,7 +150,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_COLORMATCHTOTARGETW! !
-!EMRCOLORMATCHTOTARGET class categoriesFor: #defineFields!public!template definition! !
-!EMRCOLORMATCHTOTARGET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRCOLORMATCHTOTARGET class categoriesFor: #iTypes!constants!public! !
+!EMRCOLORMATCHTOTARGET class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

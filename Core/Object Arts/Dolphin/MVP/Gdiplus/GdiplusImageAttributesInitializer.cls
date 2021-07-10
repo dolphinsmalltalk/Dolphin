@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusImageAttributesInitializer
 	instanceVariableNames: ''
@@ -26,8 +26,10 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating ImageAttributes'! !
-!GdiplusImageAttributesInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusImageAttributesInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!GdiplusImageAttributesInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+!
 
 !GdiplusImageAttributesInitializer class methodsFor!
 
@@ -42,7 +44,9 @@ onPreStripImage
 	which holds an instance of the receiver."
 
 	Default := nil! !
-!GdiplusImageAttributesInitializer class categoriesFor: #default!instance creation!private! !
-!GdiplusImageAttributesInitializer class categoriesFor: #new!development!instance creation!public! !
-!GdiplusImageAttributesInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!GdiplusImageAttributesInitializer class categoriesForMethods!
+default!instance creation!private! !
+new!development!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+!
 

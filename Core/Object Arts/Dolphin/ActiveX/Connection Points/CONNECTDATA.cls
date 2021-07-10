@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #CONNECTDATA
 	instanceVariableNames: ''
@@ -35,10 +35,12 @@ punk: anIUnknown
 	"Set the receiver's 'punk' field to the value of the argument, anIUnknown"
 
 	bytes uintPtrAtOffset: _OffsetOf_punk put: anIUnknown yourAddress! !
-!CONNECTDATA categoriesFor: #dwCookie!**compiled accessors**!public! !
-!CONNECTDATA categoriesFor: #dwCookie:!**compiled accessors**!public! !
-!CONNECTDATA categoriesFor: #punk!**compiled accessors**!public! !
-!CONNECTDATA categoriesFor: #punk:!**compiled accessors**!public! !
+!CONNECTDATA categoriesForMethods!
+dwCookie!**compiled accessors**!public! !
+dwCookie:!**compiled accessors**!public! !
+punk!**compiled accessors**!public! !
+punk:!**compiled accessors**!public! !
+!
 
 !CONNECTDATA class methodsFor!
 
@@ -59,6 +61,8 @@ defineFields
 
 getFieldNames
 	^#(#punk #dwCookie)! !
-!CONNECTDATA class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!CONNECTDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!CONNECTDATA class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

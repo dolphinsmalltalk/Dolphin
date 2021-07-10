@@ -176,10 +176,12 @@ stbConvertFrom: anSTBClassFormat
 					1 to: data size do: [:i | newBlock instVarAt: i put: (data at: i)]]].
 	upgrading ifTrue: [newBlock := self attemptToUpgradeBlock: newBlock data: data].
 	newBlock]! !
-!BlockClosure class categoriesFor: #convertBlockToClosure:!binary filing!development!private! !
-!BlockClosure class categoriesFor: #convertMethodContext:!binary filing!development!private! !
-!BlockClosure class categoriesFor: #rewriterClass!binary filing!development!private! !
-!BlockClosure class categoriesFor: #stbConvertFrom:!binary filing!development!public! !
+!BlockClosure class categoriesForMethods!
+convertBlockToClosure:!binary filing!development!private! !
+convertMethodContext:!binary filing!development!private! !
+rewriterClass!binary filing!development!private! !
+stbConvertFrom:!binary filing!development!public! !
+!
 
 !ChunkSourceFiler methodsFor!
 
@@ -202,7 +204,9 @@ fileOutResource: aResourceIdentifier
 		cr.
 	aResourceIdentifier resource asInternalResource binaryStoreBytes base64StoreOn: stream.
 	self emitChunk: ')'! !
-!ChunkSourceFiler categoriesFor: #fileOutResource:!public!source filing-file out! !
+!ChunkSourceFiler categoriesForMethods!
+fileOutResource:!public!source filing-file out! !
+!
 
 !ResourceIdentifier methodsFor!
 
@@ -212,7 +216,9 @@ assignBinaryResourceData: aViewResource
 	view := aViewResource loadWithContext: viewClass desktop forEdit: true.
 	self assign: view literalStoreArray.
 	view destroy! !
-!ResourceIdentifier categoriesFor: #assignBinaryResourceData:!private! !
+!ResourceIdentifier categoriesForMethods!
+assignBinaryResourceData:!private! !
+!
 
 !ResourceIdentifier class methodsFor!
 
@@ -221,7 +227,9 @@ resourceAt: aResourceIdentifier ifAbsent: aBlock
 	Answers the resource data associated with aResourceIdentifier"
 
 	^aResourceIdentifier resource! !
-!ResourceIdentifier class categoriesFor: #resourceAt:ifAbsent:!accessing!public! !
+!ResourceIdentifier class categoriesForMethods!
+resourceAt:ifAbsent:!accessing!public! !
+!
 
 !RuntimeSessionManager methodsFor!
 
@@ -232,7 +240,9 @@ initializeFromSessionManager: oldSessionManager
 
 	super initializeFromSessionManager: oldSessionManager.
 	Smalltalk at: #ResourceAccessor ifPresent: [:ra | ra ensureAccessorsAreInternal]! !
-!RuntimeSessionManager categoriesFor: #initializeFromSessionManager:!initializing!private! !
+!RuntimeSessionManager categoriesForMethods!
+initializeFromSessionManager:!initializing!private! !
+!
 
 "End of package definition"!
 

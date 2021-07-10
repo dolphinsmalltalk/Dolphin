@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #LOGPEN
 	instanceVariableNames: ''
@@ -71,16 +71,18 @@ width: anInteger
 	"Set the <integer> width of the pen described by the receiver."
 
 	bytes sdwordAtOffset: 4 put: anInteger! !
-!LOGPEN categoriesFor: #color!accessing!public! !
-!LOGPEN categoriesFor: #color:!accessing!public! !
-!LOGPEN categoriesFor: #lopnColor!**compiled accessors**!public! !
-!LOGPEN categoriesFor: #lopnColor:!**compiled accessors**!public! !
-!LOGPEN categoriesFor: #lopnStyle!**compiled accessors**!public! !
-!LOGPEN categoriesFor: #lopnStyle:!**compiled accessors**!public! !
-!LOGPEN categoriesFor: #style!accessing!public! !
-!LOGPEN categoriesFor: #style:!accessing!public! !
-!LOGPEN categoriesFor: #width!accessing!public! !
-!LOGPEN categoriesFor: #width:!accessing!public! !
+!LOGPEN categoriesForMethods!
+color!accessing!public! !
+color:!accessing!public! !
+lopnColor!**compiled accessors**!public! !
+lopnColor:!**compiled accessors**!public! !
+lopnStyle!**compiled accessors**!public! !
+lopnStyle:!**compiled accessors**!public! !
+style!accessing!public! !
+style:!accessing!public! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 !LOGPEN class methodsFor!
 
@@ -103,6 +105,8 @@ defineFields
 
 getFieldNames
 	^#(#lopnStyle #lopnColor)! !
-!LOGPEN class categoriesFor: #defineFields!public!template definition! !
-!LOGPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!LOGPEN class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

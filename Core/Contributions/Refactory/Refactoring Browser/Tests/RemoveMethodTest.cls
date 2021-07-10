@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #RemoveMethodTest
 	instanceVariableNames: ''
@@ -44,8 +44,10 @@ testRemoveReferenced
 testRemoveSameMethodButSendsSuper
 	self shouldWarn: (RemoveMethodRefactoring removeMethods: #(#new)
 				from: BasicLintRuleTest class)! !
-!RemoveMethodTest categoriesFor: #testModelRecursiveMethodThatIsNotReferencedFromOtherMethods!public!tests! !
-!RemoveMethodTest categoriesFor: #testRemoveMethod!public!tests! !
-!RemoveMethodTest categoriesFor: #testRemoveReferenced!failure tests!public! !
-!RemoveMethodTest categoriesFor: #testRemoveSameMethodButSendsSuper!failure tests!public! !
+!RemoveMethodTest categoriesForMethods!
+testModelRecursiveMethodThatIsNotReferencedFromOtherMethods!public!tests! !
+testRemoveMethod!public!tests! !
+testRemoveReferenced!failure tests!public! !
+testRemoveSameMethodButSendsSuper!failure tests!public! !
+!
 

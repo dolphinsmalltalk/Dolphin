@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ChangeMethodNameRefactoring subclass: #RenameMethodRefactoring
 	instanceVariableNames: 'hasPermutedArguments'
@@ -58,12 +58,14 @@ storeOn: aStream
 		nextPutAll: ' permuation: '.
 	permutation storeOn: aStream.
 	aStream nextPut: $)! !
-!RenameMethodRefactoring categoriesFor: #hasPermutedArguments!public!testing! !
-!RenameMethodRefactoring categoriesFor: #implementorsCanBePrimitives!public!testing! !
-!RenameMethodRefactoring categoriesFor: #myConditions!preconditions!public! !
-!RenameMethodRefactoring categoriesFor: #parseTreeRewriter!public!transforming! !
-!RenameMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!RenameMethodRefactoring categoriesFor: #storeOn:!printing!public! !
+!RenameMethodRefactoring categoriesForMethods!
+hasPermutedArguments!public!testing! !
+implementorsCanBePrimitives!public!testing! !
+myConditions!preconditions!public! !
+parseTreeRewriter!public!transforming! !
+preconditions!preconditions!public! !
+storeOn:!printing!public! !
+!
 
 !RenameMethodRefactoring class methodsFor!
 
@@ -82,6 +84,8 @@ renameMethod: aSelector in: aClass to: newSelector permutation: aMap
 		in: aClass
 		to: newSelector
 		permutation: aMap! !
-!RenameMethodRefactoring class categoriesFor: #model:renameMethod:in:to:permutation:!instance creation!public! !
-!RenameMethodRefactoring class categoriesFor: #renameMethod:in:to:permutation:!instance creation!public! !
+!RenameMethodRefactoring class categoriesForMethods!
+model:renameMethod:in:to:permutation:!instance creation!public! !
+renameMethod:in:to:permutation:!instance creation!public! !
+!
 

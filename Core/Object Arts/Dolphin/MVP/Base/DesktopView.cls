@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 View subclass: #DesktopView
 	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
@@ -326,54 +326,56 @@ workArea
 	occuppied by the tool bar."
 
 	^(SystemMetrics current getSysParamStruct: SPI_GETWORKAREA type: RECT) asRectangle! !
-!DesktopView categoriesFor: #actualFont!accessing!private! !
-!DesktopView categoriesFor: #addCommandHistory:!accessing!private! !
-!DesktopView categoriesFor: #addSubView:!hierarchy!public!sub views! !
-!DesktopView categoriesFor: #allParents!hierarchy!public! !
-!DesktopView categoriesFor: #ambientBackcolor!accessing!private! !
-!DesktopView categoriesFor: #assumeDesktopHandle!accessing!public! !
-!DesktopView categoriesFor: #basicActualBackcolor!accessing!private! !
-!DesktopView categoriesFor: #buttonRemoved:!default button!private! !
-!DesktopView categoriesFor: #canvas!accessing!public! !
-!DesktopView categoriesFor: #caption!accessing!public! !
-!DesktopView categoriesFor: #caption:!accessing!public! !
-!DesktopView categoriesFor: #commandPolicyWithSource:!commands!public! !
-!DesktopView categoriesFor: #defaultExtentOf:!geometry!helpers!private! !
-!DesktopView categoriesFor: #displayOn:!displaying!public! !
-!DesktopView categoriesFor: #ensureSubView:rectangleVisible:!private!updating! !
-!DesktopView categoriesFor: #ensureSubViewVisible:!public!sub views! !
-!DesktopView categoriesFor: #ensureVisible!accessing!public! !
-!DesktopView categoriesFor: #filerProxy!binary filing!private! !
-!DesktopView categoriesFor: #helpId!accessing!public! !
-!DesktopView categoriesFor: #iconTitleFont!geometry!public! !
-!DesktopView categoriesFor: #invalidateLayout!geometry!public! !
-!DesktopView categoriesFor: #invalidateRect:erase:!drawing!public! !
-!DesktopView categoriesFor: #invalidateUserInterface!accessing!public! !
-!DesktopView categoriesFor: #isDesktop!public!testing! !
-!DesktopView categoriesFor: #isLayoutValid!geometry!public!testing! !
-!DesktopView categoriesFor: #layoutManager:!geometry!public! !
-!DesktopView categoriesFor: #name!accessing!public! !
-!DesktopView categoriesFor: #name:!accessing!public! !
-!DesktopView categoriesFor: #name:as:!hierarchy!public!sub views! !
-!DesktopView categoriesFor: #onAboutToDisplaySystemMenu:!event handling!public! !
-!DesktopView categoriesFor: #onStartup!event handling!public! !
-!DesktopView categoriesFor: #onViewActivated:!event handling!public! !
-!DesktopView categoriesFor: #onViewDeactivated:!event handling!public! !
-!DesktopView categoriesFor: #onViewMinimized:!event handling!public! !
-!DesktopView categoriesFor: #onViewRestored:!event handling!public! !
-!DesktopView categoriesFor: #performCommand:!commands!public! !
-!DesktopView categoriesFor: #queryContextMenu!menus!public! !
-!DesktopView categoriesFor: #refresh!drawing!public! !
-!DesktopView categoriesFor: #repositionShell:!helpers!private! !
-!DesktopView categoriesFor: #resolution!accessing!public! !
-!DesktopView categoriesFor: #screenRectangle!geometry!public! !
-!DesktopView categoriesFor: #setDefaultButton:state:!accessing!default button!private! !
-!DesktopView categoriesFor: #setFocus!operations!public! !
-!DesktopView categoriesFor: #topShell!hierarchy!public! !
-!DesktopView categoriesFor: #topView!hierarchy!public! !
-!DesktopView categoriesFor: #updateCaption!public!updating! !
-!DesktopView categoriesFor: #withAllParentsDo:!hierarchy!public! !
-!DesktopView categoriesFor: #workArea!geometry!public! !
+!DesktopView categoriesForMethods!
+actualFont!accessing!private! !
+addCommandHistory:!accessing!private! !
+addSubView:!hierarchy!public!sub views! !
+allParents!hierarchy!public! !
+ambientBackcolor!accessing!private! !
+assumeDesktopHandle!accessing!public! !
+basicActualBackcolor!accessing!private! !
+buttonRemoved:!default button!private! !
+canvas!accessing!public! !
+caption!accessing!public! !
+caption:!accessing!public! !
+commandPolicyWithSource:!commands!public! !
+defaultExtentOf:!geometry!helpers!private! !
+displayOn:!displaying!public! !
+ensureSubView:rectangleVisible:!private!updating! !
+ensureSubViewVisible:!public!sub views! !
+ensureVisible!accessing!public! !
+filerProxy!binary filing!private! !
+helpId!accessing!public! !
+iconTitleFont!geometry!public! !
+invalidateLayout!geometry!public! !
+invalidateRect:erase:!drawing!public! !
+invalidateUserInterface!accessing!public! !
+isDesktop!public!testing! !
+isLayoutValid!geometry!public!testing! !
+layoutManager:!geometry!public! !
+name!accessing!public! !
+name:!accessing!public! !
+name:as:!hierarchy!public!sub views! !
+onAboutToDisplaySystemMenu:!event handling!public! !
+onStartup!event handling!public! !
+onViewActivated:!event handling!public! !
+onViewDeactivated:!event handling!public! !
+onViewMinimized:!event handling!public! !
+onViewRestored:!event handling!public! !
+performCommand:!commands!public! !
+queryContextMenu!menus!public! !
+refresh!drawing!public! !
+repositionShell:!helpers!private! !
+resolution!accessing!public! !
+screenRectangle!geometry!public! !
+setDefaultButton:state:!accessing!default button!private! !
+setFocus!operations!public! !
+topShell!hierarchy!public! !
+topView!hierarchy!public! !
+updateCaption!public!updating! !
+withAllParentsDo:!hierarchy!public! !
+workArea!geometry!public! !
+!
 
 DesktopView methodProtocol: #compositeView attributes: #(#readOnly) selectors: #(#addSubView: #allParents #allSubViews #arrangement #arrangement: #backcolor #backcolor: #canAcceptSubViews #canvas #clientExtent #clientHeight #clientRectangle #clientWidth #close #contextMenu #contextMenu: #cursor #cursorPosition #destroy #disable #disableRedraw #enable #enableRedraw #ensureLayoutValid #ensureRectangleVisible: #ensureSubView:rectangleVisible: #ensureSubViewVisible: #ensureVisible #extent #extent: #firstSubView #font #font: #forecolor #forecolor: #hasBorder #hasBorder: #hasClientEdge #hasClientEdge: #hasFocus #hasLayoutManager #hasStaticEdge #hasStaticEdge: #hasVisibleStyle #hasVisibleStyle: #height #height: #hide #invalidate #invalidateCalculatedExtent #invalidateLayout #invalidateRect: #invalidateRect:erase: #invalidateRgn: #invalidateUserInterface #isEnabled: #isGroupStop #isGroupStop: #isLayoutValid #isManaged #isManaged: #isTabStop #isTabStop: #isTopView #isTransparent #isTransparent: #isWindowVisible #layout #layoutExtent: #layoutManager #layoutManager: #managedSubViews #mapPoint:to: #mapRectangle:to: #model #model: #name #name: #nameOf: #needsValidateLayout #nextSiblingView #nonClientCanvas #onAboutToCreate #onBegin:drag: #onCommand: #onCreated: #onDestroyed #onEraseRequired: #onHScroll: #onModelChanged #onPaintRequired: #onSubViewAdded: #onSubViewRemoved: #onViewCreated #onVScroll: #onZOrderChanged #parentView #placement #placement: #plainText #position #position: #preferredExtent #preferredExtent: #presenter #presenter: #presenterConnectionPoint #preTranslateKeyboardInput: #preTranslateMessage: #preTranslateMouseInput: #previousSiblingView #queryContextMenu #recreate #rectangle #rectangle: #refreshContents #removeSubView: #resolution #screenRectangle #screenRectangle: #scrollBy:clip: #scrollBy:scroll:clip: #setCapture #styles #subViewFromPoint: #subViewFromPoint:flags: #subViews #tabFirst #tabNext #text #text: #topView #update #updateModel #usePreferredExtent #usePreferredExtent: #validate #validateLayout #validateRect: #validateUserInterface #viewNamed: #viewNamed:ifNone: #width #width: #withAllParents #withAllSubViews #x #x: #y #y: #zOrderAfter: #zOrderAfter:withFlags: #zOrderBottom #zOrderTop)!
 DesktopView methodProtocol: #topPresenter attributes: #(#readOnly) selectors: #(#caption #caption: #commandPolicyWithSource: #ensureVisible #invalidateUserInterface #onAboutToDisplayMenu: #onAboutToDisplaySystemMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewActivated: #onViewClosed #onViewDeactivated: #onViewMinimized: #onViewOpened #onViewRestored: #parentPresenter #performAction #performCommand: #setFocus #show #topShell #updateCaption #view)!
@@ -444,12 +446,14 @@ uninitialize
 		winFinalize;
 		handle: nil.
 	Current := nil! !
-!DesktopView class categoriesFor: #current!accessing!public! !
-!DesktopView class categoriesFor: #current:!accessing!public! !
-!DesktopView class categoriesFor: #getProgmanClass!initializing!private! !
-!DesktopView class categoriesFor: #icon!constants!public! !
-!DesktopView class categoriesFor: #initialize!development!initializing!private! !
-!DesktopView class categoriesFor: #isProgramManager:!enquiries!private! !
-!DesktopView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
-!DesktopView class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!DesktopView class categoriesForMethods!
+current!accessing!public! !
+current:!accessing!public! !
+getProgmanClass!initializing!private! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+isProgramManager:!enquiries!private! !
+stbConvertFromVersion9:!binary filing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

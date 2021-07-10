@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #PermanentLibrary
 	instanceVariableNames: ''
@@ -18,7 +18,9 @@ close
 	because it will break the VM and everything else."
 
 	^self ~~ self class default and: [super close]! !
-!PermanentLibrary categoriesFor: #close!public!realizing/unrealizing! !
+!PermanentLibrary categoriesForMethods!
+close!public!realizing/unrealizing! !
+!
 
 !PermanentLibrary class methodsFor!
 
@@ -60,10 +62,12 @@ onStartup2
 	may get called."
 
 	self allSubclassesDo: [:c | c openDefault]! !
-!PermanentLibrary class categoriesFor: #clear!initializing!private! !
-!PermanentLibrary class categoriesFor: #closeDefault!private!realizing/unrealizing! !
-!PermanentLibrary class categoriesFor: #default!accessing!public! !
-!PermanentLibrary class categoriesFor: #default:!accessing!public! !
-!PermanentLibrary class categoriesFor: #onStartup!event handling!private! !
-!PermanentLibrary class categoriesFor: #onStartup2!event handling!private! !
+!PermanentLibrary class categoriesForMethods!
+clear!initializing!private! !
+closeDefault!private!realizing/unrealizing! !
+default!accessing!public! !
+default:!accessing!public! !
+onStartup!event handling!private! !
+onStartup2!event handling!private! !
+!
 

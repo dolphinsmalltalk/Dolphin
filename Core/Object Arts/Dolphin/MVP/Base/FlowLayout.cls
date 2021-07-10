@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LayoutManager subclass: #FlowLayout
 	instanceVariableNames: 'horizontalGap verticalGap flags'
@@ -169,20 +169,22 @@ verticalGap: anInteger
 	"Set the vertical gap between items laid out by the receiver to be the <integer> argument."
 
 	verticalGap := anInteger! !
-!FlowLayout categoriesFor: #alignment!accessing!public! !
-!FlowLayout categoriesFor: #alignment:!accessing!public! !
-!FlowLayout categoriesFor: #flowSplit:context:!helpers!private! !
-!FlowLayout categoriesFor: #horizontalAlignment!accessing!private! !
-!FlowLayout categoriesFor: #horizontalGap!accessing!public! !
-!FlowLayout categoriesFor: #horizontalGap:!accessing!public! !
-!FlowLayout categoriesFor: #initialize!initializing!private! !
-!FlowLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!FlowLayout categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
-!FlowLayout categoriesFor: #resize:to:!geometry!public! !
-!FlowLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
-!FlowLayout categoriesFor: #verticalAlignment!accessing!private! !
-!FlowLayout categoriesFor: #verticalGap!accessing!public! !
-!FlowLayout categoriesFor: #verticalGap:!accessing!public! !
+!FlowLayout categoriesForMethods!
+alignment!accessing!public! !
+alignment:!accessing!public! !
+flowSplit:context:!helpers!private! !
+horizontalAlignment!accessing!private! !
+horizontalGap!accessing!public! !
+horizontalGap:!accessing!public! !
+initialize!initializing!private! !
+layoutContainer:context:!geometry!private! !
+preferredLayoutExtentOf:context:!enquiries!public! !
+resize:to:!geometry!public! !
+resolutionScaledBy:!geometry!private! !
+verticalAlignment!accessing!private! !
+verticalGap!accessing!public! !
+verticalGap:!accessing!public! !
+!
 
 !FlowLayout class methodsFor!
 
@@ -224,7 +226,9 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!FlowLayout class categoriesFor: #initialize!development!helpers!public! !
-!FlowLayout class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!FlowLayout class categoriesFor: #stbVersion!constants!public! !
+!FlowLayout class categoriesForMethods!
+initialize!development!helpers!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!constants!public! !
+!
 

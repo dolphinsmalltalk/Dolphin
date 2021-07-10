@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXDualImp subclass: #AXForwardingDualImp
 	instanceVariableNames: 'interfaceClass server'
@@ -35,8 +35,10 @@ server: anObject
 	the server is set before the interface is queried."
 
 	server := anObject! !
-!AXForwardingDualImp categoriesFor: #interfaceClass!accessing!public! !
-!AXForwardingDualImp categoriesFor: #interfaceClass:!accessing!public! !
-!AXForwardingDualImp categoriesFor: #server!accessing!public! !
-!AXForwardingDualImp categoriesFor: #server:!accessing!public! !
+!AXForwardingDualImp categoriesForMethods!
+interfaceClass!accessing!public! !
+interfaceClass:!accessing!public! !
+server!accessing!public! !
+server:!accessing!public! !
+!
 

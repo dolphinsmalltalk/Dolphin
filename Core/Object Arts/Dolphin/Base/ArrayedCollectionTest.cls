@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequenceableCollectionTest subclass: #ArrayedCollectionTest
 	instanceVariableNames: ''
@@ -23,5 +23,7 @@ testReplaceIdentityWith
 	self assert: a equals: (self newCollection: #($0 $2 $0 $3 $0)).
 	a replaceIdentity: (self assimilate: $6) with: rep.
 	self assert: a equals: (self newCollection: #($0 $2 $0 $3 $0 $0))! !
-!ArrayedCollectionTest categoriesFor: #testReplaceIdentityWith!public!unit tests! !
+!ArrayedCollectionTest categoriesForMethods!
+testReplaceIdentityWith!public!unit tests! !
+!
 

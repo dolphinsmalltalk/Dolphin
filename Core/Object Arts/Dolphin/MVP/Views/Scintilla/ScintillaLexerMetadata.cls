@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ScintillaLexerMetadata
 	instanceVariableNames: 'view id'
@@ -41,14 +41,16 @@ view
 view: aScintillaView id: anObject
 	view := aScintillaView.
 	id := anObject! !
-!ScintillaLexerMetadata categoriesFor: #description!accessing!public! !
-!ScintillaLexerMetadata categoriesFor: #displayOn:!printing!public! !
-!ScintillaLexerMetadata categoriesFor: #getDescription!accessing!private! !
-!ScintillaLexerMetadata categoriesFor: #id!accessing!private! !
-!ScintillaLexerMetadata categoriesFor: #name!accessing!public! !
-!ScintillaLexerMetadata categoriesFor: #printOn:!printing!public! !
-!ScintillaLexerMetadata categoriesFor: #view!accessing!private! !
-!ScintillaLexerMetadata categoriesFor: #view:id:!public! !
+!ScintillaLexerMetadata categoriesForMethods!
+description!accessing!public! !
+displayOn:!printing!public! !
+getDescription!accessing!private! !
+id!accessing!private! !
+name!accessing!public! !
+printOn:!printing!public! !
+view!accessing!private! !
+view:id:!public! !
+!
 
 !ScintillaLexerMetadata class methodsFor!
 
@@ -58,6 +60,8 @@ icon
 view: aScintillaView id: anObject
 	<primitive: 157>
 	^self new view: aScintillaView id: anObject! !
-!ScintillaLexerMetadata class categoriesFor: #icon!constants!development!public! !
-!ScintillaLexerMetadata class categoriesFor: #view:id:!instance creation!public! !
+!ScintillaLexerMetadata class categoriesForMethods!
+icon!constants!development!public! !
+view:id:!instance creation!public! !
+!
 

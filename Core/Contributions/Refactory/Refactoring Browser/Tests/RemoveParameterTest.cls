@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #RemoveParameterTest
 	instanceVariableNames: ''
@@ -48,7 +48,9 @@ testRemoveParameter
 		equals: (RBParser parseMethod: 'callMethod
 								^(self renameThisMethod)').
 	self deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)! !
-!RemoveParameterTest categoriesFor: #testNonExistantName!failure tests!public! !
-!RemoveParameterTest categoriesFor: #testPrimitiveMethods!failure tests!public! !
-!RemoveParameterTest categoriesFor: #testRemoveParameter!public!tests! !
+!RemoveParameterTest categoriesForMethods!
+testNonExistantName!failure tests!public! !
+testPrimitiveMethods!failure tests!public! !
+testRemoveParameter!public!tests! !
+!
 

@@ -115,7 +115,9 @@ browseMethodProtocol
 	self model browseProtocols 
 		protocol: self protocols first;
 		actualClass: self actualClass! !
-!ClassBrowserAbstract categoriesFor: #browseMethodProtocol!commands!private! !
+!ClassBrowserAbstract categoriesForMethods!
+browseMethodProtocol!commands!private! !
+!
 
 !ITEMIDLIST class methodsFor!
 
@@ -126,7 +128,9 @@ publishedAspectsOfInstances
 		add: (Aspect integer: #getSize);
 		add: (Aspect boolean: #isSingle);
 		yourself! !
-!ITEMIDLIST class categoriesFor: #publishedAspectsOfInstances!must strip!public! !
+!ITEMIDLIST class categoriesForMethods!
+publishedAspectsOfInstances!must strip!public! !
+!
 
 !SmalltalkSystem methodsFor!
 
@@ -143,8 +147,10 @@ inspectSystemOptions
 	"Open a TwoLevelInspector on the system options."
 
 	^UserPreferencesShell showOn: self systemOptions! !
-!SmalltalkSystem categoriesFor: #inspectPoolDictionaries!initializing!public! !
-!SmalltalkSystem categoriesFor: #inspectSystemOptions!commands!public! !
+!SmalltalkSystem categoriesForMethods!
+inspectPoolDictionaries!initializing!public! !
+inspectSystemOptions!commands!public! !
+!
 
 !Toolbar class methodsFor!
 
@@ -157,7 +163,9 @@ resource_Protocol_tools
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1903898080 170 192 8 #() 170 192 34 4 51215 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #toggleReadOnly 8 'Lock/unlock protocol' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Mutex.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 51215 51217 594 416 1 626 #toggleANSI 8 'Toggle ANSI status' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $\x1F5FD 8 'Segoe UI Emoji' nil nil nil nil 1 nil nil 51217 34 3 608 800 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1058 111 51 416 1010 #updateSizePosted 544 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 182 7 0 0 35 0 0 0] 8 #() 1058 193 193 nil 27 )! !
-!Toolbar class categoriesFor: #resource_Protocol_tools!public!resources-views! !
+!Toolbar class categoriesForMethods!
+resource_Protocol_tools!public!resources-views! !
+!
 
 "End of package definition"!
 

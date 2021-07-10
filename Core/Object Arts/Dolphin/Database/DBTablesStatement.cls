@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBSchemaStatement subclass: #DBTablesStatement
 	instanceVariableNames: 'tableType'
@@ -37,8 +37,10 @@ tableType
 
 tableType: aString
 	tableType := aString! !
-!DBTablesStatement categoriesFor: #executeStatement!operations!private! !
-!DBTablesStatement categoriesFor: #initialize:!initializing!private!searching! !
-!DBTablesStatement categoriesFor: #tableType!accessing!public!searching! !
-!DBTablesStatement categoriesFor: #tableType:!accessing!public!searching! !
+!DBTablesStatement categoriesForMethods!
+executeStatement!operations!private! !
+initialize:!initializing!private!searching! !
+tableType!accessing!public!searching! !
+tableType:!accessing!public!searching! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #CharacterANSITest
 	instanceVariableNames: ''
@@ -155,15 +155,17 @@ testXisUppercase
 	self value: [$: isUppercase]
 		shouldnt: [:r | r & (upperChars includes: $:)]
 		conformTo: #'Character' selector: #'isUppercase'.! !
-!CharacterANSITest categoriesFor: #canonicalObject!public! !
-!CharacterANSITest categoriesFor: #protocol!public! !
-!CharacterANSITest categoriesFor: #testXasLowercase!public! !
-!CharacterANSITest categoriesFor: #testXasString!public! !
-!CharacterANSITest categoriesFor: #testXasUppercase!public! !
-!CharacterANSITest categoriesFor: #testXcodePoint!public! !
-!CharacterANSITest categoriesFor: #testXisAlphaNumeric!public! !
-!CharacterANSITest categoriesFor: #testXisDigit!public! !
-!CharacterANSITest categoriesFor: #testXisLetter!public! !
-!CharacterANSITest categoriesFor: #testXisLowercase!public! !
-!CharacterANSITest categoriesFor: #testXisUppercase!public! !
+!CharacterANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXasLowercase!public! !
+testXasString!public! !
+testXasUppercase!public! !
+testXcodePoint!public! !
+testXisAlphaNumeric!public! !
+testXisDigit!public! !
+testXisLetter!public! !
+testXisLowercase!public! !
+testXisUppercase!public! !
+!
 

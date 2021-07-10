@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StVariableNode subclass: #StParameterNode
 	instanceVariableNames: ''
@@ -18,6 +18,8 @@ isConstantNode
 	"Answer whether the receiver describes a constant that cannot be assigned to."
 
 	^true! !
-!StParameterNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StParameterNode categoriesFor: #isConstantNode!public!testing! !
+!StParameterNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isConstantNode!public!testing! !
+!
 

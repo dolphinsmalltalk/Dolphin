@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ControlView subclass: #Tooltip
 	instanceVariableNames: ''
@@ -321,52 +321,54 @@ ttnShow: anNMHDR
 	"Private - Handler for the TTN_SHOW message, which is forwarded to the presenter."
 
 	^self presenter onShow! !
-!Tooltip categoriesFor: #add:tool:!operations!private! !
-!Tooltip categoriesFor: #alwaysTip!public!testing! !
-!Tooltip categoriesFor: #alwaysTip:!accessing!public! !
-!Tooltip categoriesFor: #defaultBackcolor!colors!constants!public! !
-!Tooltip categoriesFor: #endTracking!operations!public! !
-!Tooltip categoriesFor: #forecolor:!accessing!public! !
-!Tooltip categoriesFor: #hasCloseButton!public!testing! !
-!Tooltip categoriesFor: #hasCloseButton:!accessing!public! !
-!Tooltip categoriesFor: #isActive:!accessing!public! !
-!Tooltip categoriesFor: #isBalloon!public!testing! !
-!Tooltip categoriesFor: #isBalloon:!accessing!public! !
-!Tooltip categoriesFor: #margins!accessing!public! !
-!Tooltip categoriesFor: #margins:!accessing!public! !
-!Tooltip categoriesFor: #maxWidth!accessing!public! !
-!Tooltip categoriesFor: #maxWidth:!accessing!public! !
-!Tooltip categoriesFor: #nmNotify:!events-win32!private! !
-!Tooltip categoriesFor: #onLeftButtonReleased:!event handling!public! !
-!Tooltip categoriesFor: #onLinkClicked!event handling!public! !
-!Tooltip categoriesFor: #onPop!events-win32!public! !
-!Tooltip categoriesFor: #onShow!events-win32!public! !
-!Tooltip categoriesFor: #pop!operations!public! !
-!Tooltip categoriesFor: #registerView:!operations!private! !
-!Tooltip categoriesFor: #reshowDelay!accessing!public! !
-!Tooltip categoriesFor: #reshowDelay:!accessing!public! !
-!Tooltip categoriesFor: #setControlBackcolor:!helpers!private! !
-!Tooltip categoriesFor: #showDelay!accessing!public! !
-!Tooltip categoriesFor: #showDelay:!accessing!public! !
-!Tooltip categoriesFor: #showDuration!accessing!public! !
-!Tooltip categoriesFor: #showDuration:!accessing!public! !
-!Tooltip categoriesFor: #startTracking:!operations!public! !
-!Tooltip categoriesFor: #tools!operations!private! !
-!Tooltip categoriesFor: #trackPosition:!geometry!public! !
-!Tooltip categoriesFor: #ttmAddTool:!operations!private! !
-!Tooltip categoriesFor: #ttmDelTool:!operations!private! !
-!Tooltip categoriesFor: #ttmEnumTools:info:!operations!private! !
-!Tooltip categoriesFor: #ttmGetCurrentTool!accessing!private! !
-!Tooltip categoriesFor: #ttmGetDelayTime:!accessing!private! !
-!Tooltip categoriesFor: #ttmGetMargin!accessing!private! !
-!Tooltip categoriesFor: #ttmGetToolCount!accessing!private! !
-!Tooltip categoriesFor: #ttmGetToolInfo:!accessing!private! !
-!Tooltip categoriesFor: #ttmRelayEvent:!operations!private! !
-!Tooltip categoriesFor: #ttmSetDelayTime:milliseconds:!accessing!private! !
-!Tooltip categoriesFor: #ttmSetTitle:icon:!operations!private! !
-!Tooltip categoriesFor: #ttnLinkClick:!events-win32!private! !
-!Tooltip categoriesFor: #ttnPop:!events-win32!private! !
-!Tooltip categoriesFor: #ttnShow:!events-win32!private! !
+!Tooltip categoriesForMethods!
+add:tool:!operations!private! !
+alwaysTip!public!testing! !
+alwaysTip:!accessing!public! !
+defaultBackcolor!colors!constants!public! !
+endTracking!operations!public! !
+forecolor:!accessing!public! !
+hasCloseButton!public!testing! !
+hasCloseButton:!accessing!public! !
+isActive:!accessing!public! !
+isBalloon!public!testing! !
+isBalloon:!accessing!public! !
+margins!accessing!public! !
+margins:!accessing!public! !
+maxWidth!accessing!public! !
+maxWidth:!accessing!public! !
+nmNotify:!events-win32!private! !
+onLeftButtonReleased:!event handling!public! !
+onLinkClicked!event handling!public! !
+onPop!events-win32!public! !
+onShow!events-win32!public! !
+pop!operations!public! !
+registerView:!operations!private! !
+reshowDelay!accessing!public! !
+reshowDelay:!accessing!public! !
+setControlBackcolor:!helpers!private! !
+showDelay!accessing!public! !
+showDelay:!accessing!public! !
+showDuration!accessing!public! !
+showDuration:!accessing!public! !
+startTracking:!operations!public! !
+tools!operations!private! !
+trackPosition:!geometry!public! !
+ttmAddTool:!operations!private! !
+ttmDelTool:!operations!private! !
+ttmEnumTools:info:!operations!private! !
+ttmGetCurrentTool!accessing!private! !
+ttmGetDelayTime:!accessing!private! !
+ttmGetMargin!accessing!private! !
+ttmGetToolCount!accessing!private! !
+ttmGetToolInfo:!accessing!private! !
+ttmRelayEvent:!operations!private! !
+ttmSetDelayTime:milliseconds:!accessing!private! !
+ttmSetTitle:icon:!operations!private! !
+ttnLinkClick:!events-win32!private! !
+ttnPop:!events-win32!private! !
+ttnShow:!events-win32!private! !
+!
 
 !Tooltip class methodsFor!
 
@@ -384,7 +386,9 @@ winClassName
 
 	^'tooltips_class32'
 ! !
-!Tooltip class categoriesFor: #icon!constants!public! !
-!Tooltip class categoriesFor: #themePartName!constants!private! !
-!Tooltip class categoriesFor: #winClassName!constants!private! !
+!Tooltip class categoriesForMethods!
+icon!constants!public! !
+themePartName!constants!private! !
+winClassName!constants!private! !
+!
 

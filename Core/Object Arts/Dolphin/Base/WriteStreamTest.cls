@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PositionableStreamTest subclass: #WriteStreamTest
 	instanceVariableNames: ''
@@ -130,24 +130,26 @@ testUpToUtf
 	| stream |
 	stream := self streamOn: '1£/🐬'.
 	self readOperationNotImplemented: [stream upTo: Character dolphin]! !
-!WriteStreamTest categoriesFor: #streamClass!helpers!private! !
-!WriteStreamTest categoriesFor: #streamOn:!helpers!private! !
-!WriteStreamTest categoriesFor: #testBasicNext!public!unit tests! !
-!WriteStreamTest categoriesFor: #testContents!public!unit tests! !
-!WriteStreamTest categoriesFor: #testNewContents!public!unit tests! !
-!WriteStreamTest categoriesFor: #testNext!public!unit tests! !
-!WriteStreamTest categoriesFor: #testNextAvailable!public!unit tests! !
-!WriteStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
-!WriteStreamTest categoriesFor: #testNextColon!public!unit tests! !
-!WriteStreamTest categoriesFor: #testNextInto!public!unit tests! !
-!WriteStreamTest categoriesFor: #testNextPutAllArray!public!unit tests! !
-!WriteStreamTest categoriesFor: #testNextWord!public!unit tests! !
-!WriteStreamTest categoriesFor: #testPeekFor!public!unit tests! !
-!WriteStreamTest categoriesFor: #testSetToEnd!public!testing! !
-!WriteStreamTest categoriesFor: #testUpTo!public!unit tests! !
-!WriteStreamTest categoriesFor: #testUpToAllColon!public!unit tests! !
-!WriteStreamTest categoriesFor: #testUpToEnd!public!unit tests! !
-!WriteStreamTest categoriesFor: #testUpToUtf!public!unit tests! !
+!WriteStreamTest categoriesForMethods!
+streamClass!helpers!private! !
+streamOn:!helpers!private! !
+testBasicNext!public!unit tests! !
+testContents!public!unit tests! !
+testNewContents!public!unit tests! !
+testNext!public!unit tests! !
+testNextAvailable!public!unit tests! !
+testNextAvailableColon!public!unit tests! !
+testNextColon!public!unit tests! !
+testNextInto!public!unit tests! !
+testNextPutAllArray!public!unit tests! !
+testNextWord!public!unit tests! !
+testPeekFor!public!unit tests! !
+testSetToEnd!public!testing! !
+testUpTo!public!unit tests! !
+testUpToAllColon!public!unit tests! !
+testUpToEnd!public!unit tests! !
+testUpToUtf!public!unit tests! !
+!
 
 !WriteStreamTest class methodsFor!
 
@@ -155,5 +157,7 @@ allTestSelectors
 	| roCategory |
 	roCategory := 'gettableStream only' asMethodCategory.
 	^super allTestSelectors reject: [:each | roCategory includesMethod: (self lookupMethod: each)]! !
-!WriteStreamTest class categoriesFor: #allTestSelectors!Accessing!public! !
+!WriteStreamTest class categoriesForMethods!
+allTestSelectors!Accessing!public! !
+!
 

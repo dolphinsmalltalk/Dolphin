@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #SERVENT
 	instanceVariableNames: ''
@@ -69,12 +69,14 @@ s_proto
 	"Answer the <AnsiString> value of the receiver's 's_proto' field."
 
 	^AnsiString fromAddress: (bytes intPtrAtOffset: _OffsetOf_s_proto)! !
-!SERVENT categoriesFor: #aliases!public! !
-!SERVENT categoriesFor: #port!accessing!public! !
-!SERVENT categoriesFor: #printFieldsOn:limit:!development!printing!private! !
-!SERVENT categoriesFor: #s_name!**compiled accessors**!public! !
-!SERVENT categoriesFor: #s_port!**compiled accessors**!public! !
-!SERVENT categoriesFor: #s_proto!**compiled accessors**!public! !
+!SERVENT categoriesForMethods!
+aliases!public! !
+port!accessing!public! !
+printFieldsOn:limit:!development!printing!private! !
+s_name!**compiled accessors**!public! !
+s_port!**compiled accessors**!public! !
+s_proto!**compiled accessors**!public! !
+!
 
 !SERVENT class methodsFor!
 
@@ -123,8 +125,10 @@ fromString: aString
 
 getFieldNames
 	^#(#s_name #s_port #s_proto)! !
-!SERVENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!SERVENT class categoriesFor: #fromInteger:!public! !
-!SERVENT class categoriesFor: #fromString:!public! !
-!SERVENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!SERVENT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+fromInteger:!public! !
+fromString:!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

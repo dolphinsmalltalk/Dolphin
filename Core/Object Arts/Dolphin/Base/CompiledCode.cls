@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object variableSubclass: #CompiledCode
 	instanceVariableNames: 'header methodClass selector sourceDescriptor byteCodes'
@@ -609,83 +609,85 @@ writesInstVar: aString at: anInteger
 
 	^(self extraIndex between: 1 and: 6) not 
 		and: [self byteCodeDispatcher writesInstVarAt: anInteger]! !
-!CompiledCode categoriesFor: #=!comparing!public! !
-!CompiledCode categoriesFor: #accessesInstVar:!development!public!testing! !
-!CompiledCode categoriesFor: #accessesInstVar:at:!development!public!testing! !
-!CompiledCode categoriesFor: #allLiteralsDo:!enumerating!private! !
-!CompiledCode categoriesFor: #allSymbolLiterals!enumerating!private! !
-!CompiledCode categoriesFor: #allSymbolLiteralsDo:!enumerating!private! !
-!CompiledCode categoriesFor: #argumentCount!method header!public! !
-!CompiledCode categoriesFor: #argumentCount:!accessing!method header!private! !
-!CompiledCode categoriesFor: #basicByteCodes!accessing!private! !
-!CompiledCode categoriesFor: #byteCodeDispatcher!private!testing! !
-!CompiledCode categoriesFor: #byteCodeDispatcherClass!constants!private! !
-!CompiledCode categoriesFor: #byteCodes!accessing!private! !
-!CompiledCode categoriesFor: #byteCodes:!accessing!private! !
-!CompiledCode categoriesFor: #byteCodeSegments!accessing!private! !
-!CompiledCode categoriesFor: #clear!operations!private! !
-!CompiledCode categoriesFor: #compilerClass!constants!private! !
-!CompiledCode categoriesFor: #containsSource:!development!public!testing! !
-!CompiledCode categoriesFor: #debugInfo!development!private! !
-!CompiledCode categoriesFor: #envInfo!accessing!private! !
-!CompiledCode categoriesFor: #envTempCount!accessing!development!public! !
-!CompiledCode categoriesFor: #evaluationPools!accessing!development!public! !
-!CompiledCode categoriesFor: #extraIndex!method header!private! !
-!CompiledCode categoriesFor: #extraIndex:!method header!private! !
-!CompiledCode categoriesFor: #getDebugInfo!development!private! !
-!CompiledCode categoriesFor: #getSource!accessing!development!public! !
-!CompiledCode categoriesFor: #hash!comparing!public! !
-!CompiledCode categoriesFor: #header!accessing!private! !
-!CompiledCode categoriesFor: #header:!accessing!private! !
-!CompiledCode categoriesFor: #isCompilationFailure!public!testing! !
-!CompiledCode categoriesFor: #isDebugMethod!development!private!testing! !
-!CompiledCode categoriesFor: #isExpression!private!testing! !
-!CompiledCode categoriesFor: #isOverride!public!testing! !
-!CompiledCode categoriesFor: #isPacked!private!testing! !
-!CompiledCode categoriesFor: #isPrimitive!private!testing! !
-!CompiledCode categoriesFor: #isPrivate!private!testing! !
-!CompiledCode categoriesFor: #isPrivate:!accessing!private! !
-!CompiledCode categoriesFor: #isPublic!private!testing! !
-!CompiledCode categoriesFor: #isUnbound!public!testing! !
-!CompiledCode categoriesFor: #literalArray:do:!enumerating!private! !
-!CompiledCode categoriesFor: #literalAt:!accessing!private! !
-!CompiledCode categoriesFor: #literalAt:put:!accessing!private! !
-!CompiledCode categoriesFor: #literalCount!method header!private! !
-!CompiledCode categoriesFor: #literalReferencesDo:!enumerating!private! !
-!CompiledCode categoriesFor: #literals!accessing!private! !
-!CompiledCode categoriesFor: #literalsDetect:ifNone:!private!testing! !
-!CompiledCode categoriesFor: #literalsDo:!enumerating!private! !
-!CompiledCode categoriesFor: #localCount!accessing!method header!private! !
-!CompiledCode categoriesFor: #messages!accessing!development!public! !
-!CompiledCode categoriesFor: #messagesDo:!development!enumerating!public! !
-!CompiledCode categoriesFor: #methodClass!accessing!public! !
-!CompiledCode categoriesFor: #methodClass:!accessing!private! !
-!CompiledCode categoriesFor: #needsContext!development!method header!private!testing! !
-!CompiledCode categoriesFor: #owningPackage!accessing!public! !
-!CompiledCode categoriesFor: #primitiveIndex!method header!private! !
-!CompiledCode categoriesFor: #readsInstVar:!development!public!testing! !
-!CompiledCode categoriesFor: #readsInstVar:at:!development!public!testing! !
-!CompiledCode categoriesFor: #refersToLiteral:!private!testing! !
-!CompiledCode categoriesFor: #replaceElementsOf:from:to:startingAt:!private!replacing! !
-!CompiledCode categoriesFor: #selector!accessing!public! !
-!CompiledCode categoriesFor: #selector:!accessing!private! !
-!CompiledCode categoriesFor: #sendsSelector:!development!public!testing! !
-!CompiledCode categoriesFor: #sendsSpecialSelector:!development!public!testing! !
-!CompiledCode categoriesFor: #setByteCodes:!accessing!private! !
-!CompiledCode categoriesFor: #sourceDescriptor!accessing!private! !
-!CompiledCode categoriesFor: #sourceDescriptor:!accessing!private! !
-!CompiledCode categoriesFor: #specialMessages!development!enumerating!private! !
-!CompiledCode categoriesFor: #stackTempCount!method header!private! !
-!CompiledCode categoriesFor: #stackTempCount:!accessing!development!method header!private! !
-!CompiledCode categoriesFor: #storeCategories!categories!private!source filing-methods! !
-!CompiledCode categoriesFor: #storeSourceString:!private!source filing-methods! !
-!CompiledCode categoriesFor: #superMessages!accessing!development!public! !
-!CompiledCode categoriesFor: #tempCount!method header!private! !
-!CompiledCode categoriesFor: #tempsMap!accessing!development!private! !
-!CompiledCode categoriesFor: #textMap!accessing!development!private! !
-!CompiledCode categoriesFor: #value:withArguments:!evaluating!public! !
-!CompiledCode categoriesFor: #writesInstVar:!development!public!testing! !
-!CompiledCode categoriesFor: #writesInstVar:at:!development!public!testing! !
+!CompiledCode categoriesForMethods!
+=!comparing!public! !
+accessesInstVar:!development!public!testing! !
+accessesInstVar:at:!development!public!testing! !
+allLiteralsDo:!enumerating!private! !
+allSymbolLiterals!enumerating!private! !
+allSymbolLiteralsDo:!enumerating!private! !
+argumentCount!method header!public! !
+argumentCount:!accessing!method header!private! !
+basicByteCodes!accessing!private! !
+byteCodeDispatcher!private!testing! !
+byteCodeDispatcherClass!constants!private! !
+byteCodes!accessing!private! !
+byteCodes:!accessing!private! !
+byteCodeSegments!accessing!private! !
+clear!operations!private! !
+compilerClass!constants!private! !
+containsSource:!development!public!testing! !
+debugInfo!development!private! !
+envInfo!accessing!private! !
+envTempCount!accessing!development!public! !
+evaluationPools!accessing!development!public! !
+extraIndex!method header!private! !
+extraIndex:!method header!private! !
+getDebugInfo!development!private! !
+getSource!accessing!development!public! !
+hash!comparing!public! !
+header!accessing!private! !
+header:!accessing!private! !
+isCompilationFailure!public!testing! !
+isDebugMethod!development!private!testing! !
+isExpression!private!testing! !
+isOverride!public!testing! !
+isPacked!private!testing! !
+isPrimitive!private!testing! !
+isPrivate!private!testing! !
+isPrivate:!accessing!private! !
+isPublic!private!testing! !
+isUnbound!public!testing! !
+literalArray:do:!enumerating!private! !
+literalAt:!accessing!private! !
+literalAt:put:!accessing!private! !
+literalCount!method header!private! !
+literalReferencesDo:!enumerating!private! !
+literals!accessing!private! !
+literalsDetect:ifNone:!private!testing! !
+literalsDo:!enumerating!private! !
+localCount!accessing!method header!private! !
+messages!accessing!development!public! !
+messagesDo:!development!enumerating!public! !
+methodClass!accessing!public! !
+methodClass:!accessing!private! !
+needsContext!development!method header!private!testing! !
+owningPackage!accessing!public! !
+primitiveIndex!method header!private! !
+readsInstVar:!development!public!testing! !
+readsInstVar:at:!development!public!testing! !
+refersToLiteral:!private!testing! !
+replaceElementsOf:from:to:startingAt:!private!replacing! !
+selector!accessing!public! !
+selector:!accessing!private! !
+sendsSelector:!development!public!testing! !
+sendsSpecialSelector:!development!public!testing! !
+setByteCodes:!accessing!private! !
+sourceDescriptor!accessing!private! !
+sourceDescriptor:!accessing!private! !
+specialMessages!development!enumerating!private! !
+stackTempCount!method header!private! !
+stackTempCount:!accessing!development!method header!private! !
+storeCategories!categories!private!source filing-methods! !
+storeSourceString:!private!source filing-methods! !
+superMessages!accessing!development!public! !
+tempCount!method header!private! !
+tempsMap!accessing!development!private! !
+textMap!accessing!development!private! !
+value:withArguments:!evaluating!public! !
+writesInstVar:!development!public!testing! !
+writesInstVar:at:!development!public!testing! !
+!
 
 CompiledCode methodProtocol: #messageSender attributes: #(#readOnly) selectors: #(#messages)!
 
@@ -747,10 +749,12 @@ packByteCodes: anArray
 					bitShift: -1.
 	self assert: [codes class == SmallInteger].
 	^codes! !
-!CompiledCode class categoriesFor: #elementsExpired:of:!finalizing!private! !
-!CompiledCode class categoriesFor: #initialize!development!initializing!private! !
-!CompiledCode class categoriesFor: #initializeInfoCache!development!initializing!private! !
-!CompiledCode class categoriesFor: #initializeInfoCache:!development!initializing!private! !
-!CompiledCode class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!CompiledCode class categoriesFor: #packByteCodes:!helpers!private! !
+!CompiledCode class categoriesForMethods!
+elementsExpired:of:!finalizing!private! !
+initialize!development!initializing!private! !
+initializeInfoCache!development!initializing!private! !
+initializeInfoCache:!development!initializing!private! !
+onPreStripImage!class hierarchy-removing!private! !
+packByteCodes:!helpers!private! !
+!
 

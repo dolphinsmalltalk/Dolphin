@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Base64Codec
 	instanceVariableNames: 'quadsPerLine isPadded'
@@ -87,11 +87,13 @@ nextBase64From: aGettableStream
 				ifTrue: [^value]
 				ifFalse: [value == 64 ifTrue: [^nil]]].
 	^nil! !
-!Base64Codec categoriesFor: #decodeFrom:onto:!private! !
-!Base64Codec categoriesFor: #encodeFrom:onto:!private! !
-!Base64Codec categoriesFor: #initialize!initializing!private! !
-!Base64Codec categoriesFor: #lineLength:!accessing!private! !
-!Base64Codec categoriesFor: #nextBase64From:!helpers!private! !
+!Base64Codec categoriesForMethods!
+decodeFrom:onto:!private! !
+encodeFrom:onto:!private! !
+initialize!initializing!private! !
+lineLength:!accessing!private! !
+nextBase64From:!helpers!private! !
+!
 
 !Base64Codec class methodsFor!
 
@@ -125,8 +127,10 @@ new
 	^(super new)
 		initialize;
 		yourself! !
-!Base64Codec class categoriesFor: #decodeFrom:onto:!operations!public! !
-!Base64Codec class categoriesFor: #encodeFrom:onto:!operations!public! !
-!Base64Codec class categoriesFor: #initialize!development!private! !
-!Base64Codec class categoriesFor: #new!instance creation!private! !
+!Base64Codec class categoriesForMethods!
+decodeFrom:onto:!operations!public! !
+encodeFrom:onto:!operations!public! !
+initialize!development!private! !
+new!instance creation!private! !
+!
 

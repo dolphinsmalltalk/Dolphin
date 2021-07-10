@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ProcessTest
 	instanceVariableNames: ''
@@ -577,31 +577,33 @@ testUnwindFromForeignProcess
 	be handled here (it's truncated already)"
 	self shouldnt: [process terminate] raise: Error.
 	self assert: sema excessSignals > 0! !
-!ProcessTest categoriesFor: #assertBlock:in:isCopyOf:in:visited:!helpers!private! !
-!ProcessTest categoriesFor: #assertBlockFrame:isCopyOf:visited:!helpers!private! !
-!ProcessTest categoriesFor: #assertContext:in:isCopyOf:in:visited:!helpers!private! !
-!ProcessTest categoriesFor: #assertContextFrame:isCopyOf:visited:!helpers!private! !
-!ProcessTest categoriesFor: #assertDisparateEnvironments:source:!helpers!private! !
-!ProcessTest categoriesFor: #assertExceptionHandler:in:isCopyOf:in:visited:!helpers!private! !
-!ProcessTest categoriesFor: #assertObject:in:isOrIsCopyOf:in:visited:!helpers!private! !
-!ProcessTest categoriesFor: #assertOuterContext:in:isCopyOf:in:visited:!helpers!private! !
-!ProcessTest categoriesFor: #assertProcess:copiedCorrectlyFrom:below:!helpers!private! !
-!ProcessTest categoriesFor: #assertStack:copiedCorrectlyFrom:!helpers!private! !
-!ProcessTest categoriesFor: #assertStackFrame:isCopyOf:visited:!helpers!private! !
-!ProcessTest categoriesFor: #forkNested:!helpers!private! !
-!ProcessTest categoriesFor: #forkWaiterOn:sharing:!helpers!private! !
-!ProcessTest categoriesFor: #isMemTopDown!helpers!private! !
-!ProcessTest categoriesFor: #testAsStackPointer!public!unit tests! !
-!ProcessTest categoriesFor: #testCopy!public!unit tests! !
-!ProcessTest categoriesFor: #testCopyExceptionHandlers!public!unit tests! !
-!ProcessTest categoriesFor: #testCopyNestedBlocks!public!unit tests! !
-!ProcessTest categoriesFor: #testCopyWhileUnwinding!public!unit tests! !
-!ProcessTest categoriesFor: #testForkedBlockHomeFrame!public!unit tests! !
-!ProcessTest categoriesFor: #testLargeAddress!public!unit tests! !
-!ProcessTest categoriesFor: #testOverlappedErrno!public!unit tests! !
-!ProcessTest categoriesFor: #testOverlappedLastError!public!unit tests! !
-!ProcessTest categoriesFor: #testSchedulerTermination!public!tests! !
-!ProcessTest categoriesFor: #testSeparateContexts!public!unit tests! !
-!ProcessTest categoriesFor: #testUnwindFromActiveProcess!public!tests! !
-!ProcessTest categoriesFor: #testUnwindFromForeignProcess!public!tests! !
+!ProcessTest categoriesForMethods!
+assertBlock:in:isCopyOf:in:visited:!helpers!private! !
+assertBlockFrame:isCopyOf:visited:!helpers!private! !
+assertContext:in:isCopyOf:in:visited:!helpers!private! !
+assertContextFrame:isCopyOf:visited:!helpers!private! !
+assertDisparateEnvironments:source:!helpers!private! !
+assertExceptionHandler:in:isCopyOf:in:visited:!helpers!private! !
+assertObject:in:isOrIsCopyOf:in:visited:!helpers!private! !
+assertOuterContext:in:isCopyOf:in:visited:!helpers!private! !
+assertProcess:copiedCorrectlyFrom:below:!helpers!private! !
+assertStack:copiedCorrectlyFrom:!helpers!private! !
+assertStackFrame:isCopyOf:visited:!helpers!private! !
+forkNested:!helpers!private! !
+forkWaiterOn:sharing:!helpers!private! !
+isMemTopDown!helpers!private! !
+testAsStackPointer!public!unit tests! !
+testCopy!public!unit tests! !
+testCopyExceptionHandlers!public!unit tests! !
+testCopyNestedBlocks!public!unit tests! !
+testCopyWhileUnwinding!public!unit tests! !
+testForkedBlockHomeFrame!public!unit tests! !
+testLargeAddress!public!unit tests! !
+testOverlappedErrno!public!unit tests! !
+testOverlappedLastError!public!unit tests! !
+testSchedulerTermination!public!tests! !
+testSeparateContexts!public!unit tests! !
+testUnwindFromActiveProcess!public!tests! !
+testUnwindFromForeignProcess!public!tests! !
+!
 

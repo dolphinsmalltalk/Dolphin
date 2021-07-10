@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Font subclass: #StockFont
 	instanceVariableNames: 'id'
@@ -43,12 +43,14 @@ ownedHandle: aHandle
 	"Implementation Note: Stock objects should never be free'd"
 
 	self handle: aHandle! !
-!StockFont categoriesFor: #=!comparing!public! !
-!StockFont categoriesFor: #createHandle!private!realizing/unrealizing! !
-!StockFont categoriesFor: #hash!comparing!public! !
-!StockFont categoriesFor: #id!accessing!private! !
-!StockFont categoriesFor: #id:!accessing!private! !
-!StockFont categoriesFor: #ownedHandle:!accessing!private! !
+!StockFont categoriesForMethods!
+=!comparing!public! !
+createHandle!private!realizing/unrealizing! !
+hash!comparing!public! !
+id!accessing!private! !
+id:!accessing!private! !
+ownedHandle:!accessing!private! !
+!
 
 !StockFont class methodsFor!
 
@@ -59,5 +61,7 @@ fromId: anInteger
 		ownsHandle: false;
 		id: anInteger;
 		yourself! !
-!StockFont class categoriesFor: #fromId:!instance creation!public! !
+!StockFont class categoriesForMethods!
+fromId:!instance creation!public! !
+!
 

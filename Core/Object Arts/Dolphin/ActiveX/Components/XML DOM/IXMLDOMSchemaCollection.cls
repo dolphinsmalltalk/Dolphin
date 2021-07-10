@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IXMLDOMSchemaCollection
 	instanceVariableNames: ''
@@ -184,20 +184,22 @@ Remove: namespaceURI
 
 	<virtual stdcall: hresult 10 bstr>
 	^self invalidCall: _failureCode! !
-!IXMLDOMSchemaCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!IXMLDOMSchemaCollection categoriesFor: #add:var:!**auto generated**!methods!public! !
-!IXMLDOMSchemaCollection categoriesFor: #Add:var:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
-!IXMLDOMSchemaCollection categoriesFor: #AddCollection:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!public! !
-!IXMLDOMSchemaCollection categoriesFor: #get:!**auto generated**!methods!public! !
-!IXMLDOMSchemaCollection categoriesFor: #Get:schemaNode:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
-!IXMLDOMSchemaCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
-!IXMLDOMSchemaCollection categoriesFor: #get_length:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
-!IXMLDOMSchemaCollection categoriesFor: #get_namespaceURI:length:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
-!IXMLDOMSchemaCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IXMLDOMSchemaCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IXMLDOMSchemaCollection categoriesFor: #length!**auto generated**!properties!public! !
-!IXMLDOMSchemaCollection categoriesFor: #namespaceURI:!**auto generated**!properties!public! !
-!IXMLDOMSchemaCollection categoriesFor: #Remove:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!public! !
+!IXMLDOMSchemaCollection categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+add:var:!**auto generated**!methods!public! !
+Add:var:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
+AddCollection:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!public! !
+get:!**auto generated**!methods!public! !
+Get:schemaNode:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
+get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
+get_length:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
+get_namespaceURI:length:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+length!**auto generated**!properties!public! !
+namespaceURI:!**auto generated**!properties!public! !
+Remove:!**auto generated**!COM Interfaces-IXMLDOMSchemaCollection!public! !
+!
 
 !IXMLDOMSchemaCollection class methodsFor!
 
@@ -239,8 +241,10 @@ newXMLSchemaCache30
 
 	^self onCLSID: (CLSID fromString: '{F5078F34-C551-11D3-89B9-0000F81FE221}')
 ! !
-!IXMLDOMSchemaCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IXMLDOMSchemaCollection class categoriesFor: #newXMLSchemaCache!**auto generated**!instance creation!public! !
-!IXMLDOMSchemaCollection class categoriesFor: #newXMLSchemaCache26!**auto generated**!instance creation!public! !
-!IXMLDOMSchemaCollection class categoriesFor: #newXMLSchemaCache30!**auto generated**!instance creation!public! !
+!IXMLDOMSchemaCollection class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+newXMLSchemaCache!**auto generated**!instance creation!public! !
+newXMLSchemaCache26!**auto generated**!instance creation!public! !
+newXMLSchemaCache30!**auto generated**!instance creation!public! !
+!
 

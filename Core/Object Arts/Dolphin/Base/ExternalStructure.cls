@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ExternalStructure
 	instanceVariableNames: 'bytes'
@@ -392,57 +392,59 @@ yourAddress
 	"Answer the address of the receiver's contents"
 
 	^bytes yourAddress! !
-!ExternalStructure categoriesFor: #_deepenShallowCopy:trail:!copying!private! !
-!ExternalStructure categoriesFor: #=!comparing!public! !
-!ExternalStructure categoriesFor: #alignment!constants!public! !
-!ExternalStructure categoriesFor: #asByteArray!converting!public! !
-!ExternalStructure categoriesFor: #asObject!accessing!public! !
-!ExternalStructure categoriesFor: #asParameter!converting!public! !
-!ExternalStructure categoriesFor: #basicFree!private!realizing/unrealizing! !
-!ExternalStructure categoriesFor: #beNullHeapPointer!modes!private! !
-!ExternalStructure categoriesFor: #beNullPointer!modes!private! !
-!ExternalStructure categoriesFor: #bufferClass!constants!private! !
-!ExternalStructure categoriesFor: #bytes!accessing!public! !
-!ExternalStructure categoriesFor: #bytes:!initializing!private! !
-!ExternalStructure categoriesFor: #bytesAtOffset:put:!accessing!public! !
-!ExternalStructure categoriesFor: #byteSize!accessing!public! !
-!ExternalStructure categoriesFor: #comparisonSize!accessing!private! !
-!ExternalStructure categoriesFor: #copy!copying!public! !
-!ExternalStructure categoriesFor: #copy:from:to:!copying!private! !
-!ExternalStructure categoriesFor: #copyBytes:!accessing!private! !
-!ExternalStructure categoriesFor: #copyFrom:to:!copying!public! !
-!ExternalStructure categoriesFor: #copyStringFrom:to:!copying!public! !
-!ExternalStructure categoriesFor: #detach!public!realizing/unrealizing! !
-!ExternalStructure categoriesFor: #doesNotUnderstand:!exceptions!public! !
-!ExternalStructure categoriesFor: #fieldsDo:!enumerating!public! !
-!ExternalStructure categoriesFor: #fieldsDo:separatedBy:!enumerating!public! !
-!ExternalStructure categoriesFor: #free!public!realizing/unrealizing! !
-!ExternalStructure categoriesFor: #getField:!accessing!public! !
-!ExternalStructure categoriesFor: #getValidFields!accessing!private! !
-!ExternalStructure categoriesFor: #hash!comparing!public! !
-!ExternalStructure categoriesFor: #heapPointerClass!constants!private! !
-!ExternalStructure categoriesFor: #hresultError:!exceptions!public! !
-!ExternalStructure categoriesFor: #initialize!initializing!private! !
-!ExternalStructure categoriesFor: #initialize:!initializing!private! !
-!ExternalStructure categoriesFor: #initializeAtAddress:!initializing!private! !
-!ExternalStructure categoriesFor: #initializePointer!initializing!private! !
-!ExternalStructure categoriesFor: #invalidArgErrorClass!constants!private! !
-!ExternalStructure categoriesFor: #invalidCall:!exceptions!public! !
-!ExternalStructure categoriesFor: #isFieldBrowsable:!printing!private! !
-!ExternalStructure categoriesFor: #isNull!public!testing! !
-!ExternalStructure categoriesFor: #isPointer!public!testing! !
-!ExternalStructure categoriesFor: #maxPrint!constants!private! !
-!ExternalStructure categoriesFor: #needsFree!private!realizing/unrealizing! !
-!ExternalStructure categoriesFor: #notNull!public!testing! !
-!ExternalStructure categoriesFor: #pointerClass!constants!private! !
-!ExternalStructure categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!private!replacing! !
-!ExternalStructure categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!ExternalStructure categoriesFor: #setField:value:!accessing!public! !
-!ExternalStructure categoriesFor: #size!accessing!public! !
-!ExternalStructure categoriesFor: #template!constants!private! !
-!ExternalStructure categoriesFor: #value!accessing!public! !
-!ExternalStructure categoriesFor: #value:!accessing!public! !
-!ExternalStructure categoriesFor: #yourAddress!accessing!public! !
+!ExternalStructure categoriesForMethods!
+_deepenShallowCopy:trail:!copying!private! !
+=!comparing!public! !
+alignment!constants!public! !
+asByteArray!converting!public! !
+asObject!accessing!public! !
+asParameter!converting!public! !
+basicFree!private!realizing/unrealizing! !
+beNullHeapPointer!modes!private! !
+beNullPointer!modes!private! !
+bufferClass!constants!private! !
+bytes!accessing!public! !
+bytes:!initializing!private! !
+bytesAtOffset:put:!accessing!public! !
+byteSize!accessing!public! !
+comparisonSize!accessing!private! !
+copy!copying!public! !
+copy:from:to:!copying!private! !
+copyBytes:!accessing!private! !
+copyFrom:to:!copying!public! !
+copyStringFrom:to:!copying!public! !
+detach!public!realizing/unrealizing! !
+doesNotUnderstand:!exceptions!public! !
+fieldsDo:!enumerating!public! !
+fieldsDo:separatedBy:!enumerating!public! !
+free!public!realizing/unrealizing! !
+getField:!accessing!public! !
+getValidFields!accessing!private! !
+hash!comparing!public! !
+heapPointerClass!constants!private! !
+hresultError:!exceptions!public! !
+initialize!initializing!private! !
+initialize:!initializing!private! !
+initializeAtAddress:!initializing!private! !
+initializePointer!initializing!private! !
+invalidArgErrorClass!constants!private! !
+invalidCall:!exceptions!public! !
+isFieldBrowsable:!printing!private! !
+isNull!public!testing! !
+isPointer!public!testing! !
+maxPrint!constants!private! !
+needsFree!private!realizing/unrealizing! !
+notNull!public!testing! !
+pointerClass!constants!private! !
+replaceBytesOf:from:to:startingAt:!double dispatch!private!replacing! !
+replaceFrom:to:with:startingAt:!public!replacing! !
+setField:value:!accessing!public! !
+size!accessing!public! !
+template!constants!private! !
+value!accessing!public! !
+value:!accessing!public! !
+yourAddress!accessing!public! !
+!
 
 !ExternalStructure class methodsFor!
 
@@ -939,63 +941,65 @@ withBytes: aByteObject
 		bytes: aByteObject;
 		initialize;
 		yourself! !
-!ExternalStructure class categoriesFor: #alignment!constants!public! !
-!ExternalStructure class categoriesFor: #atAddress:!instance creation!public! !
-!ExternalStructure class categoriesFor: #baseAlignment!private!template definition! !
-!ExternalStructure class categoriesFor: #basicByteSize!accessing!public! !
-!ExternalStructure class categoriesFor: #beCompiled!modes!public!template definition! !
-!ExternalStructure class categoriesFor: #beUncompiled!modes!public!template definition! !
-!ExternalStructure class categoriesFor: #byteSize!accessing!public! !
-!ExternalStructure class categoriesFor: #byteSize:!initializing!private! !
-!ExternalStructure class categoriesFor: #canUnderstand:!methods-testing!public! !
-!ExternalStructure class categoriesFor: #changedByteSizeFrom:!private!template definition! !
-!ExternalStructure class categoriesFor: #clear:!public!realizing/unrealizing! !
-!ExternalStructure class categoriesFor: #defineField:type:!public!template definition! !
-!ExternalStructure class categoriesFor: #defineField:type:offset:!public!template definition! !
-!ExternalStructure class categoriesFor: #defineFields!public!template definition! !
-!ExternalStructure class categoriesFor: #definesNewFields!private!template definition!testing! !
-!ExternalStructure class categoriesFor: #defineTemplate!public!template definition! !
-!ExternalStructure class categoriesFor: #descriptorClass!constants!private! !
-!ExternalStructure class categoriesFor: #dynamicSelectorsDo:!compiling!methods-accessing!public! !
-!ExternalStructure class categoriesFor: #elementSize!accessing!public! !
-!ExternalStructure class categoriesFor: #ensureDefined!instance creation!private! !
-!ExternalStructure class categoriesFor: #fieldNamesFromTemplate!accessing!private! !
-!ExternalStructure class categoriesFor: #fieldOffsetConstantPrefix!constants!private!template definition! !
-!ExternalStructure class categoriesFor: #fromAddress:!instance creation!public! !
-!ExternalStructure class categoriesFor: #fromBytes:!instance creation!public! !
-!ExternalStructure class categoriesFor: #getFieldNames!accessing!private! !
-!ExternalStructure class categoriesFor: #inheritTemplate!private!template definition! !
-!ExternalStructure class categoriesFor: #init:!initializing!public! !
-!ExternalStructure class categoriesFor: #initialize!development!initializing!private! !
-!ExternalStructure class categoriesFor: #initializeAfterLoad!development!initializing!private! !
-!ExternalStructure class categoriesFor: #initializeTemplate!private!template definition! !
-!ExternalStructure class categoriesFor: #isCompiled!private!testing! !
-!ExternalStructure class categoriesFor: #isFieldBrowsable:!printing!private! !
-!ExternalStructure class categoriesFor: #libraryAndIndex!constants!public! !
-!ExternalStructure class categoriesFor: #new!instance creation!public! !
-!ExternalStructure class categoriesFor: #new:!instance creation!public! !
-!ExternalStructure class categoriesFor: #new:bufferClass:!instance creation!public! !
-!ExternalStructure class categoriesFor: #newBuffer!instance creation!public! !
-!ExternalStructure class categoriesFor: #newBufferClass:!instance creation!public! !
-!ExternalStructure class categoriesFor: #newHeapPointer!instance creation!public! !
-!ExternalStructure class categoriesFor: #newPointer!instance creation!public! !
-!ExternalStructure class categoriesFor: #newPointer:!instance creation!public! !
-!ExternalStructure class categoriesFor: #newTemplate!private!template definition! !
-!ExternalStructure class categoriesFor: #offsetFor:base:!public!template definition! !
-!ExternalStructure class categoriesFor: #offsetOf:!accessing!public! !
-!ExternalStructure class categoriesFor: #packing!constants!public! !
-!ExternalStructure class categoriesFor: #paddedSizeFor:!public!template definition! !
-!ExternalStructure class categoriesFor: #pointerClass!constants!private! !
-!ExternalStructure class categoriesFor: #recompileReferences!private!template definition! !
-!ExternalStructure class categoriesFor: #register!adding!public! !
-!ExternalStructure class categoriesFor: #registerClass:forGUID:!adding!public! !
-!ExternalStructure class categoriesFor: #removeRedundantOffsetConstants!private!template definition! !
-!ExternalStructure class categoriesFor: #resetTemplate!public!template definition! !
-!ExternalStructure class categoriesFor: #setGuid:!accessing!private! !
-!ExternalStructure class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!ExternalStructure class categoriesFor: #structurePacker!public!template definition! !
-!ExternalStructure class categoriesFor: #template!accessing!private! !
-!ExternalStructure class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!public! !
-!ExternalStructure class categoriesFor: #unregister!public!removing! !
-!ExternalStructure class categoriesFor: #withBytes:!instance creation!public! !
+!ExternalStructure class categoriesForMethods!
+alignment!constants!public! !
+atAddress:!instance creation!public! !
+baseAlignment!private!template definition! !
+basicByteSize!accessing!public! !
+beCompiled!modes!public!template definition! !
+beUncompiled!modes!public!template definition! !
+byteSize!accessing!public! !
+byteSize:!initializing!private! !
+canUnderstand:!methods-testing!public! !
+changedByteSizeFrom:!private!template definition! !
+clear:!public!realizing/unrealizing! !
+defineField:type:!public!template definition! !
+defineField:type:offset:!public!template definition! !
+defineFields!public!template definition! !
+definesNewFields!private!template definition!testing! !
+defineTemplate!public!template definition! !
+descriptorClass!constants!private! !
+dynamicSelectorsDo:!compiling!methods-accessing!public! !
+elementSize!accessing!public! !
+ensureDefined!instance creation!private! !
+fieldNamesFromTemplate!accessing!private! !
+fieldOffsetConstantPrefix!constants!private!template definition! !
+fromAddress:!instance creation!public! !
+fromBytes:!instance creation!public! !
+getFieldNames!accessing!private! !
+inheritTemplate!private!template definition! !
+init:!initializing!public! !
+initialize!development!initializing!private! !
+initializeAfterLoad!development!initializing!private! !
+initializeTemplate!private!template definition! !
+isCompiled!private!testing! !
+isFieldBrowsable:!printing!private! !
+libraryAndIndex!constants!public! !
+new!instance creation!public! !
+new:!instance creation!public! !
+new:bufferClass:!instance creation!public! !
+newBuffer!instance creation!public! !
+newBufferClass:!instance creation!public! !
+newHeapPointer!instance creation!public! !
+newPointer!instance creation!public! !
+newPointer:!instance creation!public! !
+newTemplate!private!template definition! !
+offsetFor:base:!public!template definition! !
+offsetOf:!accessing!public! !
+packing!constants!public! !
+paddedSizeFor:!public!template definition! !
+pointerClass!constants!private! !
+recompileReferences!private!template definition! !
+register!adding!public! !
+registerClass:forGUID:!adding!public! !
+removeRedundantOffsetConstants!private!template definition! !
+resetTemplate!public!template definition! !
+setGuid:!accessing!private! !
+stbReadFrom:format:!binary filing!public! !
+structurePacker!public!template definition! !
+template!accessing!private! !
+uninitializeBeforeRemove!class hierarchy-removing!public! !
+unregister!public!removing! !
+withBytes:!instance creation!public! !
+!
 

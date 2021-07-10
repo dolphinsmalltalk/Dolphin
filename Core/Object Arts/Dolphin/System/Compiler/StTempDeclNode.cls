@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StVariableNode subclass: #StTempDeclNode
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ StTempDeclNode comment: 'StTempDeclNode is a parse tree node that represents a t
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitTempDeclNode: self! !
-!StTempDeclNode categoriesFor: #acceptVisitor:!public!visitor! !
+!StTempDeclNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 

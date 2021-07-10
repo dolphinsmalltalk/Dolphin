@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 COMEnumerator subclass: #COMInterfaceEnumerator
 	instanceVariableNames: ''
@@ -28,8 +28,10 @@ nextElement
 	pi _addRef.
 	^pi yourAddress
 ! !
-!COMInterfaceEnumerator categoriesFor: #arrayBufferAt:length:!COM Interfaces-IEnumXXXX!private! !
-!COMInterfaceEnumerator categoriesFor: #nextElement!COM Interfaces-IEnumXXXX!private! !
+!COMInterfaceEnumerator categoriesForMethods!
+arrayBufferAt:length:!COM Interfaces-IEnumXXXX!private! !
+nextElement!COM Interfaces-IEnumXXXX!private! !
+!
 
 !COMInterfaceEnumerator class methodsFor!
 
@@ -39,5 +41,7 @@ newEnumeratorOn: sequence
 	sequence."
 
 	^self newEnumerator: IEnumUnknown on: sequence! !
-!COMInterfaceEnumerator class categoriesFor: #newEnumeratorOn:!instance creation!public! !
+!COMInterfaceEnumerator class categoriesForMethods!
+newEnumeratorOn:!instance creation!public! !
+!
 

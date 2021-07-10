@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScintillaStyler subclass: #NullScintillaStyler
 	instanceVariableNames: 'normalStyleName'
@@ -29,10 +29,12 @@ onStyleNeeded: aScintillaView from: startInteger to: stopInteger
 	In this case we just set to the default style, regardless."
 
 	aScintillaView applyStyle: self normalStyleName toNext: stopInteger - startInteger + 1! !
-!NullScintillaStyler categoriesFor: #initialize!initializing!public! !
-!NullScintillaStyler categoriesFor: #normalStyleName!accessing!public! !
-!NullScintillaStyler categoriesFor: #normalStyleName:!accessing!public! !
-!NullScintillaStyler categoriesFor: #onStyleNeeded:from:to:!event handling!public! !
+!NullScintillaStyler categoriesForMethods!
+initialize!initializing!public! !
+normalStyleName!accessing!public! !
+normalStyleName:!accessing!public! !
+onStyleNeeded:from:to:!event handling!public! !
+!
 
 !NullScintillaStyler class methodsFor!
 
@@ -41,6 +43,8 @@ stbConvertFrom: anSTBVersion
 
 stbVersion
 	^1! !
-!NullScintillaStyler class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!NullScintillaStyler class categoriesFor: #stbVersion!binary filing!public! !
+!NullScintillaStyler class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

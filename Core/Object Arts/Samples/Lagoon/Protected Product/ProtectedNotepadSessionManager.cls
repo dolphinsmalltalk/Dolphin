@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ProtectedProductSessionManager subclass: #ProtectedNotepadSessionManager
 	instanceVariableNames: ''
@@ -28,9 +28,11 @@ serialNumberClass
 	"Answer the class of the <ProtectedProductSerialNumber> used to encrypt the receiver"
 
 	^ AnotherCompanySerialNumber! !
-!ProtectedNotepadSessionManager categoriesFor: #encryptedPackageNames!constants!public! !
-!ProtectedNotepadSessionManager categoriesFor: #productRegistrationKey!constants!public! !
-!ProtectedNotepadSessionManager categoriesFor: #serialNumberClass!constants!public! !
+!ProtectedNotepadSessionManager categoriesForMethods!
+encryptedPackageNames!constants!public! !
+productRegistrationKey!constants!public! !
+serialNumberClass!constants!public! !
+!
 
 !ProtectedNotepadSessionManager class methodsFor!
 
@@ -38,5 +40,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^Notepad! !
-!ProtectedNotepadSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!ProtectedNotepadSessionManager class categoriesForMethods!
+mainShellClass!constants!public! !
+!
 

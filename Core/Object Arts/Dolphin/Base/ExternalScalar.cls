@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #ExternalScalar
 	instanceVariableNames: ''
@@ -32,10 +32,12 @@ value: anObject
 	"Set the receiver's value field to the value of anObject."
 
 	^self subclassResponsibility! !
-!ExternalScalar categoriesFor: #=!comparing!public! !
-!ExternalScalar categoriesFor: #displayOn:!printing!private! !
-!ExternalScalar categoriesFor: #value!converting!public! !
-!ExternalScalar categoriesFor: #value:!public! !
+!ExternalScalar categoriesForMethods!
+=!comparing!public! !
+displayOn:!printing!private! !
+value!converting!public! !
+value:!public! !
+!
 
 !ExternalScalar class methodsFor!
 
@@ -44,6 +46,8 @@ defineFields
 
 getFieldNames
 	^#(#value)! !
-!ExternalScalar class categoriesFor: #defineFields!public!template definition! !
-!ExternalScalar class categoriesFor: #getFieldNames!constants!private! !
+!ExternalScalar class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!constants!private! !
+!
 

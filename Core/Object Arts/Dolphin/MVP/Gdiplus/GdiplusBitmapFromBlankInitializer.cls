@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusBitmapFromBlankInitializer
 	instanceVariableNames: 'width height format'
@@ -46,9 +46,11 @@ width: widthInteger height: heightInteger format: aPixelFormat
 	height := heightInteger.
 	format := aPixelFormat.
 	^self! !
-!GdiplusBitmapFromBlankInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusBitmapFromBlankInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusBitmapFromBlankInitializer categoriesFor: #width:height:format:!initializing!private! !
+!GdiplusBitmapFromBlankInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+width:height:format:!initializing!private! !
+!
 
 !GdiplusBitmapFromBlankInitializer class methodsFor!
 
@@ -57,5 +59,7 @@ width: width height: height format: aPixelFormat
 		width: width
 		height: height
 		format: aPixelFormat! !
-!GdiplusBitmapFromBlankInitializer class categoriesFor: #width:height:format:!instance creation!public! !
+!GdiplusBitmapFromBlankInitializer class categoriesForMethods!
+width:height:format:!instance creation!public! !
+!
 

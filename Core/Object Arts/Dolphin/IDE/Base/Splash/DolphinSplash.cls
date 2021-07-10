@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Splash subclass: #DolphinSplash
 	instanceVariableNames: 'objectsInside'
@@ -67,15 +67,17 @@ showWindow
 	self class canDisplay 
 		ifTrue: [super showWindow]
 		ifFalse: [Canvas forDesktop colorDepth < 16 ifTrue: [self give256ColorDisplayWarning]]! !
-!DolphinSplash categoriesFor: #animationDuration!constants!private! !
-!DolphinSplash categoriesFor: #defaultExtent!accessing!public! !
-!DolphinSplash categoriesFor: #defaultSplashDelay!constants!public! !
-!DolphinSplash categoriesFor: #defaultWindowStyle!constants!private! !
-!DolphinSplash categoriesFor: #give256ColorDisplayWarning!operations!private! !
-!DolphinSplash categoriesFor: #objectsInside!accessing!private! !
-!DolphinSplash categoriesFor: #onCreated:!event handling!private! !
-!DolphinSplash categoriesFor: #onPaintRequired:!event handling!private! !
-!DolphinSplash categoriesFor: #showWindow!operations!private! !
+!DolphinSplash categoriesForMethods!
+animationDuration!constants!private! !
+defaultExtent!accessing!public! !
+defaultSplashDelay!constants!public! !
+defaultWindowStyle!constants!private! !
+give256ColorDisplayWarning!operations!private! !
+objectsInside!accessing!private! !
+onCreated:!event handling!private! !
+onPaintRequired:!event handling!private! !
+showWindow!operations!private! !
+!
 
 !DolphinSplash class methodsFor!
 
@@ -102,8 +104,10 @@ splashPlayTheGame
 
 splashPlayTheGame: aBoolean 
 	SeeingTheObjectsInside splashPlayTheGame: aBoolean! !
-!DolphinSplash class categoriesFor: #canDisplay!accessing!public! !
-!DolphinSplash class categoriesFor: #publishedAspects!public! !
-!DolphinSplash class categoriesFor: #splashPlayTheGame!accessing!public! !
-!DolphinSplash class categoriesFor: #splashPlayTheGame:!accessing!public! !
+!DolphinSplash class categoriesForMethods!
+canDisplay!accessing!public! !
+publishedAspects!public! !
+splashPlayTheGame!accessing!public! !
+splashPlayTheGame:!accessing!public! !
+!
 

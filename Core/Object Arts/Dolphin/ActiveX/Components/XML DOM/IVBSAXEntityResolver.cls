@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IVBSAXEntityResolver
 	instanceVariableNames: ''
@@ -72,10 +72,12 @@ ResolveEntity: strPublicId strSystemId: strSystemId varInput: varInput
 
 	<virtual stdcall: hresult 8 bstr* bstr* variant*>
 	^self invalidCall: _failureCode! !
-!IVBSAXEntityResolver categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IVBSAXEntityResolver categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IVBSAXEntityResolver categoriesFor: #resolveEntity:strSystemId:!**auto generated**!methods!public! !
-!IVBSAXEntityResolver categoriesFor: #ResolveEntity:strSystemId:varInput:!**auto generated**!COM Interfaces-IVBSAXEntityResolver!private! !
+!IVBSAXEntityResolver categoriesForMethods!
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+resolveEntity:strSystemId:!**auto generated**!methods!public! !
+ResolveEntity:strSystemId:varInput:!**auto generated**!COM Interfaces-IVBSAXEntityResolver!private! !
+!
 
 !IVBSAXEntityResolver class methodsFor!
 
@@ -87,5 +89,7 @@ defineFunctions
 		defineFunction: #ResolveEntity:strSystemId:varInput:
 			argumentTypes: 'bstr* bstr* variant*'
 ! !
-!IVBSAXEntityResolver class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IVBSAXEntityResolver class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

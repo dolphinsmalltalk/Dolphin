@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScintillaPropertyDescriptor subclass: #ScintillaColorPropertyDescriptor
 	instanceVariableNames: ''
@@ -17,6 +17,8 @@ lParamFromAttributeValue: aColor
 
 valueFromLResult: anInteger
 	^Color fromRgbCode: anInteger! !
-!ScintillaColorPropertyDescriptor categoriesFor: #lParamFromAttributeValue:!helpers!private! !
-!ScintillaColorPropertyDescriptor categoriesFor: #valueFromLResult:!helpers!private! !
+!ScintillaColorPropertyDescriptor categoriesForMethods!
+lParamFromAttributeValue:!helpers!private! !
+valueFromLResult:!helpers!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #WIN32_FIND_DATAW
 	instanceVariableNames: 'directory'
@@ -108,23 +108,25 @@ stem
 	"Answer the stem (name sans extension) of the file described by the receiver."
 
 	^File splitStemFrom: self fileName! !
-!WIN32_FIND_DATAW categoriesFor: #cAlternateFileName!**compiled accessors**!public! !
-!WIN32_FIND_DATAW categoriesFor: #cFileName!**compiled accessors**!public! !
-!WIN32_FIND_DATAW categoriesFor: #directory!accessing!public! !
-!WIN32_FIND_DATAW categoriesFor: #directory:!accessing!private! !
-!WIN32_FIND_DATAW categoriesFor: #dwFileAttributes!**compiled accessors**!public! !
-!WIN32_FIND_DATAW categoriesFor: #fileName!accessing!public! !
-!WIN32_FIND_DATAW categoriesFor: #fileSize!accessing!public! !
-!WIN32_FIND_DATAW categoriesFor: #ftCreationTime!**compiled accessors**!public! !
-!WIN32_FIND_DATAW categoriesFor: #ftLastAccessTime!**compiled accessors**!public! !
-!WIN32_FIND_DATAW categoriesFor: #ftLastWriteTime!**compiled accessors**!public! !
-!WIN32_FIND_DATAW categoriesFor: #isDirectory!public!testing! !
-!WIN32_FIND_DATAW categoriesFor: #isReadOnly!public!testing! !
-!WIN32_FIND_DATAW categoriesFor: #nFileSizeHigh!**compiled accessors**!public! !
-!WIN32_FIND_DATAW categoriesFor: #nFileSizeLow!**compiled accessors**!public! !
-!WIN32_FIND_DATAW categoriesFor: #path!accessing!public! !
-!WIN32_FIND_DATAW categoriesFor: #shortFileName!accessing!public! !
-!WIN32_FIND_DATAW categoriesFor: #stem!accessing!public! !
+!WIN32_FIND_DATAW categoriesForMethods!
+cAlternateFileName!**compiled accessors**!public! !
+cFileName!**compiled accessors**!public! !
+directory!accessing!public! !
+directory:!accessing!private! !
+dwFileAttributes!**compiled accessors**!public! !
+fileName!accessing!public! !
+fileSize!accessing!public! !
+ftCreationTime!**compiled accessors**!public! !
+ftLastAccessTime!**compiled accessors**!public! !
+ftLastWriteTime!**compiled accessors**!public! !
+isDirectory!public!testing! !
+isReadOnly!public!testing! !
+nFileSizeHigh!**compiled accessors**!public! !
+nFileSizeLow!**compiled accessors**!public! !
+path!accessing!public! !
+shortFileName!accessing!public! !
+stem!accessing!public! !
+!
 
 !WIN32_FIND_DATAW class methodsFor!
 
@@ -162,6 +164,8 @@ defineFields
 
 getFieldNames
 	^#(#dwFileAttributes #ftCreationTime #ftLastAccessTime #ftLastWriteTime #nFileSizeHigh #nFileSizeLow #cFileName #cAlternateFileName)! !
-!WIN32_FIND_DATAW class categoriesFor: #defineFields!public!template definition! !
-!WIN32_FIND_DATAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WIN32_FIND_DATAW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

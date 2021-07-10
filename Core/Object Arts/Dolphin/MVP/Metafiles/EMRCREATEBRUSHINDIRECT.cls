@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRCREATEBRUSHINDIRECT
 	instanceVariableNames: ''
@@ -49,10 +49,12 @@ lb: aLOGBRUSH
 		from: ##(_OffsetOf_lb + 1)
 		to: ##(_OffsetOf_lb + LOGBRUSH basicByteSize)
 		startingAt: 1! !
-!EMRCREATEBRUSHINDIRECT categoriesFor: #ihBrush!**compiled accessors**!public! !
-!EMRCREATEBRUSHINDIRECT categoriesFor: #ihBrush:!**compiled accessors**!public! !
-!EMRCREATEBRUSHINDIRECT categoriesFor: #lb!**compiled accessors**!public! !
-!EMRCREATEBRUSHINDIRECT categoriesFor: #lb:!**compiled accessors**!public! !
+!EMRCREATEBRUSHINDIRECT categoriesForMethods!
+ihBrush!**compiled accessors**!public! !
+ihBrush:!**compiled accessors**!public! !
+lb!**compiled accessors**!public! !
+lb:!**compiled accessors**!public! !
+!
 
 !EMRCREATEBRUSHINDIRECT class methodsFor!
 
@@ -82,7 +84,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATEBRUSHINDIRECT! !
-!EMRCREATEBRUSHINDIRECT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRCREATEBRUSHINDIRECT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRCREATEBRUSHINDIRECT class categoriesFor: #iTypes!constants!public! !
+!EMRCREATEBRUSHINDIRECT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

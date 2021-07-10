@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TypeConverter subclass: #MappingConverter
 	instanceVariableNames: 'leftToRightMap rightToLeftMap'
@@ -45,12 +45,14 @@ rightToLeftMap: aLookupTable
 	leftToRightMap := aLookupTable copyEmpty.
 	rightToLeftMap 
 		keysAndValuesDo: [:eachKey :eachValue | leftToRightMap at: eachValue put: eachKey]! !
-!MappingConverter categoriesFor: #leftToRight:!operations!private! !
-!MappingConverter categoriesFor: #leftToRightMap!accessing!private! !
-!MappingConverter categoriesFor: #leftToRightMap:!accessing!private! !
-!MappingConverter categoriesFor: #rightToLeft:!operations!private! !
-!MappingConverter categoriesFor: #rightToLeftMap!accessing!private! !
-!MappingConverter categoriesFor: #rightToLeftMap:!accessing!private! !
+!MappingConverter categoriesForMethods!
+leftToRight:!operations!private! !
+leftToRightMap!accessing!private! !
+leftToRightMap:!accessing!private! !
+rightToLeft:!operations!private! !
+rightToLeftMap!accessing!private! !
+rightToLeftMap:!accessing!private! !
+!
 
 !MappingConverter class methodsFor!
 
@@ -69,6 +71,8 @@ rightToLeft: aLookupTable
 	^self new 
 		rightToLeftMap: aLookupTable;
 		yourself! !
-!MappingConverter class categoriesFor: #leftToRight:!instance creation!public! !
-!MappingConverter class categoriesFor: #rightToLeft:!instance creation!public! !
+!MappingConverter class categoriesForMethods!
+leftToRight:!instance creation!public! !
+rightToLeft:!instance creation!public! !
+!
 

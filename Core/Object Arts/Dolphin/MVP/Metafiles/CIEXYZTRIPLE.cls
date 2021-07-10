@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #CIEXYZTRIPLE
 	instanceVariableNames: ''
@@ -68,12 +68,14 @@ ciexyzRed: aCIEXYZ
 		from: ##(_OffsetOf_ciexyzRed + 1)
 		to: ##(_OffsetOf_ciexyzRed + CIEXYZ basicByteSize)
 		startingAt: 1! !
-!CIEXYZTRIPLE categoriesFor: #ciexyzBlue!**compiled accessors**!public! !
-!CIEXYZTRIPLE categoriesFor: #ciexyzBlue:!**compiled accessors**!public! !
-!CIEXYZTRIPLE categoriesFor: #ciexyzGreen!**compiled accessors**!public! !
-!CIEXYZTRIPLE categoriesFor: #ciexyzGreen:!**compiled accessors**!public! !
-!CIEXYZTRIPLE categoriesFor: #ciexyzRed!**compiled accessors**!public! !
-!CIEXYZTRIPLE categoriesFor: #ciexyzRed:!**compiled accessors**!public! !
+!CIEXYZTRIPLE categoriesForMethods!
+ciexyzBlue!**compiled accessors**!public! !
+ciexyzBlue:!**compiled accessors**!public! !
+ciexyzGreen!**compiled accessors**!public! !
+ciexyzGreen:!**compiled accessors**!public! !
+ciexyzRed!**compiled accessors**!public! !
+ciexyzRed:!**compiled accessors**!public! !
+!
 
 !CIEXYZTRIPLE class methodsFor!
 
@@ -98,6 +100,8 @@ defineFields
 
 getFieldNames
 	^#(#ciexyzRed #ciexyzGreen #ciexyzBlue)! !
-!CIEXYZTRIPLE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!CIEXYZTRIPLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!CIEXYZTRIPLE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

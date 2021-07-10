@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusAdjustableArrowCapInitializer
 	instanceVariableNames: 'height width isFilled'
@@ -28,9 +28,11 @@ height: heightReal width: widthReal isFilled: isFilledBoolean
 	height := heightReal.
 	width := widthReal.
 	isFilled := isFilledBoolean! !
-!GdiplusAdjustableArrowCapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusAdjustableArrowCapInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusAdjustableArrowCapInitializer categoriesFor: #height:width:isFilled:!initializing!private! !
+!GdiplusAdjustableArrowCapInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+height:width:isFilled:!initializing!private! !
+!
 
 !GdiplusAdjustableArrowCapInitializer class methodsFor!
 
@@ -39,5 +41,7 @@ height: heightReal width: widthReal isFilled: isFilledBoolean
 		height: heightReal
 		width: widthReal
 		isFilled: isFilledBoolean! !
-!GdiplusAdjustableArrowCapInitializer class categoriesFor: #height:width:isFilled:!instance creation!public! !
+!GdiplusAdjustableArrowCapInitializer class categoriesForMethods!
+height:width:isFilled:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IScriptProcedureCollection
 	instanceVariableNames: ''
@@ -82,14 +82,16 @@ item: index
 		ppdispProcedure: answer.
 	^answer asObject
 ! !
-!IScriptProcedureCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!IScriptProcedureCollection categoriesFor: #count!**auto generated**!properties!public! !
-!IScriptProcedureCollection categoriesFor: #get__NewEnum:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
-!IScriptProcedureCollection categoriesFor: #get_Count:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
-!IScriptProcedureCollection categoriesFor: #get_Item:ppdispProcedure:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
-!IScriptProcedureCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IScriptProcedureCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IScriptProcedureCollection categoriesFor: #item:!**auto generated**!properties!public! !
+!IScriptProcedureCollection categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+count!**auto generated**!properties!public! !
+get__NewEnum:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
+get_Count:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
+get_Item:ppdispProcedure:!**auto generated**!COM Interfaces-IScriptProcedureCollection!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+!
 
 !IScriptProcedureCollection class methodsFor!
 
@@ -117,7 +119,9 @@ initializeTypeLib
 		IScriptProcedureCollection initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
-!IScriptProcedureCollection class categoriesFor: #clsid!**auto generated**!constants!private! !
-!IScriptProcedureCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IScriptProcedureCollection class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!IScriptProcedureCollection class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!public! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #InlineParameterTest
 	instanceVariableNames: ''
@@ -30,6 +30,8 @@ testInlineLiteralArray
 	self assert: (class parseTreeFor: #sendInlineParameterMethod)
 		equals: (RBParser parseMethod: 'sendInlineParameterMethod ^self inlineParameterMethod').
 	self deny: (class directlyDefinesMethod: ('inline' , 'ParameterMethod:') asSymbol)! !
-!InlineParameterTest categoriesFor: #testInlineBlockFailure!failure tests!public! !
-!InlineParameterTest categoriesFor: #testInlineLiteralArray!public!tests! !
+!InlineParameterTest categoriesForMethods!
+testInlineBlockFailure!failure tests!public! !
+testInlineLiteralArray!public!tests! !
+!
 

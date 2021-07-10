@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VirtualTreeModel subclass: #RegTreeModel
 	instanceVariableNames: ''
@@ -25,10 +25,12 @@ defaultGetParentBlock
 
 defaultHasChildrenBlock
 	^[:aRegKey | aRegKey notEmpty]! !
-!RegTreeModel categoriesFor: #approxSize!accessing!private! !
-!RegTreeModel categoriesFor: #defaultGetChildrenBlock!initializing!private! !
-!RegTreeModel categoriesFor: #defaultGetParentBlock!initializing!private! !
-!RegTreeModel categoriesFor: #defaultHasChildrenBlock!initializing!private! !
+!RegTreeModel categoriesForMethods!
+approxSize!accessing!private! !
+defaultGetChildrenBlock!initializing!private! !
+defaultGetParentBlock!initializing!private! !
+defaultHasChildrenBlock!initializing!private! !
+!
 
 !RegTreeModel class methodsFor!
 
@@ -41,5 +43,7 @@ defaultSearchPolicy
 	identical."
 
 	^SearchPolicy equality! !
-!RegTreeModel class categoriesFor: #defaultSearchPolicy!accessing!public! !
+!RegTreeModel class categoriesForMethods!
+defaultSearchPolicy!accessing!public! !
+!
 

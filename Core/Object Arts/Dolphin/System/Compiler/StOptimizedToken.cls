@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StToken subclass: #StOptimizedToken
 	instanceVariableNames: 'stopPosition'
@@ -21,10 +21,12 @@ length
 
 stop: anInteger 
 	stopPosition := anInteger! !
-!StOptimizedToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StOptimizedToken categoriesFor: #isOptimized!public!testing! !
-!StOptimizedToken categoriesFor: #length!accessing!private! !
-!StOptimizedToken categoriesFor: #stop:!accessing!public! !
+!StOptimizedToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isOptimized!public!testing! !
+length!accessing!private! !
+stop:!accessing!public! !
+!
 
 !StOptimizedToken class methodsFor!
 
@@ -35,5 +37,7 @@ start: anInteger comments: aCollectionOrNil stop: stopInteger
 		comments: aCollectionOrNil;
 		stop: stopInteger;
 		yourself! !
-!StOptimizedToken class categoriesFor: #start:comments:stop:!instance creation!public! !
+!StOptimizedToken class categoriesForMethods!
+start:comments:stop:!instance creation!public! !
+!
 

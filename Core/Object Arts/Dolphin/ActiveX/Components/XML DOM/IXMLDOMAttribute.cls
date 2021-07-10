@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IXMLDOMNode subclass: #IXMLDOMAttribute
 	instanceVariableNames: ''
@@ -101,17 +101,19 @@ value: attributeValue
 
 	self put_value: attributeValue asVariant
 ! !
-!IXMLDOMAttribute categoriesFor: #<=!comparing!public! !
-!IXMLDOMAttribute categoriesFor: #=!comparing!public! !
-!IXMLDOMAttribute categoriesFor: #get_name:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
-!IXMLDOMAttribute categoriesFor: #get_value:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
-!IXMLDOMAttribute categoriesFor: #key!accessing!public! !
-!IXMLDOMAttribute categoriesFor: #key:!accessing!public! !
-!IXMLDOMAttribute categoriesFor: #name!**auto generated**!properties!public! !
-!IXMLDOMAttribute categoriesFor: #printValueOn:!printing!private! !
-!IXMLDOMAttribute categoriesFor: #put_value:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
-!IXMLDOMAttribute categoriesFor: #value!**auto generated**!properties!public! !
-!IXMLDOMAttribute categoriesFor: #value:!**auto generated**!properties!public! !
+!IXMLDOMAttribute categoriesForMethods!
+<=!comparing!public! !
+=!comparing!public! !
+get_name:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
+get_value:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
+key!accessing!public! !
+key:!accessing!public! !
+name!**auto generated**!properties!public! !
+printValueOn:!printing!private! !
+put_value:!**auto generated**!COM Interfaces-IXMLDOMAttribute!private! !
+value!**auto generated**!properties!public! !
+value:!**auto generated**!properties!public! !
+!
 
 IXMLDOMAttribute methodProtocol: #association attributes: #(#ansi #readOnly) selectors: #(#key #key: #value #value:)!
 
@@ -129,5 +131,7 @@ defineFunctions
 		defineFunction: #put_value:
 			argumentTypes: 'variant'
 ! !
-!IXMLDOMAttribute class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IXMLDOMAttribute class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

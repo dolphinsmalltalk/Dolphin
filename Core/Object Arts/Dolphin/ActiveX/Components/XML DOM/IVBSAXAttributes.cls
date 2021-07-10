@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IVBSAXAttributes
 	instanceVariableNames: ''
@@ -366,32 +366,34 @@ length
 	self get_length: answer.
 	^answer asObject
 ! !
-!IVBSAXAttributes categoriesFor: #get_length:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getIndexFromName:strLocalName:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetIndexFromName:strLocalName:nIndex:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getIndexFromQName:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetIndexFromQName:nIndex:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getLocalName:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetLocalName:strLocalName:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getQName:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetQName:strQName:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getType:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetType:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getTypeFromName:strLocalName:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetTypeFromName:strLocalName:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getTypeFromQName:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetTypeFromQName:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getURI:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetURI:strURI:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getValue:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetValue:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getValueFromName:strLocalName:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetValueFromName:strLocalName:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #getValueFromQName:!**auto generated**!methods!public! !
-!IVBSAXAttributes categoriesFor: #GetValueFromQName:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
-!IVBSAXAttributes categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IVBSAXAttributes categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IVBSAXAttributes categoriesFor: #length!**auto generated**!properties!public! !
+!IVBSAXAttributes categoriesForMethods!
+get_length:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getIndexFromName:strLocalName:!**auto generated**!methods!public! !
+GetIndexFromName:strLocalName:nIndex:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getIndexFromQName:!**auto generated**!methods!public! !
+GetIndexFromQName:nIndex:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getLocalName:!**auto generated**!methods!public! !
+GetLocalName:strLocalName:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getQName:!**auto generated**!methods!public! !
+GetQName:strQName:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getType:!**auto generated**!methods!public! !
+GetType:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getTypeFromName:strLocalName:!**auto generated**!methods!public! !
+GetTypeFromName:strLocalName:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getTypeFromQName:!**auto generated**!methods!public! !
+GetTypeFromQName:strType:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getURI:!**auto generated**!methods!public! !
+GetURI:strURI:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getValue:!**auto generated**!methods!public! !
+GetValue:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getValueFromName:strLocalName:!**auto generated**!methods!public! !
+GetValueFromName:strLocalName:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+getValueFromQName:!**auto generated**!methods!public! !
+GetValueFromQName:strValue:!**auto generated**!COM Interfaces-IVBSAXAttributes!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+length!**auto generated**!properties!public! !
+!
 
 !IVBSAXAttributes class methodsFor!
 
@@ -425,5 +427,7 @@ defineFunctions
 		defineFunction: #GetValueFromQName:strValue:
 			argumentTypes: 'bstr bstr*'
 ! !
-!IVBSAXAttributes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IVBSAXAttributes class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

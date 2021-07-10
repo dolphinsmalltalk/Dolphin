@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RenameClassRefactoring subclass: #CopyClassRefactoring
 	instanceVariableNames: 'superclass'
@@ -90,17 +90,19 @@ transform
 	self copyPoolsTo: clone.
 	self copyMethodsFrom: class to: clone.
 	self copyMethodsFrom: class metaclass to: clone metaclass! !
-!CopyClassRefactoring categoriesFor: #copyClass!private!transforming! !
-!CopyClassRefactoring categoriesFor: #copyClassVarsTo:!private!transforming! !
-!CopyClassRefactoring categoriesFor: #copyInstVarsTo:!private!transforming! !
-!CopyClassRefactoring categoriesFor: #copyMethodsFrom:to:!private!transforming! !
-!CopyClassRefactoring categoriesFor: #copyPoolsTo:!private!transforming! !
-!CopyClassRefactoring categoriesFor: #displayOn:!displaying!public! !
-!CopyClassRefactoring categoriesFor: #preconditions!preconditions!public! !
-!CopyClassRefactoring categoriesFor: #storeOn:!printing!public! !
-!CopyClassRefactoring categoriesFor: #superclass!accessing!private! !
-!CopyClassRefactoring categoriesFor: #superclass:!accessing!private! !
-!CopyClassRefactoring categoriesFor: #transform!public!transforming! !
+!CopyClassRefactoring categoriesForMethods!
+copyClass!private!transforming! !
+copyClassVarsTo:!private!transforming! !
+copyInstVarsTo:!private!transforming! !
+copyMethodsFrom:to:!private!transforming! !
+copyPoolsTo:!private!transforming! !
+displayOn:!displaying!public! !
+preconditions!preconditions!public! !
+storeOn:!printing!public! !
+superclass!accessing!private! !
+superclass:!accessing!private! !
+transform!public!transforming! !
+!
 
 !CopyClassRefactoring class methodsFor!
 
@@ -116,6 +118,8 @@ model: aRBNamespace clone: aClass as: aNewName superclass: superClass
 		to: aNewName)
 		superclass: superClass;
 		yourself! !
-!CopyClassRefactoring class categoriesFor: #clone:as:superclass:!instance creation!public! !
-!CopyClassRefactoring class categoriesFor: #model:clone:as:superclass:!instance creation!public! !
+!CopyClassRefactoring class categoriesForMethods!
+clone:as:superclass:!instance creation!public! !
+model:clone:as:superclass:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 WeakLookupTable variableSubclass: #WeakIdentityDictionary
 	instanceVariableNames: ''
@@ -41,11 +41,13 @@ species
 	which is less than useful."
 
 	^IdentityDictionary! !
-!WeakIdentityDictionary categoriesFor: #findKeyOrNil:!private!searching! !
-!WeakIdentityDictionary categoriesFor: #hash:max:!private!searching! !
-!WeakIdentityDictionary categoriesFor: #keysClass!constants!public! !
-!WeakIdentityDictionary categoriesFor: #searchPolicy!constants!public! !
-!WeakIdentityDictionary categoriesFor: #species!accessing!public! !
+!WeakIdentityDictionary categoriesForMethods!
+findKeyOrNil:!private!searching! !
+hash:max:!private!searching! !
+keysClass!constants!public! !
+searchPolicy!constants!public! !
+species!accessing!public! !
+!
 
 !WeakIdentityDictionary class methodsFor!
 
@@ -63,8 +65,10 @@ new: anInteger
 	^(super new: anInteger)
 		haveWeakKeys;
 		yourself! !
-!WeakIdentityDictionary class categoriesFor: #initialize!development!initializing!public! !
-!WeakIdentityDictionary class categoriesFor: #new:!instance creation!public! !
+!WeakIdentityDictionary class categoriesForMethods!
+initialize!development!initializing!public! !
+new:!instance creation!public! !
+!
 
 WeakIdentityDictionary class methodProtocol: #'IdentityDictionary factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #withAll:)!
 

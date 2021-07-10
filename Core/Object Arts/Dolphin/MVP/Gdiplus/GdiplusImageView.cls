@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ImageViewAbstract subclass: #GdiplusImageView
 	instanceVariableNames: 'interpolationMode swun2 swun3 imageAttributes swun4 swun5 swun6'
@@ -117,17 +117,19 @@ paintImageOn: aCanvas
 		drawBorderOn: aCanvas
 		imageRect: imageRect
 		displayRect: displayRect! !
-!GdiplusImageView categoriesFor: #default:in:!geometry!private! !
-!GdiplusImageView categoriesFor: #imageAttributes!accessing!public! !
-!GdiplusImageView categoriesFor: #imageAttributes:!accessing!public! !
-!GdiplusImageView categoriesFor: #imagePadding!accessing!public! !
-!GdiplusImageView categoriesFor: #imagePadding:!accessing!public! !
-!GdiplusImageView categoriesFor: #initialize!initializing!private! !
-!GdiplusImageView categoriesFor: #interpolationMode!accessing!public! !
-!GdiplusImageView categoriesFor: #interpolationMode:!accessing!public! !
-!GdiplusImageView categoriesFor: #isEraseBackground!accessing!public! !
-!GdiplusImageView categoriesFor: #isEraseBackground:!accessing!public! !
-!GdiplusImageView categoriesFor: #paintImageOn:!drawing!private! !
+!GdiplusImageView categoriesForMethods!
+default:in:!geometry!private! !
+imageAttributes!accessing!public! !
+imageAttributes:!accessing!public! !
+imagePadding!accessing!public! !
+imagePadding:!accessing!public! !
+initialize!initializing!private! !
+interpolationMode!accessing!public! !
+interpolationMode:!accessing!public! !
+isEraseBackground!accessing!public! !
+isEraseBackground:!accessing!public! !
+paintImageOn:!drawing!private! !
+!
 
 !GdiplusImageView class methodsFor!
 
@@ -204,10 +206,12 @@ stbConvertFromVersion13: anArray
 
 stbVersion
 	^14! !
-!GdiplusImageView class categoriesFor: #interpolationStyles!constants!public! !
-!GdiplusImageView class categoriesFor: #interpolationStyleTable!constants!public! !
-!GdiplusImageView class categoriesFor: #publishedAspectsOfInstances!must strip!public! !
-!GdiplusImageView class categoriesFor: #stbConvert:fromVersion:!binary filing!public! !
-!GdiplusImageView class categoriesFor: #stbConvertFromVersion13:!public! !
-!GdiplusImageView class categoriesFor: #stbVersion!public! !
+!GdiplusImageView class categoriesForMethods!
+interpolationStyles!constants!public! !
+interpolationStyleTable!constants!public! !
+publishedAspectsOfInstances!must strip!public! !
+stbConvert:fromVersion:!binary filing!public! !
+stbConvertFromVersion13:!public! !
+stbVersion!public! !
+!
 

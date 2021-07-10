@@ -48,7 +48,9 @@ type: aClass lengthField: aSymbol
 	structure being described with the specified <Symbol> name."
 
 	^self type: aClass arrayLength: (ConformantArrayFieldLength lengthField: aSymbol)! !
-!ArrayField class categoriesFor: #type:lengthField:!instance creation!public! !
+!ArrayField class categoriesForMethods!
+type:lengthField:!instance creation!public! !
+!
 
 !ArrayPointerField class methodsFor!
 
@@ -58,7 +60,9 @@ type: aClass lengthField: aSymbol
 	of the structure with the specified <Symbol> name."
 
 	^self type: aClass arrayLength: (ConformantArrayFieldLength lengthField: aSymbol)! !
-!ArrayPointerField class categoriesFor: #type:lengthField:!instance creation!public! !
+!ArrayPointerField class categoriesForMethods!
+type:lengthField:!instance creation!public! !
+!
 
 "End of package definition"!
 

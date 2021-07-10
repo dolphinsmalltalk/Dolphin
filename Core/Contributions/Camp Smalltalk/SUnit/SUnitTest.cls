@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #SUnitTest
 	instanceVariableNames: 'hasRun hasSetup hasRanOnce'
@@ -153,29 +153,31 @@ testSuite
 		failed: 1
 		errors: 1
 		skipped: 0! !
-!SUnitTest categoriesFor: #assertForTestResult:runCount:passed:failed:errors:skipped:!helpers!public! !
-!SUnitTest categoriesFor: #error!helpers!private! !
-!SUnitTest categoriesFor: #fail!helpers!private! !
-!SUnitTest categoriesFor: #hasRun!Accessing!public! !
-!SUnitTest categoriesFor: #hasSetup!Accessing!public! !
-!SUnitTest categoriesFor: #noop!helpers!private! !
-!SUnitTest categoriesFor: #setRun!helpers!private! !
-!SUnitTest categoriesFor: #setUp!public!Running! !
-!SUnitTest categoriesFor: #skipped!helpers!private! !
-!SUnitTest categoriesFor: #testAssert!public!Testing! !
-!SUnitTest categoriesFor: #testDefects!public!Testing! !
-!SUnitTest categoriesFor: #testDialectLocalizedException!public!Testing! !
-!SUnitTest categoriesFor: #testError!public!Testing! !
-!SUnitTest categoriesFor: #testException!public!Testing! !
-!SUnitTest categoriesFor: #testFail!public!Testing! !
-!SUnitTest categoriesFor: #testIsNotRerunOnDebug!public!Testing! !
-!SUnitTest categoriesFor: #testRan!public!Testing! !
-!SUnitTest categoriesFor: #testRanOnlyOnce!public!Testing! !
-!SUnitTest categoriesFor: #testResult!public!Testing! !
-!SUnitTest categoriesFor: #testRunning!public!Testing! !
-!SUnitTest categoriesFor: #testShould!public!Testing! !
-!SUnitTest categoriesFor: #testSkip!public!Testing! !
-!SUnitTest categoriesFor: #testSuite!public!Testing! !
+!SUnitTest categoriesForMethods!
+assertForTestResult:runCount:passed:failed:errors:skipped:!helpers!public! !
+error!helpers!private! !
+fail!helpers!private! !
+hasRun!Accessing!public! !
+hasSetup!Accessing!public! !
+noop!helpers!private! !
+setRun!helpers!private! !
+setUp!public!Running! !
+skipped!helpers!private! !
+testAssert!public!Testing! !
+testDefects!public!Testing! !
+testDialectLocalizedException!public!Testing! !
+testError!public!Testing! !
+testException!public!Testing! !
+testFail!public!Testing! !
+testIsNotRerunOnDebug!public!Testing! !
+testRan!public!Testing! !
+testRanOnlyOnce!public!Testing! !
+testResult!public!Testing! !
+testRunning!public!Testing! !
+testShould!public!Testing! !
+testSkip!public!Testing! !
+testSuite!public!Testing! !
+!
 
 !SUnitTest class methodsFor!
 
@@ -183,5 +185,7 @@ shouldInheritSelectors
 	"answer true to inherit selectors from superclasses"
 
 	^false! !
-!SUnitTest class categoriesFor: #shouldInheritSelectors!public!Testing! !
+!SUnitTest class categoriesForMethods!
+shouldInheritSelectors!public!Testing! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #ICatInformation
 	instanceVariableNames: ''
@@ -200,23 +200,25 @@ requiredCategoriesOfClass: rclsid
 	answer := IEnumStruct elementClass: GUID.
 	self EnumReqCategoriesOfClass: rclsid ppenumCatid: answer.
 	^OLEEnumerator onIEnum: answer! !
-!ICatInformation categoriesFor: #allCategories!enquiries!public! !
-!ICatInformation categoriesFor: #allCategories:!enquiries!public! !
-!ICatInformation categoriesFor: #buildGuidArray:!helpers!methods!private! !
-!ICatInformation categoriesFor: #categoriesOfClass:!enquiries!public! !
-!ICatInformation categoriesFor: #classesInCategories:requiring:!enquiries!public! !
-!ICatInformation categoriesFor: #classesInCategory:!enquiries!public! !
-!ICatInformation categoriesFor: #descriptionOfCategory:!enquiries!public! !
-!ICatInformation categoriesFor: #descriptionOfCategory:locale:!enquiries!public! !
-!ICatInformation categoriesFor: #enumCategories:!enquiries!public! !
-!ICatInformation categoriesFor: #EnumCategories:ppenumCategoryInfo:!**auto generated**!COM Interfaces-ICatInformation!private! !
-!ICatInformation categoriesFor: #enumClassesOfCategories:requiring:!enquiries!public! !
-!ICatInformation categoriesFor: #EnumClassesOfCategories:rgcatidImpl:cRequired:rgcatidReq:ppenumClsid:!COM Interfaces-ICatInformation!private! !
-!ICatInformation categoriesFor: #EnumImplCategoriesOfClass:ppenumCatid:!**auto generated**!COM Interfaces-ICatInformation!private! !
-!ICatInformation categoriesFor: #EnumReqCategoriesOfClass:ppenumCatid:!**auto generated**!COM Interfaces-ICatInformation!private! !
-!ICatInformation categoriesFor: #GetCategoryDesc:lcid:pszDesc:!**auto generated**!COM Interfaces-ICatInformation!private! !
-!ICatInformation categoriesFor: #IsClassOfCategories:cImplemented:rgcatidImpl:cRequired:rgcatidReq:!COM Interfaces-ICatInformation!private! !
-!ICatInformation categoriesFor: #requiredCategoriesOfClass:!enquiries!public! !
+!ICatInformation categoriesForMethods!
+allCategories!enquiries!public! !
+allCategories:!enquiries!public! !
+buildGuidArray:!helpers!methods!private! !
+categoriesOfClass:!enquiries!public! !
+classesInCategories:requiring:!enquiries!public! !
+classesInCategory:!enquiries!public! !
+descriptionOfCategory:!enquiries!public! !
+descriptionOfCategory:locale:!enquiries!public! !
+enumCategories:!enquiries!public! !
+EnumCategories:ppenumCategoryInfo:!**auto generated**!COM Interfaces-ICatInformation!private! !
+enumClassesOfCategories:requiring:!enquiries!public! !
+EnumClassesOfCategories:rgcatidImpl:cRequired:rgcatidReq:ppenumClsid:!COM Interfaces-ICatInformation!private! !
+EnumImplCategoriesOfClass:ppenumCatid:!**auto generated**!COM Interfaces-ICatInformation!private! !
+EnumReqCategoriesOfClass:ppenumCatid:!**auto generated**!COM Interfaces-ICatInformation!private! !
+GetCategoryDesc:lcid:pszDesc:!**auto generated**!COM Interfaces-ICatInformation!private! !
+IsClassOfCategories:cImplemented:rgcatidImpl:cRequired:rgcatidReq:!COM Interfaces-ICatInformation!private! !
+requiredCategoriesOfClass:!enquiries!public! !
+!
 
 ICatInformation methodProtocol: #ICatInformation attributes: #(#readOnly) selectors: #(#EnumCategories:ppenumCategoryInfo: #EnumClassesOfCategories:rgcatidImpl:cRequired:rgcatidReq:ppenumClsid: #EnumImplCategoriesOfClass:ppenumCatid: #EnumReqCategoriesOfClass:ppenumCatid: #GetCategoryDesc:lcid:pszDesc: #IsClassOfCategories:cImplemented:rgcatidImpl:cRequired:rgcatidReq:)!
 
@@ -285,11 +287,13 @@ uninitialize
 	"Private -  Uninitialize the receiver as it is about to be removed from the image."
 
 	CatMan := Controls := nil.! !
-!ICatInformation class categoriesFor: #clsid!constants!public! !
-!ICatInformation class categoriesFor: #controls!enquiries!public! !
-!ICatInformation class categoriesFor: #current!instance creation!public! !
-!ICatInformation class categoriesFor: #defineFunctions!initializing!public! !
-!ICatInformation class categoriesFor: #new!instance creation!public! !
-!ICatInformation class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!ICatInformation class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!ICatInformation class categoriesForMethods!
+clsid!constants!public! !
+controls!enquiries!public! !
+current!instance creation!public! !
+defineFunctions!initializing!public! !
+new!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

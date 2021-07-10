@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Error subclass: #OutOfMemoryError
 	instanceVariableNames: ''
@@ -14,12 +14,16 @@ initialize
 	"Private - Initialize the receiver's instance variables."
 
 	self tag: (HRESULT fromInteger: E_OUTOFMEMORY)! !
-!OutOfMemoryError categoriesFor: #initialize!initializing!private! !
+!OutOfMemoryError categoriesForMethods!
+initialize!initializing!private! !
+!
 
 !OutOfMemoryError class methodsFor!
 
 signal: messageText with: anObject
 
 	^self shouldNotImplement! !
-!OutOfMemoryError class categoriesFor: #signal:with:!instance creation!public! !
+!OutOfMemoryError class categoriesForMethods!
+signal:with:!instance creation!public! !
+!
 

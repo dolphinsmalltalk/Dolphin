@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMHDR subclass: #NMLINK
 	instanceVariableNames: ''
@@ -23,7 +23,9 @@ item
 	"Answer the <LITEM> value of the receiver's 'item' field."
 
 	^LITEM fromAddress: bytes yourAddress + _OffsetOf_item! !
-!NMLINK categoriesFor: #item!**compiled accessors**!public! !
+!NMLINK categoriesForMethods!
+item!**compiled accessors**!public! !
+!
 
 !NMLINK class methodsFor!
 
@@ -40,7 +42,9 @@ getFieldNames
 
 itemFromNMHDR: anExternalAddress
 	^LITEM fromAddress: anExternalAddress yourAddress + _OffsetOf_item! !
-!NMLINK class categoriesFor: #defineFields!public!template definition! !
-!NMLINK class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!NMLINK class categoriesFor: #itemFromNMHDR:!public! !
+!NMLINK class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+itemFromNMHDR:!public! !
+!
 

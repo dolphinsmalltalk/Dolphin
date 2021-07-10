@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusFontFamilyInitializer subclass: #GdiplusFontFamilyGenericSansSerifInitializer
 	instanceVariableNames: ''
@@ -16,11 +16,15 @@ createHandle
 	status := self library gdipGetGenericFontFamilySansSerif: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle! !
-!GdiplusFontFamilyGenericSansSerifInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!GdiplusFontFamilyGenericSansSerifInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+!
 
 !GdiplusFontFamilyGenericSansSerifInitializer class methodsFor!
 
 uninitialize
 	GenericSansSerif := nil! !
-!GdiplusFontFamilyGenericSansSerifInitializer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!GdiplusFontFamilyGenericSansSerifInitializer class categoriesForMethods!
+uninitialize!class hierarchy-removing!private! !
+!
 

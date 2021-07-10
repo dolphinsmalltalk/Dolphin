@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #DebuggerTest
 	instanceVariableNames: 'process savedShowWalkbacks savedView'
@@ -67,8 +67,10 @@ testRemapIPOfSendSelf
 	"Test remapping of the instruction in the middle of the block"
 	byte := debugMethod byteCodes at: startIP + 3.
 	self assert: (byte = Pop or: [byte = PopPushSelf])! !
-!DebuggerTest categoriesFor: #setUp!private!unit tests! !
-!DebuggerTest categoriesFor: #tearDown!private!unit tests! !
-!DebuggerTest categoriesFor: #testNoShowWalkbacks!public!unit tests! !
-!DebuggerTest categoriesFor: #testRemapIPOfSendSelf!public!unit tests! !
+!DebuggerTest categoriesForMethods!
+setUp!private!unit tests! !
+tearDown!private!unit tests! !
+testNoShowWalkbacks!public!unit tests! !
+testRemapIPOfSendSelf!public!unit tests! !
+!
 

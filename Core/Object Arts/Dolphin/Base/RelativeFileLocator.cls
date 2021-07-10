@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 FileLocator subclass: #RelativeFileLocator
 	instanceVariableNames: ''
@@ -16,5 +16,7 @@ relativePathTo: aString
 	specified <readableString> path from the receiver's base path."
 
 	^self relativePathIfSubPath: aString! !
-!RelativeFileLocator categoriesFor: #relativePathTo:!accessing!public! !
+!RelativeFileLocator categoriesForMethods!
+relativePathTo:!accessing!public! !
+!
 

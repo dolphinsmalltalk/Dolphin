@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #SAFEARRAYBOUND
 	instanceVariableNames: ''
@@ -33,10 +33,12 @@ lLbound: anInteger
 	"Set the receiver's 'lLbound' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_lLbound put: anInteger! !
-!SAFEARRAYBOUND categoriesFor: #cElements!**compiled accessors**!public! !
-!SAFEARRAYBOUND categoriesFor: #cElements:!**compiled accessors**!public! !
-!SAFEARRAYBOUND categoriesFor: #lLbound!**compiled accessors**!public! !
-!SAFEARRAYBOUND categoriesFor: #lLbound:!**compiled accessors**!public! !
+!SAFEARRAYBOUND categoriesForMethods!
+cElements!**compiled accessors**!public! !
+cElements:!**compiled accessors**!public! !
+lLbound!**compiled accessors**!public! !
+lLbound:!**compiled accessors**!public! !
+!
 
 !SAFEARRAYBOUND class methodsFor!
 
@@ -57,6 +59,8 @@ defineFields
 
 getFieldNames
 	^#(#cElements #lLbound)! !
-!SAFEARRAYBOUND class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!SAFEARRAYBOUND class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!SAFEARRAYBOUND class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

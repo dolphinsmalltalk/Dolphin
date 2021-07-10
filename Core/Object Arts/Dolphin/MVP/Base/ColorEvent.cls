@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 WindowsEvent subclass: #ColorEvent
 	instanceVariableNames: ''
@@ -17,6 +17,8 @@ canvas
 
 hdc
 	^self wParam! !
-!ColorEvent categoriesFor: #canvas!accessing!public! !
-!ColorEvent categoriesFor: #hdc!accessing!public! !
+!ColorEvent categoriesForMethods!
+canvas!accessing!public! !
+hdc!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StValueToken subclass: #StIdentifierToken
 	instanceVariableNames: ''
@@ -18,7 +18,9 @@ isIdentifier
 
 isPatternVariable
 	^value first == self scannerClass patternVariableCharacter! !
-!StIdentifierToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StIdentifierToken categoriesFor: #isIdentifier!public!testing! !
-!StIdentifierToken categoriesFor: #isPatternVariable!public!testing! !
+!StIdentifierToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isIdentifier!public!testing! !
+isPatternVariable!public!testing! !
+!
 

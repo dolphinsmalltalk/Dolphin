@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IDocHostUIHandlerDispatch
 	instanceVariableNames: ''
@@ -369,30 +369,32 @@ UpdateUI
 
 	<virtual stdcall: hresult 12>
 	^self invalidCall: _failureCode! !
-!IDocHostUIHandlerDispatch categoriesFor: #EnableModeless:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
-!IDocHostUIHandlerDispatch categoriesFor: #filterDataObject:!**auto generated**!methods!public! !
-!IDocHostUIHandlerDispatch categoriesFor: #FilterDataObject:ppDORet:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!IDocHostUIHandlerDispatch categoriesFor: #getDropTarget:!**auto generated**!methods!public! !
-!IDocHostUIHandlerDispatch categoriesFor: #GetDropTarget:ppDropTarget:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!IDocHostUIHandlerDispatch categoriesFor: #getExternal!**auto generated**!methods!public! !
-!IDocHostUIHandlerDispatch categoriesFor: #GetExternal:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!IDocHostUIHandlerDispatch categoriesFor: #getHostInfo:pdwDoubleClick:!**auto generated**!methods!public! !
-!IDocHostUIHandlerDispatch categoriesFor: #GetHostInfo:pdwDoubleClick:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!IDocHostUIHandlerDispatch categoriesFor: #getOptionKeyPath:!**auto generated**!methods!public! !
-!IDocHostUIHandlerDispatch categoriesFor: #GetOptionKeyPath:dw:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!IDocHostUIHandlerDispatch categoriesFor: #HideUI!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
-!IDocHostUIHandlerDispatch categoriesFor: #OnDocWindowActivate:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
-!IDocHostUIHandlerDispatch categoriesFor: #OnFrameWindowActivate:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
-!IDocHostUIHandlerDispatch categoriesFor: #ResizeBorder:top:right:bottom:pUIWindow:fFrameWindow:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
-!IDocHostUIHandlerDispatch categoriesFor: #showContextMenu:x:y:pcmdtReserved:pdispReserved:!**auto generated**!methods!public! !
-!IDocHostUIHandlerDispatch categoriesFor: #ShowContextMenu:x:y:pcmdtReserved:pdispReserved:dwRetVal:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!IDocHostUIHandlerDispatch categoriesFor: #showUI:pActiveObject:pCommandTarget:pFrame:pDoc:!**auto generated**!methods!public! !
-!IDocHostUIHandlerDispatch categoriesFor: #ShowUI:pActiveObject:pCommandTarget:pFrame:pDoc:dwRetVal:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!IDocHostUIHandlerDispatch categoriesFor: #translateAccelerator:nMessage:wParam:lParam:bstrGuidCmdGroup:nCmdID:!**auto generated**!methods!public! !
-!IDocHostUIHandlerDispatch categoriesFor: #TranslateAccelerator:nMessage:wParam:lParam:bstrGuidCmdGroup:nCmdID:dwRetVal:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!IDocHostUIHandlerDispatch categoriesFor: #translateUrl:bstrURLIn:!**auto generated**!methods!public! !
-!IDocHostUIHandlerDispatch categoriesFor: #TranslateUrl:bstrURLIn:pbstrURLOut:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
-!IDocHostUIHandlerDispatch categoriesFor: #UpdateUI!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
+!IDocHostUIHandlerDispatch categoriesForMethods!
+EnableModeless:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
+filterDataObject:!**auto generated**!methods!public! !
+FilterDataObject:ppDORet:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+getDropTarget:!**auto generated**!methods!public! !
+GetDropTarget:ppDropTarget:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+getExternal!**auto generated**!methods!public! !
+GetExternal:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+getHostInfo:pdwDoubleClick:!**auto generated**!methods!public! !
+GetHostInfo:pdwDoubleClick:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+getOptionKeyPath:!**auto generated**!methods!public! !
+GetOptionKeyPath:dw:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+HideUI!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
+OnDocWindowActivate:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
+OnFrameWindowActivate:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
+ResizeBorder:top:right:bottom:pUIWindow:fFrameWindow:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
+showContextMenu:x:y:pcmdtReserved:pdispReserved:!**auto generated**!methods!public! !
+ShowContextMenu:x:y:pcmdtReserved:pdispReserved:dwRetVal:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+showUI:pActiveObject:pCommandTarget:pFrame:pDoc:!**auto generated**!methods!public! !
+ShowUI:pActiveObject:pCommandTarget:pFrame:pDoc:dwRetVal:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+translateAccelerator:nMessage:wParam:lParam:bstrGuidCmdGroup:nCmdID:!**auto generated**!methods!public! !
+TranslateAccelerator:nMessage:wParam:lParam:bstrGuidCmdGroup:nCmdID:dwRetVal:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+translateUrl:bstrURLIn:!**auto generated**!methods!public! !
+TranslateUrl:bstrURLIn:pbstrURLOut:!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!private! !
+UpdateUI!**auto generated**!COM Interfaces-IDocHostUIHandlerDispatch!public! !
+!
 
 !IDocHostUIHandlerDispatch class methodsFor!
 
@@ -430,5 +432,7 @@ defineFunctions
 		defineFunction: #FilterDataObject:ppDORet:
 			argumentTypes: 'IUnknown* IUnknown**'
 ! !
-!IDocHostUIHandlerDispatch class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IDocHostUIHandlerDispatch class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StProgramNode subclass: #StExternalArgTypeNode
 	instanceVariableNames: 'typeOrdinal structClass indirections start stop'
@@ -42,15 +42,17 @@ typeOrdinal
 
 typeOrdinal: anInteger 
 	typeOrdinal := anInteger! !
-!StExternalArgTypeNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StExternalArgTypeNode categoriesFor: #indirections!accessing!private! !
-!StExternalArgTypeNode categoriesFor: #indirections:!accessing!private! !
-!StExternalArgTypeNode categoriesFor: #start!accessing!public! !
-!StExternalArgTypeNode categoriesFor: #start:!accessing!private! !
-!StExternalArgTypeNode categoriesFor: #stop!accessing!public! !
-!StExternalArgTypeNode categoriesFor: #stop:!accessing!private! !
-!StExternalArgTypeNode categoriesFor: #structClass!accessing!private! !
-!StExternalArgTypeNode categoriesFor: #structClass:!accessing!private! !
-!StExternalArgTypeNode categoriesFor: #typeOrdinal!accessing!private! !
-!StExternalArgTypeNode categoriesFor: #typeOrdinal:!accessing!private! !
+!StExternalArgTypeNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+indirections!accessing!private! !
+indirections:!accessing!private! !
+start!accessing!public! !
+start:!accessing!private! !
+stop!accessing!public! !
+stop:!accessing!private! !
+structClass!accessing!private! !
+structClass:!accessing!private! !
+typeOrdinal!accessing!private! !
+typeOrdinal:!accessing!private! !
+!
 

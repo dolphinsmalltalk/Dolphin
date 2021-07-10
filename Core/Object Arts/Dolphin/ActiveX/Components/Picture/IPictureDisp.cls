@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IPictureDisp
 	instanceVariableNames: ''
@@ -115,15 +115,17 @@ width
 		OLE_XSIZE_HIMETRIC Width"
 
 	^self getPropertyId: 4! !
-!IPictureDisp categoriesFor: #handle!**auto generated**!properties!public! !
-!IPictureDisp categoriesFor: #height!**auto generated**!properties!public! !
-!IPictureDisp categoriesFor: #hPal!**auto generated**!properties!public! !
-!IPictureDisp categoriesFor: #hPal:!**auto generated**!properties!public! !
-!IPictureDisp categoriesFor: #render:x:y:cx:cy:xSrc:ySrc:cxSrc:cySrc:prcWBounds:!**auto generated**!methods!public! !
-!IPictureDisp categoriesFor: #type!**auto generated**!properties!public! !
-!IPictureDisp categoriesFor: #value!**auto generated**!properties!public! !
-!IPictureDisp categoriesFor: #value:!**auto generated**!properties!public! !
-!IPictureDisp categoriesFor: #width!**auto generated**!properties!public! !
+!IPictureDisp categoriesForMethods!
+handle!**auto generated**!properties!public! !
+height!**auto generated**!properties!public! !
+hPal!**auto generated**!properties!public! !
+hPal:!**auto generated**!properties!public! !
+render:x:y:cx:cy:xSrc:ySrc:cxSrc:cySrc:prcWBounds:!**auto generated**!methods!public! !
+type!**auto generated**!properties!public! !
+value!**auto generated**!properties!public! !
+value:!**auto generated**!properties!public! !
+width!**auto generated**!properties!public! !
+!
 
 !IPictureDisp class methodsFor!
 
@@ -132,5 +134,7 @@ clsid
 
 	^CLSID fromString: '{0be35204-8f91-11ce-9de3-00aa004bb851}'
 ! !
-!IPictureDisp class categoriesFor: #clsid!**auto generated**!constants!private! !
+!IPictureDisp class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+!
 

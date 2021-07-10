@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 InternalBitmap subclass: #InternalIcon
 	instanceVariableNames: 'tileColor'
@@ -125,22 +125,24 @@ tileColor
 
 tileColor: aColor 
 	tileColor := aColor! !
-!InternalIcon categoriesFor: #=!comparing!comparison!public! !
-!InternalIcon categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!InternalIcon categoriesFor: #asAlphaBitmap:!converting!public! !
-!InternalIcon categoriesFor: #asMenuBitmap!converting!public! !
-!InternalIcon categoriesFor: #asParameter!converting!public! !
-!InternalIcon categoriesFor: #bitmap!accessing!public! !
-!InternalIcon categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!InternalIcon categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
-!InternalIcon categoriesFor: #hash!comparing!comparison!public! !
-!InternalIcon categoriesFor: #hotspot!accessing!public! !
-!InternalIcon categoriesFor: #imageIndex!accessing!public! !
-!InternalIcon categoriesFor: #imageManager!public! !
-!InternalIcon categoriesFor: #imageType!constants!public! !
-!InternalIcon categoriesFor: #tileBitmapWithExtent:!accessing!helpers!private! !
-!InternalIcon categoriesFor: #tileColor!accessing!private! !
-!InternalIcon categoriesFor: #tileColor:!accessing!private! !
+!InternalIcon categoriesForMethods!
+=!comparing!comparison!public! !
+addToImageList:mask:!double dispatch!private! !
+asAlphaBitmap:!converting!public! !
+asMenuBitmap!converting!public! !
+asParameter!converting!public! !
+bitmap!accessing!public! !
+drawOn:at:extent:!drawing-bitmaps!public! !
+drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-gdiplus!public! !
+hash!comparing!comparison!public! !
+hotspot!accessing!public! !
+imageIndex!accessing!public! !
+imageManager!public! !
+imageType!constants!public! !
+tileBitmapWithExtent:!accessing!helpers!private! !
+tileColor!accessing!private! !
+tileColor:!accessing!private! !
+!
 
 !InternalIcon class methodsFor!
 
@@ -215,17 +217,19 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^1! !
-!InternalIcon class categoriesFor: #badgeTile:color:!instance creation!public! !
-!InternalIcon class categoriesFor: #badgeTile:color:extent:!instance creation!public! !
-!InternalIcon class categoriesFor: #defaultExtent!constants!private! !
-!InternalIcon class categoriesFor: #defaultTileExtent!constants!private! !
-!InternalIcon class categoriesFor: #filesType!constants!private! !
-!InternalIcon class categoriesFor: #fromFile:!instance creation!public! !
-!InternalIcon class categoriesFor: #fromFile:extent:!instance creation!public! !
-!InternalIcon class categoriesFor: #icon!public! !
-!InternalIcon class categoriesFor: #imageManager!accessing!private! !
-!InternalIcon class categoriesFor: #new!instance creation!public! !
-!InternalIcon class categoriesFor: #newTile!instance creation!public! !
-!InternalIcon class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!InternalIcon class categoriesFor: #stbVersion!binary filing!public! !
+!InternalIcon class categoriesForMethods!
+badgeTile:color:!instance creation!public! !
+badgeTile:color:extent:!instance creation!public! !
+defaultExtent!constants!private! !
+defaultTileExtent!constants!private! !
+filesType!constants!private! !
+fromFile:!instance creation!public! !
+fromFile:extent:!instance creation!public! !
+icon!public! !
+imageManager!accessing!private! !
+new!instance creation!public! !
+newTile!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

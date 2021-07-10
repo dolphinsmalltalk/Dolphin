@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_SSL_INFO
 	instanceVariableNames: ''
@@ -121,22 +121,24 @@ SslClientCertNegotiated: anInteger
 	"Set the receiver's 'SslClientCertNegotiated' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_SslClientCertNegotiated put: anInteger! !
-!HTTP_SSL_INFO categoriesFor: #ConnectionKeySize!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #ConnectionKeySize:!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #pClientCertInfo!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #pClientCertInfo:!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #pServerCertIssuer!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #pServerCertIssuer:!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #pServerCertSubject!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #pServerCertSubject:!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #ServerCertIssuerSize!**compiled accessors**!private! !
-!HTTP_SSL_INFO categoriesFor: #ServerCertIssuerSize:!**compiled accessors**!private! !
-!HTTP_SSL_INFO categoriesFor: #ServerCertKeySize!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #ServerCertKeySize:!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #ServerCertSubjectSize!**compiled accessors**!private! !
-!HTTP_SSL_INFO categoriesFor: #ServerCertSubjectSize:!**compiled accessors**!private! !
-!HTTP_SSL_INFO categoriesFor: #SslClientCertNegotiated!**compiled accessors**!public! !
-!HTTP_SSL_INFO categoriesFor: #SslClientCertNegotiated:!**compiled accessors**!public! !
+!HTTP_SSL_INFO categoriesForMethods!
+ConnectionKeySize!**compiled accessors**!public! !
+ConnectionKeySize:!**compiled accessors**!public! !
+pClientCertInfo!**compiled accessors**!public! !
+pClientCertInfo:!**compiled accessors**!public! !
+pServerCertIssuer!**compiled accessors**!public! !
+pServerCertIssuer:!**compiled accessors**!public! !
+pServerCertSubject!**compiled accessors**!public! !
+pServerCertSubject:!**compiled accessors**!public! !
+ServerCertIssuerSize!**compiled accessors**!private! !
+ServerCertIssuerSize:!**compiled accessors**!private! !
+ServerCertKeySize!**compiled accessors**!public! !
+ServerCertKeySize:!**compiled accessors**!public! !
+ServerCertSubjectSize!**compiled accessors**!private! !
+ServerCertSubjectSize:!**compiled accessors**!private! !
+SslClientCertNegotiated!**compiled accessors**!public! !
+SslClientCertNegotiated:!**compiled accessors**!public! !
+!
 
 !HTTP_SSL_INFO class methodsFor!
 
@@ -171,6 +173,8 @@ defineFields
 
 getFieldNames
 	^#(#ServerCertKeySize #ConnectionKeySize #ServerCertIssuerSize #ServerCertSubjectSize #pServerCertIssuer #pServerCertSubject #pClientCertInfo #SslClientCertNegotiated)! !
-!HTTP_SSL_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SSL_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_SSL_INFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

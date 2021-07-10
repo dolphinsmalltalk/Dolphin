@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ResourceSTBAccessor subclass: #ResourceSTBByteArrayAccessor
 	instanceVariableNames: 'byteArray'
@@ -68,14 +68,16 @@ stbSaveOn: anSTBOutFiler
 	class references within a resource."
 
 	anSTBOutFiler saveObject: self as: (STBResourceSTBByteArrayAccessorProxy forAccessor: self)! !
-!ResourceSTBByteArrayAccessor categoriesFor: #byteArray!accessing!private! !
-!ResourceSTBByteArrayAccessor categoriesFor: #byteArray:!accessing!private! !
-!ResourceSTBByteArrayAccessor categoriesFor: #makeByteArrayClass:usingContext:!mutating!private! !
-!ResourceSTBByteArrayAccessor categoriesFor: #makeFile:class:usingContext:!mutating!private! !
-!ResourceSTBByteArrayAccessor categoriesFor: #postCopy!copying!private! !
-!ResourceSTBByteArrayAccessor categoriesFor: #readStream!accessing!private! !
-!ResourceSTBByteArrayAccessor categoriesFor: #save:as:!operations!public! !
-!ResourceSTBByteArrayAccessor categoriesFor: #stbSaveOn:!binary filing!public! !
+!ResourceSTBByteArrayAccessor categoriesForMethods!
+byteArray!accessing!private! !
+byteArray:!accessing!private! !
+makeByteArrayClass:usingContext:!mutating!private! !
+makeFile:class:usingContext:!mutating!private! !
+postCopy!copying!private! !
+readStream!accessing!private! !
+save:as:!operations!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 !ResourceSTBByteArrayAccessor class methodsFor!
 
@@ -105,7 +107,9 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
-!ResourceSTBByteArrayAccessor class categoriesFor: #onByteArray:!instance creation!public! !
-!ResourceSTBByteArrayAccessor class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!ResourceSTBByteArrayAccessor class categoriesFor: #stbVersion!binary filing!public! !
+!ResourceSTBByteArrayAccessor class categoriesForMethods!
+onByteArray:!instance creation!public! !
+stbConvertFromVersion1:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

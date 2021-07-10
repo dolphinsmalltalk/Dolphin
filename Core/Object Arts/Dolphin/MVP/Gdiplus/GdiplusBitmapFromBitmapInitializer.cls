@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusBitmapFromBitmapInitializer
 	instanceVariableNames: 'bitmap'
@@ -41,9 +41,11 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating Bitmap'! !
-!GdiplusBitmapFromBitmapInitializer categoriesFor: #bitmap:!initializing!private! !
-!GdiplusBitmapFromBitmapInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusBitmapFromBitmapInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!GdiplusBitmapFromBitmapInitializer categoriesForMethods!
+bitmap:!initializing!private! !
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+!
 
 !GdiplusBitmapFromBitmapInitializer class methodsFor!
 
@@ -54,5 +56,7 @@ bitmap: aBitmap
 	"SW: Would there be any need to allow the user to supply the HPALETTE ?"
 
 	^self new bitmap: aBitmap! !
-!GdiplusBitmapFromBitmapInitializer class categoriesFor: #bitmap:!instance creation!public! !
+!GdiplusBitmapFromBitmapInitializer class categoriesForMethods!
+bitmap:!instance creation!public! !
+!
 

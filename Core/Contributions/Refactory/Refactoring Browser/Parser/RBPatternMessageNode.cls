@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StMessageNode subclass: #RBPatternMessageNode
 	instanceVariableNames: 'isList isCascadeList'
@@ -102,16 +102,18 @@ sentMessages
 	^(super sentMessages)
 		remove: self selector ifAbsent: [];
 		yourself! !
-!RBPatternMessageNode categoriesFor: #copyInContext:!matching!public! !
-!RBPatternMessageNode categoriesFor: #isList!public!testing/matching! !
-!RBPatternMessageNode categoriesFor: #isPatternNode!public!testing/matching! !
-!RBPatternMessageNode categoriesFor: #isSelectorList!public!testing/matching! !
-!RBPatternMessageNode categoriesFor: #match:inContext:!matching!public! !
-!RBPatternMessageNode categoriesFor: #matchArgumentsAgainst:inContext:!matching!public! !
-!RBPatternMessageNode categoriesFor: #matchingClass!constants!public! !
-!RBPatternMessageNode categoriesFor: #matchSelectorAgainst:inContext:!matching!public! !
-!RBPatternMessageNode categoriesFor: #receiver:selectorParts:arguments:!initialize/release!public! !
-!RBPatternMessageNode categoriesFor: #sentMessages!accessing!public! !
+!RBPatternMessageNode categoriesForMethods!
+copyInContext:!matching!public! !
+isList!public!testing/matching! !
+isPatternNode!public!testing/matching! !
+isSelectorList!public!testing/matching! !
+match:inContext:!matching!public! !
+matchArgumentsAgainst:inContext:!matching!public! !
+matchingClass!constants!public! !
+matchSelectorAgainst:inContext:!matching!public! !
+receiver:selectorParts:arguments:!initialize/release!public! !
+sentMessages!accessing!public! !
+!
 
 !RBPatternMessageNode class methodsFor!
 
@@ -127,5 +129,7 @@ receiver: aValueNode selectorParts: keywordTokens arguments: valueNodes
 				receiver: aValueNode
 				selectorParts: keywordTokens
 				arguments: valueNodes]! !
-!RBPatternMessageNode class categoriesFor: #receiver:selectorParts:arguments:!instance creation!public! !
+!RBPatternMessageNode class categoriesForMethods!
+receiver:selectorParts:arguments:!instance creation!public! !
+!
 

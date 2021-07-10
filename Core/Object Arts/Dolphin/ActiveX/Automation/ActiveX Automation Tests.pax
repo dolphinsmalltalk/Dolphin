@@ -70,7 +70,9 @@ testBSTRFromAddress
 	empty := BSTR new.
 	self assert: (BSTR fromAddress: nil) equals: empty.
 	self assert: (BSTR fromAddress: 0) equals: empty! !
-!ExternalAddressTest categoriesFor: #testBSTRFromAddress!public!unit tests! !
+!ExternalAddressTest categoriesForMethods!
+testBSTRFromAddress!public!unit tests! !
+!
 
 !ExternalDescriptorTest methodsFor!
 
@@ -83,7 +85,9 @@ testComPtrs
 		parseStructArg: IDispatch
 		valueType: ExtCallArgSTRUCT
 		refType: ExtCallArgCOMPTR! !
-!ExternalDescriptorTest categoriesFor: #testComPtrs!public!unit tests! !
+!ExternalDescriptorTest categoriesForMethods!
+testComPtrs!public!unit tests! !
+!
 
 "End of package definition"!
 

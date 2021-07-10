@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LayoutManagerTest subclass: #ProportionalLayoutTest
 	instanceVariableNames: ''
@@ -77,6 +77,8 @@ testSplitterVisibility
 	self deny: s4 isWindowVisible.
 	self assert: s5 isWindowVisible.
 ! !
-!ProportionalLayoutTest categoriesFor: #layoutManagerClass!private!unit tests! !
-!ProportionalLayoutTest categoriesFor: #testSplitterVisibility!public!unit tests! !
+!ProportionalLayoutTest categoriesForMethods!
+layoutManagerClass!private!unit tests! !
+testSplitterVisibility!public!unit tests! !
+!
 

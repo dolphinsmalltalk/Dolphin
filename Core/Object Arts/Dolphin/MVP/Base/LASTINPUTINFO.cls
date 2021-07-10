@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #LASTINPUTINFO
 	instanceVariableNames: ''
@@ -35,9 +35,11 @@ dwTime: anInteger
 	"Set the receiver's 'dwTime' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_dwTime put: anInteger! !
-!LASTINPUTINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
-!LASTINPUTINFO categoriesFor: #dwTime!**compiled accessors**!public! !
-!LASTINPUTINFO categoriesFor: #dwTime:!**compiled accessors**!public! !
+!LASTINPUTINFO categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+dwTime!**compiled accessors**!public! !
+dwTime:!**compiled accessors**!public! !
+!
 
 !LASTINPUTINFO class methodsFor!
 
@@ -58,6 +60,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwTime)! !
-!LASTINPUTINFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!LASTINPUTINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!LASTINPUTINFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

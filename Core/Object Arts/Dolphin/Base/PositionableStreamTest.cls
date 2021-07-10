@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StreamTest subclass: #PositionableStreamTest
 	instanceVariableNames: ''
@@ -854,46 +854,48 @@ writeOperationNotImplemented: aBlock
 		should: aBlock
 		raise: Error
 		matching: [:ex | ex description beginsWith: self streamClass name , ' does not understand']! !
-!PositionableStreamTest categoriesFor: #arrayedCollections!private!unit tests! !
-!PositionableStreamTest categoriesFor: #arrays!private!unit tests! !
-!PositionableStreamTest categoriesFor: #byteArrays!private!unit tests! !
-!PositionableStreamTest categoriesFor: #collections!private!unit tests! !
-!PositionableStreamTest categoriesFor: #intervals!private!unit tests! !
-!PositionableStreamTest categoriesFor: #orderedCollections!private!unit tests! !
-!PositionableStreamTest categoriesFor: #readOperationNotImplemented:!private!unit tests! !
-!PositionableStreamTest categoriesFor: #runArrays!private!unit tests! !
-!PositionableStreamTest categoriesFor: #streamOn:!helpers!private! !
-!PositionableStreamTest categoriesFor: #streamOnBytes:type:!helpers!private! !
-!PositionableStreamTest categoriesFor: #streamOnFile:type:!helpers!private! !
-!PositionableStreamTest categoriesFor: #streamWith:!helpers!private! !
-!PositionableStreamTest categoriesFor: #strings!constants!private! !
-!PositionableStreamTest categoriesFor: #subjectCollection:!public! !
-!PositionableStreamTest categoriesFor: #testBasicNext!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testContents!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testMarkusKuhnUtf8!gettableStream only!public! !
-!PositionableStreamTest categoriesFor: #testNew!public!testing! !
-!PositionableStreamTest categoriesFor: #testNext!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextAvailable!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextAvailableColon!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextColon!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextIllegalUtf8CodePositions!gettableStream only!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextInto!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextLine!gettableStream only!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextLineCrOnly!gettableStream only!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextLongUtf8Encodings!gettableStream only!public!strict utf8!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextOtherNonCharactersUtf8!gettableStream only!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextOverlongUtf8!gettableStream only!public!strict utf8!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextPut!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testNextWord!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testPeekFor!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testReverseContents!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testSkipSeparators!gettableStream only!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testSkipToAllColon!gettableStream only!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testUpTo!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testUpToAllColon!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testUpToEnd!public!unit tests! !
-!PositionableStreamTest categoriesFor: #testUpToUtf!gettableStream only!public! !
-!PositionableStreamTest categoriesFor: #verifyNonChars:!public! !
-!PositionableStreamTest categoriesFor: #writeableCollections!private!unit tests! !
-!PositionableStreamTest categoriesFor: #writeOperationNotImplemented:!private!unit tests! !
+!PositionableStreamTest categoriesForMethods!
+arrayedCollections!private!unit tests! !
+arrays!private!unit tests! !
+byteArrays!private!unit tests! !
+collections!private!unit tests! !
+intervals!private!unit tests! !
+orderedCollections!private!unit tests! !
+readOperationNotImplemented:!private!unit tests! !
+runArrays!private!unit tests! !
+streamOn:!helpers!private! !
+streamOnBytes:type:!helpers!private! !
+streamOnFile:type:!helpers!private! !
+streamWith:!helpers!private! !
+strings!constants!private! !
+subjectCollection:!public! !
+testBasicNext!public!unit tests! !
+testContents!public!unit tests! !
+testMarkusKuhnUtf8!gettableStream only!public! !
+testNew!public!testing! !
+testNext!public!unit tests! !
+testNextAvailable!public!unit tests! !
+testNextAvailableColon!public!unit tests! !
+testNextColon!public!unit tests! !
+testNextIllegalUtf8CodePositions!gettableStream only!public!unit tests! !
+testNextInto!public!unit tests! !
+testNextLine!gettableStream only!public!unit tests! !
+testNextLineCrOnly!gettableStream only!public!unit tests! !
+testNextLongUtf8Encodings!gettableStream only!public!strict utf8!unit tests! !
+testNextOtherNonCharactersUtf8!gettableStream only!public!unit tests! !
+testNextOverlongUtf8!gettableStream only!public!strict utf8!unit tests! !
+testNextPut!public!unit tests! !
+testNextWord!public!unit tests! !
+testPeekFor!public!unit tests! !
+testReverseContents!public!unit tests! !
+testSkipSeparators!gettableStream only!public!unit tests! !
+testSkipToAllColon!gettableStream only!public!unit tests! !
+testUpTo!public!unit tests! !
+testUpToAllColon!public!unit tests! !
+testUpToEnd!public!unit tests! !
+testUpToUtf!gettableStream only!public! !
+verifyNonChars:!public! !
+writeableCollections!private!unit tests! !
+writeOperationNotImplemented:!private!unit tests! !
+!
 

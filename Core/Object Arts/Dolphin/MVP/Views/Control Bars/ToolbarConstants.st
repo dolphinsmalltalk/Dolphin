@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Smalltalk at: #ToolbarConstants put: (PoolConstantsDictionary named: #ToolbarConstants)!
 ToolbarConstants at: 'BTNS_AUTOSIZE' put: 16r10!

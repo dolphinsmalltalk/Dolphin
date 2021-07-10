@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StdioFileStream subclass: #StdioBinaryFileStream
 	instanceVariableNames: ''
@@ -83,15 +83,17 @@ upToEnd
 	"Implementation Note: Override to provide a more efficient implementation by reading the bytes as a block."
 
 	^self basicNext: self size - self position! !
-!StdioBinaryFileStream categoriesFor: #contentsSpecies!constants!private! !
-!StdioBinaryFileStream categoriesFor: #externalType!accessing!public! !
-!StdioBinaryFileStream categoriesFor: #next!accessing!public! !
-!StdioBinaryFileStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!StdioBinaryFileStream categoriesFor: #nextLine!accessing!public! !
-!StdioBinaryFileStream categoriesFor: #peek!accessing!public! !
-!StdioBinaryFileStream categoriesFor: #peekFor:!accessing!public! !
-!StdioBinaryFileStream categoriesFor: #translationMode!constants!private! !
-!StdioBinaryFileStream categoriesFor: #upToEnd!accessing!public! !
+!StdioBinaryFileStream categoriesForMethods!
+contentsSpecies!constants!private! !
+externalType!accessing!public! !
+next!accessing!public! !
+next:putAll:startingAt:!accessing!public! !
+nextLine!accessing!public! !
+peek!accessing!public! !
+peekFor:!accessing!public! !
+translationMode!constants!private! !
+upToEnd!accessing!public! !
+!
 
 !StdioBinaryFileStream class methodsFor!
 
@@ -103,6 +105,8 @@ encodingType
 	Although this ought to be #binary at this level (untranslated binary being the most general), for historical compatibility it is not."
 
 	^#binary! !
-!StdioBinaryFileStream class categoriesFor: #encodingMode!constants!private! !
-!StdioBinaryFileStream class categoriesFor: #encodingType!constants!public! !
+!StdioBinaryFileStream class categoriesForMethods!
+encodingMode!constants!private! !
+encodingType!constants!public! !
+!
 

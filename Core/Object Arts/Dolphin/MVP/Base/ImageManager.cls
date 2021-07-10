@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ImageManager
 	instanceVariableNames: 'images imageLists maskcolor backcolor'
@@ -201,31 +201,33 @@ stbSaveOn: anSTBOutFiler
 
 	self purgeImages.
 	super stbSaveOn: anSTBOutFiler! !
-!ImageManager categoriesFor: #addImage:!adding!public! !
-!ImageManager categoriesFor: #addImage:extent:!adding!public! !
-!ImageManager categoriesFor: #addImage:extent:maskcolor:!adding!private! !
-!ImageManager categoriesFor: #addImage:maskcolor:!adding!private! !
-!ImageManager categoriesFor: #backcolor!accessing!public! !
-!ImageManager categoriesFor: #backcolor:!accessing!public! !
-!ImageManager categoriesFor: #basicAddImage:extent:maskcolor:!adding!private! !
-!ImageManager categoriesFor: #buildImageListWithExtent:!helpers!private! !
-!ImageManager categoriesFor: #imageAt:!accessing!public! !
-!ImageManager categoriesFor: #imageAt:ifAbsent:!accessing!public! !
-!ImageManager categoriesFor: #imageListWithExtent:!accessing!public! !
-!ImageManager categoriesFor: #indexOfImage:!public!searching! !
-!ImageManager categoriesFor: #initialize!initializing!private! !
-!ImageManager categoriesFor: #maskcolor!accessing!public! !
-!ImageManager categoriesFor: #maskcolor:!accessing!public! !
-!ImageManager categoriesFor: #maximumImageIndex!helpers!private! !
-!ImageManager categoriesFor: #newImageLists!private!removing! !
-!ImageManager categoriesFor: #newImageListWithExtent:!helpers!private! !
-!ImageManager categoriesFor: #newImages!private!removing! !
-!ImageManager categoriesFor: #orderedImages!accessing!private! !
-!ImageManager categoriesFor: #purge!public!removing! !
-!ImageManager categoriesFor: #purgeImages!operations!private! !
-!ImageManager categoriesFor: #purgeImagesWithExtent:!operations!private! !
-!ImageManager categoriesFor: #size!accessing!public! !
-!ImageManager categoriesFor: #stbSaveOn:!binary filing!public! !
+!ImageManager categoriesForMethods!
+addImage:!adding!public! !
+addImage:extent:!adding!public! !
+addImage:extent:maskcolor:!adding!private! !
+addImage:maskcolor:!adding!private! !
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+basicAddImage:extent:maskcolor:!adding!private! !
+buildImageListWithExtent:!helpers!private! !
+imageAt:!accessing!public! !
+imageAt:ifAbsent:!accessing!public! !
+imageListWithExtent:!accessing!public! !
+indexOfImage:!public!searching! !
+initialize!initializing!private! !
+maskcolor!accessing!public! !
+maskcolor:!accessing!public! !
+maximumImageIndex!helpers!private! !
+newImageLists!private!removing! !
+newImageListWithExtent:!helpers!private! !
+newImages!private!removing! !
+orderedImages!accessing!private! !
+purge!public!removing! !
+purgeImages!operations!private! !
+purgeImagesWithExtent:!operations!private! !
+size!accessing!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 !ImageManager class methodsFor!
 
@@ -248,7 +250,9 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!ImageManager class categoriesFor: #new!instance creation!public! !
-!ImageManager class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!ImageManager class categoriesFor: #stbVersion!binary filing!public! !
+!ImageManager class categoriesForMethods!
+new!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

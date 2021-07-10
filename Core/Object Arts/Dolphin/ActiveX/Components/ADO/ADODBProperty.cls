@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #ADODBProperty
 	instanceVariableNames: ''
@@ -160,21 +160,23 @@ value: pval
 	"Set the 'Value' property of the receiver to the <variant> value of the argument."
 
 	self put_Value: pval asVariant! !
-!ADODBProperty categoriesFor: #attributes!**auto generated**!properties!public! !
-!ADODBProperty categoriesFor: #attributes:!**auto generated**!properties!public! !
-!ADODBProperty categoriesFor: #get_Attributes:!**auto generated**!COM Interfaces-Property!private! !
-!ADODBProperty categoriesFor: #get_Name:!**auto generated**!COM Interfaces-Property!private! !
-!ADODBProperty categoriesFor: #get_Type:!**auto generated**!COM Interfaces-Property!private! !
-!ADODBProperty categoriesFor: #get_Value:!**auto generated**!COM Interfaces-Property!private! !
-!ADODBProperty categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ADODBProperty categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ADODBProperty categoriesFor: #name!**auto generated**!properties!public! !
-!ADODBProperty categoriesFor: #printValueOn:!printing!private! !
-!ADODBProperty categoriesFor: #put_Attributes:!**auto generated**!COM Interfaces-Property!private! !
-!ADODBProperty categoriesFor: #put_Value:!**auto generated**!COM Interfaces-Property!private! !
-!ADODBProperty categoriesFor: #type!**auto generated**!properties!public! !
-!ADODBProperty categoriesFor: #value!**auto generated**!properties!public! !
-!ADODBProperty categoriesFor: #value:!**auto generated**!properties!public! !
+!ADODBProperty categoriesForMethods!
+attributes!**auto generated**!properties!public! !
+attributes:!**auto generated**!properties!public! !
+get_Attributes:!**auto generated**!COM Interfaces-Property!private! !
+get_Name:!**auto generated**!COM Interfaces-Property!private! !
+get_Type:!**auto generated**!COM Interfaces-Property!private! !
+get_Value:!**auto generated**!COM Interfaces-Property!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+name!**auto generated**!properties!public! !
+printValueOn:!printing!private! !
+put_Attributes:!**auto generated**!COM Interfaces-Property!private! !
+put_Value:!**auto generated**!COM Interfaces-Property!private! !
+type!**auto generated**!properties!public! !
+value!**auto generated**!properties!public! !
+value:!**auto generated**!properties!public! !
+!
 
 !ADODBProperty class methodsFor!
 
@@ -196,5 +198,7 @@ defineFunctions
 		defineFunction: #put_Attributes:
 			argumentTypes: 'sdword'
 ! !
-!ADODBProperty class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBProperty class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

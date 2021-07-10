@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ChunkFileMethodScanner
 	instanceVariableNames: 'readBufferSize'
@@ -136,17 +136,19 @@ scanSourcesFileFor: aString
 		scan: SourceManager default sourcesFileStream
 		for: aString
 		sourceFileIndex: SourceManager.SourcesIndex! !
-!ChunkFileMethodScanner categoriesFor: #defaultReadBufferSize!constants!public! !
-!ChunkFileMethodScanner categoriesFor: #initialize!initializing!public! !
-!ChunkFileMethodScanner categoriesFor: #nextChunkFrom:!file operations!public! !
-!ChunkFileMethodScanner categoriesFor: #positionsOf:in:firstOnly:!file operations!public! !
-!ChunkFileMethodScanner categoriesFor: #readBufferSize!accessing!private! !
-!ChunkFileMethodScanner categoriesFor: #readBufferSize:!accessing!private! !
-!ChunkFileMethodScanner categoriesFor: #scan:for:sourceFileIndex:!operations!public! !
-!ChunkFileMethodScanner categoriesFor: #scanChangesFileFor:!operations!public! !
-!ChunkFileMethodScanner categoriesFor: #scanForMethodVersions:inClass:!operations!public! !
-!ChunkFileMethodScanner categoriesFor: #scanForMethodVersionsInClass:!operations!public! !
-!ChunkFileMethodScanner categoriesFor: #scanSourcesFileFor:!operations!public! !
+!ChunkFileMethodScanner categoriesForMethods!
+defaultReadBufferSize!constants!public! !
+initialize!initializing!public! !
+nextChunkFrom:!file operations!public! !
+positionsOf:in:firstOnly:!file operations!public! !
+readBufferSize!accessing!private! !
+readBufferSize:!accessing!private! !
+scan:for:sourceFileIndex:!operations!public! !
+scanChangesFileFor:!operations!public! !
+scanForMethodVersions:inClass:!operations!public! !
+scanForMethodVersionsInClass:!operations!public! !
+scanSourcesFileFor:!operations!public! !
+!
 
 !ChunkFileMethodScanner class methodsFor!
 
@@ -165,7 +167,9 @@ forMethodsInClass: aClass
 new
 
 	^super new initialize! !
-!ChunkFileMethodScanner class categoriesFor: #forMethod:inClass:!instance creation!public! !
-!ChunkFileMethodScanner class categoriesFor: #forMethodsInClass:!instance creation!public! !
-!ChunkFileMethodScanner class categoriesFor: #new!instance creation!public! !
+!ChunkFileMethodScanner class categoriesForMethods!
+forMethod:inClass:!instance creation!public! !
+forMethodsInClass:!instance creation!public! !
+new!instance creation!public! !
+!
 

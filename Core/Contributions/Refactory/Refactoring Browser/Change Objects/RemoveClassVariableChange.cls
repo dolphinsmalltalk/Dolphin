@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoryVariableChange subclass: #RemoveClassVariableChange
 	instanceVariableNames: ''
@@ -30,9 +30,11 @@ printOn: aStream
 
 variable
 	^variable asSymbol! !
-!RemoveClassVariableChange categoriesFor: #asUndoOperation!converting!public! !
-!RemoveClassVariableChange categoriesFor: #changeString!printing!public! !
-!RemoveClassVariableChange categoriesFor: #changeSymbol!private! !
-!RemoveClassVariableChange categoriesFor: #printOn:!printing!public! !
-!RemoveClassVariableChange categoriesFor: #variable!private! !
+!RemoveClassVariableChange categoriesForMethods!
+asUndoOperation!converting!public! !
+changeString!printing!public! !
+changeSymbol!private! !
+printOn:!printing!public! !
+variable!private! !
+!
 

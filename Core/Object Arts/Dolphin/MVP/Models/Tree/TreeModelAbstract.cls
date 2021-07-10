@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Model subclass: #TreeModelAbstract
 	instanceVariableNames: 'searchPolicy'
@@ -426,55 +426,57 @@ withAllParents: anObject
 	^(self allParentsOf: anObject)
 		addLast: anObject;
 		yourself! !
-!TreeModelAbstract categoriesFor: #add:asChildOf:!adding!public! !
-!TreeModelAbstract categoriesFor: #addRoot:!accessing!public! !
-!TreeModelAbstract categoriesFor: #allParentsOf:!hierarchy!public! !
-!TreeModelAbstract categoriesFor: #approxSize!accessing!private! !
-!TreeModelAbstract categoriesFor: #asArray!converting!public! !
-!TreeModelAbstract categoriesFor: #asBag!converting!public! !
-!TreeModelAbstract categoriesFor: #asOrderedCollection!converting!public! !
-!TreeModelAbstract categoriesFor: #asSet!converting!public! !
-!TreeModelAbstract categoriesFor: #asSortedCollection!converting!public! !
-!TreeModelAbstract categoriesFor: #asSortedCollection:!converting!public! !
-!TreeModelAbstract categoriesFor: #basicRoots:!accessing!private! !
-!TreeModelAbstract categoriesFor: #childrenOf:!hierarchy!public! !
-!TreeModelAbstract categoriesFor: #clear!public!removing! !
-!TreeModelAbstract categoriesFor: #collapse:!public!removing! !
-!TreeModelAbstract categoriesFor: #collapse:ifAbsent:!public!removing! !
-!TreeModelAbstract categoriesFor: #countElements!accessing!private! !
-!TreeModelAbstract categoriesFor: #depthOf:!hierarchy!public! !
-!TreeModelAbstract categoriesFor: #detect:ifNone:!converting!public! !
-!TreeModelAbstract categoriesFor: #do:!enumerating!public! !
-!TreeModelAbstract categoriesFor: #endOrderDo:!enumerating!public! !
-!TreeModelAbstract categoriesFor: #endOrderDo:on:!enumerating!private! !
-!TreeModelAbstract categoriesFor: #formattedPrintOn:!development!printing!public! !
-!TreeModelAbstract categoriesFor: #getChildrenOf:!hierarchy!private! !
-!TreeModelAbstract categoriesFor: #hasChildren:!hierarchy!public!testing! !
-!TreeModelAbstract categoriesFor: #includes:!hierarchy!public!searching! !
-!TreeModelAbstract categoriesFor: #isEmpty!public!testing! !
-!TreeModelAbstract categoriesFor: #keyOfNode:in:ifAbsent:!public!searching! !
-!TreeModelAbstract categoriesFor: #move:asChildOf:!public!updating! !
-!TreeModelAbstract categoriesFor: #notEmpty!public!testing! !
-!TreeModelAbstract categoriesFor: #parentOf:!hierarchy!public! !
-!TreeModelAbstract categoriesFor: #preOrderDo:!enumerating!public! !
-!TreeModelAbstract categoriesFor: #preOrderDo:on:!enumerating!private! !
-!TreeModelAbstract categoriesFor: #refresh:!public!updating! !
-!TreeModelAbstract categoriesFor: #refresh:ifAbsent:!public!updating! !
-!TreeModelAbstract categoriesFor: #refreshTree:!public!updating! !
-!TreeModelAbstract categoriesFor: #remove:!public!removing! !
-!TreeModelAbstract categoriesFor: #remove:ifAbsent:!public!removing! !
-!TreeModelAbstract categoriesFor: #removeAll!public!removing! !
-!TreeModelAbstract categoriesFor: #reset!private!removing! !
-!TreeModelAbstract categoriesFor: #roots!hierarchy!public! !
-!TreeModelAbstract categoriesFor: #roots:!accessing!public! !
-!TreeModelAbstract categoriesFor: #searchPolicy!accessing!public! !
-!TreeModelAbstract categoriesFor: #searchPolicy:!initializing!private! !
-!TreeModelAbstract categoriesFor: #select:!converting!public! !
-!TreeModelAbstract categoriesFor: #setRoots:!initializing!private! !
-!TreeModelAbstract categoriesFor: #setRoots:searchPolicy:!initializing!private! !
-!TreeModelAbstract categoriesFor: #size!accessing!public! !
-!TreeModelAbstract categoriesFor: #withAllChildren:!hierarchy!public! !
-!TreeModelAbstract categoriesFor: #withAllParents:!hierarchy!public! !
+!TreeModelAbstract categoriesForMethods!
+add:asChildOf:!adding!public! !
+addRoot:!accessing!public! !
+allParentsOf:!hierarchy!public! !
+approxSize!accessing!private! !
+asArray!converting!public! !
+asBag!converting!public! !
+asOrderedCollection!converting!public! !
+asSet!converting!public! !
+asSortedCollection!converting!public! !
+asSortedCollection:!converting!public! !
+basicRoots:!accessing!private! !
+childrenOf:!hierarchy!public! !
+clear!public!removing! !
+collapse:!public!removing! !
+collapse:ifAbsent:!public!removing! !
+countElements!accessing!private! !
+depthOf:!hierarchy!public! !
+detect:ifNone:!converting!public! !
+do:!enumerating!public! !
+endOrderDo:!enumerating!public! !
+endOrderDo:on:!enumerating!private! !
+formattedPrintOn:!development!printing!public! !
+getChildrenOf:!hierarchy!private! !
+hasChildren:!hierarchy!public!testing! !
+includes:!hierarchy!public!searching! !
+isEmpty!public!testing! !
+keyOfNode:in:ifAbsent:!public!searching! !
+move:asChildOf:!public!updating! !
+notEmpty!public!testing! !
+parentOf:!hierarchy!public! !
+preOrderDo:!enumerating!public! !
+preOrderDo:on:!enumerating!private! !
+refresh:!public!updating! !
+refresh:ifAbsent:!public!updating! !
+refreshTree:!public!updating! !
+remove:!public!removing! !
+remove:ifAbsent:!public!removing! !
+removeAll!public!removing! !
+reset!private!removing! !
+roots!hierarchy!public! !
+roots:!accessing!public! !
+searchPolicy!accessing!public! !
+searchPolicy:!initializing!private! !
+select:!converting!public! !
+setRoots:!initializing!private! !
+setRoots:searchPolicy:!initializing!private! !
+size!accessing!public! !
+withAllChildren:!hierarchy!public! !
+withAllParents:!hierarchy!public! !
+!
 
 TreeModelAbstract methodProtocol: #treeModel attributes: #(#readOnly) selectors: #(#add:asChildOf: #addRoot: #allParentsOf: #childrenOf: #clear #do: #endOrderDo: #hasChildren: #includes: #isEmpty #move:asChildOf: #parentOf: #preOrderDo: #refresh: #refreshTree: #remove: #remove:ifAbsent: #removeAll #roots #roots: #size #withAllChildren: #withAllParents:)!
 
@@ -523,11 +525,13 @@ withRoots: aCollection searchPolicy: aSearchPolicy
 
 	^self basicNew
 		setRoots: aCollection searchPolicy: aSearchPolicy! !
-!TreeModelAbstract class categoriesFor: #defaultSearchPolicy!constants!public! !
-!TreeModelAbstract class categoriesFor: #icon!constants!public! !
-!TreeModelAbstract class categoriesFor: #new!instance creation!public! !
-!TreeModelAbstract class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
-!TreeModelAbstract class categoriesFor: #stbVersion!binary filing!public! !
-!TreeModelAbstract class categoriesFor: #withRoots:!instance creation!public! !
-!TreeModelAbstract class categoriesFor: #withRoots:searchPolicy:!instance creation!public! !
+!TreeModelAbstract class categoriesForMethods!
+defaultSearchPolicy!constants!public! !
+icon!constants!public! !
+new!instance creation!public! !
+stbConvertFromVersion2:!binary filing!private! !
+stbVersion!binary filing!public! !
+withRoots:!instance creation!public! !
+withRoots:searchPolicy:!instance creation!public! !
+!
 

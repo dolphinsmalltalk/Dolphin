@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ListPresenter subclass: #ResourceListPresenter
 	instanceVariableNames: 'filterBlock resourcesPresenter previewPresenter resourceIdModel'
@@ -298,40 +298,42 @@ systemModel
 	"Private - Answer the development system model."
 
 	^Smalltalk developmentSystem! !
-!ResourceListPresenter categoriesFor: #browseClass!commands!public! !
-!ResourceListPresenter categoriesFor: #browseHierarchy!commands!public! !
-!ResourceListPresenter categoriesFor: #browseIt!commands!public! !
-!ResourceListPresenter categoriesFor: #browseReferences!commands!public! !
-!ResourceListPresenter categoriesFor: #browseSystem!commands!public! !
-!ResourceListPresenter categoriesFor: #caption!accessing!public! !
-!ResourceListPresenter categoriesFor: #clear!commands!public! !
-!ResourceListPresenter categoriesFor: #clearSelection!commands!public! !
-!ResourceListPresenter categoriesFor: #createComponents!initializing!public! !
-!ResourceListPresenter categoriesFor: #createSchematicWiring!initializing!public! !
-!ResourceListPresenter categoriesFor: #defaultSortBlock!constants!private!sorting! !
-!ResourceListPresenter categoriesFor: #deleteResource!commands!public! !
-!ResourceListPresenter categoriesFor: #editResource!commands!public! !
-!ResourceListPresenter categoriesFor: #filterBlock:!accessing!public! !
-!ResourceListPresenter categoriesFor: #imageFromResource:!helpers!private! !
-!ResourceListPresenter categoriesFor: #initialize!initializing!private! !
-!ResourceListPresenter categoriesFor: #model:!accessing!public! !
-!ResourceListPresenter categoriesFor: #onDragResource:!event handling!private! !
-!ResourceListPresenter categoriesFor: #onMethodAdded:!event handling!private! !
-!ResourceListPresenter categoriesFor: #onMethodRemoved:!event handling!private! !
-!ResourceListPresenter categoriesFor: #onResourceRepackaged:from:to:!event handling!private! !
-!ResourceListPresenter categoriesFor: #onResourceSelected!event handling!private! !
-!ResourceListPresenter categoriesFor: #passesFilter:!event handling!private! !
-!ResourceListPresenter categoriesFor: #queryCommand:!commands!private! !
-!ResourceListPresenter categoriesFor: #queryMoveResource:toPackage:!accessing!private! !
-!ResourceListPresenter categoriesFor: #refresh!operations!public! !
-!ResourceListPresenter categoriesFor: #resourceIdentifier!accessing!public! !
-!ResourceListPresenter categoriesFor: #resourcePackage!commands!public! !
-!ResourceListPresenter categoriesFor: #selectableItems!accessing!private! !
-!ResourceListPresenter categoriesFor: #showAllResources!filtering!public! !
-!ResourceListPresenter categoriesFor: #showResource!commands!public! !
-!ResourceListPresenter categoriesFor: #showResourcesOwnedByPackages:!filtering!public! !
-!ResourceListPresenter categoriesFor: #showResourcesReferencingView:!helpers!private! !
-!ResourceListPresenter categoriesFor: #systemModel!commands!private! !
+!ResourceListPresenter categoriesForMethods!
+browseClass!commands!public! !
+browseHierarchy!commands!public! !
+browseIt!commands!public! !
+browseReferences!commands!public! !
+browseSystem!commands!public! !
+caption!accessing!public! !
+clear!commands!public! !
+clearSelection!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+defaultSortBlock!constants!private!sorting! !
+deleteResource!commands!public! !
+editResource!commands!public! !
+filterBlock:!accessing!public! !
+imageFromResource:!helpers!private! !
+initialize!initializing!private! !
+model:!accessing!public! !
+onDragResource:!event handling!private! !
+onMethodAdded:!event handling!private! !
+onMethodRemoved:!event handling!private! !
+onResourceRepackaged:from:to:!event handling!private! !
+onResourceSelected!event handling!private! !
+passesFilter:!event handling!private! !
+queryCommand:!commands!private! !
+queryMoveResource:toPackage:!accessing!private! !
+refresh!operations!public! !
+resourceIdentifier!accessing!public! !
+resourcePackage!commands!public! !
+selectableItems!accessing!private! !
+showAllResources!filtering!public! !
+showResource!commands!public! !
+showResourcesOwnedByPackages:!filtering!public! !
+showResourcesReferencingView:!helpers!private! !
+systemModel!commands!private! !
+!
 
 !ResourceListPresenter class methodsFor!
 
@@ -372,9 +374,11 @@ showResourcesReferencingView: aResourceIdentifier
 	browser showResourcesReferencingView: aResourceIdentifier.
 	browser topShell caption: ('Resources referencing <1p>' expandMacrosWith: aResourceIdentifier).
 	^browser! !
-!ResourceListPresenter class categoriesFor: #defaultModel!models!public! !
-!ResourceListPresenter class categoriesFor: #icon!constants!public! !
-!ResourceListPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!ResourceListPresenter class categoriesFor: #resource_Package_view!public!resources-views! !
-!ResourceListPresenter class categoriesFor: #showResourcesReferencingView:!instance creation!public! !
+!ResourceListPresenter class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+resource_Package_view!public!resources-views! !
+showResourcesReferencingView:!instance creation!public! !
+!
 

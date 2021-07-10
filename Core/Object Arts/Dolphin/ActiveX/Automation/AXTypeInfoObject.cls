@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #AXTypeInfoObject
 	instanceVariableNames: 'tlbInterface generationFlags'
@@ -130,23 +130,25 @@ suggestedGlobalName
 tlbInterface
 	tlbInterface isNull ifTrue: [self realize].
 	^tlbInterface! !
-!AXTypeInfoObject categoriesFor: #asParameter!converting!public! !
-!AXTypeInfoObject categoriesFor: #attributes!accessing!public! !
-!AXTypeInfoObject categoriesFor: #basicName!accessing!private! !
-!AXTypeInfoObject categoriesFor: #documentation!accessing!public! !
-!AXTypeInfoObject categoriesFor: #environment!constants!public! !
-!AXTypeInfoObject categoriesFor: #free!public!realizing/unrealizing! !
-!AXTypeInfoObject categoriesFor: #globalBinding!accessing!private! !
-!AXTypeInfoObject categoriesFor: #globalName!accessing!public! !
-!AXTypeInfoObject categoriesFor: #guid!accessing!public! !
-!AXTypeInfoObject categoriesFor: #helpfile!accessing!public! !
-!AXTypeInfoObject categoriesFor: #helpstring!accessing!public! !
-!AXTypeInfoObject categoriesFor: #isHidden!public!testing! !
-!AXTypeInfoObject categoriesFor: #isInstalled!public!testing! !
-!AXTypeInfoObject categoriesFor: #isNull!public!testing! !
-!AXTypeInfoObject categoriesFor: #isRestricted!public!testing! !
-!AXTypeInfoObject categoriesFor: #name!accessing!public! !
-!AXTypeInfoObject categoriesFor: #realize!private!realizing/unrealizing! !
-!AXTypeInfoObject categoriesFor: #suggestedGlobalName!accessing!private! !
-!AXTypeInfoObject categoriesFor: #tlbInterface!accessing!private! !
+!AXTypeInfoObject categoriesForMethods!
+asParameter!converting!public! !
+attributes!accessing!public! !
+basicName!accessing!private! !
+documentation!accessing!public! !
+environment!constants!public! !
+free!public!realizing/unrealizing! !
+globalBinding!accessing!private! !
+globalName!accessing!public! !
+guid!accessing!public! !
+helpfile!accessing!public! !
+helpstring!accessing!public! !
+isHidden!public!testing! !
+isInstalled!public!testing! !
+isNull!public!testing! !
+isRestricted!public!testing! !
+name!accessing!public! !
+realize!private!realizing/unrealizing! !
+suggestedGlobalName!accessing!private! !
+tlbInterface!accessing!private! !
+!
 

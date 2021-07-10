@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Smalltalk at: #ScintillaConstants put: (PoolConstantsDictionary named: #ScintillaConstants)!
 ScintillaConstants at: 'ANNOTATION_BOXED' put: 16r2!

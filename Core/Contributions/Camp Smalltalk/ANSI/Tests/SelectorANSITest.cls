@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #SelectorANSITest
 	instanceVariableNames: ''
@@ -15,6 +15,8 @@ canonicalObject
 
 protocol
 	^#'selector'! !
-!SelectorANSITest categoriesFor: #canonicalObject!public! !
-!SelectorANSITest categoriesFor: #protocol!public! !
+!SelectorANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+!
 

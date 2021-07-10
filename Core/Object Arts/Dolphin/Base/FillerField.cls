@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalField subclass: #FillerField
 	instanceVariableNames: 'byteSize'
@@ -47,13 +47,15 @@ writeInto: anExternal value: anObject
 	appropriate format for the receiver"
 
 	^self shouldNotImplement! !
-!FillerField categoriesFor: #alignment!constants!public! !
-!FillerField categoriesFor: #byteSize!accessing!private! !
-!FillerField categoriesFor: #byteSize:!accessing!private! !
-!FillerField categoriesFor: #canGenerateAccessors!private!testing! !
-!FillerField categoriesFor: #initialize!initializing!private! !
-!FillerField categoriesFor: #readFrom:!indirect accessing!private! !
-!FillerField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!FillerField categoriesForMethods!
+alignment!constants!public! !
+byteSize!accessing!private! !
+byteSize:!accessing!private! !
+canGenerateAccessors!private!testing! !
+initialize!initializing!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !FillerField class methodsFor!
 
@@ -61,5 +63,7 @@ byteSize: anInteger
 	"Answer a FillerField of the specified number of bytes"
 
 	^(self new) byteSize: anInteger; yourself! !
-!FillerField class categoriesFor: #byteSize:!instance creation!public! !
+!FillerField class categoriesForMethods!
+byteSize:!instance creation!public! !
+!
 

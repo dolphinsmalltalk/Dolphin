@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinSureTrustedData subclass: #DolphinSureCertificate
 	instanceVariableNames: ''
@@ -218,34 +218,36 @@ validityString
 
 	^self info validityString
 	 ! !
-!DolphinSureCertificate categoriesFor: #=!comparing!public! !
-!DolphinSureCertificate categoriesFor: #backgroundImageFile!constants!private! !
-!DolphinSureCertificate categoriesFor: #beNotPermanentlyTrusted!accessing!public!trust! !
-!DolphinSureCertificate categoriesFor: #beNotTemporarilyTrusted!accessing!public!trust! !
-!DolphinSureCertificate categoriesFor: #beNotTrusted!accessing!public!trust! !
-!DolphinSureCertificate categoriesFor: #bePermanentlyTrusted!accessing!public!trust! !
-!DolphinSureCertificate categoriesFor: #beTemporarilyTrusted!accessing!public!trust! !
-!DolphinSureCertificate categoriesFor: #canBePermanentlyTrusted!public!testing!trust! !
-!DolphinSureCertificate categoriesFor: #confirmTrustFor:!operations!public!trust! !
-!DolphinSureCertificate categoriesFor: #details!accessing!public! !
-!DolphinSureCertificate categoriesFor: #displayOn:!printing!public! !
-!DolphinSureCertificate categoriesFor: #gap!drawing!helpers!private! !
-!DolphinSureCertificate categoriesFor: #hasExpired!public!testing! !
-!DolphinSureCertificate categoriesFor: #imageAttributes!drawing!helpers!private! !
-!DolphinSureCertificate categoriesFor: #info!accessing!public! !
-!DolphinSureCertificate categoriesFor: #info:privateKey:!accessing!private! !
-!DolphinSureCertificate categoriesFor: #isPermanentlyTrusted!public!testing!trust! !
-!DolphinSureCertificate categoriesFor: #issuingAuthority!accessing!public! !
-!DolphinSureCertificate categoriesFor: #isTemporarilyTrusted!public!testing!trust! !
-!DolphinSureCertificate categoriesFor: #isTrusted!public!testing!trust! !
-!DolphinSureCertificate categoriesFor: #owner!accessing!public! !
-!DolphinSureCertificate categoriesFor: #printOn:!printing!public! !
-!DolphinSureCertificate categoriesFor: #publicKey!accessing!public! !
-!DolphinSureCertificate categoriesFor: #purpose!accessing!public! !
-!DolphinSureCertificate categoriesFor: #serial!accessing!public! !
-!DolphinSureCertificate categoriesFor: #sign:description:privateKey:!operations!public! !
-!DolphinSureCertificate categoriesFor: #sign:privateKey:!operations!public! !
-!DolphinSureCertificate categoriesFor: #validityString!helpers!private! !
+!DolphinSureCertificate categoriesForMethods!
+=!comparing!public! !
+backgroundImageFile!constants!private! !
+beNotPermanentlyTrusted!accessing!public!trust! !
+beNotTemporarilyTrusted!accessing!public!trust! !
+beNotTrusted!accessing!public!trust! !
+bePermanentlyTrusted!accessing!public!trust! !
+beTemporarilyTrusted!accessing!public!trust! !
+canBePermanentlyTrusted!public!testing!trust! !
+confirmTrustFor:!operations!public!trust! !
+details!accessing!public! !
+displayOn:!printing!public! !
+gap!drawing!helpers!private! !
+hasExpired!public!testing! !
+imageAttributes!drawing!helpers!private! !
+info!accessing!public! !
+info:privateKey:!accessing!private! !
+isPermanentlyTrusted!public!testing!trust! !
+issuingAuthority!accessing!public! !
+isTemporarilyTrusted!public!testing!trust! !
+isTrusted!public!testing!trust! !
+owner!accessing!public! !
+printOn:!printing!public! !
+publicKey!accessing!public! !
+purpose!accessing!public! !
+serial!accessing!public! !
+sign:description:privateKey:!operations!public! !
+sign:privateKey:!operations!public! !
+validityString!helpers!private! !
+!
 
 !DolphinSureCertificate class methodsFor!
 
@@ -288,11 +290,13 @@ untrustedContentWarning
 	by the receiver."
 
 	UntrustedContentWarning := WarningSignal description: 'Untrusted Content %1'! !
-!DolphinSureCertificate class categoriesFor: #icon!constants!development!public! !
-!DolphinSureCertificate class categoriesFor: #info:authority:authorityPrivateKey:!instance creation!public! !
-!DolphinSureCertificate class categoriesFor: #initialize!initializing!private! !
-!DolphinSureCertificate class categoriesFor: #myDefault!instance creation!public! !
-!DolphinSureCertificate class categoriesFor: #new!instance creation!private! !
-!DolphinSureCertificate class categoriesFor: #publisherCertificate:privateKey:!instance creation!private! !
-!DolphinSureCertificate class categoriesFor: #untrustedContentWarning!constants!public! !
+!DolphinSureCertificate class categoriesForMethods!
+icon!constants!development!public! !
+info:authority:authorityPrivateKey:!instance creation!public! !
+initialize!initializing!private! !
+myDefault!instance creation!public! !
+new!instance creation!private! !
+publisherCertificate:privateKey:!instance creation!private! !
+untrustedContentWarning!constants!public! !
+!
 

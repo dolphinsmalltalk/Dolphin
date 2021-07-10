@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractRGB subclass: #ColorRef
 	instanceVariableNames: ''
@@ -47,12 +47,14 @@ red
 	"Answer the receiver's red component component expressed as an <integer> in the range [0,255]."
 
 	^code bitAnd: 16rFF! !
-!ColorRef categoriesFor: #asColorRef!converting!public! !
-!ColorRef categoriesFor: #asCOLORREF!accessing!public! !
-!ColorRef categoriesFor: #asRGB!converting!public! !
-!ColorRef categoriesFor: #blue!accessing!public! !
-!ColorRef categoriesFor: #errorNotARealColor!exceptions!private! !
-!ColorRef categoriesFor: #red!accessing!public! !
+!ColorRef categoriesForMethods!
+asColorRef!converting!public! !
+asCOLORREF!accessing!public! !
+asRGB!converting!public! !
+blue!accessing!public! !
+errorNotARealColor!exceptions!private! !
+red!accessing!public! !
+!
 
 !ColorRef class methodsFor!
 
@@ -87,7 +89,9 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	answer := self fromCOLORREF: anSTBInFiler basicNext.
 	anSTBInFiler fixup: ref to: answer.
 	^answer! !
-!ColorRef class categoriesFor: #defaultColorRepresentation!constants!private! !
-!ColorRef class categoriesFor: #fromCOLORREF:!instance creation!private! !
-!ColorRef class categoriesFor: #stbReadFrom:format:!binary filing!public! !
+!ColorRef class categoriesForMethods!
+defaultColorRepresentation!constants!private! !
+fromCOLORREF:!instance creation!private! !
+stbReadFrom:format:!binary filing!public! !
+!
 

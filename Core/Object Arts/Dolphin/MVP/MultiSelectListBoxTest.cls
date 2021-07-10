@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ListBoxTest subclass: #MultiSelectListBoxTest
 	instanceVariableNames: ''
@@ -91,9 +91,11 @@ testNewSelectionsToggleMode
 	"Modifiers disable right clicks"
 	#(#(#control #right) #(#shift #right) #(#control #shift #right))
 		do: [:each | self verifySelectionsFromMouseDown: (self mouseDownEventOnItem: 7 buttons: each) equals: #(1 3 5)]! !
-!MultiSelectListBoxTest categoriesFor: #initializePresenter!private!Running! !
-!MultiSelectListBoxTest categoriesFor: #testNewSelectionsCtrlShiftClickAdditive!public!unit tests! !
-!MultiSelectListBoxTest categoriesFor: #testNewSelectionsCtrlShiftClickSubtractive!public!unit tests! !
-!MultiSelectListBoxTest categoriesFor: #testNewSelectionsShiftClickWithSelectionMark!public!unit tests! !
-!MultiSelectListBoxTest categoriesFor: #testNewSelectionsToggleMode!public!unit tests! !
+!MultiSelectListBoxTest categoriesForMethods!
+initializePresenter!private!Running! !
+testNewSelectionsCtrlShiftClickAdditive!public!unit tests! !
+testNewSelectionsCtrlShiftClickSubtractive!public!unit tests! !
+testNewSelectionsShiftClickWithSelectionMark!public!unit tests! !
+testNewSelectionsToggleMode!public!unit tests! !
+!
 

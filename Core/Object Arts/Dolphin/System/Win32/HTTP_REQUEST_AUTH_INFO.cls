@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_REQUEST_AUTH_INFO
 	instanceVariableNames: ''
@@ -184,32 +184,34 @@ SecStatus: anInteger
 	"Set the receiver's 'SecStatus' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_SecStatus put: anInteger! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #AccessToken!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #AccessToken:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #AuthStatus!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #AuthStatus:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #AuthType!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #AuthType:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #ContextAttributes!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #ContextAttributes:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #Flags!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #Flags:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #MutualAuthDataLength!**compiled accessors**!private! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #MutualAuthDataLength:!**compiled accessors**!private! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #PackageNameLength!**compiled accessors**!private! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #PackageNameLength:!**compiled accessors**!private! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContext!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContext:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContextLength!**compiled accessors**!private! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContextLength:!**compiled accessors**!private! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContextType!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #PackedContextType:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #pMutualAuthData!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #pMutualAuthData:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #pPackageName!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #pPackageName:!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #SecStatus!**compiled accessors**!public! !
-!HTTP_REQUEST_AUTH_INFO categoriesFor: #SecStatus:!**compiled accessors**!public! !
+!HTTP_REQUEST_AUTH_INFO categoriesForMethods!
+AccessToken!**compiled accessors**!public! !
+AccessToken:!**compiled accessors**!public! !
+AuthStatus!**compiled accessors**!public! !
+AuthStatus:!**compiled accessors**!public! !
+AuthType!**compiled accessors**!public! !
+AuthType:!**compiled accessors**!public! !
+ContextAttributes!**compiled accessors**!public! !
+ContextAttributes:!**compiled accessors**!public! !
+Flags!**compiled accessors**!public! !
+Flags:!**compiled accessors**!public! !
+MutualAuthDataLength!**compiled accessors**!private! !
+MutualAuthDataLength:!**compiled accessors**!private! !
+PackageNameLength!**compiled accessors**!private! !
+PackageNameLength:!**compiled accessors**!private! !
+PackedContext!**compiled accessors**!public! !
+PackedContext:!**compiled accessors**!public! !
+PackedContextLength!**compiled accessors**!private! !
+PackedContextLength:!**compiled accessors**!private! !
+PackedContextType!**compiled accessors**!public! !
+PackedContextType:!**compiled accessors**!public! !
+pMutualAuthData!**compiled accessors**!public! !
+pMutualAuthData:!**compiled accessors**!public! !
+pPackageName!**compiled accessors**!public! !
+pPackageName:!**compiled accessors**!public! !
+SecStatus!**compiled accessors**!public! !
+SecStatus:!**compiled accessors**!public! !
+!
 
 !HTTP_REQUEST_AUTH_INFO class methodsFor!
 
@@ -254,6 +256,8 @@ defineFields
 
 getFieldNames
 	^#(#AuthStatus #SecStatus #Flags #AuthType #AccessToken #ContextAttributes #PackedContextLength #PackedContextType #PackedContext #MutualAuthDataLength #pMutualAuthData #PackageNameLength #pPackageName)! !
-!HTTP_REQUEST_AUTH_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_REQUEST_AUTH_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_REQUEST_AUTH_INFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

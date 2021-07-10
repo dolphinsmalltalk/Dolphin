@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #GpPathData
 	instanceVariableNames: ''
@@ -56,12 +56,14 @@ Types: aBYTE
 	"Set the receiver's 'Types' field to the value of the argument, aBYTE"
 
 	bytes uintPtrAtOffset: _OffsetOf_Types put: aBYTE yourAddress! !
-!GpPathData categoriesFor: #Count!**compiled accessors**!public! !
-!GpPathData categoriesFor: #Count:!**compiled accessors**!public! !
-!GpPathData categoriesFor: #Points!**compiled accessors**!public! !
-!GpPathData categoriesFor: #Points:!**compiled accessors**!public! !
-!GpPathData categoriesFor: #Types!**compiled accessors**!public! !
-!GpPathData categoriesFor: #Types:!**compiled accessors**!public! !
+!GpPathData categoriesForMethods!
+Count!**compiled accessors**!public! !
+Count:!**compiled accessors**!public! !
+Points!**compiled accessors**!public! !
+Points:!**compiled accessors**!public! !
+Types!**compiled accessors**!public! !
+Types:!**compiled accessors**!public! !
+!
 
 !GpPathData class methodsFor!
 
@@ -85,6 +87,8 @@ defineFields
 
 getFieldNames
 	^#(#Count #Points #Types)! !
-!GpPathData class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GpPathData class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!GpPathData class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

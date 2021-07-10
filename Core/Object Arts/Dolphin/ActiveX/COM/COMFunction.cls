@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 COMFunctionAbstract subclass: #COMFunction
 	instanceVariableNames: 'selector descriptor'
@@ -49,11 +49,13 @@ selector: aSymbol
 	implementing the COM virtual function when that function is called."
 
 	selector := aSymbol! !
-!COMFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
-!COMFunction categoriesFor: #descriptor!accessing!private! !
-!COMFunction categoriesFor: #descriptor:!accessing!private! !
-!COMFunction categoriesFor: #selector!accessing!private! !
-!COMFunction categoriesFor: #selector:!accessing!private! !
+!COMFunction categoriesForMethods!
+callback:interface:withArgumentsAt:!evaluating!private! !
+descriptor!accessing!private! !
+descriptor:!accessing!private! !
+selector!accessing!private! !
+selector:!accessing!private! !
+!
 
 !COMFunction class methodsFor!
 
@@ -72,6 +74,8 @@ selector: aSymbol descriptor: anExternalDescriptor
 	^self new
 		selector: aSymbol;
 		descriptor: anExternalDescriptor! !
-!COMFunction class categoriesFor: #prototype:!instance creation!public! !
-!COMFunction class categoriesFor: #selector:descriptor:!instance creation!public! !
+!COMFunction class categoriesForMethods!
+prototype:!instance creation!public! !
+selector:descriptor:!instance creation!public! !
+!
 

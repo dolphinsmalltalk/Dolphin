@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CollectionTest subclass: #SetANSITest
 	instanceVariableNames: ''
@@ -45,17 +45,21 @@ testXaddX
 		should: [:r | co size = oldSize]
 		conformTo: #Set
 		selector: #add:! !
-!SetANSITest categoriesFor: #canonicalElement!public! !
-!SetANSITest categoriesFor: #canonicalObject!public! !
-!SetANSITest categoriesFor: #emptyCollection!public! !
-!SetANSITest categoriesFor: #protocol!public! !
-!SetANSITest categoriesFor: #testXaddAllX!public! !
-!SetANSITest categoriesFor: #testXaddX!public! !
+!SetANSITest categoriesForMethods!
+canonicalElement!public! !
+canonicalObject!public! !
+emptyCollection!public! !
+protocol!public! !
+testXaddAllX!public! !
+testXaddX!public! !
+!
 
 !SetANSITest class methodsFor!
 
 helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: ExtensibleCollectionHelper.! !
-!SetANSITest class categoriesFor: #helperClassesDo:!public! !
+!SetANSITest class categoriesForMethods!
+helperClassesDo:!public! !
+!
 

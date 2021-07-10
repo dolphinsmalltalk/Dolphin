@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_LOGGING_INFO
 	instanceVariableNames: 'directoryName softwareName'
@@ -148,26 +148,28 @@ SoftwareNameLength: anInteger
 	"Set the receiver's 'SoftwareNameLength' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_SoftwareNameLength put: anInteger! !
-!HTTP_LOGGING_INFO categoriesFor: #DirectoryName!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #DirectoryName:!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #DirectoryNameLength!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #DirectoryNameLength:!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #Fields!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #Fields:!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #Format!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #Format:!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #LoggingFlags!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #LoggingFlags:!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #pSecurityDescriptor!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #pSecurityDescriptor:!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #RolloverSize!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #RolloverSize:!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #RolloverType!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #RolloverType:!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #SoftwareName!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #SoftwareName:!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #SoftwareNameLength!**compiled accessors**!public! !
-!HTTP_LOGGING_INFO categoriesFor: #SoftwareNameLength:!**compiled accessors**!public! !
+!HTTP_LOGGING_INFO categoriesForMethods!
+DirectoryName!**compiled accessors**!public! !
+DirectoryName:!**compiled accessors**!public! !
+DirectoryNameLength!**compiled accessors**!public! !
+DirectoryNameLength:!**compiled accessors**!public! !
+Fields!**compiled accessors**!public! !
+Fields:!**compiled accessors**!public! !
+Format!**compiled accessors**!public! !
+Format:!**compiled accessors**!public! !
+LoggingFlags!**compiled accessors**!public! !
+LoggingFlags:!**compiled accessors**!public! !
+pSecurityDescriptor!**compiled accessors**!public! !
+pSecurityDescriptor:!**compiled accessors**!public! !
+RolloverSize!**compiled accessors**!public! !
+RolloverSize:!**compiled accessors**!public! !
+RolloverType!**compiled accessors**!public! !
+RolloverType:!**compiled accessors**!public! !
+SoftwareName!**compiled accessors**!public! !
+SoftwareName:!**compiled accessors**!public! !
+SoftwareNameLength!**compiled accessors**!public! !
+SoftwareNameLength:!**compiled accessors**!public! !
+!
 
 !HTTP_LOGGING_INFO class methodsFor!
 
@@ -217,7 +219,9 @@ getFieldNames
 
 propertyId
 	^HttpServerLoggingProperty! !
-!HTTP_LOGGING_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_LOGGING_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HTTP_LOGGING_INFO class categoriesFor: #propertyId!public! !
+!HTTP_LOGGING_INFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+propertyId!public! !
+!
 

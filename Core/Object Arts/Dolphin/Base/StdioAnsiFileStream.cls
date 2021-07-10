@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StdioTextFileStream subclass: #StdioAnsiFileStream
 	instanceVariableNames: ''
@@ -52,10 +52,12 @@ peekFor: anObject
 		and: [ch == anObject ansiValue or: 
 					[crtlib ungetc: ch stream: stream.
 					false]]! !
-!StdioAnsiFileStream categoriesFor: #contentsSpecies!accessing!private! !
-!StdioAnsiFileStream categoriesFor: #getString:!accessing!private! !
-!StdioAnsiFileStream categoriesFor: #next!accessing!public! !
-!StdioAnsiFileStream categoriesFor: #nextPutAll:!accessing!public! !
-!StdioAnsiFileStream categoriesFor: #peek!accessing!public! !
-!StdioAnsiFileStream categoriesFor: #peekFor:!accessing!public! !
+!StdioAnsiFileStream categoriesForMethods!
+contentsSpecies!accessing!private! !
+getString:!accessing!private! !
+next!accessing!public! !
+nextPutAll:!accessing!public! !
+peek!accessing!public! !
+peekFor:!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #InvalidExternalCall
 	instanceVariableNames: 'argument type'
@@ -50,13 +50,15 @@ type: anObject
 	invalid call to anObject."
 
 	type := anObject! !
-!InvalidExternalCall categoriesFor: #_descriptionArguments!displaying!public! !
-!InvalidExternalCall categoriesFor: #_descriptionFormat!displaying!private! !
-!InvalidExternalCall categoriesFor: #argument!accessing!public! !
-!InvalidExternalCall categoriesFor: #argument:!accessing!private! !
-!InvalidExternalCall categoriesFor: #hresult!accessing!public! !
-!InvalidExternalCall categoriesFor: #type!accessing!public! !
-!InvalidExternalCall categoriesFor: #type:!accessing!private! !
+!InvalidExternalCall categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!private! !
+argument!accessing!public! !
+argument:!accessing!private! !
+hresult!accessing!public! !
+type!accessing!public! !
+type:!accessing!private! !
+!
 
 !InvalidExternalCall class methodsFor!
 
@@ -71,5 +73,7 @@ invalidArgument: anInteger got: anObject expected: type
 		argument: anObject;
 		type: type;
 		signalWith: anInteger! !
-!InvalidExternalCall class categoriesFor: #invalidArgument:got:expected:!instance creation!private! !
+!InvalidExternalCall class categoriesForMethods!
+invalidArgument:got:expected:!instance creation!private! !
+!
 

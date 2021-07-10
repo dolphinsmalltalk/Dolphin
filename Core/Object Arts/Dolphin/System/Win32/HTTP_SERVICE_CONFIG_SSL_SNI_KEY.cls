@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_SNI_KEY
 	instanceVariableNames: ''
@@ -48,10 +48,12 @@ IpPort: aSOCKADDR_STORAGE
 		from: ##(_OffsetOf_IpPort + 1)
 		to: ##(_OffsetOf_IpPort + SOCKADDR_STORAGE basicByteSize)
 		startingAt: 1! !
-!HTTP_SERVICE_CONFIG_SSL_SNI_KEY categoriesFor: #Host!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_SNI_KEY categoriesFor: #Host:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_SNI_KEY categoriesFor: #IpPort!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_SNI_KEY categoriesFor: #IpPort:!**compiled accessors**!public! !
+!HTTP_SERVICE_CONFIG_SSL_SNI_KEY categoriesForMethods!
+Host!**compiled accessors**!public! !
+Host:!**compiled accessors**!public! !
+IpPort!**compiled accessors**!public! !
+IpPort:!**compiled accessors**!public! !
+!
 
 !HTTP_SERVICE_CONFIG_SSL_SNI_KEY class methodsFor!
 
@@ -74,6 +76,8 @@ defineFields
 
 getFieldNames
 	^#(#IpPort #Host)! !
-!HTTP_SERVICE_CONFIG_SSL_SNI_KEY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVICE_CONFIG_SSL_SNI_KEY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_SERVICE_CONFIG_SSL_SNI_KEY class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #ExternalSize
 	instanceVariableNames: ''
@@ -40,14 +40,16 @@ x
 
 y
 	^self height! !
-!ExternalSize categoriesFor: #asObject!converting!public! !
-!ExternalSize categoriesFor: #asPoint!converting!public! !
-!ExternalSize categoriesFor: #height!accessing!public! !
-!ExternalSize categoriesFor: #height:!accessing!public! !
-!ExternalSize categoriesFor: #width!accessing!public! !
-!ExternalSize categoriesFor: #width:!accessing!public! !
-!ExternalSize categoriesFor: #x!accessing!public! !
-!ExternalSize categoriesFor: #y!accessing!public! !
+!ExternalSize categoriesForMethods!
+asObject!converting!public! !
+asPoint!converting!public! !
+height!accessing!public! !
+height:!accessing!public! !
+width!accessing!public! !
+width:!accessing!public! !
+x!accessing!public! !
+y!accessing!public! !
+!
 
 !ExternalSize class methodsFor!
 
@@ -66,7 +68,9 @@ width: cx height: cy
 		width: cx;
 		height: cy;
 		yourself! !
-!ExternalSize class categoriesFor: #fromPoint:!instance creation!public! !
-!ExternalSize class categoriesFor: #icon!constants!public! !
-!ExternalSize class categoriesFor: #width:height:!instance creation!public! !
+!ExternalSize class categoriesForMethods!
+fromPoint:!instance creation!public! !
+icon!constants!public! !
+width:height:!instance creation!public! !
+!
 

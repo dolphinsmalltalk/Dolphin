@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 UtfEncodedStringTest subclass: #Utf16StringTest
 	instanceVariableNames: ''
@@ -97,16 +97,18 @@ testUtf8StringConversion
 	self assert: bstr asArray equals: wideString asArray.
 	self assert: bstr asUtf16String equals: wideString.
 	self assert: bstr asUtf8String equals: byteString! !
-!Utf16StringTest categoriesFor: #assimilate:!helpers!private! !
-!Utf16StringTest categoriesFor: #assimilateString:!helpers!private! !
-!Utf16StringTest categoriesFor: #byteArrayForSequence:!helpers!private! !
-!Utf16StringTest categoriesFor: #collectionClass!helpers!private! !
-!Utf16StringTest categoriesFor: #decodeIncompleteContinuations!constants!private! !
-!Utf16StringTest categoriesFor: #decodeInvalidContinuations!constants!private! !
-!Utf16StringTest categoriesFor: #decodeTestCases!constants!private! !
-!Utf16StringTest categoriesFor: #testAssociations!public!unit tests! !
-!Utf16StringTest categoriesFor: #testCopyWithAtIndex!public!unit tests! !
-!Utf16StringTest categoriesFor: #testKeys!public!unit tests! !
-!Utf16StringTest categoriesFor: #testMixedConcatenation!public! !
-!Utf16StringTest categoriesFor: #testUtf8StringConversion!public!unit tests! !
+!Utf16StringTest categoriesForMethods!
+assimilate:!helpers!private! !
+assimilateString:!helpers!private! !
+byteArrayForSequence:!helpers!private! !
+collectionClass!helpers!private! !
+decodeIncompleteContinuations!constants!private! !
+decodeInvalidContinuations!constants!private! !
+decodeTestCases!constants!private! !
+testAssociations!public!unit tests! !
+testCopyWithAtIndex!public!unit tests! !
+testKeys!public!unit tests! !
+testMixedConcatenation!public! !
+testUtf8StringConversion!public!unit tests! !
+!
 

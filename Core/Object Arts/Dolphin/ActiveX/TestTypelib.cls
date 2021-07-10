@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestResource subclass: #TestTypelib
 	instanceVariableNames: 'analyzer'
@@ -34,8 +34,10 @@ tearDown
 			analyzer free.
 			analyzer := nil].
 	super tearDown! !
-!TestTypelib categoriesFor: #analyzer!private!unit tests! !
-!TestTypelib categoriesFor: #libid!Init / Release!public! !
-!TestTypelib categoriesFor: #setUp!Init / Release!public! !
-!TestTypelib categoriesFor: #tearDown!public!Running! !
+!TestTypelib categoriesForMethods!
+analyzer!private!unit tests! !
+libid!Init / Release!public! !
+setUp!Init / Release!public! !
+tearDown!public!Running! !
+!
 

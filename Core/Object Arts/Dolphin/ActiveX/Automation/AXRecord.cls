@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEFinalizableStructure subclass: #AXRecord
 	instanceVariableNames: 'recordInfo owner'
@@ -129,21 +129,23 @@ setRecordInfo: anIRecordInfo owner: dataOwner
 
 	recordInfo := anIRecordInfo.
 	owner := dataOwner! !
-!AXRecord categoriesFor: #basicFree!private!realizing/unrealizing! !
-!AXRecord categoriesFor: #byteSize!accessing!public! !
-!AXRecord categoriesFor: #displayOn:!displaying!public! !
-!AXRecord categoriesFor: #doesNotUnderstand:!exceptions!public! !
-!AXRecord categoriesFor: #getField:!accessing!public! !
-!AXRecord categoriesFor: #getField:ifAbsent:!accessing!public! !
-!AXRecord categoriesFor: #getValidFields!accessing!private! !
-!AXRecord categoriesFor: #initialize!initializing!private! !
-!AXRecord categoriesFor: #initialize:!initializing!private! !
-!AXRecord categoriesFor: #initializePointer!initializing!private! !
-!AXRecord categoriesFor: #needsFree!private!realizing/unrealizing! !
-!AXRecord categoriesFor: #recordInfo!accessing!public! !
-!AXRecord categoriesFor: #setField:value:!accessing!public! !
-!AXRecord categoriesFor: #setField:value:ifAbsent:!accessing!public! !
-!AXRecord categoriesFor: #setRecordInfo:owner:!accessing!private! !
+!AXRecord categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+byteSize!accessing!public! !
+displayOn:!displaying!public! !
+doesNotUnderstand:!exceptions!public! !
+getField:!accessing!public! !
+getField:ifAbsent:!accessing!public! !
+getValidFields!accessing!private! !
+initialize!initializing!private! !
+initialize:!initializing!private! !
+initializePointer!initializing!private! !
+needsFree!private!realizing/unrealizing! !
+recordInfo!accessing!public! !
+setField:value:!accessing!public! !
+setField:value:ifAbsent:!accessing!public! !
+setRecordInfo:owner:!accessing!private! !
+!
 
 !AXRecord class methodsFor!
 
@@ -183,9 +185,11 @@ newWithRecordInfo: recInfo
 		setRecordInfo: recInfo owner: nil;
 		initialize;
 		yourself! !
-!AXRecord class categoriesFor: #clear:!public!realizing/unrealizing! !
-!AXRecord class categoriesFor: #fromAddress:!instance creation!public! !
-!AXRecord class categoriesFor: #fromAddress:recordInfo:owner:!instance creation!public! !
-!AXRecord class categoriesFor: #newBuffer!instance creation!public! !
-!AXRecord class categoriesFor: #newWithRecordInfo:!instance creation!public! !
+!AXRecord class categoriesForMethods!
+clear:!public!realizing/unrealizing! !
+fromAddress:!instance creation!public! !
+fromAddress:recordInfo:owner:!instance creation!public! !
+newBuffer!instance creation!public! !
+newWithRecordInfo:!instance creation!public! !
+!
 

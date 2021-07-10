@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Smalltalk at: #AXTypeGenerationFlags put: (PoolConstantsDictionary named: #AXTypeGenerationFlags)!
 AXTypeGenerationFlags at: 'CommentStyleMask' put: 16r101!

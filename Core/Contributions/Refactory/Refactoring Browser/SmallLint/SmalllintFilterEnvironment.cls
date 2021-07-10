@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AndEnvironment subclass: #SmalllintFilterEnvironment
 	instanceVariableNames: 'lintRuleName'
@@ -30,9 +30,11 @@ isForSmalllint
 
 lintRuleName: aString 
 	lintRuleName := aString! !
-!SmalllintFilterEnvironment categoriesFor: #addFilterForClass:!accessing!actions!public! !
-!SmalllintFilterEnvironment categoriesFor: #addFilterForClass:andSelector:!accessing!actions!public! !
-!SmalllintFilterEnvironment categoriesFor: #canFilterSelectors!public!testing! !
-!SmalllintFilterEnvironment categoriesFor: #isForSmalllint!public!testing! !
-!SmalllintFilterEnvironment categoriesFor: #lintRuleName:!accessing!public! !
+!SmalllintFilterEnvironment categoriesForMethods!
+addFilterForClass:!accessing!actions!public! !
+addFilterForClass:andSelector:!accessing!actions!public! !
+canFilterSelectors!public!testing! !
+isForSmalllint!public!testing! !
+lintRuleName:!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Notification subclass: #DBWarning
 	instanceVariableNames: ''
@@ -22,6 +22,8 @@ signal
 
 	self tag buildErrorInfo.
 	super signal! !
-!DBWarning categoriesFor: #_descriptionFormat!displaying!public! !
-!DBWarning categoriesFor: #signal!public!signalling! !
+!DBWarning categoriesForMethods!
+_descriptionFormat!displaying!public! !
+signal!public!signalling! !
+!
 

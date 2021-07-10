@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StdioTextFileStream subclass: #StdioUnicodeFileStream
 	instanceVariableNames: 'offset'
@@ -69,19 +69,23 @@ setStream: anExternalAddress name: aString flags: anInteger
 
 translationMode
 	^CRTConstants._O_U16TEXT! !
-!StdioUnicodeFileStream categoriesFor: #basicNextAvailable!accessing!private! !
-!StdioUnicodeFileStream categoriesFor: #basicNextPut:!accessing!private! !
-!StdioUnicodeFileStream categoriesFor: #basicPeek!accessing!private! !
-!StdioUnicodeFileStream categoriesFor: #bufferClass!constants!private! !
-!StdioUnicodeFileStream categoriesFor: #getString:!accessing!private! !
-!StdioUnicodeFileStream categoriesFor: #nextPutAll:!accessing!public! !
-!StdioUnicodeFileStream categoriesFor: #open:mode:!instance creation!private! !
-!StdioUnicodeFileStream categoriesFor: #setStream:name:flags:!initializing!private! !
-!StdioUnicodeFileStream categoriesFor: #translationMode!constants!private! !
+!StdioUnicodeFileStream categoriesForMethods!
+basicNextAvailable!accessing!private! !
+basicNextPut:!accessing!private! !
+basicPeek!accessing!private! !
+bufferClass!constants!private! !
+getString:!accessing!private! !
+nextPutAll:!accessing!public! !
+open:mode:!instance creation!private! !
+setStream:name:flags:!initializing!private! !
+translationMode!constants!private! !
+!
 
 !StdioUnicodeFileStream class methodsFor!
 
 encodingType
 	^#utf16le! !
-!StdioUnicodeFileStream class categoriesFor: #encodingType!constants!public! !
+!StdioUnicodeFileStream class categoriesForMethods!
+encodingType!constants!public! !
+!
 

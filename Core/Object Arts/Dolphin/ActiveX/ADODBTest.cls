@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBTest subclass: #ADODBTest
 	instanceVariableNames: ''
@@ -20,12 +20,16 @@ setUp
 	connection close.
 	connection := ADODB_Connection new connectionString: self databaseResource connectString.
 	connection open! !
-!ADODBTest categoriesFor: #field:fromRow:!private!unit tests! !
-!ADODBTest categoriesFor: #setUp!public!Running! !
+!ADODBTest categoriesForMethods!
+field:fromRow:!private!unit tests! !
+setUp!public!Running! !
+!
 
 !ADODBTest class methodsFor!
 
 resources
 	^{SQLServerNorthwindDB}! !
-!ADODBTest class categoriesFor: #resources!public! !
+!ADODBTest class categoriesForMethods!
+resources!public! !
+!
 

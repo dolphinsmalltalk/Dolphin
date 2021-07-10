@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StProgramNode subclass: #StReturnNode
 	instanceVariableNames: 'return value'
@@ -57,18 +57,20 @@ value
 value: valueNode 
 	value := valueNode.
 	value parent: self! !
-!StReturnNode categoriesFor: #=!comparing!public! !
-!StReturnNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StReturnNode categoriesFor: #childrenDo:!accessing!public! !
-!StReturnNode categoriesFor: #containsReturn!public!testing! !
-!StReturnNode categoriesFor: #hash!comparing!public! !
-!StReturnNode categoriesFor: #isReturn!public!testing! !
-!StReturnNode categoriesFor: #postCopy!copying!public! !
-!StReturnNode categoriesFor: #return:value:!initializing!private! !
-!StReturnNode categoriesFor: #start!accessing!public! !
-!StReturnNode categoriesFor: #stop!accessing!public! !
-!StReturnNode categoriesFor: #value!accessing!public! !
-!StReturnNode categoriesFor: #value:!accessing!public! !
+!StReturnNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+childrenDo:!accessing!public! !
+containsReturn!public!testing! !
+hash!comparing!public! !
+isReturn!public!testing! !
+postCopy!copying!public! !
+return:value:!initializing!private! !
+start!accessing!public! !
+stop!accessing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !StReturnNode class methodsFor!
 
@@ -77,6 +79,8 @@ return: returnInteger value: aValueNode
 
 value: aNode
 	^self return: nil value: aNode! !
-!StReturnNode class categoriesFor: #return:value:!instance creation!public! !
-!StReturnNode class categoriesFor: #value:!instance creation!public! !
+!StReturnNode class categoriesForMethods!
+return:value:!instance creation!public! !
+value:!instance creation!public! !
+!
 

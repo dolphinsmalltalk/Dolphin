@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StValueNode subclass: #StLiteralNode
 	instanceVariableNames: ''
@@ -40,14 +40,16 @@ value
 
 valueClass
 	^self subclassResponsibility! !
-!StLiteralNode categoriesFor: #=!comparing!public! !
-!StLiteralNode categoriesFor: #hash!comparing!public! !
-!StLiteralNode categoriesFor: #isImmediateNode!public!testing! !
-!StLiteralNode categoriesFor: #isLiteralNode!public!testing! !
-!StLiteralNode categoriesFor: #needsParenthesis!public!testing! !
-!StLiteralNode categoriesFor: #precedence!accessing!public! !
-!StLiteralNode categoriesFor: #value!accessing!public! !
-!StLiteralNode categoriesFor: #valueClass!accessing!public! !
+!StLiteralNode categoriesForMethods!
+=!comparing!public! !
+hash!comparing!public! !
+isImmediateNode!public!testing! !
+isLiteralNode!public!testing! !
+needsParenthesis!public!testing! !
+precedence!accessing!public! !
+value!accessing!public! !
+valueClass!accessing!public! !
+!
 
 !StLiteralNode class methodsFor!
 
@@ -55,5 +57,7 @@ value: aValue
 	^((aValue class == Array or: [aValue class == ByteArray])
 		ifTrue: [StLiteralArrayNode]
 		ifFalse: [StLiteralValueNode]) value: aValue! !
-!StLiteralNode class categoriesFor: #value:!instance creation!public! !
+!StLiteralNode class categoriesForMethods!
+value:!instance creation!public! !
+!
 

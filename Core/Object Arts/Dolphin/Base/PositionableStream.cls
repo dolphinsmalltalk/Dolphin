@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequencedStream subclass: #PositionableStream
 	instanceVariableNames: 'collection position readLimit'
@@ -232,32 +232,34 @@ upToEnd
 	 particular streams, and which counts by raw elements regardless of encoding."
 
 	^self basicNext: self lastPosition - self position! !
-!PositionableStream categoriesFor: #advancePosition!positioning!private! !
-!PositionableStream categoriesFor: #atEnd!public!testing! !
-!PositionableStream categoriesFor: #basicNext:!accessing!private! !
-!PositionableStream categoriesFor: #basicNextAvailable!accessing!private! !
-!PositionableStream categoriesFor: #basicNextAvailable:!private! !
-!PositionableStream categoriesFor: #basicUpTo:!accessing!private! !
-!PositionableStream categoriesFor: #collection!accessing!private! !
-!PositionableStream categoriesFor: #contents!accessing!public! !
-!PositionableStream categoriesFor: #contentsSpecies!accessing!private! !
-!PositionableStream categoriesFor: #lastPosition!accessing!private! !
-!PositionableStream categoriesFor: #nextAvailable:!accessing!public! !
-!PositionableStream categoriesFor: #nextDOUBLE!binary filing!public! !
-!PositionableStream categoriesFor: #nextDWORD!binary filing!public! !
-!PositionableStream categoriesFor: #nextFLOAT!binary filing!public! !
-!PositionableStream categoriesFor: #nextSDWORD!binary filing!public! !
-!PositionableStream categoriesFor: #nextSWORD!binary filing!public! !
-!PositionableStream categoriesFor: #nextWORD!binary filing!public! !
-!PositionableStream categoriesFor: #on:!initializing!private! !
-!PositionableStream categoriesFor: #position!positioning!public! !
-!PositionableStream categoriesFor: #position:!positioning!public! !
-!PositionableStream categoriesFor: #positionAfterNext:!positioning!private! !
-!PositionableStream categoriesFor: #reset!positioning!public! !
-!PositionableStream categoriesFor: #setToEnd!positioning!public! !
-!PositionableStream categoriesFor: #size!accessing!public! !
-!PositionableStream categoriesFor: #upTo:!accessing!public! !
-!PositionableStream categoriesFor: #upToEnd!accessing!public! !
+!PositionableStream categoriesForMethods!
+advancePosition!positioning!private! !
+atEnd!public!testing! !
+basicNext:!accessing!private! !
+basicNextAvailable!accessing!private! !
+basicNextAvailable:!private! !
+basicUpTo:!accessing!private! !
+collection!accessing!private! !
+contents!accessing!public! !
+contentsSpecies!accessing!private! !
+lastPosition!accessing!private! !
+nextAvailable:!accessing!public! !
+nextDOUBLE!binary filing!public! !
+nextDWORD!binary filing!public! !
+nextFLOAT!binary filing!public! !
+nextSDWORD!binary filing!public! !
+nextSWORD!binary filing!public! !
+nextWORD!binary filing!public! !
+on:!initializing!private! !
+position!positioning!public! !
+position:!positioning!public! !
+positionAfterNext:!positioning!private! !
+reset!positioning!public! !
+setToEnd!positioning!public! !
+size!accessing!public! !
+upTo:!accessing!public! !
+upToEnd!accessing!public! !
+!
 
 PositionableStream methodProtocol: #collectionStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!
 
@@ -280,6 +282,8 @@ on: aCollection from: firstIndex to: lastIndex
 
 	^self on: (aCollection copyFrom: firstIndex to: lastIndex)
 ! !
-!PositionableStream class categoriesFor: #on:!instance creation!public! !
-!PositionableStream class categoriesFor: #on:from:to:!instance creation!public! !
+!PositionableStream class categoriesForMethods!
+on:!instance creation!public! !
+on:from:to:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #InlineAllMethodTest
 	instanceVariableNames: ''
@@ -37,6 +37,8 @@ testRecursiveMethod
 				in: class).
 	self assert: (class parseTreeFor: #foo) equals: (RBParser parseMethod: 'foo ^self foo').
 	self assert: (class parseTreeFor: #bar) equals: (RBParser parseMethod: 'bar ^self foo')! !
-!InlineAllMethodTest categoriesFor: #testInlineMethodWithMultipleSendersInMethod!public!tests! !
-!InlineAllMethodTest categoriesFor: #testRecursiveMethod!public!tests! !
+!InlineAllMethodTest categoriesForMethods!
+testInlineMethodWithMultipleSendersInMethod!public!tests! !
+testRecursiveMethod!public!tests! !
+!
 

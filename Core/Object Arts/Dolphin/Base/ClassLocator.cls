@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 FileLocator subclass: #ClassLocator
 	instanceVariableNames: 'packageName codeBase key'
@@ -153,25 +153,27 @@ printOn: aStream
 		nextPutAll: ', ';
 		print: key;
 		nextPut: $)! !
-!ClassLocator categoriesFor: #codeBase!accessing!public! !
-!ClassLocator categoriesFor: #codeBase:!initializing!private! !
-!ClassLocator categoriesFor: #copyWithCodeBase!copying!private! !
-!ClassLocator categoriesFor: #errorClassCircularityDetected!exceptions!private! !
-!ClassLocator categoriesFor: #errorClassNotFound!exceptions!private! !
-!ClassLocator categoriesFor: #findAvailableClass!operations!public! !
-!ClassLocator categoriesFor: #findResidentClass!operations!private! !
-!ClassLocator categoriesFor: #fullClassKey!helpers!private! !
-!ClassLocator categoriesFor: #fullPackageKey!accessing!public! !
-!ClassLocator categoriesFor: #hasPackageName!accessing!private! !
-!ClassLocator categoriesFor: #initialize!initializing!private! !
-!ClassLocator categoriesFor: #installImportedClass:!operations!private! !
-!ClassLocator categoriesFor: #key!accessing!public! !
-!ClassLocator categoriesFor: #key:!initializing!private! !
-!ClassLocator categoriesFor: #localFileSpecFor:!accessing!public! !
-!ClassLocator categoriesFor: #locateClass!operations!public! !
-!ClassLocator categoriesFor: #packageName!accessing!public! !
-!ClassLocator categoriesFor: #packageName:!initializing!private! !
-!ClassLocator categoriesFor: #printOn:!printing!public! !
+!ClassLocator categoriesForMethods!
+codeBase!accessing!public! !
+codeBase:!initializing!private! !
+copyWithCodeBase!copying!private! !
+errorClassCircularityDetected!exceptions!private! !
+errorClassNotFound!exceptions!private! !
+findAvailableClass!operations!public! !
+findResidentClass!operations!private! !
+fullClassKey!helpers!private! !
+fullPackageKey!accessing!public! !
+hasPackageName!accessing!private! !
+initialize!initializing!private! !
+installImportedClass:!operations!private! !
+key!accessing!public! !
+key:!initializing!private! !
+localFileSpecFor:!accessing!public! !
+locateClass!operations!public! !
+packageName!accessing!public! !
+packageName:!initializing!private! !
+printOn:!printing!public! !
+!
 
 !ClassLocator class methodsFor!
 
@@ -281,19 +283,21 @@ uninitialize
 	SessionManager current removeEventsTriggeredFor: self.
 
 ! !
-!ClassLocator class categoriesFor: #addAlias:forClass:!accessing!public! !
-!ClassLocator class categoriesFor: #binaryPackageExtension!constants!public! !
-!ClassLocator class categoriesFor: #codeBase:!instance creation!public! !
-!ClassLocator class categoriesFor: #codeBase:packageName:!instance creation!public! !
-!ClassLocator class categoriesFor: #codeBase:packageName:key:!instance creation!public! !
-!ClassLocator class categoriesFor: #default!accessing!public! !
-!ClassLocator class categoriesFor: #importedClassesMutex!accessing!private! !
-!ClassLocator class categoriesFor: #initialize!development!initializing!private! !
-!ClassLocator class categoriesFor: #isImportedClass:!public!testing! !
-!ClassLocator class categoriesFor: #new!instance creation!public! !
-!ClassLocator class categoriesFor: #onStartup!events-session!private! !
-!ClassLocator class categoriesFor: #removeAlias:!accessing!public! !
-!ClassLocator class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!ClassLocator class categoriesFor: #stbVersion!binary filing!public! !
-!ClassLocator class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!ClassLocator class categoriesForMethods!
+addAlias:forClass:!accessing!public! !
+binaryPackageExtension!constants!public! !
+codeBase:!instance creation!public! !
+codeBase:packageName:!instance creation!public! !
+codeBase:packageName:key:!instance creation!public! !
+default!accessing!public! !
+importedClassesMutex!accessing!private! !
+initialize!development!initializing!private! !
+isImportedClass:!public!testing! !
+new!instance creation!public! !
+onStartup!events-session!private! !
+removeAlias:!accessing!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

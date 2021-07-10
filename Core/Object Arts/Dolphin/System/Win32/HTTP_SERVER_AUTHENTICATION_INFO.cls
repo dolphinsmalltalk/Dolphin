@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_SERVER_AUTHENTICATION_INFO
 	instanceVariableNames: ''
@@ -113,20 +113,22 @@ ReceiveMutualAuth: aBoolean
 	"Set the receiver's 'ReceiveMutualAuth' field to the value of the argument, aBoolean"
 
 	bytes byteAtOffset: _OffsetOf_ReceiveMutualAuth put: aBoolean asParameter! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #AuthSchemes!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #AuthSchemes:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #BasicParams!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #BasicParams:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #DigestParams!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #DigestParams:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #DisableNTLMCredentialCaching!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #DisableNTLMCredentialCaching:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ExFlags!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ExFlags:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ReceiveContextHandle!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ReceiveContextHandle:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ReceiveMutualAuth!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_INFO categoriesFor: #ReceiveMutualAuth:!**compiled accessors**!public! !
+!HTTP_SERVER_AUTHENTICATION_INFO categoriesForMethods!
+AuthSchemes!**compiled accessors**!public! !
+AuthSchemes:!**compiled accessors**!public! !
+BasicParams!**compiled accessors**!public! !
+BasicParams:!**compiled accessors**!public! !
+DigestParams!**compiled accessors**!public! !
+DigestParams:!**compiled accessors**!public! !
+DisableNTLMCredentialCaching!**compiled accessors**!public! !
+DisableNTLMCredentialCaching:!**compiled accessors**!public! !
+ExFlags!**compiled accessors**!public! !
+ExFlags:!**compiled accessors**!public! !
+ReceiveContextHandle!**compiled accessors**!public! !
+ReceiveContextHandle:!**compiled accessors**!public! !
+ReceiveMutualAuth!**compiled accessors**!public! !
+ReceiveMutualAuth:!**compiled accessors**!public! !
+!
 
 !HTTP_SERVER_AUTHENTICATION_INFO class methodsFor!
 
@@ -164,7 +166,9 @@ getFieldNames
 
 propertyId
 	^HttpServerAuthenticationProperty! !
-!HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HTTP_SERVER_AUTHENTICATION_INFO class categoriesFor: #propertyId!public! !
+!HTTP_SERVER_AUTHENTICATION_INFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+propertyId!public! !
+!
 

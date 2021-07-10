@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScalarField subclass: #AbstractCHARField
 	instanceVariableNames: ''
@@ -30,8 +30,10 @@ writeInto: anExternalStructure value: aCharacter
 	"Private - Write the code point of the <Character>, aCharacter, into the <ExternalStructure>, anExternalStructure, at the receiver's offset."
 
 	^self basicWriteInto: anExternalStructure value: aCharacter codePoint! !
-!AbstractCHARField categoriesFor: #basicWriteInto:value:!accessing!public! !
-!AbstractCHARField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
-!AbstractCHARField categoriesFor: #printMutatorValueOn:parameter:!automatic generation!development!private! !
-!AbstractCHARField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!AbstractCHARField categoriesForMethods!
+basicWriteInto:value:!accessing!public! !
+fieldClassName!automatic generation!constants!development!private! !
+printMutatorValueOn:parameter:!automatic generation!development!private! !
+writeInto:value:!indirect accessing!private! !
+!
 

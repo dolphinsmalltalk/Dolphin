@@ -74,7 +74,9 @@ readFromIStream: anIStream
 	answer := self newPointer.
 	OLELibrary default oleLoadFromStream: anIStream iidInterface: self iid ppvObj: answer.
 	^answer! !
-!COMInterface class categoriesFor: #readFromIStream:!instance creation!public! !
+!COMInterface class categoriesForMethods!
+readFromIStream:!instance creation!public! !
+!
 
 !IStream methodsFor!
 
@@ -93,7 +95,9 @@ nextPutObject: unkObj
 			self nextPutCLSID: ip clsid]
 		ifFalse: [OLELibrary default oleSaveToStream: ips pStm: self]
 ! !
-!IStream categoriesFor: #nextPutObject:!accessing!public! !
+!IStream categoriesForMethods!
+nextPutObject:!accessing!public! !
+!
 
 !OLELibrary methodsFor!
 
@@ -132,8 +136,10 @@ oleSaveToStream: pPStm pStm: pStm
 
 	<stdcall: hresult OleSaveToStream IPersistStream* IStream*>
 	^self invalidCall: _failureCode! !
-!OLELibrary categoriesFor: #oleLoadFromStream:iidInterface:ppvObj:!OLE Functions-Persistent Objects!primitives!public! !
-!OLELibrary categoriesFor: #oleSaveToStream:pStm:!OLE Functions-Persistent Objects!primitives!public! !
+!OLELibrary categoriesForMethods!
+oleLoadFromStream:iidInterface:ppvObj:!OLE Functions-Persistent Objects!primitives!public! !
+oleSaveToStream:pStm:!OLE Functions-Persistent Objects!primitives!public! !
+!
 
 "End of package definition"!
 

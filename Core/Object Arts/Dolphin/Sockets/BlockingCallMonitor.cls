@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #BlockingCallMonitor
 	instanceVariableNames: 'callBlock completionBlock errorBlock monitorProcess priority'
@@ -82,16 +82,18 @@ terminate
 			mp := monitorProcess.
 			monitorProcess := nil.
 			mp terminate]! !
-!BlockingCallMonitor categoriesFor: #callBlock:!accessing!public! !
-!BlockingCallMonitor categoriesFor: #completionBlock:!accessing!public! !
-!BlockingCallMonitor categoriesFor: #errorBlock:!accessing!public! !
-!BlockingCallMonitor categoriesFor: #initialize!initializing!private! !
-!BlockingCallMonitor categoriesFor: #makeCall!operations!private! !
-!BlockingCallMonitor categoriesFor: #monitor!operations!public! !
-!BlockingCallMonitor categoriesFor: #monitorOnce!operations!public! !
-!BlockingCallMonitor categoriesFor: #priority!accessing!public! !
-!BlockingCallMonitor categoriesFor: #priority:!accessing!public! !
-!BlockingCallMonitor categoriesFor: #terminate!operations!public! !
+!BlockingCallMonitor categoriesForMethods!
+callBlock:!accessing!public! !
+completionBlock:!accessing!public! !
+errorBlock:!accessing!public! !
+initialize!initializing!private! !
+makeCall!operations!private! !
+monitor!operations!public! !
+monitorOnce!operations!public! !
+priority!accessing!public! !
+priority:!accessing!public! !
+terminate!operations!public! !
+!
 
 !BlockingCallMonitor class methodsFor!
 
@@ -115,7 +117,9 @@ publishedEventsOfInstances
 	^(super publishedEventsOfInstances)
 		add: #completedWith:;
 		yourself! !
-!BlockingCallMonitor class categoriesFor: #callBlock:!instance creation!public! !
-!BlockingCallMonitor class categoriesFor: #new!instance creation!public! !
-!BlockingCallMonitor class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!BlockingCallMonitor class categoriesForMethods!
+callBlock:!instance creation!public! !
+new!instance creation!public! !
+publishedEventsOfInstances!development!events!public! !
+!
 

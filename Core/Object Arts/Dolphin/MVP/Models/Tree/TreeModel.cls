@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TreeModelAbstract subclass: #TreeModel
 	instanceVariableNames: 'anchorNode objectNodeMap'
@@ -243,35 +243,37 @@ size
 	"Answer the number of elements in the receiver"
 
 	^objectNodeMap size! !
-!TreeModel categoriesFor: #add:asChildOf:!adding!public! !
-!TreeModel categoriesFor: #add:asChildOfNode:!adding!private! !
-!TreeModel categoriesFor: #addChild:parentNode:!adding!private! !
-!TreeModel categoriesFor: #approxSize!accessing!private! !
-!TreeModel categoriesFor: #asBag!converting!public! !
-!TreeModel categoriesFor: #asSet!converting!public! !
-!TreeModel categoriesFor: #basicRoots:!accessing!private! !
-!TreeModel categoriesFor: #childrenOfNode:!hierarchy!private! !
-!TreeModel categoriesFor: #clear!public!removing! !
-!TreeModel categoriesFor: #collapse:ifAbsent:!public!removing! !
-!TreeModel categoriesFor: #depthOf:!hierarchy!public! !
-!TreeModel categoriesFor: #forgetChildrenOfNode:!operations!private! !
-!TreeModel categoriesFor: #forgetNode:!operations!private! !
-!TreeModel categoriesFor: #getChildrenOf:!hierarchy!private! !
-!TreeModel categoriesFor: #getNodeFor:!hierarchy!private! !
-!TreeModel categoriesFor: #hasChildren:!hierarchy!public!testing! !
-!TreeModel categoriesFor: #includes:!hierarchy!public!searching! !
-!TreeModel categoriesFor: #initialize!initializing!private! !
-!TreeModel categoriesFor: #lookupNode:!operations!private! !
-!TreeModel categoriesFor: #move:asChildOf:!public!updating! !
-!TreeModel categoriesFor: #newNode:!adding!private! !
-!TreeModel categoriesFor: #nodeClass!constants!public! !
-!TreeModel categoriesFor: #parentNodeOf:!hierarchy!private! !
-!TreeModel categoriesFor: #parentOf:!hierarchy!public! !
-!TreeModel categoriesFor: #remove:ifAbsent:!public!removing! !
-!TreeModel categoriesFor: #reset!private!removing! !
-!TreeModel categoriesFor: #rootNodes!hierarchy!private! !
-!TreeModel categoriesFor: #roots!hierarchy!public! !
-!TreeModel categoriesFor: #size!accessing!public! !
+!TreeModel categoriesForMethods!
+add:asChildOf:!adding!public! !
+add:asChildOfNode:!adding!private! !
+addChild:parentNode:!adding!private! !
+approxSize!accessing!private! !
+asBag!converting!public! !
+asSet!converting!public! !
+basicRoots:!accessing!private! !
+childrenOfNode:!hierarchy!private! !
+clear!public!removing! !
+collapse:ifAbsent:!public!removing! !
+depthOf:!hierarchy!public! !
+forgetChildrenOfNode:!operations!private! !
+forgetNode:!operations!private! !
+getChildrenOf:!hierarchy!private! !
+getNodeFor:!hierarchy!private! !
+hasChildren:!hierarchy!public!testing! !
+includes:!hierarchy!public!searching! !
+initialize!initializing!private! !
+lookupNode:!operations!private! !
+move:asChildOf:!public!updating! !
+newNode:!adding!private! !
+nodeClass!constants!public! !
+parentNodeOf:!hierarchy!private! !
+parentOf:!hierarchy!public! !
+remove:ifAbsent:!public!removing! !
+reset!private!removing! !
+rootNodes!hierarchy!private! !
+roots!hierarchy!public! !
+size!accessing!public! !
+!
 
 !TreeModel class methodsFor!
 
@@ -305,7 +307,9 @@ stbConvertFromVersion2: anArray
 	^answer
 
 ! !
-!TreeModel class categoriesFor: #new!instance creation!public! !
-!TreeModel class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!TreeModel class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
+!TreeModel class categoriesForMethods!
+new!instance creation!public! !
+stbConvertFromVersion1:!binary filing!private! !
+stbConvertFromVersion2:!binary filing!private! !
+!
 

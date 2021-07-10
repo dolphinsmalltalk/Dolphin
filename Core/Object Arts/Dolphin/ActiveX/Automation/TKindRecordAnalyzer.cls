@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXStructureTypeAnalyzer subclass: #TKindRecordAnalyzer
 	instanceVariableNames: ''
@@ -16,5 +16,7 @@ typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_RECORD! !
-!TKindRecordAnalyzer class categoriesFor: #typekind!constants!private! !
+!TKindRecordAnalyzer class categoriesForMethods!
+typekind!constants!private! !
+!
 

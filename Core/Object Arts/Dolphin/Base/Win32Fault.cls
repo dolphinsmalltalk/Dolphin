@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Error subclass: #Win32Fault
 	instanceVariableNames: 'exceptionRecord'
@@ -62,16 +62,18 @@ tagFromExceptionCode: anInteger
 	code, anInteger."
 
 	^HRESULT ntStatusCode: anInteger! !
-!Win32Fault categoriesFor: #_descriptionArguments!displaying!public! !
-!Win32Fault categoriesFor: #_descriptionFormat!displaying!public! !
-!Win32Fault categoriesFor: #exceptionAddress!accessing!public! !
-!Win32Fault categoriesFor: #exceptionCode!accessing!public! !
-!Win32Fault categoriesFor: #exceptionName!accessing!public! !
-!Win32Fault categoriesFor: #exceptionRecord!accessing!public! !
-!Win32Fault categoriesFor: #exceptionRecord:!accessing!private! !
-!Win32Fault categoriesFor: #initialize!initializing!public! !
-!Win32Fault categoriesFor: #moduleFileName!accessing!public! !
-!Win32Fault categoriesFor: #tagFromExceptionCode:!accessing!private! !
+!Win32Fault categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+exceptionAddress!accessing!public! !
+exceptionCode!accessing!public! !
+exceptionName!accessing!public! !
+exceptionRecord!accessing!public! !
+exceptionRecord:!accessing!private! !
+initialize!initializing!public! !
+moduleFileName!accessing!public! !
+tagFromExceptionCode:!accessing!private! !
+!
 
 !Win32Fault class methodsFor!
 
@@ -102,6 +104,8 @@ signal: messageText with: anEXCEPTION_RECORD
 	^self new 
 		exceptionRecord: anEXCEPTION_RECORD;
 		signal! !
-!Win32Fault class categoriesFor: #initialize!development!initializing!private! !
-!Win32Fault class categoriesFor: #signal:with:!instance creation!public! !
+!Win32Fault class categoriesForMethods!
+initialize!development!initializing!private! !
+signal:with:!instance creation!public! !
+!
 

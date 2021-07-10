@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ADODB_ADO subclass: #ADODBField20
 	instanceVariableNames: ''
@@ -427,47 +427,49 @@ value: pvar
 	"Set the 'Value' property of the receiver to the <variant> value of the argument."
 
 	self put_Value: pvar asVariant! !
-!ADODBField20 categoriesFor: #actualSize!**auto generated**!properties!public! !
-!ADODBField20 categoriesFor: #appendChunk:!**auto generated**!methods!public! !
-!ADODBField20 categoriesFor: #AppendChunk:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #attributes!**auto generated**!properties!public! !
-!ADODBField20 categoriesFor: #attributes:!**auto generated**!properties!public! !
-!ADODBField20 categoriesFor: #dataFormat!**auto generated**!properties!public! !
-!ADODBField20 categoriesFor: #definedSize!**auto generated**!properties!public! !
-!ADODBField20 categoriesFor: #definedSize:!**auto generated**!properties!public! !
-!ADODBField20 categoriesFor: #get_ActualSize:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #get_Attributes:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #get_DataFormat:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #get_DefinedSize:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #get_Name:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #get_NumericScale:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #get_OriginalValue:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #get_Precision:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #get_Type:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #get_UnderlyingValue:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #get_Value:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #getChunk:!**auto generated**!methods!public! !
-!ADODBField20 categoriesFor: #GetChunk:pvar:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #name!**auto generated**!properties!public! !
-!ADODBField20 categoriesFor: #numericScale!**auto generated**!properties!public! !
-!ADODBField20 categoriesFor: #numericScale:!**auto generated**!properties!public! !
-!ADODBField20 categoriesFor: #originalValue!**auto generated**!properties!public! !
-!ADODBField20 categoriesFor: #precision!**auto generated**!properties!public! !
-!ADODBField20 categoriesFor: #precision:!**auto generated**!properties!public! !
-!ADODBField20 categoriesFor: #printValueOn:!printing!private! !
-!ADODBField20 categoriesFor: #put_Attributes:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #put_DefinedSize:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #put_NumericScale:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #put_Precision:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #put_Type:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #put_Value:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #putref_DataFormat:!**auto generated**!COM Interfaces-Field20!private! !
-!ADODBField20 categoriesFor: #setDataFormat:!**auto generated**!properties!public! !
-!ADODBField20 categoriesFor: #type!**auto generated**!properties!public! !
-!ADODBField20 categoriesFor: #type:!**auto generated**!properties!public! !
-!ADODBField20 categoriesFor: #underlyingValue!**auto generated**!properties!public! !
-!ADODBField20 categoriesFor: #value!**auto generated**!properties!public! !
-!ADODBField20 categoriesFor: #value:!**auto generated**!properties!public! !
+!ADODBField20 categoriesForMethods!
+actualSize!**auto generated**!properties!public! !
+appendChunk:!**auto generated**!methods!public! !
+AppendChunk:!**auto generated**!COM Interfaces-Field20!private! !
+attributes!**auto generated**!properties!public! !
+attributes:!**auto generated**!properties!public! !
+dataFormat!**auto generated**!properties!public! !
+definedSize!**auto generated**!properties!public! !
+definedSize:!**auto generated**!properties!public! !
+get_ActualSize:!**auto generated**!COM Interfaces-Field20!private! !
+get_Attributes:!**auto generated**!COM Interfaces-Field20!private! !
+get_DataFormat:!**auto generated**!COM Interfaces-Field20!private! !
+get_DefinedSize:!**auto generated**!COM Interfaces-Field20!private! !
+get_Name:!**auto generated**!COM Interfaces-Field20!private! !
+get_NumericScale:!**auto generated**!COM Interfaces-Field20!private! !
+get_OriginalValue:!**auto generated**!COM Interfaces-Field20!private! !
+get_Precision:!**auto generated**!COM Interfaces-Field20!private! !
+get_Type:!**auto generated**!COM Interfaces-Field20!private! !
+get_UnderlyingValue:!**auto generated**!COM Interfaces-Field20!private! !
+get_Value:!**auto generated**!COM Interfaces-Field20!private! !
+getChunk:!**auto generated**!methods!public! !
+GetChunk:pvar:!**auto generated**!COM Interfaces-Field20!private! !
+name!**auto generated**!properties!public! !
+numericScale!**auto generated**!properties!public! !
+numericScale:!**auto generated**!properties!public! !
+originalValue!**auto generated**!properties!public! !
+precision!**auto generated**!properties!public! !
+precision:!**auto generated**!properties!public! !
+printValueOn:!printing!private! !
+put_Attributes:!**auto generated**!COM Interfaces-Field20!private! !
+put_DefinedSize:!**auto generated**!COM Interfaces-Field20!private! !
+put_NumericScale:!**auto generated**!COM Interfaces-Field20!private! !
+put_Precision:!**auto generated**!COM Interfaces-Field20!private! !
+put_Type:!**auto generated**!COM Interfaces-Field20!private! !
+put_Value:!**auto generated**!COM Interfaces-Field20!private! !
+putref_DataFormat:!**auto generated**!COM Interfaces-Field20!private! !
+setDataFormat:!**auto generated**!properties!public! !
+type!**auto generated**!properties!public! !
+type:!**auto generated**!properties!public! !
+underlyingValue!**auto generated**!properties!public! !
+value!**auto generated**!properties!public! !
+value:!**auto generated**!properties!public! !
+!
 
 !ADODBField20 class methodsFor!
 
@@ -517,5 +519,7 @@ defineFunctions
 		defineFunction: #put_Attributes:
 			argumentTypes: 'sdword'
 ! !
-!ADODBField20 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBField20 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

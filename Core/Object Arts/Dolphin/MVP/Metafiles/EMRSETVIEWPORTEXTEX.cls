@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRSETVIEWPORTEXTEX
 	instanceVariableNames: ''
@@ -37,8 +37,10 @@ szlExtent: aSIZE
 		from: ##(_OffsetOf_szlExtent + 1)
 		to: ##(_OffsetOf_szlExtent + SIZE basicByteSize)
 		startingAt: 1! !
-!EMRSETVIEWPORTEXTEX categoriesFor: #szlExtent!**compiled accessors**!public! !
-!EMRSETVIEWPORTEXTEX categoriesFor: #szlExtent:!**compiled accessors**!public! !
+!EMRSETVIEWPORTEXTEX categoriesForMethods!
+szlExtent!**compiled accessors**!public! !
+szlExtent:!**compiled accessors**!public! !
+!
 
 !EMRSETVIEWPORTEXTEX class methodsFor!
 
@@ -68,7 +70,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETVIEWPORTEXTEX with: EMR_SETWINDOWEXTEX! !
-!EMRSETVIEWPORTEXTEX class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETVIEWPORTEXTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETVIEWPORTEXTEX class categoriesFor: #iTypes!constants!public! !
+!EMRSETVIEWPORTEXTEX class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

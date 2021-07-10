@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusGraphicsPathFromPointsInitializer
 	instanceVariableNames: 'pathPoints pathTypes fillMode'
@@ -34,9 +34,11 @@ points: points types: types fillMode: aFillModeConstant
 	pathPoints := points.
 	pathTypes := types asByteArray.
 	fillMode := aFillModeConstant! !
-!GdiplusGraphicsPathFromPointsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusGraphicsPathFromPointsInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusGraphicsPathFromPointsInitializer categoriesFor: #points:types:fillMode:!initializing!private! !
+!GdiplusGraphicsPathFromPointsInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+points:types:fillMode:!initializing!private! !
+!
 
 !GdiplusGraphicsPathFromPointsInitializer class methodsFor!
 
@@ -45,5 +47,7 @@ points: points types: types fillMode: aFillModeConstant
 		points: points
 		types: types
 		fillMode: aFillModeConstant! !
-!GdiplusGraphicsPathFromPointsInitializer class categoriesFor: #points:types:fillMode:!public! !
+!GdiplusGraphicsPathFromPointsInitializer class categoriesForMethods!
+points:types:fillMode:!public! !
+!
 

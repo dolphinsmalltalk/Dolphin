@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TypeConverter subclass: #NullConverter
 	instanceVariableNames: ''
@@ -19,6 +19,8 @@ rightToLeft: anObject
 	"Private - For a NullConverter this does nothing"
 	
 	^anObject! !
-!NullConverter categoriesFor: #leftToRight:!operations!private! !
-!NullConverter categoriesFor: #rightToLeft:!operations!private! !
+!NullConverter categoriesForMethods!
+leftToRight:!operations!private! !
+rightToLeft:!operations!private! !
+!
 

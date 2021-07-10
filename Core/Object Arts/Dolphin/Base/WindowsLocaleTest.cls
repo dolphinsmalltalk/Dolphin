@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LocaleTest subclass: #WindowsLocaleTest
 	instanceVariableNames: ''
@@ -162,11 +162,13 @@ testPrintNoLeadingZero
 	format hasLeadingZero: false.
 	self assert: (subject printFloat: 1234567890.123 format: format) equals: '1,234,567,890.12'.
 	self assert: (subject printFloat: 0.123 format: format) equals: '.12'! !
-!WindowsLocaleTest categoriesFor: #defaultSubject!helpers!private! !
-!WindowsLocaleTest categoriesFor: #testDisplayFloatOnNegativeModes!public!unit tests! !
-!WindowsLocaleTest categoriesFor: #testEnglishName!public!unit tests! !
-!WindowsLocaleTest categoriesFor: #testPrintFloat!public!unit tests! !
-!WindowsLocaleTest categoriesFor: #testPrintFloatGrouping!public!unit tests! !
-!WindowsLocaleTest categoriesFor: #testPrintFloatSeparators!public!unit tests! !
-!WindowsLocaleTest categoriesFor: #testPrintNoLeadingZero!public!unit tests! !
+!WindowsLocaleTest categoriesForMethods!
+defaultSubject!helpers!private! !
+testDisplayFloatOnNegativeModes!public!unit tests! !
+testEnglishName!public!unit tests! !
+testPrintFloat!public!unit tests! !
+testPrintFloatGrouping!public!unit tests! !
+testPrintFloatSeparators!public!unit tests! !
+testPrintNoLeadingZero!public!unit tests! !
+!
 

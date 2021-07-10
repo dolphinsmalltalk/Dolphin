@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #VideoTape
 	instanceVariableNames: 'name length recordings'
@@ -69,12 +69,14 @@ recordings
 	"
 
 	^recordings! !
-!VideoTape categoriesFor: #displayOn:!printing!public! !
-!VideoTape categoriesFor: #length!accessing!public! !
-!VideoTape categoriesFor: #name!accessing!public! !
-!VideoTape categoriesFor: #name:length:!initializing!private! !
-!VideoTape categoriesFor: #printOn:!printing!public! !
-!VideoTape categoriesFor: #recordings!accessing!public! !
+!VideoTape categoriesForMethods!
+displayOn:!printing!public! !
+length!accessing!public! !
+name!accessing!public! !
+name:length:!initializing!private! !
+printOn:!printing!public! !
+recordings!accessing!public! !
+!
 
 !VideoTape class methodsFor!
 
@@ -113,8 +115,10 @@ name: tapeName length: tapeLength
 
 	^self new name: tapeName length: tapeLength
 ! !
-!VideoTape class categoriesFor: #defaultTapeLength!constants!private! !
-!VideoTape class categoriesFor: #icon!constants!public! !
-!VideoTape class categoriesFor: #name:!instance creation!public! !
-!VideoTape class categoriesFor: #name:length:!instance creation!public! !
+!VideoTape class categoriesForMethods!
+defaultTapeLength!constants!private! !
+icon!constants!public! !
+name:!instance creation!public! !
+name:length:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #CHARFORMAT2W
 	instanceVariableNames: ''
@@ -448,75 +448,77 @@ yHeight: anInteger
 	"Set the receiver's 'yHeight' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_yHeight put: anInteger! !
-!CHARFORMAT2W categoriesFor: #bAnimation!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bAnimation:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bCharSet!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bCharSet:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #beBold!accessing!public! !
-!CHARFORMAT2W categoriesFor: #beItalic!accessing!public! !
-!CHARFORMAT2W categoriesFor: #beNotBold!accessing!public! !
-!CHARFORMAT2W categoriesFor: #beNotItalic!accessing!public! !
-!CHARFORMAT2W categoriesFor: #beNotUnderlined!accessing!public! !
-!CHARFORMAT2W categoriesFor: #bePlain!modes!public! !
-!CHARFORMAT2W categoriesFor: #beUnderlined!accessing!public! !
-!CHARFORMAT2W categoriesFor: #bPitchAndFamily!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bPitchAndFamily:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bRevAuthor!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bRevAuthor:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bUnderlineColor!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bUnderlineColor:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bUnderlyineType!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #bUnderlyineType:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #characterSet!public! !
-!CHARFORMAT2W categoriesFor: #characterSet:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #color!accessing!public! !
-!CHARFORMAT2W categoriesFor: #color:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #crBackColor!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #crBackColor:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #crTextColor!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #crTextColor:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #dwEffects!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #dwEffects:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #dwMask!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #dwMask:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #dwSize:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #effectsAny:!accessing!private! !
-!CHARFORMAT2W categoriesFor: #faceName:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #font!accessing!public! !
-!CHARFORMAT2W categoriesFor: #font:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #height:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #isBold!public!testing! !
-!CHARFORMAT2W categoriesFor: #isBold:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #isItalic!accessing!public! !
-!CHARFORMAT2W categoriesFor: #isItalic:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #isStruckThrough!public!testing! !
-!CHARFORMAT2W categoriesFor: #isStruckThrough:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #isUnderlined!accessing!public! !
-!CHARFORMAT2W categoriesFor: #isUnderlined:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #lcid!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #lcid:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #logFont!public! !
-!CHARFORMAT2W categoriesFor: #maskAny:!accessing!private! !
-!CHARFORMAT2W categoriesFor: #maskIn:!accessing!private! !
-!CHARFORMAT2W categoriesFor: #maskOut:!private! !
-!CHARFORMAT2W categoriesFor: #pointSize!accessing!public! !
-!CHARFORMAT2W categoriesFor: #pointSize:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #populateChooseFont:!private! !
-!CHARFORMAT2W categoriesFor: #populateFromChooseFont:!private! !
-!CHARFORMAT2W categoriesFor: #setEffect:mask:set:!accessing!private! !
-!CHARFORMAT2W categoriesFor: #size:!accessing!public! !
-!CHARFORMAT2W categoriesFor: #sSpacing!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #sSpacing:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #sStyle!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #sStyle:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #szFaceName!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #szFaceName:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #wKerning!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #wKerning:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #wWeight!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #wWeight:!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #yHeight!**compiled accessors**!public! !
-!CHARFORMAT2W categoriesFor: #yHeight:!**compiled accessors**!public! !
+!CHARFORMAT2W categoriesForMethods!
+bAnimation!**compiled accessors**!public! !
+bAnimation:!**compiled accessors**!public! !
+bCharSet!**compiled accessors**!public! !
+bCharSet:!**compiled accessors**!public! !
+beBold!accessing!public! !
+beItalic!accessing!public! !
+beNotBold!accessing!public! !
+beNotItalic!accessing!public! !
+beNotUnderlined!accessing!public! !
+bePlain!modes!public! !
+beUnderlined!accessing!public! !
+bPitchAndFamily!**compiled accessors**!public! !
+bPitchAndFamily:!**compiled accessors**!public! !
+bRevAuthor!**compiled accessors**!public! !
+bRevAuthor:!**compiled accessors**!public! !
+bUnderlineColor!**compiled accessors**!public! !
+bUnderlineColor:!**compiled accessors**!public! !
+bUnderlyineType!**compiled accessors**!public! !
+bUnderlyineType:!**compiled accessors**!public! !
+characterSet!public! !
+characterSet:!accessing!public! !
+color!accessing!public! !
+color:!accessing!public! !
+crBackColor!**compiled accessors**!public! !
+crBackColor:!**compiled accessors**!public! !
+crTextColor!**compiled accessors**!public! !
+crTextColor:!**compiled accessors**!public! !
+dwEffects!**compiled accessors**!public! !
+dwEffects:!**compiled accessors**!public! !
+dwMask!**compiled accessors**!public! !
+dwMask:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+effectsAny:!accessing!private! !
+faceName:!accessing!public! !
+font!accessing!public! !
+font:!accessing!public! !
+height:!accessing!public! !
+isBold!public!testing! !
+isBold:!accessing!public! !
+isItalic!accessing!public! !
+isItalic:!accessing!public! !
+isStruckThrough!public!testing! !
+isStruckThrough:!accessing!public! !
+isUnderlined!accessing!public! !
+isUnderlined:!accessing!public! !
+lcid!**compiled accessors**!public! !
+lcid:!**compiled accessors**!public! !
+logFont!public! !
+maskAny:!accessing!private! !
+maskIn:!accessing!private! !
+maskOut:!private! !
+pointSize!accessing!public! !
+pointSize:!accessing!public! !
+populateChooseFont:!private! !
+populateFromChooseFont:!private! !
+setEffect:mask:set:!accessing!private! !
+size:!accessing!public! !
+sSpacing!**compiled accessors**!public! !
+sSpacing:!**compiled accessors**!public! !
+sStyle!**compiled accessors**!public! !
+sStyle:!**compiled accessors**!public! !
+szFaceName!**compiled accessors**!public! !
+szFaceName:!**compiled accessors**!public! !
+wKerning!**compiled accessors**!public! !
+wKerning:!**compiled accessors**!public! !
+wWeight!**compiled accessors**!public! !
+wWeight:!**compiled accessors**!public! !
+yHeight!**compiled accessors**!public! !
+yHeight:!**compiled accessors**!public! !
+!
 
 !CHARFORMAT2W class methodsFor!
 
@@ -553,7 +555,9 @@ fromChooseFont: aCHOOSEFRONT
 
 getFieldNames
 	^#(#dwSize #dwMask #dwEffects #yHeight #yOffset #crTextColor #bCharSet #bPitchAndFamily #szFaceName #wWeight #sSpacing #crBackColor #lcid #sStyle #wKerning #bUnderlyineType #bAnimation #bRevAuthor #bUnderlineColor)! !
-!CHARFORMAT2W class categoriesFor: #defineFields!public!template definition! !
-!CHARFORMAT2W class categoriesFor: #fromChooseFont:!public! !
-!CHARFORMAT2W class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!CHARFORMAT2W class categoriesForMethods!
+defineFields!public!template definition! !
+fromChooseFont:!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

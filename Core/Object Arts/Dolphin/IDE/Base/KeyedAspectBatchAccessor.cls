@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BatchAspectAccessor subclass: #KeyedAspectBatchAccessor
 	instanceVariableNames: ''
@@ -42,9 +42,11 @@ publishedAspects
 	for this node (without this one gets a + and can expand it)."
 
 	^LookupTable new! !
-!KeyedAspectBatchAccessor categoriesFor: #aspectClass!public! !
-!KeyedAspectBatchAccessor categoriesFor: #getBatchAccessors!accessing!public! !
-!KeyedAspectBatchAccessor categoriesFor: #publishedAspects!constants!public! !
+!KeyedAspectBatchAccessor categoriesForMethods!
+aspectClass!public! !
+getBatchAccessors!accessing!public! !
+publishedAspects!constants!public! !
+!
 
 !KeyedAspectBatchAccessor class methodsFor!
 
@@ -57,5 +59,7 @@ subject: anObject batchSize: sizeInteger
 		keys: anObject keys
 		startingAt: 1
 		batchSize: sizeInteger! !
-!KeyedAspectBatchAccessor class categoriesFor: #subject:batchSize:!instance creation!public! !
+!KeyedAspectBatchAccessor class categoriesForMethods!
+subject:batchSize:!instance creation!public! !
+!
 

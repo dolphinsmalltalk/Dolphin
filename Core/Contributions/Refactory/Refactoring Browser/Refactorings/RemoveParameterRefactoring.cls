@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ChangeMethodNameRefactoring subclass: #RemoveParameterRefactoring
 	instanceVariableNames: 'parameterIndex argument'
@@ -72,12 +72,14 @@ storeOn: aStream
 		nextPutAll: ' selector: #';
 		nextPutAll: oldSelector.
 	aStream nextPut: $)! !
-!RemoveParameterRefactoring categoriesFor: #computeNewSelector!private! !
-!RemoveParameterRefactoring categoriesFor: #getNewSelector!public!transforming! !
-!RemoveParameterRefactoring categoriesFor: #hasReferencesToTemporaryIn:!public!transforming! !
-!RemoveParameterRefactoring categoriesFor: #myConditions!preconditions!public! !
-!RemoveParameterRefactoring categoriesFor: #removeParameter:in:selector:!initialize/release!public! !
-!RemoveParameterRefactoring categoriesFor: #storeOn:!printing!public! !
+!RemoveParameterRefactoring categoriesForMethods!
+computeNewSelector!private! !
+getNewSelector!public!transforming! !
+hasReferencesToTemporaryIn:!public!transforming! !
+myConditions!preconditions!public! !
+removeParameter:in:selector:!initialize/release!public! !
+storeOn:!printing!public! !
+!
 
 !RemoveParameterRefactoring class methodsFor!
 
@@ -91,6 +93,8 @@ model: aRBNamespace removeParameter: aString in: aClass selector: aSelector
 
 removeParameter: aString in: aClass selector: aSelector
 	^self new removeParameter: aString in: aClass selector: aSelector! !
-!RemoveParameterRefactoring class categoriesFor: #model:removeParameter:in:selector:!instance creation!public! !
-!RemoveParameterRefactoring class categoriesFor: #removeParameter:in:selector:!instance creation!public! !
+!RemoveParameterRefactoring class categoriesForMethods!
+model:removeParameter:in:selector:!instance creation!public! !
+removeParameter:in:selector:!instance creation!public! !
+!
 

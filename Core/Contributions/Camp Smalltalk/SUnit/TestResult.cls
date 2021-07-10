@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #TestResult
 	instanceVariableNames: 'results failures errors passed skipped duration'
@@ -170,38 +170,40 @@ tests
 		addAll: self errors;
 		addAll: self defects;
 		yourself! !
-!TestResult categoriesFor: #addError:signal:!adding!private! !
-!TestResult categoriesFor: #addFailure:signal:!adding!private! !
-!TestResult categoriesFor: #addPass:duration:!adding!private! !
-!TestResult categoriesFor: #addSkip:signal:!adding!private! !
-!TestResult categoriesFor: #correctCount!accessing!public! !
-!TestResult categoriesFor: #defects!accessing!public! !
-!TestResult categoriesFor: #displayAttributes:on:!printing!public! !
-!TestResult categoriesFor: #displayOn:!printing!public! !
-!TestResult categoriesFor: #duration!accessing!public! !
-!TestResult categoriesFor: #duration:!accessing!public! !
-!TestResult categoriesFor: #errorCount!accessing!public! !
-!TestResult categoriesFor: #errors!accessing!public! !
-!TestResult categoriesFor: #failureCount!accessing!public! !
-!TestResult categoriesFor: #failures!accessing!public! !
-!TestResult categoriesFor: #hasErrors!public!testing! !
-!TestResult categoriesFor: #hasFailures!public!testing! !
-!TestResult categoriesFor: #hasPassed!public!testing! !
-!TestResult categoriesFor: #initialize!initializing!public! !
-!TestResult categoriesFor: #isError:!public!testing! !
-!TestResult categoriesFor: #isFailure:!public!testing! !
-!TestResult categoriesFor: #isPassed:!public!testing! !
-!TestResult categoriesFor: #isSkipped:!public!testing! !
-!TestResult categoriesFor: #passed!accessing!public! !
-!TestResult categoriesFor: #passedCount!accessing!public! !
-!TestResult categoriesFor: #printOn:!public! !
-!TestResult categoriesFor: #resultFor:!accessing!public! !
-!TestResult categoriesFor: #results!accessing!public! !
-!TestResult categoriesFor: #runCase:!public!running! !
-!TestResult categoriesFor: #runCount!accessing!public! !
-!TestResult categoriesFor: #skipped!accessing!public! !
-!TestResult categoriesFor: #skippedCount!accessing!public! !
-!TestResult categoriesFor: #tests!accessing!public! !
+!TestResult categoriesForMethods!
+addError:signal:!adding!private! !
+addFailure:signal:!adding!private! !
+addPass:duration:!adding!private! !
+addSkip:signal:!adding!private! !
+correctCount!accessing!public! !
+defects!accessing!public! !
+displayAttributes:on:!printing!public! !
+displayOn:!printing!public! !
+duration!accessing!public! !
+duration:!accessing!public! !
+errorCount!accessing!public! !
+errors!accessing!public! !
+failureCount!accessing!public! !
+failures!accessing!public! !
+hasErrors!public!testing! !
+hasFailures!public!testing! !
+hasPassed!public!testing! !
+initialize!initializing!public! !
+isError:!public!testing! !
+isFailure:!public!testing! !
+isPassed:!public!testing! !
+isSkipped:!public!testing! !
+passed!accessing!public! !
+passedCount!accessing!public! !
+printOn:!public! !
+resultFor:!accessing!public! !
+results!accessing!public! !
+runCase:!public!running! !
+runCount!accessing!public! !
+skipped!accessing!public! !
+skippedCount!accessing!public! !
+tests!accessing!public! !
+!
 
 !TestResult class methodsFor!
 
@@ -231,12 +233,14 @@ signalFailureWith: aString
 
 skip
 	^TestSkip! !
-!TestResult class categoriesFor: #error!Exceptions!public! !
-!TestResult class categoriesFor: #exError!Exceptions!public! !
-!TestResult class categoriesFor: #failure!Exceptions!public! !
-!TestResult class categoriesFor: #new!Init / Release!public! !
-!TestResult class categoriesFor: #resumableFailure!Exceptions!public! !
-!TestResult class categoriesFor: #signalErrorWith:!Exceptions!public! !
-!TestResult class categoriesFor: #signalFailureWith:!Exceptions!public! !
-!TestResult class categoriesFor: #skip!Exceptions!public! !
+!TestResult class categoriesForMethods!
+error!Exceptions!public! !
+exError!Exceptions!public! !
+failure!Exceptions!public! !
+new!Init / Release!public! !
+resumableFailure!Exceptions!public! !
+signalErrorWith:!Exceptions!public! !
+signalFailureWith:!Exceptions!public! !
+skip!Exceptions!public! !
+!
 

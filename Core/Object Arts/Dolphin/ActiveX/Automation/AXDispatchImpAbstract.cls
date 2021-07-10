@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 COMInterfaceImp subclass: #AXDispatchImpAbstract
 	instanceVariableNames: ''
@@ -149,18 +149,20 @@ typeInfoCount
 	"Answer 1 if type information is available, else 0."
 
 	^0! !
-!AXDispatchImpAbstract categoriesFor: #decodeArgs:!helpers!private! !
-!AXDispatchImpAbstract categoriesFor: #errorDispatching:exception:excepInfo:!operations!private! !
-!AXDispatchImpAbstract categoriesFor: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!public! !
-!AXDispatchImpAbstract categoriesFor: #GetTypeInfo:lcid:pptinfo:!COM Interfaces-IDispatch!public! !
-!AXDispatchImpAbstract categoriesFor: #GetTypeInfoCount:!COM Interfaces-IDispatch!public! !
-!AXDispatchImpAbstract categoriesFor: #idsOfNames:whenNotKnown:!accessing!public! !
-!AXDispatchImpAbstract categoriesFor: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!public! !
-!AXDispatchImpAbstract categoriesFor: #invokeId:flags:withArguments:!operations!public! !
-!AXDispatchImpAbstract categoriesFor: #notifyDispatchError:invoking:!operations!private! !
-!AXDispatchImpAbstract categoriesFor: #supportedInterfaces!constants!public! !
-!AXDispatchImpAbstract categoriesFor: #typeInfo:ifNone:!accessing!private! !
-!AXDispatchImpAbstract categoriesFor: #typeInfoCount!accessing!public! !
+!AXDispatchImpAbstract categoriesForMethods!
+decodeArgs:!helpers!private! !
+errorDispatching:exception:excepInfo:!operations!private! !
+GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!public! !
+GetTypeInfo:lcid:pptinfo:!COM Interfaces-IDispatch!public! !
+GetTypeInfoCount:!COM Interfaces-IDispatch!public! !
+idsOfNames:whenNotKnown:!accessing!public! !
+Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!public! !
+invokeId:flags:withArguments:!operations!public! !
+notifyDispatchError:invoking:!operations!private! !
+supportedInterfaces!constants!public! !
+typeInfo:ifNone:!accessing!private! !
+typeInfoCount!accessing!public! !
+!
 
 AXDispatchImpAbstract methodProtocol: #IDispatch attributes: #(#readOnly) selectors: #(#GetIDsOfNames:rgszNames:cNames:lcid:rgdispid: #GetTypeInfo:lcid:pptinfo: #GetTypeInfoCount: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:)!
 

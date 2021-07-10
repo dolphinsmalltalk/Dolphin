@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalArray subclass: #SBYTEArray
 	instanceVariableNames: ''
@@ -21,8 +21,10 @@ uncheckedAt: indexInteger put: valueInteger
 	with the <integer> argument. No bounds checks are performed on the subscript."
 
 	^bytes sbyteAtOffset: indexInteger - 1 put: valueInteger! !
-!SBYTEArray categoriesFor: #uncheckedAt:!accessing!private! !
-!SBYTEArray categoriesFor: #uncheckedAt:put:!private! !
+!SBYTEArray categoriesForMethods!
+uncheckedAt:!accessing!private! !
+uncheckedAt:put:!private! !
+!
 
 !SBYTEArray class methodsFor!
 
@@ -30,5 +32,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^BYTE! !
-!SBYTEArray class categoriesFor: #elementClass!constants!public! !
+!SBYTEArray class categoriesForMethods!
+elementClass!constants!public! !
+!
 

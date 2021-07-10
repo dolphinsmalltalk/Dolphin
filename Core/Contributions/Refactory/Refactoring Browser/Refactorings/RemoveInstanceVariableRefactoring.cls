@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VariableRefactoring subclass: #RemoveInstanceVariableRefactoring
 	instanceVariableNames: ''
@@ -25,6 +25,8 @@ preconditions
 
 transform
 	class removeInstanceVariable: variableName! !
-!RemoveInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!RemoveInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
+!RemoveInstanceVariableRefactoring categoriesForMethods!
+preconditions!preconditions!public! !
+transform!public!transforming! !
+!
 

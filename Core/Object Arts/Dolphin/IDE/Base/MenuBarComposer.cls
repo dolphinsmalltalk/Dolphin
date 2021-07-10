@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MenuComposer subclass: #MenuBarComposer
 	instanceVariableNames: ''
@@ -14,5 +14,7 @@ menuClass
 	"Private - Answer the base menu class that instances of the receiver will edit|"
 
 	^MenuBar! !
-!MenuBarComposer class categoriesFor: #menuClass!models!private! !
+!MenuBarComposer class categoriesForMethods!
+menuClass!models!private! !
+!
 

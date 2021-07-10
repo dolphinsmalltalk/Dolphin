@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IMSControl
 	instanceVariableNames: ''
@@ -275,45 +275,47 @@ setFont: ppFont
 
 	self putref_Font: ppFont
 ! !
-!IMSControl categoriesFor: #aboutBox!COM Interfaces-IMSControl!public! !
-!IMSControl categoriesFor: #AboutBox!COM Interfaces-IMSControl!public! !
-!IMSControl categoriesFor: #appearance!properties!public! !
-!IMSControl categoriesFor: #appearance:!properties!public! !
-!IMSControl categoriesFor: #backColor!properties!public! !
-!IMSControl categoriesFor: #backColor:!properties!public! !
-!IMSControl categoriesFor: #borderStyle!properties!public! !
-!IMSControl categoriesFor: #borderStyle:!properties!public! !
-!IMSControl categoriesFor: #convertToBackColorRef:!private!properties! !
-!IMSControl categoriesFor: #convertToForeColorRef:!properties!public! !
-!IMSControl categoriesFor: #enabled!properties!public! !
-!IMSControl categoriesFor: #enabled:!properties!public! !
-!IMSControl categoriesFor: #font!properties!public! !
-!IMSControl categoriesFor: #font:!properties!public! !
-!IMSControl categoriesFor: #foreColor!properties!public! !
-!IMSControl categoriesFor: #foreColor:!properties!public! !
-!IMSControl categoriesFor: #get_Appearance:!COM Interfaces-IMSControl!private! !
-!IMSControl categoriesFor: #get_BackColor:!COM Interfaces-IMSControl!private! !
-!IMSControl categoriesFor: #get_BorderStyle:!COM Interfaces-IMSControl!private! !
-!IMSControl categoriesFor: #get_Enabled:!COM Interfaces-IMSControl!private! !
-!IMSControl categoriesFor: #get_Font:!COM Interfaces-IMSControl!private! !
-!IMSControl categoriesFor: #get_ForeColor:!COM Interfaces-IMSControl!private! !
-!IMSControl categoriesFor: #get_hWnd:!COM Interfaces-IMSControl!private! !
-!IMSControl categoriesFor: #get_OLEDropMode:!COM Interfaces-IMSControl!private! !
-!IMSControl categoriesFor: #hWnd!properties!public! !
-!IMSControl categoriesFor: #hWnd:!properties!public! !
-!IMSControl categoriesFor: #isExtensible!public!testing! !
-!IMSControl categoriesFor: #isVBCollection!public!testing! !
-!IMSControl categoriesFor: #oleDropMode!properties!public! !
-!IMSControl categoriesFor: #oleDropMode:!properties!public! !
-!IMSControl categoriesFor: #put_Appearance:!COM Interfaces-IMSControl!private! !
-!IMSControl categoriesFor: #put_BackColor:!COM Interfaces-IMSControl!private! !
-!IMSControl categoriesFor: #put_BorderStyle:!COM Interfaces-IMSControl!private! !
-!IMSControl categoriesFor: #put_Enabled:!COM Interfaces-IMSControl!private! !
-!IMSControl categoriesFor: #put_ForeColor:!COM Interfaces-IMSControl!private! !
-!IMSControl categoriesFor: #put_hWnd:!COM Interfaces-IMSControl!private! !
-!IMSControl categoriesFor: #put_OLEDropMode:!COM Interfaces-IMSControl!private! !
-!IMSControl categoriesFor: #putref_Font:!COM Interfaces-IMSControl!private! !
-!IMSControl categoriesFor: #refresh!COM Interfaces-IMSControl!public! !
-!IMSControl categoriesFor: #Refresh!COM Interfaces-IMSControl!public! !
-!IMSControl categoriesFor: #setFont:!properties!public! !
+!IMSControl categoriesForMethods!
+aboutBox!COM Interfaces-IMSControl!public! !
+AboutBox!COM Interfaces-IMSControl!public! !
+appearance!properties!public! !
+appearance:!properties!public! !
+backColor!properties!public! !
+backColor:!properties!public! !
+borderStyle!properties!public! !
+borderStyle:!properties!public! !
+convertToBackColorRef:!private!properties! !
+convertToForeColorRef:!properties!public! !
+enabled!properties!public! !
+enabled:!properties!public! !
+font!properties!public! !
+font:!properties!public! !
+foreColor!properties!public! !
+foreColor:!properties!public! !
+get_Appearance:!COM Interfaces-IMSControl!private! !
+get_BackColor:!COM Interfaces-IMSControl!private! !
+get_BorderStyle:!COM Interfaces-IMSControl!private! !
+get_Enabled:!COM Interfaces-IMSControl!private! !
+get_Font:!COM Interfaces-IMSControl!private! !
+get_ForeColor:!COM Interfaces-IMSControl!private! !
+get_hWnd:!COM Interfaces-IMSControl!private! !
+get_OLEDropMode:!COM Interfaces-IMSControl!private! !
+hWnd!properties!public! !
+hWnd:!properties!public! !
+isExtensible!public!testing! !
+isVBCollection!public!testing! !
+oleDropMode!properties!public! !
+oleDropMode:!properties!public! !
+put_Appearance:!COM Interfaces-IMSControl!private! !
+put_BackColor:!COM Interfaces-IMSControl!private! !
+put_BorderStyle:!COM Interfaces-IMSControl!private! !
+put_Enabled:!COM Interfaces-IMSControl!private! !
+put_ForeColor:!COM Interfaces-IMSControl!private! !
+put_hWnd:!COM Interfaces-IMSControl!private! !
+put_OLEDropMode:!COM Interfaces-IMSControl!private! !
+putref_Font:!COM Interfaces-IMSControl!private! !
+refresh!COM Interfaces-IMSControl!public! !
+Refresh!COM Interfaces-IMSControl!public! !
+setFont:!properties!public! !
+!
 

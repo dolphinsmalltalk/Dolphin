@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ProcessCopier
 	instanceVariableNames: 'source delta copied clone'
@@ -100,18 +100,20 @@ recordVisitTo: anObject
 
 visit: anObject
 	^anObject acceptProcessCopier: self! !
-!ProcessCopier categoriesFor: #copyObject:!copying!public! !
-!ProcessCopier categoriesFor: #copyStack:!copying!private! !
-!ProcessCopier categoriesFor: #createBasicCopyOfStack:!copying!private! !
-!ProcessCopier categoriesFor: #delta!accessing!public! !
-!ProcessCopier categoriesFor: #existingCopyOf:!copying!public! !
-!ProcessCopier categoriesFor: #hasVisited:!private!testing! !
-!ProcessCopier categoriesFor: #initializeCopiedMap!copying!private! !
-!ProcessCopier categoriesFor: #patchExceptionHandlers!copying!private! !
-!ProcessCopier categoriesFor: #patchFrames!copying!private! !
-!ProcessCopier categoriesFor: #patchStackSlots!copying!private! !
-!ProcessCopier categoriesFor: #recordVisitTo:!copying!public! !
-!ProcessCopier categoriesFor: #visit:!copying!public! !
+!ProcessCopier categoriesForMethods!
+copyObject:!copying!public! !
+copyStack:!copying!private! !
+createBasicCopyOfStack:!copying!private! !
+delta!accessing!public! !
+existingCopyOf:!copying!public! !
+hasVisited:!private!testing! !
+initializeCopiedMap!copying!private! !
+patchExceptionHandlers!copying!private! !
+patchFrames!copying!private! !
+patchStackSlots!copying!private! !
+recordVisitTo:!copying!public! !
+visit:!copying!public! !
+!
 
 !ProcessCopier class methodsFor!
 
@@ -120,5 +122,7 @@ copyStack: aStackFrame
 	the <StackFrame> argument. The answer will be suspended, but continuable."
 
 	^self new copyStack: aStackFrame! !
-!ProcessCopier class categoriesFor: #copyStack:!operations!public! !
+!ProcessCopier class categoriesForMethods!
+copyStack:!operations!public! !
+!
 

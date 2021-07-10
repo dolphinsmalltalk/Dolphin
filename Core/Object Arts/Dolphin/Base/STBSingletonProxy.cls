@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STBProxy subclass: #STBSingletonProxy
 	instanceVariableNames: 'class selector'
@@ -29,9 +29,11 @@ stbFixup: inFiler at: anInteger
 	anObject := class perform: selector.
 	inFiler fixup: anInteger to: anObject.
 	^anObject! !
-!STBSingletonProxy categoriesFor: #class:!accessing!public! !
-!STBSingletonProxy categoriesFor: #selector:!accessing!public! !
-!STBSingletonProxy categoriesFor: #stbFixup:at:!converting!public! !
+!STBSingletonProxy categoriesForMethods!
+class:!accessing!public! !
+selector:!accessing!public! !
+stbFixup:at:!converting!public! !
+!
 
 !STBSingletonProxy class methodsFor!
 
@@ -51,6 +53,8 @@ forClass: aClass using: aSelectorSymbol
 		class: aClass;
 		selector: aSelectorSymbol;
 		yourself! !
-!STBSingletonProxy class categoriesFor: #forClass:!instance creation!public! !
-!STBSingletonProxy class categoriesFor: #forClass:using:!instance creation!public! !
+!STBSingletonProxy class categoriesForMethods!
+forClass:!instance creation!public! !
+forClass:using:!instance creation!public! !
+!
 

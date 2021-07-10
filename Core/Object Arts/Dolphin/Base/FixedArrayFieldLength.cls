@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ArrayFieldLength subclass: #FixedArrayFieldLength
 	instanceVariableNames: 'elementCount'
@@ -48,14 +48,16 @@ setElementCount: anArrayedCollection of: anExternalField in: anExternalStructure
 	"anExternalField describes a fixed length array - nothing to do here"
 
 	! !
-!FixedArrayFieldLength categoriesFor: #allocationLength!accessing!private! !
-!FixedArrayFieldLength categoriesFor: #elementCount!accessing!private! !
-!FixedArrayFieldLength categoriesFor: #elementCount:!accessing!private! !
-!FixedArrayFieldLength categoriesFor: #getElementCountOf:in:!indirect accessing!private! !
-!FixedArrayFieldLength categoriesFor: #isFixedSize!private!testing! !
-!FixedArrayFieldLength categoriesFor: #printElementCountExpressionFor:on:!automatic generation!private! !
-!FixedArrayFieldLength categoriesFor: #printSetSizeFor:on:!automatic generation!development!private! !
-!FixedArrayFieldLength categoriesFor: #setElementCount:of:in:!indirect accessing!private! !
+!FixedArrayFieldLength categoriesForMethods!
+allocationLength!accessing!private! !
+elementCount!accessing!private! !
+elementCount:!accessing!private! !
+getElementCountOf:in:!indirect accessing!private! !
+isFixedSize!private!testing! !
+printElementCountExpressionFor:on:!automatic generation!private! !
+printSetSizeFor:on:!automatic generation!development!private! !
+setElementCount:of:in:!indirect accessing!private! !
+!
 
 !FixedArrayFieldLength class methodsFor!
 
@@ -64,5 +66,7 @@ elementCount: anInteger
 	number of elements on behalf of some kind of <ArrayField>."
 
 	^self new elementCount: anInteger! !
-!FixedArrayFieldLength class categoriesFor: #elementCount:!instance creation!public! !
+!FixedArrayFieldLength class categoriesForMethods!
+elementCount:!instance creation!public! !
+!
 

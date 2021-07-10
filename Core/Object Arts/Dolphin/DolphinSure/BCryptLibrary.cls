@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #BCryptLibrary
 	instanceVariableNames: 'shaAlgorithmHandle'
@@ -151,18 +151,20 @@ shaHashBuffer: aHashHandle buffer: buffer
 		input: buffer
 		inputSize: buffer size
 		flags: 0! !
-!BCryptLibrary categoriesFor: #closeAlgorithmProvider:flags:!public!win32 functions-bcrypt library! !
-!BCryptLibrary categoriesFor: #createHash:hashHandle:hashObject:hashObjectSize:secret:secretSize:flags:!public!win32 functions-bcrypt library! !
-!BCryptLibrary categoriesFor: #destroyHash:!public!win32 functions-bcrypt library! !
-!BCryptLibrary categoriesFor: #finishHash:output:outputSize:flags:!public!win32 functions-bcrypt library! !
-!BCryptLibrary categoriesFor: #getProperty:property:output:outputSize:resultSize:flags:!public!win32 functions-bcrypt library! !
-!BCryptLibrary categoriesFor: #hashData:input:inputSize:flags:!public!win32 functions-bcrypt library! !
-!BCryptLibrary categoriesFor: #openAlgorithmProvider:id:implementation:flags:!public!win32 functions-bcrypt library! !
-!BCryptLibrary categoriesFor: #shaAlgorithmHandle!hashing!public! !
-!BCryptLibrary categoriesFor: #shaCreate!hashing!public! !
-!BCryptLibrary categoriesFor: #shaDestroy:!hashing!public! !
-!BCryptLibrary categoriesFor: #shaGetHash:!hashing!public! !
-!BCryptLibrary categoriesFor: #shaHashBuffer:buffer:!hashing!public! !
+!BCryptLibrary categoriesForMethods!
+closeAlgorithmProvider:flags:!public!win32 functions-bcrypt library! !
+createHash:hashHandle:hashObject:hashObjectSize:secret:secretSize:flags:!public!win32 functions-bcrypt library! !
+destroyHash:!public!win32 functions-bcrypt library! !
+finishHash:output:outputSize:flags:!public!win32 functions-bcrypt library! !
+getProperty:property:output:outputSize:resultSize:flags:!public!win32 functions-bcrypt library! !
+hashData:input:inputSize:flags:!public!win32 functions-bcrypt library! !
+openAlgorithmProvider:id:implementation:flags:!public!win32 functions-bcrypt library! !
+shaAlgorithmHandle!hashing!public! !
+shaCreate!hashing!public! !
+shaDestroy:!hashing!public! !
+shaGetHash:!hashing!public! !
+shaHashBuffer:buffer:!hashing!public! !
+!
 
 !BCryptLibrary class methodsFor!
 
@@ -170,5 +172,7 @@ fileName
 	"Answer the host system file name for the library"
 
 	^ 'BCrypt'! !
-!BCryptLibrary class categoriesFor: #fileName!constants!public! !
+!BCryptLibrary class categoriesForMethods!
+fileName!constants!public! !
+!
 

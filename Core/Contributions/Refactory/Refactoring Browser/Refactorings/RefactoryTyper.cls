@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #RefactoryTyper
 	instanceVariableNames: 'model class variableTypes bestGuesses variableMessages backpointers methodName selectorLookup'
@@ -312,35 +312,37 @@ typesFor: anInstVarName
 typesFor: anInstVarName in: aClass 
 	class = aClass ifFalse: [self runOn: aClass].
 	^variableTypes at: anInstVarName ifAbsent: [Set new]! !
-!RefactoryTyper categoriesFor: #collectionNameFor:!printing!public! !
-!RefactoryTyper categoriesFor: #computeEquivalenceClassesForMethodsAndVars!equivalence classes!public! !
-!RefactoryTyper categoriesFor: #computeMessagesSentToVariables!public!selectors! !
-!RefactoryTyper categoriesFor: #computeTypes!computing types!public! !
-!RefactoryTyper categoriesFor: #executeSearch:!operations!private! !
-!RefactoryTyper categoriesFor: #findTypeFor:!computing types!public! !
-!RefactoryTyper categoriesFor: #guessTypeFromAssignment:!assignments!public! !
-!RefactoryTyper categoriesFor: #guessTypesFor:!accessing!public! !
-!RefactoryTyper categoriesFor: #guessTypesFor:in:!accessing!public! !
-!RefactoryTyper categoriesFor: #implementorsOf:!computing types!public! !
-!RefactoryTyper categoriesFor: #implementorsOf:in:storeIn:!computing types!public! !
-!RefactoryTyper categoriesFor: #initialize!initialize/release!public! !
-!RefactoryTyper categoriesFor: #merge:!equivalence classes!public! !
-!RefactoryTyper categoriesFor: #model!accessing!private! !
-!RefactoryTyper categoriesFor: #model:!accessing!private! !
-!RefactoryTyper categoriesFor: #printOn:!printing!public! !
-!RefactoryTyper categoriesFor: #printType:for:on:!printing!public! !
-!RefactoryTyper categoriesFor: #printTypeFor:on:!printing!public! !
-!RefactoryTyper categoriesFor: #processCollectionFor:messagesTo:in:!public!selectors/collections! !
-!RefactoryTyper categoriesFor: #processCollectionMessagesFor:in:!public!selectors/collections! !
-!RefactoryTyper categoriesFor: #processNode:!equivalence classes!public! !
-!RefactoryTyper categoriesFor: #refineTypes:with:!computing types!public! !
-!RefactoryTyper categoriesFor: #refineTypesByLookingAtAssignments!assignments!public! !
-!RefactoryTyper categoriesFor: #rootClasses!constants!private! !
-!RefactoryTyper categoriesFor: #runOn:!accessing!public! !
-!RefactoryTyper categoriesFor: #selectedClass:!accessing!public! !
-!RefactoryTyper categoriesFor: #typeFor:!assignments!public! !
-!RefactoryTyper categoriesFor: #typesFor:!accessing!public! !
-!RefactoryTyper categoriesFor: #typesFor:in:!accessing!public! !
+!RefactoryTyper categoriesForMethods!
+collectionNameFor:!printing!public! !
+computeEquivalenceClassesForMethodsAndVars!equivalence classes!public! !
+computeMessagesSentToVariables!public!selectors! !
+computeTypes!computing types!public! !
+executeSearch:!operations!private! !
+findTypeFor:!computing types!public! !
+guessTypeFromAssignment:!assignments!public! !
+guessTypesFor:!accessing!public! !
+guessTypesFor:in:!accessing!public! !
+implementorsOf:!computing types!public! !
+implementorsOf:in:storeIn:!computing types!public! !
+initialize!initialize/release!public! !
+merge:!equivalence classes!public! !
+model!accessing!private! !
+model:!accessing!private! !
+printOn:!printing!public! !
+printType:for:on:!printing!public! !
+printTypeFor:on:!printing!public! !
+processCollectionFor:messagesTo:in:!public!selectors/collections! !
+processCollectionMessagesFor:in:!public!selectors/collections! !
+processNode:!equivalence classes!public! !
+refineTypes:with:!computing types!public! !
+refineTypesByLookingAtAssignments!assignments!public! !
+rootClasses!constants!private! !
+runOn:!accessing!public! !
+selectedClass:!accessing!public! !
+typeFor:!assignments!public! !
+typesFor:!accessing!public! !
+typesFor:in:!accessing!public! !
+!
 
 !RefactoryTyper class methodsFor!
 
@@ -367,7 +369,9 @@ typesFor: variableName in: aParseTree model: aRBNamespace
 	^(self new)
 		model: aRBNamespace;
 		findTypeFor: messages! !
-!RefactoryTyper class categoriesFor: #new!instance creation!public! !
-!RefactoryTyper class categoriesFor: #newFor:!instance creation!public! !
-!RefactoryTyper class categoriesFor: #typesFor:in:model:!accessing!public! !
+!RefactoryTyper class categoriesForMethods!
+new!instance creation!public! !
+newFor:!instance creation!public! !
+typesFor:in:model:!accessing!public! !
+!
 

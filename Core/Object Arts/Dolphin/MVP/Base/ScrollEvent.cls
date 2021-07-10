@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 WindowsEvent subclass: #ScrollEvent
 	instanceVariableNames: ''
@@ -99,20 +99,22 @@ top
 	"Answer whether the scroll event is to the far top/left."
 
 	^self scrollCode = SB_TOP! !
-!ScrollEvent categoriesFor: #bottom!public!testing! !
-!ScrollEvent categoriesFor: #endScroll!public!testing! !
-!ScrollEvent categoriesFor: #lineDown!public!testing! !
-!ScrollEvent categoriesFor: #lineLeft!public!testing! !
-!ScrollEvent categoriesFor: #lineRight!public!testing! !
-!ScrollEvent categoriesFor: #lineUp!public!testing! !
-!ScrollEvent categoriesFor: #pageDown!public!testing! !
-!ScrollEvent categoriesFor: #pageLeft!public!testing! !
-!ScrollEvent categoriesFor: #pageRight!public!testing! !
-!ScrollEvent categoriesFor: #pageUp!public!testing! !
-!ScrollEvent categoriesFor: #pos!accessing!public! !
-!ScrollEvent categoriesFor: #scrollBar!accessing!public! !
-!ScrollEvent categoriesFor: #scrollCode!accessing!public! !
-!ScrollEvent categoriesFor: #thumbPosition!public!testing! !
-!ScrollEvent categoriesFor: #thumbTrack!public!testing! !
-!ScrollEvent categoriesFor: #top!public!testing! !
+!ScrollEvent categoriesForMethods!
+bottom!public!testing! !
+endScroll!public!testing! !
+lineDown!public!testing! !
+lineLeft!public!testing! !
+lineRight!public!testing! !
+lineUp!public!testing! !
+pageDown!public!testing! !
+pageLeft!public!testing! !
+pageRight!public!testing! !
+pageUp!public!testing! !
+pos!accessing!public! !
+scrollBar!accessing!public! !
+scrollCode!accessing!public! !
+thumbPosition!public!testing! !
+thumbTrack!public!testing! !
+top!public!testing! !
+!
 

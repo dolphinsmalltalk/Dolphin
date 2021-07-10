@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Exception subclass: #StackOverflow
 	instanceVariableNames: ''
@@ -25,7 +25,9 @@ hresult
 	"Answer the <HRESULT> error/status code associated with the receiver."
 
 	^HRESULT win32Error: ERROR_STACK_OVERFLOW! !
-!StackOverflow categoriesFor: #_descriptionArguments!displaying!public! !
-!StackOverflow categoriesFor: #defaultAction!handling!public! !
-!StackOverflow categoriesFor: #hresult!accessing!public! !
+!StackOverflow categoriesForMethods!
+_descriptionArguments!displaying!public! !
+defaultAction!handling!public! !
+hresult!accessing!public! !
+!
 

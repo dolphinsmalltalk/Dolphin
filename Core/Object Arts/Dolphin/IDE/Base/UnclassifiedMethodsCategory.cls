@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VirtualMethodCategory subclass: #UnclassifiedMethodsCategory
 	instanceVariableNames: ''
@@ -57,10 +57,12 @@ methodsInBehavior: aBehavior do: aMonadicValuable
 		ifFalse: 
 			[(dict keys difference: classified) 
 				do: [:each | aMonadicValuable value: (aBehavior compiledMethodAt: each)]]! !
-!UnclassifiedMethodsCategory categoriesFor: #acceptsAdditions!public!testing! !
-!UnclassifiedMethodsCategory categoriesFor: #addMethodSilently:!adding!private! !
-!UnclassifiedMethodsCategory categoriesFor: #includesMethod:!public!testing! !
-!UnclassifiedMethodsCategory categoriesFor: #methodsInBehavior:do:!enumerating!public! !
+!UnclassifiedMethodsCategory categoriesForMethods!
+acceptsAdditions!public!testing! !
+addMethodSilently:!adding!private! !
+includesMethod:!public!testing! !
+methodsInBehavior:do:!enumerating!public! !
+!
 
 !UnclassifiedMethodsCategory class methodsFor!
 
@@ -80,6 +82,8 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self removePseud: self unclassifiedName! !
-!UnclassifiedMethodsCategory class categoriesFor: #initialize!initializing!private! !
-!UnclassifiedMethodsCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UnclassifiedMethodsCategory class categoriesForMethods!
+initialize!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

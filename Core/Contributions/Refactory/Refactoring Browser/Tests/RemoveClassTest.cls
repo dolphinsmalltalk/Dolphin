@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #RemoveClassTest
 	instanceVariableNames: ''
@@ -25,7 +25,9 @@ testRemoveClass
 testRemoveReferenced
 	self 
 		shouldFail: (RemoveClassRefactoring classNames: #(#BasicLintRuleTest))! !
-!RemoveClassTest categoriesFor: #testBadName!failure tests!public! !
-!RemoveClassTest categoriesFor: #testRemoveClass!public!tests! !
-!RemoveClassTest categoriesFor: #testRemoveReferenced!failure tests!public! !
+!RemoveClassTest categoriesForMethods!
+testBadName!failure tests!public! !
+testRemoveClass!public!tests! !
+testRemoveReferenced!failure tests!public! !
+!
 

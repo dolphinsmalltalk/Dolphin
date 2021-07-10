@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CommonDialog subclass: #FindDialog
 	instanceVariableNames: 'findWhatBuf findDetails'
@@ -82,15 +82,17 @@ winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
 	^FINDREPLACEW! !
-!FindDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!FindDialog categoriesFor: #extractResult:!helpers!private! !
-!FindDialog categoriesFor: #fdFlags!accessing!private! !
-!FindDialog categoriesFor: #findWhat!accessing!private! !
-!FindDialog categoriesFor: #findWhat:!accessing!private! !
-!FindDialog categoriesFor: #initialize!initializing!private! !
-!FindDialog categoriesFor: #prepareStruct!helpers!private! !
-!FindDialog categoriesFor: #setFindDetails:!accessing!private! !
-!FindDialog categoriesFor: #winStructClass!constants!private! !
+!FindDialog categoriesForMethods!
+basicShowModal!private!realizing/unrealizing! !
+extractResult:!helpers!private! !
+fdFlags!accessing!private! !
+findWhat!accessing!private! !
+findWhat:!accessing!private! !
+initialize!initializing!private! !
+prepareStruct!helpers!private! !
+setFindDetails:!accessing!private! !
+winStructClass!constants!private! !
+!
 
 !FindDialog class methodsFor!
 
@@ -133,9 +135,11 @@ showModeless: aView on: aFindDetails
 				ownerView: aView.
 	"N.B. Doesn't really show as a modal dialog"
 	dialog showModal! !
-!FindDialog class categoriesFor: #defaultModel!public! !
-!FindDialog class categoriesFor: #initialize!development!initializing!private! !
-!FindDialog class categoriesFor: #ownerView:!instance creation!public! !
-!FindDialog class categoriesFor: #ownerView:findWhat:!instance creation!public! !
-!FindDialog class categoriesFor: #showModeless:on:!public! !
+!FindDialog class categoriesForMethods!
+defaultModel!public! !
+initialize!development!initializing!private! !
+ownerView:!instance creation!public! !
+ownerView:findWhat:!instance creation!public! !
+showModeless:on:!public! !
+!
 

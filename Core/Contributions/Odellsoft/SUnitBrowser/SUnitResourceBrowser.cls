@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SUnitAbsBrowser subclass: #SUnitResourceBrowser
 	instanceVariableNames: ''
@@ -122,22 +122,24 @@ wrapAllTestResourcesFromModel
 
 	^self model listItems collect: [:each | SUnitTestResourceWrapper newOn: each model: self model].
 ! !
-!SUnitResourceBrowser categoriesFor: #browserName!commands!private! !
-!SUnitResourceBrowser categoriesFor: #browseTestCases!commands!private! !
-!SUnitResourceBrowser categoriesFor: #callbackStartedTestResource:!model callbacks!private! !
-!SUnitResourceBrowser categoriesFor: #callbackStoppedTestResource:!model callbacks!private! !
-!SUnitResourceBrowser categoriesFor: #createSchematicWiring!initializing!public! !
-!SUnitResourceBrowser categoriesFor: #model:!accessing!public! !
-!SUnitResourceBrowser categoriesFor: #queryCommand:!commands!private! !
-!SUnitResourceBrowser categoriesFor: #resetListFromModel!model callbacks!private! !
-!SUnitResourceBrowser categoriesFor: #sbBrowseHierarchy!commands!private! !
-!SUnitResourceBrowser categoriesFor: #setLabelState!model callbacks!private! !
-!SUnitResourceBrowser categoriesFor: #setModelWithSelectedItems!event handling!private! !
-!SUnitResourceBrowser categoriesFor: #startAll!commands!private! !
-!SUnitResourceBrowser categoriesFor: #startSelected!commands!private! !
-!SUnitResourceBrowser categoriesFor: #stopAll!commands!private! !
-!SUnitResourceBrowser categoriesFor: #stopSelected!commands!private! !
-!SUnitResourceBrowser categoriesFor: #wrapAllTestResourcesFromModel!model callbacks!private! !
+!SUnitResourceBrowser categoriesForMethods!
+browserName!commands!private! !
+browseTestCases!commands!private! !
+callbackStartedTestResource:!model callbacks!private! !
+callbackStoppedTestResource:!model callbacks!private! !
+createSchematicWiring!initializing!public! !
+model:!accessing!public! !
+queryCommand:!commands!private! !
+resetListFromModel!model callbacks!private! !
+sbBrowseHierarchy!commands!private! !
+setLabelState!model callbacks!private! !
+setModelWithSelectedItems!event handling!private! !
+startAll!commands!private! !
+startSelected!commands!private! !
+stopAll!commands!private! !
+stopSelected!commands!private! !
+wrapAllTestResourcesFromModel!model callbacks!private! !
+!
 
 !SUnitResourceBrowser class methodsFor!
 
@@ -196,12 +198,14 @@ uninitialize
 	"
 
 	self uninitializeToolClass: self! !
-!SUnitResourceBrowser class categoriesFor: #defaultModel!accessing!private! !
-!SUnitResourceBrowser class categoriesFor: #defaultModelClass!accessing!private! !
-!SUnitResourceBrowser class categoriesFor: #displayOn:!displaying!public! !
-!SUnitResourceBrowser class categoriesFor: #initialize!initializing!must strip!private! !
-!SUnitResourceBrowser class categoriesFor: #openOnTestResource:!instance creation!public! !
-!SUnitResourceBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
-!SUnitResourceBrowser class categoriesFor: #toolsFolderHelpId!public! !
-!SUnitResourceBrowser class categoriesFor: #uninitialize!initializing!must strip!private! !
+!SUnitResourceBrowser class categoriesForMethods!
+defaultModel!accessing!private! !
+defaultModelClass!accessing!private! !
+displayOn:!displaying!public! !
+initialize!initializing!must strip!private! !
+openOnTestResource:!instance creation!public! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!public! !
+uninitialize!initializing!must strip!private! !
+!
 

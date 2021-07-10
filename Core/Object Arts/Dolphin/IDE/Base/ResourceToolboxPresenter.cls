@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ListPresenter subclass: #ResourceToolboxPresenter
 	instanceVariableNames: 'categoriesPresenter resourcesPresenter iconMap'
@@ -246,41 +246,43 @@ systemModel
 	"Private - Answer the development system model."
 
 	^Smalltalk developmentSystem! !
-!ResourceToolboxPresenter categoriesFor: #add:toCategory:!operations!private! !
-!ResourceToolboxPresenter categoriesFor: #addResourceIdentifierFor:!helpers!private! !
-!ResourceToolboxPresenter categoriesFor: #caption!accessing!public! !
-!ResourceToolboxPresenter categoriesFor: #categoriesPresenter!accessing!private! !
-!ResourceToolboxPresenter categoriesFor: #categorizeResource!commands!public! !
-!ResourceToolboxPresenter categoriesFor: #configureColumns!helpers!private! !
-!ResourceToolboxPresenter categoriesFor: #createComponents!initializing!private! !
-!ResourceToolboxPresenter categoriesFor: #createSchematicWiring!initializing!private! !
-!ResourceToolboxPresenter categoriesFor: #imageForCategory:!helpers!private! !
-!ResourceToolboxPresenter categoriesFor: #initialize!initializing!private! !
-!ResourceToolboxPresenter categoriesFor: #localResourceCategoriesOf:!helpers!private! !
-!ResourceToolboxPresenter categoriesFor: #move:toCategory:!operations!private! !
-!ResourceToolboxPresenter categoriesFor: #onCategorySelected!private! !
-!ResourceToolboxPresenter categoriesFor: #onDragOverCategory:!private! !
-!ResourceToolboxPresenter categoriesFor: #onDropOverCategory:!private! !
-!ResourceToolboxPresenter categoriesFor: #onMethodAdded:!private! !
-!ResourceToolboxPresenter categoriesFor: #onMethodRemoved:!private! !
-!ResourceToolboxPresenter categoriesFor: #onViewOpened!private! !
-!ResourceToolboxPresenter categoriesFor: #queryCommand:!commands!private! !
-!ResourceToolboxPresenter categoriesFor: #refresh!private!updating! !
-!ResourceToolboxPresenter categoriesFor: #refreshResourceList!private!updating! !
-!ResourceToolboxPresenter categoriesFor: #remove:fromCategory:!operations!private! !
-!ResourceToolboxPresenter categoriesFor: #removeResourceIdentifierFor:!helpers!private! !
-!ResourceToolboxPresenter categoriesFor: #resetForItem:!event handling!private! !
-!ResourceToolboxPresenter categoriesFor: #resetIconMap!helpers!private! !
-!ResourceToolboxPresenter categoriesFor: #resourceCategories!accessing!public! !
-!ResourceToolboxPresenter categoriesFor: #resourceCategoriesOf:!helpers!private! !
-!ResourceToolboxPresenter categoriesFor: #resourceCategoryPrefix!constants!private! !
-!ResourceToolboxPresenter categoriesFor: #resourceClasses!accessing!public! !
-!ResourceToolboxPresenter categoriesFor: #resourceClassesWithCategories:!helpers!public! !
-!ResourceToolboxPresenter categoriesFor: #resourceIdentifiers!accessing!public! !
-!ResourceToolboxPresenter categoriesFor: #resourcesPresenter!accessing!private! !
-!ResourceToolboxPresenter categoriesFor: #selectableItems!accessing!private! !
-!ResourceToolboxPresenter categoriesFor: #selectCategory:!accessing!public! !
-!ResourceToolboxPresenter categoriesFor: #systemModel!commands!private! !
+!ResourceToolboxPresenter categoriesForMethods!
+add:toCategory:!operations!private! !
+addResourceIdentifierFor:!helpers!private! !
+caption!accessing!public! !
+categoriesPresenter!accessing!private! !
+categorizeResource!commands!public! !
+configureColumns!helpers!private! !
+createComponents!initializing!private! !
+createSchematicWiring!initializing!private! !
+imageForCategory:!helpers!private! !
+initialize!initializing!private! !
+localResourceCategoriesOf:!helpers!private! !
+move:toCategory:!operations!private! !
+onCategorySelected!private! !
+onDragOverCategory:!private! !
+onDropOverCategory:!private! !
+onMethodAdded:!private! !
+onMethodRemoved:!private! !
+onViewOpened!private! !
+queryCommand:!commands!private! !
+refresh!private!updating! !
+refreshResourceList!private!updating! !
+remove:fromCategory:!operations!private! !
+removeResourceIdentifierFor:!helpers!private! !
+resetForItem:!event handling!private! !
+resetIconMap!helpers!private! !
+resourceCategories!accessing!public! !
+resourceCategoriesOf:!helpers!private! !
+resourceCategoryPrefix!constants!private! !
+resourceClasses!accessing!public! !
+resourceClassesWithCategories:!helpers!public! !
+resourceIdentifiers!accessing!public! !
+resourcesPresenter!accessing!private! !
+selectableItems!accessing!private! !
+selectCategory:!accessing!public! !
+systemModel!commands!private! !
+!
 
 !ResourceToolboxPresenter class methodsFor!
 
@@ -307,8 +309,10 @@ resource_Default_view
 
 resourceManager
 	^SessionManager current resourceManager! !
-!ResourceToolboxPresenter class categoriesFor: #defaultModel!models!private! !
-!ResourceToolboxPresenter class categoriesFor: #icon!constants!public! !
-!ResourceToolboxPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!ResourceToolboxPresenter class categoriesFor: #resourceManager!constants!public! !
+!ResourceToolboxPresenter class categoriesForMethods!
+defaultModel!models!private! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+resourceManager!constants!public! !
+!
 

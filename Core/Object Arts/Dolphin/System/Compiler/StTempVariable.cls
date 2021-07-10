@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StLocalVariable subclass: #StTempVariable
 	instanceVariableNames: ''
@@ -14,5 +14,7 @@ isTempVariable
 	"Answer whether the receiver describes a temporary variable."
 
 	^true! !
-!StTempVariable categoriesFor: #isTempVariable!public!testing! !
+!StTempVariable categoriesForMethods!
+isTempVariable!public!testing! !
+!
 

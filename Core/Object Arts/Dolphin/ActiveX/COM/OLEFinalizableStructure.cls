@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #OLEFinalizableStructure
 	instanceVariableNames: ''
@@ -35,9 +35,11 @@ onStartup
 	self beUnfinalizable.
 	self isPointer ifTrue: [
 		bytes := nil]! !
-!OLEFinalizableStructure categoriesFor: #initialize!initializing!private! !
-!OLEFinalizableStructure categoriesFor: #needsFree!private!realizing/unrealizing! !
-!OLEFinalizableStructure categoriesFor: #onStartup!event handling!private! !
+!OLEFinalizableStructure categoriesForMethods!
+initialize!initializing!private! !
+needsFree!private!realizing/unrealizing! !
+onStartup!event handling!private! !
+!
 
 !OLEFinalizableStructure class methodsFor!
 
@@ -65,8 +67,10 @@ onStartup
 
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
-!OLEFinalizableStructure class categoriesFor: #clear:!public!realizing/unrealizing! !
-!OLEFinalizableStructure class categoriesFor: #initialize!development!initializing!private! !
-!OLEFinalizableStructure class categoriesFor: #onStartup!event handling!private! !
-!OLEFinalizableStructure class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OLEFinalizableStructure class categoriesForMethods!
+clear:!public!realizing/unrealizing! !
+initialize!development!initializing!private! !
+onStartup!event handling!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #LayoutContext
 	instanceVariableNames: 'container positions'
@@ -147,23 +147,25 @@ setView: aView visibility: aBoolean
 
 showView: aView 
 	self setView: aView visibility: true! !
-!LayoutContext categoriesFor: #apply!operations!public! !
-!LayoutContext categoriesFor: #clientExtentOf:!accessing!public! !
-!LayoutContext categoriesFor: #clientRectangleOf:!accessing!public! !
-!LayoutContext categoriesFor: #deferRectangles!private!testing! !
-!LayoutContext categoriesFor: #deferWindowPositions:!operations!public! !
-!LayoutContext categoriesFor: #extentOf:!accessing!public! !
-!LayoutContext categoriesFor: #hideView:!accessing!public! !
-!LayoutContext categoriesFor: #isViewVisible:!enquiries!public! !
-!LayoutContext categoriesFor: #positionForView:!accessing!private! !
-!LayoutContext categoriesFor: #rectangleOf:!accessing!public! !
-!LayoutContext categoriesFor: #repositionSubViewsOf:!operations!private! !
-!LayoutContext categoriesFor: #setContainer:!initializing!private! !
-!LayoutContext categoriesFor: #setView:extent:!accessing!public! !
-!LayoutContext categoriesFor: #setView:origin:!accessing!public! !
-!LayoutContext categoriesFor: #setView:rectangle:!accessing!public! !
-!LayoutContext categoriesFor: #setView:visibility:!accessing!public! !
-!LayoutContext categoriesFor: #showView:!accessing!public! !
+!LayoutContext categoriesForMethods!
+apply!operations!public! !
+clientExtentOf:!accessing!public! !
+clientRectangleOf:!accessing!public! !
+deferRectangles!private!testing! !
+deferWindowPositions:!operations!public! !
+extentOf:!accessing!public! !
+hideView:!accessing!public! !
+isViewVisible:!enquiries!public! !
+positionForView:!accessing!private! !
+rectangleOf:!accessing!public! !
+repositionSubViewsOf:!operations!private! !
+setContainer:!initializing!private! !
+setView:extent:!accessing!public! !
+setView:origin:!accessing!public! !
+setView:rectangle:!accessing!public! !
+setView:visibility:!accessing!public! !
+showView:!accessing!public! !
+!
 
 !LayoutContext class methodsFor!
 
@@ -171,5 +173,7 @@ forContainer: aView
 	^(self new)
 		setContainer: aView;
 		yourself! !
-!LayoutContext class categoriesFor: #forContainer:!instance creation!public! !
+!LayoutContext class categoriesForMethods!
+forContainer:!instance creation!public! !
+!
 

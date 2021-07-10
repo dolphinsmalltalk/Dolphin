@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRRESTOREDC
 	instanceVariableNames: ''
@@ -33,8 +33,10 @@ iRelative: anInteger
 	"Set the receiver's 'iRelative' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_iRelative put: anInteger! !
-!EMRRESTOREDC categoriesFor: #iRelative!**compiled accessors**!public! !
-!EMRRESTOREDC categoriesFor: #iRelative:!**compiled accessors**!public! !
+!EMRRESTOREDC categoriesForMethods!
+iRelative!**compiled accessors**!public! !
+iRelative:!**compiled accessors**!public! !
+!
 
 !EMRRESTOREDC class methodsFor!
 
@@ -64,7 +66,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_RESTOREDC! !
-!EMRRESTOREDC class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRRESTOREDC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRRESTOREDC class categoriesFor: #iTypes!constants!public! !
+!EMRRESTOREDC class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

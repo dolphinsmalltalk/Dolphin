@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SocketError subclass: #SocketClosed
 	instanceVariableNames: ''
@@ -24,8 +24,10 @@ initialize
 
 uninitialize
 	self errorCodes do: [:each | ErrorClasses removeKey: each ifAbsent: []]! !
-!SocketClosed class categoriesFor: #errorCode!constants!private! !
-!SocketClosed class categoriesFor: #errorCodes!constants!private! !
-!SocketClosed class categoriesFor: #initialize!initializing!public! !
-!SocketClosed class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!SocketClosed class categoriesForMethods!
+errorCode!constants!private! !
+errorCodes!constants!private! !
+initialize!initializing!public! !
+uninitialize!class hierarchy-removing!public! !
+!
 

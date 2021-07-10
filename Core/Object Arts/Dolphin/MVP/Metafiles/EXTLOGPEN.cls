@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #EXTLOGPEN
 	instanceVariableNames: ''
@@ -111,20 +111,22 @@ elpWidth: anInteger
 	"Set the receiver's 'elpWidth' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_elpWidth put: anInteger! !
-!EXTLOGPEN categoriesFor: #elpBrushStyle!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpBrushStyle:!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpColor!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpColor:!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpHatch!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpHatch:!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpNumEntries!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpNumEntries:!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpPenStyle!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpPenStyle:!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpStyleEntry!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpStyleEntry:!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpWidth!**compiled accessors**!public! !
-!EXTLOGPEN categoriesFor: #elpWidth:!**compiled accessors**!public! !
+!EXTLOGPEN categoriesForMethods!
+elpBrushStyle!**compiled accessors**!public! !
+elpBrushStyle:!**compiled accessors**!public! !
+elpColor!**compiled accessors**!public! !
+elpColor:!**compiled accessors**!public! !
+elpHatch!**compiled accessors**!public! !
+elpHatch:!**compiled accessors**!public! !
+elpNumEntries!**compiled accessors**!public! !
+elpNumEntries:!**compiled accessors**!public! !
+elpPenStyle!**compiled accessors**!public! !
+elpPenStyle:!**compiled accessors**!public! !
+elpStyleEntry!**compiled accessors**!public! !
+elpStyleEntry:!**compiled accessors**!public! !
+elpWidth!**compiled accessors**!public! !
+elpWidth:!**compiled accessors**!public! !
+!
 
 !EXTLOGPEN class methodsFor!
 
@@ -171,6 +173,8 @@ defineFields
 
 getFieldNames
 	^#(#elpPenStyle #elpWidth #elpBrushStyle #elpColor #elpHatch #elpNumEntries #elpStyleEntry)! !
-!EXTLOGPEN class categoriesFor: #defineFields!public!template definition! !
-!EXTLOGPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!EXTLOGPEN class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

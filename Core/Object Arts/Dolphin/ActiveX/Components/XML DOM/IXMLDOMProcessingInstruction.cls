@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IXMLDOMNode subclass: #IXMLDOMProcessingInstruction
 	instanceVariableNames: ''
@@ -86,15 +86,17 @@ target
 	self get_target: answer.
 	^answer asObject
 ! !
-!IXMLDOMProcessingInstruction categoriesFor: #=!comparing!public! !
-!IXMLDOMProcessingInstruction categoriesFor: #childNodes!properties!public! !
-!IXMLDOMProcessingInstruction categoriesFor: #data!**auto generated**!properties!public! !
-!IXMLDOMProcessingInstruction categoriesFor: #data:!**auto generated**!properties!public! !
-!IXMLDOMProcessingInstruction categoriesFor: #get_data:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
-!IXMLDOMProcessingInstruction categoriesFor: #get_target:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
-!IXMLDOMProcessingInstruction categoriesFor: #printOn:!development!printing!public! !
-!IXMLDOMProcessingInstruction categoriesFor: #put_data:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
-!IXMLDOMProcessingInstruction categoriesFor: #target!**auto generated**!properties!public! !
+!IXMLDOMProcessingInstruction categoriesForMethods!
+=!comparing!public! !
+childNodes!properties!public! !
+data!**auto generated**!properties!public! !
+data:!**auto generated**!properties!public! !
+get_data:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
+get_target:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
+printOn:!development!printing!public! !
+put_data:!**auto generated**!COM Interfaces-IXMLDOMProcessingInstruction!private! !
+target!**auto generated**!properties!public! !
+!
 
 !IXMLDOMProcessingInstruction class methodsFor!
 
@@ -110,5 +112,7 @@ defineFunctions
 		defineFunction: #put_data:
 			argumentTypes: 'bstr'
 ! !
-!IXMLDOMProcessingInstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IXMLDOMProcessingInstruction class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

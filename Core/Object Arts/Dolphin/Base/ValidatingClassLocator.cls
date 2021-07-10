@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassLocator subclass: #ValidatingClassLocator
 	instanceVariableNames: 'validationBlock'
@@ -46,9 +46,11 @@ validationBlock: aMonadicValuable
 
 	validationBlock := aMonadicValuable.
 ! !
-!ValidatingClassLocator categoriesFor: #copyWithCodeBase!copying!private! !
-!ValidatingClassLocator categoriesFor: #findResidentClass!operations!private! !
-!ValidatingClassLocator categoriesFor: #initialize!initializing!private! !
-!ValidatingClassLocator categoriesFor: #validationBlock!accessing!public! !
-!ValidatingClassLocator categoriesFor: #validationBlock:!accessing!public! !
+!ValidatingClassLocator categoriesForMethods!
+copyWithCodeBase!copying!private! !
+findResidentClass!operations!private! !
+initialize!initializing!private! !
+validationBlock!accessing!public! !
+validationBlock:!accessing!public! !
+!
 

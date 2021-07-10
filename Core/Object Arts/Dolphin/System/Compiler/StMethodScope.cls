@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StLexicalScope subclass: #StMethodScope
 	instanceVariableNames: ''
@@ -14,5 +14,7 @@ forScopeNode: anStMethodNode outer: anStLexicalScope
 	^(self new)
 		setNode: anStMethodNode outer: anStLexicalScope;
 		yourself! !
-!StMethodScope class categoriesFor: #forScopeNode:outer:!instance creation!public! !
+!StMethodScope class categoriesForMethods!
+forScopeNode:outer:!instance creation!public! !
+!
 

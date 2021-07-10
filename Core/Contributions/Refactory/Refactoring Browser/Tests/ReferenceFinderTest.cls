@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringBrowserTest subclass: #ReferenceFinderTest
 	instanceVariableNames: ''
@@ -47,9 +47,11 @@ testPathToInstance
 	path := ReferenceFinder findPathToInstanceOf: RefactoringManager.
 	self assert: path last class identicalTo: RefactoringManager.
 	self assert: path first identicalTo: Smalltalk! !
-!ReferenceFinderTest categoriesFor: #testAllPaths!public!tests! !
-!ReferenceFinderTest categoriesFor: #testAllPathsToInstance!public!tests! !
-!ReferenceFinderTest categoriesFor: #testFound!public!tests! !
-!ReferenceFinderTest categoriesFor: #testNotFound!public!tests! !
-!ReferenceFinderTest categoriesFor: #testPathToInstance!public!tests! !
+!ReferenceFinderTest categoriesForMethods!
+testAllPaths!public!tests! !
+testAllPathsToInstance!public!tests! !
+testFound!public!tests! !
+testNotFound!public!tests! !
+testPathToInstance!public!tests! !
+!
 

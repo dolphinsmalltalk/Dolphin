@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusPenInitializer subclass: #GdiplusPenFromColorInitializer
 	instanceVariableNames: 'color width'
@@ -33,6 +33,8 @@ createHandle
 				pen: gpHandle.
 	status == Ok ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle! !
-!GdiplusPenFromColorInitializer categoriesFor: #color:width:!initializing!private! !
-!GdiplusPenFromColorInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!GdiplusPenFromColorInitializer categoriesForMethods!
+color:width:!initializing!private! !
+createHandle!private!realizing/unrealizing! !
+!
 

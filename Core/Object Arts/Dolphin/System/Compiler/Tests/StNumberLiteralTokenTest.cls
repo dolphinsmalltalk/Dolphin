@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StLiteralTokenTest subclass: #StNumberLiteralTokenTest
 	instanceVariableNames: ''
@@ -42,6 +42,8 @@ testInstanceCreation
 	self assert: token2 value equals: 0.125
 
 ! !
-!StNumberLiteralTokenTest categoriesFor: #subjectClass!constants!private! !
-!StNumberLiteralTokenTest categoriesFor: #testInstanceCreation!public!unit tests! !
+!StNumberLiteralTokenTest categoriesForMethods!
+subjectClass!constants!private! !
+testInstanceCreation!public!unit tests! !
+!
 

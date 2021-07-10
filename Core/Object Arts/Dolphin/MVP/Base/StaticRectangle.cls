@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ControlView subclass: #StaticRectangle
 	instanceVariableNames: ''
@@ -34,9 +34,11 @@ style: rectangleStyleName
 	name, rectangleStyleName."
 
 	self setStyle: (StyleMap at: rectangleStyleName)! !
-!StaticRectangle categoriesFor: #setStyle:!accessing!private! !
-!StaticRectangle categoriesFor: #style!accessing!public! !
-!StaticRectangle categoriesFor: #style:!accessing!public! !
+!StaticRectangle categoriesForMethods!
+setStyle:!accessing!private! !
+style!accessing!public! !
+style:!accessing!public! !
+!
 
 !StaticRectangle class methodsFor!
 
@@ -76,7 +78,9 @@ winClassName
 
 	^'STATIC'
 ! !
-!StaticRectangle class categoriesFor: #initialize!development!initializing!private! !
-!StaticRectangle class categoriesFor: #resource_Default_view!public!resources-views! !
-!StaticRectangle class categoriesFor: #winClassName!constants!private! !
+!StaticRectangle class categoriesForMethods!
+initialize!development!initializing!private! !
+resource_Default_view!public!resources-views! !
+winClassName!constants!private! !
+!
 

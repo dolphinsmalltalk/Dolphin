@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #WeakSubscriptionBuilder
 	instanceVariableNames: 'announcer'
@@ -50,18 +50,22 @@ when: anAnnouncementClass do: aValuable
 
 when: anAnnouncementClass send: aSelector to: anObject
 	^ self subscribe: anAnnouncementClass send: aSelector to: anObject! !
-!WeakSubscriptionBuilder categoriesFor: #announcer:!initialize/release!public! !
-!WeakSubscriptionBuilder categoriesFor: #on:do:!public!wrapped protocol! !
-!WeakSubscriptionBuilder categoriesFor: #on:send:to:!public!wrapped protocol! !
-!WeakSubscriptionBuilder categoriesFor: #subscribe:do:!private! !
-!WeakSubscriptionBuilder categoriesFor: #subscribe:send:to:!public!wrapped protocol! !
-!WeakSubscriptionBuilder categoriesFor: #weak!public!wrapped protocol! !
-!WeakSubscriptionBuilder categoriesFor: #when:do:!public!wrapped protocol! !
-!WeakSubscriptionBuilder categoriesFor: #when:send:to:!public!wrapped protocol! !
+!WeakSubscriptionBuilder categoriesForMethods!
+announcer:!initialize/release!public! !
+on:do:!public!wrapped protocol! !
+on:send:to:!public!wrapped protocol! !
+subscribe:do:!private! !
+subscribe:send:to:!public!wrapped protocol! !
+weak!public!wrapped protocol! !
+when:do:!public!wrapped protocol! !
+when:send:to:!public!wrapped protocol! !
+!
 
 !WeakSubscriptionBuilder class methodsFor!
 
 on: announcer
 	^ self new announcer: announcer! !
-!WeakSubscriptionBuilder class categoriesFor: #on:!instance creation!public! !
+!WeakSubscriptionBuilder class categoriesForMethods!
+on:!instance creation!public! !
+!
 

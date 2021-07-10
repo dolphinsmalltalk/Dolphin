@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 FileSystemChangeReader subclass: #FileSystemWatcher
 	instanceVariableNames: 'events'
@@ -66,13 +66,15 @@ stbSaveOn: anSTBOutFiler
 
 	anSTBOutFiler override: events with: nil.
 	super stbSaveOn: anSTBOutFiler.! !
-!FileSystemWatcher categoriesFor: #getEvents!events!private! !
-!FileSystemWatcher categoriesFor: #handleError:!helpers!private! !
-!FileSystemWatcher categoriesFor: #handleNotifications:!private! !
-!FileSystemWatcher categoriesFor: #informObservers:!helpers!private! !
-!FileSystemWatcher categoriesFor: #postCopy!copying!public! !
-!FileSystemWatcher categoriesFor: #setEvents:!events!private! !
-!FileSystemWatcher categoriesFor: #stbSaveOn:!binary filing!public! !
+!FileSystemWatcher categoriesForMethods!
+getEvents!events!private! !
+handleError:!helpers!private! !
+handleNotifications:!private! !
+informObservers:!helpers!private! !
+postCopy!copying!public! !
+setEvents:!events!private! !
+stbSaveOn:!binary filing!public! !
+!
 
 !FileSystemWatcher class methodsFor!
 
@@ -85,5 +87,7 @@ initialize
 
 	FileIOCompletionRoutineDescriptor := ExternalDescriptor argumentTypes: 'DWORD DWORD OVERLAPPED*'.
 	ActionMap := #(#fileAdded: #fileRemoved: #fileModified: #fileRenamedFrom:to: 5)! !
-!FileSystemWatcher class categoriesFor: #initialize!initializing!public! !
+!FileSystemWatcher class categoriesForMethods!
+initialize!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequenceableCollection subclass: #OLEEnumerator
 	instanceVariableNames: 'interface'
@@ -120,20 +120,22 @@ species
 	(Array because OLEEnumerators are fixed in size and typically static)."
 
 	^Array! !
-!OLEEnumerator categoriesFor: #add:!adding!public! !
-!OLEEnumerator categoriesFor: #approxSize!accessing!private! !
-!OLEEnumerator categoriesFor: #at:!accessing!public! !
-!OLEEnumerator categoriesFor: #at:put:!accessing!public! !
-!OLEEnumerator categoriesFor: #basicFree!private!realizing/unrealizing! !
-!OLEEnumerator categoriesFor: #collect:!enumerating!public! !
-!OLEEnumerator categoriesFor: #copyEmpty:!copying!private! !
-!OLEEnumerator categoriesFor: #copySize!copying!private! !
-!OLEEnumerator categoriesFor: #free!public!realizing/unrealizing! !
-!OLEEnumerator categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
-!OLEEnumerator categoriesFor: #growSize!accessing!private! !
-!OLEEnumerator categoriesFor: #interface:!accessing!private! !
-!OLEEnumerator categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!OLEEnumerator categoriesFor: #species!constants!public! !
+!OLEEnumerator categoriesForMethods!
+add:!adding!public! !
+approxSize!accessing!private! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+collect:!enumerating!public! !
+copyEmpty:!copying!private! !
+copySize!copying!private! !
+free!public!realizing/unrealizing! !
+from:to:keysAndValuesDo:!enumerating!public! !
+growSize!accessing!private! !
+interface:!accessing!private! !
+keysAndValuesDo:!enumerating!public! !
+species!constants!public! !
+!
 
 !OLEEnumerator class methodsFor!
 
@@ -145,5 +147,7 @@ onIEnum: anIEnum
 		interface: anIEnum
 
 	! !
-!OLEEnumerator class categoriesFor: #onIEnum:!instance creation!public! !
+!OLEEnumerator class categoriesForMethods!
+onIEnum:!instance creation!public! !
+!
 

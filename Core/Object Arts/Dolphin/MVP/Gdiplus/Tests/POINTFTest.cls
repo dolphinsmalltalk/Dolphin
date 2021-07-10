@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalPointTest subclass: #POINTFTest
 	instanceVariableNames: ''
@@ -18,6 +18,8 @@ testAsDword
 		should: [super testAsDword]
 		raise: Error
 		matching: [:ex | ex description equals: 'POINTF should not implement #asDword']! !
-!POINTFTest categoriesFor: #subjectClass!constants!private! !
-!POINTFTest categoriesFor: #testAsDword!public!unit tests! !
+!POINTFTest categoriesForMethods!
+subjectClass!constants!private! !
+testAsDword!public!unit tests! !
+!
 

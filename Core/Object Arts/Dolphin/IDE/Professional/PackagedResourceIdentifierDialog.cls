@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ResourceIdentifierDialog subclass: #PackagedResourceIdentifierDialog
 	instanceVariableNames: ''
@@ -13,7 +13,9 @@ PackagedResourceIdentifierDialog comment: 'PackagedResourceIdentifierDialog is a
 
 classesPresenterClass
 	^PackagedClassSelector! !
-!PackagedResourceIdentifierDialog categoriesFor: #classesPresenterClass!constants!private! !
+!PackagedResourceIdentifierDialog categoriesForMethods!
+classesPresenterClass!constants!private! !
+!
 
 !PackagedResourceIdentifierDialog class methodsFor!
 
@@ -30,6 +32,8 @@ resource_Default_view
 uninitialize
 	Smalltalk developmentSystem packagedResourceIdentifierDialogClass == self 
 		ifTrue: [Smalltalk developmentSystem packagedResourceIdentifierDialogClass: nil]! !
-!PackagedResourceIdentifierDialog class categoriesFor: #resource_Default_view!public!resources-views! !
-!PackagedResourceIdentifierDialog class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!PackagedResourceIdentifierDialog class categoriesForMethods!
+resource_Default_view!public!resources-views! !
+uninitialize!class hierarchy-removing!public! !
+!
 

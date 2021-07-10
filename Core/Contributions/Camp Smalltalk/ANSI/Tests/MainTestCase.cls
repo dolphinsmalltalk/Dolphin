@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCaseProtocol subclass: #MainTestCase
 	instanceVariableNames: 'messages helpers'
@@ -27,9 +27,11 @@ setUp
 		helper1 attachTo: self.
 		helper1 object: self canonicalObject.
 		helpers := helpers copyWith: helper1]! !
-!MainTestCase categoriesFor: #performTest!public! !
-!MainTestCase categoriesFor: #receiverFor:!public! !
-!MainTestCase categoriesFor: #setUp!public! !
+!MainTestCase categoriesForMethods!
+performTest!public! !
+receiverFor:!public! !
+setUp!public! !
+!
 
 !MainTestCase class methodsFor!
 
@@ -67,11 +69,13 @@ removeAllCodeThatShouldBeInHelpers
 	"Warning - only works for Squeak"
 	"MainTestCase removeAllCodeThatShouldBeInHelpers"
 	self allSubclasses do: [:each | each deleteEmptyMethodsImplementedByHelpers]! !
-!MainTestCase class categoriesFor: #allTestSelectors!public! !
-!MainTestCase class categoriesFor: #deleteEmptyMethodsImplementedByHelpers!public! !
-!MainTestCase class categoriesFor: #deleteIfUnnecessary:!public! !
-!MainTestCase class categoriesFor: #hasEmptyMethodFor:!public! !
-!MainTestCase class categoriesFor: #helperClassesDo:!public! !
-!MainTestCase class categoriesFor: #helpersImplement:!public! !
-!MainTestCase class categoriesFor: #removeAllCodeThatShouldBeInHelpers!public! !
+!MainTestCase class categoriesForMethods!
+allTestSelectors!public! !
+deleteEmptyMethodsImplementedByHelpers!public! !
+deleteIfUnnecessary:!public! !
+hasEmptyMethodFor:!public! !
+helperClassesDo:!public! !
+helpersImplement:!public! !
+removeAllCodeThatShouldBeInHelpers!public! !
+!
 

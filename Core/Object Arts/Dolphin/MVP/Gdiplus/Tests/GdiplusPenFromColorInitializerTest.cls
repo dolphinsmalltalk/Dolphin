@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializerTests subclass: #GdiplusPenFromColorInitializerTest
 	instanceVariableNames: ''
@@ -35,8 +35,10 @@ testCreateHandleDefaultWidth
 	self assert: constructorArgs second equals: 1.0.
 	self assert: constructorArgs third equals: UnitWorld.
 	self assertLastArgIsHandle! !
-!GdiplusPenFromColorInitializerTest categoriesFor: #gdipCreatePen1:width:unit:pen:!accessing!public! !
-!GdiplusPenFromColorInitializerTest categoriesFor: #setUp!public!setup! !
-!GdiplusPenFromColorInitializerTest categoriesFor: #testCreateHandle!public!unit tests! !
-!GdiplusPenFromColorInitializerTest categoriesFor: #testCreateHandleDefaultWidth!public!unit tests! !
+!GdiplusPenFromColorInitializerTest categoriesForMethods!
+gdipCreatePen1:width:unit:pen:!accessing!public! !
+setUp!public!setup! !
+testCreateHandle!public!unit tests! !
+testCreateHandleDefaultWidth!public!unit tests! !
+!
 

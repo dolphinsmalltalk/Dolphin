@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ShellView subclass: #Playground
 	instanceVariableNames: 'shapes'
@@ -62,12 +62,14 @@ shapes
 	"Answer the collection of shapes held by the receiver"
 
 	^shapes! !
-!Playground categoriesFor: #add:!adding!public! !
-!Playground categoriesFor: #clear!operations!public! !
-!Playground categoriesFor: #initialize!initializing!private! !
-!Playground categoriesFor: #onPaintRequired:!event handling!public! !
-!Playground categoriesFor: #remove:!public!removing! !
-!Playground categoriesFor: #shapes!accessing!public! !
+!Playground categoriesForMethods!
+add:!adding!public! !
+clear!operations!public! !
+initialize!initializing!private! !
+onPaintRequired:!event handling!public! !
+remove:!public!removing! !
+shapes!accessing!public! !
+!
 
 !Playground class methodsFor!
 
@@ -80,6 +82,8 @@ new
 	"Create and show a new instance of the receiver. Answer the new instance"
 
 	^super new show caption: 'A Playground'.! !
-!Playground class categoriesFor: #icon!constants!public! !
-!Playground class categoriesFor: #new!instance creation!public! !
+!Playground class categoriesForMethods!
+icon!constants!public! !
+new!instance creation!public! !
+!
 

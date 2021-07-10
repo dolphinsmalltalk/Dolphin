@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ImageStripper subclass: #AXDllImageStripper
 	instanceVariableNames: 'typeLibPath'
@@ -87,14 +87,16 @@ updateTypelibResource: anExternalHandle
 		lpData: resourceBytes
 		cbData: resourceBytes size)
 			ifFalse: [KernelLibrary default systemError]! !
-!AXDllImageStripper categoriesFor: #defaultSessionManagerClass!constants!public! !
-!AXDllImageStripper categoriesFor: #prepareToStrip!operations!public! !
-!AXDllImageStripper categoriesFor: #requiredPackageNames!accessing!public! !
-!AXDllImageStripper categoriesFor: #stubFile!accessing!public! !
-!AXDllImageStripper categoriesFor: #typeLibPath!accessing!public! !
-!AXDllImageStripper categoriesFor: #typeLibPath:!accessing!public! !
-!AXDllImageStripper categoriesFor: #updateStubResources:!operations!private! !
-!AXDllImageStripper categoriesFor: #updateTypelibResource:!operations!private! !
+!AXDllImageStripper categoriesForMethods!
+defaultSessionManagerClass!constants!public! !
+prepareToStrip!operations!public! !
+requiredPackageNames!accessing!public! !
+stubFile!accessing!public! !
+typeLibPath!accessing!public! !
+typeLibPath:!accessing!public! !
+updateStubResources:!operations!private! !
+updateTypelibResource:!operations!private! !
+!
 
 !AXDllImageStripper class methodsFor!
 
@@ -113,6 +115,8 @@ publishedAspectsOfInstances
 	^(super publishedAspectsOfInstances)
 		add: (Aspect fileSave: #typeLibPath);
 		yourself! !
-!AXDllImageStripper class categoriesFor: #defaultOptions!constants!development!private! !
-!AXDllImageStripper class categoriesFor: #publishedAspectsOfInstances!constants!development!must strip!public! !
+!AXDllImageStripper class categoriesForMethods!
+defaultOptions!constants!development!private! !
+publishedAspectsOfInstances!constants!development!must strip!public! !
+!
 

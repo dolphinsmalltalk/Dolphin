@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Model subclass: #PersonalAccount
 	instanceVariableNames: 'name accountNumber initialBalance transactions currentBalance'
@@ -122,21 +122,23 @@ transactions
 	"Answer the transactions collection"
 
 	^transactions! !
-!PersonalAccount categoriesFor: #accountNumber!accessing!public! !
-!PersonalAccount categoriesFor: #accountNumber:!accessing!public! !
-!PersonalAccount categoriesFor: #addTransaction:!adding!public! !
-!PersonalAccount categoriesFor: #calculateCurrentBalance!operations!public! !
-!PersonalAccount categoriesFor: #currentBalance!accessing!public! !
-!PersonalAccount categoriesFor: #currentBalance:!accessing!public! !
-!PersonalAccount categoriesFor: #displayOn:!displaying!public! !
-!PersonalAccount categoriesFor: #initialBalance!accessing!public! !
-!PersonalAccount categoriesFor: #initialBalance:!accessing!public! !
-!PersonalAccount categoriesFor: #initialize!initializing!private! !
-!PersonalAccount categoriesFor: #name!accessing!public! !
-!PersonalAccount categoriesFor: #name:!accessing!public! !
-!PersonalAccount categoriesFor: #printOn:!printing!public! !
-!PersonalAccount categoriesFor: #removeTransaction:!public!removing! !
-!PersonalAccount categoriesFor: #transactions!accessing!public! !
+!PersonalAccount categoriesForMethods!
+accountNumber!accessing!public! !
+accountNumber:!accessing!public! !
+addTransaction:!adding!public! !
+calculateCurrentBalance!operations!public! !
+currentBalance!accessing!public! !
+currentBalance:!accessing!public! !
+displayOn:!displaying!public! !
+initialBalance!accessing!public! !
+initialBalance:!accessing!public! !
+initialize!initializing!private! !
+name!accessing!public! !
+name:!accessing!public! !
+printOn:!printing!public! !
+removeTransaction:!public!removing! !
+transactions!accessing!public! !
+!
 
 !PersonalAccount class methodsFor!
 
@@ -148,5 +150,7 @@ publishedEventsOfInstances
 		add: #currentBalanceChanged;
 		yourself.
 ! !
-!PersonalAccount class categoriesFor: #publishedEventsOfInstances!development!events!public! !
+!PersonalAccount class categoriesForMethods!
+publishedEventsOfInstances!development!events!public! !
+!
 

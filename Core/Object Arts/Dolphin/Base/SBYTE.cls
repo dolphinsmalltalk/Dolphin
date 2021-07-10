@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BYTE subclass: #SBYTE
 	instanceVariableNames: ''
@@ -30,9 +30,11 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes sbyteAtOffset: _OffsetOf_value put: anInteger! !
-!SBYTE categoriesFor: #isSigned!public!testing! !
-!SBYTE categoriesFor: #value!**compiled accessors**!public! !
-!SBYTE categoriesFor: #value:!**compiled accessors**!public! !
+!SBYTE categoriesForMethods!
+isSigned!public!testing! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !SBYTE class methodsFor!
 
@@ -53,7 +55,9 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!SBYTE class categoriesFor: #defineFields!public!template definition! !
-!SBYTE class categoriesFor: #initialize!development!initializing!private! !
-!SBYTE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!SBYTE class categoriesForMethods!
+defineFields!public!template definition! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

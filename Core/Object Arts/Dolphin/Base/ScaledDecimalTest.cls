@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ScaledDecimalTest
 	instanceVariableNames: ''
@@ -332,38 +332,40 @@ testZeroRaisedToInteger
 	self assert: (0.0s1 raisedToInteger: 1) scale equals: 1.
 	self assert: (0.0s1 raisedToInteger: 2) equals: 0.
 	self assert: (0.0s1 raisedToInteger: 2) scale equals: 1! !
-!ScaledDecimalTest categoriesFor: #floatTestValues!constants!private! !
-!ScaledDecimalTest categoriesFor: #fractionTestValues!constants!private! !
-!ScaledDecimalTest categoriesFor: #integerTestValues!constants!private! !
-!ScaledDecimalTest categoriesFor: #largeIntegerTestValues!constants!private! !
-!ScaledDecimalTest categoriesFor: #numericTestValues!constants!private! !
-!ScaledDecimalTest categoriesFor: #smallIntegerTestValues!constants!private! !
-!ScaledDecimalTest categoriesFor: #testAsNumber!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testAsNumberNegatedWithoutDecimalPoint!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testAsNumberNegatedWithoutDecimalPoint2!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testAsNumberWithExtendedScale!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testAsNumberWithoutDecimalPoint!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testAsNumberWithoutDecimalPoint2!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testAsNumberWithRadix!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testAsNumberWithSuperfluousDecimalPoint!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testCoercion!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testConvertFromFloat!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testConvertFromFraction!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testConvertFromIntegerWithScale!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testEqualityComparisons!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testExactNthRoot!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testExactSqrt!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testInexactNthRoot!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testInexactSqrt!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testIsLiteral!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testLiteral!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testOneRaisedToInteger!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testPrintString!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testRaisedToInteger!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testReadFrom!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testRounded!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testScaleExtension!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testStoreOnRoundTrip!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testSubtractionFromInteger!public!unit tests! !
-!ScaledDecimalTest categoriesFor: #testZeroRaisedToInteger!public!unit tests! !
+!ScaledDecimalTest categoriesForMethods!
+floatTestValues!constants!private! !
+fractionTestValues!constants!private! !
+integerTestValues!constants!private! !
+largeIntegerTestValues!constants!private! !
+numericTestValues!constants!private! !
+smallIntegerTestValues!constants!private! !
+testAsNumber!public!unit tests! !
+testAsNumberNegatedWithoutDecimalPoint!public!unit tests! !
+testAsNumberNegatedWithoutDecimalPoint2!public!unit tests! !
+testAsNumberWithExtendedScale!public!unit tests! !
+testAsNumberWithoutDecimalPoint!public!unit tests! !
+testAsNumberWithoutDecimalPoint2!public!unit tests! !
+testAsNumberWithRadix!public!unit tests! !
+testAsNumberWithSuperfluousDecimalPoint!public!unit tests! !
+testCoercion!public!unit tests! !
+testConvertFromFloat!public!unit tests! !
+testConvertFromFraction!public!unit tests! !
+testConvertFromIntegerWithScale!public!unit tests! !
+testEqualityComparisons!public!unit tests! !
+testExactNthRoot!public!unit tests! !
+testExactSqrt!public!unit tests! !
+testInexactNthRoot!public!unit tests! !
+testInexactSqrt!public!unit tests! !
+testIsLiteral!public!unit tests! !
+testLiteral!public!unit tests! !
+testOneRaisedToInteger!public!unit tests! !
+testPrintString!public!unit tests! !
+testRaisedToInteger!public!unit tests! !
+testReadFrom!public!unit tests! !
+testRounded!public!unit tests! !
+testScaleExtension!public!unit tests! !
+testStoreOnRoundTrip!public!unit tests! !
+testSubtractionFromInteger!public!unit tests! !
+testZeroRaisedToInteger!public!unit tests! !
+!
 

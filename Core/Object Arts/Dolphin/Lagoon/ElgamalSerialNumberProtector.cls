@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SerialNumberProtector subclass: #ElgamalSerialNumberProtector
 	instanceVariableNames: ''
@@ -67,8 +67,10 @@ stringFromData: anArrayOfLargeIntegers
 		do: [:each | stream nextPutAll: (self class readableStringFromInteger: each)]
 		separatedBy: [stream nextPutAll: '/'].
 	^ stream contents.! !
-!ElgamalSerialNumberProtector categoriesFor: #dataFromString:!helpers!private! !
-!ElgamalSerialNumberProtector categoriesFor: #decrypt:!operations!public! !
-!ElgamalSerialNumberProtector categoriesFor: #encrypt:!operations!public! !
-!ElgamalSerialNumberProtector categoriesFor: #stringFromData:!helpers!public! !
+!ElgamalSerialNumberProtector categoriesForMethods!
+dataFromString:!helpers!private! !
+decrypt:!operations!public! !
+encrypt:!operations!public! !
+stringFromData:!helpers!public! !
+!
 

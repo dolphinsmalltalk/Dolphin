@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PlayShape subclass: #RegularPolygon
 	instanceVariableNames: 'color sides position rotation radius'
@@ -196,32 +196,34 @@ sides: anInteger
 	sides := anInteger.
 	self redraw.
 ! !
-!RegularPolygon categoriesFor: #chooseColor!operations!public! !
-!RegularPolygon categoriesFor: #color!accessing!public! !
-!RegularPolygon categoriesFor: #color:!accessing!public! !
-!RegularPolygon categoriesFor: #defaultColor!constants!public! !
-!RegularPolygon categoriesFor: #defaultPosition!constants!public! !
-!RegularPolygon categoriesFor: #defaultRadius!constants!public! !
-!RegularPolygon categoriesFor: #defaultRotation!constants!public! !
-!RegularPolygon categoriesFor: #defaultSides!constants!public! !
-!RegularPolygon categoriesFor: #drawOn:!drawing!private! !
-!RegularPolygon categoriesFor: #growBy:!operations!public! !
-!RegularPolygon categoriesFor: #initialize!initializing!private! !
-!RegularPolygon categoriesFor: #moveBy:!operations!public! !
-!RegularPolygon categoriesFor: #moveDown:!operations!public! !
-!RegularPolygon categoriesFor: #moveLeft:!operations!public! !
-!RegularPolygon categoriesFor: #moveRight:!operations!public! !
-!RegularPolygon categoriesFor: #moveUp:!operations!public! !
-!RegularPolygon categoriesFor: #position!accessing!public! !
-!RegularPolygon categoriesFor: #position:!accessing!public! !
-!RegularPolygon categoriesFor: #radius!accessing!public! !
-!RegularPolygon categoriesFor: #radius:!accessing!public! !
-!RegularPolygon categoriesFor: #rotateBy:!operations!public! !
-!RegularPolygon categoriesFor: #rotation!accessing!public! !
-!RegularPolygon categoriesFor: #rotation:!accessing!public! !
-!RegularPolygon categoriesFor: #shrinkBy:!operations!public! !
-!RegularPolygon categoriesFor: #sides!accessing!initializing!public! !
-!RegularPolygon categoriesFor: #sides:!accessing!public! !
+!RegularPolygon categoriesForMethods!
+chooseColor!operations!public! !
+color!accessing!public! !
+color:!accessing!public! !
+defaultColor!constants!public! !
+defaultPosition!constants!public! !
+defaultRadius!constants!public! !
+defaultRotation!constants!public! !
+defaultSides!constants!public! !
+drawOn:!drawing!private! !
+growBy:!operations!public! !
+initialize!initializing!private! !
+moveBy:!operations!public! !
+moveDown:!operations!public! !
+moveLeft:!operations!public! !
+moveRight:!operations!public! !
+moveUp:!operations!public! !
+position!accessing!public! !
+position:!accessing!public! !
+radius!accessing!public! !
+radius:!accessing!public! !
+rotateBy:!operations!public! !
+rotation!accessing!public! !
+rotation:!accessing!public! !
+shrinkBy:!operations!public! !
+sides!accessing!initializing!public! !
+sides:!accessing!public! !
+!
 
 !RegularPolygon class methodsFor!
 
@@ -229,5 +231,7 @@ new
 	"Create an instance of the receiver with a default number of sides"
 	
 	^super new initialize! !
-!RegularPolygon class categoriesFor: #new!instance creation!public! !
+!RegularPolygon class categoriesForMethods!
+new!instance creation!public! !
+!
 

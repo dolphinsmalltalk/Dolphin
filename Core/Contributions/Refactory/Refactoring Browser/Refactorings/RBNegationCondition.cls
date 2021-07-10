@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RBAbstractCondition subclass: #RBNegationCondition
 	instanceVariableNames: 'condition'
@@ -29,15 +29,19 @@ errorStringFor: aBoolean
 printOn: aStream 
 	aStream nextPutAll: 'NOT ';
 		print: condition! !
-!RBNegationCondition categoriesFor: #check!checking!public! !
-!RBNegationCondition categoriesFor: #condition:!initialize/release!public! !
-!RBNegationCondition categoriesFor: #errorBlockFor:!private! !
-!RBNegationCondition categoriesFor: #errorStringFor:!private! !
-!RBNegationCondition categoriesFor: #printOn:!printing!public! !
+!RBNegationCondition categoriesForMethods!
+check!checking!public! !
+condition:!initialize/release!public! !
+errorBlockFor:!private! !
+errorStringFor:!private! !
+printOn:!printing!public! !
+!
 
 !RBNegationCondition class methodsFor!
 
 on: aCondition
 	^self new condition: aCondition! !
-!RBNegationCondition class categoriesFor: #on:!instance creation!public! !
+!RBNegationCondition class categoriesForMethods!
+on:!instance creation!public! !
+!
 

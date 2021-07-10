@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 XMLNode subclass: #XMLNodeWithEntities
 	instanceVariableNames: 'entities'
@@ -42,13 +42,15 @@ printXMLOn: writer
 
 topElement
 	^self entities first value! !
-!XMLNodeWithEntities categoriesFor: #addEntity:!accessing!public! !
-!XMLNodeWithEntities categoriesFor: #addEntity:value:!accessing!public! !
-!XMLNodeWithEntities categoriesFor: #elements!accessing!public! !
-!XMLNodeWithEntities categoriesFor: #entities!accessing!public! !
-!XMLNodeWithEntities categoriesFor: #entitiesDo:!enumerating!public! !
-!XMLNodeWithEntities categoriesFor: #entityAt:!accessing!public! !
-!XMLNodeWithEntities categoriesFor: #entityAt:ifAbsent:!accessing!public! !
-!XMLNodeWithEntities categoriesFor: #printXMLOn:!printing!public! !
-!XMLNodeWithEntities categoriesFor: #topElement!accessing!public! !
+!XMLNodeWithEntities categoriesForMethods!
+addEntity:!accessing!public! !
+addEntity:value:!accessing!public! !
+elements!accessing!public! !
+entities!accessing!public! !
+entitiesDo:!enumerating!public! !
+entityAt:!accessing!public! !
+entityAt:ifAbsent:!accessing!public! !
+printXMLOn:!printing!public! !
+topElement!accessing!public! !
+!
 

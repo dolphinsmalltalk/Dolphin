@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEFinalizableStructure subclass: #VARIANT
 	instanceVariableNames: 'data'
@@ -707,93 +707,95 @@ word: newValue
 
 	bytes wordAtOffset: 8 put: newValue asInteger.
 	self vt: VT_UI2! !
-!VARIANT categoriesFor: #_deepCopy:!copying!private! !
-!VARIANT categoriesFor: #<!comparing!public! !
-!VARIANT categoriesFor: #<=!comparing!public! !
-!VARIANT categoriesFor: #=!comparing!public! !
-!VARIANT categoriesFor: #>!comparing!public! !
-!VARIANT categoriesFor: #>=!comparing!public! !
-!VARIANT categoriesFor: #array!accessing!public! !
-!VARIANT categoriesFor: #array:!accessing!public! !
-!VARIANT categoriesFor: #arrayRef:!accessing!public! !
-!VARIANT categoriesFor: #asString!converting!public! !
-!VARIANT categoriesFor: #asVariant!converting!public! !
-!VARIANT categoriesFor: #badVarType!exceptions!private! !
-!VARIANT categoriesFor: #basicFree!private!realizing/unrealizing! !
-!VARIANT categoriesFor: #bstr!accessing!public! !
-!VARIANT categoriesFor: #bstr:!accessing!public! !
-!VARIANT categoriesFor: #byte!accessing!public! !
-!VARIANT categoriesFor: #byte:!accessing!public! !
-!VARIANT categoriesFor: #changeType:!converting!public! !
-!VARIANT categoriesFor: #char!accessing!public! !
-!VARIANT categoriesFor: #cmp:!comparing!private! !
-!VARIANT categoriesFor: #copy!copying!public! !
-!VARIANT categoriesFor: #cy!accessing!public! !
-!VARIANT categoriesFor: #cy:!accessing!public! !
-!VARIANT categoriesFor: #date!accessing!public! !
-!VARIANT categoriesFor: #date:!accessing!public! !
-!VARIANT categoriesFor: #dblVal!**compiled accessors**!public! !
-!VARIANT categoriesFor: #dblVal:!**compiled accessors**!public! !
-!VARIANT categoriesFor: #decimal!accessing!public! !
-!VARIANT categoriesFor: #decimal:!accessing!public! !
-!VARIANT categoriesFor: #detach!public!realizing/unrealizing! !
-!VARIANT categoriesFor: #dispatch!accessing!public! !
-!VARIANT categoriesFor: #dispatch:!accessing!public! !
-!VARIANT categoriesFor: #displayOn:!printing!public! !
-!VARIANT categoriesFor: #double!accessing!public! !
-!VARIANT categoriesFor: #double:!accessing!public! !
-!VARIANT categoriesFor: #dword!accessing!public! !
-!VARIANT categoriesFor: #dword:!accessing!public! !
-!VARIANT categoriesFor: #float!accessing!public! !
-!VARIANT categoriesFor: #float:!accessing!public! !
-!VARIANT categoriesFor: #hresult!accessing!public! !
-!VARIANT categoriesFor: #hresult:!accessing!public! !
-!VARIANT categoriesFor: #initialize!initializing!private! !
-!VARIANT categoriesFor: #intPtr:!accessing!public! !
-!VARIANT categoriesFor: #isArray!public!testing! !
-!VARIANT categoriesFor: #isByRef!private!testing! !
-!VARIANT categoriesFor: #isDispatch!public!testing! !
-!VARIANT categoriesFor: #isEmpty!public!testing! !
-!VARIANT categoriesFor: #isObject!public!testing! !
-!VARIANT categoriesFor: #lpvoid!accessing!public! !
-!VARIANT categoriesFor: #lVal!accessing!private! !
-!VARIANT categoriesFor: #nil!accessing!public! !
-!VARIANT categoriesFor: #nil:!accessing!public! !
-!VARIANT categoriesFor: #null!accessing!public! !
-!VARIANT categoriesFor: #null:!accessing!public! !
-!VARIANT categoriesFor: #qword!accessing!public! !
-!VARIANT categoriesFor: #qword:!accessing!public! !
-!VARIANT categoriesFor: #recordInfo!accessing!private! !
-!VARIANT categoriesFor: #refAddress!accessing!private! !
-!VARIANT categoriesFor: #reference:!accessing!private! !
-!VARIANT categoriesFor: #sbyte!accessing!public! !
-!VARIANT categoriesFor: #sbyte:!accessing!public! !
-!VARIANT categoriesFor: #sdword!accessing!public! !
-!VARIANT categoriesFor: #sdword:!accessing!public! !
-!VARIANT categoriesFor: #sqword!accessing!public! !
-!VARIANT categoriesFor: #sqword:!accessing!public! !
-!VARIANT categoriesFor: #struct!accessing!public! !
-!VARIANT categoriesFor: #struct:!accessing!public! !
-!VARIANT categoriesFor: #sword!accessing!public! !
-!VARIANT categoriesFor: #sword:!accessing!public! !
-!VARIANT categoriesFor: #systemTime!accessing!public! !
-!VARIANT categoriesFor: #typeName!accessing!public! !
-!VARIANT categoriesFor: #ulVal!accessing!private! !
-!VARIANT categoriesFor: #ulVal:!accessing!private! !
-!VARIANT categoriesFor: #unknown!accessing!public! !
-!VARIANT categoriesFor: #unknown:!accessing!public! !
-!VARIANT categoriesFor: #value!accessing!public! !
-!VARIANT categoriesFor: #value:!accessing!public! !
-!VARIANT categoriesFor: #varbool!accessing!public! !
-!VARIANT categoriesFor: #varbool:!accessing!public! !
-!VARIANT categoriesFor: #variant!accessing!public! !
-!VARIANT categoriesFor: #variant:!accessing!public! !
-!VARIANT categoriesFor: #vartype!accessing!public! !
-!VARIANT categoriesFor: #void!accessing!public! !
-!VARIANT categoriesFor: #vt!**compiled accessors**!public! !
-!VARIANT categoriesFor: #vt:!**compiled accessors**!public! !
-!VARIANT categoriesFor: #word!accessing!public! !
-!VARIANT categoriesFor: #word:!accessing!public! !
+!VARIANT categoriesForMethods!
+_deepCopy:!copying!private! !
+<!comparing!public! !
+<=!comparing!public! !
+=!comparing!public! !
+>!comparing!public! !
+>=!comparing!public! !
+array!accessing!public! !
+array:!accessing!public! !
+arrayRef:!accessing!public! !
+asString!converting!public! !
+asVariant!converting!public! !
+badVarType!exceptions!private! !
+basicFree!private!realizing/unrealizing! !
+bstr!accessing!public! !
+bstr:!accessing!public! !
+byte!accessing!public! !
+byte:!accessing!public! !
+changeType:!converting!public! !
+char!accessing!public! !
+cmp:!comparing!private! !
+copy!copying!public! !
+cy!accessing!public! !
+cy:!accessing!public! !
+date!accessing!public! !
+date:!accessing!public! !
+dblVal!**compiled accessors**!public! !
+dblVal:!**compiled accessors**!public! !
+decimal!accessing!public! !
+decimal:!accessing!public! !
+detach!public!realizing/unrealizing! !
+dispatch!accessing!public! !
+dispatch:!accessing!public! !
+displayOn:!printing!public! !
+double!accessing!public! !
+double:!accessing!public! !
+dword!accessing!public! !
+dword:!accessing!public! !
+float!accessing!public! !
+float:!accessing!public! !
+hresult!accessing!public! !
+hresult:!accessing!public! !
+initialize!initializing!private! !
+intPtr:!accessing!public! !
+isArray!public!testing! !
+isByRef!private!testing! !
+isDispatch!public!testing! !
+isEmpty!public!testing! !
+isObject!public!testing! !
+lpvoid!accessing!public! !
+lVal!accessing!private! !
+nil!accessing!public! !
+nil:!accessing!public! !
+null!accessing!public! !
+null:!accessing!public! !
+qword!accessing!public! !
+qword:!accessing!public! !
+recordInfo!accessing!private! !
+refAddress!accessing!private! !
+reference:!accessing!private! !
+sbyte!accessing!public! !
+sbyte:!accessing!public! !
+sdword!accessing!public! !
+sdword:!accessing!public! !
+sqword!accessing!public! !
+sqword:!accessing!public! !
+struct!accessing!public! !
+struct:!accessing!public! !
+sword!accessing!public! !
+sword:!accessing!public! !
+systemTime!accessing!public! !
+typeName!accessing!public! !
+ulVal!accessing!private! !
+ulVal:!accessing!private! !
+unknown!accessing!public! !
+unknown:!accessing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+varbool!accessing!public! !
+varbool:!accessing!public! !
+variant!accessing!public! !
+variant:!accessing!public! !
+vartype!accessing!public! !
+void!accessing!public! !
+vt!**compiled accessors**!public! !
+vt:!**compiled accessors**!public! !
+word!accessing!public! !
+word:!accessing!public! !
+!
 
 VARIANT methodProtocol: #variantCompatible attributes: #(#readOnly) selectors: #(#asVariant)!
 
@@ -1155,28 +1157,30 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_VARIANT! !
-!VARIANT class categoriesFor: #classForVT:!enquiries!public! !
-!VARIANT class categoriesFor: #clear:!public!realizing/unrealizing! !
-!VARIANT class categoriesFor: #defineFields!public!template definition! !
-!VARIANT class categoriesFor: #fromBoolean:!instance creation!public! !
-!VARIANT class categoriesFor: #fromCollection:!instance creation!public! !
-!VARIANT class categoriesFor: #fromDATE:!instance creation!public! !
-!VARIANT class categoriesFor: #fromDispatch:!instance creation!public! !
-!VARIANT class categoriesFor: #fromFloat:!instance creation!public! !
-!VARIANT class categoriesFor: #fromInteger:!instance creation!public! !
-!VARIANT class categoriesFor: #fromLargeInteger:!instance creation!public! !
-!VARIANT class categoriesFor: #fromSmallInteger:!instance creation!public! !
-!VARIANT class categoriesFor: #fromString:!instance creation!public! !
-!VARIANT class categoriesFor: #fromUnknown:!instance creation!public! !
-!VARIANT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!VARIANT class categoriesFor: #init:!initializing!public! !
-!VARIANT class categoriesFor: #initialize!development!initializing!private! !
-!VARIANT class categoriesFor: #initializeVTClasses!initializing!must not strip!private! !
-!VARIANT class categoriesFor: #initializeVTNames!initializing!must not strip!private! !
-!VARIANT class categoriesFor: #nameOfVT:!enquiries!public! !
-!VARIANT class categoriesFor: #null!instance creation!public! !
-!VARIANT class categoriesFor: #typeName!constants!private! !
-!VARIANT class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!VARIANT class categoriesFor: #unspecified!instance creation!public! !
-!VARIANT class categoriesFor: #vt!constants!public! !
+!VARIANT class categoriesForMethods!
+classForVT:!enquiries!public! !
+clear:!public!realizing/unrealizing! !
+defineFields!public!template definition! !
+fromBoolean:!instance creation!public! !
+fromCollection:!instance creation!public! !
+fromDATE:!instance creation!public! !
+fromDispatch:!instance creation!public! !
+fromFloat:!instance creation!public! !
+fromInteger:!instance creation!public! !
+fromLargeInteger:!instance creation!public! !
+fromSmallInteger:!instance creation!public! !
+fromString:!instance creation!public! !
+fromUnknown:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+init:!initializing!public! !
+initialize!development!initializing!private! !
+initializeVTClasses!initializing!must not strip!private! !
+initializeVTNames!initializing!must not strip!private! !
+nameOfVT:!enquiries!public! !
+null!instance creation!public! !
+typeName!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+unspecified!instance creation!public! !
+vt!constants!public! !
+!
 

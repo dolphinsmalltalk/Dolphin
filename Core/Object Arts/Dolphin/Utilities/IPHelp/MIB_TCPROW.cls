@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #MIB_TCPROW
 	instanceVariableNames: ''
@@ -69,14 +69,16 @@ portName
 	| psrvent |
 	psrvent := WS2_32Library default getservbyport: self dwLocalPort proto: 'tcp'.
 	^psrvent isNull ifFalse: [psrvent s_name]! !
-!MIB_TCPROW categoriesFor: #displayOn:!public! !
-!MIB_TCPROW categoriesFor: #dwLocalAddr!**compiled accessors**!public! !
-!MIB_TCPROW categoriesFor: #dwLocalPort!**compiled accessors**!public! !
-!MIB_TCPROW categoriesFor: #dwRemoteAddr!**compiled accessors**!public! !
-!MIB_TCPROW categoriesFor: #dwRemotePort!**compiled accessors**!public! !
-!MIB_TCPROW categoriesFor: #dwState!**compiled accessors**!public! !
-!MIB_TCPROW categoriesFor: #port!accessing!public! !
-!MIB_TCPROW categoriesFor: #portName!accessing!public! !
+!MIB_TCPROW categoriesForMethods!
+displayOn:!public! !
+dwLocalAddr!**compiled accessors**!public! !
+dwLocalPort!**compiled accessors**!public! !
+dwRemoteAddr!**compiled accessors**!public! !
+dwRemotePort!**compiled accessors**!public! !
+dwState!**compiled accessors**!public! !
+port!accessing!public! !
+portName!accessing!public! !
+!
 
 !MIB_TCPROW class methodsFor!
 
@@ -114,6 +116,8 @@ defineFields
 
 getFieldNames
 	^#(#dwState #dwLocalAddr #dwLocalPort #dwRemoteAddr #dwRemotePort)! !
-!MIB_TCPROW class categoriesFor: #defineFields!initializing!public! !
-!MIB_TCPROW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MIB_TCPROW class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

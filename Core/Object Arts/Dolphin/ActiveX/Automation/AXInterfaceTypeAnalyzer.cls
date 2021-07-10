@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXAPIInfoAnalyzer subclass: #AXInterfaceTypeAnalyzer
 	instanceVariableNames: 'protocol isSource'
@@ -117,18 +117,20 @@ superInterface
 
 	^self isDerived
 		ifTrue: [self getImplTypeInfoAt: 1]! !
-!AXInterfaceTypeAnalyzer categoriesFor: #classDesc!accessing!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #clsid!accessing!public! !
-!AXInterfaceTypeAnalyzer categoriesFor: #defaultInterface!enquiries!public! !
-!AXInterfaceTypeAnalyzer categoriesFor: #iid!accessing!public! !
-!AXInterfaceTypeAnalyzer categoriesFor: #inheritedFunctions!enumerating!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #isDerived!private!testing! !
-!AXInterfaceTypeAnalyzer categoriesFor: #isDual!public!testing! !
-!AXInterfaceTypeAnalyzer categoriesFor: #isExtensible!public!testing! !
-!AXInterfaceTypeAnalyzer categoriesFor: #isSource!public!testing! !
-!AXInterfaceTypeAnalyzer categoriesFor: #isVBCollection!private!testing! !
-!AXInterfaceTypeAnalyzer categoriesFor: #methods!enumerating!public! !
-!AXInterfaceTypeAnalyzer categoriesFor: #protocol!accessing!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #suggestedBinding!accessing!private! !
-!AXInterfaceTypeAnalyzer categoriesFor: #superInterface!enumerating!public! !
+!AXInterfaceTypeAnalyzer categoriesForMethods!
+classDesc!accessing!private! !
+clsid!accessing!public! !
+defaultInterface!enquiries!public! !
+iid!accessing!public! !
+inheritedFunctions!enumerating!private! !
+isDerived!private!testing! !
+isDual!public!testing! !
+isExtensible!public!testing! !
+isSource!public!testing! !
+isVBCollection!private!testing! !
+methods!enumerating!public! !
+protocol!accessing!private! !
+suggestedBinding!accessing!private! !
+superInterface!enumerating!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #WSADATA
 	instanceVariableNames: ''
@@ -69,13 +69,15 @@ wVersion
 	"Answer the <Integer> value of the receiver's 'wVersion' field."
 
 	^bytes wordAtOffset: _OffsetOf_wVersion! !
-!WSADATA categoriesFor: #iMaxSockets!**compiled accessors**!public! !
-!WSADATA categoriesFor: #iMaxUdpDg!**compiled accessors**!public! !
-!WSADATA categoriesFor: #lpVendorInfo!**compiled accessors**!public! !
-!WSADATA categoriesFor: #szDescription!**compiled accessors**!public! !
-!WSADATA categoriesFor: #szSystemStatus!**compiled accessors**!public! !
-!WSADATA categoriesFor: #wHighVersion!**compiled accessors**!public! !
-!WSADATA categoriesFor: #wVersion!**compiled accessors**!public! !
+!WSADATA categoriesForMethods!
+iMaxSockets!**compiled accessors**!public! !
+iMaxUdpDg!**compiled accessors**!public! !
+lpVendorInfo!**compiled accessors**!public! !
+szDescription!**compiled accessors**!public! !
+szSystemStatus!**compiled accessors**!public! !
+wHighVersion!**compiled accessors**!public! !
+wVersion!**compiled accessors**!public! !
+!
 
 !WSADATA class methodsFor!
 
@@ -108,6 +110,8 @@ defineFields
 
 getFieldNames
 	^#(#wVersion #wHighVersion #szDescription #szSystemStatus #iMaxSockets #iMaxUdpDg #lpVendorInfo)! !
-!WSADATA class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!WSADATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!WSADATA class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

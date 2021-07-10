@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequencedReadableCollectionTest subclass: #SortedCollectionANSITest
 	instanceVariableNames: ''
@@ -107,23 +107,25 @@ testXsortBlockX
 		should: [:r | co first = 4]
 		conformTo: #SortedCollection
 		selector: #sortBlock:! !
-!SortedCollectionANSITest categoriesFor: #canonicalElement!public! !
-!SortedCollectionANSITest categoriesFor: #canonicalObject!public! !
-!SortedCollectionANSITest categoriesFor: #emptyCollection!public! !
-!SortedCollectionANSITest categoriesFor: #protocol!public! !
-!SortedCollectionANSITest categoriesFor: #testXaddAllX!public! !
-!SortedCollectionANSITest categoriesFor: #testXaddX!public! !
-!SortedCollectionANSITest categoriesFor: #testXasSortedCollection!public! !
-!SortedCollectionANSITest categoriesFor: #testXcollectX!public! !
-!SortedCollectionANSITest categoriesFor: #testXcomma!public! !
-!SortedCollectionANSITest categoriesFor: #testXconcatenateOp!public! !
-!SortedCollectionANSITest categoriesFor: #testXcopyReplaceAllXwithX!public! !
-!SortedCollectionANSITest categoriesFor: #testXcopyReplaceFromXtoXwithObjectX!public! !
-!SortedCollectionANSITest categoriesFor: #testXcopyReplaceFromXtoXwithX!public! !
-!SortedCollectionANSITest categoriesFor: #testXcopyReplacingXwithObjectX!public! !
-!SortedCollectionANSITest categoriesFor: #testXreverse!public! !
-!SortedCollectionANSITest categoriesFor: #testXsortBlock!public! !
-!SortedCollectionANSITest categoriesFor: #testXsortBlockX!public! !
+!SortedCollectionANSITest categoriesForMethods!
+canonicalElement!public! !
+canonicalObject!public! !
+emptyCollection!public! !
+protocol!public! !
+testXaddAllX!public! !
+testXaddX!public! !
+testXasSortedCollection!public! !
+testXcollectX!public! !
+testXcomma!public! !
+testXconcatenateOp!public! !
+testXcopyReplaceAllXwithX!public! !
+testXcopyReplaceFromXtoXwithObjectX!public! !
+testXcopyReplaceFromXtoXwithX!public! !
+testXcopyReplacingXwithObjectX!public! !
+testXreverse!public! !
+testXsortBlock!public! !
+testXsortBlockX!public! !
+!
 
 !SortedCollectionANSITest class methodsFor!
 
@@ -132,5 +134,7 @@ helperClassesDo: aBlock
 	aBlock value: ExtensibleCollectionHelper.
 	aBlock value: SequencedContractibleCollectionHelper.
 	aBlock value: SequencedReadableCollectionHelper.! !
-!SortedCollectionANSITest class categoriesFor: #helperClassesDo:!public! !
+!SortedCollectionANSITest class categoriesForMethods!
+helperClassesDo:!public! !
+!
 

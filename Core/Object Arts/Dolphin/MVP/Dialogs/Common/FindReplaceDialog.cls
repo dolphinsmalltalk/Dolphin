@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 FindDialog subclass: #FindReplaceDialog
 	instanceVariableNames: 'replaceWith'
@@ -50,11 +50,13 @@ replaceWith: aString
 	| size |
 	size := self replaceWith size min: aString size.
 	self replaceWith replaceFrom: 1 to: size with: aString.! !
-!FindReplaceDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!FindReplaceDialog categoriesFor: #initialize!initializing!private! !
-!FindReplaceDialog categoriesFor: #prepareStruct!helpers!private! !
-!FindReplaceDialog categoriesFor: #replaceWith!accessing!private! !
-!FindReplaceDialog categoriesFor: #replaceWith:!accessing!private! !
+!FindReplaceDialog categoriesForMethods!
+basicShowModal!private!realizing/unrealizing! !
+initialize!initializing!private! !
+prepareStruct!helpers!private! !
+replaceWith!accessing!private! !
+replaceWith:!accessing!private! !
+!
 
 !FindReplaceDialog class methodsFor!
 
@@ -74,6 +76,8 @@ ownerView: aView findWhat: find replaceWith: replace
 		replaceWith: replace;
 		showModal;
 		yourself! !
-!FindReplaceDialog class categoriesFor: #initialize!development!initializing!private! !
-!FindReplaceDialog class categoriesFor: #ownerView:findWhat:replaceWith:!constants!instance creation!public! !
+!FindReplaceDialog class categoriesForMethods!
+initialize!development!initializing!private! !
+ownerView:findWhat:replaceWith:!constants!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ADODB_ADO subclass: #ADODB_Parameter
 	instanceVariableNames: ''
@@ -350,40 +350,42 @@ value: pvar
 	"Set the 'Value' property of the receiver to the <variant> value of the argument."
 
 	self put_Value: pvar asVariant! !
-!ADODB_Parameter categoriesFor: #appendChunk:!**auto generated**!methods!public! !
-!ADODB_Parameter categoriesFor: #AppendChunk:!**auto generated**!COM Interfaces-_Parameter!private! !
-!ADODB_Parameter categoriesFor: #attributes!**auto generated**!properties!public! !
-!ADODB_Parameter categoriesFor: #attributes:!**auto generated**!properties!public! !
-!ADODB_Parameter categoriesFor: #direction!**auto generated**!properties!public! !
-!ADODB_Parameter categoriesFor: #direction:!**auto generated**!properties!public! !
-!ADODB_Parameter categoriesFor: #get_Attributes:!**auto generated**!COM Interfaces-_Parameter!private! !
-!ADODB_Parameter categoriesFor: #get_Direction:!**auto generated**!COM Interfaces-_Parameter!private! !
-!ADODB_Parameter categoriesFor: #get_Name:!**auto generated**!COM Interfaces-_Parameter!private! !
-!ADODB_Parameter categoriesFor: #get_NumericScale:!**auto generated**!COM Interfaces-_Parameter!private! !
-!ADODB_Parameter categoriesFor: #get_Precision:!**auto generated**!COM Interfaces-_Parameter!private! !
-!ADODB_Parameter categoriesFor: #get_Size:!**auto generated**!COM Interfaces-_Parameter!private! !
-!ADODB_Parameter categoriesFor: #get_Type:!**auto generated**!COM Interfaces-_Parameter!private! !
-!ADODB_Parameter categoriesFor: #get_Value:!**auto generated**!COM Interfaces-_Parameter!private! !
-!ADODB_Parameter categoriesFor: #name!**auto generated**!properties!public! !
-!ADODB_Parameter categoriesFor: #name:!**auto generated**!properties!public! !
-!ADODB_Parameter categoriesFor: #numericScale!**auto generated**!properties!public! !
-!ADODB_Parameter categoriesFor: #numericScale:!**auto generated**!properties!public! !
-!ADODB_Parameter categoriesFor: #precision!**auto generated**!properties!public! !
-!ADODB_Parameter categoriesFor: #precision:!**auto generated**!properties!public! !
-!ADODB_Parameter categoriesFor: #put_Attributes:!**auto generated**!COM Interfaces-_Parameter!private! !
-!ADODB_Parameter categoriesFor: #put_Direction:!**auto generated**!COM Interfaces-_Parameter!private! !
-!ADODB_Parameter categoriesFor: #put_Name:!**auto generated**!COM Interfaces-_Parameter!private! !
-!ADODB_Parameter categoriesFor: #put_NumericScale:!**auto generated**!COM Interfaces-_Parameter!private! !
-!ADODB_Parameter categoriesFor: #put_Precision:!**auto generated**!COM Interfaces-_Parameter!private! !
-!ADODB_Parameter categoriesFor: #put_Size:!**auto generated**!COM Interfaces-_Parameter!private! !
-!ADODB_Parameter categoriesFor: #put_Type:!**auto generated**!COM Interfaces-_Parameter!private! !
-!ADODB_Parameter categoriesFor: #put_Value:!**auto generated**!COM Interfaces-_Parameter!private! !
-!ADODB_Parameter categoriesFor: #size!**auto generated**!properties!public! !
-!ADODB_Parameter categoriesFor: #size:!**auto generated**!properties!public! !
-!ADODB_Parameter categoriesFor: #type!**auto generated**!properties!public! !
-!ADODB_Parameter categoriesFor: #type:!**auto generated**!properties!public! !
-!ADODB_Parameter categoriesFor: #value!**auto generated**!properties!public! !
-!ADODB_Parameter categoriesFor: #value:!**auto generated**!properties!public! !
+!ADODB_Parameter categoriesForMethods!
+appendChunk:!**auto generated**!methods!public! !
+AppendChunk:!**auto generated**!COM Interfaces-_Parameter!private! !
+attributes!**auto generated**!properties!public! !
+attributes:!**auto generated**!properties!public! !
+direction!**auto generated**!properties!public! !
+direction:!**auto generated**!properties!public! !
+get_Attributes:!**auto generated**!COM Interfaces-_Parameter!private! !
+get_Direction:!**auto generated**!COM Interfaces-_Parameter!private! !
+get_Name:!**auto generated**!COM Interfaces-_Parameter!private! !
+get_NumericScale:!**auto generated**!COM Interfaces-_Parameter!private! !
+get_Precision:!**auto generated**!COM Interfaces-_Parameter!private! !
+get_Size:!**auto generated**!COM Interfaces-_Parameter!private! !
+get_Type:!**auto generated**!COM Interfaces-_Parameter!private! !
+get_Value:!**auto generated**!COM Interfaces-_Parameter!private! !
+name!**auto generated**!properties!public! !
+name:!**auto generated**!properties!public! !
+numericScale!**auto generated**!properties!public! !
+numericScale:!**auto generated**!properties!public! !
+precision!**auto generated**!properties!public! !
+precision:!**auto generated**!properties!public! !
+put_Attributes:!**auto generated**!COM Interfaces-_Parameter!private! !
+put_Direction:!**auto generated**!COM Interfaces-_Parameter!private! !
+put_Name:!**auto generated**!COM Interfaces-_Parameter!private! !
+put_NumericScale:!**auto generated**!COM Interfaces-_Parameter!private! !
+put_Precision:!**auto generated**!COM Interfaces-_Parameter!private! !
+put_Size:!**auto generated**!COM Interfaces-_Parameter!private! !
+put_Type:!**auto generated**!COM Interfaces-_Parameter!private! !
+put_Value:!**auto generated**!COM Interfaces-_Parameter!private! !
+size!**auto generated**!properties!public! !
+size:!**auto generated**!properties!public! !
+type!**auto generated**!properties!public! !
+type:!**auto generated**!properties!public! !
+value!**auto generated**!properties!public! !
+value:!**auto generated**!properties!public! !
+!
 
 !ADODB_Parameter class methodsFor!
 
@@ -433,6 +435,8 @@ defineFunctions
 		defineFunction: #put_Attributes:
 			argumentTypes: 'sdword'
 ! !
-!ADODB_Parameter class categoriesFor: #clsid!**auto generated**!constants!private! !
-!ADODB_Parameter class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB_Parameter class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!public! !
+!
 

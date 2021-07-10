@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Canvas subclass: #PrinterCanvas
 	instanceVariableNames: ''
@@ -44,16 +44,20 @@ startPage
 	"Signal the start of a new page."
 
 	GDILibrary default startPage: self asParameter! !
-!PrinterCanvas categoriesFor: #basicFree!private!realizing/unrealizing! !
-!PrinterCanvas categoriesFor: #endDoc!operations!public! !
-!PrinterCanvas categoriesFor: #endPage!operations!public! !
-!PrinterCanvas categoriesFor: #startDoc!operations!public! !
-!PrinterCanvas categoriesFor: #startDocNamed:!operations!public! !
-!PrinterCanvas categoriesFor: #startPage!operations!public! !
+!PrinterCanvas categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+endDoc!operations!public! !
+endPage!operations!public! !
+startDoc!operations!public! !
+startDocNamed:!operations!public! !
+startPage!operations!public! !
+!
 
 !PrinterCanvas class methodsFor!
 
 icon
 	^##(self) defaultIcon! !
-!PrinterCanvas class categoriesFor: #icon!constants!development!public! !
+!PrinterCanvas class categoriesForMethods!
+icon!constants!development!public! !
+!
 

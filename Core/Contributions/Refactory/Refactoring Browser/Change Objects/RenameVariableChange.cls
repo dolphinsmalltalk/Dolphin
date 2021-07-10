@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CompositeRefactoryChange subclass: #RenameVariableChange
 	instanceVariableNames: 'className isMeta oldName newName'
@@ -78,22 +78,24 @@ printOn: aStream
 
 renameVariable
 	^self subclassResponsibility! !
-!RenameVariableChange categoriesFor: #=!comparing!public! !
-!RenameVariableChange categoriesFor: #changeClass!accessing!public! !
-!RenameVariableChange categoriesFor: #changeClass:!accessing!public! !
-!RenameVariableChange categoriesFor: #changeClassName!accessing!public! !
-!RenameVariableChange categoriesFor: #changeClassName:!accessing!public! !
-!RenameVariableChange categoriesFor: #changeString!printing!public! !
-!RenameVariableChange categoriesFor: #displayClassName!printing!public! !
-!RenameVariableChange categoriesFor: #executeNotifying:!private! !
-!RenameVariableChange categoriesFor: #hash!comparing!public! !
-!RenameVariableChange categoriesFor: #isMeta!private! !
-!RenameVariableChange categoriesFor: #newName!accessing!public! !
-!RenameVariableChange categoriesFor: #newName:!private! !
-!RenameVariableChange categoriesFor: #oldName!accessing!public! !
-!RenameVariableChange categoriesFor: #oldName:!private! !
-!RenameVariableChange categoriesFor: #printOn:!printing!public! !
-!RenameVariableChange categoriesFor: #renameVariable!private! !
+!RenameVariableChange categoriesForMethods!
+=!comparing!public! !
+changeClass!accessing!public! !
+changeClass:!accessing!public! !
+changeClassName!accessing!public! !
+changeClassName:!accessing!public! !
+changeString!printing!public! !
+displayClassName!printing!public! !
+executeNotifying:!private! !
+hash!comparing!public! !
+isMeta!private! !
+newName!accessing!public! !
+newName:!private! !
+oldName!accessing!public! !
+oldName:!private! !
+printOn:!printing!public! !
+renameVariable!private! !
+!
 
 !RenameVariableChange class methodsFor!
 
@@ -103,5 +105,7 @@ rename: oldName to: newName in: aClass
 		newName: newName;
 		changeClass: aClass;
 		yourself! !
-!RenameVariableChange class categoriesFor: #rename:to:in:!instance creation!public! !
+!RenameVariableChange class categoriesForMethods!
+rename:to:in:!instance creation!public! !
+!
 

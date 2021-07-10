@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMHDR subclass: #NMITEMACTIVATE
 	instanceVariableNames: ''
@@ -55,14 +55,16 @@ uOldState
 	"Answer the <Integer> value of the receiver's 'uOldState' field."
 
 	^bytes dwordAtOffset: _OffsetOf_uOldState! !
-!NMITEMACTIVATE categoriesFor: #iItem!**compiled accessors**!public! !
-!NMITEMACTIVATE categoriesFor: #iSubItem!**compiled accessors**!public! !
-!NMITEMACTIVATE categoriesFor: #position!accessing!public! !
-!NMITEMACTIVATE categoriesFor: #ptAction!**compiled accessors**!public! !
-!NMITEMACTIVATE categoriesFor: #uChanged!**compiled accessors**!public! !
-!NMITEMACTIVATE categoriesFor: #uKeyFlags!**compiled accessors**!public! !
-!NMITEMACTIVATE categoriesFor: #uNewState!**compiled accessors**!public! !
-!NMITEMACTIVATE categoriesFor: #uOldState!**compiled accessors**!public! !
+!NMITEMACTIVATE categoriesForMethods!
+iItem!**compiled accessors**!public! !
+iSubItem!**compiled accessors**!public! !
+position!accessing!public! !
+ptAction!**compiled accessors**!public! !
+uChanged!**compiled accessors**!public! !
+uKeyFlags!**compiled accessors**!public! !
+uNewState!**compiled accessors**!public! !
+uOldState!**compiled accessors**!public! !
+!
 
 !NMITEMACTIVATE class methodsFor!
 
@@ -95,6 +97,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #iSubItem #uNewState #uOldState #uChanged #ptAction #uKeyFlags)! !
-!NMITEMACTIVATE class categoriesFor: #defineFields!public!template definition! !
-!NMITEMACTIVATE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NMITEMACTIVATE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

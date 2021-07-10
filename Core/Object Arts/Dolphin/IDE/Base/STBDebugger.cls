@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STBInFiler subclass: #STBDebugger
 	instanceVariableNames: 'indentLevel traceStream printOffsets'
@@ -165,13 +165,15 @@ traceStream
 
 traceStream: aPuttableStream 
 	traceStream := aPuttableStream! !
-!STBDebugger categoriesFor: #basicNext!accessing!private! !
-!STBDebugger categoriesFor: #initialize!initializing!private! !
-!STBDebugger categoriesFor: #next!accessing!public! !
-!STBDebugger categoriesFor: #objectAt:!accessing!private! !
-!STBDebugger categoriesFor: #printOffsets!accessing!public! !
-!STBDebugger categoriesFor: #printOffsets:!accessing!public! !
-!STBDebugger categoriesFor: #readObjectOfClass:format:!operations!private! !
-!STBDebugger categoriesFor: #traceStream!accessing!public! !
-!STBDebugger categoriesFor: #traceStream:!accessing!public! !
+!STBDebugger categoriesForMethods!
+basicNext!accessing!private! !
+initialize!initializing!private! !
+next!accessing!public! !
+objectAt:!accessing!private! !
+printOffsets!accessing!public! !
+printOffsets:!accessing!public! !
+readObjectOfClass:format:!operations!private! !
+traceStream!accessing!public! !
+traceStream:!accessing!public! !
+!
 

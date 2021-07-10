@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HistoryBrowser subclass: #MethodHistoryBrowser
 	instanceVariableNames: 'history class selector debugger selection slider source'
@@ -272,41 +272,43 @@ updateSelection
 	self 
 		setCaption;
 		setLoadedMarker! !
-!MethodHistoryBrowser categoriesFor: #about!commands!public! !
-!MethodHistoryBrowser categoriesFor: #canPrint!printing!public!testing! !
-!MethodHistoryBrowser categoriesFor: #createComponents!initializing!operations!public! !
-!MethodHistoryBrowser categoriesFor: #createSchematicWiring!initializing!operations!public! !
-!MethodHistoryBrowser categoriesFor: #diff!commands!public! !
-!MethodHistoryBrowser categoriesFor: #history!accessing!public! !
-!MethodHistoryBrowser categoriesFor: #loadedMethodVersion!accessing!public! !
-!MethodHistoryBrowser categoriesFor: #methodClass!accessing!public! !
-!MethodHistoryBrowser categoriesFor: #moveTo:!operations!public! !
-!MethodHistoryBrowser categoriesFor: #moveToFirst!commands!public! !
-!MethodHistoryBrowser categoriesFor: #moveToLast!commands!public! !
-!MethodHistoryBrowser categoriesFor: #moveToLoaded!commands!public! !
-!MethodHistoryBrowser categoriesFor: #moveToNext!commands!public! !
-!MethodHistoryBrowser categoriesFor: #moveToPrevious!commands!public! !
-!MethodHistoryBrowser categoriesFor: #onImageChanged:!event handling!public! !
-!MethodHistoryBrowser categoriesFor: #onMethodAdded:!event handling!public! !
-!MethodHistoryBrowser categoriesFor: #onMethodRemoved:!event handling!public! !
-!MethodHistoryBrowser categoriesFor: #onMethodUpdated:!event handling!public! !
-!MethodHistoryBrowser categoriesFor: #onSliderValueChanged!initializing!operations!public! !
-!MethodHistoryBrowser categoriesFor: #onTipTextRequired:!event handling!public! !
-!MethodHistoryBrowser categoriesFor: #onViewClosed!event handling!public! !
-!MethodHistoryBrowser categoriesFor: #onViewOpened!event handling!public! !
-!MethodHistoryBrowser categoriesFor: #parseContext!public! !
-!MethodHistoryBrowser categoriesFor: #printableView!accessing!printing!public! !
-!MethodHistoryBrowser categoriesFor: #queryCommand:!commands!public! !
-!MethodHistoryBrowser categoriesFor: #restoreMethod!commands!public! !
-!MethodHistoryBrowser categoriesFor: #selectedMethod!public! !
-!MethodHistoryBrowser categoriesFor: #selectedMethodVersion!accessing!public! !
-!MethodHistoryBrowser categoriesFor: #selectedMethodVersion:!accessing!public! !
-!MethodHistoryBrowser categoriesFor: #setCaption!operations!public! !
-!MethodHistoryBrowser categoriesFor: #setClass:selector:debugger:!accessing!public! !
-!MethodHistoryBrowser categoriesFor: #setLoadedMarker!operations!private! !
-!MethodHistoryBrowser categoriesFor: #source!commands!public! !
-!MethodHistoryBrowser categoriesFor: #updateHistory!operations!public! !
-!MethodHistoryBrowser categoriesFor: #updateSelection!event handling!public! !
+!MethodHistoryBrowser categoriesForMethods!
+about!commands!public! !
+canPrint!printing!public!testing! !
+createComponents!initializing!operations!public! !
+createSchematicWiring!initializing!operations!public! !
+diff!commands!public! !
+history!accessing!public! !
+loadedMethodVersion!accessing!public! !
+methodClass!accessing!public! !
+moveTo:!operations!public! !
+moveToFirst!commands!public! !
+moveToLast!commands!public! !
+moveToLoaded!commands!public! !
+moveToNext!commands!public! !
+moveToPrevious!commands!public! !
+onImageChanged:!event handling!public! !
+onMethodAdded:!event handling!public! !
+onMethodRemoved:!event handling!public! !
+onMethodUpdated:!event handling!public! !
+onSliderValueChanged!initializing!operations!public! !
+onTipTextRequired:!event handling!public! !
+onViewClosed!event handling!public! !
+onViewOpened!event handling!public! !
+parseContext!public! !
+printableView!accessing!printing!public! !
+queryCommand:!commands!public! !
+restoreMethod!commands!public! !
+selectedMethod!public! !
+selectedMethodVersion!accessing!public! !
+selectedMethodVersion:!accessing!public! !
+setCaption!operations!public! !
+setClass:selector:debugger:!accessing!public! !
+setLoadedMarker!operations!private! !
+source!commands!public! !
+updateHistory!operations!public! !
+updateSelection!event handling!public! !
+!
 
 !MethodHistoryBrowser class methodsFor!
 
@@ -330,7 +332,9 @@ showOnClass: aClass selector: aSymbol debugger: aDebuggerOrNil
 	^self create
 		setClass: aClass selector: aSymbol debugger: aDebuggerOrNil;
 		show! !
-!MethodHistoryBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
-!MethodHistoryBrowser class categoriesFor: #showOnClass:selector:!instance creation!public! !
-!MethodHistoryBrowser class categoriesFor: #showOnClass:selector:debugger:!instance creation!private! !
+!MethodHistoryBrowser class categoriesForMethods!
+resource_Default_view!public!resources-views! !
+showOnClass:selector:!instance creation!public! !
+showOnClass:selector:debugger:!instance creation!private! !
+!
 

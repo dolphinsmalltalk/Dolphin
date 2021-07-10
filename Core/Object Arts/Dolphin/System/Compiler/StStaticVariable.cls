@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StVariable subclass: #StStaticVariable
 	instanceVariableNames: 'binding'
@@ -36,15 +36,19 @@ setScope: anStLexicalScope binding: aVariableBinding
 	scope := anStLexicalScope.
 	binding := aVariableBinding.
 	self initialize! !
-!StStaticVariable categoriesFor: #binding!public! !
-!StStaticVariable categoriesFor: #isConstant!public!testing! !
-!StStaticVariable categoriesFor: #isStaticVariable!constants!public! !
-!StStaticVariable categoriesFor: #name!accessing!public! !
-!StStaticVariable categoriesFor: #setScope:binding:!initializing!private! !
+!StStaticVariable categoriesForMethods!
+binding!public! !
+isConstant!public!testing! !
+isStaticVariable!constants!public! !
+name!accessing!public! !
+setScope:binding:!initializing!private! !
+!
 
 !StStaticVariable class methodsFor!
 
 scope: anStLexicalScope binding: aVariableBinding
 	^self new setScope: anStLexicalScope binding: aVariableBinding! !
-!StStaticVariable class categoriesFor: #scope:binding:!public! !
+!StStaticVariable class categoriesForMethods!
+scope:binding:!public! !
+!
 

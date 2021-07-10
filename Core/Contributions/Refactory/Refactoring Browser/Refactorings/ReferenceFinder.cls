@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ReferenceFinder
 	instanceVariableNames: 'backlinks objectsLeft testBlock foundBlock'
@@ -131,22 +131,24 @@ startFrom: anObject
 	backlinks last at: anObject put: nil.
 	#rbFix.	"Because an Object will be found on the path Smalltalk->Processor->active Process->obj, we add the active process to the backlinks so it appears that it has already been searched"
 	backlinks last at: Processor activeProcess put: nil! !
-!ReferenceFinder categoriesFor: #addBacklinkFrom:to:!helpers!private! !
-!ReferenceFinder categoriesFor: #addBacklinkLevel!helpers!private! !
-!ReferenceFinder categoriesFor: #backlinkFor:!private! !
-!ReferenceFinder categoriesFor: #computePathFor:!private! !
-!ReferenceFinder categoriesFor: #find!private! !
-!ReferenceFinder categoriesFor: #findAllPaths:!accessing!public! !
-!ReferenceFinder categoriesFor: #findPath:!accessing!public! !
-!ReferenceFinder categoriesFor: #hasSearched:!private! !
-!ReferenceFinder categoriesFor: #identityDictionaryClass!private! !
-!ReferenceFinder categoriesFor: #initialize!initialize/release!private! !
-!ReferenceFinder categoriesFor: #printToDoNotice!private! !
-!ReferenceFinder categoriesFor: #processLinkTo:from:!private! !
-!ReferenceFinder categoriesFor: #searchForObject!private! !
-!ReferenceFinder categoriesFor: #searchIndicesIn:!private! !
-!ReferenceFinder categoriesFor: #searchVariablesIn:!private! !
-!ReferenceFinder categoriesFor: #startFrom:!initialize/release!public! !
+!ReferenceFinder categoriesForMethods!
+addBacklinkFrom:to:!helpers!private! !
+addBacklinkLevel!helpers!private! !
+backlinkFor:!private! !
+computePathFor:!private! !
+find!private! !
+findAllPaths:!accessing!public! !
+findPath:!accessing!public! !
+hasSearched:!private! !
+identityDictionaryClass!private! !
+initialize!initialize/release!private! !
+printToDoNotice!private! !
+processLinkTo:from:!private! !
+searchForObject!private! !
+searchIndicesIn:!private! !
+searchVariablesIn:!private! !
+startFrom:!initialize/release!public! !
+!
 
 !ReferenceFinder class methodsFor!
 
@@ -198,13 +200,15 @@ new
 	^(super new)
 		initialize;
 		yourself! !
-!ReferenceFinder class categoriesFor: #findAllPathsTo:!accessing!public! !
-!ReferenceFinder class categoriesFor: #findAllPathsTo:from:!accessing!public! !
-!ReferenceFinder class categoriesFor: #findAllPathsToInstanceOf:!accessing!public! !
-!ReferenceFinder class categoriesFor: #findAllPathsToInstanceOf:from:!accessing!public! !
-!ReferenceFinder class categoriesFor: #findPathTo:!accessing!public! !
-!ReferenceFinder class categoriesFor: #findPathTo:from:!accessing!public! !
-!ReferenceFinder class categoriesFor: #findPathToInstanceOf:!accessing!public! !
-!ReferenceFinder class categoriesFor: #findPathToInstanceOf:from:!accessing!public! !
-!ReferenceFinder class categoriesFor: #new!instance creation!public! !
+!ReferenceFinder class categoriesForMethods!
+findAllPathsTo:!accessing!public! !
+findAllPathsTo:from:!accessing!public! !
+findAllPathsToInstanceOf:!accessing!public! !
+findAllPathsToInstanceOf:from:!accessing!public! !
+findPathTo:!accessing!public! !
+findPathTo:from:!accessing!public! !
+findPathToInstanceOf:!accessing!public! !
+findPathToInstanceOf:from:!accessing!public! !
+new!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalField subclass: #ScalarField
 	instanceVariableNames: ''
@@ -32,10 +32,12 @@ printMutatorValueOn: aWriteStream parameter: aString
 	compiled into a mutator method where the value parameter is named by the <String> argument."
 
 	aWriteStream nextPutAll: aString! !
-!ScalarField categoriesFor: #accessorMessage!automatic generation!private! !
-!ScalarField categoriesFor: #byteSize!constants!private! !
-!ScalarField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
-!ScalarField categoriesFor: #printMutatorValueOn:parameter:!automatic generation!development!private! !
+!ScalarField categoriesForMethods!
+accessorMessage!automatic generation!private! !
+byteSize!constants!private! !
+fieldClassName!automatic generation!constants!development!private! !
+printMutatorValueOn:parameter:!automatic generation!development!private! !
+!
 
 !ScalarField class methodsFor!
 
@@ -44,5 +46,7 @@ byteSize
 	A large number of fields are the same size as an integer."
 
 	^VMConstants.IntSize! !
-!ScalarField class categoriesFor: #byteSize!constants!private! !
+!ScalarField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

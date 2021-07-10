@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #RBAbstractCondition
 	instanceVariableNames: 'errorMacro'
@@ -47,14 +47,16 @@ errorStringFor: aBoolean
 
 not
 	^RBNegationCondition on: self! !
-!RBAbstractCondition categoriesFor: #&!logical operations!public! !
-!RBAbstractCondition categoriesFor: #|!logical operations!public! !
-!RBAbstractCondition categoriesFor: #check!checking!public! !
-!RBAbstractCondition categoriesFor: #errorBlock!accessing!public! !
-!RBAbstractCondition categoriesFor: #errorBlockFor:!private! !
-!RBAbstractCondition categoriesFor: #errorMacro!private! !
-!RBAbstractCondition categoriesFor: #errorMacro:!private! !
-!RBAbstractCondition categoriesFor: #errorString!accessing!public! !
-!RBAbstractCondition categoriesFor: #errorStringFor:!private! !
-!RBAbstractCondition categoriesFor: #not!logical operations!public! !
+!RBAbstractCondition categoriesForMethods!
+&!logical operations!public! !
+|!logical operations!public! !
+check!checking!public! !
+errorBlock!accessing!public! !
+errorBlockFor:!private! !
+errorMacro!private! !
+errorMacro:!private! !
+errorString!accessing!public! !
+errorStringFor:!private! !
+not!logical operations!public! !
+!
 

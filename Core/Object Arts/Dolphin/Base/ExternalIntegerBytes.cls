@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ByteArray variableByteSubclass: #ExternalIntegerBytes
 	instanceVariableNames: ''
@@ -83,20 +83,22 @@ value
 
 value: anObject 
 	^self subclassResponsibility! !
-!ExternalIntegerBytes categoriesFor: #=!comparing!public! !
-!ExternalIntegerBytes categoriesFor: #asInteger!converting!public! !
-!ExternalIntegerBytes categoriesFor: #asObject!accessing!public! !
-!ExternalIntegerBytes categoriesFor: #asSignedInteger!converting!public! !
-!ExternalIntegerBytes categoriesFor: #asUIntPtr!converting!public! !
-!ExternalIntegerBytes categoriesFor: #byteSize!accessing!public! !
-!ExternalIntegerBytes categoriesFor: #clear!initializing!public! !
-!ExternalIntegerBytes categoriesFor: #displayOn:!displaying!public! !
-!ExternalIntegerBytes categoriesFor: #hash!comparing!public! !
-!ExternalIntegerBytes categoriesFor: #isNull!public!testing! !
-!ExternalIntegerBytes categoriesFor: #printOn:!printing!public! !
-!ExternalIntegerBytes categoriesFor: #species!constants!public! !
-!ExternalIntegerBytes categoriesFor: #value!accessing!public! !
-!ExternalIntegerBytes categoriesFor: #value:!accessing!public! !
+!ExternalIntegerBytes categoriesForMethods!
+=!comparing!public! !
+asInteger!converting!public! !
+asObject!accessing!public! !
+asSignedInteger!converting!public! !
+asUIntPtr!converting!public! !
+byteSize!accessing!public! !
+clear!initializing!public! !
+displayOn:!displaying!public! !
+hash!comparing!public! !
+isNull!public!testing! !
+printOn:!printing!public! !
+species!constants!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !ExternalIntegerBytes class methodsFor!
 
@@ -132,10 +134,12 @@ new
 
 valueAtAddress: anAddress 
 	^self subclassResponsibility! !
-!ExternalIntegerBytes class categoriesFor: #atAddress:!instance creation!public! !
-!ExternalIntegerBytes class categoriesFor: #fromAddress:!instance creation!public! !
-!ExternalIntegerBytes class categoriesFor: #fromInteger:!instance creation!public! !
-!ExternalIntegerBytes class categoriesFor: #initialize!development!initializing!private! !
-!ExternalIntegerBytes class categoriesFor: #new!instance creation!public! !
-!ExternalIntegerBytes class categoriesFor: #valueAtAddress:!helpers!private! !
+!ExternalIntegerBytes class categoriesForMethods!
+atAddress:!instance creation!public! !
+fromAddress:!instance creation!public! !
+fromInteger:!instance creation!public! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+valueAtAddress:!helpers!private! !
+!
 

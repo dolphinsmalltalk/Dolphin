@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRSETPALETTEENTRIES
 	instanceVariableNames: ''
@@ -79,14 +79,16 @@ iStart: anInteger
 	"Set the receiver's 'iStart' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_iStart put: anInteger! !
-!EMRSETPALETTEENTRIES categoriesFor: #aPalEntries!**compiled accessors**!public! !
-!EMRSETPALETTEENTRIES categoriesFor: #aPalEntries:!**compiled accessors**!public! !
-!EMRSETPALETTEENTRIES categoriesFor: #cEntries!**compiled accessors**!public! !
-!EMRSETPALETTEENTRIES categoriesFor: #cEntries:!**compiled accessors**!public! !
-!EMRSETPALETTEENTRIES categoriesFor: #ihPal!**compiled accessors**!public! !
-!EMRSETPALETTEENTRIES categoriesFor: #ihPal:!**compiled accessors**!public! !
-!EMRSETPALETTEENTRIES categoriesFor: #iStart!**compiled accessors**!public! !
-!EMRSETPALETTEENTRIES categoriesFor: #iStart:!**compiled accessors**!public! !
+!EMRSETPALETTEENTRIES categoriesForMethods!
+aPalEntries!**compiled accessors**!public! !
+aPalEntries:!**compiled accessors**!public! !
+cEntries!**compiled accessors**!public! !
+cEntries:!**compiled accessors**!public! !
+ihPal!**compiled accessors**!public! !
+ihPal:!**compiled accessors**!public! !
+iStart!**compiled accessors**!public! !
+iStart:!**compiled accessors**!public! !
+!
 
 !EMRSETPALETTEENTRIES class methodsFor!
 
@@ -127,7 +129,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETPALETTEENTRIES! !
-!EMRSETPALETTEENTRIES class categoriesFor: #defineFields!public!template definition! !
-!EMRSETPALETTEENTRIES class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETPALETTEENTRIES class categoriesFor: #iTypes!constants!public! !
+!EMRSETPALETTEENTRIES class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

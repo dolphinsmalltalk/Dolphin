@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #LVCOLUMNW
 	instanceVariableNames: 'text'
@@ -185,36 +185,38 @@ width: pixelWidth
 	"Set the width of the column to pixelWidth."
 
 	self cx: pixelWidth; maskIn: LVCF_WIDTH! !
-!LVCOLUMNW categoriesFor: #alignment:!accessing!public! !
-!LVCOLUMNW categoriesFor: #cchTextMax:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #cx!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #cx:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #cxDefault!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #cxDefault:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #cxIdeal!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #cxIdeal:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #cxMin!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #cxMin:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #fmt!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #fmt:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #format:!accessing!public! !
-!LVCOLUMNW categoriesFor: #iImage!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #iImage:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #image:!accessing!public! !
-!LVCOLUMNW categoriesFor: #iOrder!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #iOrder:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #iSubItem!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #iSubItem:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #mask!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #mask:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #maskIn:!accessing!public! !
-!LVCOLUMNW categoriesFor: #newTextBuffer:!helpers!public! !
-!LVCOLUMNW categoriesFor: #order:!accessing!public! !
-!LVCOLUMNW categoriesFor: #pszText!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #pszText:!**compiled accessors**!public! !
-!LVCOLUMNW categoriesFor: #text!accessing!public! !
-!LVCOLUMNW categoriesFor: #text:!accessing!public! !
-!LVCOLUMNW categoriesFor: #width:!accessing!public! !
+!LVCOLUMNW categoriesForMethods!
+alignment:!accessing!public! !
+cchTextMax:!**compiled accessors**!public! !
+cx!**compiled accessors**!public! !
+cx:!**compiled accessors**!public! !
+cxDefault!**compiled accessors**!public! !
+cxDefault:!**compiled accessors**!public! !
+cxIdeal!**compiled accessors**!public! !
+cxIdeal:!**compiled accessors**!public! !
+cxMin!**compiled accessors**!public! !
+cxMin:!**compiled accessors**!public! !
+fmt!**compiled accessors**!public! !
+fmt:!**compiled accessors**!public! !
+format:!accessing!public! !
+iImage!**compiled accessors**!public! !
+iImage:!**compiled accessors**!public! !
+image:!accessing!public! !
+iOrder!**compiled accessors**!public! !
+iOrder:!**compiled accessors**!public! !
+iSubItem!**compiled accessors**!public! !
+iSubItem:!**compiled accessors**!public! !
+mask!**compiled accessors**!public! !
+mask:!**compiled accessors**!public! !
+maskIn:!accessing!public! !
+newTextBuffer:!helpers!public! !
+order:!accessing!public! !
+pszText!**compiled accessors**!public! !
+pszText:!**compiled accessors**!public! !
+text!accessing!public! !
+text:!accessing!public! !
+width:!accessing!public! !
+!
 
 !LVCOLUMNW class methodsFor!
 
@@ -260,8 +262,10 @@ initialize
 			at: #center put: LVCFMT_CENTER;
 			shrink;
 			yourself)! !
-!LVCOLUMNW class categoriesFor: #defineFields!public!template definition! !
-!LVCOLUMNW class categoriesFor: #fromColumn:in:!instance creation!public! !
-!LVCOLUMNW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!LVCOLUMNW class categoriesFor: #initialize!development!initializing!private! !
+!LVCOLUMNW class categoriesForMethods!
+defineFields!public!template definition! !
+fromColumn:in:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!development!initializing!private! !
+!
 

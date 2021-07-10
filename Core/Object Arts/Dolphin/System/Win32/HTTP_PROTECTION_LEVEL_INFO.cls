@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_PROTECTION_LEVEL_INFO
 	instanceVariableNames: ''
@@ -34,8 +34,10 @@ Level: anInteger
 	"Set the receiver's 'Level' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_Level put: anInteger! !
-!HTTP_PROTECTION_LEVEL_INFO categoriesFor: #Level!**compiled accessors**!public! !
-!HTTP_PROTECTION_LEVEL_INFO categoriesFor: #Level:!**compiled accessors**!public! !
+!HTTP_PROTECTION_LEVEL_INFO categoriesForMethods!
+Level!**compiled accessors**!public! !
+Level:!**compiled accessors**!public! !
+!
 
 !HTTP_PROTECTION_LEVEL_INFO class methodsFor!
 
@@ -61,7 +63,9 @@ getFieldNames
 
 propertyId
 	^HttpServerProtectionLevelProperty! !
-!HTTP_PROTECTION_LEVEL_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_PROTECTION_LEVEL_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HTTP_PROTECTION_LEVEL_INFO class categoriesFor: #propertyId!public! !
+!HTTP_PROTECTION_LEVEL_INFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+propertyId!public! !
+!
 

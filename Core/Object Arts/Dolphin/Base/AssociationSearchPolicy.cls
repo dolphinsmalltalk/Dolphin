@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 EqualitySearchPolicy subclass: #AssociationSearchPolicy
 	instanceVariableNames: ''
@@ -33,7 +33,9 @@ name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
 	^#association! !
-!AssociationSearchPolicy categoriesFor: #hash:!comparing!public! !
-!AssociationSearchPolicy categoriesFor: #hash:max:!comparing!public! !
-!AssociationSearchPolicy categoriesFor: #name!accessing!public! !
+!AssociationSearchPolicy categoriesForMethods!
+hash:!comparing!public! !
+hash:max:!comparing!public! !
+name!accessing!public! !
+!
 

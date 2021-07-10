@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalArray subclass: #OLECountedArray
 	instanceVariableNames: 'elements'
@@ -93,20 +93,22 @@ uncheckedAt: anInteger put: anObject
 	with the <Object> argument."
 
 	^self elements at: anInteger put: anObject! !
-!OLECountedArray categoriesFor: #asArray!converting!public! !
-!OLECountedArray categoriesFor: #basicLength:!accessing!private! !
-!OLECountedArray categoriesFor: #cElems!**compiled accessors**!public! !
-!OLECountedArray categoriesFor: #cElems:!**compiled accessors**!public! !
-!OLECountedArray categoriesFor: #elements!accessing!private! !
-!OLECountedArray categoriesFor: #getElements!accessing!private! !
-!OLECountedArray categoriesFor: #initialize!initializing!private! !
-!OLECountedArray categoriesFor: #length!accessing!public! !
-!OLECountedArray categoriesFor: #needsFree!initializing!private!realizing/unrealizing! !
-!OLECountedArray categoriesFor: #onStartup!event handling!private! !
-!OLECountedArray categoriesFor: #pElems!**compiled accessors**!public! !
-!OLECountedArray categoriesFor: #pElems:!**compiled accessors**!public! !
-!OLECountedArray categoriesFor: #uncheckedAt:!accessing!private!testing! !
-!OLECountedArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!OLECountedArray categoriesForMethods!
+asArray!converting!public! !
+basicLength:!accessing!private! !
+cElems!**compiled accessors**!public! !
+cElems:!**compiled accessors**!public! !
+elements!accessing!private! !
+getElements!accessing!private! !
+initialize!initializing!private! !
+length!accessing!public! !
+needsFree!initializing!private!realizing/unrealizing! !
+onStartup!event handling!private! !
+pElems!**compiled accessors**!public! !
+pElems:!**compiled accessors**!public! !
+uncheckedAt:!accessing!private!testing! !
+uncheckedAt:put:!accessing!private! !
+!
 
 !OLECountedArray class methodsFor!
 
@@ -153,10 +155,12 @@ onStartup
 
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
-!OLECountedArray class categoriesFor: #clear:!public!realizing/unrealizing! !
-!OLECountedArray class categoriesFor: #defineFields!public!template definition! !
-!OLECountedArray class categoriesFor: #initialize!development!initializing!private! !
-!OLECountedArray class categoriesFor: #new:!instance creation!public! !
-!OLECountedArray class categoriesFor: #onStartup!event handling!private! !
-!OLECountedArray class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!OLECountedArray class categoriesForMethods!
+clear:!public!realizing/unrealizing! !
+defineFields!public!template definition! !
+initialize!development!initializing!private! !
+new:!instance creation!public! !
+onStartup!event handling!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

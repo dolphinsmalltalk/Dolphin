@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusStringFormatInitializer subclass: #GdiplusStringFormatGenericDefaultInitializer
 	instanceVariableNames: ''
@@ -16,11 +16,15 @@ createHandle
 	(status := self library gdipStringFormatGetGenericDefault: gpHandle) == Ok
 		ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle! !
-!GdiplusStringFormatGenericDefaultInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!GdiplusStringFormatGenericDefaultInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+!
 
 !GdiplusStringFormatGenericDefaultInitializer class methodsFor!
 
 uninitialize
 	GenericDefault := nil! !
-!GdiplusStringFormatGenericDefaultInitializer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!GdiplusStringFormatGenericDefaultInitializer class categoriesForMethods!
+uninitialize!class hierarchy-removing!private! !
+!
 

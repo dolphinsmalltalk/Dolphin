@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractNonReferenceDelegatingView subclass: #ToolButton
 	instanceVariableNames: ''
@@ -201,46 +201,48 @@ toolTipText
 	"Answer a String suitable for displaying in a Tool tip control."
 
 	^self commandDescription toolTipText! !
-!ToolButton categoriesFor: #applyFont!font!private!updating! !
-!ToolButton categoriesFor: #backcolor:!accessing!public! !
-!ToolButton categoriesFor: #bitmapSize!accessing!geometry!public! !
-!ToolButton categoriesFor: #bitmapSize:!accessing!geometry!public! !
-!ToolButton categoriesFor: #buttonSize!accessing!geometry!public! !
-!ToolButton categoriesFor: #buttonSize:!accessing!geometry!public! !
-!ToolButton categoriesFor: #commandDescription!accessing!public! !
-!ToolButton categoriesFor: #commandDescription:!accessing!public! !
-!ToolButton categoriesFor: #createDelegate!event handling!private! !
-!ToolButton categoriesFor: #createInternalButton!event handling!private! !
-!ToolButton categoriesFor: #defaultBackcolor!private! !
-!ToolButton categoriesFor: #defaultBitmapSize!constants!private! !
-!ToolButton categoriesFor: #defaultExtent!constants!private! !
-!ToolButton categoriesFor: #hasFlatAppearance!accessing!accessing-styles!public! !
-!ToolButton categoriesFor: #hasFlatAppearance:!accessing!accessing-styles!public! !
-!ToolButton categoriesFor: #hasLabels!accessing!accessing-styles!public! !
-!ToolButton categoriesFor: #hasLabels:!accessing!accessing-styles!public! !
-!ToolButton categoriesFor: #hasListAppearance!accessing!public! !
-!ToolButton categoriesFor: #hasListAppearance:!accessing!public! !
-!ToolButton categoriesFor: #internalButton!private! !
-!ToolButton categoriesFor: #isChecked!accessing!public!testing! !
-!ToolButton categoriesFor: #isChecked:!accessing!public!state! !
-!ToolButton categoriesFor: #isCheckStyle!accessing!public! !
-!ToolButton categoriesFor: #isCheckStyle:!accessing!public! !
-!ToolButton categoriesFor: #isDropDownOnly!accessing!public! !
-!ToolButton categoriesFor: #isDropDownOnly:!accessing!public! !
-!ToolButton categoriesFor: #isDropdownStyle!accessing!public! !
-!ToolButton categoriesFor: #isDropdownStyle:!accessing!public! !
-!ToolButton categoriesFor: #isEnabled!accessing!public!testing! !
-!ToolButton categoriesFor: #isEnabled:!accessing!public!state! !
-!ToolButton categoriesFor: #isGroupStyle!accessing!public! !
-!ToolButton categoriesFor: #isGroupStyle:!accessing!public!style! !
-!ToolButton categoriesFor: #isIndeterminate!accessing!public!testing! !
-!ToolButton categoriesFor: #isIndeterminate:!accessing!public!state! !
-!ToolButton categoriesFor: #isPressed!accessing!public!testing! !
-!ToolButton categoriesFor: #isPressed:!accessing!public!state! !
-!ToolButton categoriesFor: #onPositionChanged:!event handling!private! !
-!ToolButton categoriesFor: #onResize!private! !
-!ToolButton categoriesFor: #onTipTextRequired!event handling!public! !
-!ToolButton categoriesFor: #toolTipText!operations!public! !
+!ToolButton categoriesForMethods!
+applyFont!font!private!updating! !
+backcolor:!accessing!public! !
+bitmapSize!accessing!geometry!public! !
+bitmapSize:!accessing!geometry!public! !
+buttonSize!accessing!geometry!public! !
+buttonSize:!accessing!geometry!public! !
+commandDescription!accessing!public! !
+commandDescription:!accessing!public! !
+createDelegate!event handling!private! !
+createInternalButton!event handling!private! !
+defaultBackcolor!private! !
+defaultBitmapSize!constants!private! !
+defaultExtent!constants!private! !
+hasFlatAppearance!accessing!accessing-styles!public! !
+hasFlatAppearance:!accessing!accessing-styles!public! !
+hasLabels!accessing!accessing-styles!public! !
+hasLabels:!accessing!accessing-styles!public! !
+hasListAppearance!accessing!public! !
+hasListAppearance:!accessing!public! !
+internalButton!private! !
+isChecked!accessing!public!testing! !
+isChecked:!accessing!public!state! !
+isCheckStyle!accessing!public! !
+isCheckStyle:!accessing!public! !
+isDropDownOnly!accessing!public! !
+isDropDownOnly:!accessing!public! !
+isDropdownStyle!accessing!public! !
+isDropdownStyle:!accessing!public! !
+isEnabled!accessing!public!testing! !
+isEnabled:!accessing!public!state! !
+isGroupStyle!accessing!public! !
+isGroupStyle:!accessing!public!style! !
+isIndeterminate!accessing!public!testing! !
+isIndeterminate:!accessing!public!state! !
+isPressed!accessing!public!testing! !
+isPressed:!accessing!public!state! !
+onPositionChanged:!event handling!private! !
+onResize!private! !
+onTipTextRequired!event handling!public! !
+toolTipText!operations!public! !
+!
 
 !ToolButton class methodsFor!
 
@@ -256,6 +258,8 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ToolButton) 34 14 nil nil 34 2 8 1140850688 131073 416 nil nil nil 7 nil nil nil 416 nil 410 ##(Smalltalk.Toolbar) 34 25 nil 416 34 2 8 1140853580 131137 480 nil nil nil 3 nil nil nil 480 nil 8 1915204752 nil 170 192 34 2 48155 1115206 1 ##(Smalltalk.ToolbarIconButton) 480 1 1180998 4 ##(Smalltalk.CommandDescription) #noCommand 8 'No command' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Object.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 48155 34 1 608 nil nil 3 nil 328198 ##(Smalltalk.Point) 49 49 818 183 87 nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 818 1 1 818 193 97 480 930 #updateSizePosted 8 #() 480 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 96 0 0 0 48 0 0 0] 8 #() 818 193 193 nil 27 866 138 144 34 1 930 #createAt:extent: 34 2 818 3839 21 818 193 97 416 1042 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 223 7 0 0 58 0 0 0] 34 1 480 1104 nil 27 )! !
-!ToolButton class categoriesFor: #icon!public! !
-!ToolButton class categoriesFor: #resource_Default_view!public!resources-views! !
+!ToolButton class categoriesForMethods!
+icon!public! !
+resource_Default_view!public!resources-views! !
+!
 

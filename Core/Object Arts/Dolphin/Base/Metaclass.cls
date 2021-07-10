@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassDescription subclass: #Metaclass
 	instanceVariableNames: 'instanceClass'
@@ -150,22 +150,24 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler saveObject: self as: (STBMetaclassProxy forClass: self)! !
-!Metaclass categoriesFor: #addToSuper!class hierarchy-adding!private! !
-!Metaclass categoriesFor: #bindingFor:!binding!public! !
-!Metaclass categoriesFor: #classPool!class variables!public! !
-!Metaclass categoriesFor: #classVariables!class variables!public! !
-!Metaclass categoriesFor: #classVarNames!class variables!public! !
-!Metaclass categoriesFor: #comment!accessing!public! !
-!Metaclass categoriesFor: #comment:!accessing!public! !
-!Metaclass categoriesFor: #instanceClass!accessing!public! !
-!Metaclass categoriesFor: #instanceClass:!accessing!private! !
-!Metaclass categoriesFor: #instanceVariableNames:!class hierarchy-mutating!instance variables!public! !
-!Metaclass categoriesFor: #isMeta!public!testing! !
-!Metaclass categoriesFor: #name!accessing!public! !
-!Metaclass categoriesFor: #new!instance creation!public! !
-!Metaclass categoriesFor: #owningPackage!accessing!development!public! !
-!Metaclass categoriesFor: #printDefinitionOn:!private!source filing-class definition! !
-!Metaclass categoriesFor: #removeClassVarName:!class variables!public! !
-!Metaclass categoriesFor: #removeFromSuper!class hierarchy-removing!private! !
-!Metaclass categoriesFor: #stbSaveOn:!binary filing!public! !
+!Metaclass categoriesForMethods!
+addToSuper!class hierarchy-adding!private! !
+bindingFor:!binding!public! !
+classPool!class variables!public! !
+classVariables!class variables!public! !
+classVarNames!class variables!public! !
+comment!accessing!public! !
+comment:!accessing!public! !
+instanceClass!accessing!public! !
+instanceClass:!accessing!private! !
+instanceVariableNames:!class hierarchy-mutating!instance variables!public! !
+isMeta!public!testing! !
+name!accessing!public! !
+new!instance creation!public! !
+owningPackage!accessing!development!public! !
+printDefinitionOn:!private!source filing-class definition! !
+removeClassVarName:!class variables!public! !
+removeFromSuper!class hierarchy-removing!private! !
+stbSaveOn:!binary filing!public! !
+!
 

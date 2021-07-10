@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Locale subclass: #SmalltalkLocale
 	instanceVariableNames: ''
@@ -335,52 +335,54 @@ yearMonthFormat
 	"Answer the year/month date format for the receiver locale."
 
 	^'MMMM yyyy'! !
-!SmalltalkLocale categoriesFor: #amDesignator!constants!public! !
-!SmalltalkLocale categoriesFor: #code!constants!public! !
-!SmalltalkLocale categoriesFor: #dayOfWeek:!mapping!public! !
-!SmalltalkLocale categoriesFor: #dayOfWeekAbbreviation:!constants!public! !
-!SmalltalkLocale categoriesFor: #dayOfWeekName:!constants!public! !
-!SmalltalkLocale categoriesFor: #dayOfWeekShortAbbreviation:!constants!public! !
-!SmalltalkLocale categoriesFor: #decimalPlaces!constants!public! !
-!SmalltalkLocale categoriesFor: #decimalSeparator!constants!public! !
-!SmalltalkLocale categoriesFor: #displayDuration:on:!printing!public! !
-!SmalltalkLocale categoriesFor: #displayFloat:on:!printing!public! !
-!SmalltalkLocale categoriesFor: #displayName!displaying!public! !
-!SmalltalkLocale categoriesFor: #displayOn:!displaying!public! !
-!SmalltalkLocale categoriesFor: #durationFormat!constants!public! !
-!SmalltalkLocale categoriesFor: #englishDisplayName!constants!public! !
-!SmalltalkLocale categoriesFor: #englishLanguageName!constants!public! !
-!SmalltalkLocale categoriesFor: #firstDayOfWeek!constants!public! !
-!SmalltalkLocale categoriesFor: #hasLeadingZero!constants!public! !
-!SmalltalkLocale categoriesFor: #indexOfMonth:!enquiries!public! !
-!SmalltalkLocale categoriesFor: #infinity!constants!public! !
-!SmalltalkLocale categoriesFor: #lastTwoDigitYear!constants!public! !
-!SmalltalkLocale categoriesFor: #lcid!accessing!public! !
-!SmalltalkLocale categoriesFor: #listSeparator!constants!public! !
-!SmalltalkLocale categoriesFor: #longDateFormat!constants!public! !
-!SmalltalkLocale categoriesFor: #longTimeFormat!constants!public! !
-!SmalltalkLocale categoriesFor: #monthAbbreviation:!constants!public! !
-!SmalltalkLocale categoriesFor: #monthName:!enquiries!public! !
-!SmalltalkLocale categoriesFor: #monthNames!constants!public! !
-!SmalltalkLocale categoriesFor: #name!constants!public! !
-!SmalltalkLocale categoriesFor: #nameOfDay:!enquiries!public! !
-!SmalltalkLocale categoriesFor: #nan!constants!public! !
-!SmalltalkLocale categoriesFor: #nativeDigits!constants!public! !
-!SmalltalkLocale categoriesFor: #negativeInfinity!constants!public! !
-!SmalltalkLocale categoriesFor: #negativeNumberMode!constants!public! !
-!SmalltalkLocale categoriesFor: #negativeSign!constants!public! !
-!SmalltalkLocale categoriesFor: #numberGrouping!constants!public! !
-!SmalltalkLocale categoriesFor: #percentSymbol!constants!public! !
-!SmalltalkLocale categoriesFor: #pmDesignator!constants!public! !
-!SmalltalkLocale categoriesFor: #printFloat:!printing!public! !
-!SmalltalkLocale categoriesFor: #printFloat:on:format:!printing!public! !
-!SmalltalkLocale categoriesFor: #shortAmDesignator!constants!public! !
-!SmalltalkLocale categoriesFor: #shortDateFormat!constants!public! !
-!SmalltalkLocale categoriesFor: #shortPmDesignator!constants!public! !
-!SmalltalkLocale categoriesFor: #shortTimeFormat!constants!public! !
-!SmalltalkLocale categoriesFor: #tag!constants!public! !
-!SmalltalkLocale categoriesFor: #thousandSeparator!constants!public! !
-!SmalltalkLocale categoriesFor: #yearMonthFormat!constants!public! !
+!SmalltalkLocale categoriesForMethods!
+amDesignator!constants!public! !
+code!constants!public! !
+dayOfWeek:!mapping!public! !
+dayOfWeekAbbreviation:!constants!public! !
+dayOfWeekName:!constants!public! !
+dayOfWeekShortAbbreviation:!constants!public! !
+decimalPlaces!constants!public! !
+decimalSeparator!constants!public! !
+displayDuration:on:!printing!public! !
+displayFloat:on:!printing!public! !
+displayName!displaying!public! !
+displayOn:!displaying!public! !
+durationFormat!constants!public! !
+englishDisplayName!constants!public! !
+englishLanguageName!constants!public! !
+firstDayOfWeek!constants!public! !
+hasLeadingZero!constants!public! !
+indexOfMonth:!enquiries!public! !
+infinity!constants!public! !
+lastTwoDigitYear!constants!public! !
+lcid!accessing!public! !
+listSeparator!constants!public! !
+longDateFormat!constants!public! !
+longTimeFormat!constants!public! !
+monthAbbreviation:!constants!public! !
+monthName:!enquiries!public! !
+monthNames!constants!public! !
+name!constants!public! !
+nameOfDay:!enquiries!public! !
+nan!constants!public! !
+nativeDigits!constants!public! !
+negativeInfinity!constants!public! !
+negativeNumberMode!constants!public! !
+negativeSign!constants!public! !
+numberGrouping!constants!public! !
+percentSymbol!constants!public! !
+pmDesignator!constants!public! !
+printFloat:!printing!public! !
+printFloat:on:format:!printing!public! !
+shortAmDesignator!constants!public! !
+shortDateFormat!constants!public! !
+shortPmDesignator!constants!public! !
+shortTimeFormat!constants!public! !
+tag!constants!public! !
+thousandSeparator!constants!public! !
+yearMonthFormat!constants!public! !
+!
 
 !SmalltalkLocale class methodsFor!
 
@@ -392,7 +394,9 @@ initialize
 
 reset
 	Current numberFormat: nil! !
-!SmalltalkLocale class categoriesFor: #current!instance creation!public! !
-!SmalltalkLocale class categoriesFor: #initialize!class initialization!public! !
-!SmalltalkLocale class categoriesFor: #reset!initializing!private! !
+!SmalltalkLocale class categoriesForMethods!
+current!instance creation!public! !
+initialize!class initialization!public! !
+reset!initializing!private! !
+!
 

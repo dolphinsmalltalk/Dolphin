@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMREXTCREATEFONTINDIRECTW
 	instanceVariableNames: ''
@@ -49,10 +49,12 @@ ihFont: anInteger
 	"Set the receiver's 'ihFont' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_ihFont put: anInteger! !
-!EMREXTCREATEFONTINDIRECTW categoriesFor: #elfw!**compiled accessors**!public! !
-!EMREXTCREATEFONTINDIRECTW categoriesFor: #elfw:!**compiled accessors**!public! !
-!EMREXTCREATEFONTINDIRECTW categoriesFor: #ihFont!**compiled accessors**!public! !
-!EMREXTCREATEFONTINDIRECTW categoriesFor: #ihFont:!**compiled accessors**!public! !
+!EMREXTCREATEFONTINDIRECTW categoriesForMethods!
+elfw!**compiled accessors**!public! !
+elfw:!**compiled accessors**!public! !
+ihFont!**compiled accessors**!public! !
+ihFont:!**compiled accessors**!public! !
+!
 
 !EMREXTCREATEFONTINDIRECTW class methodsFor!
 
@@ -82,7 +84,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXTCREATEFONTINDIRECTW! !
-!EMREXTCREATEFONTINDIRECTW class categoriesFor: #defineFields!public!template definition! !
-!EMREXTCREATEFONTINDIRECTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMREXTCREATEFONTINDIRECTW class categoriesFor: #iTypes!constants!public! !
+!EMREXTCREATEFONTINDIRECTW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

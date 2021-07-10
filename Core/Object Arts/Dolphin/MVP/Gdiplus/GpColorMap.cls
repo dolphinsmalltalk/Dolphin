@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #GpColorMap
 	instanceVariableNames: ''
@@ -44,10 +44,12 @@ oldColor: anInteger
 	"Set the receiver's 'oldColor' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_oldColor put: anInteger! !
-!GpColorMap categoriesFor: #newColor!**compiled accessors**!public! !
-!GpColorMap categoriesFor: #newColor:!**compiled accessors**!public! !
-!GpColorMap categoriesFor: #oldColor!**compiled accessors**!public! !
-!GpColorMap categoriesFor: #oldColor:!**compiled accessors**!public! !
+!GpColorMap categoriesForMethods!
+newColor!**compiled accessors**!public! !
+newColor:!**compiled accessors**!public! !
+oldColor!**compiled accessors**!public! !
+oldColor:!**compiled accessors**!public! !
+!
 
 !GpColorMap class methodsFor!
 
@@ -69,6 +71,8 @@ defineFields
 
 getFieldNames
 	^#(#oldColor #newColor)! !
-!GpColorMap class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GpColorMap class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!GpColorMap class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

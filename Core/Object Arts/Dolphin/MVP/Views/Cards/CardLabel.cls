@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #CardLabel
 	instanceVariableNames: 'text iconBlock helpId'
@@ -52,15 +52,17 @@ text
 
 text: aString 
 	text := aString! !
-!CardLabel categoriesFor: #displayOn:!displaying!public! !
-!CardLabel categoriesFor: #helpId!public! !
-!CardLabel categoriesFor: #helpId:!public! !
-!CardLabel categoriesFor: #icon!accessing!public! !
-!CardLabel categoriesFor: #iconBlock!accessing!public! !
-!CardLabel categoriesFor: #iconBlock:!accessing!public! !
-!CardLabel categoriesFor: #printOn:!printing!public! !
-!CardLabel categoriesFor: #text!accessing!public! !
-!CardLabel categoriesFor: #text:!accessing!public! !
+!CardLabel categoriesForMethods!
+displayOn:!displaying!public! !
+helpId!public! !
+helpId:!public! !
+icon!accessing!public! !
+iconBlock!accessing!public! !
+iconBlock:!accessing!public! !
+printOn:!printing!public! !
+text!accessing!public! !
+text:!accessing!public! !
+!
 
 CardLabel methodProtocol: #whatsThisHelp attributes: #(#readOnly) selectors: #(#helpId)!
 
@@ -92,9 +94,11 @@ text: aString iconBlock: aNiladicValuable
 		text: aString;
 		iconBlock: aNiladicValuable;
 		yourself! !
-!CardLabel class categoriesFor: #new!instance creation!public! !
-!CardLabel class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!CardLabel class categoriesFor: #stbVersion!binary filing!public! !
-!CardLabel class categoriesFor: #text:!instance creation!public! !
-!CardLabel class categoriesFor: #text:iconBlock:!instance creation!public! !
+!CardLabel class categoriesForMethods!
+new!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+text:!instance creation!public! !
+text:iconBlock:!instance creation!public! !
+!
 

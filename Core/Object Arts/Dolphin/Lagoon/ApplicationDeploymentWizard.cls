@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueDialog subclass: #ApplicationDeploymentWizard
 	instanceVariableNames: 'imageStripperClass executableName executablePath1 executablePath2 rootPackage runtimeSessionManagerClass stripRedundantMethods stripDeprecatedMethods stripShouldNotImplement stripRedundantPackages stripRedundantClasses preserveAspectSetters stripDuplicateStrings stripDuplicateBytecodes stripClassInfo retainInstVarNames stripClassGuids stripClassBuilder unused stripRedundantResources compileExternalStructures writeLogFile preStripScriptWorkspace preStripScriptErrors logFileName logReferencesToClasses stepsView isToGo stripSubclassResponsibility'
@@ -334,30 +334,32 @@ validateUserInterface
 	stripClassGuids view isEnabled: stripInfo.
 
 	! !
-!ApplicationDeploymentWizard categoriesFor: #accept!commands!public! !
-!ApplicationDeploymentWizard categoriesFor: #addToCommandRoute:!commands!public! !
-!ApplicationDeploymentWizard categoriesFor: #apply!commands!public! !
-!ApplicationDeploymentWizard categoriesFor: #browseForExecutableName!commands!public! !
-!ApplicationDeploymentWizard categoriesFor: #canDeploy!public!testing! !
-!ApplicationDeploymentWizard categoriesFor: #createComponents!initializing!public! !
-!ApplicationDeploymentWizard categoriesFor: #createSchematicWiring!initializing!public! !
-!ApplicationDeploymentWizard categoriesFor: #defaultExtension!constants!private! !
-!ApplicationDeploymentWizard categoriesFor: #deployApplication!commands!public! !
-!ApplicationDeploymentWizard categoriesFor: #exeFileTypes!constants!private! !
-!ApplicationDeploymentWizard categoriesFor: #hasExistingLog!public!testing! !
-!ApplicationDeploymentWizard categoriesFor: #hasLog!public!testing! !
-!ApplicationDeploymentWizard categoriesFor: #help!commands!public! !
-!ApplicationDeploymentWizard categoriesFor: #model:!accessing!public! !
-!ApplicationDeploymentWizard categoriesFor: #onExecutableNameChanged!event handling!private! !
-!ApplicationDeploymentWizard categoriesFor: #onImageStripperClassChanged!event handling!private! !
-!ApplicationDeploymentWizard categoriesFor: #onViewOpened!event handling!public! !
-!ApplicationDeploymentWizard categoriesFor: #queryCommand:!commands!private! !
-!ApplicationDeploymentWizard categoriesFor: #refreshContents!accessing!private! !
-!ApplicationDeploymentWizard categoriesFor: #reset!commands!public! !
-!ApplicationDeploymentWizard categoriesFor: #sessionManagerOrShellChoices!accessing!private! !
-!ApplicationDeploymentWizard categoriesFor: #showLog!commands!public! !
-!ApplicationDeploymentWizard categoriesFor: #strip!commands!private! !
-!ApplicationDeploymentWizard categoriesFor: #validateUserInterface!operations!public! !
+!ApplicationDeploymentWizard categoriesForMethods!
+accept!commands!public! !
+addToCommandRoute:!commands!public! !
+apply!commands!public! !
+browseForExecutableName!commands!public! !
+canDeploy!public!testing! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+defaultExtension!constants!private! !
+deployApplication!commands!public! !
+exeFileTypes!constants!private! !
+hasExistingLog!public!testing! !
+hasLog!public!testing! !
+help!commands!public! !
+model:!accessing!public! !
+onExecutableNameChanged!event handling!private! !
+onImageStripperClassChanged!event handling!private! !
+onViewOpened!event handling!public! !
+queryCommand:!commands!private! !
+refreshContents!accessing!private! !
+reset!commands!public! !
+sessionManagerOrShellChoices!accessing!private! !
+showLog!commands!public! !
+strip!commands!private! !
+validateUserInterface!operations!public! !
+!
 
 !ApplicationDeploymentWizard class methodsFor!
 
@@ -513,14 +515,16 @@ toolsFolderIcon
 	receiver in the system folder."
 
 	^SmalltalkSystemIcon showModal: self description: self displayString! !
-!ApplicationDeploymentWizard class categoriesFor: #defaultAdditionalAccelerators!constants!private! !
-!ApplicationDeploymentWizard class categoriesFor: #defaultModel!models!public! !
-!ApplicationDeploymentWizard class categoriesFor: #displayOn:!displaying!public! !
-!ApplicationDeploymentWizard class categoriesFor: #icon!constants!public! !
-!ApplicationDeploymentWizard class categoriesFor: #initialize!initializing!private! !
-!ApplicationDeploymentWizard class categoriesFor: #publishedAspects!development!public! !
-!ApplicationDeploymentWizard class categoriesFor: #resource_Default_view!public!resources-views! !
-!ApplicationDeploymentWizard class categoriesFor: #saveImageOnDeploy!options!public! !
-!ApplicationDeploymentWizard class categoriesFor: #saveImageOnDeploy:!options!public! !
-!ApplicationDeploymentWizard class categoriesFor: #toolsFolderIcon!accessing!public! !
+!ApplicationDeploymentWizard class categoriesForMethods!
+defaultAdditionalAccelerators!constants!private! !
+defaultModel!models!public! !
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!development!public! !
+resource_Default_view!public!resources-views! !
+saveImageOnDeploy!options!public! !
+saveImageOnDeploy:!options!public! !
+toolsFolderIcon!accessing!public! !
+!
 

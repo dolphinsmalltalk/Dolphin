@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #STONTestUser
 	instanceVariableNames: 'username password enabled'
@@ -51,15 +51,17 @@ username
 
 username: anObject
 	username := anObject! !
-!STONTestUser categoriesFor: #=!comparing!public! !
-!STONTestUser categoriesFor: #enabled!accessing!public! !
-!STONTestUser categoriesFor: #enabled:!accessing!public! !
-!STONTestUser categoriesFor: #hash!comparing!public! !
-!STONTestUser categoriesFor: #initialize!initialize/release!public! !
-!STONTestUser categoriesFor: #password!accessing!public! !
-!STONTestUser categoriesFor: #password:!accessing!public! !
-!STONTestUser categoriesFor: #username!accessing!public! !
-!STONTestUser categoriesFor: #username:!accessing!public! !
+!STONTestUser categoriesForMethods!
+=!comparing!public! !
+enabled!accessing!public! !
+enabled:!accessing!public! !
+hash!comparing!public! !
+initialize!initialize/release!public! !
+password!accessing!public! !
+password:!accessing!public! !
+username!accessing!public! !
+username:!accessing!public! !
+!
 
 !STONTestUser class methodsFor!
 
@@ -81,7 +83,9 @@ new
 
 stonName
 	^ #TestUser! !
-!STONTestUser class categoriesFor: #dummy!instance creation!public! !
-!STONTestUser class categoriesFor: #new!public! !
-!STONTestUser class categoriesFor: #stonName!public!ston/core! !
+!STONTestUser class categoriesForMethods!
+dummy!instance creation!public! !
+new!public! !
+stonName!public!ston/core! !
+!
 

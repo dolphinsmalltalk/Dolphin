@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpQosSetting subclass: #HTTP_BANDWIDTH_LIMIT_INFO
 	instanceVariableNames: ''
@@ -48,10 +48,12 @@ value: anInteger
 			[self
 				Present: true;
 				MaxBandwidth: anInteger]! !
-!HTTP_BANDWIDTH_LIMIT_INFO categoriesFor: #MaxBandwidth!**compiled accessors**!public! !
-!HTTP_BANDWIDTH_LIMIT_INFO categoriesFor: #MaxBandwidth:!**compiled accessors**!public! !
-!HTTP_BANDWIDTH_LIMIT_INFO categoriesFor: #value!accessing!public! !
-!HTTP_BANDWIDTH_LIMIT_INFO categoriesFor: #value:!accessing!public! !
+!HTTP_BANDWIDTH_LIMIT_INFO categoriesForMethods!
+MaxBandwidth!**compiled accessors**!public! !
+MaxBandwidth:!**compiled accessors**!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !HTTP_BANDWIDTH_LIMIT_INFO class methodsFor!
 
@@ -80,8 +82,10 @@ maxBandwidth: anInteger
 
 qosType
 	^HttpQosSettingTypeBandwidth! !
-!HTTP_BANDWIDTH_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_BANDWIDTH_LIMIT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HTTP_BANDWIDTH_LIMIT_INFO class categoriesFor: #maxBandwidth:!public! !
-!HTTP_BANDWIDTH_LIMIT_INFO class categoriesFor: #qosType!constants!public! !
+!HTTP_BANDWIDTH_LIMIT_INFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+maxBandwidth:!public! !
+qosType!constants!public! !
+!
 

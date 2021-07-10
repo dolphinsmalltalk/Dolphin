@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ArithmeticValue subclass: #Point
 	instanceVariableNames: 'x y'
@@ -295,50 +295,52 @@ y: aNumber
 	"Set the receiver's y coordinate"
 
 	y := aNumber! !
-!Point categoriesFor: #-!arithmetic!public! !
-!Point categoriesFor: #*!arithmetic!public! !
-!Point categoriesFor: #/!arithmetic!public! !
-!Point categoriesFor: #@!converting!public! !
-!Point categoriesFor: #+!arithmetic!public! !
-!Point categoriesFor: #<!comparing!public! !
-!Point categoriesFor: #<=!comparing!public! !
-!Point categoriesFor: #=!comparing!public! !
-!Point categoriesFor: #>!comparing!public! !
-!Point categoriesFor: #>=!comparing!public! !
-!Point categoriesFor: #abs!arithmetic!public! !
-!Point categoriesFor: #addToPoint:!double dispatch!private! !
-!Point categoriesFor: #asDword!converting!public! !
-!Point categoriesFor: #asParameter!converting!public! !
-!Point categoriesFor: #asPoint!converting!public! !
-!Point categoriesFor: #asPoint3D!converting!public! !
-!Point categoriesFor: #asUIntPtr!converting!public! !
-!Point categoriesFor: #ceiling!public!truncation and round off! !
-!Point categoriesFor: #coerce:!coercing!private! !
-!Point categoriesFor: #corner:!converting!public! !
-!Point categoriesFor: #degrees!accessing!public! !
-!Point categoriesFor: #dist:!operations!public! !
-!Point categoriesFor: #divideIntoPoint:!double dispatch!private! !
-!Point categoriesFor: #dotProduct:!operations!public! !
-!Point categoriesFor: #extent:!converting!public! !
-!Point categoriesFor: #floor!public!truncation and round off! !
-!Point categoriesFor: #generality!coercing!private! !
-!Point categoriesFor: #hash!comparing!public! !
-!Point categoriesFor: #max:!comparing!public! !
-!Point categoriesFor: #min:!comparing!public! !
-!Point categoriesFor: #multiplyByPoint:!double dispatch!private! !
-!Point categoriesFor: #printOn:!printing!public! !
-!Point categoriesFor: #r!accessing!public! !
-!Point categoriesFor: #raisedTo:!mathematical!public! !
-!Point categoriesFor: #rounded!public!truncation and round off! !
-!Point categoriesFor: #roundTo:!public!truncation and round off! !
-!Point categoriesFor: #subtractFromPoint:!double dispatch!private! !
-!Point categoriesFor: #transpose!operations!public! !
-!Point categoriesFor: #truncated!public!truncation and round off! !
-!Point categoriesFor: #x!accessing!public! !
-!Point categoriesFor: #x:!accessing!public! !
-!Point categoriesFor: #x:y:!accessing!private! !
-!Point categoriesFor: #y!accessing!public! !
-!Point categoriesFor: #y:!accessing!public! !
+!Point categoriesForMethods!
+-!arithmetic!public! !
+*!arithmetic!public! !
+/!arithmetic!public! !
+@!converting!public! !
++!arithmetic!public! !
+<!comparing!public! !
+<=!comparing!public! !
+=!comparing!public! !
+>!comparing!public! !
+>=!comparing!public! !
+abs!arithmetic!public! !
+addToPoint:!double dispatch!private! !
+asDword!converting!public! !
+asParameter!converting!public! !
+asPoint!converting!public! !
+asPoint3D!converting!public! !
+asUIntPtr!converting!public! !
+ceiling!public!truncation and round off! !
+coerce:!coercing!private! !
+corner:!converting!public! !
+degrees!accessing!public! !
+dist:!operations!public! !
+divideIntoPoint:!double dispatch!private! !
+dotProduct:!operations!public! !
+extent:!converting!public! !
+floor!public!truncation and round off! !
+generality!coercing!private! !
+hash!comparing!public! !
+max:!comparing!public! !
+min:!comparing!public! !
+multiplyByPoint:!double dispatch!private! !
+printOn:!printing!public! !
+r!accessing!public! !
+raisedTo:!mathematical!public! !
+rounded!public!truncation and round off! !
+roundTo:!public!truncation and round off! !
+subtractFromPoint:!double dispatch!private! !
+transpose!operations!public! !
+truncated!public!truncation and round off! !
+x!accessing!public! !
+x:!accessing!public! !
+x:y:!accessing!private! !
+y!accessing!public! !
+y:!accessing!public! !
+!
 
 !Point class methodsFor!
 
@@ -371,10 +373,12 @@ zero
 	"Answer the receiver's representation of zero."
 
 	^Zero! !
-!Point class categoriesFor: #initialize!class initialization!development!public! !
-!Point class categoriesFor: #new!instance creation!public! !
-!Point class categoriesFor: #one!instance creation!public! !
-!Point class categoriesFor: #unitialize!class hierarchy-removing!public! !
-!Point class categoriesFor: #x:y:!instance creation!public! !
-!Point class categoriesFor: #zero!instance creation!public! !
+!Point class categoriesForMethods!
+initialize!class initialization!development!public! !
+new!instance creation!public! !
+one!instance creation!public! !
+unitialize!class hierarchy-removing!public! !
+x:y:!instance creation!public! !
+zero!instance creation!public! !
+!
 

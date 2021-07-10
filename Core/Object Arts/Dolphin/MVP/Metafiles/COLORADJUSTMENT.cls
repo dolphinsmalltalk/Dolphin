@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #COLORADJUSTMENT
 	instanceVariableNames: ''
@@ -164,30 +164,32 @@ caSize: anInteger
 	"Set the receiver's 'caSize' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_caSize put: anInteger! !
-!COLORADJUSTMENT categoriesFor: #caBlueGamma!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caBlueGamma:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caBrightness!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caBrightness:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caColorfulness!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caColorfulness:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caContrast!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caContrast:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caFlags!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caFlags:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caGreenGamma!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caGreenGamma:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caIlluminantIndex!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caIlluminantIndex:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caRedGamma!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caRedGamma:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caRedGreenTint!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caRedGreenTint:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caReferenceBlack!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caReferenceBlack:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caReferenceWhite!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caReferenceWhite:!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caSize!**compiled accessors**!public! !
-!COLORADJUSTMENT categoriesFor: #caSize:!**compiled accessors**!public! !
+!COLORADJUSTMENT categoriesForMethods!
+caBlueGamma!**compiled accessors**!public! !
+caBlueGamma:!**compiled accessors**!public! !
+caBrightness!**compiled accessors**!public! !
+caBrightness:!**compiled accessors**!public! !
+caColorfulness!**compiled accessors**!public! !
+caColorfulness:!**compiled accessors**!public! !
+caContrast!**compiled accessors**!public! !
+caContrast:!**compiled accessors**!public! !
+caFlags!**compiled accessors**!public! !
+caFlags:!**compiled accessors**!public! !
+caGreenGamma!**compiled accessors**!public! !
+caGreenGamma:!**compiled accessors**!public! !
+caIlluminantIndex!**compiled accessors**!public! !
+caIlluminantIndex:!**compiled accessors**!public! !
+caRedGamma!**compiled accessors**!public! !
+caRedGamma:!**compiled accessors**!public! !
+caRedGreenTint!**compiled accessors**!public! !
+caRedGreenTint:!**compiled accessors**!public! !
+caReferenceBlack!**compiled accessors**!public! !
+caReferenceBlack:!**compiled accessors**!public! !
+caReferenceWhite!**compiled accessors**!public! !
+caReferenceWhite:!**compiled accessors**!public! !
+caSize!**compiled accessors**!public! !
+caSize:!**compiled accessors**!public! !
+!
 
 !COLORADJUSTMENT class methodsFor!
 
@@ -230,6 +232,8 @@ defineFields
 
 getFieldNames
 	^#(#caSize #caFlags #caIlluminantIndex #caRedGamma #caGreenGamma #caBlueGamma #caReferenceBlack #caReferenceWhite #caContrast #caBrightness #caColorfulness #caRedGreenTint)! !
-!COLORADJUSTMENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!COLORADJUSTMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!COLORADJUSTMENT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

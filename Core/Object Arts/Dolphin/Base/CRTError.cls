@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #CRTError
 	instanceVariableNames: ''
@@ -49,10 +49,12 @@ strerror
 		errnum: self errno) == 0
 		ifTrue: [buf trimNulls]
 		ifFalse: [self errno printString]! !
-!CRTError categoriesFor: #_descriptionArguments!displaying!public! !
-!CRTError categoriesFor: #_descriptionFormat!displaying!public! !
-!CRTError categoriesFor: #errno!accessing!public! !
-!CRTError categoriesFor: #initialize!initializing!private! !
-!CRTError categoriesFor: #messageText!accessing!public! !
-!CRTError categoriesFor: #strerror!accessing!public! !
+!CRTError categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+errno!accessing!public! !
+initialize!initializing!private! !
+messageText!accessing!public! !
+strerror!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ProfilerListItem
 	instanceVariableNames: 'object tallyAll tallyActive timeAll timeActive'
@@ -111,21 +111,23 @@ timeAll
 	This method was automatically generated, but may be modified."
 
 	^timeAll! !
-!ProfilerListItem categoriesFor: #convertTally:time:!converting!public! !
-!ProfilerListItem categoriesFor: #incrementTallyActive!operations!public! !
-!ProfilerListItem categoriesFor: #incrementTallyAll!operations!public! !
-!ProfilerListItem categoriesFor: #incrementTimeActiveBy:!operations!public! !
-!ProfilerListItem categoriesFor: #incrementTimeAllBy:!operations!public! !
-!ProfilerListItem categoriesFor: #isAbove:!public!testing! !
-!ProfilerListItem categoriesFor: #object!accessing!public! !
-!ProfilerListItem categoriesFor: #object:!accessing!public! !
-!ProfilerListItem categoriesFor: #profilerIconIndex!accessing!public! !
-!ProfilerListItem categoriesFor: #reportOn:!public!reporting! !
-!ProfilerListItem categoriesFor: #setObject:!initializing!public! !
-!ProfilerListItem categoriesFor: #tallyActive!accessing!public! !
-!ProfilerListItem categoriesFor: #tallyAll!accessing!public! !
-!ProfilerListItem categoriesFor: #timeActive!accessing!public! !
-!ProfilerListItem categoriesFor: #timeAll!accessing!public! !
+!ProfilerListItem categoriesForMethods!
+convertTally:time:!converting!public! !
+incrementTallyActive!operations!public! !
+incrementTallyAll!operations!public! !
+incrementTimeActiveBy:!operations!public! !
+incrementTimeAllBy:!operations!public! !
+isAbove:!public!testing! !
+object!accessing!public! !
+object:!accessing!public! !
+profilerIconIndex!accessing!public! !
+reportOn:!public!reporting! !
+setObject:!initializing!public! !
+tallyActive!accessing!public! !
+tallyAll!accessing!public! !
+timeActive!accessing!public! !
+timeAll!accessing!public! !
+!
 
 !ProfilerListItem class methodsFor!
 
@@ -138,6 +140,8 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Profiler icon! !
-!ProfilerListItem class categoriesFor: #for:!instance creation!public! !
-!ProfilerListItem class categoriesFor: #icon!constants!public! !
+!ProfilerListItem class categoriesForMethods!
+for:!instance creation!public! !
+icon!constants!public! !
+!
 

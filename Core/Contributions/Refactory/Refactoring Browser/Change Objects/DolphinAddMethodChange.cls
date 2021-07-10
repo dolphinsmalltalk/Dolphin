@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AddMethodChange subclass: #DolphinAddMethodChange
 	instanceVariableNames: 'packageName compilationFlags method'
@@ -67,19 +67,21 @@ rememberCurrentPackage
 
 source
 	^source! !
-!DolphinAddMethodChange categoriesFor: #categories!accessing!public! !
-!DolphinAddMethodChange categoriesFor: #changeString!printing!public! !
-!DolphinAddMethodChange categoriesFor: #class:protocol:source:!initialize/release!public! !
-!DolphinAddMethodChange categoriesFor: #class:source:!initialize/release!public! !
-!DolphinAddMethodChange categoriesFor: #compilationFlags!accessing!public! !
-!DolphinAddMethodChange categoriesFor: #compilationFlags:!accessing!public! !
-!DolphinAddMethodChange categoriesFor: #currentProtocols!converting!public! !
-!DolphinAddMethodChange categoriesFor: #method!accessing!public! !
-!DolphinAddMethodChange categoriesFor: #package!accessing!public! !
-!DolphinAddMethodChange categoriesFor: #package:!accessing!public! !
-!DolphinAddMethodChange categoriesFor: #primitiveExecute!operations!private! !
-!DolphinAddMethodChange categoriesFor: #rememberCurrentPackage!accessing!private! !
-!DolphinAddMethodChange categoriesFor: #source!accessing!public! !
+!DolphinAddMethodChange categoriesForMethods!
+categories!accessing!public! !
+changeString!printing!public! !
+class:protocol:source:!initialize/release!public! !
+class:source:!initialize/release!public! !
+compilationFlags!accessing!public! !
+compilationFlags:!accessing!public! !
+currentProtocols!converting!public! !
+method!accessing!public! !
+package!accessing!public! !
+package:!accessing!public! !
+primitiveExecute!operations!private! !
+rememberCurrentPackage!accessing!private! !
+source!accessing!public! !
+!
 
 !DolphinAddMethodChange class methodsFor!
 
@@ -103,7 +105,9 @@ compile: aString in: aClass categories: aSequenceableCollection package: aPackag
 		ifTrue: [change protocols: (aSequenceableCollection collect: [:each | each asString])].
 	change package: aPackage.
 	^change! !
-!DolphinAddMethodChange class categoriesFor: #compile:in:!instance creation!public! !
-!DolphinAddMethodChange class categoriesFor: #compile:in:categories:!instance creation!public! !
-!DolphinAddMethodChange class categoriesFor: #compile:in:categories:package:!instance creation!public! !
+!DolphinAddMethodChange class categoriesForMethods!
+compile:in:!instance creation!public! !
+compile:in:categories:!instance creation!public! !
+compile:in:categories:package:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 EmbeddedField subclass: #StructureField
 	instanceVariableNames: ''
@@ -24,8 +24,10 @@ writeInto: anExternal value: anExternalStructure
 		from: offset+1
 		to: offset+self byteSize
 		startingAt: 1! !
-!StructureField categoriesFor: #readFrom:!indirect accessing!private! !
-!StructureField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!StructureField categoriesForMethods!
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !StructureField class methodsFor!
 
@@ -36,5 +38,7 @@ type: aClass
 	^self basicNew
 		initialize;
 		fieldClass: aClass! !
-!StructureField class categoriesFor: #type:!instance creation!public! !
+!StructureField class categoriesForMethods!
+type:!instance creation!public! !
+!
 

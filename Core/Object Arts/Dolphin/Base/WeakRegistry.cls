@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ObjectRegistry subclass: #WeakRegistry
 	instanceVariableNames: ''
@@ -33,7 +33,9 @@ removeAtIndex: anInteger
 	object := registry basicAt: anInteger.
 	registry basicAt: anInteger put: DeadObject current.
 	^object! !
-!WeakRegistry categoriesFor: #addAnsweringIndex:!adding!public! !
-!WeakRegistry categoriesFor: #initialize:!initializing!private! !
-!WeakRegistry categoriesFor: #removeAtIndex:!public!removing! !
+!WeakRegistry categoriesForMethods!
+addAnsweringIndex:!adding!public! !
+initialize:!initializing!private! !
+removeAtIndex:!public!removing! !
+!
 

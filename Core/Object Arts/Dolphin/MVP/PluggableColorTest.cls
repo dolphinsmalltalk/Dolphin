@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VirtualColorTest subclass: #PluggableColorTest
 	instanceVariableNames: ''
@@ -22,5 +22,7 @@ testWith
 	"Invoke the method directly so we don't need to install it."
 	pc2 := testMethod value: PluggableColor withArguments: {[Color black]}.
 	self assert: pc2 equals: Color black! !
-!PluggableColorTest categoriesFor: #testWith!public!unit tests! !
+!PluggableColorTest categoriesForMethods!
+testWith!public!unit tests! !
+!
 

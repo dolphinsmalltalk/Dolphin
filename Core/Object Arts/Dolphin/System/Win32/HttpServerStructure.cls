@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #HttpServerStructure
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ HttpServerStructure comment: ''!
 
 byteSize
 	^bytes class isIndirection ifTrue: [super byteSize] ifFalse: [bytes size]! !
-!HttpServerStructure categoriesFor: #byteSize!accessing!public! !
+!HttpServerStructure categoriesForMethods!
+byteSize!accessing!public! !
+!
 

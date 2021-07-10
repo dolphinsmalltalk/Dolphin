@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassSelectorTest subclass: #ClassListSelectorTest
 	instanceVariableNames: ''
@@ -143,14 +143,16 @@ testAddRemoveListItems
 
 treeModel
 	^presenter selectableItems treeModel! !
-!ClassListSelectorTest categoriesFor: #assertContains:!helpers!private! !
-!ClassListSelectorTest categoriesFor: #classToTest!helpers!private! !
-!ClassListSelectorTest categoriesFor: #denyContains:!helpers!private! !
-!ClassListSelectorTest categoriesFor: #initializePresenter!public!Running! !
-!ClassListSelectorTest categoriesFor: #listModel!accessing!private! !
-!ClassListSelectorTest categoriesFor: #listPresenter!public!unit tests! !
-!ClassListSelectorTest categoriesFor: #removalOfSelectionLeaves:!helpers!private! !
-!ClassListSelectorTest categoriesFor: #resetSelection!helpers!private! !
-!ClassListSelectorTest categoriesFor: #testAddRemoveListItems!public!unit tests! !
-!ClassListSelectorTest categoriesFor: #treeModel!accessing!private! !
+!ClassListSelectorTest categoriesForMethods!
+assertContains:!helpers!private! !
+classToTest!helpers!private! !
+denyContains:!helpers!private! !
+initializePresenter!public!Running! !
+listModel!accessing!private! !
+listPresenter!public!unit tests! !
+removalOfSelectionLeaves:!helpers!private! !
+resetSelection!helpers!private! !
+testAddRemoveListItems!public!unit tests! !
+treeModel!accessing!private! !
+!
 

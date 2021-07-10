@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractDocumentShell subclass: #DocumentShell
 	instanceVariableNames: ''
@@ -31,8 +31,10 @@ streamOut: aStream
 	self isText 
 		ifTrue: [aStream nextPutAll: data]
 		ifFalse: [data binaryStoreOn: aStream]! !
-!DocumentShell categoriesFor: #streamIn:!private!streaming! !
-!DocumentShell categoriesFor: #streamOut:!private!streaming! !
+!DocumentShell categoriesForMethods!
+streamIn:!private!streaming! !
+streamOut:!private!streaming! !
+!
 
 !DocumentShell class methodsFor!
 
@@ -41,5 +43,7 @@ defaultFileExtension
 	the receiver"
 
 	^''! !
-!DocumentShell class categoriesFor: #defaultFileExtension!constants!public! !
+!DocumentShell class categoriesForMethods!
+defaultFileExtension!constants!public! !
+!
 

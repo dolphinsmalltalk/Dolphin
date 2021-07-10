@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IXMLDOMCharacterData subclass: #IXMLDOMComment
 	instanceVariableNames: ''
@@ -20,5 +20,7 @@ printOn: aStream
 		on: Error do: [:e | aStream nextPut: $(; print: bytes; nextPut: $)]
 
 ! !
-!IXMLDOMComment categoriesFor: #printOn:!development!printing!public! !
+!IXMLDOMComment categoriesForMethods!
+printOn:!development!printing!public! !
+!
 

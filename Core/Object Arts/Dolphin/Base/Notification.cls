@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Exception subclass: #Notification
 	instanceVariableNames: ''
@@ -30,9 +30,11 @@ isResumable
 	Notifications are almost always resumable."
 
 	^true! !
-!Notification categoriesFor: #defaultAction!handling!public! !
-!Notification categoriesFor: #hresult!accessing!public! !
-!Notification categoriesFor: #isResumable!public!testing! !
+!Notification categoriesForMethods!
+defaultAction!handling!public! !
+hresult!accessing!public! !
+isResumable!public!testing! !
+!
 
 Notification methodProtocol: #Notification attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #messageText #messageText: #outer #pass #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
 
@@ -52,9 +54,11 @@ severityClass
 	"Answer an exception class describing the severity of the notification."
 
 	^Notification! !
-!Notification class categoriesFor: #deprecated!instance creation!public! !
-!Notification class categoriesFor: #mbIconId!parping!public! !
-!Notification class categoriesFor: #severityClass!constants!public! !
+!Notification class categoriesForMethods!
+deprecated!instance creation!public! !
+mbIconId!parping!public! !
+severityClass!constants!public! !
+!
 
 Notification class methodProtocol: #'Notification class' attributes: #(#ansi #readOnly) selectors: #(#, #allSubclasses #allSuperclasses #handles: #name #new #signal #signal: #subclasses #superclass)!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StTagNode subclass: #StPrimitiveNode
 	instanceVariableNames: 'primitiveIndex errorTemp'
@@ -29,12 +29,14 @@ primitiveIndex
 
 primitiveIndex: anInteger 
 	primitiveIndex := anInteger! !
-!StPrimitiveNode categoriesFor: #=!comparing!public! !
-!StPrimitiveNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StPrimitiveNode categoriesFor: #errorTemp!accessing!public! !
-!StPrimitiveNode categoriesFor: #errorTemp:!accessing!private! !
-!StPrimitiveNode categoriesFor: #primitiveIndex!accessing!public! !
-!StPrimitiveNode categoriesFor: #primitiveIndex:!accessing!private! !
+!StPrimitiveNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+errorTemp!accessing!public! !
+errorTemp:!accessing!private! !
+primitiveIndex!accessing!public! !
+primitiveIndex:!accessing!private! !
+!
 
 !StPrimitiveNode class methodsFor!
 
@@ -42,5 +44,7 @@ primitiveIndex: anInteger
 	^self new
 		primitiveIndex: anInteger;
 		yourself! !
-!StPrimitiveNode class categoriesFor: #primitiveIndex:!instance creation!public! !
+!StPrimitiveNode class categoriesForMethods!
+primitiveIndex:!instance creation!public! !
+!
 

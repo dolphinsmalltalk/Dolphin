@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #TextTileIcon
 	instanceVariableNames: 'text fontName tilecolor textcolor icon fontStyle flags _reserved8 _reserved9'
@@ -400,51 +400,53 @@ tilecolor
 	"Answer the tile background colour, or nil for transparent."
 
 	^tilecolor! !
-!TextTileIcon categoriesFor: #=!comparison!public! !
-!TextTileIcon categoriesFor: #actualFontName!accessing!private! !
-!TextTileIcon categoriesFor: #actualFontStyle!accessing!private! !
-!TextTileIcon categoriesFor: #actualTextcolor!accessing!private! !
-!TextTileIcon categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!TextTileIcon categoriesFor: #applyTransforms:rect:!drawing-bitmaps!private! !
-!TextTileIcon categoriesFor: #asAlphaBitmap:!converting!public! !
-!TextTileIcon categoriesFor: #asBitmap!converting!public! !
-!TextTileIcon categoriesFor: #asMenuBitmap!converting!public! !
-!TextTileIcon categoriesFor: #asParameter!converting!public! !
-!TextTileIcon categoriesFor: #basicFontStyle!accessing!private! !
-!TextTileIcon categoriesFor: #bitmapWithExtent:!converting!private! !
-!TextTileIcon categoriesFor: #defaultFontName!accessing!constants!public! !
-!TextTileIcon categoriesFor: #drawOn:!drawing-bitmaps!public! !
-!TextTileIcon categoriesFor: #drawOn:at:!drawing-bitmaps!public! !
-!TextTileIcon categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!TextTileIcon categoriesFor: #drawOnGraphics:at:extent:!drawing-bitmaps!public! !
-!TextTileIcon categoriesFor: #drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-bitmaps!public! !
-!TextTileIcon categoriesFor: #extent!accessing!public! !
-!TextTileIcon categoriesFor: #flags!accessing!private! !
-!TextTileIcon categoriesFor: #flags:!accessing!private! !
-!TextTileIcon categoriesFor: #fontName!accessing!public! !
-!TextTileIcon categoriesFor: #fontStyle!accessing!public! !
-!TextTileIcon categoriesFor: #fontStyle:!accessing!public! !
-!TextTileIcon categoriesFor: #freeDC!public! !
-!TextTileIcon categoriesFor: #hash!comparison!public! !
-!TextTileIcon categoriesFor: #hotspot!accessing!public! !
-!TextTileIcon categoriesFor: #icon!accessing!public! !
-!TextTileIcon categoriesFor: #imageIndex!image management!private! !
-!TextTileIcon categoriesFor: #imageManager!image management!private! !
-!TextTileIcon categoriesFor: #imageType!constants!public! !
-!TextTileIcon categoriesFor: #isRealized!public!testing! !
-!TextTileIcon categoriesFor: #largeIcon!converting!public! !
-!TextTileIcon categoriesFor: #printOn:!printing!public! !
-!TextTileIcon categoriesFor: #realize!public!realizing/unrealizing! !
-!TextTileIcon categoriesFor: #rotation!accessing!public! !
-!TextTileIcon categoriesFor: #rotation:!accessing!public! !
-!TextTileIcon categoriesFor: #setText:fontName:color:!initializing!private! !
-!TextTileIcon categoriesFor: #stbSaveOn:!binary filing!public! !
-!TextTileIcon categoriesFor: #storeOn:!printing!public! !
-!TextTileIcon categoriesFor: #stringFormat!drawing-bitmaps!private! !
-!TextTileIcon categoriesFor: #text!accessing!public! !
-!TextTileIcon categoriesFor: #textcolor!accessing!public! !
-!TextTileIcon categoriesFor: #textcolor:!accessing!public! !
-!TextTileIcon categoriesFor: #tilecolor!accessing!public! !
+!TextTileIcon categoriesForMethods!
+=!comparison!public! !
+actualFontName!accessing!private! !
+actualFontStyle!accessing!private! !
+actualTextcolor!accessing!private! !
+addToImageList:mask:!double dispatch!private! !
+applyTransforms:rect:!drawing-bitmaps!private! !
+asAlphaBitmap:!converting!public! !
+asBitmap!converting!public! !
+asMenuBitmap!converting!public! !
+asParameter!converting!public! !
+basicFontStyle!accessing!private! !
+bitmapWithExtent:!converting!private! !
+defaultFontName!accessing!constants!public! !
+drawOn:!drawing-bitmaps!public! !
+drawOn:at:!drawing-bitmaps!public! !
+drawOn:at:extent:!drawing-bitmaps!public! !
+drawOnGraphics:at:extent:!drawing-bitmaps!public! !
+drawOnGraphics:at:extent:from:extent:unit:attributes:!drawing-bitmaps!public! !
+extent!accessing!public! !
+flags!accessing!private! !
+flags:!accessing!private! !
+fontName!accessing!public! !
+fontStyle!accessing!public! !
+fontStyle:!accessing!public! !
+freeDC!public! !
+hash!comparison!public! !
+hotspot!accessing!public! !
+icon!accessing!public! !
+imageIndex!image management!private! !
+imageManager!image management!private! !
+imageType!constants!public! !
+isRealized!public!testing! !
+largeIcon!converting!public! !
+printOn:!printing!public! !
+realize!public!realizing/unrealizing! !
+rotation!accessing!public! !
+rotation:!accessing!public! !
+setText:fontName:color:!initializing!private! !
+stbSaveOn:!binary filing!public! !
+storeOn:!printing!public! !
+stringFormat!drawing-bitmaps!private! !
+text!accessing!public! !
+textcolor!accessing!public! !
+textcolor:!accessing!public! !
+tilecolor!accessing!public! !
+!
 
 !TextTileIcon class methodsFor!
 
@@ -499,13 +501,15 @@ text: labelString fontName: fontString color: aColor
 		setText: labelString
 		fontName: fontString
 		color: aColor! !
-!TextTileIcon class categoriesFor: #defaultExtent!constants!private! !
-!TextTileIcon class categoriesFor: #icon!public! !
-!TextTileIcon class categoriesFor: #new!instance creation!private! !
-!TextTileIcon class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!TextTileIcon class categoriesFor: #stbVersion!binary filing!public! !
-!TextTileIcon class categoriesFor: #text:!instance creation!public! !
-!TextTileIcon class categoriesFor: #text:color:!instance creation!public! !
-!TextTileIcon class categoriesFor: #text:fontName:!instance creation!public! !
-!TextTileIcon class categoriesFor: #text:fontName:color:!instance creation!public! !
+!TextTileIcon class categoriesForMethods!
+defaultExtent!constants!private! !
+icon!public! !
+new!instance creation!private! !
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!public! !
+text:!instance creation!public! !
+text:color:!instance creation!public! !
+text:fontName:!instance creation!public! !
+text:fontName:color:!instance creation!public! !
+!
 

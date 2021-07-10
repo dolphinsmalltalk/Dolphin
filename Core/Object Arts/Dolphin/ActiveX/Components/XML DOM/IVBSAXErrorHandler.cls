@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IVBSAXErrorHandler
 	instanceVariableNames: ''
@@ -119,14 +119,16 @@ isVBCollection
 	"Answer whether the receiver is a VB style collection."
 
 	^false! !
-!IVBSAXErrorHandler categoriesFor: #error:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
-!IVBSAXErrorHandler categoriesFor: #Error:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
-!IVBSAXErrorHandler categoriesFor: #fatalError:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
-!IVBSAXErrorHandler categoriesFor: #FatalError:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
-!IVBSAXErrorHandler categoriesFor: #ignorableWarning:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
-!IVBSAXErrorHandler categoriesFor: #IgnorableWarning:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
-!IVBSAXErrorHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IVBSAXErrorHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
+!IVBSAXErrorHandler categoriesForMethods!
+error:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
+Error:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
+fatalError:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
+FatalError:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
+ignorableWarning:strErrorMessage:nErrorCode:!**auto generated**!methods!public! !
+IgnorableWarning:strErrorMessage:nErrorCode:!**auto generated**!COM Interfaces-IVBSAXErrorHandler!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+!
 
 !IVBSAXErrorHandler class methodsFor!
 
@@ -142,5 +144,7 @@ defineFunctions
 		defineFunction: #IgnorableWarning:strErrorMessage:nErrorCode:
 			argumentTypes: 'IVBSAXLocator* bstr* sdword'
 ! !
-!IVBSAXErrorHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IVBSAXErrorHandler class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

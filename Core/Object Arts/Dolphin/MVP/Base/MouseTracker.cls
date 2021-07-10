@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CapturingInteractor subclass: #MouseTracker
 	instanceVariableNames: 'dragButton target startPoint startPointLocal origin hysteresis _unused10 trackPosition constrain'
@@ -276,42 +276,44 @@ trackPositionDelta: aPointDelta
 	a delta value from the origin"
 
 	trackPosition := self origin + aPointDelta! !
-!MouseTracker categoriesFor: #beHorizontalOnly!modes!public! !
-!MouseTracker categoriesFor: #beVerticalOnly!modes!public! !
-!MouseTracker categoriesFor: #cancelTracking!accessing!private! !
-!MouseTracker categoriesFor: #captureReleased!event handling!private! !
-!MouseTracker categoriesFor: #constrainPositionFromDelta:!helpers!private! !
-!MouseTracker categoriesFor: #dragButton!accessing!public! !
-!MouseTracker categoriesFor: #dragButton:!accessing!public! !
-!MouseTracker categoriesFor: #dragButtonUp:!drag & drop!private! !
-!MouseTracker categoriesFor: #hysteresis!accessing!private! !
-!MouseTracker categoriesFor: #hysteresis:!initializing!public! !
-!MouseTracker categoriesFor: #isHorizontalOnly!private!testing! !
-!MouseTracker categoriesFor: #isTracking!private!testing! !
-!MouseTracker categoriesFor: #isTracking:!private!testing! !
-!MouseTracker categoriesFor: #isVerticalOnly!private!testing! !
-!MouseTracker categoriesFor: #onKeyPressed:!event handling!public! !
-!MouseTracker categoriesFor: #onKeyReleased:!event handling!public! !
-!MouseTracker categoriesFor: #onKeyTransition:!event handling!private! !
-!MouseTracker categoriesFor: #onLeftButtonReleased:!event handling!public! !
-!MouseTracker categoriesFor: #onMouseHovering:!event handling!public! !
-!MouseTracker categoriesFor: #onMouseMoved:!event handling!public! !
-!MouseTracker categoriesFor: #onRightButtonReleased:!event handling!public! !
-!MouseTracker categoriesFor: #onSysKeyPressed:!event handling!public! !
-!MouseTracker categoriesFor: #onSysKeyReleased:!event handling!public! !
-!MouseTracker categoriesFor: #onSysKeyTransition:!helpers!private! !
-!MouseTracker categoriesFor: #origin!accessing!public! !
-!MouseTracker categoriesFor: #origin:!accessing!public! !
-!MouseTracker categoriesFor: #setPresenter:!accessing!private! !
-!MouseTracker categoriesFor: #simulateMouseMouse:!helpers!private! !
-!MouseTracker categoriesFor: #startPoint!accessing!private! !
-!MouseTracker categoriesFor: #startPoint:!accessing!private! !
-!MouseTracker categoriesFor: #startPointLocal!accessing!private! !
-!MouseTracker categoriesFor: #startTracking:!initializing!public! !
-!MouseTracker categoriesFor: #target!accessing!private! !
-!MouseTracker categoriesFor: #trackPosition!accessing!private! !
-!MouseTracker categoriesFor: #trackPosition:!accessing!private! !
-!MouseTracker categoriesFor: #trackPositionDelta:!accessing!private! !
+!MouseTracker categoriesForMethods!
+beHorizontalOnly!modes!public! !
+beVerticalOnly!modes!public! !
+cancelTracking!accessing!private! !
+captureReleased!event handling!private! !
+constrainPositionFromDelta:!helpers!private! !
+dragButton!accessing!public! !
+dragButton:!accessing!public! !
+dragButtonUp:!drag & drop!private! !
+hysteresis!accessing!private! !
+hysteresis:!initializing!public! !
+isHorizontalOnly!private!testing! !
+isTracking!private!testing! !
+isTracking:!private!testing! !
+isVerticalOnly!private!testing! !
+onKeyPressed:!event handling!public! !
+onKeyReleased:!event handling!public! !
+onKeyTransition:!event handling!private! !
+onLeftButtonReleased:!event handling!public! !
+onMouseHovering:!event handling!public! !
+onMouseMoved:!event handling!public! !
+onRightButtonReleased:!event handling!public! !
+onSysKeyPressed:!event handling!public! !
+onSysKeyReleased:!event handling!public! !
+onSysKeyTransition:!helpers!private! !
+origin!accessing!public! !
+origin:!accessing!public! !
+setPresenter:!accessing!private! !
+simulateMouseMouse:!helpers!private! !
+startPoint!accessing!private! !
+startPoint:!accessing!private! !
+startPointLocal!accessing!private! !
+startTracking:!initializing!public! !
+target!accessing!private! !
+trackPosition!accessing!private! !
+trackPosition:!accessing!private! !
+trackPositionDelta:!accessing!private! !
+!
 
 !MouseTracker class methodsFor!
 
@@ -333,7 +335,9 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!MouseTracker class categoriesFor: #defaultHysteresis!constants!public! !
-!MouseTracker class categoriesFor: #forPresenter:startingAt:!instance creation!public! !
-!MouseTracker class categoriesFor: #icon!constants!public! !
+!MouseTracker class categoriesForMethods!
+defaultHysteresis!constants!public! !
+forPresenter:startingAt:!instance creation!public! !
+icon!constants!public! !
+!
 

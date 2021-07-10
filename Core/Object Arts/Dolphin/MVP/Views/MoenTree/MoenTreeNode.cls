@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #MoenTreeNode
 	instanceVariableNames: 'object contour offset position parent child sibling clip extent flags'
@@ -258,45 +258,47 @@ visiblePreOrderDo: operation
 
 	operation value: self.
 	self visibleChildrenDo: [:each | each visiblePreOrderDo: operation]! !
-!MoenTreeNode categoriesFor: #buttonRectangle!accessing!private! !
-!MoenTreeNode categoriesFor: #buttonSize!constants!private! !
-!MoenTreeNode categoriesFor: #calculateClipRect!geometry!private! !
-!MoenTreeNode categoriesFor: #child!accessing!private! !
-!MoenTreeNode categoriesFor: #child:!accessing!private! !
-!MoenTreeNode categoriesFor: #children!enumerating!private! !
-!MoenTreeNode categoriesFor: #childrenDo:!enumerating!private! !
-!MoenTreeNode categoriesFor: #clip!accessing!private! !
-!MoenTreeNode categoriesFor: #clip:!accessing!private! !
-!MoenTreeNode categoriesFor: #contour!accessing!private! !
-!MoenTreeNode categoriesFor: #contour:!accessing!private! !
-!MoenTreeNode categoriesFor: #endOrderDo:!enumerating!private! !
-!MoenTreeNode categoriesFor: #extent!accessing!private! !
-!MoenTreeNode categoriesFor: #extent:!accessing!private! !
-!MoenTreeNode categoriesFor: #hasExpanded!private!testing! !
-!MoenTreeNode categoriesFor: #hasExpanded:!accessing!private! !
-!MoenTreeNode categoriesFor: #hasVisibleChildren!private!testing! !
-!MoenTreeNode categoriesFor: #isChild:!accessing!private! !
-!MoenTreeNode categoriesFor: #isExpanded!private!testing! !
-!MoenTreeNode categoriesFor: #isExpanded:!accessing!private! !
-!MoenTreeNode categoriesFor: #isVisible!private!testing! !
-!MoenTreeNode categoriesFor: #keyAtEqualValue:ifAbsent:!accessing!private! !
-!MoenTreeNode categoriesFor: #keyAtValue:ifAbsent:!accessing!private! !
-!MoenTreeNode categoriesFor: #keysAndValuesDo:!enumerating!private! !
-!MoenTreeNode categoriesFor: #object!accessing!private! !
-!MoenTreeNode categoriesFor: #offset!accessing!private! !
-!MoenTreeNode categoriesFor: #offset:!accessing!private! !
-!MoenTreeNode categoriesFor: #parent!accessing!private! !
-!MoenTreeNode categoriesFor: #parent:!accessing!private! !
-!MoenTreeNode categoriesFor: #position!accessing!private! !
-!MoenTreeNode categoriesFor: #position:!accessing!private! !
-!MoenTreeNode categoriesFor: #preOrderDo:!enumerating!private! !
-!MoenTreeNode categoriesFor: #printOn:!development!printing!public! !
-!MoenTreeNode categoriesFor: #rectangle!accessing!private! !
-!MoenTreeNode categoriesFor: #setObject:parent:!initializing!private! !
-!MoenTreeNode categoriesFor: #sibling!accessing!private! !
-!MoenTreeNode categoriesFor: #sibling:!accessing!private! !
-!MoenTreeNode categoriesFor: #visibleChildrenDo:!enumerating!private! !
-!MoenTreeNode categoriesFor: #visiblePreOrderDo:!enumerating!private! !
+!MoenTreeNode categoriesForMethods!
+buttonRectangle!accessing!private! !
+buttonSize!constants!private! !
+calculateClipRect!geometry!private! !
+child!accessing!private! !
+child:!accessing!private! !
+children!enumerating!private! !
+childrenDo:!enumerating!private! !
+clip!accessing!private! !
+clip:!accessing!private! !
+contour!accessing!private! !
+contour:!accessing!private! !
+endOrderDo:!enumerating!private! !
+extent!accessing!private! !
+extent:!accessing!private! !
+hasExpanded!private!testing! !
+hasExpanded:!accessing!private! !
+hasVisibleChildren!private!testing! !
+isChild:!accessing!private! !
+isExpanded!private!testing! !
+isExpanded:!accessing!private! !
+isVisible!private!testing! !
+keyAtEqualValue:ifAbsent:!accessing!private! !
+keyAtValue:ifAbsent:!accessing!private! !
+keysAndValuesDo:!enumerating!private! !
+object!accessing!private! !
+offset!accessing!private! !
+offset:!accessing!private! !
+parent!accessing!private! !
+parent:!accessing!private! !
+position!accessing!private! !
+position:!accessing!private! !
+preOrderDo:!enumerating!private! !
+printOn:!development!printing!public! !
+rectangle!accessing!private! !
+setObject:parent:!initializing!private! !
+sibling!accessing!private! !
+sibling:!accessing!private! !
+visibleChildrenDo:!enumerating!private! !
+visiblePreOrderDo:!enumerating!private! !
+!
 
 !MoenTreeNode class methodsFor!
 
@@ -315,7 +317,9 @@ new
 
 object: anObject parent: aMoenTreeNode
 	^self basicNew setObject: anObject parent: aMoenTreeNode! !
-!MoenTreeNode class categoriesFor: #initialize!development!private! !
-!MoenTreeNode class categoriesFor: #new!instance creation!public! !
-!MoenTreeNode class categoriesFor: #object:parent:!instance creation!public! !
+!MoenTreeNode class categoriesForMethods!
+initialize!development!private! !
+new!instance creation!public! !
+object:parent:!instance creation!public! !
+!
 

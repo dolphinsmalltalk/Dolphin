@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IEnumXXXX subclass: #IEnumVARIANT
 	instanceVariableNames: ''
@@ -43,8 +43,10 @@ nextAvailable: anInteger
 	answer := elements collect: [:e | e value].
 	elements free.
 	^answer! !
-!IEnumVARIANT categoriesFor: #nextAvailable!accessing!public! !
-!IEnumVARIANT categoriesFor: #nextAvailable:!accessing!public! !
+!IEnumVARIANT categoriesForMethods!
+nextAvailable!accessing!public! !
+nextAvailable:!accessing!public! !
+!
 
 !IEnumVARIANT class methodsFor!
 
@@ -59,6 +61,8 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^VARIANT! !
-!IEnumVARIANT class categoriesFor: #defineFunctions!initializing!public! !
-!IEnumVARIANT class categoriesFor: #elementClass!constants!public! !
+!IEnumVARIANT class categoriesForMethods!
+defineFunctions!initializing!public! !
+elementClass!constants!public! !
+!
 

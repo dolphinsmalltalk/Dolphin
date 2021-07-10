@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #ClosedCommandDescriptionTest
 	instanceVariableNames: 'dialog'
@@ -30,8 +30,10 @@ testReceiver
 
 	self assert: dialog view combinedAcceleratorTable commands anyOne receiver
 		identicalTo: dialog model subject! !
-!ClosedCommandDescriptionTest categoriesFor: #setUp!public!unit tests! !
-!ClosedCommandDescriptionTest categoriesFor: #tearDown!public!unit tests! !
-!ClosedCommandDescriptionTest categoriesFor: #testArgument!public!unit tests! !
-!ClosedCommandDescriptionTest categoriesFor: #testReceiver!public!unit tests! !
+!ClosedCommandDescriptionTest categoriesForMethods!
+setUp!public!unit tests! !
+tearDown!public!unit tests! !
+testArgument!public!unit tests! !
+testReceiver!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StValueToken subclass: #PatternBlockToken
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ PatternBlockToken comment: ''!
 
 isPatternBlock
 	^true! !
-!PatternBlockToken categoriesFor: #isPatternBlock!public!testing! !
+!PatternBlockToken categoriesForMethods!
+isPatternBlock!public!testing! !
+!
 

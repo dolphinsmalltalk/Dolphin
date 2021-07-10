@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BrowserEnvironmentWrapper subclass: #CategoryEnvironment
 	instanceVariableNames: 'categories'
@@ -62,22 +62,26 @@ storeOn: aStream
 	aStream nextPutAll: ' categories: '.
 	categories asArray storeOn: aStream.
 	aStream nextPut: $)! !
-!CategoryEnvironment categoriesFor: #categories!accessing!public! !
-!CategoryEnvironment categoriesFor: #categories:!initialize/release!public! !
-!CategoryEnvironment categoriesFor: #classNames!accessing/classes!public! !
-!CategoryEnvironment categoriesFor: #defaultLabel!constants!private! !
-!CategoryEnvironment categoriesFor: #definesClass:!public!testing! !
-!CategoryEnvironment categoriesFor: #includesCategory:!public!testing! !
-!CategoryEnvironment categoriesFor: #includesClass:!public!testing! !
-!CategoryEnvironment categoriesFor: #initialize!initialize/release!public! !
-!CategoryEnvironment categoriesFor: #isEmpty!public!testing! !
-!CategoryEnvironment categoriesFor: #postCopy!copying!public! !
-!CategoryEnvironment categoriesFor: #storeOn:!printing!public! !
+!CategoryEnvironment categoriesForMethods!
+categories!accessing!public! !
+categories:!initialize/release!public! !
+classNames!accessing/classes!public! !
+defaultLabel!constants!private! !
+definesClass:!public!testing! !
+includesCategory:!public!testing! !
+includesClass:!public!testing! !
+initialize!initialize/release!public! !
+isEmpty!public!testing! !
+postCopy!copying!public! !
+storeOn:!printing!public! !
+!
 
 !CategoryEnvironment class methodsFor!
 
 onEnvironment: anEnvironment categories: aCollection
 	^(self onEnvironment: anEnvironment)
 		categories: aCollection; yourself! !
-!CategoryEnvironment class categoriesFor: #onEnvironment:categories:!instance creation!public! !
+!CategoryEnvironment class categoriesForMethods!
+onEnvironment:categories:!instance creation!public! !
+!
 

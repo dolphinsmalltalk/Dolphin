@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #ShlwapiLibrary
 	instanceVariableNames: ''
@@ -134,17 +134,19 @@ pathSetDlgItemPath: hDlg id: id pszPath: pszPath
 
 	<stdcall: void PathSetDlgItemPathW handle sdword lpwstr>
 	^self invalidCall: _failureCode! !
-!ShlwapiLibrary categoriesFor: #pathCombine:lpszDir:lpszFile:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathCommonPrefix:pszFile2:achPath:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathCompactPath:pszPath:dx:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathCompactPathEx:pszSrc:cchMax:dwFlags:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathFindNextComponent:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathIsRelative:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathIsRoot:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathIsURL:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathParseIconLocation:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathRelativePathTo:pszFrom:dwAttrFrom:pszTo:dwAttrTo:!**auto generated**!public! !
-!ShlwapiLibrary categoriesFor: #pathSetDlgItemPath:id:pszPath:!**auto generated**!public! !
+!ShlwapiLibrary categoriesForMethods!
+pathCombine:lpszDir:lpszFile:!**auto generated**!public! !
+pathCommonPrefix:pszFile2:achPath:!**auto generated**!public! !
+pathCompactPath:pszPath:dx:!**auto generated**!public! !
+pathCompactPathEx:pszSrc:cchMax:dwFlags:!**auto generated**!public! !
+pathFindNextComponent:!**auto generated**!public! !
+pathIsRelative:!**auto generated**!public! !
+pathIsRoot:!**auto generated**!public! !
+pathIsURL:!**auto generated**!public! !
+pathParseIconLocation:!**auto generated**!public! !
+pathRelativePathTo:pszFrom:dwAttrFrom:pszTo:dwAttrTo:!**auto generated**!public! !
+pathSetDlgItemPath:id:pszPath:!**auto generated**!public! !
+!
 
 !ShlwapiLibrary class methodsFor!
 
@@ -152,5 +154,7 @@ fileName
 	"Answer the host system file name for the library"
 
 	^'SHLWAPI'! !
-!ShlwapiLibrary class categoriesFor: #fileName!constants!public! !
+!ShlwapiLibrary class categoriesForMethods!
+fileName!constants!public! !
+!
 

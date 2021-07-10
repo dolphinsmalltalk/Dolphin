@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SharedIdentityDictionary variableSubclass: #EventsCollection
 	instanceVariableNames: ''
@@ -87,14 +87,16 @@ triggerEvent: aSymbol withArguments: anArray
 	with the specified arguments. Answer the result of the last evaluation, or nil if none."
 
 	^(self lookup: aSymbol) ifNotNil: [:msgs | msgs valueWithArguments: anArray]! !
-!EventsCollection categoriesFor: #addEvent:action:!adding!private! !
-!EventsCollection categoriesFor: #asMinimumRepresentation!converting!private! !
-!EventsCollection categoriesFor: #hasActionsForEvent:!private!testing! !
-!EventsCollection categoriesFor: #removeActionsForEvent:!adding!private! !
-!EventsCollection categoriesFor: #removeEventsTriggeredFor:!private!removing! !
-!EventsCollection categoriesFor: #shrink!private!removing! !
-!EventsCollection categoriesFor: #triggerEvent:!debugger-step through!private!triggering! !
-!EventsCollection categoriesFor: #triggerEvent:with:!debugger-step through!private!triggering! !
-!EventsCollection categoriesFor: #triggerEvent:with:with:!debugger-step through!private!triggering! !
-!EventsCollection categoriesFor: #triggerEvent:withArguments:!debugger-step through!private!triggering! !
+!EventsCollection categoriesForMethods!
+addEvent:action:!adding!private! !
+asMinimumRepresentation!converting!private! !
+hasActionsForEvent:!private!testing! !
+removeActionsForEvent:!adding!private! !
+removeEventsTriggeredFor:!private!removing! !
+shrink!private!removing! !
+triggerEvent:!debugger-step through!private!triggering! !
+triggerEvent:with:!debugger-step through!private!triggering! !
+triggerEvent:with:with:!debugger-step through!private!triggering! !
+triggerEvent:withArguments:!debugger-step through!private!triggering! !
+!
 

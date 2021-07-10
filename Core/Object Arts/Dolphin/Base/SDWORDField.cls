@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScalarField subclass: #SDWORDField
 	instanceVariableNames: ''
@@ -26,9 +26,11 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes sdwordAtOffset: offset put: anInteger! !
-!SDWORDField categoriesFor: #accessorMessage!initializing!private! !
-!SDWORDField categoriesFor: #readFrom:!indirect accessing!private! !
-!SDWORDField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!SDWORDField categoriesForMethods!
+accessorMessage!initializing!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !SDWORDField class methodsFor!
 
@@ -37,5 +39,7 @@ byteSize
 	An SDWORD is always 4 bytes."
 
 	^4! !
-!SDWORDField class categoriesFor: #byteSize!constants!private! !
+!SDWORDField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

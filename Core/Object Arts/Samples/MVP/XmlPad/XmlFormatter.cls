@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 XmlDomVisitor subclass: #XmlFormatter
 	instanceVariableNames: 'stream indent line newlineNeeded'
@@ -194,23 +194,25 @@ visitProcessingInstruction: anIXMLDOMProcessingInstruction
 				nextPutAll: data].
 	stream nextPutAll: '?>'.
 	indent = 0 ifTrue: [newlineNeeded := true]! !
-!XmlFormatter categoriesFor: #format:!operations!public! !
-!XmlFormatter categoriesFor: #indent:around:!formatting!private! !
-!XmlFormatter categoriesFor: #indentAround:!formatting!private! !
-!XmlFormatter categoriesFor: #initialize!operations!public! !
-!XmlFormatter categoriesFor: #newline!public! !
-!XmlFormatter categoriesFor: #newlineIfNeeded!private!visiting! !
-!XmlFormatter categoriesFor: #startTag:!private! !
-!XmlFormatter categoriesFor: #visitAttribute:!public! !
-!XmlFormatter categoriesFor: #visitAttributes:!private! !
-!XmlFormatter categoriesFor: #visitCharacterData:!private! !
-!XmlFormatter categoriesFor: #visitComment:!public! !
-!XmlFormatter categoriesFor: #visitDocument:!public!visiting! !
-!XmlFormatter categoriesFor: #visitDocumentType:!public!visiting! !
-!XmlFormatter categoriesFor: #visitElement:!public! !
-!XmlFormatter categoriesFor: #visitEntity:!public!visiting! !
-!XmlFormatter categoriesFor: #visitEntityReference:!public!visiting! !
-!XmlFormatter categoriesFor: #visitNodeChildren:!private!visiting! !
-!XmlFormatter categoriesFor: #visitNotation:!public!visiting! !
-!XmlFormatter categoriesFor: #visitProcessingInstruction:!public! !
+!XmlFormatter categoriesForMethods!
+format:!operations!public! !
+indent:around:!formatting!private! !
+indentAround:!formatting!private! !
+initialize!operations!public! !
+newline!public! !
+newlineIfNeeded!private!visiting! !
+startTag:!private! !
+visitAttribute:!public! !
+visitAttributes:!private! !
+visitCharacterData:!private! !
+visitComment:!public! !
+visitDocument:!public!visiting! !
+visitDocumentType:!public!visiting! !
+visitElement:!public! !
+visitEntity:!public!visiting! !
+visitEntityReference:!public!visiting! !
+visitNodeChildren:!private!visiting! !
+visitNotation:!public!visiting! !
+visitProcessingInstruction:!public! !
+!
 

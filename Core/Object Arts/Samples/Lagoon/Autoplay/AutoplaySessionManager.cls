@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RuntimeSessionManager subclass: #AutoplaySessionManager
 	instanceVariableNames: ''
@@ -35,8 +35,10 @@ main
 			y := Number readFrom: stream.
 			autoplay pageExtent: x@y]].
 	autoplay show! !
-!AutoplaySessionManager categoriesFor: #allowDuplicate!operations-startup!public! !
-!AutoplaySessionManager categoriesFor: #main!operations!public! !
+!AutoplaySessionManager categoriesForMethods!
+allowDuplicate!operations-startup!public! !
+main!operations!public! !
+!
 
 !AutoplaySessionManager class methodsFor!
 
@@ -44,5 +46,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^Autoplay! !
-!AutoplaySessionManager class categoriesFor: #mainShellClass!constants!public! !
+!AutoplaySessionManager class categoriesForMethods!
+mainShellClass!constants!public! !
+!
 

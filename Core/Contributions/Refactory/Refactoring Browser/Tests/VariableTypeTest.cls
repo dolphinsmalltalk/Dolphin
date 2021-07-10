@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringBrowserTest subclass: #VariableTypeTest
 	instanceVariableNames: ''
@@ -54,8 +54,10 @@ testParseTreeTypes
 				model: model.
 	self assert: types size equals: 1.
 	self assert: (types includes: (model classFor: self class))! !
-!VariableTypeTest categoriesFor: #testBasicLintRuleTypes!public!unit tests! !
-!VariableTypeTest categoriesFor: #testCompositeLintRuleTypes!public!tests! !
-!VariableTypeTest categoriesFor: #testLintRuleTypes!public!tests! !
-!VariableTypeTest categoriesFor: #testParseTreeTypes!public!tests! !
+!VariableTypeTest categoriesForMethods!
+testBasicLintRuleTypes!public!unit tests! !
+testCompositeLintRuleTypes!public!tests! !
+testLintRuleTypes!public!tests! !
+testParseTreeTypes!public!tests! !
+!
 

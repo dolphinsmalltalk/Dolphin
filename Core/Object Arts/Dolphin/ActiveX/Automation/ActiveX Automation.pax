@@ -582,7 +582,9 @@ typeName
 	There is an appropriate built-in type which we can substitute."
 
 	^#bool! !
-!BOOL class categoriesFor: #typeName!constants!private! !
+!BOOL class categoriesForMethods!
+typeName!constants!private! !
+!
 
 !Boolean methodsFor!
 
@@ -590,7 +592,9 @@ asVariant
 	"Answer the <VARIANT> representation of the receiver."
 
 	^VARIANT fromBoolean: self! !
-!Boolean categoriesFor: #asVariant!converting!public! !
+!Boolean categoriesForMethods!
+asVariant!converting!public! !
+!
 
 !BOOLEAN class methodsFor!
 
@@ -599,7 +603,9 @@ typeName
 	There is an appropriate built-in type which we can substitute."
 
 	^#bool! !
-!BOOLEAN class categoriesFor: #typeName!constants!private! !
+!BOOLEAN class categoriesForMethods!
+typeName!constants!private! !
+!
 
 !BSTR methodsFor!
 
@@ -615,8 +621,10 @@ asVariant
 	This will also work fine for Utf16String."
 
 	^VARIANT fromString: self! !
-!BSTR categoriesFor: #asSAFEARRAY!converting!public! !
-!BSTR categoriesFor: #asVariant!converting!public! !
+!BSTR categoriesForMethods!
+asSAFEARRAY!converting!public! !
+asVariant!converting!public! !
+!
 
 !BSTR class methodsFor!
 
@@ -640,10 +648,12 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_BSTR! !
-!BSTR class categoriesFor: #fromObject:!instance creation!public! !
-!BSTR class categoriesFor: #newSAFEARRAY:!double dispatch!public! !
-!BSTR class categoriesFor: #typeName!constants!private! !
-!BSTR class categoriesFor: #vt!constants!public! !
+!BSTR class categoriesForMethods!
+fromObject:!instance creation!public! !
+newSAFEARRAY:!double dispatch!public! !
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !BYTE class methodsFor!
 
@@ -658,8 +668,10 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_UI1! !
-!BYTE class categoriesFor: #typeName!constants!private! !
-!BYTE class categoriesFor: #vt!constants!public! !
+!BYTE class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !ByteArray methodsFor!
 
@@ -669,7 +681,9 @@ asSAFEARRAY
 	of the receiver's elements, assuming that such a representation is possible."
 
 	^SAFEARRAY withAll: self elementClass: BYTE! !
-!ByteArray categoriesFor: #asSAFEARRAY!converting!public! !
+!ByteArray categoriesForMethods!
+asSAFEARRAY!converting!public! !
+!
 
 !ByteArray class methodsFor!
 
@@ -677,7 +691,9 @@ typeName
 	"Private - Answer the Dolphin external type name associated with the receiver."
 
 	^self name! !
-!ByteArray class categoriesFor: #typeName!constants!private! !
+!ByteArray class categoriesForMethods!
+typeName!constants!private! !
+!
 
 !Character methodsFor!
 
@@ -687,7 +703,9 @@ asVariant
 	^VARIANT new
 		sword: self codePoint;
 		yourself! !
-!Character categoriesFor: #asVariant!converting!public! !
+!Character categoriesForMethods!
+asVariant!converting!public! !
+!
 
 !CLSID class methodsFor!
 
@@ -703,8 +721,10 @@ vt
 
 	^AXAutomationConstants.VT_CLSID
 ! !
-!CLSID class categoriesFor: #newSAFEARRAY:!double dispatch!public! !
-!CLSID class categoriesFor: #vt!constants!public! !
+!CLSID class categoriesForMethods!
+newSAFEARRAY:!double dispatch!public! !
+vt!constants!public! !
+!
 
 !Collection methodsFor!
 
@@ -719,8 +739,10 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a SAFEARRAY of VARIANT)."
 
 	^VARIANT fromCollection: self! !
-!Collection categoriesFor: #asSAFEARRAY!converting!public! !
-!Collection categoriesFor: #asVariant!converting!public! !
+!Collection categoriesForMethods!
+asSAFEARRAY!converting!public! !
+asVariant!converting!public! !
+!
 
 !COMInterface methodsFor!
 
@@ -750,10 +772,12 @@ typeInfoIfNone: exceptionHandler
 	Not all custom interfaces have an associated type library, but many do."
 
 	^(self coclassTypeInfoIfNone: [^exceptionHandler value]) defaultInterface! !
-!COMInterface categoriesFor: #coclassTypeInfo!accessing!public! !
-!COMInterface categoriesFor: #coclassTypeInfoIfNone:!accessing!public! !
-!COMInterface categoriesFor: #typeInfo!accessing!public! !
-!COMInterface categoriesFor: #typeInfoIfNone:!accessing!public! !
+!COMInterface categoriesForMethods!
+coclassTypeInfo!accessing!public! !
+coclassTypeInfoIfNone:!accessing!public! !
+typeInfo!accessing!public! !
+typeInfoIfNone:!accessing!public! !
+!
 
 !COMInterface class methodsFor!
 
@@ -808,14 +832,16 @@ typeLib
 	or nil if the receiver does not have a type library."
 
 	^typeLib! !
-!COMInterface class categoriesFor: #coclassTypeInfo!accessing!public! !
-!COMInterface class categoriesFor: #coclassTypeInfoIfNone:!accessing!public! !
-!COMInterface class categoriesFor: #errorNoTypeInfo!exceptions!private! !
-!COMInterface class categoriesFor: #fromObject:!instance creation!public! !
-!COMInterface class categoriesFor: #newSAFEARRAY:!double dispatch!public! !
-!COMInterface class categoriesFor: #registerDispinterface:!adding!public! !
-!COMInterface class categoriesFor: #typeInfoIfNone:!accessing!public! !
-!COMInterface class categoriesFor: #typeLib!accessing!public! !
+!COMInterface class categoriesForMethods!
+coclassTypeInfo!accessing!public! !
+coclassTypeInfoIfNone:!accessing!public! !
+errorNoTypeInfo!exceptions!private! !
+fromObject:!instance creation!public! !
+newSAFEARRAY:!double dispatch!public! !
+registerDispinterface:!adding!public! !
+typeInfoIfNone:!accessing!public! !
+typeLib!accessing!public! !
+!
 
 !Date methodsFor!
 
@@ -828,8 +854,10 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a VT_DATE)."
 
 	^self asSYSTEMTIME asVariant! !
-!Date categoriesFor: #asFloat!converting!public! !
-!Date categoriesFor: #asVariant!converting!public! !
+!Date categoriesForMethods!
+asFloat!converting!public! !
+asVariant!converting!public! !
+!
 
 !DateAndTime methodsFor!
 
@@ -842,8 +870,10 @@ asVariant
 	"Answer the <VARIANT> representation of the receiver (a VT_DATE)."
 
 	^self asSYSTEMTIME asVariant! !
-!DateAndTime categoriesFor: #asFloat!converting!public! !
-!DateAndTime categoriesFor: #asVariant!converting!public! !
+!DateAndTime categoriesForMethods!
+asFloat!converting!public! !
+asVariant!converting!public! !
+!
 
 !DOUBLE class methodsFor!
 
@@ -858,8 +888,10 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_R8! !
-!DOUBLE class categoriesFor: #typeName!constants!private! !
-!DOUBLE class categoriesFor: #vt!constants!public! !
+!DOUBLE class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !DWORD class methodsFor!
 
@@ -874,8 +906,10 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_UI4! !
-!DWORD class categoriesFor: #typeName!constants!private! !
-!DWORD class categoriesFor: #vt!constants!public! !
+!DWORD class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !ExternalAddress class methodsFor!
 
@@ -890,8 +924,10 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_PTR! !
-!ExternalAddress class categoriesFor: #typeName!constants!private! !
-!ExternalAddress class categoriesFor: #vt!constants!public! !
+!ExternalAddress class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !ExternalArray methodsFor!
 
@@ -904,8 +940,10 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a VT_ARRAY|VT_XX)."
 
 	^VARIANT fromCollection: self! !
-!ExternalArray categoriesFor: #asSAFEARRAY!converting!public! !
-!ExternalArray categoriesFor: #asVariant!converting!public! !
+!ExternalArray categoriesForMethods!
+asSAFEARRAY!converting!public! !
+asVariant!converting!public! !
+!
 
 !ExternalArray class methodsFor!
 
@@ -914,7 +952,9 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_CARRAY! !
-!ExternalArray class categoriesFor: #vt!constants!public! !
+!ExternalArray class categoriesForMethods!
+vt!constants!public! !
+!
 
 !ExternalHandle class methodsFor!
 
@@ -923,7 +963,9 @@ typeName
 	There is an appropriate built-in type which we can substitute."
 
 	^#handle! !
-!ExternalHandle class categoriesFor: #typeName!constants!private! !
+!ExternalHandle class categoriesForMethods!
+typeName!constants!private! !
+!
 
 !ExternalInteger class methodsFor!
 
@@ -937,8 +979,10 @@ vt
 	"Private - Answer the VARIANT type required to represent the receiver."
 
 	^self subclassResponsibility! !
-!ExternalInteger class categoriesFor: #typeName!constants!private! !
-!ExternalInteger class categoriesFor: #vt!constants!private! !
+!ExternalInteger class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!private! !
+!
 
 !ExternalScalar methodsFor!
 
@@ -948,7 +992,9 @@ asVariant
 	^(VARIANT new)
 		vt: (self vt bitOr: AXAutomationConstants.VT_BYREF);
 		reference: self! !
-!ExternalScalar categoriesFor: #asVariant!converting!public! !
+!ExternalScalar categoriesForMethods!
+asVariant!converting!public! !
+!
 
 !ExternalStructure methodsFor!
 
@@ -969,9 +1015,11 @@ vt
 	"Private - Answer the VARIANT type required to represent the receiver."
 
 	^self class vt! !
-!ExternalStructure categoriesFor: #asVariant!converting!public! !
-!ExternalStructure categoriesFor: #recordInfo!accessing!public! !
-!ExternalStructure categoriesFor: #vt!constants!private! !
+!ExternalStructure categoriesForMethods!
+asVariant!converting!public! !
+recordInfo!accessing!public! !
+vt!constants!private! !
+!
 
 !ExternalStructure class methodsFor!
 
@@ -1375,40 +1423,42 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_RECORD! !
-!ExternalStructure class categoriesFor: #classForGUID:ifNone:!enquiries!private! !
-!ExternalStructure class categoriesFor: #clearGuid!accessing!private! !
-!ExternalStructure class categoriesFor: #finalRelease!public!realizing/unrealizing! !
-!ExternalStructure class categoriesFor: #fromAddress:recordInfo:owner:!instance creation!public! !
-!ExternalStructure class categoriesFor: #fromObject:!instance creation!public! !
-!ExternalStructure class categoriesFor: #GetField:szFieldName:pvarField:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #GetFieldNames:rgBstrNames:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #GetGuid:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #GetName:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #GetSize:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #GetTypeInfo:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #initializeRegister!initializing!private! !
-!ExternalStructure class categoriesFor: #IsMatchingType:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #newSAFEARRAY:!double dispatch!public! !
-!ExternalStructure class categoriesFor: #pointerFieldType!constants!private! !
-!ExternalStructure class categoriesFor: #PutField:pvData:szFieldName:pvarField:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #PutFieldNoCopy:pvData:szFieldName:pvarField:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #queryInterface:!accessing-interfaces!public! !
-!ExternalStructure class categoriesFor: #queryInterface:ifNone:!accessing!accessing-interfaces!public! !
-!ExternalStructure class categoriesFor: #RecordClear:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #RecordCopy:pvNew:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #RecordCreate!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #RecordCreateCopy:ppvDest:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #RecordDestroy:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #recordInfo!accessing!public! !
-!ExternalStructure class categoriesFor: #RecordInit:!COM Interfaces-IRecordInfo!public! !
-!ExternalStructure class categoriesFor: #registerSubclasses!initializing!public! !
-!ExternalStructure class categoriesFor: #supportedInterfaces!constants!private! !
-!ExternalStructure class categoriesFor: #typeInfo!accessing!public! !
-!ExternalStructure class categoriesFor: #typeInfoIfNone:!accessing!public! !
-!ExternalStructure class categoriesFor: #typeLib!accessing!public! !
-!ExternalStructure class categoriesFor: #typeName!constants!private! !
-!ExternalStructure class categoriesFor: #vt!constants!public! !
+!ExternalStructure class categoriesForMethods!
+classForGUID:ifNone:!enquiries!private! !
+clearGuid!accessing!private! !
+finalRelease!public!realizing/unrealizing! !
+fromAddress:recordInfo:owner:!instance creation!public! !
+fromObject:!instance creation!public! !
+GetField:szFieldName:pvarField:!COM Interfaces-IRecordInfo!public! !
+GetFieldNames:rgBstrNames:!COM Interfaces-IRecordInfo!public! !
+GetFieldNoCopy:szFieldName:pvarField:ppvDataCArray:!COM Interfaces-IRecordInfo!public! !
+GetGuid:!COM Interfaces-IRecordInfo!public! !
+GetName:!COM Interfaces-IRecordInfo!public! !
+GetSize:!COM Interfaces-IRecordInfo!public! !
+GetTypeInfo:!COM Interfaces-IRecordInfo!public! !
+initializeRegister!initializing!private! !
+IsMatchingType:!COM Interfaces-IRecordInfo!public! !
+newSAFEARRAY:!double dispatch!public! !
+pointerFieldType!constants!private! !
+PutField:pvData:szFieldName:pvarField:!COM Interfaces-IRecordInfo!public! !
+PutFieldNoCopy:pvData:szFieldName:pvarField:!COM Interfaces-IRecordInfo!public! !
+queryInterface:!accessing-interfaces!public! !
+queryInterface:ifNone:!accessing!accessing-interfaces!public! !
+RecordClear:!COM Interfaces-IRecordInfo!public! !
+RecordCopy:pvNew:!COM Interfaces-IRecordInfo!public! !
+RecordCreate!COM Interfaces-IRecordInfo!public! !
+RecordCreateCopy:ppvDest:!COM Interfaces-IRecordInfo!public! !
+RecordDestroy:!COM Interfaces-IRecordInfo!public! !
+recordInfo!accessing!public! !
+RecordInit:!COM Interfaces-IRecordInfo!public! !
+registerSubclasses!initializing!public! !
+supportedInterfaces!constants!private! !
+typeInfo!accessing!public! !
+typeInfoIfNone:!accessing!public! !
+typeLib!accessing!public! !
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !FILETIME class methodsFor!
 
@@ -1417,7 +1467,9 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_FILETIME! !
-!FILETIME class categoriesFor: #vt!constants!public! !
+!FILETIME class categoriesForMethods!
+vt!constants!public! !
+!
 
 !Float methodsFor!
 
@@ -1425,7 +1477,9 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a VT_R8)."
 
 	^VARIANT fromFloat: self! !
-!Float categoriesFor: #asVariant!converting!public! !
+!Float categoriesForMethods!
+asVariant!converting!public! !
+!
 
 !FLOAT class methodsFor!
 
@@ -1440,8 +1494,10 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_R4! !
-!FLOAT class categoriesFor: #typeName!constants!private! !
-!FLOAT class categoriesFor: #vt!constants!public! !
+!FLOAT class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !Fraction methodsFor!
 
@@ -1450,7 +1506,9 @@ asVariant
 	Note that precision may be lost."
 
 	^self asFloat asVariant! !
-!Fraction categoriesFor: #asVariant!converting!public! !
+!Fraction categoriesForMethods!
+asVariant!converting!public! !
+!
 
 !GUID class methodsFor!
 
@@ -1458,7 +1516,9 @@ typeName
 	"Private - Answer the Dolphin external type name associated with the receiver."
 
 	^self name! !
-!GUID class categoriesFor: #typeName!constants!private! !
+!GUID class categoriesForMethods!
+typeName!constants!private! !
+!
 
 !HRESULT class methodsFor!
 
@@ -1472,8 +1532,10 @@ vt
 	"Private - Answer the VARIANT type required to represent the receiver."
 
 	^AXAutomationConstants.VT_ERROR! !
-!HRESULT class categoriesFor: #typeName!constants!private! !
-!HRESULT class categoriesFor: #vt!constants!private! !
+!HRESULT class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!private! !
+!
 
 !IErrorInfo class methodsFor!
 
@@ -1498,8 +1560,10 @@ source: sourceString description: descriptionString helpContext: anInteger helpF
 	^ice errorInfo
 
 ! !
-!IErrorInfo class categoriesFor: #fromEXCEPINFO:guid:!instance creation!public! !
-!IErrorInfo class categoriesFor: #source:description:helpContext:helpFile:guid:!instance creation!public! !
+!IErrorInfo class categoriesForMethods!
+fromEXCEPINFO:guid:!instance creation!public! !
+source:description:helpContext:helpFile:guid:!instance creation!public! !
+!
 
 !INT_PTR class methodsFor!
 
@@ -1516,8 +1580,10 @@ vt
 	"Note: The compiler will optimise out the conditional because it is constant."
 
 	^VMConstants.IsWin64 ifTrue: [AXAutomationConstants.VT_I8] ifFalse: [AXAutomationConstants.VT_I4]! !
-!INT_PTR class categoriesFor: #typeName!constants!private! !
-!INT_PTR class categoriesFor: #vt!constants!public! !
+!INT_PTR class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !Integer methodsFor!
 
@@ -1525,7 +1591,9 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a VT_I4, VT_I8, or VT_UI8)."
 
 	^self subclassResponsibility! !
-!Integer categoriesFor: #asVariant!converting!public! !
+!Integer categoriesForMethods!
+asVariant!converting!public! !
+!
 
 !IUnknown methodsFor!
 
@@ -1533,7 +1601,9 @@ asVariant
 	"Answer the VARIANT representation of the receiver."
 
 	^VARIANT fromUnknown: self! !
-!IUnknown categoriesFor: #asVariant!converting!public! !
+!IUnknown categoriesForMethods!
+asVariant!converting!public! !
+!
 
 !IUnknown class methodsFor!
 
@@ -1542,7 +1612,9 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_UNKNOWN! !
-!IUnknown class categoriesFor: #vt!constants!public! !
+!IUnknown class categoriesForMethods!
+vt!constants!public! !
+!
 
 !LARGE_INTEGER class methodsFor!
 
@@ -1557,8 +1629,10 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_I8! !
-!LARGE_INTEGER class categoriesFor: #typeName!constants!private! !
-!LARGE_INTEGER class categoriesFor: #vt!constants!public! !
+!LARGE_INTEGER class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !LargeInteger methodsFor!
 
@@ -1567,7 +1641,9 @@ asVariant
 	It is an error if the receiver is too large to be represented in 64-bits."
 
 	^VARIANT fromLargeInteger: self! !
-!LargeInteger categoriesFor: #asVariant!converting!public! !
+!LargeInteger categoriesForMethods!
+asVariant!converting!public! !
+!
 
 !LPVOID class methodsFor!
 
@@ -1584,8 +1660,10 @@ vt
 
 	#todo "Is this right?".
 	^AXAutomationConstants.VT_VOID! !
-!LPVOID class categoriesFor: #typeName!constants!private! !
-!LPVOID class categoriesFor: #vt!constants!public! !
+!LPVOID class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !OLEAutLibrary methodsFor!
 
@@ -2015,46 +2093,48 @@ variantTimeToSystemTime: vtime lpSystemTime: lpSystemTime
 
 	<stdcall: bool VariantTimeToSystemTime double SYSTEMTIME*>
 	^self invalidCall: _failureCode! !
-!OLEAutLibrary categoriesFor: #clearCustData:!Automation Functions-Error Handling API!public! !
-!OLEAutLibrary categoriesFor: #createErrorInfo:!Automation Functions-Error Handling API!public! !
-!OLEAutLibrary categoriesFor: #getRecordInfoFromTypeInfo:ppRecInfo:!OLE Functions-OLE!public! !
-!OLEAutLibrary categoriesFor: #lHashValOfNameSys:lcid:szName:!Automation Functions-Type Compilation And Library!primitives!public! !
-!OLEAutLibrary categoriesFor: #loadRegTypeLib:wVerMajor:wVerMinor:lcid:pptlib:!Automation Functions-Type Compilation And Library!public! !
-!OLEAutLibrary categoriesFor: #loadTypeLib:pptlib:!Automation Functions-Type Compilation And Library!primitives!public! !
-!OLEAutLibrary categoriesFor: #loadTypeLibEx:regkind:pptlib:!Automation Functions-Type Compilation And Library!primitives!public! !
-!OLEAutLibrary categoriesFor: #oleCreateFontIndirect:riid:ppvObj:!OLE Functions-OLE!public! !
-!OLEAutLibrary categoriesFor: #queryPathOfRegTypeLib:wVerMajor:wVerMinor:lcid:lpbstrPathName:!Automation Functions-Type Compilation And Library!public! !
-!OLEAutLibrary categoriesFor: #registerTypeLib:wszFullPath:wszHelpDir:!Automation Functions-Type Compilation And Library!public! !
-!OLEAutLibrary categoriesFor: #registerTypeLibForUser:szFullPath:szHelpDir:!**auto generated**!Automation Functions-Type Compilation And Library!public! !
-!OLEAutLibrary categoriesFor: #safeArrayAccessData:ppvData:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #safeArrayCopy:ppsaout:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #safeArrayCreateEx:cDims:rgsabound:pvExtra:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #safeArrayCreateVectorEx:lLbound:cElements:pvExtra:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #safeArrayDestroy:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #safeArrayGetDim:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #safeArrayGetElement:rgIndices:pv:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #safeArrayGetIID:pguid:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #safeArrayGetLBound:nDim:plLbound:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #safeArrayGetRecordInfo:prinfo:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #safeArrayGetUBound:nDim:plUbound:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #safeArrayGetVartype:pvt:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #safeArrayPtrOfIndex:rgIndices:ppvData:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #safeArrayPutElement:rgIndices:pv:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #safeArrayRedim:psaboundNew:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #safeArraySetIID:pguid:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #safeArrayUnaccessData:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #safeArrayUnlock:!Automation Functions-Array Manipulation!public! !
-!OLEAutLibrary categoriesFor: #setErrorInfo:perrinfo:!Automation Functions-Error Handling API!public! !
-!OLEAutLibrary categoriesFor: #systemTimeToVariantTime:pvtime:!Automation Functions-Variant Manipulation!public! !
-!OLEAutLibrary categoriesFor: #unRegisterTypeLib:wVerMajor:wVerMinor:lcid:syskind:!**auto generated**!Automation Functions-Type Compilation And Library!public! !
-!OLEAutLibrary categoriesFor: #varCmp:pvarRight:lcid:dwFlags:!Automation Functions-Variant Manipulation!public! !
-!OLEAutLibrary categoriesFor: #varDateFromStr:lcid:dwFlags:pdateOut:!Automation Functions-Variant Manipulation!public! !
-!OLEAutLibrary categoriesFor: #variantChangeType:pvarSrc:wFlags:vt:!Automation Functions-Variant Manipulation!public! !
-!OLEAutLibrary categoriesFor: #variantClear:!Automation Functions-Variant Manipulation!public! !
-!OLEAutLibrary categoriesFor: #variantCopy:pvargSrc:!Automation Functions-Variant Manipulation!public! !
-!OLEAutLibrary categoriesFor: #variantCopyInd:pvargSrc:!Automation Functions-Variant Manipulation!public! !
-!OLEAutLibrary categoriesFor: #variantInit:!Automation Functions-Variant Manipulation!public! !
-!OLEAutLibrary categoriesFor: #variantTimeToSystemTime:lpSystemTime:!Automation Functions-Variant Manipulation!public! !
+!OLEAutLibrary categoriesForMethods!
+clearCustData:!Automation Functions-Error Handling API!public! !
+createErrorInfo:!Automation Functions-Error Handling API!public! !
+getRecordInfoFromTypeInfo:ppRecInfo:!OLE Functions-OLE!public! !
+lHashValOfNameSys:lcid:szName:!Automation Functions-Type Compilation And Library!primitives!public! !
+loadRegTypeLib:wVerMajor:wVerMinor:lcid:pptlib:!Automation Functions-Type Compilation And Library!public! !
+loadTypeLib:pptlib:!Automation Functions-Type Compilation And Library!primitives!public! !
+loadTypeLibEx:regkind:pptlib:!Automation Functions-Type Compilation And Library!primitives!public! !
+oleCreateFontIndirect:riid:ppvObj:!OLE Functions-OLE!public! !
+queryPathOfRegTypeLib:wVerMajor:wVerMinor:lcid:lpbstrPathName:!Automation Functions-Type Compilation And Library!public! !
+registerTypeLib:wszFullPath:wszHelpDir:!Automation Functions-Type Compilation And Library!public! !
+registerTypeLibForUser:szFullPath:szHelpDir:!**auto generated**!Automation Functions-Type Compilation And Library!public! !
+safeArrayAccessData:ppvData:!Automation Functions-Array Manipulation!public! !
+safeArrayCopy:ppsaout:!Automation Functions-Array Manipulation!public! !
+safeArrayCreateEx:cDims:rgsabound:pvExtra:!Automation Functions-Array Manipulation!public! !
+safeArrayCreateVectorEx:lLbound:cElements:pvExtra:!Automation Functions-Array Manipulation!public! !
+safeArrayDestroy:!Automation Functions-Array Manipulation!public! !
+safeArrayGetDim:!Automation Functions-Array Manipulation!public! !
+safeArrayGetElement:rgIndices:pv:!Automation Functions-Array Manipulation!public! !
+safeArrayGetIID:pguid:!Automation Functions-Array Manipulation!public! !
+safeArrayGetLBound:nDim:plLbound:!Automation Functions-Array Manipulation!public! !
+safeArrayGetRecordInfo:prinfo:!Automation Functions-Array Manipulation!public! !
+safeArrayGetUBound:nDim:plUbound:!Automation Functions-Array Manipulation!public! !
+safeArrayGetVartype:pvt:!Automation Functions-Array Manipulation!public! !
+safeArrayPtrOfIndex:rgIndices:ppvData:!Automation Functions-Array Manipulation!public! !
+safeArrayPutElement:rgIndices:pv:!Automation Functions-Array Manipulation!public! !
+safeArrayRedim:psaboundNew:!Automation Functions-Array Manipulation!public! !
+safeArraySetIID:pguid:!Automation Functions-Array Manipulation!public! !
+safeArrayUnaccessData:!Automation Functions-Array Manipulation!public! !
+safeArrayUnlock:!Automation Functions-Array Manipulation!public! !
+setErrorInfo:perrinfo:!Automation Functions-Error Handling API!public! !
+systemTimeToVariantTime:pvtime:!Automation Functions-Variant Manipulation!public! !
+unRegisterTypeLib:wVerMajor:wVerMinor:lcid:syskind:!**auto generated**!Automation Functions-Type Compilation And Library!public! !
+varCmp:pvarRight:lcid:dwFlags:!Automation Functions-Variant Manipulation!public! !
+varDateFromStr:lcid:dwFlags:pdateOut:!Automation Functions-Variant Manipulation!public! !
+variantChangeType:pvarSrc:wFlags:vt:!Automation Functions-Variant Manipulation!public! !
+variantClear:!Automation Functions-Variant Manipulation!public! !
+variantCopy:pvargSrc:!Automation Functions-Variant Manipulation!public! !
+variantCopyInd:pvargSrc:!Automation Functions-Variant Manipulation!public! !
+variantInit:!Automation Functions-Variant Manipulation!public! !
+variantTimeToSystemTime:lpSystemTime:!Automation Functions-Variant Manipulation!public! !
+!
 
 !QWORD class methodsFor!
 
@@ -2063,7 +2143,9 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_UI8! !
-!QWORD class categoriesFor: #vt!constants!public! !
+!QWORD class categoriesForMethods!
+vt!constants!public! !
+!
 
 !SBYTE class methodsFor!
 
@@ -2078,8 +2160,10 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_I1! !
-!SBYTE class categoriesFor: #typeName!constants!private! !
-!SBYTE class categoriesFor: #vt!constants!public! !
+!SBYTE class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !ScaledDecimal methodsFor!
 
@@ -2092,7 +2176,9 @@ asVariant
 	^VARIANT new 
 		decimal: self;
 		yourself! !
-!ScaledDecimal categoriesFor: #asVariant!converting!public! !
+!ScaledDecimal categoriesForMethods!
+asVariant!converting!public! !
+!
 
 !SDWORD class methodsFor!
 
@@ -2107,8 +2193,10 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_I4! !
-!SDWORD class categoriesFor: #typeName!constants!private! !
-!SDWORD class categoriesFor: #vt!constants!public! !
+!SDWORD class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !SmallInteger methodsFor!
 
@@ -2117,7 +2205,9 @@ asVariant
 	bitness of the host machine)."
 
 	^VARIANT fromSmallInteger: self! !
-!SmallInteger categoriesFor: #asVariant!converting!public! !
+!SmallInteger categoriesForMethods!
+asVariant!converting!public! !
+!
 
 !String methodsFor!
 
@@ -2126,7 +2216,9 @@ asVariant
 	This will also work fine for Utf16String."
 
 	^VARIANT fromString: self! !
-!String categoriesFor: #asVariant!converting!public! !
+!String categoriesForMethods!
+asVariant!converting!public! !
+!
 
 !String class methodsFor!
 
@@ -2147,9 +2239,11 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_LPSTR! !
-!String class categoriesFor: #pointerType!constants!private! !
-!String class categoriesFor: #typeName!constants!private! !
-!String class categoriesFor: #vt!constants!public! !
+!String class categoriesForMethods!
+pointerType!constants!private! !
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !SWORD class methodsFor!
 
@@ -2164,8 +2258,10 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_I2! !
-!SWORD class categoriesFor: #typeName!constants!private! !
-!SWORD class categoriesFor: #vt!constants!public! !
+!SWORD class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !SYSTEMTIME methodsFor!
 
@@ -2181,8 +2277,10 @@ asVariant
 	"Answer the VARIANT representation of the receiver (a VT_DATE)"
 
 	^VARIANT fromDATE: self asFloat! !
-!SYSTEMTIME categoriesFor: #asFloat!converting!public! !
-!SYSTEMTIME categoriesFor: #asVariant!converting!public! !
+!SYSTEMTIME categoriesForMethods!
+asFloat!converting!public! !
+asVariant!converting!public! !
+!
 
 !SYSTEMTIME class methodsFor!
 
@@ -2191,7 +2289,9 @@ fromDATE: aFloat
 	systime := self new.
 	OLEAutLibrary default variantTimeToSystemTime: aFloat lpSystemTime: systime.
 	^systime! !
-!SYSTEMTIME class categoriesFor: #fromDATE:!public! !
+!SYSTEMTIME class categoriesForMethods!
+fromDATE:!public! !
+!
 
 !UINT_PTR class methodsFor!
 
@@ -2208,8 +2308,10 @@ vt
 	"Note: The compiler will optimise out the conditional because it is constant."
 
 	^VMConstants.IsWin64 ifTrue: [AXAutomationConstants.VT_UI8] ifFalse: [AXAutomationConstants.VT_UI4]! !
-!UINT_PTR class categoriesFor: #typeName!constants!private! !
-!UINT_PTR class categoriesFor: #vt!constants!public! !
+!UINT_PTR class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !ULARGE_INTEGER class methodsFor!
 
@@ -2218,7 +2320,9 @@ typeName
 	There is an appropriate built-in type which we can substitute."
 
 	^#qword! !
-!ULARGE_INTEGER class categoriesFor: #typeName!constants!private! !
+!ULARGE_INTEGER class categoriesForMethods!
+typeName!constants!private! !
+!
 
 !UndefinedObject methodsFor!
 
@@ -2229,7 +2333,9 @@ asVariant
 	appear more appropriate at first glance."
 
 	^VARIANT new! !
-!UndefinedObject categoriesFor: #asVariant!converting!public! !
+!UndefinedObject categoriesForMethods!
+asVariant!converting!public! !
+!
 
 !UndefinedObject class methodsFor!
 
@@ -2243,8 +2349,10 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_EMPTY! !
-!UndefinedObject class categoriesFor: #typeName!constants!private! !
-!UndefinedObject class categoriesFor: #vt!constants!public! !
+!UndefinedObject class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !Utf16String class methodsFor!
 
@@ -2265,9 +2373,11 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_LPWSTR! !
-!Utf16String class categoriesFor: #pointerType!constants!private! !
-!Utf16String class categoriesFor: #typeName!constants!private! !
-!Utf16String class categoriesFor: #vt!constants!public! !
+!Utf16String class categoriesForMethods!
+pointerType!constants!private! !
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !VOID class methodsFor!
 
@@ -2282,8 +2392,10 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_VOID! !
-!VOID class categoriesFor: #typeName!constants!private! !
-!VOID class categoriesFor: #vt!constants!public! !
+!VOID class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 !WORD class methodsFor!
 
@@ -2298,8 +2410,10 @@ vt
 	type when represented in a <VARIANT>."
 
 	^AXAutomationConstants.VT_UI2! !
-!WORD class categoriesFor: #typeName!constants!private! !
-!WORD class categoriesFor: #vt!constants!public! !
+!WORD class categoriesForMethods!
+typeName!constants!private! !
+vt!constants!public! !
+!
 
 "End of package definition"!
 

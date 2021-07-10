@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IPropertyBag
 	instanceVariableNames: ''
@@ -73,10 +73,12 @@ Write: pszPropName pVar: pVar
 
 	<virtual stdcall: hresult 5 lpwstr variant*>
 	^self invalidCall: _failureCode! !
-!IPropertyBag categoriesFor: #read:pErrorLog:!**auto generated**!methods!public! !
-!IPropertyBag categoriesFor: #Read:pVar:pErrorLog:!**auto generated**!COM Interfaces-IPropertyBag!private! !
-!IPropertyBag categoriesFor: #write:pVar:!**auto generated**!methods!public! !
-!IPropertyBag categoriesFor: #Write:pVar:!**auto generated**!COM Interfaces-IPropertyBag!private! !
+!IPropertyBag categoriesForMethods!
+read:pErrorLog:!**auto generated**!methods!public! !
+Read:pVar:pErrorLog:!**auto generated**!COM Interfaces-IPropertyBag!private! !
+write:pVar:!**auto generated**!methods!public! !
+Write:pVar:!**auto generated**!COM Interfaces-IPropertyBag!private! !
+!
 
 IPropertyBag methodProtocol: #IPropertyBag attributes: #(#readOnly) selectors: #(#Read:pVar:pErrorLog: #Write:pVar:)!
 
@@ -93,5 +95,7 @@ defineFunctions
 		defineFunction: #Write:pVar:
 			argumentTypes: 'lpwstr VARIANT*'
 ! !
-!IPropertyBag class categoriesFor: #defineFunctions!initializing!public! !
+!IPropertyBag class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

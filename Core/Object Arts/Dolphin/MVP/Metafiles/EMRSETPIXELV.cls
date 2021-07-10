@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRSETPIXELV
 	instanceVariableNames: ''
@@ -49,10 +49,12 @@ ptlPixel: aPOINTL
 		from: ##(_OffsetOf_ptlPixel + 1)
 		to: ##(_OffsetOf_ptlPixel + POINTL basicByteSize)
 		startingAt: 1! !
-!EMRSETPIXELV categoriesFor: #crColor!**compiled accessors**!public! !
-!EMRSETPIXELV categoriesFor: #crColor:!**compiled accessors**!public! !
-!EMRSETPIXELV categoriesFor: #ptlPixel!**compiled accessors**!public! !
-!EMRSETPIXELV categoriesFor: #ptlPixel:!**compiled accessors**!public! !
+!EMRSETPIXELV categoriesForMethods!
+crColor!**compiled accessors**!public! !
+crColor:!**compiled accessors**!public! !
+ptlPixel!**compiled accessors**!public! !
+ptlPixel:!**compiled accessors**!public! !
+!
 
 !EMRSETPIXELV class methodsFor!
 
@@ -86,7 +88,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETPIXELV! !
-!EMRSETPIXELV class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETPIXELV class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETPIXELV class categoriesFor: #iTypes!constants!public! !
+!EMRSETPIXELV class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRBITBLT
 	instanceVariableNames: ''
@@ -209,36 +209,38 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
-!EMRBITBLT categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #crBkColorSrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #crBkColorSrc:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #cxDest!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #cxDest:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #cyDest!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #cyDest:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #dwRop!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #dwRop:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #iUsageSrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #offBitsSrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #offBmiSrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #xDest!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #xDest:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #xformSrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #xformSrc:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #xSrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #xSrc:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #yDest!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #yDest:!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #ySrc!**compiled accessors**!public! !
-!EMRBITBLT categoriesFor: #ySrc:!**compiled accessors**!public! !
+!EMRBITBLT categoriesForMethods!
+cbBitsSrc!**compiled accessors**!public! !
+cbBitsSrc:!**compiled accessors**!public! !
+cbBmiSrc!**compiled accessors**!public! !
+cbBmiSrc:!**compiled accessors**!public! !
+crBkColorSrc!**compiled accessors**!public! !
+crBkColorSrc:!**compiled accessors**!public! !
+cxDest!**compiled accessors**!public! !
+cxDest:!**compiled accessors**!public! !
+cyDest!**compiled accessors**!public! !
+cyDest:!**compiled accessors**!public! !
+dwRop!**compiled accessors**!public! !
+dwRop:!**compiled accessors**!public! !
+iUsageSrc!**compiled accessors**!public! !
+iUsageSrc:!**compiled accessors**!public! !
+offBitsSrc!**compiled accessors**!public! !
+offBitsSrc:!**compiled accessors**!public! !
+offBmiSrc!**compiled accessors**!public! !
+offBmiSrc:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+xDest!**compiled accessors**!public! !
+xDest:!**compiled accessors**!public! !
+xformSrc!**compiled accessors**!public! !
+xformSrc:!**compiled accessors**!public! !
+xSrc!**compiled accessors**!public! !
+xSrc:!**compiled accessors**!public! !
+yDest!**compiled accessors**!public! !
+yDest:!**compiled accessors**!public! !
+ySrc!**compiled accessors**!public! !
+ySrc:!**compiled accessors**!public! !
+!
 
 !EMRBITBLT class methodsFor!
 
@@ -294,7 +296,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_BITBLT! !
-!EMRBITBLT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRBITBLT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRBITBLT class categoriesFor: #iTypes!constants!public! !
+!EMRBITBLT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

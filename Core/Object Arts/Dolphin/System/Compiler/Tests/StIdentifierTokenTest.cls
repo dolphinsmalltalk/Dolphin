@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StValueTokenTest subclass: #StIdentifierTokenTest
 	instanceVariableNames: ''
@@ -15,6 +15,8 @@ exampleSource
 
 subjectClass
 	^StIdentifierToken! !
-!StIdentifierTokenTest categoriesFor: #exampleSource!constants!private! !
-!StIdentifierTokenTest categoriesFor: #subjectClass!constants!private! !
+!StIdentifierTokenTest categoriesForMethods!
+exampleSource!constants!private! !
+subjectClass!constants!private! !
+!
 

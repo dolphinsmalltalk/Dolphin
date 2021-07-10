@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMREXTTEXTOUT
 	instanceVariableNames: ''
@@ -73,16 +73,18 @@ rclBounds: aRECT
 		from: ##(_OffsetOf_rclBounds + 1)
 		to: ##(_OffsetOf_rclBounds + RECT basicByteSize)
 		startingAt: 1! !
-!EMREXTTEXTOUT categoriesFor: #EMRTEXT!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #EMRTEXT:!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #exScale!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #exScale:!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #eyScale!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #eyScale:!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #iGraphicsMode!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #iGraphicsMode:!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMREXTTEXTOUT categoriesFor: #rclBounds:!**compiled accessors**!public! !
+!EMREXTTEXTOUT categoriesForMethods!
+EMRTEXT!**compiled accessors**!public! !
+EMRTEXT:!**compiled accessors**!public! !
+exScale!**compiled accessors**!public! !
+exScale:!**compiled accessors**!public! !
+eyScale!**compiled accessors**!public! !
+eyScale:!**compiled accessors**!public! !
+iGraphicsMode!**compiled accessors**!public! !
+iGraphicsMode:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+!
 
 !EMREXTTEXTOUT class methodsFor!
 
@@ -125,6 +127,8 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^#()! !
-!EMREXTTEXTOUT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMREXTTEXTOUT class categoriesFor: #iTypes!constants!public! !
+!EMREXTTEXTOUT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+iTypes!constants!public! !
+!
 

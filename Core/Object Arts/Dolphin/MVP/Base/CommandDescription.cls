@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #CommandDescription
 	instanceVariableNames: 'command description acceleratorKey flags image'
@@ -205,34 +205,36 @@ toolTipText
 	"Answer a <readableString> suitable for displaying in a Tool-tip control."
 
 	^self description! !
-!CommandDescription categoriesFor: #acceleratorKey!accessing!public! !
-!CommandDescription categoriesFor: #acceleratorKey:!accessing!public! !
-!CommandDescription categoriesFor: #acceleratorKeyDisplayString!accessing!public! !
-!CommandDescription categoriesFor: #acceleratorKeyString!accessing!public! !
-!CommandDescription categoriesFor: #acceleratorKeyString:!accessing!public! !
-!CommandDescription categoriesFor: #canPerformAgainst:!commands!public!testing! !
-!CommandDescription categoriesFor: #command!accessing!public! !
-!CommandDescription categoriesFor: #command:!accessing!public! !
-!CommandDescription categoriesFor: #commandString!accessing!public! !
-!CommandDescription categoriesFor: #commandString:!accessing!initializing!public! !
-!CommandDescription categoriesFor: #commandSymbol!accessing!public! !
-!CommandDescription categoriesFor: #description!accessing!public! !
-!CommandDescription categoriesFor: #description:!accessing!public! !
-!CommandDescription categoriesFor: #displayOn:!printing!public! !
-!CommandDescription categoriesFor: #hasAcceleratorKey!public!testing! !
-!CommandDescription categoriesFor: #id!accessing!public! !
-!CommandDescription categoriesFor: #image!accessing!public! !
-!CommandDescription categoriesFor: #image:!accessing!public! !
-!CommandDescription categoriesFor: #initialize!initializing!private! !
-!CommandDescription categoriesFor: #isModalCommand!public!testing! !
-!CommandDescription categoriesFor: #isModalCommand:!public!testing! !
-!CommandDescription categoriesFor: #menuText!accessing!private! !
-!CommandDescription categoriesFor: #messages!enquiries!public! !
-!CommandDescription categoriesFor: #performAgainst:!operations!private! !
-!CommandDescription categoriesFor: #printOn:!development!printing!public! !
-!CommandDescription categoriesFor: #queryCommand:!commands!private! !
-!CommandDescription categoriesFor: #registerAcceleratorKeyIn:!operations!private! !
-!CommandDescription categoriesFor: #toolTipText!accessing!public! !
+!CommandDescription categoriesForMethods!
+acceleratorKey!accessing!public! !
+acceleratorKey:!accessing!public! !
+acceleratorKeyDisplayString!accessing!public! !
+acceleratorKeyString!accessing!public! !
+acceleratorKeyString:!accessing!public! !
+canPerformAgainst:!commands!public!testing! !
+command!accessing!public! !
+command:!accessing!public! !
+commandString!accessing!public! !
+commandString:!accessing!initializing!public! !
+commandSymbol!accessing!public! !
+description!accessing!public! !
+description:!accessing!public! !
+displayOn:!printing!public! !
+hasAcceleratorKey!public!testing! !
+id!accessing!public! !
+image!accessing!public! !
+image:!accessing!public! !
+initialize!initializing!private! !
+isModalCommand!public!testing! !
+isModalCommand:!public!testing! !
+menuText!accessing!private! !
+messages!enquiries!public! !
+performAgainst:!operations!private! !
+printOn:!development!printing!public! !
+queryCommand:!commands!private! !
+registerAcceleratorKeyIn:!operations!private! !
+toolTipText!accessing!public! !
+!
 
 CommandDescription methodProtocol: #commandTarget attributes: #(#readOnly) selectors: #(#queryCommand:)!
 CommandDescription methodProtocol: #messageSender attributes: #(#readOnly) selectors: #(#messages)!
@@ -343,16 +345,18 @@ withId: anInteger ifAbsent: absentBlock
 	then the value of absentBlock."
 
 	^CommandDescriptionRegistry keyAtValue: anInteger ifAbsent: absentBlock! !
-!CommandDescription class categoriesFor: #command:!instance creation!public! !
-!CommandDescription class categoriesFor: #command:description:!instance creation!public! !
-!CommandDescription class categoriesFor: #command:description:image:!instance creation!public! !
-!CommandDescription class categoriesFor: #idFor:!command registry!private! !
-!CommandDescription class categoriesFor: #initialize!development!initializing!private! !
-!CommandDescription class categoriesFor: #maximumId!command registry!private! !
-!CommandDescription class categoriesFor: #new!instance creation!public! !
-!CommandDescription class categoriesFor: #nextId!command registry!private! !
-!CommandDescription class categoriesFor: #startingId!command registry!private! !
-!CommandDescription class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!CommandDescription class categoriesFor: #stbVersion!binary filing!public! !
-!CommandDescription class categoriesFor: #withId:ifAbsent:!command registry!public! !
+!CommandDescription class categoriesForMethods!
+command:!instance creation!public! !
+command:description:!instance creation!public! !
+command:description:image:!instance creation!public! !
+idFor:!command registry!private! !
+initialize!development!initializing!private! !
+maximumId!command registry!private! !
+new!instance creation!public! !
+nextId!command registry!private! !
+startingId!command registry!private! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+withId:ifAbsent:!command registry!public! !
+!
 

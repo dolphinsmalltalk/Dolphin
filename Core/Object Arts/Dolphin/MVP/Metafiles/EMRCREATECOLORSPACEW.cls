@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRCREATECOLORSPACEW
 	instanceVariableNames: ''
@@ -92,16 +92,18 @@ lcs: aLOGCOLORSPACEW
 		from: ##(_OffsetOf_lcs + 1)
 		to: ##(_OffsetOf_lcs + LOGCOLORSPACEW basicByteSize)
 		startingAt: 1! !
-!EMRCREATECOLORSPACEW categoriesFor: #cbData!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #cbData:!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #Data!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #Data:!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #dwFlags!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #dwFlags:!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #ihCS!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #ihCS:!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #lcs!**compiled accessors**!public! !
-!EMRCREATECOLORSPACEW categoriesFor: #lcs:!**compiled accessors**!public! !
+!EMRCREATECOLORSPACEW categoriesForMethods!
+cbData!**compiled accessors**!public! !
+cbData:!**compiled accessors**!public! !
+Data!**compiled accessors**!public! !
+Data:!**compiled accessors**!public! !
+dwFlags!**compiled accessors**!public! !
+dwFlags:!**compiled accessors**!public! !
+ihCS!**compiled accessors**!public! !
+ihCS:!**compiled accessors**!public! !
+lcs!**compiled accessors**!public! !
+lcs:!**compiled accessors**!public! !
+!
 
 !EMRCREATECOLORSPACEW class methodsFor!
 
@@ -146,7 +148,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATECOLORSPACEW! !
-!EMRCREATECOLORSPACEW class categoriesFor: #defineFields!public!template definition! !
-!EMRCREATECOLORSPACEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRCREATECOLORSPACEW class categoriesFor: #iTypes!constants!public! !
+!EMRCREATECOLORSPACEW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

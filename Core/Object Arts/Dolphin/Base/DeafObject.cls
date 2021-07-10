@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #DeafObject
 	instanceVariableNames: ''
@@ -45,10 +45,12 @@ mustBeBoolean
 	indefinitely, causing an unbreakable loop."
 
 	^true! !
-!DeafObject categoriesFor: #=!comparing!public! !
-!DeafObject categoriesFor: #asParameter!converting!public! !
-!DeafObject categoriesFor: #doesNotUnderstand:!exceptions!public! !
-!DeafObject categoriesFor: #mustBeBoolean!exceptions!not restartable!private!vm entry points! !
+!DeafObject categoriesForMethods!
+=!comparing!public! !
+asParameter!converting!public! !
+doesNotUnderstand:!exceptions!public! !
+mustBeBoolean!exceptions!not restartable!private!vm entry points! !
+!
 
 !DeafObject class methodsFor!
 
@@ -61,6 +63,8 @@ initialize
 	"Private - Initialize the receiver's class variables."
 
 	Current isNil ifTrue: [Current := self new]! !
-!DeafObject class categoriesFor: #current!accessing!public! !
-!DeafObject class categoriesFor: #initialize!development!initializing!private! !
+!DeafObject class categoriesForMethods!
+current!accessing!public! !
+initialize!development!initializing!private! !
+!
 

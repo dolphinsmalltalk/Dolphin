@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #EditableListViewTest
 	instanceVariableNames: ''
@@ -39,8 +39,10 @@ testStbConversion15
 
 	[self assert: (elv instVarAt: (instVarNames indexOf: 'originalColumns')) equals: nil.
 	self assert: (elv instVarAt: (instVarNames indexOf: 'headerControl')) equals: nil] ensure: [elv close]! !
-!EditableListViewTest categoriesFor: #editableListViewBytes15!constants!private! !
-!EditableListViewTest categoriesFor: #elvWithEmbeddedComboBoxBytes20!constants!private! !
-!EditableListViewTest categoriesFor: #testEmbeddedComboBoxStbConversion20!public!unit tests! !
-!EditableListViewTest categoriesFor: #testStbConversion15!public!unit tests! !
+!EditableListViewTest categoriesForMethods!
+editableListViewBytes15!constants!private! !
+elvWithEmbeddedComboBoxBytes20!constants!private! !
+testEmbeddedComboBoxStbConversion20!public!unit tests! !
+testStbConversion15!public!unit tests! !
+!
 

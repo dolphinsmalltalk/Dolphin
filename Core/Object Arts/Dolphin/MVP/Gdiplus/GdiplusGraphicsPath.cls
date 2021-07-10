@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusBase subclass: #GdiplusGraphicsPath
 	instanceVariableNames: ''
@@ -150,22 +150,24 @@ startFigure
 	| status |
 	(status := GdiplusLibrary default gdipStartPathFigure: self asParameter) = Ok 
 		ifFalse: [GdiplusError signal: 'GdipStartPathFigure failed' with: status]! !
-!GdiplusGraphicsPath categoriesFor: #addArc:angles:!operations!public! !
-!GdiplusGraphicsPath categoriesFor: #addClosedCurve:!operations!public! !
-!GdiplusGraphicsPath categoriesFor: #addCurve:!operations!public! !
-!GdiplusGraphicsPath categoriesFor: #addEllipse:!operations!public! !
-!GdiplusGraphicsPath categoriesFor: #addLineFrom:to:!operations!public! !
-!GdiplusGraphicsPath categoriesFor: #addLines:!operations!public! !
-!GdiplusGraphicsPath categoriesFor: #addPolygon:!operations!public! !
-!GdiplusGraphicsPath categoriesFor: #addRectangle:!operations!public! !
-!GdiplusGraphicsPath categoriesFor: #basicFree!private!realizing/unrealizing! !
-!GdiplusGraphicsPath categoriesFor: #bounds!accessing!public! !
-!GdiplusGraphicsPath categoriesFor: #closeFigure!operations!public! !
-!GdiplusGraphicsPath categoriesFor: #fillMode!accessing!public! !
-!GdiplusGraphicsPath categoriesFor: #fillMode:!accessing!public! !
-!GdiplusGraphicsPath categoriesFor: #getBounds:pen:!accessing!private! !
-!GdiplusGraphicsPath categoriesFor: #pointCount!accessing!public! !
-!GdiplusGraphicsPath categoriesFor: #startFigure!operations!public! !
+!GdiplusGraphicsPath categoriesForMethods!
+addArc:angles:!operations!public! !
+addClosedCurve:!operations!public! !
+addCurve:!operations!public! !
+addEllipse:!operations!public! !
+addLineFrom:to:!operations!public! !
+addLines:!operations!public! !
+addPolygon:!operations!public! !
+addRectangle:!operations!public! !
+basicFree!private!realizing/unrealizing! !
+bounds!accessing!public! !
+closeFigure!operations!public! !
+fillMode!accessing!public! !
+fillMode:!accessing!public! !
+getBounds:pen:!accessing!private! !
+pointCount!accessing!public! !
+startFigure!operations!public! !
+!
 
 !GdiplusGraphicsPath class methodsFor!
 
@@ -251,9 +253,11 @@ points: points types: types fillMode: aFillModeConstant
 				points: points
 				types: types
 				fillMode: aFillModeConstant)! !
-!GdiplusGraphicsPath class categoriesFor: #exampleGdipGPCreatingFigures!examples!public!sunit! !
-!GdiplusGraphicsPath class categoriesFor: #exampleGdipGPFillingFigures!examples!public!sunit! !
-!GdiplusGraphicsPath class categoriesFor: #fillMode:!instance creation!public! !
-!GdiplusGraphicsPath class categoriesFor: #new!instance creation!public! !
-!GdiplusGraphicsPath class categoriesFor: #points:types:fillMode:!instance creation!public! !
+!GdiplusGraphicsPath class categoriesForMethods!
+exampleGdipGPCreatingFigures!examples!public!sunit! !
+exampleGdipGPFillingFigures!examples!public!sunit! !
+fillMode:!instance creation!public! !
+new!instance creation!public! !
+points:types:fillMode:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STBProxy subclass: #STBCollectionProxy
 	instanceVariableNames: 'class array'
@@ -30,9 +30,11 @@ value
 	"Answer a new collection of class class and elements array."
 
 	^class withAll: array! !
-!STBCollectionProxy categoriesFor: #array:!accessing!private! !
-!STBCollectionProxy categoriesFor: #class:!accessing!private! !
-!STBCollectionProxy categoriesFor: #value!converting!public! !
+!STBCollectionProxy categoriesForMethods!
+array:!accessing!private! !
+class:!accessing!private! !
+value!converting!public! !
+!
 
 !STBCollectionProxy class methodsFor!
 
@@ -50,6 +52,8 @@ forCollection: aCollection
 	"Answer a new instance representing aCollection."
 
 	^self class: aCollection class array: aCollection asArray! !
-!STBCollectionProxy class categoriesFor: #class:array:!instance creation!public! !
-!STBCollectionProxy class categoriesFor: #forCollection:!instance creation!public! !
+!STBCollectionProxy class categoriesForMethods!
+class:array:!instance creation!public! !
+forCollection:!instance creation!public! !
+!
 

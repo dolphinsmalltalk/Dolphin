@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserOtherChunk
 	instanceVariableNames: ''
@@ -56,21 +56,25 @@ isMatch
 
 restore
 	^nil! !
-!ChunkBrowserOtherChunk categoriesFor: #=!comparing!public! !
-!ChunkBrowserOtherChunk categoriesFor: #browseTarget!operations!public! !
-!ChunkBrowserOtherChunk categoriesFor: #canBrowse!public!testing! !
-!ChunkBrowserOtherChunk categoriesFor: #canCompare!public!testing! !
-!ChunkBrowserOtherChunk categoriesFor: #chunkClass!accessing!public! !
-!ChunkBrowserOtherChunk categoriesFor: #chunkIconIndex!accessing!public! !
-!ChunkBrowserOtherChunk categoriesFor: #hash!comparing!public! !
-!ChunkBrowserOtherChunk categoriesFor: #initialize:!initializing!public! !
-!ChunkBrowserOtherChunk categoriesFor: #initializeIdentity!initializing!public! !
-!ChunkBrowserOtherChunk categoriesFor: #isMatch!public!testing! !
-!ChunkBrowserOtherChunk categoriesFor: #restore!operations!public! !
+!ChunkBrowserOtherChunk categoriesForMethods!
+=!comparing!public! !
+browseTarget!operations!public! !
+canBrowse!public!testing! !
+canCompare!public!testing! !
+chunkClass!accessing!public! !
+chunkIconIndex!accessing!public! !
+hash!comparing!public! !
+initialize:!initializing!public! !
+initializeIdentity!initializing!public! !
+isMatch!public!testing! !
+restore!operations!public! !
+!
 
 !ChunkBrowserOtherChunk class methodsFor!
 
 chunkType
 	^#Other! !
-!ChunkBrowserOtherChunk class categoriesFor: #chunkType!constants!public! !
+!ChunkBrowserOtherChunk class categoriesForMethods!
+chunkType!constants!public! !
+!
 

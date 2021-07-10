@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 FileDialog subclass: #FileOpenDialog
 	instanceVariableNames: 'maxFileCount'
@@ -51,12 +51,14 @@ style
 	"Answers the style flags to be used when the receiver is opened."
 
 	^self maxFileCount > 1 ifTrue: [style | ##(OFN_ALLOWMULTISELECT | OFN_EXPLORER)] ifFalse: [style]! !
-!FileOpenDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!FileOpenDialog categoriesFor: #defaultMaxFileCount!constants!private! !
-!FileOpenDialog categoriesFor: #defaultStyle!constants!private! !
-!FileOpenDialog categoriesFor: #maxFileCount!accessing!public! !
-!FileOpenDialog categoriesFor: #maxFileCount:!accessing!public! !
-!FileOpenDialog categoriesFor: #style!accessing!public! !
+!FileOpenDialog categoriesForMethods!
+basicShowModal!private!realizing/unrealizing! !
+defaultMaxFileCount!constants!private! !
+defaultStyle!constants!private! !
+maxFileCount!accessing!public! !
+maxFileCount:!accessing!public! !
+style!accessing!public! !
+!
 
 !FileOpenDialog class methodsFor!
 
@@ -66,5 +68,7 @@ initialize
 	"
 
 	self initializeDefaultHooks! !
-!FileOpenDialog class categoriesFor: #initialize!development!initializing!private! !
+!FileOpenDialog class categoriesForMethods!
+initialize!development!initializing!private! !
+!
 

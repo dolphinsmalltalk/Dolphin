@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CommonDialog subclass: #PrintDialog
 	instanceVariableNames: ''
@@ -67,13 +67,15 @@ winStructClass
 	"Private - Answer the class to use for the receiver's associated windows parameter structure."
 
 	^PRINTDLGW! !
-!PrintDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!PrintDialog categoriesFor: #copies!accessing!public! !
-!PrintDialog categoriesFor: #copies:!accessing!public! !
-!PrintDialog categoriesFor: #extractResult:!helpers!private! !
-!PrintDialog categoriesFor: #initialize!public! !
-!PrintDialog categoriesFor: #pageRange:!accessing!public! !
-!PrintDialog categoriesFor: #printRange!accessing!public! !
-!PrintDialog categoriesFor: #printRange:!accessing!public! !
-!PrintDialog categoriesFor: #winStructClass!constants!private! !
+!PrintDialog categoriesForMethods!
+basicShowModal!private!realizing/unrealizing! !
+copies!accessing!public! !
+copies:!accessing!public! !
+extractResult:!helpers!private! !
+initialize!public! !
+pageRange:!accessing!public! !
+printRange!accessing!public! !
+printRange:!accessing!public! !
+winStructClass!constants!private! !
+!
 

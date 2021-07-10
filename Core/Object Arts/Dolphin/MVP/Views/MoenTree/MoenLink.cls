@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Link subclass: #MoenLink
 	instanceVariableNames: 'x y'
@@ -36,10 +36,12 @@ y
 	"Private - Answer the y-coordinate."
 
 	^y! !
-!MoenLink categoriesFor: #printOn:!development!printing!public! !
-!MoenLink categoriesFor: #setX:y:!initializing!private! !
-!MoenLink categoriesFor: #x!accessing!private! !
-!MoenLink categoriesFor: #y!accessing!private! !
+!MoenLink categoriesForMethods!
+printOn:!development!printing!public! !
+setX:y:!initializing!private! !
+x!accessing!private! !
+y!accessing!private! !
+!
 
 !MoenLink class methodsFor!
 
@@ -47,5 +49,7 @@ x: x y: y nextLink: aLink
 	"Answer a new, initialized, instance of the receiver."
 
 	^(self nextLink: aLink) setX: x y: y! !
-!MoenLink class categoriesFor: #x:y:nextLink:!instance creation!public! !
+!MoenLink class categoriesForMethods!
+x:y:nextLink:!instance creation!public! !
+!
 

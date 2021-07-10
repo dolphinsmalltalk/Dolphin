@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEFinalizableStructure subclass: #MULTI_QI
 	instanceVariableNames: ''
@@ -44,12 +44,14 @@ pItf: anIUnknown
 	"Set the receiver's 'pItf' field to the value of the argument, anIUnknown"
 
 	bytes uintPtrAtOffset: _OffsetOf_pItf put: anIUnknown yourAddress! !
-!MULTI_QI categoriesFor: #hr!**compiled accessors**!public! !
-!MULTI_QI categoriesFor: #hr:!**compiled accessors**!public! !
-!MULTI_QI categoriesFor: #pIID!**compiled accessors**!public! !
-!MULTI_QI categoriesFor: #pIID:!**compiled accessors**!public! !
-!MULTI_QI categoriesFor: #pItf!**compiled accessors**!public! !
-!MULTI_QI categoriesFor: #pItf:!**compiled accessors**!public! !
+!MULTI_QI categoriesForMethods!
+hr!**compiled accessors**!public! !
+hr:!**compiled accessors**!public! !
+pIID!**compiled accessors**!public! !
+pIID:!**compiled accessors**!public! !
+pItf!**compiled accessors**!public! !
+pItf:!**compiled accessors**!public! !
+!
 
 !MULTI_QI class methodsFor!
 
@@ -82,7 +84,9 @@ defineFields
 
 getFieldNames
 	^#(#pIID #pItf #hr)! !
-!MULTI_QI class categoriesFor: #clear:!public!realizing/unrealizing! !
-!MULTI_QI class categoriesFor: #defineFields!public!template definition! !
-!MULTI_QI class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MULTI_QI class categoriesForMethods!
+clear:!public!realizing/unrealizing! !
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

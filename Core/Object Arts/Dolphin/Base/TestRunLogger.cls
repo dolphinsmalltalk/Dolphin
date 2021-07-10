@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #TestRunLogger
 	instanceVariableNames: ''
@@ -27,9 +27,11 @@ startingCase: aTestCase
 
 startingRun: aTestSuite
 ! !
-!TestRunLogger categoriesFor: #finishedCase:!logging!public! !
-!TestRunLogger categoriesFor: #finishedRun:knownSlowTests:!helpers!logging!public! !
-!TestRunLogger categoriesFor: #slowTestThreshold!helpers!private! !
-!TestRunLogger categoriesFor: #startingCase:!logging!public! !
-!TestRunLogger categoriesFor: #startingRun:!logging!public! !
+!TestRunLogger categoriesForMethods!
+finishedCase:!logging!public! !
+finishedRun:knownSlowTests:!helpers!logging!public! !
+slowTestThreshold!helpers!private! !
+startingCase:!logging!public! !
+startingRun:!logging!public! !
+!
 

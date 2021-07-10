@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusRegionInitializer
 	instanceVariableNames: ''
@@ -19,8 +19,10 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating Region'! !
-!GdiplusRegionInitializer categoriesFor: #createHandle!private! !
-!GdiplusRegionInitializer categoriesFor: #gdiplusConstructorErrorDescription!private! !
+!GdiplusRegionInitializer categoriesForMethods!
+createHandle!private! !
+gdiplusConstructorErrorDescription!private! !
+!
 
 !GdiplusRegionInitializer class methodsFor!
 
@@ -35,7 +37,9 @@ onPreStripImage
 	which holds an instance of the receiver."
 
 	Default := nil! !
-!GdiplusRegionInitializer class categoriesFor: #default!instance creation!private! !
-!GdiplusRegionInitializer class categoriesFor: #new!development!instance creation!public! !
-!GdiplusRegionInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
+!GdiplusRegionInitializer class categoriesForMethods!
+default!instance creation!private! !
+new!development!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+!
 

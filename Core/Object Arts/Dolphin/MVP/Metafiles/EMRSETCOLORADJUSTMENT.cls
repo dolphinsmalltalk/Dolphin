@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRSETCOLORADJUSTMENT
 	instanceVariableNames: ''
@@ -37,8 +37,10 @@ COLORADJUSTMENT: aCOLORADJUSTMENT
 		from: ##(_OffsetOf_COLORADJUSTMENT + 1)
 		to: ##(_OffsetOf_COLORADJUSTMENT + COLORADJUSTMENT basicByteSize)
 		startingAt: 1! !
-!EMRSETCOLORADJUSTMENT categoriesFor: #COLORADJUSTMENT!**compiled accessors**!public! !
-!EMRSETCOLORADJUSTMENT categoriesFor: #COLORADJUSTMENT:!**compiled accessors**!public! !
+!EMRSETCOLORADJUSTMENT categoriesForMethods!
+COLORADJUSTMENT!**compiled accessors**!public! !
+COLORADJUSTMENT:!**compiled accessors**!public! !
+!
 
 !EMRSETCOLORADJUSTMENT class methodsFor!
 
@@ -68,7 +70,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETCOLORADJUSTMENT! !
-!EMRSETCOLORADJUSTMENT class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETCOLORADJUSTMENT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETCOLORADJUSTMENT class categoriesFor: #iTypes!constants!public! !
+!EMRSETCOLORADJUSTMENT class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

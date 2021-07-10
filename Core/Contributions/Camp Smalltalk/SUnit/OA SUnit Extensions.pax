@@ -294,33 +294,35 @@ skipUnless: aNiladicValuable
 	" If the assumption in the <niladicValuable> argument evaluates to false, abandon the running test and mark it as skipped."
 	
 	aNiladicValuable value ifFalse: [TestSkip signal: 'Assumption in #skipUnless: failed']! !
-!TestCase categoriesFor: #<=!comparing!public! !
-!TestCase categoriesFor: #=!comparing!public! !
-!TestCase categoriesFor: #assert:equals:description:!asserting!public! !
-!TestCase categoriesFor: #assert:identicalTo:!asserting!public! !
-!TestCase categoriesFor: #assert:isKindOf:!asserting!public! !
-!TestCase categoriesFor: #assert:sameAs:!asserting!public! !
-!TestCase categoriesFor: #assertIsNil:!asserting!public! !
-!TestCase categoriesFor: #debugWithResult!public!running! !
-!TestCase categoriesFor: #debugWithResult:!private!running! !
-!TestCase categoriesFor: #deny:equals:!asserting!public! !
-!TestCase categoriesFor: #deny:identicalTo:!public! !
-!TestCase categoriesFor: #deny:sameAs:!public! !
-!TestCase categoriesFor: #denyIsNil:!asserting!public! !
-!TestCase categoriesFor: #hash!comparing!public! !
-!TestCase categoriesFor: #isCiBuild!helpers!public! !
-!TestCase categoriesFor: #should:raise:matching:!asserting!public! !
-!TestCase categoriesFor: #should:trigger:against:!asserting!public! !
-!TestCase categoriesFor: #should:trigger:butNot:against:!asserting!public! !
-!TestCase categoriesFor: #should:trigger:matching:against:!asserting!public! !
-!TestCase categoriesFor: #should:triggerAllOf:against:!asserting!public! !
-!TestCase categoriesFor: #should:triggerAllOf:matching:against:!asserting!public! !
-!TestCase categoriesFor: #should:triggerAllOf:matching:butNoneOf:against:!asserting!public! !
-!TestCase categoriesFor: #shouldnt:trigger:against:!asserting!public! !
-!TestCase categoriesFor: #shouldnt:triggerAnyOf:against:!asserting!public! !
-!TestCase categoriesFor: #skipIfCiBuild!helpers!public! !
-!TestCase categoriesFor: #skipIfWin32!helpers!public! !
-!TestCase categoriesFor: #skipUnless:!asserting!public! !
+!TestCase categoriesForMethods!
+<=!comparing!public! !
+=!comparing!public! !
+assert:equals:description:!asserting!public! !
+assert:identicalTo:!asserting!public! !
+assert:isKindOf:!asserting!public! !
+assert:sameAs:!asserting!public! !
+assertIsNil:!asserting!public! !
+debugWithResult!public!running! !
+debugWithResult:!private!running! !
+deny:equals:!asserting!public! !
+deny:identicalTo:!public! !
+deny:sameAs:!public! !
+denyIsNil:!asserting!public! !
+hash!comparing!public! !
+isCiBuild!helpers!public! !
+should:raise:matching:!asserting!public! !
+should:trigger:against:!asserting!public! !
+should:trigger:butNot:against:!asserting!public! !
+should:trigger:matching:against:!asserting!public! !
+should:triggerAllOf:against:!asserting!public! !
+should:triggerAllOf:matching:against:!asserting!public! !
+should:triggerAllOf:matching:butNoneOf:against:!asserting!public! !
+shouldnt:trigger:against:!asserting!public! !
+shouldnt:triggerAnyOf:against:!asserting!public! !
+skipIfCiBuild!helpers!public! !
+skipIfWin32!helpers!public! !
+skipUnless:!asserting!public! !
+!
 
 !TestCase class methodsFor!
 
@@ -341,8 +343,10 @@ buildSuiteFromConcreteMethods: testMethodSelectors
 
 debugWithResult: aSymbol
 	^(self selector: aSymbol) debugWithResult! !
-!TestCase class categoriesFor: #buildSuiteFromConcreteMethods:!Instance Creation!public! !
-!TestCase class categoriesFor: #debugWithResult:!Instance Creation!public! !
+!TestCase class categoriesForMethods!
+buildSuiteFromConcreteMethods:!Instance Creation!public! !
+debugWithResult:!Instance Creation!public! !
+!
 
 !TestResult methodsFor!
 
@@ -370,7 +374,9 @@ debugCase: aTestCase
 				[:signal |
 				self addSkip: aTestCase signal: signal.
 				signal return]! !
-!TestResult categoriesFor: #debugCase:!public!running! !
+!TestResult categoriesForMethods!
+debugCase:!public!running! !
+!
 
 "End of package definition"!
 

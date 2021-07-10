@@ -381,26 +381,28 @@ writeFmtUserTypeStg: pStg cf: cf lpszUserType: lpszUserType
 
 	<stdcall: hresult WriteFmtUserTypeStg IStorage* word lpwstr>
 	^self invalidCall: _failureCode! !
-!OLELibrary categoriesFor: #createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #createStreamOnHGlobal:fDeleteOnRelease:ppstm:!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #getConvertStg:!OLE Functions-Structured Storage!primitives!public! !
-!OLELibrary categoriesFor: #getHGlobalFromILockBytes:phglobal:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #getHGlobalFromStream:phglobal:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #oleDoAutoConvert:pClsidNew:!OLE Functions-Structured Storage!primitives!public! !
-!OLELibrary categoriesFor: #readClassStg:pclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #readClassStm:pclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #readFmtUserTypeStg:pcf:lplpszUserType:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #setConvertStg:fConvert:!OLE Functions-Structured Storage!primitives!public! !
-!OLELibrary categoriesFor: #stgCreateDocfile:grfMode:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #stgCreateDocfileOnILockBytes:grfMode:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #stgIsStorageFile:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #stgIsStorageILockBytes:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #stgOpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #stgOpenStorageOnILockBytes:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #stgSetTimes:pctime:patime:pmtime:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #writeClassStg:rclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #writeClassStm:rclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
-!OLELibrary categoriesFor: #writeFmtUserTypeStg:cf:lpszUserType:!**auto generated**!OLE Functions-Structured Storage!public! !
+!OLELibrary categoriesForMethods!
+createILockBytesOnHGlobal:fDeleteOnRelease:pplkbyt:!**auto generated**!OLE Functions-Structured Storage!public! !
+createStreamOnHGlobal:fDeleteOnRelease:ppstm:!OLE Functions-Structured Storage!public! !
+getConvertStg:!OLE Functions-Structured Storage!primitives!public! !
+getHGlobalFromILockBytes:phglobal:!**auto generated**!OLE Functions-Structured Storage!public! !
+getHGlobalFromStream:phglobal:!**auto generated**!OLE Functions-Structured Storage!public! !
+oleDoAutoConvert:pClsidNew:!OLE Functions-Structured Storage!primitives!public! !
+readClassStg:pclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
+readClassStm:pclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
+readFmtUserTypeStg:pcf:lplpszUserType:!**auto generated**!OLE Functions-Structured Storage!public! !
+setConvertStg:fConvert:!OLE Functions-Structured Storage!primitives!public! !
+stgCreateDocfile:grfMode:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
+stgCreateDocfileOnILockBytes:grfMode:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
+stgIsStorageFile:!**auto generated**!OLE Functions-Structured Storage!public! !
+stgIsStorageILockBytes:!**auto generated**!OLE Functions-Structured Storage!public! !
+stgOpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
+stgOpenStorageOnILockBytes:pstgPriority:grfMode:snbExclude:reserved:ppstgOpen:!**auto generated**!OLE Functions-Structured Storage!public! !
+stgSetTimes:pctime:patime:pmtime:!**auto generated**!OLE Functions-Structured Storage!public! !
+writeClassStg:rclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
+writeClassStm:rclsid:!**auto generated**!OLE Functions-Structured Storage!public! !
+writeFmtUserTypeStg:cf:lpszUserType:!**auto generated**!OLE Functions-Structured Storage!public! !
+!
 
 !SequencedStream methodsFor!
 
@@ -597,19 +599,21 @@ Write: pv cb: cb pcbWritten: pcbWritten
 		startingAt: 1.
 	pcbWritten bytes notNull ifTrue: [pcbWritten value: cb].
 	^Win32Errors.S_OK! !
-!SequencedStream categoriesFor: #Commit:!public! !
-!SequencedStream categoriesFor: #CopyTo:cb:pcbRead:pcbWritten:!public! !
-!SequencedStream categoriesFor: #finalRelease!public! !
-!SequencedStream categoriesFor: #LockRegion:cb:dwLockType:!public! !
-!SequencedStream categoriesFor: #queryInterface:!accessing-interfaces!public! !
-!SequencedStream categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
-!SequencedStream categoriesFor: #Read:cb:pcbRead:!public! !
-!SequencedStream categoriesFor: #Revert!public! !
-!SequencedStream categoriesFor: #Seek:dwOrigin:plibNewPosition:!public! !
-!SequencedStream categoriesFor: #SetSize:!public! !
-!SequencedStream categoriesFor: #Stat:grfStatFlag:!public! !
-!SequencedStream categoriesFor: #UnlockRegion:cb:dwLockType:!public! !
-!SequencedStream categoriesFor: #Write:cb:pcbWritten:!public! !
+!SequencedStream categoriesForMethods!
+Commit:!public! !
+CopyTo:cb:pcbRead:pcbWritten:!public! !
+finalRelease!public! !
+LockRegion:cb:dwLockType:!public! !
+queryInterface:!accessing-interfaces!public! !
+queryInterface:ifNone:!accessing-interfaces!public! !
+Read:cb:pcbRead:!public! !
+Revert!public! !
+Seek:dwOrigin:plibNewPosition:!public! !
+SetSize:!public! !
+Stat:grfStatFlag:!public! !
+UnlockRegion:cb:dwLockType:!public! !
+Write:cb:pcbWritten:!public! !
+!
 
 !ShlwapiLibrary methodsFor!
 
@@ -623,7 +627,9 @@ shCreateMemStream: pInit cbInit: cbInit
 
 	<stdcall: IStream* 12 byte* dword>
 	^self invalidCall: _failureCode! !
-!ShlwapiLibrary categoriesFor: #shCreateMemStream:cbInit:!**auto generated**!public! !
+!ShlwapiLibrary categoriesForMethods!
+shCreateMemStream:cbInit:!**auto generated**!public! !
+!
 
 "End of package definition"!
 

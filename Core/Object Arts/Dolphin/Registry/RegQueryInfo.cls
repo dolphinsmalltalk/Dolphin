@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #RegQueryInfo
 	instanceVariableNames: 'keyClass subKeyCount maxSubKeyLen maxClassNameLen valueCount maxValueNameLen maxValueLen securityDescriptorLen lastWriteTime'
@@ -117,22 +117,24 @@ valueCount: anObject
 	This method was automatically generated, but may be modified."
 
 	valueCount := anObject! !
-!RegQueryInfo categoriesFor: #keyClass!accessing!public! !
-!RegQueryInfo categoriesFor: #keyClass:!accessing!public! !
-!RegQueryInfo categoriesFor: #lastWriteTime!accessing!public! !
-!RegQueryInfo categoriesFor: #lastWriteTime:!accessing!public! !
-!RegQueryInfo categoriesFor: #maxClassNameLen!accessing!public! !
-!RegQueryInfo categoriesFor: #maxClassNameLen:!accessing!public! !
-!RegQueryInfo categoriesFor: #maxSubKeyLen!accessing!public! !
-!RegQueryInfo categoriesFor: #maxSubKeyLen:!accessing!public! !
-!RegQueryInfo categoriesFor: #maxValueLen!accessing!public! !
-!RegQueryInfo categoriesFor: #maxValueLen:!accessing!public! !
-!RegQueryInfo categoriesFor: #maxValueNameLen!accessing!public! !
-!RegQueryInfo categoriesFor: #maxValueNameLen:!accessing!public! !
-!RegQueryInfo categoriesFor: #securityDescriptorLen!accessing!public! !
-!RegQueryInfo categoriesFor: #securityDescriptorLen:!accessing!public! !
-!RegQueryInfo categoriesFor: #subKeyCount!accessing!public! !
-!RegQueryInfo categoriesFor: #subKeyCount:!accessing!public! !
-!RegQueryInfo categoriesFor: #valueCount!accessing!public! !
-!RegQueryInfo categoriesFor: #valueCount:!accessing!public! !
+!RegQueryInfo categoriesForMethods!
+keyClass!accessing!public! !
+keyClass:!accessing!public! !
+lastWriteTime!accessing!public! !
+lastWriteTime:!accessing!public! !
+maxClassNameLen!accessing!public! !
+maxClassNameLen:!accessing!public! !
+maxSubKeyLen!accessing!public! !
+maxSubKeyLen:!accessing!public! !
+maxValueLen!accessing!public! !
+maxValueLen:!accessing!public! !
+maxValueNameLen!accessing!public! !
+maxValueNameLen:!accessing!public! !
+securityDescriptorLen!accessing!public! !
+securityDescriptorLen:!accessing!public! !
+subKeyCount!accessing!public! !
+subKeyCount:!accessing!public! !
+valueCount!accessing!public! !
+valueCount:!accessing!public! !
+!
 

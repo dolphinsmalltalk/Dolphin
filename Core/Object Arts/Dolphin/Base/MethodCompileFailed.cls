@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Notification subclass: #MethodCompileFailed
 	instanceVariableNames: 'compilerErrorNotification'
@@ -39,9 +39,11 @@ resumeWithStubMethod
 
 	"Resume with this stub"
 	self resume: result! !
-!MethodCompileFailed categoriesFor: #compilerErrorNotification:!accessing!private! !
-!MethodCompileFailed categoriesFor: #defaultAction!handling!public! !
-!MethodCompileFailed categoriesFor: #resumeWithStubMethod!handler responses!operations!public! !
+!MethodCompileFailed categoriesForMethods!
+compilerErrorNotification:!accessing!private! !
+defaultAction!handling!public! !
+resumeWithStubMethod!handler responses!operations!public! !
+!
 
 !MethodCompileFailed class methodsFor!
 
@@ -56,6 +58,8 @@ with: aCompilerErrorNotification
 
 	^super new compilerErrorNotification: aCompilerErrorNotification
 ! !
-!MethodCompileFailed class categoriesFor: #new!instance creation!private! !
-!MethodCompileFailed class categoriesFor: #with:!instance creation!public! !
+!MethodCompileFailed class categoriesForMethods!
+new!instance creation!private! !
+with:!instance creation!public! !
+!
 

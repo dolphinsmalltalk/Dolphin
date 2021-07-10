@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ShellView subclass: #DialogView
 	instanceVariableNames: 'endModal isModal oldWndProc'
@@ -398,47 +398,49 @@ wmInitDialog: message wParam: wParam lParam: lParam
 	self defaultButtonId isNil ifTrue: [self setDefId: 0].
 
 	^self onInitDialog! !
-!DialogView categoriesFor: #answer!accessing!public! !
-!DialogView categoriesFor: #answer:!accessing!not an aspect!public! !
-!DialogView categoriesFor: #basicCreateAt:extent:!private!realizing/unrealizing! !
-!DialogView categoriesFor: #cancel!commands!public! !
-!DialogView categoriesFor: #defaultBackcolor!colors!constants!private! !
-!DialogView categoriesFor: #defaultExtent!constants!public! !
-!DialogView categoriesFor: #defaultPositionWithin:forExtent:!geometry!private! !
-!DialogView categoriesFor: #defaultWindowProcessing:wParam:lParam:!dispatching!private! !
-!DialogView categoriesFor: #defaultWindowStyle!constants!private! !
-!DialogView categoriesFor: #destroy!public!realizing/unrealizing! !
-!DialogView categoriesFor: #dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
-!DialogView categoriesFor: #dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
-!DialogView categoriesFor: #enableItem:state:!accessing!private! !
-!DialogView categoriesFor: #endDialog:!operations!public! !
-!DialogView categoriesFor: #getItemText:!accessing!private! !
-!DialogView categoriesFor: #has3dLook!accessing!public! !
-!DialogView categoriesFor: #has3dLook:!accessing!public! !
-!DialogView categoriesFor: #initialize!initializing!private! !
-!DialogView categoriesFor: #isInProc!public!testing! !
-!DialogView categoriesFor: #isInProc:!accessing!public! !
-!DialogView categoriesFor: #isModal!accessing!private! !
-!DialogView categoriesFor: #isModal:!accessing!private! !
-!DialogView categoriesFor: #isPersistentView!public!testing! !
-!DialogView categoriesFor: #isPropertyPage!public!testing! !
-!DialogView categoriesFor: #oldWndProc:!accessing!private! !
-!DialogView categoriesFor: #onInitDialog!event handling!public! !
-!DialogView categoriesFor: #performCommand:!commands!public! !
-!DialogView categoriesFor: #preTranslateKeyboardInput:!dispatching!public! !
-!DialogView categoriesFor: #resourceLib!constants!public! !
-!DialogView categoriesFor: #runModalInProcessLoop!operations!private! !
-!DialogView categoriesFor: #runModalLoop!operations!private! !
-!DialogView categoriesFor: #setItem:font:!accessing!private! !
-!DialogView categoriesFor: #setItem:icon:!accessing!private! !
-!DialogView categoriesFor: #setItem:int:!accessing!private! !
-!DialogView categoriesFor: #setItem:text:!accessing!private! !
-!DialogView categoriesFor: #showModal!private!realizing/unrealizing! !
-!DialogView categoriesFor: #showModalTo:!private!realizing/unrealizing! !
-!DialogView categoriesFor: #showModeless:!private!realizing/unrealizing! !
-!DialogView categoriesFor: #subclassWindow:!operations!private! !
-!DialogView categoriesFor: #templateId!constants!private! !
-!DialogView categoriesFor: #wmInitDialog:wParam:lParam:!event handling-win32!public! !
+!DialogView categoriesForMethods!
+answer!accessing!public! !
+answer:!accessing!not an aspect!public! !
+basicCreateAt:extent:!private!realizing/unrealizing! !
+cancel!commands!public! !
+defaultBackcolor!colors!constants!private! !
+defaultExtent!constants!public! !
+defaultPositionWithin:forExtent:!geometry!private! !
+defaultWindowProcessing:wParam:lParam:!dispatching!private! !
+defaultWindowStyle!constants!private! !
+destroy!public!realizing/unrealizing! !
+dmGetDefId:wParam:lParam:!default button!event handling-win32!private! !
+dmSetDefId:wParam:lParam:!default button!event handling-win32!private! !
+enableItem:state:!accessing!private! !
+endDialog:!operations!public! !
+getItemText:!accessing!private! !
+has3dLook!accessing!public! !
+has3dLook:!accessing!public! !
+initialize!initializing!private! !
+isInProc!public!testing! !
+isInProc:!accessing!public! !
+isModal!accessing!private! !
+isModal:!accessing!private! !
+isPersistentView!public!testing! !
+isPropertyPage!public!testing! !
+oldWndProc:!accessing!private! !
+onInitDialog!event handling!public! !
+performCommand:!commands!public! !
+preTranslateKeyboardInput:!dispatching!public! !
+resourceLib!constants!public! !
+runModalInProcessLoop!operations!private! !
+runModalLoop!operations!private! !
+setItem:font:!accessing!private! !
+setItem:icon:!accessing!private! !
+setItem:int:!accessing!private! !
+setItem:text:!accessing!private! !
+showModal!private!realizing/unrealizing! !
+showModalTo:!private!realizing/unrealizing! !
+showModeless:!private!realizing/unrealizing! !
+subclassWindow:!operations!private! !
+templateId!constants!private! !
+wmInitDialog:wParam:lParam:!event handling-win32!public! !
+!
 
 !DialogView class methodsFor!
 
@@ -460,8 +462,10 @@ on: aSubjectModel
 
 	^super new model: aSubjectModel.
 ! !
-!DialogView class categoriesFor: #icon!constants!public! !
-!DialogView class categoriesFor: #initialize!development!initializing!public! !
-!DialogView class categoriesFor: #new!instance creation!public! !
-!DialogView class categoriesFor: #on:!instance creation!public! !
+!DialogView class categoriesForMethods!
+icon!constants!public! !
+initialize!development!initializing!public! !
+new!instance creation!public! !
+on:!instance creation!public! !
+!
 

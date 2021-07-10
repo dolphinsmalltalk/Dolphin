@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 View subclass: #AbstractDelegatingView
 	instanceVariableNames: 'resourceIdentifier referee'
@@ -176,29 +176,31 @@ viewNamed: aString ifNone: aBlock
 	on to our referee."
 
 	^self referee viewNamed: aString ifNone: aBlock! !
-!AbstractDelegatingView categoriesFor: #applyFont!font!private!updating! !
-!AbstractDelegatingView categoriesFor: #backcolor:!accessing!public! !
-!AbstractDelegatingView categoriesFor: #calculateExtent:!geometry!private! !
-!AbstractDelegatingView categoriesFor: #clearReferee!event handling!private! !
-!AbstractDelegatingView categoriesFor: #createDelegate!event handling!private! !
-!AbstractDelegatingView categoriesFor: #defaultWindowExStyle!constants!private! !
-!AbstractDelegatingView categoriesFor: #isDragSource:!accessing!public! !
-!AbstractDelegatingView categoriesFor: #isDropTarget:!accessing!public! !
-!AbstractDelegatingView categoriesFor: #isGroupStop:!accessing-styles!public! !
-!AbstractDelegatingView categoriesFor: #isTabStop:!accessing-styles!public! !
-!AbstractDelegatingView categoriesFor: #layout:!geometry!private! !
-!AbstractDelegatingView categoriesFor: #model!accessing!private! !
-!AbstractDelegatingView categoriesFor: #model:!accessing!private! !
-!AbstractDelegatingView categoriesFor: #onDestroyed!event handling!private! !
-!AbstractDelegatingView categoriesFor: #onViewCreated!event handling!private! !
-!AbstractDelegatingView categoriesFor: #preferredExtent!geometry!public! !
-!AbstractDelegatingView categoriesFor: #preferredExtent:!geometry!public! !
-!AbstractDelegatingView categoriesFor: #referee!accessing!private! !
-!AbstractDelegatingView categoriesFor: #show!operations!public! !
-!AbstractDelegatingView categoriesFor: #tabFocus!private!tabbing! !
-!AbstractDelegatingView categoriesFor: #usePreferredExtent!accessing!public! !
-!AbstractDelegatingView categoriesFor: #usePreferredExtent:!accessing!not an aspect!public! !
-!AbstractDelegatingView categoriesFor: #validateSubViewLayouts:!geometry!private! !
-!AbstractDelegatingView categoriesFor: #validateUserInterface!operations!public! !
-!AbstractDelegatingView categoriesFor: #viewNamed:ifNone:!hierarchy!public!sub views! !
+!AbstractDelegatingView categoriesForMethods!
+applyFont!font!private!updating! !
+backcolor:!accessing!public! !
+calculateExtent:!geometry!private! !
+clearReferee!event handling!private! !
+createDelegate!event handling!private! !
+defaultWindowExStyle!constants!private! !
+isDragSource:!accessing!public! !
+isDropTarget:!accessing!public! !
+isGroupStop:!accessing-styles!public! !
+isTabStop:!accessing-styles!public! !
+layout:!geometry!private! !
+model!accessing!private! !
+model:!accessing!private! !
+onDestroyed!event handling!private! !
+onViewCreated!event handling!private! !
+preferredExtent!geometry!public! !
+preferredExtent:!geometry!public! !
+referee!accessing!private! !
+show!operations!public! !
+tabFocus!private!tabbing! !
+usePreferredExtent!accessing!public! !
+usePreferredExtent:!accessing!not an aspect!public! !
+validateSubViewLayouts:!geometry!private! !
+validateUserInterface!operations!public! !
+viewNamed:ifNone:!hierarchy!public!sub views! !
+!
 

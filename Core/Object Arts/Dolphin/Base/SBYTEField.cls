@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScalarField subclass: #SBYTEField
 	instanceVariableNames: ''
@@ -26,9 +26,11 @@ writeInto: anExternalStructure value: anInteger
 	anExternalStructure, at the receiver's offset."
 
 	^anExternalStructure bytes sbyteAtOffset: offset put: anInteger! !
-!SBYTEField categoriesFor: #accessorMessage!initializing!private! !
-!SBYTEField categoriesFor: #readFrom:!indirect accessing!private! !
-!SBYTEField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!SBYTEField categoriesForMethods!
+accessorMessage!initializing!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !SBYTEField class methodsFor!
 
@@ -36,5 +38,7 @@ byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes."
 
 	^1! !
-!SBYTEField class categoriesFor: #byteSize!constants!private! !
+!SBYTEField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

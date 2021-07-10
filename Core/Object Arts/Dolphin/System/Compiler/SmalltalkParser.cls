@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #SmalltalkParser
 	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source'
@@ -1110,96 +1110,98 @@ validateTemp: aVariableNode of: aNode temps: anOrderedCollection
 
 variableNodeClass
 	^StVariableNode! !
-!SmalltalkParser categoriesFor: #addCommentsTo:!helpers!private! !
-!SmalltalkParser categoriesFor: #assignmentNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #atEnd!public!testing! !
-!SmalltalkParser categoriesFor: #blockNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #braceArrayNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #canHaveStatementsAfterReturn!public!testing! !
-!SmalltalkParser categoriesFor: #cascadeNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #errorBlock:!accessing!public! !
-!SmalltalkParser categoriesFor: #errorPosition!error handling!public! !
-!SmalltalkParser categoriesFor: #externalReferenceTypeFor:!parsing!private! !
-!SmalltalkParser categoriesFor: #initialize!initializing!public! !
-!SmalltalkParser categoriesFor: #initializeParserWith:!initializing!private! !
-!SmalltalkParser categoriesFor: #line!accessing!public! !
-!SmalltalkParser categoriesFor: #literalArrayNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #literalValueNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #lookupExternalStructType:!parsing!private! !
-!SmalltalkParser categoriesFor: #messageNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #methodClass:!accessing!public! !
-!SmalltalkParser categoriesFor: #methodNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #nextToken!helpers!private! !
-!SmalltalkParser categoriesFor: #optimizedNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #parameterNodeClass!parsing!private! !
-!SmalltalkParser categoriesFor: #parseAssignment!parsing!private! !
-!SmalltalkParser categoriesFor: #parseBinaryMessage!parsing!private! !
-!SmalltalkParser categoriesFor: #parseBinaryMessageWith:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseBinaryPattern!parsing!private! !
-!SmalltalkParser categoriesFor: #parseBlock!parsing!private! !
-!SmalltalkParser categoriesFor: #parseBlockArgsInto:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseBlockParameter!parsing!private! !
-!SmalltalkParser categoriesFor: #parseBraceArray!parsing!private! !
-!SmalltalkParser categoriesFor: #parseCascadedMessageFor:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseCascadeMessage!parsing!private! !
-!SmalltalkParser categoriesFor: #parseExpression:!parsing!public! !
-!SmalltalkParser categoriesFor: #parseExtendedTags:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseExternalArgType!parsing!private! !
-!SmalltalkParser categoriesFor: #parseExternalArgTypeQualifier!parsing!private! !
-!SmalltalkParser categoriesFor: #parseExternalCall:isVirtual:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseExternalCallArgList!parsing!private! !
-!SmalltalkParser categoriesFor: #parseExternalCallArgs:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseExternalCallingConvention!parsing!private! !
-!SmalltalkParser categoriesFor: #parseExternalCallName!parsing!private! !
-!SmalltalkParser categoriesFor: #parseKeywordMessage!parsing!private! !
-!SmalltalkParser categoriesFor: #parseKeywordMessageWith:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseKeywordPattern!parsing!private! !
-!SmalltalkParser categoriesFor: #parseLiteralArray!parsing!private! !
-!SmalltalkParser categoriesFor: #parseLiteralArrayObject!parsing!private! !
-!SmalltalkParser categoriesFor: #parseLiteralByteArray!parsing!private! !
-!SmalltalkParser categoriesFor: #parseLiteralByteArrayObject!parsing!private! !
-!SmalltalkParser categoriesFor: #parseMessagePattern!parsing!private! !
-!SmalltalkParser categoriesFor: #parseMethod!parsing!private! !
-!SmalltalkParser categoriesFor: #parseMethod:!accessing!private! !
-!SmalltalkParser categoriesFor: #parseMethod:in:errorBlock:!parsing!public! !
-!SmalltalkParser categoriesFor: #parseMethodParameter!parsing!private! !
-!SmalltalkParser categoriesFor: #parseNumberLiteral!parsing!private! !
-!SmalltalkParser categoriesFor: #parseOptimizedExpression!parsing!private! !
-!SmalltalkParser categoriesFor: #parseOverlappedCall:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseParenthesizedExpression!parsing!private! !
-!SmalltalkParser categoriesFor: #parsePrimitiveIdentifier:!parsing!private! !
-!SmalltalkParser categoriesFor: #parsePrimitiveLiteral!parsing!private! !
-!SmalltalkParser categoriesFor: #parsePrimitiveObject!parsing!private! !
-!SmalltalkParser categoriesFor: #parsePrimitiveValueLiteral!parsing!private! !
-!SmalltalkParser categoriesFor: #parserError:!error handling!private! !
-!SmalltalkParser categoriesFor: #parserError:range:!error handling!private! !
-!SmalltalkParser categoriesFor: #parserError:range:extra:!error handling!private! !
-!SmalltalkParser categoriesFor: #parserError:range:extras:!error handling!private! !
-!SmalltalkParser categoriesFor: #parseStatementList:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseStatementsOf:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseTag:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseTags!parsing!private! !
-!SmalltalkParser categoriesFor: #parseTempDecl!parsing!private! !
-!SmalltalkParser categoriesFor: #parseTempsOf:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseUnaryMessage!parsing!private! !
-!SmalltalkParser categoriesFor: #parseUnaryMessageWith:!parsing!private! !
-!SmalltalkParser categoriesFor: #parseUnaryPattern!parsing!private! !
-!SmalltalkParser categoriesFor: #parseVariableNode:!parsing!private! !
-!SmalltalkParser categoriesFor: #patchExternalDescriptorClose!parsing!private! !
-!SmalltalkParser categoriesFor: #patchLiteralArrayToken!parsing!private! !
-!SmalltalkParser categoriesFor: #patchLiteralMessage!helpers!private! !
-!SmalltalkParser categoriesFor: #patchNegativeLiteral!helpers!private! !
-!SmalltalkParser categoriesFor: #reportError:at:line:range:extras:!error handling!private! !
-!SmalltalkParser categoriesFor: #returnNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #scanner:!accessing!public! !
-!SmalltalkParser categoriesFor: #scannerClass!constants!private! !
-!SmalltalkParser categoriesFor: #sequenceNodeClass!constants!private! !
-!SmalltalkParser categoriesFor: #source!accessing!private! !
-!SmalltalkParser categoriesFor: #step!parsing!private! !
-!SmalltalkParser categoriesFor: #tempDeclClass!parsing!private! !
-!SmalltalkParser categoriesFor: #validateArg:args:!parsing!private! !
-!SmalltalkParser categoriesFor: #validateTemp:of:temps:!parsing!private! !
-!SmalltalkParser categoriesFor: #variableNodeClass!constants!private! !
+!SmalltalkParser categoriesForMethods!
+addCommentsTo:!helpers!private! !
+assignmentNodeClass!constants!private! !
+atEnd!public!testing! !
+blockNodeClass!constants!private! !
+braceArrayNodeClass!constants!private! !
+canHaveStatementsAfterReturn!public!testing! !
+cascadeNodeClass!constants!private! !
+errorBlock:!accessing!public! !
+errorPosition!error handling!public! !
+externalReferenceTypeFor:!parsing!private! !
+initialize!initializing!public! !
+initializeParserWith:!initializing!private! !
+line!accessing!public! !
+literalArrayNodeClass!constants!private! !
+literalValueNodeClass!constants!private! !
+lookupExternalStructType:!parsing!private! !
+messageNodeClass!constants!private! !
+methodClass:!accessing!public! !
+methodNodeClass!constants!private! !
+nextToken!helpers!private! !
+optimizedNodeClass!constants!private! !
+parameterNodeClass!parsing!private! !
+parseAssignment!parsing!private! !
+parseBinaryMessage!parsing!private! !
+parseBinaryMessageWith:!parsing!private! !
+parseBinaryPattern!parsing!private! !
+parseBlock!parsing!private! !
+parseBlockArgsInto:!parsing!private! !
+parseBlockParameter!parsing!private! !
+parseBraceArray!parsing!private! !
+parseCascadedMessageFor:!parsing!private! !
+parseCascadeMessage!parsing!private! !
+parseExpression:!parsing!public! !
+parseExtendedTags:!parsing!private! !
+parseExternalArgType!parsing!private! !
+parseExternalArgTypeQualifier!parsing!private! !
+parseExternalCall:isVirtual:!parsing!private! !
+parseExternalCallArgList!parsing!private! !
+parseExternalCallArgs:!parsing!private! !
+parseExternalCallingConvention!parsing!private! !
+parseExternalCallName!parsing!private! !
+parseKeywordMessage!parsing!private! !
+parseKeywordMessageWith:!parsing!private! !
+parseKeywordPattern!parsing!private! !
+parseLiteralArray!parsing!private! !
+parseLiteralArrayObject!parsing!private! !
+parseLiteralByteArray!parsing!private! !
+parseLiteralByteArrayObject!parsing!private! !
+parseMessagePattern!parsing!private! !
+parseMethod!parsing!private! !
+parseMethod:!accessing!private! !
+parseMethod:in:errorBlock:!parsing!public! !
+parseMethodParameter!parsing!private! !
+parseNumberLiteral!parsing!private! !
+parseOptimizedExpression!parsing!private! !
+parseOverlappedCall:!parsing!private! !
+parseParenthesizedExpression!parsing!private! !
+parsePrimitiveIdentifier:!parsing!private! !
+parsePrimitiveLiteral!parsing!private! !
+parsePrimitiveObject!parsing!private! !
+parsePrimitiveValueLiteral!parsing!private! !
+parserError:!error handling!private! !
+parserError:range:!error handling!private! !
+parserError:range:extra:!error handling!private! !
+parserError:range:extras:!error handling!private! !
+parseStatementList:!parsing!private! !
+parseStatementsOf:!parsing!private! !
+parseTag:!parsing!private! !
+parseTags!parsing!private! !
+parseTempDecl!parsing!private! !
+parseTempsOf:!parsing!private! !
+parseUnaryMessage!parsing!private! !
+parseUnaryMessageWith:!parsing!private! !
+parseUnaryPattern!parsing!private! !
+parseVariableNode:!parsing!private! !
+patchExternalDescriptorClose!parsing!private! !
+patchLiteralArrayToken!parsing!private! !
+patchLiteralMessage!helpers!private! !
+patchNegativeLiteral!helpers!private! !
+reportError:at:line:range:extras:!error handling!private! !
+returnNodeClass!constants!private! !
+scanner:!accessing!public! !
+scannerClass!constants!private! !
+sequenceNodeClass!constants!private! !
+source!accessing!private! !
+step!parsing!private! !
+tempDeclClass!parsing!private! !
+validateArg:args:!parsing!private! !
+validateTemp:of:temps:!parsing!private! !
+variableNodeClass!constants!private! !
+!
 
 SmalltalkParser methodProtocol: #parseErrorHandler attributes: #(#readOnly) selectors: #(#reportError:at:line:range:extras:)!
 
@@ -1307,24 +1309,26 @@ parseMethodPattern: aString
 
 warningClass
 	^CompilerWarningNotification! !
-!SmalltalkParser class categoriesFor: #allowEmptyStatements!accessing!public! !
-!SmalltalkParser class categoriesFor: #allowEmptyStatements:!accessing!public! !
-!SmalltalkParser class categoriesFor: #errorClass!constants!public! !
-!SmalltalkParser class categoriesFor: #initialize!development!initializing!public! !
-!SmalltalkParser class categoriesFor: #new!instance creation!public! !
-!SmalltalkParser class categoriesFor: #notificationClass!constants!public! !
-!SmalltalkParser class categoriesFor: #parseExistingMethodNoError:!commands!public! !
-!SmalltalkParser class categoriesFor: #parseExpression:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseExpression:in:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseExpression:in:onError:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseExpression:onError:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseExpressionNoError:in:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseMethod:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseMethod:in:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseMethod:in:onError:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseMethod:onError:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseMethodNoError:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseMethodNoError:in:!parsing!public! !
-!SmalltalkParser class categoriesFor: #parseMethodPattern:!parsing!public! !
-!SmalltalkParser class categoriesFor: #warningClass!constants!public! !
+!SmalltalkParser class categoriesForMethods!
+allowEmptyStatements!accessing!public! !
+allowEmptyStatements:!accessing!public! !
+errorClass!constants!public! !
+initialize!development!initializing!public! !
+new!instance creation!public! !
+notificationClass!constants!public! !
+parseExistingMethodNoError:!commands!public! !
+parseExpression:!parsing!public! !
+parseExpression:in:!parsing!public! !
+parseExpression:in:onError:!parsing!public! !
+parseExpression:onError:!parsing!public! !
+parseExpressionNoError:in:!parsing!public! !
+parseMethod:!parsing!public! !
+parseMethod:in:!parsing!public! !
+parseMethod:in:onError:!parsing!public! !
+parseMethod:onError:!parsing!public! !
+parseMethodNoError:!parsing!public! !
+parseMethodNoError:in:!parsing!public! !
+parseMethodPattern:!parsing!public! !
+warningClass!constants!public! !
+!
 

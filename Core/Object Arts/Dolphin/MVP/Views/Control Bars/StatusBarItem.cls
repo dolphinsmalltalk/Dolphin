@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StatusBarItemAbstract subclass: #StatusBarItem
 	instanceVariableNames: 'getTextBlock getImageBlock reserved1'
@@ -133,19 +133,21 @@ printOn: aStream
 		nextPut: $(;
 		print: (self parentView notNil ifTrue: [self name]);
 		nextPut: $)! !
-!StatusBarItem categoriesFor: #defaultGetImageBlock!adapters!constants!private! !
-!StatusBarItem categoriesFor: #defaultGetTextBlock!adapters!constants!private! !
-!StatusBarItem categoriesFor: #drawImageOn:in:!drawing!private! !
-!StatusBarItem categoriesFor: #drawItem:bounding:!drawing!private! !
-!StatusBarItem categoriesFor: #drawTextOn:offset:!drawing!private! !
-!StatusBarItem categoriesFor: #getImageBlock!adapters!public! !
-!StatusBarItem categoriesFor: #getImageBlock:!adapters!public! !
-!StatusBarItem categoriesFor: #getText!private!updating! !
-!StatusBarItem categoriesFor: #getTextBlock!adapters!public! !
-!StatusBarItem categoriesFor: #getTextBlock:!adapters!public! !
-!StatusBarItem categoriesFor: #imageManager!accessing!public! !
-!StatusBarItem categoriesFor: #initialize!initializing!private! !
-!StatusBarItem categoriesFor: #printOn:!development!printing!public! !
+!StatusBarItem categoriesForMethods!
+defaultGetImageBlock!adapters!constants!private! !
+defaultGetTextBlock!adapters!constants!private! !
+drawImageOn:in:!drawing!private! !
+drawItem:bounding:!drawing!private! !
+drawTextOn:offset:!drawing!private! !
+getImageBlock!adapters!public! !
+getImageBlock:!adapters!public! !
+getText!private!updating! !
+getTextBlock!adapters!public! !
+getTextBlock:!adapters!public! !
+imageManager!accessing!public! !
+initialize!initializing!private! !
+printOn:!development!printing!public! !
+!
 
 !StatusBarItem class methodsFor!
 
@@ -153,5 +155,7 @@ value: anObject
 	"#deprecated."
 
 	^anObject iconImageIndex! !
-!StatusBarItem class categoriesFor: #value:!evaluating!private! !
+!StatusBarItem class categoriesForMethods!
+value:!evaluating!private! !
+!
 

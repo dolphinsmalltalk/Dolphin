@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMREXTFLOODFILL
 	instanceVariableNames: ''
@@ -61,12 +61,14 @@ ptlStart: aPOINTL
 		from: ##(_OffsetOf_ptlStart + 1)
 		to: ##(_OffsetOf_ptlStart + POINTL basicByteSize)
 		startingAt: 1! !
-!EMREXTFLOODFILL categoriesFor: #crColor!**compiled accessors**!public! !
-!EMREXTFLOODFILL categoriesFor: #crColor:!**compiled accessors**!public! !
-!EMREXTFLOODFILL categoriesFor: #iMode!**compiled accessors**!public! !
-!EMREXTFLOODFILL categoriesFor: #iMode:!**compiled accessors**!public! !
-!EMREXTFLOODFILL categoriesFor: #ptlStart!**compiled accessors**!public! !
-!EMREXTFLOODFILL categoriesFor: #ptlStart:!**compiled accessors**!public! !
+!EMREXTFLOODFILL categoriesForMethods!
+crColor!**compiled accessors**!public! !
+crColor:!**compiled accessors**!public! !
+iMode!**compiled accessors**!public! !
+iMode:!**compiled accessors**!public! !
+ptlStart!**compiled accessors**!public! !
+ptlStart:!**compiled accessors**!public! !
+!
 
 !EMREXTFLOODFILL class methodsFor!
 
@@ -98,7 +100,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_EXTFLOODFILL! !
-!EMREXTFLOODFILL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMREXTFLOODFILL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMREXTFLOODFILL class categoriesFor: #iTypes!constants!public! !
+!EMREXTFLOODFILL class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

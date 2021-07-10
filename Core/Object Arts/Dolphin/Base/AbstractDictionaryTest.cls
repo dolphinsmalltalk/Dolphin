@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinCollectionTest subclass: #AbstractDictionaryTest
 	instanceVariableNames: ''
@@ -245,25 +245,27 @@ testStrongTalkTests
 	self assert: new]
 			on: ConfirmationRequiredWarning
 			do: [:ex | ex refuse]! !
-!AbstractDictionaryTest categoriesFor: #assertCommutativelyEqual:other:!helpers!private! !
-!AbstractDictionaryTest categoriesFor: #checkValidity:!benchmarking!private! !
-!AbstractDictionaryTest categoriesFor: #collectionClass!helpers!private! !
-!AbstractDictionaryTest categoriesFor: #denyCommutativelyEqual:other:!helpers!private! !
-!AbstractDictionaryTest categoriesFor: #key3Value!private! !
-!AbstractDictionaryTest categoriesFor: #makeKey:!helpers!private! !
-!AbstractDictionaryTest categoriesFor: #newCollection:!helpers!private! !
-!AbstractDictionaryTest categoriesFor: #newDictionary!private!unit tests! !
-!AbstractDictionaryTest categoriesFor: #newEmpty!helpers!public! !
-!AbstractDictionaryTest categoriesFor: #testAssociationsDo!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testAtIfAbsent!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testAtIfAbsentPut!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testAtIfAbsentPutModifyingCollection!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testAtIfAbsentPutValue!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testCyclicRefPrinting!public! !
-!AbstractDictionaryTest categoriesFor: #testDeepCopy!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testEquals!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testIncludesKey!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testNilKey!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testRemoveKey!public!unit tests! !
-!AbstractDictionaryTest categoriesFor: #testStrongTalkTests!benchmarking!public! !
+!AbstractDictionaryTest categoriesForMethods!
+assertCommutativelyEqual:other:!helpers!private! !
+checkValidity:!benchmarking!private! !
+collectionClass!helpers!private! !
+denyCommutativelyEqual:other:!helpers!private! !
+key3Value!private! !
+makeKey:!helpers!private! !
+newCollection:!helpers!private! !
+newDictionary!private!unit tests! !
+newEmpty!helpers!public! !
+testAssociationsDo!public!unit tests! !
+testAtIfAbsent!public!unit tests! !
+testAtIfAbsentPut!public!unit tests! !
+testAtIfAbsentPutModifyingCollection!public!unit tests! !
+testAtIfAbsentPutValue!public!unit tests! !
+testCyclicRefPrinting!public! !
+testDeepCopy!public!unit tests! !
+testEquals!public!unit tests! !
+testIncludesKey!public!unit tests! !
+testNilKey!public!unit tests! !
+testRemoveKey!public!unit tests! !
+testStrongTalkTests!benchmarking!public! !
+!
 

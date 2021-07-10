@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ISchemaItem subclass: #ISchemaType
 	instanceVariableNames: ''
@@ -389,40 +389,42 @@ whitespace
 	self get_whitespace: answer.
 	^answer asObject
 ! !
-!ISchemaType categoriesFor: #baseTypes!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #derivedBy!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #enumeration!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #final!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #fractionDigits!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #get_baseTypes:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_derivedBy:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_enumeration:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_final:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_fractionDigits:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_length:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_maxExclusive:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_maxInclusive:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_maxLength:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_minExclusive:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_minInclusive:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_minLength:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_patterns:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_totalDigits:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_variety:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #get_whitespace:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #isValid:!**auto generated**!methods!public! !
-!ISchemaType categoriesFor: #IsValid:valid:!**auto generated**!COM Interfaces-ISchemaType!private! !
-!ISchemaType categoriesFor: #length!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #maxExclusive!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #maxInclusive!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #maxLength!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #minExclusive!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #minInclusive!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #minLength!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #patterns!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #totalDigits!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #variety!**auto generated**!properties!public! !
-!ISchemaType categoriesFor: #whitespace!**auto generated**!properties!public! !
+!ISchemaType categoriesForMethods!
+baseTypes!**auto generated**!properties!public! !
+derivedBy!**auto generated**!properties!public! !
+enumeration!**auto generated**!properties!public! !
+final!**auto generated**!properties!public! !
+fractionDigits!**auto generated**!properties!public! !
+get_baseTypes:!**auto generated**!COM Interfaces-ISchemaType!private! !
+get_derivedBy:!**auto generated**!COM Interfaces-ISchemaType!private! !
+get_enumeration:!**auto generated**!COM Interfaces-ISchemaType!private! !
+get_final:!**auto generated**!COM Interfaces-ISchemaType!private! !
+get_fractionDigits:!**auto generated**!COM Interfaces-ISchemaType!private! !
+get_length:!**auto generated**!COM Interfaces-ISchemaType!private! !
+get_maxExclusive:!**auto generated**!COM Interfaces-ISchemaType!private! !
+get_maxInclusive:!**auto generated**!COM Interfaces-ISchemaType!private! !
+get_maxLength:!**auto generated**!COM Interfaces-ISchemaType!private! !
+get_minExclusive:!**auto generated**!COM Interfaces-ISchemaType!private! !
+get_minInclusive:!**auto generated**!COM Interfaces-ISchemaType!private! !
+get_minLength:!**auto generated**!COM Interfaces-ISchemaType!private! !
+get_patterns:!**auto generated**!COM Interfaces-ISchemaType!private! !
+get_totalDigits:!**auto generated**!COM Interfaces-ISchemaType!private! !
+get_variety:!**auto generated**!COM Interfaces-ISchemaType!private! !
+get_whitespace:!**auto generated**!COM Interfaces-ISchemaType!private! !
+isValid:!**auto generated**!methods!public! !
+IsValid:valid:!**auto generated**!COM Interfaces-ISchemaType!private! !
+length!**auto generated**!properties!public! !
+maxExclusive!**auto generated**!properties!public! !
+maxInclusive!**auto generated**!properties!public! !
+maxLength!**auto generated**!properties!public! !
+minExclusive!**auto generated**!properties!public! !
+minInclusive!**auto generated**!properties!public! !
+minLength!**auto generated**!properties!public! !
+patterns!**auto generated**!properties!public! !
+totalDigits!**auto generated**!properties!public! !
+variety!**auto generated**!properties!public! !
+whitespace!**auto generated**!properties!public! !
+!
 
 !ISchemaType class methodsFor!
 
@@ -466,5 +468,7 @@ defineFunctions
 		defineFunction: #get_patterns:
 			argumentTypes: 'ISchemaStringCollection**'
 ! !
-!ISchemaType class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISchemaType class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

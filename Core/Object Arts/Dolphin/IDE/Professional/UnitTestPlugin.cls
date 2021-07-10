@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassBrowserPlugin subclass: #UnitTestPlugin
 	instanceVariableNames: 'result icon autoSwitchProcess defectsPresenter modePresenter detailsPresenter'
@@ -369,53 +369,55 @@ updateWindow
 		ifTrue: [self displayErrors]
 		ifFalse: [result hasFailures ifTrue: [self displayFail] ifFalse: [self displayPass]].
 	self updateDefects! !
-!UnitTestPlugin categoriesFor: #allContextMenus!helpers!private! !
-!UnitTestPlugin categoriesFor: #allMenuBarMenus!helpers!private! !
-!UnitTestPlugin categoriesFor: #classUnderTest!Accessing!private! !
-!UnitTestPlugin categoriesFor: #createComponents!initializing!private! !
-!UnitTestPlugin categoriesFor: #createSchematicWiring!helpers!private! !
-!UnitTestPlugin categoriesFor: #currentTestMethodSelectors!commands!private! !
-!UnitTestPlugin categoriesFor: #debugTest!commands!public! !
-!UnitTestPlugin categoriesFor: #debugTest:!operations!private! !
-!UnitTestPlugin categoriesFor: #defaultHelpId!constants!public! !
-!UnitTestPlugin categoriesFor: #displayColor:!private!Updating! !
-!UnitTestPlugin categoriesFor: #displayDefects:!private!Updating! !
-!UnitTestPlugin categoriesFor: #displayDetails:!private!Updating! !
-!UnitTestPlugin categoriesFor: #displayErrors!private!Updating! !
-!UnitTestPlugin categoriesFor: #displayFail!private!Updating! !
-!UnitTestPlugin categoriesFor: #displayMode:!private!Updating! !
-!UnitTestPlugin categoriesFor: #displayOn:!displaying!private! !
-!UnitTestPlugin categoriesFor: #displayPass!private!Updating! !
-!UnitTestPlugin categoriesFor: #displayReset!private!Updating! !
-!UnitTestPlugin categoriesFor: #displayRunning!private!Updating! !
-!UnitTestPlugin categoriesFor: #hasDefects!public!testing! !
-!UnitTestPlugin categoriesFor: #hasIndividualTests!public!Updating! !
-!UnitTestPlugin categoriesFor: #hasTestClass!public!Updating! !
-!UnitTestPlugin categoriesFor: #icon!accessing!public! !
-!UnitTestPlugin categoriesFor: #icon:!accessing!private! !
-!UnitTestPlugin categoriesFor: #installMenuCommands!helpers!private! !
-!UnitTestPlugin categoriesFor: #installTestCommandsInClassMenu:withAccelerator:!helpers!private! !
-!UnitTestPlugin categoriesFor: #installTestCommandsInMethodMenu:!helpers!private! !
-!UnitTestPlugin categoriesFor: #isBrowserLookingAtTestClass!private!testing! !
-!UnitTestPlugin categoriesFor: #onBrowserClassSelected!event handling!private! !
-!UnitTestPlugin categoriesFor: #onBrowserMethodSelected!event handling!private! !
-!UnitTestPlugin categoriesFor: #onViewOpened!event handling!private! !
-!UnitTestPlugin categoriesFor: #queryCommand:!commands!private! !
-!UnitTestPlugin categoriesFor: #refreshIcon!operations!private! !
-!UnitTestPlugin categoriesFor: #runIndividualTests!commands!public! !
-!UnitTestPlugin categoriesFor: #runSuite:!operations!private! !
-!UnitTestPlugin categoriesFor: #runTests!commands!public! !
-!UnitTestPlugin categoriesFor: #startAutoSwitchProcess!helpers!private! !
-!UnitTestPlugin categoriesFor: #stopAutoSwitchProcess!helpers!private! !
-!UnitTestPlugin categoriesFor: #testClass!Accessing!private! !
-!UnitTestPlugin categoriesFor: #testSuite!accessing!public! !
-!UnitTestPlugin categoriesFor: #testSuiteName!event handling!private! !
-!UnitTestPlugin categoriesFor: #toggleToTests!commands!public! !
-!UnitTestPlugin categoriesFor: #toggleToTestsClass!helpers!private! !
-!UnitTestPlugin categoriesFor: #toggleToTestsClassDescription!helpers!private! !
-!UnitTestPlugin categoriesFor: #update:!helpers!private! !
-!UnitTestPlugin categoriesFor: #updateDefects!private!Updating! !
-!UnitTestPlugin categoriesFor: #updateWindow!private!Updating! !
+!UnitTestPlugin categoriesForMethods!
+allContextMenus!helpers!private! !
+allMenuBarMenus!helpers!private! !
+classUnderTest!Accessing!private! !
+createComponents!initializing!private! !
+createSchematicWiring!helpers!private! !
+currentTestMethodSelectors!commands!private! !
+debugTest!commands!public! !
+debugTest:!operations!private! !
+defaultHelpId!constants!public! !
+displayColor:!private!Updating! !
+displayDefects:!private!Updating! !
+displayDetails:!private!Updating! !
+displayErrors!private!Updating! !
+displayFail!private!Updating! !
+displayMode:!private!Updating! !
+displayOn:!displaying!private! !
+displayPass!private!Updating! !
+displayReset!private!Updating! !
+displayRunning!private!Updating! !
+hasDefects!public!testing! !
+hasIndividualTests!public!Updating! !
+hasTestClass!public!Updating! !
+icon!accessing!public! !
+icon:!accessing!private! !
+installMenuCommands!helpers!private! !
+installTestCommandsInClassMenu:withAccelerator:!helpers!private! !
+installTestCommandsInMethodMenu:!helpers!private! !
+isBrowserLookingAtTestClass!private!testing! !
+onBrowserClassSelected!event handling!private! !
+onBrowserMethodSelected!event handling!private! !
+onViewOpened!event handling!private! !
+queryCommand:!commands!private! !
+refreshIcon!operations!private! !
+runIndividualTests!commands!public! !
+runSuite:!operations!private! !
+runTests!commands!public! !
+startAutoSwitchProcess!helpers!private! !
+stopAutoSwitchProcess!helpers!private! !
+testClass!Accessing!private! !
+testSuite!accessing!public! !
+testSuiteName!event handling!private! !
+toggleToTests!commands!public! !
+toggleToTestsClass!helpers!private! !
+toggleToTestsClassDescription!helpers!private! !
+update:!helpers!private! !
+updateDefects!private!Updating! !
+updateWindow!private!Updating! !
+!
 
 !UnitTestPlugin class methodsFor!
 
@@ -529,26 +531,28 @@ runningColor
 
 runningColor: aColor 
 	RunningColor := aColor = Color default ifTrue: [self defaultRunningColor] ifFalse: [aColor]! !
-!UnitTestPlugin class categoriesFor: #autoSwitchDelayMs!accessing!public! !
-!UnitTestPlugin class categoriesFor: #autoSwitchDelayMs:!accessing!public! !
-!UnitTestPlugin class categoriesFor: #defaultAutoSwitchDelay!constants!private! !
-!UnitTestPlugin class categoriesFor: #defaultErrorColor!constants!private! !
-!UnitTestPlugin class categoriesFor: #defaultFailColor!constants!private! !
-!UnitTestPlugin class categoriesFor: #defaultNoTestsColor!private!Updating! !
-!UnitTestPlugin class categoriesFor: #defaultPassColor!constants!private! !
-!UnitTestPlugin class categoriesFor: #defaultRunningColor!constants!private! !
-!UnitTestPlugin class categoriesFor: #errorColor!accessing!public! !
-!UnitTestPlugin class categoriesFor: #errorColor:!accessing!public! !
-!UnitTestPlugin class categoriesFor: #failColor!accessing!public! !
-!UnitTestPlugin class categoriesFor: #failColor:!accessing!public! !
-!UnitTestPlugin class categoriesFor: #icon!constants!public! !
-!UnitTestPlugin class categoriesFor: #initialize!class initialization!private! !
-!UnitTestPlugin class categoriesFor: #noTestsColor!accessing!public! !
-!UnitTestPlugin class categoriesFor: #noTestsColor:!accessing!public! !
-!UnitTestPlugin class categoriesFor: #passColor!accessing!public! !
-!UnitTestPlugin class categoriesFor: #passColor:!accessing!public! !
-!UnitTestPlugin class categoriesFor: #publishedAspects!private! !
-!UnitTestPlugin class categoriesFor: #resource_Default_view!public!resources-views! !
-!UnitTestPlugin class categoriesFor: #runningColor!accessing!public! !
-!UnitTestPlugin class categoriesFor: #runningColor:!accessing!public! !
+!UnitTestPlugin class categoriesForMethods!
+autoSwitchDelayMs!accessing!public! !
+autoSwitchDelayMs:!accessing!public! !
+defaultAutoSwitchDelay!constants!private! !
+defaultErrorColor!constants!private! !
+defaultFailColor!constants!private! !
+defaultNoTestsColor!private!Updating! !
+defaultPassColor!constants!private! !
+defaultRunningColor!constants!private! !
+errorColor!accessing!public! !
+errorColor:!accessing!public! !
+failColor!accessing!public! !
+failColor:!accessing!public! !
+icon!constants!public! !
+initialize!class initialization!private! !
+noTestsColor!accessing!public! !
+noTestsColor:!accessing!public! !
+passColor!accessing!public! !
+passColor:!accessing!public! !
+publishedAspects!private! !
+resource_Default_view!public!resources-views! !
+runningColor!accessing!public! !
+runningColor:!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StValueToken subclass: #StLiteralArrayToken
 	instanceVariableNames: ''
@@ -18,7 +18,9 @@ isForByteArray
 
 isLiteralArrayToken
 	^true! !
-!StLiteralArrayToken categoriesFor: #acceptVisitor:!public!visitor! !
-!StLiteralArrayToken categoriesFor: #isForByteArray!public!testing! !
-!StLiteralArrayToken categoriesFor: #isLiteralArrayToken!public!testing! !
+!StLiteralArrayToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isForByteArray!public!testing! !
+isLiteralArrayToken!public!testing! !
+!
 

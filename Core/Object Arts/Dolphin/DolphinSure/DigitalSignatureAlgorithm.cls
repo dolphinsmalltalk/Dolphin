@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #DigitalSignatureAlgorithm
 	instanceVariableNames: 'randKey randSeed'
@@ -507,28 +507,30 @@ verifySignature: aSignature ofMessageHash: hash publicKey: publicKey
 	v := self remainder: (self remainder: v0 mod: p) mod: q.
 	^ v = r
 ! !
-!DigitalSignatureAlgorithm categoriesFor: #computeSignatureForMessageHash:privateKey:!operations!public!signing! !
-!DigitalSignatureAlgorithm categoriesFor: #dsaSign:q:g:k:x:h:!operations!private! !
-!DigitalSignatureAlgorithm categoriesFor: #elgamalDecrypt:privateKey:!operations!public! !
-!DigitalSignatureAlgorithm categoriesFor: #elgamalEncrypt:publicKey:!operations!public! !
-!DigitalSignatureAlgorithm categoriesFor: #generateFullKeySet!key generation!operations!public! !
-!DigitalSignatureAlgorithm categoriesFor: #generateKeyGroup!key generation!operations!public! !
-!DigitalSignatureAlgorithm categoriesFor: #generateKeySetForGroup:!key generation!operations!public! !
-!DigitalSignatureAlgorithm categoriesFor: #generateQandP!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #generateRandomLength:s:n:!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #generateSandQ!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #initRandom:!initializing!private! !
-!DigitalSignatureAlgorithm categoriesFor: #initRandomFromUser!initializing!private! !
-!DigitalSignatureAlgorithm categoriesFor: #inverseOf:mod:!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #isProbablyPrime:!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #keyStrength!accessing!public! !
-!DigitalSignatureAlgorithm categoriesFor: #logOfLargestPowerOfTwoDividing:!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #nextRandom160!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #raise:to:mod:!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #remainder:mod:!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #signatureToString:!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #stringToSignature:!helpers!private! !
-!DigitalSignatureAlgorithm categoriesFor: #verifySignature:ofMessageHash:publicKey:!operations!public!signing! !
+!DigitalSignatureAlgorithm categoriesForMethods!
+computeSignatureForMessageHash:privateKey:!operations!public!signing! !
+dsaSign:q:g:k:x:h:!operations!private! !
+elgamalDecrypt:privateKey:!operations!public! !
+elgamalEncrypt:publicKey:!operations!public! !
+generateFullKeySet!key generation!operations!public! !
+generateKeyGroup!key generation!operations!public! !
+generateKeySetForGroup:!key generation!operations!public! !
+generateQandP!helpers!private! !
+generateRandomLength:s:n:!helpers!private! !
+generateSandQ!helpers!private! !
+initRandom:!initializing!private! !
+initRandomFromUser!initializing!private! !
+inverseOf:mod:!helpers!private! !
+isProbablyPrime:!helpers!private! !
+keyStrength!accessing!public! !
+logOfLargestPowerOfTwoDividing:!helpers!private! !
+nextRandom160!helpers!private! !
+raise:to:mod:!helpers!private! !
+remainder:mod:!helpers!private! !
+signatureToString:!helpers!private! !
+stringToSignature:!helpers!private! !
+verifySignature:ofMessageHash:publicKey:!operations!public!signing! !
+!
 
 !DigitalSignatureAlgorithm class methodsFor!
 
@@ -644,13 +646,15 @@ verify: signatureString isSignatureOf: aStringOrStream publicKey: publicKey
 
 	^ dsa verifySignature: sig ofMessageHash: h publicKey: publicKey
 ! !
-!DigitalSignatureAlgorithm class categoriesFor: #example!examples!private! !
-!DigitalSignatureAlgorithm class categoriesFor: #generateFullKeySet!key generation!operations!public! !
-!DigitalSignatureAlgorithm class categoriesFor: #generateKeyGroup!key generation!operations!public! !
-!DigitalSignatureAlgorithm class categoriesFor: #generateKeySetForGroup:!key generation!operations!public! !
-!DigitalSignatureAlgorithm class categoriesFor: #initialize!initializing!private! !
-!DigitalSignatureAlgorithm class categoriesFor: #sign:privateKey:!operations!public!signing! !
-!DigitalSignatureAlgorithm class categoriesFor: #testKeySet512!accessing!examples!public! !
-!DigitalSignatureAlgorithm class categoriesFor: #testKeySet768!accessing!examples!public! !
-!DigitalSignatureAlgorithm class categoriesFor: #verify:isSignatureOf:publicKey:!operations!public!signing! !
+!DigitalSignatureAlgorithm class categoriesForMethods!
+example!examples!private! !
+generateFullKeySet!key generation!operations!public! !
+generateKeyGroup!key generation!operations!public! !
+generateKeySetForGroup:!key generation!operations!public! !
+initialize!initializing!private! !
+sign:privateKey:!operations!public!signing! !
+testKeySet512!accessing!examples!public! !
+testKeySet768!accessing!examples!public! !
+verify:isSignatureOf:publicKey:!operations!public!signing! !
+!
 

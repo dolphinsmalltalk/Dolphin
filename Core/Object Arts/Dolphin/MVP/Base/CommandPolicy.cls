@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #CommandPolicy
 	instanceVariableNames: 'source path'
@@ -217,23 +217,25 @@ visitPresenter: presenter
 	adding its contributions to that chain. Answer the next <presenter> to visit."
 
 	^self subclassResponsibility! !
-!CommandPolicy categoriesFor: #appendPresenter:!adding!public! !
-!CommandPolicy categoriesFor: #appendTarget:!adding!public! !
-!CommandPolicy categoriesFor: #commandPath!accessing!public! !
-!CommandPolicy categoriesFor: #commandQueryClass!constants!public! !
-!CommandPolicy categoriesFor: #insertTarget:after:!adding!public! !
-!CommandPolicy categoriesFor: #insertTarget:atIndex:!adding!public! !
-!CommandPolicy categoriesFor: #insertTarget:before:!adding!public! !
-!CommandPolicy categoriesFor: #newCommandQuery:!helpers!public! !
-!CommandPolicy categoriesFor: #prependTarget:!adding!public! !
-!CommandPolicy categoriesFor: #query:!operations!public! !
-!CommandPolicy categoriesFor: #queryCommand:!operations!private! !
-!CommandPolicy categoriesFor: #queryCommand:ofTarget:!operations!private! !
-!CommandPolicy categoriesFor: #route:!operations!public! !
-!CommandPolicy categoriesFor: #routeFrom:!operations!public! !
-!CommandPolicy categoriesFor: #source!accessing!private! !
-!CommandPolicy categoriesFor: #source:!initializing!private! !
-!CommandPolicy categoriesFor: #visitPresenter:!operations!private! !
+!CommandPolicy categoriesForMethods!
+appendPresenter:!adding!public! !
+appendTarget:!adding!public! !
+commandPath!accessing!public! !
+commandQueryClass!constants!public! !
+insertTarget:after:!adding!public! !
+insertTarget:atIndex:!adding!public! !
+insertTarget:before:!adding!public! !
+newCommandQuery:!helpers!public! !
+prependTarget:!adding!public! !
+query:!operations!public! !
+queryCommand:!operations!private! !
+queryCommand:ofTarget:!operations!private! !
+route:!operations!public! !
+routeFrom:!operations!public! !
+source!accessing!private! !
+source:!initializing!private! !
+visitPresenter:!operations!private! !
+!
 
 CommandPolicy methodProtocol: #commandPolicy attributes: #(#readOnly) selectors: #(#query: #route:)!
 
@@ -256,9 +258,11 @@ new
 	"Instances of the receiver should be created using the #commandSource: message."
 
 	^self shouldNotImplement! !
-!CommandPolicy class categoriesFor: #commandSource:!instance creation!public! !
-!CommandPolicy class categoriesFor: #defaultClass!constants!public! !
-!CommandPolicy class categoriesFor: #new!instance creation!public! !
+!CommandPolicy class categoriesForMethods!
+commandSource:!instance creation!public! !
+defaultClass!constants!public! !
+new!instance creation!public! !
+!
 
 CommandPolicy class methodProtocol: #'commandPolicy factory' attributes: #(#readOnly) selectors: #(#commandSource:)!
 

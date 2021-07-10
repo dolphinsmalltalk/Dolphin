@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SUnitAbsModel subclass: #SUnitResourceBrowserModel
 	instanceVariableNames: ''
@@ -145,33 +145,35 @@ unavailableResources
 unavailableSelectedResources
 
 	^self basicSelectedItems select: [:each | each isUnavailable]! !
-!SUnitResourceBrowserModel categoriesFor: #availableCount!accessing!private! !
-!SUnitResourceBrowserModel categoriesFor: #availableResources!accessing!private! !
-!SUnitResourceBrowserModel categoriesFor: #availableSelectedResources!accessing!private! !
-!SUnitResourceBrowserModel categoriesFor: #buildList!actions!public! !
-!SUnitResourceBrowserModel categoriesFor: #buildResourcesOn:!actions!private! !
-!SUnitResourceBrowserModel categoriesFor: #canStart!public!querying! !
-!SUnitResourceBrowserModel categoriesFor: #canStartAll!public!querying! !
-!SUnitResourceBrowserModel categoriesFor: #canStop!public!querying! !
-!SUnitResourceBrowserModel categoriesFor: #canStopAll!public!querying! !
-!SUnitResourceBrowserModel categoriesFor: #hasAvailableResources!private!querying! !
-!SUnitResourceBrowserModel categoriesFor: #hasAvailableSelectedResources!private!querying! !
-!SUnitResourceBrowserModel categoriesFor: #hasUnavailableResources!private!querying! !
-!SUnitResourceBrowserModel categoriesFor: #hasUnavailableSelectedResources!private!querying! !
-!SUnitResourceBrowserModel categoriesFor: #signalStartedTestResource:!private!signalling! !
-!SUnitResourceBrowserModel categoriesFor: #signalStoppedTestResource:!private!signalling! !
-!SUnitResourceBrowserModel categoriesFor: #startAll!actions!public! !
-!SUnitResourceBrowserModel categoriesFor: #startResource:!actions!private! !
-!SUnitResourceBrowserModel categoriesFor: #startResources:!actions!private! !
-!SUnitResourceBrowserModel categoriesFor: #startSelected!actions!public! !
-!SUnitResourceBrowserModel categoriesFor: #stopAll!actions!public! !
-!SUnitResourceBrowserModel categoriesFor: #stopResource:!actions!private! !
-!SUnitResourceBrowserModel categoriesFor: #stopResources:!actions!private! !
-!SUnitResourceBrowserModel categoriesFor: #stopSelected!actions!public! !
-!SUnitResourceBrowserModel categoriesFor: #testResourceSortBlock!actions!private! !
-!SUnitResourceBrowserModel categoriesFor: #unavailableCount!accessing!private! !
-!SUnitResourceBrowserModel categoriesFor: #unavailableResources!accessing!private! !
-!SUnitResourceBrowserModel categoriesFor: #unavailableSelectedResources!accessing!private! !
+!SUnitResourceBrowserModel categoriesForMethods!
+availableCount!accessing!private! !
+availableResources!accessing!private! !
+availableSelectedResources!accessing!private! !
+buildList!actions!public! !
+buildResourcesOn:!actions!private! !
+canStart!public!querying! !
+canStartAll!public!querying! !
+canStop!public!querying! !
+canStopAll!public!querying! !
+hasAvailableResources!private!querying! !
+hasAvailableSelectedResources!private!querying! !
+hasUnavailableResources!private!querying! !
+hasUnavailableSelectedResources!private!querying! !
+signalStartedTestResource:!private!signalling! !
+signalStoppedTestResource:!private!signalling! !
+startAll!actions!public! !
+startResource:!actions!private! !
+startResources:!actions!private! !
+startSelected!actions!public! !
+stopAll!actions!public! !
+stopResource:!actions!private! !
+stopResources:!actions!private! !
+stopSelected!actions!public! !
+testResourceSortBlock!actions!private! !
+unavailableCount!accessing!private! !
+unavailableResources!accessing!private! !
+unavailableSelectedResources!accessing!private! !
+!
 
 !SUnitResourceBrowserModel class methodsFor!
 
@@ -193,9 +195,11 @@ stateClass
 
 uninitialize
 	defaultConfiguration := nil! !
-!SUnitResourceBrowserModel class categoriesFor: #builderClass!constants!public! !
-!SUnitResourceBrowserModel class categoriesFor: #configurationClass!constants!public! !
-!SUnitResourceBrowserModel class categoriesFor: #resourceClass!constants!public! !
-!SUnitResourceBrowserModel class categoriesFor: #stateClass!constants!public! !
-!SUnitResourceBrowserModel class categoriesFor: #uninitialize!class hierarchy-removing!public! !
+!SUnitResourceBrowserModel class categoriesForMethods!
+builderClass!constants!public! !
+configurationClass!constants!public! !
+resourceClass!constants!public! !
+stateClass!constants!public! !
+uninitialize!class hierarchy-removing!public! !
+!
 

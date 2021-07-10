@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #MessageNotUnderstood
 	instanceVariableNames: 'receiver'
@@ -50,13 +50,15 @@ selector
 	<failedMessage>."
 
 	^self message selector! !
-!MessageNotUnderstood categoriesFor: #_descriptionArguments!displaying!public! !
-!MessageNotUnderstood categoriesFor: #_descriptionFormat!displaying!public! !
-!MessageNotUnderstood categoriesFor: #isResumable!public!testing! !
-!MessageNotUnderstood categoriesFor: #message!accessing!public! !
-!MessageNotUnderstood categoriesFor: #receiver!accessing!public! !
-!MessageNotUnderstood categoriesFor: #receiver:!accessing!public! !
-!MessageNotUnderstood categoriesFor: #selector!accessing!public! !
+!MessageNotUnderstood categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+isResumable!public!testing! !
+message!accessing!public! !
+receiver!accessing!public! !
+receiver:!accessing!public! !
+selector!accessing!public! !
+!
 
 MessageNotUnderstood methodProtocol: #MessageNotUnderstood attributes: #(#ansi #readOnly) selectors: #(#defaultAction #description #isNested #isResumable #message #messageText #messageText: #outer #pass #receiver #resignalAs: #resume #resume: #retry #retryUsing: #return #return: #signal #signal: #tag)!
 
@@ -70,7 +72,9 @@ receiver: anObject message: aMessage
 		receiver: anObject;
 		tag: aMessage;
 		signal! !
-!MessageNotUnderstood class categoriesFor: #receiver:message:!instance creation!public! !
+!MessageNotUnderstood class categoriesForMethods!
+receiver:message:!instance creation!public! !
+!
 
 MessageNotUnderstood class methodProtocol: #MessageNotUnderstoodSelector attributes: #(#ansi #readOnly) selectors: #(#, #handles:)!
 

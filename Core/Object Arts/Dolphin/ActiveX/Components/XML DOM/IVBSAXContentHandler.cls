@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IVBSAXContentHandler
 	instanceVariableNames: ''
@@ -291,28 +291,30 @@ StartPrefixMapping: strPrefix strURI: strURI
 
 	<virtual stdcall: hresult 11 bstr* bstr*>
 	^self invalidCall: _failureCode! !
-!IVBSAXContentHandler categoriesFor: #characters:!**auto generated**!methods!public! !
-!IVBSAXContentHandler categoriesFor: #Characters:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
-!IVBSAXContentHandler categoriesFor: #EndDocument!**auto generated**!COM Interfaces-IVBSAXContentHandler!public! !
-!IVBSAXContentHandler categoriesFor: #endElement:strLocalName:strQName:!**auto generated**!methods!public! !
-!IVBSAXContentHandler categoriesFor: #EndElement:strLocalName:strQName:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
-!IVBSAXContentHandler categoriesFor: #endPrefixMapping:!**auto generated**!methods!public! !
-!IVBSAXContentHandler categoriesFor: #EndPrefixMapping:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
-!IVBSAXContentHandler categoriesFor: #ignorableWhitespace:!**auto generated**!methods!public! !
-!IVBSAXContentHandler categoriesFor: #IgnorableWhitespace:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
-!IVBSAXContentHandler categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IVBSAXContentHandler categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IVBSAXContentHandler categoriesFor: #processingInstruction:strData:!**auto generated**!methods!public! !
-!IVBSAXContentHandler categoriesFor: #ProcessingInstruction:strData:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
-!IVBSAXContentHandler categoriesFor: #putref_documentLocator:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
-!IVBSAXContentHandler categoriesFor: #setDocumentLocator:!**auto generated**!properties!public! !
-!IVBSAXContentHandler categoriesFor: #skippedEntity:!**auto generated**!methods!public! !
-!IVBSAXContentHandler categoriesFor: #SkippedEntity:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
-!IVBSAXContentHandler categoriesFor: #StartDocument!**auto generated**!COM Interfaces-IVBSAXContentHandler!public! !
-!IVBSAXContentHandler categoriesFor: #startElement:strLocalName:strQName:oAttributes:!**auto generated**!methods!public! !
-!IVBSAXContentHandler categoriesFor: #StartElement:strLocalName:strQName:oAttributes:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
-!IVBSAXContentHandler categoriesFor: #startPrefixMapping:strURI:!**auto generated**!methods!public! !
-!IVBSAXContentHandler categoriesFor: #StartPrefixMapping:strURI:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+!IVBSAXContentHandler categoriesForMethods!
+characters:!**auto generated**!methods!public! !
+Characters:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+EndDocument!**auto generated**!COM Interfaces-IVBSAXContentHandler!public! !
+endElement:strLocalName:strQName:!**auto generated**!methods!public! !
+EndElement:strLocalName:strQName:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+endPrefixMapping:!**auto generated**!methods!public! !
+EndPrefixMapping:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+ignorableWhitespace:!**auto generated**!methods!public! !
+IgnorableWhitespace:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+processingInstruction:strData:!**auto generated**!methods!public! !
+ProcessingInstruction:strData:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+putref_documentLocator:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+setDocumentLocator:!**auto generated**!properties!public! !
+skippedEntity:!**auto generated**!methods!public! !
+SkippedEntity:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+StartDocument!**auto generated**!COM Interfaces-IVBSAXContentHandler!public! !
+startElement:strLocalName:strQName:oAttributes:!**auto generated**!methods!public! !
+StartElement:strLocalName:strQName:oAttributes:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+startPrefixMapping:strURI:!**auto generated**!methods!public! !
+StartPrefixMapping:strURI:!**auto generated**!COM Interfaces-IVBSAXContentHandler!private! !
+!
 
 !IVBSAXContentHandler class methodsFor!
 
@@ -342,5 +344,7 @@ defineFunctions
 		defineFunction: #SkippedEntity:
 			argumentTypes: 'bstr*'
 ! !
-!IVBSAXContentHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IVBSAXContentHandler class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

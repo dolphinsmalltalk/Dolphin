@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 	instanceVariableNames: ''
@@ -68,14 +68,16 @@ RealmLength: anInteger
 	"Set the receiver's 'RealmLength' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_RealmLength put: anInteger! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainName!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainName:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainNameLength!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #DomainNameLength:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #Realm!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #Realm:!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #RealmLength!**compiled accessors**!public! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesFor: #RealmLength:!**compiled accessors**!public! !
+!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS categoriesForMethods!
+DomainName!**compiled accessors**!public! !
+DomainName:!**compiled accessors**!public! !
+DomainNameLength!**compiled accessors**!public! !
+DomainNameLength:!**compiled accessors**!public! !
+Realm!**compiled accessors**!public! !
+Realm:!**compiled accessors**!public! !
+RealmLength!**compiled accessors**!public! !
+RealmLength:!**compiled accessors**!public! !
+!
 
 !HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class methodsFor!
 
@@ -102,6 +104,8 @@ defineFields
 
 getFieldNames
 	^#(#DomainNameLength #DomainName #RealmLength #Realm)! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

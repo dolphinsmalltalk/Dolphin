@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STONStreamWriter subclass: #STONMapWriter
 	instanceVariableNames: ''
@@ -13,5 +13,7 @@ STONMapWriter comment: 'STONDictionaryWriter helps in writing dictionary based S
 at: key put: value
 	first ifTrue: [ first := false ] ifFalse: [ writer mapElementSeparator ].
 	writer encodeKey: key value: value! !
-!STONMapWriter categoriesFor: #at:put:!accessing!public! !
+!STONMapWriter categoriesForMethods!
+at:put:!accessing!public! !
+!
 

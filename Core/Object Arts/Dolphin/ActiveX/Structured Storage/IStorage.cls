@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IStorage
 	instanceVariableNames: ''
@@ -478,51 +478,53 @@ Stat: pstatstg grfStatFlag: grfStatFlag
 
 	<virtual stdcall: hresult 18 STATSTG* dword>
 	^self invalidCall: _failureCode! !
-!IStorage categoriesFor: #close!operations!public! !
-!IStorage categoriesFor: #clsid!accessing!public! !
-!IStorage categoriesFor: #clsid:!accessing!public! !
-!IStorage categoriesFor: #Commit:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #copy:to:!operations!public! !
-!IStorage categoriesFor: #copy:to:withName:!operations!public! !
-!IStorage categoriesFor: #CopyTo:rgiidExclude:snbExclude:pstgDest:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #CreateStorage:grfMode:dwStgFmt:reserved2:ppstg:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #CreateStream:grfMode:reserved1:reserved2:ppstm:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #defaultMode!constants!public! !
-!IStorage categoriesFor: #delete:!operations!public! !
-!IStorage categoriesFor: #DestroyElement:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #directory!accessing!public! !
-!IStorage categoriesFor: #doAutoConvert!operations!public! !
-!IStorage categoriesFor: #EnumElements:reserved2:reserved3:ppenum:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #fastFlush!operations!public! !
-!IStorage categoriesFor: #flush!operations!public! !
-!IStorage categoriesFor: #getCLIPFORMATAndUserType!accessing!public! !
-!IStorage categoriesFor: #iEnumStats!accessing!private! !
-!IStorage categoriesFor: #isAutoConvert!public!testing! !
-!IStorage categoriesFor: #isAutoConvert:!modes!public! !
-!IStorage categoriesFor: #move:to:!operations!public! !
-!IStorage categoriesFor: #move:to:withName:!operations!public! !
-!IStorage categoriesFor: #MoveElementTo:pstgDest:pwcsNewName:grfFlags:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #newStorage:!operations!public! !
-!IStorage categoriesFor: #newStorage:mode:!operations!public! !
-!IStorage categoriesFor: #newStorage:mode:format:!operations!public! !
-!IStorage categoriesFor: #newStream:!operations!public! !
-!IStorage categoriesFor: #newStream:mode:!operations!public! !
-!IStorage categoriesFor: #openStorage:!operations!public! !
-!IStorage categoriesFor: #openStorage:mode:!operations!public! !
-!IStorage categoriesFor: #OpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstg:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #openStream:!operations!public! !
-!IStorage categoriesFor: #openStream:mode:!operations!public! !
-!IStorage categoriesFor: #OpenStream:reserved1:grfMode:reserved2:ppstm:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #rename:to:!operations!public! !
-!IStorage categoriesFor: #RenameElement:pwcsNewName:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #Revert!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #rollback!operations!public! !
-!IStorage categoriesFor: #SetClass:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #setCLIPFORMAT:userType:!accessing!public! !
-!IStorage categoriesFor: #SetElementTimes:pctime:patime:pmtime:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #SetStateBits:grfMask:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
-!IStorage categoriesFor: #stat!accessing!public! !
-!IStorage categoriesFor: #Stat:grfStatFlag:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+!IStorage categoriesForMethods!
+close!operations!public! !
+clsid!accessing!public! !
+clsid:!accessing!public! !
+Commit:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+copy:to:!operations!public! !
+copy:to:withName:!operations!public! !
+CopyTo:rgiidExclude:snbExclude:pstgDest:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+CreateStorage:grfMode:dwStgFmt:reserved2:ppstg:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+CreateStream:grfMode:reserved1:reserved2:ppstm:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+defaultMode!constants!public! !
+delete:!operations!public! !
+DestroyElement:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+directory!accessing!public! !
+doAutoConvert!operations!public! !
+EnumElements:reserved2:reserved3:ppenum:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+fastFlush!operations!public! !
+flush!operations!public! !
+getCLIPFORMATAndUserType!accessing!public! !
+iEnumStats!accessing!private! !
+isAutoConvert!public!testing! !
+isAutoConvert:!modes!public! !
+move:to:!operations!public! !
+move:to:withName:!operations!public! !
+MoveElementTo:pstgDest:pwcsNewName:grfFlags:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+newStorage:!operations!public! !
+newStorage:mode:!operations!public! !
+newStorage:mode:format:!operations!public! !
+newStream:!operations!public! !
+newStream:mode:!operations!public! !
+openStorage:!operations!public! !
+openStorage:mode:!operations!public! !
+OpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstg:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+openStream:!operations!public! !
+openStream:mode:!operations!public! !
+OpenStream:reserved1:grfMode:reserved2:ppstm:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+rename:to:!operations!public! !
+RenameElement:pwcsNewName:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+Revert!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+rollback!operations!public! !
+SetClass:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+setCLIPFORMAT:userType:!accessing!public! !
+SetElementTimes:pctime:patime:pmtime:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+SetStateBits:grfMask:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+stat!accessing!public! !
+Stat:grfStatFlag:!**auto generated**!COM Interfaces-OBJIDL.IStorage!primitives!public! !
+!
 
 IStorage methodProtocol: #IStorage attributes: #(#readOnly) selectors: #(#Commit: #CopyTo:rgiidExclude:snbExclude:pstgDest: #CreateStorage:grfMode:dwStgFmt:reserved2:ppstg: #CreateStream:grfMode:reserved1:reserved2:ppstm: #DestroyElement: #EnumElements:reserved2:reserved3:ppenum: #MoveElementTo:pstgDest:pwcsNewName:grfFlags: #OpenStorage:pstgPriority:grfMode:snbExclude:reserved:ppstg: #OpenStream:reserved1:grfMode:reserved2:ppstm: #RenameElement:pwcsNewName: #Revert #SetClass: #SetElementTimes:pctime:patime:pmtime: #SetStateBits:grfMask: #Stat:grfStatFlag:)!
 
@@ -745,19 +747,21 @@ openOnILockBytes: anILockBytes mode: grfMode
 		reserved: 0
 		ppstgOpen: answer.
 	^answer! !
-!IStorage class categoriesFor: #create:!instance creation!public! !
-!IStorage class categoriesFor: #create:mode:!instance creation!public! !
-!IStorage class categoriesFor: #createOnILockBytes:!instance creation!public! !
-!IStorage class categoriesFor: #createOnILockBytes:mode:!instance creation!public! !
-!IStorage class categoriesFor: #defaultCreateMode!constants!public! !
-!IStorage class categoriesFor: #defaultOpenMode!constants!public! !
-!IStorage class categoriesFor: #defineFunctions!initializing!public! !
-!IStorage class categoriesFor: #initializeModeMaps!initializing!private! !
-!IStorage class categoriesFor: #onILockBytes!instance creation!public! !
-!IStorage class categoriesFor: #onILockBytes:!instance creation!public! !
-!IStorage class categoriesFor: #onILockBytes:mode:!instance creation!public! !
-!IStorage class categoriesFor: #open:!instance creation!public! !
-!IStorage class categoriesFor: #open:mode:!instance creation!public! !
-!IStorage class categoriesFor: #openOnILockBytes:!instance creation!public! !
-!IStorage class categoriesFor: #openOnILockBytes:mode:!instance creation!public! !
+!IStorage class categoriesForMethods!
+create:!instance creation!public! !
+create:mode:!instance creation!public! !
+createOnILockBytes:!instance creation!public! !
+createOnILockBytes:mode:!instance creation!public! !
+defaultCreateMode!constants!public! !
+defaultOpenMode!constants!public! !
+defineFunctions!initializing!public! !
+initializeModeMaps!initializing!private! !
+onILockBytes!instance creation!public! !
+onILockBytes:!instance creation!public! !
+onILockBytes:mode:!instance creation!public! !
+open:!instance creation!public! !
+open:mode:!instance creation!public! !
+openOnILockBytes:!instance creation!public! !
+openOnILockBytes:mode:!instance creation!public! !
+!
 

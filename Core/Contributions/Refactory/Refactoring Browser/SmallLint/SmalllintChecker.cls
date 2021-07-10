@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #SmalllintChecker
 	instanceVariableNames: 'rule environment context methodBlock'
@@ -49,15 +49,17 @@ run
 			[:aClass | 
 			self checkClass: aClass.
 			self checkMethodsForClass: aClass]! !
-!SmalllintChecker categoriesFor: #checkClass:!private! !
-!SmalllintChecker categoriesFor: #checkMethodsForClass:!private! !
-!SmalllintChecker categoriesFor: #context:!accessing!public! !
-!SmalllintChecker categoriesFor: #environment:!accessing!public! !
-!SmalllintChecker categoriesFor: #initialize!initialize/release!public! !
-!SmalllintChecker categoriesFor: #methodBlock:!accessing!public! !
-!SmalllintChecker categoriesFor: #release!initialize/release!public! !
-!SmalllintChecker categoriesFor: #rule:!accessing!public! !
-!SmalllintChecker categoriesFor: #run!actions!public! !
+!SmalllintChecker categoriesForMethods!
+checkClass:!private! !
+checkMethodsForClass:!private! !
+context:!accessing!public! !
+environment:!accessing!public! !
+initialize!initialize/release!public! !
+methodBlock:!accessing!public! !
+release!initialize/release!public! !
+rule:!accessing!public! !
+run!actions!public! !
+!
 
 !SmalllintChecker class methodsFor!
 
@@ -77,7 +79,9 @@ runRule: aLintRule onEnvironment: aBrowserEnvironment
 		environment: aBrowserEnvironment;
 		run.
 	^aLintRule! !
-!SmalllintChecker class categoriesFor: #new!instance creation!public! !
-!SmalllintChecker class categoriesFor: #newWithContext!instance creation!public! !
-!SmalllintChecker class categoriesFor: #runRule:onEnvironment:!instance creation!public! !
+!SmalllintChecker class categoriesForMethods!
+new!instance creation!public! !
+newWithContext!instance creation!public! !
+runRule:onEnvironment:!instance creation!public! !
+!
 

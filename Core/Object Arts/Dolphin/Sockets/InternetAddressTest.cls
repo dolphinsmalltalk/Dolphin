@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #InternetAddressTest
 	instanceVariableNames: ''
@@ -55,8 +55,10 @@ testLocalHost
 	self assert: local host asLowercase equals: computerName.
 	self assert: ((InternetAddress ipAddress: local ipAddress) host subStrings: $.) first asLowercase
 		equals: computerName! !
-!InternetAddressTest categoriesFor: #testAllForHost!public!unit tests! !
-!InternetAddressTest categoriesFor: #testHost!public!unit tests! !
-!InternetAddressTest categoriesFor: #testIsIPString!public!unit tests! !
-!InternetAddressTest categoriesFor: #testLocalHost!public!unit tests! !
+!InternetAddressTest categoriesForMethods!
+testAllForHost!public!unit tests! !
+testHost!public!unit tests! !
+testIsIPString!public!unit tests! !
+testLocalHost!public!unit tests! !
+!
 

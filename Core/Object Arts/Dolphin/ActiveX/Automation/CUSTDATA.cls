@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEFinalizableStructure subclass: #CUSTDATA
 	instanceVariableNames: 'contents'
@@ -50,11 +50,13 @@ prgCustData
 		fromAddress: (bytes intPtrAtOffset: _OffsetOf_prgCustData)
 		length: self cCustData
 		elementClass: CUSTDATAITEM! !
-!CUSTDATA categoriesFor: #basicFree!private!realizing/unrealizing! !
-!CUSTDATA categoriesFor: #buildContents!printing-IDL!private! !
-!CUSTDATA categoriesFor: #cCustData!**compiled accessors**!private! !
-!CUSTDATA categoriesFor: #contents!printing-IDL!public! !
-!CUSTDATA categoriesFor: #prgCustData!**compiled accessors**!public! !
+!CUSTDATA categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+buildContents!printing-IDL!private! !
+cCustData!**compiled accessors**!private! !
+contents!printing-IDL!public! !
+prgCustData!**compiled accessors**!public! !
+!
 
 !CUSTDATA class methodsFor!
 
@@ -90,7 +92,9 @@ initialize
 		at: (GUID fromString: '{82a85647-bd20-4075-823b-d9758c4391eb}') put: #length_is;
 		at: (GUID fromString: '{be29f9d9-7844-49e1-aacb-8e19386529df}') put: #size_is;
 		shrink! !
-!CUSTDATA class categoriesFor: #defineFields!public!template definition! !
-!CUSTDATA class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!CUSTDATA class categoriesFor: #initialize!public! !
+!CUSTDATA class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!public! !
+!
 

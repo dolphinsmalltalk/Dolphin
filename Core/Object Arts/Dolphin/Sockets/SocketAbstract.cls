@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #SocketAbstract
 	instanceVariableNames: 'port descriptor asyncError events'
@@ -215,36 +215,38 @@ waitOn: aSemaphore
 	self class waitingSemaphores add: aSemaphore.
 	[aSemaphore wait] ensure: [self class waitingSemaphores remove: aSemaphore ifAbsent: []].
 	self asyncError isNil ifFalse: [self asyncError signal]! !
-!SocketAbstract categoriesFor: #allowAsyncEvents!operations!private! !
-!SocketAbstract categoriesFor: #asParameter!converting!public! !
-!SocketAbstract categoriesFor: #asyncError!accessing!public! !
-!SocketAbstract categoriesFor: #asyncError:!accessing!private! !
-!SocketAbstract categoriesFor: #cancel!operations!public! !
-!SocketAbstract categoriesFor: #cancelWait!operations!private! !
-!SocketAbstract categoriesFor: #close!operations!public! !
-!SocketAbstract categoriesFor: #create!operations!private! !
-!SocketAbstract categoriesFor: #descriptor!accessing!private! !
-!SocketAbstract categoriesFor: #descriptor:!accessing!private! !
-!SocketAbstract categoriesFor: #error!exceptions!private! !
-!SocketAbstract categoriesFor: #finalize!finalizing!private! !
-!SocketAbstract categoriesFor: #getEvents!events!private! !
-!SocketAbstract categoriesFor: #initialize!initializing!private! !
-!SocketAbstract categoriesFor: #isOpen!public!testing! !
-!SocketAbstract categoriesFor: #onAsyncAccept!event handling!private! !
-!SocketAbstract categoriesFor: #onAsyncClose!event handling!private! !
-!SocketAbstract categoriesFor: #onAsyncError:!event handling!private! !
-!SocketAbstract categoriesFor: #onAsyncRead!event handling!private! !
-!SocketAbstract categoriesFor: #onAsyncWrite!event handling!private! !
-!SocketAbstract categoriesFor: #onShutdown!event handling!private! !
-!SocketAbstract categoriesFor: #onStartup!event handling!private! !
-!SocketAbstract categoriesFor: #port!accessing!public! !
-!SocketAbstract categoriesFor: #port:!accessing!private! !
-!SocketAbstract categoriesFor: #printOn:!printing!public! !
-!SocketAbstract categoriesFor: #queryPort!accessing!public! !
-!SocketAbstract categoriesFor: #registerDescriptor!operations!private! !
-!SocketAbstract categoriesFor: #setEvents:!events!private! !
-!SocketAbstract categoriesFor: #unregisterDescriptor!operations!private! !
-!SocketAbstract categoriesFor: #waitOn:!operations!private! !
+!SocketAbstract categoriesForMethods!
+allowAsyncEvents!operations!private! !
+asParameter!converting!public! !
+asyncError!accessing!public! !
+asyncError:!accessing!private! !
+cancel!operations!public! !
+cancelWait!operations!private! !
+close!operations!public! !
+create!operations!private! !
+descriptor!accessing!private! !
+descriptor:!accessing!private! !
+error!exceptions!private! !
+finalize!finalizing!private! !
+getEvents!events!private! !
+initialize!initializing!private! !
+isOpen!public!testing! !
+onAsyncAccept!event handling!private! !
+onAsyncClose!event handling!private! !
+onAsyncError:!event handling!private! !
+onAsyncRead!event handling!private! !
+onAsyncWrite!event handling!private! !
+onShutdown!event handling!private! !
+onStartup!event handling!private! !
+port!accessing!public! !
+port:!accessing!private! !
+printOn:!printing!public! !
+queryPort!accessing!public! !
+registerDescriptor!operations!private! !
+setEvents:!events!private! !
+unregisterDescriptor!operations!private! !
+waitOn:!operations!private! !
+!
 
 !SocketAbstract class methodsFor!
 
@@ -324,14 +326,16 @@ waitingSemaphores
 
 	WaitingSemaphores isNil ifTrue: [WaitingSemaphores := SharedSet new].
 	^WaitingSemaphores! !
-!SocketAbstract class categoriesFor: #addSocket:!accessing!private! !
-!SocketAbstract class categoriesFor: #allSockets!accessing!private! !
-!SocketAbstract class categoriesFor: #fromDescriptor:!instance creation!public! !
-!SocketAbstract class categoriesFor: #initialize!initializing!must not strip!private! !
-!SocketAbstract class categoriesFor: #onShutdown!event handling!private! !
-!SocketAbstract class categoriesFor: #onStartup!event handling!private! !
-!SocketAbstract class categoriesFor: #publishedEventsOfInstances!development!events!public! !
-!SocketAbstract class categoriesFor: #removeSocket:!accessing!private! !
-!SocketAbstract class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!SocketAbstract class categoriesFor: #waitingSemaphores!accessing!private! !
+!SocketAbstract class categoriesForMethods!
+addSocket:!accessing!private! !
+allSockets!accessing!private! !
+fromDescriptor:!instance creation!public! !
+initialize!initializing!must not strip!private! !
+onShutdown!event handling!private! !
+onStartup!event handling!private! !
+publishedEventsOfInstances!development!events!public! !
+removeSocket:!accessing!private! !
+uninitialize!class hierarchy-removing!private! !
+waitingSemaphores!accessing!private! !
+!
 

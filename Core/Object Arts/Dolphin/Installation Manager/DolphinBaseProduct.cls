@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinCoreProduct subclass: #DolphinBaseProduct
 	instanceVariableNames: ''
@@ -165,10 +165,12 @@ warnOfUnlistedContent
 			[self unlistedContentException 
 				signal: 'The deployed image will include the following unlisted pre-requisite packages: ' 
 						, unlistedContent displayString]! !
-!DolphinBaseProduct categoriesFor: #calcSystemFolderExtentFor:!helpers!private! !
-!DolphinBaseProduct categoriesFor: #contents!accessing!public! !
-!DolphinBaseProduct categoriesFor: #fullName!accessing!public! !
-!DolphinBaseProduct categoriesFor: #warnOfUnlistedContent!operations!private! !
+!DolphinBaseProduct categoriesForMethods!
+calcSystemFolderExtentFor:!helpers!private! !
+contents!accessing!public! !
+fullName!accessing!public! !
+warnOfUnlistedContent!operations!private! !
+!
 
 !DolphinBaseProduct class methodsFor!
 
@@ -181,6 +183,8 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DBASE'! !
-!DolphinBaseProduct class categoriesFor: #productName!accessing!public! !
-!DolphinBaseProduct class categoriesFor: #shortProductName!accessing!public! !
+!DolphinBaseProduct class categoriesForMethods!
+productName!accessing!public! !
+shortProductName!accessing!public! !
+!
 

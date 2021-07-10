@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Smalltalk at: #ListViewConstants put: (PoolConstantsDictionary named: #ListViewConstants)!
 ListViewConstants at: 'LV_MAX_WORKAREAS' put: 16r10!

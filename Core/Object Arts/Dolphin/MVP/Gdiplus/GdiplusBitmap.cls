@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusImage subclass: #GdiplusBitmap
 	instanceVariableNames: ''
@@ -105,14 +105,16 @@ unlockBits: lockedBitmapData
 	(status := GdiplusLibrary default gdipBitmapUnlockBits: self handle
 				lockedBitmapData: lockedBitmapData) = Ok
 		ifFalse: [^GdiplusError signal: 'Error in GdipBitmapUnlockBits' with: status]! !
-!GdiplusBitmap categoriesFor: #asBitmap!public! !
-!GdiplusBitmap categoriesFor: #asIcon!public! !
-!GdiplusBitmap categoriesFor: #cloneBitmapRectangle:format:!copying!private! !
-!GdiplusBitmap categoriesFor: #cloneFormat:!copying!public! !
-!GdiplusBitmap categoriesFor: #lockBits:flags:format:lockedBitmapData:!accessing!public! !
-!GdiplusBitmap categoriesFor: #pixelAt:!accessing!public! !
-!GdiplusBitmap categoriesFor: #pixelAt:put:!accessing!public! !
-!GdiplusBitmap categoriesFor: #unlockBits:!accessing!public! !
+!GdiplusBitmap categoriesForMethods!
+asBitmap!public! !
+asIcon!public! !
+cloneBitmapRectangle:format:!copying!private! !
+cloneFormat:!copying!public! !
+lockBits:flags:format:lockedBitmapData:!accessing!public! !
+pixelAt:!accessing!public! !
+pixelAt:put:!accessing!public! !
+unlockBits:!accessing!public! !
+!
 
 !GdiplusBitmap class methodsFor!
 
@@ -357,27 +359,29 @@ width: width height: height format: aPixelFormat
 				width: width
 				height: height
 				format: aPixelFormat)! !
-!GdiplusBitmap class categoriesFor: #exampleGdipBFromBitmap!examples!public!sunit! !
-!GdiplusBitmap class categoriesFor: #exampleGdipBFromByteArray!examples!public!sunit! !
-!GdiplusBitmap class categoriesFor: #exampleGdipBFromDIB!examples!public!sunit! !
-!GdiplusBitmap class categoriesFor: #exampleGdipBFromXPIcon!examples!public!sunit! !
-!GdiplusBitmap class categoriesFor: #exampleGdipBResize1!examples!public!sunit! !
-!GdiplusBitmap class categoriesFor: #exampleGdipBResize2!examples!public!sunit! !
-!GdiplusBitmap class categoriesFor: #exampleGdipBResize3!examples!public!sunit! !
-!GdiplusBitmap class categoriesFor: #exampleLockBitsTest1Bmp!examples!private! !
-!GdiplusBitmap class categoriesFor: #exampleLockBitsTest2Bmp!examples!private! !
-!GdiplusBitmap class categoriesFor: #extent:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromBitmap:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromByteArray:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromFile:usingLocator:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromIcon:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromImage:centeredIn:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromImage:crop:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromImage:extent:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromImage:scaledBy:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromIStream:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #fromView:!public! !
-!GdiplusBitmap class categoriesFor: #new!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #width:height:!instance creation!public! !
-!GdiplusBitmap class categoriesFor: #width:height:format:!instance creation!public! !
+!GdiplusBitmap class categoriesForMethods!
+exampleGdipBFromBitmap!examples!public!sunit! !
+exampleGdipBFromByteArray!examples!public!sunit! !
+exampleGdipBFromDIB!examples!public!sunit! !
+exampleGdipBFromXPIcon!examples!public!sunit! !
+exampleGdipBResize1!examples!public!sunit! !
+exampleGdipBResize2!examples!public!sunit! !
+exampleGdipBResize3!examples!public!sunit! !
+exampleLockBitsTest1Bmp!examples!private! !
+exampleLockBitsTest2Bmp!examples!private! !
+extent:!instance creation!public! !
+fromBitmap:!instance creation!public! !
+fromByteArray:!instance creation!public! !
+fromFile:usingLocator:!instance creation!public! !
+fromIcon:!instance creation!public! !
+fromImage:centeredIn:!instance creation!public! !
+fromImage:crop:!instance creation!public! !
+fromImage:extent:!instance creation!public! !
+fromImage:scaledBy:!instance creation!public! !
+fromIStream:!instance creation!public! !
+fromView:!public! !
+new!instance creation!public! !
+width:height:!instance creation!public! !
+width:height:format:!instance creation!public! !
+!
 

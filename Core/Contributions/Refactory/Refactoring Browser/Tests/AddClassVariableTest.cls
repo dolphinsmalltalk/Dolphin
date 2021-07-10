@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #AddClassVariableTest
 	instanceVariableNames: ''
@@ -65,12 +65,14 @@ testModelMetaclass
 				variable: #ClassVarName3
 				class: (model classNamed: #Bar) metaclass.
 	self shouldFail: refactoring! !
-!AddClassVariableTest categoriesFor: #setUp!public!set up! !
-!AddClassVariableTest categoriesFor: #testAddClassVariable!public!tests! !
-!AddClassVariableTest categoriesFor: #testAlreadyExistingName!failure tests!public! !
-!AddClassVariableTest categoriesFor: #testMetaclass!failure tests!public! !
-!AddClassVariableTest categoriesFor: #testMetaClassFailure!failure tests!public! !
-!AddClassVariableTest categoriesFor: #testModelAddClassVariable!public!tests! !
-!AddClassVariableTest categoriesFor: #testModelAlreadyExistingName!failure tests!public! !
-!AddClassVariableTest categoriesFor: #testModelMetaclass!failure tests!public! !
+!AddClassVariableTest categoriesForMethods!
+setUp!public!set up! !
+testAddClassVariable!public!tests! !
+testAlreadyExistingName!failure tests!public! !
+testMetaclass!failure tests!public! !
+testMetaClassFailure!failure tests!public! !
+testModelAddClassVariable!public!tests! !
+testModelAlreadyExistingName!failure tests!public! !
+testModelMetaclass!failure tests!public! !
+!
 

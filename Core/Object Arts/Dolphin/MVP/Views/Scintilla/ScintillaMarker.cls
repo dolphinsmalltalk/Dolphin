@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ScintillaMarker
 	instanceVariableNames: 'view definition line handle'
@@ -83,20 +83,22 @@ view
 
 view: anObject
 	view := anObject! !
-!ScintillaMarker categoriesFor: #addToView:!helpers!public! !
-!ScintillaMarker categoriesFor: #cacheCurrentLine!accessing!public! !
-!ScintillaMarker categoriesFor: #currentLine!accessing!public! !
-!ScintillaMarker categoriesFor: #currentPosition!accessing!public! !
-!ScintillaMarker categoriesFor: #currentRange!accessing!public! !
-!ScintillaMarker categoriesFor: #definition!helpers!public! !
-!ScintillaMarker categoriesFor: #handle!accessing!private! !
-!ScintillaMarker categoriesFor: #line!accessing!public! !
-!ScintillaMarker categoriesFor: #removedFromView!private!removing! !
-!ScintillaMarker categoriesFor: #removeFromView!public!removing! !
-!ScintillaMarker categoriesFor: #setDefinition:line:!initializing!private! !
-!ScintillaMarker categoriesFor: #type!accessing!public! !
-!ScintillaMarker categoriesFor: #view!accessing!private! !
-!ScintillaMarker categoriesFor: #view:!accessing!private! !
+!ScintillaMarker categoriesForMethods!
+addToView:!helpers!public! !
+cacheCurrentLine!accessing!public! !
+currentLine!accessing!public! !
+currentPosition!accessing!public! !
+currentRange!accessing!public! !
+definition!helpers!public! !
+handle!accessing!private! !
+line!accessing!public! !
+removedFromView!private!removing! !
+removeFromView!public!removing! !
+setDefinition:line:!initializing!private! !
+type!accessing!public! !
+view!accessing!private! !
+view:!accessing!private! !
+!
 
 !ScintillaMarker class methodsFor!
 
@@ -107,6 +109,8 @@ definition: aScintillaMarkerDefinition line: anInteger
 
 icon
 	^ScintillaView icon! !
-!ScintillaMarker class categoriesFor: #definition:line:!instance creation!public! !
-!ScintillaMarker class categoriesFor: #icon!constants!development!public! !
+!ScintillaMarker class categoriesForMethods!
+definition:line:!instance creation!public! !
+icon!constants!development!public! !
+!
 

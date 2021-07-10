@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #GdiplusTests
 	instanceVariableNames: 'model'
@@ -63,20 +63,24 @@ tearDown
 			[model free.
 			model := nil].
 	super tearDown! !
-!GdiplusTests categoriesFor: #assertPersistedValid!asserting!public! !
-!GdiplusTests categoriesFor: #compare:to:!comparing!public! !
-!GdiplusTests categoriesFor: #compare:to:epsilon:!comparing!public! !
-!GdiplusTests categoriesFor: #fileLocator!accessing!public! !
-!GdiplusTests categoriesFor: #fileResource!accessing!public! !
-!GdiplusTests categoriesFor: #getSampleBrush!accessing!public! !
-!GdiplusTests categoriesFor: #getSampleGDIBitmap!accessing!public! !
-!GdiplusTests categoriesFor: #getSampleLinearGradientBrush!accessing!public! !
-!GdiplusTests categoriesFor: #getSamplePen!accessing!public! !
-!GdiplusTests categoriesFor: #tearDown!public!Running! !
+!GdiplusTests categoriesForMethods!
+assertPersistedValid!asserting!public! !
+compare:to:!comparing!public! !
+compare:to:epsilon:!comparing!public! !
+fileLocator!accessing!public! !
+fileResource!accessing!public! !
+getSampleBrush!accessing!public! !
+getSampleGDIBitmap!accessing!public! !
+getSampleLinearGradientBrush!accessing!public! !
+getSamplePen!accessing!public! !
+tearDown!public!Running! !
+!
 
 !GdiplusTests class methodsFor!
 
 resources
 	^Array with: GdiplusFileResource! !
-!GdiplusTests class categoriesFor: #resources!accessing!public! !
+!GdiplusTests class categoriesForMethods!
+resources!accessing!public! !
+!
 

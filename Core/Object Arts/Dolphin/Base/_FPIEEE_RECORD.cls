@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #_FPIEEE_RECORD
 	instanceVariableNames: ''
@@ -118,23 +118,25 @@ roundingModeName
 	"Answer the symbolic name of the rounding mode configured at the time of the exception."
 
 	^self class roundingModes at: self roundingMode + 1 ifAbsent: [#Unknown]! !
-!_FPIEEE_RECORD categoriesFor: #cause!**compiled accessors**!public! !
-!_FPIEEE_RECORD categoriesFor: #causeDescription!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #causeNames!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #enable!**compiled accessors**!public! !
-!_FPIEEE_RECORD categoriesFor: #flags!**compiled accessors**!public! !
-!_FPIEEE_RECORD categoriesFor: #isDivide!public!testing! !
-!_FPIEEE_RECORD categoriesFor: #isOverflow!public!testing! !
-!_FPIEEE_RECORD categoriesFor: #isUnderflow!public!testing! !
-!_FPIEEE_RECORD categoriesFor: #isZeroDivide!public!testing! !
-!_FPIEEE_RECORD categoriesFor: #operand1!**compiled accessors**!public! !
-!_FPIEEE_RECORD categoriesFor: #operand2!**compiled accessors**!public! !
-!_FPIEEE_RECORD categoriesFor: #operation!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #operationName!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #precision!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #precisionName!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #roundingMode!accessing!public! !
-!_FPIEEE_RECORD categoriesFor: #roundingModeName!accessing!public! !
+!_FPIEEE_RECORD categoriesForMethods!
+cause!**compiled accessors**!public! !
+causeDescription!accessing!public! !
+causeNames!accessing!public! !
+enable!**compiled accessors**!public! !
+flags!**compiled accessors**!public! !
+isDivide!public!testing! !
+isOverflow!public!testing! !
+isUnderflow!public!testing! !
+isZeroDivide!public!testing! !
+operand1!**compiled accessors**!public! !
+operand2!**compiled accessors**!public! !
+operation!accessing!public! !
+operationName!accessing!public! !
+precision!accessing!public! !
+precisionName!accessing!public! !
+roundingMode!accessing!public! !
+roundingModeName!accessing!public! !
+!
 
 !_FPIEEE_RECORD class methodsFor!
 
@@ -194,12 +196,14 @@ printFlags: anInteger on: aStream
 
 roundingModes
 	^#(#Nearest #MinusInfinity #PlusInfinity #Chopped)! !
-!_FPIEEE_RECORD class categoriesFor: #defineFields!public!template definition! !
-!_FPIEEE_RECORD class categoriesFor: #exceptionFlags!constants!public! !
-!_FPIEEE_RECORD class categoriesFor: #exceptionFlags:do:!helpers!private! !
-!_FPIEEE_RECORD class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!_FPIEEE_RECORD class categoriesFor: #operationCodes!constants!public! !
-!_FPIEEE_RECORD class categoriesFor: #precisionModes!constants!public! !
-!_FPIEEE_RECORD class categoriesFor: #printFlags:on:!helpers!private! !
-!_FPIEEE_RECORD class categoriesFor: #roundingModes!constants!public! !
+!_FPIEEE_RECORD class categoriesForMethods!
+defineFields!public!template definition! !
+exceptionFlags!constants!public! !
+exceptionFlags:do:!helpers!private! !
+getFieldNames!**compiled accessors**!constants!private! !
+operationCodes!constants!public! !
+precisionModes!constants!public! !
+printFlags:on:!helpers!private! !
+roundingModes!constants!public! !
+!
 

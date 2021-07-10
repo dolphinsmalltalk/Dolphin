@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ChunkBrowserChunk subclass: #ChunkBrowserExpressionChunk
 	instanceVariableNames: ''
@@ -30,6 +30,8 @@ restoreAndLog: aBoolean
 			answer := index -> e errorMessage.
 			e resume].
 	^answer! !
-!ChunkBrowserExpressionChunk categoriesFor: #restore!operations!public! !
-!ChunkBrowserExpressionChunk categoriesFor: #restoreAndLog:!operations!public! !
+!ChunkBrowserExpressionChunk categoriesForMethods!
+restore!operations!public! !
+restoreAndLog:!operations!public! !
+!
 

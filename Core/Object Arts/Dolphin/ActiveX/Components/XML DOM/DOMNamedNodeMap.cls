@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Dictionary variableSubclass: #DOMNamedNodeMap
 	instanceVariableNames: 'interface parentNode'
@@ -219,37 +219,39 @@ uncheckedAdd: newObject
 	"Private - Should not be sent to the receiver."
 
 	^self shouldNotImplement! !
-!DOMNamedNodeMap categoriesFor: #add:!adding!public! !
-!DOMNamedNodeMap categoriesFor: #associationAt:ifAbsent:!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #associationClass!constants!private! !
-!DOMNamedNodeMap categoriesFor: #associations!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #associationsDo:!enumerating!public! !
-!DOMNamedNodeMap categoriesFor: #at:ifAbsent:!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #at:put:!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #copyElementsInto:!adding!private! !
-!DOMNamedNodeMap categoriesFor: #createNamedNode:!helpers!private! !
-!DOMNamedNodeMap categoriesFor: #do:!enumerating!public! !
-!DOMNamedNodeMap categoriesFor: #getNamedItem:!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #hash:max:!private!searching! !
-!DOMNamedNodeMap categoriesFor: #includesKey:!public!searching! !
-!DOMNamedNodeMap categoriesFor: #interface!accessing!private! !
-!DOMNamedNodeMap categoriesFor: #item:!properties!public! !
-!DOMNamedNodeMap categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!DOMNamedNodeMap categoriesFor: #length!properties!public! !
-!DOMNamedNodeMap categoriesFor: #lookup:!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #nextNode!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #postCopy!copying!public! !
-!DOMNamedNodeMap categoriesFor: #privateAt:put:!accessing!private! !
-!DOMNamedNodeMap categoriesFor: #removeIndex:!private!removing! !
-!DOMNamedNodeMap categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!DOMNamedNodeMap categoriesFor: #removeNamedItem:!public!removing! !
-!DOMNamedNodeMap categoriesFor: #removeQualifiedItem:namespaceURI:!public!removing! !
-!DOMNamedNodeMap categoriesFor: #reset!enumerating!public! !
-!DOMNamedNodeMap categoriesFor: #setInterface:parentNode:!accessing!private! !
-!DOMNamedNodeMap categoriesFor: #setNamedItem:!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #size!accessing!public! !
-!DOMNamedNodeMap categoriesFor: #species!constants!public! !
-!DOMNamedNodeMap categoriesFor: #uncheckedAdd:!adding!private! !
+!DOMNamedNodeMap categoriesForMethods!
+add:!adding!public! !
+associationAt:ifAbsent:!accessing!public! !
+associationClass!constants!private! !
+associations!accessing!public! !
+associationsDo:!enumerating!public! !
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+copyElementsInto:!adding!private! !
+createNamedNode:!helpers!private! !
+do:!enumerating!public! !
+getNamedItem:!accessing!public! !
+hash:max:!private!searching! !
+includesKey:!public!searching! !
+interface!accessing!private! !
+item:!properties!public! !
+keysAndValuesDo:!enumerating!public! !
+length!properties!public! !
+lookup:!accessing!public! !
+nextNode!accessing!public! !
+postCopy!copying!public! !
+privateAt:put:!accessing!private! !
+removeIndex:!private!removing! !
+removeKey:ifAbsent:!public!removing! !
+removeNamedItem:!public!removing! !
+removeQualifiedItem:namespaceURI:!public!removing! !
+reset!enumerating!public! !
+setInterface:parentNode:!accessing!private! !
+setNamedItem:!accessing!public! !
+size!accessing!public! !
+species!constants!public! !
+uncheckedAdd:!adding!private! !
+!
 
 !DOMNamedNodeMap class methodsFor!
 
@@ -261,5 +263,7 @@ onInterface: anIXMLDOMNamedNodeMap parentNode: anIXMLDOMNode
 		setInterface: anIXMLDOMNamedNodeMap parentNode: anIXMLDOMNode
 
 	! !
-!DOMNamedNodeMap class categoriesFor: #onInterface:parentNode:!instance creation!public! !
+!DOMNamedNodeMap class categoriesForMethods!
+onInterface:parentNode:!instance creation!public! !
+!
 

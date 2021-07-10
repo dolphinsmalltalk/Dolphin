@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BrowserEnvironmentWrapper subclass: #ClassEnvironment
 	instanceVariableNames: 'classes metaClasses'
@@ -120,28 +120,32 @@ storeOn: aStream
 				class := Smalltalk at: each ifAbsent: [nil].
 				class notNil ifTrue: [sum add: class class].
 				sum])))'! !
-!ClassEnvironment categoriesFor: #addClass:!adding!public! !
-!ClassEnvironment categoriesFor: #classes:!initialize/release!public! !
-!ClassEnvironment categoriesFor: #classesAndSelectorsDo:!accessing!public! !
-!ClassEnvironment categoriesFor: #classesDo:!accessing/classes!public! !
-!ClassEnvironment categoriesFor: #classNames!accessing/classes!public! !
-!ClassEnvironment categoriesFor: #defaultLabel!constants!private! !
-!ClassEnvironment categoriesFor: #definesClass:!public!testing! !
-!ClassEnvironment categoriesFor: #includesCategory:!public!testing! !
-!ClassEnvironment categoriesFor: #includesClass:!public!testing! !
-!ClassEnvironment categoriesFor: #initialize!initialize/release!public! !
-!ClassEnvironment categoriesFor: #isClassEnvironment!public!testing! !
-!ClassEnvironment categoriesFor: #isEmpty!public!testing! !
-!ClassEnvironment categoriesFor: #postCopy!copying!public! !
-!ClassEnvironment categoriesFor: #problemCount!accessing!public! !
-!ClassEnvironment categoriesFor: #removeClass:!public!removing! !
-!ClassEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
-!ClassEnvironment categoriesFor: #storeOn:!printing!public! !
+!ClassEnvironment categoriesForMethods!
+addClass:!adding!public! !
+classes:!initialize/release!public! !
+classesAndSelectorsDo:!accessing!public! !
+classesDo:!accessing/classes!public! !
+classNames!accessing/classes!public! !
+defaultLabel!constants!private! !
+definesClass:!public!testing! !
+includesCategory:!public!testing! !
+includesClass:!public!testing! !
+initialize!initialize/release!public! !
+isClassEnvironment!public!testing! !
+isEmpty!public!testing! !
+postCopy!copying!public! !
+problemCount!accessing!public! !
+removeClass:!public!removing! !
+selectorsForClass:do:!accessing!public! !
+storeOn:!printing!public! !
+!
 
 !ClassEnvironment class methodsFor!
 
 onEnvironment: anEnvironment classes: aCollection
 	^(self onEnvironment: anEnvironment)
 		classes: aCollection; yourself! !
-!ClassEnvironment class categoriesFor: #onEnvironment:classes:!instance creation!public! !
+!ClassEnvironment class categoriesForMethods!
+onEnvironment:classes:!instance creation!public! !
+!
 

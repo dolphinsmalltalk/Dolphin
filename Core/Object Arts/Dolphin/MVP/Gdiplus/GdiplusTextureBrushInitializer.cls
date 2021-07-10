@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusTextureBrushInitializer
 	instanceVariableNames: 'image wrapMode rectangle'
@@ -41,10 +41,12 @@ image: anImage wrapMode: aNumber rectangle: aRectangle
 
 isPersistent
 	^image isPersistent! !
-!GdiplusTextureBrushInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusTextureBrushInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusTextureBrushInitializer categoriesFor: #image:wrapMode:rectangle:!initializing!private! !
-!GdiplusTextureBrushInitializer categoriesFor: #isPersistent!public! !
+!GdiplusTextureBrushInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+image:wrapMode:rectangle:!initializing!private! !
+isPersistent!public! !
+!
 
 !GdiplusTextureBrushInitializer class methodsFor!
 
@@ -53,5 +55,7 @@ image: anImage wrapMode: aNumber rectangle: aRectangle
 		image: anImage
 		wrapMode: aNumber
 		rectangle: aRectangle! !
-!GdiplusTextureBrushInitializer class categoriesFor: #image:wrapMode:rectangle:!instance creation!public! !
+!GdiplusTextureBrushInitializer class categoriesForMethods!
+image:wrapMode:rectangle:!instance creation!public! !
+!
 

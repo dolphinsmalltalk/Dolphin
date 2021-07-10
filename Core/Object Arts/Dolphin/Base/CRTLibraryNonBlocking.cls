@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CRTLibrary subclass: #CRTLibraryNonBlocking
 	instanceVariableNames: ''
@@ -37,11 +37,13 @@ fgetws: buf n: bufsize stream: aFILE
 fread_s: buffer bufferSize: bufsizeInteger elementSize: elemSizeInteger count: countInteger stream: aFILE
 	<overlap cdecl: sdword fread_s lpvoid intptr intptr intptr handle>
 	^self invalidCall: _failureCode! !
-!CRTLibraryNonBlocking categoriesFor: #_errno!CRT functions-process and environment control!public! !
-!CRTLibraryNonBlocking categoriesFor: #chmod:pmode:!CRT functions-file handling!public! !
-!CRTLibraryNonBlocking categoriesFor: #fgetc:!CRT functions-stream I/O!public! !
-!CRTLibraryNonBlocking categoriesFor: #fgets:n:stream:!CRT functions-stream I/O!public! !
-!CRTLibraryNonBlocking categoriesFor: #fgetwc:!CRT functions-stream I/O!public! !
-!CRTLibraryNonBlocking categoriesFor: #fgetws:n:stream:!CRT functions-stream I/O!public! !
-!CRTLibraryNonBlocking categoriesFor: #fread_s:bufferSize:elementSize:count:stream:!CRT functions-stream I/O!public! !
+!CRTLibraryNonBlocking categoriesForMethods!
+_errno!CRT functions-process and environment control!public! !
+chmod:pmode:!CRT functions-file handling!public! !
+fgetc:!CRT functions-stream I/O!public! !
+fgets:n:stream:!CRT functions-stream I/O!public! !
+fgetwc:!CRT functions-stream I/O!public! !
+fgetws:n:stream:!CRT functions-stream I/O!public! !
+fread_s:bufferSize:elementSize:count:stream:!CRT functions-stream I/O!public! !
+!
 

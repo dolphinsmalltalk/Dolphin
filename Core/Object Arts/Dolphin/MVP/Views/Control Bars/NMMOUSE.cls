@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMHDR subclass: #NMMOUSE
 	instanceVariableNames: ''
@@ -45,12 +45,14 @@ pt
 	"Answer the <POINTL> value of the receiver's 'pt' field."
 
 	^POINTL fromAddress: bytes yourAddress + _OffsetOf_pt! !
-!NMMOUSE categoriesFor: #dwHitInfo!**compiled accessors**!public! !
-!NMMOUSE categoriesFor: #dwItemData!**compiled accessors**!public! !
-!NMMOUSE categoriesFor: #dwItemSpec!**compiled accessors**!public! !
-!NMMOUSE categoriesFor: #iItem!accessing!public! !
-!NMMOUSE categoriesFor: #position!accessing!public! !
-!NMMOUSE categoriesFor: #pt!**compiled accessors**!public! !
+!NMMOUSE categoriesForMethods!
+dwHitInfo!**compiled accessors**!public! !
+dwItemData!**compiled accessors**!public! !
+dwItemSpec!**compiled accessors**!public! !
+iItem!accessing!public! !
+position!accessing!public! !
+pt!**compiled accessors**!public! !
+!
 
 !NMMOUSE class methodsFor!
 
@@ -68,6 +70,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwItemSpec #dwItemData #pt #dwHitInfo)! !
-!NMMOUSE class categoriesFor: #defineFields!public!template definition! !
-!NMMOUSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NMMOUSE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #COMObjectStub
 	instanceVariableNames: 'cookie object count interfaces outerUnknown'
@@ -300,25 +300,27 @@ supportsInterface: interface
 	supports that implementation!!)."
 
 	^interface == IUnknown! !
-!COMObjectStub categoriesFor: #addInterface:!accessing-interfaces!private! !
-!COMObjectStub categoriesFor: #AddRef!COM Interfaces-IUnknown!private! !
-!COMObjectStub categoriesFor: #callback:vfn:withArgumentsAt:!evaluating!private! !
-!COMObjectStub categoriesFor: #cookie!accessing!private! !
-!COMObjectStub categoriesFor: #disconnect!public!realizing/unrealizing! !
-!COMObjectStub categoriesFor: #findInterface:ifNoneAdd:!accessing-interfaces!private! !
-!COMObjectStub categoriesFor: #free!operations!private! !
-!COMObjectStub categoriesFor: #innerAddRef!non delegating unknown!private! !
-!COMObjectStub categoriesFor: #innerQueryInterface:ppvObject:!non delegating unknown!private! !
-!COMObjectStub categoriesFor: #innerRelease!non delegating unknown!private! !
-!COMObjectStub categoriesFor: #onObject:!initializing!private! !
-!COMObjectStub categoriesFor: #outerUnknown:!accessing!private! !
-!COMObjectStub categoriesFor: #printOn:!development!printing!public! !
-!COMObjectStub categoriesFor: #queryInterface:!accessing-interfaces!public! !
-!COMObjectStub categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
-!COMObjectStub categoriesFor: #QueryInterface:ppvObject:!COM Interfaces-IUnknown!private! !
-!COMObjectStub categoriesFor: #referenceCount!accessing!private! !
-!COMObjectStub categoriesFor: #Release!COM Interfaces-IUnknown!private! !
-!COMObjectStub categoriesFor: #supportsInterface:!accessing-interfaces!private!testing! !
+!COMObjectStub categoriesForMethods!
+addInterface:!accessing-interfaces!private! !
+AddRef!COM Interfaces-IUnknown!private! !
+callback:vfn:withArgumentsAt:!evaluating!private! !
+cookie!accessing!private! !
+disconnect!public!realizing/unrealizing! !
+findInterface:ifNoneAdd:!accessing-interfaces!private! !
+free!operations!private! !
+innerAddRef!non delegating unknown!private! !
+innerQueryInterface:ppvObject:!non delegating unknown!private! !
+innerRelease!non delegating unknown!private! !
+onObject:!initializing!private! !
+outerUnknown:!accessing!private! !
+printOn:!development!printing!public! !
+queryInterface:!accessing-interfaces!public! !
+queryInterface:ifNone:!accessing-interfaces!public! !
+QueryInterface:ppvObject:!COM Interfaces-IUnknown!private! !
+referenceCount!accessing!private! !
+Release!COM Interfaces-IUnknown!private! !
+supportsInterface:!accessing-interfaces!private!testing! !
+!
 
 !COMObjectStub class methodsFor!
 
@@ -374,12 +376,14 @@ uninitialize
 
 	self initializeRegistries.
 	VMLibrary default registryAtIndex: 70 put: nil! !
-!COMObjectStub class categoriesFor: #disconnectAll!accessing!public! !
-!COMObjectStub class categoriesFor: #initialize!development!initializing!private! !
-!COMObjectStub class categoriesFor: #initializeRegistries!initializing!private! !
-!COMObjectStub class categoriesFor: #on:!instance creation!public! !
-!COMObjectStub class categoriesFor: #onExit!event handling!private! !
-!COMObjectStub class categoriesFor: #onStartup!event handling!private! !
-!COMObjectStub class categoriesFor: #registry!accessing!private! !
-!COMObjectStub class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!COMObjectStub class categoriesForMethods!
+disconnectAll!accessing!public! !
+initialize!development!initializing!private! !
+initializeRegistries!initializing!private! !
+on:!instance creation!public! !
+onExit!event handling!private! !
+onStartup!event handling!private! !
+registry!accessing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

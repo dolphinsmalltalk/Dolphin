@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LayoutManager subclass: #BorderLayout
 	instanceVariableNames: 'horizontalGap verticalGap north south east west center'
@@ -279,31 +279,33 @@ widthForEdge: aView ofHeight: anInteger inContext: aLayoutContext
 	rect height: anInteger.
 	aLayoutContext setView: aView rectangle: rect.
 	^(aView layoutExtent: aLayoutContext) x! !
-!BorderLayout categoriesFor: #arrangementOf:!accessing!public! !
-!BorderLayout categoriesFor: #arrangementOf:put:!accessing!public! !
-!BorderLayout categoriesFor: #center!accessing!public! !
-!BorderLayout categoriesFor: #center:!accessing!public! !
-!BorderLayout categoriesFor: #east!accessing!public! !
-!BorderLayout categoriesFor: #east:!accessing!public! !
-!BorderLayout categoriesFor: #heightForEdge:ofWidth:inContext:!geometry!helpers!private! !
-!BorderLayout categoriesFor: #horizontalGap!accessing!public! !
-!BorderLayout categoriesFor: #horizontalGap:!accessing!public! !
-!BorderLayout categoriesFor: #initialize!initializing!private! !
-!BorderLayout categoriesFor: #layoutContainer:context:!geometry!private! !
-!BorderLayout categoriesFor: #north!accessing!public! !
-!BorderLayout categoriesFor: #north:!accessing!public! !
-!BorderLayout categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
-!BorderLayout categoriesFor: #removeSubView:!public!removing! !
-!BorderLayout categoriesFor: #reposition:to:!geometry!private! !
-!BorderLayout categoriesFor: #resize:to:!geometry!public! !
-!BorderLayout categoriesFor: #resolutionScaledBy:!geometry!private! !
-!BorderLayout categoriesFor: #south!accessing!public! !
-!BorderLayout categoriesFor: #south:!accessing!public! !
-!BorderLayout categoriesFor: #verticalGap!accessing!public! !
-!BorderLayout categoriesFor: #verticalGap:!accessing!public! !
-!BorderLayout categoriesFor: #west!accessing!public! !
-!BorderLayout categoriesFor: #west:!accessing!public! !
-!BorderLayout categoriesFor: #widthForEdge:ofHeight:inContext:!geometry!helpers!private! !
+!BorderLayout categoriesForMethods!
+arrangementOf:!accessing!public! !
+arrangementOf:put:!accessing!public! !
+center!accessing!public! !
+center:!accessing!public! !
+east!accessing!public! !
+east:!accessing!public! !
+heightForEdge:ofWidth:inContext:!geometry!helpers!private! !
+horizontalGap!accessing!public! !
+horizontalGap:!accessing!public! !
+initialize!initializing!private! !
+layoutContainer:context:!geometry!private! !
+north!accessing!public! !
+north:!accessing!public! !
+preferredLayoutExtentOf:context:!enquiries!public! !
+removeSubView:!public!removing! !
+reposition:to:!geometry!private! !
+resize:to:!geometry!public! !
+resolutionScaledBy:!geometry!private! !
+south!accessing!public! !
+south:!accessing!public! !
+verticalGap!accessing!public! !
+verticalGap:!accessing!public! !
+west!accessing!public! !
+west:!accessing!public! !
+widthForEdge:ofHeight:inContext:!geometry!helpers!private! !
+!
 
 !BorderLayout class methodsFor!
 
@@ -315,5 +317,7 @@ horizontalGap: horizontal verticalGap: vertical
 		horizontalGap: horizontal;
 		verticalGap: vertical;
 		yourself! !
-!BorderLayout class categoriesFor: #horizontalGap:verticalGap:!instance creation!public! !
+!BorderLayout class categoriesForMethods!
+horizontalGap:verticalGap:!instance creation!public! !
+!
 

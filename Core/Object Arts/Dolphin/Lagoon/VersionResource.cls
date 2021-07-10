@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #VersionResource
 	instanceVariableNames: 'fixedInfo stringTables translations'
@@ -375,40 +375,42 @@ writeVersionInfoTo: aWriteStream
 	self stringTables notEmpty ifTrue: [self writeStringFileInfoTo: aWriteStream].
 	self translations notEmpty ifTrue: [self writeVarFileInfoTo: aWriteStream].
 	self writeBlockSizeTo: aWriteStream at: blockStart! !
-!VersionResource categoriesFor: #bumpProductVersion!operations!public! !
-!VersionResource categoriesFor: #decodeVersionString:!helpers!private! !
-!VersionResource categoriesFor: #fileVersion!accessing!public! !
-!VersionResource categoriesFor: #fileVersion:!accessing!public! !
-!VersionResource categoriesFor: #fixedInfo!accessing!public! !
-!VersionResource categoriesFor: #initialize!initializing!private! !
-!VersionResource categoriesFor: #languageId!accessing!public! !
-!VersionResource categoriesFor: #pack!operations!private! !
-!VersionResource categoriesFor: #productVersion!accessing!public! !
-!VersionResource categoriesFor: #productVersion:!accessing!public! !
-!VersionResource categoriesFor: #readFromModule:!initializing!public! !
-!VersionResource categoriesFor: #setFileVersions:!accessing!private! !
-!VersionResource categoriesFor: #setProductVersions:!accessing!private! !
-!VersionResource categoriesFor: #stringTables!accessing!public! !
-!VersionResource categoriesFor: #stringTables:!accessing!public! !
-!VersionResource categoriesFor: #translations!accessing!public! !
-!VersionResource categoriesFor: #translations:!accessing!public! !
-!VersionResource categoriesFor: #unpack:!operations!public! !
-!VersionResource categoriesFor: #unpackStringFileInfo:!helpers!public! !
-!VersionResource categoriesFor: #unpackStringTable:!helpers!public! !
-!VersionResource categoriesFor: #unpackVar:!helpers!private! !
-!VersionResource categoriesFor: #unpackVarFileInfo:!helpers!public! !
-!VersionResource categoriesFor: #updateFile:!operations!public! !
-!VersionResource categoriesFor: #updateResource:!operations!public! !
-!VersionResource categoriesFor: #writeBinaryHeaderTo:key:value:!helpers!private! !
-!VersionResource categoriesFor: #writeBlockSizeTo:at:!helpers!private! !
-!VersionResource categoriesFor: #writeHeaderTo:type:key:value:length:!helpers!private! !
-!VersionResource categoriesFor: #writeStringFileInfoTo:!helpers!private! !
-!VersionResource categoriesFor: #writeStrings:to:!helpers!private! !
-!VersionResource categoriesFor: #writeStringTablesTo:!helpers!private! !
-!VersionResource categoriesFor: #writeTextHeaderTo:key:value:!helpers!private! !
-!VersionResource categoriesFor: #writeTranslationsTo:!helpers!private! !
-!VersionResource categoriesFor: #writeVarFileInfoTo:!helpers!private! !
-!VersionResource categoriesFor: #writeVersionInfoTo:!helpers!private! !
+!VersionResource categoriesForMethods!
+bumpProductVersion!operations!public! !
+decodeVersionString:!helpers!private! !
+fileVersion!accessing!public! !
+fileVersion:!accessing!public! !
+fixedInfo!accessing!public! !
+initialize!initializing!private! !
+languageId!accessing!public! !
+pack!operations!private! !
+productVersion!accessing!public! !
+productVersion:!accessing!public! !
+readFromModule:!initializing!public! !
+setFileVersions:!accessing!private! !
+setProductVersions:!accessing!private! !
+stringTables!accessing!public! !
+stringTables:!accessing!public! !
+translations!accessing!public! !
+translations:!accessing!public! !
+unpack:!operations!public! !
+unpackStringFileInfo:!helpers!public! !
+unpackStringTable:!helpers!public! !
+unpackVar:!helpers!private! !
+unpackVarFileInfo:!helpers!public! !
+updateFile:!operations!public! !
+updateResource:!operations!public! !
+writeBinaryHeaderTo:key:value:!helpers!private! !
+writeBlockSizeTo:at:!helpers!private! !
+writeHeaderTo:type:key:value:length:!helpers!private! !
+writeStringFileInfoTo:!helpers!private! !
+writeStrings:to:!helpers!private! !
+writeStringTablesTo:!helpers!private! !
+writeTextHeaderTo:key:value:!helpers!private! !
+writeTranslationsTo:!helpers!private! !
+writeVarFileInfoTo:!helpers!private! !
+writeVersionInfoTo:!helpers!private! !
+!
 
 !VersionResource class methodsFor!
 
@@ -454,8 +456,10 @@ getVersionResourceOfModule: anExternalResourceLibrary
 
 new
 	^super new initialize! !
-!VersionResource class categoriesFor: #forModule:!instance creation!public! !
-!VersionResource class categoriesFor: #forPath:!instance creation!public! !
-!VersionResource class categoriesFor: #getVersionResourceOfModule:!enquiries!private! !
-!VersionResource class categoriesFor: #new!instance creation!public! !
+!VersionResource class categoriesForMethods!
+forModule:!instance creation!public! !
+forPath:!instance creation!public! !
+getVersionResourceOfModule:!enquiries!private! !
+new!instance creation!public! !
+!
 

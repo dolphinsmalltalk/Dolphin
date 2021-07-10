@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Dictionary variableSubclass: #SystemDictionary
 	instanceVariableNames: 'events allClasses allRoots'
@@ -189,25 +189,27 @@ triggerGlobalRenamed: anAssociation from: oldSymbol
 		trigger: #globalRenamed:from:
 		with: anAssociation
 		with: oldSymbol! !
-!SystemDictionary categoriesFor: #add:!adding!public! !
-!SystemDictionary categoriesFor: #allBehaviors!class hierarchy-accessing!private! !
-!SystemDictionary categoriesFor: #allBehaviorsDo:!enumerating!private! !
-!SystemDictionary categoriesFor: #allClasses!accessing!public! !
-!SystemDictionary categoriesFor: #allRoots!accessing!public! !
-!SystemDictionary categoriesFor: #associationClass!constants!private! !
-!SystemDictionary categoriesFor: #at:put:!accessing!public! !
-!SystemDictionary categoriesFor: #classAdded:!event handling!private! !
-!SystemDictionary categoriesFor: #classRemoved:!private!removing! !
-!SystemDictionary categoriesFor: #classUpdated:!event handling!private! !
-!SystemDictionary categoriesFor: #clearCachedClasses!accessing!private! !
-!SystemDictionary categoriesFor: #developmentSystem!accessing!public! !
-!SystemDictionary categoriesFor: #getEvents!events!private! !
-!SystemDictionary categoriesFor: #isAtomic!public!testing! !
-!SystemDictionary categoriesFor: #postResize:!adding!private! !
-!SystemDictionary categoriesFor: #removeClass:!class hierarchy-removing!private! !
-!SystemDictionary categoriesFor: #removeGlobalNamed:!operations!public! !
-!SystemDictionary categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!SystemDictionary categoriesFor: #renameGlobal:to:!operations!public! !
-!SystemDictionary categoriesFor: #setEvents:!events!private! !
-!SystemDictionary categoriesFor: #triggerGlobalRenamed:from:!events!private! !
+!SystemDictionary categoriesForMethods!
+add:!adding!public! !
+allBehaviors!class hierarchy-accessing!private! !
+allBehaviorsDo:!enumerating!private! !
+allClasses!accessing!public! !
+allRoots!accessing!public! !
+associationClass!constants!private! !
+at:put:!accessing!public! !
+classAdded:!event handling!private! !
+classRemoved:!private!removing! !
+classUpdated:!event handling!private! !
+clearCachedClasses!accessing!private! !
+developmentSystem!accessing!public! !
+getEvents!events!private! !
+isAtomic!public!testing! !
+postResize:!adding!private! !
+removeClass:!class hierarchy-removing!private! !
+removeGlobalNamed:!operations!public! !
+removeKey:ifAbsent:!public!removing! !
+renameGlobal:to:!operations!public! !
+setEvents:!events!private! !
+triggerGlobalRenamed:from:!events!private! !
+!
 

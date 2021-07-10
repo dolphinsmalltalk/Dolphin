@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractCHARField subclass: #WCHARField
 	instanceVariableNames: ''
@@ -17,8 +17,10 @@ readFrom: anExternalStructure
 	"Private - Answer a <Character> representing the UTF-16 character at the receiver's offset in the <ExternalStructure> argument."
 
 	^Character utf16Value: (anExternalStructure bytes wordAtOffset: offset)! !
-!WCHARField categoriesFor: #basicWriteInto:value:!accessing!private! !
-!WCHARField categoriesFor: #readFrom:!indirect accessing!private! !
+!WCHARField categoriesForMethods!
+basicWriteInto:value:!accessing!private! !
+readFrom:!indirect accessing!private! !
+!
 
 !WCHARField class methodsFor!
 
@@ -26,5 +28,7 @@ byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes."
 
 	^2! !
-!WCHARField class categoriesFor: #byteSize!constants!private! !
+!WCHARField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

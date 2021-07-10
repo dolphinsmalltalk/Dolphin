@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #ISAXEntityResolver
 	instanceVariableNames: ''
@@ -55,8 +55,10 @@ ResolveEntity: pwchPublicId pwchSystemId: pwchSystemId pvarInput: pvarInput
 
 	<virtual stdcall: hresult 4 word* word* variant*>
 	^self invalidCall: _failureCode! !
-!ISAXEntityResolver categoriesFor: #resolveEntity:pwchSystemId:!**auto generated**!methods!public! !
-!ISAXEntityResolver categoriesFor: #ResolveEntity:pwchSystemId:pvarInput:!**auto generated**!COM Interfaces-ISAXEntityResolver!private! !
+!ISAXEntityResolver categoriesForMethods!
+resolveEntity:pwchSystemId:!**auto generated**!methods!public! !
+ResolveEntity:pwchSystemId:pvarInput:!**auto generated**!COM Interfaces-ISAXEntityResolver!private! !
+!
 
 !ISAXEntityResolver class methodsFor!
 
@@ -68,5 +70,7 @@ defineFunctions
 		defineFunction: #ResolveEntity:pwchSystemId:pvarInput:
 			argumentTypes: 'word* word* variant*'
 ! !
-!ISAXEntityResolver class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISAXEntityResolver class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

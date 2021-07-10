@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Color subclass: #SystemColor
 	instanceVariableNames: 'id'
@@ -92,15 +92,17 @@ shallowCopy
 	"The receiver's instances are unique for each named value."
 
 	^self! !
-!SystemColor categoriesFor: #asParameter!converting!public! !
-!SystemColor categoriesFor: #asRGB!converting!public! !
-!SystemColor categoriesFor: #brushClass!constants!private! !
-!SystemColor categoriesFor: #id!accessing!private! !
-!SystemColor categoriesFor: #name!accessing!public! !
-!SystemColor categoriesFor: #printOn:!development!printing!public! !
-!SystemColor categoriesFor: #rgbCode!converting!public! !
-!SystemColor categoriesFor: #setId:!accessing!private! !
-!SystemColor categoriesFor: #shallowCopy!copying!public! !
+!SystemColor categoriesForMethods!
+asParameter!converting!public! !
+asRGB!converting!public! !
+brushClass!constants!private! !
+id!accessing!private! !
+name!accessing!public! !
+printOn:!development!printing!public! !
+rgbCode!converting!public! !
+setId:!accessing!private! !
+shallowCopy!copying!public! !
+!
 
 !SystemColor class methodsFor!
 
@@ -141,7 +143,9 @@ withIndex: anInteger
 	"
 
 	^ColorsById at: anInteger + 1! !
-!SystemColor class categoriesFor: #initialize!class initialization!development!public! !
-!SystemColor class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!SystemColor class categoriesFor: #withIndex:!instance creation!public! !
+!SystemColor class categoriesForMethods!
+initialize!class initialization!development!public! !
+stbReadFrom:format:!binary filing!public! !
+withIndex:!instance creation!public! !
+!
 

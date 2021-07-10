@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #SOCKADDR
 	instanceVariableNames: ''
@@ -62,11 +62,13 @@ sa_family: anInteger
 	"Set the receiver's 'sa_family' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_sa_family put: anInteger! !
-!SOCKADDR categoriesFor: #displayOn:!displaying!public! !
-!SOCKADDR categoriesFor: #initialize!initializing!private! !
-!SOCKADDR categoriesFor: #printFieldsOn:limit:!development!printing!private! !
-!SOCKADDR categoriesFor: #sa_family!**compiled accessors**!public! !
-!SOCKADDR categoriesFor: #sa_family:!**compiled accessors**!public! !
+!SOCKADDR categoriesForMethods!
+displayOn:!displaying!public! !
+initialize!initializing!private! !
+printFieldsOn:limit:!development!printing!private! !
+sa_family!**compiled accessors**!public! !
+sa_family:!**compiled accessors**!public! !
+!
 
 !SOCKADDR class methodsFor!
 
@@ -129,9 +131,11 @@ fromString: aString
 
 getFieldNames
 	^#(#sa_family)! !
-!SOCKADDR class categoriesFor: #addressFamily!constants!public! !
-!SOCKADDR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!SOCKADDR class categoriesFor: #fromAddress:!instance creation!public! !
-!SOCKADDR class categoriesFor: #fromString:!public! !
-!SOCKADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!SOCKADDR class categoriesForMethods!
+addressFamily!constants!public! !
+defineFields!**auto generated**!public!template definition! !
+fromAddress:!instance creation!public! !
+fromString:!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

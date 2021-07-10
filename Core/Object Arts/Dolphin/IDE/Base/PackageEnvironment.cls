@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BrowserEnvironmentWrapper subclass: #PackageEnvironment
 	instanceVariableNames: 'packages'
@@ -136,20 +136,22 @@ storeOn: aStream
 	aStream nextPutAll: ' packageNames: '.
 	self packageNames storeOn: aStream.
 	aStream nextPutAll: ';yourself)'! !
-!PackageEnvironment categoriesFor: #classesDo:!accessing/classes!public! !
-!PackageEnvironment categoriesFor: #defaultLabel!constants!private! !
-!PackageEnvironment categoriesFor: #definesClass:!public!testing! !
-!PackageEnvironment categoriesFor: #definesLooseMethodsInClass:!private!testing! !
-!PackageEnvironment categoriesFor: #includesClass:!public!testing! !
-!PackageEnvironment categoriesFor: #includesResource:!public!testing! !
-!PackageEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!PackageEnvironment categoriesFor: #isSinglePackage!public!testing! !
-!PackageEnvironment categoriesFor: #packageNames!accessing!public! !
-!PackageEnvironment categoriesFor: #packageNames:!accessing!public! !
-!PackageEnvironment categoriesFor: #packages!accessing!public! !
-!PackageEnvironment categoriesFor: #packages:!accessing!private! !
-!PackageEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
-!PackageEnvironment categoriesFor: #storeOn:!printing!public! !
+!PackageEnvironment categoriesForMethods!
+classesDo:!accessing/classes!public! !
+defaultLabel!constants!private! !
+definesClass:!public!testing! !
+definesLooseMethodsInClass:!private!testing! !
+includesClass:!public!testing! !
+includesResource:!public!testing! !
+includesSelector:in:!public!testing! !
+isSinglePackage!public!testing! !
+packageNames!accessing!public! !
+packageNames:!accessing!public! !
+packages!accessing!public! !
+packages:!accessing!private! !
+selectorsForClass:do:!accessing!public! !
+storeOn:!printing!public! !
+!
 
 !PackageEnvironment class methodsFor!
 
@@ -162,6 +164,8 @@ onEnvironment: anEnvironment packages: aPackage
 	^(self onEnvironment: anEnvironment)
 		packages: aPackage;
 		yourself! !
-!PackageEnvironment class categoriesFor: #onEnvironment:packageNames:!instance creation!public! !
-!PackageEnvironment class categoriesFor: #onEnvironment:packages:!instance creation!public! !
+!PackageEnvironment class categoriesForMethods!
+onEnvironment:packageNames:!instance creation!public! !
+onEnvironment:packages:!instance creation!public! !
+!
 

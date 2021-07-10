@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CompiledMethod variableSubclass: #ExternalMethod
 	instanceVariableNames: ''
@@ -128,19 +128,21 @@ stbSaveOn: anSTBOutFiler
 	super stbSaveOn: anSTBOutFiler.
 
 ! !
-!ExternalMethod categoriesFor: #argsLen!accessing!private! !
-!ExternalMethod categoriesFor: #argumentTypes!accessing!private! !
-!ExternalMethod categoriesFor: #clear!operations!private! !
-!ExternalMethod categoriesFor: #descriptor!accessing!private! !
-!ExternalMethod categoriesFor: #descriptorClass!constants!private! !
-!ExternalMethod categoriesFor: #descriptorLiteral!accessing!private! !
-!ExternalMethod categoriesFor: #functionName!accessing!private! !
-!ExternalMethod categoriesFor: #isExternalCall!private!testing! !
-!ExternalMethod categoriesFor: #isVirtualFunction!private!testing! !
-!ExternalMethod categoriesFor: #printOn:!development!printing!public! !
-!ExternalMethod categoriesFor: #procAddress!accessing!private! !
-!ExternalMethod categoriesFor: #returnType!accessing!private! !
-!ExternalMethod categoriesFor: #stbSaveOn:!binary filing!public! !
+!ExternalMethod categoriesForMethods!
+argsLen!accessing!private! !
+argumentTypes!accessing!private! !
+clear!operations!private! !
+descriptor!accessing!private! !
+descriptorClass!constants!private! !
+descriptorLiteral!accessing!private! !
+functionName!accessing!private! !
+isExternalCall!private!testing! !
+isVirtualFunction!private!testing! !
+printOn:!development!printing!public! !
+procAddress!accessing!private! !
+returnType!accessing!private! !
+stbSaveOn:!binary filing!public! !
+!
 
 !ExternalMethod class methodsFor!
 
@@ -170,5 +172,7 @@ initialize
 	ReturnTypeIndex := 8.
 	ReturnParmIndex := 7.
 	ArgumentStartIndex := 9! !
-!ExternalMethod class categoriesFor: #initialize!development!initializing!private! !
+!ExternalMethod class categoriesForMethods!
+initialize!development!initializing!private! !
+!
 

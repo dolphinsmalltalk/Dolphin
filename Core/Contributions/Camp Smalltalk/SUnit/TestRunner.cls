@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Shell subclass: #TestRunner
 	instanceVariableNames: 'result lastPass'
@@ -154,34 +154,36 @@ updateWindow
 		ifTrue: [self displayPass]
 		ifFalse: [self displayFail].
 	self updateDefects! !
-!TestRunner categoriesFor: #allTestSuite!helpers!public! !
-!TestRunner categoriesFor: #createSchematicWiring!helpers!private! !
-!TestRunner categoriesFor: #debugFailedTest!Actions!public! !
-!TestRunner categoriesFor: #debugTest!Actions!public! !
-!TestRunner categoriesFor: #debugTest:!Actions!public! !
-!TestRunner categoriesFor: #displayClear!public!Updating! !
-!TestRunner categoriesFor: #displayColor:!public!Updating! !
-!TestRunner categoriesFor: #displayDefects:!public!Updating! !
-!TestRunner categoriesFor: #displayDetails:!public!Updating! !
-!TestRunner categoriesFor: #displayFail!public!Updating! !
-!TestRunner categoriesFor: #displayGreen!public!Updating! !
-!TestRunner categoriesFor: #displayMode:!public!Updating! !
-!TestRunner categoriesFor: #displayPass!public!Updating! !
-!TestRunner categoriesFor: #displayRed!public!Updating! !
-!TestRunner categoriesFor: #displayReset!public!Updating! !
-!TestRunner categoriesFor: #displayRunning!public!Updating! !
-!TestRunner categoriesFor: #displayYellow!public!Updating! !
-!TestRunner categoriesFor: #onViewOpened!Actions!public! !
-!TestRunner categoriesFor: #refreshTests!Actions!public! !
-!TestRunner categoriesFor: #result!Accessing!public! !
-!TestRunner categoriesFor: #runAllTests!Actions!public! !
-!TestRunner categoriesFor: #runSuite:!Actions!public! !
-!TestRunner categoriesFor: #runTests!Actions!public! !
-!TestRunner categoriesFor: #script!Accessing!public! !
-!TestRunner categoriesFor: #timeSinceLastPassAsString!helpers!public! !
-!TestRunner categoriesFor: #update:!helpers!public! !
-!TestRunner categoriesFor: #updateDefects!public!Updating! !
-!TestRunner categoriesFor: #updateWindow!public!Updating! !
+!TestRunner categoriesForMethods!
+allTestSuite!helpers!public! !
+createSchematicWiring!helpers!private! !
+debugFailedTest!Actions!public! !
+debugTest!Actions!public! !
+debugTest:!Actions!public! !
+displayClear!public!Updating! !
+displayColor:!public!Updating! !
+displayDefects:!public!Updating! !
+displayDetails:!public!Updating! !
+displayFail!public!Updating! !
+displayGreen!public!Updating! !
+displayMode:!public!Updating! !
+displayPass!public!Updating! !
+displayRed!public!Updating! !
+displayReset!public!Updating! !
+displayRunning!public!Updating! !
+displayYellow!public!Updating! !
+onViewOpened!Actions!public! !
+refreshTests!Actions!public! !
+result!Accessing!public! !
+runAllTests!Actions!public! !
+runSuite:!Actions!public! !
+runTests!Actions!public! !
+script!Accessing!public! !
+timeSinceLastPassAsString!helpers!public! !
+update:!helpers!public! !
+updateDefects!public!Updating! !
+updateWindow!public!Updating! !
+!
 
 !TestRunner class methodsFor!
 
@@ -227,11 +229,13 @@ toolDescription
 
 toolsFolderHelpId
 	^10632! !
-!TestRunner class categoriesFor: #defaultView!public!views! !
-!TestRunner class categoriesFor: #icon!constants!public! !
-!TestRunner class categoriesFor: #initialize!initializing!must strip!private! !
-!TestRunner class categoriesFor: #open!Init / Release!public! !
-!TestRunner class categoriesFor: #resource_SUnit_Runner_30!public!resources-views! !
-!TestRunner class categoriesFor: #toolDescription!constants!public! !
-!TestRunner class categoriesFor: #toolsFolderHelpId!public! !
+!TestRunner class categoriesForMethods!
+defaultView!public!views! !
+icon!constants!public! !
+initialize!initializing!must strip!private! !
+open!Init / Release!public! !
+resource_SUnit_Runner_30!public!resources-views! !
+toolDescription!constants!public! !
+toolsFolderHelpId!public! !
+!
 

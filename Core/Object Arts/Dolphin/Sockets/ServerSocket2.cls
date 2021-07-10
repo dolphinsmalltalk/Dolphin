@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SocketAbstract2 subclass: #ServerSocket2
 	instanceVariableNames: ''
@@ -79,12 +79,14 @@ preBindPort: anInteger
 	"Private - Same as #bindPort, but dont call bind."
 
 	self createOnPort: anInteger! !
-!ServerSocket2 categoriesFor: #accept!operations!public! !
-!ServerSocket2 categoriesFor: #bind!operations!private! !
-!ServerSocket2 categoriesFor: #bindPort:!operations!private! !
-!ServerSocket2 categoriesFor: #createOnPort:!helpers!private! !
-!ServerSocket2 categoriesFor: #listen:!operations!private! !
-!ServerSocket2 categoriesFor: #preBindPort:!public!swazoo! !
+!ServerSocket2 categoriesForMethods!
+accept!operations!public! !
+bind!operations!private! !
+bindPort:!operations!private! !
+createOnPort:!helpers!private! !
+listen:!operations!private! !
+preBindPort:!public!swazoo! !
+!
 
 !ServerSocket2 class methodsFor!
 
@@ -119,9 +121,11 @@ port: anIntegerPort backlog: anIntegerBacklog
 		bind;
 		listen: anIntegerBacklog;
 		yourself! !
-!ServerSocket2 class categoriesFor: #defaultMaxPendingConnects!constants access!public! !
-!ServerSocket2 class categoriesFor: #new!instance creation!public! !
-!ServerSocket2 class categoriesFor: #newPort:!public! !
-!ServerSocket2 class categoriesFor: #port:!instance creation!public! !
-!ServerSocket2 class categoriesFor: #port:backlog:!instance creation!public! !
+!ServerSocket2 class categoriesForMethods!
+defaultMaxPendingConnects!constants access!public! !
+new!instance creation!public! !
+newPort:!public! !
+port:!instance creation!public! !
+port:backlog:!instance creation!public! !
+!
 

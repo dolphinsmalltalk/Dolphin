@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusRegionFromRectangleInitializer
 	instanceVariableNames: 'rectangle'
@@ -22,13 +22,17 @@ gdiplusConstructorErrorDescription
 
 rectangle: aRectangle
 	rectangle := aRectangle! !
-!GdiplusRegionFromRectangleInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusRegionFromRectangleInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
-!GdiplusRegionFromRectangleInitializer categoriesFor: #rectangle:!initializing!private! !
+!GdiplusRegionFromRectangleInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+rectangle:!initializing!private! !
+!
 
 !GdiplusRegionFromRectangleInitializer class methodsFor!
 
 fromRectangle: aRectangle
 	^self new rectangle: aRectangle! !
-!GdiplusRegionFromRectangleInitializer class categoriesFor: #fromRectangle:!instance creation!public! !
+!GdiplusRegionFromRectangleInitializer class categoriesForMethods!
+fromRectangle:!instance creation!public! !
+!
 

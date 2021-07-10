@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Smalltalk at: #HeaderViewConstants put: (PoolDictionary named: #HeaderViewConstants)!
 HeaderViewConstants at: 'HDF_CENTER' put: 16r2!

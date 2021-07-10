@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #MultipleSelectionListBoxTest
 	instanceVariableNames: 'box'
@@ -206,11 +206,13 @@ testSelectionIfAbsent
 						with: [self assert: false]]
 				trigger: #selectionChanged
 				against: box]! !
-!MultipleSelectionListBoxTest categoriesFor: #assertAllSelectionAre:!helpers!private! !
-!MultipleSelectionListBoxTest categoriesFor: #classToTest!constants!private! !
-!MultipleSelectionListBoxTest categoriesFor: #setUp!public!Running! !
-!MultipleSelectionListBoxTest categoriesFor: #tearDown!public!Running! !
-!MultipleSelectionListBoxTest categoriesFor: #testSelection!public!unit tests! !
-!MultipleSelectionListBoxTest categoriesFor: #testSelectionCacheUpdated!public!unit tests! !
-!MultipleSelectionListBoxTest categoriesFor: #testSelectionIfAbsent!public!unit tests! !
+!MultipleSelectionListBoxTest categoriesForMethods!
+assertAllSelectionAre:!helpers!private! !
+classToTest!constants!private! !
+setUp!public!Running! !
+tearDown!public!Running! !
+testSelection!public!unit tests! !
+testSelectionCacheUpdated!public!unit tests! !
+testSelectionIfAbsent!public!unit tests! !
+!
 

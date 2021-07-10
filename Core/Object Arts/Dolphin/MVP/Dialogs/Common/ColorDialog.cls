@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CommonDialog subclass: #ColorDialog
 	instanceVariableNames: 'validationBlock'
@@ -84,15 +84,17 @@ wmColorOk: msgInteger wParam: wParamInteger lParam: lParamInteger
 	"Private - The user has pressed the OK button."
 
 	^(self validationBlock value: winStruct color) ifTrue: [0] ifFalse: [1]! !
-!ColorDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!ColorDialog categoriesFor: #defaultColor!helpers!private! !
-!ColorDialog categoriesFor: #extractResult:!helpers!private! !
-!ColorDialog categoriesFor: #initialize!accessing!initializing!private! !
-!ColorDialog categoriesFor: #prepareStruct!helpers!private! !
-!ColorDialog categoriesFor: #validationBlock!accessing!public! !
-!ColorDialog categoriesFor: #validationBlock:!initializing!public! !
-!ColorDialog categoriesFor: #winStructClass!constants!private! !
-!ColorDialog categoriesFor: #wmColorOk:wParam:lParam:!event handling-win32!private! !
+!ColorDialog categoriesForMethods!
+basicShowModal!private!realizing/unrealizing! !
+defaultColor!helpers!private! !
+extractResult:!helpers!private! !
+initialize!accessing!initializing!private! !
+prepareStruct!helpers!private! !
+validationBlock!accessing!public! !
+validationBlock:!initializing!public! !
+winStructClass!constants!private! !
+wmColorOk:wParam:lParam:!event handling-win32!private! !
+!
 
 !ColorDialog class methodsFor!
 
@@ -152,12 +154,14 @@ uninitialize
 	"
 
 	SessionManager current removeEventsTriggeredFor: self! !
-!ColorDialog class categoriesFor: #customColors!accessing!public! !
-!ColorDialog class categoriesFor: #defaultModel!models!public! !
-!ColorDialog class categoriesFor: #icon!constants!public! !
-!ColorDialog class categoriesFor: #initialize!development!initializing!private! !
-!ColorDialog class categoriesFor: #onStartup!events-session!public! !
-!ColorDialog class categoriesFor: #registerColorOkMessage!events-session!private! !
-!ColorDialog class categoriesFor: #resetCustomColors!accessing!public! !
-!ColorDialog class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!ColorDialog class categoriesForMethods!
+customColors!accessing!public! !
+defaultModel!models!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+onStartup!events-session!public! !
+registerColorOkMessage!events-session!private! !
+resetCustomColors!accessing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

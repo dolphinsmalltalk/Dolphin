@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMGETINFOTIP subclass: #NMLVGETINFOTIPW
 	instanceVariableNames: ''
@@ -45,12 +45,14 @@ pszText
 	"Answer the <ExternalAddress> value of the receiver's 'pszText' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_pszText) asExternalAddress! !
-!NMLVGETINFOTIPW categoriesFor: #cchTextMax!**compiled accessors**!public! !
-!NMLVGETINFOTIPW categoriesFor: #dwFlags!**compiled accessors**!public! !
-!NMLVGETINFOTIPW categoriesFor: #iItem!**compiled accessors**!public! !
-!NMLVGETINFOTIPW categoriesFor: #iSubItem!**compiled accessors**!public! !
-!NMLVGETINFOTIPW categoriesFor: #itemHandle!accessing!public! !
-!NMLVGETINFOTIPW categoriesFor: #pszText!**compiled accessors**!public! !
+!NMLVGETINFOTIPW categoriesForMethods!
+cchTextMax!**compiled accessors**!public! !
+dwFlags!**compiled accessors**!public! !
+iItem!**compiled accessors**!public! !
+iSubItem!**compiled accessors**!public! !
+itemHandle!accessing!public! !
+pszText!**compiled accessors**!public! !
+!
 
 !NMLVGETINFOTIPW class methodsFor!
 
@@ -84,6 +86,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwFlags #pszText #cchTextMax #iItem #iSubItem)! !
-!NMLVGETINFOTIPW class categoriesFor: #defineFields!public!template definition! !
-!NMLVGETINFOTIPW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NMLVGETINFOTIPW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

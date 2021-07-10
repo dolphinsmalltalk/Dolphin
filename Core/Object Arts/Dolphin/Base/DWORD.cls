@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalInteger subclass: #DWORD
 	instanceVariableNames: ''
@@ -82,18 +82,20 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_value put: anInteger! !
-!DWORD categoriesFor: #asSignedInteger!converting!public! !
-!DWORD categoriesFor: #asUnsignedInteger!converting!public! !
-!DWORD categoriesFor: #highSWord!accessing!public! !
-!DWORD categoriesFor: #highSWord:!accessing!public! !
-!DWORD categoriesFor: #highWord!accessing!public! !
-!DWORD categoriesFor: #highWord:!accessing!public! !
-!DWORD categoriesFor: #lowSWord!accessing!public! !
-!DWORD categoriesFor: #lowSWord:!accessing!public! !
-!DWORD categoriesFor: #lowWord!accessing!public! !
-!DWORD categoriesFor: #lowWord:!accessing!public! !
-!DWORD categoriesFor: #value!**compiled accessors**!public! !
-!DWORD categoriesFor: #value:!**compiled accessors**!public! !
+!DWORD categoriesForMethods!
+asSignedInteger!converting!public! !
+asUnsignedInteger!converting!public! !
+highSWord!accessing!public! !
+highSWord:!accessing!public! !
+highWord!accessing!public! !
+highWord:!accessing!public! !
+lowSWord!accessing!public! !
+lowSWord:!accessing!public! !
+lowWord!accessing!public! !
+lowWord:!accessing!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !DWORD class methodsFor!
 
@@ -114,7 +116,9 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!DWORD class categoriesFor: #defineFields!public!template definition! !
-!DWORD class categoriesFor: #initialize!development!initializing!private! !
-!DWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!DWORD class categoriesForMethods!
+defineFields!public!template definition! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

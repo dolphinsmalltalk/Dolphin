@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VirtualMethodCategory subclass: #MethodPrivacyCategory
 	instanceVariableNames: 'privacy'
@@ -60,13 +60,15 @@ removeMethodSilently: aCompiledMethod
 	methods that are members of the receiver, and make no fuss about it."
 
 	aCompiledMethod isPrivate: privacy not! !
-!MethodPrivacyCategory categoriesFor: #acceptsAdditions!public!testing! !
-!MethodPrivacyCategory categoriesFor: #addMethodSilently:!adding!private! !
-!MethodPrivacyCategory categoriesFor: #includesMethod:!public!testing! !
-!MethodPrivacyCategory categoriesFor: #isPrivacy!private!testing! !
-!MethodPrivacyCategory categoriesFor: #isPseud!public!testing! !
-!MethodPrivacyCategory categoriesFor: #privacy:!accessing!private! !
-!MethodPrivacyCategory categoriesFor: #removeMethodSilently:!private!removing! !
+!MethodPrivacyCategory categoriesForMethods!
+acceptsAdditions!public!testing! !
+addMethodSilently:!adding!private! !
+includesMethod:!public!testing! !
+isPrivacy!private!testing! !
+isPseud!public!testing! !
+privacy:!accessing!private! !
+removeMethodSilently:!private!removing! !
+!
 
 !MethodPrivacyCategory class methodsFor!
 
@@ -90,6 +92,8 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Public := Private := nil! !
-!MethodPrivacyCategory class categoriesFor: #initialize!initializing!private! !
-!MethodPrivacyCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!MethodPrivacyCategory class categoriesForMethods!
+initialize!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

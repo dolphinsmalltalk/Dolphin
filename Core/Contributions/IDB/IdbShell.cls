@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalltalkToolShell subclass: #IdbShell
 	instanceVariableNames: ''
@@ -25,10 +25,12 @@ idbHelp
 
 idbHelp: aFileNameStem
 	self class idbHelp: aFileNameStem! !
-!IdbShell categoriesFor: #idbAbout!public! !
-!IdbShell categoriesFor: #idbAbout:!operations!public! !
-!IdbShell categoriesFor: #idbHelp!public! !
-!IdbShell categoriesFor: #idbHelp:!operations!public! !
+!IdbShell categoriesForMethods!
+idbAbout!public! !
+idbAbout:!operations!public! !
+idbHelp!public! !
+idbHelp:!operations!public! !
+!
 
 !IdbShell class methodsFor!
 
@@ -57,7 +59,9 @@ idbHelp: aFileNameStem
 				composePath: SessionManager current idbDocumentationFolder
 				stem: aFileNameStem
 				extension: 'html')! !
-!IdbShell class categoriesFor: #defaultIconName!constants!public! !
-!IdbShell class categoriesFor: #idbAbout:!operations!public! !
-!IdbShell class categoriesFor: #idbHelp:!operations!public! !
+!IdbShell class categoriesForMethods!
+defaultIconName!constants!public! !
+idbAbout:!operations!public! !
+idbHelp:!operations!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #AXTypeLibDocumentation
 	instanceVariableNames: 'name helpstring helpcontext helpfile'
@@ -45,10 +45,12 @@ printOn: aStream
 		nextPut: $(;
 		print: self name;
 		nextPut: $)! !
-!AXTypeLibDocumentation categoriesFor: #helpcontext!accessing!public! !
-!AXTypeLibDocumentation categoriesFor: #helpfile!accessing!public! !
-!AXTypeLibDocumentation categoriesFor: #helpstring!accessing!public! !
-!AXTypeLibDocumentation categoriesFor: #name!accessing!public! !
-!AXTypeLibDocumentation categoriesFor: #name:helpstring:helpcontext:helpfile:!initializing!private! !
-!AXTypeLibDocumentation categoriesFor: #printOn:!printing!public! !
+!AXTypeLibDocumentation categoriesForMethods!
+helpcontext!accessing!public! !
+helpfile!accessing!public! !
+helpstring!accessing!public! !
+name!accessing!public! !
+name:helpstring:helpcontext:helpfile:!initializing!private! !
+printOn:!printing!public! !
+!
 

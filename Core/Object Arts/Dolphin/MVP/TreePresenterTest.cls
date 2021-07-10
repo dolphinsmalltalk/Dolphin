@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SelectableTreeItemsTest subclass: #TreePresenterTest
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ TreePresenterTest comment: ''!
 
 classToTest
 	^TreePresenter! !
-!TreePresenterTest categoriesFor: #classToTest!helpers!private! !
+!TreePresenterTest categoriesForMethods!
+classToTest!helpers!private! !
+!
 

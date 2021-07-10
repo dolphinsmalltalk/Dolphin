@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IPropertyNotifySink
 	instanceVariableNames: ''
@@ -40,5 +40,7 @@ defineFunctions
 		defineFunction: #OnRequestEdit:
 			argumentTypes: 'sdword'
 ! !
-!IPropertyNotifySink class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IPropertyNotifySink class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

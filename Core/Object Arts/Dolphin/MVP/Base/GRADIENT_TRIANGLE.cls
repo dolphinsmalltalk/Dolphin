@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #GRADIENT_TRIANGLE
 	instanceVariableNames: ''
@@ -57,12 +57,14 @@ Vertex3: anInteger
 	"Set the receiver's 'Vertex3' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_Vertex3 put: anInteger! !
-!GRADIENT_TRIANGLE categoriesFor: #Vertex1!**compiled accessors**!public! !
-!GRADIENT_TRIANGLE categoriesFor: #Vertex1:!**compiled accessors**!public! !
-!GRADIENT_TRIANGLE categoriesFor: #Vertex2!**compiled accessors**!public! !
-!GRADIENT_TRIANGLE categoriesFor: #Vertex2:!**compiled accessors**!public! !
-!GRADIENT_TRIANGLE categoriesFor: #Vertex3!**compiled accessors**!public! !
-!GRADIENT_TRIANGLE categoriesFor: #Vertex3:!**compiled accessors**!public! !
+!GRADIENT_TRIANGLE categoriesForMethods!
+Vertex1!**compiled accessors**!public! !
+Vertex1:!**compiled accessors**!public! !
+Vertex2!**compiled accessors**!public! !
+Vertex2:!**compiled accessors**!public! !
+Vertex3!**compiled accessors**!public! !
+Vertex3:!**compiled accessors**!public! !
+!
 
 !GRADIENT_TRIANGLE class methodsFor!
 
@@ -86,6 +88,8 @@ defineFields
 
 getFieldNames
 	^#(#Vertex1 #Vertex2 #Vertex3)! !
-!GRADIENT_TRIANGLE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GRADIENT_TRIANGLE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!GRADIENT_TRIANGLE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

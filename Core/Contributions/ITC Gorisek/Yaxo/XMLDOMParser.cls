@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SAXHandler subclass: #XMLDOMParser
 	instanceVariableNames: 'entity stack incremental'
@@ -108,22 +108,24 @@ top
 	^self stack isEmpty
 		ifTrue: [nil]
 		ifFalse: [self stack last]! !
-!XMLDOMParser categoriesFor: #characters:!content!public! !
-!XMLDOMParser categoriesFor: #documentAttributes:!content!public! !
-!XMLDOMParser categoriesFor: #endDocument!content!public! !
-!XMLDOMParser categoriesFor: #endElement:!content!public! !
-!XMLDOMParser categoriesFor: #incremental!accessing!public! !
-!XMLDOMParser categoriesFor: #incremental:!accessing!public! !
-!XMLDOMParser categoriesFor: #initialize!initialize!public! !
-!XMLDOMParser categoriesFor: #nextEntity!parsing!public! !
-!XMLDOMParser categoriesFor: #nextEntityStart!parsing!public! !
-!XMLDOMParser categoriesFor: #pop!accessing!private! !
-!XMLDOMParser categoriesFor: #processingInstruction:data:!content!public! !
-!XMLDOMParser categoriesFor: #push:!accessing!private! !
-!XMLDOMParser categoriesFor: #stack!accessing!private! !
-!XMLDOMParser categoriesFor: #startDocument!content!public! !
-!XMLDOMParser categoriesFor: #startElement:attributeList:!content!public! !
-!XMLDOMParser categoriesFor: #top!accessing!private! !
+!XMLDOMParser categoriesForMethods!
+characters:!content!public! !
+documentAttributes:!content!public! !
+endDocument!content!public! !
+endElement:!content!public! !
+incremental!accessing!public! !
+incremental:!accessing!public! !
+initialize!initialize!public! !
+nextEntity!parsing!public! !
+nextEntityStart!parsing!public! !
+pop!accessing!private! !
+processingInstruction:data:!content!public! !
+push:!accessing!private! !
+stack!accessing!private! !
+startDocument!content!public! !
+startElement:attributeList:!content!public! !
+top!accessing!private! !
+!
 
 !XMLDOMParser class methodsFor!
 
@@ -134,6 +136,8 @@ addressBookXMLWithDTD
 parseDocumentFrom: aStream
 	#swYAXO.	"Note that unlike the super class method, this method answers a XMLDocument"
 	^(super parseDocumentFrom: aStream) document! !
-!XMLDOMParser class categoriesFor: #addressBookXMLWithDTD!examples!public! !
-!XMLDOMParser class categoriesFor: #parseDocumentFrom:!instance creation!public! !
+!XMLDOMParser class categoriesForMethods!
+addressBookXMLWithDTD!examples!public! !
+parseDocumentFrom:!instance creation!public! !
+!
 

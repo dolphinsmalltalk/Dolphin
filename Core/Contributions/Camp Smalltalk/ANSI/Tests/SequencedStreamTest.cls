@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #SequencedStreamTest
 	instanceVariableNames: ''
@@ -14,5 +14,7 @@ SequencedStreamTest comment: ''!
 helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: SequencedStreamHelper! !
-!SequencedStreamTest class categoriesFor: #helperClassesDo:!public! !
+!SequencedStreamTest class categoriesForMethods!
+helperClassesDo:!public! !
+!
 

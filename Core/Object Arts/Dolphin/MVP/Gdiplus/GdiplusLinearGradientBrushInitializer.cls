@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusLinearGradientBrushInitializer
 	instanceVariableNames: ''
@@ -13,7 +13,9 @@ GdiplusLinearGradientBrushInitializer comment: ''!
 
 gdiplusConstructorErrorDescription
 	^'Error creating LinearGradientBrush'! !
-!GdiplusLinearGradientBrushInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!GdiplusLinearGradientBrushInitializer categoriesForMethods!
+gdiplusConstructorErrorDescription!constants!private! !
+!
 
 !GdiplusLinearGradientBrushInitializer class methodsFor!
 
@@ -45,6 +47,8 @@ rect: rect color1: color1 color2: color2 mode: aLinearGradientMode
 		color1: color1
 		color2: color2
 		mode: aLinearGradientMode! !
-!GdiplusLinearGradientBrushInitializer class categoriesFor: #point1:point2:color1:color2:!instance creation!public! !
-!GdiplusLinearGradientBrushInitializer class categoriesFor: #rect:color1:color2:mode:!instance creation!public! !
+!GdiplusLinearGradientBrushInitializer class categoriesForMethods!
+point1:point2:color1:color2:!instance creation!public! !
+rect:color1:color2:mode:!instance creation!public! !
+!
 

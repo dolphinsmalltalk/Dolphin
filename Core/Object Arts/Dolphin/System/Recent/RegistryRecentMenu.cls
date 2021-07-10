@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractRecentMenu subclass: #RegistryRecentMenu
 	instanceVariableNames: 'productRegistryKey recentRegistryKey'
@@ -58,15 +58,17 @@ setRecentList: anOrderedCollectionOfFilenameStrings
 				nextPutAll: each;
 				cr].
 	self productRegistryAt: self recentRegistryKey put: stream contents! !
-!RegistryRecentMenu categoriesFor: #getRecentList!helpers!private! !
-!RegistryRecentMenu categoriesFor: #initialize!initializing!private! !
-!RegistryRecentMenu categoriesFor: #productRegistryAt:!accessing!private!product! !
-!RegistryRecentMenu categoriesFor: #productRegistryAt:put:!accessing!private!product! !
-!RegistryRecentMenu categoriesFor: #productRegistryKey!accessing!public! !
-!RegistryRecentMenu categoriesFor: #recentRegistryKey!accessing!public! !
-!RegistryRecentMenu categoriesFor: #recentRegistryKey:!accessing!public! !
-!RegistryRecentMenu categoriesFor: #setProductRegistryKey:!initializing!private! !
-!RegistryRecentMenu categoriesFor: #setRecentList:!helpers!private! !
+!RegistryRecentMenu categoriesForMethods!
+getRecentList!helpers!private! !
+initialize!initializing!private! !
+productRegistryAt:!accessing!private!product! !
+productRegistryAt:put:!accessing!private!product! !
+productRegistryKey!accessing!public! !
+recentRegistryKey!accessing!public! !
+recentRegistryKey:!accessing!public! !
+setProductRegistryKey:!initializing!private! !
+setRecentList:!helpers!private! !
+!
 
 !RegistryRecentMenu class methodsFor!
 
@@ -74,5 +76,7 @@ withProductKey: aKeyString
 	^(super new)
 		setProductRegistryKey: aKeyString;
 		yourself! !
-!RegistryRecentMenu class categoriesFor: #withProductKey:!instance creation!public! !
+!RegistryRecentMenu class categoriesForMethods!
+withProductKey:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MIB_TCPTABLE subclass: #MIB_TCPEXTABLE
 	instanceVariableNames: ''
@@ -30,7 +30,9 @@ table
 		fromAddress: bytes yourAddress + _OffsetOf_table
 		length: self dwNumEntries
 		elementClass: MIB_TCPEXROW! !
-!MIB_TCPEXTABLE categoriesFor: #table!**compiled accessors**!public! !
+!MIB_TCPEXTABLE categoriesForMethods!
+table!**compiled accessors**!public! !
+!
 
 !MIB_TCPEXTABLE class methodsFor!
 
@@ -56,5 +58,7 @@ defineFields
 					yourself)
 			offset: 4.
 	self byteSize: 28! !
-!MIB_TCPEXTABLE class categoriesFor: #defineFields!initializing!public! !
+!MIB_TCPEXTABLE class categoriesForMethods!
+defineFields!initializing!public! !
+!
 

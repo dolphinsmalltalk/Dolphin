@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IntegerTest subclass: #SmallIntegerTest
 	instanceVariableNames: ''
@@ -298,41 +298,43 @@ testSubtract
 	"Coercion to float"
 
 	self assert: (5 - 2.125 equals: 2.875)! !
-!SmallIntegerTest categoriesFor: #canonicalInstance!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testAbs!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testAllMask!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testAnyMask!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testBasicNew!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testBitAnd!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testBitOr!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testBitShift!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testDecimalDigitLength!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testDigitLength!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testDivide!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testEven!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testExp10!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testGcd!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testHighBit!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testIntegerDivide!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testLargeSmallComparisons!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testLcm!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testLowBit!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testMaxVal!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testMinMax!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testMinVal!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testModulo!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testNew!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testNoMask!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testNumberOfDigitsInBase!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testOverflow!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testPrimesUpTo!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testPrintString!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testPrintStringRadix!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testQuo!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testRaisedToInteger!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testReciprocal!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testRem!public!unit tests! !
-!SmallIntegerTest categoriesFor: #testSubtract!public!unit tests! !
+!SmallIntegerTest categoriesForMethods!
+canonicalInstance!public!unit tests! !
+testAbs!public!unit tests! !
+testAllMask!public!unit tests! !
+testAnyMask!public!unit tests! !
+testBasicNew!public!unit tests! !
+testBitAnd!public!unit tests! !
+testBitOr!public!unit tests! !
+testBitShift!public!unit tests! !
+testDecimalDigitLength!public!unit tests! !
+testDigitLength!public!unit tests! !
+testDivide!public!unit tests! !
+testEven!public!unit tests! !
+testExp10!public!unit tests! !
+testGcd!public!unit tests! !
+testHighBit!public!unit tests! !
+testIntegerDivide!public!unit tests! !
+testLargeSmallComparisons!public!unit tests! !
+testLcm!public!unit tests! !
+testLowBit!public!unit tests! !
+testMaxVal!public!unit tests! !
+testMinMax!public!unit tests! !
+testMinVal!public!unit tests! !
+testModulo!public!unit tests! !
+testNew!public!unit tests! !
+testNoMask!public!unit tests! !
+testNumberOfDigitsInBase!public!unit tests! !
+testOverflow!public!unit tests! !
+testPrimesUpTo!public!unit tests! !
+testPrintString!public!unit tests! !
+testPrintStringRadix!public!unit tests! !
+testQuo!public!unit tests! !
+testRaisedToInteger!public!unit tests! !
+testReciprocal!public!unit tests! !
+testRem!public!unit tests! !
+testSubtract!public!unit tests! !
+!
 
 !SmallIntegerTest class methodsFor!
 
@@ -490,8 +492,10 @@ quoTestCases
 				{-16r40000000. Float pi negated. 341782637}.
 				{16r3FFFFFFF. Float pi. 341782637}.
 				{16r3FFFFFFF. Float pi negated. -341782637}}! !
-!SmallIntegerTest class categoriesFor: #bitShiftTestCases!constants!public! !
-!SmallIntegerTest class categoriesFor: #integerDivideTestCases!constants!public! !
-!SmallIntegerTest class categoriesFor: #moduloTestCases!constants!public! !
-!SmallIntegerTest class categoriesFor: #quoTestCases!constants!public! !
+!SmallIntegerTest class categoriesForMethods!
+bitShiftTestCases!constants!public! !
+integerDivideTestCases!constants!public! !
+moduloTestCases!constants!public! !
+quoTestCases!constants!public! !
+!
 

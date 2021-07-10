@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STONReaderError subclass: #DolphinSTONReaderError
 	instanceVariableNames: ''
@@ -23,7 +23,9 @@ _descriptionFormat
 
 messageText
 	^ messageText! !
-!DolphinSTONReaderError categoriesFor: #_descriptionArguments!displaying!public! !
-!DolphinSTONReaderError categoriesFor: #_descriptionFormat!displaying!public! !
-!DolphinSTONReaderError categoriesFor: #messageText!accessing!public! !
+!DolphinSTONReaderError categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+messageText!accessing!public! !
+!
 

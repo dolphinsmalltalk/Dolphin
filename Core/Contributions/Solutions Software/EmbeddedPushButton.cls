@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 EmulatedPushButton subclass: #EmbeddedPushButton
 	instanceVariableNames: 'isDisplayingEmbedded embeddedRectangle embeddedDisplayState embeddedText text'
@@ -236,43 +236,45 @@ wmSetFocus: message wParam: wParam lParam: lParam
 	((self clientRectangle containsPoint: self cursorPosition) and: [Keyboard default isKeyDown: VK_LBUTTON]) ifTrue: [^self displayState: #pressed].
 
 	^super wmSetFocus: message wParam: wParam lParam: lParam! !
-!EmbeddedPushButton categoriesFor: #clientRectangle!accessing!public! !
-!EmbeddedPushButton categoriesFor: #createEmbeddedIn:!initialize/release!public! !
-!EmbeddedPushButton categoriesFor: #display:in:on:forecolor:backcolor:editable:hot:!drawing!public! !
-!EmbeddedPushButton categoriesFor: #displayInset!operations!public! !
-!EmbeddedPushButton categoriesFor: #displayOnFormats!accessing!public! !
-!EmbeddedPushButton categoriesFor: #displayRectangleWithin:!calculating!private! !
-!EmbeddedPushButton categoriesFor: #displayState!accessing!public! !
-!EmbeddedPushButton categoriesFor: #drawBackgroundOn:!drawing!public! !
-!EmbeddedPushButton categoriesFor: #dropDownOffset!accessing!public! !
-!EmbeddedPushButton categoriesFor: #durationOfTransition:!accessing!public! !
-!EmbeddedPushButton categoriesFor: #embeddedDisplayState!accessing!private! !
-!EmbeddedPushButton categoriesFor: #embeddedDisplayState:!accessing!private! !
-!EmbeddedPushButton categoriesFor: #embeddedRectangle!accessing!private! !
-!EmbeddedPushButton categoriesFor: #embeddedRectangle:!accessing!private! !
-!EmbeddedPushButton categoriesFor: #embeddedText!accessing!private! !
-!EmbeddedPushButton categoriesFor: #embeddedText:!accessing!private! !
-!EmbeddedPushButton categoriesFor: #embeddedValue:!accessing!public! !
-!EmbeddedPushButton categoriesFor: #expectsText!public!testing! !
-!EmbeddedPushButton categoriesFor: #extent!accessing!public! !
-!EmbeddedPushButton categoriesFor: #hasEmbeddedHotTracking!public!testing! !
-!EmbeddedPushButton categoriesFor: #hasFocus!public!testing! !
-!EmbeddedPushButton categoriesFor: #isDisplayingEmbedded!accessing!private! !
-!EmbeddedPushButton categoriesFor: #isDisplayingEmbedded:!accessing!private! !
-!EmbeddedPushButton categoriesFor: #isDisplayOwnerDrawn!public!testing! !
-!EmbeddedPushButton categoriesFor: #isEnabled!public!testing! !
-!EmbeddedPushButton categoriesFor: #onCursoredLeft!event handling!public! !
-!EmbeddedPushButton categoriesFor: #onKillFocus!event handling!public! !
-!EmbeddedPushButton categoriesFor: #onRequestDeactivate!event handling!public! !
-!EmbeddedPushButton categoriesFor: #preferredExtent:!accessing!public! !
-!EmbeddedPushButton categoriesFor: #preTranslateKeyboardInput:!event handling!public! !
-!EmbeddedPushButton categoriesFor: #showIn:!operations!public! !
-!EmbeddedPushButton categoriesFor: #stbSaveOn:!binary filing!public! !
-!EmbeddedPushButton categoriesFor: #text!accessing!public! !
-!EmbeddedPushButton categoriesFor: #text:!accessing!public! !
-!EmbeddedPushButton categoriesFor: #ttnGetDispInfo:!event handling!public! !
-!EmbeddedPushButton categoriesFor: #validateUserInterface!operations!public! !
-!EmbeddedPushButton categoriesFor: #wmSetFocus:wParam:lParam:!event handling-win32!public! !
+!EmbeddedPushButton categoriesForMethods!
+clientRectangle!accessing!public! !
+createEmbeddedIn:!initialize/release!public! !
+display:in:on:forecolor:backcolor:editable:hot:!drawing!public! !
+displayInset!operations!public! !
+displayOnFormats!accessing!public! !
+displayRectangleWithin:!calculating!private! !
+displayState!accessing!public! !
+drawBackgroundOn:!drawing!public! !
+dropDownOffset!accessing!public! !
+durationOfTransition:!accessing!public! !
+embeddedDisplayState!accessing!private! !
+embeddedDisplayState:!accessing!private! !
+embeddedRectangle!accessing!private! !
+embeddedRectangle:!accessing!private! !
+embeddedText!accessing!private! !
+embeddedText:!accessing!private! !
+embeddedValue:!accessing!public! !
+expectsText!public!testing! !
+extent!accessing!public! !
+hasEmbeddedHotTracking!public!testing! !
+hasFocus!public!testing! !
+isDisplayingEmbedded!accessing!private! !
+isDisplayingEmbedded:!accessing!private! !
+isDisplayOwnerDrawn!public!testing! !
+isEnabled!public!testing! !
+onCursoredLeft!event handling!public! !
+onKillFocus!event handling!public! !
+onRequestDeactivate!event handling!public! !
+preferredExtent:!accessing!public! !
+preTranslateKeyboardInput:!event handling!public! !
+showIn:!operations!public! !
+stbSaveOn:!binary filing!public! !
+text!accessing!public! !
+text:!accessing!public! !
+ttnGetDispInfo:!event handling!public! !
+validateUserInterface!operations!public! !
+wmSetFocus:wParam:lParam:!event handling-win32!public! !
+!
 
 !EmbeddedPushButton class methodsFor!
 
@@ -291,6 +293,8 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^20! !
-!EmbeddedPushButton class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!EmbeddedPushButton class categoriesFor: #stbVersion!binary filing!public! !
+!EmbeddedPushButton class categoriesForMethods!
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

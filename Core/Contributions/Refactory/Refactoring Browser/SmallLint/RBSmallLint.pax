@@ -112,7 +112,9 @@ instanceBehavior
 	"Answer the receiver's singleton instance (the actual class object)."
 
 	^self! !
-!Behavior categoriesFor: #instanceBehavior!accessing!public! !
+!Behavior categoriesForMethods!
+instanceBehavior!accessing!public! !
+!
 
 !CompiledCode methodsFor!
 
@@ -121,8 +123,10 @@ needsHybridFrame
 
 withAllBlockMethodsDo: operation
 	operation value: self! !
-!CompiledCode categoriesFor: #needsHybridFrame!private!testing! !
-!CompiledCode categoriesFor: #withAllBlockMethodsDo:!enumerating!private! !
+!CompiledCode categoriesForMethods!
+needsHybridFrame!private!testing! !
+withAllBlockMethodsDo:!enumerating!private! !
+!
 
 !CompiledMethod methodsFor!
 
@@ -153,7 +157,9 @@ equivalentTo: aCompiledMethod
 								in: aCompiledMethod mclass
 								method: aCompiledMethod.
 					selfParseTree = methodParseTree]]]"! !
-!CompiledMethod categoriesFor: #equivalentTo:!public!RefactoringBrowser! !
+!CompiledMethod categoriesForMethods!
+equivalentTo:!public!RefactoringBrowser! !
+!
 
 !Metaclass methodsFor!
 
@@ -161,7 +167,9 @@ instanceBehavior
 	"Answer the receiver's singleton instance (the actual class object)."
 
 	^instanceClass! !
-!Metaclass categoriesFor: #instanceBehavior!accessing!public! !
+!Metaclass categoriesForMethods!
+instanceBehavior!accessing!public! !
+!
 
 "End of package definition"!
 

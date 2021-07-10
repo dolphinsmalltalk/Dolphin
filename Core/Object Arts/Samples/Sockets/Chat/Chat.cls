@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Presenter subclass: #Chat
 	instanceVariableNames: 'calleeAddress outgoingMessage messageDisplay status socket acceptSocket sendQueue outgoingPort incomingPort'
@@ -418,51 +418,53 @@ validateUserInterface
 	super validateUserInterface.
 	calleeAddress view isEnabled: self isIdle.
 	outgoingMessage view isEnabled: self isConnected! !
-!Chat categoriesFor: #acceptCalls!operations!private! !
-!Chat categoriesFor: #appendMessage:!operations!private! !
-!Chat categoriesFor: #calleeAddress!accessing!public! !
-!Chat categoriesFor: #canConnect!public!testing! !
-!Chat categoriesFor: #closeConnection!operations!private! !
-!Chat categoriesFor: #connect!commands!public! !
-!Chat categoriesFor: #connectFailed:!helpers!private! !
-!Chat categoriesFor: #createComponents!initializing!public! !
-!Chat categoriesFor: #createSchematicWiring!initializing!public! !
-!Chat categoriesFor: #defaultPort!accessing!constants!public! !
-!Chat categoriesFor: #disconnect!commands!public! !
-!Chat categoriesFor: #dontAcceptCalls!operations!private! !
-!Chat categoriesFor: #enqueueConnected:!operations!private! !
-!Chat categoriesFor: #enqueueDisconnect!helpers!private! !
-!Chat categoriesFor: #enqueueDisconnected!helpers!private! !
-!Chat categoriesFor: #enqueueInboundMessage:!helpers!private! !
-!Chat categoriesFor: #enqueueOutboundMessage:!helpers!private! !
-!Chat categoriesFor: #forkAccepter!operations!private! !
-!Chat categoriesFor: #forkConnector:!operations!private! !
-!Chat categoriesFor: #forkReceiverOn:!private! !
-!Chat categoriesFor: #forkSender!helpers!private! !
-!Chat categoriesFor: #incomingPort!accessing!public! !
-!Chat categoriesFor: #incomingPort:!accessing!public! !
-!Chat categoriesFor: #isBusy!event handling!public! !
-!Chat categoriesFor: #isConnected!public!testing! !
-!Chat categoriesFor: #isIdle!public!testing! !
-!Chat categoriesFor: #messageReceived:!operations!private! !
-!Chat categoriesFor: #onGetCursor:!event handling!public! !
-!Chat categoriesFor: #onStartup!event handling!private! !
-!Chat categoriesFor: #onViewClosed!event handling!private! !
-!Chat categoriesFor: #onViewOpened!event handling!private! !
-!Chat categoriesFor: #outgoingPort!accessing!public! !
-!Chat categoriesFor: #outgoingPort:!accessing!public! !
-!Chat categoriesFor: #peerAddress!private! !
-!Chat categoriesFor: #queryCommand:!commands!private! !
-!Chat categoriesFor: #receiveMessagesOn:!private! !
-!Chat categoriesFor: #send!commands!public! !
-!Chat categoriesFor: #senderMain!operations!private! !
-!Chat categoriesFor: #setAcceptStatus!operations!private! !
-!Chat categoriesFor: #socketConnected:!helpers!private! !
-!Chat categoriesFor: #socketDisconnected!helpers!private! !
-!Chat categoriesFor: #status!accessing!public! !
-!Chat categoriesFor: #status:!accessing!public! !
-!Chat categoriesFor: #userName!operations!private! !
-!Chat categoriesFor: #validateUserInterface!operations!public! !
+!Chat categoriesForMethods!
+acceptCalls!operations!private! !
+appendMessage:!operations!private! !
+calleeAddress!accessing!public! !
+canConnect!public!testing! !
+closeConnection!operations!private! !
+connect!commands!public! !
+connectFailed:!helpers!private! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+defaultPort!accessing!constants!public! !
+disconnect!commands!public! !
+dontAcceptCalls!operations!private! !
+enqueueConnected:!operations!private! !
+enqueueDisconnect!helpers!private! !
+enqueueDisconnected!helpers!private! !
+enqueueInboundMessage:!helpers!private! !
+enqueueOutboundMessage:!helpers!private! !
+forkAccepter!operations!private! !
+forkConnector:!operations!private! !
+forkReceiverOn:!private! !
+forkSender!helpers!private! !
+incomingPort!accessing!public! !
+incomingPort:!accessing!public! !
+isBusy!event handling!public! !
+isConnected!public!testing! !
+isIdle!public!testing! !
+messageReceived:!operations!private! !
+onGetCursor:!event handling!public! !
+onStartup!event handling!private! !
+onViewClosed!event handling!private! !
+onViewOpened!event handling!private! !
+outgoingPort!accessing!public! !
+outgoingPort:!accessing!public! !
+peerAddress!private! !
+queryCommand:!commands!private! !
+receiveMessagesOn:!private! !
+send!commands!public! !
+senderMain!operations!private! !
+setAcceptStatus!operations!private! !
+socketConnected:!helpers!private! !
+socketDisconnected!helpers!private! !
+status!accessing!public! !
+status:!accessing!public! !
+userName!operations!private! !
+validateUserInterface!operations!public! !
+!
 
 !Chat class methodsFor!
 
@@ -509,8 +511,10 @@ sampleDescription
 	"Private - Answer the description of the receiver to be used in the samples folder."
 
 	^'Sockets Chat'! !
-!Chat class categoriesFor: #icon!constants!public! !
-!Chat class categoriesFor: #initialize!development!initializing!private! !
-!Chat class categoriesFor: #resource_Default_view!public!resources-views! !
-!Chat class categoriesFor: #sampleDescription!constants!development!private! !
+!Chat class categoriesForMethods!
+icon!constants!public! !
+initialize!development!initializing!private! !
+resource_Default_view!public!resources-views! !
+sampleDescription!constants!development!private! !
+!
 

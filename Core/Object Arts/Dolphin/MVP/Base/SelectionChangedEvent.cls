@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SelectionChangeEvent subclass: #SelectionChangedEvent
 	instanceVariableNames: ''
@@ -15,6 +15,8 @@ canIntercept
 
 value
 	^true! !
-!SelectionChangedEvent categoriesFor: #canIntercept!public!testing! !
-!SelectionChangedEvent categoriesFor: #value!accessing!public! !
+!SelectionChangedEvent categoriesForMethods!
+canIntercept!public!testing! !
+value!accessing!public! !
+!
 

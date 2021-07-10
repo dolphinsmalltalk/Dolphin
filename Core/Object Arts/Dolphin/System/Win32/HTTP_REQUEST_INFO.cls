@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_REQUEST_INFO
 	instanceVariableNames: ''
@@ -72,14 +72,16 @@ pInfo: anExternalArray
 
 printFields: aCollection on: aStream limit: anInteger
 	aStream print: self info! !
-!HTTP_REQUEST_INFO categoriesFor: #info!accessing!public! !
-!HTTP_REQUEST_INFO categoriesFor: #InfoLength!**compiled accessors**!private! !
-!HTTP_REQUEST_INFO categoriesFor: #InfoLength:!**compiled accessors**!private! !
-!HTTP_REQUEST_INFO categoriesFor: #InfoType!**compiled accessors**!private! !
-!HTTP_REQUEST_INFO categoriesFor: #InfoType:!**compiled accessors**!private! !
-!HTTP_REQUEST_INFO categoriesFor: #pInfo!**compiled accessors**!private! !
-!HTTP_REQUEST_INFO categoriesFor: #pInfo:!**compiled accessors**!private! !
-!HTTP_REQUEST_INFO categoriesFor: #printFields:on:limit:!development!printing!private! !
+!HTTP_REQUEST_INFO categoriesForMethods!
+info!accessing!public! !
+InfoLength!**compiled accessors**!private! !
+InfoLength:!**compiled accessors**!private! !
+InfoType!**compiled accessors**!private! !
+InfoType:!**compiled accessors**!private! !
+pInfo!**compiled accessors**!private! !
+pInfo:!**compiled accessors**!private! !
+printFields:on:limit:!development!printing!private! !
+!
 
 !HTTP_REQUEST_INFO class methodsFor!
 
@@ -104,6 +106,8 @@ defineFields
 
 getFieldNames
 	^#(#InfoType #InfoLength #pInfo)! !
-!HTTP_REQUEST_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_REQUEST_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_REQUEST_INFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Message subclass: #MessageSendAbstract
 	instanceVariableNames: ''
@@ -143,24 +143,26 @@ valueWithArguments: triggerArguments
 	than that required, then the subclass determines which take precedence."
 
 	^self forwardTo: self receiver withArguments: triggerArguments! !
-!MessageSendAbstract categoriesFor: #=!comparing!public! !
-!MessageSendAbstract categoriesFor: #cull:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #cull:cull:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #cull:cull:cull:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #cull:cull:cull:cull:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #deferredValue!evaluating!public! !
-!MessageSendAbstract categoriesFor: #deferredValueAt:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #forwardTo:!operations!public! !
-!MessageSendAbstract categoriesFor: #hash!comparing!public! !
-!MessageSendAbstract categoriesFor: #printOn:!printing!public! !
-!MessageSendAbstract categoriesFor: #receiver!accessing!public! !
-!MessageSendAbstract categoriesFor: #receiver:!accessing!public! !
-!MessageSendAbstract categoriesFor: #value!evaluating!public! !
-!MessageSendAbstract categoriesFor: #value:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #value:value:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #value:value:value:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #value:value:value:value:!evaluating!public! !
-!MessageSendAbstract categoriesFor: #valueWithArguments:!evaluating!public! !
+!MessageSendAbstract categoriesForMethods!
+=!comparing!public! !
+cull:!evaluating!public! !
+cull:cull:!evaluating!public! !
+cull:cull:cull:!evaluating!public! !
+cull:cull:cull:cull:!evaluating!public! !
+deferredValue!evaluating!public! !
+deferredValueAt:!evaluating!public! !
+forwardTo:!operations!public! !
+hash!comparing!public! !
+printOn:!printing!public! !
+receiver!accessing!public! !
+receiver:!accessing!public! !
+value!evaluating!public! !
+value:!evaluating!public! !
+value:value:!evaluating!public! !
+value:value:value:!evaluating!public! !
+value:value:value:value:!evaluating!public! !
+valueWithArguments:!evaluating!public! !
+!
 
 MessageSendAbstract methodProtocol: #niladicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value #valueWithArguments:)!
 
@@ -200,8 +202,10 @@ selector: aSymbol arguments: anArray
 		receiver: nil
 		selector: aSymbol
 		arguments: anArray! !
-!MessageSendAbstract class categoriesFor: #receiver:selector:!instance creation!public! !
-!MessageSendAbstract class categoriesFor: #receiver:selector:argument:!instance creation!public! !
-!MessageSendAbstract class categoriesFor: #receiver:selector:arguments:!instance creation!public! !
-!MessageSendAbstract class categoriesFor: #selector:arguments:!instance creation!public! !
+!MessageSendAbstract class categoriesForMethods!
+receiver:selector:!instance creation!public! !
+receiver:selector:argument:!instance creation!public! !
+receiver:selector:arguments:!instance creation!public! !
+selector:arguments:!instance creation!public! !
+!
 

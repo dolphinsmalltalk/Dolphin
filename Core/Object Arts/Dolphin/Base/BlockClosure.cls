@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object variableSubclass: #BlockClosure
 	instanceVariableNames: 'outer method initialIP info receiver'
@@ -763,76 +763,78 @@ whileTrue: iterationBlock
 	the definition below, so this method is not actually recursive."
 
 	^[self value] whileTrue: [iterationBlock value]! !
-!BlockClosure categoriesFor: #=!comparing!public! !
-!BlockClosure categoriesFor: #argumentCount!accessing!public! !
-!BlockClosure categoriesFor: #argumentCount:!accessing!development!private! !
-!BlockClosure categoriesFor: #asBlock!accessing!converting!public! !
-!BlockClosure categoriesFor: #atPriority:!evaluating!public! !
-!BlockClosure categoriesFor: #copiedValues!private! !
-!BlockClosure categoriesFor: #critical!private!scheduling! !
-!BlockClosure categoriesFor: #cull:!evaluating!public! !
-!BlockClosure categoriesFor: #cull:cull:!evaluating!public! !
-!BlockClosure categoriesFor: #cull:cull:cull:!evaluating!public! !
-!BlockClosure categoriesFor: #cull:cull:cull:cull:!evaluating!public! !
-!BlockClosure categoriesFor: #deferredValue!evaluating!public! !
-!BlockClosure categoriesFor: #deferredValueAt:!evaluating!public! !
-!BlockClosure categoriesFor: #ensure:!debugger-step through!not restartable!public!unwinding! !
-!BlockClosure categoriesFor: #envTempCount!accessing!private! !
-!BlockClosure categoriesFor: #envTempCount:!accessing!development!private! !
-!BlockClosure categoriesFor: #fork!public!scheduling! !
-!BlockClosure categoriesFor: #forkAt:!public!scheduling! !
-!BlockClosure categoriesFor: #forkAt:maxStack:!public!scheduling! !
-!BlockClosure categoriesFor: #forkMaxStack:!public!scheduling! !
-!BlockClosure categoriesFor: #frameClass!constants!private! !
-!BlockClosure categoriesFor: #home!accessing!private! !
-!BlockClosure categoriesFor: #ifCurtailed:!debugger-step through!not restartable!public!unwinding! !
-!BlockClosure categoriesFor: #info!accessing!private! !
-!BlockClosure categoriesFor: #info:!accessing!development!private! !
-!BlockClosure categoriesFor: #initialIP!accessing!public! !
-!BlockClosure categoriesFor: #initialIP:!accessing!development!private! !
-!BlockClosure categoriesFor: #isClean!private!testing! !
-!BlockClosure categoriesFor: #localCount!accessing!private! !
-!BlockClosure categoriesFor: #method!accessing!private! !
-!BlockClosure categoriesFor: #method:!accessing!private! !
-!BlockClosure categoriesFor: #newProcess!public!scheduling! !
-!BlockClosure categoriesFor: #newProcess:!public!scheduling! !
-!BlockClosure categoriesFor: #newProcessWithArguments:!public!scheduling! !
-!BlockClosure categoriesFor: #numArgs!accessing!public! !
-!BlockClosure categoriesFor: #on:do:!debugger-step through!exceptions!public! !
-!BlockClosure categoriesFor: #on:do:on:do:!exceptions!public! !
-!BlockClosure categoriesFor: #on:do:on:do:on:do:!exceptions!public! !
-!BlockClosure categoriesFor: #on:do:on:do:on:do:on:do:!exceptions!public! !
-!BlockClosure categoriesFor: #on:do:on:do:on:do:on:do:on:do:!exceptions!public! !
-!BlockClosure categoriesFor: #on:do:on:do:on:do:on:do:on:do:on:do:!exceptions!public! !
-!BlockClosure categoriesFor: #onDo:!exceptions!public! !
-!BlockClosure categoriesFor: #outer!accessing!private! !
-!BlockClosure categoriesFor: #outer:!accessing!development!private! !
-!BlockClosure categoriesFor: #postToInputQueue!event handling!public! !
-!BlockClosure categoriesFor: #postToMessageQueue!event handling!public! !
-!BlockClosure categoriesFor: #printOn:!development!printing!public! !
-!BlockClosure categoriesFor: #receiver!accessing!private! !
-!BlockClosure categoriesFor: #receiver:!accessing!private! !
-!BlockClosure categoriesFor: #repeat!evaluating!public! !
-!BlockClosure categoriesFor: #replaceElementsOf:from:to:startingAt:!public!replacing! !
-!BlockClosure categoriesFor: #stackTempCount!accessing!private! !
-!BlockClosure categoriesFor: #stackTempCount:!accessing!development!private! !
-!BlockClosure categoriesFor: #tempCount!accessing!public! !
-!BlockClosure categoriesFor: #ticksToRun!operations!private! !
-!BlockClosure categoriesFor: #timeToRepeat:!event handling!public! !
-!BlockClosure categoriesFor: #timeToRun!evaluating!public! !
-!BlockClosure categoriesFor: #value!evaluating!public! !
-!BlockClosure categoriesFor: #value:!evaluating!public! !
-!BlockClosure categoriesFor: #value:value:!evaluating!public! !
-!BlockClosure categoriesFor: #value:value:value:!evaluating!public! !
-!BlockClosure categoriesFor: #value:value:value:value:!evaluating!public! !
-!BlockClosure categoriesFor: #valueFailed:argumentCount:!exceptions!private! !
-!BlockClosure categoriesFor: #valueOnUnwind:!private!unwinding! !
-!BlockClosure categoriesFor: #valueWithArguments:!evaluating!public! !
-!BlockClosure categoriesFor: #valueWithArgumentsAt:descriptor:!evaluating!private! !
-!BlockClosure categoriesFor: #whileFalse!evaluating!public! !
-!BlockClosure categoriesFor: #whileFalse:!evaluating!public! !
-!BlockClosure categoriesFor: #whileTrue!evaluating!public! !
-!BlockClosure categoriesFor: #whileTrue:!evaluating!public! !
+!BlockClosure categoriesForMethods!
+=!comparing!public! !
+argumentCount!accessing!public! !
+argumentCount:!accessing!development!private! !
+asBlock!accessing!converting!public! !
+atPriority:!evaluating!public! !
+copiedValues!private! !
+critical!private!scheduling! !
+cull:!evaluating!public! !
+cull:cull:!evaluating!public! !
+cull:cull:cull:!evaluating!public! !
+cull:cull:cull:cull:!evaluating!public! !
+deferredValue!evaluating!public! !
+deferredValueAt:!evaluating!public! !
+ensure:!debugger-step through!not restartable!public!unwinding! !
+envTempCount!accessing!private! !
+envTempCount:!accessing!development!private! !
+fork!public!scheduling! !
+forkAt:!public!scheduling! !
+forkAt:maxStack:!public!scheduling! !
+forkMaxStack:!public!scheduling! !
+frameClass!constants!private! !
+home!accessing!private! !
+ifCurtailed:!debugger-step through!not restartable!public!unwinding! !
+info!accessing!private! !
+info:!accessing!development!private! !
+initialIP!accessing!public! !
+initialIP:!accessing!development!private! !
+isClean!private!testing! !
+localCount!accessing!private! !
+method!accessing!private! !
+method:!accessing!private! !
+newProcess!public!scheduling! !
+newProcess:!public!scheduling! !
+newProcessWithArguments:!public!scheduling! !
+numArgs!accessing!public! !
+on:do:!debugger-step through!exceptions!public! !
+on:do:on:do:!exceptions!public! !
+on:do:on:do:on:do:!exceptions!public! !
+on:do:on:do:on:do:on:do:!exceptions!public! !
+on:do:on:do:on:do:on:do:on:do:!exceptions!public! !
+on:do:on:do:on:do:on:do:on:do:on:do:!exceptions!public! !
+onDo:!exceptions!public! !
+outer!accessing!private! !
+outer:!accessing!development!private! !
+postToInputQueue!event handling!public! !
+postToMessageQueue!event handling!public! !
+printOn:!development!printing!public! !
+receiver!accessing!private! !
+receiver:!accessing!private! !
+repeat!evaluating!public! !
+replaceElementsOf:from:to:startingAt:!public!replacing! !
+stackTempCount!accessing!private! !
+stackTempCount:!accessing!development!private! !
+tempCount!accessing!public! !
+ticksToRun!operations!private! !
+timeToRepeat:!event handling!public! !
+timeToRun!evaluating!public! !
+value!evaluating!public! !
+value:!evaluating!public! !
+value:value:!evaluating!public! !
+value:value:value:!evaluating!public! !
+value:value:value:value:!evaluating!public! !
+valueFailed:argumentCount:!exceptions!private! !
+valueOnUnwind:!private!unwinding! !
+valueWithArguments:!evaluating!public! !
+valueWithArgumentsAt:descriptor:!evaluating!private! !
+whileFalse!evaluating!public! !
+whileFalse:!evaluating!public! !
+whileTrue!evaluating!public! !
+whileTrue:!evaluating!public! !
+!
 
 BlockClosure methodProtocol: #dyadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value:value: #valueWithArguments:)!
 BlockClosure methodProtocol: #monadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value: #valueWithArguments:)!
@@ -889,7 +891,9 @@ stbVersion
 	"
 
 	^3! !
-!BlockClosure class categoriesFor: #attemptToRecompile:!binary filing!development!private! !
-!BlockClosure class categoriesFor: #attemptToUpgradeBlock:data:!binary filing!development!private! !
-!BlockClosure class categoriesFor: #stbVersion!binary filing!public! !
+!BlockClosure class categoriesForMethods!
+attemptToRecompile:!binary filing!development!private! !
+attemptToUpgradeBlock:data:!binary filing!development!private! !
+stbVersion!binary filing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBAbstractStatement subclass: #DBSchemaStatement
 	instanceVariableNames: 'catalogName schemaName tableName'
@@ -34,11 +34,13 @@ tableName
 
 tableName: aStringPattern
 	tableName := aStringPattern! !
-!DBSchemaStatement categoriesFor: #catalogName!accessing!public!searching! !
-!DBSchemaStatement categoriesFor: #catalogName:!accessing!public!searching! !
-!DBSchemaStatement categoriesFor: #defaultCursorType!constants!public! !
-!DBSchemaStatement categoriesFor: #schemaName!accessing!public!searching! !
-!DBSchemaStatement categoriesFor: #schemaName:!accessing!public!searching! !
-!DBSchemaStatement categoriesFor: #tableName!accessing!public!searching! !
-!DBSchemaStatement categoriesFor: #tableName:!accessing!public!searching! !
+!DBSchemaStatement categoriesForMethods!
+catalogName!accessing!public!searching! !
+catalogName:!accessing!public!searching! !
+defaultCursorType!constants!public! !
+schemaName!accessing!public!searching! !
+schemaName:!accessing!public!searching! !
+tableName!accessing!public!searching! !
+tableName:!accessing!public!searching! !
+!
 

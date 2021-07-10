@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ArrayedCollection variableSubclass: #WeakArray
 	instanceVariableNames: ''
@@ -94,14 +94,16 @@ species
 	and #select: when applied against the receiver"
 
 	^Array! !
-!WeakArray categoriesFor: #add:!adding!public! !
-!WeakArray categoriesFor: #addAnsweringIndex:!adding!public! !
-!WeakArray categoriesFor: #corpsesDo:!enumerating!public! !
-!WeakArray categoriesFor: #initialize!initializing!public! !
-!WeakArray categoriesFor: #nilCorpsesAndDo:!enumerating!public! !
-!WeakArray categoriesFor: #nonCorpsesDo:!enumerating!public! !
-!WeakArray categoriesFor: #remove:ifAbsent:!private!removing! !
-!WeakArray categoriesFor: #species!accessing!public! !
+!WeakArray categoriesForMethods!
+add:!adding!public! !
+addAnsweringIndex:!adding!public! !
+corpsesDo:!enumerating!public! !
+initialize!initializing!public! !
+nilCorpsesAndDo:!enumerating!public! !
+nonCorpsesDo:!enumerating!public! !
+remove:ifAbsent:!private!removing! !
+species!accessing!public! !
+!
 
 !WeakArray class methodsFor!
 
@@ -110,5 +112,7 @@ new: anInteger
 	The new instance is registered with the memory manager as a weakling"
 
 	^(super new: anInteger) initialize! !
-!WeakArray class categoriesFor: #new:!instance creation!public! !
+!WeakArray class categoriesForMethods!
+new:!instance creation!public! !
+!
 

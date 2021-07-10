@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PositionableStream subclass: #WriteStream
 	instanceVariableNames: 'writeLimit'
@@ -262,38 +262,40 @@ tab: tabCount
 	"Append the specified number of tabs to the receiver."
 
 	tabCount timesRepeat: [self tab]! !
-!WriteStream categoriesFor: #<<!accessing!public! !
-!WriteStream categoriesFor: #basicNext:putAll:startingAt:!accessing!private! !
-!WriteStream categoriesFor: #basicNextPut:!accessing!private! !
-!WriteStream categoriesFor: #basicNextPutAll:!accessing!private! !
-!WriteStream categoriesFor: #basicPrint:!printing!private! !
-!WriteStream categoriesFor: #binaryStore:!binary filing!public!storing! !
-!WriteStream categoriesFor: #contents!accessing!public! !
-!WriteStream categoriesFor: #cr!accessing!public! !
-!WriteStream categoriesFor: #crtab!accessing!public! !
-!WriteStream categoriesFor: #crtab:!accessing!public! !
-!WriteStream categoriesFor: #grabContents!accessing!public! !
-!WriteStream categoriesFor: #growCollection!operations!private! !
-!WriteStream categoriesFor: #initialize!initializing!private! !
-!WriteStream categoriesFor: #isWriteable!public!testing! !
-!WriteStream categoriesFor: #moveToEnd!positioning!private! !
-!WriteStream categoriesFor: #next!accessing!public! !
-!WriteStream categoriesFor: #next:put:!accessing!public! !
-!WriteStream categoriesFor: #next:putAll:startingAt:!accessing!public! !
-!WriteStream categoriesFor: #nextDWORDPut:!binary filing!public! !
-!WriteStream categoriesFor: #nextPut:!accessing!public! !
-!WriteStream categoriesFor: #nextPutAll:!accessing!public! !
-!WriteStream categoriesFor: #nextSDWORDPut:!binary filing!public! !
-!WriteStream categoriesFor: #on:!initializing!private! !
-!WriteStream categoriesFor: #padTo:put:!positioning!public! !
-!WriteStream categoriesFor: #position:!positioning!public! !
-!WriteStream categoriesFor: #primitiveBasicNextPut:!accessing!private! !
-!WriteStream categoriesFor: #primitiveNextPut:!accessing!private! !
-!WriteStream categoriesFor: #reset!positioning!public! !
-!WriteStream categoriesFor: #setToEnd!positioning!public! !
-!WriteStream categoriesFor: #space!constants!public! !
-!WriteStream categoriesFor: #tab!accessing!public! !
-!WriteStream categoriesFor: #tab:!accessing!public! !
+!WriteStream categoriesForMethods!
+<<!accessing!public! !
+basicNext:putAll:startingAt:!accessing!private! !
+basicNextPut:!accessing!private! !
+basicNextPutAll:!accessing!private! !
+basicPrint:!printing!private! !
+binaryStore:!binary filing!public!storing! !
+contents!accessing!public! !
+cr!accessing!public! !
+crtab!accessing!public! !
+crtab:!accessing!public! !
+grabContents!accessing!public! !
+growCollection!operations!private! !
+initialize!initializing!private! !
+isWriteable!public!testing! !
+moveToEnd!positioning!private! !
+next!accessing!public! !
+next:put:!accessing!public! !
+next:putAll:startingAt:!accessing!public! !
+nextDWORDPut:!binary filing!public! !
+nextPut:!accessing!public! !
+nextPutAll:!accessing!public! !
+nextSDWORDPut:!binary filing!public! !
+on:!initializing!private! !
+padTo:put:!positioning!public! !
+position:!positioning!public! !
+primitiveBasicNextPut:!accessing!private! !
+primitiveNextPut:!accessing!private! !
+reset!positioning!public! !
+setToEnd!positioning!public! !
+space!constants!public! !
+tab!accessing!public! !
+tab:!accessing!public! !
+!
 
 WriteStream methodProtocol: #puttableStream attributes: #(#ansi #readOnly) selectors: #(#cr #flush #nextPut: #nextPutAll: #space #tab)!
 WriteStream methodProtocol: #WriteStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #cr #flush #isEmpty #nextPut: #nextPutAll: #position #position: #reset #setToEnd #space #tab)!
@@ -318,8 +320,10 @@ with: aCollection from: firstIndex to: lastIndex
 	^(self on: aCollection from: firstIndex to: lastIndex)
 		moveToEnd;
 		yourself! !
-!WriteStream class categoriesFor: #with:!instance creation!public! !
-!WriteStream class categoriesFor: #with:from:to:!instance creation!public! !
+!WriteStream class categoriesForMethods!
+with:!instance creation!public! !
+with:from:to:!instance creation!public! !
+!
 
 WriteStream class methodProtocol: #'WriteStream factory' attributes: #(#ansi #readOnly) selectors: #(#with:)!
 

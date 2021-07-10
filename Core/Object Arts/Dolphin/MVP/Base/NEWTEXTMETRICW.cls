@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TEXTMETRICW subclass: #NEWTEXTMETRICW
 	instanceVariableNames: ''
@@ -45,10 +45,12 @@ ntmSizeEM
 	"Answer the <Integer> value of the receiver's 'ntmSizeEM' field."
 
 	^bytes dwordAtOffset: _OffsetOf_ntmSizeEM! !
-!NEWTEXTMETRICW categoriesFor: #ntmAvgWidth!**compiled accessors**!public! !
-!NEWTEXTMETRICW categoriesFor: #ntmCellHeight!**compiled accessors**!public! !
-!NEWTEXTMETRICW categoriesFor: #ntmFlags!**compiled accessors**!public! !
-!NEWTEXTMETRICW categoriesFor: #ntmSizeEM!**compiled accessors**!public! !
+!NEWTEXTMETRICW categoriesForMethods!
+ntmAvgWidth!**compiled accessors**!public! !
+ntmCellHeight!**compiled accessors**!public! !
+ntmFlags!**compiled accessors**!public! !
+ntmSizeEM!**compiled accessors**!public! !
+!
 
 !NEWTEXTMETRICW class methodsFor!
 
@@ -75,6 +77,8 @@ defineFields
 
 getFieldNames
 	^#(#tmHeight #tmAscent #tmDescent #tmInternalLeading #tmExternalLeading #tmAveCharWidth #tmMaxCharWidth #tmWeight #tmOverhang #tmDigitizedAspectX #tmDigitizedAspectY #tmFirstChar #tmLastChar #tmDefaultChar #tmBreakChar #tmItalic #tmUnderlined #tmStruckOut #tmPitchAndFamily #tmCharSet #ntmFlags #ntmSizeEM #ntmCellHeight #ntmAvgWidth)! !
-!NEWTEXTMETRICW class categoriesFor: #defineFields!public!template definition! !
-!NEWTEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NEWTEXTMETRICW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

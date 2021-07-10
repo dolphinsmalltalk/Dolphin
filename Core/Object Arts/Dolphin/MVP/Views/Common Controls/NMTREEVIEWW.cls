@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMHDR subclass: #NMTREEVIEWW
 	instanceVariableNames: ''
@@ -38,11 +38,13 @@ ptDrag
 	"Answer the <POINTL> value of the receiver's 'ptDrag' field."
 
 	^POINTL fromAddress: bytes yourAddress + _OffsetOf_ptDrag! !
-!NMTREEVIEWW categoriesFor: #action!**compiled accessors**!public! !
-!NMTREEVIEWW categoriesFor: #itemHandle!accessing!public! !
-!NMTREEVIEWW categoriesFor: #itemNew!**compiled accessors**!public! !
-!NMTREEVIEWW categoriesFor: #itemOld!**compiled accessors**!public! !
-!NMTREEVIEWW categoriesFor: #ptDrag!**compiled accessors**!public! !
+!NMTREEVIEWW categoriesForMethods!
+action!**compiled accessors**!public! !
+itemHandle!accessing!public! !
+itemNew!**compiled accessors**!public! !
+itemOld!**compiled accessors**!public! !
+ptDrag!**compiled accessors**!public! !
+!
 
 !NMTREEVIEWW class methodsFor!
 
@@ -60,6 +62,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #action #itemOld #itemNew #ptDrag)! !
-!NMTREEVIEWW class categoriesFor: #defineFields!public!template definition! !
-!NMTREEVIEWW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NMTREEVIEWW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

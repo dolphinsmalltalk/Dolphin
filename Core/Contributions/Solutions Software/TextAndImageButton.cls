@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OwnerDrawnButton subclass: #TextAndImageButton
 	instanceVariableNames: 'imageExtent imageManager imageIndex dropDownMenu isMenuOpen'
@@ -301,41 +301,43 @@ wmLButtonDown: message wParam: wParam lParam: lParam
 		^0].
 
 	^super wmLButtonDown: message wParam: wParam lParam: lParam! !
-!TextAndImageButton categoriesFor: #buildImageManager!operations!private! !
-!TextAndImageButton categoriesFor: #contentOffsetOn:!calculating!private! !
-!TextAndImageButton categoriesFor: #currentBackcolor!accessing!public! !
-!TextAndImageButton categoriesFor: #drawBackgroundOn:!drawing!private! !
-!TextAndImageButton categoriesFor: #drawDropDownArrowOn:!drawing!private! !
-!TextAndImageButton categoriesFor: #drawImageOn:!drawing!private! !
-!TextAndImageButton categoriesFor: #drawOn:!drawing!private! !
-!TextAndImageButton categoriesFor: #drawTextOn:!drawing!private! !
-!TextAndImageButton categoriesFor: #dropDownMenu!accessing!public! !
-!TextAndImageButton categoriesFor: #dropDownMenu:!accessing!public! !
-!TextAndImageButton categoriesFor: #dropDownOffset!accessing!public! !
-!TextAndImageButton categoriesFor: #durationOfTransition:!accessing!public! !
-!TextAndImageButton categoriesFor: #filerProxy!accessing!public! !
-!TextAndImageButton categoriesFor: #hasDropDownMenu!public!testing! !
-!TextAndImageButton categoriesFor: #hasImage!public!testing! !
-!TextAndImageButton categoriesFor: #hasText!public!testing! !
-!TextAndImageButton categoriesFor: #image:!accessing!public! !
-!TextAndImageButton categoriesFor: #imageExtent!accessing!public! !
-!TextAndImageButton categoriesFor: #imageExtent:!accessing!public! !
-!TextAndImageButton categoriesFor: #imageGap!accessing!calculating!private! !
-!TextAndImageButton categoriesFor: #imageIndex!accessing!private! !
-!TextAndImageButton categoriesFor: #imageIndex:!accessing!private! !
-!TextAndImageButton categoriesFor: #imageList!accessing!private! !
-!TextAndImageButton categoriesFor: #imageManager!accessing!private! !
-!TextAndImageButton categoriesFor: #imageManager:!accessing!private! !
-!TextAndImageButton categoriesFor: #imagePosOn:!calculating!private! !
-!TextAndImageButton categoriesFor: #isImageFirst!public!testing! !
-!TextAndImageButton categoriesFor: #isMenuOpen!accessing!private! !
-!TextAndImageButton categoriesFor: #isMenuOpen:!accessing!private! !
-!TextAndImageButton categoriesFor: #labelWidthOn:!calculating!private! !
-!TextAndImageButton categoriesFor: #preTranslateKeyboardInput:!event handling!private! !
-!TextAndImageButton categoriesFor: #rebuildImageManager!operations!private! !
-!TextAndImageButton categoriesFor: #standardTransitionDurations!accessing!public! !
-!TextAndImageButton categoriesFor: #textExtentOn:!calculating!public! !
-!TextAndImageButton categoriesFor: #textPosOn:!calculating!private! !
-!TextAndImageButton categoriesFor: #trackMenu!operations!private! !
-!TextAndImageButton categoriesFor: #wmLButtonDown:wParam:lParam:!event handling-win32!private! !
+!TextAndImageButton categoriesForMethods!
+buildImageManager!operations!private! !
+contentOffsetOn:!calculating!private! !
+currentBackcolor!accessing!public! !
+drawBackgroundOn:!drawing!private! !
+drawDropDownArrowOn:!drawing!private! !
+drawImageOn:!drawing!private! !
+drawOn:!drawing!private! !
+drawTextOn:!drawing!private! !
+dropDownMenu!accessing!public! !
+dropDownMenu:!accessing!public! !
+dropDownOffset!accessing!public! !
+durationOfTransition:!accessing!public! !
+filerProxy!accessing!public! !
+hasDropDownMenu!public!testing! !
+hasImage!public!testing! !
+hasText!public!testing! !
+image:!accessing!public! !
+imageExtent!accessing!public! !
+imageExtent:!accessing!public! !
+imageGap!accessing!calculating!private! !
+imageIndex!accessing!private! !
+imageIndex:!accessing!private! !
+imageList!accessing!private! !
+imageManager!accessing!private! !
+imageManager:!accessing!private! !
+imagePosOn:!calculating!private! !
+isImageFirst!public!testing! !
+isMenuOpen!accessing!private! !
+isMenuOpen:!accessing!private! !
+labelWidthOn:!calculating!private! !
+preTranslateKeyboardInput:!event handling!private! !
+rebuildImageManager!operations!private! !
+standardTransitionDurations!accessing!public! !
+textExtentOn:!calculating!public! !
+textPosOn:!calculating!private! !
+trackMenu!operations!private! !
+wmLButtonDown:wParam:lParam:!event handling-win32!private! !
+!
 

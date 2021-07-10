@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #DiskVolumeInformation
 	instanceVariableNames: 'path rootPath label serialNumber maxComponentLength fileSystemFlags fileSystemName sectorsPerCluster bytesPerSector freeClusters totalClusters freeBytes totalBytes totalFreeBytes'
@@ -262,32 +262,34 @@ totalFreeBytes
 
 	totalFreeBytes isNil ifTrue: [self calcDiskSpace].
 	^totalFreeBytes! !
-!DiskVolumeInformation categoriesFor: #bytesPerSector!accessing!public! !
-!DiskVolumeInformation categoriesFor: #calcDiskSpace!helpers!private! !
-!DiskVolumeInformation categoriesFor: #displayOn:!displaying!public! !
-!DiskVolumeInformation categoriesFor: #displaySerialNumberOn:!displaying!private! !
-!DiskVolumeInformation categoriesFor: #driveLetter!accessing!public! !
-!DiskVolumeInformation categoriesFor: #explorerName!accessing!public! !
-!DiskVolumeInformation categoriesFor: #fileSystemFlags!accessing!public! !
-!DiskVolumeInformation categoriesFor: #fileSystemName!accessing!public! !
-!DiskVolumeInformation categoriesFor: #freeBytes!accessing!public! !
-!DiskVolumeInformation categoriesFor: #freeClusters!accessing!public! !
-!DiskVolumeInformation categoriesFor: #getDiskFreeSpace!helpers!private! !
-!DiskVolumeInformation categoriesFor: #getDiskFreeSpaceEx!helpers!private! !
-!DiskVolumeInformation categoriesFor: #getDiskStats!helpers!private! !
-!DiskVolumeInformation categoriesFor: #getVolumeInformation!helpers!private! !
-!DiskVolumeInformation categoriesFor: #isSparseFileCapable!accessing!public! !
-!DiskVolumeInformation categoriesFor: #label!accessing!public! !
-!DiskVolumeInformation categoriesFor: #label:!accessing!public! !
-!DiskVolumeInformation categoriesFor: #maxComponentLength!accessing!public! !
-!DiskVolumeInformation categoriesFor: #printOn:!displaying!public! !
-!DiskVolumeInformation categoriesFor: #rootPath!accessing!public! !
-!DiskVolumeInformation categoriesFor: #sectorsPerCluster!accessing!public! !
-!DiskVolumeInformation categoriesFor: #serialNumber!accessing!public! !
-!DiskVolumeInformation categoriesFor: #setPath:!initializing!private! !
-!DiskVolumeInformation categoriesFor: #totalBytes!accessing!public! !
-!DiskVolumeInformation categoriesFor: #totalClusters!accessing!public! !
-!DiskVolumeInformation categoriesFor: #totalFreeBytes!accessing!public! !
+!DiskVolumeInformation categoriesForMethods!
+bytesPerSector!accessing!public! !
+calcDiskSpace!helpers!private! !
+displayOn:!displaying!public! !
+displaySerialNumberOn:!displaying!private! !
+driveLetter!accessing!public! !
+explorerName!accessing!public! !
+fileSystemFlags!accessing!public! !
+fileSystemName!accessing!public! !
+freeBytes!accessing!public! !
+freeClusters!accessing!public! !
+getDiskFreeSpace!helpers!private! !
+getDiskFreeSpaceEx!helpers!private! !
+getDiskStats!helpers!private! !
+getVolumeInformation!helpers!private! !
+isSparseFileCapable!accessing!public! !
+label!accessing!public! !
+label:!accessing!public! !
+maxComponentLength!accessing!public! !
+printOn:!displaying!public! !
+rootPath!accessing!public! !
+sectorsPerCluster!accessing!public! !
+serialNumber!accessing!public! !
+setPath:!initializing!private! !
+totalBytes!accessing!public! !
+totalClusters!accessing!public! !
+totalFreeBytes!accessing!public! !
+!
 
 !DiskVolumeInformation class methodsFor!
 
@@ -306,6 +308,8 @@ forSystemPath
 	"
 
 	^self forPath: SessionManager current systemDirectory! !
-!DiskVolumeInformation class categoriesFor: #forPath:!instance creation!public! !
-!DiskVolumeInformation class categoriesFor: #forSystemPath!instance creation!public! !
+!DiskVolumeInformation class categoriesForMethods!
+forPath:!instance creation!public! !
+forSystemPath!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IWebBrowserApp subclass: #IWebBrowser2
 	instanceVariableNames: ''
@@ -396,44 +396,46 @@ theaterMode: pbRegister
 
 	self put_TheaterMode: pbRegister
 ! !
-!IWebBrowser2 categoriesFor: #addressBar!**auto generated**!properties!public! !
-!IWebBrowser2 categoriesFor: #addressBar:!**auto generated**!properties!public! !
-!IWebBrowser2 categoriesFor: #execWB:cmdexecopt:pvaIn:pvaOut:!**auto generated**!methods!public! !
-!IWebBrowser2 categoriesFor: #ExecWB:cmdexecopt:pvaIn:pvaOut:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #get_AddressBar:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #get_Offline:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #get_ReadyState:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #get_RegisterAsBrowser:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #get_RegisterAsDropTarget:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #get_Resizable:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #get_Silent:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #get_TheaterMode:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #navigate2:flags:targetFrameName:postData:headers:!**auto generated**!methods!public! !
-!IWebBrowser2 categoriesFor: #Navigate2:Flags:TargetFrameName:PostData:Headers:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #offline!**auto generated**!properties!public! !
-!IWebBrowser2 categoriesFor: #offline:!**auto generated**!properties!public! !
-!IWebBrowser2 categoriesFor: #put_AddressBar:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #put_Offline:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #put_RegisterAsBrowser:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #put_RegisterAsDropTarget:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #put_Resizable:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #put_Silent:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #put_TheaterMode:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #queryStatusWB:!**auto generated**!methods!public! !
-!IWebBrowser2 categoriesFor: #QueryStatusWB:pcmdf:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #readyState!**auto generated**!properties!public! !
-!IWebBrowser2 categoriesFor: #registerAsBrowser!**auto generated**!properties!public! !
-!IWebBrowser2 categoriesFor: #registerAsBrowser:!**auto generated**!properties!public! !
-!IWebBrowser2 categoriesFor: #registerAsDropTarget!**auto generated**!properties!public! !
-!IWebBrowser2 categoriesFor: #registerAsDropTarget:!**auto generated**!properties!public! !
-!IWebBrowser2 categoriesFor: #resizable!**auto generated**!properties!public! !
-!IWebBrowser2 categoriesFor: #resizable:!**auto generated**!properties!public! !
-!IWebBrowser2 categoriesFor: #showBrowserBar:pvarShow:pvarSize:!**auto generated**!methods!public! !
-!IWebBrowser2 categoriesFor: #ShowBrowserBar:pvarShow:pvarSize:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
-!IWebBrowser2 categoriesFor: #silent!**auto generated**!properties!public! !
-!IWebBrowser2 categoriesFor: #silent:!**auto generated**!properties!public! !
-!IWebBrowser2 categoriesFor: #theaterMode!**auto generated**!properties!public! !
-!IWebBrowser2 categoriesFor: #theaterMode:!**auto generated**!properties!public! !
+!IWebBrowser2 categoriesForMethods!
+addressBar!**auto generated**!properties!public! !
+addressBar:!**auto generated**!properties!public! !
+execWB:cmdexecopt:pvaIn:pvaOut:!**auto generated**!methods!public! !
+ExecWB:cmdexecopt:pvaIn:pvaOut:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+get_AddressBar:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+get_Offline:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+get_ReadyState:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+get_RegisterAsBrowser:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+get_RegisterAsDropTarget:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+get_Resizable:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+get_Silent:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+get_TheaterMode:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+navigate2:flags:targetFrameName:postData:headers:!**auto generated**!methods!public! !
+Navigate2:Flags:TargetFrameName:PostData:Headers:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+offline!**auto generated**!properties!public! !
+offline:!**auto generated**!properties!public! !
+put_AddressBar:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+put_Offline:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+put_RegisterAsBrowser:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+put_RegisterAsDropTarget:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+put_Resizable:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+put_Silent:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+put_TheaterMode:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+queryStatusWB:!**auto generated**!methods!public! !
+QueryStatusWB:pcmdf:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+readyState!**auto generated**!properties!public! !
+registerAsBrowser!**auto generated**!properties!public! !
+registerAsBrowser:!**auto generated**!properties!public! !
+registerAsDropTarget!**auto generated**!properties!public! !
+registerAsDropTarget:!**auto generated**!properties!public! !
+resizable!**auto generated**!properties!public! !
+resizable:!**auto generated**!properties!public! !
+showBrowserBar:pvarShow:pvarSize:!**auto generated**!methods!public! !
+ShowBrowserBar:pvarShow:pvarSize:!**auto generated**!COM Interfaces-IWebBrowser2!private! !
+silent!**auto generated**!properties!public! !
+silent:!**auto generated**!properties!public! !
+theaterMode!**auto generated**!properties!public! !
+theaterMode:!**auto generated**!properties!public! !
+!
 
 !IWebBrowser2 class methodsFor!
 
@@ -481,5 +483,7 @@ defineFunctions
 		defineFunction: #put_Resizable:
 			argumentTypes: 'varbool'
 ! !
-!IWebBrowser2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IWebBrowser2 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

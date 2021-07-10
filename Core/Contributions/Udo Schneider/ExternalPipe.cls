@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ExternalPipe
 	instanceVariableNames: 'readHandle writeHandle streams'
@@ -43,12 +43,14 @@ writeHandle
 writeStream
 	streams isNil ifTrue: [self connectStreams].
 	^streams at: 2! !
-!ExternalPipe categoriesFor: #connectStreams!private! !
-!ExternalPipe categoriesFor: #createPipe!helpers!initializing!private! !
-!ExternalPipe categoriesFor: #readHandle!accessing!private! !
-!ExternalPipe categoriesFor: #readStream!accessing!public! !
-!ExternalPipe categoriesFor: #writeHandle!accessing!private! !
-!ExternalPipe categoriesFor: #writeStream!accessing!public! !
+!ExternalPipe categoriesForMethods!
+connectStreams!private! !
+createPipe!helpers!initializing!private! !
+readHandle!accessing!private! !
+readStream!accessing!public! !
+writeHandle!accessing!private! !
+writeStream!accessing!public! !
+!
 
 !ExternalPipe class methodsFor!
 
@@ -137,7 +139,9 @@ example2
 
 new
 	^super new createPipe; yourself! !
-!ExternalPipe class categoriesFor: #example1!must strip!public! !
-!ExternalPipe class categoriesFor: #example2!must strip!public! !
-!ExternalPipe class categoriesFor: #new!instance creation!public! !
+!ExternalPipe class categoriesForMethods!
+example1!must strip!public! !
+example2!must strip!public! !
+new!instance creation!public! !
+!
 

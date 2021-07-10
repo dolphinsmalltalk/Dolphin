@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodRefactoring subclass: #ExtractToTemporaryRefactoring
 	instanceVariableNames: 'sourceInterval selector newVariableName parseTree'
@@ -106,17 +106,19 @@ verifySelectedInterval
 				onError: [:message :position | self refactoringError: 'Invalid selection'].
 	selectedParseTree isSequence 
 		ifTrue: [self refactoringError: 'Cannot assign temp from multiple statements']! !
-!ExtractToTemporaryRefactoring categoriesFor: #checkVariableName!preconditions!public! !
-!ExtractToTemporaryRefactoring categoriesFor: #compileNewMethod!public!transforming! !
-!ExtractToTemporaryRefactoring categoriesFor: #constructAssignmentFrom:!public!transforming! !
-!ExtractToTemporaryRefactoring categoriesFor: #extract:to:from:in:!initialize/release!public! !
-!ExtractToTemporaryRefactoring categoriesFor: #insertTemporary!public!transforming! !
-!ExtractToTemporaryRefactoring categoriesFor: #parseTree!accessing!private! !
-!ExtractToTemporaryRefactoring categoriesFor: #preconditions!preconditions!public! !
-!ExtractToTemporaryRefactoring categoriesFor: #selectedSource!accessing!private! !
-!ExtractToTemporaryRefactoring categoriesFor: #storeOn:!printing!public! !
-!ExtractToTemporaryRefactoring categoriesFor: #transform!public!transforming! !
-!ExtractToTemporaryRefactoring categoriesFor: #verifySelectedInterval!preconditions!public! !
+!ExtractToTemporaryRefactoring categoriesForMethods!
+checkVariableName!preconditions!public! !
+compileNewMethod!public!transforming! !
+constructAssignmentFrom:!public!transforming! !
+extract:to:from:in:!initialize/release!public! !
+insertTemporary!public!transforming! !
+parseTree!accessing!private! !
+preconditions!preconditions!public! !
+selectedSource!accessing!private! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+verifySelectedInterval!preconditions!public! !
+!
 
 !ExtractToTemporaryRefactoring class methodsFor!
 
@@ -135,6 +137,8 @@ model: aRBNamespace extract: anInterval to: aString from: aSelector in: aClass
 			from: aSelector
 			in: aClass;
 		yourself! !
-!ExtractToTemporaryRefactoring class categoriesFor: #extract:to:from:in:!instance creation!public! !
-!ExtractToTemporaryRefactoring class categoriesFor: #model:extract:to:from:in:!instance creation!public! !
+!ExtractToTemporaryRefactoring class categoriesForMethods!
+extract:to:from:in:!instance creation!public! !
+model:extract:to:from:in:!instance creation!public! !
+!
 

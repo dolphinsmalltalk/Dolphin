@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RelativeFileLocator subclass: #ImageRelativeFileLocator
 	instanceVariableNames: ''
@@ -22,7 +22,9 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler writePreambleFor: self! !
-!ImageRelativeFileLocator categoriesFor: #stbSaveOn:!binary filing!public! !
+!ImageRelativeFileLocator categoriesForMethods!
+stbSaveOn:!binary filing!public! !
+!
 
 !ImageRelativeFileLocator class methodsFor!
 
@@ -50,8 +52,10 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current := nil! !
-!ImageRelativeFileLocator class categoriesFor: #current!accessing!public! !
-!ImageRelativeFileLocator class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!ImageRelativeFileLocator class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!ImageRelativeFileLocator class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!ImageRelativeFileLocator class categoriesForMethods!
+current!accessing!public! !
+onPreStripImage!class hierarchy-removing!private! !
+stbReadFrom:format:!binary filing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

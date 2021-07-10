@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BrowserEnvironmentWrapper subclass: #AndEnvironment
 	instanceVariableNames: 'andedEnvironment'
@@ -72,18 +72,20 @@ storeOn: aStream
 	aStream nextPutAll: ' & '.
 	andedEnvironment storeOn: aStream.
 	aStream nextPut: $)! !
-!AndEnvironment categoriesFor: #andedEnvironment!accessing!private! !
-!AndEnvironment categoriesFor: #andedEnvironment:!initialize/release!public! !
-!AndEnvironment categoriesFor: #classesDo:!accessing!public! !
-!AndEnvironment categoriesFor: #definesClass:!public!testing! !
-!AndEnvironment categoriesFor: #includesCategory:!public! !
-!AndEnvironment categoriesFor: #includesClass:!public!testing! !
-!AndEnvironment categoriesFor: #includesProtocol:in:!public! !
-!AndEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!AndEnvironment categoriesFor: #numberSelectors!accessing!public! !
-!AndEnvironment categoriesFor: #problemCount!accessing!public! !
-!AndEnvironment categoriesFor: #selectorsForClass:do:!accessing!public! !
-!AndEnvironment categoriesFor: #storeOn:!printing!public! !
+!AndEnvironment categoriesForMethods!
+andedEnvironment!accessing!private! !
+andedEnvironment:!initialize/release!public! !
+classesDo:!accessing!public! !
+definesClass:!public!testing! !
+includesCategory:!public! !
+includesClass:!public!testing! !
+includesProtocol:in:!public! !
+includesSelector:in:!public!testing! !
+numberSelectors!accessing!public! !
+problemCount!accessing!public! !
+selectorsForClass:do:!accessing!public! !
+storeOn:!printing!public! !
+!
 
 !AndEnvironment class methodsFor!
 
@@ -91,5 +93,7 @@ onEnvironment: anEnvironment and: anotherEnvironment
 	^(self onEnvironment: anEnvironment)
 		andedEnvironment: anotherEnvironment;
 		yourself! !
-!AndEnvironment class categoriesFor: #onEnvironment:and:!instance creation!public! !
+!AndEnvironment class categoriesForMethods!
+onEnvironment:and:!instance creation!public! !
+!
 

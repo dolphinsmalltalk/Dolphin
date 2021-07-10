@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRGRADIENTFILL
 	instanceVariableNames: ''
@@ -95,16 +95,18 @@ Ver: aStructureArrayOfTRIVERTEX
 		to: _OffsetOf_Ver + size
 		startingAt: 1.
 	self nVer: aStructureArrayOfTRIVERTEX size! !
-!EMRGRADIENTFILL categoriesFor: #nTri!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #nTri:!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #nVer!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #nVer:!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #ulMode!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #ulMode:!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #Ver!**compiled accessors**!public! !
-!EMRGRADIENTFILL categoriesFor: #Ver:!**compiled accessors**!public! !
+!EMRGRADIENTFILL categoriesForMethods!
+nTri!**compiled accessors**!public! !
+nTri:!**compiled accessors**!public! !
+nVer!**compiled accessors**!public! !
+nVer:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+ulMode!**compiled accessors**!public! !
+ulMode:!**compiled accessors**!public! !
+Ver!**compiled accessors**!public! !
+Ver:!**compiled accessors**!public! !
+!
 
 !EMRGRADIENTFILL class methodsFor!
 
@@ -149,7 +151,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_GRADIENTFILL! !
-!EMRGRADIENTFILL class categoriesFor: #defineFields!public!template definition! !
-!EMRGRADIENTFILL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRGRADIENTFILL class categoriesFor: #iTypes!constants!public! !
+!EMRGRADIENTFILL class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

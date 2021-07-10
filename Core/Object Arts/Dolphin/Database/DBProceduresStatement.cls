@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBSchemaStatement subclass: #DBProceduresStatement
 	instanceVariableNames: 'procedureName'
@@ -28,7 +28,9 @@ procedureName
 
 procedureName: aString
 	procedureName := aString! !
-!DBProceduresStatement categoriesFor: #executeStatement!operations!private! !
-!DBProceduresStatement categoriesFor: #procedureName!accessing!public! !
-!DBProceduresStatement categoriesFor: #procedureName:!accessing!public! !
+!DBProceduresStatement categoriesForMethods!
+executeStatement!operations!private! !
+procedureName!accessing!public! !
+procedureName:!accessing!public! !
+!
 

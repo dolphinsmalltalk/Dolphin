@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalArrayTest subclass: #SDWORDArrayTest
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ SDWORDArrayTest comment: ''!
 
 arrayClass
 	^SDWORDArray! !
-!SDWORDArrayTest categoriesFor: #arrayClass!constants!private! !
+!SDWORDArrayTest categoriesForMethods!
+arrayClass!constants!private! !
+!
 

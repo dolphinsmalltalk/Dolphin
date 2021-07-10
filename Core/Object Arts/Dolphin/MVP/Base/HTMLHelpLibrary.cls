@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #HTMLHelpLibrary
 	instanceVariableNames: 'cookie'
@@ -80,14 +80,16 @@ htmlHelpUrl: url style: styleOrNil
 		pszFile: (styleOrNil isNil ifTrue: [url] ifFalse: [url , '>' , styleOrNil])
 		uCommand: HH_DISPLAY_TOPIC
 		dwData: 0! !
-!HTMLHelpLibrary categoriesFor: #close!public!realizing/unrealizing! !
-!HTMLHelpLibrary categoriesFor: #handle:!accessing!private! !
-!HTMLHelpLibrary categoriesFor: #htmlHelp:pszFile:uCommand:dwData:!operations!public! !
-!HTMLHelpLibrary categoriesFor: #htmlHelpCloseAll!operations!public! !
-!HTMLHelpLibrary categoriesFor: #htmlHelpInitialize!operations!private! !
-!HTMLHelpLibrary categoriesFor: #htmlHelpUninitialize!operations!private! !
-!HTMLHelpLibrary categoriesFor: #htmlHelpUrl:!operations!public! !
-!HTMLHelpLibrary categoriesFor: #htmlHelpUrl:style:!operations!public! !
+!HTMLHelpLibrary categoriesForMethods!
+close!public!realizing/unrealizing! !
+handle:!accessing!private! !
+htmlHelp:pszFile:uCommand:dwData:!operations!public! !
+htmlHelpCloseAll!operations!public! !
+htmlHelpInitialize!operations!private! !
+htmlHelpUninitialize!operations!private! !
+htmlHelpUrl:!operations!public! !
+htmlHelpUrl:style:!operations!public! !
+!
 
 !HTMLHelpLibrary class methodsFor!
 
@@ -103,6 +105,8 @@ htmlHelpCloseAll
 
 	(default notNil and: [default isOpen]) ifTrue: [
 		default htmlHelpCloseAll]! !
-!HTMLHelpLibrary class categoriesFor: #fileName!constants!public! !
-!HTMLHelpLibrary class categoriesFor: #htmlHelpCloseAll!operations!public! !
+!HTMLHelpLibrary class categoriesForMethods!
+fileName!constants!public! !
+htmlHelpCloseAll!operations!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserMethodDeleteChunk
 	instanceVariableNames: ''
@@ -65,10 +65,12 @@ isMatch
 		ifNil: [true]
 		ifNotNil:
 			[:arg | (identity2 subStrings anySatisfy: [:each | arg includesSelector: each asSymbol]) not]! !
-!ChunkBrowserMethodDeleteChunk categoriesFor: #browseTarget!operations!public! !
-!ChunkBrowserMethodDeleteChunk categoriesFor: #identity1AndIdentity2AsCompiledMethod!helpers!public! !
-!ChunkBrowserMethodDeleteChunk categoriesFor: #initialize:!initializing!public! !
-!ChunkBrowserMethodDeleteChunk categoriesFor: #isMatch!public!testing! !
+!ChunkBrowserMethodDeleteChunk categoriesForMethods!
+browseTarget!operations!public! !
+identity1AndIdentity2AsCompiledMethod!helpers!public! !
+initialize:!initializing!public! !
+isMatch!public!testing! !
+!
 
 !ChunkBrowserMethodDeleteChunk class methodsFor!
 
@@ -88,6 +90,8 @@ isChunkClassFor: aString
 		and:
 			[#(' removeSelector: #' ' class removeSelector: #' ' removeSelectors: #(' ' class removeSelectors: #(')
 				anySatisfy: [:each | (aString indexOfSubCollection: each) = firstSpaceIndex]]! !
-!ChunkBrowserMethodDeleteChunk class categoriesFor: #chunkType!constants!public! !
-!ChunkBrowserMethodDeleteChunk class categoriesFor: #isChunkClassFor:!public!testing! !
+!ChunkBrowserMethodDeleteChunk class categoriesForMethods!
+chunkType!constants!public! !
+isChunkClassFor:!public!testing! !
+!
 

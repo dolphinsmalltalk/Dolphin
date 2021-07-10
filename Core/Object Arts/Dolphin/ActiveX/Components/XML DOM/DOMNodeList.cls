@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequenceableCollection subclass: #DOMNodeList
 	instanceVariableNames: 'interface'
@@ -93,20 +93,22 @@ xml
 	stream := String writeStream: 64.
 	self do: [:each | stream nextPutAll: each xml].
 	^stream contents! !
-!DOMNodeList categoriesFor: #add:!adding!public! !
-!DOMNodeList categoriesFor: #at:!accessing!public! !
-!DOMNodeList categoriesFor: #at:put:!accessing!public! !
-!DOMNodeList categoriesFor: #basicFree!private!realizing/unrealizing! !
-!DOMNodeList categoriesFor: #free!public!realizing/unrealizing! !
-!DOMNodeList categoriesFor: #interface!accessing!private! !
-!DOMNodeList categoriesFor: #interface:!accessing!private! !
-!DOMNodeList categoriesFor: #item:!properties!public! !
-!DOMNodeList categoriesFor: #length!properties!public! !
-!DOMNodeList categoriesFor: #nextNode!methods!public! !
-!DOMNodeList categoriesFor: #reset!methods!public! !
-!DOMNodeList categoriesFor: #size!accessing!public! !
-!DOMNodeList categoriesFor: #species!constants!public! !
-!DOMNodeList categoriesFor: #xml!accessing!public! !
+!DOMNodeList categoriesForMethods!
+add:!adding!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+free!public!realizing/unrealizing! !
+interface!accessing!private! !
+interface:!accessing!private! !
+item:!properties!public! !
+length!properties!public! !
+nextNode!methods!public! !
+reset!methods!public! !
+size!accessing!public! !
+species!constants!public! !
+xml!accessing!public! !
+!
 
 !DOMNodeList class methodsFor!
 
@@ -118,5 +120,7 @@ on: anIXMLDOMNodeList
 		interface: anIXMLDOMNodeList
 
 	! !
-!DOMNodeList class categoriesFor: #on:!instance creation!public! !
+!DOMNodeList class categoriesForMethods!
+on:!instance creation!public! !
+!
 

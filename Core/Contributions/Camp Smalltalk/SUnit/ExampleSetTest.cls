@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #ExampleSetTest
 	instanceVariableNames: 'full empty'
@@ -44,11 +44,13 @@ testRemove
 	full remove: 5.
 	self assert: (full includes: #abc).
 	self deny: (full includes: 5)! !
-!ExampleSetTest categoriesFor: #setUp!public!Running! !
-!ExampleSetTest categoriesFor: #testAdd!public!Testing! !
-!ExampleSetTest categoriesFor: #testGrow!public!Testing! !
-!ExampleSetTest categoriesFor: #testIllegal!public!Testing! !
-!ExampleSetTest categoriesFor: #testIncludes!public!Testing! !
-!ExampleSetTest categoriesFor: #testOccurrences!public!Testing! !
-!ExampleSetTest categoriesFor: #testRemove!public!Testing! !
+!ExampleSetTest categoriesForMethods!
+setUp!public!Running! !
+testAdd!public!Testing! !
+testGrow!public!Testing! !
+testIllegal!public!Testing! !
+testIncludes!public!Testing! !
+testOccurrences!public!Testing! !
+testRemove!public!Testing! !
+!
 

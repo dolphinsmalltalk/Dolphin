@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractIN_ADDR subclass: #IN6_ADDR
 	instanceVariableNames: ''
@@ -42,8 +42,10 @@ Bytes: anExternalArray
 		from: ##(_OffsetOf_Bytes + 1)
 		to: size
 		startingAt: 1! !
-!IN6_ADDR categoriesFor: #Bytes!**compiled accessors**!public! !
-!IN6_ADDR categoriesFor: #Bytes:!**compiled accessors**!public! !
+!IN6_ADDR categoriesForMethods!
+Bytes!**compiled accessors**!public! !
+Bytes:!**compiled accessors**!public! !
+!
 
 !IN6_ADDR class methodsFor!
 
@@ -71,7 +73,9 @@ defineFields
 
 getFieldNames
 	^#(#Bytes)! !
-!IN6_ADDR class categoriesFor: #addressFamily!constants!public! !
-!IN6_ADDR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!IN6_ADDR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!IN6_ADDR class categoriesForMethods!
+addressFamily!constants!public! !
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

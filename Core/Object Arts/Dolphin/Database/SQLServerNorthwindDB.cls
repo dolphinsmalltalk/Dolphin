@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBConnectionTestResource subclass: #SQLServerNorthwindDB
 	instanceVariableNames: ''
@@ -58,11 +58,13 @@ serverName
 
 uid
 	^'sa'! !
-!SQLServerNorthwindDB categoriesFor: #connectString!private! !
-!SQLServerNorthwindDB categoriesFor: #createDatabase!private! !
-!SQLServerNorthwindDB categoriesFor: #dropDatabase!private! !
-!SQLServerNorthwindDB categoriesFor: #newConnection!public! !
-!SQLServerNorthwindDB categoriesFor: #pwd!private! !
-!SQLServerNorthwindDB categoriesFor: #serverName!private! !
-!SQLServerNorthwindDB categoriesFor: #uid!private! !
+!SQLServerNorthwindDB categoriesForMethods!
+connectString!private! !
+createDatabase!private! !
+dropDatabase!private! !
+newConnection!public! !
+pwd!private! !
+serverName!private! !
+uid!private! !
+!
 

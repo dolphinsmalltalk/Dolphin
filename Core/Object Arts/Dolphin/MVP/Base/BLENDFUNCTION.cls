@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #BLENDFUNCTION
 	instanceVariableNames: ''
@@ -85,18 +85,20 @@ usePerPixelAlpha: aBoolean
 	blend. If not then only the constant alpha is used."
 
 	self AlphaFormat: (aBoolean ifTrue: [AC_SRC_ALPHA] ifFalse: [0])! !
-!BLENDFUNCTION categoriesFor: #AlphaFormat!**compiled accessors**!public! !
-!BLENDFUNCTION categoriesFor: #AlphaFormat:!**compiled accessors**!public! !
-!BLENDFUNCTION categoriesFor: #blend:!accessing!public! !
-!BLENDFUNCTION categoriesFor: #BlendFlags!**compiled accessors**!public! !
-!BLENDFUNCTION categoriesFor: #BlendFlags:!**compiled accessors**!public! !
-!BLENDFUNCTION categoriesFor: #BlendOp!**compiled accessors**!public! !
-!BLENDFUNCTION categoriesFor: #BlendOp:!**compiled accessors**!public! !
-!BLENDFUNCTION categoriesFor: #blendPercentage:!accessing!public! !
-!BLENDFUNCTION categoriesFor: #initialize!initializing!public! !
-!BLENDFUNCTION categoriesFor: #SourceConstantAlpha!**compiled accessors**!public! !
-!BLENDFUNCTION categoriesFor: #SourceConstantAlpha:!**compiled accessors**!public! !
-!BLENDFUNCTION categoriesFor: #usePerPixelAlpha:!accessing!public! !
+!BLENDFUNCTION categoriesForMethods!
+AlphaFormat!**compiled accessors**!public! !
+AlphaFormat:!**compiled accessors**!public! !
+blend:!accessing!public! !
+BlendFlags!**compiled accessors**!public! !
+BlendFlags:!**compiled accessors**!public! !
+BlendOp!**compiled accessors**!public! !
+BlendOp:!**compiled accessors**!public! !
+blendPercentage:!accessing!public! !
+initialize!initializing!public! !
+SourceConstantAlpha!**compiled accessors**!public! !
+SourceConstantAlpha:!**compiled accessors**!public! !
+usePerPixelAlpha:!accessing!public! !
+!
 
 !BLENDFUNCTION class methodsFor!
 
@@ -130,7 +132,9 @@ defineFields
 
 getFieldNames
 	^#(#BlendOp #BlendFlags #SourceConstantAlpha #AlphaFormat)! !
-!BLENDFUNCTION class categoriesFor: #blend:!instance creation!public! !
-!BLENDFUNCTION class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!BLENDFUNCTION class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!BLENDFUNCTION class categoriesForMethods!
+blend:!instance creation!public! !
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

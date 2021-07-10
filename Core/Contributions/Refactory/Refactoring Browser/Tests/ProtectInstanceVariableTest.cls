@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #ProtectInstanceVariableTest
 	instanceVariableNames: ''
@@ -30,6 +30,8 @@ testVariableNotDefined
 	refactoring := ProtectInstanceVariableRefactoring variable: 'rewrite'
 				class: SubclassOfClassToRename.
 	self shouldFail: refactoring! !
-!ProtectInstanceVariableTest categoriesFor: #testProtectInstanceVariable!public!tests! !
-!ProtectInstanceVariableTest categoriesFor: #testVariableNotDefined!failure tests!public! !
+!ProtectInstanceVariableTest categoriesForMethods!
+testProtectInstanceVariable!public!tests! !
+testVariableNotDefined!failure tests!public! !
+!
 

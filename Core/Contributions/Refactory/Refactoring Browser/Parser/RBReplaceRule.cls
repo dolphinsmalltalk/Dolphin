@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RBParseTreeRule subclass: #RBReplaceRule
 	instanceVariableNames: 'verificationBlock'
@@ -23,8 +23,10 @@ initialize
 
 replace: aProgramNode with: newNode 
 	aProgramNode replaceMethodSource: newNode! !
-!RBReplaceRule categoriesFor: #canMatch:!matching!public! !
-!RBReplaceRule categoriesFor: #foundMatchFor:!matching!public! !
-!RBReplaceRule categoriesFor: #initialize!initialize/release!public! !
-!RBReplaceRule categoriesFor: #replace:with:!matching!public! !
+!RBReplaceRule categoriesForMethods!
+canMatch:!matching!public! !
+foundMatchFor:!matching!public! !
+initialize!initialize/release!public! !
+replace:with:!matching!public! !
+!
 

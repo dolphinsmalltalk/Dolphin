@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #IDispatchTest
 	instanceVariableNames: ''
@@ -87,8 +87,10 @@ testReadOnlyAspects
 	self assert: prop isNullable.
 	self assert: prop isWriteable.
 	obj free! !
-!IDispatchTest categoriesFor: #testDisplayOn!public!unit tests! !
-!IDispatchTest categoriesFor: #testDNU!public!unit tests! !
-!IDispatchTest categoriesFor: #testInspectablePropertiesOfDual!public!unit tests! !
-!IDispatchTest categoriesFor: #testReadOnlyAspects!public!unit tests! !
+!IDispatchTest categoriesForMethods!
+testDisplayOn!public!unit tests! !
+testDNU!public!unit tests! !
+testInspectablePropertiesOfDual!public!unit tests! !
+testReadOnlyAspects!public!unit tests! !
+!
 

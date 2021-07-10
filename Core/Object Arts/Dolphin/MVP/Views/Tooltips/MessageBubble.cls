@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MessageBoxAbstract subclass: #MessageBubble
 	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth'
@@ -334,49 +334,51 @@ willFade: aBoolean
 	style has no effect after opening."
 
 	tooltipStyle := tooltipStyle mask: TTS_NOFADE set: aBoolean not! !
-!MessageBubble categoriesFor: #activateTooltip:!private!realizing/unrealizing! !
-!MessageBubble categoriesFor: #addTool!private!realizing/unrealizing! !
-!MessageBubble categoriesFor: #areLinksParsed!public!testing! !
-!MessageBubble categoriesFor: #areLinksParsed:!accessing-styles!public! !
-!MessageBubble categoriesFor: #backcolor!accessing!public! !
-!MessageBubble categoriesFor: #backcolor:!accessing!public! !
-!MessageBubble categoriesFor: #close!public!realizing/unrealizing! !
-!MessageBubble categoriesFor: #createTooltip!private!realizing/unrealizing! !
-!MessageBubble categoriesFor: #defaultCaption!displaying!private! !
-!MessageBubble categoriesFor: #font!accessing!public! !
-!MessageBubble categoriesFor: #font:!accessing!public! !
-!MessageBubble categoriesFor: #forecolor!accessing!public! !
-!MessageBubble categoriesFor: #forecolor:!accessing!public! !
-!MessageBubble categoriesFor: #hasCloseButton!public!testing! !
-!MessageBubble categoriesFor: #hasCloseButton:!public!testing! !
-!MessageBubble categoriesFor: #iconStyleFlag!accessing-styles!private! !
-!MessageBubble categoriesFor: #iconStyleFlag:!accessing-styles!private! !
-!MessageBubble categoriesFor: #initialize!initializing!private! !
-!MessageBubble categoriesFor: #initializeTooltip!private!realizing/unrealizing! !
-!MessageBubble categoriesFor: #isAnimated!accessing!public!testing! !
-!MessageBubble categoriesFor: #isAnimated:!accessing-styles!public! !
-!MessageBubble categoriesFor: #isBalloon!accessing!public!testing! !
-!MessageBubble categoriesFor: #isBalloon:!accessing-styles!public! !
-!MessageBubble categoriesFor: #isCentered!public!testing! !
-!MessageBubble categoriesFor: #isCentered:!accessing-styles!public! !
-!MessageBubble categoriesFor: #isModal!accessing-styles!public!testing! !
-!MessageBubble categoriesFor: #margins!accessing!public! !
-!MessageBubble categoriesFor: #margins:!accessing!public! !
-!MessageBubble categoriesFor: #maxWidth!accessing!public! !
-!MessageBubble categoriesFor: #maxWidth:!accessing!public! !
-!MessageBubble categoriesFor: #onPopped!event handling!private! !
-!MessageBubble categoriesFor: #onShowTip:!event handling!private! !
-!MessageBubble categoriesFor: #open!public!realizing/unrealizing! !
-!MessageBubble categoriesFor: #owner!public! !
-!MessageBubble categoriesFor: #position!accessing!public! !
-!MessageBubble categoriesFor: #position:!accessing!public! !
-!MessageBubble categoriesFor: #startTimeout!private!realizing/unrealizing! !
-!MessageBubble categoriesFor: #timeout!accessing!public! !
-!MessageBubble categoriesFor: #timeout:!accessing!public! !
-!MessageBubble categoriesFor: #tooltip!accessing!private! !
-!MessageBubble categoriesFor: #trackPosition!operations!private! !
-!MessageBubble categoriesFor: #willFade!accessing-styles!public!testing! !
-!MessageBubble categoriesFor: #willFade:!accessing-styles!public! !
+!MessageBubble categoriesForMethods!
+activateTooltip:!private!realizing/unrealizing! !
+addTool!private!realizing/unrealizing! !
+areLinksParsed!public!testing! !
+areLinksParsed:!accessing-styles!public! !
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+close!public!realizing/unrealizing! !
+createTooltip!private!realizing/unrealizing! !
+defaultCaption!displaying!private! !
+font!accessing!public! !
+font:!accessing!public! !
+forecolor!accessing!public! !
+forecolor:!accessing!public! !
+hasCloseButton!public!testing! !
+hasCloseButton:!public!testing! !
+iconStyleFlag!accessing-styles!private! !
+iconStyleFlag:!accessing-styles!private! !
+initialize!initializing!private! !
+initializeTooltip!private!realizing/unrealizing! !
+isAnimated!accessing!public!testing! !
+isAnimated:!accessing-styles!public! !
+isBalloon!accessing!public!testing! !
+isBalloon:!accessing-styles!public! !
+isCentered!public!testing! !
+isCentered:!accessing-styles!public! !
+isModal!accessing-styles!public!testing! !
+margins!accessing!public! !
+margins:!accessing!public! !
+maxWidth!accessing!public! !
+maxWidth:!accessing!public! !
+onPopped!event handling!private! !
+onShowTip:!event handling!private! !
+open!public!realizing/unrealizing! !
+owner!public! !
+position!accessing!public! !
+position:!accessing!public! !
+startTimeout!private!realizing/unrealizing! !
+timeout!accessing!public! !
+timeout:!accessing!public! !
+tooltip!accessing!private! !
+trackPosition!operations!private! !
+willFade!accessing-styles!public!testing! !
+willFade:!accessing-styles!public! !
+!
 
 !MessageBubble class methodsFor!
 
@@ -392,6 +394,8 @@ initialize
 				with: MB_ICONINFORMATION
 				with: MB_ICONWARNING
 				with: MB_ICONERROR)! !
-!MessageBubble class categoriesFor: #icon!constants!development!public! !
-!MessageBubble class categoriesFor: #initialize!private! !
+!MessageBubble class categoriesForMethods!
+icon!constants!development!public! !
+initialize!private! !
+!
 

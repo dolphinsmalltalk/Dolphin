@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #VARIANTTest
 	instanceVariableNames: ''
@@ -438,43 +438,47 @@ testUI8
 	"dwordAtOffset:put: is unusual in accepting negative values"
 	var qword: -1.
 	self assert: var value equals: 2 ** 64 - 1! !
-!VARIANTTest categoriesFor: #isValidNullString:!private!testing! !
-!VARIANTTest categoriesFor: #testARRAY!public!unit tests! !
-!VARIANTTest categoriesFor: #testARRAYREF!public!unit tests! !
-!VARIANTTest categoriesFor: #testBSTR!public!unit tests! !
-!VARIANTTest categoriesFor: #testCollectionConversions!public!unit tests! !
-!VARIANTTest categoriesFor: #testCY!public!unit tests! !
-!VARIANTTest categoriesFor: #testCYREF!public!unit tests! !
-!VARIANTTest categoriesFor: #testDATE!public!unit tests! !
-!VARIANTTest categoriesFor: #testDISPATCH!public!unit tests! !
-!VARIANTTest categoriesFor: #testDISPATCHREF!public!unit tests! !
-!VARIANTTest categoriesFor: #testEMPTY!public!unit tests! !
-!VARIANTTest categoriesFor: #testFromAddress!public!unit tests! !
-!VARIANTTest categoriesFor: #testFromInteger!public!unit tests! !
-!VARIANTTest categoriesFor: #testI1!public!unit tests! !
-!VARIANTTest categoriesFor: #testI1REF!public!unit tests! !
-!VARIANTTest categoriesFor: #testI2!public!unit tests! !
-!VARIANTTest categoriesFor: #testI2REF!public!unit tests! !
-!VARIANTTest categoriesFor: #testI4!public!unit tests! !
-!VARIANTTest categoriesFor: #testI4REF!public!unit tests! !
-!VARIANTTest categoriesFor: #testI8!public!unit tests! !
-!VARIANTTest categoriesFor: #testINT!public!unit tests! !
-!VARIANTTest categoriesFor: #testNULL!public!unit tests! !
-!VARIANTTest categoriesFor: #testR4!public!unit tests! !
-!VARIANTTest categoriesFor: #testR4REF!public!unit tests! !
-!VARIANTTest categoriesFor: #testR8!public!unit tests! !
-!VARIANTTest categoriesFor: #testR8REF!public!unit tests! !
-!VARIANTTest categoriesFor: #testUI1!public!unit tests! !
-!VARIANTTest categoriesFor: #testUI1REF!public!unit tests! !
-!VARIANTTest categoriesFor: #testUI2!public!unit tests! !
-!VARIANTTest categoriesFor: #testUI2REF!public!unit tests! !
-!VARIANTTest categoriesFor: #testUI4!public!unit tests! !
-!VARIANTTest categoriesFor: #testUI4REF!public!unit tests! !
-!VARIANTTest categoriesFor: #testUI8!public!unit tests! !
+!VARIANTTest categoriesForMethods!
+isValidNullString:!private!testing! !
+testARRAY!public!unit tests! !
+testARRAYREF!public!unit tests! !
+testBSTR!public!unit tests! !
+testCollectionConversions!public!unit tests! !
+testCY!public!unit tests! !
+testCYREF!public!unit tests! !
+testDATE!public!unit tests! !
+testDISPATCH!public!unit tests! !
+testDISPATCHREF!public!unit tests! !
+testEMPTY!public!unit tests! !
+testFromAddress!public!unit tests! !
+testFromInteger!public!unit tests! !
+testI1!public!unit tests! !
+testI1REF!public!unit tests! !
+testI2!public!unit tests! !
+testI2REF!public!unit tests! !
+testI4!public!unit tests! !
+testI4REF!public!unit tests! !
+testI8!public!unit tests! !
+testINT!public!unit tests! !
+testNULL!public!unit tests! !
+testR4!public!unit tests! !
+testR4REF!public!unit tests! !
+testR8!public!unit tests! !
+testR8REF!public!unit tests! !
+testUI1!public!unit tests! !
+testUI1REF!public!unit tests! !
+testUI2!public!unit tests! !
+testUI2REF!public!unit tests! !
+testUI4!public!unit tests! !
+testUI4REF!public!unit tests! !
+testUI8!public!unit tests! !
+!
 
 !VARIANTTest class methodsFor!
 
 supportsI8
 	^true! !
-!VARIANTTest class categoriesFor: #supportsI8!private!testing! !
+!VARIANTTest class categoriesForMethods!
+supportsI8!private!testing! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StatusBarItemAbstract subclass: #StatusBarNullItem
 	instanceVariableNames: ''
@@ -15,5 +15,7 @@ drawItem: aCanvas bounding: boundingRectangle
 	"Private - A request to draw the receiver. As we are just a placeholder, we do nothing."
 
 	! !
-!StatusBarNullItem categoriesFor: #drawItem:bounding:!drawing!private! !
+!StatusBarNullItem categoriesForMethods!
+drawItem:bounding:!drawing!private! !
+!
 

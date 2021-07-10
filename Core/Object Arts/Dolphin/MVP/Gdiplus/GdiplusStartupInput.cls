@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #GdiplusStartupInput
 	instanceVariableNames: ''
@@ -33,7 +33,9 @@ GdiplusVersion: anInteger
 	"Set the receiver's 'GdiplusVersion' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_GdiplusVersion put: anInteger! !
-!GdiplusStartupInput categoriesFor: #GdiplusVersion:!**compiled accessors**!public! !
+!GdiplusStartupInput categoriesForMethods!
+GdiplusVersion:!**compiled accessors**!public! !
+!
 
 !GdiplusStartupInput class methodsFor!
 
@@ -59,6 +61,8 @@ defineFields
 
 getFieldNames
 	^#(#GdiplusVersion)! !
-!GdiplusStartupInput class categoriesFor: #defineFields!public!template definition! !
-!GdiplusStartupInput class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!GdiplusStartupInput class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

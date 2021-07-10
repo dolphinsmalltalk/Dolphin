@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractDictionaryTest subclass: #LookupTableTest
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ LookupTableTest comment: ''!
 
 collectionClass
 	^LookupTable! !
-!LookupTableTest categoriesFor: #collectionClass!helpers!private! !
+!LookupTableTest categoriesForMethods!
+collectionClass!helpers!private! !
+!
 

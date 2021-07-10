@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 UINT_PTRArray subclass: #HandleArray
 	instanceVariableNames: ''
@@ -19,8 +19,10 @@ uncheckedAt: anInteger
 uncheckedAt: indexInteger put: anExternalHandle 
 	super uncheckedAt: indexInteger put: anExternalHandle asInteger.
 	^anExternalHandle! !
-!HandleArray categoriesFor: #uncheckedAt:!accessing!private! !
-!HandleArray categoriesFor: #uncheckedAt:put:!accessing!private! !
+!HandleArray categoriesForMethods!
+uncheckedAt:!accessing!private! !
+uncheckedAt:put:!accessing!private! !
+!
 
 !HandleArray class methodsFor!
 
@@ -28,5 +30,7 @@ elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
 	^ExternalHandle! !
-!HandleArray class categoriesFor: #elementClass!constants!public! !
+!HandleArray class categoriesForMethods!
+elementClass!constants!public! !
+!
 

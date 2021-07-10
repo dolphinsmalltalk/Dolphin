@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalInteger subclass: #UINT_PTR
 	instanceVariableNames: ''
@@ -64,16 +64,18 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes uintPtrAtOffset: _OffsetOf_value put: anInteger! !
-!UINT_PTR categoriesFor: #asSignedInteger!converting!public! !
-!UINT_PTR categoriesFor: #asUnsignedInteger!converting!public! !
-!UINT_PTR categoriesFor: #highPart!accessing!public! !
-!UINT_PTR categoriesFor: #highPart:!accessing!public! !
-!UINT_PTR categoriesFor: #highPartSigned!accessing!public! !
-!UINT_PTR categoriesFor: #lowPart!accessing!public! !
-!UINT_PTR categoriesFor: #lowPart:!accessing!public! !
-!UINT_PTR categoriesFor: #lowPartSigned!accessing!public! !
-!UINT_PTR categoriesFor: #value!**compiled accessors**!public! !
-!UINT_PTR categoriesFor: #value:!**compiled accessors**!public! !
+!UINT_PTR categoriesForMethods!
+asSignedInteger!converting!public! !
+asUnsignedInteger!converting!public! !
+highPart!accessing!public! !
+highPart:!accessing!public! !
+highPartSigned!accessing!public! !
+lowPart!accessing!public! !
+lowPart:!accessing!public! !
+lowPartSigned!accessing!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !UINT_PTR class methodsFor!
 
@@ -82,5 +84,7 @@ defineFields
 	have a single value."
 
 	self defineField: #value type: UINT_PTRField new beOverride! !
-!UINT_PTR class categoriesFor: #defineFields!public!template definition! !
+!UINT_PTR class categoriesForMethods!
+defineFields!public!template definition! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MessageSequenceAbstract subclass: #MessageSequence
 	instanceVariableNames: 'list'
@@ -55,14 +55,16 @@ size
 	"Answers the number of messages in the sequence"
 
 	^list size! !
-!MessageSequence categoriesFor: #add:!adding!public! !
-!MessageSequence categoriesFor: #add:afterIndex:!adding!public! !
-!MessageSequence categoriesFor: #addAll:afterIndex:!adding!public! !
-!MessageSequence categoriesFor: #initialize!initializing!private! !
-!MessageSequence categoriesFor: #list!accessing!private! !
-!MessageSequence categoriesFor: #messagesDo:!enumerating!private! !
-!MessageSequence categoriesFor: #removeMessagesFor:!public!removing! !
-!MessageSequence categoriesFor: #size!public!testing! !
+!MessageSequence categoriesForMethods!
+add:!adding!public! !
+add:afterIndex:!adding!public! !
+addAll:afterIndex:!adding!public! !
+initialize!initializing!private! !
+list!accessing!private! !
+messagesDo:!enumerating!private! !
+removeMessagesFor:!public!removing! !
+size!public!testing! !
+!
 
 !MessageSequence class methodsFor!
 
@@ -73,5 +75,7 @@ withMessages: aSequencedReadableCollection
 	answer := self new.
 	answer list addAll: aSequencedReadableCollection.
 	^answer! !
-!MessageSequence class categoriesFor: #withMessages:!instance creation!public! !
+!MessageSequence class categoriesForMethods!
+withMessages:!instance creation!public! !
+!
 

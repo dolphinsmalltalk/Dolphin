@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinCollectionTest subclass: #SetTest
 	instanceVariableNames: ''
@@ -204,27 +204,29 @@ testShallowCopy
 	copy := set shallowCopy.
 	self assertIs: copy shallowCopyOf: set.
 	self assertValidSet: copy! !
-!SetTest categoriesFor: #assertCommutativelyEqual:other:!helpers!private! !
-!SetTest categoriesFor: #assertIs:shallowCopyOf:!private!unit tests! !
-!SetTest categoriesFor: #assertValidSet:!private!unit tests! !
-!SetTest categoriesFor: #collectionClass!helpers!private! !
-!SetTest categoriesFor: #denyCommutativelyEqual:other:!helpers!private! !
-!SetTest categoriesFor: #elements!public!unit tests! !
-!SetTest categoriesFor: #loadFactor!constants!private! !
-!SetTest categoriesFor: #minimumCapacity!constants!private! !
-!SetTest categoriesFor: #newEmpty!helpers!private! !
-!SetTest categoriesFor: #newSet!private!unit tests! !
-!SetTest categoriesFor: #newSet:!private!unit tests! !
-!SetTest categoriesFor: #setSizes!public!unit tests! !
-!SetTest categoriesFor: #testAllHealthy!public! !
-!SetTest categoriesFor: #testAllInstancesValid!public!unit tests! !
-!SetTest categoriesFor: #testClassSizeFor!public!unit tests! !
-!SetTest categoriesFor: #testCopy!public!unit tests! !
-!SetTest categoriesFor: #testDeepCopy!public!unit tests! !
-!SetTest categoriesFor: #testEquals!public!unit tests! !
-!SetTest categoriesFor: #testIncludes!public!unit tests! !
-!SetTest categoriesFor: #testMaintainsLoadFactor!public!unit tests! !
-!SetTest categoriesFor: #testNil!public!unit tests! !
-!SetTest categoriesFor: #testRemove!public!unit tests! !
-!SetTest categoriesFor: #testShallowCopy!public!unit tests! !
+!SetTest categoriesForMethods!
+assertCommutativelyEqual:other:!helpers!private! !
+assertIs:shallowCopyOf:!private!unit tests! !
+assertValidSet:!private!unit tests! !
+collectionClass!helpers!private! !
+denyCommutativelyEqual:other:!helpers!private! !
+elements!public!unit tests! !
+loadFactor!constants!private! !
+minimumCapacity!constants!private! !
+newEmpty!helpers!private! !
+newSet!private!unit tests! !
+newSet:!private!unit tests! !
+setSizes!public!unit tests! !
+testAllHealthy!public! !
+testAllInstancesValid!public!unit tests! !
+testClassSizeFor!public!unit tests! !
+testCopy!public!unit tests! !
+testDeepCopy!public!unit tests! !
+testEquals!public!unit tests! !
+testIncludes!public!unit tests! !
+testMaintainsLoadFactor!public!unit tests! !
+testNil!public!unit tests! !
+testRemove!public!unit tests! !
+testShallowCopy!public!unit tests! !
+!
 

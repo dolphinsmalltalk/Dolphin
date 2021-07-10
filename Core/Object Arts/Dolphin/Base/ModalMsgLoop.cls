@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ModalMsgLoop
 	instanceVariableNames: 'loop'
@@ -41,9 +41,11 @@ wait
 	message loop continues to be serviced, but keyboard and mouse input is discarded."
 
 	SessionManager inputState loopWhile: [loop]! !
-!ModalMsgLoop categoriesFor: #initialize!initializing!private! !
-!ModalMsgLoop categoriesFor: #signal!process synchronisation!public! !
-!ModalMsgLoop categoriesFor: #wait!process synchronisation!public! !
+!ModalMsgLoop categoriesForMethods!
+initialize!initializing!private! !
+signal!process synchronisation!public! !
+wait!process synchronisation!public! !
+!
 
 !ModalMsgLoop class methodsFor!
 
@@ -51,5 +53,7 @@ new
 	"Answer a new initialized instance of the receiver."
 
 	^super new initialize! !
-!ModalMsgLoop class categoriesFor: #new!instance creation!public! !
+!ModalMsgLoop class categoriesForMethods!
+new!instance creation!public! !
+!
 

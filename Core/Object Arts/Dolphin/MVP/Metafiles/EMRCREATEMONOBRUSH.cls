@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRCREATEMONOBRUSH
 	instanceVariableNames: ''
@@ -93,18 +93,20 @@ offBmi: anInteger
 	"Set the receiver's 'offBmi' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_offBmi put: anInteger! !
-!EMRCREATEMONOBRUSH categoriesFor: #cbBits!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #cbBits:!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #cbBmi!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #cbBmi:!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #ihBrush!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #ihBrush:!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #iUsage!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #iUsage:!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #offBits!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #offBits:!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #offBmi!**compiled accessors**!public! !
-!EMRCREATEMONOBRUSH categoriesFor: #offBmi:!**compiled accessors**!public! !
+!EMRCREATEMONOBRUSH categoriesForMethods!
+cbBits!**compiled accessors**!public! !
+cbBits:!**compiled accessors**!public! !
+cbBmi!**compiled accessors**!public! !
+cbBmi:!**compiled accessors**!public! !
+ihBrush!**compiled accessors**!public! !
+ihBrush:!**compiled accessors**!public! !
+iUsage!**compiled accessors**!public! !
+iUsage:!**compiled accessors**!public! !
+offBits!**compiled accessors**!public! !
+offBits:!**compiled accessors**!public! !
+offBmi!**compiled accessors**!public! !
+offBmi:!**compiled accessors**!public! !
+!
 
 !EMRCREATEMONOBRUSH class methodsFor!
 
@@ -142,7 +144,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATEMONOBRUSH! !
-!EMRCREATEMONOBRUSH class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRCREATEMONOBRUSH class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRCREATEMONOBRUSH class categoriesFor: #iTypes!constants!public! !
+!EMRCREATEMONOBRUSH class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

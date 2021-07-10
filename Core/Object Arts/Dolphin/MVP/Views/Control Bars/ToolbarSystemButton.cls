@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ToolbarButton subclass: #ToolbarSystemButton
 	instanceVariableNames: 'bitmapId bitmapIndex'
@@ -53,12 +53,14 @@ imageIndexIn: aToolbar
 	Answer the index of the bitmap from aToolbar's registered bitmaps."
 
 	^aToolbar addSystemBitmap: self bitmapId index: self bitmapIndex! !
-!ToolbarSystemButton categoriesFor: #bitmapId!accessing!public! !
-!ToolbarSystemButton categoriesFor: #bitmapId:!accessing!public! !
-!ToolbarSystemButton categoriesFor: #bitmapId:index:commandDescription:!initializing!private! !
-!ToolbarSystemButton categoriesFor: #bitmapIndex!accessing!public! !
-!ToolbarSystemButton categoriesFor: #bitmapIndex:!accessing!public! !
-!ToolbarSystemButton categoriesFor: #imageIndexIn:!operations!private! !
+!ToolbarSystemButton categoriesForMethods!
+bitmapId!accessing!public! !
+bitmapId:!accessing!public! !
+bitmapId:index:commandDescription:!initializing!private! !
+bitmapIndex!accessing!public! !
+bitmapIndex:!accessing!public! !
+imageIndexIn:!operations!private! !
+!
 
 !ToolbarSystemButton class methodsFor!
 
@@ -174,8 +176,10 @@ stbConvertFrom: anSTBClassFormat
 	newInstance instVarAt: 4 put: (data at: 1).
 	5 to: 6 do: [:i | newInstance instVarAt: i put: (data at: i + 1)].
 	newInstance]! !
-!ToolbarSystemButton class categoriesFor: #bitmapId:index:commandDescription:!instance creation!public! !
-!ToolbarSystemButton class categoriesFor: #initialize!development!initializing!public! !
-!ToolbarSystemButton class categoriesFor: #new!instance creation!public! !
-!ToolbarSystemButton class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!ToolbarSystemButton class categoriesForMethods!
+bitmapId:index:commandDescription:!instance creation!public! !
+initialize!development!initializing!public! !
+new!instance creation!public! !
+stbConvertFrom:!binary filing!private! !
+!
 

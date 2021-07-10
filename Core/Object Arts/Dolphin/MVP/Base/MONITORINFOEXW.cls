@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MONITORINFO subclass: #MONITORINFOEXW
 	instanceVariableNames: ''
@@ -32,7 +32,9 @@ szDevice
 	"Answer the <Utf16String> value of the receiver's 'szDevice' field."
 
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szDevice! !
-!MONITORINFOEXW categoriesFor: #szDevice!**compiled accessors**!public! !
+!MONITORINFOEXW categoriesForMethods!
+szDevice!**compiled accessors**!public! !
+!
 
 !MONITORINFOEXW class methodsFor!
 
@@ -60,6 +62,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #rcMonitor #rcWork #dwFlags #szDevice)! !
-!MONITORINFOEXW class categoriesFor: #defineFields!public!template definition! !
-!MONITORINFOEXW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MONITORINFOEXW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

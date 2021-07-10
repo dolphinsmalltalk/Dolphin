@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #LICINFO
 	instanceVariableNames: ''
@@ -34,9 +34,11 @@ fRuntimeKeyAvail
 	"Answer the <Boolean> value of the receiver's 'fRuntimeKeyAvail' field."
 
 	^(bytes dwordAtOffset: _OffsetOf_fRuntimeKeyAvail) asBoolean! !
-!LICINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
-!LICINFO categoriesFor: #fLicVerified!**compiled accessors**!public! !
-!LICINFO categoriesFor: #fRuntimeKeyAvail!**compiled accessors**!public! !
+!LICINFO categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+fLicVerified!**compiled accessors**!public! !
+fRuntimeKeyAvail!**compiled accessors**!public! !
+!
 
 !LICINFO class methodsFor!
 
@@ -59,6 +61,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fRuntimeKeyAvail #fLicVerified)! !
-!LICINFO class categoriesFor: #defineFields!public!template definition! !
-!LICINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!LICINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

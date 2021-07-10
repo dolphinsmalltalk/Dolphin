@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IScriptModule
 	instanceVariableNames: ''
@@ -169,23 +169,25 @@ value
 
 	^self name
 ! !
-!IScriptModule categoriesFor: #addCode:!**auto generated**!methods!public! !
-!IScriptModule categoriesFor: #AddCode:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!IScriptModule categoriesFor: #codeObject!**auto generated**!properties!public! !
-!IScriptModule categoriesFor: #eval:!**auto generated**!methods!public! !
-!IScriptModule categoriesFor: #Eval:pvarResult:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!IScriptModule categoriesFor: #executeStatement:!**auto generated**!methods!public! !
-!IScriptModule categoriesFor: #ExecuteStatement:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!IScriptModule categoriesFor: #get_CodeObject:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!IScriptModule categoriesFor: #get_Name:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!IScriptModule categoriesFor: #get_Procedures:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!IScriptModule categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IScriptModule categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IScriptModule categoriesFor: #name!**auto generated**!properties!public! !
-!IScriptModule categoriesFor: #procedures!**auto generated**!properties!public! !
-!IScriptModule categoriesFor: #run:parameters:!**auto generated**!methods!public! !
-!IScriptModule categoriesFor: #Run:Parameters:pvarResult:!**auto generated**!COM Interfaces-IScriptModule!private! !
-!IScriptModule categoriesFor: #value!**auto generated**!properties!public! !
+!IScriptModule categoriesForMethods!
+addCode:!**auto generated**!methods!public! !
+AddCode:!**auto generated**!COM Interfaces-IScriptModule!private! !
+codeObject!**auto generated**!properties!public! !
+eval:!**auto generated**!methods!public! !
+Eval:pvarResult:!**auto generated**!COM Interfaces-IScriptModule!private! !
+executeStatement:!**auto generated**!methods!public! !
+ExecuteStatement:!**auto generated**!COM Interfaces-IScriptModule!private! !
+get_CodeObject:!**auto generated**!COM Interfaces-IScriptModule!private! !
+get_Name:!**auto generated**!COM Interfaces-IScriptModule!private! !
+get_Procedures:!**auto generated**!COM Interfaces-IScriptModule!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+name!**auto generated**!properties!public! !
+procedures!**auto generated**!properties!public! !
+run:parameters:!**auto generated**!methods!public! !
+Run:Parameters:pvarResult:!**auto generated**!COM Interfaces-IScriptModule!private! !
+value!**auto generated**!properties!public! !
+!
 
 !IScriptModule class methodsFor!
 
@@ -221,7 +223,9 @@ initializeTypeLib
 		IScriptModule initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
-!IScriptModule class categoriesFor: #clsid!**auto generated**!constants!private! !
-!IScriptModule class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IScriptModule class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!IScriptModule class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!public! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

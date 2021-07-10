@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractToTextConverter subclass: #BooleanToText
 	instanceVariableNames: 'format'
@@ -62,11 +62,13 @@ rightToLeft: aString
 
 
 	! !
-!BooleanToText categoriesFor: #actualFormat!accessing!private! !
-!BooleanToText categoriesFor: #defaultFormat!constants!private! !
-!BooleanToText categoriesFor: #errorInvalidFormat!exceptions!private! !
-!BooleanToText categoriesFor: #format!accessing!public! !
-!BooleanToText categoriesFor: #format:!accessing!public! !
-!BooleanToText categoriesFor: #leftToRight:!operations!private! !
-!BooleanToText categoriesFor: #rightToLeft:!operations!private! !
+!BooleanToText categoriesForMethods!
+actualFormat!accessing!private! !
+defaultFormat!constants!private! !
+errorInvalidFormat!exceptions!private! !
+format!accessing!public! !
+format:!accessing!public! !
+leftToRight:!operations!private! !
+rightToLeft:!operations!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBTest subclass: #DBConnectionTest
 	instanceVariableNames: ''
@@ -268,22 +268,24 @@ testTracing
 	self assert: connection isTracing not.
 	File delete: traceFile
 ! !
-!DBConnectionTest categoriesFor: #databaseResource!public! !
-!DBConnectionTest categoriesFor: #dbmsFeaturesMap!constants!private! !
-!DBConnectionTest categoriesFor: #field:fromRow:!private!unit tests! !
-!DBConnectionTest categoriesFor: #queryColumns!private! !
-!DBConnectionTest categoriesFor: #shouldRaiseNotSupported:!helpers!public! !
-!DBConnectionTest categoriesFor: #testAsArray!public!unit tests! !
-!DBConnectionTest categoriesFor: #testColumnsQuery!public!unit tests! !
-!DBConnectionTest categoriesFor: #testConnectionAttributes!public!unit tests! !
-!DBConnectionTest categoriesFor: #testConnectionEnquiries!public!unit tests! !
-!DBConnectionTest categoriesFor: #testConnectionString!public!unit tests! !
-!DBConnectionTest categoriesFor: #testConnectStringDo!public!unit tests! !
-!DBConnectionTest categoriesFor: #testDSNlessConnection!public!unit tests! !
-!DBConnectionTest categoriesFor: #testODBCTIMEConversion!public!unit tests! !
-!DBConnectionTest categoriesFor: #testPackagesCorrectlySetUp!public!unit tests! !
-!DBConnectionTest categoriesFor: #testPreparedQuery!public!unit tests! !
-!DBConnectionTest categoriesFor: #testSpecialColumnsQuery!public!unit tests! !
-!DBConnectionTest categoriesFor: #testStatisticsQuery!public!unit tests! !
-!DBConnectionTest categoriesFor: #testTracing!public!unit tests! !
+!DBConnectionTest categoriesForMethods!
+databaseResource!public! !
+dbmsFeaturesMap!constants!private! !
+field:fromRow:!private!unit tests! !
+queryColumns!private! !
+shouldRaiseNotSupported:!helpers!public! !
+testAsArray!public!unit tests! !
+testColumnsQuery!public!unit tests! !
+testConnectionAttributes!public!unit tests! !
+testConnectionEnquiries!public!unit tests! !
+testConnectionString!public!unit tests! !
+testConnectStringDo!public!unit tests! !
+testDSNlessConnection!public!unit tests! !
+testODBCTIMEConversion!public!unit tests! !
+testPackagesCorrectlySetUp!public!unit tests! !
+testPreparedQuery!public!unit tests! !
+testSpecialColumnsQuery!public!unit tests! !
+testStatisticsQuery!public!unit tests! !
+testTracing!public!unit tests! !
+!
 

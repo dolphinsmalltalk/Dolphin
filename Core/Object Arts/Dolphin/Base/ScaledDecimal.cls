@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Number subclass: #ScaledDecimal
 	instanceVariableNames: 'fraction scale'
@@ -295,42 +295,44 @@ truncated
 
 	^fraction truncated
 ! !
-!ScaledDecimal categoriesFor: #-!arithmetic!public! !
-!ScaledDecimal categoriesFor: #*!arithmetic!public! !
-!ScaledDecimal categoriesFor: #/!arithmetic!public! !
-!ScaledDecimal categoriesFor: #//!arithmetic!public! !
-!ScaledDecimal categoriesFor: #+!arithmetic!public! !
-!ScaledDecimal categoriesFor: #<!comparing!public! !
-!ScaledDecimal categoriesFor: #=!comparing!public! !
-!ScaledDecimal categoriesFor: #addToScaledDecimal:!double dispatch!private! !
-!ScaledDecimal categoriesFor: #asFloat!converting!public! !
-!ScaledDecimal categoriesFor: #asFraction!converting!public! !
-!ScaledDecimal categoriesFor: #asScaledDecimal:!converting!public! !
-!ScaledDecimal categoriesFor: #coerce:!coercing!private! !
-!ScaledDecimal categoriesFor: #denominator!accessing!public! !
-!ScaledDecimal categoriesFor: #displayOn:!printing!public! !
-!ScaledDecimal categoriesFor: #divideIntoScaledDecimal:!double dispatch!private! !
-!ScaledDecimal categoriesFor: #equalToInteger:!double dispatch!private! !
-!ScaledDecimal categoriesFor: #equalToScaledDecimal:!double dispatch!private! !
-!ScaledDecimal categoriesFor: #fractionPart!accessing!public! !
-!ScaledDecimal categoriesFor: #generality!coercing!private! !
-!ScaledDecimal categoriesFor: #greaterThanScaledDecimal:!double dispatch!private! !
-!ScaledDecimal categoriesFor: #hash!comparing!public! !
-!ScaledDecimal categoriesFor: #integerPart!accessing!public! !
-!ScaledDecimal categoriesFor: #isLiteral!public!testing! !
-!ScaledDecimal categoriesFor: #isZero!public!testing! !
-!ScaledDecimal categoriesFor: #multiplyByScaledDecimal:!double dispatch!private! !
-!ScaledDecimal categoriesFor: #negated!arithmetic!public! !
-!ScaledDecimal categoriesFor: #numerator!accessing!public! !
-!ScaledDecimal categoriesFor: #printOn:!printing!public! !
-!ScaledDecimal categoriesFor: #raisedToInteger:!mathematical!public! !
-!ScaledDecimal categoriesFor: #reciprocal!arithmetic!public! !
-!ScaledDecimal categoriesFor: #scale!accessing!public! !
-!ScaledDecimal categoriesFor: #setFraction:scale:!initializing!private! !
-!ScaledDecimal categoriesFor: #storeOn:!public! !
-!ScaledDecimal categoriesFor: #subtractFromInteger:!double dispatch!private! !
-!ScaledDecimal categoriesFor: #subtractFromScaledDecimal:!double dispatch!private! !
-!ScaledDecimal categoriesFor: #truncated!public!truncation and round off! !
+!ScaledDecimal categoriesForMethods!
+-!arithmetic!public! !
+*!arithmetic!public! !
+/!arithmetic!public! !
+//!arithmetic!public! !
++!arithmetic!public! !
+<!comparing!public! !
+=!comparing!public! !
+addToScaledDecimal:!double dispatch!private! !
+asFloat!converting!public! !
+asFraction!converting!public! !
+asScaledDecimal:!converting!public! !
+coerce:!coercing!private! !
+denominator!accessing!public! !
+displayOn:!printing!public! !
+divideIntoScaledDecimal:!double dispatch!private! !
+equalToInteger:!double dispatch!private! !
+equalToScaledDecimal:!double dispatch!private! !
+fractionPart!accessing!public! !
+generality!coercing!private! !
+greaterThanScaledDecimal:!double dispatch!private! !
+hash!comparing!public! !
+integerPart!accessing!public! !
+isLiteral!public!testing! !
+isZero!public!testing! !
+multiplyByScaledDecimal:!double dispatch!private! !
+negated!arithmetic!public! !
+numerator!accessing!public! !
+printOn:!printing!public! !
+raisedToInteger:!mathematical!public! !
+reciprocal!arithmetic!public! !
+scale!accessing!public! !
+setFraction:scale:!initializing!private! !
+storeOn:!public! !
+subtractFromInteger:!double dispatch!private! !
+subtractFromScaledDecimal:!double dispatch!private! !
+truncated!public!truncation and round off! !
+!
 
 ScaledDecimal methodProtocol: #scaledDecimal attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #// #\\ #+ #< #<= #> #>= #abs #asFloat #asFloatD #asFloatE #asFloatQ #asFraction #asInteger #asScaledDecimal: #between:and: #ceiling #floor #fractionPart #integerPart #max: #min: #negated #negative #positive #quo: #raisedTo: #raisedToInteger: #reciprocal #rem: #rounded #roundTo: #scale #sign #sqrt #squared #strictlyPositive #to: #to:by: #to:by:do: #to:do: #truncated #truncateTo:)!
 
@@ -372,9 +374,11 @@ zero
 		newFromNumber: 0
 		scale: 0
 ! !
-!ScaledDecimal class categoriesFor: #basicNewFromFraction:scale:!instance creation!private! !
-!ScaledDecimal class categoriesFor: #maxPrecision!accessing!private! !
-!ScaledDecimal class categoriesFor: #newFromNumber:scale:!instance creation!public! !
-!ScaledDecimal class categoriesFor: #one!instance creation!public! !
-!ScaledDecimal class categoriesFor: #zero!instance creation!public! !
+!ScaledDecimal class categoriesForMethods!
+basicNewFromFraction:scale:!instance creation!private! !
+maxPrecision!accessing!private! !
+newFromNumber:scale:!instance creation!public! !
+one!instance creation!public! !
+zero!instance creation!public! !
+!
 

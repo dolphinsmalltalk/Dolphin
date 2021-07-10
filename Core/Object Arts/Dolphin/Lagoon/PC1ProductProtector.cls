@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ProductProtector subclass: #PC1ProductProtector
 	instanceVariableNames: ''
@@ -76,13 +76,15 @@ hashKeyWith: aString
 
 methodsOf: aClass do: aBlockClosure 
 	aClass methodDictionary do: [:each | each whileMutableDo: [aBlockClosure value: each]]! !
-!PC1ProductProtector categoriesFor: #cipherClass:!operations!private! !
-!PC1ProductProtector categoriesFor: #cipherForMethod:!helpers!private! !
-!PC1ProductProtector categoriesFor: #cipherMethod:!operations!private! !
-!PC1ProductProtector categoriesFor: #decipherClass:!operations!private! !
-!PC1ProductProtector categoriesFor: #decipherMethod:!operations!private! !
-!PC1ProductProtector categoriesFor: #decryptClasses:!operations!public! !
-!PC1ProductProtector categoriesFor: #encryptClasses:!operations!public! !
-!PC1ProductProtector categoriesFor: #hashKeyWith:!helpers!public! !
-!PC1ProductProtector categoriesFor: #methodsOf:do:!operations!private! !
+!PC1ProductProtector categoriesForMethods!
+cipherClass:!operations!private! !
+cipherForMethod:!helpers!private! !
+cipherMethod:!operations!private! !
+decipherClass:!operations!private! !
+decipherMethod:!operations!private! !
+decryptClasses:!operations!public! !
+encryptClasses:!operations!public! !
+hashKeyWith:!helpers!public! !
+methodsOf:do:!operations!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Folder
 	instanceVariableNames: 'pathname canonicalPath'
@@ -98,19 +98,21 @@ volumeName
 	^[(DiskVolumeInformation forPath: self pathname) explorerName] 
 		on: Win32Error
 		do: [:ex | File removePathDelimiter: self pathname]! !
-!Folder categoriesFor: #<=!comparing!public! !
-!Folder categoriesFor: #=!comparing!public! !
-!Folder categoriesFor: #canonicalPath!accessing!private! !
-!Folder categoriesFor: #displayOn:!displaying!public! !
-!Folder categoriesFor: #folderName!accessing!public! !
-!Folder categoriesFor: #hash!comparing!public! !
-!Folder categoriesFor: #name!accessing!public! !
-!Folder categoriesFor: #parent!accessing!public! !
-!Folder categoriesFor: #pathname!accessing!public! !
-!Folder categoriesFor: #pathname:!accessing!private! !
-!Folder categoriesFor: #printOn:!printing!public! !
-!Folder categoriesFor: #rootName!constants!private! !
-!Folder categoriesFor: #volumeName!accessing!private! !
+!Folder categoriesForMethods!
+<=!comparing!public! !
+=!comparing!public! !
+canonicalPath!accessing!private! !
+displayOn:!displaying!public! !
+folderName!accessing!public! !
+hash!comparing!public! !
+name!accessing!public! !
+parent!accessing!public! !
+pathname!accessing!public! !
+pathname:!accessing!private! !
+printOn:!printing!public! !
+rootName!constants!private! !
+volumeName!accessing!private! !
+!
 
 !Folder class methodsFor!
 
@@ -135,8 +137,10 @@ root
 	"Answer an instance of the receiver representing the current root folder."
 
 	^self pathname: ''! !
-!Folder class categoriesFor: #icon!constants!development!public! !
-!Folder class categoriesFor: #new!instance creation!public! !
-!Folder class categoriesFor: #pathname:!instance creation!public! !
-!Folder class categoriesFor: #root!instance creation!public! !
+!Folder class categoriesForMethods!
+icon!constants!development!public! !
+new!instance creation!public! !
+pathname:!instance creation!public! !
+root!instance creation!public! !
+!
 

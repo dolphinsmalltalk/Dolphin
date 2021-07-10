@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Resource subclass: #ViewResource
 	instanceVariableNames: ''
@@ -15,5 +15,7 @@ fileExtension
 	stored in files."
 
 	^'vu'! !
-!ViewResource class categoriesFor: #fileExtension!private! !
+!ViewResource class categoriesForMethods!
+fileExtension!private! !
+!
 

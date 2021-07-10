@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RBAbstractCondition subclass: #RBConjunctiveCondition
 	instanceVariableNames: 'left right failed'
@@ -66,15 +66,17 @@ rightFailed
 
 unknownFailed
 	^(left errorStringFor: false) , ' OR ' , (right errorStringFor: false)! !
-!RBConjunctiveCondition categoriesFor: #check!checking!public! !
-!RBConjunctiveCondition categoriesFor: #errorBlockFor:!private! !
-!RBConjunctiveCondition categoriesFor: #errorMacro!private! !
-!RBConjunctiveCondition categoriesFor: #errorStringFor:!private! !
-!RBConjunctiveCondition categoriesFor: #left:right:!initialize/release!public! !
-!RBConjunctiveCondition categoriesFor: #leftFailed!private! !
-!RBConjunctiveCondition categoriesFor: #longMacro!private! !
-!RBConjunctiveCondition categoriesFor: #neitherFailed!private! !
-!RBConjunctiveCondition categoriesFor: #printOn:!printing!public! !
-!RBConjunctiveCondition categoriesFor: #rightFailed!private! !
-!RBConjunctiveCondition categoriesFor: #unknownFailed!private! !
+!RBConjunctiveCondition categoriesForMethods!
+check!checking!public! !
+errorBlockFor:!private! !
+errorMacro!private! !
+errorStringFor:!private! !
+left:right:!initialize/release!public! !
+leftFailed!private! !
+longMacro!private! !
+neitherFailed!private! !
+printOn:!printing!public! !
+rightFailed!private! !
+unknownFailed!private! !
+!
 

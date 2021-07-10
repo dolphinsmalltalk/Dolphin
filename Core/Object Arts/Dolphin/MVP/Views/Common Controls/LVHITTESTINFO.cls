@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CCHITTESTINFO subclass: #LVHITTESTINFO
 	instanceVariableNames: ''
@@ -31,9 +31,11 @@ iSubItem
 	"Answer the <Integer> value of the receiver's 'iSubItem' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_iSubItem! !
-!LVHITTESTINFO categoriesFor: #handle!accessing!private! !
-!LVHITTESTINFO categoriesFor: #iItem!**compiled accessors**!public! !
-!LVHITTESTINFO categoriesFor: #iSubItem!**compiled accessors**!public! !
+!LVHITTESTINFO categoriesForMethods!
+handle!accessing!private! !
+iItem!**compiled accessors**!public! !
+iSubItem!**compiled accessors**!public! !
+!
 
 !LVHITTESTINFO class methodsFor!
 
@@ -57,6 +59,8 @@ defineFields
 
 getFieldNames
 	^#(#pt #flags #iItem #iSubItem)! !
-!LVHITTESTINFO class categoriesFor: #defineFields!development!public!template definition! !
-!LVHITTESTINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!LVHITTESTINFO class categoriesForMethods!
+defineFields!development!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

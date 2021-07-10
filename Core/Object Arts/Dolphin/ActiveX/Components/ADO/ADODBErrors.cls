@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ADODB_Collection subclass: #ADODBErrors
 	instanceVariableNames: ''
@@ -60,9 +60,11 @@ item: index
 	answer := ADODBError newPointer.
 	self get_Item: index asVariant ppvObject: answer.
 	^answer asObject! !
-!ADODBErrors categoriesFor: #Clear!**auto generated**!COM Interfaces-Errors!public! !
-!ADODBErrors categoriesFor: #get_Item:ppvObject:!**auto generated**!COM Interfaces-Errors!private! !
-!ADODBErrors categoriesFor: #item:!**auto generated**!properties!public! !
+!ADODBErrors categoriesForMethods!
+Clear!**auto generated**!COM Interfaces-Errors!public! !
+get_Item:ppvObject:!**auto generated**!COM Interfaces-Errors!private! !
+item:!**auto generated**!properties!public! !
+!
 
 !ADODBErrors class methodsFor!
 
@@ -75,5 +77,7 @@ defineFunctions
 			argumentTypes: 'variant ADODBError**';
 		defineFunction: #Clear
 ! !
-!ADODBErrors class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBErrors class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

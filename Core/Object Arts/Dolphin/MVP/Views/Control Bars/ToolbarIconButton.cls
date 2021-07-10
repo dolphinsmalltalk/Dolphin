@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ToolbarButton subclass: #ToolbarIconButton
 	instanceVariableNames: ''
@@ -40,9 +40,11 @@ setCommandDescription: aCommandDescription
 	self initialize.
 	commandDescription := aCommandDescription.
 	^self! !
-!ToolbarIconButton categoriesFor: #imageIndexIn:!operations!private! !
-!ToolbarIconButton categoriesFor: #renderBitmap!private! !
-!ToolbarIconButton categoriesFor: #setCommandDescription:!public! !
+!ToolbarIconButton categoriesForMethods!
+imageIndexIn:!operations!private! !
+renderBitmap!private! !
+setCommandDescription:!public! !
+!
 
 !ToolbarIconButton class methodsFor!
 
@@ -108,10 +110,12 @@ stbConvertFrom: anSTBClassFormat
 	1 to: 3 do: [:i | newInstance instVarAt: i put: (data at: i + 2)].
 	newInstance instVarAt: 4 put: (data at: 1).
 	newInstance]! !
-!ToolbarIconButton class categoriesFor: #command:description:image:!instance creation!public! !
-!ToolbarIconButton class categoriesFor: #commandDescription:!instance creation!public! !
-!ToolbarIconButton class categoriesFor: #defaultImage!public! !
-!ToolbarIconButton class categoriesFor: #new!instance creation!public! !
-!ToolbarIconButton class categoriesFor: #onStartup!public! !
-!ToolbarIconButton class categoriesFor: #stbConvertFrom:!binary filing!private! !
+!ToolbarIconButton class categoriesForMethods!
+command:description:image:!instance creation!public! !
+commandDescription:!instance creation!public! !
+defaultImage!public! !
+new!instance creation!public! !
+onStartup!public! !
+stbConvertFrom:!binary filing!private! !
+!
 

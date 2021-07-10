@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_SSL_PARAM
 	instanceVariableNames: ''
@@ -146,26 +146,28 @@ SslHashLength: anInteger
 	"Set the receiver's 'SslHashLength' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_SslHashLength put: anInteger! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #AppId!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #AppId:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #DefaultCertCheckMode!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #DefaultCertCheckMode:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #DefaultFlags!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #DefaultFlags:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #DefaultRevocationFreshnessTime!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #DefaultRevocationFreshnessTime:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #DefaultRevocationUrlRetrievalTimeout!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #DefaultRevocationUrlRetrievalTimeout:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #pDefaultSslCtlIdentifier!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #pDefaultSslCtlIdentifier:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #pDefaultSslCtlStoreName!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #pDefaultSslCtlStoreName:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #pSslCertStoreName!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #pSslCertStoreName:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #pSslHash!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #pSslHash:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #SslHashLength!**compiled accessors**!private! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesFor: #SslHashLength:!**compiled accessors**!private! !
+!HTTP_SERVICE_CONFIG_SSL_PARAM categoriesForMethods!
+AppId!**compiled accessors**!public! !
+AppId:!**compiled accessors**!public! !
+DefaultCertCheckMode!**compiled accessors**!public! !
+DefaultCertCheckMode:!**compiled accessors**!public! !
+DefaultFlags!**compiled accessors**!public! !
+DefaultFlags:!**compiled accessors**!public! !
+DefaultRevocationFreshnessTime!**compiled accessors**!public! !
+DefaultRevocationFreshnessTime:!**compiled accessors**!public! !
+DefaultRevocationUrlRetrievalTimeout!**compiled accessors**!public! !
+DefaultRevocationUrlRetrievalTimeout:!**compiled accessors**!public! !
+pDefaultSslCtlIdentifier!**compiled accessors**!public! !
+pDefaultSslCtlIdentifier:!**compiled accessors**!public! !
+pDefaultSslCtlStoreName!**compiled accessors**!public! !
+pDefaultSslCtlStoreName:!**compiled accessors**!public! !
+pSslCertStoreName!**compiled accessors**!public! !
+pSslCertStoreName:!**compiled accessors**!public! !
+pSslHash!**compiled accessors**!public! !
+pSslHash:!**compiled accessors**!public! !
+SslHashLength!**compiled accessors**!private! !
+SslHashLength:!**compiled accessors**!private! !
+!
 
 !HTTP_SERVICE_CONFIG_SSL_PARAM class methodsFor!
 
@@ -204,6 +206,8 @@ defineFields
 
 getFieldNames
 	^#(#SslHashLength #pSslHash #AppId #pSslCertStoreName #DefaultCertCheckMode #DefaultRevocationFreshnessTime #DefaultRevocationUrlRetrievalTimeout #pDefaultSslCtlIdentifier #pDefaultSslCtlStoreName #DefaultFlags)! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVICE_CONFIG_SSL_PARAM class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_SERVICE_CONFIG_SSL_PARAM class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

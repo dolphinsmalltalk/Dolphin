@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #DISPPARAMS
 	instanceVariableNames: 'args vargs dispids'
@@ -161,20 +161,22 @@ singleArg
 	"Answer the single VARIANT parameter - assumes cArgs == 1"
 
 	^VARIANT fromAddress: (bytes intPtrAtOffset: 0)! !
-!DISPPARAMS categoriesFor: #arg:!accessing!public! !
-!DISPPARAMS categoriesFor: #args:!accessing!public! !
-!DISPPARAMS categoriesFor: #cArgs!**compiled accessors**!private! !
-!DISPPARAMS categoriesFor: #cArgs:!**compiled accessors**!private! !
-!DISPPARAMS categoriesFor: #cNamedArgs!**compiled accessors**!private! !
-!DISPPARAMS categoriesFor: #cNamedArgs:!**compiled accessors**!private! !
-!DISPPARAMS categoriesFor: #names:named:args:!accessing!public! !
-!DISPPARAMS categoriesFor: #propertyPut:value:!accessing!public! !
-!DISPPARAMS categoriesFor: #propertyPutValue:!accessing!public! !
-!DISPPARAMS categoriesFor: #rgdispidNamedArgs!**compiled accessors**!public! !
-!DISPPARAMS categoriesFor: #rgdispidNamedArgs:!**compiled accessors**!public! !
-!DISPPARAMS categoriesFor: #rgvarg!**compiled accessors**!public! !
-!DISPPARAMS categoriesFor: #rgvarg:!**compiled accessors**!public! !
-!DISPPARAMS categoriesFor: #singleArg!accessing!public! !
+!DISPPARAMS categoriesForMethods!
+arg:!accessing!public! !
+args:!accessing!public! !
+cArgs!**compiled accessors**!private! !
+cArgs:!**compiled accessors**!private! !
+cNamedArgs!**compiled accessors**!private! !
+cNamedArgs:!**compiled accessors**!private! !
+names:named:args:!accessing!public! !
+propertyPut:value:!accessing!public! !
+propertyPutValue:!accessing!public! !
+rgdispidNamedArgs!**compiled accessors**!public! !
+rgdispidNamedArgs:!**compiled accessors**!public! !
+rgvarg!**compiled accessors**!public! !
+rgvarg:!**compiled accessors**!public! !
+singleArg!accessing!public! !
+!
 
 !DISPPARAMS class methodsFor!
 
@@ -239,11 +241,13 @@ zeroArgs
 	are no arguments."
 
 	^ZeroArgs! !
-!DISPPARAMS class categoriesFor: #defineFields!public!template definition! !
-!DISPPARAMS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!DISPPARAMS class categoriesFor: #initialize!development!initializing!private! !
-!DISPPARAMS class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!DISPPARAMS class categoriesFor: #with:!instance creation!public! !
-!DISPPARAMS class categoriesFor: #withArguments:!instance creation!public! !
-!DISPPARAMS class categoriesFor: #zeroArgs!instance creation!public! !
+!DISPPARAMS class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+with:!instance creation!public! !
+withArguments:!instance creation!public! !
+zeroArgs!instance creation!public! !
+!
 

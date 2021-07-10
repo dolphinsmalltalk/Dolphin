@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MenuPainter subclass: #PopupMenuPainter
 	instanceVariableNames: 'itemWidth textOffset submenuOffset acceleratorOffset'
@@ -140,18 +140,20 @@ paintSeparatorOn: aCanvas in: aRectangle
 				bottom: aRectangle bottom)
 		edge: EDGE_ETCHED
 		grfFlags: BF_TOP! !
-!PopupMenuPainter categoriesFor: #borderInset!constants!private! !
-!PopupMenuPainter categoriesFor: #calculateGeometry:!public!updating! !
-!PopupMenuPainter categoriesFor: #dividerHeight!constants!private! !
-!PopupMenuPainter categoriesFor: #gutterWidth!constants!private! !
-!PopupMenuPainter categoriesFor: #heightOfItem:!accessing!private! !
-!PopupMenuPainter categoriesFor: #insertBefore:position:canvas:!public!testing! !
-!PopupMenuPainter categoriesFor: #itemHeight!constants!private! !
-!PopupMenuPainter categoriesFor: #itemRect:using:!accessing!public! !
-!PopupMenuPainter categoriesFor: #menuColor!constants!private! !
-!PopupMenuPainter categoriesFor: #offsetForSubmenu:canvas:!accessing!public! !
-!PopupMenuPainter categoriesFor: #paintEdgeOn:in:!painting!private! !
-!PopupMenuPainter categoriesFor: #paintItem:on:in:!painting!private! !
-!PopupMenuPainter categoriesFor: #paintItemAccelerator:on:in:!painting!private! !
-!PopupMenuPainter categoriesFor: #paintSeparatorOn:in:!painting!private! !
+!PopupMenuPainter categoriesForMethods!
+borderInset!constants!private! !
+calculateGeometry:!public!updating! !
+dividerHeight!constants!private! !
+gutterWidth!constants!private! !
+heightOfItem:!accessing!private! !
+insertBefore:position:canvas:!public!testing! !
+itemHeight!constants!private! !
+itemRect:using:!accessing!public! !
+menuColor!constants!private! !
+offsetForSubmenu:canvas:!accessing!public! !
+paintEdgeOn:in:!painting!private! !
+paintItem:on:in:!painting!private! !
+paintItemAccelerator:on:in:!painting!private! !
+paintSeparatorOn:in:!painting!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StParseNodeVisitor subclass: #StStyler
 	instanceVariableNames: 'view arrayDepth'
@@ -256,33 +256,35 @@ visitSequenceNode: aSequenceNode
 
 visitVariableNode: aVariableNode
 	view applyStyle: #identifier toNext: aVariableNode name size! !
-!StStyler categoriesFor: #acceptLiteralByteArrayNode:!public!unit tests! !
-!StStyler categoriesFor: #colorComments:!helpers!private! !
-!StStyler categoriesFor: #colourBefore:!helpers!private! !
-!StStyler categoriesFor: #emitWhitespaceBefore:!private!unit tests! !
-!StStyler categoriesFor: #emitWhitespaceFrom:to:!helpers!private! !
-!StStyler categoriesFor: #onStyleNeeded:from:to:!event handling!public! !
-!StStyler categoriesFor: #prepareToStyleView:!event handling!public! !
-!StStyler categoriesFor: #style:in:!operations!public! !
-!StStyler categoriesFor: #styleIntersticesUpTo:!private!visitor/double dispatching! !
-!StStyler categoriesFor: #styleInterstitialSpaceBefore:!private!visitor/double dispatching! !
-!StStyler categoriesFor: #styleMethodPatternFor:!private!unit tests! !
-!StStyler categoriesFor: #styleNameFor:!private!visitor/double dispatching! !
-!StStyler categoriesFor: #styleSelectorAndArguments:!private!unit tests! !
-!StStyler categoriesFor: #styleTemporaries:!private!unit tests! !
-!StStyler categoriesFor: #visitAnnotationNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitAssignmentNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitBlockNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitCascadeNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitExternalCallNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitLiteralArrayNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitMessageNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitMethodNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitNode:!public!visiting! !
-!StStyler categoriesFor: #visitOptimizedNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitPrimitiveNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitReturnNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitSequenceNode:!public!visitor/double dispatching! !
-!StStyler categoriesFor: #visitVariableNode:!public!visitor/double dispatching! !
+!StStyler categoriesForMethods!
+acceptLiteralByteArrayNode:!public!unit tests! !
+colorComments:!helpers!private! !
+colourBefore:!helpers!private! !
+emitWhitespaceBefore:!private!unit tests! !
+emitWhitespaceFrom:to:!helpers!private! !
+onStyleNeeded:from:to:!event handling!public! !
+prepareToStyleView:!event handling!public! !
+style:in:!operations!public! !
+styleIntersticesUpTo:!private!visitor/double dispatching! !
+styleInterstitialSpaceBefore:!private!visitor/double dispatching! !
+styleMethodPatternFor:!private!unit tests! !
+styleNameFor:!private!visitor/double dispatching! !
+styleSelectorAndArguments:!private!unit tests! !
+styleTemporaries:!private!unit tests! !
+visitAnnotationNode:!public!visitor/double dispatching! !
+visitAssignmentNode:!public!visitor/double dispatching! !
+visitBlockNode:!public!visitor/double dispatching! !
+visitCascadeNode:!public!visitor/double dispatching! !
+visitExternalCallNode:!public!visitor/double dispatching! !
+visitLiteralArrayNode:!public!visitor/double dispatching! !
+visitLiteralNode:!public!visitor/double dispatching! !
+visitMessageNode:!public!visitor/double dispatching! !
+visitMethodNode:!public!visitor/double dispatching! !
+visitNode:!public!visiting! !
+visitOptimizedNode:!public!visitor/double dispatching! !
+visitPrimitiveNode:!public!visitor/double dispatching! !
+visitReturnNode:!public!visitor/double dispatching! !
+visitSequenceNode:!public!visitor/double dispatching! !
+visitVariableNode:!public!visitor/double dispatching! !
+!
 

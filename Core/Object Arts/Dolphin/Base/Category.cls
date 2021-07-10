@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Category
 	instanceVariableNames: 'name'
@@ -141,27 +141,29 @@ subNames
 	on category separator."
 
 	^self class separator split: self name! !
-!Category categoriesFor: #<=!comparing!public! !
-!Category categoriesFor: #=!comparing!public! !
-!Category categoriesFor: #acceptsAdditions!public!testing! !
-!Category categoriesFor: #addClass:!adding!public! !
-!Category categoriesFor: #asString!converting!public! !
-!Category categoriesFor: #contents!enumerating!public! !
-!Category categoriesFor: #displayOn:!displaying!public! !
-!Category categoriesFor: #hash!comparing!public! !
-!Category categoriesFor: #isEmpty!public!testing! !
-!Category categoriesFor: #isIntermediate!private!testing! !
-!Category categoriesFor: #isPermanent!accessing!public! !
-!Category categoriesFor: #isPermanent:!accessing!public! !
-!Category categoriesFor: #isPseud!public!testing! !
-!Category categoriesFor: #isVirtual!public!testing! !
-!Category categoriesFor: #localName!accessing!public! !
-!Category categoriesFor: #name!accessing!public! !
-!Category categoriesFor: #permanentCategories!accessing!public! !
-!Category categoriesFor: #printOn:!printing!public! !
-!Category categoriesFor: #removeClass:!public!removing! !
-!Category categoriesFor: #setName:!initializing!private! !
-!Category categoriesFor: #subNames!accessing!public! !
+!Category categoriesForMethods!
+<=!comparing!public! !
+=!comparing!public! !
+acceptsAdditions!public!testing! !
+addClass:!adding!public! !
+asString!converting!public! !
+contents!enumerating!public! !
+displayOn:!displaying!public! !
+hash!comparing!public! !
+isEmpty!public!testing! !
+isIntermediate!private!testing! !
+isPermanent!accessing!public! !
+isPermanent:!accessing!public! !
+isPseud!public!testing! !
+isVirtual!public!testing! !
+localName!accessing!public! !
+name!accessing!public! !
+permanentCategories!accessing!public! !
+printOn:!printing!public! !
+removeClass:!public!removing! !
+setName:!initializing!private! !
+subNames!accessing!public! !
+!
 
 !Category class methodsFor!
 
@@ -205,11 +207,13 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	PermanentCategories := nil.! !
-!Category class categoriesFor: #name:!instance creation!public! !
-!Category class categoriesFor: #new!instance creation!public! !
-!Category class categoriesFor: #newNamed:!instance creation!private! !
-!Category class categoriesFor: #separator!constants!private! !
-!Category class categoriesFor: #unclassified!instance creation!public! !
-!Category class categoriesFor: #unclassifiedName!constants!private! !
-!Category class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Category class categoriesForMethods!
+name:!instance creation!public! !
+new!instance creation!public! !
+newNamed:!instance creation!private! !
+separator!constants!private! !
+unclassified!instance creation!public! !
+unclassifiedName!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

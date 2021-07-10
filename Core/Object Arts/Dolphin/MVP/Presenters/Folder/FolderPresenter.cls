@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ListPresenter subclass: #FolderPresenter
 	instanceVariableNames: 'treeItem contentsModel isAutoNavigate openBlock history'
@@ -230,31 +230,33 @@ viewModel
 	connected to the receiver's contentsModel - not the receiver's tree model"
 
 	^self contents! !
-!FolderPresenter categoriesFor: #beNotSorted!accessing!public!sorting! !
-!FolderPresenter categoriesFor: #collapse:!operations!public! !
-!FolderPresenter categoriesFor: #contents!accessing!public! !
-!FolderPresenter categoriesFor: #expand:!operations!public! !
-!FolderPresenter categoriesFor: #expandAll:!operations!public! !
-!FolderPresenter categoriesFor: #historyBack!commands!public! !
-!FolderPresenter categoriesFor: #historyForward!commands!public! !
-!FolderPresenter categoriesFor: #initialize!initializing!private! !
-!FolderPresenter categoriesFor: #isAutoNavigate!accessing!public! !
-!FolderPresenter categoriesFor: #isAutoNavigate:!accessing!public! !
-!FolderPresenter categoriesFor: #list!accessing!private! !
-!FolderPresenter categoriesFor: #list:!accessing!private! !
-!FolderPresenter categoriesFor: #model:!accessing!public! !
-!FolderPresenter categoriesFor: #onActionPerformed!event handling!public! !
-!FolderPresenter categoriesFor: #onItem:addedInParent:!event handling!private! !
-!FolderPresenter categoriesFor: #onItem:movedToParent:!event handling!private! !
-!FolderPresenter categoriesFor: #onItem:removedFromParent:!event handling!private! !
-!FolderPresenter categoriesFor: #onItemUpdated:!event handling!private! !
-!FolderPresenter categoriesFor: #onKeyTyped:!event handling!public! !
-!FolderPresenter categoriesFor: #onTreeChanged:!event handling!private! !
-!FolderPresenter categoriesFor: #openBlock!accessing!public! !
-!FolderPresenter categoriesFor: #openBlock:!accessing!public! !
-!FolderPresenter categoriesFor: #queryCommand:!commands!private! !
-!FolderPresenter categoriesFor: #up!commands!public! !
-!FolderPresenter categoriesFor: #viewModel!accessing!private! !
+!FolderPresenter categoriesForMethods!
+beNotSorted!accessing!public!sorting! !
+collapse:!operations!public! !
+contents!accessing!public! !
+expand:!operations!public! !
+expandAll:!operations!public! !
+historyBack!commands!public! !
+historyForward!commands!public! !
+initialize!initializing!private! !
+isAutoNavigate!accessing!public! !
+isAutoNavigate:!accessing!public! !
+list!accessing!private! !
+list:!accessing!private! !
+model:!accessing!public! !
+onActionPerformed!event handling!public! !
+onItem:addedInParent:!event handling!private! !
+onItem:movedToParent:!event handling!private! !
+onItem:removedFromParent:!event handling!private! !
+onItemUpdated:!event handling!private! !
+onKeyTyped:!event handling!public! !
+onTreeChanged:!event handling!private! !
+openBlock!accessing!public! !
+openBlock:!accessing!public! !
+queryCommand:!commands!private! !
+up!commands!public! !
+viewModel!accessing!private! !
+!
 
 FolderPresenter methodProtocol: #treePresenter attributes: #(#readOnly) selectors: #(#collapse: #ensureVisible #expand: #expandAll: #onAboutToDisplayMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewOpened #parentPresenter #performAction #setFocus #show #topShell #up #view)!
 
@@ -270,6 +272,8 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) instanceClass defaultIcon! !
-!FolderPresenter class categoriesFor: #defaultModel!models!public! !
-!FolderPresenter class categoriesFor: #icon!constants!public! !
+!FolderPresenter class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+!
 

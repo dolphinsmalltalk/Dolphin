@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CompiledMethod variableSubclass: #CompileFailedMethod
 	instanceVariableNames: ''
@@ -30,8 +30,10 @@ getDebugInfo
 
 isCompilationFailure
 	^true! !
-!CompileFailedMethod categoriesFor: #getDebugInfo!development!private! !
-!CompileFailedMethod categoriesFor: #isCompilationFailure!public!testing! !
+!CompileFailedMethod categoriesForMethods!
+getDebugInfo!development!private! !
+isCompilationFailure!public!testing! !
+!
 
 !CompileFailedMethod class methodsFor!
 
@@ -73,5 +75,7 @@ buildSourceForSelector: aSymbol class: aBehavior
 		crtab;
 		nextPutAll: ' self error: ''This method did not compile'''.
 	^stream contents! !
-!CompileFailedMethod class categoriesFor: #buildSourceForSelector:class:!helpers!private! !
+!CompileFailedMethod class categoriesForMethods!
+buildSourceForSelector:class:!helpers!private! !
+!
 

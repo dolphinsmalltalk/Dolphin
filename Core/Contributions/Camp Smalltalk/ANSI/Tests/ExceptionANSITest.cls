@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #ExceptionANSITest
 	instanceVariableNames: 'unchanged changed value exceptionClass'
@@ -316,41 +316,43 @@ testXtag
 	self should: [exception tag = messageText].
 	exception tag: 1.
 	self should: [exception tag = 1].! !
-!ExceptionANSITest categoriesFor: #canonicalObject!public! !
-!ExceptionANSITest categoriesFor: #exceptionClass!private! !
-!ExceptionANSITest categoriesFor: #exceptionOuterReturn!public! !
-!ExceptionANSITest categoriesFor: #exceptionPass!public! !
-!ExceptionANSITest categoriesFor: #exceptionReturn!public! !
-!ExceptionANSITest categoriesFor: #mustBeBoolean:!public! !
-!ExceptionANSITest categoriesFor: #notificationOuterDefault!public! !
-!ExceptionANSITest categoriesFor: #notificationOuterResume!public! !
-!ExceptionANSITest categoriesFor: #protocol!public! !
-!ExceptionANSITest categoriesFor: #resignalExceptionAsNotification!public! !
-!ExceptionANSITest categoriesFor: #resignalNotificationAsException!public! !
-!ExceptionANSITest categoriesFor: #resumedException!public! !
-!ExceptionANSITest categoriesFor: #resumedExceptionWithValue!public! !
-!ExceptionANSITest categoriesFor: #resumedNotification!public! !
-!ExceptionANSITest categoriesFor: #resumedNotificationWithValue!public! !
-!ExceptionANSITest categoriesFor: #setUp!public! !
-!ExceptionANSITest categoriesFor: #signalExceptionNestedWithError!public! !
-!ExceptionANSITest categoriesFor: #signalNestedException!public! !
-!ExceptionANSITest categoriesFor: #signalUnnestedException!public! !
-!ExceptionANSITest categoriesFor: #testXdefaultAction!public! !
-!ExceptionANSITest categoriesFor: #testXdescription!public! !
-!ExceptionANSITest categoriesFor: #testXisNested!public! !
-!ExceptionANSITest categoriesFor: #testXisResumable!public! !
-!ExceptionANSITest categoriesFor: #testXmessageText!public! !
-!ExceptionANSITest categoriesFor: #testXmessageTextX!public! !
-!ExceptionANSITest categoriesFor: #testXouter!public! !
-!ExceptionANSITest categoriesFor: #testXpass!public! !
-!ExceptionANSITest categoriesFor: #testXresignalAsX!public! !
-!ExceptionANSITest categoriesFor: #testXresume!public! !
-!ExceptionANSITest categoriesFor: #testXresumeX!public! !
-!ExceptionANSITest categoriesFor: #testXretry!public! !
-!ExceptionANSITest categoriesFor: #testXretryUsingX!public! !
-!ExceptionANSITest categoriesFor: #testXreturn!public! !
-!ExceptionANSITest categoriesFor: #testXreturnX!public! !
-!ExceptionANSITest categoriesFor: #testXsignal!public! !
-!ExceptionANSITest categoriesFor: #testXsignalX!public! !
-!ExceptionANSITest categoriesFor: #testXtag!public! !
+!ExceptionANSITest categoriesForMethods!
+canonicalObject!public! !
+exceptionClass!private! !
+exceptionOuterReturn!public! !
+exceptionPass!public! !
+exceptionReturn!public! !
+mustBeBoolean:!public! !
+notificationOuterDefault!public! !
+notificationOuterResume!public! !
+protocol!public! !
+resignalExceptionAsNotification!public! !
+resignalNotificationAsException!public! !
+resumedException!public! !
+resumedExceptionWithValue!public! !
+resumedNotification!public! !
+resumedNotificationWithValue!public! !
+setUp!public! !
+signalExceptionNestedWithError!public! !
+signalNestedException!public! !
+signalUnnestedException!public! !
+testXdefaultAction!public! !
+testXdescription!public! !
+testXisNested!public! !
+testXisResumable!public! !
+testXmessageText!public! !
+testXmessageTextX!public! !
+testXouter!public! !
+testXpass!public! !
+testXresignalAsX!public! !
+testXresume!public! !
+testXresumeX!public! !
+testXretry!public! !
+testXretryUsingX!public! !
+testXreturn!public! !
+testXreturnX!public! !
+testXsignal!public! !
+testXsignalX!public! !
+testXtag!public! !
+!
 

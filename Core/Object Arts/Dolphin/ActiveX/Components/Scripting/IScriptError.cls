@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IScriptError
 	instanceVariableNames: ''
@@ -196,27 +196,29 @@ value
 	"Answer the special property which is the default value for the receiver."
 
 	^self description! !
-!IScriptError categoriesFor: #clear!**auto generated**!methods!public! !
-!IScriptError categoriesFor: #Clear!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #column!**auto generated**!properties!public! !
-!IScriptError categoriesFor: #description!**auto generated**!properties!public! !
-!IScriptError categoriesFor: #get_Column:!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #get_Description:!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #get_HelpContext:!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #get_HelpFile:!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #get_Line:!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #get_Number:!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #get_Source:!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #get_Text:!**auto generated**!COM Interfaces-IScriptError!private! !
-!IScriptError categoriesFor: #helpContext!**auto generated**!properties!public! !
-!IScriptError categoriesFor: #helpFile!**auto generated**!properties!public! !
-!IScriptError categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IScriptError categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IScriptError categoriesFor: #line!**auto generated**!properties!public! !
-!IScriptError categoriesFor: #number!**auto generated**!properties!public! !
-!IScriptError categoriesFor: #source!**auto generated**!properties!public! !
-!IScriptError categoriesFor: #text!**auto generated**!properties!public! !
-!IScriptError categoriesFor: #value!accessing!properties!public! !
+!IScriptError categoriesForMethods!
+clear!**auto generated**!methods!public! !
+Clear!**auto generated**!COM Interfaces-IScriptError!private! !
+column!**auto generated**!properties!public! !
+description!**auto generated**!properties!public! !
+get_Column:!**auto generated**!COM Interfaces-IScriptError!private! !
+get_Description:!**auto generated**!COM Interfaces-IScriptError!private! !
+get_HelpContext:!**auto generated**!COM Interfaces-IScriptError!private! !
+get_HelpFile:!**auto generated**!COM Interfaces-IScriptError!private! !
+get_Line:!**auto generated**!COM Interfaces-IScriptError!private! !
+get_Number:!**auto generated**!COM Interfaces-IScriptError!private! !
+get_Source:!**auto generated**!COM Interfaces-IScriptError!private! !
+get_Text:!**auto generated**!COM Interfaces-IScriptError!private! !
+helpContext!**auto generated**!properties!public! !
+helpFile!**auto generated**!properties!public! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+line!**auto generated**!properties!public! !
+number!**auto generated**!properties!public! !
+source!**auto generated**!properties!public! !
+text!**auto generated**!properties!public! !
+value!accessing!properties!public! !
+!
 
 !IScriptError class methodsFor!
 
@@ -255,7 +257,9 @@ initializeTypeLib
 		IScriptError initializeTypeLib"
 
 	typeLib := MSScriptControlLib! !
-!IScriptError class categoriesFor: #clsid!**auto generated**!constants!private! !
-!IScriptError class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IScriptError class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!IScriptError class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!public! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #STONReader
 	instanceVariableNames: 'readStream objects classes unresolvedReferences stringStream acceptUnknownClasses newLine convertNewLines'
@@ -493,60 +493,62 @@ stringStreamContents: block
 	stringStream reset.
 	block value: stringStream.
 	^ stringStream contents! !
-!STONReader categoriesFor: #acceptUnknownClasses:!initialize/release!private! !
-!STONReader categoriesFor: #allowComplexMapKeys:!initialize/release!private! !
-!STONReader categoriesFor: #atEnd!private!testing! !
-!STONReader categoriesFor: #close!initialize/release!private! !
-!STONReader categoriesFor: #consumeWhitespace!helpers!private! !
-!STONReader categoriesFor: #convertNewLines:!initialize/release!private! !
-!STONReader categoriesFor: #error:!error handling!private! !
-!STONReader categoriesFor: #expectChar:!helpers!private! !
-!STONReader categoriesFor: #initialize!initialize/release!private! !
-!STONReader categoriesFor: #isClassChar:!helpers!private! !
-!STONReader categoriesFor: #isClassStartChar:!helpers!private! !
-!STONReader categoriesFor: #isSimpleSymbolChar:!helpers!private! !
-!STONReader categoriesFor: #lookupClass:!helpers!private! !
-!STONReader categoriesFor: #match:do:!helpers!private! !
-!STONReader categoriesFor: #matchChar:!helpers!private! !
-!STONReader categoriesFor: #newLine:!initialize/release!private! !
-!STONReader categoriesFor: #newReference!helpers!private! !
-!STONReader categoriesFor: #next!helpers!public! !
-!STONReader categoriesFor: #on:!initialize/release!private! !
-!STONReader categoriesFor: #optimizeForLargeStructures!initialize/release!private! !
-!STONReader categoriesFor: #parseCharacter!parsing-internal!private! !
-!STONReader categoriesFor: #parseCharacterConvertingNewLinesOn:!parsing-internal!private! !
-!STONReader categoriesFor: #parseCharacterHex!helpers!private! !
-!STONReader categoriesFor: #parseCharacterHex4Value!helpers!private! !
-!STONReader categoriesFor: #parseCharacterHexDigit!parsing-internal!private! !
-!STONReader categoriesFor: #parseClass!parsing-internal!private! !
-!STONReader categoriesFor: #parseConstantDo:!parsing-internal!private! !
-!STONReader categoriesFor: #parseEscapedCharacter!parsing-internal!private! !
-!STONReader categoriesFor: #parseList!parsing!private! !
-!STONReader categoriesFor: #parseListDo:!parsing!private! !
-!STONReader categoriesFor: #parseListSingleton!parsing!private! !
-!STONReader categoriesFor: #parseMap!parsing!private! !
-!STONReader categoriesFor: #parseMapDo:!parsing!private! !
-!STONReader categoriesFor: #parseMapOrListRepresentation!parsing!private! !
-!STONReader categoriesFor: #parseNamedInstVarsFor:!parsing!private! !
-!STONReader categoriesFor: #parseNumber!parsing-internal!private! !
-!STONReader categoriesFor: #parseNumberExponent!parsing-internal!private! !
-!STONReader categoriesFor: #parseNumberFraction!parsing-internal!private! !
-!STONReader categoriesFor: #parseNumberInteger!parsing-internal!private! !
-!STONReader categoriesFor: #parseObject!parsing!private! !
-!STONReader categoriesFor: #parseReference!parsing-internal!private! !
-!STONReader categoriesFor: #parseSimpleValue!parsing!private! !
-!STONReader categoriesFor: #parseString!parsing-internal!private! !
-!STONReader categoriesFor: #parseStringInternal!parsing-internal!private! !
-!STONReader categoriesFor: #parseSymbol!parsing-internal!private! !
-!STONReader categoriesFor: #parseTrailingSurrogateHexEscape!helpers!private! !
-!STONReader categoriesFor: #parseValue!parsing!private! !
-!STONReader categoriesFor: #processSubObjectsOf:!helpers!private! !
-!STONReader categoriesFor: #reset!initialize/release!private! !
-!STONReader categoriesFor: #resolveReference:!helpers!private! !
-!STONReader categoriesFor: #resolveReferenceIndex:!helpers!private! !
-!STONReader categoriesFor: #setReference:to:!helpers!private! !
-!STONReader categoriesFor: #storeReference:!helpers!private! !
-!STONReader categoriesFor: #stringStreamContents:!helpers!private! !
+!STONReader categoriesForMethods!
+acceptUnknownClasses:!initialize/release!private! !
+allowComplexMapKeys:!initialize/release!private! !
+atEnd!private!testing! !
+close!initialize/release!private! !
+consumeWhitespace!helpers!private! !
+convertNewLines:!initialize/release!private! !
+error:!error handling!private! !
+expectChar:!helpers!private! !
+initialize!initialize/release!private! !
+isClassChar:!helpers!private! !
+isClassStartChar:!helpers!private! !
+isSimpleSymbolChar:!helpers!private! !
+lookupClass:!helpers!private! !
+match:do:!helpers!private! !
+matchChar:!helpers!private! !
+newLine:!initialize/release!private! !
+newReference!helpers!private! !
+next!helpers!public! !
+on:!initialize/release!private! !
+optimizeForLargeStructures!initialize/release!private! !
+parseCharacter!parsing-internal!private! !
+parseCharacterConvertingNewLinesOn:!parsing-internal!private! !
+parseCharacterHex!helpers!private! !
+parseCharacterHex4Value!helpers!private! !
+parseCharacterHexDigit!parsing-internal!private! !
+parseClass!parsing-internal!private! !
+parseConstantDo:!parsing-internal!private! !
+parseEscapedCharacter!parsing-internal!private! !
+parseList!parsing!private! !
+parseListDo:!parsing!private! !
+parseListSingleton!parsing!private! !
+parseMap!parsing!private! !
+parseMapDo:!parsing!private! !
+parseMapOrListRepresentation!parsing!private! !
+parseNamedInstVarsFor:!parsing!private! !
+parseNumber!parsing-internal!private! !
+parseNumberExponent!parsing-internal!private! !
+parseNumberFraction!parsing-internal!private! !
+parseNumberInteger!parsing-internal!private! !
+parseObject!parsing!private! !
+parseReference!parsing-internal!private! !
+parseSimpleValue!parsing!private! !
+parseString!parsing-internal!private! !
+parseStringInternal!parsing-internal!private! !
+parseSymbol!parsing-internal!private! !
+parseTrailingSurrogateHexEscape!helpers!private! !
+parseValue!parsing!private! !
+processSubObjectsOf:!helpers!private! !
+reset!initialize/release!private! !
+resolveReference:!helpers!private! !
+resolveReferenceIndex:!helpers!private! !
+setReference:to:!helpers!private! !
+storeReference:!helpers!private! !
+stringStreamContents:!helpers!private! !
+!
 
 !STONReader class methodsFor!
 
@@ -554,5 +556,7 @@ on: readStream
 	^ self new
 		on: readStream;
 		yourself! !
-!STONReader class categoriesFor: #on:!instance creation!public! !
+!STONReader class categoriesForMethods!
+on:!instance creation!public! !
+!
 

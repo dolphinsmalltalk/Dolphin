@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GraphicsTool subclass: #Region
 	instanceVariableNames: ''
@@ -52,12 +52,14 @@ union: aRegion
 	"Answers a new region which is the union of the receiver with aRegion"
 
 	^self combine: aRegion mode: RGN_OR! !
-!Region categoriesFor: #combine:mode:!operations!private! !
-!Region categoriesFor: #containsPoint:!operations!public!testing! !
-!Region categoriesFor: #exclude:!operations!public! !
-!Region categoriesFor: #intersection:!operations!public! !
-!Region categoriesFor: #isPersistent!private!testing! !
-!Region categoriesFor: #union:!operations!public! !
+!Region categoriesForMethods!
+combine:mode:!operations!private! !
+containsPoint:!operations!public!testing! !
+exclude:!operations!public! !
+intersection:!operations!public! !
+isPersistent!private!testing! !
+union:!operations!public! !
+!
 
 !Region class methodsFor!
 
@@ -77,7 +79,9 @@ rectangle: aRectangle
 
 	^self fromOwnedHandle:
 		(GDILibrary default createRectRgnIndirect: aRectangle asParameter)! !
-!Region class categoriesFor: #ellipse:!instance creation!public! !
-!Region class categoriesFor: #empty!instance creation!public! !
-!Region class categoriesFor: #rectangle:!instance creation!public! !
+!Region class categoriesForMethods!
+ellipse:!instance creation!public! !
+empty!instance creation!public! !
+rectangle:!instance creation!public! !
+!
 

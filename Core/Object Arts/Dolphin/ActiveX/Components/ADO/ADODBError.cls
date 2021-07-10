@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #ADODBError
 	instanceVariableNames: ''
@@ -187,24 +187,26 @@ value
 	This is the default value (DISPID_VALUE) property of the receiver."
 
 	^self description! !
-!ADODBError categoriesFor: #description!**auto generated**!properties!public! !
-!ADODBError categoriesFor: #get_Description:!**auto generated**!COM Interfaces-Error!private! !
-!ADODBError categoriesFor: #get_HelpContext:!**auto generated**!COM Interfaces-Error!private! !
-!ADODBError categoriesFor: #get_HelpFile:!**auto generated**!COM Interfaces-Error!private! !
-!ADODBError categoriesFor: #get_NativeError:!**auto generated**!COM Interfaces-Error!private! !
-!ADODBError categoriesFor: #get_Number:!**auto generated**!COM Interfaces-Error!private! !
-!ADODBError categoriesFor: #get_Source:!**auto generated**!COM Interfaces-Error!private! !
-!ADODBError categoriesFor: #get_SQLState:!**auto generated**!COM Interfaces-Error!private! !
-!ADODBError categoriesFor: #helpContext!**auto generated**!properties!public! !
-!ADODBError categoriesFor: #helpFile!**auto generated**!properties!public! !
-!ADODBError categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ADODBError categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ADODBError categoriesFor: #nativeError!**auto generated**!properties!public! !
-!ADODBError categoriesFor: #number!**auto generated**!properties!public! !
-!ADODBError categoriesFor: #printValueOn:!printing!private! !
-!ADODBError categoriesFor: #source!**auto generated**!properties!public! !
-!ADODBError categoriesFor: #sqlState!**auto generated**!properties!public! !
-!ADODBError categoriesFor: #value!**auto generated**!properties!public! !
+!ADODBError categoriesForMethods!
+description!**auto generated**!properties!public! !
+get_Description:!**auto generated**!COM Interfaces-Error!private! !
+get_HelpContext:!**auto generated**!COM Interfaces-Error!private! !
+get_HelpFile:!**auto generated**!COM Interfaces-Error!private! !
+get_NativeError:!**auto generated**!COM Interfaces-Error!private! !
+get_Number:!**auto generated**!COM Interfaces-Error!private! !
+get_Source:!**auto generated**!COM Interfaces-Error!private! !
+get_SQLState:!**auto generated**!COM Interfaces-Error!private! !
+helpContext!**auto generated**!properties!public! !
+helpFile!**auto generated**!properties!public! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+nativeError!**auto generated**!properties!public! !
+number!**auto generated**!properties!public! !
+printValueOn:!printing!private! !
+source!**auto generated**!properties!public! !
+sqlState!**auto generated**!properties!public! !
+value!**auto generated**!properties!public! !
+!
 
 !ADODBError class methodsFor!
 
@@ -228,5 +230,7 @@ defineFunctions
 		defineFunction: #get_NativeError:
 			argumentTypes: 'sdword*'
 ! !
-!ADODBError class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBError class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IPicture
 	instanceVariableNames: ''
@@ -378,37 +378,39 @@ width
 	answer := SDWORD new.
 	self get_Width: answer.
 	^answer asObject! !
-!IPicture categoriesFor: #attributes!**auto generated**!properties!public! !
-!IPicture categoriesFor: #curDC!properties!public! !
-!IPicture categoriesFor: #extent!accessing!public! !
-!IPicture categoriesFor: #get_Attributes:!**auto generated**!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #get_CurDC:!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #get_Handle:!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #get_Height:!**auto generated**!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #get_hPal:!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #get_KeepOriginalFormat:!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #get_Type:!**auto generated**!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #get_Width:!**auto generated**!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #handle!properties!public! !
-!IPicture categoriesFor: #height!**auto generated**!properties!public! !
-!IPicture categoriesFor: #hPal!properties!public! !
-!IPicture categoriesFor: #hPal:!**auto generated**!properties!public! !
-!IPicture categoriesFor: #keepOriginalFormat!properties!public! !
-!IPicture categoriesFor: #keepOriginalFormat:!**auto generated**!properties!public! !
-!IPicture categoriesFor: #pictureChanged!**auto generated**!methods!public! !
-!IPicture categoriesFor: #PictureChanged!**auto generated**!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #put_hPal:!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #put_KeepOriginalFormat:!**auto generated**!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #render:x:y:cx:cy:xSrc:ySrc:cxSrc:cySrc:prcWBounds:!methods!public! !
-!IPicture categoriesFor: #Render:x:y:cx:cy:xSrc:ySrc:cxSrc:cySrc:prcWBounds:!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #saveAsFile:fSaveMemCopy:!**auto generated**!methods!public! !
-!IPicture categoriesFor: #SaveAsFile:fSaveMemCopy:pcbSize:!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #selectPicture:!**auto generated**!methods!public! !
-!IPicture categoriesFor: #SelectPicture:phdcOut:phbmpOut:!**auto generated**!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #setHdc:!methods!public! !
-!IPicture categoriesFor: #SetHdc:!COM Interfaces-IPicture!private! !
-!IPicture categoriesFor: #type!**auto generated**!properties!public! !
-!IPicture categoriesFor: #width!**auto generated**!properties!public! !
+!IPicture categoriesForMethods!
+attributes!**auto generated**!properties!public! !
+curDC!properties!public! !
+extent!accessing!public! !
+get_Attributes:!**auto generated**!COM Interfaces-IPicture!private! !
+get_CurDC:!COM Interfaces-IPicture!private! !
+get_Handle:!COM Interfaces-IPicture!private! !
+get_Height:!**auto generated**!COM Interfaces-IPicture!private! !
+get_hPal:!COM Interfaces-IPicture!private! !
+get_KeepOriginalFormat:!COM Interfaces-IPicture!private! !
+get_Type:!**auto generated**!COM Interfaces-IPicture!private! !
+get_Width:!**auto generated**!COM Interfaces-IPicture!private! !
+handle!properties!public! !
+height!**auto generated**!properties!public! !
+hPal!properties!public! !
+hPal:!**auto generated**!properties!public! !
+keepOriginalFormat!properties!public! !
+keepOriginalFormat:!**auto generated**!properties!public! !
+pictureChanged!**auto generated**!methods!public! !
+PictureChanged!**auto generated**!COM Interfaces-IPicture!private! !
+put_hPal:!COM Interfaces-IPicture!private! !
+put_KeepOriginalFormat:!**auto generated**!COM Interfaces-IPicture!private! !
+render:x:y:cx:cy:xSrc:ySrc:cxSrc:cySrc:prcWBounds:!methods!public! !
+Render:x:y:cx:cy:xSrc:ySrc:cxSrc:cySrc:prcWBounds:!COM Interfaces-IPicture!private! !
+saveAsFile:fSaveMemCopy:!**auto generated**!methods!public! !
+SaveAsFile:fSaveMemCopy:pcbSize:!COM Interfaces-IPicture!private! !
+selectPicture:!**auto generated**!methods!public! !
+SelectPicture:phdcOut:phbmpOut:!**auto generated**!COM Interfaces-IPicture!private! !
+setHdc:!methods!public! !
+SetHdc:!COM Interfaces-IPicture!private! !
+type!**auto generated**!properties!public! !
+width!**auto generated**!properties!public! !
+!
 
 !IPicture class methodsFor!
 
@@ -539,15 +541,17 @@ readFromIStream: anIStream
 	^answer
 
 	! !
-!IPicture class categoriesFor: #clsid!constants!private! !
-!IPicture class categoriesFor: #createPicture:type:owns:!instance creation!private! !
-!IPicture class categoriesFor: #defineFunctions!initializing!public! !
-!IPicture class categoriesFor: #fromBitmap:!instance creation!public! !
-!IPicture class categoriesFor: #fromFile:!instance creation!public! !
-!IPicture class categoriesFor: #fromIcon:!instance creation!public! !
-!IPicture class categoriesFor: #fromImage:type:!instance creation!private! !
-!IPicture class categoriesFor: #fromOwnedBitmap:!instance creation!public! !
-!IPicture class categoriesFor: #fromOwnedIcon:!instance creation!public! !
-!IPicture class categoriesFor: #fromOwnedImage:type:!instance creation!private! !
-!IPicture class categoriesFor: #readFromIStream:!instance creation!public! !
+!IPicture class categoriesForMethods!
+clsid!constants!private! !
+createPicture:type:owns:!instance creation!private! !
+defineFunctions!initializing!public! !
+fromBitmap:!instance creation!public! !
+fromFile:!instance creation!public! !
+fromIcon:!instance creation!public! !
+fromImage:type:!instance creation!private! !
+fromOwnedBitmap:!instance creation!public! !
+fromOwnedIcon:!instance creation!public! !
+fromOwnedImage:type:!instance creation!private! !
+readFromIStream:!instance creation!public! !
+!
 

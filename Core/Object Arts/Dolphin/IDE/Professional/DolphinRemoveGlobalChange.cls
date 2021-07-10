@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinGlobalChange subclass: #DolphinRemoveGlobalChange
 	instanceVariableNames: ''
@@ -18,9 +18,11 @@ changeString
 
 primitiveExecute
 	Smalltalk removeKey: variable! !
-!DolphinRemoveGlobalChange categoriesFor: #asUndoOperation!converting!public! !
-!DolphinRemoveGlobalChange categoriesFor: #changeString!printing!public! !
-!DolphinRemoveGlobalChange categoriesFor: #primitiveExecute!private! !
+!DolphinRemoveGlobalChange categoriesForMethods!
+asUndoOperation!converting!public! !
+changeString!printing!public! !
+primitiveExecute!private! !
+!
 
 !DolphinRemoveGlobalChange class methodsFor!
 
@@ -28,5 +30,7 @@ removeGlobal: aVariable
 	^(self new)
 		variable: aVariable;
 		yourself! !
-!DolphinRemoveGlobalChange class categoriesFor: #removeGlobal:!instance creation!public! !
+!DolphinRemoveGlobalChange class categoriesForMethods!
+removeGlobal:!instance creation!public! !
+!
 

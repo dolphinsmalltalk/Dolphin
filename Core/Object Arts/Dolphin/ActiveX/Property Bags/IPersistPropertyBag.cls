@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IPersist subclass: #IPersistPropertyBag
 	instanceVariableNames: ''
@@ -62,11 +62,13 @@ Save: pPropBag fClearDirty: fClearDirty fSaveAllProperties: fSaveAllProperties
 
 	<virtual stdcall: hresult 7 IPropertyBag* bool bool>
 	^self invalidCall: _failureCode! !
-!IPersistPropertyBag categoriesFor: #initNew!methods!public! !
-!IPersistPropertyBag categoriesFor: #InitNew!**auto generated**!COM Interfaces-IPersistPropertyBag!private! !
-!IPersistPropertyBag categoriesFor: #Load:pErrorLog:!COM Interfaces-IPersistPropertyBag!private! !
-!IPersistPropertyBag categoriesFor: #save:fClearDirty:fSaveAllProperties:!methods!public! !
-!IPersistPropertyBag categoriesFor: #Save:fClearDirty:fSaveAllProperties:!COM Interfaces-IPersistPropertyBag!private! !
+!IPersistPropertyBag categoriesForMethods!
+initNew!methods!public! !
+InitNew!**auto generated**!COM Interfaces-IPersistPropertyBag!private! !
+Load:pErrorLog:!COM Interfaces-IPersistPropertyBag!private! !
+save:fClearDirty:fSaveAllProperties:!methods!public! !
+Save:fClearDirty:fSaveAllProperties:!COM Interfaces-IPersistPropertyBag!private! !
+!
 
 IPersistPropertyBag methodProtocol: #IPersistPropertyBag attributes: #(#readOnly) selectors: #(#InitNew #Load:pErrorLog: #Save:fClearDirty:fSaveAllProperties:)!
 
@@ -85,5 +87,7 @@ defineFunctions
 		defineFunction: #Save:fClearDirty:fSaveAllProperties:
 			argumentTypes: 'IPropertyBag* bool bool'
 ! !
-!IPersistPropertyBag class categoriesFor: #defineFunctions!initializing!public! !
+!IPersistPropertyBag class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

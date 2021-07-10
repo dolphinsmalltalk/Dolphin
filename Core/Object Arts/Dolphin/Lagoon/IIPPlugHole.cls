@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IIPPlugHole
 	instanceVariableNames: ''
@@ -34,8 +34,10 @@ put_Peer: pVal
 
 	<virtual stdcall: hresult 5 IUnknown*>
 	^self invalidCall: _failureCode! !
-!IIPPlugHole categoriesFor: #get_Peer:!**auto generated**!COM Interfaces-IInProcPlugHole!private! !
-!IIPPlugHole categoriesFor: #put_Peer:!**auto generated**!COM Interfaces-IInProcPlugHole!private! !
+!IIPPlugHole categoriesForMethods!
+get_Peer:!**auto generated**!COM Interfaces-IInProcPlugHole!private! !
+put_Peer:!**auto generated**!COM Interfaces-IInProcPlugHole!private! !
+!
 
 !IIPPlugHole class methodsFor!
 
@@ -50,5 +52,7 @@ defineFunctions
 		defineFunction: #put_Peer:
 			argumentTypes: 'IUnknown*'
 ! !
-!IIPPlugHole class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IIPPlugHole class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

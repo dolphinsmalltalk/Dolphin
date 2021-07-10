@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #DBTxn
 	instanceVariableNames: 'connection readOnly creator'
@@ -85,15 +85,17 @@ transcriptMessage: aString
 				space;
 				nextPutAll: aString;
 				cr]! !
-!DBTxn categoriesFor: #beReadOnly!accessing!public! !
-!DBTxn categoriesFor: #beReadWrite!accessing!public! !
-!DBTxn categoriesFor: #commit!operations!public! !
-!DBTxn categoriesFor: #connection!accessing!public! !
-!DBTxn categoriesFor: #connection:!initializing!private! !
-!DBTxn categoriesFor: #creator:!development!private! !
-!DBTxn categoriesFor: #printOn:!printing!public! !
-!DBTxn categoriesFor: #rollback!operations!public! !
-!DBTxn categoriesFor: #transcriptMessage:!operations-logging!private! !
+!DBTxn categoriesForMethods!
+beReadOnly!accessing!public! !
+beReadWrite!accessing!public! !
+commit!operations!public! !
+connection!accessing!public! !
+connection:!initializing!private! !
+creator:!development!private! !
+printOn:!printing!public! !
+rollback!operations!public! !
+transcriptMessage:!operations-logging!private! !
+!
 
 !DBTxn class methodsFor!
 
@@ -112,6 +114,8 @@ newRWOn: aDBConnection
 		connection: aDBConnection;
 		beReadWrite;
 		yourself! !
-!DBTxn class categoriesFor: #newOn:!instance creation!public! !
-!DBTxn class categoriesFor: #newRWOn:!instance creation!public! !
+!DBTxn class categoriesForMethods!
+newOn:!instance creation!public! !
+newRWOn:!instance creation!public! !
+!
 

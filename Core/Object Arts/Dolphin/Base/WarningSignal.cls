@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NotificationSignal subclass: #WarningSignal
 	instanceVariableNames: ''
@@ -16,5 +16,7 @@ defaultAction: exception
 	Implementation Note: forward to the SessionManager for application specific handling."
 
 	^SessionManager current onUnhandledWarning: exception! !
-!WarningSignal categoriesFor: #defaultAction:!handling!private! !
+!WarningSignal categoriesForMethods!
+defaultAction:!handling!private! !
+!
 

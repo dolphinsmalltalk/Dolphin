@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 View subclass: #ScribbleView
 	instanceVariableNames: ''
@@ -36,9 +36,11 @@ onPaintRequired: aPaintEvent
 	| canvas |
 	canvas := aPaintEvent canvas.
 	self model do: [:each | each drawOn: canvas ].	! !
-!ScribbleView categoriesFor: #connectModel!models!public! !
-!ScribbleView categoriesFor: #onItem:addedAtIndex:!event handling!public! !
-!ScribbleView categoriesFor: #onPaintRequired:!event handling!public! !
+!ScribbleView categoriesForMethods!
+connectModel!models!public! !
+onItem:addedAtIndex:!event handling!public! !
+onPaintRequired:!event handling!public! !
+!
 
 !ScribbleView class methodsFor!
 
@@ -51,6 +53,8 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!ScribbleView class categoriesFor: #defaultModel!models!public! !
-!ScribbleView class categoriesFor: #icon!constants!public! !
+!ScribbleView class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+!
 

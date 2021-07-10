@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestResource subclass: #GdiplusFileResource
 	instanceVariableNames: ''
@@ -5466,23 +5466,25 @@ writeBytes: aByteArray filename: aAbsFilename
 	| fs |
 	fs := FileStream write: aAbsFilename text: false.
 	[fs nextPutAll: aByteArray] ensure: [fs close]! !
-!GdiplusFileResource categoriesFor: #eyeJpgBytes!accessing-bytes!public! !
-!GdiplusFileResource categoriesFor: #fileLocator!accessing!public! !
-!GdiplusFileResource categoriesFor: #fish32x32pngBytes!accessing-bytes!public! !
-!GdiplusFileResource categoriesFor: #mosaic2BmpBytes!accessing-bytes!public! !
-!GdiplusFileResource categoriesFor: #pafBugJpg!accessing-filenames!public! !
-!GdiplusFileResource categoriesFor: #pafEyeJpg!accessing-filenames!public! !
-!GdiplusFileResource categoriesFor: #pafFish32x32png!accessing-filenames!public! !
-!GdiplusFileResource categoriesFor: #pafMosaic2Bmp!accessing-filenames!public! !
-!GdiplusFileResource categoriesFor: #pafRgb0000FF_100x100bmp!accessing-filenames!public! !
-!GdiplusFileResource categoriesFor: #pafSeattleNightJpg!accessing-filenames!public! !
-!GdiplusFileResource categoriesFor: #pafWinXP32x32ico!accessing-filenames!public! !
-!GdiplusFileResource categoriesFor: #rgb0000FF_100x100bmpBytes!accessing-bytes!public! !
-!GdiplusFileResource categoriesFor: #seattleNightJpgBytes!accessing-bytes!public! !
-!GdiplusFileResource categoriesFor: #setUp!public!setup! !
-!GdiplusFileResource categoriesFor: #tearDown!public!setup! !
-!GdiplusFileResource categoriesFor: #winXP32x32icoBytes!accessing-bytes!public! !
-!GdiplusFileResource categoriesFor: #writeBytes:filename:!operations!private! !
+!GdiplusFileResource categoriesForMethods!
+eyeJpgBytes!accessing-bytes!public! !
+fileLocator!accessing!public! !
+fish32x32pngBytes!accessing-bytes!public! !
+mosaic2BmpBytes!accessing-bytes!public! !
+pafBugJpg!accessing-filenames!public! !
+pafEyeJpg!accessing-filenames!public! !
+pafFish32x32png!accessing-filenames!public! !
+pafMosaic2Bmp!accessing-filenames!public! !
+pafRgb0000FF_100x100bmp!accessing-filenames!public! !
+pafSeattleNightJpg!accessing-filenames!public! !
+pafWinXP32x32ico!accessing-filenames!public! !
+rgb0000FF_100x100bmpBytes!accessing-bytes!public! !
+seattleNightJpgBytes!accessing-bytes!public! !
+setUp!public!setup! !
+tearDown!public!setup! !
+winXP32x32icoBytes!accessing-bytes!public! !
+writeBytes:filename:!operations!private! !
+!
 
 !GdiplusFileResource class methodsFor!
 
@@ -5504,5 +5506,7 @@ promptImageAsHex
 		display: '^'.
 	(image asByteArray: image mimeType) hexStoreOn: strm.
 	^strm contents! !
-!GdiplusFileResource class categoriesFor: #promptImageAsHex!private! !
+!GdiplusFileResource class categoriesForMethods!
+promptImageAsHex!private! !
+!
 

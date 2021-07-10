@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #DBAbstractRow
 	instanceVariableNames: 'columns contents selectors status'
@@ -134,22 +134,24 @@ selectors
 
 status
 	^status! !
-!DBAbstractRow categoriesFor: #=!comparing!public! !
-!DBAbstractRow categoriesFor: #asObject!converting!private! !
-!DBAbstractRow categoriesFor: #at:!accessing!public! !
-!DBAbstractRow categoriesFor: #at:ifAbsent:!accessing!public! !
-!DBAbstractRow categoriesFor: #at:ifPresent:!accessing!public! !
-!DBAbstractRow categoriesFor: #at:put:!accessing!public! !
-!DBAbstractRow categoriesFor: #atIndex:!accessing!public! !
-!DBAbstractRow categoriesFor: #atIndex:put:!accessing!public! !
-!DBAbstractRow categoriesFor: #buildSelectors!accessing!private! !
-!DBAbstractRow categoriesFor: #columns!accessing!public! !
-!DBAbstractRow categoriesFor: #columns:!accessing!private! !
-!DBAbstractRow categoriesFor: #contents!accessing!public! !
-!DBAbstractRow categoriesFor: #doesNotUnderstand:!exceptions!private! !
-!DBAbstractRow categoriesFor: #hash!comparing!public! !
-!DBAbstractRow categoriesFor: #isDeletedRow!public!testing! !
-!DBAbstractRow categoriesFor: #printOn:!printing!public! !
-!DBAbstractRow categoriesFor: #selectors!accessing!private! !
-!DBAbstractRow categoriesFor: #status!accessing!private! !
+!DBAbstractRow categoriesForMethods!
+=!comparing!public! !
+asObject!converting!private! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:ifPresent:!accessing!public! !
+at:put:!accessing!public! !
+atIndex:!accessing!public! !
+atIndex:put:!accessing!public! !
+buildSelectors!accessing!private! !
+columns!accessing!public! !
+columns:!accessing!private! !
+contents!accessing!public! !
+doesNotUnderstand:!exceptions!private! !
+hash!comparing!public! !
+isDeletedRow!public!testing! !
+printOn:!printing!public! !
+selectors!accessing!private! !
+status!accessing!private! !
+!
 

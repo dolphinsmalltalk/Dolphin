@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Shell subclass: #Calculator
 	instanceVariableNames: 'input output'
@@ -59,12 +59,14 @@ print: aString
 
 printNewline
 	self print: String lineDelimiter! !
-!Calculator categoriesFor: #clearTape!commands!public! !
-!Calculator categoriesFor: #createComponents!initializing!private! !
-!Calculator categoriesFor: #displayIt!commands!public! !
-!Calculator categoriesFor: #evaluateIt!commands!public! !
-!Calculator categoriesFor: #print:!helpers!private! !
-!Calculator categoriesFor: #printNewline!private! !
+!Calculator categoriesForMethods!
+clearTape!commands!public! !
+createComponents!initializing!private! !
+displayIt!commands!public! !
+evaluateIt!commands!public! !
+print:!helpers!private! !
+printNewline!private! !
+!
 
 !Calculator class methodsFor!
 
@@ -103,11 +105,13 @@ shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."
 
 	^true! !
-!Calculator class categoriesFor: #displayOn:!displaying!public! !
-!Calculator class categoriesFor: #icon!constants!public! !
-!Calculator class categoriesFor: #initialize!development!initializing!private! !
-!Calculator class categoriesFor: #resource_Default_view!public!resources-views! !
-!Calculator class categoriesFor: #shutdownOnExit!public!testing! !
+!Calculator class categoriesForMethods!
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+resource_Default_view!public!resources-views! !
+shutdownOnExit!public!testing! !
+!
 
 Calculator class methodProtocol: #installableSystemTool attributes: #(#readOnly) selectors: #(#registerAsToolWith: #unregisterAsToolWith:)!
 

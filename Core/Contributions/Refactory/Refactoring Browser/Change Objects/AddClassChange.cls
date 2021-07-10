@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoryClassChange subclass: #AddClassChange
 	instanceVariableNames: 'definition superclassName instanceVariableNames classVariableNames poolDictionaryNames category'
@@ -137,32 +137,36 @@ printOn: aStream
 superclassName
 	className isNil ifTrue: [self fillOutDefinition].
 	^superclassName! !
-!AddClassChange categoriesFor: #=!comparing!public! !
-!AddClassChange categoriesFor: #asUndoOperation!converting!public! !
-!AddClassChange categoriesFor: #category!accessing!public! !
-!AddClassChange categoriesFor: #changeClassName!accessing!public! !
-!AddClassChange categoriesFor: #changeString!printing!public! !
-!AddClassChange categoriesFor: #classVariableNames!accessing!public! !
-!AddClassChange categoriesFor: #controller!accessing!private! !
-!AddClassChange categoriesFor: #definingSuperclass!accessing!private! !
-!AddClassChange categoriesFor: #definition!accessing!private! !
-!AddClassChange categoriesFor: #definition:!initialize/release!public! !
-!AddClassChange categoriesFor: #fillOutDefinition!helpers!private! !
-!AddClassChange categoriesFor: #hash!comparing!public! !
-!AddClassChange categoriesFor: #initialize!initialize/release!public! !
-!AddClassChange categoriesFor: #instanceVariableNames!accessing!public! !
-!AddClassChange categoriesFor: #isValidMessageName:!public!testing! !
-!AddClassChange categoriesFor: #isValidSubclassCreationMessage:!public!testing! !
-!AddClassChange categoriesFor: #namesIn:!helpers!private! !
-!AddClassChange categoriesFor: #parseDefinitionError!helpers!private! !
-!AddClassChange categoriesFor: #poolDictionaryNames!accessing!public! !
-!AddClassChange categoriesFor: #primitiveExecute!public! !
-!AddClassChange categoriesFor: #printOn:!printing!public! !
-!AddClassChange categoriesFor: #superclassName!accessing!public! !
+!AddClassChange categoriesForMethods!
+=!comparing!public! !
+asUndoOperation!converting!public! !
+category!accessing!public! !
+changeClassName!accessing!public! !
+changeString!printing!public! !
+classVariableNames!accessing!public! !
+controller!accessing!private! !
+definingSuperclass!accessing!private! !
+definition!accessing!private! !
+definition:!initialize/release!public! !
+fillOutDefinition!helpers!private! !
+hash!comparing!public! !
+initialize!initialize/release!public! !
+instanceVariableNames!accessing!public! !
+isValidMessageName:!public!testing! !
+isValidSubclassCreationMessage:!public!testing! !
+namesIn:!helpers!private! !
+parseDefinitionError!helpers!private! !
+poolDictionaryNames!accessing!public! !
+primitiveExecute!public! !
+printOn:!printing!public! !
+superclassName!accessing!public! !
+!
 
 !AddClassChange class methodsFor!
 
 definition: aString 
 	^self new definition: aString! !
-!AddClassChange class categoriesFor: #definition:!instance creation!public! !
+!AddClassChange class categoriesForMethods!
+definition:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IXMLDOMNodeList
 	instanceVariableNames: ''
@@ -109,17 +109,19 @@ Reset
 
 	<virtual stdcall: hresult 11>
 	^self invalidCall: _failureCode! !
-!IXMLDOMNodeList categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!IXMLDOMNodeList categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
-!IXMLDOMNodeList categoriesFor: #get_item:listItem:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
-!IXMLDOMNodeList categoriesFor: #get_length:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
-!IXMLDOMNodeList categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IXMLDOMNodeList categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IXMLDOMNodeList categoriesFor: #item:!**auto generated**!properties!public! !
-!IXMLDOMNodeList categoriesFor: #length!**auto generated**!properties!public! !
-!IXMLDOMNodeList categoriesFor: #nextNode!**auto generated**!methods!public! !
-!IXMLDOMNodeList categoriesFor: #NextNode:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
-!IXMLDOMNodeList categoriesFor: #Reset!**auto generated**!COM Interfaces-IXMLDOMNodeList!public! !
+!IXMLDOMNodeList categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
+get_item:listItem:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
+get_length:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+length!**auto generated**!properties!public! !
+nextNode!**auto generated**!methods!public! !
+NextNode:!**auto generated**!COM Interfaces-IXMLDOMNodeList!private! !
+Reset!**auto generated**!COM Interfaces-IXMLDOMNodeList!public! !
+!
 
 !IXMLDOMNodeList class methodsFor!
 
@@ -138,5 +140,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!IXMLDOMNodeList class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IXMLDOMNodeList class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

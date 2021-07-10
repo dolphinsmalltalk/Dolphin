@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ReadWriteStreamTest subclass: #AbstractFileStreamTest
 	instanceVariableNames: 'tempFileName filestream'
@@ -396,38 +396,40 @@ testTruncate
 
 writeableCollections
 	^self strings , self byteArrays! !
-!AbstractFileStreamTest categoriesFor: #arrayedCollections!private! !
-!AbstractFileStreamTest categoriesFor: #assertBufferEmptyOrDirty:!helpers!private! !
-!AbstractFileStreamTest categoriesFor: #assertBufferEmptyOrDirty:size:!helpers!private! !
-!AbstractFileStreamTest categoriesFor: #blockWriteIntervals!constants!private! !
-!AbstractFileStreamTest categoriesFor: #bufferSize!constants!private! !
-!AbstractFileStreamTest categoriesFor: #closeTempStream:!helpers!private! !
-!AbstractFileStreamTest categoriesFor: #collections!private!unit tests! !
-!AbstractFileStreamTest categoriesFor: #initializeRandomTestData!initializing!private! !
-!AbstractFileStreamTest categoriesFor: #maxPosition!constants!public! !
-!AbstractFileStreamTest categoriesFor: #randomData1!constants!private! !
-!AbstractFileStreamTest categoriesFor: #randomData2!constants!private! !
-!AbstractFileStreamTest categoriesFor: #readWriteStreamOnString:!helpers!private! !
-!AbstractFileStreamTest categoriesFor: #setUp!public!running! !
-!AbstractFileStreamTest categoriesFor: #streamOnBytes:type:!helpers!private! !
-!AbstractFileStreamTest categoriesFor: #streamWith:!helpers!private! !
-!AbstractFileStreamTest categoriesFor: #strings!constants!private! !
-!AbstractFileStreamTest categoriesFor: #tearDown!public!running! !
-!AbstractFileStreamTest categoriesFor: #tearDownTempStream!helpers!private! !
-!AbstractFileStreamTest categoriesFor: #tempReadStream!helpers!private! !
-!AbstractFileStreamTest categoriesFor: #tempReadWriteStream!helpers!private! !
-!AbstractFileStreamTest categoriesFor: #tempWriteStream!helpers!private! !
-!AbstractFileStreamTest categoriesFor: #tempWriteStream:!helpers!private! !
-!AbstractFileStreamTest categoriesFor: #test1065!public!unit tests! !
-!AbstractFileStreamTest categoriesFor: #test64BitPosition!public!unit tests! !
-!AbstractFileStreamTest categoriesFor: #testAppend!public!unit tests! !
-!AbstractFileStreamTest categoriesFor: #testNextPutAllStartingAt!public!unit tests! !
-!AbstractFileStreamTest categoriesFor: #testNextPutAllStartingAt2!public!unit tests! !
-!AbstractFileStreamTest categoriesFor: #testPositionAfterWrite!public!unit tests! !
-!AbstractFileStreamTest categoriesFor: #testPositionPastEnd!public!unit tests! !
-!AbstractFileStreamTest categoriesFor: #testRandomWriteOnePage!public!unit tests! !
-!AbstractFileStreamTest categoriesFor: #testReset!public!unit tests! !
-!AbstractFileStreamTest categoriesFor: #testRewindAfterWrite!public!unit tests! !
-!AbstractFileStreamTest categoriesFor: #testTruncate!public!unit tests! !
-!AbstractFileStreamTest categoriesFor: #writeableCollections!constants!private! !
+!AbstractFileStreamTest categoriesForMethods!
+arrayedCollections!private! !
+assertBufferEmptyOrDirty:!helpers!private! !
+assertBufferEmptyOrDirty:size:!helpers!private! !
+blockWriteIntervals!constants!private! !
+bufferSize!constants!private! !
+closeTempStream:!helpers!private! !
+collections!private!unit tests! !
+initializeRandomTestData!initializing!private! !
+maxPosition!constants!public! !
+randomData1!constants!private! !
+randomData2!constants!private! !
+readWriteStreamOnString:!helpers!private! !
+setUp!public!running! !
+streamOnBytes:type:!helpers!private! !
+streamWith:!helpers!private! !
+strings!constants!private! !
+tearDown!public!running! !
+tearDownTempStream!helpers!private! !
+tempReadStream!helpers!private! !
+tempReadWriteStream!helpers!private! !
+tempWriteStream!helpers!private! !
+tempWriteStream:!helpers!private! !
+test1065!public!unit tests! !
+test64BitPosition!public!unit tests! !
+testAppend!public!unit tests! !
+testNextPutAllStartingAt!public!unit tests! !
+testNextPutAllStartingAt2!public!unit tests! !
+testPositionAfterWrite!public!unit tests! !
+testPositionPastEnd!public!unit tests! !
+testRandomWriteOnePage!public!unit tests! !
+testReset!public!unit tests! !
+testRewindAfterWrite!public!unit tests! !
+testTruncate!public!unit tests! !
+writeableCollections!constants!private! !
+!
 

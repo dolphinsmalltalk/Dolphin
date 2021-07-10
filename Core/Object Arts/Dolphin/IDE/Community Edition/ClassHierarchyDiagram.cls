@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalltalkToolShell subclass: #ClassHierarchyDiagram
 	instanceVariableNames: 'classesPresenter commentPresenter'
@@ -59,13 +59,15 @@ onViewOpened
 
 searchForClass: aClass 
 	classesPresenter selection: aClass instanceClass ifAbsent: [super searchForClass: aClass]! !
-!ClassHierarchyDiagram categoriesFor: #canSaveState!private!saved state! !
-!ClassHierarchyDiagram categoriesFor: #createComponents!initializing!private! !
-!ClassHierarchyDiagram categoriesFor: #createSchematicWiring!initializing!private! !
-!ClassHierarchyDiagram categoriesFor: #defaultHelpId!public! !
-!ClassHierarchyDiagram categoriesFor: #onClassSelected!event handling!public! !
-!ClassHierarchyDiagram categoriesFor: #onViewOpened!event handling!private! !
-!ClassHierarchyDiagram categoriesFor: #searchForClass:!private! !
+!ClassHierarchyDiagram categoriesForMethods!
+canSaveState!private!saved state! !
+createComponents!initializing!private! !
+createSchematicWiring!initializing!private! !
+defaultHelpId!public! !
+onClassSelected!event handling!public! !
+onViewOpened!event handling!private! !
+searchForClass:!private! !
+!
 
 !ClassHierarchyDiagram class methodsFor!
 
@@ -114,11 +116,13 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10590! !
-!ClassHierarchyDiagram class categoriesFor: #defaultAdditionalAccelerators!initializing!private! !
-!ClassHierarchyDiagram class categoriesFor: #displayOn:!displaying!public! !
-!ClassHierarchyDiagram class categoriesFor: #icon!constants!public! !
-!ClassHierarchyDiagram class categoriesFor: #initialize!initializing!private! !
-!ClassHierarchyDiagram class categoriesFor: #publishedAspects!public! !
-!ClassHierarchyDiagram class categoriesFor: #resource_Default_view!public!resources-views! !
-!ClassHierarchyDiagram class categoriesFor: #toolsFolderHelpId!public! !
+!ClassHierarchyDiagram class categoriesForMethods!
+defaultAdditionalAccelerators!initializing!private! !
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!public! !
+!
 

@@ -174,7 +174,9 @@ profilerIconIndex
 
 	#idbAdded.
 	^self icon imageIndex! !
-!ClassDescription categoriesFor: #profilerIconIndex!accessing!idb goodies!public! !
+!ClassDescription categoriesForMethods!
+profilerIconIndex!accessing!idb goodies!public! !
+!
 
 !CompiledMethod methodsFor!
 
@@ -183,7 +185,9 @@ profilerIconIndex
 
 	#idbAdded.
 	^self methodClass icon imageIndex! !
-!CompiledMethod categoriesFor: #profilerIconIndex!accessing!idb goodies!public! !
+!CompiledMethod categoriesForMethods!
+profilerIconIndex!accessing!idb goodies!public! !
+!
 
 !Number methodsFor!
 
@@ -192,7 +196,9 @@ asPercentageOf: aNumber
 
 	#idbAdded.
 	^(self / aNumber * 100.0) rounded! !
-!Number categoriesFor: #asPercentageOf:!converting!idb goodies!public! !
+!Number categoriesForMethods!
+asPercentageOf:!converting!idb goodies!public! !
+!
 
 !Process methodsFor!
 
@@ -208,7 +214,9 @@ stackDepthFrom: aStackFrame
 			i := sender == 0 ifFalse: [self indexOfSP: sender].
 			count := count + 1].
 	^count! !
-!Process categoriesFor: #stackDepthFrom:!accessing!idb goodies!public! !
+!Process categoriesForMethods!
+stackDepthFrom:!accessing!idb goodies!public! !
+!
 
 "End of package definition"!
 

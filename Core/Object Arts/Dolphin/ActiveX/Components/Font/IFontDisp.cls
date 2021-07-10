@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IFontDisp
 	instanceVariableNames: ''
@@ -165,24 +165,26 @@ weight: newVal
 		short Weight"
 
 	self setPropertyId: 7 value: newVal! !
-!IFontDisp categoriesFor: #bold!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #bold:!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #charset!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #charset:!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #italic!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #italic:!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #name!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #name:!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #size!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #size:!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #strikethrough!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #strikethrough:!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #underline!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #underline:!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #value!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #value:!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #weight!**auto generated**!properties!public! !
-!IFontDisp categoriesFor: #weight:!**auto generated**!properties!public! !
+!IFontDisp categoriesForMethods!
+bold!**auto generated**!properties!public! !
+bold:!**auto generated**!properties!public! !
+charset!**auto generated**!properties!public! !
+charset:!**auto generated**!properties!public! !
+italic!**auto generated**!properties!public! !
+italic:!**auto generated**!properties!public! !
+name!**auto generated**!properties!public! !
+name:!**auto generated**!properties!public! !
+size!**auto generated**!properties!public! !
+size:!**auto generated**!properties!public! !
+strikethrough!**auto generated**!properties!public! !
+strikethrough:!**auto generated**!properties!public! !
+underline!**auto generated**!properties!public! !
+underline:!**auto generated**!properties!public! !
+value!**auto generated**!properties!public! !
+value:!**auto generated**!properties!public! !
+weight!**auto generated**!properties!public! !
+weight:!**auto generated**!properties!public! !
+!
 
 !IFontDisp class methodsFor!
 
@@ -204,6 +206,8 @@ fromFont: aFont
 		riid: IFontDisp iid
 		ppvObj: answer.
 	^answer! !
-!IFontDisp class categoriesFor: #clsid!**auto generated**!constants!private! !
-!IFontDisp class categoriesFor: #fromFont:!instance creation!public! !
+!IFontDisp class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+fromFont:!instance creation!public! !
+!
 

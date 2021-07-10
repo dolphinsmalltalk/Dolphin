@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SearchPolicy subclass: #SingletonSearchPolicy
 	instanceVariableNames: ''
@@ -20,8 +20,10 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler writePreambleFor: self! !
-!SingletonSearchPolicy categoriesFor: #name!accessing!public! !
-!SingletonSearchPolicy categoriesFor: #stbSaveOn:!binary filing!public! !
+!SingletonSearchPolicy categoriesForMethods!
+name!accessing!public! !
+stbSaveOn:!binary filing!public! !
+!
 
 !SingletonSearchPolicy class methodsFor!
 
@@ -48,8 +50,10 @@ uninitialize
 	"Private - Tidy up the receiver in preparation for removal from the system."
 
 	current := nil! !
-!SingletonSearchPolicy class categoriesFor: #current!instance creation!public! !
-!SingletonSearchPolicy class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!SingletonSearchPolicy class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!SingletonSearchPolicy class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!SingletonSearchPolicy class categoriesForMethods!
+current!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+stbReadFrom:format:!binary filing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

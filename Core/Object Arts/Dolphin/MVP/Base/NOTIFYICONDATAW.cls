@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #NOTIFYICONDATAW
 	instanceVariableNames: ''
@@ -87,18 +87,20 @@ uID: anInteger
 	"Set the receiver's 'uID' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_uID put: anInteger! !
-!NOTIFYICONDATAW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!NOTIFYICONDATAW categoriesFor: #hIcon:!**compiled accessors**!public! !
-!NOTIFYICONDATAW categoriesFor: #hWnd:!**compiled accessors**!public! !
-!NOTIFYICONDATAW categoriesFor: #icon:!accessing!public! !
-!NOTIFYICONDATAW categoriesFor: #message:!accessing!public! !
-!NOTIFYICONDATAW categoriesFor: #szTip!**compiled accessors**!public! !
-!NOTIFYICONDATAW categoriesFor: #szTip:!**compiled accessors**!public! !
-!NOTIFYICONDATAW categoriesFor: #tipText:!accessing!public! !
-!NOTIFYICONDATAW categoriesFor: #uCallbackMessage:!**compiled accessors**!public! !
-!NOTIFYICONDATAW categoriesFor: #uFlags!**compiled accessors**!public! !
-!NOTIFYICONDATAW categoriesFor: #uFlags:!**compiled accessors**!public! !
-!NOTIFYICONDATAW categoriesFor: #uID:!**compiled accessors**!public! !
+!NOTIFYICONDATAW categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+hIcon:!**compiled accessors**!public! !
+hWnd:!**compiled accessors**!public! !
+icon:!accessing!public! !
+message:!accessing!public! !
+szTip!**compiled accessors**!public! !
+szTip:!**compiled accessors**!public! !
+tipText:!accessing!public! !
+uCallbackMessage:!**compiled accessors**!public! !
+uFlags!**compiled accessors**!public! !
+uFlags:!**compiled accessors**!public! !
+uID:!**compiled accessors**!public! !
+!
 
 !NOTIFYICONDATAW class methodsFor!
 
@@ -128,6 +130,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hWnd #uID #uFlags #uCallbackMessage #hIcon #szTip)! !
-!NOTIFYICONDATAW class categoriesFor: #defineFields!public!template definition! !
-!NOTIFYICONDATAW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NOTIFYICONDATAW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

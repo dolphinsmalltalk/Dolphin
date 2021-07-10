@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 InputState subclass: #GuiInputState
 	instanceVariableNames: ''
@@ -136,16 +136,18 @@ visibleWindows
 			| hWnd |
 			hWnd := each asParameter.
 			hWnd notNil and: [hWnd ~= hDesktop and: [(user isWindow: hWnd) and: [user isWindowVisible: hWnd]]]]! !
-!GuiInputState categoriesFor: #aboutToForkUI!idling!private! !
-!GuiInputState categoriesFor: #allTopLevelWindowHandlesDo:!enumerating!private! !
-!GuiInputState categoriesFor: #getLastInputInfo!helpers!private! !
-!GuiInputState categoriesFor: #guiStartup!operations-startup!private! !
-!GuiInputState categoriesFor: #isDolphinWindow:!private!testing! !
-!GuiInputState categoriesFor: #topLevelWindowHandlesDo:!enumerating!private! !
-!GuiInputState categoriesFor: #topLevelWindows!enumerating!public! !
-!GuiInputState categoriesFor: #topLevelWindowsInZOrder!enumerating!public! !
-!GuiInputState categoriesFor: #uiIdle!idling!private! !
-!GuiInputState categoriesFor: #uiIdle:!idling!private! !
-!GuiInputState categoriesFor: #userSessionIdleMs!idling!public! !
-!GuiInputState categoriesFor: #visibleWindows!private!testing! !
+!GuiInputState categoriesForMethods!
+aboutToForkUI!idling!private! !
+allTopLevelWindowHandlesDo:!enumerating!private! !
+getLastInputInfo!helpers!private! !
+guiStartup!operations-startup!private! !
+isDolphinWindow:!private!testing! !
+topLevelWindowHandlesDo:!enumerating!private! !
+topLevelWindows!enumerating!public! !
+topLevelWindowsInZOrder!enumerating!public! !
+uiIdle!idling!private! !
+uiIdle:!idling!private! !
+userSessionIdleMs!idling!public! !
+visibleWindows!private!testing! !
+!
 

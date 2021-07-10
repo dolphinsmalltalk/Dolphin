@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IEnumXXXX subclass: #IEnumRECT
 	instanceVariableNames: ''
@@ -19,5 +19,7 @@ elementClass
 	"Answer the class of element enumerated by the receiver."
 
 	^RECT! !
-!IEnumRECT class categoriesFor: #elementClass!constants!public! !
+!IEnumRECT class categoriesForMethods!
+elementClass!constants!public! !
+!
 

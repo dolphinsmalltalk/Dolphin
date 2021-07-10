@@ -56,73 +56,97 @@ Object subclass: #XmlDomVisitor
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitAttribute: self! !
-!IXMLDOMAttribute categoriesFor: #acceptVisitor:!public!visitor! !
+!IXMLDOMAttribute categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !IXMLDOMCDATASection methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitCDATA: self! !
-!IXMLDOMCDATASection categoriesFor: #acceptVisitor:!public!visitor! !
+!IXMLDOMCDATASection categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !IXMLDOMComment methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitComment: self! !
-!IXMLDOMComment categoriesFor: #acceptVisitor:!public!visitor! !
+!IXMLDOMComment categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !IXMLDOMDocument methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitDocument: self! !
-!IXMLDOMDocument categoriesFor: #acceptVisitor:!public!visitor! !
+!IXMLDOMDocument categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !IXMLDOMDocumentType methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitDocumentType: self! !
-!IXMLDOMDocumentType categoriesFor: #acceptVisitor:!public!visitor! !
+!IXMLDOMDocumentType categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !IXMLDOMElement methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitElement: self! !
-!IXMLDOMElement categoriesFor: #acceptVisitor:!public!visitor! !
+!IXMLDOMElement categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !IXMLDOMEntity methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitEntity: self! !
-!IXMLDOMEntity categoriesFor: #acceptVisitor:!public!visitor! !
+!IXMLDOMEntity categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !IXMLDOMEntityReference methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitEntityReference: self! !
-!IXMLDOMEntityReference categoriesFor: #acceptVisitor:!public!visitor! !
+!IXMLDOMEntityReference categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !IXMLDOMNode methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitDomNode: self! !
-!IXMLDOMNode categoriesFor: #acceptVisitor:!public!visitor! !
+!IXMLDOMNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !IXMLDOMNotation methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitNotation: self! !
-!IXMLDOMNotation categoriesFor: #acceptVisitor:!public!visitor! !
+!IXMLDOMNotation categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !IXMLDOMProcessingInstruction methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitProcessingInstruction: self! !
-!IXMLDOMProcessingInstruction categoriesFor: #acceptVisitor:!public!visitor! !
+!IXMLDOMProcessingInstruction categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 !IXMLDOMText methodsFor!
 
 acceptVisitor: anXmlNodeVisitor
 	anXmlNodeVisitor visitText: self! !
-!IXMLDOMText categoriesFor: #acceptVisitor:!public!visitor! !
+!IXMLDOMText categoriesForMethods!
+acceptVisitor:!public!visitor! !
+!
 
 "End of package definition"!
 

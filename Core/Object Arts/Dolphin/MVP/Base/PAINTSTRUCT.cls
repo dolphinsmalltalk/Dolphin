@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #PAINTSTRUCT
 	instanceVariableNames: ''
@@ -25,8 +25,10 @@ rcPaint
 	"Answer the <RECT> value of the receiver's 'rcPaint' field."
 
 	^RECT fromAddress: bytes yourAddress + _OffsetOf_rcPaint! !
-!PAINTSTRUCT categoriesFor: #fErase!**compiled accessors**!public! !
-!PAINTSTRUCT categoriesFor: #rcPaint!**compiled accessors**!public! !
+!PAINTSTRUCT categoriesForMethods!
+fErase!**compiled accessors**!public! !
+rcPaint!**compiled accessors**!public! !
+!
 
 !PAINTSTRUCT class methodsFor!
 
@@ -46,6 +48,8 @@ defineFields
 
 getFieldNames
 	^#(#hdc #fErase #rcPaint)! !
-!PAINTSTRUCT class categoriesFor: #defineFields!public!template definition! !
-!PAINTSTRUCT class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!PAINTSTRUCT class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IniFileAbstract subclass: #IniFile
 	instanceVariableNames: ''
@@ -100,11 +100,13 @@ removeKey: aString ifAbsent: aNiladicValuable
 		writePrivateProfileSection: key
 		lpString: nil
 		lpFileName: filename) ifTrue: [value] ifFalse: [Win32Error signal]! !
-!IniFile categoriesFor: #at:ifAbsent:!accessing!public! !
-!IniFile categoriesFor: #at:put:!adding!public! !
-!IniFile categoriesFor: #getValue:!accessing!private! !
-!IniFile categoriesFor: #hasSectionNamed:!accessing!private! !
-!IniFile categoriesFor: #includesKey:!accessing!public! !
-!IniFile categoriesFor: #keysDo:!enumerating!public! !
-!IniFile categoriesFor: #removeKey:ifAbsent:!public!removing! !
+!IniFile categoriesForMethods!
+at:ifAbsent:!accessing!public! !
+at:put:!adding!public! !
+getValue:!accessing!private! !
+hasSectionNamed:!accessing!private! !
+includesKey:!accessing!public! !
+keysDo:!enumerating!public! !
+removeKey:ifAbsent:!public!removing! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #StVariable
 	instanceVariableNames: 'scope reads writes'
@@ -101,20 +101,22 @@ writes
 	the variable described by the receiver."
 
 	^writes ?? #()! !
-!StVariable categoriesFor: #addAssignment:fromScope:!public! !
-!StVariable categoriesFor: #addRead:fromScope:!public! !
-!StVariable categoriesFor: #isArgument!public!testing! !
-!StVariable categoriesFor: #isConstant!public!testing! !
-!StVariable categoriesFor: #isInstanceVariable!public!testing! !
-!StVariable categoriesFor: #isLocalVariable!public!testing! !
-!StVariable categoriesFor: #isRead!public!testing! !
-!StVariable categoriesFor: #isStaticVariable!public!testing! !
-!StVariable categoriesFor: #isTempVariable!public!testing! !
-!StVariable categoriesFor: #isWritten!public!testing! !
-!StVariable categoriesFor: #name!accessing!public! !
-!StVariable categoriesFor: #printOn:!public! !
-!StVariable categoriesFor: #reads!accessing!public! !
-!StVariable categoriesFor: #scope!accessing!public! !
-!StVariable categoriesFor: #scope:!accessing!public! !
-!StVariable categoriesFor: #writes!accessing!public! !
+!StVariable categoriesForMethods!
+addAssignment:fromScope:!public! !
+addRead:fromScope:!public! !
+isArgument!public!testing! !
+isConstant!public!testing! !
+isInstanceVariable!public!testing! !
+isLocalVariable!public!testing! !
+isRead!public!testing! !
+isStaticVariable!public!testing! !
+isTempVariable!public!testing! !
+isWritten!public!testing! !
+name!accessing!public! !
+printOn:!public! !
+reads!accessing!public! !
+scope!accessing!public! !
+scope:!accessing!public! !
+writes!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinSureCertificate subclass: #MyOwnCertificate
 	instanceVariableNames: ''
@@ -36,9 +36,11 @@ purpose
 	"Answers the purpose of this certificate"
 
 	^'This certificate ensures that the content is from a known individual and guarantees that it has not been modified since it was originally created.'! !
-!MyOwnCertificate categoriesFor: #backgroundImageFile!constants!private! !
-!MyOwnCertificate categoriesFor: #imageAttributes!drawing!helpers!private! !
-!MyOwnCertificate categoriesFor: #purpose!accessing!public! !
+!MyOwnCertificate categoriesForMethods!
+backgroundImageFile!constants!private! !
+imageAttributes!drawing!helpers!private! !
+purpose!accessing!public! !
+!
 
 !MyOwnCertificate class methodsFor!
 
@@ -136,9 +138,11 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^1! !
-!MyOwnCertificate class categoriesFor: #info:!instance creation!public! !
-!MyOwnCertificate class categoriesFor: #info:authority:authorityPrivateKey:!instance creation!public! !
-!MyOwnCertificate class categoriesFor: #rootCertificateClass!instance creation!public! !
-!MyOwnCertificate class categoriesFor: #serial:owner:details:!operations!public! !
-!MyOwnCertificate class categoriesFor: #validYears!constants!private! !
+!MyOwnCertificate class categoriesForMethods!
+info:!instance creation!public! !
+info:authority:authorityPrivateKey:!instance creation!public! !
+rootCertificateClass!instance creation!public! !
+serial:owner:details:!operations!public! !
+validYears!constants!private! !
+!
 

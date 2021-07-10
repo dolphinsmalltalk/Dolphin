@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusBrush subclass: #GdiplusSolidBrush
 	instanceVariableNames: ''
@@ -21,8 +21,10 @@ color: aColor
 	| status |
 	(status := GdiplusLibrary default gdipSetSolidFillColor: self asParameter color: aColor argbCode)
 		== Ok ifFalse: [GdiplusError signal: 'GdipSetSolidFillColor failed' with: status]! !
-!GdiplusSolidBrush categoriesFor: #color!accessing!public! !
-!GdiplusSolidBrush categoriesFor: #color:!accessing!public! !
+!GdiplusSolidBrush categoriesForMethods!
+color!accessing!public! !
+color:!accessing!public! !
+!
 
 !GdiplusSolidBrush class methodsFor!
 
@@ -85,12 +87,14 @@ new
 
 red
 	^self color: Color red! !
-!GdiplusSolidBrush class categoriesFor: #black!instance creation!public! !
-!GdiplusSolidBrush class categoriesFor: #blue!instance creation!public! !
-!GdiplusSolidBrush class categoriesFor: #color:!instance creation!public! !
-!GdiplusSolidBrush class categoriesFor: #exampleGdipDropShadow!examples!public!sunit! !
-!GdiplusSolidBrush class categoriesFor: #exampleGdipSBFillAShape!examples!public!sunit! !
-!GdiplusSolidBrush class categoriesFor: #green!instance creation!public! !
-!GdiplusSolidBrush class categoriesFor: #new!instance creation!public! !
-!GdiplusSolidBrush class categoriesFor: #red!instance creation!public! !
+!GdiplusSolidBrush class categoriesForMethods!
+black!instance creation!public! !
+blue!instance creation!public! !
+color:!instance creation!public! !
+exampleGdipDropShadow!examples!public!sunit! !
+exampleGdipSBFillAShape!examples!public!sunit! !
+green!instance creation!public! !
+new!instance creation!public! !
+red!instance creation!public! !
+!
 

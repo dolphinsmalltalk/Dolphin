@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BOOLField subclass: #BOOLEANField
 	instanceVariableNames: ''
@@ -26,9 +26,11 @@ writeInto: anExternalStructure value: aBoolean
 	integer byte value 1 for true, or 0 for false."
 
 	anExternalStructure bytes byteAtOffset: offset put: aBoolean asParameter! !
-!BOOLEANField categoriesFor: #accessorMessage!automatic generation!private! !
-!BOOLEANField categoriesFor: #readFrom:!indirect accessing!private! !
-!BOOLEANField categoriesFor: #writeInto:value:!indirect accessing!private! !
+!BOOLEANField categoriesForMethods!
+accessorMessage!automatic generation!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 
 !BOOLEANField class methodsFor!
 
@@ -36,5 +38,7 @@ byteSize
 	"Private - Answer the size of the field type the receiver represents in bytes."
 
 	^1! !
-!BOOLEANField class categoriesFor: #byteSize!constants!private! !
+!BOOLEANField class categoriesForMethods!
+byteSize!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DTDEntityDeclaration subclass: #DTDParameterEntityDeclaration
 	instanceVariableNames: ''
@@ -19,9 +19,11 @@ notRecognized
 
 registerIn: aParser
 	aParser parameterEntity: self name put: self! !
-!DTDParameterEntityDeclaration categoriesFor: #includePE!behaviors!public! !
-!DTDParameterEntityDeclaration categoriesFor: #notRecognized!behaviors!public! !
-!DTDParameterEntityDeclaration categoriesFor: #registerIn:!invocation!public! !
+!DTDParameterEntityDeclaration categoriesForMethods!
+includePE!behaviors!public! !
+notRecognized!behaviors!public! !
+registerIn:!invocation!public! !
+!
 
 !DTDParameterEntityDeclaration class methodsFor!
 
@@ -40,6 +42,8 @@ initialize
 
 leadIn
 	^'%'! !
-!DTDParameterEntityDeclaration class categoriesFor: #initialize!class initialization!public! !
-!DTDParameterEntityDeclaration class categoriesFor: #leadIn!accessing!public! !
+!DTDParameterEntityDeclaration class categoriesForMethods!
+initialize!class initialization!public! !
+leadIn!accessing!public! !
+!
 

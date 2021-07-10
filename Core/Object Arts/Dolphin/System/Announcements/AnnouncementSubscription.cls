@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #AnnouncementSubscription
 	instanceVariableNames: 'announcer announcementClass subscriber action'
@@ -66,17 +66,19 @@ valuable: aValuable
 	"Used when subscriber should be extracted from valuable object"
 	self action:  aValuable.
 	self subscriber: aValuable announcementSubscriber.! !
-!AnnouncementSubscription categoriesFor: #action!accessing!public! !
-!AnnouncementSubscription categoriesFor: #action:!accessing!public! !
-!AnnouncementSubscription categoriesFor: #announcementClass!accessing!public! !
-!AnnouncementSubscription categoriesFor: #announcementClass:!accessing!public! !
-!AnnouncementSubscription categoriesFor: #announcer!accessing!public! !
-!AnnouncementSubscription categoriesFor: #announcer:!accessing!public! !
-!AnnouncementSubscription categoriesFor: #deliver:!announcing!public! !
-!AnnouncementSubscription categoriesFor: #handlesAnnouncement:!public!testing! !
-!AnnouncementSubscription categoriesFor: #makeStrong!converting!public! !
-!AnnouncementSubscription categoriesFor: #makeWeak!converting!public! !
-!AnnouncementSubscription categoriesFor: #subscriber!accessing!public! !
-!AnnouncementSubscription categoriesFor: #subscriber:!accessing!public! !
-!AnnouncementSubscription categoriesFor: #valuable:!accessing!public! !
+!AnnouncementSubscription categoriesForMethods!
+action!accessing!public! !
+action:!accessing!public! !
+announcementClass!accessing!public! !
+announcementClass:!accessing!public! !
+announcer!accessing!public! !
+announcer:!accessing!public! !
+deliver:!announcing!public! !
+handlesAnnouncement:!public!testing! !
+makeStrong!converting!public! !
+makeWeak!converting!public! !
+subscriber!accessing!public! !
+subscriber:!accessing!public! !
+valuable:!accessing!public! !
+!
 

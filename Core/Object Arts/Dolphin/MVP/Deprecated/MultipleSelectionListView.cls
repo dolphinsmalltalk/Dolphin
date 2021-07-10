@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ListView subclass: #MultipleSelectionListView
 	instanceVariableNames: ''
@@ -50,14 +50,16 @@ selectionOrNil
 	"Legacy behaviour"
 
 	^self selectionIfNone: [#()]! !
-!MultipleSelectionListView categoriesFor: #defaultWindowStyle!constants!private! !
-!MultipleSelectionListView categoriesFor: #isMultiSelect:!public!testing! !
-!MultipleSelectionListView categoriesFor: #selection!public!selection! !
-!MultipleSelectionListView categoriesFor: #selection:ifAbsent:!public!selection! !
-!MultipleSelectionListView categoriesFor: #selectionByIndex!public!selection! !
-!MultipleSelectionListView categoriesFor: #selectionByIndex:ifAbsent:!public!selection! !
-!MultipleSelectionListView categoriesFor: #selectionIfNone:!public!selection! !
-!MultipleSelectionListView categoriesFor: #selectionOrNil!public!selection! !
+!MultipleSelectionListView categoriesForMethods!
+defaultWindowStyle!constants!private! !
+isMultiSelect:!public!testing! !
+selection!public!selection! !
+selection:ifAbsent:!public!selection! !
+selectionByIndex!public!selection! !
+selectionByIndex:ifAbsent:!public!selection! !
+selectionIfNone:!public!selection! !
+selectionOrNil!public!selection! !
+!
 
 !MultipleSelectionListView class methodsFor!
 
@@ -73,6 +75,8 @@ publishedAspectsOfInstances
 	aspects := super publishedAspectsOfInstances.
 	(aspects at: #isMultiSelect) beReadOnly.
 	^aspects! !
-!MultipleSelectionListView class categoriesFor: #icon!constants!public! !
-!MultipleSelectionListView class categoriesFor: #publishedAspectsOfInstances!constants!development!public! !
+!MultipleSelectionListView class categoriesForMethods!
+icon!constants!public! !
+publishedAspectsOfInstances!constants!development!public! !
+!
 

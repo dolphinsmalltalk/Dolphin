@@ -85,7 +85,9 @@ oleRegGetUserType: clsid dwFormOfType: dwFormOfType pszUserType: pszUserType
 
 	<stdcall: sdword OleRegGetUserType guid* dword lpwstr*>
 	^self invalidCall: _failureCode! !
-!OLELibrary categoriesFor: #oleRegGetUserType:dwFormOfType:pszUserType:!OLE Functions-OLE!public! !
+!OLELibrary categoriesForMethods!
+oleRegGetUserType:dwFormOfType:pszUserType:!OLE Functions-OLE!public! !
+!
 
 "End of package definition"!
 

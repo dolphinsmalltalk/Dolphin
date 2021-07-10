@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Refactoring subclass: #MethodRefactoring
 	instanceVariableNames: 'class'
@@ -29,6 +29,8 @@ buildSelectorString: aSelector withPermuteMap: anIntegerCollection
 				nextPutAll: i printString;
 				nextPut: $ ].
 	^stream contents! !
-!MethodRefactoring categoriesFor: #buildSelectorString:!private! !
-!MethodRefactoring categoriesFor: #buildSelectorString:withPermuteMap:!private! !
+!MethodRefactoring categoriesForMethods!
+buildSelectorString:!private! !
+buildSelectorString:withPermuteMap:!private! !
+!
 

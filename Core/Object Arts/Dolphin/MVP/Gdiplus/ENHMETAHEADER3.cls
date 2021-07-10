@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #ENHMETAHEADER3
 	instanceVariableNames: ''
@@ -216,36 +216,38 @@ szlMillimeters: aSIZE
 		from: ##(_OffsetOf_szlMillimeters + 1)
 		to: ##(_OffsetOf_szlMillimeters + SIZE basicByteSize)
 		startingAt: 1! !
-!ENHMETAHEADER3 categoriesFor: #dSignature!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #dSignature:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #iType!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #iType:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nBytes!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nBytes:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nDescription!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nDescription:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nHandles!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nHandles:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nPalEntries!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nPalEntries:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nRecords!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nRecords:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nSize!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nSize:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nVersion!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #nVersion:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #offDescription!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #offDescription:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #rclBounds!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #rclFrame!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #rclFrame:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #sReserved!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #sReserved:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #szlDevice!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #szlDevice:!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #szlMillimeters!**compiled accessors**!public! !
-!ENHMETAHEADER3 categoriesFor: #szlMillimeters:!**compiled accessors**!public! !
+!ENHMETAHEADER3 categoriesForMethods!
+dSignature!**compiled accessors**!public! !
+dSignature:!**compiled accessors**!public! !
+iType!**compiled accessors**!public! !
+iType:!**compiled accessors**!public! !
+nBytes!**compiled accessors**!public! !
+nBytes:!**compiled accessors**!public! !
+nDescription!**compiled accessors**!public! !
+nDescription:!**compiled accessors**!public! !
+nHandles!**compiled accessors**!public! !
+nHandles:!**compiled accessors**!public! !
+nPalEntries!**compiled accessors**!public! !
+nPalEntries:!**compiled accessors**!public! !
+nRecords!**compiled accessors**!public! !
+nRecords:!**compiled accessors**!public! !
+nSize!**compiled accessors**!public! !
+nSize:!**compiled accessors**!public! !
+nVersion!**compiled accessors**!public! !
+nVersion:!**compiled accessors**!public! !
+offDescription!**compiled accessors**!public! !
+offDescription:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+rclFrame!**compiled accessors**!public! !
+rclFrame:!**compiled accessors**!public! !
+sReserved!**compiled accessors**!public! !
+sReserved:!**compiled accessors**!public! !
+szlDevice!**compiled accessors**!public! !
+szlDevice:!**compiled accessors**!public! !
+szlMillimeters!**compiled accessors**!public! !
+szlMillimeters:!**compiled accessors**!public! !
+!
 
 !ENHMETAHEADER3 class methodsFor!
 
@@ -293,6 +295,8 @@ defineFields
 
 getFieldNames
 	^#(#iType #nSize #rclBounds #rclFrame #dSignature #nVersion #nBytes #nRecords #nHandles #sReserved #nDescription #offDescription #nPalEntries #szlDevice #szlMillimeters)! !
-!ENHMETAHEADER3 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!ENHMETAHEADER3 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!ENHMETAHEADER3 class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IOleClientSite
 	instanceVariableNames: ''
@@ -30,5 +30,7 @@ defineFunctions
 			argumentTypes: 'bool';
 		defineFunction: #RequestNewObjectLayout
 ! !
-!IOleClientSite class categoriesFor: #defineFunctions!initializing!public! !
+!IOleClientSite class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

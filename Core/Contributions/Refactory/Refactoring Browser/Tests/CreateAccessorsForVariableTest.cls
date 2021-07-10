@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #CreateAccessorsForVariableTest
 	instanceVariableNames: ''
@@ -65,9 +65,11 @@ testNonExistantName
 					variable: 'foo'
 					class: BasicLintRuleTest
 					classVariable: true)! !
-!CreateAccessorsForVariableTest categoriesFor: #setUp!public!set up! !
-!CreateAccessorsForVariableTest categoriesFor: #testExistingInstanceVariableAccessors!public!tests! !
-!CreateAccessorsForVariableTest categoriesFor: #testNewClassVariableAccessors!public!tests! !
-!CreateAccessorsForVariableTest categoriesFor: #testNewInstanceVariableAccessors!public!tests! !
-!CreateAccessorsForVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
+!CreateAccessorsForVariableTest categoriesForMethods!
+setUp!public!set up! !
+testExistingInstanceVariableAccessors!public!tests! !
+testNewClassVariableAccessors!public!tests! !
+testNewInstanceVariableAccessors!public!tests! !
+testNonExistantName!failure tests!public! !
+!
 

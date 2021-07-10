@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_CCS_QUERY
 	instanceVariableNames: ''
@@ -50,10 +50,12 @@ KeyDesc: aSOCKADDR_STORAGE
 		from: ##(_OffsetOf_KeyDesc + 1)
 		to: ##(_OffsetOf_KeyDesc + SOCKADDR_STORAGE basicByteSize)
 		startingAt: 1! !
-!HTTP_SERVICE_CONFIG_SSL_CCS_QUERY categoriesFor: #dwToken!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_CCS_QUERY categoriesFor: #dwToken:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_CCS_QUERY categoriesFor: #KeyDesc!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_CCS_QUERY categoriesFor: #KeyDesc:!**compiled accessors**!public! !
+!HTTP_SERVICE_CONFIG_SSL_CCS_QUERY categoriesForMethods!
+dwToken!**compiled accessors**!public! !
+dwToken:!**compiled accessors**!public! !
+KeyDesc!**compiled accessors**!public! !
+KeyDesc:!**compiled accessors**!public! !
+!
 
 !HTTP_SERVICE_CONFIG_SSL_CCS_QUERY class methodsFor!
 
@@ -78,6 +80,8 @@ defineFields
 
 getFieldNames
 	^#(#QueryDesc #KeyDesc #dwToken)! !
-!HTTP_SERVICE_CONFIG_SSL_CCS_QUERY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVICE_CONFIG_SSL_CCS_QUERY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_SERVICE_CONFIG_SSL_CCS_QUERY class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #SubscriptionRegistry
 	instanceVariableNames: 'subscriptions monitor'
@@ -102,24 +102,28 @@ subscriptionsOf: aSubscriber do: aBlock
 			subscription subscriber == aSubscriber 
 				ifTrue: [ aBlock value: subscription ]	]
 ! !
-!SubscriptionRegistry categoriesFor: #add:!add/remove!public! !
-!SubscriptionRegistry categoriesFor: #deliver:!announcing!public! !
-!SubscriptionRegistry categoriesFor: #deliver:to:!private! !
-!SubscriptionRegistry categoriesFor: #deliver:to:startingAt:!private! !
-!SubscriptionRegistry categoriesFor: #glmSubscriptions!public! !
-!SubscriptionRegistry categoriesFor: #initialize!initialization!public! !
-!SubscriptionRegistry categoriesFor: #numberOfSubscriptions!accessing!public! !
-!SubscriptionRegistry categoriesFor: #protected:!private! !
-!SubscriptionRegistry categoriesFor: #remove:!add/remove!public! !
-!SubscriptionRegistry categoriesFor: #removeSubscriber:!add/remove!public! !
-!SubscriptionRegistry categoriesFor: #replace:with:!add/remove!public! !
-!SubscriptionRegistry categoriesFor: #reset!initialize/release!public! !
-!SubscriptionRegistry categoriesFor: #subscriptionsHandling:!accessing!public! !
-!SubscriptionRegistry categoriesFor: #subscriptionsOf:do:!iterating!public! !
+!SubscriptionRegistry categoriesForMethods!
+add:!add/remove!public! !
+deliver:!announcing!public! !
+deliver:to:!private! !
+deliver:to:startingAt:!private! !
+glmSubscriptions!public! !
+initialize!initialization!public! !
+numberOfSubscriptions!accessing!public! !
+protected:!private! !
+remove:!add/remove!public! !
+removeSubscriber:!add/remove!public! !
+replace:with:!add/remove!public! !
+reset!initialize/release!public! !
+subscriptionsHandling:!accessing!public! !
+subscriptionsOf:do:!iterating!public! !
+!
 
 !SubscriptionRegistry class methodsFor!
 
 new	
 	^super new initialize! !
-!SubscriptionRegistry class categoriesFor: #new!public! !
+!SubscriptionRegistry class categoriesForMethods!
+new!public! !
+!
 

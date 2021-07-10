@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #SECURITY_ATTRIBUTES
 	instanceVariableNames: ''
@@ -52,11 +52,13 @@ lpSecurityDescriptor: anExternalAddress
 	"Set the receiver's 'lpSecurityDescriptor' field to the value of the argument, anExternalAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_lpSecurityDescriptor put: anExternalAddress! !
-!SECURITY_ATTRIBUTES categoriesFor: #bInheritHandle!**compiled accessors**!public! !
-!SECURITY_ATTRIBUTES categoriesFor: #bInheritHandle:!**compiled accessors**!public! !
-!SECURITY_ATTRIBUTES categoriesFor: #dwSize:!**compiled accessors**!public! !
-!SECURITY_ATTRIBUTES categoriesFor: #lpSecurityDescriptor!**compiled accessors**!public! !
-!SECURITY_ATTRIBUTES categoriesFor: #lpSecurityDescriptor:!**compiled accessors**!public! !
+!SECURITY_ATTRIBUTES categoriesForMethods!
+bInheritHandle!**compiled accessors**!public! !
+bInheritHandle:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+lpSecurityDescriptor!**compiled accessors**!public! !
+lpSecurityDescriptor:!**compiled accessors**!public! !
+!
 
 !SECURITY_ATTRIBUTES class methodsFor!
 
@@ -80,6 +82,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #lpSecurityDescriptor #bInheritHandle)! !
-!SECURITY_ATTRIBUTES class categoriesFor: #defineFields!public!template definition! !
-!SECURITY_ATTRIBUTES class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!SECURITY_ATTRIBUTES class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

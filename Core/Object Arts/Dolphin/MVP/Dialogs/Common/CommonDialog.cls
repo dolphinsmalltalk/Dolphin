@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueDialog subclass: #CommonDialog
 	instanceVariableNames: 'winStruct hook'
@@ -143,20 +143,22 @@ wmInitDialog: message wParam: wParam lParam: lParam
 
 	self caption ifNotNil: [:text | self view caption: text].
 	^1! !
-!CommonDialog categoriesFor: #attachHandle:!private!realizing/unrealizing! !
-!CommonDialog categoriesFor: #basicShowModal!private!realizing/unrealizing! !
-!CommonDialog categoriesFor: #checkError!helpers!private! !
-!CommonDialog categoriesFor: #createHook!helpers!private! !
-!CommonDialog categoriesFor: #extractResult:!helpers!private! !
-!CommonDialog categoriesFor: #initialize!accessing!initializing!private! !
-!CommonDialog categoriesFor: #ownerView:!accessing!private! !
-!CommonDialog categoriesFor: #prepareStruct!helpers!private! !
-!CommonDialog categoriesFor: #setViewIcon:!operations!public! !
-!CommonDialog categoriesFor: #showModal!public!realizing/unrealizing! !
-!CommonDialog categoriesFor: #updateIcon!private!updating! !
-!CommonDialog categoriesFor: #winStruct!accessing!private! !
-!CommonDialog categoriesFor: #winStructClass!constants!private! !
-!CommonDialog categoriesFor: #wmInitDialog:wParam:lParam:!event handling-win32!private! !
+!CommonDialog categoriesForMethods!
+attachHandle:!private!realizing/unrealizing! !
+basicShowModal!private!realizing/unrealizing! !
+checkError!helpers!private! !
+createHook!helpers!private! !
+extractResult:!helpers!private! !
+initialize!accessing!initializing!private! !
+ownerView:!accessing!private! !
+prepareStruct!helpers!private! !
+setViewIcon:!operations!public! !
+showModal!public!realizing/unrealizing! !
+updateIcon!private!updating! !
+winStruct!accessing!private! !
+winStructClass!constants!private! !
+wmInitDialog:wParam:lParam:!event handling-win32!private! !
+!
 
 !CommonDialog class methodsFor!
 
@@ -198,11 +200,13 @@ showModalOn: aModel
 	Answers the result of dialog if confirmed or nil otherwise"
 
 	^(self on: aModel) showModal! !
-!CommonDialog class categoriesFor: #defaultView!constants!public! !
-!CommonDialog class categoriesFor: #hookHandlers!accessing!private! !
-!CommonDialog class categoriesFor: #initializeDefaultHooks!initializing!must not strip!private! !
-!CommonDialog class categoriesFor: #showModal!instance creation!public! !
-!CommonDialog class categoriesFor: #showModal:!instance creation!private! !
-!CommonDialog class categoriesFor: #showModal:on:!instance creation!private! !
-!CommonDialog class categoriesFor: #showModalOn:!instance creation!public! !
+!CommonDialog class categoriesForMethods!
+defaultView!constants!public! !
+hookHandlers!accessing!private! !
+initializeDefaultHooks!initializing!must not strip!private! !
+showModal!instance creation!public! !
+showModal:!instance creation!private! !
+showModal:on:!instance creation!private! !
+showModalOn:!instance creation!public! !
+!
 

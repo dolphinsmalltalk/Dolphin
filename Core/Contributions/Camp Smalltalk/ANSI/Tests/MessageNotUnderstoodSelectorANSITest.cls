@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #MessageNotUnderstoodSelectorANSITest
 	instanceVariableNames: ''
@@ -35,8 +35,10 @@ testXhandlesX
 					mnu return: (Error handles: mnu) ] ]
 		should: [:r | r]
 		conformTo: #'MessageNotUnderstoodSelector' selector: #'handles:'.! !
-!MessageNotUnderstoodSelectorANSITest categoriesFor: #canonicalObject!public! !
-!MessageNotUnderstoodSelectorANSITest categoriesFor: #protocol!public! !
-!MessageNotUnderstoodSelectorANSITest categoriesFor: #testXconcatenateOp!public! !
-!MessageNotUnderstoodSelectorANSITest categoriesFor: #testXhandlesX!public! !
+!MessageNotUnderstoodSelectorANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXconcatenateOp!public! !
+testXhandlesX!public! !
+!
 

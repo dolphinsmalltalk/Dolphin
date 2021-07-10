@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Message
 	instanceVariableNames: 'selector args'
@@ -133,24 +133,26 @@ valueWithArguments: argArray
 	"Evaluate the receiver with an <Array> of arguments in argArray"
 
 	^self forwardTo: argArray first withArguments: (argArray copyFrom: 2)! !
-!Message categoriesFor: #=!comparing!public! !
-!Message categoriesFor: #argumentCount!accessing!public! !
-!Message categoriesFor: #arguments!accessing!public! !
-!Message categoriesFor: #arguments:!accessing!public! !
-!Message categoriesFor: #asSymbol!converting!public! !
-!Message categoriesFor: #forwardTo:!operations!public! !
-!Message categoriesFor: #forwardTo:with:!operations!private! !
-!Message categoriesFor: #forwardTo:withArguments:!operations!private! !
-!Message categoriesFor: #hash!comparing!public! !
-!Message categoriesFor: #messages!enquiries!public! !
-!Message categoriesFor: #numArgs!accessing!public! !
-!Message categoriesFor: #printOn:!printing!public! !
-!Message categoriesFor: #selector!accessing!public! !
-!Message categoriesFor: #selector:!accessing!public! !
-!Message categoriesFor: #setSelector:arguments:!accessing!private! !
-!Message categoriesFor: #value:!evaluating!public! !
-!Message categoriesFor: #value:value:!evaluating!public! !
-!Message categoriesFor: #valueWithArguments:!evaluating!public! !
+!Message categoriesForMethods!
+=!comparing!public! !
+argumentCount!accessing!public! !
+arguments!accessing!public! !
+arguments:!accessing!public! !
+asSymbol!converting!public! !
+forwardTo:!operations!public! !
+forwardTo:with:!operations!private! !
+forwardTo:withArguments:!operations!private! !
+hash!comparing!public! !
+messages!enquiries!public! !
+numArgs!accessing!public! !
+printOn:!printing!public! !
+selector!accessing!public! !
+selector:!accessing!public! !
+setSelector:arguments:!accessing!private! !
+value:!evaluating!public! !
+value:value:!evaluating!public! !
+valueWithArguments:!evaluating!public! !
+!
 
 Message methodProtocol: #commandMessage attributes: #(#readOnly) selectors: #(#asSymbol #forwardTo:)!
 Message methodProtocol: #dyadicValuable attributes: #(#readOnly) selectors: #(#argumentCount #value:value: #valueWithArguments:)!
@@ -177,7 +179,9 @@ selector: aSymbol arguments: anArray
 
 	<primitive: 157>
 	^self new setSelector: aSymbol arguments: anArray! !
-!Message class categoriesFor: #selector:!instance creation!public! !
-!Message class categoriesFor: #selector:argument:!instance creation!public! !
-!Message class categoriesFor: #selector:arguments:!instance creation!public! !
+!Message class categoriesForMethods!
+selector:!instance creation!public! !
+selector:argument:!instance creation!public! !
+selector:arguments:!instance creation!public! !
+!
 

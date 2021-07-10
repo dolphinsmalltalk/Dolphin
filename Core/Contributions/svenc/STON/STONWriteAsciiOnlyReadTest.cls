@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STONWriteReadTest subclass: #STONWriteAsciiOnlyReadTest
 	instanceVariableNames: ''
@@ -23,6 +23,8 @@ serializeJson: anObject
 			on: stream; 
 			asciiOnly: true;
 			nextPut: anObject ]! !
-!STONWriteAsciiOnlyReadTest categoriesFor: #serialize:!private! !
-!STONWriteAsciiOnlyReadTest categoriesFor: #serializeJson:!private! !
+!STONWriteAsciiOnlyReadTest categoriesForMethods!
+serialize:!private! !
+serializeJson:!private! !
+!
 

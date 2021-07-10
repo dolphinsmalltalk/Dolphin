@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OrderedCollection variableSubclass: #SortedCollection
 	instanceVariableNames: 'algorithm'
@@ -326,39 +326,41 @@ stbSaveOn: anSTBOutFiler
 	super stbSaveOn: anSTBOutFiler
 
 	! !
-!SortedCollection categoriesFor: #,!copying!public! !
-!SortedCollection categoriesFor: #add:!adding!public! !
-!SortedCollection categoriesFor: #add:afterIndex:!adding!public! !
-!SortedCollection categoriesFor: #add:beforeIndex:!adding!public! !
-!SortedCollection categoriesFor: #addAll:!adding!public! !
-!SortedCollection categoriesFor: #addAllFirst:!adding!public! !
-!SortedCollection categoriesFor: #addAllLast:!adding!public! !
-!SortedCollection categoriesFor: #addAllWithoutSorting:!adding!public! !
-!SortedCollection categoriesFor: #addAnsweringIndex:!adding!public! !
-!SortedCollection categoriesFor: #addFirst:!adding!public! !
-!SortedCollection categoriesFor: #addLast:!adding!public! !
-!SortedCollection categoriesFor: #algorithm!accessing!non browsable!public! !
-!SortedCollection categoriesFor: #algorithm:!accessing!operations!public! !
-!SortedCollection categoriesFor: #anyIndexOf:!public!searching! !
-!SortedCollection categoriesFor: #asOrderedCollection!converting!public! !
-!SortedCollection categoriesFor: #asSortedCollection!converting!public! !
-!SortedCollection categoriesFor: #at:put:!accessing!public! !
-!SortedCollection categoriesFor: #binaryIncludes:!adding!public! !
-!SortedCollection categoriesFor: #collect:!enumerating!public! !
-!SortedCollection categoriesFor: #copyEmpty:!copying!private! !
-!SortedCollection categoriesFor: #copyFrom:to:!copying!public! !
-!SortedCollection categoriesFor: #copyLikeOfSize:!copying!private! !
-!SortedCollection categoriesFor: #indexForInserting:!adding!private! !
-!SortedCollection categoriesFor: #replaceFrom:to:with:startingAt:!public!replacing! !
-!SortedCollection categoriesFor: #resize:!mutating!private! !
-!SortedCollection categoriesFor: #reSort!operations!public! !
-!SortedCollection categoriesFor: #reverse!copying!public! !
-!SortedCollection categoriesFor: #select:!enumerating!public! !
-!SortedCollection categoriesFor: #setSortAlgorithm:!initializing!private! !
-!SortedCollection categoriesFor: #sortBlock!accessing!public! !
-!SortedCollection categoriesFor: #sortBlock:!accessing!operations!public! !
-!SortedCollection categoriesFor: #sortFrom:to:!algorithms!private! !
-!SortedCollection categoriesFor: #stbSaveOn:!binary filing!public! !
+!SortedCollection categoriesForMethods!
+,!copying!public! !
+add:!adding!public! !
+add:afterIndex:!adding!public! !
+add:beforeIndex:!adding!public! !
+addAll:!adding!public! !
+addAllFirst:!adding!public! !
+addAllLast:!adding!public! !
+addAllWithoutSorting:!adding!public! !
+addAnsweringIndex:!adding!public! !
+addFirst:!adding!public! !
+addLast:!adding!public! !
+algorithm!accessing!non browsable!public! !
+algorithm:!accessing!operations!public! !
+anyIndexOf:!public!searching! !
+asOrderedCollection!converting!public! !
+asSortedCollection!converting!public! !
+at:put:!accessing!public! !
+binaryIncludes:!adding!public! !
+collect:!enumerating!public! !
+copyEmpty:!copying!private! !
+copyFrom:to:!copying!public! !
+copyLikeOfSize:!copying!private! !
+indexForInserting:!adding!private! !
+replaceFrom:to:with:startingAt:!public!replacing! !
+resize:!mutating!private! !
+reSort!operations!public! !
+reverse!copying!public! !
+select:!enumerating!public! !
+setSortAlgorithm:!initializing!private! !
+sortBlock!accessing!public! !
+sortBlock:!accessing!operations!public! !
+sortFrom:to:!algorithms!private! !
+stbSaveOn:!binary filing!public! !
+!
 
 SortedCollection methodProtocol: #SortedCollection attributes: #(#ansi #readOnly) selectors: #(#, #add: #addAll: #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #remove: #remove:ifAbsent: #removeAll: #removeAtIndex: #removeFirst #removeLast #reverse #reverseDo: #select: #size #sortBlock #sortBlock: #with:do:)!
 
@@ -409,12 +411,14 @@ sortBlock: aDyadicValuable
 withNilsSortBlock
 	^[:a :b | a isNil ifTrue: [true] ifFalse: [b isNil ifTrue: [false] ifFalse: [a <= b]]]
 ! !
-!SortedCollection class categoriesFor: #caseSensitiveSortBlock!constants!public! !
-!SortedCollection class categoriesFor: #defaultSortBlock!constants!public! !
-!SortedCollection class categoriesFor: #new:!instance creation!public! !
-!SortedCollection class categoriesFor: #sortAlgorithm:!instance creation!public! !
-!SortedCollection class categoriesFor: #sortBlock:!instance creation!public! !
-!SortedCollection class categoriesFor: #withNilsSortBlock!instance creation!public! !
+!SortedCollection class categoriesForMethods!
+caseSensitiveSortBlock!constants!public! !
+defaultSortBlock!constants!public! !
+new:!instance creation!public! !
+sortAlgorithm:!instance creation!public! !
+sortBlock:!instance creation!public! !
+withNilsSortBlock!instance creation!public! !
+!
 
 SortedCollection class methodProtocol: #'SortedCollection factory' attributes: #(#ansi #readOnly) selectors: #(#new #new: #sortBlock: #with: #with:with: #with:with:with: #with:with:with:with: #withAll:)!
 

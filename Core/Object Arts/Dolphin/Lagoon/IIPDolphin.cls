@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IIPDolphin
 	instanceVariableNames: ''
@@ -26,5 +26,7 @@ defineFunctions
 		defineFunction: #OnInitialize;
 		defineFunction: #OnShutdown
 ! !
-!IIPDolphin class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IIPDolphin class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

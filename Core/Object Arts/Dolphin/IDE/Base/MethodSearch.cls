@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #MethodSearch
 	instanceVariableNames: 'findDetails regexp literal'
@@ -171,26 +171,28 @@ wildcardReferenceFilter
 	match := self wildcardMatchPattern.
 	ignoreCase := findDetails isCaseSensitive not.
 	^self literalSymbolsFilter: [:each | match match: each ignoreCase: ignoreCase]! !
-!MethodSearch categoriesFor: #findDetails!accessing!public! !
-!MethodSearch categoriesFor: #findDetails:!accessing!public! !
-!MethodSearch categoriesFor: #initialize!initializing!public! !
-!MethodSearch categoriesFor: #literal!public! !
-!MethodSearch categoriesFor: #literal:!accessing!public! !
-!MethodSearch categoriesFor: #literalDefinitionFilter!helpers!private! !
-!MethodSearch categoriesFor: #literalSymbolsFilter:!helpers!private! !
-!MethodSearch categoriesFor: #methodDefinitionFilter!helpers!private! !
-!MethodSearch categoriesFor: #methodReferenceFilter!helpers!private! !
-!MethodSearch categoriesFor: #pattern!accessing!public! !
-!MethodSearch categoriesFor: #pattern:!accessing!public! !
-!MethodSearch categoriesFor: #regexpDefinitionFilter!helpers!private! !
-!MethodSearch categoriesFor: #regexpReferenceFilter!helpers!private! !
-!MethodSearch categoriesFor: #regularExpression!accessing!private! !
-!MethodSearch categoriesFor: #searchMode!accessing!public! !
-!MethodSearch categoriesFor: #searchMode:!accessing!public! !
-!MethodSearch categoriesFor: #simpleReferenceFilter!helpers!private! !
-!MethodSearch categoriesFor: #wildcardDefinitionFilter!helpers!private! !
-!MethodSearch categoriesFor: #wildcardMatchPattern!helpers!private! !
-!MethodSearch categoriesFor: #wildcardReferenceFilter!helpers!private! !
+!MethodSearch categoriesForMethods!
+findDetails!accessing!public! !
+findDetails:!accessing!public! !
+initialize!initializing!public! !
+literal!public! !
+literal:!accessing!public! !
+literalDefinitionFilter!helpers!private! !
+literalSymbolsFilter:!helpers!private! !
+methodDefinitionFilter!helpers!private! !
+methodReferenceFilter!helpers!private! !
+pattern!accessing!public! !
+pattern:!accessing!public! !
+regexpDefinitionFilter!helpers!private! !
+regexpReferenceFilter!helpers!private! !
+regularExpression!accessing!private! !
+searchMode!accessing!public! !
+searchMode:!accessing!public! !
+simpleReferenceFilter!helpers!private! !
+wildcardDefinitionFilter!helpers!private! !
+wildcardMatchPattern!helpers!private! !
+wildcardReferenceFilter!helpers!private! !
+!
 
 !MethodSearch class methodsFor!
 
@@ -216,10 +218,12 @@ newPattern: aString
 
 newSelector: aSymbol 
 	^self newLiteral: aSymbol asSymbol! !
-!MethodSearch class categoriesFor: #initialize!initializing!public! !
-!MethodSearch class categoriesFor: #new!instance creation!public! !
-!MethodSearch class categoriesFor: #newFindDetails:!instance creation!public! !
-!MethodSearch class categoriesFor: #newLiteral:!instance creation!public! !
-!MethodSearch class categoriesFor: #newPattern:!instance creation!public! !
-!MethodSearch class categoriesFor: #newSelector:!instance creation!public! !
+!MethodSearch class categoriesForMethods!
+initialize!initializing!public! !
+new!instance creation!public! !
+newFindDetails:!instance creation!public! !
+newLiteral:!instance creation!public! !
+newPattern:!instance creation!public! !
+newSelector:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IXMLHttpRequest subclass: #IServerXMLHTTPRequest
 	instanceVariableNames: ''
@@ -130,14 +130,16 @@ WaitForResponse: timeoutInSeconds isSuccessful: isSuccessful
 
 	<virtual stdcall: hresult 23 variant varbool*>
 	^self invalidCall: _failureCode! !
-!IServerXMLHTTPRequest categoriesFor: #getOption:!**auto generated**!methods!public! !
-!IServerXMLHTTPRequest categoriesFor: #GetOption:value:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
-!IServerXMLHTTPRequest categoriesFor: #setOption:value:!**auto generated**!methods!public! !
-!IServerXMLHTTPRequest categoriesFor: #SetOption:value:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
-!IServerXMLHTTPRequest categoriesFor: #SetTimeouts:connectTimeout:sendTimeout:receiveTimeout:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!public! !
-!IServerXMLHTTPRequest categoriesFor: #waitForResponse!**auto generated**!methods!public! !
-!IServerXMLHTTPRequest categoriesFor: #waitForResponse:!**auto generated**!methods!public! !
-!IServerXMLHTTPRequest categoriesFor: #WaitForResponse:isSuccessful:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
+!IServerXMLHTTPRequest categoriesForMethods!
+getOption:!**auto generated**!methods!public! !
+GetOption:value:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
+setOption:value:!**auto generated**!methods!public! !
+SetOption:value:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
+SetTimeouts:connectTimeout:sendTimeout:receiveTimeout:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!public! !
+waitForResponse!**auto generated**!methods!public! !
+waitForResponse:!**auto generated**!methods!public! !
+WaitForResponse:isSuccessful:!**auto generated**!COM Interfaces-IServerXMLHTTPRequest!private! !
+!
 
 !IServerXMLHTTPRequest class methodsFor!
 
@@ -167,7 +169,9 @@ newServerXMLHTTP30
 
 	^self onCLSID: (CLSID fromString: '{AFB40FFD-B609-40A3-9828-F88BBE11E4E3}')
 ! !
-!IServerXMLHTTPRequest class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IServerXMLHTTPRequest class categoriesFor: #newServerXMLHTTP!**auto generated**!instance creation!public! !
-!IServerXMLHTTPRequest class categoriesFor: #newServerXMLHTTP30!**auto generated**!instance creation!public! !
+!IServerXMLHTTPRequest class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+newServerXMLHTTP!**auto generated**!instance creation!public! !
+newServerXMLHTTP30!**auto generated**!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NumberToText subclass: #IntegerToText
 	instanceVariableNames: ''
@@ -15,5 +15,7 @@ rightToLeft: aString
 	empty or nil then answer leftExceptionalValue to represent this"
 
 	^Integer fromString: aString! !
-!IntegerToText categoriesFor: #rightToLeft:!operations!public! !
+!IntegerToText categoriesForMethods!
+rightToLeft:!operations!public! !
+!
 

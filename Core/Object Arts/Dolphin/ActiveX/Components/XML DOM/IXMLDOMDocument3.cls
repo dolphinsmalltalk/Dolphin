@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IXMLDOMDocument2 subclass: #IXMLDOMDocument3
 	instanceVariableNames: ''
@@ -83,10 +83,12 @@ ValidateNode: node errorObj: errorObj
 
 	<virtual stdcall: hresult 83 IXMLDOMNode* IXMLDOMParseError**>
 	^self invalidCall: _failureCode! !
-!IXMLDOMDocument3 categoriesFor: #importNode:deep:!**auto generated**!methods!public! !
-!IXMLDOMDocument3 categoriesFor: #ImportNode:deep:clone:!**auto generated**!COM Interfaces-IXMLDOMDocument3!private! !
-!IXMLDOMDocument3 categoriesFor: #validateNode:!**auto generated**!methods!public! !
-!IXMLDOMDocument3 categoriesFor: #ValidateNode:errorObj:!**auto generated**!COM Interfaces-IXMLDOMDocument3!private! !
+!IXMLDOMDocument3 categoriesForMethods!
+importNode:deep:!**auto generated**!methods!public! !
+ImportNode:deep:clone:!**auto generated**!COM Interfaces-IXMLDOMDocument3!private! !
+validateNode:!**auto generated**!methods!public! !
+ValidateNode:errorObj:!**auto generated**!COM Interfaces-IXMLDOMDocument3!private! !
+!
 
 !IXMLDOMDocument3 class methodsFor!
 
@@ -112,7 +114,9 @@ newFreeThreadedDOMDocument60
 
 	^self onCLSID: (CLSID fromString: '{88D96A06-F192-11D4-A65F-0040963251E5}')
 ! !
-!IXMLDOMDocument3 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IXMLDOMDocument3 class categoriesFor: #newDOMDocument60!**auto generated**!instance creation!public! !
-!IXMLDOMDocument3 class categoriesFor: #newFreeThreadedDOMDocument60!**auto generated**!instance creation!public! !
+!IXMLDOMDocument3 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+newDOMDocument60!**auto generated**!instance creation!public! !
+newFreeThreadedDOMDocument60!**auto generated**!instance creation!public! !
+!
 

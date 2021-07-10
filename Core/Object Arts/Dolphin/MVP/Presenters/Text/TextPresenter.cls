@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValuePresenter subclass: #TextPresenter
 	instanceVariableNames: 'findDetails'
@@ -91,19 +91,21 @@ selectionRange: anInterval
 	
 	^self view selectionRange: anInterval
 ! !
-!TextPresenter categoriesFor: #clear!operations!public! !
-!TextPresenter categoriesFor: #dragOver:!drag & drop!public! !
-!TextPresenter categoriesFor: #drop:!drag & drop!public! !
-!TextPresenter categoriesFor: #findDetails!accessing!public! !
-!TextPresenter categoriesFor: #findDetails:!public!searching! !
-!TextPresenter categoriesFor: #hasSelection!public!selection! !
-!TextPresenter categoriesFor: #isModified!public!testing! !
-!TextPresenter categoriesFor: #isModified:!modes!public! !
-!TextPresenter categoriesFor: #isReadOnly!public!testing! !
-!TextPresenter categoriesFor: #isReadOnly:!accessing!public! !
-!TextPresenter categoriesFor: #replaceSelection:!operations!public! !
-!TextPresenter categoriesFor: #selectionRange!public!selection! !
-!TextPresenter categoriesFor: #selectionRange:!public!selection! !
+!TextPresenter categoriesForMethods!
+clear!operations!public! !
+dragOver:!drag & drop!public! !
+drop:!drag & drop!public! !
+findDetails!accessing!public! !
+findDetails:!public!searching! !
+hasSelection!public!selection! !
+isModified!public!testing! !
+isModified:!modes!public! !
+isReadOnly!public!testing! !
+isReadOnly:!accessing!public! !
+replaceSelection:!operations!public! !
+selectionRange!public!selection! !
+selectionRange:!public!selection! !
+!
 
 TextPresenter methodProtocol: #textPresenter attributes: #() selectors: #(#clear #findDetails #findDetails: #hasSelection #isModified #isModified: #replaceSelection: #selectionRange #selectionRange:)!
 
@@ -169,11 +171,13 @@ resource_Static_text
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.StaticText) 34 16 nil nil 34 2 8 1140850944 65 416 nil nil nil 7 nil nil nil 416 nil 8 1915124368 852486 ##(Smalltalk.NullConverter) nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3359 21 642 241 39 416 594 #text: 34 1 8 'Static Text' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 143 6 0 0 10 0 0 0 7 7 0 0 29 0 0 0] 8 #() 642 193 193 nil 27 )! !
-!TextPresenter class categoriesFor: #defaultModel!models!public! !
-!TextPresenter class categoriesFor: #icon!constants!public! !
-!TextPresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!TextPresenter class categoriesFor: #resource_Multiline_text!public!resources-views! !
-!TextPresenter class categoriesFor: #resource_Password_text!public!resources-views! !
-!TextPresenter class categoriesFor: #resource_Path_text!public!resources-views! !
-!TextPresenter class categoriesFor: #resource_Static_text!public!resources-views! !
+!TextPresenter class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+resource_Multiline_text!public!resources-views! !
+resource_Password_text!public!resources-views! !
+resource_Path_text!public!resources-views! !
+resource_Static_text!public!resources-views! !
+!
 

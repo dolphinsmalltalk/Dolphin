@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ContainerView subclass: #MenuComposerArena
 	instanceVariableNames: 'dragImageList dragPoint dragMenuIndex dragSource _unused'
@@ -125,15 +125,17 @@ startTrackingAt: aPoint
 	self createDragImageList.
 	dragImageList dragEnter: self at: aPoint.
 	^aPoint! !
-!MenuComposerArena categoriesFor: #beginDrag:of:in:!helpers!private! !
-!MenuComposerArena categoriesFor: #cancelTrackingAt:!private!tracking! !
-!MenuComposerArena categoriesFor: #continueTrackingAt:from:!private!tracking! !
-!MenuComposerArena categoriesFor: #createDragImageList!private!tracking! !
-!MenuComposerArena categoriesFor: #endTrackingAt:!private!tracking! !
-!MenuComposerArena categoriesFor: #hideDragCursor!modes!private! !
-!MenuComposerArena categoriesFor: #onItemIn:selectedAtIndex:!event handling!private! !
-!MenuComposerArena categoriesFor: #showDragCursor!modes!private! !
-!MenuComposerArena categoriesFor: #startTrackingAt:!private!tracking! !
+!MenuComposerArena categoriesForMethods!
+beginDrag:of:in:!helpers!private! !
+cancelTrackingAt:!private!tracking! !
+continueTrackingAt:from:!private!tracking! !
+createDragImageList!private!tracking! !
+endTrackingAt:!private!tracking! !
+hideDragCursor!modes!private! !
+onItemIn:selectedAtIndex:!event handling!private! !
+showDragCursor!modes!private! !
+startTrackingAt:!private!tracking! !
+!
 
 MenuComposerArena methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
 
@@ -154,6 +156,8 @@ publishedEventsOfInstances
 		add: #itemFrom:at:droppedBefore:copy:;
 		yourself.
 ! !
-!MenuComposerArena class categoriesFor: #icon!constants!public! !
-!MenuComposerArena class categoriesFor: #publishedEventsOfInstances!events!public! !
+!MenuComposerArena class categoriesForMethods!
+icon!constants!public! !
+publishedEventsOfInstances!events!public! !
+!
 

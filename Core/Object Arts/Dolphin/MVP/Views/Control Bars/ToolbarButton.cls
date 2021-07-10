@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ToolbarItem subclass: #ToolbarButton
 	instanceVariableNames: 'style commandDescription commandId'
@@ -241,51 +241,53 @@ validateUserInterface: route
 	query isEnabled ifTrue: [mask := mask bitOr: TBSTATE_ENABLED].
 	query isChecked ifTrue: [mask := mask bitOr: ##(TBSTATE_CHECKED|TBSTATE_PRESSED)].
 	self stateMask: mask! !
-!ToolbarButton categoriesFor: #checked!public!testing! !
-!ToolbarButton categoriesFor: #checked:!public!state! !
-!ToolbarButton categoriesFor: #command!commands!public! !
-!ToolbarButton categoriesFor: #command:!accessing!public! !
-!ToolbarButton categoriesFor: #commandDescription!accessing!public! !
-!ToolbarButton categoriesFor: #commandDescription:!accessing!public! !
-!ToolbarButton categoriesFor: #commandId!commands!private! !
-!ToolbarButton categoriesFor: #enabled!public!testing! !
-!ToolbarButton categoriesFor: #enabled:!public!state! !
-!ToolbarButton categoriesFor: #getCommandId!commands!private! !
-!ToolbarButton categoriesFor: #hide:!public!state! !
-!ToolbarButton categoriesFor: #indeterminate:!public!state! !
-!ToolbarButton categoriesFor: #initialize!initializing!private! !
-!ToolbarButton categoriesFor: #isChecked!public!testing! !
-!ToolbarButton categoriesFor: #isChecked:!public!state! !
-!ToolbarButton categoriesFor: #isCheckStyle!public!style! !
-!ToolbarButton categoriesFor: #isCheckStyle:!public!style! !
-!ToolbarButton categoriesFor: #isDropDownOnly!public!style! !
-!ToolbarButton categoriesFor: #isDropDownOnly:!public!style! !
-!ToolbarButton categoriesFor: #isDropdownStyle!public!style! !
-!ToolbarButton categoriesFor: #isDropdownStyle:!public!style! !
-!ToolbarButton categoriesFor: #isEnabled!public!testing! !
-!ToolbarButton categoriesFor: #isEnabled:!public!state! !
-!ToolbarButton categoriesFor: #isGroupStyle!public!style! !
-!ToolbarButton categoriesFor: #isGroupStyle:!public!style! !
-!ToolbarButton categoriesFor: #isHidden!public!testing! !
-!ToolbarButton categoriesFor: #isHidden:!public!state! !
-!ToolbarButton categoriesFor: #isIndeterminate!public!testing! !
-!ToolbarButton categoriesFor: #isIndeterminate:!public!state! !
-!ToolbarButton categoriesFor: #isPressed!public!testing! !
-!ToolbarButton categoriesFor: #isPressed:!public!state! !
-!ToolbarButton categoriesFor: #onTipTextRequired!event handling!public! !
-!ToolbarButton categoriesFor: #pressed!public!testing! !
-!ToolbarButton categoriesFor: #pressed:!public!state! !
-!ToolbarButton categoriesFor: #printOn:!development!printing!public! !
-!ToolbarButton categoriesFor: #rectangle!accessing!public! !
-!ToolbarButton categoriesFor: #screenRectangle!accessing!public! !
-!ToolbarButton categoriesFor: #stateMask:!public!state! !
-!ToolbarButton categoriesFor: #style!private!style! !
-!ToolbarButton categoriesFor: #style:!private!style! !
-!ToolbarButton categoriesFor: #text!accessing!public! !
-!ToolbarButton categoriesFor: #text:!accessing!public! !
-!ToolbarButton categoriesFor: #textIndexIn:!operations!private! !
-!ToolbarButton categoriesFor: #toolTipText!operations!public! !
-!ToolbarButton categoriesFor: #validateUserInterface:!operations!public! !
+!ToolbarButton categoriesForMethods!
+checked!public!testing! !
+checked:!public!state! !
+command!commands!public! !
+command:!accessing!public! !
+commandDescription!accessing!public! !
+commandDescription:!accessing!public! !
+commandId!commands!private! !
+enabled!public!testing! !
+enabled:!public!state! !
+getCommandId!commands!private! !
+hide:!public!state! !
+indeterminate:!public!state! !
+initialize!initializing!private! !
+isChecked!public!testing! !
+isChecked:!public!state! !
+isCheckStyle!public!style! !
+isCheckStyle:!public!style! !
+isDropDownOnly!public!style! !
+isDropDownOnly:!public!style! !
+isDropdownStyle!public!style! !
+isDropdownStyle:!public!style! !
+isEnabled!public!testing! !
+isEnabled:!public!state! !
+isGroupStyle!public!style! !
+isGroupStyle:!public!style! !
+isHidden!public!testing! !
+isHidden:!public!state! !
+isIndeterminate!public!testing! !
+isIndeterminate:!public!state! !
+isPressed!public!testing! !
+isPressed:!public!state! !
+onTipTextRequired!event handling!public! !
+pressed!public!testing! !
+pressed:!public!state! !
+printOn:!development!printing!public! !
+rectangle!accessing!public! !
+screenRectangle!accessing!public! !
+stateMask:!public!state! !
+style!private!style! !
+style:!private!style! !
+text!accessing!public! !
+text:!accessing!public! !
+textIndexIn:!operations!private! !
+toolTipText!operations!public! !
+validateUserInterface:!operations!public! !
+!
 
 !ToolbarButton class methodsFor!
 
@@ -616,40 +618,42 @@ undo
 		image: STD_UNDO
 		command: #undo
 		description: 'Undo'! !
-!ToolbarButton class categoriesFor: #bitmapButtonClass!constants!instance creation!public! !
-!ToolbarButton class categoriesFor: #clearSelection!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #copySelection!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #cutSelection!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #dolphinImage:command:description:!instance creation!private! !
-!ToolbarButton class categoriesFor: #dolphinToolsBitmap!instance creation!private! !
-!ToolbarButton class categoriesFor: #fileNew!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #fileOpen!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #fileSave!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #find!instance creation!public! !
-!ToolbarButton class categoriesFor: #findNext!instance creation!public! !
-!ToolbarButton class categoriesFor: #findToolsBitmap!constants!public! !
-!ToolbarButton class categoriesFor: #histImage:command:description:!instance creation-system buttons!private! !
-!ToolbarButton class categoriesFor: #historyBack!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #historyForward!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #icon!public! !
-!ToolbarButton class categoriesFor: #largeIconMode!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #listMode!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #listToolsBitmap!constants!public! !
-!ToolbarButton class categoriesFor: #newFolder!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #parentFolder!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #pasteClipboard!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #print!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #properties!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #redo!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #replace!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #reportMode!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #smallIconMode!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #sortDate!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #sortName!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #sortSize!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #sortType!instance creation-system buttons!public! !
-!ToolbarButton class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!ToolbarButton class categoriesFor: #systemBitmap:image:command:description:!instance creation-system buttons!private! !
-!ToolbarButton class categoriesFor: #systemButtonClass!constants!instance creation!public! !
-!ToolbarButton class categoriesFor: #undo!instance creation!public! !
+!ToolbarButton class categoriesForMethods!
+bitmapButtonClass!constants!instance creation!public! !
+clearSelection!instance creation-system buttons!public! !
+copySelection!instance creation-system buttons!public! !
+cutSelection!instance creation-system buttons!public! !
+dolphinImage:command:description:!instance creation!private! !
+dolphinToolsBitmap!instance creation!private! !
+fileNew!instance creation-system buttons!public! !
+fileOpen!instance creation-system buttons!public! !
+fileSave!instance creation-system buttons!public! !
+find!instance creation!public! !
+findNext!instance creation!public! !
+findToolsBitmap!constants!public! !
+histImage:command:description:!instance creation-system buttons!private! !
+historyBack!instance creation-system buttons!public! !
+historyForward!instance creation-system buttons!public! !
+icon!public! !
+largeIconMode!instance creation-system buttons!public! !
+listMode!instance creation-system buttons!public! !
+listToolsBitmap!constants!public! !
+newFolder!instance creation-system buttons!public! !
+parentFolder!instance creation-system buttons!public! !
+pasteClipboard!instance creation-system buttons!public! !
+print!instance creation-system buttons!public! !
+properties!instance creation-system buttons!public! !
+redo!instance creation-system buttons!public! !
+replace!instance creation-system buttons!public! !
+reportMode!instance creation-system buttons!public! !
+smallIconMode!instance creation-system buttons!public! !
+sortDate!instance creation-system buttons!public! !
+sortName!instance creation-system buttons!public! !
+sortSize!instance creation-system buttons!public! !
+sortType!instance creation-system buttons!public! !
+stbConvertFrom:!binary filing!private! !
+systemBitmap:image:command:description:!instance creation-system buttons!private! !
+systemButtonClass!constants!instance creation!public! !
+undo!instance creation!public! !
+!
 

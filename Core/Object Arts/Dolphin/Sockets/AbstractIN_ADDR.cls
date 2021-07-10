@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #AbstractIN_ADDR
 	instanceVariableNames: ''
@@ -30,8 +30,10 @@ displayOn: aStream
 printFieldsOn: aStream limit: anInteger
 	self isNull ifTrue: [aStream nextPutAll: 'NULL'] ifFalse: [self displayOn: aStream].
 	self displayOn: aStream! !
-!AbstractIN_ADDR categoriesFor: #displayOn:!displaying!public! !
-!AbstractIN_ADDR categoriesFor: #printFieldsOn:limit:!development!printing!private! !
+!AbstractIN_ADDR categoriesForMethods!
+displayOn:!displaying!public! !
+printFieldsOn:limit:!development!printing!private! !
+!
 
 !AbstractIN_ADDR class methodsFor!
 
@@ -52,6 +54,8 @@ fromString: aString
 				ifTrue: [InvalidFormat signalWith: self]
 				ifFalse: [SocketError signalWith: lib wsaGetLastError]].
 	^answer! !
-!AbstractIN_ADDR class categoriesFor: #addressFamily!constants!public! !
-!AbstractIN_ADDR class categoriesFor: #fromString:!public! !
+!AbstractIN_ADDR class categoriesForMethods!
+addressFamily!constants!public! !
+fromString:!public! !
+!
 

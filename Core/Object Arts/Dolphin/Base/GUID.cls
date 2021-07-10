@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object variableByteSubclass: #GUID
 	instanceVariableNames: ''
@@ -182,23 +182,25 @@ value: guidBytes
 	"Set the raw binary value of the receiver from those of the argument."
 
 	guidBytes replaceBytesOf: self from: 1 to: self class byteSize startingAt: 1! !
-!GUID categoriesFor: #<=>!comparing!public! !
-!GUID categoriesFor: #=!comparing!public! !
-!GUID categoriesFor: #asByteArray!converting!public! !
-!GUID categoriesFor: #asInteger!converting!public! !
-!GUID categoriesFor: #asObject!accessing!public! !
-!GUID categoriesFor: #asString!converting!public! !
-!GUID categoriesFor: #displayOn:!printing!public! !
-!GUID categoriesFor: #hash!comparing!public! !
-!GUID categoriesFor: #idlString!converting!public! !
-!GUID categoriesFor: #isNull!public!testing! !
-!GUID categoriesFor: #notNull!public!testing! !
-!GUID categoriesFor: #printOn:!development!printing!public! !
-!GUID categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
-!GUID categoriesFor: #species!accessing!public! !
-!GUID categoriesFor: #storeOn:!printing!public! !
-!GUID categoriesFor: #stringSize!constants!public! !
-!GUID categoriesFor: #value:!accessing!public! !
+!GUID categoriesForMethods!
+<=>!comparing!public! !
+=!comparing!public! !
+asByteArray!converting!public! !
+asInteger!converting!public! !
+asObject!accessing!public! !
+asString!converting!public! !
+displayOn:!printing!public! !
+hash!comparing!public! !
+idlString!converting!public! !
+isNull!public!testing! !
+notNull!public!testing! !
+printOn:!development!printing!public! !
+replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private! !
+species!accessing!public! !
+storeOn:!printing!public! !
+stringSize!constants!public! !
+value:!accessing!public! !
+!
 
 !GUID class methodsFor!
 
@@ -359,26 +361,28 @@ uninitialize
 
 	Null := nil.
 	VMLibrary default registryAt: #GUID put: nil! !
-!GUID class categoriesFor: #alignment!constants!private! !
-!GUID class categoriesFor: #atAddress:!instance creation!public! !
-!GUID class categoriesFor: #basicByteSize!public! !
-!GUID class categoriesFor: #byteSize!constants!public! !
-!GUID class categoriesFor: #clear:!public!realizing/unrealizing! !
-!GUID class categoriesFor: #defineFields!public!template definition! !
-!GUID class categoriesFor: #elementSize!accessing!private! !
-!GUID class categoriesFor: #fromAddress:!instance creation!public! !
-!GUID class categoriesFor: #fromBytes:!instance creation!public! !
-!GUID class categoriesFor: #fromIdlString:!instance creation!public! !
-!GUID class categoriesFor: #fromString:!instance creation!public! !
-!GUID class categoriesFor: #init:!initializing!public! !
-!GUID class categoriesFor: #initialize!development!initializing!private! !
-!GUID class categoriesFor: #new!instance creation!public! !
-!GUID class categoriesFor: #newBuffer!instance creation!public! !
-!GUID class categoriesFor: #newNull!instance creation!public! !
-!GUID class categoriesFor: #newUnique!instance creation!public! !
-!GUID class categoriesFor: #null!constants!public! !
-!GUID class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!GUID class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!GUID class categoriesForMethods!
+alignment!constants!private! !
+atAddress:!instance creation!public! !
+basicByteSize!public! !
+byteSize!constants!public! !
+clear:!public!realizing/unrealizing! !
+defineFields!public!template definition! !
+elementSize!accessing!private! !
+fromAddress:!instance creation!public! !
+fromBytes:!instance creation!public! !
+fromIdlString:!instance creation!public! !
+fromString:!instance creation!public! !
+init:!initializing!public! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+newBuffer!instance creation!public! !
+newNull!instance creation!public! !
+newUnique!instance creation!public! !
+null!constants!public! !
+onPreStripImage!class hierarchy-removing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 
 GUID class methodProtocol: #'externalStructure class' attributes: #(#readOnly) selectors: #(#alignment #byteSize #clear: #elementSize #fromAddress: #fromBytes: #init: #newBuffer)!
 

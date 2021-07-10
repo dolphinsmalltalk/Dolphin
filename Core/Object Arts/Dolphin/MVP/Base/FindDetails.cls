@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #FindDetails
 	instanceVariableNames: 'pattern replaceWith searchMode flags action'
@@ -111,30 +111,32 @@ searchMode
 searchMode: aSymbol 
 	(self class searchModes includes: aSymbol) ifFalse: [self error: 'Invalid search mode: ' , aSymbol].
 	searchMode := aSymbol! !
-!FindDetails categoriesFor: #action!accessing!public! !
-!FindDetails categoriesFor: #action:!accessing!public! !
-!FindDetails categoriesFor: #findIn:range:!public! !
-!FindDetails categoriesFor: #findWhat!accessing!public! !
-!FindDetails categoriesFor: #hasValidRegularExpression!public!testing! !
-!FindDetails categoriesFor: #initialize!initializing!public! !
-!FindDetails categoriesFor: #isCaseSensitive!public!testing! !
-!FindDetails categoriesFor: #isCaseSensitive:!accessing!public! !
-!FindDetails categoriesFor: #isForwards!public!testing! !
-!FindDetails categoriesFor: #isForwards:!accessing!public! !
-!FindDetails categoriesFor: #isRegularExpression!public!testing! !
-!FindDetails categoriesFor: #isWholeWord!public!testing! !
-!FindDetails categoriesFor: #isWholeWord:!accessing!public! !
-!FindDetails categoriesFor: #isWildcard!public!testing! !
-!FindDetails categoriesFor: #isWildcard:!accessing!public! !
-!FindDetails categoriesFor: #isWrapAround!public!testing! !
-!FindDetails categoriesFor: #isWrapAround:!accessing!public! !
-!FindDetails categoriesFor: #pattern!accessing!public! !
-!FindDetails categoriesFor: #pattern:!accessing!public! !
-!FindDetails categoriesFor: #regularExpression!accessing!public! !
-!FindDetails categoriesFor: #replaceWith!accessing!public! !
-!FindDetails categoriesFor: #replaceWith:!accessing!public! !
-!FindDetails categoriesFor: #searchMode!accessing!public! !
-!FindDetails categoriesFor: #searchMode:!accessing!public! !
+!FindDetails categoriesForMethods!
+action!accessing!public! !
+action:!accessing!public! !
+findIn:range:!public! !
+findWhat!accessing!public! !
+hasValidRegularExpression!public!testing! !
+initialize!initializing!public! !
+isCaseSensitive!public!testing! !
+isCaseSensitive:!accessing!public! !
+isForwards!public!testing! !
+isForwards:!accessing!public! !
+isRegularExpression!public!testing! !
+isWholeWord!public!testing! !
+isWholeWord:!accessing!public! !
+isWildcard!public!testing! !
+isWildcard:!accessing!public! !
+isWrapAround!public!testing! !
+isWrapAround:!accessing!public! !
+pattern!accessing!public! !
+pattern:!accessing!public! !
+regularExpression!accessing!public! !
+replaceWith!accessing!public! !
+replaceWith:!accessing!public! !
+searchMode!accessing!public! !
+searchMode:!accessing!public! !
+!
 
 !FindDetails class methodsFor!
 
@@ -170,9 +172,11 @@ newPattern: aString
 
 searchModes
 	^#(#text #wildcardExpression)! !
-!FindDetails class categoriesFor: #icon!constants!public! !
-!FindDetails class categoriesFor: #initialize!development!initializing!public! !
-!FindDetails class categoriesFor: #new!instance creation!public! !
-!FindDetails class categoriesFor: #newPattern:!instance creation!public! !
-!FindDetails class categoriesFor: #searchModes!constants!public! !
+!FindDetails class categoriesForMethods!
+icon!constants!public! !
+initialize!development!initializing!public! !
+new!instance creation!public! !
+newPattern:!instance creation!public! !
+searchModes!constants!public! !
+!
 

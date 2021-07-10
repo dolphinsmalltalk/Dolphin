@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #CharacterTest
 	instanceVariableNames: ''
@@ -494,30 +494,32 @@ testStb
 	bytes := Character dolphin binaryStoreBytes.
 	rehydrated := Object fromBinaryStoreBytes: bytes.
 	self assert: rehydrated equals: Character dolphin! !
-!CharacterTest categoriesFor: #nonCharacters!constants!private! !
-!CharacterTest categoriesFor: #testAnsiValue!public!unit tests! !
-!CharacterTest categoriesFor: #testAsciiValue!public!unit tests! !
-!CharacterTest categoriesFor: #testAsLowercase!public!unit tests! !
-!CharacterTest categoriesFor: #testAsUppercase!public!unit tests! !
-!CharacterTest categoriesFor: #testAsUtf16String!public!unit tests! !
-!CharacterTest categoriesFor: #testAsUtf8String!public!unit tests! !
-!CharacterTest categoriesFor: #testClassCodePoint!public!unit tests! !
-!CharacterTest categoriesFor: #testClassNewCode!public! !
-!CharacterTest categoriesFor: #testCodePoint!public!unit tests! !
-!CharacterTest categoriesFor: #testDigitValue!public!unit tests! !
-!CharacterTest categoriesFor: #testEquals!public!unit tests! !
-!CharacterTest categoriesFor: #testIdentity!public!unit tests! !
-!CharacterTest categoriesFor: #testIsAlphaNumeric!public!unit tests! !
-!CharacterTest categoriesFor: #testIsControl!public!unit tests! !
-!CharacterTest categoriesFor: #testIsDigit!public!unit tests! !
-!CharacterTest categoriesFor: #testIsHexDigit!public!unit tests! !
-!CharacterTest categoriesFor: #testIsLowercase!public!unit tests! !
-!CharacterTest categoriesFor: #testIsPunctuation!public!unit tests! !
-!CharacterTest categoriesFor: #testIsUppercase!public!unit tests! !
-!CharacterTest categoriesFor: #testIsUtf16SurrogateTests!public!unit tests! !
-!CharacterTest categoriesFor: #testIsUtf8SurrogateTests!public!unit tests! !
-!CharacterTest categoriesFor: #testPrintString!public!unit tests! !
-!CharacterTest categoriesFor: #testSize!public!unit tests! !
-!CharacterTest categoriesFor: #testSplit!public!unit tests! !
-!CharacterTest categoriesFor: #testStb!public!unit tests! !
+!CharacterTest categoriesForMethods!
+nonCharacters!constants!private! !
+testAnsiValue!public!unit tests! !
+testAsciiValue!public!unit tests! !
+testAsLowercase!public!unit tests! !
+testAsUppercase!public!unit tests! !
+testAsUtf16String!public!unit tests! !
+testAsUtf8String!public!unit tests! !
+testClassCodePoint!public!unit tests! !
+testClassNewCode!public! !
+testCodePoint!public!unit tests! !
+testDigitValue!public!unit tests! !
+testEquals!public!unit tests! !
+testIdentity!public!unit tests! !
+testIsAlphaNumeric!public!unit tests! !
+testIsControl!public!unit tests! !
+testIsDigit!public!unit tests! !
+testIsHexDigit!public!unit tests! !
+testIsLowercase!public!unit tests! !
+testIsPunctuation!public!unit tests! !
+testIsUppercase!public!unit tests! !
+testIsUtf16SurrogateTests!public!unit tests! !
+testIsUtf8SurrogateTests!public!unit tests! !
+testPrintString!public!unit tests! !
+testSize!public!unit tests! !
+testSplit!public!unit tests! !
+testStb!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StProgramNode subclass: #StMethodNode
 	instanceVariableNames: 'selector selectorParts body source arguments tag replacements nodeReplacements methodClass'
@@ -194,48 +194,50 @@ tag: anStTagNodeOrNil
 
 uses: aNode 
 	^body == aNode and: [aNode lastIsReturn]! !
-!StMethodNode categoriesFor: #=!comparing!public! !
-!StMethodNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StMethodNode categoriesFor: #actualScope!public! !
-!StMethodNode categoriesFor: #allArgumentVariableNodesDo:!accessing!public! !
-!StMethodNode categoriesFor: #allDefinedVariableNodesDo:!accessing!public! !
-!StMethodNode categoriesFor: #argumentCount!accessing!public! !
-!StMethodNode categoriesFor: #argumentNames!accessing!public! !
-!StMethodNode categoriesFor: #arguments!accessing!public! !
-!StMethodNode categoriesFor: #arguments:!accessing!public! !
-!StMethodNode categoriesFor: #body!accessing!public! !
-!StMethodNode categoriesFor: #body:!accessing!public! !
-!StMethodNode categoriesFor: #buildSelector!helpers!private! !
-!StMethodNode categoriesFor: #childrenDo:!accessing!public! !
-!StMethodNode categoriesFor: #defines:!public!testing! !
-!StMethodNode categoriesFor: #displayOn:!printing!public! !
-!StMethodNode categoriesFor: #hash!comparing!public! !
-!StMethodNode categoriesFor: #isExternalCall!public!testing! !
-!StMethodNode categoriesFor: #isInlined!public!testing! !
-!StMethodNode categoriesFor: #isLast:!public!testing! !
-!StMethodNode categoriesFor: #isMethod!public!testing! !
-!StMethodNode categoriesFor: #isPrimitive!public!testing! !
-!StMethodNode categoriesFor: #lastIsReturn!public!testing! !
-!StMethodNode categoriesFor: #methodClass!accessing!public! !
-!StMethodNode categoriesFor: #methodClass:!accessing!public! !
-!StMethodNode categoriesFor: #methodComments!accessing!public! !
-!StMethodNode categoriesFor: #methodNode!accessing!public! !
-!StMethodNode categoriesFor: #numArgs!accessing!public! !
-!StMethodNode categoriesFor: #outer!public! !
-!StMethodNode categoriesFor: #postCopy!copying!public! !
-!StMethodNode categoriesFor: #printOn:!printing!public! !
-!StMethodNode categoriesFor: #selector!accessing!public! !
-!StMethodNode categoriesFor: #selector:!accessing!public! !
-!StMethodNode categoriesFor: #selectorParts!accessing!private! !
-!StMethodNode categoriesFor: #selectorParts:!accessing!private! !
-!StMethodNode categoriesFor: #selectorParts:arguments:!initializing!public! !
-!StMethodNode categoriesFor: #source!accessing!public! !
-!StMethodNode categoriesFor: #source:!accessing!public! !
-!StMethodNode categoriesFor: #start!accessing!public! !
-!StMethodNode categoriesFor: #stop!accessing!public! !
-!StMethodNode categoriesFor: #tag!accessing!public! !
-!StMethodNode categoriesFor: #tag:!accessing!private! !
-!StMethodNode categoriesFor: #uses:!public!testing! !
+!StMethodNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+actualScope!public! !
+allArgumentVariableNodesDo:!accessing!public! !
+allDefinedVariableNodesDo:!accessing!public! !
+argumentCount!accessing!public! !
+argumentNames!accessing!public! !
+arguments!accessing!public! !
+arguments:!accessing!public! !
+body!accessing!public! !
+body:!accessing!public! !
+buildSelector!helpers!private! !
+childrenDo:!accessing!public! !
+defines:!public!testing! !
+displayOn:!printing!public! !
+hash!comparing!public! !
+isExternalCall!public!testing! !
+isInlined!public!testing! !
+isLast:!public!testing! !
+isMethod!public!testing! !
+isPrimitive!public!testing! !
+lastIsReturn!public!testing! !
+methodClass!accessing!public! !
+methodClass:!accessing!public! !
+methodComments!accessing!public! !
+methodNode!accessing!public! !
+numArgs!accessing!public! !
+outer!public! !
+postCopy!copying!public! !
+printOn:!printing!public! !
+selector!accessing!public! !
+selector:!accessing!public! !
+selectorParts!accessing!private! !
+selectorParts:!accessing!private! !
+selectorParts:arguments:!initializing!public! !
+source!accessing!public! !
+source:!accessing!public! !
+start!accessing!public! !
+stop!accessing!public! !
+tag!accessing!public! !
+tag:!accessing!private! !
+uses:!public!testing! !
+!
 
 !StMethodNode class methodsFor!
 
@@ -261,8 +263,10 @@ selectorParts: tokenCollection arguments: variableNodes
 	^(self new)
 		selectorParts: tokenCollection arguments: variableNodes;
 		yourself! !
-!StMethodNode class categoriesFor: #new!instance creation!public! !
-!StMethodNode class categoriesFor: #selector:arguments:body:!instance creation!public! !
-!StMethodNode class categoriesFor: #selector:body:!instance creation!public! !
-!StMethodNode class categoriesFor: #selectorParts:arguments:!instance creation!public! !
+!StMethodNode class categoriesForMethods!
+new!instance creation!public! !
+selector:arguments:body:!instance creation!public! !
+selector:body:!instance creation!public! !
+selectorParts:arguments:!instance creation!public! !
+!
 

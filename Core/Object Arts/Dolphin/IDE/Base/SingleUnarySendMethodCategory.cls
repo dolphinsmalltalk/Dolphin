@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ReferencesCategory subclass: #SingleUnarySendMethodCategory
 	instanceVariableNames: 'selector'
@@ -20,7 +20,9 @@ includesMethod: aCompiledMethod
 	nothing else."
 
 	^aCompiledMethod isSimpleSelfSend: literal! !
-!SingleUnarySendMethodCategory categoriesFor: #includesMethod:!public!testing! !
+!SingleUnarySendMethodCategory categoriesForMethods!
+includesMethod:!public!testing! !
+!
 
 !SingleUnarySendMethodCategory class methodsFor!
 
@@ -33,6 +35,8 @@ initialize
 
 referenceSymbols
 	^#(#subclassResponsibility #shouldNotImplement)! !
-!SingleUnarySendMethodCategory class categoriesFor: #initialize!initializing!private! !
-!SingleUnarySendMethodCategory class categoriesFor: #referenceSymbols!constants!private! !
+!SingleUnarySendMethodCategory class categoriesForMethods!
+initialize!initializing!private! !
+referenceSymbols!constants!private! !
+!
 

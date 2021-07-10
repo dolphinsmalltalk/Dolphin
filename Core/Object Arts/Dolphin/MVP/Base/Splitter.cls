@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 View subclass: #Splitter
 	instanceVariableNames: ''
@@ -199,29 +199,31 @@ startTrackingAt: aPoint
 	position := self constrainPosition: aPoint.
 	self drawTrackingAt: position.
 	^position! !
-!Splitter categoriesFor: #applyFont!font!private!updating! !
-!Splitter categoriesFor: #calculateExtent:!operations!private! !
-!Splitter categoriesFor: #cancelTrackingAt:!private!tracking! !
-!Splitter categoriesFor: #constrainPosition:!operations!private! !
-!Splitter categoriesFor: #continueTrackingAt:from:!private!tracking! !
-!Splitter categoriesFor: #cursor!constants!public! !
-!Splitter categoriesFor: #defaultBackcolor!constants!private! !
-!Splitter categoriesFor: #defaultExtent!constants!private! !
-!Splitter categoriesFor: #defaultProportion!constants!private! !
-!Splitter categoriesFor: #drawTrackingAt:!private!tracking! !
-!Splitter categoriesFor: #endTrackingAt:!public!tracking! !
-!Splitter categoriesFor: #eraseTrackingAt:!private!tracking! !
-!Splitter categoriesFor: #forecolor!accessing!public! !
-!Splitter categoriesFor: #hasFlatAppearance!accessing-styles!public! !
-!Splitter categoriesFor: #hasFlatAppearance:!accessing-styles!public! !
-!Splitter categoriesFor: #isHot!public!testing! !
-!Splitter categoriesFor: #isVertical!public!testing! !
-!Splitter categoriesFor: #onEraseRequired:!event handling!public! !
-!Splitter categoriesFor: #onGetCursor:!event handling!public! !
-!Splitter categoriesFor: #onInputMaskRequired:!event handling!public! !
-!Splitter categoriesFor: #onPaintRequired:!event handling!private! !
-!Splitter categoriesFor: #onViewCreated!event handling!public! !
-!Splitter categoriesFor: #startTrackingAt:!private!tracking! !
+!Splitter categoriesForMethods!
+applyFont!font!private!updating! !
+calculateExtent:!operations!private! !
+cancelTrackingAt:!private!tracking! !
+constrainPosition:!operations!private! !
+continueTrackingAt:from:!private!tracking! !
+cursor!constants!public! !
+defaultBackcolor!constants!private! !
+defaultExtent!constants!private! !
+defaultProportion!constants!private! !
+drawTrackingAt:!private!tracking! !
+endTrackingAt:!public!tracking! !
+eraseTrackingAt:!private!tracking! !
+forecolor!accessing!public! !
+hasFlatAppearance!accessing-styles!public! !
+hasFlatAppearance:!accessing-styles!public! !
+isHot!public!testing! !
+isVertical!public!testing! !
+onEraseRequired:!event handling!public! !
+onGetCursor:!event handling!public! !
+onInputMaskRequired:!event handling!public! !
+onPaintRequired:!event handling!private! !
+onViewCreated!event handling!public! !
+startTrackingAt:!private!tracking! !
+!
 
 Splitter methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
 
@@ -253,7 +255,9 @@ stbConvertFromVersion12: anArray
 	(backcolor = ##(Color brightness: 225 / 255) or: [backcolor = Color face3d])
 		ifTrue: [anArray at: 6 put: Color default].
 	^super stbConvertFromVersion12: anArray! !
-!Splitter class categoriesFor: #icon!constants!public! !
-!Splitter class categoriesFor: #resource_Horizontalvertical_splitter!public!resources-views! !
-!Splitter class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
+!Splitter class categoriesForMethods!
+icon!constants!public! !
+resource_Horizontalvertical_splitter!public!resources-views! !
+stbConvertFromVersion12:!binary filing!private! !
+!
 

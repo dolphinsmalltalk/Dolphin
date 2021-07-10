@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #Win32Structure
 	instanceVariableNames: ''
@@ -21,6 +21,8 @@ initialize: anInteger
 
 	super initialize: anInteger.
 	self dwSize: anInteger! !
-!Win32Structure categoriesFor: #dwSize:!initializing!public! !
-!Win32Structure categoriesFor: #initialize:!initializing!private! !
+!Win32Structure categoriesForMethods!
+dwSize:!initializing!public! !
+initialize:!initializing!private! !
+!
 

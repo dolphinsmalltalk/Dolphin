@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #ISchemaStringCollection
 	instanceVariableNames: ''
@@ -105,14 +105,16 @@ length
 	self get_length: answer.
 	^answer asObject
 ! !
-!ISchemaStringCollection categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!ISchemaStringCollection categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
-!ISchemaStringCollection categoriesFor: #get_item:bstr:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
-!ISchemaStringCollection categoriesFor: #get_length:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
-!ISchemaStringCollection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ISchemaStringCollection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ISchemaStringCollection categoriesFor: #item:!**auto generated**!properties!public! !
-!ISchemaStringCollection categoriesFor: #length!**auto generated**!properties!public! !
+!ISchemaStringCollection categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+get__newEnum:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
+get_item:bstr:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
+get_length:!**auto generated**!COM Interfaces-ISchemaStringCollection!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+length!**auto generated**!properties!public! !
+!
 
 !ISchemaStringCollection class methodsFor!
 
@@ -128,5 +130,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!ISchemaStringCollection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISchemaStringCollection class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

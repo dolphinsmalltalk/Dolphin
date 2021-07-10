@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 COMInterfaceImp subclass: #COMClassFactory
 	instanceVariableNames: 'serverClass clsid registration'
@@ -174,24 +174,26 @@ supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
 	^#(##(IClassFactory))! !
-!COMClassFactory categoriesFor: #basicFree!private!realizing/unrealizing! !
-!COMClassFactory categoriesFor: #clear!initializing!private! !
-!COMClassFactory categoriesFor: #clsid!accessing!public! !
-!COMClassFactory categoriesFor: #clsid:!accessing!private! !
-!COMClassFactory categoriesFor: #createInstance:!instance creation!private! !
-!COMClassFactory categoriesFor: #CreateInstance:riid:ppvObject:!COM Interfaces-IClassFactory!private! !
-!COMClassFactory categoriesFor: #CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:!COM Interfaces-IClassFactory2!public! !
-!COMClassFactory categoriesFor: #free!public!realizing/unrealizing! !
-!COMClassFactory categoriesFor: #GetLicInfo:!COM Interfaces-IClassFactory2!public! !
-!COMClassFactory categoriesFor: #LockServer:!COM Interfaces-IClassFactory!private! !
-!COMClassFactory categoriesFor: #printOn:!development!printing!public! !
-!COMClassFactory categoriesFor: #register!operations!private! !
-!COMClassFactory categoriesFor: #registerInstance:!operations!private! !
-!COMClassFactory categoriesFor: #RequestLicKey:pBstrKey:!COM Interfaces-IClassFactory2!public! !
-!COMClassFactory categoriesFor: #revoke!private!realizing/unrealizing! !
-!COMClassFactory categoriesFor: #serverClass!accessing!private! !
-!COMClassFactory categoriesFor: #serverClass:!accessing!private! !
-!COMClassFactory categoriesFor: #supportedInterfaces!constants!public! !
+!COMClassFactory categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+clear!initializing!private! !
+clsid!accessing!public! !
+clsid:!accessing!private! !
+createInstance:!instance creation!private! !
+CreateInstance:riid:ppvObject:!COM Interfaces-IClassFactory!private! !
+CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:!COM Interfaces-IClassFactory2!public! !
+free!public!realizing/unrealizing! !
+GetLicInfo:!COM Interfaces-IClassFactory2!public! !
+LockServer:!COM Interfaces-IClassFactory!private! !
+printOn:!development!printing!public! !
+register!operations!private! !
+registerInstance:!operations!private! !
+RequestLicKey:pBstrKey:!COM Interfaces-IClassFactory2!public! !
+revoke!private!realizing/unrealizing! !
+serverClass!accessing!private! !
+serverClass:!accessing!private! !
+supportedInterfaces!constants!public! !
+!
 
 !COMClassFactory class methodsFor!
 
@@ -325,23 +327,25 @@ unregister: serverClass
 	| f |
 	f := Factories removeKey: serverClass ifAbsent: [^self].
 	f revoke! !
-!COMClassFactory class categoriesFor: #basicOn:clsid:!instance creation!private! !
-!COMClassFactory class categoriesFor: #canUnloadNow!private!testing! !
-!COMClassFactory class categoriesFor: #clearAll!initializing!private! !
-!COMClassFactory class categoriesFor: #decrementLockCount!accessing!private! !
-!COMClassFactory class categoriesFor: #freeAll!operations!private! !
-!COMClassFactory class categoriesFor: #incrementLockCount!accessing!private! !
-!COMClassFactory class categoriesFor: #initialize!development!initializing!private! !
-!COMClassFactory class categoriesFor: #initializeFactoryRegister!initializing!private! !
-!COMClassFactory class categoriesFor: #lockCount!accessing!public! !
-!COMClassFactory class categoriesFor: #on:!instance creation!public! !
-!COMClassFactory class categoriesFor: #on:clsid:!instance creation!public! !
-!COMClassFactory class categoriesFor: #onElementsExpired:!event handling!private! !
-!COMClassFactory class categoriesFor: #onExit!event handling!private! !
-!COMClassFactory class categoriesFor: #onStartup!event handling!private! !
-!COMClassFactory class categoriesFor: #registerAll!operations!private! !
-!COMClassFactory class categoriesFor: #revokeAll!operations!private! !
-!COMClassFactory class categoriesFor: #revokeOn:!instance creation!public! !
-!COMClassFactory class categoriesFor: #shutdownIfDead!operations-shutdown!private! !
-!COMClassFactory class categoriesFor: #unregister:!instance creation!public! !
+!COMClassFactory class categoriesForMethods!
+basicOn:clsid:!instance creation!private! !
+canUnloadNow!private!testing! !
+clearAll!initializing!private! !
+decrementLockCount!accessing!private! !
+freeAll!operations!private! !
+incrementLockCount!accessing!private! !
+initialize!development!initializing!private! !
+initializeFactoryRegister!initializing!private! !
+lockCount!accessing!public! !
+on:!instance creation!public! !
+on:clsid:!instance creation!public! !
+onElementsExpired:!event handling!private! !
+onExit!event handling!private! !
+onStartup!event handling!private! !
+registerAll!operations!private! !
+revokeAll!operations!private! !
+revokeOn:!instance creation!public! !
+shutdownIfDead!operations-shutdown!private! !
+unregister:!instance creation!public! !
+!
 

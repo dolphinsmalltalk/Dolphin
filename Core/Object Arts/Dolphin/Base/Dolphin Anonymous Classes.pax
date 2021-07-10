@@ -52,8 +52,10 @@ isAnonymous
 newAnonymousSubclass
 	^(ClassBuilder forAnonymousSubclassOf: self)
 		createNewClass! !
-!Class categoriesFor: #isAnonymous!public!testing! !
-!Class categoriesFor: #newAnonymousSubclass!public! !
+!Class categoriesForMethods!
+isAnonymous!public!testing! !
+newAnonymousSubclass!public! !
+!
 
 !ClassBuilder class methodsFor!
 
@@ -61,7 +63,9 @@ forAnonymousSubclassOf: aClass
 	^AnonymousClassBuilder new
 		superclass: aClass;
 		yourself! !
-!ClassBuilder class categoriesFor: #forAnonymousSubclassOf:!instance creation!public! !
+!ClassBuilder class categoriesForMethods!
+forAnonymousSubclassOf:!instance creation!public! !
+!
 
 !ClassDescription methodsFor!
 
@@ -69,7 +73,9 @@ isAnonymous
 	"Answer whether this is an anonymous (unbound) class."
 
 	^self subclassResponsibility! !
-!ClassDescription categoriesFor: #isAnonymous!public!testing! !
+!ClassDescription categoriesForMethods!
+isAnonymous!public!testing! !
+!
 
 !Metaclass methodsFor!
 
@@ -77,7 +83,9 @@ isAnonymous
 	"Answer whether this is an anonymous (unbound) class."
 
 	^self instanceClass isAnonymous! !
-!Metaclass categoriesFor: #isAnonymous!public!testing! !
+!Metaclass categoriesForMethods!
+isAnonymous!public!testing! !
+!
 
 "End of package definition"!
 

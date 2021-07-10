@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #ReadFileStreamANSITest
 	instanceVariableNames: 'readFileStream'
@@ -112,29 +112,31 @@ testXskipX
 testXupToX
 	" <readFileStream>#upTo: "
 	#'File Stream'.! !
-!ReadFileStreamANSITest categoriesFor: #canonicalObject!public! !
-!ReadFileStreamANSITest categoriesFor: #protocol!public! !
-!ReadFileStreamANSITest categoriesFor: #setUp!public! !
-!ReadFileStreamANSITest categoriesFor: #tearDown!public! !
-!ReadFileStreamANSITest categoriesFor: #testXatEnd!public! !
-!ReadFileStreamANSITest categoriesFor: #testXclose!public! !
-!ReadFileStreamANSITest categoriesFor: #testXcontents!public! !
-!ReadFileStreamANSITest categoriesFor: #testXdoX!public! !
-!ReadFileStreamANSITest categoriesFor: #testXexternalType!public! !
-!ReadFileStreamANSITest categoriesFor: #testXisBinary!public! !
-!ReadFileStreamANSITest categoriesFor: #testXisEmpty!public! !
-!ReadFileStreamANSITest categoriesFor: #testXisText!public! !
-!ReadFileStreamANSITest categoriesFor: #testXnext!public! !
-!ReadFileStreamANSITest categoriesFor: #testXnextLine!public! !
-!ReadFileStreamANSITest categoriesFor: #testXnextMatchForX!public! !
-!ReadFileStreamANSITest categoriesFor: #testXnextX!public! !
-!ReadFileStreamANSITest categoriesFor: #testXpeek!public! !
-!ReadFileStreamANSITest categoriesFor: #testXpeekForX!public! !
-!ReadFileStreamANSITest categoriesFor: #testXposition!public! !
-!ReadFileStreamANSITest categoriesFor: #testXpositionX!public! !
-!ReadFileStreamANSITest categoriesFor: #testXreset!public! !
-!ReadFileStreamANSITest categoriesFor: #testXsetToEnd!public! !
-!ReadFileStreamANSITest categoriesFor: #testXskipToX!public! !
-!ReadFileStreamANSITest categoriesFor: #testXskipX!public! !
-!ReadFileStreamANSITest categoriesFor: #testXupToX!public! !
+!ReadFileStreamANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+setUp!public! !
+tearDown!public! !
+testXatEnd!public! !
+testXclose!public! !
+testXcontents!public! !
+testXdoX!public! !
+testXexternalType!public! !
+testXisBinary!public! !
+testXisEmpty!public! !
+testXisText!public! !
+testXnext!public! !
+testXnextLine!public! !
+testXnextMatchForX!public! !
+testXnextX!public! !
+testXpeek!public! !
+testXpeekForX!public! !
+testXposition!public! !
+testXpositionX!public! !
+testXreset!public! !
+testXsetToEnd!public! !
+testXskipToX!public! !
+testXskipX!public! !
+testXupToX!public! !
+!
 

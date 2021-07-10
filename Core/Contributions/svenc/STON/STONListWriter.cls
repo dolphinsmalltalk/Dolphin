@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STONStreamWriter subclass: #STONListWriter
 	instanceVariableNames: ''
@@ -14,5 +14,7 @@ STONListWriter comment: 'STONArrayWriter helps in writing array based STON repre
 add: anObject
 	first ifTrue: [ first := false ] ifFalse: [ writer listElementSeparator ].
 	writer nextPut: anObject! !
-!STONListWriter categoriesFor: #add:!accessing!public! !
+!STONListWriter categoriesForMethods!
+add:!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #TEXTMETRICW
 	instanceVariableNames: ''
@@ -160,26 +160,28 @@ tmWeight
 	"Answer the <Integer> value of the receiver's 'tmWeight' field."
 
 	^bytes sdwordAtOffset: _OffsetOf_tmWeight! !
-!TEXTMETRICW categoriesFor: #tmAscent!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmAveCharWidth!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmBreakChar!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmCharSet!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmDefaultChar!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmDescent!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmDigitizedAspectX!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmDigitizedAspectY!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmExternalLeading!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmFirstChar!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmHeight!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmInternalLeading!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmItalic!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmLastChar!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmMaxCharWidth!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmOverhang!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmPitchAndFamily!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmStruckOut!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmUnderlined!**compiled accessors**!public! !
-!TEXTMETRICW categoriesFor: #tmWeight!**compiled accessors**!public! !
+!TEXTMETRICW categoriesForMethods!
+tmAscent!**compiled accessors**!public! !
+tmAveCharWidth!**compiled accessors**!public! !
+tmBreakChar!**compiled accessors**!public! !
+tmCharSet!**compiled accessors**!public! !
+tmDefaultChar!**compiled accessors**!public! !
+tmDescent!**compiled accessors**!public! !
+tmDigitizedAspectX!**compiled accessors**!public! !
+tmDigitizedAspectY!**compiled accessors**!public! !
+tmExternalLeading!**compiled accessors**!public! !
+tmFirstChar!**compiled accessors**!public! !
+tmHeight!**compiled accessors**!public! !
+tmInternalLeading!**compiled accessors**!public! !
+tmItalic!**compiled accessors**!public! !
+tmLastChar!**compiled accessors**!public! !
+tmMaxCharWidth!**compiled accessors**!public! !
+tmOverhang!**compiled accessors**!public! !
+tmPitchAndFamily!**compiled accessors**!public! !
+tmStruckOut!**compiled accessors**!public! !
+tmUnderlined!**compiled accessors**!public! !
+tmWeight!**compiled accessors**!public! !
+!
 
 !TEXTMETRICW class methodsFor!
 
@@ -241,7 +243,9 @@ packing
 	"Uses non-standard packing"
 
 	^4! !
-!TEXTMETRICW class categoriesFor: #defineFields!public!template definition! !
-!TEXTMETRICW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!TEXTMETRICW class categoriesFor: #packing!constants!public! !
+!TEXTMETRICW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+packing!constants!public! !
+!
 

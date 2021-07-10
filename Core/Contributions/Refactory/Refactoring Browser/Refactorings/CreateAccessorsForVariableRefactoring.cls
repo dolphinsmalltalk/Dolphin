@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VariableRefactoring subclass: #CreateAccessorsForVariableRefactoring
 	instanceVariableNames: 'getterMethod setterMethod classVariable needsReturn'
@@ -144,24 +144,26 @@ usesAssignmentOf: aString in: aClass classVariable: isClassVar
 								checkClass: each
 								selector: sel
 								using: matcher]]! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #classVariable:!initialize/release!public! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #createGetterAccessor!public!transforming! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #createSetterAccessor!public!transforming! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #defineGetterMethod!public!transforming! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #defineSetterMethod!public!transforming! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #definingClass!accessing!private! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #findGetterMethod!accessing!private! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #findSetterMethod!accessing!private! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #getterMethod!accessing!private! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #methodsReferencingVariable!accessing!private! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #needsReturnForSetter!public!testing! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #possibleGetterSelectors!accessing!private! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #possibleSetterSelectors!accessing!private! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #setterMethod!accessing!private! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #storeOn:!printing!public! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #transform!public!transforming! !
-!CreateAccessorsForVariableRefactoring categoriesFor: #usesAssignmentOf:in:classVariable:!public!testing! !
+!CreateAccessorsForVariableRefactoring categoriesForMethods!
+classVariable:!initialize/release!public! !
+createGetterAccessor!public!transforming! !
+createSetterAccessor!public!transforming! !
+defineGetterMethod!public!transforming! !
+defineSetterMethod!public!transforming! !
+definingClass!accessing!private! !
+findGetterMethod!accessing!private! !
+findSetterMethod!accessing!private! !
+getterMethod!accessing!private! !
+methodsReferencingVariable!accessing!private! !
+needsReturnForSetter!public!testing! !
+possibleGetterSelectors!accessing!private! !
+possibleSetterSelectors!accessing!private! !
+preconditions!preconditions!public! !
+setterMethod!accessing!private! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+usesAssignmentOf:in:classVariable:!public!testing! !
+!
 
 !CreateAccessorsForVariableRefactoring class methodsFor!
 
@@ -176,6 +178,8 @@ model: aRBNamespace variable: aVarName class: aClass classVariable: aBoolean
 variable: aVarName class: aClass classVariable: aBoolean 
 	^(self variable: aVarName class: aClass)
 		classVariable: aBoolean; yourself! !
-!CreateAccessorsForVariableRefactoring class categoriesFor: #model:variable:class:classVariable:!instance creation!public! !
-!CreateAccessorsForVariableRefactoring class categoriesFor: #variable:class:classVariable:!instance creation!public! !
+!CreateAccessorsForVariableRefactoring class categoriesForMethods!
+model:variable:class:classVariable:!instance creation!public! !
+variable:class:classVariable:!instance creation!public! !
+!
 

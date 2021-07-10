@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IPersist subclass: #IPersistStream
 	instanceVariableNames: ''
@@ -86,13 +86,15 @@ storeOn: anIStream clearDirty: aBoolean
 	the stream to be in the standard format)."
 
 	self Save: anIStream fClearDirty: aBoolean! !
-!IPersistStream categoriesFor: #GetSizeMax:!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
-!IPersistStream categoriesFor: #IsDirty!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
-!IPersistStream categoriesFor: #Load:!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
-!IPersistStream categoriesFor: #maxSize!accessing!public! !
-!IPersistStream categoriesFor: #readFrom:!operations!public! !
-!IPersistStream categoriesFor: #Save:fClearDirty:!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
-!IPersistStream categoriesFor: #storeOn:clearDirty:!operations!public! !
+!IPersistStream categoriesForMethods!
+GetSizeMax:!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
+IsDirty!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
+Load:!**auto generated**!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
+maxSize!accessing!public! !
+readFrom:!operations!public! !
+Save:fClearDirty:!COM Interfaces-OBJIDL.IPersistStream!primitives!public! !
+storeOn:clearDirty:!operations!public! !
+!
 
 IPersistStream methodProtocol: #IPersistStream attributes: #(#readOnly) selectors: #(#GetClassID: #GetSizeMax: #IsDirty #Load: #Save:fClearDirty:)!
 
@@ -113,5 +115,7 @@ defineFunctions
 		defineFunction: #GetSizeMax:
 			argumentTypes: 'qword*'
 ! !
-!IPersistStream class categoriesFor: #defineFunctions!initializing!public! !
+!IPersistStream class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

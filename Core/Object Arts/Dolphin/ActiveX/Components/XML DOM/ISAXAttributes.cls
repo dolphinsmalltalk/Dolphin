@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #ISAXAttributes
 	instanceVariableNames: ''
@@ -460,32 +460,34 @@ GetValueFromQName: pwchQName cchQName: cchQName ppwchValue: ppwchValue pcchValue
 
 	<virtual stdcall: hresult 16 word* sdword word** sdword*>
 	^self invalidCall: _failureCode! !
-!ISAXAttributes categoriesFor: #getIndexFromName:cchUri:pwchLocalName:cchLocalName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetIndexFromName:cchUri:pwchLocalName:cchLocalName:pnIndex:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getIndexFromQName:cchQName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetIndexFromQName:cchQName:pnIndex:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getLength!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetLength:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getLocalName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetLocalName:ppwchLocalName:pcchLocalName:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetName:ppwchUri:pcchUri:ppwchLocalName:pcchLocalName:ppwchQName:pcchQName:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getQName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetQName:ppwchQName:pcchQName:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getType:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetType:ppwchType:pcchType:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getTypeFromName:cchUri:pwchLocalName:cchLocalName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetTypeFromName:cchUri:pwchLocalName:cchLocalName:ppwchType:pcchType:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getTypeFromQName:cchQName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetTypeFromQName:cchQName:ppwchType:pcchType:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getURI:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetURI:ppwchUri:pcchUri:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getValue:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetValue:ppwchValue:pcchValue:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getValueFromName:cchUri:pwchLocalName:cchLocalName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetValueFromName:cchUri:pwchLocalName:cchLocalName:ppwchValue:pcchValue:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
-!ISAXAttributes categoriesFor: #getValueFromQName:cchQName:!**auto generated**!methods!public! !
-!ISAXAttributes categoriesFor: #GetValueFromQName:cchQName:ppwchValue:pcchValue:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+!ISAXAttributes categoriesForMethods!
+getIndexFromName:cchUri:pwchLocalName:cchLocalName:!**auto generated**!methods!public! !
+GetIndexFromName:cchUri:pwchLocalName:cchLocalName:pnIndex:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+getIndexFromQName:cchQName:!**auto generated**!methods!public! !
+GetIndexFromQName:cchQName:pnIndex:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+getLength!**auto generated**!methods!public! !
+GetLength:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+getLocalName:!**auto generated**!methods!public! !
+GetLocalName:ppwchLocalName:pcchLocalName:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+getName:!**auto generated**!methods!public! !
+GetName:ppwchUri:pcchUri:ppwchLocalName:pcchLocalName:ppwchQName:pcchQName:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+getQName:!**auto generated**!methods!public! !
+GetQName:ppwchQName:pcchQName:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+getType:!**auto generated**!methods!public! !
+GetType:ppwchType:pcchType:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+getTypeFromName:cchUri:pwchLocalName:cchLocalName:!**auto generated**!methods!public! !
+GetTypeFromName:cchUri:pwchLocalName:cchLocalName:ppwchType:pcchType:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+getTypeFromQName:cchQName:!**auto generated**!methods!public! !
+GetTypeFromQName:cchQName:ppwchType:pcchType:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+getURI:!**auto generated**!methods!public! !
+GetURI:ppwchUri:pcchUri:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+getValue:!**auto generated**!methods!public! !
+GetValue:ppwchValue:pcchValue:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+getValueFromName:cchUri:pwchLocalName:cchLocalName:!**auto generated**!methods!public! !
+GetValueFromName:cchUri:pwchLocalName:cchLocalName:ppwchValue:pcchValue:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+getValueFromQName:cchQName:!**auto generated**!methods!public! !
+GetValueFromQName:cchQName:ppwchValue:pcchValue:!**auto generated**!COM Interfaces-ISAXAttributes!private! !
+!
 
 !ISAXAttributes class methodsFor!
 
@@ -521,5 +523,7 @@ defineFunctions
 		defineFunction: #GetValueFromQName:cchQName:ppwchValue:pcchValue:
 			argumentTypes: 'word* sdword word** sdword*'
 ! !
-!ISAXAttributes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISAXAttributes class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IConnectionPointContainer
 	instanceVariableNames: ''
@@ -66,12 +66,14 @@ FindConnectionPoint: riid ppCP: ppCP
 
 	<virtual stdcall: hresult 5 guid* IConnectionPoint**>
 	^self invalidCall: _failureCode! !
-!IConnectionPointContainer categoriesFor: #connectionIIDs!enumerating!public! !
-!IConnectionPointContainer categoriesFor: #connectionPoints!enumerating!public! !
-!IConnectionPointContainer categoriesFor: #enumConnectionPoints!**auto generated**!methods!public! !
-!IConnectionPointContainer categoriesFor: #EnumConnectionPoints:!**auto generated**!COM Interfaces-IConnectionPointContainer!private! !
-!IConnectionPointContainer categoriesFor: #findConnectionPoint:!accessing!public! !
-!IConnectionPointContainer categoriesFor: #FindConnectionPoint:ppCP:!**auto generated**!COM Interfaces-IConnectionPointContainer!private! !
+!IConnectionPointContainer categoriesForMethods!
+connectionIIDs!enumerating!public! !
+connectionPoints!enumerating!public! !
+enumConnectionPoints!**auto generated**!methods!public! !
+EnumConnectionPoints:!**auto generated**!COM Interfaces-IConnectionPointContainer!private! !
+findConnectionPoint:!accessing!public! !
+FindConnectionPoint:ppCP:!**auto generated**!COM Interfaces-IConnectionPointContainer!private! !
+!
 
 !IConnectionPointContainer class methodsFor!
 
@@ -86,5 +88,7 @@ defineFunctions
 		defineFunction: #FindConnectionPoint:ppCP:
 			argumentTypes: 'GUID* IConnectionPoint**'
 ! !
-!IConnectionPointContainer class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IConnectionPointContainer class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

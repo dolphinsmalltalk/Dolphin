@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DWORD subclass: #SDWORD
 	instanceVariableNames: ''
@@ -36,10 +36,12 @@ value: anInteger
 	"Set the receiver's 'value' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_value put: anInteger! !
-!SDWORD categoriesFor: #isSigned!public!testing! !
-!SDWORD categoriesFor: #unsignedValue:!accessing!public! !
-!SDWORD categoriesFor: #value!**compiled accessors**!public! !
-!SDWORD categoriesFor: #value:!**compiled accessors**!public! !
+!SDWORD categoriesForMethods!
+isSigned!public!testing! !
+unsignedValue:!accessing!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !SDWORD class methodsFor!
 
@@ -69,8 +71,10 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!SDWORD class categoriesFor: #defineFields!public!template definition! !
-!SDWORD class categoriesFor: #fromUnsignedInteger:!instance creation!public! !
-!SDWORD class categoriesFor: #initialize!development!initializing!private! !
-!SDWORD class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!SDWORD class categoriesForMethods!
+defineFields!public!template definition! !
+fromUnsignedInteger:!instance creation!public! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

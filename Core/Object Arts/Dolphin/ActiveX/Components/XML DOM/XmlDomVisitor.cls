@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #XmlDomVisitor
 	instanceVariableNames: ''
@@ -60,20 +60,22 @@ visitProcessingInstruction: anIXMLDOMProcessingInstruction
 
 visitText: anIXMLDOMText
 	self visitCharacterData: anIXMLDOMText! !
-!XmlDomVisitor categoriesFor: #visitAttribute:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitCDATA:!public! !
-!XmlDomVisitor categoriesFor: #visitCharacterData:!private! !
-!XmlDomVisitor categoriesFor: #visitComment:!public! !
-!XmlDomVisitor categoriesFor: #visitDocument:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitDocumentType:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitDomNode:!private!visiting! !
-!XmlDomVisitor categoriesFor: #visitElement:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitEntity:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitEntityReference:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitNode:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitNodeChildren:!private!visiting! !
-!XmlDomVisitor categoriesFor: #visitNodes:!private!visiting! !
-!XmlDomVisitor categoriesFor: #visitNotation:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitProcessingInstruction:!public!visiting! !
-!XmlDomVisitor categoriesFor: #visitText:!public! !
+!XmlDomVisitor categoriesForMethods!
+visitAttribute:!public!visiting! !
+visitCDATA:!public! !
+visitCharacterData:!private! !
+visitComment:!public! !
+visitDocument:!public!visiting! !
+visitDocumentType:!public!visiting! !
+visitDomNode:!private!visiting! !
+visitElement:!public!visiting! !
+visitEntity:!public!visiting! !
+visitEntityReference:!public!visiting! !
+visitNode:!public!visiting! !
+visitNodeChildren:!private!visiting! !
+visitNodes:!private!visiting! !
+visitNotation:!public!visiting! !
+visitProcessingInstruction:!public!visiting! !
+visitText:!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 COMFunctionAbstract subclass: #UnkReleaseFunction
 	instanceVariableNames: ''
@@ -31,9 +31,11 @@ selector
 	"Private - Answer the selector sent when the receiver is evaluated."
 
 	^#Release! !
-!UnkReleaseFunction categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
-!UnkReleaseFunction categoriesFor: #descriptor!accessing!private! !
-!UnkReleaseFunction categoriesFor: #selector!accessing!private! !
+!UnkReleaseFunction categoriesForMethods!
+callback:interface:withArgumentsAt:!evaluating!private! !
+descriptor!accessing!private! !
+selector!accessing!private! !
+!
 
 !UnkReleaseFunction class methodsFor!
 
@@ -51,6 +53,8 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Descriptor := nil! !
-!UnkReleaseFunction class categoriesFor: #initialize!development!initializing!private! !
-!UnkReleaseFunction class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!UnkReleaseFunction class categoriesForMethods!
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

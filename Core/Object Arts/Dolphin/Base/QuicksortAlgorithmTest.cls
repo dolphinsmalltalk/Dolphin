@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SortAlgorithmTest subclass: #QuicksortAlgorithmTest
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ QuicksortAlgorithmTest comment: ''!
 
 algorithmToTest
 	^QuicksortAlgorithm! !
-!QuicksortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
+!QuicksortAlgorithmTest categoriesForMethods!
+algorithmToTest!private!unit tests! !
+!
 

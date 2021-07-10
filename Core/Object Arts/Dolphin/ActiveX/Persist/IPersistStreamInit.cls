@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IPersistStream subclass: #IPersistStreamInit
 	instanceVariableNames: ''
@@ -33,8 +33,10 @@ InitNew
 
 	<virtual stdcall: sdword 9>
 	^self invalidCall: _failureCode! !
-!IPersistStreamInit categoriesFor: #initNew!initializing!public! !
-!IPersistStreamInit categoriesFor: #InitNew!COM Interfaces-IPersistStreamInit!public! !
+!IPersistStreamInit categoriesForMethods!
+initNew!initializing!public! !
+InitNew!COM Interfaces-IPersistStreamInit!public! !
+!
 
 IPersistStreamInit methodProtocol: #IPersistStreamInit attributes: #(#readOnly) selectors: #(#GetClassID: #GetSizeMax: #InitNew #IsDirty #Load: #Save:fClearDirty:)!
 
@@ -47,5 +49,7 @@ defineFunctions
 
 	self
 		defineFunction: #InitNew returnType: 'sdword'! !
-!IPersistStreamInit class categoriesFor: #defineFunctions!initializing!public! !
+!IPersistStreamInit class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

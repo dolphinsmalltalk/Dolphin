@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 COMInterfaceImp subclass: #COMEnumerator
 	instanceVariableNames: 'enumClass contents'
@@ -96,15 +96,17 @@ supportedInterfaces
 	This will vary on a per-instance basis."
 
 	^Array with: enumClass! !
-!COMEnumerator categoriesFor: #arrayBufferAt:length:!COM Interfaces-IEnumXXXX!private! !
-!COMEnumerator categoriesFor: #Clone:!COM Interfaces-IEnumXXXX!public! !
-!COMEnumerator categoriesFor: #copyElements:length:!COM Interfaces-IEnumXXXX!private! !
-!COMEnumerator categoriesFor: #Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!public! !
-!COMEnumerator categoriesFor: #nextElement!COM Interfaces-IEnumXXXX!private! !
-!COMEnumerator categoriesFor: #Reset!COM Interfaces-IEnumXXXX!public! !
-!COMEnumerator categoriesFor: #setEnumClass:contents:!accessing!private! !
-!COMEnumerator categoriesFor: #Skip:!COM Interfaces-IEnumXXXX!public! !
-!COMEnumerator categoriesFor: #supportedInterfaces!constants!public! !
+!COMEnumerator categoriesForMethods!
+arrayBufferAt:length:!COM Interfaces-IEnumXXXX!private! !
+Clone:!COM Interfaces-IEnumXXXX!public! !
+copyElements:length:!COM Interfaces-IEnumXXXX!private! !
+Next:rgelt:pceltFetched:!COM Interfaces-IEnumXXXX!public! !
+nextElement!COM Interfaces-IEnumXXXX!private! !
+Reset!COM Interfaces-IEnumXXXX!public! !
+setEnumClass:contents:!accessing!private! !
+Skip:!COM Interfaces-IEnumXXXX!public! !
+supportedInterfaces!constants!public! !
+!
 
 COMEnumerator methodProtocol: #IEnumXXXX attributes: #() selectors: #(#Clone: #Next:rgelt:pceltFetched: #Reset #Skip:)!
 
@@ -123,6 +125,8 @@ newEnumerator: enumClass onStream: stream
 	^self new
 		setEnumClass: enumClass contents: stream;
 		queryInterface: enumClass! !
-!COMEnumerator class categoriesFor: #newEnumerator:on:!instance creation!public! !
-!COMEnumerator class categoriesFor: #newEnumerator:onStream:!instance creation!public! !
+!COMEnumerator class categoriesForMethods!
+newEnumerator:on:!instance creation!public! !
+newEnumerator:onStream:!instance creation!public! !
+!
 

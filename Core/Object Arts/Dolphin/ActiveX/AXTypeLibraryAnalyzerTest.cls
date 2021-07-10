@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #AXTypeLibraryAnalyzerTest
 	instanceVariableNames: 'analyzer'
@@ -73,15 +73,19 @@ testQuotesInIDL
 			class := Smalltalk at: #TLATESTLibITestQuotesInIDL.
 			self assert: class comment notEmpty.
 			self assert: (Compiler evaluate: class comment printString) = class comment]! !
-!AXTypeLibraryAnalyzerTest categoriesFor: #setUp!public!unit tests! !
-!AXTypeLibraryAnalyzerTest categoriesFor: #tearDown!public!unit tests! !
-!AXTypeLibraryAnalyzerTest categoriesFor: #testDefaultArgs!public!unit tests! !
-!AXTypeLibraryAnalyzerTest categoriesFor: #testDispinterfacePropGetOptionalArguments!public!unit tests! !
-!AXTypeLibraryAnalyzerTest categoriesFor: #testQuotesInIDL!public!unit tests! !
+!AXTypeLibraryAnalyzerTest categoriesForMethods!
+setUp!public!unit tests! !
+tearDown!public!unit tests! !
+testDefaultArgs!public!unit tests! !
+testDispinterfacePropGetOptionalArguments!public!unit tests! !
+testQuotesInIDL!public!unit tests! !
+!
 
 !AXTypeLibraryAnalyzerTest class methodsFor!
 
 resources
 	^Array with: TestTypelib! !
-!AXTypeLibraryAnalyzerTest class categoriesFor: #resources!public!unit tests! !
+!AXTypeLibraryAnalyzerTest class categoriesForMethods!
+resources!public!unit tests! !
+!
 

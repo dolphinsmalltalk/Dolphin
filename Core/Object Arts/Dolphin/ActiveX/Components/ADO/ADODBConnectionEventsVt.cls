@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #ADODBConnectionEventsVt
 	instanceVariableNames: ''
@@ -314,24 +314,26 @@ WillExecute: source CursorType: cursorType LockType: lockType Options: options a
 
 	<virtual stdcall: hresult 8 bstr* sdword* sdword* sdword* sdword* ADODB_Command* ADODB_Recordset* ADODB_Connection*>
 	^self invalidCall: _failureCode! !
-!ADODBConnectionEventsVt categoriesFor: #beginTransComplete:pError:adStatus:pConnection:!**auto generated**!methods!public! !
-!ADODBConnectionEventsVt categoriesFor: #BeginTransComplete:pError:adStatus:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
-!ADODBConnectionEventsVt categoriesFor: #commitTransComplete:adStatus:pConnection:!**auto generated**!methods!public! !
-!ADODBConnectionEventsVt categoriesFor: #CommitTransComplete:adStatus:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
-!ADODBConnectionEventsVt categoriesFor: #connectComplete:adStatus:pConnection:!**auto generated**!methods!public! !
-!ADODBConnectionEventsVt categoriesFor: #ConnectComplete:adStatus:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
-!ADODBConnectionEventsVt categoriesFor: #disconnect:pConnection:!**auto generated**!methods!public! !
-!ADODBConnectionEventsVt categoriesFor: #Disconnect:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
-!ADODBConnectionEventsVt categoriesFor: #executeComplete:pError:adStatus:pCommand:pRecordset:pConnection:!**auto generated**!methods!public! !
-!ADODBConnectionEventsVt categoriesFor: #ExecuteComplete:pError:adStatus:pCommand:pRecordset:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
-!ADODBConnectionEventsVt categoriesFor: #infoMessage:adStatus:pConnection:!**auto generated**!methods!public! !
-!ADODBConnectionEventsVt categoriesFor: #InfoMessage:adStatus:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
-!ADODBConnectionEventsVt categoriesFor: #rollbackTransComplete:adStatus:pConnection:!**auto generated**!methods!public! !
-!ADODBConnectionEventsVt categoriesFor: #RollbackTransComplete:adStatus:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
-!ADODBConnectionEventsVt categoriesFor: #willConnect:userID:password:options:adStatus:pConnection:!**auto generated**!methods!public! !
-!ADODBConnectionEventsVt categoriesFor: #WillConnect:UserID:Password:Options:adStatus:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
-!ADODBConnectionEventsVt categoriesFor: #willExecute:cursorType:lockType:options:adStatus:pCommand:pRecordset:pConnection:!**auto generated**!methods!public! !
-!ADODBConnectionEventsVt categoriesFor: #WillExecute:CursorType:LockType:Options:adStatus:pCommand:pRecordset:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
+!ADODBConnectionEventsVt categoriesForMethods!
+beginTransComplete:pError:adStatus:pConnection:!**auto generated**!methods!public! !
+BeginTransComplete:pError:adStatus:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
+commitTransComplete:adStatus:pConnection:!**auto generated**!methods!public! !
+CommitTransComplete:adStatus:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
+connectComplete:adStatus:pConnection:!**auto generated**!methods!public! !
+ConnectComplete:adStatus:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
+disconnect:pConnection:!**auto generated**!methods!public! !
+Disconnect:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
+executeComplete:pError:adStatus:pCommand:pRecordset:pConnection:!**auto generated**!methods!public! !
+ExecuteComplete:pError:adStatus:pCommand:pRecordset:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
+infoMessage:adStatus:pConnection:!**auto generated**!methods!public! !
+InfoMessage:adStatus:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
+rollbackTransComplete:adStatus:pConnection:!**auto generated**!methods!public! !
+RollbackTransComplete:adStatus:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
+willConnect:userID:password:options:adStatus:pConnection:!**auto generated**!methods!public! !
+WillConnect:UserID:Password:Options:adStatus:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
+willExecute:cursorType:lockType:options:adStatus:pCommand:pRecordset:pConnection:!**auto generated**!methods!public! !
+WillExecute:CursorType:LockType:Options:adStatus:pCommand:pRecordset:pConnection:!**auto generated**!COM Interfaces-ConnectionEventsVt!private! !
+!
 
 !ADODBConnectionEventsVt class methodsFor!
 
@@ -359,5 +361,7 @@ defineFunctions
 		defineFunction: #Disconnect:pConnection:
 			argumentTypes: 'sdword* ADODB_Connection*'
 ! !
-!ADODBConnectionEventsVt class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBConnectionEventsVt class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #TimeStampTest
 	instanceVariableNames: ''
@@ -93,13 +93,15 @@ testFromSYSTEMTIME
 	self assert: ts time second truncated equals: sysTime wSecond.
 	self assert: ts time millisecond equals: sysTime wMilliseconds.
 	self assert: sysTime asTimeStamp equals: ts! !
-!TimeStampTest categoriesFor: #currentTimeStamp!helpers!private! !
-!TimeStampTest categoriesFor: #testAddSeconds!public! !
-!TimeStampTest categoriesFor: #testAsMilliseconds!public! !
-!TimeStampTest categoriesFor: #testAsSeconds!public! !
-!TimeStampTest categoriesFor: #testCurrentUTC!public! !
-!TimeStampTest categoriesFor: #testDateTime!public!unit tests! !
-!TimeStampTest categoriesFor: #testFromMilliseconds!public! !
-!TimeStampTest categoriesFor: #testFromSeconds!public! !
-!TimeStampTest categoriesFor: #testFromSYSTEMTIME!public! !
+!TimeStampTest categoriesForMethods!
+currentTimeStamp!helpers!private! !
+testAddSeconds!public! !
+testAsMilliseconds!public! !
+testAsSeconds!public! !
+testCurrentUTC!public! !
+testDateTime!public!unit tests! !
+testFromMilliseconds!public! !
+testFromSeconds!public! !
+testFromSYSTEMTIME!public! !
+!
 

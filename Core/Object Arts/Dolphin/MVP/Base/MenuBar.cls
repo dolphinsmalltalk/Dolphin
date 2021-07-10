@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Menu subclass: #MenuBar
 	instanceVariableNames: ''
@@ -44,9 +44,11 @@ showIn: aWindow position: aPos
 	"Private - Show the receiver in aWindow at aPos."
 
 	^self shouldNotImplement! !
-!MenuBar categoriesFor: #createHandle!private!realizing/unrealizing! !
-!MenuBar categoriesFor: #isMenuBar!public!testing! !
-!MenuBar categoriesFor: #printOn:!printing!public! !
-!MenuBar categoriesFor: #queryAlong:!operations!public! !
-!MenuBar categoriesFor: #showIn:position:!drawing!private! !
+!MenuBar categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+isMenuBar!public!testing! !
+printOn:!printing!public! !
+queryAlong:!operations!public! !
+showIn:position:!drawing!private! !
+!
 

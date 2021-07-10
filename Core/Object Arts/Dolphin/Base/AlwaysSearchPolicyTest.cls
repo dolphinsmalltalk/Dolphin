@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SearchPolicyTest subclass: #AlwaysSearchPolicyTest
 	instanceVariableNames: ''
@@ -30,6 +30,8 @@ testCompareWith
 	self assert: (policy compare: #hash with: #identityHash).
 	self assert: (policy compare: $a with: $a).
 	self assert: (policy compare: $a with: $b)! !
-!AlwaysSearchPolicyTest categoriesFor: #policyClass!private!unit tests! !
-!AlwaysSearchPolicyTest categoriesFor: #testCompareWith!public!unit tests! !
+!AlwaysSearchPolicyTest categoriesForMethods!
+policyClass!private!unit tests! !
+testCompareWith!public!unit tests! !
+!
 

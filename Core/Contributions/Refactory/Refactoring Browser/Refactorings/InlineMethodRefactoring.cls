@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodRefactoring subclass: #InlineMethodRefactoring
 	instanceVariableNames: 'sourceInterval inlineParseTree sourceParseTree sourceSelector sourceMessage inlineClass'
@@ -355,38 +355,40 @@ writeGuardClauses
 			with: '`@methodName: `@args | `@temps | `@.s1. `@boolean ifTrue: [`@.s2. ^self] ifFalse: [| `@t1 | `@.Stmts1. ^`@r1]'.
 	[rewriter executeTree: inlineParseTree] 
 		whileTrue: [inlineParseTree := rewriter tree]! !
-!InlineMethodRefactoring categoriesFor: #addSelfReturn!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #addTemporary:assignedTo:!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #checkSuperMessages!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #compileMethod!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #findSelectedMessage!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #getOptionImplementorToInline:!options!private! !
-!InlineMethodRefactoring categoriesFor: #hasMultipleReturns!public!testing! !
-!InlineMethodRefactoring categoriesFor: #inline:inMethod:forClass:!initialize/release!public! !
-!InlineMethodRefactoring categoriesFor: #inlineClass!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #inlineSelector!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #inlineSourceReplacing:!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #insertInlinedMethod!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #isOverridden!public! !
-!InlineMethodRefactoring categoriesFor: #isPrimitive!public!testing! !
-!InlineMethodRefactoring categoriesFor: #moveComments!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #normalizeIfTrues!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #normalizeReturns!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #parseInlineMethod!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!InlineMethodRefactoring categoriesFor: #removeEmptyIfTrues!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #removeImmediateBlocks!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #removeReturns!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #renameConflictingTemporaries!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #renameConflictingTemporary:!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #renameTemporary:to:!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #replaceArgument:with:!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #replaceArguments!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #rewriteCascadedMessage!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #rewriteInlinedTree!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!InlineMethodRefactoring categoriesFor: #transform!public!transforming! !
-!InlineMethodRefactoring categoriesFor: #writeGuardClauses!public!transforming! !
+!InlineMethodRefactoring categoriesForMethods!
+addSelfReturn!public!transforming! !
+addTemporary:assignedTo:!public!transforming! !
+checkSuperMessages!public!transforming! !
+compileMethod!public!transforming! !
+findSelectedMessage!public!transforming! !
+getOptionImplementorToInline:!options!private! !
+hasMultipleReturns!public!testing! !
+inline:inMethod:forClass:!initialize/release!public! !
+inlineClass!public!transforming! !
+inlineSelector!public!transforming! !
+inlineSourceReplacing:!public!transforming! !
+insertInlinedMethod!public!transforming! !
+isOverridden!public! !
+isPrimitive!public!testing! !
+moveComments!public!transforming! !
+normalizeIfTrues!public!transforming! !
+normalizeReturns!public!transforming! !
+parseInlineMethod!public!transforming! !
+preconditions!preconditions!public! !
+removeEmptyIfTrues!public!transforming! !
+removeImmediateBlocks!public!transforming! !
+removeReturns!public!transforming! !
+renameConflictingTemporaries!public!transforming! !
+renameConflictingTemporary:!public!transforming! !
+renameTemporary:to:!public!transforming! !
+replaceArgument:with:!public!transforming! !
+replaceArguments!public!transforming! !
+rewriteCascadedMessage!public!transforming! !
+rewriteInlinedTree!public!transforming! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+writeGuardClauses!public!transforming! !
+!
 
 !InlineMethodRefactoring class methodsFor!
 
@@ -407,7 +409,9 @@ model: aRBNamespace inline: anInterval inMethod: aSelector forClass: aClass
 			inMethod: aSelector
 			forClass: aClass;
 		yourself! !
-!InlineMethodRefactoring class categoriesFor: #initialize!class initialization!public! !
-!InlineMethodRefactoring class categoriesFor: #inline:inMethod:forClass:!instance creation!public! !
-!InlineMethodRefactoring class categoriesFor: #model:inline:inMethod:forClass:!instance creation!public! !
+!InlineMethodRefactoring class categoriesForMethods!
+initialize!class initialization!public! !
+inline:inMethod:forClass:!instance creation!public! !
+model:inline:inMethod:forClass:!instance creation!public! !
+!
 

@@ -121,8 +121,10 @@ getRichTextIfNone: exceptionHandler
 	result of evaluating the <niladicValuable> exceptionHandler."
 
 	^self getRegisteredFormat: #RichText ifNone: exceptionHandler! !
-!Clipboard categoriesFor: #getRichText!accessing!public! !
-!Clipboard categoriesFor: #getRichTextIfNone:!accessing!public! !
+!Clipboard categoriesForMethods!
+getRichText!accessing!public! !
+getRichTextIfNone:!accessing!public! !
+!
 
 !String methodsFor!
 
@@ -130,7 +132,9 @@ asRichText
 	"Answer the receiver converted to a RichText instance"
 
 	^RichText fromString: self! !
-!String categoriesFor: #asRichText!converting!public! !
+!String categoriesForMethods!
+asRichText!converting!public! !
+!
 
 !TextEdit methodsFor!
 
@@ -162,10 +166,12 @@ selectionRtf: aString
 	RichText/Strings."
 
 	! !
-!TextEdit categoriesFor: #richText!accessing!public! !
-!TextEdit categoriesFor: #richTextClass!accessing!private! !
-!TextEdit categoriesFor: #selectionRichText:!private!selection! !
-!TextEdit categoriesFor: #selectionRtf:!private!selection! !
+!TextEdit categoriesForMethods!
+richText!accessing!public! !
+richTextClass!accessing!private! !
+selectionRichText:!private!selection! !
+selectionRtf:!private!selection! !
+!
 
 !View methodsFor!
 
@@ -174,7 +180,9 @@ richText
 	May be overridden by subclasses which actually contain rich text."
 
 	^self plainText asRichText! !
-!View categoriesFor: #richText!accessing!public! !
+!View categoriesForMethods!
+richText!accessing!public! !
+!
 
 "End of package definition"!
 

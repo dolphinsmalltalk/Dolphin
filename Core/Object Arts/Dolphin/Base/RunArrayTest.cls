@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ArrayedCollectionTest subclass: #RunArrayTest
 	instanceVariableNames: ''
@@ -21,8 +21,10 @@ testReplaceIdentityWith
 
 testResize
 	self shouldnt: [super testResize] implement: #resize:! !
-!RunArrayTest categoriesFor: #collectionClass!helpers!private! !
-!RunArrayTest categoriesFor: #testReplaceFromToWithStartingAt!public! !
-!RunArrayTest categoriesFor: #testReplaceIdentityWith!public! !
-!RunArrayTest categoriesFor: #testResize!public!unit tests! !
+!RunArrayTest categoriesForMethods!
+collectionClass!helpers!private! !
+testReplaceFromToWithStartingAt!public! !
+testReplaceIdentityWith!public! !
+testResize!public!unit tests! !
+!
 

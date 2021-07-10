@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ChangeMethodNameRefactoring subclass: #AddParameterRefactoring
 	instanceVariableNames: 'initializer senders'
@@ -138,18 +138,20 @@ verifyInitializationExpression
 			[self 
 				refactoringError: 'The initialization code cannot be a return node or a list of statements'].
 	self checkVariableReferencesIn: tree! !
-!AddParameterRefactoring categoriesFor: #addParameterToMethod:in:newSelector:initializer:!initialize/release!public! !
-!AddParameterRefactoring categoriesFor: #checkSendersAccessTo:!preconditions!public! !
-!AddParameterRefactoring categoriesFor: #checkVariableReferencesIn:!preconditions!public! !
-!AddParameterRefactoring categoriesFor: #modifyImplementorParseTree:in:!private! !
-!AddParameterRefactoring categoriesFor: #myConditions!preconditions!public! !
-!AddParameterRefactoring categoriesFor: #newSelectorString!private! !
-!AddParameterRefactoring categoriesFor: #parseTreeRewriter!private! !
-!AddParameterRefactoring categoriesFor: #safeVariableNameFor:temporaries:!private! !
-!AddParameterRefactoring categoriesFor: #senders!private! !
-!AddParameterRefactoring categoriesFor: #storeOn:!printing!public! !
-!AddParameterRefactoring categoriesFor: #suggestedVariableNameIn:!private! !
-!AddParameterRefactoring categoriesFor: #verifyInitializationExpression!preconditions!public! !
+!AddParameterRefactoring categoriesForMethods!
+addParameterToMethod:in:newSelector:initializer:!initialize/release!public! !
+checkSendersAccessTo:!preconditions!public! !
+checkVariableReferencesIn:!preconditions!public! !
+modifyImplementorParseTree:in:!private! !
+myConditions!preconditions!public! !
+newSelectorString!private! !
+parseTreeRewriter!private! !
+safeVariableNameFor:temporaries:!private! !
+senders!private! !
+storeOn:!printing!public! !
+suggestedVariableNameIn:!private! !
+verifyInitializationExpression!preconditions!public! !
+!
 
 !AddParameterRefactoring class methodsFor!
 
@@ -167,6 +169,8 @@ model: aRBNamespace addParameterToMethod: aSelector in: aClass newSelector: newS
 			newSelector: newSelector
 			initializer: init;
 		yourself! !
-!AddParameterRefactoring class categoriesFor: #addParameterToMethod:in:newSelector:initializer:!instance creation!public! !
-!AddParameterRefactoring class categoriesFor: #model:addParameterToMethod:in:newSelector:initializer:!instance creation!public! !
+!AddParameterRefactoring class categoriesForMethods!
+addParameterToMethod:in:newSelector:initializer:!instance creation!public! !
+model:addParameterToMethod:in:newSelector:initializer:!instance creation!public! !
+!
 

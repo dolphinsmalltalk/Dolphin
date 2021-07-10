@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Dictionary variableSubclass: #RegKeyAbstract
 	instanceVariableNames: 'handle name rootKey parentPath keyInfo sam'
@@ -750,74 +750,76 @@ valueFromObject: value
 						nextPut: Character null].
 			^#stringArray -> stream contents].
 	^#binary -> value asByteArray! !
-!RegKeyAbstract categoriesFor: #=!comparing!public! !
-!RegKeyAbstract categoriesFor: #add:!adding!public! !
-!RegKeyAbstract categoriesFor: #asParameter!converting!public! !
-!RegKeyAbstract categoriesFor: #associationAt:ifAbsent:!accessing!public! !
-!RegKeyAbstract categoriesFor: #associationsDo:!enumerating!public! !
-!RegKeyAbstract categoriesFor: #at:ifAbsent:!accessing!public! !
-!RegKeyAbstract categoriesFor: #at:put:!accessing!public! !
-!RegKeyAbstract categoriesFor: #basicFree!private!realizing/unrealizing! !
-!RegKeyAbstract categoriesFor: #basicRealize!private!realizing/unrealizing! !
-!RegKeyAbstract categoriesFor: #createKey:!adding!public! !
-!RegKeyAbstract categoriesFor: #decodeMultiSz:size:!helpers!private! !
-!RegKeyAbstract categoriesFor: #displayOn:!displaying!public! !
-!RegKeyAbstract categoriesFor: #do:!enumerating!public! !
-!RegKeyAbstract categoriesFor: #fileOutOn:!public!storing! !
-!RegKeyAbstract categoriesFor: #free!public!realizing/unrealizing! !
-!RegKeyAbstract categoriesFor: #fullPath!accessing!public! !
-!RegKeyAbstract categoriesFor: #handle!accessing!public! !
-!RegKeyAbstract categoriesFor: #handle:!accessing!private! !
-!RegKeyAbstract categoriesFor: #hash!comparing!public! !
-!RegKeyAbstract categoriesFor: #includesKey:!public!searching! !
-!RegKeyAbstract categoriesFor: #isRoot!public!testing! !
-!RegKeyAbstract categoriesFor: #key!accessing!public! !
-!RegKeyAbstract categoriesFor: #key:!accessing!public! !
-!RegKeyAbstract categoriesFor: #keyInfo!accessing!public! !
-!RegKeyAbstract categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!RegKeyAbstract categoriesFor: #keysDo:!enumerating!public! !
-!RegKeyAbstract categoriesFor: #lookup:!accessing!public! !
-!RegKeyAbstract categoriesFor: #mode:!accessing!public! !
-!RegKeyAbstract categoriesFor: #name!accessing!public! !
-!RegKeyAbstract categoriesFor: #name:parentPath:rootKey:sam:!initializing!private! !
-!RegKeyAbstract categoriesFor: #newSubKey:sam:!helpers!private! !
-!RegKeyAbstract categoriesFor: #objectFromValue:type:size:!helpers!private! !
-!RegKeyAbstract categoriesFor: #parentKey!accessing!public! !
-!RegKeyAbstract categoriesFor: #parentPath!accessing!public! !
-!RegKeyAbstract categoriesFor: #pathFromRoot!accessing!public! !
-!RegKeyAbstract categoriesFor: #postCopy!copying!public! !
-!RegKeyAbstract categoriesFor: #printOn:!printing!public! !
-!RegKeyAbstract categoriesFor: #privateCreateKey:!helpers!private! !
-!RegKeyAbstract categoriesFor: #queryKeyInfo!accessing!public! !
-!RegKeyAbstract categoriesFor: #realize!public!realizing/unrealizing! !
-!RegKeyAbstract categoriesFor: #registryLibrary!constants!private! !
-!RegKeyAbstract categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!RegKeyAbstract categoriesFor: #removeSubKey:ifAbsent:!public!removing! !
-!RegKeyAbstract categoriesFor: #removeSubTree:ifAbsent:!public!removing! !
-!RegKeyAbstract categoriesFor: #removeSubValue:ifAbsent:!public!removing! !
-!RegKeyAbstract categoriesFor: #resize:!mutating!private! !
-!RegKeyAbstract categoriesFor: #rootHandle!accessing!public! !
-!RegKeyAbstract categoriesFor: #rootKey!accessing!public! !
-!RegKeyAbstract categoriesFor: #sam!accessing!public! !
-!RegKeyAbstract categoriesFor: #sam:!accessing!public! !
-!RegKeyAbstract categoriesFor: #shrink!mutating!public! !
-!RegKeyAbstract categoriesFor: #size!accessing!public! !
-!RegKeyAbstract categoriesFor: #species!accessing!public! !
-!RegKeyAbstract categoriesFor: #splitPath:!helpers!private! !
-!RegKeyAbstract categoriesFor: #subKeyClass!constants!private! !
-!RegKeyAbstract categoriesFor: #subKeyNamesDo:!enumerating!private! !
-!RegKeyAbstract categoriesFor: #subKeys!accessing!public! !
-!RegKeyAbstract categoriesFor: #subValueClass!constants!private! !
-!RegKeyAbstract categoriesFor: #subValueNamesAndValuesDo:!enumerating!public! !
-!RegKeyAbstract categoriesFor: #subValueNamesDo:!enumerating!public! !
-!RegKeyAbstract categoriesFor: #subValues!accessing!public! !
-!RegKeyAbstract categoriesFor: #value!accessing!public! !
-!RegKeyAbstract categoriesFor: #value:!accessing!public! !
-!RegKeyAbstract categoriesFor: #valueAt:!accessing!public! !
-!RegKeyAbstract categoriesFor: #valueAt:ifAbsent:!accessing!public! !
-!RegKeyAbstract categoriesFor: #valueAt:put:!accessing!public! !
-!RegKeyAbstract categoriesFor: #valueAt:put:type:!accessing!public! !
-!RegKeyAbstract categoriesFor: #valueFromObject:!helpers!private! !
+!RegKeyAbstract categoriesForMethods!
+=!comparing!public! !
+add:!adding!public! !
+asParameter!converting!public! !
+associationAt:ifAbsent:!accessing!public! !
+associationsDo:!enumerating!public! !
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+basicFree!private!realizing/unrealizing! !
+basicRealize!private!realizing/unrealizing! !
+createKey:!adding!public! !
+decodeMultiSz:size:!helpers!private! !
+displayOn:!displaying!public! !
+do:!enumerating!public! !
+fileOutOn:!public!storing! !
+free!public!realizing/unrealizing! !
+fullPath!accessing!public! !
+handle!accessing!public! !
+handle:!accessing!private! !
+hash!comparing!public! !
+includesKey:!public!searching! !
+isRoot!public!testing! !
+key!accessing!public! !
+key:!accessing!public! !
+keyInfo!accessing!public! !
+keysAndValuesDo:!enumerating!public! !
+keysDo:!enumerating!public! !
+lookup:!accessing!public! !
+mode:!accessing!public! !
+name!accessing!public! !
+name:parentPath:rootKey:sam:!initializing!private! !
+newSubKey:sam:!helpers!private! !
+objectFromValue:type:size:!helpers!private! !
+parentKey!accessing!public! !
+parentPath!accessing!public! !
+pathFromRoot!accessing!public! !
+postCopy!copying!public! !
+printOn:!printing!public! !
+privateCreateKey:!helpers!private! !
+queryKeyInfo!accessing!public! !
+realize!public!realizing/unrealizing! !
+registryLibrary!constants!private! !
+removeKey:ifAbsent:!public!removing! !
+removeSubKey:ifAbsent:!public!removing! !
+removeSubTree:ifAbsent:!public!removing! !
+removeSubValue:ifAbsent:!public!removing! !
+resize:!mutating!private! !
+rootHandle!accessing!public! !
+rootKey!accessing!public! !
+sam!accessing!public! !
+sam:!accessing!public! !
+shrink!mutating!public! !
+size!accessing!public! !
+species!accessing!public! !
+splitPath:!helpers!private! !
+subKeyClass!constants!private! !
+subKeyNamesDo:!enumerating!private! !
+subKeys!accessing!public! !
+subValueClass!constants!private! !
+subValueNamesAndValuesDo:!enumerating!public! !
+subValueNamesDo:!enumerating!public! !
+subValues!accessing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+valueAt:!accessing!public! !
+valueAt:ifAbsent:!accessing!public! !
+valueAt:put:!accessing!public! !
+valueAt:put:type:!accessing!public! !
+valueFromObject:!helpers!private! !
+!
 
 RegKeyAbstract methodProtocol: #association attributes: #(#ansi #readOnly) selectors: #(#key #key: #value #value:)!
 
@@ -959,23 +961,25 @@ usersRoot: mode
 	"Answer a new instance of the receiver, rooted in HKEY_USERS"
 
 	^self fromPredefinedKey: 'HKEY_USERS' mode: mode! !
-!RegKeyAbstract class categoriesFor: #branchClass!constants!public! !
-!RegKeyAbstract class categoriesFor: #classesRoot!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #classesRoot:!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #configRoot!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #defaultMode!constants!public! !
-!RegKeyAbstract class categoriesFor: #fromPredefinedKey:!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #fromPredefinedKey:mode:!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #fromPredefinedKey:sam:!instance creation!private! !
-!RegKeyAbstract class categoriesFor: #icon!constants!public! !
-!RegKeyAbstract class categoriesFor: #initialize!development!initializing!private! !
-!RegKeyAbstract class categoriesFor: #localMachineRoot!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #localMachineRoot:!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #myComputer!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #name:parentPath:rootKey:sam:!instance creation!private! !
-!RegKeyAbstract class categoriesFor: #new!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #roots!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #userRoot!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #usersRoot!instance creation!public! !
-!RegKeyAbstract class categoriesFor: #usersRoot:!instance creation!public! !
+!RegKeyAbstract class categoriesForMethods!
+branchClass!constants!public! !
+classesRoot!instance creation!public! !
+classesRoot:!instance creation!public! !
+configRoot!instance creation!public! !
+defaultMode!constants!public! !
+fromPredefinedKey:!instance creation!public! !
+fromPredefinedKey:mode:!instance creation!public! !
+fromPredefinedKey:sam:!instance creation!private! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+localMachineRoot!instance creation!public! !
+localMachineRoot:!instance creation!public! !
+myComputer!instance creation!public! !
+name:parentPath:rootKey:sam:!instance creation!private! !
+new!instance creation!public! !
+roots!instance creation!public! !
+userRoot!instance creation!public! !
+usersRoot!instance creation!public! !
+usersRoot:!instance creation!public! !
+!
 

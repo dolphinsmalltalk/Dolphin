@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PushButton subclass: #OwnerDrawnButton
 	instanceVariableNames: 'displayState transitionDurations shouldShowKeyboardCues animationEndTime setFocusTime'
@@ -289,37 +289,39 @@ wmSetFocus: message wParam: wParam lParam: lParam
 	self invalidate.
 
 	^super wmSetFocus: message wParam: wParam lParam: lParam! !
-!OwnerDrawnButton categoriesFor: #animateTransitionTo:!drawing!private! !
-!OwnerDrawnButton categoriesFor: #animationEndTime!accessing!private! !
-!OwnerDrawnButton categoriesFor: #animationEndTime:!accessing!private! !
-!OwnerDrawnButton categoriesFor: #defaultTransitionDurations!accessing!public! !
-!OwnerDrawnButton categoriesFor: #displayState!accessing!private! !
-!OwnerDrawnButton categoriesFor: #displayState:!accessing!private! !
-!OwnerDrawnButton categoriesFor: #drawOn:!drawing!private! !
-!OwnerDrawnButton categoriesFor: #durationOfTransition:!accessing!public! !
-!OwnerDrawnButton categoriesFor: #initialize!initialize/release!public! !
-!OwnerDrawnButton categoriesFor: #isHot!public!testing! !
-!OwnerDrawnButton categoriesFor: #isOffScreen!public!testing! !
-!OwnerDrawnButton categoriesFor: #isPressed!public!testing! !
-!OwnerDrawnButton categoriesFor: #iState!accessing!public! !
-!OwnerDrawnButton categoriesFor: #nilTransitionDurations!constants!public! !
-!OwnerDrawnButton categoriesFor: #nmCustomDraw:!event handling-win32!private! !
-!OwnerDrawnButton categoriesFor: #onCustomDraw:!event handling!public! !
-!OwnerDrawnButton categoriesFor: #setFocusTime!accessing!public! !
-!OwnerDrawnButton categoriesFor: #setFocusTime:!accessing!public! !
-!OwnerDrawnButton categoriesFor: #shouldAnimateTransitionTo:!public!testing! !
-!OwnerDrawnButton categoriesFor: #shouldShowFocusRect!public!testing! !
-!OwnerDrawnButton categoriesFor: #shouldShowKeyboardAccelerators!public!testing! !
-!OwnerDrawnButton categoriesFor: #shouldShowKeyboardCues!accessing!private! !
-!OwnerDrawnButton categoriesFor: #shouldShowKeyboardCues:!accessing!private! !
-!OwnerDrawnButton categoriesFor: #style!accessing!private! !
-!OwnerDrawnButton categoriesFor: #style:!accessing!private! !
-!OwnerDrawnButton categoriesFor: #themeTransitionDurations!constants!public! !
-!OwnerDrawnButton categoriesFor: #transitionDurations!accessing!private! !
-!OwnerDrawnButton categoriesFor: #transitionDurations:!accessing!private! !
-!OwnerDrawnButton categoriesFor: #transitionTo:!accessing!public! !
-!OwnerDrawnButton categoriesFor: #uState!accessing!public! !
-!OwnerDrawnButton categoriesFor: #wmKillFocus:wParam:lParam:!event handling-win32!private! !
-!OwnerDrawnButton categoriesFor: #wmPaint:wParam:lParam:!event handling-win32!private! !
-!OwnerDrawnButton categoriesFor: #wmSetFocus:wParam:lParam:!event handling-win32!private! !
+!OwnerDrawnButton categoriesForMethods!
+animateTransitionTo:!drawing!private! !
+animationEndTime!accessing!private! !
+animationEndTime:!accessing!private! !
+defaultTransitionDurations!accessing!public! !
+displayState!accessing!private! !
+displayState:!accessing!private! !
+drawOn:!drawing!private! !
+durationOfTransition:!accessing!public! !
+initialize!initialize/release!public! !
+isHot!public!testing! !
+isOffScreen!public!testing! !
+isPressed!public!testing! !
+iState!accessing!public! !
+nilTransitionDurations!constants!public! !
+nmCustomDraw:!event handling-win32!private! !
+onCustomDraw:!event handling!public! !
+setFocusTime!accessing!public! !
+setFocusTime:!accessing!public! !
+shouldAnimateTransitionTo:!public!testing! !
+shouldShowFocusRect!public!testing! !
+shouldShowKeyboardAccelerators!public!testing! !
+shouldShowKeyboardCues!accessing!private! !
+shouldShowKeyboardCues:!accessing!private! !
+style!accessing!private! !
+style:!accessing!private! !
+themeTransitionDurations!constants!public! !
+transitionDurations!accessing!private! !
+transitionDurations:!accessing!private! !
+transitionTo:!accessing!public! !
+uState!accessing!public! !
+wmKillFocus:wParam:lParam:!event handling-win32!private! !
+wmPaint:wParam:lParam:!event handling-win32!private! !
+wmSetFocus:wParam:lParam:!event handling-win32!private! !
+!
 

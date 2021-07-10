@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_STATE_INFO
 	instanceVariableNames: ''
@@ -60,13 +60,15 @@ value: anInteger
 			[self
 				Present: true;
 				State: anInteger]! !
-!HTTP_STATE_INFO categoriesFor: #isActive!accessing!public! !
-!HTTP_STATE_INFO categoriesFor: #isActive:!accessing!public! !
-!HTTP_STATE_INFO categoriesFor: #printFields:on:limit:!printing!private! !
-!HTTP_STATE_INFO categoriesFor: #State!**compiled accessors**!public! !
-!HTTP_STATE_INFO categoriesFor: #State:!**compiled accessors**!public! !
-!HTTP_STATE_INFO categoriesFor: #value!public! !
-!HTTP_STATE_INFO categoriesFor: #value:!public! !
+!HTTP_STATE_INFO categoriesForMethods!
+isActive!accessing!public! !
+isActive:!accessing!public! !
+printFields:on:limit:!printing!private! !
+State!**compiled accessors**!public! !
+State:!**compiled accessors**!public! !
+value!public! !
+value:!public! !
+!
 
 !HTTP_STATE_INFO class methodsFor!
 
@@ -102,9 +104,11 @@ inactive
 
 propertyId
 	^HttpServerStateProperty! !
-!HTTP_STATE_INFO class categoriesFor: #active!instance creation!public! !
-!HTTP_STATE_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_STATE_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HTTP_STATE_INFO class categoriesFor: #inactive!instance creation!public! !
-!HTTP_STATE_INFO class categoriesFor: #propertyId!constants!public! !
+!HTTP_STATE_INFO class categoriesForMethods!
+active!instance creation!public! !
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+inactive!instance creation!public! !
+propertyId!constants!public! !
+!
 

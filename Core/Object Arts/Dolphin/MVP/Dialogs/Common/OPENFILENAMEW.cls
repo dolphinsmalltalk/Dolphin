@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CommonDialogStructure subclass: #OPENFILENAMEW
 	instanceVariableNames: 'fileName title filter defExt initialDir'
@@ -194,34 +194,36 @@ title: aString
 
 	title := aString asUtf16String.
 	self lpstrTitle: title! !
-!OPENFILENAMEW categoriesFor: #defaultExtension!accessing!public! !
-!OPENFILENAMEW categoriesFor: #defaultExtension:!accessing!public! !
-!OPENFILENAMEW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #fileName!accessing!public! !
-!OPENFILENAMEW categoriesFor: #fileName:!accessing!public! !
-!OPENFILENAMEW categoriesFor: #fileTypes:!accessing!public! !
-!OPENFILENAMEW categoriesFor: #flags!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #flags:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #flagsEx!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #flagsEx:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #hookFlag!accessing!public! !
-!OPENFILENAMEW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #initialDirectory:!accessing!public! !
-!OPENFILENAMEW categoriesFor: #lpfnHook:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #lpstrDefExt:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #lpstrFile!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #lpstrFile:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #lpstrFileTitle!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #lpstrFileTitle:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #lpstrFilter:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #lpstrInitialDir:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #lpstrTitle:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #nFilterIndex!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #nFilterIndex:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #nMaxFile:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #nMaxFileTitle:!**compiled accessors**!public! !
-!OPENFILENAMEW categoriesFor: #ownerView:!accessing!public! !
-!OPENFILENAMEW categoriesFor: #title:!accessing!public! !
+!OPENFILENAMEW categoriesForMethods!
+defaultExtension!accessing!public! !
+defaultExtension:!accessing!public! !
+dwSize:!**compiled accessors**!public! !
+fileName!accessing!public! !
+fileName:!accessing!public! !
+fileTypes:!accessing!public! !
+flags!**compiled accessors**!public! !
+flags:!**compiled accessors**!public! !
+flagsEx!**compiled accessors**!public! !
+flagsEx:!**compiled accessors**!public! !
+hookFlag!accessing!public! !
+hwndOwner:!**compiled accessors**!public! !
+initialDirectory:!accessing!public! !
+lpfnHook:!**compiled accessors**!public! !
+lpstrDefExt:!**compiled accessors**!public! !
+lpstrFile!**compiled accessors**!public! !
+lpstrFile:!**compiled accessors**!public! !
+lpstrFileTitle!**compiled accessors**!public! !
+lpstrFileTitle:!**compiled accessors**!public! !
+lpstrFilter:!**compiled accessors**!public! !
+lpstrInitialDir:!**compiled accessors**!public! !
+lpstrTitle:!**compiled accessors**!public! !
+nFilterIndex!**compiled accessors**!public! !
+nFilterIndex:!**compiled accessors**!public! !
+nMaxFile:!**compiled accessors**!public! !
+nMaxFileTitle:!**compiled accessors**!public! !
+ownerView:!accessing!public! !
+title:!accessing!public! !
+!
 
 !OPENFILENAMEW class methodsFor!
 
@@ -285,6 +287,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #lpstrFilter #nFilterIndex #lpstrFile #nMaxFile #lpstrFileTitle #nMaxFileTitle #lpstrInitialDir #lpstrTitle #flags #nFileOffset #nFileExtension #lpstrDefExt #lpfnHook #flagsEx)! !
-!OPENFILENAMEW class categoriesFor: #defineFields!public!template definition! !
-!OPENFILENAMEW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OPENFILENAMEW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

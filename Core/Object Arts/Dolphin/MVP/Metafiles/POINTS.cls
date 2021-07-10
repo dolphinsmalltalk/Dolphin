@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalPoint subclass: #POINTS
 	instanceVariableNames: ''
@@ -58,12 +58,14 @@ y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
 	bytes swordAtOffset: _OffsetOf_y put: anInteger! !
-!POINTS categoriesFor: #asDword!converting!public! !
-!POINTS categoriesFor: #asUIntPtr!converting!public! !
-!POINTS categoriesFor: #x!**compiled accessors**!public! !
-!POINTS categoriesFor: #x:!**compiled accessors**!public! !
-!POINTS categoriesFor: #y!**compiled accessors**!public! !
-!POINTS categoriesFor: #y:!**compiled accessors**!public! !
+!POINTS categoriesForMethods!
+asDword!converting!public! !
+asUIntPtr!converting!public! !
+x!**compiled accessors**!public! !
+x:!**compiled accessors**!public! !
+y!**compiled accessors**!public! !
+y:!**compiled accessors**!public! !
+!
 
 !POINTS class methodsFor!
 
@@ -88,6 +90,8 @@ x: x y: y
 				swordAtOffset: _OffsetOf_x put: x;
 				swordAtOffset: _OffsetOf_y put: y;
 				yourself)! !
-!POINTS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!POINTS class categoriesFor: #x:y:!instance creation!public! !
+!POINTS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+x:y:!instance creation!public! !
+!
 

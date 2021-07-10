@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #PRINTPAGERANGE
 	instanceVariableNames: ''
@@ -44,10 +44,12 @@ nToPage: anInteger
 	"Set the receiver's 'nToPage' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_nToPage put: anInteger! !
-!PRINTPAGERANGE categoriesFor: #nFromPage!**compiled accessors**!public! !
-!PRINTPAGERANGE categoriesFor: #nFromPage:!**compiled accessors**!public! !
-!PRINTPAGERANGE categoriesFor: #nToPage!**compiled accessors**!public! !
-!PRINTPAGERANGE categoriesFor: #nToPage:!**compiled accessors**!public! !
+!PRINTPAGERANGE categoriesForMethods!
+nFromPage!**compiled accessors**!public! !
+nFromPage:!**compiled accessors**!public! !
+nToPage!**compiled accessors**!public! !
+nToPage:!**compiled accessors**!public! !
+!
 
 !PRINTPAGERANGE class methodsFor!
 
@@ -69,6 +71,8 @@ defineFields
 
 getFieldNames
 	^#(#nFromPage #nToPage)! !
-!PRINTPAGERANGE class categoriesFor: #defineFields!public!template definition! !
-!PRINTPAGERANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!PRINTPAGERANGE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

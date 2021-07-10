@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalltalkToolShell subclass: #AXControlBrowser
 	instanceVariableNames: 'site windowStatus inspector eventsPresenter flags traceWindow progId'
@@ -331,40 +331,42 @@ updateControlInfo
 				list: (funcs collect: [:f | f selector -> f printIDL]);
 				view enable]
 		ifFalse: [eventsPresenter clear; view disable]! !
-!AXControlBrowser categoriesFor: #about!commands!public! !
-!AXControlBrowser categoriesFor: #browseIDL!commands!public! !
-!AXControlBrowser categoriesFor: #browseIDLOfTypeLib:!commands!public! !
-!AXControlBrowser categoriesFor: #chooseAmbientBackcolor!commands!public! !
-!AXControlBrowser categoriesFor: #chooseAmbientFont!commands!public! !
-!AXControlBrowser categoriesFor: #chooseAmbientForecolor!commands!public! !
-!AXControlBrowser categoriesFor: #controlHelp!commands!public! !
-!AXControlBrowser categoriesFor: #controlProperties!commands!public! !
-!AXControlBrowser categoriesFor: #controlSite!accessing!public! !
-!AXControlBrowser categoriesFor: #copyEventName!commands!public! !
-!AXControlBrowser categoriesFor: #createComponents!initializing!public! !
-!AXControlBrowser categoriesFor: #createSchematicWiring!initializing!public! !
-!AXControlBrowser categoriesFor: #editProperties!commands!public! !
-!AXControlBrowser categoriesFor: #fileNewControl!commands!public! !
-!AXControlBrowser categoriesFor: #initialize!initializing!private! !
-!AXControlBrowser categoriesFor: #inspectControl!commands!public! !
-!AXControlBrowser categoriesFor: #isTracingEvents!commands!public! !
-!AXControlBrowser categoriesFor: #isTracingEvents:!accessing!public! !
-!AXControlBrowser categoriesFor: #onDragEvent:!event handling!public! !
-!AXControlBrowser categoriesFor: #onEvent:withArguments:!event handling!private! !
-!AXControlBrowser categoriesFor: #onPropertyChanged:!event handling!private! !
-!AXControlBrowser categoriesFor: #onPropertyChanging:accept:!event handling!private! !
-!AXControlBrowser categoriesFor: #onViewOpened!event handling!public! !
-!AXControlBrowser categoriesFor: #progId:!operations!public! !
-!AXControlBrowser categoriesFor: #queryCommand:!commands!private! !
-!AXControlBrowser categoriesFor: #toggleAllowShowUI!commands!public! !
-!AXControlBrowser categoriesFor: #toggleAllowWindowless!commands!public! !
-!AXControlBrowser categoriesFor: #toggleDesignMode!commands!public! !
-!AXControlBrowser categoriesFor: #toggleDisplayAsDefault!commands!public! !
-!AXControlBrowser categoriesFor: #toggleEventTracing!commands!public! !
-!AXControlBrowser categoriesFor: #toggleFireControlEvents!commands!public! !
-!AXControlBrowser categoriesFor: #toggleFirePropertyNotifications!commands!public! !
-!AXControlBrowser categoriesFor: #trace:!operations!private! !
-!AXControlBrowser categoriesFor: #updateControlInfo!operations!private! !
+!AXControlBrowser categoriesForMethods!
+about!commands!public! !
+browseIDL!commands!public! !
+browseIDLOfTypeLib:!commands!public! !
+chooseAmbientBackcolor!commands!public! !
+chooseAmbientFont!commands!public! !
+chooseAmbientForecolor!commands!public! !
+controlHelp!commands!public! !
+controlProperties!commands!public! !
+controlSite!accessing!public! !
+copyEventName!commands!public! !
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+editProperties!commands!public! !
+fileNewControl!commands!public! !
+initialize!initializing!private! !
+inspectControl!commands!public! !
+isTracingEvents!commands!public! !
+isTracingEvents:!accessing!public! !
+onDragEvent:!event handling!public! !
+onEvent:withArguments:!event handling!private! !
+onPropertyChanged:!event handling!private! !
+onPropertyChanging:accept:!event handling!private! !
+onViewOpened!event handling!public! !
+progId:!operations!public! !
+queryCommand:!commands!private! !
+toggleAllowShowUI!commands!public! !
+toggleAllowWindowless!commands!public! !
+toggleDesignMode!commands!public! !
+toggleDisplayAsDefault!commands!public! !
+toggleEventTracing!commands!public! !
+toggleFireControlEvents!commands!public! !
+toggleFirePropertyNotifications!commands!public! !
+trace:!operations!private! !
+updateControlInfo!operations!private! !
+!
 
 !AXControlBrowser class methodsFor!
 
@@ -410,10 +412,12 @@ resource_Default_view
 
 toolsFolderHelpId
 	^10603! !
-!AXControlBrowser class categoriesFor: #displayOn:!displaying!public! !
-!AXControlBrowser class categoriesFor: #icon!constants!public! !
-!AXControlBrowser class categoriesFor: #initialize!initializing!must strip!private! !
-!AXControlBrowser class categoriesFor: #publishedAspects!public! !
-!AXControlBrowser class categoriesFor: #resource_Default_view!public!resources-views! !
-!AXControlBrowser class categoriesFor: #toolsFolderHelpId!constants!public! !
+!AXControlBrowser class categoriesForMethods!
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!must strip!private! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+toolsFolderHelpId!constants!public! !
+!
 

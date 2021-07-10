@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Notification subclass: #RaisedNotificationSignal
 	instanceVariableNames: 'signalType'
@@ -41,9 +41,11 @@ signalType: aSignal
 	a raise event."
 
 	signalType := aSignal! !
-!RaisedNotificationSignal categoriesFor: #_descriptionFormat!displaying!public! !
-!RaisedNotificationSignal categoriesFor: #defaultAction!handling!public! !
-!RaisedNotificationSignal categoriesFor: #isResumable!public!testing! !
-!RaisedNotificationSignal categoriesFor: #signalType!accessing!private! !
-!RaisedNotificationSignal categoriesFor: #signalType:!accessing!private! !
+!RaisedNotificationSignal categoriesForMethods!
+_descriptionFormat!displaying!public! !
+defaultAction!handling!public! !
+isResumable!public!testing! !
+signalType!accessing!private! !
+signalType:!accessing!private! !
+!
 

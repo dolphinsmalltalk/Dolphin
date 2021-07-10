@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #SUnitBrowserAbsUIState
 	instanceVariableNames: 'model'
@@ -33,12 +33,14 @@ model: aModel
 redBallIconSymbol
 
 	^#redBallIcon! !
-!SUnitBrowserAbsUIState categoriesFor: #configuration!accessing!private! !
-!SUnitBrowserAbsUIState categoriesFor: #greenBallIconSymbol!constants!private! !
-!SUnitBrowserAbsUIState categoriesFor: #initializeModel:!initializing!private! !
-!SUnitBrowserAbsUIState categoriesFor: #model!accessing!private! !
-!SUnitBrowserAbsUIState categoriesFor: #model:!accessing!private! !
-!SUnitBrowserAbsUIState categoriesFor: #redBallIconSymbol!constants!private! !
+!SUnitBrowserAbsUIState categoriesForMethods!
+configuration!accessing!private! !
+greenBallIconSymbol!constants!private! !
+initializeModel:!initializing!private! !
+model!accessing!private! !
+model:!accessing!private! !
+redBallIconSymbol!constants!private! !
+!
 
 !SUnitBrowserAbsUIState class methodsFor!
 
@@ -47,5 +49,7 @@ newOn: aModel
 	^self new
 		initializeModel: aModel;
 		yourself! !
-!SUnitBrowserAbsUIState class categoriesFor: #newOn:!instantiating!public! !
+!SUnitBrowserAbsUIState class categoriesForMethods!
+newOn:!instantiating!public! !
+!
 

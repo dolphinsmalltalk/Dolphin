@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RBParseTreeRule subclass: #RBSearchRule
 	instanceVariableNames: 'answerBlock'
@@ -25,10 +25,12 @@ searchForMethod: aString thenDo: aBlock
 searchForTree: aBRProgramNode thenDo: aBlock 
 	searchTree := aBRProgramNode.
 	answerBlock := aBlock! !
-!RBSearchRule categoriesFor: #canMatch:!public!testing! !
-!RBSearchRule categoriesFor: #searchFor:thenDo:!initialize/release!public! !
-!RBSearchRule categoriesFor: #searchForMethod:thenDo:!initialize/release!public! !
-!RBSearchRule categoriesFor: #searchForTree:thenDo:!initialize/release!public! !
+!RBSearchRule categoriesForMethods!
+canMatch:!public!testing! !
+searchFor:thenDo:!initialize/release!public! !
+searchForMethod:thenDo:!initialize/release!public! !
+searchForTree:thenDo:!initialize/release!public! !
+!
 
 !RBSearchRule class methodsFor!
 
@@ -40,7 +42,9 @@ searchForMethod: aString thenDo: aBlock
 
 searchForTree: aBRProgramNode thenDo: aBlock 
 	^self new searchForTree: aBRProgramNode thenDo: aBlock! !
-!RBSearchRule class categoriesFor: #searchFor:thenDo:!instance creation!public! !
-!RBSearchRule class categoriesFor: #searchForMethod:thenDo:!instance creation!public! !
-!RBSearchRule class categoriesFor: #searchForTree:thenDo:!instance creation!public! !
+!RBSearchRule class categoriesForMethods!
+searchFor:thenDo:!instance creation!public! !
+searchForMethod:thenDo:!instance creation!public! !
+searchForTree:thenDo:!instance creation!public! !
+!
 

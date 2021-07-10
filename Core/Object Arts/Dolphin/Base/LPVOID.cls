@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalScalar subclass: #LPVOID
 	instanceVariableNames: ''
@@ -30,9 +30,11 @@ value: anExternalAddress
 	"Set the receiver's 'value' field to the value of the argument, anExternalAddress"
 
 	bytes uintPtrAtOffset: _OffsetOf_value put: anExternalAddress! !
-!LPVOID categoriesFor: #asExternalAddress!converting!public! !
-!LPVOID categoriesFor: #value!**compiled accessors**!public! !
-!LPVOID categoriesFor: #value:!**compiled accessors**!public! !
+!LPVOID categoriesForMethods!
+asExternalAddress!converting!public! !
+value!**compiled accessors**!public! !
+value:!**compiled accessors**!public! !
+!
 
 !LPVOID class methodsFor!
 
@@ -49,6 +51,8 @@ new
 	used for double indirections, thus a reference is normally required."
 
 	^self newPointer! !
-!LPVOID class categoriesFor: #defineFields!public!template definition! !
-!LPVOID class categoriesFor: #new!instance creation!public! !
+!LPVOID class categoriesForMethods!
+defineFields!public!template definition! !
+new!instance creation!public! !
+!
 

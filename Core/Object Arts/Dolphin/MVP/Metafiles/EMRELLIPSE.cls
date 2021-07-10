@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRELLIPSE
 	instanceVariableNames: ''
@@ -37,8 +37,10 @@ rclBox: aRECT
 		from: ##(_OffsetOf_rclBox + 1)
 		to: ##(_OffsetOf_rclBox + RECT basicByteSize)
 		startingAt: 1! !
-!EMRELLIPSE categoriesFor: #rclBox!**compiled accessors**!public! !
-!EMRELLIPSE categoriesFor: #rclBox:!**compiled accessors**!public! !
+!EMRELLIPSE categoriesForMethods!
+rclBox!**compiled accessors**!public! !
+rclBox:!**compiled accessors**!public! !
+!
 
 !EMRELLIPSE class methodsFor!
 
@@ -66,7 +68,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_ELLIPSE with: EMR_RECTANGLE! !
-!EMRELLIPSE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRELLIPSE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRELLIPSE class categoriesFor: #iTypes!constants!public! !
+!EMRELLIPSE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

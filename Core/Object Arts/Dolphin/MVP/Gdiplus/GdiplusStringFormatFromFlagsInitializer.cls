@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusStringFormatInitializer subclass: #GdiplusStringFormatFromFlagsInitializer
 	instanceVariableNames: ''
@@ -23,12 +23,16 @@ createHandle
 formatFlags: flagsNumber language: languageNumber
 	formatFlags := flagsNumber.
 	language := languageNumber! !
-!GdiplusStringFormatFromFlagsInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusStringFormatFromFlagsInitializer categoriesFor: #formatFlags:language:!initializing!private! !
+!GdiplusStringFormatFromFlagsInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+formatFlags:language:!initializing!private! !
+!
 
 !GdiplusStringFormatFromFlagsInitializer class methodsFor!
 
 formatFlags: flagsNumber language: languageNumber
 	^self new formatFlags: flagsNumber language: languageNumber! !
-!GdiplusStringFormatFromFlagsInitializer class categoriesFor: #formatFlags:language:!instance creation!public! !
+!GdiplusStringFormatFromFlagsInitializer class categoriesForMethods!
+formatFlags:language:!instance creation!public! !
+!
 

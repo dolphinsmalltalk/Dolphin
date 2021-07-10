@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #ODBCTIME
 	instanceVariableNames: ''
@@ -55,14 +55,16 @@ time: aTime
 		hour: aTime hour;
 		minute: aTime minute;
 		second: aTime second truncated "ODBCTIME doesn't support fractional seconds"! !
-!ODBCTIME categoriesFor: #asTime!converting!public! !
-!ODBCTIME categoriesFor: #hour!**compiled accessors**!public! !
-!ODBCTIME categoriesFor: #hour:!**compiled accessors**!public! !
-!ODBCTIME categoriesFor: #minute!**compiled accessors**!public! !
-!ODBCTIME categoriesFor: #minute:!**compiled accessors**!public! !
-!ODBCTIME categoriesFor: #second!**compiled accessors**!public! !
-!ODBCTIME categoriesFor: #second:!**compiled accessors**!public! !
-!ODBCTIME categoriesFor: #time:!accessing!public! !
+!ODBCTIME categoriesForMethods!
+asTime!converting!public! !
+hour!**compiled accessors**!public! !
+hour:!**compiled accessors**!public! !
+minute!**compiled accessors**!public! !
+minute:!**compiled accessors**!public! !
+second!**compiled accessors**!public! !
+second:!**compiled accessors**!public! !
+time:!accessing!public! !
+!
 
 !ODBCTIME class methodsFor!
 
@@ -89,7 +91,9 @@ fromTime: aTime
 
 getFieldNames
 	^#(#hour #minute #second)! !
-!ODBCTIME class categoriesFor: #defineFields!public!template definition! !
-!ODBCTIME class categoriesFor: #fromTime:!instance creation!public! !
-!ODBCTIME class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!ODBCTIME class categoriesForMethods!
+defineFields!public!template definition! !
+fromTime:!instance creation!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

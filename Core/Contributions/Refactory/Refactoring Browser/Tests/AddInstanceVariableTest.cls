@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #AddInstanceVariableTest
 	instanceVariableNames: ''
@@ -101,12 +101,14 @@ testNewHierarchyExistingName
 				variable: 'asdf'
 				class: (model classNamed: #BARFOO).
 	self shouldFail: refactoring! !
-!AddInstanceVariableTest categoriesFor: #setUp!public!set up! !
-!AddInstanceVariableTest categoriesFor: #testAddInstanceVariable!public!tests! !
-!AddInstanceVariableTest categoriesFor: #testAddToModel!public!tests! !
-!AddInstanceVariableTest categoriesFor: #testAlreadyExistingName!failure tests!public! !
-!AddInstanceVariableTest categoriesFor: #testModelAlreadyExistingName!failure tests!public! !
-!AddInstanceVariableTest categoriesFor: #testModelMetaclassAlreadyExistingName!failure tests!public! !
-!AddInstanceVariableTest categoriesFor: #testNewExistingName!failure tests!public! !
-!AddInstanceVariableTest categoriesFor: #testNewHierarchyExistingName!failure tests!public! !
+!AddInstanceVariableTest categoriesForMethods!
+setUp!public!set up! !
+testAddInstanceVariable!public!tests! !
+testAddToModel!public!tests! !
+testAlreadyExistingName!failure tests!public! !
+testModelAlreadyExistingName!failure tests!public! !
+testModelMetaclassAlreadyExistingName!failure tests!public! !
+testNewExistingName!failure tests!public! !
+testNewHierarchyExistingName!failure tests!public! !
+!
 

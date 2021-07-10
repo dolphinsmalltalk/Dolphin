@@ -371,13 +371,17 @@ SmalllintContext subclass: #SmalllintCachingContext
 
 displayPrefix
 	^'Abstract'! !
-!AbstractClassVariableRefactoring class categoriesFor: #displayPrefix!constants!displaying!public! !
+!AbstractClassVariableRefactoring class categoriesForMethods!
+displayPrefix!constants!displaying!public! !
+!
 
 !AbstractInstanceVariableRefactoring class methodsFor!
 
 displayPrefix
 	^'Abstract'! !
-!AbstractInstanceVariableRefactoring class categoriesFor: #displayPrefix!displaying!public! !
+!AbstractInstanceVariableRefactoring class categoriesForMethods!
+displayPrefix!displaying!public! !
+!
 
 !AbstractVariablesRefactoring methodsFor!
 
@@ -387,7 +391,9 @@ displayOn: aStream
 
 	#todo.	"Implement more informative display string"
 	aStream nextPutAll: 'Abstract Variables'! !
-!AbstractVariablesRefactoring categoriesFor: #displayOn:!displaying!public! !
+!AbstractVariablesRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !AddClassRefactoring methodsFor!
 
@@ -398,19 +404,25 @@ displayOn: aStream
 	aStream 
 		nextPutAll: 'Add class ';
 		display: className! !
-!AddClassRefactoring categoriesFor: #displayOn:!displaying!public! !
+!AddClassRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !AddClassVariableRefactoring class methodsFor!
 
 displayPrefix
 	^'Add'! !
-!AddClassVariableRefactoring class categoriesFor: #displayPrefix!displaying!public! !
+!AddClassVariableRefactoring class categoriesForMethods!
+displayPrefix!displaying!public! !
+!
 
 !AddInstanceVariableRefactoring class methodsFor!
 
 displayPrefix
 	^'Add'! !
-!AddInstanceVariableRefactoring class categoriesFor: #displayPrefix!displaying!public! !
+!AddInstanceVariableRefactoring class categoriesForMethods!
+displayPrefix!displaying!public! !
+!
 
 !AddMethodRefactoring methodsFor!
 
@@ -421,7 +433,9 @@ displayOn: aStream
 	aStream 
 		nextPutAll: 'Add method to ';
 		print: class! !
-!AddMethodRefactoring categoriesFor: #displayOn:!displaying!public! !
+!AddMethodRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !AddParameterRefactoring methodsFor!
 
@@ -432,7 +446,9 @@ displayOn: aStream
 	aStream 
 		nextPutAll: 'Add parameter to ';
 		print: oldSelector! !
-!AddParameterRefactoring categoriesFor: #displayOn:!displaying!public! !
+!AddParameterRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !BasicLintRule methodsFor!
 
@@ -471,10 +487,12 @@ publishedAspects
 
 searchStrings
 	^result searchStrings! !
-!BasicLintRule categoriesFor: #failedClasses!accessing!private! !
-!BasicLintRule categoriesFor: #failedMethods!accessing!private! !
-!BasicLintRule categoriesFor: #publishedAspects!constants!development!public! !
-!BasicLintRule categoriesFor: #searchStrings!accessing!private! !
+!BasicLintRule categoriesForMethods!
+failedClasses!accessing!private! !
+failedMethods!accessing!private! !
+publishedAspects!constants!development!public! !
+searchStrings!accessing!private! !
+!
 
 !ChildrenToSiblingsRefactoring methodsFor!
 
@@ -486,13 +504,17 @@ displayOn: aStream
 		nextPutAll: 'Convert ';
 		display: parent;
 		nextPutAll: ' to sibling'! !
-!ChildrenToSiblingsRefactoring categoriesFor: #displayOn:!displaying!public! !
+!ChildrenToSiblingsRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !Class methodsFor!
 
 directlyDefinesClassVariable: aString 
 	^self classVarNames includes: aString asString! !
-!Class categoriesFor: #directlyDefinesClassVariable:!public!testing! !
+!Class categoriesForMethods!
+directlyDefinesClassVariable:!public!testing! !
+!
 
 !ClassBrowserAbstract methodsFor!
 
@@ -641,19 +663,21 @@ selectedOverridableMethods
 	| class |
 	class := self actualClass.
 	^self selectedMethods reject: [:each | each methodClass == class]! !
-!ClassBrowserAbstract categoriesFor: #abstractInstanceVariables!commands!private!refactoring! !
-!ClassBrowserAbstract categoriesFor: #methodRefactoringTool!commands!private!refactoring! !
-!ClassBrowserAbstract categoriesFor: #methodsToOverride!helpers!private! !
-!ClassBrowserAbstract categoriesFor: #overrideMethods!commands!private!refactoring! !
-!ClassBrowserAbstract categoriesFor: #protectInstanceVariables!commands!private!refactoring! !
-!ClassBrowserAbstract categoriesFor: #pushDownInstanceVariables!commands!public!refactoring! !
-!ClassBrowserAbstract categoriesFor: #pushDownMethods!commands!public!refactoring! !
-!ClassBrowserAbstract categoriesFor: #pushMethods:!commands!private!refactoring! !
-!ClassBrowserAbstract categoriesFor: #pushUpMethods!commands!public!refactoring! !
-!ClassBrowserAbstract categoriesFor: #queryRefactoringCommand:!commands!private!refactoring! !
-!ClassBrowserAbstract categoriesFor: #removeInstanceVariables!public!refactoring! !
-!ClassBrowserAbstract categoriesFor: #renameMethod!accessing!private! !
-!ClassBrowserAbstract categoriesFor: #selectedOverridableMethods!accessing!private! !
+!ClassBrowserAbstract categoriesForMethods!
+abstractInstanceVariables!commands!private!refactoring! !
+methodRefactoringTool!commands!private!refactoring! !
+methodsToOverride!helpers!private! !
+overrideMethods!commands!private!refactoring! !
+protectInstanceVariables!commands!private!refactoring! !
+pushDownInstanceVariables!commands!public!refactoring! !
+pushDownMethods!commands!public!refactoring! !
+pushMethods:!commands!private!refactoring! !
+pushUpMethods!commands!public!refactoring! !
+queryRefactoringCommand:!commands!private!refactoring! !
+removeInstanceVariables!public!refactoring! !
+renameMethod!accessing!private! !
+selectedOverridableMethods!accessing!private! !
+!
 
 !ClassDescription methodsFor!
 
@@ -684,13 +708,15 @@ directlyDefinesVariable: aVariableName
 hierarchyDefinesVariable: aString 
 	(self definesVariable: aString) ifTrue: [^true].
 	^self allSubclasses anySatisfy: [:each | each directlyDefinesVariable: aString]! !
-!ClassDescription categoriesFor: #definesClassVariable:!public!testing! !
-!ClassDescription categoriesFor: #definesInstanceVariable:!public!testing! !
-!ClassDescription categoriesFor: #definesVariable:!public!testing! !
-!ClassDescription categoriesFor: #directlyDefinesClassVariable:!public!testing! !
-!ClassDescription categoriesFor: #directlyDefinesInstanceVariable:!public!testing! !
-!ClassDescription categoriesFor: #directlyDefinesVariable:!public!testing! !
-!ClassDescription categoriesFor: #hierarchyDefinesVariable:!public!testing! !
+!ClassDescription categoriesForMethods!
+definesClassVariable:!public!testing! !
+definesInstanceVariable:!public!testing! !
+definesVariable:!public!testing! !
+directlyDefinesClassVariable:!public!testing! !
+directlyDefinesInstanceVariable:!public!testing! !
+directlyDefinesVariable:!public!testing! !
+hierarchyDefinesVariable:!public!testing! !
+!
 
 !ClassSelector methodsFor!
 
@@ -1099,37 +1125,41 @@ safeRemoveClass
 	and any subclasses are removable (i.e. invoke the 'Remove Class' refactoring)."
 
 	self systemModel safeRemoveClass: self selection! !
-!ClassSelector categoriesFor: #abstractClassVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #abstractInstanceVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #addClassVariable!commands!private!refactoring! !
-!ClassSelector categoriesFor: #addInstanceVariable!commands!private!refactoring! !
-!ClassSelector categoriesFor: #buildInstVarMenu:selectors:!menus!private!refactoring! !
-!ClassSelector categoriesFor: #buildPullUpVariablesMenu:!menus!private!refactoring! !
-!ClassSelector categoriesFor: #buildVariablesMenu:instVarSelectors:classVarSelectors:!menus!private!refactoring! !
-!ClassSelector categoriesFor: #cloneClass:under:changes:!private! !
-!ClassSelector categoriesFor: #convertToSibling!commands!public!refactoring! !
-!ClassSelector categoriesFor: #createClassVariableAccessors!commands!public!refactoring! !
-!ClassSelector categoriesFor: #populateClassVarMenu:selectors:!menus!private!refactoring! !
-!ClassSelector categoriesFor: #populateInstVarMenu:selectors:!menus!private!refactoring! !
-!ClassSelector categoriesFor: #populatePullUpVariableMenu:forClass:command:classVariables:ifTooMany:!menus!private!refactoring! !
-!ClassSelector categoriesFor: #populateRefactoringMenu:!menus!private!refactoring! !
-!ClassSelector categoriesFor: #protectInstanceVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #pullUpClassVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #pullUpInstanceVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #pullUpVariableNamePairs:for:maximum:!menus!private!refactoring! !
-!ClassSelector categoriesFor: #pushDownClassVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #pushDownInstanceVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #queryRefactoringCommand:!commands!private! !
-!ClassSelector categoriesFor: #removeClassVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #removeDuplicateMethods!commands!private!refactoring! !
-!ClassSelector categoriesFor: #removeInstanceVariables!commands!public!refactoring! !
-!ClassSelector categoriesFor: #safeRemoveClass!commands!public!refactoring! !
+!ClassSelector categoriesForMethods!
+abstractClassVariables!commands!public!refactoring! !
+abstractInstanceVariables!commands!public!refactoring! !
+addClassVariable!commands!private!refactoring! !
+addInstanceVariable!commands!private!refactoring! !
+buildInstVarMenu:selectors:!menus!private!refactoring! !
+buildPullUpVariablesMenu:!menus!private!refactoring! !
+buildVariablesMenu:instVarSelectors:classVarSelectors:!menus!private!refactoring! !
+cloneClass:under:changes:!private! !
+convertToSibling!commands!public!refactoring! !
+createClassVariableAccessors!commands!public!refactoring! !
+populateClassVarMenu:selectors:!menus!private!refactoring! !
+populateInstVarMenu:selectors:!menus!private!refactoring! !
+populatePullUpVariableMenu:forClass:command:classVariables:ifTooMany:!menus!private!refactoring! !
+populateRefactoringMenu:!menus!private!refactoring! !
+protectInstanceVariables!commands!public!refactoring! !
+pullUpClassVariables!commands!public!refactoring! !
+pullUpInstanceVariables!commands!public!refactoring! !
+pullUpVariableNamePairs:for:maximum:!menus!private!refactoring! !
+pushDownClassVariables!commands!public!refactoring! !
+pushDownInstanceVariables!commands!public!refactoring! !
+queryRefactoringCommand:!commands!private! !
+removeClassVariables!commands!public!refactoring! !
+removeDuplicateMethods!commands!private!refactoring! !
+removeInstanceVariables!commands!public!refactoring! !
+safeRemoveClass!commands!public!refactoring! !
+!
 
 !CreateAccessorsForVariableRefactoring class methodsFor!
 
 displayPrefix
 	^'Create accessors for'! !
-!CreateAccessorsForVariableRefactoring class categoriesFor: #displayPrefix!displaying!public! !
+!CreateAccessorsForVariableRefactoring class categoriesForMethods!
+displayPrefix!displaying!public! !
+!
 
 !Debugger methodsFor!
 
@@ -1160,10 +1190,12 @@ performMethodRenameRefactoring: aMonadicValuable
 	home isNil ifTrue: [^self].
 	sender := home sender.
 	(sender notNil and: [sender isRestartable]) ifTrue: [self restartMethodFrame: sender]! !
-!Debugger categoriesFor: #canMoveMethods!commands!private!refactoring! !
-!Debugger categoriesFor: #hasRefactorableMethodSelected!public!refactoring!testing! !
-!Debugger categoriesFor: #performMethodRefactoring:!helpers!public!refactoring! !
-!Debugger categoriesFor: #performMethodRenameRefactoring:!helpers!private!refactoring! !
+!Debugger categoriesForMethods!
+canMoveMethods!commands!private!refactoring! !
+hasRefactorableMethodSelected!public!refactoring!testing! !
+performMethodRefactoring:!helpers!public!refactoring! !
+performMethodRenameRefactoring:!helpers!private!refactoring! !
+!
 
 !ExpandReferencedPoolsRefactoring methodsFor!
 
@@ -1189,7 +1221,9 @@ displayOn: aStream
 		ifFalse: 
 			[toClasses do: [:each | aStream display: each name]
 				separatedBy: [aStream nextPutAll: ', ']]! !
-!ExpandReferencedPoolsRefactoring categoriesFor: #displayOn:!displaying!public! !
+!ExpandReferencedPoolsRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !ExtractMethodRefactoring methodsFor!
 
@@ -1202,7 +1236,9 @@ displayOn: aStream
 		print: class;
 		nextPutAll: '>>';
 		display: selector! !
-!ExtractMethodRefactoring categoriesFor: #displayOn:!displaying!public! !
+!ExtractMethodRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !ExtractMethodToComponentRefactoring methodsFor!
 
@@ -1219,8 +1255,10 @@ displayOn: aStream
 getOptionVariableToMoveToOf: aClass in: aSelector 
 	^Smalltalk developmentSystem selectTargetVariableOf: aClass
 		parseTree: (aClass parseTreeFor: aSelector)! !
-!ExtractMethodToComponentRefactoring categoriesFor: #displayOn:!displaying!public! !
-!ExtractMethodToComponentRefactoring categoriesFor: #getOptionVariableToMoveToOf:in:!public! !
+!ExtractMethodToComponentRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+getOptionVariableToMoveToOf:in:!public! !
+!
 
 !ExtractToTemporaryRefactoring methodsFor!
 
@@ -1231,7 +1269,9 @@ displayOn: aStream
 	aStream 
 		nextPutAll: 'Extract to temporary ';
 		print: newVariableName! !
-!ExtractToTemporaryRefactoring categoriesFor: #displayOn:!displaying!public! !
+!ExtractToTemporaryRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !InlineAllSendersRefactoring methodsFor!
 
@@ -1244,7 +1284,9 @@ displayOn: aStream
 		print: selector;
 		nextPutAll: ' in ';
 		print: class! !
-!InlineAllSendersRefactoring categoriesFor: #displayOn:!displaying!public! !
+!InlineAllSendersRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !InlineMethodRefactoring methodsFor!
 
@@ -1257,7 +1299,9 @@ displayOn: aStream
 		print: class;
 		nextPutAll: '>>';
 		print: sourceSelector! !
-!InlineMethodRefactoring categoriesFor: #displayOn:!displaying!public! !
+!InlineMethodRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !InlineParameterRefactoring methodsFor!
 
@@ -1272,7 +1316,9 @@ displayOn: aStream
 		print: class;
 		nextPutAll: '>>';
 		display: oldSelector! !
-!InlineParameterRefactoring categoriesFor: #displayOn:!displaying!public! !
+!InlineParameterRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !InlineTemporaryRefactoring methodsFor!
 
@@ -1287,7 +1333,9 @@ displayOn: aStream
 		print: class;
 		nextPutAll: '>>';
 		display: selector! !
-!InlineTemporaryRefactoring categoriesFor: #displayOn:!displaying!public! !
+!InlineTemporaryRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !LintRule methodsFor!
 
@@ -1300,9 +1348,11 @@ failedMethods
 
 searchStrings
 	^#()! !
-!LintRule categoriesFor: #failedClasses!accessing!private! !
-!LintRule categoriesFor: #failedMethods!accessing!private! !
-!LintRule categoriesFor: #searchStrings!accessing!private! !
+!LintRule categoriesForMethods!
+failedClasses!accessing!private! !
+failedMethods!accessing!private! !
+searchStrings!accessing!private! !
+!
 
 !LintRule class methodsFor!
 
@@ -1310,13 +1360,17 @@ icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon! !
-!LintRule class categoriesFor: #icon!constants!public! !
+!LintRule class categoriesForMethods!
+icon!constants!public! !
+!
 
 !Metaclass methodsFor!
 
 directlyDefinesClassVariable: aString 
 	^self instanceClass directlyDefinesClassVariable: aString! !
-!Metaclass categoriesFor: #directlyDefinesClassVariable:!public!testing! !
+!Metaclass categoriesForMethods!
+directlyDefinesClassVariable:!public!testing! !
+!
 
 !MethodBrowser methodsFor!
 
@@ -1347,11 +1401,13 @@ performMethodRenameRefactoring: aMonadicValuable
 performMethodsRefactoring: aMonadicValuable name: aString 
 	self promptToSaveChanges ifFalse: [^self].
 	^sourcePresenter executeRefactoring: aMonadicValuable with: self selectedMethods! !
-!MethodBrowser categoriesFor: #canMoveMethods!helpers!private!refactoring! !
-!MethodBrowser categoriesFor: #hasRefactorableMethodSelected!private!refactoring!testing! !
-!MethodBrowser categoriesFor: #performMethodRefactoring:!helpers!public!refactoring! !
-!MethodBrowser categoriesFor: #performMethodRenameRefactoring:!helpers!private!refactoring! !
-!MethodBrowser categoriesFor: #performMethodsRefactoring:name:!helpers!private!refactoring! !
+!MethodBrowser categoriesForMethods!
+canMoveMethods!helpers!private!refactoring! !
+hasRefactorableMethodSelected!private!refactoring!testing! !
+performMethodRefactoring:!helpers!public!refactoring! !
+performMethodRenameRefactoring:!helpers!private!refactoring! !
+performMethodsRefactoring:name:!helpers!private!refactoring! !
+!
 
 !MethodRefactoring methodsFor!
 
@@ -1373,7 +1429,9 @@ getOptionMethodName: anRBMethodName
 							stream contents].
 			anRBMethodName selector: mname asSymbol].
 	^(MethodNameDialog showModalOn: anRBMethodName) isNil ifFalse: [anRBMethodName]! !
-!MethodRefactoring categoriesFor: #getOptionMethodName:!options!public! !
+!MethodRefactoring categoriesForMethods!
+getOptionMethodName:!options!public! !
+!
 
 !MethodWorkspace methodsFor!
 
@@ -1440,14 +1498,16 @@ renameVariable: aStVariableNode operation: operationBlock validationBlock: valid
 		ifNotNil: 
 			[:newName | 
 			newName = name ifFalse: [self performMethodRefactoring: [:method | operationBlock value: newName]]]! !
-!MethodWorkspace categoriesFor: #canRefactor!public!refactoring!testing! !
-!MethodWorkspace categoriesFor: #executeRefactoring:!helpers!private!refactoring! !
-!MethodWorkspace categoriesFor: #executeRefactoring:with:!helpers!private!refactoring! !
-!MethodWorkspace categoriesFor: #fontOfStyle:!operations!private!refactoring! !
-!MethodWorkspace categoriesFor: #performCodeRefactoring:!helpers!private!refactoring! !
-!MethodWorkspace categoriesFor: #performMethodRefactoring:!helpers!private!refactoring! !
-!MethodWorkspace categoriesFor: #performMethodRenameRefactoring:!helpers!private!refactoring! !
-!MethodWorkspace categoriesFor: #renameVariable:operation:validationBlock:!operations!private!refactoring! !
+!MethodWorkspace categoriesForMethods!
+canRefactor!public!refactoring!testing! !
+executeRefactoring:!helpers!private!refactoring! !
+executeRefactoring:with:!helpers!private!refactoring! !
+fontOfStyle:!operations!private!refactoring! !
+performCodeRefactoring:!helpers!private!refactoring! !
+performMethodRefactoring:!helpers!private!refactoring! !
+performMethodRenameRefactoring:!helpers!private!refactoring! !
+renameVariable:operation:validationBlock:!operations!private!refactoring! !
+!
 
 !MoveMethodRefactoring methodsFor!
 
@@ -1502,9 +1562,11 @@ getOptionVariableTypes: choicesCollection selected: suggestionsCollection
 							nil]
 						ifTrue: [self model classNamed: global name]];
 		showModal! !
-!MoveMethodRefactoring categoriesFor: #displayOn:!displaying!public! !
-!MoveMethodRefactoring categoriesFor: #getOptionSelfArgumentName!public! !
-!MoveMethodRefactoring categoriesFor: #getOptionVariableTypes:selected:!options!public! !
+!MoveMethodRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+getOptionSelfArgumentName!public! !
+getOptionVariableTypes:selected:!options!public! !
+!
 
 !MoveVariableDefinitionRefactoring methodsFor!
 
@@ -1519,7 +1581,9 @@ displayOn: aStream
 		print: class;
 		nextPutAll: '>>';
 		display: selector! !
-!MoveVariableDefinitionRefactoring categoriesFor: #displayOn:!displaying!public! !
+!MoveVariableDefinitionRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !PackageBrowserShell methodsFor!
 
@@ -1685,23 +1749,25 @@ safeRemoveMethods
 	considered as part of the decision as to whether it will be safe to remove the method)."
 
 	self model safeRemoveMethods: self selectedMethods within: self selectionEnvironment! !
-!PackageBrowserShell categoriesFor: #addParameter!commands!private!refactoring! !
-!PackageBrowserShell categoriesFor: #addParameterTo:!private!refactoring! !
-!PackageBrowserShell categoriesFor: #addParameterToMethod!commands!public!refactoring! !
-!PackageBrowserShell categoriesFor: #chooseMethodsForRefactoring:!private!refactoring! !
-!PackageBrowserShell categoriesFor: #hasRefactorableMethodSelected!private!refactoring!testing! !
-!PackageBrowserShell categoriesFor: #parseTree!commands!private! !
-!PackageBrowserShell categoriesFor: #performMethodRenameRefactoring:!helpers!private!refactoring! !
-!PackageBrowserShell categoriesFor: #performMethodsRefactoring:name:!private! !
-!PackageBrowserShell categoriesFor: #promptForMethodName:caption:allowExisting:!helpers!private!refactoring! !
-!PackageBrowserShell categoriesFor: #queryRefactoringCommand:!commands!private!refactoring! !
-!PackageBrowserShell categoriesFor: #removeParameter!commands!private!refactoring! !
-!PackageBrowserShell categoriesFor: #renameLooseMethod!commands!private!refactoring! !
-!PackageBrowserShell categoriesFor: #renameLooseMethodReferences!commands!private!refactoring! !
-!PackageBrowserShell categoriesFor: #renameMethod!commands!public!refactoring! !
-!PackageBrowserShell categoriesFor: #renameMethodReferences:!operations!private!refactoring! !
-!PackageBrowserShell categoriesFor: #safeRemoveMethod!commands!public!refactoring! !
-!PackageBrowserShell categoriesFor: #safeRemoveMethods!commands!public!refactoring! !
+!PackageBrowserShell categoriesForMethods!
+addParameter!commands!private!refactoring! !
+addParameterTo:!private!refactoring! !
+addParameterToMethod!commands!public!refactoring! !
+chooseMethodsForRefactoring:!private!refactoring! !
+hasRefactorableMethodSelected!private!refactoring!testing! !
+parseTree!commands!private! !
+performMethodRenameRefactoring:!helpers!private!refactoring! !
+performMethodsRefactoring:name:!private! !
+promptForMethodName:caption:allowExisting:!helpers!private!refactoring! !
+queryRefactoringCommand:!commands!private!refactoring! !
+removeParameter!commands!private!refactoring! !
+renameLooseMethod!commands!private!refactoring! !
+renameLooseMethodReferences!commands!private!refactoring! !
+renameMethod!commands!public!refactoring! !
+renameMethodReferences:!operations!private!refactoring! !
+safeRemoveMethod!commands!public!refactoring! !
+safeRemoveMethods!commands!public!refactoring! !
+!
 
 !PackageSelector methodsFor!
 
@@ -1746,15 +1812,19 @@ removeDuplicateMethods
 							devsys removeMethodsDuplicatedInSuperclassOf: eachClass]]])
 		caption: 'Remove Methods Duplicating Superclass'' from Package(s)...';
 		showModal! !
-!PackageSelector categoriesFor: #moveAllTempsToInnerScope!commands!private!refactoring! !
-!PackageSelector categoriesFor: #queryRefactoringCommand:!commands!private!refactoring! !
-!PackageSelector categoriesFor: #removeDuplicateMethods!development!private! !
+!PackageSelector categoriesForMethods!
+moveAllTempsToInnerScope!commands!private!refactoring! !
+queryRefactoringCommand:!commands!private!refactoring! !
+removeDuplicateMethods!development!private! !
+!
 
 !ProtectInstanceVariableRefactoring class methodsFor!
 
 displayPrefix
 	^'Protect'! !
-!ProtectInstanceVariableRefactoring class categoriesFor: #displayPrefix!displaying!public! !
+!ProtectInstanceVariableRefactoring class categoriesForMethods!
+displayPrefix!displaying!public! !
+!
 
 !PullUpClassVariableRefactoring methodsFor!
 
@@ -1767,13 +1837,17 @@ displayOn: aStream
 		print: variableName;
 		nextPutAll: ' into ';
 		print: class! !
-!PullUpClassVariableRefactoring categoriesFor: #displayOn:!displaying!public! !
+!PullUpClassVariableRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !PullUpClassVariableRefactoring class methodsFor!
 
 displayPrefix
 	^'Pull up'! !
-!PullUpClassVariableRefactoring class categoriesFor: #displayPrefix!displaying!public! !
+!PullUpClassVariableRefactoring class categoriesForMethods!
+displayPrefix!displaying!public! !
+!
 
 !PullUpInstanceVariableRefactoring methodsFor!
 
@@ -1786,25 +1860,33 @@ displayOn: aStream
 		print: variableName;
 		nextPutAll: ' into ';
 		print: class! !
-!PullUpInstanceVariableRefactoring categoriesFor: #displayOn:!displaying!public! !
+!PullUpInstanceVariableRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !PullUpInstanceVariableRefactoring class methodsFor!
 
 displayPrefix
 	^'Pull up'! !
-!PullUpInstanceVariableRefactoring class categoriesFor: #displayPrefix!displaying!public! !
+!PullUpInstanceVariableRefactoring class categoriesForMethods!
+displayPrefix!displaying!public! !
+!
 
 !PushDownClassVariableRefactoring class methodsFor!
 
 displayPrefix
 	^'Push down'! !
-!PushDownClassVariableRefactoring class categoriesFor: #displayPrefix!displaying!public! !
+!PushDownClassVariableRefactoring class categoriesForMethods!
+displayPrefix!displaying!public! !
+!
 
 !PushDownInstanceVariableRefactoring class methodsFor!
 
 displayPrefix
 	^'Push down'! !
-!PushDownInstanceVariableRefactoring class categoriesFor: #displayPrefix!displaying!public! !
+!PushDownInstanceVariableRefactoring class categoriesForMethods!
+displayPrefix!displaying!public! !
+!
 
 !PushDownMethodRefactoring methodsFor!
 
@@ -1817,7 +1899,9 @@ displayOn: aStream
 		print: (selectors size == 1 ifTrue: [selectors first] ifFalse: [selectors]);
 		nextPutAll: ' from ';
 		print: class! !
-!PushDownMethodRefactoring categoriesFor: #displayOn:!displaying!public! !
+!PushDownMethodRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !PushUpMethodRefactoring methodsFor!
 
@@ -1830,7 +1914,9 @@ displayOn: aStream
 		print: (selectors size == 1 ifTrue: [selectors first] ifFalse: [selectors]);
 		nextPutAll: ' from ';
 		print: class! !
-!PushUpMethodRefactoring categoriesFor: #displayOn:!displaying!public! !
+!PushUpMethodRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !RBAbstractClass methodsFor!
 
@@ -1839,8 +1925,10 @@ instVarNames
 
 owningPackage
 	^self realClass ifNotNil: [:class | class owningPackage]! !
-!RBAbstractClass categoriesFor: #instVarNames!instance variables!public! !
-!RBAbstractClass categoriesFor: #owningPackage!accessing!public! !
+!RBAbstractClass categoriesForMethods!
+instVarNames!instance variables!public! !
+owningPackage!accessing!public! !
+!
 
 !RBMethod methodsFor!
 
@@ -1848,7 +1936,9 @@ owningPackage
 	^compiledMethod isNil 
 		ifTrue: [class owningPackage]
 		ifFalse: [compiledMethod owningPackage]! !
-!RBMethod categoriesFor: #owningPackage!accessing!public! !
+!RBMethod categoriesForMethods!
+owningPackage!accessing!public! !
+!
 
 !Refactoring methodsFor!
 
@@ -1858,7 +1948,9 @@ confirm: aString
 	^MessageBox 
 		confirm: aString
 		caption: self displayString! !
-!Refactoring categoriesFor: #confirm:!helpers!public! !
+!Refactoring categoriesForMethods!
+confirm:!helpers!public! !
+!
 
 !Refactoring class methodsFor!
 
@@ -1871,8 +1963,10 @@ renameIcon
 	"Answers an Icon that can be used to represent this class"
 
 	^Icon fromId: 'InPlaceRename.ico'! !
-!Refactoring class categoriesFor: #icon!constants!public! !
-!Refactoring class categoriesFor: #renameIcon!constants!public! !
+!Refactoring class categoriesForMethods!
+icon!constants!public! !
+renameIcon!constants!public! !
+!
 
 !RemoveClassRefactoring methodsFor!
 
@@ -1887,19 +1981,25 @@ displayOn: aStream
 		ifFalse: [
 			aStream nextPutAll: 'classes: '.
 			classNames do: [:each | aStream display: each] separatedBy: [aStream nextPutAll: ', ']]! !
-!RemoveClassRefactoring categoriesFor: #displayOn:!displaying!public! !
+!RemoveClassRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !RemoveClassVariableRefactoring class methodsFor!
 
 displayPrefix
 	^'Remove'! !
-!RemoveClassVariableRefactoring class categoriesFor: #displayPrefix!displaying!public! !
+!RemoveClassVariableRefactoring class categoriesForMethods!
+displayPrefix!displaying!public! !
+!
 
 !RemoveInstanceVariableRefactoring class methodsFor!
 
 displayPrefix
 	^'Remove'! !
-!RemoveInstanceVariableRefactoring class categoriesFor: #displayPrefix!displaying!public! !
+!RemoveInstanceVariableRefactoring class categoriesForMethods!
+displayPrefix!displaying!public! !
+!
 
 !RemoveMethodRefactoring methodsFor!
 
@@ -1912,7 +2012,9 @@ displayOn: aStream
 		print: (selectors size == 1 ifTrue: [selectors first] ifFalse: [selectors]);
 		nextPutAll: ' from ';
 		print: class! !
-!RemoveMethodRefactoring categoriesFor: #displayOn:!displaying!public! !
+!RemoveMethodRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !RemoveParameterRefactoring methodsFor!
 
@@ -1927,7 +2029,9 @@ displayOn: aStream
 		print: class;
 		nextPutAll: '>>';
 		display: oldSelector! !
-!RemoveParameterRefactoring categoriesFor: #displayOn:!displaying!public! !
+!RemoveParameterRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !RenameAccessorsForVariableRefactoring methodsFor!
 
@@ -1939,7 +2043,9 @@ displayOn: aStream
 	aStream
 		nextPutAll: ' to ';
 		print: newName! !
-!RenameAccessorsForVariableRefactoring categoriesFor: #displayOn:!displaying!public! !
+!RenameAccessorsForVariableRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !RenameAccessorsForVariableRefactoring class methodsFor!
 
@@ -1948,8 +2054,10 @@ displayPrefix
 
 icon
 	^self renameIcon! !
-!RenameAccessorsForVariableRefactoring class categoriesFor: #displayPrefix!displaying!public! !
-!RenameAccessorsForVariableRefactoring class categoriesFor: #icon!constants!public! !
+!RenameAccessorsForVariableRefactoring class categoriesForMethods!
+displayPrefix!displaying!public! !
+icon!constants!public! !
+!
 
 !RenameClassRefactoring methodsFor!
 
@@ -1962,7 +2070,9 @@ displayOn: aStream
 		display: className;
 		nextPutAll: ' to ';
 		display: newName! !
-!RenameClassRefactoring categoriesFor: #displayOn:!displaying!public! !
+!RenameClassRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !RenameClassVariableRefactoring methodsFor!
 
@@ -1974,7 +2084,9 @@ displayOn: aStream
 	aStream
 		nextPutAll: ' to ';
 		print: newName! !
-!RenameClassVariableRefactoring categoriesFor: #displayOn:!displaying!public! !
+!RenameClassVariableRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !RenameClassVariableRefactoring class methodsFor!
 
@@ -1983,8 +2095,10 @@ displayPrefix
 
 icon
 	^self renameIcon! !
-!RenameClassVariableRefactoring class categoriesFor: #displayPrefix!displaying!public! !
-!RenameClassVariableRefactoring class categoriesFor: #icon!constants!public! !
+!RenameClassVariableRefactoring class categoriesForMethods!
+displayPrefix!displaying!public! !
+icon!constants!public! !
+!
 
 !RenameInstanceVariableAndAccessorsRefactoring methodsFor!
 
@@ -2000,7 +2114,9 @@ displayOn: aStream
 		display: variableName;
 		nextPutAll: ' (and accessors) to ';
 		print: newName! !
-!RenameInstanceVariableAndAccessorsRefactoring categoriesFor: #displayOn:!displaying!public! !
+!RenameInstanceVariableAndAccessorsRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !RenameInstanceVariableRefactoring methodsFor!
 
@@ -2012,7 +2128,9 @@ displayOn: aStream
 	aStream
 		nextPutAll: ' to ';
 		print: newName! !
-!RenameInstanceVariableRefactoring categoriesFor: #displayOn:!displaying!public! !
+!RenameInstanceVariableRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !RenameInstanceVariableRefactoring class methodsFor!
 
@@ -2021,8 +2139,10 @@ displayPrefix
 
 icon
 	^self renameIcon! !
-!RenameInstanceVariableRefactoring class categoriesFor: #displayPrefix!displaying!public! !
-!RenameInstanceVariableRefactoring class categoriesFor: #icon!constants!public! !
+!RenameInstanceVariableRefactoring class categoriesForMethods!
+displayPrefix!displaying!public! !
+icon!constants!public! !
+!
 
 !RenameMethodRefactoring methodsFor!
 
@@ -2036,13 +2156,17 @@ displayOn: aStream
 		nextPutAll: ' to ';
 		print: newSelector
 ! !
-!RenameMethodRefactoring categoriesFor: #displayOn:!displaying!public! !
+!RenameMethodRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !RenameMethodRefactoring class methodsFor!
 
 icon
 	^self renameIcon! !
-!RenameMethodRefactoring class categoriesFor: #icon!constants!public! !
+!RenameMethodRefactoring class categoriesForMethods!
+icon!constants!public! !
+!
 
 !RenameTemporaryRefactoring methodsFor!
 
@@ -2059,13 +2183,17 @@ displayOn: aStream
 		print: class;
 		nextPutAll: '>>';
 		display: selector! !
-!RenameTemporaryRefactoring categoriesFor: #displayOn:!displaying!public! !
+!RenameTemporaryRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !RenameTemporaryRefactoring class methodsFor!
 
 icon
 	^self renameIcon! !
-!RenameTemporaryRefactoring class categoriesFor: #icon!constants!public! !
+!RenameTemporaryRefactoring class categoriesForMethods!
+icon!constants!public! !
+!
 
 !SmalllintChecker class methodsFor!
 
@@ -2073,7 +2201,9 @@ newWithCachingContext
 	^(self new)
 		context: SmalllintCachingContext new;
 		yourself! !
-!SmalllintChecker class categoriesFor: #newWithCachingContext!instance creation!public! !
+!SmalllintChecker class categoriesForMethods!
+newWithCachingContext!instance creation!public! !
+!
 
 !SmalltalkToolShell methodsFor!
 
@@ -2085,8 +2215,10 @@ queryRefactoringCommand: aCommandQuery
 	into the <CommandQuery>."
 
 	^false! !
-!SmalltalkToolShell categoriesFor: #chooseMethodForRefactoring:!private!refactoring! !
-!SmalltalkToolShell categoriesFor: #queryRefactoringCommand:!commands!private!refactoring! !
+!SmalltalkToolShell categoriesForMethods!
+chooseMethodForRefactoring:!private!refactoring! !
+queryRefactoringCommand:!commands!private!refactoring! !
+!
 
 !TemporaryToInstanceVariableRefactoring methodsFor!
 
@@ -2099,7 +2231,9 @@ displayOn: aStream
 		print: temporaryVariableName;
 		nextPutAll: ' to inst var of ';
 		print: class! !
-!TemporaryToInstanceVariableRefactoring categoriesFor: #displayOn:!displaying!public! !
+!TemporaryToInstanceVariableRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+!
 
 !TransformationRule class methodsFor!
 
@@ -2190,10 +2324,12 @@ renameArgument: beforeString to: afterString
 					replace: beforeString with: afterString;
 					yourself);
 		yourself! !
-!TransformationRule class categoriesFor: #bitLogicElimination!public!transformations! !
-!TransformationRule class categoriesFor: #icon!constants!public! !
-!TransformationRule class categoriesFor: #ifElimination!public!transformations! !
-!TransformationRule class categoriesFor: #renameArgument:to:!public! !
+!TransformationRule class categoriesForMethods!
+bitLogicElimination!public!transformations! !
+icon!constants!public! !
+ifElimination!public!transformations! !
+renameArgument:to:!public! !
+!
 
 !VariableRefactoring methodsFor!
 
@@ -2210,14 +2346,18 @@ displayOn: aStream
 
 displayPrefix
 	^self class displayPrefix! !
-!VariableRefactoring categoriesFor: #displayOn:!displaying!public! !
-!VariableRefactoring categoriesFor: #displayPrefix!displaying!public! !
+!VariableRefactoring categoriesForMethods!
+displayOn:!displaying!public! !
+displayPrefix!displaying!public! !
+!
 
 !VariableRefactoring class methodsFor!
 
 displayPrefix
 	^self subclassResponsibility! !
-!VariableRefactoring class categoriesFor: #displayPrefix!constants!displaying!public! !
+!VariableRefactoring class categoriesForMethods!
+displayPrefix!constants!displaying!public! !
+!
 
 "End of package definition"!
 

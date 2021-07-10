@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusFromFileInitializer subclass: #GdiplusImageFromFileInitializer
 	instanceVariableNames: ''
@@ -27,6 +27,8 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error loading Image'! !
-!GdiplusImageFromFileInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusImageFromFileInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!GdiplusImageFromFileInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+!
 

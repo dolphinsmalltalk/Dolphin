@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringBrowserTest subclass: #RBNamespaceTest
 	instanceVariableNames: ''
@@ -153,16 +153,18 @@ testRoots
 	self assert: (model rootClasses asSortedCollection: [:a :b | a name < b name]) asArray
 		equals: ((Class rootsOfTheWorld collect: [:each | model classFor: each])
 				asSortedCollection: [:a :b | a name < b name]) asArray! !
-!RBNamespaceTest categoriesFor: #testAllClassesDo!class tests!public! !
-!RBNamespaceTest categoriesFor: #testDefineClassAfterDeletedChange!class tests!public! !
-!RBNamespaceTest categoriesFor: #testDefineClassChange!class tests!public! !
-!RBNamespaceTest categoriesFor: #testImplementors!class tests!public! !
-!RBNamespaceTest categoriesFor: #testIncludesClass!class tests!public! !
-!RBNamespaceTest categoriesFor: #testModelImplementorsSenders!class tests!public! !
-!RBNamespaceTest categoriesFor: #testRedefineClassChange!class tests!public! !
-!RBNamespaceTest categoriesFor: #testReferencesPrintOn!class tests!public! !
-!RBNamespaceTest categoriesFor: #testReferencesPrintOnAfterRemove!class tests!public! !
-!RBNamespaceTest categoriesFor: #testRemoveClassChange!class tests!public! !
-!RBNamespaceTest categoriesFor: #testReparentSuperclassChange!class tests!public! !
-!RBNamespaceTest categoriesFor: #testRoots!class tests!public! !
+!RBNamespaceTest categoriesForMethods!
+testAllClassesDo!class tests!public! !
+testDefineClassAfterDeletedChange!class tests!public! !
+testDefineClassChange!class tests!public! !
+testImplementors!class tests!public! !
+testIncludesClass!class tests!public! !
+testModelImplementorsSenders!class tests!public! !
+testRedefineClassChange!class tests!public! !
+testReferencesPrintOn!class tests!public! !
+testReferencesPrintOnAfterRemove!class tests!public! !
+testRemoveClassChange!class tests!public! !
+testReparentSuperclassChange!class tests!public! !
+testRoots!class tests!public! !
+!
 

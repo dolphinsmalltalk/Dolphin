@@ -51,7 +51,9 @@ learnSmalltalk
 	"Open the Learn Smalltalk tutorial"
 
 	ProfStef show! !
-!SmalltalkSystem categoriesFor: #learnSmalltalk!commands!operations!public! !
+!SmalltalkSystem categoriesForMethods!
+learnSmalltalk!commands!operations!public! !
+!
 
 "End of package definition"!
 

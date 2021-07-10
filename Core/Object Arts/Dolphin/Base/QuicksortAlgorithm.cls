@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PluggableSortAlgorithm subclass: #QuicksortAlgorithm
 	instanceVariableNames: ''
@@ -84,5 +84,7 @@ sort: anObject from: startInteger to: stopInteger
 		insertionSort: anObject
 		from: lo
 		to: up! !
-!QuicksortAlgorithm categoriesFor: #sort:from:to:!operations!public! !
+!QuicksortAlgorithm categoriesForMethods!
+sort:from:to:!operations!public! !
+!
 

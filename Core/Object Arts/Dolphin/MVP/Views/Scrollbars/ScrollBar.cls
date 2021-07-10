@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueConvertingControlView subclass: #ScrollBar
 	instanceVariableNames: 'continuousTracking'
@@ -182,25 +182,27 @@ state
 		yourself
 
 ! !
-!ScrollBar categoriesFor: #calculateExtent:!geometry!private! !
-!ScrollBar categoriesFor: #defaultExtent!constants!private! !
-!ScrollBar categoriesFor: #displayValue!private!updating! !
-!ScrollBar categoriesFor: #displayValue:!private!updating! !
-!ScrollBar categoriesFor: #getScrollInfo:!accessing!private! !
-!ScrollBar categoriesFor: #isTrackingContinuous!accessing!public! !
-!ScrollBar categoriesFor: #isTrackingContinuous:!accessing!public! !
-!ScrollBar categoriesFor: #isVertical!modes!public! !
-!ScrollBar categoriesFor: #isVertical:!modes!public! !
-!ScrollBar categoriesFor: #onHScroll:!event handling!public! !
-!ScrollBar categoriesFor: #onVScroll:!event handling!public! !
-!ScrollBar categoriesFor: #pageSize!accessing!public! !
-!ScrollBar categoriesFor: #pageSize:!accessing!public! !
-!ScrollBar categoriesFor: #range!accessing!public! !
-!ScrollBar categoriesFor: #range:!accessing!public! !
-!ScrollBar categoriesFor: #scrollPosition!accessing!private! !
-!ScrollBar categoriesFor: #scrollPosition:!accessing!private! !
-!ScrollBar categoriesFor: #setScrollInfo:!accessing!private! !
-!ScrollBar categoriesFor: #state!accessing!private! !
+!ScrollBar categoriesForMethods!
+calculateExtent:!geometry!private! !
+defaultExtent!constants!private! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+getScrollInfo:!accessing!private! !
+isTrackingContinuous!accessing!public! !
+isTrackingContinuous:!accessing!public! !
+isVertical!modes!public! !
+isVertical:!modes!public! !
+onHScroll:!event handling!public! !
+onVScroll:!event handling!public! !
+pageSize!accessing!public! !
+pageSize:!accessing!public! !
+range!accessing!public! !
+range:!accessing!public! !
+scrollPosition!accessing!private! !
+scrollPosition:!accessing!private! !
+setScrollInfo:!accessing!private! !
+state!accessing!private! !
+!
 
 !ScrollBar class methodsFor!
 
@@ -228,10 +230,12 @@ winClassName
 
 	^'SCROLLBAR'
 ! !
-!ScrollBar class categoriesFor: #defaultHeight!constants!public! !
-!ScrollBar class categoriesFor: #defaultModel!models!public! !
-!ScrollBar class categoriesFor: #defaultWidth!constants!public! !
-!ScrollBar class categoriesFor: #icon!constants!public! !
-!ScrollBar class categoriesFor: #themePartName!constants!private! !
-!ScrollBar class categoriesFor: #winClassName!constants!private! !
+!ScrollBar class categoriesForMethods!
+defaultHeight!constants!public! !
+defaultModel!models!public! !
+defaultWidth!constants!public! !
+icon!constants!public! !
+themePartName!constants!private! !
+winClassName!constants!private! !
+!
 

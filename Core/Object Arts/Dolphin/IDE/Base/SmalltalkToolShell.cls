@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Shell subclass: #SmalltalkToolShell
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
@@ -339,55 +339,57 @@ systemModel
 
 workspaceClass
 	^Smalltalk developmentSystem workspaceClass! !
-!SmalltalkToolShell categoriesFor: #applyOptions!private! !
-!SmalltalkToolShell categoriesFor: #browseIt!commands!public! !
-!SmalltalkToolShell categoriesFor: #buildPopupForCommand:!private! !
-!SmalltalkToolShell categoriesFor: #canRefactor!private!testing! !
-!SmalltalkToolShell categoriesFor: #canSaveState!private!saved state! !
-!SmalltalkToolShell categoriesFor: #configureFromSavedStateString:!public! !
-!SmalltalkToolShell categoriesFor: #createComponents!initializing!private! !
-!SmalltalkToolShell categoriesFor: #createSchematicWiring!initializing!private! !
-!SmalltalkToolShell categoriesFor: #displayOn:!displaying!public! !
-!SmalltalkToolShell categoriesFor: #fontSize!public! !
-!SmalltalkToolShell categoriesFor: #fontSize:!public! !
-!SmalltalkToolShell categoriesFor: #forgetSize!commands!public! !
-!SmalltalkToolShell categoriesFor: #getPinStateFor:!accessing!private! !
-!SmalltalkToolShell categoriesFor: #hasFuture!public!testing! !
-!SmalltalkToolShell categoriesFor: #hasPast!public!testing! !
-!SmalltalkToolShell categoriesFor: #help!commands!public! !
-!SmalltalkToolShell categoriesFor: #historyBack!commands!private! !
-!SmalltalkToolShell categoriesFor: #historyBack:!commands!private! !
-!SmalltalkToolShell categoriesFor: #historyForward!commands!private! !
-!SmalltalkToolShell categoriesFor: #historyForward:!commands!private! !
-!SmalltalkToolShell categoriesFor: #historySkip:!commands!private! !
-!SmalltalkToolShell categoriesFor: #ideaSpace!public! !
-!SmalltalkToolShell categoriesFor: #inspectSystemOptions!commands!public! !
-!SmalltalkToolShell categoriesFor: #isIdeaSpaceCard!public! !
-!SmalltalkToolShell categoriesFor: #methodBrowserClass!constants!private! !
-!SmalltalkToolShell categoriesFor: #onDropDown:!private! !
-!SmalltalkToolShell categoriesFor: #onViewOpened!private! !
-!SmalltalkToolShell categoriesFor: #packageManager!constants!private! !
-!SmalltalkToolShell categoriesFor: #queryCommand:!commands!private! !
-!SmalltalkToolShell categoriesFor: #rememberThisSize!commands!public! !
-!SmalltalkToolShell categoriesFor: #saveStateAspects:for:on:!helpers!private!saved state! !
-!SmalltalkToolShell categoriesFor: #saveStateOn:!private!saved state! !
-!SmalltalkToolShell categoriesFor: #saveStateString!private!saved state! !
-!SmalltalkToolShell categoriesFor: #searchForClass:!private! !
-!SmalltalkToolShell categoriesFor: #searchForMethod:!private! !
-!SmalltalkToolShell categoriesFor: #searchForObject:!public! !
-!SmalltalkToolShell categoriesFor: #searchForPackage:!public! !
-!SmalltalkToolShell categoriesFor: #searchForSymbol:!private! !
-!SmalltalkToolShell categoriesFor: #searchSmalltalk!commands!public! !
-!SmalltalkToolShell categoriesFor: #searchSmalltalkFor:!commands!public! !
-!SmalltalkToolShell categoriesFor: #selectionEnvironment!public! !
-!SmalltalkToolShell categoriesFor: #setPinStateFor:to:!accessing!private! !
-!SmalltalkToolShell categoriesFor: #show!operations!public! !
-!SmalltalkToolShell categoriesFor: #slideyPinMap!accessing!public! !
-!SmalltalkToolShell categoriesFor: #slideyPinMap:!accessing!public! !
-!SmalltalkToolShell categoriesFor: #slideyPinNames!accessing!private! !
-!SmalltalkToolShell categoriesFor: #sourceControl!commands!public! !
-!SmalltalkToolShell categoriesFor: #systemModel!accessing!private! !
-!SmalltalkToolShell categoriesFor: #workspaceClass!constants!private! !
+!SmalltalkToolShell categoriesForMethods!
+applyOptions!private! !
+browseIt!commands!public! !
+buildPopupForCommand:!private! !
+canRefactor!private!testing! !
+canSaveState!private!saved state! !
+configureFromSavedStateString:!public! !
+createComponents!initializing!private! !
+createSchematicWiring!initializing!private! !
+displayOn:!displaying!public! !
+fontSize!public! !
+fontSize:!public! !
+forgetSize!commands!public! !
+getPinStateFor:!accessing!private! !
+hasFuture!public!testing! !
+hasPast!public!testing! !
+help!commands!public! !
+historyBack!commands!private! !
+historyBack:!commands!private! !
+historyForward!commands!private! !
+historyForward:!commands!private! !
+historySkip:!commands!private! !
+ideaSpace!public! !
+inspectSystemOptions!commands!public! !
+isIdeaSpaceCard!public! !
+methodBrowserClass!constants!private! !
+onDropDown:!private! !
+onViewOpened!private! !
+packageManager!constants!private! !
+queryCommand:!commands!private! !
+rememberThisSize!commands!public! !
+saveStateAspects:for:on:!helpers!private!saved state! !
+saveStateOn:!private!saved state! !
+saveStateString!private!saved state! !
+searchForClass:!private! !
+searchForMethod:!private! !
+searchForObject:!public! !
+searchForPackage:!public! !
+searchForSymbol:!private! !
+searchSmalltalk!commands!public! !
+searchSmalltalkFor:!commands!public! !
+selectionEnvironment!public! !
+setPinStateFor:to:!accessing!private! !
+show!operations!public! !
+slideyPinMap!accessing!public! !
+slideyPinMap:!accessing!public! !
+slideyPinNames!accessing!private! !
+sourceControl!commands!public! !
+systemModel!accessing!private! !
+workspaceClass!constants!private! !
+!
 
 !SmalltalkToolShell class methodsFor!
 
@@ -658,45 +660,47 @@ toolsFolderIcon
 		show: self 
 		description: self toolDescription
 		helpId: self toolsFolderHelpId! !
-!SmalltalkToolShell class categoriesFor: #activeIdeaSpace!public! !
-!SmalltalkToolShell class categoriesFor: #buildIdeaSpacePopup!private! !
-!SmalltalkToolShell class categoriesFor: #canUseIdeaSpace!accessing!public! !
-!SmalltalkToolShell class categoriesFor: #canUseIdeaSpace:!accessing!public! !
-!SmalltalkToolShell class categoriesFor: #defaultAdditionalAccelerators!constants!private! !
-!SmalltalkToolShell class categoriesFor: #defaultDefaultView!constants!public! !
-!SmalltalkToolShell class categoriesFor: #defaultExtent!accessing!public! !
-!SmalltalkToolShell class categoriesFor: #defaultExtent:!accessing!public! !
-!SmalltalkToolShell class categoriesFor: #defaultHistoryDwellTime!constants!public! !
-!SmalltalkToolShell class categoriesFor: #defaultHistoryListSize!constants!public! !
-!SmalltalkToolShell class categoriesFor: #defaultModel!models!public! !
-!SmalltalkToolShell class categoriesFor: #defaultSearchFieldFlashes!public! !
-!SmalltalkToolShell class categoriesFor: #defaultSlideyPinsMap!accessing!public! !
-!SmalltalkToolShell class categoriesFor: #defaultSlideyPinsMap:!accessing!public! !
-!SmalltalkToolShell class categoriesFor: #defaultView!accessing!public! !
-!SmalltalkToolShell class categoriesFor: #defaultView:!accessing!public! !
-!SmalltalkToolShell class categoriesFor: #getAdditionalKeyBindings!accessing!private! !
-!SmalltalkToolShell class categoriesFor: #getCommandQueryHandlers!accessing!private! !
-!SmalltalkToolShell class categoriesFor: #historyDwellTime!accessing!public! !
-!SmalltalkToolShell class categoriesFor: #historyDwellTime:!accessing!public! !
-!SmalltalkToolShell class categoriesFor: #icon!constants!public! !
-!SmalltalkToolShell class categoriesFor: #initialize!initializing!private! !
-!SmalltalkToolShell class categoriesFor: #initializeAfterLoad!initializing!public! !
-!SmalltalkToolShell class categoriesFor: #initializeOptionFlags!initializing!private! !
-!SmalltalkToolShell class categoriesFor: #notificationGetImageBlock!constants!private! !
-!SmalltalkToolShell class categoriesFor: #notificationGetTextBlock!constants!private! !
-!SmalltalkToolShell class categoriesFor: #publishedAspects!public! !
-!SmalltalkToolShell class categoriesFor: #reuseIfOpen!accessing!public! !
-!SmalltalkToolShell class categoriesFor: #reuseIfOpen:!accessing!public! !
-!SmalltalkToolShell class categoriesFor: #searchFieldFlashes!public! !
-!SmalltalkToolShell class categoriesFor: #searchFieldFlashes:!public! !
-!SmalltalkToolShell class categoriesFor: #setAdditionalKeyBindings:!accessing!private! !
-!SmalltalkToolShell class categoriesFor: #setCommandQueryHandlers:!accessing!private! !
-!SmalltalkToolShell class categoriesFor: #show!instance creation!public! !
-!SmalltalkToolShell class categoriesFor: #show:inIdeaSpace:!private! !
-!SmalltalkToolShell class categoriesFor: #showExistingInstanceOf:!initializing!instance creation!must strip!private! !
-!SmalltalkToolShell class categoriesFor: #toolDescription!constants!public! !
-!SmalltalkToolShell class categoriesFor: #toolsFolderHelpId!public! !
-!SmalltalkToolShell class categoriesFor: #toolsFolderIcon!constants!public! !
+!SmalltalkToolShell class categoriesForMethods!
+activeIdeaSpace!public! !
+buildIdeaSpacePopup!private! !
+canUseIdeaSpace!accessing!public! !
+canUseIdeaSpace:!accessing!public! !
+defaultAdditionalAccelerators!constants!private! !
+defaultDefaultView!constants!public! !
+defaultExtent!accessing!public! !
+defaultExtent:!accessing!public! !
+defaultHistoryDwellTime!constants!public! !
+defaultHistoryListSize!constants!public! !
+defaultModel!models!public! !
+defaultSearchFieldFlashes!public! !
+defaultSlideyPinsMap!accessing!public! !
+defaultSlideyPinsMap:!accessing!public! !
+defaultView!accessing!public! !
+defaultView:!accessing!public! !
+getAdditionalKeyBindings!accessing!private! !
+getCommandQueryHandlers!accessing!private! !
+historyDwellTime!accessing!public! !
+historyDwellTime:!accessing!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+initializeAfterLoad!initializing!public! !
+initializeOptionFlags!initializing!private! !
+notificationGetImageBlock!constants!private! !
+notificationGetTextBlock!constants!private! !
+publishedAspects!public! !
+reuseIfOpen!accessing!public! !
+reuseIfOpen:!accessing!public! !
+searchFieldFlashes!public! !
+searchFieldFlashes:!public! !
+setAdditionalKeyBindings:!accessing!private! !
+setCommandQueryHandlers:!accessing!private! !
+show!instance creation!public! !
+show:inIdeaSpace:!private! !
+showExistingInstanceOf:!initializing!instance creation!must strip!private! !
+toolDescription!constants!public! !
+toolsFolderHelpId!public! !
+toolsFolderIcon!constants!public! !
+!
 
 SmalltalkToolShell class methodProtocol: #installableSystemTool attributes: #(#readOnly) selectors: #(#registerAsToolWith: #unregisterAsToolWith:)!
 

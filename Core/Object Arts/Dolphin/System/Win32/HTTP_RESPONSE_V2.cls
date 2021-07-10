@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HTTP_RESPONSE_V1 subclass: #HTTP_RESPONSE_V2
 	instanceVariableNames: ''
@@ -50,10 +50,12 @@ ResponseInfoCount: anInteger
 	"Set the receiver's 'ResponseInfoCount' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_ResponseInfoCount put: anInteger! !
-!HTTP_RESPONSE_V2 categoriesFor: #pResponseInfo!**compiled accessors**!public! !
-!HTTP_RESPONSE_V2 categoriesFor: #pResponseInfo:!**compiled accessors**!public! !
-!HTTP_RESPONSE_V2 categoriesFor: #ResponseInfoCount!**compiled accessors**!private! !
-!HTTP_RESPONSE_V2 categoriesFor: #ResponseInfoCount:!**compiled accessors**!private! !
+!HTTP_RESPONSE_V2 categoriesForMethods!
+pResponseInfo!**compiled accessors**!public! !
+pResponseInfo:!**compiled accessors**!public! !
+ResponseInfoCount!**compiled accessors**!private! !
+ResponseInfoCount:!**compiled accessors**!private! !
+!
 
 !HTTP_RESPONSE_V2 class methodsFor!
 
@@ -78,6 +80,8 @@ defineFields
 
 getFieldNames
 	^#(#Flags #Version #StatusCode #ReasonLength #pReason #Headers #EntityChunkCount #pEntityChunks #ResponseInfoCount #pResponseInfo)! !
-!HTTP_RESPONSE_V2 class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_RESPONSE_V2 class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_RESPONSE_V2 class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

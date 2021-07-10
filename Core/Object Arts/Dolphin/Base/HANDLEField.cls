@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 UINT_PTRField subclass: #HANDLEField
 	instanceVariableNames: ''
@@ -18,6 +18,8 @@ readFrom: anExternalStructure
 	field at the receiver's offset in the <ExternalStructure> argument."
 
 	^(anExternalStructure bytes uintPtrAtOffset: offset) asExternalHandle! !
-!HANDLEField categoriesFor: #fieldClassName!automatic generation!constants!development!private! !
-!HANDLEField categoriesFor: #readFrom:!indirect accessing!private! !
+!HANDLEField categoriesForMethods!
+fieldClassName!automatic generation!constants!development!private! !
+readFrom:!indirect accessing!private! !
+!
 

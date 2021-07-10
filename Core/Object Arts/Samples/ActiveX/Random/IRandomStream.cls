@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IRandomStream
 	instanceVariableNames: ''
@@ -152,22 +152,24 @@ upperBound: pVal
 
 	self put_UpperBound: pVal
 ! !
-!IRandomStream categoriesFor: #get_LowerBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!IRandomStream categoriesFor: #get_Seed:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!IRandomStream categoriesFor: #get_UpperBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!IRandomStream categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IRandomStream categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IRandomStream categoriesFor: #lowerBound!**auto generated**!properties!public! !
-!IRandomStream categoriesFor: #lowerBound:!**auto generated**!properties!public! !
-!IRandomStream categoriesFor: #next!**auto generated**!methods!public! !
-!IRandomStream categoriesFor: #Next:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!IRandomStream categoriesFor: #put_LowerBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!IRandomStream categoriesFor: #put_Seed:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!IRandomStream categoriesFor: #put_UpperBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
-!IRandomStream categoriesFor: #seed!**auto generated**!properties!public! !
-!IRandomStream categoriesFor: #seed:!**auto generated**!properties!public! !
-!IRandomStream categoriesFor: #upperBound!**auto generated**!properties!public! !
-!IRandomStream categoriesFor: #upperBound:!**auto generated**!properties!public! !
+!IRandomStream categoriesForMethods!
+get_LowerBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
+get_Seed:!**auto generated**!COM Interfaces-IRandomStream!private! !
+get_UpperBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+lowerBound!**auto generated**!properties!public! !
+lowerBound:!**auto generated**!properties!public! !
+next!**auto generated**!methods!public! !
+Next:!**auto generated**!COM Interfaces-IRandomStream!private! !
+put_LowerBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
+put_Seed:!**auto generated**!COM Interfaces-IRandomStream!private! !
+put_UpperBound:!**auto generated**!COM Interfaces-IRandomStream!private! !
+seed!**auto generated**!properties!public! !
+seed:!**auto generated**!properties!public! !
+upperBound!**auto generated**!properties!public! !
+upperBound:!**auto generated**!properties!public! !
+!
 
 !IRandomStream class methodsFor!
 
@@ -203,7 +205,9 @@ initializeTypeLib
 		IRandomStream initializeTypeLib"
 
 	typeLib := RANDOMLib! !
-!IRandomStream class categoriesFor: #clsid!**auto generated**!constants!private! !
-!IRandomStream class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IRandomStream class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!IRandomStream class categoriesForMethods!
+clsid!**auto generated**!constants!private! !
+defineFunctions!**auto generated**!initializing!public! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

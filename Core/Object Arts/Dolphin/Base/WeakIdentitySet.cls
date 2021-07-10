@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 WeakSet variableSubclass: #WeakIdentitySet
 	instanceVariableNames: ''
@@ -23,8 +23,10 @@ findElementOrNil: anObject
 
 hash: anObject max: anInteger
 	^anObject identityHash \\ anInteger + 1! !
-!WeakIdentitySet categoriesFor: #findElementOrNil:!private!searching! !
-!WeakIdentitySet categoriesFor: #hash:max:!private!searching! !
+!WeakIdentitySet categoriesForMethods!
+findElementOrNil:!private!searching! !
+hash:max:!private!searching! !
+!
 
 !WeakIdentitySet class methodsFor!
 
@@ -34,5 +36,7 @@ initialize
 	so we must implement to get the bereavement notifications."
 
 	super initialize! !
-!WeakIdentitySet class categoriesFor: #initialize!development!initializing!public! !
+!WeakIdentitySet class categoriesForMethods!
+initialize!development!initializing!public! !
+!
 

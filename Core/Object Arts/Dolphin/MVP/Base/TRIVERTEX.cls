@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #TRIVERTEX
 	instanceVariableNames: ''
@@ -105,20 +105,22 @@ y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
-!TRIVERTEX categoriesFor: #alpha!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #alpha:!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #blue!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #blue:!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #color:!accessing!public! !
-!TRIVERTEX categoriesFor: #green!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #green:!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #position:!accessing!public! !
-!TRIVERTEX categoriesFor: #red!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #red:!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #x!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #x:!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #y!**compiled accessors**!public! !
-!TRIVERTEX categoriesFor: #y:!**compiled accessors**!public! !
+!TRIVERTEX categoriesForMethods!
+alpha!**compiled accessors**!public! !
+alpha:!**compiled accessors**!public! !
+blue!**compiled accessors**!public! !
+blue:!**compiled accessors**!public! !
+color:!accessing!public! !
+green!**compiled accessors**!public! !
+green:!**compiled accessors**!public! !
+position:!accessing!public! !
+red!**compiled accessors**!public! !
+red:!**compiled accessors**!public! !
+x!**compiled accessors**!public! !
+x:!**compiled accessors**!public! !
+y!**compiled accessors**!public! !
+y:!**compiled accessors**!public! !
+!
 
 !TRIVERTEX class methodsFor!
 
@@ -148,6 +150,8 @@ defineFields
 
 getFieldNames
 	^#(#x #y #red #green #blue #alpha)! !
-!TRIVERTEX class categoriesFor: #defineFields!public!template definition! !
-!TRIVERTEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!TRIVERTEX class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

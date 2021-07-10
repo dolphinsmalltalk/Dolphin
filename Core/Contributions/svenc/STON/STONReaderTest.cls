@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #STONReaderTest
 	instanceVariableNames: ''
@@ -424,53 +424,55 @@ testWhitespace
 testWideSymbol
 	self assert: (self materialize: '#''яблоко''') equals: #'яблоко'.
 	self assert: (self materialize: '#яблоко') equals: #'яблоко'! !
-!STONReaderTest categoriesFor: #materialize:!private! !
-!STONReaderTest categoriesFor: #testAssociation!public!tests! !
-!STONReaderTest categoriesFor: #testBag!public!tests! !
-!STONReaderTest categoriesFor: #testBoolean!public!tests! !
-!STONReaderTest categoriesFor: #testByteArray!public!tests! !
-!STONReaderTest categoriesFor: #testCharacter!public!tests! !
-!STONReaderTest categoriesFor: #testClass!public!tests! !
-!STONReaderTest categoriesFor: #testClassWithUnderscore!public!tests! !
-!STONReaderTest categoriesFor: #testColor!public!tests! !
-!STONReaderTest categoriesFor: #testConvertingNewLines!public!tests! !
-!STONReaderTest categoriesFor: #testDate!public!tests! !
-!STONReaderTest categoriesFor: #testDateAndTime!public!tests! !
-!STONReaderTest categoriesFor: #testDeepStructure!public!tests! !
-!STONReaderTest categoriesFor: #testDictionary!public!tests! !
-!STONReaderTest categoriesFor: #testDictionaryWithComplexKeys!public!tests! !
-!STONReaderTest categoriesFor: #testDictionaryWithIndirectReferenceKeys!public!tests! !
-!STONReaderTest categoriesFor: #testDictionaryWithReferenceKeys!public!tests! !
-!STONReaderTest categoriesFor: #testError!public!tests! !
-!STONReaderTest categoriesFor: #testFloat!public!tests! !
-!STONReaderTest categoriesFor: #testFraction!public!tests! !
-!STONReaderTest categoriesFor: #testIdentityDictionary!public!tests! !
-!STONReaderTest categoriesFor: #testIllegalCharacterEscapes!public!tests! !
-!STONReaderTest categoriesFor: #testInteger!public!tests! !
-!STONReaderTest categoriesFor: #testJsonString!public!tests! !
-!STONReaderTest categoriesFor: #testList!public!tests! !
-!STONReaderTest categoriesFor: #testMap!public!tests! !
-!STONReaderTest categoriesFor: #testMetaclass!public!tests! !
-!STONReaderTest categoriesFor: #testMultiple!public!tests! !
-!STONReaderTest categoriesFor: #testNewSymbol!public!tests! !
-!STONReaderTest categoriesFor: #testNil!public!tests! !
-!STONReaderTest categoriesFor: #testNonBMPCharacterDecoding!public!tests! !
-!STONReaderTest categoriesFor: #testNull!public!tests! !
-!STONReaderTest categoriesFor: #testObject!public!tests! !
-!STONReaderTest categoriesFor: #testOrderedCollection!public!tests! !
-!STONReaderTest categoriesFor: #testPoint!public!tests! !
-!STONReaderTest categoriesFor: #testReferenceCycle!public!tests! !
-!STONReaderTest categoriesFor: #testReferenceSharing!public!tests! !
-!STONReaderTest categoriesFor: #testScaledDecimal!public!tests! !
-!STONReaderTest categoriesFor: #testSetWithIndirectReferenceElements!public!tests! !
-!STONReaderTest categoriesFor: #testSetWithReferenceElements!public!tests! !
-!STONReaderTest categoriesFor: #testStreaming!public!tests! !
-!STONReaderTest categoriesFor: #testString!public!tests! !
-!STONReaderTest categoriesFor: #testSymbol!public!tests! !
-!STONReaderTest categoriesFor: #testTime!public!tests! !
-!STONReaderTest categoriesFor: #testUnknownClasses!public!tests! !
-!STONReaderTest categoriesFor: #testUser!public!tests! !
-!STONReaderTest categoriesFor: #testUser2!public!tests! !
-!STONReaderTest categoriesFor: #testWhitespace!public!tests! !
-!STONReaderTest categoriesFor: #testWideSymbol!public!tests! !
+!STONReaderTest categoriesForMethods!
+materialize:!private! !
+testAssociation!public!tests! !
+testBag!public!tests! !
+testBoolean!public!tests! !
+testByteArray!public!tests! !
+testCharacter!public!tests! !
+testClass!public!tests! !
+testClassWithUnderscore!public!tests! !
+testColor!public!tests! !
+testConvertingNewLines!public!tests! !
+testDate!public!tests! !
+testDateAndTime!public!tests! !
+testDeepStructure!public!tests! !
+testDictionary!public!tests! !
+testDictionaryWithComplexKeys!public!tests! !
+testDictionaryWithIndirectReferenceKeys!public!tests! !
+testDictionaryWithReferenceKeys!public!tests! !
+testError!public!tests! !
+testFloat!public!tests! !
+testFraction!public!tests! !
+testIdentityDictionary!public!tests! !
+testIllegalCharacterEscapes!public!tests! !
+testInteger!public!tests! !
+testJsonString!public!tests! !
+testList!public!tests! !
+testMap!public!tests! !
+testMetaclass!public!tests! !
+testMultiple!public!tests! !
+testNewSymbol!public!tests! !
+testNil!public!tests! !
+testNonBMPCharacterDecoding!public!tests! !
+testNull!public!tests! !
+testObject!public!tests! !
+testOrderedCollection!public!tests! !
+testPoint!public!tests! !
+testReferenceCycle!public!tests! !
+testReferenceSharing!public!tests! !
+testScaledDecimal!public!tests! !
+testSetWithIndirectReferenceElements!public!tests! !
+testSetWithReferenceElements!public!tests! !
+testStreaming!public!tests! !
+testString!public!tests! !
+testSymbol!public!tests! !
+testTime!public!tests! !
+testUnknownClasses!public!tests! !
+testUser!public!tests! !
+testUser2!public!tests! !
+testWhitespace!public!tests! !
+testWideSymbol!public!tests! !
+!
 

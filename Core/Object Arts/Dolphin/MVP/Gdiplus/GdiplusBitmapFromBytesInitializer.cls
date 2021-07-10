@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusFromBytesInitializer subclass: #GdiplusBitmapFromBytesInitializer
 	instanceVariableNames: ''
@@ -30,6 +30,8 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating Bitmap'! !
-!GdiplusBitmapFromBytesInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusBitmapFromBytesInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!GdiplusBitmapFromBytesInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+!
 

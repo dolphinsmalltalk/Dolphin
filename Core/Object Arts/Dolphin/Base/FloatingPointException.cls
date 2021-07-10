@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ArithmeticError subclass: #FloatingPointException
 	instanceVariableNames: ''
@@ -71,9 +71,11 @@ isUnderflow
 
 	^self tag isUnderflow
 ! !
-!FloatingPointException categoriesFor: #_descriptionArguments!displaying!public! !
-!FloatingPointException categoriesFor: #_descriptionFormat!displaying!public! !
-!FloatingPointException categoriesFor: #_ieeeRecord!accessing!private! !
-!FloatingPointException categoriesFor: #isOverflow!public!testing! !
-!FloatingPointException categoriesFor: #isUnderflow!public!testing! !
+!FloatingPointException categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+_ieeeRecord!accessing!private! !
+isOverflow!public!testing! !
+isUnderflow!public!testing! !
+!
 

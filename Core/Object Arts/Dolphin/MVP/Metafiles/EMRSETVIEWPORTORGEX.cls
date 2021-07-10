@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRSETVIEWPORTORGEX
 	instanceVariableNames: ''
@@ -37,8 +37,10 @@ ptlOrigin: aPOINTL
 		from: ##(_OffsetOf_ptlOrigin + 1)
 		to: ##(_OffsetOf_ptlOrigin + POINTL basicByteSize)
 		startingAt: 1! !
-!EMRSETVIEWPORTORGEX categoriesFor: #ptlOrigin!**compiled accessors**!public! !
-!EMRSETVIEWPORTORGEX categoriesFor: #ptlOrigin:!**compiled accessors**!public! !
+!EMRSETVIEWPORTORGEX categoriesForMethods!
+ptlOrigin!**compiled accessors**!public! !
+ptlOrigin:!**compiled accessors**!public! !
+!
 
 !EMRSETVIEWPORTORGEX class methodsFor!
 
@@ -71,7 +73,9 @@ iTypes
 		with: EMR_SETVIEWPORTORGEX
 		with: EMR_SETWINDOWORGEX
 		with: EMR_SETBRUSHORGEX! !
-!EMRSETVIEWPORTORGEX class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETVIEWPORTORGEX class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETVIEWPORTORGEX class categoriesFor: #iTypes!constants!public! !
+!EMRSETVIEWPORTORGEX class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

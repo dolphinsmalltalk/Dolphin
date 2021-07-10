@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #XmlFormatterTest
 	instanceVariableNames: ''
@@ -159,11 +159,13 @@ testDocumentType
 "
 DiffBrowser compare: reformatted with: text
 "! !
-!XmlFormatterTest categoriesFor: #assertReformat:toCanonical:!helpers!private! !
-!XmlFormatterTest categoriesFor: #newDocument!helpers!private! !
-!XmlFormatterTest categoriesFor: #parseXml:!helpers!private! !
-!XmlFormatterTest categoriesFor: #testCanonicalExample3_1!public!unit tests! !
-!XmlFormatterTest categoriesFor: #testCanonicalExample3_2!public!unit tests! !
-!XmlFormatterTest categoriesFor: #testCanonicalExample3_3!public!unit tests! !
-!XmlFormatterTest categoriesFor: #testDocumentType!public!unit tests! !
+!XmlFormatterTest categoriesForMethods!
+assertReformat:toCanonical:!helpers!private! !
+newDocument!helpers!private! !
+parseXml:!helpers!private! !
+testCanonicalExample3_1!public!unit tests! !
+testCanonicalExample3_2!public!unit tests! !
+testCanonicalExample3_3!public!unit tests! !
+testDocumentType!public!unit tests! !
+!
 

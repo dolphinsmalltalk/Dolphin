@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #InlineMethodTest
 	instanceVariableNames: ''
@@ -261,19 +261,21 @@ testReturn
 						for: (BasicLintRuleTest class sourceCodeAt: #utilityMethods))
 				inMethod: #utilityMethods
 				forClass: BasicLintRuleTest class)! !
-!InlineMethodTest categoriesFor: #testBadInterval!failure tests!public! !
-!InlineMethodTest categoriesFor: #testInlineMethod!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethod1!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethod2!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethod3!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethod4!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethod5!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethodForSuperSend!public!tests! !
-!InlineMethodTest categoriesFor: #testInlineMethodForSuperSendThatAlsoSendsSuper!failure tests!public! !
-!InlineMethodTest categoriesFor: #testInlineRecursiveCascadedMethod!public!tests! !
-!InlineMethodTest categoriesFor: #testModelInlineRecursiveMethod!public!tests! !
-!InlineMethodTest categoriesFor: #testNonExistantSelector!failure tests!public! !
-!InlineMethodTest categoriesFor: #testOverriden!failure tests!public! !
-!InlineMethodTest categoriesFor: #testPrimitive!failure tests!public! !
-!InlineMethodTest categoriesFor: #testReturn!failure tests!public! !
+!InlineMethodTest categoriesForMethods!
+testBadInterval!failure tests!public! !
+testInlineMethod!public!tests! !
+testInlineMethod1!public!tests! !
+testInlineMethod2!public!tests! !
+testInlineMethod3!public!tests! !
+testInlineMethod4!public!tests! !
+testInlineMethod5!public!tests! !
+testInlineMethodForSuperSend!public!tests! !
+testInlineMethodForSuperSendThatAlsoSendsSuper!failure tests!public! !
+testInlineRecursiveCascadedMethod!public!tests! !
+testModelInlineRecursiveMethod!public!tests! !
+testNonExistantSelector!failure tests!public! !
+testOverriden!failure tests!public! !
+testPrimitive!failure tests!public! !
+testReturn!failure tests!public! !
+!
 

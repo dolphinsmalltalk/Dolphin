@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ArithmeticExpressionVisitor subclass: #SizeIsExpressionFormatter
 	instanceVariableNames: 'codeStream structClass variable'
@@ -42,11 +42,13 @@ visitVariableNode: aVariableNode
 				nextPutAll: variable;
 				space].
 	codeStream nextPutAll: identifier! !
-!SizeIsExpressionFormatter categoriesFor: #format:on:!public! !
-!SizeIsExpressionFormatter categoriesFor: #structClass:variable:!initializing!private! !
-!SizeIsExpressionFormatter categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
-!SizeIsExpressionFormatter categoriesFor: #visitMessageNode:!public!visiting! !
-!SizeIsExpressionFormatter categoriesFor: #visitVariableNode:!public!visiting! !
+!SizeIsExpressionFormatter categoriesForMethods!
+format:on:!public! !
+structClass:variable:!initializing!private! !
+visitLiteralNode:!public!visitor/double dispatching! !
+visitMessageNode:!public!visiting! !
+visitVariableNode:!public!visiting! !
+!
 
 !SizeIsExpressionFormatter class methodsFor!
 
@@ -55,6 +57,8 @@ structClass: anExternalStructureClass
 
 structClass: anExternalStructureClass variable: aString
 	^self new structClass: anExternalStructureClass variable: aString! !
-!SizeIsExpressionFormatter class categoriesFor: #structClass:!instance creation!public! !
-!SizeIsExpressionFormatter class categoriesFor: #structClass:variable:!instance creation!public! !
+!SizeIsExpressionFormatter class categoriesForMethods!
+structClass:!instance creation!public! !
+structClass:variable:!instance creation!public! !
+!
 

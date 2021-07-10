@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinGlobalChange subclass: #DolphinAddGlobalChange
 	instanceVariableNames: ''
@@ -18,9 +18,11 @@ changeString
 
 primitiveExecute
 	Smalltalk at: variable put: nil! !
-!DolphinAddGlobalChange categoriesFor: #asUndoOperation!converting!public! !
-!DolphinAddGlobalChange categoriesFor: #changeString!printing!public! !
-!DolphinAddGlobalChange categoriesFor: #primitiveExecute!private! !
+!DolphinAddGlobalChange categoriesForMethods!
+asUndoOperation!converting!public! !
+changeString!printing!public! !
+primitiveExecute!private! !
+!
 
 !DolphinAddGlobalChange class methodsFor!
 
@@ -28,5 +30,7 @@ addGlobal: aVariable
 	^(self new)
 		variable: aVariable;
 		yourself! !
-!DolphinAddGlobalChange class categoriesFor: #addGlobal:!instance creation!public! !
+!DolphinAddGlobalChange class categoriesForMethods!
+addGlobal:!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CollectionTest subclass: #IntervalANSITest
 	instanceVariableNames: ''
@@ -31,17 +31,21 @@ testXkeysAndValuesDoX
 testXlast
 	" <sequencedReadableCollection>#last "
 	#'Collection'.! !
-!IntervalANSITest categoriesFor: #canonicalElement!public! !
-!IntervalANSITest categoriesFor: #canonicalObject!public! !
-!IntervalANSITest categoriesFor: #emptyCollection!public! !
-!IntervalANSITest categoriesFor: #protocol!public! !
-!IntervalANSITest categoriesFor: #testXkeysAndValuesDoX!public! !
-!IntervalANSITest categoriesFor: #testXlast!public! !
+!IntervalANSITest categoriesForMethods!
+canonicalElement!public! !
+canonicalObject!public! !
+emptyCollection!public! !
+protocol!public! !
+testXkeysAndValuesDoX!public! !
+testXlast!public! !
+!
 
 !IntervalANSITest class methodsFor!
 
 helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: SequencedReadableCollectionHelper! !
-!IntervalANSITest class categoriesFor: #helperClassesDo:!public! !
+!IntervalANSITest class categoriesForMethods!
+helperClassesDo:!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #BagFactoryANSITest
 	instanceVariableNames: ''
@@ -43,13 +43,15 @@ testXwithXwithXwithX
 testXwithXwithXwithXwithX
 	" <Bag factory>#with:with:with:with: "
 	#'Collection'.! !
-!BagFactoryANSITest categoriesFor: #canonicalObject!public! !
-!BagFactoryANSITest categoriesFor: #protocol!public! !
-!BagFactoryANSITest categoriesFor: #testXnew!public! !
-!BagFactoryANSITest categoriesFor: #testXnewX!public! !
-!BagFactoryANSITest categoriesFor: #testXwithAllX!public! !
-!BagFactoryANSITest categoriesFor: #testXwithX!public! !
-!BagFactoryANSITest categoriesFor: #testXwithXwithX!public! !
-!BagFactoryANSITest categoriesFor: #testXwithXwithXwithX!public! !
-!BagFactoryANSITest categoriesFor: #testXwithXwithXwithXwithX!public! !
+!BagFactoryANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+testXnew!public! !
+testXnewX!public! !
+testXwithAllX!public! !
+testXwithX!public! !
+testXwithXwithX!public! !
+testXwithXwithXwithX!public! !
+testXwithXwithXwithXwithX!public! !
+!
 

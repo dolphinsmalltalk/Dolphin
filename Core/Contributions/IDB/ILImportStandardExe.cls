@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ILImportExe subclass: #ILImportStandardExe
 	instanceVariableNames: ''
@@ -21,6 +21,8 @@ iconsStartAddress
 	"The start address of the icons in a Dolphin exe"
 
 	^6524! !
-!ILImportStandardExe class categoriesFor: #iconsEndAddress!constants!public! !
-!ILImportStandardExe class categoriesFor: #iconsStartAddress!constants!public! !
+!ILImportStandardExe class categoriesForMethods!
+iconsEndAddress!constants!public! !
+iconsStartAddress!constants!public! !
+!
 

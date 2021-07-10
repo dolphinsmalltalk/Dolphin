@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #ISAXLexicalHandler
 	instanceVariableNames: ''
@@ -121,13 +121,15 @@ StartEntity: pwchName cchName: cchName
 
 	<virtual stdcall: hresult 6 word* sdword>
 	^self invalidCall: _failureCode! !
-!ISAXLexicalHandler categoriesFor: #Comment:cchChars:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!ISAXLexicalHandler categoriesFor: #EndCDATA!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!ISAXLexicalHandler categoriesFor: #EndDTD!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!ISAXLexicalHandler categoriesFor: #EndEntity:cchName:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!ISAXLexicalHandler categoriesFor: #StartCDATA!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!ISAXLexicalHandler categoriesFor: #StartDTD:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
-!ISAXLexicalHandler categoriesFor: #StartEntity:cchName:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+!ISAXLexicalHandler categoriesForMethods!
+Comment:cchChars:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+EndCDATA!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+EndDTD!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+EndEntity:cchName:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+StartCDATA!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+StartDTD:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+StartEntity:cchName:!**auto generated**!COM Interfaces-ISAXLexicalHandler!public! !
+!
 
 !ISAXLexicalHandler class methodsFor!
 
@@ -148,5 +150,7 @@ defineFunctions
 		defineFunction: #Comment:cchChars:
 			argumentTypes: 'word* sdword'
 ! !
-!ISAXLexicalHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISAXLexicalHandler class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

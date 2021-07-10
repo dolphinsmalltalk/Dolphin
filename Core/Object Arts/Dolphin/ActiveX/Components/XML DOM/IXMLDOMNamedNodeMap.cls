@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IXMLDOMNamedNodeMap
 	instanceVariableNames: ''
@@ -232,27 +232,29 @@ SetNamedItem: newItem nameItem: nameItem
 
 	<virtual stdcall: hresult 9 IXMLDOMNode* IXMLDOMNode**>
 	^self invalidCall: _failureCode! !
-!IXMLDOMNamedNodeMap categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
-!IXMLDOMNamedNodeMap categoriesFor: #get_item:listItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
-!IXMLDOMNamedNodeMap categoriesFor: #get_length:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
-!IXMLDOMNamedNodeMap categoriesFor: #getNamedItem:!**auto generated**!methods!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #GetNamedItem:namedItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
-!IXMLDOMNamedNodeMap categoriesFor: #getQualifiedItem:namespaceURI:!**auto generated**!methods!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #GetQualifiedItem:namespaceURI:qualifiedItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
-!IXMLDOMNamedNodeMap categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IXMLDOMNamedNodeMap categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IXMLDOMNamedNodeMap categoriesFor: #item:!**auto generated**!properties!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #length!**auto generated**!properties!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #nextNode!**auto generated**!methods!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #NextNode:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
-!IXMLDOMNamedNodeMap categoriesFor: #removeNamedItem:!**auto generated**!methods!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #RemoveNamedItem:namedItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
-!IXMLDOMNamedNodeMap categoriesFor: #removeQualifiedItem:namespaceURI:!**auto generated**!methods!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #RemoveQualifiedItem:namespaceURI:qualifiedItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
-!IXMLDOMNamedNodeMap categoriesFor: #Reset!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #setNamedItem:!**auto generated**!methods!public! !
-!IXMLDOMNamedNodeMap categoriesFor: #SetNamedItem:nameItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+!IXMLDOMNamedNodeMap categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+get__newEnum:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+get_item:listItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+get_length:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+getNamedItem:!**auto generated**!methods!public! !
+GetNamedItem:namedItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+getQualifiedItem:namespaceURI:!**auto generated**!methods!public! !
+GetQualifiedItem:namespaceURI:qualifiedItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+length!**auto generated**!properties!public! !
+nextNode!**auto generated**!methods!public! !
+NextNode:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+removeNamedItem:!**auto generated**!methods!public! !
+RemoveNamedItem:namedItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+removeQualifiedItem:namespaceURI:!**auto generated**!methods!public! !
+RemoveQualifiedItem:namespaceURI:qualifiedItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+Reset!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!public! !
+setNamedItem:!**auto generated**!methods!public! !
+SetNamedItem:nameItem:!**auto generated**!COM Interfaces-IXMLDOMNamedNodeMap!private! !
+!
 
 !IXMLDOMNamedNodeMap class methodsFor!
 
@@ -281,5 +283,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!IXMLDOMNamedNodeMap class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IXMLDOMNamedNodeMap class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

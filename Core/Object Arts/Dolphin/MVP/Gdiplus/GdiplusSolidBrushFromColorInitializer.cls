@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusSolidBrushFromColorInitializer
 	instanceVariableNames: 'color'
@@ -29,13 +29,17 @@ createHandle
 
 gdiplusConstructorErrorDescription
 	^'Error creating SolidBrush'! !
-!GdiplusSolidBrushFromColorInitializer categoriesFor: #color:!initializing!private! !
-!GdiplusSolidBrushFromColorInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
-!GdiplusSolidBrushFromColorInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!GdiplusSolidBrushFromColorInitializer categoriesForMethods!
+color:!initializing!private! !
+createHandle!private!realizing/unrealizing! !
+gdiplusConstructorErrorDescription!constants!private! !
+!
 
 !GdiplusSolidBrushFromColorInitializer class methodsFor!
 
 color: aColor
 	^self new color: aColor! !
-!GdiplusSolidBrushFromColorInitializer class categoriesFor: #color:!instance creation!public! !
+!GdiplusSolidBrushFromColorInitializer class categoriesForMethods!
+color:!instance creation!public! !
+!
 

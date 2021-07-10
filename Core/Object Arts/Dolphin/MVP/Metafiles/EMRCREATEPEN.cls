@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRCREATEPEN
 	instanceVariableNames: ''
@@ -49,10 +49,12 @@ lopn: aLOGPEN
 		from: ##(_OffsetOf_lopn + 1)
 		to: ##(_OffsetOf_lopn + LOGPEN basicByteSize)
 		startingAt: 1! !
-!EMRCREATEPEN categoriesFor: #ihPen!**compiled accessors**!public! !
-!EMRCREATEPEN categoriesFor: #ihPen:!**compiled accessors**!public! !
-!EMRCREATEPEN categoriesFor: #lopn!**compiled accessors**!public! !
-!EMRCREATEPEN categoriesFor: #lopn:!**compiled accessors**!public! !
+!EMRCREATEPEN categoriesForMethods!
+ihPen!**compiled accessors**!public! !
+ihPen:!**compiled accessors**!public! !
+lopn!**compiled accessors**!public! !
+lopn:!**compiled accessors**!public! !
+!
 
 !EMRCREATEPEN class methodsFor!
 
@@ -82,7 +84,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_CREATEPEN! !
-!EMRCREATEPEN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRCREATEPEN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRCREATEPEN class categoriesFor: #iTypes!constants!public! !
+!EMRCREATEPEN class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

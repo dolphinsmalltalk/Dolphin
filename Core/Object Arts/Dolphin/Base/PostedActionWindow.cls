@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #PostedActionWindow
 	instanceVariableNames: 'handle actions'
@@ -102,16 +102,18 @@ setTimer: idInteger interval: intervalInteger
 		nIDEvent: idInteger
 		uElapse: intervalInteger
 		lpTimerFunc: nil! !
-!PostedActionWindow categoriesFor: #asParameter!converting!public! !
-!PostedActionWindow categoriesFor: #dispatchMessage:wParam:lParam:!dispatching!private! !
-!PostedActionWindow categoriesFor: #evaluateNextAction!helpers!private! !
-!PostedActionWindow categoriesFor: #evaluatePendingActions!helpers!private! !
-!PostedActionWindow categoriesFor: #handle:!accessing!private! !
-!PostedActionWindow categoriesFor: #isPersistentView!private!testing! !
-!PostedActionWindow categoriesFor: #isView!accessing!private!testing! !
-!PostedActionWindow categoriesFor: #killTimer:!private!timers! !
-!PostedActionWindow categoriesFor: #onStartup!event handling!private! !
-!PostedActionWindow categoriesFor: #postAction:!operations!private! !
-!PostedActionWindow categoriesFor: #preTranslateMessage:!dispatching!private! !
-!PostedActionWindow categoriesFor: #setTimer:interval:!private!timers! !
+!PostedActionWindow categoriesForMethods!
+asParameter!converting!public! !
+dispatchMessage:wParam:lParam:!dispatching!private! !
+evaluateNextAction!helpers!private! !
+evaluatePendingActions!helpers!private! !
+handle:!accessing!private! !
+isPersistentView!private!testing! !
+isView!accessing!private!testing! !
+killTimer:!private!timers! !
+onStartup!event handling!private! !
+postAction:!operations!private! !
+preTranslateMessage:!dispatching!private! !
+setTimer:interval:!private!timers! !
+!
 

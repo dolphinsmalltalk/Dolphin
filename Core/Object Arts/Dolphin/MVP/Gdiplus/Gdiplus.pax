@@ -742,8 +742,10 @@ asColorKeyedBitmap: aKeyColor
 	bitmap drawOn: keyedBitmap canvas.
 	keyedBitmap freeDC.
 	^keyedBitmap! !
-!Bitmap categoriesFor: #asColorKeyedBitmap!public! !
-!Bitmap categoriesFor: #asColorKeyedBitmap:!public! !
+!Bitmap categoriesForMethods!
+asColorKeyedBitmap!public! !
+asColorKeyedBitmap:!public! !
+!
 
 !Point methodsFor!
 
@@ -766,8 +768,10 @@ scaledTo: aPoint
 	scale := aPoint x / self x.
 	scale * self y > aPoint y ifTrue: [scale := aPoint y / self y].
 	^scale * self! !
-!Point categoriesFor: #scaledOver:!public! !
-!Point categoriesFor: #scaledTo:!operations!public! !
+!Point categoriesForMethods!
+scaledOver:!public! !
+scaledTo:!operations!public! !
+!
 
 !Rectangle methodsFor!
 
@@ -775,7 +779,9 @@ asGdiplusRectangle
 	"In Gdiplus the rectangle coordinates include the lower right border"
 
 	^self position extent: self extent - 1 asPoint! !
-!Rectangle categoriesFor: #asGdiplusRectangle!converting!public! !
+!Rectangle categoriesForMethods!
+asGdiplusRectangle!converting!public! !
+!
 
 !View methodsFor!
 
@@ -808,7 +814,9 @@ createThumbnailExtent: extent mask: aColor
 	image drawOn: canvas at: ((extent - scaledExtent) / 2) rounded.
 	thumbnail freeDC.
 	^thumbnail! !
-!View categoriesFor: #createThumbnailExtent:mask:!private! !
+!View categoriesForMethods!
+createThumbnailExtent:mask:!private! !
+!
 
 "End of package definition"!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodBrowserShell subclass: #LintRuleFailuresBrowserShell
 	instanceVariableNames: 'lintRule'
@@ -55,15 +55,19 @@ removeMethod
 	index := self browser selectionsByIndex first.
 	self browser model removeAll: methods.
 	self browser selectionByIndex: index ifAbsent: []! !
-!LintRuleFailuresBrowserShell categoriesFor: #addToCommandRoute:!commands!public! !
-!LintRuleFailuresBrowserShell categoriesFor: #lintRule!accessing!public! !
-!LintRuleFailuresBrowserShell categoriesFor: #lintRule:!accessing!public! !
-!LintRuleFailuresBrowserShell categoriesFor: #queryCommand:!commands!private! !
-!LintRuleFailuresBrowserShell categoriesFor: #removeMethod!commands!public! !
+!LintRuleFailuresBrowserShell categoriesForMethods!
+addToCommandRoute:!commands!public! !
+lintRule!accessing!public! !
+lintRule:!accessing!public! !
+queryCommand:!commands!private! !
+removeMethod!commands!public! !
+!
 
 !LintRuleFailuresBrowserShell class methodsFor!
 
 initialize
 	self canUseIdeaSpace: true! !
-!LintRuleFailuresBrowserShell class categoriesFor: #initialize!initializing!private! !
+!LintRuleFailuresBrowserShell class categoriesForMethods!
+initialize!initializing!private! !
+!
 

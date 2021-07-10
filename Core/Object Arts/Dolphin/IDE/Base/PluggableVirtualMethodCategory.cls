@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VirtualMethodCategory subclass: #PluggableVirtualMethodCategory
 	instanceVariableNames: 'filter isSlowToEnumerate'
@@ -37,11 +37,13 @@ setFilter: aMonadicValuable
 setName: aString 
 	super setName: aString.
 	filter := [:each | true]! !
-!PluggableVirtualMethodCategory categoriesFor: #includesMethod:!public!testing! !
-!PluggableVirtualMethodCategory categoriesFor: #isSlowToEnumerate!public!testing! !
-!PluggableVirtualMethodCategory categoriesFor: #isSlowToEnumerate:!accessing!public! !
-!PluggableVirtualMethodCategory categoriesFor: #setFilter:!initializing!private! !
-!PluggableVirtualMethodCategory categoriesFor: #setName:!initializing!private! !
+!PluggableVirtualMethodCategory categoriesForMethods!
+includesMethod:!public!testing! !
+isSlowToEnumerate!public!testing! !
+isSlowToEnumerate:!accessing!public! !
+setFilter:!initializing!private! !
+setName:!initializing!private! !
+!
 
 !PluggableVirtualMethodCategory class methodsFor!
 
@@ -84,7 +86,9 @@ uninitialize
 
 	#('compilation failures' 'primitives') 
 		do: [:each | self removePseud: self pseudPrefix , each]! !
-!PluggableVirtualMethodCategory class categoriesFor: #initialize!initializing!private! !
-!PluggableVirtualMethodCategory class categoriesFor: #newNamed:withFilter:!instance creation!public! !
-!PluggableVirtualMethodCategory class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!PluggableVirtualMethodCategory class categoriesForMethods!
+initialize!initializing!private! !
+newNamed:withFilter:!instance creation!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

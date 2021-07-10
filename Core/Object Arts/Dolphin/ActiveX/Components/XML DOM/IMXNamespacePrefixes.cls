@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IMXNamespacePrefixes
 	instanceVariableNames: ''
@@ -105,14 +105,16 @@ length
 	self get_length: answer.
 	^answer asObject
 ! !
-!IMXNamespacePrefixes categoriesFor: #_newEnum!**auto generated**!properties!public! !
-!IMXNamespacePrefixes categoriesFor: #get__newEnum:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
-!IMXNamespacePrefixes categoriesFor: #get_item:prefix:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
-!IMXNamespacePrefixes categoriesFor: #get_length:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
-!IMXNamespacePrefixes categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IMXNamespacePrefixes categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IMXNamespacePrefixes categoriesFor: #item:!**auto generated**!properties!public! !
-!IMXNamespacePrefixes categoriesFor: #length!**auto generated**!properties!public! !
+!IMXNamespacePrefixes categoriesForMethods!
+_newEnum!**auto generated**!properties!public! !
+get__newEnum:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
+get_item:prefix:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
+get_length:!**auto generated**!COM Interfaces-IMXNamespacePrefixes!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+item:!**auto generated**!properties!public! !
+length!**auto generated**!properties!public! !
+!
 
 !IMXNamespacePrefixes class methodsFor!
 
@@ -128,5 +130,7 @@ defineFunctions
 		defineFunction: #get__newEnum:
 			argumentTypes: 'IUnknown**'
 ! !
-!IMXNamespacePrefixes class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IMXNamespacePrefixes class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

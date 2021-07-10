@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 BrowserEnvironmentWrapper subclass: #NotEnvironment
 	instanceVariableNames: ''
@@ -46,13 +46,15 @@ numberSelectors
 storeOn: aStream
 	environment storeOn: aStream.
 	aStream nextPutAll: ' not'! !
-!NotEnvironment categoriesFor: #defaultLabel!constants!private! !
-!NotEnvironment categoriesFor: #definesClass:!public!testing! !
-!NotEnvironment categoriesFor: #includesCategory:!public!testing! !
-!NotEnvironment categoriesFor: #includesClass:!public!testing! !
-!NotEnvironment categoriesFor: #includesProtocol:in:!public!testing! !
-!NotEnvironment categoriesFor: #includesSelector:in:!public!testing! !
-!NotEnvironment categoriesFor: #not!environments!public! !
-!NotEnvironment categoriesFor: #numberSelectors!public! !
-!NotEnvironment categoriesFor: #storeOn:!printing!public! !
+!NotEnvironment categoriesForMethods!
+defaultLabel!constants!private! !
+definesClass:!public!testing! !
+includesCategory:!public!testing! !
+includesClass:!public!testing! !
+includesProtocol:in:!public!testing! !
+includesSelector:in:!public!testing! !
+not!environments!public! !
+numberSelectors!public! !
+storeOn:!printing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ChunkBrowserSeriesChunk subclass: #ChunkBrowserMethodDefineChunk
 	instanceVariableNames: ''
@@ -71,16 +71,20 @@ restore
 
 sourceFromImage
 	^self identity1AndIdentity2AsCompiledMethod getSource! !
-!ChunkBrowserMethodDefineChunk categoriesFor: #browseTarget!operations!public! !
-!ChunkBrowserMethodDefineChunk categoriesFor: #canShowDifferences!public!testing! !
-!ChunkBrowserMethodDefineChunk categoriesFor: #initializeFromSeriesStart:!initializing!public! !
-!ChunkBrowserMethodDefineChunk categoriesFor: #isMatch!public!testing! !
-!ChunkBrowserMethodDefineChunk categoriesFor: #restore!operations!public! !
-!ChunkBrowserMethodDefineChunk categoriesFor: #sourceFromImage!accessing!public! !
+!ChunkBrowserMethodDefineChunk categoriesForMethods!
+browseTarget!operations!public! !
+canShowDifferences!public!testing! !
+initializeFromSeriesStart:!initializing!public! !
+isMatch!public!testing! !
+restore!operations!public! !
+sourceFromImage!accessing!public! !
+!
 
 !ChunkBrowserMethodDefineChunk class methodsFor!
 
 chunkType
 	^#'Method Define'! !
-!ChunkBrowserMethodDefineChunk class categoriesFor: #chunkType!constants!public! !
+!ChunkBrowserMethodDefineChunk class categoriesForMethods!
+chunkType!constants!public! !
+!
 

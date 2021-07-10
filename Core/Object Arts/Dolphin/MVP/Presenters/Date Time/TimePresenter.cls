@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValuePresenter subclass: #TimePresenter
 	instanceVariableNames: ''
@@ -27,7 +27,9 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.TextEdit) 34 16 nil nil 34 2 8 1140916224 1025 416 nil 327686 ##(Smalltalk.Color) #default nil 7 nil nil nil 416 nil 8 1903872368 656134 ##(Smalltalk.TimeToText) nil nil nil 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 674 261 39 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 1 8 0 0 29 0 0 0] 8 #() 674 193 193 nil 27 )! !
-!TimePresenter class categoriesFor: #defaultView!constants!public!views! !
-!TimePresenter class categoriesFor: #icon!constants!public! !
-!TimePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
+!TimePresenter class categoriesForMethods!
+defaultView!constants!public!views! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+!
 

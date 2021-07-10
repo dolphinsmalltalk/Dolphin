@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalSize subclass: #SIZE
 	instanceVariableNames: ''
@@ -43,14 +43,16 @@ width
 
 width: anObject
 	bytes sdwordAtOffset: _OffsetOf_cx put: anObject! !
-!SIZE categoriesFor: #cx!**compiled accessors**!public! !
-!SIZE categoriesFor: #cx:!**compiled accessors**!public! !
-!SIZE categoriesFor: #cy!**compiled accessors**!public! !
-!SIZE categoriesFor: #cy:!**compiled accessors**!public! !
-!SIZE categoriesFor: #height!accessing!public! !
-!SIZE categoriesFor: #height:!accessing!public! !
-!SIZE categoriesFor: #width!accessing!public! !
-!SIZE categoriesFor: #width:!accessing!public! !
+!SIZE categoriesForMethods!
+cx!**compiled accessors**!public! !
+cx:!**compiled accessors**!public! !
+cy!**compiled accessors**!public! !
+cy:!**compiled accessors**!public! !
+height!accessing!public! !
+height:!accessing!public! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 !SIZE class methodsFor!
 
@@ -89,8 +91,10 @@ width: cx height: cy
 				sdwordAtOffset: 0 put: cx;
 				sdwordAtOffset: 4 put: cy;
 				yourself)! !
-!SIZE class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!SIZE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!SIZE class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!SIZE class categoriesFor: #width:height:!instance creation!public! !
+!SIZE class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+width:height:!instance creation!public! !
+!
 

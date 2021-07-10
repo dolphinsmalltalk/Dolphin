@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MainTestCase subclass: #FloatANSITest
 	instanceVariableNames: 'smallInt2 largeNegInt2000000000 largePosInt2000000000 float2 fractionHalf sclDec2s3 numList'
@@ -1172,72 +1172,74 @@ testXtruncated
 		conformTo: #'number' selector: #'truncated'.
 	self value: [0.0 truncated] should: [:r | r = 0]
 		conformTo: #'number' selector: #'truncated'.! !
-!FloatANSITest categoriesFor: #canonicalObject!public! !
-!FloatANSITest categoriesFor: #protocol!public! !
-!FloatANSITest categoriesFor: #setUp!public! !
-!FloatANSITest categoriesFor: #testLiterals!public! !
-!FloatANSITest categoriesFor: #testXabs!public! !
-!FloatANSITest categoriesFor: #testXaddOp!public! !
-!FloatANSITest categoriesFor: #testXarcCos!public! !
-!FloatANSITest categoriesFor: #testXarcSin!public! !
-!FloatANSITest categoriesFor: #testXarcTan!public! !
-!FloatANSITest categoriesFor: #testXasFloat!public! !
-!FloatANSITest categoriesFor: #testXasFloatD!public! !
-!FloatANSITest categoriesFor: #testXasFloatE!public! !
-!FloatANSITest categoriesFor: #testXasFloatQ!public! !
-!FloatANSITest categoriesFor: #testXasFraction!public! !
-!FloatANSITest categoriesFor: #testXasInteger!public! !
-!FloatANSITest categoriesFor: #testXasScaledDecimalX!public! !
-!FloatANSITest categoriesFor: #testXbetweenXandX!public! !
-!FloatANSITest categoriesFor: #testXceiling!public! !
-!FloatANSITest categoriesFor: #testXcopy!public! !
-!FloatANSITest categoriesFor: #testXcos!public! !
-!FloatANSITest categoriesFor: #testXdegreesToRadians!public! !
-!FloatANSITest categoriesFor: #testXdivideOp!public! !
-!FloatANSITest categoriesFor: #testXequalityOp!public! !
-!FloatANSITest categoriesFor: #testXexp!public! !
-!FloatANSITest categoriesFor: #testXfloor!public! !
-!FloatANSITest categoriesFor: #testXfloorLogX!public! !
-!FloatANSITest categoriesFor: #testXfractionPart!public! !
-!FloatANSITest categoriesFor: #testXgreaterThanOp!public! !
-!FloatANSITest categoriesFor: #testXgreaterThanOrEqualToOp!public! !
-!FloatANSITest categoriesFor: #testXhash!public! !
-!FloatANSITest categoriesFor: #testXidentityHash!public! !
-!FloatANSITest categoriesFor: #testXidentityOp!public! !
-!FloatANSITest categoriesFor: #testXintegerDivideOp!public! !
-!FloatANSITest categoriesFor: #testXintegerPart!public! !
-!FloatANSITest categoriesFor: #testXisKindOfX!public! !
-!FloatANSITest categoriesFor: #testXisMemberOfX!public! !
-!FloatANSITest categoriesFor: #testXlessThanOp!public! !
-!FloatANSITest categoriesFor: #testXlessThanOrEqualToOp!public! !
-!FloatANSITest categoriesFor: #testXln!public! !
-!FloatANSITest categoriesFor: #testXlogX!public! !
-!FloatANSITest categoriesFor: #testXmaxX!public! !
-!FloatANSITest categoriesFor: #testXminX!public! !
-!FloatANSITest categoriesFor: #testXmultiplyOp!public! !
-!FloatANSITest categoriesFor: #testXnegated!public! !
-!FloatANSITest categoriesFor: #testXnegative!public! !
-!FloatANSITest categoriesFor: #testXnotIdentityOp!public! !
-!FloatANSITest categoriesFor: #testXpositive!public! !
-!FloatANSITest categoriesFor: #testXprintString!public! !
-!FloatANSITest categoriesFor: #testXquoX!public! !
-!FloatANSITest categoriesFor: #testXradiansToDegrees!public! !
-!FloatANSITest categoriesFor: #testXraisedToIntegerX!public! !
-!FloatANSITest categoriesFor: #testXraisedToX!public! !
-!FloatANSITest categoriesFor: #testXreciprocal!public! !
-!FloatANSITest categoriesFor: #testXremainderIntegerDivideOp!public! !
-!FloatANSITest categoriesFor: #testXremX!public! !
-!FloatANSITest categoriesFor: #testXrounded!public! !
-!FloatANSITest categoriesFor: #testXsign!public! !
-!FloatANSITest categoriesFor: #testXsin!public! !
-!FloatANSITest categoriesFor: #testXsqrt!public! !
-!FloatANSITest categoriesFor: #testXsquared!public! !
-!FloatANSITest categoriesFor: #testXstrictlyPositive!public! !
-!FloatANSITest categoriesFor: #testXsubtractOp!public! !
-!FloatANSITest categoriesFor: #testXtan!public! !
-!FloatANSITest categoriesFor: #testXtoX!public! !
-!FloatANSITest categoriesFor: #testXtoXbyX!public! !
-!FloatANSITest categoriesFor: #testXtoXbyXdoX!public! !
-!FloatANSITest categoriesFor: #testXtoXdoX!public! !
-!FloatANSITest categoriesFor: #testXtruncated!public! !
+!FloatANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+setUp!public! !
+testLiterals!public! !
+testXabs!public! !
+testXaddOp!public! !
+testXarcCos!public! !
+testXarcSin!public! !
+testXarcTan!public! !
+testXasFloat!public! !
+testXasFloatD!public! !
+testXasFloatE!public! !
+testXasFloatQ!public! !
+testXasFraction!public! !
+testXasInteger!public! !
+testXasScaledDecimalX!public! !
+testXbetweenXandX!public! !
+testXceiling!public! !
+testXcopy!public! !
+testXcos!public! !
+testXdegreesToRadians!public! !
+testXdivideOp!public! !
+testXequalityOp!public! !
+testXexp!public! !
+testXfloor!public! !
+testXfloorLogX!public! !
+testXfractionPart!public! !
+testXgreaterThanOp!public! !
+testXgreaterThanOrEqualToOp!public! !
+testXhash!public! !
+testXidentityHash!public! !
+testXidentityOp!public! !
+testXintegerDivideOp!public! !
+testXintegerPart!public! !
+testXisKindOfX!public! !
+testXisMemberOfX!public! !
+testXlessThanOp!public! !
+testXlessThanOrEqualToOp!public! !
+testXln!public! !
+testXlogX!public! !
+testXmaxX!public! !
+testXminX!public! !
+testXmultiplyOp!public! !
+testXnegated!public! !
+testXnegative!public! !
+testXnotIdentityOp!public! !
+testXpositive!public! !
+testXprintString!public! !
+testXquoX!public! !
+testXradiansToDegrees!public! !
+testXraisedToIntegerX!public! !
+testXraisedToX!public! !
+testXreciprocal!public! !
+testXremainderIntegerDivideOp!public! !
+testXremX!public! !
+testXrounded!public! !
+testXsign!public! !
+testXsin!public! !
+testXsqrt!public! !
+testXsquared!public! !
+testXstrictlyPositive!public! !
+testXsubtractOp!public! !
+testXtan!public! !
+testXtoX!public! !
+testXtoXbyX!public! !
+testXtoXbyXdoX!public! !
+testXtoXdoX!public! !
+testXtruncated!public! !
+!
 

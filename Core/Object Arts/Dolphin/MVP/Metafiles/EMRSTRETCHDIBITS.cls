@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRSTRETCHDIBITS
 	instanceVariableNames: ''
@@ -205,36 +205,38 @@ ySrc: anInteger
 	"Set the receiver's 'ySrc' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_ySrc put: anInteger! !
-!EMRSTRETCHDIBITS categoriesFor: #cbBitsSrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cbBitsSrc:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cbBmiSrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cbBmiSrc:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cxDest!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cxDest:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cxSrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cxSrc:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cyDest!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cyDest:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cySrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #cySrc:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #dwRop!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #dwRop:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #iUsageSrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #iUsageSrc:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #offBitsSrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #offBitsSrc:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #offBmiSrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #offBmiSrc:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #xDest!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #xDest:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #xSrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #xSrc:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #yDest!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #yDest:!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #ySrc!**compiled accessors**!public! !
-!EMRSTRETCHDIBITS categoriesFor: #ySrc:!**compiled accessors**!public! !
+!EMRSTRETCHDIBITS categoriesForMethods!
+cbBitsSrc!**compiled accessors**!public! !
+cbBitsSrc:!**compiled accessors**!public! !
+cbBmiSrc!**compiled accessors**!public! !
+cbBmiSrc:!**compiled accessors**!public! !
+cxDest!**compiled accessors**!public! !
+cxDest:!**compiled accessors**!public! !
+cxSrc!**compiled accessors**!public! !
+cxSrc:!**compiled accessors**!public! !
+cyDest!**compiled accessors**!public! !
+cyDest:!**compiled accessors**!public! !
+cySrc!**compiled accessors**!public! !
+cySrc:!**compiled accessors**!public! !
+dwRop!**compiled accessors**!public! !
+dwRop:!**compiled accessors**!public! !
+iUsageSrc!**compiled accessors**!public! !
+iUsageSrc:!**compiled accessors**!public! !
+offBitsSrc!**compiled accessors**!public! !
+offBitsSrc:!**compiled accessors**!public! !
+offBmiSrc!**compiled accessors**!public! !
+offBmiSrc:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+xDest!**compiled accessors**!public! !
+xDest:!**compiled accessors**!public! !
+xSrc!**compiled accessors**!public! !
+xSrc:!**compiled accessors**!public! !
+yDest!**compiled accessors**!public! !
+yDest:!**compiled accessors**!public! !
+ySrc!**compiled accessors**!public! !
+ySrc:!**compiled accessors**!public! !
+!
 
 !EMRSTRETCHDIBITS class methodsFor!
 
@@ -320,7 +322,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_STRETCHDIBITS! !
-!EMRSTRETCHDIBITS class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSTRETCHDIBITS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSTRETCHDIBITS class categoriesFor: #iTypes!constants!public! !
+!EMRSTRETCHDIBITS class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

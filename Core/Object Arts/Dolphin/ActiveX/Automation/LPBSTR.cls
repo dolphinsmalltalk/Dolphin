@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LPVOID subclass: #LPBSTR
 	instanceVariableNames: ''
@@ -57,11 +57,13 @@ value: aString
 	"Avoid side effect on argument if it is already a <BSTR>"
 	bstr == aString ifTrue: [bstr := bstr copy].
 	super value: bstr detach! !
-!LPBSTR categoriesFor: #asString!converting!public! !
-!LPBSTR categoriesFor: #asUtf16String!converting!public! !
-!LPBSTR categoriesFor: #asUtf8String!converting!public! !
-!LPBSTR categoriesFor: #value!accessing!public! !
-!LPBSTR categoriesFor: #value:!accessing!public! !
+!LPBSTR categoriesForMethods!
+asString!converting!public! !
+asUtf16String!converting!public! !
+asUtf8String!converting!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !LPBSTR class methodsFor!
 
@@ -76,6 +78,8 @@ uninitialize
 	"Private - Uninitialize the receiver prior to its removal from the image."
 
 	VMLibrary default registryAt: self name put: nil! !
-!LPBSTR class categoriesFor: #initialize!development!initializing!private! !
-!LPBSTR class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!LPBSTR class categoriesForMethods!
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

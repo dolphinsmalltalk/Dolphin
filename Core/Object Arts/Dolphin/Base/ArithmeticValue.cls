@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Magnitude subclass: #ArithmeticValue
 	instanceVariableNames: ''
@@ -475,73 +475,75 @@ understandsArithmetic
 	All Numbers do."
 
 	^true! !
-!ArithmeticValue categoriesFor: #-!arithmetic!public! !
-!ArithmeticValue categoriesFor: #%!arithmetic!public! !
-!ArithmeticValue categoriesFor: #*!arithmetic!public! !
-!ArithmeticValue categoriesFor: #**!mathematical!public! !
-!ArithmeticValue categoriesFor: #/!arithmetic!public! !
-!ArithmeticValue categoriesFor: #//!arithmetic!public! !
-!ArithmeticValue categoriesFor: #\\!arithmetic!public! !
-!ArithmeticValue categoriesFor: #+!arithmetic!public! !
-!ArithmeticValue categoriesFor: #=!comparing!public! !
-!ArithmeticValue categoriesFor: #abs!arithmetic!public! !
-!ArithmeticValue categoriesFor: #addToFloat:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #addToFraction:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #addToInteger:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #addToPoint:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #addToPoint3D:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #addToScaledDecimal:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #ceiling!public!truncation and round off! !
-!ArithmeticValue categoriesFor: #coerce:!coercing!private! !
-!ArithmeticValue categoriesFor: #divideIntoFloat:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #divideIntoFraction:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #divideIntoInteger:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #divideIntoPoint:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #divideIntoPoint3D:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #divideIntoScaledDecimal:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #equalToFloat:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #equalToFraction:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #equalToInteger:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #equalToScaledDecimal:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #floor!public!truncation and round off! !
-!ArithmeticValue categoriesFor: #generality!coercing!private! !
-!ArithmeticValue categoriesFor: #greaterThanFloat:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #greaterThanFraction:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #greaterThanInteger:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #greaterThanScaledDecimal:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #isZero!public!testing! !
-!ArithmeticValue categoriesFor: #multiplyByFloat:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #multiplyByFraction:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #multiplyByInteger:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #multiplyByPoint:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #multiplyByPoint3D:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #multiplyByScaledDecimal:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #negated!arithmetic!public! !
-!ArithmeticValue categoriesFor: #negative!public!testing! !
-!ArithmeticValue categoriesFor: #positive!public!testing! !
-!ArithmeticValue categoriesFor: #quo:!arithmetic!public! !
-!ArithmeticValue categoriesFor: #quotientFromInteger:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #raisedTo:!mathematical!public! !
-!ArithmeticValue categoriesFor: #raisedToInteger:!mathematical!public! !
-!ArithmeticValue categoriesFor: #reciprocal!arithmetic!public! !
-!ArithmeticValue categoriesFor: #rem:!arithmetic!public! !
-!ArithmeticValue categoriesFor: #retry:coercing:!coercing!private! !
-!ArithmeticValue categoriesFor: #roundDownTo:!public!truncation and round off! !
-!ArithmeticValue categoriesFor: #rounded!public!truncation and round off! !
-!ArithmeticValue categoriesFor: #roundTo:!public!truncation and round off! !
-!ArithmeticValue categoriesFor: #roundUpTo:!public!truncation and round off! !
-!ArithmeticValue categoriesFor: #sign!public!testing! !
-!ArithmeticValue categoriesFor: #squared!mathematical!public! !
-!ArithmeticValue categoriesFor: #strictlyPositive!public!testing! !
-!ArithmeticValue categoriesFor: #subtractFromFloat:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #subtractFromFraction:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #subtractFromInteger:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #subtractFromPoint:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #subtractFromPoint3D:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #subtractFromScaledDecimal:!double dispatch!private! !
-!ArithmeticValue categoriesFor: #truncated!public!truncation and round off! !
-!ArithmeticValue categoriesFor: #truncateTo:!public!truncation and round off! !
-!ArithmeticValue categoriesFor: #understandsArithmetic!public!testing! !
+!ArithmeticValue categoriesForMethods!
+-!arithmetic!public! !
+%!arithmetic!public! !
+*!arithmetic!public! !
+**!mathematical!public! !
+/!arithmetic!public! !
+//!arithmetic!public! !
+\\!arithmetic!public! !
++!arithmetic!public! !
+=!comparing!public! !
+abs!arithmetic!public! !
+addToFloat:!double dispatch!private! !
+addToFraction:!double dispatch!private! !
+addToInteger:!double dispatch!private! !
+addToPoint:!double dispatch!private! !
+addToPoint3D:!double dispatch!private! !
+addToScaledDecimal:!double dispatch!private! !
+ceiling!public!truncation and round off! !
+coerce:!coercing!private! !
+divideIntoFloat:!double dispatch!private! !
+divideIntoFraction:!double dispatch!private! !
+divideIntoInteger:!double dispatch!private! !
+divideIntoPoint:!double dispatch!private! !
+divideIntoPoint3D:!double dispatch!private! !
+divideIntoScaledDecimal:!double dispatch!private! !
+equalToFloat:!double dispatch!private! !
+equalToFraction:!double dispatch!private! !
+equalToInteger:!double dispatch!private! !
+equalToScaledDecimal:!double dispatch!private! !
+floor!public!truncation and round off! !
+generality!coercing!private! !
+greaterThanFloat:!double dispatch!private! !
+greaterThanFraction:!double dispatch!private! !
+greaterThanInteger:!double dispatch!private! !
+greaterThanScaledDecimal:!double dispatch!private! !
+isZero!public!testing! !
+multiplyByFloat:!double dispatch!private! !
+multiplyByFraction:!double dispatch!private! !
+multiplyByInteger:!double dispatch!private! !
+multiplyByPoint:!double dispatch!private! !
+multiplyByPoint3D:!double dispatch!private! !
+multiplyByScaledDecimal:!double dispatch!private! !
+negated!arithmetic!public! !
+negative!public!testing! !
+positive!public!testing! !
+quo:!arithmetic!public! !
+quotientFromInteger:!double dispatch!private! !
+raisedTo:!mathematical!public! !
+raisedToInteger:!mathematical!public! !
+reciprocal!arithmetic!public! !
+rem:!arithmetic!public! !
+retry:coercing:!coercing!private! !
+roundDownTo:!public!truncation and round off! !
+rounded!public!truncation and round off! !
+roundTo:!public!truncation and round off! !
+roundUpTo:!public!truncation and round off! !
+sign!public!testing! !
+squared!mathematical!public! !
+strictlyPositive!public!testing! !
+subtractFromFloat:!double dispatch!private! !
+subtractFromFraction:!double dispatch!private! !
+subtractFromInteger:!double dispatch!private! !
+subtractFromPoint:!double dispatch!private! !
+subtractFromPoint3D:!double dispatch!private! !
+subtractFromScaledDecimal:!double dispatch!private! !
+truncated!public!truncation and round off! !
+truncateTo:!public!truncation and round off! !
+understandsArithmetic!public!testing! !
+!
 
 !ArithmeticValue class methodsFor!
 
@@ -554,6 +556,8 @@ zero
 	"Answer the receiver's representation of zero."
 
 	^self subclassResponsibility! !
-!ArithmeticValue class categoriesFor: #one!instance creation!public! !
-!ArithmeticValue class categoriesFor: #zero!instance creation!public! !
+!ArithmeticValue class categoriesForMethods!
+one!instance creation!public! !
+zero!instance creation!public! !
+!
 

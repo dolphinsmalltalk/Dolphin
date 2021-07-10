@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoryClassChange subclass: #RefactoryVariableChange
 	instanceVariableNames: 'variable'
@@ -44,14 +44,16 @@ primitiveExecute
 
 variable
 	^variable! !
-!RefactoryVariableChange categoriesFor: #=!comparing!public! !
-!RefactoryVariableChange categoriesFor: #changeObject!private! !
-!RefactoryVariableChange categoriesFor: #changesFileTemplate!private! !
-!RefactoryVariableChange categoriesFor: #changeSymbol!constants!private! !
-!RefactoryVariableChange categoriesFor: #class:variable:!initialize/release!public! !
-!RefactoryVariableChange categoriesFor: #hash!comparing!public! !
-!RefactoryVariableChange categoriesFor: #primitiveExecute!private! !
-!RefactoryVariableChange categoriesFor: #variable!private! !
+!RefactoryVariableChange categoriesForMethods!
+=!comparing!public! !
+changeObject!private! !
+changesFileTemplate!private! !
+changeSymbol!constants!private! !
+class:variable:!initialize/release!public! !
+hash!comparing!public! !
+primitiveExecute!private! !
+variable!private! !
+!
 
 !RefactoryVariableChange class methodsFor!
 
@@ -66,6 +68,8 @@ remove: aVariable from: aBehavior
 	but is here so we don't need to copy it to all subclasses"
 
 	^self new class: aBehavior variable: aVariable! !
-!RefactoryVariableChange class categoriesFor: #add:to:!instance creation!public! !
-!RefactoryVariableChange class categoriesFor: #remove:from:!instance creation!public! !
+!RefactoryVariableChange class categoriesForMethods!
+add:to:!instance creation!public! !
+remove:from:!instance creation!public! !
+!
 

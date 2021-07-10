@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCaseHelper subclass: #AbstractDictionaryHelper
 	instanceVariableNames: ''
@@ -301,26 +301,28 @@ testXvalues
 			checkSum = 110]
 		conformTo: #abstractDictionary
 		selector: #values.! !
-!AbstractDictionaryHelper categoriesFor: #emptyObject!public! !
-!AbstractDictionaryHelper categoriesFor: #object!public! !
-!AbstractDictionaryHelper categoriesFor: #object:!public! !
-!AbstractDictionaryHelper categoriesFor: #testXaddAllX!public! !
-!AbstractDictionaryHelper categoriesFor: #testXatX!public! !
-!AbstractDictionaryHelper categoriesFor: #testXatXifAbsentPutX!public! !
-!AbstractDictionaryHelper categoriesFor: #testXatXifAbsentX!public! !
-!AbstractDictionaryHelper categoriesFor: #testXatXputX!public! !
-!AbstractDictionaryHelper categoriesFor: #testXcollectX!public! !
-!AbstractDictionaryHelper categoriesFor: #testXincludesKeyX!public! !
-!AbstractDictionaryHelper categoriesFor: #testXkeyAtValueX!public! !
-!AbstractDictionaryHelper categoriesFor: #testXkeyAtValueXifAbsentX!public! !
-!AbstractDictionaryHelper categoriesFor: #testXkeys!public! !
-!AbstractDictionaryHelper categoriesFor: #testXkeysAndValuesDoX!public! !
-!AbstractDictionaryHelper categoriesFor: #testXkeysDoX!public! !
-!AbstractDictionaryHelper categoriesFor: #testXrejectX!public! !
-!AbstractDictionaryHelper categoriesFor: #testXremoveAllKeysifAbsentX!public! !
-!AbstractDictionaryHelper categoriesFor: #testXremoveAllKeysX!public! !
-!AbstractDictionaryHelper categoriesFor: #testXremoveKeyX!public! !
-!AbstractDictionaryHelper categoriesFor: #testXremoveKeyXifAbsentX!public! !
-!AbstractDictionaryHelper categoriesFor: #testXselectX!public! !
-!AbstractDictionaryHelper categoriesFor: #testXvalues!public! !
+!AbstractDictionaryHelper categoriesForMethods!
+emptyObject!public! !
+object!public! !
+object:!public! !
+testXaddAllX!public! !
+testXatX!public! !
+testXatXifAbsentPutX!public! !
+testXatXifAbsentX!public! !
+testXatXputX!public! !
+testXcollectX!public! !
+testXincludesKeyX!public! !
+testXkeyAtValueX!public! !
+testXkeyAtValueXifAbsentX!public! !
+testXkeys!public! !
+testXkeysAndValuesDoX!public! !
+testXkeysDoX!public! !
+testXrejectX!public! !
+testXremoveAllKeysifAbsentX!public! !
+testXremoveAllKeysX!public! !
+testXremoveKeyX!public! !
+testXremoveKeyXifAbsentX!public! !
+testXselectX!public! !
+testXvalues!public! !
+!
 

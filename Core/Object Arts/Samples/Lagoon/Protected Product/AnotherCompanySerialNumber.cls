@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ProtectedProductSerialNumber subclass: #AnotherCompanySerialNumber
 	instanceVariableNames: ''
@@ -66,9 +66,11 @@ serialNumberProtectorClass
 	"overriden to request asymetric"
 
 	^ElgamalSerialNumberProtector! !
-!AnotherCompanySerialNumber class categoriesFor: #instanceDecodingKey!constants!private! !
-!AnotherCompanySerialNumber class categoriesFor: #instanceEncodingKey!constants!private! !
-!AnotherCompanySerialNumber class categoriesFor: #lockedMethodDecodingKey!constants!private! !
-!AnotherCompanySerialNumber class categoriesFor: #lockedMethodDecodingKeyHash!constants!private! !
-!AnotherCompanySerialNumber class categoriesFor: #serialNumberProtectorClass!constants!public! !
+!AnotherCompanySerialNumber class categoriesForMethods!
+instanceDecodingKey!constants!private! !
+instanceEncodingKey!constants!private! !
+lockedMethodDecodingKey!constants!private! !
+lockedMethodDecodingKeyHash!constants!private! !
+serialNumberProtectorClass!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PositionableStreamTest subclass: #ReadWriteStreamTest
 	instanceVariableNames: ''
@@ -55,9 +55,11 @@ testResetAfterWrite
 	stream reset.
 	self assert: stream next equals: $a.
 	self closeTempStream: stream! !
-!ReadWriteStreamTest categoriesFor: #streamClass!helpers!private! !
-!ReadWriteStreamTest categoriesFor: #streamOn:!helpers!private! !
-!ReadWriteStreamTest categoriesFor: #testIsEmpty!public!unit tests! !
-!ReadWriteStreamTest categoriesFor: #testNextColon!public!unit tests! !
-!ReadWriteStreamTest categoriesFor: #testResetAfterWrite!public!unit tests! !
+!ReadWriteStreamTest categoriesForMethods!
+streamClass!helpers!private! !
+streamOn:!helpers!private! !
+testIsEmpty!public!unit tests! !
+testNextColon!public!unit tests! !
+testResetAfterWrite!public!unit tests! !
+!
 

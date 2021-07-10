@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ConsoleSessionManager subclass: #CommandLineHelloWorld
 	instanceVariableNames: ''
@@ -26,5 +26,7 @@ main
 	self stderr
 		nextPutAll: 'Press <Enter> to exit:'; flush.
 	self stdin nextLine! !
-!CommandLineHelloWorld categoriesFor: #main!operations-startup!public! !
+!CommandLineHelloWorld categoriesForMethods!
+main!operations-startup!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #ITypeComp
 	instanceVariableNames: ''
@@ -25,8 +25,10 @@ BindType: bindType lHashVal: lHashVal ppTInfo: ppTInfo ppTComp: ppTComp
 
 	<virtual stdcall: hresult 5 lpwstr dword lppvoid lppvoid>
 	^self invalidCall: _failureCode! !
-!ITypeComp categoriesFor: #Bind:lHashVal:wFlags:ppTInfo:pDescKind:pBindPtr:!COM Interfaces-ITypeComp!primitives!public! !
-!ITypeComp categoriesFor: #BindType:lHashVal:ppTInfo:ppTComp:!COM Interfaces-ITypeComp!primitives!public! !
+!ITypeComp categoriesForMethods!
+Bind:lHashVal:wFlags:ppTInfo:pDescKind:pBindPtr:!COM Interfaces-ITypeComp!primitives!public! !
+BindType:lHashVal:ppTInfo:ppTComp:!COM Interfaces-ITypeComp!primitives!public! !
+!
 
 !ITypeComp class methodsFor!
 
@@ -57,5 +59,7 @@ defineFunctions
 			 argumentTypes: 'lpwstr dword word ITypeInfo** SDWORD* lppvoid'; "'DESCKIND* BINDPTR*';"
 		defineFunction: #BindType:lHashVal:ppTInfo:ppTComp:        
 			 argumentTypes: 'lpwstr dword ITypeInfo** ITypeComp**'! !
-!ITypeComp class categoriesFor: #defineFunctions!initializing!public! !
+!ITypeComp class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

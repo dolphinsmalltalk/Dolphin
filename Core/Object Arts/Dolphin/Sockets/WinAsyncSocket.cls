@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 View subclass: #WinAsyncSocket
 	instanceVariableNames: '_reserved1 _reserved2'
@@ -90,13 +90,15 @@ wsaEvent: message wParam: wParam lParam: lParam
 	event := lParam lowWord.
 	selector := SocketMessageMap at: event ifAbsent: nil.
 	selector notNil ifTrue: [socket perform: selector]! !
-!WinAsyncSocket categoriesFor: #applyFont!font!private!updating! !
-!WinAsyncSocket categoriesFor: #cancelSocket:!operations!private! !
-!WinAsyncSocket categoriesFor: #defaultExtent!constants!public! !
-!WinAsyncSocket categoriesFor: #dispatchUser:wParam:lParam:!dispatching!private! !
-!WinAsyncSocket categoriesFor: #error!exceptions!private! !
-!WinAsyncSocket categoriesFor: #monitorSocket:!operations!public! !
-!WinAsyncSocket categoriesFor: #wsaEvent:wParam:lParam:!event handling-win32!private! !
+!WinAsyncSocket categoriesForMethods!
+applyFont!font!private!updating! !
+cancelSocket:!operations!private! !
+defaultExtent!constants!public! !
+dispatchUser:wParam:lParam:!dispatching!private! !
+error!exceptions!private! !
+monitorSocket:!operations!public! !
+wsaEvent:wParam:lParam:!event handling-win32!private! !
+!
 
 !WinAsyncSocket class methodsFor!
 
@@ -149,9 +151,11 @@ uninitialize
 		ifTrue: 
 			[DefaultInstance destroy.
 			DefaultInstance := nil]! !
-!WinAsyncSocket class categoriesFor: #default!accessing!public! !
-!WinAsyncSocket class categoriesFor: #defaultWmUserOffset!constants!private! !
-!WinAsyncSocket class categoriesFor: #initialize!initializing!private! !
-!WinAsyncSocket class categoriesFor: #onStartup!initializing!private! !
-!WinAsyncSocket class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!WinAsyncSocket class categoriesForMethods!
+default!accessing!public! !
+defaultWmUserOffset!constants!private! !
+initialize!initializing!private! !
+onStartup!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

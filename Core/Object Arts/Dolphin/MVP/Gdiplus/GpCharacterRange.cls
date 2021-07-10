@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #GpCharacterRange
 	instanceVariableNames: ''
@@ -44,10 +44,12 @@ length: anInteger
 	"Set the receiver's 'length' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_length put: anInteger! !
-!GpCharacterRange categoriesFor: #First!**compiled accessors**!public! !
-!GpCharacterRange categoriesFor: #First:!**compiled accessors**!public! !
-!GpCharacterRange categoriesFor: #length!**compiled accessors**!public! !
-!GpCharacterRange categoriesFor: #length:!**compiled accessors**!public! !
+!GpCharacterRange categoriesForMethods!
+First!**compiled accessors**!public! !
+First:!**compiled accessors**!public! !
+length!**compiled accessors**!public! !
+length:!**compiled accessors**!public! !
+!
 
 !GpCharacterRange class methodsFor!
 
@@ -69,6 +71,8 @@ defineFields
 
 getFieldNames
 	^#(#First #length)! !
-!GpCharacterRange class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!GpCharacterRange class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!GpCharacterRange class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

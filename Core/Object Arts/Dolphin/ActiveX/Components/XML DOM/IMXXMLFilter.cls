@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IMXXMLFilter
 	instanceVariableNames: ''
@@ -284,31 +284,33 @@ setErrorHandler: oHandler
 
 	self putref_errorHandler: oHandler
 ! !
-!IMXXMLFilter categoriesFor: #contentHandler!**auto generated**!properties!public! !
-!IMXXMLFilter categoriesFor: #dtdHandler!**auto generated**!properties!public! !
-!IMXXMLFilter categoriesFor: #entityResolver!**auto generated**!properties!public! !
-!IMXXMLFilter categoriesFor: #errorHandler!**auto generated**!properties!public! !
-!IMXXMLFilter categoriesFor: #get_contentHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #get_dtdHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #get_entityResolver:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #get_errorHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #getFeature:!**auto generated**!methods!public! !
-!IMXXMLFilter categoriesFor: #GetFeature:fValue:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #GetProperty:varValue:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #getProperty_:!**auto generated**!methods!public! !
-!IMXXMLFilter categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IMXXMLFilter categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IMXXMLFilter categoriesFor: #PutFeature:fValue:!**auto generated**!COM Interfaces-IMXXMLFilter!public! !
-!IMXXMLFilter categoriesFor: #putProperty:varValue:!**auto generated**!methods!public! !
-!IMXXMLFilter categoriesFor: #PutProperty:varValue:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #putref_contentHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #putref_dtdHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #putref_entityResolver:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #putref_errorHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
-!IMXXMLFilter categoriesFor: #setContentHandler:!**auto generated**!properties!public! !
-!IMXXMLFilter categoriesFor: #setDtdHandler:!**auto generated**!properties!public! !
-!IMXXMLFilter categoriesFor: #setEntityResolver:!**auto generated**!properties!public! !
-!IMXXMLFilter categoriesFor: #setErrorHandler:!**auto generated**!properties!public! !
+!IMXXMLFilter categoriesForMethods!
+contentHandler!**auto generated**!properties!public! !
+dtdHandler!**auto generated**!properties!public! !
+entityResolver!**auto generated**!properties!public! !
+errorHandler!**auto generated**!properties!public! !
+get_contentHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+get_dtdHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+get_entityResolver:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+get_errorHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+getFeature:!**auto generated**!methods!public! !
+GetFeature:fValue:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+GetProperty:varValue:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+getProperty_:!**auto generated**!methods!public! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+PutFeature:fValue:!**auto generated**!COM Interfaces-IMXXMLFilter!public! !
+putProperty:varValue:!**auto generated**!methods!public! !
+PutProperty:varValue:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+putref_contentHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+putref_dtdHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+putref_entityResolver:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+putref_errorHandler:!**auto generated**!COM Interfaces-IMXXMLFilter!private! !
+setContentHandler:!**auto generated**!properties!public! !
+setDtdHandler:!**auto generated**!properties!public! !
+setEntityResolver:!**auto generated**!properties!public! !
+setErrorHandler:!**auto generated**!properties!public! !
+!
 
 !IMXXMLFilter class methodsFor!
 
@@ -342,5 +344,7 @@ defineFunctions
 		defineFunction: #putref_errorHandler:
 			argumentTypes: 'IUnknown*'
 ! !
-!IMXXMLFilter class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IMXXMLFilter class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

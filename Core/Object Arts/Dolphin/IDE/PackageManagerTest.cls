@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #PackageManagerTest
 	instanceVariableNames: ''
@@ -24,6 +24,8 @@ testLooseMethodCacheUpToDate
 		do: [:eachPackage | eachPackage methodNames do: [:each | allNames add: each key , each value]].
 	loose := Package manager looseMethods keys collect: [:each | each key , each value].
 	self assert: loose equals: allNames! !
-!PackageManagerTest categoriesFor: #testAllClassesPackaged!public!unit tests! !
-!PackageManagerTest categoriesFor: #testLooseMethodCacheUpToDate!public!unit tests! !
+!PackageManagerTest categoriesForMethods!
+testAllClassesPackaged!public!unit tests! !
+testLooseMethodCacheUpToDate!public!unit tests! !
+!
 

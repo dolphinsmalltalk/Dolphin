@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #AXEventSinkTest
 	instanceVariableNames: 'sink object received'
@@ -63,15 +63,19 @@ testOneArgs
 					[:each | 
 					each key == #OneVariant: 
 						and: [each value size = 1 and: [each value first asObject = #[0 1 2 3 4 5 6 7 8 9]]]])! !
-!AXEventSinkTest categoriesFor: #onAxEvent:withArguments:!private!unit tests! !
-!AXEventSinkTest categoriesFor: #setUp!public!unit tests! !
-!AXEventSinkTest categoriesFor: #tearDown!public!unit tests! !
-!AXEventSinkTest categoriesFor: #testNoArgs!public!unit tests! !
-!AXEventSinkTest categoriesFor: #testOneArgs!public!unit tests! !
+!AXEventSinkTest categoriesForMethods!
+onAxEvent:withArguments:!private!unit tests! !
+setUp!public!unit tests! !
+tearDown!public!unit tests! !
+testNoArgs!public!unit tests! !
+testOneArgs!public!unit tests! !
+!
 
 !AXEventSinkTest class methodsFor!
 
 resources
 	^Array with: TestTypelib! !
-!AXEventSinkTest class categoriesFor: #resources!public!unit tests! !
+!AXEventSinkTest class categoriesForMethods!
+resources!public!unit tests! !
+!
 

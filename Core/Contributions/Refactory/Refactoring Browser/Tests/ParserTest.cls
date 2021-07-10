@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringBrowserTest subclass: #ParserTest
 	instanceVariableNames: 'currentSelector classSearches rewrites'
@@ -744,64 +744,66 @@ verifyTree: copiedNode isDeepCopyOf: originalNode
 			(Array with: originalNode with: originalChild parent with: copiedNode with: copiedChild parent) collect: #identityHash.
 			"
 			self verifyTree: copiedChild isDeepCopyOf: originalChild]! !
-!ParserTest categoriesFor: #buildArgumentSearch!accessing!public! !
-!ParserTest categoriesFor: #buildMessageSearch!accessing!public! !
-!ParserTest categoriesFor: #buildMethodArgumentSearch!accessing!public! !
-!ParserTest categoriesFor: #buildMethodSearch!accessing!public! !
-!ParserTest categoriesFor: #buildMethodTitleSearch!accessing!public! !
-!ParserTest categoriesFor: #buildSimpleLiteralSearch!accessing!public! !
-!ParserTest categoriesFor: #buildSimpleVariableSearch!accessing!public! !
-!ParserTest categoriesFor: #buildStatementSearch!accessing!public! !
-!ParserTest categoriesFor: #compare:to:!accessing!public! !
-!ParserTest categoriesFor: #createArgumentSearchWith:selectors:inClass:!accessing!public! !
-!ParserTest categoriesFor: #createMethodSearchWith:selectors:inClass:!accessing!public! !
-!ParserTest categoriesFor: #createSearchWith:selectors:inClass:!accessing!public! !
-!ParserTest categoriesFor: #currentSelector!accessing!public! !
-!ParserTest categoriesFor: #errorSignal!public! !
-!ParserTest categoriesFor: #parseAll!long running!public! !
-!ParserTest categoriesFor: #parseError:!private! !
-!ParserTest categoriesFor: #setUp!accessing!public! !
-!ParserTest categoriesFor: #testAllSearches!public!unit tests! !
-!ParserTest categoriesFor: #testArray!public!unit tests! !
-!ParserTest categoriesFor: #testBestNodeFor!public! !
-!ParserTest categoriesFor: #testBlockRewrites!public!unit tests! !
-!ParserTest categoriesFor: #testCascadeReplacement!public!unit tests! !
-!ParserTest categoriesFor: #testComparingTrees!public!unit tests! !
-!ParserTest categoriesFor: #testCopy!public!unit tests! !
-!ParserTest categoriesFor: #testCreationProtocol!public!unit tests! !
-!ParserTest categoriesFor: #testEquality!public!unit tests! !
-!ParserTest categoriesFor: #testEqualToWithMappingAfterRewrite!public!unit tests! !
-!ParserTest categoriesFor: #testEqualToWithMappingRename!public!unit tests! !
-!ParserTest categoriesFor: #testEquivalentExceptRenaming!public!unit tests! !
-!ParserTest categoriesFor: #testExtendedLiterals!public!unit tests! !
-!ParserTest categoriesFor: #testFormatter!public!unit tests! !
-!ParserTest categoriesFor: #testIntervals!public!unit tests! !
-!ParserTest categoriesFor: #testIsA!public!unit tests! !
-!ParserTest categoriesFor: #testLiteralIntevals!public!unit tests! !
-!ParserTest categoriesFor: #testLiteralMessages!public!unit tests! !
-!ParserTest categoriesFor: #testLiterals!public!unit tests! !
-!ParserTest categoriesFor: #testMethodPatterns!public!unit tests! !
-!ParserTest categoriesFor: #testModifying!public!unit tests! !
-!ParserTest categoriesFor: #testMultimatch!public!unit tests! !
-!ParserTest categoriesFor: #testNodesDo!public!unit tests! !
-!ParserTest categoriesFor: #testNumberParsing!public!unit tests! !
-!ParserTest categoriesFor: #testParserErrors!public!unit tests! !
-!ParserTest categoriesFor: #testParsingLiteralMessages!public!unit tests! !
-!ParserTest categoriesFor: #testPatternCascade!public!unit tests! !
-!ParserTest categoriesFor: #testPatternNodeCopy!public!unit tests! !
-!ParserTest categoriesFor: #testPositions!public!unit tests! !
-!ParserTest categoriesFor: #testPrimitives!public!unit tests! !
-!ParserTest categoriesFor: #testQuerying!public!unit tests! !
-!ParserTest categoriesFor: #testReadBeforeWritten!public!unit tests! !
-!ParserTest categoriesFor: #testReadBeforeWritten1!public!unit tests! !
-!ParserTest categoriesFor: #testReplacingNodes!public!unit tests! !
-!ParserTest categoriesFor: #testRewriteMethods!public!unit tests! !
-!ParserTest categoriesFor: #testRewrites!public!unit tests! !
-!ParserTest categoriesFor: #testSearching!public!unit tests! !
-!ParserTest categoriesFor: #testSmallDictionary!public!unit tests! !
-!ParserTest categoriesFor: #testTokens!public!unit tests! !
-!ParserTest categoriesFor: #treeWithEverything!private! !
-!ParserTest categoriesFor: #verifyParser!long running!public! !
-!ParserTest categoriesFor: #verifySelector:inClass:!private! !
-!ParserTest categoriesFor: #verifyTree:isDeepCopyOf:!private! !
+!ParserTest categoriesForMethods!
+buildArgumentSearch!accessing!public! !
+buildMessageSearch!accessing!public! !
+buildMethodArgumentSearch!accessing!public! !
+buildMethodSearch!accessing!public! !
+buildMethodTitleSearch!accessing!public! !
+buildSimpleLiteralSearch!accessing!public! !
+buildSimpleVariableSearch!accessing!public! !
+buildStatementSearch!accessing!public! !
+compare:to:!accessing!public! !
+createArgumentSearchWith:selectors:inClass:!accessing!public! !
+createMethodSearchWith:selectors:inClass:!accessing!public! !
+createSearchWith:selectors:inClass:!accessing!public! !
+currentSelector!accessing!public! !
+errorSignal!public! !
+parseAll!long running!public! !
+parseError:!private! !
+setUp!accessing!public! !
+testAllSearches!public!unit tests! !
+testArray!public!unit tests! !
+testBestNodeFor!public! !
+testBlockRewrites!public!unit tests! !
+testCascadeReplacement!public!unit tests! !
+testComparingTrees!public!unit tests! !
+testCopy!public!unit tests! !
+testCreationProtocol!public!unit tests! !
+testEquality!public!unit tests! !
+testEqualToWithMappingAfterRewrite!public!unit tests! !
+testEqualToWithMappingRename!public!unit tests! !
+testEquivalentExceptRenaming!public!unit tests! !
+testExtendedLiterals!public!unit tests! !
+testFormatter!public!unit tests! !
+testIntervals!public!unit tests! !
+testIsA!public!unit tests! !
+testLiteralIntevals!public!unit tests! !
+testLiteralMessages!public!unit tests! !
+testLiterals!public!unit tests! !
+testMethodPatterns!public!unit tests! !
+testModifying!public!unit tests! !
+testMultimatch!public!unit tests! !
+testNodesDo!public!unit tests! !
+testNumberParsing!public!unit tests! !
+testParserErrors!public!unit tests! !
+testParsingLiteralMessages!public!unit tests! !
+testPatternCascade!public!unit tests! !
+testPatternNodeCopy!public!unit tests! !
+testPositions!public!unit tests! !
+testPrimitives!public!unit tests! !
+testQuerying!public!unit tests! !
+testReadBeforeWritten!public!unit tests! !
+testReadBeforeWritten1!public!unit tests! !
+testReplacingNodes!public!unit tests! !
+testRewriteMethods!public!unit tests! !
+testRewrites!public!unit tests! !
+testSearching!public!unit tests! !
+testSmallDictionary!public!unit tests! !
+testTokens!public!unit tests! !
+treeWithEverything!private! !
+verifyParser!long running!public! !
+verifySelector:inClass:!private! !
+verifyTree:isDeepCopyOf:!private! !
+!
 

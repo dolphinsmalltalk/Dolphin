@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassBuilder subclass: #AnonymousClassBuilder
 	instanceVariableNames: ''
@@ -28,9 +28,11 @@ validateClassName
 
 validateSuperclassChainForCreate
 	"The superclass just validates that no superclass has the same name, which is not relevant for the unnamed."! !
-!AnonymousClassBuilder categoriesFor: #installInSuperclass:!helpers!private! !
-!AnonymousClassBuilder categoriesFor: #installNewClass!environment!private! !
-!AnonymousClassBuilder categoriesFor: #superclass:!accessing!private! !
-!AnonymousClassBuilder categoriesFor: #validateClassName!public! !
-!AnonymousClassBuilder categoriesFor: #validateSuperclassChainForCreate!public! !
+!AnonymousClassBuilder categoriesForMethods!
+installInSuperclass:!helpers!private! !
+installNewClass!environment!private! !
+superclass:!accessing!private! !
+validateClassName!public! !
+validateSuperclassChainForCreate!public! !
+!
 

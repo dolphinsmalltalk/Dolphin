@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractDelegatingView subclass: #AbstractNonReferenceDelegatingView
 	instanceVariableNames: ''
@@ -55,13 +55,15 @@ isEnabled
 
 isEnabled: aBoolean 
 	self isStateRestoring ifFalse: [self referee isEnabled: aBoolean]! !
-!AbstractNonReferenceDelegatingView categoriesFor: #ambientBackcolor!accessing!private! !
-!AbstractNonReferenceDelegatingView categoriesFor: #hasBorder!accessing!accessing-styles!public! !
-!AbstractNonReferenceDelegatingView categoriesFor: #hasBorder:!accessing!accessing-styles!public! !
-!AbstractNonReferenceDelegatingView categoriesFor: #hasClientEdge!accessing!accessing-styles!public! !
-!AbstractNonReferenceDelegatingView categoriesFor: #hasClientEdge:!accessing!accessing-styles!public! !
-!AbstractNonReferenceDelegatingView categoriesFor: #hasStaticEdge!accessing!accessing-styles!public! !
-!AbstractNonReferenceDelegatingView categoriesFor: #hasStaticEdge:!accessing!accessing-styles!public! !
-!AbstractNonReferenceDelegatingView categoriesFor: #isEnabled!accessing!public!testing! !
-!AbstractNonReferenceDelegatingView categoriesFor: #isEnabled:!accessing!public!state! !
+!AbstractNonReferenceDelegatingView categoriesForMethods!
+ambientBackcolor!accessing!private! !
+hasBorder!accessing!accessing-styles!public! !
+hasBorder:!accessing!accessing-styles!public! !
+hasClientEdge!accessing!accessing-styles!public! !
+hasClientEdge:!accessing!accessing-styles!public! !
+hasStaticEdge!accessing!accessing-styles!public! !
+hasStaticEdge:!accessing!accessing-styles!public! !
+isEnabled!accessing!public!testing! !
+isEnabled:!accessing!public!state! !
+!
 

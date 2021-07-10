@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #EXTLOGFONTW
 	instanceVariableNames: ''
@@ -138,20 +138,22 @@ elfVendorId: anExternalArray
 		from: ##(_OffsetOf_elfVendorId + 1)
 		to: _OffsetOf_elfVendorId + size
 		startingAt: 1! !
-!EXTLOGFONTW categoriesFor: #elfFullName!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfFullName:!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfLogFont!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfLogFont:!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfMatch!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfMatch:!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfPanose!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfPanose:!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfStyle!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfStyle:!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfStyleSize!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfStyleSize:!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfVendorId!**compiled accessors**!public! !
-!EXTLOGFONTW categoriesFor: #elfVendorId:!**compiled accessors**!public! !
+!EXTLOGFONTW categoriesForMethods!
+elfFullName!**compiled accessors**!public! !
+elfFullName:!**compiled accessors**!public! !
+elfLogFont!**compiled accessors**!public! !
+elfLogFont:!**compiled accessors**!public! !
+elfMatch!**compiled accessors**!public! !
+elfMatch:!**compiled accessors**!public! !
+elfPanose!**compiled accessors**!public! !
+elfPanose:!**compiled accessors**!public! !
+elfStyle!**compiled accessors**!public! !
+elfStyle:!**compiled accessors**!public! !
+elfStyleSize!**compiled accessors**!public! !
+elfStyleSize:!**compiled accessors**!public! !
+elfVendorId!**compiled accessors**!public! !
+elfVendorId:!**compiled accessors**!public! !
+!
 
 !EXTLOGFONTW class methodsFor!
 
@@ -190,6 +192,8 @@ defineFields
 
 getFieldNames
 	^#(#elfLogFont #elfFullName #elfStyle #elfStyleSize #elfMatch #elfVendorId #elfPanose)! !
-!EXTLOGFONTW class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EXTLOGFONTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!EXTLOGFONTW class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

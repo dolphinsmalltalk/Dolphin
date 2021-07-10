@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 MethodRefactoring subclass: #PushDownMethodRefactoring
 	instanceVariableNames: 'selectors'
@@ -64,11 +64,13 @@ storeOn: aStream
 transform
 	selectors do: [:each | self pushDown: each].
 	selectors do: [:each | class removeMethod: each]! !
-!PushDownMethodRefactoring categoriesFor: #preconditions!preconditions!public! !
-!PushDownMethodRefactoring categoriesFor: #pushDown:!public!transforming! !
-!PushDownMethodRefactoring categoriesFor: #pushDown:from:!initialize/release!public! !
-!PushDownMethodRefactoring categoriesFor: #storeOn:!printing!public! !
-!PushDownMethodRefactoring categoriesFor: #transform!public!transforming! !
+!PushDownMethodRefactoring categoriesForMethods!
+preconditions!preconditions!public! !
+pushDown:!public!transforming! !
+pushDown:from:!initialize/release!public! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !PushDownMethodRefactoring class methodsFor!
 
@@ -80,6 +82,8 @@ model: aRBNamespace pushDown: selectorCollection from: aClass
 
 pushDown: selectorCollection from: aClass 
 	^self new pushDown: selectorCollection from: aClass! !
-!PushDownMethodRefactoring class categoriesFor: #model:pushDown:from:!instance creation!public! !
-!PushDownMethodRefactoring class categoriesFor: #pushDown:from:!instance creation!public! !
+!PushDownMethodRefactoring class categoriesForMethods!
+model:pushDown:from:!instance creation!public! !
+pushDown:from:!instance creation!public! !
+!
 

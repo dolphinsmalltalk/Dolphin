@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #STONTestDomainObject
 	instanceVariableNames: 'created modified integer float description color tags bytes boolean'
@@ -114,27 +114,29 @@ tags
 
 tags: anObject
 	tags := anObject! !
-!STONTestDomainObject categoriesFor: #=!comparing!public! !
-!STONTestDomainObject categoriesFor: #boolean!accessing!public! !
-!STONTestDomainObject categoriesFor: #boolean:!accessing!public! !
-!STONTestDomainObject categoriesFor: #bytes!accessing!public! !
-!STONTestDomainObject categoriesFor: #bytes:!accessing!public! !
-!STONTestDomainObject categoriesFor: #color!accessing!public! !
-!STONTestDomainObject categoriesFor: #color:!accessing!public! !
-!STONTestDomainObject categoriesFor: #created!accessing!public! !
-!STONTestDomainObject categoriesFor: #created:!accessing!public! !
-!STONTestDomainObject categoriesFor: #description!accessing!public! !
-!STONTestDomainObject categoriesFor: #description:!accessing!public! !
-!STONTestDomainObject categoriesFor: #float!accessing!public! !
-!STONTestDomainObject categoriesFor: #float:!accessing!public! !
-!STONTestDomainObject categoriesFor: #hash!comparing!public! !
-!STONTestDomainObject categoriesFor: #initialize!initialize/release!public! !
-!STONTestDomainObject categoriesFor: #integer!accessing!public! !
-!STONTestDomainObject categoriesFor: #integer:!accessing!public! !
-!STONTestDomainObject categoriesFor: #modified!accessing!public! !
-!STONTestDomainObject categoriesFor: #modified:!accessing!public! !
-!STONTestDomainObject categoriesFor: #tags!accessing!public! !
-!STONTestDomainObject categoriesFor: #tags:!accessing!public! !
+!STONTestDomainObject categoriesForMethods!
+=!comparing!public! !
+boolean!accessing!public! !
+boolean:!accessing!public! !
+bytes!accessing!public! !
+bytes:!accessing!public! !
+color!accessing!public! !
+color:!accessing!public! !
+created!accessing!public! !
+created:!accessing!public! !
+description!accessing!public! !
+description:!accessing!public! !
+float!accessing!public! !
+float:!accessing!public! !
+hash!comparing!public! !
+initialize!initialize/release!public! !
+integer!accessing!public! !
+integer:!accessing!public! !
+modified!accessing!public! !
+modified:!accessing!public! !
+tags!accessing!public! !
+tags:!accessing!public! !
+!
 
 !STONTestDomainObject class methodsFor!
 
@@ -155,6 +157,8 @@ dummy
 
 stonName
 	^ #TestDomainObject! !
-!STONTestDomainObject class categoriesFor: #dummy!instance creation!public! !
-!STONTestDomainObject class categoriesFor: #stonName!public!ston/core! !
+!STONTestDomainObject class categoriesForMethods!
+dummy!instance creation!public! !
+stonName!public!ston/core! !
+!
 

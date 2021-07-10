@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #WSockLibrary
 	instanceVariableNames: 'wsaData'
@@ -426,52 +426,54 @@ wsaStartup: p1 lpWSAData: p2
 
 	<stdcall: sdword WSAStartup word lpvoid>
 	^self invalidCall: _failureCode! !
-!WSockLibrary categoriesFor: #accept:addr:addrlen:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #bind:addr:namelen:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #close!public!realizing/unrealizing! !
-!WSockLibrary categoriesFor: #closesocket:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #connect:name:namelen:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #gethostbyaddr:len:type:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #gethostbyname:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #gethostname:namelen:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #getpeername:name:namelen:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #getprotobyname:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #getprotobynumber:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #getservbyname:proto:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #getservbyport:proto:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #getsockname:name:namelen:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #getsockopt:level:optname:optval:optlen:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #htonl:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #htons:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #inet_addr:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #inetntoa:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #initialize!initializing!private! !
-!WSockLibrary categoriesFor: #ioctlsocket:cmd:argp:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #listen:backlog:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #ntohl:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #ntohs:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #recv:buf:len:flags:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #recvfrom:buf:len:flags:from:fromlen:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #select:readfds:writefds:exceptfds:timeout:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #send:buf:len:flags:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #sendto:buf:len:flags:to:tolen:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #setsockopt:level:optname:optval:optlen:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #shutdown:how:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #socket:type:protocol:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #wsaAsyncGetHostByAddr:wMsg:addr:len:type:buf:buflen:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #wsaAsyncGetHostByName:wMsg:name:buf:buflen:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #wsaAsyncGetProtoByName:wMsg:name:buf:buflen:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #wsaAsyncGetProtoByNumber:wMsg:number:buf:buflen:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #wsaAsyncGetServByName:wMsg:name:proto:buf:buflen:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #wsaAsyncGetServByPort:wMsg:port:proto:buf:buflen:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #wsaAsyncSelect:hWnd:wMsg:lEvent:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #wsaCancelAsyncRequest:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #wsaCancelBlockingCall!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #wsaCleanup!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #wsaGetLastError!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #wsaIsBlocking!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #wsaSetLastError:!public!win32 functions-sockets library! !
-!WSockLibrary categoriesFor: #wsaStartup:lpWSAData:!public!win32 functions-sockets library! !
+!WSockLibrary categoriesForMethods!
+accept:addr:addrlen:!public!win32 functions-sockets library! !
+bind:addr:namelen:!public!win32 functions-sockets library! !
+close!public!realizing/unrealizing! !
+closesocket:!public!win32 functions-sockets library! !
+connect:name:namelen:!public!win32 functions-sockets library! !
+gethostbyaddr:len:type:!public!win32 functions-sockets library! !
+gethostbyname:!public!win32 functions-sockets library! !
+gethostname:namelen:!public!win32 functions-sockets library! !
+getpeername:name:namelen:!public!win32 functions-sockets library! !
+getprotobyname:!public!win32 functions-sockets library! !
+getprotobynumber:!public!win32 functions-sockets library! !
+getservbyname:proto:!public!win32 functions-sockets library! !
+getservbyport:proto:!public!win32 functions-sockets library! !
+getsockname:name:namelen:!public!win32 functions-sockets library! !
+getsockopt:level:optname:optval:optlen:!public!win32 functions-sockets library! !
+htonl:!public!win32 functions-sockets library! !
+htons:!public!win32 functions-sockets library! !
+inet_addr:!public!win32 functions-sockets library! !
+inetntoa:!public!win32 functions-sockets library! !
+initialize!initializing!private! !
+ioctlsocket:cmd:argp:!public!win32 functions-sockets library! !
+listen:backlog:!public!win32 functions-sockets library! !
+ntohl:!public!win32 functions-sockets library! !
+ntohs:!public!win32 functions-sockets library! !
+recv:buf:len:flags:!public!win32 functions-sockets library! !
+recvfrom:buf:len:flags:from:fromlen:!public!win32 functions-sockets library! !
+select:readfds:writefds:exceptfds:timeout:!public!win32 functions-sockets library! !
+send:buf:len:flags:!public!win32 functions-sockets library! !
+sendto:buf:len:flags:to:tolen:!public!win32 functions-sockets library! !
+setsockopt:level:optname:optval:optlen:!public!win32 functions-sockets library! !
+shutdown:how:!public!win32 functions-sockets library! !
+socket:type:protocol:!public!win32 functions-sockets library! !
+wsaAsyncGetHostByAddr:wMsg:addr:len:type:buf:buflen:!public!win32 functions-sockets library! !
+wsaAsyncGetHostByName:wMsg:name:buf:buflen:!public!win32 functions-sockets library! !
+wsaAsyncGetProtoByName:wMsg:name:buf:buflen:!public!win32 functions-sockets library! !
+wsaAsyncGetProtoByNumber:wMsg:number:buf:buflen:!public!win32 functions-sockets library! !
+wsaAsyncGetServByName:wMsg:name:proto:buf:buflen:!public!win32 functions-sockets library! !
+wsaAsyncGetServByPort:wMsg:port:proto:buf:buflen:!public!win32 functions-sockets library! !
+wsaAsyncSelect:hWnd:wMsg:lEvent:!public!win32 functions-sockets library! !
+wsaCancelAsyncRequest:!public!win32 functions-sockets library! !
+wsaCancelBlockingCall!public!win32 functions-sockets library! !
+wsaCleanup!public!win32 functions-sockets library! !
+wsaGetLastError!public!win32 functions-sockets library! !
+wsaIsBlocking!public!win32 functions-sockets library! !
+wsaSetLastError:!public!win32 functions-sockets library! !
+wsaStartup:lpWSAData:!public!win32 functions-sockets library! !
+!
 
 !WSockLibrary class methodsFor!
 
@@ -480,5 +482,7 @@ fileName
 	receiver represents"
 
 	^'WSOCK32'! !
-!WSockLibrary class categoriesFor: #fileName!constants!public! !
+!WSockLibrary class categoriesForMethods!
+fileName!constants!public! !
+!
 

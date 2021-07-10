@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMHDR subclass: #NMSELCHANGE
 	instanceVariableNames: ''
@@ -21,8 +21,10 @@ stSelStart
 	"Answer the <SYSTEMTIME> value of the receiver's 'stSelStart' field."
 
 	^SYSTEMTIME fromAddress: bytes yourAddress + _OffsetOf_stSelStart! !
-!NMSELCHANGE categoriesFor: #stSelEnd!**compiled accessors**!public! !
-!NMSELCHANGE categoriesFor: #stSelStart!**compiled accessors**!public! !
+!NMSELCHANGE categoriesForMethods!
+stSelEnd!**compiled accessors**!public! !
+stSelStart!**compiled accessors**!public! !
+!
 
 !NMSELCHANGE class methodsFor!
 
@@ -38,6 +40,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #stSelStart #stSelEnd)! !
-!NMSELCHANGE class categoriesFor: #defineFields!public!template definition! !
-!NMSELCHANGE class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NMSELCHANGE class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

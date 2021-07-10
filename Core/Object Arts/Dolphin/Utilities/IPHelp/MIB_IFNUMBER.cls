@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #MIB_IFNUMBER
 	instanceVariableNames: ''
@@ -27,7 +27,9 @@ dwValue
 	"Answer the <Integer> value of the receiver's 'dwValue' field."
 
 	^bytes dwordAtOffset: _OffsetOf_dwValue! !
-!MIB_IFNUMBER categoriesFor: #dwValue!**compiled accessors**!public! !
+!MIB_IFNUMBER categoriesForMethods!
+dwValue!**compiled accessors**!public! !
+!
 
 !MIB_IFNUMBER class methodsFor!
 
@@ -47,6 +49,8 @@ defineFields
 
 getFieldNames
 	^#(#dwValue)! !
-!MIB_IFNUMBER class categoriesFor: #defineFields!initializing!public! !
-!MIB_IFNUMBER class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MIB_IFNUMBER class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

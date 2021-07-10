@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 UIntPtrBytes variableByteSubclass: #ExternalAddress
 	instanceVariableNames: ''
@@ -322,35 +322,37 @@ yourAddress
 	the receiver's bytes"
 
 	^self asInteger! !
-!ExternalAddress categoriesFor: #approxSize!accessing!private! !
-!ExternalAddress categoriesFor: #asExternalAddress!converting!public! !
-!ExternalAddress categoriesFor: #asInteger!accessing!public! !
-!ExternalAddress categoriesFor: #at:!accessing!public! !
-!ExternalAddress categoriesFor: #at:put:!accessing!public! !
-!ExternalAddress categoriesFor: #byteAtOffset:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #byteAtOffset:put:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #copyFrom:to:!copying!public! !
-!ExternalAddress categoriesFor: #deepCopy!copying!public! !
-!ExternalAddress categoriesFor: #detach!public!realizing/unrealizing! !
-!ExternalAddress categoriesFor: #displayOn:!displaying!public! !
-!ExternalAddress categoriesFor: #dwordAtOffset:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #dwordAtOffset:put:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #intPtrAtOffset:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #intPtrAtOffset:put:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private!replacing! !
-!ExternalAddress categoriesFor: #resize:!mutating!public! !
-!ExternalAddress categoriesFor: #sdwordAtOffset:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #sdwordAtOffset:put:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #stbSaveOn:!binary filing!public! !
-!ExternalAddress categoriesFor: #swordAtOffset:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #swordAtOffset:put:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #uintPtrAtOffset:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #uintPtrAtOffset:put:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #value!accessing!public! !
-!ExternalAddress categoriesFor: #value:!accessing!public! !
-!ExternalAddress categoriesFor: #wordAtOffset:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #wordAtOffset:put:!accessing!primitives!public! !
-!ExternalAddress categoriesFor: #yourAddress!accessing!public! !
+!ExternalAddress categoriesForMethods!
+approxSize!accessing!private! !
+asExternalAddress!converting!public! !
+asInteger!accessing!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+byteAtOffset:!accessing!primitives!public! !
+byteAtOffset:put:!accessing!primitives!public! !
+copyFrom:to:!copying!public! !
+deepCopy!copying!public! !
+detach!public!realizing/unrealizing! !
+displayOn:!displaying!public! !
+dwordAtOffset:!accessing!primitives!public! !
+dwordAtOffset:put:!accessing!primitives!public! !
+intPtrAtOffset:!accessing!primitives!public! !
+intPtrAtOffset:put:!accessing!primitives!public! !
+replaceBytesOf:from:to:startingAt:!double dispatch!primitives!private!replacing! !
+resize:!mutating!public! !
+sdwordAtOffset:!accessing!primitives!public! !
+sdwordAtOffset:put:!accessing!primitives!public! !
+stbSaveOn:!binary filing!public! !
+swordAtOffset:!accessing!primitives!public! !
+swordAtOffset:put:!accessing!primitives!public! !
+uintPtrAtOffset:!accessing!primitives!public! !
+uintPtrAtOffset:put:!accessing!primitives!public! !
+value!accessing!public! !
+value:!accessing!public! !
+wordAtOffset:!accessing!primitives!public! !
+wordAtOffset:put:!accessing!primitives!public! !
+yourAddress!accessing!public! !
+!
 
 !ExternalAddress class methodsFor!
 
@@ -378,8 +380,10 @@ fromInteger: anInteger
 	primitive coercion trick."
 
 	^VMLibrary default addressFromInteger: anInteger! !
-!ExternalAddress class categoriesFor: #alignment!constants!public! !
-!ExternalAddress class categoriesFor: #fromAddress:!instance creation!public! !
-!ExternalAddress class categoriesFor: #fromBytes:!instance creation!public! !
-!ExternalAddress class categoriesFor: #fromInteger:!instance creation!public! !
+!ExternalAddress class categoriesForMethods!
+alignment!constants!public! !
+fromAddress:!instance creation!public! !
+fromBytes:!instance creation!public! !
+fromInteger:!instance creation!public! !
+!
 

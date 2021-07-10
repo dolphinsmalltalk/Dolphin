@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LinearLayout subclass: #ProportionalLayout
 	instanceVariableNames: 'proportions isVertical'
@@ -203,17 +203,19 @@ totalProportionsOf: viewCollection
 	^viewCollection inject: 0 into: [:total :aView |
 			total + (self arrangementOf: aView)].
 ! !
-!ProportionalLayout categoriesFor: #arrangementOf:!accessing!public! !
-!ProportionalLayout categoriesFor: #arrangementOf:put:!accessing!public! !
-!ProportionalLayout categoriesFor: #hasFixedSize:!private!testing! !
-!ProportionalLayout categoriesFor: #hideShowSplitters:context:!helpers!private! !
-!ProportionalLayout categoriesFor: #initialize!initializing!private! !
-!ProportionalLayout categoriesFor: #isVertical!public!testing! !
-!ProportionalLayout categoriesFor: #isVertical:!accessing!public! !
-!ProportionalLayout categoriesFor: #layoutContainer:context:!helpers!private! !
-!ProportionalLayout categoriesFor: #nearestResizableViewFrom:inViews:by:!helpers!private! !
-!ProportionalLayout categoriesFor: #proportions!accessing!private! !
-!ProportionalLayout categoriesFor: #removeSubView:!public!removing! !
-!ProportionalLayout categoriesFor: #reposition:to:!operations!private! !
-!ProportionalLayout categoriesFor: #totalProportionsOf:!helpers!private! !
+!ProportionalLayout categoriesForMethods!
+arrangementOf:!accessing!public! !
+arrangementOf:put:!accessing!public! !
+hasFixedSize:!private!testing! !
+hideShowSplitters:context:!helpers!private! !
+initialize!initializing!private! !
+isVertical!public!testing! !
+isVertical:!accessing!public! !
+layoutContainer:context:!helpers!private! !
+nearestResizableViewFrom:inViews:by:!helpers!private! !
+proportions!accessing!private! !
+removeSubView:!public!removing! !
+reposition:to:!operations!private! !
+totalProportionsOf:!helpers!private! !
+!
 

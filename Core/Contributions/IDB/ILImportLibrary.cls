@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ILImport subclass: #ILImportLibrary
 	instanceVariableNames: ''
@@ -17,11 +17,15 @@ Public Domain Freeware'!
 initializeFrom: aStream
 	aStream skip: 3.
 	^Object binaryReadFrom: aStream! !
-!ILImportLibrary categoriesFor: #initializeFrom:!initializing!public! !
+!ILImportLibrary categoriesForMethods!
+initializeFrom:!initializing!public! !
+!
 
 !ILImportLibrary class methodsFor!
 
 isResponsibleFor: aStream
 	[^(aStream next: 3) = 'LIB' asByteArray] ensure: [aStream reset]! !
-!ILImportLibrary class categoriesFor: #isResponsibleFor:!public!testing! !
+!ILImportLibrary class categoriesForMethods!
+isResponsibleFor:!public!testing! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TreeModel subclass: #FolderHierarchyModel
 	instanceVariableNames: ''
@@ -29,13 +29,17 @@ newNode: anObject
 	^(super newNode: anObject)
 		children: (SortedCollection sortBlock: [:x :y | x object <= y object]);
 		yourself! !
-!FolderHierarchyModel categoriesFor: #addFolder:!adding!public! !
-!FolderHierarchyModel categoriesFor: #folderClass!operations!private! !
-!FolderHierarchyModel categoriesFor: #newNode:!adding!private! !
+!FolderHierarchyModel categoriesForMethods!
+addFolder:!adding!public! !
+folderClass!operations!private! !
+newNode:!adding!private! !
+!
 
 !FolderHierarchyModel class methodsFor!
 
 defaultSearchPolicy
 	^SearchPolicy equality! !
-!FolderHierarchyModel class categoriesFor: #defaultSearchPolicy!constants!public! !
+!FolderHierarchyModel class categoriesForMethods!
+defaultSearchPolicy!constants!public! !
+!
 

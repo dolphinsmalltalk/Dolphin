@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #TestSuite
 	instanceVariableNames: 'tests resources name'
@@ -65,18 +65,20 @@ run: aResult
 tests
 	tests isNil ifTrue: [tests := OrderedCollection new].
 	^tests! !
-!TestSuite categoriesFor: #addDependentToHierachy:!Dependencies!public! !
-!TestSuite categoriesFor: #addTest:!Accessing!public! !
-!TestSuite categoriesFor: #addTests:!Accessing!public! !
-!TestSuite categoriesFor: #defaultResources!Accessing!public! !
-!TestSuite categoriesFor: #name!Accessing!public! !
-!TestSuite categoriesFor: #name:!Accessing!public! !
-!TestSuite categoriesFor: #removeDependentFromHierachy:!Dependencies!public! !
-!TestSuite categoriesFor: #resources!Accessing!public! !
-!TestSuite categoriesFor: #resources:!Accessing!public! !
-!TestSuite categoriesFor: #run!public!Running! !
-!TestSuite categoriesFor: #run:!public!Running! !
-!TestSuite categoriesFor: #tests!Accessing!public! !
+!TestSuite categoriesForMethods!
+addDependentToHierachy:!Dependencies!public! !
+addTest:!Accessing!public! !
+addTests:!Accessing!public! !
+defaultResources!Accessing!public! !
+name!Accessing!public! !
+name:!Accessing!public! !
+removeDependentFromHierachy:!Dependencies!public! !
+resources!Accessing!public! !
+resources:!Accessing!public! !
+run!public!Running! !
+run:!public!Running! !
+tests!Accessing!public! !
+!
 
 !TestSuite class methodsFor!
 
@@ -85,5 +87,7 @@ named: aString
 	^self new
 		name: aString;
 		yourself! !
-!TestSuite class categoriesFor: #named:!Creation!public! !
+!TestSuite class categoriesForMethods!
+named:!Creation!public! !
+!
 

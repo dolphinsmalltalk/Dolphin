@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #LHITTESTINFO
 	instanceVariableNames: ''
@@ -30,9 +30,11 @@ pt: aPOINTL
 		from: ##(_OffsetOf_pt + 1)
 		to: ##(_OffsetOf_pt + POINTL basicByteSize)
 		startingAt: 1! !
-!LHITTESTINFO categoriesFor: #item!**compiled accessors**!public! !
-!LHITTESTINFO categoriesFor: #pt!**compiled accessors**!public! !
-!LHITTESTINFO categoriesFor: #pt:!**compiled accessors**!public! !
+!LHITTESTINFO categoriesForMethods!
+item!**compiled accessors**!public! !
+pt!**compiled accessors**!public! !
+pt:!**compiled accessors**!public! !
+!
 
 !LHITTESTINFO class methodsFor!
 
@@ -48,6 +50,8 @@ defineFields
 
 getFieldNames
 	^#(#pt #item)! !
-!LHITTESTINFO class categoriesFor: #defineFields!public!template definition! !
-!LHITTESTINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!LHITTESTINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

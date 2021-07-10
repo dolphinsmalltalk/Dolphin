@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #OLEVERB
 	instanceVariableNames: ''
@@ -79,15 +79,17 @@ printOn: aStream
 		nextPutAll: ': ';
 		print: self lpszVerbName;
 		nextPut: $)! !
-!OLEVERB categoriesFor: #fuFlags!**compiled accessors**!public! !
-!OLEVERB categoriesFor: #fuFlags:!**compiled accessors**!public! !
-!OLEVERB categoriesFor: #grfAttribs!**compiled accessors**!public! !
-!OLEVERB categoriesFor: #grfAttribs:!**compiled accessors**!public! !
-!OLEVERB categoriesFor: #lpszVerbName!**compiled accessors**!public! !
-!OLEVERB categoriesFor: #lpszVerbName:!**compiled accessors**!public! !
-!OLEVERB categoriesFor: #lVerb!**compiled accessors**!public! !
-!OLEVERB categoriesFor: #lVerb:!**compiled accessors**!public! !
-!OLEVERB categoriesFor: #printOn:!development!printing!public! !
+!OLEVERB categoriesForMethods!
+fuFlags!**compiled accessors**!public! !
+fuFlags:!**compiled accessors**!public! !
+grfAttribs!**compiled accessors**!public! !
+grfAttribs:!**compiled accessors**!public! !
+lpszVerbName!**compiled accessors**!public! !
+lpszVerbName:!**compiled accessors**!public! !
+lVerb!**compiled accessors**!public! !
+lVerb:!**compiled accessors**!public! !
+printOn:!development!printing!public! !
+!
 
 !OLEVERB class methodsFor!
 
@@ -113,6 +115,8 @@ defineFields
 
 getFieldNames
 	^#(#lVerb #lpszVerbName #fuFlags #grfAttribs)! !
-!OLEVERB class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OLEVERB class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OLEVERB class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

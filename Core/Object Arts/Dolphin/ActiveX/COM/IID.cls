@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GUID variableByteSubclass: #IID
 	instanceVariableNames: ''
@@ -29,8 +29,10 @@ interfaceName
 
 	^(((RegKey classesRoot: #read) at: 'Interface') at: self asString ifAbsent: [^nil]) value
 ! !
-!IID categoriesFor: #displayOn:!displaying!public! !
-!IID categoriesFor: #interfaceName!accessing!public! !
+!IID categoriesForMethods!
+displayOn:!displaying!public! !
+interfaceName!accessing!public! !
+!
 
 !IID class methodsFor!
 
@@ -48,6 +50,8 @@ initialize
 	"
 
 	self extraInstanceSpec: self byteSize! !
-!IID class categoriesFor: #fromString:!instance creation!public! !
-!IID class categoriesFor: #initialize!development!initializing!private! !
+!IID class categoriesForMethods!
+fromString:!instance creation!public! !
+initialize!development!initializing!private! !
+!
 

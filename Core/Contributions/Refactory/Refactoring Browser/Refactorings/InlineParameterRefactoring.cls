@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RemoveParameterRefactoring subclass: #InlineParameterRefactoring
 	instanceVariableNames: 'expressions'
@@ -71,12 +71,14 @@ storeOn: aStream
 		nextPutAll: ' selector: #';
 		nextPutAll: oldSelector;
 		nextPut: $)! !
-!InlineParameterRefactoring categoriesFor: #allExpressionsToInline!enquiries!private! !
-!InlineParameterRefactoring categoriesFor: #expressionsToInlineFrom:!private! !
-!InlineParameterRefactoring categoriesFor: #inlineParameter:in:selector:!initialize/release!public! !
-!InlineParameterRefactoring categoriesFor: #modifyImplementorParseTree:in:!public!transforming! !
-!InlineParameterRefactoring categoriesFor: #myConditions!preconditions!public! !
-!InlineParameterRefactoring categoriesFor: #storeOn:!printing!public! !
+!InlineParameterRefactoring categoriesForMethods!
+allExpressionsToInline!enquiries!private! !
+expressionsToInlineFrom:!private! !
+inlineParameter:in:selector:!initialize/release!public! !
+modifyImplementorParseTree:in:!public!transforming! !
+myConditions!preconditions!public! !
+storeOn:!printing!public! !
+!
 
 !InlineParameterRefactoring class methodsFor!
 
@@ -93,6 +95,8 @@ model: aRBNamespace inlineParameter: aString in: aClass selector: aSelector
 			in: aClass
 			selector: aSelector;
 		yourself! !
-!InlineParameterRefactoring class categoriesFor: #inlineParameter:in:selector:!instance creation!public! !
-!InlineParameterRefactoring class categoriesFor: #model:inlineParameter:in:selector:!instance creation!public! !
+!InlineParameterRefactoring class categoriesForMethods!
+inlineParameter:in:selector:!instance creation!public! !
+model:inlineParameter:in:selector:!instance creation!public! !
+!
 

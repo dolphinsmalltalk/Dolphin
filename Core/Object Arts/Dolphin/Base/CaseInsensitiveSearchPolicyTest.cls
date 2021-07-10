@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SearchPolicyTest subclass: #CaseInsensitiveSearchPolicyTest
 	instanceVariableNames: ''
@@ -21,6 +21,8 @@ testCompareWith
 	self deny: (policy compare: 'a' with: 'b').
 	self deny: (policy compare: 'a' with: 'ab').
 ! !
-!CaseInsensitiveSearchPolicyTest categoriesFor: #policyClass!private!unit tests! !
-!CaseInsensitiveSearchPolicyTest categoriesFor: #testCompareWith!public!unit tests! !
+!CaseInsensitiveSearchPolicyTest categoriesForMethods!
+policyClass!private!unit tests! !
+testCompareWith!public!unit tests! !
+!
 

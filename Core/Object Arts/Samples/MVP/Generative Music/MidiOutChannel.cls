@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #MidiOutChannel
 	instanceVariableNames: 'midiout noteProcess octaveShift'
@@ -123,23 +123,25 @@ playNote: noteName velocity: velocity duration: aDuration channel: channel
 
 voice: voice channel: channel
 	self midiout voice: (self mapVoiceToValue: voice ) channel: channel! !
-!MidiOutChannel categoriesFor: #defaultDeviceId!private! !
-!MidiOutChannel categoriesFor: #defaultDuration!private! !
-!MidiOutChannel categoriesFor: #defaultVelocity!private! !
-!MidiOutChannel categoriesFor: #defaultVoice!private! !
-!MidiOutChannel categoriesFor: #free!private! !
-!MidiOutChannel categoriesFor: #initialize!private! !
-!MidiOutChannel categoriesFor: #mapNoteToValue:!helpers!private! !
-!MidiOutChannel categoriesFor: #mapVoiceToValue:!private! !
-!MidiOutChannel categoriesFor: #midiNoteMap!private! !
-!MidiOutChannel categoriesFor: #midiout!accessing!public! !
-!MidiOutChannel categoriesFor: #octaveShift!helpers!private! !
-!MidiOutChannel categoriesFor: #open!private! !
-!MidiOutChannel categoriesFor: #playNote:channel:!public! !
-!MidiOutChannel categoriesFor: #playNote:duration:channel:!public! !
-!MidiOutChannel categoriesFor: #playNote:velocity:channel:!public! !
-!MidiOutChannel categoriesFor: #playNote:velocity:duration:channel:!public! !
-!MidiOutChannel categoriesFor: #voice:channel:!public! !
+!MidiOutChannel categoriesForMethods!
+defaultDeviceId!private! !
+defaultDuration!private! !
+defaultVelocity!private! !
+defaultVoice!private! !
+free!private! !
+initialize!private! !
+mapNoteToValue:!helpers!private! !
+mapVoiceToValue:!private! !
+midiNoteMap!private! !
+midiout!accessing!public! !
+octaveShift!helpers!private! !
+open!private! !
+playNote:channel:!public! !
+playNote:duration:channel:!public! !
+playNote:velocity:channel:!public! !
+playNote:velocity:duration:channel:!public! !
+voice:channel:!public! !
+!
 
 !MidiOutChannel class methodsFor!
 
@@ -148,6 +150,8 @@ generalMidiMap
 
 new
 	^super new initialize! !
-!MidiOutChannel class categoriesFor: #generalMidiMap!public! !
-!MidiOutChannel class categoriesFor: #new!instance creation!public! !
+!MidiOutChannel class categoriesForMethods!
+generalMidiMap!public! !
+new!instance creation!public! !
+!
 

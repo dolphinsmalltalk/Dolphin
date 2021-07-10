@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #ACCEL
 	instanceVariableNames: ''
@@ -29,9 +29,11 @@ key: anInteger
 	"Set the receiver's 'key' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_key put: anInteger! !
-!ACCEL categoriesFor: #cmd:!**compiled accessors**!public! !
-!ACCEL categoriesFor: #fVirt:!**compiled accessors**!public! !
-!ACCEL categoriesFor: #key:!**compiled accessors**!public! !
+!ACCEL categoriesForMethods!
+cmd:!**compiled accessors**!public! !
+fVirt:!**compiled accessors**!public! !
+key:!**compiled accessors**!public! !
+!
 
 !ACCEL class methodsFor!
 
@@ -55,6 +57,8 @@ defineFields
 
 getFieldNames
 	^#(#fVirt #key #cmd)! !
-!ACCEL class categoriesFor: #defineFields!public!template definition! !
-!ACCEL class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!ACCEL class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 InspectorAbstract subclass: #VisualObjectFinder
 	instanceVariableNames: 'mouseTracker finderIcon heading workspace foundView'
@@ -149,24 +149,26 @@ visualObjectAt: aPoint
 			| localPoint |
 			localPoint := View desktop mapPoint: aPoint to: viewUnderCursor.
 			viewUnderCursor visualObjectAtPoint: localPoint]! !
-!VisualObjectFinder categoriesFor: #browseObject!accessing!private! !
-!VisualObjectFinder categoriesFor: #cancelTrackingAt:!private!tracking! !
-!VisualObjectFinder categoriesFor: #continueTrackingAt:from:!private!tracking! !
-!VisualObjectFinder categoriesFor: #createComponents!initializing!private! !
-!VisualObjectFinder categoriesFor: #createSchematicWiring!initializing!private! !
-!VisualObjectFinder categoriesFor: #displayOn:!displaying!public! !
-!VisualObjectFinder categoriesFor: #endTrackingAt:!private!tracking! !
-!VisualObjectFinder categoriesFor: #findObject!commands!public! !
-!VisualObjectFinder categoriesFor: #foundView!public! !
-!VisualObjectFinder categoriesFor: #inspecteeSelection!accessing!private! !
-!VisualObjectFinder categoriesFor: #model:!accessing!public! !
-!VisualObjectFinder categoriesFor: #onDragOver:!event handling!public! !
-!VisualObjectFinder categoriesFor: #onDropOver:!event handling!public! !
-!VisualObjectFinder categoriesFor: #onValueChanged!accessing!private! !
-!VisualObjectFinder categoriesFor: #onViewOpened!event handling!private! !
-!VisualObjectFinder categoriesFor: #startTrackingAt:!private!tracking! !
-!VisualObjectFinder categoriesFor: #viewFromPoint:!helpers!private! !
-!VisualObjectFinder categoriesFor: #visualObjectAt:!helpers!private! !
+!VisualObjectFinder categoriesForMethods!
+browseObject!accessing!private! !
+cancelTrackingAt:!private!tracking! !
+continueTrackingAt:from:!private!tracking! !
+createComponents!initializing!private! !
+createSchematicWiring!initializing!private! !
+displayOn:!displaying!public! !
+endTrackingAt:!private!tracking! !
+findObject!commands!public! !
+foundView!public! !
+inspecteeSelection!accessing!private! !
+model:!accessing!public! !
+onDragOver:!event handling!public! !
+onDropOver:!event handling!public! !
+onValueChanged!accessing!private! !
+onViewOpened!event handling!private! !
+startTrackingAt:!private!tracking! !
+viewFromPoint:!helpers!private! !
+visualObjectAt:!helpers!private! !
+!
 
 VisualObjectFinder methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
 
@@ -209,14 +211,16 @@ resource_Default_view
 
 unregisterAsToolWith: aSmalltalkSystem
 ! !
-!VisualObjectFinder class categoriesFor: #findNonDolphinWindows!accessing!public! !
-!VisualObjectFinder class categoriesFor: #findNonDolphinWindows:!accessing!public! !
-!VisualObjectFinder class categoriesFor: #icon!constants!public! !
-!VisualObjectFinder class categoriesFor: #initialize!initializing!private! !
-!VisualObjectFinder class categoriesFor: #publishedAspects!constants!public! !
-!VisualObjectFinder class categoriesFor: #registerAsToolWith:!operations!public! !
-!VisualObjectFinder class categoriesFor: #resource_Default_view!public!resources-views! !
-!VisualObjectFinder class categoriesFor: #unregisterAsToolWith:!operations!public! !
+!VisualObjectFinder class categoriesForMethods!
+findNonDolphinWindows!accessing!public! !
+findNonDolphinWindows:!accessing!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!constants!public! !
+registerAsToolWith:!operations!public! !
+resource_Default_view!public!resources-views! !
+unregisterAsToolWith:!operations!public! !
+!
 
 VisualObjectFinder class methodProtocol: #installableSystemTool attributes: #(#readOnly) selectors: #(#registerAsToolWith: #unregisterAsToolWith:)!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #InkStroke
 	instanceVariableNames: 'data'
@@ -66,13 +66,15 @@ printOn: aStream
 	aStream
 		basicPrint: self;
 		nextPut: $(; display: data size; nextPutAll: ' points)'! !
-!InkStroke categoriesFor: #addPoint:!adding!public! !
-!InkStroke categoriesFor: #drawOn:!drawing!public! !
-!InkStroke categoriesFor: #initialize!initializing!private! !
-!InkStroke categoriesFor: #inkWidth!public! !
-!InkStroke categoriesFor: #length!accessing!public! !
-!InkStroke categoriesFor: #points!accessing!public! !
-!InkStroke categoriesFor: #printOn:!printing!public! !
+!InkStroke categoriesForMethods!
+addPoint:!adding!public! !
+drawOn:!drawing!public! !
+initialize!initializing!private! !
+inkWidth!public! !
+length!accessing!public! !
+points!accessing!public! !
+printOn:!printing!public! !
+!
 
 !InkStroke class methodsFor!
 
@@ -80,5 +82,7 @@ new
 	"Answer an initialized instance of the receiver"
 
 	^super new initialize! !
-!InkStroke class categoriesFor: #new!instance creation!public! !
+!InkStroke class categoriesForMethods!
+new!instance creation!public! !
+!
 

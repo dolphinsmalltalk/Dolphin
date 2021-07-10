@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassAspectPlugin subclass: #ClassCommentPlugin
 	instanceVariableNames: ''
@@ -55,16 +55,18 @@ setWordWrap
 
 systemUpdateEvent
 	^#classCommented:! !
-!ClassCommentPlugin categoriesFor: #applyOptions!options!private! !
-!ClassCommentPlugin categoriesFor: #aspect!constants!private! !
-!ClassCommentPlugin categoriesFor: #backgroundUpdate!private!updating! !
-!ClassCommentPlugin categoriesFor: #caption!constants!private! !
-!ClassCommentPlugin categoriesFor: #currentClassUpdated!event handling!private! !
-!ClassCommentPlugin categoriesFor: #defaultHelpId!constants!public! !
-!ClassCommentPlugin categoriesFor: #icon!accessing!public! !
-!ClassCommentPlugin categoriesFor: #setTextStyles!helpers!private! !
-!ClassCommentPlugin categoriesFor: #setWordWrap!helpers!private! !
-!ClassCommentPlugin categoriesFor: #systemUpdateEvent!constants!private! !
+!ClassCommentPlugin categoriesForMethods!
+applyOptions!options!private! !
+aspect!constants!private! !
+backgroundUpdate!private!updating! !
+caption!constants!private! !
+currentClassUpdated!event handling!private! !
+defaultHelpId!constants!public! !
+icon!accessing!public! !
+setTextStyles!helpers!private! !
+setWordWrap!helpers!private! !
+systemUpdateEvent!constants!private! !
+!
 
 !ClassCommentPlugin class methodsFor!
 
@@ -127,16 +129,18 @@ wordWrap: aBoolean
 	WordWrap == aBoolean ifTrue: [^self].
 	WordWrap := aBoolean.
 	self allSubinstances do: [:each | each setWordWrap]! !
-!ClassCommentPlugin class categoriesFor: #defaultBackcolor!accessing!public! !
-!ClassCommentPlugin class categoriesFor: #defaultBackcolor:!accessing!public! !
-!ClassCommentPlugin class categoriesFor: #defaultTextStyles!constants!public! !
-!ClassCommentPlugin class categoriesFor: #grayedIcon!constants!public! !
-!ClassCommentPlugin class categoriesFor: #icon!constants!public! !
-!ClassCommentPlugin class categoriesFor: #initialize!initializing!public! !
-!ClassCommentPlugin class categoriesFor: #publishedAspects!public! !
-!ClassCommentPlugin class categoriesFor: #resource_Default_view!public!resources-views! !
-!ClassCommentPlugin class categoriesFor: #textStyles!accessing!options!public! !
-!ClassCommentPlugin class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!ClassCommentPlugin class categoriesFor: #wordWrap!accessing!options!public! !
-!ClassCommentPlugin class categoriesFor: #wordWrap:!accessing!options!public! !
+!ClassCommentPlugin class categoriesForMethods!
+defaultBackcolor!accessing!public! !
+defaultBackcolor:!accessing!public! !
+defaultTextStyles!constants!public! !
+grayedIcon!constants!public! !
+icon!constants!public! !
+initialize!initializing!public! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+textStyles!accessing!options!public! !
+uninitialize!class hierarchy-removing!private! !
+wordWrap!accessing!options!public! !
+wordWrap:!accessing!options!public! !
+!
 

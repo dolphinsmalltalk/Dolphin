@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #MessageSequenceAbstract
 	instanceVariableNames: ''
@@ -93,18 +93,20 @@ valueWithArguments: argArray
 	| answer |
 	self messagesDo: [:each | answer := each valueWithArguments: argArray].
 	^answer! !
-!MessageSequenceAbstract categoriesFor: #add:!adding!public! !
-!MessageSequenceAbstract categoriesFor: #argumentCount!accessing!public! !
-!MessageSequenceAbstract categoriesFor: #asMinimumRepresentation!converting!public! !
-!MessageSequenceAbstract categoriesFor: #forwardTo:!operations!public! !
-!MessageSequenceAbstract categoriesFor: #includes:!public!searching! !
-!MessageSequenceAbstract categoriesFor: #isEmpty!public!testing! !
-!MessageSequenceAbstract categoriesFor: #messagesDo:!enumerating!private! !
-!MessageSequenceAbstract categoriesFor: #notEmpty!public!testing! !
-!MessageSequenceAbstract categoriesFor: #value!evaluating!public! !
-!MessageSequenceAbstract categoriesFor: #value:!evaluating!public! !
-!MessageSequenceAbstract categoriesFor: #value:value:!evaluating!public! !
-!MessageSequenceAbstract categoriesFor: #valueWithArguments:!evaluating!public! !
+!MessageSequenceAbstract categoriesForMethods!
+add:!adding!public! !
+argumentCount!accessing!public! !
+asMinimumRepresentation!converting!public! !
+forwardTo:!operations!public! !
+includes:!public!searching! !
+isEmpty!public!testing! !
+messagesDo:!enumerating!private! !
+notEmpty!public!testing! !
+value!evaluating!public! !
+value:!evaluating!public! !
+value:value:!evaluating!public! !
+valueWithArguments:!evaluating!public! !
+!
 
 MessageSequenceAbstract methodProtocol: #message attributes: #() selectors: #(#argumentCount #forwardTo: #value: #value:value: #valueWithArguments:)!
 MessageSequenceAbstract methodProtocol: #messageSend attributes: #() selectors: #()!
@@ -115,5 +117,7 @@ new
 	"Answer an instance of the receiver; instance require initialization"
 
 	^super new initialize! !
-!MessageSequenceAbstract class categoriesFor: #new!instance creation!public! !
+!MessageSequenceAbstract class categoriesForMethods!
+new!instance creation!public! !
+!
 

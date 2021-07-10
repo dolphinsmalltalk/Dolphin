@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GraphicsTool subclass: #Menu
 	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
@@ -654,87 +654,89 @@ updateItem: indexInteger id: idInteger text: newText
 		uFlags: ##(MF_BYPOSITION | MFT_STRING)
 		uIDNewItem: idInteger
 		lpNewItem: newText! !
-!Menu categoriesFor: #acceleratorKey!accessing!public! !
-!Menu categoriesFor: #addCommand:description:!adding!public! !
-!Menu categoriesFor: #addCommand:description:image:!adding!public! !
-!Menu categoriesFor: #addCommandDescription:!adding!public! !
-!Menu categoriesFor: #addItem:!adding!public! !
-!Menu categoriesFor: #addSeparator!adding!public! !
-!Menu categoriesFor: #addSubmenu:!adding!public! !
-!Menu categoriesFor: #allItems!public! !
-!Menu categoriesFor: #allMenus!public! !
-!Menu categoriesFor: #applyFlags!private!realizing/unrealizing! !
-!Menu categoriesFor: #basicFree!private!realizing/unrealizing! !
-!Menu categoriesFor: #basicRealize!public!realizing/unrealizing! !
-!Menu categoriesFor: #clear!public!removing! !
-!Menu categoriesFor: #clearCached!private!realizing/unrealizing! !
-!Menu categoriesFor: #command!accessing!public! !
-!Menu categoriesFor: #commandDescription!accessing!public! !
-!Menu categoriesFor: #commandString!accessing!public! !
-!Menu categoriesFor: #commandString:!accessing!public! !
-!Menu categoriesFor: #createHandle!public!realizing/unrealizing! !
-!Menu categoriesFor: #defaultFlags!initializing!private! !
-!Menu categoriesFor: #deleteItemAt:!accessing!private! !
-!Menu categoriesFor: #description!accessing!private! !
-!Menu categoriesFor: #description:!accessing!public! !
-!Menu categoriesFor: #drawItemImage:on:at:disabled:!helpers!private! !
-!Menu categoriesFor: #findCommand:!public!searching! !
-!Menu categoriesFor: #flags:!accessing!private! !
-!Menu categoriesFor: #fromStrings:!converting!private! !
-!Menu categoriesFor: #hasSharedImageColumn!public!testing! !
-!Menu categoriesFor: #hasSharedImageColumn:!accessing!public! !
-!Menu categoriesFor: #hasSubmenu!public!testing! !
-!Menu categoriesFor: #id!accessing!public! !
-!Menu categoriesFor: #image!accessing!public! !
-!Menu categoriesFor: #image:!accessing!public! !
-!Menu categoriesFor: #imageManager!accessing!private! !
-!Menu categoriesFor: #includesCommand:!public!testing! !
-!Menu categoriesFor: #indexOfCommand:!accessing!private! !
-!Menu categoriesFor: #indexOfCommand:ifAbsent:!accessing!private! !
-!Menu categoriesFor: #initialize!initializing!private! !
-!Menu categoriesFor: #insertIntoMenu:at:!adding!private! !
-!Menu categoriesFor: #insertIntoMenu:at:info:!public!realizing/unrealizing! !
-!Menu categoriesFor: #insertItem:after:!adding!public! !
-!Menu categoriesFor: #insertItem:at:!adding!public! !
-!Menu categoriesFor: #insertItem:before:!adding!public! !
-!Menu categoriesFor: #isAutoDismiss!public!testing! !
-!Menu categoriesFor: #isAutoDismiss:!accessing!public! !
-!Menu categoriesFor: #isDefault!accessing!public! !
-!Menu categoriesFor: #isDivider!public!testing! !
-!Menu categoriesFor: #isEmpty!public!testing! !
-!Menu categoriesFor: #isMenuBar!public!testing! !
-!Menu categoriesFor: #isModeless!public!testing! !
-!Menu categoriesFor: #isModeless:!accessing!public! !
-!Menu categoriesFor: #isRadioButtonStyle!public! !
-!Menu categoriesFor: #itemAt:!accessing!public! !
-!Menu categoriesFor: #itemAt:put:!accessing!public! !
-!Menu categoriesFor: #items!accessing!public! !
-!Menu categoriesFor: #items:!accessing!public! !
-!Menu categoriesFor: #itemsDo:!enumerating!public! !
-!Menu categoriesFor: #itemWithId:!accessing!public! !
-!Menu categoriesFor: #menuFromHandle:!accessing!public! !
-!Menu categoriesFor: #name!accessing!public! !
-!Menu categoriesFor: #name:!accessing!public! !
-!Menu categoriesFor: #notEmpty!public!testing! !
-!Menu categoriesFor: #onDrawItem:!event handling-win32!private! !
-!Menu categoriesFor: #postCopy!copying!public! !
-!Menu categoriesFor: #printOn:!printing!public! !
-!Menu categoriesFor: #queryAllAlong:!operations!public! !
-!Menu categoriesFor: #queryAllFromView:!operations!private! !
-!Menu categoriesFor: #queryAlong:!operations!public! !
-!Menu categoriesFor: #registerAcceleratorKeyIn:!adding!public! !
-!Menu categoriesFor: #removeItem:!public!removing! !
-!Menu categoriesFor: #removeItemAt:!public!removing! !
-!Menu categoriesFor: #replaceItem:with:!public!replacing! !
-!Menu categoriesFor: #setDefault:!accessing!public! !
-!Menu categoriesFor: #setItem:info:!accessing!private! !
-!Menu categoriesFor: #showIn:position:!drawing!public! !
-!Menu categoriesFor: #size!accessing!public! !
-!Menu categoriesFor: #styleFlags!private!realizing/unrealizing! !
-!Menu categoriesFor: #text!accessing!public! !
-!Menu categoriesFor: #text:!accessing!public! !
-!Menu categoriesFor: #typeFlags!private!realizing/unrealizing! !
-!Menu categoriesFor: #updateItem:id:text:!accessing!private! !
+!Menu categoriesForMethods!
+acceleratorKey!accessing!public! !
+addCommand:description:!adding!public! !
+addCommand:description:image:!adding!public! !
+addCommandDescription:!adding!public! !
+addItem:!adding!public! !
+addSeparator!adding!public! !
+addSubmenu:!adding!public! !
+allItems!public! !
+allMenus!public! !
+applyFlags!private!realizing/unrealizing! !
+basicFree!private!realizing/unrealizing! !
+basicRealize!public!realizing/unrealizing! !
+clear!public!removing! !
+clearCached!private!realizing/unrealizing! !
+command!accessing!public! !
+commandDescription!accessing!public! !
+commandString!accessing!public! !
+commandString:!accessing!public! !
+createHandle!public!realizing/unrealizing! !
+defaultFlags!initializing!private! !
+deleteItemAt:!accessing!private! !
+description!accessing!private! !
+description:!accessing!public! !
+drawItemImage:on:at:disabled:!helpers!private! !
+findCommand:!public!searching! !
+flags:!accessing!private! !
+fromStrings:!converting!private! !
+hasSharedImageColumn!public!testing! !
+hasSharedImageColumn:!accessing!public! !
+hasSubmenu!public!testing! !
+id!accessing!public! !
+image!accessing!public! !
+image:!accessing!public! !
+imageManager!accessing!private! !
+includesCommand:!public!testing! !
+indexOfCommand:!accessing!private! !
+indexOfCommand:ifAbsent:!accessing!private! !
+initialize!initializing!private! !
+insertIntoMenu:at:!adding!private! !
+insertIntoMenu:at:info:!public!realizing/unrealizing! !
+insertItem:after:!adding!public! !
+insertItem:at:!adding!public! !
+insertItem:before:!adding!public! !
+isAutoDismiss!public!testing! !
+isAutoDismiss:!accessing!public! !
+isDefault!accessing!public! !
+isDivider!public!testing! !
+isEmpty!public!testing! !
+isMenuBar!public!testing! !
+isModeless!public!testing! !
+isModeless:!accessing!public! !
+isRadioButtonStyle!public! !
+itemAt:!accessing!public! !
+itemAt:put:!accessing!public! !
+items!accessing!public! !
+items:!accessing!public! !
+itemsDo:!enumerating!public! !
+itemWithId:!accessing!public! !
+menuFromHandle:!accessing!public! !
+name!accessing!public! !
+name:!accessing!public! !
+notEmpty!public!testing! !
+onDrawItem:!event handling-win32!private! !
+postCopy!copying!public! !
+printOn:!printing!public! !
+queryAllAlong:!operations!public! !
+queryAllFromView:!operations!private! !
+queryAlong:!operations!public! !
+registerAcceleratorKeyIn:!adding!public! !
+removeItem:!public!removing! !
+removeItemAt:!public!removing! !
+replaceItem:with:!public!replacing! !
+setDefault:!accessing!public! !
+setItem:info:!accessing!private! !
+showIn:position:!drawing!public! !
+size!accessing!public! !
+styleFlags!private!realizing/unrealizing! !
+text!accessing!public! !
+text:!accessing!public! !
+typeFlags!private!realizing/unrealizing! !
+updateItem:id:text:!accessing!private! !
+!
 
 Menu methodProtocol: #commandSource attributes: #(#readOnly) selectors: #(#commandDescription)!
 Menu methodProtocol: #menuItem attributes: #(#readOnly) selectors: #(#acceleratorKey #command #hasSubmenu #id #image #insertIntoMenu:at:info: #items #menuFromHandle: #queryAlong: #registerAcceleratorKeyIn: #text)!
@@ -835,15 +837,17 @@ stbVersion
 
 uninitialize
 	View unregisterMessageMappings: {WM_CONTEXTMENU. WM_INITMENU. WM_INITMENUPOPUP}! !
-!Menu class categoriesFor: #description:!instance creation!public! !
-!Menu class categoriesFor: #fromStrings:!instance creation!public! !
-!Menu class categoriesFor: #icon!constants!public! !
-!Menu class categoriesFor: #initialize!class initialization!development!public! !
-!Menu class categoriesFor: #menuMessageMappings!constants!must not strip!private! !
-!Menu class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Menu class categoriesFor: #stbConvertToVersion1:!binary filing!private! !
-!Menu class categoriesFor: #stbConvertToVersion2:!binary filing!private! !
-!Menu class categoriesFor: #stbConvertToVersion3:!binary filing!private! !
-!Menu class categoriesFor: #stbVersion!binary filing!public! !
-!Menu class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!Menu class categoriesForMethods!
+description:!instance creation!public! !
+fromStrings:!instance creation!public! !
+icon!constants!public! !
+initialize!class initialization!development!public! !
+menuMessageMappings!constants!must not strip!private! !
+stbConvertFrom:!binary filing!public! !
+stbConvertToVersion1:!binary filing!private! !
+stbConvertToVersion2:!binary filing!private! !
+stbConvertToVersion3:!binary filing!private! !
+stbVersion!binary filing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

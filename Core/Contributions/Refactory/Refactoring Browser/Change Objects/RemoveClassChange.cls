@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoryClassChange subclass: #RemoveClassChange
 	instanceVariableNames: ''
@@ -35,10 +35,12 @@ printOn: aStream
 		nextPutAll: self displayClassName;
 		nextPutAll: ' removeFromSystem';
 		nextPut: $!!! !
-!RemoveClassChange categoriesFor: #asUndoOperation!converting!public! !
-!RemoveClassChange categoriesFor: #changeString!printing!public! !
-!RemoveClassChange categoriesFor: #primitiveExecute!private! !
-!RemoveClassChange categoriesFor: #printOn:!printing!public! !
+!RemoveClassChange categoriesForMethods!
+asUndoOperation!converting!public! !
+changeString!printing!public! !
+primitiveExecute!private! !
+printOn:!printing!public! !
+!
 
 !RemoveClassChange class methodsFor!
 
@@ -47,6 +49,8 @@ remove: aClass
 
 removeClassName: aSymbol 
 	^self new changeClassName: aSymbol! !
-!RemoveClassChange class categoriesFor: #remove:!instance creation!public! !
-!RemoveClassChange class categoriesFor: #removeClassName:!instance creation!public! !
+!RemoveClassChange class categoriesForMethods!
+remove:!instance creation!public! !
+removeClassName:!instance creation!public! !
+!
 

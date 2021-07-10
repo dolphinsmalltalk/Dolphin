@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractParserErrorTest subclass: #SmalltalkParserErrorTest
 	instanceVariableNames: ''
@@ -414,36 +414,38 @@ writtenNotReadRange: aString
 	| start |
 	start := aString lastIndexOf: $_.
 	^start to: start + 3! !
-!SmalltalkParserErrorTest categoriesFor: #compilationErrorClass!helpers!private! !
-!SmalltalkParserErrorTest categoriesFor: #compilationWarningClass!helpers!private! !
-!SmalltalkParserErrorTest categoriesFor: #ifNil:!control flow!public! !
-!SmalltalkParserErrorTest categoriesFor: #ifNotNil:ifNil:!control flow!public! !
-!SmalltalkParserErrorTest categoriesFor: #lexicalError:range:line:code:!helpers!private! !
-!SmalltalkParserErrorTest categoriesFor: #lexicalErrorFrom:range:line:code:!helpers!private! !
-!SmalltalkParserErrorTest categoriesFor: #lexicalQualifiedRefError:code:range:!helpers!private! !
-!SmalltalkParserErrorTest categoriesFor: #parseExpression:in:!helpers!private! !
-!SmalltalkParserErrorTest categoriesFor: #parseMethod:in:!helpers!private! !
-!SmalltalkParserErrorTest categoriesFor: #parserClass!constants!private! !
-!SmalltalkParserErrorTest categoriesFor: #scannerClass!constants!private! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsBadCodePoint!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsExpectCodePoint!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalBadNumber!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalInvalidQualifier!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsLexicalUnterminatedQualifier!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfExpression!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsNonsenseAtEndOfMethod!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testErrorsTempsNotClosedRecovery!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testInfoHardBreakpoint!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testInfoSupersendsOther!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testInfoUnreferencedArg!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testParserErrors!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarningUnreachable!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarningUsesBooleanClass!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarnMsgUnimplemented!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarnNiladicExceptionHandler!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarnNonNiladicGuardedBlock!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarnRestrictedSelector!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarnUndefinedSelector!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #testWarnUnimplementedAbstractMethod!public!unit tests! !
-!SmalltalkParserErrorTest categoriesFor: #writtenNotReadRange:!helpers!private! !
+!SmalltalkParserErrorTest categoriesForMethods!
+compilationErrorClass!helpers!private! !
+compilationWarningClass!helpers!private! !
+ifNil:!control flow!public! !
+ifNotNil:ifNil:!control flow!public! !
+lexicalError:range:line:code:!helpers!private! !
+lexicalErrorFrom:range:line:code:!helpers!private! !
+lexicalQualifiedRefError:code:range:!helpers!private! !
+parseExpression:in:!helpers!private! !
+parseMethod:in:!helpers!private! !
+parserClass!constants!private! !
+scannerClass!constants!private! !
+testErrorsBadCodePoint!public!unit tests! !
+testErrorsExpectCodePoint!public!unit tests! !
+testErrorsLexicalBadNumber!public!unit tests! !
+testErrorsLexicalInvalidQualifier!public!unit tests! !
+testErrorsLexicalUnterminatedQualifier!public!unit tests! !
+testErrorsNonsenseAtEndOfExpression!public!unit tests! !
+testErrorsNonsenseAtEndOfMethod!public!unit tests! !
+testErrorsTempsNotClosedRecovery!public!unit tests! !
+testInfoHardBreakpoint!public!unit tests! !
+testInfoSupersendsOther!public!unit tests! !
+testInfoUnreferencedArg!public!unit tests! !
+testParserErrors!public!unit tests! !
+testWarningUnreachable!public!unit tests! !
+testWarningUsesBooleanClass!public!unit tests! !
+testWarnMsgUnimplemented!public!unit tests! !
+testWarnNiladicExceptionHandler!public!unit tests! !
+testWarnNonNiladicGuardedBlock!public!unit tests! !
+testWarnRestrictedSelector!public!unit tests! !
+testWarnUndefinedSelector!public!unit tests! !
+testWarnUnimplementedAbstractMethod!public!unit tests! !
+writtenNotReadRange:!helpers!private! !
+!
 

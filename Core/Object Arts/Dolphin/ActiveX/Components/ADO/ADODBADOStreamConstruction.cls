@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #ADODBADOStreamConstruction
 	instanceVariableNames: ''
@@ -64,10 +64,12 @@ stream: ppStm
 	"Set the 'Stream' property of the receiver to the <IUnknown*> value of the argument."
 
 	self put_Stream: ppStm! !
-!ADODBADOStreamConstruction categoriesFor: #get_Stream:!**auto generated**!COM Interfaces-ADOStreamConstruction!private! !
-!ADODBADOStreamConstruction categoriesFor: #put_Stream:!**auto generated**!COM Interfaces-ADOStreamConstruction!private! !
-!ADODBADOStreamConstruction categoriesFor: #stream!**auto generated**!properties!public! !
-!ADODBADOStreamConstruction categoriesFor: #stream:!**auto generated**!properties!public! !
+!ADODBADOStreamConstruction categoriesForMethods!
+get_Stream:!**auto generated**!COM Interfaces-ADOStreamConstruction!private! !
+put_Stream:!**auto generated**!COM Interfaces-ADOStreamConstruction!private! !
+stream!**auto generated**!properties!public! !
+stream:!**auto generated**!properties!public! !
+!
 
 !ADODBADOStreamConstruction class methodsFor!
 
@@ -81,5 +83,7 @@ defineFunctions
 		defineFunction: #put_Stream:
 			argumentTypes: 'IUnknown*'
 ! !
-!ADODBADOStreamConstruction class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBADOStreamConstruction class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

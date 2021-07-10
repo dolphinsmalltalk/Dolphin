@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequencedReadableCollectionTest subclass: #ArrayANSITest
 	instanceVariableNames: ''
@@ -23,10 +23,12 @@ emptyCollection
 
 protocol
 	^#Array! !
-!ArrayANSITest categoriesFor: #canonicalElement!public! !
-!ArrayANSITest categoriesFor: #canonicalObject!public! !
-!ArrayANSITest categoriesFor: #emptyCollection!public! !
-!ArrayANSITest categoriesFor: #protocol!public! !
+!ArrayANSITest categoriesForMethods!
+canonicalElement!public! !
+canonicalObject!public! !
+emptyCollection!public! !
+protocol!public! !
+!
 
 !ArrayANSITest class methodsFor!
 
@@ -34,5 +36,7 @@ helperClassesDo: aBlock
 	super helperClassesDo: aBlock.
 	aBlock value: SequencedCollectionHelper.
 	aBlock value: SequencedReadableCollectionHelper! !
-!ArrayANSITest class categoriesFor: #helperClassesDo:!public! !
+!ArrayANSITest class categoriesForMethods!
+helperClassesDo:!public! !
+!
 

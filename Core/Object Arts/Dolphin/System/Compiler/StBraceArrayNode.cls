@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StValueNode subclass: #StBraceArrayNode
 	instanceVariableNames: 'left statements periods right'
@@ -86,31 +86,35 @@ stopWithoutParentheses
 
 uses: aNode
 	^(statements anySatisfy: [:each | each == aNode]) or: [self isUsed]! !
-!StBraceArrayNode categoriesFor: #=!comparing!public! !
-!StBraceArrayNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StBraceArrayNode categoriesFor: #children!accessing!public! !
-!StBraceArrayNode categoriesFor: #childrenDo:!accessing!enumerating!public! !
-!StBraceArrayNode categoriesFor: #hash!comparing!public! !
-!StBraceArrayNode categoriesFor: #isDynamicArray!public!testing! !
-!StBraceArrayNode categoriesFor: #lastIsReturn!public!testing! !
-!StBraceArrayNode categoriesFor: #left!accessing!public! !
-!StBraceArrayNode categoriesFor: #left:!accessing!public! !
-!StBraceArrayNode categoriesFor: #needsParenthesis!public!testing! !
-!StBraceArrayNode categoriesFor: #periods!accessing!public! !
-!StBraceArrayNode categoriesFor: #periods:!accessing!public! !
-!StBraceArrayNode categoriesFor: #postCopy!copying!public! !
-!StBraceArrayNode categoriesFor: #precedence!constants!public! !
-!StBraceArrayNode categoriesFor: #right!accessing!public! !
-!StBraceArrayNode categoriesFor: #right:!accessing!public! !
-!StBraceArrayNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StBraceArrayNode categoriesFor: #statements!accessing!public! !
-!StBraceArrayNode categoriesFor: #statements:!accessing!public! !
-!StBraceArrayNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!StBraceArrayNode categoriesFor: #uses:!public!testing! !
+!StBraceArrayNode categoriesForMethods!
+=!comparing!public! !
+acceptVisitor:!public!visitor! !
+children!accessing!public! !
+childrenDo:!accessing!enumerating!public! !
+hash!comparing!public! !
+isDynamicArray!public!testing! !
+lastIsReturn!public!testing! !
+left!accessing!public! !
+left:!accessing!public! !
+needsParenthesis!public!testing! !
+periods!accessing!public! !
+periods:!accessing!public! !
+postCopy!copying!public! !
+precedence!constants!public! !
+right!accessing!public! !
+right:!accessing!public! !
+startWithoutParentheses!accessing!public! !
+statements!accessing!public! !
+statements:!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+uses:!public!testing! !
+!
 
 !StBraceArrayNode class methodsFor!
 
 statements: statements
 	^self new statements: statements! !
-!StBraceArrayNode class categoriesFor: #statements:!instance creation!public! !
+!StBraceArrayNode class categoriesForMethods!
+statements:!instance creation!public! !
+!
 

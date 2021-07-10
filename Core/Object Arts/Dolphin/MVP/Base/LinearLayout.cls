@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LayoutManager subclass: #LinearLayout
 	instanceVariableNames: ''
@@ -79,13 +79,15 @@ preferredLayoutExtentOf: aCompositeView context: aLayoutContext
 		do: [:each | accumulate value: (each layoutExtent: aLayoutContext)].
 	insets := aCompositeView actualInsets: aLayoutContext.
 	^box + insets topLeft + insets bottomRight! !
-!LinearLayout categoriesFor: #beHorizontal!modes!public! !
-!LinearLayout categoriesFor: #beVertical!modes!public! !
-!LinearLayout categoriesFor: #initialize!initializing!private! !
-!LinearLayout categoriesFor: #isHorizontal!public!testing! !
-!LinearLayout categoriesFor: #isVertical!public!testing! !
-!LinearLayout categoriesFor: #isVertical:!accessing!public! !
-!LinearLayout categoriesFor: #majorDimensionOf:!geometry!private! !
-!LinearLayout categoriesFor: #pointWithMajor:minor:!helpers!private! !
-!LinearLayout categoriesFor: #preferredLayoutExtentOf:context:!enquiries!public! !
+!LinearLayout categoriesForMethods!
+beHorizontal!modes!public! !
+beVertical!modes!public! !
+initialize!initializing!private! !
+isHorizontal!public!testing! !
+isVertical!public!testing! !
+isVertical:!accessing!public! !
+majorDimensionOf:!geometry!private! !
+pointWithMajor:minor:!helpers!private! !
+preferredLayoutExtentOf:context:!enquiries!public! !
+!
 

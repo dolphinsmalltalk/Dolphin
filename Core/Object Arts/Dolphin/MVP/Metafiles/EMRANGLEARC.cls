@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRANGLEARC
 	instanceVariableNames: ''
@@ -73,14 +73,16 @@ ptlCenter: aPOINTL
 		from: ##(_OffsetOf_ptlCenter + 1)
 		to: ##(_OffsetOf_ptlCenter + POINTL basicByteSize)
 		startingAt: 1! !
-!EMRANGLEARC categoriesFor: #eStartAngle!**compiled accessors**!public! !
-!EMRANGLEARC categoriesFor: #eStartAngle:!**compiled accessors**!public! !
-!EMRANGLEARC categoriesFor: #eSweepAngle!**compiled accessors**!public! !
-!EMRANGLEARC categoriesFor: #eSweepAngle:!**compiled accessors**!public! !
-!EMRANGLEARC categoriesFor: #nRadius!**compiled accessors**!public! !
-!EMRANGLEARC categoriesFor: #nRadius:!**compiled accessors**!public! !
-!EMRANGLEARC categoriesFor: #ptlCenter!**compiled accessors**!public! !
-!EMRANGLEARC categoriesFor: #ptlCenter:!**compiled accessors**!public! !
+!EMRANGLEARC categoriesForMethods!
+eStartAngle!**compiled accessors**!public! !
+eStartAngle:!**compiled accessors**!public! !
+eSweepAngle!**compiled accessors**!public! !
+eSweepAngle:!**compiled accessors**!public! !
+nRadius!**compiled accessors**!public! !
+nRadius:!**compiled accessors**!public! !
+ptlCenter!**compiled accessors**!public! !
+ptlCenter:!**compiled accessors**!public! !
+!
 
 !EMRANGLEARC class methodsFor!
 
@@ -114,7 +116,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_ANGLEARC! !
-!EMRANGLEARC class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRANGLEARC class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRANGLEARC class categoriesFor: #iTypes!constants!public! !
+!EMRANGLEARC class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

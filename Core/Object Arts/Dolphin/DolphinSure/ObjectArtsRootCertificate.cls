@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinSureCertificationAuthorityCertificate subclass: #ObjectArtsRootCertificate
 	instanceVariableNames: ''
@@ -23,8 +23,10 @@ publisherPublicKey
 	"Private - Answer the publisher's public key"
 
 	^self publicKey! !
-!ObjectArtsRootCertificate categoriesFor: #publicKey!accessing!public! !
-!ObjectArtsRootCertificate categoriesFor: #publisherPublicKey!accessing!private! !
+!ObjectArtsRootCertificate categoriesForMethods!
+publicKey!accessing!public! !
+publisherPublicKey!accessing!private! !
+!
 
 !ObjectArtsRootCertificate class methodsFor!
 
@@ -63,8 +65,10 @@ validYears
 	for by default. Nil indicates valid indefinitely."
 
 	^nil! !
-!ObjectArtsRootCertificate class categoriesFor: #generate!instance creation!private! !
-!ObjectArtsRootCertificate class categoriesFor: #new!instance creation!public! !
-!ObjectArtsRootCertificate class categoriesFor: #publicKey!constants!public! !
-!ObjectArtsRootCertificate class categoriesFor: #validYears!constants!private! !
+!ObjectArtsRootCertificate class categoriesForMethods!
+generate!instance creation!private! !
+new!instance creation!public! !
+publicKey!constants!public! !
+validYears!constants!private! !
+!
 

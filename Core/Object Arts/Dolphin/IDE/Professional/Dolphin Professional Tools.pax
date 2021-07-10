@@ -198,7 +198,9 @@ correspondingTestCase
 	potentialTestCaseNames
 		do: [:each | (Smalltalk lookup: each) ifNotNil: [:class | (class inheritsFrom: TestCase) ifTrue: [^class]]].
 	^nil! !
-!ClassDescription categoriesFor: #correspondingTestCase!public! !
+!ClassDescription categoriesForMethods!
+correspondingTestCase!public! !
+!
 
 !LinkButton class methodsFor!
 
@@ -212,7 +214,9 @@ publishedAspectsOfInstances
 		add: (Aspect name: #commandDescription) beReadOnly;
 		yourself.
 	^answer! !
-!LinkButton class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+!LinkButton class categoriesForMethods!
+publishedAspectsOfInstances!constants!public! !
+!
 
 !PackageSelector methodsFor!
 
@@ -241,9 +245,11 @@ browseSources
 	"Private - Open a browser on the sources for the currently selected package."
 
 	self browsePackageSources! !
-!PackageSelector categoriesFor: #browseDeployed!commands!public! !
-!PackageSelector categoriesFor: #browsePackageSources!commands!private! !
-!PackageSelector categoriesFor: #browseSources!commands!private! !
+!PackageSelector categoriesForMethods!
+browseDeployed!commands!public! !
+browsePackageSources!commands!private! !
+browseSources!commands!private! !
+!
 
 !Process methodsFor!
 
@@ -252,7 +258,9 @@ priorityName
 
 	^Processor nameOfPriority: self priority
 ! !
-!Process categoriesFor: #priorityName!accessing!public! !
+!Process categoriesForMethods!
+priorityName!accessing!public! !
+!
 
 !ProcessorScheduler methodsFor!
 
@@ -271,7 +279,9 @@ nameOfPriority: anInteger
 		highIOPriority
 		timingPriority)
 			at: anInteger ifAbsent: [#unknownPriority]! !
-!ProcessorScheduler categoriesFor: #nameOfPriority:!enquiries!public! !
+!ProcessorScheduler categoriesForMethods!
+nameOfPriority:!enquiries!public! !
+!
 
 !SlideyInneyOuteyThing class methodsFor!
 
@@ -305,8 +315,10 @@ publishedAspectsOfInstances
 		do: [:each | aspects add: (Aspect boolean: each)].
 	aspects add: (Aspect choice: #animation from: Animations keys asSortedCollection).
 	^aspects! !
-!SlideyInneyOuteyThing class categoriesFor: #example1!examples!public! !
-!SlideyInneyOuteyThing class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+!SlideyInneyOuteyThing class categoriesForMethods!
+example1!examples!public! !
+publishedAspectsOfInstances!constants!public! !
+!
 
 !SmalltalkSystem methodsFor!
 
@@ -341,8 +353,10 @@ updateHelpMenus
 					(menuBar findCommand: #help)
 						ifNotNil: [:oldHelpMenu | menuBar replaceItem: oldHelpMenu with: (Object fromBinaryStoreBytes: helpmenu)]].
 			true]! !
-!SmalltalkSystem categoriesFor: #openIdeaSpace!commands!public! !
-!SmalltalkSystem categoriesFor: #updateHelpMenus!private!utilities! !
+!SmalltalkSystem categoriesForMethods!
+openIdeaSpace!commands!public! !
+updateHelpMenus!private!utilities! !
+!
 
 !SmalltalkToolShell methodsFor!
 
@@ -368,11 +382,13 @@ exit
 
 	self isIdeaSpaceCard ifTrue: [^self ideaSpace closeCard: self].
 	^super exit! !
-!SmalltalkToolShell categoriesFor: #addToNewIdeaSpace!public! !
-!SmalltalkToolShell categoriesFor: #browseSystem!commands!public! !
-!SmalltalkToolShell categoriesFor: #destroy!commands!public! !
-!SmalltalkToolShell categoriesFor: #dragToolToIdeaSpace!public! !
-!SmalltalkToolShell categoriesFor: #exit!commands!public! !
+!SmalltalkToolShell categoriesForMethods!
+addToNewIdeaSpace!public! !
+browseSystem!commands!public! !
+destroy!commands!public! !
+dragToolToIdeaSpace!public! !
+exit!commands!public! !
+!
 
 !SmalltalkToolShell class methodsFor!
 
@@ -389,8 +405,10 @@ dragToolToIdeaSpace: aSmalltalkToolShell
 	ideaSpaceFound := shellFinder value.
 	ideaSpaceFound isNil ifTrue: [^self].
 	ideaSpaceFound absorbCard: aSmalltalkToolShell! !
-!SmalltalkToolShell class categoriesFor: #addToNewIdeaSpace:!public! !
-!SmalltalkToolShell class categoriesFor: #dragToolToIdeaSpace:!public! !
+!SmalltalkToolShell class categoriesForMethods!
+addToNewIdeaSpace:!public! !
+dragToolToIdeaSpace:!public! !
+!
 
 !SmalltalkWorkspaceDocument methodsFor!
 
@@ -404,9 +422,11 @@ browseSources
 
 dragToolToIdeaSpace
 	^IdeaSpaceShell dragToolToIdeaSpace: self! !
-!SmalltalkWorkspaceDocument categoriesFor: #addToNewIdeaSpace!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #browseSources!commands!public! !
-!SmalltalkWorkspaceDocument categoriesFor: #dragToolToIdeaSpace!public! !
+!SmalltalkWorkspaceDocument categoriesForMethods!
+addToNewIdeaSpace!public! !
+browseSources!commands!public! !
+dragToolToIdeaSpace!public! !
+!
 
 !StyledContainer class methodsFor!
 
@@ -439,7 +459,9 @@ publishedAspectsOfInstances
 					isNullable: false;
 					yourself).
 	^aspects! !
-!StyledContainer class categoriesFor: #publishedAspectsOfInstances!constants!public! !
+!StyledContainer class categoriesForMethods!
+publishedAspectsOfInstances!constants!public! !
+!
 
 !SysLinkView class methodsFor!
 
@@ -458,14 +480,18 @@ publishedEventsOfInstances
     		add: #linkClicked:;
     		yourself.
     ! !
-!SysLinkView class categoriesFor: #publishedAspectsOfInstances!constants!public! !
-!SysLinkView class categoriesFor: #publishedEventsOfInstances!events!public! !
+!SysLinkView class categoriesForMethods!
+publishedAspectsOfInstances!constants!public! !
+publishedEventsOfInstances!events!public! !
+!
 
 !TestCase class methodsFor!
 
 correspondingTestCase
 	^self! !
-!TestCase class categoriesFor: #correspondingTestCase!public! !
+!TestCase class categoriesForMethods!
+correspondingTestCase!public! !
+!
 
 !Toolbar class methodsFor!
 
@@ -478,7 +504,9 @@ resource_Idea_space_card_tools
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.Toolbar) 34 25 nil nil 34 2 8 1409289036 131137 416 nil nil nil 517 nil nil nil 416 327686 ##(Smalltalk.Color) #default 8 1903898080 170 192 8 #() 170 192 34 10 51221 1115206 1 ##(Smalltalk.ToolbarIconButton) 416 1 1180998 4 ##(Smalltalk.CommandDescription) #cardHistoryForward 8 'Forward' 1 1 263494 3 ##(Smalltalk.Icon) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'HistoryForward.ico' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil 51221 51227 594 416 1 626 #closeCard 8 'Close This Card' 1 1 788806 1 ##(Smalltalk.TextTileIcon) $\x2716 nil nil nil nil nil 1 nil nil 51227 51223 594 416 1 626 #moveCardLeft 8 'Move Card Left' 1 1 850 $\x25C0 8 'Cambria' nil 482 #menuHilight nil nil 1 nil nil 51223 51219 594 416 1 626 #cardHistoryBack 8 'Back' 1 1 674 nil true 720 8 'HistoryBack.ico' 768 51219 51225 594 416 1 626 #moveCardRight 8 'Move Card Right' 1 1 850 $\x25B6 8 'Cambria' nil 960 nil nil 1 nil nil 51225 34 7 1049158 1 ##(Smalltalk.ToolbarSeparator) 416 1 976 608 1154 416 1 880 1056 800 nil nil 1 nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 3839 21 1314 263 51 416 1266 #updateSizePosted 544 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 2 8 0 0 35 0 0 0] 8 #() 1314 193 193 nil 27 )! !
-!Toolbar class categoriesFor: #resource_Idea_space_card_tools!public!resources-views! !
+!Toolbar class categoriesForMethods!
+resource_Idea_space_card_tools!public!resources-views! !
+!
 
 "End of package definition"!
 

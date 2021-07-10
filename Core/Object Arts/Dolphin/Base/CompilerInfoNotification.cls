@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CompilerNotification subclass: #CompilerInfoNotification
 	instanceVariableNames: ''
@@ -12,7 +12,9 @@ CompilerInfoNotification comment: 'CompilerInfoNotification is a resumable excep
 
 severityName
 	^#Note! !
-!CompilerInfoNotification categoriesFor: #severityName!displaying!public! !
+!CompilerInfoNotification categoriesForMethods!
+severityName!displaying!public! !
+!
 
 !CompilerInfoNotification class methodsFor!
 
@@ -21,5 +23,7 @@ severity
 	sorting compilation issues by severity."
 
 	^0! !
-!CompilerInfoNotification class categoriesFor: #severity!constants!public! !
+!CompilerInfoNotification class categoriesForMethods!
+severity!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RuntimeSessionManager subclass: #WebBrowserSessionManager
 	instanceVariableNames: ''
@@ -21,8 +21,10 @@ objectArtsUrl
 	"Private - Answer the URL of the Object Arts home page"
 
 	^'http://www.object-arts.com'.! !
-!WebBrowserSessionManager categoriesFor: #main!operations!public! !
-!WebBrowserSessionManager categoriesFor: #objectArtsUrl!constants!private! !
+!WebBrowserSessionManager categoriesForMethods!
+main!operations!public! !
+objectArtsUrl!constants!private! !
+!
 
 !WebBrowserSessionManager class methodsFor!
 
@@ -30,5 +32,7 @@ mainShellClass
 	"Answer the class of the application's main window (a <Shell> presenter)."
 
 	^WebBrowserShell! !
-!WebBrowserSessionManager class categoriesFor: #mainShellClass!constants!public! !
+!WebBrowserSessionManager class categoriesForMethods!
+mainShellClass!constants!public! !
+!
 

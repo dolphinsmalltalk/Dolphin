@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #DolphinProduct
 	instanceVariableNames: 'versionMask encryptedClasses'
@@ -414,56 +414,58 @@ versionMask: anInteger
 
 warnOfUnlistedContent
 ! !
-!DolphinProduct categoriesFor: #allPackages!accessing!public! !
-!DolphinProduct categoriesFor: #basicLoad!operations!private! !
-!DolphinProduct categoriesFor: #beCurrent!operations!public! !
-!DolphinProduct categoriesFor: #boot!operations!private! !
-!DolphinProduct categoriesFor: #calcSystemFolderExtentFor:!helpers!private! !
-!DolphinProduct categoriesFor: #contents!accessing!public! !
-!DolphinProduct categoriesFor: #defaultSystemFolderColor!constants!private! !
-!DolphinProduct categoriesFor: #defaultSystemFolderExtent!constants!private! !
-!DolphinProduct categoriesFor: #diskBasedPackages!accessing!private! !
-!DolphinProduct categoriesFor: #displayOn:!printing!public! !
-!DolphinProduct categoriesFor: #encryptedClasses!accessing!public! !
-!DolphinProduct categoriesFor: #encryptedClasses:!accessing!private! !
-!DolphinProduct categoriesFor: #encryptedPackageNames!accessing!public! !
-!DolphinProduct categoriesFor: #foldLiterals!private! !
-!DolphinProduct categoriesFor: #fullName!accessing!public! !
-!DolphinProduct categoriesFor: #imageLevel!constants!public! !
-!DolphinProduct categoriesFor: #installProductDetails!operations!private! !
-!DolphinProduct categoriesFor: #installProductSounds!operations!private! !
-!DolphinProduct categoriesFor: #installSplash!private! !
-!DolphinProduct categoriesFor: #installSystemFolderOptions!operations!private! !
-!DolphinProduct categoriesFor: #installSystemFolderOptions:!private! !
-!DolphinProduct categoriesFor: #isSafeToEncrypt:!operations!public! !
-!DolphinProduct categoriesFor: #load!operations!public! !
-!DolphinProduct categoriesFor: #loadAndShrink!operations!public! !
-!DolphinProduct categoriesFor: #loadShrinkAndCompress!operations!public! !
-!DolphinProduct categoriesFor: #majorVersion!accessing!public! !
-!DolphinProduct categoriesFor: #minorVersion!accessing!public! !
-!DolphinProduct categoriesFor: #name!accessing!public! !
-!DolphinProduct categoriesFor: #packageNames!accessing!public! !
-!DolphinProduct categoriesFor: #packagePaths!accessing!public! !
-!DolphinProduct categoriesFor: #packages!accessing!public! !
-!DolphinProduct categoriesFor: #preShrink!private! !
-!DolphinProduct categoriesFor: #printOn:!printing!public! !
-!DolphinProduct categoriesFor: #productDetails!accessing!public! !
-!DolphinProduct categoriesFor: #productLevel!constants!public! !
-!DolphinProduct categoriesFor: #removeUnlistedPackages!operations!private! !
-!DolphinProduct categoriesFor: #resizeSymbolTable!operations!public! !
-!DolphinProduct categoriesFor: #shortProductName!accessing!public! !
-!DolphinProduct categoriesFor: #shouldEncryptMetaclasses!constants!public!testing! !
-!DolphinProduct categoriesFor: #shrink!operations!public! !
-!DolphinProduct categoriesFor: #shrinkEventsRegister!operations!private! !
-!DolphinProduct categoriesFor: #shrinkHashedCollections!operations!private! !
-!DolphinProduct categoriesFor: #uninstallPackage:!operations!private! !
-!DolphinProduct categoriesFor: #unlistedContentException!operations!public! !
-!DolphinProduct categoriesFor: #unlistedPrerequisites!public! !
-!DolphinProduct categoriesFor: #unwantedClasses!constants!public! !
-!DolphinProduct categoriesFor: #version!accessing!public! !
-!DolphinProduct categoriesFor: #versionMask!accessing!private! !
-!DolphinProduct categoriesFor: #versionMask:!accessing!initializing!private! !
-!DolphinProduct categoriesFor: #warnOfUnlistedContent!operations!private! !
+!DolphinProduct categoriesForMethods!
+allPackages!accessing!public! !
+basicLoad!operations!private! !
+beCurrent!operations!public! !
+boot!operations!private! !
+calcSystemFolderExtentFor:!helpers!private! !
+contents!accessing!public! !
+defaultSystemFolderColor!constants!private! !
+defaultSystemFolderExtent!constants!private! !
+diskBasedPackages!accessing!private! !
+displayOn:!printing!public! !
+encryptedClasses!accessing!public! !
+encryptedClasses:!accessing!private! !
+encryptedPackageNames!accessing!public! !
+foldLiterals!private! !
+fullName!accessing!public! !
+imageLevel!constants!public! !
+installProductDetails!operations!private! !
+installProductSounds!operations!private! !
+installSplash!private! !
+installSystemFolderOptions!operations!private! !
+installSystemFolderOptions:!private! !
+isSafeToEncrypt:!operations!public! !
+load!operations!public! !
+loadAndShrink!operations!public! !
+loadShrinkAndCompress!operations!public! !
+majorVersion!accessing!public! !
+minorVersion!accessing!public! !
+name!accessing!public! !
+packageNames!accessing!public! !
+packagePaths!accessing!public! !
+packages!accessing!public! !
+preShrink!private! !
+printOn:!printing!public! !
+productDetails!accessing!public! !
+productLevel!constants!public! !
+removeUnlistedPackages!operations!private! !
+resizeSymbolTable!operations!public! !
+shortProductName!accessing!public! !
+shouldEncryptMetaclasses!constants!public!testing! !
+shrink!operations!public! !
+shrinkEventsRegister!operations!private! !
+shrinkHashedCollections!operations!private! !
+uninstallPackage:!operations!private! !
+unlistedContentException!operations!public! !
+unlistedPrerequisites!public! !
+unwantedClasses!constants!public! !
+version!accessing!public! !
+versionMask!accessing!private! !
+versionMask:!accessing!initializing!private! !
+warnOfUnlistedContent!operations!private! !
+!
 
 !DolphinProduct class methodsFor!
 
@@ -607,25 +609,27 @@ versionMask: versionMask
 	^(super new)
 		versionMask: versionMask;
 		yourself! !
-!DolphinProduct class categoriesFor: #boot!operations!public! !
-!DolphinProduct class categoriesFor: #current!accessing!public! !
-!DolphinProduct class categoriesFor: #errorInvalidProductDescription:!exceptions!public! !
-!DolphinProduct class categoriesFor: #fromString:!instance creation!public! !
-!DolphinProduct class categoriesFor: #icon!constants!public! !
-!DolphinProduct class categoriesFor: #initialize!initializing!private! !
-!DolphinProduct class categoriesFor: #loadAndShrink!operations!public! !
-!DolphinProduct class categoriesFor: #new!instance creation!public! !
-!DolphinProduct class categoriesFor: #ofImageLevel:!instance creation!private! !
-!DolphinProduct class categoriesFor: #ofSerialNumber:!instance creation!private! !
-!DolphinProduct class categoriesFor: #packages:under:encrypted:!private! !
-!DolphinProduct class categoriesFor: #pacsUnder:encrypted:!private! !
-!DolphinProduct class categoriesFor: #paxesUnder:encrypted:!private! !
-!DolphinProduct class categoriesFor: #productLevel!constants!private! !
-!DolphinProduct class categoriesFor: #productMask!accessing!private! !
-!DolphinProduct class categoriesFor: #productName!accessing!public! !
-!DolphinProduct class categoriesFor: #productPrefix!instance creation!public! !
-!DolphinProduct class categoriesFor: #release!operations!public! !
-!DolphinProduct class categoriesFor: #shortProductName!accessing!public! !
-!DolphinProduct class categoriesFor: #version:!instance creation!public! !
-!DolphinProduct class categoriesFor: #versionMask:!instance creation!private! !
+!DolphinProduct class categoriesForMethods!
+boot!operations!public! !
+current!accessing!public! !
+errorInvalidProductDescription:!exceptions!public! !
+fromString:!instance creation!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+loadAndShrink!operations!public! !
+new!instance creation!public! !
+ofImageLevel:!instance creation!private! !
+ofSerialNumber:!instance creation!private! !
+packages:under:encrypted:!private! !
+pacsUnder:encrypted:!private! !
+paxesUnder:encrypted:!private! !
+productLevel!constants!private! !
+productMask!accessing!private! !
+productName!accessing!public! !
+productPrefix!instance creation!public! !
+release!operations!public! !
+shortProductName!accessing!public! !
+version:!instance creation!public! !
+versionMask:!instance creation!private! !
+!
 

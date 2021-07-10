@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Grabber
 	instanceVariableNames: 'rectangle aspect constrain view composer'
@@ -216,35 +216,37 @@ view: aView aspect: anAspectSymbol composer: aViewComposer
 	aspect := anAspectSymbol.
 	composer := aViewComposer.
 	self alignWithView! !
-!Grabber categoriesFor: #alignWithView!operations!public! !
-!Grabber categoriesFor: #arena!accessing!public! !
-!Grabber categoriesFor: #aspect!accessing!public! !
-!Grabber categoriesFor: #beHorizontalOnly!accessing!public! !
-!Grabber categoriesFor: #beVerticalOnly!accessing!public! !
-!Grabber categoriesFor: #calculateViewRectangleFor:!operations!public! !
-!Grabber categoriesFor: #cancelTrackingAt:!private!tracking! !
-!Grabber categoriesFor: #constrainPoint:!geometry!private! !
-!Grabber categoriesFor: #containsPoint:!public!testing! !
-!Grabber categoriesFor: #continueTrackingAt:from:!private!tracking! !
-!Grabber categoriesFor: #cursor!accessing!public! !
-!Grabber categoriesFor: #cursors!accessing!private! !
-!Grabber categoriesFor: #defaultColor!constants!private! !
-!Grabber categoriesFor: #defaultExtent!constants!private! !
-!Grabber categoriesFor: #draw!drawing!public! !
-!Grabber categoriesFor: #drawTrackingAt:!private!tracking! !
-!Grabber categoriesFor: #endTrackingAt:!private!tracking! !
-!Grabber categoriesFor: #eraseTrackingAt:!private!tracking! !
-!Grabber categoriesFor: #grid!accessing!public! !
-!Grabber categoriesFor: #invalidate!drawing!private! !
-!Grabber categoriesFor: #isHorizontalOnly!accessing!public! !
-!Grabber categoriesFor: #isVerticalOnly!accessing!public! !
-!Grabber categoriesFor: #rectangle!accessing!private! !
-!Grabber categoriesFor: #setAspect!accessing!private! !
-!Grabber categoriesFor: #startTrackingAt:!private!tracking! !
-!Grabber categoriesFor: #status!public! !
-!Grabber categoriesFor: #trackMouseFrom:!public!tracking! !
-!Grabber categoriesFor: #view!accessing!public! !
-!Grabber categoriesFor: #view:aspect:composer:!initializing!private! !
+!Grabber categoriesForMethods!
+alignWithView!operations!public! !
+arena!accessing!public! !
+aspect!accessing!public! !
+beHorizontalOnly!accessing!public! !
+beVerticalOnly!accessing!public! !
+calculateViewRectangleFor:!operations!public! !
+cancelTrackingAt:!private!tracking! !
+constrainPoint:!geometry!private! !
+containsPoint:!public!testing! !
+continueTrackingAt:from:!private!tracking! !
+cursor!accessing!public! !
+cursors!accessing!private! !
+defaultColor!constants!private! !
+defaultExtent!constants!private! !
+draw!drawing!public! !
+drawTrackingAt:!private!tracking! !
+endTrackingAt:!private!tracking! !
+eraseTrackingAt:!private!tracking! !
+grid!accessing!public! !
+invalidate!drawing!private! !
+isHorizontalOnly!accessing!public! !
+isVerticalOnly!accessing!public! !
+rectangle!accessing!private! !
+setAspect!accessing!private! !
+startTrackingAt:!private!tracking! !
+status!public! !
+trackMouseFrom:!public!tracking! !
+view!accessing!public! !
+view:aspect:composer:!initializing!private! !
+!
 
 !Grabber class methodsFor!
 
@@ -315,13 +317,15 @@ view: aView aspect: anAspectSymbol composer: aViewComposer
 			aspect: anAspectSymbol
 			composer: aViewComposer;
 		yourself! !
-!Grabber class categoriesFor: #cursors!accessing!private! !
-!Grabber class categoriesFor: #defaultExtent!constants!private! !
-!Grabber class categoriesFor: #initialize!initializing!private! !
-!Grabber class categoriesFor: #new!instance creation!private! !
-!Grabber class categoriesFor: #onStartup!event handling!private! !
-!Grabber class categoriesFor: #publishedEventsOfInstances!events!private! !
-!Grabber class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!Grabber class categoriesFor: #view:aspect:arena:grid:status:!instance creation!public! !
-!Grabber class categoriesFor: #view:aspect:composer:!instance creation!public! !
+!Grabber class categoriesForMethods!
+cursors!accessing!private! !
+defaultExtent!constants!private! !
+initialize!initializing!private! !
+new!instance creation!private! !
+onStartup!event handling!private! !
+publishedEventsOfInstances!events!private! !
+uninitialize!class hierarchy-removing!private! !
+view:aspect:arena:grid:status:!instance creation!public! !
+view:aspect:composer:!instance creation!public! !
+!
 

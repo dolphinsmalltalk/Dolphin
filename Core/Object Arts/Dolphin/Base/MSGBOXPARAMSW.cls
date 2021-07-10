@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #MSGBOXPARAMSW
 	instanceVariableNames: 'text caption'
@@ -80,15 +80,17 @@ text: aString
 
 	text := aString asUtf16String.
 	self lpszText: text! !
-!MSGBOXPARAMSW categoriesFor: #caption:!accessing!public! !
-!MSGBOXPARAMSW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!MSGBOXPARAMSW categoriesFor: #dwStyle:!**compiled accessors**!public! !
-!MSGBOXPARAMSW categoriesFor: #hInstance:!**compiled accessors**!public! !
-!MSGBOXPARAMSW categoriesFor: #hwndOwner:!**compiled accessors**!public! !
-!MSGBOXPARAMSW categoriesFor: #lpszCaption:!**compiled accessors**!public! !
-!MSGBOXPARAMSW categoriesFor: #lpszIcon:!**compiled accessors**!public! !
-!MSGBOXPARAMSW categoriesFor: #lpszText:!**compiled accessors**!public! !
-!MSGBOXPARAMSW categoriesFor: #text:!accessing!public! !
+!MSGBOXPARAMSW categoriesForMethods!
+caption:!accessing!public! !
+dwSize:!**compiled accessors**!public! !
+dwStyle:!**compiled accessors**!public! !
+hInstance:!**compiled accessors**!public! !
+hwndOwner:!**compiled accessors**!public! !
+lpszCaption:!**compiled accessors**!public! !
+lpszIcon:!**compiled accessors**!public! !
+lpszText:!**compiled accessors**!public! !
+text:!accessing!public! !
+!
 
 !MSGBOXPARAMSW class methodsFor!
 
@@ -127,6 +129,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #hwndOwner #hInstance #lpszText #lpszCaption #dwStyle #lpszIcon #dwLanguageId)! !
-!MSGBOXPARAMSW class categoriesFor: #defineFields!public!template definition! !
-!MSGBOXPARAMSW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!MSGBOXPARAMSW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

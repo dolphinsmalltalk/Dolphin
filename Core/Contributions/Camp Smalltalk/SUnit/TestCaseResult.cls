@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #TestCaseResult
 	instanceVariableNames: 'case outcome duration signal stacktrace ip testMethod'
@@ -114,17 +114,19 @@ stacktrace
 	"Answer the stacktrace capture when the test failed/errored, or nil if the test passed."
 
 	^stacktrace! !
-!TestCaseResult categoriesFor: #captureDiagnostics:!initializing!private! !
-!TestCaseResult categoriesFor: #case!accessing!public! !
-!TestCaseResult categoriesFor: #diagnostic!accessing!public! !
-!TestCaseResult categoriesFor: #displayOn:!displaying!public! !
-!TestCaseResult categoriesFor: #duration!accessing!public! !
-!TestCaseResult categoriesFor: #outcome!accessing!public! !
-!TestCaseResult categoriesFor: #printSourceOn:!printing!private! !
-!TestCaseResult categoriesFor: #setCase:duration:!initializing!private! !
-!TestCaseResult categoriesFor: #setCase:outcome:signal:!initializing!private! !
-!TestCaseResult categoriesFor: #signal!accessing!public! !
-!TestCaseResult categoriesFor: #stacktrace!accessing!public! !
+!TestCaseResult categoriesForMethods!
+captureDiagnostics:!initializing!private! !
+case!accessing!public! !
+diagnostic!accessing!public! !
+displayOn:!displaying!public! !
+duration!accessing!public! !
+outcome!accessing!public! !
+printSourceOn:!printing!private! !
+setCase:duration:!initializing!private! !
+setCase:outcome:signal:!initializing!private! !
+signal!accessing!public! !
+stacktrace!accessing!public! !
+!
 
 !TestCaseResult class methodsFor!
 
@@ -148,8 +150,10 @@ case: aTestCase skipped: aTestSkip
 		setCase: aTestCase
 		outcome: #skipped
 		signal: aTestSkip! !
-!TestCaseResult class categoriesFor: #case:duration:!instance creation!public! !
-!TestCaseResult class categoriesFor: #case:error:!instance creation!public! !
-!TestCaseResult class categoriesFor: #case:failure:!instance creation!public! !
-!TestCaseResult class categoriesFor: #case:skipped:!instance creation!public! !
+!TestCaseResult class categoriesForMethods!
+case:duration:!instance creation!public! !
+case:error:!instance creation!public! !
+case:failure:!instance creation!public! !
+case:skipped:!instance creation!public! !
+!
 

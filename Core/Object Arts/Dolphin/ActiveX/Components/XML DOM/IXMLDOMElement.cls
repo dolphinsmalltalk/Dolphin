@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IXMLDOMNode subclass: #IXMLDOMElement
 	instanceVariableNames: ''
@@ -199,24 +199,26 @@ tagName
 	self get_tagName: answer.
 	^answer asObject
 ! !
-!IXMLDOMElement categoriesFor: #=!comparing!public! !
-!IXMLDOMElement categoriesFor: #get_tagName:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!IXMLDOMElement categoriesFor: #getAttribute:!**auto generated**!methods!public! !
-!IXMLDOMElement categoriesFor: #GetAttribute:value:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!IXMLDOMElement categoriesFor: #getAttributeNode:!**auto generated**!methods!public! !
-!IXMLDOMElement categoriesFor: #GetAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!IXMLDOMElement categoriesFor: #getElementsByTagName:!methods!public! !
-!IXMLDOMElement categoriesFor: #GetElementsByTagName:resultList:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!IXMLDOMElement categoriesFor: #namespaceURI:!properties!public! !
-!IXMLDOMElement categoriesFor: #Normalize!**auto generated**!COM Interfaces-IXMLDOMElement!public! !
-!IXMLDOMElement categoriesFor: #RemoveAttribute:!**auto generated**!COM Interfaces-IXMLDOMElement!public! !
-!IXMLDOMElement categoriesFor: #removeAttributeNode:!**auto generated**!methods!public! !
-!IXMLDOMElement categoriesFor: #RemoveAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!IXMLDOMElement categoriesFor: #setAttribute:value:!**auto generated**!methods!public! !
-!IXMLDOMElement categoriesFor: #SetAttribute:value:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!IXMLDOMElement categoriesFor: #setAttributeNode:!**auto generated**!methods!public! !
-!IXMLDOMElement categoriesFor: #SetAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
-!IXMLDOMElement categoriesFor: #tagName!**auto generated**!properties!public! !
+!IXMLDOMElement categoriesForMethods!
+=!comparing!public! !
+get_tagName:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+getAttribute:!**auto generated**!methods!public! !
+GetAttribute:value:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+getAttributeNode:!**auto generated**!methods!public! !
+GetAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+getElementsByTagName:!methods!public! !
+GetElementsByTagName:resultList:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+namespaceURI:!properties!public! !
+Normalize!**auto generated**!COM Interfaces-IXMLDOMElement!public! !
+RemoveAttribute:!**auto generated**!COM Interfaces-IXMLDOMElement!public! !
+removeAttributeNode:!**auto generated**!methods!public! !
+RemoveAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+setAttribute:value:!**auto generated**!methods!public! !
+SetAttribute:value:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+setAttributeNode:!**auto generated**!methods!public! !
+SetAttributeNode:attributeNode:!**auto generated**!COM Interfaces-IXMLDOMElement!private! !
+tagName!**auto generated**!properties!public! !
+!
 
 !IXMLDOMElement class methodsFor!
 
@@ -243,5 +245,7 @@ defineFunctions
 			argumentTypes: 'bstr IXMLDOMNodeList**';
 		defineFunction: #Normalize
 ! !
-!IXMLDOMElement class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IXMLDOMElement class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

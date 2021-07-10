@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ADODB_DynaCollection subclass: #ADODBParameters
 	instanceVariableNames: ''
@@ -50,8 +50,10 @@ item: index
 	answer := ADODB_Parameter newPointer.
 	self get_Item: index asVariant ppvObject: answer.
 	^answer asObject! !
-!ADODBParameters categoriesFor: #get_Item:ppvObject:!**auto generated**!COM Interfaces-Parameters!private! !
-!ADODBParameters categoriesFor: #item:!**auto generated**!properties!public! !
+!ADODBParameters categoriesForMethods!
+get_Item:ppvObject:!**auto generated**!COM Interfaces-Parameters!private! !
+item:!**auto generated**!properties!public! !
+!
 
 !ADODBParameters class methodsFor!
 
@@ -63,5 +65,7 @@ defineFunctions
 		defineFunction: #get_Item:ppvObject:
 			argumentTypes: 'variant ADODB_Parameter**'
 ! !
-!ADODBParameters class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBParameters class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

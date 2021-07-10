@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #TBBUTTONINFOW
 	instanceVariableNames: ''
@@ -84,19 +84,21 @@ iImage: anInteger
 	"Set the receiver's 'iImage' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_iImage put: anInteger! !
-!TBBUTTONINFOW categoriesFor: #cx!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #cx:!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #dwMask!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #dwMask:!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #fsState!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #fsState:!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #fsStyle!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #fsStyle:!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #idCommand!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #idCommand:!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #iImage!**compiled accessors**!public! !
-!TBBUTTONINFOW categoriesFor: #iImage:!**compiled accessors**!public! !
+!TBBUTTONINFOW categoriesForMethods!
+cx!**compiled accessors**!public! !
+cx:!**compiled accessors**!public! !
+dwMask!**compiled accessors**!public! !
+dwMask:!**compiled accessors**!public! !
+dwSize:!**compiled accessors**!public! !
+fsState!**compiled accessors**!public! !
+fsState:!**compiled accessors**!public! !
+fsStyle!**compiled accessors**!public! !
+fsStyle:!**compiled accessors**!public! !
+idCommand!**compiled accessors**!public! !
+idCommand:!**compiled accessors**!public! !
+iImage!**compiled accessors**!public! !
+iImage:!**compiled accessors**!public! !
+!
 
 !TBBUTTONINFOW class methodsFor!
 
@@ -131,6 +133,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #dwMask #idCommand #iImage #fsState #fsStyle #cx)! !
-!TBBUTTONINFOW class categoriesFor: #defineFields!public!template definition! !
-!TBBUTTONINFOW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!TBBUTTONINFOW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

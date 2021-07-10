@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #AbstractELEMDESC
 	instanceVariableNames: 'owner tdesc'
@@ -73,16 +73,18 @@ typeName
 	"Answer the Dolphin external type name for the type described by the receiver."
 
 	^self tdesc typeName! !
-!AbstractELEMDESC categoriesFor: #analyzer!accessing!private! !
-!AbstractELEMDESC categoriesFor: #classDesc!accessing!private! !
-!AbstractELEMDESC categoriesFor: #indirections!accessing!public! !
-!AbstractELEMDESC categoriesFor: #isVariant!private!testing! !
-!AbstractELEMDESC categoriesFor: #objectClass!accessing!public! !
-!AbstractELEMDESC categoriesFor: #owner!accessing!private! !
-!AbstractELEMDESC categoriesFor: #owner:!accessing!private! !
-!AbstractELEMDESC categoriesFor: #tdesc!accessing!public! !
-!AbstractELEMDESC categoriesFor: #tdescElem!**compiled accessors**!private! !
-!AbstractELEMDESC categoriesFor: #typeName!accessing!public! !
+!AbstractELEMDESC categoriesForMethods!
+analyzer!accessing!private! !
+classDesc!accessing!private! !
+indirections!accessing!public! !
+isVariant!private!testing! !
+objectClass!accessing!public! !
+owner!accessing!private! !
+owner:!accessing!private! !
+tdesc!accessing!public! !
+tdescElem!**compiled accessors**!private! !
+typeName!accessing!public! !
+!
 
 !AbstractELEMDESC class methodsFor!
 
@@ -92,5 +94,7 @@ defineFields
 	"
 
 	self defineField: #tdescElem type: (StructureField type: TYPEDESC) beReadOnly beNonBrowsable! !
-!AbstractELEMDESC class categoriesFor: #defineFields!public!template definition! !
+!AbstractELEMDESC class categoriesForMethods!
+defineFields!public!template definition! !
+!
 

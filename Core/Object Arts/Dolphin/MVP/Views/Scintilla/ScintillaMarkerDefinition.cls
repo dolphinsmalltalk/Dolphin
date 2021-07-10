@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScintillaAttribute subclass: #ScintillaMarkerDefinition
 	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor _reserved9 _reserved10 _reserved11 _reserved12'
@@ -135,29 +135,31 @@ view
 
 view: aScintillaView 
 	view := aScintillaView! !
-!ScintillaMarkerDefinition categoriesFor: #alpha!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #alpha:!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #alphaValue!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #backcolor!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #backcolor:!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #basicBackcolor:!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #basicForecolor:!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #basicId!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #basicSelectionBackcolor:!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #code!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #code:!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #forecolor!accessing!colors!public! !
-!ScintillaMarkerDefinition categoriesFor: #forecolor:!accessing!colors!public! !
-!ScintillaMarkerDefinition categoriesFor: #glyphName!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #glyphName:!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #name!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #name:!accessing!public! !
-!ScintillaMarkerDefinition categoriesFor: #newForLine:!adding!must not strip!public! !
-!ScintillaMarkerDefinition categoriesFor: #selectionBackcolor!accessing!colors!public! !
-!ScintillaMarkerDefinition categoriesFor: #selectionBackcolor:!accessing!colors!public! !
-!ScintillaMarkerDefinition categoriesFor: #storeableProperties!development!printing!private! !
-!ScintillaMarkerDefinition categoriesFor: #view!accessing!private! !
-!ScintillaMarkerDefinition categoriesFor: #view:!accessing!private! !
+!ScintillaMarkerDefinition categoriesForMethods!
+alpha!accessing!public! !
+alpha:!accessing!public! !
+alphaValue!accessing!private! !
+backcolor!accessing!public! !
+backcolor:!accessing!public! !
+basicBackcolor:!accessing!private! !
+basicForecolor:!accessing!private! !
+basicId!accessing!private! !
+basicSelectionBackcolor:!accessing!private! !
+code!accessing!private! !
+code:!accessing!private! !
+forecolor!accessing!colors!public! !
+forecolor:!accessing!colors!public! !
+glyphName!accessing!public! !
+glyphName:!accessing!public! !
+name!accessing!public! !
+name:!accessing!public! !
+newForLine:!adding!must not strip!public! !
+selectionBackcolor!accessing!colors!public! !
+selectionBackcolor:!accessing!colors!public! !
+storeableProperties!development!printing!private! !
+view!accessing!private! !
+view:!accessing!private! !
+!
 
 !ScintillaMarkerDefinition class methodsFor!
 
@@ -498,16 +500,18 @@ stbVersion
 visibleCharacterGlyphs
 	^(Character byteCharacterSet select: [:each | each isGraph]) asArray
 		collect: [:each | each asSymbol]! !
-!ScintillaMarkerDefinition class categoriesFor: #arrows!constants!public! !
-!ScintillaMarkerDefinition class categoriesFor: #boxTree!constants!public! !
-!ScintillaMarkerDefinition class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
-!ScintillaMarkerDefinition class categoriesFor: #circleTree!constants!public! !
-!ScintillaMarkerDefinition class categoriesFor: #folderIds!constants!public! !
-!ScintillaMarkerDefinition class categoriesFor: #foldMarkerNames!constants!public! !
-!ScintillaMarkerDefinition class categoriesFor: #glyphNames!constants!public! !
-!ScintillaMarkerDefinition class categoriesFor: #initialize!development!initializing!public! !
-!ScintillaMarkerDefinition class categoriesFor: #plusMinus!constants!public! !
-!ScintillaMarkerDefinition class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!ScintillaMarkerDefinition class categoriesFor: #stbVersion!binary filing!public! !
-!ScintillaMarkerDefinition class categoriesFor: #visibleCharacterGlyphs!constants!public! !
+!ScintillaMarkerDefinition class categoriesForMethods!
+arrows!constants!public! !
+boxTree!constants!public! !
+buildPropertyMap!constants!must not strip!private! !
+circleTree!constants!public! !
+folderIds!constants!public! !
+foldMarkerNames!constants!public! !
+glyphNames!constants!public! !
+initialize!development!initializing!public! !
+plusMinus!constants!public! !
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!public! !
+visibleCharacterGlyphs!constants!public! !
+!
 

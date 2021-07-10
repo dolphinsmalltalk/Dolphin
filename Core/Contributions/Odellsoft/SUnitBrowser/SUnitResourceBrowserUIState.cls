@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SUnitBrowserAbsUIState subclass: #SUnitResourceBrowserUIState
 	instanceVariableNames: ''
@@ -49,8 +49,10 @@ resultStateColorSymbol
 	^self model unavailableResources isEmpty
 		ifTrue: [#commonGreen]
 		ifFalse: [#red]! !
-!SUnitResourceBrowserUIState categoriesFor: #colorSymbolFor:!color!public! !
-!SUnitResourceBrowserUIState categoriesFor: #detailState!public!strings! !
-!SUnitResourceBrowserUIState categoriesFor: #iconSymbolFor:!icons!public! !
-!SUnitResourceBrowserUIState categoriesFor: #resultStateColorSymbol!color!public! !
+!SUnitResourceBrowserUIState categoriesForMethods!
+colorSymbolFor:!color!public! !
+detailState!public!strings! !
+iconSymbolFor:!icons!public! !
+resultStateColorSymbol!color!public! !
+!
 

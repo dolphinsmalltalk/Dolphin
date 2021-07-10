@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBSchemaStatement subclass: #DBForeignKeysStatement
 	instanceVariableNames: 'foreignCatalogName foreignSchemaName foreignTableName'
@@ -46,11 +46,13 @@ foreignTableName
 
 foreignTableName: aString
 	foreignTableName := aString! !
-!DBForeignKeysStatement categoriesFor: #executeStatement!operations!private! !
-!DBForeignKeysStatement categoriesFor: #foreignCatalogName!accessing!public! !
-!DBForeignKeysStatement categoriesFor: #foreignCatalogName:!accessing!public! !
-!DBForeignKeysStatement categoriesFor: #foreignSchemaName!accessing!public! !
-!DBForeignKeysStatement categoriesFor: #foreignSchemaName:!accessing!public! !
-!DBForeignKeysStatement categoriesFor: #foreignTableName!accessing!public! !
-!DBForeignKeysStatement categoriesFor: #foreignTableName:!accessing!public! !
+!DBForeignKeysStatement categoriesForMethods!
+executeStatement!operations!private! !
+foreignCatalogName!accessing!public! !
+foreignCatalogName:!accessing!public! !
+foreignSchemaName!accessing!public! !
+foreignSchemaName:!accessing!public! !
+foreignTableName!accessing!public! !
+foreignTableName:!accessing!public! !
+!
 

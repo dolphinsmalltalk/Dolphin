@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TypeConverter subclass: #AbstractToTextConverter
 	instanceVariableNames: ''
@@ -16,5 +16,7 @@ initialize
 	"Private - Initialize the receiver"
 
 	rightNullValue := String empty! !
-!AbstractToTextConverter categoriesFor: #initialize!initializing!private! !
+!AbstractToTextConverter categoriesForMethods!
+initialize!initializing!private! !
+!
 

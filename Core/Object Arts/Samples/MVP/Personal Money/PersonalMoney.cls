@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Model subclass: #PersonalMoney
 	instanceVariableNames: 'owner accounts'
@@ -51,11 +51,13 @@ removeAccount: aPersonalAccount
 	Answers aPersonalAccount"
 
 	^self accounts remove: aPersonalAccount! !
-!PersonalMoney categoriesFor: #accounts!accessing!initializing!public! !
-!PersonalMoney categoriesFor: #addAccount:!adding!public! !
-!PersonalMoney categoriesFor: #initialize!initializing!private! !
-!PersonalMoney categoriesFor: #owner!accessing!public! !
-!PersonalMoney categoriesFor: #owner:!accessing!public! !
-!PersonalMoney categoriesFor: #printOn:!printing!public! !
-!PersonalMoney categoriesFor: #removeAccount:!public!removing! !
+!PersonalMoney categoriesForMethods!
+accounts!accessing!initializing!public! !
+addAccount:!adding!public! !
+initialize!initializing!private! !
+owner!accessing!public! !
+owner:!accessing!public! !
+printOn:!printing!public! !
+removeAccount:!public!removing! !
+!
 

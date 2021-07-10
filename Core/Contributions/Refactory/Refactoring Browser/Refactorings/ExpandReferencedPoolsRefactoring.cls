@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Refactoring subclass: #ExpandReferencedPoolsRefactoring
 	instanceVariableNames: 'pools fromClass parseTree toClasses'
@@ -85,15 +85,17 @@ whichPoolDefines: varName
 				do: [:each | ((self poolVariableNamesIn: each) includes: varName) ifTrue: [^each]].
 			currentClass := currentClass superclass].
 	^nil! !
-!ExpandReferencedPoolsRefactoring categoriesFor: #computePoolsToMove!public!transforming! !
-!ExpandReferencedPoolsRefactoring categoriesFor: #forMethod:fromClass:toClasses:!initialize/release!public! !
-!ExpandReferencedPoolsRefactoring categoriesFor: #hasPoolsToMove!public!testing! !
-!ExpandReferencedPoolsRefactoring categoriesFor: #movePool:toClass:!public!transforming! !
-!ExpandReferencedPoolsRefactoring categoriesFor: #movePoolVariables!public!transforming! !
-!ExpandReferencedPoolsRefactoring categoriesFor: #poolVariableNamesIn:!public!transforming! !
-!ExpandReferencedPoolsRefactoring categoriesFor: #preconditions!preconditions!public! !
-!ExpandReferencedPoolsRefactoring categoriesFor: #transform!public!transforming! !
-!ExpandReferencedPoolsRefactoring categoriesFor: #whichPoolDefines:!public!transforming! !
+!ExpandReferencedPoolsRefactoring categoriesForMethods!
+computePoolsToMove!public!transforming! !
+forMethod:fromClass:toClasses:!initialize/release!public! !
+hasPoolsToMove!public!testing! !
+movePool:toClass:!public!transforming! !
+movePoolVariables!public!transforming! !
+poolVariableNamesIn:!public!transforming! !
+preconditions!preconditions!public! !
+transform!public!transforming! !
+whichPoolDefines:!public!transforming! !
+!
 
 !ExpandReferencedPoolsRefactoring class methodsFor!
 
@@ -111,6 +113,8 @@ model: aRBNamespace forMethod: aParseTree fromClass: aClass toClasses: classColl
 			fromClass: aClass
 			toClasses: classCollection;
 		yourself! !
-!ExpandReferencedPoolsRefactoring class categoriesFor: #forMethod:fromClass:toClasses:!instance creation!public! !
-!ExpandReferencedPoolsRefactoring class categoriesFor: #model:forMethod:fromClass:toClasses:!instance creation!public! !
+!ExpandReferencedPoolsRefactoring class categoriesForMethods!
+forMethod:fromClass:toClasses:!instance creation!public! !
+model:forMethod:fromClass:toClasses:!instance creation!public! !
+!
 

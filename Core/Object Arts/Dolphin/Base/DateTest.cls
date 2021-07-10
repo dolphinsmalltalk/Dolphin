@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #DateTest
 	instanceVariableNames: ''
@@ -77,8 +77,10 @@ testYyyymmdd
 
 
 	! !
-!DateTest categoriesFor: #testFromDays!public!unit tests! !
-!DateTest categoriesFor: #testFromSeconds!public!unit tests! !
-!DateTest categoriesFor: #testStoreOn!public!testing! !
-!DateTest categoriesFor: #testYyyymmdd!public!unit tests! !
+!DateTest categoriesForMethods!
+testFromDays!public!unit tests! !
+testFromSeconds!public!unit tests! !
+testStoreOn!public!testing! !
+testYyyymmdd!public!unit tests! !
+!
 

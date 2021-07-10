@@ -171,8 +171,10 @@ translateToUTC
 	"Private - This probably isn't correct, but then Dolphin's legacy Dates are not TZ aware. This is implemented purely to make the STON tests pass."
 
 	^self translateTo: 0 seconds! !
-!Date categoriesFor: #translateTo:!private! !
-!Date categoriesFor: #translateToUTC!private! !
+!Date categoriesForMethods!
+translateTo:!private! !
+translateToUTC!private! !
+!
 
 "End of package definition"!
 

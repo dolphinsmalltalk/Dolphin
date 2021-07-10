@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StLocalVariable subclass: #StArgumentVariable
 	instanceVariableNames: ''
@@ -20,6 +20,8 @@ isConstant
 	Arguments cannot be assigned to in Smalltalk."
 
 	^true! !
-!StArgumentVariable categoriesFor: #isArgument!public!testing! !
-!StArgumentVariable categoriesFor: #isConstant!public!testing! !
+!StArgumentVariable categoriesForMethods!
+isArgument!public!testing! !
+isConstant!public!testing! !
+!
 

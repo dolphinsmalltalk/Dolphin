@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValuePresenter subclass: #ChoicePresenter
 	instanceVariableNames: 'choicesModel nilChoice'
@@ -143,21 +143,23 @@ viewModel
 	connected to the receiver's choicesModel - not the receiver's value model"
 
 	^choicesModel! !
-!ChoicePresenter categoriesFor: #choices:!accessing!public! !
-!ChoicePresenter categoriesFor: #createSchematicWiring!initializing!public! !
-!ChoicePresenter categoriesFor: #getValue!helpers!private! !
-!ChoicePresenter categoriesFor: #initialize!initializing!private! !
-!ChoicePresenter categoriesFor: #isMultiChoice!private!testing! !
-!ChoicePresenter categoriesFor: #model:!accessing!public! !
-!ChoicePresenter categoriesFor: #nilChoice!accessing!public! !
-!ChoicePresenter categoriesFor: #nilChoice:!initializing!public! !
-!ChoicePresenter categoriesFor: #onChoiceChanged!event handling!private! !
-!ChoicePresenter categoriesFor: #onSelectionChanged!event handling!private! !
-!ChoicePresenter categoriesFor: #onSelectionChanging:!event handling!private! !
-!ChoicePresenter categoriesFor: #onValueChanged!event handling!public! !
-!ChoicePresenter categoriesFor: #updateChoice!accessing!private! !
-!ChoicePresenter categoriesFor: #view:!accessing!public! !
-!ChoicePresenter categoriesFor: #viewModel!accessing!private! !
+!ChoicePresenter categoriesForMethods!
+choices:!accessing!public! !
+createSchematicWiring!initializing!public! !
+getValue!helpers!private! !
+initialize!initializing!private! !
+isMultiChoice!private!testing! !
+model:!accessing!public! !
+nilChoice!accessing!public! !
+nilChoice:!initializing!public! !
+onChoiceChanged!event handling!private! !
+onSelectionChanged!event handling!private! !
+onSelectionChanging:!event handling!private! !
+onValueChanged!event handling!public! !
+updateChoice!accessing!private! !
+view:!accessing!public! !
+viewModel!accessing!private! !
+!
 
 !ChoicePresenter class methodsFor!
 
@@ -201,9 +203,11 @@ resource_Enhanced_list_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ListView) 34 45 nil nil 34 2 8 1409355853 1025 416 590662 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 nil 8 1883852064 459270 ##(Smalltalk.Message) #displayString 8 #() ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 'Column 1' 201 #left 626 #displayString 656 626 #<= 8 #() nil nil 416 nil 1 nil nil #report 528 nil 131169 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 7039 21 946 491 311 416 898 #text: 34 1 8 'Column 1' 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 191 13 0 0 10 0 0 0 180 14 0 0 165 0 0 0] 8 #() 946 193 193 nil 35 )! !
-!ChoicePresenter class categoriesFor: #defaultModel!models!public! !
-!ChoicePresenter class categoriesFor: #icon!constants!public! !
-!ChoicePresenter class categoriesFor: #resource_Default_view!public!resources-views! !
-!ChoicePresenter class categoriesFor: #resource_Drop_down_list!public!resources-views! !
-!ChoicePresenter class categoriesFor: #resource_Enhanced_list_view!public!resources-views! !
+!ChoicePresenter class categoriesForMethods!
+defaultModel!models!public! !
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+resource_Drop_down_list!public!resources-views! !
+resource_Enhanced_list_view!public!resources-views! !
+!
 

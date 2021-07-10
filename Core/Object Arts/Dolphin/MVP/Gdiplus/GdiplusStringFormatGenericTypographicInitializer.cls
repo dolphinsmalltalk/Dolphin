@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusStringFormatInitializer subclass: #GdiplusStringFormatGenericTypographicInitializer
 	instanceVariableNames: ''
@@ -16,11 +16,15 @@ createHandle
 	(status := self library gdipStringFormatGetGenericTypographic: gpHandle) == Ok
 		ifFalse: [self gdiplusErrorWith: status].
 	^gpHandle! !
-!GdiplusStringFormatGenericTypographicInitializer categoriesFor: #createHandle!private!realizing/unrealizing! !
+!GdiplusStringFormatGenericTypographicInitializer categoriesForMethods!
+createHandle!private!realizing/unrealizing! !
+!
 
 !GdiplusStringFormatGenericTypographicInitializer class methodsFor!
 
 uninitialize
 	GenericTypographic := nil! !
-!GdiplusStringFormatGenericTypographicInitializer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!GdiplusStringFormatGenericTypographicInitializer class categoriesForMethods!
+uninitialize!class hierarchy-removing!private! !
+!
 

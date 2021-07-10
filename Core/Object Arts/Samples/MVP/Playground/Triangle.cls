@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RegularPolygon subclass: #Triangle
 	instanceVariableNames: ''
@@ -26,7 +26,9 @@ defaultSides
 	Triangles have 3 sides"
 
 	^3! !
-!Triangle categoriesFor: #defaultColor!constants!public! !
-!Triangle categoriesFor: #defaultPosition!constants!public! !
-!Triangle categoriesFor: #defaultSides!constants!public! !
+!Triangle categoriesForMethods!
+defaultColor!constants!public! !
+defaultPosition!constants!public! !
+defaultSides!constants!public! !
+!
 

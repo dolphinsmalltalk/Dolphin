@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #VisualShellFinder
 	instanceVariableNames: 'mouseTracker foundObject foundCursor notFoundCursor shellClassFilter'
@@ -76,21 +76,23 @@ visualShellAt: aPoint
 	self shellClassFilter isNil ifTrue: [^shell].
 	self shellClassFilter detect: [:each | shell isKindOf: each] ifNone: [^nil].
 	^shell! !
-!VisualShellFinder categoriesFor: #cancelTrackingAt:!private!tracking! !
-!VisualShellFinder categoriesFor: #continueTrackingAt:from:!private!tracking! !
-!VisualShellFinder categoriesFor: #defaultFoundCursor!constants!public! !
-!VisualShellFinder categoriesFor: #defaultNotFoundCursor!constants!public! !
-!VisualShellFinder categoriesFor: #endTrackingAt:!private!tracking! !
-!VisualShellFinder categoriesFor: #findObject!commands!public! !
-!VisualShellFinder categoriesFor: #foundCursor:!accessing!public! !
-!VisualShellFinder categoriesFor: #initialize!private! !
-!VisualShellFinder categoriesFor: #notFoundCursor:!accessing!public! !
-!VisualShellFinder categoriesFor: #setCursor:!private!tracking! !
-!VisualShellFinder categoriesFor: #shellClassFilter!accessing!public! !
-!VisualShellFinder categoriesFor: #shellClassFilter:!accessing!public! !
-!VisualShellFinder categoriesFor: #startTrackingAt:!private!tracking! !
-!VisualShellFinder categoriesFor: #value!public! !
-!VisualShellFinder categoriesFor: #visualShellAt:!helpers!public! !
+!VisualShellFinder categoriesForMethods!
+cancelTrackingAt:!private!tracking! !
+continueTrackingAt:from:!private!tracking! !
+defaultFoundCursor!constants!public! !
+defaultNotFoundCursor!constants!public! !
+endTrackingAt:!private!tracking! !
+findObject!commands!public! !
+foundCursor:!accessing!public! !
+initialize!private! !
+notFoundCursor:!accessing!public! !
+setCursor:!private!tracking! !
+shellClassFilter!accessing!public! !
+shellClassFilter:!accessing!public! !
+startTrackingAt:!private!tracking! !
+value!public! !
+visualShellAt:!helpers!public! !
+!
 
 VisualShellFinder methodProtocol: #mouseTrackerTarget attributes: #(#readOnly) selectors: #(#cancelTrackingAt: #continueTrackingAt:from: #endTrackingAt: #startTrackingAt:)!
 
@@ -106,7 +108,9 @@ forAnyOf: aSetOfShellClasses
 
 new
 	^super new initialize! !
-!VisualShellFinder class categoriesFor: #for:!public! !
-!VisualShellFinder class categoriesFor: #forAnyOf:!public! !
-!VisualShellFinder class categoriesFor: #new!public! !
+!VisualShellFinder class categoriesForMethods!
+for:!public! !
+forAnyOf:!public! !
+new!public! !
+!
 

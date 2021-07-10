@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #BITMAP
 	instanceVariableNames: ''
@@ -63,15 +63,17 @@ extent
 	"Answer the width and height (in pels) of the the bitmap described by the receiver."
 
 	^self bmWidth @ self bmHeight! !
-!BITMAP categoriesFor: #bmBits!**compiled accessors**!public! !
-!BITMAP categoriesFor: #bmBitsPixel!**compiled accessors**!public! !
-!BITMAP categoriesFor: #bmHeight!**compiled accessors**!public! !
-!BITMAP categoriesFor: #bmPlanes!**compiled accessors**!public! !
-!BITMAP categoriesFor: #bmType!**compiled accessors**!public! !
-!BITMAP categoriesFor: #bmWidth!**compiled accessors**!public! !
-!BITMAP categoriesFor: #bmWidthBytes!**compiled accessors**!public! !
-!BITMAP categoriesFor: #depth!accessing!public! !
-!BITMAP categoriesFor: #extent!accessing!public! !
+!BITMAP categoriesForMethods!
+bmBits!**compiled accessors**!public! !
+bmBitsPixel!**compiled accessors**!public! !
+bmHeight!**compiled accessors**!public! !
+bmPlanes!**compiled accessors**!public! !
+bmType!**compiled accessors**!public! !
+bmWidth!**compiled accessors**!public! !
+bmWidthBytes!**compiled accessors**!public! !
+depth!accessing!public! !
+extent!accessing!public! !
+!
 
 !BITMAP class methodsFor!
 
@@ -105,7 +107,9 @@ fileOutStem
 
 getFieldNames
 	^#(#bmType #bmWidth #bmHeight #bmWidthBytes #bmPlanes #bmBitsPixel #bmBits)! !
-!BITMAP class categoriesFor: #defineFields!public!template definition! !
-!BITMAP class categoriesFor: #fileOutStem!private!source filing! !
-!BITMAP class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!BITMAP class categoriesForMethods!
+defineFields!public!template definition! !
+fileOutStem!private!source filing! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

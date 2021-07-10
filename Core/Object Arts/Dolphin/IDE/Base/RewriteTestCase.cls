@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCase subclass: #RewriteTestCase
 	instanceVariableNames: 'env'
@@ -42,8 +42,10 @@ testTransformationRule
 				name: 'Transform'.
 	SmalllintChecker runRule: rule onEnvironment: env.
 	self deny: rule changes changes isEmpty! !
-!RewriteTestCase categoriesFor: #setUp!public!unit tests! !
-!RewriteTestCase categoriesFor: #testEnvironment!public!unit tests! !
-!RewriteTestCase categoriesFor: #testFindReplace!public!unit tests! !
-!RewriteTestCase categoriesFor: #testTransformationRule!public!unit tests! !
+!RewriteTestCase categoriesForMethods!
+setUp!public!unit tests! !
+testEnvironment!public!unit tests! !
+testFindReplace!public!unit tests! !
+testTransformationRule!public!unit tests! !
+!
 

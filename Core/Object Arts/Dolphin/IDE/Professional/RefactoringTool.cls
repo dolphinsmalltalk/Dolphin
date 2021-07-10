@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #RefactoringTool
 	instanceVariableNames: 'presenter'
@@ -107,19 +107,21 @@ setPresenter: aPresenter
 
 systemModel
 	^Smalltalk developmentSystem! !
-!RefactoringTool categoriesFor: #convertTempToInstVar:!public!refactoring! !
-!RefactoringTool categoriesFor: #inlineParameter:!private!refactoring! !
-!RefactoringTool categoriesFor: #onAboutToDisplayMenu:!event handling!public! !
-!RefactoringTool categoriesFor: #parseTree!accessing!private! !
-!RefactoringTool categoriesFor: #queryCommand:!commands!public! !
-!RefactoringTool categoriesFor: #queryCommand:command:!commands!private! !
-!RefactoringTool categoriesFor: #removeParameter:!operations!private!refactoring! !
-!RefactoringTool categoriesFor: #removeParameter:from:!operations!private!refactoring! !
-!RefactoringTool categoriesFor: #renameIt!commands!public!refactoring! !
-!RefactoringTool categoriesFor: #renameItCommand!private!refactoring! !
-!RefactoringTool categoriesFor: #renameTemporary:!operations!private!refactoring! !
-!RefactoringTool categoriesFor: #setPresenter:!initializing!private! !
-!RefactoringTool categoriesFor: #systemModel!constants!public! !
+!RefactoringTool categoriesForMethods!
+convertTempToInstVar:!public!refactoring! !
+inlineParameter:!private!refactoring! !
+onAboutToDisplayMenu:!event handling!public! !
+parseTree!accessing!private! !
+queryCommand:!commands!public! !
+queryCommand:command:!commands!private! !
+removeParameter:!operations!private!refactoring! !
+removeParameter:from:!operations!private!refactoring! !
+renameIt!commands!public!refactoring! !
+renameItCommand!private!refactoring! !
+renameTemporary:!operations!private!refactoring! !
+setPresenter:!initializing!private! !
+systemModel!constants!public! !
+!
 
 RefactoringTool methodProtocol: #commandTarget attributes: #(#readOnly) selectors: #(#queryCommand:)!
 
@@ -129,5 +131,7 @@ forPresenter: aPresenter
 	^(self new)
 		setPresenter: aPresenter;
 		yourself! !
-!RefactoringTool class categoriesFor: #forPresenter:!instance creation!public! !
+!RefactoringTool class categoriesForMethods!
+forPresenter:!instance creation!public! !
+!
 

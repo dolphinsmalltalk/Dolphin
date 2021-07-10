@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #OVERLAPPED
 	instanceVariableNames: ''
@@ -77,14 +77,16 @@ OffsetHigh: anInteger
 	"Set the receiver's 'OffsetHigh' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_OffsetHigh put: anInteger! !
-!OVERLAPPED categoriesFor: #hEvent!**compiled accessors**!public! !
-!OVERLAPPED categoriesFor: #hEvent:!**compiled accessors**!public! !
-!OVERLAPPED categoriesFor: #Internal!**compiled accessors**!public! !
-!OVERLAPPED categoriesFor: #InternalHigh!**compiled accessors**!public! !
-!OVERLAPPED categoriesFor: #Offset!**compiled accessors**!public! !
-!OVERLAPPED categoriesFor: #Offset:!**compiled accessors**!public! !
-!OVERLAPPED categoriesFor: #OffsetHigh!**compiled accessors**!public! !
-!OVERLAPPED categoriesFor: #OffsetHigh:!**compiled accessors**!public! !
+!OVERLAPPED categoriesForMethods!
+hEvent!**compiled accessors**!public! !
+hEvent:!**compiled accessors**!public! !
+Internal!**compiled accessors**!public! !
+InternalHigh!**compiled accessors**!public! !
+Offset!**compiled accessors**!public! !
+Offset:!**compiled accessors**!public! !
+OffsetHigh!**compiled accessors**!public! !
+OffsetHigh:!**compiled accessors**!public! !
+!
 
 !OVERLAPPED class methodsFor!
 
@@ -119,6 +121,8 @@ defineFields
 
 getFieldNames
 	^#(#Internal #InternalHigh #Offset #OffsetHigh #hEvent)! !
-!OVERLAPPED class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!OVERLAPPED class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OVERLAPPED class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

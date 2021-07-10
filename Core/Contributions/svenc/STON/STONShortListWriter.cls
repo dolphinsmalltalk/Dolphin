@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STONListWriter subclass: #STONShortListWriter
 	instanceVariableNames: ''
@@ -14,5 +14,7 @@ STONShortListWriter comment: 'STONShortArrayWriter helps in writing short array 
 add: anObject
 	first ifTrue: [ first := false ] ifFalse: [ writer shortListElementSeparator ].
 	writer nextPut: anObject! !
-!STONShortListWriter categoriesFor: #add:!accessing!public! !
+!STONShortListWriter categoriesForMethods!
+add:!accessing!public! !
+!
 

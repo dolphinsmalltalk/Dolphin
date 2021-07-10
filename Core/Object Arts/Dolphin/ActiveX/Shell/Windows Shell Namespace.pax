@@ -128,13 +128,15 @@ SHGetMalloc: ppMalloc
 SHGetPathFromIDList: pidl pszPath: pszPath
 	<stdcall: bool SHGetPathFromIDListW handle lpwstr>
 	^self invalidCall: _failureCode! !
-!ShellLibrary categoriesFor: #allocator!accessing!public! !
-!ShellLibrary categoriesFor: #getDesktopFolder!accessing!public! !
-!ShellLibrary categoriesFor: #pathFromIDList:!helpers!private! !
-!ShellLibrary categoriesFor: #SHBrowseForFolder:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #SHGetDesktopFolder:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #SHGetMalloc:!public!win32 functions-shell library! !
-!ShellLibrary categoriesFor: #SHGetPathFromIDList:pszPath:!public!win32 functions-shell library! !
+!ShellLibrary categoriesForMethods!
+allocator!accessing!public! !
+getDesktopFolder!accessing!public! !
+pathFromIDList:!helpers!private! !
+SHBrowseForFolder:!public!win32 functions-shell library! !
+SHGetDesktopFolder:!public!win32 functions-shell library! !
+SHGetMalloc:!public!win32 functions-shell library! !
+SHGetPathFromIDList:pszPath:!public!win32 functions-shell library! !
+!
 
 "End of package definition"!
 

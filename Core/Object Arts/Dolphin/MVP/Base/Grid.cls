@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Grid
 	instanceVariableNames: 'resolution'
@@ -31,10 +31,12 @@ resolution: anInteger
 	"Sets the number of pixels between adjacent points in the grid to anInteger."
 
 	resolution := anInteger! !
-!Grid categoriesFor: #constrainPoint:!accessing!public! !
-!Grid categoriesFor: #constrainRectangle:!accessing!public! !
-!Grid categoriesFor: #resolution!accessing!public! !
-!Grid categoriesFor: #resolution:!accessing!public! !
+!Grid categoriesForMethods!
+constrainPoint:!accessing!public! !
+constrainRectangle:!accessing!public! !
+resolution!accessing!public! !
+resolution:!accessing!public! !
+!
 
 !Grid class methodsFor!
 
@@ -45,5 +47,7 @@ resolution: anInteger
 	^self new
 		resolution: anInteger;
 		yourself! !
-!Grid class categoriesFor: #resolution:!instance creation!public! !
+!Grid class categoriesForMethods!
+resolution:!instance creation!public! !
+!
 

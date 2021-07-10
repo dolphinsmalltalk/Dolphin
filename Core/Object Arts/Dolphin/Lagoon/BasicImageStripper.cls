@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #BasicImageStripper
 	instanceVariableNames: 'events'
@@ -830,86 +830,88 @@ verifyRequiredPackages
 	packages := self actualRequiredPackages.
 	packages do: [:each | each okToSaveOrDeploy].
 	^packages! !
-!BasicImageStripper categoriesFor: #actualRequiredPackages!private! !
-!BasicImageStripper categoriesFor: #allMethodsInClasses:do:!helpers!private! !
-!BasicImageStripper categoriesFor: #allReferencedClasses!operations!private! !
-!BasicImageStripper categoriesFor: #basicRemoveClass:!helpers!private! !
-!BasicImageStripper categoriesFor: #collectGarbage:!operations!private! !
-!BasicImageStripper categoriesFor: #compileExternalStructures!public!testing! !
-!BasicImageStripper categoriesFor: #compileExternalStructuresNow:!operations!private! !
-!BasicImageStripper categoriesFor: #defineExternalStructures:!operations!private! !
-!BasicImageStripper categoriesFor: #destroyAndRemoveProgress!operations!private! !
-!BasicImageStripper categoriesFor: #destroyNotifier!operations!private! !
-!BasicImageStripper categoriesFor: #developmentResources!accessing!public! !
-!BasicImageStripper categoriesFor: #emptyMethodDictionariesOfStubbornClasses!public!testing! !
-!BasicImageStripper categoriesFor: #emptySystemDictionary!operations!private! !
-!BasicImageStripper categoriesFor: #endElement:!operations-logging!private! !
-!BasicImageStripper categoriesFor: #endTag!operations-logging!private! !
-!BasicImageStripper categoriesFor: #externalStructureClasses!accessing!private! !
-!BasicImageStripper categoriesFor: #finishedWithAll:!operations!private! !
-!BasicImageStripper categoriesFor: #foldDuplicateBytecodes!operations!private! !
-!BasicImageStripper categoriesFor: #foldDuplicateStrings!operations!private! !
-!BasicImageStripper categoriesFor: #logElement:attributes:value:!operations-logging!private! !
-!BasicImageStripper categoriesFor: #logFold:folded:total:!operations!private! !
-!BasicImageStripper categoriesFor: #logMethod:!operations!private! !
-!BasicImageStripper categoriesFor: #logStrippingError:!operations-logging!private! !
-!BasicImageStripper categoriesFor: #logValue:!operations-logging!private! !
-!BasicImageStripper categoriesFor: #messagesSentByClasses:!helpers!private! !
-!BasicImageStripper categoriesFor: #notify:!operations!private! !
-!BasicImageStripper categoriesFor: #notRequiredClasses!configuration!public! !
-!BasicImageStripper categoriesFor: #notRequiredMethodCategories!configuration!public! !
-!BasicImageStripper categoriesFor: #onNotification:!event handling!private! !
-!BasicImageStripper categoriesFor: #prepareExternalStructures!operations!private! !
-!BasicImageStripper categoriesFor: #preStripTidy!operations!private! !
-!BasicImageStripper categoriesFor: #purgeStubbornClass:!operations!private! !
-!BasicImageStripper categoriesFor: #removeCategoryManagement!operations!private! !
-!BasicImageStripper categoriesFor: #removeClass:!helpers!private! !
-!BasicImageStripper categoriesFor: #removeClassBuilder:!operations!private! !
-!BasicImageStripper categoriesFor: #removeClasses:reason:!operations!private! !
-!BasicImageStripper categoriesFor: #removeClassMetaInfo!operations!private! !
-!BasicImageStripper categoriesFor: #removeClassNamed:!helpers!private! !
-!BasicImageStripper categoriesFor: #removeClassUninstallation:!operations!private! !
-!BasicImageStripper categoriesFor: #removeDevelopmentInfo!operations!private! !
-!BasicImageStripper categoriesFor: #removeDevelopmentResources!operations!private! !
-!BasicImageStripper categoriesFor: #removeDevelopmentSystemResidue!operations!private! !
-!BasicImageStripper categoriesFor: #removeGuiForConsoleApplication!operations!private! !
-!BasicImageStripper categoriesFor: #removeMethod:!private!removing! !
-!BasicImageStripper categoriesFor: #removeMethods:reason:force:!private!removing! !
-!BasicImageStripper categoriesFor: #removeMethodSoft:!private!removing! !
-!BasicImageStripper categoriesFor: #removeNotRequiredClasses!operations!private! !
-!BasicImageStripper categoriesFor: #removeNotRequiredMethods!operations!private! !
-!BasicImageStripper categoriesFor: #removePackageManagement!operations!private! !
-!BasicImageStripper categoriesFor: #removeProtocolManagement!operations!private! !
-!BasicImageStripper categoriesFor: #removeRedundantClassesAndResources:!operations!private! !
-!BasicImageStripper categoriesFor: #removeRedundantMethods!operations!private! !
-!BasicImageStripper categoriesFor: #removeRedundantMethodsOnceFrom:!operations!private! !
-!BasicImageStripper categoriesFor: #removeRedundantObjects:!operations!private! !
-!BasicImageStripper categoriesFor: #removeRedundantPackages!operations!private! !
-!BasicImageStripper categoriesFor: #removeRedundantResources:!operations!private! !
-!BasicImageStripper categoriesFor: #removeResource:!operations!private! !
-!BasicImageStripper categoriesFor: #removeResources:reason:!operations!private! !
-!BasicImageStripper categoriesFor: #removeSelectors:of:!operations!private! !
-!BasicImageStripper categoriesFor: #retainInstVarNames!public!testing! !
-!BasicImageStripper categoriesFor: #rootClasses!accessing!private! !
-!BasicImageStripper categoriesFor: #shouldPreserveMethod:!private!removing! !
-!BasicImageStripper categoriesFor: #shouldRemoveResources!private!testing! !
-!BasicImageStripper categoriesFor: #shrinkEventsRegister!private! !
-!BasicImageStripper categoriesFor: #speciallySentMessages!configuration!private! !
-!BasicImageStripper categoriesFor: #startElement:attributes:!operations-logging!private! !
-!BasicImageStripper categoriesFor: #startTag:attributes:!operations-logging!private! !
-!BasicImageStripper categoriesFor: #stbSaveOn:!binary filing!public! !
-!BasicImageStripper categoriesFor: #stripClassBuilder!public!testing! !
-!BasicImageStripper categoriesFor: #stripClassInfo!public!testing! !
-!BasicImageStripper categoriesFor: #stripClassInitializers!public!testing! !
-!BasicImageStripper categoriesFor: #stripDuplicateBytecodes!public!testing! !
-!BasicImageStripper categoriesFor: #stripDuplicateStrings!public!testing! !
-!BasicImageStripper categoriesFor: #stripRedundantClasses!public!testing! !
-!BasicImageStripper categoriesFor: #stripRedundantMethods!public!testing! !
-!BasicImageStripper categoriesFor: #stripRedundantPackages!public!testing! !
-!BasicImageStripper categoriesFor: #stripRedundantResources!public!testing! !
-!BasicImageStripper categoriesFor: #systemPackageManager!accessing!private! !
-!BasicImageStripper categoriesFor: #uncheckedRemoveClass:!helpers!private! !
-!BasicImageStripper categoriesFor: #verifyRequiredPackages!accessing!private! !
+!BasicImageStripper categoriesForMethods!
+actualRequiredPackages!private! !
+allMethodsInClasses:do:!helpers!private! !
+allReferencedClasses!operations!private! !
+basicRemoveClass:!helpers!private! !
+collectGarbage:!operations!private! !
+compileExternalStructures!public!testing! !
+compileExternalStructuresNow:!operations!private! !
+defineExternalStructures:!operations!private! !
+destroyAndRemoveProgress!operations!private! !
+destroyNotifier!operations!private! !
+developmentResources!accessing!public! !
+emptyMethodDictionariesOfStubbornClasses!public!testing! !
+emptySystemDictionary!operations!private! !
+endElement:!operations-logging!private! !
+endTag!operations-logging!private! !
+externalStructureClasses!accessing!private! !
+finishedWithAll:!operations!private! !
+foldDuplicateBytecodes!operations!private! !
+foldDuplicateStrings!operations!private! !
+logElement:attributes:value:!operations-logging!private! !
+logFold:folded:total:!operations!private! !
+logMethod:!operations!private! !
+logStrippingError:!operations-logging!private! !
+logValue:!operations-logging!private! !
+messagesSentByClasses:!helpers!private! !
+notify:!operations!private! !
+notRequiredClasses!configuration!public! !
+notRequiredMethodCategories!configuration!public! !
+onNotification:!event handling!private! !
+prepareExternalStructures!operations!private! !
+preStripTidy!operations!private! !
+purgeStubbornClass:!operations!private! !
+removeCategoryManagement!operations!private! !
+removeClass:!helpers!private! !
+removeClassBuilder:!operations!private! !
+removeClasses:reason:!operations!private! !
+removeClassMetaInfo!operations!private! !
+removeClassNamed:!helpers!private! !
+removeClassUninstallation:!operations!private! !
+removeDevelopmentInfo!operations!private! !
+removeDevelopmentResources!operations!private! !
+removeDevelopmentSystemResidue!operations!private! !
+removeGuiForConsoleApplication!operations!private! !
+removeMethod:!private!removing! !
+removeMethods:reason:force:!private!removing! !
+removeMethodSoft:!private!removing! !
+removeNotRequiredClasses!operations!private! !
+removeNotRequiredMethods!operations!private! !
+removePackageManagement!operations!private! !
+removeProtocolManagement!operations!private! !
+removeRedundantClassesAndResources:!operations!private! !
+removeRedundantMethods!operations!private! !
+removeRedundantMethodsOnceFrom:!operations!private! !
+removeRedundantObjects:!operations!private! !
+removeRedundantPackages!operations!private! !
+removeRedundantResources:!operations!private! !
+removeResource:!operations!private! !
+removeResources:reason:!operations!private! !
+removeSelectors:of:!operations!private! !
+retainInstVarNames!public!testing! !
+rootClasses!accessing!private! !
+shouldPreserveMethod:!private!removing! !
+shouldRemoveResources!private!testing! !
+shrinkEventsRegister!private! !
+speciallySentMessages!configuration!private! !
+startElement:attributes:!operations-logging!private! !
+startTag:attributes:!operations-logging!private! !
+stbSaveOn:!binary filing!public! !
+stripClassBuilder!public!testing! !
+stripClassInfo!public!testing! !
+stripClassInitializers!public!testing! !
+stripDuplicateBytecodes!public!testing! !
+stripDuplicateStrings!public!testing! !
+stripRedundantClasses!public!testing! !
+stripRedundantMethods!public!testing! !
+stripRedundantPackages!public!testing! !
+stripRedundantResources!public!testing! !
+systemPackageManager!accessing!private! !
+uncheckedRemoveClass:!helpers!private! !
+verifyRequiredPackages!accessing!private! !
+!
 
 BasicImageStripper methodProtocol: #model attributes: #(#readOnly) selectors: #()!
 
@@ -945,7 +947,9 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!BasicImageStripper class categoriesFor: #new!development!instance creation!public! !
-!BasicImageStripper class categoriesFor: #stbConvertFrom:!binary filing!development!private! !
-!BasicImageStripper class categoriesFor: #stbVersion!binary filing!development!public! !
+!BasicImageStripper class categoriesForMethods!
+new!development!instance creation!public! !
+stbConvertFrom:!binary filing!development!private! !
+stbVersion!binary filing!development!public! !
+!
 

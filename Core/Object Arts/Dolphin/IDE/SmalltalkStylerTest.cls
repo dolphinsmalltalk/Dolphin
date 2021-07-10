@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #SmalltalkStylerTest
 	instanceVariableNames: 'mock scintilla'
@@ -516,29 +516,31 @@ testUnaryMessageToByteArray
 		in: mock.
 	tokens := mock tokens asArray.
 	self assert: tokens equals: #(#(##(1 to: 4) #literalBytes '#[1]') #(##(5 to: 5) #unaryMessage 'x'))! !
-!SmalltalkStylerTest categoriesFor: #restyleFromEachPosition:resumeable:!private!unit tests! !
-!SmalltalkStylerTest categoriesFor: #scannerClass!private!unit tests! !
-!SmalltalkStylerTest categoriesFor: #scanNumeric:class:!private!unit tests! !
-!SmalltalkStylerTest categoriesFor: #setUp!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #tearDown!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testArrayNoSpace!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testBinaryMethodSignature!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testEmptyTemps!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testLegacyLiteralArray!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testLiteralArray!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testLiteralBytes!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testNegativeOrSubtract!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testOptimizedExpressionInArray!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testPrimitiveTag!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testPseudoSignature!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testScanningFloats!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testScanningIntegers!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testScanningRadixIntegers!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testScanningScaledDecimals!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testTempBarsAtExpressionStart!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testTempBarsOrBinarySelector!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testUnaryMessageSequence!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testUnaryMessageToArray!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testUnaryMessageToBlock!public!unit tests! !
-!SmalltalkStylerTest categoriesFor: #testUnaryMessageToByteArray!public!unit tests! !
+!SmalltalkStylerTest categoriesForMethods!
+restyleFromEachPosition:resumeable:!private!unit tests! !
+scannerClass!private!unit tests! !
+scanNumeric:class:!private!unit tests! !
+setUp!public!unit tests! !
+tearDown!public!unit tests! !
+testArrayNoSpace!public!unit tests! !
+testBinaryMethodSignature!public!unit tests! !
+testEmptyTemps!public!unit tests! !
+testLegacyLiteralArray!public!unit tests! !
+testLiteralArray!public!unit tests! !
+testLiteralBytes!public!unit tests! !
+testNegativeOrSubtract!public!unit tests! !
+testOptimizedExpressionInArray!public!unit tests! !
+testPrimitiveTag!public!unit tests! !
+testPseudoSignature!public!unit tests! !
+testScanningFloats!public!unit tests! !
+testScanningIntegers!public!unit tests! !
+testScanningRadixIntegers!public!unit tests! !
+testScanningScaledDecimals!public!unit tests! !
+testTempBarsAtExpressionStart!public!unit tests! !
+testTempBarsOrBinarySelector!public!unit tests! !
+testUnaryMessageSequence!public!unit tests! !
+testUnaryMessageToArray!public!unit tests! !
+testUnaryMessageToBlock!public!unit tests! !
+testUnaryMessageToByteArray!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CardContainer subclass: #SlidingCardTray
 	instanceVariableNames: '_sctReserved0 slider pinSize pinInteractor _sctReserved1 _sctReserved2'
@@ -347,48 +347,50 @@ wmPrint: message wParam: wParam lParam: lParam
 				lParam: lParam.
 	(lParam allMask: PRF_NONCLIENT) ifTrue: [self paintEdgesOn: (Canvas withNonOwnedDC: wParam)].
 	^result! !
-!SlidingCardTray categoriesFor: #calcClientRectangleFromRectangle:!event handling-win32!private! !
-!SlidingCardTray categoriesFor: #calculateExtent:!geometry!private! !
-!SlidingCardTray categoriesFor: #captionGeometryChanged!event handling!private! !
-!SlidingCardTray categoriesFor: #edgeExtent!constants!private! !
-!SlidingCardTray categoriesFor: #headerBackgroundPart!constants!private! !
-!SlidingCardTray categoriesFor: #headerHeight!constants!private! !
-!SlidingCardTray categoriesFor: #headerRectangle!painting!private! !
-!SlidingCardTray categoriesFor: #hitTest:!painting!private! !
-!SlidingCardTray categoriesFor: #implicitInsets:!accessing!private! !
-!SlidingCardTray categoriesFor: #isPinHot!private!testing! !
-!SlidingCardTray categoriesFor: #isPinned!private!testing! !
-!SlidingCardTray categoriesFor: #isPinPressed!private!testing! !
-!SlidingCardTray categoriesFor: #isResizable!private!testing! !
-!SlidingCardTray categoriesFor: #onLeftButtonPressed:!event handling!private! !
-!SlidingCardTray categoriesFor: #onMouseMoved:!event handling!private! !
-!SlidingCardTray categoriesFor: #onPaintRequired:!event handling!private! !
-!SlidingCardTray categoriesFor: #onPositionChanged:!event handling!private! !
-!SlidingCardTray categoriesFor: #onResize!helpers!private! !
-!SlidingCardTray categoriesFor: #onViewDestroyed!event handling!private! !
-!SlidingCardTray categoriesFor: #openTheme!helpers!private! !
-!SlidingCardTray categoriesFor: #paintClassicBackgroundOn:!painting!private! !
-!SlidingCardTray categoriesFor: #paintClassicEdgesOn:!event handling!private! !
-!SlidingCardTray categoriesFor: #paintClassicOn:!painting!private! !
-!SlidingCardTray categoriesFor: #paintClassicPinOn:!painting!private! !
-!SlidingCardTray categoriesFor: #paintEdgesOn:!painting!private! !
-!SlidingCardTray categoriesFor: #paintThemedBackgroundOn:!painting!private! !
-!SlidingCardTray categoriesFor: #paintThemedEdgesOn:!event handling!private! !
-!SlidingCardTray categoriesFor: #paintThemedOn:!painting!private! !
-!SlidingCardTray categoriesFor: #paintThemedPinOn:!painting!private! !
-!SlidingCardTray categoriesFor: #pinImageList!accessing!private! !
-!SlidingCardTray categoriesFor: #pinInset!constants!private! !
-!SlidingCardTray categoriesFor: #pinRectangle!accessing!private! !
-!SlidingCardTray categoriesFor: #pinStateId!accessing!private! !
-!SlidingCardTray categoriesFor: #setSlider:!initializing!private! !
-!SlidingCardTray categoriesFor: #sizingEdgeInfo!helpers!private! !
-!SlidingCardTray categoriesFor: #tabOrientation:!accessing-styles!public! !
-!SlidingCardTray categoriesFor: #togglePin!commands!public! !
-!SlidingCardTray categoriesFor: #trackMouseOverPin:!helpers!private! !
-!SlidingCardTray categoriesFor: #wmNcCalcSize:wParam:lParam:!event handling-win32!private! !
-!SlidingCardTray categoriesFor: #wmNcHitTest:wParam:lParam:!event handling-win32!private! !
-!SlidingCardTray categoriesFor: #wmNcPaint:wParam:lParam:!event handling-win32!private! !
-!SlidingCardTray categoriesFor: #wmPrint:wParam:lParam:!event handling-win32!private! !
+!SlidingCardTray categoriesForMethods!
+calcClientRectangleFromRectangle:!event handling-win32!private! !
+calculateExtent:!geometry!private! !
+captionGeometryChanged!event handling!private! !
+edgeExtent!constants!private! !
+headerBackgroundPart!constants!private! !
+headerHeight!constants!private! !
+headerRectangle!painting!private! !
+hitTest:!painting!private! !
+implicitInsets:!accessing!private! !
+isPinHot!private!testing! !
+isPinned!private!testing! !
+isPinPressed!private!testing! !
+isResizable!private!testing! !
+onLeftButtonPressed:!event handling!private! !
+onMouseMoved:!event handling!private! !
+onPaintRequired:!event handling!private! !
+onPositionChanged:!event handling!private! !
+onResize!helpers!private! !
+onViewDestroyed!event handling!private! !
+openTheme!helpers!private! !
+paintClassicBackgroundOn:!painting!private! !
+paintClassicEdgesOn:!event handling!private! !
+paintClassicOn:!painting!private! !
+paintClassicPinOn:!painting!private! !
+paintEdgesOn:!painting!private! !
+paintThemedBackgroundOn:!painting!private! !
+paintThemedEdgesOn:!event handling!private! !
+paintThemedOn:!painting!private! !
+paintThemedPinOn:!painting!private! !
+pinImageList!accessing!private! !
+pinInset!constants!private! !
+pinRectangle!accessing!private! !
+pinStateId!accessing!private! !
+setSlider:!initializing!private! !
+sizingEdgeInfo!helpers!private! !
+tabOrientation:!accessing-styles!public! !
+togglePin!commands!public! !
+trackMouseOverPin:!helpers!private! !
+wmNcCalcSize:wParam:lParam:!event handling-win32!private! !
+wmNcHitTest:wParam:lParam:!event handling-win32!private! !
+wmNcPaint:wParam:lParam:!event handling-win32!private! !
+wmPrint:wParam:lParam:!event handling-win32!private! !
+!
 
 !SlidingCardTray class methodsFor!
 
@@ -397,6 +399,8 @@ initialize
 
 themePartName
 	^'EXPLORERBAR'! !
-!SlidingCardTray class categoriesFor: #initialize!initializing!private! !
-!SlidingCardTray class categoriesFor: #themePartName!constants!public!theming! !
+!SlidingCardTray class categoriesForMethods!
+initialize!initializing!private! !
+themePartName!constants!public!theming! !
+!
 

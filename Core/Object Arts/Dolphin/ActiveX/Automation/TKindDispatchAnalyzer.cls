@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXInterfaceTypeAnalyzer subclass: #TKindDispatchAnalyzer
 	instanceVariableNames: ''
@@ -74,13 +74,15 @@ vt
 	the receiver."
 
 	^VT_DISPATCH! !
-!TKindDispatchAnalyzer categoriesFor: #asImplType!accessing!public! !
-!TKindDispatchAnalyzer categoriesFor: #baseClass!constants!private! !
-!TKindDispatchAnalyzer categoriesFor: #dualInterface!accessing!public! !
-!TKindDispatchAnalyzer categoriesFor: #isAutomationCompatible!public!testing! !
-!TKindDispatchAnalyzer categoriesFor: #properties!enumerating!public! !
-!TKindDispatchAnalyzer categoriesFor: #superInterface!enumerating!public! !
-!TKindDispatchAnalyzer categoriesFor: #vt!constants!public! !
+!TKindDispatchAnalyzer categoriesForMethods!
+asImplType!accessing!public! !
+baseClass!constants!private! !
+dualInterface!accessing!public! !
+isAutomationCompatible!public!testing! !
+properties!enumerating!public! !
+superInterface!enumerating!public! !
+vt!constants!public! !
+!
 
 !TKindDispatchAnalyzer class methodsFor!
 
@@ -97,6 +99,8 @@ typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_DISPATCH! !
-!TKindDispatchAnalyzer class categoriesFor: #initialize!development!initializing!private! !
-!TKindDispatchAnalyzer class categoriesFor: #typekind!constants!private! !
+!TKindDispatchAnalyzer class categoriesForMethods!
+initialize!development!initializing!private! !
+typekind!constants!private! !
+!
 

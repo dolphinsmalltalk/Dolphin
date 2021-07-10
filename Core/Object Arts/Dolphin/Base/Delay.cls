@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Delay
 	instanceVariableNames: 'duration resumptionTime waitSemaphore'
@@ -211,26 +211,28 @@ wakeup
 
 	duration ifNotNil: [resumptionTime := nil].
 	waitSemaphore signal! !
-!Delay categoriesFor: #<=!comparing!public! !
-!Delay categoriesFor: #basicCancel!private!process synchronisation! !
-!Delay categoriesFor: #calcResumptionTime!accessing!private! !
-!Delay categoriesFor: #cancel!process synchronisation!public! !
-!Delay categoriesFor: #delta:!operations!private! !
-!Delay categoriesFor: #duration:!accessing!private! !
-!Delay categoriesFor: #getDuration!accessing!private! !
-!Delay categoriesFor: #hasExpired!private!testing! !
-!Delay categoriesFor: #initialize!initializing!private! !
-!Delay categoriesFor: #microsecondClockValue!enquiries!public! !
-!Delay categoriesFor: #printOn:!development!printing!public! !
-!Delay categoriesFor: #resumptionTime!accessing!public! !
-!Delay categoriesFor: #resumptionTime:!accessing!private! !
-!Delay categoriesFor: #riseAndShine!private!process synchronisation! !
-!Delay categoriesFor: #schedule!initializing!private! !
-!Delay categoriesFor: #signal!process synchronisation!public! !
-!Delay categoriesFor: #snooze!private!process synchronisation! !
-!Delay categoriesFor: #terminateProcess!process synchronisation!public! !
-!Delay categoriesFor: #wait!process synchronisation!public! !
-!Delay categoriesFor: #wakeup!private!process synchronisation! !
+!Delay categoriesForMethods!
+<=!comparing!public! !
+basicCancel!private!process synchronisation! !
+calcResumptionTime!accessing!private! !
+cancel!process synchronisation!public! !
+delta:!operations!private! !
+duration:!accessing!private! !
+getDuration!accessing!private! !
+hasExpired!private!testing! !
+initialize!initializing!private! !
+microsecondClockValue!enquiries!public! !
+printOn:!development!printing!public! !
+resumptionTime!accessing!public! !
+resumptionTime:!accessing!private! !
+riseAndShine!private!process synchronisation! !
+schedule!initializing!private! !
+signal!process synchronisation!public! !
+snooze!private!process synchronisation! !
+terminateProcess!process synchronisation!public! !
+wait!process synchronisation!public! !
+wakeup!private!process synchronisation! !
+!
 
 !Delay class methodsFor!
 
@@ -495,34 +497,36 @@ untilMilliseconds: millisecondTime
 	wait until the millisecond clock reaches the value millisecondTime."
 
 	^self new resumptionTime: millisecondTime * 1000! !
-!Delay class categoriesFor: #aboutToIdle!event handling!private! !
-!Delay class categoriesFor: #cancelTimer!operations!private! !
-!Delay class categoriesFor: #clampResolution:!helpers!private! !
-!Delay class categoriesFor: #forDuration:!instance creation!public! !
-!Delay class categoriesFor: #forkTimingProcess!initializing!private! !
-!Delay class categoriesFor: #forMicroseconds:!instance creation!public! !
-!Delay class categoriesFor: #forMilliseconds:!instance creation!public! !
-!Delay class categoriesFor: #forSeconds:!instance creation!public! !
-!Delay class categoriesFor: #getTicksToNanos!helpers!private! !
-!Delay class categoriesFor: #highestResolution!constants!public! !
-!Delay class categoriesFor: #initialize!development!initializing!public! !
-!Delay class categoriesFor: #initializeTimingSemaphore!initializing!private! !
-!Delay class categoriesFor: #keepAlive!helpers!private! !
-!Delay class categoriesFor: #lowestResolution!constants!public! !
-!Delay class categoriesFor: #microsecondClockValue!initializing!public! !
-!Delay class categoriesFor: #millisecondClockValue!accessing!public! !
-!Delay class categoriesFor: #new!instance creation!public! !
-!Delay class categoriesFor: #onExit!event handling!public! !
-!Delay class categoriesFor: #onPreSaveImage!event handling!private! !
-!Delay class categoriesFor: #onStartup!event handling!public! !
-!Delay class categoriesFor: #prod!operations!private! !
-!Delay class categoriesFor: #queryOsTimerResolution!helpers!private! !
-!Delay class categoriesFor: #reschedule!initializing!private! !
-!Delay class categoriesFor: #resolution!constants!public! !
-!Delay class categoriesFor: #resolution:do:!operations!public! !
-!Delay class categoriesFor: #resolution:set:!helpers!public! !
-!Delay class categoriesFor: #scheduleNext!initializing!private! !
-!Delay class categoriesFor: #signalTimerAfter:!private!processes-synchronising! !
-!Delay class categoriesFor: #timingProcess!initializing!private! !
-!Delay class categoriesFor: #untilMilliseconds:!instance creation!public! !
+!Delay class categoriesForMethods!
+aboutToIdle!event handling!private! !
+cancelTimer!operations!private! !
+clampResolution:!helpers!private! !
+forDuration:!instance creation!public! !
+forkTimingProcess!initializing!private! !
+forMicroseconds:!instance creation!public! !
+forMilliseconds:!instance creation!public! !
+forSeconds:!instance creation!public! !
+getTicksToNanos!helpers!private! !
+highestResolution!constants!public! !
+initialize!development!initializing!public! !
+initializeTimingSemaphore!initializing!private! !
+keepAlive!helpers!private! !
+lowestResolution!constants!public! !
+microsecondClockValue!initializing!public! !
+millisecondClockValue!accessing!public! !
+new!instance creation!public! !
+onExit!event handling!public! !
+onPreSaveImage!event handling!private! !
+onStartup!event handling!public! !
+prod!operations!private! !
+queryOsTimerResolution!helpers!private! !
+reschedule!initializing!private! !
+resolution!constants!public! !
+resolution:do:!operations!public! !
+resolution:set:!helpers!public! !
+scheduleNext!initializing!private! !
+signalTimerAfter:!private!processes-synchronising! !
+timingProcess!initializing!private! !
+untilMilliseconds:!instance creation!public! !
+!
 

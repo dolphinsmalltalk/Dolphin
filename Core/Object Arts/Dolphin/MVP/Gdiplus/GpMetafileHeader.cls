@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #GpMetafileHeader
 	instanceVariableNames: ''
@@ -207,36 +207,38 @@ y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
-!GpMetafileHeader categoriesFor: #DpiX!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #DpiX:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #DpiY!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #DpiY:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #EmfHeader!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #EmfHeader:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #EmfPlusFlags!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #EmfPlusFlags:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #EmfPlusHeaderSize!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #EmfPlusHeaderSize:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #height!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #height:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #LogicalDpiX!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #LogicalDpiX:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #LogicalDpiY!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #LogicalDpiY:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #size!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #size:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #type!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #type:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #Version!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #Version:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #width!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #width:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #WmfHeader!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #WmfHeader:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #x!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #x:!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #y!**compiled accessors**!public! !
-!GpMetafileHeader categoriesFor: #y:!**compiled accessors**!public! !
+!GpMetafileHeader categoriesForMethods!
+DpiX!**compiled accessors**!public! !
+DpiX:!**compiled accessors**!public! !
+DpiY!**compiled accessors**!public! !
+DpiY:!**compiled accessors**!public! !
+EmfHeader!**compiled accessors**!public! !
+EmfHeader:!**compiled accessors**!public! !
+EmfPlusFlags!**compiled accessors**!public! !
+EmfPlusFlags:!**compiled accessors**!public! !
+EmfPlusHeaderSize!**compiled accessors**!public! !
+EmfPlusHeaderSize:!**compiled accessors**!public! !
+height!**compiled accessors**!public! !
+height:!**compiled accessors**!public! !
+LogicalDpiX!**compiled accessors**!public! !
+LogicalDpiX:!**compiled accessors**!public! !
+LogicalDpiY!**compiled accessors**!public! !
+LogicalDpiY:!**compiled accessors**!public! !
+size!**compiled accessors**!public! !
+size:!**compiled accessors**!public! !
+type!**compiled accessors**!public! !
+type:!**compiled accessors**!public! !
+Version!**compiled accessors**!public! !
+Version:!**compiled accessors**!public! !
+width!**compiled accessors**!public! !
+width:!**compiled accessors**!public! !
+WmfHeader!**compiled accessors**!public! !
+WmfHeader:!**compiled accessors**!public! !
+x!**compiled accessors**!public! !
+x:!**compiled accessors**!public! !
+y!**compiled accessors**!public! !
+y:!**compiled accessors**!public! !
+!
 
 !GpMetafileHeader class methodsFor!
 
@@ -316,6 +318,8 @@ defineFields
 
 getFieldNames
 	^#(#type #size #Version #EmfPlusFlags #DpiX #DpiY #x #y #width #height #EmfHeader #WmfHeader #EmfPlusHeaderSize #LogicalDpiX #LogicalDpiY)! !
-!GpMetafileHeader class categoriesFor: #defineFields!public!template definition! !
-!GpMetafileHeader class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!GpMetafileHeader class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

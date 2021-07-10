@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ReferencesCategory subclass: #SpecialReferencesCategory
 	instanceVariableNames: 'index'
@@ -21,6 +21,8 @@ index: anInteger
 	"Private - Set the special selector index."
 
 	index := anInteger! !
-!SpecialReferencesCategory categoriesFor: #includesMethod:!public!testing! !
-!SpecialReferencesCategory categoriesFor: #index:!accessing!private! !
+!SpecialReferencesCategory categoriesForMethods!
+includesMethod:!public!testing! !
+index:!accessing!private! !
+!
 

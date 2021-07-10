@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ProcessorScheduler
 	instanceVariableNames: 'processLists activeProcess pendingReturns comStubs _reserved pendingTerminations'
@@ -628,76 +628,78 @@ zeroDivide: interruptArg
 
 	self enableInterrupts.
 	ZeroDivide dividend: interruptArg! !
-!ProcessorScheduler categoriesFor: #activePriority!processes-accessing!public! !
-!ProcessorScheduler categoriesFor: #activeProcess!debugger-step over!processes-accessing!public! !
-!ProcessorScheduler categoriesFor: #bereavedOverflow:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #callback:evaluate:!callbacks!not restartable!private!vm entry points! !
-!ProcessorScheduler categoriesFor: #callback:perform:cookie:!callbacks!not restartable!private!vm entry points! !
-!ProcessorScheduler categoriesFor: #callback:perform:with:cookie:!callbacks!not restartable!private!vm entry points! !
-!ProcessorScheduler categoriesFor: #callback:perform:with:with:cookie:!callbacks!not restartable!private!vm entry points! !
-!ProcessorScheduler categoriesFor: #callback:perform:with:with:with:cookie:!callbacks!not restartable!private!vm entry points! !
-!ProcessorScheduler categoriesFor: #callback:perform:withArguments:cookie:!callbacks!not restartable!private!vm entry points! !
-!ProcessorScheduler categoriesFor: #callback:return:!callbacks!private! !
-!ProcessorScheduler categoriesFor: #callback:withArgumentsAt:cookie:!callbacks!not restartable!private!vm entry points! !
-!ProcessorScheduler categoriesFor: #cannotReturn:!exceptions!not restartable!private! !
-!ProcessorScheduler categoriesFor: #constWrite:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #constWriteSignal!accessing!private! !
-!ProcessorScheduler categoriesFor: #crtFault:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #enableAsyncEvents:!interrupts-status!private! !
-!ProcessorScheduler categoriesFor: #enableInterrupts!interrupts-status!private! !
-!ProcessorScheduler categoriesFor: #forkMain!private!processes-accessing! !
-!ProcessorScheduler categoriesFor: #forkMainIfMain!private!processes-accessing! !
-!ProcessorScheduler categoriesFor: #fpException:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #fpStackFault:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #genericInterrupt!interrupts-names!private! !
-!ProcessorScheduler categoriesFor: #gpFault:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #highestPriority!processes-accessing!public! !
-!ProcessorScheduler categoriesFor: #highIOPriority!priority names!public! !
-!ProcessorScheduler categoriesFor: #hospiceOverflow:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #idlePanic:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #idleProcess!private!processes-accessing! !
-!ProcessorScheduler categoriesFor: #interruptWith:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #iret:list:!interrupts!private! !
-!ProcessorScheduler categoriesFor: #isActiveMain!public!testing! !
-!ProcessorScheduler categoriesFor: #isAtomic!public!testing! !
-!ProcessorScheduler categoriesFor: #kill:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #killInterrupt!interrupts-names!private! !
-!ProcessorScheduler categoriesFor: #lowIOPriority!priority names!public! !
-!ProcessorScheduler categoriesFor: #mainProcess!private!processes-accessing! !
-!ProcessorScheduler categoriesFor: #noMemory:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #onBreak:!development!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #onStartup:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #otOverflow:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #pendingTerminations!accessing!private! !
-!ProcessorScheduler categoriesFor: #primReturn:callback:!callbacks!private! !
-!ProcessorScheduler categoriesFor: #primUnwindCallback:!callbacks!private! !
-!ProcessorScheduler categoriesFor: #primUnwindInterrupt!interrupts!private! !
-!ProcessorScheduler categoriesFor: #processesAt:!processes-accessing!public! !
-!ProcessorScheduler categoriesFor: #returnValue:toFrame:!callbacks!must not strip!private! !
-!ProcessorScheduler categoriesFor: #setHighestPriority:activeProcess:!development!initializing!private! !
-!ProcessorScheduler categoriesFor: #sleep:!processes-synchronising!public! !
-!ProcessorScheduler categoriesFor: #stackOverflow:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #suspendActive!processes-changing state!public! !
-!ProcessorScheduler categoriesFor: #systemBackgroundPriority!priority names!public! !
-!ProcessorScheduler categoriesFor: #systemBasePriority!priority names!public! !
-!ProcessorScheduler categoriesFor: #systemProcessOwner!accessing!private! !
-!ProcessorScheduler categoriesFor: #terminate:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #terminateActive!processes-changing state!public! !
-!ProcessorScheduler categoriesFor: #terminateInterrupt!interrupts-names!private! !
-!ProcessorScheduler categoriesFor: #timingPriority!priority names!public! !
-!ProcessorScheduler categoriesFor: #unregisterCOMStubs!callbacks!initializing!private! !
-!ProcessorScheduler categoriesFor: #unusedInterrupt:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #unwindCallback:!callbacks!private! !
-!ProcessorScheduler categoriesFor: #unwindCallbacks!callbacks!private! !
-!ProcessorScheduler categoriesFor: #userBackgroundPriority!priority names!public! !
-!ProcessorScheduler categoriesFor: #userBreak:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #userBreakInterrupt!interrupts-names!private! !
-!ProcessorScheduler categoriesFor: #userInterruptPriority!priority names!public! !
-!ProcessorScheduler categoriesFor: #userSchedulingPriority!priority names!public! !
-!ProcessorScheduler categoriesFor: #vmi:list:no:with:!interrupts!interrupts-handling!must not strip!not restartable!private! !
-!ProcessorScheduler categoriesFor: #win32Fault:!interrupts-handling!private! !
-!ProcessorScheduler categoriesFor: #yield!processes-changing state!public! !
-!ProcessorScheduler categoriesFor: #zeroDivide:!interrupts-handling!private! !
+!ProcessorScheduler categoriesForMethods!
+activePriority!processes-accessing!public! !
+activeProcess!debugger-step over!processes-accessing!public! !
+bereavedOverflow:!interrupts-handling!private! !
+callback:evaluate:!callbacks!not restartable!private!vm entry points! !
+callback:perform:cookie:!callbacks!not restartable!private!vm entry points! !
+callback:perform:with:cookie:!callbacks!not restartable!private!vm entry points! !
+callback:perform:with:with:cookie:!callbacks!not restartable!private!vm entry points! !
+callback:perform:with:with:with:cookie:!callbacks!not restartable!private!vm entry points! !
+callback:perform:withArguments:cookie:!callbacks!not restartable!private!vm entry points! !
+callback:return:!callbacks!private! !
+callback:withArgumentsAt:cookie:!callbacks!not restartable!private!vm entry points! !
+cannotReturn:!exceptions!not restartable!private! !
+constWrite:!interrupts-handling!private! !
+constWriteSignal!accessing!private! !
+crtFault:!interrupts-handling!private! !
+enableAsyncEvents:!interrupts-status!private! !
+enableInterrupts!interrupts-status!private! !
+forkMain!private!processes-accessing! !
+forkMainIfMain!private!processes-accessing! !
+fpException:!interrupts-handling!private! !
+fpStackFault:!interrupts-handling!private! !
+genericInterrupt!interrupts-names!private! !
+gpFault:!interrupts-handling!private! !
+highestPriority!processes-accessing!public! !
+highIOPriority!priority names!public! !
+hospiceOverflow:!interrupts-handling!private! !
+idlePanic:!interrupts-handling!private! !
+idleProcess!private!processes-accessing! !
+interruptWith:!interrupts-handling!private! !
+iret:list:!interrupts!private! !
+isActiveMain!public!testing! !
+isAtomic!public!testing! !
+kill:!interrupts-handling!private! !
+killInterrupt!interrupts-names!private! !
+lowIOPriority!priority names!public! !
+mainProcess!private!processes-accessing! !
+noMemory:!interrupts-handling!private! !
+onBreak:!development!interrupts-handling!private! !
+onStartup:!interrupts-handling!private! !
+otOverflow:!interrupts-handling!private! !
+pendingTerminations!accessing!private! !
+primReturn:callback:!callbacks!private! !
+primUnwindCallback:!callbacks!private! !
+primUnwindInterrupt!interrupts!private! !
+processesAt:!processes-accessing!public! !
+returnValue:toFrame:!callbacks!must not strip!private! !
+setHighestPriority:activeProcess:!development!initializing!private! !
+sleep:!processes-synchronising!public! !
+stackOverflow:!interrupts-handling!private! !
+suspendActive!processes-changing state!public! !
+systemBackgroundPriority!priority names!public! !
+systemBasePriority!priority names!public! !
+systemProcessOwner!accessing!private! !
+terminate:!interrupts-handling!private! !
+terminateActive!processes-changing state!public! !
+terminateInterrupt!interrupts-names!private! !
+timingPriority!priority names!public! !
+unregisterCOMStubs!callbacks!initializing!private! !
+unusedInterrupt:!interrupts-handling!private! !
+unwindCallback:!callbacks!private! !
+unwindCallbacks!callbacks!private! !
+userBackgroundPriority!priority names!public! !
+userBreak:!interrupts-handling!private! !
+userBreakInterrupt!interrupts-names!private! !
+userInterruptPriority!priority names!public! !
+userSchedulingPriority!priority names!public! !
+vmi:list:no:with:!interrupts!interrupts-handling!must not strip!not restartable!private! !
+win32Fault:!interrupts-handling!private! !
+yield!processes-changing state!public! !
+zeroDivide:!interrupts-handling!private! !
+!
 
 !ProcessorScheduler class methodsFor!
 
@@ -730,9 +732,11 @@ newPriorities: highestPriority activeProcess: aProcess
 	"Private - Create Processor during boot."
 
 	^self basicNew setHighestPriority: highestPriority activeProcess: aProcess! !
-!ProcessorScheduler class categoriesFor: #initialize!development!initializing!public! !
-!ProcessorScheduler class categoriesFor: #initializeInterruptSelectors!initializing!must not strip!private! !
-!ProcessorScheduler class categoriesFor: #interruptSelectors!accessing!private! !
-!ProcessorScheduler class categoriesFor: #new!instance creation!public! !
-!ProcessorScheduler class categoriesFor: #newPriorities:activeProcess:!development!instance creation!private! !
+!ProcessorScheduler class categoriesForMethods!
+initialize!development!initializing!public! !
+initializeInterruptSelectors!initializing!must not strip!private! !
+interruptSelectors!accessing!private! !
+new!instance creation!public! !
+newPriorities:activeProcess:!development!instance creation!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DBStatement subclass: #DBParameterizedStatement
 	instanceVariableNames: 'values parameters paramCols isPrepared'
@@ -133,16 +133,18 @@ values: anArrayOfValues
 
 	self close.
 	values := anArrayOfValues! !
-!DBParameterizedStatement categoriesFor: #bindParams!operations!private! !
-!DBParameterizedStatement categoriesFor: #exec!operations!public! !
-!DBParameterizedStatement categoriesFor: #free!public!realizing/unrealizing! !
-!DBParameterizedStatement categoriesFor: #paramCols!accessing!public! !
-!DBParameterizedStatement categoriesFor: #paramCols:!accessing!public! !
-!DBParameterizedStatement categoriesFor: #parameters!accessing!private! !
-!DBParameterizedStatement categoriesFor: #prepare!operations!private! !
-!DBParameterizedStatement categoriesFor: #prepare:!operations!private! !
-!DBParameterizedStatement categoriesFor: #reset!initializing!private! !
-!DBParameterizedStatement categoriesFor: #setValues!operations!private! !
-!DBParameterizedStatement categoriesFor: #values!accessing!public! !
-!DBParameterizedStatement categoriesFor: #values:!accessing!public! !
+!DBParameterizedStatement categoriesForMethods!
+bindParams!operations!private! !
+exec!operations!public! !
+free!public!realizing/unrealizing! !
+paramCols!accessing!public! !
+paramCols:!accessing!public! !
+parameters!accessing!private! !
+prepare!operations!private! !
+prepare:!operations!private! !
+reset!initializing!private! !
+setValues!operations!private! !
+values!accessing!public! !
+values:!accessing!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #DwmApiLibrary
 	instanceVariableNames: ''
@@ -15,7 +15,9 @@ dwmIsCompositionEnabled: pfEnabled
 
 	<stdcall: hresult DwmIsCompositionEnabled BOOL*>
 	^self invalidCall: _failureCode! !
-!DwmApiLibrary categoriesFor: #dwmIsCompositionEnabled:!public! !
+!DwmApiLibrary categoriesForMethods!
+dwmIsCompositionEnabled:!public! !
+!
 
 !DwmApiLibrary class methodsFor!
 
@@ -28,6 +30,8 @@ isDesktopCompositionEnabled
 			answer := BOOL new.
 			self default dwmIsCompositionEnabled: answer.
 			answer asObject]! !
-!DwmApiLibrary class categoriesFor: #fileName!constants!public! !
-!DwmApiLibrary class categoriesFor: #isDesktopCompositionEnabled!public!queries! !
+!DwmApiLibrary class categoriesForMethods!
+fileName!constants!public! !
+isDesktopCompositionEnabled!public!queries! !
+!
 

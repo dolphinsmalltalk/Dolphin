@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXTypeInfoAnalyzer subclass: #TKindEnumAnalyzer
 	instanceVariableNames: ''
@@ -47,11 +47,13 @@ vt
 	the receiver."
 
 	^VT_I4! !
-!TKindEnumAnalyzer categoriesFor: #baseClass!constants!private! !
-!TKindEnumAnalyzer categoriesFor: #constants!enumerating!public! !
-!TKindEnumAnalyzer categoriesFor: #name!accessing!public! !
-!TKindEnumAnalyzer categoriesFor: #suggestedGlobalName!accessing!private! !
-!TKindEnumAnalyzer categoriesFor: #vt!constants!public! !
+!TKindEnumAnalyzer categoriesForMethods!
+baseClass!constants!private! !
+constants!enumerating!public! !
+name!accessing!public! !
+suggestedGlobalName!accessing!private! !
+vt!constants!public! !
+!
 
 !TKindEnumAnalyzer class methodsFor!
 
@@ -59,5 +61,7 @@ typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_ENUM! !
-!TKindEnumAnalyzer class categoriesFor: #typekind!constants!private! !
+!TKindEnumAnalyzer class categoriesForMethods!
+typekind!constants!private! !
+!
 

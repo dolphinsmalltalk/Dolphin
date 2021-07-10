@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusInitializer subclass: #GdiplusStringFormatInitializer
 	instanceVariableNames: 'formatFlags language'
@@ -13,7 +13,9 @@ GdiplusStringFormatInitializer comment: ''!
 
 gdiplusConstructorErrorDescription
 	^'Error creating StringFormat'! !
-!GdiplusStringFormatInitializer categoriesFor: #gdiplusConstructorErrorDescription!constants!private! !
+!GdiplusStringFormatInitializer categoriesForMethods!
+gdiplusConstructorErrorDescription!constants!private! !
+!
 
 !GdiplusStringFormatInitializer class methodsFor!
 
@@ -38,10 +40,12 @@ onPreStripImage
 
 uninitialize
 	GenericDefault := GenericTypographic := nil! !
-!GdiplusStringFormatInitializer class categoriesFor: #formatFlags:language:!instance creation!public! !
-!GdiplusStringFormatInitializer class categoriesFor: #genericDefault!instance creation!public! !
-!GdiplusStringFormatInitializer class categoriesFor: #genericTypographic!instance creation!public! !
-!GdiplusStringFormatInitializer class categoriesFor: #new!development!instance creation!public! !
-!GdiplusStringFormatInitializer class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!GdiplusStringFormatInitializer class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!GdiplusStringFormatInitializer class categoriesForMethods!
+formatFlags:language:!instance creation!public! !
+genericDefault!instance creation!public! !
+genericTypographic!instance creation!public! !
+new!development!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

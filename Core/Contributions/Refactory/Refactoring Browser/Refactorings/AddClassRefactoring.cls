@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ClassRefactoring subclass: #AddClassRefactoring
 	instanceVariableNames: 'category superclass subclasses'
@@ -75,11 +75,13 @@ transform
 	(self model)
 		defineClass: self definitionMessage;
 		reparentClasses: subclasses to: (self model classNamed: className asSymbol)! !
-!AddClassRefactoring categoriesFor: #addClass:superclass:subclasses:category:!initialize/release!public! !
-!AddClassRefactoring categoriesFor: #definitionMessage!public!transforming! !
-!AddClassRefactoring categoriesFor: #preconditions!public! !
-!AddClassRefactoring categoriesFor: #storeOn:!printing!public! !
-!AddClassRefactoring categoriesFor: #transform!public!transforming! !
+!AddClassRefactoring categoriesForMethods!
+addClass:superclass:subclasses:category:!initialize/release!public! !
+definitionMessage!public!transforming! !
+preconditions!public! !
+storeOn:!printing!public! !
+transform!public!transforming! !
+!
 
 !AddClassRefactoring class methodsFor!
 
@@ -98,6 +100,8 @@ model: aRBNamespace addClass: aName superclass: aClass subclasses: aCollection c
 			subclasses: aCollection
 			category: aSymbol;
 		yourself! !
-!AddClassRefactoring class categoriesFor: #addClass:superclass:subclasses:category:!instance creation!public! !
-!AddClassRefactoring class categoriesFor: #model:addClass:superclass:subclasses:category:!instance creation!public! !
+!AddClassRefactoring class categoriesForMethods!
+addClass:superclass:subclasses:category:!instance creation!public! !
+model:addClass:superclass:subclasses:category:!instance creation!public! !
+!
 

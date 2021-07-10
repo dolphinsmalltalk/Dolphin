@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Model subclass: #ValueModel
 	instanceVariableNames: 'settingValue comparisonPolicy'
@@ -100,19 +100,21 @@ value: anObject
 	[settingValue := true.
 	self setValue: anObject] ensure: [settingValue := false].
 	self notifyChanged! !
-!ValueModel categoriesFor: #aspectAdaptorClass!constants!private! !
-!ValueModel categoriesFor: #asValue!converting!public! !
-!ValueModel categoriesFor: #canGet!private!testing! !
-!ValueModel categoriesFor: #canSet!private!testing! !
-!ValueModel categoriesFor: #comparisonPolicy!accessing!public! !
-!ValueModel categoriesFor: #comparisonPolicy:!accessing!public! !
-!ValueModel categoriesFor: #defaultComparisonPolicy!initializing!private! !
-!ValueModel categoriesFor: #initialize!initializing!private! !
-!ValueModel categoriesFor: #notifyChanged!operations!private! !
-!ValueModel categoriesFor: #printOn:!printing!public! !
-!ValueModel categoriesFor: #setValue:!accessing!private! !
-!ValueModel categoriesFor: #value!accessing!public! !
-!ValueModel categoriesFor: #value:!accessing!public! !
+!ValueModel categoriesForMethods!
+aspectAdaptorClass!constants!private! !
+asValue!converting!public! !
+canGet!private!testing! !
+canSet!private!testing! !
+comparisonPolicy!accessing!public! !
+comparisonPolicy:!accessing!public! !
+defaultComparisonPolicy!initializing!private! !
+initialize!initializing!private! !
+notifyChanged!operations!private! !
+printOn:!printing!public! !
+setValue:!accessing!private! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 ValueModel methodProtocol: #value attributes: #(#readOnly) selectors: #(#value #value:)!
 ValueModel methodProtocol: #valueModel attributes: #(#readOnly) selectors: #(#value #value:)!
@@ -147,8 +149,10 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^2! !
-!ValueModel class categoriesFor: #comparisonPolicy:!instance creation!public! !
-!ValueModel class categoriesFor: #icon!constants!public! !
-!ValueModel class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!ValueModel class categoriesFor: #stbVersion!binary filing!public! !
+!ValueModel class categoriesForMethods!
+comparisonPolicy:!instance creation!public! !
+icon!constants!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

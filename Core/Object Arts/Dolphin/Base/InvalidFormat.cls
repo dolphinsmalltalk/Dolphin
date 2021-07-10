@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #InvalidFormat
 	instanceVariableNames: ''
@@ -14,5 +14,7 @@ _descriptionFormat
 	"Private - Answer a string which is the message format for the receiver's description."
 
 	^'Invalid format for %2'! !
-!InvalidFormat categoriesFor: #_descriptionFormat!displaying!private! !
+!InvalidFormat categoriesForMethods!
+_descriptionFormat!displaying!private! !
+!
 

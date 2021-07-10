@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Magnitude subclass: #Duration
 	instanceVariableNames: 'seconds'
@@ -232,41 +232,42 @@ subtractFromDateAndTime: aDateAndTime
 
 wait
 	(Delay forDuration: self) wait! !
-!Duration categoriesFor: #-!arithmetic!public! !
-!Duration categoriesFor: #*!arithmetic!public! !
-!Duration categoriesFor: #/!arithmetic!public! !
-!Duration categoriesFor: #+!arithmetic!public! !
-!Duration categoriesFor: #<!comparing!public! !
-!Duration categoriesFor: #=!comparing!public! !
-!Duration categoriesFor: #abs!arithmetic!public! !
-!Duration categoriesFor: #asMicroseconds!converting!public! !
-!Duration categoriesFor: #asMilliseconds!converting!public! !
-!Duration categoriesFor: #asNanoseconds!converting!public! !
-!Duration categoriesFor: #asSeconds!converting!public! !
-!Duration categoriesFor: #days!accessing!public! !
-!Duration categoriesFor: #displayOn:!printing!public! !
-!Duration categoriesFor: #divideIntoDuration:!arithmetic!double dispatch!private! !
-!Duration categoriesFor: #formatters!printing!private! !
-!Duration categoriesFor: #hash!comparing!public! !
-!Duration categoriesFor: #hours!accessing!public! !
-!Duration categoriesFor: #humanReadablePrintString!printing!public! !
-!Duration categoriesFor: #isZero!public!testing! !
-!Duration categoriesFor: #microseconds!accessing!public! !
-!Duration categoriesFor: #milliseconds!accessing!public! !
-!Duration categoriesFor: #minutes!accessing!public! !
-!Duration categoriesFor: #nanoseconds!accessing!public! !
-!Duration categoriesFor: #negated!arithmetic!public! !
-!Duration categoriesFor: #negative!public!testing! !
-!Duration categoriesFor: #positive!public!testing! !
-!Duration categoriesFor: #printHumanReadableOn:!printing!public! !
-!Duration categoriesFor: #printOn:!printing!public! !
-!Duration categoriesFor: #printOn:format:!printing!public! !
-!Duration categoriesFor: #printStringFormat:!printing!public! !
-!Duration categoriesFor: #seconds!accessing!public! !
-!Duration categoriesFor: #setSeconds:!initializing!private! !
-!Duration categoriesFor: #storeOn:!printing!public! !
-!Duration categoriesFor: #subtractFromDateAndTime:!initializing!private! !
-!Duration categoriesFor: #wait!process synchronisation!public! !
+!Duration categoriesForMethods!
+-!arithmetic!public! !
+*!arithmetic!public! !
+/!arithmetic!public! !
++!arithmetic!public! !
+<!comparing!public! !
+=!comparing!public! !
+abs!arithmetic!public! !
+asMicroseconds!converting!public! !
+asMilliseconds!converting!public! !
+asNanoseconds!converting!public! !
+asSeconds!converting!public! !
+days!accessing!public! !
+displayOn:!printing!public! !
+divideIntoDuration:!arithmetic!double dispatch!private! !
+hash!comparing!public! !
+hours!accessing!public! !
+humanReadablePrintString!printing!public! !
+isZero!public!testing! !
+microseconds!accessing!public! !
+milliseconds!accessing!public! !
+minutes!accessing!public! !
+nanoseconds!accessing!public! !
+negated!arithmetic!public! !
+negative!public!testing! !
+positive!public!testing! !
+printHumanReadableOn:!printing!public! !
+printOn:!printing!public! !
+printOn:format:!printing!public! !
+printStringFormat:!printing!public! !
+seconds!accessing!public! !
+setSeconds:!initializing!private! !
+storeOn:!printing!public! !
+subtractFromDateAndTime:!initializing!private! !
+wait!process synchronisation!public! !
+!
 
 Duration methodProtocol: #Duration attributes: #(#ansi #readOnly) selectors: #(#- #* #/ #~~ #~= #+ #< #<= #= #== #> #>= #abs #asSeconds #between:and: #class #copy #days #doesNotUnderstand: #error: #hash #hours #identityHash #isKindOf: #isMemberOf: #isNil #max: #min: #minutes #negated #negative #notNil #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #positive #printOn: #printString #respondsTo: #seconds #yourself)!
 
@@ -402,22 +403,24 @@ zero
 	"Answer a <Duration> representing an empty interval of time."
 
 	^Zero ifNil: [Zero := self seconds: 0]! !
-!Duration class categoriesFor: #days:!instance creation!public! !
-!Duration class categoriesFor: #days:hours:minutes:seconds:!instance creation!public! !
-!Duration class categoriesFor: #errorInvalidFormat!exceptions!private! !
-!Duration class categoriesFor: #fromString:!instance creation!public! !
-!Duration class categoriesFor: #hours:!instance creation!public! !
-!Duration class categoriesFor: #hours:minutes:!instance creation!public! !
-!Duration class categoriesFor: #hours:minutes:seconds:!instance creation!public! !
-!Duration class categoriesFor: #microseconds:!instance creation!public! !
-!Duration class categoriesFor: #milliseconds:!instance creation!public! !
-!Duration class categoriesFor: #minutes:!instance creation!public! !
-!Duration class categoriesFor: #nanoseconds:!instance creation!public! !
-!Duration class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Duration class categoriesFor: #readFrom:!instance creation!public! !
-!Duration class categoriesFor: #readFrom:sign:withDays:!helpers!private! !
-!Duration class categoriesFor: #seconds:!instance creation!public! !
-!Duration class categoriesFor: #zero!instance creation!public! !
+!Duration class categoriesForMethods!
+days:!instance creation!public! !
+days:hours:minutes:seconds:!instance creation!public! !
+errorInvalidFormat!exceptions!private! !
+fromString:!instance creation!public! !
+hours:!instance creation!public! !
+hours:minutes:!instance creation!public! !
+hours:minutes:seconds:!instance creation!public! !
+microseconds:!instance creation!public! !
+milliseconds:!instance creation!public! !
+minutes:!instance creation!public! !
+nanoseconds:!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+readFrom:!instance creation!public! !
+readFrom:sign:withDays:!helpers!private! !
+seconds:!instance creation!public! !
+zero!instance creation!public! !
+!
 
 Duration class methodProtocol: #'Duration factory' attributes: #(#ansi #readOnly) selectors: #(#~~ #~= #= #== #class #copy #days:hours:minutes:seconds: #doesNotUnderstand: #error: #hash #identityHash #isKindOf: #isMemberOf: #isNil #notNil #perform: #perform:with: #perform:with:with: #perform:with:with:with: #perform:withArguments: #printOn: #printString #respondsTo: #seconds: #yourself #zero)!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StProgramNode subclass: #StTagNode
 	instanceVariableNames: 'start stop'
@@ -31,11 +31,13 @@ stop
 
 stop: anInteger
 	stop := anInteger! !
-!StTagNode categoriesFor: #acceptVisitor:!public!visitor! !
-!StTagNode categoriesFor: #isExternalCall!public!testing! !
-!StTagNode categoriesFor: #primitiveIndex!accessing!public! !
-!StTagNode categoriesFor: #start!accessing!public! !
-!StTagNode categoriesFor: #start:!accessing!private! !
-!StTagNode categoriesFor: #stop!accessing!public! !
-!StTagNode categoriesFor: #stop:!accessing!private! !
+!StTagNode categoriesForMethods!
+acceptVisitor:!public!visitor! !
+isExternalCall!public!testing! !
+primitiveIndex!accessing!public! !
+start!accessing!public! !
+start:!accessing!private! !
+stop!accessing!public! !
+stop:!accessing!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ChunkBrowserExpressionChunk subclass: #ChunkBrowserClassGUIDChunk
 	instanceVariableNames: 'id'
@@ -30,9 +30,11 @@ initialize: aString
 
 isMatch
 	^self identity1AsClass ifNotNil: [:arg | arg instanceClass guid asString = id]! !
-!ChunkBrowserClassGUIDChunk categoriesFor: #browseTarget!operations!public! !
-!ChunkBrowserClassGUIDChunk categoriesFor: #initialize:!initializing!public! !
-!ChunkBrowserClassGUIDChunk categoriesFor: #isMatch!public!testing! !
+!ChunkBrowserClassGUIDChunk categoriesForMethods!
+browseTarget!operations!public! !
+initialize:!initializing!public! !
+isMatch!public!testing! !
+!
 
 !ChunkBrowserClassGUIDChunk class methodsFor!
 
@@ -51,6 +53,8 @@ isChunkClassFor: aString
 				or:
 					[(aString indexOfSubCollection: ' guid: (IID fromString: ''{') = firstSpaceIndex
 						or: [(aString indexOfSubCollection: ' guid: (CLSID fromString: ''{') = firstSpaceIndex]]]! !
-!ChunkBrowserClassGUIDChunk class categoriesFor: #chunkType!constants!public! !
-!ChunkBrowserClassGUIDChunk class categoriesFor: #isChunkClassFor:!public!testing! !
+!ChunkBrowserClassGUIDChunk class categoriesForMethods!
+chunkType!constants!public! !
+isChunkClassFor:!public!testing! !
+!
 

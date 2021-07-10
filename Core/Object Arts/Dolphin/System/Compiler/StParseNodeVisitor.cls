@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #StParseNodeVisitor
 	instanceVariableNames: ''
@@ -109,38 +109,42 @@ visitThisContextVariableNode: anStSelfVariableNode
 
 visitVariableNode: aVariableNode
 	^aVariableNode! !
-!StParseNodeVisitor categoriesFor: #processBlock:!helpers!private! !
-!StParseNodeVisitor categoriesFor: #visitAnnotationNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitArgumentNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitArgumentNodes:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitArrayNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitAssignmentNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitBlockNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitCascadeNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitExternalArgTypeNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitExternalCallNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitLiteralArrayNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitLiteralNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitMessageNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitMethodNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitOptimizedNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitParameterNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitPrimitiveNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitReturnNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitSelfVariableNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitSequenceNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitSpecialVariableNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitStatements:!helpers!private! !
-!StParseNodeVisitor categoriesFor: #visitSuperVariableNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitTempDeclNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitTemporaryNodes:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitThisContextVariableNode:!public!visiting! !
-!StParseNodeVisitor categoriesFor: #visitVariableNode:!public!visiting! !
+!StParseNodeVisitor categoriesForMethods!
+processBlock:!helpers!private! !
+visitAnnotationNode:!public!visiting! !
+visitArgumentNode:!public!visiting! !
+visitArgumentNodes:!public!visiting! !
+visitArrayNode:!public!visiting! !
+visitAssignmentNode:!public!visiting! !
+visitBlockNode:!public!visiting! !
+visitCascadeNode:!public!visiting! !
+visitExternalArgTypeNode:!public!visiting! !
+visitExternalCallNode:!public!visiting! !
+visitLiteralArrayNode:!public!visiting! !
+visitLiteralNode:!public!visiting! !
+visitMessageNode:!public!visiting! !
+visitMethodNode:!public!visiting! !
+visitNode:!public!visiting! !
+visitOptimizedNode:!public!visiting! !
+visitParameterNode:!public!visiting! !
+visitPrimitiveNode:!public!visiting! !
+visitReturnNode:!public!visiting! !
+visitSelfVariableNode:!public!visiting! !
+visitSequenceNode:!public!visiting! !
+visitSpecialVariableNode:!public!visiting! !
+visitStatements:!helpers!private! !
+visitSuperVariableNode:!public!visiting! !
+visitTempDeclNode:!public!visiting! !
+visitTemporaryNodes:!public!visiting! !
+visitThisContextVariableNode:!public!visiting! !
+visitVariableNode:!public!visiting! !
+!
 
 !StParseNodeVisitor class methodsFor!
 
 new
 	^super new initialize! !
-!StParseNodeVisitor class categoriesFor: #new!instance creation!public! !
+!StParseNodeVisitor class categoriesForMethods!
+new!instance creation!public! !
+!
 

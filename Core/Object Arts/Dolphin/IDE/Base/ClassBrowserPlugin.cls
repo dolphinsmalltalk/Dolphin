@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Presenter subclass: #ClassBrowserPlugin
 	instanceVariableNames: ''
@@ -74,18 +74,20 @@ promptToSaveClassChanges: aSelectionChangingEvent
 	selection change can continue."
 
 	^true! !
-!ClassBrowserPlugin categoriesFor: #applyOptions!options!private! !
-!ClassBrowserPlugin categoriesFor: #browser!accessing!public! !
-!ClassBrowserPlugin categoriesFor: #createSchematicWiring!initializing!private! !
-!ClassBrowserPlugin categoriesFor: #destroy!public!realizing/unrealizing! !
-!ClassBrowserPlugin categoriesFor: #displayOn:!displaying!public! !
-!ClassBrowserPlugin categoriesFor: #isCurrentCard!event handling!public! !
-!ClassBrowserPlugin categoriesFor: #isModified!public!testing! !
-!ClassBrowserPlugin categoriesFor: #modifiedModel!accessing!public! !
-!ClassBrowserPlugin categoriesFor: #onBrowserCardChanged!event handling!private! !
-!ClassBrowserPlugin categoriesFor: #onShownInBrowser!event handling!private! !
-!ClassBrowserPlugin categoriesFor: #onViewOpened!event handling!private! !
-!ClassBrowserPlugin categoriesFor: #promptToSaveClassChanges:!helpers!public! !
+!ClassBrowserPlugin categoriesForMethods!
+applyOptions!options!private! !
+browser!accessing!public! !
+createSchematicWiring!initializing!private! !
+destroy!public!realizing/unrealizing! !
+displayOn:!displaying!public! !
+isCurrentCard!event handling!public! !
+isModified!public!testing! !
+modifiedModel!accessing!public! !
+onBrowserCardChanged!event handling!private! !
+onShownInBrowser!event handling!private! !
+onViewOpened!event handling!private! !
+promptToSaveClassChanges:!helpers!public! !
+!
 
 ClassBrowserPlugin methodProtocol: #classBrowserPlugin attributes: #(#readOnly) selectors: #(#browser #isCurrentCard #onShownInBrowser)!
 
@@ -111,7 +113,9 @@ uninitializeBeforeRemove
 unregisterFromAllBrowsers
 	ClassBrowserAbstract allSubclasses do: [:each | each removePlugin: self].
 	self primAllInstances do: [:each | each destroy]! !
-!ClassBrowserPlugin class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!ClassBrowserPlugin class categoriesFor: #uninitializeBeforeRemove!class hierarchy-removing!private! !
-!ClassBrowserPlugin class categoriesFor: #unregisterFromAllBrowsers!initializing!private! !
+!ClassBrowserPlugin class categoriesForMethods!
+uninitialize!class hierarchy-removing!private! !
+uninitializeBeforeRemove!class hierarchy-removing!private! !
+unregisterFromAllBrowsers!initializing!private! !
+!
 

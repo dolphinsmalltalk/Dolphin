@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractDelegatingView subclass: #ReferenceView
 	instanceVariableNames: ''
@@ -136,19 +136,21 @@ validateUserInterface
 	when the UI has been flagged as being invalid"
 
 	self referee presenter validateUserInterface! !
-!ReferenceView categoriesFor: #clearReferee!event handling!private! !
-!ReferenceView categoriesFor: #configureReferee!helpers!private! !
-!ReferenceView categoriesFor: #createDelegate!event handling!private! !
-!ReferenceView categoriesFor: #filerProxy!binary filing!private! !
-!ReferenceView categoriesFor: #loadReferee!helpers!private! !
-!ReferenceView categoriesFor: #nonReferenceAncestor!accessing!public! !
-!ReferenceView categoriesFor: #presenterConnectionPoint!public! !
-!ReferenceView categoriesFor: #printOn:!development!printing!public! !
-!ReferenceView categoriesFor: #referee!accessing!public! !
-!ReferenceView categoriesFor: #resource!operations!public! !
-!ReferenceView categoriesFor: #resourceIdentifier!accessing!private! !
-!ReferenceView categoriesFor: #resourceIdentifier:!accessing!private! !
-!ReferenceView categoriesFor: #validateUserInterface!operations!public! !
+!ReferenceView categoriesForMethods!
+clearReferee!event handling!private! !
+configureReferee!helpers!private! !
+createDelegate!event handling!private! !
+filerProxy!binary filing!private! !
+loadReferee!helpers!private! !
+nonReferenceAncestor!accessing!public! !
+presenterConnectionPoint!public! !
+printOn:!development!printing!public! !
+referee!accessing!public! !
+resource!operations!public! !
+resourceIdentifier!accessing!private! !
+resourceIdentifier:!accessing!private! !
+validateUserInterface!operations!public! !
+!
 
 !ReferenceView class methodsFor!
 
@@ -190,9 +192,11 @@ stbConvertFromVersion9: anArray
 	rid := array at: 13.
 	rid owningClass == (Smalltalk lookup: #Toolbar) ifTrue: [array at: 6 put: Color face3d].
 	^array! !
-!ReferenceView class categoriesFor: #icon!constants!public! !
-!ReferenceView class categoriesFor: #new!development!instance creation!public! !
-!ReferenceView class categoriesFor: #resourceIdentifier:!instance creation!public! !
-!ReferenceView class categoriesFor: #stbConvertFromVersion12:!binary filing!private! !
-!ReferenceView class categoriesFor: #stbConvertFromVersion9:!binary filing!private! !
+!ReferenceView class categoriesForMethods!
+icon!constants!public! !
+new!development!instance creation!public! !
+resourceIdentifier:!instance creation!public! !
+stbConvertFromVersion12:!binary filing!private! !
+stbConvertFromVersion9:!binary filing!private! !
+!
 

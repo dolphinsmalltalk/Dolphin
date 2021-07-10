@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GraphicsTool subclass: #Image
 	instanceVariableNames: 'fileLocator identifier instanceHandle'
@@ -235,35 +235,37 @@ printOn: aStream
 						nextPutAll: #fromId:;
 						space;
 						print: id]]! !
-!Image categoriesFor: #=!comparing!public! !
-!Image categoriesFor: #addToImageList:mask:!private!testing! !
-!Image categoriesFor: #asSharedCopy!converting!public! !
-!Image categoriesFor: #copy!copying!public! !
-!Image categoriesFor: #copyHandle!private!realizing/unrealizing! !
-!Image categoriesFor: #createHandle!private!realizing/unrealizing! !
-!Image categoriesFor: #drawDisabledOn:at:extent:!drawing-bitmaps!public! !
-!Image categoriesFor: #drawOn:!drawing-bitmaps!public! !
-!Image categoriesFor: #drawOn:at:!drawing-bitmaps!public! !
-!Image categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!Image categoriesFor: #extent!accessing!public! !
-!Image categoriesFor: #fileLocator!accessing!public! !
-!Image categoriesFor: #fileLocator:!accessing!public! !
-!Image categoriesFor: #fileSpec!accessing!private! !
-!Image categoriesFor: #freeDC!private!realizing/unrealizing! !
-!Image categoriesFor: #fullIdentifier!accessing!private! !
-!Image categoriesFor: #hash!comparing!public! !
-!Image categoriesFor: #hotspot!accessing!public! !
-!Image categoriesFor: #identifier!accessing!public! !
-!Image categoriesFor: #identifier:!accessing!public! !
-!Image categoriesFor: #imageManager!accessing!public! !
-!Image categoriesFor: #imageType!constants!private!testing! !
-!Image categoriesFor: #instanceHandle!accessing!public! !
-!Image categoriesFor: #instanceHandle:!accessing!public! !
-!Image categoriesFor: #isPersistent!private!testing! !
-!Image categoriesFor: #isShared!private!testing! !
-!Image categoriesFor: #loadFromFile:extent:!private!realizing/unrealizing! !
-!Image categoriesFor: #loadFromInstance:!private!realizing/unrealizing! !
-!Image categoriesFor: #printOn:!printing!public! !
+!Image categoriesForMethods!
+=!comparing!public! !
+addToImageList:mask:!private!testing! !
+asSharedCopy!converting!public! !
+copy!copying!public! !
+copyHandle!private!realizing/unrealizing! !
+createHandle!private!realizing/unrealizing! !
+drawDisabledOn:at:extent:!drawing-bitmaps!public! !
+drawOn:!drawing-bitmaps!public! !
+drawOn:at:!drawing-bitmaps!public! !
+drawOn:at:extent:!drawing-bitmaps!public! !
+extent!accessing!public! !
+fileLocator!accessing!public! !
+fileLocator:!accessing!public! !
+fileSpec!accessing!private! !
+freeDC!private!realizing/unrealizing! !
+fullIdentifier!accessing!private! !
+hash!comparing!public! !
+hotspot!accessing!public! !
+identifier!accessing!public! !
+identifier:!accessing!public! !
+imageManager!accessing!public! !
+imageType!constants!private!testing! !
+instanceHandle!accessing!public! !
+instanceHandle:!accessing!public! !
+isPersistent!private!testing! !
+isShared!private!testing! !
+loadFromFile:extent:!private!realizing/unrealizing! !
+loadFromInstance:!private!realizing/unrealizing! !
+printOn:!printing!public! !
+!
 
 Image methodProtocol: #image attributes: #(#readOnly) selectors: #(#drawOn: #drawOn:at: #drawOn:at:extent: #extent)!
 
@@ -350,13 +352,15 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^3! !
-!Image class categoriesFor: #fromFile:!instance creation!public! !
-!Image class categoriesFor: #fromFile:usingLocator:!instance creation!public! !
-!Image class categoriesFor: #fromId:!instance creation!public! !
-!Image class categoriesFor: #fromId:in:!instance creation!public! !
-!Image class categoriesFor: #fromSystemId:!instance creation!public! !
-!Image class categoriesFor: #icon!constants!public! !
-!Image class categoriesFor: #imageManager!accessing!public! !
-!Image class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Image class categoriesFor: #stbVersion!binary filing!public! !
+!Image class categoriesForMethods!
+fromFile:!instance creation!public! !
+fromFile:usingLocator:!instance creation!public! !
+fromId:!instance creation!public! !
+fromId:in:!instance creation!public! !
+fromSystemId:!instance creation!public! !
+icon!constants!public! !
+imageManager!accessing!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

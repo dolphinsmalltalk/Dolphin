@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Stream subclass: #SequencedStream
 	instanceVariableNames: ''
@@ -227,28 +227,30 @@ upToAll: aCollection
 		ifFalse: 
 			[self position: start.
 			self upToEnd]! !
-!SequencedStream categoriesFor: #contents!accessing!public! !
-!SequencedStream categoriesFor: #copyFrom:to:!copying!public! !
-!SequencedStream categoriesFor: #flush!accessing!public! !
-!SequencedStream categoriesFor: #isEmpty!public!testing! !
-!SequencedStream categoriesFor: #isPositionable!public!testing! !
-!SequencedStream categoriesFor: #nextLine!accessing!public! !
-!SequencedStream categoriesFor: #nextWord!accessing!public! !
-!SequencedStream categoriesFor: #notEmpty!public!testing! !
-!SequencedStream categoriesFor: #peek!accessing!public! !
-!SequencedStream categoriesFor: #peekFor:!accessing!public! !
-!SequencedStream categoriesFor: #pop!positioning!public! !
-!SequencedStream categoriesFor: #position!positioning!public! !
-!SequencedStream categoriesFor: #position:!positioning!public! !
-!SequencedStream categoriesFor: #reset!positioning!public! !
-!SequencedStream categoriesFor: #reverseContents!accessing!public! !
-!SequencedStream categoriesFor: #setToEnd!positioning!public! !
-!SequencedStream categoriesFor: #skip:!positioning!public! !
-!SequencedStream categoriesFor: #skipSeparators!positioning!public! !
-!SequencedStream categoriesFor: #skipToAll:!positioning!public! !
-!SequencedStream categoriesFor: #skipWhile:!positioning!public! !
-!SequencedStream categoriesFor: #skipWhileMatchAll:!positioning!public! !
-!SequencedStream categoriesFor: #upToAll:!positioning!public! !
+!SequencedStream categoriesForMethods!
+contents!accessing!public! !
+copyFrom:to:!copying!public! !
+flush!accessing!public! !
+isEmpty!public!testing! !
+isPositionable!public!testing! !
+nextLine!accessing!public! !
+nextWord!accessing!public! !
+notEmpty!public!testing! !
+peek!accessing!public! !
+peekFor:!accessing!public! !
+pop!positioning!public! !
+position!positioning!public! !
+position:!positioning!public! !
+reset!positioning!public! !
+reverseContents!accessing!public! !
+setToEnd!positioning!public! !
+skip:!positioning!public! !
+skipSeparators!positioning!public! !
+skipToAll:!positioning!public! !
+skipWhile:!positioning!public! !
+skipWhileMatchAll:!positioning!public! !
+upToAll:!positioning!public! !
+!
 
 SequencedStream methodProtocol: #gettableStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #do: #next #next: #nextLine #nextMatchFor: #peek #peekFor: #skip: #skipTo: #upTo:)!
 SequencedStream methodProtocol: #sequencedStream attributes: #(#ansi #readOnly) selectors: #(#close #contents #isEmpty #position #position: #reset #setToEnd)!

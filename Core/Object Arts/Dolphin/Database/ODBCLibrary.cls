@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #ODBCLibrary
 	instanceVariableNames: ''
@@ -441,45 +441,47 @@ sqlTables: anExternalHandleSTMT szTableQualifier: aStringParmQual cbTableQualifi
 
 	<stdcall: sword SQLTablesW handle lpwstr sword lpwstr sword lpwstr sword lpwstr sword>
 	^self invalidCall: _failureCode! !
-!ODBCLibrary categoriesFor: #sqlAllocHandle:inputHandle:outputHandlePtr:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlBindCol:columnNumber:targetType:targetValuePtr:bufferLength:strLenOrInd:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlBindParameter:parameterNumber:inputOutputType:valueType:parameterType:columnSize:decimalDigits:parameterValuePtr:bufferLength:strLenOrIndPtr:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlBrowseConnect:inConnectionString:stringLength1:outConnectionString:bufferLength:stringLength2Ptr:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlCancel:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlCloseCursor:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlColAttribute:columnNumber:fieldIdentifier:characterAttributePtr:bufferLength:stringLengthPtr:numericAttributePtr:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlColumns:catalogName:nameLength1:schemaName:nameLength2:tableName:nameLength3:columnName:nameLength4:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlConnect:serverName:nameLength1:userName:nameLength2:authentication:nameLength3:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlDataSources:direction:serverName:bufferLength1:nameLength1Ptr:description:bufferLength2:nameLength2Ptr:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlDescribeCol:columnNumber:columnName:bufferLength:nameLengthPtr:dataTypePtr:columnSizePtr:decimalDigitsPtr:nullablePtr:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlDisconnect:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlDriverConnect:windowHandle:inConnectionString:stringLength1:outConnectionString:bufferLength:stringLength2Ptr:driverCompletion:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlEndTran:handle:completionType:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlExecDirect:statementText:textLength:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlExecute:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlFetchScroll:fetchOrientation:fetchOffset:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlForeignKeys:pkCatalogName:nameLength1:pkSchemaName:nameLength2:pkTableName:nameLength3:fkCatalogName:nameLength4:fkSchemaName:nameLength5:fkTableName:nameLength6:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlFreeHandle:handle:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlFreeStmt:option:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlGetConnectAttr:attribute:valuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlGetData:columnNumber:targetType:targetValuePtr:bufferLength:strLenOrIndPtr:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlGetDiagRec:handle:recNumber:szSqlState:pfNativeError:szErrorMsg:cbErrorMsgMax:pcbErrorMsg:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlGetEnvAttr:infoType:infoValuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlGetFunctions:functionId:supportedPtr:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlGetInfo:infoType:infoValuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlGetStmtAttr:attribute:valuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlNumResultCols:pccol:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlPrepare:statementText:textLength:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlPrimaryKeys:catalogName:nameLength1:schemaName:nameLength2:tableName:nameLength3:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlProcedures:catalogName:nameLength1:schemaName:nameLength1:procName:nameLength3:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlRowCount:rowCountPtr:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlSetConnectAttr:attribute:valuePtr:stringLength:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlSetEnvAttr:attribute:valuePtr:stringLength:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlSetPos:rowNumber:operation:lockType:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlSetStmtAttr:attribute:valuePtr:stringLength:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlSpecialColumns:identifierType:catalogName:nameLength1:schemaName:nameLength2:tableName:nameLength3:scope:nullable:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlStatistics:catalogName:nameLength1:schemaName:nameLength2:tableName:nameLength3:unique:reserved:!public!win32 functions-odbc library! !
-!ODBCLibrary categoriesFor: #sqlTables:szTableQualifier:cbTableQualifier:szTableOwner:cbTableOwner:szTableName:cbTableName:szTableType:cbTableType:!public!win32 functions-odbc library! !
+!ODBCLibrary categoriesForMethods!
+sqlAllocHandle:inputHandle:outputHandlePtr:!public!win32 functions-odbc library! !
+sqlBindCol:columnNumber:targetType:targetValuePtr:bufferLength:strLenOrInd:!public!win32 functions-odbc library! !
+sqlBindParameter:parameterNumber:inputOutputType:valueType:parameterType:columnSize:decimalDigits:parameterValuePtr:bufferLength:strLenOrIndPtr:!public!win32 functions-odbc library! !
+sqlBrowseConnect:inConnectionString:stringLength1:outConnectionString:bufferLength:stringLength2Ptr:!public!win32 functions-odbc library! !
+sqlCancel:!public!win32 functions-odbc library! !
+sqlCloseCursor:!public!win32 functions-odbc library! !
+sqlColAttribute:columnNumber:fieldIdentifier:characterAttributePtr:bufferLength:stringLengthPtr:numericAttributePtr:!public!win32 functions-odbc library! !
+sqlColumns:catalogName:nameLength1:schemaName:nameLength2:tableName:nameLength3:columnName:nameLength4:!public!win32 functions-odbc library! !
+sqlConnect:serverName:nameLength1:userName:nameLength2:authentication:nameLength3:!public!win32 functions-odbc library! !
+sqlDataSources:direction:serverName:bufferLength1:nameLength1Ptr:description:bufferLength2:nameLength2Ptr:!public!win32 functions-odbc library! !
+sqlDescribeCol:columnNumber:columnName:bufferLength:nameLengthPtr:dataTypePtr:columnSizePtr:decimalDigitsPtr:nullablePtr:!public!win32 functions-odbc library! !
+sqlDisconnect:!public!win32 functions-odbc library! !
+sqlDriverConnect:windowHandle:inConnectionString:stringLength1:outConnectionString:bufferLength:stringLength2Ptr:driverCompletion:!public!win32 functions-odbc library! !
+sqlEndTran:handle:completionType:!public!win32 functions-odbc library! !
+sqlExecDirect:statementText:textLength:!public!win32 functions-odbc library! !
+sqlExecute:!public!win32 functions-odbc library! !
+sqlFetchScroll:fetchOrientation:fetchOffset:!public!win32 functions-odbc library! !
+sqlForeignKeys:pkCatalogName:nameLength1:pkSchemaName:nameLength2:pkTableName:nameLength3:fkCatalogName:nameLength4:fkSchemaName:nameLength5:fkTableName:nameLength6:!public!win32 functions-odbc library! !
+sqlFreeHandle:handle:!public!win32 functions-odbc library! !
+sqlFreeStmt:option:!public!win32 functions-odbc library! !
+sqlGetConnectAttr:attribute:valuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
+sqlGetData:columnNumber:targetType:targetValuePtr:bufferLength:strLenOrIndPtr:!public!win32 functions-odbc library! !
+sqlGetDiagRec:handle:recNumber:szSqlState:pfNativeError:szErrorMsg:cbErrorMsgMax:pcbErrorMsg:!public!win32 functions-odbc library! !
+sqlGetEnvAttr:infoType:infoValuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
+sqlGetFunctions:functionId:supportedPtr:!public!win32 functions-odbc library! !
+sqlGetInfo:infoType:infoValuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
+sqlGetStmtAttr:attribute:valuePtr:bufferLength:stringLengthPtr:!public!win32 functions-odbc library! !
+sqlNumResultCols:pccol:!public!win32 functions-odbc library! !
+sqlPrepare:statementText:textLength:!public!win32 functions-odbc library! !
+sqlPrimaryKeys:catalogName:nameLength1:schemaName:nameLength2:tableName:nameLength3:!public!win32 functions-odbc library! !
+sqlProcedures:catalogName:nameLength1:schemaName:nameLength1:procName:nameLength3:!public!win32 functions-odbc library! !
+sqlRowCount:rowCountPtr:!public!win32 functions-odbc library! !
+sqlSetConnectAttr:attribute:valuePtr:stringLength:!public!win32 functions-odbc library! !
+sqlSetEnvAttr:attribute:valuePtr:stringLength:!public!win32 functions-odbc library! !
+sqlSetPos:rowNumber:operation:lockType:!public!win32 functions-odbc library! !
+sqlSetStmtAttr:attribute:valuePtr:stringLength:!public!win32 functions-odbc library! !
+sqlSpecialColumns:identifierType:catalogName:nameLength1:schemaName:nameLength2:tableName:nameLength3:scope:nullable:!public!win32 functions-odbc library! !
+sqlStatistics:catalogName:nameLength1:schemaName:nameLength2:tableName:nameLength3:unique:reserved:!public!win32 functions-odbc library! !
+sqlTables:szTableQualifier:cbTableQualifier:szTableOwner:cbTableOwner:szTableName:cbTableName:szTableType:cbTableType:!public!win32 functions-odbc library! !
+!
 
 !ODBCLibrary class methodsFor!
 
@@ -494,6 +496,8 @@ onStartup2
 
 	DBResultSet onStartup.
 ! !
-!ODBCLibrary class categoriesFor: #fileName!constants!public! !
-!ODBCLibrary class categoriesFor: #onStartup2!event handling!private! !
+!ODBCLibrary class categoriesForMethods!
+fileName!constants!public! !
+onStartup2!event handling!private! !
+!
 

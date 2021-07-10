@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXStructureTypeAnalyzer subclass: #TKindUnionAnalyzer
 	instanceVariableNames: ''
@@ -14,7 +14,9 @@ isUnion
 	"Answer whether the receiver describes a union."
 
 	^true! !
-!TKindUnionAnalyzer categoriesFor: #isUnion!public!testing! !
+!TKindUnionAnalyzer categoriesForMethods!
+isUnion!public!testing! !
+!
 
 !TKindUnionAnalyzer class methodsFor!
 
@@ -22,5 +24,7 @@ typekind
 	"Private - Answer the Automation TYPEKIND associated with the receiver."
 	
 	^TKIND_UNION! !
-!TKindUnionAnalyzer class categoriesFor: #typekind!constants!private! !
+!TKindUnionAnalyzer class categoriesForMethods!
+typekind!constants!private! !
+!
 

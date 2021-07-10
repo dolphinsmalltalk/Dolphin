@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #NONCLIENTMETRICSW
 	instanceVariableNames: ''
@@ -67,14 +67,16 @@ lfMenuFont
 	"Answer the <LOGFONTW> value of the receiver's 'lfMenuFont' field."
 
 	^LOGFONTW fromAddress: bytes yourAddress + _OffsetOf_lfMenuFont! !
-!NONCLIENTMETRICSW categoriesFor: #dwSize:!**compiled accessors**!public! !
-!NONCLIENTMETRICSW categoriesFor: #iCaptionHeight!**compiled accessors**!public! !
-!NONCLIENTMETRICSW categoriesFor: #iMenuHeight!**compiled accessors**!public! !
-!NONCLIENTMETRICSW categoriesFor: #iMenuWidth!**compiled accessors**!public! !
-!NONCLIENTMETRICSW categoriesFor: #iPaddedBorderWidth!**compiled accessors**!public! !
-!NONCLIENTMETRICSW categoriesFor: #iScrollHeight!**compiled accessors**!public! !
-!NONCLIENTMETRICSW categoriesFor: #iScrollWidth!**compiled accessors**!public! !
-!NONCLIENTMETRICSW categoriesFor: #lfMenuFont!**compiled accessors**!public! !
+!NONCLIENTMETRICSW categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+iCaptionHeight!**compiled accessors**!public! !
+iMenuHeight!**compiled accessors**!public! !
+iMenuWidth!**compiled accessors**!public! !
+iPaddedBorderWidth!**compiled accessors**!public! !
+iScrollHeight!**compiled accessors**!public! !
+iScrollWidth!**compiled accessors**!public! !
+lfMenuFont!**compiled accessors**!public! !
+!
 
 !NONCLIENTMETRICSW class methodsFor!
 
@@ -122,6 +124,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #iBorderWidth #iScrollWidth #iScrollHeight #iCaptionWidth #iCaptionHeight #lfCationFont #iSmCaptionWidth #iSmCaptionHeight #lfSmCaptionFont #iMenuWidth #iMenuHeight #lfMenuFont #lfStatusFont #lfMessageFont #iPaddedBorderWidth)! !
-!NONCLIENTMETRICSW class categoriesFor: #defineFields!public!template definition! !
-!NONCLIENTMETRICSW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!NONCLIENTMETRICSW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

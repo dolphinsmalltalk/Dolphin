@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ADODBRecordset15 subclass: #ADODBRecordset20
 	instanceVariableNames: ''
@@ -315,33 +315,35 @@ stayInSync: pbStayInSync
 	"Set the 'StayInSync' property of the receiver to the <varbool> value of the argument."
 
 	self put_StayInSync: pbStayInSync! !
-!ADODBRecordset20 categoriesFor: #_xSave!**auto generated**!methods!public! !
-!ADODBRecordset20 categoriesFor: #_xSave:PersistFormat:!**auto generated**!COM Interfaces-Recordset20!public! !
-!ADODBRecordset20 categoriesFor: #activeCommand!**auto generated**!properties!public! !
-!ADODBRecordset20 categoriesFor: #Cancel!**auto generated**!COM Interfaces-Recordset20!public! !
-!ADODBRecordset20 categoriesFor: #clone!**auto generated**!methods!public! !
-!ADODBRecordset20 categoriesFor: #clone:!**auto generated**!methods!public! !
-!ADODBRecordset20 categoriesFor: #Clone:ppvObject:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #compareBookmarks:bookmark2:!**auto generated**!methods!public! !
-!ADODBRecordset20 categoriesFor: #CompareBookmarks:Bookmark2:pCompare:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #dataMember!**auto generated**!properties!public! !
-!ADODBRecordset20 categoriesFor: #dataMember:!**auto generated**!properties!public! !
-!ADODBRecordset20 categoriesFor: #dataSource!**auto generated**!properties!public! !
-!ADODBRecordset20 categoriesFor: #get_ActiveCommand:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #get_DataMember:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #get_DataSource:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #get_StayInSync:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #getString!**auto generated**!methods!public! !
-!ADODBRecordset20 categoriesFor: #getString:numRows:columnDelimeter:rowDelimeter:nullExpr:!**auto generated**!methods!public! !
-!ADODBRecordset20 categoriesFor: #GetString:NumRows:ColumnDelimeter:RowDelimeter:NullExpr:pRetString:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #put_DataMember:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #put_StayInSync:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #putref_DataSource:!**auto generated**!COM Interfaces-Recordset20!private! !
-!ADODBRecordset20 categoriesFor: #resync!**auto generated**!methods!public! !
-!ADODBRecordset20 categoriesFor: #Resync:ResyncValues:!**auto generated**!COM Interfaces-Recordset20!public! !
-!ADODBRecordset20 categoriesFor: #setDataSource:!**auto generated**!properties!public! !
-!ADODBRecordset20 categoriesFor: #stayInSync!**auto generated**!properties!public! !
-!ADODBRecordset20 categoriesFor: #stayInSync:!**auto generated**!properties!public! !
+!ADODBRecordset20 categoriesForMethods!
+_xSave!**auto generated**!methods!public! !
+_xSave:PersistFormat:!**auto generated**!COM Interfaces-Recordset20!public! !
+activeCommand!**auto generated**!properties!public! !
+Cancel!**auto generated**!COM Interfaces-Recordset20!public! !
+clone!**auto generated**!methods!public! !
+clone:!**auto generated**!methods!public! !
+Clone:ppvObject:!**auto generated**!COM Interfaces-Recordset20!private! !
+compareBookmarks:bookmark2:!**auto generated**!methods!public! !
+CompareBookmarks:Bookmark2:pCompare:!**auto generated**!COM Interfaces-Recordset20!private! !
+dataMember!**auto generated**!properties!public! !
+dataMember:!**auto generated**!properties!public! !
+dataSource!**auto generated**!properties!public! !
+get_ActiveCommand:!**auto generated**!COM Interfaces-Recordset20!private! !
+get_DataMember:!**auto generated**!COM Interfaces-Recordset20!private! !
+get_DataSource:!**auto generated**!COM Interfaces-Recordset20!private! !
+get_StayInSync:!**auto generated**!COM Interfaces-Recordset20!private! !
+getString!**auto generated**!methods!public! !
+getString:numRows:columnDelimeter:rowDelimeter:nullExpr:!**auto generated**!methods!public! !
+GetString:NumRows:ColumnDelimeter:RowDelimeter:NullExpr:pRetString:!**auto generated**!COM Interfaces-Recordset20!private! !
+put_DataMember:!**auto generated**!COM Interfaces-Recordset20!private! !
+put_StayInSync:!**auto generated**!COM Interfaces-Recordset20!private! !
+putref_DataSource:!**auto generated**!COM Interfaces-Recordset20!private! !
+resync!**auto generated**!methods!public! !
+Resync:ResyncValues:!**auto generated**!COM Interfaces-Recordset20!public! !
+setDataSource:!**auto generated**!properties!public! !
+stayInSync!**auto generated**!properties!public! !
+stayInSync:!**auto generated**!properties!public! !
+!
 
 !ADODBRecordset20 class methodsFor!
 
@@ -376,5 +378,7 @@ defineFunctions
 		defineFunction: #Resync:ResyncValues:
 			argumentTypes: 'sdword sdword'
 ! !
-!ADODBRecordset20 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODBRecordset20 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

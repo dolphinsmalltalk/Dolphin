@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SmalltalkToolShell subclass: #ProcessMonitor
 	instanceVariableNames: 'listPresenter updateInterval'
@@ -233,30 +233,32 @@ updateInterval: aDuration
 
 	updateInterval := aDuration.
 	self setTimer! !
-!ProcessMonitor categoriesFor: #createComponents!initializing!public! !
-!ProcessMonitor categoriesFor: #createSchematicWiring!initializing!public! !
-!ProcessMonitor categoriesFor: #debugIt!commands!public! !
-!ProcessMonitor categoriesFor: #defaultHelpId!constants!public! !
-!ProcessMonitor categoriesFor: #inspectIt!commands!public! !
-!ProcessMonitor categoriesFor: #isSystemProcess:!enquiries!public! !
-!ProcessMonitor categoriesFor: #onProcess:renameTo:accept:!event handling!private! !
-!ProcessMonitor categoriesFor: #onStartup!event handling!private! !
-!ProcessMonitor categoriesFor: #onTimerTick:!event handling!public! !
-!ProcessMonitor categoriesFor: #onViewDestroyed!event handling!public! !
-!ProcessMonitor categoriesFor: #onViewOpened!event handling!public! !
-!ProcessMonitor categoriesFor: #pause!helpers!private! !
-!ProcessMonitor categoriesFor: #process!accessing!private! !
-!ProcessMonitor categoriesFor: #process:!accessing!private! !
-!ProcessMonitor categoriesFor: #queryCommand:!commands!private! !
-!ProcessMonitor categoriesFor: #refresh!commands!private! !
-!ProcessMonitor categoriesFor: #renameIt!commands!public! !
-!ProcessMonitor categoriesFor: #setLowerPriority:!commands!public! !
-!ProcessMonitor categoriesFor: #setPriority:!commands!public! !
-!ProcessMonitor categoriesFor: #setSpeed:!commands!public! !
-!ProcessMonitor categoriesFor: #setTimer!helpers!private! !
-!ProcessMonitor categoriesFor: #terminateProcess!commands!public! !
-!ProcessMonitor categoriesFor: #updateInterval!accessing!private! !
-!ProcessMonitor categoriesFor: #updateInterval:!accessing!private! !
+!ProcessMonitor categoriesForMethods!
+createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+debugIt!commands!public! !
+defaultHelpId!constants!public! !
+inspectIt!commands!public! !
+isSystemProcess:!enquiries!public! !
+onProcess:renameTo:accept:!event handling!private! !
+onStartup!event handling!private! !
+onTimerTick:!event handling!public! !
+onViewDestroyed!event handling!public! !
+onViewOpened!event handling!public! !
+pause!helpers!private! !
+process!accessing!private! !
+process:!accessing!private! !
+queryCommand:!commands!private! !
+refresh!commands!private! !
+renameIt!commands!public! !
+setLowerPriority:!commands!public! !
+setPriority:!commands!public! !
+setSpeed:!commands!public! !
+setTimer!helpers!private! !
+terminateProcess!commands!public! !
+updateInterval!accessing!private! !
+updateInterval:!accessing!private! !
+!
 
 !ProcessMonitor class methodsFor!
 
@@ -331,13 +333,15 @@ reuseIfOpen
 
 toolsFolderHelpId
 	^10597! !
-!ProcessMonitor class categoriesFor: #defaultUpdateInterval!options!public! !
-!ProcessMonitor class categoriesFor: #defaultUpdateInterval:!options!public! !
-!ProcessMonitor class categoriesFor: #displayOn:!displaying!public! !
-!ProcessMonitor class categoriesFor: #icon!constants!public! !
-!ProcessMonitor class categoriesFor: #initialize!initializing!private! !
-!ProcessMonitor class categoriesFor: #publishedAspects!public! !
-!ProcessMonitor class categoriesFor: #resource_Default_view!public!resources-views! !
-!ProcessMonitor class categoriesFor: #reuseIfOpen!accessing!public! !
-!ProcessMonitor class categoriesFor: #toolsFolderHelpId!constants!public! !
+!ProcessMonitor class categoriesForMethods!
+defaultUpdateInterval!options!public! !
+defaultUpdateInterval:!options!public! !
+displayOn:!displaying!public! !
+icon!constants!public! !
+initialize!initializing!private! !
+publishedAspects!public! !
+resource_Default_view!public!resources-views! !
+reuseIfOpen!accessing!public! !
+toolsFolderHelpId!constants!public! !
+!
 

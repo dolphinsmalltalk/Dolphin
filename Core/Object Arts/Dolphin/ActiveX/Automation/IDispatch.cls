@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #IDispatch
 	instanceVariableNames: 'typeInfo dispatchImplementor'
@@ -699,63 +699,65 @@ value: value
 	Raise an HRESULTError if the receiver does not have  a default value property."
 
 	self setPropertyId: DISPID_VALUE value: value! !
-!IDispatch categoriesFor: #_newEnum!enumerating!private! !
-!IDispatch categoriesFor: #asImplType!converting!public! !
-!IDispatch categoriesFor: #asVariant!converting!public! !
-!IDispatch categoriesFor: #basicFree!private!realizing/unrealizing! !
-!IDispatch categoriesFor: #basicInvokeId:flags:parms:retVal:!dispatching!private! !
-!IDispatch categoriesFor: #contents!accessing!public! !
-!IDispatch categoriesFor: #dispatchImplementor!accessing!public! !
-!IDispatch categoriesFor: #dispatchImplementor:!accessing!public! !
-!IDispatch categoriesFor: #displayOn:!printing!public! !
-!IDispatch categoriesFor: #displayValueOn:!printing!private! !
-!IDispatch categoriesFor: #doesNotUnderstand:!exceptions!public! !
-!IDispatch categoriesFor: #downCast!converting!public! !
-!IDispatch categoriesFor: #getIDsOfNames:!accessing!public! !
-!IDispatch categoriesFor: #GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!methods!private! !
-!IDispatch categoriesFor: #getProperty:!accessing!properties!public! !
-!IDispatch categoriesFor: #getProperty:item:!accessing!properties!public! !
-!IDispatch categoriesFor: #getPropertyId:!accessing!public! !
-!IDispatch categoriesFor: #getPropertyId:item:!accessing!public! !
-!IDispatch categoriesFor: #getPropertyId:withArguments:!accessing!public! !
-!IDispatch categoriesFor: #getPropertyObj:id:!accessing!private! !
-!IDispatch categoriesFor: #getPropertyObj:id:item:!dispatching!private! !
-!IDispatch categoriesFor: #getTypeInfo:ifNone:!accessing!private! !
-!IDispatch categoriesFor: #GetTypeInfo:lcid:pptinfo:!COM Interfaces-IDispatch!methods!private! !
-!IDispatch categoriesFor: #getTypeInfoCount!**auto generated**!methods!public! !
-!IDispatch categoriesFor: #GetTypeInfoCount:!**auto generated**!COM Interfaces-IDispatch!private! !
-!IDispatch categoriesFor: #has_NewEnum!private!testing! !
-!IDispatch categoriesFor: #hasTypeInfo!public!testing! !
-!IDispatch categoriesFor: #idOfName:!accessing!public! !
-!IDispatch categoriesFor: #idOfName:ifAbsent:!accessing!public! !
-!IDispatch categoriesFor: #implementor:!accessing!public! !
-!IDispatch categoriesFor: #invoke:!dispatching!public! !
-!IDispatch categoriesFor: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!methods!private! !
-!IDispatch categoriesFor: #invoke:with:!dispatching!public! !
-!IDispatch categoriesFor: #invoke:with:with:!dispatching!public! !
-!IDispatch categoriesFor: #invoke:with:with:with:!dispatching!public! !
-!IDispatch categoriesFor: #invoke:with:with:with:with:!dispatching!public! !
-!IDispatch categoriesFor: #invoke:withArguments:!dispatching!public! !
-!IDispatch categoriesFor: #invokeId:!dispatching!public! !
-!IDispatch categoriesFor: #invokeId:flags:parms:!dispatching!public! !
-!IDispatch categoriesFor: #invokeId:flags:parms:retVal:!dispatching!public! !
-!IDispatch categoriesFor: #invokeId:with:!dispatching!public! !
-!IDispatch categoriesFor: #invokeId:with:with:!dispatching!public! !
-!IDispatch categoriesFor: #invokeId:with:with:with:!dispatching!public! !
-!IDispatch categoriesFor: #invokeId:withArguments:!dispatching!public! !
-!IDispatch categoriesFor: #isExtensible!public!testing! !
-!IDispatch categoriesFor: #isVBCollection!public!testing! !
-!IDispatch categoriesFor: #newEnum!enumerating!public! !
-!IDispatch categoriesFor: #printValueOn:!printing!private! !
-!IDispatch categoriesFor: #setProperty:item:value:!accessing!properties!public! !
-!IDispatch categoriesFor: #setProperty:value:!accessing!properties!public! !
-!IDispatch categoriesFor: #setPropertyId:item:value:!accessing!properties!public! !
-!IDispatch categoriesFor: #setPropertyId:value:!accessing!properties!public! !
-!IDispatch categoriesFor: #setPropertyId:withArguments:value:!accessing!properties!public! !
-!IDispatch categoriesFor: #signalException:!dispatching!private! !
-!IDispatch categoriesFor: #typeInfoIfNone:!accessing!public! !
-!IDispatch categoriesFor: #value!accessing!public! !
-!IDispatch categoriesFor: #value:!accessing!public! !
+!IDispatch categoriesForMethods!
+_newEnum!enumerating!private! !
+asImplType!converting!public! !
+asVariant!converting!public! !
+basicFree!private!realizing/unrealizing! !
+basicInvokeId:flags:parms:retVal:!dispatching!private! !
+contents!accessing!public! !
+dispatchImplementor!accessing!public! !
+dispatchImplementor:!accessing!public! !
+displayOn:!printing!public! !
+displayValueOn:!printing!private! !
+doesNotUnderstand:!exceptions!public! !
+downCast!converting!public! !
+getIDsOfNames:!accessing!public! !
+GetIDsOfNames:rgszNames:cNames:lcid:rgdispid:!COM Interfaces-IDispatch!methods!private! !
+getProperty:!accessing!properties!public! !
+getProperty:item:!accessing!properties!public! !
+getPropertyId:!accessing!public! !
+getPropertyId:item:!accessing!public! !
+getPropertyId:withArguments:!accessing!public! !
+getPropertyObj:id:!accessing!private! !
+getPropertyObj:id:item:!dispatching!private! !
+getTypeInfo:ifNone:!accessing!private! !
+GetTypeInfo:lcid:pptinfo:!COM Interfaces-IDispatch!methods!private! !
+getTypeInfoCount!**auto generated**!methods!public! !
+GetTypeInfoCount:!**auto generated**!COM Interfaces-IDispatch!private! !
+has_NewEnum!private!testing! !
+hasTypeInfo!public!testing! !
+idOfName:!accessing!public! !
+idOfName:ifAbsent:!accessing!public! !
+implementor:!accessing!public! !
+invoke:!dispatching!public! !
+Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:!COM Interfaces-IDispatch!methods!private! !
+invoke:with:!dispatching!public! !
+invoke:with:with:!dispatching!public! !
+invoke:with:with:with:!dispatching!public! !
+invoke:with:with:with:with:!dispatching!public! !
+invoke:withArguments:!dispatching!public! !
+invokeId:!dispatching!public! !
+invokeId:flags:parms:!dispatching!public! !
+invokeId:flags:parms:retVal:!dispatching!public! !
+invokeId:with:!dispatching!public! !
+invokeId:with:with:!dispatching!public! !
+invokeId:with:with:with:!dispatching!public! !
+invokeId:withArguments:!dispatching!public! !
+isExtensible!public!testing! !
+isVBCollection!public!testing! !
+newEnum!enumerating!public! !
+printValueOn:!printing!private! !
+setProperty:item:value:!accessing!properties!public! !
+setProperty:value:!accessing!properties!public! !
+setPropertyId:item:value:!accessing!properties!public! !
+setPropertyId:value:!accessing!properties!public! !
+setPropertyId:withArguments:value:!accessing!properties!public! !
+signalException:!dispatching!private! !
+typeInfoIfNone:!accessing!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 IDispatch methodProtocol: #IDispatch attributes: #(#readOnly) selectors: #(#GetIDsOfNames:rgszNames:cNames:lcid:rgdispid: #GetTypeInfo:lcid:pptinfo: #GetTypeInfoCount: #Invoke:riid:lcid:wFlags:pdispparams:pvarResult:pexcepinfo:puArgErr:)!
 
@@ -802,8 +804,10 @@ vt
 	type when represented in a <VARIANT>."
 
 	^VT_DISPATCH! !
-!IDispatch class categoriesFor: #defineFunctions!initializing!public! !
-!IDispatch class categoriesFor: #icon!constants!public! !
-!IDispatch class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!IDispatch class categoriesFor: #vt!constants!public! !
+!IDispatch class categoriesForMethods!
+defineFunctions!initializing!public! !
+icon!constants!public! !
+uninitialize!class hierarchy-removing!private! !
+vt!constants!public! !
+!
 

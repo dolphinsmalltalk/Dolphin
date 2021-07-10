@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 View subclass: #ContainerView
 	instanceVariableNames: 'layoutManager names insets'
@@ -287,37 +287,39 @@ viewNamed: aString ifNone: exceptionHandler
 					found := each viewNamed: aString ifNone: [].
 					found notNil ifTrue: [^found]].
 			exceptionHandler value]! !
-!ContainerView categoriesFor: #actualInsets:!accessing!private! !
-!ContainerView categoriesFor: #actualPreferredExtent:!geometry!private! !
-!ContainerView categoriesFor: #addSubView:name:!hierarchy!public!sub views! !
-!ContainerView categoriesFor: #arrangementOf:!accessing!public! !
-!ContainerView categoriesFor: #arrangementOf:put:!accessing!public! !
-!ContainerView categoriesFor: #canAcceptSubViews!hierarchy!public!sub views! !
-!ContainerView categoriesFor: #defaultExtent!constants!private! !
-!ContainerView categoriesFor: #defaultExtentOf:!geometry!public! !
-!ContainerView categoriesFor: #defaultLayoutManager!constants!private! !
-!ContainerView categoriesFor: #defaultWindowExStyle!constants!private! !
-!ContainerView categoriesFor: #errorDuplicateName:!exceptions!public! !
-!ContainerView categoriesFor: #implicitInsets:!accessing!private! !
-!ContainerView categoriesFor: #initialize!initializing!private! !
-!ContainerView categoriesFor: #insets!accessing!public! !
-!ContainerView categoriesFor: #insets:!accessing!public! !
-!ContainerView categoriesFor: #isControlParent!accessing-styles!public! !
-!ContainerView categoriesFor: #isControlParent:!accessing-styles!public! !
-!ContainerView categoriesFor: #layout:!geometry!private! !
-!ContainerView categoriesFor: #layoutManager!geometry!public! !
-!ContainerView categoriesFor: #layoutManager:!geometry!public! !
-!ContainerView categoriesFor: #name:as:!hierarchy!public!sub views! !
-!ContainerView categoriesFor: #nameOf:!hierarchy!public!sub views! !
-!ContainerView categoriesFor: #onSubViewAdded:!event handling!public! !
-!ContainerView categoriesFor: #onSubViewRemoved:!event handling!private! !
-!ContainerView categoriesFor: #onZOrderChanged!event handling!public! !
-!ContainerView categoriesFor: #removeSubView:!hierarchy!public!sub views! !
-!ContainerView categoriesFor: #resolutionScaledBy:!geometry!private! !
-!ContainerView categoriesFor: #tabFirst!public!tabbing! !
-!ContainerView categoriesFor: #validateSubViewLayouts:!geometry!private! !
-!ContainerView categoriesFor: #validateUserInterface!operations!public! !
-!ContainerView categoriesFor: #viewNamed:ifNone:!hierarchy!public!sub views! !
+!ContainerView categoriesForMethods!
+actualInsets:!accessing!private! !
+actualPreferredExtent:!geometry!private! !
+addSubView:name:!hierarchy!public!sub views! !
+arrangementOf:!accessing!public! !
+arrangementOf:put:!accessing!public! !
+canAcceptSubViews!hierarchy!public!sub views! !
+defaultExtent!constants!private! !
+defaultExtentOf:!geometry!public! !
+defaultLayoutManager!constants!private! !
+defaultWindowExStyle!constants!private! !
+errorDuplicateName:!exceptions!public! !
+implicitInsets:!accessing!private! !
+initialize!initializing!private! !
+insets!accessing!public! !
+insets:!accessing!public! !
+isControlParent!accessing-styles!public! !
+isControlParent:!accessing-styles!public! !
+layout:!geometry!private! !
+layoutManager!geometry!public! !
+layoutManager:!geometry!public! !
+name:as:!hierarchy!public!sub views! !
+nameOf:!hierarchy!public!sub views! !
+onSubViewAdded:!event handling!public! !
+onSubViewRemoved:!event handling!private! !
+onZOrderChanged!event handling!public! !
+removeSubView:!hierarchy!public!sub views! !
+resolutionScaledBy:!geometry!private! !
+tabFirst!public!tabbing! !
+validateSubViewLayouts:!geometry!private! !
+validateUserInterface!operations!public! !
+viewNamed:ifNone:!hierarchy!public!sub views! !
+!
 
 ContainerView methodProtocol: #compositeView attributes: #(#readOnly) selectors: #(#addSubView: #allParents #allSubViews #arrangement #arrangement: #backcolor #backcolor: #canAcceptSubViews #canvas #clientExtent #clientHeight #clientRectangle #clientWidth #close #contextMenu #contextMenu: #cursor #cursorPosition #destroy #disable #disableRedraw #enable #enableRedraw #ensureLayoutValid #ensureRectangleVisible: #ensureSubView:rectangleVisible: #ensureSubViewVisible: #ensureVisible #extent #extent: #firstSubView #font #font: #forecolor #forecolor: #hasBorder #hasBorder: #hasClientEdge #hasClientEdge: #hasFocus #hasLayoutManager #hasStaticEdge #hasStaticEdge: #hasVisibleStyle #hasVisibleStyle: #height #height: #hide #invalidate #invalidateCalculatedExtent #invalidateLayout #invalidateRect: #invalidateRect:erase: #invalidateRgn: #invalidateUserInterface #isEnabled: #isGroupStop #isGroupStop: #isLayoutValid #isManaged #isManaged: #isTabStop #isTabStop: #isTopView #isTransparent #isTransparent: #isWindowVisible #layout #layoutExtent: #layoutManager #layoutManager: #managedSubViews #mapPoint:to: #mapRectangle:to: #model #model: #name #name: #nameOf: #needsValidateLayout #nextSiblingView #nonClientCanvas #onAboutToCreate #onBegin:drag: #onCommand: #onCreated: #onDestroyed #onEraseRequired: #onHScroll: #onModelChanged #onPaintRequired: #onSubViewAdded: #onSubViewRemoved: #onViewCreated #onVScroll: #onZOrderChanged #parentView #placement #placement: #plainText #position #position: #preferredExtent #preferredExtent: #presenter #presenter: #presenterConnectionPoint #preTranslateKeyboardInput: #preTranslateMessage: #preTranslateMouseInput: #previousSiblingView #queryContextMenu #recreate #rectangle #rectangle: #refreshContents #removeSubView: #resolution #screenRectangle #screenRectangle: #scrollBy:clip: #scrollBy:scroll:clip: #setCapture #styles #subViewFromPoint: #subViewFromPoint:flags: #subViews #tabFirst #tabNext #text #text: #topView #update #updateModel #usePreferredExtent #usePreferredExtent: #validate #validateLayout #validateRect: #validateUserInterface #viewNamed: #viewNamed:ifNone: #width #width: #withAllParents #withAllSubViews #x #x: #y #y: #zOrderAfter: #zOrderAfter:withFlags: #zOrderBottom #zOrderTop)!
 
@@ -337,6 +339,8 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1140850688 131073 416 nil nil nil 5 nil nil nil 416 nil 170 192 8 #() nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 1 1 626 701 501 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 250 0 0 0] 8 #() 626 193 193 nil 27 )! !
-!ContainerView class categoriesFor: #icon!constants!public! !
-!ContainerView class categoriesFor: #resource_Default_view!public!resources-views! !
+!ContainerView class categoriesForMethods!
+icon!constants!public! !
+resource_Default_view!public!resources-views! !
+!
 

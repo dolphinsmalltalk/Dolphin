@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RBAbstractCondition subclass: #RBCondition
 	instanceVariableNames: 'block type errorBlock'
@@ -38,12 +38,14 @@ type: aSymbol block: aBlock errorString: aString
 withBlock: aBlock 
 	block := aBlock.
 	type := #(#generic)! !
-!RBCondition categoriesFor: #check!checking!public! !
-!RBCondition categoriesFor: #errorBlock:!initialize/release!public! !
-!RBCondition categoriesFor: #errorBlockFor:!accessing!public! !
-!RBCondition categoriesFor: #printOn:!printing!public! !
-!RBCondition categoriesFor: #type:block:errorString:!initialize/release!public! !
-!RBCondition categoriesFor: #withBlock:!initialize/release!public! !
+!RBCondition categoriesForMethods!
+check!checking!public! !
+errorBlock:!initialize/release!public! !
+errorBlockFor:!accessing!public! !
+printOn:!printing!public! !
+type:block:errorString:!initialize/release!public! !
+withBlock:!initialize/release!public! !
+!
 
 !RBCondition class methodsFor!
 
@@ -361,41 +363,43 @@ withBlock: aBlock errorString: aString
 	^self new type: #unknown
 		block: aBlock
 		errorString: aString! !
-!RBCondition class categoriesFor: #canUnderstand:in:!instance creation!public! !
-!RBCondition class categoriesFor: #checkClassVarName:in:!public!utilities! !
-!RBCondition class categoriesFor: #checkInstanceVariableName:in:!public!utilities! !
-!RBCondition class categoriesFor: #checkMethodName:in:!public!utilities! !
-!RBCondition class categoriesFor: #definesClassVariable:in:!instance creation!public! !
-!RBCondition class categoriesFor: #definesInstanceVariable:in:!instance creation!public! !
-!RBCondition class categoriesFor: #definesSelector:in:!instance creation!public! !
-!RBCondition class categoriesFor: #definesTemporaryVariable:in:!instance creation!public! !
-!RBCondition class categoriesFor: #definesTempVar:in:ignoreClass:!instance creation!public! !
-!RBCondition class categoriesFor: #directlyDefinesClassVariable:in:!instance creation!public! !
-!RBCondition class categoriesFor: #directlyDefinesInstanceVariable:in:!instance creation!public! !
-!RBCondition class categoriesFor: #empty!instance creation!public! !
-!RBCondition class categoriesFor: #hasSubclasses:!instance creation!public! !
-!RBCondition class categoriesFor: #hasSuperclass:!instance creation!public! !
-!RBCondition class categoriesFor: #hierarchyOf:canUnderstand:!instance creation!public! !
-!RBCondition class categoriesFor: #hierarchyOf:definesVariable:!instance creation!public! !
-!RBCondition class categoriesFor: #hierarchyOf:referencesInstanceVariable:!instance creation!public! !
-!RBCondition class categoriesFor: #isAbstractClass:!instance creation!public! !
-!RBCondition class categoriesFor: #isClass:!instance creation!public! !
-!RBCondition class categoriesFor: #isEmptyClass:!instance creation!public! !
-!RBCondition class categoriesFor: #isGlobal:in:!instance creation!public! !
-!RBCondition class categoriesFor: #isImmediateSubclass:of:!instance creation!public! !
-!RBCondition class categoriesFor: #isMetaclass:!instance creation!public! !
-!RBCondition class categoriesFor: #isString:!instance creation!public! !
-!RBCondition class categoriesFor: #isSymbol:!instance creation!public! !
-!RBCondition class categoriesFor: #isValidClassName:!instance creation!public! !
-!RBCondition class categoriesFor: #isValidClassVarName:for:!instance creation!public! !
-!RBCondition class categoriesFor: #isValidInstanceVariableName:for:!instance creation!public! !
-!RBCondition class categoriesFor: #isValidMethodName:for:!instance creation!public! !
-!RBCondition class categoriesFor: #isValidTemporaryVariableName:for:!instance creation!public! !
-!RBCondition class categoriesFor: #methodDefiningTemporary:in:ignore:!public!utilities! !
-!RBCondition class categoriesFor: #referencesInstanceVariable:in:!instance creation!public! !
-!RBCondition class categoriesFor: #reservedNames!public!utilities! !
-!RBCondition class categoriesFor: #subclassesOf:referToSelector:!instance creation!public! !
-!RBCondition class categoriesFor: #validClassName:!public!utilities! !
-!RBCondition class categoriesFor: #withBlock:!instance creation!public! !
-!RBCondition class categoriesFor: #withBlock:errorString:!instance creation!public! !
+!RBCondition class categoriesForMethods!
+canUnderstand:in:!instance creation!public! !
+checkClassVarName:in:!public!utilities! !
+checkInstanceVariableName:in:!public!utilities! !
+checkMethodName:in:!public!utilities! !
+definesClassVariable:in:!instance creation!public! !
+definesInstanceVariable:in:!instance creation!public! !
+definesSelector:in:!instance creation!public! !
+definesTemporaryVariable:in:!instance creation!public! !
+definesTempVar:in:ignoreClass:!instance creation!public! !
+directlyDefinesClassVariable:in:!instance creation!public! !
+directlyDefinesInstanceVariable:in:!instance creation!public! !
+empty!instance creation!public! !
+hasSubclasses:!instance creation!public! !
+hasSuperclass:!instance creation!public! !
+hierarchyOf:canUnderstand:!instance creation!public! !
+hierarchyOf:definesVariable:!instance creation!public! !
+hierarchyOf:referencesInstanceVariable:!instance creation!public! !
+isAbstractClass:!instance creation!public! !
+isClass:!instance creation!public! !
+isEmptyClass:!instance creation!public! !
+isGlobal:in:!instance creation!public! !
+isImmediateSubclass:of:!instance creation!public! !
+isMetaclass:!instance creation!public! !
+isString:!instance creation!public! !
+isSymbol:!instance creation!public! !
+isValidClassName:!instance creation!public! !
+isValidClassVarName:for:!instance creation!public! !
+isValidInstanceVariableName:for:!instance creation!public! !
+isValidMethodName:for:!instance creation!public! !
+isValidTemporaryVariableName:for:!instance creation!public! !
+methodDefiningTemporary:in:ignore:!public!utilities! !
+referencesInstanceVariable:in:!instance creation!public! !
+reservedNames!public!utilities! !
+subclassesOf:referToSelector:!instance creation!public! !
+validClassName:!public!utilities! !
+withBlock:!instance creation!public! !
+withBlock:errorString:!instance creation!public! !
+!
 

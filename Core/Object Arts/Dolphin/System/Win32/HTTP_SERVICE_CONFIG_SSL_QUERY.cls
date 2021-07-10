@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_QUERY
 	instanceVariableNames: ''
@@ -46,10 +46,12 @@ KeyDesc: aSOCKADDR
 	"Set the receiver's 'KeyDesc' field to the value of the argument, aSOCKADDR"
 
 	bytes uintPtrAtOffset: _OffsetOf_KeyDesc put: aSOCKADDR yourAddress! !
-!HTTP_SERVICE_CONFIG_SSL_QUERY categoriesFor: #dwToken!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_QUERY categoriesFor: #dwToken:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_QUERY categoriesFor: #KeyDesc!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_SSL_QUERY categoriesFor: #KeyDesc:!**compiled accessors**!public! !
+!HTTP_SERVICE_CONFIG_SSL_QUERY categoriesForMethods!
+dwToken!**compiled accessors**!public! !
+dwToken:!**compiled accessors**!public! !
+KeyDesc!**compiled accessors**!public! !
+KeyDesc:!**compiled accessors**!public! !
+!
 
 !HTTP_SERVICE_CONFIG_SSL_QUERY class methodsFor!
 
@@ -74,6 +76,8 @@ defineFields
 
 getFieldNames
 	^#(#QueryDesc #KeyDesc #dwToken)! !
-!HTTP_SERVICE_CONFIG_SSL_QUERY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVICE_CONFIG_SSL_QUERY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_SERVICE_CONFIG_SSL_QUERY class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

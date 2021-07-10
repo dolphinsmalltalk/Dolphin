@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #ADODB_Collection
 	instanceVariableNames: ''
@@ -94,14 +94,16 @@ removeAtIndex: index
 	Raise a <BoundsError> if there is no element with that index."
 
 	^self shouldNotImplement! !
-!ADODB_Collection categoriesFor: #_newEnum!**auto generated**!methods!public! !
-!ADODB_Collection categoriesFor: #_NewEnum:!**auto generated**!COM Interfaces-_Collection!private! !
-!ADODB_Collection categoriesFor: #count!**auto generated**!properties!public! !
-!ADODB_Collection categoriesFor: #get_Count:!**auto generated**!COM Interfaces-_Collection!private! !
-!ADODB_Collection categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!ADODB_Collection categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!ADODB_Collection categoriesFor: #Refresh!**auto generated**!COM Interfaces-_Collection!public! !
-!ADODB_Collection categoriesFor: #removeAtIndex:!public!removing! !
+!ADODB_Collection categoriesForMethods!
+_newEnum!**auto generated**!methods!public! !
+_NewEnum:!**auto generated**!COM Interfaces-_Collection!private! !
+count!**auto generated**!properties!public! !
+get_Count:!**auto generated**!COM Interfaces-_Collection!private! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+Refresh!**auto generated**!COM Interfaces-_Collection!public! !
+removeAtIndex:!public!removing! !
+!
 
 !ADODB_Collection class methodsFor!
 
@@ -116,5 +118,7 @@ defineFunctions
 			argumentTypes: 'IUnknown**';
 		defineFunction: #Refresh
 ! !
-!ADODB_Collection class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ADODB_Collection class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

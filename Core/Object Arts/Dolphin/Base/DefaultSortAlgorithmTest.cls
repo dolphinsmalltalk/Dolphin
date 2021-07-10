@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SortAlgorithmTest subclass: #DefaultSortAlgorithmTest
 	instanceVariableNames: ''
@@ -52,7 +52,9 @@ sort: aCollection sortBlock: block
 	self assertSorted: sorted.
 	self add: aCollection sortBlock: block.
 	^sorted! !
-!DefaultSortAlgorithmTest categoriesFor: #add:sortBlock:!helpers!private! !
-!DefaultSortAlgorithmTest categoriesFor: #algorithmToTest!private!unit tests! !
-!DefaultSortAlgorithmTest categoriesFor: #sort:sortBlock:!helpers!private! !
+!DefaultSortAlgorithmTest categoriesForMethods!
+add:sortBlock:!helpers!private! !
+algorithmToTest!private!unit tests! !
+sort:sortBlock:!helpers!private! !
+!
 

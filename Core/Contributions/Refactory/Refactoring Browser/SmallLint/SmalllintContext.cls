@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #SmalllintContext
 	instanceVariableNames: 'class selector parseTree literals literalSemaphore literalProcess selectors compiledMethod selfMessages superMessages messages'
@@ -173,35 +173,37 @@ superMessages
 
 uses: anObject 
 	^self literals includes: anObject! !
-!SmalllintContext categoriesFor: #addImplementationSpecificLiterals!private! !
-!SmalllintContext categoriesFor: #buildParseTree!helpers!private! !
-!SmalllintContext categoriesFor: #checkLiteral:!helpers!private! !
-!SmalllintContext categoriesFor: #compiledMethod!accessing!public! !
-!SmalllintContext categoriesFor: #computeLiterals!helpers!private! !
-!SmalllintContext categoriesFor: #computeLiteralsForClass:!helpers!private! !
-!SmalllintContext categoriesFor: #computeMessages!helpers!private! !
-!SmalllintContext categoriesFor: #implements:!public!testing! !
-!SmalllintContext categoriesFor: #initialize!initialize/release!public! !
-!SmalllintContext categoriesFor: #instVarNames!accessing!public! !
-!SmalllintContext categoriesFor: #isAbstract:!public!testing! !
-!SmalllintContext categoriesFor: #lintProtocols!accessing!public! !
-!SmalllintContext categoriesFor: #literals!accessing!public! !
-!SmalllintContext categoriesFor: #messages!accessing!public! !
-!SmalllintContext categoriesFor: #parseTree!accessing!public! !
-!SmalllintContext categoriesFor: #primitiveComputeLiterals!helpers!private! !
-!SmalllintContext categoriesFor: #protocol!accessing!public! !
-!SmalllintContext categoriesFor: #protocols!accessing!public! !
-!SmalllintContext categoriesFor: #release!initialize/release!public! !
-!SmalllintContext categoriesFor: #selectedClass!accessing!public! !
-!SmalllintContext categoriesFor: #selectedClass:!accessing!public! !
-!SmalllintContext categoriesFor: #selector!accessing!public! !
-!SmalllintContext categoriesFor: #selector:!accessing!public! !
-!SmalllintContext categoriesFor: #selectors!accessing!public! !
-!SmalllintContext categoriesFor: #selfMessages!accessing!public! !
-!SmalllintContext categoriesFor: #signalProcesses:!helpers!private! !
-!SmalllintContext categoriesFor: #specialSelectors!helpers!private! !
-!SmalllintContext categoriesFor: #superMessages!accessing!public! !
-!SmalllintContext categoriesFor: #uses:!public!testing! !
+!SmalllintContext categoriesForMethods!
+addImplementationSpecificLiterals!private! !
+buildParseTree!helpers!private! !
+checkLiteral:!helpers!private! !
+compiledMethod!accessing!public! !
+computeLiterals!helpers!private! !
+computeLiteralsForClass:!helpers!private! !
+computeMessages!helpers!private! !
+implements:!public!testing! !
+initialize!initialize/release!public! !
+instVarNames!accessing!public! !
+isAbstract:!public!testing! !
+lintProtocols!accessing!public! !
+literals!accessing!public! !
+messages!accessing!public! !
+parseTree!accessing!public! !
+primitiveComputeLiterals!helpers!private! !
+protocol!accessing!public! !
+protocols!accessing!public! !
+release!initialize/release!public! !
+selectedClass!accessing!public! !
+selectedClass:!accessing!public! !
+selector!accessing!public! !
+selector:!accessing!public! !
+selectors!accessing!public! !
+selfMessages!accessing!public! !
+signalProcesses:!helpers!private! !
+specialSelectors!helpers!private! !
+superMessages!accessing!public! !
+uses:!public!testing! !
+!
 
 !SmalllintContext class methodsFor!
 
@@ -212,6 +214,8 @@ new
 
 newNoCache
 	^self basicNew! !
-!SmalllintContext class categoriesFor: #new!instance creation!public! !
-!SmalllintContext class categoriesFor: #newNoCache!instance creation!public! !
+!SmalllintContext class categoriesForMethods!
+new!instance creation!public! !
+newNoCache!instance creation!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ControlView subclass: #CommandButton
 	instanceVariableNames: 'commandDescription'
@@ -91,19 +91,21 @@ validateUserInterface
 		ifTrue: 
 			["The button text should be updated"
 			self text: query text]! !
-!CommandButton categoriesFor: #command!accessing!public! !
-!CommandButton categoriesFor: #command:!accessing!public! !
-!CommandButton categoriesFor: #commandDescription!accessing!public! !
-!CommandButton categoriesFor: #commandDescription:!accessing!public! !
-!CommandButton categoriesFor: #commandSource!accessing!public! !
-!CommandButton categoriesFor: #defaultExtent!constants!private! !
-!CommandButton categoriesFor: #defaultId!accessing!private! !
-!CommandButton categoriesFor: #displayOnFormats!displaying!private! !
-!CommandButton categoriesFor: #initialize!initializing!private! !
-!CommandButton categoriesFor: #isChecked!accessing!public! !
-!CommandButton categoriesFor: #isChecked:!accessing!public! !
-!CommandButton categoriesFor: #onActionPerformed!event handling!public! !
-!CommandButton categoriesFor: #validateUserInterface!operations!public! !
+!CommandButton categoriesForMethods!
+command!accessing!public! !
+command:!accessing!public! !
+commandDescription!accessing!public! !
+commandDescription:!accessing!public! !
+commandSource!accessing!public! !
+defaultExtent!constants!private! !
+defaultId!accessing!private! !
+displayOnFormats!displaying!private! !
+initialize!initializing!private! !
+isChecked!accessing!public! !
+isChecked:!accessing!public! !
+onActionPerformed!event handling!public! !
+validateUserInterface!operations!public! !
+!
 
 !CommandButton class methodsFor!
 
@@ -138,7 +140,9 @@ initialize
 
 themePartName
 	^'BUTTON'! !
-!CommandButton class categoriesFor: #icon!constants!public! !
-!CommandButton class categoriesFor: #initialize!development!initializing!private! !
-!CommandButton class categoriesFor: #themePartName!constants!public!theming! !
+!CommandButton class categoriesForMethods!
+icon!constants!public! !
+initialize!development!initializing!private! !
+themePartName!constants!public!theming! !
+!
 

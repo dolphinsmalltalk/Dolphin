@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Magnitude
 	instanceVariableNames: ''
@@ -86,17 +86,19 @@ min: operand
 	^self < operand
 		ifTrue:  [self]
 		ifFalse: [operand]! !
-!Magnitude categoriesFor: #<!comparing!public! !
-!Magnitude categoriesFor: #<=!comparing!public! !
-!Magnitude categoriesFor: #=!comparing!public! !
-!Magnitude categoriesFor: #>!comparing!public! !
-!Magnitude categoriesFor: #>=!comparing!public! !
-!Magnitude categoriesFor: #between:and:!comparing!public! !
-!Magnitude categoriesFor: #clampBetween:and:!comparing!public! !
-!Magnitude categoriesFor: #hash!comparing!public! !
-!Magnitude categoriesFor: #isNaN!public!testing! !
-!Magnitude categoriesFor: #max:!comparing!public! !
-!Magnitude categoriesFor: #min:!comparing!public! !
+!Magnitude categoriesForMethods!
+<!comparing!public! !
+<=!comparing!public! !
+=!comparing!public! !
+>!comparing!public! !
+>=!comparing!public! !
+between:and:!comparing!public! !
+clampBetween:and:!comparing!public! !
+hash!comparing!public! !
+isNaN!public!testing! !
+max:!comparing!public! !
+min:!comparing!public! !
+!
 
 Magnitude methodProtocol: #magnitude attributes: #(#ansi #readOnly) selectors: #(#< #<= #> #>= #between:and: #max: #min:)!
 

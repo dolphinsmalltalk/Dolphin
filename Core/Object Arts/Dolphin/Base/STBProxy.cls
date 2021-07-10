@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #STBProxy
 	instanceVariableNames: ''
@@ -21,8 +21,10 @@ value
 	"Answer the object that this one represents."
 
 	^self subclassResponsibility! !
-!STBProxy categoriesFor: #stbFixup:at:!converting!public! !
-!STBProxy categoriesFor: #value!converting!public! !
+!STBProxy categoriesForMethods!
+stbFixup:at:!converting!public! !
+value!converting!public! !
+!
 
 !STBProxy class methodsFor!
 
@@ -30,5 +32,7 @@ new
 	"Private - Use specialized instance creation methods"
 
 	^self shouldNotImplement! !
-!STBProxy class categoriesFor: #new!instance creation!private! !
+!STBProxy class categoriesForMethods!
+new!instance creation!private! !
+!
 

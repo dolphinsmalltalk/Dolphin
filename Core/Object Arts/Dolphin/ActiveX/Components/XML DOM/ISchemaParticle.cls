@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ISchemaItem subclass: #ISchemaParticle
 	instanceVariableNames: ''
@@ -70,10 +70,12 @@ minOccurs
 	self get_minOccurs: answer.
 	^answer asObject
 ! !
-!ISchemaParticle categoriesFor: #get_maxOccurs:!**auto generated**!COM Interfaces-ISchemaParticle!private! !
-!ISchemaParticle categoriesFor: #get_minOccurs:!**auto generated**!COM Interfaces-ISchemaParticle!private! !
-!ISchemaParticle categoriesFor: #maxOccurs!**auto generated**!properties!public! !
-!ISchemaParticle categoriesFor: #minOccurs!**auto generated**!properties!public! !
+!ISchemaParticle categoriesForMethods!
+get_maxOccurs:!**auto generated**!COM Interfaces-ISchemaParticle!private! !
+get_minOccurs:!**auto generated**!COM Interfaces-ISchemaParticle!private! !
+maxOccurs!**auto generated**!properties!public! !
+minOccurs!**auto generated**!properties!public! !
+!
 
 !ISchemaParticle class methodsFor!
 
@@ -87,5 +89,7 @@ defineFunctions
 		defineFunction: #get_maxOccurs:
 			argumentTypes: 'variant*'
 ! !
-!ISchemaParticle class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISchemaParticle class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

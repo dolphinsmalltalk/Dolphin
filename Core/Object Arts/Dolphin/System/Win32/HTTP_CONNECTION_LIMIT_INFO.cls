@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpQosSetting subclass: #HTTP_CONNECTION_LIMIT_INFO
 	instanceVariableNames: ''
@@ -48,10 +48,12 @@ value: anInteger
 			[self
 				Present: true;
 				MaxConnections: anInteger]! !
-!HTTP_CONNECTION_LIMIT_INFO categoriesFor: #MaxConnections!**compiled accessors**!public! !
-!HTTP_CONNECTION_LIMIT_INFO categoriesFor: #MaxConnections:!**compiled accessors**!public! !
-!HTTP_CONNECTION_LIMIT_INFO categoriesFor: #value!accessing!public! !
-!HTTP_CONNECTION_LIMIT_INFO categoriesFor: #value:!accessing!public! !
+!HTTP_CONNECTION_LIMIT_INFO categoriesForMethods!
+MaxConnections!**compiled accessors**!public! !
+MaxConnections:!**compiled accessors**!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !HTTP_CONNECTION_LIMIT_INFO class methodsFor!
 
@@ -82,8 +84,10 @@ maxConnections: anInteger
 
 qosType
 	^HttpQosSettingTypeConnectionLimit! !
-!HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #maxConnections:!public! !
-!HTTP_CONNECTION_LIMIT_INFO class categoriesFor: #qosType!constants!public! !
+!HTTP_CONNECTION_LIMIT_INFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+maxConnections:!public! !
+qosType!constants!public! !
+!
 

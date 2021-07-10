@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 NMHDR subclass: #OFNOTIFYW
 	instanceVariableNames: ''
@@ -35,8 +35,10 @@ pszFile
 	"Answer the <Utf16String> value of the receiver's 'pszFile' field."
 
 	^Utf16String fromAddress: (bytes intPtrAtOffset: _OffsetOf_pszFile)! !
-!OFNOTIFYW categoriesFor: #lpOFN!**compiled accessors**!public! !
-!OFNOTIFYW categoriesFor: #pszFile!**compiled accessors**!public! !
+!OFNOTIFYW categoriesForMethods!
+lpOFN!**compiled accessors**!public! !
+pszFile!**compiled accessors**!public! !
+!
 
 !OFNOTIFYW class methodsFor!
 
@@ -60,6 +62,8 @@ defineFields
 
 getFieldNames
 	^#(#hwndFrom #idFrom #code #lpOFN #pszFile)! !
-!OFNOTIFYW class categoriesFor: #defineFields!public!template definition! !
-!OFNOTIFYW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!OFNOTIFYW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

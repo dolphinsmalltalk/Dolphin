@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AspectInspector subclass: #AbstractPublishedAspectInspector
 	instanceVariableNames: 'aspectValueHolder aspectPresenter isRootAspectVisible isSingleLevelOnly'
@@ -366,37 +366,39 @@ testForEditButtonClickAt: aPoint
 			self assert: [hit iItem = (aspectListTree selectionByIndex - 1)].
 			aspectAccessor := aspectListTree objectFromHandle: hit iItem + 1.
 			aspectAccessor canEdit ifTrue: [aspectAccessor editUsing: aspectPresenter]]! !
-!AbstractPublishedAspectInspector categoriesFor: #addToCommandRoute:!private! !
-!AbstractPublishedAspectInspector categoriesFor: #aspectChanged:!private!updating! !
-!AbstractPublishedAspectInspector categoriesFor: #aspectChanged:of:!private!updating! !
-!AbstractPublishedAspectInspector categoriesFor: #aspectTree!event handling!private! !
-!AbstractPublishedAspectInspector categoriesFor: #buildNewAspectTree!private!updating! !
-!AbstractPublishedAspectInspector categoriesFor: #createSchematicWiring!initializing!private! !
-!AbstractPublishedAspectInspector categoriesFor: #createValueHolderFor:!private! !
-!AbstractPublishedAspectInspector categoriesFor: #displayOn:!displaying!public! !
-!AbstractPublishedAspectInspector categoriesFor: #editAspect!operations!public! !
-!AbstractPublishedAspectInspector categoriesFor: #getAspectsFor:!private! !
-!AbstractPublishedAspectInspector categoriesFor: #getSubAspectAccessorsFor:!helpers!private! !
-!AbstractPublishedAspectInspector categoriesFor: #getSubAspectsFor:!helpers!private! !
-!AbstractPublishedAspectInspector categoriesFor: #initialize!private! !
-!AbstractPublishedAspectInspector categoriesFor: #isRootAspectVisible!public! !
-!AbstractPublishedAspectInspector categoriesFor: #isRootAspectVisible:!public! !
-!AbstractPublishedAspectInspector categoriesFor: #isSingleLevelOnly!public! !
-!AbstractPublishedAspectInspector categoriesFor: #isSingleLevelOnly:!public! !
-!AbstractPublishedAspectInspector categoriesFor: #onAspectActioned!event handling!private! !
-!AbstractPublishedAspectInspector categoriesFor: #onAspectValueChanged:!event handling!private! !
-!AbstractPublishedAspectInspector categoriesFor: #onLeftButtonPressed:!private! !
-!AbstractPublishedAspectInspector categoriesFor: #onValueChanged!accessing!private! !
-!AbstractPublishedAspectInspector categoriesFor: #propagate:!helpers!private! !
-!AbstractPublishedAspectInspector categoriesFor: #queryCommand:!commands!private! !
-!AbstractPublishedAspectInspector categoriesFor: #refresh!commands!public!updating! !
-!AbstractPublishedAspectInspector categoriesFor: #refreshAccessor:!event handling!private! !
-!AbstractPublishedAspectInspector categoriesFor: #selectionPath!accessing!private! !
-!AbstractPublishedAspectInspector categoriesFor: #selectionPath:!accessing!private! !
-!AbstractPublishedAspectInspector categoriesFor: #setAspectValue:!commands!private! !
-!AbstractPublishedAspectInspector categoriesFor: #setMutableValueOf:into:!private! !
-!AbstractPublishedAspectInspector categoriesFor: #sortAspects:!private! !
-!AbstractPublishedAspectInspector categoriesFor: #testForEditButtonClickAt:!private! !
+!AbstractPublishedAspectInspector categoriesForMethods!
+addToCommandRoute:!private! !
+aspectChanged:!private!updating! !
+aspectChanged:of:!private!updating! !
+aspectTree!event handling!private! !
+buildNewAspectTree!private!updating! !
+createSchematicWiring!initializing!private! !
+createValueHolderFor:!private! !
+displayOn:!displaying!public! !
+editAspect!operations!public! !
+getAspectsFor:!private! !
+getSubAspectAccessorsFor:!helpers!private! !
+getSubAspectsFor:!helpers!private! !
+initialize!private! !
+isRootAspectVisible!public! !
+isRootAspectVisible:!public! !
+isSingleLevelOnly!public! !
+isSingleLevelOnly:!public! !
+onAspectActioned!event handling!private! !
+onAspectValueChanged:!event handling!private! !
+onLeftButtonPressed:!private! !
+onValueChanged!accessing!private! !
+propagate:!helpers!private! !
+queryCommand:!commands!private! !
+refresh!commands!public!updating! !
+refreshAccessor:!event handling!private! !
+selectionPath!accessing!private! !
+selectionPath:!accessing!private! !
+setAspectValue:!commands!private! !
+setMutableValueOf:into:!private! !
+sortAspects:!private! !
+testForEditButtonClickAt:!private! !
+!
 
 !AbstractPublishedAspectInspector class methodsFor!
 
@@ -427,7 +429,9 @@ shellOn: anObject
 	shell view validateLayout.
 	shell show setInitialFocus.
 	^inspector! !
-!AbstractPublishedAspectInspector class categoriesFor: #publishedEventsOfInstances!events!public! !
-!AbstractPublishedAspectInspector class categoriesFor: #resource_Vertical_view!public!resources-views! !
-!AbstractPublishedAspectInspector class categoriesFor: #shellOn:!instance creation!public! !
+!AbstractPublishedAspectInspector class categoriesForMethods!
+publishedEventsOfInstances!events!public! !
+resource_Vertical_view!public!resources-views! !
+shellOn:!instance creation!public! !
+!
 

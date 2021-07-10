@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Package
 	instanceVariableNames: 'name packagePathname comment classNames methodNames globalNames prerequisiteNames events scripts doNotReuse imageStripperBytes aboutBlock packageVersion manualPrerequisites timestamp untracedGlobals changeIndex properties preDeclareClassesOnLoad'
@@ -1721,199 +1721,201 @@ It will probably load, but it may not operate correctly.
 If you experience subsequent problems please contact the package supplier for an updated version.' 
 				expandMacrosWith: self name
 				with: versionString)! !
-!Package categoriesFor: #about!commands!public! !
-!Package categoriesFor: #aboutBlock!accessing!public! !
-!Package categoriesFor: #aboutBlock:!accessing!public! !
-!Package categoriesFor: #aboutBlockBytes:!accessing!private! !
-!Package categoriesFor: #addAllPrerequisitesTo:!accessing!private! !
-!Package categoriesFor: #addClass:!adding!public! !
-!Package categoriesFor: #addGlobalNamed:!adding!public! !
-!Package categoriesFor: #addLooseMethod:!adding!private! !
-!Package categoriesFor: #addMethod:!adding!public! !
-!Package categoriesFor: #addPackagedMethod:!adding!private! !
-!Package categoriesFor: #addResourceIdentifier:!adding!public! !
-!Package categoriesFor: #allDependentPackages!accessing!public! !
-!Package categoriesFor: #allMethods!accessing!public! !
-!Package categoriesFor: #allMethodsDo:!enumerating!private! !
-!Package categoriesFor: #allPrerequisites!accessing!private! !
-!Package categoriesFor: #allResourceIdentifiers!accessing!public! !
-!Package categoriesFor: #allResourceNames!accessing!public! !
-!Package categoriesFor: #allResourceNames:!private!source filing! !
-!Package categoriesFor: #allSourceObjects!accessing!public!source filing! !
-!Package categoriesFor: #allSourceObjectsDo:!enumerating!public!source filing! !
-!Package categoriesFor: #basicAddClass:!adding!private! !
-!Package categoriesFor: #basicAddGlobalNamed:!adding!private! !
-!Package categoriesFor: #basicComment:!accessing!private! !
-!Package categoriesFor: #basicPackageVersion:!accessing!private! !
-!Package categoriesFor: #basicRemoveClass:!private!removing! !
-!Package categoriesFor: #basicRemoveGlobalNamed:!private!removing! !
-!Package categoriesFor: #basicScriptAt:put:!accessing!private! !
-!Package categoriesFor: #behaviorFromName:ifAbsent:!mapping!private! !
-!Package categoriesFor: #behaviors!enumerating!public! !
-!Package categoriesFor: #behaviorsDo:!enumerating!public! !
-!Package categoriesFor: #binaryGlobalNames!accessing!private! !
-!Package categoriesFor: #binaryGlobalNames:!accessing!private! !
-!Package categoriesFor: #binaryGlobalVariables!private!source filing! !
-!Package categoriesFor: #buildPrerequisiteNames!helpers!private! !
-!Package categoriesFor: #calculatePrerequisites!operations!private! !
-!Package categoriesFor: #canShowAbout!public!testing! !
-!Package categoriesFor: #changedFrom:!public!source filing! !
-!Package categoriesFor: #changeIndex!accessing!development!private! !
-!Package categoriesFor: #changeIndexValue:!accessing!development!private! !
-!Package categoriesFor: #classDefinitionsFileName!constants!private! !
-!Package categoriesFor: #classes!enumerating!public! !
-!Package categoriesFor: #classesDo:!enumerating!public! !
-!Package categoriesFor: #classesInHierarchyOrder!enumerating!private! !
-!Package categoriesFor: #classFromName:!mapping!private! !
-!Package categoriesFor: #classFromName:ifAbsent:!mapping!private! !
-!Package categoriesFor: #classNames!accessing!public! !
-!Package categoriesFor: #comment!accessing!public! !
-!Package categoriesFor: #comment:!accessing!public! !
-!Package categoriesFor: #declareClasses!helpers!private! !
-!Package categoriesFor: #declareGlobals!helpers!private! !
-!Package categoriesFor: #dependentPackages!accessing!public! !
-!Package categoriesFor: #depthOfClass:!helpers!public! !
-!Package categoriesFor: #displayOn:!displaying!public! !
-!Package categoriesFor: #environment!constants!private! !
-!Package categoriesFor: #errorFileCorrupt!exceptions!private! !
-!Package categoriesFor: #fileInClasses!development!private!source filing! !
-!Package categoriesFor: #fileInScript:!private!source filing! !
-!Package categoriesFor: #fileNameForBinaryGlobal:!mapping!private! !
-!Package categoriesFor: #fileNameForSourceGlobal:!mapping!private! !
-!Package categoriesFor: #fileOutName!public!source filing! !
-!Package categoriesFor: #getEvents!events!private! !
-!Package categoriesFor: #getPrerequisites!enumerating!private! !
-!Package categoriesFor: #globalAliases!private!source filing! !
-!Package categoriesFor: #globalAliases:!accessing!private! !
-!Package categoriesFor: #globalAliasVariables!accessing!private!source filing! !
-!Package categoriesFor: #globalFromName:!mapping!private! !
-!Package categoriesFor: #globalNameOfLiteral:!enumerating!private! !
-!Package categoriesFor: #globalNames!accessing!public! !
-!Package categoriesFor: #globals!accessing!private! !
-!Package categoriesFor: #globalVariables!private!source filing! !
-!Package categoriesFor: #hasCyclicPrerequisites!private!testing! !
-!Package categoriesFor: #hasCyclicPrerequisites:safe:!private!testing! !
-!Package categoriesFor: #hasUncommittedPrerequisites!private!testing! !
-!Package categoriesFor: #hierarchyOrderOfClasses:!helpers!private! !
-!Package categoriesFor: #imageStripper:!accessing!public! !
-!Package categoriesFor: #imageStripperBytes!accessing!private! !
-!Package categoriesFor: #imageStripperBytes:!accessing!private! !
-!Package categoriesFor: #includesClass:!public!searching! !
-!Package categoriesFor: #includesGlobalNamed:!public!searching! !
-!Package categoriesFor: #includesMethod:!public!searching! !
-!Package categoriesFor: #includesResourceIdentifier:!private!searching! !
-!Package categoriesFor: #initialize!initializing!private! !
-!Package categoriesFor: #initializeClasses!initializing!private! !
-!Package categoriesFor: #initializeGlobals!initializing!private! !
-!Package categoriesFor: #initializeLegacyResources!helpers!private! !
-!Package categoriesFor: #initializeOldSourcePackage!private!source filing-pax! !
-!Package categoriesFor: #isBaseImagePackage!public! !
-!Package categoriesFor: #isBasePackage!public! !
-!Package categoriesFor: #isChanged!development!public!source filing!testing! !
-!Package categoriesFor: #isChanged:!public!source filing! !
-!Package categoriesFor: #isDefaultPackage!public!testing! !
-!Package categoriesFor: #isGlobalAlias:!private!testing! !
-!Package categoriesFor: #isImportedClass:!private!testing! !
-!Package categoriesFor: #isInstalled!public!testing! !
-!Package categoriesFor: #isSourceGlobal:!private!testing! !
-!Package categoriesFor: #isSystemPackage!public!testing! !
-!Package categoriesFor: #load!operations!private! !
-!Package categoriesFor: #loadBinaryGlobals!binary filing!private! !
-!Package categoriesFor: #loadPAC!private!source filing! !
-!Package categoriesFor: #loadPAC:!private!source filing! !
-!Package categoriesFor: #loadPAX!private!source filing-pax! !
-!Package categoriesFor: #looseResourceIdentifiers!accessing!public! !
-!Package categoriesFor: #looseResourceIdentifiersDo:!enumerating!public! !
-!Package categoriesFor: #manager!accessing!public! !
-!Package categoriesFor: #manualPrerequisites!accessing!public! !
-!Package categoriesFor: #manualPrerequisites:!accessing!public! !
-!Package categoriesFor: #membershipChanged!event handling!private! !
-!Package categoriesFor: #membershipChangedAt:!helpers!private! !
-!Package categoriesFor: #memberUpdatedAt:!event handling!private! !
-!Package categoriesFor: #methodFromName:ifAbsent:!mapping!private! !
-!Package categoriesFor: #methodNames!accessing!public! !
-!Package categoriesFor: #methods!enumerating!public! !
-!Package categoriesFor: #methodsDo:!enumerating!public! !
-!Package categoriesFor: #methodsOfClass:!enumerating!public! !
-!Package categoriesFor: #name!accessing!public! !
-!Package categoriesFor: #nameForMethod:!mapping!private! !
-!Package categoriesFor: #nameForResourceIdentifier:!mapping!private! !
-!Package categoriesFor: #okToSaveOrDeploy!helpers!private! !
-!Package categoriesFor: #okToUninstall!helpers!private! !
-!Package categoriesFor: #onClassRemoved:!event handling!private! !
-!Package categoriesFor: #onClassRenamed:from:to:!event handling!private! !
-!Package categoriesFor: #onGlobalRenamed:from:!event handling!private! !
-!Package categoriesFor: #owningPackage!public!source filing! !
-!Package categoriesFor: #packageFileName!accessing!public! !
-!Package categoriesFor: #packageFileName:!accessing!private! !
-!Package categoriesFor: #packageFolder!instance creation!public! !
-!Package categoriesFor: #packagePathname!accessing!private! !
-!Package categoriesFor: #packagePathname:!accessing!private! !
-!Package categoriesFor: #packageVersion!accessing!public! !
-!Package categoriesFor: #packageVersion:!accessing!public! !
-!Package categoriesFor: #path!accessing!public! !
-!Package categoriesFor: #paxVersion!accessing!private! !
-!Package categoriesFor: #paxVersion:!accessing!private! !
-!Package categoriesFor: #preDeclareClassesOnLoad!accessing!public! !
-!Package categoriesFor: #preDeclareClassesOnLoad:!accessing!public! !
-!Package categoriesFor: #prerequisiteNames!accessing!private! !
-!Package categoriesFor: #prerequisites!enumerating!public! !
-!Package categoriesFor: #printOn:!printing!public! !
-!Package categoriesFor: #privateUninstall!private!removing! !
-!Package categoriesFor: #propertyAt:ifAbsent:!properties!public! !
-!Package categoriesFor: #propertyManager!private!properties! !
-!Package categoriesFor: #rebaseTo:!public!testing! !
-!Package categoriesFor: #remainingClasses!accessing!public! !
-!Package categoriesFor: #removeClass:!public!removing! !
-!Package categoriesFor: #removeClassName:!private!removing! !
-!Package categoriesFor: #removeGlobalNamed:!public!removing! !
-!Package categoriesFor: #removeLooseMethod:!private!removing! !
-!Package categoriesFor: #removeMethod:!public!removing! !
-!Package categoriesFor: #removeMethodNames:!event handling!private! !
-!Package categoriesFor: #removePackagedMethod:!private!removing! !
-!Package categoriesFor: #removePAXProperties!operations!private! !
-!Package categoriesFor: #renameLooseMethodsOf:to:!event handling!private! !
-!Package categoriesFor: #resetChangeFlags!public!source filing! !
-!Package categoriesFor: #resetPrerequisites!operations!private! !
-!Package categoriesFor: #resourceIdentifiers!accessing!public! !
-!Package categoriesFor: #scriptAt:!accessing!public! !
-!Package categoriesFor: #scriptAt:put:!accessing!public! !
-!Package categoriesFor: #scripts!accessing!private! !
-!Package categoriesFor: #setEvents:!events!private! !
-!Package categoriesFor: #setManualPrerequisites:!accessing!private! !
-!Package categoriesFor: #setPackageFileName:!accessing!private! !
-!Package categoriesFor: #setPrerequisites:!accessing!private! !
-!Package categoriesFor: #shrink!private! !
-!Package categoriesFor: #sourceDescriptor!accessing!private! !
-!Package categoriesFor: #sourceDescriptor:!accessing!private! !
-!Package categoriesFor: #sourceGlobalNames!accessing!private! !
-!Package categoriesFor: #sourceGlobalVariables!accessing!private! !
-!Package categoriesFor: #sourceManager!accessing!public! !
-!Package categoriesFor: #stbSaveOn:!binary filing!public! !
-!Package categoriesFor: #storeComment!helpers!private! !
-!Package categoriesFor: #synchronizeNames!helpers!private! !
-!Package categoriesFor: #systemGlobalRenamed:to:!event handling!private! !
-!Package categoriesFor: #timestamp!accessing!public! !
-!Package categoriesFor: #timestamp:!accessing!private! !
-!Package categoriesFor: #trace:prerequisite:from:to:type:!helpers!private! !
-!Package categoriesFor: #tracePrerequisiteGlobals:packagedGlobals:!operations!private! !
-!Package categoriesFor: #tracePrerequisites!operations!private! !
-!Package categoriesFor: #tracePrerequisites:!operations!private! !
-!Package categoriesFor: #tracePrerequisitesOfClasses:packagedGlobals:!operations!private! !
-!Package categoriesFor: #tracePrerequisitesOfGlobals:packagedGlobals:!operations!private! !
-!Package categoriesFor: #tracePrerequisitesOfImageStripper:!operations!private! !
-!Package categoriesFor: #tracePrerequisitesOfMethods:!operations!private! !
-!Package categoriesFor: #uninstall!public!removing! !
-!Package categoriesFor: #uninstallClasses!class hierarchy-removing!private!removing! !
-!Package categoriesFor: #uninstallGlobals!private!removing! !
-!Package categoriesFor: #uninstallMethods!private!removing! !
-!Package categoriesFor: #untracedGlobals!accessing!public! !
-!Package categoriesFor: #untracedGlobals:!accessing!public! !
-!Package categoriesFor: #upateFileNames!operations!private! !
-!Package categoriesFor: #validate!operations!private! !
-!Package categoriesFor: #variableSortBlock!constants!private! !
-!Package categoriesFor: #versionIfRequired!public! !
-!Package categoriesFor: #vmVersionCheck:!constants!private! !
+!Package categoriesForMethods!
+about!commands!public! !
+aboutBlock!accessing!public! !
+aboutBlock:!accessing!public! !
+aboutBlockBytes:!accessing!private! !
+addAllPrerequisitesTo:!accessing!private! !
+addClass:!adding!public! !
+addGlobalNamed:!adding!public! !
+addLooseMethod:!adding!private! !
+addMethod:!adding!public! !
+addPackagedMethod:!adding!private! !
+addResourceIdentifier:!adding!public! !
+allDependentPackages!accessing!public! !
+allMethods!accessing!public! !
+allMethodsDo:!enumerating!private! !
+allPrerequisites!accessing!private! !
+allResourceIdentifiers!accessing!public! !
+allResourceNames!accessing!public! !
+allResourceNames:!private!source filing! !
+allSourceObjects!accessing!public!source filing! !
+allSourceObjectsDo:!enumerating!public!source filing! !
+basicAddClass:!adding!private! !
+basicAddGlobalNamed:!adding!private! !
+basicComment:!accessing!private! !
+basicPackageVersion:!accessing!private! !
+basicRemoveClass:!private!removing! !
+basicRemoveGlobalNamed:!private!removing! !
+basicScriptAt:put:!accessing!private! !
+behaviorFromName:ifAbsent:!mapping!private! !
+behaviors!enumerating!public! !
+behaviorsDo:!enumerating!public! !
+binaryGlobalNames!accessing!private! !
+binaryGlobalNames:!accessing!private! !
+binaryGlobalVariables!private!source filing! !
+buildPrerequisiteNames!helpers!private! !
+calculatePrerequisites!operations!private! !
+canShowAbout!public!testing! !
+changedFrom:!public!source filing! !
+changeIndex!accessing!development!private! !
+changeIndexValue:!accessing!development!private! !
+classDefinitionsFileName!constants!private! !
+classes!enumerating!public! !
+classesDo:!enumerating!public! !
+classesInHierarchyOrder!enumerating!private! !
+classFromName:!mapping!private! !
+classFromName:ifAbsent:!mapping!private! !
+classNames!accessing!public! !
+comment!accessing!public! !
+comment:!accessing!public! !
+declareClasses!helpers!private! !
+declareGlobals!helpers!private! !
+dependentPackages!accessing!public! !
+depthOfClass:!helpers!public! !
+displayOn:!displaying!public! !
+environment!constants!private! !
+errorFileCorrupt!exceptions!private! !
+fileInClasses!development!private!source filing! !
+fileInScript:!private!source filing! !
+fileNameForBinaryGlobal:!mapping!private! !
+fileNameForSourceGlobal:!mapping!private! !
+fileOutName!public!source filing! !
+getEvents!events!private! !
+getPrerequisites!enumerating!private! !
+globalAliases!private!source filing! !
+globalAliases:!accessing!private! !
+globalAliasVariables!accessing!private!source filing! !
+globalFromName:!mapping!private! !
+globalNameOfLiteral:!enumerating!private! !
+globalNames!accessing!public! !
+globals!accessing!private! !
+globalVariables!private!source filing! !
+hasCyclicPrerequisites!private!testing! !
+hasCyclicPrerequisites:safe:!private!testing! !
+hasUncommittedPrerequisites!private!testing! !
+hierarchyOrderOfClasses:!helpers!private! !
+imageStripper:!accessing!public! !
+imageStripperBytes!accessing!private! !
+imageStripperBytes:!accessing!private! !
+includesClass:!public!searching! !
+includesGlobalNamed:!public!searching! !
+includesMethod:!public!searching! !
+includesResourceIdentifier:!private!searching! !
+initialize!initializing!private! !
+initializeClasses!initializing!private! !
+initializeGlobals!initializing!private! !
+initializeLegacyResources!helpers!private! !
+initializeOldSourcePackage!private!source filing-pax! !
+isBaseImagePackage!public! !
+isBasePackage!public! !
+isChanged!development!public!source filing!testing! !
+isChanged:!public!source filing! !
+isDefaultPackage!public!testing! !
+isGlobalAlias:!private!testing! !
+isImportedClass:!private!testing! !
+isInstalled!public!testing! !
+isSourceGlobal:!private!testing! !
+isSystemPackage!public!testing! !
+load!operations!private! !
+loadBinaryGlobals!binary filing!private! !
+loadPAC!private!source filing! !
+loadPAC:!private!source filing! !
+loadPAX!private!source filing-pax! !
+looseResourceIdentifiers!accessing!public! !
+looseResourceIdentifiersDo:!enumerating!public! !
+manager!accessing!public! !
+manualPrerequisites!accessing!public! !
+manualPrerequisites:!accessing!public! !
+membershipChanged!event handling!private! !
+membershipChangedAt:!helpers!private! !
+memberUpdatedAt:!event handling!private! !
+methodFromName:ifAbsent:!mapping!private! !
+methodNames!accessing!public! !
+methods!enumerating!public! !
+methodsDo:!enumerating!public! !
+methodsOfClass:!enumerating!public! !
+name!accessing!public! !
+nameForMethod:!mapping!private! !
+nameForResourceIdentifier:!mapping!private! !
+okToSaveOrDeploy!helpers!private! !
+okToUninstall!helpers!private! !
+onClassRemoved:!event handling!private! !
+onClassRenamed:from:to:!event handling!private! !
+onGlobalRenamed:from:!event handling!private! !
+owningPackage!public!source filing! !
+packageFileName!accessing!public! !
+packageFileName:!accessing!private! !
+packageFolder!instance creation!public! !
+packagePathname!accessing!private! !
+packagePathname:!accessing!private! !
+packageVersion!accessing!public! !
+packageVersion:!accessing!public! !
+path!accessing!public! !
+paxVersion!accessing!private! !
+paxVersion:!accessing!private! !
+preDeclareClassesOnLoad!accessing!public! !
+preDeclareClassesOnLoad:!accessing!public! !
+prerequisiteNames!accessing!private! !
+prerequisites!enumerating!public! !
+printOn:!printing!public! !
+privateUninstall!private!removing! !
+propertyAt:ifAbsent:!properties!public! !
+propertyManager!private!properties! !
+rebaseTo:!public!testing! !
+remainingClasses!accessing!public! !
+removeClass:!public!removing! !
+removeClassName:!private!removing! !
+removeGlobalNamed:!public!removing! !
+removeLooseMethod:!private!removing! !
+removeMethod:!public!removing! !
+removeMethodNames:!event handling!private! !
+removePackagedMethod:!private!removing! !
+removePAXProperties!operations!private! !
+renameLooseMethodsOf:to:!event handling!private! !
+resetChangeFlags!public!source filing! !
+resetPrerequisites!operations!private! !
+resourceIdentifiers!accessing!public! !
+scriptAt:!accessing!public! !
+scriptAt:put:!accessing!public! !
+scripts!accessing!private! !
+setEvents:!events!private! !
+setManualPrerequisites:!accessing!private! !
+setPackageFileName:!accessing!private! !
+setPrerequisites:!accessing!private! !
+shrink!private! !
+sourceDescriptor!accessing!private! !
+sourceDescriptor:!accessing!private! !
+sourceGlobalNames!accessing!private! !
+sourceGlobalVariables!accessing!private! !
+sourceManager!accessing!public! !
+stbSaveOn:!binary filing!public! !
+storeComment!helpers!private! !
+synchronizeNames!helpers!private! !
+systemGlobalRenamed:to:!event handling!private! !
+timestamp!accessing!public! !
+timestamp:!accessing!private! !
+trace:prerequisite:from:to:type:!helpers!private! !
+tracePrerequisiteGlobals:packagedGlobals:!operations!private! !
+tracePrerequisites!operations!private! !
+tracePrerequisites:!operations!private! !
+tracePrerequisitesOfClasses:packagedGlobals:!operations!private! !
+tracePrerequisitesOfGlobals:packagedGlobals:!operations!private! !
+tracePrerequisitesOfImageStripper:!operations!private! !
+tracePrerequisitesOfMethods:!operations!private! !
+uninstall!public!removing! !
+uninstallClasses!class hierarchy-removing!private!removing! !
+uninstallGlobals!private!removing! !
+uninstallMethods!private!removing! !
+untracedGlobals!accessing!public! !
+untracedGlobals:!accessing!public! !
+upateFileNames!operations!private! !
+validate!operations!private! !
+variableSortBlock!constants!private! !
+versionIfRequired!public! !
+vmVersionCheck:!constants!private! !
+!
 
 !Package class methodsFor!
 
@@ -2266,38 +2268,40 @@ unsaveableSignal
 	a package with uncommitted or cyclic pre-requisites."
 
 	^UnsaveableSignal! !
-!Package class categoriesFor: #binaryGlobalExtension!constants!private! !
-!Package class categoriesFor: #binaryPacLoader:!accessing!private! !
-!Package class categoriesFor: #clashSignal!constants!private! !
-!Package class categoriesFor: #defaultSortBlock!constants!public! !
-!Package class categoriesFor: #errorInvalidPACFile:!exceptions!private! !
-!Package class categoriesFor: #errorInvalidPAXFile:!exceptions!private! !
-!Package class categoriesFor: #fromFile:!instance creation!private! !
-!Package class categoriesFor: #fromPACFile:!instance creation!private! !
-!Package class categoriesFor: #fromPAXFile:!instance creation!private! !
-!Package class categoriesFor: #initialize!initializing!private! !
-!Package class categoriesFor: #manager!accessing!public! !
-!Package class categoriesFor: #name:!instance creation!public! !
-!Package class categoriesFor: #new!instance creation!public! !
-!Package class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!Package class categoriesFor: #packageExtension!constants!private! !
-!Package class categoriesFor: #packageFileVersion!constants!public! !
-!Package class categoriesFor: #paxVersion!constants!private! !
-!Package class categoriesFor: #preDeclareClassesOnLoad!accessing!public! !
-!Package class categoriesFor: #preDeclareClassesOnLoad:!accessing!public! !
-!Package class categoriesFor: #readFrom:!instance creation!private! !
-!Package class categoriesFor: #sourceGlobalExtension!constants!private! !
-!Package class categoriesFor: #sourcePackageExtension!constants!private! !
-!Package class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!Package class categoriesFor: #stbConvertFromVersion0:!binary filing!private! !
-!Package class categoriesFor: #stbConvertFromVersion1:!binary filing!private! !
-!Package class categoriesFor: #stbConvertFromVersion2:!binary filing!private! !
-!Package class categoriesFor: #stbConvertFromVersion3:!binary filing!private! !
-!Package class categoriesFor: #stbConvertFromVersion4:!binary filing!private! !
-!Package class categoriesFor: #stbConvertFromVersion5:!binary filing!private! !
-!Package class categoriesFor: #stbConvertFromVersion6:!binary filing!private! !
-!Package class categoriesFor: #stbVersion!binary filing!public! !
-!Package class categoriesFor: #uncommitted!accessing!public! !
-!Package class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!Package class categoriesFor: #unsaveableSignal!constants!private! !
+!Package class categoriesForMethods!
+binaryGlobalExtension!constants!private! !
+binaryPacLoader:!accessing!private! !
+clashSignal!constants!private! !
+defaultSortBlock!constants!public! !
+errorInvalidPACFile:!exceptions!private! !
+errorInvalidPAXFile:!exceptions!private! !
+fromFile:!instance creation!private! !
+fromPACFile:!instance creation!private! !
+fromPAXFile:!instance creation!private! !
+initialize!initializing!private! !
+manager!accessing!public! !
+name:!instance creation!public! !
+new!instance creation!public! !
+onPreStripImage!class hierarchy-removing!private! !
+packageExtension!constants!private! !
+packageFileVersion!constants!public! !
+paxVersion!constants!private! !
+preDeclareClassesOnLoad!accessing!public! !
+preDeclareClassesOnLoad:!accessing!public! !
+readFrom:!instance creation!private! !
+sourceGlobalExtension!constants!private! !
+sourcePackageExtension!constants!private! !
+stbConvertFrom:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
+stbConvertFromVersion2:!binary filing!private! !
+stbConvertFromVersion3:!binary filing!private! !
+stbConvertFromVersion4:!binary filing!private! !
+stbConvertFromVersion5:!binary filing!private! !
+stbConvertFromVersion6:!binary filing!private! !
+stbVersion!binary filing!public! !
+uncommitted!accessing!public! !
+uninitialize!class hierarchy-removing!private! !
+unsaveableSignal!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Image subclass: #OLEPicture
 	instanceVariableNames: 'picture extent hmExtent'
@@ -169,20 +169,22 @@ saveAsFile: pathString
 	self picture saveAsFile: istream fSaveMemCopy: true.
 	istream free.
 	fstream close! !
-!OLEPicture categoriesFor: #=!comparing!public! !
-!OLEPicture categoriesFor: #addToImageList:mask:!double dispatch!private! !
-!OLEPicture categoriesFor: #asBitmap!public! !
-!OLEPicture categoriesFor: #asDIBSection!converting!public! !
-!OLEPicture categoriesFor: #basicFree!private!realizing/unrealizing! !
-!OLEPicture categoriesFor: #createHandle!private!realizing/unrealizing! !
-!OLEPicture categoriesFor: #drawOn:at:extent:!drawing-bitmaps!public! !
-!OLEPicture categoriesFor: #extent!accessing!public! !
-!OLEPicture categoriesFor: #imageType!constants!private!testing! !
-!OLEPicture categoriesFor: #isPersistent!private!testing! !
-!OLEPicture categoriesFor: #loadFromFile:extent:!private!realizing/unrealizing! !
-!OLEPicture categoriesFor: #picture!accessing!private! !
-!OLEPicture categoriesFor: #picture:!accessing!private! !
-!OLEPicture categoriesFor: #saveAsFile:!file operations!public! !
+!OLEPicture categoriesForMethods!
+=!comparing!public! !
+addToImageList:mask:!double dispatch!private! !
+asBitmap!public! !
+asDIBSection!converting!public! !
+basicFree!private!realizing/unrealizing! !
+createHandle!private!realizing/unrealizing! !
+drawOn:at:extent:!drawing-bitmaps!public! !
+extent!accessing!public! !
+imageType!constants!private!testing! !
+isPersistent!private!testing! !
+loadFromFile:extent:!private!realizing/unrealizing! !
+picture!accessing!private! !
+picture:!accessing!private! !
+saveAsFile:!file operations!public! !
+!
 
 !OLEPicture class methodsFor!
 
@@ -191,5 +193,7 @@ fromIPicture: anIPicture
 		picture: anIPicture;
 		createHandle;
 		yourself! !
-!OLEPicture class categoriesFor: #fromIPicture:!public! !
+!OLEPicture class categoriesForMethods!
+fromIPicture:!public! !
+!
 

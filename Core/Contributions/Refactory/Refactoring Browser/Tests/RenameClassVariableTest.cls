@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #RenameClassVariableTest
 	instanceVariableNames: ''
@@ -58,8 +58,10 @@ testRenameClassVar
 												[builder compile: rewriteRule tree printString
 													in: class
 													classified: aSmalllintContext protocols]]')! !
-!RenameClassVariableTest categoriesFor: #testAlreadyExistingName!failure tests!public! !
-!RenameClassVariableTest categoriesFor: #testMetaClassFailure!failure tests!public! !
-!RenameClassVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
-!RenameClassVariableTest categoriesFor: #testRenameClassVar!public!tests! !
+!RenameClassVariableTest categoriesForMethods!
+testAlreadyExistingName!failure tests!public! !
+testMetaClassFailure!failure tests!public! !
+testNonExistantName!failure tests!public! !
+testRenameClassVar!public!tests! !
+!
 

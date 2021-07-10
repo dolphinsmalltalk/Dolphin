@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 STBProxy subclass: #STBClassProxy
 	instanceVariableNames: 'packageName locatorKey'
@@ -43,11 +43,13 @@ stbFixup: inFiler at: anInteger
 
 withClassLocator: aClassLocator
 	^(Smalltalk lookup: #ClassStub) ifNotNil: [:classStub | classStub withClassLocator: aClassLocator]! !
-!STBClassProxy categoriesFor: #locatorKey:!accessing!private! !
-!STBClassProxy categoriesFor: #packageName:!accessing!private! !
-!STBClassProxy categoriesFor: #resolveWithClassLocator:!converting!private! !
-!STBClassProxy categoriesFor: #stbFixup:at:!converting!public! !
-!STBClassProxy categoriesFor: #withClassLocator:!converting!private! !
+!STBClassProxy categoriesForMethods!
+locatorKey:!accessing!private! !
+packageName:!accessing!private! !
+resolveWithClassLocator:!converting!private! !
+stbFixup:at:!converting!public! !
+withClassLocator:!converting!private! !
+!
 
 !STBClassProxy class methodsFor!
 
@@ -75,7 +77,9 @@ stbVersion
 	"Answer the current binary filer version number for instances of the receiver."
 
 	^1! !
-!STBClassProxy class categoriesFor: #forClass:!instance creation!public! !
-!STBClassProxy class categoriesFor: #stbConvertFrom:!binary filing!public! !
-!STBClassProxy class categoriesFor: #stbVersion!binary filing!public! !
+!STBClassProxy class categoriesForMethods!
+forClass:!instance creation!public! !
+stbConvertFrom:!binary filing!public! !
+stbVersion!binary filing!public! !
+!
 

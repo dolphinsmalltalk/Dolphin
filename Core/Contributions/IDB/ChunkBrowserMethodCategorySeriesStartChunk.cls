@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ChunkBrowserSeriesStartChunk subclass: #ChunkBrowserMethodCategorySeriesStartChunk
 	instanceVariableNames: ''
@@ -22,8 +22,10 @@ initialize: aString
 
 seriesClass
 	^ChunkBrowserMethodCategoryChunk! !
-!ChunkBrowserMethodCategorySeriesStartChunk categoriesFor: #initialize:!initializing!public! !
-!ChunkBrowserMethodCategorySeriesStartChunk categoriesFor: #seriesClass!constants!public! !
+!ChunkBrowserMethodCategorySeriesStartChunk categoriesForMethods!
+initialize:!initializing!public! !
+seriesClass!constants!public! !
+!
 
 !ChunkBrowserMethodCategorySeriesStartChunk class methodsFor!
 
@@ -36,5 +38,7 @@ isChunkClassFor: aString
 		ifFalse:
 			[(aString indexOfSubCollection: ' categoriesFor: #') = firstSpaceIndex
 				or: [(aString indexOfSubCollection: ' class categoriesFor: #') = firstSpaceIndex]]! !
-!ChunkBrowserMethodCategorySeriesStartChunk class categoriesFor: #isChunkClassFor:!public!testing! !
+!ChunkBrowserMethodCategorySeriesStartChunk class categoriesForMethods!
+isChunkClassFor:!public!testing! !
+!
 

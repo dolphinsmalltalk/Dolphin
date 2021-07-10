@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PositionableStream subclass: #ReadStream
 	instanceVariableNames: ''
@@ -92,12 +92,14 @@ nextAvailable
 
 	<primitive: 65>
 	^position >= readLimit ifFalse: [collection decodeNextFrom: self]! !
-!ReadStream categoriesFor: #basicNext!accessing!public! !
-!ReadStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
-!ReadStream categoriesFor: #basicNextAvailable!accessing!private! !
-!ReadStream categoriesFor: #isReadable!public!testing! !
-!ReadStream categoriesFor: #next!accessing!public! !
-!ReadStream categoriesFor: #nextAvailable!accessing!public! !
+!ReadStream categoriesForMethods!
+basicNext!accessing!public! !
+basicNext:into:startingAt:!accessing!public! !
+basicNextAvailable!accessing!private! !
+isReadable!public!testing! !
+next!accessing!public! !
+nextAvailable!accessing!public! !
+!
 
 ReadStream methodProtocol: #ReadStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #do: #isEmpty #next #next: #nextLine #nextMatchFor: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #upTo:)!
 

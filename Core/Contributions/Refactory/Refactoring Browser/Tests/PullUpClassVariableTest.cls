@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #PullUpClassVariableTest
 	instanceVariableNames: ''
@@ -28,7 +28,9 @@ testPullUpClassVariable
 				directlyDefinesClassVariable: #RecursiveSelfRule).
 	self deny: ((refactoring model classNamed: #TransformationRuleTest) 
 				directlyDefinesClassVariable: #RecursiveSelfRule)! !
-!PullUpClassVariableTest categoriesFor: #testMetaClassFailure!failure tests!public! !
-!PullUpClassVariableTest categoriesFor: #testNonExistantName!failure tests!public! !
-!PullUpClassVariableTest categoriesFor: #testPullUpClassVariable!public!tests! !
+!PullUpClassVariableTest categoriesForMethods!
+testMetaClassFailure!failure tests!public! !
+testNonExistantName!failure tests!public! !
+testPullUpClassVariable!public!tests! !
+!
 

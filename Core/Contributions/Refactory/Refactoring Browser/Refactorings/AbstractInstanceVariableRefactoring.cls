@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 VariableRefactoring subclass: #AbstractInstanceVariableRefactoring
 	instanceVariableNames: 'accessorsRefactoring'
@@ -46,9 +46,11 @@ preconditions
 transform
 	self createAccessors.
 	self abstractReferences! !
-!AbstractInstanceVariableRefactoring categoriesFor: #abstractReferences!public!transforming! !
-!AbstractInstanceVariableRefactoring categoriesFor: #accessorsRefactoring!accessing!private! !
-!AbstractInstanceVariableRefactoring categoriesFor: #createAccessors!public!transforming! !
-!AbstractInstanceVariableRefactoring categoriesFor: #preconditions!preconditions!public! !
-!AbstractInstanceVariableRefactoring categoriesFor: #transform!public!transforming! !
+!AbstractInstanceVariableRefactoring categoriesForMethods!
+abstractReferences!public!transforming! !
+accessorsRefactoring!accessing!private! !
+createAccessors!public!transforming! !
+preconditions!preconditions!public! !
+transform!public!transforming! !
+!
 

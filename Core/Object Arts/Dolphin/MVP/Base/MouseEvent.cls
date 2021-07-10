@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PointEvent subclass: #MouseEvent
 	instanceVariableNames: ''
@@ -79,18 +79,20 @@ printWParamOn: aStream
 				ifTrue: 
 					[first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
 					aStream nextPutAll: each]]! !
-!MouseEvent categoriesFor: #button!accessing!public! !
-!MouseEvent categoriesFor: #buttonFlag!accessing!public! !
-!MouseEvent categoriesFor: #isButtonDown!public!testing! !
-!MouseEvent categoriesFor: #isCtrlDown!public!testing! !
-!MouseEvent categoriesFor: #isLButtonDown!public!testing! !
-!MouseEvent categoriesFor: #isMButtonDown!public!testing! !
-!MouseEvent categoriesFor: #isModifierDown!public!testing! !
-!MouseEvent categoriesFor: #isRButtonDown!public!testing! !
-!MouseEvent categoriesFor: #isSelectionButtonDown!public!testing! !
-!MouseEvent categoriesFor: #isShiftDown!public!testing! !
-!MouseEvent categoriesFor: #isXButtonDown:!public!testing! !
-!MouseEvent categoriesFor: #printWParamOn:!development!printing!private! !
+!MouseEvent categoriesForMethods!
+button!accessing!public! !
+buttonFlag!accessing!public! !
+isButtonDown!public!testing! !
+isCtrlDown!public!testing! !
+isLButtonDown!public!testing! !
+isMButtonDown!public!testing! !
+isModifierDown!public!testing! !
+isRButtonDown!public!testing! !
+isSelectionButtonDown!public!testing! !
+isShiftDown!public!testing! !
+isXButtonDown:!public!testing! !
+printWParamOn:!development!printing!private! !
+!
 
 !MouseEvent class methodsFor!
 
@@ -104,5 +106,7 @@ wParamFlags
 				#xButton2 -> MK_XBUTTON2.
 				#shift -> MK_SHIFT.
 				#control -> MK_CONTROL})! !
-!MouseEvent class categoriesFor: #wParamFlags!constants!public! !
+!MouseEvent class categoriesForMethods!
+wParamFlags!constants!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #MessageBoxAbstract
 	instanceVariableNames: 'text caption owner'
@@ -116,23 +116,25 @@ warning: warningString
 	self text: warningString.
 	self iconStyle: #warning.
 	^self open! !
-!MessageBoxAbstract categoriesFor: #beep!parping!private! !
-!MessageBoxAbstract categoriesFor: #caption!accessing!public! !
-!MessageBoxAbstract categoriesFor: #caption:!accessing!public! !
-!MessageBoxAbstract categoriesFor: #defaultCaption!constants!private! !
-!MessageBoxAbstract categoriesFor: #errorMsg:!operations!public! !
-!MessageBoxAbstract categoriesFor: #iconStyle!accessing-styles!public! !
-!MessageBoxAbstract categoriesFor: #iconStyle:!accessing-styles!public! !
-!MessageBoxAbstract categoriesFor: #iconStyleFlag!accessing-styles!private! !
-!MessageBoxAbstract categoriesFor: #iconStyleFlag:!accessing-styles!private! !
-!MessageBoxAbstract categoriesFor: #notify:!operations!public! !
-!MessageBoxAbstract categoriesFor: #open!displaying!public! !
-!MessageBoxAbstract categoriesFor: #owner!accessing!public! !
-!MessageBoxAbstract categoriesFor: #owner:!accessing!public! !
-!MessageBoxAbstract categoriesFor: #ownerHandle!accessing!private! !
-!MessageBoxAbstract categoriesFor: #text!accessing!public! !
-!MessageBoxAbstract categoriesFor: #text:!accessing!public! !
-!MessageBoxAbstract categoriesFor: #warning:!operations!public! !
+!MessageBoxAbstract categoriesForMethods!
+beep!parping!private! !
+caption!accessing!public! !
+caption:!accessing!public! !
+defaultCaption!constants!private! !
+errorMsg:!operations!public! !
+iconStyle!accessing-styles!public! !
+iconStyle:!accessing-styles!public! !
+iconStyleFlag!accessing-styles!private! !
+iconStyleFlag:!accessing-styles!private! !
+notify:!operations!public! !
+open!displaying!public! !
+owner!accessing!public! !
+owner:!accessing!public! !
+ownerHandle!accessing!private! !
+text!accessing!public! !
+text:!accessing!public! !
+warning:!operations!public! !
+!
 
 !MessageBoxAbstract class methodsFor!
 
@@ -212,13 +214,15 @@ warning: warningString caption: titleString
 	(self new)
 		caption: titleString;
 		warning: warningString! !
-!MessageBoxAbstract class categoriesFor: #defaultCaption:!constants!private! !
-!MessageBoxAbstract class categoriesFor: #errorMsg:!instance creation!public! !
-!MessageBoxAbstract class categoriesFor: #errorMsg:caption:!instance creation!public! !
-!MessageBoxAbstract class categoriesFor: #initialize!development!initializing!public! !
-!MessageBoxAbstract class categoriesFor: #new!instance creation!public! !
-!MessageBoxAbstract class categoriesFor: #notify:!instance creation!public! !
-!MessageBoxAbstract class categoriesFor: #notify:caption:!instance creation!public! !
-!MessageBoxAbstract class categoriesFor: #warning:!instance creation!public! !
-!MessageBoxAbstract class categoriesFor: #warning:caption:!instance creation!public! !
+!MessageBoxAbstract class categoriesForMethods!
+defaultCaption:!constants!private! !
+errorMsg:!instance creation!public! !
+errorMsg:caption:!instance creation!public! !
+initialize!development!initializing!public! !
+new!instance creation!public! !
+notify:!instance creation!public! !
+notify:caption:!instance creation!public! !
+warning:!instance creation!public! !
+warning:caption:!instance creation!public! !
+!
 

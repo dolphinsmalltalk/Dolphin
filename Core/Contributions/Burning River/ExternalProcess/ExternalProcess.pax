@@ -110,7 +110,9 @@ createProcess: aStringFileName lpCommandLine: cl lpProcessAttributes: pa lpThrea
 
 	<stdcall: bool CreateProcessW lpwstr lpwstr SECURITY_ATTRIBUTES* SECURITY_ATTRIBUTES* bool dword lpvoid lpwstr STARTUPINFOW* PROCESS_INFORMATION*>
 	^self invalidCall: _failureCode! !
-!KernelLibrary categoriesFor: #createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:!public!win32 functions-process and thread! !
+!KernelLibrary categoriesForMethods!
+createProcess:lpCommandLine:lpProcessAttributes:lpThreadAttributes:bInheritsHandles:dwCreationFlags:lpEnvironment:lpCurrentDirectory:lpStartupInfo:lpProcessInformation:!public!win32 functions-process and thread! !
+!
 
 "End of package definition"!
 

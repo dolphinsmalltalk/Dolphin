@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #ClassBuilderTests
 	instanceVariableNames: 'wasOAD'
@@ -368,28 +368,32 @@ testReshapeSubClass
 	self assert: testInstance class identicalTo: self classBuilderTestSubclass1.
 	self assert: testClass identicalTo: self classBuilderTestSubclass1.
 	self assert: testMeta identicalTo: self classBuilderTestSubclass1 class! !
-!ClassBuilderTests categoriesFor: #classBuilderTestClass!public!unit tests! !
-!ClassBuilderTests categoriesFor: #classBuilderTestSubclass1!public!unit tests! !
-!ClassBuilderTests categoriesFor: #classBuilderTestSubclass2!public!unit tests! !
-!ClassBuilderTests categoriesFor: #makeCleanClasses!private!Running! !
-!ClassBuilderTests categoriesFor: #setUp!public!Running! !
-!ClassBuilderTests categoriesFor: #tearDown!public!Running! !
-!ClassBuilderTests categoriesFor: #testAddClassInstVars!public!unit tests! !
-!ClassBuilderTests categoriesFor: #testAddRemovePools!public!unit tests! !
-!ClassBuilderTests categoriesFor: #testBuildAnonymous!public!unit tests! !
-!ClassBuilderTests categoriesFor: #testBuildAnonymousRoot!public!unit tests! !
-!ClassBuilderTests categoriesFor: #testMoveClassToSuperclassWithInstVars!public!unit tests! !
-!ClassBuilderTests categoriesFor: #testMoveClassToSuperclassWithNoInstVars!public!unit tests! !
-!ClassBuilderTests categoriesFor: #testMoveVariable!public!unit tests! !
-!ClassBuilderTests categoriesFor: #testPoolVariablePrecedence!public!unit tests! !
-!ClassBuilderTests categoriesFor: #testReparentSubClassWithSameAllInstVars!public!unit tests! !
-!ClassBuilderTests categoriesFor: #testReshapeClass!public!unit tests! !
-!ClassBuilderTests categoriesFor: #testReshapeClassWithJugglingInstVars!public!unit tests! !
-!ClassBuilderTests categoriesFor: #testReshapeSubClass!public!unit tests! !
+!ClassBuilderTests categoriesForMethods!
+classBuilderTestClass!public!unit tests! !
+classBuilderTestSubclass1!public!unit tests! !
+classBuilderTestSubclass2!public!unit tests! !
+makeCleanClasses!private!Running! !
+setUp!public!Running! !
+tearDown!public!Running! !
+testAddClassInstVars!public!unit tests! !
+testAddRemovePools!public!unit tests! !
+testBuildAnonymous!public!unit tests! !
+testBuildAnonymousRoot!public!unit tests! !
+testMoveClassToSuperclassWithInstVars!public!unit tests! !
+testMoveClassToSuperclassWithNoInstVars!public!unit tests! !
+testMoveVariable!public!unit tests! !
+testPoolVariablePrecedence!public!unit tests! !
+testReparentSubClassWithSameAllInstVars!public!unit tests! !
+testReshapeClass!public!unit tests! !
+testReshapeClassWithJugglingInstVars!public!unit tests! !
+testReshapeSubClass!public!unit tests! !
+!
 
 !ClassBuilderTests class methodsFor!
 
 resources
 	^Array with: ClassBuilderTestClasses! !
-!ClassBuilderTests class categoriesFor: #resources!Accessing!public! !
+!ClassBuilderTests class categoriesForMethods!
+resources!Accessing!public! !
+!
 

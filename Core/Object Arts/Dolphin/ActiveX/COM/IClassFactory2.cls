@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IClassFactory subclass: #IClassFactory2
 	instanceVariableNames: ''
@@ -59,10 +59,12 @@ RequestLicKey: dwReserved pBstrKey: pBstrKey
 
 	<virtual stdcall: hresult 7 dword bstr*>
 	^self invalidCall: _failureCode! !
-!IClassFactory2 categoriesFor: #CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:!**auto generated**!COM Interfaces-OCIDL.IClassFactory2!public! !
-!IClassFactory2 categoriesFor: #GetLicInfo:!COM Interfaces-OCIDL.IClassFactory2!private! !
-!IClassFactory2 categoriesFor: #requestLicenseKey!accessing!enquiries!public! !
-!IClassFactory2 categoriesFor: #RequestLicKey:pBstrKey:!**auto generated**!COM Interfaces-OCIDL.IClassFactory2!private! !
+!IClassFactory2 categoriesForMethods!
+CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:!**auto generated**!COM Interfaces-OCIDL.IClassFactory2!public! !
+GetLicInfo:!COM Interfaces-OCIDL.IClassFactory2!private! !
+requestLicenseKey!accessing!enquiries!public! !
+RequestLicKey:pBstrKey:!**auto generated**!COM Interfaces-OCIDL.IClassFactory2!private! !
+!
 
 !IClassFactory2 class methodsFor!
 
@@ -78,5 +80,7 @@ defineFunctions
 			argumentTypes: 'dword bstr*';
 		defineFunction: #CreateInstanceLic:pUnkReserved:riid:bstrKey:ppvObject:
 						argumentTypes: 'IUnknown* IUnknown* GUID* bstr IUnknown**'! !
-!IClassFactory2 class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IClassFactory2 class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

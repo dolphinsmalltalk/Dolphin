@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AspectAccessor subclass: #BatchAspectAccessor
 	instanceVariableNames: ''
@@ -58,16 +58,18 @@ value
 
 valueIcon
 	^self icon! !
-!BatchAspectAccessor categoriesFor: #aspectClass!accessing!public! !
-!BatchAspectAccessor categoriesFor: #batchSize!accessing!public! !
-!BatchAspectAccessor categoriesFor: #displayOn:!displaying!public! !
-!BatchAspectAccessor categoriesFor: #keys!accessing!public! !
-!BatchAspectAccessor categoriesFor: #nextBatch:!private! !
-!BatchAspectAccessor categoriesFor: #selectIn:!event handling!private! !
-!BatchAspectAccessor categoriesFor: #startKey!accessing!public! !
-!BatchAspectAccessor categoriesFor: #subjectIncludesKey:!accessing!private! !
-!BatchAspectAccessor categoriesFor: #value!accessing!public! !
-!BatchAspectAccessor categoriesFor: #valueIcon!accessing!public! !
+!BatchAspectAccessor categoriesForMethods!
+aspectClass!accessing!public! !
+batchSize!accessing!public! !
+displayOn:!displaying!public! !
+keys!accessing!public! !
+nextBatch:!private! !
+selectIn:!event handling!private! !
+startKey!accessing!public! !
+subjectIncludesKey:!accessing!private! !
+value!accessing!public! !
+valueIcon!accessing!public! !
+!
 
 !BatchAspectAccessor class methodsFor!
 
@@ -92,7 +94,9 @@ subject: anObject keys: aSequencedReadableCollection startingAt: startInteger ba
 				startingAt: startInteger
 				batchSize: sizeInteger
 				accessorClass: self)! !
-!BatchAspectAccessor class categoriesFor: #aspectBatchClass!public! !
-!BatchAspectAccessor class categoriesFor: #icon!constants!public! !
-!BatchAspectAccessor class categoriesFor: #subject:keys:startingAt:batchSize:!instance creation!public! !
+!BatchAspectAccessor class categoriesForMethods!
+aspectBatchClass!public! !
+icon!constants!public! !
+subject:keys:startingAt:batchSize:!instance creation!public! !
+!
 

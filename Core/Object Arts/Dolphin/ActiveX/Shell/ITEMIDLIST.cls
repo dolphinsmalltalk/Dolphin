@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #ITEMIDLIST
 	instanceVariableNames: 'back'
@@ -139,22 +139,24 @@ pointerClass
 	"Private - Answer the default class to use as a pointer"
 
 	^WindowsShellMemory! !
-!ITEMIDLIST categoriesFor: #append:!operations!public! !
-!ITEMIDLIST categoriesFor: #back!accessing!private! !
-!ITEMIDLIST categoriesFor: #back:!accessing!private! !
-!ITEMIDLIST categoriesFor: #bufferClass!constants!private! !
-!ITEMIDLIST categoriesFor: #cb!accessing!public! !
-!ITEMIDLIST categoriesFor: #cb:!accessing!public! !
-!ITEMIDLIST categoriesFor: #getSize!operations!public! !
-!ITEMIDLIST categoriesFor: #idCopy!operations!public! !
-!ITEMIDLIST categoriesFor: #idLast!operations!public! !
-!ITEMIDLIST categoriesFor: #idNext!operations!public! !
-!ITEMIDLIST categoriesFor: #idParent!operations!public! !
-!ITEMIDLIST categoriesFor: #isDesktopID!public!testing! !
-!ITEMIDLIST categoriesFor: #isSingle!public!testing! !
-!ITEMIDLIST categoriesFor: #isValid!public!testing! !
-!ITEMIDLIST categoriesFor: #onStartup!event handling!public! !
-!ITEMIDLIST categoriesFor: #pointerClass!constants!private! !
+!ITEMIDLIST categoriesForMethods!
+append:!operations!public! !
+back!accessing!private! !
+back:!accessing!private! !
+bufferClass!constants!private! !
+cb!accessing!public! !
+cb:!accessing!public! !
+getSize!operations!public! !
+idCopy!operations!public! !
+idLast!operations!public! !
+idNext!operations!public! !
+idParent!operations!public! !
+isDesktopID!public!testing! !
+isSingle!public!testing! !
+isValid!public!testing! !
+onStartup!event handling!public! !
+pointerClass!constants!private! !
+!
 
 !ITEMIDLIST class methodsFor!
 
@@ -247,15 +249,17 @@ pointerClass
 
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
-!ITEMIDLIST class categoriesFor: #defineFields!public!template definition! !
-!ITEMIDLIST class categoriesFor: #exampleCopying!examples!public! !
-!ITEMIDLIST class categoriesFor: #exampleWalkID:!examples!public! !
-!ITEMIDLIST class categoriesFor: #exampleWalking!examples!public! !
-!ITEMIDLIST class categoriesFor: #exampleWalkPath:!examples!public! !
-!ITEMIDLIST class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!ITEMIDLIST class categoriesFor: #initialize!development!initializing!private! !
-!ITEMIDLIST class categoriesFor: #new!instance creation!public! !
-!ITEMIDLIST class categoriesFor: #onStartup!event handling!private! !
-!ITEMIDLIST class categoriesFor: #pointerClass!constants!private! !
-!ITEMIDLIST class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!ITEMIDLIST class categoriesForMethods!
+defineFields!public!template definition! !
+exampleCopying!examples!public! !
+exampleWalkID:!examples!public! !
+exampleWalking!examples!public! !
+exampleWalkPath:!examples!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+onStartup!event handling!private! !
+pointerClass!constants!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

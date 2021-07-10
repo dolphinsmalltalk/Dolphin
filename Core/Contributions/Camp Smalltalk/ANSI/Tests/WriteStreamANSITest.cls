@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequencedStreamTest subclass: #WriteStreamANSITest
 	instanceVariableNames: 'writeStream buffer'
@@ -103,14 +103,16 @@ testXtab
 	byteStream := WriteStream on: ByteArray new.
 	self value: [byteStream tab] shouldRaise: Error
 	! !
-!WriteStreamANSITest categoriesFor: #canonicalObject!public! !
-!WriteStreamANSITest categoriesFor: #protocol!public! !
-!WriteStreamANSITest categoriesFor: #setUp!public! !
-!WriteStreamANSITest categoriesFor: #testXcr!public! !
-!WriteStreamANSITest categoriesFor: #testXnextPutAllX!public! !
-!WriteStreamANSITest categoriesFor: #testXnextPutX!public! !
-!WriteStreamANSITest categoriesFor: #testXspace!public! !
-!WriteStreamANSITest categoriesFor: #testXtab!public! !
+!WriteStreamANSITest categoriesForMethods!
+canonicalObject!public! !
+protocol!public! !
+setUp!public! !
+testXcr!public! !
+testXnextPutAllX!public! !
+testXnextPutX!public! !
+testXspace!public! !
+testXtab!public! !
+!
 
 !WriteStreamANSITest class methodsFor!
 
@@ -119,5 +121,7 @@ helperClassesDo: aBlock
 	aBlock value: PuttableStreamHelper.
 	aBlock value: CollectionStreamHelper.
 	aBlock value: WriteStreamHelper.! !
-!WriteStreamANSITest class categoriesFor: #helperClassesDo:!public! !
+!WriteStreamANSITest class categoriesForMethods!
+helperClassesDo:!public! !
+!
 

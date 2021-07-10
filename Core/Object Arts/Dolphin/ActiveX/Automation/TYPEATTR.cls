@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXTypeInfoStructure subclass: #TYPEATTR
 	instanceVariableNames: 'piTypeInfo'
@@ -215,36 +215,38 @@ wTypeFlags
 	"Answer the <Integer> value of the receiver's 'wTypeFlags' field."
 
 	^bytes wordAtOffset: _OffsetOf_wTypeFlags! !
-!TYPEATTR categoriesFor: #basicFree!private!realizing/unrealizing! !
-!TYPEATTR categoriesFor: #cbAlignment!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #cbSizeInstance!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #cbSizeVft!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #cFuncs!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #cImplTypes!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #classDesc!accessing!private! !
-!TYPEATTR categoriesFor: #cVars!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #guid!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #idldescType!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #isAggregatable!public!testing! !
-!TYPEATTR categoriesFor: #isAppObject!public!testing! !
-!TYPEATTR categoriesFor: #isAutomationCompatible!public!testing! !
-!TYPEATTR categoriesFor: #isControl!public!testing! !
-!TYPEATTR categoriesFor: #isDispatchable!public!testing! !
-!TYPEATTR categoriesFor: #isExtensible!public!testing! !
-!TYPEATTR categoriesFor: #isInstantiable!public!testing! !
-!TYPEATTR categoriesFor: #isLicensed!public!testing! !
-!TYPEATTR categoriesFor: #isRestricted!public!testing! !
-!TYPEATTR categoriesFor: #lcid!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #memidConstructor!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #memidDestructor!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #name!accessing!public! !
-!TYPEATTR categoriesFor: #piTypeInfo:!accessing!private! !
-!TYPEATTR categoriesFor: #tdesc!accessing!public! !
-!TYPEATTR categoriesFor: #tdescAlias!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #typekind!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #wMajorVerNum!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #wMinorVerNum!**compiled accessors**!public! !
-!TYPEATTR categoriesFor: #wTypeFlags!**compiled accessors**!public! !
+!TYPEATTR categoriesForMethods!
+basicFree!private!realizing/unrealizing! !
+cbAlignment!**compiled accessors**!public! !
+cbSizeInstance!**compiled accessors**!public! !
+cbSizeVft!**compiled accessors**!public! !
+cFuncs!**compiled accessors**!public! !
+cImplTypes!**compiled accessors**!public! !
+classDesc!accessing!private! !
+cVars!**compiled accessors**!public! !
+guid!**compiled accessors**!public! !
+idldescType!**compiled accessors**!public! !
+isAggregatable!public!testing! !
+isAppObject!public!testing! !
+isAutomationCompatible!public!testing! !
+isControl!public!testing! !
+isDispatchable!public!testing! !
+isExtensible!public!testing! !
+isInstantiable!public!testing! !
+isLicensed!public!testing! !
+isRestricted!public!testing! !
+lcid!**compiled accessors**!public! !
+memidConstructor!**compiled accessors**!public! !
+memidDestructor!**compiled accessors**!public! !
+name!accessing!public! !
+piTypeInfo:!accessing!private! !
+tdesc!accessing!public! !
+tdescAlias!**compiled accessors**!public! !
+typekind!**compiled accessors**!public! !
+wMajorVerNum!**compiled accessors**!public! !
+wMinorVerNum!**compiled accessors**!public! !
+wTypeFlags!**compiled accessors**!public! !
+!
 
 !TYPEATTR class methodsFor!
 
@@ -298,6 +300,8 @@ defineFields
 
 getFieldNames
 	^#(#guid #lcid #memidConstructor #memidDestructor #cbSizeInstance #typekind #cFuncs #cVars #cImplTypes #cbSizeVft #cbAlignment #wTypeFlags #wMajorVerNum #wMinorVerNum #tdescAlias #idldescType)! !
-!TYPEATTR class categoriesFor: #defineFields!public!template definition! !
-!TYPEATTR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!TYPEATTR class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

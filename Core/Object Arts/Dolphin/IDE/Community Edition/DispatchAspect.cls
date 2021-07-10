@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AXAutomationAspect subclass: #DispatchAspect
 	instanceVariableNames: 'dispid'
@@ -36,10 +36,12 @@ writeInto: subjectObject value: valueObject
 			[:ex | 
 			MessageBox errorMsg: ex description
 				caption: ('Error setting property <1p>' expandMacrosWith: self name)]! !
-!DispatchAspect categoriesFor: #dispid!accessing!public! !
-!DispatchAspect categoriesFor: #dispid:!accessing!private! !
-!DispatchAspect categoriesFor: #flags!accessing!private! !
-!DispatchAspect categoriesFor: #flags:!accessing!private! !
-!DispatchAspect categoriesFor: #readFrom:!indirect accessing!private! !
-!DispatchAspect categoriesFor: #writeInto:value:!indirect accessing!private! !
+!DispatchAspect categoriesForMethods!
+dispid!accessing!public! !
+dispid:!accessing!private! !
+flags!accessing!private! !
+flags:!accessing!private! !
+readFrom:!indirect accessing!private! !
+writeInto:value:!indirect accessing!private! !
+!
 

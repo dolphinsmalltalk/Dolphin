@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PresenterTest subclass: #SmalltalkWorkspaceTest
 	instanceVariableNames: ''
@@ -38,8 +38,10 @@ testReformatSourcePartial
 bar bar] value: #foo value: #bar'.
 	"No selection, cursor positioned after reformatted text"
 	self assert: presenter selectionRange equals: (31 to: 30)! !
-!SmalltalkWorkspaceTest categoriesFor: #classToTest!helpers!private! !
-!SmalltalkWorkspaceTest categoriesFor: #doReformatSource!helpers!private! !
-!SmalltalkWorkspaceTest categoriesFor: #testReformatSource!public!unit tests! !
-!SmalltalkWorkspaceTest categoriesFor: #testReformatSourcePartial!public!unit tests! !
+!SmalltalkWorkspaceTest categoriesForMethods!
+classToTest!helpers!private! !
+doReformatSource!helpers!private! !
+testReformatSource!public!unit tests! !
+testReformatSourcePartial!public!unit tests! !
+!
 

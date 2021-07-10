@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ScintillaAnnotation
 	instanceVariableNames: 'line text styles'
@@ -42,13 +42,15 @@ text
 	"Answer the text  of the annotation."
 
 	^text! !
-!ScintillaAnnotation categoriesFor: #=!comparing!public! !
-!ScintillaAnnotation categoriesFor: #hash!comparing!public! !
-!ScintillaAnnotation categoriesFor: #line!public! !
-!ScintillaAnnotation categoriesFor: #printOn:!printing!public! !
-!ScintillaAnnotation categoriesFor: #setLine:text:styles:!initializing!private! !
-!ScintillaAnnotation categoriesFor: #styles!accessing!public! !
-!ScintillaAnnotation categoriesFor: #text!accessing!public! !
+!ScintillaAnnotation categoriesForMethods!
+=!comparing!public! !
+hash!comparing!public! !
+line!public! !
+printOn:!printing!public! !
+setLine:text:styles:!initializing!private! !
+styles!accessing!public! !
+text!accessing!public! !
+!
 
 !ScintillaAnnotation class methodsFor!
 
@@ -67,7 +69,9 @@ line: anInteger text: aString styles: aSequencedReadableCollectionOfSymbol
 			text: aString
 			styles: aSequencedReadableCollectionOfSymbol;
 		yourself! !
-!ScintillaAnnotation class categoriesFor: #icon!constants!development!public! !
-!ScintillaAnnotation class categoriesFor: #line:text:style:!public! !
-!ScintillaAnnotation class categoriesFor: #line:text:styles:!initializing!private! !
+!ScintillaAnnotation class categoriesForMethods!
+icon!constants!development!public! !
+line:text:style:!public! !
+line:text:styles:!initializing!private! !
+!
 

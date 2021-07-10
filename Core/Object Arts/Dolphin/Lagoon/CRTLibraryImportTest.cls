@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #CRTLibraryImportTest
 	instanceVariableNames: ''
@@ -59,8 +59,10 @@ testStubCrtExports
 						separatedBy: [desc nextPutAll: ', '].
 					desc contents]]
 					ensure: [l close]]! !
-!CRTLibraryImportTest categoriesFor: #devOnlyCrtFunctions!constants!private! !
-!CRTLibraryImportTest categoriesFor: #minimumVmVersion!accessing!public! !
-!CRTLibraryImportTest categoriesFor: #stubNames!constants!private! !
-!CRTLibraryImportTest categoriesFor: #testStubCrtExports!public!unit tests! !
+!CRTLibraryImportTest categoriesForMethods!
+devOnlyCrtFunctions!constants!private! !
+minimumVmVersion!accessing!public! !
+stubNames!constants!private! !
+testStubCrtExports!public!unit tests! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Compiler
 	instanceVariableNames: ''
@@ -421,42 +421,44 @@ uninitialize
 
 warningClass
 	^CompilerWarningNotification! !
-!Compiler class categoriesFor: #compile:in:!compiling!public! !
-!Compiler class categoriesFor: #compile:in:flags:!compiling!private! !
-!Compiler class categoriesFor: #compileDebugExpression:in:evaluationPools:!compiling!public! !
-!Compiler class categoriesFor: #compileDebugMethod:in:!compiling!public! !
-!Compiler class categoriesFor: #compileExpression:in:!compiling!public! !
-!Compiler class categoriesFor: #compileExpression:in:flags:!compiling!public! !
-!Compiler class categoriesFor: #compileForEvaluation:in:evaluationPools:flags:!compiling!private! !
-!Compiler class categoriesFor: #compilerNotification:!exceptions!private! !
-!Compiler class categoriesFor: #debugInfoFlags:!development!public! !
-!Compiler class categoriesFor: #debugInfoFor:in:debug:!development!public! !
-!Compiler class categoriesFor: #debugInfoForExpression:in:evaluationPools:debug:!development!public! !
-!Compiler class categoriesFor: #defaultFlags!constants!public! !
-!Compiler class categoriesFor: #defaultFlags:!accessing!public! !
-!Compiler class categoriesFor: #disableWarning:!helpers!public! !
-!Compiler class categoriesFor: #enableWarning:!helpers!public! !
-!Compiler class categoriesFor: #errorClass!public! !
-!Compiler class categoriesFor: #evaluate:!evaluating!public! !
-!Compiler class categoriesFor: #evaluate:for:!evaluating!public! !
-!Compiler class categoriesFor: #evaluate:for:evaluationPools:!evaluating!public! !
-!Compiler class categoriesFor: #evaluate:for:evaluationPools:logged:!evaluating!public! !
-!Compiler class categoriesFor: #evaluate:for:evaluationPools:logged:ifFail:!evaluating!public! !
-!Compiler class categoriesFor: #evaluate:for:logged:!evaluating!public! !
-!Compiler class categoriesFor: #evaluate:logged:!evaluating!public! !
-!Compiler class categoriesFor: #identifierFrom:!parsing!public! !
-!Compiler class categoriesFor: #initialize!development!initializing!private! !
-!Compiler class categoriesFor: #isAReservedWord:!parsing!private! !
-!Compiler class categoriesFor: #isAValidIdentifierChar:!parsing!private! !
-!Compiler class categoriesFor: #isAValidInitialIdentifierChar:!parsing!private! !
-!Compiler class categoriesFor: #isAValidLocalIdentifier:!parsing!private! !
-!Compiler class categoriesFor: #isValidSelector:!public!testing! !
-!Compiler class categoriesFor: #isWarningDisabled:!exceptions!private! !
-!Compiler class categoriesFor: #notificationCallback:!exceptions!private! !
-!Compiler class categoriesFor: #notificationClass!public! !
-!Compiler class categoriesFor: #reservedWords!constants!private! !
-!Compiler class categoriesFor: #temporariesMapOf:in:!development!public! !
-!Compiler class categoriesFor: #textMapOf:in:!development!public! !
-!Compiler class categoriesFor: #uninitialize!class hierarchy-removing!public! !
-!Compiler class categoriesFor: #warningClass!public! !
+!Compiler class categoriesForMethods!
+compile:in:!compiling!public! !
+compile:in:flags:!compiling!private! !
+compileDebugExpression:in:evaluationPools:!compiling!public! !
+compileDebugMethod:in:!compiling!public! !
+compileExpression:in:!compiling!public! !
+compileExpression:in:flags:!compiling!public! !
+compileForEvaluation:in:evaluationPools:flags:!compiling!private! !
+compilerNotification:!exceptions!private! !
+debugInfoFlags:!development!public! !
+debugInfoFor:in:debug:!development!public! !
+debugInfoForExpression:in:evaluationPools:debug:!development!public! !
+defaultFlags!constants!public! !
+defaultFlags:!accessing!public! !
+disableWarning:!helpers!public! !
+enableWarning:!helpers!public! !
+errorClass!public! !
+evaluate:!evaluating!public! !
+evaluate:for:!evaluating!public! !
+evaluate:for:evaluationPools:!evaluating!public! !
+evaluate:for:evaluationPools:logged:!evaluating!public! !
+evaluate:for:evaluationPools:logged:ifFail:!evaluating!public! !
+evaluate:for:logged:!evaluating!public! !
+evaluate:logged:!evaluating!public! !
+identifierFrom:!parsing!public! !
+initialize!development!initializing!private! !
+isAReservedWord:!parsing!private! !
+isAValidIdentifierChar:!parsing!private! !
+isAValidInitialIdentifierChar:!parsing!private! !
+isAValidLocalIdentifier:!parsing!private! !
+isValidSelector:!public!testing! !
+isWarningDisabled:!exceptions!private! !
+notificationCallback:!exceptions!private! !
+notificationClass!public! !
+reservedWords!constants!private! !
+temporariesMapOf:in:!development!public! !
+textMapOf:in:!development!public! !
+uninitialize!class hierarchy-removing!public! !
+warningClass!public! !
+!
 

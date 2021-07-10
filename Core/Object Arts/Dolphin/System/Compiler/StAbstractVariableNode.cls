@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StValueNode subclass: #StAbstractVariableNode
 	instanceVariableNames: 'start variable'
@@ -59,19 +59,21 @@ variable
 
 variable: anStVariable
 	variable := anStVariable! !
-!StAbstractVariableNode categoriesFor: #=!comparing!public! !
-!StAbstractVariableNode categoriesFor: #hash!comparing!public! !
-!StAbstractVariableNode categoriesFor: #isConstantNode!public!testing! !
-!StAbstractVariableNode categoriesFor: #isImmediateNode!public!testing! !
-!StAbstractVariableNode categoriesFor: #isVariable!public!testing! !
-!StAbstractVariableNode categoriesFor: #name!constants!public! !
-!StAbstractVariableNode categoriesFor: #needsParenthesis!public!testing! !
-!StAbstractVariableNode categoriesFor: #precedence!accessing!public! !
-!StAbstractVariableNode categoriesFor: #setStart:!initializing!private! !
-!StAbstractVariableNode categoriesFor: #startWithoutParentheses!accessing!public! !
-!StAbstractVariableNode categoriesFor: #stopWithoutParentheses!accessing!public! !
-!StAbstractVariableNode categoriesFor: #variable!accessing!public! !
-!StAbstractVariableNode categoriesFor: #variable:!accessing!public! !
+!StAbstractVariableNode categoriesForMethods!
+=!comparing!public! !
+hash!comparing!public! !
+isConstantNode!public!testing! !
+isImmediateNode!public!testing! !
+isVariable!public!testing! !
+name!constants!public! !
+needsParenthesis!public!testing! !
+precedence!accessing!public! !
+setStart:!initializing!private! !
+startWithoutParentheses!accessing!public! !
+stopWithoutParentheses!accessing!public! !
+variable!accessing!public! !
+variable:!accessing!public! !
+!
 
 !StAbstractVariableNode class methodsFor!
 
@@ -88,7 +90,9 @@ named: aString start: anInteger
 	^(self new)
 		setName: aString start: anInteger;
 		yourself! !
-!StAbstractVariableNode class categoriesFor: #identifierToken:!instance creation!public! !
-!StAbstractVariableNode class categoriesFor: #named:!instance creation!public! !
-!StAbstractVariableNode class categoriesFor: #named:start:!instance creation!public! !
+!StAbstractVariableNode class categoriesForMethods!
+identifierToken:!instance creation!public! !
+named:!instance creation!public! !
+named:start:!instance creation!public! !
+!
 

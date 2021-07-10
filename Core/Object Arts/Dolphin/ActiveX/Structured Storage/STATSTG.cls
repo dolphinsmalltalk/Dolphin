@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEFinalizableStructure subclass: #STATSTG
 	instanceVariableNames: ''
@@ -149,26 +149,28 @@ type: anInteger
 	"Set the receiver's 'type' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_type put: anInteger! !
-!STATSTG categoriesFor: #atime!**compiled accessors**!public! !
-!STATSTG categoriesFor: #atime:!**compiled accessors**!public! !
-!STATSTG categoriesFor: #cbSize!**compiled accessors**!public! !
-!STATSTG categoriesFor: #cbSize:!**compiled accessors**!public! !
-!STATSTG categoriesFor: #clsid!**compiled accessors**!public! !
-!STATSTG categoriesFor: #ctime!**compiled accessors**!public! !
-!STATSTG categoriesFor: #dwStgFmt!**compiled accessors**!public! !
-!STATSTG categoriesFor: #grfLocksSupported!**compiled accessors**!public! !
-!STATSTG categoriesFor: #grfLocksSupported:!**compiled accessors**!public! !
-!STATSTG categoriesFor: #grfMode!**compiled accessors**!public! !
-!STATSTG categoriesFor: #grfStateBits!**compiled accessors**!public! !
-!STATSTG categoriesFor: #isOLEStorage!public!testing! !
-!STATSTG categoriesFor: #isOLEStream!public!testing! !
-!STATSTG categoriesFor: #mtime!**compiled accessors**!public! !
-!STATSTG categoriesFor: #name!accessing!public! !
-!STATSTG categoriesFor: #name:!accessing!public! !
-!STATSTG categoriesFor: #pwcsName!**compiled accessors**!public! !
-!STATSTG categoriesFor: #pwcsName:!**compiled accessors**!public! !
-!STATSTG categoriesFor: #type!**compiled accessors**!public! !
-!STATSTG categoriesFor: #type:!**compiled accessors**!public! !
+!STATSTG categoriesForMethods!
+atime!**compiled accessors**!public! !
+atime:!**compiled accessors**!public! !
+cbSize!**compiled accessors**!public! !
+cbSize:!**compiled accessors**!public! !
+clsid!**compiled accessors**!public! !
+ctime!**compiled accessors**!public! !
+dwStgFmt!**compiled accessors**!public! !
+grfLocksSupported!**compiled accessors**!public! !
+grfLocksSupported:!**compiled accessors**!public! !
+grfMode!**compiled accessors**!public! !
+grfStateBits!**compiled accessors**!public! !
+isOLEStorage!public!testing! !
+isOLEStream!public!testing! !
+mtime!**compiled accessors**!public! !
+name!accessing!public! !
+name:!accessing!public! !
+pwcsName!**compiled accessors**!public! !
+pwcsName:!**compiled accessors**!public! !
+type!**compiled accessors**!public! !
+type:!**compiled accessors**!public! !
+!
 
 !STATSTG class methodsFor!
 
@@ -217,7 +219,9 @@ defineFields
 
 getFieldNames
 	^#(#pwcsName #type #cbSize #mtime #ctime #atime #grfMode #grfLocksSupported #clsid #grfStateBits #dwStgFmt)! !
-!STATSTG class categoriesFor: #clear:!public!realizing/unrealizing! !
-!STATSTG class categoriesFor: #defineFields!public!template definition! !
-!STATSTG class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!STATSTG class categoriesForMethods!
+clear:!public!realizing/unrealizing! !
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

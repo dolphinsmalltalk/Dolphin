@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 QueryableScintillaAttribute subclass: #ScintillaIndicatorStyle
 	instanceVariableNames: 'forecolor style under name alpha hoverStyle hoverForecolor flags foreAlpha _reserved12'
@@ -211,38 +211,40 @@ validateAlpha: anInteger
 	^(anInteger between: SC_ALPHA_TRANSPARENT and: SC_ALPHA_OPAQUE)
 		ifTrue: [anInteger]
 		ifFalse: [self error: 'Invalid alpha value ' , anInteger displayString]! !
-!ScintillaIndicatorStyle categoriesFor: #alpha!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #alpha:!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #applyToView:initializing:!helpers!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicAlpha:!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicForeAlpha:!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicForecolor:!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicHoverForecolor:!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicHoverStyle!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicHoverStyle:!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicId!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicIsUnderText!private!testing! !
-!ScintillaIndicatorStyle categoriesFor: #basicIsUnderText:!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicStyle!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #basicStyle:!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #flags!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #flags:!accessing!private! !
-!ScintillaIndicatorStyle categoriesFor: #foreAlpha!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #foreAlpha:!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #forecolor!accessing!colors!public! !
-!ScintillaIndicatorStyle categoriesFor: #forecolor:!accessing!colors!public! !
-!ScintillaIndicatorStyle categoriesFor: #hoverForecolor!accessing!colors!public! !
-!ScintillaIndicatorStyle categoriesFor: #hoverForecolor:!accessing!colors!public! !
-!ScintillaIndicatorStyle categoriesFor: #hoverStyle!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #hoverStyle:!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #isUnderText!public!testing! !
-!ScintillaIndicatorStyle categoriesFor: #isUnderText:!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #name!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #name:!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #style!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #style:!accessing!public! !
-!ScintillaIndicatorStyle categoriesFor: #styleFromName:!helpers!private! !
-!ScintillaIndicatorStyle categoriesFor: #validateAlpha:!helpers!private! !
+!ScintillaIndicatorStyle categoriesForMethods!
+alpha!accessing!public! !
+alpha:!accessing!public! !
+applyToView:initializing:!helpers!private! !
+basicAlpha:!accessing!private! !
+basicForeAlpha:!accessing!private! !
+basicForecolor:!accessing!private! !
+basicHoverForecolor:!accessing!private! !
+basicHoverStyle!accessing!private! !
+basicHoverStyle:!accessing!private! !
+basicId!accessing!private! !
+basicIsUnderText!private!testing! !
+basicIsUnderText:!accessing!private! !
+basicStyle!accessing!private! !
+basicStyle:!accessing!private! !
+flags!accessing!private! !
+flags:!accessing!private! !
+foreAlpha!accessing!public! !
+foreAlpha:!accessing!public! !
+forecolor!accessing!colors!public! !
+forecolor:!accessing!colors!public! !
+hoverForecolor!accessing!colors!public! !
+hoverForecolor:!accessing!colors!public! !
+hoverStyle!accessing!public! !
+hoverStyle:!accessing!public! !
+isUnderText!public!testing! !
+isUnderText:!accessing!public! !
+name!accessing!public! !
+name:!accessing!public! !
+style!accessing!public! !
+style:!accessing!public! !
+styleFromName:!helpers!private! !
+validateAlpha:!helpers!private! !
+!
 
 !ScintillaIndicatorStyle class methodsFor!
 
@@ -339,9 +341,11 @@ stbConvertFrom: anSTBClassFormat
 
 stbVersion
 	^3! !
-!ScintillaIndicatorStyle class categoriesFor: #buildPropertyMap!constants!must not strip!private! !
-!ScintillaIndicatorStyle class categoriesFor: #initialize!development!initializing!public! !
-!ScintillaIndicatorStyle class categoriesFor: #new!public! !
-!ScintillaIndicatorStyle class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!ScintillaIndicatorStyle class categoriesFor: #stbVersion!binary filing!public! !
+!ScintillaIndicatorStyle class categoriesForMethods!
+buildPropertyMap!constants!must not strip!private! !
+initialize!development!initializing!public! !
+new!public! !
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!public! !
+!
 

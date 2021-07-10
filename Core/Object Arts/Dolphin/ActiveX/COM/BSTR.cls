@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalAddress variableByteSubclass: #BSTR
 	instanceVariableNames: ''
@@ -171,27 +171,29 @@ value: newValue
 			bstr := newValue asBSTR.
 			bstr == newValue ifTrue: [bstr := bstr copy]].
 	super value: (bstr beUnfinalizable; yourself)! !
-!BSTR categoriesFor: #asAnsiString!converting!public! !
-!BSTR categoriesFor: #asBSTR!converting!public! !
-!BSTR categoriesFor: #asByteString:!converting!private! !
-!BSTR categoriesFor: #asString!converting!public! !
-!BSTR categoriesFor: #asUtf16String!converting!public! !
-!BSTR categoriesFor: #asUtf8String!converting!public! !
-!BSTR categoriesFor: #at:!accessing!public! !
-!BSTR categoriesFor: #at:put:!accessing!public! !
-!BSTR categoriesFor: #attach:!accessing!private! !
-!BSTR categoriesFor: #basicFree!private!realizing/unrealizing! !
-!BSTR categoriesFor: #byteSize!accessing!public! !
-!BSTR categoriesFor: #copy!copying!public! !
-!BSTR categoriesFor: #deepCopy!copying!public! !
-!BSTR categoriesFor: #displayOn:!printing!public! !
-!BSTR categoriesFor: #free!private!realizing/unrealizing! !
-!BSTR categoriesFor: #onStartup!event handling!private! !
-!BSTR categoriesFor: #printOn:!development!printing!public! !
-!BSTR categoriesFor: #size!accessing!public! !
-!BSTR categoriesFor: #species!constants!public! !
-!BSTR categoriesFor: #value!accessing!public! !
-!BSTR categoriesFor: #value:!accessing!public! !
+!BSTR categoriesForMethods!
+asAnsiString!converting!public! !
+asBSTR!converting!public! !
+asByteString:!converting!private! !
+asString!converting!public! !
+asUtf16String!converting!public! !
+asUtf8String!converting!public! !
+at:!accessing!public! !
+at:put:!accessing!public! !
+attach:!accessing!private! !
+basicFree!private!realizing/unrealizing! !
+byteSize!accessing!public! !
+copy!copying!public! !
+deepCopy!copying!public! !
+displayOn:!printing!public! !
+free!private!realizing/unrealizing! !
+onStartup!event handling!private! !
+printOn:!development!printing!public! !
+size!accessing!public! !
+species!constants!public! !
+value!accessing!public! !
+value:!accessing!public! !
+!
 
 !BSTR class methodsFor!
 
@@ -263,14 +265,16 @@ uninitialize
 
 	VMLibrary default registryAt: #BSTR put: nil.
 	SessionManager current removeEventsTriggeredFor: self! !
-!BSTR class categoriesFor: #basicNew!instance creation!private! !
-!BSTR class categoriesFor: #clear:!public!realizing/unrealizing! !
-!BSTR class categoriesFor: #fromInteger:!instance creation!public! !
-!BSTR class categoriesFor: #fromString:!instance creation!public! !
-!BSTR class categoriesFor: #icon!constants!public! !
-!BSTR class categoriesFor: #initialize!development!initializing!private! !
-!BSTR class categoriesFor: #new!instance creation!public! !
-!BSTR class categoriesFor: #newBuffer!instance creation!public! !
-!BSTR class categoriesFor: #onStartup!event handling!private! !
-!BSTR class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!BSTR class categoriesForMethods!
+basicNew!instance creation!private! !
+clear:!public!realizing/unrealizing! !
+fromInteger:!instance creation!public! !
+fromString:!instance creation!public! !
+icon!constants!public! !
+initialize!development!initializing!private! !
+new!instance creation!public! !
+newBuffer!instance creation!public! !
+onStartup!event handling!private! !
+uninitialize!class hierarchy-removing!private! !
+!
 

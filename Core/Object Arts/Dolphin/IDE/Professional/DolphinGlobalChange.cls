@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoryChange subclass: #DolphinGlobalChange
 	instanceVariableNames: 'variable'
@@ -39,10 +39,12 @@ variable
 
 variable: aString 
 	variable := aString! !
-!DolphinGlobalChange categoriesFor: #=!comparing!public! !
-!DolphinGlobalChange categoriesFor: #asUndoOperation!converting!public! !
-!DolphinGlobalChange categoriesFor: #executeNotifying:!private! !
-!DolphinGlobalChange categoriesFor: #primitiveExecute!operations!private! !
-!DolphinGlobalChange categoriesFor: #variable!accessing!private! !
-!DolphinGlobalChange categoriesFor: #variable:!accessing!private! !
+!DolphinGlobalChange categoriesForMethods!
+=!comparing!public! !
+asUndoOperation!converting!public! !
+executeNotifying:!private! !
+primitiveExecute!operations!private! !
+variable!accessing!private! !
+variable:!accessing!private! !
+!
 

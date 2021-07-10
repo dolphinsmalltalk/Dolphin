@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ScintillaTextStyle subclass: #ScintillaCallTipStyle
 	instanceVariableNames: ''
@@ -15,7 +15,9 @@ initialize
 	backcolor := Color tooltip.
 	forecolor := Color tooltipText.
 	self name: #callTip! !
-!ScintillaCallTipStyle categoriesFor: #initialize!initializing!private! !
+!ScintillaCallTipStyle categoriesForMethods!
+initialize!initializing!private! !
+!
 
 !ScintillaCallTipStyle class methodsFor!
 
@@ -32,5 +34,7 @@ initialize
 							setMessage: SCI_STYLESETFORE);
 				isImmutable: true;
 				yourself! !
-!ScintillaCallTipStyle class categoriesFor: #initialize!development!initializing!public! !
+!ScintillaCallTipStyle class categoriesForMethods!
+initialize!development!initializing!public! !
+!
 

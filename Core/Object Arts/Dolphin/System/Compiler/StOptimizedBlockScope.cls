@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StBlockScope subclass: #StOptimizedBlockScope
 	instanceVariableNames: ''
@@ -28,9 +28,11 @@ realScope
 	the receiver will actually be allocated."
 
 	^self outer realScope! !
-!StOptimizedBlockScope categoriesFor: #hasFarReturn!accessing!public! !
-!StOptimizedBlockScope categoriesFor: #markFarReturn!public!visiting! !
-!StOptimizedBlockScope categoriesFor: #markNeedsSelf!public!visiting! !
-!StOptimizedBlockScope categoriesFor: #needsSelf!accessing!public! !
-!StOptimizedBlockScope categoriesFor: #realScope!public! !
+!StOptimizedBlockScope categoriesForMethods!
+hasFarReturn!accessing!public! !
+markFarReturn!public!visiting! !
+markNeedsSelf!public!visiting! !
+needsSelf!accessing!public! !
+realScope!public! !
+!
 

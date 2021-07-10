@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalRectangleTest subclass: #RECTLTest
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ RECTLTest comment: ''!
 
 subjectClass
 	^RECTL! !
-!RECTLTest categoriesFor: #subjectClass!constants!private! !
+!RECTLTest categoriesForMethods!
+subjectClass!constants!private! !
+!
 

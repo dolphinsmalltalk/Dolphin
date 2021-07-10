@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinBaseProduct subclass: #DolphinCommunityEdition
 	instanceVariableNames: ''
@@ -25,9 +25,11 @@ preShrink
 	because they contain references to Lagoon, which only belongs in DolphinProfessional"
 
 	self packages do: [:each | each imageStripperBytes: nil]! !
-!DolphinCommunityEdition categoriesFor: #defaultSystemFolderExtent!private! !
-!DolphinCommunityEdition categoriesFor: #fullName!accessing!public! !
-!DolphinCommunityEdition categoriesFor: #preShrink!private! !
+!DolphinCommunityEdition categoriesForMethods!
+defaultSystemFolderExtent!private! !
+fullName!accessing!public! !
+preShrink!private! !
+!
 
 !DolphinCommunityEdition class methodsFor!
 
@@ -45,7 +47,9 @@ shortProductName
 	"Answer the abbreviated product name"
 	
 	^'DCE'! !
-!DolphinCommunityEdition class categoriesFor: #productLevel!constants!private! !
-!DolphinCommunityEdition class categoriesFor: #productName!accessing!public! !
-!DolphinCommunityEdition class categoriesFor: #shortProductName!accessing!public! !
+!DolphinCommunityEdition class categoriesForMethods!
+productLevel!constants!private! !
+productName!accessing!public! !
+shortProductName!accessing!public! !
+!
 

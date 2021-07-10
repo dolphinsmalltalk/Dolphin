@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #RaisedSignal
 	instanceVariableNames: 'signalType'
@@ -41,10 +41,12 @@ signalType: aSignal
 	a raise event."
 
 	signalType := aSignal! !
-!RaisedSignal categoriesFor: #_descriptionFormat!displaying!public! !
-!RaisedSignal categoriesFor: #defaultAction!handling!public! !
-!RaisedSignal categoriesFor: #isResumable!public!testing! !
-!RaisedSignal categoriesFor: #messageText!accessing!public! !
-!RaisedSignal categoriesFor: #signalType!accessing!private! !
-!RaisedSignal categoriesFor: #signalType:!accessing!private! !
+!RaisedSignal categoriesForMethods!
+_descriptionFormat!displaying!public! !
+defaultAction!handling!public! !
+isResumable!public!testing! !
+messageText!accessing!public! !
+signalType!accessing!private! !
+signalType:!accessing!private! !
+!
 

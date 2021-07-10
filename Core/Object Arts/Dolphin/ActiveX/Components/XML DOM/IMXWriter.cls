@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #IMXWriter
 	instanceVariableNames: ''
@@ -385,41 +385,43 @@ version: strVersion
 
 	self put_version: strVersion
 ! !
-!IMXWriter categoriesFor: #byteOrderMark!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #byteOrderMark:!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #disableOutputEscaping!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #disableOutputEscaping:!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #encoding!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #encoding:!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #Flush!**auto generated**!COM Interfaces-IMXWriter!public! !
-!IMXWriter categoriesFor: #get_byteOrderMark:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #get_disableOutputEscaping:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #get_encoding:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #get_indent:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #get_omitXMLDeclaration:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #get_output:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #get_standalone:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #get_version:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #indent!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #indent:!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!IMXWriter categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!IMXWriter categoriesFor: #omitXMLDeclaration!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #omitXMLDeclaration:!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #output!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #output:!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #put_byteOrderMark:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #put_disableOutputEscaping:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #put_encoding:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #put_indent:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #put_omitXMLDeclaration:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #put_output:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #put_standalone:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #put_version:!**auto generated**!COM Interfaces-IMXWriter!private! !
-!IMXWriter categoriesFor: #standalone!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #standalone:!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #version!**auto generated**!properties!public! !
-!IMXWriter categoriesFor: #version:!**auto generated**!properties!public! !
+!IMXWriter categoriesForMethods!
+byteOrderMark!**auto generated**!properties!public! !
+byteOrderMark:!**auto generated**!properties!public! !
+disableOutputEscaping!**auto generated**!properties!public! !
+disableOutputEscaping:!**auto generated**!properties!public! !
+encoding!**auto generated**!properties!public! !
+encoding:!**auto generated**!properties!public! !
+Flush!**auto generated**!COM Interfaces-IMXWriter!public! !
+get_byteOrderMark:!**auto generated**!COM Interfaces-IMXWriter!private! !
+get_disableOutputEscaping:!**auto generated**!COM Interfaces-IMXWriter!private! !
+get_encoding:!**auto generated**!COM Interfaces-IMXWriter!private! !
+get_indent:!**auto generated**!COM Interfaces-IMXWriter!private! !
+get_omitXMLDeclaration:!**auto generated**!COM Interfaces-IMXWriter!private! !
+get_output:!**auto generated**!COM Interfaces-IMXWriter!private! !
+get_standalone:!**auto generated**!COM Interfaces-IMXWriter!private! !
+get_version:!**auto generated**!COM Interfaces-IMXWriter!private! !
+indent!**auto generated**!properties!public! !
+indent:!**auto generated**!properties!public! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+omitXMLDeclaration!**auto generated**!properties!public! !
+omitXMLDeclaration:!**auto generated**!properties!public! !
+output!**auto generated**!properties!public! !
+output:!**auto generated**!properties!public! !
+put_byteOrderMark:!**auto generated**!COM Interfaces-IMXWriter!private! !
+put_disableOutputEscaping:!**auto generated**!COM Interfaces-IMXWriter!private! !
+put_encoding:!**auto generated**!COM Interfaces-IMXWriter!private! !
+put_indent:!**auto generated**!COM Interfaces-IMXWriter!private! !
+put_omitXMLDeclaration:!**auto generated**!COM Interfaces-IMXWriter!private! !
+put_output:!**auto generated**!COM Interfaces-IMXWriter!private! !
+put_standalone:!**auto generated**!COM Interfaces-IMXWriter!private! !
+put_version:!**auto generated**!COM Interfaces-IMXWriter!private! !
+standalone!**auto generated**!properties!public! !
+standalone:!**auto generated**!properties!public! !
+version!**auto generated**!properties!public! !
+version:!**auto generated**!properties!public! !
+!
 
 !IMXWriter class methodsFor!
 
@@ -510,13 +512,15 @@ newMXXMLWriter60
 
 	^self onCLSID: (CLSID fromString: '{88D96A0F-F192-11D4-A65F-0040963251E5}')
 ! !
-!IMXWriter class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!IMXWriter class categoriesFor: #newMXHTMLWriter!**auto generated**!instance creation!public! !
-!IMXWriter class categoriesFor: #newMXHTMLWriter30!**auto generated**!instance creation!public! !
-!IMXWriter class categoriesFor: #newMXHTMLWriter40!**auto generated**!instance creation!public! !
-!IMXWriter class categoriesFor: #newMXHTMLWriter60!**auto generated**!instance creation!public! !
-!IMXWriter class categoriesFor: #newMXXMLWriter!**auto generated**!instance creation!public! !
-!IMXWriter class categoriesFor: #newMXXMLWriter30!**auto generated**!instance creation!public! !
-!IMXWriter class categoriesFor: #newMXXMLWriter40!**auto generated**!instance creation!public! !
-!IMXWriter class categoriesFor: #newMXXMLWriter60!**auto generated**!instance creation!public! !
+!IMXWriter class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+newMXHTMLWriter!**auto generated**!instance creation!public! !
+newMXHTMLWriter30!**auto generated**!instance creation!public! !
+newMXHTMLWriter40!**auto generated**!instance creation!public! !
+newMXHTMLWriter60!**auto generated**!instance creation!public! !
+newMXXMLWriter!**auto generated**!instance creation!public! !
+newMXXMLWriter30!**auto generated**!instance creation!public! !
+newMXXMLWriter40!**auto generated**!instance creation!public! !
+newMXXMLWriter60!**auto generated**!instance creation!public! !
+!
 

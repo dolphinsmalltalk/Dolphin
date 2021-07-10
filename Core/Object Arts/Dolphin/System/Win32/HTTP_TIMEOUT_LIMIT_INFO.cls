@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_TIMEOUT_LIMIT_INFO
 	instanceVariableNames: ''
@@ -94,18 +94,20 @@ RequestQueue: anInteger
 	"Set the receiver's 'RequestQueue' field to the value of the argument, anInteger"
 
 	bytes wordAtOffset: _OffsetOf_RequestQueue put: anInteger! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #DrainEntityBody!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #DrainEntityBody:!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #EntityBody!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #EntityBody:!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #HeaderWait!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #HeaderWait:!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #IdleConnection!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #IdleConnection:!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #MinSendRate!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #MinSendRate:!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #RequestQueue!**compiled accessors**!public! !
-!HTTP_TIMEOUT_LIMIT_INFO categoriesFor: #RequestQueue:!**compiled accessors**!public! !
+!HTTP_TIMEOUT_LIMIT_INFO categoriesForMethods!
+DrainEntityBody!**compiled accessors**!public! !
+DrainEntityBody:!**compiled accessors**!public! !
+EntityBody!**compiled accessors**!public! !
+EntityBody:!**compiled accessors**!public! !
+HeaderWait!**compiled accessors**!public! !
+HeaderWait:!**compiled accessors**!public! !
+IdleConnection!**compiled accessors**!public! !
+IdleConnection:!**compiled accessors**!public! !
+MinSendRate!**compiled accessors**!public! !
+MinSendRate:!**compiled accessors**!public! !
+RequestQueue!**compiled accessors**!public! !
+RequestQueue:!**compiled accessors**!public! !
+!
 
 !HTTP_TIMEOUT_LIMIT_INFO class methodsFor!
 
@@ -141,7 +143,9 @@ getFieldNames
 
 propertyId
 	^HttpServerTimeoutsProperty! !
-!HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!HTTP_TIMEOUT_LIMIT_INFO class categoriesFor: #propertyId!constants!public! !
+!HTTP_TIMEOUT_LIMIT_INFO class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+propertyId!constants!public! !
+!
 

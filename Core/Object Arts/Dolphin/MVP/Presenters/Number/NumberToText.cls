@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractToTextConverter subclass: #NumberToText
 	instanceVariableNames: '_reserved1'
@@ -27,6 +27,8 @@ rightToLeft: aString
 	"Answers the result of converting aString to a Number."
 
 	^Number fromString: aString! !
-!NumberToText categoriesFor: #leftToRight:!operations!public! !
-!NumberToText categoriesFor: #rightToLeft:!operations!public! !
+!NumberToText categoriesForMethods!
+leftToRight:!operations!public! !
+rightToLeft:!operations!public! !
+!
 

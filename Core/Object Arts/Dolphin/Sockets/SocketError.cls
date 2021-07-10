@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Error subclass: #SocketError
 	instanceVariableNames: ''
@@ -19,8 +19,10 @@ errorAsString
 errorCode
 	#deprecated. "6.0"
 	^self statusCode! !
-!SocketError categoriesFor: #errorAsString!displaying!public! !
-!SocketError categoriesFor: #errorCode!accessing!public! !
+!SocketError categoriesForMethods!
+errorAsString!displaying!public! !
+errorCode!accessing!public! !
+!
 
 !SocketError class methodsFor!
 
@@ -45,9 +47,11 @@ signalWith: anInteger
 
 	^(ErrorClasses at: anInteger ifAbsent: [self]) basicSignalWith: anInteger
 ! !
-!SocketError class categoriesFor: #basicSignalWith:!instance creation!private! !
-!SocketError class categoriesFor: #errorCode!enquiries!private! !
-!SocketError class categoriesFor: #initialize!public! !
-!SocketError class categoriesFor: #signal!instance creation!public! !
-!SocketError class categoriesFor: #signalWith:!instance creation!public! !
+!SocketError class categoriesForMethods!
+basicSignalWith:!instance creation!private! !
+errorCode!enquiries!private! !
+initialize!public! !
+signal!instance creation!public! !
+signalWith:!instance creation!public! !
+!
 

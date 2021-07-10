@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CommandPolicy subclass: #LegacyCommandPolicy
 	instanceVariableNames: ''
@@ -39,6 +39,8 @@ visitPresenter: presenter
 
 	self appendPresenter: presenter.
 	^presenter! !
-!LegacyCommandPolicy categoriesFor: #queryCommand:!operations!private! !
-!LegacyCommandPolicy categoriesFor: #visitPresenter:!operations!private! !
+!LegacyCommandPolicy categoriesForMethods!
+queryCommand:!operations!private! !
+visitPresenter:!operations!private! !
+!
 

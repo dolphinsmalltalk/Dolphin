@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CCHITTESTINFO subclass: #TVHITTESTINFO
 	instanceVariableNames: ''
@@ -30,9 +30,11 @@ item
 	"Answer the 'item' which has been hit (in this case the handle of node)."
 
 	^self hItem! !
-!TVHITTESTINFO categoriesFor: #handle!accessing!private! !
-!TVHITTESTINFO categoriesFor: #hItem!**compiled accessors**!public! !
-!TVHITTESTINFO categoriesFor: #item!accessing!public! !
+!TVHITTESTINFO categoriesForMethods!
+handle!accessing!private! !
+hItem!**compiled accessors**!public! !
+item!accessing!public! !
+!
 
 !TVHITTESTINFO class methodsFor!
 
@@ -54,6 +56,8 @@ defineFields
 
 getFieldNames
 	^#(#pt #flags #hItem)! !
-!TVHITTESTINFO class categoriesFor: #defineFields!public!template definition! !
-!TVHITTESTINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!TVHITTESTINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

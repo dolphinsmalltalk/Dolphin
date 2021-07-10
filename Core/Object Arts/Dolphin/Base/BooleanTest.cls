@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #BooleanTest
 	instanceVariableNames: ''
@@ -38,8 +38,10 @@ testXor
 	self assert: (false xor: true).
 	self deny: (false xor: false).
 	self deny: (true xor: true)! !
-!BooleanTest categoriesFor: #testEvaluatingConjunction!public!unit tests! !
-!BooleanTest categoriesFor: #testEvaluatingDisjunction!public!unit tests! !
-!BooleanTest categoriesFor: #testNew!public!testing! !
-!BooleanTest categoriesFor: #testXor!public!unit tests! !
+!BooleanTest categoriesForMethods!
+testEvaluatingConjunction!public!unit tests! !
+testEvaluatingDisjunction!public!unit tests! !
+testNew!public!testing! !
+testXor!public!unit tests! !
+!
 

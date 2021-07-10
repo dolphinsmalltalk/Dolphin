@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #PackageTest
 	instanceVariableNames: 'loadedPackages checkTimestamps'
@@ -273,22 +273,24 @@ testLooseResourceIdentifiers
 
 testTimestampInitialized
 	self assert: Package new timestamp asInteger equals: 0! !
-!PackageTest categoriesFor: #checkNoTestPackageContents!private!unit tests! !
-!PackageTest categoriesFor: #checkTestPackageContents!private!unit tests! !
-!PackageTest categoriesFor: #d5ForwardRefTestPacContents!private!unit tests! !
-!PackageTest categoriesFor: #filenameFor:!helpers!private! !
-!PackageTest categoriesFor: #loadAndTestPackage:!helpers!private! !
-!PackageTest categoriesFor: #setUp!initializing!private!unit tests! !
-!PackageTest categoriesFor: #tearDown!private!unit tests! !
-!PackageTest categoriesFor: #testBehaviorFromName!public!unit tests! !
-!PackageTest categoriesFor: #testForwardRefLoadPac!public!unit tests! !
-!PackageTest categoriesFor: #testLoad21Pac!public!unit tests! !
-!PackageTest categoriesFor: #testLoad40Pac!public!unit tests! !
-!PackageTest categoriesFor: #testLoad40Pax!public!unit tests! !
-!PackageTest categoriesFor: #testLoad51Pac!public!unit tests! !
-!PackageTest categoriesFor: #testLoad51Pax!public!unit tests! !
-!PackageTest categoriesFor: #testLoad60Pac!public!unit tests! !
-!PackageTest categoriesFor: #testLoad60Pax!public!unit tests! !
-!PackageTest categoriesFor: #testLooseResourceIdentifiers!public! !
-!PackageTest categoriesFor: #testTimestampInitialized!public!unit tests! !
+!PackageTest categoriesForMethods!
+checkNoTestPackageContents!private!unit tests! !
+checkTestPackageContents!private!unit tests! !
+d5ForwardRefTestPacContents!private!unit tests! !
+filenameFor:!helpers!private! !
+loadAndTestPackage:!helpers!private! !
+setUp!initializing!private!unit tests! !
+tearDown!private!unit tests! !
+testBehaviorFromName!public!unit tests! !
+testForwardRefLoadPac!public!unit tests! !
+testLoad21Pac!public!unit tests! !
+testLoad40Pac!public!unit tests! !
+testLoad40Pax!public!unit tests! !
+testLoad51Pac!public!unit tests! !
+testLoad51Pax!public!unit tests! !
+testLoad60Pac!public!unit tests! !
+testLoad60Pax!public!unit tests! !
+testLooseResourceIdentifiers!public! !
+testTimestampInitialized!public!unit tests! !
+!
 

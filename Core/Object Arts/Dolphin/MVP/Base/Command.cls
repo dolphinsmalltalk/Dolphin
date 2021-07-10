@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #Command
 	instanceVariableNames: 'commandDescription receiver undoAction redoAction isBenign'
@@ -107,21 +107,23 @@ value
 	prior := Current.
 	Current := self.
 	^[self commandDescription performAgainst: self receiver] ensure: [Current := prior]! !
-!Command categoriesFor: #beBenign!accessing!public! !
-!Command categoriesFor: #canRedo!accessing!public! !
-!Command categoriesFor: #canUndo!accessing!public! !
-!Command categoriesFor: #command!commands!public! !
-!Command categoriesFor: #commandDescription!accessing!public! !
-!Command categoriesFor: #description!accessing!public! !
-!Command categoriesFor: #isBenign!accessing!public! !
-!Command categoriesFor: #isModalCommand!public!testing! !
-!Command categoriesFor: #receiver!accessing!public! !
-!Command categoriesFor: #receiver:commandDescription:!initializing!private! !
-!Command categoriesFor: #redo!operations!public! !
-!Command categoriesFor: #redoWith:!accessing!public! !
-!Command categoriesFor: #undo!operations!public! !
-!Command categoriesFor: #undoWith:!accessing!public! !
-!Command categoriesFor: #value!evaluating!public! !
+!Command categoriesForMethods!
+beBenign!accessing!public! !
+canRedo!accessing!public! !
+canUndo!accessing!public! !
+command!commands!public! !
+commandDescription!accessing!public! !
+description!accessing!public! !
+isBenign!accessing!public! !
+isModalCommand!public!testing! !
+receiver!accessing!public! !
+receiver:commandDescription:!initializing!private! !
+redo!operations!public! !
+redoWith:!accessing!public! !
+undo!operations!public! !
+undoWith:!accessing!public! !
+value!evaluating!public! !
+!
 
 !Command class methodsFor!
 
@@ -144,8 +146,10 @@ receiver: anObject commandDescription: aCommandDescription
 
 	^super new receiver: anObject commandDescription: aCommandDescription
 ! !
-!Command class categoriesFor: #current!accessing!public! !
-!Command class categoriesFor: #new!instance creation!private! !
-!Command class categoriesFor: #onStartup!public! !
-!Command class categoriesFor: #receiver:commandDescription:!instance creation!public! !
+!Command class categoriesForMethods!
+current!accessing!public! !
+new!instance creation!private! !
+onStartup!public! !
+receiver:commandDescription:!instance creation!public! !
+!
 

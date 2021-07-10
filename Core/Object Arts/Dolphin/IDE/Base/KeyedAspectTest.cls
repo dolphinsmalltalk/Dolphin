@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #KeyedAspectTest
 	instanceVariableNames: ''
@@ -70,12 +70,14 @@ testLookupTablePublishedKeyedAspects
 
 testOrderedCollectionPublishedKeyedAspects
 	self sequenceableCollectionKeyedAspectsTest: OrderedCollection! !
-!KeyedAspectTest categoriesFor: #collectionKeyedAspectsTest:!helpers!private! !
-!KeyedAspectTest categoriesFor: #dictionaryKeyedAspectsTest:!helpers!private! !
-!KeyedAspectTest categoriesFor: #sequenceableCollectionKeyedAspectsTest:!helpers!private! !
-!KeyedAspectTest categoriesFor: #testArrayPublishedKeyedAspects!public!unit tests! !
-!KeyedAspectTest categoriesFor: #testDictionaryPublishedKeyedAspects!public!unit tests! !
-!KeyedAspectTest categoriesFor: #testDWORDArrayPublishedKeyedAspects!public!unit tests! !
-!KeyedAspectTest categoriesFor: #testLookupTablePublishedKeyedAspects!public!unit tests! !
-!KeyedAspectTest categoriesFor: #testOrderedCollectionPublishedKeyedAspects!public!unit tests! !
+!KeyedAspectTest categoriesForMethods!
+collectionKeyedAspectsTest:!helpers!private! !
+dictionaryKeyedAspectsTest:!helpers!private! !
+sequenceableCollectionKeyedAspectsTest:!helpers!private! !
+testArrayPublishedKeyedAspects!public!unit tests! !
+testDictionaryPublishedKeyedAspects!public!unit tests! !
+testDWORDArrayPublishedKeyedAspects!public!unit tests! !
+testLookupTablePublishedKeyedAspects!public!unit tests! !
+testOrderedCollectionPublishedKeyedAspects!public!unit tests! !
+!
 

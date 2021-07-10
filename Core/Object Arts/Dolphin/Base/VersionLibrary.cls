@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalLibrary subclass: #VersionLibrary
 	instanceVariableNames: ''
@@ -62,10 +62,12 @@ verQueryValue: pBlock lpSubBlock: lpstrSubBlock lplpBuffer: lplpBuffer puLen: pu
 
 	<stdcall: bool VerQueryValueW lpvoid lpwstr lppvoid dword*>
 	^self invalidCall: _failureCode! !
-!VersionLibrary categoriesFor: #getFileVersionInfo:!helpers!private! !
-!VersionLibrary categoriesFor: #getFileVersionInfo:dwHandle:dwLen:lpData:!private!win32 functions-file installation! !
-!VersionLibrary categoriesFor: #getFileVersionInfoSize:lpdwHandle:!private!win32 functions-file installation! !
-!VersionLibrary categoriesFor: #verQueryValue:lpSubBlock:lplpBuffer:puLen:!private!win32 functions-file installation! !
+!VersionLibrary categoriesForMethods!
+getFileVersionInfo:!helpers!private! !
+getFileVersionInfo:dwHandle:dwLen:lpData:!private!win32 functions-file installation! !
+getFileVersionInfoSize:lpdwHandle:!private!win32 functions-file installation! !
+verQueryValue:lpSubBlock:lplpBuffer:puLen:!private!win32 functions-file installation! !
+!
 
 !VersionLibrary class methodsFor!
 
@@ -74,5 +76,7 @@ fileName
 
 	^'Version'
 ! !
-!VersionLibrary class categoriesFor: #fileName!constants!public! !
+!VersionLibrary class categoriesForMethods!
+fileName!constants!public! !
+!
 

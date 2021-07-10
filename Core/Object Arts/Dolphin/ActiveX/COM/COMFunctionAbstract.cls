@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #COMFunctionAbstract
 	instanceVariableNames: ''
@@ -98,14 +98,16 @@ selector
 	"Private - Answer the selector sent when the receiver is evaluated."
 
 	^self subclassResponsibility! !
-!COMFunctionAbstract categoriesFor: #argumentCount!accessing!private! !
-!COMFunctionAbstract categoriesFor: #argumentsSize!accessing!private! !
-!COMFunctionAbstract categoriesFor: #argumentTypes!accessing!private! !
-!COMFunctionAbstract categoriesFor: #callback:interface:withArgumentsAt:!evaluating!private! !
-!COMFunctionAbstract categoriesFor: #callingConvention!accessing!private! !
-!COMFunctionAbstract categoriesFor: #descriptor!accessing!private! !
-!COMFunctionAbstract categoriesFor: #messageSelectorAndArgumentNames!accessing!private! !
-!COMFunctionAbstract categoriesFor: #printOn:!development!printing!public! !
-!COMFunctionAbstract categoriesFor: #returnType!accessing!private! !
-!COMFunctionAbstract categoriesFor: #selector!accessing!private! !
+!COMFunctionAbstract categoriesForMethods!
+argumentCount!accessing!private! !
+argumentsSize!accessing!private! !
+argumentTypes!accessing!private! !
+callback:interface:withArgumentsAt:!evaluating!private! !
+callingConvention!accessing!private! !
+descriptor!accessing!private! !
+messageSelectorAndArgumentNames!accessing!private! !
+printOn:!development!printing!public! !
+returnType!accessing!private! !
+selector!accessing!private! !
+!
 

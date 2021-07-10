@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IDispatch subclass: #CDOIDataSource
 	instanceVariableNames: ''
@@ -239,26 +239,28 @@ sourceURL
 		get_SourceURL: answer.
 	^answer asObject
 ! !
-!CDOIDataSource categoriesFor: #activeConnection!**auto generated**!properties!public! !
-!CDOIDataSource categoriesFor: #get_ActiveConnection:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDOIDataSource categoriesFor: #get_IsDirty:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDOIDataSource categoriesFor: #get_Source:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDOIDataSource categoriesFor: #get_SourceClass:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDOIDataSource categoriesFor: #get_SourceURL:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDOIDataSource categoriesFor: #isDirty!**auto generated**!properties!public! !
-!CDOIDataSource categoriesFor: #isDirty:!**auto generated**!properties!public! !
-!CDOIDataSource categoriesFor: #isExtensible!**auto generated**!public!testing! !
-!CDOIDataSource categoriesFor: #isVBCollection!**auto generated**!public!testing! !
-!CDOIDataSource categoriesFor: #Open:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDOIDataSource categoriesFor: #OpenObject:InterfaceName:!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDOIDataSource categoriesFor: #put_IsDirty:!**auto generated**!COM Interfaces-IDataSource!private! !
-!CDOIDataSource categoriesFor: #Save!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDOIDataSource categoriesFor: #SaveTo:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDOIDataSource categoriesFor: #SaveToContainer:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDOIDataSource categoriesFor: #SaveToObject:InterfaceName:!**auto generated**!COM Interfaces-IDataSource!public! !
-!CDOIDataSource categoriesFor: #source!**auto generated**!properties!public! !
-!CDOIDataSource categoriesFor: #sourceClass!**auto generated**!properties!public! !
-!CDOIDataSource categoriesFor: #sourceURL!**auto generated**!properties!public! !
+!CDOIDataSource categoriesForMethods!
+activeConnection!**auto generated**!properties!public! !
+get_ActiveConnection:!**auto generated**!COM Interfaces-IDataSource!private! !
+get_IsDirty:!**auto generated**!COM Interfaces-IDataSource!private! !
+get_Source:!**auto generated**!COM Interfaces-IDataSource!private! !
+get_SourceClass:!**auto generated**!COM Interfaces-IDataSource!private! !
+get_SourceURL:!**auto generated**!COM Interfaces-IDataSource!private! !
+isDirty!**auto generated**!properties!public! !
+isDirty:!**auto generated**!properties!public! !
+isExtensible!**auto generated**!public!testing! !
+isVBCollection!**auto generated**!public!testing! !
+Open:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
+OpenObject:InterfaceName:!**auto generated**!COM Interfaces-IDataSource!public! !
+put_IsDirty:!**auto generated**!COM Interfaces-IDataSource!private! !
+Save!**auto generated**!COM Interfaces-IDataSource!public! !
+SaveTo:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
+SaveToContainer:ActiveConnection:Mode:CreateOptions:Options:UserName:Password:!**auto generated**!COM Interfaces-IDataSource!public! !
+SaveToObject:InterfaceName:!**auto generated**!COM Interfaces-IDataSource!public! !
+source!**auto generated**!properties!public! !
+sourceClass!**auto generated**!properties!public! !
+sourceURL!**auto generated**!properties!public! !
+!
 
 !CDOIDataSource class methodsFor!
 
@@ -299,6 +301,8 @@ initializeTypeLib
 	"
 
 	typeLib := CDOLib! !
-!CDOIDataSource class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
-!CDOIDataSource class categoriesFor: #initializeTypeLib!**auto generated**!initializing!private! !
+!CDOIDataSource class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+initializeTypeLib!**auto generated**!initializing!private! !
+!
 

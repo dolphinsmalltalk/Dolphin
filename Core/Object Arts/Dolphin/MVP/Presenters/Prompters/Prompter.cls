@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueDialog subclass: #Prompter
 	instanceVariableNames: 'promptPresenter replyPresenter validationBlock'
@@ -67,14 +67,16 @@ validationBlock: aBlock
 	button is not enabled until the validationBlock answers true."
 
 	validationBlock := aBlock! !
-!Prompter categoriesFor: #createComponents!initializing!public! !
-!Prompter categoriesFor: #initialize!initializing!private! !
-!Prompter categoriesFor: #isInputValid!public!testing! !
-!Prompter categoriesFor: #model:!accessing!public! !
-!Prompter categoriesFor: #prompt:!accessing!public! !
-!Prompter categoriesFor: #queryCommand:!commands!private! !
-!Prompter categoriesFor: #validationBlock!accessing!public! !
-!Prompter categoriesFor: #validationBlock:!accessing!public! !
+!Prompter categoriesForMethods!
+createComponents!initializing!public! !
+initialize!initializing!private! !
+isInputValid!public!testing! !
+model:!accessing!public! !
+prompt:!accessing!public! !
+queryCommand:!commands!private! !
+validationBlock!accessing!public! !
+validationBlock:!accessing!public! !
+!
 
 !Prompter class methodsFor!
 
@@ -167,14 +169,16 @@ resource_Mini_view
 	"
 
 	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.DialogView) 34 30 nil nil 8 #(524288 196608) 416 nil 327686 ##(Smalltalk.Color) #lightYellow nil 165 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 nil nil nil nil 410 ##(Smalltalk.TextEdit) 34 16 nil 416 34 2 8 1140916352 1 528 nil nil nil 7 nil nil nil 528 nil 8 1903872368 852486 ##(Smalltalk.NullConverter) nil nil 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 11 11 754 117 37 528 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 63 0 0 0 23 0 0 0] 8 #() 754 193 193 nil 27 170 192 34 2 528 8 'reply' 590342 ##(Smalltalk.Rectangle) 754 11 11 754 1 1 nil nil nil nil 25807 nil nil nil nil 1 nil nil 590598 ##(Smalltalk.Semaphore) nil nil 1 nil 8 1998684880 642 138 144 34 2 706 #createAt:extent: 34 2 754 3839 21 754 131 51 416 706 #updateMenuBar 8 #() 416 802 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 192 7 0 0 35 0 0 0] 34 2 528 410 ##(Smalltalk.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 1232 nil nil nil 7 nil nil nil 1232 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.Presenter) #resource_OK_Cancel_button_block nil 642 138 144 34 1 706 #createAt:extent: 34 2 754 161 71 754 201 201 1232 802 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 80 0 0 0 35 0 0 0 180 0 0 0 135 0 0 0] 1168 864 nil 27 864 nil 27 )! !
-!Prompter class categoriesFor: #create:on:prompt:caption:!instance creation!public! !
-!Prompter class categoriesFor: #createOn:prompt:caption:!instance creation!public! !
-!Prompter class categoriesFor: #defaultModel!models!public! !
-!Prompter class categoriesFor: #icon!constants!public! !
-!Prompter class categoriesFor: #on:prompt:caption:!instance creation!public! !
-!Prompter class categoriesFor: #prompt:!instance creation!public! !
-!Prompter class categoriesFor: #prompt:caption:!instance creation!public! !
-!Prompter class categoriesFor: #resource_Default_view!public!resources-views! !
-!Prompter class categoriesFor: #resource_Inplace_edit_view!public!resources-views! !
-!Prompter class categoriesFor: #resource_Mini_view!public!resources-views! !
+!Prompter class categoriesForMethods!
+create:on:prompt:caption:!instance creation!public! !
+createOn:prompt:caption:!instance creation!public! !
+defaultModel!models!public! !
+icon!constants!public! !
+on:prompt:caption:!instance creation!public! !
+prompt:!instance creation!public! !
+prompt:caption:!instance creation!public! !
+resource_Default_view!public!resources-views! !
+resource_Inplace_edit_view!public!resources-views! !
+resource_Mini_view!public!resources-views! !
+!
 

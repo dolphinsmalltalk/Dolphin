@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 TestCaseHelper subclass: #CollectionStreamHelper
 	instanceVariableNames: ''
@@ -22,14 +22,18 @@ testXcontents
 		should: [:r | r = 'this is a string'
 				& r size = self canonicalObject size]
 		conformTo: self protocol selector: #'contents'.! !
-!CollectionStreamHelper categoriesFor: #canonicalObject!public! !
-!CollectionStreamHelper categoriesFor: #object:!public! !
-!CollectionStreamHelper categoriesFor: #testXcontents!public! !
+!CollectionStreamHelper categoriesForMethods!
+canonicalObject!public! !
+object:!public! !
+testXcontents!public! !
+!
 
 !CollectionStreamHelper class methodsFor!
 
 initialize
 	"CollectionStreamHelper  initialize"
 	super initialize! !
-!CollectionStreamHelper class categoriesFor: #initialize!public! !
+!CollectionStreamHelper class categoriesForMethods!
+initialize!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #SHITEMID
 	instanceVariableNames: ''
@@ -33,8 +33,10 @@ cb
 	"Private - Answer the <Integer> value of the receiver's 'cb' field."
 
 	^bytes wordAtOffset: _OffsetOf_cb! !
-!SHITEMID categoriesFor: #abID!**compiled accessors**!public! !
-!SHITEMID categoriesFor: #cb!**compiled accessors**!private! !
+!SHITEMID categoriesForMethods!
+abID!**compiled accessors**!public! !
+cb!**compiled accessors**!private! !
+!
 
 !SHITEMID class methodsFor!
 
@@ -67,7 +69,9 @@ packing
 	"Uses byte packing"
 
 	^1! !
-!SHITEMID class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!SHITEMID class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!SHITEMID class categoriesFor: #packing!constants!public! !
+!SHITEMID class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+packing!constants!public! !
+!
 

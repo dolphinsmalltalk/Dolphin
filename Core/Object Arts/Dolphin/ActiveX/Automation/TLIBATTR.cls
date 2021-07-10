@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 OLEStructure subclass: #TLIBATTR
 	instanceVariableNames: ''
@@ -87,17 +87,19 @@ wMinorVerNum
 	"Answer the <Integer> value of the receiver's 'wMinorVerNum' field."
 
 	^bytes wordAtOffset: _OffsetOf_wMinorVerNum! !
-!TLIBATTR categoriesFor: #comparisonSize!accessing!private! !
-!TLIBATTR categoriesFor: #guid!**compiled accessors**!public! !
-!TLIBATTR categoriesFor: #hasDiskImage!public!testing! !
-!TLIBATTR categoriesFor: #isControl!public!testing! !
-!TLIBATTR categoriesFor: #isHidden!public!testing! !
-!TLIBATTR categoriesFor: #isRestricted!public!testing! !
-!TLIBATTR categoriesFor: #lcid!**compiled accessors**!public! !
-!TLIBATTR categoriesFor: #version!accessing-version!public! !
-!TLIBATTR categoriesFor: #wLibFlags!**compiled accessors**!public! !
-!TLIBATTR categoriesFor: #wMajorVerNum!**compiled accessors**!public! !
-!TLIBATTR categoriesFor: #wMinorVerNum!**compiled accessors**!public! !
+!TLIBATTR categoriesForMethods!
+comparisonSize!accessing!private! !
+guid!**compiled accessors**!public! !
+hasDiskImage!public!testing! !
+isControl!public!testing! !
+isHidden!public!testing! !
+isRestricted!public!testing! !
+lcid!**compiled accessors**!public! !
+version!accessing-version!public! !
+wLibFlags!**compiled accessors**!public! !
+wMajorVerNum!**compiled accessors**!public! !
+wMinorVerNum!**compiled accessors**!public! !
+!
 
 !TLIBATTR class methodsFor!
 
@@ -141,6 +143,8 @@ defineFields
 
 getFieldNames
 	^#(#guid #lcid #wMajorVerNum #wMinorVerNum #wLibFlags)! !
-!TLIBATTR class categoriesFor: #defineFields!public!template definition! !
-!TLIBATTR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!TLIBATTR class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

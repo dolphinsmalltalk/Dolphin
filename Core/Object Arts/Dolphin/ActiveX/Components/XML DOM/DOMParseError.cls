@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Error subclass: #DOMParseError
 	instanceVariableNames: ''
@@ -45,6 +45,8 @@ _descriptionFormat
 	"Private - Answer a string which is the message format for the receiver's description."
 
 	^'%1 - ''%3'' at %4!!d!!, %5!!d!!'! !
-!DOMParseError categoriesFor: #_descriptionArguments!displaying!public! !
-!DOMParseError categoriesFor: #_descriptionFormat!displaying!private! !
+!DOMParseError categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!private! !
+!
 

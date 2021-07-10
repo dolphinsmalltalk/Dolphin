@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 HttpServerStructure subclass: #HTTP_SERVICE_CONFIG_CACHE_SET
 	instanceVariableNames: ''
@@ -45,10 +45,12 @@ ParamDesc: anInteger
 	"Set the receiver's 'ParamDesc' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_ParamDesc put: anInteger! !
-!HTTP_SERVICE_CONFIG_CACHE_SET categoriesFor: #KeyDesc!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_CACHE_SET categoriesFor: #KeyDesc:!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_CACHE_SET categoriesFor: #ParamDesc!**compiled accessors**!public! !
-!HTTP_SERVICE_CONFIG_CACHE_SET categoriesFor: #ParamDesc:!**compiled accessors**!public! !
+!HTTP_SERVICE_CONFIG_CACHE_SET categoriesForMethods!
+KeyDesc!**compiled accessors**!public! !
+KeyDesc:!**compiled accessors**!public! !
+ParamDesc!**compiled accessors**!public! !
+ParamDesc:!**compiled accessors**!public! !
+!
 
 !HTTP_SERVICE_CONFIG_CACHE_SET class methodsFor!
 
@@ -71,6 +73,8 @@ defineFields
 
 getFieldNames
 	^#(#KeyDesc #ParamDesc)! !
-!HTTP_SERVICE_CONFIG_CACHE_SET class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!HTTP_SERVICE_CONFIG_CACHE_SET class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HTTP_SERVICE_CONFIG_CACHE_SET class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

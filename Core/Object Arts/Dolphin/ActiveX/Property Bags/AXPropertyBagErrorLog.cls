@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 COMInterfaceImp subclass: #AXPropertyBagErrorLog
 	instanceVariableNames: 'errors guid'
@@ -79,15 +79,17 @@ supportedInterfaces
 	"Answer the set of interface classes supported by the receiver."
 
 	^#(##(IErrorLog) ##(IEnumErrorInfo))! !
-!AXPropertyBagErrorLog categoriesFor: #AddError:pExcepInfo:!COM Interfaces-IErrorLog!public! !
-!AXPropertyBagErrorLog categoriesFor: #guid!accessing!private! !
-!AXPropertyBagErrorLog categoriesFor: #guid:!accessing!private! !
-!AXPropertyBagErrorLog categoriesFor: #initialize!initializing!private! !
-!AXPropertyBagErrorLog categoriesFor: #isEmpty!public!testing! !
-!AXPropertyBagErrorLog categoriesFor: #notEmpty!public!testing! !
-!AXPropertyBagErrorLog categoriesFor: #queryIEnumErrorInfo!accessing-interfaces!public! !
-!AXPropertyBagErrorLog categoriesFor: #queryInterface:ifNone:!accessing-interfaces!public! !
-!AXPropertyBagErrorLog categoriesFor: #supportedInterfaces!constants!public! !
+!AXPropertyBagErrorLog categoriesForMethods!
+AddError:pExcepInfo:!COM Interfaces-IErrorLog!public! !
+guid!accessing!private! !
+guid:!accessing!private! !
+initialize!initializing!private! !
+isEmpty!public!testing! !
+notEmpty!public!testing! !
+queryIEnumErrorInfo!accessing-interfaces!public! !
+queryInterface:ifNone:!accessing-interfaces!public! !
+supportedInterfaces!constants!public! !
+!
 
 AXPropertyBagErrorLog methodProtocol: #IErrorLog attributes: #(#readOnly) selectors: #(#AddError:pExcepInfo:)!
 

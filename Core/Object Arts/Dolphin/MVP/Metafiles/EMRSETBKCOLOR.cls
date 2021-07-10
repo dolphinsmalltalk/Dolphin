@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRSETBKCOLOR
 	instanceVariableNames: ''
@@ -33,8 +33,10 @@ crColor: anInteger
 	"Set the receiver's 'crColor' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_crColor put: anInteger! !
-!EMRSETBKCOLOR categoriesFor: #crColor!**compiled accessors**!public! !
-!EMRSETBKCOLOR categoriesFor: #crColor:!**compiled accessors**!public! !
+!EMRSETBKCOLOR categoriesForMethods!
+crColor!**compiled accessors**!public! !
+crColor:!**compiled accessors**!public! !
+!
 
 !EMRSETBKCOLOR class methodsFor!
 
@@ -64,7 +66,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_SETBKCOLOR with: EMR_SETTEXTCOLOR! !
-!EMRSETBKCOLOR class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRSETBKCOLOR class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRSETBKCOLOR class categoriesFor: #iTypes!constants!public! !
+!EMRSETBKCOLOR class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

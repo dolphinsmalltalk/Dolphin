@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CCITEM subclass: #HDITEMW
 	instanceVariableNames: ''
@@ -178,37 +178,39 @@ type: anInteger
 	"Set the receiver's 'type' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_type put: anInteger! !
-!HDITEMW categoriesFor: #cchTextMax!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #cchTextMax:!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #cxy!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #cxy:!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #dwState!accessing!public! !
-!HDITEMW categoriesFor: #dwState:!accessing!public! !
-!HDITEMW categoriesFor: #fmt!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #fmt:!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #handle!accessing!public! !
-!HDITEMW categoriesFor: #hbm!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #hbm:!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #iImage!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #iImage:!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #imageValidMask!constants!private! !
-!HDITEMW categoriesFor: #iOrder!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #iOrder:!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #lParam!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #lParam:!accessing!public! !
-!HDITEMW categoriesFor: #paramValidMask!constants!private! !
-!HDITEMW categoriesFor: #pszText!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #pszText:!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #pvFilter!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #pvFilter:!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #state!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #state:!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #stateMask!accessing!public! !
-!HDITEMW categoriesFor: #stateMask:!accessing!public! !
-!HDITEMW categoriesFor: #textPointerOffset!constants!private! !
-!HDITEMW categoriesFor: #textValidMask!constants!private! !
-!HDITEMW categoriesFor: #type!**compiled accessors**!public! !
-!HDITEMW categoriesFor: #type:!**compiled accessors**!public! !
+!HDITEMW categoriesForMethods!
+cchTextMax!**compiled accessors**!public! !
+cchTextMax:!**compiled accessors**!public! !
+cxy!**compiled accessors**!public! !
+cxy:!**compiled accessors**!public! !
+dwState!accessing!public! !
+dwState:!accessing!public! !
+fmt!**compiled accessors**!public! !
+fmt:!**compiled accessors**!public! !
+handle!accessing!public! !
+hbm!**compiled accessors**!public! !
+hbm:!**compiled accessors**!public! !
+iImage!**compiled accessors**!public! !
+iImage:!**compiled accessors**!public! !
+imageValidMask!constants!private! !
+iOrder!**compiled accessors**!public! !
+iOrder:!**compiled accessors**!public! !
+lParam!**compiled accessors**!public! !
+lParam:!accessing!public! !
+paramValidMask!constants!private! !
+pszText!**compiled accessors**!public! !
+pszText:!**compiled accessors**!public! !
+pvFilter!**compiled accessors**!public! !
+pvFilter:!**compiled accessors**!public! !
+state!**compiled accessors**!public! !
+state:!**compiled accessors**!public! !
+stateMask!accessing!public! !
+stateMask:!accessing!public! !
+textPointerOffset!constants!private! !
+textValidMask!constants!private! !
+type!**compiled accessors**!public! !
+type:!**compiled accessors**!public! !
+!
 
 !HDITEMW class methodsFor!
 
@@ -253,6 +255,8 @@ defineFields
 
 getFieldNames
 	^#(#mask #cxy #pszText #hbm #cchTextMax #fmt #lParam #iImage #iOrder #type #pvFilter #state)! !
-!HDITEMW class categoriesFor: #defineFields!initializing!public!template definition! !
-!HDITEMW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!HDITEMW class categoriesForMethods!
+defineFields!initializing!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

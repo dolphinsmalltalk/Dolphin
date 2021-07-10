@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object variableSubclass: #MethodContext
 	instanceVariableNames: 'frame method receiver'
@@ -18,9 +18,11 @@ method
 
 receiver
 	^receiver! !
-!MethodContext categoriesFor: #frame!accessing!private! !
-!MethodContext categoriesFor: #method!accessing!private! !
-!MethodContext categoriesFor: #receiver!accessing!private! !
+!MethodContext categoriesForMethods!
+frame!accessing!private! !
+method!accessing!private! !
+receiver!accessing!private! !
+!
 
 !MethodContext class methodsFor!
 
@@ -46,6 +48,8 @@ stbConvertFrom: format
 stbVersion
 	^2
 ! !
-!MethodContext class categoriesFor: #stbConvertFrom:!binary filing!private! !
-!MethodContext class categoriesFor: #stbVersion!binary filing!constants!private! !
+!MethodContext class categoriesForMethods!
+stbConvertFrom:!binary filing!private! !
+stbVersion!binary filing!constants!private! !
+!
 

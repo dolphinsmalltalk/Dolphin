@@ -154,7 +154,9 @@ analyze
 		for: self methodClass
 		context: nil
 		pools: #()! !
-!StMethodNode categoriesFor: #analyze!public! !
+!StMethodNode categoriesForMethods!
+analyze!public! !
+!
 
 "End of package definition"!
 

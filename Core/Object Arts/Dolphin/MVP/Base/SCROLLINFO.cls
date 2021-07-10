@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #SCROLLINFO
 	instanceVariableNames: ''
@@ -119,25 +119,27 @@ range: anInterval
 		nMin: anInterval start;
 		nMax: anInterval stop;
 		maskIn: SIF_RANGE! !
-!SCROLLINFO categoriesFor: #dwSize:!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #fMask!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #fMask:!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #maskIn:!accessing!public! !
-!SCROLLINFO categoriesFor: #nMax!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #nMax:!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #nMin!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #nMin:!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #nPage!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #nPage:!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #nPos!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #nPos:!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #nTrackPos!**compiled accessors**!public! !
-!SCROLLINFO categoriesFor: #page!accessing!public! !
-!SCROLLINFO categoriesFor: #page:!accessing!public! !
-!SCROLLINFO categoriesFor: #pos!accessing!public! !
-!SCROLLINFO categoriesFor: #pos:!accessing!public! !
-!SCROLLINFO categoriesFor: #range!accessing!public! !
-!SCROLLINFO categoriesFor: #range:!accessing!public! !
+!SCROLLINFO categoriesForMethods!
+dwSize:!**compiled accessors**!public! !
+fMask!**compiled accessors**!public! !
+fMask:!**compiled accessors**!public! !
+maskIn:!accessing!public! !
+nMax!**compiled accessors**!public! !
+nMax:!**compiled accessors**!public! !
+nMin!**compiled accessors**!public! !
+nMin:!**compiled accessors**!public! !
+nPage!**compiled accessors**!public! !
+nPage:!**compiled accessors**!public! !
+nPos!**compiled accessors**!public! !
+nPos:!**compiled accessors**!public! !
+nTrackPos!**compiled accessors**!public! !
+page!accessing!public! !
+page:!accessing!public! !
+pos!accessing!public! !
+pos:!accessing!public! !
+range!accessing!public! !
+range:!accessing!public! !
+!
 
 !SCROLLINFO class methodsFor!
 
@@ -168,6 +170,8 @@ defineFields
 
 getFieldNames
 	^#(#dwSize #fMask #nMin #nMax #nPage #nPos #nTrackPos)! !
-!SCROLLINFO class categoriesFor: #defineFields!public!template definition! !
-!SCROLLINFO class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!SCROLLINFO class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

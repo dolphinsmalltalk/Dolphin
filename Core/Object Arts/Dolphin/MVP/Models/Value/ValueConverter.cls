@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ValueModel subclass: #ValueConverter
 	instanceVariableNames: 'subject typeConverter'
@@ -74,14 +74,16 @@ value
 	"Answer the <Object> value of the receiver."
 
 	^self typeConverter convertFromLeftToRight: self subject value! !
-!ValueConverter categoriesFor: #format!accessing!public! !
-!ValueConverter categoriesFor: #format:!accessing!public! !
-!ValueConverter categoriesFor: #setValue:!accessing!private! !
-!ValueConverter categoriesFor: #subject!accessing!private! !
-!ValueConverter categoriesFor: #subject:!accessing!private! !
-!ValueConverter categoriesFor: #typeConverter!accessing!public! !
-!ValueConverter categoriesFor: #typeConverter:!accessing!public! !
-!ValueConverter categoriesFor: #value!accessing!public! !
+!ValueConverter categoriesForMethods!
+format!accessing!public! !
+format:!accessing!public! !
+setValue:!accessing!private! !
+subject!accessing!private! !
+subject:!accessing!private! !
+typeConverter!accessing!public! !
+typeConverter:!accessing!public! !
+value!accessing!public! !
+!
 
 !ValueConverter class methodsFor!
 
@@ -100,7 +102,9 @@ subject: aValueModel typeConverter: aTypeConverter
 	using aTypeConverter for the conversion process"
 
 	^super new subject: aValueModel; typeConverter: aTypeConverter; yourself! !
-!ValueConverter class categoriesFor: #icon!constants!public! !
-!ValueConverter class categoriesFor: #new!instance creation!private! !
-!ValueConverter class categoriesFor: #subject:typeConverter:!instance creation!public! !
+!ValueConverter class categoriesForMethods!
+icon!constants!public! !
+new!instance creation!private! !
+subject:typeConverter:!instance creation!public! !
+!
 

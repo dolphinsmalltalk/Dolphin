@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #TVINSERTSTRUCTW
 	instanceVariableNames: ''
@@ -36,10 +36,12 @@ item: aTVITEMEXW
 		from: ##(_OffsetOf_item + 1)
 		to: ##(_OffsetOf_item + TVITEMEXW basicByteSize)
 		startingAt: 1! !
-!TVINSERTSTRUCTW categoriesFor: #hInsertAfter:!**compiled accessors**!public! !
-!TVINSERTSTRUCTW categoriesFor: #hParent:!**compiled accessors**!public! !
-!TVINSERTSTRUCTW categoriesFor: #item!**compiled accessors**!public! !
-!TVINSERTSTRUCTW categoriesFor: #item:!**compiled accessors**!public! !
+!TVINSERTSTRUCTW categoriesForMethods!
+hInsertAfter:!**compiled accessors**!public! !
+hParent:!**compiled accessors**!public! !
+item!**compiled accessors**!public! !
+item:!**compiled accessors**!public! !
+!
 
 !TVINSERTSTRUCTW class methodsFor!
 
@@ -55,6 +57,8 @@ defineFields
 
 getFieldNames
 	^#(#hParent #hInsertAfter #item)! !
-!TVINSERTSTRUCTW class categoriesFor: #defineFields!public!template definition! !
-!TVINSERTSTRUCTW class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!TVINSERTSTRUCTW class categoriesForMethods!
+defineFields!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusCustomLineCap subclass: #GdiplusAdjustableArrowCap
 	instanceVariableNames: ''
@@ -77,14 +77,16 @@ width: aNumber
 	| status |
 	(status := GdiplusLibrary default gdipSetAdjustableArrowCapWidth: self asParameter width: aNumber) 
 		= Ok ifFalse: [GdiplusError signal: 'GdipSetAdjustableArrowCapWidth failed' with: status]! !
-!GdiplusAdjustableArrowCap categoriesFor: #height!accessing!public! !
-!GdiplusAdjustableArrowCap categoriesFor: #height:!accessing!public! !
-!GdiplusAdjustableArrowCap categoriesFor: #isFilled!accessing!public! !
-!GdiplusAdjustableArrowCap categoriesFor: #isFilled:!accessing!public! !
-!GdiplusAdjustableArrowCap categoriesFor: #middleInset!accessing!public! !
-!GdiplusAdjustableArrowCap categoriesFor: #middleInset:!accessing!public! !
-!GdiplusAdjustableArrowCap categoriesFor: #width!accessing!public! !
-!GdiplusAdjustableArrowCap categoriesFor: #width:!accessing!public! !
+!GdiplusAdjustableArrowCap categoriesForMethods!
+height!accessing!public! !
+height:!accessing!public! !
+isFilled!accessing!public! !
+isFilled:!accessing!public! !
+middleInset!accessing!public! !
+middleInset:!accessing!public! !
+width!accessing!public! !
+width:!accessing!public! !
+!
 
 !GdiplusAdjustableArrowCap class methodsFor!
 
@@ -133,7 +135,9 @@ height: heightReal width: widthReal isFilled: isFilledBoolean
 
 strokePath: aStrokePath
 	^self shouldNotImplement! !
-!GdiplusAdjustableArrowCap class categoriesFor: #exampleGdipAACArrowCap!examples!public!unit tests! !
-!GdiplusAdjustableArrowCap class categoriesFor: #height:width:isFilled:!instance creation!public! !
-!GdiplusAdjustableArrowCap class categoriesFor: #strokePath:!instance creation!public! !
+!GdiplusAdjustableArrowCap class categoriesForMethods!
+exampleGdipAACArrowCap!examples!public!unit tests! !
+height:width:isFilled:!instance creation!public! !
+strokePath:!instance creation!public! !
+!
 

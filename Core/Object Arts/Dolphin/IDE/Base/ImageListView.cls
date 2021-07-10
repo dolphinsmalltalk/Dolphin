@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ImageViewAbstract subclass: #ImageListView
 	instanceVariableNames: ''
@@ -34,5 +34,7 @@ paintImageOn: aCanvas
 				on: aCanvas
 				at: origin + ((i \\ perRow * cx) @ (i // perRow * cy))].
 	^displayRect origin: origin extent: (perRow * cx) @ (rows * cy)! !
-!ImageListView categoriesFor: #paintImageOn:!drawing!event handling!private! !
+!ImageListView categoriesForMethods!
+paintImageOn:!drawing!event handling!private! !
+!
 

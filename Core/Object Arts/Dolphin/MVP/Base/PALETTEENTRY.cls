@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Win32Structure subclass: #PALETTEENTRY
 	instanceVariableNames: ''
@@ -77,16 +77,18 @@ peRed: anInteger
 
 rgbCode
 	^(bytes dwordAtOffset: 0) bitAnd: 16rFFFFFF! !
-!PALETTEENTRY categoriesFor: #asColor!converting!public! !
-!PALETTEENTRY categoriesFor: #peBlue!**compiled accessors**!public! !
-!PALETTEENTRY categoriesFor: #peBlue:!**compiled accessors**!public! !
-!PALETTEENTRY categoriesFor: #peFlags!**compiled accessors**!public! !
-!PALETTEENTRY categoriesFor: #peFlags:!**compiled accessors**!public! !
-!PALETTEENTRY categoriesFor: #peGreen!**compiled accessors**!public! !
-!PALETTEENTRY categoriesFor: #peGreen:!**compiled accessors**!public! !
-!PALETTEENTRY categoriesFor: #peRed!**compiled accessors**!public! !
-!PALETTEENTRY categoriesFor: #peRed:!**compiled accessors**!public! !
-!PALETTEENTRY categoriesFor: #rgbCode!accessing!public! !
+!PALETTEENTRY categoriesForMethods!
+asColor!converting!public! !
+peBlue!**compiled accessors**!public! !
+peBlue:!**compiled accessors**!public! !
+peFlags!**compiled accessors**!public! !
+peFlags:!**compiled accessors**!public! !
+peGreen!**compiled accessors**!public! !
+peGreen:!**compiled accessors**!public! !
+peRed!**compiled accessors**!public! !
+peRed:!**compiled accessors**!public! !
+rgbCode!accessing!public! !
+!
 
 !PALETTEENTRY class methodsFor!
 
@@ -129,7 +131,9 @@ threeThreeTwo
 					pe peGreen: ((i bitShift: -2) bitAnd: 2r111) * 255 // 7.
 					pe peBlue: (i bitAnd: 2r11) * 255 // 3].
 	^palette! !
-!PALETTEENTRY class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!PALETTEENTRY class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!PALETTEENTRY class categoriesFor: #threeThreeTwo!instance creation!public! !
+!PALETTEENTRY class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+threeThreeTwo!instance creation!public! !
+!
 

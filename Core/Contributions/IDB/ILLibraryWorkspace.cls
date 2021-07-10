@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 View subclass: #ILLibraryWorkspace
 	instanceVariableNames: 'imageLayout imageLayoutRect lastSelection lastImage dum5'
@@ -135,19 +135,21 @@ preferredExtent
 	self model isNil ifTrue: [^10 @ 10].
 	self imageLayout.
 	^imageLayoutRect corner max: Point one! !
-!ILLibraryWorkspace categoriesFor: #connectModel!models!public! !
-!ILLibraryWorkspace categoriesFor: #imageLayout!geometry!public! !
-!ILLibraryWorkspace categoriesFor: #initialize!initializing!public! !
-!ILLibraryWorkspace categoriesFor: #margin!constants!public! !
-!ILLibraryWorkspace categoriesFor: #onLeftButtonDoubleClicked:!event handling!public! !
-!ILLibraryWorkspace categoriesFor: #onLeftButtonPressed:!event handling!public! !
-!ILLibraryWorkspace categoriesFor: #onLeftButtonReleased:!event handling!public! !
-!ILLibraryWorkspace categoriesFor: #onLibraryChanged:!event handling!public! !
-!ILLibraryWorkspace categoriesFor: #onMouseMoved:!event handling!public! !
-!ILLibraryWorkspace categoriesFor: #onMouseWheel:!event handling!public! !
-!ILLibraryWorkspace categoriesFor: #onPaintRequired:!event handling!public! !
-!ILLibraryWorkspace categoriesFor: #onPositionChanged:!event handling!public! !
-!ILLibraryWorkspace categoriesFor: #preferredExtent!geometry!public! !
+!ILLibraryWorkspace categoriesForMethods!
+connectModel!models!public! !
+imageLayout!geometry!public! !
+initialize!initializing!public! !
+margin!constants!public! !
+onLeftButtonDoubleClicked:!event handling!public! !
+onLeftButtonPressed:!event handling!public! !
+onLeftButtonReleased:!event handling!public! !
+onLibraryChanged:!event handling!public! !
+onMouseMoved:!event handling!public! !
+onMouseWheel:!event handling!public! !
+onPaintRequired:!event handling!public! !
+onPositionChanged:!event handling!public! !
+preferredExtent!geometry!public! !
+!
 
 !ILLibraryWorkspace class methodsFor!
 
@@ -160,5 +162,7 @@ resource_Default_view
 	"
 
 	^#(#'!!STL' 3 788558 10 ##(STBViewProxy)  8 ##(ILLibraryWorkspace)  98 17 0 0 98 2 8 1140850688 1 416 0 524550 ##(ColorRef)  8 4278190080 0 519 0 0 0 416 0 0 0 0 0 983302 ##(MessageSequence)  202 208 98 1 721670 ##(MessageSend)  8 #createAt:extent: 98 2 328198 ##(Point)  11 11 674 225 201 416 983302 ##(WINDOWPLACEMENT)  8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 5 0 0 0 5 0 0 0 117 0 0 0 105 0 0 0] 98 0 674 193 193 0 27 )! !
-!ILLibraryWorkspace class categoriesFor: #resource_Default_view!public!resources-views! !
+!ILLibraryWorkspace class categoriesForMethods!
+resource_Default_view!public!resources-views! !
+!
 

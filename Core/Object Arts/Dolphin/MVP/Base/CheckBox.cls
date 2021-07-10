@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CheckButton subclass: #CheckBox
 	instanceVariableNames: ''
@@ -34,8 +34,10 @@ paintTransparentBackgroundOn: aCanvas
 		drawThemeParentBackground: self asParameter
 		hdc: aCanvas asParameter
 		prc: nil! !
-!CheckBox categoriesFor: #basicWindowStyle!constants!private! !
-!CheckBox categoriesFor: #is3State!accessing!public! !
-!CheckBox categoriesFor: #is3State:!accessing!public! !
-!CheckBox categoriesFor: #paintTransparentBackgroundOn:!private!updating! !
+!CheckBox categoriesForMethods!
+basicWindowStyle!constants!private! !
+is3State!accessing!public! !
+is3State:!accessing!public! !
+paintTransparentBackgroundOn:!private!updating! !
+!
 

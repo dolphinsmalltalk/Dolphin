@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalPoint subclass: #POINTL
 	instanceVariableNames: ''
@@ -46,12 +46,14 @@ y: anInteger
 	"Set the receiver's 'y' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_y put: anInteger! !
-!POINTL categoriesFor: #asUIntPtr!converting!public! !
-!POINTL categoriesFor: #x!**compiled accessors**!public! !
-!POINTL categoriesFor: #x:!**compiled accessors**!public! !
-!POINTL categoriesFor: #x:y:!initializing!public! !
-!POINTL categoriesFor: #y!**compiled accessors**!public! !
-!POINTL categoriesFor: #y:!**compiled accessors**!public! !
+!POINTL categoriesForMethods!
+asUIntPtr!converting!public! !
+x!**compiled accessors**!public! !
+x:!**compiled accessors**!public! !
+x:y:!initializing!public! !
+y!**compiled accessors**!public! !
+y:!**compiled accessors**!public! !
+!
 
 !POINTL class methodsFor!
 
@@ -87,7 +89,9 @@ x: x y: y
 				sdwordAtOffset: _OffsetOf_y put: y;
 				yourself)
 ! !
-!POINTL class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!POINTL class categoriesFor: #uninitialize!class hierarchy-removing!private! !
-!POINTL class categoriesFor: #x:y:!instance creation!public! !
+!POINTL class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+uninitialize!class hierarchy-removing!private! !
+x:y:!instance creation!public! !
+!
 

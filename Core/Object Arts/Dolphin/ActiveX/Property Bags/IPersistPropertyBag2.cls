@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IPersistPropertyBag subclass: #IPersistPropertyBag2
 	instanceVariableNames: ''
@@ -22,7 +22,9 @@ IsDirty
 
 	<virtual stdcall: hresult 8>
 	^self invalidCall: _failureCode! !
-!IPersistPropertyBag2 categoriesFor: #IsDirty!**auto generated**!COM Interfaces-IPersistPropertyBag2!private! !
+!IPersistPropertyBag2 categoriesForMethods!
+IsDirty!**auto generated**!COM Interfaces-IPersistPropertyBag2!private! !
+!
 
 IPersistPropertyBag2 methodProtocol: #IPersistPropertyBag2 attributes: #(#readOnly) selectors: #(#InitNew #IsDirty #Save:fClearDirty:fSaveAllProperties:)!
 
@@ -47,5 +49,7 @@ defineFunctions
 		defineFunction: #IsDirty
 			returnType: 'sdword'
 ! !
-!IPersistPropertyBag2 class categoriesFor: #defineFunctions!initializing!public! !
+!IPersistPropertyBag2 class categoriesForMethods!
+defineFunctions!initializing!public! !
+!
 

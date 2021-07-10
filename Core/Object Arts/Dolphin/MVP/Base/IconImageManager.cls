@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ImageManager subclass: #IconImageManager
 	instanceVariableNames: 'bitmaps'
@@ -36,11 +36,13 @@ stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
 	anSTBOutFiler writePreambleFor: self! !
-!IconImageManager categoriesFor: #bitmapForIcon:extent:!public!searching! !
-!IconImageManager categoriesFor: #initialize!initializing!private! !
-!IconImageManager categoriesFor: #menuBitmapForIcon:!public!searching! !
-!IconImageManager categoriesFor: #newImages!private!removing! !
-!IconImageManager categoriesFor: #stbSaveOn:!binary filing!public! !
+!IconImageManager categoriesForMethods!
+bitmapForIcon:extent:!public!searching! !
+initialize!initializing!private! !
+menuBitmapForIcon:!public!searching! !
+newImages!private!removing! !
+stbSaveOn:!binary filing!public! !
+!
 
 !IconImageManager class methodsFor!
 
@@ -78,10 +80,12 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	Current := nil! !
-!IconImageManager class categoriesFor: #current!instance creation!public! !
-!IconImageManager class categoriesFor: #new!instance creation!private! !
-!IconImageManager class categoriesFor: #onPreStripImage!class hierarchy-removing!private! !
-!IconImageManager class categoriesFor: #reset!operations!public! !
-!IconImageManager class categoriesFor: #stbReadFrom:format:!binary filing!public! !
-!IconImageManager class categoriesFor: #uninitialize!class hierarchy-removing!private! !
+!IconImageManager class categoriesForMethods!
+current!instance creation!public! !
+new!instance creation!private! !
+onPreStripImage!class hierarchy-removing!private! !
+reset!operations!public! !
+stbReadFrom:format:!binary filing!public! !
+uninitialize!class hierarchy-removing!private! !
+!
 

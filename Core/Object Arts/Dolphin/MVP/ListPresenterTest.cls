@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SelectableListItemsTest subclass: #ListPresenterTest
 	instanceVariableNames: ''
@@ -12,5 +12,7 @@ ListPresenterTest comment: ''!
 
 classToTest
 	^ListPresenter! !
-!ListPresenterTest categoriesFor: #classToTest!helpers!private! !
+!ListPresenterTest categoriesForMethods!
+classToTest!helpers!private! !
+!
 

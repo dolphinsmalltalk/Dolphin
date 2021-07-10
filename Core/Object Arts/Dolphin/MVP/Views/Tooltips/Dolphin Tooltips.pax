@@ -72,7 +72,9 @@ ControlView subclass: #Tooltip
 
 toolTipWindow
 	^Tooltip fromHandle: self hwndFrom! !
-!NMTTDISPINFOW categoriesFor: #toolTipWindow!accessing!public! !
+!NMTTDISPINFOW categoriesForMethods!
+toolTipWindow!accessing!public! !
+!
 
 "End of package definition"!
 

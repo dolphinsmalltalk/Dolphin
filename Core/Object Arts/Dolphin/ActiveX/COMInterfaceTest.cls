@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #COMInterfaceTest
 	instanceVariableNames: ''
@@ -16,5 +16,7 @@ testGetObject
 	"clsid monikers are quite interesting, as they allow one to bind to the class"
 	factory := IClassFactory getObject: 'clsid:' , IFont clsid asString.
 	font := factory createInstance: nil iid: IFont iid.! !
-!COMInterfaceTest categoriesFor: #testGetObject!public!unit tests! !
+!COMInterfaceTest categoriesForMethods!
+testGetObject!public!unit tests! !
+!
 

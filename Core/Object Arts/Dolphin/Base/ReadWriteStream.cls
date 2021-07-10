@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 WriteStream subclass: #ReadWriteStream
 	instanceVariableNames: ''
@@ -80,12 +80,14 @@ nextAvailable
 
 	<primitive: 65>
 	^position >= readLimit ifFalse: [collection decodeNextFrom: self]! !
-!ReadWriteStream categoriesFor: #basicNext!accessing!public! !
-!ReadWriteStream categoriesFor: #basicNext:into:startingAt:!accessing!public! !
-!ReadWriteStream categoriesFor: #contents!accessing!public! !
-!ReadWriteStream categoriesFor: #isReadable!public!testing! !
-!ReadWriteStream categoriesFor: #next!accessing!public! !
-!ReadWriteStream categoriesFor: #nextAvailable!accessing!public! !
+!ReadWriteStream categoriesForMethods!
+basicNext!accessing!public! !
+basicNext:into:startingAt:!accessing!public! !
+contents!accessing!public! !
+isReadable!public!testing! !
+next!accessing!public! !
+nextAvailable!accessing!public! !
+!
 
 ReadWriteStream methodProtocol: #ReadWriteStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #cr #do: #flush #isEmpty #next #next: #nextLine #nextMatchFor: #nextPut: #nextPutAll: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #space #tab #upTo:)!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RegularPolygon subclass: #Circle
 	instanceVariableNames: ''
@@ -27,7 +27,9 @@ defaultSides
 	Circles effectively have many sides"
 
 	^100! !
-!Circle categoriesFor: #defaultColor!constants!public! !
-!Circle categoriesFor: #defaultPosition!constants!public! !
-!Circle categoriesFor: #defaultSides!constants!public! !
+!Circle categoriesForMethods!
+defaultColor!constants!public! !
+defaultPosition!constants!public! !
+defaultSides!constants!public! !
+!
 

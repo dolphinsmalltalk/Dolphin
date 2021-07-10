@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StLexicalScope subclass: #StBlockScope
 	instanceVariableNames: ''
@@ -32,9 +32,11 @@ needsOuter
 	to escape from the method context active when the block was created."
 
 	^flags anyMask: NeedsOuterMask! !
-!StBlockScope categoriesFor: #isEmptyBlock!public! !
-!StBlockScope categoriesFor: #markEmpty!public! !
-!StBlockScope categoriesFor: #needsOuter!accessing!public! !
+!StBlockScope categoriesForMethods!
+isEmptyBlock!public! !
+markEmpty!public! !
+needsOuter!accessing!public! !
+!
 
 !StBlockScope class methodsFor!
 
@@ -46,6 +48,8 @@ forScopeNode: anStBlockNode outer: anStLexicalScope
 initialize
 	self addClassConstant: 'NeedsOuterMask' value: 16r100.
 	self addClassConstant: 'EmptyBlockMask' value: 16r200! !
-!StBlockScope class categoriesFor: #forScopeNode:outer:!instance creation!public! !
-!StBlockScope class categoriesFor: #initialize!class initialization!development!public! !
+!StBlockScope class categoriesForMethods!
+forScopeNode:outer:!instance creation!public! !
+initialize!class initialization!development!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StaticView subclass: #SysLinkView
 	instanceVariableNames: ''
@@ -134,20 +134,22 @@ preferredHeight
 	ideal height, given its current width."
 
 	^self sendMessage: LM_GETIDEALHEIGHT! !
-!SysLinkView categoriesFor: #calculateExtent:!geometry!private! !
-!SysLinkView categoriesFor: #displayValue!private!updating! !
-!SysLinkView categoriesFor: #displayValue:!private!updating! !
-!SysLinkView categoriesFor: #itemFromPoint:!enquiries!private! !
-!SysLinkView categoriesFor: #linkAt:!accessing!public! !
-!SysLinkView categoriesFor: #linkAt:ifAbsent:!accessing!public! !
-!SysLinkView categoriesFor: #linkAt:put:!accessing!public! !
-!SysLinkView categoriesFor: #links!accessing!public! !
-!SysLinkView categoriesFor: #lmGetItem:!accessing!private! !
-!SysLinkView categoriesFor: #lmSetItem:!accessing!private! !
-!SysLinkView categoriesFor: #nmClick:!event handling-win32!private! !
-!SysLinkView categoriesFor: #nmReturn:!event handling-win32!private! !
-!SysLinkView categoriesFor: #onLinkClicked:!event handling!private! !
-!SysLinkView categoriesFor: #preferredHeight!enquiries!private! !
+!SysLinkView categoriesForMethods!
+calculateExtent:!geometry!private! !
+displayValue!private!updating! !
+displayValue:!private!updating! !
+itemFromPoint:!enquiries!private! !
+linkAt:!accessing!public! !
+linkAt:ifAbsent:!accessing!public! !
+linkAt:put:!accessing!public! !
+links!accessing!public! !
+lmGetItem:!accessing!private! !
+lmSetItem:!accessing!private! !
+nmClick:!event handling-win32!private! !
+nmReturn:!event handling-win32!private! !
+onLinkClicked:!event handling!private! !
+preferredHeight!enquiries!private! !
+!
 
 !SysLinkView class methodsFor!
 
@@ -161,7 +163,9 @@ winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'SysLink'! !
-!SysLinkView class categoriesFor: #initialize!development!initializing!private! !
-!SysLinkView class categoriesFor: #uninitialize!class hierarchy-removing!public! !
-!SysLinkView class categoriesFor: #winClassName!constants!private! !
+!SysLinkView class categoriesForMethods!
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!public! !
+winClassName!constants!private! !
+!
 

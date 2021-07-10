@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ObjectRegistry subclass: #PermanentRegistry
 	instanceVariableNames: 'freeHead'
@@ -52,8 +52,10 @@ removeAtIndex: anInteger
 	(registry basicAt: anInteger) isInteger ifFalse: [
 		registry basicAt: anInteger put: freeHead.
 		freeHead := anInteger]! !
-!PermanentRegistry categoriesFor: #addAnsweringIndex:!adding!public! !
-!PermanentRegistry categoriesFor: #grow!mutating!private! !
-!PermanentRegistry categoriesFor: #initialize:!initializing!private! !
-!PermanentRegistry categoriesFor: #removeAtIndex:!public!removing! !
+!PermanentRegistry categoriesForMethods!
+addAnsweringIndex:!adding!public! !
+grow!mutating!private! !
+initialize:!initializing!private! !
+removeAtIndex:!public!removing! !
+!
 

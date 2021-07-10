@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 SequenceableCollection subclass: #DBResultSet
 	instanceVariableNames: 'statement buffer columns'
@@ -539,69 +539,71 @@ with: otherCollection do: operation
 			[operation value: buffer asObject value: (otherCollection at: i).
 			i := i + 1].
 	i > otherCollection size ifFalse: [^self error: 'collections are of different sizes']! !
-!DBResultSet categoriesFor: #,!copying!public! !
-!DBResultSet categoriesFor: #add:!adding!public! !
-!DBResultSet categoriesFor: #allocBuffer:!allocating!private! !
-!DBResultSet categoriesFor: #appendToStream:!double dispatch!private! !
-!DBResultSet categoriesFor: #approxSize!accessing!private! !
-!DBResultSet categoriesFor: #asArray!converting!public! !
-!DBResultSet categoriesFor: #at:!accessing!public! !
-!DBResultSet categoriesFor: #at:ifAbsent:!accessing!public! !
-!DBResultSet categoriesFor: #at:put:!accessing!public! !
-!DBResultSet categoriesFor: #atIndex:!accessing!public! !
-!DBResultSet categoriesFor: #bind!binding!private! !
-!DBResultSet categoriesFor: #bind:!binding!private! !
-!DBResultSet categoriesFor: #buffer:!accessing!private! !
-!DBResultSet categoriesFor: #bufferClass!constants!private! !
-!DBResultSet categoriesFor: #close!public!realizing/unrealizing! !
-!DBResultSet categoriesFor: #collect:!enumerating!public! !
-!DBResultSet categoriesFor: #copyEmpty:!copying!private! !
-!DBResultSet categoriesFor: #copyFrom:!copying!public! !
-!DBResultSet categoriesFor: #copySize!copying!private! !
-!DBResultSet categoriesFor: #copyWith:!copying!public! !
-!DBResultSet categoriesFor: #countElements!accessing!private! !
-!DBResultSet categoriesFor: #describeCol:!operations!public! !
-!DBResultSet categoriesFor: #describeCols!accessing!public! !
-!DBResultSet categoriesFor: #describeCols:!accessing!public! !
-!DBResultSet categoriesFor: #fetchScroll:offset:!positioning!private! !
-!DBResultSet categoriesFor: #findLast:!public!searching! !
-!DBResultSet categoriesFor: #first!accessing!public! !
-!DBResultSet categoriesFor: #free!public!realizing/unrealizing! !
-!DBResultSet categoriesFor: #from:keysAndValuesDo:!enumerating!public! !
-!DBResultSet categoriesFor: #from:to:keysAndValuesDo:!enumerating!public! !
-!DBResultSet categoriesFor: #hash!comparing!public! !
-!DBResultSet categoriesFor: #identityIndexOf:!public!searching! !
-!DBResultSet categoriesFor: #indexOf:!public!searching! !
-!DBResultSet categoriesFor: #isEmpty!public!testing! !
-!DBResultSet categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!DBResultSet categoriesFor: #last!accessing!public! !
-!DBResultSet categoriesFor: #lastIndexOf:!public!searching! !
-!DBResultSet categoriesFor: #lookup:!accessing!public! !
-!DBResultSet categoriesFor: #moveFirst!positioning!private! !
-!DBResultSet categoriesFor: #moveLast!positioning!private! !
-!DBResultSet categoriesFor: #moveNext!positioning!private! !
-!DBResultSet categoriesFor: #movePrevious!positioning!private! !
-!DBResultSet categoriesFor: #moveTo:!positioning!private! !
-!DBResultSet categoriesFor: #next!accessing!public! !
-!DBResultSet categoriesFor: #numColumns!accessing!public! !
-!DBResultSet categoriesFor: #numRows!accessing!public! !
-!DBResultSet categoriesFor: #onStartup!event handling!private! !
-!DBResultSet categoriesFor: #previous!accessing!public! !
-!DBResultSet categoriesFor: #printOn:!printing!public! !
-!DBResultSet categoriesFor: #rawCollect:!enumerating!private! !
-!DBResultSet categoriesFor: #rawDo:!enumerating!private! !
-!DBResultSet categoriesFor: #realize!binding!private! !
-!DBResultSet categoriesFor: #resize:!mutating!private! !
-!DBResultSet categoriesFor: #reverse!copying!public! !
-!DBResultSet categoriesFor: #reverseDo:!enumerating!public! !
-!DBResultSet categoriesFor: #scrollTo:!accessing!private! !
-!DBResultSet categoriesFor: #select:!enumerating!public! !
-!DBResultSet categoriesFor: #size!accessing!public! !
-!DBResultSet categoriesFor: #species!accessing!public! !
-!DBResultSet categoriesFor: #statement!accessing!private! !
-!DBResultSet categoriesFor: #statement:!accessing!private! !
-!DBResultSet categoriesFor: #statementHandle!accessing!private! !
-!DBResultSet categoriesFor: #with:do:!enumerating!public! !
+!DBResultSet categoriesForMethods!
+,!copying!public! !
+add:!adding!public! !
+allocBuffer:!allocating!private! !
+appendToStream:!double dispatch!private! !
+approxSize!accessing!private! !
+asArray!converting!public! !
+at:!accessing!public! !
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+atIndex:!accessing!public! !
+bind!binding!private! !
+bind:!binding!private! !
+buffer:!accessing!private! !
+bufferClass!constants!private! !
+close!public!realizing/unrealizing! !
+collect:!enumerating!public! !
+copyEmpty:!copying!private! !
+copyFrom:!copying!public! !
+copySize!copying!private! !
+copyWith:!copying!public! !
+countElements!accessing!private! !
+describeCol:!operations!public! !
+describeCols!accessing!public! !
+describeCols:!accessing!public! !
+fetchScroll:offset:!positioning!private! !
+findLast:!public!searching! !
+first!accessing!public! !
+free!public!realizing/unrealizing! !
+from:keysAndValuesDo:!enumerating!public! !
+from:to:keysAndValuesDo:!enumerating!public! !
+hash!comparing!public! !
+identityIndexOf:!public!searching! !
+indexOf:!public!searching! !
+isEmpty!public!testing! !
+keysAndValuesDo:!enumerating!public! !
+last!accessing!public! !
+lastIndexOf:!public!searching! !
+lookup:!accessing!public! !
+moveFirst!positioning!private! !
+moveLast!positioning!private! !
+moveNext!positioning!private! !
+movePrevious!positioning!private! !
+moveTo:!positioning!private! !
+next!accessing!public! !
+numColumns!accessing!public! !
+numRows!accessing!public! !
+onStartup!event handling!private! !
+previous!accessing!public! !
+printOn:!printing!public! !
+rawCollect:!enumerating!private! !
+rawDo:!enumerating!private! !
+realize!binding!private! !
+resize:!mutating!private! !
+reverse!copying!public! !
+reverseDo:!enumerating!public! !
+scrollTo:!accessing!private! !
+select:!enumerating!public! !
+size!accessing!public! !
+species!accessing!public! !
+statement!accessing!private! !
+statement:!accessing!private! !
+statementHandle!accessing!private! !
+with:do:!enumerating!public! !
+!
 
 !DBResultSet class methodsFor!
 
@@ -623,7 +625,9 @@ statement: aDBStatement
 	^self new
 		statement: aDBStatement;
 		yourself! !
-!DBResultSet class categoriesFor: #new!instance creation!public! !
-!DBResultSet class categoriesFor: #onStartup!event handling!public! !
-!DBResultSet class categoriesFor: #statement:!instance creation!public! !
+!DBResultSet class categoriesForMethods!
+new!instance creation!public! !
+onStartup!event handling!public! !
+statement:!instance creation!public! !
+!
 

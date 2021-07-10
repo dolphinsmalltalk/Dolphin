@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RegKeyAbstract variableSubclass: #RegKey
 	instanceVariableNames: ''
@@ -111,17 +111,19 @@ subValues
 			handle: self handle;
 			yourself
 	! !
-!RegKey categoriesFor: #at:ifAbsent:!accessing!public! !
-!RegKey categoriesFor: #at:put:!accessing!public! !
-!RegKey categoriesFor: #fileOutOn:!public!storing! !
-!RegKey categoriesFor: #includesKey:!public!searching! !
-!RegKey categoriesFor: #keysAndValuesDo:!enumerating!public! !
-!RegKey categoriesFor: #keysDo:!enumerating!public! !
-!RegKey categoriesFor: #privateAt:!accessing!private! !
-!RegKey categoriesFor: #removeKey:ifAbsent:!public!removing! !
-!RegKey categoriesFor: #size!accessing!public! !
-!RegKey categoriesFor: #subKeys!accessing!public! !
-!RegKey categoriesFor: #subValues!accessing!public! !
+!RegKey categoriesForMethods!
+at:ifAbsent:!accessing!public! !
+at:put:!accessing!public! !
+fileOutOn:!public!storing! !
+includesKey:!public!searching! !
+keysAndValuesDo:!enumerating!public! !
+keysDo:!enumerating!public! !
+privateAt:!accessing!private! !
+removeKey:ifAbsent:!public!removing! !
+size!accessing!public! !
+subKeys!accessing!public! !
+subValues!accessing!public! !
+!
 
 !RegKey class methodsFor!
 
@@ -129,5 +131,7 @@ icon
 	"Answers an Icon that can be used to represent this class."
 
 	^##(self) defaultIcon! !
-!RegKey class categoriesFor: #icon!constants!public! !
+!RegKey class categoriesForMethods!
+icon!constants!public! !
+!
 

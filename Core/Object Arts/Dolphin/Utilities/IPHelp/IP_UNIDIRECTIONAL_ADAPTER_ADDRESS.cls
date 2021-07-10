@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalStructure subclass: #IP_UNIDIRECTIONAL_ADAPTER_ADDRESS
 	instanceVariableNames: ''
@@ -45,9 +45,11 @@ NumAdapters
 	"Answer the <Integer> value of the receiver's 'NumAdapters' field."
 
 	^bytes dwordAtOffset: _OffsetOf_NumAdapters! !
-!IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesFor: #Address!**compiled accessors**!public! !
-!IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesFor: #Address:!**compiled accessors**!public! !
-!IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesFor: #NumAdapters!**compiled accessors**!public! !
+!IP_UNIDIRECTIONAL_ADAPTER_ADDRESS categoriesForMethods!
+Address!**compiled accessors**!public! !
+Address:!**compiled accessors**!public! !
+NumAdapters!**compiled accessors**!public! !
+!
 
 !IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class methodsFor!
 
@@ -69,6 +71,8 @@ defineFields
 
 getFieldNames
 	^#(#NumAdapters #Address)! !
-!IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class categoriesFor: #defineFields!initializing!public! !
-!IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
+!IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class categoriesForMethods!
+defineFields!initializing!public! !
+getFieldNames!**compiled accessors**!constants!private! !
+!
 

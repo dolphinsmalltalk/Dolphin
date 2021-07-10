@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 StParseNodeVisitor subclass: #ArithmeticExpressionVisitor
 	instanceVariableNames: ''
@@ -55,19 +55,21 @@ visitStatements: aNodeCollection
 
 visitVariableNode: aVariableNode
 	^self subclassResponsibility! !
-!ArithmeticExpressionVisitor categoriesFor: #errorInvalidArithmeticExpression:!exceptions!private! !
-!ArithmeticExpressionVisitor categoriesFor: #visitArgumentNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitAssignmentNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitCascadeNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitExternalArgTypeNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitExternalCallNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitLiteralArrayNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitLiteralNode:!public!visitor/double dispatching! !
-!ArithmeticExpressionVisitor categoriesFor: #visitMessageNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitMethodNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitOptimizedNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitPrimitiveNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitReturnNode:!public!visiting! !
-!ArithmeticExpressionVisitor categoriesFor: #visitStatements:!helpers!private! !
-!ArithmeticExpressionVisitor categoriesFor: #visitVariableNode:!public!visiting! !
+!ArithmeticExpressionVisitor categoriesForMethods!
+errorInvalidArithmeticExpression:!exceptions!private! !
+visitArgumentNode:!public!visiting! !
+visitAssignmentNode:!public!visiting! !
+visitCascadeNode:!public!visiting! !
+visitExternalArgTypeNode:!public!visiting! !
+visitExternalCallNode:!public!visiting! !
+visitLiteralArrayNode:!public!visiting! !
+visitLiteralNode:!public!visitor/double dispatching! !
+visitMessageNode:!public!visiting! !
+visitMethodNode:!public!visiting! !
+visitOptimizedNode:!public!visiting! !
+visitPrimitiveNode:!public!visiting! !
+visitReturnNode:!public!visiting! !
+visitStatements:!helpers!private! !
+visitVariableNode:!public!visiting! !
+!
 

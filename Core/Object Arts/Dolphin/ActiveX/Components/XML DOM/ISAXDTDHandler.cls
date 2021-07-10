@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IUnknown subclass: #ISAXDTDHandler
 	instanceVariableNames: ''
@@ -75,8 +75,10 @@ UnparsedEntityDecl: pwchName cchName: cchName pwchPublicId: pwchPublicId cchPubl
 
 	<virtual stdcall: hresult 5 word* sdword word* sdword word* sdword word* sdword>
 	^self invalidCall: _failureCode! !
-!ISAXDTDHandler categoriesFor: #NotationDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXDTDHandler!public! !
-!ISAXDTDHandler categoriesFor: #UnparsedEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:pwchNotationName:cchNotationName:!**auto generated**!COM Interfaces-ISAXDTDHandler!public! !
+!ISAXDTDHandler categoriesForMethods!
+NotationDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:!**auto generated**!COM Interfaces-ISAXDTDHandler!public! !
+UnparsedEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:pwchNotationName:cchNotationName:!**auto generated**!COM Interfaces-ISAXDTDHandler!public! !
+!
 
 !ISAXDTDHandler class methodsFor!
 
@@ -90,5 +92,7 @@ defineFunctions
 		defineFunction: #UnparsedEntityDecl:cchName:pwchPublicId:cchPublicId:pwchSystemId:cchSystemId:pwchNotationName:cchNotationName:
 			argumentTypes: 'word* sdword word* sdword word* sdword word* sdword'
 ! !
-!ISAXDTDHandler class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!ISAXDTDHandler class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

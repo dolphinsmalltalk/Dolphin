@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ArrayFieldLength subclass: #SizeIsArrayFieldLength
 	instanceVariableNames: 'sizeIs getLength setLength'
@@ -113,16 +113,18 @@ sizeIs: aString
 
 sizeIsExpression
 	^SmalltalkParser parseExpression: sizeIs! !
-!SizeIsArrayFieldLength categoriesFor: #buildLengthReader:!accessing!private! !
-!SizeIsArrayFieldLength categoriesFor: #buildLengthWriter:!accessing!private! !
-!SizeIsArrayFieldLength categoriesFor: #getElementCountOf:in:!indirect accessing!private! !
-!SizeIsArrayFieldLength categoriesFor: #invertSizeIsExpression:paramName:!private! !
-!SizeIsArrayFieldLength categoriesFor: #printElementCountExpressionFor:on:!automatic generation!private! !
-!SizeIsArrayFieldLength categoriesFor: #printSetSizeFor:on:!automatic generation!development!private! !
-!SizeIsArrayFieldLength categoriesFor: #printSetSizeIsExpression:for:variable:on:!automatic generation!development!private! !
-!SizeIsArrayFieldLength categoriesFor: #setElementCount:of:in:!indirect accessing!private! !
-!SizeIsArrayFieldLength categoriesFor: #sizeIs:!accessing!private! !
-!SizeIsArrayFieldLength categoriesFor: #sizeIsExpression!automatic generation!private! !
+!SizeIsArrayFieldLength categoriesForMethods!
+buildLengthReader:!accessing!private! !
+buildLengthWriter:!accessing!private! !
+getElementCountOf:in:!indirect accessing!private! !
+invertSizeIsExpression:paramName:!private! !
+printElementCountExpressionFor:on:!automatic generation!private! !
+printSetSizeFor:on:!automatic generation!development!private! !
+printSetSizeIsExpression:for:variable:on:!automatic generation!development!private! !
+setElementCount:of:in:!indirect accessing!private! !
+sizeIs:!accessing!private! !
+sizeIsExpression!automatic generation!private! !
+!
 
 !SizeIsArrayFieldLength class methodsFor!
 
@@ -133,5 +135,7 @@ sizeIs: aString
 	a field."
 
 	^self new sizeIs: aString! !
-!SizeIsArrayFieldLength class categoriesFor: #sizeIs:!instance creation!public! !
+!SizeIsArrayFieldLength class categoriesForMethods!
+sizeIs:!instance creation!public! !
+!
 

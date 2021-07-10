@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 PresenterTest subclass: #DifferencesPresenterTest
 	instanceVariableNames: ''
@@ -29,6 +29,8 @@ baz'.
 	presenter comparisonMode: #line.
 	items := presenter itemsFrom: str.
 	self assert: items asArray equals: #('foo bar' 'baz')! !
-!DifferencesPresenterTest categoriesFor: #classToTest!helpers!private! !
-!DifferencesPresenterTest categoriesFor: #testItemsFrom!public! !
+!DifferencesPresenterTest categoriesForMethods!
+classToTest!helpers!private! !
+testItemsFrom!public! !
+!
 

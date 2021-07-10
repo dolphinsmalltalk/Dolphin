@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 IRegExpAbstract subclass: #IRegExp
 	instanceVariableNames: ''
@@ -108,11 +108,13 @@ Test: sourceString pMatch: pMatch
 
 	<virtual stdcall: hresult 15 bstr varbool*>
 	^self invalidCall: _failureCode! !
-!IRegExp categoriesFor: #Execute:ppMatches:!**auto generated**!COM Interfaces-IRegExp!private! !
-!IRegExp categoriesFor: #matchCollectionClass!constants!private! !
-!IRegExp categoriesFor: #replace:replaceString:!operations!public! !
-!IRegExp categoriesFor: #Replace:replaceString:pDestString:!**auto generated**!COM Interfaces-IRegExp!private! !
-!IRegExp categoriesFor: #Test:pMatch:!**auto generated**!COM Interfaces-IRegExp!private! !
+!IRegExp categoriesForMethods!
+Execute:ppMatches:!**auto generated**!COM Interfaces-IRegExp!private! !
+matchCollectionClass!constants!private! !
+replace:replaceString:!operations!public! !
+Replace:replaceString:pDestString:!**auto generated**!COM Interfaces-IRegExp!private! !
+Test:pMatch:!**auto generated**!COM Interfaces-IRegExp!private! !
+!
 
 !IRegExp class methodsFor!
 
@@ -140,5 +142,7 @@ defineFunctions
 		defineFunction: #Replace:replaceString:pDestString:
 			argumentTypes: 'bstr bstr bstr*'
 ! !
-!IRegExp class categoriesFor: #defineFunctions!**auto generated**!initializing!public! !
+!IRegExp class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
 

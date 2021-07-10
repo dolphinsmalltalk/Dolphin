@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 LintRuleTest subclass: #BasicLintRuleTest
 	instanceVariableNames: 'classBlock methodBlock result'
@@ -49,18 +49,20 @@ resultClass: aClass
 
 viewResults
 	result openEditor! !
-!BasicLintRuleTest categoriesFor: #checkClass:!accessing!public! !
-!BasicLintRuleTest categoriesFor: #checkMethod:!accessing!public! !
-!BasicLintRuleTest categoriesFor: #classBlock:!initialize/release!public! !
-!BasicLintRuleTest categoriesFor: #initialize!initialize/release!public! !
-!BasicLintRuleTest categoriesFor: #isEmpty!public!testing! !
-!BasicLintRuleTest categoriesFor: #methodBlock:!initialize/release!public! !
-!BasicLintRuleTest categoriesFor: #problemCount!accessing!public! !
-!BasicLintRuleTest categoriesFor: #resetResult!initialize/release!public! !
-!BasicLintRuleTest categoriesFor: #result!accessing!public! !
-!BasicLintRuleTest categoriesFor: #result:!initialize/release!public! !
-!BasicLintRuleTest categoriesFor: #resultClass:!initialize/release!public! !
-!BasicLintRuleTest categoriesFor: #viewResults!private! !
+!BasicLintRuleTest categoriesForMethods!
+checkClass:!accessing!public! !
+checkMethod:!accessing!public! !
+classBlock:!initialize/release!public! !
+initialize!initialize/release!public! !
+isEmpty!public!testing! !
+methodBlock:!initialize/release!public! !
+problemCount!accessing!public! !
+resetResult!initialize/release!public! !
+result!accessing!public! !
+result:!initialize/release!public! !
+resultClass:!initialize/release!public! !
+viewResults!private! !
+!
 
 !BasicLintRuleTest class methodsFor!
 
@@ -1148,75 +1150,77 @@ yourselfNotUsed
 			(addSearcher executeTree: context parseTree initialAnswer: false)
 				ifTrue: [result addClass: context selectedClass selector: context selector]].
 	^detector! !
-!BasicLintRuleTest class categoriesFor: #abstractClass!possible bugs!public! !
-!BasicLintRuleTest class categoriesFor: #addRemoveDependents!possible bugs!public! !
-!BasicLintRuleTest class categoriesFor: #anySatisfy!intention revealing!public! !
-!BasicLintRuleTest class categoriesFor: #assignmentInBlock!miscellaneous!public! !
-!BasicLintRuleTest class categoriesFor: #assignmentInIfTrue!intention revealing!public! !
-!BasicLintRuleTest class categoriesFor: #atIfAbsent!intention revealing!public! !
-!BasicLintRuleTest class categoriesFor: #badMessage!miscellaneous!public! !
-!BasicLintRuleTest class categoriesFor: #badSelectors!private! !
-!BasicLintRuleTest class categoriesFor: #booleanPrecedence!bugs!public! !
-!BasicLintRuleTest class categoriesFor: #canCall:in:from:!private! !
-!BasicLintRuleTest class categoriesFor: #classNameInSelector!miscellaneous!public! !
-!BasicLintRuleTest class categoriesFor: #classNotReferenced!public!unnecessary code! !
-!BasicLintRuleTest class categoriesFor: #classShouldNotOverride!private! !
-!BasicLintRuleTest class categoriesFor: #collectionCopyEmpty!possible bugs!public! !
-!BasicLintRuleTest class categoriesFor: #collectionMessagesToExternalObject!intention revealing!public! !
-!BasicLintRuleTest class categoriesFor: #collectionProtocol!intention revealing!public! !
-!BasicLintRuleTest class categoriesFor: #consistencyCheck!intention revealing!public! !
-!BasicLintRuleTest class categoriesFor: #createMatcherFor:method:!private! !
-!BasicLintRuleTest class categoriesFor: #createParseTreeRule:method:name:!instance creation!public! !
-!BasicLintRuleTest class categoriesFor: #createParseTreeRule:name:!instance creation!public! !
-!BasicLintRuleTest class categoriesFor: #definesEqualNotHash!possible bugs!public! !
-!BasicLintRuleTest class categoriesFor: #detectAnySatisfy!intention revealing!public! !
-!BasicLintRuleTest class categoriesFor: #endTrueFalse!public!unnecessary code! !
-!BasicLintRuleTest class categoriesFor: #equalsTrue!public!unnecessary code! !
-!BasicLintRuleTest class categoriesFor: #equivalentSuperclassMethods!public!unnecessary code! !
-!BasicLintRuleTest class categoriesFor: #extraBlock!public!unnecessary code! !
-!BasicLintRuleTest class categoriesFor: #fileBlocks!possible bugs!public! !
-!BasicLintRuleTest class categoriesFor: #fullBlocks!miscellaneous!public! !
-!BasicLintRuleTest class categoriesFor: #guardingClause!intention revealing!public! !
-!BasicLintRuleTest class categoriesFor: #ifTrueBlocks!miscellaneous!public! !
-!BasicLintRuleTest class categoriesFor: #ifTrueReturns!intention revealing!public! !
-!BasicLintRuleTest class categoriesFor: #implementedNotSent!public!unnecessary code! !
-!BasicLintRuleTest class categoriesFor: #instVarInSubclasses!miscellaneous!public! !
-!BasicLintRuleTest class categoriesFor: #justSendsSuper!public!unnecessary code! !
-!BasicLintRuleTest class categoriesFor: #lintProtocols!accessing!public! !
-!BasicLintRuleTest class categoriesFor: #longMethods!miscellaneous!public! !
-!BasicLintRuleTest class categoriesFor: #longMethodSize!private! !
-!BasicLintRuleTest class categoriesFor: #metaclassShouldNotOverride!private! !
-!BasicLintRuleTest class categoriesFor: #minMax!intention revealing!public! !
-!BasicLintRuleTest class categoriesFor: #missingSubclassResponsibility!intention revealing!public! !
-!BasicLintRuleTest class categoriesFor: #missingYourself!possible bugs!public! !
-!BasicLintRuleTest class categoriesFor: #modifiesCollection!possible bugs!public! !
-!BasicLintRuleTest class categoriesFor: #new!private! !
-!BasicLintRuleTest class categoriesFor: #onlyReadOrWritten!public!unnecessary code! !
-!BasicLintRuleTest class categoriesFor: #overridesSpecialMessage!bugs!public! !
-!BasicLintRuleTest class categoriesFor: #precedence!miscellaneous!public! !
-!BasicLintRuleTest class categoriesFor: #refersToClass!miscellaneous!public! !
-!BasicLintRuleTest class categoriesFor: #returnsBooleanAndOther!possible bugs!public! !
-!BasicLintRuleTest class categoriesFor: #returnsIfTrue!possible bugs!public! !
-!BasicLintRuleTest class categoriesFor: #sendsDifferentSuper!possible bugs!public! !
-!BasicLintRuleTest class categoriesFor: #sentNotImplemented!bugs!public! !
-!BasicLintRuleTest class categoriesFor: #sentNotImplementedInApplication!possible bugs!public! !
-!BasicLintRuleTest class categoriesFor: #sizeCheck!intention revealing!public! !
-!BasicLintRuleTest class categoriesFor: #stringConcatenation!miscellaneous!public! !
-!BasicLintRuleTest class categoriesFor: #subclassOf:overrides:!private! !
-!BasicLintRuleTest class categoriesFor: #subclassResponsibilityNotDefined!bugs!public! !
-!BasicLintRuleTest class categoriesFor: #superMessages!private! !
-!BasicLintRuleTest class categoriesFor: #superSends!possible bugs!public! !
-!BasicLintRuleTest class categoriesFor: #tempsReadBeforeWritten!possible bugs!public! !
-!BasicLintRuleTest class categoriesFor: #tempVarOverridesInstVar!possible bugs!public! !
-!BasicLintRuleTest class categoriesFor: #threeElementPoint!possible bugs!public! !
-!BasicLintRuleTest class categoriesFor: #toDo!intention revealing!public! !
-!BasicLintRuleTest class categoriesFor: #unreferencedVariables!public!unnecessary code! !
-!BasicLintRuleTest class categoriesFor: #usesAdd!possible bugs!public! !
-!BasicLintRuleTest class categoriesFor: #usesTrue!bugs!public! !
-!BasicLintRuleTest class categoriesFor: #utilityMethods!miscellaneous!public! !
-!BasicLintRuleTest class categoriesFor: #utilityProtocols!private! !
-!BasicLintRuleTest class categoriesFor: #variableAssignedLiteral!miscellaneous!public! !
-!BasicLintRuleTest class categoriesFor: #variableReferencedOnce!public!unnecessary code! !
-!BasicLintRuleTest class categoriesFor: #whileTrue!intention revealing!public! !
-!BasicLintRuleTest class categoriesFor: #yourselfNotUsed!miscellaneous!public! !
+!BasicLintRuleTest class categoriesForMethods!
+abstractClass!possible bugs!public! !
+addRemoveDependents!possible bugs!public! !
+anySatisfy!intention revealing!public! !
+assignmentInBlock!miscellaneous!public! !
+assignmentInIfTrue!intention revealing!public! !
+atIfAbsent!intention revealing!public! !
+badMessage!miscellaneous!public! !
+badSelectors!private! !
+booleanPrecedence!bugs!public! !
+canCall:in:from:!private! !
+classNameInSelector!miscellaneous!public! !
+classNotReferenced!public!unnecessary code! !
+classShouldNotOverride!private! !
+collectionCopyEmpty!possible bugs!public! !
+collectionMessagesToExternalObject!intention revealing!public! !
+collectionProtocol!intention revealing!public! !
+consistencyCheck!intention revealing!public! !
+createMatcherFor:method:!private! !
+createParseTreeRule:method:name:!instance creation!public! !
+createParseTreeRule:name:!instance creation!public! !
+definesEqualNotHash!possible bugs!public! !
+detectAnySatisfy!intention revealing!public! !
+endTrueFalse!public!unnecessary code! !
+equalsTrue!public!unnecessary code! !
+equivalentSuperclassMethods!public!unnecessary code! !
+extraBlock!public!unnecessary code! !
+fileBlocks!possible bugs!public! !
+fullBlocks!miscellaneous!public! !
+guardingClause!intention revealing!public! !
+ifTrueBlocks!miscellaneous!public! !
+ifTrueReturns!intention revealing!public! !
+implementedNotSent!public!unnecessary code! !
+instVarInSubclasses!miscellaneous!public! !
+justSendsSuper!public!unnecessary code! !
+lintProtocols!accessing!public! !
+longMethods!miscellaneous!public! !
+longMethodSize!private! !
+metaclassShouldNotOverride!private! !
+minMax!intention revealing!public! !
+missingSubclassResponsibility!intention revealing!public! !
+missingYourself!possible bugs!public! !
+modifiesCollection!possible bugs!public! !
+new!private! !
+onlyReadOrWritten!public!unnecessary code! !
+overridesSpecialMessage!bugs!public! !
+precedence!miscellaneous!public! !
+refersToClass!miscellaneous!public! !
+returnsBooleanAndOther!possible bugs!public! !
+returnsIfTrue!possible bugs!public! !
+sendsDifferentSuper!possible bugs!public! !
+sentNotImplemented!bugs!public! !
+sentNotImplementedInApplication!possible bugs!public! !
+sizeCheck!intention revealing!public! !
+stringConcatenation!miscellaneous!public! !
+subclassOf:overrides:!private! !
+subclassResponsibilityNotDefined!bugs!public! !
+superMessages!private! !
+superSends!possible bugs!public! !
+tempsReadBeforeWritten!possible bugs!public! !
+tempVarOverridesInstVar!possible bugs!public! !
+threeElementPoint!possible bugs!public! !
+toDo!intention revealing!public! !
+unreferencedVariables!public!unnecessary code! !
+usesAdd!possible bugs!public! !
+usesTrue!bugs!public! !
+utilityMethods!miscellaneous!public! !
+utilityProtocols!private! !
+variableAssignedLiteral!miscellaneous!public! !
+variableReferencedOnce!public!unnecessary code! !
+whileTrue!intention revealing!public! !
+yourselfNotUsed!miscellaneous!public! !
+!
 

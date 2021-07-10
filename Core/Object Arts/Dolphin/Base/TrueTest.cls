@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 DolphinTest subclass: #TrueTest
 	instanceVariableNames: ''
@@ -25,8 +25,10 @@ testPrintOn
 	stream := String writeStream.
 	true printOn: stream.
 	self assert: stream contents equals: 'true'! !
-!TrueTest categoriesFor: #testAND!public!testing! !
-!TrueTest categoriesFor: #testNew!public!testing! !
-!TrueTest categoriesFor: #testNot!public!testing! !
-!TrueTest categoriesFor: #testPrintOn!public!testing! !
+!TrueTest categoriesForMethods!
+testAND!public!testing! !
+testNew!public!testing! !
+testNot!public!testing! !
+testPrintOn!public!testing! !
+!
 

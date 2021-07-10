@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Smalltalk at: #FacilityCodes put: (PoolConstantsDictionary named: #FacilityCodes)!
 FacilityCodes at: 'FACILITY_CERT' put: 16rB!

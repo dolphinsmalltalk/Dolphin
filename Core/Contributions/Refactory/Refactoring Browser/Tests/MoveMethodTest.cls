@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 RefactoringTest subclass: #MoveMethodTest
 	instanceVariableNames: ''
@@ -162,9 +162,11 @@ testMovePrimitiveMethod
 				class: Object
 				variable: 'OrderedCollection'.
 	self shouldFail: refactoring! !
-!MoveMethodTest categoriesFor: #testMoveMethodIntoArgument!public!tests! !
-!MoveMethodTest categoriesFor: #testMoveMethodIntoClassVariable!public!tests! !
-!MoveMethodTest categoriesFor: #testMoveMethodIntoInstanceVariable!public!tests! !
-!MoveMethodTest categoriesFor: #testMoveMethodThatReferencesPoolDictionary!public!tests! !
-!MoveMethodTest categoriesFor: #testMovePrimitiveMethod!failure tests!public! !
+!MoveMethodTest categoriesForMethods!
+testMoveMethodIntoArgument!public!tests! !
+testMoveMethodIntoClassVariable!public!tests! !
+testMoveMethodIntoInstanceVariable!public!tests! !
+testMoveMethodThatReferencesPoolDictionary!public!tests! !
+testMovePrimitiveMethod!failure tests!public! !
+!
 

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ENHMETARECORD subclass: #EMRFRAMERGN
 	instanceVariableNames: ''
@@ -96,16 +96,18 @@ szlStroke: aSIZE
 		from: ##(_OffsetOf_szlStroke + 1)
 		to: ##(_OffsetOf_szlStroke + SIZE basicByteSize)
 		startingAt: 1! !
-!EMRFRAMERGN categoriesFor: #cbRgnData!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #cbRgnData:!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #ihBrush!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #ihBrush:!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #rclBounds!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #rclBounds:!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #RGNDATA!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #RGNDATA:!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #szlStroke!**compiled accessors**!public! !
-!EMRFRAMERGN categoriesFor: #szlStroke:!**compiled accessors**!public! !
+!EMRFRAMERGN categoriesForMethods!
+cbRgnData!**compiled accessors**!public! !
+cbRgnData:!**compiled accessors**!public! !
+ihBrush!**compiled accessors**!public! !
+ihBrush:!**compiled accessors**!public! !
+rclBounds!**compiled accessors**!public! !
+rclBounds:!**compiled accessors**!public! !
+RGNDATA!**compiled accessors**!public! !
+RGNDATA:!**compiled accessors**!public! !
+szlStroke!**compiled accessors**!public! !
+szlStroke:!**compiled accessors**!public! !
+!
 
 !EMRFRAMERGN class methodsFor!
 
@@ -150,7 +152,9 @@ iTypes
 	"Answer the integer enhanced metafile record type id for this record class."
 
 	^Array with: EMR_FRAMERGN! !
-!EMRFRAMERGN class categoriesFor: #defineFields!**auto generated**!public!template definition! !
-!EMRFRAMERGN class categoriesFor: #getFieldNames!**compiled accessors**!constants!private! !
-!EMRFRAMERGN class categoriesFor: #iTypes!constants!public! !
+!EMRFRAMERGN class categoriesForMethods!
+defineFields!**auto generated**!public!template definition! !
+getFieldNames!**compiled accessors**!constants!private! !
+iTypes!constants!public! !
+!
 

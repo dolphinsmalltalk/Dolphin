@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 AbstractSocketTest subclass: #Socket2Test
 	instanceVariableNames: ''
@@ -55,7 +55,9 @@ testSTBMessages
 	ready wait.
 	messages := messages asArray.
 	self assert: messages equals: sent! !
-!Socket2Test categoriesFor: #clientSocketClass!constants!private! !
-!Socket2Test categoriesFor: #serverSocketClass!constants!private!unit tests! !
-!Socket2Test categoriesFor: #testSTBMessages!public! !
+!Socket2Test categoriesForMethods!
+clientSocketClass!constants!private! !
+serverSocketClass!constants!private!unit tests! !
+testSTBMessages!public! !
+!
 

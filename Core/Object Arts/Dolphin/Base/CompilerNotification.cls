@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Notification subclass: #CompilerNotification
 	instanceVariableNames: 'position ranges line extras methodClass source selector offset'
@@ -132,24 +132,26 @@ source
 	was being compiled."
 
 	^source ?? ''! !
-!CompilerNotification categoriesFor: #_descriptionArguments!displaying!public! !
-!CompilerNotification categoriesFor: #_descriptionFormat!displaying!public! !
-!CompilerNotification categoriesFor: #code:in:for:selector:position:line:ranges:extras:!initializing!private! !
-!CompilerNotification categoriesFor: #displayOn:!displaying!public! !
-!CompilerNotification categoriesFor: #errorCode!accessing!public! !
-!CompilerNotification categoriesFor: #errorMessage!accessing!public! !
-!CompilerNotification categoriesFor: #extras!accessing!public! !
-!CompilerNotification categoriesFor: #line!accessing!public! !
-!CompilerNotification categoriesFor: #methodClass!accessing!public! !
-!CompilerNotification categoriesFor: #offset!private! !
-!CompilerNotification categoriesFor: #offset:!private! !
-!CompilerNotification categoriesFor: #position!accessing!public! !
-!CompilerNotification categoriesFor: #range!accessing!public! !
-!CompilerNotification categoriesFor: #ranges!accessing!public! !
-!CompilerNotification categoriesFor: #selector!accessing!public! !
-!CompilerNotification categoriesFor: #severity!constants!public! !
-!CompilerNotification categoriesFor: #severityName!displaying!public! !
-!CompilerNotification categoriesFor: #source!accessing!public! !
+!CompilerNotification categoriesForMethods!
+_descriptionArguments!displaying!public! !
+_descriptionFormat!displaying!public! !
+code:in:for:selector:position:line:ranges:extras:!initializing!private! !
+displayOn:!displaying!public! !
+errorCode!accessing!public! !
+errorMessage!accessing!public! !
+extras!accessing!public! !
+line!accessing!public! !
+methodClass!accessing!public! !
+offset!private! !
+offset:!private! !
+position!accessing!public! !
+range!accessing!public! !
+ranges!accessing!public! !
+selector!accessing!public! !
+severity!constants!public! !
+severityName!displaying!public! !
+source!accessing!public! !
+!
 
 !CompilerNotification class methodsFor!
 
@@ -308,11 +310,13 @@ severity
 	sorting compilation issues by severity."
 
 	^self subclassResponsibility! !
-!CompilerNotification class categoriesFor: #beep!parping!public! !
-!CompilerNotification class categoriesFor: #classForCode:!private! !
-!CompilerNotification class categoriesFor: #code:in:for:selector:position:line:range:extras:!instance creation!private! !
-!CompilerNotification class categoriesFor: #code:in:for:selector:position:line:ranges:extras:!instance creation!private! !
-!CompilerNotification class categoriesFor: #errorFormats!accessing!private! !
-!CompilerNotification class categoriesFor: #initialize!development!initializing!public! !
-!CompilerNotification class categoriesFor: #severity!constants!public! !
+!CompilerNotification class categoriesForMethods!
+beep!parping!public! !
+classForCode:!private! !
+code:in:for:selector:position:line:range:extras:!instance creation!private! !
+code:in:for:selector:position:line:ranges:extras:!instance creation!private! !
+errorFormats!accessing!private! !
+initialize!development!initializing!public! !
+severity!constants!public! !
+!
 

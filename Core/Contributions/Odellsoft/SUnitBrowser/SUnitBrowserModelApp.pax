@@ -137,7 +137,9 @@ sunitbRemoveAll: aCollection
 		self
 			remove: element
 			ifAbsent: []]! !
-!Collection categoriesFor: #sunitbRemoveAll:!public!sunit browser model! !
+!Collection categoriesForMethods!
+sunitbRemoveAll:!public!sunit browser model! !
+!
 
 !String methodsFor!
 
@@ -162,7 +164,9 @@ sunitbAsProperNouns
 		last := each].
 
 	^stream contents! !
-!String categoriesFor: #sunitbAsProperNouns!public!sunit browser model! !
+!String categoriesForMethods!
+sunitbAsProperNouns!public!sunit browser model! !
+!
 
 !TestCase methodsFor!
 
@@ -216,17 +220,19 @@ signature
 step
 
 	self debugAsFailure! !
-!TestCase categoriesFor: #allTests!public!sunit browser model! !
-!TestCase categoriesFor: #canBrowse!public!sunit browser model! !
-!TestCase categoriesFor: #canDebug!public!sunit browser model! !
-!TestCase categoriesFor: #displayName!public!sunit browser model! !
-!TestCase categoriesFor: #hasTests!public!sunit browser model! !
-!TestCase categoriesFor: #isSameAs:!public!sunit browser model! !
-!TestCase categoriesFor: #isTestSuite!public!sunit browser model! !
-!TestCase categoriesFor: #name!public!sunit browser model! !
-!TestCase categoriesFor: #numberOfTests!public!sunit browser model! !
-!TestCase categoriesFor: #signature!accessing!public! !
-!TestCase categoriesFor: #step!public!sunit browser model! !
+!TestCase categoriesForMethods!
+allTests!public!sunit browser model! !
+canBrowse!public!sunit browser model! !
+canDebug!public!sunit browser model! !
+displayName!public!sunit browser model! !
+hasTests!public!sunit browser model! !
+isSameAs:!public!sunit browser model! !
+isTestSuite!public!sunit browser model! !
+name!public!sunit browser model! !
+numberOfTests!public!sunit browser model! !
+signature!accessing!public! !
+step!public!sunit browser model! !
+!
 
 !TestResource methodsFor!
 
@@ -237,8 +243,10 @@ canBrowse
 displayName
 
 	^self name sunitbAsProperNouns! !
-!TestResource categoriesFor: #canBrowse!public!sunit browser model! !
-!TestResource categoriesFor: #displayName!public!sunit browser model! !
+!TestResource categoriesForMethods!
+canBrowse!public!sunit browser model! !
+displayName!public!sunit browser model! !
+!
 
 !TestSuite methodsFor!
 
@@ -285,14 +293,16 @@ numberOfTests
 				inject: 0
 				into: [:total :each | total + each numberOfTests]]
 		ifFalse: [0]! !
-!TestSuite categoriesFor: #allTests!public!sunit browser model! !
-!TestSuite categoriesFor: #buildSuite!public!sunit browser model! !
-!TestSuite categoriesFor: #canBrowse!public!sunit browser model! !
-!TestSuite categoriesFor: #canDebug!public!sunit browser model! !
-!TestSuite categoriesFor: #displayName!public!sunit browser model! !
-!TestSuite categoriesFor: #hasTests!public!sunit browser model! !
-!TestSuite categoriesFor: #isTestSuite!public!sunit browser model! !
-!TestSuite categoriesFor: #numberOfTests!public!sunit browser model! !
+!TestSuite categoriesForMethods!
+allTests!public!sunit browser model! !
+buildSuite!public!sunit browser model! !
+canBrowse!public!sunit browser model! !
+canDebug!public!sunit browser model! !
+displayName!public!sunit browser model! !
+hasTests!public!sunit browser model! !
+isTestSuite!public!sunit browser model! !
+numberOfTests!public!sunit browser model! !
+!
 
 "End of package definition"!
 

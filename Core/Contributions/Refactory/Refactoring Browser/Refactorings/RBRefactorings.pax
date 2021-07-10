@@ -408,7 +408,9 @@ rootsOfTheWorld
 	#rbFix. "Dolphin uses #allRoots"
 
 	^self environment allRoots! !
-!Class class categoriesFor: #rootsOfTheWorld!class hierarchy-accessing!private! !
+!Class class categoriesForMethods!
+rootsOfTheWorld!class hierarchy-accessing!private! !
+!
 
 "End of package definition"!
 

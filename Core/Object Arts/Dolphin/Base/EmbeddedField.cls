@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 ExternalField subclass: #EmbeddedField
 	instanceVariableNames: 'fieldClass'
@@ -56,12 +56,14 @@ printOn: aStream
 		nextPutAll: self fieldClassName;
 		nextPut: $)
 ! !
-!EmbeddedField categoriesFor: #alignment!constants!public! !
-!EmbeddedField categoriesFor: #byteSize!accessing!private! !
-!EmbeddedField categoriesFor: #fieldClass!accessing!private! !
-!EmbeddedField categoriesFor: #fieldClass:!accessing!private! !
-!EmbeddedField categoriesFor: #fieldClassName!accessing!private! !
-!EmbeddedField categoriesFor: #printOn:!printing!public! !
+!EmbeddedField categoriesForMethods!
+alignment!constants!public! !
+byteSize!accessing!private! !
+fieldClass!accessing!private! !
+fieldClass:!accessing!private! !
+fieldClassName!accessing!private! !
+printOn:!printing!public! !
+!
 
 !EmbeddedField class methodsFor!
 
@@ -71,5 +73,7 @@ new
 	a length."
 
 	^self shouldNotImplement! !
-!EmbeddedField class categoriesFor: #new!instance creation!private! !
+!EmbeddedField class categoriesForMethods!
+new!instance creation!private! !
+!
 

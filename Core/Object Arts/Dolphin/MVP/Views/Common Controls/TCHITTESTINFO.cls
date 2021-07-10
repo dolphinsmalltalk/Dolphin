@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 CCHITTESTINFO subclass: #TCHITTESTINFO
 	instanceVariableNames: 'iItem'
@@ -21,6 +21,8 @@ handle
 
 iItem: anInteger 
 	iItem := anInteger! !
-!TCHITTESTINFO categoriesFor: #handle!accessing!private! !
-!TCHITTESTINFO categoriesFor: #iItem:!accessing!private! !
+!TCHITTESTINFO categoriesForMethods!
+handle!accessing!private! !
+iItem:!accessing!private! !
+!
 

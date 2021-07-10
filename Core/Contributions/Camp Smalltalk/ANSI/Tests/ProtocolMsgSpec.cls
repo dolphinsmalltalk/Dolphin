@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 Object subclass: #ProtocolMsgSpec
 	instanceVariableNames: 'selector parameterSpecifications returnValueSpecifications specSections'
@@ -252,31 +252,33 @@ specSections
 
 	specSections isNil ifTrue: [^ProtocolSpec defaultSpecSectionsCollection].
 	^specSections! !
-!ProtocolMsgSpec categoriesFor: #<=!public! !
-!ProtocolMsgSpec categoriesFor: #=!public! !
-!ProtocolMsgSpec categoriesFor: #allReferredToProtocolNames!public! !
-!ProtocolMsgSpec categoriesFor: #definedInProtocolName!public! !
-!ProtocolMsgSpec categoriesFor: #fileOutOnSIFFiler:protocol:!public! !
-!ProtocolMsgSpec categoriesFor: #hash!public! !
-!ProtocolMsgSpec categoriesFor: #hasParms!public! !
-!ProtocolMsgSpec categoriesFor: #hasReturnValue!public! !
-!ProtocolMsgSpec categoriesFor: #isConformingReturn:!public! !
-!ProtocolMsgSpec categoriesFor: #isConformingReturn:opRECEIVER:conformTo:selector:!public! !
-!ProtocolMsgSpec categoriesFor: #isConformingReturn:ruleReceiver:!public! !
-!ProtocolMsgSpec categoriesFor: #isConformingReturn:ruleReceiver:operand:!public! !
-!ProtocolMsgSpec categoriesFor: #isReturnValueSpecByRule!public! !
-!ProtocolMsgSpec categoriesFor: #messageDefinition!public! !
-!ProtocolMsgSpec categoriesFor: #messageErrors!public! !
-!ProtocolMsgSpec categoriesFor: #messagePattern!public! !
-!ProtocolMsgSpec categoriesFor: #messageRefinement!public! !
-!ProtocolMsgSpec categoriesFor: #messageSelector!public! !
-!ProtocolMsgSpec categoriesFor: #messageSynopsis!public! !
-!ProtocolMsgSpec categoriesFor: #printOn:!public! !
-!ProtocolMsgSpec categoriesFor: #refinedInProtocolName!public! !
-!ProtocolMsgSpec categoriesFor: #setSelector:specSections:specForEachParmList:specForEachReturnValueList:!public! !
-!ProtocolMsgSpec categoriesFor: #specForEachParmList!public! !
-!ProtocolMsgSpec categoriesFor: #specForEachReturnValueList!public! !
-!ProtocolMsgSpec categoriesFor: #specSections!public! !
+!ProtocolMsgSpec categoriesForMethods!
+<=!public! !
+=!public! !
+allReferredToProtocolNames!public! !
+definedInProtocolName!public! !
+fileOutOnSIFFiler:protocol:!public! !
+hash!public! !
+hasParms!public! !
+hasReturnValue!public! !
+isConformingReturn:!public! !
+isConformingReturn:opRECEIVER:conformTo:selector:!public! !
+isConformingReturn:ruleReceiver:!public! !
+isConformingReturn:ruleReceiver:operand:!public! !
+isReturnValueSpecByRule!public! !
+messageDefinition!public! !
+messageErrors!public! !
+messagePattern!public! !
+messageRefinement!public! !
+messageSelector!public! !
+messageSynopsis!public! !
+printOn:!public! !
+refinedInProtocolName!public! !
+setSelector:specSections:specForEachParmList:specForEachReturnValueList:!public! !
+specForEachParmList!public! !
+specForEachReturnValueList!public! !
+specSections!public! !
+!
 
 !ProtocolMsgSpec class methodsFor!
 
@@ -404,13 +406,15 @@ privateValidSpecSectionsOrNil: specSectionsIn ifError: errorBlock
 		ifFalse: [^ errorBlock value].
 	specSectionsIn isEmpty ifTrue: [^ nil].
 	^ specSectionsIn! !
-!ProtocolMsgSpec class categoriesFor: #defaultParameterSpecificationCollection!public! !
-!ProtocolMsgSpec class categoriesFor: #defaultReturnValueSpecificationCollection!public! !
-!ProtocolMsgSpec class categoriesFor: #new!public! !
-!ProtocolMsgSpec class categoriesFor: #newSelector:specSections:specsForEachParm:specsForEachReturnValue:!public! !
-!ProtocolMsgSpec class categoriesFor: #privateMessagePatternParmListOrNil:selector:!public! !
-!ProtocolMsgSpec class categoriesFor: #privateNewSelector:specSectionsOrNil:specForEachParmOrListOrNil:specForEachReturnValueOrListOrNil:!public! !
-!ProtocolMsgSpec class categoriesFor: #privateValidParmOrListOrNil:selector:ifError:!public! !
-!ProtocolMsgSpec class categoriesFor: #privateValidReturnValueOrListOrNil:ifError:!public! !
-!ProtocolMsgSpec class categoriesFor: #privateValidSpecSectionsOrNil:ifError:!public! !
+!ProtocolMsgSpec class categoriesForMethods!
+defaultParameterSpecificationCollection!public! !
+defaultReturnValueSpecificationCollection!public! !
+new!public! !
+newSelector:specSections:specsForEachParm:specsForEachReturnValue:!public! !
+privateMessagePatternParmListOrNil:selector:!public! !
+privateNewSelector:specSectionsOrNil:specForEachParmOrListOrNil:specForEachReturnValueOrListOrNil:!public! !
+privateValidParmOrListOrNil:selector:ifError:!public! !
+privateValidReturnValueOrListOrNil:ifError:!public! !
+privateValidSpecSectionsOrNil:ifError:!public! !
+!
 

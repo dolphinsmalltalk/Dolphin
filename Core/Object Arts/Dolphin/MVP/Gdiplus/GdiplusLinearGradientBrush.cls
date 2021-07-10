@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smallalk"!
 
 GdiplusBrush subclass: #GdiplusLinearGradientBrush
 	instanceVariableNames: ''
@@ -77,12 +77,14 @@ startingColor: startColor endingColor: endColor
 				color1: startColor argbCode
 				color2: endColor argbCode) == Ok
 		ifFalse: [GdiplusError signal: 'GdipSetLineColors failed' with: status]! !
-!GdiplusLinearGradientBrush categoriesFor: #blendCount!accessing!private! !
-!GdiplusLinearGradientBrush categoriesFor: #blendFactors!accessing!public! !
-!GdiplusLinearGradientBrush categoriesFor: #blendFactors:positions:!accessing!public! !
-!GdiplusLinearGradientBrush categoriesFor: #isGammaCorrected!accessing!public! !
-!GdiplusLinearGradientBrush categoriesFor: #isGammaCorrected:!accessing!public! !
-!GdiplusLinearGradientBrush categoriesFor: #startingColor:endingColor:!accessing!public! !
+!GdiplusLinearGradientBrush categoriesForMethods!
+blendCount!accessing!private! !
+blendFactors!accessing!public! !
+blendFactors:positions:!accessing!public! !
+isGammaCorrected!accessing!public! !
+isGammaCorrected:!accessing!public! !
+startingColor:endingColor:!accessing!public! !
+!
 
 !GdiplusLinearGradientBrush class methodsFor!
 
@@ -245,12 +247,14 @@ rect: rect color1: color1 color2: color2 mode: aLinearGradientMode
 				color1: color1
 				color2: color2
 				mode: aLinearGradientMode)! !
-!GdiplusLinearGradientBrush class categoriesFor: #exampleGdipLGChangingColors!examples!public!sunit! !
-!GdiplusLinearGradientBrush class categoriesFor: #exampleGdipLGCustom!examples!public!sunit! !
-!GdiplusLinearGradientBrush class categoriesFor: #exampleGdipLGDiagonal!examples!public!sunit! !
-!GdiplusLinearGradientBrush class categoriesFor: #exampleGdipLGHorizontal!examples!public!sunit! !
-!GdiplusLinearGradientBrush class categoriesFor: #exampleGdipLGModeConstants!examples!public!sunit! !
-!GdiplusLinearGradientBrush class categoriesFor: #exampleGdipLGTiling!examples!public!sunit! !
-!GdiplusLinearGradientBrush class categoriesFor: #point1:point2:color1:color2:!instance creation!public! !
-!GdiplusLinearGradientBrush class categoriesFor: #rect:color1:color2:mode:!instance creation!public! !
+!GdiplusLinearGradientBrush class categoriesForMethods!
+exampleGdipLGChangingColors!examples!public!sunit! !
+exampleGdipLGCustom!examples!public!sunit! !
+exampleGdipLGDiagonal!examples!public!sunit! !
+exampleGdipLGHorizontal!examples!public!sunit! !
+exampleGdipLGModeConstants!examples!public!sunit! !
+exampleGdipLGTiling!examples!public!sunit! !
+point1:point2:color1:color2:!instance creation!public! !
+rect:color1:color2:mode:!instance creation!public! !
+!
 
