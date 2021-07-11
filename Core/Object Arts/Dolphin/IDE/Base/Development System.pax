@@ -1920,7 +1920,7 @@ methodsFor: categoryName
 	| useName |
 	useName := categoryName copyReplacing: #{Category} value separator withObject: $/.
 	^ChunkReader
-		do: [:chunkString | self compile: chunkString classified: useName]
+		do: [:chunkString :filer | self compile: chunkString classified: useName]
 		inContext: self
 		atEnd: []!
 
@@ -1932,7 +1932,7 @@ methodsFor: name stamp: aString
 	| useName |
 	useName := name copyReplacing: #{Category} value separator withObject: $/.
 	^ChunkReader
-		do: [:chunkString | self compile: chunkString classified: useName]
+		do: [:chunkString :filer | self compile: chunkString classified: useName]
 		inContext: self
 		atEnd: []!
 

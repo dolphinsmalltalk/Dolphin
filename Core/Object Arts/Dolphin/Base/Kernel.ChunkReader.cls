@@ -13,12 +13,6 @@ Kernel.ChunkReader comment: '
 !Kernel.ChunkReader categoriesForClass!Kernel-Support! !
 !Kernel.ChunkReader methodsFor!
 
-chunk: chunkString
-	"Private - Evaluate the receivers chunkBlock with chunkString."
-
-	#deprecated.
-	self chunkBlock value: chunkString!
-
 chunkBlock
 	"Answer the receivers chunkBlock. This is a <dyadicValuable> which is evaluated for each chunk of text read from a stream."
 
@@ -45,7 +39,6 @@ setChunkBlock: perChunk context: contextObject endAction: finalOperation
 	endAction := finalOperation.
 	context := contextObject! !
 !Kernel.ChunkReader categoriesForMethods!
-chunk:!operations!private! !
 chunkBlock!accessing!public! !
 context!accessing!public! !
 fileInFrom:!private!source filing! !

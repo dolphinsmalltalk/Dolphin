@@ -253,7 +253,7 @@ categoriesForClass
 	| catclass cats |
 	catclass := self classCategoryClass.
 	cats := OrderedCollection new.
-	^ChunkReader do: [:chunkString | cats addLast: (catclass name: chunkString)]
+	^ChunkReader do: [:chunkString :filer | cats addLast: (catclass name: chunkString)]
 		atEnd: [self categories: cats]!
 
 category

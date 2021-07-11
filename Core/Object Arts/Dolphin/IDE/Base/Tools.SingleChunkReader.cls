@@ -17,7 +17,7 @@ fileInFrom: aSourceFiler
 
 	| chunk |
 	(aSourceFiler atEnd or: [(chunk := aSourceFiler nextChunk) isEmpty]) 
-		ifFalse: [self chunk: chunk].
+		ifFalse: [chunkBlock cull: chunk cull: aSourceFiler].
 	^endAction value! !
 !Tools.SingleChunkReader categoriesForMethods!
 fileInFrom:!private!source filing! !

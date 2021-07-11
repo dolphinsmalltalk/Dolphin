@@ -240,7 +240,7 @@ secure
 
 	| chunks |
 	chunks := OrderedCollection new.
-	^ChunkReader do: [:chunk | chunks addLast: chunk]
+	^ChunkReader do: [:chunk :filer | chunks addLast: chunk]
 		atEnd: 
 			[| data certificate bytes |
 			bytes := self parseByteArrayChunk: (chunks at: 3).
