@@ -2409,6 +2409,7 @@ viewTest
 						layoutManager: GridLayout new;
 						yourself].
 	testView := Object fromLiteralStoreArray: (self composingView literalStoreArray) context: parentView.
+	self view repositionShell: testView topView.
 	testView show!
 
 viewUndo

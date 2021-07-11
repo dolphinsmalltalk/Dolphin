@@ -2,7 +2,7 @@
 
 View subclass: #DesktopView
 	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
-	classVariableNames: 'Current ProgmanClassAtom'
+	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DesktopView guid: (GUID fromString: '{87b4c70e-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -211,8 +211,7 @@ onStartup
 	"Make sure the receiver represents the desktop window handle."
 
 	self assumeDesktopHandle.
-	resolution := nil.
-	self class getProgmanClass!
+	resolution := nil!
 
 onViewActivated: anEvent
 	"Default handler for window activation.
@@ -392,13 +391,6 @@ current: aDesktopView
 
 	Current := aDesktopView!
 
-getProgmanClass
-	| user |
-	user := UserLibrary default.
-	ProgmanClassAtom := user
-				getClassLongPtr: (user findWindow: 'Progman' asUtf16String lpWindowName: nil)
-				nIndex: GCW_ATOM!
-
 icon
 	"Answers an Icon that can be used to represent this class"
 
@@ -411,13 +403,7 @@ initialize
 			assumeDesktopHandle;
 			yourself!
 
-isProgramManager: hWnd
-	"Private - Answer whether the argument is the window handle of the Windows program manager. Here we are relying on the undocumented fact that the 'program manager' (main Windows shell) has a specific name for its Window class, and has done so since the very earliest versions of Windows. It seems unlikely to change, but if it does will fail safe for most purposes."
-
-	^(UserLibrary default getClassLongPtr: hWnd asParameter nIndex: Win32Constants.GCW_ATOM)
-		== ProgmanClassAtom!
-
-stbConvertFromVersion9: anArray 
+stbConvertFromVersion9: anArray
 	"Private - Perform an STB conversion from a version 9 (or earlier) instance
 	of the receiver to version 10,
 		10: append iconTitleFont inst. var., and a couple more reserved for future use
@@ -449,10 +435,8 @@ uninitialize
 !DesktopView class categoriesForMethods!
 current!accessing!public! !
 current:!accessing!public! !
-getProgmanClass!initializing!private! !
 icon!constants!public! !
 initialize!development!initializing!private! !
-isProgramManager:!enquiries!private! !
 stbConvertFromVersion9:!binary filing!private! !
 uninitialize!class hierarchy-removing!private! !
 !

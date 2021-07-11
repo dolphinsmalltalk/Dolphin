@@ -1240,7 +1240,7 @@ View subclass: #ControlView
 	classInstanceVariableNames: ''!
 View subclass: #DesktopView
 	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
-	classVariableNames: 'Current ProgmanClassAtom'
+	classVariableNames: 'Current'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 View subclass: #DoubleBufferedView

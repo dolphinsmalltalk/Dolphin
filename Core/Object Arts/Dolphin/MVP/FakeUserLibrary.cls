@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
 UserLibrary subclass: #FakeUserLibrary
-	instanceVariableNames: 'user32 getForegroundWindowBlock getActiveWindowBlock getCursorPosBlock'
+	instanceVariableNames: 'user32 process getForegroundWindowBlock getActiveWindowBlock getCursorPosBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -21,13 +21,17 @@ free
 	self close!
 
 getActiveWindow
-	^getActiveWindowBlock ifNotNil: [getActiveWindowBlock value] ifNil: [super getActiveWindow]!
+	^(getActiveWindowBlock notNil and: [Processor activeProcess == process])
+		ifTrue: [getActiveWindowBlock value]
+		ifFalse: [super getActiveWindow]!
 
 getActiveWindowBlock: aNiladicValuable
 	getActiveWindowBlock := aNiladicValuable!
 
 getCursorPos: aPOINT
-	^getCursorPosBlock ifNotNil: [getCursorPosBlock value: aPOINT] ifNil: [super getCursorPos: aPOINT]!
+	^(getCursorPosBlock notNil and: [Processor activeProcess == process])
+		ifTrue: [getCursorPosBlock value: aPOINT]
+		ifFalse: [super getCursorPos: aPOINT]!
 
 getCursorPosBlock: aMonadicValuable
 	getCursorPosBlock := aMonadicValuable!
@@ -36,9 +40,9 @@ getForegroundWindow
 	"Answer the handle of the window with which the user is currently working.
 		HWND GetForegroundWindow(VOID)"
 
-	^getForegroundWindowBlock
-		ifNotNil: [getForegroundWindowBlock value]
-		ifNil: [super getForegroundWindow]!
+	^(getForegroundWindowBlock notNil and: [Processor activeProcess == process])
+		ifTrue: [getForegroundWindowBlock value]
+		ifFalse: [super getForegroundWindow]!
 
 getForegroundWindowBlock: aNiladicValuable
 	getForegroundWindowBlock := aNiladicValuable!
@@ -48,6 +52,7 @@ initializeForDesktopActive
 	getActiveWindowBlock := []!
 
 open
+	process := Processor activeProcess.
 	user32 := UserLibrary default.
 	handle := user32 handle.
 	self beFinalizable.
