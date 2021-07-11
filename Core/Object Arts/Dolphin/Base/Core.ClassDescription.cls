@@ -702,10 +702,8 @@ methodsFor
 	"Answer a chunk reader to read and compile method chunks for the receiver.
 	New methods are classified into the default category (''unclassified'')."
 
-	| methodEnvironment |
-	methodEnvironment := QueryEnvironmentNotification signalWith: self.
 	^ChunkReader
-		do: [:chunkString :filer | self compile: chunkString environment: methodEnvironment]
+		do: [:chunkString :filer | self compile: chunkString environment: filer environment]
 		inContext: self
 		atEnd: []!
 

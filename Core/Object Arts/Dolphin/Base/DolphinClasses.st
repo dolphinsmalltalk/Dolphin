@@ -3371,12 +3371,6 @@ Core.Notification subclass: #'Kernel.MethodCompileFailed'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Notification subclass: #'Kernel.QueryEnvironmentNotification'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Notification subclass: #'Kernel.RaisedNotificationSignal'
 	instanceVariableNames: 'signalType'
 	classVariableNames: ''

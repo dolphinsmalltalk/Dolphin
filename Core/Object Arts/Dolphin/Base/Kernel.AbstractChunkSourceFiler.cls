@@ -122,8 +122,6 @@ fileIn
 						for: self evaluationContext
 						environment: self environment
 						logged: true]]]
-			on: QueryEnvironmentNotification
-			do: [:ex | ex resume: self environment]
 			on: MethodCompileFailed
 			do: 
 				[:n |
