@@ -234,7 +234,7 @@ negated
 negative
 	"Answer whether the receiver is negative."
 
-	^seconds < 0!
+	^seconds negative!
 
 positive
 	"Answer whether the receiver is positive or zero."
@@ -256,7 +256,9 @@ printOn: aStream
 		ss	is the number of complete seconds with leading zeroes to fill to two places
 		fff	is the fraction part of the number of seconds, if any, displayed with up to 9 digits of precision (i.e. down to nanoseconds)."
 
-	Locale invariant
+	"This is an ANSI Smalltalk compliant definition. It would probably be more useful if Duration>>printOn: produced a self-evaluating form."
+
+	aStream locale
 		printDuration: self
 		on: aStream
 		format: '-d:hh:mm:ssfffffffff'!

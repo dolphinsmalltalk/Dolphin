@@ -273,6 +273,13 @@ negated
 
 	^Fraction numerator: self numerator negated denominator: self denominator!
 
+negative
+	"Answer whether the receiver is negative."
+
+	"Implementation Note: The denominator is always positive."
+
+	^numerator < 0!
+
 numerator
 	"Answer the <integer> numerator of the receiver reduced to its lowest common denominator."
 
@@ -389,6 +396,7 @@ multiplyByFloat:!double dispatch!private! !
 multiplyByFraction:!double dispatch!private! !
 multiplyByInteger:!double dispatch!private! !
 negated!arithmetic!public! !
+negative!public!testing! !
 numerator!accessing!public! !
 numerator:denominator:!accessing!private! !
 printOn:!printing!public! !

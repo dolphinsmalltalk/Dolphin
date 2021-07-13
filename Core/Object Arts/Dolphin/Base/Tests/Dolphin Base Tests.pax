@@ -67,7 +67,6 @@ package setClassNames: #(
 	#{Core.Tests.SetTest}
 	#{Core.Tests.SignalTest}
 	#{Core.Tests.SmallIntegerTest}
-	#{Core.Tests.SmalltalkLocaleTest}
 	#{Core.Tests.SortAlgorithmTest}
 	#{Core.Tests.SortedCollectionTest}
 	#{Core.Tests.StreamTest}
@@ -140,6 +139,7 @@ package setClassNames: #(
 	#{Kernel.Tests.RootNamespaceTest}
 	#{Kernel.Tests.SessionManagerTest}
 	#{Kernel.Tests.ShellsortAlgorithmTest}
+	#{Kernel.Tests.SmalltalkLocaleTest}
 	#{Kernel.Tests.SmalltalkNamespaceTest}
 	#{Kernel.Tests.StableSortAlgorithmTest}
 	#{Kernel.Tests.StackFrameTest}
@@ -917,7 +917,7 @@ Core.Tests.IntegerTest subclass: #'Core.Tests.SmallIntegerTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.LocaleTest subclass: #'Core.Tests.SmalltalkLocaleTest'
+Core.Tests.LocaleTest subclass: #'Kernel.Tests.SmalltalkLocaleTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -65,30 +65,47 @@ decimalSeparator
 	^'.'!
 
 displayDuration: aDuration on: aPuttableStream
-	"Display a friendly but concise representation of the <Duration> argument onto the <puttableStream> argument."
+	"Display a friendly but concise representation of the <Duration> argument onto the <puttableStream> argument.
+	The result will be expressed in a single unit, potentially as a decimal fraction with limited precision appropriate to the scale of the unit."
 
-	| seconds |
-	seconds := aDuration negative
-				ifTrue: 
-					[aPuttableStream nextPutAll: self negativeSign.
-					aDuration asSeconds negated]
-				ifFalse: [aDuration asSeconds].
-	#(#(86400 'day' 2 ##(1 / 100)) #(3600 'hour' 2 ##(1 / 100)) #(60 'minute' 2 ##(1 / 100)) #(1 's' 1 ##(1
-		/ 100)) #(0.001 'ms' 1 ##(1 / 10)) #(1.0e-6 'µs' 1 ##(1/10)) #(1.0e-9 'ns' 1 1)) detect: 
-				[:each |
-				| value |
-				value := seconds / each first.
-				value >= each third and: 
-						[| units |
-						units := each second.
-						value := value roundTo: each last.
-						aPuttableStream
-							print: (value fractionPart = 0 ifTrue: [value] ifFalse: [value asFloat]);
-							space;
-							nextPutAll: units.
-						(value = 1 or: [units last asLowercase = $s]) ifFalse: [aPuttableStream nextPut: $s].
-						true]]
-			ifNone: [aPuttableStream nextPutAll: '0 s']!
+	| seconds formats |
+	seconds := aDuration asSeconds.
+	seconds negative
+		ifTrue: 
+			[aPuttableStream nextPutAll: self negativeSign.
+			seconds := seconds negated].
+
+	"Each choice of format is described by a four/five element array where the elements are respectively:
+		1. The minimum duration in seconds for which this format should be used.
+		2. The number of seconds per unit.
+		3. The precision to be used displaying the duration in this unit.
+		4. The suffix for a single unit.
+		5. The suffix for multiple units."
+	formats := ##({{2 days asSeconds. 1 days asSeconds. 1 / 100. ' day'. ' days'}.
+				{2 hours asSeconds. 1 hours asSeconds. 1 / 100. ' hour'. ' hours'}.
+				{2 minutes asSeconds. 1 minutes asSeconds. 1 / 100. ' minute'. ' minutes'}.
+				{1. 1. 1 / 100. ' s'. ' s'}.
+				{1 milliseconds asSeconds. 1 milliseconds asSeconds. 1 / 10. ' ms'. ' ms'}.
+				{1 microseconds asSeconds. 1 microseconds asSeconds. 1 / 10. ' µs'. ' µs'}.
+				{1 nanoseconds asSeconds. 1 nanoseconds asSeconds. 1. ' ns'. ' ns'}}).
+	1 to: formats size
+		do: 
+			[:i |
+			| unitDetails |
+			unitDetails := formats at: i.
+			seconds < (unitDetails at: 1)
+				ifFalse: 
+					[| value |
+					value := seconds / (unitDetails at: 2) roundTo: (unitDetails at: 3).
+					value isInteger
+						ifTrue: 
+							[value printOn: aPuttableStream base: 10.
+							aPuttableStream nextPutAll: (value == 1 ifTrue: [unitDetails at: 4] ifFalse: [unitDetails at: 5])]
+						ifFalse: 
+							[self displayFloat: value asFloat on: aPuttableStream.
+							aPuttableStream nextPutAll: unitDetails last].
+					^self]].
+	aPuttableStream nextPutAll: '0 s'!
 
 displayFloat: aFloat on: aStream
 	"Append, to aStream, a String whose characters are a representation of the receiver in the base, anInteger, as a Smalltalk developer would want to see it.
@@ -97,26 +114,28 @@ displayFloat: aFloat on: aStream
 
 	| classification |
 	classification := aFloat fpClass.
-	(classification anyMask: Float.FpClassNaN)
-		ifTrue: [aStream nextPutAll: self nan]
-		ifFalse: 
-			[(classification anyMask: Float.FpClassInfinite)
+	(classification anyMask: ##(Float.FpClassNaN | Float.FpClassInfinite | Float.FpClassZero))
+		ifTrue: 
+			[(classification anyMask: Float.FpClassZero)
 				ifTrue: 
-					[aStream nextPutAll: ((classification anyMask: Float.FpClassNegative)
-								ifTrue: [self negativeInfinity]
-								ifFalse: [self infinity])]
+					[(classification anyMask: Float.FpClassNegative)
+						ifTrue: [aStream nextPutAll: '-0.0']
+						ifFalse: [aStream nextPutAll: '0.0']]
 				ifFalse: 
-					[(classification anyMask: Float.FpClassZero)
+					[(classification anyMask: Float.FpClassInfinite)
 						ifTrue: 
-							[(classification anyMask: Float.FpClassNegative)
-								ifTrue: [aStream nextPutAll: '-0.0']
-								ifFalse: [aStream nextPutAll: '0.0']]
+							[aStream nextPutAll: ((classification anyMask: Float.FpClassNegative)
+										ifTrue: [self negativeInfinity]
+										ifFalse: [self infinity])]
 						ifFalse: 
-							[((classification anyMask: Float.FpClassNegative)
-								ifTrue: 
-									[aStream nextPut: $-.
-									aFloat abs]
-								ifFalse: [aFloat]) absPrintExactlyOn: aStream base: 10]]]!
+							["Must be NaN"
+							aStream nextPutAll: self nan]]]
+		ifFalse: 
+			[(classification anyMask: Float.FpClassNegative)
+				ifTrue: 
+					[aStream nextPut: $-.
+					aFloat abs absPrintExactlyOn: aStream base: 10]
+				ifFalse: [aFloat absPrintExactlyOn: aStream base: 10]]!
 
 displayInteger: anInteger on: aStream
 	"Append, to aStream, a String whose characters are a representation of the <Integer> first argument as a Smalltalk user would want to see it."

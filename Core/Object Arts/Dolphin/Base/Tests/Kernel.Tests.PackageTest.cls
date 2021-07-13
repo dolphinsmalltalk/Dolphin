@@ -442,7 +442,7 @@ testLoad70Pax
 	actual := filer stream contents.
 	expected := File readAllText: (File change: (self filenameFor: testPackagePath) extension: 'pac').
 	"
-	Smalltalk.DiffBrowser compare: actual with: expectedDifferences
+	Smalltalk.DiffBrowser compare: actual with: expected
 	"
 	self assert: actual equals: expected.
 	self uninstallTestPackages.

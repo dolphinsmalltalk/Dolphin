@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.LocaleTest subclass: #'Core.Tests.SmalltalkLocaleTest'
+Core.Tests.LocaleTest subclass: #'Kernel.Tests.SmalltalkLocaleTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.SmalltalkLocaleTest guid: (Core.GUID fromString: '{0a445b92-78d1-4c9c-a3f4-7be49f0c2932}')!
-Core.Tests.SmalltalkLocaleTest comment: ''!
-!Core.Tests.SmalltalkLocaleTest categoriesForClass!Unclassified! !
-!Core.Tests.SmalltalkLocaleTest methodsFor!
+Kernel.Tests.SmalltalkLocaleTest guid: (Core.GUID fromString: '{0a445b92-78d1-4c9c-a3f4-7be49f0c2932}')!
+Kernel.Tests.SmalltalkLocaleTest comment: ''!
+!Kernel.Tests.SmalltalkLocaleTest categoriesForClass!Unclassified! !
+!Kernel.Tests.SmalltalkLocaleTest methodsFor!
 
 defaultSubject
 	^Locale smalltalk!
@@ -66,7 +66,7 @@ testPrintFloatSeparators
 		decimalSeparator: $@;
 		thousandSeparator: $^.
 	self assert: (subject printFloat: 1234567890.123 format: format) equals: '1234567890@123'! !
-!Core.Tests.SmalltalkLocaleTest categoriesForMethods!
+!Kernel.Tests.SmalltalkLocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
 testDisplayFloatOn!public!unit tests! !
 testPrintFloatGrouping!public!unit tests! !
