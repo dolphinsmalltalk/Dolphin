@@ -1226,7 +1226,7 @@ UI.Dialog subclass: #'Tools.AspectEditorDialog'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Dialog subclass: #'Tools.CreateSubclassDialog'
-	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter usePackagePresenter package superclassPresenter'
+	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter namespacePresenter usePackagePresenter package superclassPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

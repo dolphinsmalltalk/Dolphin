@@ -98,7 +98,7 @@ chooseNamespace
 	(ChooseClassDialog
 		on: choice
 		choices: namespaces
-		caption: 'Select namespace…')
+		caption: 'Select Namespace…')
 		allowNil: true;
 		nilButtonCaption: '&Default';
 		showModal!
