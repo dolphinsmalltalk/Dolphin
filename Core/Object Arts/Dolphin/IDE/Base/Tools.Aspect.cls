@@ -730,9 +730,14 @@ integer: aSymbol
 		presenterBlock: 
 			[:p :m |
 			| presenter |
-			presenter := NumberPresenter create: 'Integer text' in: p on: m.
-			presenter view typeconverter leftNullValue: 0.
-			presenter view selectAllIfSingleLine.
+			"Would be nice to use TextEdit in numeric mode, but it won't accept the minus sign, so no use for negative integers"
+			presenter := NumberPresenter createIn: p.
+			presenter view
+				typeconverter: (IntegerToText new
+							leftNullValue: 0;
+							yourself);
+				selectAllIfSingleLine.
+			presenter model: m.
 			presenter])
 		beEditedInPlace;
 		type: Integer;
