@@ -15,7 +15,7 @@ Refactory.Browser.Tests.RefactoringTest comment: ''!
 readFile: aString
 	| path |
 	#rbFix.	"^aString asFilename contentsOfEntireFile"
-	path := File composePath: self class owningPackage path subPath: aString.
+	path := (PackageRelativeFileLocator package: self class owningPackage) localFileSpecFor: aString.
 	^(FileStream read: path) contents!
 
 setUp

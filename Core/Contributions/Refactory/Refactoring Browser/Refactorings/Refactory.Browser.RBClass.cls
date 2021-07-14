@@ -166,7 +166,7 @@ printDefinitionOn: puttableStream
 		space;
 		nextPutAll: self kindOfSubclass;
 		space;
-		print: self name;
+		print: self fullName asSymbol;
 		crtab;
 		nextPutAll: 'instanceVariableNames: '''.
 	self instanceVariableNames do: [:each | puttableStream nextPutAll: each]

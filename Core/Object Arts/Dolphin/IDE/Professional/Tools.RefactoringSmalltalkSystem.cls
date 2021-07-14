@@ -251,7 +251,7 @@ convertToSibling: aClass
 	subclasses will be defined as #subclassResponsibility methods in the new class."
 
 	(ConvertToSiblingDialog showModalOn: (ChildrenToSiblingsRefactoring
-				name: 'Abstract' , aClass name
+				name: (aClass environment fullNameFor: 'Abstract' , aClass name)
 				class: aClass
 				subclasses: aClass subclasses))
 		ifNotNil: 

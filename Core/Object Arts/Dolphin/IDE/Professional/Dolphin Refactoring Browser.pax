@@ -298,7 +298,7 @@ Tools.SmalllintPlugin subclass: #'Tools.CodeRewriterPlugin'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Dialog subclass: #'Tools.ConvertToSiblingDialog'
-	instanceVariableNames: 'classNamePresenter subclassesPresenter statusModel'
+	instanceVariableNames: 'classNamePresenter namespacePresenter subclassesPresenter statusModel'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''

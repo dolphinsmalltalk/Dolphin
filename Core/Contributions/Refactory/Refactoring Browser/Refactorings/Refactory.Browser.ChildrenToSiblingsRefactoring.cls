@@ -23,9 +23,25 @@ addSuperclass
 				category: parent category)!
 
 changeIsKindOfReferences
-	| replacer |
+	| replacer superclass |
 	replacer := ParseTreeRewriter new.
-	replacer replace: '``@object isKindOf: ' , parent name with: '``@object isKindOf: ' , className.
+	superclass := model classNamed: className.
+	"A qualified name can be expressed in a number of ways; unqualified, fully-qualified, or partially-qualified. Rather than attempt to match each of these, we use a block rewrite"
+	replacer
+		replace: '``@object isKindOf: `variable'
+		withValueFrom: 
+			[:msg |
+			msg
+				arguments: {(RBVariableNode named: (self nameForReferenceToClass: superclass fromNode: msg))
+							comments: msg arguments first comments;
+							yourself}.
+			msg]
+		when: 
+			[:msg |
+			| binding |
+			"This may be over the top - we can only be here if the method references the class, but maybe an ambiguous partially qualified reference is also present that actually binds more tightly to another variable?"
+			binding := msg methodNode methodClass fullBindingFor: msg arguments first name.
+			binding notNil and: [binding value = parent]].
 	self convertAllReferencesToClass: parent using: replacer!
 
 computeSubclassSupersOf: aClass

@@ -156,11 +156,7 @@ defineClass: aString
 				nonMetaclass: newClass.
 			newClasses at: newClassName put: newClass.
 			newClass environment addClass: newClass].
-	newClass superclass: (change superclassName
-				ifNotNil: 
-					[:superName |
-					(((self classFor: Smalltalk) ifNil: [Smalltalk]) fullBindingFor: superName)
-						ifNotNil: [:var | self classFor: var value]]).
+	newClass superclass: (self classNamed: change superclassName).
 	newClass superclass isNil
 		ifTrue: 
 			[self rootClasses add: newClass.
@@ -301,7 +297,7 @@ reparentClasses: aRBClassCollection to: newClass
 	aRBClassCollection do: 
 			[:aClass | 
 			self defineClass: (self replaceClassNameIn: aClass definitionString
-						to: newClass name)]!
+						to: newClass fullName)]!
 
 replaceClassNameIn: definitionString to: aSymbol 
 	| parseTree |

@@ -46,8 +46,9 @@ buildParseTreeRewriter
 					from := from ifNil: [each] ifNotNil: [each , '.' , from].
 					rewriter
 						replaceTree: (RBLiteralNode value: from asSymbol)
-							withValueFrom: [:node | RBLiteralNode value: (self newNameForReferenceFrom: node) asSymbol];
-						replace: from withValueFrom: [:node | RBVariableNode named: (self newNameForReferenceFrom: node)]]].
+							withValueFrom: [:node | RBLiteralNode value: (self nameForReferenceToClass: class fromNode: node) asSymbol];
+						replace: from
+							withValueFrom: [:node | RBVariableNode named: (self nameForReferenceToClass: class fromNode: node)]]].
 	rewriter replaceArgument: newUnqualified
 		withValueFrom: [:aNode | self refactoringError: newUnqualified , ' already exists within the reference scope'].
 	^rewriter!
@@ -65,27 +66,6 @@ className: aName newName: aNewName
 					$. join: parts])
 					asSymbol.
 	class := self model classNamed: className!
-
-newNameForReferenceFrom: aStProgramNode
-	"Private - If a reference to a renamed class from the method associated with the specified node can be unqualified, then answer the new unqualified name. Otherwise answer the new full name.
-	As noted in #buildParseTreeRewriter, this is currently a hack that will sometimes use a fully-qualified name when it is not actually required, but a correct implementation really requires a proper RB model of the Namespace hierarchy."
-
-	| unqualifiedName methodClass |
-	methodClass := aStProgramNode methodNode methodClass.
-	unqualifiedName := class unqualifiedName.
-	methodClass == class
-		ifTrue: 
-			["A method of the renamed class itself, which is self-referential"
-			^unqualifiedName].
-	^methodClass environment == class environment
-		ifTrue: 
-			["The method's environment is the same, we can definitely use the unqualified name"
-			unqualifiedName]
-		ifFalse: 
-			[| found |
-			"We can also use the unqualified name if it can be found in one of the namespaces visitable in the imports graph."
-			found := methodClass fullBindingFor: unqualifiedName.
-			(found notNil and: [found value = class]) ifTrue: [unqualifiedName] ifFalse: [newName]]!
 
 preconditions
 	^(RBCondition withBlock: [class notNil and: [class isMeta not]]
@@ -133,7 +113,6 @@ transform
 !Tools.RenameNamespacedClassRefactoring categoriesForMethods!
 buildParseTreeRewriter!private!transforming! !
 className:newName:!initializing!private! !
-newNameForReferenceFrom:!private!transforming! !
 preconditions!preconditions!public! !
 renameImports!private!transforming! !
 renameReferences:!private!transforming! !

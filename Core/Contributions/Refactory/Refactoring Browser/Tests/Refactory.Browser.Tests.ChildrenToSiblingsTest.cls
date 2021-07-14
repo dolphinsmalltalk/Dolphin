@@ -11,10 +11,6 @@ Refactory.Browser.Tests.ChildrenToSiblingsTest comment: ''!
 !Refactory.Browser.Tests.ChildrenToSiblingsTest categoriesForClass!Refactory-Testing! !
 !Refactory.Browser.Tests.ChildrenToSiblingsTest methodsFor!
 
-setUp
-	super setUp.
-	model := Compiler evaluate: (self readFile: 'ChildrenToSiblingTest.st')!
-
 testBadName
 	self shouldFail: (ChildrenToSiblingsRefactoring
 				name: #'Obje ct'
@@ -45,16 +41,22 @@ testMetaClassFailure
 				subclasses: {BasicLintRuleTest class. CompositeLintRuleTest class})!
 
 testModelChildrenToSibling
-	| refactoring class subclass superclass |
-	class := model classNamed: #ConcreteSuperclass.
-	subclass := model classNamed: #ConcreteSubclass.
+	| refactoring class subclass superclass noMove |
+	model := Compiler evaluate: (self readFile: 'ChildrenToSiblingTest.st').
+	class := model classNamed: #'Refactory.Browser.Tests.ConcreteSuperclass'.
+	subclass := model classNamed: #'Refactory.Browser.Tests.ConcreteSubclass'.
+	noMove := model classNamed: #'Refactory.Browser.Tests.NoMoveSubclass'.
+	self assert: (noMove parseTreeFor: #qualifiedRef) formattedCode
+		equals: 'qualifiedRef
+	^self initialize isKindOf: Refactory.Browser.Tests.ConcreteSuperclass	"Hello"'.
 	refactoring := ChildrenToSiblingsRefactoring
 				model: model
-				name: #AbstractSuperclass
+				name: #'Refactory.Browser.Tests.AbstractSuperclass'
 				class: class
 				subclasses: {subclass}.
 	self executeRefactoring: refactoring.
-	superclass := refactoring model classNamed: #AbstractSuperclass.
+	superclass := refactoring model classNamed: #'Refactory.Browser.Tests.AbstractSuperclass'.
+
 	self assert: class superclass equals: superclass.
 	self assert: class metaclass superclass equals: superclass metaclass.
 	self assert: subclass superclass equals: superclass.
@@ -67,6 +69,10 @@ testModelChildrenToSibling
 		equals: (RBParser
 				parseMethod: 'initialize
 							instVarName1 := instVarName2 := ClassVarName1 := ClassVarName2 := 0').
+	"The qualified name can be shortened. The comment should be preserved."
+	self assert: (noMove parseTreeFor: #qualifiedRef) formattedCode
+		equals: 'qualifiedRef
+	^self initialize isKindOf: AbstractSuperclass	"Hello"'.
 	self assert: (superclass directlyDefinesInstanceVariable: 'instVarName1').
 	self assert: (superclass directlyDefinesInstanceVariable: 'instVarName2').
 	self assert: (superclass directlyDefinesClassVariable: 'ClassVarName1').
@@ -96,7 +102,6 @@ testModelChildrenToSibling
 		equals: (RBParser parseMethod: 'bar
 							^self printString')! !
 !Refactory.Browser.Tests.ChildrenToSiblingsTest categoriesForMethods!
-setUp!public!set up! !
 testBadName!failure tests!public! !
 testExistingName!failure tests!public! !
 testInvalidSubclass!failure tests!public! !

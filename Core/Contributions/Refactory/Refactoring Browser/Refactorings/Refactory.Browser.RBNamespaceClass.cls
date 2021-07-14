@@ -35,7 +35,16 @@ localBindingFor: aString
 	"Answer a variable binding for the named variable directly in the scope of this class, i.e. one of its own class variables. If there is no such class variable, then answer nil."
 
 	^(removedVariables includes: aString)
-		ifFalse: [(newVariables bindingFor: aString) ifNil: [self realClass localBindingFor: aString]]!
+		ifFalse: 
+			[(newVariables bindingFor: aString)
+				ifNil: 
+					[(self realClass localBindingFor: aString)
+						ifNotNil: 
+							[:realBinding |
+							(VariableBinding key: realBinding key value: (model classFor: realBinding value))
+								environment: self;
+								setFlags: realBinding flags;
+								yourself]]]!
 
 removeClass: aRBClass
 	self removeVariableNamed: aRBClass unqualifiedName!

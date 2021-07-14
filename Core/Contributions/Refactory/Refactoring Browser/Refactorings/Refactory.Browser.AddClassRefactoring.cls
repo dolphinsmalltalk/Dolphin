@@ -29,7 +29,7 @@ definitionMessage
 	^'<1p> <2s>: <3p> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''' category: <4p>'
 		expandMacrosWith: superclass
 		with: classType
-		with: className
+		with: className asSymbol
 		with: category!
 
 preconditions

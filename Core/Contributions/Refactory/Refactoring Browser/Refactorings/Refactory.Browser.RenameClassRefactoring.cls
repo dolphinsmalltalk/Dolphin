@@ -42,8 +42,7 @@ renameReferences
 					[self refactoringError: newName , ' is already defined in hierarchy of ' 
 								, method modelClass printString].
 			self 
-				convertMethod: method selector
-				for: method modelClass
+				convertMethod: method
 				using: replacer]!
 
 storeOn: aStream 
