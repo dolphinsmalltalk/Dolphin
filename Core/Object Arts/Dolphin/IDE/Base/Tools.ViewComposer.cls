@@ -247,10 +247,12 @@ arenaLeftButtonPressed: aMouseEvent
 			viewHit == self composingView ifTrue: [self adjustScroll]].
 	^nil!
 
-arenaMouseMoved: aMouseEvent 
-	| cursor |
-	cursor := self cursor.
-	cursor notNil ifTrue: [cursor setCursor].
+arenaMouseMoved: aMouseEvent
+	composingView isOpen
+		ifTrue: 
+			[| cursor |
+			cursor := self cursor.
+			cursor notNil ifTrue: [cursor setCursor]].
 	^nil!
 
 aspectAccessor
