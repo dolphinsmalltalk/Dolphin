@@ -557,12 +557,10 @@ canvas
 
 	^Canvas forView: self!
 
-centerExtent: aPoint within: aParentView
-	"Private - Answer the position to give a view of extent aPoint in order to center it within aParentView."
+centerExtent: aPoint
+	"Private - Answer the origin `Point` for a child view centred over the receiver of the specified extent."
 
-	^(aParentView extent - aPoint) // 2
-
-!
+	^(self extent - aPoint) // 2!
 
 clearHandle
 	self handle: nil!
@@ -4672,7 +4670,7 @@ calculateExtent!geometry!private! !
 calculateExtent:!geometry!private! !
 canAcceptSubViews!hierarchy!public!sub views!testing! !
 canvas!drawing!public! !
-centerExtent:within:!geometry!private! !
+centerExtent:!geometry!private! !
 clearHandle!private!realizing/unrealizing! !
 clearStateRestoring!helpers!private! !
 clientExtent!geometry!public! !
