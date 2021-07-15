@@ -807,7 +807,7 @@ getOptionVariableTypes: choicesCollection selected: suggestionsCollection
 						ifFalse: 
 							[MessageBox errorMsg: ('Sorry, but <1s> is not a valid class name' expandMacrosWith: aString).
 							nil]
-						ifTrue: [self model classNamed: global name]];
+						ifTrue: [self model classFor: global]];
 		showModal! !
 !Refactory.Browser.MoveMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
