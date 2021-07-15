@@ -91,6 +91,11 @@ caption: aString
 	self text: aString.
 	self trigger: #captionChanged!
 
+centerExtent: aPoint
+	"Private - Answer the origin `Point` for a shell view of the specified extent, centred over the active monitor's work area."
+
+	^DisplayMonitor active centerExtent: aPoint!
+
 commandPolicyWithSource: sourceView
 	"Answers a <CommandPolicy> object for routing commands originating
 	from the <View>, source.
@@ -337,6 +342,7 @@ buttonRemoved:!default button!private! !
 canvas!accessing!public! !
 caption!accessing!public! !
 caption:!accessing!public! !
+centerExtent:!geometry!private! !
 commandPolicyWithSource:!commands!public! !
 defaultExtentOf:!geometry!helpers!private! !
 displayOn:!displaying!public! !

@@ -28,6 +28,19 @@ Having identified a `DisplayMonitor`, one can then query the desktop co-ordinate
 	^self == anObject
 		or: [anObject species == self species and: [anObject deviceName = self deviceName]]!
 
+adjustPosition: originPoint forExtent: extentPoint
+	"Answer the nearest `Point` to originPoint that allows a rectangle with extent, extentPoint, to fit within the receiver's work area.
+	If the extent is larger than the work area, then answer the work area's own origin."
+
+	| workArea |
+	workArea := self workArea.
+	^(originPoint min: workArea bottomRight - extentPoint) max: workArea topLeft!
+
+centerExtent: aPoint
+	"Answer the best origin `Point` for a view rectangle expected to be centred over the receiver of the specified extent."
+
+	^self adjustPosition: self workArea center - (aPoint // 2) forExtent: aPoint!
+
 deviceName
 	"Answer the Window's device name for the monitor that the receiver represents."
 
@@ -101,6 +114,8 @@ workArea
 	^self info rcWork asRectangle! !
 !DisplayMonitor categoriesForMethods!
 =!comparing!public! !
+adjustPosition:forExtent:!geometry!public! !
+centerExtent:!geometry!public! !
 deviceName!accessing!public! !
 devices!accessing!private! !
 handle!accessing!private! !
