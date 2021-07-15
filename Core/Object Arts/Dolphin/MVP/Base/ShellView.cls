@@ -189,11 +189,10 @@ defaultPositionWithin: aParentView forExtent: aPoint
 
 	| testWindow defaultPosition activeMonitor defaultMonitor |
 	self assert: [aParentView notNil].
-	self isInitiallyCentered ifTrue: [^self centerExtent: aPoint within: aParentView].
+	self isInitiallyCentered ifTrue: [^aParentView centerExtent: aPoint].
 
 	"If not creating on the desktop, create at the origin of the parent's client area"
 	aParentView parentView notNil ifTrue: [^0 @ 0].
-	#todo.	"We need a less expensive way to determine a sensible default position than creating and destroying a test window."
 	(testWindow := ShellView new)
 		parentView: aParentView;
 		createAt: ##(CW_USEDEFAULT @ CW_USEDEFAULT) extent: aPoint.
@@ -202,13 +201,11 @@ defaultPositionWithin: aParentView forExtent: aPoint
 	"Reposition to within bounds of active monitor"
 	activeMonitor := DisplayMonitor active.
 	defaultMonitor := DisplayMonitor containingPoint: defaultPosition.
-	activeMonitor = defaultMonitor
+	^activeMonitor = defaultMonitor
+		ifTrue: [defaultPosition]
 		ifFalse: 
-			[| workArea |
-			defaultPosition := activeMonitor origin + (defaultPosition - defaultMonitor origin).
-			workArea := activeMonitor workArea.
-			defaultPosition := (defaultPosition min: workArea bottomRight - aPoint) max: workArea topLeft].
-	^defaultPosition!
+			[activeMonitor adjustPosition: activeMonitor origin + (defaultPosition - defaultMonitor origin)
+				forExtent: aPoint]!
 
 defaultShowStyle
 	^self isMaximized ifTrue: [SW_SHOWMAXIMIZED] ifFalse: [SW_SHOWNORMAL]!
@@ -798,11 +795,9 @@ performCommand: aCommand
 positionNear: aPoint
 	"Attempt to position the receiver at the origin, aPoint, in screen co-ordinates, but ensuring that the receiver's window will be entirely visible if possible, or if not so that at least the top-left corner is visible."
 
-	| workArea position |
-	workArea := (DisplayMonitor nearestPoint: aPoint) workArea.
-	position := (aPoint min: workArea bottomRight - self extent) max: workArea topLeft.
-	position := creationParent mapScreenToClient: position.
-	self position: position!
+	self position: (creationParent
+				mapScreenToClient: ((DisplayMonitor nearestPoint: aPoint) adjustPosition: aPoint
+						forExtent: self extent))!
 
 preTranslateKeyboardInput: aMSG 
 	"Answer whether the receiver would like to consume the argument aMSG, which is a keyboard
