@@ -678,10 +678,9 @@ customDrawSelector: anNMLVCUSTOMDRAW
 
 	| method |
 	method := anNMLVCUSTOMDRAW item.
-	method isLoose ifTrue: [anNMLVCUSTOMDRAW forecolor: self class looseMethodColor].
+	method isLoose ifTrue: [anNMLVCUSTOMDRAW forecolor: LooseMethodColor].
 	(self isEditableMethod: method)
-		ifFalse: 
-			[anNMLVCUSTOMDRAW forecolor: (anNMLVCUSTOMDRAW forecolor fadedBy: self class grayedMethodFadeFactor)].
+		ifFalse: [anNMLVCUSTOMDRAW forecolor: (anNMLVCUSTOMDRAW forecolor fadedBy: GrayedMethodFadeFactor)].
 	method isDeprecated ifTrue: [anNMLVCUSTOMDRAW font isStruckThrough: true].
 	method isAbstract ifTrue: [anNMLVCUSTOMDRAW font isItalic: true]!
 

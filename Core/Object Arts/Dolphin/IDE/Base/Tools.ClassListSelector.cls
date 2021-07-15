@@ -99,7 +99,7 @@ customDrawClassList: anNMLVCUSTOMDRAW
 	| class |
 	class := anNMLVCUSTOMDRAW item.
 	(environment definesClass: class)
-		ifFalse: [anNMLVCUSTOMDRAW forecolor: ClassBrowserAbstract looseMethodColor].
+		ifFalse: [anNMLVCUSTOMDRAW forecolor: ClassBrowserAbstract.LooseMethodColor].
 	self systemModel setCustomDrawAttributes: anNMLVCUSTOMDRAW forClass: class!
 
 customDrawClassTree: anNMTVCUSTOMDRAW
@@ -116,17 +116,16 @@ customDrawClassTree: anNMTVCUSTOMDRAW
 	(environment includesClass: class)
 		ifTrue: 
 			[(environment definesClass: class)
-				ifFalse: [anNMTVCUSTOMDRAW forecolor: ClassBrowserAbstract looseMethodColor]]
+				ifFalse: [anNMTVCUSTOMDRAW forecolor: ClassBrowserAbstract.LooseMethodColor]]
 		ifFalse: 
 			[anNMTVCUSTOMDRAW
-				forecolor: (anNMTVCUSTOMDRAW forecolor fadedBy: ClassBrowserAbstract grayedMethodFadeFactor)].
+				forecolor: (anNMTVCUSTOMDRAW forecolor fadedBy: ClassBrowserAbstract.GrayedMethodFadeFactor)].
 	self systemModel setCustomDrawAttributes: anNMTVCUSTOMDRAW forClass: class!
 
 deleteItCommand
 	"Private - Answer the command that the context-sensitive 'Browse-It' command would be linked
 	to if sent to the receiver at this moment."
 
-	"packagesPresenter packagesPresenter hasFocus ifTrue: [^#uninstallPackage]."
 	classesListPresenter hasFocus ifTrue: [^#deleteClassHierarchy].
 	^super deleteItCommand!
 
