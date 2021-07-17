@@ -521,10 +521,10 @@ spOfIndex: anInteger
 	^(16r40000000 + sp bitAnd: 16r7FFFFFFF) + -16r40000000!
 
 stackTrace: anInteger
-	"Private - Answer a <readableString> containing a stack trace to the depth specified by the <integer>
-	argument."
+	"Private - Answer a <readableString> containing a stack trace to the depth specified by the <integer> argument.
+	The frame for this method is excluded so that the top frame is the caller."
 
-	^self topFrame stackTrace: anInteger!
+	^self topFrame sender stackTrace: anInteger!
 
 state
 	"Private - Answer a symbol identifying the receiver's state."
