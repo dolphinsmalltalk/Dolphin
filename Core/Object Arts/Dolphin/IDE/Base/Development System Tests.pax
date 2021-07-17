@@ -9,6 +9,7 @@ package setClassNames: #(
 	#{OS.Tests.VersionResourceTest}
 	#{Refactory.Browser.Tests.RewriteTestCase}
 	#{Tools.Tests}
+	#{Tools.Tests.CreateSubclassDialogTest}
 	#{Tools.Tests.ImageListViewTest}
 	#{Tools.Tests.KeyedAspectTest}
 	#{Tools.Tests.MenuPainterTest}
@@ -32,6 +33,7 @@ package setMethodNames: #(
 	#(#{Kernel.Tests.ParserErrorTest} #testWarnMsgUnimplemented)
 	#(#{Kernel.Tests.ParserErrorTest} #testWarnUndefinedSelector)
 	#(#{Kernel.Tests.ParserErrorTest} #testWarnUnimplementedAbstractMethod)
+	#(#{Tools.CreateSubclassDialog} #namespacePresenter)
 	#(#{UI.Scintilla.Tests.ScintillaViewTest} #testTokensFromTo)
 	#(#{UI.Tests.BorderLayoutTest} #testResourceBrowserPreview)
 ).
@@ -81,6 +83,12 @@ Kernel.ParseNodeVisitor subclass: #'Tools.Tests.StStyler'
 	classConstants: {}!
 XProgramming.SUnit.TestCase subclass: #'Refactory.Browser.Tests.RewriteTestCase'
 	instanceVariableNames: 'env'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Tools.Tests.CreateSubclassDialogTest'
+	instanceVariableNames: 'subject'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -282,6 +290,15 @@ testWarningUsesBooleanClass!public!unit tests! !
 testWarnMsgUnimplemented!public!unit tests! !
 testWarnUndefinedSelector!public!unit tests! !
 testWarnUnimplementedAbstractMethod!public!unit tests! !
+!
+
+!Tools.CreateSubclassDialog methodsFor!
+
+namespacePresenter
+	"Private - For testing only"
+	^namespacePresenter! !
+!Tools.CreateSubclassDialog categoriesForMethods!
+namespacePresenter!accessing!private! !
 !
 
 !UI.Scintilla.Tests.ScintillaViewTest methodsFor!
