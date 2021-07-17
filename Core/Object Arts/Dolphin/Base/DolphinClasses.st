@@ -2767,7 +2767,7 @@ External.Callback subclass: #'External.MessageCallback'
 	classConstants: {}!
 Core.Category subclass: #'Core.ClassCategory'
 	instanceVariableNames: ''
-	classVariableNames: 'Table Unclassified'
+	classVariableNames: 'Deprecated Table Unclassified'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

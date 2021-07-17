@@ -2,7 +2,7 @@
 
 Core.Category subclass: #'Core.ClassCategory'
 	instanceVariableNames: ''
-	classVariableNames: 'Table Unclassified'
+	classVariableNames: 'Deprecated Table Unclassified'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -38,7 +38,7 @@ isEmpty
 	^(Smalltalk allClasses anySatisfy: [:aClass | self includesClass: aClass]) not!
 
 removeClass: aClass
-	"Remove aClass from the classes held by the receiver. Answer
+	"Remove aClass from the classes held by the reciver. Answer
 	aMethod."
 
 	aClass removeFromCategory: self.
@@ -59,6 +59,11 @@ allClassCategories
 
 	^self table asArray!
 
+deprecated
+	"Answer a <ClassCategory> used to mark deprecated classes."
+
+	^Deprecated!
+
 initialize
 	"Private - Initialize the receiver's class variables.
 
@@ -71,17 +76,18 @@ initialize
 
 	It is unwise to clear down this table, as the development system
 	expects methods and classes to be correctly categorized."
-"	| newTable |
+
+	"	| newTable |
 
 	newTable := WeakLookupTable new.
 	newTable addAll: Table associations.
 	Table := newTable"
 
 	"During the boot, weakness doesn't work properly, so some repairs may be needed"
-	Unclassified := self newNamed: self unclassifiedName.
-	Table 
-		at: self unclassifiedName put: Unclassified;
-		removeKey: 'No category' ifAbsent: []!
+
+	Unclassified := Table at: self unclassifiedName ifAbsentPut: [self newNamed: self unclassifiedName].
+	Deprecated := Table at: 'Deprecated' ifAbsentPut: [self newNamed: 'Deprecated'].
+	Table removeKey: 'No category' ifAbsent: []!
 
 name: cat
 	"Answer a new or existing class category with the specified name."
@@ -112,10 +118,11 @@ unclassifiedName
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
-	Table := nil.
-	Unclassified := nil! !
+	Table := Unclassified := nil.
+	Deprecated := DeafObject current! !
 !Core.ClassCategory class categoriesForMethods!
 allClassCategories!accessing!public! !
+deprecated!instance creation!public! !
 initialize!initializing!private! !
 name:!instance creation!public! !
 table!accessing!private! !

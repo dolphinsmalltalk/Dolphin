@@ -1745,7 +1745,7 @@ isChanged: aBoolean
 		ifFalse: [self removePropertyAt: #changeIndex ifAbsent: []]!
 
 isDeprecated
-	^(ClassCategory name: 'Deprecated') includesClass: self!
+	^ClassCategory.Deprecated includesClass: self!
 
 isNonInstantiable: aBoolean
 	"Private - Set whether the receiver should not be instantiated, e.g. it is abstract."
