@@ -73,7 +73,7 @@ addBitmap: aBitmap index: anIntegerIndex
 	^start + anIntegerIndex!
 
 addEditTools
-	"Private - Add the standard file tools to the receiver."
+	"Private - Add the standard edit tools to the receiver."
 
 	self addItems: self itemClass editTools!
 
@@ -83,7 +83,7 @@ addFileTools
 	self addItems: self itemClass fileTools!
 
 addFindTools
-	"Private - Add the standard file tools to the receiver."
+	"Private - Add the standard find tools to the receiver."
 
 	self addItems: self itemClass findTools!
 
@@ -96,7 +96,7 @@ addItem: tool
 	^self basicAddItems: {tool}!
 
 addItems: toolbarItems
-	"Add a collection of ToolBaritems to the receiver, and answer that collection."
+	"Add a collection of ToolBarItems to the receiver, and answer that collection."
 
 	| unique |
 	unique := toolbarItems reject: [:t | idMap includesKey: t commandId].
@@ -585,7 +585,7 @@ onViewCreated
 	self basicAddItems: items!
 
 removeAllItems
-	"Remove all the receivers buttons."
+	"Remove all the receiver's buttons."
 
 	items copy do: [ :each | self removeItem: each].
 !
@@ -678,7 +678,7 @@ tbEnableButton: anIntegerId state: enableBoolean
 	This is to prevent a walkback appearing in the idle processing of #validUserInterface
 	when enabling/disabling toolbar buttons while a view is being closed. The problem only
 	occurs when a view is closed by a process other than the user interface process 
-	(e.g the Debugger). Unfotunately it is not just possible to test the toolbar with #isOpen 
+	(e.g the Debugger). Unfotunately it is just not possible to test the toolbar with #isOpen 
 	because it reports that it still is. I suspect that although the toolbar is still open - the 
 	buttons are not"
 
@@ -808,7 +808,7 @@ tbHideButton: anIntegerId state: hideBoolean
 		ifTrue: [self errorInCommonControlCall]!
 
 tbIndeterminate: anIntegerId state: indeterminateBoolean
-	"Private - Set whether the button with anIntegerId is in it's indeterminate state."
+	"Private - Set whether the button with anIntegerId is in its indeterminate state."
 
 	(self sendMessage: TB_INDETERMINATE wParam: anIntegerId lParam: indeterminateBoolean asParameter) == 0
 		ifTrue: [^self errorInCommonControlCall]!
@@ -829,7 +829,7 @@ tbIsButtonHidden: anIntegerId
 	^(self sendMessage: TB_ISBUTTONHIDDEN wParam: anIntegerId) asBoolean!
 
 tbIsButtonIndeterminate: anIntegerId
-	"Private - Answer whether the button with anIntegerId is in it's indeterminate state."
+	"Private - Answer whether the button with anIntegerId is in its indeterminate state."
 
 	^(self sendMessage: TB_ISBUTTONINDETERMINATE wParam: anIntegerId) asBoolean!
 
@@ -917,7 +917,7 @@ tbnToolbarChange: pNMHDR
 	self tbAutoSize!
 
 tbPressButton: anIntegerId state: pressBoolean
-	"Private - Press or release the button withanIntegerId."
+	"Private - Press or release the button with anIntegerId."
 
 	(self
 		sendMessage: TB_PRESSBUTTON
@@ -988,12 +988,12 @@ tbSetState: id state: stateMask
 		lParam: stateMask!
 
 tbSetToolTips: toolTipHandle
-	"Private - Set the handle of the receivers tooltip control to toolTipHandle."
+	"Private - Set the handle of the receiver's tooltip control to toolTipHandle."
 
 	self sendMessage: TB_SETTOOLTIPS wParam: toolTipHandle!
 
 updateAllItems
-	"Private - Cause all of the receivers items to be rebuilt"
+	"Private - Cause all of the receiver's items to be rebuilt"
 
 	| existingItems |
 	existingItems := items copy.

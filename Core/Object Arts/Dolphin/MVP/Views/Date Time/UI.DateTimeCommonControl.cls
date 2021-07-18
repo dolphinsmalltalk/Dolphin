@@ -41,7 +41,7 @@ getSystemTime
 
 maximum
 	"Answer the maximum date/time allowed by the receiver, or nil
-	if not limit is imposed"
+	if no limit is imposed"
 
 	^self range last ifNotNil: [:max | self modelClass fromSYSTEMTIME: max]!
 
@@ -100,7 +100,7 @@ range
 		(gd anyMask: GDTR_MAX) ifTrue: [(array at: 2) copy]}!
 
 range: interval
-	"Set the allowable range of values. The first element of interval if either the
+	"Set the allowable range of values. The first element of interval is either the
 	minimum allowable SYSTEMTIME or nil if there isn't one. The last element is either the
 	maximum allowable SYSTEMTIME or nil if there isn't one."
 
@@ -126,7 +126,7 @@ setRangeMessage
 	^self subclassResponsibility!
 
 setSystemTime: aSYSTEMTIMEOrNil 
-	"Private - Set the control's current date/time to the <SYSTEMTIME> arugment,
+	"Private - Set the control's current date/time to the <SYSTEMTIME> argument,
 	or set it to none if the argument is nil."
 
 	^self subclassResponsibility!

@@ -92,7 +92,7 @@ initialize
 
 model: aSubjectModel
 	"Connect the receiver to aSubjectModel. The choice presenter shares this
-	same model since it is responsible for editing it's value"
+	same model since it is responsible for editing its value"
 
 	super model: aSubjectModel.	
 	choicePresenter model: self model.!

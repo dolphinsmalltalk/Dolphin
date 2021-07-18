@@ -7,7 +7,7 @@ UI.LayoutManager subclass: #'UI.ScrollingDecoratorLayout'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.ScrollingDecoratorLayout guid: (Core.GUID fromString: '{87b4c64c-026e-11d3-9fd7-00a0cc3e4a32}')!
-UI.ScrollingDecoratorLayout comment: 'ScrollingDecoratorLayout implements a specialised <layoutManager> to layout a single <view> object contained within a <scrolllingDecoratorView>. The ScrollingDecoratorLayout does not attempt to resize the managed view (although see the #shouldStretchToFit aspect) but, instead, it repositions it according to scroll information that it receives from the view''s parent. Scrollbars will become available in the parent <scrollingDecoratorView> when its extent goes below the preferred extent recommended by the ScrollingDecoratorLayout.
+UI.ScrollingDecoratorLayout comment: 'ScrollingDecoratorLayout implements a specialised <layoutManager> to layout a single <view> object contained within a <scrollingDecoratorView>. The ScrollingDecoratorLayout does not attempt to resize the managed view (although see the #shouldStretchToFit aspect) but, instead, it repositions it according to scroll information that it receives from the view''s parent. Scrollbars will become available in the parent <scrollingDecoratorView> when its extent goes below the preferred extent recommended by the ScrollingDecoratorLayout.
 
 
 
@@ -20,7 +20,7 @@ initialize
 	stretchToFit := true!
 
 layoutContainer: aScrollingDecorator context: aLayoutContext 
-	"Private - Update the <LayoutContext> argument with rectangles for the sub-views of its the
+	"Private - Update the <LayoutContext> argument with rectangles for the sub-views of the
 	specified container view, laying out those sub-views according to the rules and
 	configuration of the particular layout manager."
 

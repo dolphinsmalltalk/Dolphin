@@ -55,7 +55,7 @@ getSystemTime
 		lpParam: answer) asBoolean ifTrue: [answer]!
 
 hasToday
-	"Answers whether the receiver displays todays date in  text at the bottom
+	"Answers whether the receiver displays today's date in  text at the bottom
 	of the view."
 
 	^(self baseStyleAllMask: MCS_NOTODAY) not!
@@ -67,7 +67,7 @@ hasToday: aBoolean
 		recreateIfChanged: false!
 
 hasTodayCircle
-	"Answers whether the receiver circles todays date in the calendar.
+	"Answers whether the receiver circles today's date in the calendar.
 	Note that on Windows XP, with the default theme, this is actually a 
 	red square border around the cell for the current date."
 

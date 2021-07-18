@@ -37,7 +37,7 @@ corpsesDo: aBlock
 	"Locate each indexable variable of the receiver which formally housed an Object
 	which has sadly expired, and pass its index to aBlock for evaluation. This
 	method is non-destructive and may be evaluated repeatedly. Should you require
-	to clear the slots formerly occuppied by corpses so that they are not
+	to clear the slots formerly occupied by corpses so that they are not
 	subsequently treated as deaths, use the #nilCorpsesAndDo: message"
 
 	| deathAt size corpse |

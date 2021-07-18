@@ -42,7 +42,7 @@ hresult
 	^HRESULT fromPrimitiveFailureCode: _PrimitiveFailureCode.InvalidParameter1 + self tag - 1!
 
 type
-	"Answer the type  expected by the argument for which the receiver represents an invalid call to anObject."
+	"Answer the type expected by the argument for which the receiver represents an invalid call to anObject."
 
 	^type!
 

@@ -10,7 +10,7 @@ Kernel.SubscriptionRegistry guid: (Core.GUID fromString: '{a785d939-edab-48ad-b4
 Kernel.SubscriptionRegistry comment: 'The subscription registry is a threadsafe storage for the subscriptions to an Announcer.
 
 In Pharo, subscriptionsFor: protocol is not implemented.
-This is because Announcer does not provide public access to its registery for encapsulation reasons.
+This is because Announcer does not provide public access to its registry for encapsulation reasons.
 (We do not want access to the announcer from action blocks to break encapsulation to other subscribers)'!
 !Kernel.SubscriptionRegistry categoriesForClass!Announcements-Core! !
 !Kernel.SubscriptionRegistry methodsFor!

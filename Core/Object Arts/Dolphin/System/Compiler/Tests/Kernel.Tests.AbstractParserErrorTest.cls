@@ -1620,7 +1620,7 @@ testRestrictedSelectors
 testUnoptimizedLoopsNonMonadicArg
 	"An error is actually generated in the case where the block arg of a #to:[by:]do: is not
 	monadic, because this is simpler given the compiler's single-pass design. If the code
-	generation were a separate pass, then it could produce unomptimized code and a warning."
+	generation were a separate pass, then it could produce unoptimized code and a warning."
 
 	#('1 to: 2' '1 to: 2 by: 1') do: 
 			[:each |

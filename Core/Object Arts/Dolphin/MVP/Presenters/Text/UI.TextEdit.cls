@@ -141,7 +141,7 @@ canHScroll: aBoolean
 	"Sets the receiver into horizontal scrolling mode if aBoolean is true. When this style is
 	off the control limits the amount of text that can be entered to that which can be displayed
 	in the box. When the style is on the user can enter text up to the #textLimit (the caret
-	remains at the right edge of the field and the text scrolls left to accomodate new input)."
+	remains at the right edge of the field and the text scrolls left to accommodate new input)."
 
 	"Implementation Note: The control ignores these style changes after creation,
 	so we must accept the default action, which is to recreate the view."
@@ -411,7 +411,7 @@ findNext: aFindDetails
 findNextWrapped: aFindDetails 
 	"Find the next match with the specified <FindDetails> in the text of the receiver forward
 	from the current insert location. The search wraps and selects any match found. Answer an
-	<Interval> that describes the range of text occuppied by the match, or an empty <Interval>
+	<Interval> that describes the range of text occupied by the match, or an empty <Interval>
 	if no further matches are found."
 
 	| selRange match rangeAbove rangeBelow |
@@ -652,7 +652,7 @@ lineLengthFromPosition: anInteger
 
 lineRange: anInteger
 	"Answer an <Interval> specifying the range of character positions in the 
-	receiver occuppied by the line with the specified <integer> index,
+	receiver occupied by the line with the specified <integer> index,
 	not including the end-of-line terminators (if any)."
 
 	| start |
@@ -1051,7 +1051,7 @@ selectLine: anInteger
 	"Selects a complete line of text in the receiver indicated by anInteger
 	line number. Answers the selected range."
 
-	"Implemenation Note: As the receiver represents a single line of text 
+	"Implementation Note: As the receiver represents a single line of text 
 	the argument must always be line 1."
 
 	anInteger == 1 ifFalse: [^self errorSubscriptBounds: anInteger].

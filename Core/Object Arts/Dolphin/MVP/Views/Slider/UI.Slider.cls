@@ -28,7 +28,7 @@ backcolorChanged
 	self recreate!
 
 channelRectangle
-	"Answer a <Rectangle> representing the area of the receiver occuppied by the slider channel."
+	"Answer a <Rectangle> representing the area of the receiver occupied by the slider channel."
 
 	^self getRect: TBM_GETCHANNELRECT!
 

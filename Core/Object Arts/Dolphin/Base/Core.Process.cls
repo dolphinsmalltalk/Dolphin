@@ -503,7 +503,7 @@ size
 	as the named instance variables are not included)."
 
 	"Implementation Note: Access thisContext to get the process size saved down as the
-	processes dynamically change size to accomodate their stack. Normally the process
+	processes dynamically change size to accommodate their stack. Normally the process
 	size is only recorded from the SP on process switches, when thisContext is accessed,
 	on GC's, on invocations of the #allReferences primitive, and on image save."
 

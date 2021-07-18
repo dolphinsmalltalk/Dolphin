@@ -18,7 +18,7 @@ applyFont
 
 calculateExtent: aLayoutContext 
 	"Private - Answer the calculated extent of the receiver that should be used by a
-	layout manager during it's layout process."
+	layout manager during its layout process."
 
 	^self calcExtentFromClientExtent: self defaultExtent!
 
@@ -107,7 +107,7 @@ endTrackingAt: aPoint
 
 eraseTrackingAt: aPoint
 	"Private - Erase a position tracking rectangle for the associated view at aPoint. 
-	Default tracking is Xored onto the parent canvas so we can just redraw it to
+	Default tracking is XORed onto the parent canvas so we can just redraw it to
 	erase it"
 
 	self drawTrackingAt: aPoint

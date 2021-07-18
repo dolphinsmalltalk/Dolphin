@@ -169,7 +169,7 @@ remove: oldElement ifAbsent: exceptionHandler
 		ifFalse: [answer]!
 
 resize: anInteger
-	"Private - Resize the receiver to have a capacity suitable for accomodating
+	"Private - Resize the receiver to have a capacity suitable for accommodating
 	at least anInteger elements."
 
 	mutex critical: [super resize: anInteger]!

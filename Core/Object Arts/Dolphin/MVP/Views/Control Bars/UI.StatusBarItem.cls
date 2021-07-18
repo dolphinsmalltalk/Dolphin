@@ -108,7 +108,7 @@ getTextBlock
 
 getTextBlock: monad
 	"Set the <monadicValuable> used to determine the text to display for an object that will
-	placed in the receiver to the argument, monad."
+	be placed in the receiver to the argument, monad."
 
 	getTextBlock := monad.
 	self refreshContents

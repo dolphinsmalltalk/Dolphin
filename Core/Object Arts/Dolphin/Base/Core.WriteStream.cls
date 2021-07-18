@@ -82,7 +82,7 @@ grabContents
 
 growCollection
 	"Private - Increase the size of the streamed over collection
-	to accomodate more elements."
+	to accommodate more elements."
 
 	collection grow.
 	writeLimit := collection size!

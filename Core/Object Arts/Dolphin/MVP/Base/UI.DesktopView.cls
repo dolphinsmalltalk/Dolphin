@@ -320,7 +320,7 @@ withAllParentsDo: aMonadicValuable
 
 workArea
 	"Answer a <Rectangle> which is the desktop area excluding that 
-	occuppied by the tool bar."
+	occupied by the tool bar."
 
 	^(SystemMetrics current getSysParamStruct: SPI_GETWORKAREA type: RECTL) asRectangle! !
 !UI.DesktopView categoriesForMethods!

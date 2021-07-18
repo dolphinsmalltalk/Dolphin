@@ -306,7 +306,7 @@ length
 
 length: anInteger
 	"Set the length (in elements, not bytes) of the receiver, resizing the
-	bytes of the receiver to accomodate the new length.
+	bytes of the receiver to accommodate the new length.
 	This is not private as it can be used to adjust the length of 
 	pointer instances after creation."
 	

@@ -360,7 +360,7 @@ removeIndex: anInteger
 	self fixCollisionsFrom: anInteger!
 
 resize: anInteger
-	"Private - Resize the receiver to have a capacity suitable for accomodating
+	"Private - Resize the receiver to have a capacity suitable for accommodating
 	at least anInteger elements. Answer the receiver (resized). The receiver is
 	rehashed regardless of whether it is already of the correct capacity (this
 	is important)."

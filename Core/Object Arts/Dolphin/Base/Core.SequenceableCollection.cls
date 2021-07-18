@@ -1031,7 +1031,7 @@ remove: oldElement ifAbsent: exceptionHandler
 	^self shouldNotImplement!
 
 replaceAll: oldObject with: newObject
-	"Replace all occurences of oldObject with newObject"
+	"Replace all occurrences of oldObject with newObject"
 
 	| index last |
 	last := self size.
@@ -1122,7 +1122,7 @@ replaceFrom: start to: stop withObject: replacementElement
 	^replacementElement!
 
 resize: anInteger
-	"Private - Resize the receiver to accomodate anInteger elements.
+	"Private - Resize the receiver to accommodate anInteger elements.
 	Answer the receiver."
 
 	self isImmutable ifTrue: [Processor constWriteSignal signalWith: self].

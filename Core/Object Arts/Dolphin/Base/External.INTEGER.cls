@@ -63,7 +63,7 @@ hash
 
 isNull
 	"Answer whether the receiver is Null (i.e. equal to 0). 
-	This message is useful way of testing for NULL pointers or handles."
+	This message is a useful way of testing for NULL pointers or handles."
 
 	^super isNull or: [self value == 0]!
 

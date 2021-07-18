@@ -234,7 +234,7 @@ topOffset: aNumber
 
 updateFor: aView context: aFramingContext 
 	"Private - Update the receivers offsets from a new <Rectangle> within the parent extent,
-	aPoint. This is used when repositioning or resizing the receiver, not to accomodate layout
+	aPoint. This is used when repositioning or resizing the receiver, not to accommodate layout
 	changes caused by resizing of the parent - i.e. this is mainly intended for design time
 	support. The offset calculations have to work out what value offset is needed for that
 	calculation to position the view so that it has the specified view rectangle, so in some

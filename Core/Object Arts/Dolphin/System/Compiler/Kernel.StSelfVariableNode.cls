@@ -16,7 +16,7 @@ acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitSelfVariableNode: self!
 
 isSelfVariable
-	"Answer whether the variable described by the receiver is the special variables 'super'."
+	"Answer whether the variable described by the receiver is the special variable 'super'."
 
 	^true!
 

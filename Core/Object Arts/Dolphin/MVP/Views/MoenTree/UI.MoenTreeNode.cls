@@ -35,7 +35,7 @@ Class Variables:
 !UI.MoenTreeNode methodsFor!
 
 buttonRectangle
-	"Private - Answer the rectangle occuppied by the expand/contract button which 
+	"Private - Answer the rectangle occupied by the expand/contract button which
 	is outside the normal client area of the receiver."
 
 	| pels |
@@ -47,7 +47,7 @@ buttonSize
 
 calculateClipRect
 	"Private - Calculate, cache, and answer the receiver's clipping rectangle.
-	The clipping rectangle is that area which precisely contains the receiver 
+	The clipping rectangle is that area which precisely contains the receiver
 	and all its _visible_ children."
 
 	| rect |
@@ -175,7 +175,7 @@ keyAtValue: anObject ifAbsent: operation
 
 keysAndValuesDo: operation
 	"Evaluate the <dyadicValuable>, operation, for each key/value pair in the receiver 
-	where the 'keys' are the nodes, and the 'values' are the objects stored in the nodes..
+	where the 'keys' are the nodes, and the 'values' are the objects stored in the nodes.
 	The order is as defined by a pre-order traversal.
 	Implementation Note: This message is sent to the receiver if a <SearchPolicy>
 	is installed in the owning MoenTreeView's model"

@@ -368,7 +368,7 @@ fileSave
 find
 	"Answer a sub-instance of the receiver for the #find command"
 
-	"The standard find tool  is rather poor, and nobody uses it, so rather than:
+	"The standard find tool is rather poor, and nobody uses it, so rather than:
 	^self standardImage: STD_FIND command: #find description: 'Find'"
 
 	^self bitmapButtonClass

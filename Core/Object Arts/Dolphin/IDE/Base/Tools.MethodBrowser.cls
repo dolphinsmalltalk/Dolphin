@@ -764,7 +764,7 @@ onMethodSelectionChanging: aSelectionChangingEvent
 onMethodUpdated: aCompilationResult
 	"Private - The development system has added aCompiledMethod. Check to see if this should
 	be included in the receiver's display of methods by running it through the filter. If it
-	shouldn't then remove any existing occurence of it from the display"
+	shouldn't then remove any existing occurrence of it from the display"
 
 	self onMethod: aCompilationResult oldMethod updatedTo: aCompilationResult method!
 

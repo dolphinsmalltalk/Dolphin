@@ -1788,7 +1788,7 @@ RecordClear: pvExisting
 
 RecordCopy: pvExisting pvNew: pvNew
 	"Implement IRecordInfo::RecordCopy() method for the UDT described by the receiver.
-	Copy an existing area of memory occuppied by a record of the receiver's type to a new
+	Copy an existing area of memory occupied by a record of the receiver's type to a new
 	location. Relies on a correct implementation of #copy which copies any pointed at
 	structures which should not be shared.
 

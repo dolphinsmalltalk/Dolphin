@@ -72,7 +72,7 @@ do: operation
 
 isEmpty
 	"Answer whether the receiver contains no elements. 
-	Implemenation Note: Override superclass to provide a more efficient implementation."
+	Implementation Note: Override superclass to provide a more efficient implementation."
 
 	^firstLink isNil
 !
@@ -80,7 +80,7 @@ isEmpty
 remove: oldElement ifAbsent: exceptionHandler 
 	"Remove oldElement from the list and answer it, or evaluate the niladic
 	valuable exceptionHandler if it's not found in the list.
-	Implemenation Note: We use identity comparison, because the Links
+	Implementation Note: We use identity comparison, because the Links
 	of a list are unique (necessitated by the 'intrusive' implementation)."
 
 	oldElement == firstLink 

@@ -86,7 +86,7 @@ canHScroll: aBoolean
 	"Sets the receiver into horizontal scrolling mode if aBoolean is true. When this style is
 	off the control limits the amount of text that can be entered to that which can be displayed
 	in the box. When the style is on the user can enter more text than can be displayed (the
-	caret remains at the right edge of the field and the text scrolls left to accomodate new
+	caret remains at the right edge of the field and the text scrolls left to accommodate new
 	input). This style is only relevant when the combobox has an associated edit field (i.e. not
 	when in #dropDownList mode)."
 

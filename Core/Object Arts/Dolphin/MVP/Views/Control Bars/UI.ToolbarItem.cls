@@ -136,8 +136,7 @@ fileTools
 	^{bc fileNew. bc fileOpen. bc fileSave}!
 
 findTools
-	"Answer a collection of items which are the standard file tools (e.g. new, open, save)
-	in the standard order."
+	"Answer a collection of items which are the standard find tools in the standard order."
 
 	| bc |
 	bc := self buttonClass.

@@ -53,7 +53,7 @@ associationAt: anObject ifAbsent: aNiladicValuable
 associationsDo: operation
 	"Evaluate the monadic valuable, operation, for each of the receiver's 
 	key/value associations.
-	Implemenation Note: We must override because the receiver does not 
+	Implementation Note: We must override because the receiver does not 
 	actually contain Associations."
 
 	self keysAndValuesDo: [:k :v | 

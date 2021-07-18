@@ -13,7 +13,7 @@ UI.SpinButton comment: 'SpinButton is a <valueView> wrapping the Windows Up-Down
 
 Note that comctl32.dll version 5.80 or later is required, mandating at least Internet Explorer 5 on the target machine. This is to support the 32-bit integer range, 16-bit seeming hardly worthwhile.
 
-A SpinButton is essentially a collapsed scrollbar with no centre portion (i.e. just the up/down arrows). Pressing the buttons "nudges" a value in another field, usually a text field, known as the ''buddy''. Holding down the buttons will spin through the value sequence, accelerating as the button is held down. In Dolphin''s implementation the the UDS_AUTOBUDDY style, which causes the SpinButton to automatically buddy up with the previous control in the z-order, is used as the default. The alternative of explicitly setting the buddy is somewhat difficult to maintain in a dynamic environment, so the framework provides no support for this. 
+A SpinButton is essentially a collapsed scrollbar with no centre portion (i.e. just the up/down arrows). Pressing the buttons "nudges" a value in another field, usually a text field, known as the ''buddy''. Holding down the buttons will spin through the value sequence, accelerating as the button is held down. In Dolphin''s implementation the UDS_AUTOBUDDY style, which causes the SpinButton to automatically buddy up with the previous control in the z-order, is used as the default. The alternative of explicitly setting the buddy is somewhat difficult to maintain in a dynamic environment, so the framework provides no support for this. 
 
 The SpinButton can be configured to automatically set the text of its buddy to the decimal or hex representation of its integer value by enabling the #isAutoSync property. However it is recommended that the auto-sync mode not be used because it is only useful for cycling through a range of integer values, and its effect is easily achieved in MVP by associating the same model with the SpinButton and its buddy. For other enumerations (such as a set of symbolic names) one can synchronise the ''buddy'' view by observing the value change events of the SpinButton''s model, or by using some combination of ValueConverter and TypeConverter to convert the numeric index to a selection from a list.
 
@@ -44,7 +44,7 @@ alignment
 
 alignment: aSymbol 
 	"Set the receiver's alignment mode in relation to its buddy window.
-	The <Symbol> argument names the desired mode and can be one one of 
+	The <Symbol> argument names the desired mode and can be one of 
 	#left, #right, or #unattached."
 
 	self 
@@ -141,14 +141,14 @@ isAutoBuddy
 	^self baseStyleAllMask: UDS_AUTOBUDDY!
 
 isAutoBuddy: aBoolean 
-	"Answer whether the receiver automatically buddies with its previous sibling."
+	"Set whether the receiver automatically buddies with its previous sibling."
 
 	"Note that if we don't recreate when switching into auto-buddy mode, then the control makes
 	no attempt to locate its buddy"
 	self baseStyleMask: UDS_AUTOBUDDY set: aBoolean recreateIfChanged: true!
 
 isAutoSync
-	"Set whether the receiver updates the text of its buddy <TextEdit> when its own value
+	"Answer whether the receiver updates the text of its buddy <TextEdit> when its own value
 	changes."
 
 	^self baseStyleAllMask: UDS_SETBUDDYINT!
@@ -319,7 +319,7 @@ wantArrowKeys
 	^self baseStyleAllMask: UDS_ARROWKEYS!
 
 wantArrowKeys: aBoolean 
-	"Answer whether the receiver spins up and down in response to the keyboard arrow keys."
+	"Set whether the receiver spins up and down in response to the keyboard arrow keys."
 
 	self 
 		baseStyleMask: UDS_ARROWKEYS

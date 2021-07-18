@@ -182,7 +182,7 @@ selectionOrNil
 	^listPresenter selectionOrNil!
 
 selectionOrNil: anObject 
-	"Select the first occurence of the <Object>, anObject, in the collection. If anObject is
+	"Select the first occurrence of the <Object>, anObject, in the collection. If anObject is
 	nil, then simply remove the existing selection. If anObject is not present then signal a
 	NotFoundError. Answer anObject."
 

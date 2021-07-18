@@ -11,7 +11,7 @@ This package contains two MVP View wrappers for the Windows XP "SysLink" common 
 
 <LinkButton> is the simpler view to use, and can be used as a link-style substitute for <PushButton>, i.e. it is a <commandSource> that fires off a command when the link it contains is clicked, or when it has focus and the Enter key is pressed. However it is limited to displaying and acting on only a single link. If you need more control, then <SysLinkView> can be used. SysLinkView is a static text <valueView>, the value of which is some text that may contain HTML links, e.g. ''<a>Click Me</a>''. If any of these links are clicked by the user then a #linkClicked: event is triggered off the view''s presenter. The argument to the event is an <LITEM> instance containing information about the link that was clicked (such as the URL in the href attribute of the link, if any). See MSDN for a description of the fields in the LITEM structure.
 
-Please Note: The underlying SysLink control which this package relies on is not supported not supported on Windows 2000 and earlier.'.
+Please Note: The underlying SysLink control which this package relies on is not supported on Windows 2000 and earlier.'.
 
 package basicPackageVersion: '6.1'.
 

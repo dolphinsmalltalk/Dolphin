@@ -47,7 +47,7 @@ handlesAnnouncement: anAnnouncement
 	^ announcementClass handlesAnnouncement: anAnnouncement!
 
 makeStrong
-	" i am already strong. Do nothing "!
+	" I am already strong. Do nothing "!
 
 makeWeak
 	^announcer replace: self

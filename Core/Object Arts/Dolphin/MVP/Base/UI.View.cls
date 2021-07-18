@@ -594,7 +594,7 @@ clientWidth
 	^self clientExtent x!
 
 clipChildren
-	"Answer whether the receiver will exclude the areas occuppied by its sub views from its
+	"Answer whether the receiver will exclude the areas occupied by its sub views from its
 	repaints so that it cannot overpaint them. It can be worth setting this style if
 	experiencing repaint problems where a child view repaints but is then immediately erased, a
 	situation that arises in certain circumstances when embedding Active-X controls."
@@ -607,7 +607,7 @@ clipChildren
 	^self baseStyleAllMask: WS_CLIPCHILDREN!
 
 clipChildren: aBoolean 
-	"Set whether the receiver will exclude the areas occuppied by its sub views from its
+	"Set whether the receiver will exclude the areas occupied by its sub views from its
 	repaints so that it cannot overpaint them."
 
 	self 
@@ -2088,7 +2088,7 @@ layout: aLayoutContext
 	!
 
 layoutExtent: aLayoutContext 
-	"Answer the extent of the receiver that should be used by a layout manager during it's layout
+	"Answer the extent of the receiver that should be used by a layout manager during its layout
 	process. The <Point> argument is the suggested extent."
 
 	"Implementation Note: If the view has been flagged as requiring its preferred extent to be used then it is,

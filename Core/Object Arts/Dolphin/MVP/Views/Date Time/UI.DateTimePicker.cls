@@ -59,7 +59,7 @@ displayFormat
 	^displayFormat!
 
 displayFormat: aStringOrNil
-	"Set the display format string for the receiver to aStringrNil.
+	"Set the display format string for the receiver to aStringOrNil.
 	If nil the receiver returns to using the default format for the current mode"
 
 	displayFormat := aStringOrNil.
@@ -71,7 +71,7 @@ dtmSetFormat: aStringFormat
 	self sendMessage: DTM_SETFORMATW wParam: 0 lpParam: aStringFormat asUtf16String.!
 
 dtmSetSystemTime: wFlags lpSysTime: aSYSTEMTIME
-	"Set the receivers system time to aSYSTEMTIME or set it to none if the argument is nil."
+	"Set the receiver's system time to aSYSTEMTIME or set it to none if the argument is nil."
 
 	(self sendMessage: DTM_SETSYSTEMTIME wParam: wFlags lpParam: aSYSTEMTIME asParameter) == 0
 		ifTrue: [ self errorInCommonControlCall ]!
@@ -130,7 +130,7 @@ hasUpDown: aBoolean
 		recreateIfChanged: true	"Recreate required for this change to take effect"!
 
 isRightAligned
-	"Answers true if the receivers calendar drop down is right aligned."
+	"Answers true if the receiver's calendar drop down is right aligned."
 
 	^self baseStyleAllMask: DTS_RIGHTALIGN!
 

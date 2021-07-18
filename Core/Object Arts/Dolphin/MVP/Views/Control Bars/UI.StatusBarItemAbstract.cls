@@ -97,12 +97,12 @@ invalidate
 	parentView invalidateRect: self rectangle!
 
 isAutoResize
-	"Answer true if the receiver will attempt to share the available width in it's parent <StatusBar> with other auto-resize items"
+	"Answer true if the receiver will attempt to share the available width in its parent <StatusBar> with other auto-resize items"
 
 	^width == -1!
 
 isAutoResize: aBoolean
-	"Set whether the receiver will attempt to share the available width in it's parent <StatusBar> with other auto-resize items"
+	"Set whether the receiver will attempt to share the available width in its parent <StatusBar> with other auto-resize items"
 
 	self width: (aBoolean
 				ifTrue: [-1]
@@ -189,7 +189,7 @@ parentView
 	^parentView!
 
 parentView: aStatus
-	"Private - Set the receivers parentView."
+	"Private - Set the receiver's parentView."
 
 	parentView := aStatus!
 

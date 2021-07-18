@@ -9,7 +9,7 @@ UI.MessageBoxAbstract subclass: #'UI.MessageBubble'
 		'IconIds' -> #[64 48 16]
 	}!
 UI.MessageBubble guid: (Core.GUID fromString: '{00e5c07e-c4fc-471c-b037-25bc55861176}')!
-UI.MessageBubble comment: 'MessageBubble is similar to <MessageBox>, and has a similar protocol. The principle difference is that messages are displayed using a Tooltip (normally a balloon tooltip), rather than in a traditional dialog. This provides a general capability for Dolphin applications to implement speech bubble style help like that which sometimes pops up for tray icons in Windows XP. 
+UI.MessageBubble comment: 'MessageBubble is similar to <MessageBox>, and has a similar protocol. The principal difference is that messages are displayed using a Tooltip (normally a balloon tooltip), rather than in a traditional dialog. This provides a general capability for Dolphin applications to implement speech bubble style help like that which sometimes pops up for tray icons in Windows XP. 
 
 The other main differences from <MessageBox> are:
 - MessageBubbles can only be used to display information, not garner a response (i.e. prompting for a yes/no or abort/retry/ignore response is not supported). 
@@ -170,7 +170,7 @@ initialize
 	itemFlags := ##(TTF_PARSELINKS | TTF_TRACK | TTF_ABSOLUTE).
 	timeout := 0 seconds.
 	tooltipStyle := ##(TTS_BALLOON | TTS_NOPREFIX | TTS_NOFADE).
-	maxWidth := SmallInteger maximum	"Allows a toolip with embedded CRs to go onto multiples lines"!
+	maxWidth := SmallInteger maximum	"Allows a tooltip with embedded CRs to go onto multiple lines"!
 
 initializeTooltip
 	| cap |
@@ -260,7 +260,7 @@ maxWidth: anIntegerOrNil
 
 	"A word of warning: If the maximum width is too small relative to the amount
 	of text to be displayed, then it seems the Tooltip control may arbitrarily
-	truncate the	text."
+	truncate the text."
 
 	maxWidth := anIntegerOrNil.
 	tooltip isNil ifFalse: [tooltip maxWidth: anIntegerOrNil]!

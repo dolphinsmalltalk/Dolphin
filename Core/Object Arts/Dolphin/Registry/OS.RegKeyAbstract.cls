@@ -44,7 +44,7 @@ associationAt: key ifAbsent: exceptionHandler
 associationsDo: operation
 	"Evaluate the monadic valuable, operation, for each of the receiver's 
 	key/value associations.
-	Implemenation Note: We must override because the receiver does not 
+	Implementation Note: We must override because the receiver does not 
 	actually contain Associations."
 
 	self keysAndValuesDo: [:k :v | 
@@ -455,7 +455,7 @@ removeSubValue: aString ifAbsent: exceptionHandler
 				ifFalse: [self registryLibrary systemError: dwErr]]!
 
 resize: anInteger
-	"Private - Resize the receiver to have a capacity suitable for accomodating
+	"Private - Resize the receiver to have a capacity suitable for accommodating
 	at least anInteger elements. Answer the receiver (resized). The receiver is
 	rehashed regardless of whether it is already of the correct capacity (this
 	is important).

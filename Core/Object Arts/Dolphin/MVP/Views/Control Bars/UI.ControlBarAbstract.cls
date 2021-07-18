@@ -19,7 +19,7 @@ UI.ControlBarAbstract comment: '`ControlBarAbstract` is an abstract `<compositeV
 
 actualInsets: aLayoutContext 
 	"Private - Answer a Rectangle whose edges specify the actual inset (in pixels) by which the
-	sub views are positioned away from the bordered of the receiver."
+	sub views are positioned away from the border of the receiver."
 
 	^self insets!
 
@@ -63,7 +63,7 @@ arrangementOf: aView put: anObject
 			self invalidateLayout]!
 
 canAcceptSubViews
-	"Answer true if the receiver can accept aView sub viewss"
+	"Answer true if the receiver can accept aView sub views"
 
 	^true!
 
@@ -254,7 +254,7 @@ ttnGetDispInfo: anNMTTDISPINFOW
 
 	| ret |
 	ret := super ttnGetDispInfo: anNMTTDISPINFOW.
-	"We must retain a referenced to the tip text to prevent it being GC'd while still in use by the control.
+	"We must retain a reference to the tip text to prevent it being GC'd while still in use by the control.
 	This should really be pushed up to ControlView, but that would create a difficult STB version upgrade."
 	_tipText := anNMTTDISPINFOW text.
 	^ret!
@@ -266,7 +266,7 @@ validateSubViewLayouts: anExternalHandle
 
 validateUserInterface
 	"Validates the user interface for the receiver. Usually performed at idle time
-	when the  UI has been flagged as being invalid"
+	when the UI has been flagged as being invalid"
 
 	self subViewsDo: [:each | each presenter validateUserInterface].
 	super validateUserInterface.!
