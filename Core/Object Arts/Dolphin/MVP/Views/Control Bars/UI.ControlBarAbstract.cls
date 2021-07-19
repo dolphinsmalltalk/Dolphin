@@ -63,7 +63,7 @@ arrangementOf: aView put: anObject
 			self invalidateLayout]!
 
 canAcceptSubViews
-	"Answer true if the receiver can accept aView sub-views"
+	"Answer true if the receiver can accept sub-views"
 
 	^true!
 
