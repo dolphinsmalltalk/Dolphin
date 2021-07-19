@@ -678,7 +678,7 @@ tbEnableButton: anIntegerId state: enableBoolean
 	This is to prevent a walkback appearing in the idle processing of #validUserInterface
 	when enabling/disabling toolbar buttons while a view is being closed. The problem only
 	occurs when a view is closed by a process other than the user interface process 
-	(e.g the Debugger). Unfotunately it is just not possible to test the toolbar with #isOpen 
+	(e.g the Debugger). Unfotunately it is not possible to test the toolbar with #isOpen 
 	because it reports that it still is. I suspect that although the toolbar is still open - the 
 	buttons are not"
 
