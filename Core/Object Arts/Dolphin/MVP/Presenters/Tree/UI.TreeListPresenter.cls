@@ -88,7 +88,7 @@ connectTreeModel
 			to: self!
 
 doModelUpdate: aNiladicBlock 
-	self assert: [updating not].
+	self assert: updating not.
 	updating := true.
 	aNiladicBlock ensure: [updating := false]!
 
@@ -234,9 +234,11 @@ rebuildFilter
 	visibleNodes := Set new.
 	self list do: 
 			[:each |
-			"Avoid the cost of walking the parent chain if object is already in the set."
-			(visibleNodes addNewElement: each)
-				ifTrue: [visibleNodes addAll: (aVirtualTreeModel allParentsOf: each)]]!
+			| current |
+			"Avoid the cost of walking the parent chain if object is already in the set. An invariant is that if a node is already in the set, then its parent nodes must also be there. This is guaranteed by walking all the way up from a node after adding it."
+			current := each.
+			[current notNil and: [visibleNodes addNewElement: current]]
+				whileTrue: [current := aVirtualTreeModel parentOf: current]]!
 
 refresh
 	"Private - Refresh the display of the receiver"
@@ -261,7 +263,7 @@ removeNode: anObject
 treeModel
 	"Private - Answer the tree model used to display the contents of the receiver"
 
-	^super model!
+	^model!
 
 treeModel: aVirtualTreeModel 
 	"Set the tree model used to display the contents of the receiver to the <VirtualTreeModel> argument."
