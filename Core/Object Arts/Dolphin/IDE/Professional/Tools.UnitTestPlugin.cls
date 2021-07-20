@@ -86,7 +86,7 @@ createSchematicWiring
 currentTestMethodSelectors
 	self isBrowserLookingAtTestClass ifFalse: [^Set new].
 	^(self browser selectedMethods collect: [:each | each selector]) 
-		intersection: self testClass testSelectors!
+		intersection: self testClass allTestSelectors!
 
 debugTest
 	"Debug the currently selected defect. If no defects are selected then select and ebug the first one"
