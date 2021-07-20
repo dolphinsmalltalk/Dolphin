@@ -87,6 +87,12 @@ addVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
 								lpParam: aTVINSERTSTRUCT.
 					hItem == 0 ifFalse: [objectHandleMap at: (handleObjectMap at: hItem put: each) put: hItem]]]!
 
+applyExtendedStyles
+	"Private - Apply any extended TreeView styles after view creation or recreation. 
+	At present these are not configurable - we just hard-code the use of double-buffering to reduce flickering, which can otherwise be very noticeable with custom-drawing, especially if the CDIS_DISABLED state is used."
+
+	self tvmSetExtendedStyle: TVS_EX_DOUBLEBUFFER lParam: TVS_EX_DOUBLEBUFFER!
+
 applyImageLists
 	"Private - Set the receiver's image lists from the image managers."
 
@@ -373,6 +379,9 @@ getSingleSelection
 	the receiver, or zero if there is no selection."
 
 	^self tvmGetNextItem: nil code: TVGN_CARET!
+
+handleFromObject: anObject
+	^objectHandleMap lookup: anObject!
 
 handleFromObject: anObject ifAbsent: exceptionHandler
 	"Private - Answer the handle associated with anObject in the receiver,
@@ -887,7 +896,8 @@ onViewCreated
 	self applyFont.
 	self refreshContents.
 	self viewMode: self viewMode.
-	indentSeparation ifNotNil: [self updateIndentation]!
+	indentSeparation ifNotNil: [self updateIndentation].
+	self applyExtendedStyles!
 
 refreshContents
 	"Repopulate the receiver with the elements of the receiver's model."
@@ -1090,6 +1100,13 @@ tvmGetNextItem: aHandle code: anInteger
 		wParam: anInteger
 		lParam: aHandle!
 
+tvmSetExtendedStyle: maskInteger lParam: valueInteger
+	^User32
+		sendMessageU: handle
+		msg: TVM_SETEXTENDEDSTYLE
+		wParam: maskInteger
+		lParam: valueInteger!
+
 tvmSetImageList: aWinImageList type: anIntegerImageType
 	"Private - Set the receivers normal/state image list depending on anIntegerImageType.
 	 Answer the receiver's previous <Imagelist>."
@@ -1244,6 +1261,7 @@ wmKeyDown: message wParam: wParam lParam: lParam
 addNonVirtualItems:insertStruct:!adding!private! !
 addRoot:!adding!private! !
 addVirtualItems:insertStruct:!adding!private! !
+applyExtendedStyles!private!updating! !
 applyImageLists!image management!private! !
 basicAdd:atIndex:!adding!private! !
 basicAddAll:inHandle:afterHandle:!adding!private! !
@@ -1277,6 +1295,7 @@ getItemState:!helpers!private! !
 getItemText:!accessing!private! !
 getSelectionsByIndex!private!selection! !
 getSingleSelection!private!selection! !
+handleFromObject:!accessing!private! !
 handleFromObject:ifAbsent:!accessing!private! !
 hasButtons!accessing-styles!public! !
 hasButtons:!accessing-styles!public! !
@@ -1353,6 +1372,7 @@ tvmExpand:code:!expanding/collapsing!private! !
 tvmGetItem:!accessing!private! !
 tvmGetItemRect:textOnly:!geometry!private! !
 tvmGetNextItem:code:!accessing!private! !
+tvmSetExtendedStyle:lParam:!image management!private! !
 tvmSetImageList:type:!image management!private! !
 tvmSetItem:!accessing!private! !
 tvnGetInfoTip:!event handling-win32!private! !
