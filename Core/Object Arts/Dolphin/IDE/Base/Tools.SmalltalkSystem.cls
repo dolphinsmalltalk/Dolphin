@@ -4694,8 +4694,7 @@ publishedAspectsOfInstances
 	#(#hierarchyBrowserClass #protocolBrowserClass #debuggerClass #methodExplorerClass #packageBrowserClass #resourceBrowserClass #viewComposerClass #workspaceClass #workspaceShellClass #classChooserClass #resourceIdentifierDialogClass #defaultInspectorClass #testBrowserClass #aboutBoxClass)
 		do: 
 			[:each |
-			aspects add: (Aspect
-						name: each type: Presenter class;
+			aspects add: ((Aspect name: each type: Presenter class)
 						icon: SmalltalkToolShell icon;
 						yourself)].
 	#(#autoFormatMethodSource #backupOnImageSave #preferAlternateInspectors #splashShowAtStartup)

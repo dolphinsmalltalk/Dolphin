@@ -86,6 +86,11 @@ testNameForArgument
 	self assert: (devsys nameForArgument: Object yourAddress asExternalAddress)
 		equals: 'anAddress'!
 
+testSystemOptions
+	"Github #1145 - just check that the publishedAspects works for all tools so that the options will display in the System Options tool"
+
+	SmalltalkSystem current systemOptions do: [:each | each publishedAspects]!
+
 testWrapText
 	| wrapped |
 	(devsys respondsTo: #wrapText:toWidth:indent:tabWidth:) ifFalse: [^self].
@@ -194,6 +199,7 @@ testAllSelectorsImplementedIn!public!unit tests! !
 testBuildSimpleSignature!public!unit tests! !
 testDefaultInspectorClass!public!unit tests! !
 testNameForArgument!public!unit tests! !
+testSystemOptions!public!unit tests! !
 testWrapText!public!unit tests! !
 !
 
