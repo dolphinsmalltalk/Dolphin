@@ -133,7 +133,7 @@ canRedo
 charNearestPosition: aPoint 
 	"Answer the one based index of the character nearest aPoint within the receiver. Note the
 	differences in the parameter and return types from a normal Edit control in order to
-	accomodate the larger potential size of a RichEdit (or course a multiline Edit control could
+	accommodate the larger potential size of a RichEdit (or course a multiline Edit control could
 	be just as large on NT as well....)."
 
 	^(self 

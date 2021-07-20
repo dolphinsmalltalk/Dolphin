@@ -76,7 +76,7 @@ stbSaveOn:!binary filing!instance creation!public! !
 
 aliasFor: libraryNameString
 	"Answer the name of the resource file which should actually be opened in place
-	of the named library. Generally the argument will be answered, but on occassion, e.g
+	of the named library. Generally the argument will be answered, but on occasion, e.g
 	after a product upgrade, the resource file name has changed and so we can use
 	this facility to remap old resources to the new resource file."
 

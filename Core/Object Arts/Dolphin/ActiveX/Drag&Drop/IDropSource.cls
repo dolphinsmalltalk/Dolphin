@@ -6,7 +6,7 @@ IUnknown subclass: #IDropSource
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IDropSource guid: (IID fromString: '{00000121-0000-0000-C000-000000000046}')!
-IDropSource comment: '<IDropSource>is a wrapper class for the standard OLE Drag & Drop interface. It was originally generated from type information in the ''OCIDL Library'' type library. It defines the function table for that interface (we only implement this interface, we never call out through it since that is always handled by the system function DoDragDrop()).'!
+IDropSource comment: '<IDropSource> is a wrapper class for the standard OLE Drag & Drop interface. It was originally generated from type information in the ''OCIDL Library'' type library. It defines the function table for that interface (we only implement this interface, we never call out through it since that is always handled by the system function DoDragDrop()).'!
 !IDropSource categoriesForClass!COM-Interfaces!OLEIDL-Interfaces! !
 !IDropSource methodsFor!
 

@@ -363,7 +363,7 @@ resizeTable
 	"Private - Remove unused Symbols from the system - must be done to the exclusion of other processes, e.g:
 		[Symbol resizeTable] forkAt: Processor timingPriority.
 	By default we select a symbol table bucket size of about 6. This is appropriate for a development image, which
-	interns a lot of symbols, but a runtime image could easily accomodate larger buckets to reduce the symbol table
+	interns a lot of symbols, but a runtime image could easily accommodate larger buckets to reduce the symbol table
 	size. Answers the new size of the table."
 
 	^self resizeTable: 6

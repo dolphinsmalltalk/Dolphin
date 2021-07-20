@@ -76,7 +76,7 @@ N.B. Scintilla is an excellent editor control, but does not do much parameter va
   `wordChars`					`String` of characters considered to be word delimiters.
   `registeredImages`			`LookupTable`
   `modificationEventMask`		 `<integer>` bit mask controlling `SCN_MODIFIED` notifications (see Scintilla docs).
-  `autoCStops`					`String` or `nil`. The characters which cancel an auto-completion list when typed..
+  `autoCStops`					`String` or `nil`. The characters which cancel an auto-completion list when typed.
   `autoCFillups`				`String` or `nil`. The characters which accept the selection in an auto-completion list when typed.
   `elementColors`				`LookupTable` of `Color` keyed by `SmallInteger` element id.
   `caretBlinktime`				`Duration` of caret blink.
@@ -132,7 +132,7 @@ activeHotspotBackcolor: aColor
 	self setOrResetElement: SC_ELEMENT_HOT_SPOT_ACTIVE_BACK color: aColor!
 
 activeHotspotForecolor
-	"Get the fore colour for active hotspots."
+	"Get the foreground colour for active hotspots."
 
 	^self getElementColor: SC_ELEMENT_HOT_SPOT_ACTIVE!
 
@@ -143,7 +143,7 @@ activeHotspotForecolor: aColor
 
 addAnnotation: aScintillaAnnotation
 	"Append the specified <ScintillaAnnotation> to the current annotations (if any) for the line
-	with which is is associated."
+	with which it is associated."
 
 	| line newText newStyles |
 	line := aScintillaAnnotation line.
@@ -318,7 +318,7 @@ annotationsFromRawAnnotation: aScintillaAnnotation
 								text: eachLine
 								styles: (self annotationStylesFromStyleBytes: (aScintillaAnnotation styles copyFrom: start
 												to: start + lineLength - 1))).
-					"Note we mus skip the style byte for the LF separator"
+					"Note we must skip the style byte for the LF separator"
 					start := start + lineLength + 1].
 			annotations]!
 
@@ -448,7 +448,7 @@ autoCompletionAcceptChars: aString
 	self sciAutoCSetFillUps: aString!
 
 autoCompletionCancelChars
-	"Answer the <String> of character that, when typed, will cancel an auto-completion list."
+	"Answer the <String> of characters that, when typed, will cancel an auto-completion list."
 
 	^autoCStops ?? ''!
 
@@ -459,8 +459,8 @@ autoCompletionCancelChars: aString
 	self sciAutoCStops: aString!
 
 autoCompletionCurrentText
-	"Get currently selected item text in the auto-completion list Returns the length of the item
-	text Result is NUL-terminated."
+	"Get currently selected item text in the auto-completion list. Returns the length of the item
+	text. Result is NUL-terminated."
 
 	| len |
 	len := library
@@ -932,7 +932,7 @@ canHScroll
 		lParam: 0!
 
 canHScroll: aBoolean 
-	"Sets the receiver into horizontal scrolling mode the <Boolean> argument is true."
+	"Sets the receiver into horizontal scrolling mode when the <Boolean> argument is true."
 
 	self sciSetHScrollBar: aBoolean.
 	self invalidateCalculatedExtent!
@@ -1474,7 +1474,7 @@ defaultWindowStyle
 	"Private - Answer a default style to use when creating a ScintillaView."
 
 	"Implementation Note: Scintilla occassionally creates child windows, e.g. for
-	autocompletion, and since it does background painting it may occassionally paint over these.
+	autocompletion, and since it does background painting it may occasionally paint over these.
 	Therefore it needs the WS_CLIPCHILDREN style. Unfortunately the documentation does not
 	mention this, but Scite does set this style when creating the window."
 
@@ -3708,7 +3708,7 @@ lineNumberMargin
 	^self margins detect: [:each | each type == #lineNumber] ifNone: []!
 
 lineRange: anInteger
-	"Answer an <Interval> specifying the range of character positions in the receiver occuppied
+	"Answer an <Interval> specifying the range of character positions in the receiver occupied
 	by the line with the specified <integer> index, not including the end-of-line terminators
 	(if any)."
 
@@ -4587,7 +4587,7 @@ rangeOfIndicator: anIntegerOrSymbol at: positionInteger
 			(self sciIndicatorStart: id pos: positionInteger)
 				to: (self sciIndicatorEnd: id pos: positionInteger) - 1]
 		ifFalse: 
-			["The interval occuppied by the indicator that intersects the position is empty"
+			["The interval occupied by the indicator that intersects the position is empty"
 			positionInteger to: positionInteger - 1]!
 
 rectangularSelectionAnchor
@@ -9450,7 +9450,7 @@ tokenEndAt: anInteger
 	^stop!
 
 tokenRangeAt: anInteger 
-	"Answer the <Interval> of text in the receiver occuppied by the token under the specified
+	"Answer the <Interval> of text in the receiver occupied by the token under the specified
 	<integer> position. This is dependent on there being valid styling information available,
 	and that the styles delimit tokens."
 

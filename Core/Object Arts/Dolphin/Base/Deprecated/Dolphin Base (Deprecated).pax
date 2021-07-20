@@ -558,7 +558,7 @@ _spawnvp: mode cmdname: aString argv: argv
 
 _strnicmp: string1 string2: string2 count: count
 	"Answer the result of a case insensitive string comparison between string1 and
-	string2,comparing only the first, count, characters. Answer <0, 0, or >0 according to
+	string2, comparing only the first, count, characters. Answer <0, 0, or >0 according to
 	whether the first count characters of are lexicographically less than, equal to, or greater
 	than the first count characters of string2."
 

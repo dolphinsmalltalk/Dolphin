@@ -65,7 +65,7 @@ selection
 	^self selectableItems selection!
 
 selection: anObject
-	"Select the first occurence of anObject in the receiver. If not present then signal a NotFoundError.
+	"Select the first occurrence of anObject in the receiver. If not present then signal a NotFoundError.
 	Answer anObject"
 
 	^self selectableItems selection: anObject
@@ -74,7 +74,7 @@ selection: anObject
 			self selectableItems selection: anObject]!
 
 selection: anObject ifAbsent: exceptionHandler
-	"Select the first occurence of the <Object>, anObject, in the receiver. 
+	"Select the first occurrence of the <Object>, anObject, in the receiver.
 	Answer anObject, or, if not present, the result of evaluating the
 	<niladicValuable>, exceptionHandler."
 
@@ -95,7 +95,7 @@ selectionOrNil
 	^self selectableItems selectionOrNil!
 
 selectionOrNil: anObject
-	"Select the first occurence of the <Object>, anObject, in the
+	"Select the first occurrence of the <Object>, anObject, in the
 	receiver. If anObject  is nil, then simply remove the existing
 	selection. If anObject is not present then signal a NotFoundError.
 	Answer anObject."

@@ -13,7 +13,7 @@ UI.ContainerView subclass: #'UI.SlideyInneyOuteyThing'
 		'ResizableMask' -> 16r4
 	}!
 UI.SlideyInneyOuteyThing guid: (Core.GUID fromString: '{b9cf8580-efea-4336-84cd-3108804dd202}')!
-UI.SlideyInneyOuteyThing comment: 'SlideyInneyOuteyThing is a decorator for a <CardContainer> which behaves like one of those slidey-inney-outey-things one sees in Visual Studio.NET, i.e: It display a thin tab strip most of the time, but slides cards smoothly out (as if they were on a sliding "tray") when one hovers over them. . The tray slides out over the top of any sibling views of the SlideyInneyOuteyThing, and so it does not cause any relayout within the parent. The tray can then be pinned into place if desired, in which case the parent is re-layed out to accomodate the full extent of the SlideyInneyOuteyThing. When pinned a SlideyInneyOuteyThing behaves visually like a normal <CardContainer>. When unpinned, the tray will slide back when the user moves outside the tray/tabs for a short period. This is useful for panes which are used only occassionally since they need consume only a little space (for the tabs) when they are not being used.
+UI.SlideyInneyOuteyThing comment: 'SlideyInneyOuteyThing is a decorator for a <CardContainer> which behaves like one of those slidey-inney-outey-things one sees in Visual Studio.NET, i.e: It displays a thin tab strip most of the time, but slides cards smoothly out (as if they were on a sliding "tray") when one hovers over them. The tray slides out over the top of any sibling views of the SlideyInneyOuteyThing, and so it does not cause any re-layout within the parent. The tray can then be pinned into place if desired, in which case the parent is re-layed out to accommodate the full extent of the SlideyInneyOuteyThing. When pinned a SlideyInneyOuteyThing behaves visually like a normal <CardContainer>. When unpinned, the tray will slide back when the user moves outside the tray/tabs for a short period. This is useful for panes which are used only occasionally since they need consume only a little space (for the tabs) when they are not being used.
 
 A SlideyInneyOuteyThing must be used in conjunction with a <SlidingCardTray> as its actual <CardContainer>, and can host only one such card container. The cards themselves must be added to the <SlidingCardTray>, NOT to the SlideyInneyOuteyThing which, as mentioned, is a decorator rather than a card container itself.
 
@@ -85,7 +85,7 @@ backcolor: aColorOrNil
 
 calculateExtent: aLayoutContext 
 	"Private - Answer the calculated extent of the receiver that should be used by a layout
-	manager during it's layout process."
+	manager during its layout process."
 
 	^self isPinned 
 		ifTrue: [self layoutManager preferredLayoutExtentOf: self context: aLayoutContext]
@@ -200,7 +200,7 @@ isHiddenOnUnpin
 	^siotFlags allMask: HideOnUnpinMask!
 
 isHiddenOnUnpin: aBoolean
-	"Answer whether or not the tray should be hidden when it is unpinned."
+	"Set whether or not the tray should be hidden when it is unpinned."
 
 	siotFlags := siotFlags mask: HideOnUnpinMask set: aBoolean!
 
@@ -279,7 +279,7 @@ layout: aLayoutContext
 	aLayoutContext setView: tabs rectangle: (0 @ 0 extent: (aLayoutContext extentOf: self)).
 	super layout: aLayoutContext.
 
-	"This is necessay to get the tray to relayout when sizing down, even when pinned (?)"
+	"This is necessary to get the tray to re-layout when sizing down, even when pinned (?)"
 	tray validateLayout!
 
 layoutManager: aLayoutManager
@@ -413,7 +413,7 @@ positionTray: aLayoutContext
 	| nc myExtent rect myRect |
 	self isPinned 
 		ifTrue: 
-			["Tray is position by card layout when pinned"
+			["Tray is positioned by card layout when pinned"
 			^self].
 	nc := self implicitInsets: aLayoutContext.
 	myRect := aLayoutContext rectangleOf: self.
@@ -459,7 +459,7 @@ showTray
 	self isTrayVisible ifTrue: [^self].
 	self animateTray: true.
 	"Rather than capture the mouse and slide the tray back immediately the user moves outside
-	the window, we can use the simpler mechanism of a timer, the even handler for which tests
+	the window, we can use the simpler mechanism of a timer, the event handler for which tests
 	whether the user is still over the receiver's tabs or tray and slides in the tray if not.
 	This is more useable anyway, as it allows us to introduce a slight delay before the window
 	slides in. This means that if the user moves the mouse outside the tray momentarily by

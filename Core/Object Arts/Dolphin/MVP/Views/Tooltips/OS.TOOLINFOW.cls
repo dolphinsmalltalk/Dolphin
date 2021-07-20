@@ -17,7 +17,7 @@ OS.Win32Structure subclass: #'OS.TOOLINFOW'
 		'_OffsetOf_uId' -> 16rC
 	}!
 OS.TOOLINFOW guid: (Core.GUID fromString: '{87b4c617-026e-11d3-9fd7-00a0cc3e4a32}')!
-OS.TOOLINFOW comment: 'TOOLINFOA is an <ExternalStructure> class to represent the Win32 structure of the same name.
+OS.TOOLINFOW comment: 'TOOLINFOW is an <ExternalStructure> class to represent the Win32 structure of the same name.
 
 This structure is used in conjunction with the tooltips.
 
@@ -101,7 +101,7 @@ text: aString
 	"Set the tool-tip text of the receiver to the <String> argument."
 
 	"Implementation Note: We must retain a reference to the String to ensure it is not
-	garbage collect, so we store it into the 'text' inst var maintained for that purpose."
+	garbage collected, so we store it into the 'text' inst var maintained for that purpose."
 
 	text := aString asUtf16String.
 	self lpszText: text!
@@ -152,7 +152,7 @@ uId:!**compiled accessors**!public! !
 !OS.TOOLINFOW class methodsFor!
 
 defineFields
-	"Define the fields of the TOOLINFO structure.
+	"Define the fields of the TOOLINFOW structure.
 		self compileDefinition
 	
 		typedef 		struct tagTOOLINFOW {

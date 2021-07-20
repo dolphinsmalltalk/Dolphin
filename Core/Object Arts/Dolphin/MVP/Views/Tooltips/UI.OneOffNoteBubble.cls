@@ -74,7 +74,7 @@ previouslyViewedNotes
 		ifNotNil: [:regkey | regkey subValues keys collect: [:each | each asSymbol]]!
 
 previouslyViewedNotes: aCollection
-	"Set the previously views notes to aCollection of <Symbols>"
+	"Set the previously viewed notes to aCollection of <Symbols>"
 
 	| regKey timeStamp |
 	self resetPreviouslyViewedNotes.

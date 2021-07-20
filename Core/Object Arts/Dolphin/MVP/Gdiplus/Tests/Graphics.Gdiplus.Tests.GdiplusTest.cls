@@ -15,7 +15,7 @@ Graphics.Gdiplus.Tests.GdiplusTest comment: ''!
 assertPersistedValid
 	| recreated |
 	recreated := Object fromBinaryStoreBytes: model binaryStoreBytes.
-	"Asking recreated for it's handle should find any errors"
+	"Asking recreated for its handle should find any errors"
 	self assert: recreated handle class identicalTo: External.Handle!
 
 compare: x to: y

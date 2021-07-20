@@ -448,12 +448,12 @@ hasLines: aBoolean
 	self baseStyleMask: TVS_HASLINES set: aBoolean recreateIfChanged: false!
 
 hasLinesAtRoot
-	"Answer whether the receiver has lines and buttons for it's root entries."
+	"Answer whether the receiver has lines and buttons for its root entries."
 
 	^self baseStyleAllMask: TVS_LINESATROOT!
 
 hasLinesAtRoot: aBoolean
-	"Sets the receiver to have lines and buttons for it's root entries
+	"Sets the receiver to have lines and buttons for its root entries
 	depending on the value of aBoolean. This is the TVS_LINESATROOT style,
 	which can be changed dynamically without needing to recreate the control."
 
@@ -934,7 +934,7 @@ restoreSelection: anObject
 	self selection: anObject ifAbsent: []!
 
 selection: anObject ifAbsent: exceptionHandler
-	"Select the first occurence of the <Object>, anObject, in the receiver
+	"Select the first occurrence of the <Object>, anObject, in the receiver
 	and answer it. If there are no occurrences then answer the
 	result of evaluating the <niladicValuable>, exceptionHandler."
 

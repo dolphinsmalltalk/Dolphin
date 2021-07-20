@@ -132,7 +132,7 @@ receiveByte
 receiveSome: aByteObject count: lengthInteger startingAt: startInteger
 	"Private - Receive bytes from the socket up to a maxiumum of lengthInteger bytes
 	into the buffer, aByteObject. Note that the buffer must be large enough	
-	to accomodate the data, or memory corruption may occur.
+	to accommodate the data, or memory corruption may occur.
 	The current process is blocked until the some data is available to read. 
 	Answer the actual number of bytes read, which may be fewer than the 
 	number requested. If the socket is closed, or becomes closed, signal a <SocketClosed> 

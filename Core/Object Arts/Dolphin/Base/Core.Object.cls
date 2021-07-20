@@ -354,7 +354,7 @@ basicPrintString
 	^aStream contents!
 
 basicResize: anInteger
-	"Private - Resize the receiver to accomodate anInteger indexable instance variables. 
+	"Private - Resize the receiver to accommodate anInteger indexable instance variables.
 	As #resize:, but not to be overridden.
 
 	Primitive failure reason:
@@ -1196,7 +1196,7 @@ removePropertyAt: aSymbol ifAbsent: aBlock
 	^self propertyManager removePropertyOf: self at: aSymbol ifAbsent: aBlock.!
 
 resize: anInteger
-	"Resize the receiver to accomodate anInteger indexable instance variables. If anInteger 
+	"Resize the receiver to accommodate anInteger indexable instance variables. If anInteger
 	is greater than the current size of the receiver, then new, safely initialized, elements are 
 	added to the end of the receiver. If anInteger is less that the current size of the receiver, 
 	then elements are removed from the end of the receiver.

@@ -192,7 +192,7 @@ replaceBytesOf: aByteObject from: start to: stop startingAt: fromStart
 	^aByteObject!
 
 resize: anInteger
-	"Resize the receiver to accomodate anInteger bytes.
+	"Resize the receiver to accommodate anInteger bytes.
 	We ignore the request, since we don't know how to resize the object
 	pointed at (or even if it is resizable)."!
 

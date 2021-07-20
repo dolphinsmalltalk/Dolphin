@@ -27,7 +27,7 @@ backcolor: aColorOrNil
 
 calculateExtent: aLayoutContext 
 	"Private - Answer the calculated extent of the receiver that should be used by a layout
-	manager during it's layout process."
+	manager during its layout process."
 
 	^self referee calculateExtent: aLayoutContext!
 

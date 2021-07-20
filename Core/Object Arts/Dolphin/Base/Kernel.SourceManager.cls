@@ -235,7 +235,7 @@ ignoreSources
 		at: SourcesIndex put: nil.!
 
 initialize
-	"N.B. This must be a mutex as, for example,when copying a methods source from one source stream from another 
+	"N.B. This must be a mutex as, for example, when copying a methods source from one source stream from another 
 	re-entry will occur."
 
 	mutex := Mutex new!
@@ -244,7 +244,7 @@ isMethodChanged: aCompiledMethod
 	"Private - Answer whether the <CompiledMethod> argument is 'changed' (i.e. it has been
 	changed since its class was last saved)."
 
-	"Implementation Note: Its faster to lookup the class 'first change' index last, because it
+	"Implementation Note: It's faster to lookup the class 'first change' index last, because it
 	is stored in a property."
 
 	^(self hasMethodChanged: aCompiledMethod) and: 

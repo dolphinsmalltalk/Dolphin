@@ -11,7 +11,7 @@ UI.StatusBar comment: '`StatusBar` is a `<compositeView>` implementing the Windo
 
 `StatusBar` holds a list of items, sub-instances of `StatusBarItemAbstract`, matching the order of items in the control. Items may be added and deleted once the view has been created. It also allows a name to be associated with each item. 
 
-Note that, internally, an additional separator is  placed as the first item in the status common control when there are no user parts. This is because the common control does not allow you to remove all the items completely.
+Note that, internally, an additional separator is placed as the first item in the status common control when there are no user parts. This is because the common control does not allow you to remove all the items completely.
 
 ## Instance Variables:
   `parts`				`<Array>` of `StatusBarItemAbstract`.
@@ -310,7 +310,7 @@ setItem: aStatusBarItem tipText: aString
 		lpParam: aString asUtf16String!
 
 setItemText: aStatusBarItem
-	"Private - Set the SB_SETTEXT of the receivers common control for	specified one of the receiver's <StatusBarItem>s."
+	"Private - Set the SB_SETTEXT of the receivers common control for specified one of the receiver's <StatusBarItem>s."
 
 	"In the case of owner-drawn items, this amounts to an instruction to the control to request re-draw of the item."
 

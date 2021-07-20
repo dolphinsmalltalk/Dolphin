@@ -260,7 +260,7 @@ removeAtIndex: anInteger
 	^elem!
 
 resize: anInteger
-	"Private - Resize the receiver to accomodate anInteger elements.
+	"Private - Resize the receiver to accommodate anInteger elements.
 	Answer the receiver."
 
 	^self list resize: anInteger!

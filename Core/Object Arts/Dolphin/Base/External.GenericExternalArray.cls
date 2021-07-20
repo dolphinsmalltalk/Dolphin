@@ -31,7 +31,7 @@ elementClass
 	^elementClass!
 
 elementClass: aClass 
-	"Private - Set the class of Smalltalk object used to represent the elements	of the receiver."
+	"Private - Set the class of Smalltalk object used to represent the elements of the receiver."
 
 	elementClass := aClass!
 

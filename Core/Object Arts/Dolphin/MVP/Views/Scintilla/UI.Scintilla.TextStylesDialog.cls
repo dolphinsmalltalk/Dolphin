@@ -36,7 +36,7 @@ defaultStyle: aScintillaTextStyle
 
 model: aSubjectModel
 	"Connect the receiver to aSubjectModel. The reply presenter shares this
-	same model since it is responsible for editing it's value"
+	same model since it is responsible for editing its value"
 
 	| styles |
 	super model: aSubjectModel.

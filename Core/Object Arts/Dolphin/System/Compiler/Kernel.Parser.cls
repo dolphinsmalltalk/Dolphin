@@ -417,11 +417,11 @@ parseExternalCallArgs: anStExternalCallNode
 	got < expected 
 		ifTrue: 
 			[self parserError: CErrInsufficientArgTypes range: (start to: self errorPosition - 1)
-			"Error ignored, but no recovery needed as the decl is syntactically correct,it just defines too few types."].
+			"Error ignored, but no recovery needed as the decl is syntactically correct, it just defines too few types."].
 	got > expected 
 		ifTrue: 
 			[self parserError: CErrTooManyArgTypes range: (start to: types last sourceInterval stop)
-			"Error ignored, but no recovery needed as the decl is syntactically correct,it just defines too many types."].
+			"Error ignored, but no recovery needed as the decl is syntactically correct, it just defines too many types."].
 	^types!
 
 parseExternalCallingConvention

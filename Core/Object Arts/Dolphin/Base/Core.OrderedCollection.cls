@@ -316,9 +316,9 @@ lookup: keyInteger
 		ifFalse: [self basicAt: basicIndex]!
 
 makeRoomAtEndFor: anInteger
-	"Private - Make room at the end of the receiver to accomodate at least anInteger
+	"Private - Make room at the end of the receiver to accommodate at least anInteger
 	more elements. If there is insufficient free space in the receiver, then it is expanded 
-	to accomodate	more elements."
+	to accommodate	more elements."
 
 	| shift capacity |
 	capacity := self basicSize.
@@ -339,7 +339,7 @@ makeRoomAtEndFor: anInteger
 	lastIndex := lastIndex + shift!
 
 makeRoomAtFirstFor: anInteger
-	"Private - Make room at the start of the receiver to accomodate anInteger elements."
+	"Private - Make room at the start of the receiver to accommodate anInteger elements."
 
 	| newOrderedCollection |
 	newOrderedCollection := self class new: self basicSize + anInteger.

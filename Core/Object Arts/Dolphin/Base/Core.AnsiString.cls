@@ -78,7 +78,7 @@ decodeNextFrom: aReadStream
 	^aReadStream basicNextAvailable ifNotNil: [:ch | Character ansiValue: ch]!
 
 encodedSizeAt: anInteger
-	"Private - Answer the <integer> number of code units occuppied by the <Character> whose first code unit is at the specified index in the receiver. Always 1 in the case of an ANSI string (multi-byte code pages are not supported)."
+	"Private - Answer the <integer> number of code units occupied by the <Character> whose first code unit is at the specified index in the receiver. Always 1 in the case of an ANSI string (multi-byte code pages are not supported)."
 
 	^1!
 

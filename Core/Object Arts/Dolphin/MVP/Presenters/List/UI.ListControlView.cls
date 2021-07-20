@@ -417,7 +417,7 @@ selection
 	^self selectionIfNone: [self errorNoSelection]!
 
 selection: newSelection 
-	"Select the first occurence of the <Object>, newSelection, in the receiver. If not present
+	"Select the first occurrence of the <Object>, newSelection, in the receiver. If not present
 	then signal a <NotFoundError>. Answer newSelection."
 
 	^self selection: newSelection ifAbsent: [self errorNotFound: newSelection]!
@@ -482,7 +482,7 @@ selectionOrNil
 	^self selectionIfNone: []!
 
 selectionOrNil: anObject 
-	"Select the first occurence of the <Object> argument, in the receiver. If anObject
+	"Select the first occurrence of the <Object> argument, in the receiver. If anObject
 	is nil, then simply remove the existing selection. If the new selection is not present then
 	signal a <NotFoundError>. Answer the new selection."
 

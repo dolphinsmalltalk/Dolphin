@@ -18,7 +18,7 @@ Instance Variables:
 
 calculateExtent: aLayoutContext 
 	"Private - Answer the calculated extent of the receiver that should be used by a
-	layout manager during it's layout process."
+	layout manager during its layout process."
 
 	^self calcExtentFromClientExtent: self defaultExtent!
 

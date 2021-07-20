@@ -12,7 +12,7 @@ UI.View subclass: #'UI.MoenTreeView'
 		'SingleLineMask' -> 16r8024
 	}!
 UI.MoenTreeView guid: (Core.GUID fromString: '{68f4ac03-2f95-11d3-93ba-00a024ca708a}')!
-UI.MoenTreeView comment: 'MoenTreeView is a <treeView> for displaying a <treeModel> in a graphic layout. It support the single <selectableItems> protocol for handling item selection. MoenTreeViews can be used to display any type of object with the exception of the ''nil'' object which is used to distinguish the root.
+UI.MoenTreeView comment: 'MoenTreeView is a <treeView> for displaying a <treeModel> in a graphic layout. It supports the single <selectableItems> protocol for handling item selection. MoenTreeViews can be used to display any type of object with the exception of the ''nil'' object which is used to distinguish the root.
 
 For more information on the underlying algorithms see:
 	''Drawing Dynamic Trees''
@@ -50,7 +50,7 @@ Class Variables:
 !UI.MoenTreeView methodsFor!
 
 addTreeFor: anObject parentNode: aMoenTreeNode
-	"Private - Add a new node for anObject and for each of its children if auto-expanding,, under the 
+	"Private - Add a new node for anObject and for each of its children if auto-expanding, under the 
 	<MoenTreeNode>, parentNode, and to the left of the <MoenTreeNode>, sibling. Answer the new 
 	<MoenTreeNode>. Note that the original parent (i.e. parentNode at the start of the recursion) will 
 	not be wired up to point to the new child on return from this message."
@@ -369,8 +369,8 @@ dragOver: session
 
 drop: session 
 	"The drag operation described by the <DragDropSession>, session, has 
-	culminated in a drop over the receiver. Answer whether the drop was successfull
-	so that the Session knows whether to cut the item from the 	drag source in the case 
+	culminated in a drop over the receiver. Answer whether the drop was successful
+	so that the Session knows whether to cut the item from the drag source in the case 
 	of a #move operation.
 	Implementation Note: We must remove the drop highlight."
 
@@ -410,7 +410,7 @@ errorNoSelection
 	^self error: 'No object selected'!
 
 expand
-	"Expand the selected node, hiding any children and displaying a '-' button.
+	"Expand the selected node, showing any children and displaying a '-' button.
 	Implementation Note: This may take a while, so display the wait cursor."
 
 	Cursor wait showWhile: [self expandNode: self selectedNode]!
@@ -455,7 +455,7 @@ expandSubtree: aMoenTreeNode
 
 findNodeForObject: anObject
 	"Private - Answer the first node in the receiver located using a pre-order traversal from the roots,
-	for which the receiver's model's search policy evaluates to true for the <Object> argument..
+	for which the receiver's model's search policy evaluates to true for the <Object> argument.
 	If there is no matching node then answer nil. Note that no check is made to verify that the object 
 	is actually part of the model."
 
@@ -589,7 +589,7 @@ hitTest: position
 	no node coincides, or an association the key of which is the symbolic hit type, and the 
 	value of which is the node which was hit."
 
-	"Note that rather than a simple test against each the keys of trees we use
+	"Note that rather than a simple test against each of the keys of trees we use
 	a recursive method which uses the pre-computed clip rectangle of a node
 	and all its nodes. This makes for a very fast search, even in massive trees,
 	because we can immediately exclude branches of the tree which do not
@@ -793,8 +793,8 @@ linePen: aPen
 linkChild: aMoenTreeNode toParent: parentMoenTreeNode
 	"Private - The first <MoenTreeNode> argument has been added (or perhaps moved) into this 
 	Moen tree beneath the second <MoenTreeNode> argument. The node is inserted into the 
-	children of the parent in the same position that it occuppies in the model. The contours are 
-	adjusted to accomodate the new node if the parent is currently expanded."
+	children of the parent in the same position that it occupies in the model. The contours are 
+	adjusted to accommodate the new node if the parent is currently expanded."
 
 	| siblingNode previousSibling |
 	siblingNode := parentMoenTreeNode child.
@@ -817,7 +817,7 @@ linkChild: aMoenTreeNode toParent: parentMoenTreeNode
 linkChild: aMoenTreeNode toParent: parentMoenTreeNode after: siblingMoenTreeNode 
 	"Private - The first <MoenTreeNode> argument has been added (or perhaps moved) into this 
 	Moen tree beneath the second <MoenTreeNode> argument. The contours are adjusted to 
-	accomodate the new node if the parent is currently expanded."
+	accommodate the new node if the parent is currently expanded."
 
 	| visible |
 	self assert: [parentMoenTreeNode hasExpanded].
@@ -1118,7 +1118,7 @@ onInputMaskRequired: anEvent
 onItem: anObject addedInParent: parentObject
 	"The <Object>, element, has been added as a child of the <Object>, parent,
 	in the receiver's model. Add the new element into the node tree in the same
-	position with respect to its siblings that it occuppies in the model. The parent 
+	position with respect to its siblings that it occupies in the model. The parent 
 	may be nil if the new element is to be a root."
 
 	| parentNode newNode |
@@ -1185,7 +1185,7 @@ onItem: anObject removedFromParent: parentObject
 			selection == node 
 				ifTrue: 
 					["Try and move selection to the previous sibling, or failing that the parent.
-					If its a root move the selection to the previous root, failing that the next root."
+					If it's a root move the selection to the previous root, failing that the next root."
 
 					self basicSelection: (self nearestNodeTo: node) cause: #unknown].
 			node isVisible 
@@ -1314,7 +1314,7 @@ onSelectionChanged
 
 onSelectionChanging: aSelectionChangingEvent
 	"Handler to indicate that the receiver's selection is about to change.
-	To prevent the proposed change under cdertain circumstances a handler
+	To prevent the proposed change under certain circumstances a handler
 	can set the value of aValueHolder to false.
 	The default is to trigger an #selectionChanging: event off the presenter"
 
@@ -1567,14 +1567,14 @@ selection
 !
 
 selection: newSelection
-	"Select the first occurence of the <Object>, newSelection, in the receiver. 
+	"Select the first occurrence of the <Object>, newSelection, in the receiver. 
 	If not present then signal a NotFoundError.
 	Answer anObject"
 
 	^self selection: newSelection ifAbsent: [self errorNotFound: newSelection]!
 
 selection: anObject ifAbsent: exceptionHandler
-	"Select the first occurence of anObject in the receiver
+	"Select the first occurrence of anObject in the receiver
 	and answer anObject, or if there are no occurrences, the 
 	result of evaluating the <niladicValuable>, exceptionHandler."
 
@@ -1599,7 +1599,7 @@ selectionOrNil
 	^self selectionIfNone: []!
 
 selectionOrNil: newSelection 
-	"Select the first occurence of the <Object> argument, in the receiver. If anObject
+	"Select the first occurrence of the <Object> argument, in the receiver. If anObject
 	is nil, then simply remove the existing selection. If the new selection is not present then
 	signal a <NotFoundError>. Answer the new selection."
 
@@ -1778,7 +1778,7 @@ wmSetFocus: message wParam: wParam lParam: lParam
 
 zip: aMoenTreeNode 
 	"Private - Reassemble the contours of the <MoenTreeNode> argument 
-	and its parent chain to accomodate a change in the argument's subtree."
+	and its parent chain to accommodate a change in the argument's subtree."
 
 	aMoenTreeNode isNil ifTrue: [^self].
 	aMoenTreeNode hasVisibleChildren 

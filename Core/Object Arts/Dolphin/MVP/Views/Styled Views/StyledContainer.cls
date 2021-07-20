@@ -118,7 +118,7 @@ allEdges
 
 ambientBackcolor
 	"Private - Answer the background colour that should be inherited by children of this view
-	that don't have their own background colour specified. ."
+	that don't have their own background colour specified."
 
 	^Color none!
 
@@ -163,13 +163,13 @@ initialize
 	edges := self allEdges.
 	cornerRadii := #(0 0 0 0).
 
-	"Ther default is to turn clip clhildren on. For non-transparent child views this stops
+	"The default is to turn clip children on. For non-transparent child views this stops
 	flashing during resize. Transparent children, however, will disappear in this mode so we
 	have to explicitly draw them into our clips during WM_PAINT"
 	self clipChildren: true!
 
 isAntialiased
-	"Answers true f the receiver uses antialiasing for it's drawing. This is the default but it
+	"Answers true if the receiver uses antialiasing for its drawing. This is the default but it
 	may sometimes be worth turning this off e.g. for testing"
 
 	isAntialiased isNil ifTrue: [isAntialiased := true].
@@ -275,13 +275,13 @@ paintParentBackgroundOn: aGdiplusGraphics
 			brush free]!
 
 paintStyledBackgroundOn: graphics 
-	"Private - Paint the nackground of the receiver"
+	"Private - Paint the background of the receiver"
 
 	| bounds sbrush bbrush backcolorARGB path corners |
 	bounds := self styledBackgroundRectangle.
 	sbrush := self hasStyledBrush 
 				ifTrue: 
-					["if we have a styled  brush use that "
+					["if we have a styled  brush use that"
 					self styledBrush asBackgroundGdiplusBrushFor: self].
 	backcolorARGB := self actualBackcolor.
 	bbrush := backcolorARGB isNone ifFalse: [GdiplusSolidBrush color: backcolorARGB].
@@ -359,10 +359,10 @@ paintTransparentChildrenOn: parentImage updateRect: updateRect
 	(self subViews select: [:each | each isTransparent and: [each rectangle intersects: updateRect]]) 
 		do: 
 			[:eachView | 
-			"We need to go a few hoops here. Apparently, getting a canvas onto the
+			"We need to go through a few hoops here. Apparently, getting a canvas onto the
 			parentImage directly doesn't work correctly since any text in the child view
-			is draw 'bold'. For this reason we create our own GDI bitmap to supply to
-			WM_PRINT and thgis seems to work better. We must first copy the parentImage
+			is drawn 'bold'. For this reason we create our own GDI bitmap to supply to
+			WM_PRINT and this seems to work better. We must first copy the parentImage
 			background to this."
 			| eachBitmap eachCanvas eachImage eachGraphics |
 			eachBitmap := Bitmap displayCompatibleWithExtent: eachView extent.
