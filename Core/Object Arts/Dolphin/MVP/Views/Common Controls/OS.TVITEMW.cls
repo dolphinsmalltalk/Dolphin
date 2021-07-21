@@ -74,7 +74,7 @@ cchTextMaxOffset
 	^_OffsetOf_cchTextMax!
 
 children: anInteger
-	"Set contents' cChildren member from anInteger"
+	"Set content's cChildren member from anInteger"
 
 	self cChildren: anInteger.
 	self maskIn: TVIF_CHILDREN!
@@ -171,7 +171,7 @@ pszText: anUtf16String
 	bytes uintPtrAtOffset: _OffsetOf_pszText put: anUtf16String yourAddress!
 
 selectedImage: anInteger
-	"Set contents' iSelectedImage member to anInteger"
+	"Set content's iSelectedImage member to anInteger"
 
 	self iSelectedImage: anInteger.
 	self maskIn: TVIF_SELECTEDIMAGE!
