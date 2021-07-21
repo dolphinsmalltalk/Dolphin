@@ -1318,7 +1318,7 @@ lvmInsertItem: aLvItem
 		lpParam: aLvItem asParameter!
 
 lvmRedrawItems: firstIndex to: lastIndex
-	"Private - Insert aLvItem into the tree view and add it to our contents dictionary"
+	"Private - Cause redraw messages to be sent for each of these item entries"
 
 	^self sendMessage: LVM_REDRAWITEMS wParam: firstIndex lpParam: lastIndex!
 
