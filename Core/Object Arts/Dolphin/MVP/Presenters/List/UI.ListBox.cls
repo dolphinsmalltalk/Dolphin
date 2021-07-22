@@ -400,7 +400,7 @@ maybeSelChanging: aSymbol
 	self onSelChanged: curSel!
 
 newMultiSelectionsFromEvent: aMouseEvent
-	"Private - Answer a collection of the <integer> selections that would occur if the `MouseEvent` argument was was passed to the list box control.
+	"Private - Answer a collection of the <integer> selections that would occur if the `MouseEvent` argument was passed to the list box control.
 	The behaviour is quite complicated, and different from the equally complicated behaviour of the later ListView control."
 
 	| itemClicked modified anchorIndex shiftRange button |
@@ -442,7 +442,7 @@ newMultiSelectionsFromEvent: aMouseEvent
 				ifFalse: [shiftRange copyWithout: anchorIndex]]!
 
 newSelectionsFromEvent: aMouseEvent
-	"Private - Answer a collection of the <integer> selections that would occur if the `MouseEvent` argument was was passed to the list box control.
+	"Private - Answer a collection of the <integer> selections that would occur if the `MouseEvent` argument was passed to the list box control.
 	The behaviour is quite complicated, and different from the similarly complicated behaviour of the later ListView control."
 
 	| mode |
@@ -452,7 +452,7 @@ newSelectionsFromEvent: aMouseEvent
 	^self newToggleSelectionsFromEvent: aMouseEvent!
 
 newSingleSelectionsFromEvent: aMouseEvent
-	"Private - Answer a single element `Array` of <integer> being the selections that result if the `MouseEvent` argument was was passed to a list box control in single-select mode.
+	"Private - Answer a single element `Array` of <integer> being the selections that result if the `MouseEvent` argument was passed to a list box control in single-select mode.
 	Single select mode is very simple:
 		- clicking an item selects it
 		- clicking outside any item has no effect on selection (although the caret moves)
@@ -465,7 +465,7 @@ newSingleSelectionsFromEvent: aMouseEvent
 			ifFalse: [lastSelIndices]!
 
 newToggleSelectionsFromEvent: aMouseEvent
-	"Private - Answer a single element `Array` of <integer> being the selections that result if the `MouseEvent` argument was was passed to a list box control in toggle-select mode.
+	"Private - Answer a single element `Array` of <integer> being the selections that result if the `MouseEvent` argument was passed to a list box control in toggle-select mode.
 	Toggle select mode is relatively simple:
 		- clicking an item toggles its previous selection state
 		- clicking outside any item toggles the last selected item
