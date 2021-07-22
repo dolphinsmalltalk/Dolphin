@@ -9,7 +9,7 @@ UI.CommandButton subclass: #'UI.PushButton'
 UI.PushButton guid: (Core.GUID fromString: '{87b4c729-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.PushButton comment: 'PushButton is a <CommandButton> implementing the Windows "BUTTON" class, usually in push button mode, i.e. with the BS_PUSHLIKE style. 
 
-Note that we have chosen not to support the text alignment styles of the BUTTON control on PushButton''s, because the ability to align the text in the push button rectangle doesn''t seem that useful. Alignment styles are, however, supported on the other incarnations of the BUTTON control as represented by the <CheckBox> and <RadioButton> classes, and so if needed the implemenation can be borrowed from there.
+Note that we have chosen not to support the text alignment styles of the BUTTON control on PushButton''s, because the ability to align the text in the push button rectangle doesn''t seem that useful. Alignment styles are, however, supported on the other incarnations of the BUTTON control as represented by the <CheckBox> and <RadioButton> classes, and so if needed the implementation can be borrowed from there.
 
 As of Dolphin 6.1 the Vista Command Link button style, with a note displayed in the form of a sub-title, is supported, but only when running on Vista. Command Link buttons degrade to a normal push button on earlier platforms. 
 
@@ -208,7 +208,7 @@ onViewCreated
 	(note notNil and: [note notEmpty]) ifTrue: [self setNote]!
 
 setDefault: aBoolean 
-	"Private - Inform the receiver's shell of it's (non-)default state."
+	"Private - Inform the receiver's shell of its (non-)default state."
 
 	self topShell view setDefaultButton: self state: aBoolean!
 

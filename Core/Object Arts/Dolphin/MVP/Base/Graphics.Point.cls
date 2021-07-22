@@ -248,7 +248,7 @@ raisedTo: operand
 
 rounded
 	"Answer a new Point with the x and y values of the receiver rounded.
-	Implementation Note: Superclass implemenation works, but we can do it more efficiently."
+	Implementation Note: Superclass implementation works, but we can do it more efficiently."
 
 	^x rounded @ y rounded!
 

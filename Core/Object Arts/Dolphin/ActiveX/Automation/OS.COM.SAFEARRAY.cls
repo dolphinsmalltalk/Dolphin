@@ -18,7 +18,7 @@ OS.COM.SAFEARRAY comment: 'SAFEARRAY is an <ExternalArray> class to represent th
 
 SAFEARRAYs are a flexible representation of potentially multiple dimensioned arrays of almost any of the Variant (Visual Basic) types.
 
-SAFEARRAY has similar behaviour to <StructureArray> in providing a means to map externally implemented arrays of values to appropriate Smalltalk objects (mostly from the <ExternalStructure> hierarchy), and thus (as of Dolphin 6) these share implemenation via a common abstract superclass.
+SAFEARRAY has similar behaviour to <StructureArray> in providing a means to map externally implemented arrays of values to appropriate Smalltalk objects (mostly from the <ExternalStructure> hierarchy), and thus (as of Dolphin 6) these share implementation via a common abstract superclass.
 
 Note that the reported length of a SAFEARRAY is actually the length of the rightmost (least significant) dimension.
 

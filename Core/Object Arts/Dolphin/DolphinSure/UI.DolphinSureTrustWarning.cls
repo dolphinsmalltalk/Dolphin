@@ -21,7 +21,7 @@ Instance Variables:
 !UI.DolphinSureTrustWarning methodsFor!
 
 alwaysTrust
-	"Answer true if the user has checked the alway trust check box"
+	"Answer true if the user has checked the always trust check box"
 
 	^alwaysTrust value!
 

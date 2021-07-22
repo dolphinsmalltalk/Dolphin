@@ -293,7 +293,7 @@ IsRunning: pbc pmkToLeft: pmkToLeft pmkNewlyRunning: pmkNewlyRunning
 
 isSystemMoniker
 	"Answer whether the receiver is a 'system moniker', i.e. one with an 
-	implemenation provided by OLE itself."
+	implementation provided by OLE itself."
 
 	| mksys |
 	mksys := DWORDBytes new.
@@ -386,7 +386,7 @@ RelativePathTo: pmkOther ppmkRelPath: ppmkRelPath
 
 systemMonikerType
 	"Answer whether the receiver is a 'system moniker', i.e. one with an 
-	implemenation provided by OLE itself."
+	implementation provided by OLE itself."
 
 	| mksys |
 	mksys := DWORDBytes new.
