@@ -22,7 +22,7 @@ The text in a button control can be aligned in various ways (this may also affec
 		#bottomRight	- bottom right corner
 
 Instance Variables:
-	image			<Image> or nil, specifying an image to associate with the button..
+	image			<Image> or nil, specifying an image to associate with the button.
 
 Class Variables:
 	AlignmentMap	<LookupTable> mapping the alignment modes listed above to the corresponding integer flags.
@@ -94,7 +94,7 @@ hasLeftText
 	^self baseStyleAllMask: BS_LEFTTEXT!
 
 hasLeftText: boolean 
-	"Set whether the receiver has the text at the left of the button button according to
+	"Set whether the receiver has the text at the left of the button according to
 	aBoolean."
 
 	self 
@@ -123,13 +123,13 @@ image: anImageOrNil
 				lParam: anImageOrNil asParameter]!
 
 isPushLike
-	"Answer whether the receiver has an appearence like a push button (i.e. it is a Toggle
+	"Answer whether the receiver has an appearance like a push button (i.e. it is a Toggle
 	Button)."
 
 	^self baseStyleAllMask: BS_PUSHLIKE!
 
 isPushLike: boolean 
-	"Set whether the receiver has appearence of a toggling push button according to aBoolean."
+	"Set whether the receiver has appearance of a toggling push button according to aBoolean."
 
 	self 
 		baseStyleMask: BS_PUSHLIKE
