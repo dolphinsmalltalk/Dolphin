@@ -43,7 +43,7 @@ basicAdd: anObject atIndex: anInteger
 	^self tcmInsertItem: (self makeTcItemStruct: anObject) atOffset: anInteger - 1!
 
 basicClear
-	"Private - Clears down the tab view control(but not its model)."
+	"Private - Clears down the tab view control (but not its model)."
 
 	(self sendMessage: TCM_DELETEALLITEMS) == 0 ifTrue: [^self errorInCommonControlCall]!
 
@@ -89,7 +89,7 @@ calcClientRectangleFromRectangle: aRectangle
 calcRectangleFromClientRectangle: aRectangle 
 	"Private - Given a client rectangle represented by the <Rectangle> argument, answer the
 	window rectangle that would be required to achieve this taking into account the current
-	window styles etc Note that the answered rectangle is in the COORDINATE SYSTEM OF THE
+	window styles etc. Note that the answered rectangle is in the COORDINATE SYSTEM OF THE
 	CLIENT."
 
 	^self tcmAdjustRect: true for: aRectangle!

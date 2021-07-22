@@ -148,7 +148,7 @@ dragLeave: session
 	session hideCursorWhile: [self hideDropHighlight]!
 
 dragOver: session 
-	"The drag operation described by  the <DragDropSession>, session,
+	"The drag operation described by the <DragDropSession>, session,
 	 has moved to a new position over the receiver's window. 
 	Implementation Note: Override in order to provide drop target highlighting
 	and to suggest a reasonable drop target for most cases (the item under the
@@ -186,7 +186,7 @@ dropHighlight
 !
 
 editItemLabel: hItem 
-	"Private - Initiate in-place editing of the item with the specified handle. Answer the a
+	"Private - Initiate in-place editing of the item with the specified handle. Answer the
 	<TextEdit> wrapping the edit control created by the receiver's list control, or nil if the
 	label edit was refused.
 
@@ -229,7 +229,7 @@ editSelectionLabel
 enableLabelEdit
 	"Private - Enable programmatic label editing in the host control. In order to allow 
 	programmatically initiated label editing when the #canEditLabels aspect is false
-	(i.e. the control does not have the ?VS_LABELEDIT style), 	we must temporarily 
+	(i.e. the control does not have the ?VS_LABELEDIT style), we must temporarily 
 	add the style bit, which is then removed later on receipt of the NM_ENDLABELEDIT 
 	notification. In order to allow us to restore the correct style bits on termination of 
 	the label edit, we avoid updating our own style bit mask."
@@ -308,12 +308,12 @@ hasGridLines: aBoolean
 	!
 
 hasHotTracking
-	"Answer whether the receiver's selection will track the mouse as it hovers over items in thel list."
+	"Answer whether the receiver's selection will track the mouse as it hovers over items in the list."
 
 	^self subclassResponsibility!
 
 hasHotTracking: aBoolean 
-	"Set whether the receiver's selection will track the mouse as it hovers over items in thel list."
+	"Set whether the receiver's selection will track the mouse as it hovers over items in the list."
 
 	^self subclassResponsibility!
 
@@ -395,7 +395,7 @@ largeIconExtent: aPointOrNil
 !
 
 newSelectionsFromEvent: aMouseEvent
-	"Private - Answer a collection of the <integer> selections that would occur if the `MouseEvent` argument was was passed to the control.
+	"Private - Answer a collection of the <integer> selections that would occur if the `MouseEvent` argument was passed to the control.
 	This method encodes the selection behaviour of `ListView` in response to mouse clicks, and is used there to predict what it will do in order to generate `selectionChanging:` events that the control itself does not provide (or at least not in virtual mode). The method is also used to implement right-click selection for `ListBox`, but note that it does not precisely replicate the listbox control's native left-click selection behaviour."
 
 	| itemClicked anyKeysDown newSelections anchorIndex shiftRange anchorIsSelected |
@@ -694,7 +694,7 @@ positionForKeyboardContextMenu
 		ifFalse: [self mapPointToScreen: (self itemRect: selections first textOnly: true) bottomLeft]!
 
 queryCommand: aCommandQuery
-	"Update aCommandQuery to indicates how a command would be processed.
+	"Update aCommandQuery to indicate how a command would be processed,
 	if sent to the receiver. Answers whether the receiver recognised the command
 	as one of its own (this may be ignored by the command router). This need not
 	be supersent if the #isEnabled: is sent to the <CommandQuery> to explicitly
@@ -759,7 +759,7 @@ viewMode
 	^self subclassResponsibility!
 
 viewMode: aSymbol 
-	"Sets the view mode of the reciver to aSymbol.
+	"Sets the view mode of the receiver to aSymbol.
 	See the class side method #viewModes for the set of valid symbols."
 
 	"Helps mutation between ListView and TreeView if we do something sensible with invalid viewMode"
