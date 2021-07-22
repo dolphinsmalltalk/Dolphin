@@ -33,7 +33,7 @@ lParam
 	^bytes uintPtrAtOffset: _OffsetOf_lParam!
 
 maskIn: anInteger
-	"OR in to content's mask member the bit flags represented by anInteger"
+	"OR in to receiver's mask field the bit flags represented by anInteger"
 
 	self flags: (self flags bitOr: anInteger)!
 

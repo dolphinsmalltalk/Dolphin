@@ -1318,7 +1318,6 @@ lvmInsertItem: aLvItem
 		lpParam: aLvItem asParameter!
 
 lvmRedrawItems: firstIndex to: lastIndex
-	"Private - Cause redraw messages to be sent for each of these item entries"
 
 	^self sendMessage: LVM_REDRAWITEMS wParam: firstIndex lpParam: lastIndex!
 
@@ -1896,9 +1895,7 @@ primaryColumn
 queryCommand: aCommandQuery
 	"Update aCommandQuery to indicate how a command would be processed.
 	if sent to the receiver. Answers whether the receiver recognised the command
-	as one of its own (this may be ignored by the command router). This need not
-	be supersent if the #isEnabled: is sent to the <CommandQuery> to explicitly
-	enable or disable a particular command."
+	as one of its own (this may be ignored by the command router)."
 
 	| cmd |
 	cmd := aCommandQuery commandSymbol.
@@ -2628,7 +2625,7 @@ onStartup
 
 	NtDll isWine
 		ifTrue: 
-			["Having autoSelectPackages option turned on in System Browser gives unpleasant scrolling effect when many multiple packages are selected. This also happens in Package Browser. Problem under Wine traced to LVIS_FOCUSED option in ListView>>selectIndex:. Not sure what overall effect it will have turning this off."
+			["When running under Wine the autoSelectPackages option causes an unpleasant scrolling effect when many packages are selected in a System Browser or Package Browser. The problem does not occur without the LVIS_FOCUSED style, the absence of which does mean the loss of focus indication."
 			SelectionStateMask := LVIS_SELECTED]
 		ifFalse: [SelectionStateMask := ##(LVIS_SELECTED | LVIS_FOCUSED)]!
 

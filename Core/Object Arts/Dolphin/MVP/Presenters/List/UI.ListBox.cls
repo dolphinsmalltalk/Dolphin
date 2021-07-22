@@ -400,8 +400,6 @@ maybeSelChanging: aSymbol
 	self onSelChanged: curSel!
 
 newMultiSelectionsFromEvent: aMouseEvent
-	"Private - Answer a collection of the <integer> selections that would occur if the `MouseEvent` argument was passed to the list box control.
-	The behaviour is quite complicated, and different from the equally complicated behaviour of the later ListView control."
 
 	| itemClicked modified anchorIndex shiftRange button |
 	itemClicked := self itemFromPoint: aMouseEvent position.
@@ -414,7 +412,7 @@ newMultiSelectionsFromEvent: aMouseEvent
 		ifTrue: [^lastSelIndices].
 	"Having taken care of the above edge cases, if no modifier keys are down, the behavior is equivalent to the single-select case."
 	modified ifFalse: [^itemClicked ifNil: [lastSelIndices] ifNotNil: [{itemClicked}]].
-	"The ListBox has a different with respect to the ListView in that clicking out of bounds is as if clicking on the last item"
+	"The ListBox behaves differently to the ListView in that clicking out of bounds is as if clicking on the last item"
 	itemClicked isNil ifTrue: [itemClicked := self itemCount].
 	aMouseEvent isShiftDown
 		ifFalse: 
@@ -423,7 +421,7 @@ newMultiSelectionsFromEvent: aMouseEvent
 			newSelections := lastSelIndices asSortedCollection.
 			newSelections remove: itemClicked ifAbsent: [newSelections add: itemClicked].
 			^newSelections asArray].
-	"At least Shift is down, so we must start examining the 'anchor'. This is the last item that was clicked with no modifiers, only ctrl, or ctrl + shift (shift-clicks do *not* move the 	anchor). It acts as the 'start point' for operations where shift is held--they affect the range of items from the anchor to the click point, inclusive. Initially it is zero, i.e. out-of-bounds, in which case holding shift essentially has no effect, and we act only on the item actually clicked."
+	"At least Shift is down, so we must start examining the 'anchor'. This is the last item that was clicked with no modifiers, only ctrl, or ctrl + shift (shift-clicks do *not* move the anchor). It acts as the 'start point' for operations where shift is held--they affect the range of items from the anchor to the click point, inclusive. Initially it is zero, i.e. out-of-bounds, in which case holding shift essentially has no effect, and we act only on the item actually clicked."
 	anchorIndex := self anchorIndex.
 	shiftRange := anchorIndex == 0
 				ifTrue: [itemClicked to: itemClicked]

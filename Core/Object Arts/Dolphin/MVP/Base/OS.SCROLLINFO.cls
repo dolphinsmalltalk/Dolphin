@@ -35,7 +35,7 @@ fMask: anInteger
 	bytes dwordAtOffset: _OffsetOf_fMask put: anInteger!
 
 maskIn: anInteger
-	"OR in to content's mask member the bit flags represented by anInteger.
+	"OR in to receiver's 'fMask' field the bit flags represented by anInteger.
 	Answer the receiver."
 
 	self fMask: (self fMask bitOr: anInteger)!

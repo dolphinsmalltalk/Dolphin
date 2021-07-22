@@ -74,7 +74,7 @@ cchTextMaxOffset
 	^_OffsetOf_cchTextMax!
 
 children: anInteger
-	"Set content's cChildren member from anInteger"
+	"Set receiver's cChildren field from anInteger"
 
 	self cChildren: anInteger.
 	self maskIn: TVIF_CHILDREN!

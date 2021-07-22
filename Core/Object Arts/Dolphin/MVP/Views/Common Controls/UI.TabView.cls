@@ -89,8 +89,7 @@ calcClientRectangleFromRectangle: aRectangle
 calcRectangleFromClientRectangle: aRectangle 
 	"Private - Given a client rectangle represented by the <Rectangle> argument, answer the
 	window rectangle that would be required to achieve this taking into account the current
-	window styles etc. Note that the answered rectangle is in the COORDINATE SYSTEM OF THE
-	CLIENT."
+	window styles etc. Note that the answered rectangle is in the client's coordinate system."
 
 	^self tcmAdjustRect: true for: aRectangle!
 
