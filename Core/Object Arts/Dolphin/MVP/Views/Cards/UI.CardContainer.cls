@@ -28,7 +28,7 @@ arrangementOf: aView put: anObject
 	super arrangementOf: aView put: anObject.
 	(tabs model includes: existingTab) 
 		ifTrue: 
-			["If the view has already an arrangement, just do an update of the tab 
+			["If the view already has an arrangement, just do an update of the tab 
 			instead of removing it and adding it. This will keep the tabs in order"
 			| index |
 			index := tabs model identityIndexOf: existingTab.
@@ -43,7 +43,7 @@ backcolor: aColorOrNil
 	tabs backcolor: aColorOrNil!
 
 createTabs
-	"Private - Add a <TabView> as a non-managed sub view of the receiver"
+	"Private - Add a <TabView> as a non-managed sub-view of the receiver"
 
 	tabs notNil ifTrue: [^self].
 	tabs := self newTabs.
@@ -58,7 +58,7 @@ defaultViewClass
 	^TabViewXP!
 
 ensureTabsAtBack
-	"Private - Force the associated tab view to be behind all our managed subviews so that it
+	"Private - Force the associated tab view to be behind all our managed sub-views so that it
 	does not obscure them. We must do this silently without causing an #onZOrderChanged."
 
 	self hasOwnTabs 
@@ -96,7 +96,7 @@ getTextBlock: aOneArgBlock
 	tabs getTextBlock: aOneArgBlock!
 
 hasButtons
-	"Answer whether the receiver has the buttons instead of tabs."
+	"Answer whether the receiver has buttons instead of tabs."
 
 	^tabs hasButtons!
 
@@ -196,7 +196,7 @@ onCurrentCardChanged
 	super onCurrentCardChanged!
 
 onEraseRequired: aColorEvent 
-	"Handler for erase background event- erase to the background colour,
+	"Handler for erase background event - erase to the background colour,
 	or answer nil if no colour is set to accept the default window processing."
 
 	"CardContainers are completely covered by their unmanaged TabView child."
@@ -258,7 +258,7 @@ preTranslateKeyboardInput: aMSG
 	^tabs preTranslateKeyboardInput: aMSG!
 
 queryCommand: aCommandQuery 
-	"Update aCommandQuery to indicates how a command would be processed.
+	"Update aCommandQuery to indicate how a command would be processed
 	if sent to the receiver. Answers whether the receiver recognised the command
 	as one of its own (this may be ignored by the command router). This need not
 	be supersent if the #isEnabled: is sent to the <CommandQuery> to explicitly
@@ -325,7 +325,7 @@ viewMode
 	^tabs viewMode!
 
 viewMode: aSymbol 
-	"Sets the view mode of the TabView associated with the reciver to aSymbol.
+	"Sets the view mode of the TabView associated with the receiver to aSymbol.
 	This can be one of:
 		#noIcons
 		#smallIcons
