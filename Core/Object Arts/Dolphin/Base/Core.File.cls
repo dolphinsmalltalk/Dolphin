@@ -285,7 +285,7 @@ pathName
 	^buf!
 
 position
-	"Answer the absolute Integer position of the reciver's file pointer
+	"Answer the absolute Integer position of the receiver's file pointer
 	or signal a FileException if the operation fails."
 
 	^self seek: 0 sense: FILE_CURRENT

@@ -275,7 +275,7 @@ viewMode
 		!
 
 viewMode: aSymbol 
-	"Sets the view mode of the reciver to aSymbol.
+	"Sets the view mode of the receiver to aSymbol.
 	This can be one of:
 		#normal
 		#centered

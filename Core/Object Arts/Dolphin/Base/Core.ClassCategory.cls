@@ -38,7 +38,7 @@ isEmpty
 	^(Smalltalk allClasses anySatisfy: [:aClass | self includesClass: aClass]) not!
 
 removeClass: aClass
-	"Remove aClass from the classes held by the reciver. Answer
+	"Remove aClass from the classes held by the receiver. Answer
 	aMethod."
 
 	aClass removeFromCategory: self.

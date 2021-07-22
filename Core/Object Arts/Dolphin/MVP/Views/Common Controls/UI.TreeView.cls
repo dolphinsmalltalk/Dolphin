@@ -1211,7 +1211,7 @@ updateMode: aSymbol
 				bitOr: ((UpdateModes indexOf: aSymbol) - 1 bitShift: 1)!
 
 viewMode
-	"Answer the view mode of the reciver. See the class method #viewModes for the
+	"Answer the view mode of the receiver. See the class method #viewModes for the
 	set of valid symbols."
 
 	^viewMode

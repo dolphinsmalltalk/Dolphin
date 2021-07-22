@@ -549,7 +549,7 @@ uninitialize
 		ifNotNil: [:devsys | devsys systemFolderClass == self ifTrue: [devsys systemFolderClass: nil]]!
 
 viewMode
-	"Answer the view mode of the reciver.
+	"Answer the view mode of the receiver.
 	This can be one of:
 		#report 
 		#extraLargeIcons 
@@ -563,7 +563,7 @@ viewMode
 !
 
 viewMode: aSymbol
-	"Sets the view mode of the reciver to aSymbol.
+	"Sets the view mode of the receiver to aSymbol.
 	This can be one of:
 		#smallIcons
 		#largeIcons

@@ -89,7 +89,7 @@ filterStopped
 	self showSample!
 
 initialize
-	"Initialize the reciver"
+	"Initialize the receiver"
 
 	super initialize.
 	selectorFilter := [:o | true].

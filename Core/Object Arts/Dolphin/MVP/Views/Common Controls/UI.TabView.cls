@@ -588,7 +588,7 @@ updateSelectionCache
 	self itemCount = 1 ifTrue: [self onSelChanged: nil]!
 
 viewMode
-	"Answer the view mode of the reciver.
+	"Answer the view mode of the receiver.
 	This can be one of:
 		#noIcons
 		#smallIcons	(16x16)
