@@ -264,7 +264,7 @@ list: aSequenceableCollection
 	self model list: aSequenceableCollection!
 
 newSelectionsFromEvent: aMouseEvent
-	"Private - Answer a collection of the <integer> selections that would occur if the `MouseEvent` argument was was passed to the control."
+	"Private - Answer a collection of the <integer> selections that would occur if the `MouseEvent` argument was passed to the control."
 
 	^self subclassResponsibility!
 

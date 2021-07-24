@@ -4701,7 +4701,7 @@ publishedAspectsOfInstances
 	#(#autoFormatMethodSource #backupOnImageSave #preferAlternateInspectors #splashShowAtStartup)
 		do: [:each | aspects add: (Aspect boolean: each)].
 	^aspects
-		add: ((Aspect font: #defaultFont) category: #appearence);
+		add: ((Aspect font: #defaultFont) category: #appearance);
 		add: (Aspect
 					choice: #formatterClass
 					from: [(ClassCategory name: 'System-Compiler-Formatters') classes]

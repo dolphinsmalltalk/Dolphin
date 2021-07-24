@@ -41,7 +41,7 @@ filterSelector: aCompiledCodeOrNil
 	self subclassResponsibility!
 
 initialize
-	"Initialize the reciver"
+	"Initialize the receiver"
 
 	super initialize.
 	percentageFilter := [:o | true].

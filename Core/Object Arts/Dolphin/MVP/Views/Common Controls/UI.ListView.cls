@@ -12,7 +12,7 @@ UI.IconicListAbstract subclass: #'UI.ListView'
 UI.ListView guid: (Core.GUID fromString: '{87b4c730-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.ListView comment: '`ListView` is the `<listView>` implementing the Windows "SysListView32" common control. It is for single selection use and, therefore, implements the `<selectableItems>` protocol for use with any `<listModel>`.
 
-A `ListView` is capable of displaying it items in one of a number of modes, e.g. `#smallIcons`, `#largeIcons`, `#list`, and `#report` which can be set using the `#viewMode` aspect. In all but `#report` mode the list effectively has only one column being displayed; this is the primary column. Columns are described using instances of `ListViewColumn`. See the comment for this class for details on how to set up a column to display the appropriate information for a list item.
+A `ListView` is capable of displaying its items in one of a number of modes, e.g. `#smallIcons`, `#largeIcons`, `#list`, and `#report` which can be set using the `#viewMode` aspect. In all but `#report` mode the list effectively has only one column being displayed; this is the primary column. Columns are described using instances of `ListViewColumn`. See the comment for this class for details on how to set up a column to display the appropriate information for a list item.
 
 The underlying Windows common control is a sophisticated one with many options. We have not attempted to wrap all of the features of this control within the ListView class. However, you should find that much of the most useful functionality is present.
 
@@ -297,7 +297,7 @@ basicAddColumn: aListViewColumn atIndex: anInteger
 	^aListViewColumn!
 
 basicClear
-	"Private - Clears down the listview control(but not its model)."
+	"Private - Clears down the listview control (but not its model)."
 
 	self lvmDeleteAllItems!
 
@@ -575,7 +575,7 @@ findItem: aString startingAt: anInteger wrap: aBoolean
 	"Private - Perform a search for the first item starting with the <readableString>,
 	partialName, beginning with the item at <integer> index, start, potentially wrapping
 	round to the start depending on the <boolean>, wrap. i.e. an incremental search.
-	Answer the index of the item, or 0 if it none matched."
+	Answer the index of the item, or 0 if none matched."
 
 	| items getText len |
 	items := self list.
@@ -633,7 +633,7 @@ getItemChecked: anInteger
 	"Answer whether the item with the specified index is 'checked' or not. The result is unspecified if the receiver is not in `hasCheckBoxes` mode."
 	"Implementation mode: The ListView checkboxes feature is really just an application of state images, and the API for managing checked/unchecked is irregular and not very specific.
 		- to determine whether an item is checked, we have to request the state image index using a special message (LVM_GETITEM does not return it). The image index should be 1 for unchecked, and 2 for checked.
-		- to check/uncheck an item, we set the state image index to either 1 or 2. See `setItem:checked:`. If set to 0 (or some other value) then the checkbox will not be showed at all, but will reappear if the user clicks the item. In practice this isn't useful to represent 3 states, as it would be better to have a specific image for the unspecified state."
+		- to check/uncheck an item, we set the state image index to either 1 or 2. See `setItem:checked:`. If set to 0 (or some other value) then the checkbox will not be shown at all, but will reappear if the user clicks the item. In practice this isn't useful to represent 3 states, as it would be better to have a specific image for the unspecified state."
 
 	^((self lvmGetItemState: anInteger - 1 mask: LVIS_STATEIMAGEMASK)
 		bitShift: ##((LVIS_STATEIMAGEMASK lowBit - 1) negated)) > 1!
@@ -723,7 +723,7 @@ hasColumnHeaders
 !
 
 hasColumnHeaders: aBoolean
-	"Set the receiver's base style such that is has column headers
+	"Set the receiver's base style such that it has column headers
 	according to aBoolean." 
 
 	self 
@@ -1160,7 +1160,7 @@ lvmGetCallbackMask
 
 lvmGetColumnOrderArray
 	"Private - Answer an <SDWORDArray> containing the current left-to-right order 
-	of columns in the receiver specified as a zero-based positions. "
+	of columns in the receiver specified as zero-based positions. "
 
 	| iCount iArray |
 	iCount := self columnCount.
@@ -1318,7 +1318,6 @@ lvmInsertItem: aLvItem
 		lpParam: aLvItem asParameter!
 
 lvmRedrawItems: firstIndex to: lastIndex
-	"Private - Insert aLvItem into the tree view and add it to our contents dictionary"
 
 	^self sendMessage: LVM_REDRAWITEMS wParam: firstIndex lpParam: lastIndex!
 
@@ -1375,7 +1374,7 @@ lvmSetExtendedListViewStyle: dwExMask dwExStyle: dwExStyle
 
 lvmSetIconSpacing: aPoint 
 	"Private - Set the spacing between icons displayed in the receiver.
-	Answer's the previous icon spacing packed into a 32-bit integer."
+	Answers the previous icon spacing packed into a 32-bit integer."
 
 	^self 
 		sendMessage: LVM_SETICONSPACING
@@ -1383,7 +1382,7 @@ lvmSetIconSpacing: aPoint
 		lpParam: aPoint asUIntPtr!
 
 lvmSetImageList: aWinImageList type: anIntegerImageType
-	"Private - Set the receivers normal/state image list depending on anIntegerImageType.
+	"Private - Set the receiver's normal/state image list depending on anIntegerImageType.
 	Answer the handle of the previous image list."
 
 	^User32
@@ -1393,7 +1392,7 @@ lvmSetImageList: aWinImageList type: anIntegerImageType
 		lParam: aWinImageList asParameter!
 
 lvmSetItem: anLvItem
-	"Private - Set some or all of the receivers default attributes as 
+	"Private - Set some or all of the receiver's default attributes as 
 	specified in the argument, anLvItem."
 
 	(self
@@ -1412,7 +1411,7 @@ lvmSetItem: index position: aPos
 		lpParam: aPos asParameter!
 
 lvmSetItem: index state: anLvItem
-	"Private - Set an items state to that in anLvItem."
+	"Private - Set an item's state to that in anLvItem."
 
 	(self 
 		sendMessage: LVM_SETITEMSTATE
@@ -1848,7 +1847,7 @@ onSelChanged: anArray
 
 onSelChanging: anArray cause: aSymbol
 	"Private - Selection is changing in the receiver to the item in the receiver's model identified by the specified <Collection> of <integer> indices. Answer whether to allow the selection change to proceed.
-	Note that #selectionChanging: events are only fired as a direct consequence of  user initiated actions, not in response to selection changes that occur as direct  or indirect results of programmatic actions."
+	Note that #selectionChanging: events are only fired as a direct consequence of user initiated actions, not in response to selection changes that occur as direct or indirect results of programmatic actions."
 
 	^self isStateRestoring or: 
 			[anArray = approvedSelIndices or: 
@@ -1894,11 +1893,9 @@ primaryColumn
 	^self allColumns first!
 
 queryCommand: aCommandQuery
-	"Update aCommandQuery to indicates how a command would be processed.
+	"Update aCommandQuery to indicate how a command would be processed.
 	if sent to the receiver. Answers whether the receiver recognised the command
-	as one of its own (this may be ignored by the command router). This need not
-	be supersent if the #isEnabled: is sent to the <CommandQuery> to explicitly
-	enable or disable a particular command."
+	as one of its own (this may be ignored by the command router)."
 
 	| cmd |
 	cmd := aCommandQuery commandSymbol.
@@ -2023,7 +2020,7 @@ selections: aCollection ifAbsent: aNiladicOrMonadicValuable
 	^missing isEmpty ifTrue: [aCollection] ifFalse: [aNiladicOrMonadicValuable cull: missing]!
 
 selectionsByIndex
-	"Answer an <Array> of the <integer> the indices of the selected items 	in the receiver in ascending order. The array will be empty if there is no selection."
+	"Answer an <Array> of the <integer> the indices of the selected items in the receiver in ascending order. The array will be empty if there is no selection."
 
 	^lastSelIndices!
 
@@ -2628,7 +2625,7 @@ onStartup
 
 	NtDll isWine
 		ifTrue: 
-			["Having autoSelectPackages option turned on in System  Browser gives unpleasant scrolling effect when many multiple packages are selected. This also happens in Package Browser. Problem under Wine traced to LVIS_FOCUSED option in ListView>>selectIndex:. Not sure what overall effect it will have turning this off."
+			["When running under Wine the autoSelectPackages option causes an unpleasant scrolling effect when many packages are selected in a System Browser or Package Browser. The problem does not occur without the LVIS_FOCUSED style, the absence of which does mean the loss of focus indication."
 			SelectionStateMask := LVIS_SELECTED]
 		ifFalse: [SelectionStateMask := ##(LVIS_SELECTED | LVIS_FOCUSED)]!
 

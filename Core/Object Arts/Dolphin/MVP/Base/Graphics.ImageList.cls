@@ -243,7 +243,7 @@ isPersistent
 	"Private - Answer true if the receiver holds sufficient information such that
 	it can recreate itself when the image is saved and restored. This is also
 	an indication as to whether the receiver can be filed out/in using the STB
-	mechanism. Generally this ability corresponds to a useful implemenation
+	mechanism. Generally this ability corresponds to a useful implementation
 	of #basicRealize"
 
 	^false!

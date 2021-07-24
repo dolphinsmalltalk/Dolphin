@@ -150,7 +150,7 @@ iStateImage
 	^self dwState bitShift: -12!
 
 iStateImage: anInteger
-	"Set contents' state image index to anInteger. Any other state is discarded."
+	"Set receiver's state image field to anInteger. Any other state is discarded."
 
 	self
 		dwState: (anInteger bitShift: 12);
@@ -245,7 +245,7 @@ row: rowInteger text: aString imageIndex: imageInteger indent: indentInteger sta
 	self mask: mask!
 
 stateImageIndex: anInteger
-	"Set contents' state image index to anInteger. Any other state is discarded."
+	"Set content's state image index to anInteger. Any other state is discarded."
 
 	self
 		iStateImage: anInteger;

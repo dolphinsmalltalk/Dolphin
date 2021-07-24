@@ -395,7 +395,7 @@ emitPaxAttributes:!private!source filing-pax! !
 
 allFileOutNames
 	"Private - Answers an OrderedCollection of the source filenames for the receiver and all of its 
-	contents when in PAX source mode. Note that the PAX filename is alway last in the collection."
+	contents when in PAX source mode. Note that the PAX filename is always last in the collection."
 
 	| answer |
 	answer := OrderedCollection new.

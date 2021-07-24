@@ -67,7 +67,7 @@ queryAlong: aCommandPolicy
 	^CommandQuery new beEnabled!
 
 styleName
-	"Answer a Symbol description of the style of the reciver"
+	"Answer a Symbol description of the style of the receiver"
 
 	^DividerLookup at: self styleFlags!
 

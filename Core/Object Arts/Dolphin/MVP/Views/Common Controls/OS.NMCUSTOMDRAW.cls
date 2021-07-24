@@ -119,12 +119,12 @@ isDefault
 	^self uItemState allMask: CDIS_DEFAULT!
 
 isDisabled
-	"Answer whether the item being draw is disabled."
+	"Answer whether the item being drawn is disabled."
 
 	^self uItemState allMask: CDIS_DISABLED!
 
 isGrayed
-	"Answer whether the item being draw is greyed out."
+	"Answer whether the item being drawn is greyed out."
 
 	^self uItemState allMask: CDIS_GRAYED!
 
@@ -145,7 +145,7 @@ isMarked
 	^self uItemState allMask: CDIS_MARKED!
 
 isSelected
-	"Answer whether the item being draw is selected."
+	"Answer whether the item being drawn is selected."
 
 	^self uItemState allMask: CDIS_SELECTED!
 

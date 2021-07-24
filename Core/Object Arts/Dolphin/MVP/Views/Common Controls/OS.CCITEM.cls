@@ -48,7 +48,7 @@ iImage: anObject
 	self subclassResponsibility!
 
 image: anInteger
-	"Set contents' iImage member to anInteger"
+	"Set receiver's iImage field to anInteger"
 
 	self iImage: anInteger.
 	self maskIn: self imageValidMask!
@@ -87,7 +87,7 @@ mask: anInteger
 	bytes dwordAtOffset: _OffsetOf_mask put: anInteger!
 
 maskIn: anInteger
-	"OR in to contents' mask member the bit flags represented by anInteger"
+	"OR in to receiver's mask field the bit flags represented by anInteger"
 
 	self mask: (self mask bitOr: anInteger)!
 
@@ -101,7 +101,7 @@ newTextBuffer: anInteger
 		maskIn: self textValidMask!
 
 param: anInteger
-	"Set contents's lParam member to anInteger marking the modifications in the mask."
+	"Set receiver's lParam field to anInteger marking the modifications in the mask."
 
 	self lParam: anInteger.
 	self maskIn: self paramValidMask!
@@ -125,7 +125,7 @@ pszText: anObject
 	self subclassResponsibility!
 
 state: anInteger
-	"Set contents' state member from anInteger"
+	"Set receiver's state field from anInteger"
 
 	self dwState: anInteger; 
 		maskIn: self stateValidMask;
@@ -142,12 +142,12 @@ stateMask: anObject
 	self subclassResponsibility!
 
 stateMaskIn: anInteger
-	"Private - OR in to contents' state member the bit flags represented by anInteger"
+	"Private - OR in to receiver's state field the bit flags represented by anInteger"
 
 	self state: (self dwState bitOr: anInteger)!
 
 stateMaskOut: anInteger
-	"Private - Mask out of contents' state member the bit flags represented by anInteger"
+	"Private - Mask out of receiver's state field the bit flags represented by anInteger"
 
 	self state: (self dwState maskClear: anInteger)!
 
@@ -165,7 +165,7 @@ text
 	^text ifNil: [self pszText]!
 
 text: aString
-	"Sets contents' pszMember to Utf16String. We also hang on to it in our text instance var to
+	"Sets receiver's pszMember field to Utf16String. We also hang on to it in our text instance var to
 	ensure that its lifetime is sufficiently long for us to safely use it."
 
 	text := aString displayString asUtf16String.

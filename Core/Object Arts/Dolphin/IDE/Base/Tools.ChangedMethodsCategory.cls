@@ -9,7 +9,7 @@ Tools.VirtualMethodCategory subclass: #'Tools.ChangedMethodsCategory'
 Tools.ChangedMethodsCategory guid: (Core.GUID fromString: '{51ab4605-0ab6-4cc3-b886-e2c90022ec0a}')!
 Tools.ChangedMethodsCategory comment: 'ChangedMethodsCategory is a virtual method category membership of which is limited to those methods which have unsaved changes (i.e. they are a method of a changed class with source residing in the change log).
 
-Although this class is strictly redundant (it being implementable as a PluggableVirtualMethodCategory), a specialised implemenation is much faster when enumerating the entire contents because the set of candidate behaviours can be limited.'!
+Although this class is strictly redundant (it being implementable as a PluggableVirtualMethodCategory), a specialised implementation is much faster when enumerating the entire contents because the set of candidate behaviours can be limited.'!
 !Tools.ChangedMethodsCategory categoriesForClass!System-Support! !
 !Tools.ChangedMethodsCategory methodsFor!
 

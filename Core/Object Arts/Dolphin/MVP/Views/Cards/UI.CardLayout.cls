@@ -30,7 +30,7 @@ arrangementOf: aView put: anObject
 
 	| previous |
 
-	"If the view has already an arrangement, we need to remove it."
+	"If the view already has an arrangement, we need to remove it."
 	previous := names detect: [:each | each value==aView] ifNone: [].
 	previous notNil ifTrue: [ names remove: previous ].
 
@@ -113,7 +113,7 @@ lastCard
 	^card!
 
 layoutContainer: aCompositeView context: aLayoutContext 
-	"Private - Update the <LayoutContext> argument with rectangles for the sub-views of its the
+	"Private - Update the <LayoutContext> argument with rectangles for the sub-views of the
 	specified container view, laying out those sub-views according to the rules and
 	configuration of the particular layout manager."
 

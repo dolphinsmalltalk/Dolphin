@@ -12,7 +12,7 @@ Core.Object subclass: #'UI.ListViewColumn'
 UI.ListViewColumn guid: (Core.GUID fromString: '{87b4c499-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.ListViewColumn comment: 'ListViewColumn is a description of a column held by a <ListView>. Note that, columns are only displayed when a list is in #report mode.
 
-Each column is configurable using a number of valuables (usually blocks) which determine how the item objects held by the list are mapped to information to be presented in the column.The first mapping is achieved by the getContentsBlock which, given the list item, determines the object that the column actually represents. How this contents object is then mapped to the displayed text is determined by the getTextBlock. Similarly, the getImageBlock is used to map a contents object to the index of an image to display in the column (the ImageManager that will be used to obtain the actual image is that of the ListView itself). In order to determine how a column will be sorted (an operation that is automatically perform when a column header is clicked) the getSortValueBlock can be set. This takes a contents object and maps it to an appropriate sort value. If it is necessary for a column to display "tip text" then a getInfoTipBlock can be used to specify the mapping between a contents object and this text. Lastly the customDrawBlock can be used to control the appearance for individual column entries. The above blocks are initialized to defaults with the following actions:
+Each column is configurable using a number of valuables (usually blocks) which determine how the item objects held by the list are mapped to information to be presented in the column.The first mapping is achieved by the getContentsBlock which, given the list item, determines the object that the column actually represents. How this contents object is then mapped to the displayed text is determined by the getTextBlock. Similarly, the getImageBlock is used to map a contents object to the index of an image to display in the column (the ImageManager that will be used to obtain the actual image is that of the ListView itself). In order to determine how a column will be sorted (an operation that is automatically performed when a column header is clicked) the getSortValueBlock can be set. This takes a contents object and maps it to an appropriate sort value. If it is necessary for a column to display "tip text" then a getInfoTipBlock can be used to specify the mapping between a contents object and this text. Lastly the customDrawBlock can be used to control the appearance for individual column entries. The above blocks are initialized to defaults with the following actions:
 
 getContentsBlock	- use the list item itself (the primary column object).
 getTextBlock		- use #displayString on the contents object.
@@ -264,14 +264,14 @@ isAlignmentRight
 	^alignment == #right!
 
 isAutoResize
-	"Answer true if the receiver will attempt to share the available width in it's parent with
+	"Answer true if the receiver will attempt to share the available width in its parent with
 	other auto-resize columns"
 
 	^flags anyMask: AutoResizeMask!
 
 isAutoResize: aBoolean 
 	"Set the auto-resize feature of the receiver to aBoolean. If enabled, the receiver will 
-	attempt to share the available width in it's parent with other auto-resize columns"
+	attempt to share the available width in its parent with other auto-resize columns"
 
 	flags := flags mask: AutoResizeMask set: aBoolean.
 	self parent ifNotNil: [:list | list autoResizeColumns]!
@@ -477,7 +477,7 @@ stbConvertFrom: anSTBClassFormat
 	"Convert from earlier version resource. 
 	Version changes:
 		1: Add a getImageBlock instance variable.
-		2: Addsan isAutoResize instance variable.
+		2: Adds an isAutoResize instance variable.
 		3: Add getInfoTipBlock instance variable.
 		4: Add customDrawBlock instance variable.
 		5: Old isAutoResize variable becomes flags variable."

@@ -625,13 +625,13 @@ onXButtonReleased: aMouseEvent
 	^self view onXButtonReleased: aMouseEvent!
 
 parentPresenter
-	"Answer the Presenter that is the parent of the reciver, or nil if there
+	"Answer the Presenter that is the parent of the receiver, or nil if there
 	is no parent"
 
 	^parentPresenter!
 
 parentPresenter: aPresenter
-	"Private - Set the Presenter that is the parent of the reciver to be aPresenter"
+	"Private - Set the Presenter that is the parent of the receiver to be aPresenter"
 
 	parentPresenter := aPresenter!
 

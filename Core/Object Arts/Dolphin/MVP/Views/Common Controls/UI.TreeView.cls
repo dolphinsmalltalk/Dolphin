@@ -668,7 +668,7 @@ onAdd: anObject atIndex: anIntegerIndex
 	self shouldNotImplement.!
 
 onDestroyed
-	"Private - Handler for window destruction notification.. 
+	"Private - Handler for window destruction notification.
 	Implementation Note: In order to speed up deletion we first reset the handleObjectMap so that
 	the item deletion notifications are handled more speedily - unfortunately
 	we can't turn them off altogether, as then the tree leaks."
@@ -722,7 +722,7 @@ onItem: anObject addedInParent: aParentObject
 	"Event received when anObject has been added to the receiver's
 	model within aParentObject."
 
-	"Update parent if it has gained it's first child."
+	"Update parent if it has gained its first child."
 
 	| parentHandle parentTvItem siblings previousSiblingIndex previousSiblingHandle |
 	aParentObject isNil
@@ -1211,7 +1211,7 @@ updateMode: aSymbol
 				bitOr: ((UpdateModes indexOf: aSymbol) - 1 bitShift: 1)!
 
 viewMode
-	"Answer the view mode of the reciver. See the class method #viewModes for the
+	"Answer the view mode of the receiver. See the class method #viewModes for the
 	set of valid symbols."
 
 	^viewMode

@@ -139,7 +139,7 @@ mask: anInteger
 	bytes dwordAtOffset: _OffsetOf_mask put: anInteger!
 
 maskIn: anInteger
-	"OR in to contents' mask member the bit flags represented by anInteger"
+	"OR in to receiver's mask field the bit flags represented by anInteger"
 
 	self mask: (self mask bitOr: anInteger)!
 
@@ -173,7 +173,7 @@ text
 	^text!
 
 text: aString
-	"Sets contents' pszMember to a Utf16String. We also hang on to it in our
+	"Sets receiver's pszMember field to a Utf16String. We also hang on to it in our
 	text instance var to ensure that its lifetime is sufficiently long
 	for us to safely use it."
 

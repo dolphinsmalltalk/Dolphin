@@ -8,7 +8,7 @@ UI.ValueConvertingControlView subclass: #'UI.CheckButton'
 	classConstants: {}!
 UI.CheckButton guid: (Core.GUID fromString: '{e7a5424e-24cd-4389-a849-591db02a92d0}')!
 UI.CheckButton isNonInstantiable: true!
-UI.CheckButton comment: 'CheckButton is the abstract subclass of <valueView>s implementing the Windows "BUTTON" class in checkbox and radio button styles. The <valueModel> associated with a CheckButton must alway yield a <boolean> value once mapped through the installed type converter, although nil is also an acceptable value for a <CheckBox> in 3-state mode. A CheckButton will normally be used in conjunction with either a <BooleanPresenter>, or in a group connected to a <RadioButtonSetPresenter>.
+UI.CheckButton comment: 'CheckButton is the abstract subclass of <valueView>s implementing the Windows "BUTTON" class in checkbox and radio button styles. The <valueModel> associated with a CheckButton must always yield a <boolean> value once mapped through the installed type converter, although nil is also an acceptable value for a <CheckBox> in 3-state mode. A CheckButton will normally be used in conjunction with either a <BooleanPresenter>, or in a group connected to a <RadioButtonSetPresenter>.
 
 The text in a button control can be aligned in various ways (this may also affect the alignment of any image displayed in the button):
 		#left			- left edge, vertically centred
@@ -22,7 +22,7 @@ The text in a button control can be aligned in various ways (this may also affec
 		#bottomRight	- bottom right corner
 
 Instance Variables:
-	image			<Image> or nil, specifying an image to associate with the button..
+	image			<Image> or nil, specifying an image to associate with the button.
 
 Class Variables:
 	AlignmentMap	<LookupTable> mapping the alignment modes listed above to the corresponding integer flags.
@@ -94,7 +94,7 @@ hasLeftText
 	^self baseStyleAllMask: BS_LEFTTEXT!
 
 hasLeftText: boolean 
-	"Set whether the receiver has the text at the left of the button button according to
+	"Set whether the receiver has the text at the left of the button according to
 	aBoolean."
 
 	self 
@@ -123,13 +123,13 @@ image: anImageOrNil
 				lParam: anImageOrNil asParameter]!
 
 isPushLike
-	"Answer whether the receiver has an appearence like a push button (i.e. it is a Toggle
+	"Answer whether the receiver has an appearance like a push button (i.e. it is a Toggle
 	Button)."
 
 	^self baseStyleAllMask: BS_PUSHLIKE!
 
 isPushLike: boolean 
-	"Set whether the receiver has appearence of a toggling push button according to aBoolean."
+	"Set whether the receiver has appearance of a toggling push button according to aBoolean."
 
 	self 
 		baseStyleMask: BS_PUSHLIKE
