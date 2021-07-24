@@ -1059,11 +1059,14 @@ removePackage: aPackage
 	If aPackage is corrupt, leading to the canRemove: test raising an error
 	then you can evaluate basicRemove: directly to remove aPackage."
 
-	aPackage == self systemPackage
-		ifTrue: [^self errorRemovingSystemPackage].
-	self basicRemovePackage: aPackage.
-	self loadedChanged.
+	self removePackages: {aPackage}.
 	^aPackage!
+
+removePackages: aCollectionOfPackages
+	(aCollectionOfPackages anySatisfy: [:each | each == self systemPackage])
+		ifTrue: [^self errorRemovingSystemPackage].
+	aCollectionOfPackages do: [:each | self basicRemovePackage: each].
+	self loadedChanged!
 
 renamePackage: aPackage to: aStringPathname
 	"Attempts to rename aPackage held by the receiver to aStringName."
@@ -1271,6 +1274,7 @@ prerequisiteNotFoundSignal!constants!public! !
 rebaseBasePackagesTo:!public!removing! !
 release!initializing!private! !
 removePackage:!public!removing! !
+removePackages:!public!removing! !
 renamePackage:to:!public!removing! !
 resetPrerequisites!private!updating! !
 resourceRepackaged:from:to:!events!private! !

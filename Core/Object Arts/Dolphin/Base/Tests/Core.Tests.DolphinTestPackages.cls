@@ -40,13 +40,13 @@ setUp
 !
 
 tearDown
-	{a. b. c} do: 
+	| toRemove |
+	toRemove := {a. b. c} select: [:each | each notNil].
+	toRemove do: 
 			[:each |
-			each notNil
-				ifTrue: 
-					[{each packageFileName. each fileOutName}
-						do: [:filename | (File exists: filename) ifTrue: [File delete: filename]].
-					Package manager removePackage: each]].
+			{each packageFileName. each fileOutName}
+				do: [:filename | (File exists: filename) ifTrue: [File delete: filename]]].
+	Package manager removePackages: toRemove.
 	a := b := c := nil.
 	super tearDown! !
 !Core.Tests.DolphinTestPackages categoriesForMethods!
