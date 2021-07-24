@@ -207,8 +207,8 @@ initialize
 	cardHistory := HistoryList new.
 	cardHistory searchPolicy: SearchPolicy identity!
 
-installCardMenubarAndAccelerators
-	self view menuBar: self currentCard view menuBar!
+installCardMenubarAndAccelerators: aView
+	self view menuBar: aView menuBar!
 
 isCurrentCardFirst
 	^self hasCurrentCard and: [self cards first = self currentCard]!
@@ -274,10 +274,10 @@ onCardCaptionChanged
 	self updateCaption.
 	cardsPresenter view updateTabs!
 
-onCardChanged
-	self installCardMenubarAndAccelerators.
+onCardChangedFrom: previousView to: currentView
+	self installCardMenubarAndAccelerators: currentView.
 	self updateCaption.
-	cardHistory visit: self currentCard view!
+	cardHistory visit: currentView!
 
 onCloseRequested: aBooleanValue 
 	"Private - A request to close the view onto the receiver as occurred.
@@ -359,8 +359,8 @@ queryCommand: aCommandQuery
 
 registerForCardEvents
 	cardsPresenter view 
-		when: #currentCardChanged
-		send: #onCardChanged
+		when: #currentCardChangedFrom:to:
+		send: #onCardChangedFrom:to:
 		to: self!
 
 removeCard: cardToRemove 
@@ -551,7 +551,7 @@ hasFilename!public!testing! !
 historySkip:!helpers!public! !
 ideaCardToolbarId!Constants!private! !
 initialize!initializing!private! !
-installCardMenubarAndAccelerators!helpers!private! !
+installCardMenubarAndAccelerators:!helpers!private! !
 isCurrentCardFirst!public!testing! !
 isCurrentCardLast!public!testing! !
 isIdeaSpaceCard!public!testing! !
@@ -561,7 +561,7 @@ moveCardLeft!commands!public! !
 moveCardRight!commands!public! !
 newEmbeddedCardOfClass:!helpers!private! !
 onCardCaptionChanged!event handling!private! !
-onCardChanged!event handling!private! !
+onCardChangedFrom:to:!event handling!private! !
 onCloseRequested:!event handling!private! !
 onIdleEntered!event handling!private! !
 onTabsMiddleButtonClicked:!event handling!private! !

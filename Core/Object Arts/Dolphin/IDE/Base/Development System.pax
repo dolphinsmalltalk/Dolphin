@@ -6153,7 +6153,7 @@ publishedEventsOfInstances
     	by instances of the receiver."
 
 	^(super publishedEventsOfInstances)
-		add: #currentCardChanged;
+		add: #currentCardChangedFrom:to:;
 		yourself! !
 !UI.AbstractCardContainer class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
@@ -6329,13 +6329,12 @@ publishedAspectsOfInstances!public! !
 !UI.CardLayout class methodsFor!
 
 publishedEventsOfInstances
-    	"Answer a Set of Symbols that describe the published events triggered
+	"Answer a Set of Symbols that describe the published events triggered
     	by instances of the receiver."
-    
-    	^super publishedEventsOfInstances
-    		add: #currentCardChanged;
-    		yourself.
-    ! !
+
+	^super publishedEventsOfInstances
+		add: #currentCardChangedFrom:to:;
+		yourself! !
 !UI.CardLayout class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 !
@@ -6974,17 +6973,9 @@ publishedAspectsOfInstances
 	^answer!
 
 publishedEventsOfInstances
-    	"Answer a Set of Symbols that describe the published events triggered
-    	by instances of the receiver."
-    
-    	^super publishedEventsOfInstances
-    		add: #rightButtonPressed:;
-    		add: #keyPressed:;
-    		add: #keyTyped:;
-    		add: #leftButtonPressed:;
-    		add: #aboutToEditLabel:accept:;
-    		yourself.
-    ! !
+	^super publishedEventsOfInstances
+		add: #viewModeChanged;
+		yourself! !
 !UI.ListView class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
 publishedEventsOfInstances!events!public! !

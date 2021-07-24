@@ -648,8 +648,8 @@ createSchematicWiring
 			send: #onRenameInstVar:to:
 			to: self.
 	cardsPresenter view 
-		when: #currentCardChanged
-		send: #onBrowserCardChanged
+		when: #currentCardChangedFrom:to:
+		send: #onBrowserCardChangedFrom:to:
 		to: self!
 
 currentCard
@@ -999,14 +999,14 @@ newMethod
 
 	methodBrowserPresenter newMethod!
 
-onBrowserCardChanged
+onBrowserCardChangedFrom: previousView to: currentView
 	| currentCardName |
-	currentCardName := self currentCard view name.
-	(currentCardName = self sourceCardName 
+	currentCardName := currentView name.
+	(currentCardName = self sourceCardName
 		ifTrue: [methodBrowserPresenter sourcePresenter]
-		ifFalse: [currentCardName = self definitionCardName ifTrue: [definitionPresenter]]) 
+		ifFalse: [currentCardName = self definitionCardName ifTrue: [definitionPresenter]])
 			ifNotNil: 
-				[:workspace | 
+				[:workspace |
 				workspace updateErrorStatus.
 				self modifiedModel: workspace modifiedModel]!
 
@@ -1277,11 +1277,11 @@ onDropOverMode: aDragDropSession
 	aDragDropSession suggestedTarget == #classMode ifTrue: [dropClass := dropClass class].
 	self dropMethods: aDragDropSession onto: dropClass!
 
-onFilterCardChanged
+onFilterCardChangedFrom: previousView to: currentView
 	"Private - The method filter card has been changed. Update the method list
 	and dynamic filter accordingly."
 
-	self actualClass isNil ifTrue: [^self].
+	self actualClass ifNil: [^self].
 	self isDisplayingCategories 
 		ifTrue: [self updateMethodsInCategory]
 		ifFalse: [
@@ -1664,8 +1664,8 @@ onViewOpened
 	filterPresenter notNil
 		ifTrue: 
 			[filterPresenter
-				when: #currentCardChanged
-					send: #onFilterCardChanged
+				when: #currentCardChangedFrom:to:
+					send: #onFilterCardChangedFrom:to:
 					to: self;
 				when: #currentCardChanging:
 					send: #onFilterSelectionChanging:
@@ -2668,7 +2668,7 @@ methodProtocols:!accessing!public! !
 methodsMatching:!helpers!private! !
 modifiedModel:!accessing!public! !
 newMethod!commands!public! !
-onBrowserCardChanged!event handling!private! !
+onBrowserCardChangedFrom:to:!event handling!private! !
 onCategory:renameTo:accept:!event handling!private! !
 onCategorySelected!event handling!private! !
 onClassCategorized:!event handling!private! !
@@ -2688,7 +2688,7 @@ onDragVariableRefs:!event handling!private! !
 onDropOverCategory:!event handling!private! !
 onDropOverMethods:!event handling!private! !
 onDropOverMode:!event handling!private! !
-onFilterCardChanged!event handling!private! !
+onFilterCardChangedFrom:to:!event handling!private! !
 onFilterSelectionChanging:!event handling!private! !
 onMethodAdded:!event handling!private! !
 onMethodCategorized:!event handling!private! !

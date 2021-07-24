@@ -73,10 +73,15 @@ nextCard
 	self cardLayout nextCard.
 	^self tabOntoCurrentCard!
 
-onCurrentCardChanged
+onCardChangedFrom: previousView to: currentView
 	"Private - The current card has been changed in the layout manager. 
 	Trigger our own card change event."
 
+	self
+		trigger: #currentCardChangedFrom:to:
+		with: previousView
+		with: currentView.
+	"Trigger the pre-8 event for backwards compatibility."
 	self trigger: #currentCardChanged!
 
 onSubViewAdded: aView 
@@ -93,9 +98,9 @@ onViewCreated
 	"Private - Create the tabs view if it is not already present"
 
 	super onViewCreated.
-	self cardLayout 
-		when: #currentCardChanged
-		send: #onCurrentCardChanged
+	self cardLayout
+		when: #currentCardChangedFrom:to:
+		send: #onCardChangedFrom:to:
 		to: self!
 
 previousCard
@@ -154,7 +159,7 @@ ensureSubViewVisible:!public!sub views! !
 firstCard!commands!public! !
 lastCard!commands!public! !
 nextCard!commands!public! !
-onCurrentCardChanged!event handling!private! !
+onCardChangedFrom:to:!event handling!private! !
 onSubViewAdded:!event handling!private! !
 onViewCreated!event handling!private! !
 previousCard!commands!public! !

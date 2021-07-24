@@ -60,8 +60,8 @@ model: aCommandMenuItem
 						rightToLeft: [:id | Icon fromId: id])).
 	inspector model: aspectBuffer value!
 
-onCardChanged
-	cardsPresenter currentCard = inspector view parentView ifTrue: [inspector refresh]!
+onCardChangedFrom: previousView to: currentView
+	currentView == inspector view parentView ifTrue: [inspector refresh]!
 
 onInspecteeChanged
 	self model notifyChanged!
@@ -70,8 +70,8 @@ onViewOpened
 	super onViewOpened.
 	cardsPresenter := self view viewNamed: 'cards'.
 	cardsPresenter 
-		when: #currentCardChanged
-		send: #onCardChanged
+		when: #currentCardChangedFrom:to:
+		send: #onCardChangedFrom:to:
 		to: self!
 
 queryCommand: aCommandQuery 
@@ -91,7 +91,7 @@ clearIcon!commands!private! !
 createComponents!public! !
 createSchematicWiring!initializing!public! !
 model:!public! !
-onCardChanged!event handling!private! !
+onCardChangedFrom:to:!event handling!private! !
 onInspecteeChanged!event handling!private! !
 onViewOpened!event handling!public! !
 queryCommand:!public! !

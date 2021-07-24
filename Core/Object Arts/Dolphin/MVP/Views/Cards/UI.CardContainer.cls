@@ -187,13 +187,13 @@ layout: aLayoutContext
 newTabs
 	^self defaultViewClass new!
 
-onCurrentCardChanged
+onCardChangedFrom: previousView to: currentView
 	"Private - The current card has been changed in the layout manager. 
 	Select the appropriate tab in the receiver to reflect this, and trigger
 	our own card change event."
 
-	tabs selection: self cardLayout currentCard arrangement.
-	super onCurrentCardChanged!
+	tabs selection: currentView arrangement.
+	super onCardChangedFrom: previousView to: currentView!
 
 onEraseRequired: aColorEvent 
 	"Handler for erase background event - erase to the background colour,
@@ -385,7 +385,7 @@ isVertical!accessing-styles!public! !
 isVertical:!accessing-styles!public! !
 layout:!geometry!public! !
 newTabs!helpers!private! !
-onCurrentCardChanged!event handling!private! !
+onCardChangedFrom:to:!event handling!private! !
 onEraseRequired:!event handling!public! !
 onSubViewAdded:!event handling!private! !
 onTabChanged!event handling!private! !

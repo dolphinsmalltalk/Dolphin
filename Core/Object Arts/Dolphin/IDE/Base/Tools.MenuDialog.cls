@@ -33,12 +33,12 @@ model: aMenu
 	checkColumnModePresenter model: (aspectBuffer aspectValue: #hasSharedImageColumn).
 	autoDismissPresenter model: (aspectBuffer aspectValue: #isAutoDismiss)!
 
-onCardChanged
-	cardsPresenter currentCard = inspector view parentView ifTrue: [inspector refresh]! !
+onCardChangedFrom: previousView to: currentView
+	currentView == inspector view parentView ifTrue: [inspector refresh]! !
 !Tools.MenuDialog categoriesForMethods!
 createComponents!initializing!public! !
 model:!accessing!public! !
-onCardChanged!event handling!private! !
+onCardChangedFrom:to:!event handling!private! !
 !
 
 !Tools.MenuDialog class methodsFor!

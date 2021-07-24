@@ -8,9 +8,9 @@ UI.Presenter subclass: #'Tools.ClassBrowserPlugin'
 	classConstants: {}!
 Tools.ClassBrowserPlugin guid: (Core.GUID fromString: '{4e71c848-3d94-41f6-8ce9-66d437619a5f}')!
 Tools.ClassBrowserPlugin isNonInstantiable: true!
-Tools.ClassBrowserPlugin comment: '<ClassBrowserPluginAbstract> is the abstract superclass that implements the basic <classBrowserPlugin> protocol to support plug-in views for class browsers. The plug-ins are appended to the standard set of tabbed cards in the lower half of the browser and can be displayed by selecting the appropriate tab. Each browser class maintains an <OrderedCollection> of plug-ins that will be installed when instances of the browser are created. This collection can be modified through the User Preferences for that browser.
+Tools.ClassBrowserPlugin comment: '`ClassBrowserPluginAbstract` is the abstract superclass that implements the basic `<classBrowserPlugin>` protocol to support plug-in views for class browsers. The plug-ins are appended to the standard set of tabbed cards in the lower half of the browser and can be displayed by selecting the appropriate tab. Each browser class maintains an `OrderedCollection` of plug-ins that will be installed when instances of the browser are created. This collection can be modified through the User Preferences for that browser.
 
-When a plug-in is created it is assigned the class browser to which it is attached as its model. From this, the plug-in can observe events in the browser (such as #classSelected, #methodSelected, #packageSelected etc) and use these to initiate the rendition of its own display. In situations where creating this rendition may be a time consuming process, the plug-in may choose to defer this step until its card is actually made visible in the browser. This can be intercepted by overriding #onShownInBrowser.'!
+When a plug-in is created it is assigned the class browser to which it is attached as its model. From this, the plug-in can observe events in the browser (such as `#classSelected`, `#methodSelected`, `#packageSelected` etc) and use these to initiate the rendition of its own display. In situations where creating this rendition may be a time consuming process, the plug-in may choose to defer this step until its card is actually made visible in the browser. This can be intercepted by overriding `#onShownInBrowser`.'!
 !Tools.ClassBrowserPlugin categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !Tools.ClassBrowserPlugin methodsFor!
 
@@ -23,8 +23,13 @@ createSchematicWiring
 	"Private - Create the trigger wiring for the receiver"
 
 	super createSchematicWiring.
-	self model ifNotNil: [:m | m cardsPresenter view when: #currentCardChanged send: #onBrowserCardChanged to: self]
-!
+	self model
+		ifNotNil: 
+			[:m |
+			m cardsPresenter view
+				when: #currentCardChangedFrom:to:
+				send: #onBrowserCardChangedFrom:to:
+				to: self]!
 
 destroy
 	self isOpen ifTrue: [self model removePlugin: self].
@@ -51,10 +56,10 @@ modifiedModel
 
 	^false asValue!
 
-onBrowserCardChanged
+onBrowserCardChangedFrom: previousView to: currentView
 	"Private - Event handler for a card being selected in the receiver's browser"
 
-	self isCurrentCard ifTrue: [self onShownInBrowser]!
+	currentView == self view ifTrue: [self onShownInBrowser]!
 
 onShownInBrowser
 	"Private - Event handler indicating that the receiver has been displayed within it's browser. 
@@ -83,7 +88,7 @@ displayOn:!displaying!public! !
 isCurrentCard!event handling!public! !
 isModified!public!testing! !
 modifiedModel!accessing!public! !
-onBrowserCardChanged!event handling!private! !
+onBrowserCardChangedFrom:to:!event handling!private! !
 onShownInBrowser!event handling!private! !
 onViewOpened!event handling!private! !
 promptToSaveClassChanges:!helpers!public! !

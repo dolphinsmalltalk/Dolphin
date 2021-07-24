@@ -7,13 +7,16 @@ UI.LayoutManager subclass: #'UI.CardLayout'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.CardLayout guid: (Core.GUID fromString: '{87b4c647-026e-11d3-9fd7-00a0cc3e4a32}')!
-UI.CardLayout comment: 'CardLayout implements a specialised <layoutManager> to layout <view> objects within a <cardView>. It arranges the contained views so that they stack on top of one another in z-order sequence. Only one of the views, the so-called current card, is allowed to be visible at any one time.
+UI.CardLayout comment: '`CardLayout` implements a specialised `<layoutManager>` to layout `<view>` objects within a `<cardView>`. It arranges the contained views so that they stack on top of one another in z-order sequence. Only one of the views, the so-called current card, is allowed to be visible at any one time.
 
-The arrangement aspects of the managed views are used as a descriptive names for the cards. The containing <cardView> may make use of these names as it sees fit. For example, a CardContainer uses these as the names for the tabs that it displays.
+The arrangement aspects of the managed views are used as a descriptive names for the cards (generally instances of `CardLabel`). The containing `<cardView>` may make use of these names as it sees fit. For example, a `CardContainer` uses these as the names for the tabs that it displays.
 
-Instance Variables:
-	names		<OrderedCollection> of names for each of the managed views.
-	currentCard 	<view> that is currently visible in the container.
+## Instance Variables:
+  `names`			`OrderedCollection` of `Association`, pairing card names with each of the managed views.
+  `currentCard` 	`<view>` that is currently visible in the container.
+  `events`			`<eventsCollection>`
+
+
 
 '!
 !UI.CardLayout categoriesForClass!MVP-Layout Managers-Specialized! !
@@ -45,9 +48,9 @@ cards
 	that manages them"
 
 	| views container |
-	views := self cardViews asOrderedCollection.
+	views := self cardViews.
 	views isEmpty ifTrue: [^OrderedCollection new].
-	container := views first parentView.
+	container := views anyOne parentView.
 	^container managedSubViews select: [:each | views includes: each]!
 
 cardViews
@@ -186,16 +189,21 @@ setEvents: anEventsCollectionOrNil
 	events := anEventsCollectionOrNil!
 
 showCard: aView
-	"Show the card, aView and make this the current card. This is after hiding the existing current card"
+	"Show the card, aView and make this the current card. Any existing current card is hidden."
 
+	| previousCard |
+	currentCard == aView ifTrue: [^self].
 	self assert: [names anySatisfy: [:each | each value == aView]].
-	currentCard == aView
-		ifFalse: 
-			[aView show.
-			currentCard notNil ifTrue: [currentCard hide].
-			currentCard := aView.
-			self trigger: #currentCardChanged].
-	^self!
+	aView show.
+	currentCard notNil ifTrue: [currentCard hide].
+	previousCard := currentCard.
+	currentCard := aView.
+	self
+		trigger: #currentCardChangedFrom:to:
+		with: previousCard
+		with: currentCard.
+	"Also trigger the pre-8 event for backwards compatibility"
+	self trigger: #currentCardChanged!
 
 showCardWithArrangement: anObject
 	"Show the card identified by an arrangement of anObject and make this the current card.

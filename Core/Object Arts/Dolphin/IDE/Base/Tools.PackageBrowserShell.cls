@@ -219,8 +219,8 @@ buildPopupForCommand: aSymbol
 	aSymbol == #viewModeSelect ifTrue: [^classesPresenter view buildViewsPopup].
 	^super buildPopupForCommand: aSymbol!
 
-cacheCurrentCard
-	currentCard := cardsPresenter currentCard name asSymbol!
+cacheCurrentCard: aView
+	currentCard := aView name asSymbol!
 
 canSaveState
 	"Private - Answer true if the receiver can successfully have it's state saved by #saveStateOn:. Some
@@ -559,11 +559,11 @@ objectRepackaged: anObject from: oldPackage to: newPackage card: cardSymbol list
 				ifFalse: [aListModel remove: anObject]]
 		ifFalse: [displayingNewPackage ifTrue: [aListModel add: anObject]]!
 
-onCardChanged
+onCardChangedFrom: previousView to: currentView
 	"Private - The source object card has been changed. Update the source pane
 	accordingly."
 
-	self cacheCurrentCard.
+	self cacheCurrentCard: currentView.
 	(self isCardUpToDate: currentCard) ifFalse: [self updateCardNow: currentCard]!
 
 onClassRemoved: aClass
@@ -844,8 +844,8 @@ onViewOpened
 	"Really a CardContainer view, but we treat as if a presenter"
 	cardsPresenter := self view viewNamed: 'ownedCards'.
 	cardsPresenter 
-		when: #currentCardChanged
-		send: #onCardChanged
+		when: #currentCardChangedFrom:to:
+		send: #onCardChangedFrom:to:
 		to: self.	";
 		when: #currentCardChanging: send: #onSelectionChanging: to: self"
 
@@ -1177,7 +1177,7 @@ updateComment
 updateContents
 	"Private - Fill the contents presenters based on the currently selected package."
 
-	currentCard isNil ifTrue: [self cacheCurrentCard].
+	currentCard isNil ifTrue: [self cacheCurrentCard: cardsPresenter currentCard].
 	self
 		updateCards;
 		updateCaption;
@@ -1284,7 +1284,7 @@ browseReferences!commands!public! !
 browseSystem!commands!public! !
 browseVariableReferences!commands!public! !
 buildPopupForCommand:!event handling!private! !
-cacheCurrentCard!event handling!private! !
+cacheCurrentCard:!event handling!private! !
 canSaveState!private!saved state! !
 clearCard:!private!updating! !
 clearClasses!private!updating! !
@@ -1316,7 +1316,7 @@ inspectSharedVariables!commands!public! !
 isCardUpToDate:!private!testing! !
 markCardDirty:!helpers!private! !
 objectRepackaged:from:to:card:list:!event handling!private! !
-onCardChanged!event handling!private! !
+onCardChangedFrom:to:!event handling!private! !
 onClassRemoved:!event handling!private! !
 onClassRepackaged:from:to:!event handling!private! !
 onCloseRequested:!event handling!private! !
