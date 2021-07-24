@@ -68,28 +68,6 @@ allBindings
 	self allBindingsDo: [:each | bindings add: each] visited: (IdentitySet with: self).
 	^bindings!
 
-allBindingsDo: aMonadicValuable
-	"Evaluate the <monadicValuable> argument for each of the bindings in the receiver, including aliases, and recursively in any of the nested namespaces."
-
-	self allBindingsDo: aMonadicValuable visited: IdentitySet new!
-
-allClasses
-	| classes |
-	classes := Array writeStream: 256.
-	self allClassesDo: [:each | classes nextPut: each].
-	^classes contents!
-
-allClassesDo: aMonadicValuable
-	"Evaluate the <monadicValuable> argument for each of the <Class>es that are values of bindings in the receiver, including aliases, and recursively in any of the nested namespaces."
-
-	self allBindingsDo: 
-			[:each |
-			each isClassVariable
-				ifFalse: 
-					[| value |
-					value := each value.
-					(value class isMeta and: [value name == each key]) ifTrue: [aMonadicValuable value: value]]]!
-
 allSatisfy: aMonadicValuable
 	^classPool allSatisfy: aMonadicValuable!
 
@@ -324,9 +302,6 @@ addNewElement:!dictionary-adding!public! !
 allBehaviors!accessing!public! !
 allBehaviorsDo:!enumerating!public! !
 allBindings!enumerating!public! !
-allBindingsDo:!enumerating!public! !
-allClasses!accessing!public! !
-allClassesDo:!enumerating!public! !
 allSatisfy:!dictionary-enumerating!public! !
 anySatisfy:!dictionary-enumerating!public! !
 asArray!dictionary-converting!public! !

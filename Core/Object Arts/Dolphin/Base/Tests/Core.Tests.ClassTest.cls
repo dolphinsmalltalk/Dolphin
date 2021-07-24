@@ -89,6 +89,13 @@ testLocalEnvironment
 testLocalScope
 	self assert: Object localScope equals: Object!
 
+testNestedClasses
+	| expected actual |
+	expected := (Smalltalk allClasses select: [:each | each environment == Smalltalk]) asSet.
+	actual := Smalltalk nestedClasses.
+	self assert: actual size equals: expected size.
+	self assert: actual asSet equals: expected!
+
 testPoolBinding
 	"Should be able to resolve imported pool bindings from the class"
 
@@ -103,10 +110,11 @@ allClassHierarchyInstancesDo:!helpers!private! !
 testAllRoots!public!unit tests! !
 testClassPoolsWellFormed!public!unit tests! !
 testImportsValid!public!unit tests! !
-testIncludesNamespace!private! !
+testIncludesNamespace!public!unit tests! !
 testLessOrEqual!public!unit tests! !
 testLocalEnvironment!public!unit tests! !
 testLocalScope!public!unit tests! !
+testNestedClasses!public!unit tests! !
 testPoolBinding!public!unit tests! !
 testStoreOn!public!unit tests! !
 !

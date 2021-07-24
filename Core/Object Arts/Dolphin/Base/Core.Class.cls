@@ -142,6 +142,11 @@ addToSuper
 
 	superclass ifNotNil: [superclass addSubclass: self]!
 
+allBindingsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the bindings in the receiver, including aliases, and recursively in any of the nested namespaces."
+
+	self allBindingsDo: aMonadicValuable visited: (IdentitySet with: self)!
+
 allBindingsDo: aMonadicValuable visited: aSet
 	self bindingsDo: 
 			[:each |
@@ -152,6 +157,26 @@ allBindingsDo: aMonadicValuable visited: aSet
 					[value := each value.
 					(value class isMeta and: [aSet addNewElement: value])
 						ifTrue: [value allBindingsDo: aMonadicValuable visited: aSet]]]!
+
+allClasses
+	"Answer a <collection> of all the <Class>es that are values of bindings in the receiver, including aliases, and recursively in any of the nested namespaces."
+
+	| classes |
+	classes := Array writeStream: 256.
+	self allClassesDo: [:each | classes nextPut: each].
+	^classes contents!
+
+allClassesDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the <Class>es that are values of bindings in the receiver, excluding aliases, and recursively in any of the nested namespaces."
+
+	self allBindingsDo: 
+			[:each |
+			each isClassVariable
+				ifFalse: 
+					[| value |
+					value := each value.
+					(value class isMeta and: [value name == each key and: [value environment == each environment]])
+						ifTrue: [aMonadicValuable value: value]]]!
 
 allEnvironments
 	"Answer a <sequencedReadableCollection> of the receiver's environment and in turn its environment, and so on, to the top of the namespace tree. The last entry should always be Root, apart from for Root itself (which has no enclosing environments)."
@@ -502,6 +527,25 @@ name
 	Implementation Note: For compatibility reasons, the answer is actually a Symbol."
 
 	^name ifNil: [super name]!
+
+nestedClasses
+	"Answer a <collection> of all the <Class>es that are directly nested within this class when considered as a namespace, excluding any that are only aliased here."
+
+	| classes |
+	classes := Array writeStream: 8.
+	self nestedClassesDo: [:each | classes nextPut: each].
+	^classes contents!
+
+nestedClassesDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the <Class>es that are values of bindings in the receiver, excluding classes that are aliased into this namespace."
+
+	self bindingsDo: 
+			[:each |
+			each isClassVariable
+				ifFalse: 
+					[| value |
+					value := each value.
+					(value class isMeta and: [value environment == self]) ifTrue: [aMonadicValuable value: value]]]!
 
 newBindingContextForIdentifier: aString environment: aNamespace
 	^BindingContext
@@ -1009,7 +1053,10 @@ addClassVarNamed:!class hierarchy-mutating!class variables!public! !
 addImport:!namespaces!public! !
 addSubclass:!class hierarchy-adding!private! !
 addToSuper!class hierarchy-adding!private! !
+allBindingsDo:!enumerating!public! !
 allBindingsDo:visited:!enumerating!private! !
+allClasses!accessing!public! !
+allClassesDo:!enumerating!public! !
 allEnvironments!class hierarchy-accessing!public! !
 allEnvironmentsDo:!class hierarchy-accessing!enumerating!private! !
 allImports!namespaces!public! !
@@ -1067,6 +1114,8 @@ isAtomic!public!testing! !
 isLiteral!public!testing! !
 localBindingFor:!bindings!public! !
 name!accessing!public! !
+nestedClasses!accessing!public! !
+nestedClassesDo:!enumerating!public! !
 newBindingContextForIdentifier:environment:!bindings!private! !
 newClassBuilder:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!private! !
 owningPackage!development!public!source filing! !

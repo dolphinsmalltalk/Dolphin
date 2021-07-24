@@ -24,7 +24,12 @@ testAbsoluteReference
 	self assert: self subject absoluteReference equals: 'Root' asQualifiedReference!
 
 testAllClasses
-	self assert: (Root allClasses difference: Smalltalk allClasses asSet) equals: #()!
+	| expected actual |
+	expected := Smalltalk allClasses asSet.
+	actual := Root allClasses.
+	self assert: actual size equals: expected size - 1.
+	actual := actual asSet.
+	self assert: (actual symmetricDifference: expected) equals: (Set with: Root)!
 
 testAllEnvironments
 	self assert: self subject allEnvironments equals: {}!
