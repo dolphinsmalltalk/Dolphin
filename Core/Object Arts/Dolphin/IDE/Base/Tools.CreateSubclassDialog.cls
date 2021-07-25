@@ -93,7 +93,8 @@ model: aSubjectModel
 			[namespacePresenter model: Smalltalk asValue.
 			namePresenter model: 'ProtoObject2' asValue]
 		ifNotNil: 
-			[namespacePresenter model: aClassOrNil localEnvironment asValue.
+			[namespacePresenter
+				model: (aClassOrNil == Namespace ifTrue: [Root] ifFalse: [aClassOrNil localEnvironment asValue]).
 			namePresenter model: aClassOrNil name asValue].
 	self onSuperclassChanged!
 

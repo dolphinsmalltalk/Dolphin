@@ -15,6 +15,21 @@ tearDown
 	subject ifNotNil: [subject destroy].
 	^super tearDown!
 
+testNewNamespaceSubclass
+	subject := CreateSubclassDialog newSubclassOf: Namespace inPackage: nil.
+	self assert: subject namespacePresenter value equals: Root.
+	self assert: subject subclassName equals: 'Namespace'.
+	self deny: subject canApply.
+	subject subclassName: 'Root.__Namespace__'.
+	self assert: subject canApply.
+	self assert: subject subclassName equals: '__Namespace__'.
+	subject subclassName: '__Namespace__'.
+	self assert: subject subclassName equals: 'Smalltalk.__Namespace__'.
+	self assert: subject canApply.
+	subject namespacePresenter value: Core.
+	self assert: subject canApply.
+	self assert: subject subclassName equals: 'Core.__Namespace__'!
+
 testNewRootNamespaceSubclass
 	subject := CreateSubclassDialog newSubclassOf: Root inPackage: nil.
 	self assert: subject namespacePresenter value equals: Root.
@@ -25,6 +40,7 @@ testNewRootNamespaceSubclass
 	self assert: subject subclassName equals: '__Root__'! !
 !Tools.Tests.CreateSubclassDialogTest categoriesForMethods!
 tearDown!private!running! !
+testNewNamespaceSubclass!public! !
 testNewRootNamespaceSubclass!public! !
 !
 
