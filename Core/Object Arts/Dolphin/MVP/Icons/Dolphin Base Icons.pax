@@ -115,14 +115,20 @@ package setMethodNames: #(
 	#(#{UI class} #icon)
 	#(#{UI.AbstractCardContainer class} #icon)
 	#(#{UI.BooleanPresenter class} #icon)
+	#(#{UI.BorderLayout class} #icon)
 	#(#{UI.CardLabel class} #icon)
+	#(#{UI.CardLayout class} #icon)
 	#(#{UI.CheckButton class} #icon)
+	#(#{UI.FlowLayout class} #icon)
 	#(#{UI.FramingLayout class} #icon)
+	#(#{UI.GridLayout class} #icon)
 	#(#{UI.Keyboard class} #icon)
 	#(#{UI.LayoutManager class} #icon)
+	#(#{UI.ProportionalLayout class} #icon)
 	#(#{UI.RadioButton class} #icon)
 	#(#{UI.RadioButtonSetPresenter class} #icon)
 	#(#{UI.ResourceIdentifier class} #icon)
+	#(#{UI.ScrollingDecoratorLayout class} #icon)
 ).
 
 package setPrerequisites: #(
@@ -136,6 +142,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\Base\Dolphin MVP Base'
 	'..\Presenters\Radio\Dolphin Radio Buttons'
+	'..\Views\Scrollbars\Dolphin Scrollbars'
 	'..\..\System\SemVer\Dolphin SemVer'
 	'..\..\System\STON\Dolphin STON-Core'
 	'Dolphin Text Tile Icons'
@@ -1296,6 +1303,16 @@ icon
 icon!constants!public! !
 !
 
+!UI.BorderLayout class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class: ⬒"
+
+	^##(TextTileIcon text: $\x2B12 fontName: 'Arial')! !
+!UI.BorderLayout class categoriesForMethods!
+icon!constants!public! !
+!
+
 !UI.CardLabel class methodsFor!
 
 icon
@@ -1305,6 +1322,16 @@ icon
 		textcolor: Color darkBlue;
 		yourself)! !
 !UI.CardLabel class categoriesForMethods!
+icon!constants!public! !
+!
+
+!UI.CardLayout class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class: 🗂"
+
+	^##(TextTileIcon text: $\x1F5C2 fontName: 'Segoe UI Emoji')! !
+!UI.CardLayout class categoriesForMethods!
 icon!constants!public! !
 !
 
@@ -1318,6 +1345,16 @@ icon
 icon!constants!public! !
 !
 
+!UI.FlowLayout class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class: ⏖"
+
+	^##(TextTileIcon text: $\x23D6 fontName: 'Arial')! !
+!UI.FlowLayout class categoriesForMethods!
+icon!constants!public! !
+!
+
 !UI.FramingLayout class methodsFor!
 
 icon
@@ -1325,6 +1362,16 @@ icon
 
 	^##(TextTileIcon text: $\x1F5BD)! !
 !UI.FramingLayout class categoriesForMethods!
+icon!constants!public! !
+!
+
+!UI.GridLayout class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class:⌗"
+
+	^##(TextTileIcon text: $\x2317 fontName: 'Arial')! !
+!UI.GridLayout class categoriesForMethods!
 icon!constants!public! !
 !
 
@@ -1345,6 +1392,16 @@ icon
 
 	^##(TextTileIcon text: $\x29C9 fontName: 'Cambria')! !
 !UI.LayoutManager class categoriesForMethods!
+icon!constants!public! !
+!
+
+!UI.ProportionalLayout class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class: ⎅"
+
+	^##(TextTileIcon text: $\x2385 fontName: 'Arial')! !
+!UI.ProportionalLayout class categoriesForMethods!
 icon!constants!public! !
 !
 
@@ -1380,6 +1437,16 @@ icon
 	^##(self) defaultIcon! !
 !UI.ResourceIdentifier class categoriesForMethods!
 icon!constants!development!public! !
+!
+
+!UI.ScrollingDecoratorLayout class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class: ⮹"
+
+	^##(TextTileIcon text: $\x2BB9 fontName: 'Arial')! !
+!UI.ScrollingDecoratorLayout class categoriesForMethods!
+icon!constants!public! !
 !
 
 "End of package definition"!
