@@ -302,7 +302,7 @@ testPrimitiveTag
 		equals: {{1 to: 1. #unarySelector. 'x'}.
 				{2 to: 14. #tag. '<primitive:1>'}.
 				{15 to: 18. #identifier. 'self'}}.
-	text := 'x:y<primitive:1>y'.
+	text := 'x:y<primitive:1> |a b|^y'.
 	mock text: text.
 	styler
 		colorTextFrom: 1
@@ -313,7 +313,14 @@ testPrimitiveTag
 		equals: {{1 to: 2. #keywordSelector. 'x:'}.
 				{3 to: 3. #argDecl. 'y'}.
 				{4 to: 16. #tag. '<primitive:1>'}.
-				{17 to: 17. #identifier. 'y'}}.
+				{17 to: 17. #whitespace. ' '}.
+				{18 to: 18. #tempOpenBar. '|'}.
+				{19 to: 19. #tempDecl. 'a'}.
+				{20 to: 20. #whitespace. ' '}.
+				{21 to: 21. #tempDecl. 'b'}.
+				{22 to: 22. #tempCloseBar. '|'}.
+				{23 to: 23. #specialCharacter. '^'}.
+				{24 to: 24. #identifier. 'y'}}.
 	text := '|y<primitive: 1>self|y'.
 	mock text: text.
 	styler

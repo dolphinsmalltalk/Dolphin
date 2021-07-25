@@ -195,18 +195,19 @@ scannerClass
 styleForBar
 	| lastStyle |
 	lastStyle := self lastStyle.
-	lastStyle == #specialCharacter 
+	lastStyle == #specialCharacter
 		ifTrue: 
-			[^(self lastCharacter == $[ or: [self lastToken = '##(']) 
+			[^(self lastCharacter == $[ or: [self lastToken = '##('])
 				ifTrue: [#tempOpenBar]
 				ifFalse: [#binaryMessage]].
-	^##((IdentityDictionary new)
+	^##(IdentityDictionary new
 		at: #tempOpenBar put: #tempCloseBar;
 		at: #tempDecl put: #tempCloseBar;
 		at: #blockArgDecl put: #tempCloseBar;
 		at: #argDecl put: #tempOpenBar;
 		at: #unarySelector put: #tempOpenBar;
 		at: #tempCloseBar put: #tempOpenBar;
+		at: #tag put: #tempOpenBar;
 		shrink;
 		yourself) at: lastStyle ifAbsent: [#binaryMessage]!
 
