@@ -14,5 +14,6 @@ Kernel.SharedPool subclass: #'OS.ODBCRetCodes'
 		'SQL_SUCCESS_WITH_INFO' -> 16r1
 	}!
 OS.ODBCRetCodes guid: (Core.GUID fromString: '{1d2958b4-30dc-440a-b023-ba7589e87908}')!
+OS.ODBCRetCodes isNonInstantiable: true!
 OS.ODBCRetCodes comment: ''!
 !OS.ODBCRetCodes categoriesForClass!Unclassified! !

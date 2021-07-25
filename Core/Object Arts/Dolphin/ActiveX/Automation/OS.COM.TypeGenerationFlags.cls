@@ -23,5 +23,6 @@ Kernel.SharedPool subclass: #'OS.COM.TypeGenerationFlags'
 		'WrapperStyleMask' -> 16r90
 	}!
 OS.COM.TypeGenerationFlags guid: (Core.GUID fromString: '{65bfd99a-c64d-4f9a-b125-1ccf47a617e9}')!
+OS.COM.TypeGenerationFlags isNonInstantiable: true!
 OS.COM.TypeGenerationFlags comment: ''!
 !OS.COM.TypeGenerationFlags categoriesForClass!Unclassified! !

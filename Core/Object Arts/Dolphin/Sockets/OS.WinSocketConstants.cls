@@ -116,5 +116,6 @@ Kernel.SharedPool subclass: #'OS.WinSocketConstants'
 		'WSASYS_STATUS_LEN' -> 16r80
 	}!
 OS.WinSocketConstants guid: (Core.GUID fromString: '{607ae505-f0cf-4dd6-af63-236bff9d5b02}')!
+OS.WinSocketConstants isNonInstantiable: true!
 OS.WinSocketConstants comment: ''!
 !OS.WinSocketConstants categoriesForClass!Unclassified! !

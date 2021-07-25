@@ -161,6 +161,11 @@ testName
 
 	self nameCases do: [:each | self assert: each value name identicalTo: each unqualifiedName asSymbol]!
 
+testNonInstantiable
+	| instantiable |
+	instantiable := Namespace withAllSubclasses reject: [:each | each isNonInstantiable].
+	self assert: instantiable asArray equals: #()!
+
 testPrintOn
 	#(#Core #Kernel #XProgramming)
 		do: [:each | self assert: each asQualifiedReference value printString equals: each].
@@ -239,6 +244,7 @@ testImportedBinding!public!unit tests! !
 testImportIntoParentNamespace!public!unit tests! !
 testIncludesKey!public!unit tests! !
 testName!public!unit tests! !
+testNonInstantiable!public!unit tests! !
 testPrintOn!public!unit tests! !
 testPrivateImportIntoParentNamespace!public!unit tests! !
 testResolveImportIntoCustomEnvironment!public! !

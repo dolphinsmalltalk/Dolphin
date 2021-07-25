@@ -1211,6 +1211,7 @@ UI subclass: #'UI.Scintilla'
 		'VISIBLE_STRICT' -> 16r4
 	}!
 UI.Scintilla guid: (Core.GUID fromString: '{c0575b77-f355-425e-863f-b942011e4cf3}')!
+UI.Scintilla isNonInstantiable: true!
 UI.Scintilla comment: ''!
 !UI.Scintilla categoriesForClass!Kernel-Objects! !
 !UI.Scintilla class methodsFor!

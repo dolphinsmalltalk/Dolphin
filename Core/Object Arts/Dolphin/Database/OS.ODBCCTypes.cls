@@ -49,5 +49,6 @@ Kernel.SharedPool subclass: #'OS.ODBCCTypes'
 		'SQL_C_WCHAR' -> -16r8
 	}!
 OS.ODBCCTypes guid: (Core.GUID fromString: '{ac8663b9-4e3a-4089-9f50-e0fbdfebcc05}')!
+OS.ODBCCTypes isNonInstantiable: true!
 OS.ODBCCTypes comment: ''!
 !OS.ODBCCTypes categoriesForClass!Unclassified! !

@@ -7,6 +7,7 @@ OS.COM subclass: #'OS.COM.Tests'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.COM.Tests guid: (Core.GUID fromString: '{d8c1716c-576c-4a35-9cd6-832eb9930105}')!
+OS.COM.Tests isNonInstantiable: true!
 OS.COM.Tests comment: ''!
 !OS.COM.Tests categoriesForClass!Kernel-Objects! !
 !OS.COM.Tests class methodsFor!

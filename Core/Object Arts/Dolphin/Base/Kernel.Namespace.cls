@@ -245,6 +245,15 @@ new
 
 	^self shouldNotImplement!
 
+newClassBuilder: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString imports: anArrayOfBindingReferences
+	^(super
+		newClassBuilder: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: anArrayOfBindingReferences)
+		beNonInstantiable;
+		yourself!
+
 notEmpty
 	^classPool notEmpty!
 
@@ -342,6 +351,7 @@ keysDo:!dictionary-enumerating!public! !
 localEnvironment!accessing!private! !
 lookup:!dictionary-accessing!public! !
 new!instance creation!public! !
+newClassBuilder:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!private! !
 notEmpty!dictionary-testing!public! !
 occurrencesOf:!dictionary-searching!public! !
 rehash!dictionary-operations!public! !

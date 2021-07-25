@@ -7,6 +7,7 @@ ADODB subclass: #'ADODB.Tests'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ADODB.Tests guid: (Core.GUID fromString: '{48858524-ad82-4c96-b9cf-796d9c959c72}')!
+ADODB.Tests isNonInstantiable: true!
 ADODB.Tests comment: ''!
 !ADODB.Tests categoriesForClass!Kernel-Objects! !
 !ADODB.Tests class methodsFor!

@@ -727,5 +727,6 @@ Kernel.SharedPool subclass: #'OS.IPHlpApiConstants'
 		'WPSTYLE_TILE' -> 16r1
 	}!
 OS.IPHlpApiConstants guid: (Core.GUID fromString: '{cf21fda9-e7be-4a8d-b79d-e49173e5c3cc}')!
+OS.IPHlpApiConstants isNonInstantiable: true!
 OS.IPHlpApiConstants comment: ''!
 !OS.IPHlpApiConstants categoriesForClass!Unclassified! !

@@ -40,15 +40,8 @@ beFixed
 
 	instanceSpec := Behavior._PointersMask bitOr: (instanceSpec bitAnd: Behavior._SizeMask)!
 
-beIndirectBytes
-	"Private - Set the class type to indirect bytes."
-
-	instanceSpec := ##(Behavior._VariableMask + Behavior._IndirectMask)!
-
-beNullTerminatedBytes
-	"Private - Set the class type to null-terminated variable bytes."
-
-	instanceSpec := ##(Behavior._VariableMask + Behavior._NullTermMask)!
+beNonInstantiable
+	instanceSpec := instanceSpec bitOr: Behavior._NonInstantiableMask!
 
 beVariable
 	"Private - Set the class type to indexable pointers and named instance vars."
@@ -1201,8 +1194,7 @@ allInstVarNamesOf:!helpers!private! !
 baseEnvironment!helpers!private! !
 beBytes!class type!private! !
 beFixed!class type!private! !
-beIndirectBytes!class type!private! !
-beNullTerminatedBytes!class type!private! !
+beNonInstantiable!class type!private! !
 beVariable!class type!private! !
 canMutateInSitu!mutating!private! !
 categories!accessing!private! !

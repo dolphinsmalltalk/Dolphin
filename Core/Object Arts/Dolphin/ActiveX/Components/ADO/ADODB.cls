@@ -430,5 +430,6 @@ Kernel.Namespace subclass: #ADODB
 		'stWriteLine' -> 16r1
 	}!
 ADODB guid: (Core.GUID fromString: '{d5c09c7a-aa2d-46de-b9c0-bdd8bd63521d}')!
+ADODB isNonInstantiable: true!
 ADODB comment: ''!
 !ADODB categoriesForClass!Kernel-Objects! !

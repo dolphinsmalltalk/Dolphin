@@ -20,5 +20,6 @@ Kernel.SharedPool subclass: #'Database.DBColFlags'
 		'UpdateSetNull' -> 16r400
 	}!
 Database.DBColFlags guid: (Core.GUID fromString: '{09efa816-d3eb-4a23-9b64-ea47b55b121e}')!
+Database.DBColFlags isNonInstantiable: true!
 Database.DBColFlags comment: ''!
 !Database.DBColFlags categoriesForClass!Unclassified! !

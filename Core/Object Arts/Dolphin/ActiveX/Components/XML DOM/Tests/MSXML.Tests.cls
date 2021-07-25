@@ -7,6 +7,7 @@ MSXML subclass: #'MSXML.Tests'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 MSXML.Tests guid: (Core.GUID fromString: '{b8c5bee7-bb63-4a4b-a8d2-52c0be705d27}')!
+MSXML.Tests isNonInstantiable: true!
 MSXML.Tests comment: ''!
 !MSXML.Tests categoriesForClass!Kernel-Objects! !
 !MSXML.Tests class methodsFor!

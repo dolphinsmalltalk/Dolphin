@@ -125,5 +125,6 @@ Kernel.Namespace subclass: #SHDocVw
 		'SWFO_NEEDDISPATCH' -> 16r1
 	}!
 SHDocVw guid: (Core.GUID fromString: '{de60cb46-51b4-4666-a3a6-61057999bb49}')!
+SHDocVw isNonInstantiable: true!
 SHDocVw comment: ''!
 !SHDocVw categoriesForClass!Unclassified! !

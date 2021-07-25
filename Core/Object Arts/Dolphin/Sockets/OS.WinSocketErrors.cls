@@ -70,5 +70,6 @@ Kernel.SharedPool subclass: #'OS.WinSocketErrors'
 		'WSAVERNOTSUPPORTED' -> 16r276C
 	}!
 OS.WinSocketErrors guid: (Core.GUID fromString: '{dd50fc7b-d07d-43c6-ba58-2f75c76f6a4f}')!
+OS.WinSocketErrors isNonInstantiable: true!
 OS.WinSocketErrors comment: ''!
 !OS.WinSocketErrors categoriesForClass!Unclassified! !

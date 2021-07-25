@@ -7,6 +7,7 @@ Database subclass: #'Database.Tests'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Database.Tests guid: (Core.GUID fromString: '{c76812f1-ac4b-4204-953c-4fd9721ffa83}')!
+Database.Tests isNonInstantiable: true!
 Database.Tests comment: ''!
 !Database.Tests categoriesForClass!Kernel-Objects! !
 !Database.Tests class methodsFor!
