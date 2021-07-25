@@ -18,11 +18,6 @@ Warning: This comment was automatically generated from the struct''s type inform
 !OS.COM.CUSTDATA categoriesForClass!External-Data-Structured-COM! !
 !OS.COM.CUSTDATA methodsFor!
 
-basicFree
-	"Private - Free external resources owned by the receiver."
-
-	OleAut32 clearCustData: self!
-
 buildContents
 	| attrs |
 	attrs := LookupTable new.
@@ -53,7 +48,6 @@ prgCustData
 		length: self cCustData
 		elementClass: CUSTDATAITEM! !
 !OS.COM.CUSTDATA categoriesForMethods!
-basicFree!private!realizing/unrealizing! !
 buildContents!printing-IDL!private! !
 cCustData!**compiled accessors**!private! !
 contents!printing-IDL!public! !
@@ -61,6 +55,9 @@ prgCustData!**compiled accessors**!public! !
 !
 
 !OS.COM.CUSTDATA class methodsFor!
+
+clear: addressOrBytes
+	OleAut32 clearCustData: addressOrBytes!
 
 defineFields
 	"Define the fields of the CUSTDATA structure.
@@ -95,6 +92,7 @@ initialize
 		at: (GUID fromString: '{be29f9d9-7844-49e1-aacb-8e19386529df}') put: #size_is;
 		shrink! !
 !OS.COM.CUSTDATA class categoriesForMethods!
+clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 initialize!public! !

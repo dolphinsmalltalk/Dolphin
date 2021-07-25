@@ -11,9 +11,13 @@ Refactory.Browser.PatternBlockToken comment: ''!
 !Refactory.Browser.PatternBlockToken categoriesForClass!Refactory-Parser! !
 !Refactory.Browser.PatternBlockToken methodsFor!
 
+acceptVisitor: aTokenVisitor 
+	self shouldNotImplement!
+
 isPatternBlock
 	^true! !
 !Refactory.Browser.PatternBlockToken categoriesForMethods!
+acceptVisitor:!public!visitor! !
 isPatternBlock!public!testing! !
 !
 

@@ -37,6 +37,9 @@ asRectangle
 bottom
 	^self y + self height!
 
+bottom: aNumber
+	self height: aNumber - self y!
+
 height
 	"Answer the <Float> value of the receiver's 'height' field."
 
@@ -50,11 +53,22 @@ height: aFloat
 left
 	^self x!
 
+left: aNumber
+	self width: self width + (self x - aNumber).
+	self x: aNumber!
+
 right
 	^self x + self width!
 
+right: aNumber
+	self width: aNumber - self x!
+
 top
 	^self y!
+
+top: aNumber
+	self height: self height + (self y - aNumber).
+	self y: aNumber!
 
 width
 	"Answer the <Float> value of the receiver's 'width' field."
@@ -88,11 +102,15 @@ y: aFloat
 !Graphics.Gdiplus.RECTF categoriesForMethods!
 asRectangle!converting!public! !
 bottom!accessing!public! !
+bottom:!accessing!public! !
 height!**compiled accessors**!public! !
 height:!**compiled accessors**!public! !
 left!public! !
+left:!accessing!public! !
 right!accessing!public! !
+right:!accessing!public! !
 top!public! !
+top:!accessing!public! !
 width!**compiled accessors**!public! !
 width:!**compiled accessors**!public! !
 x!**compiled accessors**!public! !

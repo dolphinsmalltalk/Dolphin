@@ -42,6 +42,12 @@ inverted
 	^self wrappedConverter
 !
 
+leftToRight: anObject
+	^self shouldNotImplement!
+
+rightToLeft: anObject
+	^self shouldNotImplement!
+
 wrappedConverter
 	"Private - Answer the type converter that is being wrapped (and therefore inverted) by
 	the receiver"
@@ -59,6 +65,8 @@ wrappedConverter: aTypeConverter
 convertFromLeftToRight:!converting!public! !
 convertFromRightToLeft:!converting!public! !
 inverted!operations!public! !
+leftToRight:!operations!private! !
+rightToLeft:!operations!private! !
 wrappedConverter!accessing!private! !
 wrappedConverter:!accessing!private! !
 !

@@ -80,6 +80,11 @@ createHandle
 			dc free].
 	^hPic!
 
+drawDisabledOn: aCanvas at: aPoint extent: sizePoint
+	"Draw a disabled/grayed representation of the receiver on aCanvas at aPoint with extent sizePoint."
+
+	self shouldNotImplement!
+
 drawOn: aCanvas at: aPoint extent: sizePoint
 	"Draw the receiver on aCanvas at aPoint with size sizePoint."
 
@@ -177,6 +182,7 @@ asBitmap!public! !
 asDIBSection!converting!public! !
 basicFree!private!realizing/unrealizing! !
 createHandle!private!realizing/unrealizing! !
+drawDisabledOn:at:extent:!drawing-bitmaps!public! !
 drawOn:at:extent:!drawing-bitmaps!public! !
 extent!accessing!public! !
 imageType!constants!private!testing! !

@@ -16,15 +16,9 @@ stbFixup: inFiler at: anInteger
 	"Answer the object that this one represents.
 	As we use become to change the receiver's identity no fixups are required."
 
-	^self become: self value!
-
-value
-	"Answer the object that this one represents."
-
-	^self subclassResponsibility! !
+	^self become: self value! !
 !Kernel.STBProxy categoriesForMethods!
 stbFixup:at:!converting!public! !
-value!converting!public! !
 !
 
 !Kernel.STBProxy class methodsFor!

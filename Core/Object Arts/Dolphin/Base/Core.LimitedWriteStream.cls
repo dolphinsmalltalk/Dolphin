@@ -119,6 +119,11 @@ peekFor: anObject
 position
 	^stream position min: limit!
 
+position: anInteger 
+	"Set the current position in the stream of values to the <integer> argument."
+
+	stream position: anInteger!
+
 reset
 	stream reset!
 
@@ -127,6 +132,12 @@ setStream: aCollection limit: anInteger limitBlock: aLimitBlock
 	start := stream position.
 	limit := start + anInteger.
 	limitBlock := aLimitBlock!
+
+setToEnd
+	"Set the position of the receiver to be past the last value (i.e. the stream will have no
+	future sequence values), and will answer true in response to the #atEnd message."
+
+	stream setToEnd!
 
 visit: aCompositeObject do: aNiladicValuable
 	visited
@@ -165,8 +176,10 @@ nextPutAll:!accessing!public! !
 originalContents!accessing!public! !
 peekFor:!accessing!public! !
 position!public! !
+position:!positioning!public! !
 reset!public! !
 setStream:limit:limitBlock:!initializing!private! !
+setToEnd!positioning!public! !
 visit:do:!public! !
 visitedBlock!public! !
 visitedBlock:!public! !

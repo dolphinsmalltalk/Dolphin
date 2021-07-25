@@ -10,10 +10,6 @@ CollectionStreamHelper comment: ''!
 !CollectionStreamHelper categoriesForClass!Unclassified! !
 !CollectionStreamHelper methodsFor!
 
-canonicalObject
-
-	^testCase canonicalObject!
-
 object: anObject!
 
 testXcontents
@@ -23,7 +19,6 @@ testXcontents
 				& r size = self canonicalObject size]
 		conformTo: self protocol selector: #'contents'.! !
 !CollectionStreamHelper categoriesForMethods!
-canonicalObject!public! !
 object:!public! !
 testXcontents!public! !
 !

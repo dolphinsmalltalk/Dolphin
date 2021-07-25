@@ -621,12 +621,6 @@ stackTempCount
 
 	^(header bitShift: -7) bitAnd: 255!
 
-stackTempCount: anInteger 
-	"Private - Set the number of stack temporaries (excluding arguments) used by the receiver."
-
-	header := (header bitAnd: ##((255 << 7) bitInvert)) 
-				bitOr: ((anInteger bitAnd: 255) bitShift: 7)!
-
 storeCategories
 	"Private - Record the categories of the receiver."
 
@@ -764,7 +758,6 @@ sourceDescriptor!accessing!private! !
 sourceDescriptor:!accessing!private! !
 specialMessages!development!enumerating!private! !
 stackTempCount!method header!private! !
-stackTempCount:!accessing!development!method header!private! !
 storeCategories!categories!private!source filing-methods! !
 storeSourceString:!private!source filing-methods! !
 superMessages!accessing!development!public! !

@@ -10,17 +10,12 @@ WriteStreamHelper comment: ''!
 !WriteStreamHelper categoriesForClass!Unclassified! !
 !WriteStreamHelper methodsFor!
 
-canonicalObject
-
-	^testCase canonicalObject!
-
 object: anObject!
 
 protocol
 
 	^#'WriteStream'! !
 !WriteStreamHelper categoriesForMethods!
-canonicalObject!public! !
 object:!public! !
 protocol!public! !
 !

@@ -392,11 +392,6 @@ template
 
 	^self class template!
 
-value
-	"Answer the receiver's value field as an equivalent Smalltalk object."
-
-	^self!
-
 value: anObject
 	"Set the value buffered by the receiver to anObject."
 
@@ -456,7 +451,6 @@ replaceFrom:to:with:startingAt:!public!replacing! !
 setField:value:!accessing!public! !
 size!accessing!public! !
 template!constants!private! !
-value!accessing!public! !
 value:!accessing!public! !
 yourAddress!accessing!public! !
 !

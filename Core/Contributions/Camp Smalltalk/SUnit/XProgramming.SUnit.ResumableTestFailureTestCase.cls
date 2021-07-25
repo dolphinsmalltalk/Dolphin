@@ -14,13 +14,6 @@ XProgramming.SUnit.ResumableTestFailureTestCase comment: ''!
 errorTest
 	^1 zork!
 
-failureLog
-	"dialect-specific"
-	"VA - System errorLog"
-	"VW, Dolphin - Transcript"
-	
-	^Transcript!
-
 isLogging
 	^true!
 
@@ -49,7 +42,6 @@ testResumable
 	self assert: result failures size equals: 2! !
 !XProgramming.SUnit.ResumableTestFailureTestCase categoriesForMethods!
 errorTest!public!Running! !
-failureLog!public!Running! !
 isLogging!public!Running! !
 okTest!public!Running! !
 regularTestFailureTest!public!Running! !

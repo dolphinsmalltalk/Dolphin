@@ -103,12 +103,6 @@ hasToolTips: aBoolean
 		set: aBoolean
 		recreateIfChanged: true!
 
-indexFromPoint: aPoint 
-	"Private - Answer the index of the object in the list under the <Point> argument, or nil if
-	none."
-
-	^(1 to: parts size) detect: [:i | (self itemRect: i) containsPoint: aPoint] ifNone: [0]!
-
 indexOfItem: part 
 	"Private - Answer the 1-based <integer> index of part."
 
@@ -375,7 +369,6 @@ hasSizeGrip!accessing-styles!public! !
 hasSizeGrip:!accessing-styles!public! !
 hasToolTips!accessing-styles!public! !
 hasToolTips:!accessing-styles!public! !
-indexFromPoint:!accessing!enquiries!private! !
 indexOfItem:!items!private! !
 initialize!initializing!private! !
 itemAtIndex:!items!public! !

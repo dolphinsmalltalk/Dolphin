@@ -165,6 +165,9 @@ lpCallback: anIUnknown
 
 	bytes uintPtrAtOffset: _OffsetOf_lpCallback put: anIUnknown yourAddress!
 
+lpfnHook: anExternalAddress
+	self shouldNotImplement!
+
 lphPropertyPages
 	"Answer the <ExternalHandle> value of the receiver's 'lphPropertyPages' field."
 
@@ -295,6 +298,7 @@ hwndOwner!**compiled accessors**!public! !
 hwndOwner:!**compiled accessors**!public! !
 lpCallback!**compiled accessors**!public! !
 lpCallback:!**compiled accessors**!public! !
+lpfnHook:!**compiled accessors**!public! !
 lphPropertyPages!**compiled accessors**!public! !
 lphPropertyPages:!**compiled accessors**!public! !
 lpPageRanges!**compiled accessors**!public! !

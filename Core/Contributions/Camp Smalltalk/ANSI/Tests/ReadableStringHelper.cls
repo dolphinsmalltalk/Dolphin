@@ -10,10 +10,6 @@ ReadableStringHelper comment: ''!
 !ReadableStringHelper categoriesForClass!Unclassified! !
 !ReadableStringHelper methodsFor!
 
-canonicalObject
-
-	^testCase canonicalObject!
-
 testXasLowercase
 
 	" <readableString>#asLowercase "
@@ -48,7 +44,6 @@ testXsubStringsX
 	" <readableString>#subStrings:"
 	#'ReadableString'.! !
 !ReadableStringHelper categoriesForMethods!
-canonicalObject!public! !
 testXasLowercase!public! !
 testXasString!public! !
 testXasSymbol!public! !

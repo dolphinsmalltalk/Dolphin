@@ -49,14 +49,6 @@ createTestPackage
 	^self createPackage: 'Object Arts\Dolphin\Tests\Dolphin Tests Test Package'
 !
 
-failureLog
-	"dialect-specific"
-	"VA - System errorLog"
-	"VW, Dolphin - Transcript"
-	
-	^Transcript
-!
-
 isAtLeastVmVersion: anArray
 	^VM versionInfo fileVersion >= (self versionFromParts: anArray)!
 
@@ -123,7 +115,6 @@ assertIs:deepCopyOf:visited:!private!unit tests! !
 compare:to:epsilon:!comparing!public! !
 createPackage:!helpers!public! !
 createTestPackage!helpers!public! !
-failureLog!Accessing!public! !
 isAtLeastVmVersion:!private!testing! !
 isLogging!Accessing!public! !
 isOnline!public!unit tests! !

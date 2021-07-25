@@ -29,11 +29,31 @@ testCompilationFailures
 	self assert: failed asArray equals: #()
 	"
 	(Refactory.Browser.BrowserEnvironment new forMethods: failed) browse
+	"!
+
+testSubclassResponsibilityNotDefined
+	<namespace: Refactory.Browser>
+	| checker rule failures |
+	rule := BlockLintRule subclassResponsibilityNotDefined.
+	checker := SmalllintChecker newWithCachingContext
+				rule: rule;
+				environment: BrowserEnvironment new;
+				yourself.
+	checker run.
+	failures := rule failedMethods reject: 
+					[:each |
+					each selector == #testWarnUnimplementedAbstractMethod or: [each methodClass subclasses isEmpty]].
+	self assert: failures asArray sort equals: #()
+	"
+	(BrowserEnvironment new forMethods: failures) openEditor.
+	Or to see all failures, including those grandfathered-in
+	rule viewResults.
 	"! !
 !Tools.Tests.ProductReleaseTest categoriesForMethods!
 checkNoClass:!public!unit tests! !
 isReleased!private!unit tests! !
 specialAssert:!private!unit tests! !
 testCompilationFailures!public!unit tests! !
+testSubclassResponsibilityNotDefined!public!unit tests! !
 !
 

@@ -176,6 +176,11 @@ testLookup
 	absent := subject lookup: 'section'.
 	self assert: absent associations equals: {'x' -> '1'}!
 
+testRemove
+	| subject |
+	subject := self makeModifiableIniFile.
+	self should: [subject remove: 'Blah'] raise: Error matching: [:ex | ex description = 'IniFile should not implement #remove:ifAbsent:']!
+
 testRemoveAllKeys
 	| subject sections absent |
 	subject := self makeModifiableIniFile.
@@ -242,6 +247,7 @@ testIncludesKey!public!unit tests! !
 testIsEmpty!public!unit tests! !
 testKeys!public!unit tests! !
 testLookup!public!unit tests! !
+testRemove!public! !
 testRemoveAllKeys!public!unit tests! !
 testRemoveKey!public!unit tests! !
 testValues!public!unit tests! !

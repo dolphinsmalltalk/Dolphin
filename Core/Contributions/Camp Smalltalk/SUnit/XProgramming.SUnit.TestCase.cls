@@ -87,7 +87,7 @@ failureLog
 	"VA - System errorLog"
 	"VW, Dolphin - Transcript"
 	
-	^self subclassResponsibility
+	^Transcript
 !
 
 getDescription: aStringOrValuable
@@ -218,7 +218,7 @@ deny:description:!asserting!public! !
 deny:description:resumable:!asserting!public! !
 executeShould:inScopeOf:!private!running! !
 fail:!asserting!public! !
-failureLog!accessing!public! !
+failureLog!Accessing!public! !
 getDescription:!helpers!private! !
 isLogging!accessing!public! !
 logFailure:!asserting!public! !

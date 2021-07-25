@@ -25,7 +25,7 @@ hook: anExternalCallback
 	self maskIn: self hookFlag!
 
 hookFlag
-	^self subclassResponsibility!
+	^0!
 
 lpfnHook: anExternalAddress 
 	^self subclassResponsibility!

@@ -11,6 +11,12 @@ Kernel.Tests.StNumberLiteralTokenTest comment: ''!
 !Kernel.Tests.StNumberLiteralTokenTest categoriesForClass!Unclassified! !
 !Kernel.Tests.StNumberLiteralTokenTest methodsFor!
 
+exampleSource
+	^'16rCD'!
+
+exampleValue
+	^205!
+
 subjectClass
 	^StNumberLiteralToken!
 
@@ -19,15 +25,15 @@ testInstanceCreation
 	token := self subjectClass
 				start: 5
 				comments: nil
-				value: 205
+				value: self exampleValue
 				stop: 9
-				source: '16rCD'.
+				source: self exampleSource.
 	self assert: token isLiteralToken.
 	self assert: token start equals: 5.
 	self assert: token stop equals: 9.
 	self assertIsNil: token comments.
-	self assert: token value equals: 205.
-	self assert: token source equals: '16rCD'.
+	self assert: token value equals: self exampleValue.
+	self assert: token source equals: self exampleSource.
 	"Now test that the Smalltalk backup code works without primitive: 157"
 	originalMethod := self subjectClass class compiledMethodAt: #start:comments:value:stop:source:.
 	testMethod := originalMethod copy.
@@ -40,10 +46,10 @@ testInstanceCreation
 	self assert: token2 start equals: 20.
 	self assert: token2 stop equals: 27.
 	self assertIsNil: token2 comments.
-	self assert: token2 value equals: 0.125
-
-! !
+	self assert: token2 value equals: 0.125! !
 !Kernel.Tests.StNumberLiteralTokenTest categoriesForMethods!
+exampleSource!public!unit tests! !
+exampleValue!public!unit tests! !
 subjectClass!constants!private! !
 testInstanceCreation!public!unit tests! !
 !

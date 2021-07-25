@@ -13,17 +13,9 @@ WinHttpServer.HttpQosSetting comment: ''!
 !WinHttpServer.HttpQosSetting methodsFor!
 
 qosType
-	^self class qosType!
-
-value
-	^self subclassResponsibility!
-
-value: anInteger
-	^self subclassResponsibility! !
+	^self class qosType! !
 !WinHttpServer.HttpQosSetting categoriesForMethods!
 qosType!constants!public! !
-value!public! !
-value:!public! !
 !
 
 !WinHttpServer.HttpQosSetting class methodsFor!

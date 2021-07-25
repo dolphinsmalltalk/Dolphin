@@ -263,11 +263,6 @@ list: aSequenceableCollection
 
 	self model list: aSequenceableCollection!
 
-newSelectionsFromEvent: aMouseEvent
-	"Private - Answer a collection of the <integer> selections that would occur if the `MouseEvent` argument was passed to the control."
-
-	^self subclassResponsibility!
-
 noSelection
 	"Private - Answer the receiver's representation of no selection."
 
@@ -646,7 +641,6 @@ itemFromPoint:!enquiries!private! !
 lastSelIndices!private! !
 list!accessing!public! !
 list:!accessing!public! !
-newSelectionsFromEvent:!event handling!private! !
 noSelection!constants!private! !
 objectFromHandle:!accessing!private! !
 objectFromHandle:ifAbsent:!accessing!private! !

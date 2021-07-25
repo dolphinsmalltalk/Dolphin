@@ -501,7 +501,6 @@ package setMethodNames: #(
 	#(#{Kernel.StVariable} #staticValueClass)
 	#(#{Kernel.StVariable} #valueClass)
 	#(#{Kernel.StVariable} #valueClass:)
-	#(#{Kernel.StVariable} #valueInFrame:)
 	#(#{Kernel.StWorkspaceVariable} #printInfoTipOn:)
 	#(#{Kernel.StWorkspaceVariable} #staticValueClass)
 	#(#{OS._FPIEEE_RECORD} #printFieldsOn:)
@@ -5546,10 +5545,7 @@ valueClass
 	^nil!
 
 valueClass: aStackFrame 
-	^self valueClass!
-
-valueInFrame: aStackFrame
-	^self subclassResponsibility! !
+	^self valueClass! !
 !Kernel.StVariable categoriesForMethods!
 infoTip!accessing!public! !
 infoTip:!accessing!public! !
@@ -5558,7 +5554,6 @@ printInfoTipOn:frame:!accessing!public! !
 staticValueClass!accessing!public! !
 valueClass!accessing!public! !
 valueClass:!public! !
-valueInFrame:!accessing!public! !
 !
 
 !Kernel.StWorkspaceVariable methodsFor!

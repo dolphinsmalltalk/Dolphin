@@ -23,7 +23,12 @@ subjectClass
 	^self subclassResponsibility!
 
 testBottom
-	self assert: desktop bottom equals: 1024!
+	self assert: oddDesktop bottom equals: 1023.
+	self assert: oddDesktop height equals: 1021.
+	oddDesktop bottom: 2048.
+	self assert: oddDesktop bottom equals: 2048.
+	self assert: oddDesktop height equals: 2046
+!
 
 testCenter
 	self assert: desktop center equals: 640 @ 512.
@@ -38,7 +43,11 @@ testHeight
 	self assert: oddDesktop height equals: 1021!
 
 testLeft
-	self assert: oddDesktop left  equals: -1!
+	self assert: oddDesktop left equals: -1.
+	self assert: oddDesktop width equals: 1280.
+	oddDesktop left: 3.
+	self assert: oddDesktop left equals: 3.
+	self assert: oddDesktop width equals: 1276!
 
 testOriginCorner
 	| rect rect2 originalMethod testMethod |
@@ -55,10 +64,19 @@ testOriginCorner
 	self assert: rect2 equals: rect!
 
 testRight
-	self assert: desktop right equals: 1280!
+	self assert: desktop right equals: 1280.
+	desktop right: 3072.
+	self assert: desktop right equals: 3072.
+	self assert: desktop width equals: 3072
+!
 
 testTop
-	self assert: oddDesktop top equals: 2!
+	self assert: oddDesktop top equals: 2.
+	self assert: oddDesktop height equals: 1021.
+	oddDesktop top: 3.
+	self assert: oddDesktop top equals: 3.
+	self assert: oddDesktop height equals: 1020.
+!
 
 testWidth
 	self assert: oddDesktop width equals: 1280! !

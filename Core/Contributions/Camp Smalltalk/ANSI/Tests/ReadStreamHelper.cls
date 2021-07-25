@@ -10,10 +10,6 @@ ReadStreamHelper comment: ''!
 !ReadStreamHelper categoriesForClass!Unclassified! !
 !ReadStreamHelper methodsFor!
 
-canonicalObject
-
-	^testCase canonicalObject!
-
 object: anObject!
 
 protocol
@@ -49,7 +45,6 @@ testXupToX
 		should: [:r | r isEmpty]
 		conformTo: self protocol selector: #upTo:.! !
 !ReadStreamHelper categoriesForMethods!
-canonicalObject!public! !
 object:!public! !
 protocol!public! !
 testXnextX!public! !

@@ -16,6 +16,13 @@ This styler is useful either when one wants to use Scintilla with plain text, or
 !UI.Scintilla.NullStyler categoriesForClass!Kernel-Objects! !
 !UI.Scintilla.NullStyler methodsFor!
 
+colorText: aString in: aScintillaView startingAt: aSmallInteger 
+	"Colour the <String> of text from the <ScintillaView>, starting at the character position
+	identified by the <Integer> argument. Note that the initial styling position has already
+	been set."
+
+	aScintillaView applyStyle: self normalStyleName toNext: aString size - aSmallInteger + 1!
+
 initialize
 	normalStyleName := #normal!
 
@@ -31,6 +38,7 @@ onStyleNeeded: aScintillaView from: startInteger to: stopInteger
 
 	aScintillaView applyStyle: self normalStyleName toNext: stopInteger - startInteger + 1! !
 !UI.Scintilla.NullStyler categoriesForMethods!
+colorText:in:startingAt:!operations!private! !
 initialize!initializing!public! !
 normalStyleName!accessing!public! !
 normalStyleName:!accessing!public! !

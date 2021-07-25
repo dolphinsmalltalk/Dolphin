@@ -10,10 +10,6 @@ SequencedStreamHelper comment: ''!
 !SequencedStreamHelper categoriesForClass!Unclassified! !
 !SequencedStreamHelper methodsFor!
 
-canonicalObject
-
-	^testCase canonicalObject!
-
 object
 	^testCase canonicalObject!
 
@@ -93,7 +89,6 @@ testXsetToEnd
 								= self canonicalObject contents size]
 		conformTo: self protocol selector: #'setToEnd'.! !
 !SequencedStreamHelper categoriesForMethods!
-canonicalObject!public! !
 object!public! !
 object:!public! !
 testXclose!public! !

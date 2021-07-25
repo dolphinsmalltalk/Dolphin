@@ -14,21 +14,13 @@ Public Domain Freeware'!
 !IdbShell categoriesForClass!IDB Goodies! !
 !IdbShell methodsFor!
 
-idbAbout
-	self subclassResponsibility!
-
 idbAbout: aString
 	self class idbAbout: aString!
-
-idbHelp
-	self subclassResponsibility!
 
 idbHelp: aFileNameStem
 	self class idbHelp: aFileNameStem! !
 !IdbShell categoriesForMethods!
-idbAbout!public! !
 idbAbout:!operations!public! !
-idbHelp!public! !
 idbHelp:!operations!public! !
 !
 

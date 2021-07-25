@@ -54,11 +54,6 @@ defaultContext
 
 	^nil!
 
-edit: aResourceIdentifier
-	"Invoke a suitable editor to edit the receiver with the given identity."
-
-	^self subclassResponsibility!
-
 icon
 	"Answer the icon used to represent this resource"
 
@@ -133,12 +128,7 @@ save: anObject
 	a default icon to use to represent this resource"
 
 	accessor save: anObject as: self class.
-	self icon: anObject icon.!
-
-show: aResourceIdentifier
-	"Display the receiver in a suitable manner with the given identity."
-
-	^self subclassResponsibility! !
+	self icon: anObject icon.! !
 !Resource categoriesForMethods!
 accessor!accessing!private! !
 accessor:!accessing!private! !
@@ -147,7 +137,6 @@ assignToResourceIdentifier:!private! !
 canSave!public!testing! !
 copy!operations!private! !
 defaultContext!constants!private! !
-edit:!operations!public! !
 icon!accessing!public! !
 icon:!accessing!public! !
 isChanged!public!testing! !
@@ -161,7 +150,6 @@ makeFile:!development!mutating!public! !
 makeFilename:!mutating!public! !
 resave!operations!public! !
 save:!operations!public! !
-show:!operations!public! !
 !
 
 !Resource class methodsFor!

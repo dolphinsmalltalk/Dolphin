@@ -11,6 +11,11 @@ Kernel.MethodAnnotations comment: ''!
 !Kernel.MethodAnnotations categoriesForClass!Kernel-Objects! !
 !Kernel.MethodAnnotations methodsFor!
 
+add: newElement
+	"MethodAnnotations are not extensible."
+
+	^self shouldNotImplement!
+
 at: anInteger
 	"Answer the <Message> element of the receiver at the specified <integer> index."
 
@@ -102,6 +107,7 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 			aDyadicValuable value: i
 				value: (Message selector: (self basicAt: offset - 1) arguments: (self basicAt: offset))]! !
 !Kernel.MethodAnnotations categoriesForMethods!
+add:!adding!public! !
 at:!enumerating!public! !
 at:put:!accessing!public! !
 basicNextIdentityIndexOf:from:to:!private!searching! !

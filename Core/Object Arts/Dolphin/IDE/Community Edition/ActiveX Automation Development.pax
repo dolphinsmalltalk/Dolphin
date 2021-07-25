@@ -310,6 +310,7 @@ package setMethodNames: #(
 	#(#{OS.COM.TKindCoclassAnalyzer} #generateWrapper)
 	#(#{OS.COM.TKindCoclassAnalyzer} #idlAttributes)
 	#(#{OS.COM.TKindCoclassAnalyzer} #idlKeyword)
+	#(#{OS.COM.TKindCoclassAnalyzer} #printClassCommentPreambleOn:)
 	#(#{OS.COM.TKindCoclassAnalyzer} #printIDLBodyOn:indent:)
 	#(#{OS.COM.TKindCoclassAnalyzer class} #publishedAspectsOfInstances)
 	#(#{OS.COM.TKindDispatchAnalyzer} #buildPropertyAccessorName:)
@@ -341,6 +342,7 @@ package setMethodNames: #(
 	#(#{OS.COM.TKindEnumAnalyzer} #idlAttributes)
 	#(#{OS.COM.TKindEnumAnalyzer} #idlKeyword)
 	#(#{OS.COM.TKindEnumAnalyzer} #isInstalled)
+	#(#{OS.COM.TKindEnumAnalyzer} #printClassCommentPreambleOn:)
 	#(#{OS.COM.TKindEnumAnalyzer} #printIDLBodyOn:indent:)
 	#(#{OS.COM.TKindEnumAnalyzer} #printIDLOn:indent:)
 	#(#{OS.COM.TKindEnumAnalyzer} #removeOldWrappers:)
@@ -4077,6 +4079,12 @@ idlKeyword
 
 	^'coclass'!
 
+printClassCommentPreambleOn: target
+	"Private - Print a comment preamble appropriate for the receiver onto the 
+	<puttableStream>, target."
+
+	self shouldNotImplement!
+
 printIDLBodyOn: target indent: tabs
 	"Private - Print the IDL description for the receiver on the <puttableStream>, target."
 
@@ -4111,6 +4119,7 @@ generateVariableDefinition:!private! !
 generateWrapper!private! !
 idlAttributes!printing-IDL!private! !
 idlKeyword!constants!private! !
+printClassCommentPreambleOn:!private! !
 printIDLBodyOn:indent:!printing-IDL!private! !
 !
 
@@ -4649,6 +4658,12 @@ isInstalled
 			var := self suggestedBinding.
 			var value notNil and: [self isGeneratedAs: var value]]!
 
+printClassCommentPreambleOn: target
+	"Private - Print a comment preamble appropriate for the receiver onto the 
+	<puttableStream>, target."
+
+	self shouldNotImplement!
+
 printIDLBodyOn: aPuttableStream indent: anInteger
 	"Private - Print the IDL description for the receiver on the <puttableStream>, target."
 
@@ -4698,6 +4713,7 @@ generateVariableDefinition:!private! !
 idlAttributes!printing-IDL!private! !
 idlKeyword!constants!private! !
 isInstalled!private!testing! !
+printClassCommentPreambleOn:!private! !
 printIDLBodyOn:indent:!printing-IDL!private! !
 printIDLOn:indent:!printing-IDL!public! !
 removeOldWrappers:!private! !

@@ -802,9 +802,6 @@ parseCmdLineFlags
 		do: [:each | (each notEmpty and: ['/-' includes: each first]) ifTrue: [cmdLineFlags add: (each copyFrom: 2)]].
 	(cmdLineFlags includes: 'Embedding') ifTrue: [flags := flags maskSet: EmbeddingMask]!
 
-popupHelpFile
-	self subclassResponsibility!
-
 preStart
 	"A hook for user configuration of the starutp - for example the development session
 	manager uses this to file in a prestart.st fixup file, if there is one.
@@ -1133,9 +1130,6 @@ versionInfo
 
 	^VersionInfo forPath: (External.DynamicLinkLibrary moduleFileName: nil)!
 
-whatsThis: object 
-	self subclassResponsibility!
-
 windowsDirectory
 	"Answer the path of the Windows directory on the host computer for the current session."
 
@@ -1238,7 +1232,6 @@ openStdIn!helpers!private! !
 openStdOut!helpers!private! !
 outer!accessing!public! !
 parseCmdLineFlags!operations-startup!private! !
-popupHelpFile!constants!public! !
 preStart!operations-startup!public! !
 primaryStartup!operations-startup!public! !
 primQuit:!operations-shutdown!private! !
@@ -1286,7 +1279,6 @@ unregisterConsoleCtrlHandler!operations!private! !
 unregisterServer:!accessing!public! !
 userName!accessing!public! !
 versionInfo!accessing-version!public! !
-whatsThis:!commands!public! !
 windowsDirectory!accessing!public! !
 !
 

@@ -35,6 +35,11 @@ actualPreferredExtent: aLayoutContext
 				ifNotNil: [:manager | manager preferredLayoutExtentOf: self context: aLayoutContext]
 				ifNil: [self calculateExtent: aLayoutContext]]!
 
+addItem: anObject
+	"Append a new item to the list of items displayed in the receiver. Answer the new item."
+
+	^self subclassResponsibility!
+
 addSubView: aView name: aNameString
 	"Adds aView to the receiver's collection of managed sub-views and
 	gives it aNameString. Answers aView"
@@ -112,10 +117,7 @@ hasDivider: aBoolean
 		set: aBoolean not
 		recreateIfChanged: false) ifTrue: [self frameChanged]!
 
-indexFromPoint: aPoint 
-	"Private - Answer the index of the item in the list under the <Point> argument, or nil if
-	none."
-
+indexOfItem: anObject
 	^self subclassResponsibility!
 
 initialize
@@ -141,6 +143,22 @@ isVertical: aBoolean
 		baseStyleMask: CCS_VERT
 		set: aBoolean
 		recreateIfChanged: false	"Modifiable after creation") ifTrue: [self invalidateLayout; invalidate]!
+
+itemAtIndex: anInteger
+	"Answers the item at the specified index in the receiver"
+
+	^self subclassResponsibility!
+
+itemRect: anInteger
+	"Answer the bounding <Rectangle> for the item at the specified 1-based <Integer> index."
+
+	^self subclassResponsibility!
+
+items
+	^self subclassResponsibility!
+
+items: aCollection
+	self subclassResponsibility!
 
 layout: aLayoutContext 
 	"Private - Recalculate the geometry of the receiver."
@@ -238,6 +256,11 @@ onZOrderChanged
 	self invalidateLayout.
 	super onZOrderChanged!
 
+removeItem: anObject
+	"Remove an item from the receivers contents. Answer the item."
+
+	^self subclassResponsibility!
+
 removeSubView: aView
 	"Removes aView as a managed subview of the receiver. 
 	If aView is indeed a subview of the receiver then it is destroyed. If not,
@@ -299,6 +322,7 @@ wmNotify: message wParam: wParam lParam: lParam
 !UI.ControlBarAbstract categoriesForMethods!
 actualInsets:!accessing!private! !
 actualPreferredExtent:!private! !
+addItem:!adding!items!public! !
 addSubView:name:!public!sub views! !
 arrangementOf:!accessing!public! !
 arrangementOf:put:!accessing!public! !
@@ -310,11 +334,15 @@ defaultWindowStyle!constants!private! !
 errorDuplicateName:!exceptions!public! !
 hasDivider!accessing-styles!public! !
 hasDivider:!accessing-styles!public! !
-indexFromPoint:!enquiries!private! !
+indexOfItem:!items!private! !
 initialize!initializing!private! !
 insets!accessing!private! !
 isVertical!accessing-styles!public! !
 isVertical:!accessing-styles!public! !
+itemAtIndex:!items!public! !
+itemRect:!geometry!public! !
+items!accessing!private! !
+items:!accessing!private! !
 layout:!geometry!private! !
 layoutManager:!geometry!public! !
 name:as:!public!subpresenters! !
@@ -325,6 +353,7 @@ nmRClick:!event handling-win32!public! !
 onSubViewAdded:!event handling!public! !
 onTipTextRequired:!event handling!private! !
 onZOrderChanged!event handling!public! !
+removeItem:!items!public!removing! !
 removeSubView:!hierarchy!public!sub views! !
 ttnGetDispInfo:!event handling-win32!private! !
 validateSubViewLayouts:!geometry!private! !

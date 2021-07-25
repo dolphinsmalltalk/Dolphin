@@ -278,9 +278,6 @@ itemCount
 
 	^self sendMessage: TCM_GETITEMCOUNT!
 
-itemFromNMHDRA: pNMHDR
-	^self shouldNotImplement!
-
 itemFromNMHDRW: pNMHDR
 	^self shouldNotImplement!
 
@@ -642,7 +639,6 @@ isMultiline:!accessing!public! !
 isVertical!accessing-styles!public! !
 isVertical:!accessing-styles!public! !
 itemCount!accessing!public! !
-itemFromNMHDRA:!helpers!private! !
 itemFromNMHDRW:!event handling-win32!private! !
 itemRect:textOnly:!public! !
 makeTcItemStruct:!adding!private! !

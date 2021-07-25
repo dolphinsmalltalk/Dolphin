@@ -28,6 +28,14 @@ elementClass:!accessing!private! !
 
 !OS.COM.IEnumStruct class methodsFor!
 
+elementClass
+	"Private - Answer the class of element enumerated by the receiver."
+
+	"Only known by instances"
+
+	^self shouldNotImplement
+!
+
 elementClass: elementClass 
 	"Answer a new instance of the receiver that will be able to enumerate over a collection of
 	the specified class of <ExternalStructure> elements."
@@ -36,6 +44,7 @@ elementClass: elementClass
 		elementClass: elementClass;
 		yourself! !
 !OS.COM.IEnumStruct class categoriesForMethods!
+elementClass!constants!private! !
 elementClass:!instance creation!public! !
 !
 

@@ -357,9 +357,6 @@ initialize
 	getImageBlock := self defaultGetImageBlock.
 	imageManager := self defaultImageManager!
 
-itemFromNMHDRA: pNMHDR
-	^self subclassResponsibility!
-
 itemFromNMHDRW: pNMHDR
 	^self subclassResponsibility!
 
@@ -832,7 +829,6 @@ imageExtent!accessing!private! !
 imageManager!image management!private! !
 imageManager:!image management!public! !
 initialize!initializing!private! !
-itemFromNMHDRA:!helpers!private! !
 itemFromNMHDRW:!event handling-win32!private! !
 itemFromPoint:!enquiries!private! !
 itemRect:!accessing!public! !

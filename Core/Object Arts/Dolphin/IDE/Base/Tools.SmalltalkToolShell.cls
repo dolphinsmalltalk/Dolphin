@@ -151,8 +151,10 @@ historyForward: delta
 
 	self historySkip: delta!
 
-historySkip: delta 
-	^self subclassResponsibility!
+historySkip: anInteger
+	"Private - Move around in the history list by the specified <integer> delta (negative for backwards)."
+
+	"Nothing to do by default."!
 
 ideaSpace
 	^#{IdeaSpaceShell} valueOrNil
@@ -299,7 +301,7 @@ searchSmalltalkFor: anObject
 	anObject searchForInTool: self!
 
 selectionEnvironment
-	^self subclassResponsibility!
+	^BrowserEnvironment new!
 
 setPinStateFor: aSlideyInneyOuteyThingName to: aBooleanOrNil 
 	"Private - Attempts to find a named SlideyInneyOuteyThing within the view hierarchy of the receiver and sets the

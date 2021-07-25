@@ -27,12 +27,6 @@ markAndTry
 	returnContinuation := [:answer | ^answer].
 	^protectedBlock value!
 
-on: exceptionSelector do: monadicBlock 
-	"Private - Record the <exceptionSelector> and <monadicBlock> to be
-	used as the receivers exception selector and handler block respectively."
-
-	^self subclassResponsibility!
-
 outer
 	"Private - Answer the receiver's outer handler."
 	
@@ -93,7 +87,6 @@ try: niladicBlock
 !Kernel.ExceptionHandlerAbstract categoriesForMethods!
 actionFor:!helpers!private! !
 markAndTry!debugger-step through!evaluating!private! !
-on:do:!initializing!private! !
 outer!debugger-step over!private! !
 printOn:!development!printing!public! !
 retry!debugger-step through!handler responses!private! !

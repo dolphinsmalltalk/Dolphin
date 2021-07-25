@@ -37,9 +37,6 @@ flags: anInteger
 
 	bytes dwordAtOffset: _OffsetOf_flags put: anInteger!
 
-hookFlag
-	^0!
-
 hwndOwner: anInteger
 	"Set the receiver's 'hwndOwner' field to the value of the argument, anInteger"
 
@@ -93,7 +90,6 @@ title: text
 displayName!accessing!public! !
 flags!**compiled accessors**!public! !
 flags:!**compiled accessors**!public! !
-hookFlag!constants!public! !
 hwndOwner:!**compiled accessors**!public! !
 initialize:!initializing!private! !
 lpfnHook:!**compiled accessors**!public! !

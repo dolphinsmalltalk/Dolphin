@@ -14,19 +14,6 @@ Public Domain Freeware'!
 !ProfileBrowser categoriesForClass!IDB Goodies! !
 !ProfileBrowser methodsFor!
 
-about
-	"Display the about view"
-
-	self 
-		idbAbout: '
-Profiler
-for
-Dolphin Smalltalk 6.x
-
-Version 6a
-© 2005 Ian Bartholomew
-http://www.idb.me.uk'!
-
 createComponents
 	"Create the presenters for the sub views in the shell"
 
@@ -98,6 +85,19 @@ filterSelector
 
 	filterSelector := filterSelector not.
 	self onSelectorSelectionChanged!
+
+idbAbout
+	"Display the about view"
+
+	self 
+		idbAbout: '
+Profiler
+for
+Dolphin Smalltalk 6.x
+
+Version 6a
+© 2005 Ian Bartholomew
+http://www.idb.me.uk'!
 
 isSampleSetSelected
 	"Answer true if there is a sample set selected in the list"
@@ -245,7 +245,6 @@ updateIndicatorLimit
 
 	^65000! !
 !ProfileBrowser categoriesForMethods!
-about!commands!public! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 deleteAllSampleSets!commands!public! !
@@ -253,6 +252,7 @@ deleteSampleSet!commands!public! !
 filterDolphinXXX!commands!public! !
 filterPercentage:symbol:!helpers!private! !
 filterSelector!commands!public! !
+idbAbout!commands!public! !
 isSampleSetSelected!public!testing! !
 onSampleSetSelectionChanged!event handling!public! !
 onSampleSetUpdated:atIndex:!event handling!public! !

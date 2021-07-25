@@ -18,9 +18,6 @@ acceptVisitor: aProgramNodeVisitor
 isExternalCall
 	^false!
 
-primitiveIndex
-	^self subclassResponsibility!
-
 start
 	^start!
 
@@ -35,7 +32,6 @@ stop: anInteger
 !Kernel.StTagNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 isExternalCall!public!testing! !
-primitiveIndex!accessing!public! !
 start!accessing!public! !
 start:!accessing!private! !
 stop!accessing!public! !

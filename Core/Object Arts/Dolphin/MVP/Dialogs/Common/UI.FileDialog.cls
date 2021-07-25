@@ -91,11 +91,6 @@ cdnTypeChange: anExternalAddress
 
 	^0!
 
-commonDialogSelector
-	"Private - Answer the selector to use to get the result."
-
-	^self subclassResponsibility!
-
 defaultExtension
 	"Answer the default file extension to be used if a filename is entered
 	without one, or nil if there is no default."
@@ -348,7 +343,6 @@ cdnInitDone:!event handling-win32!private! !
 cdnSelChange:!event handling-win32!private! !
 cdnShareViolation:!event handling-win32!private! !
 cdnTypeChange:!event handling-win32!private! !
-commonDialogSelector!constants!private! !
 defaultExtension!accessing!public! !
 defaultExtension:!accessing!public! !
 defaultStyle!constants!public! !

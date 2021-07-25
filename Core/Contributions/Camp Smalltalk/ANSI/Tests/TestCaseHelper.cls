@@ -14,6 +14,9 @@ TestCaseHelper comment: ''!
 attachTo: mainTestCase 
 	testCase := mainTestCase.!
 
+canonicalObject
+	^testCase canonicalObject!
+
 printOn: aStream
 
 	aStream
@@ -24,6 +27,7 @@ protocol
 	^testCase protocol! !
 !TestCaseHelper categoriesForMethods!
 attachTo:!public! !
+canonicalObject!public! !
 printOn:!public! !
 protocol!public! !
 !

@@ -108,12 +108,6 @@ postMouseEvents: aSequencedReadableCollection
 				wParam: each wParam
 				lParam: each lParam]!
 
-removalOfSelectionLeaves: aClass
-	"Private - Answer the class that we would expect to be selected follwing the removal of aClass when it was originally
-	selected in the receiver"
-
-	self subclassResponsibility!
-
 sendClickEvent: aMouseEvent
 	| pos |
 	"The mouse needs to be outside any Dolphin window in order to cause the control's WM_?BUTTONDOWN handler to block in the way described in #898"
@@ -174,7 +168,6 @@ onSelectionChanged!event handling!private! !
 onSelectionChanging:!event handling!private! !
 onTimerTick:!event handling!private! !
 postMouseEvents:!helpers!private! !
-removalOfSelectionLeaves:!helpers!private! !
 sendClickEvent:!helpers!private! !
 sendMouseEvents:!helpers!private! !
 setupClickTimeout!helpers!private! !

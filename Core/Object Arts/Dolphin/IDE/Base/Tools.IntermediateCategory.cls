@@ -88,8 +88,12 @@ name: categoryName
 	"Answer the subinstance of the receiver with the 
 	<readableString> name, categoryName."
 
-	^self newNamed: categoryName! !
+	^self newNamed: categoryName!
+
+unclassifiedName
+	^self shouldNotImplement! !
 !Tools.IntermediateCategory class categoriesForMethods!
 name:!instance creation!public! !
+unclassifiedName!constants!private! !
 !
 

@@ -13,9 +13,6 @@ CollectionHelper comment: ''!
 canonicalElement
 	^testCase canonicalElement!
 
-canonicalObject
-	^testCase canonicalObject!
-
 emptyCollection
 	^testCase emptyCollection!
 
@@ -673,7 +670,6 @@ testXsize
 	self assertSend: #size! !
 !CollectionHelper categoriesForMethods!
 canonicalElement!public! !
-canonicalObject!public! !
 emptyCollection!public! !
 limitedElementTypes!public! !
 object!public! !

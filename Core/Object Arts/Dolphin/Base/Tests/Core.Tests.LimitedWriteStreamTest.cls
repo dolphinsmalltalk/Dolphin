@@ -179,6 +179,21 @@ testRecursionDetection
 	stream print: array.
 	self assert: stream contents equals: 'an Array(1.1 an Array(2.1 ... a cyclic ref to an Array... 2.2 2.3) 2.1 3.1)'!
 
+testSetPosition
+	| stream |
+	stream := self newStream.
+	stream nextPutAll: 'Foo Bar'.
+	stream position: 4.
+	stream nextPutAll: 'foo'.
+	self assert: stream contents equals: 'Foo foo'.
+	self should: [stream position: 20] raise: BoundsError.
+	stream position: 0.
+	stream nextPutAll: 'Bar'.
+	stream setToEnd.
+	self assert: stream atEnd.
+	stream nextPutAll: 'bar'.
+	self assert: stream contents equals: 'Bar foobar'!
+
 testWith
 	"like on: except it starts writing at the end of its argument collection,
 	and the initial position is the collection size and the initial contents
@@ -252,6 +267,7 @@ testOnFromTo!public!unit tests! !
 testOnLimitLimitBlock!public!unit tests! !
 testOverFileStream!public!unit tests! !
 testRecursionDetection!public!unit tests! !
+testSetPosition!public! !
 testWith!public! !
 testWithFromTo!public! !
 !

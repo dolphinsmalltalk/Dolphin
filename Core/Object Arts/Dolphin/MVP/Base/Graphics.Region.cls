@@ -32,6 +32,9 @@ containsPoint: aPoint
 		x: aPoint x
 		y: aPoint y) asBoolean!
 
+createHandle
+	^self shouldNotImplement!
+
 exclude: aRegion
 	"Answers a new region which is the receiver with aRegion excluded"
 
@@ -58,6 +61,7 @@ union: aRegion
 !Graphics.Region categoriesForMethods!
 combine:mode:!operations!private! !
 containsPoint:!operations!public!testing! !
+createHandle!private!realizing/unrealizing! !
 exclude:!operations!public! !
 intersection:!operations!public! !
 isPersistent!private!testing! !

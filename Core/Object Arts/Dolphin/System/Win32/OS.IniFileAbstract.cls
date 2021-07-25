@@ -198,6 +198,9 @@ lookup: aString
 
 	^self getValue: aString shallowCopy!
 
+remove: oldElement ifAbsent: exceptionHandler
+	^self shouldNotImplement!
+
 removeAllKeys: keys
 	"Remove any elements from the receiver with the keys in the <collection> argument, keys.
 	If any of the keys are not present in the receiver, or there are duplicates in
@@ -279,6 +282,7 @@ keys!accessing!public! !
 keysAndValuesDo:!enumerating!public! !
 keysDo:!enumerating!public! !
 lookup:!accessing!public! !
+remove:ifAbsent:!public!removing! !
 removeAllKeys:!accessing!public! !
 removeAllKeys:ifAbsent:!public!removing! !
 removeKey:!public!removing! !

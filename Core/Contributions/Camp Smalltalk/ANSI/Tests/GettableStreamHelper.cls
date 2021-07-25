@@ -10,10 +10,6 @@ GettableStreamHelper comment: ''!
 !GettableStreamHelper categoriesForClass!Unclassified! !
 !GettableStreamHelper methodsFor!
 
-canonicalObject
-
-	^testCase canonicalObject!
-
 object: anObject!
 
 protocol
@@ -150,7 +146,6 @@ testXupToX
 		should: [:r | r isEmpty]
 		conformTo: self protocol selector: #'upTo:'.! !
 !GettableStreamHelper categoriesForMethods!
-canonicalObject!public! !
 object:!public! !
 protocol!public! !
 testXatEnd!public! !

@@ -17,6 +17,14 @@ canonicalSubject
 emptySubject
 	^MethodAnnotations new: 0!
 
+testAdd
+	| subject |
+	subject := self canonicalSubject.
+	self
+		should: [subject add: #blah]
+		raise: Error
+		matching: [:ex | ex description = 'MethodAnnotations should not implement #add:']!
+
 testAnySatisfy
 	self assert: (self canonicalSubject anySatisfy: [:each | each selector == #mutable])!
 
@@ -124,22 +132,23 @@ testSize
 !Kernel.Tests.MethodAnnotationsTest categoriesForMethods!
 canonicalSubject!helpers!private! !
 emptySubject!helpers!private! !
-testAnySatisfy!public! !
-testAsArray!public! !
-testAsByteArray!public! !
-testAt!public! !
-testAtPut!public! !
-testCollect!public! !
-testCopyFromTo!public! !
-testEnvironment!public! !
-testFirst!public! !
-testIdentityIndexOf!public! !
-testIncludes!public! !
-testIndexOf!public! !
-testPrintOn!public! !
-testRefersToLiteral!public! !
-testResize!public! !
-testSelect!public! !
-testSize!public! !
+testAdd!public!unit tests! !
+testAnySatisfy!public!unit tests! !
+testAsArray!public!unit tests! !
+testAsByteArray!public!unit tests! !
+testAt!public!unit tests! !
+testAtPut!public!unit tests! !
+testCollect!public!unit tests! !
+testCopyFromTo!public!unit tests! !
+testEnvironment!public!unit tests! !
+testFirst!public!unit tests! !
+testIdentityIndexOf!public!unit tests! !
+testIncludes!public!unit tests! !
+testIndexOf!public!unit tests! !
+testPrintOn!public!unit tests! !
+testRefersToLiteral!public!unit tests! !
+testResize!public!unit tests! !
+testSelect!public!unit tests! !
+testSize!public!unit tests! !
 !
 

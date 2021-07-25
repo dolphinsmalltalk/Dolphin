@@ -7,16 +7,15 @@ UI.Tests.PresenterTest subclass: #'UI.Tests.ReferenceViewTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.ReferenceViewTest guid: (Core.GUID fromString: '{a38c1b83-5cc7-4717-8bc4-29b681abe8f9}')!
-UI.Tests.ReferenceViewTest isNonInstantiable: true!
 UI.Tests.ReferenceViewTest comment: ''!
 !UI.Tests.ReferenceViewTest categoriesForClass!Unclassified! !
 !UI.Tests.ReferenceViewTest methodsFor!
 
 classToTest
-	^self subclassResponsibility!
+	^ReferenceView!
 
 initializePresenter
-	presenter := ReferenceView
+	presenter := self classToTest
 				resourceIdentifier: (ResourceIdentifier class: Presenter name: 'OK Cancel button block').
 	presenter showShell!
 

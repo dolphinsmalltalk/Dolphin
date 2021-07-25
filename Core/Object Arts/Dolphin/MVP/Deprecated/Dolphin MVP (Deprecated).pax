@@ -45,7 +45,6 @@ package methodNames
 	add: #ColorRef -> #asIndexedColor;
 	add: #ColorRef -> #asIndexedColorUsingPalette:;
 	add: #GDILibrary -> #enumFonts:lpFaceName:lpFontFunc:lParam:;
-	add: #GUISessionManager -> #whatsThis:;
 	add: #IndexedColor -> #asIndexedColor;
 	add: #ListBox -> #basicSelectionByIndex:;
 	add: #ListModel -> #updateAtIndex:;
@@ -495,17 +494,6 @@ enumFonts: dcHandle lpFaceName: aString lpFontFunc: aCallbackThunk lParam: anInt
 	^self invalidCall: _failureCode! !
 !GDILibrary categoriesForMethods!
 enumFonts:lpFaceName:lpFontFunc:lParam:!public!win32 functions-font and text! !
-!
-
-!GUISessionManager methodsFor!
-
-whatsThis: object
-	| helpId |
-	#deprecated.	"The Windows Help program is no longer supported on Windows 10 and later."
-	helpId := object helpId.
-	View active winHelpPopup: self popupHelpFile topic: helpId! !
-!GUISessionManager categoriesForMethods!
-whatsThis:!commands!public! !
 !
 
 !ImageList class methodsFor!

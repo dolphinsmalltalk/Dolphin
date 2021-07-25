@@ -10,10 +10,6 @@ PuttableStreamHelper comment: ''!
 !PuttableStreamHelper categoriesForClass!Unclassified! !
 !PuttableStreamHelper methodsFor!
 
-canonicalObject
-
-	^testCase canonicalObject!
-
 object: anObject!
 
 protocol
@@ -79,7 +75,6 @@ testXtab
 "
 	self assertSend: #tab! !
 !PuttableStreamHelper categoriesForMethods!
-canonicalObject!public! !
 object:!public! !
 protocol!public! !
 testXcr!public! !
