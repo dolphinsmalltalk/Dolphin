@@ -52,6 +52,13 @@ actualClass: aClass ifAbsent: exceptionHandler
 	self isInstanceMode: class == aClass.
 	self selection: class ifAbsent: exceptionHandler!
 
+actualClasses
+	"Answer the actual classes selected in the receiver after taking account	of instance or class mode. Answer an empty collection if there is no class selected."
+
+	^self isInstanceMode
+		ifTrue: [self selections]
+		ifFalse: [self selections collect: [:each | each class]]!
+
 browseChangedMethods
 	"Browse the changed methods in the selected classes"
 
@@ -235,6 +242,9 @@ chooseVariables: aBoolean caption: aString
 	varNames := ChoicePrompter multipleChoices: varNames caption: aString.
 	^varNames isNil ifFalse: [varNames collect: [:each | class -> each]]!
 
+classHierarchyPresenter
+	^classesPresenter!
+
 classPackage
 	"Prompt for the user to repackage the selected class."
 
@@ -266,7 +276,7 @@ createSchematicWiring
 	"Create the trigger wiring for the receiver"
 
 	super createSchematicWiring.
-	(self selectableItems)
+	classesPresenter
 		when: #selectionChanged
 			send: #onSelectionChanged
 			to: self;
@@ -787,7 +797,7 @@ Would you like to move its subclasses in <1p>, or without a package, too?'
 renameClass
 	"Private - Initiate in-place label edit for the selected class."
 
-	self selectableItems view editSelectionLabel!
+	classesPresenter view editSelectionLabel!
 
 renameClassVariable
 	"Private - Initiate the rename of a class variable. Note that the view may also implement this 
@@ -824,12 +834,12 @@ selectableItems
 	^classesPresenter!
 
 selectionEnvironment
-	| class |
-	class := self selectionOrNil.
-	^self browserEnvironment forClasses: {class. class class}!
+	| classes |
+	classes := self selections.
+	^self browserEnvironment forClasses: classes , (classes collect: [:each | each class])!
 
 setInitialFocus
-	self selectableItems setFocus!
+	classesPresenter setFocus!
 
 showPresenter: viewName
 	"Show the selected presenter class in an existing view resource, of the <readableString> name,
@@ -848,12 +858,13 @@ testBrowserClass
 
 toggleShowFullNames
 	self isShowingFullNames: self isShowingFullNames not.
-	classesPresenter selectableItems view getTextBlock: (Message
+	classesPresenter view getTextBlock: (Message
 				selector: (self isShowingFullNames ifTrue: [#fullName] ifFalse: [#unqualifiedName]))! !
 !Tools.ClassSelector categoriesForMethods!
 actualClass!accessing!public! !
 actualClass:!accessing!public! !
 actualClass:ifAbsent:!accessing!public! !
+actualClasses!accessing!public! !
 browseChangedMethods!commands!public! !
 browseClass!commands!public! !
 browseClassPackage!commands!public! !
@@ -874,6 +885,7 @@ buildViewsMenu:command:!menus!private! !
 canRefactor!public!testing! !
 categorizeClass!commands!public! !
 chooseVariables:caption:!commands!private!refactoring! !
+classHierarchyPresenter!accessing!private! !
 classPackage!commands!public! !
 clearSelection!commands!private! !
 copyClass!commands!private! !

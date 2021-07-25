@@ -7,11 +7,10 @@ Tools.ClassBrowserPlugin subclass: #'Tools.ClassDiagramPlugin'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.ClassDiagramPlugin guid: (Core.GUID fromString: '{2a2213bc-1639-42cf-a5b9-987d7fd36e9a}')!
-Tools.ClassDiagramPlugin comment: 'ClassDiagramPlugin is a simple example of a <classBrowserPlugin> that renders the hierarchy below the browser''s currently selected class in a moen tree diagram. Although the time taken to perform this rendition is not significant, for illustrative purposes, we have chosen to defer the building of the class diagram until the plug-in''s card is selected in the browser.
+Tools.ClassDiagramPlugin comment: '`ClassDiagramPlugin` is a simple example of a `<classBrowserPlugin>` that renders the hierarchy below the browser''s currently selected class in a moen tree diagram. Although the time taken to perform this rendition is not significant, for illustrative purposes, we have chosen to defer the building of the class diagram until the plug-in''s card is selected in the browser.
 
-Instance Variables:
-	classesPresenter		<ClassHierarchySelector> used to show the class hierarchy diagram
-
+##Instance Variables:
+  classesPresenter		`ClassHierarchySelector` used to show the class hierarchy diagram
 '!
 !Tools.ClassDiagramPlugin categoriesForClass!Browser-Plugins!MVP-Presenters! !
 !Tools.ClassDiagramPlugin methodsFor!
@@ -20,18 +19,19 @@ buildClassDiagram
 	"Private - Create the diagram for the browser's currently selected class"
 
 	Cursor wait showWhile: 
-			[| classModel instClass showAllClasses |
-			instClass := self browser actualClass ifNotNil: [:actualClass | actualClass instanceClass].
+			[| classModel classes showAllClasses count |
+			classes := self browser selectedClasses.
+			count := classes size.
+			showAllClasses := count == 0 or: [count == 1 and: [classes anyOne == Object]].
 			classModel := ClassHierarchyModel withAllClasses.
-			showAllClasses := instClass isNil or: [instClass == Object].
 			showAllClasses
 				ifFalse: 
 					[classModel
-						filter: [:x | (instClass allSuperclasses includes: x) or: [instClass withAllSubclasses includes: x]]].
+						filter: [:x | classes anySatisfy: [:class | (class includesBehavior: x) or: [x includesBehavior: class]]]].
 			classesPresenter model: classModel.
-			classesPresenter selectionOrNil: instClass.
+			count == 1 ifTrue: [classesPresenter selection: classes anyOne].
 
-			"Don't expand Object since it just wastes times"
+			"Don't expand-all from Object since it just wastes time"
 			showAllClasses ifFalse: [classesPresenter expandAll: nil]]!
 
 createComponents

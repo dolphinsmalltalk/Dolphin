@@ -13,6 +13,7 @@ package basicPackageVersion: '2016.7.0.4'.
 
 
 package setClassNames: #(
+	#{Tools.AbstractClassHierarchyModel}
 	#{Tools.AbstractPublishedAspectInspector}
 	#{Tools.AllMethodsCategory}
 	#{Tools.AnonymousKeyedAspect}
@@ -81,6 +82,7 @@ package setClassNames: #(
 	#{Tools.MethodSearch}
 	#{Tools.MethodSourceSearch}
 	#{Tools.MethodWorkspace}
+	#{Tools.NamespaceHierarchyModel}
 	#{Tools.PackageBrowserShell}
 	#{Tools.PackageDependencyPresenter}
 	#{Tools.PackageDependents}
@@ -1042,7 +1044,19 @@ UI.FolderHierarchyModel subclass: #'Tools.PackageHierarchyModel'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.VirtualTreeModel subclass: #'Tools.ClassHierarchyModel'
+UI.VirtualTreeModel subclass: #'Tools.AbstractClassHierarchyModel'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.AbstractClassHierarchyModel subclass: #'Tools.ClassHierarchyModel'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.AbstractClassHierarchyModel subclass: #'Tools.NamespaceHierarchyModel'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1181,7 +1195,7 @@ Tools.ClassSelector subclass: #'Tools.ClassHierarchySelector'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.ClassSelector subclass: #'Tools.ClassListSelector'
-	instanceVariableNames: 'classesListPresenter environment'
+	instanceVariableNames: 'classesListPresenter browserEnvironment namespacesPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

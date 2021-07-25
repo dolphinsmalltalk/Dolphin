@@ -56,8 +56,7 @@ acceptItCommand
 	^nil!
 
 actualClass
-	"Answer the actual class selected in the receiver after taking account
-	of instance or class mode. Answer nil if there is no class selected"
+	"Answer the actual class selected in the receiver after taking account of instance or class mode. Answer nil if there is no class selected"
 
 	^classesPresenter actualClass!
 
@@ -115,6 +114,11 @@ actualClassChainMethods
 					eachClass methodDictionary
 						keysAndValuesDo: [:eachSelector :eachMethod | dict at: eachSelector put: eachMethod]]].
 	^dict values!
+
+actualClasses
+	"Answer the actual classes selected in the receiver after taking account of instance or class mode. Answer an empty collection if there is no class selected."
+
+	^classesPresenter actualClasses!
 
 addCategoriesOfMethod: aCompiledMethod
 	(aCompiledMethod realCategories difference: categoriesPresenter model asSet) 
@@ -2251,6 +2255,9 @@ selectedClass
 
 	^classesPresenter selectionOrNil!
 
+selectedClasses
+	^classesPresenter selections!
+
 selectedMethod
 	^methodBrowserPresenter selectedMethod!
 
@@ -2263,13 +2270,12 @@ selectedMethods: aCollection
 selectionEnvironment
 	| env |
 	env := self searchEnvironment.
-	self actualClass 
-		ifNotNil: 
-			[:class | 
-			| methods |
+	classesPresenter hasSelection
+		ifTrue: 
+			[| methods |
 			methods := self selectedMethods.
-			env := methods isEmpty 
-						ifFalse: [env forClass: class selectors: (methods collect: [:each | each selector])]
+			env := methods isEmpty
+						ifFalse: [env forMethods: methods]
 						ifTrue: [classesPresenter selectionEnvironment]].
 	^env!
 
@@ -2569,6 +2575,7 @@ actualClass:ifAbsent:!accessing!public! !
 actualClassChain!accessing!private! !
 actualClassChainCategories!accessing!private! !
 actualClassChainMethods!helpers!private! !
+actualClasses!accessing!public! !
 addCategoriesOfMethod:!helpers!private! !
 addMethod:toCategory:!operations!private! !
 addMethodCategory!commands!private! !
@@ -2753,6 +2760,7 @@ searchEnvironment!commands!public! !
 searchForClass:!helpers!private! !
 searchForMethod:!helpers!private! !
 selectedClass!accessing!private! !
+selectedClasses!accessing!private! !
 selectedMethod!public! !
 selectedMethods!accessing!public! !
 selectedMethods:!accessing!public! !

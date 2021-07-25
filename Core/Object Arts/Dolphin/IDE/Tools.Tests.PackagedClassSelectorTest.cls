@@ -16,13 +16,14 @@ assertContains: anObject
 	us to verify whether the view is actually displaying the object in addition to it jsut appearing in the model"
 
 	"We need to take care that altering the selection of the receiver doesn't change the filter. Therefore we use the selection
-	of the #selectableItems presenter"
+	of the class-hierarchy presenter."
 
-	| sel |
-	sel := presenter selectableItems selectionOrNil.
-	presenter selectableItems selection: anObject ifAbsent: [].
-	self assert: presenter selectableItems selection identicalTo: anObject.
-	presenter selectableItems selectionOrNil: sel!
+	| sel classHierarchy |
+	classHierarchy := presenter classHierarchyPresenter.
+	sel := classHierarchy selectionOrNil.
+	classHierarchy selection: anObject ifAbsent: [].
+	self assert: classHierarchy selection identicalTo: anObject.
+	classHierarchy selectionOrNil: sel!
 
 classToTest
 	^PackagedClassSelector!
@@ -39,15 +40,16 @@ denyContains: anObject
 	self should: [presenter selectableItems selection: anObject] raise: NotFoundError.
 	presenter selectableItems selectionOrNil: sel!
 
-removalOfSelectionLeaves: aClass 
+removalOfSelectionLeaves: aClass
 	"Private - Answer the class that we would expect to be selected follwing the removal of aClass when it was originally
 	selected in the receiver"
 
-	^nil
-	"	siblings := aClass superclass subclasses.
-	^siblings size = 1 
-		ifTrue: [aClass superclass]
-		ifFalse: [siblings after: aClass]"!
+	^presenter classesPresenter view currentCard name = 'classesList'
+		ifFalse: 
+			[| env siblings |
+			env := Refactory.Browser.BrowserEnvironment new forPackages: presenter packages.
+			siblings := aClass superclass subclasses select: [:each | env includesClass: each].
+			^siblings size = 1 ifTrue: [aClass superclass] ifFalse: [siblings asSortedCollection after: aClass]]!
 
 resetSelection
 	presenter packagesPresenter filterPresenter selection: (PackageFolder forPackage: packageA) parent.
@@ -91,9 +93,9 @@ testFilteredPackagedHierarchyMove
 	self resetSelection.
 	(presenter instVarNamed: 'classesPresenter') view ensureVisible.
 	presenter packages: {packageB}.
-	self assert: presenter selectableItems selectableItems treeModel asArray isEmpty.
+	self assert: presenter classHierarchyPresenter treeModel asArray isEmpty.
 	self createClassesABC.
-	self assert: presenter selectableItems selectableItems treeModel asArray isEmpty.
+	self assert: presenter classHierarchyPresenter treeModel asArray isEmpty.
 	self createClassesDEF.
 	self assertContains: Object.
 	self assertContains: dolphinTestD.

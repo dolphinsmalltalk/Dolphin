@@ -7,15 +7,15 @@ Tools.ClassBrowserPlugin subclass: #'Tools.ResourceListPlugin'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.ResourceListPlugin guid: (Core.GUID fromString: '{9bf86123-58b4-42e2-bdf8-063f7e315276}')!
-Tools.ResourceListPlugin comment: 'ResourceListPlugin is a <classBrowserPlugin> that displays a list of the view resources associated with a class, optionally including those inherited from superclasses and/or those owned by subclasses.
+Tools.ResourceListPlugin comment: '`ResourceListPlugin` is a `<classBrowserPlugin>` that displays a list of the view resources associated with a class, optionally including those inherited from superclasses and/or those owned by subclasses.
 
-Instance Variables:
-	resourcesPresenter	<ResourceListPresenter>
-	flags				<integer>
+##Instance Variables:
+  resourcesPresenter	`ResourceListPresenter`
+  flags				`<integer>`
 
-Class Variables:
-	ShowSubclassResourcesMask		<integer>
-	ShowInheritedResourcesMask		<integer>
+##Class Variables:
+  ShowSubclassResourcesMask		`<integer>`
+  ShowInheritedResourcesMask		`<integer>`
 
 '!
 !Tools.ResourceListPlugin categoriesForClass!Browser-Plugins!MVP-Presenters! !
@@ -106,17 +106,26 @@ queryCommand: aCommandQuery
 	^super queryCommand: aCommandQuery!
 
 showClassResources
-	| class filter |
-	class := self browser selectedClass.
-	filter := self isShowingInheritedResources 
+	| classes filter |
+	classes := self browser selectedClasses asSet.
+	filter := self isShowingInheritedResources
 				ifTrue: 
 					[
-					[:resID | 
-					(class includesBehavior: resID owningClass) 
-						and: [(ResourceIdentifier class: class name: resID name) resource = resID resource]]]
-				ifFalse: [[:resID | resID owningClass == class]].
-	resourcesPresenter filterBlock: (self isShowingSubclassResources 
-				ifTrue: [[:resID | (resID owningClass includesBehavior: class) or: [filter value: resID]]]
+					[:resID |
+					| owner |
+					owner := resID owningClass.
+					classes anySatisfy: 
+							[:class |
+							(class includesBehavior: owner)
+								and: [(ResourceIdentifier class: class name: resID name) resource = resID resource]]]]
+				ifFalse: [[:resID | classes includes: resID owningClass]].
+	resourcesPresenter filterBlock: (self isShowingSubclassResources
+				ifTrue: 
+					[
+					[:resID |
+					| owner |
+					owner := resID owningClass.
+					(classes anySatisfy: [:class | owner includesBehavior: class]) or: [filter value: resID]]]
 				ifFalse: [filter])!
 
 toggleShowInheritedResources

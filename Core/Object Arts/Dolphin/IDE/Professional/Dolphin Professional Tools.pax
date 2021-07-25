@@ -144,7 +144,7 @@ Tools.ClassBrowserPlugin subclass: #'Tools.ResourceListPlugin'
 	classConstants: {}!
 Tools.ClassBrowserPlugin subclass: #'Tools.UnitTestPlugin'
 	instanceVariableNames: 'result icon autoSwitchProcess defectsPresenter modePresenter detailsPresenter'
-	classVariableNames: 'AutoSwitchDelayMs ErrorColor FailColor NoTestsColor PassColor RunningColor'
+	classVariableNames: 'AutoSwitchDelay ErrorColor FailColor NoTestsColor PassColor RunningColor'
 	imports: #(#{XProgramming.SUnit private})
 	classInstanceVariableNames: ''
 	classConstants: {}!

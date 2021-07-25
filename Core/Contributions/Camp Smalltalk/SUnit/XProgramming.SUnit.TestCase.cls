@@ -251,8 +251,7 @@ tearDown!public!running! !
 !XProgramming.SUnit.TestCase class methodsFor!
 
 allTestSelectors
-	^self allSelectors
-		select: [:each | (each beginsWith: 'test') and: [(each identityIncludes: $:) not]]!
+	^self allSelectors select: [:each | self isTestSelector: each]!
 
 buildSuite
 
@@ -293,6 +292,12 @@ debug: aSymbol
 debugAsFailure: aSymbol
 	^(self selector: aSymbol) debugAsFailure!
 
+isTestMethod: aCompiledMethod
+	^(aCompiledMethod methodClass inheritsFrom: self) and: [self isTestSelector: aCompiledMethod selector]!
+
+isTestSelector: aSymbol
+	^(aSymbol beginsWith: 'test') and: [(aSymbol identityIncludes: $:) not]!
+
 resources
 	^#()!
 
@@ -325,6 +330,8 @@ buildSuiteFromMethods:!Building Suites!public! !
 buildSuiteFromSelectors!Building Suites!public! !
 debug:!Instance Creation!public! !
 debugAsFailure:!Instance Creation!public! !
+isTestMethod:!enquiries!public! !
+isTestSelector:!enquiries!public! !
 resources!Accessing!public! !
 run:!Instance Creation!public! !
 selector:!Instance Creation!public! !

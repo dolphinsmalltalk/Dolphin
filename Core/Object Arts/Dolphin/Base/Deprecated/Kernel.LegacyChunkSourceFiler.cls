@@ -222,7 +222,7 @@ environment
 !
 
 environment: aNamespace
-	aNamespace == Smalltalk ifFalse: [self error: '<1p> can only be used for compiling code in the Smalltalk namespace' << self class]
+	aNamespace == Smalltalk ifFalse: [Warning signal: '<1p> can only be used for code in the Smalltalk namespace' << self class]
 !
 
 fileOutAttributesOfClass: aClass

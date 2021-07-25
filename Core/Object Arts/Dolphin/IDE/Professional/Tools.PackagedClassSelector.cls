@@ -37,6 +37,9 @@ browsePackages
 classesPresenter
 	^classesPresenter!
 
+classHierarchyPresenter
+	^classesPresenter classHierarchyPresenter!
+
 createComponents
 	"Create the presenters contained by the receiver"
 
@@ -155,6 +158,7 @@ autoSelectPackages:!accessing!private!selection! !
 browseItCommand!helpers!private! !
 browsePackages!commands!public! !
 classesPresenter!accessing!public! !
+classHierarchyPresenter!accessing!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 gotoDefinition!commands!public! !

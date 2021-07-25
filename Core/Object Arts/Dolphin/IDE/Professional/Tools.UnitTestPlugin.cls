@@ -2,36 +2,36 @@
 
 Tools.ClassBrowserPlugin subclass: #'Tools.UnitTestPlugin'
 	instanceVariableNames: 'result icon autoSwitchProcess defectsPresenter modePresenter detailsPresenter'
-	classVariableNames: 'AutoSwitchDelayMs ErrorColor FailColor NoTestsColor PassColor RunningColor'
+	classVariableNames: 'AutoSwitchDelay ErrorColor FailColor NoTestsColor PassColor RunningColor'
 	imports: #(#{XProgramming.SUnit private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.UnitTestPlugin guid: (Core.GUID fromString: '{e8b10dcb-9855-41f7-95d2-a91639377d01}')!
-Tools.UnitTestPlugin comment: 'UnitTestPlugin is a <classBrowserPlugin> that provides SUnit test running facilities within a browser. The aim is to allow tests directly relevant to the current class being worked on in the browser to be run quickly and easily using a single hotkey or menu command. Failing tests can be isolated and run within the debugger. The UnitTestPlugin does not provide facilities to run large suites of tests comprising of more than one <TestCase>; this functionaility is left to the SUnitBrowser and TestRunner tools.
+Tools.UnitTestPlugin comment: '`UnitTestPlugin` is a `<classBrowserPlugin>` that provides SUnit test running facilities within a browser. The aim is to allow tests directly relevant to the current class being worked on in the browser to be run quickly and easily using a single hotkey or menu command. Failing tests can be isolated and run within the debugger. The `UnitTestPlugin` does not provide facilities to run large suites of tests comprising of more than one `TestCase`; this functionaility is left to the `SUnitBrowser` and `TestRunner` tools.
 
-When a class is selected in the browser, the UnitTestPlugin deterines if there is a <TestCase> subclass that can be associated with it. By default, ClassDescription>>correspondingTestCase is used to do this by simply appending ''Test'' to the name of the class. If the mapping between a class under test and its <TestCase> is not so straightforward it is always possible to implement #correspondingTestCase as a class method that directly answers the correct <TestCase> subclass. Typically, if used, this class method would be installed as a loose method in the package containing the tests. 
+When a class is selected in the browser, the `UnitTestPlugin` determines if there is a `TestCase` subclass that can be associated with it. By default, `ClassDescription>>correspondingTestCase` is used to do this by simply appending ''Test'' to the name of the class. If the mapping between a class under test and its `TestCase` is not so straightforward it is alway possible to implement `#correspondingTestCase` as a class method that directly answers the correct `TestCase` subclass. Typically, if used, this class method would be installed as a loose method in the package containing the tests. 
 
-If such a test case class exists then a TestSuite is built and held by the plugin to be run at the user''s request. A UnitTestPlugin dynamically installs new menu commands into the Class and Method menus of the associated browser. The #runTests command will run the available tests. A traffic light scheme is used to display the result of the tests in the plugin pane''s tab. If the tests take a long time to run, or if a test fails, the UnitTestPlugin will automatically make itself the foreground pane in the browser.
+If such a test case class exists then a `TestSuite` is built and held by the plugin to be run at the user''s request. A `UnitTestPlugin` dynamically installs new menu commands into the Class and Method menus of the associated browser. The `#runTests` command will run the available tests. A traffic light scheme is used to display the result of the tests in the plugin pane''s tab. If the tests take a long time to run, or if a test fails, the `UnitTestPlugin` will automatically make itself the foreground pane in the browser.
 
-Another menu command that is made available is #toggleToTests. This allows the developer to quickly move the browser between the class under test and its corresponding <TestCase> class (and vice versa). When the browser displays a <TestCase> class the #runTests command will run all the tests in that test case. If, however, one or more individual test methods (#testXXX methods) are selected then only these will be executed when a #runTests is performed.
+Another menu command that is made available is `#toggleToTests`. This allows the developer to quickly move the browser between the class under test and its corresponding `TestCase` class (and vice versa). When the browser displays a `TestCase` class the `#runTests` command will run all the tests in that test case. If, however, one or more individual test methods (`#testXXX` methods) are selected then only these will be executed when a `#runTests` is performed.
 
 When tests fail, a list of the defects is retained by the plugin. Using the drop down list at the bottom of the plugin''s display you can choose each of the failing tests to re-run under the control of the debugger.
 
-Instance Variables:
-	result			<TestResult> indicating the results of the last run tests
-	icon				<Icon> used to provide a traffic light representation of the current state of the plugin 
-	autoSwitchProcess	<Process> started when tests are running to automatically switch to the plugin pane to show progress if the tests take a long time to complete.
-	defectsPresenter	<ListPresenter> showing a list of defects when some tests have failed
-	modePresenter		<TextPresenter> describing the current running state
-	detailsPresenter	<TextPresenter> providing further details about the current running state
+##Instance Variables:
+  `result`				`TestResult` indicating the results of the last executed tests
+  `icon`				`Icon` used to provide a traffic light representation of the current state of the plugin 
+  `autoSwitchProcess`	Background `Process` started when tests are running to automatically switch to the plugin pane to show progress if the tests take a long time to complete.
+  `defectsPresenter`		`ListPresenter` showing a list of defects when some tests have failed
+  `modePresenter`		`TextPresenter` describing the current running state
+  `detailsPresenter`		`TextPresenter` providing further details about the current running state
 
-Class Variables:
-	AutoSwitchDelayMs	<Integer> count of milliseconds after which the <autoSwitchProcess> will bring the plugin pane to the foreground
-	ErrorColor			<color> which will be used as a background colour when some tests throw errors
-	FailColor			<color> which will be used as a background colour when some tests fail
-	PassColor			<color> which will be used as a background colour when all tests pass
-	RunningColor		<color> which will be used as a background colour when tests are running
-	NoTestsColor		<color> which will be used as a background colour when no tests are available for the browser selection
+##Class Variables:
+  `AutoSwitchDelay`		`Duration` after which the `autoSwitchProcess` will bring the plugin pane to the foreground
+  `ErrorColor`			`<color>` to be used as the background colour when one or more tests throw errors
+  `FailColor`			`<color>` to be used as the background colour when one or more tests fail, but there are no errors
+  `PassColor`			`<color>` to be used as the background colour when all tests pass
+  `RunningColor`		`<color>` to be used as the background colour when tests are running
+  `NoTestsColor`		`<color>` to be used as the background colour when no tests are available for the browser selection
 '!
 !Tools.UnitTestPlugin categoriesForClass!Browser-Plugins! !
 !Tools.UnitTestPlugin methodsFor!
@@ -82,11 +82,6 @@ createSchematicWiring
 		when: #selectionChanged
 		send: #debugTest
 		to: self!
-
-currentTestMethodSelectors
-	self isBrowserLookingAtTestClass ifFalse: [^Set new].
-	^(self browser selectedMethods collect: [:each | each selector]) 
-		intersection: self testClass allTestSelectors!
 
 debugTest
 	"Debug the currently selected defect. If no defects are selected then select and ebug the first one"
@@ -152,7 +147,7 @@ displayPass
 
 displayReset
 	self displayColor: self class noTestsColor.
-	self hasTestClass
+	self hasTests
 		ifTrue: 
 			[self icon: (Icon fromId: 'UnitTestPluginNotRun.ico').
 			self displayMode: 'Not Yet Run']
@@ -179,12 +174,19 @@ hasDefects
 hasIndividualTests
 	"Answer true if we are looking at a TestCase subclass with one or more  #testXXX methods selected."
 
-	^self currentTestMethodSelectors notEmpty!
+	| methods |
+	methods := self browser selectedMethods.
+	^methods notEmpty and: [(methods select: [:each | TestCase isTestMethod: each]) notEmpty]!
 
 hasTestClass
 	"Answer true if we have a corresponding test class so that tests can be run."
 
-	^self testClass notNil!
+	^self testClasses size == 1!
+
+hasTests
+	"Answer true if we have a some tests to run."
+
+	^self testClasses notEmpty!
 
 icon
 	icon ifNil: [^super icon].
@@ -225,7 +227,7 @@ installTestCommandsInClassMenu: aMenu withAccelerator: needsAccel
 	runTestsCommandDescription := ClosedCommandDescription
 				command: #runTests
 				description: '&Run Tests'
-				queryBlock: [:query | query isEnabled: self hasTestClass]
+				queryBlock: [:query | query isEnabled: self hasTests]
 				receiver: self.
 	needsAccel ifTrue: [runTestsCommandDescription acceleratorKeyString: 'Ctrl+Alt+R'].
 	runTestsCommandDescription image: self class icon.
@@ -260,11 +262,6 @@ installTestCommandsInMethodMenu: aMenu
 		addSeparator;
 		addCommandDescription: runTestsCommandDescription!
 
-isBrowserLookingAtTestClass
-	"Private - Answer true if the browser associated with the receiver is looking at a TestCase subclass"
-
-	^self testClass ifNotNil: [:testClass | testClass = self browser actualClass] ifNil: [false]!
-
 onBrowserClassSelected
 	"Private - Event handler for a class being selected within the receiver's associated browser. "
 
@@ -289,7 +286,7 @@ queryCommand: aCommandQuery
 	selector := aCommandQuery commandSymbol.
 	#runTests == selector 
 		ifTrue: 
-			[aCommandQuery isEnabled: self hasTestClass.
+			[aCommandQuery isEnabled: self hasTests.
 			^true].
 	#debugTest == selector 
 		ifTrue: 
@@ -299,11 +296,6 @@ queryCommand: aCommandQuery
 
 refreshIcon
 	self view arrangement: self!
-
-runIndividualTests
-	| suite |
-	suite := self testClass buildSuiteFromMethods: self currentTestMethodSelectors.
-	self runSuite: suite!
 
 runSuite: aTestSuite 
 	self
@@ -320,31 +312,51 @@ runTests
 
 startAutoSwitchProcess
 	autoSwitchProcess := 
-			[Processor sleep: self class autoSwitchDelayMs.
+			[Processor sleep: self class autoSwitchDelay.
 			self ensureVisible.
 			SessionManager inputState prod]
-					forkAt: Processor highIOPriority.!
+					forkAt: Processor highIOPriority!
 
 stopAutoSwitchProcess
 	autoSwitchProcess ifNotNil: [:process | process terminate].
 	autoSwitchProcess := nil!
 
+suiteForTestClasses
+	| allTests testClasses |
+	testClasses := self testClasses.
+	testClasses isEmpty ifTrue: [^nil].
+	#todo.	"Improve SUnit TestSuite building so we don't have logic spread around for building suites"
+	allTests := Set new.
+	testClasses do: [:each | allTests addAll: each suite tests].
+	^TestSuite new
+		addTests: allTests;
+		yourself!
+
+suiteForTestMethods: aCollectionOfCompiledMethods
+	"Private - Answer a `TestSuite` build from the specified methods, assumed to be methods of, or inherited by, a single selected test class."
+
+	^self testClasses single
+		buildSuiteFromConcreteMethods: (aCollectionOfCompiledMethods collect: [:each | each selector])!
+
 testClass
 	self browser selectedClass isNil ifTrue: [^nil].
 	^self browser selectedClass correspondingTestCase!
 
+testClasses
+	| testClasses |
+	testClasses := Set new.
+	self browser selectedClasses do: [:each | testClasses add: each correspondingTestCase].
+	^testClasses!
+
 testSuite
-	| testMethodSelectors testClass |
-	testClass := self testClass.
-	testClass ifNil: [^nil].
-	testMethodSelectors := self currentTestMethodSelectors.
-	testMethodSelectors isEmpty ifTrue: [^testClass suite].
-	^testClass buildSuiteFromConcreteMethods: testMethodSelectors!
-
-testSuiteName
-	"Private - Answer the name of the current test suite (if any). Answer nil if none"
-
-	^self testClass ifNotNil: [:testClass | testClass suite name]!
+	| testMethods methods |
+	methods := self browser selectedMethods.
+	testMethods := methods select: [:each | TestCase isTestMethod: each].
+	^testMethods isEmpty
+		ifTrue: 
+			["If there are no test methods selected at all, then run the tests for the whole class"
+			self suiteForTestClasses]
+		ifFalse: [self suiteForTestMethods: testMethods]!
 
 toggleToTests
 	"Switch the associated browser between the class under test and the corresponding test class"
@@ -355,10 +367,14 @@ toggleToTests
 	^self browser actualClass: toggleToClass!
 
 toggleToTestsClass
-	^self testClass = self browser actualClass ifTrue: [self classUnderTest] ifFalse: [self testClass]!
+	| testClasses testClass |
+	testClasses := self testClasses.
+	testClasses size == 1 ifFalse: [^nil].
+	testClass := testClasses single.
+	^testClass = self browser actualClass ifTrue: [self classUnderTest] ifFalse: [testClass]!
 
 toggleToTestsClassDescription
-	^self toggleToTestsClass ?? TestCase!
+	^(self toggleToTestsClass ?? TestCase) shortName!
 
 update: anObject
 	(anObject isKindOf: TestCase)
@@ -381,62 +397,62 @@ allMenuBarMenus!helpers!private! !
 classUnderTest!Accessing!private! !
 createComponents!initializing!private! !
 createSchematicWiring!helpers!private! !
-currentTestMethodSelectors!commands!private! !
 debugTest!commands!public! !
 debugTest:!operations!private! !
 defaultHelpId!constants!public! !
-displayColor:!private!Updating! !
-displayDefects:!private!Updating! !
-displayDetails:!private!Updating! !
-displayErrors!private!Updating! !
-displayFail!private!Updating! !
-displayMode:!private!Updating! !
+displayColor:!private!updating! !
+displayDefects:!private!updating! !
+displayDetails:!private!updating! !
+displayErrors!private!updating! !
+displayFail!private!updating! !
+displayMode:!private!updating! !
 displayOn:!displaying!private! !
-displayPass!private!Updating! !
-displayReset!private!Updating! !
-displayRunning!private!Updating! !
+displayPass!private!updating! !
+displayReset!private!updating! !
+displayRunning!private!updating! !
 hasDefects!public!testing! !
-hasIndividualTests!public!Updating! !
-hasTestClass!public!Updating! !
+hasIndividualTests!public!updating! !
+hasTestClass!public!testing! !
+hasTests!public!testing! !
 icon!accessing!public! !
 icon:!accessing!private! !
 installMenuCommands!helpers!private! !
 installTestCommandsInClassMenu:withAccelerator:!helpers!private! !
 installTestCommandsInMethodMenu:!helpers!private! !
-isBrowserLookingAtTestClass!private!testing! !
 onBrowserClassSelected!event handling!private! !
 onBrowserMethodSelected!event handling!private! !
 onViewOpened!event handling!private! !
 queryCommand:!commands!private! !
 refreshIcon!operations!private! !
-runIndividualTests!commands!public! !
 runSuite:!operations!private! !
 runTests!commands!public! !
 startAutoSwitchProcess!helpers!private! !
 stopAutoSwitchProcess!helpers!private! !
+suiteForTestClasses!accessing!private! !
+suiteForTestMethods:!accessing!private! !
 testClass!Accessing!private! !
+testClasses!accessing!private! !
 testSuite!accessing!public! !
-testSuiteName!event handling!private! !
 toggleToTests!commands!public! !
 toggleToTestsClass!helpers!private! !
 toggleToTestsClassDescription!helpers!private! !
 update:!helpers!private! !
-updateDefects!private!Updating! !
-updateWindow!private!Updating! !
+updateDefects!private!updating! !
+updateWindow!private!updating! !
 !
 
 !Tools.UnitTestPlugin class methodsFor!
 
-autoSwitchDelayMs
+autoSwitchDelay
 	"Answer the number of milliseconds after which instances of the receiver will automatically switch
 	to their tab when tests are running"
 
-	^AutoSwitchDelayMs!
+	^AutoSwitchDelay!
 
-autoSwitchDelayMs: aDuration 
+autoSwitchDelay: aDuration
 	"Set the <Duration> after which instances of the receiver will automatically switch to their tab when tests are running"
 
-	AutoSwitchDelayMs := aDuration!
+	AutoSwitchDelay := aDuration!
 
 defaultAutoSwitchDelay
 	"Private - Answer the default <Duration> before the plugin will automatically show itself when tests are running"
@@ -492,7 +508,7 @@ initialize
 	self initialize
 	"
 
-	AutoSwitchDelayMs := self defaultAutoSwitchDelay.
+	AutoSwitchDelay := self defaultAutoSwitchDelay.
 	PassColor := self defaultPassColor.
 	FailColor := self defaultFailColor.
 	ErrorColor := self defaultErrorColor.
@@ -515,11 +531,12 @@ publishedAspects
 	"Private - Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	^super publishedAspects
-		add: (Aspect integer: #autoSwitchDelayMs);
+		add: (Aspect duration: #autoSwitchDelay);
 		add: (Aspect color: #noTestsColor);
 		add: (Aspect color: #passColor);
 		add: (Aspect color: #runningColor);
 		add: (Aspect color: #failColor);
+		add: (Aspect color: #errorColor);
 		yourself!
 
 resource_Default_view
@@ -538,8 +555,8 @@ runningColor
 runningColor: aColor 
 	RunningColor := aColor = Color default ifTrue: [self defaultRunningColor] ifFalse: [aColor]! !
 !Tools.UnitTestPlugin class categoriesForMethods!
-autoSwitchDelayMs!accessing!public! !
-autoSwitchDelayMs:!accessing!public! !
+autoSwitchDelay!accessing!public! !
+autoSwitchDelay:!accessing!public! !
 defaultAutoSwitchDelay!constants!private! !
 defaultErrorColor!constants!private! !
 defaultFailColor!constants!private! !

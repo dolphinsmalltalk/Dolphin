@@ -12,17 +12,16 @@ Tools.Tests.ClassListSelectorTest comment: ''!
 !Tools.Tests.ClassListSelectorTest methodsFor!
 
 assertContains: anObject
-	"Private - Asserts that the receiver contains anObject. We do this by trying to select the object since this allows
-	us to verify whether the view is actually displaying the object in addition to it jsut appearing in the model"
+	"Private - Asserts that the receiver contains anObject. We do this by trying to select the object since this allows us to verify whether the view is actually displaying the object in addition to it just appearing in the model"
 
-	"We need to take care that altering the selection of the receiver doesn't change the filter. Therefore we use the selection
-	of the #selectableItems presenter"
+	"We need to take care that altering the selection of the receiver doesn't change the filter. Therefore we use the selection of the class-hierarchy presenter."
 
-	| sel |
-	sel := presenter selectableItems selectionOrNil.
-	presenter selectableItems selection: anObject.
-	self assert: presenter selectableItems selection identicalTo: anObject.
-	presenter selectableItems selectionOrNil: sel!
+	| sel classHierarchy |
+	classHierarchy := presenter classHierarchyPresenter.
+	sel := classHierarchy selectionOrNil.
+	classHierarchy selection: anObject.
+	self assert: classHierarchy selection identicalTo: anObject.
+	classHierarchy selectionOrNil: sel!
 
 classToTest
 	^ClassListSelector
@@ -50,11 +49,11 @@ listModel
 listPresenter
 	^presenter instVarNamed: 'classesListPresenter'!
 
-removalOfSelectionLeaves: aClass 
-	"Private - Answer the class that we would expect to be selected follwing the removal of aClass when it was originally
-	selected in the receiver"
+removalOfSelectionLeaves: aClass
+	"Private - Answer the class that we would expect to be selected following the removal of aClass when it was originally selected in the receiver"
 
-	^nil!
+	^presenter selectableItems == presenter classesListPresenter
+		ifFalse: [super removalOfSelectionLeaves: aClass]!
 
 resetSelection
 	super resetSelection.
@@ -64,7 +63,8 @@ resetSelection
 testAddRemoveListItems
 	"Test adding and removing classes"
 
-	| nilSubclasses |
+	| nilSubclasses classHierarchy |
+	classHierarchy := presenter classHierarchyPresenter.
 	self resetSelection.
 
 	"Add classes"
@@ -84,12 +84,14 @@ testAddRemoveListItems
 	"Now a branch - needs to remain behind"
 	self listModel remove: dolphinTestA.
 	self assertContains: dolphinTestA.
-	self assert: (presenter selectableItems view includesItem: dolphinTestA).
-	presenter selectableItems selection: dolphinTestA.
+	self assert: (classHierarchy view includesItem: dolphinTestA).
+	classHierarchy selection: dolphinTestA.
 	self assertIsNil: self listPresenter selectionOrNil.
 	self assertContains: dolphinTestB.
-	self assert: (presenter selectableItems view includesItem: dolphinTestB).
-	presenter selectableItems selection: dolphinTestB.
+	self assert: (classHierarchy view includesItem: dolphinTestB).
+	presenter view cardLayout showCard: classHierarchy view.
+	presenter selection: dolphinTestB.
+	presenter view cardLayout showCard: self listPresenter view.
 	self assert: self listPresenter selectionOrNil identicalTo: dolphinTestB.
 
 	"Now remove a child, then a branch, then the last child of that branch. The branch should go too"
@@ -98,10 +100,10 @@ testAddRemoveListItems
 	self listModel remove: dolphinTestD.
 	self assertContains: dolphinTestD.
 	self assertContains: dolphinTestE.
-	self assert: (presenter selectableItems view includesItem: dolphinTestD).
+	self assert: (classHierarchy view includesItem: dolphinTestD).
 	self listModel remove: dolphinTestE.
 	"When we remove E, D should disappear too as it is no longer needed as an infrastructural node"
-	self deny: (presenter selectableItems view includesItem: dolphinTestD).
+	self deny: (classHierarchy view includesItem: dolphinTestD).
 	self denyContains: dolphinTestD.
 
 	"Remove a popular root"
@@ -143,7 +145,7 @@ testAddRemoveListItems
 	nilSubclasses do: [:each | self denyContains: each]!
 
 treeModel
-	^presenter selectableItems treeModel! !
+	^presenter classHierarchyPresenter treeModel! !
 !Tools.Tests.ClassListSelectorTest categoriesForMethods!
 assertContains:!helpers!private! !
 classToTest!helpers!private! !

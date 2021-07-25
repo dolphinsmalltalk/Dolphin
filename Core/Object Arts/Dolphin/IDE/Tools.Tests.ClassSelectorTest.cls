@@ -14,7 +14,11 @@ Tools.Tests.ClassSelectorTest comment: ''!
 
 create: aClassSymbol subclassOf: aClass
 	| newClass |
-	newClass := aClass subclass: aClassSymbol instanceVariableNames: '' classVariableNames: '' poolDictionaries: '' classInstanceVariableNames: ''.
+	newClass := aClass
+				subclass: aClassSymbol
+				instanceVariableNames: ''
+				classVariableNames: ''
+				imports: #().
 	self assert: (newClass notNil and: [newClass isKindOf: Class]).
 	^newClass!
 
@@ -74,7 +78,11 @@ removalOfSelectionLeaves: aClass
 	"Private - Answer the class that we would expect to be selected follwing the removal of aClass when it was originally
 	selected in the receiver"
 
-	self subclassResponsibility!
+	| siblings |
+	siblings := aClass superclass subclasses.
+	^siblings size = 1 
+		ifTrue: [aClass superclass]
+		ifFalse: [siblings asSortedCollection after: aClass]!
 
 removeClassesABC
 	self removeClassesNamed: #('DolphinTestA' 'DolphinTestB' 'DolphinTestC')!

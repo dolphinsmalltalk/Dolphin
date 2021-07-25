@@ -15,23 +15,12 @@ classToTest
 	^ClassHierarchySelector
 !
 
-removalOfSelectionLeaves: aClass
-	"Private - Answer the class that we would expect to be selected follwing the removal of aClass when it was originally
-	selected in the receiver"
-
-	| siblings |
-	siblings := aClass superclass subclasses.
-	^siblings size = 1 
-		ifTrue: [aClass superclass]
-		ifFalse: [siblings asSortedCollection after: aClass]!
-
 resetSelection
 	super resetSelection.
 	self assertContains: Object.
 	self assertContains: Behavior! !
 !Tools.Tests.ClassHierarchySelectorTest categoriesForMethods!
 classToTest!helpers!private! !
-removalOfSelectionLeaves:!helpers!private! !
 resetSelection!helpers!private! !
 !
 

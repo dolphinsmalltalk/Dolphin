@@ -1466,9 +1466,9 @@ lvnColumnOverflowClick: pNMHDR
 
 lvnDeleteAllItems: pNMHDR
 	"Private - Default handler for the LVN_DELETEALLITEMS notification message.
-	Answer true to suppress individual LVN_DELETEITEM notifications."
+	Answer true (1) to suppress individual LVN_DELETEITEM notifications."
 
-	^true
+	^TRUE
 
 	!
 
@@ -1505,6 +1505,11 @@ lvnGetInfoTip: pNMHDR
 				ifFalse: [self]) infoTipFromRow: target withPrefix: prefixText).
 	^0	"Return value is ignored"!
 
+lvnHotTrack: anAddress 
+"	| nmlv |
+	nmlv := OS.NMLISTVIEW fromAddress: anAddress."
+	^0!
+
 lvnIncrementalSearch: pNMHDR
 	^nil!
 
@@ -1518,7 +1523,7 @@ lvnInsertItem: pNMHDR
 	!
 
 lvnItemActivate: anExternalAddress
-	^nil!
+	^0!
 
 lvnItemChanged: anNMHDR
 	"Private - Item has changed.
@@ -1526,20 +1531,20 @@ lvnItemChanged: anNMHDR
 	is absurdly difficult to tell what is going on from a disconnected series
 	of events with no indication as to the overall effect."
 
-	^nil!
+	^0!
 
 lvnItemChanging: pNMHDR
 	"Private - Default handler for the LVN_ITEMCHANGING notification message.
-	Answer false to allow the change, or true to prevent it"
+	Answer false (0) to allow the change, or true (1) to prevent it"
 
-	^false.
+	^0
 !
 
 lvnLinkClick: pNMHDR
 	^nil!
 
 lvnMarqueeBegin: anExternalAddress 
-	^nil!
+	^0!
 
 lvnODStateChanged: pNMHDR
 	"Private - Default handler for the LVN_ODSTATECHANGED notification message."
@@ -1547,7 +1552,7 @@ lvnODStateChanged: pNMHDR
 	"	| nmlv |
 	nmlv := NMLVODSTATECHANGE fromAddress: anNMHDR yourAddress."
 
-	^nil!
+	^0!
 
 maybeSelChanging: aSymbol
 	"Private - The selection may be changing as a result of a user action (e.g. due to a keypress). 
@@ -1601,7 +1606,7 @@ nmNotify: pNMHDR
 		at: LVN_FIRST - LVN_ODCACHEHINT + 1 put: #nmDummy:;
 		at: LVN_FIRST - LVN_ITEMACTIVATE + 1 put: #lvnItemActivate:;
 		at: LVN_FIRST - LVN_ODSTATECHANGED + 1 put: #lvnODStateChanged:;
-		at: LVN_FIRST - LVN_HOTTRACK + 1 put: #nmDummy:;
+		at: LVN_FIRST - LVN_HOTTRACK + 1 put: #lvnHotTrack:;
 		at: LVN_FIRST - LVN_GETDISPINFOW + 1 put: #nmGetDispInfoW:;
 		at: LVN_FIRST - LVN_SETDISPINFOW + 1 put: #nmSetDispInfoW:;
 		at: LVN_FIRST - LVN_ODFINDITEMW + 1 put: #lvnFindItem:;
@@ -2277,7 +2282,7 @@ updateSelectionCache
 	"Private - The receiver's model is being modified, so we may need to account for selection changes caused by that.
 	Of course this can't add a selection if there is none."
 
-	lastSelIndices notEmpty ifTrue: [lastSelIndices := self getSelectionsByIndex].
+	lastSelIndices isEmpty ifFalse: [lastSelIndices := self getSelectionsByIndex].
 	approvedSelIndices := nil!
 
 viewMode
@@ -2500,6 +2505,7 @@ lvnEndScroll:!event handling-win32!private! !
 lvnFindItem:!event handling-win32!private! !
 lvnGetEmptyMarkup:!event handling-win32!private! !
 lvnGetInfoTip:!event handling-win32!private! !
+lvnHotTrack:!event handling-win32!private! !
 lvnIncrementalSearch:!event handling-win32!private! !
 lvnInsertItem:!event handling-win32!private! !
 lvnItemActivate:!event handling-win32!private! !
@@ -2516,7 +2522,7 @@ nmNotify:!event handling-win32!private! !
 nmRClick:!event handling-win32!private! !
 nmSelChanged:!event handling-win32!private! !
 notificationClass!constants!private! !
-onButtonPressed:!private! !
+onButtonPressed:!event handling!private! !
 onDisplayDetailsRequired:!event handling!private! !
 onDropDown:!event handling!private! !
 onEraseRequired:!event handling!public! !

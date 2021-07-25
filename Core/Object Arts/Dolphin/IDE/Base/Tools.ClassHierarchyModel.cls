@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-UI.VirtualTreeModel subclass: #'Tools.ClassHierarchyModel'
+Tools.AbstractClassHierarchyModel subclass: #'Tools.ClassHierarchyModel'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -11,13 +11,6 @@ Tools.ClassHierarchyModel comment: 'ClassHierarchyModel implements a <treeModel>
 !Tools.ClassHierarchyModel categoriesForClass!MVP-Models! !
 !Tools.ClassHierarchyModel methodsFor!
 
-approxSize
-	"Private - Answer the approximate size of the receiver.
-	Implementation Note: This does not have to be accurate, but it should be fast
-	(i.e. don't calculate it by counting the receiver's elements)."
-
-	^500!
-
 defaultGetChildrenBlock
 	^[:aClass | aClass subclasses asSortedCollection]!
 
@@ -27,47 +20,21 @@ defaultGetParentBlock
 defaultHasChildrenBlock
 	^[:aClass | aClass subclasses anySatisfy: filter]!
 
-observeEnvironment
-	Smalltalk
-		when: #classAdded:
-			send: #onClassAdded:
-			to: self;
-		when: #classUpdated:
-			send: #onClassUpdated:
-			to: self;
-		when: #classRemoved:
-			send: #onClassRemoved:
-			to: self!
-
 onClassAdded: aClass
 	self add: aClass asChildOf: aClass superclass!
-
-onClassRemoved: aClass
-	self remove: aClass
-!
 
 onClassUpdated: aClass
 	"Note that we only trigger #item:movedToParent: events if the updated class
 	is a <Class>, not if it is a <Metaclass>."
 
 	aClass isMeta ifFalse: [self move: aClass asChildOf: aClass superclass].
-	self refresh: aClass ifAbsent: []!
-
-setRoots: aCollection 
-	"Private - Initialize the receiver with the roots in aCollection"
-
-	super setRoots: aCollection.
-	self observeEnvironment! !
+	self refresh: aClass ifAbsent: []! !
 !Tools.ClassHierarchyModel categoriesForMethods!
-approxSize!accessing!private! !
 defaultGetChildrenBlock!initializing!private! !
 defaultGetParentBlock!initializing!private! !
 defaultHasChildrenBlock!constants!private! !
-observeEnvironment!initializing!private! !
 onClassAdded:!event handling!public! !
-onClassRemoved:!event handling!public! !
 onClassUpdated:!event handling!public! !
-setRoots:!initializing!private! !
 !
 
 !Tools.ClassHierarchyModel class methodsFor!

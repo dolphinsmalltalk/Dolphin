@@ -36,8 +36,7 @@ browserClass
 	^self subclassResponsibility!
 
 deleteTestMethods: aCollection
-	aCollection
-		do: [:each | Transcript display: 'Removing '; print: each; cr. each methodClass removeSelector: each selector ifAbsent: []]!
+	aCollection do: [:each | each methodClass removeSelector: each selector ifAbsent: []]!
 
 inheritedMethodAddRemoveTests
 	"Private - "

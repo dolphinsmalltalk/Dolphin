@@ -141,7 +141,7 @@ onListItem: anObject addedAtIndex: anInteger
 	updating ifTrue: [^self].
 	self doModelUpdate: [self addNode: anObject]!
 
-onListItem: anObject removedAtIndex: anInteger 
+onListItem: anObject removedAtIndex: anInteger
 	"The specified <Object> has been removed from the receiver's list model. It is an invariant
 	that any item in the list must also be in the tree, so we must rebuild the tree (unless the
 	event is a circular one resulting from us updating the list to reflect a change in the
@@ -215,7 +215,7 @@ onTreeItemUpdated: anObject
 	updating ifTrue: [^self].
 	self doModelUpdate: [self model refresh: anObject ifAbsent: []]!
 
-onTreeRemovingItem: anObject 
+onTreeRemovingItem: anObject
 	"The specified <Object> is being removed from the underlying tree model, so we have to
 	remove it from the list too."
 
@@ -224,7 +224,7 @@ onTreeRemovingItem: anObject
 			[| tree |
 			tree := self treeModel.
 			(tree withAllChildren: anObject) do: 
-					[:each | 
+					[:each |
 					self model remove: each ifAbsent: [].
 					visibleNodes remove: each ifAbsent: []]]!
 

@@ -2323,6 +2323,11 @@ nameForArgument: anObject
 nameForBlockOfArity: anInteger 
 	^'a' , (#('Niladic' 'Monadic' 'Dyadic') at: anInteger+1 ifAbsent: ['']) , 'Valuable'!
 
+namespaceHierarchy
+	"Answer a <NamespaceHierarchyModel> for the tree of Namespaced classes managed by the receiver."
+
+	^NamespaceHierarchyModel new!
+
 newCodeRefactoringToolFor: aMethodWorkspace 
 	^nil!
 
@@ -4466,6 +4471,7 @@ minimizeAll!commands!public! !
 myDolphinAccount!accessing!public! !
 nameForArgument:!helpers!private! !
 nameForBlockOfArity:!helpers!private! !
+namespaceHierarchy!accessing!public! !
 newCodeRefactoringToolFor:!helpers!public!refactoring! !
 newMethodRefactoringToolFor:!helpers!public!refactoring! !
 newWorkspace!commands!public! !
