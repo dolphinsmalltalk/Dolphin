@@ -493,9 +493,9 @@ UI.Tests.PresenterTest subclass: #'UI.Tests.ScrollingDecoratorTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.PresenterTest subclass: #'UI.Tests.SelectableItemsTest'
-	instanceVariableNames: ''
+	instanceVariableNames: 'events selectionChanging selectionChanged timedout'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.PresenterTest subclass: #'UI.Tests.SliderTest'
@@ -571,7 +571,7 @@ UI.Tests.SelectableItemsTest subclass: #'UI.Tests.SelectableTreeItemsTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.SelectableListItemsTest subclass: #'UI.Tests.ListControlTest'
-	instanceVariableNames: 'selectionChanged selectionChanging timedout events clicks'
+	instanceVariableNames: 'clicks'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

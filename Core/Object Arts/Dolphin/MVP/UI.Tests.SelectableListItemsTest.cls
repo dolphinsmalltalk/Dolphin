@@ -16,13 +16,7 @@ autoSelectsFirst
 	^false!
 
 objectsToTest
-	^(OrderedCollection new)
-		add: 5;
-		add: 0;
-		add: '&Hello && Welcome';
-		add: #(1 2 3);
-		add: 0 @ 0;
-		yourself!
+	^{5. 0. '&Hello && Welcome'. #(1 2 3). 0 @ 0}!
 
 removingResetsSelection
 	^true!

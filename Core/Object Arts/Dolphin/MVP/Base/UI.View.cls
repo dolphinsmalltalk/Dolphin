@@ -138,7 +138,7 @@ allSubViews
 
 	| answer |
 	answer := OrderedCollection new.
-	self allSubViewsDo: [:each | answer add: each].
+	self allSubViewsDo: [:each | answer addLast: each].
 	^answer!
 
 allSubViewsDo: aMonadicValuable 
@@ -4252,7 +4252,6 @@ wmNcActivate: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_NCACTIVATE.
 	Answer nil to accept default window processing."
 
-	Transcript print: self; nextPutAll: ' WM_NCACTIVATE'; cr.
 	^nil!
 
 wmNcCalcSize: message wParam: wParam lParam: lParam

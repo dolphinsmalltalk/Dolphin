@@ -12,8 +12,16 @@ UI.Tests.MoenTreeViewTest2 comment: 'SUnitBrowser openOnTestCase: self'!
 !UI.Tests.MoenTreeViewTest2 methodsFor!
 
 classToTest
-	^MoenTreeView! !
+	^MoenTreeView!
+
+mouseDownEventOn: anObject buttons: anArray
+	| position |
+	position := (presenter nodeForObject: anObject ifAbsent: [])
+				ifNil: [presenter clientRectangle corner - 1]
+				ifNotNil: [:node | node rectangle origin + 1].
+	^self mouseDownEventAt: position buttons: anArray! !
 !UI.Tests.MoenTreeViewTest2 categoriesForMethods!
 classToTest!helpers!private! !
+mouseDownEventOn:buttons:!helpers!private! !
 !
 

@@ -610,7 +610,7 @@ onItem: anObject removedAtIndex: anInteger
 	and trigger a selection changed event if the removed item was previously selected."
 
 	| wasSelected |
-	wasSelected := self selectionsByIndex includes: anInteger.
+	wasSelected := self selectionsByIndex identityIncludes: anInteger.
 	self basicRemoveAtIndex: anInteger.
 	wasSelected ifTrue: [self onSelRemoved]!
 

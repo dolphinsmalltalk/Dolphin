@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Tests.PresenterTest subclass: #'UI.Tests.SelectableItemsTest'
-	instanceVariableNames: ''
+	instanceVariableNames: 'events selectionChanging selectionChanged timedout'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.SelectableItemsTest guid: (Core.GUID fromString: '{eb11681e-441a-44d4-af4c-de1ea399a79e}')!
@@ -22,6 +22,12 @@ assertContains: anObject
 	self assert: presenter selection identicalTo: anObject.
 	presenter selectionOrNil: sel!
 
+defaultSelectionChangedAction
+	^
+	[events addLast: ((SelectionChangedEvent forSource: presenter)
+				newSelections: presenter view selectionsByIndex;
+				yourself)]!
+
 denyContains: anObject 
 	"Private - Asserts that the receiver does not contain anObject. We do this by trying to select the object since this allows
 	us to verify whether the view is actually displaying the object in addition to it jsut appearing in the model"
@@ -29,9 +35,148 @@ denyContains: anObject
 	| sel |
 	sel := presenter selectionOrNil.
 	[self should: [presenter selection: anObject] raise: NotFoundError] 
-		ensure: [presenter selectionOrNil: sel]! !
+		ensure: [presenter selectionOrNil: sel]!
+
+mouseDownEventAt: position buttons: anArray
+	| mouseButton keys |
+	mouseButton := anArray intersection: #(#left #right #middle).
+	self assert: mouseButton size equals: 1.
+	mouseButton := mouseButton anyOne.
+	keys := (anArray collect: [:each | MouseEvent wParamFlags at: each]) fold: [:a :b | a bitOr: b].
+	^MouseEvent
+		window: presenter
+		message: (##(IdentityDictionary
+				withAll: {#left -> WM_LBUTTONDOWN. #right -> WM_RBUTTONDOWN. #middle -> WM_MBUTTONDOWN})
+					at: mouseButton)
+		wParam: keys
+		lParam: position asDword!
+
+mouseDownEventOn: anObject buttons: anArray
+	^self mouseDownEventOnItem: (presenter view handleFromObject: anObject) buttons: anArray!
+
+mouseDownEventOnItem: itemHandle buttons: anArray
+	| position |
+	position := itemHandle isNull
+				ifTrue: [presenter view clientRectangle corner - 1]
+				ifFalse: [(presenter view itemRect: itemHandle) origin + 1].
+	^self mouseDownEventAt: position buttons: anArray!
+
+mouseUpForMouseDown: aMouseEvent
+	| upEvent |
+	upEvent := MouseEvent
+				window: presenter
+				message: aMouseEvent message + 1
+				wParam: (aMouseEvent wParam maskClear: aMouseEvent buttonFlag)
+				lParam: aMouseEvent lParam.
+	^upEvent!
+
+observeSelectionEvents
+	events := OrderedCollection new.
+	presenter
+		when: #selectionChanging:
+			send: #onSelectionChanging:
+			to: self;
+		when: #selectionChanged
+			send: #onSelectionChanged
+			to: self.
+	selectionChanging := [:event | events addLast: event].
+	"The ListView (and other selectable item views) should really be generating a #selectionChanged: event with a SelectionChangedEvent parameter, but at present they don't"
+	selectionChanged := self defaultSelectionChangedAction!
+
+onSelectionChanged
+	selectionChanged value!
+
+onSelectionChanging: aSelectionChangingEvent 
+	selectionChanging value: aSelectionChangingEvent!
+
+onTimerTick: wParam
+	(wParam == WM_LBUTTONDOWN or: [wParam == WM_RBUTTONDOWN])
+		ifTrue: 
+			[timedout := true.
+			presenter killTimer: wParam.
+			"Post a mouse up so that the ListView control returns from its WM_?BUTTONDOWN handler"
+			presenter postMessage: wParam + 1 wParam: 0 lParam: 0]!
+
+postMouseEvents: aSequencedReadableCollection
+	self assert: aSequencedReadableCollection first isButtonDown.
+	"Clear the message queue"
+	SessionManager inputState pumpMessages.
+	aSequencedReadableCollection do: 
+			[:each |
+			presenter view
+				postMessage: each message
+				wParam: each wParam
+				lParam: each lParam]!
+
+removalOfSelectionLeaves: aClass
+	"Private - Answer the class that we would expect to be selected follwing the removal of aClass when it was originally
+	selected in the receiver"
+
+	self subclassResponsibility!
+
+sendClickEvent: aMouseEvent
+	| pos |
+	"The mouse needs to be outside any Dolphin window in order to cause the control's WM_?BUTTONDOWN handler to block in the way described in #898"
+	pos := POINTL new.
+	User32
+		getCursorPos: pos;
+		setCursorPosX: 0 y: 0.
+	self sendMouseEvents: {aMouseEvent. self mouseUpForMouseDown: aMouseEvent}.
+	User32 setCursorPosX: pos x y: pos y!
+
+sendMouseEvents: aSequencedReadableCollection
+	| keyState newKeyState aMouseEvent |
+	"The ListBox control ignores the button/key state flags the mouse messages and uses the keyboard state, so unfortunately we have to set that.
+	We use an ensure: block to prevent keys appearing stuck down if there is an error, but stopping in the debugger after the key state is set, but before the ensure block is run, will leave the shift and/or control keys stuck down. Hitting the actual keys will clear this though."
+	keyState := Keyboard default getState.
+	newKeyState := keyState copy.
+	aMouseEvent := aSequencedReadableCollection first.
+	aMouseEvent isCtrlDown ifTrue: [newKeyState at: VK_CONTROL + 1 put: 128].
+	aMouseEvent isShiftDown ifTrue: [newKeyState at: VK_SHIFT + 1 put: 128].
+	self postMouseEvents: aSequencedReadableCollection.
+
+	"Schedule a WM_TIMER so that we can detect the control's WM_?BUTTONDOWN handler not returning"
+	timedout := false.
+	presenter view setTimer: aMouseEvent message interval: 500.
+	"Dispatch the posted mouse down/up messages to the control"
+	
+	[newKeyState = keyState ifFalse: [User32 setKeyboardState: newKeyState].
+	"Dispatch the posted messages to the control"
+	false
+		ifTrue: 
+			[| i |
+			i := aSequencedReadableCollection size.
+			SessionManager inputState loopWhile: 
+					[Sound bell.
+					(i := i - 1) > 0]]
+		ifFalse: [SessionManager inputState pumpMessages]]
+			ensure: [newKeyState = keyState ifFalse: [User32 setKeyboardState: keyState]].
+	presenter view killTimer: aMouseEvent message.
+	"If this fires, it means the control did not return from the call to its window proc to handle the button down event in ListView>>onButtonPressed:"
+	self deny: timedout description: 'Control blocked in mouse down handler'!
+
+setupClickTimeout
+	presenter view
+		when: #timerTick:
+		send: #onTimerTick:
+		to: self.
+	timedout := false! !
 !UI.Tests.SelectableItemsTest categoriesForMethods!
 assertContains:!helpers!private! !
+defaultSelectionChangedAction!helpers!private! !
 denyContains:!helpers!private! !
+mouseDownEventAt:buttons:!helpers!private! !
+mouseDownEventOn:buttons:!helpers!private! !
+mouseDownEventOnItem:buttons:!helpers!private! !
+mouseUpForMouseDown:!helpers!private! !
+observeSelectionEvents!helpers!private! !
+onSelectionChanged!event handling!private! !
+onSelectionChanging:!event handling!private! !
+onTimerTick:!event handling!private! !
+postMouseEvents:!helpers!private! !
+removalOfSelectionLeaves:!helpers!private! !
+sendClickEvent:!helpers!private! !
+sendMouseEvents:!helpers!private! !
+setupClickTimeout!helpers!private! !
 !
 

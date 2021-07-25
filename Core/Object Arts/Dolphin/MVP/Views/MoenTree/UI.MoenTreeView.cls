@@ -1596,7 +1596,7 @@ selectionIfNone: aBlock
 selectionOrNil
 	"Return the selected object or nil if no selection."
 
-	^self selectionIfNone: []!
+	^self selectedNode ifNotNil: [:node | node object]!
 
 selectionOrNil: newSelection 
 	"Select the first occurrence of the <Object> argument, in the receiver. If anObject
@@ -1605,6 +1605,27 @@ selectionOrNil: newSelection
 
 	newSelection isNil ifTrue: [self resetSelection] ifFalse: [self selection: newSelection].
 	^newSelection!
+
+selections
+	"Answer a <sequencedReadableCollection> containing the <Object> selected in the tree.
+	If there is no selection, then the collection will be empty."
+
+	^self selectedNode ifNil: [#()] ifNotNil: [:node | {node object}]!
+
+selections: aSequencedReadableCollection
+	"Set the objects selected in the receiver to be the elements of the <sequencedReadableCollection> argument.
+	If any of those elements are not present in the receiver, raise a NotFoundError."
+
+	^self selections: aSequencedReadableCollection ifAbsent: [:missing | self errorNotFound: missing]!
+
+selections: aSequenceableCollection ifAbsent: aNiladicValuable
+	"Select the first occurrence in the receiver of the single<Object> in the <sequencedReadableCollection> in the receiver, and answer the collection. If there are no occurrences then answer the result of evaluating the <niladicValuable> last argument."
+
+	^aSequenceableCollection isEmpty
+		ifTrue: 
+			[self resetSelection.
+			aSequenceableCollection]
+		ifFalse: [self selection: aSequenceableCollection single ifAbsent: aNiladicValuable]!
 
 setDefaultCanvasColors: canvas 
 	"Private - "
@@ -1923,6 +1944,9 @@ selection:ifAbsent:!public!selection! !
 selectionIfNone:!public!selection! !
 selectionOrNil!public!selection! !
 selectionOrNil:!public!selection! !
+selections!public!selection! !
+selections:!public! !
+selections:ifAbsent:!public! !
 setDefaultCanvasColors:!helpers!private! !
 showDropHighlight:!drag & drop!private! !
 toggleExpanded:cause:!operations!private! !
@@ -1945,7 +1969,7 @@ wmSetFocus:wParam:lParam:!event handling-win32!private! !
 zip:!private!tree layout! !
 !
 
-UI.MoenTreeView methodProtocol: #selectableItems attributes: #(#readOnly) selectors: #(#hasSelection #onSelectionChanged #onSelectionChanging: #resetSelection #selection #selection: #selection:ifAbsent: #selectionIfNone: #selectionOrNil #selectionOrNil:)!
+UI.MoenTreeView methodProtocol: #selectableItems attributes: #(#readOnly) selectors: #(#hasSelection #onSelectionChanged #onSelectionChanging: #resetSelection #selection #selection: #selection:ifAbsent: #selectionIfNone: #selectionOrNil #selectionOrNil: #selections #selections: #selections:ifAbsent:)!
 UI.MoenTreeView methodProtocol: #treeView attributes: #(#readOnly) selectors: #(#collapse: #expand: #expandAll: #includesItem: #onItem:addedInParent: #onItem:movedToParent: #onItem:removedFromParent: #onItemUpdated: #onTreeChanged: #updateItem: #viewMode #viewMode:)!
 
 !UI.MoenTreeView class methodsFor!
