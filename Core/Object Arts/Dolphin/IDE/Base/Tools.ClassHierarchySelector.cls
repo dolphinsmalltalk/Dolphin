@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.ClassSelector subclass: #'Tools.ClassHierarchySelector'
-	instanceVariableNames: ''
+	instanceVariableNames: 'flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -32,6 +32,12 @@ expandAll: aClass
 
 	classesPresenter expandAll: aClass!
 
+flags
+	^flags!
+
+flags: anInteger
+	flags := anInteger!
+
 newClass
 	"Create a new subclass of the selected class (or a subclass of nil if no class is actually selected)."
 
@@ -45,6 +51,8 @@ createComponents!initializing!public! !
 customDrawClassTree:!helpers!private! !
 expand:!operations!public! !
 expandAll:!operations!public! !
+flags!accessing!private! !
+flags:!accessing!private! !
 newClass!commands!public! !
 !
 

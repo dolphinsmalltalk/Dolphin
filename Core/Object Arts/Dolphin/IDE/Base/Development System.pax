@@ -1173,7 +1173,7 @@ Tools.PackageDependencyPresenter subclass: #'Tools.PackagePrerequisites'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.SelectableItemsPresenter subclass: #'Tools.ClassSelector'
-	instanceVariableNames: 'flags classesPresenter searchEnvironment'
+	instanceVariableNames: 'classesPresenter searchEnvironment'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private} #{XProgramming.SUnit private})
 	classInstanceVariableNames: 'commandQueryHandlers'
@@ -1188,13 +1188,13 @@ UI.SelectableItemsPresenter subclass: #'Tools.PackageSelector'
 	classInstanceVariableNames: 'commandQueryHandlers'
 	classConstants: {}!
 Tools.ClassSelector subclass: #'Tools.ClassHierarchySelector'
-	instanceVariableNames: ''
+	instanceVariableNames: 'flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.ClassSelector subclass: #'Tools.ClassListSelector'
-	instanceVariableNames: 'classesListPresenter browserEnvironment namespacesPresenter'
+	instanceVariableNames: 'flags classesListPresenter browserEnvironment namespacesPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

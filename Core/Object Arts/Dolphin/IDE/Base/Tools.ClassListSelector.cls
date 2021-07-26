@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.ClassSelector subclass: #'Tools.ClassListSelector'
-	instanceVariableNames: 'classesListPresenter browserEnvironment namespacesPresenter'
+	instanceVariableNames: 'flags classesListPresenter browserEnvironment namespacesPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -37,6 +37,10 @@ browserEnvironment: aBrowserEnvironment
 
 classesListPresenter
 	^classesListPresenter!
+
+classNamesSelector: aSymbol
+	super classNamesSelector: aSymbol.
+	namespacesPresenter view getTextBlock: classesPresenter view getTextBlock!
 
 createComponents
 	"Create the presenters contained by the receiver"
@@ -125,6 +129,12 @@ deleteItCommand
 
 	classesListPresenter hasFocus ifTrue: [^#deleteClassHierarchy].
 	^super deleteItCommand!
+
+flags
+	^flags!
+
+flags: anInteger
+	flags := anInteger!
 
 initialize
 	"Private - Initialize the receiver"
@@ -221,11 +231,14 @@ browseItCommand!helpers!private! !
 browserEnvironment!public! !
 browserEnvironment:!accessing!public! !
 classesListPresenter!accessing!private! !
+classNamesSelector:!accessing!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 customDrawClassList:!helpers!private! !
 customDrawClassTree:!helpers!private! !
 deleteItCommand!helpers!private! !
+flags!accessing!private! !
+flags:!accessing!private! !
 initialize!initializing!private! !
 model:!accessing!public! !
 onCardChangedFrom:to:!public! !

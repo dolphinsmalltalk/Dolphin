@@ -40,6 +40,9 @@ classesPresenter
 classHierarchyPresenter
 	^classesPresenter classHierarchyPresenter!
 
+classNamesSelector: aSymbol
+	classesPresenter classNamesSelector: aSymbol!
+
 createComponents
 	"Create the presenters contained by the receiver"
 
@@ -58,6 +61,12 @@ createSchematicWiring
 		when: #actionPerformed
 			send: #onPackageChosen
 			to: self!
+
+flags
+	^classesPresenter flags!
+
+flags: anInteger
+	classesPresenter flags: anInteger!
 
 gotoDefinition
 	"Sets the receiver to be displaying the currently selected class with it's own package selected"
@@ -159,8 +168,11 @@ browseItCommand!helpers!private! !
 browsePackages!commands!public! !
 classesPresenter!accessing!public! !
 classHierarchyPresenter!accessing!private! !
+classNamesSelector:!accessing!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
+flags!accessing!private! !
+flags:!accessing!private! !
 gotoDefinition!commands!public! !
 newClass!commands!public! !
 onPackageChosen!event handling!public! !

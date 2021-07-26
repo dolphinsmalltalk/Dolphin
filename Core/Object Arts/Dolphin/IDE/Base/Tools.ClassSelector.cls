@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.SelectableItemsPresenter subclass: #'Tools.ClassSelector'
-	instanceVariableNames: 'flags classesPresenter searchEnvironment'
+	instanceVariableNames: 'classesPresenter searchEnvironment'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private} #{XProgramming.SUnit private})
 	classInstanceVariableNames: 'commandQueryHandlers'
@@ -245,6 +245,9 @@ chooseVariables: aBoolean caption: aString
 classHierarchyPresenter
 	^classesPresenter!
 
+classNamesSelector: aSymbol
+	classesPresenter view getTextBlock: (Message selector: aSymbol)!
+
 classPackage
 	"Prompt for the user to repackage the selected class."
 
@@ -388,11 +391,17 @@ findClass
 			class notNil ifTrue: [self actualClass: class].
 			self ensureSelectionVisible]!
 
+flags
+	^self subclassResponsibility!
+
+flags: anInteger
+	self subclassResponsibility!
+
 initialize
 	"Private - Initialize the receiver"
 
 	super initialize.
-	flags := 0.
+	self flags: 0.
 	searchEnvironment := BrowserEnvironment new!
 
 inspectIt
@@ -403,7 +412,7 @@ inspectIt
 isInstanceMode
 	"Answer whether the receiver is in instance mode."
 
-	^flags noMask: ClassModeMask!
+	^self flags noMask: ClassModeMask!
 
 isInstanceMode: aBoolean
 	"Set whether the receiver is in instance mode.
@@ -412,20 +421,20 @@ isInstanceMode: aBoolean
 	may not make any visual difference, but it affects the operation of certain
 	commands."
 
-	self isInstanceMode == aBoolean 
+	self isInstanceMode == aBoolean
 		ifFalse: 
-			[flags := flags mask: ClassModeMask set: aBoolean not.
+			[self flags: (self flags mask: ClassModeMask set: aBoolean not).
 			self trigger: #modeChanged]!
 
 isShowingFullNames
 	"Answer whether the receiver is display full class names (including namespace) in it's class hierarchy tree."
 
-	^flags allMask: ShowFullNamesMask!
+	^self flags allMask: ShowFullNamesMask!
 
 isShowingFullNames: aBoolean
 	"Set  whether the receiver is display full class names (including namespace) in it's class hierarchy tree."
 
-	flags := flags mask: ShowFullNamesMask set: aBoolean!
+	self flags: (self flags mask: ShowFullNamesMask set: aBoolean)!
 
 maximumVariableMenuEntries
 	"The maximum number of variables that should be listed in the variable refactoring menus
@@ -857,9 +866,12 @@ testBrowserClass
 	^self systemModel testBrowserClass!
 
 toggleShowFullNames
-	self isShowingFullNames: self isShowingFullNames not.
-	classesPresenter view getTextBlock: (Message
-				selector: (self isShowingFullNames ifTrue: [#fullName] ifFalse: [#unqualifiedName]))! !
+	"Private - Enable/disable the display of class full names (i.e. with namespace qualifier) in the class hierarchy view. There is no good reason to do this in the class list, as this already has a Namespace column showing the qualifier."
+
+	| fullNames |
+	fullNames := self isShowingFullNames not.
+	self isShowingFullNames: fullNames.
+	self classNamesSelector: (fullNames ifTrue: [#fullName] ifFalse: [#unqualifiedName])! !
 !Tools.ClassSelector categoriesForMethods!
 actualClass!accessing!public! !
 actualClass:!accessing!public! !
@@ -886,6 +898,7 @@ canRefactor!public!testing! !
 categorizeClass!commands!public! !
 chooseVariables:caption:!commands!private!refactoring! !
 classHierarchyPresenter!accessing!private! !
+classNamesSelector:!accessing!private! !
 classPackage!commands!public! !
 clearSelection!commands!private! !
 copyClass!commands!private! !
@@ -900,6 +913,8 @@ editView:!commands!public! !
 fileInClass!commands!public! !
 fileOutClass!commands!public! !
 findClass!commands!public! !
+flags!accessing!private! !
+flags:!accessing!private! !
 initialize!initializing!private! !
 inspectIt!commands!public! !
 isInstanceMode!modes!public! !
