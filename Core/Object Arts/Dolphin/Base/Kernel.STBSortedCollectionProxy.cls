@@ -29,7 +29,7 @@ value
 
 	^(class new: array size)
 		setSortAlgorithm: sortAlgorithm;
-		addAllWithoutSorting: array;
+		basicAddAll: array;
 		yourself! !
 !Kernel.STBSortedCollectionProxy categoriesForMethods!
 sortAlgorithm!accessing!private! !

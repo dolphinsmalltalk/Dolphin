@@ -12,6 +12,30 @@ Core.Tests.SequencedGrowableCollectionTest comment: ''!
 !Core.Tests.SequencedGrowableCollectionTest categoriesForClass!Unclassified! !
 !Core.Tests.SequencedGrowableCollectionTest methodsFor!
 
+testAddAfterIndex
+	| subject |
+	0 to: 5
+		do: 
+			[:each |
+			| expected |
+			subject := self newCollection: (1 to: 5).
+			expected := self newCollection: (1 to: each) asArray , {6} , (each + 1 to: 5).
+			subject add: 6 afterIndex: each.
+			self assert: subject equals: expected].
+	"Test adding to empty"
+	subject := self newCollection: #().
+	self should: [subject add: 1 afterIndex: 1] raise: BoundsError.
+	subject add: 1 afterIndex: 0.
+	self assert: subject equals: (self newCollection: #(1)).
+	"Test adding at the beginning of a 1-element collection"
+	subject add: 0 afterIndex: 0.
+	self assert: subject equals: (self newCollection: #(0 1)).
+	"Test adding at the end of a 1-element collection"
+	subject := self newCollection: #(1).
+	subject add: 2 afterIndex: 1.
+	self assert: subject equals: (self newCollection: #(1 2)).
+	!
+
 testAddAllFirst
 	| sequence |
 	0 to: 6
@@ -161,12 +185,31 @@ testCopyWithoutIndex
 			subject := (self newCollection: each first)
 						removeFirst;
 						yourself.
-			self assert: (subject copyWithoutIndex: each second) equals: (self newCollection: each third)]! !
+			self assert: (subject copyWithoutIndex: each second) equals: (self newCollection: each third)]!
+
+testRemoveAtIndex
+	| subject |
+	1 to: 5
+		do: 
+			[:i |
+			| expected |
+			subject := self newCollection: (1 to: 5).
+			expected := self newCollection: ((1 to: 5) copyWithout: i).
+			subject removeAtIndex: i.
+			self assert: subject equals: expected.
+			subject := self newCollection: (0 to: 5).
+			subject removeFirst.
+			subject removeAtIndex: i.
+			self assert: subject equals: expected].
+	subject := self newCollection: (1 to: 5).
+	#(0 6) do: [:i | self should: [subject removeAtIndex: i] raise: BoundsError]! !
 !Core.Tests.SequencedGrowableCollectionTest categoriesForMethods!
+testAddAfterIndex!public!unit tests! !
 testAddAllFirst!public!unit tests! !
 testAddAllFirst2!public!unit tests! !
 testAddAllLast!public!unit tests! !
 testAddFirst!public!unit tests! !
 testCopyWithoutIndex!public!unit tests! !
+testRemoveAtIndex!public!unit tests! !
 !
 

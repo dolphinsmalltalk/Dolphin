@@ -41,10 +41,8 @@ add: newElement
 	self addAnsweringIndex: newElement.
 	^newElement!
 
-add: newElement afterIndex: index
-	"Add newElement to the receiver immediately after the element currently at the specified
-	index. index must be between 0 and the receiver's current size (if not raise an exception).
-	Answer newElement. 
+add: anObject afterIndex: anInteger
+	"Add the <Object> first argument to the receiver immediately after the element currently at the specified <integer> index. The index must be between 0 and the receiver's current size (if not raise an exception). Answer the new element.
 	SortedCollections maintain their own ordering, so this is not a valid operation."
 
 	^self shouldNotImplement!
@@ -57,41 +55,28 @@ add: newElement beforeIndex: index
 
 	^self shouldNotImplement!
 
-addAll: aCollection 
+addAll: aCollection
 	"Include all the elements of the <collection> argument as elements of the receiver. Answer
 	aCollection."
 
-	aCollection size > (self size // 3) 
+	aCollection size > (self size // 3)
 		ifTrue: 
-			[self addAllWithoutSorting: aCollection.
+			[self basicAddAll: aCollection.
 			self reSort]
 		ifFalse: [aCollection do: [:each | self add: each]].
 	^aCollection!
 
-addAllFirst: newElements
-	"Prepend all elements of the collection newElements to the receiver, in the order that they
-	appear in newElements (as determined by its implementation of #do:). Answer newElements.
+addAllFirst: aCollection
+	"Prepend all elements of the <collection> argument to the receiver, in the order that they appear in the argument, as determined by its implementation of #do:. Answer the new elements.
 	SortedCollections maintain their own ordering, so this is not a valid operation."
 
 	^self shouldNotImplement!
 
 addAllLast: aCollection
-	"Insert all elements of aCollection as the new first elements of the receiver, in the order
-	that they appear in aCollection. Answer aCollection. 
+	"Append the elements of the <collection> argument to the receiver, in the order that they appear in that collection (as defined by its implementation of #do:). Answer the collection.
 	SortedCollections maintain their own ordering, so this is not a valid operation."
 
 	^self shouldNotImplement!
-
-addAllWithoutSorting: aCollection 
-	"Append the elements of the <collection> argument to the receiver without doing any sorting.
-	Answer aCollection."
-
-	self makeRoomAtEndFor: aCollection size.
-	aCollection do: 
-			[:each | 
-			lastIndex := lastIndex + 1.
-			self basicAt: lastIndex put: each].
-	^aCollection!
 
 addAnsweringIndex: anObject 
 	"Add anObject as a new element of the receiver, inserting it in the correct place to
@@ -188,7 +173,7 @@ collect: transformer
 
 	| answer |
 	answer := OrderedCollection new: self size.
-	self do: [:each | answer add: (transformer value: each)].
+	self do: [:each | answer addLast: (transformer value: each)].
 	^answer!
 
 copyEmpty: anInteger 
@@ -239,6 +224,32 @@ indexForInserting: anObject
 					ifFalse: [high := index - 1]].
 	^low!
 
+insert: newElement before: anInteger
+	"Private - Insert the argument, newElement, into the receiver at the basic index
+	specified by the argument, anInteger, shuffling any subsequent elements down.
+	index must be between 0 and the receiver's current basic size (if not an exception
+	is raised), however no check is made to ensure that it lies within the current
+	first and last indices. Answer the index at which the element was actually
+	inserted."
+
+	| basicIndex |
+	basicIndex := lastIndex == self basicSize
+				ifTrue: 
+					[| offset |
+					offset := anInteger - firstIndex.
+					self makeRoomAtEndFor: 1.
+					firstIndex + offset]
+				ifFalse: [anInteger].
+
+	"Slide the elements down the collection toward the new end to make room for the insertion"
+	self
+		basicReplaceElementsOf: self
+		from: basicIndex + 1
+		to: (lastIndex := lastIndex + 1)
+		startingAt: basicIndex.
+	self basicAt: basicIndex put: newElement.
+	^basicIndex - firstIndex + 1!
+
 replaceFrom: startInteger to: stopInteger with: aSequencedReadableCollection startingAt: startAtInteger
 	"Destructively replace the elements of the receiver between the <integer> arguments
 	startInteger and stopInteger inclusive with the <Object> elements of the
@@ -273,7 +284,7 @@ reverse
 
 	| answer |
 	answer := OrderedCollection new: self size.
-	self reverseDo: [:element | answer add: element].
+	self reverseDo: [:element | answer addLast: element].
 	^answer!
 
 select: aMonadicValuable
@@ -333,7 +344,6 @@ add:beforeIndex:!adding!public! !
 addAll:!adding!public! !
 addAllFirst:!adding!public! !
 addAllLast:!adding!public! !
-addAllWithoutSorting:!adding!public! !
 addAnsweringIndex:!adding!public! !
 addFirst:!adding!public! !
 addLast:!adding!public! !
@@ -349,6 +359,7 @@ copyEmpty:!copying!private! !
 copyFrom:to:!copying!public! !
 copyLikeOfSize:!copying!private! !
 indexForInserting:!adding!private! !
+insert:before:!adding!private! !
 replaceFrom:to:with:startingAt:!public!replacing! !
 resize:!mutating!private! !
 reSort!operations!public! !

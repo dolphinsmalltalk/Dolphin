@@ -131,7 +131,7 @@ testResize
 	self should: [super testResize] raise: Processor constWriteSignal!
 
 testSpecies
-	self assert: self collectionClass empty species sameAs: Symbol!
+	self assert: self collectionClass empty species identicalTo: Symbol!
 
 testSymbolTable
 	Symbol.Table do: [:each | self assert: (each isNil or: [each isWeak])]! !

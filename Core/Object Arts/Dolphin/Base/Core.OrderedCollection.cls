@@ -11,29 +11,29 @@ Core.OrderedCollection comment: 'OrderedCollections store an ordered, contiguous
 !Core.OrderedCollection categoriesForClass!Collections-Sequenceable! !
 !Core.OrderedCollection methodsFor!
 
-add: newElement afterIndex: index
-	"Add newElement to the receiver immediately after the element currently at the
-	specified <integer> index. index must be between 0 and the receiver's current 
-	size (if not raise an exception). Answer newElement."
+add: anObject afterIndex: anInteger
+	"Add the <Object> first argument to the receiver immediately after the element currently at the specified <integer> index. The index must be between 0 and the receiver's current size (if not raise an exception). Answer the new element."
 
 	| basicIndex |
-	basicIndex := index + firstIndex.
-	(basicIndex > (lastIndex + 1) or: [basicIndex < firstIndex]) ifTrue: [^self errorSubscriptBounds: index].
-	lastIndex == self basicSize ifTrue: [ 
-		self makeRoomAtEndFor: 1.
-		basicIndex := index + firstIndex].
-	"Slide the elements down the collection toward the new end to make room for the insertion"
-	lastIndex to: basicIndex by: -1 do: [:i | self basicAt: i + 1 put: (self basicAt: i)].
-	lastIndex := lastIndex + 1.
-	^self basicAt: basicIndex put: newElement!
+	basicIndex := anInteger + firstIndex.
+	(basicIndex > (lastIndex + 1) or: [basicIndex < firstIndex])
+		ifTrue: [^self errorSubscriptBounds: anInteger].
+	lastIndex == self basicSize
+		ifTrue: 
+			[self makeRoomAtEndFor: 1.
+			basicIndex := anInteger + firstIndex].
+	"Slide the elements down the collection toward the new end to make room for the insertion. The primitive is able to handle an overlapping upwards move."
+	self
+		basicReplaceElementsOf: self
+		from: basicIndex + 1
+		to: (lastIndex := lastIndex + 1)
+		startingAt: basicIndex.
+	^self basicAt: basicIndex put: anObject!
 
-addAllFirst: aCollection 
-	"Prepend all elements of the <collection> argument to the receiver,
-	in the order that they appear in the argument, as determined by
-	its implementation of #do:. Answer the new elements."
+addAllFirst: aCollection
+	"Prepend all elements of the <collection> argument to the receiver, in the order that they appear in the argument, as determined by its implementation of #do:. Answer the new elements."
 
-	"Implementation Note: Override for better performance by
-	opening up a space at the front in one operation."
+	"Implementation Note: Override for better performance by opening up a space at the front in one operation."
 
 	| extra |
 	extra := aCollection size.
@@ -41,45 +41,37 @@ addAllFirst: aCollection
 	firstIndex := firstIndex - extra.
 	aCollection inject: firstIndex
 		into: 
-			[:i :e | 
+			[:i :e |
 			self basicAt: i put: e.
 			i + 1].
 	^aCollection!
 
-addAllLast: newElements
-	"Append the elements of the <sequencedCollection>, newElements, to the receiver,
-	in the order that they appear in newElements (as defined by its implementation
-	of #do:). Answer newElements."
+addAllLast: aCollection
+	"Append the elements of the <collection> argument to the receiver, in the order that they appear in that collection (as defined by its implementation of #do:). Answer the collection."
 
-	| size |
-	size := newElements size.
-	self basicSize - lastIndex < size ifTrue: [self makeRoomAtEndFor: size].
-	newElements 
-		do: [:each | self basicAt: (lastIndex := lastIndex + 1) put: each].
-	^newElements!
+	^self basicAddAll: aCollection!
 
-addAnsweringIndex: newObject
-	"Append newObject as the last element of the receiver. 
-	Answer the index at which the object was added."
+addAnsweringIndex: anObject
+	"Append the argument as the last element of the receiver. Answer the index at which the object was added."
 
-	self addLast: newObject.
+	self addLast: anObject.
 	^lastIndex - firstIndex + 1!
 
-addFirst: newElement
-	"Insert newElement as the first element of the receiver.
-	Implementation Note: Override for performance."
+addFirst: anObject
+	"Insert the argument as the first element of the receiver. Answer the argument."
+
+	"Implementation Note: Override for performance."
 
 	firstIndex == 1 ifTrue: [self makeRoomAtFirstFor: self growSize].
-	firstIndex := firstIndex - 1.
-	^self basicAt: firstIndex put: newElement
-!
+	^self basicAt: (firstIndex := firstIndex - 1) put: anObject!
 
-addLast: newObject
-	"Append newObject as the last element of the receiver. Answer newObject.
-	Implementation Note: Override for performance."
+addLast: anObject
+	"Append the argument as the last element of the receiver. Answer the argument."
+
+	"Implementation Note: Override for performance."
 
 	lastIndex == self basicSize ifTrue: [self makeRoomAtEndFor: 1].
-	^self basicAt: (lastIndex := lastIndex + 1) put: newObject!
+	^self basicAt: (lastIndex := lastIndex + 1) put: anObject!
 
 allSatisfy: discriminator
 	"Answer whether the <monadicValuable>, discriminator, evaluates to true for
@@ -134,6 +126,13 @@ at: index put: storee
 	^(index < 1 or: [(basicIndex := index + firstIndex - 1) > lastIndex])
 		ifTrue: [self errorSubscriptBounds: index]
 		ifFalse: [self basicAt: basicIndex put: storee]!
+
+basicAddAll: aCollection
+	| size |
+	size := aCollection size.
+	self basicSize - lastIndex < size ifTrue: [self makeRoomAtEndFor: size].
+	aCollection do: [:each | self basicAt: (lastIndex := lastIndex + 1) put: each].
+	^aCollection!
 
 basicReplaceElementsOf: anIndexableObject from: startInteger to: stopInteger startingAt: startAtInteger
 	"Private - Replace the indexable instance variables of the variable pointer object, anIndexableObject, between
@@ -268,32 +267,6 @@ inject: anObject into: aDyadicValuable
 		do: [:i | nextValue := aDyadicValuable value: nextValue value: (self basicAt: i)].
 	^nextValue!
 
-insert: newElement before: anInteger
-	"Private - Insert the argument, newElement, into the receiver at the basic index
-	specified by the argument, anInteger, shuffling any subsequent elements down.
-	index must be between 0 and the receiver's current basic size (if not an exception
-	is raised), however no check is made to ensure that it lies within the current
-	first and last indices. Answer the index at which the element was actually
-	inserted."
-
-	| basicIndex |
-	basicIndex := lastIndex == self basicSize
-				ifTrue: 
-					[| offset |
-					offset := anInteger - firstIndex.
-					self makeRoomAtEndFor: 1.
-					firstIndex + offset]
-				ifFalse: [anInteger].
-
-	"Slide the elements down the collection toward the new end to make room for the insertion"
-	self
-		basicReplaceElementsOf: self
-		from: basicIndex + 1
-		to: (lastIndex := lastIndex + 1)
-		startingAt: basicIndex.
-	self basicAt: basicIndex put: newElement.
-	^basicIndex - firstIndex + 1!
-
 isEmpty
 	"Answer whether the receiver contains no elements. 
 	Implementation Note: Override superclass to provide a more efficient implementation."
@@ -316,9 +289,7 @@ lookup: keyInteger
 		ifFalse: [self basicAt: basicIndex]!
 
 makeRoomAtEndFor: anInteger
-	"Private - Make room at the end of the receiver to accommodate at least anInteger
-	more elements. If there is insufficient free space in the receiver, then it is expanded 
-	to accommodate	more elements."
+	"Private - Make room at the end of the receiver to accommodate at least anInteger more elements. If there is insufficient free space in the receiver, then it is expanded to accommodate more elements."
 
 	| shift capacity |
 	capacity := self basicSize.
@@ -332,7 +303,7 @@ makeRoomAtEndFor: anInteger
 	shift := 1 - firstIndex.	"N.B. shift < 0"
 
 	"Move tail of collection towards head"
-	firstIndex to: lastIndex do: [:i | self basicAt: i + shift put: (self basicAt: i)].
+	self basicReplaceElementsOf: self from: firstIndex + shift to: lastIndex+shift startingAt: firstIndex.
 	"Nil out old slots"
 	lastIndex + shift + 1 to: lastIndex do: [:i | self basicAt: i put: nil].
 	firstIndex := 1.
@@ -343,7 +314,7 @@ makeRoomAtFirstFor: anInteger
 
 	| newOrderedCollection |
 	newOrderedCollection := self class new: self basicSize + anInteger.
-	firstIndex to: lastIndex do: [:i | newOrderedCollection basicAt: anInteger + i put: (self basicAt: i)].
+	self basicReplaceElementsOf: newOrderedCollection from: anInteger + firstIndex to: anInteger + lastIndex startingAt: firstIndex.
 	newOrderedCollection 
 		firstIndex: anInteger + firstIndex
 		lastIndex: anInteger + lastIndex.
@@ -397,19 +368,22 @@ removeAllSuchThat: aBlock
 	n to: lastIndex do: [:i | self basicAt: i put: nil].
 	lastIndex := n - 1!
 
-removeAtIndex: index
-	"Remove, and answer, the element of the receiver at the specified 
-	<integer> index, by shuffling elements which succeed it down one slot.
-	Raise an BoundsError if there is no element with that index."
+removeAtIndex: anInteger
+	"Remove, and answer, the element of the receiver at the specified <integer> index. Raise a `BoundsError` if there is no element with that index."
 
 	| element basicIndex |
-	element := self at: index.
-	(basicIndex := index + firstIndex - 1) == firstIndex
-		ifTrue: [
-			self basicAt: firstIndex put: nil.
+	element := self at: anInteger.
+	(basicIndex := anInteger + firstIndex - 1) == firstIndex
+		ifTrue: 
+			[self basicAt: firstIndex put: nil.
 			firstIndex := firstIndex + 1]
-		ifFalse: [
-			basicIndex + 1 to: lastIndex do: [:i | self basicAt: i - 1 put: (self basicAt: i)].
+		ifFalse: 
+			["Shuffle any succeeding elements down"
+			self
+				basicReplaceElementsOf: self
+				from: basicIndex
+				to: lastIndex - 1
+				startingAt: basicIndex + 1.
 			self basicAt: lastIndex put: nil.
 			lastIndex := lastIndex - 1].
 	^element!
@@ -539,6 +513,7 @@ asOrderedCollection!converting!public! !
 at:!accessing!public! !
 at:ifAbsent:!accessing!public! !
 at:put:!accessing!public! !
+basicAddAll:!adding!private! !
 basicReplaceElementsOf:from:to:startingAt:!private!replacing! !
 copyWith:!copying!public! !
 copyWithout:!copying!public! !
@@ -551,7 +526,6 @@ firstIndex:lastIndex:!accessing!private! !
 includes:!public!searching! !
 initialize!initializing!public! !
 inject:into:!enumerating!public! !
-insert:before:!adding!private! !
 isEmpty!public!testing! !
 last!accessing!public! !
 lookup:!accessing!public! !

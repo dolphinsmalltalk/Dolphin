@@ -678,7 +678,7 @@ testReverseDo
 			self assert: actual equals: expected]!
 
 testSpecies
-	self assert: self collectionClass empty species sameAs: String!
+	self assert: self collectionClass empty species identicalTo: String!
 
 testSplitByCharacterArray
 	| empty separators |

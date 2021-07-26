@@ -33,10 +33,8 @@ add: newElement after: target
 	^self add: newElement afterIndex: 
 		(self indexOf: target ifAbsent: [self errorNotFound: target])!
 
-add: newElement afterIndex: index
-	"Add newElement to the receiver immediately after the element currently at the
-	specified <integer> index. index must be between 0 and the receiver's current 
-	size (if not raise an exception). Answer newElement."
+add: anObject afterIndex: anInteger
+	"Add the <Object> first argument to the receiver immediately after the element currently at the specified <integer> index. The index must be between 0 and the receiver's current size (if not raise an exception). Answer the new element."
 
 	^self subclassResponsibility!
 
@@ -54,11 +52,11 @@ add: newElement beforeIndex: index
 
 	^self add: newElement afterIndex: index - 1!
 
-addAll: newElements
-	"Include all the elements of the argument, newElements, as the receiver's elements. 
-	Answer newElements. Note that this modifies and answers the receiver, not a copy."
+addAll: aCollection
+	"Include all the elements of the <collection> argument as the receiver's elements. 
+	Answer the argument. Note that this modifies and answers the receiver, not a copy."
 
-	^self addAllLast: newElements!
+	^self addAllLast: aCollection!
 
 addAll: newElements after: target
 	"Insert the elements of the collection, newElements, as new elements of the receiver
@@ -93,25 +91,24 @@ addAll: newElements beforeIndex: index
 
 	^self addAll: newElements afterIndex: index-1!
 
-addAllFirst: newElements
-	"Prepend all elements of the <collection> newElements to the receiver,
-	in the order that they appear in newElements (as determined by
-	its implementation of #do:). Answer newElements.
-	Note that the ANSI standard specifies that newElements must comply with
-	<sequencedCollection>, but we relax this to <collection> since this
-	is implementable purely in terms of #do: (or #inject:into: as here)..
-	Implementation Note: Avoid #reverseDo:, as not understood by all collections."
+addAllFirst: aCollection
+	"Prepend all elements of the <collection> argument to the receiver, in the order that they appear in the argument, as determined by its implementation of #do:. Answer the new elements.
+	Note that the ANSI standard specifies that newElements must comply with <sequencedCollection>, but we relax this to <collection> since this is implementable purely in terms of #do: (or #inject:into: as here).."
 
-	newElements inject: 0 into: [:i :e | self add: e afterIndex: i. i + 1].
-	^newElements!
+	"Implementation Note: Avoid #reverseDo:, as not understood by all collections."
 
-addAllLast: newElements
-	"Append the elements of the <sequencedCollection>, newElements, to the receiver,
-	in the order that they appear in newElements (as defined by its implementation
-	of #do:). Answer newElements."
+	aCollection inject: 0
+		into: 
+			[:i :e |
+			self add: e afterIndex: i.
+			i + 1].
+	^aCollection!
 
-	newElements do: [:each | self addLast: each].
-	^newElements!
+addAllLast: aCollection
+	"Append the elements of the <collection> argument to the receiver, in the order that they appear in that collection (as defined by its implementation of #do:). Answer the collection."
+
+	aCollection do: [:each | self addLast: each].
+	^aCollection!
 
 addFirst: newElement
 	"Insert newElement as the first element of the receiver."

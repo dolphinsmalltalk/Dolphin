@@ -14,6 +14,9 @@ Core.Tests.SortedCollectionTest comment: ''!
 collectionClass
 	^SortedCollection!
 
+testAddAfterIndex
+	self shouldnt: [super testAddAfterIndex] implement: #add:afterIndex:!
+
 testAddAllFirst
 	self shouldnt: [super testAddAllFirst] implement: #addAllFirst:!
 
@@ -72,6 +75,7 @@ verifyConcatenation: b with: a
 	^result! !
 !Core.Tests.SortedCollectionTest categoriesForMethods!
 collectionClass!constants!private! !
+testAddAfterIndex!public!unit tests! !
 testAddAllFirst!public!unit tests! !
 testAddAllFirst2!public!unit tests! !
 testAddAllLast!public!unit tests! !
