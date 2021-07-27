@@ -1293,7 +1293,7 @@ onSelChanging: aMoenTreeNode cause: aSymbol
 	direct result of user input. The user input type is #keyboard or #mouse, as determined 
 	by the <Symbol> argument. A #selectionChanging: event is triggered to enquire as to 
 	whether the selection change is permissible. If it is not then any observer that wishes to 
-	veto the change must set the the value of the <SelectionChangingEvent> to false. Note 
+	veto the change must set the value of the <SelectionChangingEvent> to false. Note 
 	that selection notifications are not propagated during state restoral."
 
 	^self isStateRestoring or: 

@@ -180,12 +180,12 @@ hasButtons: aBoolean
 		recreateIfChanged: false	"Modifiable after creation"!
 
 hasFlatSeparators
-	"Answer whether the receiver has the the TCS_EX_FLATSEPARATORS style."
+	"Answer whether the receiver has the TCS_EX_FLATSEPARATORS style."
 
 	^self tabViewStyleAllMask: TCS_EX_FLATSEPARATORS!
 
 hasFlatSeparators: aBoolean
-	"Set whether or not the receiver has the the TCS_EX_FLATSEPARATORS style."
+	"Set whether or not the receiver has the TCS_EX_FLATSEPARATORS style."
 
 	^self tabViewStyleMask: TCS_EX_FLATSEPARATORS set: aBoolean!
 
@@ -456,7 +456,7 @@ tabOrientation
 	^TabOrientations at: (self baseStyle bitAnd: OrientationMask)!
 
 tabOrientation: aSymbol 
-	"Set the the orientation (i.e. the edge along which the tabs are displayed) of the receiver
+	"Set the orientation (i.e. the edge along which the tabs are displayed) of the receiver
 	to that named by the <Symbol> argument. Note that if a vertical mode is selected then the
 	single-line (scrolling tabs) mode is not supported so we switch on the multiline flag implicitly."
 

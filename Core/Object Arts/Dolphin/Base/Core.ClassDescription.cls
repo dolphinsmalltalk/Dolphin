@@ -183,7 +183,7 @@ baseEnvironment
 	^Smalltalk!
 
 bindingNames
-	"Answer a Set of the the names of all the bindings in the receiver. The answer will include constant names, if any."
+	"Answer a Set of the names of all the bindings in the receiver. The answer will include constant names, if any."
 
 	^self classPool keys!
 

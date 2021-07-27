@@ -180,7 +180,7 @@ divideIntoScaledDecimal: operand
 	^operand retry: #/ coercing: self!
 
 equalToFloat: aFloat
-	"Private - Answer whether the receiver is equal to the the known Float, aFloat, by coercing 
+	"Private - Answer whether the receiver is equal to the known Float, aFloat, by coercing 
 	the less general of it and the receiver. Overridden by subclasses which can implement 
 	more efficiently and/or correctly."
 

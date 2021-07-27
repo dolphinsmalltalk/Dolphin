@@ -124,7 +124,7 @@ divideByZero
 	^ZeroDivide dividend: self!
 
 divideIntoDuration: aDuration 
-	"Private - Answer a new <Duration> which represents the the value in seconds of aDuration divided by the receiver."
+	"Private - Answer a new <Duration> which represents the value in seconds of aDuration divided by the receiver."
 
 	^aDuration class seconds: aDuration asSeconds / self!
 

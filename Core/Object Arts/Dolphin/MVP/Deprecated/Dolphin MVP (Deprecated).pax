@@ -391,7 +391,7 @@ resource_Multiselection_list_box!public!resources-views! !
 !Clipboard methodsFor!
 
 getObjectBinaryStoreBytes
-	"Answer the STB binary store bytes for the <object> stored on the the clipboard, or raise an
+	"Answer the STB binary store bytes for the <object> stored on the clipboard, or raise an
 	exception if none is available."
 
 	Notification deprecated.

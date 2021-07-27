@@ -344,7 +344,7 @@ limbSize
 multiplyByInteger: anInteger
 	"Private - Answer the result of multiplying the receiver by the argument, anInteger."
 
-	"N.B. If we get in here, then anInteger must be small, in which case we just perform the arithmetic in reverse (at present the SmallInteger prim's cannot handle LargeInteger arguments, but the the LI prims can handle SmallInteger args). The primitive should not fail for an Integer argument, so we treat that as an error."
+	"N.B. If we get in here, then anInteger must be small, in which case we just perform the arithmetic in reverse (at present the SmallInteger prim's cannot handle LargeInteger arguments, but the LI prims can handle SmallInteger args). The primitive should not fail for an Integer argument, so we treat that as an error."
 
 	<primitive: 29>
 	^self primitiveFailed: _failureCode!
@@ -525,7 +525,7 @@ subtractFromInteger:!double dispatch!private! !
 !Core.LargeInteger class methodsFor!
 
 fromBytes: bytes 
-	"Answer an instance of the receiver instantiated from the the byte object, bytes,
+	"Answer an instance of the receiver instantiated from the byte object, bytes,
 	which is assumed to contain a positive Integer magnitude."
 
 	| size answer |

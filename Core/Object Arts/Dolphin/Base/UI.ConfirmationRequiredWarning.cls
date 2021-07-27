@@ -16,7 +16,7 @@ Examples:
 !UI.ConfirmationRequiredWarning methodsFor!
 
 cancel
-	"Answer the the result of evaluating the <niladicValuable>, cancelBlock, as the value of the
+	"Answer the result of evaluating the <niladicValuable>, cancelBlock, as the value of the
 	expression which signalled this exception, from whence execution continues. If no cancel
 	block was specified, then the resumption value will be nil."
 
@@ -29,7 +29,7 @@ cancelBlock: aNiladicValuable
 	cancelBlock := aNiladicValuable!
 
 confirm
-	"Answer the the result of evaluating the <niladicValuable>, confirmBlock, as the value of
+	"Answer the result of evaluating the <niladicValuable>, confirmBlock, as the value of
 	the expression which signalled this exception, from whence execution continues. If no
 	confirm block was specified, then the resumption value will be true."
 
@@ -55,7 +55,7 @@ defaultAction
 				onCancel: self cancelBlock]!
 
 refuse
-	"Answer the the result of evaluating the <niladicValuable>, refuseBlock, as the value of
+	"Answer the result of evaluating the <niladicValuable>, refuseBlock, as the value of
 	the expression which signalled this exception, from whence execution continues. If no
 	refuse block was specified, then the resumption value will be false."
 

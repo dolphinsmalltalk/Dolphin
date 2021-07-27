@@ -132,7 +132,7 @@ fileIn
 					resumeWithStubMethod]!
 
 fileOutExpression: aString
-	"Append an immediate expression evaluation to the the source stream."
+	"Append an immediate expression evaluation to the source stream."
 
 	self emitChunk: aString; cr!
 

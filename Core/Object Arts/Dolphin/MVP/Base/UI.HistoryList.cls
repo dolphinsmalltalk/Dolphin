@@ -165,7 +165,7 @@ position
 
 position: anInteger
 	"Set the receiver's current position reference for accessing the collection
-	to the the argument, anInteger. If the argument is not within the bounds of
+	to the argument, anInteger. If the argument is not within the bounds of
 	the receiver's collection, report an error."
 
 	(anInteger between: 0 and: history size)

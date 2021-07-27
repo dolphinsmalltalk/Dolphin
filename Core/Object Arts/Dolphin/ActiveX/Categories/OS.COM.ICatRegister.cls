@@ -122,7 +122,7 @@ registerCoClass: rclsid requiredCategories: catids
 !
 
 revokeCategories: catids
-	"Revoke the registrations of the the categories identified by the 
+	"Revoke the registrations of the categories identified by the 
 	<collection> of <GUID>s, catids."
 
 	| rgcatid |
@@ -141,7 +141,7 @@ revokeCategory: catid
 !
 
 revokeCoClass: rclsid categories: catids
-	"Remove the registration of the the COM component with <CLSID>, rclsid, 
+	"Remove the registration of the COM component with <CLSID>, rclsid, 
 	from the categories listed in the <collection> of <GUID>s, catids."
 
 	| rgcatid |
@@ -153,7 +153,7 @@ revokeCoClass: rclsid categories: catids
 !
 
 revokeCoClass: rclsid category: catid
-	"Revoke the registration of the the COM component with <CLSID>, rclsid, 
+	"Revoke the registration of the COM component with <CLSID>, rclsid, 
 	from the category with <GUID>, catid."
 
 	self

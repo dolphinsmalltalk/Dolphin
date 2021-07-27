@@ -239,7 +239,7 @@ create: viewName on: aValueModel multipleChoices: aSequenceableCollection captio
 	^prompter!
 
 createOn: aValueModel choices: aSequenceableCollection caption: aStringCaptionOrNil
-	"Answer a new instance of the receiver that when shown allows the the user to 
+	"Answer a new instance of the receiver that when shown allows the user to 
 	make a single choice from aSequenceableCollection."
 
 	^self 

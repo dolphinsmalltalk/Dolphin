@@ -1101,7 +1101,7 @@ new
 
 open: aString
 	"Open the file described by aString for exclusive read/write access.
-	Answer the the new instance or signal a FileException if the operation fails."
+	Answer the new instance or signal a FileException if the operation fails."
 
 	^self open: aString mode: #open!
 

@@ -451,15 +451,15 @@ asRichText!converting!public! !
 !UI.Clipboard methodsFor!
 
 getRichText
-	"Answer a <RichText> containing the the Rich Text contents 
+	"Answer a <RichText> containing the Rich Text contents 
 	of the clipboard. If no rich text is currently available, raise 
 	an exception."
 
 	^self getRichTextIfNone: [self errorFormatNotAvailable: #RichText]!
 
 getRichTextIfNone: exceptionHandler
-	"Answer a <readableString> containing the the Rich Text contents 
-	of the clipboard. If no rich text is currently available, the answers the
+	"Answer a <readableString> containing the Rich Text contents 
+	of the clipboard. If no rich text is currently available, then answers the
 	result of evaluating the <niladicValuable> exceptionHandler."
 
 	^self getRegisteredFormat: #RichText ifNone: exceptionHandler! !

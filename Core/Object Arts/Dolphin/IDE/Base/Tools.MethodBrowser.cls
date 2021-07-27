@@ -136,7 +136,7 @@ browseMessageDefinitions: aString in: aBrowserEnvironment
 
 browseMessageReferences
 	"Prompt for a selector and open a method browserdisplaying the references to that selector
-	within the context of the current search environment using the the first word of the clipboard text as the initial
+	within the context of the current search environment using the first word of the clipboard text as the initial
 	suggestion."
 
 	self browseMessageReferences: '' in: self searchEnvironment!

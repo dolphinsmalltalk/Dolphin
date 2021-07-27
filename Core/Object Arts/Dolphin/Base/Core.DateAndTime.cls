@@ -107,7 +107,7 @@ day
 	^self dayOfMonth!
 
 dayMonthYearDo: aTriadicValuable
-	"Evaluate the the triadic valuable argument passing it the day, month, and year of the date represented by the receiver, answering the result."
+	"Evaluate the triadic valuable argument passing it the day, month, and year of the date represented by the receiver, answering the result."
 
 	| z h a b year c month day |
 	z := rataDie + 306.
@@ -293,7 +293,7 @@ printOn: aStream format: aString
 
 printOn: aWriteStream withLeadingSpace: aBoolean
 	"Append a default string representation of the receiver to the <puttableStream>, aWriteStream.
-	The string that is written will represent be expressed in the the local time of the receiver, including the offset from UTC. All dates are in the astronomical Gregorian calendar. 
+	The string that is written will represent be expressed in the local time of the receiver, including the offset from UTC. All dates are in the astronomical Gregorian calendar. 
 	The result will be of the format:
 		-YYYY-MM-DDThh:mm:ss.s+ZZ:zz:z
 	where the z's specify the offset from UTC. e.g. 8:33:14.321 PM EST Jan 5, 1200 B.C.

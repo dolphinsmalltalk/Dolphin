@@ -18,7 +18,7 @@ Multiple error causes may be associated with a raised `FloatingPointException`, 
 
 The `tag` associated with a `FloatingPointException` will be an instance of the structure `_FPIEEE_RECORD`. This can be queried to determine details of the faulting operation and its operands.
 
-The classes of floating-point error that will results in a `FloatingPointException` being raised depends on the floating-point exception mask that is active at the time of the operation. The mask is set by `Float class>>#exceptionMask`, but stored on a per-`Process` basis, i.e. each Smalltak `Process` can have an independent exception mask, which the VM switches when scheduling processes. By default, the the Inexact, Overflow and Underflow exceptions will be ''masked'' (i.e. not raised).
+The classes of floating-point error that will results in a `FloatingPointException` being raised depends on the floating-point exception mask that is active at the time of the operation. The mask is set by `Float class>>#exceptionMask`, but stored on a per-`Process` basis, i.e. each Smalltak `Process` can have an independent exception mask, which the VM switches when scheduling processes. By default, the Inexact, Overflow and Underflow exceptions will be ''masked'' (i.e. not raised).
 
 As specified by ISO 10967, clause 6, a compliant implementation can support a number of alternate means for applications to detect FP errors:
   1. Notification by recording in indicators (see clause 6.2.1).

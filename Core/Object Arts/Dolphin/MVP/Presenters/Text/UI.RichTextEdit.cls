@@ -1023,7 +1023,7 @@ maxTextLimit
 	^SmallInteger maximum!
 
 registerClass
-	"Private - Ensure the the rich edit window class is registered by loading the relevant library."
+	"Private - Ensure the rich edit window class is registered by loading the relevant library."
 
 	(Library isNil or: [Library isOpen not])
 		ifTrue: [Library := External.DynamicLinkLibrary open: self richEditDllName]!

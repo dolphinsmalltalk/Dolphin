@@ -60,7 +60,7 @@ setLeftToRightBlock:rightToLeftBlock:!initializing!private! !
 
 leftToRight: leftMonadicValuable rightToLeft: rightMonadicValuable 
 	"Answer a new instance of the receiver that converts between values 
-	in the left domain to values in the the right domain by evaluating the 
+	in the left domain to values in the right domain by evaluating the 
 	<monadicValuable>, leftMonadicValuable, and which converts in the 
 	reverse direction by evaluating the <monadicValuable>, rightMonadicValuable."
 

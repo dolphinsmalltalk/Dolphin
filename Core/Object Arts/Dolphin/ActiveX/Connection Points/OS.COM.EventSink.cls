@@ -22,7 +22,7 @@ Note that COM components "source" interfaces are almost always dispinterfaces be
 !OS.COM.EventSink methodsFor!
 
 connect: anIUnknown
-	"Connect the receiver to appropriate connection point of the the COM object, punkSource.
+	"Connect the receiver to appropriate connection point of the COM object, punkSource.
 	Answer the advise cookie.
 	Note: If the Active-X object has been implemented using ATL, which is common, then one of
 	these standard error codes may result:

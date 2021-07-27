@@ -93,7 +93,7 @@ defineFields
 	self byteSize: 16!
 
 fromAddress: anAddress
-	"Answer a new sub-instance of the correct type to represent the the IP address structure
+	"Answer a new sub-instance of the correct type to represent the IP address structure
 	stored at the specified memory location."
 
 	| family ptr |

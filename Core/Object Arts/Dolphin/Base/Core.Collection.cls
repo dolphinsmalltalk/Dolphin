@@ -215,7 +215,7 @@ copyingClass
 	^self class!
 
 copyLike
-	"Private - Answer an empty collection of the the receiver's copying class with sufficient capacity for the same number of elements."
+	"Private - Answer an empty collection of the receiver's copying class with sufficient capacity for the same number of elements."
 
 	^self copyingClass new: self copySize!
 
@@ -445,7 +445,7 @@ remove: oldElement
 remove: oldElement ifAbsent: exceptionHandler
 	"Remove the <Object> argument, oldElement, from the receiver's elements.  
 	If several of the elements are equal to anObject, only one is removed (precisely 
-	which is determined by the the subclass).
+	which is determined by the subclass).
 	If no element is equal to oldElement, answer the result of evaluating the <niladicValuable>
 	exceptionHandler. Otherwise, answer oldElement. 
 	Must be implemented by subclasses which comply with <extensibleCollection>."

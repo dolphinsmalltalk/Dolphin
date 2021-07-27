@@ -712,7 +712,7 @@ valueWithArguments: argumentArray
 	^self valueFailed: _failureCode argumentCount: argumentArray size!
 
 valueWithArgumentsAt: anAddress descriptor: anExternalFunctionDescriptor
-	"Private - Answer the result of evaluating the receiver with arguments instantiated from memory at anAddress using the the external argument types from, anExternalFunctionDescriptor.
+	"Private - Answer the result of evaluating the receiver with arguments instantiated from memory at anAddress using the external argument types from, anExternalFunctionDescriptor.
 
 	Primitive Failure reasons:
 		InvalidParameter1	-	anAddress is not a valid address object (SmallInteger/byte indirection)

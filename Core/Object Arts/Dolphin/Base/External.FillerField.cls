@@ -38,7 +38,7 @@ initialize
 	self beInaccessible!
 
 readFrom: anExternalStructure
-	"Private - Answer an object of the the type the receiver represents at the receiver's
+	"Private - Answer an object of the type the receiver represents at the receiver's
 	offset in the <ExternalStructure> argument."
 
 	^self shouldNotImplement!

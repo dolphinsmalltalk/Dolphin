@@ -310,7 +310,7 @@ fileOutProtocols: aCollection ofBehavior: aClassDescription
 	self cr!
 
 logEvaluation: aString
-	"Private - Log an immediate expression evaluation to the the source stream."
+	"Private - Log an immediate expression evaluation to the source stream."
 
 	stream nextPutAll: '"Evaluate"'; cr.
 	self fileOutExpression: aString!
@@ -571,7 +571,7 @@ fileOutDefinitionOfClass: aClass
 		fileOutAttributesOfClass: aClass!
 
 fileOutExpression: aString
-	"Append an immediate expression evaluation to the the source stream."
+	"Append an immediate expression evaluation to the source stream."
 
 	^self subclassResponsibility!
 

@@ -75,7 +75,7 @@ fileName: aString
 	self lpstrFile: fileName!
 
 fileTypes: aString
-	"Set the file type filter to be used for the the common file dialog.
+	"Set the file type filter to be used for the common file dialog.
 	We store down the String in an instance variable to prevent it being GC'd."
 
 	filter := aString asUtf16String.
@@ -191,7 +191,7 @@ ownerView: aView
 		ifFalse: [self hwndOwner: hWnd].!
 
 title: aString
-	"Set the title to be used for the the common file dialog caption.
+	"Set the title to be used for the common file dialog caption.
 	We store down the String in an instance variable to prevent it being GC'd."
 
 	title := aString asUtf16String.

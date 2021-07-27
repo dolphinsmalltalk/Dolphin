@@ -1401,7 +1401,7 @@ getFirstChild
 	^self getWindow: GW_HWNDCHILD!
 
 getItem: anInteger
-	"Private - Answer the the receiver's sub view with the specified ID.
+	"Private - Answer the receiver's sub view with the specified ID.
 	Note: This method is not only useful for Dialogs, as it can be used any parent-child 
 	pair, as long as the child window has a unique identifier (as specified by the hMenu parameter in 
 	the CreateWindowEx() function that created the child window)."
@@ -1409,7 +1409,7 @@ getItem: anInteger
 	^self getItem: anInteger ifAbsent: [Win32Error signal]!
 
 getItem: anInteger ifAbsent: exceptionHandler
-	"Private - Answer the the receiver's sub view with the specified ID, or if there is no such child,
+	"Private - Answer the receiver's sub view with the specified ID, or if there is no such child,
 	then answer the result of evaluating the niladic valuable, exceptionHandler.
 	Note: This method is not only useful for Dialogs, as it can be used any parent-child 
 	pair, as long as the child window has a unique identifier (as specified by the hMenu parameter in 

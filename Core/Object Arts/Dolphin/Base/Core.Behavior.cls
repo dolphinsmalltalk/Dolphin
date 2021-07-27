@@ -742,7 +742,7 @@ removeSelector: selector
 	^self removeSelector: selector ifAbsent: [self errorNotFound: selector]!
 
 removeSelector: aSymbol ifAbsent: aNiladicValuable
-	"Remove the the method with the selector specified by the argument, aSymbol, 
+	"Remove the method with the selector specified by the argument, aSymbol, 
 	from the receiver's message dictionary. Answer the <CompiledMethod> that
 	as removed, or, if the selector is not in the method dictionary, the result of evaluating 
 	the niladic valuable argument.

@@ -347,7 +347,7 @@ divideIntoInteger: anInteger
 	^Fraction rationalisedNumerator: anInteger denominator: self!
 
 equalToFloat: aFloat
-	"Private - Answer whether the receiver is equal to the the known <Float>, aFloat. This can only be the case for Float's with no fractional value."
+	"Private - Answer whether the receiver is equal to the known <Float>, aFloat. This can only be the case for Float's with no fractional value."
 
 	^aFloat isFinite and: [aFloat fractionPart isZero and: [aFloat truncated = self]]!
 

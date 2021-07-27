@@ -29,7 +29,7 @@ addTime: aTimeOrDate
 	^self class fromSeconds: self seconds + aTimeOrDate seconds!
 
 asDateAndTime
-	"Answer a new <DateAndTime> representing the the same local time as the receiver on the current day."
+	"Answer a new <DateAndTime> representing the same local time as the receiver on the current day."
 
 	^DateAndTime today + self!
 

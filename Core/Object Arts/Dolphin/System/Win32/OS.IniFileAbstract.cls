@@ -296,7 +296,7 @@ OS.IniFileAbstract methodProtocol: #abstractDictionary attributes: #(#ansi #read
 !OS.IniFileAbstract class methodsFor!
 
 open: aString
-	"Answer the the new instance of the receiver for reading/writing the .ini file 
+	"Answer the new instance of the receiver for reading/writing the .ini file 
 	with the specified path."
 
 	^self new 

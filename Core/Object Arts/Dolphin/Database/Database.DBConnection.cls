@@ -610,7 +610,7 @@ maxSchemaNameLength
 	^self getWordInfo: SQL_MAX_SCHEMA_NAME_LEN!
 
 maxStatements
-	"Answer the the maximum number of concurrent statements supported."
+	"Answer the maximum number of concurrent statements supported."
 
 	^self getWordInfo: SQL_MAX_CONCURRENT_ACTIVITIES!
 
@@ -1040,7 +1040,7 @@ transactionIsolation: aSymbol
 		size: SQL_IS_UINTEGER!
 
 translate
-	"Answer an Integer containing the the value of receiver's Translate option."
+	"Answer an Integer containing the value of receiver's Translate option."
 
 	^self getDWordAttribute: SQL_ATTR_TRANSLATE_OPTION!
 

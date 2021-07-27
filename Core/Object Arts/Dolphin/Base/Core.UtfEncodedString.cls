@@ -112,7 +112,7 @@ bom
 	^self subclassResponsibility!
 
 codePointAt: anInteger
-	"Answer the the full code point <Character> which would be that indexed by the argument if the receiver is considered as an <Array> of complete <Character>s."
+	"Answer the full code point <Character> which would be that indexed by the argument if the receiver is considered as an <Array> of complete <Character>s."
 
 	^self decodeAt: (self indexOfNth: anInteger)!
 

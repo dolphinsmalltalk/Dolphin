@@ -223,7 +223,7 @@ hasMethodChanged: aCompiledMethod
 	^(self sourceIndexFromDescriptor: aCompiledMethod sourceDescriptor) == ChangesIndex!
 
 hasSources
-	"Private - Answer whether the the sources and changes files are available."
+	"Private - Answer whether the sources and changes files are available."
 
 	^self changesStream notNil and: [self sourcesFileStream notNil]!
 

@@ -334,7 +334,7 @@ compileRange: anInterval ifFail: failBlock debug: aBoolean
 
 compilerNotification: aCompilerNotification offset: anInteger 
 	"Private - A notification has been sent by the Compiler. If an errorsModel has been set up
-	then the the notification will be sent to that, and the offending range of source selected.
+	then the notification will be sent to that, and the offending range of source selected.
 	Only the first error notification of any compilation will be set into any configured
 	errorsModel, displacing any previous warning, further ones will be ignored."
 

@@ -585,7 +585,7 @@ packageManager
 
 pathFrom: aNamespace
 	"Private - Answer an <Array> of <String> representing the identifier path from the specified namespace to the receiver through any intervening namespaces.
-	If the namespace is not one of the outer environments the the path will be that from (but not including) Root."
+	If the namespace is not one of the outer environments the path will be that from (but not including) Root."
 
 	| stream current |
 	self isAnonymous ifTrue: [^#()].

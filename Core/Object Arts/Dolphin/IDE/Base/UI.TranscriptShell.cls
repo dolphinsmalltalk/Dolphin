@@ -233,7 +233,7 @@ position
 
 position: pos
 	"Set the receiver's current position reference for accessing the collection
-	to the the <Integer> argument, pos. If the argument is not within the bounds of
+	to the <Integer> argument, pos. If the argument is not within the bounds of
 	the receiver's collection, report an error."
 
 	self flush.

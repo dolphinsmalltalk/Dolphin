@@ -12,7 +12,7 @@ Refactory.Browser.RenameAccessorsForVariableRefactoring comment: ''!
 !Refactory.Browser.RenameAccessorsForVariableRefactoring methodsFor!
 
 createGetterAccessor
-	"Currently, if we fail to find a getter to rename, we do nothing.  An option to ask the the user if they want to create one, reverting to the superclass' behaviour, could be added."
+	"Currently, if we fail to find a getter to rename, we do nothing.  An option to ask the user if they want to create one, reverting to the superclass' behaviour, could be added."
 
 	self setGetterMethod.
 	getterMethod isNil ifFalse:
@@ -24,7 +24,7 @@ createGetterAccessor
 			!
 
 createSetterAccessor
-	"Currently, if we fail to find a setter to rename, we do nothing.  An option to ask the the user if they want to create one, reverting to the superclass' behaviour, could be added."
+	"Currently, if we fail to find a setter to rename, we do nothing.  An option to ask the user if they want to create one, reverting to the superclass' behaviour, could be added."
 
 	self setSetterMethod.
 	setterMethod isNil ifFalse:

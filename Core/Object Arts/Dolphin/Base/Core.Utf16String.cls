@@ -479,7 +479,7 @@ fromBytes: aByteArray codePage: anInteger
 	^answer!
 
 fromUtf16String: anAddressOrUtf16String
-	"Answer a new instance of the receiver which is a copy of the the UTF-16 string pointed at by the argument."
+	"Answer a new instance of the receiver which is a copy of the UTF-16 string pointed at by the argument."
 
 	^self fromAddress: anAddressOrUtf16String yourAddress!
 
