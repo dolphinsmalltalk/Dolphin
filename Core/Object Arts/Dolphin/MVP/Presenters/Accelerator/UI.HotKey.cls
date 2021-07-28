@@ -126,7 +126,7 @@ wmKeyDown: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_KEYDOWN.
 	We override this in order to prevent VK_DELETE getting through to the HotKey
 	control, which treats it literally, thus preventing the use of the Delete key as an 
-	accelerator. Note that the control also absorbs other keys, such as "
+	accelerator."
 
 	^wParam == VK_DELETE 
 		ifTrue: 
