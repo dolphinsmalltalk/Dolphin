@@ -84,7 +84,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter'
-	'..\..\Base\Dolphin Message Box'
+	'..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\MVP\Models\Value\Dolphin Value Models'

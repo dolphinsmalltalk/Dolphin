@@ -56,7 +56,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\..\Dolphin\MVP\Models\List\Dolphin List Models'
 	'..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
-	'..\..\..\Dolphin\Base\Dolphin Message Box'
+	'..\..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\Registry\Dolphin Registry Access'
 	'..\..\..\Dolphin\MVP\Views\Splitter\Dolphin Splitter Control'

@@ -45,7 +45,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Integer Prompter'
-	'..\..\..\Dolphin\Base\Dolphin Message Box'
+	'..\..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Views\SpinButton\Dolphin SpinButton Control'
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'

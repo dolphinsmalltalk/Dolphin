@@ -25,7 +25,7 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
-	'..\..\..\Base\Dolphin Message Box'
+	'..\..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\..\Registry\Dolphin Registry Access'
 ).

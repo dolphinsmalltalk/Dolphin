@@ -20,7 +20,7 @@ package setPrerequisites: #(
 	'..\..\Presenters\Image\Dolphin Image Presenter'
 	'..\..\Models\List\Dolphin List Models'
 	'..\..\Presenters\List\Dolphin List Presenter'
-	'..\..\..\Base\Dolphin Message Box'
+	'..\..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Presenters\Number\Dolphin Number Presenter'
 	'..\..\Views\SpinButton\Dolphin SpinButton Control'

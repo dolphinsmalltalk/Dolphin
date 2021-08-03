@@ -93,7 +93,7 @@ package setAliasVariableNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
-	'..\..\..\Base\Dolphin Message Box'
+	'..\MessageBox\Dolphin Message Box'
 	'..\Dolphin Overlapped IO'
 	'..\..\..\Base\Dolphin SizeIs Fields'
 	'..\..\..\Sockets\Dolphin Sockets'

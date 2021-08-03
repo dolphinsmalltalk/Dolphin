@@ -29,7 +29,7 @@ package setPrerequisites: #(
 	'..\ActiveX\Automation\ActiveX Automation'
 	'..\IDE\Base\Development System'
 	'..\Base\Dolphin'
-	'..\Base\Dolphin Message Box'
+	'..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\MVP\Base\Dolphin MVP Base'
 	'Lagoon Image Stripper'
 	'..\ActiveX\COM\OLE COM'

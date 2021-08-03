@@ -52,7 +52,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Models\List\Dolphin List Models'
 	'..\..\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\MVP\Presenters\ListTree\Dolphin List Tree Presenter'
-	'..\..\Base\Dolphin Message Box'
+	'..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Presenters\Prompters\Dolphin Prompter'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'

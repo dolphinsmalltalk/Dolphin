@@ -26,7 +26,7 @@ package setPrerequisites: #(
 	'..\..\Dolphin\IDE\Base\Development System'
 	'..\..\Dolphin\Base\Dolphin'
 	'..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter'
-	'..\..\Dolphin\Base\Dolphin Message Box'
+	'..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer'
 	'..\..\Dolphin\ActiveX\Persist\OLE Persistence Base'

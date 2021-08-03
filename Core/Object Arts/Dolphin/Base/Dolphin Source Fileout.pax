@@ -78,7 +78,7 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'Dolphin'
 	'..\System\Base64\Dolphin Base64'
-	'Dolphin Message Box'
+	'..\System\Win32\MessageBox\Dolphin Message Box'
 ).
 
 package setManualPrerequisites: #(

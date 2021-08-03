@@ -31,7 +31,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Dialogs\Common\Dolphin Common Dialogs'
 	'..\Shell\Dolphin Document Presenter'
-	'..\..\..\Base\Dolphin Message Box'
+	'..\..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Type Converters\Dolphin Type Converters'
 	'..\..\Models\Value\Dolphin Value Models'

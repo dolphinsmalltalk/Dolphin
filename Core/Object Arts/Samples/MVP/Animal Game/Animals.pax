@@ -23,7 +23,7 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
-	'..\..\..\Dolphin\Base\Dolphin Message Box'
+	'..\..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'

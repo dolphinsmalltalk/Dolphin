@@ -85,7 +85,7 @@ package setPrerequisites: #(
 	'..\MVP\Presenters\Image\Dolphin Image Presenter'
 	'..\MVP\Models\List\Dolphin List Models'
 	'..\MVP\Presenters\List\Dolphin List Presenter'
-	'..\Base\Dolphin Message Box'
+	'..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\MVP\Base\Dolphin MVP Base'
 	'..\IDE\Professional\Dolphin Professional Tools'
 	'..\MVP\Views\Buttons\Dolphin Push Buttons'

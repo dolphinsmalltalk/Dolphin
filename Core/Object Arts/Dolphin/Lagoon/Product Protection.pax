@@ -33,7 +33,7 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
-	'..\Base\Dolphin Message Box'
+	'..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\MVP\Base\Dolphin MVP Base'
 	'..\MVP\Presenters\Prompters\Dolphin Prompter'
 	'..\Registry\Dolphin Registry Access'

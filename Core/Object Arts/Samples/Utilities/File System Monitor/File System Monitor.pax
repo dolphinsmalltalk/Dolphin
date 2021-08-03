@@ -49,7 +49,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\System\Win32\Dolphin File System Watcher'
 	'..\..\..\Dolphin\MVP\Models\List\Dolphin List Models'
 	'..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
-	'..\..\..\Dolphin\Base\Dolphin Message Box'
+	'..\..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Views\Buttons\Dolphin Push Buttons'
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
