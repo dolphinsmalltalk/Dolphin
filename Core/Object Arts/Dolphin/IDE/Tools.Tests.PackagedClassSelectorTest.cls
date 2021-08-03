@@ -104,7 +104,6 @@ testFilteredPackagedHierarchyMove
 
 	"Now move some classes under superclasses which are not in the selected package - the tree must update
 	to include these."
-	"	(self runKnownBug: '#1078' test: #testFilteredPackagedHierarchyMove) ifFalse: [^self]."
 
 	"First move a leaf, but for extra interest make it the selection"
 	presenter selection: dolphinTestF.

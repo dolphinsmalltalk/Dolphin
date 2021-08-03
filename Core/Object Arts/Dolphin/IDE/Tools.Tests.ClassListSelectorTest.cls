@@ -46,9 +46,6 @@ initializePresenter
 listModel
 	^presenter model!
 
-listPresenter
-	^presenter instVarNamed: 'classesListPresenter'!
-
 removalOfSelectionLeaves: aClass
 	"Private - Answer the class that we would expect to be selected following the removal of aClass when it was originally selected in the receiver"
 
@@ -86,13 +83,13 @@ testAddRemoveListItems
 	self assertContains: dolphinTestA.
 	self assert: (classHierarchy view includesItem: dolphinTestA).
 	classHierarchy selection: dolphinTestA.
-	self assertIsNil: self listPresenter selectionOrNil.
+	self assertIsNil: presenter classesListPresenter selectionOrNil.
 	self assertContains: dolphinTestB.
 	self assert: (classHierarchy view includesItem: dolphinTestB).
 	presenter view cardLayout showCard: classHierarchy view.
 	presenter selection: dolphinTestB.
-	presenter view cardLayout showCard: self listPresenter view.
-	self assert: self listPresenter selectionOrNil identicalTo: dolphinTestB.
+	presenter view cardLayout showCard: presenter classesListPresenter view.
+	self assert: presenter classesListPresenter selectionOrNil identicalTo: dolphinTestB.
 
 	"Now remove a child, then a branch, then the last child of that branch. The branch should go too"
 	self listModel remove: dolphinTestF.
@@ -110,20 +107,19 @@ testAddRemoveListItems
 	self listModel remove: Object.
 	self assertContains: Object.
 	self assert: (self treeModel roots includes: Object).
-	self should: [self listPresenter selection: Object] raise: Error.
+	self should: [presenter classesListPresenter selection: Object] raise: Error.
 
 	"Remove a lonely root"
 	self listModel remove: dolphinTestG.
-	self should: [self listPresenter selection: dolphinTestG] raise: Error.
+	self should: [presenter classesListPresenter selection: dolphinTestG] raise: Error.
 	self denyContains: dolphinTestG.
 	self deny: (self treeModel roots includes: dolphinTestG).
 	self assert: ((self treeModel instVarNamed: 'roots') includes: dolphinTestG).
 	"Remove from tree from root"
-	self listPresenter selection: ProtoObject.
+	presenter classesListPresenter selection: ProtoObject.
 	ProtoObject withAllSubclassesDo: [:each | self listModel remove: each].
-	"Hmmm.. this test fails in deployed release (#1695).
-	self assert: self listPresenter selectionOrNil isNil."
-	self should: [self listPresenter selection: ProtoObject] raise: Error.
+	self assert: presenter classesListPresenter selectionOrNil isNil.
+	self should: [presenter classesListPresenter selection: ProtoObject] raise: Error.
 	self denyContains: ProtoObject.
 	self deny: (self treeModel roots includes: ProtoObject).
 	"Should still be in roots collection, even if filtered out by accessor"
@@ -152,7 +148,6 @@ classToTest!helpers!private! !
 denyContains:!helpers!private! !
 initializePresenter!public!Running! !
 listModel!accessing!private! !
-listPresenter!public!unit tests! !
 removalOfSelectionLeaves:!helpers!private! !
 resetSelection!helpers!private! !
 testAddRemoveListItems!public!unit tests! !
