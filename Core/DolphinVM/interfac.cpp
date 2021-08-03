@@ -647,6 +647,7 @@ LRESULT CALLBACK Interpreter::VMWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 {
 	switch(static_cast<VmWndMsgs>(uMsg))
 	{
+	case VmWndMsgs::Timer:
 	case VmWndMsgs::Sync:
 		return DolphinWndProc(hWnd, uMsg, wParam, lParam);
 		break;
@@ -664,6 +665,7 @@ LRESULT CALLBACK Interpreter::VMWndProc(HWND hWnd, UINT uMsg, WPARAM wParam, LPA
 ///////////////////////////////////////////////////////////////////////////////
 // GenericCallback is the routine used for constructing function pointers for passing to external
 // libraries as callback functions.
+
 LRESULT __stdcall Interpreter::GenericCallback(SmallInteger id, uint8_t* lpArgs)
 {
 	LRESULT result;
@@ -678,7 +680,6 @@ LRESULT __stdcall Interpreter::GenericCallback(SmallInteger id, uint8_t* lpArgs)
 
 	return result;
 }
-
 
 LRESULT Interpreter::callbackResultFromOop(Oop objectPointer)
 {

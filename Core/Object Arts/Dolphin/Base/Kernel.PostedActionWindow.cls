@@ -16,8 +16,12 @@ A queue of niladic valuable actions is maintained. When a new action is posted t
 asParameter
 	^handle!
 
-dispatchMessage: msgInteger wParam: wParam lParam: lParam 
-	^msgInteger == WM_USER 
+dispatchMessage: msgInteger wParam: wParam lParam: lParam
+	msgInteger == WM_TIMER
+		ifTrue: 
+			[SessionManager.Current onTimer: wParam.
+			^0].
+	^msgInteger == WM_USER
 		ifTrue: 
 			[self evaluateNextAction.
 			0]!
@@ -78,22 +82,13 @@ postAction: aNiladicValuable
 		lParam: 0!
 
 preTranslateMessage: aMSG
-	"Private - Dispatch any posted action requests on the message loop side - we don't want to
-	do this inside a callback. Also the window belongs to the VM, and messages are not
-	dispatched into the image anyway."
+	"Private - Dispatch any posted action requests on the message loop side - we don't want to do this inside a callback."
 
 	| msg |
 	msg := aMSG message.
 	msg == WM_USER
 		ifTrue: 
 			[self evaluateNextAction.
-			^true].
-	msg == WM_TIMER
-		ifTrue: 
-			[| timerId |
-			timerId := aMSG wParam.
-			self killTimer: timerId.
-			SessionManager current onTimer: timerId.
 			^true].
 	^false!
 

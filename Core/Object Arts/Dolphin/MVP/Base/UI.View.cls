@@ -4002,17 +4002,12 @@ wmDrawItem: message wParam: wParam lParam: lParam
 				ifNotNil: [:destinationWindow | destinationWindow onDrawItem: struct]]!
 
 wmEnterIdle: message wParam: wParam lParam: lParam
-	"Private - Default handler for WM_ENTERIDLE.
-	The intent of the sleep here is to give background tasks a change to run when Windows
-	is performing some task (such as displaying a common dialog box) which steals all
-	of Dolphin's cycles."
+	"Private - Default handler for WM_ENTERIDLE. If the window going idle is owned by the main VM thread, then this may be an opportunity to allow some background processing to run which would otherwise be blocked because an external message loop has taken control, or it may be possible to quiesce and save energy."
 
-	"We'll try disrupting the user's menu activities too, and see how it
-	works out, if there's a problem, re-enable this line.!!!!"
+	"We must be careful not to put the main VM thread to sleep if the Window going idle is actually owned by another thread, for example a system dialog started by an overlapped call."
 
-	"wParam = MSGF_MENU ifTrue: [^nil]."
-
-	SessionManager.Current inputState enterIdle.
+	(User32 getWindowThreadProcessId: lParam lpdwProcessId: nil) = Kernel32 getCurrentThreadId
+		ifTrue: [SessionManager.Current inputState enterIdle].
 	^0!
 
 wmEnterMenuLoop: message wParam: wParam lParam: lParam
@@ -4024,7 +4019,7 @@ wmEnterMenuLoop: message wParam: wParam lParam: lParam
 	while the menu loop is active. Be warned, this uses a magic number for the timer
 	(WM_ENTERIDLE = 289). The timer fires every 1/10th of a second."
 
-	SessionManager.Current inputState startIdleTimer: self.
+	SessionManager.Current inputState startIdleTimer.
 	^nil!
 
 wmEraseBkGnd: message wParam: wParam lParam: lParam
@@ -4044,7 +4039,7 @@ wmExitMenuLoop: message wParam: wParam lParam: lParam
 	Implementation Note: See wmEnterMenuLoop:&c. We must ensure the idle
 	kick timer is killed."
 
-	SessionManager.Current inputState stopIdleTimer: self.
+	SessionManager.Current inputState stopIdleTimer.
 	^nil!
 
 wmGetDlgCode: message wParam: wParam lParam: aMSGAddress
@@ -4472,11 +4467,6 @@ wmTimeChange: message wParam: wParam lParam: lParam
 wmTimer: message wParam: wParam lParam: lParam
 	"Private - A timer event, identified by the <integer> id, wParam, has fired."
 
-	wParam == WM_ENTERIDLE
-		ifTrue: 
-			["Simulated WM_ENTERIDLE fired when menus popped"
-			SessionManager.Current inputState enterIdle.
-			^0].
 	self presenter trigger: #timerTick: with: wParam.
 	^nil!
 

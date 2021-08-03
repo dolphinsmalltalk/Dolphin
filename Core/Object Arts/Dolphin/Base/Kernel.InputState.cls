@@ -231,7 +231,7 @@ initializeFrom: anInputState
 			windows := anInputState windows.
 			anInputState main: nil.
 			anInputState idler ifNotNil: [:process | process kill]].
-	idleTimer := WeakArray with: DeadObject current.
+	idleTimer := nil.
 	self
 		createAndRegisterWakeupEvent;
 		registerAsDispatcher;
@@ -506,36 +506,32 @@ setSamplingInterval: anInteger
 	SamplingInterval := anInteger.
 	self primSampleInterval: SamplingInterval!
 
-startIdleTimer: aView
-	"Private - Start the idle timer (e.g. when a menu is popped), hosted by the window, aView,
-	which must respond to #asParameter by answering its window handle (it need not be a View).
-	If the idle timer is already active then this do nothing."
+startIdleTimer
+	"Private - Start the idle timer (e.g. when a menu is popped), using the VM's message window as the host. The idle timer is a high-frequency timer used to keep the system ticking over when some kind of modal Windows loop that is not implemented in Dolphin is running, e.g. a common dialog. If the idle timer is already running, then this increments the count of outstanding requests, but otherwise does nothing."
 
 	
-	[| idleHost hWnd |
-	idleHost := idleTimer basicAt: 1.
-	hWnd := aView asParameter.
-	(idleHost == DeadObject current or: [hWnd isNull or: [(User32 isWindow: hWnd) not]])
-		ifTrue: 
-			[idleTimer basicAt: 1 put: aView.
+	[idleTimer
+		ifNil: 
+			[idleTimer := 1.
 			User32
-				setTimer: hWnd
+				setTimer: msgWindow asParameter
 				nIDEvent: WM_ENTERIDLE
 				uElapse: 100
-				lpTimerFunc: nil]]
+				lpTimerFunc: nil]
+		ifNotNil: [idleTimer := idleTimer + 1]]
 			critical!
 
-stopIdleTimer: aView
-	"Private - Stop the idle timer hosted by the specified window. If the idle timer is not
-	actually hosted by aView, then do nothing."
+stopIdleTimer
+	"Private - Stop the idle timer. If the idle timer is not running, then do nothing."
 
+	idleTimer ifNil: [^self].
 	
-	[| idleHost |
-	idleHost := idleTimer basicAt: 1.
-	idleHost == aView
-		ifTrue: 
-			[idleTimer basicAt: 1 put: DeadObject current.
-			User32 killTimer: aView asParameter uIDEvent: WM_ENTERIDLE]]
+	[idleTimer
+		ifNotNil: 
+			[(idleTimer := idleTimer - 1) > 0
+				ifFalse: 
+					[idleTimer := nil.
+					User32 killTimer: msgWindow asParameter uIDEvent: WM_ENTERIDLE]]]
 			critical!
 
 topLevelWindows
@@ -673,8 +669,8 @@ queueDeferredAction:!message dispatching!public! !
 registerAsDispatcher!initializing!private! !
 removeWindowAt:!accessing!private! !
 setSamplingInterval:!initializing!private! !
-startIdleTimer:!idling!private! !
-stopIdleTimer:!idling!private! !
+startIdleTimer!idling!private! !
+stopIdleTimer!idling!private! !
 topLevelWindows!enumerating!public! !
 uiIdle!idling!private! !
 userInterruptSignal!constants!public! !

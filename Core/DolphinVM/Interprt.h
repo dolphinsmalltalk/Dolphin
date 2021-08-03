@@ -154,6 +154,7 @@ public:
 
 	enum class VmWndMsgs : UINT
 	{
+		Timer = WM_TIMER,
 		Sync = WM_USER,
 		SyncCallback,
 		SyncVirtual

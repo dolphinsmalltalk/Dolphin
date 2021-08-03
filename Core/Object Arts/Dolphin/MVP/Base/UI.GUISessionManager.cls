@@ -110,8 +110,8 @@ onTimeChanged: aWindowsEvent
 	inputState msgWindow setTimer: SettingsChangeTimerId interval: 1000!
 
 onTimer: anInteger
-	anInteger == SettingsChangeTimerId
-		ifTrue: [self triggerSettingsChanged]!
+	super onTimer: anInteger.
+	anInteger == SettingsChangeTimerId ifTrue: [self triggerSettingsChanged]!
 
 parseCmdLineFlags
 	| options |

@@ -434,11 +434,11 @@ messageBox: anExternalHandle text: textString caption: captionString style: styl
 			"Ensure owner is (temporarily) enabled to prevent losing activation when box is closed"
 			(wasDisabled := (self isWindowEnabled: hWnd) not) ifTrue: [self enableWindow: hWnd bEnable: true].
 			response := 
-					[SessionManager.Current inputState startIdleTimer: hWnd.
+					[SessionManager.Current inputState startIdleTimer.
 					"Task modal only disables windows in the calling thread, so we can't use an
 					overlapped call here."
 					self messageBoxIndirect: struct]
-							ensure: [SessionManager.Current inputState stopIdleTimer: hWnd]]
+							ensure: [SessionManager.Current inputState stopIdleTimer]]
 		ifFalse: 
 			[wasDisabled := (self isWindowEnabled: hWnd) not.
 			"MessageBoxIndirect is called using an overlapped call on a separate thread to avoid

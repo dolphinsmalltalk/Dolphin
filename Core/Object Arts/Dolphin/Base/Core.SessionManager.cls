@@ -705,7 +705,11 @@ onStartup: args
 	Processor activeProcess kill!
 
 onTimer: anInteger
-	"Do nothing by default - but see GUISessionManager"!
+	"Do nothing by default - but see GUISessionManager"
+
+	anInteger == WM_ENTERIDLE
+		ifTrue: [self inputState enterIdle]
+		ifFalse: [inputState msgWindow killTimer: anInteger]!
 
 onUnhandledError: anError
 	"The unhandled Error, anError, occurred in the active Process.
