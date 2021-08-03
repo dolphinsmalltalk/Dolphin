@@ -637,7 +637,7 @@ Oop* __fastcall Interpreter::primitiveBasicAt(Oop* const sp, const primargcount_
 				if (static_cast<size_t>(index) < (oteReceiver->bytesSize() / 4))
 				{
 					uint32_t value = reinterpret_cast<QuadsOTE*>(oteReceiver)->m_location->m_fields[index];
-					*newSp = ObjectMemoryIntegerObjectOf(value);
+					StoreUnsigned32()(newSp, value);
 					return newSp;
 				}
 				break;
@@ -822,7 +822,7 @@ Oop* __fastcall Interpreter::primitiveInstVarAt(Oop* const sp, primargcount_t)
 				if (static_cast<size_t>(index) < (oteReceiver->bytesSize() / 4))
 				{
 					uint32_t value = reinterpret_cast<QuadsOTE*>(oteReceiver)->m_location->m_fields[index];
-					*newSp = ObjectMemoryIntegerObjectOf(value);
+					StoreUnsigned32()(newSp, value);
 					return newSp;
 				}
 				break;
