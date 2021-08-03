@@ -9,11 +9,11 @@ UI.ValueDialog subclass: #'UI.ChoicePrompter'
 UI.ChoicePrompter guid: (Core.GUID fromString: '{87b4c6a7-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.ChoicePrompter comment: 'ChoicePrompter is a <valueDialogPresenter> that allows a value to be chosen from a list of alternatives. 
 
-You can instantiate a single selection ChoicePrompter dialog using the class methods #choices:caption: or #on:choices:caption:. It is also possible to allow multiples selections by using the methods #multipleChoices:caption: and #on:multipleChoices:caption:. Each of these methods answers the model value if Ok (or nil if Cancel) is pressed. When a ChoicePrompter is being used to select multiple choices, the < valueModel> will be used to contain an Array of the selected items.
+You can instantiate a single selection ChoicePrompter dialog using the class methods #choices:caption: or #on:choices:caption:. It is also possible to allow multiple selections by using the methods #multipleChoices:caption: and #on:multipleChoices:caption:. Each of these methods answers the model value if Ok (or nil if Cancel) is pressed. When a ChoicePrompter is being used to select multiple choices, the <valueModel> will be used to contain an Array of the selected items.
 
-Since a ChoicePrompter is really just a dialog wrapper around a <ChoicePresenter> it presents most of the functionality of the latter in an easy to use dialog form. The initial selection of choices in the dialog will match the initial value of the model. The selections made in the choices list will not be transferred to the <valueModel> unless Ok is used confirm the dialog. If Cancel is pressed the model will be left untouched. 
+Since a ChoicePrompter is really just a dialog wrapper around a <ChoicePresenter> it presents most of the functionality of the latter in an easy to use dialog form. The initial selection of choices in the dialog will match the initial value of the model. The selections made in the choices list will not be transferred to the <valueModel> unless Ok is used to confirm the dialog. If Cancel is pressed the model will be left untouched. 
 
-It is also possible to configure a ChoicePrompter such that new entries may be added dynmaically to the list of choices. This can be done by specifying a <monadicValuable> using #newBlock:. When a #newChoice or #newMultipleChoice command is received from the view, a standard <Prompter> will be displayed and the resultant text from this will be run through the newBlock to determine the choice or choices to be added to the list. In order to enable this functionality it is necessary to explicitly specify the view as "Extensible choice prompter" or "Extensible multi-selection choice prompter", as appropriate.
+It is also possible to configure a ChoicePrompter such that new entries may be added dynamically to the list of choices. This can be done by specifying a <monadicValuable> using #newBlock:. When a #newChoice or #newMultipleChoice command is received from the view, a standard <Prompter> will be displayed and the resultant text from this will be run through the newBlock to determine the choice or choices to be added to the list. In order to enable this functionality it is necessary to explicitly specify the view as "Extensible choice prompter" or "Extensible multi-selection choice prompter", as appropriate.
 
 Examples:
 
@@ -71,7 +71,7 @@ getTextBlock: monad
 	"Set the <monadicValuable> used to extract text from the choices in
 	the receiver for display in the choice list to the argument.
 	The default 'block' sends #displayString to the objects, which is satisfactory 
-	for a many uses, but this message allows the same prompter view 
+	for many uses, but this message allows the same prompter view 
 	to be used in a wider range of circumstances. "
 
 	choicePresenter view getTextBlock: monad!
@@ -135,7 +135,7 @@ newChoice
 
 newMultipleChoice
 	"New command has been issued for a multi-selection prompter. 
-	Create a new choice by prompting the user for	its name."
+	Create a new choice by prompting the user for its name."
 
 	| default chosenName new |
 	default := choicePresenter value.
@@ -300,7 +300,7 @@ multipleChoices: aSequenceableCollection caption: aStringCaptionOrNil
 
 on: aValueModel choices: aSequenceableCollection caption: aStringCaptionOrNil
 	"Shows a dialog to allow the user to choose from aSequenceableCollection.
-	See #create:on:choices:caption: for configuration details.Answer the choice made 
+	See #create:on:choices:caption: for configuration details. Answer the choice made 
 	or nil if the dialog is cancelled"
 
 	^(self 

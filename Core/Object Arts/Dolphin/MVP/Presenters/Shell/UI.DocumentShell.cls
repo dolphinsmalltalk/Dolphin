@@ -7,7 +7,7 @@ UI.AbstractDocumentShell subclass: #'UI.DocumentShell'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.DocumentShell guid: (Core.GUID fromString: '{87b4c69b-026e-11d3-9fd7-00a0cc3e4a32}')!
-UI.DocumentShell comment: '`DocumentShell` is a legacy base class of  `<documentPresenter>`s that supports documents stored as text or STB-format binary representation. 
+UI.DocumentShell comment: '`DocumentShell` is a legacy base class of `<documentPresenter>`s that supports documents stored as text or STB-format binary representation. 
 
 `DocumentShell` will be deprecated in a future release. Document shells should now be directly subclassed from `AbstractDocumentShell`, or from `TextDocument`.
 '!

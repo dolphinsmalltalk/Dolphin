@@ -19,7 +19,7 @@ Instance Variables:
 !UI.HotKey methodsFor!
 
 currentModifiers
-	"Private - Answer the a bit mask of the hot key modifiers corresponding
+	"Private - Answer the bit mask of the hot key modifiers corresponding
 	to the current keyboard state. Note that this does NOT bitOr: in either
 	HOTKEYF_EXT or the current default mask."
 
@@ -106,7 +106,7 @@ setHotKey: hotKeyCode
 		lpParam: 0!
 
 setHotKey: virtualKeyCode modifiers: modifiers
-	"Private - Set the receiver's hot key combination.	"
+	"Private - Set the receiver's hot key combination."
 
 	| mods |
 	mods := modifiers.

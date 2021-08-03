@@ -7,7 +7,7 @@ UI.TextEdit subclass: #'UI.MultilineTextEdit'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.MultilineTextEdit guid: (Core.GUID fromString: '{87b4c743-026e-11d3-9fd7-00a0cc3e4a32}')!
-UI.MultilineTextEdit comment: 'MultilineTextEdit is a <valueView> class that implements the Windows "EDIT" control with an ES_MULTILINE style for the displaying and editing of multi-line text. The <valueModel> associated with a MultilineTextEdit  must always yield a <readableString> value when mapped through the installed type converter. A MultilineTextEdit will normally be used in conjunction with a <TextPresenter>. '!
+UI.MultilineTextEdit comment: 'MultilineTextEdit is a <valueView> class that implements the Windows "EDIT" control with an ES_MULTILINE style for the displaying and editing of multi-line text. The <valueModel> associated with a MultilineTextEdit must always yield a <readableString> value when mapped through the installed type converter. A MultilineTextEdit will normally be used in conjunction with a <TextPresenter>. '!
 !UI.MultilineTextEdit categoriesForClass!MVP-Views! !
 !UI.MultilineTextEdit methodsFor!
 
@@ -87,7 +87,7 @@ currentLine
 !
 
 cutLine
-	"Delete the line on which the caret is located, including the line delimiter (i.e. subsequent lines shift
+	"Delete the line on which the caret is located into the cut buffer, including the line delimiter (i.e. subsequent lines shift
 	up by one). If it is the last line just cuts the text on that line, if any."
 
 	self selectLineAndTerminator: self currentLine.
@@ -287,7 +287,7 @@ textAtLine: lineIndex
 	| length text |
 	lineIndex <= 0 ifTrue: [^self errorSubscriptBounds: lineIndex].
 
-	"EM_GETLINE has an unusual way of specifying the buffer size, which is that the size is in characters is written into the first word.
+	"EM_GETLINE has an unusual way of specifying the buffer size, which is that the size in characters is written into the first word.
 	It does not write a null terminator, but our strings have an implicit one anyway"
 	length := self lineLength: lineIndex.
 	text := Utf16String newFixed: length.
@@ -300,7 +300,7 @@ textAtLine: lineIndex
 
 toggleWordWrap
 	"Toggle the receiver into/out-of word wrap mode.
-	Implementation Note: Changing word wrap mode causes the receiver to ge recreated, so we must
+	Implementation Note: Changing word wrap mode causes the receiver to get recreated, so we must
 	restore focus if we had it. This is especially important given the Windows bug in IsDialogMessage
 	which will go into an infinite loop if a keyboard shortcut or navigation key is pressed when the active
 	view does not have focus anywhere."

@@ -18,7 +18,7 @@ Instance Variables:
 !UI.MappingConverter methodsFor!
 
 leftToRight: anObject 
-	"Private - Converts the <Object> argument, which is assumed to be of the receivers left 
+	"Private - Converts the <Object> argument, which is assumed to be of the receiver's left 
 	type to an <Object> of the receiver's right type. Answers the result of the conversion."
 
 	^leftToRightMap at: anObject!
@@ -33,8 +33,8 @@ leftToRightMap: aLookupTable
 		keysAndValuesDo: [:eachKey :eachValue | rightToLeftMap at: eachValue put: eachKey]!
 
 rightToLeft: anObject 
-	"Private - Converts the <Object> argument, which is assumed to be of the receivers right 
-	type to an <Object> of the receivers left type. Answers the result of the conversion."
+	"Private - Converts the <Object> argument, which is assumed to be of the receiver's right 
+	type to an <Object> of the receiver's left type. Answers the result of the conversion."
 
 	^rightToLeftMap at: anObject!
 

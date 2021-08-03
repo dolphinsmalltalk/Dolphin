@@ -75,8 +75,8 @@ validationBlock:!accessing!public! !
 
 createOn: pairValueModel prompt: promptString caption: captionStringOrNil 
 	"Creates an instance of the receiver on pairValueModel and promptString. The prompter is
-	given a caption according to captionStringOrNil; if nil a default caption is used.. The
-	initial value of the reply field will be the original value of the model The model must
+	given a caption according to captionStringOrNil; if nil a default caption is used. The
+	initial value of the reply field will be the original value of the model. The model must
 	expose #key and #value aspects, e.g. an Association. The dialog is not shown."
 
 	| answer |
@@ -95,7 +95,7 @@ on: pairValueModel prompt: promptString caption: captionStringOrNil
 	"Creates an instance of the receiver on pairValueModel and promptString. The prompter is
 	given a caption according to captionStringOrNil; if nil a default caption is used. The
 	prompter is displayed modally, prompting for a key-value pair reply. The initial value of
-	the reply field is the original value of the model The model must expose #key and #value
+	the reply field is the original value of the model. The model must expose #key and #value
 	aspects, e.g. an Association.
 
 	Answer the reply or nil if the dialog is cancelled."
@@ -114,7 +114,7 @@ prompt: promptString
 	^self prompt: promptString caption: nil!
 
 prompt: promptString caption: captionStringOrNil
-	"Creates an instance of the receiver with the specified prompt string and caption.. If the
+	"Creates an instance of the receiver with the specified prompt string and caption. If the
 	captionStringOrNil is nil then a default caption is used. The prompter is displayed modally,
 	prompting for a key-value pair reply.
 

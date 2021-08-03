@@ -347,7 +347,7 @@ OS.Win32Structure subclass: #'OS.CHARFORMAT2W'
 		'_OffsetOf_bPitchAndFamily' -> 16r19.
 		'_OffsetOf_bRevAuthor' -> 16r72.
 		'_OffsetOf_bUnderlineColor' -> 16r73.
-		'_OffsetOf_bUnderlyineType' -> 16r70.
+		'_OffsetOf_bUnderlineType' -> 16r70.
 		'_OffsetOf_crBackColor' -> 16r60.
 		'_OffsetOf_crTextColor' -> 16r14.
 		'_OffsetOf_dwCookie' -> 16r68.
@@ -471,7 +471,7 @@ getRichTextIfNone:!accessing!public! !
 !UI.TextEdit methodsFor!
 
 richText
-	"Answer a RichText containing the rich text contents of the receiver.
+	"Answer a <RichText> containing the rich text contents of the receiver.
 	May be overridden by subclasses which actually contain rich text."
 
 	^self richTextClass fromString: self plainText!

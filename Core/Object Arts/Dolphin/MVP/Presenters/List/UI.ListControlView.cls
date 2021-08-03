@@ -206,7 +206,7 @@ handlesFromObjects: aCollection whenAbsent: exceptionHandler
 	^handles!
 
 hasSelection
-	"Answer whether the receiver has a selection."
+	"Answer whether the receiver has any selections."
 
 	^self selectedCount > 0!
 
@@ -237,7 +237,7 @@ isVirtual
 
 itemCount
 	"Answers the count of elements in the view. This may be different from the answer to #size
-	if the model has been updated but the change has not yet propaged to the receiver's
+	if the model has been updated but the change has not yet propagated to the receiver's
 	contents"
 
 	^self subclassResponsibility!
@@ -298,7 +298,7 @@ onItem: anObject removedAtIndex: anInteger
 	^self subclassResponsibility!
 
 onItem: anObject updatedAtIndex: anInteger 
-	"Updates the item at the specified <integer> index to reflect it's current state."
+	"Updates the item at the specified <integer> index to reflect its current state."
 
 	self updateItem: anObject atIndex: anInteger	!
 
@@ -340,7 +340,7 @@ onSelectionChanged
 onSelectionChanging: aSelectionChangingEvent
 	"Handler to indicate that the receiver's selection is about to change. To prevent the
 	proposed change under cdertain circumstances a handler can set the value of aValueHolder to
-	false. The default is to trigger an #selectionChanging: event off the presenter"
+	false. The default is to trigger a #selectionChanging: event off the presenter"
 
 	self presenter trigger: #selectionChanging: with: aSelectionChangingEvent!
 
@@ -362,7 +362,7 @@ refreshContents
 
 requestDragObjects: session 
 	"This is where the receiver specifies which object(s) the <DragDropSession>, session, is to
-	drag.The objects are added to the session using DragDropSession>>addDragObject: or
+	drag. The objects are added to the session using DragDropSession>>addDragObject: or
 	DragDropSession>>dragObjects:."
 
 	"Implementation Note: Override to make a reasonable suggestion (the current selections)."
@@ -399,7 +399,7 @@ selectIndex: anInteger set: aBoolean
 	^self errorNotMultiSelect!
 
 selectIndices: aCollection set: aBoolean 
-	"Private - Set/clear (dependeing on the boolean argument) the selection status of the items
+	"Private - Set/clear (depending on the boolean argument) the selection status of the items
 	in the receiver with the <integer> in the <collection>, argument."
 
 	self isMultiSelect 

@@ -126,7 +126,7 @@ new
 	self shouldNotImplement!
 
 pathname: aString
-	"Answers an intance of the receiver with the specified path.
+	"Answers an instance of the receiver with the specified path.
 	Note that if the path is not expected to include a file stem, and must include
 	a terminating delimiter."
 

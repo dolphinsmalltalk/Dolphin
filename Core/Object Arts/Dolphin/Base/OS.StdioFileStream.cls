@@ -548,12 +548,12 @@ newForEncoding: aSymbol
 	^(self classForEncoding: aSymbol) basicNew!
 
 on: aFile
-	"Answer an intance of the receiver attached to the open <File>, aFile."
+	"Answer an instance of the receiver attached to the open <File>, aFile."
 
 	^self on: aFile text: true!
 
 on: aFile text: aBoolean
-	"Answer an intance of the receiver attached to the open file <File>, aFile, in binary or text mode depending on the <Boolean> argument, aBoolean."
+	"Answer an instance of the receiver attached to the open file <File>, aFile, in binary or text mode depending on the <Boolean> argument, aBoolean."
 
 	^self on: aFile type: (aBoolean ifTrue: [#text] ifFalse: [#binary])!
 

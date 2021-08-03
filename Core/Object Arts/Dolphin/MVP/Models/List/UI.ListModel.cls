@@ -47,7 +47,7 @@ addAll: newElements
 	Answer newElements. This implementation is not particularly efficient since it falls
 	back on adding the new elements one by one. This is to ensure that the #add:atIndex
 	notifications are correctly triggered.
-	Note that this modifies the and answers the receiver, not a copy."
+	Note that this modifies and answers the receiver, not a copy."
 
 	newElements do: [ :each | self add: each ].
 	^newElements!
@@ -223,7 +223,7 @@ refresh: anObject ifAbsent: exceptionHandler
 	"The <Object>, anObject, has been updated in some way. If anObject is an element of
 	the receiver then notify observers of the index in the receiver that has been updated and
 	answer that index, otherwise answer the result of evaluating the <niladicValuable>,
-	eaxceptionHandler."
+	exceptionHandler."
 
 	| index |
 	index := self indexOf: anObject.
@@ -233,7 +233,7 @@ refresh: anObject ifAbsent: exceptionHandler
 
 refreshAtIndex: anInteger 
 	"Update, and answer, an object in the receiver at anInteger index because 
-	it's contents have changed. If anInteger index does not exist in the list 
+	its contents have changed. If anInteger index does not exist in the list 
 	then raise a suitable exception. Answer anObject."
 
 	| elem |
@@ -245,7 +245,7 @@ removeAll
 	"Empty the receiver of all contents.
 	Implementation Note: We must be careful how we do this since we must preserve any
 	attributes of the collection (e.g. the sort block of a sorted collection), but it must be empty
-	even if an non-resizable collection such as an <Array>."
+	even if a non-resizable collection such as an <Array>."
 
 	self notEmpty ifTrue: [self list: (self list copyEmpty: 0)]!
 

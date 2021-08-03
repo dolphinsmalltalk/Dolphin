@@ -7,7 +7,7 @@ UI.Presenter subclass: #'UI.InplaceTextEditor'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.InplaceTextEditor guid: (Core.GUID fromString: '{772412aa-7ca7-476c-b034-e5397984a86d}')!
-UI.InplaceTextEditor comment: 'InplaceTextEditor is a special kind of "prompter" that appears as an in-place text edit control over the text being edited. It behaves like a modal dialog, in that control is not returned to the called until the in-place edit has been committed or cancelled. This makes for an easier programming model than the alternative of a modeless view shown from the activating command, and delayed response to events when a modeless view is cancelled/committed to complete the command. However InplaceTextEditor is not actually a true dialog, because if it were then when shown it would have the undesirable effect of de-activating the owning top-level window while the editor is open.
+UI.InplaceTextEditor comment: 'InplaceTextEditor is a special kind of "prompter" that appears as an in-place text edit control over the text being edited. It behaves like a modal dialog, in that control is not returned to the caller until the in-place edit has been committed or cancelled. This makes for an easier programming model than the alternative of a modeless view shown from the activating command, and delayed response to events when a modeless view is cancelled/committed to complete the command. However InplaceTextEditor is not actually a true dialog, because if it were then when shown it would have the undesirable effect of de-activating the owning top-level window while the editor is open.
 
 The in-place text editor is shown with an initial size that is sufficient to display the existing edited text (with the edit controls adornments such as borders and margins), plus sufficient extra space for any character in the current font to be typed. As more characters are typed, the edit box grows dynamically. If characters are deleted then the edit control shrinks, but never below the initial size.
 
@@ -18,8 +18,8 @@ A validation block can be specified which controls whether the ability to commit
 Instance Variables:
 	textRectangle		<Rectangle>. The rectangle of the text being edited, specified in the co-ordinates of the ownerView.
 	minExtent			<Point>. The minimum extent to which the in-place edit control is allowed to shrink. Initialised to the initial size required to allow editing of the original text.
-	maxCharWidth		<integer>. The maximm width of a character from the font of the text being edited.
-	confirmed			<boolean>. Whether or not the edit has been comitted.
+	maxCharWidth		<integer>. The maximum width of a character from the font of the text being edited.
+	confirmed			<boolean>. Whether or not the edit has been committed.
 	ownerView		<View>. The view for which text is being edited in place. Defaults to the view with focus.
 	validationBlock		<monadicValuable> used to validate the input when a commit action is attempted.
 '!
@@ -115,7 +115,7 @@ isInputValid
 	^(self validationBlock value: self editBox text) == true!
 
 model: aValueModel 
-	"Set the model of the receiver to be aValueModel. Register with it's #valueChanged event"
+	"Set the model of the receiver to be aValueModel. Register with its #valueChanged event"
 
 	| actualModel |
 	actualModel := aValueModel notNil ifTrue: [self bufferedModelFor: aValueModel].

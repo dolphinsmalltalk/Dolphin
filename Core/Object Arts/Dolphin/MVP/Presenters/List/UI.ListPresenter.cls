@@ -10,7 +10,7 @@ UI.ListPresenter guid: (Core.GUID fromString: '{87b4c685-026e-11d3-9fd7-00a0cc3e
 UI.ListPresenter comment: 'ListPresenter implements a <listPresenter> component that can be used to display the contents of a <listModel> within a <listView>.  It also conforms to <selectableItems> and <indexSelectableItems> to provide methods for accessing the current selection(s) in the list.
 
 Instance Variables:
-	sortBlock		<dyadicValuable> or nil, specifying how a objects should be sorted.
+	sortBlock		<dyadicValuable> or nil, specifying how an object should be sorted.
 
 
 
@@ -108,14 +108,14 @@ selectionByIndex: newSelection ifAbsent: exceptionHandler
 !
 
 selectionByIndexIfNone: exceptionHandler
-	"Answer the index of the selectd item in the list (1 based), or if no item is
+	"Answer the index of the selected item in the list (1 based), or if no item is
 	selected, then the result of evaluating the niladic valuable, exceptionHandler."
 
 	^self selectableItems selectionByIndexIfNone: exceptionHandler
 !
 
 selectionsByIndex
-	"Answer the indices of the selected objects in the receiver>"
+	"Answer the indices of the selected objects in the receiver."
 
 	^self selectableItems selectionsByIndex!
 

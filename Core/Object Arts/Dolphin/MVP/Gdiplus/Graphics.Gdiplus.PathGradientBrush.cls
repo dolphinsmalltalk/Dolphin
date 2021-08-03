@@ -582,7 +582,7 @@ exampleGdipPGSurroundColors
 	^bitmap!
 
 exampleGdipPGSurroundColors2
-	"This example creates a path gradient brush from a an elliptical path, then sets its outer boundary colors.
+	"This example creates a path gradient brush from an elliptical path, then sets its outer boundary colors.
 
 		self exampleGdipPGSurroundColors2 showExample
 	"

@@ -100,7 +100,7 @@ translateTransform:order:!operations!public! !
 !Graphics.Gdiplus.Matrix class methodsFor!
 
 exampleGdipMShadows
-	"This example various transformations (shear, scale and translate) to display a string
+	"This example shows various transformations (shear, scale and translate) to display a string
 	in large font and its shadow.
 
 		self exampleGdipMShadows showExample

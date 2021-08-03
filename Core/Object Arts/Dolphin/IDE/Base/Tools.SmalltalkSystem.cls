@@ -11,7 +11,7 @@ Tools.SmalltalkSystem comment: 'SmalltalkSystem is a Facade onto the Dolphin Sma
 
 Instance Variables:
 	classHierarchyModel		<ClassHierarchyModel> representing the hierarchy of classes in the system.
-	unsued			<UndefinedObject> reserved for future use.
+	unused			<UndefinedObject> reserved for future use.
 	isOAD			<boolean> indicating whether the system is configured for Object Arts development use.
 	systemFolder		<treeModel> holding the contents of the System Folder.
 

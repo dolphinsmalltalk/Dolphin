@@ -84,7 +84,7 @@ on: aValueModel prompt: aStringPrompt caption: aStringCaptionOrNil
 		interval: (1 to: SmallInteger maximum)!
 
 on: aValueModel prompt: aStringPrompt caption: aStringCaptionOrNil interval: anInterval 
-	"Creates an instance of the receiver on aValueModel with and aStringPrompt. 
+	"Creates an instance of the receiver on aValueModel with an aStringPrompt. 
 	The prompter is given a caption according to aStringCaptionOrNil; if nil
 	a default caption is used. The prompter is displayed modally, prompting 
 	for a String reply. The initial value of the reply field is the original

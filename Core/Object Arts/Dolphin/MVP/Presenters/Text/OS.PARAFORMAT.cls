@@ -89,7 +89,7 @@ dxStartIndent: anInteger
 	bytes sdwordAtOffset: _OffsetOf_dxStartIndent put: anInteger!
 
 maskIn: anInteger
-	"Private - OR in to contents mask member the bit flags represented by anInteger.
+	"Private - OR in to receiver's mask field the bit flags represented by anInteger.
 	Answer the receiver."
 
 	self dwMask: (self dwMask bitOr: anInteger)!

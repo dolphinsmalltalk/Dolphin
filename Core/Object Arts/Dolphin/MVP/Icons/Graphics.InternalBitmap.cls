@@ -7,7 +7,7 @@ Core.Object subclass: #'Graphics.InternalBitmap'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.InternalBitmap guid: (Core.GUID fromString: '{b9454399-94c0-4572-bc54-802ff110731f}')!
-Graphics.InternalBitmap comment: 'An InternalBitmap is capable of holding it''s image bytes internally in the Smalltalk image. Thus it is no longer necessary to refer to external files outside the image to make use of bitmap resources. This has several advantages, including the ability to version InternalBitmap resources into STS as part of a Smalltalk method and the fact that fewer external files need to be distributed with an application. 
+Graphics.InternalBitmap comment: 'An InternalBitmap is capable of holding its image bytes internally in the Smalltalk image. Thus it is no longer necessary to refer to external files outside the image to make use of bitmap resources. This has several advantages, including the ability to version InternalBitmap resources into STS as part of a Smalltalk method and the fact that fewer external files need to be distributed with an application. 
 
 A word of caution, however. InternalBitmaps will display their full byte array initializers if you use #displayString or #printString. If you choose to load a huge bitmap into one of these objects (which is not a good idea anyway) this could cause problems if you "Display It" in a workspace. It is for this reason that InternalIcons forcibly reformat any supplied image to a default size of 48@48 pixels. Thus, InternalIcons should never be too large to "Display It". Indeed, this is the only difference between InternalIcons and InternalBitmaps; the latter are not resized on load and so can be arbitrarily large.
 

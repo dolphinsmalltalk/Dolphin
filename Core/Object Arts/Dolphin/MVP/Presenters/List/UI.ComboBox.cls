@@ -66,7 +66,7 @@ basicAdd: anObject atIndex: anInteger
 
 basicClear
 	"Private - Clears down the listbox control(but not its model). 
-	XB_RESETCONTENT does not return a value."
+	CB_RESETCONTENT does not return a value."
 
 	self sendMessage: CB_RESETCONTENT!
 
@@ -249,7 +249,7 @@ initialize
 itemCount
 	"Answers the count of elements in the receiver. This may be 
 	different from the answer to #size if the model has been updated but
-	the change has not yet propaged to the receiver's contents"
+	the change has not yet propagated to the receiver's contents"
 
 	^self sendMessage: CB_GETCOUNT!
 
@@ -287,7 +287,7 @@ onPositionChanged: aPositionEvent
 	"Handle a window position change event (move or resize)."
 
 	"Implementation Note:  Unless the receiver is in #simple mode
-	then 	we can't invalidate the layout on resize because the combo-box 
+	then we can't invalidate the layout on resize because the combo-box 
 	always stays the same height (depending on the font and some system
 	settings) and an infinite loop may otherwise result in the layout manager."
 

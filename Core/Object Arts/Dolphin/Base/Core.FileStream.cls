@@ -629,18 +629,18 @@ initialize
 				yourself)!
 
 on: aFile
-	"Answer an intance of the receiver attached to the open file aFile."
+	"Answer an instance of the receiver attached to the open file aFile."
 
 	^self on: aFile text: true!
 
 on: aFile text: aBoolean
-	"Answer an intance of the receiver attached to the open file aFile, in
+	"Answer an instance of the receiver attached to the open file aFile, in
 	binary or text mode depending on the argument, aBoolean."
 
 	^self on: aFile type: (aBoolean ifTrue: [#text] ifFalse: [#binary])!
 
 on: aFile type: aSymbol
-	"Answer an intance of the receiver attached to the open file, aFile, configured to read in
+	"Answer an instance of the receiver attached to the open file, aFile, configured to read in
 	the encoding specified by the <Symbol> argument. See the class comment for more details on
 	possible the encodings."
 

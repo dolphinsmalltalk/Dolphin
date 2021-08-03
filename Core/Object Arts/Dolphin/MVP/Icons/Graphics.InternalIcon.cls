@@ -7,7 +7,7 @@ Graphics.InternalBitmap subclass: #'Graphics.InternalIcon'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.InternalIcon guid: (Core.GUID fromString: '{7446a3c1-e3ae-45b8-bca2-bbd493a5c7d3}')!
-Graphics.InternalIcon comment: 'An InternalIcon is capable of holding it''s image bytes internally in the Smalltalk image. Thus it is no longer necessary to refer to external files outside the image to make use of Icon resources. This has several advantages, including the ability to version InternalIcon resources into STS as part of a Smalltalk method and the fact that fewer external files need to be distributed with an application.
+Graphics.InternalIcon comment: 'An InternalIcon is capable of holding its image bytes internally in the Smalltalk image. Thus it is no longer necessary to refer to external files outside the image to make use of Icon resources. This has several advantages, including the ability to version InternalIcon resources into STS as part of a Smalltalk method and the fact that fewer external files need to be distributed with an application.
 
 USAGE:
 
@@ -15,7 +15,7 @@ USAGE:
 
 MyClass createIconMethod.
 
-This will prompt for a (usually PNG) file, and then create a MyClass class>>icon method for it. If you browse this method you''ll see answers an instance of InternalIcon instantiated from a literal byte array. Note that InternalIcons automatically reformat any image to 48@48 pixels by default.
+This will prompt for a (usually PNG) file, and then create a MyClass class>>icon method for it. If you browse this method you''ll see it answers an instance of InternalIcon instantiated from a literal byte array. Note that InternalIcons automatically reformat any image to 48@48 pixels by default.
 
 (2) If you want to add an InternalIcon to a toolbar, in the View Composer first create a ToolbarIconButton in your toolbar and locate the commandDescription/image aspect for this button. Then type and accept:
 

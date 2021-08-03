@@ -14,7 +14,7 @@ Graphics.Gdiplus.StringFormat comment: 'GdiplusStringFormat contains text layout
 !Graphics.Gdiplus.StringFormat methodsFor!
 
 alignment
-	"Answer a StringAlignment constant  that specifies how the receiver will align 
+	"Answer a StringAlignment constant that specifies how the receiver will align 
 	characters of a string within a layout rectangle."
 
 	| answer |

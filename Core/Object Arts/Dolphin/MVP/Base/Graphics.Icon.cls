@@ -342,6 +342,7 @@ asterisk
 
 blank
 	Blank isNil ifTrue: [Blank := self fromId: 'Blank.ico'].
+	NtDll isWine ifTrue: [^self null].
 	^Blank!
 
 clear

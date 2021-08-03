@@ -43,7 +43,7 @@ expandNodeChildren: aTreeNode
 	with its children. Answer an <OrderedCollection> of <TreeNode> containing the
 	children. Note that because TreeNode stores nil instead of an empty
 	collection (to save space), each access to the children of a leaf node will
-	required a further attempt at expanding the children. This has an upside, in that
+	require a further attempt at expanding the children. This has an upside, in that
 	a connected tree view will update to display an expansion button when/if a former
 	leaf acquires children."
 
