@@ -157,8 +157,8 @@ allExpandedItems
 	^ OrderedCollection withAll: expanded.!
 
 allHiddenExpandedItems
-	"answer an OrderedCollection of all the items that are currently hidden-expanded; those
-	are the ones that we will automatically expand as soon as they are visible, because they
+	"answer an OrderedCollection of all the items that are currently hidden-expanded; that is,
+	the ones that we will automatically expand as soon as they are visible, because they
 	were expanded when their parent was closed"
 
 	| all |

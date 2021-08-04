@@ -9827,7 +9827,8 @@ xOffset: xOffsetInteger
 		lParam: 0!
 
 zoomFactor
-	"Scintilla zooms in and out by points, and is the points delta that is reported by SCI_GETZOOM, which is not easy to understand from a user perspective. The actual the zoom factor is relative to the original font size. The factor can be multiplied by 100 to give a zoom percentage for presentation to the user."
+	"Scintilla zooms in and out by points, and it is the points delta that is reported by SCI_GETZOOM, which is not easy to understand from a user perspective. The actual zoom factor is relative to the original font size. The factor can be multiplied by 100 to give a zoom percentage for presentation to the user."
+    
 
 	| fontSize zoom |
 	fontSize := self actualFont pointSize.
