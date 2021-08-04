@@ -308,7 +308,7 @@ maskAny: anInteger
 	^self dwMask anyMask: anInteger!
 
 maskIn: anInteger
-	"Private - OR in to contents mask field the bit flags represented by anInteger.
+	"Private - OR in to the contents mask field the bit flags represented by anInteger.
 	Answer the receiver."
 
 	self dwMask: (self dwMask bitOr: anInteger)!
@@ -318,7 +318,7 @@ maskOut: anInteger
 
 pointSize
 	"Answer the receiver's height field in points (N.B. the answer may be
-	a Fraction if the, for example, the size is 10.5 points)."
+	a Fraction if, for example, the size is 10.5 points)."
 
 	^self yHeight / 20!
 

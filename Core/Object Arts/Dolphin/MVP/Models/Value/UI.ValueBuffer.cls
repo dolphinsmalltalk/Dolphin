@@ -9,8 +9,6 @@ UI.ValueHolder subclass: #'UI.ValueBuffer'
 UI.ValueBuffer guid: (Core.GUID fromString: '{87b4c67d-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.ValueBuffer comment: 'A ValueBuffer can be used to buffer changes to a subject <valueModel>. It presents the same <value> protocol as its subject but, when the value is changed, the change is not immediately passed to the subject. This only happens when the ValueBuffer receives an #apply message to indicate that any changes should be flushed.
 
-It is important to note that, in order to be used with a ValueBuffer.
-
 Instance Variables:
 	subject		<valueModel> being buffered.
 	modified		<boolean> indicating whether the subject has been modified.

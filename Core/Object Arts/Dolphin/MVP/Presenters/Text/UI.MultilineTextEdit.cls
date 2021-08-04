@@ -87,7 +87,7 @@ currentLine
 !
 
 cutLine
-	"Delete the line on which the caret is located into the cut buffer, including the line delimiter (i.e. subsequent lines shift
+	"Delete the line on which the caret is located into the clipboard, including the line delimiter (i.e. subsequent lines shift
 	up by one). If it is the last line just cuts the text on that line, if any."
 
 	self selectLineAndTerminator: self currentLine.

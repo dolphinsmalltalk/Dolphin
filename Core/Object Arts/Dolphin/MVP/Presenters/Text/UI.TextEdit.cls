@@ -733,7 +733,7 @@ onInputMaskRequired: anEvent
 	WM_GETDLGCODE to ensure the control never actually receives it. This keeps 
 	its behaviour sane, and means we do not need workarounds in WM_CHAR (to 
 	forcibly insert VK_TABs). It also enables us to implement WantTab functionality
-	which Windows does not support directly as an Edit control style."
+	that Windows does not support directly as an Edit control style."
 
 	| dlgCode |
 	dlgCode := self dlgCode.
@@ -752,7 +752,7 @@ onKeyTyped: aKeyEvent
 
 	"Implementation Note: Sadly the edit control does not insert tabs if used 
 	in conjunction with IsDialogMessage(), even though it says it wants to 
-	receive them. We therefore fix this bug overridding WM_GETDLGCODE and never
+	receive them. We therefore fix this bug by overriding WM_GETDLGCODE and never
 	allowing it to reach the control. This prevents the control from getting the
 	notion that it is in a dialog, and retains the saner behaviour.
 	An alternative workaround to implementing WM_GETDLGCODE would be to

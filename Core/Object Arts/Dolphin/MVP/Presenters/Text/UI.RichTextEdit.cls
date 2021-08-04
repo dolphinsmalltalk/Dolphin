@@ -614,7 +614,7 @@ selectionCharFormat
 
 selectionCharFormat: aCHARFORMAT 
 	"Private - Apply the specified character formatting options to the receiver's
-	current selection (or from the insertion point if no selection.)"
+	current selection (or from the insertion point if no selection)."
 
 	self setCharFormat: aCHARFORMAT flags: SCF_SELECTION.
 	self updatePerChar ifTrue: [self updateModel]!

@@ -224,7 +224,7 @@ onRightButtonPressed: aMouseEvent
 preferredExtent
 	"Answer the extent of the receiver allowing for the extent of the image, the zoom
 	factor and the margin allowed around all four edges. If this answers the correct
-	size the parent view, a ScrollingDecorator can set it's scroll bars correctly"
+	size then the parent view, a ScrollingDecorator, can set its scroll bars correctly"
 
 	self model isNil ifTrue: [^10 @ 10].
 	^self model extent * (zoom - 1) + (self margin * 2)!

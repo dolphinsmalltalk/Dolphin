@@ -123,12 +123,12 @@ onTimeChanged: aWindowEvent
 	^self view onTimeChanged: aWindowEvent!
 
 onViewActivated: anEvent
-	"Default handler for activation. Pass on the view"
+	"Default handler for activation. Pass on to the view"
 
 	^self view onViewActivated: anEvent!
 
 onViewDeactivated: anEvent
-	"Default handler for de-activation. Pass on to view"
+	"Default handler for de-activation. Pass on to the view"
 
 	^self view onViewDeactivated: anEvent!
 

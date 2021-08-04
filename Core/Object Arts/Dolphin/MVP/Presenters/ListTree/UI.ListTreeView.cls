@@ -20,7 +20,7 @@ UI.ListTreeView guid: (Core.GUID fromString: '{f2d6215c-2adc-4032-aacb-8c4da1095
 UI.ListTreeView comment: 'Copyright © Chris Uppal, 2002 - 2004.
 chris.uppal@metagnostic.org
 
-An implementation of a kind of TreeView that supports multiple columns.  It uses the same technique as (I guess) M$ do for Outlook Express''s message folder.  I.e. it''s really a ListView that indents the primary column''s items according to how deep in the tree they are, and uses the rows ''state'' images to show open/closed indicators.  There is also a version of this class that supports multiple-selection, but is otherwise identical (see MultipleSelectionListTreeView).
+An implementation of a kind of TreeView that supports multiple columns.  It uses the same technique as (I guess) M$ do for Outlook Express''s message folder.  I.e. it''s really a ListView that indents the primary column''s items according to how deep in the tree they are, and uses the rows ''state'' images to show open/closed indicators.
 
 There are some examples of use in the class-side category ''examples'', but to save you the effort of going to look for them:
 	self example1.	"do it"
@@ -29,9 +29,6 @@ There are some examples of use in the class-side category ''examples'', but to s
 	self example2c.	"do it"
 
 Instances can be used with TreePresenters (e.g. TreePresenter.ListTree view), ListPresenters (e.g. ListPresenter.ListTree view), or with the specialised presenter class, TreeViewPresenter, which knows more about ListTreeView than the pre-packaged Presenter classes do.  
-
-The multi-select version, MultipleSelectionListTreeView, can be used with ListPresenters (e.g. ListPresenter.Multi-select ListTree view) and with ProperTreeViewPresenter.
-
 
 General Notes on Usage:
 ----------------------------------------
@@ -68,13 +65,13 @@ Differences between ListTreeView and TreeView
 
 The biggest deficiency (that I know about so far) is that ListTreeView does not draw tree ''lines''.  Since M$ don''t do this either (in Outlook Express) I take it that this is OK.  If you find it too much of a failing, then don''t use this software... ;-)
 
-The big gains over a TreeView is that a ListTreeView supports additional ListViewColumns and that MultipleSelectionListTreeView supports multiple selection (duh).  As far as I know things like per-column images, owner-draw, etc. all work, but I haven''t tried everything.
+The big gains over a TreeView is that a ListTreeView supports additional ListViewColumns and multiple selection.  As far as I know things like per-column images, owner-draw, etc. all work, but I haven''t tried everything.
 
 One or two minor aspects of TreeView, like #isMonoExpandable and #hasHotTracking, are not implemented or are simulated badly.
 
 As with ListPresenter, sorting is not dispatched via the TreePresenter but handled internally, and the #hasCheckBoxes aspect is not supported.
 
-Since the tree navigation key bindings are not quite consistant across M$ products, I''ve tried to find and implement a sensible compromise among them.  Please let me know if I''ve missed any.  I''ve also tried to come up with sensible implementations for the case where there are multiple selections.  Sometimes they will seem odd, but I don''t think that''s avoidable.  One touch I like is that expanding any selected item while holding down the <shift> key will automatically select its children too.
+Since the tree navigation key bindings are not quite consistent across M$ products, I''ve tried to find and implement a sensible compromise among them.  Please let me know if I''ve missed any.  I''ve also tried to come up with sensible implementations for the case where there are multiple selections.  Sometimes they will seem odd, but I don''t think that''s avoidable.  One touch I like is that expanding any selected item while holding down the <shift> key will automatically select its children too.
 
 Instances can be set not to keep a record of which nodes were expanded when their parents are closed.  This, again, can save resources, but it''s mainly because the default Window''s tree behaviour irritates me.  It makes no difference for small trees, but is a bloody nuisance for large ones.  This is controlled by the #retainExpanded aspect; standard Windows behaviour is the default.
 
@@ -148,8 +145,8 @@ additem: aChildObject toParent: aParentObject withSiblings: aCollection
 	self addItem: aChildObject afterIndex: index!
 
 allDisplayedItems
-	"answer an OrderedCollection of all the items that are currently displayed.
-	(i.e. they are either a root or their parent is expanded).
+	"answer an OrderedCollection of all the items that are currently displayed,
+	i.e. they are either a root or their parent is expanded.
 	They are listed in the order that they are currently displayed"
 
 	^ OrderedCollection withAll: self model.!

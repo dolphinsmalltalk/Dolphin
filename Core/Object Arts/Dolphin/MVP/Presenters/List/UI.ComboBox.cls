@@ -287,7 +287,7 @@ onPositionChanged: aPositionEvent
 	"Handle a window position change event (move or resize)."
 
 	"Implementation Note:  Unless the receiver is in #simple mode
-	then we can't invalidate the layout on resize because the combo-box 
+	we can't invalidate the layout on resize because the combo-box 
 	always stays the same height (depending on the font and some system
 	settings) and an infinite loop may otherwise result in the layout manager."
 

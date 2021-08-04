@@ -28,7 +28,7 @@ _addRef
 	"Answer whether the receiver is equivalent to the <Object>, anObject.
 	Two COMInterfaces are only considered equal if they have the same IID and
 	the same address (but see also #isSameCOMObject: which is a more
-	expensive comparison which tests for the same underlying COM object)."
+	expensive comparison that tests for the same underlying COM object)."
 
 	^self == anObject or: [
 		self species == anObject species and: [

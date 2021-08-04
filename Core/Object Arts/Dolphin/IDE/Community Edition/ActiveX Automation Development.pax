@@ -4205,7 +4205,7 @@ generateValuePropertyWrappers
 			self generateValueMutator: valueProp wrapping: (self buildPropertyMutatorName: valueProp)]!
 
 generateWrapper
-	"Private - Generate a new subclass of IDispatch which wraps the  properties and methods of the dispinterface described the receiver's ITypeInfo. Answer the object generated (in this case a <COMInterface> subclass)."
+	"Private - Generate a new subclass of IDispatch that wraps the properties and methods of the dispinterface described by the receiver's ITypeInfo. Answer the object generated (in this case a <COMInterface> subclass)."
 
 	^self isSource
 		ifTrue: 
@@ -5247,8 +5247,8 @@ generateMethodWrappers
 	self functions do: [:each | self generateMethodWrappers: each]!
 
 generateWrapper
-	"Private - Generate a new subclass of IDispatch which wraps the  properties and methods 
-	of the dispinterface described the receiver's ITypeInfo.
+	"Private - Generate a new subclass of IDispatch that wraps the properties and methods 
+	of the dispinterface described by the receiver's ITypeInfo.
 	Answer the object generated (in this case a <COMInterface> subclass)."
 
 	| class |
@@ -5726,8 +5726,8 @@ generateVariableDefinition: aVariableBinding
 	^self subclassResponsibility!
 
 generateWrapper
-	"Private - Generate a new subclass of IDispatch which wraps the  properties and methods 
-	of the dispinterface described the receiver's ITypeInfo.
+	"Private - Generate a new subclass of IDispatch that wraps the properties and methods 
+	of the dispinterface described by the receiver's ITypeInfo.
 	Answer the object generated (in this case a <COMInterface> subclass)."
 
 	| class |

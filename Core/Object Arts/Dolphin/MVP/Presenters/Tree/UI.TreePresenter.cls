@@ -7,9 +7,9 @@ UI.SelectableItemsPresenter subclass: #'UI.TreePresenter'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.TreePresenter guid: (Core.GUID fromString: '{87b4c688-026e-11d3-9fd7-00a0cc3e4a32}')!
-UI.TreePresenter comment: 'TreePresenter implements a <treePresenter> component that can be used to display the contents of a <treeModel> within a <treeView>. This is similar to the way a tree view is used to display a file system''s contents in the Window''s explorer. For presentation of a tree as a hierarchy of nested "folders" see the <FolderPresenter> class.
+UI.TreePresenter comment: 'TreePresenter implements a <treePresenter> component that can be used to display the contents of a <treeModel> within a <treeView>. This is similar to the way a tree view is used to display a file system''s contents in the Windows explorer. For presentation of a tree as a hierarchy of nested "folders" see the <FolderPresenter> class.
 
-TreePresenter conforms to <selectableItems> to provide methods for accessing the current selection. In addition, the <treePresenter> protocol allows the tree presentation to be modified using the #expand: , #collapse: and #up methods.
+TreePresenter conforms to <selectableItems> to provide methods for accessing the current selection. In addition, the <treePresenter> protocol allows the tree to be navigated using the #expand: , #collapse: and #up methods.
 
 '!
 !UI.TreePresenter categoriesForClass!MVP-Presenters!MVP-Resources-Trees! !
