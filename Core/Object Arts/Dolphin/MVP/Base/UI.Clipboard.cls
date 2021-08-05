@@ -166,13 +166,13 @@ getRegisteredFormat: name ifNone: exceptionHandler
 			formatId last rightToLeft: handle]!
 
 getText
-	"Answer a <readableString> containing the the CF_UNICODETEXT contents 
+	"Answer a <readableString> containing the CF_UNICODETEXT contents 
 	of the clipboard. If no text is currently available, raise an exception."
 
 	^self getTextIfNone: [self errorFormatNotAvailable: #String]!
 
 getTextIfNone: exceptionHandler
-	"Answer a <readableString> containing the the CF_UNICODETEXT contents of the clipboard. If no text is currently available, the answers the result of evaluating the <niladicValuable> exceptionHandler."
+	"Answer a <readableString> containing the CF_UNICODETEXT contents of the clipboard. If no text is currently available, then answers the result of evaluating the <niladicValuable> exceptionHandler."
 
 	^self getRegisteredFormat: #String ifNone: exceptionHandler!
 

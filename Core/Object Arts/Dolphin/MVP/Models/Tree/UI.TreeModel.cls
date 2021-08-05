@@ -55,7 +55,7 @@ addChild: anObject parentNode: parentNode
 
 approxSize
 	"Private - Answer the approximate size of the receiver. Since TreeModels keep an
-	object to node maping dictionary we can use the size of this"
+	object to node mapping dictionary we can use the size of this"
 
 	^self size!
 

@@ -158,7 +158,7 @@ day
 	^self dayOfYear!
 
 dayMonthYearDo: aTriadicValuable
-	"Evaluate the the triadic valuable argument passing it the day, month, and year of the date
+	"Evaluate the triadic valuable argument passing it the day, month, and year of the date
 	represented by the receiver, answering the result."
 
 	| year dayOfYear monthIndex |

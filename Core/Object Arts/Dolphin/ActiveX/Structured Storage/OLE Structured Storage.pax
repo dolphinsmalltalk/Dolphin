@@ -520,7 +520,7 @@ readFmtUserTypeStg: pStg pcf: pcf lplpszUserType: lplpszUserType
 	^self invalidCall: _failureCode!
 
 setConvertStg: pStg fConvert: aBoolean
-	"Set/Reset the the convert bit in a storage to indicate that the object is to be 
+	"Set/Reset the convert bit in a storage to indicate that the object is to be 
 	converted to a new class when it is opened.
 
 		WINOLEAPI SetConvertStg(

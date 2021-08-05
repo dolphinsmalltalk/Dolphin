@@ -46,7 +46,7 @@ homePage
 	^homePage!
 
 homePage: aString
-	"Set the the home page to use for the receiver - treated as a path relative to the executable.
+	"Set the home page to use for the receiver - treated as a path relative to the executable.
 	Has no effect after the receiver has been shown."
 
 	homePage := FileLocator imageRelative localFileSpecFor: aString!

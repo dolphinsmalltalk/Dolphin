@@ -148,7 +148,7 @@ collapse: anObject ifAbsent: exceptionHandler
 	^self subclassResponsibility!
 
 countElements
-	"Private - Count, and answer, the number of elemens in the receiver.
+	"Private - Count, and answer, the number of elements in the receiver.
 	Implementation Note: Could be implemented more elegantly with #inject:into:, but
 	this implementation is about twice as fast."
 
@@ -293,14 +293,14 @@ preOrderDo: aMonadicValuable on: anObject
 	(self childrenOf: anObject) do: [:each | self preOrderDo: aMonadicValuable on: each]!
 
 refresh: anObject
-	"Update anObject in the receiver because it's contents have changed although it's position
+	"Update anObject in the receiver because its contents have changed although its position
 	in the hierarchy has not. If anObject does not exist in the tree then raise a suitable
 	exception. Answer anObject."
 
 	^self refresh: anObject ifAbsent: [self errorNotFound: anObject]!
 
 refresh: anObject ifAbsent: exceptionHandler
-	"Update anObject in the receiver because it's contents have changed although it's position
+	"Update anObject in the receiver because its contents have changed although its position
 	in the hierarchy has not. If anObject does not exist in the tree then answer the result of
 	evaluating the <niladicValuable>, exceptionHandler, otherwise answer anObject."
 

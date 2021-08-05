@@ -3191,7 +3191,7 @@ deferWindowPos: hWinPosInfo hwnd: hwnd hwndInsertAfter: hwndInsertAfter x: x y: 
 	^self invalidCall: _failureCode!
 
 deleteMenu: hMenu uPosition: uPosition uFlags: uFlags
-	"Deletes an item from the the Menu with handle, hMenu.
+	"Deletes an item from the Menu with handle, hMenu.
 
 		BOOL DeleteMenu(
 			HMENU hMenu,

@@ -761,7 +761,7 @@ tbGetMaxSize
 	^size asPoint!
 
 tbGetPadding
-	"Private - Answer the padding between buttons of the the receiver."
+	"Private - Answer the padding between buttons of the receiver."
 
 	| pad |
 	pad := self sendMessage: TB_GETPADDING.

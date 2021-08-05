@@ -122,7 +122,7 @@ onWriteStreamReady: anAppletStream
 
 openTimeout
 	"Answer the number of seconds to wait after starting to wait for a download to start
-	before deciding that it isn't going to happen. If < 0, the the timeout is infinite."
+	before deciding that it isn't going to happen. If < 0, the timeout is infinite."
 
 	^openTimeout!
 

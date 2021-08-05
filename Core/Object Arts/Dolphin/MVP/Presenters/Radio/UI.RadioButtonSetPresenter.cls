@@ -74,7 +74,7 @@ radioButtonNamed: aSymbol
 	^self radioButtons detect: [:each | each name = aSymbol] ifNone: []!
 
 radioButtons
-	"Private - Answer a collection of the immediate sub views of the reciever that admit to
+	"Private - Answer a collection of the immediate sub views of the receiver that admit to
 	being RadioButtons. As only the immediate sub views are checked this allows nesting of
 	RadioButtonGroups. Cache the buttons for a bit of a performance gain as they are assumed not
 	to change (i.e. if you are dynamically adding and removing radio buttons, then you will need

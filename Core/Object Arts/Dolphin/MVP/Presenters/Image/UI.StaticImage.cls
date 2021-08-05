@@ -24,7 +24,7 @@ displayValue
 	^image!
 
 displayValue: anImage
-	"Private - Sets the displayable contents, the image, of the receiver to anImage
+	"Private - Sets the displayable contents, the image, of the receiver to anImage.
 	Since the Windows StaticImage control has a propensity to resize to the image 
 	size, and this would often be considered unacceptable, we force ourselves 
 	back to our original size"

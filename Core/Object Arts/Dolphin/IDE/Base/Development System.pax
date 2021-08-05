@@ -1836,7 +1836,7 @@ copy: selector from: class
 
 copy: aSymbol from: aClass categories: aCollection 
 	"Copy the method with the specified selector <Symbol>, in the <Behavior>, aClass, to the
-	receiver's method dictionary, classifying it in each of the the <Collection> of
+	receiver's method dictionary, classifying it in each of the <Collection> of
 	<methodCategory>s specified by the last argument. If a compile error occurs then a
 	CompilerNotification is signalled. Answers the new method or nil."
 
@@ -2819,7 +2819,7 @@ printAccessorExpression: aSymbol on: aCodeGenerationContext
 	stream nextPutAll: '))'!
 
 printMutatorValueOn: aCodeGenerationContext parameter: aString
-	"Private - Print a suitable expression onto the specified <CodeGenerationContext> which will evaluate to the the value to be stored into this field in an instance of the structure when compiled into a mutator method where the value parameter is named by the <String> argument."
+	"Private - Print a suitable expression onto the specified <CodeGenerationContext> which will evaluate to the value to be stored into this field in an instance of the structure when compiled into a mutator method where the value parameter is named by the <String> argument."
 
 	aCodeGenerationContext writeStream
 		nextPutAll: aString;
@@ -2971,7 +2971,7 @@ printAccessorExpressionSuffixOn: aCodeGenerationContext
 		display: #asBoolean!
 
 printMutatorValueOn: aCodeGenerationContext parameter: aString
-	"Private - Print a suitable expression onto the specified <CodeGenerationContext> which will evaluate to the the value to be stored into this field in an instance of the structure when compiled into a mutator method where the value parameter is named by the <String> argument."
+	"Private - Print a suitable expression onto the specified <CodeGenerationContext> which will evaluate to the value to be stored into this field in an instance of the structure when compiled into a mutator method where the value parameter is named by the <String> argument."
 
 	aCodeGenerationContext writeStream
 		nextPutAll: aString;
@@ -3512,7 +3512,7 @@ printMutatorBody: aSymbol on: aCodeGenerationContext
 
 printMutatorValueOn: aCodeGenerationContext parameter: aString
 	"Private - Print a suitable expression onto the specified <CodeGenerationContext> which will
-	evaluate to the the value to be stored into this field in an instance of the structure when
+	evaluate to the value to be stored into this field in an instance of the structure when
 	compiled into a mutator method where the value parameter is named by the <String> argument."
 
 	aCodeGenerationContext writeStream nextPutAll: aString! !

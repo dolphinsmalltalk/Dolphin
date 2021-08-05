@@ -282,7 +282,7 @@ testSelection
 			| selAfterRemoval |
 			presenter selection: each.
 			"Because the PCS is using a TreeListPresenter connected to the model
-				 of a ListPresenter, the list sees the remove event first, and so the the PCS 
+				 of a ListPresenter, the list sees the remove event first, and so the PCS 
 				then syncs the selection of the tree to nil before it sees the remove event,
 				which means we get list style selection change behaviour on removal (i.e.
 				selection is lost) rather than tree style (where selection is moved to the

@@ -250,7 +250,7 @@ generateSandQ
 			(self isProbablyPrime: q) ifTrue: [^{s. q}]]!
 
 initRandom: randomInteger
-	"Private - Initialize the the secure random number generator with the given value. 
+	"Private - Initialize the secure random number generator with the given value. 
 	The argument should be a positive integer of up to 512 bits chosen randomly to avoid someone
 	being able to predict the sequence of random values generated.
 

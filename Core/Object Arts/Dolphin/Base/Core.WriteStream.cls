@@ -166,7 +166,7 @@ padTo: anInteger put: anObject
 
 position: anInteger
 	"Set the receiver's current position reference for accessing the collection
-	to the the argument, anInteger. If the argument is not within the bounds of
+	to the argument, anInteger. If the argument is not within the bounds of
 	the receiver's collection, report an error.
 	Override to update the readLimit."
 

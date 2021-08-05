@@ -679,7 +679,7 @@ boundingRectangleOfTextRange: anIntervalOfInteger
 
 braceChars
 	"Answer a <LookupTable> the keys of which are <Symbol>ic style names, and the associated
-	values are the <String>s containing the the set of <Character>s that should be considered as
+	values are the <String>s containing the set of <Character>s that should be considered as
 	brace characters for that style."
 
 	^braceChars ifNil: [self defaultBraceChars]!
@@ -8979,7 +8979,7 @@ showAutoCompletionList: aCollection prefixLength: anInteger withIcons: aBoolean
 	list that the collection of items be appropriately sorted. In particular if Scintilla is
 	configured to perform case-sensitive auto-completion then the list must be sorted in the
 	same order as would result from using strcmp() to compare the items. This is because
-	Scintilla uses a binary chop to perform an incremental search of the the list as characters
+	Scintilla uses a binary chop to perform an incremental search of the list as characters
 	are entered, and so it may fail to find items if the sort order is not based on the same
 	comparison order that it uses."
 
@@ -9100,7 +9100,7 @@ stringClass
 	^stringClass!
 
 styleAt: anInteger 
-	"Answer a <ScintillaTextStyle> being the the style of the character at the specified character
+	"Answer a <ScintillaTextStyle> being the style of the character at the specified character
 	position."
 
 	^self styleWithId: (self styleIdAt: anInteger)!
@@ -9827,7 +9827,8 @@ xOffset: xOffsetInteger
 		lParam: 0!
 
 zoomFactor
-	"Scintilla zooms in and out by points, and is the the points delta that is reported by SCI_GETZOOM, which is not easy to understand from a user perspective. The actual the zoom factor is relative to the original font size. The factor can be multiplied by 100 to give a zoom percentage for presentation to the user."
+	"Scintilla zooms in and out by points, and it is the points delta that is reported by SCI_GETZOOM, which is not easy to understand from a user perspective. The actual zoom factor is relative to the original font size. The factor can be multiplied by 100 to give a zoom percentage for presentation to the user."
+    
 
 	| fontSize zoom |
 	fontSize := self actualFont pointSize.

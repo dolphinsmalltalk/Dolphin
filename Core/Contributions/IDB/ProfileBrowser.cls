@@ -229,7 +229,7 @@ sampleSetUpdated
 
 startProfiler
 	"If the profiler dialog is correctly completed and dismissed with OK then profile
-	the the block that was entered with the requested parameters"
+	the block that was entered with the requested parameters"
 
 	ProfilerSetupDialog showModal isNil ifTrue: [^self].
 	Profiler

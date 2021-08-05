@@ -169,7 +169,7 @@ divideIntoInteger: anInteger
 	^Fraction rationalisedNumerator: anInteger * denominator denominator: numerator!
 
 equalToFloat: aFloat
-	"Private - Answer whether the receiver is equal to the the known <Float>, aFloat. We are careful to avoid any loss of precision."
+	"Private - Answer whether the receiver is equal to the known <Float>, aFloat. We are careful to avoid any loss of precision."
 
 	^aFloat isFinite and: [aFloat asTrueFraction equalToFraction: self]!
 

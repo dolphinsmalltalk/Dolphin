@@ -548,7 +548,7 @@ isSmallIcons
 	^self viewMode == #smallIcons!
 
 isVirtual
-	"Private - Answer true if the the receiver configures the tree to ask for 
+	"Private - Answer true if the receiver configures the tree to ask for 
 	text and images by callback (i.e. lazy or dynamic mode)."
 
 	^tvFlags noMask: NonVirtualMask!
@@ -833,7 +833,7 @@ onSelChanging: anExternalAddress
 	about the selection change are recorded in the <NMTREEVIEW> structure pointed at
 	by the argument. A #selectionChanging: event is triggered to enquire as to whether the 
 	selection change is permissible. If it is not then any observer that wishes to veto the change 
-	must set the the value of the <SelectionChangingEvent> to false."
+	must set the value of the <SelectionChangingEvent> to false."
 
 	"Implementation Note: The TreeView is unusual among Windows controls in that it sends selection 
 	changing notifications for programmatic changes, as well as for user input, so we have to identify

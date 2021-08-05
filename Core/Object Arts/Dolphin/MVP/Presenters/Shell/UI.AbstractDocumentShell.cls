@@ -39,9 +39,9 @@ canSave
 	^true!
 
 canSaveState
-	"Private - Answer true if the receiver can successfully have it's state saved by #saveStateOn:. Some
+	"Private - Answer true if the receiver can successfully have its state saved by #saveStateOn:. Some
 	tools may not be able to save their state and therefore will not be able to be exported as
-	part of a IdeaSpace save operation"
+	part of an IdeaSpace save operation"
 
 	^false!
 

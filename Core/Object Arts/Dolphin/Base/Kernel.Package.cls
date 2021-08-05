@@ -1814,7 +1814,7 @@ untracedGlobals: aCollectionOfSymbols
 	untracedVariables := aCollectionOfSymbols!
 
 untracedVariables
-	"Answer a <Set> of <BindingReference>s, being the names of the shared variables which should be ignored when tracing prerequisites. This allows a shared variable to reference an object from another package without creating a dependency on that package. An example of where this is useful is that the Transcript global owned by the the base package is assigned an instance of TranscriptShell by the Transcript development package when the latter is loaded. "
+	"Answer a <Set> of <BindingReference>s, being the names of the shared variables which should be ignored when tracing prerequisites. This allows a shared variable to reference an object from another package without creating a dependency on that package. An example of where this is useful is that the Transcript global owned by the base package is assigned an instance of TranscriptShell by the Transcript development package when the latter is loaded. "
 
 	^untracedVariables ifNil: [Set new]!
 

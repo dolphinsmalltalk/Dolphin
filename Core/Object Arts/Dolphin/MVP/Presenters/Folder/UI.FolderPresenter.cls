@@ -7,7 +7,7 @@ UI.ListPresenter subclass: #'UI.FolderPresenter'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.FolderPresenter guid: (Core.GUID fromString: '{87b4c6c7-026e-11d3-9fd7-00a0cc3e4a32}')!
-UI.FolderPresenter comment: 'FolderPresenter is a <treePresenter> component that can be used to display the contents of a <treeModel> within a <listView>. The list is used to display the contents of individual parent nodes within the tree. This is similar to the way a folder view (hence the name) is used to display a directory''s contents in the Windows Shell.. For presentation of a tree but viewing it as a complete hierarchy see the TreePresenter class.
+UI.FolderPresenter comment: 'FolderPresenter is a <treePresenter> component that can be used to display the contents of a <treeModel> within a <listView>. The list is used to display the contents of individual parent nodes within the tree. This is similar to the way a folder view (hence the name) is used to display a directory''s contents in the Windows Shell. For presentation of a tree but viewing it as a complete hierarchy see the TreePresenter class.
 
 A FolderPresenter can navigate the tree hierarchy using the #expand:, #collapse: and #up <treePresenter> methods. 
 
@@ -30,9 +30,9 @@ beNotSorted
 	self list: (self model childrenOf: treeItem)!
 
 collapse: anObject
-	"Collapse the displayed hierarchy below anObject.If the receiver is currently displaying
+	"Collapse the displayed hierarchy below anObject. If the receiver is currently displaying
 	a tree node below anObject's parent then collapse to be displaying the contents of the 
-	parent only. Note that is is not legal to collapse nil."
+	parent only. Note that it is not legal to collapse nil."
 
 	| parentChain |
 	parentChain := self model allParentsOf: treeItem.

@@ -12,7 +12,7 @@ UI.TypeConverter comment: 'A <TypeConverter> is capable of converting one type o
 
 TypeConverter is itself an abstract class and concrete subclasses must be created to provide specific type convertions. Subclasses should implement #leftToRight: and #rightToLeft: methods to perform the conversions. These methods are, however, private. The public interface for conversion is as defined in the <typeConverter> method protocol.
 
-In order that these seletor names hold a common meaning all subclasses should follow the naming convention LefttypeToRighttype (e.g. NumberToString). 
+In order that these selector names hold a common meaning all subclasses should follow the naming convention LefttypeToRighttype (e.g. NumberToString). 
 
 TypeConverters support the notion of an undefined or null value for both left and right value types. The ''null'' value for one side is mapped to the ''null'' value for the other side and vice versa, without going through the normal conversion process. For example text converters will map nil from the left subject value to the empty string display value.
 
@@ -27,7 +27,7 @@ Instance Variables:
 !UI.TypeConverter methodsFor!
 
 convertFromLeftToRight: anObject 
-	"Converts the <Object> argument, which is assumed to be of the receivers left type
+	"Converts the <Object> argument, which is assumed to be of the receiver's left type
 	(possibly its null value) to an <Object> of the receiver's right type (possibly its null
 	value), and answers the resulting right value."
 
@@ -35,8 +35,8 @@ convertFromLeftToRight: anObject
 	^self leftToRight: anObject!
 
 convertFromRightToLeft: anObject 
-	"Converts anObject, which is assumed to be of the receivers right type to an object
-	of the receivers left type. If anObject is an exceptional value it will be converted to the 
+	"Converts anObject, which is assumed to be of the receiver's right type to an object
+	of the receiver's left type. If anObject is an exceptional value it will be converted to the 
 	receiver's equivalent for the right hand side. Answers the result of the conversion."
 
 	(self isRightNullValue: anObject) ifTrue: [^self leftNullValue].
@@ -56,7 +56,7 @@ isLeftNullValue: anObject
 
 isRightNullValue: anObject 
 	"Private - Answers whether the argument can be considered the 'null' value 
-	for the left hand side value type."
+	for the right hand side value type."
 
 	^anObject = self rightNullValue!
 
@@ -71,7 +71,7 @@ leftNullValue: anObject
 	leftNullValue := anObject!
 
 leftToRight: anObject
-	"Private - Converts the <Object> argument, which is assumed to be of the receivers left 
+	"Private - Converts the <Object> argument, which is assumed to be of the receiver's left 
 	type to an <Object> of the receiver's right type. Answers the result of the conversion. 
 	Must be overridden by subclasses to perform specific conversions."
 
@@ -88,8 +88,8 @@ rightNullValue: anObject
 	rightNullValue := anObject!
 
 rightToLeft: anObject
-	"Private - Converts the <Object> argument, which is assumed to be of the receivers right 
-	type to an <Object> of the receivers left type. Answers the result of the conversion. 
+	"Private - Converts the <Object> argument, which is assumed to be of the receiver's right 
+	type to an <Object> of the receiver's left type. Answers the result of the conversion. 
 	Must be overridden by subclasses to perform specific conversions"
 
 	^self subclassResponsibility! !

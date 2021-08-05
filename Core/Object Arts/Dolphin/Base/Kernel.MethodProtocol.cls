@@ -171,7 +171,7 @@ behaviors
 	^answer!
 
 comment
-	"Answer a <readableString> describing the the receiver."
+	"Answer a <readableString> describing the receiver."
 
 	^comment ?? ''!
 

@@ -165,7 +165,7 @@ dump: msgString path: pathString stackDepth: slotsInteger walkbackDepth: framesI
 	^self invalidCall: _failureCode!
 
 emptyBlock
-	"Private - Answer the singleton empty clean block instance the the compiler installs into methods with empty zero-arg blocks as a space saving optimization."
+	"Private - Answer the singleton empty clean block instance the compiler installs into methods with empty zero-arg blocks as a space saving optimization."
 
 	^self registry at: 7!
 

@@ -21,12 +21,12 @@ asBitmap
 	^bitmap!
 
 asByteArray: mimeString 
-	"SW: OLEPicture>>saveAsFile locks the hGlobal (other uses dont) ... is that necessary?"
+	"SW: OLEPicture>>saveAsFile locks the hGlobal (other uses don't) ... is that necessary?"
 
 	^self asByteArray: mimeString compression: nil!
 
 asByteArray: mimeString compression: anIntegerOrNil
-	"SW: OLEPicture>>saveAsFile locks the hGlobal (other uses dont) ... is that necessary?"
+	"SW: OLEPicture>>saveAsFile locks the hGlobal (other uses don't) ... is that necessary?"
 
 	| pStream bytes |
 	pStream := COM.IStream onHGLOBAL.
@@ -557,7 +557,7 @@ saveToFile: pathString encoderParams: aGpEncoderParameters
 		encoderParams: aGpEncoderParameters!
 
 saveToIStream: pStream mimeType: mimeString 
-	"Save the receiver to the specified IStream using  the image encoder associated with mimeString."
+	"Save the receiver to the specified IStream using the image encoder associated with mimeString."
 
 	"MSDN: Do not save an image to the same stream that was used to construct the image. 
 	Doing so might damage the stream. "
@@ -568,7 +568,7 @@ saveToIStream: pStream mimeType: mimeString
 		encoderParams: nil!
 
 saveToIStream: pStream mimeType: mimeString encoderParams: aGpEncoderParameters
-	"Save the receiver to the specified IStream using  the image encoder associated with mimeString
+	"Save the receiver to the specified IStream using the image encoder associated with mimeString
 	and parameters specified by aGpEncoderParameters."
 
 	"MSDN: Do not save an image to the same stream that was used to construct the image. 

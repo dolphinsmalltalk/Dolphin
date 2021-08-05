@@ -71,7 +71,7 @@ browseMessageDefinitions
 
 browseMessageReferences
 	"Prompt for a selector and open a method browser displaying the references to that
-	selector, using the the first word of the clipboard text as the initial suggestion."
+	selector, using the first word of the clipboard text as the initial suggestion."
 
 	self model browseMessageReferencesIn: self searchEnvironment!
 

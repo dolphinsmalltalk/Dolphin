@@ -836,7 +836,7 @@ onPromptToSaveChanges: aSelectionChangingEvent
 
 onStep: pFrame 
 	"Private - A step interrupt has been intercepted, take control once more. The argument is
-	the process frame 'address'. This event will only occur after the the activation of a new
+	the process frame 'address'. This event will only occur after the activation of a new
 	method or block. Most 'step's actually result in a break interrupt when the next soft
 	breakpoint is hit. N.B. This method is entered with async events disabled."
 

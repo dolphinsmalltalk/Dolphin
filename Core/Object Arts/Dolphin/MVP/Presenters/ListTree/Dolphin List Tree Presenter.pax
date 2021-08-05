@@ -30,12 +30,12 @@ Known Bugs:
 History:
 
 7.00
--	Fix for #recreate loosing connection to treeModel (seems to have been introduced in pl3 or 4).
+-	Fix for #recreate losing connection to treeModel (seems to have been introduced in pl3 or 4).
 -	Minor fix to ListTreePresenter>>up
 -	Fixed rare bug in #onTreeChanged that could use model''s list object as the "roots" instead of making a copy.
 -	Performace tweak closing big trees.
 -	Now do an updateStates in smart refresh.
--	Changes to supprt EditableListTreeView.
+-	Changes to support EditableListTreeView.
 
 6.00
 -	Fixed bug handling #treeChanged: notification with virtual tree models.
@@ -56,7 +56,7 @@ History:
 -	Uses the Tree/ListModel''s search policy instead of identity comparisons.
 		My thanks to Pieter Emmelot for the suggestion.
 -	The ''hidden-expanded'' set is no longer Weak (required by the above).
--	Slightly improved consistancy with [Moen]TreeViews'' public protocols.
+-	Slightly improved consistency with [Moen]TreeViews'' public protocols.
 -	Better emulation of {Tree/List}Views'' #selectionChanging: events.
 -	Deprecated:
 		TreeListView>>ensureDisplayed:
@@ -163,7 +163,7 @@ isOnItemIcon
 #CUadded.
 
 	"if the hit is on the same line as the item, but not over any of its formal
-	elements, then Window's seems to set all the LVHT_ISONITEM* flags"
+	elements, then Windows seems to set all the LVHT_ISONITEM* flags"
 	^ (self flags bitAnd: LVHT_ONITEM) = LVHT_ONITEMICON.!
 
 isOnItemLabel
@@ -172,7 +172,7 @@ isOnItemLabel
 #CUadded.
 
 	"if the hit is on the same line as the item, but not over any of its formal
-	elements, then Window's seems to set all the LVHT_ISONITEM* flags"
+	elements, then Windows seems to set all the LVHT_ISONITEM* flags"
 	^ (self flags bitAnd: LVHT_ONITEM) = LVHT_ONITEMLABEL.!
 
 isOnItemStateIcon
@@ -181,7 +181,7 @@ isOnItemStateIcon
 #CUadded.
 
 	"if the hit is on the same line as the item, but not over any of its formal
-	elements, then Window's seems to set all the LVHT_ISONITEM* flags"
+	elements, then Windows seems to set all the LVHT_ISONITEM* flags"
 	^ (self flags bitAnd: LVHT_ONITEM) = LVHT_ONITEMSTATEICON.!
 
 isToLeft

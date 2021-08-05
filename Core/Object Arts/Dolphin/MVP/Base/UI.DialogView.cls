@@ -60,14 +60,14 @@ defaultBackcolor
 defaultExtent
 	"Answer the default size of the receiver"
 
-	"Implementation Note: This is used only for creation, and as the the initial size and position are ignored when creating a dialog, we may as well answer any fixed point rather than calculating something that will be ignored."
+	"Implementation Note: This is used only for creation, and as the initial size and position are ignored when creating a dialog, we may as well answer any fixed point rather than calculating something that will be ignored."
 
 	^260 @ 295!
 
 defaultPositionWithin: aParentView forExtent: aPoint
 	"Private - Answer the default position of the receiver within aParentView given its intended extent aPoint."
 
-	"Implementation Note: This is used only for creation, and as the the initial size and position are ignored when creating a dialog, we may as well answer any fixed point rather than calculating something that will be ignored."
+	"Implementation Note: This is used only for creation, and as the initial size and position are ignored when creating a dialog, we may as well answer any fixed point rather than calculating something that will be ignored."
 
 	^0 @ 0!
 

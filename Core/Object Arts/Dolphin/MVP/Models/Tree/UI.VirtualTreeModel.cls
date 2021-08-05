@@ -9,15 +9,15 @@ UI.TreeModelAbstract subclass: #'UI.VirtualTreeModel'
 UI.VirtualTreeModel guid: (Core.GUID fromString: '{87b4c670-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.VirtualTreeModel comment: 'VirtualTreeModel provides an <treeModel> interface onto a tree like data structure where the elements in the tree are always aware of their position in the hierarchy. In general, Smalltalk Collections organise objects into groups, but the objects are unaware of their grouping. In this way an object can belong to more than one Collection at a time. For a tree that follows this behaviour use a <TreeModel>. However, some objects are implicitly aware of their location within a tree hierarchy (e.g. Smalltalk classes); in such cases a VirtualTreeModel can be used to represent the structure without having to duplicate it as a hierarchy of <TreeNode>s.  
 
-VirtualTreeModel triggers the same modification events as a standard <treeModel>. However, the methods #add:asChildOf:, #move:asChildOf: and #remove: are only used to inform the tree model of changes that have been made externally to its structure. They do not actually modify the structure, though, since the VirtualTreeModel cannot be considered as owning it elements; they simply trigger the appropriate change notifications to inform the tree''s Observers. 
+VirtualTreeModel triggers the same modification events as a standard <treeModel>. However, the methods #add:asChildOf:, #move:asChildOf: and #remove: are only used to inform the tree model of changes that have been made externally to its structure. They do not actually modify the structure, though, since the VirtualTreeModel cannot be considered as owning its elements; they simply trigger the appropriate change notifications to inform the tree''s Observers. 
 
-The virtual tree is represented by a collection of objects that are the root of the hierarchy. Navigation around the tree is specifying by three monadic valuables; the getChildrenBlock, the getParentBlock and the hasChildrenBlock. A monadic filter valuable can also be specified to determine which of the objects in the actual hierarchy will appear in the virtual tree, though by default all objects are included.
+The virtual tree is represented by a collection of objects that are the root of the hierarchy. Navigation around the tree is specified by three monadic valuables; the getChildrenBlock, the getParentBlock and the hasChildrenBlock. A monadic filter valuable can also be specified to determine which of the objects in the actual hierarchy will appear in the virtual tree, though by default all objects are included.
 
-A VirtualTreeModel tree is configured by supplying a number of root objects using the #roots aspect and also by setting number of <monadicValuable> (usually blocks) to define the structure. The following aspects are used to do this:
+A VirtualTreeModel tree is configured by supplying a number of root objects using the #roots aspect and also by setting a number of <monadicValuable> (usually blocks) to define the structure. The following aspects are used to do this:
 
 #getChildrenBlock	: which answers a <sequencedCollection> of children for an object in the tree.
 #hasChildrenBlock	: which answers a <boolean> to quickly identify whether an object has any children (usually implemented in terms of #getChildrenBlock).
-#getParentBlock		: which answer the parent of an object, or nil if it is one of the roots.
+#getParentBlock		: which answers the parent of an object, or nil if it is one of the roots.
 
 Instance Variables:
 	roots				<OrderedCollection> of root objects.

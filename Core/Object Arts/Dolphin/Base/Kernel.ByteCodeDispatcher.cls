@@ -205,7 +205,7 @@ instructionsDo: operation
 
 interpreter: anInstructionInterpreter 
 	"Private - Set the receiver's interpreter client. The client is sent messages (the
-	selectors for which it can supply) for each of the instructions in the the receivers
+	selectors for which it can supply) for each of the instructions in the receivers
 	method."
 
 	interpreter := anInstructionInterpreter!

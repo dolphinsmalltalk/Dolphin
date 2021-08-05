@@ -69,7 +69,7 @@ parent: aTreeNode
 	parent := aTreeNode!
 
 printOn: target
-	"Append, to the <puttableStream>, target, a string whose characters are a 
+	"Append, to the <puttableStream>, target, a string whose characters are
 	the same as those which would result from sending a #printString
 	message to the receiver.
 	N.B. This is really intended for development use. #displayOn: and #displayString

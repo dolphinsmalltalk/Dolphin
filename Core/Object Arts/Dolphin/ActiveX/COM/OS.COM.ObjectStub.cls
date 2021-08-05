@@ -164,7 +164,7 @@ innerQueryInterface: pIID ppvObject: ppvOut
 		interface must succeed.
 	-	QueryInterface() must be transitive - i.e. given a pointer to one interface through which I can 
 		successfully query for a a second, and through that successfully query for a third, then a query for 
-		the first interface through the the third must succeed."
+		the first interface through the third must succeed."
 
 	| interfaceClass interface |
 	ppvOut value: 0.	"must set, even on error"

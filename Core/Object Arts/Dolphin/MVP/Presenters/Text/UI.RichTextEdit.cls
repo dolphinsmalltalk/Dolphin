@@ -49,7 +49,7 @@ basicLineFromPosition: anInteger
 		lParam: anInteger!
 
 basicSelectionRange
-	"Private - Answer an interval identifying the selected range of text/ OLE objects, as
+	"Private - Answer an interval identifying the selected range of text/OLE objects, as
 	reported by the underlying Windows control. Note that this range includes the starting
 	character, but the end of the range is the first unselected character. Note further that
 	this characteristic means that the range should NEVER be empty."
@@ -168,7 +168,7 @@ defaultCharFormat: aCHARFORMAT
 	self setCharFormat: aCHARFORMAT flags: 0!
 
 defaultNotificationMask
-	"Private - Answer the mask for the notifications we want to receiver.
+	"Private - Answer the mask for the notifications we want to receive.
 	The default is to only ask for EN_SELCHANGE"
 
 	^ENM_SELCHANGE bitOr: 1 "ENM_CHANGE"!
@@ -614,7 +614,7 @@ selectionCharFormat
 
 selectionCharFormat: aCHARFORMAT 
 	"Private - Apply the specified character formatting options to the receiver's
-	current selection (or from the insertion point if no selection."
+	current selection (or from the insertion point if no selection)."
 
 	self setCharFormat: aCHARFORMAT flags: SCF_SELECTION.
 	self updatePerChar ifTrue: [self updateModel]!
@@ -1023,7 +1023,7 @@ maxTextLimit
 	^SmallInteger maximum!
 
 registerClass
-	"Private - Ensure the the rich edit window class is registered by loading the relevant library."
+	"Private - Ensure the rich edit window class is registered by loading the relevant library."
 
 	(Library isNil or: [Library isOpen not])
 		ifTrue: [Library := External.DynamicLinkLibrary open: self richEditDllName]!

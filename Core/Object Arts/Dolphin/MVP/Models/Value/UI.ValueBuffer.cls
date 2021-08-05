@@ -7,9 +7,7 @@ UI.ValueHolder subclass: #'UI.ValueBuffer'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.ValueBuffer guid: (Core.GUID fromString: '{87b4c67d-026e-11d3-9fd7-00a0cc3e4a32}')!
-UI.ValueBuffer comment: 'A ValueBuffer can be used to buffer changes to a subject <valueModel>. It presents the same <value> protocol as its subject but, when the value is changed, the change is not immediately passed to the subject. This only happens when the ValueBuffer receives an #apply message to indicate that any changes should flushed.
-
-It is important to note that, in order to be used with a ValueBuffer
+UI.ValueBuffer comment: 'A ValueBuffer can be used to buffer changes to a subject <valueModel>. It presents the same <value> protocol as its subject but, when the value is changed, the change is not immediately passed to the subject. This only happens when the ValueBuffer receives an #apply message to indicate that any changes should be flushed.
 
 Instance Variables:
 	subject		<valueModel> being buffered.
@@ -54,7 +52,7 @@ isValid
 	^true!
 
 onGateChanged
-	"Private - Received when the gate has been triggered. Use this to either flush changes back
+	"Private - Received when the gate has been triggered. Use this to flush changes back
 	to the subject if required"
 
 	self gate value ifTrue: [self apply]!

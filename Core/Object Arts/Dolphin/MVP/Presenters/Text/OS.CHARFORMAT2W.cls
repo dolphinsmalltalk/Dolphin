@@ -11,7 +11,7 @@ OS.Win32Structure subclass: #'OS.CHARFORMAT2W'
 		'_OffsetOf_bPitchAndFamily' -> 16r19.
 		'_OffsetOf_bRevAuthor' -> 16r72.
 		'_OffsetOf_bUnderlineColor' -> 16r73.
-		'_OffsetOf_bUnderlyineType' -> 16r70.
+		'_OffsetOf_bUnderlineType' -> 16r70.
 		'_OffsetOf_crBackColor' -> 16r60.
 		'_OffsetOf_crTextColor' -> 16r14.
 		'_OffsetOf_dwCookie' -> 16r68.
@@ -120,21 +120,21 @@ bUnderlineColor: anInteger
 
 	bytes byteAtOffset: _OffsetOf_bUnderlineColor put: anInteger!
 
-bUnderlyineType
-	"Answer the <Integer> value of the receiver's 'bUnderlyineType' field."
+bUnderlineType
+	"Answer the <Integer> value of the receiver's 'bUnderlineType' field."
 
-	^bytes byteAtOffset: _OffsetOf_bUnderlyineType!
+	^bytes byteAtOffset: _OffsetOf_bUnderlineType!
 
-bUnderlyineType: anInteger
-	"Set the receiver's 'bUnderlyineType' field to the value of the argument, anInteger"
+bUnderlineType: anInteger
+	"Set the receiver's 'bUnderlineType' field to the value of the argument, anInteger"
 
-	bytes byteAtOffset: _OffsetOf_bUnderlyineType put: anInteger!
+	bytes byteAtOffset: _OffsetOf_bUnderlineType put: anInteger!
 
 characterSet
 	^(self maskAny: CFM_CHARSET) ifTrue: [self bCharSet]!
 
 characterSet: anIntegerOrNil 
-	"Set the desired character set (permitted values of lfCharSet member of LOGFONT on MSDN)."
+	"Set the desired character set (permitted values of lfCharSet field of LOGFONT on MSDN)."
 
 	self maskIn: CFM_CHARSET.
 	self bCharSet: anIntegerOrNil!
@@ -196,13 +196,13 @@ dwSize: anInteger
 	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 effectsAny: anInteger
-	"Private - Answer true if the effects member contains the bit flags represented by anInteger."
+	"Private - Answer true if the effects field contains the bit flags represented by anInteger."
 
 	^self dwEffects anyMask: anInteger!
 
 faceName: aString
 	"Set the character face name.
-	Note that the szFaceName member is an embedded string, rather than a pointer,
+	Note that the szFaceName field is an embedded string, rather than a pointer,
 	and there is, therefore, no need to save down a reference to aString."
 
 	self maskIn: CFM_FACE.
@@ -303,12 +303,12 @@ logFont
 	^answer!
 
 maskAny: anInteger
-	"Private - Answer true if the mask member contains the bit flags represented by anInteger."
+	"Private - Answer true if the mask field contains the bit flags represented by anInteger."
 
 	^self dwMask anyMask: anInteger!
 
 maskIn: anInteger
-	"Private - OR in to contents mask member the bit flags represented by anInteger.
+	"Private - OR in to the contents mask field the bit flags represented by anInteger.
 	Answer the receiver."
 
 	self dwMask: (self dwMask bitOr: anInteger)!
@@ -318,12 +318,12 @@ maskOut: anInteger
 
 pointSize
 	"Answer the receiver's height field in points (N.B. the answer may be
-	a Fraction if the, for example, the size if 10.5 points)."
+	a Fraction if, for example, the size is 10.5 points)."
 
 	^self yHeight / 20!
 
 pointSize: aNumber
-	"Set the receiver's height field to  aNumber points (aNumber 
+	"Set the receiver's height field to aNumber points (aNumber 
 	need not be integral)."
 
 	self height: aNumber * 20!
@@ -468,8 +468,8 @@ bRevAuthor!**compiled accessors**!public! !
 bRevAuthor:!**compiled accessors**!public! !
 bUnderlineColor!**compiled accessors**!public! !
 bUnderlineColor:!**compiled accessors**!public! !
-bUnderlyineType!**compiled accessors**!public! !
-bUnderlyineType:!**compiled accessors**!public! !
+bUnderlineType!**compiled accessors**!public! !
+bUnderlineType:!**compiled accessors**!public! !
 characterSet!public! !
 characterSet:!accessing!public! !
 color!accessing!public! !
@@ -546,7 +546,7 @@ defineFields
 		defineField: #dwCookie type: DWORDField filler;
 		defineField: #sStyle type: SWORDField new;
 		defineField: #wKerning type: WORDField new;
-		defineField: #bUnderlyineType type: BYTEField new;
+		defineField: #bUnderlineType type: BYTEField new;
 		defineField: #bAnimation type: BYTEField new;
 		defineField: #bRevAuthor type: BYTEField new;
 		defineField: #bUnderlineColor type: BYTEField new!
@@ -557,7 +557,7 @@ fromChooseFont: aCHOOSEFRONT
 		yourself!
 
 getFieldNames
-	^#(#dwSize #dwMask #dwEffects #yHeight #yOffset #crTextColor #bCharSet #bPitchAndFamily #szFaceName #wWeight #sSpacing #crBackColor #lcid #sStyle #wKerning #bUnderlyineType #bAnimation #bRevAuthor #bUnderlineColor)! !
+	^#(#dwSize #dwMask #dwEffects #yHeight #yOffset #crTextColor #bCharSet #bPitchAndFamily #szFaceName #wWeight #sSpacing #crBackColor #lcid #sStyle #wKerning #bUnderlineType #bAnimation #bRevAuthor #bUnderlineColor)! !
 !OS.CHARFORMAT2W class categoriesForMethods!
 defineFields!public!template definition! !
 fromChooseFont:!public! !

@@ -108,7 +108,7 @@ asSeconds
 	^seconds!
 
 days
-	"Answer the the <integer> number of whole days represented by the receiver.
+	"Answer the <integer> number of whole days represented by the receiver.
 	The answer may be negative for negative durations."
 
 	^seconds quo: SecondsPerDay!

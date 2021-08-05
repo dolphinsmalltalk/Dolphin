@@ -60,7 +60,7 @@ icon
 	^icon ifNil: [super icon]!
 
 icon: anIcon
-	"Set the the icon used to represent this resource"
+	"Set the icon used to represent this resource"
 
 	icon := anIcon!
 

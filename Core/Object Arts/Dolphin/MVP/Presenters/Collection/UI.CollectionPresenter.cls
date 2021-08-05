@@ -9,7 +9,7 @@ UI.ValuePresenter subclass: #'UI.CollectionPresenter'
 		'ReadOnlyMask' -> 16r1
 	}!
 UI.CollectionPresenter guid: (Core.GUID fromString: '{cef6a076-8a4e-4dc8-9732-9241724d99e3}')!
-UI.CollectionPresenter comment: 'CollectionPresenter is a <valuePresenter> that presents a <Collection> accessed via its <valueModel>. It provides a number of [operations]for editing the list. As changes are made to the list it is applied back to the presenter''s <valueModel>.
+UI.CollectionPresenter comment: 'CollectionPresenter is a <valuePresenter> that presents a <Collection> accessed via its <valueModel>. It provides a number of [operations] for editing the list. As changes are made to the list it is applied back to the presenter''s <valueModel>.
 
 Instance Variables:
 	listPresenter	<ListPresenter> presenting the list accessed as the value of the presenter''s model.

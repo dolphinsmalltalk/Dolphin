@@ -7,7 +7,7 @@ UI.ValueAdaptor subclass: #'UI.CompositeValueAdaptor'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.CompositeValueAdaptor guid: (Core.GUID fromString: '{c2011d89-6b90-4844-a5e9-fd4edf82239d}')!
-UI.CompositeValueAdaptor comment: 'CompositeValueAdaptor is a <valueModel> that provides access to the individual aspects of a composite object through ValueAspectAdaptors, but which treats changes through those aspect adaptors as changes to the whole composite object, i.e. any change to one of its individual aspect causes a CompositeValueAdaptor to trigger a #valueChanged event. This is a useful when implementing a <ValuePresenter> for a composite object that is considered immutable by its clients.'!
+UI.CompositeValueAdaptor comment: 'CompositeValueAdaptor is a <valueModel> that provides access to the individual aspects of a composite object through ValueAspectAdaptors, but which treats changes through those aspect adaptors as changes to the whole composite object, i.e. any change to one of its individual aspect causes a CompositeValueAdaptor to trigger a #valueChanged event. This is useful when implementing a <ValuePresenter> for a composite object that is considered immutable by its clients.'!
 !UI.CompositeValueAdaptor categoriesForClass!MVP-Models! !
 !UI.CompositeValueAdaptor methodsFor!
 

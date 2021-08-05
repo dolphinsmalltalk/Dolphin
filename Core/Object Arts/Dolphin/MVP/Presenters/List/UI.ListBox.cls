@@ -54,7 +54,7 @@ basicAdd: anObject atIndex: anInteger
 
 basicClear
 	"Private - Clears down the listbox control(but not its model). 
-	XB_RESETCONTENT does not return a value."
+	LB_RESETCONTENT does not return a value."
 
 	self sendMessage: LB_RESETCONTENT!
 
@@ -154,7 +154,7 @@ dragLeave: session
 	session hideCursorWhile: [self hideDropHighlight]!
 
 dragOver: session 
-	"The drag operation described by the <DragDropSession>. session,
+	"The drag operation described by the <DragDropSession>, session,
 	has moved to a new position over the receiver's window.
 	Implementation Note: Override in order to provide drop target highlighting
 	and to suggest a reasonable drop target for most cases (the item under the
@@ -171,8 +171,8 @@ dragOver: session
 
 drop: session 
 	"The drag operation described by the <DragDropSession>, session, has 
-	culminated in a drop over the receiver. Answer whether the drop was successfull
-	so that the Session knows whether to cut the item from the 	drag source in the case 
+	culminated in a drop over the receiver. Answer whether the drop was successful
+	so that the Session knows whether to cut the item from the drag source in the case 
 	of a #move operation.
 	Implementation Note: We must remove the drop highlight."
 
@@ -322,7 +322,7 @@ isMultiSelect: aBoolean
 itemCount
 	"Answers the count of elements in the receiver. This may be 
 	different from the answer to #size if the model has been updated but
-	the change has not yet propaged to the receiver's contents"
+	the change has not yet propagated to the receiver's contents"
 
 	^self sendMessage: LB_GETCOUNT!
 
@@ -523,7 +523,7 @@ onSelChanged: anArray
 
 onSelChanging: anArray cause: aSymbol
 	"Private - Selection is changing in the receiver to the item in the receiver's model identified by the specified <Collection> of <integer> indices. Answer whether to allow the selection change to proceed.
-	Note that #selectionChanging: events are only fired as a direct consequence of  user initiated actions, not in response to selection changes that occur as direct  or indirect results of programmatic actions."
+	Note that #selectionChanging: events are only fired as a direct consequence of user initiated actions, not in response to selection changes that occur as direct or indirect results of programmatic actions."
 
 	^self isStateRestoring or: 
 			[anArray = approvedSelIndices or: 
@@ -613,7 +613,7 @@ showDropHighlight: anItem
 
 state
 	"Private - Answer a MessageSequence which, when replayed, will restore the receiver 
-	to its current state. Add the horizonatl extent aspect since it is not otherwise cached in an
+	to its current state. Add the horizontal extent aspect since it is not otherwise cached in an
 	instance variable"
 
 	^super state

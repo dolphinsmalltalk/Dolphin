@@ -47,7 +47,7 @@ moveFirst
 	listPresenter selectionByIndex: 1!
 
 moveLast
-	"Moves the current selection to be the last  item in the receiver's list"
+	"Moves the current selection to be the last item in the receiver's list"
 
 	| list index last |
 	index := listPresenter selectionByIndex.

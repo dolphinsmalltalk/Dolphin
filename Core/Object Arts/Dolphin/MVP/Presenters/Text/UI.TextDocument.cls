@@ -51,7 +51,7 @@ isModified: aBoolean
 	documentPresenter isModified: aBoolean!
 
 isText
-	"Answer true if the receiver is a text document"
+	"Answer true if the receiver is a text document."
 
 	^true!
 
@@ -69,7 +69,7 @@ onViewClosed
 	super onViewClosed!
 
 onViewOpened
-	"Received when the receiver's view is been connected. "
+	"Received when the receiver's view has been connected."
 
 	super onViewOpened.
 	(self view viewNamed: 'status' ifNone: []) ifNotNil: [:item | item model: statusModel].
@@ -102,7 +102,7 @@ restoreUserSettings
 	!
 
 saveUserSettings
-	"Private - Save the users configuration to the registry, isolated storage, etc."
+	"Private - Save the user's configuration to the registry, isolated storage, etc."
 
 	!
 

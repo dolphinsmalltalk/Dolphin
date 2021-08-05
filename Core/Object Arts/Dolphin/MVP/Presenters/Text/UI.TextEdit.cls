@@ -16,7 +16,7 @@ UI.ValueConvertingControlView subclass: #'UI.TextEdit'
 UI.TextEdit guid: (Core.GUID fromString: '{87b4c73a-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.TextEdit comment: 'TextEdit is a <valueView> class that implements the Windows "EDIT" control for the displaying and editing of single line text. The <valueModel> associated with a TextEdit must always yield a <readableString> value when mapped through the installed type converter. A TextEdit will normally be used in conjunction with a <TextPresenter>. 
 
-The alignment of the text can be specified using the alignment aspect which can assume of of the following values: (#left, #center, #right). The #updatePerChar aspect, if set to true, will ensure that the editor''s associated model will be kept up to date with the view as each character is typed. If false, the update only takes place when the view loses focus.
+The alignment of the text can be specified using the alignment aspect which can assume one of the following values: (#left, #center, #right). The #updatePerChar aspect, if set to true, will ensure that the editor''s associated model will be kept up to date with the view as each character is typed. If false, the update only takes place when the view loses focus.
 
 Instance Variables:
 	teFlags		<integer> flags for the mode of the editor.
@@ -40,14 +40,14 @@ alignment
 	^AlignmentMap keyAtValue: typeFlags ifAbsent: [#left]!
 
 alignment: aSymbol
-	"Sets the text alignment to the symbolic aligment name, aSymbol."
+	"Sets the text alignment to the symbolic alignment name, aSymbol."
 
 	self setAlignment: (AlignmentMap at: aSymbol).
 	self invalidateCalculatedExtent
 	!
 
 apply
-	"Apply the changes made to the edit to the receivers model. Answer whether
+	"Apply the changes made to the edit to the receiver's model. Answer whether
 	any update actually occurred to the model."
 
 	| modified |
@@ -59,7 +59,7 @@ basicClearSelection
 	self sendMessage: WM_CLEAR!
 
 basicFindNext
-	"Private - Hilight the next occurrence which satisfies the find operation held in findDetails."
+	"Private - Highlight the next occurrence which satisfies the find operation held in findDetails."
 
 	^self findDetails ifNil: [false] ifNotNil: [:findDetails | (self findNextWrapped: findDetails) notEmpty]!
 
@@ -103,10 +103,10 @@ basicSelectionStart: start end: end
 calcRectangleFromClientRectangle: aRectangle
 	"Private - Given a client rectangle represented by the <Rectangle> argument, answer the
 	window rectangle that would be required to achieve this taking into account the current
-	window styles etc Note that the answered rectangle is in the COORDINATE SYSTEM OF THE
-	CLIENT.
+	window styles etc. Note that the answered rectangle is in the coordinate system of the
+	client.
 
-	Implementation Note: We must override here because of EDIT controls implicit border."
+	Implementation Note: We must override here because of EDIT control's implicit border."
 
 	| rect |
 	rect := RECTL fromRectangle: aRectangle.
@@ -170,7 +170,7 @@ canUndo
 
 caretPosition
 	"Answer the insertion cursor position, as the number of characters from the start
-	of the receivers text"
+	of the receiver's text"
 
 	^self selectionRange start	"Use #start to avoid bounds error if empty"!
 
@@ -304,7 +304,7 @@ dlgCode
 !
 
 dragOver: session
-	"The drag operation described by  the <DragDropSession> session,
+	"The drag operation described by the <DragDropSession> session,
 	 has moved to a new position over the receiver's window. 
 	Implementation Note: Suggest the character position under the drop as a
 	sensible drop target for most uses of TextEdit and its subclasses."
@@ -733,7 +733,7 @@ onInputMaskRequired: anEvent
 	WM_GETDLGCODE to ensure the control never actually receives it. This keeps 
 	its behaviour sane, and means we do not need workarounds in WM_CHAR (to 
 	forcibly insert VK_TABs). It also enables us to implement WantTab functionality
-	which windows does not support directly as an Edit control style."
+	that Windows does not support directly as an Edit control style."
 
 	| dlgCode |
 	dlgCode := self dlgCode.
@@ -752,7 +752,7 @@ onKeyTyped: aKeyEvent
 
 	"Implementation Note: Sadly the edit control does not insert tabs if used 
 	in conjunction with IsDialogMessage(), even though it says it wants to 
-	receive them. We therefore fix this bug overridding WM_GETDLGCODE and never
+	receive them. We therefore fix this bug by overriding WM_GETDLGCODE and never
 	allowing it to reach the control. This prevents the control from getting the
 	notion that it is in a dialog, and retains the saner behaviour.
 	An alternative workaround to implementing WM_GETDLGCODE would be to
@@ -1178,7 +1178,7 @@ updateModel
 	Overridden here since TextEdit and subclasses are allowed to have no model, and
 	also because we can detect if the view's representation has actually changed since
 	we sync'd back to the model. The option to have no model is for efficiency, to avoid 
-	having to maintain two copies of possibly 	large text (one in Windows, one in Smalltalk)."
+	having to maintain two copies of possibly large text (one in Windows, one in Smalltalk)."
 
 	self isTextModified ifFalse: [^self].
 	self isTextModified: false.
@@ -1201,7 +1201,7 @@ value
 	"Answer the value of the receiver."
 
 	"Implementation Note: Overridden here since TextEdit and subclasses can 
-	potentially have no model. This method accesses the 	receiver's window directly 
+	potentially have no model. This method accesses the receiver's window directly 
 	via #displayValue where that is the case."
 
 	^self model 
@@ -1220,7 +1220,7 @@ value: anObject
 		ifNotNil: [:m | m value: anObject]!
 
 wantReturn
-	"Answer whether the receiver wishes to receiver ENTER keystrokes
+	"Answer whether the receiver wishes to receive ENTER keystrokes
 	as input, as opposed to allowing them to be used for navigation/default
 	button depression (i.e. whether the receiver has the ES_WANTRETURN style).
 	Note that this is only relevant to a <MultilineTextEdit> (where it becomes
@@ -1236,12 +1236,12 @@ wantReturn: aBoolean
 	self baseStyleMask: ES_WANTRETURN set: aBoolean!
 
 wantTab
-	"Answer whether the receiver wishes to receiver tab characters as WM_CHAR messages."
+	"Answer whether the receiver wishes to receive tab characters as WM_CHAR messages."
 
 	^teFlags anyMask: WantTabMask!
 
 wantTab: aBoolean
-	"Set whether the receiver wishes to receiver tab characters as WM_CHAR messages."
+	"Set whether the receiver wishes to receive tab characters as WM_CHAR messages."
 
 	teFlags := teFlags mask: WantTabMask set: aBoolean!
 

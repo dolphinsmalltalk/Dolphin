@@ -90,7 +90,7 @@ initializeAfterLoad
 	self == ##(self) ifFalse: [self registerRecordTypes]!
 
 iTypes
-	"Answer an collection of the integer enhanced metafile record type ids that this class can represent."
+	"Answer a collection of the integer enhanced metafile record type ids that this class can represent."
 
 	^{EMR_ABORTPATH. EMR_BEGINPATH. EMR_ENDPATH. EMR_CLOSEFIGURE. EMR_FLATTENPATH}
 		, {EMR_WIDENPATH. EMR_SETMETARGN. EMR_SAVEDC. EMR_REALIZEPALETTE}!

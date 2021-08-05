@@ -19,7 +19,7 @@ Instance Variables:
 !UI.HotKey methodsFor!
 
 currentModifiers
-	"Private - Answer the a bit mask of the hot key modifiers corresponding
+	"Private - Answer the bit mask of the hot key modifiers corresponding
 	to the current keyboard state. Note that this does NOT bitOr: in either
 	HOTKEYF_EXT or the current default mask."
 
@@ -106,7 +106,7 @@ setHotKey: hotKeyCode
 		lpParam: 0!
 
 setHotKey: virtualKeyCode modifiers: modifiers
-	"Private - Set the receiver's hot key combination.	"
+	"Private - Set the receiver's hot key combination."
 
 	| mods |
 	mods := modifiers.
@@ -126,7 +126,7 @@ wmKeyDown: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_KEYDOWN.
 	We override this in order to prevent VK_DELETE getting through to the HotKey
 	control, which treats it literally, thus preventing the use of the Delete key as an 
-	accelerator. Note that the control also absorbs other keys, such as "
+	accelerator."
 
 	^wParam == VK_DELETE 
 		ifTrue: 

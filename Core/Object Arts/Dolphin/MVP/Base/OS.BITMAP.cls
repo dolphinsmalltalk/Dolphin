@@ -62,7 +62,7 @@ depth
 	^self bmBitsPixel!
 
 extent
-	"Answer the width and height (in pels) of the the bitmap described by the receiver."
+	"Answer the width and height (in pels) of the bitmap described by the receiver."
 
 	^self bmWidth @ self bmHeight! !
 !OS.BITMAP categoriesForMethods!

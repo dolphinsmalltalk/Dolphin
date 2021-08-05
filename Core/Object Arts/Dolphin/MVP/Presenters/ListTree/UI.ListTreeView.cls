@@ -20,7 +20,7 @@ UI.ListTreeView guid: (Core.GUID fromString: '{f2d6215c-2adc-4032-aacb-8c4da1095
 UI.ListTreeView comment: 'Copyright © Chris Uppal, 2002 - 2004.
 chris.uppal@metagnostic.org
 
-An implementation of a kind of TreeView that supports multiple columns.  It uses the same technique as (I guess) M$ do for Outlook Express''s message folder.  I.e. it''s really a ListView that indents the primary column''s items according to how deep in the tree they are, and uses the rows ''state'' images to show open/closed indicators.  There is also a version of this class that supports multiple-selection, but is otherwise identical (see MultipleSelectionListTreeView).
+An implementation of a kind of TreeView that supports multiple columns.  It uses the same technique as (I guess) M$ do for Outlook Express''s message folder.  I.e. it''s really a ListView that indents the primary column''s items according to how deep in the tree they are, and uses the rows ''state'' images to show open/closed indicators.
 
 There are some examples of use in the class-side category ''examples'', but to save you the effort of going to look for them:
 	self example1.	"do it"
@@ -30,9 +30,6 @@ There are some examples of use in the class-side category ''examples'', but to s
 
 Instances can be used with TreePresenters (e.g. TreePresenter.ListTree view), ListPresenters (e.g. ListPresenter.ListTree view), or with the specialised presenter class, TreeViewPresenter, which knows more about ListTreeView than the pre-packaged Presenter classes do.  
 
-The multi-select version, MultipleSelectionListTreeView, can be used with ListPresenters (e.g. ListPresente.Multi-select ListTree view) and with ProperTreeViewPresenter.
-
-
 General Notes on Usage:
 ----------------------------------------
 
@@ -40,15 +37,15 @@ Just like any other View really.  Nothing too special.  This package adds pre-pa
 
 As far as possible these act pretty much like TreeViews or ListViews.  However, I''ve added three attributes for controlling sorting.  These are #sortBlock, the <diadicValuable> to use to sort the tree (items are sorted *within* the list of their siblings); and then two attributes that restrict the use of the sort block: #doSortRoots, a boolean that can be used to turn off sorting the roots; and #doSortChildren, a <monadicValuable> that is used to selectively enable sorting of each item''s children.
 
-Instances trigger four additional events off the Presenter, #nodeAdded:, #nodeRemoved:, #nodeExpanded:, and #nodeCollapsed: which can be useful for controling the resources used for backing trees.  (This is something I''ve wanted in the standard TreeView for some time.)
+Instances trigger four additional events off the Presenter, #nodeAdded:, #nodeRemoved:, #nodeExpanded:, and #nodeCollapsed: which can be useful for controlling the resources used for backing trees. (This is something I''ve wanted in the standard TreeView for some time.)
 
 
 Bugs
 --------
 
-I have found that using column images with a non-virtual instance will cause Windows errors.  I can''t find anything that I''m doing wrong to cause this, and none of the workarounds that I''ve tried fix it, so I''ll just have to leave a warning that it doesn''t work.  Sorry!!   (Stop press: a quick look suggests that this may now work in Dolphin 5.0.3, which has had changes to the way non-virtual ListViews work.)
+I have found that using column images with a non-virtual instance will cause Windows errors. I can''t find anything that I''m doing wrong to cause this, and none of the workarounds that I''ve tried fix it, so I''ll just have to leave a warning that it doesn''t work.  Sorry!! (Stop press: a quick look suggests that this may now work in Dolphin 5.0.3, which has had changes to the way non-virtual ListViews work.)
 
-For some reason Window''s always leaves space for the primary row''s icon, even if we''ve told it that we don''t want one.  I suspect that I''m missing something obvious, but I can''t find what I''m doing wrong.  Programming Windows, perhaps...
+For some reason Windows always leaves space for the primary row''s icon, even if we''ve told it that we don''t want one.  I suspect that I''m missing something obvious, but I can''t find what I''m doing wrong.  Programming Windows, perhaps...
 
 
 Differences Between ListTreeView and ListView
@@ -68,13 +65,13 @@ Differences between ListTreeView and TreeView
 
 The biggest deficiency (that I know about so far) is that ListTreeView does not draw tree ''lines''.  Since M$ don''t do this either (in Outlook Express) I take it that this is OK.  If you find it too much of a failing, then don''t use this software... ;-)
 
-The big gains over a TreeView is that a ListTreeView supports additional ListViewColumns and that MultipleSelectionListTreeView supports multiple selection (duh).  As far as I know things like per-column images, owner-draw, etc all work, but I haven''t tried everything.
+The big gains over a TreeView is that a ListTreeView supports additional ListViewColumns and multiple selection.  As far as I know things like per-column images, owner-draw, etc. all work, but I haven''t tried everything.
 
 One or two minor aspects of TreeView, like #isMonoExpandable and #hasHotTracking, are not implemented or are simulated badly.
 
-As with ListPresener, sorting is not dispatched via the TreePresenter but handled internally, and the #hasCheckBoxes aspect is not supported.
+As with ListPresenter, sorting is not dispatched via the TreePresenter but handled internally, and the #hasCheckBoxes aspect is not supported.
 
-Since the tree navigation key bindings are not quite consistant across M$ products, I''ve tried to find and implement a sensible compromise among them.  Please let me know if I''ve missed any.  I''ve also tried to come up with sensible implementations for the case where there are multiple selections.  Sometimes they will seem odd, but I don''t think that''s avoidable.  One touch I like is that expanding any selected item while holding down the <shift> key will automatically select its children too.
+Since the tree navigation key bindings are not quite consistent across M$ products, I''ve tried to find and implement a sensible compromise among them.  Please let me know if I''ve missed any.  I''ve also tried to come up with sensible implementations for the case where there are multiple selections.  Sometimes they will seem odd, but I don''t think that''s avoidable.  One touch I like is that expanding any selected item while holding down the <shift> key will automatically select its children too.
 
 Instances can be set not to keep a record of which nodes were expanded when their parents are closed.  This, again, can save resources, but it''s mainly because the default Window''s tree behaviour irritates me.  It makes no difference for small trees, but is a bloody nuisance for large ones.  This is controlled by the #retainExpanded aspect; standard Windows behaviour is the default.
 
@@ -148,8 +145,8 @@ additem: aChildObject toParent: aParentObject withSiblings: aCollection
 	self addItem: aChildObject afterIndex: index!
 
 allDisplayedItems
-	"answer an OrderedCollection of all the items that are currently displayed.
-	(i.e. they are either a root or their parent is expanded).
+	"answer an OrderedCollection of all the items that are currently displayed,
+	i.e. they are either a root or their parent is expanded.
 	They are listed in the order that they are currently displayed"
 
 	^ OrderedCollection withAll: self model.!
@@ -160,8 +157,8 @@ allExpandedItems
 	^ OrderedCollection withAll: expanded.!
 
 allHiddenExpandedItems
-	"answer an OrderedCollection of all the items that are currently hidden-expanded; that
-	is the ones that we will automatically expand as soon as they are visible, because they
+	"answer an OrderedCollection of all the items that are currently hidden-expanded; that is,
+	the ones that we will automatically expand as soon as they are visible, because they
 	were expanded when their parent was closed"
 
 	| all |
@@ -190,7 +187,7 @@ basicOnItem: aChildObject movedToParent: aParentObject
 	"private -- implementation of #onItem:movedToParent:  This is factored
 	out so that the code can be executed without triggering the normal
 	events or worrying about handling selection change events.  Note
-	that we rely on the caller reseting all the status icons, since otherwise
+	that we rely on the caller resetting all the status icons, since otherwise
 	there's no way to ensure that the *old* parent's icon will be correct"
 
 	| itemDisplayed itemExpanded parentExpanded |
@@ -248,7 +245,7 @@ basicSetItemAt: indexInteger stateImage: stateImageInteger
 	self lvmSetItem: indexInteger - 1 state: lvItem!
 
 beNoIcons
-	"supplied for consistancy with TreeView"
+	"supplied for consistency with TreeView"
 
 	self viewMode: #noIcons.!
 
@@ -329,16 +326,16 @@ collapseAll
 	no selection.
 	This is provided for consistency with MoenTreeView.
 	Note that this is considered to be program-initiated and so does not generate
-	vetoable #selectionChanging: events add will add all currently expanded items
+	vetoable #selectionChanging: events and will add all currently expanded items
 	to the hidden-expanded list"
 
 	self selectionRootsOrRoots do: [:each | self collapse: each].
 !
 
 collapseList: aCollection because: aSymbol
-	"private -- collapse the tree view to ensure that the immediate children the items in aCollection
+	"private -- collapse the tree view to ensure that the immediate children of the items in aCollection
 	are not displayed.
-	Since this is user-initiated we need send the vetoable #onSelectionChanging:
+	Since this is user-initiated we need to send the vetoable #onSelectionChanging:
 	event before making any changes.
 	For the same reason, the directly affected nodes are not made hidden-expanded
 	since the user has set their preferred status"
@@ -418,17 +415,17 @@ countDisplayedChildrenOf: anObject
 	^ answer.!
 
 defaultIndentSeparation
-	"private -- answer the default pixel identation of child items"
+	"private -- answer the default pixel indentation of child items"
 
 	^ 0.!
 
 disableExpandAll
-	"answer whether the abiliity to expand the whole tree with one keypress is enabled"
+	"answer whether the ability to expand the whole tree with one keypress is enabled"
 
 	^ options allMask: DisableExpandAllMask.!
 
 disableExpandAll: aBool
-	"set whether the abiliity to expand the whole tree with one keypress is enabled"
+	"set whether the ability to expand the whole tree with one keypress is enabled"
 
 	options := options mask: DisableExpandAllMask set: aBool.
 !
@@ -448,7 +445,7 @@ discardExpanded
 
 discardHiddenExpanded
 	"discard any record we may be keeping of which items were
-	expanded when they were last displayed.  This only discards
+	expanded when they were last displayed. This only discards
 	the current record, it does not stop us from retaining such records
 	in the future"
 
@@ -464,7 +461,7 @@ disconnectFromModel
 !
 
 displayedContents
-	"supplied for consistancy with TreeView"
+	"supplied for consistency with TreeView"
 
 	^ self allDisplayedItems.!
 
@@ -705,7 +702,7 @@ filerProxy
 	| saved |
 
 	saved := hiddenExpanded.
-	self discardHiddenExpanded.	"don't set it to nil or the resurected version will never use hiddenExpanded"
+	self discardHiddenExpanded.	"don't set it to nil or the resurrected version will never use hiddenExpanded"
 
 	^ [super filerProxy]
 		ensure: [hiddenExpanded := saved]!
@@ -760,7 +757,7 @@ hasCheckBoxes
 hasCheckBoxes: aBool
 	"set whether the receiver has check-boxes.
 	Overridden because the check box stuff uses the same 'state' images as we need
-	for our open/closed indicators.  Always ignored (for consistancy with TreeView)"!
+	for our open/closed indicators.  Always ignored (for consistency with TreeView)"!
 
 hasChildren: anObject
 	"answer our TreeModel's idea of whether anObject has children"
@@ -797,7 +794,7 @@ hasHotTracking: aBool
 	self listViewStyleMask: LVS_EX_TWOCLICKACTIVATE set: aBool.!
 
 hasIcons
-	"supplied for consistancy with TreeView"
+	"supplied for consistency with TreeView"
 
 	^ self viewMode ~~ #list and: [self getImageBlock notNil or: [self hasColumnImages]].!
 
@@ -810,7 +807,7 @@ hasLines
 hasLines: aBool
 	"set whether the receiver has lines connecting its nodes.
 	Unfortunately we do not support lines, so this is ignored
-	but retained for compatability with TreeView"
+	but retained for compatibility with TreeView"
 !
 
 hasLinesAtRoot
@@ -850,13 +847,13 @@ indentFromRow: anObject
 	^depth!
 
 indentSeparation
-	"answer the pixel identation of child items from their parents excluding
+	"answer the pixel indentation of child items from their parents excluding
 	the width of the current set of icons being shown"
 
 	^ indentSeparation.!
 
 indentSeparation: indentation
-	"set the pixel identation of child items from their parents excluding
+	"set the pixel indentation of child items from their parents excluding
 	the width of the current set of icons being shown.
 	Note that the actual indentation used will be rounded to the nearest multiple
 	of the size of the open/close image.  Also the indentation is not applied in
@@ -892,7 +889,7 @@ inRootOrder: aCollection
 		ifFalse: [(aCollection asSortedCollection: sortBlock) asOrderedCollection].!
 
 invalidateItemAt: anInteger
-	"private -- envalidate the item with the 1-based integer index"
+	"private -- invalidate the item with the 1-based integer index"
 
 	self invalidateRect: (self itemRect: anInteger textOnly: false)!
 
@@ -909,13 +906,13 @@ isItemDisplayed: anObject
 	^ self model includes: anObject.!
 
 isItemExpandable: anObject
-	"answer whether it is possble to expand anObject -- i.e. that it has children,
+	"answer whether it is possible to expand anObject -- i.e. that it has children,
 	but hasn't been expanded yet"
 
 	^ (self hasChildren: anObject) and: [(self isItemExpanded: anObject) not].!
 
 isItemExpanded: anObject
-	"answer whether anObject is currently expanded (this doens't imply that
+	"answer whether anObject is currently expanded (this doesn't imply that
 	it has any children, just that the #expand: operation has been performed
 	on it)"
 
@@ -928,23 +925,23 @@ isItemHiddenExpanded: anObject
 	^ self retainExpanded and: [hiddenExpanded includes: anObject].!
 
 isLargeIcons
-	"supplied for conistancy with TreeView.  I'm not entirely sure what the implementation
-	should be here, since we'd look Very Odd Indeed in any mode than #report.  However..."
+	"supplied for conistency with TreeView.  I'm not entirely sure what the implementation
+	should be here, since we'd look Very Odd Indeed in any mode other than #report.  However..."
 
 	^ self viewMode == #largeIcons.!
 
 isMonoExpandable
 	"answer whether the receiver has the single-expand style.
-	Supplied for consistancy with TreeView; always answers false"
+	Supplied for consistency with TreeView; always answers false"
 
 	^ false.!
 
 isMonoExpandable: aBool
 	"set whether the receiver has the single-expand style.
-	Supplied for consistancy with TreeView; currently ignored"!
+	Supplied for consistency with TreeView; currently ignored"!
 
 isSelected: anObject
-	"supplied for consistancy with TreeView; answer whether anObject is currently
+	"supplied for consistency with TreeView; answer whether anObject is currently
 	selected"
 
 	| comparator |
@@ -955,9 +952,9 @@ isSelected: anObject
 !
 
 isSmallIcons
-	"supplied for conistancy with TreeView.  I'm not entirely sure what the implementation
-	should be here, since we'd look Very Odd Indeed in any mode than #report, but that's
-	probably the bset we can do"
+	"supplied for consistency with TreeView.  I'm not entirely sure what the implementation
+	should be here, since we'd look Very Odd Indeed in any mode other than #report, but that's
+	probably the best we can do"
 
 	^ self viewMode == #report.
 !
@@ -968,7 +965,7 @@ listModel: aListModel
 	from our *Block aspects to use as our TreeModel, and create an internal ListModel to use
 	as our #model (the contents of which will be changed as the display changes).
 	Actually we use the trivial subclass, VirtualTreeModelWithSearchPolicy, since that allows us to
-	preserver the search policy of the list model too.
+	preserve the search policy of the list model too.
 	Note that once we have initialised ourself from the supplied list model, we take no further interest
 	in it"
 
@@ -991,7 +988,7 @@ makeInternalListModel: aCollection searchPolicy: aSearchPolicy
 !
 
 makeInternalTreeModel: aCollection searchPolicy: aSearchPolicy
-	"private -- answer a new TreeModel configured the given roots, aCollection,
+	"private -- answer a new TreeModel configured with the given roots, aCollection,
 	search policy, and our various blocks"
 
 	| newTreeModel |
@@ -1021,7 +1018,7 @@ makeSetFrom: aCollection
 		yourself.!
 
 minimumIndent
-	"just for consistancy with TreeView"
+	"just for consistency with TreeView"
 
 	^ 0.!
 
@@ -1083,7 +1080,7 @@ onItem: aChildObject addedInParent: aParentObject
 		ifFalse: [self additem: aChildObject toParent: aParentObject]!
 
 onItem: aChildObject movedToParent: aParentObject
-	"notification received when aChildObject has been moved to the list of 	children of aParentObject.
+	"notification received when aChildObject has been moved to the list of children of aParentObject.
 	NB: unlike the TreeView we preserve 'expandedness' of the moved child, rather than just preserving
 	the selection and closing all other subtrees"
 
@@ -1121,8 +1118,8 @@ onKeyPressed: aKeyEvent
 	"handler for key press events.
 	We want to emulate:
 		- the numeric pad's multiply key fully expands/collapses the current selection or the whole tree
-		- left-arrow expands children or, if already expanded, selects first
-		- right-arrow collapses children, or if not expanded, selects parent
+		- right-arrow expands children or, if already expanded, selects first child
+		- left-arrow collapses children, or if not expanded, selects parent
 		- numeric+ expands selection
 		- numeric- collapses selection"
 
@@ -1216,13 +1213,13 @@ onTreeChanged: anObject
 
 	"if any part of the tree has changed, then there may be nodes (now removed) that are
 	still on our hidden-expanded list; there is no way that we can check for that case
-	so just we discard the whole hidden-expanded list"
+	so we just discard the whole hidden-expanded list"
 	self discardHiddenExpanded.
 
 	"easy implementation if the whole tree is potentially invalid"
 	anObject isNil ifTrue: [^ self resetTreeToRoots].
 
-	"if the object is not currently displayed, then we've done everything 	we have to"
+	"if the object is not currently displayed, then we've done everything we have to"
 	anObject isNil ifTrue: [^ self].
 
 	"we collapse the tree at the indicated point"
@@ -1351,7 +1348,7 @@ refreshFromModelBelow: anObject
 	anObject isNil ifFalse: [self onItemUpdated: anObject].
 
 	"and finally, put the selection back to what it should be.
-	We have to be carefull here, if the selection has genuinely changed
+	We have to be careful here, if the selection has genuinely changed
 	then we have to send a selection changed notification, but if the
 	selection has not changed, then we *still* have to set the selection
 	(since the Window's selection won't have been updated to reflect
@@ -1609,7 +1606,7 @@ selectionRootsOrRoots
 
 selectionsAsSet
 	"answer our current selection as a Set that uses our current
-	seach policy"
+	search policy"
 
 	^ self makeSetFrom: self selections.!
 
@@ -1849,7 +1846,7 @@ updateItem: arg1
 	^Error notYetImplemented!
 
 updateMode
-	"supplied for consistancy with TreeView>>updateMode.  Actually we always
+	"supplied for consistency with TreeView>>updateMode.  Actually we always
 	reply #dynamic (mainly because Windows keeps asking for the indentation even
 	after it has been told it; otherwise we would be #dynamic or #static according
 	as we are #isVirtual)"
@@ -1857,10 +1854,10 @@ updateMode
 	^ #dynamic.!
 
 updateMode: aSymbol
-	"supplied for consistancy with TreeView>>viewMode.  Actually we ignore this"!
+	"supplied for consistency with TreeView>>viewMode.  Actually we ignore this"!
 
 updateStates
-	"private -- update the 'state' images all objects"
+	"private -- update the 'state' images for all objects"
 
 	self isVirtual
 		ifFalse: 
