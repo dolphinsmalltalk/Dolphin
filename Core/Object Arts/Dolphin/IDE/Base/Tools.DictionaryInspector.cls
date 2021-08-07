@@ -96,10 +96,12 @@ removeField
 	value := self selfField at: selected.
 	self variableIndex > self headerSize
 		ifTrue: 
-			[(MessageBox confirm: ('Remove <1p> field?' expandMacrosWith: selected))
-				ifTrue: 
-					[command undoWith: [self addKey: selected put: value].
-					self removeKey: selected]]!
+			[(MessageBox new
+				headline: 'Remove <1p> field?' << selected;
+				confirm)
+					ifTrue: 
+						[command undoWith: [self addKey: selected put: value].
+						self removeKey: selected]]!
 
 removeKey: aKey
 	"Private - Removes a key in the receiver and refreshes the displayed variables"

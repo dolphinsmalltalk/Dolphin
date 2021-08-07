@@ -70,11 +70,9 @@ preconditions
 
 transform
 	self computePoolsToMove.
-	self hasPoolsToMove 
+	self hasPoolsToMove
 		ifTrue: 
-			[self 
-				refactoringWarning: 'This method contains references to pools<n>which may need to be moved.' 
-						expandMacros].
+			[self refactoringWarning: 'This method contains references to pools which may need to be moved.'].
 	self movePoolVariables!
 
 whichPoolDefines: varName

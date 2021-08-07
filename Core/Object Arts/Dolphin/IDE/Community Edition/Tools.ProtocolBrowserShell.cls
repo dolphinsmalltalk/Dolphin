@@ -62,7 +62,9 @@ addSelector
 			[chosenSelector := chosenSelector asSymbol.
 			(Compiler isValidSelector: chosenSelector)
 				ifFalse: 
-					[MessageBox errorMsg: ('Sorry, but <1p> is not a valid selector' expandMacrosWith: chosenSelector).
+					[MessageBox new
+						headline: 'Invalid selector';
+						errorMsg: 'Sorry, but <1p> is not a valid selector' << chosenSelector.
 					^self].
 			self model addSelectors: {chosenSelector asSymbol} toProtocol: self protocol]!
 

@@ -91,20 +91,14 @@ about
 	"Private - Pop up a little helpful info. about this sample program."
 
 	MessageBox new
-		caption: ('About Dolphin <1d>' expandMacrosWith: self);
+		caption: 'About Dolphin <1d>' << self;
 		icon: self icon;
-		text: (self aboutTemplate expandMacrosWith: VM fullVersion);
+		headline: 'Simple Notepad Sample';
+		text: VM fullVersion;
+		detailsText: 'This is a slightly reduced functionality implementation of the standard system utility NOTEPAD.EXE, intended to demonstrate the DocumentShell hierarchy of Dolphin''s application framework.
+
+DISCLAIMER: This software is freely provided purely as an educational sample and as such it is provided "as is", WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.';
 		open!
-
-aboutTemplate
-	"Private - Answer the text to be used in the receiver's about box"
-
-	^'Simple Notepad Sample<n><1s><n>
-This is a slightly reduced functionality implementation of the standard system utility NOTEPAD.EXE,
-intended to demonstrate the DocumentShell hierarchy of Dolphin''s application framework.<n>
-DISCLAIMER: This software is freely provided purely as an educational sample and as such it
-is provided "as is", WITHOUT ANY WARRANTY; without even the implied warranty of 
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.'!
 
 closeResourceLib
 	ResourceLib isNil ifFalse: [ResourceLib close. ResourceLib := nil].
@@ -151,7 +145,6 @@ uninitialize
 	self closeResourceLib! !
 !UI.Examples.Notepad class categoriesForMethods!
 about!enquiries!private! !
-aboutTemplate!enquiries!private! !
 closeResourceLib!helpers!private! !
 displayOn:!displaying!public! !
 icon!constants!public! !

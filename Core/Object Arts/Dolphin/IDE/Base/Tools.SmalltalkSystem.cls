@@ -142,25 +142,29 @@ addClass: class toProtocol: newProtocol
 	missing := newProtocol selectors reject: [:s | class canUnderstand: s].
 	missing notEmpty
 		ifTrue: 
-			[| stm |
+			[| stm args |
 			stm := String smalltalkWriteStream: 256.
 			stm
-				nextPutAll: class name;
-				nextPutAll: ' does not currently implement or inherit the following selectors from';
-				cr;
-				nextPutAll: 'the protocol ';
+				nextPutAll: 'The selectors of ';
 				display: newProtocol;
-				nextPut: $;;
-				cr;
+				nextPutAll: ' that are missing implementations in ';
+				print: class;
+				nextPutAll: ' are:';
 				cr.
-			missing do: [:each | stm print: each] separatedBy: [stm space].
-			stm
-				cr;
-				cr;
-				nextPutAll: 'Stub implementations will be automatically generated for the missing selectors.';
-				cr;
-				nextPutAll: 'Do you still wish to add the protocol to the class?'.
-			(MessageBox new confirm: stm contents) ifFalse: [^false]].
+			missing do: 
+					[:m |
+					stm
+						cr;
+						nextPutAll: '    ';
+						display: m].
+			args := {class. newProtocol}.
+			(MessageBox new
+				headline: 'Adding protocol <2d> to <1p>' << args;
+				detailsText: stm contents;
+				confirm: 'Stub methods will be generated for selectors of <2d> that <1p> does not currently implement or inherit.
+<n>Do you still wish to add the protocol to the class?'
+							<< args)
+					ifFalse: [^false]].
 	newProtocol addClass: class.
 	self classChanged: class.
 	^true!
@@ -1276,7 +1280,8 @@ classHierarchy
 clearChangeHistory
 	"Discard system change history (i.e. undo/redo list)."
 
-	(MessageBox
+	(MessageBox new
+		headline: 'Clear change history?';
 		confirm: 'Are you sure you want to clear the change history (undo/redo for past changes will be lost)?')
 			ifTrue: [self nukeChangeHistory]!
 
@@ -1342,6 +1347,7 @@ closeAll
 	mb := MessageBox new.
 	mb beTaskModal.
 	(mb
+		headline: 'Close all windows?';
 		confirm: 'All open windows will be closed, but you will be prompted to save or retain any changes.
 
 Are you sure that you would like to proceed?')
@@ -1675,18 +1681,15 @@ deleteClassHierarchy: aClass
 	changes := CompositeRefactoryChange new.
 	subclasses isEmpty
 		ifTrue: 
-			[mb caption: 'Delete Class…'.
-			"mb isSuppressible: (self referencesTo: aClass in: scope) isEmpty."
-			prompt := 'Are you sure you want to delete <1s>?' << oldClassName.
-			changes name: ('Delete <1s>' expandMacrosWith: oldClassName)]
+			[prompt := 'Are you sure you want to delete the class <1s>?' << oldClassName.
+			changes name: 'Delete <1s>' << oldClassName]
 		ifFalse: 
-			[mb caption: 'Delete Class Hierarchy…'.
-			prompt := 'Are you sure you want to delete <1s> and its <2p> subclass(es)?'
-						expandMacrosWith: oldClassName
-						with: subclasses size.
-			changes name: ('Delete <1s> and subclasses' expandMacrosWith: oldClassName)].
-	(mb confirm: ('<1s><n><n>The change is undoable, but beware of deleting essential classes.'
-				expandMacrosWith: prompt))
+			[prompt := 'Are you sure you want to delete <1s> and its <2p> subclass(es)?'
+						<< {oldClassName. subclasses size}.
+			changes name: 'Delete <1s> and subclasses' << oldClassName].
+	mb headline: changes name , '?'.
+	(mb confirm: prompt
+				, '<n><n>The change is undoable, but beware of deleting essential classes.' expandMacros)
 		ifFalse: [^false].
 	removedGlobals := OrderedCollection new.
 	references := scope referencesToVariable: aClass binding.
@@ -1850,10 +1853,11 @@ findMatchingClass: aString in: aBrowserEnvironment
 				asSortedCollection.
 	classes isEmpty
 		ifTrue: 
-			[(MessageBox confirm: ('No class matching <1p> in <2p><N><N>Would you like to try again?'
-						expandMacrosWith: aString
-						with: aBrowserEnvironment)
-				caption: 'Find Class…') ifTrue: [^nil] ifFalse: [OperationAborted signal]].
+			[(MessageBox new
+				headline: 'Find Class again?';
+				confirm: 'There is no class matching <1p> in <2p>' << {aString. aBrowserEnvironment})
+					ifTrue: [^nil]
+					ifFalse: [OperationAborted signal]].
 	className := classes size = 1
 				ifTrue: [classes first]
 				ifFalse: 
@@ -2077,7 +2081,7 @@ installPackage: aString
 			| mb |
 			mb := MessageBox new.
 			mb beTaskModal.
-			mb caption: ('Error installing <1p>' expandMacrosWith: aString).
+			mb headline: 'Error installing <1p>' << aString.
 			mb errorMsg: ex description.
 			#()]
 		on: manager prerequisiteNotFoundSignal
@@ -2458,28 +2462,26 @@ onDropOverProtocol: session
 	do a drop into the protocols pane.
 	Override this method to accept the dragObject(s)."
 
-	| target |
+	| target methods |
 	target := session suggestedTarget.
 	target isNil
 		ifTrue: 
 			[Sound errorBeep.
 			^false].
+	methods := (session dragObjects select: [:each | each isFormatAvailable: #CompiledMethod])
+				collect: [:each | each format: #CompiledMethod].
+	session isCopy
+		ifTrue: 
+			[methods := methods reject: [:each | target includesSelector: each selector].
+			methods do: [:each | self addMethod: each toProtocol: target]]
+		ifFalse: 
+			[session isLink
+				ifTrue: 
+					[self removeSelectors: ((methods select: [:each | target includesSelector: each selector])
+								collect: [:each | each selector])
+						fromProtocol: target]].
 	session dragObjects do: 
 			[:each |
-			"See if the drop is a CompiledMethod"
-			(each isFormatAvailable: #CompiledMethod)
-				ifTrue: 
-					[| method selectorPresent |
-					method := each format: #CompiledMethod.
-					selectorPresent := target includesSelector: method selector.
-
-					"Check for a copy to additional protocol"
-					(selectorPresent not and: [session isCopy]) ifTrue: [self addMethod: method toProtocol: target].
-
-					"Check for a removal from a protocol"
-					(selectorPresent and: [session isLink])
-						ifTrue: [self removeSelector: method selector fromProtocol: target]].
-
 			"See if the drop is a Class"
 			(each isFormatAvailable: #Class)
 				ifTrue: 
@@ -3500,14 +3502,17 @@ registerTool: aToolClass
 
 	self class registerTool: aToolClass!
 
-removeClass: class fromProtocol: protocol
-	"Private - Remove the <Class> class from the <MethodProtocol> protocol."
+removeClass: aClassDescription fromProtocol: aMethodProtocol
+	"Private - Remove the specified class from the specified <MethodProtocol>."
 
-	(MessageBox
-		confirm: ('Are you sure you would like to remove the class <1p> from method protocol <2d>?<n><n>(The class will not be deleted, but it and any subclasses will no longer conform to <2d>)'
-				expandMacrosWith: class
-				with: protocol))
-			ifTrue: [protocol removeClass: class]!
+	| args |
+	args := {aClassDescription. aMethodProtocol}.
+	(MessageBox new
+		headline: 'Remove <1p> from <2d>?' << args;
+		detailsText: 'The class will not be deleted, but it and any subclasses will no longer conform to <2d>'
+					<< args;
+		confirm: 'Are you sure you would like to remove the class <1p> from method protocol <2d>?' << args)
+			ifTrue: [aMethodProtocol removeClass: aClassDescription]!
 
 removeMethod: aCompiledMethod
 	"Removes the <CompiledMethod>, method, from its class after first verifying with the user.
@@ -3535,7 +3540,7 @@ removeMethod: aCompiledMethod changes: aCompositeRefactoryChange
 			[| s |
 			(s := aCompiledMethod methodClass superclass) notNil and: [s canUnderstand: sel]])
 		ifFalse: 
-			[| stream desc plural response |
+			[| stream desc plural response args |
 			stream := String writeStream.
 			(plural := prots size > 1)
 				ifFalse: 
@@ -3546,17 +3551,19 @@ removeMethod: aCompiledMethod changes: aCompositeRefactoryChange
 					[stream nextPutAll: 's '.
 					prots asSortedCollection do: [:p | p displayOn: stream] separatedBy: [stream nextPutAll: ', ']].
 			desc := stream contents.
+			args := {sel. desc. aCompiledMethod methodClass. plural ifTrue: ['s'] ifFalse: ['']}.
 			response := MessageBox new
+						iconStyle: #warning;
+						buttonStyle: #yesNoCancel;
 						defaultButton: 3;
-						confirmOrCancel: ('<1p> is part of the implementation of the protocol<2s> in <3p> and/or its subclasses.<n>
-Are you sure that you would like to remove <1p> from the protocol<4s> as well as from the class?<n>
-Press Yes to remove the method from <3p>, and its selector from the protocol<2s>. <3p> will still conform to the reduced protocol<4s>, but contracting protocols can affect other conforming classes or the users of those classes.<n>
+						headline: 'Remove method from class and protocol?';
+						text: '<1p> is part of the implementation of the protocol<2s> in <3p> and/or its subclasses.<n><n>Are you sure that you would like to remove <1p> from the protocol<4s> as well as from the class?'
+									<< args;
+						detailsText: 'Press Yes to remove the method from <3p>, and its selector from the protocol<2s>. <3p> will still conform to the reduced protocol<4s>, but contracting protocols can affect other conforming classes or the users of those classes.<n>
 Press No to remove the method and the dependent protocol <2s> from <3p> and subclasses. <3p> will no longer conform to the protocol<4s>, which might affect the users of <3p> or its subclasses. The protocol<4s> will be unaffected.<n>
 It is recommended that you press Cancel to abort deletion unless you are absolutely sure.'
-									expandMacrosWith: sel
-									with: desc
-									with: aCompiledMethod methodClass
-									with: (plural ifTrue: ['s'] ifFalse: [''])).
+									<< args;
+						open.
 			response == #cancel ifTrue: [^OperationAborted signal].
 			response == #yes ifTrue: [prots do: [:p | p removeSelector: sel]]
 			"Removing the selector from the class will remove protocols from the class and subclasses"].
@@ -3579,7 +3586,7 @@ removeMethods: aCollectionOfMethods
 		do: 
 			[:each |
 			stream
-				crtab;
+				cr; nextPutAll: '    ';
 				display: each].
 	methods size > max
 		ifTrue: 
@@ -3592,57 +3599,64 @@ removeMethods: aCollectionOfMethods
 		cr;
 		cr;
 		nextPutAll: 'Are you sure that you wish to proceed?'.
-	(MessageBox confirm: stream contents caption: 'Delete Methods…') ifFalse: [^self].
+	(MessageBox new
+		headline: 'Remove methods?';
+		confirm: stream contents) ifFalse: [^self].
 	self basicRemoveMethods: methods!
 
 removeMethodsIn: aBrowserEnvironment 
 	self basicRemoveMethods: aBrowserEnvironment allMethods!
 
 removeMethodsIn: methodsEnvironment within: searchEnvironment
-	(MessageBox confirm: 'Are you sure you would like to remove <1p>?' << methodsEnvironment
-		caption: 'Remove Methods…') ifTrue: [self removeMethodsIn: methodsEnvironment]!
+	(MessageBox new
+		headline: 'Remove methods?';
+		confirm: 'Are you sure you would like to remove <1p>?' << methodsEnvironment)
+			ifTrue: [self removeMethodsIn: methodsEnvironment]!
 
 removeSelector: sel fromProtocol: target
 	"Remove the <Symbol> selectors, sels from the <MethodProtocol>,	target."
 
 	self removeSelectors: {sel} fromProtocol: target!
 
-removeSelectors: sels fromProtocol: target
-	"Remove the <collection> of selectors, sels, from the <MethodProtocol>,
-	target.
-	Implementation Note: This is an important operation so we need to warn 
-	the user of its consequences."
+removeSelectors: aCollection fromProtocol: aMethodProtocol
+	"Remove the specified <collection> of selectors from the specified <MethodProtocol>."
 
-	| response stream list mb |
-	list := sels asArray.
-	list isEmpty ifTrue: [^self].
-	stream := WriteStream on: String new.
-	stream tab nextPutAll: list first printString.
-	(list copyWithout: list first) do: 
-			[:each |
-			stream
-				nextPutAll: ', ';
-				nextPutAll: each printString].
-	mb := MessageBox new.
-	mb defaultButton: 2.
-	mb buttonStyle: #okCancel.
-	mb iconStyle: #prompt.
-	mb
-		text: ('Are you sure that you would like to remove the following selectors
-from the protocol <1p>?<n><n><2s>
+	"Implementation Note: This is an important operation so we need to warn the user of its consequences."
 
-Removing selectors from a protocol may affect other conforming
-classes or the users of those classes. 
-
-It is recommended that you cancel this operation unless you are sure.'
-				expandMacrosWith: target
-				with: stream contents).
-	response := mb open.
+	| count prompt response |
+	count := aCollection size.
+	count == 0 ifTrue: [^self].
+	prompt := count == 1
+				ifTrue: 
+					['Are you sure that you would like to remove the selector <1p> from the protocol <2d>?'
+						<< {aCollection anyOne. aMethodProtocol}]
+				ifFalse: 
+					[| stream |
+					stream := String writeStream.
+					stream
+						nextPutAll: 'Are you sure that you would like to remove the following selectors from the protocol?';
+						cr.
+					aCollection asSortedCollection do: 
+							[:each |
+							stream
+								cr;
+								nextPutAll: '    ';
+								display: each].
+					stream contents].
+	response := MessageBox new
+				defaultButton: 2;
+				buttonStyle: #okCancel;
+				iconStyle: #prompt;
+				headline: 'Remove selectors from <1d>' << aMethodProtocol;
+				text: prompt;
+				detailsText: 'Removing selectors from a protocol may also affect other conforming classes or the users of those classes.<n><n>It is recommended that you cancel this operation unless you are sure.'
+							expandMacros;
+				open.
 	response == #ok
 		ifTrue: 
 			[Cursor wait showWhile: 
-					[target removeAllSelectors: sels.
-					target baseBehaviors do: [:each | self classChanged: each]]]!
+					[aMethodProtocol removeAllSelectors: aCollection.
+					aMethodProtocol baseBehaviors do: [:each | self classChanged: each]]]!
 
 removeSystemFolderIcon: aSmalltalkSystemIcon 
 	"#deprecated." "6.0 - not marked as deprecated as otherwise causes error on deployment with third party tools installed"

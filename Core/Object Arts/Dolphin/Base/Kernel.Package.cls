@@ -2200,7 +2200,7 @@ initialize
 				yourself.
 	ClashSignal := Signal resumableDescription: 'Package contents clash'.
 	UnsaveableSignal := Signal
-				description: 'Package cannot be saved (check for cyclic dependencies or unpackaged prereqs)'.
+				description: 'Package cannot be saved (check for cyclic dependencies or unpackaged prerequisites)'.
 	CheckTimestamps := true.
 	BinaryPacLoader := nil!
 

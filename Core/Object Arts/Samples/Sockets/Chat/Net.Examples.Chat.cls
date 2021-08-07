@@ -110,9 +110,10 @@ connect
 	self invalidateUserInterface.
 	self forkConnector: sock!
 
-connectFailed: aSocketError 
-	MessageBox errorMsg: aSocketError messageText
-		caption: ('Unable to connect to <1d>' expandMacrosWith: self calleeAddress).
+connectFailed: aSocketError
+	MessageBox new
+		headline: 'Unable to connect to <1d>' << self calleeAddress;
+		errorMsg: aSocketError messageText.
 	self setAcceptStatus!
 
 createComponents

@@ -314,8 +314,10 @@ browseDeployed
 	[self systemModel browseDeployedPackage: self singlePackage] on: Error
 		do: 
 			[:ex |
-			MessageBox errorMsg: 'Invalid Manifest'
-				caption: ('Error browsing <1d>' expandMacrosWith: self singlePackage)]!
+			MessageBox new
+				headline: 'Error browsing <1d>' << self singlePackage;
+				detailsText: ex description;
+				errorMsg: 'Invalid Manifest']!
 
 browsePackageSources
 	"Private - Open a browser on the sources for the currently selected package."

@@ -66,7 +66,10 @@ aboutControl
 				| caption |
 				caption := self progId.
 				caption size > 50 ifTrue: [caption := (caption leftString: 50) , '…'].
-				MessageBox warning: 'Sorry, the control refused to show its about box.' caption: caption]!
+				MessageBox new
+					detailsText: e description;
+					caption: caption;
+					errorMsg: 'Sorry, the control refused to show its about box.']!
 
 allowContextMenu
 	"Answer whether the embedded control is permitted to pop a context menu.
@@ -326,15 +329,15 @@ editControlProperties
 	(wasDesignMode := self isDesignMode) ifFalse: [self isDesignMode: true].
 	hr := [self doVerb: -7	"OLEIVERB_PROPERTIES"] on: HRESULTError
 				do: 
-					[:e | 
+					[:e |
 					error := e description.
 					e hresult asInteger].
-	hr ~= S_OK 
+	hr ~= S_OK
 		ifTrue: 
 			[error isNil ifTrue: [error := (HRESULT fromInteger: hr) displayString].
-			MessageBox 
-				errorMsg: 'Sorry, the control reports that it cannot display its property dialog at this time.'
-				caption: error].
+			MessageBox new
+				detailsText: error;
+				errorMsg: 'Sorry, the control reports that it cannot display its property dialog at this time.'].
 	wasDesignMode ifFalse: [self isDesignMode: false]!
 
 eventSinkClass

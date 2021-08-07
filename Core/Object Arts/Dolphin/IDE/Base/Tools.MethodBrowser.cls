@@ -977,10 +977,11 @@ saveNewMethod: aString
 					methodClass := context methodClass.
 					(methodClass includesSelector: selector)
 						ifTrue: 
-							[(MessageBox confirm: ('<1p> already defines <2p><n><n>Are you sure you would like to overwrite it?'
-										expandMacrosWith: methodClass
-										with: selector))
-								ifFalse: [^nil]]]].
+							[(MessageBox new
+								headline: 'Overwrite existing method?';
+								confirm: '<1p> already defines <2p><n><n>Are you sure you would like to overwrite it?'
+											<< {methodClass. selector})
+									ifFalse: [^nil]]]].
 	parentPresenter saveNewMethod: aString!
 
 searchEnvironment

@@ -224,7 +224,9 @@ terminateProcess
 
 	| proc |
 	proc := self process.
-	(MessageBox confirm: 'Are you sure you want to terminate the process?') ifTrue: [proc terminate]!
+	(MessageBox new
+		headline: 'Terminate process <1d>?' << proc id;
+		confirm: 'Are you sure you want to terminate the process?') ifTrue: [proc terminate]!
 
 updateInterval
 	^updateInterval!

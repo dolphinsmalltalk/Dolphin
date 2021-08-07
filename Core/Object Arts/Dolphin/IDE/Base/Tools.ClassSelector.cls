@@ -40,8 +40,8 @@ actualClass: class
 	^self actualClass: class
 		ifAbsent: 
 			[MessageBox new
-				owner: self view;
-				errorMsg: class name , ' is not available for browsing']!
+				owner: self view topView;
+				errorMsg: '<1p> is not available for browsing' << class]!
 
 actualClass: aClass ifAbsent: exceptionHandler
 	"Sets the actual class selected and determines the current mode."
@@ -122,8 +122,8 @@ browsePublishedAspects
 	| class pubs choice |
 	class := self selection.
 	pubs := class publishedAspectsOfInstances.
-	pubs isEmpty ifTrue: [^MessageBox notify: class displayString , ' does not publish any aspects.'].
-	choice := ChoicePrompter choices: pubs asSortedCollection caption: class name , ' published aspects'.
+	pubs isEmpty ifTrue: [^MessageBox notify: '<1p> does not publish any aspects.' << class].
+	choice := ChoicePrompter choices: pubs asSortedCollection caption: '<1p> published aspects' << class.
 	choice notNil ifTrue: [choice name copyToClipboard].
 	^choice!
 
@@ -131,12 +131,11 @@ browsePublishedEvents
 	"Browse the published events that can be triggered by instances of the current class.
 	Copy the chosen symbolic event name (if any) to the clipboard."
 
-	| pubEvents choice class name |
+	| pubEvents choice class |
 	class := self selection.
 	pubEvents := class publishedEventsOfInstances asSortedCollection.
-	name := class name.
-	pubEvents isEmpty ifTrue: [^MessageBox notify: name , ' does not publish any events.'].
-	choice := ChoicePrompter choices: pubEvents caption: name , ' published events'.
+	pubEvents isEmpty ifTrue: [^MessageBox notify: '<1p> does not publish any events.' << class].
+	choice := ChoicePrompter choices: pubEvents caption: '<1p> published events' << class.
 	choice notNil ifTrue: [choice printString copyToClipboard].
 	^choice!
 
@@ -337,9 +336,9 @@ dropClass: aSourceClass onto: aTargetClass changes: aCompositeRefactoryChange
 
 	(aSourceClass == aTargetClass or: 
 			[aSourceClass superclass == aTargetClass or: 
-					[(MessageBox
-						confirm: ('Move class <1p> to be subclass of <2p>?' expandMacrosWith: aSourceClass with: aTargetClass))
-							not]])
+					[(MessageBox new
+						headline: 'Move <1p> to be a subclass of <2p>?' << {aSourceClass. aTargetClass};
+						confirm) not]])
 		ifTrue: [^self].
 	aCompositeRefactoryChange addChange: (MoveClassChange move: aSourceClass toSuperclass: aTargetClass)!
 
@@ -349,10 +348,11 @@ dropMethod: aCompiledMethod onto: aClass changes: aCompositeRefactoryChange
 
 	(aClass == aCompiledMethod methodClass or: 
 			[(aClass includesSelector: aCompiledMethod selector) and: 
-					[(MessageBox confirm: ('The selector <1p> already exists in <2p><n><n>Do you wish to overwrite it?'
-								expandMacrosWith: aCompiledMethod selector
-								with: aClass))
-						not]])
+					[| args |
+					args := {aCompiledMethod selector. aClass}.
+					(MessageBox new
+						headline: 'Overwrite <1p> in <2p>?' << args;
+						confirm: 'Are you sure that you would like to replace the existing implementation of <1p> in <2p>?' << args) not]])
 		ifTrue: [^false].
 	"If the method was not compiled in the same environment as the class from which it was dragged, we preserve that namespace, 
 	otherwise we compile it in the target class' namespace"
@@ -492,12 +492,12 @@ onClass: aClass renameTo: text accept: booleanValue
 		ifTrue: 
 			[booleanValue value: false.
 			^self].
-	(MessageBox confirm: ('Are you sure you would like to rename the class <1s> to <2s>?'
-				expandMacrosWith: aClass fullName
-				with: text))
-		ifTrue: 
-			["Queue deferred action as we can't delete the old item now while still in use (causes GPF in TreeView)"
-			[self onClass: aClass renamedTo: text] postToMessageQueue]!
+	(MessageBox new
+		headline: 'Rename <1p> to <2s>?' << {aClass fullName. text};
+		confirm)
+			ifTrue: 
+				["Queue deferred action as we can't delete the old item now while still in use (causes GPF in TreeView)"
+				[self onClass: aClass renamedTo: text] postToMessageQueue]!
 
 onDrag: session
 	"Private - A class drag has been started. Populate the <DragDropSession>, 
@@ -589,7 +589,7 @@ onDropOver: aDragDropSession
 			(each isFormatAvailable: #MethodProtocol)
 				ifTrue: [self systemModel addClass: dropClass toProtocol: (each format: #MethodProtocol)]].
 	aDragDropSession resetOperation.
-	self performDropChanges: changes target: Object!
+	self performDropChanges: changes target: dropClass!
 
 onSelectionChanged
 	"Sent by #onSelChange when the receiver's selection has changed.
@@ -641,6 +641,7 @@ performDropChanges: aCompositeRefactoryChange target: aClass
 			[MessageBox new
 				uniqueId: [self] method;
 				isSuppressible: true;
+				headline: 'Compilation errors occurred';
 				warning: ('<1p> dropped method(s) failed to compile in <2p>.<n><n>Check Transcript for details.'
 							expandMacrosWith: errors
 							with: aClass)]!
@@ -768,11 +769,15 @@ queryMoveClass: aClass toPackage: aPackage
 	"Private - Move aClass from its existing package to the receiver's current package if
 	the user agrees."
 
-	| classPackage response packMan subclasses |
+	| classPackage packMan subclasses mb response |
 	packMan := self systemModel packageManager.
 	classPackage := packMan packageOfClass: aClass.
-	subclasses := (aClass allSubclasses collect: [:s | Pair first: s second: (packMan packageOfClass: s)])
-				select: [:a | a second isNil or: [a second == classPackage]].
+	subclasses := (aClass allSubclasses
+				collect: [:s | Pair first: s second: (packMan packageOfClass: s)])
+					select: [:a | a second isNil or: [a second == classPackage]].
+	mb := MessageBox new.
+	mb
+		headline: 'Move <1p> to package <2p>?' << {aClass. aPackage name}.
 	classPackage isNil
 		ifTrue: [response := #yes	"Move all subclasses without package too"]
 		ifFalse: 
@@ -781,10 +786,8 @@ queryMoveClass: aClass toPackage: aPackage
 						with: classPackage name.
 			subclasses isEmpty
 				ifTrue: 
-					[prompt := '<1s>.<n><n>Are you sure you would like to move it to <2p>?' expandMacrosWith: prompt
-								with: aPackage name.
-					response := MessageBox new
-								caption: 'Moving class to new package…';
+					[prompt := (prompt , '<n><n>Are you sure you would like to move it to <1p>?') << aPackage name.
+					response := mb
 								defaultButton: 2;
 								confirm: prompt.
 					response ifFalse: [^false]]
@@ -795,7 +798,7 @@ queryMoveClass: aClass toPackage: aPackage
 Would you like to move its subclasses in <1p>, or without a package, too?'
 										expandMacrosWith: classPackage name
 										with: aPackage name).
-					(response := MessageBox new confirmOrCancel: prompt) == #cancel ifTrue: [^false]]].
+					(response := mb confirmOrCancel: prompt) == #cancel ifTrue: [^false]]].
 	packMan addClass: aClass to: aPackage.
 	response == #yes
 		ifTrue: 

@@ -279,14 +279,16 @@ onCardChangedFrom: previousView to: currentView
 	self updateCaption.
 	cardHistory visit: currentView!
 
-onCloseRequested: aBooleanValue 
+onCloseRequested: aBooleanValue
 	"Private - A request to close the view onto the receiver as occurred.
 	Prompt to save any outstanding changed"
 
 	self cards isEmpty ifTrue: [^aBooleanValue value].
-	(MessageBox confirm: 'Are you sure you wish to close this IdeaSpace?') 
-		ifTrue: [aBooleanValue value: (self cards allSatisfy: [:each | each view queryClose])]
-		ifFalse: [aBooleanValue value: false].
+	(MessageBox new
+		headline: 'Close this IdeaSpace?';
+		confirm)
+			ifTrue: [aBooleanValue value: (self cards allSatisfy: [:each | each view queryClose])]
+			ifFalse: [aBooleanValue value: false].
 	^aBooleanValue value!
 
 onIdleEntered
@@ -425,19 +427,20 @@ saveIdeaSpace
 	| saved |
 	saved := false.
 	
-	[self hasFilename 
+	[self hasFilename
 		ifTrue: 
 			[| stream |
 			stream := FileStream write: self filename text: true.
 			stream locale: Locale smalltalk.
 			[self saveStateOn: stream] ensure: [stream close].
 			saved := true]
-		ifFalse: [saved := self saveIdeaSpaceAs]] 
+		ifFalse: [saved := self saveIdeaSpaceAs]]
 			on: FileException
 			do: 
-				[:e | 
-				MessageBox errorMsg: 'Unable to save file ' , e file name printString
-					caption: 'Error - ' , e messageText].
+				[:e |
+				MessageBox new
+					headline: 'Unable to save file <1p>' << e file name;
+					errorMsg: e messageText].
 	^saved!
 
 saveIdeaSpaceAs
@@ -449,9 +452,9 @@ saveIdeaSpaceAs
 				showModal.
 	(proceed := newFilename notNil and: 
 					[(File exists: newFilename) not or: 
-							[MessageBox confirm: '<1s><n>This file already exists, are you sure you would like to overwrite it?'
-										<< newFilename
-								caption: SessionManager current applicationName]])
+							[MessageBox new
+								headline: 'Overwrite <1s>?' << newFilename;
+								confirm: 'The file already exists, are you sure you would like to overwrite it?']])
 		ifTrue: 
 			["Install the new filename"
 			self

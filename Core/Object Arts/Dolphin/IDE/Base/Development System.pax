@@ -4434,14 +4434,14 @@ okToContinue
 	| mb severity |
 	severity := self severityClass.
 	mb := MessageBox new
-				caption: 'Compilation ' , self severityName;
+				headline: 'Compilation <1s>' << self severityName;
 				text: ('line <1p>: <2s>' expandMacrosWith: self line with: self errorMessage);
 				iconStyleFlag: severity mbIconId;
 				yourself.
 	^severity == Error
 		ifTrue: 
 			[mb
-				ok;
+				buttonStyle: #ok;
 				open.
 			false]
 		ifFalse: 
@@ -7215,8 +7215,9 @@ editNewDefaultView
 	resName isNil ifTrue: [^self].
 	resourceIdentifier := ResourceIdentifier class: self name: resName.
 	(resourceIdentifier exists not or: 
-			[MessageBox
-				confirm: ('<1p> already exists. Do you wish to overwrite it?' expandMacrosWith: resourceIdentifier)])
+			[MessageBox new
+				headline: 'Overwrite <1p>?' << resourceIdentifier;
+				confirm: '<1p> already exists. Do you wish to overwrite it?' << resourceIdentifier])
 		ifFalse: [^self].
 	vc := SmalltalkSystem current openViewComposerEmpty.
 	vc
@@ -8550,8 +8551,9 @@ editNewDefaultView
 	resName isNil ifTrue: [^self].
 	resourceIdentifier := ResourceIdentifier class: self name: resName.
 	(resourceIdentifier resourceOrNil isNil or: 
-			[MessageBox
-				confirm: ('<1p> already exists. Do you wish to overwrite it?' expandMacrosWith: resourceIdentifier)])
+			[MessageBox new
+				headline: 'Overwrite existing view?';
+				confirm: '<1p> already exists. Do you wish to overwrite it?' << resourceIdentifier])
 		ifFalse: [^self].
 	resourceIdentifier assign: view literalStoreArray.
 	view destroy.

@@ -716,10 +716,11 @@ dereference
 
 	| referenceView dereferencedView |
 	referenceView := self primarySelection.
-	(MessageBox
+	(MessageBox new
+		headline: 'Dereference selected ReferenceView?';
 		confirm: 'This reference to ''<1d>'' will be replaced by a copy.<n><n>Are you sure you want to continue?'
-				<< referenceView resourceIdentifier
-		caption: 'Dereference to copy…') ifFalse: [^self].
+					<< referenceView resourceIdentifier)
+			ifFalse: [^self].
 	self eraseAdornment.
 	dereferencedView := self basicPasteResource: referenceView resource
 				context: referenceView parentView.
@@ -1593,17 +1594,17 @@ onInspecteeChanged
 	viewHierarchyPresenter model refresh: self primarySelection.
 	self isModified: true!
 
-onPromptToSaveChanges: aBooleanValue 
+onPromptToSaveChanges: aBooleanValue
 	"Private - Check to see if the composing view has been changed. 
 	If so prompt to see if the changes should be retained and if they should then
 	set the value of the out parameter, aBooleanValue, to false"
 
-	self isModified 
+	self isModified
 		ifTrue: 
-			[((MessageBox new)
+			[(MessageBox new
 				owner: self view;
-				headerText: 'There are unsaved changes';
-				confirm: 'Do you wish to retain them?') 
+				headline: 'There are unsaved changes';
+				confirm: 'Do you wish to retain them?')
 					ifTrue: [aBooleanValue value: false]
 					ifFalse: [self isModified: false]].
 	^aBooleanValue value!
@@ -2369,8 +2370,13 @@ viewRevert
 
 	| rid |
 	rid := resourceIdentifier.
-	(MessageBox confirm: 'Are you sure you wish to revert to the previously saved copy?') ifTrue: [ 
-		self endComposition; openOn: rid ].!
+	(MessageBox new
+		headline: 'Revert to saved view?';
+		confirm: 'Are you sure you wish to revert to the previously saved copy?')
+			ifTrue: 
+				[self
+					endComposition;
+					openOn: rid]!
 
 viewSave
 	"Save the view as a resource."
@@ -2393,7 +2399,9 @@ viewSaveAs
 		ifTrue: 
 			[| message |
 			message := '''<1d>'' is an existing resource. Do you wish to replace it?' expandMacrosWith: rid.
-			(MessageBox confirm: message) ifFalse: [^false]].
+			(MessageBox new
+				headline: 'Overwrite existing resource?';
+				confirm: message) ifFalse: [^false]].
 	self resourceIdentifier: rid.
 	self
 		updateCaption;

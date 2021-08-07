@@ -23,14 +23,14 @@ allowDuplicate
 	| mb |
 	mb := MessageBox new.
 	mb beTaskModal.
-	mb
+	^mb
 		caption: self applicationName;
 		icon: self icon;
-		buttonStyle: #yesNo;
 		defaultButton: 2;
-		text: ('The image <1p> is already open. You can continue, but you risk corrupting the change log.<n><n>Are you sure that you really want to open the same image again?'
-					expandMacrosWith: self imageFileName).
-	^mb open == #yes!
+		headline: 'The image <1p> is already open' << self imageFileName;
+		text: 'You can continue, but you risk corrupting the change log.<n><n>Are you sure that you really want to open the same image again?'
+					expandMacros;
+		confirm!
 
 appIdString
 	^'5902537A8D4049C394F32CD287656C38'!
@@ -292,7 +292,7 @@ onExit
 
 	^super onExit!
 
-onQueryEndSession: aBooleanValue 
+onQueryEndSession: aBooleanValue
 	"The user has initiated the end of the session, either by shutting down (or logging off of)
 	Window, or by closing the system launcher window. Prompt the user to save the image, and
 	give them the opportunity to abort the shutdown."
@@ -301,12 +301,12 @@ onQueryEndSession: aBooleanValue
 	self isEmbedded ifTrue: [^self].
 	mb := MessageBox new.
 	mb beTaskModal.
-	mb 
-		confirm: 'You are about to exit Dolphin Smalltalk.
-Do you wish to save the image?'
-		onYes: [self saveImage]
-		onNo: []
-		onCancel: [aBooleanValue value: false]!
+	mb
+		headline: 'Exit Dolphin Smalltalk?';
+		confirm: 'Do you wish to save the image?'
+			onYes: [self saveImage]
+			onNo: []
+			onCancel: [aBooleanValue value: false]!
 
 onQueryWindowsShutdown
 	"The Windows OS is shutting down, save the image and allow shutdown"
@@ -349,7 +349,7 @@ open: filename
 		at: 'ST' put: #openWorkspace:;
 		at: 'XML' put: #openXmlFile:;
 		yourself) at: ext ifAbsent: [
-			^MessageBox notify: 'Unable to open ', filename ].
+			^MessageBox notify: 'Unable to open <1s>' << filename ].
 	self perform: openMsg with: filename 
 !
 
@@ -563,8 +563,9 @@ saveImageTo: aString
 			mb := MessageBox new.
 			mb beTaskModal.
 			mb
-				errorMsg: ('The image <1p> is open in another Dolphin instance.<n><n>Close that instance and try again should you still wish to save this image to that name.<n><n>The image has not been saved!!'
-						expandMacrosWith: self imageFileName).
+				headline: 'The image <1p> is open in another Dolphin instance.' << self imageFileName;
+				errorMsg: 'Close that instance and try again should you still wish to save this image to that name.<n><n>The image has not been saved!!'
+							expandMacros.
 			^self].
 	self class sourceManager copyAndReopenSources: self imagePath.
 	self

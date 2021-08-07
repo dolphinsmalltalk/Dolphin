@@ -39,9 +39,10 @@ canSave
 	true] on: DOMParseError
 			do: 
 				[:ex |
-				MessageBox
-					confirm: 'The XML contains one or more errors and is invalid. Are you sure that you would like to save it?'
-					caption: ex tag displayString]!
+				MessageBox new
+					headline: 'Save invalid XML?';
+					detailsText: ex tag displayString;
+					confirm: 'The XML contains one or more errors and is invalid. Are you sure that you would like to save it?']!
 
 hasFormattingMarks
 	^self scintilla whitespaceVisibility ~~ #invisible!
@@ -320,21 +321,16 @@ about
 	"Private - Pop up a little helpful info. about this sample program."
 
 	MessageBox new
-		caption: ('About Dolphin <1d>' expandMacrosWith: self);
+		caption: 'About Dolphin <1d>' << self;
 		icon: self icon;
-		text: (self aboutTemplate expandMacrosWith: VM fullVersion);
+		headline: 'XmlPad Sample';
+		text: VM fullVersion;
+		detailsText: 'XmlPad is a simple text-based XML editor. It is intended to demonstrate the DocumentShell hierarchy of Dolphin''s application framework, the Scintilla view component, and the use of the MSXML.
+
+It is also useful for editing Xml!!
+
+DISCLAIMER: This software is freely provided purely as an educational sample and as such it is provided "as is", WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.';
 		open!
-
-aboutTemplate
-	"Private - Answer the text to be used in the receiver's about box"
-
-	^'XmlPad Sample<n><1s><n>
-XmlPad is a simple text-based XML editor. It is intended to demonstrate the DocumentShell hierarchy 
-of Dolphin''s application framework, the Scintilla view component, and the use of the MSXML. 
-It is also useful for editing Xml!!<n>
-DISCLAIMER: This software is freely provided purely as an educational sample and as such it
-is provided "as is", WITHOUT ANY WARRANTY; without even the implied warranty of 
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.'!
 
 defaultFileExtension
 	"Answer a default extension that will be used for files saved from
@@ -402,7 +398,6 @@ userSettingsRootKey
 	^RegKey userRoot createKey: self installKeyName! !
 !UI.Examples.XmlPad class categoriesForMethods!
 about!enquiries!private! !
-aboutTemplate!enquiries!private! !
 defaultFileExtension!constants!public! !
 displayOn:!displaying!public! !
 explicitDependencies!must not strip!private! !

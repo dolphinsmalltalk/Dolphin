@@ -1046,16 +1046,15 @@ printIt
 prompt: aString toSaveChanges: aSelectionChangingEvent
 	self isModified == true
 		ifTrue: 
-			[| response prompt mb |
+			[| response prompt |
 			self ensureVisible.
 			prompt := aSelectionChangingEvent canIntercept
 						ifTrue: ['Do you wish to retain them?']
 						ifFalse: ['Would you like them copied to the clipboard?'].
-			mb := MessageBox new.
-			mb owner: self view topView.
-			mb headerText: 'There are unsaved <1s> changes' << aString.
-			"mb beTaskModal."
-			response := mb confirm: prompt.
+			response := MessageBox new
+						owner: self view topView;
+						headline: 'There are unsaved <1s> changes' << aString;
+						confirm: prompt.
 			aSelectionChangingEvent canIntercept
 				ifTrue: 
 					[response
@@ -1083,7 +1082,9 @@ promptForVariableName: anObjectRef
 	(Scanner isVariable: name)
 		ifTrue: [true]
 		ifFalse: 
-			[MessageBox errorMsg: ('<1p> is not a valid variable name.' expandMacrosWith: name).
+			[MessageBox new
+				headline: '<1p> is not a valid variable name.' << name;
+				errorMsg.
 			false]]
 			whileFalse: [].
 	^nameValue value!

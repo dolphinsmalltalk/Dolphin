@@ -7406,15 +7406,14 @@ registerTypeLib
 		ifNotNil: 
 			[:lib |
 			UI.MessageBox new
-				notify: ('The type library ''<1s> - <2s>'' was successfully loaded and registered from:<n><n><t><3s>'
-						expandMacrosWith: lib name
-						with: lib helpstring
-						with: lib path)]]
+				headline: 'Loaded type library <1p>' << lib name;
+				notify: 'The type library ''<1s> - <2s>'' was successfully loaded and registered from:<n><n>    <3s>'
+							<< {lib name. lib helpstring. lib path}]]
 			on: Error
 			do: 
 				[:each |
 				UI.MessageBox new
-					caption: 'Unable to register type library…';
+					headline: 'Unable to register type library';
 					errorMsg: each description]!
 
 stonAllInstVarNames

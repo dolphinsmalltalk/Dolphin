@@ -43,7 +43,7 @@ browseIDLOfTypeLib: anAXTypeLibraryAnalyzer
 	Cursor wait showWhile: [anAXTypeLibraryAnalyzer printIDLOn: stream].
 	stream reset.
 	SmalltalkSystem current workspaceShellClass show
-		language: #text;
+		language: #null;
 		streamIn: stream!
 
 chooseAmbientBackcolor
@@ -92,7 +92,11 @@ controlHelp
 					ifTrue: [self browseIDLOfTypeLib: typeLib]]
 		ifFalse: 
 			[[OS.Shell32 shellOpen: filename] on: OS.Win32Error
-				do: [:e | MessageBox errorMsg: e messageText caption: 'Unabled to open help file: ' , filename]]!
+				do: 
+					[:e |
+					MessageBox new
+						headline: 'Unable to open help file: ' , filename;
+						errorMsg: e messageText]]!
 
 controlProperties
 	"Open the control's property dialog (if possible)."

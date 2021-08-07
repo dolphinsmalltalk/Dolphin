@@ -528,12 +528,12 @@ compileFunctionsIntoImplementor: aClass
 	| aStream cat |
 	cat := self generatedFunctionCategories first.
 	((aClass includesCategory: cat) and: 
-			[(UI.MessageBox
-				confirm: ('<1p> already includes the method category ''<2s>''
+			[(UI.MessageBox new
+				headline: 'Overwrite existing methods?';
+				confirm: '<1p> already includes the method category ''<2s>''
 The generated template methods may overwrite existing methods in the class.
 Are you sure you want to proceed?'
-						expandMacrosWith: aClass
-						with: cat))
+							<< {aClass. cat})
 					not])
 		ifTrue: [^self].
 	aStream := (Utf8String new: 256) writeStream.

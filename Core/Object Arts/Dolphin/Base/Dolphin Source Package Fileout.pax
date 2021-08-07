@@ -399,7 +399,7 @@ allFileOutNames
 
 	| answer |
 	answer := OrderedCollection new.
-	self allSourceObjectsDo: [:each | answer add: each fileOutName].
+	self allSourceObjectsDo: [:each | answer addLast: each fileOutName].
 	^answer!
 
 beNotUsingPAX
@@ -408,15 +408,14 @@ beNotUsingPAX
 	presence of a same named PAX file, the receiver assumes it is operating in
 	non-PAX mode for all future save operations."
 
-	| msg names |
+	| names |
 	self isUsingPAX ifFalse: [^self].
 	names := self allFileOutNames.
-	msg := 'Placing this package into PAC mode will delete <2p> PAX source files in the<n>directory <3s>.<n><n>Are you sure that you wish to proceed?'
-				expandMacrosWith: self name
-				with: names size
-				with: self path.
-	(UI.MessageBox confirm: msg caption: 'Convert <1p> to PAC mode…' << self name)
-		ifTrue: [names do: [:each | (File exists: each) ifTrue: [File delete: each]]]!
+	(UI.MessageBox new
+		headline: 'Convert <1p> to PAC mode?' << self name;
+		confirm: 'Placing this package into PAC mode will delete <2p> PAX source files in the directory <3s>.<n><n>Are you sure that you wish to proceed?'
+					<< {self name. names size. self path})
+			ifTrue: [names do: [:each | (File exists: each) ifTrue: [File delete: each]]]!
 
 beUsingPAX
 	"Place the receiver into a mode where it is using PAX source files.
@@ -424,13 +423,12 @@ beUsingPAX
 	presence of a same named PAX file, the receiver assumes it is operating in
 	PAX mode for all future save operations."
 
-	| msg |
 	self isUsingPAX ifTrue: [^self].
-	msg := 'Placing this package into PAX source mode will create <1p> source files<n>in the directory <2s>.<n><n>Are you sure that you wish to proceed?'
-				expandMacrosWith: self allSourceObjects size
-				with: self path.
-	(UI.MessageBox confirm: msg caption: 'Convert <1p> to PAX mode…' << self name)
-		ifTrue: [self fileOutAll]!
+	(UI.MessageBox new
+		headline: 'Convert <1p> to PAX mode?' << self name;
+		confirm: 'Placing this package into PAX source mode will create <1p> source files in the directory <2s>.<n><n>Are you sure that you wish to proceed?'
+					<< {self allSourceObjects size. self path})
+			ifTrue: [self fileOutAll]!
 
 canFileOut
 	"Answer true if the receiver can be filed out. At this stage we just check to ensure that
@@ -443,26 +441,24 @@ checkTimestamps
 	package file. If the package file has been modified since the package was loaded, then warn
 	the user to avoid inadvertent overwrites of later package versions causing loss of changes."
 
-	| mb warning |
+	| mb |
 	(CheckTimestamps and: [self isRenegade]) ifFalse: [^self].
 	mb := UI.MessageBox new.
 	mb
 		uniqueId: [self] method displayString;
-		isSuppressible: true.
-	warning := 'The package <1s> has been modified outside this image since it was loaded or last saved.
-
-	Package timestamp:	 <2d>
-	File modification time: <3d>
-
-If you proceed and save it from this image then you may lose changes that have been written from another session. If you are not sure it is recommended that you cancel this operation and check whether there are unstaged changes in your workspace with your preferred git tooling. 
-
+		isSuppressible: true;
+		headline: 'Overwrite modified package files?';
+		detailsText: ('Package timestamp:	 <1d>
+	File modification time: <2d><n>
+If you proceed and save the package from this image then you may lose changes that have been written from another session. If you are not sure it is recommended that you cancel this operation and check whether there are unstaged changes in your workspace using your preferred git tooling.<n>
 Alternatively you can proceed and overwrite any changes on disk. You can also choose to suppress this warning so it is not shown again, however if you do so then in future modified files will be overwritten regardless of the choice that you make now.'
-				expandMacrosWithArguments: {self name.
-						self timestamp.
-						FILETIME fromInteger: self fileModificationTime}
-				locale: Locale smalltalk.
-	mb okCancel.
-	(mb warning: warning) == #cancel ifTrue: [OperationAborted signal]!
+					expandMacrosWithArguments: {self timestamp. FILETIME fromInteger: self fileModificationTime}
+					locale: Locale smalltalk).
+	mb buttonStyle: #okCancel.
+	(mb
+		warning: 'The package <1p> has been modified outside this image since it was loaded or last saved.<n><n>Are you sure you want to overwrite the modified file(s) on disk?'
+				<< self name)
+			== #cancel ifTrue: [OperationAborted signal]!
 
 createPackagePath
 	"Private - Create the directory where the receiver resides on disk"

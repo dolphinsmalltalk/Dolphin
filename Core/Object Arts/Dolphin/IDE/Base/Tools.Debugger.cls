@@ -1194,12 +1194,16 @@ restartBlockFrame: aStackFrame
 			prompt := 'The home method of the block would appear to have been modified'.
 			(home notNil and: [home isRestartable])
 				ifTrue: 
-					[(MessageBox confirm: prompt , '.
+					[(MessageBox new
+						headline: 'Restart <1d>?' << method;
+						confirm: prompt , '.
 
-Would you like to restart the entire method instead?'
-						caption: 'Restarting a block in ' , method displayString , '…')
+Would you like to restart the entire method instead?')
 							ifTrue: [^self restartMethodFrame: home]]
-				ifFalse: [MessageBox notify: prompt , ', but is not restartable.']].
+				ifFalse: 
+					[MessageBox new
+						headline: 'Block not restartable';
+						notify: prompt , ', but is not restartable.']].
 	aStackFrame makeDebug.
 	aStackFrame = topFrame
 		ifTrue: [self restartBlock: block inFrame: aStackFrame]

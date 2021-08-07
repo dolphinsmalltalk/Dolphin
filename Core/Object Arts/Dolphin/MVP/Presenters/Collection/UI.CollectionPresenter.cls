@@ -143,12 +143,12 @@ promptForExpression: promptString caption: captionString
 						error := ex.
 						ex return: nil].
 			error notNil and: 
-					[| mb |
-					mb := MessageBox new.
-					mb buttonStyle: #yesNo.
-					mb caption: 'Error evaluating expression…'.
-					(mb errorMsg: ('<1d><n><n>Try again?' expandMacrosWithArguments: {error} locale: Locale smalltalk))
-						== #yes]]]
+					[(MessageBox new
+						buttonStyle: #yesNo;
+						iconStyle: #error;
+						caption: 'Error evaluating expression…';
+						headline: error displayString;
+						errorMsg: 'Try again?') == #yes]]]
 			whileTrue.
 	^result!
 

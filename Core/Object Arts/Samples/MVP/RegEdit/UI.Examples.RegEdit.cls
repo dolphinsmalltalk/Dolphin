@@ -433,10 +433,10 @@ about
 	MessageBox new
 		caption: 'About Dolphin Registry Editor';
 		icon: self icon;
-		text: ('Simple Registry Editor Sample.<n>Copyright © Object Arts Ltd, 1998-2011.<n><1s><n>
-This is a reduced functionality implementation of the standard system utility REGEDIT.EXE, intended to demonstrate various features of Dolphin''s application framework such as virtual tree models, and in-place label editing.<n> 
-DISCLAIMER: This software is freely provided purely as an educational sample and as such it is provided "as is", WITHOUT ANY WARRANTY; without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Furthermore, as with the real registry editor extreme care and expert knowledge are required to avoid damaging the installation of the operating system or other software on your machine if any modifications to the registry are attempted. Please take care - we accept no responsibility for any damage to your computer''s configuration which may be caused by the use of this sample.'
-					expandMacrosWith: VM fullVersion);
+		headline: 'Simple Registry Editor Sample.';
+		text: 'Copyright © Object Arts Ltd, 1998-2011.<n><1s>' << VM fullVersion;
+		detailsText: 'This is a reduced functionality implementation of the standard system utility REGEDIT.EXE, intended to demonstrate various features of Dolphin''s application framework such as virtual tree models, and in-place label editing.<n><n>DISCLAIMER: This software is freely provided purely as an educational sample and as such it is provided "as is", WITHOUT ANY WARRANTY; without even the implied warranty of  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. Furthermore, as with the real registry editor extreme care and expert knowledge are required to avoid damaging the installation of the operating system or other software on your machine if any modifications to the registry are attempted. Please take care - we accept no responsibility for any damage to your computer''s configuration which may be caused by the use of this sample.'
+					expandMacros;
 		open!
 
 binaryIcon

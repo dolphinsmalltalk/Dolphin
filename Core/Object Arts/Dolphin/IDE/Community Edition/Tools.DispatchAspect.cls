@@ -29,8 +29,9 @@ writeInto: subjectObject value: valueObject
 	[subjectObject setPropertyId: self dispid value: valueObject] on: OS.HRESULTError
 		do: 
 			[:ex |
-			MessageBox errorMsg: ex description
-				caption: ('Error setting property <1p>' expandMacrosWith: self name)]! !
+			MessageBox new
+				headline: 'Unable to set property <1p>' << self name;
+				errorMsg: ex description]! !
 !Tools.DispatchAspect categoriesForMethods!
 dispid!accessing!public! !
 dispid:!accessing!private! !

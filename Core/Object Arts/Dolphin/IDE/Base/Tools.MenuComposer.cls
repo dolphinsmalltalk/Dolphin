@@ -194,10 +194,12 @@ mutateIntoCommand
 			proceed := true.
 			(item items select: [:e | e command notNil and: [e command ~~ #noCommand]]) notEmpty
 				ifTrue: 
-					[(MessageBox
+					[(MessageBox new
+						caption: 'Mutate Menu into Command…';
+						headline: 'Discard menu sub-items?';
 						confirm: 'The menu <1p> has sub-items that will be lost.<n><n>Are you sure you want to contine?'
-								<< item description
-						caption: 'Mutate Menu into Command…') ifFalse: [proceed := false]].
+									<< item description)
+							ifFalse: [proceed := false]].
 			proceed ifTrue: [self commandItemClass commandDescription: item commandDescription]]!
 
 mutateIntoMenu

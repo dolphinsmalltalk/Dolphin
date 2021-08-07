@@ -158,43 +158,6 @@ addMethodProtocol
 				showModal.
 	newProtocol notNil ifTrue: [self model addClass: actualClass toProtocol: newProtocol]!
 
-addProtocol: newProtocol to: class
-	"Private - Add the <MethodProtocol>, newProtocol, to the <ClassDescription>, class, if
-	either the class already implements all of the methods, or alternatively if the user 
-	agrees to the generation of stub methods. Answer whether the protocol was actually	
-	added."
-
-	"Determine if the class includes the protocol already - if it does, then early out"
-
-	| missing |
-	(class conformsToProtocol: newProtocol) ifTrue: [^false].
-	missing := newProtocol selectors reject: [:s | class canUnderstand: s].
-	missing notEmpty
-		ifTrue: 
-			[| stm |
-			stm := String smalltalkWriteStream: 256.
-			stm
-				nextPutAll: class name;
-				nextPutAll: ' does not currently implement or inherit the following selectors from';
-				cr;
-				nextPutAll: 'the protocol ';
-				display: newProtocol;
-				nextPut: $;;
-				cr;
-				cr.
-			missing do: [:m | stm print: m] separatedBy: [stm space].
-			stm
-				cr;
-				cr;
-				nextPutAll: 'Stub implementations will be automatically generated for the missing selectors.';
-				cr;
-				nextPutAll: 'Do you still wish to add the protocol to the class?'.
-			(MessageBox new
-				owner: self view;
-				confirm: stm contents) ifFalse: [^false]].
-	newProtocol addClass: class.
-	^true!
-
 addToCommandRoute: route
 	"Update the <OrderedCollection>, path, with the receiver's contribution to the command path
 	held by the <CommandPolicy>, route. Answer self to have the command policy decide where
@@ -946,8 +909,9 @@ method: method
 
 	^self method: method
 		ifAbsent: 
-			[MessageBox
-				errorMsg: ('<1p> is not defined in <2p>' expandMacrosWith: method with: self browserEnvironment)]!
+			[MessageBox new
+				headline: '<1p> is not defined in <2p>' << {method. self browserEnvironment};
+				errorMsg]!
 
 method: method ifAbsent: exceptionHandler 
 	"Set's the receiver to browse the <CompiledMethod>, method,
@@ -1544,11 +1508,9 @@ onRenameInstVar: anAssociation to: aString accept: aValueHolder
 					on: Error
 					do: 
 						[:ex |
-						MessageBox errorMsg: ex description
-							caption: ('Rename <1d>.<2d> to <3s>…'
-									expandMacrosWith: anAssociation value
-									with: anAssociation key
-									with: aString).
+						MessageBox new
+							headline: 'Unable to rename the <1d> instance variable ''<2d>'' to ''<3s>''' << {anAssociation key. anAssociation value. aString};
+							errorMsg: ex description.
 						false])!
 
 onRenameMethodProtocol: aMethodProtocol to: aString accept: aValueHolder
@@ -1979,11 +1941,15 @@ recordMethodVisit
 		ifFalse: [history current: method]!
 
 reformatAll
-	(MessageBox
-		confirm: 'Are you sure you want to reformat all methods in the currently selected class?<n><n>(The operation is undoable)'
-				expandMacros)
+	| env |
+	env := classesPresenter selectionEnvironment.
+	(MessageBox new
+		owner: self view;
+		headline: 'Reformat methods in selected class?';
+		confirm: 'Are you sure you want to reformat all methods in <1p>?<n><n>(The operation is undoable)'
+					<< env)
 			ifFalse: [^self].
-	self model reformatAllMethodsIn: classesPresenter selectionEnvironment!
+	self model reformatAllMethodsIn: env!
 
 removeMethod: aCompiledMethod fromCategory: aMethodCategory 
 	"Private - Remove the <CompiledMethod>, method, from the <MethodCategory>,
@@ -1992,43 +1958,18 @@ removeMethod: aCompiledMethod fromCategory: aMethodCategory
 	aMethodCategory removeMethod: aCompiledMethod.
 	aCompiledMethod storeCategories!
 
-removeMethod: method fromProtocol: target
-	"Private - Remove the <CompiledMethod>, method, from the <MethodProtocol>,
-	target, e.g. following a drag-link operation in the category pane.
-	Implementation Note: We can't be sure if the user wishes to remove the selector 
-	from the protocol or the protocol from class of the method, so we must ask. In
-	any case this is a much more important operation than simple method recategorization
-	so we need to warn the user anyway."
-
-	| response |
-	response := MessageBox new
-				defaultButton: 3;
-				confirmOrCancel: ('Are you sure that you would like to remove the selector <2p> from the protocol <1d>?<n>
-Press Yes to remove <2p> from the list of selectors required by the <1d> protocol.
-(May affect other conforming classes or the users of those classes)<n>
-Press No to remove <1d> from the set of protocols to which <3p> conforms.
-(May affect the users of <3p> or its subclasses)<n>
-Press Cancel to abort the operation (recommended).'
-							expandMacrosWith: target
-							with: method selector
-							with: method methodClass).
-	response == #cancel ifTrue: [^self].
-	response == #yes
-		ifTrue: [target removeSelector: method selector ifAbsent: []]
-		ifFalse: 
-			[target removeClass: method methodClass.
-			protocolsPresenter model remove: target]!
-
 removeMethodCategory
 	"Private - Remove the currently selected category without deleting any
 	of the methods."
 
-	| actualClass catModel |
+	| actualClass catModel args |
 	actualClass := self actualClass.
-	(MessageBox
-		confirm: ('Are you sure you would like to remove the method category ''<2d>'' and its sub-categories from <1p>?<n>(No methods will be deleted)'
-				expandMacrosWith: actualClass
-				with: self category))
+	args := {actualClass. self category}.
+	(MessageBox new
+		owner: self view;
+		headline: 'Remove ''<2d>'' from <1p>?' << args;
+		confirm: 'Are you sure you would like to remove the method category ''<2d>'' and its sub-categories from <1p>?<n><n>(No methods will be deleted)'
+					<< args)
 			ifFalse: [^self].
 	self categories do: [:category | category removeClass: actualClass].
 	catModel := categoriesPresenter model.
@@ -2063,13 +2004,13 @@ removeMethodsInProtocol
 	| actualClass |
 	actualClass := self actualClass.
 	self protocols do: 
-			[:p |
+			[:p | | args |
+			args := { actualClass. p}.
 			(MessageBox new
 				defaultButton: 2;
 				owner: self view;
-				confirm: ('Are you sure you would like to remove the protocol <2d> and all of its methods from <1p>?'
-							expandMacrosWith: actualClass
-							with: p))
+				headline: 'Remove <2d> from <1p>?' << args;
+				confirm: 'Are you sure you would like to remove the protocol <2d> and all of its methods from <1p>?' << args)
 					ifTrue: [actualClass removeSelectors: ((p methodsInBehavior: actualClass) collect: [:m | m selector])]]!
 
 removePlugin: aClassBrowserPlugin 
@@ -2490,53 +2431,51 @@ validateProtocol: targetProtocol renameTo: newName
 	classes."
 
 	| otherClasses msg |
-	msg := String writeStream.
 	(Object methodProtocolClass exists: newName)
 		ifTrue: 
-			[msg
-				nextPutAll: 'You cannot rename ';
-				display: targetProtocol;
-				nextPutAll: ' to ';
-				print: newName;
-				nextPutAll: ' because a protocol with that name already exists'.
-			MessageBox errorMsg: msg contents.
+			[MessageBox new
+				headline: 'Unable to rename <1d> to <2p>' << {targetProtocol. newName};
+				errorMsg: 'A protocol named <1p> already exists' << newName.
 			^false].
 	otherClasses := targetProtocol baseBehaviors
 				remove: self actualClass ifAbsent: [];
 				yourself.
 	otherClasses isEmpty
 		ifTrue: 
-			[msg
-				nextPutAll: 'The protocol ';
-				display: targetProtocol;
-				nextPutAll: ' is not currently implemented by any other class hierarchies.';
-				cr;
-				nextPutAll: 'Even so are you sure that you would like to rename it to ';
-				print: newName;
-				nextPut: $?]
+			[msg := String writeStream
+						nextPutAll: 'The protocol ';
+						display: targetProtocol;
+						nextPutAll: ' is not currently implemented by any other class hierarchies.';
+						cr;
+						nextPutAll: 'Even so are you sure that you would like to rename it to ';
+						print: newName;
+						nextPut: $?;
+						contents]
 		ifFalse: 
-			[msg
+			[msg := String writeStream.
+			msg
 				nextPutAll: 'The protocol ';
 				display: targetProtocol;
-				nextPutAll: ' is also implemented by unrelated or superclass hierarchies';
-				cr;
-				nextPutAll: 'with the following roots:';
+				nextPutAll: ' is also implemented by unrelated or superclass hierarchies with the following roots:';
 				cr.
 			otherClasses asSortedCollection do: 
 					[:c |
 					msg
-						crtab;
+						cr;
+						nextPutAll: '    ';
 						display: c].
 			msg
 				cr;
 				cr;
 				nextPutAll: 'If this protocol is renamed these classes or their clients may be adversely affected.';
 				cr;
-				nextPutAll: 'Are you sure that you would like to proceed (not recommended)?'].
+				cr;
+				nextPutAll: 'Are you sure that you would like to proceed (not recommended)?'.
+			msg := msg contents].
 	^MessageBox new
 		defaultButton: 2;
-		caption: 'Renaming protocol ' , targetProtocol displayString;
-		confirm: msg contents!
+		headline: 'Rename protocol <1d> to <2p>?' << {targetProtocol. newName};
+		confirm: msg!
 
 variables
 	"Private - Answer a <collection> of all the instance variables names
@@ -2580,7 +2519,6 @@ addCategoriesOfMethod:!helpers!private! !
 addMethod:toCategory:!operations!private! !
 addMethodCategory!commands!private! !
 addMethodProtocol!commands!private! !
-addProtocol:to:!commands!private! !
 addToCommandRoute:!commands!public! !
 allCategoriesOfMethod:!helpers!private! !
 allCategory!private!updating! !
@@ -2738,7 +2676,6 @@ queryCommand:!commands!private! !
 recordMethodVisit!helpers!private! !
 reformatAll!commands!public! !
 removeMethod:fromCategory:!helpers!private! !
-removeMethod:fromProtocol:!helpers!private! !
 removeMethodCategory!commands!private! !
 removeMethodProtocol!commands!private! !
 removeMethodsInCategory!commands!private! !

@@ -805,7 +805,9 @@ getOptionVariableTypes: choicesCollection selected: suggestionsCollection
 				(global notNil
 					and: [(global isKindOf: Behavior) and: [self model environment includesClass: global]])
 						ifFalse: 
-							[MessageBox errorMsg: ('Sorry, but <1s> is not a valid class name' expandMacrosWith: aString).
+							[MessageBox new
+								headline: 'Sorry, but <1s> is not a valid class name' << aString;
+								errorMsg.
 							nil]
 						ifTrue: [self model classFor: global]];
 		showModal! !
@@ -1935,8 +1937,12 @@ removeDuplicateMethods
 	class := self actualClass.
 	(self systemModel removeMethodsDuplicatedInSuperclassOf: class)
 		ifFalse: 
-			[MessageBox notify: '<1p> does not duplicate any of its superclass'' methods' << class
-				caption: 'Remove Duplicate Methods…']!
+			[MessageBox new
+				iconStyle: #notify;
+				uniqueId: [self] method;
+				isSuppressible: true;
+				headline: '<1p> does not duplicate any of its superclass'' methods' << class;
+				open]!
 
 removeInstanceVariables
 	"Invoke the 'Remove Instance Variable' refactoring on the users choice of instance variables.
@@ -2150,7 +2156,7 @@ addParameterTo: aCompiledMethod
 	self model 
 		addParameterToMethod: aCompiledMethod
 		inPackages: self packages
-		caption: 'Add Parameter to <2p> in Package(s)…'!
+		caption: 'Add Parameter to <2p> in Package(s)'!
 
 addParameterToMethod
 	"Private - 'Loose Methods' card context menu command to invoke the 
@@ -2322,11 +2328,11 @@ safeRemoveMethods!commands!public!refactoring! !
 !Tools.PackageSelector methodsFor!
 
 moveAllTempsToInnerScope
-	(MessageBox
+	(MessageBox new
+		headline: 'Move All Temps to Inner Scope?';
 		confirm: 'This refactoring will move all temporaries in all methods in the selected package(s) into the tightest scope that contains both the variable assignment and references. Any unreferenced temporaries will be removed.
 
-Are you sure that you would like to proceed?'
-		caption: 'Move All Temps to Inner Scope…')
+Are you sure that you would like to proceed?')
 			ifTrue: [self systemModel moveAllTempsToInnerScope: self selectionEnvironment]!
 
 queryRefactoringCommand: aCommandQuery 

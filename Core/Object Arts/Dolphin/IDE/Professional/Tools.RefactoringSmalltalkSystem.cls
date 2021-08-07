@@ -105,10 +105,10 @@ addParameterToMethod: aCompiledMethod
 	^self 
 		addParameterToMethod: aCompiledMethod
 		inPackages: #()
-		caption: 'Add Parameter to <1p>>><2d>…'!
+		caption: 'Add Parameter to <1p>>><2d>'!
 
 addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages caption: aString
-	| args argc newName caption suffix newArg selector initializer model refactoring |
+	| args argc newName headline suffix newArg selector initializer model refactoring |
 	newName := ScopedMethodName fromMethod: aCompiledMethod.
 	args := newName arguments.
 	argc := args size.
@@ -119,7 +119,7 @@ addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages caption:
 	args addLast: newArg.
 	selector := aCompiledMethod selector.
 	newName selector: (argc == 0 ifTrue: [selector , ':'] ifFalse: [selector]).
-	caption := aString expandMacrosWith: aCompiledMethod methodClass name with: selector.
+	headline := aString expandMacrosWith: aCompiledMethod methodClass name with: selector.
 	newName := ((aCollectionOfPackages isEmpty
 				ifTrue: [RenameMethodDialog]
 				ifFalse: 
@@ -128,7 +128,7 @@ addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages caption:
 					createOn: newName)
 				allowParameterReordering: false;
 				allowParameterRename: false;
-				caption: caption;
+				caption: headline;
 				showModal.
 	newName isNil ifTrue: [^nil].
 	model := RBNamespace onEnvironment: newName scope.
@@ -139,7 +139,7 @@ addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages caption:
 	[initializer := self
 				promptForInitializationExpression: initializer
 				in: aCompiledMethod methodClass
-				caption: caption.
+				caption: headline.
 	(initializer isNil or: [initializer isEmpty]) ifTrue: [^nil].
 	refactoring := AddParameterRefactoring
 				model: model
@@ -152,9 +152,9 @@ addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages caption:
 	true] on: self refactoringError
 			do: 
 				[:ex |
-				| errorString |
-				errorString := 'Error in proposed initializer:<n><n><t><1d>' expandMacrosWith: ex.
-				MessageBox errorMsg: errorString caption: caption.
+				MessageBox new
+					headline: headline;
+					errorMsg: ('Error in proposed initializer:<n><n>    <1d>' expandMacrosWith: ex).
 				false]]
 			whileFalse.
 	^self handleRefactoringException: 
@@ -564,7 +564,7 @@ moveAllTempsToInnerScope: aBrowserEnvironment
 			[| mb |
 			mb := MessageBox new.
 			mb buttonStyle: #okCancel.
-			mb caption: model name.
+			mb headline: model name.
 			(mb
 				warning: ('<1p> non-fatal errors occured while constructing the refactoring. Please see Transcript for further details.<n><n>If you contine with the refactoring then the erroneous methods will be ignored. The Refactoring is undoable.<n><n>Press OK to proceed, or Cancel to abort.'
 						expandMacrosWith: errorCount))
@@ -939,9 +939,9 @@ removeMethodsDuplicatedInSuperclassOf: aClass
 		cr.
 	'Would you like to remove the duplicates from <1p>?' expandMacrosWithArguments: {aClass} on: msg.
 	(MessageBox new
-		caption: 'Remove Duplicate Methods…';
+		headline: 'Remove Duplicate Methods?';
 		isSuppressible: true;
-		uniqueId: #removeMethodsDuplicatedInSuperclassOf:;
+		uniqueId: [self] method;
 		confirm: msg contents)
 			ifTrue: 
 				[self handleRefactoringException: 
@@ -951,14 +951,12 @@ removeMethodsDuplicatedInSuperclassOf: aClass
 
 removeMethodsIn: methodsEnvironment within: searchEnvironment
 	MessageBox new
-		caption: 'Remove Methods…';
+		headline: 'Remove Methods?';
 		defaultButton: 2;
-		confirm: ('Are you sure you would like to remove <1p>?
-
-Press Yes to remove all methods regardless of whether they are referenced.
+		detailsText: 'Press Yes to remove all methods regardless of whether they are referenced.
 Press No to remove only those methods that are unreferenced.
-Press Cancel to abort the operation.'
-					expandMacrosWith: methodsEnvironment)
+Press Cancel to abort the operation.';
+		confirm: 'Are you sure you would like to remove <1p>?' << methodsEnvironment
 			onYes: [self removeMethodsIn: methodsEnvironment]
 			onNo: [self safeRemoveMethodsIn: methodsEnvironment within: searchEnvironment]
 			onCancel: []!
@@ -1129,10 +1127,10 @@ safeRemoveClass: aClass
 	| oldClassName |
 	oldClassName := aClass fullName.
 	(MessageBox new
-		uniqueId: [self] method displayString;
+		uniqueId: [self] method;
 		isSuppressible: true;
-		caption: 'Safe Remove Class…';
-		confirm: ('Remove class <1p>?' expandMacrosWith: oldClassName)) ifFalse: [^false].
+		headline: 'Remove class <1s>?' << oldClassName;
+		confirm: 'The class will only be removed if it has no references.') ifFalse: [^false].
 	self handleRefactoringException: [(RemoveClassRefactoring classNames: {aClass fullName}) execute].
 	^true!
 
@@ -1204,35 +1202,31 @@ safeRemoveMethodsIn: methodsEnvironment within: searchEnvironment
 	self changeManager performChange: model changes!
 
 safeRemoveSelectors: anArrayOfSelectors from: aClass inEnvironment: aBrowserEnvironment
-	| prompt mb |
+	| mb text |
 	mb := MessageBox new.
 	mb
 		uniqueId: [self] method displayString;
 		isSuppressible: true.
-	anArrayOfSelectors size = 1
-		ifTrue: 
-			[mb caption: 'Safe Remove Method…'.
-			prompt := 'Remove <1p>>><2p> (if it has no references or is equivalent to the superclass implementation)?'
-						expandMacrosWith: aClass
-						with: anArrayOfSelectors first]
-		ifFalse: 
-			[mb caption: 'Safe Remove Methods…'.
-			prompt := String smalltalkWriteStream.
-			'The following methods of <1p> will be removed if they have no references or are equivalent to the superclass implementation:'
-				expandMacrosWithArguments: {aClass}
-				on: prompt.
-			prompt cr.
-			anArrayOfSelectors do: 
-					[:each |
-					prompt
-						crtab;
-						print: each].
-			prompt
-				cr;
-				cr;
-				nextPutAll: 'Are you sure you want to do this?'.
-			prompt := prompt contents].
-	(mb confirm: prompt) ifFalse: [^false].
+	text := anArrayOfSelectors size > 1
+				ifTrue: 
+					[| details |
+					mb headline: 'Remove Methods of <1p>?' << aClass.
+					details := String smalltalkWriteStream.
+					'The following methods of <1p> are candidates for removal:' expandMacrosWithArguments: {aClass}
+						on: details.
+					details cr.
+					anArrayOfSelectors asSortedCollection do: 
+							[:each |
+							details
+								cr;
+								nextPutAll: '    ';
+								display: each].
+					mb detailsText: details contents.
+					'The methods will only be removed if they have no references or are equivalent to the superclass implementations.']
+				ifFalse: 
+					[mb headline: 'Remove <1p>>><2p>?' << {aClass. anArrayOfSelectors first}.
+					'The method will only be removed if it has no references or is equivalent to the superclass implementation.'].
+	(mb confirm: text << (anArrayOfSelectors size > 1)) ifFalse: [^false].
 	^self handleRefactoringException: 
 			[| model1 refactoring |
 			model1 := RBNamespace onEnvironment: aBrowserEnvironment.

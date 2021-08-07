@@ -93,7 +93,8 @@ fileRevert
 	self isModified
 		ifTrue: 
 			[(MessageBox new
-				headerText: 'There are unsaved changes';
+				owner: self view;
+				headline: 'Discard unsaved changes?';
 				confirm: 'Are you sure you wish to revert to the previously saved copy?') ifTrue: [self fileLoad]]
 		ifFalse: [self fileLoad	"Load without prompt it not modified"]!
 
@@ -245,8 +246,9 @@ saveDocument
 			on: FileException
 			do: 
 				[:e |
-				MessageBox errorMsg: 'Unable to save file ' , e file name printString
-					caption: 'Error - ' , e messageText].
+				MessageBox new
+					headline: 'Unable to save file <1p>' << e file name;
+					errorMsg: e messageText].
 	^saved!
 
 saveDocumentAs
@@ -258,9 +260,9 @@ saveDocumentAs
 				showModal.
 	(proceed := newFilename notNil and: 
 					[(File exists: newFilename) not or: 
-							[MessageBox confirm: ('<1s><n>This file already exists, are you sure you would like to overwrite it?'
-										expandMacrosWith: newFilename)
-								caption: SessionManager current applicationName]])
+							[MessageBox new
+								headline: 'Overwrite <1s>?';
+								confirm: 'This file already exists, are you sure you would like to overwrite it?']])
 		ifTrue: 
 			["Install the new filename"
 			self

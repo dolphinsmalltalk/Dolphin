@@ -21,7 +21,7 @@ UI.MessageBox comment: '`MessageBox` provides a convenient dialog abstraction fo
   - It has extra details functionality for display of additional information that is initially collapsed behind an expando button.
   - It also supports display of a progress bar, and radio buttons, but these features are not currently supported by the Dolphin abstraction.
 
-The main aspect of Windows MessageBox functionality that is missing from TaskDialog is task-modality, i.e. disablement of all windows in the application when the dialog is shown. This can be (and is) simulated fairly easily in the Smalltalk layer, however.
+The main aspect of Windows MessageBox functionality that is missing from TaskDialog is task-modality, i.e. disablement of all windows in the application when the dialog is shown. This can be (and is) simulated fairly easily in the Smalltalk layer, however. A more unfortunate difference is that TaskDialogs appear to ignore tabs in the text, unlike the basic Windows MessageBox, so this can affect the appearance of existing messages that use tabs to indent some content.
 
 Example usage:
 

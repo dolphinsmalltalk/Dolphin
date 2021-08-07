@@ -228,12 +228,10 @@ queryMoveResource: aResourceIdentifier toPackage: aPackage
 
 	| resourcePackage |
 	resourcePackage := aResourceIdentifier owningPackage.
-	(MessageBox
-		confirm: ('The resource ''<1p>'' is currently owned by the <2p> package<n><n>Are you sure you would like to move it to <3p>?'
-				expandMacrosWith: aResourceIdentifier
-				with: resourcePackage name
-				with: aPackage name)
-		caption: 'Move resource to new package…')
+	(MessageBox new
+		headline: 'Move resource to new package?';
+		confirm: 'The resource ''<1p>'' is currently owned by the <2p> package<n><n>Are you sure you would like to move it to <3p>?'
+					<< {aResourceIdentifier. resourcePackage name. aPackage name})
 			ifTrue: [aPackage addResourceIdentifier: aResourceIdentifier]!
 
 refresh

@@ -78,7 +78,11 @@ browseFolder
 	| folder |
 	folder := self selectedFolder.
 	[self systemModel browseFolder: folder] on: OS.Win32Error
-		do: [:ex | MessageBox errorMsg: ex messageText caption: 'Unable to browse <1p>…' << folder]!
+		do: 
+			[:ex |
+			MessageBox new
+				headline: 'Unable to browse <1p>…' << folder;
+				errorMsg: ex messageText]!
 
 browseIt
 	"Browse the selected item in the pane with focus."
@@ -118,7 +122,9 @@ checkCanUninstall: package
 	[package okToUninstall] on: Error do: [:ex | err := ex].
 	err notNil
 		ifTrue: 
-			[MessageBox errorMsg: err description.
+			[MessageBox new
+				headline: 'Unable to uninstall the package <1p>' << package name;
+				errorMsg: err description.
 			^self operationAbortedSignal signalWith: package]!
 
 clearSelection
@@ -145,27 +151,25 @@ confirmUninstall: aPackage
 	uninstalled anyway. If this method returns then all dependent packages were successfully
 	uninstalled, and uninstallation of the package may proceed."
 
-	| deps msg prompt max mb response |
+	| deps details max mb response |
 	self promptToSavePackageChanges: aPackage.
 	Cursor wait showWhile: [deps := aPackage allDependentPackages].
-	prompt := 'Uninstalling <1p> package…' << aPackage name.
+	mb := MessageBox new.
+	mb
+		headline: 'Uninstall package <1p>?' << aPackage name;
+		beTaskModal.
 	deps isEmpty
 		ifTrue: 
-			[mb := MessageBox new.
-			mb
-				caption: prompt;
-				beTaskModal.
-			response := mb
-						confirmOrCancel: 'Do you really want to uninstall the <1p> package and remove all its owned objects from the system?'
-								<< aPackage name.
+			[response := mb
+						confirmOrCancel: 'Do you really want to uninstall the package and remove all its owned objects from the system?'.
 			^response == #cancel
 				ifTrue: [self operationAbortedSignal signalWith: aPackage]
 				ifFalse: [response == #yes]].
-	msg := String writeStream.
-	msg
+	details := String writeStream.
+	details
 		nextPutAll: 'The following packages depend on ';
 		print: aPackage name;
-		nextPutAll: ' as a prerequisite, and will also be uninstalled:';
+		nextPutAll: ' as a prerequisite:';
 		cr;
 		cr.
 	max := 30.
@@ -174,27 +178,22 @@ confirmUninstall: aPackage
 		to: (deps size min: max)
 		do: 
 			[:each |
-			msg
+			details
 				tab;
 				nextPutAll: each;
 				cr].
 	deps size > max
 		ifTrue: 
-			[msg
+			[details
 				tab;
 				nextPutAll: '… and ';
 				print: deps size - max;
 				nextPutAll: ' other packages …';
 				cr].
-	msg
-		cr;
-		nextPutAll: 'Are you sure that you like to proceed?'.
-	mb := MessageBox new.
-	mb
-		caption: prompt;
-		buttonStyle: #yesNoCancel;
-		beTaskModal.
-	response := mb warning: msg contents.
+	mb detailsText: details contents.
+	mb iconStyle: #warning.
+	response := mb
+				confirmOrCancel: '<1d> package<2?s:> depend on <3p> as a prerequisite, and will also be uninstalled<n><n>Are you sure that you would like to proceed?' << {deps size. deps size > 1. aPackage name}.
 	^response == #cancel
 		ifTrue: [self operationAbortedSignal signalWith: aPackage]
 		ifFalse: 
@@ -385,15 +384,20 @@ okToSavePackage: aPackage
 	and answer whether it is>"
 
 	| err mb |
-	[^aPackage okToSaveOrDeploy] on: Package unsaveableSignal do: [:ex | err := ex].
+	err := 
+			[aPackage okToSaveOrDeploy.
+			nil] on: Package unsaveableSignal do: [:ex | err := ex].
+	err ifNil: [^true].
 	mb := MessageBox new.
-	mb iconStyle: #warning.
-	mb caption: 'Cannot save package ' , aPackage name printString.
-	mb headerText: err description.
-	(mb confirm: 'The package will NOT load if saved in this form so the package file has not been saved.
-
-Would you like to browse the packages prerequisites in order to track down the problem?')
-		ifTrue: [self systemModel showPrerequisitesForPackage: aPackage].
+	mb
+		iconStyle: #error;
+		caption: 'Cannot save package ' , aPackage name printString;
+		headline: err messageText;
+		text: 'The package will NOT load if saved in this form so the package file has not been saved.';
+		checkboxText: 'Browse packages prerequisites?';
+		isChecked: true;
+		open.
+	mb isChecked ifTrue: [self systemModel showPrerequisitesForPackage: aPackage].
 	^false!
 
 onDragOverFolder: aDragDropSession
@@ -595,8 +599,9 @@ promptToSavePackageChanges: package
 	mb := MessageBox new.
 	mb beTaskModal.
 	resp := mb
-				confirmOrCancel: ('The <1p> package has unsaved changes.<n>Would you like to save it before uninstalling it?'
-						expandMacrosWith: package name).
+				headline: 'Save <1p> before uninstallation?' << package name;
+				iconStyle: #warning;
+				confirmOrCancel: 'The package has unsaved changes. Would you like to save it before uninstalling it?' << package name.
 	resp == #no
 		ifFalse: 
 			[resp == #yes
@@ -870,6 +875,7 @@ savePackages: aCollection toFolder: aPackageFolder
 		nextPutAll: 'Are you sure that you would like to proceed?'.
 	mb := MessageBox new.
 	mb beTaskModal.
+	mb headline: 'Move packages to <1p>?' << aPackageFolder folderName.
 	(mb confirm: msg contents) ifFalse: [^self].
 	dir := File fullPathOf: aPackageFolder pathname relativeTo: SessionManager current imageBase.
 	aCollection do: [:each | each saveAs: (File composePath: dir subPath: each name)]!
@@ -964,6 +970,7 @@ uninstall: package
 			mb := MessageBox new.
 			mb beTaskModal.
 			e resume: (mb
+						headline: 'Continue with class removal?';
 						confirm: ('<1s><n><n>Would you like to remove the class anyway?' expandMacrosWith: e description))]
 		on: Notification
 		do: 

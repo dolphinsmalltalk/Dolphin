@@ -126,9 +126,7 @@ inspectReferences
 	| refs |
 	refs := self aspectValue allReferences copyWithout: self.
 	refs isEmpty
-		ifTrue: 
-			[MessageBox
-				notify: ('There are no additional references to:<n><t><1p>' expandMacrosWith: self aspectValue)]
+		ifTrue: [MessageBox notify: 'There are no additional references to:<n><t><1p>' << self aspectValue]
 		ifFalse: [refs inspect]!
 
 model: aValueModel
@@ -142,8 +140,9 @@ model: aValueModel
 nilAspect
 	"Clears the currently selected aspect to nil"
 
-	(MessageBox confirm: 'Are you sure you wish to set this item to nil?') 
-		ifTrue: [self setAspectValue: nil]!
+	(MessageBox new
+		headline: 'Are you sure you wish to set this item to nil?';
+		confirm) ifTrue: [self setAspectValue: nil]!
 
 onAspectSelected
 	"Private - An aspect accessor has been selected within the aspect tree."

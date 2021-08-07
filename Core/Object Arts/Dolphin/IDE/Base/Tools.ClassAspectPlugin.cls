@@ -145,9 +145,11 @@ promptToOverwrite
 	| currentText |
 	currentText := self browser selectedClass perform: self aspect.
 	^currentText = originalText or: 
-			[MessageBox
-				confirm: ('The <1s> has been changed outside this browser. Are you sure you want to overwrite it?'
-						expandMacrosWith: self caption asLowercase)]!
+			[MessageBox new
+				owner: self view topView;
+				headline: 'Overwrite modified <1s>?' << self caption asLowercase;
+				confirm: 'The <1s> has been changed outside this browser<n><n>Are you sure you want to overwrite it?'
+							<< self caption asLowercase]!
 
 promptToSaveClassChanges: aSelectionChangingEvent 
 	"Sent by the browser when its class selection is about to change. This is an opportunity for

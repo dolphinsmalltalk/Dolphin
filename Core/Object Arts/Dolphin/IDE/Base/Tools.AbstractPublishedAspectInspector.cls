@@ -174,11 +174,10 @@ onAspectValueChanged: anAspectAccessor
 			["If the accessor cannot be set, warn the user and restore the original value"
 			anAspectAccessor canSet
 				ifFalse: 
-					[MessageBox
-						errorMsg: ('The <1p> aspect of the <2p> is read-only, or the object does not understand the setter message.'
-								expandMacrosWith: anAspectAccessor name
-								with: anAspectAccessor subject class)
-						caption: 'Inspector cannot set this value'.
+					[MessageBox new
+						headline: 'Inspector cannot set this value';
+						errorMsg: 'The <1p> aspect of the <2p> is read-only, or the object does not understand the setter message.'
+									<< {anAspectAccessor name. anAspectAccessor subject class}.
 					self onAspectSelected.
 					^self].
 			anAspectAccessor editedValue: aspectValueHolder value.

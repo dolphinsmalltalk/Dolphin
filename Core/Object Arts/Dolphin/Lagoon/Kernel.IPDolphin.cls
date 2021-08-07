@@ -105,14 +105,13 @@ OnShutdown
 
 	"Trace nextPutAll: 'OnShutdown: Exiting Dolphin image '; print: SessionManager current imageFileName; cr."
 
-	SessionManager current isEmbedded 
+	SessionManager current isEmbedded
 		ifFalse: 
 			[| mb |
 			mb := UI.MessageBox new.
 			mb beTaskModal.
-			(mb confirm: 'You are about to exit Dolphin Smalltalk
-Do you wish to save the image?') 
-				ifTrue: [SessionManager current saveImage]].
+			mb headline: 'Exit Dolphin Smalltalk?'.
+			(mb confirm: 'Do you wish to save the image?') ifTrue: [SessionManager current saveImage]].
 	self pullPlug.
 
 	"To avoid locking up the calling thread we must perform the actual VM exit after this call has returned,

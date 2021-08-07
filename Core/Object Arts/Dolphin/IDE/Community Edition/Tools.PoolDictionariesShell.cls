@@ -97,7 +97,10 @@ removeEntry
 				ifTrue: ['''' , key , ''' has references.
 Are you sure you wish to remove it?']
 				ifFalse: ['Are you sure you wish to remove ''' , key , '''?'].
-	ok := MessageBox confirm: confirmationMsg caption: self caption.
+	ok := MessageBox new
+				caption: self caption;
+				headline: 'Remove referenced pool variable?';
+				confirm: confirmationMsg.
 	ok ifFalse: [^self].
 	self selectionOrNil removeKey: key.
 	dictionariesPresenter inspectorPresenter refresh!
@@ -110,7 +113,10 @@ removePool
 				ifTrue: [pool name , ' has references.
 Are you sure you wish to remove it?']
 				ifFalse: ['Are you sure you wish to remove ' , pool name , '?'].
-	ok := MessageBox confirm: confirmationMsg caption: self caption.
+	ok := MessageBox new
+				caption: self caption;
+				headline: 'Remove referenced SharedPool?';
+				confirm: confirmationMsg.
 	ok ifFalse: [^self].
 	pool removeFromSystem.
 	self model remove: pool!
