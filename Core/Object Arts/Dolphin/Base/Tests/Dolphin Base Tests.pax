@@ -120,6 +120,7 @@ package setClassNames: #(
 	#{Kernel.Tests.DefaultSortAlgorithmTest}
 	#{Kernel.Tests.EqualitySearchPolicyTest}
 	#{Kernel.Tests.EventMessageSendTest}
+	#{Kernel.Tests.EventMessageSequenceTest}
 	#{Kernel.Tests.HeapsortAlgorithmTest}
 	#{Kernel.Tests.IdentitySearchPolicyTest}
 	#{Kernel.Tests.InsertionSortAlgorithmTest}
@@ -382,6 +383,12 @@ Core.Tests.DolphinTest subclass: #'External.Tests.DynamicLinkLibraryTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.EventMessageSendTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.EventMessageSequenceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

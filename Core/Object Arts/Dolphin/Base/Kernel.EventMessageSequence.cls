@@ -86,7 +86,7 @@ messages
 		do: 
 			[:index |
 			(receivers at: index) == DeadObject.Current
-				ifFalse: [(answer at: index) ifNotNil: [:msg | answer addLast: msg]]].
+				ifFalse: [(messages at: index) ifNotNil: [:msg | answer addLast: msg]]].
 	^answer!
 
 removeMessagesFor: anObject
