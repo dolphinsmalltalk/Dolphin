@@ -346,6 +346,7 @@ classesReferencedByMethod: aCompiledMethod
 	aCompiledMethod literalReferencesDo: 
 			[:each |
 			| value |
+			"We must preserve the class of the value of shared variable bindings, e.g. the shared vars for DynamicLinkLibrary instances"
 			value := (each isKindOf: VariableBinding) ifTrue: [each value] ifFalse: [each].
 			"Don't add a class just because it is referenced by one of its own methods"
 			(value class isMeta and: [value ~~ aCompiledMethod methodClass instanceClass])
@@ -746,10 +747,11 @@ logManifest
 	self startElement: 'Manifest' attributes: #().
 	self logImageStats.
 	self logRemainingClasses.
+	self logRemainingSharedVariables.
 	(deploymentContext runFlags allMask: AllResourcesStripped)
 		ifFalse: [self logRemainingResources].
 	self endElement: true.
-	self finishedWithAll: #(#logImageStats #logRemainingClasses #logRemainingResources)!
+	self finishedWithAll: #(#logImageStats #logRemainingClasses #logRemainingSharedVariables #logRemainingResources)!
 
 logPackagePrerequisites
 	"Answer whether the stripping log should include a package pre-requisites trace showing
@@ -967,6 +969,19 @@ logRemainingResources
 			value: total;
 		endElement: true!
 
+logRemainingSharedVariables
+	| sharedVars |
+	self startElement: 'RemainingSharedVariables' attributes: #().
+	sharedVars := OrderedCollection new.
+	Root allBindingsDo: [:each | each isClassBinding not ifTrue: [sharedVars add: each]].
+	sharedVars do: 
+			[:each |
+			self
+				logElement: 'VariableBinding'
+				attributes: #()
+				value: each key].
+	self endElement: true!
+
 logRequiredMethodCategories
 	"Private - Logs a list of the classes that form the root set for the application."
 
@@ -1102,8 +1117,9 @@ The image MUST exit immediately, but see crash dump (if configured).
 		lpText: text
 		lpCaption: SessionManager current applicationName
 		uType: ##(MB_OK | MB_ICONERROR | MB_TASKMODAL | MB_SETFOREGROUND).
-	VM crashDump: anError description.
-	SessionManager current primQuit: -1!
+	SessionManager current
+		logError: anError;
+		primQuit: -1!
 
 onNotification: aNotification
 	self logComment: aNotification description!
@@ -1162,7 +1178,7 @@ prepareCycle2: developmentMethods
 	self removeDevelopmentObjects: developmentMethods.
 	"We can now remove abstract unreachable methods without concern that they may be made reachable by the removal of development methods."
 	deploymentContext setRunFlag: RemoveAbstractUnreachable.
-	self emptySystemDictionary!
+	"self emptySystemDictionary"!
 
 prepareCycle3
 	self destroyAndRemoveProgress.
@@ -2044,6 +2060,7 @@ logReferencesToClasses!public!testing! !
 logRemainingClasses!logging!private! !
 logRemainingPackages!operations!private! !
 logRemainingResources!operations!private! !
+logRemainingSharedVariables!operations!private! !
 logRequiredMethodCategories!operations!private! !
 logSentMessages:!helpers!private! !
 manifestResourceId!constants!private! !

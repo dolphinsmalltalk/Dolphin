@@ -360,7 +360,9 @@ uninitialize
 	"Private - Tidy up the receiver in preparation for removal from the system."
 
 	Null := nil.
-	VM registryAt: self name put: nil! !
+	VM registryAt: self name put: nil.
+	"Allow the RPCLibrary to be removed as it is probably no longer required"
+	OS.RPCLibrary closeDefault! !
 !Core.GUID class categoriesForMethods!
 alignment!constants!private! !
 atAddress:!instance creation!public! !

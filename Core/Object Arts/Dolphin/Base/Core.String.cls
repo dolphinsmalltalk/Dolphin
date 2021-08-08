@@ -566,13 +566,13 @@ expandMacrosWithArguments: anArray on: aPuttableStream
 			[char == $<
 				ifTrue: 
 					[| nextChar |
-					nextChar := readStream next asUppercase.
-					nextChar == $N ifTrue: [aPuttableStream cr].
-					nextChar == $T ifTrue: [aPuttableStream tab].
+					nextChar := readStream next asLowercase.
+					nextChar == $n ifTrue: [aPuttableStream cr].
+					nextChar == $t ifTrue: [aPuttableStream tab].
 					nextChar isDigit
 						ifTrue: 
 							[index := nextChar digitValue.
-							[readStream atEnd or: [(nextChar := readStream next asUppercase) isDigit not]]
+							[readStream atEnd or: [(nextChar := readStream next asLowercase) isDigit not]]
 								whileFalse: [index := index * 10 + nextChar digitValue]].
 					nextChar == $?
 						ifTrue: 
@@ -582,15 +582,15 @@ expandMacrosWithArguments: anArray on: aPuttableStream
 							readStream position: readStream position - 1.
 							aPuttableStream nextPutAll: ((anArray at: index) ifTrue: [trueString] ifFalse: [falseString]).
 							index := index + 1].
-					nextChar == $P
+					nextChar == $p
 						ifTrue: 
 							[(anArray at: index) printOn: aPuttableStream.
 							index := index + 1].
-					nextChar == $D
+					nextChar == $d
 						ifTrue: 
 							[(anArray at: index) displayOn: aPuttableStream.
 							index := index + 1].
-					nextChar == $S
+					nextChar == $s
 						ifTrue: 
 							[aPuttableStream nextPutAll: (anArray at: index).
 							index := index + 1].

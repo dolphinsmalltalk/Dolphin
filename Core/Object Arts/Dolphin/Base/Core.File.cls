@@ -7,7 +7,8 @@ Core.Object subclass: #'Core.File'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AccessFlagsMask' -> -16r8.
-		'OpenFlagsMask' -> 16r7
+		'OpenFlagsMask' -> 16r7.
+		'SniffSize' -> 16r400
 	}!
 Core.File guid: (Core.GUID fromString: '{87b4c48a-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.File comment: 'File is a class that exposes low-level (e.g. unbuffered) file I/O operations. It also includes a number of class side methods for manipulating file names and manipulating the file system.
@@ -442,18 +443,15 @@ size: anInteger
 
 sniffEncoding
 	| ituResult buf count |
-	buf := ByteArray newFixed: 1024.
-	count := self
-				reset;
-				read: buf.
-	ituResult := (ByteArray newFixed: 4)
-				sdwordAtOffset: 0 put: -1;
-				yourself.
+	buf := ByteArray newFixed: SniffSize + 4.
+	self reset.
+	count := self read: buf count: SniffSize.
+	buf sdwordAtOffset: SniffSize put: -1.
 	^((AdvApi32
 		isTextUnicode: buf
 		iSize: count
-		lpiResult: ituResult) and: 
-				[ituResult := ituResult dwordAtOffset: 0.
+		lpiResult: buf yourAddress + SniffSize) and: 
+				[ituResult := buf dwordAtOffset: SniffSize.
 				(ituResult anyMask: IS_TEXT_UNICODE_REVERSE_MASK)
 					ifTrue: [self error: 'Unsupported unicode text encoding #utf16be'].
 				"If the match is only statistical, then ignore it if there are less than 128 bytes as there are too many false positives for short ASCII sequences"

@@ -443,8 +443,9 @@ flashOnOutput: aBoolean
 free
 	"Close and release the current transcript (e.g. to create a runtime image)."
 
-	Transcript==DeafObject current ifFalse: [Transcript destroy].
-	Transcript := DeafObject current!
+	Transcript == DeafObject.Current ifTrue: [^self].
+	Transcript destroy.
+	Transcript := DeafObject.Current!
 
 icon
 	"Answers an Icon that can be used to represent this class"

@@ -2252,7 +2252,8 @@ Core.Object subclass: #'Core.File'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'AccessFlagsMask' -> -16r8.
-		'OpenFlagsMask' -> 16r7
+		'OpenFlagsMask' -> 16r7.
+		'SniffSize' -> 16r400
 	}!
 Core.Object subclass: #'Core.FileLocator'
 	instanceVariableNames: ''
@@ -2262,12 +2263,16 @@ Core.Object subclass: #'Core.FileLocator'
 	classConstants: {}!
 Core.Object variableSubclass: #'External.FunctionDescriptor'
 	instanceVariableNames: 'descriptor'
-	classVariableNames: 'CallingConventions ReferenceTypes TypeNames TypeSizes ValueTypes'
+	classVariableNames: 'ValueTypes'
 	imports: #(#{External.ExtCallArgTypes})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'CallingConventions' -> #('stdcall:' 'cdecl:' 'fastcall:' 'thiscall:').
+		'ReferenceTypes' -> #(16r1 16rF 16rC 16r1 16r1 #WORD #SWORD #DWORD #SDWORD #DWORD #DWORD #DOUBLE 16rF 16rF #FLOAT nil #HRESULT 16rF #ULARGE_INTEGER #LARGE_INTEGER 16rF 16rF #'OS.COM.VARIANT' #'OS.COM.DATE' #'OS.COM.VARIANT_BOOL' #REFGUID #UINT_PTR #INT_PTR #SDWORD #SDWORD nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r35 16r35 16r35 nil nil nil nil nil nil nil nil nil nil nil).
 		'RetClassIndex' -> 16r4.
-		'RetTypeMask' -> 16r3F
+		'RetTypeMask' -> 16r3F.
+		'TypeNames' -> #('void' 'lpvoid' 'char' 'byte' 'sbyte' 'word' 'sword' 'dword' 'sdword' 'bool' 'handle' 'double' 'lpstr' 'oop' 'float' 'lppvoid' 'hresult' 'lpwstr' 'qword' 'sqword' 'ote' 'bstr' 'variant' 'date' 'varbool' 'guid' 'uintptr' 'intptr' 'ntstatus' 'errno' nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil).
+		'TypeSizes' -> #[0 4 4 4 4 4 4 4 4 4 4 8 4 4 4 4 4 4 8 8 4 4 16 8 4 16 4 4 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 8 4 4 4 0 0 0 0 0 0 0 0]
 	}!
 Core.Object variableByteSubclass: #'Core.GUID'
 	instanceVariableNames: ''

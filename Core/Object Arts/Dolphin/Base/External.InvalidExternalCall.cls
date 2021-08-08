@@ -68,7 +68,6 @@ invalidArgument: anInteger got: anObject expected: type
 	the StackFrame argument, raising an appropriate Error if validation of an 
 	argument fails."
 
-	##(FunctionDescriptor initialize).	"cause External.FunctionDescriptor to be initialized during boot"
 	^self new
 		argument: anObject;
 		type: type;

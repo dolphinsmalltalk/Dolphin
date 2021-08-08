@@ -124,10 +124,10 @@ testSmokeTest
 	(ExternalMethod allSubinstances reject: [:each | each isUnbound]) do: 
 			[:each |
 			| desc text |
-			text := each descriptor description.
+			text := each descriptor printDescription.
 			desc := self subjectClass fromString: (text copyWithout: $,)
 						environment: each methodClass environment.
-			self assert: text equals: desc description]!
+			self assert: text equals: desc printDescription]!
 
 testStruct4
 	| valueTypes |

@@ -2,12 +2,16 @@
 
 Core.Object variableSubclass: #'External.FunctionDescriptor'
 	instanceVariableNames: 'descriptor'
-	classVariableNames: 'CallingConventions ReferenceTypes TypeNames TypeSizes ValueTypes'
+	classVariableNames: 'ValueTypes'
 	imports: #(#{External.ExtCallArgTypes})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'CallingConventions' -> #('stdcall:' 'cdecl:' 'fastcall:' 'thiscall:').
+		'ReferenceTypes' -> #(16r1 16rF 16rC 16r1 16r1 #WORD #SWORD #DWORD #SDWORD #DWORD #DWORD #DOUBLE 16rF 16rF #FLOAT nil #HRESULT 16rF #ULARGE_INTEGER #LARGE_INTEGER 16rF 16rF #'OS.COM.VARIANT' #'OS.COM.DATE' #'OS.COM.VARIANT_BOOL' #REFGUID #UINT_PTR #INT_PTR #SDWORD #SDWORD nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r35 16r35 16r35 nil nil nil nil nil nil nil nil nil nil nil).
 		'RetClassIndex' -> 16r4.
-		'RetTypeMask' -> 16r3F
+		'RetTypeMask' -> 16r3F.
+		'TypeNames' -> #('void' 'lpvoid' 'char' 'byte' 'sbyte' 'word' 'sword' 'dword' 'sdword' 'bool' 'handle' 'double' 'lpstr' 'oop' 'float' 'lppvoid' 'hresult' 'lpwstr' 'qword' 'sqword' 'ote' 'bstr' 'variant' 'date' 'varbool' 'guid' 'uintptr' 'intptr' 'ntstatus' 'errno' nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil).
+		'TypeSizes' -> #[0 4 4 4 4 4 4 4 4 4 4 8 4 4 4 4 4 4 8 8 4 4 16 8 4 16 4 4 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 8 4 4 4 0 0 0 0 0 0 0 0]
 	}!
 External.FunctionDescriptor guid: (Core.GUID fromString: '{87b4c487-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.FunctionDescriptor comment: '`FunctionDescriptor` instances describe the return type, parameter types, and calling convention of native function calls for external interfacing purposes. They can be used to describe both outbound and inbound calls, represented by `ExternalMethod` and `ExternalCallback` instances respectively.
@@ -183,14 +187,6 @@ convention
 
 	^descriptor first!
 
-description
-	"Private - Answer the descriptor string for the external function described by the receiver."
-
-	| stream |
-	stream := String smalltalkWriteStream: 60.
-	self printDescriptionOn: stream.
-	^stream contents!
-
 descriptor: aCollectionOfBytes
 	"Private - Set the descriptor byte array for the external function described by the receiver."
 
@@ -215,19 +211,24 @@ name: aString
 
 	^self!
 
-printDescriptionOn: stream
-	"Private - Answer the descriptor string for the external function described by the receiver."
+printDescription
+	"Answer the descriptor string for the external function described by the receiver."
 
+	| stream |
+	stream := String writeStream: 60.
+	self printDescriptionOn: stream.
+	^stream contents!
+
+printDescriptionOn: aWriteStream
 	| types |
-	stream
+	aWriteStream
 		nextPutAll: self callingConvention;
 		space;
 		nextPutAll: self returnType.
 	types := self argumentTypes.
-	"types notEmpty ifTrue: [stream nextPut: $,]."
 	types do: 
 			[:each |
-			stream
+			aWriteStream
 				space;
 				nextPutAll: each]!
 
@@ -262,12 +263,12 @@ argumentTypes!accessing!private! !
 calleeCleans!public!testing! !
 callingConvention!accessing!private! !
 convention!accessing!private! !
-description!accessing!private! !
 descriptor:!accessing!private! !
 literals:!accessing!public! !
 name!accessing!public! !
 name:!accessing!public! !
-printDescriptionOn:!accessing!private! !
+printDescription!printing!public! !
+printDescriptionOn:!printing!private! !
 printOn:!printing!public! !
 retType!accessing!private! !
 returnType!accessing!private! !
@@ -332,26 +333,22 @@ initialize
 	self initializeExternalRefTypes.
 
 	"Remember that bytes and words are still pushed as 32-bit values"
-	TypeSizes := #[0 4 4 4 4 4 4 4 4 4 4 8 4 4 4 4 4 4 8 8 4 4 16 8 4 16 0 0 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 8 4 4 4 0 0 0 0 0 0 0 0].
-	TypeSizes whileMutableDo: 
-			[TypeSizes
-				at: ExtCallArgINTPTR + 1 put: VMConstants.IntPtrSize;
-				at: ExtCallArgUINTPTR + 1 put: VMConstants.IntPtrSize].
-	self assert: [ValueTypes asArray sort last < TypeSizes size].
+	self initializeTypeSizes.
 	self initializeCallingConventions.
 	self addClassConstant: 'RetClassIndex' value: 4!
 
 initializeCallingConventions
 	"Private - All possible calling conventions (not all are supported)"
 
-	CallingConventions := #('stdcall:' 'cdecl:' 'fastcall:' 'thiscall:')!
+	self addClassConstant: 'CallingConventions' value: #('stdcall:' 'cdecl:' 'fastcall:' 'thiscall:')!
 
 initializeExternalRefTypes
 	"Private - Reference types are the types to be used for the value type with one level of indirection, where the name
 	of a struct class appears, this is assumed to be associated with an ExtCallArgLP argument type."
 
-	ReferenceTypes := Array new: ExtCallArgMax + 1.
-	ReferenceTypes
+	| referenceTypes |
+	referenceTypes := Array new: ExtCallArgMax + 1.
+	referenceTypes
 		at: ExtCallArgVOID + 1 put: ExtCallArgLPVOID;
 		at: ExtCallArgLPPVOID + 1 put: nil;
 		at: ExtCallArgCHAR + 1 put: ExtCallArgLPSTR;
@@ -385,11 +382,13 @@ initializeExternalRefTypes
 		at: ExtCallArgSTRUCT8 + 1 put: ExtCallArgLP;
 		at: ExtCallArgNTSTATUS + 1 put: #SDWORD;
 		at: ExtCallArgErrno + 1 put: #SDWORD.
-	ReferenceTypes isImmutable: true!
+	referenceTypes isImmutable: true.
+	self addClassConstant: 'ReferenceTypes' value: referenceTypes!
 
 initializeExternalTypes
-	ValueTypes := LookupTable new.
-	ValueTypes
+	| valueTypes typeNames |
+	valueTypes := LookupTable new.
+	valueTypes
 		at: 'sdword' put: ExtCallArgSDWORD;
 		at: 'dword' put: ExtCallArgDWORD;
 		at: 'uintptr' put: ExtCallArgUINTPTR;
@@ -420,15 +419,15 @@ initializeExternalTypes
 		at: 'ntstatus' put: ExtCallArgNTSTATUS;
 		at: 'errno' put: ExtCallArgErrno.
 	"void is only valid as a return type, not an argument type."
-	ValueTypes at: 'void' put: ExtCallArgVOID.
+	valueTypes at: 'void' put: ExtCallArgVOID.
 
 	"Init the reverse mapping of the type enumeration to string names"
-	TypeNames := Array new: ExtCallArgMax + 1.
-	ValueTypes keysAndValuesDo: [:eachKey :eachValue | TypeNames at: eachValue + 1 put: eachKey].
-	TypeNames isImmutable: true.
+	typeNames := Array new: ExtCallArgMax + 1.
+	valueTypes keysAndValuesDo: [:eachKey :eachValue | typeNames at: eachValue + 1 put: eachKey].
+	typeNames isImmutable: true.
 
 	"Convert a few class types to the special types to save space and time"
-	ValueTypes
+	valueTypes
 		at: 'ExternalAddress' put: ExtCallArgLPVOID;
 		at: 'ExternalHandle' put: ExtCallArgHANDLE;
 		at: 'BSTR' put: ExtCallArgBSTR;
@@ -456,7 +455,19 @@ initializeExternalTypes
 		at: 'VARIANT_BOOL' put: ExtCallArgVARBOOL;
 		at: 'DATE' put: ExtCallArgDATE;
 		shrink;
-		isImmutable: true!
+		isImmutable: true.
+	self addClassConstant: 'ValueTypes' value: valueTypes.
+	self addClassConstant: 'TypeNames' value: typeNames.
+!
+
+initializeTypeSizes
+	| typeSizes |
+	"Remember that bytes and words are still pushed as 32-bit values"
+	typeSizes := #[0 4 4 4 4 4 4 4 4 4 4 8 4 4 4 4 4 4 8 8 4 4 16 8 4 16 0 0 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 8 4 4 4 0 0 0 0 0 0 0 0] copy.
+	typeSizes at: ExtCallArgINTPTR + 1 put: VMConstants.IntPtrSize;
+				at: ExtCallArgUINTPTR + 1 put: VMConstants.IntPtrSize.
+	self assert: [ValueTypes asArray sort last < typeSizes size].
+	self addClassConstant: 'TypeSizes' value: typeSizes!
 
 isPointerToStruct: anInteger 
 	^anInteger == ExtCallArgLP or: [anInteger == ExtCallArgCOMPTR]!
@@ -649,6 +660,7 @@ initialize!development!initializing!private! !
 initializeCallingConventions!development!initializing!private! !
 initializeExternalRefTypes!development!initializing!private! !
 initializeExternalTypes!development!initializing!private! !
+initializeTypeSizes!development!initializing!private! !
 isPointerToStruct:!helpers!private! !
 nameOf:type:!constants!public! !
 nameOfConvention:!constants!public! !

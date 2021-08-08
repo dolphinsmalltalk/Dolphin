@@ -302,7 +302,7 @@ preserveAspectSetters: aBoolean
 preStripScript: aString 
 	"Set the pre-image stripping script which allows for custom image stripping actions."
 
-	preStripScript := aString notEmpty ifTrue: [aString]!
+	preStripScript := (aString notNil and: [aString notEmpty]) ifTrue: [aString]!
 
 queryCommand: query 
 	"Private - Enter details about a potential command for the receiver 

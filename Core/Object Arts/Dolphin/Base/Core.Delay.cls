@@ -358,10 +358,7 @@ initializeTimingSemaphore
 keepAlive
 	"Private - Ensure that there is a timing process, and that it is in a runnable state."
 
-	(TimingProcess isNil or: [TimingProcess suspendingList isNil])
-		ifTrue: 
-			[Notification signal: 'Starting new timing process'.
-			self forkTimingProcess]!
+	(TimingProcess isNil or: [TimingProcess suspendingList isNil]) ifTrue: [self forkTimingProcess]!
 
 lowestResolution
 	"Answer the maximum resolution of Delays in microseconds, i.e. the shortest period for which
@@ -423,18 +420,16 @@ prod
 	TimingSemaphore signal!
 
 queryOsTimerResolution
-	| min max actual |
-	min := ByteArray newFixed: 4.
-	max := ByteArray newFixed: 4.
-	actual := ByteArray newFixed: 4.
+	| buf |
+	buf := ByteArray newFixed: 12.
 	(OS.NtDll
-		ntQueryTimerResolution: min
-		maximum: max
-		actual: actual) == 0
+		ntQueryTimerResolution: buf
+		maximum: buf yourAddress + 4
+		actual: buf yourAddress + 8) == 0
 		ifTrue: 
-			[LowestResolution := self clampResolution: (min dwordAtOffset: 0) // 10.
-			HighestResolution := self clampResolution: (max dwordAtOffset: 0) // 10.
-			Resolution := self clampResolution: (actual dwordAtOffset: 0) // 10]
+			[LowestResolution := self clampResolution: (buf dwordAtOffset: 0) // 10.
+			HighestResolution := self clampResolution: (buf dwordAtOffset: 4) // 10.
+			Resolution := self clampResolution: (buf dwordAtOffset: 8) // 10]
 		ifFalse: [LowestResolution := HighestResolution := Resolution := DefaultResolution]!
 
 reschedule
@@ -485,12 +480,12 @@ timerResolution: aDuration set: aBoolean
 	resolution can reduce battery life, so this should be used with care."
 
 	| actualResolution |
-	actualResolution := External.DWORDBytes new.
+	actualResolution := ByteArray newFixed: 4.
 	OS.NtDll
 		setTimerResolution: aDuration asNanoseconds // 100
 		set: aBoolean
 		actualResolution: actualResolution.
-	Resolution := actualResolution value // 10.
+	Resolution := (actualResolution dwordAtOffset: 0) // 10.
 	^Resolution!
 
 timingProcess

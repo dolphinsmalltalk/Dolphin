@@ -184,6 +184,12 @@ stbSaveOn: anSTBOutFiler
 	self setBinding: nil.
 	^super stbSaveOn: anSTBOutFiler!
 
+undeclare
+	"Remove the binding in the target namespace that would be resolved by the receiver, if it exists."
+
+	super undeclare.
+	self setBinding: nil!
+
 valueOrNil
 	"Answer the value of the variable named by the receiver, or nil if not defined.
 	Note that it will not be possible to distinguish the cases of an undefined variable and a defined variable with value nil."
@@ -216,6 +222,7 @@ setPathString:!accessing!private! !
 setPathString:private:!initializing!private! !
 setScope:!initializing!private! !
 stbSaveOn:!binary filing!public! !
+undeclare!operations!public! !
 valueOrNil!accessing!public! !
 !
 
@@ -228,7 +235,7 @@ clearCachedBindings
 
 flushBindings
 	| instances |
-	instances := self primAllInstances.
+	instances := self primAllSubinstances.
 	1 to: instances size do: [:i | (instances at: i) setBinding: nil].
 	Generation := 0!
 

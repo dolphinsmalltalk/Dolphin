@@ -84,7 +84,7 @@ fileName
 	^'RPCRT4'!
 
 sharedVariableName
-	^#{Rpcrt4}! !
+	^#{OS.Rpcrt4}! !
 !OS.RPCLibrary class categoriesForMethods!
 fileName!constants!public! !
 sharedVariableName!constants!private! !

@@ -81,13 +81,13 @@ displayDuration: aDuration on: aPuttableStream
 		3. The precision to be used displaying the duration in this unit.
 		4. The suffix for a single unit.
 		5. The suffix for multiple units."
-	formats := ##({{2 days asSeconds. 1 days asSeconds. 1 / 100. ' day'. ' days'}.
-				{2 hours asSeconds. 1 hours asSeconds. 1 / 100. ' hour'. ' hours'}.
-				{2 minutes asSeconds. 1 minutes asSeconds. 1 / 100. ' minute'. ' minutes'}.
+	formats := ##({{172800. 86400. 1 / 100. ' day'. ' days'}.
+				{7200. 3600. 1 / 100. ' hour'. ' hours'}.
+				{120. 60. 1 / 100. ' minute'. ' minutes'}.
 				{1. 1. 1 / 100. ' s'. ' s'}.
-				{1 milliseconds asSeconds. 1 milliseconds asSeconds. 1 / 10. ' ms'. ' ms'}.
-				{1 microseconds asSeconds. 1 microseconds asSeconds. 1 / 10. ' µs'. ' µs'}.
-				{1 nanoseconds asSeconds. 1 nanoseconds asSeconds. 1. ' ns'. ' ns'}}).
+				{1 / 1000. 1 / 1000. 1 / 10. ' ms'. ' ms'}.
+				{1 / 1000000. 1 / 1000000. 1 / 10. ' µs'. ' µs'}.
+				{1 / 1000000000. 1 / 1000000000. 1. ' ns'. ' ns'}}).
 	1 to: formats size
 		do: 
 			[:i |

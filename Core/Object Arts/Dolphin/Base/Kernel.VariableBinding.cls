@@ -59,9 +59,6 @@ fullyQualifiedReference
 
 	^BindingReference path: (environment fullPath copyWith: key)!
 
-isAlias
-	^false!
-
 isClassBinding
 	^value class isMeta and: [key == value name and: [environment == value environment]]!
 
@@ -149,7 +146,6 @@ environment:!accessing!public! !
 flags!public! !
 fullName!accessing!public! !
 fullyQualifiedReference!converting!public! !
-isAlias!public! !
 isClassBinding!public!testing! !
 isClassVariable!public! !
 isClassVariable:!public! !

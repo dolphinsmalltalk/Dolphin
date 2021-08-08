@@ -207,33 +207,6 @@ emptyMethodDictionariesOfStubbornClasses
 
 	^false.!
 
-emptySystemDictionary
-	"Private - Remove all non-class globals from the SystemDictionary.
-	This should only be performed if the application does not intend
-	to look up objects dynamically by name in Smalltalk.
-
-	Note that we cannot remove classes from Smalltalk since these
-	ARE looked up by name by the STBFiler mechanism, though we
-	do remove global aliases for classes as their is a separate mechanism
-	in place to ensure STB can still locate the appropriate class for these."
-
-	| globals |
-	self startElement: 'EmptySystemDictionary' attributes: #().
-	globals := OrderedCollection new.
-	Root allBindingsDo: 
-			[:each |
-			(each isClassVariable not and: [each value class isMeta not or: [each value name ~~ each key]])
-				ifTrue: [globals add: each]].
-	globals do: 
-			[:each |
-			self
-				logElement: 'Global'
-				attributes: #()
-				value: each key.
-			each environment basicRemoveBinding: each].
-	self collectGarbage: 3.
-	self endElement: true!
-
 endElement: aBoolean
 	self deploymentContext endElement: aBoolean!
 
@@ -884,7 +857,6 @@ destroyNotifier!operations!private! !
 detachClass:!helpers!private! !
 developmentResources!accessing!public! !
 emptyMethodDictionariesOfStubbornClasses!public!testing! !
-emptySystemDictionary!operations!private! !
 endElement:!logging!private! !
 endTag!logging!private! !
 externalStructureClasses!accessing!private! !

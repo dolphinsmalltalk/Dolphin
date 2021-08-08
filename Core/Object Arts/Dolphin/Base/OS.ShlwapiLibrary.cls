@@ -144,7 +144,7 @@ fileName
 	^'SHLWAPI'!
 
 sharedVariableName
-	^#{Shlwapi}! !
+	^#{OS.Shlwapi}! !
 !OS.ShlwapiLibrary class categoriesForMethods!
 fileName!constants!public! !
 sharedVariableName!constants!private! !

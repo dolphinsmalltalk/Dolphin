@@ -105,7 +105,7 @@ fileName
 	^'ADVAPI32'!
 
 sharedVariableName
-	^#{AdvApi32}! !
+	^#{OS.AdvApi32}! !
 !OS.AdvApiLibrary class categoriesForMethods!
 fileName!constants!public! !
 sharedVariableName!constants!private! !

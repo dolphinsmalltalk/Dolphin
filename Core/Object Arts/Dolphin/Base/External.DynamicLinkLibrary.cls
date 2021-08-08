@@ -489,7 +489,8 @@ stbReadFrom: anSTBInFiler format: anSTBClassConversion
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
-	self closeDefault!
+	self closeDefault.
+	self sharedVariableName ifNotNil: [:ref | ref undeclare]!
 
 uninitializeBeforeRemove
 	"Perform any pre-removal uninitialisation for the class. This includes any specific #uninitialize

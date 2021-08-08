@@ -29,6 +29,8 @@ And to examine the content:
 
 ```
 Smalltalk developmentSystem browseDeploymentLog: ''DNotepad.xml''
+"Or view the log"
+UI.Examples.XmlPad openOn: ''DNotepad.xml''
 ```'.
 
 package basicScriptAt: #postinstall put: 'Smalltalk developmentSystem

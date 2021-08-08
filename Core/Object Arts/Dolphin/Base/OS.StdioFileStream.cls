@@ -278,7 +278,13 @@ locale: aLocale
 	locale := aLocale!
 
 name
-	^name ifNil: ['%<<1d>%>' expandMacrosWithArguments: {self fileno} locale: Locale invariant]!
+	^name
+		ifNil: 
+			[String writeStream
+				nextPut: $<;
+				display: self fileno;
+				nextPut: $>;
+				contents]!
 
 next
 	"Answer a <Character> or <integer> in the range 0..255, being the next of the 

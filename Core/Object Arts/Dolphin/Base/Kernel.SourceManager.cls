@@ -519,7 +519,8 @@ reset
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
-	self reset! !
+	self reset.
+	Kernel removeLocalBindingFor: #SourceFiles! !
 !Kernel.SourceManager class categoriesForMethods!
 default!accessing!public! !
 default:!accessing!public! !
