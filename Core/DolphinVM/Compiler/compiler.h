@@ -75,7 +75,7 @@ public:
 
 	void SetVMInterface(IDolphin* piVM) { m_piVM = piVM; }
 
-	POTE CompileExpression(LPUTF8 userexpression, Oop compiler, Oop notifier, Oop contextOop, POTE environment, CompilerFlags flags, size_t& len, textpos_t startAt);
+	POTE CompileExpression(Compiler* pOuter, Oop contextOop, CompilerFlags flags, size_t& len, textpos_t startAt);
 	Oop EvaluateExpression(LPUTF8 text, POTE method, Oop contextOop, POTE pools);
 	Oop EvaluateExpression(LPUTF8 source, textpos_t start, textpos_t end, POTE oteMethod, Oop contextOop, POTE pools);
 
@@ -87,8 +87,11 @@ public:
 	POTE __stdcall NewCompiledMethod(POTE classPointer, size_t numBytes, const STMethodHeader& hdr);
 	POTE MakeMethodAnnotations();
 
-	__declspec(property(get = get_Selector)) Str Selector;
-	Str get_Selector() const { return m_selector; }
+	__declspec(property(get = get_Selector)) const Str& Selector;
+	const Str& get_Selector() const 
+	{ 
+		return m_pOuter ? m_pOuter->get_Selector() : m_selector;
+	}
 
 	__declspec(property(get = get_MethodClass)) POTE MethodClass;
 	POTE get_MethodClass() const
@@ -449,6 +452,8 @@ public:
 	STDMETHOD_(POTE, CompileForEval)(IUnknown* piVM, Oop compiler, const char* compiletext, POTE aClass, POTE aNamespace, POTE workspacePools, FLAGS flags, Oop notifier);
 
 private:
+	Compiler* m_pOuter = nullptr;
+
 	// Parse state
 	bool m_ok = true;							// Parse still ok? 
 	bool m_instVarsInitialized = false;

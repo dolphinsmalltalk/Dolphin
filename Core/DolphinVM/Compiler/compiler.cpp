@@ -188,10 +188,11 @@ Str Compiler::GetNameOfClass(Oop oopClass, bool recurse)
 	}
 }
 
-POTE Compiler::CompileExpression(LPUTF8 compiletext, Oop compiler, Oop notifier, Oop contextOop, POTE environment, CompilerFlags flags, size_t& len, textpos_t exprStart)
+POTE Compiler::CompileExpression(Compiler* pOuter, Oop contextOop, CompilerFlags flags, size_t& len, textpos_t exprStart)
 {
+	m_pOuter = pOuter;
 	POTE classPointer = m_piVM->FetchClassOf(contextOop);
-	PrepareToCompile(flags, compiletext, exprStart, classPointer, environment, compiler, notifier, Nil(), true, contextOop);
+	PrepareToCompile(flags, pOuter->Text, exprStart, classPointer, pOuter->m_environment, pOuter->m_compilerObject, pOuter->m_notifier, Nil(), true, contextOop);
 	POTE oteMethod;
 	if (m_ok)
 	{
@@ -3525,7 +3526,7 @@ Oop Compiler::ParseConstExpression()
 		POTE oteSelf = m_piVM->IsAMetaclass(methodClass) ? reinterpret_cast<STMetaclass*>(GetObj(methodClass))->instanceClass: methodClass;
 		Oop contextOop = Oop(oteSelf);
 		TEXTRANGE tokRange = ThisTokenRange;
-		POTE oteMethod = pCompiler->CompileExpression(Text, m_compilerObject, m_notifier, contextOop, m_environment, flags, len, tokRange.m_stop+1);
+		POTE oteMethod = pCompiler->CompileExpression(this, contextOop, flags, len, tokRange.m_stop+1);
 		if (pCompiler->m_ok && pCompiler->ThisToken != TokenType::CloseParen)
 		{
 			CompileError(TEXTRANGE(tokRange.m_start, tokRange.m_stop+len), CErrStaticExprNotClosed);
@@ -4050,7 +4051,7 @@ Oop Compiler::Notification(int errorCode, const TEXTRANGE& range, va_list extras
 	POTE sourceString = NewUtf8String(Text);
 	m_piVM->StorePointerWithValue(&args.fields[5], Oop(sourceString));
 
-	LPUTF8 selector = m_selector.c_str();
+	LPUTF8 selector = Selector.c_str();
 	if (selector)
 	{
 		POTE sel = NewUtf8String(selector);
