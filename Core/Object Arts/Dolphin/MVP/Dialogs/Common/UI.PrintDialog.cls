@@ -44,7 +44,7 @@ initialize
 	self winStruct maskIn: ##(PD_RETURNDC | PD_USEDEVMODECOPIES | PD_COLLATE)!
 
 pageRange: anInterval
-	"Sets aInterval to dicate the page range available"
+	"Sets anInterval to dictate the page range available"
 
 	self winStruct 
 		nMinPage: anInterval first;
@@ -52,12 +52,12 @@ pageRange: anInterval
 !
 
 printRange
-	"Answers an Interval that dicates the page range to be printed"
+	"Answers an Interval that dictates the page range to be printed"
 
 	^self winStruct nFromPage to: self winStruct nToPage.!
 
 printRange: anInterval
-	"Sets aInterval to dicate the page range to be printed"
+	"Sets anInterval to dictate the page range to be printed"
 
 	self winStruct 
 		nFromPage: anInterval first;

@@ -290,7 +290,7 @@ validationBlock
 	^validationBlock!
 
 validationBlock: aMonadicValuable 
-	"Set the <monadicValuable> used to validate the user's reply. The valuable is passed the a
+	"Set the <monadicValuable> used to validate the user's reply. The valuable is passed the
 	<String> which is the full path of the selected file as its argument, and is expected to
 	answer whether it is valid. The dialog cannot be Ok'd until the validationBlock answers
 	true."

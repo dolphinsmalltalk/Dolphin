@@ -2209,7 +2209,7 @@ find: aFindDetails range: anInterval
 		flags: findFlags!
 
 find: aString range: anInterval flags: anInteger
-	"Attempt to find the text findString in the receivers text within findRange. flags are from
+	"Attempt to find the text findString in the receiver's text within findRange. flags are from
 	the SCFIND enumeration. Answer the (1-based) position of the found string, or 0 if nothing matched."
 
 	| findText start stop range |

@@ -333,7 +333,7 @@ snoopFirst
 !Presenter class methodsFor!
 
 snoop
-	"Open up a Snoop shell with the receivers view as the snoopee.
+	"Open up a Snoop shell with the receiver's view as the snoopee.
 	Do it in this order to ensure that the snooper is on top of the snoopee"
 
 	| shell |

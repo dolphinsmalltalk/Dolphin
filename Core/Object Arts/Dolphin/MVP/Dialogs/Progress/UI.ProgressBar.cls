@@ -30,7 +30,7 @@ barPosition
 	^self deltaBarPosition: 0!
 
 barPosition: aNumber
-	"Private - Set the receivers bar position to aNumber. 
+	"Private - Set the receiver's bar position to aNumber.
 	Answers the previous position"
 
 	^self sendMessage: PBM_SETPOS wParam: aNumber asInteger!
@@ -49,7 +49,7 @@ deltaBarPosition: aNumber
 	^self sendMessage: PBM_DELTAPOS wParam: aNumber asInteger!
 
 displayValue
-	"Private - Answer the current the displayable contents of the receiver 
+	"Private - Answer the current displayable contents of the receiver
 	(the integer bar position)."
 
 	^self barPosition!
@@ -72,7 +72,7 @@ forecolor: aColorOrNil
 	[self invalidate] postToMessageQueue!
 
 incrementBy: anInteger
-	"Advance the receivers bar position by anInteger increment. 
+	"Advance the receiver's bar position by anInteger increment.
 	Answer the previous position."
 
 	^self
@@ -103,7 +103,7 @@ range
 	^range!
 
 range: anIntegerInterval
-	"Set the receivers bar range to anIntegerInterval. Answer the previous range of nil
+	"Set the receiver's bar range to anIntegerInterval. Answer the previous range of nil
 	if there was not one."
 
 	| answer |

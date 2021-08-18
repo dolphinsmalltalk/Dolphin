@@ -242,7 +242,7 @@ extent: aPoint
 	^self width: aPoint x height: aPoint y!
 
 fromBitmap: aBitmap
-	"Creates a Bitmap object based on a handle to a Windows Microsoft® Windows® 
+	"Creates a Bitmap object based on a handle to a Microsoft® Windows®
 	Graphics Device Interface (GDI) bitmap and a handle to a GDI palette."
 
 	"MSDN: Do not pass to the GDI+ Bitmap constructor a GDI bitmap or a GDI

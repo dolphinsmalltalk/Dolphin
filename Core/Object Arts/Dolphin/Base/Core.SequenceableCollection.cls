@@ -322,7 +322,7 @@ copyLikeOfSize: anInteger
 	N.B. Subclasses must override to preserve additional instance variables."
 
 	"Note: This message differs from #copyEmpty: in two ways:
-	1) an instance of the receivers #copyClass, rather than exact class (although this is usually the same) is answered; and
+	1) an instance of the receiver's #copyClass, rather than exact class (although this is usually the same) is answered; and
 	2) the answer doesn't just have sufficient capacity for anInteger elements, but actually has that many nil or zero elements."
 
 	^self copyingClass ofSize: anInteger!

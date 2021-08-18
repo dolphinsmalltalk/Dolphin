@@ -154,7 +154,7 @@ invalidateLayout
 
 invalidateRect: aRectangle erase: aBoolean
 	"Invalidates the specified desktop rectangle (a RECTL, Rectangle, or nil for the whole client window).
-	Set whether to erase the receivers background before repainting. Answer whether the function succeeds."
+	Set whether to erase the receiver's background before repainting. Answer whether the function succeeds."
 
 	^User32
 		invalidate: handle

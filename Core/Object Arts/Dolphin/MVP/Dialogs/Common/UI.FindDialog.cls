@@ -41,12 +41,12 @@ fdFlags
 	^fdFlags!
 
 findWhat
-	"Private - Answer the receivers findWhat String."
+	"Private - Answer the receiver's findWhat String."
 
 	^findWhatBuf!
 
 findWhat: aString 
-	"Private - Set the receivers findWhat String to include aString."
+	"Private - Set the receiver's findWhat String to include aString."
 
 	| size wide|
 	findDetails pattern: aString.
@@ -108,7 +108,7 @@ initialize
 
 ownerView: aView
 	"Create and show a new instance of the receiver with
-	with a aView as the owner."
+	an aView as the owner."
 
 	^self new
 		initialize;
@@ -118,7 +118,7 @@ ownerView: aView
 
 ownerView: aView findWhat: findString
 	"Create and show a new instance of the receiver with
-	with a aView as the owner. Pre-populate the dialog with the
+	an aView as the owner. Pre-populate the dialog with the
 	argument findString."
 
 	^self new

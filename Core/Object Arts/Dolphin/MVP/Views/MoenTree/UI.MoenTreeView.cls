@@ -1651,7 +1651,7 @@ toggleExpanded: aMoenTreeNode cause: aSymbol
 				ifFalse: [self expandNode: aMoenTreeNode]]!
 
 treeLayout
-	"Private - Commence laying out the receivers trees, each root in turn."
+	"Private - Commence laying out the receiver's trees, each root in turn."
 
 	self treeLayout: anchorNode.
 "	anchorNode childrenDo: [:each | self treeLayout: each]"!

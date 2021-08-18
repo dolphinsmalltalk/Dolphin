@@ -15,7 +15,7 @@ IPersist is at the root of the COM persistance interface hierarchy. The single b
 !OS.COM.IPersist methodsFor!
 
 clsid
-	"Answer the receivers <CLSID>."
+	"Answer the receiver's <CLSID>."
 
 	| answer |
 	answer := CLSID new.

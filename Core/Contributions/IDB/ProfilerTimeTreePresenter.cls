@@ -20,7 +20,7 @@ total
 	^self model samplesElapsedTime!
 
 treeValueFor: aProfilerTreeNode 
-	"Answers the value of the field for the receivers type of tree"
+	"Answers the value of the field for the receiver's type of tree"
 
 	^aProfilerTreeNode time! !
 !ProfilerTimeTreePresenter categoriesForMethods!

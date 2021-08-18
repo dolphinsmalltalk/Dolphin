@@ -19,7 +19,7 @@ isAsFileMode
 
 isAsFileOnlyMode
 	"Answer whether the mode of the stream matches NP_ASFILEONLY. In this
-	mode the receivers is only informed when the url contents have been
+	mode the receiver's is only informed when the url contents have been
 	copied to a local file with the pluginStreamAsFile message.
 
 	Introduced with Netscape 3.0"
@@ -40,7 +40,7 @@ isSeekMode
 	^self mode == NP_SEEK!
 
 requestReadFrom: start to: end
-	"Requests a range of bytes from the receivers stream
+	"Requests a range of bytes from the receiver's stream
 	to be delivered through a series of onWriteReady: and
 	#onWrite: notifications. An HRESULTError exception
 	will be raised if the request could not be satisfied."

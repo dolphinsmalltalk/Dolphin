@@ -325,7 +325,7 @@ skip: anInteger
 	anInteger timesRepeat: [self next]!
 
 skipThrough: anObject 
-	"Set the receivers position reference to be past the next occurrence of the argument,
+	"Set the receiver's position reference to be past the next occurrence of the argument,
 	anObject, in the collection. Answer the receiver, or nil if no such occurrence existed."
 
 	"Included for compatibility with VisualWorks - the ANSI standard message #skipTo: should be
@@ -335,7 +335,7 @@ skipThrough: anObject
 	^nil!
 
 skipTo: anObject 
-	"Set the receivers position reference to be past the next occurrence of the argument,
+	"Set the receiver's position reference to be past the next occurrence of the argument,
 	anObject, in the collection. Answer whether such an occurrence existed."
 
 	[self atEnd] whileFalse: [self next = anObject ifTrue: [^true]].

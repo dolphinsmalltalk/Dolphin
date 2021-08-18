@@ -440,7 +440,7 @@ isIndirection
 	^instanceSpec anyMask: _IndirectMask!
 
 isIndirection: aBoolean
-	"Set/reset the receivers status as an indirect reference (i.e. an
+	"Set/reset the receiver's status as an indirect reference (i.e. an
 	address/pointer) to some other object (internal or external)."
 
 	self setShapeFlags: _IndirectMask to: aBoolean!
@@ -479,7 +479,7 @@ isNullTerminated
 	^instanceSpec allMask: _NullTermMask!
 
 isNullTerminated: aBoolean
-	"Set the receivers status as a class of Null Terminated objects
+	"Set the receiver's status as a class of Null Terminated objects
 	(i.e. its instances have an additional byte, not included in the reported size, 
 	which is always zero). Only meaningful for variable byte classes"
 
@@ -519,7 +519,7 @@ lookupMethod: aSymbol
 	^self primitiveFailed: _failureCode!
 
 makeMourner
-	"Private - Set the receivers status as an mourner. This only affects the
+	"Private - Set the receiver's status as an mourner. This only affects the
 	weak instances of such classes, which will receive a #elementsExpired:
 	message from the Undertaker process soon after they have suffered the loss
 	of an object they are weakly referencing. This gives the mourner the opportunity
@@ -804,13 +804,13 @@ setInstSize: anInteger
 	instanceSpec := (instanceSpec maskClear: _SizeMask) maskSet: anInteger!
 
 setShapeFlags: anIntegerMask to: aBoolean
-	"Private - Set/Reset the receivers shape/structure flags (as defined by anIntegerMask)
+	"Private - Set/Reset the receiver's shape/structure flags (as defined by anIntegerMask)
 	according to the argument aBoolean."
 
 	instanceSpec := instanceSpec mask: anIntegerMask set: aBoolean!
 
 setSpecialBehavior: anIntegerMask to: aBoolean
-	"Private - Set/Reset the receivers special behavior (as defined by anIntegerMask)
+	"Private - Set/Reset the receiver's special behavior (as defined by anIntegerMask)
 	according to the argument aBoolean. Only meaningful for variable byte classes"
 
 	self isPointers 

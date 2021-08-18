@@ -31,7 +31,7 @@ OS.CommonDialogStructure subclass: #'OS.OPENFILENAMEW'
 		'_OffsetOf_pvReserved' -> 16r4C
 	}!
 OS.OPENFILENAMEW guid: (Core.GUID fromString: '{87b4c603-026e-11d3-9fd7-00a0cc3e4a32}')!
-OS.OPENFILENAMEW comment: 'OPENFILENAME is a <Win32Structure> which represent the Windows Common Dialog structure of the same name. It is used in conjunction with the GetOpenFileName() and GetSaveFileName() APIs which pop a common file dialog to browser for a file to load or save respectively. See the <FileDialog> and the Win32 documentation for further details.
+OS.OPENFILENAMEW comment: 'OPENFILENAME is a <Win32Structure> which represents the Windows Common Dialog structure of the same name. It is used in conjunction with the GetOpenFileName() and GetSaveFileName() APIs which pop a common file dialog to browser for a file to load or save respectively. See the <FileDialog> and the Win32 documentation for further details.
 
 The following instance variables hold <String> objects whose addresses have been stored into the structure. This is necessary to prevent premature garbage collection of these objects occurring during an external API call.
 

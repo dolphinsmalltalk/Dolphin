@@ -14,7 +14,7 @@ If this view class is used in an application then it is necessary to distribute 
 !MaskedEdit methodsFor!
 
 apply
-	"Apply the changes made to the edit to the receivers model (but only
+	"Apply the changes made to the edit to the receiver's model (but only
 	it the text is valid against the input mask). Answer whether any update 
 	actually occurred to the model."
 
@@ -25,7 +25,7 @@ apply
 
 caretPosition
 	"Answer the insertion cursor position, as the number of characters from the start
-	of the receivers text"
+	of the receiver's text"
 
 	^self selectionRange start	"Use #start to avoid bounds error if empty"!
 

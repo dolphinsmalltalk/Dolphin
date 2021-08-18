@@ -15,7 +15,7 @@ Note that these exceptions are not raised automatically when the parsing of an X
 
 _descriptionArguments
 	"Answer a <sequencedReadableCollection> of the  arguments to be substitued 
-	into the receiver's Win32 description format string when constructing the receivers 
+	into the receiver's Win32 description format string when constructing the receiver's
 	#description.
 	By default the arguments to the message formatting are the message text and 
 	the tag supplied by the exception signaller, but if additional fields are available,

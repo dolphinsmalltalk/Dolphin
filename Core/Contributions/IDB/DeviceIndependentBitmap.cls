@@ -96,7 +96,7 @@ depth
 	^bitmapInfoHeaderStruct biBitCount!
 
 erase
-	"Clear the receivers image to white"
+	"Clear the receiver's image to white"
 
 	self canvas fillRectangle: (Rectangle origin: Point zero extent: self extent)
 		brush: Brush white!
@@ -129,7 +129,7 @@ getColorTable
 	^table!
 
 imageBytes
-	"Answer a ByteArray initialized from the receivers image bits"
+	"Answer a ByteArray initialized from the receiver's image bits"
 
 	self cacheInfo.
 	^ByteArray fromAddress: bitmapStruct bmBits length: bitmapInfoHeaderStruct biSizeImage!
@@ -158,7 +158,7 @@ saveToStream: aStream
 		nextPutAll: self imageBytes!
 
 setColorTable: anRGBQUADArray
-	"If the receivers color depth is less than or equal to 8 then set its color table 
+	"If the receiver's color depth is less than or equal to 8 then set its color table
 	to anRGBQuadArray."
 
 	| colorsUsed colorsSet |
@@ -179,7 +179,7 @@ setColorTable: anRGBQUADArray
 width: widthInteger height: heightInteger depth: depthInteger
 	"Answer a new instance of the required type. 
 	Note that the extent and depth IVs are only used by the createHandle method, any requests
-	for the receivers extent and depth will use the cached information"
+	for the receiver's extent and depth will use the cached information"
 
 	self assert: [#(1 4 8 16 24 32) includes: depthInteger].
 	extent := widthInteger @ heightInteger.

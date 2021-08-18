@@ -25,7 +25,7 @@ originalError
 
 originalError: anError
 	"Set the original <Error> which occurred when attempting to remove the class
-	in the receivers tag field."
+	in the receiver's tag field."
 
 	originalError := anError! !
 !Kernel.ClassRemovalError categoriesForMethods!

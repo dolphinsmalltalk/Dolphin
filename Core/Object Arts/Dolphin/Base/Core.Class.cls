@@ -493,7 +493,7 @@ instanceClass
 	^self!
 
 isAbstract: aBoolean
-	"Set/reset the receivers status as an abstract class. Note that a class may still answer
+	"Set/reset the receiver's status as an abstract class. Note that a class may still answer
 	true to #isAbstract even after setting this to false if it contains abstract methods (see
 	#hasAbstractMethods)."
 
@@ -902,7 +902,7 @@ stbVersion
 	^0!
 
 storeGUID
-	"Private - Record the receivers GUID to the change log."
+	"Private - Record the receiver's GUID to the change log."
 
 	self sourceManager storeGUIDForClass: self
 !
@@ -936,7 +936,7 @@ subclasses
 	^subclasses!
 
 subclasses: aCollection
-	"Set the receivers subclasses to the specified collection. The subclasses are maintained as an immutable array."
+	"Set the receiver's subclasses to the specified collection. The subclasses are maintained as an immutable array."
 
 	subclasses := aCollection asArray
 				isImmutable: true;

@@ -168,7 +168,7 @@ placement: aWINDOWPLACEMENT
 	"Sets the current minimized/maximized/restored locations of the receiver and
 	its current state from information in aWINDOWPLACEMENT."
 
-	"Implementation Note: We must initialize the scroll bars based on the receivers subview."
+	"Implementation Note: We must initialize the scroll bars based on the receiver's subview."
 
 	super placement: aWINDOWPLACEMENT.
 	self deferLayout: [:context | self updateScrollBars: context]!
@@ -295,7 +295,7 @@ setScrollInfo: barInteger position: positionInteger range: rangeInterval page: p
 		fRedraw: true!
 
 updateScrollBarOffsets: aLayoutContext
-	"Private - Update the state of the receivers standard scroll bars to reflect the current
+	"Private - Update the state of the receiver's standard scroll bars to reflect the current
 	relationship between the receiver and its subview."
 
 	| clientExtent viewExtent |
@@ -305,7 +305,7 @@ updateScrollBarOffsets: aLayoutContext
 	self setScrollInfo: self scrollOffset!
 
 updateScrollBars: aLayoutContext 
-	"Private - Update the state of the receivers standard scroll bars to reflect the current
+	"Private - Update the state of the receiver's standard scroll bars to reflect the current
 	relationship between the receiver and its subview."
 
 	| clientExtent viewExtent |

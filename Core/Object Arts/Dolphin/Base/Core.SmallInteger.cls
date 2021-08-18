@@ -155,7 +155,7 @@ asStackPointer
 	^self!
 
 basicAt: index
-	"Private - Answer the receivers indexed instance variable at the
+	"Private - Answer the receiver's indexed instance variable at the
 	argument, index. Not valid for immediate objects,  which have no indexable
 	variables as such.
 	Do not remove this method, as the primitive implementation in Object
@@ -164,7 +164,7 @@ basicAt: index
 	^self shouldNotImplement!
 
 basicAt: index put: value
-	"Private - Replace the receivers indexed instance variable at the
+	"Private - Replace the receiver's indexed instance variable at the
 	argument, index, with the argument, value. Not valid for immediate,
 	objects which are constants.
 	Do not remove this method, as the primitive implementation in Object
@@ -328,7 +328,7 @@ identityHash
 	^self hashMultiply!
 
 instVarAt: index
-	"Private - Answer the receivers instance variable at the argument, index. 
+	"Private - Answer the receiver's instance variable at the argument, index.
 	Not valid for SmallIntegers,  which have no instance variables in the true sense.
 	Do not remove this method, as the primitive implementation in Object
 	will behave unexpectedly for SmallIntegers."
@@ -336,7 +336,7 @@ instVarAt: index
 	^self shouldNotImplement!
 
 instVarAt: index put: value
-	"Private - Replace the receivers instance variable at the argument, index, 
+	"Private - Replace the receiver's instance variable at the argument, index,
 	with the argument, value. Not valid for SmallIntegers, which are constants.
 	Do not remove this method, as the primitive implementation in Object
 	will behave unexpectedly for SmallIntegers."

@@ -101,7 +101,7 @@ incrementTimeBy: anInteger
 
 isAbove: aFloat 
 	"Answers true if either of the fields isAbove aFloat (a percentage).
-	This should really just check one filed, for the receivers type of tree, but this is much easier
+	This should really just check one filed, for the receiver's type of tree, but this is much easier
 	and should make little difference as the percentages are usually very similar"
 
 	^tally > aFloat or: [time > aFloat]!

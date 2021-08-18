@@ -125,7 +125,7 @@ tagsNamed: aSymbol ifReceiverDoAndRecurse: aOneArgumentBlock
 
 tagsNamed: aSymbol ifReceiverOrChildDo: aOneArgumentBlock
 	"If the receiver tag equals aSymbol, evaluate aOneArgumentBlock with the receiver.
-	For each of the receivers children do the same. Do not go beyond direct children"
+	For each of the receiver's children do the same. Do not go beyond direct children"
 
 	self tag == aSymbol ifTrue: [aOneArgumentBlock value: self].
 	super tagsNamed: aSymbol ifReceiverDo: aOneArgumentBlock!

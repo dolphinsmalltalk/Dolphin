@@ -196,7 +196,7 @@ isShared
 	^false!
 
 loadFromFile: pathString extent: aPoint
-	"Private - Attempts to load an image of the receivers type from a disk file.
+	"Private - Attempts to load an image of the receiver's type from a disk file.
 	Answers the image's handle, or nil if the image could not be loaded."
 
 	^User32

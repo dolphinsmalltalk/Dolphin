@@ -108,7 +108,7 @@ cutSelection
 !
 
 dragCoordinator
-	"Private - Answer the drag object used to synchronize writing to the receivers view."
+	"Private - Answer the drag object used to synchronize writing to the receiver's view."
 
 	^arena!
 
@@ -122,7 +122,7 @@ ensureMinimumMenuContents: aMenu
 		ifFalse: [aMenu itemsDo: [:item | item hasSubmenu ifTrue: [self ensureMinimumMenuContents: item]]]!
 
 generateAcceleratorConflicts
-	"Private - Generate the receivers set of conflicting accelerator keys and update
+	"Private - Generate the receiver's set of conflicting accelerator keys and update
 	all the open menu views to the new state. A conflicting accelerator key is one
 	which is used by more than one menu item across the top level menu and all its
 	sub-menus."
@@ -465,7 +465,7 @@ stripUntitled: aMenu
 
 topMenuInset
 	"Private - Anser the offset of the top menu from the origin of
-	the receivers client view."
+	the receiver's client view."
 
 	^10@10!
 

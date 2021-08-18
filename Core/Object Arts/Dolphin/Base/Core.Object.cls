@@ -212,7 +212,7 @@ at: index
 	^self _primitiveError: _failureCode at: index!
 
 at: index put: value
-	"Replace the receivers indexed instance variable at the argument, index, with the argument, value. Answer value.
+	"Replace the receiver's indexed instance variable at the argument, index, with the argument, value. Answer value.
 	As basicAt:put: but may be reimplemented."
 
 	"Primitive Failure Reasons:
@@ -241,7 +241,7 @@ basicAt: aSmallInteger
 	^self _primitiveError: _failureCode at: aSmallInteger!
 
 basicAt: aSmallInteger put: value
-	"Private - Replace the receivers indexed instance variable at the argument, index, with the argument, value. Answer value. 
+	"Private - Replace the receiver's indexed instance variable at the argument, index, with the argument, value. Answer value.
 	MUST not be reimplemented (except by classes whose instances have immediate representations	such as SmallInteger)."
 
 	"Primitive Failure Reasons:

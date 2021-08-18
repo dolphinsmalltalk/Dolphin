@@ -115,7 +115,7 @@ setHotKey: virtualKeyCode modifiers: modifiers
 	self setHotKey: ((virtualKeyCode bitAnd: 16rFF) bitOr: (mods bitShift: 8))!
 
 setRules
-	"Private - Set the receivers invalid modifiers and its default modifier."
+	"Private - Set the receiver's invalid modifiers and its default modifier."
 
 	self
 		sendMessage: HKM_SETRULES

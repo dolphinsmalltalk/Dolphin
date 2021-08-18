@@ -36,7 +36,7 @@ argumentTypes
 callback: stub interface: aCOMInterface withArgumentsAt: anAddress
 	"Private - Forward a COM virtual function call as a message to the appropriate implementing
 	object stored in the interface, aCOMInterface, with arguments instantiated from memory pointed 
-	at by anAddress, corresponding to the receivers argument types. Answer the result.
+	at by anAddress, corresponding to the receiver's argument types. Answer the result.
 	Implementation Note: This is the normal form of COM dispatch."
 
 	^stub implementor		"Forward to the COM server object"

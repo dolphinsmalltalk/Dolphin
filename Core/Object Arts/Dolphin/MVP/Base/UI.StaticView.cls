@@ -42,7 +42,7 @@ invalidateOnResize
 
 invalidateRect: rectangle erase: eraseBoolean 
 	"Invalidates the specified client rectangle (a RECTL, Rectangle, or nil for the whole client window).
-	Set whether to erase the receivers background before repainting. Answer whether the function succeeds.
+	Set whether to erase the receiver's background before repainting. Answer whether the function succeeds.
 	Static views appear to behave in an odd way that requires us to perform the invalidation in the
 	parent rectangle"
 

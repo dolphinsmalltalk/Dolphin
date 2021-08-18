@@ -18,7 +18,7 @@ asInternalAccessor
 	^ResourceSTBByteArrayAccessor onByteArray: self byteArray!
 
 byteArray
-	"Private - Answer a ByteArray of the contents of the receivers file."
+	"Private - Answer a ByteArray of the contents of the receiver's file."
 
 	| stream |
 	stream := self readStream.
@@ -76,7 +76,7 @@ stbSaveOn: anSTBOutFiler
 	"Output the receiver to anSTBOutFiler.
 	If anSTBOutFiler has a non-nil context we assume this to be a Boolean
 	that identifies whether resources should be saved as a single file. If so, we
-	store the receivers resource file data inline, and regenerate the file on load.
+	store the receiver's resource file data inline, and regenerate the file on load.
 	Also, the proxy is required so that we can propagate the codebase of the loading
 	STBInFiler into the reconstituted accessor thus allowing us to resolve remote
 	class references within a resource."

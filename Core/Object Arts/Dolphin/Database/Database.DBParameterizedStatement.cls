@@ -75,7 +75,7 @@ paramCols: anArrayOfColAttrs
 	paramCols := anArrayOfColAttrs asArray!
 
 parameters
-	"Private - Answer the receivers bound parameter fields. On first receipt (usually from 
+	"Private - Answer the receiver's bound parameter fields. On first receipt (usually from
 	#exec) completes lazy evaluation by causing allocation of a statement handle, preparing 
 	the statement, creating the array of parameter fields and binding them."
 

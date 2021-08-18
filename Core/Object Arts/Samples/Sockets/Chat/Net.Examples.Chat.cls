@@ -414,7 +414,7 @@ userName
 
 validateUserInterface
 	"Set the state of the receiver accordingly. This method is sent at judicious times
-	in an attempt to ensure that the receivers state is up to date. "
+	in an attempt to ensure that the receiver's state is up to date. "
 
 	super validateUserInterface.
 	calleeAddress view isEnabled: self isIdle.

@@ -84,7 +84,7 @@ bottomFraming: aSymbol
 	bottomFraming := self class calculationClass perform: aSymbol!
 
 bottomOffset
-	"Answer the framing offset for the receivers bottom edge.
+	"Answer the framing offset for the receiver's bottom edge.
 	In the case of a parent relative framing constraint, this
 	should be a <number> between 0 and 1, and in all other cases
 	it should be an <integer>."
@@ -127,7 +127,7 @@ leftFraming: aSymbol
 	leftFraming := self class calculationClass perform: aSymbol!
 
 leftOffset
-	"Answer the framing offset for the receivers left edge.
+	"Answer the framing offset for the receiver's left edge.
 	In the case of a parent relative framing constraint, this
 	should be a <number> between 0 and 1, and in all other cases
 	it should be an <integer>."
@@ -202,7 +202,7 @@ rightFraming: aSymbol
 	rightFraming := self class calculationClass perform: aSymbol!
 
 rightOffset
-	"Answer the framing offset for the receivers right edge.
+	"Answer the framing offset for the receiver's right edge.
 	In the case of a parent relative framing constraint, this
 	should be a <number> between 0 and 1, and in all other cases
 	it should be an <integer>."
@@ -222,7 +222,7 @@ topFraming: aSymbol
 	topFraming := self class calculationClass perform: aSymbol!
 
 topOffset
-	"Answer the framing offset for the receivers top edge.
+	"Answer the framing offset for the receiver's top edge.
 	In the case of a parent relative framing constraint, this
 	should be a <number> between 0 and 1, and in all other cases
 	it should be an <integer>."
@@ -233,7 +233,7 @@ topOffset: aNumber
 	topOffset := aNumber!
 
 updateFor: aView context: aFramingContext 
-	"Private - Update the receivers offsets from a new <Rectangle> within the parent extent,
+	"Private - Update the receiver's offsets from a new <Rectangle> within the parent extent,
 	aPoint. This is used when repositioning or resizing the receiver, not to accommodate layout
 	changes caused by resizing of the parent - i.e. this is mainly intended for design time
 	support. The offset calculations have to work out what value offset is needed for that

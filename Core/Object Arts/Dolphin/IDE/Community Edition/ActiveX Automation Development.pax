@@ -2644,7 +2644,7 @@ areWrappersRequired
 	^self isSource not!
 
 autoGenPropertiesCategories
-	"Private - Answer the special method categories for auto-generated property accessors in the receivers wrapper class."
+	"Private - Answer the special method categories for auto-generated property accessors in the receiver's wrapper class."
 
 	^{self autoGenCategoryName. 'properties'. 'public'}!
 

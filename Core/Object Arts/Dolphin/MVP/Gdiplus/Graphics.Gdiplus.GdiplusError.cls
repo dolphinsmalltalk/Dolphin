@@ -14,8 +14,8 @@ Graphics.Gdiplus.GdiplusError comment: ''!
 !Graphics.Gdiplus.GdiplusError methodsFor!
 
 _descriptionArguments
-	"Answer a <sequencedReadableCollection> of the  arguments to be substitued 
-	into the receiver's Win32 description format string when constructing the receivers 
+	"Answer a <sequencedReadableCollection> of the arguments to be substituted
+	into the receiver's Win32 description format string when constructing the receiver's
 	#description."
 
 	^{self messageText displayString.

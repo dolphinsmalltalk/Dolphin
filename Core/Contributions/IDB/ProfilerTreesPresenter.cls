@@ -146,7 +146,7 @@ treePresenter
 	^self presenterNamed: 'tree'!
 
 treeValueFor: aProfilerTreeNode 
-	"Answers the value of the field for the receivers type of tree"
+	"Answers the value of the field for the receiver's type of tree"
 
 	self subclassResponsibility!
 

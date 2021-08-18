@@ -361,7 +361,7 @@ vtbl:!**compiled accessors**!public! !
 !OS.COM.Interface class methodsFor!
 
 addFunction: functionClass selector: aSymbol descriptor: aFunctionDescriptor
-	"Private - Add a function call definition to the receivers dispatch table."
+	"Private - Add a function call definition to the receiver's dispatch table."
 
 	functions add: (functionClass
 					selector: aSymbol

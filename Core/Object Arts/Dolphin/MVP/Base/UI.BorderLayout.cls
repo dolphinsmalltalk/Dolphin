@@ -215,16 +215,16 @@ removeSubView: aView
 !
 
 reposition: aMovedView to: aPoint
-	"Private - If aMovedView is not one of the receivers views then position
-	it to where it wants to go, otherwise layout the receivers container."
+	"Private - If aMovedView is not one of the receiver's views then position
+	it to where it wants to go, otherwise layout the receiver's container."
 
 	aMovedView position: aPoint.
 	aMovedView arrangement notNil ifTrue: [
 		super reposition: aMovedView to: aPoint]!
 
 resize: aSizedView to: aRectangle
-	"If aSizedView is not one of the receivers views then resize
-	it to its desired rectangle, otherwise layout the receivers container."
+	"If aSizedView is not one of the receiver's views then resize
+	it to its desired rectangle, otherwise layout the receiver's container."
 
 	aSizedView rectangle: aRectangle.
 	aSizedView arrangement notNil ifTrue: [

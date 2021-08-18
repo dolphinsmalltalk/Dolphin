@@ -21,7 +21,7 @@ apply
 applyPreferredExtent
 	"Calculate and apply a suitable extent for the receiver based on the preferred extent of the
 	aspectPresenterInDialog view. Note that the minium extent that can be allowed is the
-	#minExtent for the receivers view and the maximum is given by the *current* extent. The
+	#minExtent for the receiver's view and the maximum is given by the *current* extent. The
 	absolute maximum extent to which the receiver can later be resized by the user is given by
 	the #maxExtent."
 

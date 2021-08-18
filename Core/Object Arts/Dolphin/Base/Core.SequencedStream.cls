@@ -169,7 +169,7 @@ skipSeparators
 	^false!
 
 skipToAll: aCollection 
-	"Set the receivers current position to be past the next occurrence of the sequence of
+	"Set the receiver's current position to be past the next occurrence of the sequence of
 	objects which are the elements of the <collection> argument. Answer whether such any such
 	sequence was found."
 

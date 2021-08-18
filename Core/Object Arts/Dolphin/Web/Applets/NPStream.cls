@@ -30,7 +30,7 @@ basicFree
 	^self destroy: NPRES_DONE!
 
 destroy: reason
-	"Private - Request the internet browser to close and delete the receivers stream.
+	"Private - Request the internet browser to close and delete the receiver's stream.
 	This will result in the #pluginDestroyStream: being sent to the receiver.
 	May raise an HRESULTError if the operation was not successful."
 
@@ -57,7 +57,7 @@ isSeekable
 	^npStream seekable!
 
 lastModified
-	"Answer the TimeStamp of when the contents of the receivers URL,
+	"Answer the TimeStamp of when the contents of the receiver's URL,
 	if applicable, were last modified."
 
 	^TimeStamp fromSYSTEMTIME:
@@ -150,7 +150,7 @@ supportedInterfaces
 	^#(##(INPStreamEvents))!
 
 url
-	"Answer the receivers <readableString> url of the origin or destination of the stream 
+	"Answer the receiver's <readableString> url of the origin or destination of the stream
 	associated with the receiver."
 
 	^self npStream url! !

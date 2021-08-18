@@ -1456,7 +1456,7 @@ getPreviousSibling
 	^self getWindow: GW_HWNDPREV!
 
 getScrollInfo: siStruct bar: bar
-	"Private - Get the information about the receivers bar.
+	"Private - Get the information about the receiver's bar.
 	Answer whether values were retrieved."
 
 	^User32
@@ -1782,7 +1782,7 @@ invalidateRect: aRectangle
 
 invalidateRect: aRectangle erase: aBoolean
 	"Invalidates the specified client rectangle (a RECTL, Rectangle, or nil for the whole client window).
-	Set whether to erase the receivers background before repainting. Answer whether the function succeeds."
+	Set whether to erase the receiver's background before repainting. Answer whether the function succeeds."
 
 	"There is a possibility that this may be called before the receiver has been created
 	so check for this to avoid accidentally redrawing the entire desktop"
@@ -3300,7 +3300,7 @@ setRedraw: aBoolean
 !
 
 setScrollInfo: siStruct bar: bar
-	"Private - Set the specified scroll info for the receivers bar.
+	"Private - Set the specified scroll info for the receiver's bar.
 	Answer the current position of the bars thumb."
 
 	^User32
@@ -3525,7 +3525,7 @@ subViewFromPoint: aPoint
 			self subViewFromPoint: aPoint flags: CWP_ALL]!
 
 subViewFromPoint: aPoint flags: cwpFlags
-	"Private - Answers the View in the receiver beneath aPoint (in the receivers coordinates)."
+	"Private - Answers the View in the receiver beneath aPoint (in the receiver's coordinates)."
 
 	| handleFound viewFound |
 	handleFound := User32
@@ -4481,7 +4481,7 @@ wmTimer: message wParam: wParam lParam: lParam
 	^nil!
 
 wmVScroll: message wParam: wParam lParam: lParam
-	"Private - A vertical Scroll event has occured. Pass onto the receivers controller. Have to check
+	"Private - A vertical Scroll event has occured. Pass onto the receiver's controller. Have to check
 	whether the event came from a standard scroll bar or a scroll bar controller."
 
 	^(lParam == 0 ifTrue: [self] ifFalse: [SessionManager.Current inputState lookupWindow: lParam])
@@ -5484,7 +5484,7 @@ openTheme
 		ifFalse: [UxTheme openThemeData: nil pszClassList: self themePartName asUtf16String]!
 
 registerClass
-	"Private - Register the receivers corresponding Win32 class - answer the class atom.
+	"Private - Register the receiver's corresponding Win32 class - answer the class atom.
 	Will work for subclasses that implement at least #winClassName, and 
 	optionally #winClassStyle and #winClassBrush"
 
@@ -5731,7 +5731,7 @@ uninitialize
 	#(#subclassWindow:) do: [:each | VM unregisterObject: each]!
 
 unregisterClass
-	"Private - Unregister the receivers corresponding Win32 class - answer whether it succeeds."
+	"Private - Unregister the receiver's corresponding Win32 class - answer whether it succeeds."
 
 	^User32 unregisterClass: WndClassAtom hInstance: VM applicationHandle!
 

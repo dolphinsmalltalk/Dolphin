@@ -59,7 +59,7 @@ argsOffset
 	^0!
 
 argumentCount
-	"Private - Answer the number of arguments to the receivers stack frame, this will 
+	"Private - Answer the number of arguments to the receiver's stack frame, this will
 	vary depending on whether the receiver is a frame for a block or method activation."
 	
 	^self method argumentCount!
@@ -75,7 +75,7 @@ asInteger
 	^index!
 
 at: anInteger
-	"Private - Answer the stack temporary indexed, anInteger, from the receivers stack frame.
+	"Private - Answer the stack temporary indexed, anInteger, from the receiver's stack frame.
 	We allow access at 0, as this will return the receiver from the frame, which is at bp - 1."
 	
 	^(anInteger between: 0 and: self localCount)
@@ -133,7 +133,7 @@ basicSP
 
 basicSP: aSmallInteger 
 	"Private - Set the SP of the process stack frame the receiver represents
-	to spInteger (address/2 of the receivers TOS in the process)."
+	to spInteger (address/2 of the receiver's TOS in the process)."
 
 	process at: index + SPOffset put: aSmallInteger!
 
@@ -423,7 +423,7 @@ stackTrace: anInteger
 	^stackStream contents!
 
 temp: depthInteger at: indexInteger 
-	"Private - Answer the stack temporary indexed, anInteger, from the receivers stack frame."
+	"Private - Answer the stack temporary indexed, anInteger, from the receiver's stack frame."
 
 	| env |
 	env := self getOuter: depthInteger.

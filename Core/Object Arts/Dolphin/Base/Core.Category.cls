@@ -138,7 +138,7 @@ setName: aName
 	name := aName!
 
 subNames
-	"Answer an OrderedCollection of the receivers name split
+	"Answer an OrderedCollection of the receiver's name split
 	on category separator."
 
 	^self class separator split: self name! !

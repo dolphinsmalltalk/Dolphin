@@ -2404,13 +2404,13 @@ updateFilters
 !
 
 updateMethodsInCategory
-	"Private - Set the methods of the receivers methodBrowserPresenter so it
+	"Private - Set the methods of the receiver's methodBrowserPresenter so it
 	only shows methods of the selected class and any selected categories."
 
 	self setMethodsFilter: self categoriesFilter!
 
 updateMethodsInProtocol
-	"Private - Set the methods of the receivers methodBrowserPresenter so it
+	"Private - Set the methods of the receiver's methodBrowserPresenter so it
 	only shows methods of the selected class and any selected protocols."
 
 	| filter |
@@ -2420,7 +2420,7 @@ updateMethodsInProtocol
 	self setMethodsFilter: filter!
 
 updateMethodsReferencingVariables
-	"Private - Set the methods of the receivers methodBrowserPresenter so it
+	"Private - Set the methods of the receiver's methodBrowserPresenter so it
 	only shows methods of the selected class which reference any of the 
 	selected instance variables."
 
