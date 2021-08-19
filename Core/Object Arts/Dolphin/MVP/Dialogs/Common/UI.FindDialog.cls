@@ -108,7 +108,7 @@ initialize
 
 ownerView: aView
 	"Create and show a new instance of the receiver with
-	an aView as the owner."
+	aView as the owner."
 
 	^self new
 		initialize;
@@ -118,7 +118,7 @@ ownerView: aView
 
 ownerView: aView findWhat: findString
 	"Create and show a new instance of the receiver with
-	an aView as the owner. Pre-populate the dialog with the
+	aView as the owner. Pre-populate the dialog with the
 	argument findString."
 
 	^self new

@@ -68,7 +68,7 @@ initialize
 	self initializeDefaultHooks!
 
 ownerView: aView findWhat: find replaceWith: replace
-	"Create and show a new instance of the receiver with an aView as the owner."
+	"Create and show a new instance of the receiver with aView as the owner."
 
 	^self new
 		ownerView: aView;
