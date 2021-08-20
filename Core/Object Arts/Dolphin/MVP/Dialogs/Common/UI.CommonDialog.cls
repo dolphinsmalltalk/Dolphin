@@ -73,7 +73,7 @@ initialize
 !
 
 ownerView: aView
-	"Private - Set the receivers ownerView to aView."
+	"Private - Set the receiver's ownerView to aView."
 
 	super ownerView: aView.
 	self winStruct ownerView: aView.!

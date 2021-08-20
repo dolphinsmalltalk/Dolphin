@@ -29,13 +29,13 @@ autoGenCategoryName
 
 autoGenEventCategories
 	"Private - Answer the special method categories for auto-generated
-	property accessors in the receivers wrapper class."
+	property accessors in the receiver's wrapper class."
 
 	^{self autoGenCategoryName. 'event handling-scintilla'}!
 
 autoGenMethodCategories
 	"Private - Answer the special method categories for auto-generated
-	property accessors in the receivers wrapper class."
+	property accessors in the receiver's wrapper class."
 
 	^{self autoGenCategoryName. 'scintilla interface'}!
 

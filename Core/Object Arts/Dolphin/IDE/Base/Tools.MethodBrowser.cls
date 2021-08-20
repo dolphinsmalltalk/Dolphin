@@ -472,7 +472,7 @@ findNextMatch
 	sourcePresenter view basicFindNext!
 
 findSelector: aSelector
-	"Set the String to search for in the receivers source to be one that describes aSelector"
+	"Set the String to search for in the receiver's source to be one that describes aSelector"
 
 	aSelector isNil ifTrue: [^self].
 	sourcePresenter findDetails: (MethodSearch newSelector: aSelector) findDetails!

@@ -84,12 +84,12 @@ hasAutoTicks: aBoolean
 	aBoolean ifTrue: [self range: self range] ifFalse: [self clearTicks]!
 
 hasFixedLength
-	"Private - Answer whether the receivers slider has a fixed length"
+	"Private - Answer whether the receiver's slider has a fixed length"
 
 	^self baseStyleAllMask: TBS_FIXEDLENGTH!
 
 hasFixedLength: aBoolean 
-	"Private - Set whether the receivers slider has a fixed length"
+	"Private - Set whether the receiver's slider has a fixed length"
 
 	self 
 		baseStyleMask: TBS_FIXEDLENGTH
@@ -204,7 +204,7 @@ range
 	^(self sendMessage: TBM_GETRANGEMIN) to: (self sendMessage: TBM_GETRANGEMAX) by: autoTickFrequency!
 
 range: anIntegerInterval 
-	"Set the receivers bar range to the <Interval> argument. Note that the start, stop and
+	"Set the receiver's bar range to the <Interval> argument. Note that the start, stop and
 	increment of the Interval must be <integer>s, the step must be positive, and the interval
 	must not be empty. The 'step' of the interval is used to position the ticks (if
 	auto-generated)."
@@ -227,7 +227,7 @@ selectionRange
 		ifTrue: [(self sendMessage: TBM_GETSELSTART) to: (self sendMessage: TBM_GETSELEND)]!
 
 selectionRange: anIntervalOrNil 
-	"Set the receivers selection range to anIntegerIntervalOrNil."
+	"Set the receiver's selection range to anIntegerIntervalOrNil."
 
 	anIntervalOrNil notNil 
 		ifTrue: 

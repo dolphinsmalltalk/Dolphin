@@ -251,7 +251,7 @@ find: aFindDetails range: anInterval
 		flags: frFlags!
 
 find: findString range: findRange flags: frFlags
-	"Attempt to find the text findString in the receivers text within findRange. flags are from
+	"Attempt to find the text findString in the receiver's text within findRange. flags are from
 	FINDREPLACE. Answer the (1-based) position of the found string, or 0 if nothing matched."
 
 	| findText start stop range |

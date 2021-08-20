@@ -197,7 +197,7 @@ maxLiteralPrint
 	^60!
 
 methodClass
-	"Answer the class which the receivers method belongs to."
+	"Answer the class which the receiver's method belongs to."
 
 	^self method methodClass!
 

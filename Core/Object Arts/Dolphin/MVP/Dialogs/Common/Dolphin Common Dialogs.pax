@@ -340,7 +340,7 @@ title!accessing!public! !
 
 titleOf: aString
 	"Answer the 'title' (i.e. the display name) of a file with the specified path name.
-	The file title may or may not include the extension, depending on the users
+	The file title may or may not include the extension, depending on the user's
 	configuration."
 
 	| buf lib len |

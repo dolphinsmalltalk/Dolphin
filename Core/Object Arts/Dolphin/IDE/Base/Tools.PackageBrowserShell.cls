@@ -1039,7 +1039,7 @@ scriptText
 	^scriptTextPresenter plainText!
 
 scriptText: text 
-	"Private - Set the text of the receivers scriptPresenter to the argument,
+	"Private - Set the text of the receiver's scriptPresenter to the argument,
 	text (either plain or rich text)."
 
 	scriptTextPresenter text: text

@@ -200,7 +200,7 @@ at: anInteger
 	^self shouldNotImplement!
 
 at: index put: value
-	"Replace the receivers indexed instance variable at the argument, index, with the argument,
+	"Replace the receiver's indexed instance variable at the argument, index, with the argument,
 	value. Not valid for immediate, objects which are constants. Do not remove this method, as
 	the primitive implementation in Object will behave unexpectedly for immediate objects."
 

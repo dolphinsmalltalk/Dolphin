@@ -45,7 +45,7 @@ hasSelection
 	^self selectionOrNil notNil!
 
 indexOfItem: menuItem
-	"Private - Answer the index of menuItem in the receivers model."
+	"Private - Answer the index of menuItem in the receiver's model."
 
 	^self menu items indexOf: menuItem!
 
@@ -111,7 +111,7 @@ onPaintRequired: aPaintEvent
 			ensure: [self arena showDragCursor]!
 
 originForSubmenu: itemIndex 
-	"Answer the position in the receivers parent view at which a MenuItem's submenu should be
+	"Answer the position in the receiver's parent view at which a MenuItem's submenu should be
 	opened."
 
 	^self position 
@@ -133,7 +133,7 @@ selectionByIndex
 	^selectionIndex!
 
 selectionByIndex: index
-	"Set the index of the selected item. This will not update the receivers on screen
+	"Set the index of the selected item. This will not update the receiver's on screen
 	appearance."
 
 	selectionIndex := index!

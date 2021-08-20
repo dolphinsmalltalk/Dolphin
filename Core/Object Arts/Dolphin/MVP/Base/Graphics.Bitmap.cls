@@ -401,7 +401,7 @@ getInfo
 	^bitmapInfo!
 
 getMap3DColors
-	"Answer whether the receivers colours will be mapped to suitable 3D ones
+	"Answer whether the receiver's colours will be mapped to suitable 3D ones
 	when loaded in."
 
 	^flags allMask: Map3DColorsMask.!
@@ -516,7 +516,7 @@ pixelData
 	^pixData!
 
 setMap3DColors: aBoolean
-	"Set whether the receivers colours will be mapped to suitable 3D ones
+	"Set whether the receiver's colours will be mapped to suitable 3D ones
 	when loaded in."
 
 	flags := flags mask: Map3DColorsMask set: aBoolean.!

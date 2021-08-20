@@ -474,7 +474,7 @@ invertRegion: aRegion
 	^Gdi32 invertRgn: self asParameter hRgn: aRegion asParameter!
 
 isRectangleVisible: aRectangle
-	"Answer whether any part of aRectangle is within the receivers device
+	"Answer whether any part of aRectangle is within the receiver's device
 	context cliiping region."
 
 	^Gdi32 rectVisible: self asParameter lprc: aRectangle asParameter!
@@ -845,7 +845,7 @@ text: aString at: aPoint
 		cbString: text size!
 
 textExtent: aString
-	"Answer the extent of aString using the receivers currently selected font. Note this will only provide an accurate result for a single line of text, and when paired with the GDI ExtTextOut function for painting the text, which will only be the case if the Canvas>>text:at: method is used. For calculating the extent of text drawn with the User32 DrawText API (e.g. by Canvas>>formatText:&c) one of the textExtent:width:&c family of methods must be used."
+	"Answer the extent of aString using the receiver's currently selected font. Note this will only provide an accurate result for a single line of text, and when paired with the GDI ExtTextOut function for painting the text, which will only be the case if the Canvas>>text:at: method is used. For calculating the extent of text drawn with the User32 DrawText API (e.g. by Canvas>>formatText:&c) one of the textExtent:width:&c family of methods must be used."
 
 	| size text |
 	size := POINTL new.
@@ -878,7 +878,7 @@ textExtent: aString width: anIntegerWidth alignment: anAlignSymbol
 	^anIntegerWidth @ height!
 
 textExtent: aString width: widthInteger flags: flagsInteger
-	"Answer the extent of string using the receivers currently selected font when drawn with the User32 DrawText API that underlies the Canvas>>formatText:&c family of methods.
+	"Answer the extent of string using the receiver's currently selected font when drawn with the User32 DrawText API that underlies the Canvas>>formatText:&c family of methods.
 	There are a large number of DT_XXX flags that can be used to draw the text in different ways - see https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-drawtextexw for details."
 
 	| rect |

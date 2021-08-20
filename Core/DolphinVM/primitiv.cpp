@@ -224,7 +224,7 @@ Oop* __fastcall Interpreter::primitiveResize(Oop* const sp, primargcount_t)
 Oop* __fastcall Interpreter::primitiveChangeBehavior(Oop* const sp, primargcount_t)
 {
 	// Receiver becomes an instance of the class specified as the argument - neither
-	// receiver or arg may be SmallIntegers, and the shape of the receivers current class
+	// receiver or arg may be SmallIntegers, and the shape of the receiver's current class
 	// must be identical to its new class.
 
 	Oop arg = *sp;

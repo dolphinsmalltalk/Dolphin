@@ -15,7 +15,7 @@ Public Domain Freeware'!
 !ProfilerFrame methodsFor!
 
 coloredSource
-	"Answer a RichText containing the colored source for the receivers compiledCode"
+	"Answer a RichText containing the colored source for the receiver's compiledCode"
 
 	^compiledCode getSource!
 
@@ -23,7 +23,7 @@ compiledCode
 	^compiledCode!
 
 disassemblySelectionLine
-	"Answer the selectionLine for the ip in the receivers *disassembled* source"
+	"Answer the selectionLine for the ip in the receiver's *disassembled* source"
 
 	^compiledCode byteCodeDispatcherClass indexOfIP: (compiledCode byteCodeDispatcher prevIP: ip)
 		in: compiledCode!
@@ -134,7 +134,7 @@ profilerIconIndex
 	^self icon imageIndex!
 
 selectionRange
-	"Answer the selectionRange for the ip in the receivers source"
+	"Answer the selectionRange for the ip in the receiver's source"
 
 	| previousIP textMap index |
 	previousIP := compiledCode byteCodeDispatcher prevIP: ip.

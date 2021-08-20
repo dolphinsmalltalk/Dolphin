@@ -34,7 +34,7 @@ contents
 	^contents!
 
 objects
-	"Private - Answer the receivers contents as an <Array> of <Object>s
+	"Private - Answer the receiver's contents as an <Array> of <Object>s
 	representing the value of each column."
 
 	^self contents collect: [:c | c value]!

@@ -139,7 +139,7 @@ read: buffer count: anInteger
 	^read asInteger!
 
 skipTo: anObject 
-	"Set the receivers position reference to be past the next occurrence of the
+	"Set the receiver's position reference to be past the next occurrence of the
 	argument, anObject, in the collection. Answer whether such an occurrence existed."
 
 	

@@ -63,7 +63,7 @@ at: anInteger ifAbsent: exceptionBlock
 		ifFalse: [exceptionBlock value]!
 
 at: anInteger put: anObject
-	"Replace the receivers indexed instance variable at the argument, index, with the argument, value. Answer value."
+	"Replace the receiver's indexed instance variable at the argument, index, with the argument, value. Answer value."
 
 	"Primitive Failure Reasons:
 		InvalidParameter1	- index is not a SmallInteger
@@ -76,7 +76,7 @@ at: anInteger put: anObject
 		put: anObject!
 
 basicAt: anInteger put: anObject
-	"Private - Replace the receivers indexed instance variable at the argument, index, with the argument, value. Answer value.
+	"Private - Replace the receiver's indexed instance variable at the argument, index, with the argument, value. Answer value.
 	MUST not be reimplemented (except by classes whose instances have special representations such as SmallInteger)."
 
 	"Primitive Failure Reasons:
@@ -96,7 +96,7 @@ basicSuspendedFrame
 	^suspendedFrame!
 
 callbackDepth
-	"Private - Answer the depth of outstanding callbacks from the VM in the receivers stack.
+	"Private - Answer the depth of outstanding callbacks from the VM in the receiver's stack.
 	An example of a callback is an entry from the Smalltalk window procedure to
 	View>>dispatchMessage:. Recursive callbacks (callbacks which occur during the
 	processing of another callback, e.g. sending a Win32 message in the handler for

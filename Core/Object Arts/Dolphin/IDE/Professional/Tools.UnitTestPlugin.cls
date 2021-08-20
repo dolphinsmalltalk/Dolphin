@@ -193,7 +193,7 @@ icon
 	^icon!
 
 icon: anIconOrNil
-	"Private - Set the icon displayed in the receivers tab. This is used to indicate whether tests have passed or failed etc."
+	"Private - Set the icon displayed in the receiver's tab. This is used to indicate whether tests have passed or failed etc."
 
 	icon = anIconOrNil
 		ifFalse: 

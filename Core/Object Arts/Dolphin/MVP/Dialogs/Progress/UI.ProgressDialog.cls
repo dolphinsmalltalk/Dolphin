@@ -98,7 +98,7 @@ deferredClose
 forkOperation
 	"Private - Start the receiver's operation at the current priority
 	(the user supplied operation can modify the priority, if desired,
-	by means of a 'Processor activeProces priority: X' expression)."
+	by means of a 'Processor activeProcess priority: X' expression)."
 
 	operation ifNil: [operation := self defaultOperation].
 	process := 
@@ -113,12 +113,12 @@ initialize
 	priority := Processor userBackgroundPriority!
 
 isReusable
-	"Answer whether the progress diialog is re-usable."
+	"Answer whether the progress dialog is re-usable."
 
 	^flags allMask: IsReusableMask!
 
 isReusable: aBoolean 
-	"Set whether the progress diialog is re-usable. If re-useable then th dialog is hidden,
+	"Set whether the progress dialog is re-usable. If re-useable then the dialog is hidden,
 	rather than closed, at the end of the operation. The whole process can then be repeated by
 	re-showing the dialog."
 

@@ -83,7 +83,7 @@ initialize
 	proportions := LookupTable new!
 
 isVertical
-	"Answer whether the receivers components are positioned vertically."
+	"Answer whether the receiver's components are positioned vertically."
 
 	^isVertical!
 

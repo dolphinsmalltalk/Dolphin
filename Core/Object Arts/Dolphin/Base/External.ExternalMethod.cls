@@ -15,7 +15,7 @@ The first literal of each ExternalMethod holds a <ByteArray> which contains a de
 !External.ExternalMethod methodsFor!
 
 argsLen
-	"Private - Answer the size of the argument description bytes in the receivers descriptor."
+	"Private - Answer the size of the argument description bytes in the receiver's descriptor."
 
 	^self descriptorLiteral at: ArgsLenIndex!
 
@@ -32,7 +32,7 @@ clear
 	self descriptorLiteral replaceFrom: 1 to: 4 withObject: 0!
 
 descriptor
-	"Private - Answer a <FunctionDescriptor> generated from the receivers descriptor literal (which has
+	"Private - Answer a <FunctionDescriptor> generated from the receiver's descriptor literal (which has
 	a more compact, but more complex, format)."
 
 	| descriptor typeinfo i descriptorClass size |

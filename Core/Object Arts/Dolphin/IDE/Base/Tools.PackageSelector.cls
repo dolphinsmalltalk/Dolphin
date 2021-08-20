@@ -42,7 +42,7 @@ addClass
 			ifNotNil: [:chosen | chosen do: [:each | pacman addClass: each to: package]]!
 
 addSharedVariable
-	"Request an available shared variable to add the receivers current package. Only	variables which are not currently owned by any other package are shown."
+    "Request an available shared variable to add the receiver's current package. Only variables which are not currently owned by any other package are shown."
 
 	| variableNames package pacman |
 	pacman := self packageManager.

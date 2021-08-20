@@ -547,7 +547,7 @@ environmentName: aBindingReference
 		ifFalse: [self propertyAt: #environmentName put: aBindingReference]!
 
 errorFileCorrupt
-	"Private - Filing in the receivers owned objects has failed because the
+	"Private - Filing in the receiver's owned objects has failed because the
 	file is corrupt."
 
 	self error: ('FileIn of <1s> package has failed, file is corrupt' expandMacrosWith: self name)!
@@ -636,7 +636,7 @@ globalNames
 	^variableNames!
 
 hasCyclicPrerequisites
-	"Private - Answer whether any of the receivers prerequisites or their
+	"Private - Answer whether any of the receiver's prerequisites or their
 	prerequisites are cyclic. So two packages rely on each other to be
 	loaded before they can be loaded. The package system does not currently
 	handle this smoothly though it is possible to load in such a thing by
@@ -661,7 +661,7 @@ hasCyclicPrerequisites: trail safe: safe
 	^answer.!
 
 hasUncommittedPrerequisites
-	"Private - Answer whether any of the receivers prerequisites or their
+	"Private - Answer whether any of the receiver's prerequisites or their
 	prerequisites are current uncomitted. If so the package should not be saved
 	as it will not be reloadable into an image without the uncommitted objects."
 
@@ -1094,7 +1094,7 @@ okToUninstall
 
 onClassRemoved: aClass
 	"Private - React to aClass being removed from the Dolphin system.
-	Ensure that none of the receivers loaded packages refer to aClass
+	Ensure that none of the receiver's loaded packages refer to aClass
 	or its methods now it has departed.
 
 	N.B. We have to take care here when checking methods. As aClass is
@@ -1122,7 +1122,7 @@ onClassRemoved: aClass
 
 onClassRenamed: aClass from: oldName to: newName 
 	"Private - React to the <Class>, aClass, being removed from the Dolphin system.
-	Ensure that none of the receivers loaded packages refer to aClass
+	Ensure that none of the receiver's loaded packages refer to aClass
 	or its methods now it has departed.
 
 	N.B. We have to take care here when checking methods. As aClass is
@@ -1210,7 +1210,7 @@ packageVersion: aString
 !
 
 path
-	"Answer the full path to the directory holding the receivers files."
+	"Answer the full path to the directory holding the receiver's files."
 
 	^File splitPathFrom: self packageFileName!
 

@@ -20,7 +20,7 @@ total
 	^self model samplesSize!
 
 treeValueFor: aProfilerTreeNode 
-	"Answers the value of the field for the receivers type of tree"
+	"Answers the value of the field for the receiver's type of tree"
 
 	^aProfilerTreeNode tally! !
 !ProfilerTallyTreePresenter categoriesForMethods!

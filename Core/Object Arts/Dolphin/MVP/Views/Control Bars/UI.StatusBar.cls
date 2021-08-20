@@ -197,7 +197,7 @@ rectangleOfItem: aStatusBarItem
 	^self itemRect: (self indexOfItem: aStatusBarItem)!
 
 removeItem: aStatusBarItem
-	"Remove aStatusOwnerDraw from the receivers contents of visible parts.
+	"Remove aStatusOwnerDraw from the receiver's contents of visible parts.
 	Answer aStatusOwnerDraw.
 
 	Note that we always ensure that there is one part, the leftOverSeparator,
@@ -304,7 +304,7 @@ setItem: aStatusBarItem tipText: aString
 		lpParam: aString asUtf16String!
 
 setItemText: aStatusBarItem
-	"Private - Set the SB_SETTEXT of the receivers common control for specified one of the receiver's <StatusBarItem>s."
+	"Private - Set the SB_SETTEXT of the receiver's common control for specified one of the receiver's <StatusBarItem>s."
 
 	"In the case of owner-drawn items, this amounts to an instruction to the control to request re-draw of the item."
 
@@ -344,7 +344,7 @@ setWindowText: aString
 	^self!
 
 size
-	"Answer the size of the receivers contents."
+	"Answer the size of the receiver's contents."
 
 	^self contents size!
 

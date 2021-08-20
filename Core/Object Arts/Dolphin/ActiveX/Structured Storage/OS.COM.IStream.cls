@@ -346,7 +346,7 @@ SetSize: libNewSize
 	^self invalidCall: _failureCode!
 
 setToEnd
-	"Set the receivers position reference to the end of the collection."
+	"Set the receiver's position reference to the end of the collection."
 
 	^self position: self size!
 

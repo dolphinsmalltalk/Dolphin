@@ -247,7 +247,7 @@ basicRemovePackage: aPackage
 	^aPackage!
 
 basicUninstall: aPackage
-	"Private - Remove aPackage from the receivers loaded packages.
+	"Private - Remove aPackage from the receiver's loaded packages.
 	All the packages owned objects are removed from the system.
 	Answer aPackage."
 
@@ -298,7 +298,7 @@ changedPackages
 	^self packages select: [:each | each isChanged]!
 
 changeProcessEventsBy: countChange
-	"Private - Change the receivers count of the processEvents by countChange.
+	"Private - Change the receiver's count of the processEvents by countChange.
 	A value of zero indicates that no one has a lock on the triggers and that they 
 	should be processed as they are received from the rest of the system or generated 
 	by the receiver. A value greater than 0 indicates that processing is temporarily suspend 
@@ -419,8 +419,8 @@ includesPackageNamed: aString
 	^(self packageNamed: aString ifNone: []) notNil!
 
 initialize
-	"Private - Initialize the receivers instance variables and connect to a number of system
-	triggers to ensure that the receivers packages remove references to any system objects which
+	"Private - Initialize the receiver's instance variables and connect to a number of system
+	triggers to ensure that the receiver's packages remove references to any system objects which
 	are removed."
 
 	packages := PluggableLookupTable searchPolicy: SearchPolicy caseInsensitive.
@@ -1046,7 +1046,7 @@ release
 	Smalltalk removeEventsTriggeredFor: self!
 
 removePackage: aPackage
-	"Remove aPackage from the receivers loaded packages. All the packages
+	"Remove aPackage from the receiver's loaded packages. All the packages
 	owned objects are removed from the system. This is only possible if no
 	other packages require it for their continued operation. Answer aPackage
 	or an error if other loaded packages have aPackage as a prerequisite.
@@ -1346,7 +1346,7 @@ newSystemPackage
 	^dolphin!
 
 reset
-	"Reset the receivers singleton current instance and SystemPackage."
+	"Reset the receiver's singleton current instance and SystemPackage."
 
 	Current ifNotNil: [:current | current release].
 	Current := nil.

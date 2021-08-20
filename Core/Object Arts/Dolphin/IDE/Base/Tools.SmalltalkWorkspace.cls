@@ -515,14 +515,14 @@ dropObjectRef: anObjectRef
 	self setFocus!
 
 errorModel
-	"Answer the receivers errorModel. Its value is the first notification from the last
+	"Answer the receiver's errorModel. Its value is the first notification from the last
 	compilation. Note that this model may be shared by a number of presenters all contained
 	within a single shell."
 
 	^errorModel!
 
 errorModel: aValueModel
-	"Set the receivers errorModel."
+	"Set the receiver's errorModel."
 
 	errorModel := aValueModel!
 

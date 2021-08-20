@@ -1108,7 +1108,7 @@ tvmSetExtendedStyle: maskInteger lParam: valueInteger
 		lParam: valueInteger!
 
 tvmSetImageList: aWinImageList type: anIntegerImageType
-	"Private - Set the receivers normal/state image list depending on anIntegerImageType.
+	"Private - Set the receiver's normal/state image list depending on anIntegerImageType.
 	 Answer the receiver's previous <Imagelist>."
 
 	^ImageList

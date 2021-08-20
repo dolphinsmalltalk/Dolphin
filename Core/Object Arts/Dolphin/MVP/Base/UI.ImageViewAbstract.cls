@@ -144,7 +144,7 @@ insets: aRectangle
 
 invalidateRect: aRectangle erase: aBoolean
 	"Invalidates the specified client rectangle (a RECTL, Rectangle, or nil for the whole client window).
-	Set whether to erase the receivers background before repainting. Answer whether the function succeeds."
+	Set whether to erase the receiver's background before repainting. Answer whether the function succeeds."
 
 	"There is a possibility that this may be called before the receiver has been created
 	so check for this to avoid accidentally redrawing the entire desktop"

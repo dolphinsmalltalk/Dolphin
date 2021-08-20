@@ -14,7 +14,7 @@ alphaPercentage
 	^100!
 
 backSurface
-	"Private - Answer a the GdiplusGraphics back surface"
+	"Private - Answer the GdiplusGraphics back surface"
 
 	^backSurface!
 
@@ -43,7 +43,7 @@ flip
 	self graphics clear: self backcolor!
 
 frontSurface
-	"Private - Answer a the GdiplusGraphics front surface"
+	"Private - Answer the GdiplusGraphics front surface"
 
 	^frontSurface!
 

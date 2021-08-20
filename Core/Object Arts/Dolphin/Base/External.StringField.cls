@@ -14,7 +14,7 @@ StringField can be used for both <String>s and <UnicodeString>s.'!
 !External.StringField methodsFor!
 
 allocationLength
-	"Private - Answer the size of object of the receivers fieldClass required to hold the
+	"Private - Answer the size of object of the receiver's fieldClass required to hold the
 	number of elements in the field."
 
 	^super allocationLength - 1!

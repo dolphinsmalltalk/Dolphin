@@ -928,7 +928,7 @@ setInstanceVariables: aCollection
 	instanceVariables := aCollection isEmpty ifFalse: [aCollection asArray]!
 
 setShapeFlags: anIntegerMask to: aBoolean
-	"Private - Set/Reset the receivers shape/structure flags (as defined by anIntegerMask)
+	"Private - Set/Reset the receiver's shape/structure flags (as defined by anIntegerMask)
 	according to the argument aBoolean."
 
 	| oldSpec |

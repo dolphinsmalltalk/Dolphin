@@ -14,7 +14,7 @@ Tools.CompiledMethodInspector comment: 'CompiledMethodInspector is a <compositeP
 !Tools.CompiledMethodInspector methodsFor!
 
 disassemblyText
-	"Private - Answer a text decoding of the receivers byte codes."
+	"Private - Answer a text decoding of the receiver's byte codes."
 
 	^self selfField disassembly!
 

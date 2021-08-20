@@ -14,7 +14,7 @@ Kernel.ChunkReader comment: '
 !Kernel.ChunkReader methodsFor!
 
 chunkBlock
-	"Answer the receivers chunkBlock. This is a <dyadicValuable> which is evaluated for each chunk of text read from a stream."
+	"Answer the receiver's chunkBlock. This is a <dyadicValuable> which is evaluated for each chunk of text read from a stream."
 
 	^chunkBlock!
 

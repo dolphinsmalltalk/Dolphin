@@ -220,7 +220,7 @@ searchPolicy: anObject
 	searchPolicy := anObject!
 
 setToEnd
-	"Set the receivers position reference to the end of the collection."
+	"Set the receiver's position reference to the end of the collection."
 
 	position := history size!
 

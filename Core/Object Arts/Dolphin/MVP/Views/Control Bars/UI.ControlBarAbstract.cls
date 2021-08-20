@@ -257,7 +257,7 @@ onZOrderChanged
 	super onZOrderChanged!
 
 removeItem: anObject
-	"Remove an item from the receivers contents. Answer the item."
+	"Remove an item from the receiver's contents. Answer the item."
 
 	^self subclassResponsibility!
 

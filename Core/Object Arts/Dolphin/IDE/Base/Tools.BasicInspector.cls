@@ -163,7 +163,7 @@ headerList
 
 headerSize
 	"Private - Answer the number of extra fields in the field list which appear at the
-	top of the list. They are used for special access to the receivers object,
+	top of the list. They are used for special access to the receiver's object,
 	for example the '-Self-' field allows access to the object itself."
 
 	^self headerList size
@@ -318,7 +318,7 @@ queryCommand: query
 	^false!
 
 refresh
-	"Private - The fields of the receivers object have been modified so update
+	"Private - The fields of the receiver's object have been modified so update
 	our model of it while keeping the original selection if possible."
 
 	| oldSelection |
@@ -327,7 +327,7 @@ refresh
 	variableNamesPresenter selection: oldSelection ifAbsent: []!
 
 selfField
-	"Private - Answer the receivers object for displaying in the sourceModel."
+	"Private - Answer the receiver's object for displaying in the sourceModel."
 
 	^self object!
 
@@ -339,7 +339,7 @@ setField: anInteger to: anObject
 
 source
 	"Answer the source definition for the currently selected variable
-	of the receivers object."
+	of the receiver's object."
 
 	^sourcePresenter value asString!
 
@@ -356,7 +356,7 @@ unableToDisplayVariableErrorFormatString
 
 variable
 	"Answer the variable associated with the currently selected
-	variable name of the receivers object or nil if there is no selection."
+	variable name of the receiver's object or nil if there is no selection."
 
 	^self variableAtIndex: self variableIndex!
 
@@ -371,17 +371,17 @@ variableAtIndex: index
 
 variableIndex
 	"Private - Answer the index of the variable associated with the curently
-	selected variable name of the receivers object or 0 if there is no selection."
+	selected variable name of the receiver's object or 0 if there is no selection."
 
 	^variableNamesPresenter selectionByIndex!
 
 variableName
-	"Private - Answer the selected variable name of the receivers object."
+	"Private - Answer the selected variable name of the receiver's object."
 
 	^variableNamesPresenter selectionOrNil!
 
 variableName: name
-	"Private - Select the variable name of the receivers object."
+	"Private - Select the variable name of the receiver's object."
 
 	variableNamesPresenter selection: name!
 

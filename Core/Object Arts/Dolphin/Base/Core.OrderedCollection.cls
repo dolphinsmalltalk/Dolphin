@@ -296,7 +296,7 @@ makeRoomAtEndFor: anInteger
 	capacity - self size < anInteger
 		ifTrue: 
 			[| g n |
-			"Too full, increase the receivers capacity to the requested size, rounded up to a multiple of the growSize"
+			"Too full, increase the receiver's capacity to the requested size, rounded up to a multiple of the growSize"
 			g := self growSize.
 			n := anInteger + g - 1.
 			^self basicResize: capacity + (n - (n \\ g))].

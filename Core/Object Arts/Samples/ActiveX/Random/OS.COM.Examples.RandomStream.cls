@@ -55,7 +55,7 @@ Next: next
 
 put_LowerBound: value
 	"Private - Implement IRandomStream::put_LowerBound().
-	Set the receivers lowerBound from the [in] parameter, value."
+	Set the receiver's lowerBound from the [in] parameter, value."
 
 	lowerBound := value.
 	^S_OK!

@@ -190,7 +190,7 @@ reset
 	position := 0!
 
 setToEnd
-	"Set the receivers position reference to the end of the collection,
+	"Set the receiver's position reference to the end of the collection,
 	updating the readLimit if necessary."
 
 	position := self size! !

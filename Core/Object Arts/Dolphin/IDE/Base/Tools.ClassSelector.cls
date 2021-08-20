@@ -765,7 +765,7 @@ queryCommand: aCommandQuery
 	^super queryCommand: aCommandQuery!
 
 queryMoveClass: aClass toPackage: aPackage
-	"Private - Move aClass from its existing package to the receivers current package if
+	"Private - Move aClass from its existing package to the receiver's current package if
 	the user agrees."
 
 	| classPackage response packMan subclasses |

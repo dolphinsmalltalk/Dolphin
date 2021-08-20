@@ -88,7 +88,7 @@ queryCommand: query
 !
 
 removeField
-	"Remove the selected key in the variablesModel from the receivers object."
+	"Remove the selected key in the variablesModel from the receiver's object."
 
 	| selected value command |
 	command := Command current.

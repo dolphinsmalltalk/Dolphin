@@ -12,7 +12,7 @@ Kernel.BlockFrame comment: ''!
 !Kernel.BlockFrame methodsFor!
 
 argumentCount
-	"Private - Answer the number of arguments to the receivers stack frame, this will 
+	"Private - Answer the number of arguments to the receiver's stack frame, this will
 	vary depending on whether the receiver is a frame for a block or method activation."
 	
 	^self block argumentCount!

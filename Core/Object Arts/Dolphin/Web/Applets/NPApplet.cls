@@ -164,7 +164,7 @@ Visit http://www.object-arts.com for more information.'
 				with: requiredVersion)!
 
 evaluateAttributes
-	"Private - Once the receivers site view and source url have been setup we start the applet."
+	"Private - Once the receiver's site view and source url have been setup we start the applet."
 
 	"The actual start of the applet takes place on a difference process. We use
 	a DeferredValue to represent the eventual instance."
@@ -287,9 +287,9 @@ hasSite
 	^self site notNil!
 
 hiddenAttributeName
-	"Private - Answer the String hidden embed attribute name. If the attributes
-	value is TRUE then the receivers context will not appear in the browser. On
-	Netscape3.0 the receivers will not receive the onSetBrowserView: notification,
+	"Private - Answer the String hidden embed attribute name. If the attribute's
+	value is TRUE then the receiver's context will not appear in the browser. On
+	Netscape3.0 the receiver will not receive the onSetBrowserView: notification,
 	where as Microsofts' Internet Explorer will still send it."
 
 	^'HIDDEN'
@@ -373,7 +373,7 @@ isOkToDownload: url
 	^true!
 
 mimeType
-	"Answer the mimeType of the file on which the receivers source
+	"Answer the mimeType of the file on which the receiver's source
 	stream was opened on."
 
 	^mimeType!
@@ -494,7 +494,7 @@ OnPrint: npPrint
 !
 
 onSetBrowserView
-	"The receivers browser view, which is donated by the browser has been set.
+	"the receiver's browser view, which is donated by the browser has been set.
 	This completes applet setup, so we should now be able to start the applet."
 
 	self evaluateAttributes!
@@ -505,7 +505,7 @@ OnSetWindow: hWnd x: x y: y cx: width cy: height clipTop: clipTop clipLeft: clip
 	those attributes, and to refresh the browser view. Note that we ignore messages with a null
 	handle as these seem to occur even when the view is not being destroyed."
 
-	hWnd notNull ifTrue: ["set this as the receivers new window"
+	hWnd notNull ifTrue: ["set this as the receiver's new window"
 		(browserView isNil or: [browserView asParameter asInteger ~= hWnd])
 			ifTrue: [self browserView: hWnd]
 			ifFalse: [self invalidateViews]].
@@ -683,7 +683,7 @@ srcAttributeName
 	^'SRC'!
 
 srcURL
-	"Answer the URL from which the receivers source file was
+	"Answer the URL from which the receiver's source file was
 	opened to. In embedded mode this is supplied as an argument, in full
 	page mode it is gained from the first opened stream."
 
@@ -866,7 +866,7 @@ errorDownloadFailed: url reason: npresult
 !
 
 initialize
-	"Private - Initialize the receivers class variables.
+	"Private - Initialize the receiver's class variables.
 		self initialize
 	"
 
