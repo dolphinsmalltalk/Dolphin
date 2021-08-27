@@ -545,6 +545,15 @@ accept: s addr: addr addrlen: addrlen
 	<overlap stdcall: handle accept handle void* sdword*>
 	^self invalidCall: _failureCode!
 
+basicFree
+	"Private - We've finished using the socket system."
+
+	wsaData
+		ifNotNil: 
+			[wsaData := nil.
+			self wsaCleanup].
+	super basicFree!
+
 bind: s name: name namelen: namelen
 	"Invoke the bind() function of the module wrapped by the receiver.
 
@@ -555,15 +564,6 @@ bind: s name: name namelen: namelen
 
 	<overlap stdcall: errno bind handle void* sdword>
 	^self invalidOverlappedCall: _failureCode!
-
-close
-	"We've finished using the socket system."
-
-	wsaData notNil 
-		ifTrue: 
-			[wsaData := nil.
-			self wsaCleanup].
-	super close!
 
 closesocket: s
 	"Invoke the closesocket() function of the module wrapped by the receiver.
@@ -926,8 +926,8 @@ wsaStartup: wVersionRequested lpWSAData: lpWSAData
 		ifFalse: [super invalidCall: _failureCode]! !
 !OS.WS2_32Library categoriesForMethods!
 accept:addr:addrlen:!public!win32 functions-sockets library! !
+basicFree!private! !
 bind:name:namelen:!public!win32 functions-sockets library! !
-close!public!realizing/unrealizing! !
 closesocket:!public!win32 functions-sockets library! !
 connect:name:namelen:!public!win32 functions-sockets library! !
 gethostbyaddr:len:type:!public!win32 functions-sockets library! !

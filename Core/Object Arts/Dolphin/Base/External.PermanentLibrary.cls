@@ -18,9 +18,13 @@ close
 	It is really not a good idea to do this for the default instances of permanent libraries 
 	because it will break the VM and everything else."
 
-	^self ~~ self class default and: [super close]! !
+	^self ~~ self class default and: [super close]!
+
+isSelfEvaluating
+	^true! !
 !External.PermanentLibrary categoriesForMethods!
 close!public!realizing/unrealizing! !
+isSelfEvaluating!public!testing! !
 !
 
 !External.PermanentLibrary class methodsFor!

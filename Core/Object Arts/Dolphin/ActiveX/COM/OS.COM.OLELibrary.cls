@@ -12,13 +12,11 @@ This library contains functions pertaining to the use of OLE and COM.'!
 !OS.COM.OLELibrary categoriesForClass!External-Libraries-ActiveX! !
 !OS.COM.OLELibrary methodsFor!
 
-close
-	"Release the reference the receiver has to the External Library	it represents. This may
-	not cause the library to be unloaded, so it may still function. Answer whether the
-	library was successfully closed. We also free any standard IMalloc instances."
+basicFree
+	"Private - Release the reference the receiver has to Ole32.dll. Answer whether the library was successfully closed. We also free any standard IMalloc instances."
 
 	self uninitialize.
-	^super close!
+	^super basicFree!
 
 clsidFromProgID: lpszProgID lpclsid: lpclsid
 	"Invoke the CLSIDFromProgID() function of the module wrapped by the receiver.
@@ -296,7 +294,7 @@ uninitialize
 	IMalloc free.
 	self comOnly ifTrue: [self coUninitialize] ifFalse: [self oleUninitialize]! !
 !OS.COM.OLELibrary categoriesForMethods!
-close!public!realizing/unrealizing! !
+basicFree!private!realizing/unrealizing! !
 clsidFromProgID:lpclsid:!**auto generated**!OLE Functions-GUID!public! !
 coCreateGuid:!**auto generated**!OLE Functions-COM!public! !
 coCreateInstance:pUnkOuter:dwClsContext:riid:ppv:!**auto generated**!OLE Functions-COM!public! !

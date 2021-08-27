@@ -126,13 +126,17 @@ asParameter
 	handle isNull ifTrue: [self open].
 	^handle!
 
+basicFree
+	^Kernel32 freeLibrary: handle!
+
 basicOpen: aString
 	"Private - Open the external library with the external file name, aString,
 	as the library referenced by the receiver. Answer the receiver.
 	The library is NOT initialized."
 
 	handle := nil.
-	self handle: (self class load: aString flags: self loadFlags)!
+	self handle: (self class load: aString flags: self loadFlags).
+	self beFinalizable!
 
 close
 	"Release the reference the receiver has to the External Library it represents. This may
@@ -140,7 +144,8 @@ close
 	library was successfully closed."
 
 	| success |
-	success := handle notNull and: [Kernel32 freeLibrary: handle].
+	self beUnfinalizable.
+	success := handle notNull and: [self basicFree].
 	handle := nil.
 	^success!
 
@@ -160,6 +165,9 @@ formatMessage: anIntegerId with: arguments
 		formatMessage: anIntegerId
 		in: self asParameter
 		withArguments: arguments!
+
+free
+	self close!
 
 getProcAddress: aStringOrWord
 	"Private - Answer the address of the receiver's procedure identified by the <AnsiString> name or <integer> ordinal parameter."
@@ -182,7 +190,7 @@ handle: aHandle
 	"Private - Set the handle of the external library which the receiver represents.
 	Answer the receiver."
 
-	handle := aHandle isNil ifFalse: [aHandle asExternalHandle]!
+	handle := aHandle ifNotNil: [aHandle asExternalHandle]!
 
 invalidArgErrorClass
 	"Private - Answer the class of Error to be signalled when an invalid argument is passed to one of 
@@ -223,7 +231,12 @@ invalidCall: anInteger
 isOpen
 	"Answer whether the external library represented by the receiver is open."
 
-	^handle notNull!
+	^handle isNull not!
+
+isSelfEvaluating
+	| var |
+	var := self class sharedVariableName.
+	^var notNil and: [self = var valueOrNil]!
 
 loadFlags
 	^0!
@@ -254,8 +267,15 @@ open: aString
 printOn: aStream
 	"Append a short textual description of the receiver to aStream."
 
-	aStream 
-		basicPrint: self; 
+	self class sharedVariableName
+		ifNotNil: 
+			[:var |
+			self = var valueOrNil
+				ifTrue: 
+					[aStream display: var.
+					^self]].
+	aStream
+		basicPrint: self;
 		nextPut: $(;
 		nextPutAll: (handle isNil ifTrue: ['NULL'] ifFalse: [handle asInteger printStringRadix: 16]);
 		nextPutAll: ' - ';
@@ -301,10 +321,12 @@ versionString
 	^self versionInfo formatVersionString: self versionFormatString! !
 !External.DynamicLinkLibrary categoriesForMethods!
 asParameter!converting!public! !
+basicFree!private!realizing/unrealizing! !
 basicOpen:!private!realizing/unrealizing! !
 close!public!realizing/unrealizing! !
 fileName!accessing!public! !
 formatMessage:with:!accessing!public! !
+free!finalizing!public! !
 getProcAddress:!accessing!private! !
 getProcAddress:ifAbsent:!accessing!private! !
 handle!accessing!private! !
@@ -312,6 +334,7 @@ handle:!accessing!private! !
 invalidArgErrorClass!constants!private! !
 invalidCall:!exceptions!public! !
 isOpen!public!testing! !
+isSelfEvaluating!public!testing! !
 loadFlags!constants!private! !
 loadString:!accessing!public! !
 moduleFileName!accessing!private! !
@@ -400,7 +423,7 @@ load: aString flags: anInteger
 	^hLibrary ifNil: [Win32Error signal: aString printString]!
 
 moduleFileName: aLibOrHandle
-	"Private - Answer the file name of the receiver's loaded module."
+	"Private - Answer the `Utf16String` file name of the receiver's loaded module."
 
 	| buf size |
 	buf := File pathBuffer.
