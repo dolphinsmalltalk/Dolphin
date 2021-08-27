@@ -74,6 +74,10 @@ createSchematicWiring
 		send: #onSuperclassChanged
 		to: self!
 
+defaultNamespaceForSubclassOf: aClass
+	^##(LookupTable withAll: {Namespace -> Root. SharedPool -> OS}) at: aClass
+		ifAbsent: [aClass localEnvironment]!
+
 environment
 	"Private - Answer the global environment for which we are defining a subclass."
 
@@ -93,8 +97,7 @@ model: aSubjectModel
 			[namespacePresenter model: Smalltalk asValue.
 			namePresenter model: 'ProtoObject2' asValue]
 		ifNotNil: 
-			[namespacePresenter
-				model: (aClassOrNil == Namespace ifTrue: [Root] ifFalse: [aClassOrNil localEnvironment asValue]).
+			[namespacePresenter model: (self defaultNamespaceForSubclassOf: aClassOrNil).
 			namePresenter model: aClassOrNil name asValue].
 	self onSuperclassChanged!
 
@@ -169,6 +172,7 @@ chooseNamespace!commands!private! !
 chooseSuperclass!commands!public! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
+defaultNamespaceForSubclassOf:!helpers!private! !
 environment!constants!private! !
 isPackaged!commands!private! !
 model:!accessing!public! !
