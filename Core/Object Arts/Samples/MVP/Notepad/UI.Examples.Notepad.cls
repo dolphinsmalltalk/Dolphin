@@ -73,8 +73,7 @@ queryCommand: query
 saveChangesPrompt
 	| docName |
 	docName := self hasFilename ifTrue: [self filename] ifFalse: ['Untitled'].
-	^'The text in the <1s> file has changed.<n><n>Do you want to save the changes?' 
-		expandMacrosWith: docName! !
+	^'Do you want to save changes to <1s>?' expandMacrosWith: docName! !
 !UI.Examples.Notepad categoriesForMethods!
 aboutNotepad!commands!public! !
 chooseFont!commands!public! !

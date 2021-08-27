@@ -925,21 +925,18 @@ removeMethodsDuplicatedInSuperclassOf: aClass
 	duplicated := self duplicateSuperclassMethodsOf: aClass.
 	duplicated isEmpty ifTrue: [^false].
 	msg := String smalltalkWriteStream.
-	'<1p> duplicates the following methods of its superclass(es):' expandMacrosWithArguments: {aClass}
-		on: msg.
-	msg cr.
+	msg
+		nextPutAll: 'The following duplicate methods will be removed:';
+		cr.
 	duplicated := duplicated asSortedCollection: [:a :b | a printString < b printString].
 	duplicated do: 
 			[:each |
 			msg
-				crtab;
+				cr;
+				nextPutAll: '    ';
 				print: each].
-	msg
-		cr;
-		cr.
-	'Would you like to remove the duplicates from <1p>?' expandMacrosWithArguments: {aClass} on: msg.
 	(MessageBox new
-		headline: 'Remove Duplicate Methods?';
+		headline: 'Remove duplicate methods in <1p>?' << aClass;
 		isSuppressible: true;
 		uniqueId: [self] method;
 		confirm: msg contents)
@@ -1202,39 +1199,46 @@ safeRemoveMethodsIn: methodsEnvironment within: searchEnvironment
 	self changeManager performChange: model changes!
 
 safeRemoveSelectors: anArrayOfSelectors from: aClass inEnvironment: aBrowserEnvironment
-	| mb text |
+	| mb |
 	mb := MessageBox new.
 	mb
 		uniqueId: [self] method displayString;
 		isSuppressible: true.
-	text := anArrayOfSelectors size > 1
-				ifTrue: 
-					[| details |
-					mb headline: 'Remove Methods of <1p>?' << aClass.
-					details := String smalltalkWriteStream.
-					'The following methods of <1p> are candidates for removal:' expandMacrosWithArguments: {aClass}
-						on: details.
-					details cr.
-					anArrayOfSelectors asSortedCollection do: 
-							[:each |
-							details
-								cr;
-								nextPutAll: '    ';
-								display: each].
-					mb detailsText: details contents.
-					'The methods will only be removed if they have no references or are equivalent to the superclass implementations.']
-				ifFalse: 
-					[mb headline: 'Remove <1p>>><2p>?' << {aClass. anArrayOfSelectors first}.
-					'The method will only be removed if it has no references or is equivalent to the superclass implementation.'].
-	(mb confirm: text << (anArrayOfSelectors size > 1)) ifFalse: [^false].
+	anArrayOfSelectors size > 1
+		ifTrue: 
+			[| details |
+			mb headline: 'Remove methods if unused/redundant?'.
+			details := String smalltalkWriteStream.
+			details
+				nextPutAll: 'The following methods are the candidates for removal:';
+				cr.
+			anArrayOfSelectors asSortedCollection do: 
+					[:each |
+					details
+						cr;
+						nextPutAll: '    ';
+						display: each].
+			mb
+				detailsText: details contents;
+				text: 'The methods of <1p> will be removed if they have no references or are equivalent to the superclass implementations.'
+							<< aClass]
+		ifFalse: 
+			[mb
+				headline: 'Remove method if unused/redundant?';
+				text: '<1p>>><2s> will be removed if it has no references or is equivalent to the superclass implementation.'
+							<< {aClass. anArrayOfSelectors first}].
+	(mb
+		isCancellable: true;
+		customButtons: #(#(#yes '&Remove') #(#no 'Cancel'));
+		confirm) ifFalse: [^false].
 	^self handleRefactoringException: 
-			[| model1 refactoring |
-			model1 := RBNamespace onEnvironment: aBrowserEnvironment.
+			[| model refactoring |
+			model := RBNamespace onEnvironment: aBrowserEnvironment.
 			refactoring := RemoveMethodRefactoring
-						model: model1
+						model: model
 						removeMethods: anArrayOfSelectors
 						from: aClass.
-			model1 name: refactoring displayString.
+			model name: refactoring displayString.
 			refactoring
 				execute;
 				yourself]!
@@ -1434,7 +1438,7 @@ safeRemoveMethod:!public!refactoring! !
 safeRemoveMethods:!public!refactoring! !
 safeRemoveMethods:within:!private!refactoring! !
 safeRemoveMethodsIn:within:!private!refactoring! !
-safeRemoveSelectors:from:inEnvironment:!public!refactoring! !
+safeRemoveSelectors:from:inEnvironment:!private!refactoring! !
 scopeToRenameAccessorsFor:in:classVariable:within:!private!refactoring! !
 selectTargetVariableOf:parseTree:!helpers!private!refactoring! !
 validateRenameClass:to:!helpers!private! !

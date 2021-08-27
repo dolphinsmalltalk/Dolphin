@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 OS.Win32Structure subclass: #'OS.TASKDIALOGCONFIG'
-	instanceVariableNames: ''
+	instanceVariableNames: 'windowTitle mainInstruction content footer verificationText expandedInformation collapsedControlText expandedControlText buttons buttonLabels radioButtons radioButtonLabels'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -13,7 +13,7 @@ OS.Win32Structure subclass: #'OS.TASKDIALOGCONFIG'
 		'_OffsetOf_dwFlags' -> 16rC.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_hFooterIcon' -> 16r4C.
-		'_OffsetOf_HINSTANCE' -> 16r8.
+		'_OffsetOf_hInstance' -> 16r8.
 		'_OffsetOf_hMainIcon' -> 16r18.
 		'_OffsetOf_hwndParent' -> 16r4.
 		'_OffsetOf_lpCallbackData' -> 16r58.
@@ -34,13 +34,9 @@ OS.Win32Structure subclass: #'OS.TASKDIALOGCONFIG'
 		'_OffsetOf_pszWindowTitle' -> 16r14
 	}!
 OS.TASKDIALOGCONFIG guid: (Core.GUID fromString: '{948de028-015b-4a2a-818e-db8b5f40aa75}')!
-OS.TASKDIALOGCONFIG comment: '`TASKDIALOGCONFIG` is an `External.Structure` class to wrap the struct ''Win32.TASKDIALOGCONFIG'' from type information in the ''Win32 API'' library.
+OS.TASKDIALOGCONFIG comment: '`TASKDIALOGCONFIG` is an `External.Structure` class to wrap the Windows common controls [TASKDIALOGCONFIG structure](https://docs.microsoft.com/en-us/windows/win32/api/Commctrl/ns-commctrl-taskdialogconfig) structure.
 
-The type library contains no documentation for this struct
-
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
-
-IDL definition follows:
+##IDL definition:
 ```
 typedef [uuid(948de028-015b-4a2a-818e-db8b5f40aa75)]
 struct tagTASKDIALOGCONFIG {
@@ -80,6 +76,28 @@ struct tagTASKDIALOGCONFIG {
 !OS.TASKDIALOGCONFIG categoriesForClass!Win32-Structs! !
 !OS.TASKDIALOGCONFIG methodsFor!
 
+buttons: aSequenceOfPairs
+	| count |
+	count := aSequenceOfPairs size.
+	buttonLabels := Array new: count.
+	buttons := StructureArray
+				length: count
+				elementClass: TASKDIALOG_BUTTON
+				initializer: 
+					[:button :i |
+					| attrs label |
+					attrs := aSequenceOfPairs at: i.
+					label := attrs second.
+					label := label isString
+								ifTrue: 
+									[label := (attrs size > 2 ifTrue: [(label copyWith: $\n) , (attrs at: 3)] ifFalse: [label])
+												asUtf16String].
+					button
+						nButtonID: attrs first;
+						pszButtonText: label.
+					buttonLabels at: i put: label].
+	self pButtons: buttons!
+
 cButtons
 	"Answer the <Integer> value of the receiver's 'cButtons' field."
 
@@ -89,6 +107,12 @@ cButtons: anInteger
 	"Set the receiver's 'cButtons' field to the value of the argument, anInteger"
 
 	bytes dwordAtOffset: _OffsetOf_cButtons put: anInteger!
+
+collapsedControlText: aString
+	self pszCollapsedControlText: (collapsedControlText := aString ifNotNil: [aString asUtf16String])!
+
+content: aString
+	self pszContent: (content := aString ifNotNil: [aString asUtf16String])!
 
 cRadioButtons
 	"Answer the <Integer> value of the receiver's 'cRadioButtons' field."
@@ -135,6 +159,15 @@ dwSize: anInteger
 
 	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
+expandedControlText: aString
+	self pszExpandedControlText: (expandedControlText := aString ifNotNil: [aString asUtf16String])!
+
+expandedInformation: aString
+	self pszExpandedInformation: (expandedInformation := aString ifNotNil: [aString asUtf16String])!
+
+footer: aString
+	self pszFooter: (footer := aString ifNotNil: [aString asUtf16String])!
+
 hFooterIcon
 	"Answer the <Handle> value of the receiver's 'hFooterIcon' field."
 
@@ -145,15 +178,15 @@ hFooterIcon: aHandle
 
 	bytes uintPtrAtOffset: _OffsetOf_hFooterIcon put: aHandle!
 
-HINSTANCE
-	"Answer the <Handle> value of the receiver's 'HINSTANCE' field."
+hInstance
+	"Answer the <Handle> value of the receiver's 'hInstance' field."
 
-	^(bytes uintPtrAtOffset: _OffsetOf_HINSTANCE) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_hInstance) asExternalHandle!
 
-HINSTANCE: aHandle
-	"Set the receiver's 'HINSTANCE' field to the value of the argument, aHandle"
+hInstance: aHandle
+	"Set the receiver's 'hInstance' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_HINSTANCE put: aHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hInstance put: aHandle!
 
 hMainIcon
 	"Answer the <Handle> value of the receiver's 'hMainIcon' field."
@@ -174,6 +207,9 @@ hwndParent: aHandle
 	"Set the receiver's 'hwndParent' field to the value of the argument, aHandle"
 
 	bytes uintPtrAtOffset: _OffsetOf_hwndParent put: aHandle!
+
+mainInstruction: aString
+	self pszMainInstruction: (mainInstruction := aString ifNotNil: [aString asUtf16String])!
 
 nDefaultButton
 	"Answer the <Integer> value of the receiver's 'nDefaultButton' field."
@@ -306,10 +342,37 @@ pszWindowTitle
 pszWindowTitle: anUtf16String
 	"Set the receiver's 'pszWindowTitle' field to the value of the argument, anUtf16String"
 
-	bytes uintPtrAtOffset: _OffsetOf_pszWindowTitle put: anUtf16String yourAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_pszWindowTitle put: anUtf16String yourAddress!
+
+radioButtons: aSequenceOfPairs
+	| count |
+	count := aSequenceOfPairs size.
+	radioButtonLabels := Array new: count.
+	radioButtons := StructureArray
+				length: count
+				elementClass: TASKDIALOG_BUTTON
+				initializer: 
+					[:button :i |
+					| label |
+					label := (aSequenceOfPairs at: i) second.
+					label := label isString ifTrue: [label := label asUtf16String].
+					button
+						nButtonID: i;
+						pszButtonText: label.
+					radioButtonLabels at: i put: label].
+	self pRadioButtons: radioButtons!
+
+verificationText: aString
+	self pszVerificationText: (verificationText := aString ifNotNil: [aString asUtf16String])!
+
+windowTitle: aString
+	self pszWindowTitle: (windowTitle := aString ifNotNil: [aString asUtf16String])! !
 !OS.TASKDIALOGCONFIG categoriesForMethods!
+buttons:!accessing!public! !
 cButtons!**compiled accessors**!public! !
 cButtons:!**compiled accessors**!public! !
+collapsedControlText:!accessing!public! !
+content:!accessing!public! !
 cRadioButtons!**compiled accessors**!public! !
 cRadioButtons:!**compiled accessors**!public! !
 cxWidth!**compiled accessors**!public! !
@@ -319,14 +382,18 @@ dwCommonButtons:!**compiled accessors**!public! !
 dwFlags!**compiled accessors**!public! !
 dwFlags:!**compiled accessors**!public! !
 dwSize:!**compiled accessors**!public! !
+expandedControlText:!accessing!public! !
+expandedInformation:!accessing!public! !
+footer:!accessing!public! !
 hFooterIcon!**compiled accessors**!public! !
 hFooterIcon:!**compiled accessors**!public! !
-HINSTANCE!**compiled accessors**!public! !
-HINSTANCE:!**compiled accessors**!public! !
+hInstance!**compiled accessors**!public! !
+hInstance:!**compiled accessors**!public! !
 hMainIcon!**compiled accessors**!public! !
 hMainIcon:!**compiled accessors**!public! !
 hwndParent!**compiled accessors**!public! !
 hwndParent:!**compiled accessors**!public! !
+mainInstruction:!accessing!public! !
 nDefaultButton!**compiled accessors**!public! !
 nDefaultButton:!**compiled accessors**!public! !
 nDefaultRadioButton!**compiled accessors**!public! !
@@ -352,6 +419,9 @@ pszVerificationText!**compiled accessors**!public! !
 pszVerificationText:!**compiled accessors**!public! !
 pszWindowTitle!**compiled accessors**!public! !
 pszWindowTitle:!**compiled accessors**!public! !
+radioButtons:!accessing!public! !
+verificationText:!accessing!public! !
+windowTitle:!accessing!public! !
 !
 
 !OS.TASKDIALOGCONFIG class methodsFor!
@@ -397,36 +467,88 @@ defineFields
 "
 
 	self
-		defineField: #dwSize type: DWORDField new beWriteOnly offset: 0;
-		defineField: #hwndParent type: HANDLEField new offset: 4;
-		defineField: #HINSTANCE type: HANDLEField new offset: 8;
-		defineField: #dwFlags type: SDWORDField new offset: 12;
-		defineField: #dwCommonButtons type: SDWORDField new offset: 16;
-		defineField: #pszWindowTitle type: (PointerField type: Utf16String) offset: 20;
-		defineField: #hMainIcon type: HANDLEField new offset: 24;
-		defineField: #pszMainIcon type: (PointerField type: Utf16String) beFiller offset: 24;
-		defineField: #pszMainInstruction type: (PointerField type: Utf16String) offset: 28;
-		defineField: #pszContent type: (PointerField type: Utf16String) offset: 32;
-		defineField: #cButtons type: DWORDField new offset: 36;
-		defineField: #pButtons type: (StructureArrayPointerField type: TASKDIALOG_BUTTON lengthField: #cButtons) offset: 40;
-		defineField: #nDefaultButton type: SDWORDField new offset: 44;
-		defineField: #cRadioButtons type: DWORDField new offset: 48;
-		defineField: #pRadioButtons type: (StructureArrayPointerField type: TASKDIALOG_BUTTON lengthField: #cRadioButtons) offset: 52;
-		defineField: #nDefaultRadioButton type: SDWORDField new offset: 56;
-		defineField: #pszVerificationText type: (PointerField type: Utf16String) offset: 60;
-		defineField: #pszExpandedInformation type: (PointerField type: Utf16String) offset: 64;
-		defineField: #pszExpandedControlText type: (PointerField type: Utf16String) offset: 68;
-		defineField: #pszCollapsedControlText type: (PointerField type: Utf16String) offset: 72;
-		defineField: #hFooterIcon type: HANDLEField new offset: 76;
-		defineField: #pszFooterIcon type: (PointerField type: Utf16String) beFiller offset: 76;
-		defineField: #pszFooter type: (PointerField type: Utf16String) offset: 80;
-		defineField: #pfCallback type: LPVOIDField new beWriteOnly offset: 84;
-		defineField: #lpCallbackData type: INT_PTRField new beFiller offset: 88;
-		defineField: #cxWidth type: DWORDField new offset: 92.
+		defineField: #dwSize
+			type: DWORDField new beWriteOnly
+			offset: 0;
+		defineField: #hwndParent
+			type: HANDLEField new
+			offset: 4;
+		defineField: #hInstance
+			type: HANDLEField new
+			offset: 8;
+		defineField: #dwFlags
+			type: SDWORDField new
+			offset: 12;
+		defineField: #dwCommonButtons
+			type: SDWORDField new
+			offset: 16;
+		defineField: #pszWindowTitle
+			type: (PointerField type: Utf16String)
+			offset: 20;
+		defineField: #hMainIcon
+			type: HANDLEField new
+			offset: 24;
+		defineField: #pszMainIcon
+			type: (PointerField type: Utf16String) beFiller
+			offset: 24;
+		defineField: #pszMainInstruction
+			type: (PointerField type: Utf16String)
+			offset: 28;
+		defineField: #pszContent
+			type: (PointerField type: Utf16String)
+			offset: 32;
+		defineField: #cButtons
+			type: DWORDField new
+			offset: 36;
+		defineField: #pButtons
+			type: (StructureArrayPointerField type: TASKDIALOG_BUTTON lengthField: #cButtons)
+			offset: 40;
+		defineField: #nDefaultButton
+			type: SDWORDField new
+			offset: 44;
+		defineField: #cRadioButtons
+			type: DWORDField new
+			offset: 48;
+		defineField: #pRadioButtons
+			type: (StructureArrayPointerField type: TASKDIALOG_BUTTON lengthField: #cRadioButtons)
+			offset: 52;
+		defineField: #nDefaultRadioButton
+			type: SDWORDField new
+			offset: 56;
+		defineField: #pszVerificationText
+			type: (PointerField type: Utf16String)
+			offset: 60;
+		defineField: #pszExpandedInformation
+			type: (PointerField type: Utf16String)
+			offset: 64;
+		defineField: #pszExpandedControlText
+			type: (PointerField type: Utf16String)
+			offset: 68;
+		defineField: #pszCollapsedControlText
+			type: (PointerField type: Utf16String)
+			offset: 72;
+		defineField: #hFooterIcon
+			type: HANDLEField new
+			offset: 76;
+		defineField: #pszFooterIcon
+			type: (PointerField type: Utf16String) beFiller
+			offset: 76;
+		defineField: #pszFooter
+			type: (PointerField type: Utf16String)
+			offset: 80;
+		defineField: #pfCallback
+			type: LPVOIDField new beWriteOnly
+			offset: 84;
+		defineField: #lpCallbackData
+			type: INT_PTRField new beFiller
+			offset: 88;
+		defineField: #cxWidth
+			type: DWORDField new
+			offset: 92.
 	self byteSize: 96!
 
 getFieldNames
-	^#(#dwSize #hwndParent #HINSTANCE #dwFlags #dwCommonButtons #pszWindowTitle #hMainIcon #pszMainInstruction #pszContent #cButtons #pButtons #nDefaultButton #cRadioButtons #pRadioButtons #nDefaultRadioButton #pszVerificationText #pszExpandedInformation #pszExpandedControlText #pszCollapsedControlText #hFooterIcon #pszFooter #pfCallback #cxWidth)! !
+	^#(#dwSize #hwndParent #hInstance #dwFlags #dwCommonButtons #pszWindowTitle #hMainIcon #pszMainInstruction #pszContent #cButtons #pButtons #nDefaultButton #cRadioButtons #pRadioButtons #nDefaultRadioButton #pszVerificationText #pszExpandedInformation #pszExpandedControlText #pszCollapsedControlText #hFooterIcon #pszFooter #pfCallback #cxWidth)! !
 !OS.TASKDIALOGCONFIG class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

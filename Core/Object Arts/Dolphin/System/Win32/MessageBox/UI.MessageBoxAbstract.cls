@@ -23,6 +23,16 @@ Class Variables:
 !UI.MessageBoxAbstract categoriesForClass!Kernel-Objects! !
 !UI.MessageBoxAbstract methodsFor!
 
+areLinksParsed
+	"Answer whether hyperlinks in the text will be intepreted as links."
+
+	^self subclassResponsibility!
+
+areLinksParsed: aBoolean
+	"Set whether hyperlinks in the text will be intepreted as links."
+
+	self subclassResponsibility!
+
 beep
 	"Private - Play the system parp appropriate for the style of the receiver."
 
@@ -111,7 +121,7 @@ text
 text: aString 
 	"Set the receiver's text message to be the argument, aString."
 
-	text := aString ifNotNil: [aString asUtf16String]!
+	text := aString!
 
 warning
 	self hasIcon ifFalse: [self iconStyle: #warning].
@@ -123,13 +133,15 @@ warning: warningString
 	self text: warningString.
 	^self warning! !
 !UI.MessageBoxAbstract categoriesForMethods!
+areLinksParsed!accessing-styles!public!testing! !
+areLinksParsed:!accessing-styles!public! !
 beep!parping!private! !
 caption!accessing!public! !
 caption:!accessing!public! !
 defaultCaption!constants!private! !
 errorMsg!public! !
 errorMsg:!operations!public! !
-hasIcon!public!testing! !
+hasIcon!accessing-styles!public!testing! !
 iconStyle!accessing-styles!public! !
 iconStyle:!accessing-styles!public! !
 iconStyleFlag!accessing-styles!private! !

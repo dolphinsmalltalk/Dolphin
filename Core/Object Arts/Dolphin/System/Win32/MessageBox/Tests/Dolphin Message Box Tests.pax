@@ -10,6 +10,7 @@ package setClassNames: #(
 
 package setMethodNames: #(
 	#(#{UI.MessageBox} #clickButton:)
+	#(#{UI.MessageBox} #clickRadioButton:)
 	#(#{UI.MessageBox} #clickVerification:)
 ).
 
@@ -27,9 +28,9 @@ package!
 "Class Definitions"!
 
 Core.Tests.DolphinTest subclass: #'UI.Tests.MessageBoxTest'
-	instanceVariableNames: 'subject enablement'
+	instanceVariableNames: 'subject enablement defaultButton buttonLabels caption radioButtonLabels'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.MessageBoxConstants} #{OS.TaskDialogConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -44,6 +45,13 @@ clickButton: anInteger
 		wParam: anInteger
 		lParam: 0!
 
+clickRadioButton: anInteger
+	User32
+		postMessage: handle
+		msg: TDM_CLICK_RADIO_BUTTON
+		wParam: anInteger
+		lParam: 0!
+
 clickVerification: aBoolean
 	User32
 		postMessage: handle
@@ -51,8 +59,9 @@ clickVerification: aBoolean
 		wParam: aBoolean asParameter
 		lParam: 0! !
 !UI.MessageBox categoriesForMethods!
-clickButton:!operations!public! !
-clickVerification:!operations!public! !
+clickButton:!buttons!public! !
+clickRadioButton:!buttons!public! !
+clickVerification:!helpers!public! !
 !
 
 "End of package definition"!

@@ -56,7 +56,7 @@ isRichText
 saveChangesPrompt
 	| docName |
 	docName := self hasFilename ifTrue: [File splitFilenameFrom: self filename] ifFalse: ['Document'].
-	^'Save changes to <1s>?' expandMacrosWith: docName!
+	^'Do you want to save changes to <1s>?' expandMacrosWith: docName!
 
 setDocumentData: aString 
 	"Private - Set the data for the receiver's document to be anObject.
@@ -113,7 +113,7 @@ fileTypes
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^Icon shellStock: ShellConstants.SIID_DOCASSOC!
+	^##(Icon shellStock: ShellConstants.SIID_DOCASSOC)!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.

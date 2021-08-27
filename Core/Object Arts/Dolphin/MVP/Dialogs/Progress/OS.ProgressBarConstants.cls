@@ -19,7 +19,10 @@ Kernel.SharedPool subclass: #'OS.ProgressBarConstants'
 		'PBM_STEPIT' -> 16r405.
 		'PBS_MARQUEE' -> 16r8.
 		'PBS_SMOOTH' -> 16r1.
-		'PBS_VERTICAL' -> 16r4
+		'PBS_VERTICAL' -> 16r4.
+		'PBST_ERROR' -> 16r2.
+		'PBST_NORMAL' -> 16r1.
+		'PBST_PAUSED' -> 16r3
 	}!
 OS.ProgressBarConstants guid: (Core.GUID fromString: '{dd75854c-9e8c-4afe-b86a-d99b4dbaa1b1}')!
 OS.ProgressBarConstants isNonInstantiable: true!

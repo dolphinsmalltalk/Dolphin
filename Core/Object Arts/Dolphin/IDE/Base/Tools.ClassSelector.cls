@@ -352,7 +352,10 @@ dropMethod: aCompiledMethod onto: aClass changes: aCompositeRefactoryChange
 					args := {aCompiledMethod selector. aClass}.
 					(MessageBox new
 						headline: 'Overwrite <1p> in <2p>?' << args;
-						confirm: 'Are you sure that you would like to replace the existing implementation of <1p> in <2p>?' << args) not]])
+						customButtons: #(#(#yes '&Overwrite') #(#no '&Don''t Overwrite'));
+						defaultButton: 2;
+						iconStyle: #warning;
+						confirm: '<2p> already defines <1p>. Do you really want to replace the existing implementation?' << args) not]])
 		ifTrue: [^false].
 	"If the method was not compiled in the same environment as the class from which it was dragged, we preserve that namespace, 
 	otherwise we compile it in the target class' namespace"

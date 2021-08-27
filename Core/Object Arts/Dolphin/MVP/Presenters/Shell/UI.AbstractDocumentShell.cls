@@ -189,7 +189,9 @@ onPromptToSaveChanges: aBooleanValue
 		ifTrue: 
 			[MessageBox new
 				owner: self view;
-				confirm: self saveChangesPrompt
+				headline: self saveChangesPrompt;
+				customButtons: #(#(#yes '&Save') #(#no 'Do&n''t Save'));
+				confirm: nil
 					onYes: [aBooleanValue value: self fileSave]
 					onNo: [self isModified: false]
 					onCancel: [aBooleanValue value: false]].
@@ -228,7 +230,7 @@ queryCommand: query
 saveChangesPrompt
 	| docName |
 	docName := self hasFilename ifTrue: [self filename] ifFalse: ['(untitled)'].
-	^'Save changes to <1s>?' expandMacrosWith: docName!
+	^'Do you want to save changes to <1s>?' expandMacrosWith: docName!
 
 saveDocument
 	| saved |
@@ -261,7 +263,8 @@ saveDocumentAs
 	(proceed := newFilename notNil and: 
 					[(File exists: newFilename) not or: 
 							[MessageBox new
-								headline: 'Overwrite <1s>?';
+								headline: 'Overwrite <1s>?' << newFilename;
+								iconStyle: #warning;
 								confirm: 'This file already exists, are you sure you would like to overwrite it?']])
 		ifTrue: 
 			["Install the new filename"

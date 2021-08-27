@@ -15,6 +15,7 @@ Kernel.SharedPool subclass: #'OS.MessageBoxConstants'
 		'MB_DEFBUTTON3' -> 16r200.
 		'MB_DEFBUTTON4' -> 16r300.
 		'MB_DEFMASK' -> 16rF00.
+		'MB_HELP' -> 16r4000.
 		'MB_ICONERROR' -> 16r10.
 		'MB_ICONINFORMATION' -> 16r40.
 		'MB_ICONMASK' -> 16rF0.
@@ -28,6 +29,7 @@ Kernel.SharedPool subclass: #'OS.MessageBoxConstants'
 		'MB_SETFOREGROUND' -> 16r10000.
 		'MB_SYSTEMMODAL' -> 16r1000.
 		'MB_TASKMODAL' -> 16r2000.
+		'MB_TOPMOST' -> 16r40000.
 		'MB_TYPEMASK' -> 16rF.
 		'MB_USERICON' -> 16r80.
 		'MB_YESNO' -> 16r4.

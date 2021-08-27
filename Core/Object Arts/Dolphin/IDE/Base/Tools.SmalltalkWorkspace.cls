@@ -1048,13 +1048,13 @@ prompt: aString toSaveChanges: aSelectionChangingEvent
 		ifTrue: 
 			[| response prompt |
 			self ensureVisible.
-			prompt := aSelectionChangingEvent canIntercept
-						ifTrue: ['Do you wish to retain them?']
-						ifFalse: ['Would you like them copied to the clipboard?'].
+			prompt := aSelectionChangingEvent canIntercept 
+						ifTrue: ['Do you want to preserve your unsaved <1s> changes?']
+						ifFalse: ['Do you want to copy your unsaved <1s> changes to the clipboard?'].
 			response := MessageBox new
 						owner: self view topView;
-						headline: 'There are unsaved <1s> changes' << aString;
-						confirm: prompt.
+						headline: prompt << aString;
+						confirm.
 			aSelectionChangingEvent canIntercept
 				ifTrue: 
 					[response

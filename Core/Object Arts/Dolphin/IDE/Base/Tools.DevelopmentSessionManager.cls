@@ -303,7 +303,8 @@ onQueryEndSession: aBooleanValue
 	mb beTaskModal.
 	mb
 		headline: 'Exit Dolphin Smalltalk?';
-		confirm: 'Do you wish to save the image?'
+		customButtons: #(#(#yes '&Save Image') #(#no 'Do&n''t Save'));
+		confirm: 'Saving the image will preserve changes for your next session.'
 			onYes: [self saveImage]
 			onNo: []
 			onCancel: [aBooleanValue value: false]!

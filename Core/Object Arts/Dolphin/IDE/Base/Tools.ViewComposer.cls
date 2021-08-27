@@ -248,7 +248,7 @@ arenaLeftButtonPressed: aMouseEvent
 	^nil!
 
 arenaMouseMoved: aMouseEvent
-	composingView isOpen
+	(composingView notNil and: [composingView isOpen])
 		ifTrue: 
 			[| cursor |
 			cursor := self cursor.
@@ -2397,11 +2397,9 @@ viewSaveAs
 	(rid := rid prompt) isNil ifTrue: [^false].
 	rid exists
 		ifTrue: 
-			[| message |
-			message := '''<1d>'' is an existing resource. Do you wish to replace it?' expandMacrosWith: rid.
-			(MessageBox new
+			[(MessageBox new
 				headline: 'Overwrite existing resource?';
-				confirm: message) ifFalse: [^false]].
+				confirm: '''<1d>'' is an existing resource. Do you wish to replace it?' << rid) ifFalse: [^false]].
 	self resourceIdentifier: rid.
 	self
 		updateCaption;
