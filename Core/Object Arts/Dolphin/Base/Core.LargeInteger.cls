@@ -403,8 +403,8 @@ printOn: aWriteStream base: baseInteger nDigits: digitsInteger
 	| halfPower half head tail |
 	digitsInteger <= 1
 		ifTrue: 
-			[digitsInteger <= 0 ifTrue: [self error: 'Number of digits must be > 0'].
-			^aWriteStream nextPut: (Character digitValue: self)].
+			[digitsInteger > 0 ifTrue: [aWriteStream nextPut: (Character digitValue: self)].
+			^self].
 	"In order to reduce cost of LargeInteger arithmetic, use a divide and conquer algorithm."
 	halfPower := digitsInteger bitShift: -1.
 	half := baseInteger raisedToInteger: halfPower.

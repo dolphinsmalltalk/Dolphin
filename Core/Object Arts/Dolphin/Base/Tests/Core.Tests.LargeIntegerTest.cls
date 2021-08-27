@@ -1212,6 +1212,9 @@ testPrintStringBase
 						equals: '-' , (String new: n withAll: (Character digitValue: b - 1)).
 					self assert: (bRaisedToN negated printStringBase: b) equals: '-1' , (String new: n withAll: $0)]]!
 
+testPrintUnnormalized
+	self assert: LargeInteger new64 printString equals: '0'!
+
 testQuo
 	| u v |
 	u := 1490632608.
@@ -1431,6 +1434,7 @@ testMulSmall!public!unit tests! !
 testNegate!public!unit tests! !
 testPrintLargeBase2!public!unit tests! !
 testPrintStringBase!public!unit tests! !
+testPrintUnnormalized!public!unit tests! !
 testQuo!public!unit tests! !
 testQuoRem!public!unit tests! !
 testQuoRem2!public!unit tests! !

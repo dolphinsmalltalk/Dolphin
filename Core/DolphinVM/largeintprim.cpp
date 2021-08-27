@@ -1989,18 +1989,27 @@ Oop* __fastcall Interpreter::primitiveLargeIntegerHighBit(Oop* const sp, primarg
 {
 	LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(*sp);
 
-	// Note that Integers are always normalized. This means that zero cannot be a LargeInteger, i.e.
-	// the bottom limb can never be zero, and the result of this primitive cannot be zero. 
-	// Also there can be at most one leading zero limb (e.g. for 2**63)
-
 	LargeInteger* liReceiver = oteReceiver->m_location;
 	size_t i = oteReceiver->getWordSize() - 1;
 	uint32_t digit = liReceiver->m_digits[i];
 	if (static_cast<int32_t>(digit) >= 0)
 	{
-		if (digit == 0)
+		// Integers should be normalized, and this would mean that a LargeInteger cannot be zero, nor can it's bottom limb be zero. 
+		// However, it is possible to construct an unnormalized LargeInteger, or encounter one that is an intermediate result. In
+		// order to allow these unnormalized values to be printed successfully, we need to loop until we find a non-zero limb, or
+		// run out of limbs.
+
+		while (digit == 0)
 		{
-			digit = liReceiver->m_digits[--i];
+			if (i > 0)
+			{
+				digit = liReceiver->m_digits[--i];
+			}
+			else
+			{
+				*sp = ZeroPointer;
+				return sp;
+			}
 		}
 
 		unsigned long index;
