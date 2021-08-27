@@ -15,7 +15,10 @@ basicNext
 	| prefixOrLiteral |
 	prefixOrLiteral := stream next.
 	^prefixOrLiteral isInteger
-		ifTrue: [self readObjectWithPrefix: prefixOrLiteral]
+		ifTrue: 
+			[prefixOrLiteral == STBPrefix.LiteralPrefixMask
+				ifTrue: [self readLiteralData]
+				ifFalse: [self readObjectWithPrefix: prefixOrLiteral]]
 		ifFalse: [prefixOrLiteral]!
 
 readClassLocator: anIntegerFlags 
@@ -33,10 +36,6 @@ readLiteralData
 	self register: newObject.
 	^newObject!
 
-readObjectWithPrefix: anInteger
-	anInteger == STBPrefix.LiteralPrefixMask ifTrue: [^self readLiteralData].
-	^super readObjectWithPrefix: anInteger!
-
 readVersion
 	version := stream next.
 	^true!
@@ -50,7 +49,6 @@ basicNext!accessing!private! !
 readClassLocator:!helpers!private! !
 readInteger!helpers!private! !
 readLiteralData!private! !
-readObjectWithPrefix:!accessing!private! !
 readVersion!initializing!private! !
 registerPredefinedObjects!initializing!private! !
 !

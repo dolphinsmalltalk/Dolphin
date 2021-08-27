@@ -142,9 +142,6 @@ readMap
 
 	^readMap!
 
-readObjectOfClass: aClass
-	^aClass stbReadFrom: self format: (converters lookup: aClass)!
-
 readObjectOfClass: aClass format: anSTBClassConversion
 	"Private - Read the stream for the data to create an instance of aClass."
 
@@ -199,7 +196,7 @@ readObjectWithPrefix: anInteger
 
 	"Now read the object data."
 	newObjectIndex := readMap size + 1.
-	anObject := self readObjectOfClass: class.
+	anObject := class stbReadFrom: self format: (converters lookup: class).
 
 	"If anObject was a proxy for the real one, evaluate it now."
 	^anObject stbFixup: self at: newObjectIndex!
@@ -259,7 +256,6 @@ readClassData:!helpers!private! !
 readClassLocator:!helpers!private! !
 readInteger!helpers!private! !
 readMap!accessing!private! !
-readObjectOfClass:!accessing!private! !
 readObjectOfClass:format:!operations!private! !
 readObjectWithPrefix:!accessing!private! !
 readVersion!initializing!private! !

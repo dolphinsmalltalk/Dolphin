@@ -89,7 +89,7 @@ basicNext
 
 	"Now read the object data."
 	newObjectIndex := readMap size + 1.
-	anObject := self readObjectOfClass: class.
+	anObject := class stbReadFrom: self format: (converters lookup: class).
 	class isBytes ifTrue: [self printValueToTrace: anObject].
 	indentLevel := indentLevel - 1.
 	"If anObject was a proxy for the real one, evaluate it now."

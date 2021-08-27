@@ -216,7 +216,7 @@ literalPrintOn: aWriteStream
 
 	self trimNulls printOn: aWriteStream! !
 !Core.String categoriesForMethods!
-literalPrintOn:!public! !
+literalPrintOn:!printing!public! !
 !
 
 !Core.Symbol methodsFor!
