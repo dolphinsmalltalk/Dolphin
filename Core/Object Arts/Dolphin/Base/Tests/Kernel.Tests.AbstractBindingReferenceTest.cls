@@ -23,6 +23,7 @@ bindingTestCases
 		{{missingNamespace. 'Date'}. nil. nil}.
 		#(#(#Object #_EventsRegister) nil #(#Object #_EventsRegister)).
 		{#(#_EventsRegister). Object. #(#Object #_EventsRegister)}.
+		{#(#Kernel #VMLibrary #Registry #Symbol). Core. nil}.
 		#(#(#XProgramming #SUnit #TestCase) nil #(#XProgramming #SUnit #TestCase)).
 		{#('_' #SUnit #TestCase). XProgramming. #(#XProgramming #SUnit #TestCase)}}!
 

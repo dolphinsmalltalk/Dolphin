@@ -732,6 +732,8 @@ resolveBindingPath: anArray environment: aNamespace
 				do: 
 					[:i |
 					| identifier |
+					"We don't want to attempt to drill into normal class variables"
+					binding isClassVariable ifTrue: [^nil].
 					namespace := binding value.
 					identifier := anArray at: i.
 					binding := namespace
