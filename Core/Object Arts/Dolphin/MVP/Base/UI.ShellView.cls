@@ -619,7 +619,7 @@ onCloseRequested
 			away anyway."
 			flags := flags bitOr: LayoutValidMask.
 			self update.
-			self destroy.
+			Processor isActiveMain ifTrue: [self destroy] ifFalse: [[self destroy] postToInputQueue].
 			^true].
 	^false!
 

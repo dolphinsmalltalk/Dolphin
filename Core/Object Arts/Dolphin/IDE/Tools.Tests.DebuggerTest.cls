@@ -22,7 +22,9 @@ setUp
 tearDown
 	process isNil
 		ifFalse: 
-			[process terminate.
+			[
+			process debugger ifNotNil: [:debugger | debugger view destroy. process debugger: nil].
+			process terminate.
 			process := nil].
 	Debugger
 		showWalkbacks: savedShowWalkbacks;
