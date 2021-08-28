@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'UI.Folder'
-	instanceVariableNames: 'pathname canonicalPath'
+	instanceVariableNames: 'pathname'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -11,20 +11,15 @@ UI.Folder comment: ''!
 !UI.Folder categoriesForClass!MVP-Models! !
 !UI.Folder methodsFor!
 
-<= comperand
-	"Answer whether the receiver is less than or equal to the <PackageFolder>,
-	comperand."
+<= aFolder
+	"Answer whether the receiver is less than or equal to the <Folder> argument."
 
-	^self canonicalPath <= comperand canonicalPath!
+	^(pathname compare: aFolder pathname ignoreCase: true) <= 0!
 
-= comperand
-	"Answer whether the receiver is equivalent to argument, comperand."
+= anObject
+	"Answer whether the receiver is equivalent to argument."
 
-	^self species == comperand species and: [self canonicalPath = comperand canonicalPath]
-!
-
-canonicalPath
-	^canonicalPath!
+	^self species == anObject species and: [pathname equalsIgnoreCase: anObject pathname]!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -41,7 +36,7 @@ folderName
 hash
 	"Answer the <SmallInteger> hash value for the receiver"
 
-	^self canonicalPath hash!
+	^pathname hashIgnoreCase!
 
 name
 	"Answer the folder name of the receiver"
@@ -68,12 +63,10 @@ pathname
 
 	^pathname!
 
-pathname: aStringName 
+pathname: aStringName
 	"Private - Initialize the receiver"
 
-	pathname := aStringName.
-	"Cache a canonicalized representation of the pathname, as this is used a lot for comparisons"
-	canonicalPath := aStringName asLowercase!
+	pathname := aStringName!
 
 printOn: aStream
 	"Append, to aStream, a String whose characters are a description of the receiver as a developer
@@ -100,7 +93,6 @@ volumeName
 !UI.Folder categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
-canonicalPath!accessing!private! !
 displayOn:!displaying!public! !
 folderName!accessing!public! !
 hash!comparing!public! !

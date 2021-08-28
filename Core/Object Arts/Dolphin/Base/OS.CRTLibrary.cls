@@ -260,7 +260,7 @@ strncpy_s: desString bufferSize: anInteger strSource: sourceString count: countI
 synchronizeLocale
 	"Private - Synchronize the CRT's locale with the OS locale setting."
 
-	self setlocale: 0 locale: ''!
+	self setlocale: CRTConstants.LC_ALL locale: ''!
 
 ungetc: c stream: stream
 	"Pushes the byte, c, back onto the FILE*, stream."

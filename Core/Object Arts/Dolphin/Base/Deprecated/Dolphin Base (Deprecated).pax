@@ -61,7 +61,6 @@ package methodNames
 	add: #ExternalStructure -> #do:separatedBy:;
 	add: #File -> #readCharacter;
 	add: #Integer -> #digitSize;
-	add: #KernelLibrary -> #compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:;
 	add: #KernelLibrary -> #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:;
 	add: #KernelLibrary -> #getFileSize:lpFileSizeHigh:;
 	add: #KernelLibrary -> #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:;
@@ -86,10 +85,6 @@ package methodNames
 	add: #TimeStamp -> #dateAndTime;
 	add: #TimeStamp -> #time:;
 	add: #UndefinedObject -> #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:;
-	add: #UserLibrary -> #isCharAlpha:;
-	add: #UserLibrary -> #isCharAlphaNumeric:;
-	add: #UserLibrary -> #isCharLower:;
-	add: #UserLibrary -> #isCharUpper:;
 	add: #VMLibrary -> #isWindows10OrGreater;
 	add: #VMLibrary -> #isWindows7OrGreater;
 	add: #VMLibrary -> #isWindows7SP1OrGreater;
@@ -102,7 +97,6 @@ package methodNames
 	add: #VMLibrary -> #isWindowsVistaSP2OrGreater;
 	add: #VMLibrary -> #isWindowsXPOrGreater;
 	add: #VMLibrary -> #shortName;
-	add: #WindowsLocale -> #timeSeparator;
 	add: #WinMMLibrary -> #timeGetTime;
 	add: 'Category class' -> #categoryIcon;
 	add: 'Character class' -> #safeCodePoint:;
@@ -731,11 +725,6 @@ digitSize!accessing!public! !
 
 !KernelLibrary methodsFor!
 
-compareStringOrdinal: lpString1 cchCount1: cchCount1 lpString2: lpString2 cchCount2: cchCount2 bIgnoreCase: bIgnoreCase
-	<stdcall: sdword CompareStringOrdinal lpwstr sdword lpwstr sdword bool>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
 getDateFormat: locale dwFlags: dwFlags lpDate: aWinSYSTEMTIME lpFormat: formatString lpDateStr: outputStringOutput cchDate: anInteger
 	<stdcall: sdword GetDateFormatW dword dword void* lpwstr lpwstr sdword>
 	#deprecated. "Deprecated by Microsoft - use GetDateFormatEx"
@@ -770,7 +759,6 @@ setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddre
 	#deprecated. "Use #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:"
 	^self invalidCall: _failureCode! !
 !KernelLibrary categoriesForMethods!
-compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:!public!win32 functions-national language support! !
 getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-national language support! !
 getFileSize:lpFileSizeHigh:!public!win32 functions-file management! !
 getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-national language support! !
@@ -1038,34 +1026,6 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 !
 
-!UserLibrary methodsFor!
-
-isCharAlpha: aCharacter
-	<stdcall: bool IsCharAlphaW char>
-	#deprecated. "Does not yield Unicode compliant results."
-	^self invalidCall: _failureCode!
-
-isCharAlphaNumeric: aCharacter
-	<stdcall: bool IsCharAlphaNumericW char>
-	#deprecated.	"Does not yield Unicode compliant results."
-	^self invalidCall: _failureCode!
-
-isCharLower: aCharacter
-	<stdcall: bool IsCharLowerW char>
-	#deprecated.	"Does not yield Unicode compliant results."
-	^self invalidCall: _failureCode!
-
-isCharUpper: aCharacter
-	<stdcall: bool IsCharUpperW char>
-	#deprecated. "Does not yield Unicode compliant results."
-	^self invalidCall: _failureCode! !
-!UserLibrary categoriesForMethods!
-isCharAlpha:!public!win32 functions-string manipulation! !
-isCharAlphaNumeric:!public!win32 functions-string manipulation! !
-isCharLower:!public!win32 functions-string manipulation! !
-isCharUpper:!public!win32 functions-string manipulation! !
-!
-
 !VMLibrary methodsFor!
 
 isWindows10OrGreater
@@ -1132,17 +1092,6 @@ isWindowsVistaSP1OrGreater!public!win32 functions-version helpers! !
 isWindowsVistaSP2OrGreater!public!win32 functions-version helpers! !
 isWindowsXPOrGreater!public!win32 functions-version helpers! !
 shortName!accessing!public! !
-!
-
-!WindowsLocale methodsFor!
-
-timeSeparator
-	"Answer the character used in the receiver locale to separate time components."
-
-	Notification deprecated.	"Use timeFormat"
-	^self getStringInfo: LOCALE_STIME! !
-!WindowsLocale categoriesForMethods!
-timeSeparator!constants!public! !
 !
 
 !WinMMLibrary methodsFor!

@@ -82,7 +82,7 @@ testAllHealthy
 
 	| unhealthy |
 	unhealthy := Set allSubinstances reject: [:each | each isHealthy].
-	self assert: unhealthy asArray equals: #()!
+	self assert: unhealthy equals: #()!
 
 testAllInstancesValid
 	| invalid |

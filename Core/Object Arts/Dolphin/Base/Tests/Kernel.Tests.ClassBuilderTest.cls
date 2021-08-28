@@ -41,6 +41,7 @@ tearDown
 
 	dirtiedClasses ifTrue: [ClassBuilderTestClasses current makeCleanClasses].
 	Smalltalk developmentSystem isOAD: wasOAD.
+	self assert: Package manager unpackagedVariables equals: Set new.
 	^super tearDown!
 
 testAddClassInstVars
@@ -225,12 +226,15 @@ testFullName
 	self assert: self classBuilderTestSubclass2 fullName equals: 'ClassBuilderTestSubClass2'!
 
 testMoveClassToSuperclassWithInstVars
-	| newClass |
-	ClassBuilder moveClass: self classBuilderTestSubclass1 toSuperclass: Object.
+	| newClass oldClass namespace |
+	oldClass := self classBuilderTestSubclass1.
+	namespace := oldClass environment.
+	ClassBuilder moveClass: oldClass toSuperclass: Object.
 	newClass := self classBuilderTestSubclass1.
 	self assert: newClass superclass identicalTo: Object.
 	self assert: newClass instVarNames equals: #('var3' 'var4').
 	self assert: newClass instSize equals: 2.
+	self assert: newClass environment identicalTo: namespace.
 	dirtiedClasses := true!
 
 testMoveClassToSuperclassWithNoInstVars

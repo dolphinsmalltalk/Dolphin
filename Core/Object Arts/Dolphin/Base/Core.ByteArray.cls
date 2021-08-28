@@ -299,16 +299,17 @@ floatAtOffset: anInteger put: aFloat
 	^self updatePrimitiveFailed: _failureCode atOffset: anInteger!
 
 hash
-	"Hash the bytes of the object using the standard byte hashing
-	primitive (which should not fail)."
+	"Hash the bytes of the object using the standard byte hashing primitive."
 
 	<primitive: 106>
 	| hash |
+	"The primitive should not fail; this is how it is implemented"
 	hash := 2166136261.
 	"FNV1a"
 	1 to: self size do: [:i | hash := (hash bitXor: (self basicAt: i)) * 16777619 bitAnd: 16rFFFFFFFF].
 	"Fold to 30 bits so is always positive SmallInteger"
-	^(hash bitShift: -30) bitXor: (hash bitAnd: 16r3FFFFFFF)!
+	^(hash bitShift: ##(VMConstants.SmallIntegerMax highBit negated))
+		bitXor: (hash bitAnd: VMConstants.SmallIntegerMax)!
 
 hexStoreOn: puttableStream
 	"Print the literal string representation of the receiver to the <puttableStream>

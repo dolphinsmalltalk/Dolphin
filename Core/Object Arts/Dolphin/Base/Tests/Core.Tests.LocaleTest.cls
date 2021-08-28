@@ -19,7 +19,7 @@ setUp
 	super setUp.
 	savedLocale := Locale userDefault.
 	"Deliberately switch to another default locale to catch any reliance on Locale specific dependencies in the test"
-	Locale userDefault: (Locale named: 'hi-IN')!
+	Locale userDefault: (Locale named: 'tr-Tr')!
 
 tearDown
 	savedLocale
@@ -29,6 +29,9 @@ tearDown
 	super tearDown!
 
 testDisplayFloatOn
+	self subclassResponsibility!
+
+testName
 	self subclassResponsibility!
 
 testPrimary
@@ -131,17 +134,109 @@ testPrintFloatNumDigits
 testPrintFloatSeparators
 	"Test printing with specific decimal and group separators."
 
-	self subclassResponsibility! !
+	self subclassResponsibility!
+
+testStbRoundTrip
+	| rehydrated bytes subject |
+	subject := self defaultSubject.
+	bytes := {subject. {subject}} binaryStoreBytes.
+	rehydrated := Object fromBinaryStoreBytes: bytes.
+	self assert: rehydrated first identicalTo: subject.
+	self assert: rehydrated second first identicalTo: subject.!
+
+testTitlecaseString
+	self subclassResponsibility!
+
+testUppercaseString
+	self subclassResponsibility!
+
+verifyEnglishDayOfWeek: aLocale
+	^#('SUnday' 'MONDAY' 'Tue' 'Wednesday' 'THU' 'friday' 'sat')
+		keysAndValuesDo: [:eachKey :eachValue | self assert: (aLocale dayOfWeek: eachValue) equals: eachKey]!
+
+verifyEnglishDayOfWeekNames: aLocale
+	^self assert: ((1 to: 7) collect: [:i | aLocale dayOfWeekName: i])
+		equals: #('Sunday' 'Monday' 'Tuesday' 'Wednesday' 'Thursday' 'Friday' 'Saturday')!
+
+verifyEnglishMonthAbbreviations: aLocale
+	^self assert: ((1 to: 12) collect: [:i | aLocale monthAbbreviation: i])
+		equals: #('Jan' 'Feb' 'Mar' 'Apr' 'May' 'Jun' 'Jul' 'Aug' 'Sep' 'Oct' 'Nov' 'Dec')!
+
+verifyEnglishMonthNames: aLocale
+	^self assert: ((1 to: 12) collect: [:i | aLocale monthName: i])
+		equals: #('January' 'February' 'March' 'April' 'May' 'June' 'July' 'August' 'September' 'October' 'November' 'December')!
+
+verifyEnglishNamesOfDays: aLocale
+	^self assert: ((1 to: 7) collect: [:i | aLocale nameOfDay: i])
+		equals: #('Monday' 'Tuesday' 'Wednesday' 'Thursday' 'Friday' 'Saturday' 'Sunday')!
+
+verifyIndexOfEnglishMonths: aLocale
+	#('january' 'feb' 'march' 'apr' 'may' 'jun' 'july' 'aug' 'september' 'oct' 'november' 'dec')
+		keysAndValuesDo: [:eachKey :eachValue | self assert: (aLocale indexOfMonth: eachValue) equals: eachKey]!
+
+verifyPrintFloatGrouping
+	| format subject |
+	subject := self defaultSubject.
+	format := subject numberFormat copy.
+	#(#(0 '0' '1234567890.12') #(1 '1' '1,2,3,4,5,6,7,8,9,0.12') #(2 '2' '12,34,56,78,90.12') #(3 '3' '1,234,567,890.12') #(4 '4' '12,3456,7890.12') #(5 '5' '12345,67890.12') #(6 '6' '1234,567890.12') #(7 '7' '123,4567890.12') #(8 '8' '12,34567890.12') #(9 '9' '1,234567890.12') #(10 '1;0;0' '123456789,0.12') #(11 '1;1' '1,2,3,4,5,6,7,8,9,0.12') #(12 '1;2' '1,23,45,67,89,0.12') #(32 '3;2' '1,23,45,67,890.12') #(92 '9;2' '1,234567890.12'))
+		do: 
+			[:each |
+			format grouping: each first.
+			self assert: format numberGrouping equals: each second.
+			format numberGrouping: each second.
+			self assert: format grouping equals: each first.
+			self assert: (subject printFloat: 1234567890.123 format: format) equals: each last].
+	"The grouping is actually much more flexible than the documentation suggests. Up to four number groups are supported (the last repeating)."
+	#(#(98 '9;8' '2,00000000,00000000,00000000,000000000.00') #(89 '8;9' '20000000,000000000,000000000,00000000.00') #(99 '9;9' '2000000,000000000,000000000,000000000.00') #(120 '1;2;0;0' '2000000000000000000000000000000,00,0.00') #(123 '1;2;3' '2,000,000,000,000,000,000,000,000,000,000,00,0.00') #(1230 '1;2;3;0;0' '2000000000000000000000000000,000,00,0.00') #(1234 '1;2;3;4' '2000,0000,0000,0000,0000,0000,0000,000,00,0.00') #(4321 '4;3;2;1' '2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,00,000,0000.00') #(9999 '9;9;9;9' '2000000,000000000,000000000,000000000.00'))
+		do: 
+			[:each |
+			format grouping: each first.
+			self assert: format numberGrouping equals: each second.
+			format numberGrouping: each second.
+			self assert: format grouping equals: each first.
+			self assert: (subject printFloat: 2.0e33 format: format) equals: each last].
+	#(-1 10000) do: 
+			[:each |
+			self should: [format grouping: each] raise: Error.
+			format Grouping: each.
+			self
+				should: [subject printFloat: 1.23 format: format]
+				raise: OS.HRESULTError
+				matching: [:ex | ex tag = (OS.HRESULT win32Error: OS.Win32Errors.ERROR_INVALID_PARAMETER)]].
+	self should: [format numberGrouping: '1;2;3;4;5'] raise: Error!
+
+verifyPrintFloatSeparators
+	| format subject |
+	subject := self defaultSubject.
+	format := subject numberFormat copy.
+	format
+		decimalPlaces: 3;
+		grouping: 43;
+		decimalSeparator: $@;
+		thousandSeparator: $^.
+	self assert: (subject printFloat: 1234567890.123 format: format) equals: '123^456^7890@123'! !
 !Core.Tests.LocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
 setUp!private!running! !
 tearDown!private!running! !
 testDisplayFloatOn!public!unit tests! !
+testName!public!unit tests! !
 testPrimary!public!unit tests! !
 testPrintDateTimeOnFormat!public!unit tests! !
 testPrintDurationOnFormat!public!unit tests! !
 testPrintFloatGrouping!public!unit tests! !
 testPrintFloatNumDigits!public!unit tests! !
 testPrintFloatSeparators!public!unit tests! !
+testStbRoundTrip!public!unit tests! !
+testTitlecaseString!public!unit tests! !
+testUppercaseString!public!unit tests! !
+verifyEnglishDayOfWeek:!helpers!private! !
+verifyEnglishDayOfWeekNames:!helpers!private! !
+verifyEnglishMonthAbbreviations:!helpers!private! !
+verifyEnglishMonthNames:!helpers!private! !
+verifyEnglishNamesOfDays:!helpers!private! !
+verifyIndexOfEnglishMonths:!helpers!private! !
+verifyPrintFloatGrouping!helpers!private! !
+verifyPrintFloatSeparators!helpers!private! !
 !
 

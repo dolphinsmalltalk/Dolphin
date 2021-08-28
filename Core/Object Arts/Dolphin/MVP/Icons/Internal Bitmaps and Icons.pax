@@ -113,7 +113,7 @@ createIconMethod: methodName OfSize: pixelSize
 createIconMethod: methodName ofSize: pixelSize fromFile: imageFileName
 	| extent internalIcon methodSourceStream |
 	extent := pixelSize asPoint.
-	(File splitExtensionFrom: imageFileName) asLowercase = 'ico'
+	((File splitExtensionFrom: imageFileName) equalsIgnoreCase: 'ico')
 		ifTrue: 
 			[#todo.	"Anyone care to fix this?"
 			UI.MessageBox

@@ -53,7 +53,7 @@ completeWordAt: anInteger with: aString
 		replaceSelection: aString!
 
 completionListSortBlock
-	^[:a :b | (a displayString <===> b displayString) <= 0]!
+	^[:a :b | (a displayString compare: b displayString) <= 0]!
 
 createSchematicWiring
 	"Private - Create the trigger wiring for the receiver"

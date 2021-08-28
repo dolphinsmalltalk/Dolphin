@@ -286,8 +286,8 @@ filteredPackages
 				ifTrue: [allPackages select: [:each | File isRelativePath: each packagePathname]]
 				ifFalse: 
 					[| searchPrefix |
-					searchPrefix := (File appendPathDelimiter: filter) asLowercase.
-					allPackages select: [:each | each packagePathname asLowercase beginsWith: searchPrefix]]]!
+					searchPrefix := File appendPathDelimiter: filter.
+					allPackages select: [:each | each packagePathname beginsWith: searchPrefix ignoreCase: true]]]!
 
 filterPresenter
 	^filterPresenter!

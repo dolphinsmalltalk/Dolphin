@@ -21,7 +21,7 @@ package!
 "Class Definitions"!
 
 Core.Object subclass: #'UI.Folder'
-	instanceVariableNames: 'pathname canonicalPath'
+	instanceVariableNames: 'pathname'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

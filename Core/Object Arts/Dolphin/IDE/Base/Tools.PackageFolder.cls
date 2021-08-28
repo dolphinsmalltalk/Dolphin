@@ -21,7 +21,7 @@ icon
 isDolphinFolder
 	"Private - Answer true if the receiver represents a Dolphin base system package folder"
 
-	^self canonicalPath beginsWith: self class dolphinRootPathname!
+	^pathname beginsWith: self class dolphinRootPathname ignoreCase: true!
 
 rootName
 	"Private - Answer the name to use for the folder at the root of the current image hierarchy"
@@ -41,7 +41,7 @@ dolphinRoot
 	^self pathname: self dolphinRootPathname!
 
 dolphinRootPathname
-	^'core\'!
+	^'Core\'!
 
 forPackage: aPackage 
 	"Answer an instance of the receiver for the folder of aPackage"

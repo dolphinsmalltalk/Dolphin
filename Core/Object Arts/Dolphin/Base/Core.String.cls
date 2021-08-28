@@ -3,7 +3,7 @@
 Core.ArrayedCollection variableByteSubclass: #'Core.String'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.NlsConstants private})
 	classInstanceVariableNames: 'empty'
 	classConstants: {
 		'EncodingAnsi' -> 16r0.
@@ -99,16 +99,8 @@ _sameAsString: aString
 
 	^self <=> aString <= 0!
 
-<===> aString
-	"Answer the receiver's <integer> ORDINAL (i.e. binary) collation order with respect to the <readableString> argument.
-	The answer is < 0 if the receiver is ordinally before the argument, 0 if ordinally equivalent, or > 0 if ordinally after the argument. 
-	This comparison is fast and locale insensitive, however the ordering it provides isn't of use for non-technical purposes since it is based on the code unit values, and takes no account of character classifications."
-
-	<primitive: 220>
-	^self primitiveFailed: _failureCode!
-
-<==> comparand
-	"Answer the receiver's <integer> collation order with respect to the <readableString> argument, comparand. 
+<==> aString
+	"Answer the receiver's <integer> collation order with respect to the <readableString> argument. 
 	Similar to the spaceship operator, <=>, but the comparison is comparison is CASE SENSITIVE."
 
 	"Implementation Note: CompareString performs a word-based comparison which keeps, for example, hyphenated words together with equivalent non-hyphenated words. This is useful, but slower than a basic string collation.
@@ -116,10 +108,11 @@ _sameAsString: aString
 
 	<primitive: 51>
 	| string1 string2 |
+	aString isString ifFalse: [^self error: 'Invalid comparand'].
 	string1 := self asUtf16String.
-	string2 := comparand asUtf16String.
+	string2 := aString asUtf16String.
 	^(OS.Kernel32
-		compareString: OS.NlsConstants.LOCALE_USER_DEFAULT
+		compareString: LOCALE_USER_DEFAULT
 		dwCmpFlags: 0
 		lpString1: string1
 		cchCount1: string1 size
@@ -139,8 +132,8 @@ _sameAsString: aString
 	string1 := self asUtf16String.
 	string2 := aString asUtf16String.
 	^(OS.Kernel32
-		compareString: OS.NlsConstants.LOCALE_USER_DEFAULT
-		dwCmpFlags: OS.NlsConstants.NORM_IGNORECASE
+		compareString: LOCALE_USER_DEFAULT
+		dwCmpFlags: ##(NORM_IGNORECASE | NORM_LINGUISTIC_CASING)
 		lpString1: string1
 		cchCount1: string1 size
 		lpString2: string2
@@ -152,10 +145,10 @@ _sameAsString: aString
 
 	Primitive failure results:
 		InvalidParameter1  	- anObject is not a null-terminated object.
-		AssertionFailure		- anObject and/or receiver encoding not recognised."
+		AssertionFailure	- anObject and/or receiver encoding not recognised."
 
 	<primitive: 219>
-	^self == anObject or: [anObject isString and: [self <===> anObject == 0]]!
+	^self == anObject or: [anObject isString and: [(self compare: anObject) == 0]]!
 
 > aString
 	"Answer whether the receiver is lexically greater than the <readableString> argument, ignoring case, according to the implementation defined collation sequence (see <=>)."
@@ -196,10 +189,15 @@ asByteArray
 		startingAt: 1!
 
 asLowercase
-	"Answer a <readableString> which is a copy of the receiver but with the contents converted
-	to lowercase."
+	"Answer a <readableString> which is a copy of the receiver but with the contents converted to lowercase.
+	See #asUppercase for specific details of the conversion."
 
-	^self subclassResponsibility!
+	^Locale.UserDefault mapString: self flags: LCMAP_LOWERCASE!
+
+asLowercase: aLocale
+	"Answer a <readableString> which is a copy of the receiver but with the contents converted to lowercase using the conventions of the specified <Locale>, including any linguistic case conversions relavent in that locale."
+
+	^aLocale lowercaseString: self!
 
 asMethodCategory
 	^MethodCategory name: self!
@@ -276,13 +274,29 @@ asUIntPtr
 	^self yourAddress!
 
 asUppercase
-	"Answer a <readableString> which is a copy of the receiver but with the contents converted
-	to uppercase."
+	"Answer a <readableString> which is a copy of the receiver but with the contents converted to uppercase."
 
-	^self subclassResponsibility!
+	"The case conversion is based on the user's default locale, but does not use linguistic case conversions, so sending this message is _not_ equivalent to `string asUppercase: Locale userDefault`. The non-linguistic conversion performed will not (for example) respect the Turkish-i conversions if the user's default locale is tr-Tr, i.e. the following is always false, regardless of user deafult locale:
+
+		'i' asUppercase = ('i' asUppercase: (Locale named: 'tr-Tr'))
+		
+	We no longer use the Win32 CharUpper/CharLower APIs, but under the covers these call LCMapStringEx, passing LOCALE_NAME_USER_DEFAULT, but only the LCMAP_UPPERCASE, or LCMAP_LOWERCASE flags. They do not pass LCMAP_LINGUISTIC_CASING. This may seem odd, but it makes sense for a general purpose function as many of the strings passed for case conversion will be from languages that may be foreign in the locale (typically English), the conventions for the primary language of the locale may not apply. For this reason, and for backwards compatbility, now that we are calling LCMapString directly, we retain the same mapping flags."
+
+	^Locale.UserDefault mapString: self flags: LCMAP_UPPERCASE!
+
+asUppercase: aLocale
+	"Answer a <readableString> which is a copy of the receiver but with the contents converted to uppercase using the conventions of the specified <Locale>, including any linguistic case conversions relavent in that locale."
+
+	^aLocale uppercaseString: self!
 
 asUtf16String
 	"Answer a UTF16-encoded equivalent of the receiver."
+
+	<primitive: 215>
+	^Utf16String withAll: self!
+
+asUtf16StringCopy
+	"Answer a UTF16-encoded copy of the receiver."
 
 	<primitive: 215>
 	^Utf16String withAll: self!
@@ -325,17 +339,15 @@ at: anInteger put: aCharacter
 		at: anInteger
 		put: aCharacter!
 
-beginsWith: comperand
-	"Answer whether the receiver starts with the exact characters
-	of the argument, comperand."
+beginsWith: aCollectionOfCharacters
+	"Answer whether the receiver starts with the exact characters of the argument."
 
 	<primitive: 224>
-	^comperand _beginsString: self!
+	^aCollectionOfCharacters _beginsString: self!
 
 beginsWith: aString ignoreCase: aBoolean
-	"Answer whether the receiver starts with the characters of the argument, aString. The
-	comparison may be case sensitive or insensitive, depending on the <Boolean> argument. Note
-	that unlike #beginsWith:, the comperand must be a <String>."
+	"Answer whether the receiver starts with the characters of the argument, aString. The comparison may be case sensitive or insensitive, depending on the <Boolean> argument. 
+	Note that unlike #beginsWith:, the comparand must be a <String>, but like #beginsWith: it is an ordinal comparison of the code points."
 
 	| string1 string2 cch |
 	string1 := self asUtf16String.
@@ -343,12 +355,11 @@ beginsWith: aString ignoreCase: aBoolean
 	cch := string2 size.
 	^cch <= string1 size and: 
 			[(OS.Kernel32
-				compareString: OS.NlsConstants.LOCALE_USER_DEFAULT
-				dwCmpFlags: (aBoolean ifTrue: [OS.NlsConstants.NORM_IGNORECASE] ifFalse: [0])
-				lpString1: string1
+				compareStringOrdinal: string1
 				cchCount1: cch
 				lpString2: string2
-				cchCount2: cch) == OS.NlsConstants.CSTR_EQUAL]!
+				cchCount2: cch
+				bIgnoreCase: aBoolean) == CSTR_EQUAL]!
 
 between: min and: max
 	"Answer whether the receiver is inclusively between the <magnitude> arguments, 
@@ -405,6 +416,33 @@ codePointsDo: operation
 	"Evaluate the <monadicValuable> argument, operation, for each of the full code point <Character> elements of the receiver. Answers the receiver. The elements are evaluated in sequence."
 
 	self subclassResponsibility!
+
+compare: aString
+	"Answer the receiver's <integer> ORDINAL (i.e. binary) collation order with respect to the <readableString> argument.
+	The answer is < 0 if the receiver is ordinally before the argument, 0 if ordinally equivalent, or > 0 if ordinally after the argument. 
+	This comparison is fast and locale insensitive, however the ordering it provides isn't of use for non-technical purposes since it is based on the code unit values."
+
+	^self compare: aString ignoreCase: false!
+
+compare: aString ignoreCase: aBoolean
+	"Answer the receiver's <integer> ORDINAL (i.e. binary) collation order with respect to the <readableString> first argument. If the <boolean> last argument is true, then the comparison ignores letter case, if false the comparison is case-sensitive. The answer is < 0 if the receiver is ordinally before the argument, 0 if ordinally equivalent, or > 0 if ordinally after the argument. 
+	This comparison is fast and locale insensitive, however the ordering it provides isn't of use for non-technical purposes since it is based on the code unit values."
+
+	"Primitive failure results:
+		InvalidParameter1  	- aString is not a null-terminated object.
+		InvalidParameter2 	- aBoolean is not true/false
+		AssertionFailure	- aString and/or receiver encoding not recognised."
+
+	<primitive: 220>
+	| string1 string2 |
+	string1 := self asUtf16String.
+	string2 := aString asUtf16String.
+	^(OS.Kernel32
+		compareStringOrdinal: string1
+		cchCount1: string1 size
+		lpString2: string2
+		cchCount2: string2 size
+		bIgnoreCase: true) - CSTR_EQUAL!
 
 contains: aString
 	"Answer whether the receiver contains the specified sub-string."
@@ -464,6 +502,17 @@ encodeOn: aWriteStream put: aCharacter
 	UTF-8 encoded bytes necessary to represent the Unicode code point of the character."
 
 	^self subclassResponsibility!
+
+equalsIgnoreCase: anObject
+	"Answer whether the receiver and the <Object> argument are both <String>s containing the same code points, ignoring case.
+	This is an ORDINAL comparison, not a linguistic one. As such is suitable for use with Windows file names.
+
+	Primitive failure results:
+		InvalidParameter1  	- anObject is not a null-terminated object.
+		AssertionFailure	- anObject and/or receiver encoding not recognised."
+
+	<primitive: 226>
+	^self == anObject or: [anObject isString and: [(self compare: anObject ignoreCase: true) == 0]]!
 
 expandMacros
 	"Expand the receiver with replacable arguments.
@@ -677,8 +726,9 @@ formatWithArguments: aCollection
 		withArguments: aCollection!
 
 hash
-	"Answer the <integer> hash value for the receiver. Note that this must be the same for equal objects, and therefore it should be the same for the same sequence of characters, regardless of encoding.
-	Currently the hash is a 32-bit FNV1a with the standard constants, folded to 30 bits to produce a positive <SmallInteger> hash value, but this is a choice subject to change."
+	"Answer the <integer> hash value for the receiver. Note that this must be the same for equal objects (and in this case of Strings this means exact equal character, i.e. an ordinal comparison of the code points), and therefore it should be the same for the same sequence of code points, regardless of encoding."
+
+	"Currently the hash is a 32-bit FNV1a of the UTF-8 encoding with the standard FNV1a constants, folded to 30 bits to produce a positive <SmallInteger> hash value, but this is an implementation choice and subject to change."
 
 	<primitive: 106>
 	| utf8 hash |
@@ -687,8 +737,14 @@ hash
 	"FNV1a"
 	1 to: utf8 size do: [:i | hash := (hash bitXor: (utf8 basicAt: i)) * 16777619 bitAnd: 16rFFFFFFFF].
 	"Fold to 30 bits so is always positive SmallInteger"
-	^(hash bitShift: VMConstants.SmallIntegerMax highBit negated)
+	^(hash bitShift: ##(VMConstants.SmallIntegerMax highBit negated))
 		bitXor: (hash bitAnd: VMConstants.SmallIntegerMax)!
+
+hashIgnoreCase
+	"Answer the case-insensitive <integer> hash value for the receiver, i.e. the hash is the same for two strings regardless of case. This is complementary to #equalsIgnoreCase:, and is based on an ordinal (non-linguistic) comparison, however see Locale>>#hashString:."
+
+	<primitive: 227>
+	^(SmalltalkLocale.Current uppercaseString: self) hash!
 
 indexOfAnyOf: aCollectionOfCharacters startingAt: anInteger 
 	"Answer the one-based integer index of the first encountered element of the receiver which
@@ -1170,25 +1226,7 @@ subStringsAnsi: separators
 titleCased
 	"Answer a <readableString> which is a copy of the receiver but with the first letter of each major word capitalized."
 
-	| src dest len |
-	src := self asUtf16String.
-	len := OS.Kernel32
-				lcMapString: OS.NlsConstants.LOCALE_USER_DEFAULT
-				dwMapFlags: OS.NlsConstants.LCMAP_TITLECASE
-				lpScrStr: src
-				cchSrc: src size
-				lpDestStr: nil
-				cchDest: 0.
-	len == 0 ifTrue: [OS.Kernel32 systemError].
-	dest := Utf16String newFixed: len.
-	OS.Kernel32
-		lcMapString: OS.NlsConstants.LOCALE_USER_DEFAULT
-		dwMapFlags: OS.NlsConstants.LCMAP_TITLECASE
-		lpScrStr: src
-		cchSrc: src size
-		lpDestStr: dest
-		cchDest: len.
-	^dest!
+	^Locale default titlecaseString: self!
 
 trimBlanks
 	"Answer a copy of the receiver with leading and trailing white space removed."
@@ -1262,7 +1300,6 @@ _sameAsString:!comparing!private! !
 <!comparing!public! !
 <<!printing!public! !
 <=!comparing!public! !
-<===>!public! !
 <==>!comparing!public! !
 <=>!comparing!public! !
 =!comparing!public! !
@@ -1272,17 +1309,20 @@ appendToStream:!double dispatch!private! !
 asAnsiString!converting!public! !
 asByteArray!converting!public! !
 asLowercase!converting!public! !
+asLowercase:!converting!public! !
 asMethodCategory!converting!public! !
 asNumber!converting!public! !
 asPhrase!converting!public! !
-asQualifiedReference!public! !
+asQualifiedReference!converting!public! !
 asResourceId!converting!public! !
 associations!accessing!public! !
 asString!converting!public! !
 asSymbol!converting!public! !
 asUIntPtr!converting!public! !
 asUppercase!converting!public! !
+asUppercase:!converting!public! !
 asUtf16String!converting!public! !
+asUtf16StringCopy!converting!public! !
 asUtf8String!converting!public! !
 at:!accessing!public! !
 at:ifAbsent:!accessing!public! !
@@ -1295,9 +1335,11 @@ byteAt:put:!accessing!public! !
 byteSize!accessing!private! !
 capitalized!converting!public! !
 codePage!constants!public! !
-codePointsDo:!public! !
+codePointsDo:!enumerating!public! !
+compare:!comparing!public! !
+compare:ignoreCase:!comparing!public! !
 contains:!public!searching! !
-copyReplaceAll:with:!public! !
+copyReplaceAll:with:!copying!public! !
 copyToBuffer:ofSize:!constants!copying!private! !
 decodeAt:!encode/decode!private! !
 decodeNextAvailable:from:!encode/decode!private! !
@@ -1306,6 +1348,7 @@ displayOn:!printing!public! !
 displayString!printing!public! !
 encodedSizeAt:!encode/decode!private! !
 encodeOn:put:!encode/decode!private! !
+equalsIgnoreCase:!comparing!public! !
 expandMacros!printing!public! !
 expandMacrosIn:!double dispatch!private! !
 expandMacrosWith:!printing!public! !
@@ -1324,6 +1367,7 @@ formatWith:with:with:!printing!public! !
 formatWith:with:with:with:!printing!public! !
 formatWithArguments:!printing!public! !
 hash!comparing!public! !
+hashIgnoreCase!comparing!public! !
 indexOfAnyOf:startingAt:!public!searching! !
 indexOfSubCollection:startingAt:!public!searching! !
 isLiteral!public!testing! !
@@ -1565,7 +1609,7 @@ fromUtf16String: anAddressOrUtf16String
 
 	| answer size |
 	(size := OS.Kernel32
-				wideCharToMultiByte: OS.NlsConstants.CP_UTF8
+				wideCharToMultiByte: CP_UTF8
 				dwFlags: 0
 				lpWideCharStr: anAddressOrUtf16String
 				cchWideChar: -1
@@ -1576,7 +1620,7 @@ fromUtf16String: anAddressOrUtf16String
 		ifTrue: [OS.Kernel32 systemError].
 	answer := self new: size - 1.
 	OS.Kernel32
-		wideCharToMultiByte: OS.NlsConstants.CP_UTF8
+		wideCharToMultiByte: CP_UTF8
 		dwFlags: 0
 		lpWideCharStr: anAddressOrUtf16String
 		cchWideChar: -1
@@ -1592,7 +1636,7 @@ initialize
 installedCodePages
 	"Answer the names of all code pages installed on the host system."
 
-	^self systemCodePages: OS.NlsConstants.CP_INSTALLED!
+	^self systemCodePages: CP_INSTALLED!
 
 lf
 	^AnsiString with: $\n!
@@ -1680,10 +1724,10 @@ supportedCodePages
 		self supportedCodePages
 	"
 
-	^self systemCodePages: OS.NlsConstants.CP_SUPPORTED!
+	^self systemCodePages: CP_SUPPORTED!
 
 systemCodePages: anInteger
-	"Private - Answer a collection of system locales, depending on the flags argument,
+	"Private - Answer a collection of system code pages, depending on the flags argument,
 	anInteger. Note that this will take a while to run first time through as it causes the OS to
 	load all the code page information."
 

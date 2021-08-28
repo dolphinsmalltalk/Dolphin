@@ -15,6 +15,10 @@ Core.Tests.StringTest comment: ''!
 afterTestCases
 	^#(#('ab' $a $b) #('ca£d' $a $£) #('ca£d' $£ $d))!
 
+assert: actualObject equalsIgnoreCase: expectedObject
+	(actualObject equalsIgnoreCase: expectedObject)
+		ifFalse: [self fail: (self comparingStringBetween: expectedObject and: actualObject)]!
+
 assimilate: each
 	^Character codePoint: each asInteger!
 
@@ -25,8 +29,12 @@ beforeTestCases
 	^#(#('ab' $b $a) #('ca£d' $£ $a) #('ca£d' $d $£))!
 
 caseConversionCases
-	^#(#('abc £12' 'ABC £12') #('oña' 'OÑA') #('árvízturo tükörfúrógép' 'ÁRVÍZTURO TÜKÖRFÚRÓGÉP'))
+	^#(#('' '') #('abc £12' 'ABC £12') #('oña' 'OÑA') #('árvízturo tükörfúrógép' 'ÁRVÍZTURO TÜKÖRFÚRÓGÉP'))
 		, {{AnsiString fromByteArray: #[97 0 98]. AnsiString fromByteArray: #[65 0 66]}}!
+
+deny: actualObject equalsIgnoreCase: expectedObject
+	(actualObject equalsIgnoreCase: expectedObject)
+		ifTrue: [self fail: (self comparingStringBetween: expectedObject and: actualObject)]!
 
 equalityTestCases
 	^#('' 'a' 'abc' '' 'tükörfúrógép' 'Ḽơᶉëᶆ ȋṕšᶙṁ ḍỡḽǭᵳ ʂǐť ӓṁệẗ, ĉṓɲṩḙċťᶒțûɾ ấɖḯƥĭṩčįɳġ ḝłįʈ, șếᶑ ᶁⱺ ẽḭŭŝḿꝋď ṫĕᶆᶈṓɍ ỉñḉīḑȋᵭṵńť ṷŧ ḹẩḇőꝛế éȶ đꝍꞎôꝛȇ ᵯáꞡᶇā ąⱡîɋṹẵ' 'a🐬' 'a £=1.2€')!
@@ -223,12 +231,15 @@ testCapitalized
 	self assert: string equals: (self assimilateString: 'Ab')!
 
 testCaseConversions
-	| subject actual expected |
 	self caseConversionCases do: 
 			[:each |
+			| subject actual expected |
 			subject := self assimilateString: each first.
+			expected := self assimilateString: each last.
+			"Sanity check that the test cases are equal ordinally ignoring case"
+			self assert: (subject compare: expected ignoreCase: true) equals: 0.
+			self assert: subject equalsIgnoreCase: expected.
 			actual := subject asUppercase.
-			expected := (self assimilateString: each last).
 			self assert: actual equals: expected mutableCopy.
 			actual := expected asLowercase.
 			self assert: actual equals: subject mutableCopy]!
@@ -266,6 +277,18 @@ testClassReadFrom
 				self assert: actual equals: expected.
 				remainder := stream upToEnd.
 				self assert: remainder equals: each last]!
+
+testCompareIgnoreCase
+	self caseConversionCases do: 
+			[:each |
+			| subject upper |
+			subject := self assimilateString: each first.
+			upper := self assimilateString: each last.
+			self assert: subject hashIgnoreCase equals: upper hashIgnoreCase.
+			"The hash value should be equivalent to the hash of the UTF-8 encoded bytes of the uppercased string"
+			self assert: upper asUtf8String asByteArray hash equals: subject hashIgnoreCase.
+			self assert: (subject compare: upper ignoreCase: true) equals: 0.
+			self assert: (upper compare: subject ignoreCase: true) equals: 0]!
 
 testCopyWithout
 	| string |
@@ -305,6 +328,57 @@ testEquals
 	self assert: #abc equals: abc.
 	self assert: abc equals: #abc.
 !
+
+testEqualsIgnoreCase
+	| filenames |
+	self equalityTestCases do: 
+			[:each |
+			| subject upper lower |
+			subject := self assimilateString: each.
+			"Identical must be equal"
+			self assert: subject equalsIgnoreCase: subject.
+			"Same characters must be equal"
+			self assert: subject equalsIgnoreCase: subject copy.
+			upper := subject asUppercase.
+			self assert: subject equalsIgnoreCase: upper.
+			lower := subject asLowercase.
+			self assert: subject equalsIgnoreCase: lower.
+			self assert: upper hashIgnoreCase equals: subject hashIgnoreCase.
+			self assert: lower hashIgnoreCase equals: subject hashIgnoreCase.
+			self assert: upper hash equals: subject hashIgnoreCase.
+			self assert: subject equalsIgnoreCase: subject asUtf8String.
+			self assert: subject equalsIgnoreCase: subject asUtf16String.
+			"Not equal to ByteArrays"
+			self deny: subject equalsIgnoreCase: subject asByteArray.
+			"Nor Arrays of characters"
+			self deny: subject equalsIgnoreCase: subject asArray].
+
+	"This is an ordinal comparsion, not a linguistic one (cf. #<=>). The case-conversion is independent of locale. This does not mean that case-insensitivity applies to a-z, but it does mean that locale specific case conversions such as eszett and turkish dotless-i's are not considered equivalent."
+	#(#('ß' 'ss' 1) #('ss' 'ß' -1) #('àãçæøž' 'ÀÃÇÆØŽ' 0)) do: 
+			[:each |
+			| string1 string2 cmp |
+			string1 := self assimilateString: each first.
+			string2 := self assimilateString: each second.
+			"Sanity check - the test cases are equal by a linguistic comparison, even if not ordinally"
+			self assert: each first <=> each second equals: 0.
+			cmp := each third.
+			self assert: (string1 compare: string2 ignoreCase: true) equals: cmp.
+			cmp == 0
+				ifTrue: 
+					[self assert: string1 equalsIgnoreCase: string2.
+					self assert: string2 equalsIgnoreCase: string1]
+				ifFalse: 
+					[self deny: string1 equalsIgnoreCase: string2.
+					self deny: string2 equalsIgnoreCase: string1]].
+
+	"These strings appear to be the same, but would be different files in the filesystem"
+	filenames := #('ãåèéîïôõùú.txt' 'ãåèéîïôõùú.txt' 'ãåèéîïôõùú.txt' 'ãåèéîïôõùú.txt' 'ãåèéîïôõùú.txt' 'ãåèéîïôõùú.txt' 'ãåèéîïôõùú.txt' 'ãåèéîïôõùú.txt' 'ãåèéîïôõùú.txt' 'ãåèéîïôõùú.txt' 'ãåèéîïôõùú.txt' 'ãåèéîïôõùú.txt').
+	filenames do: 
+			[:i |
+			filenames do: 
+					[:j |
+					self assert: i <=> j equals: 0.
+					i == j ifTrue: [self assert: i equalsIgnoreCase: j] ifFalse: [self deny: i equalsIgnoreCase: j]]]!
 
 testExpandMacrosWith
 
@@ -532,14 +606,20 @@ testFindStringStartingAtIgnoreCase
 
 testHash
 	| abc |
+	"Might fail if the hash algorithm is changed."
+	self assert: (self assimilateString: '€') hash equals: 697271083.
 	self equalityTestCases do: 
 			[:each |
 			| subject |
 			subject := self assimilateString: each.
 			"Same characters must be equal"
 			self assert: subject hash equals: subject copy hash.
+			"If representable as an ANSI string, should still have the same hash value (hash value is always that of the Utf-8 bytes"
+			subject asAnsiString asUtf8String = subject
+				ifTrue: [self assert: subject hash equals: subject asAnsiString hash].
 			self assert: subject hash equals: subject asUtf8String hash.
 			self assert: subject hash equals: subject asUtf16String hash].
+
 	"Symbols are now equal to strings with the same characters"
 	abc := self assimilateString: 'abc'.
 	self assert: #abc hash equals: abc hash!
@@ -611,7 +691,7 @@ testMutableCopy
 			actual := subject mutableCopy.
 			self deny: actual identicalTo: subject.
 			self assert: actual isKindOf: subject copyingClass.
-			self assert: actual <===> subject equals: 0]!
+			self assert: (actual compare: subject) equals: 0]!
 
 testRefersToLiteral
 	"Test that string literals in a method do not count as referring to a Symbol with the same contents, now that they are #= to said Symbol.
@@ -1070,10 +1150,12 @@ withAllTestCases
 	^#(#('') #('a') #('abc') #('£€') #(#($a $£ $1 $\x20AC) 'a£1€'))! !
 !Core.Tests.StringTest categoriesForMethods!
 afterTestCases!constants!private! !
+assert:equalsIgnoreCase:!asserting!public! !
 assimilate:!helpers!private! !
 assimilateString:!helpers!private! !
 beforeTestCases!constants!private! !
 caseConversionCases!constants!private! !
+deny:equalsIgnoreCase:!asserting!public! !
 equalityTestCases!constants!private! !
 findActualIndicesOf:in:!helpers!private! !
 indexOfTestCases!constants!private! !
@@ -1093,9 +1175,11 @@ testCapitalized!public!unit tests! !
 testCaseConversions!public!unit tests! !
 testClassFromAddress!public!unit tests! !
 testClassReadFrom!public!unit tests! !
+testCompareIgnoreCase!public!unit tests! !
 testCopyWithout!public!unit tests! !
 testEmpty!public!unit tests! !
 testEquals!public!unit tests! !
+testEqualsIgnoreCase!public!unit tests! !
 testExpandMacrosWith!public!unit tests! !
 testExpandMacrosWithArguments!public!unit tests! !
 testFindStringStartingAt!public!unit tests! !

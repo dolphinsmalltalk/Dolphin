@@ -29,32 +29,14 @@ To better understand the full implications of the compromises made in introducin
 !Core.Utf8String methodsFor!
 
 _beginsString: aString
-	| size comperand |
-	comperand := aString asUtf8String.
+	| size comparand |
+	comparand := aString asUtf8String.
 	size := self size.
-	^size <= comperand size
+	^size <= comparand size
 		and: [(OS.Ucrt
-				memcmp: comperand
+				memcmp: comparand
 				buf2: self
 				count: size) == 0]!
-
-asLowercase
-	"Answer a <readableString> which is a copy of the receiver but with the contents converted
-	to lowercase."
-
-	| utf16 |
-	utf16 := self asUtf16String.
-	OS.User32 charLowerBuffW: utf16 cchLength: utf16 size.
-	^utf16 asUtf8String!
-
-asUppercase
-	"Answer a <readableString> which is a copy of the receiver but with the contents converted
-	to uppercase."
-
-	| utf16 |
-	utf16 := self asUtf16String.
-	OS.User32 charUpperBuffW: utf16 cchLength: utf16 size.
-	^utf16 asUtf8String!
 
 asUtf8String
 	"Answer a UTF-8 encoded string representation of the receiver."
@@ -473,8 +455,6 @@ urlEncoded
 	^encodedStream grabContents! !
 !Core.Utf8String categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
-asLowercase!converting!public! !
-asUppercase!converting!public! !
 asUtf8String!converting!public! !
 before:ifAbsent:!public!searching! !
 bom!constants!encode/decode!private! !
@@ -502,7 +482,7 @@ characterForCodeUnit: anInteger
 codePage
 	"Answer the Windows code page constants for the receiver's encoding."
 
-	^OS.NlsConstants.CP_UTF8!
+	^CP_UTF8!
 
 fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."

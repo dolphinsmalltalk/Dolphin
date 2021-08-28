@@ -12,12 +12,12 @@ UI.AbstractRecentMenu comment: ''!
 !UI.AbstractRecentMenu categoriesForClass!Kernel-Objects! !
 !UI.AbstractRecentMenu methodsFor!
 
-addToRecentList: aRecentString 
+addToRecentList: aRecentString
 	"Adds aFilenameString to the <orderedCollection> of recently accessed files"
 
 	| recentList |
 	recentList := self getRecentList.
-	recentList := recentList reject: [:each | each asUppercase=aRecentString asUppercase].
+	recentList := recentList reject: [:each | each equalsIgnoreCase: aRecentString].
 	recentList addFirst: aRecentString.
 	self setRecentList: recentList!
 

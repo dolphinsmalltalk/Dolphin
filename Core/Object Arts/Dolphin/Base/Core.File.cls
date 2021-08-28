@@ -1264,10 +1264,11 @@ removeExtension: aString
 removePathDelimiter: aString
 	"Answer a <readableString> that is the argument with a path separator at its end, if any, removed."
 
-	^(aString notEmpty 
-		and: [self pathDelimiters identityIncludes: aString last]) 
-			ifTrue: [aString allButLast]
-			ifFalse: [aString]!
+	^(aString notEmpty and: [self pathDelimiters identityIncludes: aString last])
+		ifTrue: 
+			["In this case we know that the path delimiters only ever require one code unit, so it is safe to trim off one code unit"
+			aString copyFrom: 1 to: aString size - 1]
+		ifFalse: [aString]!
 
 rename: oldFileNameString to: newFileNameString
 	"Rename the file specified in oldFileNameString to newFileNameString.
@@ -1374,11 +1375,10 @@ splitExtensionFrom: aString
 	"Splits aPathname string and answers the extension portion.
 	Answers the empty string if there is no extension."
 
-	| ext errno path len crt |
+	| ext errno path len |
 	path := aString asUtf8String.
 	(len := path size) == 0 ifTrue: [^''].
-	crt := Ucrt.
-	(errno := crt
+	(errno := Ucrt
 				_splitpath_s: path
 				drive: nil
 				driveLen: 0

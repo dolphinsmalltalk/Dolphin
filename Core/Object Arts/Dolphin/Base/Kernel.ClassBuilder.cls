@@ -1316,6 +1316,7 @@ forModifying: aClass
 				class: aClass;
 				superclass: aClass superclass;
 				instanceVariables: aClass instVarNames;
+				environment: aClass environment;
 				yourself.
 	aClass isMeta
 		ifFalse: 

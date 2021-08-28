@@ -60,12 +60,12 @@ extern "C" PRIMTABLEDECL Interpreter::PrimitiveFp primitivesTable[256] = {
 	Interpreter::primitiveAsyncDLL32CallThunk									, // case 48:  Overlapped FFI call primitive
 	Interpreter::primitiveSetMutableInstVar										, // case 49:  <mutable inst var> := arg
 	Interpreter::primitiveCopyFromTo											, // case 50:  ArrayedCollection>>#copyFrom:to:
-	Interpreter::primitiveStringComparison<CmpA,CmpW>							, // case 51:  String>>#trueCompare:
+	Interpreter::primitiveStringComparison<CmpA,CmpW>							, // case 51:  String>>#<==>
 	Interpreter::primitiveStringNextIndexOfFromTo								, // case 52:  String>>#nextIdentityIndexOf:from:to:
 	Interpreter::primitiveLargeIntegerHighBit									, // case 53:  LargeInteger>>#highBit
 	Interpreter::primitiveHighBit												, // case 54:  SmallInteger>>#highBit
 	Interpreter::primitiveBytesEqual											, // case 55:  ByteArray>>#=
-	Interpreter::primitiveStringComparison<CmpIA,CmpIW>							, // case 56:  String>>#_collate:
+	Interpreter::primitiveStringComparison<CmpIA,CmpIW>							, // case 56:  String>>#<=>
 	Interpreter::primitiveIsKindOf												, // case 57:  Object>>#isKindOf:
 	Interpreter::primitiveAllSubinstances										, // case 58:  Behavior>>#primAllSubinstances
 	Interpreter::primitiveNextIndexOfFromTo										, // case 59:  Object>>#basicIdentityIndexOf:from:to:, ArrayedCollection>>#nextIdentityIndexOf:from:to:
@@ -229,15 +229,15 @@ extern "C" PRIMTABLEDECL Interpreter::PrimitiveFp primitivesTable[256] = {
 	Interpreter::primitiveStringAsUtf8String									, // case 216: String>>#asUtf8String
 	Interpreter::primitiveStringAsByteString									, // case 217: String>>#asAnsiString
 	Interpreter::primitiveStringConcatenate										, // case 218: String>>#,
-	Interpreter::primitiveStringEqual											, // case 219: String>>#=
-	Interpreter::primitiveStringComparison<CmpOrdinalA, CmpOrdinalW>			, // case 220: String>>#_cmp:
+	Interpreter::primitiveStringEqual<EqualA, EqualW, true>						, // case 219: String>>#=
+	Interpreter::primitiveStringCompareOrdinal									, // case 220: String>>#compare:ignoreCase:
 	Interpreter::primitiveBasicNext												, // case 221: ReadStream|FileStream|ReadWriteStream>>#basicNext, ReadStream>>#basicNextAvailable
 	Interpreter::primitiveBasicNextPut											, // case 222: WriteStream>>#basicNextPut:, FileStream|WriteStream>>#primitiveBasicNextPut:
 	Interpreter::primitiveStringAsUtf32String									, // case 223: Currently unimplemented/unused
 	Interpreter::primitiveBeginsWith											, // case 224: String>>#beginsWith:
-	Interpreter::primitiveCharacterClassify										, // case 225: Character>>classify:
-	Interpreter::unusedPrimitive												, // case 226:
-	Interpreter::unusedPrimitive												, // case 227:
+	Interpreter::primitiveCharacterClassify										, // case 225: Character>>#classify:
+	Interpreter::primitiveStringEqual<EqualIA, EqualIW, false>					, // case 226: String>>#equalsIgnoreCase:
+	Interpreter::primitiveHashIgnoreCase										, // case 227: String>>#hashIgnoreCase
 	Interpreter::unusedPrimitive												, // case 228:
 	Interpreter::unusedPrimitive												, // case 229:
 	Interpreter::unusedPrimitive												, // case 230:

@@ -75,6 +75,7 @@ Kernel.SharedPool subclass: #'OS.CRTConstants'
 		'_TRUNCATE' -> -16r1.
 		'EBADF' -> 16r9.
 		'EINVAL' -> 16r16.
+		'LC_ALL' -> 16r0.
 		'RAND_MAX' -> 16r7FFF.
 		'SEEK_CUR' -> 16r1.
 		'SEEK_END' -> 16r2.

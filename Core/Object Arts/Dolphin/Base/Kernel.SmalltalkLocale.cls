@@ -21,9 +21,8 @@ code
 
 	^''!
 
-dayOfWeek: aString
-	"Answer the 1-based <integer> index in a week, of the day named by the <String> argument, aString.
-	Note that Monday is always 1, and Sunday always 7 (but see #firstDayOfWeek)"
+dayNames
+	"Answer a <LookupTable> keyed by lower-cased <readableString> locale-specific day names (and abbreviated day names), with the corresponding day number as values. The names are in lowercase. The day numbering convention is that Sunday is 1, Saturday is 7."
 
 	^##(LookupTable withAll: {'monday' -> 2.
 				'mon' -> 2.
@@ -38,8 +37,7 @@ dayOfWeek: aString
 				'saturday' -> 7.
 				'sat' -> 7.
 				'sunday' -> 1.
-				'sun' -> 1})
-		at: aString asLowercase!
+				'sun' -> 1})!
 
 dayOfWeekAbbreviation: anInteger
 	"Answer a <String> that is the localised abbreviated name for the day of the week whose index is the <integer> argument, where Sunday is 1 and Saturday is 7."
@@ -177,7 +175,7 @@ englishLanguageName
 firstDayOfWeek
 	"Answer an <Integer> in the range 1..7 identifying the first day of the week, where 1 is Monday and 7 is Sunday."
 
-	^1!
+	^7!
 
 hasLeadingZero
 	"Answer whether a leading zero is prepended to a displayed number in this locale if it has only a fractional.
@@ -230,7 +228,7 @@ isInstalled
 	^true!
 
 iso639LanguageName
-	"The two-charater <String> name of the language of the primary language of the locale as defined in ISO-369."
+	"The two-charater <String> name of the language of the primary language of the locale as defined in ISO-639."
 
 	^'en'!
 
@@ -249,7 +247,7 @@ lastTwoDigitYear
 lcid
 	"Answer the <integer> Windows Locale Id. The Smalltalk locale is similar to the invariant locale"
 
-	^127!
+	^LOCALE_INVARIANT!
 
 listSeparator
 	"Answer the String used in the receiver locale to separate items in lists, typically a comma."
@@ -283,7 +281,7 @@ monthName: anInteger
 		at: anInteger!
 
 monthNames
-	"Answer a map between <readableString> month names (and abbreviated month names) and the corresponding month number in the receiving locale."
+	"Answer a <LookupTable> keyed by lower-cased <readableString> locale-specific month names (and abbreviated month names), with the corresponding month number as values. The names are in lowercase."
 
 	^##(LookupTable withAll: {'january' -> 1.
 				'jan' -> 1.
@@ -315,7 +313,8 @@ name
 	^'smalltalk'!
 
 nameOfDay: anInteger
-	"Answer a <String> that is the localised full name of the day whose index is the <integer> argument, anInteger, where Monday is always 1 and Sunday is always 7."
+	"Answer a <String> that is the localised full name of the day whose index is the <integer> argument, anInteger, where regardless of locale Monday is always 1 and Sunday is always 7.
+	See also #dayOfWeekName:"
 
 	^#('Monday' 'Tuesday' 'Wednesday' 'Thursday' 'Friday' 'Saturday' 'Sunday') at: anInteger!
 
@@ -412,6 +411,14 @@ shortTimeFormat
 
 	^'HH:mm'!
 
+stbSaveOn: anSTBOutFiler
+	"Output the receiver to anSTBOutFiler."
+
+	anSTBOutFiler
+		writeClass: Locale withPrefix: STBPrefix forData;
+		register: self.
+	anSTBOutFiler nextPut: #smalltalk!
+
 tag
 	"Answer the RFC4646 language tag for this locale."
 
@@ -429,7 +436,7 @@ yearMonthFormat
 !Kernel.SmalltalkLocale categoriesForMethods!
 amDesignator!constants!public! !
 code!constants!public! !
-dayOfWeek:!mapping!public! !
+dayNames!constants!public! !
 dayOfWeekAbbreviation:!constants!public! !
 dayOfWeekName:!constants!public! !
 dayOfWeekShortAbbreviation:!constants!public! !
@@ -479,6 +486,7 @@ shortAmDesignator!constants!public! !
 shortDateFormat!constants!public! !
 shortPmDesignator!constants!public! !
 shortTimeFormat!constants!public! !
+stbSaveOn:!binary filing!public! !
 tag!constants!public! !
 thousandSeparator!constants!public! !
 yearMonthFormat!constants!public! !
@@ -502,10 +510,21 @@ initialize
 				yourself!
 
 reset
-	Current ifNotNil: [:current | current numberFormat: nil]! !
+	Current ifNotNil: [:current | current numberFormat: nil]!
+
+stbReadFrom: anSTBInFiler format: anSTBClassConversion
+	"Read an instance of the receiver from the binary filer, aSTBInFiler."
+
+	^anSTBClassConversion
+		ifNotNil: 
+			[anSTBInFiler register: Current.
+			anSTBClassConversion instSize timesRepeat: [anSTBInFiler basicNext].
+			Current]
+		ifNil: [self error: 'Unexpected SmalltalkLocale instance in STB stream']! !
 !Kernel.SmalltalkLocale class categoriesForMethods!
 current!instance creation!public! !
 initialize!class initialization!public! !
 reset!initializing!private! !
+stbReadFrom:format:!binary filing!public! !
 !
 

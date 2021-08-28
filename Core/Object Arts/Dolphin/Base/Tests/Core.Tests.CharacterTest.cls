@@ -45,6 +45,8 @@ testAsLowercase
 	self assert: $€ asLowercase identicalTo: $€.
 	"Turkish, but 8-bit"
 	self assert: $Ç asLowercase equals: $ç.
+	"Turkish dotted İ, 16-bit, note not lowercased by default conversion" 
+	self assert: $İ asLowercase equals: $İ.
 	"Cyrillic, 16-bit"
 	self assert: $\x400 asLowercase equals: $\x450.
 	"Greek delta"
@@ -64,6 +66,8 @@ testAsUppercase
 	self assert: $€ asUppercase identicalTo: $€.
 	"Turkish, but 8-bit"
 	self assert: $ç asUppercase equals: $Ç.
+	"Turkish un-dotted İ, 16-bit, note not uppercase by default conversion" 
+	self assert: $ı asUppercase equals: $ı.
 	"Cyrillic, 16-bit"
 	self assert: $\x450 asUppercase equals: $\x400.
 	"Greek delta"

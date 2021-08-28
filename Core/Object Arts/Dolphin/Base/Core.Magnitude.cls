@@ -117,7 +117,7 @@ hash!comparing!public! !
 isNaN!public!testing! !
 max:!comparing!public! !
 min:!comparing!public! !
-printString!public! !
+printString!printing!public! !
 !
 
 Core.Magnitude methodProtocol: #magnitude attributes: #(#ansi #readOnly) selectors: #(#< #<= #> #>= #between:and: #max: #min:)!

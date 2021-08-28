@@ -184,6 +184,9 @@ package setMethodNames: #(
 	#(#{External.WORD class} #typeName)
 	#(#{External.WORD class} #vt)
 	#(#{Kernel.SmalltalkLocale} #variantBool:)
+	#(#{OS.AbstractWindowsLocale} #boolFormat)
+	#(#{OS.AbstractWindowsLocale} #getVariantBoolString:)
+	#(#{OS.AbstractWindowsLocale} #variantBool:)
 	#(#{OS.COM.BSTR} #asSAFEARRAY)
 	#(#{OS.COM.BSTR} #asVariant)
 	#(#{OS.COM.BSTR class} #fromObject:)
@@ -259,9 +262,6 @@ package setMethodNames: #(
 	#(#{OS.SYSTEMTIME} #asVariant)
 	#(#{OS.SYSTEMTIME class} #fromDATE:)
 	#(#{OS.ULARGE_INTEGER class} #typeName)
-	#(#{OS.WindowsLocale} #boolFormat)
-	#(#{OS.WindowsLocale} #getVariantBoolString:)
-	#(#{OS.WindowsLocale} #variantBool:)
 ).
 
 package setPrerequisites: #(
@@ -2042,6 +2042,37 @@ variantBool: aBoolean
 variantBool:!constants!public! !
 !
 
+!OS.AbstractWindowsLocale methodsFor!
+
+boolFormat
+	"Answer an <Array> of two <String>s, being the representations for false and true in this Locale."
+
+	^{self variantBool: false. self variantBool: true}!
+
+getVariantBoolString: anInteger
+	| bstr str |
+	bstr := COM.BSTR new.
+	COM.OleAut32
+		varBstrFromBool: anInteger
+		lcid: self lcid
+		dwFlags: COM.AutomationConstants.VARIANT_LOCALBOOL
+		pbstrOut: bstr.
+	str := bstr asUtf8String.
+	bstr free.
+	^str!
+
+variantBool: aBoolean
+	^info at: aBoolean class name
+		ifAbsentPutClean: 
+			[self getVariantBoolString: (aBoolean
+						ifTrue: [COM.AutomationConstants.VARIANT_TRUE]
+						ifFalse: [COM.AutomationConstants.VARIANT_FALSE])]! !
+!OS.AbstractWindowsLocale categoriesForMethods!
+boolFormat!constants!public! !
+getVariantBoolString:!constants!public! !
+variantBool:!constants!public! !
+!
+
 !OS.COM.BSTR methodsFor!
 
 asSAFEARRAY
@@ -2845,37 +2876,6 @@ typeName
 	^#qword! !
 !OS.ULARGE_INTEGER class categoriesForMethods!
 typeName!constants!private! !
-!
-
-!OS.WindowsLocale methodsFor!
-
-boolFormat
-	"Answer an <Array> of two <String>s, being the representations for false and true in this Locale."
-
-	^{self variantBool: false. self variantBool: true}!
-
-getVariantBoolString: anInteger
-	| bstr str |
-	bstr := COM.BSTR new.
-	COM.OleAut32
-		varBstrFromBool: anInteger
-		lcid: self lcid
-		dwFlags: COM.AutomationConstants.VARIANT_LOCALBOOL
-		pbstrOut: bstr.
-	str := bstr asUtf8String.
-	bstr free.
-	^str!
-
-variantBool: aBoolean
-	^info at: aBoolean class name
-		ifAbsentPutClean: 
-			[self getVariantBoolString: (aBoolean
-						ifTrue: [COM.AutomationConstants.VARIANT_TRUE]
-						ifFalse: [COM.AutomationConstants.VARIANT_FALSE])]! !
-!OS.WindowsLocale categoriesForMethods!
-boolFormat!constants!public! !
-getVariantBoolString:!constants!public! !
-variantBool:!constants!public! !
 !
 
 "End of package definition"!

@@ -31,6 +31,14 @@ CHAR Interpreter::m_unicodeToAnsiCharMap[65536];
 
 #pragma comment(lib, "icuuc.lib")
 
+static constexpr uint32_t Fnv1aHashSeed = 2166136261U;
+
+#undef toupper
+// Fast ToUpper for ascii
+#define toupper(ch) (((ch) >= 'a' && (ch) <= 'z') ? ((ch) - 'a' + 'A') : ch)
+#undef isascii
+#define isascii(ch) ((unsigned)(ch) < 0x80)
+
 CharOTE* Character::NewUnicode(char32_t value)
 {
 	if (__isascii(value))
@@ -1006,64 +1014,6 @@ Oop* __fastcall Interpreter::primitiveCharacterClassify(Oop* const sp, primargco
 	return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 }
 
-
-// primitiveStringEqual does not use the comparison template because the result is a Boolean, not an Integer
-// 
-Oop* __fastcall Interpreter::primitiveStringEqual(Oop* sp, primargcount_t argc)
-{
-	struct EqualA
-	{
-		bool operator() (LPCSTR psz1, size_t cch1, LPCSTR psz2, size_t cch2) const
-		{
-			return cch1 == cch2 && memcmp(psz1, psz2, cch1) == 0;
-		}
-	};
-	struct EqualW
-	{
-		bool operator() (const Utf16String::CU* psz1, size_t cch1, const Utf16String::CU* psz2, size_t cch2) const
-		{
-			return cch1 == cch2 && CompareStringOrdinal((LPCWCH)psz1, cch1, (LPCWCH)psz2, cch2, FALSE) == CSTR_EQUAL;
-		}
-	};
-
-	Oop oopArg = *sp;
-	const OTE* oteReceiver = reinterpret_cast<const OTE*>(*(sp - 1));
-	if (!ObjectMemoryIsIntegerObject(oopArg))
-	{
-		const OTE* oteArg = reinterpret_cast<const OTE*>(oopArg);
-		if (oteArg != oteReceiver)
-		{
-			if (oteArg->isNullTerminated())
-			{
-				// Could double-dispatch this rather than handling all this in one
-				// primitive, or at least define one primitive for each string class, but it would mean
-				// adding quite a lot of methods, so this keeps the ST side cleaner by hiding the switch in the VM.
-				// This should also be faster as the intermediate conversions can usually be performed on the stack
-				// and so do not require any allocations.
-				bool equal = AnyStringCompare<bool, EqualA, EqualW, true>(oteReceiver, oteArg);
-				*(sp - 1) =	reinterpret_cast<Oop>(equal ? Pointers.True : Pointers.False);
-				return sp - 1;
-			}
-			else
-			{
-				// Arg not a null terminated byte object
-				return Interpreter::primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
-			}
-		}
-		else
-		{
-			// Identical, therefore equal
-			*(sp - 1) = reinterpret_cast<Oop>(Pointers.True);
-			return sp - 1;
-		}
-	}
-	else
-	{
-		// Arg is a SmallInteger
-		return Interpreter::primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
-	}
-}
-
 Oop* Interpreter::primitiveBytesEqual(Oop* const sp, primargcount_t)
 {
 	Oop oopArg = *sp;
@@ -1109,19 +1059,150 @@ Oop* Interpreter::primitiveBytesEqual(Oop* const sp, primargcount_t)
 	}
 }
 
-template <class T> uint32_t __fastcall hashBytes(const T* bytes, size_t len)
+char32_t ToUpper(char32_t ch)
 {
-	const T* stop = bytes + len;
-	uint32_t hash = 2166136261U;
-
-	while (bytes < stop) 
+	WCHAR unitsUpper[2];
+	int cchDest;
+	if (ch <= 0xffff)
 	{
-		hash = (hash ^ static_cast<uint32_t>(*bytes++)) * 16777619;
+		cchDest = ::LCMapStringEx(LOCALE_NAME_INVARIANT, LCMAP_UPPERCASE, reinterpret_cast<LPCWSTR>(&ch), 1, unitsUpper, 2, NULL, 0, 0);
+	}
+	else
+	{
+		WCHAR units[2] = { static_cast<WCHAR>(((ch) >> 10) + 0xd7c0), static_cast<WCHAR>(((ch) & 0x3ff) | 0xdc00) };
+		cchDest = ::LCMapStringEx(LOCALE_NAME_INVARIANT, LCMAP_UPPERCASE, units, 2, unitsUpper, 2, NULL, 0, 0);
 	}
 
+	switch (cchDest)
+	{
+	case 0:
+		return ch;
+	case 1:
+		return unitsUpper[0];
+	case 2:
+	{
+		size_t i = 0;
+		char32_t chUp;
+		U16_NEXT_UNSAFE(unitsUpper, i, chUp);
+		return chUp;
+	}
+	default:
+		_assume(false);
+	}
+}
+
+__forceinline uint32_t foldHash(uint32_t hash)
+{
 	// Xor-fold down to 30 bits so it will always fit in a SmallInteger. 
 	// Folding gives slightly better results than just truncating
 	return (hash >> 30) ^ (hash & 0x3FFFFFFF);
+}
+
+__forceinline uint32_t hashCombine(uint32_t hash, uint8_t byte)
+{
+	return (hash ^ static_cast<uint32_t>(byte)) * 16777619;
+}
+
+struct NextAnsi
+{
+	__forceinline char32_t operator() (const AnsiString::CU* pch, size_t& i) const
+	{
+		char ch = pch[i++];
+		return isascii(ch) ? ch : Interpreter::m_ansiToUnicodeCharMap[ch & 0xFF];
+	}
+};
+
+// icu macros may trigger assign smaller runtime check in debug build
+#pragma runtime_checks( "c", off)
+struct NextUtf8
+{
+	__forceinline char32_t operator() (const Utf8String::CU* pch, size_t& i) const
+	{
+		char32_t ch;
+		U8_NEXT_UNSAFE(pch, i, ch);
+		return ch;
+	}
+};
+
+struct NextUtf16
+{
+	__forceinline char32_t operator() (const Utf16String::CU* pch, size_t& i) const
+	{
+		char32_t ch;
+		U16_NEXT_UNSAFE(pch, i, ch);
+		return ch;
+	}
+};
+#pragma runtime_checks( "c", restore)
+
+template <class T> struct NextChar
+{
+	__forceinline char32_t operator() (const T* pch, size_t& i) const
+	{
+		return pch[i++];
+	}
+};
+
+template <class CH, class Next=NextChar<CH>> uint32_t hashString(const CH* pch, size_t byteSize)
+{
+	size_t cch = byteSize / sizeof(CH);
+	uint32_t hash = Fnv1aHashSeed;
+	size_t i = 0;
+
+	while (i < cch)
+	{
+		char32_t ch = Next()(pch, i);
+		if (isascii(ch))
+		{
+			hash = hashCombine(hash, static_cast<uint8_t>(ch));
+		}
+		else
+		{
+			// For non-ascii characters translate the code point to its UTF-8 byte sequence, and combine that sequence into the hash
+			if (ch <= 0x7ff)
+			{
+				hash = hashCombine(hash, static_cast<uint8_t>((ch >> 6) | 0xc0));
+			}
+			else
+			{
+				if (ch <= 0xffff)
+				{
+					hash = hashCombine(hash, static_cast<uint8_t>((ch >> 12) | 0xe0));
+				}
+				else
+				{
+					hash = hashCombine(hash, static_cast<uint8_t>((ch >> 18) | 0xf0));
+					hash = hashCombine(hash, static_cast<uint8_t>(((ch >> 12) & 0x3f) | 0x80));
+				}
+				hash = hashCombine(hash, static_cast<uint8_t>(((ch >> 6) & 0x3f) | 0x80));
+			}
+			hash = hashCombine(hash, static_cast<uint8_t>((ch & 0x3f) | 0x80));
+		}
+	}
+
+	return foldHash(hash);
+}
+
+template <class T, class Next=NextChar<T>> struct NextUpper
+{
+	__forceinline char32_t operator() (const T* pch, size_t& i) const
+	{
+		char32_t ch = Next()(pch, i);
+		return isascii(ch) ? toupper(ch) : ToUpper(ch);
+	}
+};
+
+inline uint32_t __fastcall hashBytes(const uint8_t* bytes, size_t len)
+{
+	const uint8_t* stop = bytes + len;
+	uint32_t hash = Fnv1aHashSeed;
+
+	while (bytes < stop)
+	{
+		hash = hashCombine(hash, *bytes++);
+	}
+
+	return foldHash(hash);
 }
 
 Oop* __fastcall Interpreter::primitiveHashBytes(Oop* const sp, primargcount_t)
@@ -1130,37 +1211,42 @@ Oop* __fastcall Interpreter::primitiveHashBytes(Oop* const sp, primargcount_t)
 
 	if (receiver->isNullTerminated())
 	{
+		// Strings are always hashed as if UTF-8 encoded in order that equal strings in different encodings
+		// have the same hash.
+
 		switch (receiver->m_oteClass->m_location->m_instanceSpec.m_encoding)
 		{
 		case StringEncoding::Ansi:
 		{
-			// Assume some kind of Ansi string
-			Utf8StringOTE * utf8 = Utf8String::NewFromAnsi(
-				reinterpret_cast<const AnsiStringOTE*>(receiver)->m_location->m_characters, receiver->bytesSize());
-			SmallInteger hash = hashBytes(utf8->m_location->m_characters, utf8->bytesSize());
+			auto ansiString = reinterpret_cast<ST::AnsiString*>(receiver->m_location);
+			SmallInteger hash = hashString<AnsiString::CU, NextAnsi>(ansiString->m_characters, receiver->bytesSize());
 			*sp = ObjectMemoryIntegerObjectOf(hash);
-			ObjectMemory::deallocateByteObject(reinterpret_cast<OTE*>(utf8));
 			return sp;
 		}
 
 		case StringEncoding::Utf8:
 		{
-			SmallInteger hash = hashBytes(reinterpret_cast<Utf8StringOTE*>(receiver)->m_location->m_characters, receiver->bytesSize());
+			auto utf8 = reinterpret_cast<ST::Utf8String*>(receiver->m_location);
+			SmallInteger hash = hashBytes(reinterpret_cast<const uint8_t*>(utf8->m_characters), receiver->bytesSize());
 			*sp = ObjectMemoryIntegerObjectOf(hash);
 			return sp;
 		}
 
 		case StringEncoding::Utf16:
 		{
-			Utf8StringOTE* utf8 = Utf8String::New(
-				reinterpret_cast<const Utf16StringOTE*>(receiver)->m_location->m_characters, receiver->getSize() / sizeof(Utf16String::CU));
-			SmallInteger hash = hashBytes(utf8->m_location->m_characters, utf8->bytesSize());
+			auto utf16 = reinterpret_cast<ST::Utf16String*>(receiver->m_location);
+			SmallInteger hash = hashString<Utf16String::CU, NextUtf16>(utf16->m_characters, receiver->bytesSize());
 			*sp = ObjectMemoryIntegerObjectOf(hash);
-			ObjectMemory::deallocateByteObject(reinterpret_cast<OTE*>(utf8));
 			return sp;
 		}
+
 		case StringEncoding::Utf32:
-			return primitiveFailure(_PrimitiveFailureCode::NotImplemented);
+		{
+			auto utf32 = reinterpret_cast<ST::Utf32String*>(receiver->m_location);
+			SmallInteger hash = hashString<char32_t>(utf32->m_characters, receiver->bytesSize());
+			*sp = ObjectMemoryIntegerObjectOf(hash);
+			return sp;
+		}
 
 		default:
 			__assume(false);
@@ -1180,6 +1266,118 @@ extern "C" SmallInteger __cdecl HashBytes(const uint8_t* bytes, size_t size)
 	return bytes != nullptr ? hashBytes(bytes, size) : 0;
 }
 
+Oop* __fastcall Interpreter::primitiveHashIgnoreCase(Oop* const sp, primargcount_t)
+{
+	BytesOTE* receiver = reinterpret_cast<BytesOTE*>(*sp);
+
+	switch (receiver->m_oteClass->m_location->m_instanceSpec.m_encoding)
+	{
+	case StringEncoding::Ansi:
+	{
+		auto ansiString = reinterpret_cast<ST::AnsiString*>(receiver->m_location);
+		SmallInteger hash = hashString<AnsiString::CU, NextUpper<AnsiString::CU, NextAnsi>>(ansiString->m_characters, receiver->bytesSize());
+		*sp = ObjectMemoryIntegerObjectOf(hash);
+		return sp;
+	}
+
+	case StringEncoding::Utf8:
+	{
+		auto utf8 = reinterpret_cast<ST::Utf8String*>(receiver->m_location);
+		SmallInteger hash = hashString<Utf8String::CU, NextUpper<Utf8String::CU, NextUtf8>>(utf8->m_characters, receiver->bytesSize());
+		*sp = ObjectMemoryIntegerObjectOf(hash);
+		return sp;
+	}
+
+	case StringEncoding::Utf16:
+	{
+		auto utf16 = reinterpret_cast<ST::Utf16String*>(receiver->m_location);
+		SmallInteger hash = hashString<Utf16String::CU, NextUpper<Utf16String::CU, NextUtf16>>(utf16->m_characters, receiver->bytesSize());
+		*sp = ObjectMemoryIntegerObjectOf(hash);
+		return sp;
+	}
+
+	case StringEncoding::Utf32:
+	{
+		auto utf32 = reinterpret_cast<ST::Utf32String*>(receiver->m_location);
+		SmallInteger hash = hashString<char32_t, NextUpper<char32_t>>(utf32->m_characters, receiver->bytesSize());
+		*sp = ObjectMemoryIntegerObjectOf(hash);
+		return sp;
+	}
+
+	default:
+		__assume(false);
+		return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);
+	}
+}
+
+
+struct CmpOrdinalA
+{
+	__forceinline int operator() (LPCSTR psz1, size_t cch1, LPCSTR psz2, size_t cch2) const
+	{
+		int cmp = memcmp(psz1, psz2, min(cch1, cch2));
+		return cmp == 0 && cch1 != cch2
+			? cch1 < cch2 ? -1 : 1
+			: cmp;
+	}
+};
+
+struct CmpOrdinalW
+{
+	__forceinline int operator() (const Utf16String::CU* psz1, size_t cch1, const Utf16String::CU* psz2, size_t cch2) const
+	{
+		return ::CompareStringOrdinal((LPCWCH)psz1, cch1, (LPCWCH)psz2, cch2, FALSE) - 2;
+	}
+};
+
+Oop* __fastcall Interpreter::primitiveStringCompareOrdinal(Oop* const sp, primargcount_t)
+{
+	Oop oopComparand = *(sp - 1);
+	const OTE* oteReceiver = reinterpret_cast<const OTE*>(*(sp - 2));
+	if (!ObjectMemoryIsIntegerObject(oopComparand))
+	{
+		const OTE* oteComparand = reinterpret_cast<const OTE*>(oopComparand);
+		if (oteComparand != oteReceiver)
+		{
+			if (oteComparand->isNullTerminated())
+			{
+				POTE ignoreCase = reinterpret_cast<POTE>(*sp);
+				if (ignoreCase == Pointers.True)
+				{
+					int cmp = AnyStringCompare<int, CmpOrdinalIA, CmpOrdinalIW, false>(oteReceiver, oteComparand);
+					*(sp - 2) = integerObjectOf(cmp);
+					return sp - 2;
+				}
+				else if (ignoreCase == Pointers.False)
+				{
+					int cmp = AnyStringCompare<int, CmpOrdinalA, CmpOrdinalW, true>(oteReceiver, oteComparand);
+					*(sp - 2) = integerObjectOf(cmp);
+					return sp - 2;
+				}
+				else
+				{
+					return primitiveFailure(_PrimitiveFailureCode::InvalidParameter2);
+				}
+			}
+			else
+			{
+				// Arg not a null terminated byte object
+				return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
+			}
+		}
+		else
+		{
+			// Identical
+			*(sp - 2) = ZeroPointer;
+			return sp - 2;
+		}
+	}
+	else
+	{
+		// Arg is a SmallInteger
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
+	}
+}
 Oop* __fastcall Interpreter::primitiveBeginsWith(Oop* const sp, primargcount_t)
 {
 	Oop oopArg = *sp;

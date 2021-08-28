@@ -14,6 +14,19 @@ OS.Tests.WindowsLocaleTest comment: ''!
 defaultSubject
 	^Locale named: 'en-GB'!
 
+testDayOfWeek
+	| subject |
+	subject := Locale named: 'tr-Tr'.
+	self assert: ((1 to: 7) collect: [:i | subject dayOfWeekName: i]) equals: #('Pazar' 'Pazartesi' 'Salı' 'Çarşamba' 'Perşembe' 'Cuma' 'Cumartesi').
+	#('en-US' 'en-GB') do: [:each | self verifyEnglishDayOfWeek: (Locale named: each)]!
+
+testDayOfWeekName
+	| subject |
+	subject := Locale named: 'tr-Tr'.
+	#('Pazartesi' 2 'PAZARTESİ' 2 'Salı' 3 'SALI' 3)
+		pairsDo: [:day :index | self assert: (subject dayOfWeek: day) equals: index].
+	#('en-US' 'en-GB') do: [:each | self verifyEnglishDayOfWeekNames: (Locale named: each)]!
+
 testDisplayFloatOn
 	| subject |
 	{{Locale named: 'en-GB'.
@@ -110,51 +123,58 @@ testEnglishName
 	#('smalltalk' 'English' 'en-US' 'English' 'en-GB' 'English' 'es-ES_tradnl' 'Spanish' 'cy-GB' 'Welsh' 'es-AR' 'Spanish')
 		pairsDo: [:lcid :language | self assert: (Locale named: lcid) englishLanguageName equals: language]!
 
+testFirstDayOfWeek
+	"In the US the first day of the week is Sunday"
+
+	self assert: (Locale named: 'en-US') firstDayOfWeek equals: 7.
+	"In the UK the first day of the week is Monday"
+	self assert: (Locale named: 'en-GB') firstDayOfWeek equals: 1!
+
+testIndexOfMonth
+	| subject |
+	subject := Locale named: 'tr-Tr'.
+	#('Ekim' 10 'EKİM' 10 'Mayıs' 5 'MAYIS' 5 'Nis' 4 'NİS' 4 'Ağu' 8)
+		pairsDo: [:month :index | self assert: (subject indexOfMonth: month) equals: index].
+	#('en-US' 'en-GB') do: [:each | self verifyIndexOfEnglishMonths: (Locale named: each)]!
+
+testLongDateFormats
+	self assert: ((Locale named: 'en-US') longDateFormats includes: 'MMMM dd, yyyy').
+	self assert: ((Locale named: 'en-GB') longDateFormats includes: 'dd MMMM yyyy')!
+
+testLowercaseString
+	| subject |
+	subject := Locale named: 'de-DE'.
+	self assert: (subject lowercaseString: '') equals: ''.
+	self assert: (subject lowercaseString: 'STRAẞE') equals: 'straße'.
+	"Turkish dotted and non-dotted i"
+	subject := Locale named: 'tr-TR'.
+	self assert: (subject lowercaseString: 'INTERESTİNG') equals: 'ınteresting'!
+
+testMonthAbbreviation
+	#('en-US' 'en-GB') do: [:each | self verifyEnglishMonthAbbreviations: (Locale named: each)]!
+
+testMonthName
+	#('en-US' 'en-GB') do: [:each | self verifyEnglishMonthNames: (Locale named: each)]!
+
+testName
+	#(1033 'en-US' 2057 'en-GB' 1106 'cy-GB' 11274 'es-AR')
+		pairsDo: [:lcid :name | self assert: (Locale lcid: lcid) name equals: name]!
+
+testNameOfDay
+	| subject |
+	subject := Locale named: 'tr-Tr'.
+	self assert: ((1 to: 7) collect: [:i | subject nameOfDay: i]) equals: #('Pazartesi' 'Salı' 'Çarşamba' 'Perşembe' 'Cuma' 'Cumartesi' 'Pazar').
+	#('en-US' 'en-GB') do: [:each | self verifyEnglishNamesOfDays: (Locale named: each)]!
+
 testPrintFloatGrouping
 	"Test printing with different number grouping."
 
-	| subject format |
-	subject := self defaultSubject.
-	format := subject numberFormat copy.
-	#(#(0 '0' '1234567890.12') #(1 '1' '1,2,3,4,5,6,7,8,9,0.12') #(2 '2' '12,34,56,78,90.12') #(3 '3' '1,234,567,890.12') #(4 '4' '12,3456,7890.12') #(5 '5' '12345,67890.12') #(6 '6' '1234,567890.12') #(7 '7' '123,4567890.12') #(8 '8' '12,34567890.12') #(9 '9' '1,234567890.12') #(10 '1;0;0' '123456789,0.12') #(11 '1;1' '1,2,3,4,5,6,7,8,9,0.12') #(12 '1;2' '1,23,45,67,89,0.12') #(32 '3;2' '1,23,45,67,890.12') #(92 '9;2' '1,234567890.12'))
-		do: 
-			[:each |
-			format grouping: each first.
-			self assert: format numberGrouping equals: each second.
-			format numberGrouping: each second.
-			self assert: format grouping equals: each first.
-			self assert: (subject printFloat: 1234567890.123 format: format) equals: each last].
-	"The grouping is actually much more flexible than the documentation suggests. Up to four number groups are supported (the last repeating)."
-	#(#(98 '9;8' '2,00000000,00000000,00000000,000000000.00') #(89 '8;9' '20000000,000000000,000000000,00000000.00') #(99 '9;9' '2000000,000000000,000000000,000000000.00') #(120 '1;2;0;0' '2000000000000000000000000000000,00,0.00') #(123 '1;2;3' '2,000,000,000,000,000,000,000,000,000,000,00,0.00') #(1230 '1;2;3;0;0' '2000000000000000000000000000,000,00,0.00') #(1234 '1;2;3;4' '2000,0000,0000,0000,0000,0000,0000,000,00,0.00') #(4321 '4;3;2;1' '2,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,00,000,0000.00') #(9999 '9;9;9;9' '2000000,000000000,000000000,000000000.00'))
-		do: 
-			[:each |
-			format grouping: each first.
-			self assert: format numberGrouping equals: each second.
-			format numberGrouping: each second.
-			self assert: format grouping equals: each first.
-			self assert: (subject printFloat: 2.0e33 format: format) equals: each last].
-	#(-1 10000) do: 
-			[:each |
-			self should: [format grouping: each] raise: Error.
-			format Grouping: each.
-			self
-				should: [subject printFloat: 1.23 format: format]
-				raise: HRESULTError
-				matching: [:ex | ex tag = (HRESULT win32Error: Win32Errors.ERROR_INVALID_PARAMETER)]].
-	self should: [format numberGrouping: '1;2;3;4;5'] raise: Error!
+	self verifyPrintFloatGrouping!
 
 testPrintFloatSeparators
 	"Test printing with different number grouping."
 
-	| subject format |
-	subject := self defaultSubject.
-	format := subject numberFormat copy.
-	format
-		decimalPlaces: 3;
-		grouping: 43;
-		decimalSeparator: $@;
-		thousandSeparator: $^.
-	self assert: (subject printFloat: 1234567890.123 format: format) equals: '123^456^7890@123'!
+	self verifyPrintFloatSeparators!
 
 testPrintNoLeadingZero
 	| subject format |
@@ -162,14 +182,97 @@ testPrintNoLeadingZero
 	format := subject numberFormat copy.
 	format hasLeadingZero: false.
 	self assert: (subject printFloat: 1234567890.123 format: format) equals: '1,234,567,890.12'.
-	self assert: (subject printFloat: 0.123 format: format) equals: '.12'! !
+	self assert: (subject printFloat: 0.123 format: format) equals: '.12'!
+
+testStbConvertFromVersion0
+	| subject |
+	subject := (Object fromLiteralStoreArray: #(#'!!STL' 4 852742 ##(Smalltalk.WindowsLocale) 656390 ##(Smalltalk.NUMBERFMTW) 8 #[2 0 0 0 1 0 0 0 3 0 0 0 96 28 20 15 176 75 20 15 1 0 0 0] 8 '.' nil 8 ',' 4115 170 192 34 14 35 5 31 8 ',' 8225 3 185 8 'en-GB' 37 3 33 8 '3;0' 29 8 '.')).
+	"We expect a newly constructed instance with the same lcid, but the other data is discarded"
+	self assert: subject lcid equals: 2057.
+	self assertIsNil: (subject instVarNamed: 'numberFormat').
+	self assert: (subject instVarNamed: 'info') isEmpty!
+
+testStbRoundTrip
+	| subject bytes rehydrated |
+	subject := self defaultSubject.
+	bytes := {subject. {subject}} binaryStoreBytes.
+	rehydrated := Object fromBinaryStoreBytes: bytes.
+	self assert: rehydrated first equals: subject.
+	self assert: rehydrated second first identicalTo: rehydrated first!
+
+testStbRoundTripDefault
+	| subject bytes |
+	bytes := Locale userDefault binaryStoreBytes.
+	subject := Object fromBinaryStoreBytes: bytes.
+	self assert: subject identicalTo: Locale userDefault.
+	"Switch to a different default - we expect preservation of the logical user default, not the original concrete locale"
+	Locale userDefault: (Locale named: 'es-ES').
+	self deny: Locale userDefault equals: subject.
+	subject := Object fromBinaryStoreBytes: bytes.
+	self assert: subject identicalTo: Locale userDefault!
+
+testStbRoundTripSystemDefault
+	| subject bytes |
+	self deny: Locale systemDefault equals: Locale userDefault.
+	bytes := Locale systemDefault binaryStoreBytes.
+	subject := Object fromBinaryStoreBytes: bytes.
+	self assert: subject identicalTo: Locale systemDefault!
+
+testStbRoundTripUserDefault
+	| subject bytes |
+	bytes := Locale userDefault binaryStoreBytes.
+	subject := Object fromBinaryStoreBytes: bytes.
+	self assert: subject identicalTo: Locale userDefault.
+	"Switch to a different default - we expect preservation of the logical user default, not the original concrete locale"
+	Locale userDefault: (Locale named: 'es-ES').
+	self deny: Locale userDefault equals: subject.
+	subject := Object fromBinaryStoreBytes: bytes.
+	self assert: subject identicalTo: Locale userDefault!
+
+testTitlecaseString
+	| subject |
+	subject := Locale named: 'tr-Tr'.
+	self assert: (subject titlecaseString: 'istanbul') equals: 'İstanbul'.
+	subject := Locale named: 'en-GB'.
+	self assert: (subject titlecaseString: 'istanbul') equals: 'Istanbul'.!
+
+testUppercaseString
+	| subject |
+	subject := Locale named: 'de-DE'.
+	self assert: (subject uppercaseString: '') equals: ''.
+	"There are two lower-case forms of the greek letter Sigma."
+	self assert: (subject uppercaseString: 'Ὀδυσσεύς') equals: 'ὈΔΥΣΣΕΎΣ'.
+
+	"Note that although there is a Unicode uppercase eszett, the Windows LCMapString API's linguistic conversion for de-DE does not recognise it. This is either because it is a relatively new addition to Unicode, or because its use in case translations is open to debate."
+	self deny: (subject uppercaseString: 'Straße') equals: 'STRAẞE'.
+	self assert: (subject uppercaseString: 'Straße') equals: 'STRAßE'.
+	"Turkish dotted and dotless i should be converted correctly preserved the dot or absence of dot"
+	subject := Locale named: 'tr-TR'.
+	self assert: (subject uppercaseString: 'ınteresting') equals: 'INTERESTİNG'! !
 !OS.Tests.WindowsLocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
+testDayOfWeek!public!unit tests! !
+testDayOfWeekName!public!unit tests! !
 testDisplayFloatOn!public!unit tests! !
 testDisplayFloatOnNegativeModes!public!unit tests! !
 testEnglishName!public!unit tests! !
+testFirstDayOfWeek!public!unit tests! !
+testIndexOfMonth!public!unit tests! !
+testLongDateFormats!public!unit tests! !
+testLowercaseString!public!unit tests! !
+testMonthAbbreviation!public!unit tests! !
+testMonthName!public!unit tests! !
+testName!public!unit tests! !
+testNameOfDay!public!unit tests! !
 testPrintFloatGrouping!public!unit tests! !
 testPrintFloatSeparators!public!unit tests! !
 testPrintNoLeadingZero!public!unit tests! !
+testStbConvertFromVersion0!public!unit tests! !
+testStbRoundTrip!public!unit tests! !
+testStbRoundTripDefault!public!unit tests! !
+testStbRoundTripSystemDefault!public!unit tests! !
+testStbRoundTripUserDefault!public!unit tests! !
+testTitlecaseString!public!unit tests! !
+testUppercaseString!public!unit tests! !
 !
 

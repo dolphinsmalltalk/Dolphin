@@ -21,8 +21,10 @@ beforeTestCases
 		, #(#('Ā🐬' $\x1F42C $\x100) #('🐬🍺' $\x1F37A $\x1F42C) #('文Ā' $\x100 $\x6587))!
 
 caseConversionCases
+	"Note that we don't expect the turkish dotless lowercase 'i' to be translated to 'İ'. This wouldn't happen even if the user's default locale is turkic because the standard asUppercase and asLowercase conversions are non-linguistic."
+
 	^super caseConversionCases
-		, #(#('кракозябры' 'КРАКОЗЯБРЫ') #('文字化け') #('маймуница' 'МАЙМУНИЦА') #('ａｂｃ' 'ＡＢＣ'))!
+		, #(#('кракозябры' 'КРАКОЗЯБРЫ') #('文字化け') #('маймуница' 'МАЙМУНИЦА') #('ａｂｃ' 'ＡＢＣ') #('straße' 'STRAßE') #('ınteresting' 'ıNTERESTING'))!
 
 decodeIncompleteContinuations
 	^Error notYetImplemented!
@@ -88,7 +90,12 @@ testAnsiStringRoundTrip
 	ansi := utf asAnsiString.
 	self assert: ansi class identicalTo: AnsiString.
 	self assert: ansi size equals: 256.
-	self assert: ansi equals: ansiAll!
+	self assert: ansi equals: ansiAll.
+
+	"Note that turkish dotless-i's do not normally roundtrip, unless using a turkish code page."
+	utf := self assimilateString: 'ınteresting'.
+	ansi := utf asAnsiString.
+	self assert: ansi equals: 'interesting' asAnsiString!
 
 testAnyone
 	| subject |
@@ -102,30 +109,43 @@ testAnySatisfy
 	subject := self assimilateString: 'a£文🐬1🍺'.
 	self deny: (subject anySatisfy: [:each | each isSurrogate])!
 
+testAsAnsiStringDotlessI
+	| subject actual |
+	"Note that turkish i's are not normally preserved on conversion to an ANSI string, unless using a turkish code page."
+	Locale userDefault primary = (Locale named: 'Tr-tr')
+		ifTrue: 
+			[subject := self assimilateString: 'İiıI'.
+			actual := subject asAnsiString.
+			self assert: actual equals: 'İiıI']
+		ifFalse: 
+			[subject := self assimilateString: 'İiıI'.
+			actual := subject asAnsiString.
+			self assert: actual equals: 'IiiI']!
+
 testBeginsWithExtended
-	| subject comperand |
+	| subject comparand |
 	subject := self newCollection: {Character dolphin. $a. $£. $b. $c}.
 	self assert: (subject beginsWith: Character dolphin).
 	self deny: (subject beginsWith: (String with: (Character value: 16rF0))).
 	self deny: (subject beginsWith: (Character value: 16rF0)).
 	self deny: (subject beginsWith: (String with: (Character value: 16r3D))).
 	self deny: (subject beginsWith: (Character value: 16r3D)).
-	comperand := Character dolphin asUtf8String , 'a£'.
-	self assert: (subject beginsWith: comperand).
-	comperand := Character dolphin asUtf16String , 'a£'.
-	self assert: (subject beginsWith: comperand)!
+	comparand := Character dolphin asUtf8String , 'a£'.
+	self assert: (subject beginsWith: comparand).
+	comparand := Character dolphin asUtf16String , 'a£'.
+	self assert: (subject beginsWith: comparand)!
 
 testBeginsWithIgnoreCase
-	| subject comperand |
+	| subject comparand |
 	subject := self newCollection: {Character dolphin. $a. $\0. $£. $b. $c}.
 	self assert: (subject beginsWith: subject ignoreCase: true).
 	self assert: (subject beginsWith: subject ignoreCase: false).
-	comperand := self newCollection: {Character dolphin. $A. $\0. $£}.
-	self assert: (subject beginsWith: comperand ignoreCase: true).
-	self deny: (subject beginsWith: comperand ignoreCase: false).
-	comperand := comperand asUtf16String.
-	self assert: (subject beginsWith: comperand ignoreCase: true).
-	self deny: (subject beginsWith: comperand ignoreCase: false)!
+	comparand := self newCollection: {Character dolphin. $A. $\0. $£}.
+	self assert: (subject beginsWith: comparand ignoreCase: true).
+	self deny: (subject beginsWith: comparand ignoreCase: false).
+	comparand := comparand asUtf16String.
+	self assert: (subject beginsWith: comparand ignoreCase: true).
+	self deny: (subject beginsWith: comparand ignoreCase: false)!
 
 testCollect
 	| subject actual |
@@ -598,6 +618,7 @@ testAllSatisfy!public!unit tests! !
 testAnsiStringRoundTrip!public!unit tests! !
 testAnyone!public!unit tests! !
 testAnySatisfy!public!unit tests! !
+testAsAnsiStringDotlessI!public!unit tests! !
 testBeginsWithExtended!public!unit tests! !
 testBeginsWithIgnoreCase!public!unit tests! !
 testCollect!public!unit tests! !

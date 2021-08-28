@@ -2631,11 +2631,11 @@ testPrimitiveStringCollate
 	| method |
 	method := self createPrimitiveMethodLike: String >> #<=>.
 	"Note that we don't test that the primitive fails for a non-String receiver - in general primitives assume they are only used in methods of suitable receiver classes."
-	#(#('a' 'b' -1) #('b' 'a' 1) #('abc' 'ABC' 0) #('A' 'a' 0) #('' 'a' -1) #('a' 'ab' -1) #('ab' 'a' 1) #('a' 1 'InvalidParameter1'))
+	#(#('a' 'b' -1) #('b' 'a' 1) #('abc' 'ABC' 0) #('A' 'a' 0) #('' 'a' -1) #('a' 'ab' -1) #('ab' 'a' 1) #('a' 1 'InvalidParameter1') #('STRAẞE' 'straße' 0) #('STRASSE' 'straße' 0) #('STRAẞE' 'strasse' 0))
 		do: 
 			[:each |
 			| subject result operand expected |
-			subject := each first asAnsiString.
+			subject := each first.
 			operand := each second.
 			expected := each third.
 			result := method value: subject withArguments: {operand}.

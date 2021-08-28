@@ -626,7 +626,9 @@ public:
 
 	// String comparisons - mostly templated
 	template<class OpA, class OpW> static Oop * __fastcall primitiveStringComparison(Oop * const sp, primargcount_t);
-	static Oop* __fastcall primitiveStringEqual(Oop* const sp, primargcount_t argCount);
+	template<class OpA, class OpW, bool> static Oop* __fastcall primitiveStringEqual(Oop* const sp, primargcount_t);
+	static Oop* __fastcall primitiveStringCompareOrdinal(Oop* const sp, primargcount_t argCount);
+	static Oop* __fastcall primitiveHashIgnoreCase(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveBytesEqual(Oop* const sp, primargcount_t argCount);
 	static Oop* __fastcall primitiveBeginsWith(Oop* const sp, primargcount_t);
 

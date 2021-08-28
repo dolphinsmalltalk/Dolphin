@@ -139,6 +139,7 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'CS_PARENTDC' -> 16r80.
 		'CS_SAVEBITS' -> 16r800.
 		'CS_VREDRAW' -> 16r1.
+		'CSTR_EQUAL' -> 16r2.
 		'CTRL_BREAK_EVENT' -> 16r1.
 		'CTRL_C_EVENT' -> 16r0.
 		'CTRL_CLOSE_EVENT' -> 16r2.

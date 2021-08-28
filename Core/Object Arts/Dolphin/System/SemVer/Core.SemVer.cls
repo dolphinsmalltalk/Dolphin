@@ -106,7 +106,7 @@ comparePrerelease: aSemVer
 								ifNil: 
 									[| strcmp |
 									"Neither part is numeric; perform ordinal string comparison"
-									strcmp := receiverPart <===> comparandPart.
+									strcmp := receiverPart compare: comparandPart.
 									strcmp == 0 ifFalse: [^strcmp]]
 								ifNotNil: 
 									["Receiver part non-numeric, other numeric. Receiver is a later release"

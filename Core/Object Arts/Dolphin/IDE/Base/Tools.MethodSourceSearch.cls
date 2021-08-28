@@ -28,16 +28,16 @@ regexpReferenceFilter
 simpleReferenceFilter
 	| find what |
 	what := findDetails pattern.
-	find := findDetails isCaseSensitive 
+	find := findDetails isCaseSensitive
 				ifTrue: [[:each | each findString: what]]
 				ifFalse: 
-					[| lower |
-					lower := what asLowercase.
-					[:text | text asLowercase findString: lower]].
-	^findDetails isWholeWord 
+					[| cmp |
+					cmp := what asUppercase.
+					[:text | text asUppercase findString: cmp]].
+	^findDetails isWholeWord
 		ifTrue: 
 			[
-			[:text | 
+			[:text |
 			| found |
 			found := find value: text.
 			found ~~ 0 and: 

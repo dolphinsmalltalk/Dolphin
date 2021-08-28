@@ -98,6 +98,10 @@ compareString: locale dwCmpFlags: dwCmpFlags lpString1: lpString1 cchCount1: cch
 	<stdcall: sdword CompareStringW dword dword lpwstr sdword lpwstr sdword>
 	^self invalidCall: _failureCode!
 
+compareStringOrdinal: lpString1 cchCount1: cchCount1 lpString2: lpString2 cchCount2: cchCount2 bIgnoreCase: bIgnoreCase
+	<stdcall: sdword CompareStringOrdinal lpwstr sdword lpwstr sdword bool>
+	^self invalidCall: _failureCode!
+
 copyFile: fromString lpNewFileName: toString bfailIfExists: fail
 	"Copies the file named fromString to a file named toString. If
 	toString already exists then the copy will only proceed if fail
@@ -1188,7 +1192,7 @@ isWindowsVersionOrGreater: wMajorVersion wMinorVersion: wMinorVersion wServicePa
 	SDK."
 
 	| osvi |
-	osvi := OSVERSIONINFOEXW new
+	osvi := OSVERSIONINFOEXW newBuffer
 				dwMajorVersion: wMajorVersion;
 				dwMinorVersion: wMinorVersion;
 				wServicePackMajor: wServicePackMajor;
@@ -1246,7 +1250,7 @@ isWow64Process: hProcess wow64Process: wow64Process
 	^self invalidCall: _failureCode!
 
 lcMapString: locale dwMapFlags: dwMapFlags lpScrStr: lpSrcStr cchSrc: cchSrc lpDestStr: lpDestStr cchDest: cchDest
-	<stdcall: sdword LCMapStringW sdword dword lpwstr sdword lpwstr sdword>
+	<stdcall: sdword LCMapStringW sdword dword lpwstr sdword lpvoid sdword>
 	^self invalidCall: _failureCode!
 
 loadLibraryEx: aString hFile: reserved dwFlags: anInteger
@@ -1841,6 +1845,7 @@ beginUpdateResource:bDeleteExistingResources:!public!win32 functions-resource! !
 close!public!realizing/unrealizing! !
 closeHandle:!public!win32 functions-handles and objects! !
 compareString:dwCmpFlags:lpString1:cchCount1:lpString2:cchCount2:!public!win32 functions-national language support! !
+compareStringOrdinal:cchCount1:lpString2:cchCount2:bIgnoreCase:!public!win32 functions-national language support! !
 copyFile:lpNewFileName:bfailIfExists:!public!win32 functions-file management! !
 copyMemory:source:length:!public!win32 functions-memory management! !
 createDirectory:lpSecurityAttributes:!public!win32 functions-file management! !

@@ -3,11 +3,11 @@
 class Utf16StringBuf
 {
 public:
-	Utf16StringBuf() : m_pBuf(m_wcsBuf), m_cwch(0) {}
+	Utf16StringBuf() {}
 	Utf16StringBuf(const Utf16StringBuf&) = delete;
 	Utf16StringBuf(const Utf16StringBuf&&) = delete;
 
-	#pragma warning (suppress: 26495)	// False positive - the variables are initialized
+	//#pragma warning (suppress: 26495)	// False positive - the variables are initialized
 	Utf16StringBuf(UINT cp, LPCCH psz, size_t cch)
 	{
 		FromBytes(cp, psz, cch);
@@ -25,7 +25,11 @@ public:
 
 	void FromBytes(UINT cp, LPCCH psz, size_t cch)
 	{
-		m_pBuf = cch < _countof(m_wcsBuf) ? m_wcsBuf : reinterpret_cast<WCHAR*>(malloc((cch + 1) * sizeof(WCHAR)));
+		if (cch >= _countof(m_wcsBuf))
+		{
+			m_pBuf = reinterpret_cast<WCHAR*>(malloc((cch + 1) * sizeof(WCHAR)));
+			// If malloc returns nullptr, then will fail below with benign AV
+		}
 
 		m_cwch = static_cast<size_t>(::MultiByteToWideChar(cp, 0, psz, cch, m_pBuf, cch));
 		ASSERT(m_cwch <= cch);
@@ -40,7 +44,7 @@ public:
 	}
 
 private:
-	WCHAR* m_pBuf;
-	size_t	m_cwch;
-	WCHAR m_wcsBuf[256-sizeof(void*)-sizeof(size_t)];
+	WCHAR* m_pBuf = m_wcsBuf;
+	size_t	m_cwch = 0;
+	WCHAR m_wcsBuf[256-sizeof(WCHAR*)-sizeof(size_t)];
 };

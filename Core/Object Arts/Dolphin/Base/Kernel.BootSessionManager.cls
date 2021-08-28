@@ -45,7 +45,7 @@ bootStarted
 fileInClass: aClass 
 	aClass sourceManager fileIn: aClass fileOutName!
 
-initializeBootPackages
+initializeBootPackages: anOrderedCollection
 	"Initialize any base system classes that require initialization not performed to create the boot image.
 	We cannot reinitialize all the base system classes after re-load as the class initialize methods are not
 	all safe to re-run. Therefore we must do this selectively."
@@ -55,7 +55,9 @@ initializeBootPackages
 	Delay initializeTimingSemaphore.
 	CompilerNotification initialize.
 	#{Utf8String} value initialize.
-	#{SmalltalkLocale} value initialize!
+	#{SmalltalkLocale} value initialize.
+	"Any new base classes may require initialization"
+	anOrderedCollection do: [:each | each initializeAfterLoad]!
 
 keepAlive
 	"We stay alive until explicitly terminated."
@@ -163,7 +165,7 @@ quit: anInteger
 	^false	"cancelled"!
 
 reloadBootPackages
-	| srcMgr basePackage baseClasses imageDir obsoleteMethodFilter missingClasses classesBefore |
+	| srcMgr basePackage baseClasses imageDir obsoleteMethodFilter missingClasses classesBefore newBaseClasses |
 	basePackage := PackageManager systemPackage.
 	imageDir := self imageBase.
 	srcMgr := SourceManager default.
@@ -178,12 +180,14 @@ reloadBootPackages
 	srcMgr fileIn: (File relativePathOf: basePackage classDefinitionsFileName to: imageDir).
 	Class subclasses: #().
 	"Ensure all base classes (including any defined after the boot image was created) are packaged"
+	newBaseClasses := OrderedCollection new.
 	Object withAllSubclassesDo: 
 			[:each |
 			(classesBefore includes: each name)
 				ifFalse: 
 					[Notification signal: 'Adding new class ' , each name , ' to BCL package'.
-					each owningPackage: basePackage]].
+					each owningPackage: basePackage.
+					newBaseClasses add: each]].
 	"Remove names of any classes that have been renamed"
 	classesBefore do: 
 			[:each |
@@ -212,7 +216,9 @@ reloadBootPackages
 			Notification signal: 'Removing obsolete boot class ' , each printString , '...'.
 			each removeFromSystem.
 			basePackage basicRemoveClass: each].
-	Package manager packages do: [:each | each == basePackage ifFalse: [self reloadPackage: each]].
+	(Package manager packages
+		rehash;
+		asArray) do: [:each | each == basePackage ifFalse: [self reloadPackage: each]].
 	Notification signal: 'Deleting obsolete boot image methods...'.
 	obsoleteMethodFilter := [:each | each hasChanged not].
 	(baseClasses difference: missingClasses) do: 
@@ -225,7 +231,7 @@ reloadBootPackages
 						[:m |
 						Notification signal: 'Removing obsolete boot image method ' , m printString.
 						m methodClass removeSelector: m selector]].
-	self initializeBootPackages!
+	self initializeBootPackages: newBaseClasses!
 
 reloadPackage: aPackage
 	| newPackage missingClasses |
@@ -322,7 +328,7 @@ basicTertiaryStartup!operations-startup!public! !
 bootFinished!event handling!public! !
 bootStarted!event handling!public! !
 fileInClass:!private! !
-initializeBootPackages!initializing!public! !
+initializeBootPackages:!initializing!public! !
 keepAlive!idling!public! !
 logError:!operations-logging!public! !
 main!operations-startup!public! !

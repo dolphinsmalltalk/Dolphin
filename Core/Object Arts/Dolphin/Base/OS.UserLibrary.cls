@@ -31,51 +31,11 @@ charLower: aCharacter
 	<stdcall: word CharLowerW intptr>
 	^self invalidCall: _failureCode!
 
-charLowerBuffA: anAnsiString cchLength: anInteger
-	"Convert a byte String to lowercase IN PLACE. This will be dependent on the semantics of the 
-	language selected by the user during setup or by using Control Panel.
-	N.B. We ignore the return value as it will be a pointer to the argument.
-
-		DWORD CharLowerBuffA(LPSTR  lpsz, DWORD cchLength);"
-
-	<stdcall: dword CharLowerBuffA lpstr dword>
-	^self invalidCall: _failureCode!
-
-charLowerBuffW: aUtf16String cchLength: anInteger
-	"Convert a UTF-16 String to lowercase IN PLACE. This will be dependent on the semantics of the 
-	language selected by the user during setup or by using Control Panel.
-	N.B. We ignore the return value as it will be a pointer to the argument.
-
-		DWORD CharLowerBuffW(LPWSTR  lpsz, DWORD cchLength);"
-
-	<stdcall: dword CharLowerBuffW lpwstr dword>
-	^self invalidCall: _failureCode!
-
 charUpper: aCharacter
 	"Answer the uppercase equivalent of aCharacter. This will be dependent on the semantics 
 	of the language selected by the user during setup or by using Control Panel."
 
 	<stdcall: word CharUpperW intptr>
-	^self invalidCall: _failureCode!
-
-charUpperBuffA: anAnsiString cchLength: anInteger
-	"Convert a byte String to uppercase IN PLACE. This will be dependent on the semantics of the 
-	language selected by the user during setup or by using Control Panel.
-	N.B. We ignore the return value as it will be a pointer to the argument.
-
-		DWORD CharUpperBuffA(LPSTR  lpsz, DWORD cchLength);"
-
-	<stdcall: dword CharUpperBuffA lpstr dword>
-	^self invalidCall: _failureCode!
-
-charUpperBuffW: aString cchLength: anInteger
-	"Convert a UTF-16 String to uppercase IN PLACE. This will be dependent on the semantics of the 
-	language selected by the user during setup or by using Control Panel.
-	N.B. We ignore the return value as it will be a pointer to the argument.
-
-		DWORD CharUpperBuffW(LPWSTR  lpsz, DWORD cchLength);"
-
-	<stdcall: dword CharUpperBuffW lpwstr dword>
 	^self invalidCall: _failureCode!
 
 copyImage: hImage uType: uType cxDesired: cxDesired cyDesired: cyDesired fuFlags: fuFlags
@@ -712,11 +672,7 @@ vkKeyScan: aChar
 !OS.UserLibrary categoriesForMethods!
 blockInput:!public!win32 functions-window! !
 charLower:!public!win32 functions-string manipulation! !
-charLowerBuffA:cchLength:!public!win32 functions-string manipulation! !
-charLowerBuffW:cchLength:!public!win32 functions-string manipulation! !
 charUpper:!public!win32 functions-string manipulation! !
-charUpperBuffA:cchLength:!public!win32 functions-string manipulation! !
-charUpperBuffW:cchLength:!public!win32 functions-string manipulation! !
 copyImage:uType:cxDesired:cyDesired:fuFlags:!public!win32 functions-resources! !
 createDialog:lpTemplate:hWndParent:lpDialogFunc:dwInitParam:!public!win32 functions-dialog box! !
 defDlgProc:msg:wParam:lParam:!public!win32 functions-window procedure! !

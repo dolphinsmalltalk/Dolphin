@@ -202,6 +202,7 @@ Kernel.SharedPool subclass: #'OS.CRTConstants'
 		'_TRUNCATE' -> -16r1.
 		'EBADF' -> 16r9.
 		'EINVAL' -> 16r16.
+		'LC_ALL' -> 16r0.
 		'RAND_MAX' -> 16r7FFF.
 		'SEEK_CUR' -> 16r1.
 		'SEEK_END' -> 16r2.
@@ -284,6 +285,7 @@ Kernel.SharedPool subclass: #'OS.MessageBoxConstants'
 		'MB_DEFBUTTON3' -> 16r200.
 		'MB_DEFBUTTON4' -> 16r300.
 		'MB_DEFMASK' -> 16rF00.
+		'MB_HELP' -> 16r4000.
 		'MB_ICONERROR' -> 16r10.
 		'MB_ICONINFORMATION' -> 16r40.
 		'MB_ICONMASK' -> 16rF0.
@@ -297,6 +299,7 @@ Kernel.SharedPool subclass: #'OS.MessageBoxConstants'
 		'MB_SETFOREGROUND' -> 16r10000.
 		'MB_SYSTEMMODAL' -> 16r1000.
 		'MB_TASKMODAL' -> 16r2000.
+		'MB_TOPMOST' -> 16r40000.
 		'MB_TYPEMASK' -> 16rF.
 		'MB_USERICON' -> 16r80.
 		'MB_YESNO' -> 16r4.
@@ -344,7 +347,20 @@ Kernel.SharedPool subclass: #'OS.NlsConstants'
 		'DATE_YEARMONTH' -> 16r8.
 		'LCID_INSTALLED' -> 16r1.
 		'LCID_SUPPORTED' -> 16r2.
+		'LCMAP_BYTEREV' -> 16r800.
+		'LCMAP_FULLWIDTH' -> 16r800000.
+		'LCMAP_HALFWIDTH' -> 16r400000.
+		'LCMAP_HASH' -> 16r40000.
+		'LCMAP_HIRAGANA' -> 16r100000.
+		'LCMAP_KATAKANA' -> 16r200000.
+		'LCMAP_LINGUISTIC_CASING' -> 16r1000000.
+		'LCMAP_LOWERCASE' -> 16r100.
+		'LCMAP_SIMPLIFIED_CHINESE' -> 16r2000000.
+		'LCMAP_SORTHANDLE' -> 16r20000000.
+		'LCMAP_SORTKEY' -> 16r400.
 		'LCMAP_TITLECASE' -> 16r300.
+		'LCMAP_TRADITIONAL_CHINESE' -> 16r4000000.
+		'LCMAP_UPPERCASE' -> 16r200.
 		'LINGUISTIC_IGNORECASE' -> 16r10.
 		'LINGUISTIC_IGNOREDIACRITIC' -> 16r20.
 		'LOCALE_ALLOW_NEUTRAL_NAMES' -> 16r8000000.
@@ -879,6 +895,7 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'CS_PARENTDC' -> 16r80.
 		'CS_SAVEBITS' -> 16r800.
 		'CS_VREDRAW' -> 16r1.
+		'CSTR_EQUAL' -> 16r2.
 		'CTRL_BREAK_EVENT' -> 16r1.
 		'CTRL_C_EVENT' -> 16r0.
 		'CTRL_CLOSE_EVENT' -> 16r2.
@@ -1137,6 +1154,8 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'IDC_IBEAM' -> 16r7F01.
 		'IDC_ICON' -> 16r7F81.
 		'IDC_NO' -> 16r7F88.
+		'IDC_PERSON' -> 16r7FA0.
+		'IDC_PIN' -> 16r7F9F.
 		'IDC_SIZE' -> 16r7F80.
 		'IDC_SIZEALL' -> 16r7F86.
 		'IDC_SIZENESW' -> 16r7F83.
@@ -1153,6 +1172,7 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'IDI_ERROR' -> 16r7F01.
 		'IDI_INFORMATION' -> 16r7F04.
 		'IDI_QUESTION' -> 16r7F02.
+		'IDI_SHIELD' -> 16r7F06.
 		'IDI_WARNING' -> 16r7F03.
 		'IDI_WINLOGO' -> 16r7F05.
 		'IDIGNORE' -> 16r5.
@@ -1189,6 +1209,7 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'LIM_LARGE' -> 16r1.
 		'LIM_SMALL' -> 16r1.
 		'LOAD_LIBRARY_AS_DATAFILE' -> 16r2.
+		'LOAD_LIBRARY_AS_IMAGE_RESOURCE' -> 16r20.
 		'LOGPIXELSX' -> 16r58.
 		'LOGPIXELSY' -> 16r5A.
 		'LPSTR_TEXTCALLBACK' -> -16r1.
@@ -2898,7 +2919,7 @@ Core.ArrayedCollection subclass: #'Core.RunArray'
 Core.ArrayedCollection variableByteSubclass: #'Core.String'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.NlsConstants private})
 	classInstanceVariableNames: 'empty'
 	classConstants: {
 		'EncodingAnsi' -> 16r0.
@@ -3532,15 +3553,27 @@ Core.Link variableSubclass: #'Core.Process'
 		'DefaultFpControl' -> 16r80007.
 		'DefaultStack' -> 16r1
 	}!
+Core.Locale subclass: #'OS.AbstractWindowsLocale'
+	instanceVariableNames: 'info'
+	classVariableNames: 'EnumNamesDescriptor'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Locale subclass: #'Kernel.SmalltalkLocale'
 	instanceVariableNames: 'integerBase'
 	classVariableNames: 'Current Hex'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Locale subclass: #'OS.WindowsLocale'
-	instanceVariableNames: 'lcid info'
-	classVariableNames: 'EnumNamesDescriptor'
+OS.AbstractWindowsLocale subclass: #'OS.InvariantLocale'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+OS.AbstractWindowsLocale subclass: #'OS.WindowsLocale'
+	instanceVariableNames: 'lcid'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

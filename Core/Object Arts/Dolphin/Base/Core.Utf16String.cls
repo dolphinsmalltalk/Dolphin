@@ -29,12 +29,12 @@ To better understand the full implications of the compromises made in introducin
 !Core.Utf16String methodsFor!
 
 _beginsString: aString
-	| size comperand |
-	comperand := aString asUtf16String.
+	| size comparand |
+	comparand := aString asUtf16String.
 	size := self size.
-	^size <= comperand size
+	^size <= comparand size
 		and: [(OS.Ucrt
-				memcmp: comperand
+				memcmp: comparand
 				buf2: self
 				count: size * 2) == 0]!
 
@@ -57,28 +57,16 @@ asByteString: aClass
 	buf resize: bytes.
 	^buf!
 
-asLowercase
-	"Answer a <readableString> which is a copy of the receiver but with the contents converted
-	to lowercase."
-
-	| copy |
-	copy := self shallowCopy.
-	OS.User32 charLowerBuffW: copy cchLength: copy size.
-	^copy!
-
-asUppercase
-	"Answer a <readableString> which is a copy of the receiver but with the contents converted
-	to uppercase."
-
-	| copy |
-	copy := self shallowCopy.
-	OS.User32 charUpperBuffW: copy cchLength: copy size.
-	^copy!
-
 asUtf16String
 	"Answer a UTF16-encoded equivalent of the receiver."
 
 	^self!
+
+asUtf16StringCopy
+	"Answer a UTF16-encoded copy of the receiver."
+
+	<primitive: 155>
+	^self shallowCopy!
 
 at: anInteger
 	"Answer the character at index, anInteger, in the receiver."
@@ -369,9 +357,8 @@ wordAtOffset: anInteger put: anObject
 !Core.Utf16String categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
 asByteString:!converting!private! !
-asLowercase!converting!public! !
-asUppercase!converting!public! !
 asUtf16String!converting!public! !
+asUtf16StringCopy!converting!public! !
 at:!accessing!public! !
 before:ifAbsent:!public!searching! !
 bom!constants!encode/decode!private! !
@@ -411,7 +398,7 @@ codePage
 	"Note: This is not a real code page, and cannot be used with most APIs expecting a code page
 	identifier. It's main purpose is to distinguish UTF-16 in some circumstances."
 
-	^OS.NlsConstants.CP_UNICODE!
+	^CP_UNICODE!
 
 coerceString: aString
 	"Answer an instance of the receiver containing the same characters as the <String> argument."
@@ -426,9 +413,7 @@ elementSize
 fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."
 
-	| len |
-	len := OS.Kernel32 lstrlenW: anAddress.
-	^self fromAddress: anAddress length: len!
+	^self fromAddress: anAddress length: (OS.Kernel32 lstrlenW: anAddress)!
 
 fromAddress: anAddress length: anInteger
 	"Answer a new <Utf16String>, of length anInteger, copied from the first anInteger

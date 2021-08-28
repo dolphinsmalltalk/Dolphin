@@ -31,7 +31,7 @@ testSystemDirectory
 	| actual |
 	actual := SessionManager current systemDirectory.
 	self assert: (File isDirectory: actual).
-	self assert: (Kernel32 fileName asUppercase beginsWith: actual asUppercase)!
+	self assert: (Kernel32 fileName beginsWith: actual ignoreCase: true)!
 
 testUsername
 	"Assumes that getenv: is working"

@@ -17,12 +17,12 @@ In all but limited circumstances `Utf8String`s should be used in preference as t
 !Core.AnsiString methodsFor!
 
 _beginsString: aString
-	| size comperand |
-	comperand := aString asAnsiString.
+	| size comparand |
+	comparand := aString asAnsiString.
 	size := self size.
-	^size <= comperand size
+	^size <= comparand size
 		and: [(OS.Ucrt
-				memcmp: comperand
+				memcmp: comparand
 				buf2: self
 				count: size) == 0]!
 
@@ -30,29 +30,6 @@ asAnsiString
 	"Answer an ANSI encoded string representation of the receiver."
 
 	^self!
-
-asLowercase
-	"Answer a <readableString> which is a copy of the receiver but with the contents converted
-	to lowercase."
-
-	"Implementation Note: The Win32 function converts in place, so we must first create a copy."
-
-	| copy |
-	copy := self shallowCopy.
-	OS.User32 charLowerBuffA: copy cchLength: copy size.
-	^copy!
-
-asUppercase
-	"Answer a <readableString> which is a copy of the receiver but with the contents converted
-	to uppercase."
-
-	"Implementation Note: The Win32 function converts in place, so we need to create a copy
-	first."
-
-	| copy |
-	copy := self shallowCopy.
-	OS.User32 charUpperBuffA: copy cchLength: copy size.
-	^copy!
 
 codePointsDo: operation
 	"Evaluate the <monadicValuable> argument, operation, for each of the full code point <Character> elements of the receiver. Answers the receiver. The elements are evaluated in sequence."
@@ -156,8 +133,6 @@ urlDecoded
 !Core.AnsiString categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
 asAnsiString!converting!public! !
-asLowercase!converting!public! !
-asUppercase!converting!public! !
 codePointsDo:!enumerating!public! !
 copyToBuffer:ofSize:!copying!private! !
 decodeAt:!encode/decode!private! !
