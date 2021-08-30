@@ -23,6 +23,7 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
 	'..\..\..\Base\Dolphin'
+	'..\..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\COM\OLE COM'
 ).

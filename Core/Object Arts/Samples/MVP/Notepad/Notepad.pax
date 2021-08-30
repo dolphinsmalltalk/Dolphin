@@ -46,6 +46,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Integer Prompter'
 	'..\..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'

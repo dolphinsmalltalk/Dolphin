@@ -41,6 +41,7 @@ package setPrerequisites: #(
 	'..\..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\MVP\Presenters\Choice\Dolphin Choice Presenter'
 	'..\..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\MVP\Views\GroupBox\Dolphin GroupBox'
 	'..\..\..\MVP\Models\List\Dolphin List Models'
 	'..\..\..\MVP\Presenters\List\Dolphin List Presenter'

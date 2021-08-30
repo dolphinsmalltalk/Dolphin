@@ -2221,7 +2221,7 @@ fillStateImageManagerThemed
 
 	"image for state leaf"
 	image := Bitmap displayCompatibleWithExtent: extent.
-	image canvas erase.
+	image erase.
 	stateImageManager addImage: image.
 	image freeDC.
 

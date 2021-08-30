@@ -630,7 +630,7 @@ showExistingInstanceOf: aClass
 	MemoryManager current
 		collectGarbage;
 		administerLastRites.
-	allInstances := aClass allInstances.
+	allInstances := aClass primAllInstances.
 	openInstances := allInstances select: [:e | e isOpen].
 	allInstances size > openInstances size
 		ifTrue: [(allInstances difference: openInstances) do: [:e | e release]].

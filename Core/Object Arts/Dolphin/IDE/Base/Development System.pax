@@ -359,10 +359,13 @@ package setMethodNames: #(
 	#(#{Graphics.Font class} #newInstanceAspect:class:)
 	#(#{Graphics.Gdiplus.Image class} #newInstanceAspect:class:)
 	#(#{Graphics.Gdiplus.ImageView class} #publishedAspectsOfInstances)
-	#(#{Graphics.Icon class} #choose)
 	#(#{Graphics.Icon class} #newInstanceAspect:class:)
+	#(#{Graphics.Image class} #choose)
+	#(#{Graphics.Image class} #fileTypes)
+	#(#{Graphics.Image class} #newInstanceAspect:class:)
 	#(#{Graphics.ImageList class} #newInstanceAspect:class:)
 	#(#{Graphics.InternalIcon class} #choose)
+	#(#{Graphics.Metafile class} #fileTypes)
 	#(#{Graphics.Pen class} #publishedAspectsOfInstances)
 	#(#{Graphics.Point class} #publishedAspectsOfInstances)
 	#(#{Graphics.Point3D class} #publishedAspectsOfInstances)
@@ -505,6 +508,7 @@ package setMethodNames: #(
 	#(#{Kernel.StWorkspaceVariable} #staticValueClass)
 	#(#{OS._FPIEEE_RECORD} #printFieldsOn:)
 	#(#{OS._FPIEEE_VALUE} #printFieldsOn:)
+	#(#{OS.COM.Picture class} #fileTypes)
 	#(#{OS.FILETIME} #printOn:)
 	#(#{OS.KernelLibrary} #queryThreadCycleTime:cycleTime:)
 	#(#{OS.LOGBRUSH} #printFieldsOn:)
@@ -743,6 +747,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Folder\Dolphin Folder Presenter'
 	'..\..\MVP\Models\Tree\Dolphin Folder Tree Model'
 	'..\..\MVP\Presenters\Font\Dolphin Font Presenter'
+	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\MVP\Views\GroupBox\Dolphin GroupBox'
 	'..\..\MVP\Presenters\Image\Dolphin Image Presenter'
 	'..\..\MVP\Presenters\Prompters\Dolphin Integer Prompter'
@@ -751,6 +756,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\MVP\Presenters\ListTree\Dolphin List Tree Presenter'
 	'..\..\System\Win32\MessageBox\Dolphin Message Box'
+	'..\..\MVP\Metafiles\Dolphin Metafiles'
 	'..\..\MVP\Views\MoenTree\Dolphin MoenTree View'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Presenters\Number\Dolphin Number Presenter'
@@ -782,6 +788,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Gdiplus\Gdiplus ImageView'
 	'..\..\Utilities\HTML Help\HTML Help'
 	'..\..\MVP\Icons\Internal Bitmaps and Icons'
+	'..\..\ActiveX\Components\Picture\OLE Picture'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters'
@@ -3993,20 +4000,38 @@ publishedAspectsOfInstances!must strip!public! !
 
 !Graphics.Icon class methodsFor!
 
-choose
-	| filename |
-	filename := FileOpenDialog new
-				fileTypes: {self filesType. FileDialog allFilesType};
-				showModal.
-	^filename notNil ifTrue: [self fromFile: filename]!
-
 newInstanceAspect: aSymbol class: aspectClass 
 	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
     	which is appropriate for representing aspects of the receiver's type."
 
 	^aspectClass icon: aSymbol! !
 !Graphics.Icon class categoriesForMethods!
+newInstanceAspect:class:!adapters!private! !
+!
+
+!Graphics.Image class methodsFor!
+
+choose
+	^(FileOpenDialog new
+		fileTypes: self fileTypes;
+		showModal)
+			ifNotNil: [self fromFile: (FileOpenDialog new
+							fileTypes: self fileTypes;
+							showModal)]!
+
+fileTypes
+	^self filesType
+		ifNil: [{UI.FileDialog allFilesType}]
+		ifNotNil: [:specific | {specific. UI.FileDialog allFilesType}]!
+
+newInstanceAspect: aSymbol class: aspectClass
+	"Private - Answer a new <Aspect> of the class, aspectClass, and with name, aSymbol, 
+    	which is appropriate for representing aspects of the receiver's type."
+
+	^aspectClass image: aSymbol type: self! !
+!Graphics.Image class categoriesForMethods!
 choose!public! !
+fileTypes!constants!public! !
 newInstanceAspect:class:!adapters!private! !
 !
 
@@ -4026,15 +4051,26 @@ newInstanceAspect:class:!adapters!private! !
 choose
 	| filename |
 	filename := FileOpenDialog new
-				fileTypes: {self filesType. Icon filesType. FileDialog allFilesType};
+				fileTypes: {#('PNG Files (*.png)' '*.png').
+							#('Icon Files (*.ico)' '*.ico').
+							FileDialog allFilesType};
 				showModal.
 	^filename notNil
 		ifTrue: 
-			[(File splitExtensionFrom: filename) asLowercase = 'png'
+			[((File splitExtensionFrom: filename) equalsIgnoreCase: 'png')
 				ifTrue: [self fromFile: filename]
 				ifFalse: [Icon fromFile: filename]]! !
 !Graphics.InternalIcon class categoriesForMethods!
 choose!public! !
+!
+
+!Graphics.Metafile class methodsFor!
+
+fileTypes
+	^#(#('EMF (*.emf)' '*.emf') #('WMF (*.wmf)' '*.wmf') #('All Metafiles' '*.emf;*.wmf'))
+		, {FileDialog allFilesType}! !
+!Graphics.Metafile class categoriesForMethods!
+fileTypes!constants!private! !
 !
 
 !Graphics.Pen class methodsFor!
@@ -4644,7 +4680,7 @@ changedIcon
 	^SmalltalkSystem current changedIcon!
 
 dolphinPackageIcon
-	^Icon fromId: 'DolphinPackage.ico'!
+	^##(Icon fromId: 'DolphinPackage.ico')!
 
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
@@ -5635,6 +5671,15 @@ printFieldsOn: aStream
 		ifFalse: [aStream nextPutAll: '<invalid>']! !
 !OS._FPIEEE_VALUE categoriesForMethods!
 printFieldsOn:!printing!private! !
+!
+
+!OS.COM.Picture class methodsFor!
+
+fileTypes
+	^#(#('BMP (*.bmp;*.dib;*.rle)' '*.bmp;*.dib;*.rle') #('JPEG (*.jpg;*.jpeg;*.jpe;*.jfif)' '*.jpg;*.jpeg;*.jpe;*.jfif') #('GIF (*.gif)' '*.gif') #('EMF (*.emf)' '*.emf') #('WMF (*.wmf)' '*.wmf') #('ICO (*.ico)' '*.ico') #('All Images' ';*.bmp;*.dib;*.rle;*.jpg;*.jpeg;*.jpe;*.jfif;*.gif;*.emf;*.wmf;*.ico'))
+		, {FileDialog allFilesType}! !
+!OS.COM.Picture class categoriesForMethods!
+fileTypes!instance creation!private! !
 !
 
 !OS.FILETIME methodsFor!

@@ -63,13 +63,13 @@ Arithmetic operations can be carried out between two Points or between a Point a
 	aPoint := anArithmeticValue asPoint.
 	^x <= aPoint x and: [ y <= aPoint y ]!
 
-= comperand
-	"Answer whether the receiver is considered equivalent to the
-	<Object> argument, comperand."
+= anObject
+	"Answer whether the receiver is considered equivalent to the	<Object> argument."
 
-	^self species == comperand species
-		ifTrue: [x = comperand x and: [y = comperand y]]
-		ifFalse: [super = comperand]!
+	^self == anObject or: 
+			[self species == anObject species
+				ifTrue: [x = anObject x and: [y = anObject y]]
+				ifFalse: [super = anObject]]!
 
 > anArithmeticValue
 	"Answer whether the receiver is below and to the right of anArithmeticValue.

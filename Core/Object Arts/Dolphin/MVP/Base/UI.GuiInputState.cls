@@ -18,7 +18,7 @@ aboutToForkUI
 
 allTopLevelWindowHandlesDo: aMonadicValuable
 	| callback answer |
-	callback := External.Callback block: [:hwnd :lParam | aMonadicValuable value: hwnd]
+	callback := External.Callback block: [:hwnd :lParam | aMonadicValuable value: hwnd. true]
 				descriptor: EnumHandlesDescriptor.
 	answer := User32 enumWindows: callback asParameter lParam: 0.
 	callback free.

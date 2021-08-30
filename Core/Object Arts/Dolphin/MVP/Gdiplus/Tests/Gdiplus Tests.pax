@@ -54,12 +54,14 @@ package setMethodNames: #(
 	#(#{Graphics.Bitmap} #hdc)
 	#(#{Graphics.Bitmap class} #gdipCopyOfIcon:extent:backcolor:)
 	#(#{Graphics.Bitmap class} #gdipCopyOfImageIndex:extent:backcolor:)
+	#(#{Graphics.Tests.BitmapTest} #testAsColorKeyedBitmap)
 ).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
-	'..\..\Base\Dolphin MVP Base'
+	'..\..\Graphics\Dolphin GDI Graphics'
+	'..\..\Graphics\Tests\Dolphin GDI Graphics Tests'
 	'..\..\Dolphin MVP Tests'
 	'..\Gdiplus'
 	'..\..\..\ActiveX\Structured Storage\OLE Structured Storage'
@@ -330,12 +332,7 @@ gdipCopyOfImageIndex: anIndex extent: extent backcolor: aColor
 	bmp := self displayCompatibleWithExtent: extent.
 	canvas := bmp canvas.
 	"Quickest way to erase to a system colour"
-	canvas fillRectangle: (RECTL
-				left: 0
-				top: 0
-				right: extent x
-				bottom: extent y)
-		brush: aColor brush.
+	canvas fillRectangle: (RECTL extent: extent) brush: aColor brush.
 	(Icon imageManager imageListWithExtent: extent)
 		draw: anIndex
 		on: canvas
@@ -346,6 +343,23 @@ gdipCopyOfImageIndex: anIndex extent: extent backcolor: aColor
 !Graphics.Bitmap class categoriesForMethods!
 gdipCopyOfIcon:extent:backcolor:!instance creation!public! !
 gdipCopyOfImageIndex:extent:backcolor:!instance creation!public! !
+!
+
+!Graphics.Tests.BitmapTest methodsFor!
+
+testAsColorKeyedBitmap
+	| subject colorKeyed result canvas |
+	subject := Bitmap fromFile: 'Resources\IdeaSpaceBackdrop.bmp'
+				usingLocator: FileLocator installRelative.
+	colorKeyed := subject asColorKeyedBitmap.
+	result := Bitmap displayCompatibleWithExtent: subject extent.
+	canvas := result canvas.
+	canvas backcolor: Color red.
+	canvas erase.
+	colorKeyed drawOn: canvas.
+	self assert: (canvas pixelAt: Point zero) equals: Color black! !
+!Graphics.Tests.BitmapTest categoriesForMethods!
+testAsColorKeyedBitmap!private!unit tests! !
 !
 
 "End of package definition"!

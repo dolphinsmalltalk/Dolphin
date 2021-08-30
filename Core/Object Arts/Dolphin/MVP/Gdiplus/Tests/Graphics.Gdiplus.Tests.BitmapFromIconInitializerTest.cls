@@ -30,7 +30,7 @@ testCreateHandle
 
 testCreateHandleRealizesIcon
 	| icon |
-	icon := Icon fromId: 43 in: Shell32.
+	icon := Icon shellStock: SHSTOCKICONID.SIID_DESKTOPPC.
 	model icon: icon.
 	self assertIsNil: icon basicHandle.
 	model createHandle.

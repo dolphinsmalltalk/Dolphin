@@ -398,6 +398,8 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'IDC_IBEAM' -> 16r7F01.
 		'IDC_ICON' -> 16r7F81.
 		'IDC_NO' -> 16r7F88.
+		'IDC_PERSON' -> 16r7FA0.
+		'IDC_PIN' -> 16r7F9F.
 		'IDC_SIZE' -> 16r7F80.
 		'IDC_SIZEALL' -> 16r7F86.
 		'IDC_SIZENESW' -> 16r7F83.
@@ -414,6 +416,7 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'IDI_ERROR' -> 16r7F01.
 		'IDI_INFORMATION' -> 16r7F04.
 		'IDI_QUESTION' -> 16r7F02.
+		'IDI_SHIELD' -> 16r7F06.
 		'IDI_WARNING' -> 16r7F03.
 		'IDI_WINLOGO' -> 16r7F05.
 		'IDIGNORE' -> 16r5.
@@ -450,6 +453,7 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'LIM_LARGE' -> 16r1.
 		'LIM_SMALL' -> 16r1.
 		'LOAD_LIBRARY_AS_DATAFILE' -> 16r2.
+		'LOAD_LIBRARY_AS_IMAGE_RESOURCE' -> 16r20.
 		'LOGPIXELSX' -> 16r58.
 		'LOGPIXELSY' -> 16r5A.
 		'LPSTR_TEXTCALLBACK' -> -16r1.
@@ -718,6 +722,7 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'SND_VALIDFLAGS' -> 16r17201F.
 		'SORT_DIGITSASNUMBERS' -> 16r8.
 		'SORT_STRINGSORT' -> 16r1000.
+		'SPI_GETCARETWIDTH' -> 16r2006.
 		'SPI_GETFLATMENU' -> 16r1022.
 		'SPI_GETICONTITLELOGFONT' -> 16r1F.
 		'SPI_GETLISTBOXSMOOTHSCROLLING' -> 16r1006.

@@ -62,6 +62,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\..\Base\Dolphin Conformant Array Fields'
 	'..\..\Presenters\Folder\Dolphin Folder Presenter'
+	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Models\List\Dolphin List Models'
 	'..\..\Presenters\List\Dolphin List Presenter'
 	'..\..\Base\Dolphin MVP Base'

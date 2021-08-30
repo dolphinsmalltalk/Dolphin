@@ -48,6 +48,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter'
 	'..\..\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\MVP\Presenters\Prompters\Dolphin Key-Value Prompter'
 	'..\..\MVP\Models\List\Dolphin List Models'
 	'..\..\MVP\Presenters\List\Dolphin List Presenter'

@@ -22,6 +22,7 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\Base\Dolphin Basic Geometry'
+	'..\Graphics\Dolphin GDI Graphics'
 	'..\Presenters\Image\Dolphin Image Presenter'
 	'..\Base\Dolphin MVP Base'
 	'..\Type Converters\Dolphin Type Converters'

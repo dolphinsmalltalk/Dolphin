@@ -43,10 +43,7 @@ canUndo
 draw: aDyadicBlock location: aRectangle with: anRGB
 	| bitmap canvas drawnRectangle |
 	self undoCommit.
-	bitmap := Bitmap 
-				compatible: DesktopView current canvas
-				width: aRectangle width + 10
-				height: aRectangle height + 10.
+	bitmap := Bitmap displayCompatibleWithExtent: aRectangle extent + 10.
 	canvas := bitmap canvas.
 	canvas
 		brush: Brush white;
@@ -54,8 +51,8 @@ draw: aDyadicBlock location: aRectangle with: anRGB
 		erase.
 	drawnRectangle := aDyadicBlock value: canvas value: (Point zero corner: aRectangle extent).
 	(self pixelPoints: drawnRectangle) do: 
-			[:each | 
-			(canvas pixelAt: each) = Color black 
+			[:each |
+			(canvas pixelAt: each) = Color black
 				ifTrue: [self putRGB: anRGB at: each + aRectangle origin - drawnRectangle origin]].
 	self undoCommit.
 	self notifyChangedRectangle: aRectangle!

@@ -8,13 +8,19 @@ Copyright © Object Arts Ltd. 2018.
 
 
 package setClassNames: #(
+	#{Graphics.IconFromTextTileIconInitializer}
 	#{Graphics.TextTileIcon}
+).
+
+package setMethodNames: #(
+	#(#{Graphics.Icon class} #fromTextTile:)
+	#(#{Graphics.Icon class} #fromTextTile:extent:)
 ).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\Base\Dolphin Basic Geometry'
-	'..\Base\Dolphin MVP Base'
+	'..\Graphics\Dolphin GDI Graphics'
 	'..\Gdiplus\Gdiplus'
 ).
 
@@ -23,7 +29,7 @@ package!
 "Class Definitions"!
 
 Core.Object subclass: #'Graphics.TextTileIcon'
-	instanceVariableNames: 'text fontName tilecolor textcolor icon _reserved6 flags _reserved8 _reserved9'
+	instanceVariableNames: 'text fontName tilecolor textcolor _reserved5 _reserved6 flags _reserved8 _reserved9'
 	classVariableNames: 'TextFormat'
 	imports: #(#{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
@@ -32,6 +38,26 @@ Core.Object subclass: #'Graphics.TextTileIcon'
 		'FontStyleNames' -> #(#regular #bold #italic #boldItalic #underline #strikeout).
 		'RotationMask' -> 16r3
 	}!
+Graphics.ImageInitializer subclass: #'Graphics.IconFromTextTileIconInitializer'
+	instanceVariableNames: 'textTile extent'
+	classVariableNames: ''
+	imports: #(#{Graphics.Gdiplus})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"Loose Methods"!
+
+!Graphics.Icon class methodsFor!
+
+fromTextTile: aTextTileIcon
+	^self fromTextTile: aTextTileIcon extent: LargeExtent!
+
+fromTextTile: aTextTileIcon extent: aPoint
+	^self initializer: (IconFromTextTileIconInitializer textTile: aTextTileIcon extent: aPoint)! !
+!Graphics.Icon class categoriesForMethods!
+fromTextTile:!converting!public! !
+fromTextTile:extent:!converting!public! !
+!
 
 "End of package definition"!
 

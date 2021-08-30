@@ -18,6 +18,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\Cards\Dolphin Card Containers'
 	'..\Common Controls\Dolphin Common Controls'
+	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Models\List\Dolphin List Models'
 	'..\..\Presenters\List\Dolphin List Presenter'
 	'..\..\Base\Dolphin MVP Base'

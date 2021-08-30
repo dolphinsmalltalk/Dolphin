@@ -54,8 +54,8 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\Base\Dolphin Basic Geometry'
 	'..\Dialogs\Common\Dolphin Common Dialogs'
+	'..\Graphics\Dolphin GDI Graphics'
 	'..\..\System\Win32\MessageBox\Dolphin Message Box'
-	'..\Base\Dolphin MVP Base'
 	'..\Gdiplus\Gdiplus'
 ).
 

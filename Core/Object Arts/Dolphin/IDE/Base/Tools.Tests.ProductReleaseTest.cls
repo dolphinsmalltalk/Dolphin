@@ -48,12 +48,16 @@ testSubclassResponsibilityNotDefined
 	(BrowserEnvironment new forMethods: failures) openEditor.
 	Or to see all failures, including those grandfathered-in
 	rule viewResults.
-	"! !
+	"!
+
+testUnpackagedVariables
+	self assert: Package manager unpackagedVariables equals: Set new! !
 !Tools.Tests.ProductReleaseTest categoriesForMethods!
 checkNoClass:!public!unit tests! !
 isReleased!private!unit tests! !
 specialAssert:!private!unit tests! !
 testCompilationFailures!public!unit tests! !
 testSubclassResponsibilityNotDefined!public!unit tests! !
+testUnpackagedVariables!public!unit tests! !
 !
 

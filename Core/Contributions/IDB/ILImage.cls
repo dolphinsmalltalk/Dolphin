@@ -22,21 +22,17 @@ bitmapCache
 	bitmapCache notNil ifTrue: [^bitmapCache].
 
 	"Make it compatible with the desktop as we don't care about the colors it actually displays"
-	bitmapCache := Bitmap 
-				compatible: DesktopView current canvas
-				width: self width
-				height: self height.
+	bitmapCache := Bitmap displayCompatibleWithExtent: self extent.
 	canvas := bitmapCache canvas.
 
 	"If the image contains a reference to a transparent point we insert the current transparent
 	color (usually set to match the background) otherwise the actual color"
 	self pixelPoints do: 
-			[:each | 
+			[:each |
 			canvas pixelAt: each - 1
-				put: ((self isTransparentAt: each) 
+				put: ((self isTransparentAt: each)
 						ifTrue: 
 							["need 0 based for the bitmap"
-
 							self class transparentRGB]
 						ifFalse: [self getRGBAt: each])].
 	^bitmapCache!

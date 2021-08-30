@@ -97,8 +97,8 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\Base\Dolphin Basic Geometry'
 	'..\..\Base\Dolphin Conformant Array Fields'
+	'..\Graphics\Dolphin GDI Graphics'
 	'Dolphin Metafiles'
-	'..\Base\Dolphin MVP Base'
 ).
 
 package!

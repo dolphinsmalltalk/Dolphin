@@ -91,6 +91,7 @@ package setPrerequisites: #(
 	'..\Common Controls\Dolphin Common Controls'
 	'..\..\Dialogs\Common\Dolphin Common Dialogs'
 	'..\Control Bars\Dolphin Control Bars'
+	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\GroupBox\Dolphin GroupBox'
 	'..\..\Models\List\Dolphin List Models'
 	'..\..\Presenters\List\Dolphin List Presenter'

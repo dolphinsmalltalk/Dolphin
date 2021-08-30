@@ -36,6 +36,7 @@ package setPrerequisites: #(
 	'..\..\OCX\ActiveX Control Hosting'
 	'..\..\..\Base\Dolphin'
 	'..\..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\MVP\Models\Value\Dolphin Value Models'

@@ -44,6 +44,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Dolphin MVP Tests'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'

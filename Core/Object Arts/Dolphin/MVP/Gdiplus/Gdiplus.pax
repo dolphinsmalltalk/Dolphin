@@ -244,6 +244,7 @@ package setPrerequisites: #(
 	'..\Base\Dolphin Basic Geometry'
 	'..\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\Base\Dolphin Conformant Array Fields'
+	'..\Graphics\Dolphin GDI Graphics'
 	'..\Presenters\Image\Dolphin Image Presenter'
 	'..\Models\List\Dolphin List Models'
 	'..\..\System\Win32\MessageBox\Dolphin Message Box'

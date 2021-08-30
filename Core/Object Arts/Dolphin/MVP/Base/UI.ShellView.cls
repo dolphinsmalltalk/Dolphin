@@ -1002,17 +1002,17 @@ updateIcons
 	"Private - Update the large and small icons of the receiver"
 
 	| actualLargeIcon |
-	actualLargeIcon := largeIcon notNil ifTrue: [largeIcon] ifFalse: [self presenter icon].
+	actualLargeIcon := largeIcon ifNil: [self presenter icon].
 	self
 		sendMessage: WM_SETICON
 		wParam: ICON_BIG
 		lParam: actualLargeIcon asParameter.
-	smallIcon notNil
-		ifTrue: 
-			[self
-				sendMessage: WM_SETICON
-				wParam: ICON_SMALL
-				lParam: smallIcon asParameter]!
+	"Ensure that the small icon is rendered at the right size"
+	smallIcon ifNotNil: [smallIcon := smallIcon asSmallIcon].
+	self
+		sendMessage: WM_SETICON
+		wParam: ICON_SMALL
+		lParam: smallIcon asParameter!
 
 updateMenuBar
 	self isStateRestoring ifTrue: [^self].
@@ -1379,7 +1379,7 @@ defaultExtentBlock: aBlockClosure
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(self) defaultIcon!
+	^##(self defaultIcon)!
 
 initialize
 	View registerMessageMappings: self messsageMappings!

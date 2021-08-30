@@ -210,10 +210,7 @@ onPaintRequired: aPaintEvent
 	| bmp screenCanvas rect extent brush |
 	screenCanvas := aPaintEvent canvas.
 	extent := self clientExtent.
-	bmp := Bitmap
-				compatible: screenCanvas
-				width: extent x
-				height: extent y.
+	bmp := Bitmap compatible: screenCanvas extent: extent.
 	rect := 0 @ 0 extent: extent.
 	"Erase the off-screen DC to the background texture - this is necessary to paint the margins of the control correctly."
 	brush := self backBrush.

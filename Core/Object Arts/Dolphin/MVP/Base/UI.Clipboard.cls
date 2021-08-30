@@ -314,10 +314,6 @@ setData: handle formatId: formatId
 	User32 setClipboardData: formatId hMem: handle]
 			ensure: [wasOpen ifFalse: [self close]]!
 
-setDIB: aDIBSection
-	Notification deprecated.	"Use setBitmap, or setRegisteredFormat: #DIBSection data: <blah>"
-	self setBitmap: aDIBSection!
-
 setObject: anObject
 	"Transfers anObject to the clipboard."
 
@@ -378,7 +374,6 @@ registerFormat:converter:!operations!public! !
 setBitmap:!accessing!public! !
 setBitmap:format:!accessing!public! !
 setData:formatId:!accessing!private! !
-setDIB:!accessing!public! !
 setObject:!accessing!public! !
 setRegisteredFormat:data:!accessing!public! !
 setText:!accessing!public! !

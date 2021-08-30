@@ -29,6 +29,7 @@ package setPrerequisites: #(
 	'..\..\..\System\Win32\CommCtrl\Common Controls Library'
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Presenters\Prompters\Dolphin Integer Prompter'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Presenters\Number\Dolphin Number Presenter'

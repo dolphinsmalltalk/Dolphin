@@ -12,50 +12,41 @@ Public Domain Freeware
 
 package basicPackageVersion: '6a'.
 
-package basicScriptAt: #postinstall put: 'Clipboard current initializeForDeviceIndependentBitmap!!'.
-
-package classNames
-	add: #BITMAPFILEHEADER;
-	add: #DeviceIndependentBitmap;
-	yourself.
 
 package methodNames
 	add: #Clipboard -> #getDeviceIndependentBitmap;
 	add: #Clipboard -> #getDeviceIndependentBitmapIfNone:;
-	add: #Clipboard -> #initializeForDeviceIndependentBitmap;
 	add: #Clipboard -> #isDeviceIndependentBitmapAvailable;
 	add: #Clipboard -> #setDeviceIndependentBitmap:;
 	add: #Clipboard -> #setDeviceIndependentBitmap:format:;
 	add: #Clipboard -> #setDeviceIndependentBitmap:formatId:;
+	add: #DeviceIndependentBitmap -> #bitmapInfoStruct;
+	add: 'DIBSection class' -> #colorTableDepth1;
+	add: 'DIBSection class' -> #colorTableDepth4;
+	add: 'DIBSection class' -> #colorTableDepth8;
+	add: 'DIBSection class' -> #colorTableForDepth:;
+	yourself.
+
+package globalNames
+	add: #DeviceIndependentBitmap;
 	yourself.
 
 package binaryGlobalNames: (Set new
 	yourself).
 
 package globalAliases: (Set new
+	add: #DeviceIndependentBitmap;
 	yourself).
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin'
-	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base').
 
 package!
 
-"Class Definitions"!
-
-Bitmap subclass: #DeviceIndependentBitmap
-	instanceVariableNames: 'depth bitmapStruct bitmapInfoStruct bitmapInfoHeaderStruct dibSectionStruct'
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-Win32Structure subclass: #BITMAPFILEHEADER
-	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bfOffBits _OffsetOf_bfReserved1 _OffsetOf_bfReserved2 _OffsetOf_bfSize _OffsetOf_bfType'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-
 "Global Aliases"!
+
+DeviceIndependentBitmap := DIBSection!
 
 
 "Loose Methods"!
@@ -65,55 +56,14 @@ Win32Structure subclass: #BITMAPFILEHEADER
 getDeviceIndependentBitmap
 	"Get a DeviceIndependentBitmap from the Clipboard"
 
-	#idbAdded.
-	(registeredFormats includesKey: #DIBSection) 
-		ifFalse: [self initializeForDeviceIndependentBitmap].
-	^self getDeviceIndependentBitmapIfNone: [self errorFormatNotAvailable: #DIB]!
+	#idbAdded.	"Or was, this is present for backwards compatibility for any uses of this old package"
+	^self getDIBSection!
 
 getDeviceIndependentBitmapIfNone: exceptionHandler 
 	"Get a DeviceIndependentBitmap from the Clipboard"
 
-	#idbAdded.
-	^self apply: 
-			[| hBitmap pBitmap bitmapInfoHeader colorTable bytes bitmap |
-			hBitmap := UserLibrary default getClipboardData: CF_DIB.
-			hBitmap isNull ifTrue: [^exceptionHandler value].
-			pBitmap := KernelLibrary default globalLock: hBitmap.
-			bitmapInfoHeader := BITMAPINFOHEADER fromAddress: pBitmap.
-
-			"Get the color table and image bits from the Clipboard data structure (a packed BITMAPINFO)"
-			colorTable := bitmapInfoHeader biBitCount <= 8 
-						ifTrue: 
-							[StructureArray 
-								fromAddress: (pBitmap yourAddress + BITMAPINFOHEADER byteSize) asExternalAddress
-								length: (2 raisedToInteger: bitmapInfoHeader biBitCount)
-								elementClass: RGBQUAD]
-						ifFalse: [StructureArray length: 1 elementClass: RGBQUAD].
-			bytes := ByteArray 
-						fromAddress: (pBitmap yourAddress + BITMAPINFOHEADER byteSize + colorTable byteSize) 
-								asExternalAddress
-						length: bitmapInfoHeader biSizeImage.
-			KernelLibrary default globalUnlock: hBitmap.
-
-			"We have to create a new DeviceIndependentBitmap of the appropriate size and then 
-	copy the color table and image bits"
-			bitmap := DeviceIndependentBitmap 
-						width: bitmapInfoHeader biWidth
-						height: bitmapInfoHeader biHeight
-						depth: bitmapInfoHeader biBitCount.
-			bitmap setColorTable: colorTable.
-			bitmap bitmapStruct bmBits 
-				replaceFrom: 1
-				to: bytes size
-				with: bytes
-				startingAt: 1.
-			bitmap]!
-
-initializeForDeviceIndependentBitmap
-	"Added to add a clipboard format for DIBSection"
-
-	#idbAdded.
-	registeredFormats at: #DIBSection put: CF_DIB!
+	#idbAdded.	"Or was, this is present for backwards compatibility for any uses of this old package"
+	^self getDIBSectionIfNone: exceptionHandler!
 
 isDeviceIndependentBitmapAvailable
 	"Answer whether the clipboard contains a DIB.(DIBSection or DeviceIndependentBitmap)"
@@ -124,45 +74,278 @@ isDeviceIndependentBitmapAvailable
 setDeviceIndependentBitmap: aDeviceIndependentBitmap
 	"Transfer the specified DIBSection bitmap to the clipboard."
 
-	#idbAdded.
-	(registeredFormats includesKey: #DIBSection) 
-		ifFalse: [self initializeForDeviceIndependentBitmap].
-	self setDeviceIndependentBitmap: aDeviceIndependentBitmap format: #DIBSection!
+	#idbAdded.	"Or was, this is present for backwards compatibility for any uses of this old package"
+	self setBitmap: aDeviceIndependentBitmap format: #DIBSection!
 
 setDeviceIndependentBitmap: aDeviceIndependentBitmap format: formatName
 	"Copy the specified bitmap to the clipboard as an entry
 	of the specified format name."
 
-	#idbAdded.
-	self setDeviceIndependentBitmap: aDeviceIndependentBitmap
-		formatId: (registeredFormats at: formatName)!
+	#idbAdded.	"Or was, this is present for backwards compatibility for any uses of this old package"
+	self setBitmap: aDeviceIndependentBitmap format: #DIBSection!
 
 setDeviceIndependentBitmap: aDeviceIndependentBitmap formatId: formatId
 	"Copies a DeviceIndependentBitmap onto the Clipboard
 	The clipboard expects a pached BITMAPINFO (a BITMAPINFO followed immediately 
 	by the image bits)"
 
-	| bytes hMem pMem |
-	#idbAdded.
-	bytes := aDeviceIndependentBitmap bitmapInfoStruct asByteArray 
-				, aDeviceIndependentBitmap imageBytes.
-	hMem := KernelLibrary default globalAlloc: ##(GHND | GMEM_DDESHARE) dwBytes: bytes size.
-	pMem := KernelLibrary default globalLock: hMem.
-	pMem 
-		replaceFrom: 1
-		to: bytes size
-		with: bytes
-		startingAt: 1.
-	KernelLibrary default globalUnlock: hMem.
-	self setData: hMem formatId: formatId! !
+	#idbAdded.	"Or was, this is present for backwards compatibility for any uses of this old package"
+	self setDeviceIndependentBitmap: aDeviceIndependentBitmap
+! !
 !Clipboard categoriesForMethods!
-getDeviceIndependentBitmap!accessing!idb goodies!public! !
-getDeviceIndependentBitmapIfNone:!accessing!idb goodies!public! !
-initializeForDeviceIndependentBitmap!idb goodies!initializing!public! !
+getDeviceIndependentBitmap!public! !
+getDeviceIndependentBitmapIfNone:!public! !
 isDeviceIndependentBitmapAvailable!idb goodies!public!testing! !
 setDeviceIndependentBitmap:!accessing!idb goodies!public! !
 setDeviceIndependentBitmap:format:!accessing!idb goodies!public! !
 setDeviceIndependentBitmap:formatId:!accessing!idb goodies!public! !
+!
+
+!DeviceIndependentBitmap methodsFor!
+
+bitmapInfoStruct
+	| bitmapInfoStruct dibSectionStruct bitmapInfoHeaderStruct |
+	dibSectionStruct := self getInfo.
+	bitmapInfoHeaderStruct := dibSectionStruct dsBmih.
+	bitmapInfoStruct := BITMAPINFO colorDepth: bitmapInfoHeaderStruct biBitCount.
+	bitmapInfoStruct bmiHeader: bitmapInfoHeaderStruct.
+	bitmapInfoHeaderStruct biBitCount <= 8
+		ifTrue: [bitmapInfoStruct bmiColors: self getColorTable bytes].
+	^bitmapInfoStruct! !
+!DeviceIndependentBitmap categoriesForMethods!
+bitmapInfoStruct!accessing!public! !
+!
+
+!DIBSection class methodsFor!
+
+colorTableDepth1
+	"Answer a default color table to be used for depth 1 (monochrome) bitmaps"
+
+	^(StructureArray length: 2 elementClass: RGBQUAD)
+		at: 1
+			put: ((RGBQUAD new)
+					rgbRed: 0;
+					rgbBlue: 0;
+					rgbGreen: 0);
+		at: 2
+			put: ((RGBQUAD new)
+					rgbRed: 255;
+					rgbBlue: 255;
+					rgbGreen: 255);
+		yourself!
+
+colorTableDepth4
+	"Answer a default color table to be used for depth 4 (VGA) bitmaps"
+
+	^(StructureArray length: 16 elementClass: RGBQUAD)
+		at: 1
+			put: ((RGBQUAD new)
+					rgbRed: 0;
+					rgbBlue: 0;
+					rgbGreen: 0);
+		at: 2
+			put: ((RGBQUAD new)
+					rgbRed: 128;
+					rgbBlue: 0;
+					rgbGreen: 0);
+		at: 3
+			put: ((RGBQUAD new)
+					rgbRed: 0;
+					rgbBlue: 0;
+					rgbGreen: 128);
+		at: 4
+			put: ((RGBQUAD new)
+					rgbRed: 128;
+					rgbBlue: 0;
+					rgbGreen: 128);
+		at: 5
+			put: ((RGBQUAD new)
+					rgbRed: 0;
+					rgbBlue: 128;
+					rgbGreen: 0);
+		at: 6
+			put: ((RGBQUAD new)
+					rgbRed: 128;
+					rgbBlue: 128;
+					rgbGreen: 0);
+		at: 7
+			put: ((RGBQUAD new)
+					rgbRed: 0;
+					rgbBlue: 128;
+					rgbGreen: 128);
+		at: 8
+			put: ((RGBQUAD new)
+					rgbRed: 192;
+					rgbBlue: 192;
+					rgbGreen: 192);
+		at: 9
+			put: ((RGBQUAD new)
+					rgbRed: 128;
+					rgbBlue: 128;
+					rgbGreen: 128);
+		at: 10
+			put: ((RGBQUAD new)
+					rgbRed: 255;
+					rgbBlue: 0;
+					rgbGreen: 0);
+		at: 11
+			put: ((RGBQUAD new)
+					rgbRed: 0;
+					rgbBlue: 0;
+					rgbGreen: 255);
+		at: 12
+			put: ((RGBQUAD new)
+					rgbRed: 255;
+					rgbBlue: 0;
+					rgbGreen: 255);
+		at: 13
+			put: ((RGBQUAD new)
+					rgbRed: 0;
+					rgbBlue: 255;
+					rgbGreen: 0);
+		at: 14
+			put: ((RGBQUAD new)
+					rgbRed: 255;
+					rgbBlue: 255;
+					rgbGreen: 0);
+		at: 15
+			put: ((RGBQUAD new)
+					rgbRed: 0;
+					rgbBlue: 255;
+					rgbGreen: 255);
+		at: 16
+			put: ((RGBQUAD new)
+					rgbRed: 255;
+					rgbBlue: 255;
+					rgbGreen: 255);
+		yourself!
+
+colorTableDepth8
+	"Answer a default color table to be used for depth 8 (super VGA) bitmaps"
+
+	| table index |
+	table := StructureArray length: 256 elementClass: RGBQUAD.
+	table
+		at: 1
+			put: ((RGBQUAD new)
+					rgbRed: 0;
+					rgbGreen: 0;
+					rgbBlue: 0);
+		at: 2
+			put: ((RGBQUAD new)
+					rgbRed: 0;
+					rgbGreen: 0;
+					rgbBlue: 128);
+		at: 3
+			put: ((RGBQUAD new)
+					rgbRed: 0;
+					rgbGreen: 128;
+					rgbBlue: 0);
+		at: 4
+			put: ((RGBQUAD new)
+					rgbRed: 0;
+					rgbGreen: 128;
+					rgbBlue: 128);
+		at: 5
+			put: ((RGBQUAD new)
+					rgbRed: 128;
+					rgbGreen: 0;
+					rgbBlue: 0);
+		at: 6
+			put: ((RGBQUAD new)
+					rgbRed: 128;
+					rgbGreen: 0;
+					rgbBlue: 128);
+		at: 7
+			put: ((RGBQUAD new)
+					rgbRed: 128;
+					rgbGreen: 128;
+					rgbBlue: 0);
+		at: 8
+			put: ((RGBQUAD new)
+					rgbRed: 192;
+					rgbGreen: 192;
+					rgbBlue: 192);
+		at: 9
+			put: ((RGBQUAD new)
+					rgbRed: 128;
+					rgbGreen: 128;
+					rgbBlue: 128);
+		at: 10
+			put: ((RGBQUAD new)
+					rgbRed: 0;
+					rgbGreen: 0;
+					rgbBlue: 255);
+		at: 11
+			put: ((RGBQUAD new)
+					rgbRed: 0;
+					rgbGreen: 255;
+					rgbBlue: 0);
+		at: 12
+			put: ((RGBQUAD new)
+					rgbRed: 0;
+					rgbGreen: 255;
+					rgbBlue: 255);
+		at: 13
+			put: ((RGBQUAD new)
+					rgbRed: 255;
+					rgbGreen: 0;
+					rgbBlue: 0);
+		at: 14
+			put: ((RGBQUAD new)
+					rgbRed: 255;
+					rgbGreen: 0;
+					rgbBlue: 255);
+		at: 15
+			put: ((RGBQUAD new)
+					rgbRed: 255;
+					rgbGreen: 255;
+					rgbBlue: 0);
+		at: 16
+			put: ((RGBQUAD new)
+					rgbRed: 255;
+					rgbGreen: 255;
+					rgbBlue: 255).
+	index := 17.
+	#(0 50 101 152 203 254) do: 
+			[:red | 
+			#(0 50 101 152 203 254) do: 
+					[:green | 
+					#(0 50 101 152 203 254) do: 
+							[:blue | 
+							table at: index
+								put: ((RGBQUAD new)
+										rgbRed: red;
+										rgbGreen: green;
+										rgbBlue: blue).
+							index := index + 1]]].
+	0 to: 242
+		by: 11
+		do: 
+			[:all | 
+			table at: index
+				put: ((RGBQUAD new)
+						rgbRed: all;
+						rgbGreen: all;
+						rgbBlue: all).
+			index := index + 1].
+	table at: index
+		put: ((RGBQUAD new)
+				rgbRed: 255;
+				rgbGreen: 255;
+				rgbBlue: 255).
+	^table!
+
+colorTableForDepth: anInteger
+	"Answer an instance of the default color table to be used for 
+	DeviceIndependentBitmaps with anInteger color depth"
+
+	^self perform: ('colorTableDepth' , anInteger printString) asSymbol! !
+!DIBSection class categoriesForMethods!
+colorTableDepth1!constants!public! !
+colorTableDepth4!constants!public! !
+colorTableDepth8!constants!public! !
+colorTableForDepth:!accessing!public! !
 !
 
 "End of package definition"!

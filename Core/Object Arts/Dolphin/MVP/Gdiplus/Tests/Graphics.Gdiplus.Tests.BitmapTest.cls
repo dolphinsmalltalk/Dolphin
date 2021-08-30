@@ -15,6 +15,21 @@ setUp
 	super setUp.
 	model := Bitmap fromFile: self fileResource pafFish32x32png!
 
+testAsByteArray
+	| b1 b2 infoHeader fileHeader |
+	model := Gdiplus.Bitmap fromFile: self fileResource pafRgb0000FF_100x100bmp.
+	b1 := model asByteArray: 'image/bmp'.
+	b2 := self fileResource rgb0000FF_100x100bmpBytes.
+	self assert: b1 size equals: b2 size.
+	"difference is in the first 100 bytes ... what is the problem?"
+	"The problem is that the API doesn't store down the biSizeImage value into the BITMAPINFOHEADER - we patch it up here, but probably this should be done in #asByteArray:"
+	fileHeader := BITMAPFILEHEADER fromBytes: b1.
+	self assert: fileHeader bfSize equals: b1 size.
+	self assert: (b1 dwordAtOffset: fileHeader byteSize) equals: BITMAPINFOHEADER byteSize.
+	infoHeader := BITMAPINFOHEADER fromAddress: b1 yourAddress + fileHeader byteSize.
+	infoHeader biSizeImage: b1 size - fileHeader byteSize - infoHeader size.
+	self assert: b1 equals: b2!
+
 testAsByteArrayRoundTripBmp
 	| bytes bitmap |
 	model := Bitmap fromFile: self fileResource pafRgb0000FF_100x100bmp.
@@ -80,6 +95,7 @@ testPixelAfterSave
 			self assert: (image pixelAt: 1 @ 1) = transparentBlack equals: supported]! !
 !Graphics.Gdiplus.Tests.BitmapTest categoriesForMethods!
 setUp!public!setup! !
+testAsByteArray!public!unit tests! !
 testAsByteArrayRoundTripBmp!public!unit tests! !
 testFromBitmap!public!unit tests! !
 testFromFile!public!unit tests! !

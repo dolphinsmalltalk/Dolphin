@@ -113,7 +113,7 @@ fileTypes
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^##(Icon shellStock: ShellConstants.SIID_DOCASSOC)!
+	^##(Icon shellStock: SHSTOCKICONID.SIID_DOCASSOC)!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.

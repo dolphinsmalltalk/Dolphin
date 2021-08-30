@@ -38,12 +38,12 @@ bitmapId: idInteger index: indexInteger commandDescription: aCommandDescription
 	commandDescription := aCommandDescription!
 
 bitmapIndex
-	"Answer the index of receivers sub-bitmap within its system bitmap."
+	"Answer the index of receiver's sub-bitmap within its system bitmap."
 
 	^bitmapIndex!
 
 bitmapIndex: anInteger
-	"Set the index of receivers sub-bitmap within its bitmap to anInteger."
+	"Set the index of receiver's sub-bitmap within its bitmap to anInteger."
 
 	bitmapIndex := anInteger.
 	self update

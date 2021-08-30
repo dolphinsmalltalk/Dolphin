@@ -54,6 +54,7 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
+	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\UI Examples'
 ).

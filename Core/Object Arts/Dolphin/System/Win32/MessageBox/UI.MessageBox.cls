@@ -385,7 +385,7 @@ footerIcon
 footerIcon: anIcon
 	"Set the receiver's footer icon to be the argument, anIcon. The Footer icon is only displayed when there is also footerText."
 
-	footerIcon := anIcon.
+	footerIcon := anIcon asSmallIcon.
 	self setElement: TDIE_ICON_FOOTER icon: footerIcon!
 
 footerText

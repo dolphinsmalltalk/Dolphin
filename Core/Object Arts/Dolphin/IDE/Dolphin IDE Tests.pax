@@ -39,6 +39,7 @@ package setPrerequisites: #(
 	'..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'Base\Dolphin Change Objects'
 	'..\MVP\Views\Common Controls\Dolphin Common Controls'
+	'..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\MVP\Base\Dolphin MVP Base'
 	'..\MVP\Dolphin MVP Tests'
 	'Professional\Dolphin Professional Tools'

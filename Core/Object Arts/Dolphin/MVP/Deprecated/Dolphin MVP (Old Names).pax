@@ -22,7 +22,7 @@ package setAliasVariableNames: #(
 
 package setPrerequisites: #(
 	'..\Base\Dolphin Basic Geometry'
-	'..\Base\Dolphin MVP Base'
+	'..\Graphics\Dolphin GDI Graphics'
 ).
 
 package!

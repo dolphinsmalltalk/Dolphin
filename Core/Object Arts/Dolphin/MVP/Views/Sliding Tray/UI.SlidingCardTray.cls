@@ -146,7 +146,7 @@ onViewDestroyed
 	self freeTheme!
 
 openTheme
-	pinSize := SystemMetrics current smallIconExtent asParameter.
+	pinSize := Icon smallExtent asParameter.
 	self isThemed
 		ifTrue: 
 			[UxTheme

@@ -1012,14 +1012,30 @@
     <Image Include="Res\AXControlSite.ico">
       <Filter>Icons</Filter>
     </Image>
-    <Image Include="Res\SharedPool.ico" />
-    <Image Include="Res\OSNamespace.ico" />
-    <Image Include="Res\ToolsNamespace.ico" />
-    <Image Include="Res\ExternalNamespace.ico" />
-    <Image Include="Res\CoreNamespace.ico" />
-    <Image Include="Res\GraphicsNamespace.ico" />
-    <Image Include="Res\KernelNamespace.ico" />
-    <Image Include="Res\DisplayMonitor.ico" />
+    <Image Include="Res\DisplayMonitor.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\CoreNamespace.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ExternalNamespace.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\GraphicsNamespace.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\KernelNamespace.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\SharedPool.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\OSNamespace.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ToolsNamespace.ico">
+      <Filter>Icons</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\hsplit.cur">

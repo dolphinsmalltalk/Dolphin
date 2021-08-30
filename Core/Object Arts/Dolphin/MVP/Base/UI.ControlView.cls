@@ -367,14 +367,14 @@ ttnGetDispInfoW: pNMHDR
 	^self ttnGetDispInfo: (NMTTDISPINFOW fromAddress: pNMHDR)!
 
 wantParentNotifications
-	"Answer whether the receiver's parent receiver notifications from the receiver
+	"Answer whether the receiver's parent will be sent notifications from the receiver
 	according to aBoolean.
 	N.B. Dolphin reflects these notifications back to the receiver."
 
 	^(self exStyleAllMask: WS_EX_NOPARENTNOTIFY) not!
 
 wantParentNotifications: aBoolean
-	"Set the whether the receiver's parent receivers notifications from the receiver
+	"Set the whether the receiver's parent will be sent notifications from the receiver
 	according to aBoolean.
 	N.B. Dolphin reflects these notifications back to the receiver."
 

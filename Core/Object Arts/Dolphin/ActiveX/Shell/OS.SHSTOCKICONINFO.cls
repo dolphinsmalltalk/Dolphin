@@ -7,10 +7,14 @@ OS.Win32Structure subclass: #'OS.SHSTOCKICONINFO'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_HICON' -> 16r4.
+		'_OffsetOf_hIcon' -> 16r4.
 		'_OffsetOf_iIcon' -> 16rC.
 		'_OffsetOf_iSysImageIndex' -> 16r8.
-		'_OffsetOf_szPath' -> 16r10
+		'_OffsetOf_szPath' -> 16r10.
+		'SHGSI_ICON' -> 16r100.
+		'SHGSI_ICONLOCATION' -> 16r0.
+		'SHGSI_LARGEICON' -> 16r0.
+		'SHGSI_SMALLICON' -> 16r1
 	}!
 OS.SHSTOCKICONINFO guid: (Core.GUID fromString: '{94b6ea81-773c-47d8-9e64-b42f7a2ac6dc}')!
 OS.SHSTOCKICONINFO comment: '`SHSTOCKICONINFO` is an `External.Structure` class to wrap the struct ''Win32.SHSTOCKICONINFO'' from type information in the ''Win32 API'' library.
@@ -40,10 +44,10 @@ dwSize: anInteger
 
 	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
-HICON
-	"Answer the <Handle> value of the receiver's 'HICON' field."
+hIcon
+	"Answer the <Handle> value of the receiver's 'hIcon' field."
 
-	^(bytes uintPtrAtOffset: _OffsetOf_HICON) asExternalHandle!
+	^(bytes uintPtrAtOffset: _OffsetOf_hIcon) asExternalHandle!
 
 iIcon
 	"Answer the <Integer> value of the receiver's 'iIcon' field."
@@ -61,7 +65,7 @@ szPath
 	^Utf16String fromAddress: bytes yourAddress + _OffsetOf_szPath! !
 !OS.SHSTOCKICONINFO categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
-HICON!**compiled accessors**!public! !
+hIcon!**compiled accessors**!public! !
 iIcon!**compiled accessors**!public! !
 iSysImageIndex!**compiled accessors**!public! !
 szPath!**compiled accessors**!public! !
@@ -77,7 +81,7 @@ defineFields
 		typedef [uuid(94b6ea81-773c-47d8-9e64-b42f7a2ac6dc), helpstring('Receives information used to retrieve a stock Shell icon. This structure is used in a call SHGetStockIconInfo.')]
 		struct tagSHSTOCKICONINFO {
 			[restricted] DWORD dwSize;
-			[readonly] HICON HICON;
+			[readonly] HICON hIcon;
 			[readonly] int iSysImageIndex;
 			[readonly] int iIcon;
 			[readonly, string] unsigned short szPath[260];
@@ -86,14 +90,14 @@ defineFields
 
 	self
 		defineField: #dwSize type: DWORDField new beWriteOnly offset: 0;
-		defineField: #HICON type: HANDLEField new beReadOnly offset: 4;
+		defineField: #hIcon type: HANDLEField new beReadOnly offset: 4;
 		defineField: #iSysImageIndex type: SDWORDField new beReadOnly offset: 8;
 		defineField: #iIcon type: SDWORDField new beReadOnly offset: 12;
 		defineField: #szPath type: (StringField type: Utf16String length: 260) beReadOnly offset: 16.
 	self byteSize: 536!
 
 getFieldNames
-	^#(#dwSize #HICON #iSysImageIndex #iIcon #szPath)! !
+	^#(#dwSize #hIcon #iSysImageIndex #iIcon #szPath)! !
 !OS.SHSTOCKICONINFO class categoriesForMethods!
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

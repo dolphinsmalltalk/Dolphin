@@ -139,7 +139,7 @@ exampleGdipBFromDIB
 	| bmp |
 	bmp := DIBSection
 				gdipCopyOfIcon: self icon
-				extent: 32 @ 32
+				extent: 256 @ 256
 				backcolor: Color black.
 	^Gdiplus.Bitmap fromBitmap: bmp!
 

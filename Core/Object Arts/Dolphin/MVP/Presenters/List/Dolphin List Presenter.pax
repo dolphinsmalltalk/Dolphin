@@ -31,6 +31,7 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Dolphin Additional Sort Algorithms'
 	'..\..\Base\Dolphin Basic Geometry'
+	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Models\List\Dolphin List Models'
 	'..\..\Base\Dolphin MVP Base'
 ).

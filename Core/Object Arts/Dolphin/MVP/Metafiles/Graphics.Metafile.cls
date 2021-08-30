@@ -7,7 +7,7 @@ Graphics.Image subclass: #'Graphics.Metafile'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.Metafile guid: (Core.GUID fromString: '{9afeffe3-f782-4d07-ad88-4aab4659091e}')!
-Graphics.Metafile comment: 'Metafile is the class of <Image>s that represent Windows'' Enhanced Metafiles.
+Graphics.Metafile comment: 'Metafile is the class of <Image>s that represent [Windows GDI Metafiles](https://docs.microsoft.com/en-us/windows/win32/gdi/metafiles)
 
 Instance Variables:
 	header	<ENHMETAHEADER>. Header data for the metafile.
@@ -18,21 +18,16 @@ Instance Variables:
 addToImageList: anImageList mask: aColorOrNil
 	"Private - Add a pictorial representation of the receiver to anImageList"
 
-	| extent bmp |
+	| extent bmp index |
 	extent := anImageList extent.
-	bmp := Bitmap
-				width: extent x
-				height: extent y
-				depth: ImageList defaultColorDepth.
+	bmp := Bitmap extent: extent depth: ImageList defaultColorDepth.
 	self
 		drawOn: bmp canvas
-		at: 0 @ 0
+		at: Point.Zero
 		extent: extent.
-	bmp addToImageList: anImageList mask: aColorOrNil.
-	bmp free!
-
-basicFree
-	Gdi32 deleteEnhMetaFile: handle!
+	index := bmp addToImageList: anImageList mask: aColorOrNil.
+	bmp free.
+	^index!
 
 clearCached
 	header := nil.
@@ -97,18 +92,10 @@ header
 				lpemnh: header].
 	^header!
 
-imageType
-	"Private - Answer the Win32 image type for the receiver."
+loadFromFile: aString extent: aPoint flags: anInteger
+	"Private - Attempts to load an Windows Enhanced Metafile (.emf) from a disk file. Answers the image's handle, or nil if the image could not be loaded. Note that specified extent is ignored."
 
-	^IMAGE_ENHMETAFILE!
-
-loadFromFile: pathString extent: aPoint
-	"Private - Attempts to load an Windows Enhanced Metafile (.emf) from a disk file. Answers
-	the image's handle, or nil if the image could not be loaded. Note that we use the GDI
-	function intended specifically for this purpose (though LoadImage should work), and the
-	specified extent is ignored."
-
-	^Gdi32 getEnhMetaFile: pathString!
+	^Gdi32 getEnhMetaFile: aString!
 
 play: operation on: aCanvas at: originPoint extent: sizePoint
 	"Play the records in the metafile through the triadic valuable, operation, onto the
@@ -171,7 +158,6 @@ saveAsFile: pathString
 	Gdi32 copyEnhMetaFile: self asParameter lpszFile: pathString! !
 !Graphics.Metafile categoriesForMethods!
 addToImageList:mask:!private!testing! !
-basicFree!private!realizing/unrealizing! !
 clearCached!private!realizing/unrealizing! !
 copyHandle!private!realizing/unrealizing! !
 description!accessing!public! !
@@ -180,14 +166,24 @@ drawOn:at:extent:!drawing-bitmaps!public! !
 extent!accessing!public! !
 getData:!accessing!private! !
 header!public! !
-imageType!constants!private!testing! !
-loadFromFile:extent:!private!realizing/unrealizing! !
+loadFromFile:extent:flags:!private!realizing/unrealizing! !
 play:on:at:extent:!enumerating!public! !
 printRecordsOn:!public! !
 saveAsFile:!file operations!public! !
 !
 
 !Graphics.Metafile class methodsFor!
+
+filesType
+	^#('Metafiles' '*.emf;*.wmf')!
+
+freeHandle: anExternalHandle
+	Gdi32 deleteEnhMetaFile: anExternalHandle!
+
+imageType
+	"Private - Answer the Win32 image type for the receiver."
+
+	^IMAGE_ENHMETAFILE!
 
 playRecord: anENHMETARECORD on: aCanvas handleTable: aHandleArray
 	"Play an individual metafile record on to the specified <Canvas> and with the specified array of GDI object handles."
@@ -196,8 +192,15 @@ playRecord: anENHMETARECORD on: aCanvas handleTable: aHandleArray
 		playEnhMetaFileRecord: aCanvas asParameter
 		lpHandletable: aHandleArray
 		lpEnhMetaRecord: anENHMETARECORD
-		nHandles: aHandleArray length! !
+		nHandles: aHandleArray length!
+
+resourceInitializerClass
+	^Error notYetImplemented! !
 !Graphics.Metafile class categoriesForMethods!
+filesType!constants!private! !
+freeHandle:!private!realizing/unrealizing! !
+imageType!constants!private!testing! !
 playRecord:on:handleTable:!operations!public! !
+resourceInitializerClass!constants!private! !
 !
 

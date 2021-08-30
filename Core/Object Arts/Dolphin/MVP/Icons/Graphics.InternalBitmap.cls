@@ -191,7 +191,7 @@ setBitmap:!initializing!private! !
 chooseFile
 	| filename |
 	filename := UI.FileOpenDialog showModal.
-	(File splitExtensionFrom: filename) asLowercase = 'ico' 
+	((File splitExtensionFrom: filename) equalsIgnoreCase: 'ico') 
 		ifTrue: 
 			[#todo.	"Anyone care to fix this?"
 			UI.MessageBox 

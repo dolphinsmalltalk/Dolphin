@@ -144,29 +144,44 @@ emitPackageNameSet: aCollectionOfBindingReferences initializer: aSymbol
 		cr!
 
 emitPackagePrerequisiteNames: aPackage
-	| basePath prereqs oldNames aliasedByOldNames |
+	| basePath prereqs new old downgrades pkgmgr legacyPaths |
 	stream
 		nextPutAll: 'package ';
 		nextPutAll: #setPrerequisites:;
 		nextPutAll: ' #(';
 		cr.
-	basePath := aPackage path.
 	"Replace the (Old Names) packages, that contain aliases from new namespaced class names back into Smalltalk, with the name of the underlying package.
 	This should give us a legacy package file on disk that is identical to the 7.1 fileout of the same package in most cases."
 	prereqs := aPackage prerequisites.
-	oldNames := prereqs select: [:each | each name endsWith: '(Old Names)'].
-	aliasedByOldNames := Set new.
-	oldNames do: 
+	new := prereqs select: [:each | each name endsWith: '(Old Names)'].
+	old := Set new.
+	pkgmgr := Package manager.
+	new do: 
 			[:each |
-			aliasedByOldNames add: (each manager
-						packageNamed: (each name copyFrom: 1 to: each name size - ##('(Old Names)' size + 1))
+			old
+				add: (pkgmgr packageNamed: (each name copyFrom: 1 to: each name size - ##('(Old Names)' size + 1))
 						ifNone: [])].
-	prereqs := (prereqs difference: oldNames) union: aliasedByOldNames.
+	downgrades := self equivalentLegacyPrerequisites.
+	prereqs do: 
+			[:each |
+			| name |
+			name := each name.
+			(downgrades lookup: name)
+				ifNotNil: 
+					[:downgrade |
+					new add: each.
+					old add: (pkgmgr packageNamed: downgrade)]].
+	prereqs := (prereqs difference: new) union: old.
+	basePath := aPackage path.
+	legacyPaths := self legacyPackagePaths.
 	(prereqs asSortedCollection: [:a :b | a name <==> b name < 0]) do: 
 			[:each |
+			| filename |
+			filename := File fullPathOf: ((legacyPaths lookup: each name) ifNil: [each packagePathname])
+						relativeTo: SessionManager current imageBase.
 			stream
 				tab;
-				print: (File removeExtension: (File relativePathOf: each packageFileName to: basePath))]
+				print: (File removeExtension: (File relativePathOf: filename to: basePath))]
 		separatedBy: [stream cr].
 	stream
 		nextPutAll: ').';
@@ -224,6 +239,15 @@ environment
 environment: aNamespace
 	aNamespace == Smalltalk ifFalse: [Warning signal: '<1p> can only be used for code in the Smalltalk namespace' << self class]
 !
+
+equivalentLegacyPrerequisites
+	"Private - Some packages have been split into multiple packages in Dolphin 8. If a legacy package is dependent on one of those new packages that is part of the original package, we want to file out a pre-requisite that is the original package. This will maintain the correct pre-reqs when roundtripping back to D7 so that the package remains loadable (unless it has been modified to add dependencies only in Dolphin 8). The pre-reqs should generally be at least sufficient for Dolphin 8 too, since typically the original package has the new package that contains part of it as one of its own pre-requisites."
+
+	^##(LookupTable withAll: {'Dolphin GDI Graphics' -> 'Dolphin MVP Base'.
+				'Common Controls Library' -> 'Dolphin MVP Base'.
+				'Dolphin Check Buttons' -> 'Dolphin MVP Base'.
+				'Dolphin Push Buttons' -> 'Dolphin MVP Base'.
+				'Dolphin Splitter Control' -> 'Dolphin MVP Base'})!
 
 fileOutAttributesOfClass: aClass
 	"File-out any attributes of the aClass (e.g. the comment, GUID, etc) not included in the basic
@@ -375,6 +399,12 @@ getSmalltalkVariableName: aBindingReference
 				with: aBindingReference].
 	^aBindingReference unqualifiedName!
 
+legacyPackagePaths
+	"Private - Some packages have been moved to new folders in Dolphin 8."
+
+	^##(LookupTable
+		withAll: {'Dolphin Message Box' -> 'Core\Object Arts\Dolphin\Base\Dolphin Message Box'})!
+
 makePoolConstsFromSharedPool: aSharedPoolClass
 	| name constsPool |
 	name := aSharedPoolClass unqualifiedName.
@@ -430,6 +460,7 @@ emitPaxNames:!private!source filing-pax! !
 emitPaxVariableNames:accessor:!private!source filing-pax! !
 environment!accessing!public! !
 environment:!accessing!public! !
+equivalentLegacyPrerequisites!constants!private! !
 fileOutAttributesOfClass:!public!source filing! !
 fileOutBasicDefinitionOfClass:!public!source filing-file out! !
 fileOutClass:ofPackage:!public!source filing! !
@@ -439,6 +470,7 @@ fileOutPackageVariableAliases:!private!source filing! !
 fileOutPoolDictionary:!private!source filing! !
 getShortName:!helpers!private! !
 getSmalltalkVariableName:!helpers!private! !
+legacyPackagePaths!constants!private! !
 makePoolConstsFromSharedPool:!helpers!private! !
 packageClassesInFileoutOrder:!helpers!private! !
 printBasicDefinitionOfClass:!public!source filing-file out! !

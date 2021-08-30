@@ -118,6 +118,22 @@ adjustRectangle: aRectangle
 
 	^aRectangle!
 
+allChildWindowHandlesDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for the Window handles of each of the child windows of the receiver, including any of their children, their children's children, and so on, recursively down through the hierarchy. The [Microsoft documentation](https://docs.microsoft.com/en-gb/windows/win32/api/winuser/nf-winuser-enumchildwindows) does not specify the enumeration order, but empirically it is a depth-first traversal."
+
+	| callback answer |
+	callback := External.Callback block: 
+					[:hwnd :lParam |
+					aMonadicValuable value: hwnd.
+					true]
+				descriptor: GuiInputState.EnumHandlesDescriptor.
+	answer := User32
+				enumChildWindows: self handle
+				lpEnumFunction: callback asParameter
+				lParam: 0.
+	callback free.
+	^answer!
+
 allParents
 	"Answers an <sequencedReadableCollection> of all parents of the receiver including, ultimately,
 	the desktop."
@@ -428,15 +444,13 @@ beCentered
 	self position: newPos!
 
 beDefaultThemed
-	"Restores the default visual theme for the receiver. Only effective on Windows XP and above"
+	"Restores the default visual theme for the receiver. Only effective on Windows XP and above. If the host system does not support themes, then the MockThemeLibrary should be installed so the theme calls should do nothing."
 
-	SystemMetrics current hasThemes
-		ifTrue: 
-			[UxTheme
-				setWindowTheme: self handle
-				pszSubAppName: self themeSubAppName
-				pszSubIdList: nil.
-			self openTheme]!
+	UxTheme
+		setWindowTheme: self handle
+		pszSubAppName: self themeSubAppName
+		pszSubIdList: nil.
+	self openTheme!
 
 beForeground
 	"Make the receiver the foreground window."
@@ -446,13 +460,11 @@ beForeground
 beNotThemed
 	"Turns off any visual theme for the receiver. Only effective on Windows XP and above"
 
-	SystemMetrics current hasThemes
-		ifTrue: 
-			[self freeTheme.
-			UxTheme
-				setWindowTheme: self handle
-				pszSubAppName: Utf16String empty
-				pszSubIdList: Utf16String empty]!
+	self freeTheme.
+	UxTheme
+		setWindowTheme: self handle
+		pszSubAppName: Utf16String empty
+		pszSubIdList: Utf16String empty!
 
 beNotTopMost
 	"Places the receiver above all non-topmost windows (that is, behind all topmost windows).
@@ -1007,7 +1019,7 @@ displayOnFormats
 	until one yields a non-nil, non-empty string as a result. Can be overridden by subclasses to 
 	change the way a view formats itself as text"
 
-	^#(name text class)!
+	^#(#name #text #wndClassName #class)!
 
 displayOnMaxCharacters
 	"Private - Answers the maximum number of characters to display with #displayOn:"
@@ -4044,7 +4056,7 @@ wmExitMenuLoop: message wParam: wParam lParam: lParam
 
 wmGetDlgCode: message wParam: wParam lParam: aMSGAddress
 	"Private - Low-level handler for a WM_GETDLGCODE sent by Windows to determine what
-	input a particular window would like (usually when the window receivers focus).
+	input a particular window would like (usually when the window receives focus).
 	The lParam is a pointer to the MSG that may be sent depending on the response.
 	The answer should be some combination of DLGC_XXXX flags (e.g. DLGC_WANTARROWS |
 	DLGC_WANTTAB)."
@@ -4069,7 +4081,7 @@ wmHotKey: message wParam: wParam lParam: lParam
 	^self presenter onHotKey: wParam!
 
 wmHScroll: message wParam: wParam lParam: lParam
-	"Private - A vertical Scroll event has occured. Pass onto receivers controller. Have to check
+	"Private - A vertical Scroll event has occured. Pass onto receiver's controller. Have to check
 	whether the event came from a standard scrool bar or a scroll bar controller."
 
 	^(lParam == 0 ifTrue: [self] ifFalse: [SessionManager.Current inputState lookupWindow: lParam])
@@ -4613,6 +4625,7 @@ addSubView:!hierarchy!public!sub views! !
 addToCommandRoute:!commands!public! !
 addToImageList:mask:!double dispatch!private! !
 adjustRectangle:!geometry!public! !
+allChildWindowHandlesDo:!hierarchy!public! !
 allParents!hierarchy!public! !
 allParentsDo:!hierarchy!public! !
 allSubViews!hierarchy!public! !
@@ -5506,7 +5519,7 @@ releaseCapture
 	User32 releaseCapture!
 
 reregisterClass
-	"Private - Un-register then re-register receivers corresponding Win32 class."
+	"Private - Un-register then re-register receiver's corresponding Win32 class."
 
 	^self
 		unregisterClass;

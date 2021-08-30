@@ -27,14 +27,11 @@ calculateGeometry: aCanvas
 conflictingAccelerators: aCollection 
 	conflictingAccelerators := aCollection!
 
-createDragImage: anInteger using: aCanvas 
+createDragImage: anInteger using: aCanvas
 	| bitmap rectangle bmpCanvas extent |
 	rectangle := self itemRect: anInteger using: aCanvas.
 	extent := rectangle extent.
-	bitmap := DIBSection 
-				compatible: aCanvas
-				width: extent x
-				height: extent y.
+	bitmap := DIBSection compatible: aCanvas extent: extent.
 	bmpCanvas := bitmap canvas.
 	bmpCanvas save.
 	
@@ -45,7 +42,7 @@ createDragImage: anInteger using: aCanvas
 		paintBackgroundOn: bmpCanvas in: rect;
 		paint: (menu itemAt: anInteger)
 			on: bmpCanvas
-			in: rect] 
+			in: rect]
 			ensure: [bmpCanvas restore].
 	bitmap freeDC.
 	^bitmap!

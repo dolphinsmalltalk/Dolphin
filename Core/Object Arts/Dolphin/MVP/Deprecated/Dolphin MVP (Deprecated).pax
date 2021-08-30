@@ -45,6 +45,8 @@ package methodNames
 	add: #ColorRef -> #asIndexedColor;
 	add: #ColorRef -> #asIndexedColorUsingPalette:;
 	add: #GDILibrary -> #enumFonts:lpFaceName:lpFontFunc:lParam:;
+	add: #Image -> #fileLocator:;
+	add: #Image -> #identifier:;
 	add: #IndexedColor -> #asIndexedColor;
 	add: #ListBox -> #basicSelectionByIndex:;
 	add: #ListModel -> #updateAtIndex:;
@@ -151,7 +153,6 @@ package setPrerequisites: #(
 	'..\Presenters\List\Dolphin List Presenter'
 	'..\Views\MoenTree\Dolphin MoenTree View'
 	'..\Base\Dolphin MVP Base'
-	'..\Views\Buttons\Dolphin Push Buttons'
 	'..\Views\Scrollbars\Dolphin Scrollbars'
 	'..\Views\Slider\Dolphin Slider Control'
 	'..\Presenters\Text\Dolphin Text Presenter'
@@ -494,6 +495,20 @@ enumFonts: dcHandle lpFaceName: aString lpFontFunc: aCallbackThunk lParam: anInt
 	^self invalidCall: _failureCode! !
 !GDILibrary categoriesForMethods!
 enumFonts:lpFaceName:lpFontFunc:lParam:!public!win32 functions-font and text! !
+!
+
+!Image methodsFor!
+
+fileLocator: aClassLocator
+	Notification deprecated.
+	initializer fileLocator: aClassLocator!
+
+identifier: id
+	Notification deprecated.
+	initializer identifier: id! !
+!Image categoriesForMethods!
+fileLocator:!accessing!public! !
+identifier:!accessing!public! !
 !
 
 !ImageList class methodsFor!

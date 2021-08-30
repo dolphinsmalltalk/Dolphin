@@ -567,7 +567,7 @@ resetCharFormat
 	self selectionCharFormat: cf.!
 
 richText
-	"Answer a RichText containing the RTF contents of the receiver."
+	"Answer a <RichText> containing the RTF contents of the receiver."
 
 	^self privGetRichText!
 

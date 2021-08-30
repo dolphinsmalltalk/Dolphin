@@ -17,6 +17,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Presenters\Choice\Dolphin Choice Presenter'
 	'..\..\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Presenters\Image\Dolphin Image Presenter'
 	'..\..\Models\List\Dolphin List Models'
 	'..\..\Presenters\List\Dolphin List Presenter'

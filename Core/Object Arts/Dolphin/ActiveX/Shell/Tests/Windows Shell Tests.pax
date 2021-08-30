@@ -10,8 +10,8 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
-	'..\..\..\MVP\Base\Dolphin MVP Base'
-	'..\..\..\MVP\Dolphin MVP Tests'
+	'..\..\..\MVP\Graphics\Dolphin GDI Graphics'
+	'..\..\..\MVP\Graphics\Tests\Dolphin GDI Graphics Tests'
 ).
 
 package!
@@ -27,7 +27,9 @@ testShellStock
 	self assert: subject1 instanceHandle fileName asLowercase equals: (File composePath: SessionManager current systemDirectory subPath: 'imageres.dll') asLowercase.	
 	self assert: subject2 instanceHandle identicalTo: subject1 instanceHandle
 ! !
-!Graphics.Tests.IconTest categoriesFor: #testShellStock!public! !
+!Graphics.Tests.IconTest categoriesForMethods!
+testShellStock!public! !
+!
 
 "End of package definition"!
 

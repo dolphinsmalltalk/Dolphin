@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Graphics.TextTileIcon'
-	instanceVariableNames: 'text fontName tilecolor textcolor icon _reserved6 flags _reserved8 _reserved9'
+	instanceVariableNames: 'text fontName tilecolor textcolor _reserved5 _reserved6 flags _reserved8 _reserved9'
 	classVariableNames: 'TextFormat'
 	imports: #(#{Graphics.Gdiplus private})
 	classInstanceVariableNames: ''
@@ -35,12 +35,12 @@ Examples:
 !Graphics.TextTileIcon categoriesForClass!Unclassified! !
 !Graphics.TextTileIcon methodsFor!
 
-= comperand
-	^self == comperand or: 
-			[self species = comperand species and: 
-					[text = comperand text and: 
-							[tilecolor = comperand tilecolor and: 
-									[fontName = comperand fontName and: [textcolor = comperand textcolor and: [flags == comperand flags]]]]]]!
+= anObject
+	^self == anObject or: 
+			[self species == anObject species and: 
+					[text = anObject text and: 
+							[tilecolor = anObject tilecolor and: 
+									[fontName = anObject fontName and: [textcolor = anObject textcolor and: [flags == anObject flags]]]]]]!
 
 actualFontName
 	^fontName ifNil: [self defaultFontName]!
@@ -118,12 +118,17 @@ asAlphaBitmap: aPoint
 		draw: self imageIndex
 		on: bmp canvas
 		at: Point.Zero
-		flags: CommCtrlConstants.ILD_PRESERVEALPHA.
+		flags: ImageList.ILD_PRESERVEALPHA.
 	bmp freeDC.
 	^bmp!
 
 asBitmap
 	^self bitmapWithExtent: self extent!
+
+asLargeIcon
+	"Answer a 'large' (32x32) <Icon> equivalent of the receiver. This is sometimes needed, e.g. to set the icon for a Window."
+
+	^Icon fromTextTile: self!
 
 asMenuBitmap
 	"Answer a 32-bpp bitmap (i.e. with alpha channel) containing the receiver's image at system
@@ -133,13 +138,18 @@ asMenuBitmap
 	^self imageManager menuBitmapForIcon: self!
 
 asParameter
-	"Answer the handle of the receiver's default icon representation, realizing it if necessary. 
+	"Answer a Windows HICON handle for receiver's default icon representation, realizing it if necessary. 
 	Implementing this allows TextTileIcons to be used as the icons for ShellViews."
 
-	^self largeIcon asParameter
+	^self asLargeIcon asParameter
 
 
 !
+
+asSmallIcon
+	"Answer a 'small' (16x16) `Icon` equivalent of the receiver."
+
+	^Icon initializer: (IconFromTextTileIconInitializer textTile: self extent: Icon.SmallExtent)!
 
 bitmapWithExtent: aPoint
 	| bitmap graphics |
@@ -186,14 +196,13 @@ drawOn: aCanvas at: dstOrigin extent: dstExtent
 	graphics free!
 
 drawOnGraphics: graphics at: originPoint extent: aPoint
-	| scale back textExtent height faceName utf16 f rect textBrush width style |
+	| scale textExtent height faceName utf16 font rect textBrush width style |
 	aPoint isZero ifTrue: [^self].
-	back := tilecolor.
 	rect := originPoint extent: aPoint.
-	back
+	tilecolor
 		ifNotNil: 
 			[| backbrush |
-			backbrush := SolidBrush color: back.
+			backbrush := SolidBrush color: tilecolor.
 			graphics fillRectangle: rect brush: backbrush.
 			backbrush free.
 			rect := rect insetBy: 1 @ 0].
@@ -207,31 +216,31 @@ drawOnGraphics: graphics at: originPoint extent: aPoint
 	"Work out a suitable font size to best fit the space"
 	faceName := self actualFontName.
 	style := self actualFontStyle.
-	f := Gdiplus.Font
+	font := Gdiplus.Font
 				name: faceName
 				pixelSize: height
 				style: style.
 	graphics textRenderingHint: TextRenderingHintAntiAlias.
 	textExtent := (graphics
 				measureString: utf16
-				font: f
+				font: font
 				rect: RECTF new
 				format: StringFormat genericTypographic) extent.
-	f free.
+	font free.
 	scale := width asFloat / textExtent x.
 	scale * textExtent y > height ifTrue: [scale := height asFloat / textExtent y].
-	f := Gdiplus.Font
+	font := Gdiplus.Font
 				name: faceName
 				pixelSize: (height * scale max: 1)
 				style: style.
 	textBrush := SolidBrush color: self actualTextcolor.
 	graphics
 		drawString: utf16
-		font: f
+		font: font
 		rect: rect
 		format: self stringFormat
 		brush: textBrush.
-	f free.
+	font free.
 	textBrush free!
 
 drawOnGraphics: aGraphics at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent unit: aUnit attributes: aImageAtt 
@@ -302,11 +311,8 @@ isRealized
 	^true!
 
 largeIcon
-	"Answer a 'large' (32x32) <Icon> equivalent of the receiver. This is sometimes needed, e.g. to set the icon for a Window."
-
-	(icon isNil or: [icon isRealized not])
-		ifTrue: [icon := (self bitmapWithExtent: SystemMetrics current largeIconExtent) asIcon].
-	^icon!
+	Notification deprecated.
+	^self asLargeIcon!
 
 printOn: aStream
 	"Append the ASCII representation of the receiver to aStream."
@@ -328,14 +334,6 @@ setText: labelString fontName: fontString color: aColor
 	tilecolor := aColor ifNotNil: [aColor isNone ifFalse: [aColor]].
 	flags := 0.
 	^self!
-
-stbSaveOn: anSTBOutFiler
-	"Output the receiver to anSTBOutFiler."
-
-	"We must ensure that the dynamically generated icon is not saved."
-
-	anSTBOutFiler override: icon with: nil.
-	super stbSaveOn: anSTBOutFiler!
 
 storeOn: aStream
 	| requiresCascade r styleName |
@@ -414,7 +412,13 @@ textcolor: aColor
 tilecolor
 	"Answer the tile background colour, or nil for transparent."
 
-	^tilecolor! !
+	^tilecolor!
+
+withExtent: arg1
+	"This is an auto-generated target implementation for the protocol <icon>
+	and remains to be correctly implemented."
+
+	^Error notYetImplemented! !
 !Graphics.TextTileIcon categoriesForMethods!
 =!comparison!public! !
 actualFontName!accessing!private! !
@@ -424,8 +428,10 @@ addToImageList:mask:!double dispatch!private! !
 applyTransforms:rect:!drawing-bitmaps!private! !
 asAlphaBitmap:!converting!public! !
 asBitmap!converting!public! !
+asLargeIcon!converting!public! !
 asMenuBitmap!converting!public! !
 asParameter!converting!public! !
+asSmallIcon!converting!public! !
 bitmapWithExtent:!converting!private! !
 defaultFontName!accessing!constants!public! !
 drawOn:!drawing-bitmaps!public! !
@@ -443,7 +449,7 @@ freeDC!public! !
 hash!comparison!public! !
 hotspot!accessing!public! !
 icon!accessing!public! !
-imageIndex!image management!private! !
+imageIndex!image management!public! !
 imageManager!image management!private! !
 imageType!constants!public! !
 isPersistent!public! !
@@ -454,21 +460,22 @@ realize!public!realizing/unrealizing! !
 rotation!accessing!public! !
 rotation:!accessing!public! !
 setText:fontName:color:!initializing!private! !
-stbSaveOn:!binary filing!public! !
 storeOn:!printing!public! !
 stringFormat!drawing-bitmaps!private! !
 text!accessing!public! !
 textcolor!accessing!public! !
 textcolor:!accessing!public! !
 tilecolor!accessing!public! !
+withExtent:!public! !
 !
 
+Graphics.TextTileIcon methodProtocol: #icon attributes: #() selectors: #(#asAlphaBitmap: #asMenuBitmap #asParameter #asSmallIcon #drawOn: #drawOn:at: #drawOn:at:extent: #extent #imageIndex #isPersistent #isRealized #withExtent:)!
 Graphics.TextTileIcon methodProtocol: #image attributes: #(#readOnly) selectors: #(#drawOn: #drawOn:at: #drawOn:at:extent: #extent #freeDC #isPersistent)!
 
 !Graphics.TextTileIcon class methodsFor!
 
 defaultExtent
-	^SystemMetrics current largeIconExtent!
+	^Icon largeExtent!
 
 icon
 	^(self

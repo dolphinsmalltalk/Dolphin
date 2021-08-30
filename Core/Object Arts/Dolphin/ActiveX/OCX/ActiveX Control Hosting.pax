@@ -84,6 +84,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\MVP\Presenters\Prompters\Dolphin Choice Prompter'
+	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'

@@ -33,8 +33,8 @@ buildDragImageList
 	self getCustomDragImages.	"Put all of the images into an ImageList and convert the drag images into imageList indices."
 	maxImageExtent := dragImages inject: Point.Zero into: [:max :image | max max: image extent].
 	imageList := ImageList
-				newExtent: (maxImageExtent min: SystemMetrics current largeIconExtent)
-				depth: self defaultDragColorDepth
+				newExtent: (maxImageExtent min: Cursor defaultExtent)
+				depth: ImageList.ILC_COLOR32
 				initialSize: dragImages size
 				growBy: 1
 				masked: true.
@@ -70,13 +70,6 @@ continueTrackingAt: aPoint from: lastPoint
 			self dropTargetEnter].
 	self giveFeedback.
 	^self dragPoint!
-
-defaultDragColorDepth
-	"Private - Answer the color depth to use for drag icon images. Only XP can handle >24 bit depths"
-
-	| metrics |
-	metrics := SystemMetrics current.
-	^metrics defaultColorDepth min: metrics dragImageColorDepth!
 
 doDragDropAt: aPoint button: buttonSymbol
 	"Initiate a drag and drop operation at the screen coordinates, aPoint, active while the mouse button
@@ -259,7 +252,6 @@ beginDragImage!public!tracking! !
 buildDragImageList!private!tracking! !
 cancelTrackingAt:!public!tracking! !
 continueTrackingAt:from:!public!tracking! !
-defaultDragColorDepth!accessing!private! !
 doDragDropAt:button:!operations!public! !
 dragObjectClass!constants!public! !
 dropTargetUnder:!helpers!private!tracking! !

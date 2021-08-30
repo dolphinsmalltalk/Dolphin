@@ -5,6 +5,7 @@ package paxVersion: 1;
 
 
 package classNames
+	add: #IconWithExtentTest;
 	add: #TextAndImageButtonTest;
 	yourself.
 
@@ -16,6 +17,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\SSW Widget Enhancements'
 	'..\..\Camp Smalltalk\SUnit\SUnit').
@@ -24,6 +26,11 @@ package!
 
 "Class Definitions"!
 
+TestCase subclass: #IconWithExtentTest
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 TestCase subclass: #TextAndImageButtonTest
 	instanceVariableNames: 'button canvas anon'
 	classVariableNames: ''

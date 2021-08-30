@@ -499,7 +499,7 @@ beUncompiled
 byteSize
 	"Answer the size (in bytes) of the structure the receiver represents"
 
-	self ensureDefined.	"ensure the byte size has been calculated by lazy template accessor"
+	template ifNil: [self defineTemplate].
 	^self basicByteSize!
 
 byteSize: anInteger

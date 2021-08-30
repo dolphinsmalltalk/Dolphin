@@ -5,6 +5,7 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\System\Continuations\Continuation Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Announcements\Dolphin Announcements Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Filer\Dolphin Literal Filer Tests.pax';
+	install: 'Core\Object Arts\Dolphin\MVP\Graphics\Tests\Dolphin GDI Graphics Tests.pax';
 	install: 'Core\Object Arts\Dolphin\MVP\Dolphin MVP Tests.pax';
 	install: 'Core\Object Arts\Dolphin\MVP\Deprecated\Dolphin MVP Tests (Deprecated).pax';
 	install: 'Core\Object Arts\Dolphin\MVP\Views\Scintilla\Tests\Dolphin Scintilla View Tests.pax';
@@ -15,7 +16,7 @@ Package manager
 	install: 'Core\Contributions\Solutions Software\Tests\SSW Widget Enhancements Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Base64\Dolphin Base64 Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Random\Dolphin Random Stream Tests.pax';
-	install: 'Core\Object Arts\Dolphin\System\Win32\MessageBox\Tests\Dolphin MessageBox Tests.pax';
+	install: 'Core\Object Arts\Dolphin\System\Win32\MessageBox\Tests\Dolphin Message Box Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Win32\Dolphin MMF Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Win32\Windows Data Protection API Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Win32\Windows Ini Files Tests.pax';

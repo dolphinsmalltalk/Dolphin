@@ -168,5 +168,5 @@ tabOntoCurrentCard!operations!private! !
 validateSubViewLayouts:!geometry!private! !
 !
 
-UI.AbstractCardContainer methodProtocol: #cardView attributes: #(#readOnly) selectors: #(#currentCard #cycleNextCard #cyclePreviousCard #firstCard #lastCard #nextCard #onCurrentCardChanged #previousCard)!
+UI.AbstractCardContainer methodProtocol: #cardView attributes: #(#readOnly) selectors: #(#currentCard #cycleNextCard #cyclePreviousCard #firstCard #lastCard #nextCard #previousCard)!
 

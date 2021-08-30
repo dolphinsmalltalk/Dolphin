@@ -15,8 +15,10 @@ package basicScriptAt: #postinstall put: 'View registerShellMessages.'.
 package basicScriptAt: #preuninstall put: 'UI.View unregisterShellMessages'.
 
 package setClassNames: #(
+	#{Graphics.IconFromShellStockInitializer}
 	#{OS.ShellConstants}
 	#{OS.ShellLibrary}
+	#{OS.SHSTOCKICONID}
 	#{OS.SHSTOCKICONINFO}
 	#{UI.DroppedFilesList}
 ).
@@ -24,6 +26,7 @@ package setClassNames: #(
 package setMethodNames: #(
 	#(#{Core.SessionManager} #documentsDirectory)
 	#(#{Graphics.Icon class} #shellStock:)
+	#(#{Graphics.Icon class} #shellStock:extent:)
 	#(#{UI.View} #acceptDroppedFiles:)
 	#(#{UI.View} #wmDropFiles:wParam:lParam:)
 	#(#{UI.View class} #registerShellMessages)
@@ -42,6 +45,7 @@ package setBinaryVariableNames: #(
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\MVP\Base\Dolphin MVP Base'
 ).
 
@@ -167,7 +171,14 @@ Kernel.SharedPool subclass: #'OS.ShellConstants'
 		'SHGFI_TYPENAME' -> 16r400.
 		'SHGFI_USEFILEATTRIBUTES' -> 16r10.
 		'SHGFP_TYPE_CURRENT' -> 16r0.
-		'SHGFP_TYPE_DEFAULT' -> 16r1.
+		'SHGFP_TYPE_DEFAULT' -> 16r1
+	}!
+Kernel.SharedPool subclass: #'OS.SHSTOCKICONID'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
 		'SIID_APPLICATION' -> 16r2.
 		'SIID_AUDIOFILES' -> 16r47.
 		'SIID_AUTOLIST' -> 16r31.
@@ -275,6 +286,12 @@ External.DynamicLinkLibrary subclass: #'OS.ShellLibrary'
 	imports: #(#{OS.ShellConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Graphics.ImageInitializer subclass: #'Graphics.IconFromShellStockInitializer'
+	instanceVariableNames: 'identifier extent'
+	classVariableNames: ''
+	imports: #(#{OS.ShellConstants private} #{OS.SHSTOCKICONINFO private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
 OS.Win32Structure subclass: #'OS.SHSTOCKICONINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -282,10 +299,14 @@ OS.Win32Structure subclass: #'OS.SHSTOCKICONINFO'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_HICON' -> 16r4.
+		'_OffsetOf_hIcon' -> 16r4.
 		'_OffsetOf_iIcon' -> 16rC.
 		'_OffsetOf_iSysImageIndex' -> 16r8.
-		'_OffsetOf_szPath' -> 16r10
+		'_OffsetOf_szPath' -> 16r10.
+		'SHGSI_ICON' -> 16r100.
+		'SHGSI_ICONLOCATION' -> 16r0.
+		'SHGSI_LARGEICON' -> 16r0.
+		'SHGSI_SMALLICON' -> 16r1
 	}!
 
 "Loose Methods"!
@@ -303,19 +324,17 @@ documentsDirectory!accessing!public! !
 !Graphics.Icon class methodsFor!
 
 shellStock: anInteger
-	"Answer a new instance of receiver representing the shell stock icon with the specified SHSTOCKICONID."
+	"Answer a new instance of receiver representing the shell stock icon with the specified SHSTOCKICONID and default large icon extent."
 
-	"Implementation Note: Although SHGetStockIconInfo can return an icon handle, we prefer to load the icon directly from the module so that we can load different image sizes."
+	^self shellStock: anInteger extent: nil!
 
-	| info |
-	info := SHSTOCKICONINFO new.
-	Shell32
-		shGetStockIconInfo: anInteger
-		uFlags: 0
-		psii: info.
-	^self fromId: info iIcon abs in: (External.ResourceLibrary open: info szPath)! !
+shellStock: anInteger extent: aPointOrNil
+	"Answer a new instance of receiver representing the shell stock icon with the specified SHSTOCKICONID and extent."
+
+	^self initializer: (IconFromShellStockInitializer identifier: anInteger extent: aPointOrNil)! !
 !Graphics.Icon class categoriesForMethods!
 shellStock:!instance creation!public! !
+shellStock:extent:!instance creation!public! !
 !
 
 !UI.View methodsFor!

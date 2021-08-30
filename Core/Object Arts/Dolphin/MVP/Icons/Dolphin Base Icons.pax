@@ -139,6 +139,7 @@ package setPrerequisites: #(
 	'..\Views\Cards\Dolphin Card Containers'
 	'..\Views\Buttons\Dolphin Check Buttons'
 	'..\..\System\Win32\Dolphin File System Info'
+	'..\Graphics\Dolphin GDI Graphics'
 	'..\..\Base\Dolphin Legacy Date & Time'
 	'..\Base\Dolphin MVP Base'
 	'..\Presenters\Radio\Dolphin Radio Buttons'
@@ -518,7 +519,7 @@ icon
 	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
 	from an ExternalResourceLibrary other than the system default."
 
-	^##(self) defaultIcon! !
+	^##(self defaultIcon)! !
 !Core.Metaclass class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1131,7 +1132,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^##(self) defaultIcon! !
+	^##(self defaultIcon)! !
 !Kernel.Package class categoriesForMethods!
 icon!constants!public! !
 !

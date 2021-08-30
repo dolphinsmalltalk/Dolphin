@@ -22,6 +22,7 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
+	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\System\Random\Dolphin Random Stream'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'

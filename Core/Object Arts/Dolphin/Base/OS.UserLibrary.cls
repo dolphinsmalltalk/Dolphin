@@ -38,22 +38,6 @@ charUpper: aCharacter
 	<stdcall: word CharUpperW intptr>
 	^self invalidCall: _failureCode!
 
-copyImage: hImage uType: uType cxDesired: cxDesired cyDesired: cyDesired fuFlags: fuFlags
-	"The CopyImage function creates a new image (icon, cursor, or bitmap) and copies the attributes of
-	the specified image to the new one. If necessary, the function stretches the bits to fit the desired size
-	of the new image.
-	
-	HANDLE CopyImage(      
-		HANDLE hImage,
-		UINT uType,
-		int cxDesired,
-		int cyDesired,
-		UINT fuFlags
-		);"
-
-	<stdcall: handle CopyImage handle dword sdword sdword dword>
-	^self invalidCall: _failureCode!
-
 createDialog: hInstance lpTemplate: template hWndParent: hParent lpDialogFunc: dlgProc dwInitParam: lParam
 	"Create a modeless dialog box from a dialog box template resource. 
 		HWND CreateDialog(
@@ -673,7 +657,6 @@ vkKeyScan: aChar
 blockInput:!public!win32 functions-window! !
 charLower:!public!win32 functions-string manipulation! !
 charUpper:!public!win32 functions-string manipulation! !
-copyImage:uType:cxDesired:cyDesired:fuFlags:!public!win32 functions-resources! !
 createDialog:lpTemplate:hWndParent:lpDialogFunc:dwInitParam:!public!win32 functions-dialog box! !
 defDlgProc:msg:wParam:lParam:!public!win32 functions-window procedure! !
 defWindowProc:msg:wParam:lParam:!public!win32 functions-window procedure! !

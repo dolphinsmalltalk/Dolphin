@@ -50,7 +50,7 @@ asAlphaBitmap: aPoint
 		draw: self imageIndex
 		on: bmp canvas
 		at: Point.Zero
-		flags: CommCtrlConstants.ILD_PRESERVEALPHA.
+		flags: ImageList.ILD_PRESERVEALPHA.
 	bmp freeDC.
 	^bmp!
 
@@ -167,7 +167,7 @@ defaultExtent
 defaultTileExtent
 	^128 @ 128!
 
-filesType
+filesTypes
 	"Private - Answer a two element array suitable for adding to the FileDialog
 	with the fileTypes: message."
 
@@ -223,7 +223,7 @@ badgeTile:color:!instance creation!public! !
 badgeTile:color:extent:!instance creation!public! !
 defaultExtent!constants!private! !
 defaultTileExtent!constants!private! !
-filesType!constants!private! !
+filesTypes!constants!private! !
 fromFile:!instance creation!public! !
 fromFile:extent:!instance creation!public! !
 icon!public! !

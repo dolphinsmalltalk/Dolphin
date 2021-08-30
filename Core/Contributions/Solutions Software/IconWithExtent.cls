@@ -1,37 +1,26 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Icon subclass: #IconWithExtent
-	instanceVariableNames: 'extent'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 IconWithExtent guid: (GUID fromString: '{429114bb-12f2-41ab-8fe0-7585364ac305}')!
-IconWithExtent comment: ''!
+IconWithExtent comment: '`IconWithExtent` is obsolete, but retained for backwards compatibility with existing references in code and in binary filed view resources.
+
+`Icon` itself now supports the ability to request realization at a particular extent for use in cases where a Windows API is expecting an icon of a particular size.'!
 !IconWithExtent categoriesForClass!Graphics-Tools! !
-!IconWithExtent methodsFor!
+!IconWithExtent class methodsFor!
 
-extent
-	^extent!
+stbConvertFromVersion3: anArray
+	"Version 4 - the superclass supports a preferred extent via it's initializer"
 
-extent: anObject
-	extent := anObject!
-
-loadFromInstance: hModule
-	"Private - Attempts to load the receiver as a resource from an instance. 
-	I would have expected the User32 loadImage function to be capable of this but
-	it does not appear to work for instance 0; the system. Hence this method 
-	which tries the old way. Answers the loaded handle or nil if the load failed"
-
-	^UserLibrary default 
-			loadImage: hModule asParameter 
-			lpszName: identifier asResourceId
-			uType: IMAGE_ICON
-			cxDesired: self extent x
-			cyDesired: self extent y
-			fuLoad: LR_DEFAULTCOLOR! !
-!IconWithExtent categoriesForMethods!
-extent!accessing!private! !
-extent:!accessing!private! !
-loadFromInstance:!private!realizing/unrealizing! !
+	| vars initializer |
+	vars := super stbConvertFromVersion3: anArray.
+	initializer := vars at: 3.
+	initializer extent: (vars at: 4).
+	^vars copyFrom: 1 to: 3! !
+!IconWithExtent class categoriesForMethods!
+stbConvertFromVersion3:!binary filing!public! !
 !
 

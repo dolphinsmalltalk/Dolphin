@@ -24,6 +24,7 @@ package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\IDE\Base\Development System'
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Object Arts\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'
 	'..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'

@@ -382,7 +382,7 @@ itemRect: itemHandle textOnly: aBoolean
 largeIconExtent
 	"Answer image extent for the large icons mode."
 
-	^largeIconExtent isNil ifTrue: [Icon largeExtent] ifFalse: [largeIconExtent]!
+	^largeIconExtent isNil ifTrue: [Icon.LargeExtent] ifFalse: [largeIconExtent]!
 
 largeIconExtent: aPointOrNil
 	"Set the image extent for the large icons mode."
@@ -727,7 +727,7 @@ showDropHighlight: anItem
 smallIconExtent
 	"Answer image extent for the small icons mode."
 
-	^Icon smallExtent!
+	^Icon.SmallExtent!
 
 stateImageManager
 	"Answers the receiver's state image manager."

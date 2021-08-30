@@ -28,6 +28,7 @@ package setPrerequisites: #(
 	'..\MVP\Base\Dolphin Basic Geometry'
 	'..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'..\MVP\Views\Buttons\Dolphin Check Buttons'
+	'..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\MVP\Presenters\Image\Dolphin Image Presenter'
 	'..\MVP\Base\Dolphin MVP Base'
 	'..\MVP\Views\Buttons\Dolphin Push Buttons'

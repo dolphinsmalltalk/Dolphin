@@ -152,6 +152,7 @@ package setClassNames: #(
 	#{OS.Tests.DiskVolumeInformationTest}
 	#{OS.Tests.FILETIMETest}
 	#{OS.Tests.HRESULTTest}
+	#{OS.Tests.InvariantLocaleTest}
 	#{OS.Tests.ShlwapiLibraryTest}
 	#{OS.Tests.StdioFileStreamTest}
 	#{OS.Tests.WindowsLocaleTest}
@@ -919,6 +920,12 @@ Core.Tests.IntegerTest subclass: #'Core.Tests.LargeIntegerTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.IntegerTest subclass: #'Core.Tests.SmallIntegerTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.LocaleTest subclass: #'OS.Tests.InvariantLocaleTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

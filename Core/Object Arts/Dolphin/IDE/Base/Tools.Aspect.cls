@@ -362,27 +362,7 @@ bitmap: aBitmapAspectSymbol
 	The aspect is viewable using an ImagePresenter with a 'Basic image' view
 	and editable using a FileDialog"
 
-	^(self
-		name: aBitmapAspectSymbol
-		presenterBlock: 
-			[:p :m |
-			| presenter |
-			presenter := ImagePresenter
-						create: 'Basic image'
-						in: p
-						on: m.
-			presenter view viewMode: #scaleBestFit.
-			presenter]
-		editBlock: 
-			[:p |
-			| filename |
-			filename := FileOpenDialog new
-						fileTypes: {DIBSection filesType. FileDialog allFilesType};
-						showModal.
-			filename notNil ifTrue: [p value: (DIBSection fromFile: filename)]])
-		type: Graphics.Bitmap;
-		bePresenterBlockReadOnly;
-		yourself!
+	^self image: aBitmapAspectSymbol type: DIBSection!
 
 block: anAspectSymbol
 	"Answer an instance of the receiver for anAspectSymbol, which is the accessor
@@ -679,21 +659,34 @@ icon: anIconAspectSymbol
 	The aspect is viewable using an ImagePresenter with a 'Basic image' view
 	and editable using a FileDialog, or edited in-place with a single line ValueWorkspace."
 
+	^(self image: anIconAspectSymbol type: Icon)
+		icon: Image icon;
+		yourself!
+
+image: aSymbol type: imageClass
+	"Answer an instance of the receiver for aBitmapAspectSymbol.
+	The aspect is viewable using an ImagePresenter with a 'Basic image' view
+	and editable using a FileDialog"
+
 	^(self
-		name: anIconAspectSymbol
+		name: aSymbol
 		presenterBlock: 
 			[:p :m |
-			| ip |
-			ip := ImagePresenter
+			| presenter |
+			presenter := ImagePresenter
 						create: 'Basic image'
 						in: p
 						on: m.
-			ip view isWholeBackgroundErased: true.
-			(m value notNil and: [m value isPersistent not]) ifTrue: [ip view viewMode: #scaleBestFit].
-			ip]
-		editBlock: [:p | InternalIcon choose ifNotNil: [:icon | p value: icon]])
-		type: Icon;
-		icon: Image icon;
+			presenter view
+				viewMode: #scaleBestFit;
+				isWholeBackgroundErased: true.
+			m value
+				ifNotNil: 
+					[:image |
+					presenter view viewMode: (image isPersistent ifTrue: [#scaleToFit] ifFalse: [#scaleBestFit])].
+			presenter]
+		editBlock: [:p | imageClass choose ifNotNil: [:choice | p value: choice]])
+		type: imageClass;
 		bePresenterBlockReadOnly;
 		yourself!
 
@@ -1060,6 +1053,7 @@ folder:!instance creation!public! !
 font:!instance creation!public! !
 hotkey:!instance creation!public! !
 icon:!instance creation!public! !
+image:type:!instance creation!public! !
 imageList:!instance creation!public! !
 initialize!constants!private! !
 inspector:!instance creation!public! !

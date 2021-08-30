@@ -47,6 +47,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Views\Buttons\Dolphin Check Buttons'
 	'..\..\..\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\..\Dolphin\System\Win32\Dolphin File System Watcher'
+	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\Dolphin\MVP\Models\List\Dolphin List Models'
 	'..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'

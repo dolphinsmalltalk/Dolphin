@@ -11,6 +11,18 @@ External.ResourceLibrary comment: 'ExternalResourceLibrary is a generic type of 
 !External.ResourceLibrary categoriesForClass!External-Libraries! !
 !External.ResourceLibrary methodsFor!
 
+= anObject
+	"Answer whether the receiver and anObject are equivalent.
+	Two DynamicLinkLibrary instances are considered equal if they are of the same species, and have (or would have if opened) the same module handle."
+
+	^self == anObject or: 
+			[self species == anObject species and: 
+					[(self isOpen and: [anObject isOpen])
+						ifTrue: [handle = anObject handle]
+						ifFalse: 
+							["Filenames should be compared using an ordinal case-insensitive comparison"
+							fileName equalsIgnoreCase: anObject fileName]]]!
+
 attemptToOpen: aString
 	^
 	[self basicOpen: aString.
@@ -21,6 +33,14 @@ fileName
 	receiver represents."
 
 	^fileName!
+
+hash
+	"Answer whether the receiver and anObject are equivalent."
+
+	^fileName hashIgnoreCase!
+
+isSelfEvaluating
+	^true!
 
 loadFlags
 	^loadFlags!
@@ -58,17 +78,31 @@ open: aString
 				signal: 'Resource library ' , fileName , ' could not be opened (' , e1 description , ')'].
 	^self!
 
+printOn: aWriteStream
+	aWriteStream
+		nextPut: $(;
+		print: self class;
+		space;
+		display: #open:;
+		space;
+		print: self fileName;
+		nextPut: $)!
+
 stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler.
 	Use a special proxy in order to share a common instance on reload."
 
 	anSTBOutFiler saveObject: self as: (STBExternalResourceLibraryProxy forLibrary: self)! !
 !External.ResourceLibrary categoriesForMethods!
+=!comparing!public! !
 attemptToOpen:!helpers!instance creation!private! !
 fileName!accessing!public! !
+hash!comparing!public! !
+isSelfEvaluating!public!testing! !
 loadFlags!constants!private! !
 loadFlags:!accessing!private! !
 open:!helpers!private! !
+printOn:!public! !
 stbSaveOn:!binary filing!instance creation!public! !
 !
 
@@ -85,14 +119,9 @@ aliasFor: libraryNameString
 	^(Libraries at: (File splitStemFrom: libName) ifAbsent: [^libName]) fileName!
 
 defaultLoadFlags
-	"Private - Answer the default LoadLibraryEx() flags to be used when loading
-	instances of the receiver.
-	Note: There appears to be a bug in Windows that results in a GPF in User32.dll if 
-	one attempts to use a dialog template from a DLL loaded as a data file, therefore
-	the development resources (for example) must be loaded without these flags."
+	"Private - Answer the default LoadLibraryEx() flags to be used when loading	instances of the receiver."
 
-	^##(LOAD_LIBRARY_AS_DATAFILE|DONT_RESOLVE_DLL_REFERENCES)
-!
+	^##(LOAD_LIBRARY_AS_IMAGE_RESOURCE|LOAD_LIBRARY_AS_DATAFILE)!
 
 initialize
 	"Private - Initialize the receiver's class variables, &c.
@@ -142,16 +171,31 @@ open: aString withAliases: aCollection flags: anInteger
 	N.B. The register of instances is weak. If the library instance is not referenced
 	from elsewhere, then the alias will be lost and will need to be re-registered."
 
-	| lib path |
+	| lib path aliases |
 	path := File default: aString asLowercase extension: 'dll'.
-	lib := Libraries at: path
-				ifAbsentPutClean: 
-					[self new
-						loadFlags: anInteger;
-						open: path;
-						initialize;
-						yourself].
-	aCollection do: [:alias | Libraries at: (File default: alias extension: 'dll') put: lib].
+	aliases := aCollection.
+	lib := (Libraries lookup: path)
+				ifNil: 
+					[| newLib fullPath |
+					newLib := self new
+								loadFlags: anInteger;
+								open: path;
+								yourself.
+					fullPath := newLib moduleFileName asLowercase.
+					"When a DLL loaded as as a resource image, GetModuleFilename will not return a path for it"
+					fullPath isEmpty
+						ifTrue: [Libraries at: path put: newLib]
+						ifFalse: 
+							[(Libraries lookup: fullPath)
+								ifNil: 
+									[Libraries
+										at: path put: newLib;
+										at: fullPath put: newLib]
+								ifNotNil: 
+									[:existing |
+									newLib close.
+									Libraries at: path put: existing]]].
+	aliases do: [:alias | Libraries at: (File default: alias extension: 'dll') put: lib].
 	^lib!
 
 stbConvertFrom: anSTBClassFormat 

@@ -233,6 +233,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\MVP\Presenters\Difference\Dolphin Differences Presenter'
+	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\MVP\Presenters\Prompters\Dolphin In-place Text Editor'
 	'..\..\MVP\Presenters\Prompters\Dolphin Key-Value Prompter'
 	'..\..\MVP\Models\List\Dolphin List Models'

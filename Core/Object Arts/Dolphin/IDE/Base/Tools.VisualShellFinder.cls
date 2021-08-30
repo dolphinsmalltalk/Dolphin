@@ -49,12 +49,10 @@ initialize
 notFoundCursor: anObject
 	notFoundCursor := anObject asCursor!
 
-setCursor: anIconOrCursor 
+setCursor: anIconOrCursor
 	"Set the tracking cursor to anIconOrCursor. "
 
-	"If this is an Icon then we need to create a new Cursor from the handle"
-
-	(Cursor fromHandle: anIconOrCursor handle) makeCurrent!
+	anIconOrCursor asCursor makeCurrent!
 
 shellClassFilter
 	^shellClassFilter!

@@ -38,6 +38,7 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Dialogs\Common\Dolphin Common Dialogs'
+	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Base\Dolphin MVP Base'
 	'Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
@@ -508,7 +509,7 @@ selectionRtf:!private!selection! !
 !UI.View methodsFor!
 
 richText
-	"Answer a RichText containing the rich text contents of the receiver.
+	"Answer a <RichText> containing the rich text contents of the receiver.
 	May be overridden by subclasses which actually contain rich text."
 
 	^self plainText asRichText! !

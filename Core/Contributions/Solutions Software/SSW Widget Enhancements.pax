@@ -25,8 +25,6 @@ package methodNames
 	add: #ComboBox -> #hasCueBanner;
 	add: #Date -> #shortString;
 	add: #GDILibrary -> #getClipRgn:hrgn:;
-	add: #Icon -> #asSmallIcon;
-	add: #Icon -> #withExtent:;
 	add: #KeyEvent -> #resendTo:;
 	add: #Menu -> #showIn:position:rightAlign:;
 	add: #NullConverter -> #isNullConverter;
@@ -75,7 +73,6 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin Legacy Date & Time'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
-	'..\..\Object Arts\Dolphin\MVP\Views\Buttons\Dolphin Push Buttons'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Object Arts\Dolphin\MVP\Views\Tooltips\Dolphin Tooltips'
 	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters').
@@ -85,7 +82,7 @@ package!
 "Class Definitions"!
 
 Icon subclass: #IconWithExtent
-	instanceVariableNames: 'extent'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -219,25 +216,6 @@ getClipRgn: hdc hrgn: hRegion
 	^self invalidCall: _failureCode! !
 !GDILibrary categoriesForMethods!
 getClipRgn:hrgn:!public!win32 functions-clipping! !
-!
-
-!Icon methodsFor!
-
-asSmallIcon
-
-	^self withExtent: 16@16!
-
-withExtent: aPoint
-
-	^IconWithExtent new
-		fileLocator: self fileLocator;
-		identifier: self identifier;
-		instanceHandle: self instanceHandle;
-		extent: aPoint;
-		yourself! !
-!Icon categoriesForMethods!
-asSmallIcon!converting!public! !
-withExtent:!converting!public! !
 !
 
 !WinImageList methodsFor!

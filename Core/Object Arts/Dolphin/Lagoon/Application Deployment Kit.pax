@@ -81,6 +81,7 @@ package setPrerequisites: #(
 	'..\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\MVP\Views\Control Bars\Dolphin Control Bars'
+	'..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\MVP\Views\GroupBox\Dolphin GroupBox'
 	'..\MVP\Presenters\Image\Dolphin Image Presenter'
 	'..\MVP\Models\List\Dolphin List Models'

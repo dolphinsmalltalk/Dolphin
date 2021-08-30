@@ -119,6 +119,18 @@ Note that in general, the UndefinedObject, nil, is interchangeable with 0, or NU
 !External.DynamicLinkLibrary categoriesForClass!External-Libraries! !
 !External.DynamicLinkLibrary methodsFor!
 
+= anObject
+	"Answer whether the receiver and anObject are equivalent.
+	Two DynamicLinkLibrary instances are considered equal if they are of the same species, and have (or would have if opened) the same module handle."
+
+	^self == anObject or: 
+			[self species == anObject species and: 
+					[(self isOpen and: [anObject isOpen])
+						ifTrue: [handle = anObject handle]
+						ifFalse: 
+							["Filenames should be compared using an ordinal case-insensitive comparison"
+							self class fileName equalsIgnoreCase: anObject class fileName]]]!
+
 asParameter
 	"Answer the receiver in a form appropriate for passing to an external
 	library procedure."
@@ -191,6 +203,9 @@ handle: aHandle
 	Answer the receiver."
 
 	handle := aHandle ifNotNil: [aHandle asExternalHandle]!
+
+hash
+	^self class fileName hashIgnoreCase!
 
 invalidArgErrorClass
 	"Private - Answer the class of Error to be signalled when an invalid argument is passed to one of 
@@ -320,6 +335,7 @@ versionString
 
 	^self versionInfo formatVersionString: self versionFormatString! !
 !External.DynamicLinkLibrary categoriesForMethods!
+=!comparing!public! !
 asParameter!converting!public! !
 basicFree!private!realizing/unrealizing! !
 basicOpen:!private!realizing/unrealizing! !
@@ -331,6 +347,7 @@ getProcAddress:!accessing!private! !
 getProcAddress:ifAbsent:!accessing!private! !
 handle!accessing!private! !
 handle:!accessing!private! !
+hash!comparing!public! !
 invalidArgErrorClass!constants!private! !
 invalidCall:!exceptions!public! !
 isOpen!public!testing! !

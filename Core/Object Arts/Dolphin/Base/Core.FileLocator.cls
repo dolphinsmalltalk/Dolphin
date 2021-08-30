@@ -43,7 +43,7 @@ Sometimes, especially in the case of development tools, you might want a resourc
 !Core.FileLocator methodsFor!
 
 basePath
-	^SessionManager current imageBase!
+	^SessionManager.Current imageBase!
 
 findOrImportForeignClass
 	"An attempt is being made by a <ClassLocator> to load a class when the dynamic loading

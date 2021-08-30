@@ -63,7 +63,7 @@ createDragImageList
 	(if any) is painted, depending on the display driver."
 	dragImageList := ImageList
 				newExtent: bitmap extent
-				depth: ILC_COLORDB
+				depth: ImageList.ILC_COLORDB
 				masked: false.
 	dragImageList addImage: bitmap.
 	bitmap free.

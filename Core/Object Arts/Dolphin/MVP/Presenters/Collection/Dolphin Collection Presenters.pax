@@ -25,6 +25,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Views\Common Controls\Dolphin Common Controls'
 	'..\..\Views\Control Bars\Dolphin Control Bars'
+	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\Prompters\Dolphin Key-Value Prompter'
 	'..\..\Models\List\Dolphin List Models'
 	'..\List\Dolphin List Presenter'

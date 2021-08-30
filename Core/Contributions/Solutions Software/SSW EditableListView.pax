@@ -39,7 +39,6 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
-	'..\..\Object Arts\Dolphin\MVP\Views\Buttons\Dolphin Check Buttons'
 	'..\..\Object Arts\Dolphin\MVP\Views\Common Controls\Dolphin Common Controls'
 	'..\..\Object Arts\Dolphin\MVP\Presenters\Date Time\Dolphin Date Time Presenters'
 	'..\..\Object Arts\Dolphin\MVP\Models\List\Dolphin List Models'

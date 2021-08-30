@@ -100,7 +100,6 @@ package setPrerequisites: #(
 	'..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\..\Object Arts\Dolphin\Base\Dolphin Message Box'
 	'..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
-	'..\..\..\Object Arts\Dolphin\MVP\Views\Splitter\Dolphin Splitter Control'
 	'..\..\..\Object Arts\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Object Arts\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'

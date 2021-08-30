@@ -1,0 +1,861 @@
+﻿| package |
+package := Package name: 'Dolphin GDI Graphics'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk GDI Graphics
+Copyright ©️ Object Arts Ltd. 1997-2021. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.'.
+
+
+package setClassNames: #(
+	#{External.SIZE}
+	#{Graphics.AbstractBitmapFromBlankInitializer}
+	#{Graphics.AbstractRGB}
+	#{Graphics.ARGB}
+	#{Graphics.Bitmap}
+	#{Graphics.BitmapFromBlankInitializer}
+	#{Graphics.BitmapFromBytesInitializer}
+	#{Graphics.Brush}
+	#{Graphics.Canvas}
+	#{Graphics.Color}
+	#{Graphics.ColorAlpha}
+	#{Graphics.ColorDefault}
+	#{Graphics.ColorNone}
+	#{Graphics.ColorRef}
+	#{Graphics.Cursor}
+	#{Graphics.DIBSection}
+	#{Graphics.DIBSectionFromBlankInitializer}
+	#{Graphics.DisplayCompatibleBitmapInitializer}
+	#{Graphics.Font}
+	#{Graphics.GraphicsTool}
+	#{Graphics.HatchBrush}
+	#{Graphics.Icon}
+	#{Graphics.IconFromSystemInitializer}
+	#{Graphics.IconImageManager}
+	#{Graphics.Image}
+	#{Graphics.ImageFromFileInitializer}
+	#{Graphics.ImageFromHandleInitializer}
+	#{Graphics.ImageFromResourceInitializer}
+	#{Graphics.ImageFromStringResourceInitializer}
+	#{Graphics.ImageInitializer}
+	#{Graphics.ImageList}
+	#{Graphics.ImageManager}
+	#{Graphics.IndexedColor}
+	#{Graphics.NullIcon}
+	#{Graphics.Pen}
+	#{Graphics.PluggableColor}
+	#{Graphics.PrinterCanvas}
+	#{Graphics.Region}
+	#{Graphics.RGB}
+	#{Graphics.StockBrush}
+	#{Graphics.StockFont}
+	#{Graphics.StockPen}
+	#{Graphics.SysColorBrush}
+	#{Graphics.SystemColor}
+	#{Graphics.ThemeColor}
+	#{Graphics.VirtualColor}
+	#{OS.AbstractLOGFONT}
+	#{OS.BITMAP}
+	#{OS.BITMAPFILEHEADER}
+	#{OS.BITMAPINFO}
+	#{OS.BITMAPINFOHEADER}
+	#{OS.BLENDFUNCTION}
+	#{OS.DEVMODE}
+	#{OS.DIBSECTION}
+	#{OS.DOCINFOW}
+	#{OS.ENUMLOGFONTW}
+	#{OS.GDILibrary}
+	#{OS.GRADIENT_RECT}
+	#{OS.GRADIENT_TRIANGLE}
+	#{OS.ICONINFO}
+	#{OS.LOGBRUSH}
+	#{OS.LOGFONT}
+	#{OS.LOGFONTW}
+	#{OS.LOGPALETTE}
+	#{OS.LOGPEN}
+	#{OS.NEWTEXTMETRICW}
+	#{OS.NONCLIENTMETRICSW}
+	#{OS.OUTLINETEXTMETRICW}
+	#{OS.PALETTEENTRY}
+	#{OS.PANOSE}
+	#{OS.RGBQUAD}
+	#{OS.SIZEL}
+	#{OS.SystemMetrics}
+	#{OS.TEXTMETRICW}
+	#{OS.TRIVERTEX}
+).
+
+package setMethodNames: #(
+	#(#{Core.ClassDescription} #defaultIcon)
+	#(#{Core.ClassDescription} #defaultIconName)
+	#(#{Core.ClassDescription} #defaultResourceIcon)
+	#(#{Core.ClassDescription} #defaultResourceIconName)
+).
+
+package setVariableNames: #(
+	#{OS.ComCtl32}
+	#{OS.Gdi32}
+).
+
+package setBinaryVariableNames: #(
+	#{OS.ComCtl32}
+	#{OS.Gdi32}
+).
+
+package setPrerequisites: #(
+	'..\..\System\Win32\CommCtrl\Common Controls Library'
+	'..\..\Base\Dolphin'
+	'..\Base\Dolphin Basic Geometry'
+	'..\..\Base\Dolphin Conformant Array Fields'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.Object subclass: #'Graphics.Canvas'
+	instanceVariableNames: 'handle source owned pen brush font saved saveIds'
+	classVariableNames: 'DesktopResolution'
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object subclass: #'Graphics.Color'
+	instanceVariableNames: ''
+	classVariableNames: 'Black ColorNames CommonColors Default Face3d NamedColors None White Window WindowText'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object subclass: #'Graphics.GraphicsTool'
+	instanceVariableNames: 'handle ownsHandle'
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object subclass: #'Graphics.ImageInitializer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object subclass: #'Graphics.ImageManager'
+	instanceVariableNames: 'images imageLists maskcolor backcolor'
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object subclass: #'OS.SystemMetrics'
+	instanceVariableNames: 'menuCheckExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth hasIconScaleDown isNotWine'
+	classVariableNames: 'Current'
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Canvas subclass: #'Graphics.PrinterCanvas'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Color subclass: #'Graphics.AbstractRGB'
+	instanceVariableNames: 'code'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Color subclass: #'Graphics.IndexedColor'
+	instanceVariableNames: 'index'
+	classVariableNames: 'InstancesByIndex InstancesByName Names'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Color subclass: #'Graphics.SystemColor'
+	instanceVariableNames: 'id'
+	classVariableNames: 'ColorsById NamesById'
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Color subclass: #'Graphics.VirtualColor'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.AbstractRGB subclass: #'Graphics.ARGB'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.AbstractRGB subclass: #'Graphics.ColorRef'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.ColorRef subclass: #'Graphics.ColorDefault'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.ColorRef subclass: #'Graphics.ColorNone'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.ColorRef subclass: #'Graphics.RGB'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.VirtualColor subclass: #'Graphics.ColorAlpha'
+	instanceVariableNames: 'color alpha'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.VirtualColor subclass: #'Graphics.PluggableColor'
+	instanceVariableNames: 'valuable'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.VirtualColor subclass: #'Graphics.ThemeColor'
+	instanceVariableNames: 'name actualColor'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.PermanentLibrary subclass: #'OS.GDILibrary'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.GraphicsTool subclass: #'Graphics.Brush'
+	instanceVariableNames: 'logBrush'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.GraphicsTool subclass: #'Graphics.Font'
+	instanceVariableNames: 'logfont resolution'
+	classVariableNames: 'System'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.GraphicsTool subclass: #'Graphics.Image'
+	instanceVariableNames: 'initializer'
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.GraphicsTool subclass: #'Graphics.ImageList'
+	instanceVariableNames: 'extent initialSize growBy createFlags'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ILC_COLOR' -> 16r0.
+		'ILC_COLOR16' -> 16r10.
+		'ILC_COLOR32' -> 16r20.
+		'ILC_COLOR4' -> 16r4.
+		'ILC_COLOR8' -> 16r8.
+		'ILC_COLORDB' -> 16rFE.
+		'ILC_HIGHQUALITYSCALE' -> 16r20000.
+		'ILC_MASK' -> 16r1.
+		'ILC_ORIGINALSIZE' -> 16r10000.
+		'ILC_PALETTE' -> 16r800.
+		'ILD_ASYNC' -> 16r8000.
+		'ILD_BLEND' -> 16rF00.
+		'ILD_BLEND25' -> 16r2.
+		'ILD_BLEND50' -> 16r4.
+		'ILD_DPISCALE' -> 16r4000.
+		'ILD_FOCUS' -> 16r4.
+		'ILD_IMAGE' -> 16r20.
+		'ILD_MASK' -> 16r10.
+		'ILD_NORMAL' -> 16r0.
+		'ILD_OVERLAYMASK' -> 16rF00.
+		'ILD_PRESERVEALPHA' -> 16r1000.
+		'ILD_ROP' -> 16r40.
+		'ILD_SCALE' -> 16r2000.
+		'ILD_SELECTED' -> 16r4.
+		'ILD_TRANSPARENT' -> 16r1
+	}!
+Graphics.GraphicsTool subclass: #'Graphics.Pen'
+	instanceVariableNames: 'logPen'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.GraphicsTool subclass: #'Graphics.Region'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Brush subclass: #'Graphics.HatchBrush'
+	instanceVariableNames: 'id color'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Brush subclass: #'Graphics.StockBrush'
+	instanceVariableNames: 'id'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.StockBrush subclass: #'Graphics.SysColorBrush'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Font subclass: #'Graphics.StockFont'
+	instanceVariableNames: 'id'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Image subclass: #'Graphics.Bitmap'
+	instanceVariableNames: 'hdc flags extent'
+	classVariableNames: 'SharedBitmaps'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'IsSharedMask' -> 16r2
+	}!
+Graphics.Image subclass: #'Graphics.Icon'
+	instanceVariableNames: ''
+	classVariableNames: 'Blank DefaultApplication Error HasScaleDown Information LargeExtent Question SmallExtent Warning WinLogo'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ExtraLargeExtent' -> (16r100@16r100).
+		'TileExtent' -> (16r30@16r30)
+	}!
+Graphics.Bitmap subclass: #'Graphics.DIBSection'
+	instanceVariableNames: 'depth imageBits'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Icon subclass: #'Graphics.Cursor'
+	instanceVariableNames: ''
+	classVariableNames: 'AppStarting Arrow Cross Current DDCopy DDCopyScroll DDLink DDLinkScroll DDMove DDMoveScroll DDNone DefaultExtent Hand Help IBeam No SizeAll SizeNESW SizeNS SizeNWSE SizeWE SplitHorizontal SplitVertical UpArrow Wait'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Icon subclass: #'Graphics.NullIcon'
+	instanceVariableNames: ''
+	classVariableNames: 'Current'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.Pen subclass: #'Graphics.StockPen'
+	instanceVariableNames: 'id'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.ImageInitializer subclass: #'Graphics.AbstractBitmapFromBlankInitializer'
+	instanceVariableNames: 'extent depth'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.ImageInitializer subclass: #'Graphics.DisplayCompatibleBitmapInitializer'
+	instanceVariableNames: 'extent'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.ImageInitializer subclass: #'Graphics.IconFromSystemInitializer'
+	instanceVariableNames: 'identifier extent'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.ImageInitializer subclass: #'Graphics.ImageFromFileInitializer'
+	instanceVariableNames: 'filename fileLocator flags extent'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.ImageInitializer subclass: #'Graphics.ImageFromHandleInitializer'
+	instanceVariableNames: 'handle'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.ImageInitializer subclass: #'Graphics.ImageFromResourceInitializer'
+	instanceVariableNames: 'identifier module flags extent'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.AbstractBitmapFromBlankInitializer subclass: #'Graphics.BitmapFromBlankInitializer'
+	instanceVariableNames: 'planes'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.AbstractBitmapFromBlankInitializer subclass: #'Graphics.DIBSectionFromBlankInitializer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.BitmapFromBlankInitializer subclass: #'Graphics.BitmapFromBytesInitializer'
+	instanceVariableNames: 'bytes'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.ImageFromResourceInitializer subclass: #'Graphics.ImageFromStringResourceInitializer'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.ImageManager subclass: #'Graphics.IconImageManager'
+	instanceVariableNames: 'bitmaps'
+	classVariableNames: 'Current'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Structure subclass: #'OS.DEVMODE'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dmBitsPerPel' -> 16r68.
+		'_OffsetOf_dmCollate' -> 16r44.
+		'_OffsetOf_dmColor' -> 16r3C.
+		'_OffsetOf_dmCopies' -> 16r36.
+		'_OffsetOf_dmDefaultSource' -> 16r38.
+		'_OffsetOf_dmDeviceName' -> 16r0.
+		'_OffsetOf_dmDisplayFlags' -> 16r74.
+		'_OffsetOf_dmDisplayFrequency' -> 16r78.
+		'_OffsetOf_dmDitherType' -> 16r88.
+		'_OffsetOf_dmDriverExtra' -> 16r26.
+		'_OffsetOf_dmDriverVersion' -> 16r22.
+		'_OffsetOf_dmDuplex' -> 16r3E.
+		'_OffsetOf_dmFields' -> 16r28.
+		'_OffsetOf_dmFormName' -> 16r46.
+		'_OffsetOf_dmICMIntent' -> 16r80.
+		'_OffsetOf_dmICMMethod' -> 16r7C.
+		'_OffsetOf_dmLogPixels' -> 16r66.
+		'_OffsetOf_dmMediaType' -> 16r84.
+		'_OffsetOf_dmOrientation' -> 16r2C.
+		'_OffsetOf_dmPaperLength' -> 16r30.
+		'_OffsetOf_dmPaperSize' -> 16r2E.
+		'_OffsetOf_dmPaperWidth' -> 16r32.
+		'_OffsetOf_dmPelsHeight' -> 16r70.
+		'_OffsetOf_dmPelsWidth' -> 16r6C.
+		'_OffsetOf_dmPrintQuality' -> 16r3A.
+		'_OffsetOf_dmReserved1' -> 16r8C.
+		'_OffsetOf_dmReserved2' -> 16r90.
+		'_OffsetOf_dmScale' -> 16r34.
+		'_OffsetOf_dmSize' -> 16r24.
+		'_OffsetOf_dmSpecVersion' -> 16r20.
+		'_OffsetOf_dmTTOption' -> 16r42.
+		'_OffsetOf_dmYResolution' -> 16r40
+	}!
+External.Structure subclass: #'External.SIZE'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.SIZE subclass: #'OS.SIZEL'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_cx' -> 16r0.
+		'_OffsetOf_cy' -> 16r4
+	}!
+OS.Win32Structure subclass: #'OS.AbstractLOGFONT'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_lfCharSet' -> 16r17.
+		'_OffsetOf_lfClipPrecision' -> 16r19.
+		'_OffsetOf_lfEscapement' -> 16r8.
+		'_OffsetOf_lfHeight' -> 16r0.
+		'_OffsetOf_lfItalic' -> 16r14.
+		'_OffsetOf_lfOrientation' -> 16rC.
+		'_OffsetOf_lfOutPrecision' -> 16r18.
+		'_OffsetOf_lfPitchAndFamily' -> 16r1B.
+		'_OffsetOf_lfQuality' -> 16r1A.
+		'_OffsetOf_lfStrikeOut' -> 16r16.
+		'_OffsetOf_lfUnderline' -> 16r15.
+		'_OffsetOf_lfWeight' -> 16r10.
+		'_OffsetOf_lfWidth' -> 16r4
+	}!
+OS.Win32Structure subclass: #'OS.BITMAP'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bmBits' -> 16r14.
+		'_OffsetOf_bmBitsPixel' -> 16r12.
+		'_OffsetOf_bmHeight' -> 16r8.
+		'_OffsetOf_bmPlanes' -> 16r10.
+		'_OffsetOf_bmType' -> 16r0.
+		'_OffsetOf_bmWidth' -> 16r4.
+		'_OffsetOf_bmWidthBytes' -> 16rC
+	}!
+OS.Win32Structure subclass: #'OS.BITMAPFILEHEADER'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bfOffBits' -> 16rA.
+		'_OffsetOf_bfReserved1' -> 16r6.
+		'_OffsetOf_bfReserved2' -> 16r8.
+		'_OffsetOf_bfSize' -> 16r2.
+		'_OffsetOf_bfType' -> 16r0
+	}!
+OS.Win32Structure subclass: #'OS.BITMAPINFO'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bmiColors' -> 16r28.
+		'_OffsetOf_bmiHeader' -> 16r0
+	}!
+OS.Win32Structure subclass: #'OS.BITMAPINFOHEADER'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_biBitCount' -> 16rE.
+		'_OffsetOf_biClrImportant' -> 16r24.
+		'_OffsetOf_biClrUsed' -> 16r20.
+		'_OffsetOf_biCompression' -> 16r10.
+		'_OffsetOf_biHeight' -> 16r8.
+		'_OffsetOf_biPlanes' -> 16rC.
+		'_OffsetOf_biSizeImage' -> 16r14.
+		'_OffsetOf_biWidth' -> 16r4.
+		'_OffsetOf_biXPelsPerMeter' -> 16r18.
+		'_OffsetOf_biYPelsPerMeter' -> 16r1C.
+		'_OffsetOf_dwSize' -> 16r0
+	}!
+OS.Win32Structure subclass: #'OS.BLENDFUNCTION'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_AlphaFormat' -> 16r3.
+		'_OffsetOf_BlendFlags' -> 16r1.
+		'_OffsetOf_BlendOp' -> 16r0.
+		'_OffsetOf_SourceConstantAlpha' -> 16r2
+	}!
+OS.Win32Structure subclass: #'OS.DOCINFOW'
+	instanceVariableNames: 'docName'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_fwType' -> 16r10.
+		'_OffsetOf_lpszDatatype' -> 16rC.
+		'_OffsetOf_lpszDocName' -> 16r4.
+		'_OffsetOf_lpszOutput' -> 16r8
+	}!
+OS.Win32Structure subclass: #'OS.GRADIENT_RECT'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_lowerRight' -> 16r4.
+		'_OffsetOf_upperLeft' -> 16r0
+	}!
+OS.Win32Structure subclass: #'OS.GRADIENT_TRIANGLE'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_Vertex1' -> 16r0.
+		'_OffsetOf_Vertex2' -> 16r4.
+		'_OffsetOf_Vertex3' -> 16r8
+	}!
+OS.Win32Structure subclass: #'OS.ICONINFO'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_fIcon' -> 16r0.
+		'_OffsetOf_hbmColor' -> 16r10.
+		'_OffsetOf_hbmMask' -> 16rC.
+		'_OffsetOf_xHotspot' -> 16r4.
+		'_OffsetOf_yHotspot' -> 16r8
+	}!
+OS.Win32Structure subclass: #'OS.LOGBRUSH'
+	instanceVariableNames: 'hatch'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_lbColor' -> 16r4.
+		'_OffsetOf_lbHatch' -> 16r8.
+		'_OffsetOf_lbStyle' -> 16r0
+	}!
+OS.Win32Structure subclass: #'OS.LOGPALETTE'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_palNumEntries' -> 16r2.
+		'_OffsetOf_palPalEntry' -> 16r4.
+		'_OffsetOf_palVersion' -> 16r0
+	}!
+OS.Win32Structure subclass: #'OS.LOGPEN'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_lopnColor' -> 16rC.
+		'_OffsetOf_lopnStyle' -> 16r0.
+		'_OffsetOf_lopnWidth' -> 16r4
+	}!
+OS.Win32Structure subclass: #'OS.NONCLIENTMETRICSW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_iBorderWidth' -> 16r4.
+		'_OffsetOf_iCaptionHeight' -> 16r14.
+		'_OffsetOf_iCaptionWidth' -> 16r10.
+		'_OffsetOf_iMenuHeight' -> 16rDC.
+		'_OffsetOf_iMenuWidth' -> 16rD8.
+		'_OffsetOf_iPaddedBorderWidth' -> 16r1F4.
+		'_OffsetOf_iScrollHeight' -> 16rC.
+		'_OffsetOf_iScrollWidth' -> 16r8.
+		'_OffsetOf_iSmCaptionHeight' -> 16r78.
+		'_OffsetOf_iSmCaptionWidth' -> 16r74.
+		'_OffsetOf_lfCationFont' -> 16r18.
+		'_OffsetOf_lfMenuFont' -> 16rE0.
+		'_OffsetOf_lfMessageFont' -> 16r198.
+		'_OffsetOf_lfSmCaptionFont' -> 16r7C.
+		'_OffsetOf_lfStatusFont' -> 16r13C
+	}!
+OS.Win32Structure subclass: #'OS.OUTLINETEXTMETRICW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dwSize' -> 16r0.
+		'_OffsetOf_otmAscent' -> 16r64.
+		'_OffsetOf_otmDescent' -> 16r68.
+		'_OffsetOf_otmEMSquare' -> 16r60.
+		'_OffsetOf_otmFiller' -> 16r40.
+		'_OffsetOf_otmfsSelection' -> 16r4C.
+		'_OffsetOf_otmfsType' -> 16r50.
+		'_OffsetOf_otmItalicAngle' -> 16r5C.
+		'_OffsetOf_otmLineGap' -> 16r6C.
+		'_OffsetOf_otmMacAscent' -> 16r88.
+		'_OffsetOf_otmMacDescent' -> 16r8C.
+		'_OffsetOf_otmMacLineGap' -> 16r90.
+		'_OffsetOf_otmPanoseNumber' -> 16r41.
+		'_OffsetOf_otmpFaceName' -> 16rCC.
+		'_OffsetOf_otmpFamilyName' -> 16rC8.
+		'_OffsetOf_otmpFullName' -> 16rD4.
+		'_OffsetOf_otmpStyleName' -> 16rD0.
+		'_OffsetOf_otmptSubscriptOffset' -> 16rA0.
+		'_OffsetOf_otmptSubscriptSize' -> 16r98.
+		'_OffsetOf_otmptSuperscriptOffset' -> 16rB0.
+		'_OffsetOf_otmptSuperscriptSize' -> 16rA8.
+		'_OffsetOf_otmrcFontBox' -> 16r78.
+		'_OffsetOf_otmsCapEmHeight' -> 16r70.
+		'_OffsetOf_otmsCharSlopeRise' -> 16r54.
+		'_OffsetOf_otmsCharSlopeRun' -> 16r58.
+		'_OffsetOf_otmsStrikeoutPosition' -> 16rBC.
+		'_OffsetOf_otmsStrikeoutSize' -> 16rB8.
+		'_OffsetOf_otmsUnderscorePosition' -> 16rC4.
+		'_OffsetOf_otmsUnderscoreSize' -> 16rC0.
+		'_OffsetOf_otmsXHeight' -> 16r74.
+		'_OffsetOf_otmTextMetrics' -> 16r4.
+		'_OffsetOf_otmusMinimumPPEM' -> 16r94
+	}!
+OS.Win32Structure subclass: #'OS.PALETTEENTRY'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_peBlue' -> 16r2.
+		'_OffsetOf_peFlags' -> 16r3.
+		'_OffsetOf_peGreen' -> 16r1.
+		'_OffsetOf_peRed' -> 16r0
+	}!
+OS.Win32Structure subclass: #'OS.PANOSE'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_bArmStyle' -> 16r6.
+		'_OffsetOf_bContrast' -> 16r4.
+		'_OffsetOf_bFamilyType' -> 16r0.
+		'_OffsetOf_bLetterform' -> 16r7.
+		'_OffsetOf_bMidline' -> 16r8.
+		'_OffsetOf_bProportion' -> 16r3.
+		'_OffsetOf_bSerifStyle' -> 16r1.
+		'_OffsetOf_bStrokeVariation' -> 16r5.
+		'_OffsetOf_bWeight' -> 16r2.
+		'_OffsetOf_bXHeight' -> 16r9
+	}!
+OS.Win32Structure subclass: #'OS.RGBQUAD'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_rgbBlue' -> 16r0.
+		'_OffsetOf_rgbGreen' -> 16r1.
+		'_OffsetOf_rgbRed' -> 16r2.
+		'_OffsetOf_rgbReserved' -> 16r3
+	}!
+OS.Win32Structure subclass: #'OS.TEXTMETRICW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_tmAscent' -> 16r4.
+		'_OffsetOf_tmAveCharWidth' -> 16r14.
+		'_OffsetOf_tmBreakChar' -> 16r32.
+		'_OffsetOf_tmCharSet' -> 16r38.
+		'_OffsetOf_tmDefaultChar' -> 16r30.
+		'_OffsetOf_tmDescent' -> 16r8.
+		'_OffsetOf_tmDigitizedAspectX' -> 16r24.
+		'_OffsetOf_tmDigitizedAspectY' -> 16r28.
+		'_OffsetOf_tmExternalLeading' -> 16r10.
+		'_OffsetOf_tmFirstChar' -> 16r2C.
+		'_OffsetOf_tmHeight' -> 16r0.
+		'_OffsetOf_tmInternalLeading' -> 16rC.
+		'_OffsetOf_tmItalic' -> 16r34.
+		'_OffsetOf_tmLastChar' -> 16r2E.
+		'_OffsetOf_tmMaxCharWidth' -> 16r18.
+		'_OffsetOf_tmOverhang' -> 16r20.
+		'_OffsetOf_tmPitchAndFamily' -> 16r37.
+		'_OffsetOf_tmStruckOut' -> 16r36.
+		'_OffsetOf_tmUnderlined' -> 16r35.
+		'_OffsetOf_tmWeight' -> 16r1C
+	}!
+OS.Win32Structure subclass: #'OS.TRIVERTEX'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_alpha' -> 16rE.
+		'_OffsetOf_blue' -> 16rC.
+		'_OffsetOf_green' -> 16rA.
+		'_OffsetOf_red' -> 16r8.
+		'_OffsetOf_x' -> 16r0.
+		'_OffsetOf_y' -> 16r4
+	}!
+OS.AbstractLOGFONT subclass: #'OS.LOGFONT'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_lfFaceName' -> 16r1C
+	}!
+OS.AbstractLOGFONT subclass: #'OS.LOGFONTW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_lfFaceName' -> 16r1C
+	}!
+OS.LOGFONTW subclass: #'OS.ENUMLOGFONTW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_elfFullName' -> 16r5C.
+		'_OffsetOf_elfStyle' -> 16rDC
+	}!
+OS.BITMAP subclass: #'OS.DIBSECTION'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_dsBitfields' -> 16r40.
+		'_OffsetOf_dsBmih' -> 16r18.
+		'_OffsetOf_dshSection' -> 16r4C.
+		'_OffsetOf_dsOffset' -> 16r50
+	}!
+OS.TEXTMETRICW subclass: #'OS.NEWTEXTMETRICW'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ntmAvgWidth' -> 16r48.
+		'_OffsetOf_ntmCellHeight' -> 16r44.
+		'_OffsetOf_ntmFlags' -> 16r3C.
+		'_OffsetOf_ntmSizeEM' -> 16r40
+	}!
+
+"Loose Methods"!
+
+!Core.ClassDescription methodsFor!
+
+defaultIcon
+	"Answer a suitable default icon to use for this class. Not all classes use their 
+	default icon; one must define an appropriate #icon method in each class where the 
+	icon required differs from that of the superclass."
+
+	^#{Graphics.Icon} value fromId: self defaultIconName!
+
+defaultIconName
+	"Answer a filename to use to find an icon for this class."
+
+	^File composeStem: self name extension: '.ico'!
+
+defaultResourceIcon
+	"Answer a suitable default icon resource to use for this class. Note that this method differs
+	from #defaultIcon in that it uses the #resourceLocator of the class to locate the icon file"
+
+	^#{Graphics.Icon} value fromId: self defaultResourceIconName!
+
+defaultResourceIconName
+	"Answer a filename to use for an icon of this class loaded from the class resources location."
+
+	^self instanceClass resourcesLocator localFileSpecFor: self defaultIconName! !
+!Core.ClassDescription categoriesForMethods!
+defaultIcon!constants!public! !
+defaultIconName!constants!public! !
+defaultResourceIcon!constants!public! !
+defaultResourceIconName!constants!public! !
+!
+
+"End of package definition"!
+

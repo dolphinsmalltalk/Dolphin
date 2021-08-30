@@ -34,71 +34,18 @@ resIds isEmpty
 package basicScriptAt: #preuninstall put: 'MemoryManager current collectGarbage; collectGarbage; administerLastRites!!'.
 
 package setClassNames: #(
-	#{External.SIZE}
-	#{Graphics.AbstractRGB}
-	#{Graphics.ARGB}
-	#{Graphics.Bitmap}
-	#{Graphics.Brush}
-	#{Graphics.Canvas}
-	#{Graphics.Color}
-	#{Graphics.ColorAlpha}
-	#{Graphics.ColorDefault}
-	#{Graphics.ColorNone}
-	#{Graphics.ColorRef}
-	#{Graphics.Cursor}
-	#{Graphics.DIBSection}
-	#{Graphics.Font}
-	#{Graphics.GraphicsTool}
 	#{Graphics.Grid}
-	#{Graphics.HatchBrush}
-	#{Graphics.Icon}
-	#{Graphics.IconImageManager}
-	#{Graphics.Image}
-	#{Graphics.ImageList}
-	#{Graphics.ImageManager}
-	#{Graphics.IndexedColor}
-	#{Graphics.NullIcon}
-	#{Graphics.Pen}
-	#{Graphics.PluggableColor}
-	#{Graphics.PrinterCanvas}
-	#{Graphics.Region}
-	#{Graphics.RGB}
-	#{Graphics.StockBrush}
-	#{Graphics.StockFont}
-	#{Graphics.StockPen}
-	#{Graphics.SysColorBrush}
-	#{Graphics.SystemColor}
-	#{Graphics.ThemeColor}
-	#{Graphics.VirtualColor}
-	#{OS.AbstractLOGFONT}
 	#{OS.ACCEL}
-	#{OS.BITMAP}
-	#{OS.BITMAPINFO}
-	#{OS.BITMAPINFOHEADER}
-	#{OS.BLENDFUNCTION}
 	#{OS.BP_ANIMATIONPARAMS}
 	#{OS.BP_PAINTPARAMS}
 	#{OS.ButtonConstants}
 	#{OS.CommCtrlConstants}
-	#{OS.DEVMODE}
-	#{OS.DIBSECTION}
 	#{OS.DISPLAY_DEVICEW}
-	#{OS.DOCINFOW}
 	#{OS.DRAWITEMSTRUCT}
 	#{OS.DTBGOPTS}
 	#{OS.DwmApiLibrary}
-	#{OS.ENUMLOGFONTW}
 	#{OS.FLASHWINFO}
-	#{OS.GDILibrary}
-	#{OS.GRADIENT_RECT}
-	#{OS.GRADIENT_TRIANGLE}
-	#{OS.ICONINFO}
 	#{OS.LASTINPUTINFO}
-	#{OS.LOGBRUSH}
-	#{OS.LOGFONT}
-	#{OS.LOGFONTW}
-	#{OS.LOGPALETTE}
-	#{OS.LOGPEN}
 	#{OS.MARGINS}
 	#{OS.MEASUREITEMSTRUCT}
 	#{OS.MENUINFO}
@@ -108,26 +55,16 @@ package setClassNames: #(
 	#{OS.MONITORINFO}
 	#{OS.MONITORINFOEXW}
 	#{OS.NCCALCSIZE_PARAMS}
-	#{OS.NEWTEXTMETRICW}
 	#{OS.NMHDR}
 	#{OS.NMTTDISPINFOW}
-	#{OS.NONCLIENTMETRICSW}
 	#{OS.NOTIFYICONDATAW}
-	#{OS.OUTLINETEXTMETRICW}
 	#{OS.OwnerDrawStruct}
 	#{OS.PAINTSTRUCT}
-	#{OS.PALETTEENTRY}
-	#{OS.PANOSE}
-	#{OS.RGBQUAD}
 	#{OS.RGNDATA}
 	#{OS.SCROLLINFO}
-	#{OS.SIZEL}
-	#{OS.SystemMetrics}
-	#{OS.TEXTMETRICW}
 	#{OS.ThemeConstants}
 	#{OS.ThemeLibrary}
 	#{OS.TRACKMOUSEEVENT}
-	#{OS.TRIVERTEX}
 	#{OS.VistaThemeLibrary}
 	#{OS.WINDOWPLACEMENT}
 	#{OS.WINDOWPOS}
@@ -216,10 +153,6 @@ package setClassNames: #(
 
 package setMethodNames: #(
 	#(#{Core.AnsiString} #copyToClipboard)
-	#(#{Core.ClassDescription} #defaultIcon)
-	#(#{Core.ClassDescription} #defaultIconName)
-	#(#{Core.ClassDescription} #defaultResourceIcon)
-	#(#{Core.ClassDescription} #defaultResourceIconName)
 	#(#{Core.MessageSend} #queryCommand:)
 	#(#{Core.Object} #addToImageList:mask:)
 	#(#{Core.Object} #icon)
@@ -229,6 +162,7 @@ package setMethodNames: #(
 	#(#{Core.String} #setTextInto:)
 	#(#{Core.Symbol} #copyToClipboard)
 	#(#{Core.UndefinedObject} #asResourceId)
+	#(#{Graphics.Bitmap} #copyToClipboard)
 	#(#{OS.CommCtrlLibrary} #imageList_AddMasked:hbmImage:crMask:)
 	#(#{OS.CommCtrlLibrary} #imageList_BeginDrag:iTrack:dxHotspot:dyHotspot:)
 	#(#{OS.CommCtrlLibrary} #imageList_Create:cy:flags:cInitial:cGrow:)
@@ -254,6 +188,7 @@ package setMethodNames: #(
 	#(#{OS.CommCtrlLibrary} #loadIconWithScaleDown:pszName:cx:cy:phico:)
 	#(#{OS.CommCtrlLibrary class} #sharedVariableName)
 	#(#{OS.KernelLibrary} #getConsoleWindow)
+	#(#{OS.SystemMetrics} #menuBarColor)
 	#(#{OS.UserLibrary} #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:)
 	#(#{OS.UserLibrary} #animateWindow:dwTime:dwFlags:)
 	#(#{OS.UserLibrary} #attachThreadInput:idAttachTo:fAttach:)
@@ -264,6 +199,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #childWindowFromPointEx:pt:uFlags:)
 	#(#{OS.UserLibrary} #clientToScreen:lpPoint:)
 	#(#{OS.UserLibrary} #closeClipboard)
+	#(#{OS.UserLibrary} #copyImage:uType:cxDesired:cyDesired:fuFlags:)
 	#(#{OS.UserLibrary} #countClipboardFormats)
 	#(#{OS.UserLibrary} #createAcceleratorTable:cEntries:)
 	#(#{OS.UserLibrary} #createMenu)
@@ -272,6 +208,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:)
 	#(#{OS.UserLibrary} #deleteMenu:uPosition:uFlags:)
 	#(#{OS.UserLibrary} #destroyAcceleratorTable:)
+	#(#{OS.UserLibrary} #destroyCursor:)
 	#(#{OS.UserLibrary} #destroyIcon:)
 	#(#{OS.UserLibrary} #destroyMenu:)
 	#(#{OS.UserLibrary} #drawEdge:qrc:edge:grfFlags:)
@@ -285,6 +222,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #endDeferWindowPos:)
 	#(#{OS.UserLibrary} #endDialog:nResult:)
 	#(#{OS.UserLibrary} #endPaint:lpPaint:)
+	#(#{OS.UserLibrary} #enumChildWindows:lpEnumFunction:lParam:)
 	#(#{OS.UserLibrary} #enumClipboardFormats:)
 	#(#{OS.UserLibrary} #enumDisplayDevices:iDevNum:lpDisplayDevice:dwFlags:)
 	#(#{OS.UserLibrary} #enumDisplayMonitors:lprcClip:lpfnEnum:dwData:)
@@ -307,6 +245,7 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #getDC)
 	#(#{OS.UserLibrary} #getDC:)
 	#(#{OS.UserLibrary} #getDCEx:hrgnClip:flags:)
+	#(#{OS.UserLibrary} #getDlgCtrlID:)
 	#(#{OS.UserLibrary} #getFocus)
 	#(#{OS.UserLibrary} #getForegroundWindow)
 	#(#{OS.UserLibrary} #getIconInfo:piconinfo:)
@@ -413,14 +352,10 @@ package setMethodNames: #(
 ).
 
 package setVariableNames: #(
-	#{OS.ComCtl32}
-	#{OS.Gdi32}
 	#{OS.UxTheme}
 ).
 
 package setBinaryVariableNames: #(
-	#{OS.ComCtl32}
-	#{OS.Gdi32}
 	#{OS.UxTheme}
 ).
 
@@ -429,7 +364,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'Dolphin Basic Geometry'
 	'..\..\Base\Dolphin Command-line Parser'
-	'..\..\Base\Dolphin Conformant Array Fields'
+	'..\Graphics\Dolphin GDI Graphics'
 	'..\..\System\Filer\Dolphin Literal Filer'
 	'..\Type Converters\Dolphin Type Converters'
 	'..\Models\Value\Dolphin Value Models'
@@ -1383,22 +1318,10 @@ Kernel.SharedPool subclass: #'OS.ThemeConstants'
 		'WP_VERTSCROLL' -> 16r1B.
 		'WP_VERTTHUMB' -> 16r1C
 	}!
-Core.Object subclass: #'Graphics.Canvas'
-	instanceVariableNames: 'handle source owned pen brush font saved saveIds'
-	classVariableNames: 'DesktopResolution'
-	imports: #(#{OS.Win32Constants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Object subclass: #'UI.Clipboard'
 	instanceVariableNames: 'isOpen registeredFormats idToName'
 	classVariableNames: 'Current'
 	imports: #(#{OS.Win32Constants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Object subclass: #'Graphics.Color'
-	instanceVariableNames: ''
-	classVariableNames: 'Black ColorNames CommonColors Default Face3d NamedColors None White Window WindowText'
-	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'UI.Command'
@@ -1488,12 +1411,6 @@ Core.Object subclass: #'UI.FramingContext'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Graphics.GraphicsTool'
-	instanceVariableNames: 'handle ownsHandle'
-	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Object subclass: #'Graphics.Grid'
 	instanceVariableNames: 'resolution'
 	classVariableNames: ''
@@ -1504,12 +1421,6 @@ Core.Object subclass: #'UI.HistoryList'
 	instanceVariableNames: 'history position maxAge searchPolicy'
 	classVariableNames: ''
 	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Object subclass: #'Graphics.ImageManager'
-	instanceVariableNames: 'images imageLists maskcolor backcolor'
-	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'UI.Interactor'
@@ -1551,12 +1462,6 @@ Core.Object subclass: #'UI.Presenter'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'OS.SystemMetrics'
-	instanceVariableNames: 'menuCheckExtent smallIconExtent largeIconExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth hasIconScaleDown isNotWine'
-	classVariableNames: 'Current'
-	imports: #(#{OS.Win32Constants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Object subclass: #'UI.View'
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
 	classVariableNames: 'MessageMap NextId ViewClosedError WndClassAtom'
@@ -1576,84 +1481,6 @@ Core.Object subclass: #'UI.View'
 	}!
 Core.Object subclass: #'UI.ViewState'
 	instanceVariableNames: 'view state placement subViewStates'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Canvas subclass: #'Graphics.PrinterCanvas'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Color subclass: #'Graphics.AbstractRGB'
-	instanceVariableNames: 'code'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Color subclass: #'Graphics.IndexedColor'
-	instanceVariableNames: 'index'
-	classVariableNames: 'InstancesByIndex InstancesByName Names'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Color subclass: #'Graphics.SystemColor'
-	instanceVariableNames: 'id'
-	classVariableNames: 'ColorsById NamesById'
-	imports: #(#{OS.Win32Constants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Color subclass: #'Graphics.VirtualColor'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.AbstractRGB subclass: #'Graphics.ARGB'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.AbstractRGB subclass: #'Graphics.ColorRef'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.ColorRef subclass: #'Graphics.ColorDefault'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.ColorRef subclass: #'Graphics.ColorNone'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.ColorRef subclass: #'Graphics.RGB'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.VirtualColor subclass: #'Graphics.ColorAlpha'
-	instanceVariableNames: 'color alpha'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.VirtualColor subclass: #'Graphics.PluggableColor'
-	instanceVariableNames: 'valuable'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.VirtualColor subclass: #'Graphics.ThemeColor'
-	instanceVariableNames: 'name actualColor'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1698,12 +1525,6 @@ External.DynamicLinkLibrary subclass: #'OS.ThemeLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.ThemeConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.PermanentLibrary subclass: #'OS.GDILibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.ThemeLibrary subclass: #'OS.MockThemeLibrary'
@@ -1808,120 +1629,15 @@ Graphics.GraphicsTool subclass: #'UI.AcceleratorTable'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.GraphicsTool subclass: #'Graphics.Brush'
-	instanceVariableNames: 'logBrush'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.GraphicsTool subclass: #'Graphics.Font'
-	instanceVariableNames: 'logfont resolution'
-	classVariableNames: 'System'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.GraphicsTool subclass: #'Graphics.Image'
-	instanceVariableNames: 'fileLocator identifier instanceHandle'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.GraphicsTool subclass: #'Graphics.ImageList'
-	instanceVariableNames: 'extent initialSize growBy createFlags'
-	classVariableNames: ''
-	imports: #(#{OS.CommCtrlConstants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Graphics.GraphicsTool subclass: #'UI.Menu'
 	instanceVariableNames: 'items text name flags image imageManager id _reserved1 _reserved2'
 	classVariableNames: 'DrawStateCallbackDescriptor'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.GraphicsTool subclass: #'Graphics.Pen'
-	instanceVariableNames: 'logPen'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.GraphicsTool subclass: #'Graphics.Region'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Brush subclass: #'Graphics.HatchBrush'
-	instanceVariableNames: 'id color'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Brush subclass: #'Graphics.StockBrush'
-	instanceVariableNames: 'id'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.StockBrush subclass: #'Graphics.SysColorBrush'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Font subclass: #'Graphics.StockFont'
-	instanceVariableNames: 'id'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Image subclass: #'Graphics.Bitmap'
-	instanceVariableNames: 'hdc flags extent'
-	classVariableNames: 'SharedBitmaps'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'IsSharedMask' -> 16r2.
-		'Map3DColorsMask' -> 16r1
-	}!
-Graphics.Image subclass: #'Graphics.Icon'
-	instanceVariableNames: ''
-	classVariableNames: 'Blank DefaultApplication Error Information Question Warning WinLogo'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Bitmap subclass: #'Graphics.DIBSection'
-	instanceVariableNames: 'depth imageBits'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Icon subclass: #'Graphics.Cursor'
-	instanceVariableNames: ''
-	classVariableNames: 'AppStarting Arrow Cross Current DDCopy DDCopyScroll DDLink DDLinkScroll DDMove DDMoveScroll DDNone Hand Help IBeam No SizeAll SizeNESW SizeNS SizeNWSE SizeWE SplitHorizontal SplitVertical UpArrow Wait'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Icon subclass: #'Graphics.NullIcon'
-	instanceVariableNames: ''
-	classVariableNames: 'Current'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 UI.Menu subclass: #'UI.MenuBar'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Pen subclass: #'Graphics.StockPen'
-	instanceVariableNames: 'id'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.ImageManager subclass: #'Graphics.IconImageManager'
-	instanceVariableNames: 'bitmaps'
-	classVariableNames: 'Current'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -2076,45 +1792,6 @@ Kernel.STBProxy subclass: #'UI.STBViewProxy'
 		'EventsIndex' -> 16rB.
 		'HandleIndex' -> 16r1
 	}!
-External.Structure subclass: #'OS.DEVMODE'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_dmBitsPerPel' -> 16r68.
-		'_OffsetOf_dmCollate' -> 16r44.
-		'_OffsetOf_dmColor' -> 16r3C.
-		'_OffsetOf_dmCopies' -> 16r36.
-		'_OffsetOf_dmDefaultSource' -> 16r38.
-		'_OffsetOf_dmDeviceName' -> 16r0.
-		'_OffsetOf_dmDisplayFlags' -> 16r74.
-		'_OffsetOf_dmDisplayFrequency' -> 16r78.
-		'_OffsetOf_dmDitherType' -> 16r88.
-		'_OffsetOf_dmDriverExtra' -> 16r26.
-		'_OffsetOf_dmDriverVersion' -> 16r22.
-		'_OffsetOf_dmDuplex' -> 16r3E.
-		'_OffsetOf_dmFields' -> 16r28.
-		'_OffsetOf_dmFormName' -> 16r46.
-		'_OffsetOf_dmICMIntent' -> 16r80.
-		'_OffsetOf_dmICMMethod' -> 16r7C.
-		'_OffsetOf_dmLogPixels' -> 16r66.
-		'_OffsetOf_dmMediaType' -> 16r84.
-		'_OffsetOf_dmOrientation' -> 16r2C.
-		'_OffsetOf_dmPaperLength' -> 16r30.
-		'_OffsetOf_dmPaperSize' -> 16r2E.
-		'_OffsetOf_dmPaperWidth' -> 16r32.
-		'_OffsetOf_dmPelsHeight' -> 16r70.
-		'_OffsetOf_dmPelsWidth' -> 16r6C.
-		'_OffsetOf_dmPrintQuality' -> 16r3A.
-		'_OffsetOf_dmReserved1' -> 16r8C.
-		'_OffsetOf_dmReserved2' -> 16r90.
-		'_OffsetOf_dmScale' -> 16r34.
-		'_OffsetOf_dmSize' -> 16r24.
-		'_OffsetOf_dmSpecVersion' -> 16r20.
-		'_OffsetOf_dmTTOption' -> 16r42.
-		'_OffsetOf_dmYResolution' -> 16r40
-	}!
 External.Structure subclass: #'OS.NCCALCSIZE_PARAMS'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -2123,41 +1800,6 @@ External.Structure subclass: #'OS.NCCALCSIZE_PARAMS'
 	classConstants: {
 		'_OffsetOf_lppos' -> 16r30.
 		'_OffsetOf_rgrc' -> 16r0
-	}!
-External.Structure subclass: #'External.SIZE'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.SIZE subclass: #'OS.SIZEL'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_cx' -> 16r0.
-		'_OffsetOf_cy' -> 16r4
-	}!
-OS.Win32Structure subclass: #'OS.AbstractLOGFONT'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_lfCharSet' -> 16r17.
-		'_OffsetOf_lfClipPrecision' -> 16r19.
-		'_OffsetOf_lfEscapement' -> 16r8.
-		'_OffsetOf_lfHeight' -> 16r0.
-		'_OffsetOf_lfItalic' -> 16r14.
-		'_OffsetOf_lfOrientation' -> 16rC.
-		'_OffsetOf_lfOutPrecision' -> 16r18.
-		'_OffsetOf_lfPitchAndFamily' -> 16r1B.
-		'_OffsetOf_lfQuality' -> 16r1A.
-		'_OffsetOf_lfStrikeOut' -> 16r16.
-		'_OffsetOf_lfUnderline' -> 16r15.
-		'_OffsetOf_lfWeight' -> 16r10.
-		'_OffsetOf_lfWidth' -> 16r4
 	}!
 OS.Win32Structure subclass: #'OS.ACCEL'
 	instanceVariableNames: ''
@@ -2168,58 +1810,6 @@ OS.Win32Structure subclass: #'OS.ACCEL'
 		'_OffsetOf_cmd' -> 16r4.
 		'_OffsetOf_fVirt' -> 16r0.
 		'_OffsetOf_key' -> 16r2
-	}!
-OS.Win32Structure subclass: #'OS.BITMAP'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_bmBits' -> 16r14.
-		'_OffsetOf_bmBitsPixel' -> 16r12.
-		'_OffsetOf_bmHeight' -> 16r8.
-		'_OffsetOf_bmPlanes' -> 16r10.
-		'_OffsetOf_bmType' -> 16r0.
-		'_OffsetOf_bmWidth' -> 16r4.
-		'_OffsetOf_bmWidthBytes' -> 16rC
-	}!
-OS.Win32Structure subclass: #'OS.BITMAPINFO'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_bmiColors' -> 16r28.
-		'_OffsetOf_bmiHeader' -> 16r0
-	}!
-OS.Win32Structure subclass: #'OS.BITMAPINFOHEADER'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_biBitCount' -> 16rE.
-		'_OffsetOf_biClrImportant' -> 16r24.
-		'_OffsetOf_biClrUsed' -> 16r20.
-		'_OffsetOf_biCompression' -> 16r10.
-		'_OffsetOf_biHeight' -> 16r8.
-		'_OffsetOf_biPlanes' -> 16rC.
-		'_OffsetOf_biSizeImage' -> 16r14.
-		'_OffsetOf_biWidth' -> 16r4.
-		'_OffsetOf_biXPelsPerMeter' -> 16r18.
-		'_OffsetOf_biYPelsPerMeter' -> 16r1C.
-		'_OffsetOf_dwSize' -> 16r0
-	}!
-OS.Win32Structure subclass: #'OS.BLENDFUNCTION'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_AlphaFormat' -> 16r3.
-		'_OffsetOf_BlendFlags' -> 16r1.
-		'_OffsetOf_BlendOp' -> 16r0.
-		'_OffsetOf_SourceConstantAlpha' -> 16r2
 	}!
 OS.Win32Structure subclass: #'OS.BP_ANIMATIONPARAMS'
 	instanceVariableNames: ''
@@ -2243,18 +1833,6 @@ OS.Win32Structure subclass: #'OS.BP_PAINTPARAMS'
 		'_OffsetOf_pBlendFunction' -> 16rC.
 		'_OffsetOf_prcExclude' -> 16r8
 	}!
-OS.Win32Structure subclass: #'OS.DIBSECTION'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_dsBitfields' -> 16r40.
-		'_OffsetOf_dsBm' -> 16r0.
-		'_OffsetOf_dsBmih' -> 16r18.
-		'_OffsetOf_dshSection' -> 16r4C.
-		'_OffsetOf_dsOffset' -> 16r50
-	}!
 OS.Win32Structure subclass: #'OS.DISPLAY_DEVICEW'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -2272,18 +1850,6 @@ OS.Win32Structure subclass: #'OS.DISPLAY_DEVICEW'
 		'DISPLAY_DEVICE_MULTI_DRIVER' -> 16r2.
 		'DISPLAY_DEVICE_PRIMARY_DEVICE' -> 16r4.
 		'DISPLAY_DEVICE_VGA_COMPATIBLE' -> 16r10
-	}!
-OS.Win32Structure subclass: #'OS.DOCINFOW'
-	instanceVariableNames: 'docName'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_fwType' -> 16r10.
-		'_OffsetOf_lpszDatatype' -> 16rC.
-		'_OffsetOf_lpszDocName' -> 16r4.
-		'_OffsetOf_lpszOutput' -> 16r8
 	}!
 OS.Win32Structure subclass: #'OS.DTBGOPTS'
 	instanceVariableNames: ''
@@ -2307,37 +1873,6 @@ OS.Win32Structure subclass: #'OS.FLASHWINFO'
 		'_OffsetOf_hwnd' -> 16r4.
 		'_OffsetOf_uCount' -> 16rC
 	}!
-OS.Win32Structure subclass: #'OS.GRADIENT_RECT'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_lowerRight' -> 16r4.
-		'_OffsetOf_upperLeft' -> 16r0
-	}!
-OS.Win32Structure subclass: #'OS.GRADIENT_TRIANGLE'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_Vertex1' -> 16r0.
-		'_OffsetOf_Vertex2' -> 16r4.
-		'_OffsetOf_Vertex3' -> 16r8
-	}!
-OS.Win32Structure subclass: #'OS.ICONINFO'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_fIcon' -> 16r0.
-		'_OffsetOf_hbmColor' -> 16r10.
-		'_OffsetOf_hbmMask' -> 16rC.
-		'_OffsetOf_xHotspot' -> 16r4.
-		'_OffsetOf_yHotspot' -> 16r8
-	}!
 OS.Win32Structure subclass: #'OS.LASTINPUTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -2346,36 +1881,6 @@ OS.Win32Structure subclass: #'OS.LASTINPUTINFO'
 	classConstants: {
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_dwTime' -> 16r4
-	}!
-OS.Win32Structure subclass: #'OS.LOGBRUSH'
-	instanceVariableNames: 'hatch'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_lbColor' -> 16r4.
-		'_OffsetOf_lbHatch' -> 16r8.
-		'_OffsetOf_lbStyle' -> 16r0
-	}!
-OS.Win32Structure subclass: #'OS.LOGPALETTE'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_palNumEntries' -> 16r2.
-		'_OffsetOf_palPalEntry' -> 16r4.
-		'_OffsetOf_palVersion' -> 16r0
-	}!
-OS.Win32Structure subclass: #'OS.LOGPEN'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_lopnColor' -> 16rC.
-		'_OffsetOf_lopnStyle' -> 16r0.
-		'_OffsetOf_lopnWidth' -> 16r4
 	}!
 OS.Win32Structure subclass: #'OS.MARGINS'
 	instanceVariableNames: ''
@@ -2455,29 +1960,6 @@ OS.Win32Structure subclass: #'OS.NMHDR'
 		'_OffsetOf_hwndFrom' -> 16r0.
 		'_OffsetOf_idFrom' -> 16r4
 	}!
-OS.Win32Structure subclass: #'OS.NONCLIENTMETRICSW'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_iBorderWidth' -> 16r4.
-		'_OffsetOf_iCaptionHeight' -> 16r14.
-		'_OffsetOf_iCaptionWidth' -> 16r10.
-		'_OffsetOf_iMenuHeight' -> 16rDC.
-		'_OffsetOf_iMenuWidth' -> 16rD8.
-		'_OffsetOf_iPaddedBorderWidth' -> 16r1F4.
-		'_OffsetOf_iScrollHeight' -> 16rC.
-		'_OffsetOf_iScrollWidth' -> 16r8.
-		'_OffsetOf_iSmCaptionHeight' -> 16r78.
-		'_OffsetOf_iSmCaptionWidth' -> 16r74.
-		'_OffsetOf_lfCationFont' -> 16r18.
-		'_OffsetOf_lfMenuFont' -> 16rE0.
-		'_OffsetOf_lfMessageFont' -> 16r198.
-		'_OffsetOf_lfSmCaptionFont' -> 16r7C.
-		'_OffsetOf_lfStatusFont' -> 16r13C
-	}!
 OS.Win32Structure subclass: #'OS.NOTIFYICONDATAW'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -2491,45 +1973,6 @@ OS.Win32Structure subclass: #'OS.NOTIFYICONDATAW'
 		'_OffsetOf_uCallbackMessage' -> 16r10.
 		'_OffsetOf_uFlags' -> 16rC.
 		'_OffsetOf_uID' -> 16r8
-	}!
-OS.Win32Structure subclass: #'OS.OUTLINETEXTMETRICW'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_otmAscent' -> 16r64.
-		'_OffsetOf_otmDescent' -> 16r68.
-		'_OffsetOf_otmEMSquare' -> 16r60.
-		'_OffsetOf_otmFiller' -> 16r40.
-		'_OffsetOf_otmfsSelection' -> 16r4C.
-		'_OffsetOf_otmfsType' -> 16r50.
-		'_OffsetOf_otmItalicAngle' -> 16r5C.
-		'_OffsetOf_otmLineGap' -> 16r6C.
-		'_OffsetOf_otmMacAscent' -> 16r88.
-		'_OffsetOf_otmMacDescent' -> 16r8C.
-		'_OffsetOf_otmMacLineGap' -> 16r90.
-		'_OffsetOf_otmPanoseNumber' -> 16r41.
-		'_OffsetOf_otmpFaceName' -> 16rCC.
-		'_OffsetOf_otmpFamilyName' -> 16rC8.
-		'_OffsetOf_otmpFullName' -> 16rD4.
-		'_OffsetOf_otmpStyleName' -> 16rD0.
-		'_OffsetOf_otmptSubscriptOffset' -> 16rA0.
-		'_OffsetOf_otmptSubscriptSize' -> 16r98.
-		'_OffsetOf_otmptSuperscriptOffset' -> 16rB0.
-		'_OffsetOf_otmptSuperscriptSize' -> 16rA8.
-		'_OffsetOf_otmrcFontBox' -> 16r78.
-		'_OffsetOf_otmsCapEmHeight' -> 16r70.
-		'_OffsetOf_otmsCharSlopeRise' -> 16r54.
-		'_OffsetOf_otmsCharSlopeRun' -> 16r58.
-		'_OffsetOf_otmsStrikeoutPosition' -> 16rBC.
-		'_OffsetOf_otmsStrikeoutSize' -> 16rB8.
-		'_OffsetOf_otmsUnderscorePosition' -> 16rC4.
-		'_OffsetOf_otmsUnderscoreSize' -> 16rC0.
-		'_OffsetOf_otmsXHeight' -> 16r74.
-		'_OffsetOf_otmTextMetrics' -> 16r4.
-		'_OffsetOf_otmusMinimumPPEM' -> 16r94
 	}!
 OS.Win32Structure subclass: #'OS.OwnerDrawStruct'
 	instanceVariableNames: ''
@@ -2553,45 +1996,6 @@ OS.Win32Structure subclass: #'OS.PAINTSTRUCT'
 		'_OffsetOf_hdc' -> 16r0.
 		'_OffsetOf_rcPaint' -> 16r8.
 		'_OffsetOf_rgbReserved' -> 16r20
-	}!
-OS.Win32Structure subclass: #'OS.PALETTEENTRY'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_peBlue' -> 16r2.
-		'_OffsetOf_peFlags' -> 16r3.
-		'_OffsetOf_peGreen' -> 16r1.
-		'_OffsetOf_peRed' -> 16r0
-	}!
-OS.Win32Structure subclass: #'OS.PANOSE'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_bArmStyle' -> 16r6.
-		'_OffsetOf_bContrast' -> 16r4.
-		'_OffsetOf_bFamilyType' -> 16r0.
-		'_OffsetOf_bLetterform' -> 16r7.
-		'_OffsetOf_bMidline' -> 16r8.
-		'_OffsetOf_bProportion' -> 16r3.
-		'_OffsetOf_bSerifStyle' -> 16r1.
-		'_OffsetOf_bStrokeVariation' -> 16r5.
-		'_OffsetOf_bWeight' -> 16r2.
-		'_OffsetOf_bXHeight' -> 16r9
-	}!
-OS.Win32Structure subclass: #'OS.RGBQUAD'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_rgbBlue' -> 16r0.
-		'_OffsetOf_rgbGreen' -> 16r1.
-		'_OffsetOf_rgbRed' -> 16r2.
-		'_OffsetOf_rgbReserved' -> 16r3
 	}!
 OS.Win32Structure subclass: #'OS.RGNDATA'
 	instanceVariableNames: ''
@@ -2619,33 +2023,6 @@ OS.Win32Structure subclass: #'OS.SCROLLINFO'
 		'_OffsetOf_nPos' -> 16r14.
 		'_OffsetOf_nTrackPos' -> 16r18
 	}!
-OS.Win32Structure subclass: #'OS.TEXTMETRICW'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_tmAscent' -> 16r4.
-		'_OffsetOf_tmAveCharWidth' -> 16r14.
-		'_OffsetOf_tmBreakChar' -> 16r32.
-		'_OffsetOf_tmCharSet' -> 16r38.
-		'_OffsetOf_tmDefaultChar' -> 16r30.
-		'_OffsetOf_tmDescent' -> 16r8.
-		'_OffsetOf_tmDigitizedAspectX' -> 16r24.
-		'_OffsetOf_tmDigitizedAspectY' -> 16r28.
-		'_OffsetOf_tmExternalLeading' -> 16r10.
-		'_OffsetOf_tmFirstChar' -> 16r2C.
-		'_OffsetOf_tmHeight' -> 16r0.
-		'_OffsetOf_tmInternalLeading' -> 16rC.
-		'_OffsetOf_tmItalic' -> 16r34.
-		'_OffsetOf_tmLastChar' -> 16r2E.
-		'_OffsetOf_tmMaxCharWidth' -> 16r18.
-		'_OffsetOf_tmOverhang' -> 16r20.
-		'_OffsetOf_tmPitchAndFamily' -> 16r37.
-		'_OffsetOf_tmStruckOut' -> 16r36.
-		'_OffsetOf_tmUnderlined' -> 16r35.
-		'_OffsetOf_tmWeight' -> 16r1C
-	}!
 OS.Win32Structure subclass: #'OS.TRACKMOUSEEVENT'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -2656,19 +2033,6 @@ OS.Win32Structure subclass: #'OS.TRACKMOUSEEVENT'
 		'_OffsetOf_dwHoverTime' -> 16rC.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_hwndTrack' -> 16r8
-	}!
-OS.Win32Structure subclass: #'OS.TRIVERTEX'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_alpha' -> 16rE.
-		'_OffsetOf_blue' -> 16rC.
-		'_OffsetOf_green' -> 16rA.
-		'_OffsetOf_red' -> 16r8.
-		'_OffsetOf_x' -> 16r0.
-		'_OffsetOf_y' -> 16r4
 	}!
 OS.Win32Structure subclass: #'OS.WINDOWPLACEMENT'
 	instanceVariableNames: ''
@@ -2714,31 +2078,6 @@ OS.Win32Structure subclass: #'OS.WNDCLASS'
 		'_OffsetOf_lpszMenuName' -> 16r20.
 		'_OffsetOf_style' -> 16r0
 	}!
-OS.AbstractLOGFONT subclass: #'OS.LOGFONT'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_lfFaceName' -> 16r1C
-	}!
-OS.AbstractLOGFONT subclass: #'OS.LOGFONTW'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_lfFaceName' -> 16r1C
-	}!
-OS.LOGFONTW subclass: #'OS.ENUMLOGFONTW'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_elfFullName' -> 16r5C.
-		'_OffsetOf_elfStyle' -> 16rDC
-	}!
 OS.MONITORINFO subclass: #'OS.MONITORINFOEXW'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -2781,17 +2120,6 @@ OS.OwnerDrawStruct subclass: #'OS.MEASUREITEMSTRUCT'
 		'_OffsetOf_itemData' -> 16r14.
 		'_OffsetOf_itemHeight' -> 16r10.
 		'_OffsetOf_itemWidth' -> 16rC
-	}!
-OS.TEXTMETRICW subclass: #'OS.NEWTEXTMETRICW'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'_OffsetOf_ntmAvgWidth' -> 16r48.
-		'_OffsetOf_ntmCellHeight' -> 16r44.
-		'_OffsetOf_ntmFlags' -> 16r3C.
-		'_OffsetOf_ntmSizeEM' -> 16r40
 	}!
 UI.View subclass: #'UI.AbstractDelegatingView'
 	instanceVariableNames: 'resourceIdentifier referee'
@@ -2904,37 +2232,6 @@ copyToClipboard
 copyToClipboard!copying!public! !
 !
 
-!Core.ClassDescription methodsFor!
-
-defaultIcon
-	"Answer a suitable default icon to use for this class. Not all classes use their 
-	default icon; one must define an appropriate #icon method in each class where the 
-	icon required differs from that of the superclass."
-
-	^#{Graphics.Icon} value fromId: self defaultIconName!
-
-defaultIconName
-	"Answer a filename to use to find an icon for this class."
-
-	^File composeStem: self name extension: '.ico'!
-
-defaultResourceIcon
-	"Answer a suitable default icon resource to use for this class. Note that this method differs
-	from #defaultIcon in that it uses the #resourceLocator of the class to locate the icon file"
-
-	^#{Graphics.Icon} value fromId: self defaultResourceIconName!
-
-defaultResourceIconName
-	"Answer a filename to use for an icon of this class loaded from the class resources location."
-
-	^self instanceClass resourcesLocator localFileSpecFor: self defaultIconName! !
-!Core.ClassDescription categoriesForMethods!
-defaultIcon!constants!public! !
-defaultIconName!constants!public! !
-defaultResourceIcon!constants!public! !
-defaultResourceIconName!constants!public! !
-!
-
 !Core.MessageSend methodsFor!
 
 queryCommand: query
@@ -2979,7 +2276,7 @@ icon
 	can override this method with a similar implementation perhaps with #defaultIconFrom: if the icon comes
 	from an ExternalResourceLibrary other than the system default."
 
-	^##(self) defaultIcon! !
+	^##(self defaultIcon)! !
 !Core.Object class categoriesForMethods!
 icon!constants!public! !
 !
@@ -3018,6 +2315,16 @@ asResourceId
 	^self! !
 !Core.UndefinedObject categoriesForMethods!
 asResourceId!converting!public! !
+!
+
+!Graphics.Bitmap methodsFor!
+
+copyToClipboard
+	"Copy the receiver to the clipboard."
+
+	UI.Clipboard current setBitmap: self! !
+!Graphics.Bitmap categoriesForMethods!
+copyToClipboard!copying!public! !
 !
 
 !OS.CommCtrlLibrary methodsFor!
@@ -3349,6 +2656,14 @@ getConsoleWindow
 getConsoleWindow!**auto generated**!public!win32 functions-console! !
 !
 
+!OS.SystemMetrics methodsFor!
+
+menuBarColor
+	^UxTheme isAppThemed ifTrue: [Graphics.Color menuBar] ifFalse: [Graphics.Color menu]! !
+!OS.SystemMetrics categoriesForMethods!
+menuBarColor!constants!public! !
+!
+
 !OS.UserLibrary methodsFor!
 
 adjustWindowRectEx: rect dwStyle: styleFlags bMenu: menuPresent dwExStyle: exStyleFlags
@@ -3466,6 +2781,22 @@ closeClipboard
 	<stdcall: bool CloseClipboard>
 	^self invalidCall: _failureCode!
 
+copyImage: hImage uType: uType cxDesired: cxDesired cyDesired: cyDesired fuFlags: fuFlags
+	"The CopyImage function creates a new image (icon, cursor, or bitmap) and copies the attributes of
+	the specified image to the new one. If necessary, the function stretches the bits to fit the desired size
+	of the new image.
+	
+	HANDLE CopyImage(      
+		HANDLE hImage,
+		UINT uType,
+		int cxDesired,
+		int cyDesired,
+		UINT fuFlags
+		);"
+
+	<stdcall: handle CopyImage handle dword sdword sdword dword>
+	^self invalidCall: _failureCode!
+
 countClipboardFormats
 	"Answer the number of registered clipboard formats.
 		int CountClipboardFormats(VOID)"
@@ -3556,6 +2887,15 @@ destroyAcceleratorTable: hAcceleratorTable
 		);"
 
 	<stdcall: bool DestroyAcceleratorTable handle>
+	^self invalidCall: _failureCode!
+
+destroyCursor: hCursor
+	"Destroy the specified cursor.
+		BOOL DestroyCursor(
+  			HCURSOR hCursor	// handle to cursor to destroy
+		);"
+
+	<stdcall: bool DestroyCursor handle>
 	^self invalidCall: _failureCode!
 
 destroyIcon: hIcon
@@ -3714,6 +3054,18 @@ endPaint: hWindow lpPaint: aPAINTSTRUCT
 	<stdcall: bool EndPaint handle PAINTSTRUCT*>
 	^self invalidCall: _failureCode!
 
+enumChildWindows: hwndParent lpEnumFunction: lpEnumFunction lParam: lParam
+	"Invoke the EnumChildWindows() function of the module wrapped by the receiver.
+	Helpstring: Enumerates the child windows that belong to the specified parent window by passing the handle of each child window, in turn, to an application-defined callback function
+
+		BOOL __stdcall EnumChildWindows(
+			wireHWND hwndParent,
+			LPVOID lpEnumFunction,
+			LONG_PTR lParam);"
+
+	<stdcall: bool EnumChildWindows handle void* intptr>
+	^self invalidCall: _failureCode!
+
 enumClipboardFormats: knownFormat
 	"Enumerate the data formats that are currently available on the clipboard, beginning
 	with that specified (set to 0 to start).  Answers 0 at end (in which case GetLastError()
@@ -3756,17 +3108,15 @@ enumThreadWindows: dwThreadId lpfn: aCallbackThunk lParam: lParam
 	<stdcall: bool EnumThreadWindows dword lpvoid uintptr>
 	^self invalidCall: _failureCode!
 
-enumWindows: aCallbackThunk lParam: lParam
-	"Enumerate all top-level windows on the screen by passing the handle of each window, in turn, to 
-	the callback function thunk aCallbackThunk. EnumWindows continues until the last top-level window 
-	is enumerated or the callback function returns false.
+enumWindows: lpEnumFunction lParam: lParam
+	"Invoke the EnumWindows() function of the module wrapped by the receiver.
+	Helpstring: Enumerates all top-level windows on the screen by passing the handle of each window, in turn, to an application-defined callback function
 
-		BOOL EnumWindows(
-			WNDENUMPROC lpEnumFunc,	// pointer to callback function
-			LPARAM lParam 	// application-defined value
-		);"
+		BOOL __stdcall EnumWindows(
+			LPVOID lpEnumFunction,
+			LONG_PTR lParam);"
 
-	<stdcall: bool EnumWindows lpvoid uintptr>
+	<stdcall: bool EnumWindows void* intptr>
 	^self invalidCall: _failureCode!
 
 fillRect: hdc lprc: aRECT hbr: hBrush
@@ -3919,6 +3269,10 @@ getDC: aWindowHandle
 
 getDCEx: aWindowHandle hrgnClip: rgnExternalHandle flags: flagsInteger
 	<stdcall: handle GetDCEx handle handle dword>
+	^self invalidCall: _failureCode!
+
+getDlgCtrlID: hWnd
+	<stdcall: sdword GetDlgCtrlID handle>
 	^self invalidCall: _failureCode!
 
 getFocus
@@ -4624,7 +3978,7 @@ sendMessageU: aWindowHandle msg: msg wParam: wParam lpParam: lParam
 	^self invalidCall: _failureCode!
 
 setCapture: aWindowHandle
-	"Set the mouse capture to the specified window. Once a window has captured the mouse, it receivers all
+	"Set the mouse capture to the specified window. Once a window has captured the mouse, it receives all
 	mouse input (unless a button is down while the mouse if over another thread's window).
 		HWND SetCapture(
 			HWND hWnd 	// handle of window to receive mouse capture
@@ -4992,6 +4346,7 @@ callWindowProc:hWnd:msg:wParam:lParam:!public!win32 functions-window procedure! 
 childWindowFromPointEx:pt:uFlags:!public!win32 functions-window! !
 clientToScreen:lpPoint:!public!win32 functions-coordinate space and transformation! !
 closeClipboard!public!win32 functions-clipboard! !
+copyImage:uType:cxDesired:cyDesired:fuFlags:!public!win32 functions-resources! !
 countClipboardFormats!public!win32 functions-clipboard! !
 createAcceleratorTable:cEntries:!public!win32 functions-keyboard accelerator! !
 createMenu!public!win32 functions-menu! !
@@ -5000,6 +4355,7 @@ createWindowEx:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hM
 deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:!**auto generated**!public! !
 deleteMenu:uPosition:uFlags:!public!win32 functions-menu! !
 destroyAcceleratorTable:!public!win32 functions-keyboard accelerator! !
+destroyCursor:!public!win32 functions-icon! !
 destroyIcon:!public!win32 functions-icon! !
 destroyMenu:!public!win32 functions-menu! !
 drawEdge:qrc:edge:grfFlags:!**auto generated**!public!win32 functions-painting and drawing! !
@@ -5013,11 +4369,12 @@ emptyClipboard!public!win32 functions-clipboard! !
 endDeferWindowPos:!**auto generated**!public! !
 endDialog:nResult:!public!win32 functions-dialog box! !
 endPaint:lpPaint:!public!win32 functions-painting and drawing! !
+enumChildWindows:lpEnumFunction:lParam:!**auto generated**!public! !
 enumClipboardFormats:!public!win32 functions-clipboard! !
 enumDisplayDevices:iDevNum:lpDisplayDevice:dwFlags:!**auto generated**!public! !
 enumDisplayMonitors:lprcClip:lpfnEnum:dwData:!**auto generated**!public!win32 functions-multiple display monitors! !
 enumThreadWindows:lpfn:lParam:!public!win32 functions-window! !
-enumWindows:lParam:!public!win32 functions-window! !
+enumWindows:lParam:!**auto generated**!public! !
 fillRect:lprc:hbr:!public!win32 functions-filled shape! !
 findWindow:lpWindowName:!public!win32 functions-filled shape! !
 flashWindow:bInvert:!public!win32 functions-error handling! !
@@ -5035,6 +4392,7 @@ getCursorPos:!public!win32 functions-cursor! !
 getDC!operations!public! !
 getDC:!not an aspect!public!win32 functions-device context! !
 getDCEx:hrgnClip:flags:!public!win32 functions-device context! !
+getDlgCtrlID:!public!win32 functions-dialog box! !
 getFocus!public!win32 functions-keyboard input! !
 getForegroundWindow!public!win32 functions-keyboard input! !
 getIconInfo:piconinfo:!public!win32 functions-icon! !

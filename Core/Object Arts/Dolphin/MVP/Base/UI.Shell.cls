@@ -288,12 +288,9 @@ updateCaption
 	!
 
 updateIcon
-	"Private - Transfer any icon across to the view"
+	"Private - Transfer any icon across to the view if it doesn't have an icon set."
 
-	self view largeIcon isNil ifTrue: [
-		"Update the view's icon if not explicitly specified"
-		self view largeIcon: self icon ].
-!
+	self view largeIcon ifNil: [self view largeIcon: self icon]!
 
 view: aShellView
 	"Set the view for the receiver to aShellView. 

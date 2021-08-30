@@ -19,6 +19,7 @@ package setPrerequisites: #(
 	'..\Development System'
 	'..\..\..\Base\Dolphin'
 	'..\..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\..\System\Random\Dolphin Random Stream'

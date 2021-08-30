@@ -10,18 +10,9 @@ package setClassNames: #(
 	#{External.Tests.RECTTest}
 	#{Graphics.Tests.AbstractPointTest}
 	#{Graphics.Tests.AbstractRectangleTest}
-	#{Graphics.Tests.ARGBTest}
-	#{Graphics.Tests.BitmapTest}
-	#{Graphics.Tests.BrushTest}
-	#{Graphics.Tests.CanvasTest}
-	#{Graphics.Tests.ColorTest}
-	#{Graphics.Tests.IconTest}
-	#{Graphics.Tests.PluggableColorTest}
 	#{Graphics.Tests.Point3DTest}
 	#{Graphics.Tests.PointTest}
 	#{Graphics.Tests.RectangleTest}
-	#{Graphics.Tests.ThemeColorTest}
-	#{Graphics.Tests.VirtualColorTest}
 	#{OS.Tests.POINTLTest}
 	#{OS.Tests.POINTSTest}
 	#{OS.Tests.RECTLTest}
@@ -114,6 +105,7 @@ package setPrerequisites: #(
 	'Presenters\Date Time\Dolphin Date Time Presenters'
 	'Presenters\Difference\Dolphin Differences Presenter'
 	'Models\Tree\Dolphin Folder Tree Model'
+	'Graphics\Dolphin GDI Graphics'
 	'Presenters\Image\Dolphin Image Presenter'
 	'..\Base\Dolphin Legacy Date & Time'
 	'Models\List\Dolphin List Models'
@@ -192,30 +184,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.AbstractShellViewTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Graphics.Tests.ARGBTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Graphics.Tests.BitmapTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Graphics.Tests.BrushTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Graphics.Tests.CanvasTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.ClipboardTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -223,12 +191,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.ClipboardTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.ColorDialogTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Graphics.Tests.ColorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -260,12 +222,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.FileDialogTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.FolderTest'
 	instanceVariableNames: 'c windows system root oa'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Graphics.Tests.IconTest'
-	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -326,12 +282,6 @@ Core.Tests.DolphinTest subclass: #'UI.Tests.TypeConverterTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.ValueConverterTest'
 	instanceVariableNames: 'converter value startTime newTime changed'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Graphics.Tests.VirtualColorTest'
-	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -643,18 +593,6 @@ UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.TreePresenterTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.TreeViewTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Tests.VirtualColorTest subclass: #'Graphics.Tests.PluggableColorTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Graphics.Tests.VirtualColorTest subclass: #'Graphics.Tests.ThemeColorTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

@@ -15,7 +15,7 @@ asBitmap
 	"Answer a display-compatible <Bitmap> with the receiver's image."
 
 	| bitmap |
-	bitmap := Bitmap displayCompatibleWithExtent: self extent.
+	bitmap := Graphics.Bitmap displayCompatibleWithExtent: self extent.
 	self drawOn: bitmap canvas.
 	bitmap freeDC.
 	^bitmap!
@@ -682,7 +682,7 @@ width
 	Gdip gdipGetImageWidth: self asParameter width: buf.
 	^buf dwordAtOffset: 0! !
 !Graphics.Gdiplus.Image categoriesForMethods!
-asBitmap!public! !
+asBitmap!converting!public! !
 asByteArray:!converting!public! !
 asByteArray:compression:!converting!public! !
 basicFree!private!realizing/unrealizing! !
@@ -803,7 +803,7 @@ encoderClsidForExtension: aString
 
 	^(self encoders detect: 
 			[:e | 
-			(e FilenameExtension asString asLowercase indexOfSubCollection: aString asLowercase) > 0]) 
+			(e FilenameExtension asLowercase indexOfSubCollection: aString asLowercase) > 0]) 
 		Clsid!
 
 encoderFileExtensions
@@ -826,8 +826,8 @@ encoderMimeTypeForExtension: aString
 
 	^(self encoders detect: 
 			[:e | 
-			(e FilenameExtension asString asLowercase indexOfSubCollection: aString asLowercase) > 0]) 
-		MimeType asString!
+			(e FilenameExtension asLowercase indexOfSubCollection: aString asLowercase) > 0]) 
+		MimeType!
 
 encoderMimeTypes
 	"Answer a list of strings that represent the supported image encoder mime types."
@@ -1607,12 +1607,12 @@ fileTypes
 	self decoders do: 
 			[:each |
 			| extensions |
-			extensions := each FilenameExtension asString asLowercase.
+			extensions := each FilenameExtension asLowercase.
 			all
 				nextPut: $;;
 				nextPutAll: extensions.
 			types
-				addLast: {'<1s> (<2s>)' expandMacrosWithArguments: {each FormatDescription asString. extensions}
+				addLast: {'<1s> (<2s>)' expandMacrosWithArguments: {each FormatDescription. extensions}
 							locale: Locale invariant.
 						extensions}].
 	types
@@ -1690,8 +1690,8 @@ mimeTypeForExtension: aString
 	"
 
 	^(self encoders
-		detect: [:e | (e FilenameExtension asString asLowercase indexOfSubCollection: aString asLowercase) > 0]
-		ifNone: []) ifNotNil: [:encoder | encoder MimeType asString]!
+		detect: [:e | (e FilenameExtension asLowercase indexOfSubCollection: aString asLowercase) > 0]
+		ifNone: []) ifNotNil: [:encoder | encoder MimeType]!
 
 prompt
 	"Prompt for an image file.  Answer an Image created from that file or nil."
