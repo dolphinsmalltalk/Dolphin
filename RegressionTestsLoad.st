@@ -15,6 +15,7 @@ Package manager
 	install: 'Core\Contributions\Solutions Software\Tests\SSW Widget Enhancements Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Base64\Dolphin Base64 Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Random\Dolphin Random Stream Tests.pax';
+	install: 'Core\Object Arts\Dolphin\System\Win32\MessageBox\Tests\Dolphin MessageBox Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Win32\Dolphin MMF Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Win32\Windows Data Protection API Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\Win32\Windows Ini Files Tests.pax';

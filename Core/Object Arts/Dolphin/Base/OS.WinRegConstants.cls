@@ -32,7 +32,22 @@ Kernel.SharedPool subclass: #'OS.WinRegConstants'
 		'REG_OPTION_OPEN_LINK' -> 16r8.
 		'REG_OPTION_VOLATILE' -> 16r1.
 		'REG_QWORD' -> 16rB.
-		'REG_SZ' -> 16r1
+		'REG_SZ' -> 16r1.
+		'RRF_NOEXPAND' -> 16r10000000.
+		'RRF_RT_ANY' -> 16rFFFF.
+		'RRF_RT_DWORD' -> 16r18.
+		'RRF_RT_QWORD' -> 16r48.
+		'RRF_RT_REG_BINARY' -> 16r8.
+		'RRF_RT_REG_DWORD' -> 16r10.
+		'RRF_RT_REG_EXPAND_SZ' -> 16r4.
+		'RRF_RT_REG_MULTI_SZ' -> 16r20.
+		'RRF_RT_REG_NONE' -> 16r0.
+		'RRF_RT_REG_QWORD' -> 16r40.
+		'RRF_RT_REG_SZ' -> 16r2.
+		'RRF_SUBKEY_WOW6432KEY' -> 16r20000.
+		'RRF_SUBKEY_WOW6464KEY' -> 16r10000.
+		'RRF_WOW64_MASK' -> 16r30000.
+		'RRF_ZEROONFAILURE' -> 16r20000000
 	}!
 OS.WinRegConstants guid: (Core.GUID fromString: '{f3002953-4006-4fa4-a61b-fab719cf4784}')!
 OS.WinRegConstants isNonInstantiable: true!

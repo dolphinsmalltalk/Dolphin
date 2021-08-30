@@ -43,14 +43,18 @@ caption: aString
 defaultCaption
 	^self class defaultCaption: self iconStyle!
 
-errorMsg: textString 
-	"Display a Windows message box for the receiver with the currently
-	configured caption, and the error message, textString. Answer the 
-	receiver (after the message box has closed)."
+errorMsg
+	self hasIcon ifFalse: [self iconStyle: #error].
+	^self open!
+
+errorMsg: textString
+	"Display a Windows message box for the receiver with the currently configured caption, and the error message, textString. Answer the <Symbol> name of the button pressed to close the dialog (usually #ok)."
 
 	self text: textString.
-	self iconStyle: #error.
-	^self open!
+	^self errorMsg!
+
+hasIcon
+	^self iconStyle ~~ #none!
 
 iconStyle
 	"Answer the receiver's symbolic icon style name."
@@ -72,17 +76,19 @@ iconStyleFlag: anInteger
 
 	^self subclassResponsibility!
 
-notify: notifyString 
-	"Display a bubble message box with the current caption, the
-	notification icon, and the specified informational message."
-
-	self text: notifyString.
-	self iconStyle: #notify.
+notify
+	self hasIcon ifFalse: [self iconStyle: #notify].
 	^self open!
 
+notify: notifyString
+	"Display a bubble message box with the current caption, the notification icon, and the specified informational message. Answer the <Symbol> name of the button pressed to close the dialog (usually #ok)."
+
+	self text: notifyString.
+	^self notify!
+
 open
-	"Display the message box for the receiver, and answer a portable symbolic constant 
-	for the button pressed by the user."
+	"Display the message box for the receiver, and answer a portable symbolic constant for the button pressed by the user.
+	Answer the <Symbol> name of the button pressed to close the dialog."
 
 	^self subclassResponsibility!
 
@@ -97,9 +103,7 @@ owner: aViewOrHandle
 	owner := aViewOrHandle!
 
 ownerHandle
-	| handle |
-	handle := owner ifNil: [User32 getActiveWindow] ifNotNil: [owner].
-	^handle notNil ifTrue: [handle asParameter] ifFalse: [0]!
+	^owner ifNil: [User32 getActiveWindow ?? 0] ifNotNil: [owner asParameter]!
 
 text
 	^text!
@@ -107,26 +111,30 @@ text
 text: aString 
 	"Set the receiver's text message to be the argument, aString."
 
-	text := aString!
+	text := aString ifNotNil: [aString asUtf16String]!
 
-warning: warningString 
-	"Display a Windows message box for the receiver with the currently configured caption,
-	and the warning message, warningString, and an OK button. Answer the receiver (after 
-	the message box has closed)."
+warning
+	self hasIcon ifFalse: [self iconStyle: #warning].
+	^self open!
+
+warning: warningString
+	"Display a Windows message box for the receiver with the currently configured caption, and the warning message, warningString, and an OK button. Answer the <Symbol> name of the button pressed to close the dialog (usually #ok)."
 
 	self text: warningString.
-	self iconStyle: #warning.
-	^self open! !
+	^self warning! !
 !UI.MessageBoxAbstract categoriesForMethods!
 beep!parping!private! !
 caption!accessing!public! !
 caption:!accessing!public! !
 defaultCaption!constants!private! !
+errorMsg!public! !
 errorMsg:!operations!public! !
+hasIcon!public!testing! !
 iconStyle!accessing-styles!public! !
 iconStyle:!accessing-styles!public! !
 iconStyleFlag!accessing-styles!private! !
 iconStyleFlag:!accessing-styles!private! !
+notify!operations!public! !
 notify:!operations!public! !
 open!displaying!public! !
 owner!accessing!public! !
@@ -134,6 +142,7 @@ owner:!accessing!public! !
 ownerHandle!accessing!private! !
 text!accessing!public! !
 text:!accessing!public! !
+warning!operations!public! !
 warning:!operations!public! !
 !
 
@@ -177,7 +186,7 @@ initialize
 
 	"Where there is no entry in the table for the message box type, the application name is used."
 	DefaultCaptions := IdentityDictionary new
-				at: #confirm put: 'Please confirm…';
+				at: #prompt put: 'Please confirm…';
 				at: #notify put: 'Note';
 				shrink;
 				yourself	"Use the Windows default caption"!

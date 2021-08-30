@@ -53,7 +53,7 @@ includesKey: keyString
 
 	| subKey dwErr lib |
 	subKey := Handle new.
-	lib := self registryLibrary.
+	lib := AdvApi32.
 	dwErr := lib
 				regOpenKeyEx: self asParameter
 				lpSubKey: keyString

@@ -476,7 +476,10 @@ productMajorVersion
 productRegistryKey
 	"Private - Answers the <readableString> registry key of this product"
 
-	^'Software\Object Arts\Dolphin Smalltalk ' , self productRegistryVersion!
+	| key version |
+	key := 'Software\Object Arts\Dolphin Smalltalk'.
+	version := self productRegistryVersion.
+	^version isEmpty ifTrue: [key] ifFalse: [key , ' ' , version]!
 
 productRegistryVersion
 	"Private - Answers the version this product suitable for looking up our installation in the registry. This is a special version that normally doesn't change between major versions."

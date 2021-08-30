@@ -464,6 +464,7 @@ initialize
 		self initialize
 	"
 
+	CommCtrlLibrary addInitFlag: ICC_BAR_CLASSES.
 	self addClassConstant: 'TickStyleMask' value: ##(TBS_TOP | TBS_BOTH | TBS_BOTTOM).
 	self addClassConstant: 'HorizontalTickStyles'
 		value: (IdentityDictionary new
@@ -491,6 +492,9 @@ stbConvertFromVersion9: anArray
 themePartName
 	^'TRACKBAR'!
 
+uninitialize
+	#{UI.ControlBarAbstract} isDefined ifFalse: [CommCtrlLibrary removeInitFlag: ICC_BAR_CLASSES]!
+
 winClassName
 	"Answer the name of the Windows window class to use when realizing the receiver."
 
@@ -501,6 +505,7 @@ icon!constants!public! !
 initialize!development!initializing!private! !
 stbConvertFromVersion9:!binary filing!private! !
 themePartName!constants!private! !
+uninitialize!class hierarchy-removing!public! !
 winClassName!constants!private! !
 !
 

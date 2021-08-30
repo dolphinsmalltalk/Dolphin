@@ -26,6 +26,7 @@ package setMethodNames: #(
 ).
 
 package setPrerequisites: #(
+	'..\..\..\System\Win32\CommCtrl\Common Controls Library'
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Presenters\Prompters\Dolphin Integer Prompter'

@@ -71,19 +71,6 @@ package methodNames
 	add: #Locale -> #dateOrder;
 	add: #Locale -> #dateSeparator;
 	add: #Locale -> #isMonthBeforeDay;
-	add: #MessageBox -> #abortRetryIgnore;
-	add: #MessageBox -> #error;
-	add: #MessageBox -> #fatalError;
-	add: #MessageBox -> #ok;
-	add: #MessageBox -> #okCancel;
-	add: #MessageBox -> #prompt;
-	add: #MessageBox -> #retryCancel;
-	add: #MessageBox -> #systemModal;
-	add: #MessageBox -> #taskModal;
-	add: #MessageBox -> #yesNo;
-	add: #MessageBox -> #yesNoCancel;
-	add: #MessageBoxAbstract -> #notify;
-	add: #MessageBoxAbstract -> #warning;
 	add: #Package -> #addGlobalNamed:;
 	add: #Package -> #includesGlobalNamed:;
 	add: #Package -> #isBaseImagePackage;
@@ -162,8 +149,7 @@ package globalAliases: (Set new
 package setPrerequisites: #(
 	'..\Dolphin'
 	'..\Dolphin Conformant Array Fields'
-	'..\Dolphin Legacy Date & Time'
-	'..\Dolphin Message Box').
+	'..\Dolphin Legacy Date & Time').
 
 package!
 
@@ -819,79 +805,6 @@ isMonthBeforeDay
 dateOrder!constants!public! !
 dateSeparator!constants!public! !
 isMonthBeforeDay!helpers!public! !
-!
-
-!MessageBox methodsFor!
-
-abortRetryIgnore
-	#deprecated.
-	self buttonStyle: #abortRetryIgnore!
-
-error
-	#deprecated.
-	self iconStyle: #error!
-
-fatalError
-	#deprecated.
-	self beFatalError!
-
-ok
-	#deprecated.
-	self buttonStyle: #ok!
-
-okCancel
-	#deprecated.
-	self buttonStyle: #okCancel!
-
-prompt
-	#deprecated.
-	self iconStyle: #prompt!
-
-retryCancel
-	#deprecated.
-	self buttonStyle: #retryCancel!
-
-systemModal
-	#deprecated.
-	self beSystemModal!
-
-taskModal
-	#deprecated.
-	self beTaskModal!
-
-yesNo
-	#deprecated.
-	self buttonStyle: #yesNo!
-
-yesNoCancel
-	#deprecated.
-	self buttonStyle: #yesNoCancel! !
-!MessageBox categoriesForMethods!
-abortRetryIgnore!accessing-styles!public! !
-error!modes!public! !
-fatalError!accessing-styles!public! !
-ok!accessing-styles!public! !
-okCancel!accessing-styles!public! !
-prompt!accessing-styles!public! !
-retryCancel!accessing-styles!public! !
-systemModal!accessing-styles!public! !
-taskModal!accessing-styles!public! !
-yesNo!accessing-styles!public! !
-yesNoCancel!accessing-styles!public! !
-!
-
-!MessageBoxAbstract methodsFor!
-
-notify
-	#deprecated.
-	self iconStyle: #notify!
-
-warning
-	#deprecated.
-	self iconStyle: #warning! !
-!MessageBoxAbstract categoriesForMethods!
-notify!modes!public! !
-warning!modes!public! !
 !
 
 !NTLibrary class methodsFor!

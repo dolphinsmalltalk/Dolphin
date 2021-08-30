@@ -563,7 +563,7 @@ centerExtent: aPoint
 	^(self extent - aPoint) // 2!
 
 clearHandle
-	self handle: nil!
+	handle := nil!
 
 clearStateRestoring
 	flags := flags bitAnd: ##(StateRestoringMask bitInvert)!

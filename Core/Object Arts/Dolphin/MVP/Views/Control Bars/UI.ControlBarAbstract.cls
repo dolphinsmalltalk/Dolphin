@@ -371,6 +371,9 @@ icon
 
 	^Icon fromId: 'Toolbar.ico'!
 
+initialize
+	CommCtrlLibrary addInitFlag: ICC_BAR_CLASSES!
+
 stbConvert: instVarArray fromVersion: verInteger
 	"Convert from earlier version view by updating and answering the array of instance variables
 	(for the View), instVarArray."
@@ -403,12 +406,17 @@ stbConvertFromVersion13: anArray
 stbVersion
 	"14: Adds _tipText, and two spares"
 
-	^14! !
+	^14!
+
+uninitialize
+	#{UI.Slider} isDefined ifFalse: [CommCtrlLibrary removeInitFlag: ICC_BAR_CLASSES]! !
 !UI.ControlBarAbstract class categoriesForMethods!
 icon!constants!public! !
+initialize!development!initializing!private! !
 stbConvert:fromVersion:!binary filing!public! !
 stbConvertFromVersion12:!binary filing!private! !
 stbConvertFromVersion13:!binary filing!private! !
 stbVersion!binary filing!public! !
+uninitialize!class hierarchy-removing!public! !
 !
 

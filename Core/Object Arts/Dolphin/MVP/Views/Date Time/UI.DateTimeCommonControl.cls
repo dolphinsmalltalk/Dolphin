@@ -173,12 +173,10 @@ initialize
 	self initialize.
 	"
 
-	CommCtrlLibrary
-		initFlags: (CommCtrlLibrary initFlags maskSet: ICC_DATE_CLASSES);
-		closeDefault!
+	CommCtrlLibrary addInitFlag: ICC_DATE_CLASSES!
 
 uninitialize
-	CommCtrlLibrary initFlags: (CommCtrlLibrary initFlags maskClear: ICC_DATE_CLASSES)! !
+	CommCtrlLibrary removeInitFlag: ICC_DATE_CLASSES! !
 !UI.DateTimeCommonControl class categoriesForMethods!
 icon!constants!public! !
 initialize!development!initializing!private! !

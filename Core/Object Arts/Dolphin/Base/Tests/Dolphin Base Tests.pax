@@ -186,7 +186,7 @@ package setPrerequisites: #(
 	'..\..\System\Win32\Dolphin File System Info'
 	'..\Dolphin Legacy Date & Time'
 	'..\Deprecated\Dolphin Legacy Package Support'
-	'..\Dolphin Message Box'
+	'..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\System\Random\Dolphin Random Stream'
 	'..\..\Registry\Dolphin Registry Access'
 	'..\Dolphin Source Fileout'

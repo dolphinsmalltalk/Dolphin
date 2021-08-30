@@ -42,14 +42,13 @@ defaultLanguage
 	^self languages first
 !
 
-displayScriptError: anIScriptError 
+displayScriptError: anIScriptError
 	"Private - Report a script code parsing or runtime error to the user."
 
-	MessageBox errorMsg: anIScriptError description
-		caption: ('<1s> Error <2d> on line <3d>' 
-				expandMacrosWith: self language
-				with: anIScriptError number
-				with: anIScriptError line)!
+	MessageBox new
+		headline: '<1s> Error <2d> on line <3d>'
+					<< {self language. anIScriptError number. anIScriptError line};
+		errorMsg: anIScriptError description!
 
 expressionText
 	"Answer the expression text from the receiver's editing window."

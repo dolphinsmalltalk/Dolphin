@@ -1049,13 +1049,13 @@ prompt: aString toSaveChanges: aSelectionChangingEvent
 			[| response prompt mb |
 			self ensureVisible.
 			prompt := aSelectionChangingEvent canIntercept
-						ifTrue: ['Do you wish to retain them']
-						ifFalse: ['Would you like them copied to the clipboard'].
+						ifTrue: ['Do you wish to retain them?']
+						ifFalse: ['Would you like them copied to the clipboard?'].
 			mb := MessageBox new.
 			mb owner: self view topView.
+			mb headerText: 'There are unsaved <1s> changes' << aString.
 			"mb beTaskModal."
-			response := mb
-						confirm: ('There are unsaved <1s> changes.<n><n><2s>?' expandMacrosWith: aString with: prompt).
+			response := mb confirm: prompt.
 			aSelectionChangingEvent canIntercept
 				ifTrue: 
 					[response

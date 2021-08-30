@@ -92,9 +92,9 @@ fileRevert
 
 	self isModified
 		ifTrue: 
-			[(MessageBox
-				confirm: 'There are unsaved changes. Are you sure you wish to revert to the previously saved copy?')
-					ifTrue: [self fileLoad]]
+			[(MessageBox new
+				headerText: 'There are unsaved changes';
+				confirm: 'Are you sure you wish to revert to the previously saved copy?') ifTrue: [self fileLoad]]
 		ifFalse: [self fileLoad	"Load without prompt it not modified"]!
 
 fileSave

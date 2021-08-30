@@ -44,8 +44,7 @@ ccmSetVersion: anInteger
 	^self sendMessage: CCM_SETVERSION wParam: anInteger lParam: 0!
 
 clearHandle
-	oldWndProc := nil.
-	super clearHandle!
+	handle := oldWndProc := nil!
 
 commonNotificationMap
 	"Private - Answer a 'map' between notification codes and the selector of the corresponding event handlers in the receiver. 
@@ -485,6 +484,7 @@ initialize
 		ControlView initialize
 	"
 
+	CommCtrlLibrary addInitFlag: ICC_STANDARD_CLASSES.
 	CommonControlCallError := Signal description: 'Common control call failed'.
 	View registerMessageMappings: self messageMappings!
 
@@ -499,6 +499,7 @@ messageMappings
 
 uninitialize
 	| deadMessages |
+	CommCtrlLibrary removeInitFlag: ICC_STANDARD_CLASSES.
 	deadMessages := self controlColorMessages.
 	#{Menu} isDefined ifFalse: [deadMessages := deadMessages , {WM_DRAWITEM. WM_MEASUREITEM}].
 	View unregisterMessageMappings: deadMessages!

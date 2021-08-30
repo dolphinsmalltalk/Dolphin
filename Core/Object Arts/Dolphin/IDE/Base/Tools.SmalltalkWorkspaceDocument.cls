@@ -520,14 +520,12 @@ fileTypes
 
 	| domain |
 	domain := self defaultModel.
-	^OrderedCollection new
-		add: domain smalltalkFilesType;
-		add: domain classFilesType;
-		add: domain packageFilesType;
-		add: domain ideaSpaceFilesType;
-		add: #('Text Files (*.txt)' '*.txt');
-		add: FileDialog allFilesType;
-		asArray!
+	^{domain smalltalkFilesType.
+		domain classFilesType.
+		domain packageFilesType.
+		domain ideaSpaceFilesType.
+		#('Text Files (*.txt)' '*.txt').
+		FileDialog allFilesType}!
 
 icon
 	"Answers an Icon that can be used to represent this class"

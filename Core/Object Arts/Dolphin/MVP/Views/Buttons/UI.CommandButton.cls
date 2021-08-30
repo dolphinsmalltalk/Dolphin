@@ -134,7 +134,7 @@ initialize
 				at: #close put: IDCLOSE;
 				at: #help put: IDHELP;
 				at: #retry put: IDTRYAGAIN;
-				at: #ignore put: IDCONTINUE;
+				at: #continue put: IDCONTINUE;
 				shrink;
 				isImmutable: true;
 				yourself)!

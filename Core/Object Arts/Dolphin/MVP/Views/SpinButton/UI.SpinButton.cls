@@ -382,6 +382,7 @@ initialize
 		self initialize
 	"
 
+	CommCtrlLibrary addInitFlag: ICC_UPDOWN_CLASS.
 	self addClassConstant: 'AlignmentMask' value: ##(UDS_ALIGNLEFT | UDS_ALIGNRIGHT).
 	self addClassConstant: 'AlignmentMap'
 		value: (IdentityDictionary new
@@ -395,6 +396,9 @@ initialize
 themePartName
 	^'SPIN'!
 
+uninitialize
+	CommCtrlLibrary removeInitFlag: ICC_UPDOWN_CLASS!
+
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
@@ -404,6 +408,7 @@ defaultModel!models!public! !
 icon!constants!public! !
 initialize!development!initializing!private! !
 themePartName!constants!private! !
+uninitialize!class hierarchy-removing!public! !
 winClassName!constants!private! !
 !
 

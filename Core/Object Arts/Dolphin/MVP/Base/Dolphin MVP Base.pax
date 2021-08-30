@@ -80,7 +80,6 @@ package setClassNames: #(
 	#{OS.BP_PAINTPARAMS}
 	#{OS.ButtonConstants}
 	#{OS.CommCtrlConstants}
-	#{OS.CommCtrlLibrary}
 	#{OS.DEVMODE}
 	#{OS.DIBSECTION}
 	#{OS.DISPLAY_DEVICEW}
@@ -230,6 +229,30 @@ package setMethodNames: #(
 	#(#{Core.String} #setTextInto:)
 	#(#{Core.Symbol} #copyToClipboard)
 	#(#{Core.UndefinedObject} #asResourceId)
+	#(#{OS.CommCtrlLibrary} #imageList_AddMasked:hbmImage:crMask:)
+	#(#{OS.CommCtrlLibrary} #imageList_BeginDrag:iTrack:dxHotspot:dyHotspot:)
+	#(#{OS.CommCtrlLibrary} #imageList_Create:cy:flags:cInitial:cGrow:)
+	#(#{OS.CommCtrlLibrary} #imageList_Destroy:)
+	#(#{OS.CommCtrlLibrary} #imageList_DragEnter:x:y:)
+	#(#{OS.CommCtrlLibrary} #imageList_DragLeave:)
+	#(#{OS.CommCtrlLibrary} #imageList_DragMove:y:)
+	#(#{OS.CommCtrlLibrary} #imageList_DragShowNolock:)
+	#(#{OS.CommCtrlLibrary} #imageList_Draw:i:hdcDst:x:y:fStyle:)
+	#(#{OS.CommCtrlLibrary} #imageList_DrawEx:i:hdcDst:x:y:dx:dy:rgbBk:rgbFg:fStyle:)
+	#(#{OS.CommCtrlLibrary} #imageList_Duplicate:)
+	#(#{OS.CommCtrlLibrary} #imageList_EndDrag)
+	#(#{OS.CommCtrlLibrary} #imageList_GetBkColor:)
+	#(#{OS.CommCtrlLibrary} #imageList_GetIcon:i:flags:)
+	#(#{OS.CommCtrlLibrary} #imageList_GetIconSize:cx:cy:)
+	#(#{OS.CommCtrlLibrary} #imageList_GetImageCount:)
+	#(#{OS.CommCtrlLibrary} #imageList_LoadImage:lpbmp:cx:cGrow:crMask:uType:uFlags:)
+	#(#{OS.CommCtrlLibrary} #imageList_ReplaceIcon:i:hicon:)
+	#(#{OS.CommCtrlLibrary} #imageList_SetBkColor:clrBk:)
+	#(#{OS.CommCtrlLibrary} #imageList_SetDragCursorImage:iDrag:dxHotspot:dyHotspot:)
+	#(#{OS.CommCtrlLibrary} #imageList_SetIconSize:cx:cy:)
+	#(#{OS.CommCtrlLibrary} #loadIconMetric:pszName:lims:phico:)
+	#(#{OS.CommCtrlLibrary} #loadIconWithScaleDown:pszName:cx:cy:phico:)
+	#(#{OS.CommCtrlLibrary class} #sharedVariableName)
 	#(#{OS.KernelLibrary} #getConsoleWindow)
 	#(#{OS.UserLibrary} #adjustWindowRectEx:dwStyle:bMenu:dwExStyle:)
 	#(#{OS.UserLibrary} #animateWindow:dwTime:dwFlags:)
@@ -402,6 +425,7 @@ package setBinaryVariableNames: #(
 ).
 
 package setPrerequisites: #(
+	'..\..\System\Win32\CommCtrl\Common Controls Library'
 	'..\..\Base\Dolphin'
 	'Dolphin Basic Geometry'
 	'..\..\Base\Dolphin Command-line Parser'
@@ -533,7 +557,22 @@ Kernel.SharedPool subclass: #'OS.CommCtrlConstants'
 		'GDTR_MIN' -> 16r1.
 		'I_CHILDRENCALLBACK' -> -16r1.
 		'I_IMAGECALLBACK' -> -16r1.
+		'ICC_ANIMATE_CLASS' -> 16r80.
+		'ICC_BAR_CLASSES' -> 16r4.
+		'ICC_COOL_CLASSES' -> 16r400.
 		'ICC_DATE_CLASSES' -> 16r121.
+		'ICC_HOTKEY_CLASS' -> 16r40.
+		'ICC_INTERNET_CLASSES' -> 16r800.
+		'ICC_LINK_CLASS' -> 16r8000.
+		'ICC_LISTVIEW_CLASSES' -> 16r1.
+		'ICC_NATIVEFNTCTL_CLASS' -> 16r2000.
+		'ICC_PAGESCROLLER_CLASS' -> 16r1000.
+		'ICC_PROGRESS_CLASS' -> 16r20.
+		'ICC_STANDARD_CLASSES' -> 16r4000.
+		'ICC_TAB_CLASSES' -> 16r8.
+		'ICC_TREEVIEW_CLASSES' -> 16r2.
+		'ICC_UPDOWN_CLASS' -> 16r10.
+		'ICC_USEREX_CLASSES' -> 16r200.
 		'ICC_WIN95_CLASSES' -> 16rFF.
 		'ILC_COLOR' -> 16r0.
 		'ILC_COLOR16' -> 16r10.
@@ -1647,12 +1686,6 @@ UI.DragDropSession subclass: #'UI.InternalDragDropSession'
 	instanceVariableNames: 'lastImageKey imageList oldCursor dragButton operationDescriptions'
 	classVariableNames: ''
 	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-External.DynamicLinkLibrary subclass: #'OS.CommCtrlLibrary'
-	instanceVariableNames: ''
-	classVariableNames: 'InitFlags'
-	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.DynamicLinkLibrary subclass: #'OS.DwmApiLibrary'
@@ -2987,6 +3020,321 @@ asResourceId
 asResourceId!converting!public! !
 !
 
+!OS.CommCtrlLibrary methodsFor!
+
+imageList_AddMasked: himl hbmImage: hbmImage crMask: crMask
+	"Invoke the ImageList_AddMasked() function of the module wrapped by the receiver.
+	Helpstring: Adds an image or images to an image list, generating a mask from the specified bitmap
+
+		int __stdcall ImageList_AddMasked(
+			HIMAGELIST himl,
+			HBITMAP hbmImage,
+			COLORREF crMask);"
+
+	<stdcall: sdword ImageList_AddMasked handle handle dword>
+	^self invalidCall: _failureCode!
+
+imageList_BeginDrag: himlTrack iTrack: iTrack dxHotspot: dxHotspot dyHotspot: dyHotspot
+	"Invoke the ImageList_BeginDrag() function of the module wrapped by the receiver.
+	Helpstring: Begins dragging an image
+
+		BOOL __stdcall ImageList_BeginDrag(
+			HIMAGELIST himlTrack,
+			int iTrack,
+			int dxHotspot,
+			int dyHotspot);"
+
+	<stdcall: bool ImageList_BeginDrag handle sdword sdword sdword>
+	^self invalidCall: _failureCode!
+
+imageList_Create: cx cy: cy flags: flags cInitial: cInitial cGrow: cGrow
+	"Invoke the ImageList_Create() function of the module wrapped by the receiver.
+	Helpstring: Creates a new image list
+
+		HIMAGELIST __stdcall ImageList_Create(
+			int cx,
+			int cy,
+			UINT flags,
+			int cInitial,
+			int cGrow);"
+
+	<stdcall: handle ImageList_Create sdword sdword dword sdword sdword>
+	^self invalidCall: _failureCode!
+
+imageList_Destroy: himl
+	"Invoke the ImageList_Destroy() function of the module wrapped by the receiver.
+	Helpstring: Destroys an image list
+
+		BOOL __stdcall ImageList_Destroy(
+			HIMAGELIST himl);"
+
+	<stdcall: bool ImageList_Destroy handle>
+	^self invalidCall: _failureCode!
+
+imageList_DragEnter: hwndLock x: x y: y
+	"Invoke the ImageList_DragEnter() function of the module wrapped by the receiver.
+	Helpstring: Updates the specified window during a drag operation and displays the drag image at the specified position
+
+		BOOL __stdcall ImageList_DragEnter(
+			HWND hwndLock,
+			int x,
+			int y);"
+
+	<stdcall: bool ImageList_DragEnter handle sdword sdword>
+	^self invalidCall: _failureCode!
+
+imageList_DragLeave: hwndLock
+	"Invoke the ImageList_DragLeave() function of the module wrapped by the receiver.
+	Helpstring: Unlocks the specified window and hides the drag image, allowing the window to be updated
+
+		BOOL __stdcall ImageList_DragLeave(
+			HWND hwndLock);"
+
+	<stdcall: bool ImageList_DragLeave handle>
+	^self invalidCall: _failureCode!
+
+imageList_DragMove: x y: y
+	"Invoke the ImageList_DragMove() function of the module wrapped by the receiver.
+	Helpstring: Moves the image that is being dragged during a drag-and-drop operation
+
+		BOOL __stdcall ImageList_DragMove(
+			int x,
+			int y);"
+
+	<stdcall: bool ImageList_DragMove sdword sdword>
+	^self invalidCall: _failureCode!
+
+imageList_DragShowNolock: fShow
+	"Invoke the ImageList_DragShowNolock() function of the module wrapped by the receiver.
+	Helpstring: Shows or hides the image being dragged
+
+		BOOL __stdcall ImageList_DragShowNolock(
+			BOOL fShow);"
+
+	<stdcall: bool ImageList_DragShowNolock bool>
+	^self invalidCall: _failureCode!
+
+imageList_Draw: hImageList i: index hdcDst: hdc x: x y: y fStyle: style
+	"The ImageList_Draw function draws an image list item in the specified
+	device context.
+
+	BOOL WINAPI ImageList_Draw(
+		HIMAGELIST himl, 	
+		int i, 	
+		HDC hdcDst, 	
+		int x, 	
+		int y, 	
+		UINT fStyle);	"
+
+	<stdcall: bool ImageList_Draw handle sdword handle sdword sdword dword>
+	^self invalidCall: _failureCode!
+
+imageList_DrawEx: himl i: i hdcDst: hdcDst x: x y: y dx: dx dy: dy rgbBk: rgbBk rgbFg: rgbFg fStyle: fStyle
+	"Invoke the ImageList_DrawEx() function of the module wrapped by the receiver.
+	Helpstring: Draws an image list item in the specified device context using the given drawing style and color
+
+		long __stdcall ImageList_DrawEx(
+			long himl,
+			int i,
+			long hdcDst,
+			int x,
+			int y,
+			int dx,
+			int dy,
+			unsigned long rgbBk,
+			unsigned long rgbFg,
+			unsigned int fStyle);"
+
+	<stdcall: bool ImageList_DrawEx handle sdword handle sdword sdword sdword sdword dword dword dword>
+	^self invalidCall: _failureCode!
+
+imageList_Duplicate: himl
+	"Invoke the ImageList_Duplicate() function of the module wrapped by the receiver.
+	Helpstring: Creates a duplicate of an existing image list
+
+		HIMAGELIST __stdcall ImageList_Duplicate(
+			HIMAGELIST himl);"
+
+	<stdcall: handle ImageList_Duplicate handle>
+	^self invalidCall: _failureCode!
+
+imageList_EndDrag
+	"Invoke the ImageList_EndDrag() function of the module wrapped by the receiver.
+	Helpstring: Ends a drag operation
+
+		void __stdcall ImageList_EndDrag();"
+
+	<stdcall: void ImageList_EndDrag>
+	^self invalidCall: _failureCode!
+
+imageList_GetBkColor: himl
+	"Invoke the ImageList_GetBkColor() function of the module wrapped by the receiver.
+	Helpstring: Gets the image list background color
+
+		COLORREF __stdcall ImageList_GetBkColor(
+			HIMAGELIST himl);"
+
+	<stdcall: dword ImageList_GetBkColor handle>
+	^self invalidCall: _failureCode!
+
+imageList_GetIcon: himl i: i flags: flags
+	"Invoke the ImageList_GetIcon() function of the module wrapped by the receiver.
+	Helpstring: Creates an icon or cursor based on an image and mask in an image list
+
+		HICON __stdcall ImageList_GetIcon(
+			HIMAGELIST himl,
+			int i,
+			UINT flags);"
+
+	<stdcall: handle ImageList_GetIcon handle sdword dword>
+	^self invalidCall: _failureCode!
+
+imageList_GetIconSize: himl cx: cx cy: cy
+	"Invoke the ImageList_GetIconSize() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the dimensions of images in the image list.
+
+		BOOL __stdcall ImageList_GetIconSize(
+			HIMAGELIST himl,
+			int* cx,
+			int* cy);"
+
+	<stdcall: bool ImageList_GetIconSize handle sdword sdword>
+	^self invalidCall: _failureCode!
+
+imageList_GetImageCount: himl
+	"Invoke the ImageList_GetImageCount() function of the module wrapped by the receiver.
+	Helpstring: Gets the number of images in an image list
+
+		int __stdcall ImageList_GetImageCount(
+			HIMAGELIST himl);"
+
+	<stdcall: sdword ImageList_GetImageCount handle>
+	^self invalidCall: _failureCode!
+
+imageList_LoadImage: hi lpbmp: lpbmp cx: cx cGrow: cGrow crMask: crMask uType: uType uFlags: uFlags
+	"Invoke the ImageList_LoadImage() function of the module wrapped by the receiver.
+	Helpstring: Creates an image list from the specified bitmap, cursor, or icon resource
+
+		HIMAGELIST __stdcall ImageList_LoadImage(
+			HINSTANCE hi,
+			LPCWSTR lpbmp,
+			int cx,
+			int cGrow,
+			COLORREF crMask,
+			UINT uType,
+			UINT uFlags);"
+
+	<stdcall: handle ImageList_LoadImageW handle lpwstr sdword sdword dword dword dword>
+	^self invalidCall: _failureCode!
+
+imageList_ReplaceIcon: himl i: i hicon: hicon
+	"Invoke the ImageList_ReplaceIcon() function of the module wrapped by the receiver.
+	Helpstring: Replaces an image with an icon or cursor
+
+		int __stdcall ImageList_ReplaceIcon(
+			HIMAGELIST himl,
+			int i,
+			HICON HICON);"
+
+	<stdcall: sdword ImageList_ReplaceIcon handle sdword handle>
+	^self invalidCall: _failureCode!
+
+imageList_SetBkColor: himl clrBk: clrBk
+	"Invoke the ImageList_SetBkColor() function of the module wrapped by the receiver.
+	Helpstring: Sets the image list background color
+
+		COLORREF __stdcall ImageList_SetBkColor(
+			HIMAGELIST himl,
+			COLORREF clrBk);"
+
+	<stdcall: dword ImageList_SetBkColor handle dword>
+	^self invalidCall: _failureCode!
+
+imageList_SetDragCursorImage: himlDrag iDrag: iDrag dxHotspot: dxHotspot dyHotspot: dyHotspot
+	"Invoke the ImageList_SetDragCursorImage() function of the module wrapped by the receiver.
+	Helpstring: Creates a new drag image by combining the specified image (typically a cursor) with the current drag image
+
+		BOOL __stdcall ImageList_SetDragCursorImage(
+			HIMAGELIST himlDrag,
+			int iDrag,
+			int dxHotspot,
+			int dyHotspot);"
+
+	<stdcall: bool ImageList_SetDragCursorImage handle sdword sdword sdword>
+	^self invalidCall: _failureCode!
+
+imageList_SetIconSize: himl cx: cx cy: cy
+	"Invoke the ImageList_SetIconSize() function of the module wrapped by the receiver.
+	Helpstring: Sets the dimensions of images in an image list
+
+		BOOL __stdcall ImageList_SetIconSize(
+			HIMAGELIST himl,
+			int cx,
+			int cy);"
+
+	<stdcall: bool ImageList_SetIconSize handle sdword sdword>
+	^self invalidCall: _failureCode!
+
+loadIconMetric: hInst pszName: pszName lims: lims phico: phico
+	"Invoke the LoadIconMetric() function of the module wrapped by the receiver.
+	Helpstring: Loads a specified icon resource with a client-specified system metric
+
+		HRESULT_NOTHROW __stdcall LoadIconMetric(
+			HINSTANCE hInst,
+			RESOURCEID pszName,
+			int lims,
+			[out, retval]HICON* phico);"
+
+	<stdcall: sdword LoadIconMetric handle void* sdword handle*>
+	^self invalidCall: _failureCode!
+
+loadIconWithScaleDown: hInst pszName: pszName cx: cx cy: cy phico: phico
+	"Invoke the LoadIconWithScaleDown() function of the module wrapped by the receiver.
+	Helpstring: Loads an icon. If the icon is not a standard size, this function scales down a larger image instead of scaling up a smaller image.
+
+		HRESULT __stdcall LoadIconWithScaleDown(
+			HINSTANCE hInst,
+			LPCWSTR pszName,
+			int cx,
+			int cy,
+			[out, retval]HICON* phico);"
+
+	<stdcall: sdword LoadIconWithScaleDown handle lpvoid sdword sdword handle*>
+	^self invalidCall: _failureCode! !
+!OS.CommCtrlLibrary categoriesForMethods!
+imageList_AddMasked:hbmImage:crMask:!**auto generated**!public!win32 functions-image list! !
+imageList_BeginDrag:iTrack:dxHotspot:dyHotspot:!**auto generated**!public!win32 functions-image list! !
+imageList_Create:cy:flags:cInitial:cGrow:!**auto generated**!public!win32 functions-image list! !
+imageList_Destroy:!**auto generated**!public!win32 functions-image list! !
+imageList_DragEnter:x:y:!**auto generated**!public!win32 functions-image list! !
+imageList_DragLeave:!**auto generated**!public!win32 functions-image list! !
+imageList_DragMove:y:!**auto generated**!public!win32 functions-image list! !
+imageList_DragShowNolock:!**auto generated**!public!win32 functions-image list! !
+imageList_Draw:i:hdcDst:x:y:fStyle:!primitives!public!win32 functions-image list! !
+imageList_DrawEx:i:hdcDst:x:y:dx:dy:rgbBk:rgbFg:fStyle:!**auto generated**!public!win32 functions-image list! !
+imageList_Duplicate:!**auto generated**!public!win32 functions-image list! !
+imageList_EndDrag!**auto generated**!public!win32 functions-image list! !
+imageList_GetBkColor:!**auto generated**!public!win32 functions-image list! !
+imageList_GetIcon:i:flags:!**auto generated**!public!win32 functions-image list! !
+imageList_GetIconSize:cx:cy:!**auto generated**!public!win32 functions-image list! !
+imageList_GetImageCount:!**auto generated**!public!win32 functions-image list! !
+imageList_LoadImage:lpbmp:cx:cGrow:crMask:uType:uFlags:!**auto generated**!public!win32 functions-image list! !
+imageList_ReplaceIcon:i:hicon:!**auto generated**!public!win32 functions-image list! !
+imageList_SetBkColor:clrBk:!**auto generated**!public!win32 functions-image list! !
+imageList_SetDragCursorImage:iDrag:dxHotspot:dyHotspot:!**auto generated**!public!win32 functions-image list! !
+imageList_SetIconSize:cx:cy:!**auto generated**!public!win32 functions-image list! !
+loadIconMetric:pszName:lims:phico:!**auto generated**!public! !
+loadIconWithScaleDown:pszName:cx:cy:phico:!**auto generated**!public! !
+!
+
+!OS.CommCtrlLibrary class methodsFor!
+
+sharedVariableName
+	^#{ComCtl32}! !
+!OS.CommCtrlLibrary class categoriesForMethods!
+sharedVariableName!constants!private! !
+!
+
 !OS.KernelLibrary methodsFor!
 
 getConsoleWindow
@@ -3824,15 +4172,13 @@ getWindowTextLength: hWnd
 	<stdcall: sdword GetWindowTextLengthW handle>
 	^self invalidCall: _failureCode!
 
-getWindowThreadProcessId: aWindowHandle lpdwProcessId: lpdw
-	"The GetWindowThreadProcessId function retrieves the identifier of the thread that created 
-	the specified window and, optionally, the identifier of the process that created the window. 
-	
-	DWORD GetWindowThreadProcessId(
-		HWND hWnd <>,             // handle to window
-		LPDWORD lpdwProcessId <>  // process identifier
-		);
-"
+getWindowThreadProcessId: hwnd lpdwProcessId: lpdwProcessId
+	"Invoke the GetWindowThreadProcessId() function of the module wrapped by the receiver.
+	Helpstring: Returns the ids of both the process and the thread that created a window
+
+		DWORD __stdcall GetWindowThreadProcessId(
+			wireHWND hwnd,
+			DWORD* lpdwProcessId);"
 
 	<stdcall: dword GetWindowThreadProcessId handle dword*>
 	^self invalidCall: _failureCode!
@@ -4711,7 +5057,7 @@ getWindowPlacement:lpwndpl:!public!win32 functions-window! !
 getWindowRect:lpRect:!public!win32 functions-window! !
 getWindowText:lpString:nMaxCount:!public! !
 getWindowTextLength:!public! !
-getWindowThreadProcessId:lpdwProcessId:!public!win32 functions-window! !
+getWindowThreadProcessId:lpdwProcessId:!**auto generated**!public!win32 functions-window! !
 getWindowULong:nIndex:!public!win32 functions-window class! !
 getWindowULongPtr:nIndex:!public!win32 functions-window class! !
 insertMenuItem:uItem:fByPosition:lpmii:!public!win32 functions-menu! !

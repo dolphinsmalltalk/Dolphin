@@ -1,0 +1,59 @@
+﻿| package |
+package := Package name: 'Dolphin Message Box Tests'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{UI.Tests.MessageBoxTest}
+).
+
+package setMethodNames: #(
+	#(#{UI.MessageBox} #clickButton:)
+	#(#{UI.MessageBox} #clickVerification:)
+).
+
+package setPrerequisites: #(
+	'..\..\..\..\Base\Dolphin'
+	'..\..\..\..\Base\Tests\Dolphin Base Tests'
+	'..\Dolphin Message Box'
+	'..\..\..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\..\..\MVP\Dolphin MVP Tests'
+	'..\..\..\..\Registry\Dolphin Registry Access'
+).
+
+package!
+
+"Class Definitions"!
+
+Core.Tests.DolphinTest subclass: #'UI.Tests.MessageBoxTest'
+	instanceVariableNames: 'subject enablement'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"Loose Methods"!
+
+!UI.MessageBox methodsFor!
+
+clickButton: anInteger
+	User32
+		postMessage: handle
+		msg: TDM_CLICK_BUTTON
+		wParam: anInteger
+		lParam: 0!
+
+clickVerification: aBoolean
+	User32
+		postMessage: handle
+		msg: TDM_CLICK_VERIFICATION
+		wParam: aBoolean asParameter
+		lParam: 0! !
+!UI.MessageBox categoriesForMethods!
+clickButton:!operations!public! !
+clickVerification:!operations!public! !
+!
+
+"End of package definition"!
+

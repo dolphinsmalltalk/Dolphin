@@ -41,6 +41,37 @@ isTextUnicode: lpv iSize: iSize lpiResult: lpiResult
 	<stdcall: bool IsTextUnicode lpvoid sdword sdword*>
 	^self invalidCall: _failureCode!
 
+regGetValue: hKey lpSubKey: lpSubKey lpValue: lpValue dwFlags: dwFlags pdwType: pdwType pvData: pvData pcbData: pcbData
+	"Invoke the RegGetValue() function of the module wrapped by the receiver.
+	Helpstring: Retrieves the type and data for the specified registry value.
+
+		LSTATUS __stdcall RegGetValue(
+			void* hKey,
+			LPCWSTR lpSubKey,
+			LPCWSTR lpValue,
+			DWORD dwFlags,
+			unsigned long* pdwType,
+			void* pvData,
+			unsigned long* pcbData);"
+
+	<stdcall: sdword RegGetValueW handle lpwstr lpwstr dword dword* void* dword*>
+	^self invalidCall: _failureCode!
+
+regSetKeyValue: hKey lpSubKey: lpSubKey lpValueName: lpValue dwType: dwType lpData: lpData cbData: cbData
+	"Invoke the RegSetKeyValue() function of the module wrapped by the receiver.
+	Helpstring: Sets the data for the specified value in the specified registry key and subkey..
+
+		LSTATUS __stdcall RegSetKeyValue(
+			HKEY hKey,
+			LPCWSTR lpSubKey,
+			LPCWSTR lpValueName,
+			DWORD dwType,
+			void* pvData,
+			DWORD pcbData);"
+
+	<stdcall: errno RegSetKeyValueW handle lpwstr lpwstr dword void* dword>
+	^self invalidCall: _failureCode!
+
 reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lpUserSid: lpUserSid wNumStrings: wNumStrings dwDataSize: dwDataSize lpStrings: lpStrings lpRawData: lpRawData
 	"
 		BOOL ReportEvent(
@@ -61,6 +92,8 @@ reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lp
 deregisterEventSource:!public!win32 functions-events! !
 getUserName:nSize:!public!win32 functions-system information! !
 isTextUnicode:iSize:lpiResult:!public!win32 functions-unicode and character set! !
+regGetValue:lpSubKey:lpValue:dwFlags:pdwType:pvData:pcbData:!public!win32 functions-registry! !
+regSetKeyValue:lpSubKey:lpValueName:dwType:lpData:cbData:!public!win32 functions-registry! !
 reportEvent:wType:wCategory:dwEventId:lpUserSid:wNumStrings:dwDataSize:lpStrings:lpRawData:!public!win32 functions-events! !
 !
 

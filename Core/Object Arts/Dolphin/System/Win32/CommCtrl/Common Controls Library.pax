@@ -1,0 +1,27 @@
+﻿| package |
+package := Package name: 'Common Controls Library'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{OS.CommCtrlLibrary}
+).
+
+package setPrerequisites: #(
+	'..\..\..\Base\Dolphin'
+).
+
+package!
+
+"Class Definitions"!
+
+External.DynamicLinkLibrary subclass: #'OS.CommCtrlLibrary'
+	instanceVariableNames: ''
+	classVariableNames: 'InitFlags'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

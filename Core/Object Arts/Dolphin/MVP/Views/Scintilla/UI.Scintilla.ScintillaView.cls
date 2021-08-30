@@ -784,7 +784,7 @@ buildRawAnnotations: aCollectionOfScintillaAnnotations
 						 line"
 						currentLine == 0
 							ifFalse: 
-								[rawAnnotations add: (Annotation
+								[rawAnnotations addLast: (Annotation
 											line: currentLine
 											text: text contents
 											styles: styleBytes contents)].
@@ -803,7 +803,7 @@ buildRawAnnotations: aCollectionOfScintillaAnnotations
 				self printAnnotationStyleBytes: eachAnnotation on: styleBytes].
 	"Add the annotations for the last annotated line, as these remain in the buffers when the
 	loop terminates"
-	rawAnnotations add: (Annotation
+	rawAnnotations addLast: (Annotation
 				line: currentLine
 				text: text contents
 				styles: styleBytes contents).
@@ -1119,6 +1119,10 @@ clearContainerIndicators
 
 	self basicClearContainerIndicators.
 	indicators := nil!
+
+clearHandle
+	this := handle := oldWndProc := nil.
+	library := NullScintillaLibrary default!
 
 clearIndicator: anIntegerOrSymbol from: startInteger to: stopInteger 
 	"Clear the indicator identified by <integer> id from the range of text between two one-based
@@ -2567,11 +2571,6 @@ gotoLine: lineInteger
 		wParam: lineInteger - 1
 		lParam: 0!
 
-handle: aHandleOrNil
-	this := nil.
-	library := NullScintillaLibrary default.
-	super handle: aHandleOrNil!
-
 hangingIndent
 	"Retrive the start indent for wrapped lines."
 
@@ -3854,7 +3853,7 @@ markerDefinitions: aCollection
 	aCollection size > userIds size ifTrue: [^self error: 'Too many marker definitions'].
 	count := aCollection size.
 	allocated := OrderedCollection new: count.
-	aCollection do: [:each | each basicId ifNotNil: [:id | allocated add: id]].
+	aCollection do: [:each | each basicId ifNotNil: [:id | allocated addLast: id]].
 	available := (userIds difference: allocated) readStream.
 	markerDefinitions := markerDefinitions reject: [:each | userIds includes: each basicId].
 	aCollection do: 
@@ -8744,7 +8743,7 @@ setCurrentTextStyles: aCollection
 	| newStylesByName allocatedStyles newStylesById availableStyles count |
 	count := aCollection size.
 	allocatedStyles := OrderedCollection new: count.
-	aCollection do: [:each | each basicId ifNotNil: [:id | allocatedStyles add: id]].
+	aCollection do: [:each | each basicId ifNotNil: [:id | allocatedStyles addLast: id]].
 	availableStyles := ((1 to: STYLE_DEFAULT - 1) , (STYLE_LASTPREDEFINED + 1 to: 255)
 				difference: allocatedStyles) readStream.
 	newStylesByName := IdentityDictionary new: count.
@@ -8840,7 +8839,7 @@ setIndicatorStyles: aCollection
 	| newStylesByName allocatedStyles availableStyles count |
 	count := aCollection size.
 	allocatedStyles := OrderedCollection new: count.
-	aCollection do: [:each | each basicId ifNotNil: [:id | allocatedStyles add: id]].
+	aCollection do: [:each | each basicId ifNotNil: [:id | allocatedStyles addLast: id]].
 	availableStyles := ((INDICATOR_CONTAINER to: INDICATOR_IME - 1) difference: allocatedStyles)
 				readStream.
 	newStylesByName := IdentityDictionary new: count.
@@ -9986,6 +9985,7 @@ charCloseToPosition:!public!selection! !
 charNearestPosition:!public!selection! !
 clearAll!commands!public!scintilla interface!text retrieval & modification! !
 clearContainerIndicators!indicators!public! !
+clearHandle!private! !
 clearIndicator:from:to:!indicators!public! !
 clearRange:!public!text retrieval & modification! !
 clearTabStops:!**auto generated**!public!scintilla interface!tabs & indentation guides! !
@@ -10147,7 +10147,6 @@ getRawAnnotations!annotations!private! !
 getSelectionRange:!private!selection! !
 goto:!**auto generated**!caret!public!scintilla interface! !
 gotoLine:!**auto generated**!caret!commands!public!scintilla interface! !
-handle:!accessing!private! !
 hangingIndent!**auto generated**!line wrapping!public!scintilla interface! !
 hangingIndent:!**auto generated**!line wrapping!public!scintilla interface! !
 hasAdditionalSelectionTyping!**auto generated**!public!scintilla interface! !

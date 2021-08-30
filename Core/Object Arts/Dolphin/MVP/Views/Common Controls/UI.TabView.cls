@@ -689,6 +689,7 @@ initialize
 		TabView initialize
 	"
 
+	CommCtrlLibrary addInitFlag: ICC_TAB_CLASSES.
 	self addClassConstant: 'TabOrientations'
 		value: (IdentityDictionary new
 				at: 0 put: #top;
@@ -715,6 +716,9 @@ initialize
 tabOrientations
 	^TabOrientations!
 
+uninitialize
+	CommCtrlLibrary removeInitFlag: ICC_TAB_CLASSES!
+
 viewModes
 	^TabViewModes!
 
@@ -727,6 +731,7 @@ winClassName
 icon!constants!public! !
 initialize!development!initializing!private! !
 tabOrientations!accessing!constants!public! !
+uninitialize!class hierarchy-removing!private! !
 viewModes!accessing!public! !
 winClassName!constants!private! !
 !

@@ -70,14 +70,14 @@ basicFree
 	The receiver is invalid after this call.
 	N.B. Any errors closing the handle are ignored."
 
-	^self registryLibrary regCloseKey: handle!
+	^AdvApi32 regCloseKey: handle!
 
 basicRealize
 	"Private - Open the receiver's associated registry key."
 
 	| dwErr |
 	handle := Handle new.
-	dwErr := self registryLibrary
+	dwErr := AdvApi32
 				regOpenKeyEx: self rootKey asParameter
 				lpSubKey: self pathFromRoot
 				ulOptions: 0
@@ -88,7 +88,7 @@ basicRealize
 		ifFalse: 
 			[dwErr == ERROR_FILE_NOT_FOUND
 				ifTrue: [self errorNotFound: self]
-				ifFalse: [self registryLibrary systemError: dwErr]]!
+				ifFalse: [AdvApi32 systemError: dwErr]]!
 
 copyingClass
 	"Private - Answer the class of object expected when the receiver is copied in whole or in part."
@@ -317,7 +317,7 @@ privateCreateKey: aString
 	| subKey dwErr rights |
 	subKey := Handle new.
 	rights := self sam.
-	dwErr := self registryLibrary
+	dwErr := AdvApi32
 				regCreateKeyEx: self asParameter
 				lpSubKey: aString
 				reserved: nil
@@ -359,7 +359,7 @@ queryKeyInfo
 	prevHandle := self handle.
 	dwErr := ERROR_SUCCESS.
 	
-	[dwErr := self registryLibrary
+	[dwErr := AdvApi32
 				regQueryInfoKey: self asParameter
 				lpClass: nil
 				lpcbClass: nil
@@ -376,7 +376,7 @@ queryKeyInfo
 			do: [:e | e tag = ERROR_ACCESS_DENIED ifTrue: [e notify] ifFalse: [e pass]]
 			on: NotFoundError
 			do: [:e | e notify].
-	dwErr = ERROR_SUCCESS ifFalse: [^self registryLibrary systemError: dwErr].
+	dwErr = ERROR_SUCCESS ifFalse: [^AdvApi32 systemError: dwErr].
 
 	"We avoid keeping the key open just to query the info ..."
 	prevHandle isNil ifTrue: [self free].
@@ -399,12 +399,6 @@ realize
 
 	handle isNil ifTrue: [self basicRealize]!
 
-registryLibrary
-	"Private - Answer the host system shared DLL used
-	to access the registry."
-
-	^AdvApi32!
-
 removeKey: key ifAbsent: exceptionHandler
 	"Remove the key (and its associated value), from the receiver. If key is
 	not in the receiver, answer the result of evaluating the <niladicValuable>,
@@ -418,16 +412,12 @@ removeSubKey: aString ifAbsent: exceptionHandler
 	if the key has sub-keys, on the latter all the sub-keys are deleted too."
 
 	| dwErr |
-	dwErr := self registryLibrary
-		regDeleteKey: self asParameter
-		lpSubKey: aString.
+	dwErr := AdvApi32 regDeleteKey: self asParameter lpSubKey: aString.
 	self free.
 	^dwErr = ERROR_SUCCESS
 		ifTrue: [aString]
-		ifFalse: [
-			dwErr = ERROR_FILE_NOT_FOUND
-				ifTrue: [exceptionHandler value]
-				ifFalse: [self registryLibrary systemError: dwErr]]!
+		ifFalse: 
+			[dwErr = ERROR_FILE_NOT_FOUND ifTrue: [exceptionHandler value] ifFalse: [AdvApi32 systemError: dwErr]]!
 
 removeSubTree: aString ifAbsent: exceptionHandler
 	"Recursively remove the specified sub-tree of the receiver."
@@ -443,16 +433,12 @@ removeSubValue: aString ifAbsent: exceptionHandler
 	"Remove the specified sub-value of the receiver."
 
 	| dwErr |
-	dwErr := self registryLibrary
-		regDeleteValue: self asParameter
-		lpValueName: aString.
+	dwErr := AdvApi32 regDeleteValue: self asParameter lpValueName: aString.
 	self free.
 	^dwErr = ERROR_SUCCESS
 		ifTrue: [aString]
-		ifFalse: [
-			dwErr = ERROR_FILE_NOT_FOUND
-				ifTrue: [exceptionHandler value]
-				ifFalse: [self registryLibrary systemError: dwErr]]!
+		ifFalse: 
+			[dwErr = ERROR_FILE_NOT_FOUND ifTrue: [exceptionHandler value] ifFalse: [AdvApi32 systemError: dwErr]]!
 
 resize: anInteger
 	"Private - Resize the receiver to have a capacity suitable for accommodating
@@ -532,7 +518,7 @@ subKeyNamesDo: operation
 	i := 0.
 	keyName := Utf16String newFixed: maxSize.
 	cbName := DWORDBytes new.
-	lib := self registryLibrary.
+	lib := AdvApi32.
 	
 	[
 	[cbName value: maxSize + 1.
@@ -553,7 +539,7 @@ subKeyNamesDo: operation
 				[operation value: (keyName copyFrom: 1 to: cbName asInteger).
 				i := i + 1].
 	self free.
-	dwErr = ERROR_NO_MORE_ITEMS ifFalse: [^self registryLibrary systemError: dwErr]!
+	dwErr = ERROR_NO_MORE_ITEMS ifFalse: [^AdvApi32 systemError: dwErr]!
 
 subKeys
 	"Answer the collection of sub-keys under the receiver (a RegKey)."
@@ -582,7 +568,7 @@ subValueNamesAndValuesDo: operation
 	cbValueName := DWORDBytes new.
 	cbData := DWORDBytes new.
 	type := DWORDBytes new.
-	lib := self registryLibrary.
+	lib := AdvApi32.
 	
 	[cbValueName value: maxNameSize + 1.	"must include Null terminator"
 	cbData value: maxDataSize.
@@ -616,7 +602,7 @@ subValueNamesDo: operation
 	maxSize := self keyInfo maxValueNameLen.
 	valueName := Utf16String newFixed: maxSize.	"Strings automatically include space for null-term"
 	cbValueName := DWORDBytes new.
-	lib := self registryLibrary.
+	lib := AdvApi32.
 	
 	[cbValueName value: maxSize + 1.	"must include Null terminator"
 	dwErr := lib
@@ -671,7 +657,7 @@ valueAt: key ifAbsent: exceptionHandler
 	size := self keyInfo maxValueLen.
 	valueBuf := ByteArray newFixed: size.
 	size := DWORDBytes fromInteger: size.
-	dwErr := self registryLibrary
+	dwErr := AdvApi32
 				regQueryValueEx: hKey
 				lpValueName: key
 				lpReserved: nil
@@ -686,9 +672,7 @@ valueAt: key ifAbsent: exceptionHandler
 				type: type asInteger
 				size: size asInteger]
 		ifFalse: 
-			[dwErr = ERROR_FILE_NOT_FOUND
-				ifTrue: [exceptionHandler value]
-				ifFalse: [self registryLibrary systemError: dwErr]]!
+			[dwErr = ERROR_FILE_NOT_FOUND ifTrue: [exceptionHandler value] ifFalse: [AdvApi32 systemError: dwErr]]!
 
 valueAt: aString put: anObject 
 	"Set the value in the receiver with the <readableString> name, aString, to the <Object>,
@@ -794,7 +778,6 @@ printOn:!printing!public! !
 privateCreateKey:!helpers!private! !
 queryKeyInfo!accessing!public! !
 realize!public!realizing/unrealizing! !
-registryLibrary!constants!private! !
 removeKey:ifAbsent:!public!removing! !
 removeSubKey:ifAbsent:!public!removing! !
 removeSubTree:ifAbsent:!public!removing! !

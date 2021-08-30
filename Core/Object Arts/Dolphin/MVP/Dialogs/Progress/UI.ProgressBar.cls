@@ -168,10 +168,14 @@ icon
 initialize
 	"Private - Initialise the receiver."
 
+	CommCtrlLibrary addInitFlag: ICC_PROGRESS_CLASS.
 	ValidRange := 0 to: 65535!
 
 themePartName
 	^'PROGRESS'!
+
+uninitialize
+	CommCtrlLibrary removeInitFlag: ICC_PROGRESS_CLASS!
 
 validRange
 	"Private - Answer an Interval delimiting the valid range for the 
@@ -189,6 +193,7 @@ defaultModel!models!public! !
 icon!constants!public! !
 initialize!development!initializing!private! !
 themePartName!constants!private! !
+uninitialize!class hierarchy-removing!private! !
 validRange!constants!private! !
 winClassName!constants!private! !
 !

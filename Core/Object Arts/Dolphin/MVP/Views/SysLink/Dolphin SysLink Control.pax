@@ -30,6 +30,7 @@ package setMethodNames: #(
 ).
 
 package setPrerequisites: #(
+	'..\..\..\System\Win32\CommCtrl\Common Controls Library'
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Base\Dolphin MVP Base'

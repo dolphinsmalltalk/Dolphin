@@ -389,10 +389,8 @@ okToSavePackage: aPackage
 	mb := MessageBox new.
 	mb iconStyle: #warning.
 	mb caption: 'Cannot save package ' , aPackage name printString.
-	(mb confirm: err description
-				, '
-
-The package will NOT load if saved in this form so the package file has not been saved.
+	mb headerText: err description.
+	(mb confirm: 'The package will NOT load if saved in this form so the package file has not been saved.
 
 Would you like to browse the packages prerequisites in order to track down the problem?')
 		ifTrue: [self systemModel showPrerequisitesForPackage: aPackage].

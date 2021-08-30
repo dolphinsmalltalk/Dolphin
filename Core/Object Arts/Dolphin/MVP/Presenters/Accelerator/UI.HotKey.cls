@@ -179,12 +179,22 @@ icon
 
 	^##(self) defaultIcon!
 
+initialize
+	"Private - Initialise the receiver."
+
+	CommCtrlLibrary addInitFlag: ICC_HOTKEY_CLASS!
+
+uninitialize
+	CommCtrlLibrary removeInitFlag: ICC_HOTKEY_CLASS!
+
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
 
 	^'msctls_hotkey32'! !
 !UI.HotKey class categoriesForMethods!
 icon!constants!public! !
+initialize!development!initializing!private! !
+uninitialize!class hierarchy-removing!private! !
 winClassName!constants!private! !
 !
 

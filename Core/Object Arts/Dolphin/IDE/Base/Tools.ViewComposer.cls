@@ -82,7 +82,7 @@ adornmentRectanglesFor: aView
 
 	| viewRects |
 	viewRects := OrderedCollection new.
-	self adornmentRectanglesFor: aView do: [:rect | viewRects add: rect].
+	self adornmentRectanglesFor: aView do: [:rect | viewRects addLast: rect].
 	^viewRects!
 
 adornmentRectanglesFor: aView do: aMonadicValuable
@@ -287,18 +287,16 @@ basicPasteResourceLink: aLiteralResourceIdentifier context: contextView
 borderRectanglesFor: aView
 	"Private - Answer a collection of rectangles that mark the borders of aView"
 
-	| extent rect borderRects corner |
+	| extent rect topLeft height width |
 	extent := Grabber defaultExtent.
 	rect := aView rectangle.
-	borderRects := OrderedCollection new.
-	corner := self mapPoint: rect topLeft toArenaFromView: aView.
-	borderRects add: (corner extent: extent x @ rect height).
-	borderRects add: (corner extent: rect width @ extent y).
-	corner := self mapPoint: rect topRight toArenaFromView: aView.
-	borderRects add: (corner - (extent x @ 0) extent: extent x @ rect height).
-	corner := self mapPoint: rect bottomLeft toArenaFromView: aView.
-	borderRects add: (corner - (0 @ extent y) extent: rect width @ extent y).
-	^borderRects!
+	topLeft := self mapPoint: rect topLeft toArenaFromView: aView.
+	height := rect height.
+	width := rect width.
+	^{topLeft extent: extent x @ height.
+		topLeft extent: width @ extent y.
+		(self mapPoint: rect topRight toArenaFromView: aView) - (extent x @ 0) extent: extent x @ height.
+		(self mapPoint: rect bottomLeft toArenaFromView: aView) - (0 @ extent y) extent: width @ extent y}!
 
 borderRegionFor: aView 
 	"Private - Answers a Region occupied by the selection borders for aView"
@@ -1604,7 +1602,8 @@ onPromptToSaveChanges: aBooleanValue
 		ifTrue: 
 			[((MessageBox new)
 				owner: self view;
-				confirm: 'There are unsaved changes. Do you wish to retain them?') 
+				headerText: 'There are unsaved changes';
+				confirm: 'Do you wish to retain them?') 
 					ifTrue: [aBooleanValue value: false]
 					ifFalse: [self isModified: false]].
 	^aBooleanValue value!

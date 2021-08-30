@@ -1407,6 +1407,9 @@ icon
 
 	^##(self) defaultIcon!
 
+initialize
+	CommCtrlLibrary addInitFlag: ICC_TREEVIEW_CLASSES!
+
 stbConvertFromVersion10: anArray
 	"Private - Perform an STB conversion from a version 10 <TreeView> to version 11,
 	i.e. append tvFlags and reserve another slot for later use."
@@ -1426,6 +1429,9 @@ stbConvertFromVersion10: anArray
 themePartName
 	^#TreeView!
 
+uninitialize
+	CommCtrlLibrary removeInitFlag: ICC_TREEVIEW_CLASSES!
+
 updateModes
 	^UpdateModes!
 
@@ -1436,8 +1442,10 @@ winClassName
 !UI.TreeView class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !
+initialize!development!initializing!private! !
 stbConvertFromVersion10:!binary filing!private! !
 themePartName!constants!public! !
+uninitialize!class hierarchy-removing!private! !
 updateModes!accessing!private! !
 winClassName!constants!private! !
 !

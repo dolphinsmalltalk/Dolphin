@@ -750,7 +750,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Models\List\Dolphin List Models'
 	'..\..\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\MVP\Presenters\ListTree\Dolphin List Tree Presenter'
-	'..\..\Base\Dolphin Message Box'
+	'..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\MVP\Views\MoenTree\Dolphin MoenTree View'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Presenters\Number\Dolphin Number Presenter'
@@ -5142,7 +5142,6 @@ printInfoTipOn: aStream frame: aStackFrame
 				debugPrint: (aStackFrame temp: (entry at: 2) at: (entry at: 3))]!
 
 valueClass: aStackFrame
-	Sound bell.
 	^(self debugInfoInFrame: aStackFrame)
 		ifNil: [super valueClass: aStackFrame]
 		ifNotNil: [:entry | (aStackFrame temp: (entry at: 2) at: (entry at: 3)) basicClass]! !

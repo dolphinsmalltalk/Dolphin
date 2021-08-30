@@ -2611,6 +2611,7 @@ initialize
 		self initialize
 	"
 
+	CommCtrlLibrary addInitFlag: ICC_LISTVIEW_CLASSES.
 	self addClassConstant: 'LvModes'
 		value: (IdentityDictionary new
 				at: #thumbnails put: LVS_ICON;
@@ -2719,6 +2720,9 @@ stbVersion
 themePartName
 	^#ListView!
 
+uninitialize
+	CommCtrlLibrary removeInitFlag: ICC_LISTVIEW_CLASSES!
+
 viewModes
 	^LvModes!
 
@@ -2738,6 +2742,7 @@ stbConvertFromVersion2:!binary filing!private! !
 stbConvertFromVersion5:!binary filing!private! !
 stbVersion!binary filing!public! !
 themePartName!constants!public! !
+uninitialize!class hierarchy-removing!private! !
 viewModes!accessing!public! !
 winClassName!constants!private! !
 !

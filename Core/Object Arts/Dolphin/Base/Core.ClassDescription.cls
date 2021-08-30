@@ -694,9 +694,7 @@ methodsCatalogue: mapOrNil
 	"Private - Sets the methods catalogue to mapOrNil which stores Arrays of selectors
 	keyed by category objects. If the map is empty, then it is reduced to nil to save space."
 
-	methodsCatalogue := (mapOrNil notNil and: [mapOrNil notEmpty])
-							ifTrue: [mapOrNil]
-!
+	methodsCatalogue := (mapOrNil notNil and: [mapOrNil notEmpty]) ifTrue: [mapOrNil]!
 
 methodsFor
 	"Answer a chunk reader to read and compile method chunks for the receiver.
@@ -900,14 +898,14 @@ resourceIdentifiersDo: aMonadicValuable
 
 resourceNames
 	| names |
-	names := OrderedCollection new.
-	self resourceSelectorsDo: [:each | names add: (UI.ResourceIdentifier nameFromSelector: each)].
-	^names asArray sort!
+	names := Array writeStream.
+	self resourceSelectorsDo: [:each | names nextPut: (UI.ResourceIdentifier nameFromSelector: each)].
+	^names contents sort!
 
 resources
 	| resources |
 	resources := OrderedCollection new.
-	self resourceIdentifiersDo: [:each | resources add: each resource].
+	self resourceIdentifiersDo: [:each | resources addLast: each resource].
 	^resources!
 
 resourceSelectorsDo: aMonadicValuable

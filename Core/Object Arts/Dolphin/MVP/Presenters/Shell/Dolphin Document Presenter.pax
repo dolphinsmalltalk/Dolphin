@@ -13,7 +13,7 @@ package setClassNames: #(
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Dialogs\Common\Dolphin Common Dialogs'
-	'..\..\..\Base\Dolphin Message Box'
+	'..\..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\Base\Dolphin MVP Base'
 ).
 

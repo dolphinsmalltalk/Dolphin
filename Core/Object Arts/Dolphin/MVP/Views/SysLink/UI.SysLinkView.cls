@@ -155,10 +155,10 @@ preferredHeight!enquiries!private! !
 !UI.SysLinkView class methodsFor!
 
 initialize
-	CommCtrlLibrary initFlags: (CommCtrlLibrary initFlags maskSet: ICC_LINK_CLASS)!
+	CommCtrlLibrary addInitFlag: ICC_LINK_CLASS!
 
 uninitialize
-	CommCtrlLibrary initFlags: (CommCtrlLibrary initFlags maskClear: ICC_LINK_CLASS)!
+	CommCtrlLibrary removeInitFlag: ICC_LINK_CLASS!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."
