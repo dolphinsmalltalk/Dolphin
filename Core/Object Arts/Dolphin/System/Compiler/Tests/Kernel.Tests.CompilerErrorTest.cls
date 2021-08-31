@@ -43,9 +43,6 @@ parseMethod: aString in: aClass
 parserClass
 	^Compiler!
 
-skipUnlessCompilerSupportsCodePointErrors
-	self skipUnless: [self isAtLeastVmVersion: #(2016 7 0 49)]!
-
 tempWarningRangeIn: aString
 	| start |
 	start := aString indexOf: $$.
@@ -90,11 +87,9 @@ testErrorsBadPools
 				source: source]!
 
 testErrorsLexicalBadCodePoint
-	self skipUnlessCompilerSupportsCodePointErrors.
 	super testErrorsLexicalBadCodePoint!
 
 testErrorsLexicalExpectCodePoint
-	self skipUnlessCompilerSupportsCodePointErrors.
 	super testErrorsLexicalExpectCodePoint!
 
 testErrorsLexicalExpectExtendedLiteral
@@ -154,7 +149,6 @@ defaultCompileFlags!constants!private! !
 parseExpression:in:!helpers!private! !
 parseMethod:in:!helpers!private! !
 parserClass!constants!private! !
-skipUnlessCompilerSupportsCodePointErrors!private!unit tests! !
 tempWarningRangeIn:!helpers!private! !
 testErrorsBadContext!public!unit tests! !
 testErrorsBadPools!public!unit tests! !

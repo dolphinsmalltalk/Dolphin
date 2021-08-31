@@ -27,7 +27,7 @@ minimumVmVersion
 		4) Update the .def files for the stubs in the DolphinVM solution.
 		5) Commit changes to the DolphinVM repo."
 
-	^self versionFromParts: #(2016 7 0 55)!
+	^self versionFromParts: #(8 0 2 0)!
 
 stubNames
 	^#('ConsoleToGo.exe' 'GUIToGo.exe' 'IPDolphinToGo.dll')!
