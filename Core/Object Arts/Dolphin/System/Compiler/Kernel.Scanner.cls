@@ -448,7 +448,10 @@ scanLiteralCharacter
 							"One of the special chars such as $\t for tab"
 							value := char.
 							stop := stream position.
-							self step]]].
+							self step]]
+				ifFalse: 
+					[value == Character.Utf8Default
+						ifTrue: [self lexicalError: LErrBadCodePoint range: (tokenStart to: stop)]]].
 	^self literalCharacterTokenClass
 		start: tokenStart
 		comments: nil

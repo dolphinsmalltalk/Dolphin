@@ -294,6 +294,11 @@ inline bool isShortPushTemp(OpCode code)
 	return code >= OpCode::ShortPushTemp && code < OpCode::ShortPushTemp + NumShortPushTemps;
 }
 
+inline bool isExtendedStore(OpCode op)
+{
+	return (static_cast<uint8_t>(op) >= FirstExtendedStore && static_cast<uint8_t>(op) <= LastExtendedStore) || (op == OpCode::StoreOuterTemp);
+}
+
 inline uint8_t indexOfShortPushTemp(OpCode code)
 {
 	_ASSERTE(isShortPushTemp(code));
@@ -397,4 +402,92 @@ inline bool isShortSend(OpCode code)
 {
 	return (code >= OpCode::ShortSpecialSend && static_cast<uint8_t>(code) <= LastShortSend) 
 		|| (code >= OpCode::ShortSpecialSendEx && code < OpCode::ShortSpecialSendEx + NumExSpecialSends);
+}
+
+inline bool isShortPush(OpCode code)
+{
+	return static_cast<uint8_t>(code) >= FirstShortPush &&
+		static_cast<uint8_t>(code) <= LastPush;	// Note that this includes pseudo pushes and push 0, 1, etc
+}
+
+inline bool isExtendedPush(OpCode op)
+{
+	return (op >= OpCode::PushInstVar && static_cast<uint8_t>(op) < FirstExtendedStore) ||
+		op == OpCode::PushOuterTemp ||
+		op == OpCode::PushImmediate ||
+		op == OpCode::PushChar;
+}
+
+inline bool isDoubleExtendedPush(OpCode op)
+{
+	return op == OpCode::LongPushOuterTemp ||
+		op == OpCode::LongPushConst ||
+		op == OpCode::LongPushStatic ||
+		op == OpCode::LongPushImmediate;
+}
+
+inline bool isPseudoPush(OpCode op)
+{
+	return static_cast<uint8_t>(op) >= FirstPseudoPush && static_cast<uint8_t>(op) <= LastPseudoPush;
+}
+
+inline bool isExtendedPopStore(OpCode op)
+{
+	return (static_cast<uint8_t>(op) >= FirstPopStore && static_cast<uint8_t>(op) <= LastPopStore) || (op == OpCode::PopStoreOuterTemp);
+}
+
+inline bool isShortPopStoreInstVar(OpCode op)
+{
+	return op >= OpCode::ShortPopStoreInstVar && op < OpCode::ShortPopStoreInstVar + NumShortPopStoreInstVars;
+}
+
+inline bool isShortPopStoreContextTemp(OpCode op)
+{
+	return op >= OpCode::PopStoreContextTemp && op < OpCode::PopStoreContextTemp + NumPopStoreContextTemps;
+}
+
+inline bool isShortPopStoreOuterTemp(OpCode op)
+{
+	return op >= OpCode::ShortPopStoreOuterTemp && op < OpCode::ShortPopStoreOuterTemp + NumPopStoreOuterTemps;
+}
+
+inline bool isShortPopStore(OpCode op)
+{
+	return isShortPopStoreContextTemp(op) || isShortPopStoreOuterTemp(op) || isShortPopStoreInstVar(op) || isShortPopStoreTemp(op);
+}
+
+inline bool isJumpIfFalse(OpCode op)
+{
+	return isShortJumpIfFalse(op) || op == OpCode::NearJumpIfFalse || op == OpCode::LongJumpIfFalse;
+}
+
+inline bool isJumpIfTrue(OpCode op)
+{
+	return op == OpCode::NearJumpIfTrue || op == OpCode::LongJumpIfTrue;
+}
+
+inline bool isJumpIfNotNil(OpCode op)
+{
+	return op == OpCode::NearJumpIfNotNil || op == OpCode::LongJumpIfNotNil;
+}
+
+inline bool isJumpIfNil(OpCode op)
+{
+	return op == OpCode::NearJumpIfNil || op == OpCode::LongJumpIfNil;
+}
+
+inline bool isConditionalJump(OpCode op)
+{
+	return
+		isJumpIfFalse(op) ||
+		isJumpIfTrue(op) ||
+		isJumpIfNil(op) ||
+		isJumpIfNotNil(op);
+}
+
+inline bool isUnconditionalJump(OpCode op)
+{
+	// Faster to test for long jump first, as this is mainly used by the optimizer
+	// which always works on long jumps
+	return op == OpCode::LongJump || op == OpCode::NearJump || isShortJump(op);
 }

@@ -651,7 +651,7 @@ Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString(Oop* const sp, pri
 #endif
 	if (err == 0)
 	{
-		auto oteResult = AnsiString::New(buffer);
+		auto oteResult = AnsiString::New(buffer, strlen(buffer));
 		*sp = reinterpret_cast<Oop>(oteResult);
 		ObjectMemory::AddToZct((OTE*)oteResult);
 		return sp;

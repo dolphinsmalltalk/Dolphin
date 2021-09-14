@@ -169,14 +169,14 @@ STDMETHODIMP_(POTE) CDolphinSmalltalk::NewString(
         /* [in] */ LPCSTR szValue,
         /* [in] */ int len)
 {
-	return (POTE)AnsiString::New(szValue, len=-1?strlen(szValue):len);
+	return (POTE)AnsiString::New(szValue, len == -1 ? strlen(szValue) : len);
 }
     
 STDMETHODIMP_(POTE) CDolphinSmalltalk::NewUtf8String(
 	/* [in] */ LPCSTR szValue,
 	/* [in] */ int len)
 {
-	return (POTE)Utf8String::New(szValue, len = -1 ? strlen(szValue) : len);
+	return (POTE)Utf8String::New((const char8_t*)szValue, len == -1 ? strlen(szValue) : len);
 }
 
 STDMETHODIMP_(Oop) CDolphinSmalltalk::NewSignedInteger( 
@@ -209,10 +209,10 @@ STDMETHODIMP_(POTE) CDolphinSmalltalk::NewFloat(
 	return (POTE)Float::New(fValue);
 }
     
-STDMETHODIMP_(POTE) CDolphinSmalltalk::InternSymbol( 
+STDMETHODIMP_(POTE) CDolphinSmalltalk::InternSymbol1( 
         /* [in] */ LPCSTR  szName)
 {
-	return (POTE)Interpreter::NewSymbol(szName);
+	return (POTE)Interpreter::NewSymbol((const char8_t*)szName, strlen(szName));
 }
     
 STDMETHODIMP_(void) CDolphinSmalltalk::StorePointerWithValue( 
@@ -290,10 +290,16 @@ STDMETHODIMP_(BSTR) CDolphinSmalltalk::DebugPrintString(
 	return SysAllocString(str.c_str());
 }
 
-STDMETHODIMP_(POTE) CDolphinSmalltalk::NewBindingRef(/* [in] */ LPCSTR  szQualifiedName, /* [in] */Oop context, /* [in] */ BindingReferenceFlags flags)
+STDMETHODIMP_(POTE) CDolphinSmalltalk::NewBindingRef(/* [in] */ const char8_t*  qualifiedName, /* [in] */int length, /* [in] */Oop context, /* [in] */ BindingReferenceFlags flags)
 {
-    return (POTE)PerformWithWithWith((Oop)Pointers.ClassBindingReference, 
+    return reinterpret_cast<POTE>(PerformWithWithWith((Oop)Pointers.ClassBindingReference, 
         Pointers.newBindingRefSelector, 
-        (Oop)Utf8String::New(szQualifiedName), context, ObjectMemoryIntegerObjectOf(static_cast<unsigned>(flags)));
+        (Oop)Utf8String::New(qualifiedName, length < 0 ? strlen((LPCSTR)qualifiedName) : length), context, ObjectMemoryIntegerObjectOf(static_cast<unsigned>(flags))));
 }
 
+STDMETHODIMP_(POTE) CDolphinSmalltalk::InternSymbol(
+	/* [in] */ const char8_t*  name,
+	/* [in] */ int length)
+{
+	return (POTE)Interpreter::NewSymbol(name, length < 0 ? strlen((LPCSTR)name) : length);
+}

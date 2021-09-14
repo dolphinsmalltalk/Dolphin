@@ -33,7 +33,7 @@ void Compiler::disassemble(wostream& stream)
 
 	LexicalScope* currentScope = m_allScopes[0];
 	unsigned currentDepth = 0;
-	stream << std::endl;
+	stream << endl;
 	ip_t ip=ip_t::zero;
 	const ip_t last = LastIp;
 	BytecodeDisassembler<Compiler, ip_t> disassembler(*this);
@@ -88,25 +88,25 @@ void Compiler::disassemble(wostream& stream)
 		disassembler.EmitDecodedInstructionAt(ip, stream);
 		ip += len;
 	}
-	stream << std::endl;
+	stream << endl;
 }
 
-Str Compiler::GetSpecialSelector(size_t index)
+u8string Compiler::GetSpecialSelector(size_t index)
 {
 	const POTE* pSpecialSelectors = GetVMPointers().specialSelectors;
 	return GetString(pSpecialSelectors[index]);
 }
 
-std::wstring Compiler::DebugPrintString(Oop oop)
+wstring Compiler::DebugPrintString(Oop oop)
 {
 	BSTR bstr = m_piVM->DebugPrintString(oop);
-	std::wstring result(bstr, ::SysStringLen(bstr));
+	wstring result(bstr, ::SysStringLen(bstr));
 	::SysFreeString(bstr);
 	return result;
 }
 
 
-std::wostream& __stdcall operator<<(std::wostream& stream, const std::string& str)
+wostream& __stdcall operator<<(wostream& stream, const string& str)
 {
 	USES_CONVERSION;
 	return stream << static_cast<LPCWSTR>(A2W(str.c_str()));

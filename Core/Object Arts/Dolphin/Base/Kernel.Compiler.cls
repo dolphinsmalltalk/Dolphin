@@ -49,10 +49,12 @@ compile: aString in: aClass environment: aNamespaceOrNil flags: anInteger
 	SendYourself(1024)		Don't optimize out #yourself, but rather send as a message.
 	"
 
-	| results |
+	| results source |
+	source := aString asUtf8String.
 	results := CompilerLibrary default
 				compile: self
-				source: aString asUtf8String
+				source: source
+				length: source size
 				in: aClass
 				environment: aNamespaceOrNil
 				flags: anInteger
@@ -135,6 +137,7 @@ compileForEvaluation: aString in: aBehaviorOrNil environment: aNamespaceOrNil ev
 	results := CompilerLibrary default
 				compileForEvaluation: self
 				source: source
+				length: source size
 				in: aBehaviorOrNil
 				environment: aNamespaceOrNil
 				evaluationPools: anArray

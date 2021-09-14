@@ -25,8 +25,8 @@ template bool Compiler::ParseWhileLoopBlock<false>(const ip_t, const TEXTRANGE&,
 ///////////////////////////////////////////////////////////////////////////////
 // When inlining code the compiler sometimes has to generate temporaries. It prefixes
 // these with a space so that the names cannot possibly clash with user defined temps
-static const char8_t eachTempName[] = GENERATEDTEMPSTART u8"each";
-static const char8_t valueTempName[] = GENERATEDTEMPSTART u8"value";
+static const u8string eachTempName = GENERATEDTEMPSTART u8"each";
+static const u8string valueTempName = GENERATEDTEMPSTART u8"value";
 
 ///////////////////////////////////////////////////////////////////////////////
 
@@ -62,10 +62,10 @@ bool Compiler::ParseIfTrue(const TEXTRANGE& messageRange)
 	ip_t jumpOutMark = GenJumpInstruction(OpCode::LongJump);
 	ip_t elseMark = m_codePointer;
 
-	if (strcmp((LPCSTR)ThisTokenText, "ifFalse:") == 0)
+	if (ThisTokenText == u8"ifFalse:"s)
 	{
 		// An else block exists
-		POTE oteSelector = AddSymbolToFrame(u8"ifTrue:ifFalse:", messageRange, LiteralType::ReferenceOnly);
+		POTE oteSelector = AddSymbolToFrame(u8"ifTrue:ifFalse:"s, messageRange, LiteralType::ReferenceOnly);
 
 		NextToken();
 
@@ -75,7 +75,7 @@ bool Compiler::ParseIfTrue(const TEXTRANGE& messageRange)
 	{
 		// When #ifFalse: branch is missing, value of expression if condition false is nil
 		
-		POTE oteSelector = AddSymbolToFrame(u8"ifTrue:", messageRange, LiteralType::ReferenceOnly);
+		POTE oteSelector = AddSymbolToFrame(u8"ifTrue:"s, messageRange, LiteralType::ReferenceOnly);
 
 		GenInstruction(OpCode::ShortPushNil);
 	}
@@ -92,7 +92,7 @@ bool Compiler::ParseIfFalse(const TEXTRANGE& messageRange)
 {
 	if (!ThisTokenIsBinary('['))
 	{
-		Warning(CWarnExpectNiladicBlockArg, (Oop)InternSymbol(u8"ifFalse:"));
+		Warning(CWarnExpectNiladicBlockArg, (Oop)InternSymbol(u8"ifFalse:"s));
 		return false;
 	}
 
@@ -105,11 +105,11 @@ bool Compiler::ParseIfFalse(const TEXTRANGE& messageRange)
 	ip_t jumpOutMark = GenJumpInstruction(OpCode::LongJump);
 	ip_t elseMark = m_codePointer;
 
-	if (strcmp((LPCSTR)ThisTokenText, "ifTrue:") == 0)
+	if (ThisTokenText == u8"ifTrue:"s)
 	{
 		// An else block exists
 
-		POTE oteSelector = AddSymbolToFrame(u8"ifFalse:ifTrue:", messageRange, LiteralType::ReferenceOnly);
+		POTE oteSelector = AddSymbolToFrame(u8"ifFalse:ifTrue:"s, messageRange, LiteralType::ReferenceOnly);
 
 		NextToken();
 
@@ -119,7 +119,7 @@ bool Compiler::ParseIfFalse(const TEXTRANGE& messageRange)
 	{
 		// When ifTrue: branch is missing, value of expression if condition false is nil
 
-		POTE oteSelector = AddSymbolToFrame(u8"ifFalse:", messageRange, LiteralType::ReferenceOnly);
+		POTE oteSelector = AddSymbolToFrame(u8"ifFalse:"s, messageRange, LiteralType::ReferenceOnly);
 
 		// N.B. We used (pre 5.5) to reorder the "blocks" to take advantage of the shorter jump on false
 		// instruction (i.e. we put the empty true block first), but it turns out that this
@@ -148,7 +148,7 @@ bool Compiler::ParseIfFalse(const TEXTRANGE& messageRange)
 
 bool Compiler::ParseAndCondition(const TEXTRANGE& messageRange)
 {
-	POTE oteSelector = AddSymbolToFrame(u8"and:", messageRange, LiteralType::ReferenceOnly);
+	POTE oteSelector = AddSymbolToFrame(u8"and:"s, messageRange, LiteralType::ReferenceOnly);
 
 	// Assume we can reorder blocks to allow us to use the smaller
 	// jump on false instruction.
@@ -244,10 +244,11 @@ bool Compiler::ParseIfNotNilBlock()
 		if (NextToken() == TokenType::NameConst)
 		{
 			argc++;
-			CheckTemporaryName(ThisTokenText, ThisTokenRange, true);
+			u8string tempName = ThisTokenText;
+			CheckTemporaryName(tempName, ThisTokenRange, true);
 			if (m_ok)
 			{
-				TempVarRef* pValueTempRef = AddOptimizedTemp(ThisTokenText, ThisTokenRange);
+				TempVarRef* pValueTempRef = AddOptimizedTemp(tempName, ThisTokenRange);
 				GenPopAndStoreTemp(pValueTempRef);
 			}
 			NextToken();
@@ -279,7 +280,7 @@ bool Compiler::ParseIfNotNilBlock()
 		ParseTemporaries();
 		
 		ParseBlockStatements();
-		if (m_ok && ThisToken != TokenType::CloseSquare)
+		if (m_ok && ThisTokenType != TokenType::CloseSquare)
 			CompileError(TEXTRANGE(nTextStart, LastTokenRange.m_stop), CErrBlockNotClosed);
 	}
 
@@ -363,9 +364,9 @@ bool Compiler::ParseIfNil(const TEXTRANGE& messageRange, textpos_t exprStartPos)
 	
 	ip_t ifNotNilMark;
 
-	if (strcmp((LPCSTR)ThisTokenText, "ifNotNil:") == 0)
+	if (ThisTokenText == u8"ifNotNil:"s)
 	{
-		POTE oteSelector = AddSymbolToFrame(u8"ifNil:ifNotNil:", messageRange, LiteralType::ReferenceOnly);
+		POTE oteSelector = AddSymbolToFrame(u8"ifNil:ifNotNil:"s, messageRange, LiteralType::ReferenceOnly);
 
 		// Generate the jump out instruction (forward jump, so target not yet known)
 		ip_t jumpOutMark = GenJumpInstruction(OpCode::LongJump);
@@ -445,9 +446,9 @@ bool Compiler::ParseIfNotNil(const TEXTRANGE& messageRange, textpos_t exprStartP
 	ip_t ifNilMark;
 
 	// Has an #ifNil: branch?
-	if (strcmp((LPCSTR)ThisTokenText, "ifNil:") == 0)
+	if (ThisTokenText == u8"ifNil:"s)
 	{
-		POTE oteSelector = AddSymbolToFrame(u8"ifNotNil:ifNil:", messageRange, LiteralType::ReferenceOnly);
+		POTE oteSelector = AddSymbolToFrame(u8"ifNotNil:ifNil:"s, messageRange, LiteralType::ReferenceOnly);
 
 		// Generate the jump out instruction (forward jump, so target not yet known)
 		ip_t jumpOutMark = GenJumpInstruction(OpCode::LongJump);
@@ -466,7 +467,7 @@ bool Compiler::ParseIfNotNil(const TEXTRANGE& messageRange, textpos_t exprStartP
 	{
 		// No "ifNil:" branch 
 
-		POTE oteSelector = AddSymbolToFrame(u8"ifNotNil:", messageRange, LiteralType::ReferenceOnly);
+		POTE oteSelector = AddSymbolToFrame(u8"ifNotNil:"s, messageRange, LiteralType::ReferenceOnly);
 
 		if (!hasArg)
 		{
@@ -595,7 +596,7 @@ bool Compiler::ParseRepeatLoop(const ip_t loopmark, const TEXTRANGE& receiverRan
 }
 
 
-POTE Compiler::AddSymbolToFrame(LPUTF8 s, const TEXTRANGE& tokenRange, LiteralType type)
+POTE Compiler::AddSymbolToFrame(const u8string& s, const TEXTRANGE& tokenRange, LiteralType type)
 {
 	POTE oteSelector = InternSymbol(s);
 	AddToFrame(reinterpret_cast<Oop>(oteSelector), tokenRange, type);
@@ -696,7 +697,7 @@ template <bool WhileTrue> bool Compiler::ParseWhileLoop(const ip_t loopmark, con
 	return true;
 }
 
-TempVarRef* Compiler::AddOptimizedTemp(const Str& tempName, const TEXTRANGE& range)
+TempVarRef* Compiler::AddOptimizedTemp(const u8string& tempName, const TEXTRANGE& range)
 {
 	_ASSERTE(m_pCurrentScope->IsOptimizedBlock);
 	TempVarDecl* pDecl = AddTemporary(tempName, range, false);
@@ -806,7 +807,7 @@ bool Compiler::ParseToByDoBlock(textpos_t exprStart, ip_t toPointer, ip_t byPoin
 			bNegativeStep = IntegerValueOf(oopStep) < 0;
 		else
 		{
-			POTE stepClass = m_piVM->FetchClassOf(oopStep);
+			POTE stepClass = FetchClassOf((POTE)oopStep);
 			if (stepClass == GetVMPointers().ClassFloat)
 			{
 				double* pfValue = reinterpret_cast<double*>(FetchBytesOf(reinterpret_cast<POTE>(oopStep)));
@@ -921,12 +922,13 @@ void Compiler::ParseOptimizeBlock(argcount_t arguments)
 	argcount_t argument = 0;
 	while (m_ok && ThisTokenIsSpecial(':') )
 	{
-		if (NextToken()==TokenType::NameConst)
+		if (NextToken() == TokenType::NameConst)
 		{
+			u8string argName = ThisTokenText;
 			if (argument < arguments)
-				RenameTemporary(argument, ThisTokenText, ThisTokenRange);
+				RenameTemporary(argument, argName, ThisTokenRange);
 			else
-				AddTemporary(ThisTokenText, ThisTokenRange, true);
+				AddTemporary(argName, ThisTokenRange, true);
 			argument++;
 			NextToken();
 		}
@@ -954,7 +956,7 @@ void Compiler::ParseOptimizeBlock(argcount_t arguments)
 		ParseTemporaries();
 		
 		ParseBlockStatements();
-		if (m_ok && ThisToken != TokenType::CloseSquare)
+		if (m_ok && ThisTokenType != TokenType::CloseSquare)
 			CompileError(TEXTRANGE(nTextStart, LastTokenRange.m_stop), CErrBlockNotClosed);
 	}
 	

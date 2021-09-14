@@ -130,7 +130,7 @@ public:
 	STDMETHOD_(POTE, NewFloat)( 
 		/* [in] */ double fValue);
         
-	STDMETHOD_(POTE, InternSymbol)( 
+	STDMETHOD_(POTE, InternSymbol1)( 
             /* [in] */ LPCSTR szName);
         
 	STDMETHOD_(void, StorePointerWithValue)( 
@@ -169,10 +169,16 @@ public:
 		/* [in] */ int len);
 
     STDMETHOD_(POTE, NewBindingRef)(
-        /* [in] */ LPCSTR szQualifiedname,
+        /* [in] */ const char8_t* szQualifiedname,
+		/* [in] */ int length,
         /* [in] */ Oop context,
         /* [in] */ BindingReferenceFlags flags
         );
+
+	STDMETHOD_(POTE, InternSymbol)(
+		/* [in] */ const char8_t* szName,
+		/* [in] */ int length
+		);
 };
 
 #ifdef VMDLL

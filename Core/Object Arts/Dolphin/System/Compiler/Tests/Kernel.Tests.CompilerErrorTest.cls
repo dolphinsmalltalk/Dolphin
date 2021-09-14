@@ -86,12 +86,6 @@ testErrorsBadPools
 				line: 1
 				source: source]!
 
-testErrorsLexicalBadCodePoint
-	super testErrorsLexicalBadCodePoint!
-
-testErrorsLexicalExpectCodePoint
-	super testErrorsLexicalExpectCodePoint!
-
 testErrorsLexicalExpectExtendedLiteral
 	"Invalid const"
 
@@ -174,10 +168,11 @@ testErrorsTooManyBytecodes
 
 testErrorsTooManyLiterals
 	| source max len |
+	self skipIfCiBuild. "Takes around 30 seconds to run due to a compiler perf issue with folding of strings"
 	source := String writeStream.
 	source print: String empty.
 	max := self maxLiterals.
-	"The empty string and concatenation operator will push it over max literals by 1 if we concate max-1 strings"
+	"The empty string and concatenation operator will push it over max literals by 1 if we concatenate max-1 strings"
 	1 to: max - 1
 		do: 
 			[:i |
@@ -209,13 +204,11 @@ parserClass!constants!private! !
 tempWarningRangeIn:!helpers!private! !
 testErrorsBadContext!public!unit tests! !
 testErrorsBadPools!public!unit tests! !
-testErrorsLexicalBadCodePoint!public!unit tests! !
-testErrorsLexicalExpectCodePoint!public!unit tests! !
 testErrorsLexicalExpectExtendedLiteral!public!unit tests! !
 testErrorsNonsenseAtEndOfExpression!public!unit tests! !
 testErrorsNonsenseAtEndOfMethod!public!unit tests! !
 testErrorsTooManyBytecodes!public!unit tests! !
-testErrorsTooManyLiterals!public!unit tests! !
+testErrorsTooManyLiterals!public!unit tests-long running! !
 writtenNotReadRange:!helpers!private! !
 !
 

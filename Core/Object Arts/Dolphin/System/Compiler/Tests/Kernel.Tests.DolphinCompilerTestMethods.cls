@@ -277,6 +277,20 @@ testTempsMapNestedFullInOptimized
 					first ifTrue: [first := false] ifFalse: [Transcript space].
 					Transcript print: each]]!
 
+testTempsMapOuterTempsIssue304
+	| env |
+	env := 0.
+	#(#foo #bar #baz) keysAndValuesDo: 
+			[:i :argOuter |
+			| env2 |
+			env2 := i.
+			false
+				ifFalse: 
+					[#(1 2 3 4 5) do: 
+							[:argInner |
+							env2 := env2 + 1.
+							env := env + env2]]]!
+
 testWarningCantOptimizeLoop
 
 	1 whileTrue.
@@ -533,7 +547,7 @@ testInfoSupersendsOther!public!unit tests! !
 testInfoUnreferencedArgBlock!public!unit tests! !
 testInfoUnreferencedArgMethod:!public!unit tests! !
 testInfoUnreferencedArgOptimizedBlock!public!unit tests! !
-testMaximumBlockNesting!public! !
+testMaximumBlockNesting!public!unit tests! !
 testNestedCopyingBlocks!public!unit tests! !
 testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
 testOverriddenBlockArgumentWarning!public!unit tests! !
@@ -547,7 +561,8 @@ testSharedOuterTemps2!public!unit tests! !
 testTempsMapInlinedReturn!public!unit tests! !
 testTempsMapNestedFullBlocks!public!unit tests! !
 testTempsMapNestedFullInOptimized!public!unit tests! !
-testWarningCantOptimizeLoop!public! !
+testTempsMapOuterTempsIssue304!public!unit tests! !
+testWarningCantOptimizeLoop!public!unit tests! !
 testWarningMutableIgnored!public!unit tests! !
 testWarningReadBeforeWrittenBlockTemp!public!unit tests! !
 testWarningReadBeforeWrittenFullBlock!public!unit tests! !

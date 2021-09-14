@@ -53,14 +53,13 @@ void Compiler::RemoveNops()
 		_ASSERTE(bc.IsOpCode);
 		_ASSERTE(!bc.IsJumpSource || (bc.target >= ip_t::zero && bc.target <= LastIp));
 
-		VerifyTextMap();
-
 		switch (bc.Opcode)
 		{
 		case OpCode::Nop:
 			// The Nop might be a jump target, in which case we must copy the inbound jump count to
 			// the new byte code at the position. RemoveByte() does this (or should)
 			RemoveBytes(i, 1);
+			VerifyTextMap();
 			break;
 
 		default:
@@ -252,10 +251,19 @@ size_t Compiler::OptimizePairs()
 	// Optimize pairs of instructions.
 	// Returns a count of the optimizations done.
 	size_t count = 0;
+	size_t lastCount = 0;
 	ip_t i = ip_t::zero;
 	while (i <= LastIp)
 	{
-		VerifyTextMap();
+#ifdef _DEBUG
+		if (count > lastCount)
+		{
+			lastCount = count;
+			VerifyTextMap();
+			VerifyJumps();
+		}
+#endif
+
 		BYTECODE& bytecode1=m_bytecodes[i];
 		const size_t len1 = bytecode1.InstructionLength;
 		const ip_t next = i+len1;
@@ -723,8 +731,6 @@ size_t Compiler::OptimizePairs()
 			continue;	// A new instruction will now be at i to be considered, so don't advance
 		}
 		
-		VerifyJumps();
-
 		// m_bytecodes may have been replaced, so move to next based on the one there now
 		_ASSERTE(m_bytecodes[i].IsOpCode);
 		const size_t len = m_bytecodes[i].InstructionLength;
@@ -747,10 +753,18 @@ size_t Compiler::CombinePairs()
 size_t Compiler::CombinePairs1()
 {
 	size_t count = 0;
+	size_t lastCount = 0;
 	ip_t i=ip_t::zero;
 	while (i <= LastIp)
 	{
-		VerifyTextMap();
+#ifdef _DEBUG
+		if (count > lastCount)
+		{
+			lastCount = count;
+			VerifyTextMap();
+		}
+#endif
+
 		BYTECODE& bytecode1=m_bytecodes[i];
 		const size_t len1 = bytecode1.InstructionLength;
 		
@@ -993,10 +1007,17 @@ size_t Compiler::CombinePairs1()
 size_t Compiler::CombinePairs2()
 {
 	size_t count = 0;
+	size_t lastCount = 0;
 	ip_t i = ip_t::zero;
 	while (i <= LastIp)
 	{
-		VerifyTextMap();
+#ifdef _DEBUG
+		if (count > lastCount)
+		{
+			lastCount = count;
+			VerifyTextMap();
+		}
+#endif
 		BYTECODE& bytecode1=m_bytecodes[i];
 		const size_t len1 = bytecode1.InstructionLength;
 		
@@ -1218,10 +1239,19 @@ size_t Compiler::OptimizeJumps()
 	// Return a count of the number of jumps replaced.
 	//
 	size_t count = 0;
+	size_t lastCount = 0;
 	ip_t i = ip_t::zero;
 	while (i<=LastIp)
 	{
-		VerifyTextMap();
+#ifdef _DEBUG
+		if (count > lastCount)
+		{
+			lastCount = count;
+			VerifyJumps();
+			VerifyTextMap();
+		}
+#endif
+
 		BYTECODE& bytecode = m_bytecodes[i];
 		_ASSERTE(bytecode.IsOpCode);
 		size_t len = bytecode.InstructionLength;
@@ -1320,8 +1350,6 @@ size_t Compiler::OptimizeJumps()
 				}
 			}
 		}
-
-		VerifyJumps();
 
 		i += len;
 	}
@@ -1539,7 +1567,7 @@ inline static bool isInNearJumpRange(intptr_t distance, unsigned extensionBytes)
 {
 #if defined(_DEBUG) && !defined(USE_VM_DLL)
 	if (distance == 0)
-		TRACESTREAM<< L"WARNING: Near Jump to itself detected" << std::endl;
+		TRACESTREAM<< L"WARNING: Near Jump to itself detected" << endl;
 #endif
 	_ASSERTE(extensionBytes >= 1);
 	
@@ -1810,7 +1838,7 @@ void Compiler::insertImmediateAsFirstLiteral(Oop newLiteralForImmediate)
 {
 	// Should only be called to insert an object that is encodable in bytecodes (and therefore cannot
 	// already be in the literal frame) as part of creating a quick method definition to return a constant
-	_ASSERTE(IsIntegerObject(newLiteralForImmediate) || m_piVM->FetchClassOf(newLiteralForImmediate) == GetVMPointers().ClassCharacter);
+	_ASSERTE(IsIntegerObject(newLiteralForImmediate) || FetchClassOf((POTE)newLiteralForImmediate) == GetVMPointers().ClassCharacter);
 	_ASSERTE(!m_literals.contains(newLiteralForImmediate));
 
 	size_t i = m_literalFrame.size();
@@ -1832,7 +1860,7 @@ POTE Compiler::NewMethod()
 	VerifyTextMap(true);
 
 	if (!m_ok || WantSyntaxCheckOnly)
-		return m_piVM->NilPointer();
+		return Nil();
 
 	size_t blockCount = Pass2();
 	
@@ -1910,7 +1938,7 @@ POTE Compiler::NewMethod()
 		_ASSERTE(m_literalFrame.size() > 1);
 		auto index = m_bytecodes[ip_t::zero].indexOfShortPushConst();
 
-		std::swap(m_literalFrame[0], m_literalFrame[index]);
+		swap(m_literalFrame[0], m_literalFrame[index]);
 
 		m_bytecodes[ip_t::zero].Opcode = OpCode::ShortPushConst;
 		MakeQuickMethod(hdr, PRIMITIVE_RETURN_LITERAL_ZERO);
@@ -1933,7 +1961,7 @@ POTE Compiler::NewMethod()
 		_ASSERTE(m_literalFrame.size() > 1);
 		auto index = m_bytecodes[ip_t::zero].indexOfShortPushStatic();
 
-		std::swap(m_literalFrame[0], m_literalFrame[index]);
+		swap(m_literalFrame[0], m_literalFrame[index]);
 
 		m_bytecodes[ip_t::zero].Opcode = OpCode::ShortPushStatic;
 		MakeQuickMethod(hdr, PRIMITIVE_RETURN_STATIC_ZERO);
@@ -2510,8 +2538,6 @@ size_t Compiler::PatchBlocks()
 	size_t blockCount = 0;
 	while (i <= LastIp)
 	{
-		VerifyTextMap(true);
-
 		const BYTECODE& bytecode1 = m_bytecodes[i];
 		size_t len1 = bytecode1.InstructionLength;
 
@@ -2520,6 +2546,7 @@ size_t Compiler::PatchBlocks()
 		case OpCode::BlockCopy:
 			len1 += PatchBlockAt(i);
 			blockCount++;
+			VerifyTextMap(true);
 			break;
 
 		default:

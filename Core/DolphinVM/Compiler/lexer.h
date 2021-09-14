@@ -16,22 +16,6 @@ typedef const char8_t* LPUTF8;
 
 class Lexer
 {
-	
-	// Replace CRT strtol(), which is too flexible for Smalltalk lexicon
-	long strtol (
-        const char *nptr,
-        char **endptr,
-        int ibase
-        );
-	
-	// This is the strtol() function cloned from the CRT library
-	unsigned long strtoxl (
-        const char *nptr,
-        const char **endptr,
-        int ibase,
-        int flags
-        );
-	
 protected:
 	// The current lexical token
 	enum class TokenType 
@@ -48,13 +32,13 @@ public:
 	Lexer();
 	virtual ~Lexer();
 	
-	char8_t Step();
-	void PushBack(char8_t ch);
+	int Step();
+	void PushBack(int ch);
 	void StepBack(size_t n);
 	TokenType NextToken();
 	TokenType ScanString(textpos_t);
 	void ScanNumber();
-	int DigitValue(char8_t ch) const;
+	int DigitValue(int ch) const;
 
 	enum class radix_t { Min = 2, Decimal=10, Hex=16, Max = 36 };
 	void ScanInteger(radix_t radix);
@@ -68,12 +52,12 @@ public:
 	void ScanSymbol();
 	void ScanBinary();
 	
-	__declspec(property(get = get_ThisToken, put=put_ThisToken)) TokenType ThisToken;
-	Lexer::TokenType get_ThisToken() const
+	__declspec(property(get = get_ThisTokenType, put=put_ThisTokenType)) TokenType ThisTokenType;
+	Lexer::TokenType get_ThisTokenType() const
 	{
 		return m_tokenType;
 	}
-	void put_ThisToken(TokenType tok)
+	void put_ThisTokenType(TokenType tok)
 	{
 		m_tokenType = tok;
 	}
@@ -84,10 +68,16 @@ public:
 		return m_tokenType == TokenType::Eof;
 	}
 
-	__declspec(property(get = get_ThisTokenText)) LPUTF8 ThisTokenText;
-	LPUTF8 get_ThisTokenText() const
+	__declspec(property(get = get_ThisTokenRaw)) LPUTF8 ThisTokenRaw;
+	LPUTF8 get_ThisTokenRaw() const
 	{
 		return m_token;
+	}
+
+	__declspec(property(get = get_ThisTokenText)) u8string ThisTokenText;
+	u8string get_ThisTokenText() const
+	{
+		return u8string(m_token, ThisTokenLength);
 	}
 
 	__declspec(property(get = get_ThisTokenInteger)) intptr_t ThisTokenInteger;
@@ -99,8 +89,8 @@ public:
 	__declspec(property(get = get_ThisTokenFloat)) double ThisTokenFloat;
 	double get_ThisTokenFloat() const;
 
-	bool ThisTokenIsBinary(const char) const;
-	bool ThisTokenIsSpecial(const char) const;
+	bool ThisTokenIsBinary(const char8_t) const;
+	bool ThisTokenIsSpecial(const char8_t) const;
 
 	__declspec(property(get = get_ThisTokenIsClosing)) bool ThisTokenIsClosing;
   	bool get_ThisTokenIsClosing() const
@@ -126,7 +116,6 @@ public:
 		return m_tokenType >= TokenType::SmallIntegerConst && m_tokenType <= TokenType::ScaledDecimalConst;
 	}
 
-
 	void CompileError(const TEXTRANGE& range, int code, Oop extra=0);
 	void CompileError(int code, Oop extra=0);	
 	void CompileErrorV(const TEXTRANGE& range, int code, ...);
@@ -136,8 +125,8 @@ protected:
 
 	virtual void _CompileErrorV(int code, const TEXTRANGE& range, va_list)=0;
 	
-	char8_t PeekAtChar(size_t lookAhead=0) const;
-	bool IsASingleBinaryChar(char8_t ch) const;
+	int PeekAtChar(size_t lookAhead=0) const;
+	bool IsASingleBinaryChar(int ch) const;
 	
 	TEXTRANGE CompileTextRange() const
 	{
@@ -147,29 +136,32 @@ protected:
 	//******************************************************************************
 	// ANSI X3J20 Compliant Lexicon (added by BSM)
 	//******************************************************************************
-	static bool isNonCaseLetter(char8_t ch);
-	static bool isLetter(char8_t ch);
-	static bool isIdentifierFirst(char8_t ch);
-	static bool isIdentifierSubsequent(char8_t ch);
-	static bool isAnsiBinaryChar(char8_t ch);
+	static bool isNonCaseLetter(int ch);
+	static bool isLetter(int ch);
+	static bool isIdentifierFirst(int ch);
+	static bool isIdentifierSubsequent(int ch);
+	static bool isAnsiBinaryChar(int ch);
 	
-	static bool isupper(char8_t ch);
-	static bool islower(char8_t ch);
-	static bool isdigit(char8_t ch);
-	static bool isspace(char8_t ch);
+	static bool isupper(int ch);
+	static bool islower(int ch);
+	static bool isdigit(int ch);
+	static bool isspace(int ch);
+	static bool isEof(int ch);
+
+	bool AtEof();
 	
 	void SkipBlanks();
 	void SkipComments();
 
-	void SetText(const char8_t* compiletext, textpos_t offset);
+	void SetText(const u8string& compiletext, textpos_t offset);
 
-	__declspec(property(get = get_Text)) LPUTF8 Text;
-	LPUTF8 get_Text() const
+	__declspec(property(get = get_Text)) const u8string& Text;
+	const u8string& get_Text() const
 	{
-		return m_buffer.c_str();
+		return m_buffer;
 	}
 
-	Str GetTextRange(const TEXTRANGE& r)
+	u8string GetTextRange(const TEXTRANGE& r)
 	{
 		return m_buffer.substr(static_cast<size_t>(r.m_start), r.Span);
 	}
@@ -183,13 +175,19 @@ protected:
 	__declspec(property(get = get_ParsedLength)) size_t ParsedLength;
 	size_t get_ParsedLength() const
 	{
-		return m_cp - Text - static_cast<size_t>(TextOffset);
+		return m_cp - m_buffer.data() - static_cast<size_t>(TextOffset);
 	}
 
 	__declspec(property(get = get_ThisTokenRange)) const TEXTRANGE& ThisTokenRange;
 	const TEXTRANGE& get_ThisTokenRange() const
 	{
 		return m_thisTokenRange;
+	}
+
+	__declspec(property(get = get_ThisTokenLength)) const size_t ThisTokenLength;
+	const size_t get_ThisTokenLength() const
+	{
+		return m_tp - m_token;
 	}
 
 	__declspec(property(get = get_LastTokenRange)) const TEXTRANGE& LastTokenRange;
@@ -207,13 +205,13 @@ protected:
 	__declspec(property(get=get_TextLength)) size_t TextLength;
 	size_t get_TextLength() const
 	{
-		return m_buffer.size();
+		return m_buffer.length();
 	}
 
 	__declspec(property(get = get_EndOfText)) textpos_t EndOfText;
 	textpos_t get_EndOfText() const
 	{
-		return static_cast<textpos_t>(m_buffer.size() - 1);
+		return static_cast<textpos_t>(m_buffer.length() - 1);
 	}
 
 	__declspec(property(get = get_CharPtr)) const char8_t* CharPtr;
@@ -236,28 +234,30 @@ protected:
 	__declspec(property(get = get_CharPosition)) textpos_t CharPosition;
 	textpos_t get_CharPosition() const
 	{
-		return static_cast<textpos_t>((m_cp - m_buffer.c_str()) - 1);
+		return static_cast<textpos_t>((m_cp - m_buffer.data()) - 1);
 	}
 
 	IDolphin* m_piVM;
+	VMPointers* m_pVMPointers;
 
 private:
-	int32_t ReadUtf8();
-	int32_t ReadUtf8(char8_t ch);
+	int32_t DecodeUtf8();
+	int32_t DecodeUtf8(char8_t ch);
 	int32_t ReadHexCodePoint();
-	char8_t NextChar();
+	int NextChar();
 
 private:
 	// The current token
 	TokenType m_tokenType;
 	intptr_t m_integer;
 	char8_t* m_token;
-	char8_t* tp;
+	char8_t* m_tp;
 	
 	// Buffer state
-	Str m_buffer;
+	u8string m_buffer;
 	const char8_t* m_cp;
-	char8_t m_cc;
+	const char8_t* m_end;
+	int m_cc;
 	int m_lineno;
 	textpos_t m_base;
 	
@@ -270,50 +270,56 @@ private:
 ///////////////////////////////////////////////////////////////////////////////
 // Inlines
 
-inline bool Lexer::ThisTokenIsBinary(const char match) const
+inline bool Lexer::ThisTokenIsBinary(const char8_t match) const
 {
-	return m_tokenType== TokenType::Binary && m_token[0] == match && m_token[1] == 0;
+	return m_tokenType== TokenType::Binary && m_token[0] == match && ThisTokenLength == 1;
 }
 
-inline bool Lexer::ThisTokenIsSpecial(const char match) const
+inline bool Lexer::ThisTokenIsSpecial(const char8_t match) const
 {
-	return m_tokenType== TokenType::Special && m_token[0] == match && m_token[1] == 0;
+	return m_tokenType== TokenType::Special && m_token[0] == match && ThisTokenLength == 1;
 }
 
-inline char8_t Lexer::NextChar()
+inline int Lexer::NextChar()
 {
-	m_cc=*m_cp ? *m_cp++ : '\0';
-	if (m_cc == '\n')
-		m_lineno++;
+	if (m_cp < m_end)
+	{
+		m_cc = *m_cp++;
+		if (m_cc == u8'\n')
+			m_lineno++;
+	}
+	else
+	{
+		m_cc = EOF;
+	}
 	return m_cc;
 }
 
-inline char8_t Lexer::Step()
+inline int Lexer::Step()
 {
-	char8_t ch = NextChar();
-	if (ch)
+	int ch = NextChar();
+	if (!isEof(ch))
 	{
-		*tp++ = ch;
-		*tp = 0;
+		*m_tp++ = ch;
 		++m_thisTokenRange.m_stop;
 	}
 	return ch;
 }
 
-inline char8_t Lexer::PeekAtChar(size_t lookAhead) const
+inline int Lexer::PeekAtChar(size_t lookAhead) const
 {
-	return m_cp[lookAhead];
+	return m_cp + lookAhead < m_end ? m_cp[lookAhead] : EOF;
 }
 
-inline void Lexer::PushBack(char8_t ch)
+inline void Lexer::PushBack(int ch)
 {
-	_ASSERTE(m_cp>m_buffer.c_str());
-	if (ch)
+	_ASSERTE(m_cp>m_buffer.data());
+	if (!isEof(ch))
 	{
 		--m_cp;
 		_ASSERTE(*m_cp == ch);
 		m_cc = ch;
-		if (m_cc=='\n')
+		if (m_cc == u8'\n')
 		{
 			_ASSERTE(m_lineno>1);
 			m_lineno--;
@@ -327,7 +333,7 @@ inline void Lexer::StepBack(size_t n)
 	m_cp -= n;
 	m_cc = *m_cp;
 	m_thisTokenRange.m_stop -= n;
-	m_token[m_thisTokenRange.Span] = 0;
+	m_tp -= n;
 }
 
 //******************************************************************************
@@ -336,42 +342,52 @@ inline void Lexer::StepBack(size_t n)
 // N.B. These must not be internationalized (currently)
 //******************************************************************************
 
-inline bool Lexer::isNonCaseLetter(char8_t c)
+inline bool Lexer::isNonCaseLetter(int c)
 {
-	return c == '_';
+	return c == u8'_';
 }
 
-inline bool Lexer::isupper(char8_t c)
+inline bool Lexer::isupper(int c)
 {
-	return c >= 'A' && c <= 'Z';
+	return c >= u8'A' && c <= u8'Z';
 }
 
-inline bool Lexer::islower(char8_t c)
+inline bool Lexer::islower(int c)
 {
-	return c >= 'a' && c <= 'z';
+	return c >= u8'a' && c <= u8'z';
 }
 
-inline bool Lexer::isLetter(char8_t c)
+inline bool Lexer::isLetter(int c)
 {
 	return islower(c) || isupper(c) || isNonCaseLetter(c); 
 }
 
-inline bool Lexer::isdigit(char8_t c)
+inline bool Lexer::isdigit(int c)
 {
-	return c >= '0' && c <= '9';
+	return c >= u8'0' && c <= u8'9';
 }
 
-inline bool Lexer::isIdentifierFirst(char8_t c)
+inline bool Lexer::isIdentifierFirst(int c)
 {
 	return isLetter(c);
 }
 
-inline bool Lexer::isIdentifierSubsequent(char8_t c)
+inline bool Lexer::isIdentifierSubsequent(int c)
 {
 	return isLetter(c) || isdigit(c);
 }
 
-inline bool Lexer::isspace(char8_t c)
+inline bool Lexer::isspace(int c)
 {
-	return c == 0x20 || (c >= 0x09 && c <= 0x0D);
+	return c == u8' ' || (c >= 0x09 && c <= 0x0D);
+}
+
+inline bool Lexer::isEof(int c)
+{
+	return c < 0;
+}
+
+inline bool Lexer::AtEof()
+{
+	return isEof(m_cc);
 }

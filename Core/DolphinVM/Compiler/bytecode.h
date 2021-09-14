@@ -34,7 +34,7 @@ struct BYTECODE
 
 	union
 	{
-		ip_t			target;			// Jump target location. Max jump is +/-32K, but this is checked only when the jump instruction is fixed up
+		ip_t			target;			// Jump target location. Max jump is +/-32K, but this can only be checked only when the jump instruction is fixed up
 		TempVarRef*		pVarRef;
 	};
 
@@ -101,8 +101,7 @@ struct BYTECODE
 	__declspec(property(get = get_InstructionLength)) size_t InstructionLength;
 	__forceinline size_t get_InstructionLength() const
 	{ 
-		_ASSERTE(IsOpCode); 
-		return lengthOfByteCode(static_cast<OpCode>(byte)); 
+		return lengthOfByteCode(Opcode); 
 	}
 
 	BYTECODE(uint8_t b=0, Flags f=Flags::IsOpCode, LexicalScope* s=nullptr) : pVarRef(nullptr), jumpsTo(0), byte(b), flags(f), pScope(s) {}
@@ -145,32 +144,32 @@ struct BYTECODE
 	__declspec(property(get = get_IsPushTemp)) bool IsPushTemp;
 	INLINE bool get_IsPushTemp() const
 	{
-		return Opcode == OpCode::PushTemp || IsShortPushTemp;
+		OpCode op = Opcode;
+		return op == OpCode::PushTemp || ::isShortPushTemp(op);
 	}
 
 	__declspec(property(get = get_IsShortPopStoreInstVar)) bool IsShortPopStoreInstVar;
 	INLINE bool get_IsShortPopStoreInstVar() const
 	{
-		return Opcode >= OpCode::ShortPopStoreInstVar && Opcode < OpCode::ShortPopStoreInstVar + NumShortPopStoreInstVars;
+		return ::isShortPopStoreInstVar(Opcode);
 	}
 
 	__declspec(property(get = get_IsShortPopStoreContextTemp)) bool IsShortPopStoreContextTemp;
 	INLINE bool get_IsShortPopStoreContextTemp() const
 	{
-		return Opcode >= OpCode::PopStoreContextTemp && Opcode < OpCode::PopStoreContextTemp + NumPopStoreContextTemps;
+		return ::isShortPopStoreContextTemp(Opcode);
 	}
 
 	__declspec(property(get = get_IsShortPopStoreOuterTemp)) bool IsShortPopStoreOuterTemp;
 	INLINE bool get_IsShortPopStoreOuterTemp() const
 	{
-		return Opcode >= OpCode::ShortPopStoreOuterTemp && Opcode < OpCode::ShortPopStoreOuterTemp + NumPopStoreOuterTemps;
+		return ::isShortPopStoreOuterTemp(Opcode);
 	}
-
 
 	__declspec(property(get = get_IsShortPopStore)) bool IsShortPopStore;
 	INLINE bool get_IsShortPopStore() const
 	{
-		return IsShortPopStoreContextTemp || IsShortPopStoreOuterTemp || IsShortPopStoreInstVar || IsShortPopStoreTemp;
+		return ::isShortPopStore(Opcode);
 	}
 
 	INLINE uint8_t indexOfShortPushConst() const
@@ -182,7 +181,6 @@ struct BYTECODE
 	{
 		return ::indexOfShortPushStatic(Opcode);
 	}
-
 
 	INLINE uint8_t indexOfShortPushTemp() const
 	{
@@ -198,7 +196,7 @@ struct BYTECODE
 	__declspec(property(get = get_IsPseudoPush)) bool IsPseudoPush;
 	INLINE bool get_IsPseudoPush() const
 	{
-		return byte >= FirstPseudoPush && byte <= LastPseudoPush;
+		return ::isPseudoPush(Opcode);
 	}
 
 	__declspec(property(get = get_IsShortPushInstVar)) bool IsShortPushInstVar;
@@ -232,7 +230,8 @@ struct BYTECODE
 	__declspec(property(get = get_IsShortSendWithNoArgs)) bool IsShortSendWithNoArgs;
 	INLINE bool get_IsShortSendWithNoArgs() const
 	{
-		return Opcode >= OpCode::ShortSendWithNoArgs && Opcode < OpCode::ShortSendWithNoArgs + NumShortSendsWithNoArgs;
+		OpCode op = Opcode;
+		return op >= OpCode::ShortSendWithNoArgs && op < OpCode::ShortSendWithNoArgs + NumShortSendsWithNoArgs;
 	}
 
 	INLINE uint8_t indexOfShortSendNoArgs() const
@@ -244,7 +243,8 @@ struct BYTECODE
 	__declspec(property(get = get_IsShortPushImmediate)) bool IsShortPushImmediate;
 	INLINE bool get_IsShortPushImmediate() const
 	{
-		return Opcode >= OpCode::ShortPushMinusOne && Opcode <= OpCode::ShortPushTwo;
+		OpCode op = Opcode;
+		return op >= OpCode::ShortPushMinusOne && op <= OpCode::ShortPushTwo;
 	}
 
 	INLINE uint8_t indexOfPushInstVar() const
@@ -255,62 +255,58 @@ struct BYTECODE
 	__declspec(property(get = get_IsShortPush)) bool IsShortPush;
 	INLINE bool get_IsShortPush() const
 	{
-		return byte >= FirstShortPush && 
-			byte <= LastPush;	// Note that this includes pseudo pushes and push 0, 1, etc
+		return ::isShortPush(Opcode);
 	}
 
 	__declspec(property(get = get_IsExtendedPush)) bool IsExtendedPush;
 	INLINE bool get_IsExtendedPush() const
 	{
-		return (Opcode >= OpCode::PushInstVar && byte < FirstExtendedStore) ||
-			Opcode == OpCode::PushOuterTemp ||
-			Opcode == OpCode::PushImmediate ||
-			Opcode == OpCode::PushChar;
+		return ::isExtendedPush(Opcode);
 	}
 
 	__declspec(property(get = get_IsDoubleExtendedPush)) bool IsDoubleExtendedPush;
 	INLINE bool get_IsDoubleExtendedPush() const
 	{
-		return Opcode == OpCode::LongPushOuterTemp ||
-			Opcode == OpCode::LongPushConst ||
-			Opcode == OpCode::LongPushStatic ||
-			Opcode == OpCode::LongPushImmediate;
+		return ::isDoubleExtendedPush(Opcode);
 	}
 
 	__declspec(property(get = get_IsPush)) bool IsPush;
 	INLINE bool get_IsPush() const
 	{
-		return IsShortPush || IsExtendedPush ||	IsDoubleExtendedPush || Opcode == OpCode::ExLongPushImmediate;
+		OpCode op = Opcode;
+		return ::isShortPush(op) || ::isExtendedPush(op) ||	::isDoubleExtendedPush(op) || op == OpCode::ExLongPushImmediate;
 	}
 
 	__declspec(property(get = get_IsExtendedStore)) bool IsExtendedStore;
 	INLINE bool get_IsExtendedStore() const
 	{
-		return (byte >= FirstExtendedStore && byte <= LastExtendedStore) || (Opcode == OpCode::StoreOuterTemp);
+		return ::isExtendedStore(Opcode);
 	}
 
 	__declspec(property(get = get_IsExtendedPopStore)) bool IsExtendedPopStore;
 	INLINE bool get_IsExtendedPopStore() const
 	{
-		return (byte >= FirstPopStore && byte <= LastPopStore) || (Opcode == OpCode::PopStoreOuterTemp);
+		return ::isExtendedPopStore(Opcode);
 	}
 
 	__declspec(property(get = get_IsStoreTemp)) bool IsStoreTemp;
 	INLINE bool get_IsStoreTemp() const
 	{
-		return Opcode == OpCode::StoreTemp || Opcode == OpCode::StoreOuterTemp || IsShortStoreTemp;
+		OpCode op = Opcode;
+		return op == OpCode::StoreTemp || op == OpCode::StoreOuterTemp || ::isShortStoreTemp(op);
 	}
 
 	__declspec(property(get = get_IsStoreStackTemp)) bool IsStoreStackTemp;
 	INLINE bool get_IsStoreStackTemp() const
 	{
-		return Opcode == OpCode::StoreTemp || IsShortStoreTemp;
+		OpCode op = Opcode;
+		return op == OpCode::StoreTemp || ::isShortStoreTemp(op);
 	}
 
 	__declspec(property(get = get_IsShortJump)) bool IsShortJump;
 	INLINE bool get_IsShortJump() const
 	{
-		return Opcode >= OpCode::ShortJump && byte <= LastShortJump;
+		return ::isShortJump(Opcode);
 	}
 
 	__declspec(property(get = get_IsLongJump)) bool IsLongJump;
@@ -328,71 +324,62 @@ struct BYTECODE
 	__declspec(property(get = get_IsUnconditionalJump)) bool IsUnconditionalJump;
 	INLINE bool get_IsUnconditionalJump() const
 	{
-		// Faster to test for long jump first, as this is mainly used by the optimizer
-		// which always works on long jumps
-		return IsLongJump || IsNearJump || IsShortJump;
+		return ::isUnconditionalJump(Opcode);
 	}
 
 	__declspec(property(get = get_IsShortJumpIfFalse)) bool IsShortJumpIfFalse;
 	INLINE bool get_IsShortJumpIfFalse() const
 	{
-		return Opcode >= OpCode::ShortJumpIfFalse && Opcode < OpCode::ShortJumpIfFalse + NumShortJumpsIfFalse;
+		return ::isShortJumpIfFalse(Opcode);
 	}
 
 	__declspec(property(get = get_IsJumpIfFalse)) bool IsJumpIfFalse;
 	INLINE bool get_IsJumpIfFalse() const
 	{
-		return IsShortJumpIfFalse ||
-			Opcode == OpCode::NearJumpIfFalse ||
-			Opcode == OpCode::LongJumpIfFalse;
+		return ::isJumpIfFalse(Opcode);
 	}
 
 	__declspec(property(get = get_IsJumpIfTrue)) bool IsJumpIfTrue;
 	INLINE bool get_IsJumpIfTrue() const
 	{
-		return Opcode == OpCode::NearJumpIfTrue || Opcode == OpCode::LongJumpIfTrue;
+		return ::isJumpIfTrue(Opcode);
 	}
 
 	__declspec(property(get = get_IsJumpIfNil)) bool IsJumpIfNil;
 	INLINE bool get_IsJumpIfNil() const
 	{
-		return Opcode == OpCode::NearJumpIfNil || Opcode == OpCode::LongJumpIfNil;
+		return ::isJumpIfNil(Opcode);
 	}
 
 	__declspec(property(get = get_IsJumpIfNotNil)) bool IsJumpIfNotNil;
 	INLINE bool get_IsJumpIfNotNil() const
 	{
-		return Opcode == OpCode::NearJumpIfNotNil || Opcode == OpCode::LongJumpIfNotNil;
+		return ::isJumpIfNotNil(Opcode);
 	}
 
 	__declspec(property(get = get_IsConditionalJump)) bool IsConditionalJump;
 	INLINE bool get_IsConditionalJump() const
 	{
-		return 
-			IsJumpIfFalse ||
-			IsJumpIfTrue ||
-			IsJumpIfNil ||
-			IsJumpIfNotNil;	
+		return ::isConditionalJump(Opcode);
 	}
 
 	__declspec(property(get = get_IsJumpInstruction)) bool IsJumpInstruction;
 	INLINE bool get_IsJumpInstruction() const
 	{
-		return IsUnconditionalJump || 
-			IsJumpIfFalse ||
-			IsJumpIfTrue ||
-			IsJumpIfNil ||
-			IsJumpIfNotNil ||
+		OpCode op = Opcode;
+		return ::isUnconditionalJump(op) || 
+			::isConditionalJump(op) ||
 			Opcode == OpCode::BlockCopy;
 	}
 
 	__declspec(property(get = get_IsLongConditionalJump)) bool IsLongConditionalJump;
 	INLINE bool get_IsLongConditionalJump() const
 	{
-		return Opcode == OpCode::LongJumpIfTrue ||
-			Opcode == OpCode::LongJumpIfFalse ||
-			Opcode == OpCode::LongJumpIfNil ||
-			Opcode == OpCode::LongJumpIfNotNil;
+		OpCode op = Opcode;
+		return op== OpCode::LongJumpIfTrue ||
+			op == OpCode::LongJumpIfFalse ||
+			op == OpCode::LongJumpIfNil ||
+			op == OpCode::LongJumpIfNotNil;
 	}
 
 	__declspec(property(get = get_IsReturn)) bool IsReturn;
@@ -410,7 +397,8 @@ struct BYTECODE
 	__declspec(property(get = get_IsMethodReturn)) bool IsMethodReturn;
 	INLINE bool get_IsMethodReturn() const
 	{
-		return Opcode != OpCode::ReturnBlockStackTop && IsReturn;
+		OpCode op = Opcode;
+		return op != OpCode::ReturnBlockStackTop && ::isReturn(op);
 	}
 
 	__declspec(property(get = get_IsShortSend)) bool IsShortSend;
@@ -422,18 +410,20 @@ struct BYTECODE
 	__declspec(property(get = get_IsSend)) bool IsSend;
 	INLINE bool get_IsSend() const
 	{
-		return IsShortSend 
-			|| Opcode == OpCode::Send || Opcode == OpCode::Supersend || Opcode == OpCode::SpecialSend
-			|| Opcode == OpCode::SendTempWithNoArgs || Opcode == OpCode::SendSelfWithNoArgs || Opcode == OpCode::PopSendSelfNoArgs
-			|| Opcode == OpCode::LongSend || Opcode == OpCode::LongSupersend
-			|| Opcode == OpCode::ExLongSend || Opcode == OpCode::ExLongSupersend;
+		OpCode op = Opcode;
+		return ::isShortSend(op)
+			|| op == OpCode::Send || op == OpCode::Supersend || op == OpCode::SpecialSend
+			|| op == OpCode::SendTempWithNoArgs || op == OpCode::SendSelfWithNoArgs || op == OpCode::PopSendSelfNoArgs
+			|| op == OpCode::LongSend || op == OpCode::LongSupersend
+			|| op == OpCode::ExLongSend || op == OpCode::ExLongSupersend;
 	}
 
 	__declspec(property(get = get_IsStore)) bool IsStore;
 	INLINE bool get_IsStore() const
 	{
-		return IsShortStoreTemp || IsShortPopStore || IsExtendedStore || IsExtendedPopStore
-				|| Opcode == OpCode::LongStoreStatic || Opcode == OpCode::LongStoreOuterTemp;
+		OpCode op = Opcode;
+		return  ::isShortStoreTemp(op) || ::isShortPopStore(op) || ::isExtendedStore(op) || ::isExtendedPopStore(op)
+				|| op == OpCode::LongStoreStatic || op == OpCode::LongStoreOuterTemp;
 	}
 };
 
@@ -441,7 +431,7 @@ ENABLE_BITMASK_OPERATORS(BYTECODE::Flags)
 
 inline bool BYTECODE::get_IsData() const 
 { 
-	return !!(flags & Flags::IsData); 
+	return (flags & Flags::IsData) == Flags::IsData;
 }
 
 inline void BYTECODE::makeData()
@@ -452,14 +442,14 @@ inline void BYTECODE::makeData()
 
 inline bool BYTECODE::get_IsJumpSource() const
 {
-	return !!(flags & Flags::IsJump);
+	return (flags & Flags::IsJump) == Flags::IsJump;
 }
 
 inline void BYTECODE::makeNonData() { flags = flags & ~Flags::IsData; }
 inline void BYTECODE::makeNonJump() { flags = flags & ~Flags::IsJump; }
 inline void BYTECODE::makeJump() { flags = flags | Flags::IsJump; }
 
-class BYTECODES : public std::vector<BYTECODE>
+class BYTECODES : public vector<BYTECODE>
 {
 public:
 	BYTECODE& operator[](const ip_t ip)

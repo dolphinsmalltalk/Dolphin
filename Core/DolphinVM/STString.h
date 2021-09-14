@@ -90,7 +90,7 @@ namespace ST
 			return stringPointer;
 		}
 
-		static POTE __fastcall New(LPCCH value, size_t cch)
+		static POTE __fastcall New(PCSZ value, size_t cch)
 		{
 			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject<MyType>(cch));
 			MyType* __restrict string = stringPointer->m_location;
@@ -100,13 +100,13 @@ namespace ST
 			return stringPointer;
 		}
 
-		static POTE __fastcall New(LPCSTR sz)
+		static POTE __fastcall New(PCSZ sz)
 		{
-			size_t cch = strlen(sz);
+			size_t cch = strlen((LPCSTR)sz);
 			OTE* stringPointer = reinterpret_cast<OTE*>(ObjectMemory::newUninitializedNullTermObject<MyType>(cch));
 			MyType* __restrict string = stringPointer->m_location;
 			// Copy the string and null terminator
-			memcpy(string->m_characters, sz, cch + sizeof(char));
+			memcpy(string->m_characters, sz, cch + sizeof(CU));
 			ASSERT(stringPointer->isNullTerminated());
 			return stringPointer;
 		}
@@ -138,19 +138,6 @@ namespace ST
 			ASSERT(stringPointer->isNullTerminated());
 			return stringPointer;
 		}
-
-		//static POTE NewLiteral(LPCSTR szValue)
-		//{
-		//	size_t cch = strlen(szValue);
-		//	if (cch > 0)
-		//	{
-		//		MyOTE* oteLiteral = NewWithLen(szValue, cch);
-		//		oteLiteral->beImmutable();
-		//		return oteLiteral;
-		//	}
-		//	else
-		//		return Pointers.EmptyString;
-		//}
 	};
 
 	// Indexes into the VM's pointer array
@@ -165,7 +152,7 @@ namespace ST
 
 		static POTE __fastcall NewFromBSTR(BSTR bs)
 		{
-			return bs == nullptr ? New("", 0) : New(reinterpret_cast<LPCWSTR>(bs));
+			return bs == nullptr ? New(u8"", 0) : New(reinterpret_cast<LPCWSTR>(bs));
 		}
 	};
 

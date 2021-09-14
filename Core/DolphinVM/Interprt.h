@@ -129,7 +129,7 @@ public:
 	//static BOOL SaveImageFile(const char* szFileName=0);
 
 	// External interface
-	static SymbolOTE* __stdcall NewSymbol(const char* name);
+	static SymbolOTE* __stdcall NewSymbol(const char8_t* name, size_t length);
 	
 	// Private helpers
 	

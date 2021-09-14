@@ -23,7 +23,7 @@ Smalltalk compiler
 #undef min
 #undef max
 #include <valarray>
-typedef std::valarray<POTE> POTEARRAY;
+typedef valarray<POTE> POTEARRAY;
 #include <unordered_map>
 
 #ifdef _DEBUG
@@ -73,11 +73,11 @@ public:
 	Compiler();
 	virtual ~Compiler();
 
-	void SetVMInterface(IDolphin* piVM) { m_piVM = piVM; }
+	void SetVMInterface(IDolphin* piVM);
 
 	POTE CompileExpression(Compiler* pOuter, Oop contextOop, CompilerFlags flags, size_t& len, textpos_t startAt);
-	Oop EvaluateExpression(LPUTF8 text, POTE method, Oop contextOop, POTE pools);
-	Oop EvaluateExpression(LPUTF8 source, textpos_t start, textpos_t end, POTE oteMethod, Oop contextOop, POTE pools);
+	Oop EvaluateExpression(const u8string& text, POTE method, Oop contextOop, POTE pools);
+	Oop EvaluateExpression(const u8string& source, textpos_t start, textpos_t end, POTE oteMethod, Oop contextOop, POTE pools);
 
 	// External interface requirements
 	void GetContext(POTE workspacePools);
@@ -87,8 +87,8 @@ public:
 	POTE __stdcall NewCompiledMethod(POTE classPointer, size_t numBytes, const STMethodHeader& hdr);
 	POTE MakeMethodAnnotations();
 
-	__declspec(property(get = get_Selector)) const Str& Selector;
-	const Str& get_Selector() const 
+	__declspec(property(get = get_Selector)) const u8string& Selector;
+	const u8string& get_Selector() const 
 	{ 
 		return m_pOuter ? m_pOuter->get_Selector() : m_selector;
 	}
@@ -147,35 +147,33 @@ private:
 		return m_isCompilingExpression;
 	}
 
-	POTE CompileForClassHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aClass, POTE environment, CompilerFlags flags= CompilerFlags::Default);
-	POTE CompileForEvaluationHelper(LPUTF8 compiletext, Oop compiler, Oop notifier, POTE aBehavior, POTE environment, POTE workspacePools, CompilerFlags=CompilerFlags::Default);
+	POTE CompileForClassHelper(const u8string& source, Oop compiler, Oop notifier, POTE aClass, POTE environment, CompilerFlags flags= CompilerFlags::Default);
+	POTE TryCompileForClass(const u8string& source, Oop compilerOop, Oop notifier, POTE aClass, POTE aNamespace, FLAGS flags);
+	POTE CompileForEvaluationHelper(const u8string& source, Oop compiler, Oop notifier, POTE aBehavior, POTE environment, POTE workspacePools, CompilerFlags=CompilerFlags::Default);
+	POTE TryCompileForEval(const u8string& source, Oop compilerOop, Oop notifier, POTE aBehaviorOrNil, POTE aNamespaceOrNil, POTE aWorkspacePool, FLAGS flags);
 
-	void SetFlagsAndText(CompilerFlags flags, LPUTF8 text, textpos_t offset);
-	void PrepareToCompile(CompilerFlags flags, LPUTF8 text, textpos_t offset, POTE classPointer, POTE aNamespace, Oop compiler, Oop notifier, POTE workspacePools, boolean isCompilingExpression, Oop context=0);
+	void SetFlagsAndText(CompilerFlags flags, const u8string& text, textpos_t offset);
+	void PrepareToCompile(CompilerFlags flags, const u8string& text, textpos_t offset, POTE classPointer, POTE aNamespace, Oop compiler, Oop notifier, POTE workspacePools, boolean isCompilingExpression, Oop context=0);
 	virtual void _CompileErrorV(int code, const TEXTRANGE& range, va_list extras);
 	Oop Notification(int errorCode, const TEXTRANGE& range, va_list extras);
 	void InternalError(const char* szFile, int line, const TEXTRANGE&, const char* szMsg, ...);
 	
-	Str  GetClassName();
-	Str GetNameOfClass(Oop oopClass, bool recurse=true);
+	u8string  GetClassName();
+	u8string GetNameOfClass(Oop oopClass, bool recurse=true);
 
 	// Moved from Interpreter as compiler specific (to ease removal of compiler)
-	Oop NewNumber(LPUTF8 textvalue) const;
-	POTE NewAnsiString(const char*) const;
-	POTE NewAnsiString(const Str&) const;
-	POTE NewUtf8String(LPUTF8) const;
-	POTE NewUtf8String(const Str&) const;
-	POTE InternSymbol(LPUTF8) const;
-	POTE InternSymbol(const Str&) const;
+	Oop NewNumber(const u8string& textvalue) const;
+	POTE NewUtf8String(const u8string&) const;
+	POTE InternSymbol(const u8string&);
 
 	// Lookup
-	OpCode FindNameAsSpecialMessage(const Str&) const;
-	bool IsPseudoVariable(const Str&) const;
-	size_t FindNameAsInstanceVariable(const Str&) const;
-	TempVarRef* AddTempRef(const Str& strName, VarRefType refType, const TEXTRANGE& refRange, textpos_t expressionEnd);
+	OpCode FindNameAsSpecialMessage(const u8string&) const;
+	bool IsPseudoVariable(const u8string&) const;
+	size_t FindNameAsInstanceVariable(const u8string&) const;
+	TempVarRef* AddTempRef(const u8string& strName, VarRefType refType, const TEXTRANGE& refRange, textpos_t expressionEnd);
 
 	enum class StaticType { Cancel=-1, NotFound, Variable, Constant };
-	StaticType FindNameAsStatic(const Str&, POTE&, bool autoDefine=false);
+	StaticType FindNameAsStatic(const u8string&, POTE&, bool autoDefine=false);
 
 	void WarnIfRestrictedSelector(textpos_t start);
 
@@ -183,8 +181,8 @@ private:
 	enum class LiteralType { ReferenceOnly, Normal };
 	size_t AddToFrameUnconditional(Oop object, const TEXTRANGE&);
 	size_t AddToFrame(Oop object, const TEXTRANGE&, LiteralType type);
-	size_t AddStringToFrame(POTE string, const TEXTRANGE&);
-	POTE AddSymbolToFrame(LPUTF8, const TEXTRANGE&, LiteralType refOnly);
+	size_t AddStringToFrame(const LPUTF8 sz, size_t cch, const TEXTRANGE&);
+	POTE AddSymbolToFrame(const u8string&, const TEXTRANGE&, LiteralType refOnly);
 	void AddAnnotation(POTE tag, Oop arg);
 	void InsertByte(ip_t pos, uint8_t value, BYTECODE::Flags flags, LexicalScope* pScope);
 	void RemoveByte(ip_t pos);
@@ -203,13 +201,13 @@ private:
 	ip_t GenPopStack();
 	
 	void GenInteger(intptr_t val, const TEXTRANGE&);
-	Oop GenNumber(LPUTF8 textvalue, const TEXTRANGE&);
+	Oop GenNumber(const u8string& textvalue, const TEXTRANGE&);
 	void GenNumber(Oop, const TEXTRANGE&);
 	void GenConstant(size_t index);
 	void GenLiteralConstant(Oop object, const TEXTRANGE&);
 	void GenStatic(const POTE oteStatic, const TEXTRANGE&);
 	
-	ip_t GenMessage(const Str& pattern, argcount_t argumentCount, textpos_t messageStart);
+	ip_t GenMessage(const u8string& pattern, argcount_t argumentCount, textpos_t messageStart);
 
 	ip_t GenJumpInstruction(OpCode basic);
 	ip_t GenJump(OpCode basic, ip_t location);
@@ -219,20 +217,20 @@ private:
 	size_t GenPushCopiedValue(TempVarDecl*);
 
 	void GenPushSelf();
-	void GenPushVariable(const Str&, const TEXTRANGE&);
+	void GenPushVariable(const u8string&, const TEXTRANGE&);
 	ip_t GenPushTemp(TempVarRef*);
 	ip_t GenPushInstVar(uint8_t index);
-	void GenPushStaticVariable(const Str&, const TEXTRANGE&);
+	void GenPushStaticVariable(const u8string&, const TEXTRANGE&);
 	void GenPushStaticConstant(POTE oteBinding, const TEXTRANGE& range);
 	void GenPushConstant(Oop objectPointer, const TEXTRANGE& range);
 	bool GenPushImmediate(Oop objectPointer, const TEXTRANGE& range);
 
 	void GenPopAndStoreTemp(TempVarRef*);
 
-	ip_t GenStore(const Str&, const TEXTRANGE&, textpos_t assignedExpressionStop);
+	ip_t GenStore(const u8string&, const TEXTRANGE&, textpos_t assignedExpressionStop);
 	ip_t GenStoreTemp(TempVarRef*);
 	ip_t GenStoreInstVar(uint8_t index);
-	ip_t GenStaticStore(const Str&, const TEXTRANGE&, textpos_t assignedExpressionStop);
+	ip_t GenStaticStore(const u8string&, const TEXTRANGE&, textpos_t assignedExpressionStop);
 
 	ip_t GenReturn(OpCode retOp);
 	ip_t GenFarReturn();
@@ -263,7 +261,7 @@ private:
 	void ParseBlockStatements();
 	void ParseStatement();
 	void ParseExpression();
-	void ParseAssignment(const Str&, const TEXTRANGE&);
+	void ParseAssignment(const u8string&, const TEXTRANGE&);
 	void ParseTerm(textpos_t textPosition);
 	void ParseBinaryTerm(textpos_t textPosition);
 	void ParseBraceArray(textpos_t textPosition);
@@ -289,7 +287,7 @@ private:
 	};
 	static LibCallType callTypes[4];
 
-	LibCallType* ParseCallingConvention(const Str&);
+	LibCallType* ParseCallingConvention(const u8string&);
 	void ParseLibCall(DolphinX::ExtCallDeclSpec decl, DolphinX::ExtCallPrimitive callPrim);
 	void ParseVirtualCall(DolphinX::ExtCallDeclSpec decl);
 
@@ -302,10 +300,10 @@ private:
 
 	argcount_t ParseExtCallArgs(TypeDescriptor args[]);
 	void ParseExtCallArgument(TypeDescriptor& out);
-	void ParseExternalClass(const Str&, TypeDescriptor&);
-	POTE FindExternalClass(const Str&, const TEXTRANGE&);
+	void ParseExternalClass(const u8string&, TypeDescriptor&);
+	POTE FindExternalClass(const u8string&, const TEXTRANGE&);
 	DolphinX::ExtCallArgType TypeForStructPointer(POTE oteStructClass);
-	DolphinX::ExternalMethodDescriptor& buildDescriptorLiteral(TypeDescriptor args[], argcount_t argcount, DolphinX::ExtCallDeclSpec decl, LPUTF8 procName);
+	DolphinX::ExternalMethodDescriptor& buildDescriptorLiteral(TypeDescriptor args[], argcount_t argcount, DolphinX::ExtCallDeclSpec decl, const u8string& procName);
 	void mangleDescriptorReturnType(TypeDescriptor& retType, const TEXTRANGE&);
 
 	__declspec(property(get=get_IsAtMethodScope)) bool IsAtMethodScope;
@@ -369,18 +367,18 @@ private:
 	Oop IsPushLiteral(ip_t pos) const;
 
 	// Temporaries
-	TempVarDecl* AddTemporary(const Str& name, const TEXTRANGE& range, bool isArg);
-	TempVarDecl* AddArgument(const Str& name, const TEXTRANGE& range);
-	TempVarRef* AddOptimizedTemp(const Str& name, const TEXTRANGE& range=TEXTRANGE());
-	void RenameTemporary(tempcount_t temporary, LPUTF8 newName, const TEXTRANGE& range);
-	void CheckTemporaryName(const Str&, const TEXTRANGE&, bool isArg);
+	TempVarDecl* AddTemporary(const u8string& name, const TEXTRANGE& range, bool isArg);
+	TempVarDecl* AddArgument(const u8string& name, const TEXTRANGE& range);
+	TempVarRef* AddOptimizedTemp(const u8string& name, const TEXTRANGE& range=TEXTRANGE());
+	void RenameTemporary(tempcount_t temporary, const u8string& newName, const TEXTRANGE& range);
+	void CheckTemporaryName(const u8string&, const TEXTRANGE&, bool isArg);
 	void PushNewScope(textpos_t textStart, bool bOptimized=false);
 	void PushOptimizedScope(textpos_t textStart=textpos_t::npos);
 	void PopScope(textpos_t textStop);
 	void PopOptimizedScope(textpos_t textStop);
 	LexicalScope* GetMethodScope() const;
 	void DetermineTempUsage();
-	TempVarDecl* DeclareTemp(const Str& strName, const TEXTRANGE& range);
+	TempVarDecl* DeclareTemp(const u8string& strName, const TEXTRANGE& range);
 	void FixupTempRef(ip_t i);
 	size_t FixupTempRefs();
 	size_t FixupTempsAndBlocks();
@@ -400,16 +398,16 @@ private:
 	void VerifyTextMap(bool bFinal = false);
 	void VerifyJumps();
 	bool IsBlock(Oop oop);
-	void disassemble(std::wostream& stream);
+	void disassemble(wostream& stream);
 	void disassemble();
-	std::wstring DebugPrintString(Oop);
+	wstring DebugPrintString(Oop);
 
 public:
 	// Methods required by Disassembler
 	uint8_t GetBytecode(ip_t ip) const { return m_bytecodes[ip].byte; }
-	Str GetSpecialSelector(size_t index);
-	std::wstring GetLiteralAsString(size_t index) { return DebugPrintString(m_literalFrame[index]); }
-	Str GetInstVar(size_t index) { return m_instVars[index]; }
+	u8string GetSpecialSelector(size_t index);
+	wstring GetLiteralAsString(size_t index) { return DebugPrintString(m_literalFrame[index]); }
+	u8string GetInstVar(size_t index) { return m_instVars[index]; }
 
 private:
 #else
@@ -423,12 +421,12 @@ private:
 
 	const VMPointers& GetVMPointers() const
 	{
-		return *(VMPointers*)m_piVM->GetVMPointers();
+		return *m_pVMPointers;
 	}
 
 	POTE Nil() const
 	{
-		return m_piVM->NilPointer();
+		return GetVMPointers().Nil;
 	}
 
 	void MakeQuickMethod(STMethodHeader& hdr, STPrimitives extraIndex);
@@ -436,20 +434,20 @@ private:
 public:
 	POTE GetInstVarNames()/* throws SE_VMCALLBACKUNWIND */;
 	POTE GetClassEnvironment(POTE oteClass);
-	POTE FindDictVariable(POTE dict, const Str&)/* throws SE_VMCALLBACKUNWIND */;
-	//POTE FindClass(const Str&)/* throws SE_VMCALLBACKUNWIND */;
-	POTE FindGlobal(const Str&)/* throws SE_VMCALLBACKUNWIND */;
-	POTE DictAtPut(POTE dict, const Str&, Oop value)/* throws SE_VMCALLBACKUNWIND */;
+	POTE FindDictVariable(POTE dict, const u8string&)/* throws SE_VMCALLBACKUNWIND */;
+	//POTE FindClass(const u8string&)/* throws SE_VMCALLBACKUNWIND */;
+	POTE FindGlobal(const u8string&)/* throws SE_VMCALLBACKUNWIND */;
+	POTE DictAtPut(POTE dict, const u8string&, Oop value)/* throws SE_VMCALLBACKUNWIND */;
 	bool CanUnderstand(POTE oteBehavior, POTE oteSelector);
-	Str GetString(POTE oopString);
+	u8string GetString(POTE oopString);
 
 	// Special names for compiler and decoder
 	static const char* s_specialObjectName[];
 
 // ICompiler
 public:
-	STDMETHOD_(POTE, CompileForClass)(IUnknown* piVM, Oop compiler, const char* compiletext, POTE aClass, POTE aNamespace, FLAGS flags, Oop notifier);
-	STDMETHOD_(POTE, CompileForEval)(IUnknown* piVM, Oop compiler, const char* compiletext, POTE aClass, POTE aNamespace, POTE workspacePools, FLAGS flags, Oop notifier);
+	STDMETHOD_(POTE, CompileForClass)(IUnknown* piVM, Oop compiler, const char8_t* compiletext, int length, POTE aClass, POTE aNamespace, FLAGS flags, Oop notifier);
+	STDMETHOD_(POTE, CompileForEval)(IUnknown* piVM, Oop compiler, const char8_t* compiletext, int length, POTE aClass, POTE aNamespace, POTE workspacePools, FLAGS flags, Oop notifier);
 
 private:
 	Compiler* m_pOuter = nullptr;
@@ -476,22 +474,22 @@ private:
 	}
 
 	// Dynamic array of literals
-	typedef std::vector<Oop> OOPVECTOR;
+	typedef vector<Oop> OOPVECTOR;
 	OOPVECTOR m_literalFrame;			// Literal frame
-	typedef std::unordered_map<Oop, size_t> LiteralMap;
+	typedef unordered_map<Oop, size_t> LiteralMap;
 	LiteralMap m_literals;				// All literals
 	size_t m_literalLimit = LITERALLIMIT;
 
-	typedef std::pair<POTE, OOPVECTOR> MethodAnnotation;
-	typedef std::vector<MethodAnnotation> AnnotationVector;
+	typedef pair<POTE, OOPVECTOR> MethodAnnotation;
+	typedef vector<MethodAnnotation> AnnotationVector;
 	AnnotationVector m_annotations;
 	size_t m_namespaceAnnotationIndex = -1;
 
 	// Fixed size array of instance vars (determined from class)
-	typedef std::valarray<Str> STRINGARRAY;
+	typedef valarray<u8string> STRINGARRAY;
 	STRINGARRAY m_instVars;
 
-	typedef std::vector<LexicalScope*> SCOPELIST;
+	typedef vector<LexicalScope*> SCOPELIST;
 	SCOPELIST m_allScopes;
 	LexicalScope* m_pCurrentScope = nullptr;
 
@@ -500,7 +498,7 @@ private:
 	POTE m_oopWorkspacePools = nullptr;		// Shared pools for associated workspace
 	Oop	 m_context = 0;						// Compilation context for expression
 
-	Str m_selector;							// The current message selector
+	u8string m_selector;							// The current message selector
 
 	uintptr_t m_primitiveIndex = 0;			// Index of primitive or zero
 	Oop m_compilerObject = 0;				// The object which was the receiver of the primCompile:... message to start compilation
@@ -515,7 +513,7 @@ private:
 		TEXTMAP() : ip((ip_t)-1), start((textpos_t)-1), stop((textpos_t)-1) { }
 	};
 
-	typedef std::vector<TEXTMAP> TEXTMAPLIST;
+	typedef vector<TEXTMAP> TEXTMAPLIST;
 	TEXTMAPLIST m_textMaps;
 
 	TEXTMAPLIST::iterator FindTextMapEntry(ip_t ip);
@@ -523,8 +521,10 @@ private:
 	POTE m_compiledMethodClass = nullptr;	// Class of compiled method to generate
 	Oop m_notifier = 0;						// Notifier object to send compilerError:... callbacks to
 
-	typedef std::map<Str, POTE> NAMEDOBJECTS;
+	typedef map<u8string, POTE> NAMEDOBJECTS;
 	NAMEDOBJECTS m_bindingRefs;
+
+	NAMEDOBJECTS m_internedSymbols;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(DolphinCompiler), Compiler)
@@ -591,34 +591,9 @@ inline LexicalScope* Compiler::GetMethodScope() const
 
 ///////////////////////
 
-inline POTE Compiler::NewAnsiString(const char* sz) const
+inline POTE Compiler::NewUtf8String(const u8string& str) const
 {
-	return m_piVM->NewString((LPCSTR)sz);
-}
-
-inline POTE Compiler::NewAnsiString(const Str& str) const
-{
-	return NewAnsiString((LPCSTR)str.c_str());
-}
-
-inline POTE Compiler::NewUtf8String(LPUTF8 sz) const
-{
-	return m_piVM->NewUtf8String((LPCSTR)sz);
-}
-
-inline POTE Compiler::NewUtf8String(const Str& str) const
-{
-	return NewUtf8String(str.c_str());
-}
-
-inline POTE Compiler::InternSymbol(LPUTF8 sz) const
-{
-	return m_piVM->InternSymbol((LPCSTR)sz);
-}
-
-inline POTE Compiler::InternSymbol(const Str& str) const
-{
-	return InternSymbol(str.c_str());
+	return m_piVM->NewUtf8String((LPCSTR)str.data(), str.length());
 }
 
 inline void Compiler::RemoveByte(ip_t ip)
@@ -627,7 +602,7 @@ inline void Compiler::RemoveByte(ip_t ip)
 	RemoveBytes(ip, 1);
 }
 
-inline Str Compiler::GetString(POTE ote) 
+inline u8string Compiler::GetString(POTE ote) 
 { 
 	return MakeString(m_piVM, ote); 
 }

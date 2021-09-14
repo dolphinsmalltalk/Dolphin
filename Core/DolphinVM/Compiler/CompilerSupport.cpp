@@ -40,9 +40,9 @@ POTE __stdcall Compiler::NewCompiledMethod(POTE classPointer, size_t numBytes, c
 POTE Compiler::GetInstVarNames() // throws SE_VMCALLBACKUNWIND
 {
 	if (!m_piVM->IsBehavior(Oop(m_class)))
-		return m_piVM->NilPointer();
+		return Nil();
 
-	_ASSERTE(GetVMPointers().allInstVarNamesSelector != m_piVM->NilPointer());
+	_ASSERTE(GetVMPointers().allInstVarNamesSelector != Nil());
 	return (POTE)m_piVM->Perform(Oop(m_class), GetVMPointers().allInstVarNamesSelector);
 }
 
@@ -50,7 +50,7 @@ POTE Compiler::GetInstVarNames() // throws SE_VMCALLBACKUNWIND
 POTE Compiler::GetClassEnvironment(POTE oteClass)
 {
 	if (!m_piVM->IsBehavior(Oop(oteClass)))
-		return m_piVM->NilPointer();
+		return Nil();
 
 	if (m_piVM->IsAMetaclass(m_class))
 	{
@@ -64,7 +64,7 @@ POTE Compiler::GetClassEnvironment(POTE oteClass)
 }
 
 // Ditto on the ref. count front
-POTE Compiler::FindDictVariable(POTE dict, const Str& name)// throws SE_VMCALLBACKUNWIND
+POTE Compiler::FindDictVariable(POTE dict, const u8string& name)// throws SE_VMCALLBACKUNWIND
 {
 	// Finds the given name as a shared global.
 	// To locate the appropriate binding for the variable we'll have to run
@@ -76,9 +76,9 @@ POTE Compiler::FindDictVariable(POTE dict, const Str& name)// throws SE_VMCALLBA
 }
 
 // Ditto on the ref. count front **?**
-POTE Compiler::DictAtPut(POTE dict, const Str& name, Oop value)// throws SE_VMCALLBACKUNWIND
+POTE Compiler::DictAtPut(POTE dict, const u8string& name, Oop value)// throws SE_VMCALLBACKUNWIND
 {
-	POTE atPutSelector = InternSymbol((LPUTF8)"at:put:");
+	POTE atPutSelector = InternSymbol(u8"at:put:"s);
 
 	// SystemDictionary will convert String to Symbol in #at:put:
 	_ASSERTE(!IsIntegerObject(Oop(dict)));
@@ -95,7 +95,7 @@ bool Compiler::CanUnderstand(POTE oteBehavior, POTE oteSelector)
 ///////////////////////////////////////////////////////////////////////////////
 // 
 
-Oop Compiler::EvaluateExpression(LPUTF8 text, POTE oteMethod, Oop contextOop, POTE pools)
+Oop Compiler::EvaluateExpression(const u8string& text, POTE oteMethod, Oop contextOop, POTE pools)
 {
 	STCompiledMethod& exprMethod = *(STCompiledMethod*)GetObj(oteMethod);
 	auto primitive = exprMethod.header.primitiveIndex;
@@ -132,7 +132,7 @@ Oop Compiler::EvaluateExpression(LPUTF8 text, POTE oteMethod, Oop contextOop, PO
 // The return value has the correct ref. count - i.e. it is not
 // artificially increased
 
-POTE Compiler::FindGlobal(const Str& name)
+POTE Compiler::FindGlobal(const u8string& name)
 {
 	const POTE nil = Nil();
 

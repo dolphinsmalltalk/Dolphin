@@ -23,7 +23,7 @@ extern NewExternalStructurePointer:near32
 NewExternalStructure EQU ?New@ExternalStructure@ST@@SIPAV?$TOTE@VObject@ST@@@@PAV?$TOTE@VBehavior@ST@@@@PAX@Z
 extern NewExternalStructure:near32
 
-NewAnsiString EQU ?New@?$ByteStringT@$0A@$0FE@VAnsiStringOTE@@D@ST@@SIPAVAnsiStringOTE@@PBD@Z
+NewAnsiString EQU ?New@?$ByteStringT@$0A@$0FE@VAnsiStringOTE@@D@ST@@SIPAVAnsiStringOTE@@PIBD@Z
 extern NewAnsiString:near32
 
 NewAnsiStringFromUtf16 EQU ?New@?$ByteStringT@$0A@$0FE@VAnsiStringOTE@@D@ST@@SIPAVAnsiStringOTE@@PB_W@Z

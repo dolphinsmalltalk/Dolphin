@@ -399,14 +399,14 @@ BytesOTE* __fastcall Interpreter::NewUint32(uint32_t value, BehaviorOTE* classPo
 #pragma code_seg(XIF_SEG)
 
 // Symbol result has correct ref. count
-SymbolOTE* __stdcall Interpreter::NewSymbol(const char* name) /* throws SE_VMCALLBACKUNWIND */
+SymbolOTE* __stdcall Interpreter::NewSymbol(const char8_t* name, size_t length) /* throws SE_VMCALLBACKUNWIND */
 {
 	// Run some Smalltalk code in the interpreter's current context
 	// to intern the symbol (Symbol intern: aString)
 	//
 
 	pushObject((OTE*)Pointers.ClassSymbol);
-	pushNewObject((OTE*)Utf8String::New(name));
+	pushNewObject((OTE*)Utf8String::New(name, length));
 	SymbolOTE* symbolPointer = reinterpret_cast<SymbolOTE*>(callback(Pointers.InternSelector, 1 TRACEARG(TRACEFLAG::TraceOff)));
 	ASSERT(symbolPointer->m_oteClass == Pointers.ClassSymbol);
 	ASSERT(symbolPointer->m_count > 1);

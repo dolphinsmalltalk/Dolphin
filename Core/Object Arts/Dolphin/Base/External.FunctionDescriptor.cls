@@ -456,7 +456,8 @@ initializeExternalTypes
 		at: 'DATE' put: ExtCallArgDATE;
 		shrink;
 		isImmutable: true.
-	self addClassConstant: 'ValueTypes' value: valueTypes.
+	"The ValueTypes variable is assigned for testing purposes"
+	self addClassVariable: 'ValueTypes' value: valueTypes.
 	self addClassConstant: 'TypeNames' value: typeNames.
 !
 

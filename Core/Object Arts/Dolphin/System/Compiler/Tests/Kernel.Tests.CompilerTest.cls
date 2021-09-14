@@ -61,7 +61,7 @@ evalTestMethod: aCompiledMethod withArgs: anArray
 evaluateExpression: aString 
 	^Compiler evaluate: aString!
 
-getTestMethod: aSymbol
+getTestMethod: aSymbol 
 	| oldMethod result method |
 	oldMethod := DolphinCompilerTestMethods compiledMethodAt: aSymbol.
 	self shouldnt: 
@@ -139,6 +139,34 @@ shortPushOne
 	| shortPushOne |
 	shortPushOne := ShortPushImmediate + (1 - -1).
 	^shortPushOne!
+
+specialTempCases
+	| specials |
+	specials := OrderedCollection new.
+	"Full block nested in optimized block"
+	#{Tools.AXMethodName} ifDefinedDo: [:class | specials add: class >> #printSignatureOn:].
+	"Inlined return in a whileFalse control structure"
+	#{Base64Codec} ifDefinedDo: [:class | specials add: class >> #nextBase64From:].
+	"Inlined returns in ifTrue/ifFalse optimised to ifNil"
+	specials add: Behavior >> #whichClassIncludesSelector:.
+	"Inlined returns in ifTrue/ifFalse stgructure"
+	specials add: Boolean >> #&.
+	"Full block nested in otherwise clean block"
+	#{Refactory.Browser.BrowserEnvironment}
+		ifDefinedDo: [:class | specials add: class >> #numberSelectors].
+	"Full block nested in multiple levels of optimized blocks"
+	specials add: CompiledCode >> #byteCodes:.
+	"Clean and copying blocks as the values of optimized blocks"
+	#{UI.ListViewColumn} ifDefinedDo: [:class | specials add: class >> #rowSortBlock].
+	"Full block nested in multiple other blocks"
+	specials add: TestResult >> #debugCase:.
+	"Optimized blocks assigning temps inside full blocks"
+	#{Date} ifDefinedDo: [:class | specials add: class >> #monthsSince:].
+	"Test case for continuations"
+	#{ContinuationTest} ifDefinedDo: [:class | specials add: class >> #testBlockVars].
+	"Clean block in otherwise empty clean block"
+	specials add: EventsCollection >> #triggerEvent:with:with:.
+	^specials!
 
 test1054
 	| method |
@@ -1175,6 +1203,34 @@ testSpecialLiteralsAsUnarySelectors
 				raise: self compilationErrorClass.
 			self denyIsNil: method]!
 
+testStringFolding
+	"String literals should be folded to a single immutable instance in the literal frame if they occur more than once."
+
+	| expr literals |
+	expr := (self
+				compileExpression: '| a1 aa1 a2 aa2 | a1 := ##(''A'' asLowercase asUtf8String). #blah. aa1 := ''A''. #blah. a2 := ''a''. #blah. aa2 := ''A''. a1 == a2 and: [aa1 == aa2]')
+					method.
+	self assert: (expr value: nil withArguments: #()).
+	self assert: expr literalCount equals: 6.
+	literals := expr literals.
+	self assert: (literals noDifference: #('a' #blah 'A' #asLowercase #asUtf8String #and: )).
+	self assert: (literals allSatisfy: [:each | each isImmutable])!
+
+testStringLiteralWithEmbeddedNulls
+	"String literals should be able to contain with embedded nulls."
+
+	| expr literals stringWithNull source |
+	stringWithNull := String
+				with: $a
+				with: $\0
+				with: $b.
+	source := '''', stringWithNull, ''',  ''a'', ##(String with: $a with: $\0 with: $b)'.
+	expr := (self compileExpression: source) method.
+	self assert: (expr value: nil withArguments: #()) equals: stringWithNull , 'a' , stringWithNull.
+	self assert: expr literalCount equals: 5.
+	literals := expr literals.
+	self assert: (literals noDifference: {stringWithNull. 'a'. #,. String binding. #with:with:with:})!
+
 testSymbolScanning
 	#('#a' '#a1' '#a:' '#a1:' '#a:b:' '#a_:_:' '#a1:b2:' '#|' '#||' '#|||' '#_' '#_a' '#-' '#--' '#''£''' '#''你好''' '#''🐬''')
 		do: 
@@ -1215,34 +1271,12 @@ testTempMapOuterDepthExhaustive
 testTempMaps
 	"Check that the temp maps for all the test methods are consistent with the bytecodes."
 
-	| specials |
-	specials := OrderedCollection new.
-	"Full block nested in optimized block"
-	#{Tools.AXMethodName} ifDefinedDo: [:class | specials add: class >> #printSignatureOn:].
-	"Inlined return in a whileFalse control structure"
-	#{Base64Codec} ifDefinedDo: [:class | specials add: class >> #nextBase64From:].
-	"Inlined returns in ifTrue/ifFalse optimised to ifNil"
-	specials add: Behavior >> #whichClassIncludesSelector:.
-	"Inlined returns in ifTrue/ifFalse stgructure"
-	specials add: Boolean >> #&.
-	"Full block nested in otherwise clean block"
-	#{Refactory.Browser.BrowserEnvironment}
-		ifDefinedDo: [:class | specials add: class >> #numberSelectors].
-	"Full block nested in multiple levels of optimized blocks"
-	specials add: CompiledCode >> #byteCodes:.
-	"Clean and copying blocks as the values of optimized blocks"
-	#{UI.ListViewColumn} ifDefinedDo: [:class | specials add: class >> #rowSortBlock].
-	"Full block nested in multiple other blocks"
-	specials add: TestResult >> #debugCase:.
-	"Optimized blocks assigning temps inside full blocks"
-	#{Date} ifDefinedDo: [:class | specials add: class >> #monthsSince:].
-	"Test case for continuations"
-	#{ContinuationTest} ifDefinedDo: [:class | specials add: class >> #testBlockVars].
-	"Clean block in otherwise empty clean block"
-	specials add: EventsCollection >> #triggerEvent:with:with:.
-	"Verify each of the specials that is available plus the standard set of test methods"
-	specials do: [:each | self verifyTempsMapOf: each].
 	DolphinCompilerTestMethods allMethodsDo: [:each | self verifyTempsMapOf: each]!
+
+testTempMaps2
+	"Check that the temp maps for some known special cases are consistent with the bytecodes."
+
+	self specialTempCases do: [:each | self verifyTempsMapOf: each]!
 
 testTempPairing
 	| prefix method pairs pair |
@@ -1518,7 +1552,8 @@ testWriteAccessor
 			self assert: (inst perform: each asSymbol) equals: each]!
 
 verifyTempsMapOf: aCompiledMethod
-	| dispatcher info ipRange tempsMap emptyBlock method |
+	| dispatcher info ipRange tempsMap emptyBlock method parseTree textMap tempsAtIp refdTemps |
+	self skip: 'Work in progress'.
 	info := aCompiledMethod getDebugInfo.
 	"Use the recompiled method as we want to check the current compiler, not what was compiled into the image"
 	method := info method.
@@ -1526,11 +1561,15 @@ verifyTempsMapOf: aCompiledMethod
 	ipRange := 1 to: method byteCodes size.
 	tempsMap := info tempsMap.
 	self assert: tempsMap first key equals: ipRange.
+	tempsAtIp := Array new: ipRange size.
 	"All temps map entries should be for ip's that represent some subset of the method's ip's"
 	tempsMap do: 
 			[:each |
-			self assert: (each key start == 0
-						or: [(ipRange includes: each key start) and: [ipRange includes: each key stop]])].
+			| range temps |
+			range := each key.
+			temps := each value.
+			range start to: range stop do: [:i | tempsAtIp at: i put: temps]].
+	refdTemps := Array new: ipRange size.
 	dispatcher := method byteCodeDispatcher.
 	[dispatcher atEnd] whileFalse: 
 			[| ip |
@@ -1540,11 +1579,48 @@ verifyTempsMapOf: aCompiledMethod
 					TempInstrs at: instr
 						ifPresent: 
 							[:val |
-							| temps actual |
-							temps := info tempsAtIp: ip.
+							| temps actual tempInfo |
+							temps := tempsAtIp at: ip.
+							self assert: (info tempsAtIp: ip) equals: temps.
 							actual := val value: args.
-							self assert: (temps
-										anySatisfy: [:tempInfo | tempInfo second == actual key and: [tempInfo last == actual value]])]]].
+							tempInfo := temps detect: [:ti | ti second == actual key and: [ti last == actual value]]
+										ifNone: [self fail: 'No temps map entry found'].
+							refdTemps at: ip put: tempInfo]]].
+	"Check that each entry in the temps map corresponds to a visible temp"
+	parseTree := aCompiledMethod parseTree.
+	parseTree analyze.
+	textMap := info textMap.
+	tempsMap do: 
+			[:each |
+			| scopeNode scope tempName refs |
+			ipRange := each key.
+			scopeNode := (ipRange start == 1 and: [ipRange stop == method byteCodes size])
+						ifTrue: [parseTree]
+						ifFalse: 
+							[| range1 range2 |
+							range1 := (textMap at: (StackFrame findIP: ipRange start inTextMap: textMap)) value.
+							range2 := (textMap at: (Kernel.StackFrame findIP: ipRange stop inTextMap: textMap)) value.
+							parseTree bestNodeFor: ((range1 start min: range2 start) to: (range1 stop max: range2 stop))].
+			scope := scopeNode scope.
+			self assert: (scope node == scopeNode or: [scope node == scopeNode outer]).
+			refs := refdTemps copyFrom: each key start to: each key stop.
+			each value do: 
+					[:tempDetails |
+					| depth declScope |
+					tempName := tempDetails at: 1.
+					depth := tempDetails second.
+					declScope := scope.
+					"Walk out to the scope indicated by the outer depth in the temp map."
+					#todo. "Need to fixup the decls as part of the semantic analysis in the same way that the compiler does, i.e. moving declarations in optimised scopes out to the nearest enclosing real scope, and adding declarations in blocks for locals copied into those blocks."
+					[[declScope isInlined] whileTrue: [declScope := declScope outer].
+					depth > 0] whileTrue: 
+								[declScope := declScope outer.
+								depth := depth - 1].
+					(declScope includesArg: tempName)
+						ifTrue: [self assert: tempDetails second equals: 0	"Arguments can be unreferenced"]
+						ifFalse: 
+							[self assert: (declScope includesTemp: tempName).
+							self assert: (tempDetails second > 0 or: [refs includes: tempDetails])]]].
 	"Check that there is a temps map entry for the initalIP of each clean block in the literal frame"
 	emptyBlock := VM emptyBlock.
 	method literalsDo: 
@@ -1607,6 +1683,7 @@ scanSmallIntegerNonNumericEnd:!helpers!private! !
 setInteractiveCompile!helpers!private! !
 setUp!helpers!private! !
 shortPushOne!helpers!private! !
+specialTempCases!constants!private! !
 test1054!public!unit tests! !
 testBlockTempsMap!public!unit tests! !
 testBlockWithAllTempTypes!public!unit tests! !
@@ -1643,10 +1720,10 @@ testIncrementPushTempOptimisation!public!unit tests! !
 testIncrementTempOptimisation!public!unit tests! !
 testIntegerScanning!public!unit tests! !
 testIntegerScanningBoundaries!public!unit tests! !
-testKeywordAnnotations!public!unit tests-known failures! !
+testKeywordAnnotations!public!unit tests! !
 testLiteralArray!public!unit tests! !
 testLiteralStringEncoding!public!unit tests! !
-testMutableAnnotation!public!unit tests-known failures! !
+testMutableAnnotation!public!unit tests! !
 testNestedCopyingBlocks!public!unit tests! !
 testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
 testOptimizedLoopReadBeforeWritten!public!unit tests! !
@@ -1659,9 +1736,12 @@ testScanningScaledDecimals!public!unit tests! !
 testScope!public!unit tests! !
 testSharedOuterTemps!public!unit tests! !
 testSpecialLiteralsAsUnarySelectors!public! !
+testStringFolding!public!unit tests! !
+testStringLiteralWithEmbeddedNulls!public!unit tests! !
 testSymbolScanning!public!unit tests! !
 testTempMapOuterDepthExhaustive!public!unit tests-long running! !
 testTempMaps!public!unit tests! !
+testTempMaps2!public!unit tests! !
 testTempPairing!public!unit tests! !
 testTextMapOfEmptyBlock!public! !
 testTextMapsExhaustive!public!unit tests-long running! !
@@ -1672,9 +1752,9 @@ testToByDo!public!unit tests! !
 testToByDoWithFloatSteps!public!unit tests! !
 testWhileFalse!public!unit tests! !
 testWhileTrue!public!unit tests! !
-testWriteAccessor!public!unit tests!unit tests-known failures! !
+testWriteAccessor!public!unit tests! !
 verifyTempsMapOf:!helpers!private! !
-verifyTextMapsOf:!helpers!private!unit tests-long running! !
+verifyTextMapsOf:!helpers!private! !
 !
 
 !Kernel.Tests.CompilerTest class methodsFor!

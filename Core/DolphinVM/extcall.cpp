@@ -36,7 +36,8 @@ using namespace DolphinX;
 #include "STBlockClosure.h"
 
 static AnsiStringOTE* (__fastcall *ForceNonInlineNewByteStringFromUtf16)(LPCWSTR) = &AnsiString::New;
-static AnsiStringOTE* (__fastcall *ForceNonInlineNewByteStringWithLen)(const char * __restrict, size_t) = &AnsiString::New;
+static AnsiStringOTE* (__fastcall *ForceNonInlineNewAnsiStringWithLen)(const char * __restrict, size_t) = &AnsiString::New;
+static AnsiStringOTE* (__fastcall* ForceNonInlineNewAnsiString)(const char* __restrict) = &AnsiString::New;
 
 ///////////////////////////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////////

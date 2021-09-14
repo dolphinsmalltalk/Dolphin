@@ -260,17 +260,22 @@
     <ClInclude Include="..\VMPointers.h" />
     <ClInclude Include="bytecode.h" />
     <ClInclude Include="compiler.h" />
+    <ClInclude Include="CompilerDLL.h" />
     <ClInclude Include="lexer.h" />
     <ClInclude Include="LexicalScope.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="stdafx.h" />
     <ClInclude Include="str.h" />
+    <ClInclude Include="textrange.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\DolphinLib.vcxproj">
       <Project>{241d4e3e-44c0-40b7-be1b-5249916fe631}</Project>
       <ReferenceOutputAssembly>false</ReferenceOutputAssembly>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Natvis Include="Compiler.natvis" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

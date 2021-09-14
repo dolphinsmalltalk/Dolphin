@@ -1033,6 +1033,18 @@ testErrorsLexicalExpectConst
 		line: 1
 		code: LErrExpectConst!
 
+testErrorsLexicalIncompleteLiteralCharacter
+	| source |
+	source := '$' , Character dolphin asUtf8String.
+	2 to: 4
+		do: 
+			[:i |
+			self
+				parseExprError: (source copyFrom: 1 to: i)
+				range: (1 to: i)
+				line: 1
+				code: LErrBadCodePoint]!
+
 testErrorsLexicalStringNotClosed
 	self
 		lexicalError: '''blah blah ...'
@@ -2102,6 +2114,7 @@ testErrorsLexicalCommentNotClosed!public!unit tests! !
 testErrorsLexicalExpectChar!public!unit tests! !
 testErrorsLexicalExpectCodePoint!public!unit tests! !
 testErrorsLexicalExpectConst!public!unit tests! !
+testErrorsLexicalIncompleteLiteralCharacter!public!unit tests! !
 testErrorsLexicalStringNotClosed!public!unit tests! !
 testErrorsLiteralArray!public!unit tests! !
 testErrorsLiteralByteArray!public!unit tests! !

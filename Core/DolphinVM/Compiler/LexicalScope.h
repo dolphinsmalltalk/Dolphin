@@ -38,7 +38,7 @@ class Compiler;
 
 class TempVarDecl
 {
-	Str				m_strName;
+	u8string		m_strName;
 	TEXTRANGE		m_range;
 	LexicalScope*	m_pScope;
 	TempVarType		m_varType;
@@ -50,7 +50,7 @@ class TempVarDecl
 	bool			m_bIsReadOnly;
 
 public:
-	TempVarDecl(const Str& strName, const TEXTRANGE& range) : 
+	TempVarDecl(const u8string& strName, const TEXTRANGE& range) : 
 			m_strName(strName), m_pScope(nullptr), m_range(range),
 			m_varType(TempVarType::Unaccessed), m_refType(VarRefType::Unknown), m_pOuter(nullptr),
 			m_nIndex(-1),
@@ -100,12 +100,12 @@ public:
 		m_nIndex = index;
 	}
 
-	__declspec(property(get = get_Name, put = put_Name)) const Str& Name;
-	const Str& get_Name() const
+	__declspec(property(get = get_Name, put = put_Name)) const u8string& Name;
+	const u8string& get_Name() const
 	{
 		return m_strName;
 	}
-	void put_Name(const Str& strName)
+	void put_Name(const u8string& strName)
 	{
 		m_strName = strName;
 	}
@@ -275,8 +275,8 @@ public:
 	__declspec(property(get = get_RealScope)) LexicalScope* RealScope;
 	LexicalScope* get_RealScope() const;
 
-	__declspec(property(get = get_Name)) const Str& Name;
-	const Str& get_Name() const
+	__declspec(property(get = get_Name)) const u8string& Name;
+	const u8string& get_Name() const
 	{
 		return Decl->Name;
 	}
@@ -308,11 +308,11 @@ public:
 	void MergeRefIntoDecl(Compiler* pCompiler);
 };
 
-typedef std::vector<TempVarDecl*> DECLLIST;
-typedef std::map<Str, TempVarDecl*> DECLMAP;
-typedef std::vector<TempVarRef*> REFLIST;
-typedef std::map<Str, REFLIST> REFLISTMAP;
-typedef std::vector<Oop> OOPVECTOR;
+typedef vector<TempVarDecl*> DECLLIST;
+typedef map<u8string, TempVarDecl*> DECLMAP;
+typedef vector<TempVarRef*> REFLIST;
+typedef map<u8string, REFLIST> REFLISTMAP;
+typedef vector<Oop> OOPVECTOR;
 
 typedef size_t tempcount_t;
 typedef size_t argcount_t;
@@ -678,12 +678,12 @@ public:
 	/////////////////////////////////////////////////////////////////
 	// Searching
 
-	TempVarDecl* FindTempDecl(const Str&);
+	TempVarDecl* FindTempDecl(const u8string&);
 
 	////////////////////////////////////////////////////////////////
 	// Operations
 
-	void RenameTemporary(tempcount_t, const Str&, const TEXTRANGE&);
+	void RenameTemporary(tempcount_t, const u8string&, const TEXTRANGE&);
 	TempVarDecl* CopyTemp(TempVarDecl* pTemp, Compiler*);
 	TempVarRef* AddTempRef(TempVarDecl*, VarRefType, const TEXTRANGE&);
 	void CopyTemps(Compiler*);

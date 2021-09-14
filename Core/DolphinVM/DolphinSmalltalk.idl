@@ -26,6 +26,10 @@ typedef unsigned int uint32_t;
 typedef signed long long int64_t;
 typedef unsigned long long uint64_t;
 
+cpp_quote("#if !defined(__cplusplus)")
+typedef unsigned char char8_t;
+cpp_quote("#endif")
+
 #ifdef _M_X64
 typedef int64_t intptr_t;
 typedef uint64_t uintptr_t;
@@ -36,6 +40,16 @@ typedef uint32_t uintptr_t;
 
 // SDWORD is used in the definition of the original Dolphin COM interfaces. We can't change this now.
 typedef int32_t		SDWORD;
+
+// Simplified OTE definition - subject to change
+struct _OTE;
+typedef struct _OTE
+{
+	void* m_location;
+	struct _OTE* m_oteClass;
+	uintptr_t m_size;
+	uintptr_t m_flagsWord;
+} _OTE;
 
 cpp_quote("#if !defined(POTE_DEFINED)")
 typedef uintptr_t Oop;
@@ -204,7 +218,7 @@ library DolphinVM
 		POTE NewArray([in]unsigned size);
 
 		POTE NewFloat([in]double fValue);
-		POTE InternSymbol([in]LPCSTR szName);
+		POTE InternSymbol1([in]LPCSTR szName);
 
 		void StorePointerWithValue([in,out]Oop* poopSlot, [in]Oop oopValue);
 
@@ -253,7 +267,8 @@ library DolphinVM
 	]
 	interface IDolphin : IDolphin71
 	{
-		POTE NewBindingRef([in]LPCSTR szQualifiedName, [in]Oop context, [in]BindingReferenceFlags flags);
+		POTE NewBindingRef([in]const char8_t* szQualifiedName, [in]int length, [in]Oop context, [in]BindingReferenceFlags flags);
+		POTE InternSymbol([in]const char8_t*, [in]int length);
 	};
 
 	cpp_quote("#ifndef INTPTR_MAX")
@@ -269,7 +284,7 @@ library DolphinVM
 	// functions, as it may change in future.
 	cpp_quote("__inline STVarObject* GetObj(POTE ote)")
 	cpp_quote("{")
-	cpp_quote("	return *(STVarObject**)ote;")
+	cpp_quote("	return (STVarObject*)(((_OTE*)ote)->m_location);")
 	cpp_quote("}")
 
 	cpp_quote("__inline BOOL IsIntegerObject(Oop objectPointer)")
@@ -293,6 +308,11 @@ library DolphinVM
 	cpp_quote("	return (valueWord >= MinSmallInteger && valueWord <= MaxSmallInteger);")
 	cpp_quote("}")
 
+	cpp_quote("__inline POTE FetchClassOf(POTE ote)")
+	cpp_quote("{")
+	cpp_quote("	return (POTE)(((_OTE*)ote)->m_oteClass);")
+	cpp_quote("}")
+
 	cpp_quote("__inline uint8_t* FetchBytesOf(POTE ote)")
 	cpp_quote("{")
 	cpp_quote("	STVariantByteObject* pObj = (STVariantByteObject*)(GetObj(ote));")
@@ -301,7 +321,7 @@ library DolphinVM
 
 	cpp_quote("__inline size_t FetchByteLengthOf(POTE ote)")
 	cpp_quote("{")
-	cpp_quote("	return (((size_t*)ote)[2]) & INTPTR_MAX;")
+	cpp_quote("	return ((_OTE*)ote)->m_size & INTPTR_MAX;")
 	cpp_quote("}")
 
 	cpp_quote("__inline size_t FetchWordLengthOf(POTE ote)")
@@ -311,7 +331,7 @@ library DolphinVM
 
 	cpp_quote("__inline BOOL IsAString(const POTE ote)")
 	cpp_quote("{")
-	cpp_quote("	return (((uintptr_t*)ote)[3] & 0x12) == 0x10;")
+	cpp_quote("	return (((_OTE*)ote)->m_flagsWord & 0x12) == 0x10;")
 	cpp_quote("}")
 
 	cpp_quote("#ifdef DEFINED_INTPTR_MAX")

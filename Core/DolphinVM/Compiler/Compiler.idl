@@ -7,6 +7,10 @@
 import "oaidl.idl";
 import "ocidl.idl";
 
+cpp_quote("#if !defined(__cplusplus)")
+typedef unsigned char char8_t;
+cpp_quote("#endif")
+
 [
 	uuid(446CBAE8-D3AD-4D40-9A50-20D725195AF7),
 	version(8.0),
@@ -158,8 +162,8 @@ library CompilerLib
 	]
 	interface ICompiler: IUnknown
 	{
-		POTE CompileForClass([in]IUnknown* piVM, [in]Oop compiler, [in]LPCSTR compiletext, [in]POTE aClass, [in]POTE aNamespace, [in]FLAGS flags, [in]Oop notifier);
-		POTE CompileForEval([in]IUnknown* piVM, [in]Oop compiler, [in]LPCSTR compiletext, [in]POTE aClass, [in]POTE aNamespace, [in]POTE workspacePools, [in]FLAGS flags, [in]Oop notifier);
+		POTE CompileForClass([in]IUnknown* piVM, [in]Oop compiler, [in]const char8_t* compiletext, [in]int length, [in]POTE aClass, [in]POTE aNamespace, [in]FLAGS flags, [in]Oop notifier);
+		POTE CompileForEval([in]IUnknown* piVM, [in]Oop compiler, [in]const char8_t* compiletext, [in]int length, [in]POTE aClass, [in]POTE aNamespace, [in]POTE workspacePools, [in]FLAGS flags, [in]Oop notifier);
 	};
 
 	[

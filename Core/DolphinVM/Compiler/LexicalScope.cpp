@@ -155,7 +155,7 @@ LexicalScope::~LexicalScope()
 	}
 }
 
-TempVarDecl* LexicalScope::FindTempDecl(const Str& strName)
+TempVarDecl* LexicalScope::FindTempDecl(const u8string& strName)
 {
 	LexicalScope* pScope = this;
 	do
@@ -551,7 +551,8 @@ POTE LexicalScope::BuildTempMapEntry(IDolphin* piVM) const
 		piVM->StorePointerWithValue(temps.fields+i, Oop(tempPointer));
 
 		STVarObject& temp = *(STVarObject*)GetObj(tempPointer);
-		piVM->StorePointerWithValue(temp.fields+0, Oop(piVM->NewUtf8String(reinterpret_cast<LPCSTR>(pDecl->Name.c_str()))));
+		const u8string& name = pDecl->Name;
+		piVM->StorePointerWithValue(temp.fields+0, Oop(piVM->NewUtf8String((LPCSTR)name.c_str(), name.length())));
 
 		unsigned nDepth = pDecl->IsStack 
 			? 0
@@ -575,7 +576,7 @@ void LexicalScope::AddTempDecl(TempVarDecl* pDecl, Compiler* pCompiler)
 		pCompiler->CompileError(pDecl->TextRange, CErrTooManyTemps);
 }
 
-void LexicalScope::RenameTemporary(tempcount_t temporary, const Str& newName, const TEXTRANGE& range)
+void LexicalScope::RenameTemporary(tempcount_t temporary, const u8string& newName, const TEXTRANGE& range)
 {
 	_ASSERTE(temporary < m_tempVarDecls.size());
 #ifdef _DEBUG

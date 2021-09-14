@@ -58,22 +58,22 @@ static ICompilerPtr NewCompiler()
 	return piCompiler;
 }
 
-extern "C" Oop __stdcall PrimCompileForClass(Oop compilerOop, const char* szSource, Oop aClass, Oop aNamespaceOrNil, int flags, Oop notifier)
+extern "C" Oop __stdcall PrimCompileForClass(Oop compilerOop, const char8_t* szSource, int length, Oop aClass, Oop aNamespaceOrNil, int flags, Oop notifier)
 {
 	ICompilerPtr piCompiler = NewCompiler();
 	if (piCompiler == NULL)
 		return Oop(GetVM()->NilPointer());
 
-	return (Oop)piCompiler->CompileForClass(GetVM(), compilerOop, szSource, (POTE)aClass, (POTE)aNamespaceOrNil, static_cast<FLAGS>(flags), notifier);
+	return (Oop)piCompiler->CompileForClass(GetVM(), compilerOop, szSource, length, (POTE)aClass, (POTE)aNamespaceOrNil, static_cast<FLAGS>(flags), notifier);
 }
 
-extern "C" Oop __stdcall PrimCompileForEval(Oop compilerOop, const char* szSource, Oop aClassOrNil, Oop aNamespaceOrNil, Oop aWorkspacePool, int flags, Oop notifier)
+extern "C" Oop __stdcall PrimCompileForEval(Oop compilerOop, const char8_t* szSource, int length, Oop aClassOrNil, Oop aNamespaceOrNil, Oop aWorkspacePool, int flags, Oop notifier)
 {
 	ICompilerPtr piCompiler = NewCompiler();
 	if (piCompiler == NULL)
 		return Oop(GetVM()->NilPointer());
 
-	return (Oop)piCompiler->CompileForEval(GetVM(), compilerOop, szSource, (POTE)aClassOrNil, (POTE)aNamespaceOrNil, (POTE)aWorkspacePool, static_cast<FLAGS>(flags), notifier);
+	return (Oop)piCompiler->CompileForEval(GetVM(), compilerOop, szSource, length, (POTE)aClassOrNil, (POTE)aNamespaceOrNil, (POTE)aWorkspacePool, static_cast<FLAGS>(flags), notifier);
 }
 
 #include "Compiler_i.c"

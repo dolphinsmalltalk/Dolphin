@@ -94,7 +94,7 @@ void Interpreter::initializeVMReferences()
 
 	if (ObjectMemory::fetchClassOf(Oop(_Pointers.EmptyString)) != _Pointers.ClassUtf8String)
 	{
-		_Pointers.EmptyString = Utf8String::New("");
+		_Pointers.EmptyString = Utf8String::New(u8"", 0);
 		_Pointers.EmptyString->beImmutable();
 	}
 
