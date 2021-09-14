@@ -39,16 +39,19 @@ isPatternNode
 isSelectorList
 	^isList!
 
-match: aNode inContext: aDictionary 
+match: aNode inContext: aDictionary
 	aNode class == self matchingClass ifFalse: [^false].
 	aDictionary at: '-source-' put: aNode source.
-	self isSelectorList 
+	self isSelectorList
 		ifTrue: 
-			[^(aDictionary at: selectorParts first value ifAbsentPut: [aNode selector]) 
-				= aNode selector and: 
-						[(aDictionary at: arguments first ifAbsentPut: [aNode arguments]) 
-							= aNode arguments and: [body match: aNode body inContext: aDictionary]]].
-	^(self matchArgumentsAgainst: aNode inContext: aDictionary) 
+			[| msg |
+			msg := aNode selector.
+			^(aDictionary at: selectorParts first value ifAbsentPut: msg) = msg and: 
+					[| args |
+					args := aNode arguments.
+					(aDictionary at: arguments first ifAbsentPut: args) = args
+						and: [body match: aNode body inContext: aDictionary]]].
+	^(self matchArgumentsAgainst: aNode inContext: aDictionary)
 		and: [body match: aNode body inContext: aDictionary]!
 
 matchArgumentsAgainst: aNode inContext: aDictionary 

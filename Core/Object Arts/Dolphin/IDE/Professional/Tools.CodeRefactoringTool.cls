@@ -121,7 +121,7 @@ declareAllUndeclaredVariablesAsTemps
 				ifTrue: 
 					[| identifier |
 					identifier := presenter plainTextRange: each range.
-					undeclared at: identifier ifAbsentPut: [each]]].
+					undeclared at: identifier ifAbsentPut: each]].
 	undeclared do: 
 			[:each | 
 			| var |

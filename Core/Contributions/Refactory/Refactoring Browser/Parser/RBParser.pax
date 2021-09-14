@@ -1115,7 +1115,7 @@ matchList: matchNodes index: matchIndex against: programNodes index: programInde
 			programNodes size < currentIndex or: 
 					[| nodes |
 					nodes := programNodes copyFrom: programIndex to: currentIndex.
-					(currentDictionary at: node ifAbsentPut: [nodes]) = nodes and: 
+					(currentDictionary at: node ifAbsentPut: nodes) = nodes and: 
 							[(self 
 								matchList: matchNodes
 								index: matchIndex + 1
