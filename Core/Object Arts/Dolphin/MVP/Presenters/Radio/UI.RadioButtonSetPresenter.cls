@@ -68,10 +68,10 @@ onViewOpened
 	super onViewOpened.
 	self onValueChanged!
 
-radioButtonNamed: aSymbol 
+radioButtonNamed: aSymbol
 	"Answer the RadioButton that is so named, or nil if none."
 
-	^self radioButtons detect: [:each | each name = aSymbol] ifNone: []!
+	^self radioButtons detect: [:each | each name = aSymbol] ifNone: nil!
 
 radioButtons
 	"Private - Answer a collection of the immediate sub views of the receiver that admit to

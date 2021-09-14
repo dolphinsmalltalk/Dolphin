@@ -187,7 +187,7 @@ name: aView as: aNameStringOrNil
 	aView name = aNameStringOrNil ifTrue: [^self].
 
 	"Otherwise name is specified so check that it is unique"
-	exists := names detect: [:each | each = aNameStringOrNil] ifNone: [].
+	exists := names detect: [:each | each = aNameStringOrNil] ifNone: nil.
 	(exists isNil or: [exists == self])
 		ifTrue: [names at: aView put: aNameStringOrNil]
 		ifFalse: [self errorDuplicateName: aNameStringOrNil]!

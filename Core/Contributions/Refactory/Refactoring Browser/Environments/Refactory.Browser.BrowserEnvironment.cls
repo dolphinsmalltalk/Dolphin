@@ -154,7 +154,7 @@ forClass: aClass selectors: selectorCollection
 		onMethods: selectorCollection
 		forClass: aClass
 		in: self)
-		label: aClass fullName , '>>#' , (selectorCollection detect: [:each | true] ifNone: ['']);
+		label: aClass fullName , '>>#' , (selectorCollection detect: [:each | true] ifNone: '');
 		yourself!
 
 forClasses: classCollection

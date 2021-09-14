@@ -96,9 +96,8 @@ enableKeyBindingsHelp: aBoolean
 
 extendClassCommentMenu: aClassBrowserAbstract
 	| commentWorkspaceMenu plugin |
-	plugin := aClassBrowserAbstract loadedPlugins
-				detect: [:each | each isKindOf: ClassCommentPlugin]
-				ifNone: [].
+	plugin := aClassBrowserAbstract loadedPlugins detect: [:each | each isKindOf: ClassCommentPlugin]
+				ifNone: nil.
 	plugin isNil ifTrue: [^self].
 	commentWorkspaceMenu := (plugin presenterNamed: 'text') view contextMenu.
 	commentWorkspaceMenu
@@ -306,7 +305,7 @@ unextendMenus
 								ifNotNil: [:item | helpMenu removeItem: item]]].
 			(each isKindOf: ClassBrowserShell)
 				ifTrue: 
-					[(each loadedPlugins detect: [:plugin | plugin isKindOf: ClassCommentPlugin] ifNone: [])
+					[(each loadedPlugins detect: [:plugin | plugin isKindOf: ClassCommentPlugin] ifNone: nil)
 						ifNotNil: 
 							[:plugin |
 							| menu |

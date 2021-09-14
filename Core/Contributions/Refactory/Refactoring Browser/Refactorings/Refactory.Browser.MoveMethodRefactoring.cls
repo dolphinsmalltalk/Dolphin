@@ -173,7 +173,7 @@ getNewMethodName
 			[self refactoringWarning: newSelector , ' is not a valid selector name.'.
 			newSelector := nil].
 	alreadyDefined := moveToClasses detect: [:each | each hierarchyDefinesMethod: newSelector]
-				ifNone: [nil].
+				ifNone: nil.
 	alreadyDefined notNil
 		ifTrue: 
 			[self refactoringWarning: ('<1p> is already defined by <2p> or a super/subclass<n>Try another?'

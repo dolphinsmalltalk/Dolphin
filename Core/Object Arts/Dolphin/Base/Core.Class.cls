@@ -114,7 +114,7 @@ addClassVarNamed: aString
 	| newVar |
 	classPool isNil ifTrue: [classPool := Dictionary new].
 	(classPool bindingFor: aString) ifNotNil: [:existingVar | ^existingVar].
-	(self allSubclasses detect: [:each | (each localBindingFor: aString) notNil] ifNone: [])
+	(self allSubclasses detect: [:each | (each localBindingFor: aString) notNil] ifNone: nil)
 		ifNotNil: 
 			[:existingClass |
 			^self error: ('<1p> is already used as a variable name in class <2p>' expandMacrosWith: aString

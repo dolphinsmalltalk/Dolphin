@@ -89,7 +89,7 @@ guessTypeFromAssignment: aNode
 				ifTrue: [type := model classFor: Boolean]].
 	type isNil ifTrue: [^self].
 	set := variableTypes at: aNode variable name.
-	newType := set detect: [:each | type includesClass: each] ifNone: [nil].
+	newType := set detect: [:each | type includesClass: each] ifNone: nil.
 	newType isNil ifTrue: [^self].
 	newType = (model classFor: Object) ifTrue: [newType := type].
 	(bestGuesses at: aNode variable name ifAbsentPut: [Set new]) add: newType!

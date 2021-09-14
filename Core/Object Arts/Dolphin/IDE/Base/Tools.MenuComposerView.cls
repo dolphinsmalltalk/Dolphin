@@ -64,12 +64,12 @@ insertBefore: anInteger position: aPoint canvas: aCanvas
 		position: aPoint
 		canvas: aCanvas!
 
-itemAt: aPoint 
+itemAt: aPoint
 	"Private - Answer the menu item of the model which spatially coincides
 	with position or 0 if there is none."
 
 	^(1 to: self menu size) detect: [:itemIndex | (self itemRect: itemIndex) containsPoint: aPoint]
-		ifNone: [0]!
+		ifNone: 0!
 
 itemRect: anInteger 
 	^self evaluateWithCanvas: [:canvas | painter itemRect: anInteger using: canvas]!

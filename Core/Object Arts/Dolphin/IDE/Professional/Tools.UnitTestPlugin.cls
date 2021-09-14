@@ -54,9 +54,9 @@ classUnderTest
 	| currentClass classUnderTest |
 	currentClass := self browser selectedClass.
 	currentClass isNil ifTrue: [^nil].
-	classUnderTest := Class allClasses 
+	classUnderTest := Class allClasses
 				detect: [:each | each ~~ currentClass and: [each correspondingTestCase = currentClass]]
-				ifNone: [].
+				ifNone: nil.
 	^classUnderTest!
 
 createComponents

@@ -41,7 +41,7 @@ autoComplete: aSymbol at: posInteger maxItems: maxInteger
 classMatchingName: aString
 	^(BindingReference isQualifiedName: aString)
 		ifTrue: [aString asQualifiedReference valueOrNil]
-		ifFalse: [environment classes detect: [:each | each name = aString] ifNone: []]!
+		ifFalse: [environment classes detect: [:each | each name = aString] ifNone: nil]!
 
 completeWordAt: anInteger with: aString 
 	| replaceRange replaceText |

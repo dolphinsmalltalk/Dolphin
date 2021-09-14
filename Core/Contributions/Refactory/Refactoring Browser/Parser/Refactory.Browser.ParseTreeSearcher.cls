@@ -66,9 +66,9 @@ canMatchMethod: aCompiledMethod
 context
 	^context!
 
-executeMethod: aParseTree initialAnswer: anObject 
+executeMethod: aParseTree initialAnswer: anObject
 	answer := anObject.
-	searches detect: [:each | (each performOn: aParseTree) notNil] ifNone: [].
+	searches detect: [:each | (each performOn: aParseTree) notNil] ifNone: nil.
 	^answer!
 
 executeTree: aParseTree

@@ -2904,7 +2904,7 @@ populateWindowMenu: windowMenu
 
 	"System shell is always first"
 	toolClasses remove: self systemFolderClass ifAbsent: nil.
-	(openShells detect: [:each | each class == self systemFolderClass] ifNone: [])
+	(openShells detect: [:each | each class == self systemFolderClass] ifNone: nil)
 		ifNotNil: 
 			[:systemShell |
 			windowMenu
@@ -3662,7 +3662,7 @@ removeSystemFolderIcon: aSmalltalkSystemIcon
 	"#deprecated." "6.0 - not marked as deprecated as otherwise causes error on deployment with third party tools installed"
 	^self removeSystemFolderIconNamed: aSmalltalkSystemIcon description!
 
-removeSystemFolderIconNamed: aString 
+removeSystemFolderIconNamed: aString
 	"Removes any <SmalltalkSystemIcon> whose name matches the <readableString> argument from the
 	system folder hierarchy. Answers the icon removed, or nil if no match was found."
 
@@ -3671,7 +3671,7 @@ removeSystemFolderIconNamed: aString
 	re-initializing the system folder!!"
 
 	systemFolder isNil ifTrue: [^self].
-	^(systemFolder asOrderedCollection detect: [:each | each description = aString] ifNone: []) 
+	^(systemFolder asOrderedCollection detect: [:each | each description = aString] ifNone: nil)
 		ifNotNil: [:matchingIcon | systemFolder remove: matchingIcon]!
 
 removeSystemFolderIconsForClass: aClass
@@ -4119,7 +4119,7 @@ viewResourcesMatching: matchBlock do: doBlock
 				administerLastRites].
 	vc exit!
 
-warnOfUndefinedSelectorsSentBy: aCompiledMethod 
+warnOfUndefinedSelectorsSentBy: aCompiledMethod
 	(aCompiledMethod messages difference: self allSelectors) do: 
 			[:each |
 			| source |
@@ -4138,9 +4138,8 @@ warnOfUndefinedSelectorsSentBy: aCompiledMethod
 				ifNotNil: 
 					[:ast |
 					| range |
-					((MessageNodeCollector messagesSentBy: ast) detect: [:eachMsg | eachMsg selector == each] ifNone: [])
-						ifNil: [range := 1 to: 1]
-						ifNotNil: [:value | range := value sourceInterval].
+					((MessageNodeCollector messagesSentBy: ast) detect: [:eachMsg | eachMsg selector == each]
+						ifNone: nil) ifNil: [range := 1 to: 1] ifNotNil: [:value | range := value sourceInterval].
 					(self compilationWarningClass
 						code: CWarnUndefinedSelector
 						in: source

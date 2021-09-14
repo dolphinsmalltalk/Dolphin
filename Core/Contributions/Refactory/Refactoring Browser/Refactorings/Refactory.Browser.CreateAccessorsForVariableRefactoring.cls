@@ -61,7 +61,7 @@ findGetterMethod
 				selector: each
 				using: matcher) notNil
 				and: [(definingClass subclassRedefines: each) not]]
-		ifNone: [nil]!
+		ifNone: nil!
 
 findSetterMethod
 	| definingClass matcher |
@@ -76,7 +76,7 @@ findSetterMethod
 				selector: each
 				using: matcher) notNil
 				and: [(definingClass subclassRedefines: each) not]]
-		ifNone: [nil]!
+		ifNone: nil!
 
 getterMethod
 	^getterMethod!

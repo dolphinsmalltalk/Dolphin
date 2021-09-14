@@ -1285,7 +1285,7 @@ selectNext
 			[Sound warningBeep.
 			^self].
 	pos := view caretPosition.
-	self selectionRange: ((indicators detect: [:each | each range start > pos] ifNone: [])
+	self selectionRange: ((indicators detect: [:each | each range start > pos] ifNone: nil)
 				ifNil: 
 					[| len |
 					len := self textLength.
@@ -1332,7 +1332,7 @@ selectPrev
 			[Sound warningBeep.
 			^self].
 	pos := self selectionRange start.
-	self selectionRange: ((indicators reverse detect: [:each | each range start < pos] ifNone: [])
+	self selectionRange: ((indicators reverse detect: [:each | each range start < pos] ifNone: nil)
 				ifNil: [pos = 1 ifTrue: [indicators last range] ifFalse: [1 to: 0]]
 				ifNotNil: [:next | next range])!
 

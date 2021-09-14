@@ -29,7 +29,7 @@ bestSuggestionFor: aCompiledMethod
 
 	^(self suggestionsFor: aCompiledMethod) first!
 
-couldBeAccessor: aCompiledMethod 
+couldBeAccessor: aCompiledMethod
 	"Private - Answer whether the argument might possibly be an accessor method 
 	for its method class."
 
@@ -38,8 +38,7 @@ couldBeAccessor: aCompiledMethod
 	^selector argumentCount <= 1 and: 
 			[| name |
 			name := selector last = $: ifTrue: [selector allButLast] ifFalse: [selector asString].
-			(aCompiledMethod methodClass instVarNames detect: [:each | each = name] ifNone: []) 
-				notNil]!
+			(aCompiledMethod methodClass instVarNames detect: [:each | each = name] ifNone: nil) notNil]!
 
 couldBeInitializer: aCompiledMethod 
 	"Private - Answer whether the argument might possibly be an initialization method."

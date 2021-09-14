@@ -328,7 +328,7 @@ duplicateSuperclassMethodsOf: aClass
 	aClass selectors do: 
 			[:each |
 			| nearest |
-			nearest := supers detect: [:parent | parent includesSelector: each] ifNone: [].
+			nearest := supers detect: [:parent | parent includesSelector: each] ifNone: nil.
 			nearest notNil
 				ifTrue: 
 					[| eachMethod |

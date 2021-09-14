@@ -5166,7 +5166,7 @@ category
 	^self subclassResponsibility!
 
 debugInfoInFrame: aStackFrame
-	^aStackFrame temps detect: [:each | each first = self name] ifNone: []!
+	^aStackFrame temps detect: [:each | each first = self name] ifNone: nil!
 
 printInfoTipOn: aStream
 	aStream

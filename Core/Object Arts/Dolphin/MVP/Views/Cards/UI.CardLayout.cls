@@ -32,15 +32,12 @@ arrangementOf: aView put: anObject
 	"Set the arrangement parameter of aView in the receiver to be anObject."
 
 	| previous |
-
 	"If the view already has an arrangement, we need to remove it."
-	previous := names detect: [:each | each value==aView] ifNone: [].
-	previous notNil ifTrue: [ names remove: previous ].
+	previous := names detect: [:each | each value == aView] ifNone: nil.
+	previous notNil ifTrue: [names remove: previous].
 
 	"Now, we can add the new arrangement"
-	names add: (anObject -> aView).
-
-!
+	names add: anObject -> aView!
 
 cards
 	"Private - Answer an OrderedCollection of views that are managed by the 

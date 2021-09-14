@@ -14,7 +14,7 @@ Tools.PullUpClassStaticRefactoring comment: 'Dolphin-specific specialization of 
 transform
 	| subclass |
 	subclass := self subclassDefiningVariable.
-	(subclass classConstants detect: [:each | each key = variableName] ifNone: [])
+	(subclass classConstants detect: [:each | each key = variableName] ifNone: nil)
 		ifNil: 
 			[subclass removeClassVariable: variableName.
 			class addClassVariable: variableName]

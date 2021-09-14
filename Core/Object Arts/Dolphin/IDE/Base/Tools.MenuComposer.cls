@@ -264,7 +264,7 @@ onItemFrom: aMenuComposerView at: anInteger droppedBefore: beforeBoolean copy: c
 					[Sound warningBeep.
 					^self]].
 	self closeSubmenuViewsOf: destView.
-	sourceView := menuViews detect: [:menuView | menuView menu == sourceMenu] ifNone: [].
+	sourceView := menuViews detect: [:menuView | menuView menu == sourceMenu] ifNone: nil.
 	updateSourceView := sourceView notNil and: [copyBoolean not].
 	copyBoolean ifTrue: [sourceItem := sourceItem copy] ifFalse: [sourceMenu removeItemAt: anInteger].
 	self ensureMinimumMenuContents: sourceMenu.

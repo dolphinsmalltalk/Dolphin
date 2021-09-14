@@ -93,7 +93,7 @@ onValueChanged
 
 	collectionPresenter model: self model.
 	collectionPresenter listModel searchPolicy: SearchPolicy equality.
-	(self model value detect: [:each | each name == #normal] ifNone: [])
+	(self model value detect: [:each | each name == #normal] ifNone: nil)
 		ifNotNil: [:normal | self normalStyle: normal]!
 
 onViewOpened

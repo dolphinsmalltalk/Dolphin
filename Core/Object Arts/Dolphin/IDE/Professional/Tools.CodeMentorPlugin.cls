@@ -271,13 +271,12 @@ htmlStyle
 
 icon
 	isRefreshPending ifTrue: [^self class sleepIcon].
-	^self isBusy 
+	^self isBusy
 		ifTrue: [self class busyIcon]
 		ifFalse: 
 			[| failedRule |
-			failedRule := failuresPresenter model asArray detect: [:each | each problemCount > 0]
-						ifNone: [].
-			failedRule notNil 
+			failedRule := failuresPresenter model asArray detect: [:each | each problemCount > 0] ifNone: nil.
+			failedRule notNil
 				ifTrue: 
 					[Processor sleep: 100 milliseconds.
 					self class lintIconOfRule: failedRule]

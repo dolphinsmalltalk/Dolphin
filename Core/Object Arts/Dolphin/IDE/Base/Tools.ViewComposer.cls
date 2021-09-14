@@ -975,9 +975,7 @@ getAdornmentRegion
 grabberHitBy: aPoint
 	"Private - Answer the grabber under aPoint or nil otherwise"
 
-	^self grabbers detect: [ :each | each containsPoint: aPoint ] ifNone: []
-
-!
+	^self grabbers detect: [:each | each containsPoint: aPoint] ifNone: nil!
 
 grabbers
 	"Private - Answers the collection of grabbers currently in operation"
@@ -1822,96 +1820,96 @@ printShortCaptionOn: aWriteStream
 				ifFalse: [aWriteStream display: resourceIdentifier]]
 		ifFalse: [aWriteStream nextPutAll: self basicCaption]!
 
-queryCommand: aCommandQuery 
+queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver into the 
 	<CommandQuery> argument."
 
 	| command |
 	command := aCommandQuery commandSymbol.
-	(#(#copySelection #mutate #toggleGroupStop #toggleTabStop #decreaseHeight #decreaseWidth #increaseWidth #increaseHeight) 
-		identityIncludes: command) 
+	(#(#copySelection #mutate #toggleGroupStop #toggleTabStop #decreaseHeight #decreaseWidth #increaseWidth #increaseHeight)
+		identityIncludes: command)
 			ifTrue: 
 				[aCommandQuery isEnabled: self hasSelection.
 				^true].
-	(#(#cutSelection #clearSelection) identityIncludes: command) 
+	(#(#cutSelection #clearSelection) identityIncludes: command)
 		ifTrue: 
 			[aCommandQuery isEnabled: self hasSelection.
 			^true].
-	(#(#nudgeLeft #nudgeRight #nudgeUp #nudgeDown #centerHorizontally #centerVertically) 
-		identityIncludes: command) 
+	(#(#nudgeLeft #nudgeRight #nudgeUp #nudgeDown #centerHorizontally #centerVertically)
+		identityIncludes: command)
 			ifTrue: 
 				[aCommandQuery isEnabled: self hasMoveableSelection.
 				^true].
-	(#(#fileSave #viewSave) identityIncludes: command) 
+	(#(#fileSave #viewSave) identityIncludes: command)
 		ifTrue: 
 			[aCommandQuery isEnabled: (self hasComposingView and: [self hasResource]).
 			^true].
-	#viewRevert == command 
+	#viewRevert == command
 		ifTrue: 
 			[aCommandQuery isEnabled: (self hasComposingView and: [self hasResource]).
 			^true].
-	(#(#referenceViewMenu #dereference #editReference) identityIncludes: command) 
+	(#(#referenceViewMenu #dereference #editReference) identityIncludes: command)
 		ifTrue: 
 			[aCommandQuery isEnabled: (self primarySelection isKindOf: ReferenceView).
 			^true].
-	(#(#viewExport #viewSaveAs #viewClose #viewTest) includes: command) 
+	(#(#viewExport #viewSaveAs #viewClose #viewTest) includes: command)
 		ifTrue: 
 			[aCommandQuery isEnabled: self hasComposingView.
 			^true].
-	(#(#zFront #zForward #zBackward #zBack) identityIncludes: command) 
+	(#(#zFront #zForward #zBackward #zBack) identityIncludes: command)
 		ifTrue: 
 			[aCommandQuery isEnabled: self primarySelection notNil.
 			^true].
-	#widenSelection == command 
+	#widenSelection == command
 		ifTrue: 
 			[| selected |
 			selected := self primarySelection.
 			aCommandQuery isEnabled: (selected notNil and: [selected ~~ self composingView]).
 			^true].
-	(#(#matchWidths #matchHeights #matchSizes #matchFonts #matchForegroundColors #matchBackgroundColors #alignLefts #alignMiddles #alignRights #alignTops #alignCenters #alignBottoms) 
-		identityIncludes: command) 
+	(#(#matchWidths #matchHeights #matchSizes #matchFonts #matchForegroundColors #matchBackgroundColors #alignLefts #alignMiddles #alignRights #alignTops #alignCenters #alignBottoms)
+		identityIncludes: command)
 			ifTrue: 
 				[aCommandQuery isEnabled: self selections size > 1.
 				^true].
-	(#(#distributeHorizontally #distributeVertically #removeHorizontalGaps #removeVerticalGaps #increaseHorizontalGaps #decreaseHorizontalGaps #increaseVerticalGaps #decreaseVerticalGaps) 
-		includes: command) 
+	(#(#distributeHorizontally #distributeVertically #removeHorizontalGaps #removeVerticalGaps #increaseHorizontalGaps #decreaseHorizontalGaps #increaseVerticalGaps #decreaseVerticalGaps)
+		includes: command)
 			ifTrue: 
-				[aCommandQuery isEnabled: (self selections size > 1 
+				[aCommandQuery isEnabled: (self selections size > 1
 							and: [(self selections collect: [:each | each parentView]) asSet size = 1]).
 				^true].
-	command == #editMenuBar 
+	command == #editMenuBar
 		ifTrue: 
 			[aCommandQuery isEnabled: (self composingView class conformsToProtocol: #topView).
 			^true].
-	command == #editContextMenu 
+	command == #editContextMenu
 		ifTrue: 
 			[aCommandQuery isEnabled: self primarySelection notNil.
 			^true].
-	command == #viewUndo 
+	command == #viewUndo
 		ifTrue: 
 			[aCommandQuery isEnabled: undoList hasPast.
 			^true].
-	command == #viewRedo 
+	command == #viewRedo
 		ifTrue: 
 			[aCommandQuery isEnabled: undoList hasFuture.
 			^true].
-	command == #toggleTabStop 
+	command == #toggleTabStop
 		ifTrue: 
-			[self hasSelection 
+			[self hasSelection
 				ifTrue: 
 					[aCommandQuery
 						isEnabled: true;
-						isChecked: (self selections detect: [:v | v isTabStop not] ifNone: []) isNil].
+						isChecked: (self selections detect: [:v | v isTabStop not] ifNone: nil) isNil].
 			^true].
-	command == #toggleGroupStop 
+	command == #toggleGroupStop
 		ifTrue: 
-			[self hasSelection 
+			[self hasSelection
 				ifTrue: 
 					[aCommandQuery
 						isEnabled: true;
 						isChecked: self primarySelection isGroupStop].
 			^true].
-	command == #pasteClipboard 
+	command == #pasteClipboard
 		ifTrue: 
 			[aCommandQuery isEnabled: self canPaste.
 			^true].

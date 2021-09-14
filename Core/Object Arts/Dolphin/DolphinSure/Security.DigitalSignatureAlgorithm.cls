@@ -348,7 +348,7 @@ inverseOf: x mod: n
 	u3 = 1 ifFalse: [self error: 'no inverse'].
 	^u - u2!
 
-isProbablyPrime: p 
+isProbablyPrime: p
 	"Private - Answer true if p is prime with very high probability. Such a number is sometimes called an 
 	'industrial grade prime'--a large number that is so extremely likely to be prime that it can
 	assumed that it actually is prime for all practical purposes. 
@@ -358,7 +358,7 @@ isProbablyPrime: p
 	iterations := 50.	"Note: The DSA spec requires >50 iterations; Schneier says 5 are enough (p. 260)"
 
 	"quick elimination: check for p divisible by a small prime"
-	factor := SmallPrimes detect: [:f | p \\ f = 0] ifNone: [nil].
+	factor := SmallPrimes detect: [:f | p \\ f = 0] ifNone: nil.
 	factor isNil ifFalse: [^false].
 	pMinusOne := p - 1.
 	b := self logOfLargestPowerOfTwoDividing: pMinusOne.
@@ -369,14 +369,14 @@ isProbablyPrime: p
 			[| a j z couldBePrime |
 			a := (r next * 16rFFFFFF) truncated.
 			j := 0.
-			z := self 
+			z := self
 						raise: a
 						to: m
 						mod: p.
 			couldBePrime := z = 1.
 			[couldBePrime] whileFalse: 
 					[z = 1 ifTrue: [^false].	"not prime"
-					z = pMinusOne 
+					z = pMinusOne
 						ifTrue: [couldBePrime := true]
 						ifFalse: [(j := j + 1) < b ifTrue: [z := self remainder: z * z mod: p] ifFalse: [^false]]]].	"not prime"
 	^true	"passed all tests; probably prime"!

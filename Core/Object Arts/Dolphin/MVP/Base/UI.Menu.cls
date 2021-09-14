@@ -232,7 +232,7 @@ drawItemImage: itemImage on: hDC at: topLeft disabled: aBoolean
 findCommand: aSymbol
 	"Answer the first <Menu>|<MenuItem> whose symbolic name or command matches the <Symbol> argument, or nil if there is no such item."
 
-	^items detect: [:aMenuItem | aMenuItem command = aSymbol] ifNone: []!
+	^items detect: [:aMenuItem | aMenuItem command = aSymbol] ifNone: nil!
 
 flags: anInteger 
 	flags := anInteger!

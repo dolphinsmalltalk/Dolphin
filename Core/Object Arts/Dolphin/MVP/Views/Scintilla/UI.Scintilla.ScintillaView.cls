@@ -2341,7 +2341,7 @@ foldMargin
 	"N.B. It is assumed there is only one fold margin in the view, so the first encountered is
 	used."
 
-	^self margins detect: [:each | each isFolders] ifNone: []!
+	^self margins detect: [:each | each isFolders] ifNone: nil!
 
 foldMarginColor
 	"Answer the background colour of the fold margin."
@@ -3704,7 +3704,7 @@ lineNumberMargin
 	"N.B. It is assumed there is only one line-number margin in the view, so the first
 	encountered is used."
 
-	^self margins detect: [:each | each type == #lineNumber] ifNone: []!
+	^self margins detect: [:each | each type == #lineNumber] ifNone: nil!
 
 lineRange: anInteger
 	"Answer an <Interval> specifying the range of character positions in the receiver occupied

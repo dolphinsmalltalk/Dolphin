@@ -432,7 +432,7 @@ getPropertyNameForDispid: dispid
 					non-source interfaces."
 					(disp coclassTypeInfoIfNone: noTypeInfo) nonSourceInterfaces
 						detect: [:ti | ti ~= tiDisp and: [(name := ti nameOfID: dispid ifAbsent: []) notNil]]
-						ifNone: []].
+						ifNone: nil].
 	^(name ifNil: [dispid printString]) asSymbol!
 
 hasMessageReflect
@@ -676,15 +676,14 @@ queryInterface: anInterfaceClass
 	^self queryInterface: anInterfaceClass ifNone: []
 !
 
-queryInterface: anInterfaceClass ifNone: exceptionHandler 
+queryInterface: anInterfaceClass ifNone: exceptionHandler
 	"Answer a new interface pointer which supports the specified interface protocol
 	(usually a class). If the receiver does not support the interface, answer the
 	result of evaluating the niladic valuable, exceptionHandler."
 
-	^(self supportedInterfaces detect: [:ic | ic supportsInterface: anInterfaceClass]
-		ifNone: []) 
-			ifNil: [exceptionHandler value]
-			ifNotNil: [:class | class on: self implementor: self]!
+	^(self supportedInterfaces detect: [:ic | ic supportsInterface: anInterfaceClass] ifNone: nil)
+		ifNil: [exceptionHandler value]
+		ifNotNil: [:class | class on: self implementor: self]!
 
 recreateControl
 	"Private - Recreate the embedded control by persisting and 
@@ -941,7 +940,7 @@ chooseControl: defaultProgId
 	controlReg := defaultProgId isNil
 				ifFalse: 
 					[([CLSID fromString: defaultProgId] on: HRESULTError do: [:e | nil])
-						ifNotNil: [:clsid | clsid notNil ifTrue: [choices detect: [:e | e clsid = clsid] ifNone: []]]].
+						ifNotNil: [:clsid | clsid notNil ifTrue: [choices detect: [:e | e clsid = clsid] ifNone: nil]]].
 	prompter := ChoicePrompter
 				create: 'Extensible choice prompter'
 				on: controlReg asValue

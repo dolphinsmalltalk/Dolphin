@@ -345,10 +345,10 @@ reformatSource
 reformattedSource
 	| ast |
 	ast := self parseTree.
-	^(compilationErrors detect: [:each | each severityClass == Error] ifNone: []) 
+	^(compilationErrors detect: [:each | each severityClass == Error] ifNone: nil)
 		ifNil: [self formattedCode: ast]
 		ifNotNil: 
-			[:ex | 
+			[:ex |
 			self showError: ex offset: 0.
 			nil]!
 

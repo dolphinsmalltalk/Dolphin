@@ -610,14 +610,14 @@ show
 		ifTrue: [(SmalltalkToolShell showExistingInstanceOf: self) ifNotNil: [:tool | ^tool]].
 	^super show!
 
-show: aClass inIdeaSpace: anIdeaSpaceShell 
-	aClass reuseIfOpen 
+show: aClass inIdeaSpace: anIdeaSpaceShell
+	aClass reuseIfOpen
 		ifTrue: 
 			[| existingInstanceInsideThisIdeaSpace |
-			existingInstanceInsideThisIdeaSpace := aClass allInstances 
+			existingInstanceInsideThisIdeaSpace := aClass allInstances
 						detect: [:each | each topShell == anIdeaSpaceShell]
-						ifNone: [].
-			existingInstanceInsideThisIdeaSpace notNil 
+						ifNone: nil.
+			existingInstanceInsideThisIdeaSpace notNil
 				ifTrue: [^existingInstanceInsideThisIdeaSpace ensureVisible]].
 	^anIdeaSpaceShell newEmbeddedCardOfClass: aClass!
 

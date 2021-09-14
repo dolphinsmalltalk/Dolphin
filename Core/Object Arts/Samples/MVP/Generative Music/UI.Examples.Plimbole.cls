@@ -59,8 +59,8 @@ assignAvailableChannels
 beatTime
 	^self class beatTime!
 
-cellAtLocation: location 
-	^self cells detect: [:each | each location = location] ifNone: []!
+cellAtLocation: location
+	^self cells detect: [:each | each location = location] ifNone: nil!
 
 cellExtent
 	^(self view extent / self gridExtent) rounded!

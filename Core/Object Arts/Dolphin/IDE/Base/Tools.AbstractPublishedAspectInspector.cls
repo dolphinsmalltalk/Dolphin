@@ -39,10 +39,10 @@ aspectChanged: aSymbol of: anObject
 	Force the tree to update if it is displaying this aspect."
 
 	| aspect |
-	aspect := aspectTreePresenter view displayedContents 
+	aspect := aspectTreePresenter view displayedContents
 				detect: [:each | each aspectDescriptor name == aSymbol and: [each subject == anObject]]
-				ifNone: [].
-	aspect isNil 
+				ifNone: nil.
+	aspect isNil
 		ifFalse: 
 			[aspectTreePresenter model collapse: aspect.
 			self onAspectSelected]!

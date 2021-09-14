@@ -317,15 +317,14 @@ retainInstVarNames: aBoolean
 
 	flags := flags mask: RetainInstVarNamesMask set: aBoolean!
 
-rootPackage: aPackageOrNil 
+rootPackage: aPackageOrNil
 	"Sets the root package associated with the receiver."
 
 	| sessionManager |
 	rootPackageName := aPackageOrNil notNil ifTrue: [aPackageOrNil name].
 	aPackageOrNil notNil ifFalse: [^self].
-	sessionManager := aPackageOrNil classes 
-				detect: [:each | each includesBehavior: SessionManager]
-				ifNone: [].
+	sessionManager := aPackageOrNil classes detect: [:each | each includesBehavior: SessionManager]
+				ifNone: nil.
 	sessionManager notNil ifTrue: [self runtimeSessionManagerClass: sessionManager]!
 
 runtimeSessionManagerClass: aSessionManagerClass 

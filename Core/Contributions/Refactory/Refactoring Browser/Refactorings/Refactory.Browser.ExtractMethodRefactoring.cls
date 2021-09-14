@@ -87,8 +87,7 @@ createTemporariesInExtractedMethodFor: assigned
 existingSelector
 	"Try to find an existing method instead of creating a new one"
 
-	^class allSelectors detect: [:each | self isMethodEquivalentTo: each]
-		ifNone: [nil]!
+	^class allSelectors detect: [:each | self isMethodEquivalentTo: each] ifNone: nil!
 
 extract: anInterval from: aSelector in: aClass 
 	#rbFix. "Ensure the displayString works when the model name is initialized"

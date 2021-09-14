@@ -4198,7 +4198,7 @@ generateRawMethod: aFUNCDESC categories: aCollection
 	^self rawMethodNameForFunction: aFUNCDESC!
 
 generateValuePropertyWrappers
-	(self properties detect: [:each | each isValueProperty] ifNone: [])
+	(self properties detect: [:each | each isValueProperty] ifNone: nil)
 		ifNil: [^super generateValuePropertyWrappers]
 		ifNotNil: 
 			[:valueProp |

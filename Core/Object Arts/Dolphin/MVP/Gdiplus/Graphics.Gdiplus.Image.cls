@@ -1691,7 +1691,7 @@ mimeTypeForExtension: aString
 
 	^(self encoders
 		detect: [:e | (e FilenameExtension asLowercase indexOfSubCollection: aString asLowercase) > 0]
-		ifNone: []) ifNotNil: [:encoder | encoder MimeType]!
+		ifNone: nil) ifNotNil: [:encoder | encoder MimeType]!
 
 prompt
 	"Prompt for an image file.  Answer an Image created from that file or nil."

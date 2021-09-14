@@ -971,7 +971,7 @@ packageOfClass: aBehavior
 	^(packagedVariables lookup: ref)
 		ifNil: 
 			["Fall back on enumerating the packages."
-			self packages detect: [:p | p includesClassNamed: ref] ifNone: []]!
+			self packages detect: [:p | p includesClassNamed: ref] ifNone: nil]!
 
 packageOfMethod: aCompiledMethod
 	"Answer the Package held by the receiver which directly owns the 
@@ -984,7 +984,7 @@ packageOfMethod: aCompiledMethod
 		ifTrue: 
 			[(self looseMethods lookup: aCompiledMethod methodClass)
 				ifNotNil: [:selectors | selectors lookup: aCompiledMethod selector]]
-		ifFalse: [self packages detect: [:pkg | pkg includesMethod: aCompiledMethod] ifNone: []]!
+		ifFalse: [self packages detect: [:pkg | pkg includesMethod: aCompiledMethod] ifNone: nil]!
 
 packageOfMethodOrItsClass: aMethod
 	"Answer the <Package> which owns the <CompiledMethod>, method,
@@ -1016,7 +1016,7 @@ packageOfVariableNamed: aBindingReference
 			self packages detect: 
 					[:each |
 					(each includesClassNamed: aBindingReference) or: [each includesVariableNamed: aBindingReference]]
-				ifNone: []]!
+				ifNone: nil]!
 
 packages
 	"Answer the <collection> of <Package>s held by the receiver, note that this excluded the

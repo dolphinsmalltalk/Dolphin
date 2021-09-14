@@ -33,16 +33,14 @@ addStatementCommentsTo: anOrderedCollection
 	messages first receiver addStatementCommentsTo: anOrderedCollection.
 	messages do: [:each | each arguments do: [:arg | arg addStatementCommentsTo: anOrderedCollection]]!
 
-bestNodeFor: anInterval 
+bestNodeFor: anInterval
 	| selectedChildren |
 	(self intersectsInterval: anInterval) ifFalse: [^nil].
 	(self containedBy: anInterval) ifTrue: [^self].
-	messages 
-		reverseDo: [:each | (each containedBy: anInterval) ifTrue: [^each]].
-	selectedChildren := (messages 
-				collect: [:each | each bestNodeFor: anInterval]) 
-					reject: [:each | each isNil].
-	^selectedChildren detect: [:each | true] ifNone: [nil]!
+	messages reverseDo: [:each | (each containedBy: anInterval) ifTrue: [^each]].
+	selectedChildren := (messages collect: [:each | each bestNodeFor: anInterval])
+				reject: [:each | each isNil].
+	^selectedChildren detect: [:each | true] ifNone: nil!
 
 children
 	^self messages!
@@ -98,16 +96,14 @@ stopWithoutParentheses
 uses: aNode 
 	^messages last = aNode and: [self isUsed]!
 
-whichNodeIsContainedBy: anInterval 
+whichNodeIsContainedBy: anInterval
 	| selectedChildren |
 	(self intersectsInterval: anInterval) ifFalse: [^nil].
 	(self containedBy: anInterval) ifTrue: [^self].
-	messages 
-		reverseDo: [:each | (each containedBy: anInterval) ifTrue: [^each]].
-	selectedChildren := (messages 
-				collect: [:each | each whichNodeIsContainedBy: anInterval]) 
-					reject: [:each | each isNil].
-	^selectedChildren detect: [:each | true] ifNone: [nil]! !
+	messages reverseDo: [:each | (each containedBy: anInterval) ifTrue: [^each]].
+	selectedChildren := (messages collect: [:each | each whichNodeIsContainedBy: anInterval])
+				reject: [:each | each isNil].
+	^selectedChildren detect: [:each | true] ifNone: nil! !
 !Kernel.StCascadeNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
