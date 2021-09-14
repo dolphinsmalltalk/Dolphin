@@ -4776,9 +4776,9 @@ BEGINBYTECODE shortSpecialSendValue
 	cmp		[edx].m_info.argumentCount, 0
 	jne		sendMessage
 
-	; _SP is pointing at the block (no args), which we must overwrite with the receiver from the closure.
+	; _SP is pointing at the block (no args), which activateBlock will overwrite with the receiver from the closure.
 	
-	lea		_BP, [_SP+OOPSIZE]					; Set up new frame base pointer for activateBlock (points at [recever+1])
+	lea		_BP, [_SP+OOPSIZE]					; Set up new frame base pointer for activateBlock (points at [receiver+1])
 
 	; To invoke activateBlock: ECX is Oop of Block, EDX is pointer to block
 
@@ -4868,20 +4868,10 @@ BEGINPROC activateBlock
 	ASSUME	ecx:PTR OTE						; Oop of block to be activiated
 	ASSUME	edx:PTR BlockClosure			; Ptr to the block to be activated
 
-	; First overwrite the block itself in the stack with the receiver captured at time of closure
-	; (Could be nil)
-	mov		eax, [edx].m_receiver
-	ASSUME eax:Oop
-
-	; No ref counting needed, as we're overwriting a stack slot, however we must count up the block
-	; if it needs a context, as it is stored into the context
-	mov		[_BP-OOPSIZE], eax
-
 	add		_SP, OOPSIZE
 	mov		eax, [ecx].m_size						; Load size into eax
 	and		eax, 7fffffffh							; Mask out the immutability bit
 
-	push	ecx										; Save block pointer for later use
 	ASSUME	ecx:NOTHING
 
 	; Now push any copied values onto the stack, again no ref. counting needed...
@@ -4928,7 +4918,7 @@ BEGINPROC activateBlock
 	movzx	ecx, [edx].m_info.envTempsCount
 	.IF		(ecx == 0)
 		; No env temps (the common case)
-		pop		eax
+		mov		eax, [_BP-OOPSIZE]			; Reload the BlockClosure OTE
 		ASSUME	eax:PTR OTE
 		
 		; The environment ref in this case is the block itself (it has no shared temps),
@@ -4952,14 +4942,19 @@ BEGINPROC activateBlock
 
 		mov		ecx, [eax].m_location
 		ASSUME	ecx:PTR Context
-		
-		pop		edx							; Pop the BlockClosure OTE
+
+		mov		edx, [_BP-OOPSIZE]			; Reload the BlockClosure OTE
 		ASSUME	edx:PTR OTE
 		CountUpObjectIn <d>
 		mov		[ecx].m_block, edx			; Save pointer to block into context (just ref. counted)
 		mov		edx, [edx].m_location
 		ASSUME	edx:PTR BlockClosure		; Ptr to the block to be activated
 	.ENDIF
+
+	; Now overwrite the block itself in the stack with the receiver captured at time of closure
+	mov		eax, [edx].m_receiver
+	ASSUME eax:Oop
+	mov		[_BP-OOPSIZE], eax
 
 	mov		eax, [ACTIVEFRAME]						; Load pointer to current active frame into ECX
 	ASSUME	eax:PStackFrame

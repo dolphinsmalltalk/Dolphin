@@ -33,7 +33,7 @@ inline void ObjectMemory::releasePointer(OTE* ote)
 	HARDASSERT(!ote->isFree());
 	ote->beFree();
 
-	ote->m_location = MakeNextFree(m_pFreePointerList);
+	ote->m_location = MarkFree(m_pFreePointerList);
 	m_pFreePointerList = ote;
 
 #ifdef TRACKFREEOTEs
@@ -77,6 +77,7 @@ void ObjectMemory::deallocate(OTE* ote)
 	#endif
 
 	ASSERT(!isPermanent(ote));
+	HARDASSERT(ote->m_count == 0);
 	// We can have up to 256 different destructors (8 bits)
 	switch (ote->heapSpace())
 	{
@@ -146,15 +147,14 @@ void ObjectMemory::OTEPool::clear()
 
 	while (m_pFreeList)
 	{
-		OTE* ote = m_pFreeList;
+		OTE* ote = PopFree();
+
 		ote->beAllocated();
 		
 		// All objects on the free list originated from pool space, so we need to
 		// send them back there
 		ote->m_flags.m_space = static_cast<space_t>(Spaces::Pools);
 
-		VariantObject* pObj = static_cast<VariantObject*>(ote->m_location);
-		m_pFreeList = reinterpret_cast<OTE*>(pObj->m_fields[0]);
 		ObjectMemory::deallocate(ote);
 	}
 

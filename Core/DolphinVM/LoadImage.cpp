@@ -317,7 +317,7 @@ template <size_t ImageNullTerms> HRESULT ObjectMemory::LoadObjects(ibinstream& i
 		else
 		{
 			// Thread onto the free list
-			ote->m_location = MakeNextFree(m_pFreePointerList);
+			ote->m_location = MarkFree(m_pFreePointerList);
 			m_pFreePointerList = ote;
 #ifdef TRACKFREEOTEs
 			m_nFreeOTEs++;

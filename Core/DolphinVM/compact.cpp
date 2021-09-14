@@ -176,7 +176,7 @@ size_t ObjectMemory::compact(Oop* const sp)
 	while (cur < end)
 	{
 		HARDASSERT(cur->isFree());
-		cur->m_location = MakeNextFree(cur+1);
+		cur->m_location = MarkFree(cur+1);
 		cur++;
 	}
 

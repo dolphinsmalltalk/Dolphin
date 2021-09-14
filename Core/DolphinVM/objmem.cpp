@@ -561,7 +561,7 @@ HRESULT ObjectMemory::allocateOT(size_t reserve, size_t commit)
 #endif
 
 		ote->beFree();
-		ote->m_location = MakeNextFree(ote+1);
+		ote->m_location = MarkFree(ote+1);
 	}
 
 	//TRACE("%d OTEs on free list\n", m_nFreeOTEs);
@@ -778,7 +778,7 @@ int ObjectMemory::gpFaultExceptionFilter(LPEXCEPTION_POINTERS pExInfo)
 					#endif
 
 					pLink->beFree();
-					pLink->m_location = MakeNextFree(pLink+1);
+					pLink->m_location = MarkFree(pLink+1);
 					pLink++;
 				}
 				m_nOTSize += extraOTEs;

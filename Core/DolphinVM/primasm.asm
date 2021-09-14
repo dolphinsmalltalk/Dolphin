@@ -223,9 +223,6 @@ BEGINPRIMITIVE primitiveValue
 
 	pop		eax										; Discard saved ebx which we no longer need
 
-	mov		eax, [edx].m_receiver
-	mov		[_BP], eax								; Overwrite receiving block with block receiver (!)
-
 	; Leave SP point at TOS, BP to point at [receiver+1],  ECX contains receiver Oop, EDX pointer to block body
 	add		_BP, OOPSIZE
 
@@ -244,17 +241,19 @@ ENDPRIMITIVE primitiveValue
 ; The sender MUST be a MethodContext for this to work (i.e. pHome must point at the sender)
 ;
 BEGINPRIMITIVE primitiveValueOnUnwind
-	mov		ecx, [_SP-OOPSIZE]					; Load receiver (under the unwind block)
+	mov		ecx, [_SP-OOPSIZE]					; Load receiver block (under the unwind block)
 	CANTBEINTEGEROBJECT <ecx>					; Context not a real object (Blocks should always be objects)!!
-	mov		edx, [ecx].m_location				; Load address of receiver into eax
+	mov		edx, [ecx].m_location				; Load address of receiver block into eax
 	ASSUME	edx:PTR BlockClosure
 
 	cmp		[edx].m_info.argumentCount, 0		; Must be a zero arg block ...
 	jne		localPrimitiveFailureWrongNumberOfArgs		; ... if not fail it
 
 	;; Past this point, the primitive is guaranteed to succeed
-	;; Make room for the closure receiver on top of the unwind block for activateBlock 
-	;; leaving the unwind block and the guarded receiver block on the stack of the caller
+	;; The unwind block and the guarded receiver block are left on the stack of the caller
+	;; with the new frame following these. activateBlock expects the block being activate
+	;; to be in the receiver slot of that frame, so we copy the block there
+	mov		[_SP+OOPSIZE], ecx
 	add		_SP, OOPSIZE
 
 	;; Replace the receiver of the calling method context with the special mark object

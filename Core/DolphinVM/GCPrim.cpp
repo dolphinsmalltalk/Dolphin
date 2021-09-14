@@ -129,24 +129,24 @@ void Interpreter::freePools()
 	// Must first adjust context size back to normal for free
 	// in case from a pool (avoids freeing mem back to smaller pool)
 	{
-		OTE* ote = m_otePools[static_cast<size_t>(Pools::Contexts)].m_pFreeList;
+		ObjectMemory::OTEPool& contextPool = m_otePools[static_cast<size_t>(Pools::Contexts)];
+		OTE* ote = contextPool.m_pFreeList;
 		const size_t sizeOfPoolContext = SizeOfPointers(Context::FixedSize+Context::MaxEnvironmentTemps);
 		while (ote)
 		{
-			VariantObject* obj = static_cast<VariantObject*>(ote->m_location);
 			ote->setSize(sizeOfPoolContext);
-			ote = reinterpret_cast<OTE*>(obj->m_fields[0]);
+			ote = ObjectMemory::OTEPool::NextFree(ote);
 		}
 	}
 
 	{
-		OTE* ote = m_otePools[static_cast<size_t>(Pools::Blocks)].m_pFreeList;
+		ObjectMemory::OTEPool& blockPool = m_otePools[static_cast<size_t>(Pools::Blocks)];
+		OTE* ote = blockPool.m_pFreeList;
 		const size_t sizeOfPoolBlock = SizeOfPointers(BlockClosure::FixedSize+BlockClosure::MaxCopiedValues);
 		while (ote)
 		{
-			VariantObject* obj = static_cast<VariantObject*>(ote->m_location);
 			ote->setSize(sizeOfPoolBlock);
-			ote = (OTE*)obj->m_fields[0];
+			ote = ObjectMemory::OTEPool::NextFree(ote);
 		}
 	}
 

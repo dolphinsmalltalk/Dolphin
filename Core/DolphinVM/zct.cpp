@@ -173,6 +173,7 @@ void ObjectMemory::EmptyZct(Oop* const sp)
 			// that we are reconciling, see AddToZct() above. 
 #ifdef _DEBUG
 			nDeleted++;
+			//TRACESTREAM << L"Zct ote " << std::hex << reinterpret_cast<uintptr_t>(ote) << " deleted: " << ote << std::endl;
 #endif
 			recursiveFree(ote);
 		}
