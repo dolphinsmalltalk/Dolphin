@@ -1635,7 +1635,7 @@ isAbstract
 	^self isNonInstantiable or: [self hasAbstractMethods]!
 
 methodFor: aSymbol
-	^self compiledMethodAt: aSymbol ifAbsent: []!
+	^self compiledMethodAt: aSymbol ifAbsent: nil!
 
 searchForInTool: aSmalltalkToolShell 
 	aSmalltalkToolShell searchForClass: self!

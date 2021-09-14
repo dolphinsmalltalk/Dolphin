@@ -1449,7 +1449,7 @@ overrideMethods
 	self systemModel changeManager performChange: changes.
 	self selectedMethods: (methodBrowserPresenter methodsPresenter list
 				intersection: ((methods collect: [:each | each selector]) asSet
-						collect: [:each | class compiledMethodAt: each ifAbsent: []]))!
+						collect: [:each | class compiledMethodAt: each ifAbsent: nil]))!
 
 protectInstanceVariables
 	"Private - Invoke the 'Protect/Concrete Instance Variable' refactoring on the users choice of instance variables."
@@ -1474,7 +1474,7 @@ pushMethods: aBoolean
 	change := self methodRefactoringTool pushMethods: aBoolean.
 	(change isNil or: [isShift not]) ifTrue: [^self].
 	methods := (methods asSet
-				collect: [:each | targetClass compiledMethodAt: each selector ifAbsent: []]) asArray.
+				collect: [:each | targetClass compiledMethodAt: each selector ifAbsent: nil]) asArray.
 	self actualClass: methods first methodClass ifAbsent: [^self].
 	self selectedMethods: methods!
 
@@ -2046,7 +2046,7 @@ performMethodRenameRefactoring: aMonadicValuable
 	refactoring isNil ifTrue: [^self].
 	method := (method ifNil: [self parseContext methodClass] ifNotNil: [method methodClass])
 				compiledMethodAt: refactoring newSelector
-				ifAbsent: [].
+				ifAbsent: nil.
 	(method notNil and: [self filter value: method]) ifTrue: [self selectMethod: method]!
 
 performMethodsRefactoring: aMonadicValuable name: aString 

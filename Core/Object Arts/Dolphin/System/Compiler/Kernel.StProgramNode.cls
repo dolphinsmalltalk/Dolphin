@@ -285,7 +285,7 @@ methodComments
 	^self comments!
 
 methodNode
-	^parent isNil ifTrue: [nil] ifFalse: [parent methodNode]!
+	^parent ifNotNil: [parent methodNode]!
 
 newSource
 	^self formattedCode!

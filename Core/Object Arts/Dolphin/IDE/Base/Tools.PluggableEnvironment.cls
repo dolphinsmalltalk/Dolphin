@@ -37,10 +37,10 @@ includesAnyMethodsOf: aClass
 includesClass: aClass 
 	^(super includesClass: aClass) and: [self includesAnyMethodsOf: aClass]!
 
-includesSelector: aSelector in: aClass 
+includesSelector: aSelector in: aClass
 	^(super includesSelector: aSelector in: aClass) and: 
 			[| method |
-			method := aClass compiledMethodAt: aSelector ifAbsent: [].
+			method := aClass compiledMethodAt: aSelector ifAbsent: nil.
 			method notNil and: [filter value: method]]!
 
 selectorsForClass: aClass do: aBlock 

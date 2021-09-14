@@ -101,14 +101,14 @@ methodsInBehavior: aBehavior
 	1 to: count
 		do: 
 			[:i |
-			(aBehavior compiledMethodAt: (selectors at: i) ifAbsent: [])
+			(aBehavior compiledMethodAt: (selectors at: i) ifAbsent: nil)
 				ifNotNil: [:each | methods nextPut: each]].
 	^methods grabContents!
 
-methodsInBehavior: aBehavior do: aMonadicValuable 
+methodsInBehavior: aBehavior do: aMonadicValuable
 	(aBehavior selectorsInCategory: self) do: 
-			[:eachSelector | 
-			(aBehavior compiledMethodAt: eachSelector ifAbsent: []) 
+			[:eachSelector |
+			(aBehavior compiledMethodAt: eachSelector ifAbsent: nil)
 				ifNotNil: [:eachMethod | aMonadicValuable value: eachMethod]]!
 
 removeClass: aClassDescription 

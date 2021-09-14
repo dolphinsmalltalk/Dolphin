@@ -159,7 +159,7 @@ basicDeleteMethod: aCompiledMethod
 					[:each |
 					(each canUnderstand: getSelector)
 						ifFalse: 
-							[(each compiledMethodAt: setSelector ifAbsent: [])
+							[(each compiledMethodAt: setSelector ifAbsent: nil)
 								ifNotNil: [:setter | deploymentContext aspectSetters remove: setter ifAbsent: nil]]]].
 	^true!
 
@@ -323,7 +323,7 @@ checkedStubFilePath
 		ifFalse: [self error: 'Stub file not found: ''' , stubFile , '''']!
 
 class: aBehavior overrides: aSymbol
-	^(aBehavior compiledMethodAt: aSymbol ifAbsent: []) notNil or: 
+	^(aBehavior compiledMethodAt: aSymbol ifAbsent: nil) notNil or: 
 			[aBehavior instanceClass isNonInstantiable
 				and: [aBehavior subclasses allSatisfy: [:sub | self class: sub overrides: aSymbol]]]!
 
@@ -1060,7 +1060,7 @@ notifyClassesOfCompletedStrip
 
 	Class allClassesDo: 
 			[:e |
-			(e class compiledMethodAt: #onPostStripImage ifAbsent: [])
+			(e class compiledMethodAt: #onPostStripImage ifAbsent: nil)
 				ifNotNil: [:method | method value: e withArguments: #()]]!
 
 notifyClassesOfImminentStrip
@@ -1073,7 +1073,7 @@ notifyClassesOfImminentStrip
 	self startElement: 'PreStrip' attributes: #().
 	Class allClassesDo: 
 			[:e |
-			(e class compiledMethodAt: #onPreStripImage ifAbsent: [])
+			(e class compiledMethodAt: #onPreStripImage ifAbsent: nil)
 				ifNotNil: 
 					[:method |
 					e onPreStripImage.

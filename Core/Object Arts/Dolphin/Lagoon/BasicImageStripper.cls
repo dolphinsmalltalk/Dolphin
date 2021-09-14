@@ -348,7 +348,7 @@ prepareExternalStructures
 				force: true].
 	"Remove all Structure defineFields methods"
 	defineFields := IdentitySet new.
-	structs do: [:each | defineFields add: (each class compiledMethodAt: #defineFields ifAbsent: [])].
+	structs do: [:each | defineFields add: (each class compiledMethodAt: #defineFields ifAbsent: nil)].
 	self
 		removeMethods: defineFields
 		reason: 'structure definition: defineFields'
@@ -530,7 +530,7 @@ removeNotRequiredMethods
 			mustkeep := 'must not strip' asMethodCategory.
 			Class allClasses do: 
 					[:each |
-					(each class compiledMethodAt: #initialize ifAbsent: [])
+					(each class compiledMethodAt: #initialize ifAbsent: nil)
 						ifNotNil: [:method | (mustkeep includesMethod: method) ifFalse: [initializers add: method]]].
 			notRequired add: {'class initializers'. initializers}].
 	notRequired do: 
@@ -563,7 +563,7 @@ removePackageManagement
 	"Note that we must leave the #owningPackage definition in ClassDescription for potential runtime STB use"
 	methods := Set new.
 	#(#{PoolDictionary} #{ResourceIdentifier} #{CompiledMethod})
-		do: [:each | each ifDefined: [:class | methods add: (class compiledMethodAt: #owningPackage ifAbsent: [])]].
+		do: [:each | each ifDefined: [:class | methods add: (class compiledMethodAt: #owningPackage ifAbsent: nil)]].
 	self
 		removeMethods: methods
 		reason: 'package management'
@@ -696,7 +696,7 @@ removeSelectors: aCollectionOfSelectors of: aBehavior
 	methods := Set new.
 	aCollectionOfSelectors do: 
 			[:each |
-			(aBehavior compiledMethodAt: each asSymbol ifAbsent: []) ifNotNil: [:method | methods add: method]].
+			(aBehavior compiledMethodAt: each asSymbol ifAbsent: nil) ifNotNil: [:method | methods add: method]].
 	self
 		removeMethods: methods
 		reason: 'explicit'

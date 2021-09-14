@@ -634,7 +634,7 @@ recompile: aSymbol
 	"Compile the method associated with the message selector, aSymbol, answering the CompilationResult method. If there is no method with the specified selector in the receiver's method dictionary, then answer nil.
 	The method is not logged to the change log, rather the source is re-used from the original"
 
-	^(self compiledMethodAt: aSymbol ifAbsent: [])
+	^(self compiledMethodAt: aSymbol ifAbsent: nil)
 		ifNotNil: [:method | self recompileMethod: method environment: method customEnvironment]!
 
 recompileMethod: aCompiledMethod environment: aNamespace

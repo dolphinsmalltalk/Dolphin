@@ -408,7 +408,7 @@ fromString: aString
 			| selector |
 			stream peekFor: $#.
 			selector := stream upToEnd asSymbol.
-			theClass compiledMethodAt: selector ifAbsent: []]! !
+			theClass compiledMethodAt: selector ifAbsent: nil]! !
 !CompiledMethod class categoriesForMethods!
 fromString:!converting!development!public! !
 !

@@ -762,7 +762,7 @@ historySkip: anInteger
 	method := history current.
 	class := method methodClass.
 	self resetFor: class.
-	currentMethod := class compiledMethodAt: method selector ifAbsent: [].
+	currentMethod := class compiledMethodAt: method selector ifAbsent: nil.
 	currentMethod isNil
 		ifTrue: 
 			[self statusText: ('<1p> has been deleted' expandMacrosWith: method).

@@ -214,7 +214,7 @@ categoriesFor: selector
 	If the receiver doesn't actually include the selector, then just stream 
 	over the categories and ignore them"
 
-	^(self compiledMethodAt: selector ifAbsent: [])
+	^(self compiledMethodAt: selector ifAbsent: nil)
 		ifNil: [ChunkReader null]
 		ifNotNil: 
 			[:method |
@@ -1006,7 +1006,7 @@ whichCategoriesIncludeSelector: aSelector
 	| answer |
 	answer := self whichNonVirtualCategoriesIncludeSelector: aSelector.
 	"The privacy category is considered 'real' because it is not calculated but based on a flag in the method header."
-	(self compiledMethodAt: aSelector ifAbsent: [])
+	(self compiledMethodAt: aSelector ifAbsent: nil)
 		ifNotNil: [:method | answer add: method privacyCategory].
 	^answer!
 

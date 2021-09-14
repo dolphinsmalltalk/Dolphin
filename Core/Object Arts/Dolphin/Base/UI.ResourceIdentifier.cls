@@ -28,7 +28,7 @@ UI.ResourceIdentifier comment: ''!
 			self name = aResourceIdentifier name]]!
 
 compiledMethod
-	^self owningClass class compiledMethodAt: self selector ifAbsent: []!
+	^self owningClass class compiledMethodAt: self selector ifAbsent: nil!
 
 copy
 	"Answer a new instance like the receiver."

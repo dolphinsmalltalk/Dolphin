@@ -101,13 +101,13 @@ model: aCompositeRefactoryChange
 onChangeSelected
 	| change method class |
 	change := self change.
-	change ifNil: 
+	change
+		ifNil: 
 			[differencesPresenter clear.
 			^self].
 	class := change changeClass.
-	method := class compiledMethodAt: change selector ifAbsent: [].
-	differencesPresenter compare: (method ifNil: [''] ifNotNil: [:m | m getSource])
-		with: change source!
+	method := class compiledMethodAt: change selector ifAbsent: nil.
+	differencesPresenter compare: (method ifNil: [''] ifNotNil: [:m | m getSource]) with: change source!
 
 onMethodAdded: aCompilationResult 
 	self methodChanged: aCompilationResult method!

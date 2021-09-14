@@ -274,19 +274,17 @@ storeOn: aStream
 transform
 	| existingSelector |
 	existingSelector := self existingSelector.
-	self nameNewMethod: (existingSelector isNil 
-				ifTrue: [self getNewMethodName]
-				ifFalse: [existingSelector]).
-	existingSelector isNil 
+	self
+		nameNewMethod: (existingSelector isNil ifTrue: [self getNewMethodName] ifFalse: [existingSelector]).
+	existingSelector isNil
 		ifTrue: 
 			[| change |
 			#rbFix.	"Bodge the change object to ensure the new method is in the same package as the source method"
-			change := class compile: extractedParseTree newSource
-						classified: (class protocolsFor: selector).
-			class realClass ifNotNil: 
-					[:c | 
-					(c compiledMethodAt: selector ifAbsent: []) 
-						ifNotNil: [:m | change package: m owningPackage]]].
+			change := class compile: extractedParseTree newSource classified: (class protocolsFor: selector).
+			class realClass
+				ifNotNil: 
+					[:c |
+					(c compiledMethodAt: selector ifAbsent: nil) ifNotNil: [:m | change package: m owningPackage]]].
 	class compileTree: modifiedParseTree! !
 !Refactory.Browser.ExtractMethodRefactoring categoriesForMethods!
 checkAssignments:!public!transforming! !

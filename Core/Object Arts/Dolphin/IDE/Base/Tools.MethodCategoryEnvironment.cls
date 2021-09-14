@@ -58,7 +58,7 @@ includesClass: aClass
 includesSelector: aSelector in: aClass
 	(super includesSelector: aSelector in: aClass)
 		ifTrue: 
-			[(aClass compiledMethodAt: aSelector ifAbsent: [])
+			[(aClass compiledMethodAt: aSelector ifAbsent: nil)
 				ifNotNil: 
 					[:method |
 					1 to: categories size do: [:i | ((categories at: i) includesMethod: method) ifTrue: [^true]]]].

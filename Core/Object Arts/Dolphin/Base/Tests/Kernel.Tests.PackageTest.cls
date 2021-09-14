@@ -15,9 +15,9 @@ checkNoTestPackageContents
 	| scribbleClass |
 	self deny: #{Smalltalk.ScribbleTest} isDefined.
 	scribbleClass := #{Smalltalk.Scribble} value.
-	self assertIsNil: (scribbleClass compiledMethodAt: #looseA ifAbsent: []).
-	self assertIsNil: (scribbleClass compiledMethodAt: #looseC ifAbsent: []).
-	self assertIsNil: (scribbleClass class compiledMethodAt: #resource_Scribble_test ifAbsent: []).
+	self assertIsNil: (scribbleClass compiledMethodAt: #looseA ifAbsent: nil).
+	self assertIsNil: (scribbleClass compiledMethodAt: #looseC ifAbsent: nil).
+	self assertIsNil: (scribbleClass class compiledMethodAt: #resource_Scribble_test ifAbsent: nil).
 	self deny: (SharedPool allSubclasses anySatisfy: [:each | each name = #ScribbleTestSourceGlobal])!
 
 checkTestPackageContents

@@ -20,7 +20,7 @@ allCategoriesOfSelector: selector
 	Smalltalk allBehaviorsDo: 
 			[:c |
 			| method |
-			method := c compiledMethodAt: selector ifAbsent: [].
+			method := c compiledMethodAt: selector ifAbsent: nil.
 			method notNil ifTrue: [answer addAll: (c categoriesOfMethod: method)]].
 	^answer!
 

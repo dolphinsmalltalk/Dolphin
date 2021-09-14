@@ -378,9 +378,9 @@ whichProtocolIncludes: aSelector in: aClass
 	^(self whichProtocolsInclude: aSelector in: aClass) asSortedCollection 
 		first!
 
-whichProtocolsInclude: aSelector in: aClass 
+whichProtocolsInclude: aSelector in: aClass
 	#rbFix.	"Dolphin specific method to support multiple method categories, also map names from strings to symbols."
-	^(aClass compiledMethodAt: aSelector ifAbsent: []) 
+	^(aClass compiledMethodAt: aSelector ifAbsent: nil)
 		ifNil: [#()]
 		ifNotNil: [:method | method realCategories collect: [:each | each name asSymbol]]! !
 !Refactory.Browser.BrowserEnvironment categoriesForMethods!

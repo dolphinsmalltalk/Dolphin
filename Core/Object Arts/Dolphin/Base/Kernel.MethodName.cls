@@ -48,7 +48,7 @@ value
 	^className value compiledMethodAt: selector!
 
 valueOrNil
-	^className valueOrNil ifNotNil: [:class | class compiledMethodAt: selector ifAbsent: []]! !
+	^className valueOrNil ifNotNil: [:class | class compiledMethodAt: selector ifAbsent: nil]! !
 !Kernel.MethodName categoriesForMethods!
 =!comparing!public! !
 className!accessing!public! !
