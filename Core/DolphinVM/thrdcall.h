@@ -38,7 +38,7 @@ private:
 public:
 
 	// Constructors
-	SmartPtr() : m_pObj(0) {}
+	SmartPtr() : m_pObj(nullptr) {}
 
 	SmartPtr(T* p, bool bAddRef=true) : m_pObj(p)
 	{
@@ -109,7 +109,7 @@ public:
 	
 	operator bool() const
 	{ 
-		return m_pObj != NULL; 
+		return m_pObj != nullptr; 
 	}
 };
 
@@ -122,7 +122,7 @@ template <class T> class DoubleLink
 	T* next;
 
 public:
-	DoubleLink() : prev(NULL), next(NULL) {}
+	DoubleLink() : prev(nullptr), next(nullptr) {}
 
 	T* Next() const { return next; }
 
@@ -289,6 +289,9 @@ public:
 
 	static int __cdecl IEEEFPHandler(_FPIEEE_RECORD* pIEEEFPException);
 
+	static void AssertCalledFromInterpreterThread();
+	void AssertCalledFromOverlappedThread();
+
 #ifdef _DEBUG
 	static void ReincrementProcessReferences();
 #endif
@@ -296,7 +299,6 @@ public:
 private:
 	// Low-level management routines
 	static OverlappedCallPtr New(ProcessOTE*);
-	static OverlappedCallPtr RemoveFirstFromList(OverlappedCallList&);
 
 	// Thread entry point function
 	static unsigned __stdcall ThreadMain(void* pThis);

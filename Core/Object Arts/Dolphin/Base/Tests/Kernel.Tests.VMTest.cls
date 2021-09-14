@@ -44,6 +44,33 @@ assertImmutableResize: anObject
 	#(0 1 -1)
 		do: [:i | self should: [anObject resize: anObject size + i] raise: Processor constWriteSignal]!
 
+assertLoopInterruptible: aBlock
+	| interruptTimes start intervals execTime sampleInterval go finished |
+	interruptTimes := OrderedCollection new.
+	sampleInterval := 3 milliseconds.
+	finished := Semaphore new.
+	go := true.
+	
+	[start := Time microsecondClockValue.
+	
+	[sampleInterval wait.
+	go] whileTrue: [interruptTimes addLast: Time microsecondClockValue].
+	finished signal]
+			forkAt: Processor userInterruptPriority.
+	aBlock value.
+	execTime := (Time microsecondClockValue - start) microseconds.
+	go := false.
+	finished wait.
+	self assert: (interruptTimes size > 2
+				and: [interruptTimes size * 1.5 >= (execTime / sampleInterval) asFloat]).
+	intervals := OrderedCollection new.
+	interruptTimes inject: start
+		into: 
+			[:last :each |
+			intervals add: (each - last) microseconds.
+			each].
+	self assert: (intervals allSatisfy: [:each | each < (sampleInterval * 2.5)])!
+
 compile: text in: aBehavior
 	| method |
 	method := Compiler compile: text in: aBehavior.
@@ -305,6 +332,21 @@ firstVmVersionRespectingNonInstantiable
 	"Private - The first VM version that refuses to instantiate abstract classes."
 
 	^#(2016 7 0 51)!
+
+getCPUTime
+	"Private - Answer the total CPU time consumed by Dolphin's main thread."
+
+	| user kernel ignored |
+	ignored := FILETIME new.
+	user := FILETIME new.
+	kernel := FILETIME new.
+	Kernel32
+		getThreadTimes: Kernel32 getCurrentThread
+		lpCreationTime: ignored
+		lpExitTime: ignored
+		lpKernelTime: kernel
+		lpUserTime: user.
+	^Duration microseconds: (kernel asInteger + user asInteger) / 10!
 
 hashBytes: aByteArray
 	"Private - PJW hash (Aho, Sethi, and Ullman pp. 434-438).
@@ -1108,6 +1150,105 @@ testIntDivideByZero
 								raisedIn: SmallInteger >> op
 								receiver: 123)]]!
 
+testInterruptPendingOverlappedCall
+	"Test sending a VM interrupt to a Process blocked waiting on an overlapped call"
+
+	| evt continue |
+	evt := Kernel32
+				createEvent: nil
+				bManualReset: false
+				bInitialState: false
+				lpName: nil.
+	
+	[| done sem wait proc |
+	wait := 0.
+	continue := true.
+	proc := 
+			[
+			[wait := wait + 1.
+			[Kernel32 waitForSingleObject: evt dwMilliseconds: 1000] on: HRESULTError
+				do: [:ex | continue := false].
+			continue]
+					whileTrue]
+					forkAt: 7.
+	self assert: wait equals: 1.
+	"Interrupt completes while the overlapped call is still pending"
+	done := 0.
+	proc interruptWith: [done := 1].
+	Processor yield.
+	self assert: done equals: 1.
+	self assert: wait equals: 1.
+	Kernel32 setEvent: evt.
+	5 milliseconds wait.
+	self assert: wait equals: 2.
+	"Interrupt is waiting when the overlapped call completes (but cannot return)"
+	sem := Semaphore new.
+	proc interruptWith: 
+			[done := 0.
+			sem wait.
+			done := 2].
+	Kernel32 setEvent: evt.
+	Processor yield.
+	self assert: done equals: 0.
+	self assert: wait equals: 2.
+	"Allow interrupt to complete - and the overlapped method to return"
+	sem signal.
+	self assert: done equals: 2.
+	5 milliseconds wait.
+	self assert: wait equals: 3]
+			ensure: 
+				[continue := false.
+				Kernel32
+					setEvent: evt;
+					closeHandle: evt]!
+
+testLoopsInterruptible
+	"#2167: Need to test all the optimisable loop types:
+		#timesRepeat:
+		#whileTrue[:]
+		#whileFalse[:]
+		#to:[by:]do:
+		#repeat		(hmmm, tricky, need some way to break the loop)
+	The loops must not contain any true mesage sends, only bytecodes"
+
+	"#timesRepeat:"
+	self assertLoopInterruptible: [2500000 timesRepeat: [1 + 2]].
+	"#whileFalse"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			
+			[i := i + 1.
+			i > 3000000] whileFalse].
+	"#whileTrue"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			
+			[i := i + 1.
+			i <= 3000000] whileTrue].
+	"#whileFalse:"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			[i >= 3000000] whileFalse: [i := i + 1]].
+	"#whileTrue:"
+	self assertLoopInterruptible: 
+			[| i |
+			i := 0.
+			[i < 3000000] whileTrue: [i := i + 1]].
+	"#to:do:"
+	self assertLoopInterruptible: [1 to: 3000000 do: [:i | i + 1]].
+	"#to:by:do:"
+	self assertLoopInterruptible: 
+			[1 to: 5000000
+				by: 2
+				do: [:i | i + 1]].
+	self assertLoopInterruptible: 
+			[2500000 to: 1
+				by: -1
+				do: [:i | i + 1]]!
+
 testMakeLargeUnsigned
 	| bytes |
 	bytes := ByteArray new: 8.
@@ -1161,6 +1302,89 @@ testMustBeBoolean
 	"Near jump if false"
 	self assert: (pseudoTrue ifTrue: [1 + 2 + 3 + 4] ifFalse: [2]) equals: 1 + 2 + 3 + 4.
 	self assert: (pseudoFalse ifTrue: [1 + 2 + 3 + 4] ifFalse: [2]) equals: 2!
+
+testOverlappedCallsSuspendAndTerminate2
+	| proc a win32Event maxRetries busyWaitForSignal retries sleep |
+	self skip: 'Known failing test'.
+	self assert: Processor pendingTerminations isEmpty.
+	win32Event := Kernel32
+				createEvent: nil
+				bManualReset: false
+				bInitialState: false
+				lpName: nil.
+	a := 0.
+	sleep := -1.
+	
+	[proc := 
+			[5 timesRepeat: 
+					[| ret |
+					a := a + 1.
+					ret := Kernel32 waitForSingleObject: win32Event dwMilliseconds: sleep.
+					Transcript
+						display: 'Wait returned ';
+						print: ret;
+						cr.
+					sleep := 1000]]
+					forkAt: Processor userInterruptPriority.	"High priority background proc runs but then blocks..."
+	maxRetries := 5.
+	busyWaitForSignal := 
+			[retries := 0.
+			[proc threadSync excessSignals > 0 or: [retries > maxRetries]] whileFalse: 
+					[retries := retries + 1.
+					Processor sleep: 10]].
+	self assert: proc isWaiting.	"proc should be blocked on the overlapped call semaphore"
+	self assert: a == 1.
+	self assert: 0 equals: proc threadSync excessSignals.
+	self assert: proc threadSync equals: proc suspendingList.
+	proc suspend.	"suspend it while blocked on the Win32 event, i.e. before the call on the overlapped thread returns."
+	self assert: proc isSuspended.	"Allow overlapped call to complete"
+	Kernel32 setEvent: win32Event.
+
+	"Wait for the overlapped call to complete, at which point the VM should signal the
+	Semaphore, even though the process is not waiting on it anymore. If it doesn't do this, then
+	we lose the notification that the overlapped call is done, and if the process were then
+	resumed onto the list, it would block forever. This is important in practice because a
+	process waiting for an overlapped call to complete can receive an interrupt and be taken off
+	any list it is waiting on while it processes the interrupt, before being resumed to that
+	list on returning from the interrupt. "
+	busyWaitForSignal value.
+	Transcript
+		nextPutAll: 'Signals=';
+		print: proc threadSync excessSignals;
+		nextPutAll: ', retries=';
+		print: retries;
+		cr.
+	self assert: retries <= maxRetries.
+	self assert: 1 equals: proc threadSync excessSignals.
+	self assert: proc isSuspended.
+	self assert: 1 equals: a.
+	"Resume it back onto the Semaphore - should continue immediately, and block again"
+	proc resume: proc threadSync.
+	self assert: 0 equals: proc threadSync excessSignals.
+	self assert: proc isWaiting.
+	self assert: proc threadSync equals: proc suspendingList.
+	self assert: 2 equals: a.
+	"This time interrupt it and make it run the wait itself."
+	proc interruptWith: busyWaitForSignal.
+	Transcript
+		nextPutAll: 'Signals=';
+		print: proc threadSync excessSignals;
+		nextPutAll: ', retries=';
+		print: retries;
+		cr.
+	self assert: retries <= maxRetries.
+	self assert: 1 equals: proc threadSync excessSignals.
+	self assert: proc isSuspended.
+	self assert: 3 equals: a.	"Now suspend it again, and terminate it before the overlapped call completes"
+	proc suspend.
+	self assert: 0 equals: proc threadSync excessSignals.
+	self assert: proc isSuspended.
+	proc terminate.
+	busyWaitForSignal value.
+	self assert: proc isTerminated.
+	self assert: a == 3.
+	self assert: Processor pendingTerminations isEmpty]
+			ensure: [Kernel32 closeHandle: win32Event]!
 
 testPrimitiveAdd
 	| method |
@@ -2829,6 +3053,21 @@ testPrimitiveYourAddress
 			self assert: (ByteArray fromAddress: addr length: each size) equals: each].
 	self assert: (method value: nil withArguments: #()) equals: 0!
 
+testQuiesceWhenUIBlocked
+	"#969: Dolphin burns 100% CPU when main UI process blocked on Semaphore"
+
+	| totalCPUBefore cpuWhileSleeping sleepTime wait |
+	self skipIfCiBuild.
+	totalCPUBefore := self getCPUTime.
+	"This test needs to measure over a minimum of 2 seconds in order to determine whether Dolphin has quiesced properly"
+	wait := 3000 milliseconds.
+	sleepTime := [Processor sleep: wait asMilliseconds] timeToRun.
+	cpuWhileSleeping := self getCPUTime - totalCPUBefore.
+	"If the sleep time was significantly longer than requested, then the VM is not waking up the image properly at the end of the timer"
+	self assert: (sleepTime between: wait * 0.9 and: wait * 1.1).
+	"The VM should quiesce properly, even if events are waiting to be processed, so very little CPU time should have been consumed"
+	self assert: cpuWhileSleeping < (wait * 0.03)!
+
 testQwordAtOffset
 	"Note that this test assumes running on a little-endian machine with 32-bit SmallIntegers."
 
@@ -3573,6 +3812,7 @@ assertImmutableAtPut:!private!unit tests! !
 assertImmutableBasicAtPut:!private!unit tests! !
 assertImmutableInstVarAtPut:!private!unit tests! !
 assertImmutableResize:!private!unit tests! !
+assertLoopInterruptible:!private!unit tests! !
 compile:in:!helpers!private! !
 createPrimitiveMethod:in:argCount:!helpers!private! !
 createPrimitiveMethodLike:!helpers!private! !
@@ -3583,6 +3823,7 @@ exerciseReplaceElementsOf:with:!private!unit tests! !
 findCaller:in:!helpers!private! !
 findFaultInterruptFrame:!helpers!private! !
 firstVmVersionRespectingNonInstantiable!constants!private! !
+getCPUTime!private!unit tests! !
 hashBytes:!helpers!private! !
 immutableTestSubjects!constants!private!unit tests! !
 isFault:raisedIn:receiver:!helpers!private! !
@@ -3638,8 +3879,11 @@ testIndirectSdwordAtOffsetPrimitives!public!unit tests! !
 testIndirectSwordAtOffsetPrimitives!public!unit tests! !
 testIndirectWordAtOffsetPrimitives!public!unit tests! !
 testIntDivideByZero!public!unit tests! !
+testInterruptPendingOverlappedCall!public!unit tests! !
+testLoopsInterruptible!public!unit tests! !
 testMakeLargeUnsigned!public!unit tests! !
 testMustBeBoolean!public!unit tests! !
+testOverlappedCallsSuspendAndTerminate2!public!unit tests! !
 testPrimitiveAdd!public!unit tests! !
 testPrimitiveAllInstances!public!unit tests! !
 testPrimitiveAllMask!public!unit tests! !
@@ -3700,6 +3944,7 @@ testPrimitiveStringNextIndexOfFromTo!public!unit tests! !
 testPrimitiveStructIsNull!public!unit tests! !
 testPrimitiveSubtract!public!unit tests! !
 testPrimitiveYourAddress!public!unit tests! !
+testQuiesceWhenUIBlocked!public!unit tests! !
 testQwordAtOffset!public!unit tests! !
 testRegistry!public! !
 testSignedFromUnsigned!public!unit tests! !

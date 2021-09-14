@@ -197,6 +197,7 @@ package setMethodNames: #(
 	#(#{Core.Dictionary} #newBatchAccessor)
 	#(#{Core.Dictionary} #publishedAspects)
 	#(#{Core.Dictionary class} #newInstanceAspect:class:)
+	#(#{Core.Duration} #debugPrintOn:)
 	#(#{Core.Float class} #newInstanceAspect:class:)
 	#(#{Core.Interval} #debugPrintOn:)
 	#(#{Core.Interval} #newBatchAccessor)
@@ -2141,6 +2142,16 @@ newInstanceAspect: aSymbol class: aspectClass
 	^aspectClass dictionary: aSymbol! !
 !Core.Dictionary class categoriesForMethods!
 newInstanceAspect:class:!adapters!private! !
+!
+
+!Core.Duration methodsFor!
+
+debugPrintOn: aWriteStream
+	"The human-readable displayString is more easy to interpret than the ANSI-compliant printString."
+
+	self displayOn: aWriteStream! !
+!Core.Duration categoriesForMethods!
+debugPrintOn:!printing!public! !
 !
 
 !Core.Float class methodsFor!

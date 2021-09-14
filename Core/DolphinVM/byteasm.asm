@@ -2016,7 +2016,7 @@ ENDBYTECODE longPushImmediate
 ;; Push a 31-bit integer (five bytes).
 ;;
 BEGINBYTECODE exLongPushImmediate
-	mov		eax, DWORD PTR[_IP]					; Load the SmallInteger encoded in the next 4 bytes of the instruction stream
+	mov		eax, DWORD PTR[_IP]					; Load the int32 value in the next 4 bytes of the instruction stream
 	xor		ecx, ecx							; Clear ECX (avoid partial register stall on PPro and later PIIs it would appear)
 
 	add		_SP, OOPSIZE
@@ -2190,9 +2190,8 @@ BEGINBYTECODE nearJump
 
 	IFDEF _DEBUG
 		lea		_IP, [_IP+eax+1]					; Offset 0 is the next instruction (after single byte instruction extension)
-		.IF (!edx)
-			CallCPP<BYTEPOLL>
-		.ENDIF
+		test	edx, edx
+		jnz		asyncPending
 		DispatchByteCode
 	ELSE
 		; Optimized pentium form
@@ -2205,8 +2204,10 @@ BEGINBYTECODE nearJump
 
 	@@:		
 		dec		_IP
-		CallCPPAndLoop	<BYTEPOLL>
 	ENDIF
+
+asyncPending:
+	CallCPPAndLoop	<BYTEPOLL>
 ENDBYTECODE nearJump
 
 ; Long jump is fairly rarely used. A noteable exception is in the long inlined sort algorithm implementations
@@ -2218,9 +2219,8 @@ BEGINBYTECODE longJump
 
 	IFDEF _DEBUG
 		lea		_IP, [_IP+eax+2]					; Offset 0 is the next instruction (after single byte instruction extension)
-		.IF (!edx)
-			CallCPP<BYTEPOLL>
-		.ENDIF
+		test	edx, edx
+		jnz		asyncPending
 		DispatchByteCode
 	ELSE
 		; Optimized pentium form
@@ -2230,11 +2230,11 @@ BEGINBYTECODE longJump
 		lea		_IP, [_IP+eax+3]					; Offset 0 is the next instruction (after double byte instruction extension)
 		jnz		@F									; If async events pending, go and poll input
 		jmp	byteCodeTable[ecx*4]
-
 	@@:		
 		dec		_IP
-		CallCPPAndLoop	<BYTEPOLL>
 	ENDIF
+asyncPending:
+	CallCPPAndLoop	<BYTEPOLL>
 ENDBYTECODE longJump
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -2255,6 +2255,8 @@ BEGINBYTECODE nearJumpIfTrue
 
 IFDEF _DEBUG
 	lea		_IP, [_IP+eax+1]						; Offset 0 is the next instruction (after single byte instruction extension)
+	test	edx, edx
+	jnz		asyncPending
 	DispatchByteCode
 ELSE
 	movzx	ecx, BYTE PTR[_IP+eax+1]
@@ -2265,8 +2267,9 @@ ELSE
 	
 @@:		
 	dec		_IP
-	CallCPPAndLoop	<BYTEPOLL>
 ENDIF
+asyncPending:
+	CallCPPAndLoop	<BYTEPOLL>
 
 elseBranch:
 	; The TOS was not false, so the jump is not to be followed. We must check if TOS is a boolean.
@@ -2301,7 +2304,11 @@ BEGINBYTECODE nearJumpIfNil
 
 IFDEF _DEBUG
 	lea		_IP, [_IP+eax+1]						; Offset 0 is the next instruction (after single byte instruction extension)
+	test	edx, edx
+	jnz		@F
 	DispatchByteCode
+@@:
+	CallCPPAndLoop <BYTEPOLL>
 ELSE
 	movzx	ecx, BYTE PTR[_IP+eax+1]
 	test	edx, edx
@@ -2337,7 +2344,11 @@ BEGINBYTECODE nearJumpIfNotNil
 
 IFDEF _DEBUG
 	lea		_IP, [_IP+eax+1]						; Offset 0 is the next instruction (after single byte instruction extension)
+	test	edx, edx
+	jnz		@F
 	DispatchByteCode
+@@:
+	CallCPPAndLoop <BYTEPOLL>
 ELSE
 	movzx	ecx, BYTE PTR[_IP+eax+1]
 	test	edx, edx
@@ -2599,6 +2610,8 @@ BEGINBYTECODE nearJumpIfFalse
 
 IFDEF _DEBUG
 	lea		_IP, [_IP+eax+1]						; Offset 0 is the next instruction (after single byte instruction extension)
+	test	edx, edx
+	jnz		asyncPending
 	DispatchByteCode
 ELSE
 	movzx	ecx, BYTE PTR[_IP+eax+1]
@@ -2609,8 +2622,9 @@ ELSE
 	
 @@:		
 	dec		_IP
-	CallCPPAndLoop	<BYTEPOLL>
 ENDIF
+asyncPending:
+	CallCPPAndLoop	<BYTEPOLL>
 
 elseBranch:
 	; The TOS was not false, so the jump is not to be followed. We must check if TOS is a boolean.
