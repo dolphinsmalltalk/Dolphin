@@ -433,13 +433,13 @@ reject: discriminator
 
 	^self select: [:elem | (discriminator value: elem) not]!
 
-remove: oldElement 
+remove: oldElement
 	"Remove the <Object> argument, oldElement, from the receiver's elements.
 	Answer oldElement unless it is not an element of the receiver, in which 
 	case, raise a suitable exception."
 
 	| removed |
-	removed := self remove: oldElement ifAbsent: [AbsentCookie].
+	removed := self remove: oldElement ifAbsent: AbsentCookie.
 	^removed == AbsentCookie ifTrue: [self errorNotFound: oldElement] ifFalse: [removed]!
 
 remove: oldElement ifAbsent: exceptionHandler

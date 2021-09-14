@@ -36,7 +36,7 @@ anySatisfy: aMonadicValuable
 		do: [:i | (self basicAt: i) ifNotNil: [(aMonadicValuable value: (values at: i)) ifTrue: [^true]]].
 	^false!
 
-associationAt: anObject ifAbsent: aNiladicValuable 
+associationAt: anObject ifAbsent: aNiladicValuable
 	"Answer a new <Association> between the key and value of the receiver at the first argument.
 	If the key is not found, answer the result of evaluating the <niladicValuable> exception
 	handler."
@@ -45,8 +45,8 @@ associationAt: anObject ifAbsent: aNiladicValuable
 	the answer is not state information."
 
 	| value |
-	value := self at: anObject ifAbsent: [AbsentCookie].
-	^value == AbsentCookie 
+	value := self at: anObject ifAbsent: AbsentCookie.
+	^value == AbsentCookie
 		ifTrue: [aNiladicValuable value]
 		ifFalse: [self newAssociation: anObject value: value]!
 

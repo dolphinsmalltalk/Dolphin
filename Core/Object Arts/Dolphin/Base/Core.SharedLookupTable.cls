@@ -118,10 +118,8 @@ at: key ifAbsent: exceptionHandler
 	(#at:ifAbsentPut: should be used in this case)."
 
 	| answer |
-	answer := mutex critical: [super at: key ifAbsent: [AbsentCookie]].
-	^answer == AbsentCookie
-		ifTrue: [exceptionHandler value]
-		ifFalse: [answer]!
+	answer := mutex critical: [super at: key ifAbsent: AbsentCookie].
+	^answer == AbsentCookie ifTrue: [exceptionHandler value] ifFalse: [answer]!
 
 at: key ifAbsentPut: exceptionHandler
 	"Answer the value named by the argument, key.  If key is not found,
@@ -139,13 +137,6 @@ at: key ifAbsentPutClean: exceptionHandler
 	Note that unlike #at:ifAbsentPut:, this method assumes that the valuable does not modify the receiver, and therefore it only looks up the key position once. Thus it is more efficient but less general purpose."
 
 	^mutex critical: [super at: key ifAbsentPutClean: exceptionHandler]!
-
-at: key ifAbsentPutValue: valueObject
-	"Answer the value of the receiver keyed by the <Object> argument, keyObject.
-	If keyObject is not one of the receiver's keys, then add the <Object>, valueObject,
-	at keyObject, and answer valueObject."
-
-	^mutex critical: [super at: key ifAbsentPutValue: valueObject]!
 
 at: key put: newElement
 	"Store the argument, newElement, with the external key, key,
@@ -202,10 +193,8 @@ keyAtEqualValue: value ifAbsent: exceptionHandler
 	where the exceptionHandler performs a far return)."
 
 	| answer |
-	answer := mutex critical: [super keyAtEqualValue: value ifAbsent: [AbsentCookie]].
-	^answer == AbsentCookie
-		ifTrue: [exceptionHandler value]
-		ifFalse: [answer]!
+	answer := mutex critical: [super keyAtEqualValue: value ifAbsent: AbsentCookie].
+	^answer == AbsentCookie ifTrue: [exceptionHandler value] ifFalse: [answer]!
 
 keyAtValue: value ifAbsent: exceptionHandler
 	"Answer the key of the first value in the receiver identical
@@ -217,10 +206,8 @@ keyAtValue: value ifAbsent: exceptionHandler
 	where the exceptionHandler performs a far return)."
 
 	| answer |
-	answer := mutex critical: [super keyAtValue: value ifAbsent: [AbsentCookie]].
-	^answer == AbsentCookie
-		ifTrue: [exceptionHandler value]
-		ifFalse: [answer]!
+	answer := mutex critical: [super keyAtValue: value ifAbsent: AbsentCookie].
+	^answer == AbsentCookie ifTrue: [exceptionHandler value] ifFalse: [answer]!
 
 keysAndValuesDo: operation
 	"Evaluate the dyadic valuable, operation, for each key/value pair in the receiver,
@@ -286,10 +273,8 @@ removeKey: key ifAbsent: exceptionHandler
 	where the exceptionHandler performs a far return)."
 
 	| answer |
-	answer:= mutex critical: [super removeKey: key ifAbsent: [AbsentCookie]].
-	^answer == AbsentCookie
-		ifTrue: [exceptionHandler value]
-		ifFalse: [answer]!
+	answer := mutex critical: [super removeKey: key ifAbsent: AbsentCookie].
+	^answer == AbsentCookie ifTrue: [exceptionHandler value] ifFalse: [answer]!
 
 resize: anInteger
 	"Private - Resize the receiver to a capacity suitable for anInteger elements.
@@ -316,7 +301,6 @@ asByteArray!converting!public! !
 at:ifAbsent:!accessing!public! !
 at:ifAbsentPut:!accessing!public! !
 at:ifAbsentPutClean:!accessing!public! !
-at:ifAbsentPutValue:!accessing!public! !
 at:put:!accessing!public! !
 changeKey:to:!accessing!private! !
 do:!enumerating!public! !

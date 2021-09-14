@@ -33,7 +33,7 @@ next
 
 	| value |
 	valueAvailable wait.
-	value := accessProtect critical: [contents removeFirstIfAbsent: [AbsentCookie]].
+	value := accessProtect critical: [contents removeFirstIfAbsent: AbsentCookie].
 	value == AbsentCookie ifTrue: [self errorOutOfSync].
 	^value!
 
@@ -48,7 +48,7 @@ nextNoWait
 
 	| value |
 	(valueAvailable wait: 0) == WAIT_TIMEOUT ifTrue: [^nil].
-	value := accessProtect critical: [contents removeFirstIfAbsent: [AbsentCookie]].
+	value := accessProtect critical: [contents removeFirstIfAbsent: AbsentCookie].
 	value == AbsentCookie ifTrue: [self errorOutOfSync].
 	^value!
 
@@ -78,8 +78,8 @@ removeAll
 
 	accessProtect critical: 
 			[
-			[((valueAvailable wait: 0) == WAIT_TIMEOUT 
-				ifFalse: [contents removeFirstIfAbsent: [AbsentCookie]]) isNil] 
+			[((valueAvailable wait: 0) == WAIT_TIMEOUT ifFalse: [contents removeFirstIfAbsent: AbsentCookie])
+				isNil]
 					whileFalse]!
 
 size

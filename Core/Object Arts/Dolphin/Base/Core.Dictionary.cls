@@ -127,7 +127,7 @@ associationsDo: aMonadicValuable separatedBy: aNiladicValuable
 			separator value.
 			aMonadicValuable value: each]!
 
-at: anObject 
+at: anObject
 	"Answer the value at the specified <Object> key in the receiver, or if the key
 	is not found raise a <NotFoundError>."
 
@@ -136,7 +136,7 @@ at: anObject
 	This is a worthwhile gain in such a commonly used method."
 
 	| answer |
-	answer := self at: anObject ifAbsent: [AbsentCookie].
+	answer := self at: anObject ifAbsent: AbsentCookie.
 	^answer == AbsentCookie ifTrue: [self errorKeyNotFound: anObject] ifFalse: [answer]!
 
 at: key ifAbsent: operation 
@@ -147,7 +147,7 @@ at: key ifAbsent: operation
 		ifNil: [operation value]
 		ifNotNil: [:element | element value]!
 
-at: key ifAbsentPut: operation 
+at: key ifAbsentPut: operation
 	"Answer the value of the receiver keyed by the <Object> argument, key.
 	If key is not one of the receiver's keys, then add the result of evaluating 
 	the <niladicValuable>, operation, at key, and answer that result."
@@ -156,7 +156,7 @@ at: key ifAbsentPut: operation
 	but must perform the hash key lookup twice."
 
 	| preexisting |
-	preexisting := self at: key ifAbsent: [AbsentCookie].
+	preexisting := self at: key ifAbsent: AbsentCookie.
 	^preexisting == AbsentCookie ifTrue: [self at: key put: operation value] ifFalse: [preexisting]!
 
 at: keyObject ifAbsentPutClean: aMonadicValuable
@@ -170,22 +170,13 @@ at: keyObject ifAbsentPutClean: aMonadicValuable
 		ifNil: [self privateAt: index put: (self newAssociation: keyObject value: aMonadicValuable value)])
 			value!
 
-at: keyObject ifAbsentPutValue: valueObject
-	"Answer the value of the receiver keyed by the <Object> argument, keyObject.
-	If keyObject is not one of the receiver's keys, then add the <Object>, valueObject,
-	at keyObject, and answer valueObject."
-
-	| preexisting |
-	preexisting := self at: keyObject ifAbsent: [AbsentCookie].
-	^preexisting == AbsentCookie ifTrue: [self at: keyObject put: valueObject] ifFalse: [preexisting]!
-
-at: key ifPresent: operation 
+at: key ifPresent: operation
 	"Answer the result of evaluating the monadic valuable, operation, if
 	the argument, key, is the key of an element in the receiver, with that
 	element as its argument. If the key is not present, then answer nil."
 
 	| value |
-	value := self at: key ifAbsent: [AbsentCookie].
+	value := self at: key ifAbsent: AbsentCookie.
 	^value == AbsentCookie ifFalse: [operation value: value]!
 
 at: keyObject put: valueObject
@@ -305,13 +296,13 @@ includes: anObject
 
 	^self anySatisfy: [:each | anObject = each]!
 
-includesAssociation: anAssociation 
+includesAssociation: anAssociation
 	"Answer whether the receiver has an element (association between a key
 	and a value) that is equal to the argument, anAssociation"
 
 	| assoc |
-	assoc := self associationAt: anAssociation key ifAbsent: [AbsentCookie].
-	^assoc ~~ AbsentCookie and: [assoc value = anAssociation value]!
+	assoc := self associationAt: anAssociation key ifAbsent: nil.
+	^assoc notNil and: [assoc value = anAssociation value]!
 
 includesKey: anObject 
 	"Answer whether the receiver has a key equal to the <Object> argument."
@@ -327,7 +318,7 @@ keyAtEqualValue: anObject ifAbsent: aNiladicValuable
 	self keysAndValuesDo: [:eachKey :eachValue | anObject = eachValue ifTrue: [^eachKey]].
 	^aNiladicValuable value!
 
-keyAtValue: value 
+keyAtValue: value
 	"Answer the <Object> key of the <Object> argument, value. 
 	If there is no such value, send #errorValueNotFound: to the receiver with 
 	value as its argument.
@@ -335,7 +326,7 @@ keyAtValue: value
 	one encountered in the search."
 
 	| key |
-	key := self keyAtValue: value ifAbsent: [AbsentCookie].
+	key := self keyAtValue: value ifAbsent: AbsentCookie.
 	^key == AbsentCookie ifTrue: [self errorValueNotFound: value] ifFalse: [key]!
 
 keyAtValue: anObject ifAbsent: aNiladicValuable 
@@ -456,17 +447,17 @@ removeAssociation: anAssociation ifAbsent: aNiladicValuable
 	Answer anAssociation. If there is no such association in the receiver, answer the result of
 	evaluating the <niladicValuable>, operation."
 
-	^(self removeKey: anAssociation key ifAbsent: [AbsentCookie]) == AbsentCookie
+	^(self removeKey: anAssociation key ifAbsent: AbsentCookie) == AbsentCookie
 		ifTrue: [aNiladicValuable value]
 		ifFalse: [anAssociation]!
 
-removeKey: key 
+removeKey: key
 	"Remove the <Object> key (and its associated value), from the receiver. 
 	If key is not in the receiver, report an error. Otherwise, answer the value 
 	named by key."
 
 	| removed |
-	removed := self removeKey: key ifAbsent: [AbsentCookie].
+	removed := self removeKey: key ifAbsent: AbsentCookie.
 	^removed == AbsentCookie ifTrue: [self errorKeyNotFound: key] ifFalse: [removed]!
 
 removeKey: key ifAbsent: operation 
@@ -552,7 +543,6 @@ at:!accessing!public! !
 at:ifAbsent:!accessing!public! !
 at:ifAbsentPut:!accessing!public! !
 at:ifAbsentPutClean:!accessing!public! !
-at:ifAbsentPutValue:!accessing!public! !
 at:ifPresent:!accessing!public! !
 at:put:!accessing!public! !
 atAll:put:!accessing!public! !

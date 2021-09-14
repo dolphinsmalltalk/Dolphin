@@ -125,7 +125,7 @@ at: aString ifAbsentPut: aNiladicValuable
 	If the identifier is not one found in this scope, then add the result of evaluating the <niladicValuable> as a new <VariableBinding> with that identifier."
 
 	| value |
-	value := self at: aString ifAbsent: [Collection.AbsentCookie].
+	value := self at: aString ifAbsent: Collection.AbsentCookie.
 	^value == Collection.AbsentCookie
 		ifTrue: [self at: aString put: aNiladicValuable value]
 		ifFalse: [value]!

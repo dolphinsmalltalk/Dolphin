@@ -56,6 +56,7 @@ package methodNames
 	add: #CRTLibrary -> #memset:c:count:;
 	add: #CRTLibrary -> #strpbrk:strCharSet:;
 	add: #CRTLibrary -> #wcsncmp:string2:count:;
+	add: #Dictionary -> #at:ifAbsentPutValue:;
 	add: #ExternalLibrary -> #invalidCall;
 	add: #ExternalStructure -> #do:;
 	add: #ExternalStructure -> #do:separatedBy:;
@@ -660,6 +661,15 @@ resolution: aDuration set: aBoolean
 resolution!constants!public! !
 resolution:do:!operations!public! !
 resolution:set:!helpers!public! !
+!
+
+!Dictionary methodsFor!
+
+at: keyObject ifAbsentPutValue: valueObject
+	#deprecated.	"With the addition of Object>>value, this is redundant"
+	^self at: keyObject ifAbsentPut: valueObject! !
+!Dictionary categoriesForMethods!
+at:ifAbsentPutValue:!accessing!public! !
 !
 
 !ExternalLibrary methodsFor!

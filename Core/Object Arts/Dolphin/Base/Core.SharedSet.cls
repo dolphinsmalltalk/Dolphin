@@ -103,10 +103,8 @@ find: target ifAbsent: exceptionHandler
 	niladic valuable, exceptionHandler, is answered."
 
 	| answer |
-	answer := mutex critical: [super find: target ifAbsent: [AbsentCookie]].
-	^answer == AbsentCookie
-		ifTrue: [exceptionHandler value]
-		ifFalse: [answer]!
+	answer := mutex critical: [super find: target ifAbsent: AbsentCookie].
+	^answer == AbsentCookie ifTrue: [exceptionHandler value] ifFalse: [answer]!
 
 identityIncludes: target
 	"Answer whether the <Object> argument, target, is one of the receiver's elements."
@@ -163,10 +161,8 @@ remove: oldElement ifAbsent: exceptionHandler
 	result of evaluating the niladic valuable, exceptionHandler."
 
 	| answer |
-	answer := mutex critical: [super remove: oldElement ifAbsent: [AbsentCookie]].
-	^answer == AbsentCookie
-		ifTrue: [exceptionHandler value]
-		ifFalse: [answer]!
+	answer := mutex critical: [super remove: oldElement ifAbsent: AbsentCookie].
+	^answer == AbsentCookie ifTrue: [exceptionHandler value] ifFalse: [answer]!
 
 resize: anInteger
 	"Private - Resize the receiver to have a capacity suitable for accommodating

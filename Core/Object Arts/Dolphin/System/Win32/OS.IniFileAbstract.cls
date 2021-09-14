@@ -41,7 +41,7 @@ associationAt: anObject ifAbsent: aNiladicValuable
 	the answer is not state information."
 
 	| value |
-	value := self at: anObject ifAbsent: [AbsentCookie].
+	value := self at: anObject ifAbsent: AbsentCookie.
 	^value == AbsentCookie ifTrue: [aNiladicValuable value] ifFalse: [anObject -> value]!
 
 associations
@@ -62,7 +62,7 @@ at: aString
 	is not found raise a <NotFoundError>."
 
 	| answer |
-	answer := self at: aString ifAbsent: [AbsentCookie].
+	answer := self at: aString ifAbsent: AbsentCookie.
 	^answer == AbsentCookie ifTrue: [self errorKeyNotFound: aString] ifFalse: [answer]!
 
 at: aString ifAbsent: aNiladicValuable
@@ -76,7 +76,7 @@ at: aString ifAbsentPut: aNiladicValuable
 	answer the result of evaluating the <niladicValuable>, argument."
 
 	| preexisting |
-	preexisting := self at: aString ifAbsent: [AbsentCookie].
+	preexisting := self at: aString ifAbsent: AbsentCookie.
 	^preexisting == AbsentCookie
 		ifTrue: [self at: aString put: aNiladicValuable value]
 		ifFalse: [preexisting]!
@@ -147,7 +147,7 @@ includesKey: aString
 	"Answer whether the receiver has a key equal to the <Object>
 	argument."
 
-	^(self at: aString ifAbsent: [AbsentCookie]) ~~ AbsentCookie!
+	^(self at: aString ifAbsent: AbsentCookie) ~~ AbsentCookie!
 
 isEmpty
 	"Answer whether the receiver contains no elements."
@@ -162,7 +162,7 @@ keyAtValue: value
 	one encountered in the search."
 
 	| key |
-	key := self keyAtValue: value ifAbsent: [AbsentCookie].
+	key := self keyAtValue: value ifAbsent: AbsentCookie.
 	^key == AbsentCookie ifTrue: [self errorValueNotFound: value] ifFalse: [key]!
 
 keyAtValue: anObject ifAbsent: aNiladicValuable
@@ -222,7 +222,7 @@ removeKey: keyString
 	named by the key."
 
 	| removed |
-	removed := self removeKey: keyString ifAbsent: [AbsentCookie].
+	removed := self removeKey: keyString ifAbsent: AbsentCookie.
 	^removed == AbsentCookie ifTrue: [self errorKeyNotFound: keyString] ifFalse: [removed]!
 
 removeKey: aString ifAbsent: aNiladicValuable

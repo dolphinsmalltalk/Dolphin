@@ -38,7 +38,7 @@ basicNextPut: anObject
 		ifNotNil: [:refIndex | ^self writeInteger: (STBPrefix encodeObjectRef: refIndex)].
 
 	"If anObject is the subject of an override:with: message then we output the 'with' proxy object instead."
-	objectToSave := proxyOverrides at: anObject ifAbsent: [Collection.AbsentCookie].
+	objectToSave := proxyOverrides at: anObject ifAbsent: Collection.AbsentCookie.
 	objectToSave == Collection.AbsentCookie
 		ifTrue: [self serializeObject: anObject]
 		ifFalse: 

@@ -190,13 +190,13 @@ at: index ifAbsent: exceptionBlock
 		ifTrue: [self at: index]
 		ifFalse: [exceptionBlock value]!
 
-at: key ifPresent: operation 
+at: key ifPresent: operation
 	"Answer the result of evaluating the monadic valuable, operation, if
 	the argument, key, is the key of an element in the receiver, with that
 	element as its argument. If the key is not present, then answer nil."
 
 	| value |
-	value := self at: key ifAbsent: [AbsentCookie].
+	value := self at: key ifAbsent: AbsentCookie.
 	^value == AbsentCookie ifFalse: [operation value: value]!
 
 at: index put: newElement
@@ -848,7 +848,7 @@ keyAtEqualValue: value ifAbsent: exceptionHandler
 
 	^self indexOf: value ifAbsent: exceptionHandler!
 
-keyAtValue: value 
+keyAtValue: value
 	"Answer the <integer> key of the <Object> argument, value. 
 	If there is no such value, send #errorNotFound: to the receiver with 
 	value as its argument.
@@ -856,7 +856,7 @@ keyAtValue: value
 	first one encountered in a serial search."
 
 	| index |
-	index := self keyAtValue: value ifAbsent: [AbsentCookie].
+	index := self keyAtValue: value ifAbsent: AbsentCookie.
 	^index == AbsentCookie ifTrue: [self errorValueNotFound: value] ifFalse: [index]!
 
 keyAtValue: value ifAbsent: operation
