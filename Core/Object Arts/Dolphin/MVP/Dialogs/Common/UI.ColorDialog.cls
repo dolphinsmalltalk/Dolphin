@@ -140,7 +140,7 @@ onStartup
 	self registerColorOkMessage!
 
 registerColorOkMessage
-	WM_COLOROK notNil ifTrue: [hookHandlers removeKey: WM_COLOROK ifAbsent: []].
+	WM_COLOROK notNil ifTrue: [hookHandlers removeKey: WM_COLOROK ifAbsent: nil].
 	WM_COLOROK := User32 registerWindowMessage: 'commdlg_ColorOK'.
 	hookHandlers at: WM_COLOROK put: #wmColorOk:wParam:lParam:!
 

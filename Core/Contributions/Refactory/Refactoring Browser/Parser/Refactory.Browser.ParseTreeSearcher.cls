@@ -129,7 +129,7 @@ messages
 			[:each |
 			| searchMessages |
 			searchMessages := each sentMessages.
-			RBProgramNode optimizedSelectors do: [:sel | searchMessages remove: sel ifAbsent: []].
+			RBProgramNode optimizedSelectors do: [:sel | searchMessages remove: sel ifAbsent: nil].
 			searchMessages isEmpty ifTrue: [^messages := #()].
 			messages addAll: searchMessages].
 	^messages := messages asArray!

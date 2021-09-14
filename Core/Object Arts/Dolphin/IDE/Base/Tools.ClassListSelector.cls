@@ -168,7 +168,7 @@ onClassRepackaged: aClass from: anUndefinedObject to: aPackage
 			(classesPresenter model includes: aClass) ifFalse: [classesPresenter model add: aClass]]
 		ifFalse: 
 			["Remove if it was previously included"
-			classesPresenter model remove: aClass ifAbsent: []]!
+			classesPresenter model remove: aClass ifAbsent: nil]!
 
 onDragOverList: aDragDropSession
 	"Private - The user is dragging over the class hierarchy pane.

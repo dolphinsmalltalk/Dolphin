@@ -155,12 +155,12 @@ postCopy
 removeClass: aClass
 	(aClass isMeta ifTrue: [metaClassSelectors] ifFalse: [classSelectors])
 		removeKey: aClass instanceClass fullName
-		ifAbsent: []!
+		ifAbsent: nil!
 
 removeClass: aClass selector: aSelector
 	((aClass isMeta ifTrue: [metaClassSelectors] ifFalse: [classSelectors])
 		lookup: aClass instanceClass fullName)
-			ifNotNil: [:selectors | selectors remove: aSelector ifAbsent: []]!
+			ifNotNil: [:selectors | selectors remove: aSelector ifAbsent: nil]!
 
 selectorsForClass: aClass do: aBlock
 	((aClass isMeta ifTrue: [metaClassSelectors] ifFalse: [classSelectors])

@@ -100,7 +100,7 @@ resetPreviouslyViewedNotes
 	self resetPreviouslyViewedNotes.
 	"
 
-	RegKey userRoot removeKey: self registryKeyName ifAbsent: []! !
+	RegKey userRoot removeKey: self registryKeyName ifAbsent: nil! !
 !UI.OneOffNoteBubble class categoriesForMethods!
 addPreviouslyViewedNote:!private! !
 defaultCaption!constants!private! !

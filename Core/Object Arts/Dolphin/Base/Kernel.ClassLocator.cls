@@ -256,7 +256,7 @@ removeAlias: aSymbol
 	Note that it is not strictly necessary to do this because the Aliases collection
 	is weak, and the alias will disappear if the class is removed."
 
-	Aliases removeKey: aSymbol asSymbol ifAbsent: []!
+	Aliases removeKey: aSymbol asSymbol ifAbsent: nil!
 
 stbConvertFrom: anSTBClassFormat 
 	"Convert from earlier version models.

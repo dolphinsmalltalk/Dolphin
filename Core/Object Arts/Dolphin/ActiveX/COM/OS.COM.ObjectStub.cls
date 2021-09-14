@@ -115,7 +115,7 @@ free
 	preservedCookie := cookie.
 	count := 0.
 	cookie := nil.
-	((IdentityRegistry removeKey: object ifAbsent: []) notNil and: [preservedCookie notNil]) 
+	((IdentityRegistry removeKey: object ifAbsent: nil) notNil and: [preservedCookie notNil])
 		ifTrue: 
 			["Notification signal: 'Unregistering ', self printString, ' at ', preservedCookie displayString."
 			Processor unregisterCOMStub: preservedCookie]!

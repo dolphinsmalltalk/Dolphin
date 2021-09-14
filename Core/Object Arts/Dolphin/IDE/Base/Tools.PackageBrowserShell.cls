@@ -570,12 +570,12 @@ onClassRemoved: aClass
 	"Private - The <Behavior>, aClass, has been deleted. Update the receiver's
 	cards as necessary to reflect the classes removal."
 
-	currentCard == #classes 
-		ifTrue: [classesPresenter model remove: aClass ifAbsent: []]
+	currentCard == #classes
+		ifTrue: [classesPresenter model remove: aClass ifAbsent: nil]
 		ifFalse: [self markCardDirty: #classes].
-	currentCard == #methods 
+	currentCard == #methods
 		ifTrue: 
-			[(methodsPresenter list select: [:each | each methodClass == aClass]) 
+			[(methodsPresenter list select: [:each | each methodClass == aClass])
 				do: [:each | methodsPresenter model remove: each]]
 		ifFalse: [self markCardDirty: #methods]!
 
@@ -709,12 +709,11 @@ onMethodAdded: aCompilationResult
 		ifFalse: [self markCardDirty: #methods]!
 
 onMethodRemoved: aCompiledMethod
-	currentCard == #methods 
+	currentCard == #methods
 		ifTrue: 
 			["By this time, the package's may have been updated, so we may not be able to tell
 			 if the method was originally loose, therefore we must just attempt to remove it regardless."
-
-			methodsPresenter model remove: aCompiledMethod ifAbsent: []]
+			methodsPresenter model remove: aCompiledMethod ifAbsent: nil]
 		ifFalse: [self markCardDirty: #methods]!
 
 onMethodRepackaged: aCompiledMethod from: oldPackage to: newPackage 
@@ -794,7 +793,7 @@ onVariableRemoved: aVariableBinding
 	The variables pane must be kept up to date."
 
 	currentCard == #variables
-		ifTrue: [variablesPresenter model remove: aVariableBinding fullyQualifiedReference ifAbsent: []]
+		ifTrue: [variablesPresenter model remove: aVariableBinding fullyQualifiedReference ifAbsent: nil]
 		ifFalse: [self markCardDirty: #variables]!
 
 onVariableRenamed: aVariableBinding from: aBindingReference
@@ -803,7 +802,7 @@ onVariableRenamed: aVariableBinding from: aBindingReference
 
 	currentCard == #variables
 		ifTrue: 
-			[(variablesPresenter model remove: aBindingReference ifAbsent: []) notNil
+			[(variablesPresenter model remove: aBindingReference ifAbsent: nil) notNil
 				ifTrue: [variablesPresenter model add: aVariableBinding fullyQualifiedReference]]
 		ifFalse: [self markCardDirty: #variables]!
 

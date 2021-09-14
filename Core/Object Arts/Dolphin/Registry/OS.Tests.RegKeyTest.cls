@@ -17,7 +17,7 @@ setUp
 
 tearDown
 	super tearDown.
-	RegKey userRoot removeKey: 'Software\Object Arts\Test' ifAbsent: [].
+	RegKey userRoot removeKey: 'Software\Object Arts\Test' ifAbsent: nil.
 	testKey := nil!
 
 testCreateUnderRoot

@@ -194,10 +194,10 @@ disableWarning: anInteger
 
 	DisabledWarnings add: anInteger!
 
-enableWarning: anInteger 
+enableWarning: anInteger
 	"Enable the compiler warning with the specified code."
 
-	DisabledWarnings remove: anInteger ifAbsent: []!
+	DisabledWarnings remove: anInteger ifAbsent: nil!
 
 errorClass
 	^CompilerErrorNotification!

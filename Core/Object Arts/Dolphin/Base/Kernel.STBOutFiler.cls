@@ -110,7 +110,7 @@ register: anObject asGlobal: aSymbol
 		ifFalse: [globals at: anObject ifAbsentPutClean: [OrderedCollection new]]) add: aSymbol!
 
 removeOverrideFor: anObject
-	anObject isNil ifFalse: [proxyOverrides removeKey: anObject ifAbsent: []]!
+	anObject isNil ifFalse: [proxyOverrides removeKey: anObject ifAbsent: nil]!
 
 reset
 	"Private - Reset the instance.

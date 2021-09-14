@@ -175,15 +175,15 @@ environmentForInstanceVariable: aString in: aClass
 					[(each whichSelectorsRead: aString) do: [:sel | selectorEnvironment addClass: each selector: sel]]].
 	^selectorEnvironment!
 
-flushCachesFor: aClass 
+flushCachesFor: aClass
 	| nonMetaClass |
 	selectorCache isNil ifTrue: [^self].
 	nonMetaClass := aClass instanceClass.
 	nonMetaClass withAllSubclasses do: 
-			[:each | 
+			[:each |
 			selectorCache
-				removeKey: each ifAbsent: [];
-				removeKey: each class ifAbsent: []]!
+				removeKey: each ifAbsent: nil;
+				removeKey: each class ifAbsent: nil]!
 
 includesCategory: aCategory 
 	^(self classNamesFor: aCategory) notEmpty!
@@ -287,29 +287,29 @@ problemCount
 removeClass: aClass classVariable: aSymbol
 	| vars |
 	vars := classVariables at: aClass fullName ifAbsent: [Set new].
-	vars remove: aSymbol ifAbsent: [].
-	vars isEmpty ifTrue: [classVariables removeKey: aClass fullName ifAbsent: []].
+	vars remove: aSymbol ifAbsent: nil.
+	vars isEmpty ifTrue: [classVariables removeKey: aClass fullName ifAbsent: nil].
 	self flushCachesFor: aClass!
 
 removeClass: aClass instanceVariable: aString
 	| vars |
 	vars := instanceVariables at: aClass fullName ifAbsent: [Set new].
-	vars remove: aString ifAbsent: [].
-	vars isEmpty ifTrue: [instanceVariables removeKey: aClass fullName ifAbsent: []].
+	vars remove: aString ifAbsent: nil.
+	vars isEmpty ifTrue: [instanceVariables removeKey: aClass fullName ifAbsent: nil].
 	self flushCachesFor: aClass!
 
 removeClass: aClass instanceVariableReader: aString
 	| vars |
 	vars := instanceVariableReaders at: aClass fullName ifAbsent: [Set new].
-	vars remove: aString ifAbsent: [].
-	vars isEmpty ifTrue: [instanceVariableReaders removeKey: aClass fullName ifAbsent: []].
+	vars remove: aString ifAbsent: nil.
+	vars isEmpty ifTrue: [instanceVariableReaders removeKey: aClass fullName ifAbsent: nil].
 	self flushCachesFor: aClass!
 
 removeClass: aClass instanceVariableWriter: aString
 	| vars |
 	vars := instanceVariableWriters at: aClass fullName ifAbsent: [Set new].
-	vars remove: aString ifAbsent: [].
-	vars isEmpty ifTrue: [instanceVariableWriters removeKey: aClass fullName ifAbsent: []].
+	vars remove: aString ifAbsent: nil.
+	vars isEmpty ifTrue: [instanceVariableWriters removeKey: aClass fullName ifAbsent: nil].
 	self flushCachesFor: aClass!
 
 selectorCacheFor: aClass

@@ -190,7 +190,7 @@ name: aView as: aNameStringOrNil
 			(aNameStringOrNil isNil or: [aNameStringOrNil isEmpty])
 				ifTrue: 
 					["Request to remove name for aView"
-					^names removeKey: aView ifAbsent: []].
+					^names removeKey: aView ifAbsent: nil].
 
 			"Otherwise name is specified so check that it is unique"
 			exists := names keyAtEqualValue: aNameStringOrNil ifAbsent: [].
@@ -267,9 +267,8 @@ removeSubView: aView
 	it continues to live."
 
 	super removeSubView: aView.
-	self hasLayoutManager
-		ifTrue: [self layoutManager removeSubView: aView].
-	names isNil ifFalse: [names removeKey: aView ifAbsent: []].
+	self hasLayoutManager ifTrue: [self layoutManager removeSubView: aView].
+	names isNil ifFalse: [names removeKey: aView ifAbsent: nil].
 	^aView!
 
 ttnGetDispInfo: anNMTTDISPINFOW

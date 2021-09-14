@@ -260,16 +260,12 @@ unregister
 	"Tidy away the residue of a previous #register from the Windows registration database."
 
 	self progID
-		ifNotNil:
-			[:pid | 
-			(RegKey classesRoot)
-				removeKey: pid
-					ifAbsent: [];
-				removeKey: self versionIndependentProgID
-					ifAbsent: []].
-	(RegKey classesRoot at: 'CLSID')
-		removeKey: self clsid asString
-		ifAbsent: []!
+		ifNotNil: 
+			[:pid |
+			RegKey classesRoot
+				removeKey: pid ifAbsent: nil;
+				removeKey: self versionIndependentProgID ifAbsent: nil].
+	(RegKey classesRoot at: 'CLSID') removeKey: self clsid asString ifAbsent: nil!
 
 unregisterClassFactory
 	"Revoke and unregistery any class factories on the receiver."

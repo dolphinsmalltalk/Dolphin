@@ -208,7 +208,7 @@ bindingFor: aString
 bindingsDo: aMonadicValuable
 	self associationsDo: aMonadicValuable!
 
-changeKey: key to: newKey 
+changeKey: key to: newKey
 	"Private - Change the key of the element of the receiver with key, key, to
 	newKey (e.g. rename a variable). Answer the <Association> whose
 	whose key was changed."
@@ -219,7 +219,7 @@ changeKey: key to: newKey
 	assoc setKey: newKey.
 	"We want to preserve the association of the element we're renaming, so we must
 	 remove any existing element with the same name"
-	self removeKey: newKey ifAbsent: [].
+	self removeKey: newKey ifAbsent: nil.
 	self add: assoc.
 	^assoc!
 

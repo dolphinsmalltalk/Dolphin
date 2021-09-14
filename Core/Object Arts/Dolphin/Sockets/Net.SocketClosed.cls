@@ -21,7 +21,7 @@ initialize
 	self errorCodes do: [:each | ErrorClasses at: each put: self]!
 
 uninitialize
-	self errorCodes do: [:each | ErrorClasses removeKey: each ifAbsent: []]! !
+	self errorCodes do: [:each | ErrorClasses removeKey: each ifAbsent: nil]! !
 !Net.SocketClosed class categoriesForMethods!
 errorCode!constants!private! !
 errorCodes!constants!private! !

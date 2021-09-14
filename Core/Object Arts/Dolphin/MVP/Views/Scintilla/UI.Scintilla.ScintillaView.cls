@@ -4696,12 +4696,12 @@ removeBraceHighlight
 
 	self highlightBracesAt: 0 and: 0!
 
-removeKeyBinding: aScintillaKeyBinding 
+removeKeyBinding: aScintillaKeyBinding
 	| bindings |
 	bindings := self keyBindings.
-	(bindings removeKey: aScintillaKeyBinding ifAbsent: []) 
+	(bindings removeKey: aScintillaKeyBinding ifAbsent: nil)
 		ifNotNil: 
-			[:removed | 
+			[:removed |
 			self sciClearCmdKey: removed scintillaKeyCode.
 			keyBindings := bindings]!
 
@@ -4746,7 +4746,7 @@ requiredLineMarginWidth
 	^self widthOfText: '_' , (self lineCount max: 999) displayString inStyle: #lineNumber!
 
 resetElementColor: anInteger
-	elementColors removeKey: anInteger ifAbsent: [].
+	elementColors removeKey: anInteger ifAbsent: nil.
 	self sciResetElementColour: anInteger!
 
 resetKeyBindings
@@ -11384,7 +11384,7 @@ mergeKeyBindings: aCollectionOfScintillaKeyBindings
 	aCollectionOfScintillaKeyBindings do: 
 			[:each |
 			each message == SCI_NULL
-				ifTrue: [bindings removeKey: each acceleratorKey ifAbsent: []]
+				ifTrue: [bindings removeKey: each acceleratorKey ifAbsent: nil]
 				ifFalse: [bindings at: each acceleratorKey put: each copy]].
 	^bindings values!
 

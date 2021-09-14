@@ -172,28 +172,25 @@ name: aView as: aNameStringOrNil
 	"Sets the name of aView within the receiver to be aNameStringOrNil"
 
 	| exists |
-
 	"Redirect name request to the immediate parent of aView
 	if we are not that parent"
-	aView parentView == self ifFalse: [
-		^aView parentView name: aView as: aNameStringOrNil].
+	aView parentView == self ifFalse: [^aView parentView name: aView as: aNameStringOrNil].
 
 	"Check that aView is one of our sub-views"
 	"self assert: [self subViews includes: aView]."
-
-	(aNameStringOrNil isNil or: [aNameStringOrNil isEmpty]) ifTrue: [
-		"Request to remove name for aView"
-		^names removeKey: aView ifAbsent: []].
+	(aNameStringOrNil isNil or: [aNameStringOrNil isEmpty])
+		ifTrue: 
+			["Request to remove name for aView"
+			^names removeKey: aView ifAbsent: nil].
 
 	"Check that the operation isn't null"
-	aView name=aNameStringOrNil ifTrue: [^self].
+	aView name = aNameStringOrNil ifTrue: [^self].
 
 	"Otherwise name is specified so check that it is unique"
 	exists := names detect: [:each | each = aNameStringOrNil] ifNone: [].
 	(exists isNil or: [exists == self])
 		ifTrue: [names at: aView put: aNameStringOrNil]
-		ifFalse: [self errorDuplicateName: aNameStringOrNil].
-!
+		ifFalse: [self errorDuplicateName: aNameStringOrNil]!
 
 nameOf: aView
 	"Answer the name of aView within the receiver or nil
@@ -237,9 +234,8 @@ removeSubView: aView
 	it continues to live."
 
 	super removeSubView: aView.
-	self hasLayoutManager
-		ifTrue: [self layoutManager removeSubView: aView].
-	names removeKey: aView ifAbsent: [].
+	self hasLayoutManager ifTrue: [self layoutManager removeSubView: aView].
+	names removeKey: aView ifAbsent: nil.
 	^aView!
 
 resolutionScaledBy: scale

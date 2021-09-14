@@ -145,7 +145,7 @@ defineClass: aString
 	newClass isNil
 		ifTrue: 
 			[| newMetaclass |
-			removedClasses remove: newClassName ifAbsent: [].
+			removedClasses remove: newClassName ifAbsent: nil.
 			newClass := RBClass named: newClassName.
 			newMetaclass := RBMetaclass named: newClassName.
 			newClass
@@ -241,8 +241,8 @@ removeClassNamed: aSymbol
 	removedClass := self classNamed: aSymbol.
 	removedClass subclasses do: [:each | self removeClassNamed: each fullName].
 	removedClasses add: aSymbol.
-	newClasses removeKey: aSymbol ifAbsent: [].
-	changedClasses removeKey: aSymbol ifAbsent: [].
+	newClasses removeKey: aSymbol ifAbsent: nil.
+	changedClasses removeKey: aSymbol ifAbsent: nil.
 	removedClass environment ifNotNil: [:env | env removeVariableNamed: removedClass unqualifiedName].
 	self flushCaches.
 	^changes removeClassNamed: aSymbol!

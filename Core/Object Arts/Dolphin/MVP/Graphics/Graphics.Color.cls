@@ -1289,7 +1289,7 @@ red: redValue green: greenValue blue: blueValue
 removeNamed: aSymbol
 	"Unregister the specified named color."
 
-	^NamedColors removeKey: aSymbol ifAbsent: []!
+	^NamedColors removeKey: aSymbol ifAbsent: nil!
 
 rgbClass
 	^RGB!

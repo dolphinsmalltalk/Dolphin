@@ -53,10 +53,10 @@ addGrabbers
 	(self addGrabberFor: #bottomCenter of: primaryView) beVerticalOnly
 !
 
-addSelectionFor: aView 
+addSelectionFor: aView
 	"Private - Adds a new selection"
 
-	self selections remove: aView ifAbsent: [].
+	self selections remove: aView ifAbsent: nil.
 	self selections addFirst: aView.
 	self updatePrimarySelection.
 	self updateAdornment.

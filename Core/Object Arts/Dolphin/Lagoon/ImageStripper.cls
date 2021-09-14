@@ -160,7 +160,7 @@ basicDeleteMethod: aCompiledMethod
 					(each canUnderstand: getSelector)
 						ifFalse: 
 							[(each compiledMethodAt: setSelector ifAbsent: [])
-								ifNotNil: [:setter | deploymentContext aspectSetters remove: setter ifAbsent: []]]]].
+								ifNotNil: [:setter | deploymentContext aspectSetters remove: setter ifAbsent: nil]]]].
 	^true!
 
 behaviorsWithIgnoredAspectSetters
@@ -579,7 +579,7 @@ finishedStrippingResources
 finishedWithAll: aCollectionOfSymbols
 	| methods |
 	methods := deploymentContext class methodDictionary.
-	aCollectionOfSymbols do: [:each | methods removeKey: each ifAbsent: []].
+	aCollectionOfSymbols do: [:each | methods removeKey: each ifAbsent: nil].
 	super finishedWithAll: aCollectionOfSymbols!
 
 finishedWithStripping
@@ -1302,7 +1302,7 @@ referencesFromObjectsInClasses: aCollection
 			[:eachMethod |
 			| messages |
 			messages := eachMethod messages
-						remove: eachMethod selector ifAbsent: [];
+						remove: eachMethod selector ifAbsent: nil;
 						yourself.
 			messages isEmpty ifFalse: [messageMap at: eachMethod put: messages]].
 

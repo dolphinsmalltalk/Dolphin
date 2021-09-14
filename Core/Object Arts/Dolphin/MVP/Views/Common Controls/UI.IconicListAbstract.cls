@@ -441,7 +441,7 @@ newSelectionsFromEvent: aMouseEvent
 	anchorIsSelected := newSelections includes: anchorIndex.
 	shiftRange do: (anchorIsSelected
 				ifTrue: [[:i | newSelections add: i]]
-				ifFalse: [[:i | newSelections remove: i ifAbsent: []]]).
+				ifFalse: [[:i | newSelections remove: i ifAbsent: nil]]).
 	"For some reason, the item clicked is always left selected, even if we are deselecting the rest
 	of the marked range. This is not true in e.g. Windows Explorer--why is it in Dolphin?"
 	newSelections add: itemClicked.

@@ -87,7 +87,7 @@ initialize
 
 	Unclassified := Table at: self unclassifiedName ifAbsentPut: [self newNamed: self unclassifiedName].
 	Deprecated := Table at: 'Deprecated' ifAbsentPut: [self newNamed: 'Deprecated'].
-	Table removeKey: 'No category' ifAbsent: []!
+	Table removeKey: 'No category' ifAbsent: nil!
 
 name: cat
 	"Answer a new or existing class category with the specified name."

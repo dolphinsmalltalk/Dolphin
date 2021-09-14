@@ -117,8 +117,8 @@ printOn: aStream
 problemCount
 	^self changesSize!
 
-removeChange: aChange 
-	changes remove: aChange ifAbsent: []!
+removeChange: aChange
+	changes remove: aChange ifAbsent: nil!
 
 removeClass: aClass
 	^self addChange: (RemoveClassChange removeClassName: aClass fullName)!

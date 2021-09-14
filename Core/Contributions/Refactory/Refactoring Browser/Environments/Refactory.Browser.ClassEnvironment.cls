@@ -101,7 +101,7 @@ problemCount
 
 removeClass: aClass
 	(aClass isMeta ifTrue: [metaClasses] ifFalse: [classes]) remove: aClass instanceClass fullName
-		ifAbsent: []!
+		ifAbsent: nil!
 
 selectorsForClass: aClass do: aBlock
 	#rbFix.	"Implement to avoid need for #includesClass: test in loop by performing it up front."

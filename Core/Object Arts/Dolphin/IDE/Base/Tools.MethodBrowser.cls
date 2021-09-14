@@ -715,19 +715,19 @@ onMethodAdded: aCompilationResult
 	in order to guarantee that these are kept consistent"
 	self selectableItems view updateAll!
 
-onMethodCategorized: aCompiledMethod 
+onMethodCategorized: aCompiledMethod
 	"Private - The development system has re-categorized aCompiledMethod, update 
 	appropriately, depending on whether the method passes the receiver's filter."
 
-	(filter value: aCompiledMethod) 
+	(filter value: aCompiledMethod)
 		ifTrue: [self model refresh: aCompiledMethod ifAbsent: [self model add: aCompiledMethod]]
-		ifFalse: [self model remove: aCompiledMethod ifAbsent: []]!
+		ifFalse: [self model remove: aCompiledMethod ifAbsent: nil]!
 
-onMethodRemoved: aCompiledMethod 
+onMethodRemoved: aCompiledMethod
 	"Private - The development system has removed aCompiledMethod. Remove this from
 	our methods display if it includes it"
 
-	self model remove: aCompiledMethod ifAbsent: [].
+	self model remove: aCompiledMethod ifAbsent: nil.
 	self model isEmpty ifTrue: [self noMethodsView ensureVisible].
 	"There may be visible effects (override markers) that need to be updated even when
 	the removed method is from a different class. Force the method presenter to redraw 

@@ -47,7 +47,7 @@ addInstanceVariable: aString
 
 addMethod: aRBMethod
 	(newMethods ifNil: [newMethods := IdentityDictionary new]) at: aRBMethod selector put: aRBMethod.
-	removedMethods notNil ifTrue: [removedMethods remove: aRBMethod selector ifAbsent: []]!
+	removedMethods notNil ifTrue: [removedMethods remove: aRBMethod selector ifAbsent: nil]!
 
 addSubclass: aRBClass 
 	self subclasses add: aRBClass!
@@ -430,13 +430,13 @@ removeInstanceVariable: aString
 	self privateInstanceVariableNames remove: aString.
 	model removeInstanceVariable: aString from: self!
 
-removeMethod: aSelector 
-	self newMethods removeKey: aSelector ifAbsent: [].
+removeMethod: aSelector
+	self newMethods removeKey: aSelector ifAbsent: nil.
 	model removeMethod: aSelector from: self.
 	self removedMethods add: aSelector!
 
-removeSubclass: aRBClass 
-	self subclasses remove: aRBClass ifAbsent: []!
+removeSubclass: aRBClass
+	self subclasses remove: aRBClass ifAbsent: nil!
 
 renameInstanceVariable: oldName to: newName around: aBlock 
 	self privateInstanceVariableNames 
@@ -455,7 +455,7 @@ selectors
 	self isDefined
 		ifTrue: 
 			[selectors addAll: self realClass selectors.
-			removedMethods notNil ifTrue: [removedMethods do: [:each | selectors remove: each ifAbsent: []]]].
+			removedMethods notNil ifTrue: [removedMethods do: [:each | selectors remove: each ifAbsent: nil]]].
 	^selectors!
 
 setName: aSymbol 

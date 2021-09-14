@@ -217,7 +217,7 @@ basicClassPool: aDictionaryOrNil
 	classPool := aDictionaryOrNil ifNotNil: [aDictionaryOrNil isEmpty ifFalse: [aDictionaryOrNil]]!
 
 basicRemoveBinding: aVariableBinding
-	classPool removeKey: aVariableBinding key ifAbsent: []!
+	classPool removeKey: aVariableBinding key ifAbsent: nil!
 
 binding
 	"Answer the <VariableBinding> of this namespace within it's environment."

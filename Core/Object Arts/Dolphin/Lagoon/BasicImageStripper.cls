@@ -55,10 +55,7 @@ basicDeleteClass: aClass
 
 basicDeleteMethod: aCompiledMethod
 	self logMethod: aCompiledMethod.
-	aCompiledMethod methodClass methodDictionary removeKey: aCompiledMethod selector
-		ifAbsent: 
-			["Could be in a weakly held development class which has evaporated"
-			]!
+	aCompiledMethod methodClass methodDictionary removeKey: aCompiledMethod selector ifAbsent: nil	"Could be in a weakly held development class which has evaporated"!
 
 collectGarbage: iterations
 	"Private - Perform a few GC's to clear away old stuff.
@@ -225,7 +222,7 @@ finishedWithAll: aCollectionOfSymbols
 			current := self class.
 			removed := false.
 			[current name == #Object] whileFalse: 
-					[(current methodDictionary removeKey: each ifAbsent: []) ifNotNil: [removed := true].
+					[(current methodDictionary removeKey: each ifAbsent: nil) ifNotNil: [removed := true].
 					current := current superclass].
 			removed ifFalse: [self notify: self class name , ' hierarchy does not define ' , each printString]].
 	Object flushMethodCache!

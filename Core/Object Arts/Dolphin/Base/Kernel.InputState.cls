@@ -485,7 +485,7 @@ registerAsDispatcher
 
 	VM registryAt: #Dispatcher put: self!
 
-removeWindowAt: aHandle 
+removeWindowAt: aHandle
 	"Private - Unregister a Window object with the specified handle."
 
 	"Implementation Note: Interrupts are disabled to prevent concurrent access to the windows
@@ -494,7 +494,7 @@ removeWindowAt: aHandle
 	| bEnabled |
 	aHandle isNil ifTrue: [^self].
 	bEnabled := Processor enableAsyncEvents: false.
-	windows removeKey: aHandle asInteger ifAbsent: [].
+	windows removeKey: aHandle asInteger ifAbsent: nil.
 	lastWindow := nil.
 	Processor enableAsyncEvents: bEnabled!
 

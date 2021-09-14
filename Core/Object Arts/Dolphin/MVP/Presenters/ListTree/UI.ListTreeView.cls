@@ -1308,14 +1308,12 @@ refreshFromModelBelow: anObject
 	are"
 
 	| oldSels newOrder legit newSels |
-
 	"there may be nodes (now removed) that are still on our hidden-expanded list; there is no
 	way that we can check for that case so just we discard the whole hidden-expanded list"
 	self discardHiddenExpanded.
 
 	"if the object is not nil, and is not currently displayed, then there's no need to do more"
-	(anObject notNil and: [(self isItemDisplayed: anObject) not])
-		ifTrue: [^ self].
+	(anObject notNil and: [(self isItemDisplayed: anObject) not]) ifTrue: [^self].
 
 	"we'll need to allow for selection changes"
 	oldSels := self selections.
@@ -1335,7 +1333,7 @@ refreshFromModelBelow: anObject
 
 	"now we have to add any 'new' items.  We get lazy, just add them at the
 	end then update the display order"
-	self model do: [:each | legit remove: each ifAbsent: []].
+	self model do: [:each | legit remove: each ifAbsent: nil].
 	legit do: [:each | self addItem: each afterIndex: self model size].
 	self updateDisplayOrderFrom: self allDisplayedItems to: newOrder.
 
@@ -1355,7 +1353,7 @@ refreshFromModelBelow: anObject
 	Sigh..."
 	newSels size = oldSels size
 		ifTrue: [self presenter noEventsDo: [self selections: newSels]]
-		ifFalse: [self selections: newSels].!
+		ifFalse: [self selections: newSels]!
 
 refreshItemState: anObject
 	"private -- update the 'state' image for anObject"
@@ -1386,7 +1384,7 @@ removeExpanded: anObject
 	"private -- ensure that anObject is not on our list of expanded
 	nodes"
 
-	expanded remove: anObject ifAbsent: [].!
+	expanded remove: anObject ifAbsent: nil!
 
 removeFromDisplay: anObject
 	"private -- ensure that anObject is not displayed"
@@ -1404,7 +1402,7 @@ removeHiddenExpanded: anObject
 	-	when the user has explicitly expanded *or* collapsed a node
 	-	when we find that anObject is no longer part of the tree"
 
-	self retainExpanded ifTrue: [hiddenExpanded remove: anObject ifAbsent: []].!
+	self retainExpanded ifTrue: [hiddenExpanded remove: anObject ifAbsent: nil]!
 
 removeZombies
 	"private -- when an object is removed, we need to remove any displayed children too;

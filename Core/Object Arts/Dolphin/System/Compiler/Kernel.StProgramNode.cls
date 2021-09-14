@@ -138,7 +138,7 @@ copyCommentsFrom: aNode
 	| newComments |
 	newComments := OrderedCollection new.
 	aNode nodesDo: [:each | newComments addAll: each comments].
-	self nodesDo: [:each | each comments do: [:comment | newComments remove: comment ifAbsent: []]].
+	self nodesDo: [:each | each comments do: [:comment | newComments remove: comment ifAbsent: nil]].
 	newComments isEmpty ifTrue: [^self].
 	self comments: (newComments asSortedCollection: [:a :b | a first < b first])!
 

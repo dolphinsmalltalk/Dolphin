@@ -241,7 +241,7 @@ basicRemovePackage: aPackage
 	Answer the Package."
 
 	self packages removeKey: aPackage name.
-	self basePackages remove: aPackage ifAbsent: [].
+	self basePackages remove: aPackage ifAbsent: nil.
 	defaultPackage == aPackage ifTrue: [defaultPackage := nil].
 	aPackage removeEventsTriggeredFor: self.
 	^aPackage!
@@ -614,7 +614,7 @@ looseMethodRemoved: aCompiledMethod
 	looseMethods notNil
 		ifTrue: 
 			[(looseMethods lookup: aCompiledMethod methodClass)
-				ifNotNil: [:selectors | selectors removeKey: aCompiledMethod selector ifAbsent: []]]!
+				ifNotNil: [:selectors | selectors removeKey: aCompiledMethod selector ifAbsent: nil]]!
 
 looseMethods
 	"Answer an <LookupTable> that contains further <LookupTable> for each class mapping the selectors of the loose methods in that class to the owning package (i.e. those methods added by a package to classes in other packages). This information is cached to speed up various tooling scenarios such as the tracing of pre-requisites,	particularly where the whole dependency tree must be calculated (as when uninstalling packages). Note that the information may be outdated if requested when event processing is disabled, but as this only applies during installation and uninstallation this is not material since the cache is then bypassed and is regenerated when event processing is again enabled."
@@ -753,15 +753,15 @@ onClassRemoved: aClass
 
 	| changed |
 	self isProcessingEvents ifFalse: [^self].
-	packagedVariables removeKey: aClass fullyQualifiedReference ifAbsent: [].
+	packagedVariables removeKey: aClass fullyQualifiedReference ifAbsent: nil.
 	"We must inform all packages, not just the package owning the class, in case any other
 	packages include loose methods of the class. In case they do we empty our loose method
 	cache."
 	looseMethods isNil
 		ifFalse: 
 			[looseMethods
-				removeKey: aClass ifAbsent: [];
-				removeKey: aClass class ifAbsent: []].
+				removeKey: aClass ifAbsent: nil;
+				removeKey: aClass class ifAbsent: nil].
 	changed := Set new.
 	self packages do: [:each | (each onClassRemoved: aClass) ifTrue: [changed add: each]].
 	changed do: [:each | each membershipChanged].
@@ -909,7 +909,7 @@ onVariableRemoved: aVariableBinding
 	| package ref |
 	self isProcessingEvents ifFalse: [^self].
 	ref := aVariableBinding fullyQualifiedReference.
-	package := packagedVariables removeKey: ref ifAbsent: [].
+	package := packagedVariables removeKey: ref ifAbsent: nil.
 	package isNil ifFalse: [package basicRemoveVariableNamed: ref].
 	self membershipChanged: package.
 	"Removing a global resets all pre-rereqs"
@@ -1076,7 +1076,7 @@ renamePackage: aPackage to: aStringPathname
 	existing := self packageNamed: newName ifNone: [].
 	(existing isNil or: [existing == aPackage]) ifFalse: [^self error: 'Package already exists'].
 	self packages
-		removeKey: aPackage name ifAbsent: [];
+		removeKey: aPackage name ifAbsent: nil;
 		at: newName put: aPackage.
 	aPackage packageFileName: aStringPathname.
 	self

@@ -109,7 +109,7 @@ developmentClasses
 			[:p |
 			| package |
 			package := Package manager packageNamed: p ifNone: [].
-			package notNil ifTrue: [package classes do: [:c | classes remove: c ifAbsent: []]]].
+			package notNil ifTrue: [package classes do: [:c | classes remove: c ifAbsent: nil]]].
 	^classes!
 
 productName

@@ -246,8 +246,7 @@ preconditions
 remainingTemporaries
 	| temps |
 	temps := modifiedParseTree allDefinedVariables asSet.
-	extractedParseTree allDefinedVariables 
-		do: [:each | temps remove: each ifAbsent: []].
+	extractedParseTree allDefinedVariables do: [:each | temps remove: each ifAbsent: nil].
 	^temps!
 
 reorderParametersToMatch: aSelector

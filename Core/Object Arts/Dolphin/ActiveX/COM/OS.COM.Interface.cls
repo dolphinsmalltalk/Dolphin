@@ -1050,8 +1050,8 @@ unregister
 	developing (primarily for deinstalling packages), and has no run-time 
 	significance."
 
-	(_guid notNil and: [InterfaceClasses notNil]) ifTrue: [
-		InterfaceClasses removeKey: self iid ifAbsent: []]! !
+	(_guid notNil and: [InterfaceClasses notNil])
+		ifTrue: [InterfaceClasses removeKey: self iid ifAbsent: nil]! !
 !OS.COM.Interface class categoriesForMethods!
 addFunction:selector:descriptor:!automatic generation!public! !
 argSizes!initializing!private! !

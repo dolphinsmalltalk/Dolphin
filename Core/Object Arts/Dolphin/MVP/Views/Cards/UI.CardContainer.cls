@@ -283,14 +283,14 @@ refreshTabs
 	tabs model list: arrangements.
 	currentCard ifNotNil: [layout showCard: currentCard]!
 
-removeSubView: aView 
+removeSubView: aView
 	"Removes aView as a subview of the receiver. First remove
 	any associated tab. If aView is indeed a subview of the receiver then it is destroyed. If not,
 	it continues to live."
 
 	| arrangement |
 	arrangement := self arrangementOf: aView.
-	tabs model remove: arrangement ifAbsent: [].
+	tabs model remove: arrangement ifAbsent: nil.
 	super removeSubView: aView!
 
 tabOrientation

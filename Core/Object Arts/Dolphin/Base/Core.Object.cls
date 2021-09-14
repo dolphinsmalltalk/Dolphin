@@ -1171,10 +1171,10 @@ removeDependent: anObject
 
 	| dependents |
 	(dependents := self getDependents) isNil
-		ifFalse: [
-			dependents
-				remove: anObject ifAbsent: [];
-				isEmpty ifTrue: [self setDependents: nil]].
+		ifFalse: 
+			[(dependents
+				remove: anObject ifAbsent: nil;
+				isEmpty) ifTrue: [self setDependents: nil]].
 	^anObject!
 
 removeEventsTriggeredFor: anObject
@@ -1233,15 +1233,15 @@ setDependents: aDependentsCollectionOrNil
 	Answer the receiver."
 
 	aDependentsCollectionOrNil isNil
-		ifTrue: [_DependentsRegister removeKey: self ifAbsent: []]
+		ifTrue: [_DependentsRegister removeKey: self ifAbsent: nil]
 		ifFalse: [_DependentsRegister at: self put: aDependentsCollectionOrNil]!
 
-setEvents: anEventsCollectionOrNil 
+setEvents: anEventsCollectionOrNil
 	"Private - Set the EventsCollection of the receiver to be anEventsCollectionOrNil.
 	Answer the receiver."
 
-	(anEventsCollectionOrNil isNil or: [anEventsCollectionOrNil isEmpty]) 
-		ifTrue: [_EventsRegister removeKey: self ifAbsent: []]
+	(anEventsCollectionOrNil isNil or: [anEventsCollectionOrNil isEmpty])
+		ifTrue: [_EventsRegister removeKey: self ifAbsent: nil]
 		ifFalse: [_EventsRegister at: self put: anEventsCollectionOrNil]!
 
 setSpecialBehavior: anInteger

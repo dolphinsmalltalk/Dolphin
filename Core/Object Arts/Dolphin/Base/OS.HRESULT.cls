@@ -244,10 +244,10 @@ status: code facility: fac
 
 	^self severity: SEVERITY_ERROR facility: fac code: code!
 
-unregisterFacility: anInteger 
+unregisterFacility: anInteger
 	"Unregister the specified facility code name for the specified facility code"
 
-	Facilities removeKey: anInteger ifAbsent: []!
+	Facilities removeKey: anInteger ifAbsent: nil!
 
 win32Error: anInteger 
 	^self 

@@ -102,8 +102,8 @@ receiver: aValueNode selectorParts: keywordTokens arguments: valueNodes
 						ifFalse: [^self]]]!
 
 sentMessages
-	^(super sentMessages)
-		remove: self selector ifAbsent: [];
+	^super sentMessages
+		remove: self selector ifAbsent: nil;
 		yourself! !
 !Refactory.Browser.RBPatternMessageNode categoriesForMethods!
 copyInContext:!matching!public! !

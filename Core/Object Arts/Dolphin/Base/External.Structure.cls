@@ -937,7 +937,7 @@ uninitializeBeforeRemove
 unregister
 	"Unregister the receiver as a Record class for its guid."
 
-	(_guid notNil and: [RecordClasses notNil]) ifTrue: [RecordClasses removeKey: _guid ifAbsent: []]!
+	(_guid notNil and: [RecordClasses notNil]) ifTrue: [RecordClasses removeKey: _guid ifAbsent: nil]!
 
 withBytes: aByteObject 
 	"Answer a new instance of the receiver with the arguments as its contents"

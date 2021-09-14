@@ -28,7 +28,7 @@ initialize
 	ErrorClasses at: self errorCode put: self!
 
 uninitialize
-	ErrorClasses removeKey: self errorCode ifAbsent: []! !
+	ErrorClasses removeKey: self errorCode ifAbsent: nil! !
 !Net.SocketWaitCancelled class categoriesForMethods!
 errorCode!constants!private! !
 initialize!initializing!public! !

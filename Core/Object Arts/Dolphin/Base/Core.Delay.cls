@@ -52,7 +52,7 @@ basicCancel
 			[self class
 				cancelTimer;
 				scheduleNext]
-		ifFalse: [Pending remove: self ifAbsent: []]!
+		ifFalse: [Pending remove: self ifAbsent: nil]!
 
 calcResumptionTime
 	"Private - Calculate and answer the value of the millisecond clock after which any Process

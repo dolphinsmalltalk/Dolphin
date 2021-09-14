@@ -244,13 +244,14 @@ removeCategory: category
 			| catalogue |
 			catalogue := c methodsCatalogue.
 			(catalogue keys select: [:e | e name = catName]) do: [:k | catalogue removeKey: k]].
-	Pseuds remove: (Table removeKey: catName ifAbsent: []) ifAbsent: []!
+	Pseuds remove: (Table removeKey: catName ifAbsent: nil) ifAbsent: nil!
 
 removePseud: pseud
 	"Remove the virtual method category, pseud, from the global list of virtual 
 	categories which may be associated with any class."
 
-	^Pseuds notNil ifTrue: [Pseuds remove: (Table removeKey: pseud asString ifAbsent: []) ifAbsent: []]!
+	^Pseuds notNil
+		ifTrue: [Pseuds remove: (Table removeKey: pseud asString ifAbsent: nil) ifAbsent: nil]!
 
 setMethod: method categories: categories
 	"Private - Set the categories of the <CompiledMethod>, method, to be the <Collection> of

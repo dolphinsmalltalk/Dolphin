@@ -166,8 +166,8 @@ removeClasses
 	dolphinTestA := dolphinTestB := dolphinTestC := nil!
 
 removeGlobals
-	#(#TestGlobalA #TestGlobalB #TestGlobalC #TestGlobalD) 
-		do: [:each | Smalltalk removeKey: each ifAbsent: []]!
+	#(#TestGlobalA #TestGlobalB #TestGlobalC #TestGlobalD)
+		do: [:each | Smalltalk removeKey: each ifAbsent: nil]!
 
 renameClass
 	| testA testA2 |

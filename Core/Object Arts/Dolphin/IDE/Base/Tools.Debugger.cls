@@ -2240,7 +2240,7 @@ uninitialize
 unskipSelector: aSymbol of: aClass
 	"Private - Remove the specified method to the set of those skipped by the debugger."
 
-	(self skipTable lookup: aClass) ifNotNil: [:selectors | selectors removeKey: aSymbol ifAbsent: []]! !
+	(self skipTable lookup: aClass) ifNotNil: [:selectors | selectors removeKey: aSymbol ifAbsent: nil]! !
 !Tools.Debugger class categoriesForMethods!
 animatePause!options!public! !
 animatePause:!options!public! !

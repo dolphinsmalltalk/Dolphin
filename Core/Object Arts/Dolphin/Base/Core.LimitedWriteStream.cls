@@ -148,7 +148,7 @@ visit: aCompositeObject do: aNiladicValuable
 					[self alreadyVisited: aCompositeObject.
 					^self].
 			visited add: aCompositeObject].
-	aNiladicValuable ensure: [visited remove: aCompositeObject ifAbsent: []]!
+	aNiladicValuable ensure: [visited remove: aCompositeObject ifAbsent: nil]!
 
 visitedBlock
 	^visitedBlock!

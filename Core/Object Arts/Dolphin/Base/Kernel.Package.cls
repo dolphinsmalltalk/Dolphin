@@ -216,7 +216,7 @@ basicRemoveVariableNamed: aBindingReference
 	"Private - Remove the <BindingReference> from the list of variables owned by the receiver.
 	Answer the argument."
 
-	variableNames remove: aBindingReference ifAbsent: [].
+	variableNames remove: aBindingReference ifAbsent: nil.
 	^aBindingReference!
 
 basicResetPrerequisites
@@ -224,13 +224,13 @@ basicResetPrerequisites
 
 	prerequisiteNames := nil!
 
-basicScriptAt: scriptSymbol put: aString 
+basicScriptAt: scriptSymbol put: aString
 	"Private - Set the script String associated with scriptSymbol."
 
 	scripts := self scripts.
-	aString isEmpty 
+	aString isEmpty
 		ifTrue: 
-			[scripts removeKey: scriptSymbol ifAbsent: [].
+			[scripts removeKey: scriptSymbol ifAbsent: nil.
 			scripts isEmpty ifTrue: [scripts := nil]]
 		ifFalse: [scripts at: scriptSymbol put: aString]!
 

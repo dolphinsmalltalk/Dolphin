@@ -86,7 +86,7 @@ isPermanent: aBoolean
 
 	aBoolean
 		ifTrue: [self permanentCategories add: self]
-		ifFalse: [self permanentCategories remove: self ifAbsent: []]!
+		ifFalse: [self permanentCategories remove: self ifAbsent: nil]!
 
 isPseud
 	"Answer whether the receiver is a pseudo (i.e. not a 'real') category.

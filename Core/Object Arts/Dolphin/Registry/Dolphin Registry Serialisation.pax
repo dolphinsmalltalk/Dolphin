@@ -142,7 +142,7 @@ storeUnderRegKey: aRegKey as: aString
 	aRegKey, with the <readableString> name, aString."
 
 	| key instVars size |
-	aRegKey removeKey: aString ifAbsent: [].
+	aRegKey removeKey: aString ifAbsent: nil.
 	key := aRegKey createKey: aString.
 	size := self basicSize.
 	key

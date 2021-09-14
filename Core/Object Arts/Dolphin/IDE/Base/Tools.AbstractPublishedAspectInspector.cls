@@ -140,7 +140,7 @@ getSubAspectsFor: anObject
 
 	| aspects |
 	aspects := self getAspectsFor: anObject.
-	aspects removeKey: #yourself ifAbsent: [].
+	aspects removeKey: #yourself ifAbsent: nil.
 	^self sortAspects: aspects!
 
 initialize

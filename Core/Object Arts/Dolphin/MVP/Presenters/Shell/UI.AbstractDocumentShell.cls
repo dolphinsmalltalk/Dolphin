@@ -16,12 +16,12 @@ Instance Variables:
 !UI.AbstractDocumentShell categoriesForClass!MVP-Presenters! !
 !UI.AbstractDocumentShell methodsFor!
 
-addToRecentList: aFilenameString 
+addToRecentList: aFilenameString
 	"Adds aFilenameString to the <orderedCollection> of recently accessed files"
 
 	| recentList |
 	recentList := self getRecentList.
-	recentList remove: aFilenameString ifAbsent: [].
+	recentList remove: aFilenameString ifAbsent: nil.
 	recentList addFirst: aFilenameString.
 	self setRecentList: recentList!
 

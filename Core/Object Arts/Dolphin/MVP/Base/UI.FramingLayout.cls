@@ -74,7 +74,7 @@ removeSubView: aView
 	arranged by the receiver.
 	Answer view."
 
-	framings removeKey: aView ifAbsent: [].
+	framings removeKey: aView ifAbsent: nil.
 	^super removeSubView: aView!
 
 reposition: aView to: aPoint 

@@ -54,8 +54,7 @@ register
 removeAllPropertiesOf: anObject
 	"Removes all properties for anObject"
 
-	register removeKey: anObject ifAbsent: []
-	!
+	register removeKey: anObject ifAbsent: nil!
 
 removePropertyOf: anObject at: aSymbol
 	"Removes a property value matching aSymbol for anObject"

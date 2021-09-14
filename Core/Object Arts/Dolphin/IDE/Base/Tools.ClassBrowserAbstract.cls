@@ -1283,15 +1283,14 @@ onMethodAdded: aCompilationResult
 			[| superclass selector |
 			superclass := methodClass superclass.
 			selector := method selector.
-			((visible := (actualClass lookupMethod: selector) == method) and: [superclass notNil]) 
+			((visible := (actualClass lookupMethod: selector) == method) and: [superclass notNil])
 				ifTrue: 
 					["The newly added method is the implementation, perhaps inherited, for the 
 					currently selected class  so we must check to see if it supplants a previous 
 					implementation, which we will need to remove from the list - note that we start 
 					the search in the superclass of the method, just like a Smalltalk supersend."
-
-					(superclass lookupMethod: selector) ifNotNil: [:overridden | 
-						methodBrowserPresenter model remove: overridden ifAbsent: []]]]
+					(superclass lookupMethod: selector)
+						ifNotNil: [:overridden | methodBrowserPresenter model remove: overridden ifAbsent: nil]]]
 		ifFalse: [visible := methodClass == actualClass].
 	visible ifTrue: [self addCategoriesOfMethod: method]!
 
@@ -2438,7 +2437,7 @@ validateProtocol: targetProtocol renameTo: newName
 				errorMsg: 'A protocol named <1p> already exists' << newName.
 			^false].
 	otherClasses := targetProtocol baseBehaviors
-				remove: self actualClass ifAbsent: [];
+				remove: self actualClass ifAbsent: nil;
 				yourself.
 	otherClasses isEmpty
 		ifTrue: 
@@ -2857,8 +2856,8 @@ publishedAspects
 		add: (Aspect integer: #historyListSize);
 		yourself!
 
-removePlugin: aClassBrowserPlugin 
-	^self plugins remove: aClassBrowserPlugin ifAbsent: []!
+removePlugin: aClassBrowserPlugin
+	^self plugins remove: aClassBrowserPlugin ifAbsent: nil!
 
 wordWrapDefinition
 	"Answer true if instances of the receiver use definition word wrapping."

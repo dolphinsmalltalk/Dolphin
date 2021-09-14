@@ -156,7 +156,7 @@ removeSubView: aView
 	arranged by the receiver.
 	Answer view."
 
-	self proportions removeKey: aView ifAbsent: [].
+	self proportions removeKey: aView ifAbsent: nil.
 	^super removeSubView: aView!
 
 reposition: aView to: aPoint

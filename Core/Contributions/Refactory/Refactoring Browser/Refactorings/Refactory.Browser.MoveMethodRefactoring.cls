@@ -158,7 +158,7 @@ getClassForGlobalOrClassVariable
 getNewMethodName
 	| newSelector parameters alreadyDefined methodName newMethodName |
 	parameters := OrderedCollection withAll: parseTree argumentNames.
-	parameters remove: variable ifAbsent: [].
+	parameters remove: variable ifAbsent: nil.
 	self needsToReplaceSelfReferences ifTrue: [parameters add: selfVariableName].
 	methodName := RBMethodName selector: selector arguments: parameters.
 	

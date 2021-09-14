@@ -169,12 +169,12 @@ onMethodAdded: aCompilationResult
 						selector: aCompilationResult method selector.
 			(self passesFilter: rid) ifTrue: [self model add: rid]]!
 
-onMethodRemoved: aCompiledMethod 
-	(aCompiledMethod selector beginsWith: ResourceIdentifier.SelectorPrefix) 
+onMethodRemoved: aCompiledMethod
+	(aCompiledMethod selector beginsWith: ResourceIdentifier.SelectorPrefix)
 		ifTrue: 
 			[self model remove: (ResourceIdentifier class: aCompiledMethod methodClass instanceClass
 						selector: aCompiledMethod selector)
-				ifAbsent: []]!
+				ifAbsent: nil]!
 
 onResourceRepackaged: aResourceIdentifier from: aPackage to: aPackage2 
 	| index |

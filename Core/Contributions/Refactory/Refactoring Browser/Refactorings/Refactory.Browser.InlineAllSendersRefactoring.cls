@@ -40,11 +40,10 @@ number > # of initial self sends."
 
 inlineSelfSends
 	class withAllSubclasses do: 
-			[:each | 
+			[:each |
 			| selectors |
-			selectors := (each whichMethodsReferToSymbol: selector) 
-						collect: [:method | method selector].
-			selectors remove: selector ifAbsent: [].
+			selectors := (each whichMethodsReferToSymbol: selector) collect: [:method | method selector].
+			selectors remove: selector ifAbsent: nil.
 			selectors do: [:sel | self inlineMessagesInClass: each andSelector: sel]]!
 
 messagePattern

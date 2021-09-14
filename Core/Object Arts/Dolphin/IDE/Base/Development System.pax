@@ -6975,7 +6975,7 @@ publishedAspectsOfInstances
 	"answer the <Aspect>s published by instances of the receiver"
 
 	^super publishedAspectsOfInstances
-		removeKey: #hasCheckBoxes ifAbsent: [];
+		removeKey: #hasCheckBoxes ifAbsent: nil;
 		add: (Aspect boolean: #hasButtons);
 		add: (Aspect boolean: #hasLinesAtRoot);
 		add: (Aspect boolean: #hasHotTracking);

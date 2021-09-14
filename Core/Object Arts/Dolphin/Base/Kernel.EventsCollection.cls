@@ -32,8 +32,8 @@ asMinimumRepresentation
 hasActionsForEvent: aSymbol
 	^mutex critical: [(self at: aSymbol ifAbsent: #()) notEmpty]!
 
-removeActionsForEvent: aSymbol 
-	^mutex critical: [self removeKey: aSymbol ifAbsent: []]!
+removeActionsForEvent: aSymbol
+	^mutex critical: [self removeKey: aSymbol ifAbsent: nil]!
 
 removeEventsTriggeredFor: anObject
 	"Private - Removes all events where the target is anObject. If the receiver becomes empty,

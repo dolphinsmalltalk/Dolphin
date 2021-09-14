@@ -15,7 +15,7 @@ addClass: aRBClass
 	self addVariableNamed: aRBClass unqualifiedName value: aRBClass!
 
 addVariableNamed: aSymbol value: anObject
-	removedVariables remove: aSymbol ifAbsent: [].
+	removedVariables remove: aSymbol ifAbsent: nil.
 	newVariables add: (VariableBinding key: aSymbol value: anObject)!
 
 baseEnvironmentName
@@ -50,7 +50,7 @@ removeClass: aRBClass
 	self removeVariableNamed: aRBClass unqualifiedName!
 
 removeVariableNamed: aSymbol
-	newVariables removeKey: aSymbol ifAbsent: [].
+	newVariables removeKey: aSymbol ifAbsent: nil.
 	removedVariables add: aSymbol!
 
 resolveImportedBinding: aBindingContext

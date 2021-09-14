@@ -750,7 +750,7 @@ removeSelector: aSymbol ifAbsent: aNiladicValuable
 	The #methodRemoved: event is triggered to inform interested parties."
 
 	| method |
-	(methodDictionary isNil or: [(method := methodDictionary removeKey: aSymbol ifAbsent: []) isNil])
+	(methodDictionary isNil or: [(method := methodDictionary removeKey: aSymbol ifAbsent: nil) isNil])
 		ifTrue: [^aNiladicValuable value].
 	methodDictionary isEmpty ifTrue: [methodDictionary := nil].
 	self flushMethodCache.
@@ -766,7 +766,7 @@ removeSelectors: aCollection
 	| methods |
 	methodDictionary ifNil: [^#()].
 	"Take advantage of the fact that Sets ignores requests to add nil"
-	methods := aCollection asSet collect: [:each | methodDictionary removeKey: each ifAbsent: []].
+	methods := aCollection asSet collect: [:each | methodDictionary removeKey: each ifAbsent: nil].
 	methodDictionary isEmpty ifTrue: [methodDictionary := nil].
 	self flushMethodCache.
 	methods do: [:each | Smalltalk trigger: #methodRemoved: with: each].

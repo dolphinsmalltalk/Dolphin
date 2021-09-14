@@ -250,7 +250,7 @@ renameConflictingTemporary: aName
 	allNames := Set new
 				addAll: inlineParseTree allDefinedVariables;
 				yourself.
-	allNames remove: aName ifAbsent: [].
+	allNames remove: aName ifAbsent: nil.
 	seqNode := sourceMessage.
 	[seqNode isSequence] whileFalse: [seqNode := seqNode parent].
 	allNames addAll: seqNode allDefinedVariables.	"Add those variables defined in blocks. This might cause a few 

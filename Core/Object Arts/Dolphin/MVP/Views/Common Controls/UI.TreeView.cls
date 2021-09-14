@@ -597,7 +597,7 @@ nmDeleteItem: pNMHDR
 		ifTrue: 
 			[| nmtv |
 			nmtv := self notificationClass fromAddress: pNMHDR.
-			(handleObjectMap removeKey: nmtv itemOld hItem ifAbsent: [])
+			(handleObjectMap removeKey: nmtv itemOld hItem ifAbsent: nil)
 				ifNotNil: [:object | objectHandleMap removeKey: object]].
 	^nil!
 

@@ -225,8 +225,8 @@ onTreeRemovingItem: anObject
 			tree := self treeModel.
 			(tree withAllChildren: anObject) do: 
 					[:each |
-					self model remove: each ifAbsent: [].
-					visibleNodes remove: each ifAbsent: []]]!
+					self model remove: each ifAbsent: nil.
+					visibleNodes remove: each ifAbsent: nil]]!
 
 rebuildFilter
 	| aVirtualTreeModel |

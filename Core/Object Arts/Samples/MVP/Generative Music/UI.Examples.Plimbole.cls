@@ -48,10 +48,10 @@ assignAvailableChannels
 	| available |
 	available := (1 to: 16) asSet.
 	self class allInstances do: 
-			[:each | 
+			[:each |
 			available
-				remove: each tenorChannel ifAbsent: [];
-				remove: each altoChannel ifAbsent: []].
+				remove: each tenorChannel ifAbsent: nil;
+				remove: each altoChannel ifAbsent: nil].
 	available := available asSortedCollection.
 	tenorChannel := available first.
 	altoChannel := available second!

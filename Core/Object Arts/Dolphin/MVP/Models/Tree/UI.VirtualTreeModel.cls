@@ -165,23 +165,23 @@ initialize
 	filter := self defaultFilterBlock.
 	self hasChildrenBlock: nil!
 
-move: anObject asChildOf: aParentObject 
+move: anObject asChildOf: aParentObject
 	"Pseudo-moves anObject in the receiver to be a child of aParentObject. Since the tree is
 	mainly managed externally to the receiver, this usually involves nothing more than informing
 	our dependents of the change. The exception is where an object is being promoted to a root,
 	or conversely being demoted from a root, in which case the roots collection needs to be
 	maintained."
 
-	aParentObject isNil 
+	aParentObject isNil
 		ifTrue: 
 			["Might have been promoted to root - if not one already"
 			(roots includes: anObject) ifFalse: [roots add: anObject]]
 		ifFalse: 
 			["Might have been demoted from being a root"
-			roots remove: anObject ifAbsent: []].
-	(filter value: anObject) 
+			roots remove: anObject ifAbsent: nil].
+	(filter value: anObject)
 		ifTrue: 
-			[self 
+			[self
 				trigger: #item:movedToParent:
 				with: anObject
 				with: aParentObject].
@@ -212,7 +212,7 @@ parentOf: anObject
 	((self hasRoot: anObject) or: [anObject isNil]) ifTrue: [^nil].
 	^getParentBlock value: anObject!
 
-remove: anObject ifAbsent: aNiladicValuable 
+remove: anObject ifAbsent: aNiladicValuable
 	"Removes anObject from the receiver. If anObject does not exist in the tree then answer the
 	result of evaluating the <niladicValuable> argument, otherwise answer anObject."
 
@@ -220,7 +220,7 @@ remove: anObject ifAbsent: aNiladicValuable
 	our dependents of the change, unless the object is a root in which case we must remove
 	it from the roots collection."
 
-	self notifyRemove: anObject around: [roots remove: anObject ifAbsent: []].
+	self notifyRemove: anObject around: [roots remove: anObject ifAbsent: nil].
 	^anObject!
 
 roots

@@ -330,10 +330,10 @@ allSymbolsReferencedIn: aBrowserEnvironment
 					(eachClass includesSelector: selector)
 						ifTrue: 
 							[(eachClass compiledMethodAt: selector)
-								literalsDo: [:eachLiteral | symbols remove: eachLiteral ifAbsent: []]]]].
+								literalsDo: [:eachLiteral | symbols remove: eachLiteral ifAbsent: nil]]]].
 
 	"Remove all global names"
-	self environment keysDo: [:k | symbols remove: k ifAbsent: []].
+	self environment keysDo: [:k | symbols remove: k ifAbsent: nil].
 	^symbols!
 
 allUnimplementedSelectors
@@ -1092,7 +1092,7 @@ buildMessageMenu: aMenu forMethods: aCollection browseSelector: browseSelector e
 				description: (method selector copyReplaceAll: '&' with: '&&').
 			"Rather than include only sent messages, we include all referenced symbols as useful for tracking down events, etc"
 			messages := method allSymbolLiterals.
-			messages remove: method selector ifAbsent: [].
+			messages remove: method selector ifAbsent: nil.
 			aMenu addSeparator.
 			messages notEmpty
 				ifTrue: 
@@ -2903,7 +2903,7 @@ populateWindowMenu: windowMenu
 	otherClasses := allOpenClasses difference: toolClasses.
 
 	"System shell is always first"
-	toolClasses remove: self systemFolderClass ifAbsent: [].
+	toolClasses remove: self systemFolderClass ifAbsent: nil.
 	(openShells detect: [:each | each class == self systemFolderClass] ifNone: [])
 		ifNotNil: 
 			[:systemShell |
@@ -3162,7 +3162,7 @@ privatizeMethod: aCompiledMethod
 										in: class
 										environment: aCompiledMethod environment
 										categories: (aCompiledMethod categories
-												remove: MethodCategory public ifAbsent: [];
+												remove: MethodCategory public ifAbsent: nil;
 												add: MethodCategory private;
 												yourself)
 										package: nil
@@ -3302,7 +3302,7 @@ publicizeMethod: aCompiledMethod
 								in: class
 								environment: aCompiledMethod environment
 								categories: (aCompiledMethod categories
-										remove: private ifAbsent: [];
+										remove: private ifAbsent: nil;
 										add: public;
 										yourself)
 								package: nil
@@ -4794,9 +4794,9 @@ uninitialize
 unregisterTool: aToolClass
 	"Removes aToolClass from the collection of registered tools for the receiver."
 
-	(aToolClass class conformsToProtocol: #installableSystemTool) 
+	(aToolClass class conformsToProtocol: #installableSystemTool)
 		ifTrue: [aToolClass unregisterAsToolWith: self].
-	self registeredTools remove: aToolClass ifAbsent: []! !
+	self registeredTools remove: aToolClass ifAbsent: nil! !
 !Tools.SmalltalkSystem class categoriesForMethods!
 current!instance creation!public! !
 help:!operations!public! !

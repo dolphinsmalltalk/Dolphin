@@ -15,7 +15,7 @@ categoriesFor: anEnvironment
 	| allCategories |
 	allCategories := Set withAll: universalEnvironment categories.
 	allCategories removeAll: anEnvironment categories.
-	anEnvironment not categories do: [:each | allCategories remove: each ifAbsent: []].
+	anEnvironment not categories do: [:each | allCategories remove: each ifAbsent: nil].
 	allCategories do: [:each | self assert: (universalEnvironment classNamesFor: each) isEmpty]!
 
 classesFor: aBrowserEnvironment

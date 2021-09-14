@@ -1116,7 +1116,7 @@ unregisterServer: server
 	longer required. If there are no further services active and the system is only
 	running services (i.e. it is a headless app.), then the request is accepted."
 
-	self servers remove: server ifAbsent: [].
+	self servers remove: server ifAbsent: nil.
 	self serverShutdown!
 
 userName

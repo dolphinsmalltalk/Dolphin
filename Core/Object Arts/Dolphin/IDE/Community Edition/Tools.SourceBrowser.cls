@@ -126,7 +126,7 @@ Ensure that all the items are writeable and try again.'
 onClassRemoved: aClass
 	"Private - React to aClass being removed from the Smalltalk system."
 
-	listPresenter model remove: aClass ifAbsent: []!
+	listPresenter model remove: aClass ifAbsent: nil!
 
 onLoadedPackagesChanged
 	"Private - React to the set of installed packages being changed."
@@ -140,7 +140,7 @@ onLoadedPackagesChanged
 onVariableRemoved: aVariableBinding
 	"Private - React to globalName being removed from the Dolphin system."
 
-	listPresenter model remove: aVariableBinding ifAbsent: []!
+	listPresenter model remove: aVariableBinding ifAbsent: nil!
 
 onViewOpened
 	"Private - Received when the receiver's view is been connected. "

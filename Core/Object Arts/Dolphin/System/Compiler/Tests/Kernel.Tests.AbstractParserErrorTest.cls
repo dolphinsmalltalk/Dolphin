@@ -407,7 +407,7 @@ testErrorsAssignClass
 	self shouldnt: [self evaluateExpression: 'CompilerTestGlobal := ''2''']
 		raise: Compiler notificationClass.
 	self assert: #{Smalltalk.CompilerTestGlobal} value equals: '2']
-			ensure: [Smalltalk removeKey: #CompilerTestGlobal ifAbsent: []]!
+			ensure: [Smalltalk removeKey: #CompilerTestGlobal ifAbsent: nil]!
 
 testErrorsAssignConstant
 	| source |
