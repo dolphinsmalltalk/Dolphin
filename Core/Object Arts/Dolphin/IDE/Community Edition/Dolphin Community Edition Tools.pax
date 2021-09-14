@@ -147,7 +147,7 @@ inspectPoolDictionaries
 inspectSystemOptions
 	"Open a TwoLevelInspector on the system options."
 
-	^UserPreferencesShell showOn: self systemOptions! !
+	^UserPreferencesShell showOn: (ListModel withAll: self systemOptions)! !
 !Tools.SmalltalkSystem categoriesForMethods!
 inspectPoolDictionaries!initializing!public! !
 inspectSystemOptions!commands!public! !
