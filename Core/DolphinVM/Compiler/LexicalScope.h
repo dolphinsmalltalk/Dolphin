@@ -575,6 +575,11 @@ public:
 		}
 	}
 
+	void AdjustFinalIP(int delta)
+	{
+		m_finalIP += delta;
+	}
+
 	__declspec(property(get = get_CodeLength)) intptr_t CodeLength;
 	intptr_t get_CodeLength() const
 	{

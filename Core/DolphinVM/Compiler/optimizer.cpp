@@ -2001,6 +2001,9 @@ POTE Compiler::NewMethod()
 		// We can save space by replacing the LongPushImmediate instruction with 2-byte argument with a single byte push const 0
 		m_bytecodes[ip_t::zero].Opcode = OpCode::ShortPushConst;
 		RemoveBytes(ip_t::one, 2);
+		// Since we have modified the instructions after FixupJumps, we must patch up the method scope (there should only be one) 
+		// to reflect the new shorter method
+		pMethodScope->AdjustFinalIP(-2);
 	}
 	else if (byte0 == OpCode::ExLongPushImmediate && m_bytecodes[static_cast<ip_t>(ExLongPushImmediateInstructionSize)].Opcode == OpCode::ReturnMessageStackTop)
 	{
@@ -2016,7 +2019,9 @@ POTE Compiler::NewMethod()
 		insertImmediateAsFirstLiteral(IntegerObjectOf(immediateValue));
 		// We can save space by replacing the ExLongPushImmediate instruction with 4-byte argument with a single byte push const 0
 		m_bytecodes[ip_t::zero].Opcode = OpCode::ShortPushConst;
-		RemoveBytes(ip_t::one, ExLongPushImmediateInstructionSize-1);
+		constexpr size_t bytesToRemove = ExLongPushImmediateInstructionSize - 1;
+		RemoveBytes(ip_t::one, bytesToRemove);
+		pMethodScope->AdjustFinalIP(-static_cast<int>(bytesToRemove));
 	}
 	else if (byte0 == OpCode::PushChar && static_cast<OpCode>(byte2) == OpCode::ReturnMessageStackTop)
 	{
@@ -2099,7 +2104,7 @@ POTE Compiler::NewMethod()
 			*pByteCodes++ = static_cast<uint8_t>(OpCode::Nop);
 			// Must adjust the debug info maps to account for the leading Nop
 			// Method scope expands for leading Nop
-			pMethodScope->FinalIP = pMethodScope->FinalIP + 1;
+			pMethodScope->AdjustFinalIP(1);
 			// Should only be here for 3 byte methods, so don't nested scopes are unlikely, but possible
 			const size_t count = m_allScopes.size();
 			for (size_t i = 1; i < count; i++)

@@ -75,6 +75,26 @@ getTestMethod: aSymbol
 		isImmutable: true.	"The method has not actually changed, so it is inappropriate to issue a #methodUpdated: event"
 	^method!
 
+knownTempsMapIssues
+	| env |
+	env := Refactory.Browser.BrowserEnvironment new.
+	"There are none"
+	^env not!
+
+knownTextMapIssues
+	| bad |
+	bad := OrderedCollection new.
+	"These methods are all have optimisation where an unconditional jump is replaced with a
+	return, and the text map for the optimised method then has an extra entry for that return
+	statement as these get breaks inserted before them. The compiler needs to be fixed to mark
+	these returns as optimised returns, and so it's never possible to break on them, or we need
+	to put a text map entry in for the unconditional jump (wouldn't do any harm)."
+	bad add: DolphinCompilerTestMethods >> #testWarningReadBeforeWrittenBlockTemp.
+	"These case have an extra entry in the debug temps map, apparently due to the optimizatiom of ifNil:ifNotNil:. In the non-debug method the unecessary ifNotNil: branch is optimized away"
+	bad add: Dictionary >> #associationAt:.
+	bad add: OS.IniFileAbstract >> #associationAt:.
+	^Refactory.Browser.BrowserEnvironment new forMethods: bad asArray!
+
 messageFromError: ex
 	^ex errorMessage!
 
@@ -950,6 +970,21 @@ testNestedWhileTrueAtStartOfCleanBlock
 	"Block should start immediately after a short push const and return stack top"
 	self assert: block initialIP equals: 3!
 
+testOptimizedLoopReadBeforeWritten
+	| expected expr actual |
+	expected := OrderedCollection new.
+	(1 to: 5) do: 
+			[:i | 
+			| a |
+			expected add: a displayString , i displayString.
+			a := i].
+	expr := (self 
+				compileExpression: '| r | r := OrderedCollection new. 1 to: 5 do: [:i | | a | r add: a displayString, i displayString. a := i]. r') 
+					method.
+	actual := expr value.
+	self skip: 'Results of actual block evaluation in a loop and optimized loop should be the same - any	read-before-written locals must be reinitialized to zero on each iteration'.
+	self assert: actual equals: expected!
+
 testQualifiedReference
 	{Array. #(). nil. nil} pairsDo: 
 			[:eachContext :eachReceiver |
@@ -1169,6 +1204,14 @@ testSymbolScanning
 					ex receiver == (each copyFrom: 2 to: colon) asSymbol
 						and: [ex selector == (each copyFrom: colon + 1) asSymbol]]]!
 
+testTempMapOuterDepthExhaustive
+	"Check that the temp maps for all methods with env temps have the correct outer depth. Note
+	that this is very long running as it compiles every method in the system and analyses the
+	bytecodes for temp references and compares those against the debug info temps map."
+
+	self skip: 'Failing on (at least) File class>>#shortenComponent:max:'.
+	self knownTempsMapIssues not methodsDo: [:each | self verifyTempsMapOf: each]!
+
 testTempMaps
 	"Check that the temp maps for all the test methods are consistent with the bytecodes."
 
@@ -1292,6 +1335,14 @@ testTextMapOfEmptyBlock
 			debugIp := StackFrame findIP: ip inTextMap: method textMap.
 			self assert: (debugMethod byteCodes at: (debugMethod textMap at: debugIp) key)
 				equals: (method byteCodes at: ip)]!
+
+testTextMapsExhaustive
+	"Check that the release and debug text maps match for every method in the system .... with a
+	couple of exceptions... ahem"
+
+	"Take 20+ seconds to run, which add another 30% to the test runtime"
+	self skipIfCiBuild.
+	self knownTextMapIssues not methodsDo: [:each | self verifyTextMapsOf: each]!
 
 testTextMapsOfCleanBlocks
 	#('[:a|a > 5 ifTrue: [''Many''] ifFalse: [a printString]]' '[1]' '[]')
@@ -1546,6 +1597,8 @@ evalTestMethod:!helpers!private! !
 evalTestMethod:withArgs:!helpers!private! !
 evaluateExpression:!helpers!private! !
 getTestMethod:!private! !
+knownTempsMapIssues!helpers!private! !
+knownTextMapIssues!helpers!private! !
 messageFromError:!helpers!private! !
 scan:class:!helpers!private! !
 scanNonNumericEnd:class:!helpers!private! !
@@ -1596,6 +1649,7 @@ testLiteralStringEncoding!public!unit tests! !
 testMutableAnnotation!public!unit tests-known failures! !
 testNestedCopyingBlocks!public!unit tests! !
 testNestedWhileTrueAtStartOfCleanBlock!public!unit tests! !
+testOptimizedLoopReadBeforeWritten!public!unit tests! !
 testQualifiedReference!public!unit tests! !
 testRadixInteger!public!unit tests! !
 testReturnFromOptimizedBlock!public!unit tests! !
@@ -1606,9 +1660,11 @@ testScope!public!unit tests! !
 testSharedOuterTemps!public!unit tests! !
 testSpecialLiteralsAsUnarySelectors!public! !
 testSymbolScanning!public!unit tests! !
+testTempMapOuterDepthExhaustive!public!unit tests-long running! !
 testTempMaps!public!unit tests! !
 testTempPairing!public!unit tests! !
 testTextMapOfEmptyBlock!public! !
+testTextMapsExhaustive!public!unit tests-long running! !
 testTextMapsOfCleanBlocks!public!unit tests! !
 testTimesRepeat!public!unit tests! !
 testTimesRepeatResult!public!unit tests! !
@@ -1632,7 +1688,9 @@ initialize
 	accessStackTemp := [:args | 0 -> (args last + 1)].
 	accessContextTemp := [:args | 1 -> (args last + 1)].
 	accessOuter1Temp := [:args | 2 -> (args last + 1)].
-	accessOuterTemp := [:args | (args last bitShift: -5) + 1 -> ((args last bitAnd: 16r1F) + 1)].
+	accessOuterTemp := [:args | 
+		"Key: Top 3 bits are outer path distance -> Value: bottom 5 bits are temp index in outer"
+		(args last bitShift: -5) + 1 -> ((args last bitAnd: 16r1F) + 1)].
 	TempInstrs
 		at: #decPushTemp:temp: put: accessStackTemp;
 		at: #decTemp:temp: put: accessStackTemp;

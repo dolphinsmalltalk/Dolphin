@@ -47,12 +47,41 @@ testFilter
 		selectNoFolder;
 		selectRootFolder.
 	self assert: presenter autoSelect.
-	self assert: presenter selections asSet equals: Package manager packages asSet! !
+	self assert: presenter selections asSet equals: Package manager packages asSet!
+
+testPackageCreationDoesntAlterSelection
+	| selections |
+	self skip: 'Creating a new package completely resets the package selector.'.
+	presenter selections: (Array with: self class owningPackage).
+	selections := presenter selections.
+	self assert: (selections size = 1 and: [selections first = self class owningPackage]).
+	self 
+		shouldnt: [packageA := self createPackage: 'Core\Object Arts\Dolphin\Tests\A']
+		triggerAnyOf: #(#selectionChanged #selectionChanging)
+		against: presenter.
+	self assert: presenter selections = selections!
+
+testPackageRemovalDoesntAlterSelection
+	| selections newSelections |
+	self skip: 'Removing a package resets the selection.'.
+	packageA := self createPackage: 'Core\Object Arts\Dolphin\Tests\A'.
+	presenter selections: (Array with: self class owningPackage).
+	selections := presenter selections.
+	self assert: (selections size = 1 and: [selections first = self class owningPackage]).
+	self 
+		shouldnt: [self removePackage: packageA]
+		triggerAnyOf: #(#selectionChanged #selectionChanging)
+		against: presenter.
+	packageA := nil.
+	newSelections := presenter selections.
+	self assert: newSelections = selections! !
 !Tools.Tests.PackageSelectorTest categoriesForMethods!
 classToTest!helpers!private! !
 createPackage:!helpers!private! !
 removePackage:!helpers!private! !
 tearDown!private! !
 testFilter!public! !
+testPackageCreationDoesntAlterSelection!public! !
+testPackageRemovalDoesntAlterSelection!public! !
 !
 

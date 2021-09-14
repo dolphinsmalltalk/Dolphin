@@ -557,6 +557,41 @@ testErrorsBlockArgNameMissing
 		line: 1
 		code: CErrExpectVariable!
 
+testErrorsBlockNestingTooDeep
+	"Small test of the test first"
+
+	| mark expected nesting source maxNest |
+	nesting := 10.
+	source := self buildNestedBlocks: nesting.
+	expected := (nesting + 1) factorial.
+	self assert: (self evaluateExpression: source) = expected.
+	"Now 2 under max"
+	maxNest := VMConstants.MaxBlockNesting.
+	nesting := maxNest - 2.
+	source := self buildNestedBlocks: nesting.
+	expected := (nesting + 1) factorial.
+	self assert: (self evaluateExpression: source) = expected.
+	"Now 1 under max"
+	nesting := maxNest - 1.
+	source := self buildNestedBlocks: nesting.
+	expected := (nesting + 1) factorial.
+	self assert: (self evaluateExpression: source) = expected.
+	"max nesting"
+	maxNest := VMConstants.MaxBlockNesting.
+	nesting := maxNest.
+	source := self buildNestedBlocks: nesting.
+	expected := (nesting + 1) factorial.
+	self assert: (self evaluateExpression: source) = expected.
+	"1 over max - should fail"
+	nesting := maxNest + 1.
+	source := self buildNestedBlocks: nesting.
+	mark := (source indexOfSubCollection: nesting displayString) - 3.
+	self
+		parseExprError: source
+		range: (mark to: nil)
+		line: 1
+		code: CErrBlockNestingTooDeep!
+
 testErrorsBlockNotClosed
 	"Test zero arg form now accepted by D6 compiler"
 
@@ -2045,6 +2080,7 @@ testErrorsBadMessagePattern!public!unit tests! !
 testErrorsBadSuper!public!unit tests! !
 testErrorsBadTokenInArray!public!unit tests! !
 testErrorsBlockArgNameMissing!public!unit tests! !
+testErrorsBlockNestingTooDeep!public!unit tests! !
 testErrorsBlockNotClosed!public!unit tests! !
 testErrorsBlockTempsNotClosed!public!unit tests! !
 testErrorsBraceArrayNotClosed!public!unit tests! !

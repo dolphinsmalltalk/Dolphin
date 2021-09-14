@@ -17,7 +17,7 @@ defaultAction
 	N.B. The ANSI standard states that no action is taken, which seems a little
 	lacking in imagination."
 
-	^SessionManager current
+	^SessionManager.Current
 		ifNil: [OS.Kernel32 outputDebugString: self description , String lineDelimiter]
 		ifNotNil: [:session | session onUnhandledNotification: self]!
 

@@ -12,8 +12,13 @@ Kernel.Tests.HeapsortAlgorithmTest comment: ''!
 !Kernel.Tests.HeapsortAlgorithmTest methodsFor!
 
 algorithmToTest
-	^HeapsortAlgorithm! !
+	^HeapsortAlgorithm!
+
+testBigStringSort
+	self skipIfCiBuild. "Long running"
+	self bigStringSort! !
 !Kernel.Tests.HeapsortAlgorithmTest categoriesForMethods!
 algorithmToTest!private!unit tests! !
+testBigStringSort!public! !
 !
 

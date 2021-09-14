@@ -14,6 +14,10 @@ Kernel.Tests.MergesortAlgorithmTest comment: ''!
 algorithmToTest
 	^MergesortAlgorithm!
 
+testBigStringSort
+	self skipIfCiBuild. "Long running"
+	self bigStringSort!
+
 testTempArrayLargeEnough
 	| sorted |
 	sorted := SortedCollection sortAlgorithm: self algorithmToTest new.
@@ -23,6 +27,7 @@ testTempArrayLargeEnough
 	self assertSorted: sorted! !
 !Kernel.Tests.MergesortAlgorithmTest categoriesForMethods!
 algorithmToTest!private!unit tests! !
+testBigStringSort!public! !
 testTempArrayLargeEnough!public!unit tests! !
 !
 

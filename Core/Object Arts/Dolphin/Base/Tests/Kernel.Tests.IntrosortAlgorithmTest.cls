@@ -14,6 +14,10 @@ Kernel.Tests.IntrosortAlgorithmTest comment: ''!
 algorithmToTest
 	^IntrosortAlgorithm!
 
+testBigStringSort
+	self skipIfCiBuild. "Long running"
+	self bigStringSort!
+
 testNewSortBlock
 	| algo1 algo2 block originalMethod testMethod |
 	block := [:a :b | a < b].
@@ -29,6 +33,7 @@ testNewSortBlock
 	self assert: algo2 sortBlock identicalTo: block! !
 !Kernel.Tests.IntrosortAlgorithmTest categoriesForMethods!
 algorithmToTest!private!unit tests! !
+testBigStringSort!public! !
 testNewSortBlock!public!unit tests! !
 !
 

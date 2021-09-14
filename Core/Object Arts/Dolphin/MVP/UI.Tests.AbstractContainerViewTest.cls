@@ -17,6 +17,21 @@ backgroundColor
 
 	^Color red!
 
+bitmapOfPaintView: aContainerView 
+	| answer ncCanvas extent |
+	extent := aContainerView extent.
+	answer := Bitmap displayCompatibleWithExtent: extent.
+	aContainerView update.
+	ncCanvas := aContainerView nonClientCanvas.
+	
+	[answer canvas 
+		bitBlt: ncCanvas
+		rectangle: (0 @ 0 extent: extent)
+		to: 0 @ 0
+		rop: SRCCOPY] 
+			ensure: [ncCanvas free].
+	^answer!
+
 bitmapOfPrintView: aContainerView
 	^Bitmap fromView: aContainerView!
 
@@ -57,11 +72,9 @@ checkPoints: aPointsArray inBitmap: bitmap color: color
 	ImagePresenter showOn: bitmap
 	"
 
-	| bitmapCanvas requiredColor |
+	| bitmapCanvas |
 	bitmapCanvas := bitmap canvas.
-	requiredColor := color asRGB.
-	aPointsArray
-		do: [:each | self assert: (bitmapCanvas pixelAt: each) equals: requiredColor]!
+	aPointsArray do: [:each | self assert: (bitmapCanvas pixelAt: each) equals: color]!
 
 checkRectangle: rect inBitmap: bitmap color: color
 	"
@@ -174,6 +187,7 @@ waitForScreenUpdate
 			Processor sleep: 100]"! !
 !UI.Tests.AbstractContainerViewTest categoriesForMethods!
 backgroundColor!private! !
+bitmapOfPaintView:!public! !
 bitmapOfPrintView:!helpers!private! !
 borderColor!private! !
 borderRectangleOf:!private! !

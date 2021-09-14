@@ -70,11 +70,45 @@ testRemapIPOfSendSelf
 	self assert: (debugMap at: i) key equals: startIP.
 	"Test remapping of the instruction in the middle of the block"
 	byte := debugMethod byteCodes at: startIP + 3.
-	self assert: (byte = Pop or: [byte = PopPushSelf])! !
+	self assert: (byte = Pop or: [byte = PopPushSelf])!
+
+testRemapIPSmokeTest
+	| frame instructions debugMethod debugInstructions info debugInfo textMap ip segment offset debugTextMap |
+	self skip: 'Many CompiledCode subinstances are not compilable. Some of this is due to Namespace changes, some pre-existing.'.
+	CompiledCode initializeInfoCache.
+	frame := StackFrame new.
+	CompiledCode allSubinstances do: 
+			[:each |
+			instructions := each byteCodeSegments.
+			debugMethod := each asDebugMethod.
+			debugInstructions := debugMethod byteCodeSegments.
+			info := each debugInfo.
+			debugInfo := debugMethod debugInfo.
+			ip := 1.
+			textMap := info textMap.
+			debugTextMap := debugInfo textMap.
+			textMap with: debugTextMap do: [:a :b | self assert: a value = b value].
+			debugTextMap do: 
+					[:assoc |
+					| ip |
+					ip := assoc key.
+					ip == 0
+						ifFalse: 
+							[| byte |
+							byte := debugMethod byteCodes at: assoc key.
+							self assert: byte ~= 0]]
+			"			instructions do: 
+					[:bytes | 
+					segment := frame findIP: ip inTextMap: textMap.
+					self deny: segment = 0.
+					offset := ip - (textMap at: segment) key.
+					self assert: offset >= 0.
+					ip := ip + bytes size]"]! !
 !Tools.Tests.DebuggerTest categoriesForMethods!
 setUp!private!unit tests! !
 tearDown!private!unit tests! !
 testNoShowWalkbacks!public!unit tests! !
 testRemapIPOfSendSelf!public!unit tests! !
+testRemapIPSmokeTest!public! !
 !
 

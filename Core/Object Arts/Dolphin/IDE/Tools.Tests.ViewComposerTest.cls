@@ -50,6 +50,9 @@ getButtonResource
 getContainerResource
 	^(ResourceIdentifier class: ContainerView) resource!
 
+getStaticTextResource
+	^(ResourceIdentifier class: StaticText name: 'Default view') resource!
+
 openTestSubjectOn: aResourceId
 	^vc
 		ifNil: 
@@ -78,8 +81,10 @@ sampleClass
 tearDown
 	DragDropSession current ifNotNil: [:dd | dd cancelTrackingAt: 0 @ 0].
 	sampleClass ifNotNil: [sampleClass removeFromSystem].
-	vc destroy.
-	vc := nil!
+	vc
+		ifNotNil: 
+			[vc destroy.
+			vc := nil]!
 
 testBasicEdit
 	| sampleResourceIdentifier rid |
@@ -251,6 +256,31 @@ testPasteToArena
 	self assert: vc primarySelection parentView identicalTo: View desktop.
 	vc viewCloseNoPrompt!
 
+testResizeDoesNotMove
+	| static shell pos corner grabber extent  |
+	self skip: 'Fails because the static is not positioned on the grid, but the grabber constrains both corners of the rectangle to the grid, including the one it is not moving, thus causing the whole rectangle to move when resized.'.
+	self openTestSubjectOnNewShell.
+	shell := vc composingView.
+	static := vc
+				pasteResource: self getStaticTextResource
+				context: shell
+				position: 0 @ 0.
+	static backcolor: Color green.
+	pos := ##(10 @ 10).
+	static position: pos.
+	self assert: static position equals: pos.
+	extent := static extent.
+	corner := static screenRectangle corner - vc hidingOffset + vc defaultComposingPosition.
+	"Deferred actions are used by the grabbers - need to run these, or the grabber won't be hit"
+	vc validateAdornment.
+	grabber := vc grabberHitBy: corner.
+	self assert: grabber aspect == #bottomRight.
+	grabber endTrackingAt: corner + (21 @ 23).
+	"It shouldn't have moved"
+	self assert: static position equals: pos.
+	self deny: static extent equals: extent.
+	self assert: (vc constrainPoint: static extent) = static extent!
+
 testWidenSelection
 	| shell browser |
 	self openTestSubjectOn: (ResourceIdentifier class: Smalltalk.MethodHistoryBrowser name: 'Default view').
@@ -289,6 +319,7 @@ doArenaDropOf:operation:!helpers!private! !
 dragResourceFor:!helpers!private! !
 getButtonResource!helpers!private! !
 getContainerResource!helpers!private! !
+getStaticTextResource!helpers!private! !
 openTestSubjectOn:!helpers!private! !
 openTestSubjectOnNewShell!helpers!private! !
 sampleClass!accessing!private! !
@@ -304,6 +335,7 @@ testExit!public!unit tests! !
 testIgnoreShellPreferredExtent!public!unit tests! !
 testNoDragResourceOverInUseArena!public!unit tests! !
 testPasteToArena!public!unit tests! !
+testResizeDoesNotMove!public!unit tests! !
 testWidenSelection!public!unit tests! !
 testZOrderPreservedByMutate!public!unit tests! !
 !

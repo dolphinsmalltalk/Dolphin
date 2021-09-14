@@ -27,9 +27,11 @@ package setClassNames: #(
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Tests\Dolphin Base Tests'
+	'..\..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\Smalltalk Compiler'
 	'..\Smalltalk Parser'
 	'..\..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
+	'..\..\Win32\Windows Ini Files'
 ).
 
 package!

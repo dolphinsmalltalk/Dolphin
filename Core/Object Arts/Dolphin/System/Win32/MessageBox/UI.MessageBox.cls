@@ -629,7 +629,7 @@ isSizedToContent: aBoolean
 isSuppressed
 	"Answer whether this message has been previously suppressed by the current user."
 
-	| isSuppressed sizeBuf status buf |
+	| sizeBuf status buf |
 	buf := Utf16String newFixed: 2.	"Note that the value must be 'NO'. Anything else appears to be ignored."
 	sizeBuf := ByteArray newFixed: 4.
 	sizeBuf dwordAtOffset: 0 put: buf byteSize.
@@ -641,8 +641,7 @@ isSuppressed
 				pdwType: nil
 				pvData: buf
 				pcbData: sizeBuf.
-	isSuppressed := status == ERROR_SUCCESS and: [buf = 'NO'].
-	^isSuppressed!
+	^status == ERROR_SUCCESS and: [buf = 'NO']!
 
 isSuppressible
 	"Answer whether this message box will be give the user the option of not seeing further occurrences with the same uniqueId in the future."

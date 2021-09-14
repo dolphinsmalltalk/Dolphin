@@ -292,6 +292,35 @@ testColumnsList
 	"Remove them all"
 	self setColumns: #()!
 
+testColumnWidth
+	"#1452, #1456"
+
+	| column primary before after width |
+	presenter view viewMode: #report.
+	primary := presenter view primaryColumn.
+	before := primary width.
+	width := presenter view width - before + 50.
+	column := ListViewColumn text: 'Blah' width: width.
+	self assert: column width equals: width.
+	width := width - 20.
+	column width: width.
+	self assert: column width equals: width.
+	presenter view update.
+	self assert: presenter view isLayoutValid.
+	presenter view addColumn: column.
+	self deny: presenter view isLayoutValid.
+	presenter view validateLayout.
+	self assert: presenter view isLayoutValid.
+	after := primary width.
+	self assert: after < before.
+	self assert: column width equals: width.
+	column width: 100.
+	self deny: presenter view isLayoutValid.
+	presenter view validateLayout.
+	self assert: presenter view isLayoutValid.
+	self assert: primary width < after.
+	self assert: column width equals: 100!
+
 testNewSelectionsClickOutsideListWithModifiers
 	| event selection expected |
 	self setUpForSelectionTesting.
@@ -391,6 +420,7 @@ testBackImage!public!unit tests! !
 testChangeViewMode!public!unit tests! !
 testCheckBoxes!public!unit tests! !
 testColumnsList!public!unit tests! !
+testColumnWidth!public!unit tests! !
 testNewSelectionsClickOutsideListWithModifiers!public!unit tests! !
 testNilRow!public!unit tests! !
 testSelectionRemainsVisibleOnSort!public!unit tests! !

@@ -138,6 +138,63 @@ testErrorsNonsenseAtEndOfMethod
 		line: 1
 		code: ParseErrorCodes.CErrInvalExprStart!
 
+testErrorsTooManyBytecodes
+	"This is one error that the parser cannot detect since it does not do code generation.
+	The number of bytecodes in a method has no real limit, except that imposed by the
+	maximum lengths of jumps (and in practice by the maximum size of the literal frame).
+	In order to provoke the 'method tool long' error we need to generate a long jump
+	around a large inlined block. To avoid requring a lot of literals we use expressions
+	with immediate values, i.e. 1+2 .Each 1+2 sequence generates 4 bytecodes:
+		Push 1
+		Push 2
+		Send +
+		Pop.
+	The maximum length of a jump is 32k."
+
+	| source max |
+	self skipIfCiBuild. "Very long running"
+	source := String writeStream.
+	source
+		nextPutAll: 'Object isNil ifFalse: [';
+		cr.
+	max := 32768 / 4.
+	1 to: max
+		do: 
+			[:i |
+			source
+				nextPutAll: '1+2.';
+				cr].
+	source nextPut: $].
+	source := source contents.
+	self
+		parseExprError: source
+		range: (source size + 1 to: source size)
+		line: max + 2
+		code: CErrMethodTooLarge!
+
+testErrorsTooManyLiterals
+	| source max len |
+	source := String writeStream.
+	source print: String empty.
+	max := self maxLiterals.
+	"The empty string and concatenation operator will push it over max literals by 1 if we concate max-1 strings"
+	1 to: max - 1
+		do: 
+			[:i |
+			source
+				nextPut: $,;
+				crtab;
+				nextPut: $';
+				display: i;
+				nextPut: $'].
+	source := source contents.
+	len := source size.
+	self
+		parseExprError: source
+		range: (len - (max - 1) printString size - 1 to: len)
+		line: max
+		code: CErrTooManyLiterals!
+
 writtenNotReadRange: aString
 	"The Dolphin Compiler reports written-not-read temps against the temp declaration."
 
@@ -157,6 +214,8 @@ testErrorsLexicalExpectCodePoint!public!unit tests! !
 testErrorsLexicalExpectExtendedLiteral!public!unit tests! !
 testErrorsNonsenseAtEndOfExpression!public!unit tests! !
 testErrorsNonsenseAtEndOfMethod!public!unit tests! !
+testErrorsTooManyBytecodes!public!unit tests! !
+testErrorsTooManyLiterals!public!unit tests! !
 writtenNotReadRange:!helpers!private! !
 !
 
