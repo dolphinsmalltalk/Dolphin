@@ -22,8 +22,10 @@ name
 
 objectClass
 	^nil! !
-!Tools.Scintilla.VoidTypeReference categoriesFor: #defaultValue!constants!public! !
-!Tools.Scintilla.VoidTypeReference categoriesFor: #isVoid!accessing!public! !
-!Tools.Scintilla.VoidTypeReference categoriesFor: #name!accessing!public! !
-!Tools.Scintilla.VoidTypeReference categoriesFor: #objectClass!accessing!public! !
+!Tools.Scintilla.VoidTypeReference categoriesForMethods!
+defaultValue!constants!public! !
+isVoid!accessing!public! !
+name!accessing!public! !
+objectClass!accessing!public! !
+!
 

@@ -37,10 +37,12 @@ printParameter: aString on: aWriteStream
 		nextPutAll: aString;
 		space;
 		display: #rgbCode! !
-!Tools.Scintilla.ColourTypeReference categoriesFor: #defaultValue!constants!public! !
-!Tools.Scintilla.ColourTypeReference categoriesFor: #emitReturnConversionAround:on:!generating!private! !
-!Tools.Scintilla.ColourTypeReference categoriesFor: #fromMessage!generating!private! !
-!Tools.Scintilla.ColourTypeReference categoriesFor: #name!accessing!public! !
-!Tools.Scintilla.ColourTypeReference categoriesFor: #objectClass!accessing!public! !
-!Tools.Scintilla.ColourTypeReference categoriesFor: #printParameter:on:!generating!public! !
+!Tools.Scintilla.ColourTypeReference categoriesForMethods!
+defaultValue!constants!public! !
+emitReturnConversionAround:on:!generating!private! !
+fromMessage!generating!private! !
+name!accessing!public! !
+objectClass!accessing!public! !
+printParameter:on:!generating!public! !
+!
 

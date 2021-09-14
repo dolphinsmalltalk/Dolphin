@@ -27,8 +27,10 @@ printParameter: aString on: aWriteStream
 		nextPutAll: aString;
 		space;
 		display: ' - 1'! !
-!Tools.Scintilla.PositionTypeReference categoriesFor: #defaultValue!accessing!public! !
-!Tools.Scintilla.PositionTypeReference categoriesFor: #emitReturnConversionAround:on:!generating!private! !
-!Tools.Scintilla.PositionTypeReference categoriesFor: #name!accessing!public! !
-!Tools.Scintilla.PositionTypeReference categoriesFor: #printParameter:on:!generating!public! !
+!Tools.Scintilla.PositionTypeReference categoriesForMethods!
+defaultValue!accessing!public! !
+emitReturnConversionAround:on:!generating!private! !
+name!accessing!public! !
+printParameter:on:!generating!public! !
+!
 

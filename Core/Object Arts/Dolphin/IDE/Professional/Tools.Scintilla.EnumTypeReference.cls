@@ -32,13 +32,15 @@ prefix
 
 prefix: anObject
 	prefix := anObject! !
-!Tools.Scintilla.EnumTypeReference categoriesFor: #addConst:value:!accessing!public! !
-!Tools.Scintilla.EnumTypeReference categoriesFor: #defaultValue!accessing!public! !
-!Tools.Scintilla.EnumTypeReference categoriesFor: #defaultValueName:!accessing!public! !
-!Tools.Scintilla.EnumTypeReference categoriesFor: #name!accessing!public! !
-!Tools.Scintilla.EnumTypeReference categoriesFor: #name:!accessing!private! !
-!Tools.Scintilla.EnumTypeReference categoriesFor: #prefix!accessing!public! !
-!Tools.Scintilla.EnumTypeReference categoriesFor: #prefix:!accessing!private! !
+!Tools.Scintilla.EnumTypeReference categoriesForMethods!
+addConst:value:!accessing!public! !
+defaultValue!accessing!public! !
+defaultValueName:!accessing!public! !
+name!accessing!public! !
+name:!accessing!private! !
+prefix!accessing!public! !
+prefix:!accessing!private! !
+!
 
 !Tools.Scintilla.EnumTypeReference class methodsFor!
 
@@ -47,5 +49,7 @@ name: aString prefix: prefixString
 		name: aString;
 		prefix: prefixString;
 		yourself! !
-!Tools.Scintilla.EnumTypeReference class categoriesFor: #name:prefix:!public! !
+!Tools.Scintilla.EnumTypeReference class categoriesForMethods!
+name:prefix:!public! !
+!
 

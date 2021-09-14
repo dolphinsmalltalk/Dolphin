@@ -46,16 +46,18 @@ retType: aString
 
 selector
 	^selector! !
-!Tools.Scintilla.InterfaceDefinition categoriesFor: #comment!accessing!public! !
-!Tools.Scintilla.InterfaceDefinition categoriesFor: #comment:!accessing!private! !
-!Tools.Scintilla.InterfaceDefinition categoriesFor: #constName!helpers!public! !
-!Tools.Scintilla.InterfaceDefinition categoriesFor: #constPrefix!constants!private! !
-!Tools.Scintilla.InterfaceDefinition categoriesFor: #id!accessing!public! !
-!Tools.Scintilla.InterfaceDefinition categoriesFor: #id:name:retType:!initializing!private! !
-!Tools.Scintilla.InterfaceDefinition categoriesFor: #isDeprecated!accessing!public!testing! !
-!Tools.Scintilla.InterfaceDefinition categoriesFor: #isDeprecated:!accessing!private! !
-!Tools.Scintilla.InterfaceDefinition categoriesFor: #retType:!accessing!private! !
-!Tools.Scintilla.InterfaceDefinition categoriesFor: #selector!accessing!private! !
+!Tools.Scintilla.InterfaceDefinition categoriesForMethods!
+comment!accessing!public! !
+comment:!accessing!private! !
+constName!helpers!public! !
+constPrefix!constants!private! !
+id!accessing!public! !
+id:name:retType:!initializing!private! !
+isDeprecated!accessing!public!testing! !
+isDeprecated:!accessing!private! !
+retType:!accessing!private! !
+selector!accessing!private! !
+!
 
 !Tools.Scintilla.InterfaceDefinition class methodsFor!
 
@@ -73,7 +75,9 @@ tokens: anArray
 		id: (anArray at: 3)
 		name: (anArray at: 2)
 		retType: (anArray at: 1)! !
-!Tools.Scintilla.InterfaceDefinition class categoriesFor: #icon!constants!development!public! !
-!Tools.Scintilla.InterfaceDefinition class categoriesFor: #id:name:retType:!initializing!public! !
-!Tools.Scintilla.InterfaceDefinition class categoriesFor: #tokens:!instance creation!public! !
+!Tools.Scintilla.InterfaceDefinition class categoriesForMethods!
+icon!constants!development!public! !
+id:name:retType:!initializing!public! !
+tokens:!instance creation!public! !
+!
 

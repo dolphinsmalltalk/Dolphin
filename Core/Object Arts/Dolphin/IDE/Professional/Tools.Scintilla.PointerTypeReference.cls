@@ -38,17 +38,21 @@ name: aString objectClass: aClass
 
 objectClass
 	^objectClass! !
-!Tools.Scintilla.PointerTypeReference categoriesFor: #byRef!accessing!public! !
-!Tools.Scintilla.PointerTypeReference categoriesFor: #defaultValue!constants!public! !
-!Tools.Scintilla.PointerTypeReference categoriesFor: #emitReturnConversionAround:on:!generating!private! !
-!Tools.Scintilla.PointerTypeReference categoriesFor: #fromMessage!accessing!public! !
-!Tools.Scintilla.PointerTypeReference categoriesFor: #name!accessing!public! !
-!Tools.Scintilla.PointerTypeReference categoriesFor: #name:objectClass:!instance creation!private! !
-!Tools.Scintilla.PointerTypeReference categoriesFor: #objectClass!accessing!public! !
+!Tools.Scintilla.PointerTypeReference categoriesForMethods!
+byRef!accessing!public! !
+defaultValue!constants!public! !
+emitReturnConversionAround:on:!generating!private! !
+fromMessage!accessing!public! !
+name!accessing!public! !
+name:objectClass:!instance creation!private! !
+objectClass!accessing!public! !
+!
 
 !Tools.Scintilla.PointerTypeReference class methodsFor!
 
 name: aString objectClass: aClass
 	^self new name: aString objectClass: aClass! !
-!Tools.Scintilla.PointerTypeReference class categoriesFor: #name:objectClass:!instance creation!private! !
+!Tools.Scintilla.PointerTypeReference class categoriesForMethods!
+name:objectClass:!instance creation!private! !
+!
 

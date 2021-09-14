@@ -13,5 +13,7 @@ Tools.Scintilla.LineTypeReference comment: ''!
 
 name
 	^'line'! !
-!Tools.Scintilla.LineTypeReference categoriesFor: #name!accessing!public! !
+!Tools.Scintilla.LineTypeReference categoriesForMethods!
+name!accessing!public! !
+!
 

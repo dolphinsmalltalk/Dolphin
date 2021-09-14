@@ -28,9 +28,11 @@ printParameter: aString on: aWriteStream
 		nextPutAll: aString;
 		space;
 		display: #asParameter! !
-!Tools.Scintilla.BoolTypeReference categoriesFor: #defaultValue!accessing!public! !
-!Tools.Scintilla.BoolTypeReference categoriesFor: #directFunctionKeyword!constants!generating!public! !
-!Tools.Scintilla.BoolTypeReference categoriesFor: #name!accessing!public! !
-!Tools.Scintilla.BoolTypeReference categoriesFor: #objectClass!accessing!public! !
-!Tools.Scintilla.BoolTypeReference categoriesFor: #printParameter:on:!generating!public! !
+!Tools.Scintilla.BoolTypeReference categoriesForMethods!
+defaultValue!accessing!public! !
+directFunctionKeyword!constants!generating!public! !
+name!accessing!public! !
+objectClass!accessing!public! !
+printParameter:on:!generating!public! !
+!
 

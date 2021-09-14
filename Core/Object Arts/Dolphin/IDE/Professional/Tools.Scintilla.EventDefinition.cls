@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smalltalk 7"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.Scintilla.InterfaceDefinition subclass: #'Tools.Scintilla.EventDefinition'
 	instanceVariableNames: 'args'
@@ -50,11 +50,13 @@ id: anInteger name: nameString retType: aString
 
 retType: aString 
 	self assert: [aString = 'void']! !
-!Tools.Scintilla.EventDefinition categoriesFor: #args:!private! !
-!Tools.Scintilla.EventDefinition categoriesFor: #constPrefix!constants!initializing!private! !
-!Tools.Scintilla.EventDefinition categoriesFor: #generateHandlerOn:!helpers!private! !
-!Tools.Scintilla.EventDefinition categoriesFor: #id:name:retType:!initializing!private! !
-!Tools.Scintilla.EventDefinition categoriesFor: #retType:!accessing!private! !
+!Tools.Scintilla.EventDefinition categoriesForMethods!
+args:!private! !
+constPrefix!constants!initializing!private! !
+generateHandlerOn:!helpers!private! !
+id:name:retType:!initializing!private! !
+retType:!accessing!private! !
+!
 
 !Tools.Scintilla.EventDefinition class methodsFor!
 
@@ -66,5 +68,7 @@ tokens: anArray
 				retType: (anArray at: 1).
 	evt args: (anArray copyFrom: 4).
 	^evt! !
-!Tools.Scintilla.EventDefinition class categoriesFor: #tokens:!instance creation!public! !
+!Tools.Scintilla.EventDefinition class categoriesForMethods!
+tokens:!instance creation!public! !
+!
 

@@ -49,14 +49,16 @@ type
 
 typeName
 	^typeName! !
-!Tools.Scintilla.ParameterDefinition categoriesFor: #displayOn:!displaying!public! !
-!Tools.Scintilla.ParameterDefinition categoriesFor: #emitOutParam:on:!generating!private! !
-!Tools.Scintilla.ParameterDefinition categoriesFor: #isUnused!generating!helpers!public! !
-!Tools.Scintilla.ParameterDefinition categoriesFor: #name!initializing!private! !
-!Tools.Scintilla.ParameterDefinition categoriesFor: #parameterName!helpers!private! !
-!Tools.Scintilla.ParameterDefinition categoriesFor: #setName:typeName:!initializing!private! !
-!Tools.Scintilla.ParameterDefinition categoriesFor: #type!initializing!private! !
-!Tools.Scintilla.ParameterDefinition categoriesFor: #typeName!public! !
+!Tools.Scintilla.ParameterDefinition categoriesForMethods!
+displayOn:!displaying!public! !
+emitOutParam:on:!generating!private! !
+isUnused!generating!helpers!public! !
+name!initializing!private! !
+parameterName!helpers!private! !
+setName:typeName:!initializing!private! !
+type!initializing!private! !
+typeName!public! !
+!
 
 !Tools.Scintilla.ParameterDefinition class methodsFor!
 
@@ -66,6 +68,8 @@ icon
 newName: nameString typeName: typeString
 	^self new
 		setName: nameString typeName: typeString! !
-!Tools.Scintilla.ParameterDefinition class categoriesFor: #icon!constants!development!public! !
-!Tools.Scintilla.ParameterDefinition class categoriesFor: #newName:typeName:!instance creation!public! !
+!Tools.Scintilla.ParameterDefinition class categoriesForMethods!
+icon!constants!development!public! !
+newName:typeName:!instance creation!public! !
+!
 

@@ -42,16 +42,18 @@ printOn: aStream
 
 printParameter: aString on: aWriteStream
 	aWriteStream nextPutAll: aString! !
-!Tools.Scintilla.TypeReference categoriesFor: #byRef!accessing!public! !
-!Tools.Scintilla.TypeReference categoriesFor: #defaultValue!constants!public! !
-!Tools.Scintilla.TypeReference categoriesFor: #directFunctionKeyword!constants!public! !
-!Tools.Scintilla.TypeReference categoriesFor: #displayOn:!displaying!public! !
-!Tools.Scintilla.TypeReference categoriesFor: #emitReturnConversionAround:on:!generating!public! !
-!Tools.Scintilla.TypeReference categoriesFor: #isVoid!accessing!public! !
-!Tools.Scintilla.TypeReference categoriesFor: #name!accessing!public! !
-!Tools.Scintilla.TypeReference categoriesFor: #objectClass!accessing!public! !
-!Tools.Scintilla.TypeReference categoriesFor: #printOn:!printing!public! !
-!Tools.Scintilla.TypeReference categoriesFor: #printParameter:on:!generating!public! !
+!Tools.Scintilla.TypeReference categoriesForMethods!
+byRef!accessing!public! !
+defaultValue!constants!public! !
+directFunctionKeyword!constants!public! !
+displayOn:!displaying!public! !
+emitReturnConversionAround:on:!generating!public! !
+isVoid!accessing!public! !
+name!accessing!public! !
+objectClass!accessing!public! !
+printOn:!printing!public! !
+printParameter:on:!generating!public! !
+!
 
 !Tools.Scintilla.TypeReference class methodsFor!
 
@@ -64,7 +66,7 @@ declareEnum: aString prefix: anObject
 enumForConst: aString
 	"Unfortunately we can't rely on the prefixes all ending in an underscore, as some do not"
 
-	^Enums detect: [:each | aString beginsWith: each prefix] ifNone: []!
+	^Enums detect: [:each | aString beginsWith: each prefix] ifNone: nil!
 
 icon
 	^UI.Scintilla.ScintillaView icon!
@@ -98,10 +100,12 @@ resetTypeMap
 				at: 'findtext' put: (PointerTypeReference name: 'findtext' objectClass: OS.FINDTEXTEX);
 				at: 'formatrange' put: (PointerTypeReference name: 'formatrange' objectClass: OS.FORMATRANGE);
 				yourself! !
-!Tools.Scintilla.TypeReference class categoriesFor: #declareEnum:prefix:!constants!public! !
-!Tools.Scintilla.TypeReference class categoriesFor: #enumForConst:!constants!public! !
-!Tools.Scintilla.TypeReference class categoriesFor: #icon!constants!development!public! !
-!Tools.Scintilla.TypeReference class categoriesFor: #initialize!constants!private! !
-!Tools.Scintilla.TypeReference class categoriesFor: #named:!public! !
-!Tools.Scintilla.TypeReference class categoriesFor: #resetTypeMap!public! !
+!Tools.Scintilla.TypeReference class categoriesForMethods!
+declareEnum:prefix:!constants!public! !
+enumForConst:!constants!public! !
+icon!constants!development!public! !
+initialize!constants!private! !
+named:!public! !
+resetTypeMap!public! !
+!
 

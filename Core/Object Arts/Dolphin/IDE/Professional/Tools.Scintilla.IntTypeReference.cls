@@ -22,8 +22,10 @@ objectClass
 
 printParameter: aString on: aWriteStream
 	aWriteStream nextPutAll: aString! !
-!Tools.Scintilla.IntTypeReference categoriesFor: #defaultValue!accessing!public! !
-!Tools.Scintilla.IntTypeReference categoriesFor: #name!accessing!public! !
-!Tools.Scintilla.IntTypeReference categoriesFor: #objectClass!accessing!public! !
-!Tools.Scintilla.IntTypeReference categoriesFor: #printParameter:on:!generating!public! !
+!Tools.Scintilla.IntTypeReference categoriesForMethods!
+defaultValue!accessing!public! !
+name!accessing!public! !
+objectClass!accessing!public! !
+printParameter:on:!generating!public! !
+!
 

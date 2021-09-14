@@ -475,7 +475,7 @@ example1
 	tree := cards addSubView: TreeView new.
 	tree model: Tools.ClassHierarchyModel withAllClasses.
 	tree viewMode: #smallIcons.
-	t := s parentView addSubView: Scintilla.ScintillaView new.
+	t := s parentView addSubView: UI.Scintilla.ScintillaView new.
 	t text: Object comment.
 	tree arrangement: 'Tree'.
 	l := cards addSubView: ListView new.

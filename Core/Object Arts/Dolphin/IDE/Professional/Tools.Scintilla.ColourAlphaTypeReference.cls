@@ -25,8 +25,10 @@ printParameter: aString on: aWriteStream
 		nextPutAll: aString;
 		space;
 		display: #rgbaCode! !
-!Tools.Scintilla.ColourAlphaTypeReference categoriesFor: #defaultValue!constants!public! !
-!Tools.Scintilla.ColourAlphaTypeReference categoriesFor: #fromMessage!generating!private! !
-!Tools.Scintilla.ColourAlphaTypeReference categoriesFor: #name!accessing!public! !
-!Tools.Scintilla.ColourAlphaTypeReference categoriesFor: #printParameter:on:!generating!public! !
+!Tools.Scintilla.ColourAlphaTypeReference categoriesForMethods!
+defaultValue!constants!public! !
+fromMessage!generating!private! !
+name!accessing!public! !
+printParameter:on:!generating!public! !
+!
 

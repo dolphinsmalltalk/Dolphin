@@ -13,5 +13,7 @@ Tools.Scintilla.KeyModTypeReference comment: ''!
 
 name
 	^'keymod'! !
-!Tools.Scintilla.KeyModTypeReference categoriesFor: #name!accessing!public! !
+!Tools.Scintilla.KeyModTypeReference categoriesForMethods!
+name!accessing!public! !
+!
 
