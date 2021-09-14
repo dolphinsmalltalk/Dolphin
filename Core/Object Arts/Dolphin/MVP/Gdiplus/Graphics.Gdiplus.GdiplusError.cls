@@ -19,7 +19,7 @@ _descriptionArguments
 	#description."
 
 	^{self messageText displayString.
-		ErrorDescriptions at: self tag + 1 ifAbsent: ['Unknown error'].
+		ErrorDescriptions at: self tag + 1 ifAbsent: 'Unknown error'.
 		self win32ErrorDescription}!
 
 _descriptionFormat

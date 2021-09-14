@@ -1897,7 +1897,7 @@ updateXPManifestResource: anExternalHandle
 					assemblyName
 						nextPutAll: (string copyWithout: $.);
 						nextPut: $.]].
-	file := (strings at: 'InternalName' ifAbsent: ['']) copyWithout: $..
+	file := (strings at: 'InternalName' ifAbsent: '') copyWithout: $..
 	file isEmpty ifTrue: [file := File splitStemFrom: self executableName].
 	assemblyName nextPutAll: file.
 	manifest := self

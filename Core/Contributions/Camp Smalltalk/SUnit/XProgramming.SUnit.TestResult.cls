@@ -104,18 +104,22 @@ initialize
 	skipped := OrderedCollection new!
 
 isError: aTestCase
-	^(results at: aTestCase ifAbsent: []) ifNil: [false] ifNotNil: [:result | result outcome == #error]!
+	^(results at: aTestCase ifAbsent: nil) ifNil: [false] ifNotNil: [:result | result outcome == #error]!
 
 isFailure: aTestCase
-	^(results at: aTestCase ifAbsent: [])
+	^(results at: aTestCase ifAbsent: nil)
 		ifNil: [false]
 		ifNotNil: [:result | result outcome == #failure]!
 
 isPassed: aTestCase
-	^(results at: aTestCase ifAbsent: []) ifNil: [false] ifNotNil: [:result | result outcome == #passed]!
+	^(results at: aTestCase ifAbsent: nil)
+		ifNil: [false]
+		ifNotNil: [:result | result outcome == #passed]!
 
 isSkipped: aTestCase
-	^(results at: aTestCase ifAbsent: []) ifNil: [false] ifNotNil: [:result | result outcome == #skipped]!
+	^(results at: aTestCase ifAbsent: nil)
+		ifNil: [false]
+		ifNotNil: [:result | result outcome == #skipped]!
 
 passed
 	^passed!

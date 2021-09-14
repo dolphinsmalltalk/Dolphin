@@ -698,7 +698,7 @@ isCompiled
 
 isFieldBrowsable: aSymbol
 	template notNil
-		ifTrue: [(template at: aSymbol ifAbsent: []) ifNotNil: [:field | ^field isBrowsable]].
+		ifTrue: [(template at: aSymbol ifAbsent: nil) ifNotNil: [:field | ^field isBrowsable]].
 	^self canUnderstand: aSymbol!
 
 libraryAndIndex

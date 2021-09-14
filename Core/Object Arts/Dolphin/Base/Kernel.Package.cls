@@ -1416,13 +1416,13 @@ resourceIdentifiers
 
 	^self allResourceIdentifiers!
 
-scriptAt: scriptName 
+scriptAt: scriptName
 	"Set the script <String> associated with the <Symbol>, scriptName.
 
 	The currently used scripts are: #preinstall, #postinstall, #preuninstall and
 	#postuninstall."
 
-	^self scripts at: scriptName ifAbsent: ['']!
+	^self scripts at: scriptName ifAbsent: ''!
 
 scriptAt: scriptSymbol put: aString
 	"Set the script String associated with scriptSymbol."

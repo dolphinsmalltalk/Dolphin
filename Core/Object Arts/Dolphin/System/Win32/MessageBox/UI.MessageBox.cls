@@ -881,7 +881,7 @@ setStyle: anInteger maskedBy: maskInteger
 			[self
 				buttonStyle: (#(#ok #okCancel #abortRetryIgnore #yesNoCancel #yesNo #retryCancel #cancelRetryContinue)
 						at: (anInteger bitAnd: MB_TYPEMASK) + 1
-						ifAbsent: [#none])].
+						ifAbsent: #none)].
 	(maskInteger allMask: MB_DEFMASK)
 		ifTrue: [self defaultButton: ((anInteger bitAnd: MB_DEFMASK) >> ##(MB_DEFMASK lowBit - 1)) + 1].
 	(maskInteger allMask: MB_ICONMASK) ifTrue: [self iconStyleFlag: (anInteger bitAnd: MB_ICONMASK)].

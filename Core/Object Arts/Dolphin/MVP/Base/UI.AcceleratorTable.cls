@@ -141,7 +141,7 @@ keyCodeFromString: aString keyboard: aKeyboard
 	"The FVIRTKEY modifier flag is always set."
 	modifierFlags := FVIRTKEY.
 	1 to: count - 1
-		do: [:i | modifierFlags := modifierFlags bitOr: (modifierKeys at: (keys at: i) ifAbsent: [0])].
+		do: [:i | modifierFlags := modifierFlags bitOr: (modifierKeys at: (keys at: i) ifAbsent: 0)].
 	^self keyCode: (aKeyboard virtualKeyFromString: (keys at: count)) modifiers: modifierFlags!
 
 keyModifierNames: anInteger keyboard: aKeyboard

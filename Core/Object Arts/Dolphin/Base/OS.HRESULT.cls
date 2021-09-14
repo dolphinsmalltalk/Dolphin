@@ -73,7 +73,7 @@ errorCode
 facility
 	"Answer a string describing the facility of the receiver's HRESULT code."
 
-	^Facilities at: self facilityCode ifAbsent: ['Unknown facility']!
+	^Facilities at: self facilityCode ifAbsent: 'Unknown facility'!
 
 facilityCode
 	"Answer the Win32 facility code extracted from the receiver's code.

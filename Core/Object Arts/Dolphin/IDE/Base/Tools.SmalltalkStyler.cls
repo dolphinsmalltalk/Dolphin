@@ -209,7 +209,7 @@ styleForBar
 		at: #tempCloseBar put: #tempOpenBar;
 		at: #tag put: #tempOpenBar;
 		shrink;
-		yourself) at: lastStyle ifAbsent: [#binaryMessage]!
+		yourself) at: lastStyle ifAbsent: #binaryMessage!
 
 styleForToken: aStToken 
 	inTag 
@@ -329,7 +329,7 @@ visitIdentifierToken: aStIdentifierToken
 		at: #binarySelector put: #argDecl;
 		at: #literalArray put: #unaryMessage;
 		shrink;
-		yourself) at: lastStyle ifAbsent: [#identifier]!
+		yourself) at: lastStyle ifAbsent: #identifier!
 
 visitIllegalCharacterToken: anStIllegalCharacterToken
 	^#illegal!

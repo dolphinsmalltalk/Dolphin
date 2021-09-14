@@ -67,8 +67,8 @@ testAssociationsDo
 testAtIfAbsent
 	| dictionary |
 	dictionary := self newDictionary.
-	self assert: (dictionary at: #key ifAbsent: [2]) identicalTo: 1.
-	self assert: (dictionary at: #value ifAbsent: [2]) identicalTo: 2!
+	self assert: (dictionary at: #key ifAbsent: 2) identicalTo: 1.
+	self assert: (dictionary at: #value ifAbsent: 2) identicalTo: 2!
 
 testAtIfAbsentPut
 	| dictionary initialSize |

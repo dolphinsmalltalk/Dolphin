@@ -29,8 +29,8 @@ asMinimumRepresentation
 
 	^self notEmpty ifTrue: [self]!
 
-hasActionsForEvent: aSymbol 
-	^mutex critical: [(self at: aSymbol ifAbsent: [#()]) notEmpty]!
+hasActionsForEvent: aSymbol
+	^mutex critical: [(self at: aSymbol ifAbsent: #()) notEmpty]!
 
 removeActionsForEvent: aSymbol 
 	^mutex critical: [self removeKey: aSymbol ifAbsent: []]!
@@ -65,7 +65,7 @@ triggerEvent: anEventSymbol
 	"Private - Evaluate the sequence of MessageSends registered for the event, 
 	anEventSymbol.  Answer the result of the last evaluation, or nil if none."
 
-	^(self at: anEventSymbol ifAbsent: [[]]) value
+	^(self at: anEventSymbol ifAbsent: nil) value
 !
 
 triggerEvent: aSymbol with: anObject

@@ -64,8 +64,8 @@ animation
 
 	^Animations keyAtValue: (siotFlags bitAnd: AnimationMask)!
 
-animation: aSymbol 
-	siotFlags := (siotFlags maskClear: AnimationMask) maskSet: (Animations at: aSymbol ifAbsent: [0])!
+animation: aSymbol
+	siotFlags := (siotFlags maskClear: AnimationMask) maskSet: (Animations at: aSymbol ifAbsent: 0)!
 
 animationDuration
 	"Answer the number of milliseconds that the animations should take. This is only relevant if

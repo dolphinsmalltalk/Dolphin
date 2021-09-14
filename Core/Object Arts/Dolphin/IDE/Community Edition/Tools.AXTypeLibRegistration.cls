@@ -44,8 +44,8 @@ buildVersionNumbers
 
 	| versionParts |
 	versionParts := $. split: self versionString asUppercase.
-	major := Integer readFrom: (versionParts at: 1 ifAbsent: ['']) readStream radix: 16.
-	minor := Integer readFrom: (versionParts at: 2 ifAbsent: ['']) readStream radix: 16!
+	major := Integer readFrom: (versionParts at: 1 ifAbsent: '') readStream radix: 16.
+	minor := Integer readFrom: (versionParts at: 2 ifAbsent: '') readStream radix: 16!
 
 description
 	"Answer the description from the typelib's registration details."

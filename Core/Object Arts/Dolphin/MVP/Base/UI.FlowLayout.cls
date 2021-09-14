@@ -34,10 +34,10 @@ alignment
 
 	^AlignmentMap keyAtValue: (flags bitAnd: AlignmentMask) ifAbsent: [#topLeft]!
 
-alignment: aSymbol 
+alignment: aSymbol
 	"Sets the alignment of the receiver to aSymbol."
 
-	flags := (flags maskClear: AlignmentMask) maskSet: (AlignmentMap at: aSymbol ifAbsent: [0])!
+	flags := (flags maskClear: AlignmentMask) maskSet: (AlignmentMap at: aSymbol ifAbsent: 0)!
 
 flowSplit: aCompositeView context: aLayoutContext
 	"Private - Split the visible managed views in aContainerView into a sequenced collection of

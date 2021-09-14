@@ -207,7 +207,7 @@ keysDo: operation
 lookup: keyObject
 	"Answer the value named by the <Object> argument, keyObject, or nil if there is no such key in the receiver."
 
-	^self at: keyObject ifAbsent: []!
+	^self at: keyObject ifAbsent: nil!
 
 mode: modeSymbol
 	"Set the access mode required of the receiver, e.g. #readWrite, or #read."

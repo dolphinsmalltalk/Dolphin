@@ -18,7 +18,7 @@ OS.FileSystemChange comment: ''!
 		and: [code = aFileSystemChange code and: [fileNames = aFileSystemChange fileNames]]!
 
 action
-	^ActionMap at: code ifAbsent: [#unknownFileChange:]!
+	^ActionMap at: code ifAbsent: #unknownFileChange:!
 
 code
 	^code!

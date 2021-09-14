@@ -225,15 +225,15 @@ style
 	^ButtonStyleMap 
 		keyAtValue: (self baseStyle bitAnd: ##((BS_TYPEMASK bitOr: BS_PUSHLIKE) maskClear: BS_DEFPUSHBUTTON))!
 
-style: aSymbol 
+style: aSymbol
 	| styleFlags |
 	self style == aSymbol ifTrue: [^self].
 	"We must make sure the button is not checked if switching out of checked button style, as
 	otherwise it may remain pushed such that it cannot be unpushed."
 	aSymbol == #check ifFalse: [self isChecked: false].
-	styleFlags := ButtonStyleMap at: aSymbol ifAbsent: [#push].
+	styleFlags := ButtonStyleMap at: aSymbol ifAbsent: #push.
 	self isDefault ifTrue: [styleFlags := styleFlags maskSet: BS_DEFPUSHBUTTON].
-	self 
+	self
 		baseStyle: styleFlags
 		maskedBy: ##(BS_TYPEMASK | BS_PUSHLIKE)
 		recreateIfChanged: styleFlags == #link.

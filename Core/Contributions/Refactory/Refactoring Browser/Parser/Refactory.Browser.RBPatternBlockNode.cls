@@ -75,7 +75,7 @@ lookupMatchFor: aString in: aDictionary
 		ifAbsent: 
 			[| variableNode |
 			variableNode := RBPatternVariableNode named: aString.
-			aDictionary at: variableNode ifAbsent: [nil]]!
+			aDictionary at: variableNode ifAbsent: nil]!
 
 match: aNode inContext: aDictionary 
 	^self matchingBlock value: aNode value: aDictionary!

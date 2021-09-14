@@ -1593,7 +1593,7 @@ showNextStatement
 skipMaskFor: aCompiledMethod
 	^(SkipTable lookup: aCompiledMethod methodClass)
 		ifNil: [0]
-		ifNotNil: [:selectors | selectors at: aCompiledMethod selector ifAbsent: [0]]!
+		ifNotNil: [:selectors | selectors at: aCompiledMethod selector ifAbsent: 0]!
 
 source
 	^sourcePresenter source!
@@ -2216,7 +2216,7 @@ skipSelector: aSymbol of: aBehavior maskClear: maskInteger
 skipSelector: aSymbol of: aBehavior maskSet: maskInteger
 	| classTable |
 	classTable := self skipTable at: aBehavior ifAbsentPut: [IdentityDictionary new].
-	classTable at: aSymbol put: ((classTable at: aSymbol ifAbsent: [0]) bitOr: maskInteger)!
+	classTable at: aSymbol put: ((classTable at: aSymbol ifAbsent: 0) bitOr: maskInteger)!
 
 skipSelector: selector of: behavior type: typeMask
 	"Private - Add the specified method to the set of those skipped by the debugger

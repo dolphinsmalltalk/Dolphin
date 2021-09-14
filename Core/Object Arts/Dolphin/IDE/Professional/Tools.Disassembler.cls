@@ -52,26 +52,26 @@ break
 
 	stream nextPutAll: '*Break'!
 
-decodeHeaderOn: aStream 
+decodeHeaderOn: aStream
 	"Private - Answer a String describing the method header."
 
 	| method |
 	method := self method.
-	aStream 
-		nextPutAll: (#('Normal' 'Return self' 'Return true' 'Return false' 'Return nil' 'Return literal constant 0' 'Return instance variable' 'Set instance variable' 'Return literal static 0') 
+	aStream
+		nextPutAll: (#('Normal' 'Return self' 'Return true' 'Return false' 'Return nil' 'Return literal constant 0' 'Return instance variable' 'Set instance variable' 'Return literal static 0')
 				at: method extraIndex + 1
-				ifAbsent: ['Primitive: ']).
+				ifAbsent: 'Primitive: ').
 	method isPrimitive ifTrue: [aStream print: method primitiveIndex].
 	aStream
 		nextPutAll: ', ';
 		print: method argumentCount;
 		nextPutAll: ' args, '.
-	method stackTempCount > 0 
+	method stackTempCount > 0
 		ifTrue: 
 			[aStream
 				print: method stackTempCount;
 				nextPutAll: ' stack temps, '].
-	method envInfo > 0 
+	method envInfo > 0
 		ifTrue: 
 			[aStream
 				print: method envTempCount;
@@ -249,11 +249,11 @@ printExLongPrefix
 
 	stream nextPutAll: 'Ex Long '!
 
-printInstVarSuffix: offset 
+printInstVarSuffix: offset
 	"Private - Append the instance variable access suffix to the stream."
 
 	| instVarName |
-	instVarName := self method methodClass allInstVarNames at: offset + 1 ifAbsent: ['**Invalid**'].
+	instVarName := self method methodClass allInstVarNames at: offset + 1 ifAbsent: '**Invalid**'.
 	stream
 		nextPutAll: 'Inst Var[';
 		print: offset;

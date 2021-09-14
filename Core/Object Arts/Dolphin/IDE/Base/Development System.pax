@@ -4267,24 +4267,24 @@ asDebugMethod
     
     	^self subclassResponsibility!
 
-decodeHeaderOn: aStream 
+decodeHeaderOn: aStream
 	"Private - Answer a String describing the method header."
 
-	aStream 
-		nextPutAll: (#('Normal' 'Return self' 'Return true' 'Return false' 'Return nil' 'Return literal constant 0' 'Return instance variable' 'Set instance variable' 'Return literal static 0') 
+	aStream
+		nextPutAll: (#('Normal' 'Return self' 'Return true' 'Return false' 'Return nil' 'Return literal constant 0' 'Return instance variable' 'Set instance variable' 'Return literal static 0')
 				at: self extraIndex + 1
-				ifAbsent: ['Primitive: ']).
+				ifAbsent: 'Primitive: ').
 	self isPrimitive ifTrue: [aStream print: self primitiveIndex].
 	aStream
 		nextPutAll: ', ';
 		print: self argumentCount;
 		nextPutAll: ' args, '.
-	self stackTempCount > 0 
+	self stackTempCount > 0
 		ifTrue: 
 			[aStream
 				print: self stackTempCount;
 				nextPutAll: ' stack temps, '].
-	self envInfo > 0 
+	self envInfo > 0
 		ifTrue: 
 			[aStream
 				print: self envTempCount;
@@ -5959,7 +5959,7 @@ openEditor
 	SmalltalkSystem current browseClass!
 
 search
-	^search ifNil: [MethodSearch newPattern: (self searchStrings at: 1 ifAbsent: [''])]!
+	^search ifNil: [MethodSearch newPattern: (self searchStrings at: 1 ifAbsent: '')]!
 
 search: aMethodSearch 
 	search := aMethodSearch.

@@ -109,7 +109,7 @@ delete
 	self class delete: spec!
 
 fileType
-	^#(#disk #char #pipe) at: ((Kernel32 getFileType: self handle) bitAnd: 16rFFF) ifAbsent: [#unknown]!
+	^#(#disk #char #pipe) at: ((Kernel32 getFileType: self handle) bitAnd: 16rFFF) ifAbsent: #unknown!
 
 flags: anInteger
 	"Private - Save away the Win32 access and open flags."

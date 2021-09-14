@@ -29,7 +29,7 @@ newEmpty
 testAtIfAbsentString
 	| dictionary |
 	dictionary := self newDictionary.
-	self assert: (dictionary at: 'key' ifAbsent: [2]) identicalTo: 1!
+	self assert: (dictionary at: 'key' ifAbsent: 2) identicalTo: 1!
 
 testIncludesKey
 	| dictionary |

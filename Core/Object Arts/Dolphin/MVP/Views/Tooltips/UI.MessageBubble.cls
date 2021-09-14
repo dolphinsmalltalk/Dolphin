@@ -157,7 +157,7 @@ hasCloseButton: aBoolean
 iconStyleFlag
 	"Private - Answer the icon style bits from the receiver's style mask."
 
-	^IconIds at: iconId ifAbsent: [0]!
+	^IconIds at: iconId ifAbsent: 0!
 
 iconStyleFlag: anInteger 
 	"Private - Set the receiver's icon to be that named by the argument."

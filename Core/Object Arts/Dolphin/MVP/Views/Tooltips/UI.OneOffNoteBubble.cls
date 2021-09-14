@@ -69,7 +69,7 @@ previouslyViewedNotes
 	self previouslyViewedNotes
 	"
 
-	^(RegKey userRoot at: self registryKeyName ifAbsent: [])
+	^(RegKey userRoot at: self registryKeyName ifAbsent: nil)
 		ifNil: [Set new]
 		ifNotNil: [:regkey | regkey subValues keys collect: [:each | each asSymbol]]!
 

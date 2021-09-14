@@ -105,7 +105,7 @@ occurrencesOf: target
 	"Answer the <integer> number of the receiver's elements which are 
 	equal to the <Object> argument, target."
 
-	^contents at: target ifAbsent: [0]!
+	^contents at: target ifAbsent: 0!
 
 postCopy
 	"Apply any final flourish to the copy that may be required in order to ensure that the copy

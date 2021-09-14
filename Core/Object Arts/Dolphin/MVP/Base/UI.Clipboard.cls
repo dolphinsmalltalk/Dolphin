@@ -239,7 +239,7 @@ isFormatAvailable: aString
 	"Answer whether the clipboard contains data in the named format (e.g. #String)."
 
 	| formatInfo |
-	^(formatInfo := registeredFormats at: aString ifAbsent: []) notNil
+	^(formatInfo := registeredFormats at: aString ifAbsent: nil) notNil
 		and: [self isFormatIdAvailable: formatInfo first]!
 
 isFormatIdAvailable: dwFormat

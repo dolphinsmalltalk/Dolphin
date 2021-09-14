@@ -314,7 +314,7 @@ setInitialFocus
 	workspacePresenter view setFocus!
 
 setLexer
-	self language: (LanguageExtensions at: (File splitExtensionFrom: self filename) ifAbsent: [#null])!
+	self language: (LanguageExtensions at: (File splitExtensionFrom: self filename) ifAbsent: #null)!
 
 show
 	"Shows the view of the receiver.

@@ -430,7 +430,7 @@ showMessage: aString style: anInteger
 						ifFalse: [anInteger])
 				icon: nil
 				instance: nil)
-		ifAbsent: [#abort]!
+		ifAbsent: #abort!
 
 signal
 	"Raise (or re-raise) the receiver in the context of the current active process, causing its propagation 

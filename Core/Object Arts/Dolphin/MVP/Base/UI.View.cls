@@ -4378,11 +4378,11 @@ wmSetCursor: message wParam: wParam lParam: lParam
 	"Private - Handle the Win32 WM_SETCURSOR message."
 
 	| myCursor hitType |
-	hitType := #(#transparent #nowhere #client #caption #sysMenu #size #menu #hscroll #vscroll #minimize #maximize #left #right #top #topLeft #topRight #bottom #bottomLeft #bottomRight #border #object #close #help) 
+	hitType := #(#transparent #nowhere #client #caption #sysMenu #size #menu #hscroll #vscroll #minimize #maximize #left #right #top #topLeft #topRight #bottom #bottomLeft #bottomRight #border #object #close #help)
 				at: lParam lowPartSigned + 2
-				ifAbsent: [#error].
+				ifAbsent: #error.
 	myCursor := self interactor onGetCursor: hitType.
-	^myCursor isNil 
+	^myCursor isNil
 		ifFalse: 
 			[myCursor setCursor.
 			true]!

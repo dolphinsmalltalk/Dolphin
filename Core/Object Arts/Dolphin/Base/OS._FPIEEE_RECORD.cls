@@ -99,7 +99,7 @@ operationName
 	"Answer the symbolic name of the operation being attemped when the exception
 	occurred. See fpieee.h in the MS Win32 SDK for further information."
 
-	^self class operationCodes at: self operation ifAbsent: [#Unspecified]!
+	^self class operationCodes at: self operation ifAbsent: #Unspecified!
 
 precision
 	"Answer an <integer> which identifies the precision configured at the time of the exception."
@@ -109,7 +109,7 @@ precision
 precisionName
 	"Answer a the symbolic name of the precision setting at the time of the exception."
 
-	^self class precisionModes at: self precision + 1 ifAbsent: [#Unknown]!
+	^self class precisionModes at: self precision + 1 ifAbsent: #Unknown!
 
 roundingMode
 	"Answer an <integer> which identifies the rounding mode configured at the time of the exception."
@@ -119,7 +119,7 @@ roundingMode
 roundingModeName
 	"Answer the symbolic name of the rounding mode configured at the time of the exception."
 
-	^self class roundingModes at: self roundingMode + 1 ifAbsent: [#Unknown]! !
+	^self class roundingModes at: self roundingMode + 1 ifAbsent: #Unknown! !
 !OS._FPIEEE_RECORD categoriesForMethods!
 cause!**compiled accessors**!public! !
 causeDescription!accessing!public! !

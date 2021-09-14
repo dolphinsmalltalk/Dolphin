@@ -6233,14 +6233,13 @@ classComments
 	flags := self generationFlags bitAnd: CommentStyleMask.
 	^self class classCommentStyleMap keyAtValue: flags!
 
-classComments: aSymbol 
+classComments: aSymbol
 	"Set the style of comment generation currently in force for the receiver
 	(one of #none, #once, and #overwrite)."
 
 	| flags |
 	flags := self generationFlags maskClear: CommentStyleMask.
-	self generationFlags: (flags 
-				maskSet: (self class classCommentStyleMap at: aSymbol ifAbsent: [0]))!
+	self generationFlags: (flags maskSet: (self class classCommentStyleMap at: aSymbol ifAbsent: 0))!
 
 customAttributes
 	"Private - Answer an <abstractDictionary> of the custom attributes defined against this type.
@@ -6342,13 +6341,12 @@ highLevelWrappers
 	flags := self generationFlags bitAnd: WrapperStyleMask.
 	^self class highLevelWrapperStyleMap keyAtValue: flags!
 
-highLevelWrappers: aSymbol 
+highLevelWrappers: aSymbol
 	"Set the generation of high-level symbols to the named type (one of #none, #minimal, #full)."
 
 	| flags |
 	flags := self generationFlags maskClear: WrapperStyleMask.
-	self generationFlags: (flags 
-				maskSet: (self class highLevelWrapperStyleMap at: aSymbol ifAbsent: [0]))!
+	self generationFlags: (flags maskSet: (self class highLevelWrapperStyleMap at: aSymbol ifAbsent: 0))!
 
 idlAttributes
 	"Private - Answer a <sequencedReadableCollection> of IDL-style attributes for the receiver."
@@ -6478,14 +6476,13 @@ tracing
 	flags := self generationFlags bitAnd: TraceOnly.
 	^self class tracingStyleMap keyAtValue: flags!
 
-tracing: aSymbol 
+tracing: aSymbol
 	"Set the symbolic name of the tracing option currently in force for the receiver
 	(one of #off, #on, and #only)."
 
 	| flags |
 	flags := self generationFlags maskClear: TraceOnly.
-	self generationFlags: (flags 
-				maskSet: (self class tracingStyleMap at: aSymbol ifAbsent: [0]))! !
+	self generationFlags: (flags maskSet: (self class tracingStyleMap at: aSymbol ifAbsent: 0))! !
 !OS.COM.TypeInfoObject categoriesForMethods!
 abortGeneration!private! !
 basicIdlAttributes!printing-IDL!private! !

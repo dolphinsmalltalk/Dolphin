@@ -108,7 +108,10 @@ logValue: anObject
 						at: Character lf put: '&#10';
 						at: Character cr put: '&#13';")
 							at: each
-							ifAbsent: []) ifNil: [logStream nextPut: each] ifNotNil: [:quoted | logStream nextPutAll: quoted]
+							ifAbsent: nil) ifNil: [logStream nextPut: each] ifNotNil: [:quoted | logStream nextPutAll: quoted]
+					"						at: Character tab put: '&#9';
+						at: Character lf put: '&#10';
+						at: Character cr put: '&#13';"
 					"						at: Character tab put: '&#9';
 						at: Character lf put: '&#10';
 						at: Character cr put: '&#13';"]]

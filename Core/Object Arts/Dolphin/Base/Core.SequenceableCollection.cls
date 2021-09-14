@@ -924,7 +924,7 @@ lookup: keyInteger
 	of the key and the key being associated with a nil value. However, this method expresses the
 	very common pattern of passing an empty block as absent handler to #at:ifAbsent:"
 
-	^self at: keyInteger ifAbsent: []!
+	^self at: keyInteger ifAbsent: nil!
 
 maxEncoding
 	^1!

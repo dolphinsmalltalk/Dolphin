@@ -353,7 +353,7 @@ isValidSelector: aSymbol
 isWarningDisabled: anInteger 
 	^anInteger >= CWarnFirst and: [DisabledWarnings includes: anInteger]!
 
-notificationCallback: anArray 
+notificationCallback: anArray
 	"Private - The receiver has generated an error while compiling, inform notifier of this.
 	N.B. This is a callback from the Compiler, and should not be removed."
 
@@ -381,8 +381,8 @@ notificationCallback: anArray
 	selector := anArray at: 7.
 	methodClass := anArray at: 8.
 	notified := anArray at: 9.
-	extras := anArray at: 10 ifAbsent: [#()].
-	^notified compilerNotification: ((self notificationClass 
+	extras := anArray at: 10 ifAbsent: #().
+	^notified compilerNotification: ((self notificationClass
 				code: errorCode
 				in: sourceText
 				for: methodClass

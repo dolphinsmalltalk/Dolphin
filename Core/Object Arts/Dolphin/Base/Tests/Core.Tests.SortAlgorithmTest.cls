@@ -213,7 +213,7 @@ testIncludes
 	selectorCounts := Dictionary new.
 	Collection withAllSubclassesDo: 
 			[:each |
-			each selectors do: [:sel | selectorCounts at: sel put: (selectorCounts at: sel ifAbsent: [0]) + 1]].
+			each selectors do: [:sel | selectorCounts at: sel put: (selectorCounts at: sel ifAbsent: 0) + 1]].
 	sorted := self sort: selectorCounts associations sortBlock: [:a :b | a value < b value].
 
 	"Sort getting at lot of duplicates (i.e. there will be a sequence of equal values)"

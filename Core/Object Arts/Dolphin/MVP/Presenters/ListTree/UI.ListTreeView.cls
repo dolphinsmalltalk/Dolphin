@@ -1154,13 +1154,12 @@ onLeftButtonDoubleClicked: aMouseEvent
 	items by double-clicking"
 
 	| hit target |
-
 	#CUtodo.	"what happens if mouse buttons are reversed ?"
 
 	"if it's not over an item then we can just leave it to the superclass"
 	hit := self basicItemFromPoint: aMouseEvent position.
-	((target := self model at: (hit iItem + 1) ifAbsent: [nil]) notNil)
-		ifFalse: [^ super onLeftButtonDoubleClicked: aMouseEvent].
+	(target := self model at: hit iItem + 1 ifAbsent: nil) notNil
+		ifFalse: [^super onLeftButtonDoubleClicked: aMouseEvent].
 
 	"toggle the indicated item's expanded state. This does not directly change the
 	selection but it may do so implicitly if the effect is to close an ancestor of
@@ -1170,21 +1169,20 @@ onLeftButtonDoubleClicked: aMouseEvent
 
 	"in this case we want to pass the event to the default handling so that any selection
 	changes and the default 'action' processing will also be applied"
-	^ super onLeftButtonDoubleClicked: aMouseEvent.!
+	^super onLeftButtonDoubleClicked: aMouseEvent!
 
 onLeftButtonPressed: aMouseEvent
 	"handle a mouse left-button event.  We need to implement opening
 	items by clicking their status box"
 
 	| hit target |
-
 	#CUtodo.	"what happens if mouse buttons are reversed ?"
 
 	"see if it's a click on a state icon; if not then let the default list view processing
 	take over"
 	hit := self basicItemFromPoint: aMouseEvent position.
-	(hit isOnItemStateIcon and: [(target := self model at: (hit iItem + 1) ifAbsent: [nil]) notNil])
-		ifFalse: [^ super onLeftButtonPressed: aMouseEvent].
+	(hit isOnItemStateIcon and: [(target := self model at: hit iItem + 1 ifAbsent: nil) notNil])
+		ifFalse: [^super onLeftButtonPressed: aMouseEvent].
 
 	"toggle the indicated item's expanded state. This does not directly change the
 	selection, unless shift is down, but it may do so implicitly if the effect is to close an
@@ -1196,7 +1194,7 @@ onLeftButtonPressed: aMouseEvent
 	self presenter trigger: #leftButtonPressed: with: aMouseEvent.
 
 	"answer 0 to suppress Window's default handling"
-	^ 0.!
+	^0!
 
 onTreeChanged: anObject
 	"notification received when the tree at and below anObject has been changed.  If

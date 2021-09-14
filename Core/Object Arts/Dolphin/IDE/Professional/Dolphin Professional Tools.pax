@@ -256,18 +256,9 @@ priorityName!accessing!public! !
 nameOfPriority: anInteger
 	"Answer the name of the specified priority"
 
-	^#(
-		systemBasePriority
-		systemBackgroundPriority
-		userBackgroundPriority
-		userLowerPriority
-		userSchedulingPriority
-		userBoostedPriority
-		userInterruptPriority
-		lowIOPriority
-		highIOPriority
-		timingPriority)
-			at: anInteger ifAbsent: [#unknownPriority]! !
+	^#(#systemBasePriority #systemBackgroundPriority #userBackgroundPriority #userLowerPriority #userSchedulingPriority #userBoostedPriority #userInterruptPriority #lowIOPriority #highIOPriority #timingPriority)
+		at: anInteger
+		ifAbsent: #unknownPriority! !
 !Kernel.ProcessorScheduler categoriesForMethods!
 nameOfPriority:!enquiries!public! !
 !

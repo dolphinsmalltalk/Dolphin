@@ -87,10 +87,10 @@ at: index put: newElement
 	^self shouldNotImplement!
 
 atIndex: anInteger
-  	"Answer the row at index anInteger.
+	"Answer the row at index anInteger.
 	Using this method means that same code can operator on a DBResultSet or a DBDictionary."
 
-	^self at: anInteger ifAbsent: []!
+	^self at: anInteger ifAbsent: nil!
 
 bind
 	"Private - Create and 'bind' (an unbound buffer will not

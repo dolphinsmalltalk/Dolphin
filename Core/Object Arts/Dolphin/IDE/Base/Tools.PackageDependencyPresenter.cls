@@ -111,11 +111,10 @@ onPackageSelected
 
 	| pair |
 	pair := self selectedPair.
-	(pair notNil and: [pair value notNil]) 
+	(pair notNil and: [pair value notNil])
 		ifTrue: 
-			[tracesPresenter 
-				list: ((self prerequisiteTraceFor: self dependentPackage) at: self prerequisitePackage
-						ifAbsent: [#()])]
+			[tracesPresenter
+				list: ((self prerequisiteTraceFor: self dependentPackage) at: self prerequisitePackage ifAbsent: #())]
 		ifFalse: [tracesPresenter clear]!
 
 onPrerequisitesReset

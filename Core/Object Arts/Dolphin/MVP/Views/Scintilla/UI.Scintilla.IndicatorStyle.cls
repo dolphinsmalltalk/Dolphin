@@ -230,7 +230,7 @@ strokeWidth: aNumberOrNil
 	self updateViewProperty: #strokeWidth!
 
 style
-	^style ifNotNil: [:s | IndicatorStyles at: s + 1 ifAbsent: []]!
+	^style ifNotNil: [:s | IndicatorStyles at: s + 1 ifAbsent: nil]!
 
 style: aSymbol
 	self basicStyle: (self styleFromName: aSymbol).

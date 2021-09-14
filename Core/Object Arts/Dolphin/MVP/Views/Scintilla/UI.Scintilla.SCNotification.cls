@@ -150,7 +150,7 @@ getValidFields
 				at: SCN_UPDATEUI put: #(#updated);
 				at: SCN_URIDROPPED put: #(#text);
 				at: SCN_USERLISTSELECTION put: #(#scPosition #ch #text #listType #listCompletionMethod);
-				shrink) at: self code ifAbsent: [#()])!
+				shrink) at: self code ifAbsent: #())!
 
 isAltKeyDown
 	"Answer whether the ALT key was down when the event was raised.

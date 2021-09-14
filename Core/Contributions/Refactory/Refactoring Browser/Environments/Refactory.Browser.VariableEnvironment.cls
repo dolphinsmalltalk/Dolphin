@@ -123,7 +123,7 @@ classVariableSelectorsFor: aClass
 	^selectors!
 
 classVariablesFor: aClass
-	^classVariables at: aClass fullName ifAbsent: [#()]!
+	^classVariables at: aClass fullName ifAbsent: #()!
 
 computeSelectorCacheFor: aClass 
 	^(self instanceVariableSelectorsFor: aClass)
@@ -139,7 +139,7 @@ environmentForClassVariable: aSymbol in: aClass
 	| selectorEnvironment assoc block |
 	selectorEnvironment := SelectorEnvironment onEnvironment: self.
 	selectorEnvironment addSearchString: aSymbol.
-	((classVariables at: aClass fullName ifAbsent: [#()]) includes: aSymbol)
+	((classVariables at: aClass fullName ifAbsent: #()) includes: aSymbol)
 		ifFalse: [^selectorEnvironment].
 	assoc := aClass bindingFor: aSymbol.
 	block := 
@@ -157,13 +157,13 @@ environmentForInstanceVariable: aString in: aClass
 	selectorEnvironment := SelectorEnvironment onEnvironment: self.
 	selectorEnvironment addSearchString: aString.
 	isReader := isWriter := false.
-	((instanceVariables at: aClass fullName ifAbsent: [#()]) includes: aString)
+	((instanceVariables at: aClass fullName ifAbsent: #()) includes: aString)
 		ifTrue: 
 			[isReader := true.
 			isWriter := true].
-	((instanceVariableWriters at: aClass fullName ifAbsent: [#()]) includes: aString)
+	((instanceVariableWriters at: aClass fullName ifAbsent: #()) includes: aString)
 		ifTrue: [isWriter := true].
-	((instanceVariableReaders at: aClass fullName ifAbsent: [#()]) includes: aString)
+	((instanceVariableReaders at: aClass fullName ifAbsent: #()) includes: aString)
 		ifTrue: [isReader := true].
 	aClass withAllSubclasses do: 
 			[:each |
@@ -239,9 +239,9 @@ instanceVariablesFor: aClass
 	vars := Set new.
 	name := aClass fullName.
 	vars
-		addAll: (instanceVariables at: name ifAbsent: [#()]);
-		addAll: (instanceVariableReaders at: name ifAbsent: [#()]);
-		addAll: (instanceVariableWriters at: name ifAbsent: [#()]).
+		addAll: (instanceVariables at: name ifAbsent: #());
+		addAll: (instanceVariableReaders at: name ifAbsent: #());
+		addAll: (instanceVariableWriters at: name ifAbsent: #()).
 	^vars!
 
 instanceVariableWriters

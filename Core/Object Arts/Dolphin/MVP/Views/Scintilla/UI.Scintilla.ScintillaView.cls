@@ -254,7 +254,7 @@ annotateLine: anInteger withAll: aCollectionOfScintillaAnnotation
 	self invalidate!
 
 annotationMode
-	^self class annotationModes at: self sciAnnotationGetVisible + 1 ifAbsent: [#hidden]!
+	^self class annotationModes at: self sciAnnotationGetVisible + 1 ifAbsent: #hidden!
 
 annotationMode: aSymbol 
 	self sciAnnotationSetVisible: (self class annotationModes keyAtValue: aSymbol) - 1!
@@ -364,13 +364,13 @@ appendText: aString
 applyCharacterRepresentations
 	characterRepresentations do: [:each | each applyToView: self initializing: true]!
 
-applyStyle: aSymbol toNext: anInteger 
+applyStyle: aSymbol toNext: anInteger
 	"Apply the named style to the next anInteger characters (from the current styling position)
 	to the style named by the <Symbol> argument, advancing the current styling position
 	appropriately. If the style name is not recognised, then the default style is used."
 
-	anInteger > 0 
-		ifTrue: [self styleNext: anInteger mask: (currentTextStyles at: aSymbol ifAbsent: [0]) asParameter]!
+	anInteger > 0
+		ifTrue: [self styleNext: anInteger mask: (currentTextStyles at: aSymbol ifAbsent: 0) asParameter]!
 
 applyStyleId: idInteger toNext: countInteger 
 	"Apply the style with the <integer> id, idInteger, to the next countInteger characters (from
@@ -1047,7 +1047,7 @@ caretStyle
 	#block"
 
 	#todo.	"This definition is not correct. The caret style integer is more complicated and includes some flags."
-	^self class caretStyles at: self sciGetCaretStyle + 1 ifAbsent: [#line]!
+	^self class caretStyles at: self sciGetCaretStyle + 1 ifAbsent: #line!
 
 caretStyle: aSymbol 
 	"Set the style of caret displayed in the receiver; one of #invisible (no caret), #line or
@@ -1590,7 +1590,7 @@ documentLineFromLine: displayLineInteger
 drawingPhases
 	"Answer the number of drawing phases used by the receiver; one of `#one` (deprecated), `#two` (default), or `#multiple`. See [SCI_GETPHASESDRAW](https://www.scintilla.org/ScintillaDoc.html#SCI_GETPHASESDRAW) in the Scintilla documentation for further details."
 
-	^self class drawingPhases at: self sciGetPhasesDraw + 1 ifAbsent: [#two]!
+	^self class drawingPhases at: self sciGetPhasesDraw + 1 ifAbsent: #two!
 
 drawingPhases: aSymbol
 	^self sciSetPhasesDraw: (aSymbol
@@ -1600,7 +1600,7 @@ drawingPhases: aSymbol
 drawingTechnology
 	"Answer the <Symbol> name of the technology to be used for drawing."
 
-	^self class drawingTechnologies at: self sciGetTechnology + 1 ifAbsent: [#default]!
+	^self class drawingTechnologies at: self sciGetTechnology + 1 ifAbsent: #default!
 
 drawingTechnology: aSymbol
 	"Set the technology to be used for drawing to that named. See the class #drawingTechnologies method for choices, and [SCI_GETTECHNOLOGY](https://www.scintilla.org/ScintillaDoc.html#SCI_GETTECHNOLOGY) for a description of each. Use of one of the DirectWrite modes provides better font rendering and supports full-colour characters."
@@ -1695,7 +1695,7 @@ emptyUndoBuffer
 		lParam: 0!
 
 endOfLineAnnotationMode
-	^self class endOfLineAnnotationModes at: self sciEOLAnnotationGetVisible ifAbsent: [#hidden]!
+	^self class endOfLineAnnotationModes at: self sciEOLAnnotationGetVisible ifAbsent: #hidden!
 
 endOfLineAnnotationMode: aSymbol
 	self sciEOLAnnotationSetVisible: (self class endOfLineAnnotationModes keyAtValue: aSymbol)!
@@ -1718,7 +1718,7 @@ endOfLineMode
 	This controls the character, or characters in the case of #crlf, inserted into the text when
 	the carriage return key is pressed."
 
-	^self class lineEndings at: self sciGetEOLMode + 1 ifAbsent: [#crlf]!
+	^self class lineEndings at: self sciGetEOLMode + 1 ifAbsent: #crlf!
 
 endOfLineMode: aSymbol
 	"Set the End of Line mode of the receiver. The <Symbol> argument must be one of #crlf, #cr,
@@ -2435,7 +2435,7 @@ fontLocale: localeNameString
 fontQuality
 	"Retrieve the quality level for text."
 
-	^self class fontQualities at: self sciGetFontQuality + 1 ifAbsent: [#default]!
+	^self class fontQualities at: self sciGetFontQuality + 1 ifAbsent: #default!
 
 fontQuality: aSymbol
 	"Choose the quality level for text from the FontQuality enumeration."
@@ -2805,7 +2805,7 @@ imageIndexForIcon: anIcon
 			type]!
 
 imeMode
-	^self class imeInteractionModes at: self sciGetIMEInteraction + 1 ifAbsent: [#windowed]!
+	^self class imeInteractionModes at: self sciGetIMEInteraction + 1 ifAbsent: #windowed!
 
 imeMode: aSymbol
 	self sciSetIMEInteraction: (aSymbol
@@ -3566,9 +3566,9 @@ layoutCachingMode
 	cache is invalidated whenever the underlying data, such as the contents or styling of the
 	document changes. Caching the layout of the whole document [#document mode in Dolphin] has
 	the most effect, making dynamic line wrap as much as 20 times faster but this requires 7
-	times the memory required by the document contents plus around 80 bytes per line.'"    
+	times the memory required by the document contents plus around 80 bytes per line.'"
 
-	^self class layoutCachingModes at: self sciGetLayoutCache+1 ifAbsent: [#none]!
+	^self class layoutCachingModes at: self sciGetLayoutCache + 1 ifAbsent: #none!
 
 layoutCachingMode: aSymbol
 	"Set the layout caching mode - see #layoutCachingMode for further details."
@@ -4248,7 +4248,7 @@ moveUp
 multiPasteMode
 	"Retrieve the effect of pasting when there are multiple selections.."
 
-	^self class multiPasteModes at: self sciGetMultiPaste + 1 ifAbsent: [#once]!
+	^self class multiPasteModes at: self sciGetMultiPaste + 1 ifAbsent: #once!
 
 multiPasteMode: aSymbol
 	"Set the effect of pasting when there are multiple selections.."
@@ -8083,7 +8083,7 @@ scnCallTipClick: pSCNotification
 	"
 
 	self presenter trigger: #callTipClicked:
-		with: (#(#upArrow #downArrow) at: (self newNotification: pSCNotification) position ifAbsent: [#other]).
+		with: (#(#upArrow #downArrow) at: (self newNotification: pSCNotification) position ifAbsent: #other).
 	^0!
 
 scnCharAdded: pSCNotification
@@ -8595,7 +8595,7 @@ selectionMode
 	"Note that holding down Ctrl+Alt while selecting with the mouse will perform a #rectangular selection,
 	the normal selection mode being #stream."
 
-	^self class selectionModes at: self sciGetSelectionMode + 1 ifAbsent: [#stream]!
+	^self class selectionModes at: self sciGetSelectionMode + 1 ifAbsent: #stream!
 
 selectionMode: aSymbol
 	"Set the current selection mode to be that named by the <Symbol> argument, one of #stream,
@@ -9206,7 +9206,7 @@ tabDrawMode
 	of the wrapped line), or #indent (indent from the start of the wrapped line by one tab
 	width)."
 
-	^self class tabDrawModes at: self sciGetTabDrawMode + 1 ifAbsent: [#longArrow]!
+	^self class tabDrawModes at: self sciGetTabDrawMode + 1 ifAbsent: #longArrow!
 
 tabDrawMode: aSymbol
 	self sciSetTabDrawMode: (aSymbol
@@ -9629,7 +9629,7 @@ whitespaces: aStringOrNil
 whitespaceVisibility
 	"Answer a <Symbol> naming the level of whitespace marking currently configured in the receiver."
 
-	^self class whitespaceVisibilityLevels at: self sciGetViewWS + 1 ifAbsent: [#invisible]!
+	^self class whitespaceVisibilityLevels at: self sciGetViewWS + 1 ifAbsent: #invisible!
 
 whitespaceVisibility: aSymbol
 	"Make white space characters invisible, always visible, visible only after indentation, or
@@ -9800,7 +9800,7 @@ wrapIndentMode
 	of the wrapped line), or #indent (indent from the start of the wrapped line by one tab
 	width)."
 
-	^self class wrapIndentModes at: self sciGetWrapIndentMode + 1 ifAbsent: [#fixed]!
+	^self class wrapIndentModes at: self sciGetWrapIndentMode + 1 ifAbsent: #fixed!
 
 wrapIndentMode: aSymbol
 	self sciSetWrapIndentMode: (aSymbol

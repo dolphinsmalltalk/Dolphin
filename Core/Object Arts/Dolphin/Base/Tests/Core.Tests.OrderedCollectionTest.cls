@@ -298,9 +298,9 @@ testStrongTalkTests
 						yourself)).
 	self assert: (oc at: 1) equals: 1.
 	self assert: oc size equals: 7.
-	self assert: (oc at: 7 ifAbsent: [nil]) equals: 7.
-	self assert: (oc at: 0 ifAbsent: [nil]) equals: nil.
-	self assert: (oc at: 8 ifAbsent: [nil]) equals: nil.
+	self assert: (oc at: 7 ifAbsent: nil) equals: 7.
+	self assert: (oc at: 0 ifAbsent: nil) equals: nil.
+	self assert: (oc at: 8 ifAbsent: nil) equals: nil.
 	self assert: (oc indexOf: 3 ifAbsent: [nil]) equals: 3.
 	oc
 		remove: 3;

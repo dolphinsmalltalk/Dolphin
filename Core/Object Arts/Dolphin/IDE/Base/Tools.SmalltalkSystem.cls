@@ -2324,8 +2324,8 @@ nameForArgument: anObject
 							print: (self typeForArgumentClass: commonBase)]].
 	^answer contents!
 
-nameForBlockOfArity: anInteger 
-	^'a' , (#('Niladic' 'Monadic' 'Dyadic') at: anInteger+1 ifAbsent: ['']) , 'Valuable'!
+nameForBlockOfArity: anInteger
+	^'a' , (#('Niladic' 'Monadic' 'Dyadic') at: anInteger + 1 ifAbsent: '') , 'Valuable'!
 
 namespaceHierarchy
 	"Answer a <NamespaceHierarchyModel> for the tree of Namespaced classes managed by the receiver."
@@ -2512,7 +2512,7 @@ onDropOverProtocol: session
 
 onFileDropped: aString over: aPresenter
 	| selector |
-	selector := FileDrops at: (File splitExtensionFrom: aString) ifAbsent: [#dropFile:].
+	selector := FileDrops at: (File splitExtensionFrom: aString) ifAbsent: #dropFile:.
 	aPresenter routeCommand: (CommandDescription command: (Message selector: selector argument: aString)
 				description: ('Drop <1s>' expandMacrosWith: aString))!
 
