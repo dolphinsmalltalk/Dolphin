@@ -28,7 +28,7 @@ associationAt: aString
 	"Answer an <Association> with the specified key and the associated value from the receiver.
 	If the key is not found, raise an exception."
 
-	^(self associationAt: aString ifAbsent: [])
+	^(self associationAt: aString ifAbsent: nil)
 		ifNil: [self errorKeyNotFound: aString]
 		ifNotNil: [:assoc | assoc]!
 

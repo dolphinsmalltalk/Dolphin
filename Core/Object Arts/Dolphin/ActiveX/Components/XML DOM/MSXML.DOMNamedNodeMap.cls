@@ -60,14 +60,14 @@ at: key ifAbsent: operation
 
 	^(self associationAt: key ifAbsent: [^operation value]) value!
 
-at: key put: newElement 
+at: key put: newElement
 	"Store the <Object> argument newElement at the <Object>
 	key, in the receiver. Answer newElement."
 
 	"Implementation Note: Because some nodes may be read-only (e.g. namespace nodes in 
 	the attributes map), we must set the value of a new node before adding it to the map."
 
-	(self associationAt: key ifAbsent: []) 
+	(self associationAt: key ifAbsent: nil)
 		ifNil: 
 			[| node |
 			node := self createNamedNode: key.
@@ -141,7 +141,7 @@ length
 lookup: keyObject
 	"Answer the value named by the <Object> argument, keyObject, or nil if there is no such key in the receiver."
 
-	^(self associationAt: keyObject ifAbsent: []) ifNotNil: [:assoc | assoc value]!
+	^(self associationAt: keyObject ifAbsent: nil) value!
 
 nextNode
 	"Answer the <IXMLDOMNode> result of invoking the COM Object's nextNode() method.

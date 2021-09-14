@@ -12,9 +12,8 @@ Refactory.Browser.Refactoring comment: ''!
 !Refactory.Browser.Refactoring categoriesForClass!Refactory-Refactorings! !
 !Refactory.Browser.Refactoring methodsFor!
 
-associationForClassVariable: aName in: aClass ifAbsent: aBlock 
-	^aClass realClass classPool associationAt: aName asSymbol
-		ifAbsent: [aClass realClass classPool associationAt: aName asString ifAbsent: aBlock]!
+associationForClassVariable: aName in: aClass ifAbsent: aBlock
+	^aClass realClass classPool associationAt: aName ifAbsent: aBlock!
 
 browseEnvironments: aCollectionOfBrowserEnvironments
 	^(self options at: #browseEnvironments) value: self value: aCollectionOfBrowserEnvironments!

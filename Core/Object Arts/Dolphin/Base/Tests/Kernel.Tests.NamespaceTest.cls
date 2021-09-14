@@ -55,16 +55,16 @@ testAssociationAt
 
 testAssociationAtIfAbsent
 	| assoc absent |
-	assoc := Core associationAt: #Association ifAbsent: [].
+	assoc := Core associationAt: #Association ifAbsent: nil.
 	self assert: assoc key identicalTo: #Association.
 	self assert: assoc value identicalTo: Association.
 	self deny: assoc isClassVariable.
 	absent := Object new.
 	self assert: (Core associationAt: #Wibble ifAbsent: [absent]) identicalTo: absent.
 	"associationAt: is a local lookup, i.e. it will only resolve unqualfied names from the classPool of the Namespace"
-	self assert: (Root associationAt: #'Core.Object' ifAbsent: [absent]) identicalTo: absent.
-	self assert: (UI associationAt: #Object ifAbsent: [absent]) identicalTo: absent.
-	self assert: (UI associationAt: #'Core.Object' ifAbsent: [absent]) identicalTo: absent.!
+	self assert: (Root associationAt: #'Core.Object' ifAbsent: absent) identicalTo: absent.
+	self assert: (UI associationAt: #Object ifAbsent: absent) identicalTo: absent.
+	self assert: (UI associationAt: #'Core.Object' ifAbsent: absent) identicalTo: absent!
 
 testBindingFromNamespaceWithCustomEnvironment
 	"Test the case of resolving an unqualified name in a method that is defined in a Namespace class in a different environment than that of the Namespace class itself, where the identifier is not bindable in the namespace class, but is bindable in the method environment (bug #1129)."

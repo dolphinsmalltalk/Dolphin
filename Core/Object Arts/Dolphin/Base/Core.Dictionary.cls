@@ -74,7 +74,7 @@ associationAt: key
 	"Answer the association named by the argument, key.  If key is not found,
 	raise an exception."
 
-	^(self associationAt: key ifAbsent: [])
+	^(self associationAt: key ifAbsent: nil)
 		ifNil: [self errorKeyNotFound: key]
 		ifNotNil: [:assoc | assoc]!
 
@@ -90,7 +90,7 @@ associationAt: key ifPresent: operation
 	key and element pair as its argument. If the key is not present, then 
 	answer nil."
 
-	^(self associationAt: key ifAbsent: []) ifNotNil: [:assoc | operation value: assoc]!
+	^(self associationAt: key ifAbsent: nil) ifNotNil: [:assoc | operation value: assoc]!
 
 associationClass
 	"Private - Answer the class of association to be used for holding
