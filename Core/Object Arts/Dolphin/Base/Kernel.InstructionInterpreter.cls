@@ -61,8 +61,7 @@ duplicateStackTop
 !
 
 exLongPushImmediate: extensionByte1 byte2: extensionByte2 byte3: extensionByte3 byte4: anInteger4
-	"Interpret a PushSmallInteger instruction. The SmallInteger is encoded in the extension
-	bytes in little endian order"
+	"Interpret a PushInt32 instruction. The Int32 is encoded in the extension bytes in little endian order."
 
 	!
 

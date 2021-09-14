@@ -10,6 +10,7 @@ package setClassNames: #(
 	#{Refactory.Browser.Tests.RewriteTestCase}
 	#{Tools.Tests}
 	#{Tools.Tests.CreateSubclassDialogTest}
+	#{Tools.Tests.DisassemblerTest}
 	#{Tools.Tests.ImageListViewTest}
 	#{Tools.Tests.KeyedAspectTest}
 	#{Tools.Tests.MenuPainterTest}
@@ -47,6 +48,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Dolphin MVP Tests'
+	'..\Professional\Dolphin Professional Tools'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\..\MVP\Views\Scintilla\Tests\Dolphin Scintilla View Tests'
 	'..\..\Lagoon\Lagoon Image Stripper'
@@ -90,6 +92,12 @@ XProgramming.SUnit.TestCase subclass: #'Refactory.Browser.Tests.RewriteTestCase'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Tools.Tests.CreateSubclassDialogTest'
 	instanceVariableNames: 'subject'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Tools.Tests.DisassemblerTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

@@ -126,10 +126,10 @@ exLongPushImmediate: extensionByte1 byte2: extensionByte2 byte3: extensionByte3 
 	self
 		pushImmediateInteger: ((((extensionByte4 >= 128
 				ifTrue: [extensionByte4 - 256]
-				ifFalse: [extensionByte4]) << 8)
-				+ extensionByte3 << 8)
-				+ extensionByte2 << 8)
-				+ extensionByte1 >> 1!
+				ifFalse: [extensionByte4]) bitShift: 8)
+				+ extensionByte3 bitShift: 8)
+				+ extensionByte2 bitShift: 8)
+				+ extensionByte1!
 
 fullDisassembly
 	self reset.
