@@ -959,8 +959,8 @@ methodProtocols: aCollection
 methodsMatching: aMonadicValuable
 	^self actualClassChainMethods select: aMonadicValuable!
 
-modifiedModel: aValueHolder 
-	(self view viewNamed: 'modified' ifNone: []) ifNotNil: [:item | item model: aValueHolder]!
+modifiedModel: aValueHolder
+	(self view viewNamed: 'modified' ifNone: nil) ifNotNil: [:item | item model: aValueHolder]!
 
 newMethod
 	"Sets the receiver up for creating a new method"
@@ -1591,7 +1591,7 @@ onViewOpened
 	| toolbar modifiedModel |
 	super onViewOpened.
 	methodBrowserPresenter beSorted: [:a :b | a selector <= b selector].
-	(self view viewNamed: 'message' ifNone: [])
+	(self view viewNamed: 'message' ifNone: nil)
 		ifNotNil: 
 			[:item |
 			item
@@ -1601,7 +1601,7 @@ onViewOpened
 			item model: self statusModel.
 			methodBrowserPresenter errorModel: self statusModel.
 			definitionPresenter errorModel: self statusModel].
-	(self view viewNamed: 'packageOfSelection' ifNone: [])
+	(self view viewNamed: 'packageOfSelection' ifNone: nil)
 		ifNotNil: 
 			[:item |
 			item
@@ -1609,7 +1609,7 @@ onViewOpened
 				send: #onPackageDoubleClicked:
 				to: self.
 			item model: packageModel].
-	(self view viewNamed: 'namespace' ifNone: [])
+	(self view viewNamed: 'namespace' ifNone: nil)
 		ifNotNil: [:item | item model: methodBrowserPresenter namespaceModel].
 	modifiedModel := methodBrowserPresenter modifiedModel.
 	self modifiedModel: modifiedModel.
@@ -1625,7 +1625,7 @@ onViewOpened
 		to: self.
 
 	"Really a CardContainer view, but we treat as if a presenter"
-	filterPresenter := self view viewNamed: 'filters' ifNone: [].
+	filterPresenter := self view viewNamed: 'filters' ifNone: nil.
 	filterPresenter notNil
 		ifTrue: 
 			[filterPresenter

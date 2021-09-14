@@ -286,7 +286,7 @@ buildPrerequisiteNames
 	prereqs := Set new.
 	self calculatePrerequisites do: [:each | prereqs add: each name].
 	self manualPrerequisites
-		do: [:each | (self manager packageNamed: each ifNone: []) notNil ifTrue: [prereqs add: each]].
+		do: [:each | (self manager packageNamed: each ifNone: nil) notNil ifTrue: [prereqs add: each]].
 	^prereqs!
 
 calculatePrerequisites

@@ -19,7 +19,7 @@ setUp
 
 tearDown
 	Tests.TestTypelib reset.
-	(Package manager packageNamed: 'Excel' ifNone: []) ifNotNil: [:package | package uninstall]!
+	(Package manager packageNamed: 'Excel' ifNone: nil) ifNotNil: [:package | package uninstall]!
 
 testDefaultArgs
 	| obj |

@@ -115,7 +115,7 @@ asParameter
 	^self view asParameter
 !
 
-attachSubPresenterViews: aView 
+attachSubPresenterViews: aView
 	"Private - Now run through all our sub-presenters and connect them in turn
 	to same named sub-views within aView."
 
@@ -123,11 +123,11 @@ attachSubPresenterViews: aView
 	a supersend in your presenter's #initialize method."
 
 	self subPresenters do: 
-			[:eachSubPresenter | 
+			[:eachSubPresenter |
 			| name matchingSubView |
 			name := self nameOf: eachSubPresenter.
-			matchingSubView := aView viewNamed: name ifNone: [].
-			matchingSubView notNil 
+			matchingSubView := aView viewNamed: name ifNone: nil.
+			matchingSubView notNil
 				ifTrue: [eachSubPresenter view: matchingSubView presenterConnectionPoint]
 				ifFalse: 
 					["No matching sub view - drill down one more layer"
@@ -360,7 +360,7 @@ name: aPresenter as: aNameString
 		ifFalse: 
 			[| exists |
 			"Check that aNameString has not already been used"
-			exists := names keyAtEqualValue: aNameString ifAbsent: [].
+			exists := names keyAtEqualValue: aNameString ifAbsent: nil.
 			(exists isNil or: [exists == self])
 				ifTrue: [names at: aPresenter put: aNameString]
 				ifFalse: [self errorDuplicateName: aNameString]]!

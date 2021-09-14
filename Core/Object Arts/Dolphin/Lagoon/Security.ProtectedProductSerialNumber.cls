@@ -354,11 +354,11 @@ purgeSensitiveMethods
 	decrypt."
 
 	self withAllSuperclassesDo: 
-			[:each | 
-			(each class)
-				removeSelector: #lockedMethodEncodingKey ifAbsent: [];
-				removeSelector: #lockedMethodDecodingKey ifAbsent: [];
-				removeSelector: #instanceEncodingKey ifAbsent: []]!
+			[:each |
+			each class
+				removeSelector: #lockedMethodEncodingKey ifAbsent: nil;
+				removeSelector: #lockedMethodDecodingKey ifAbsent: nil;
+				removeSelector: #instanceEncodingKey ifAbsent: nil]!
 
 serialNumberProtectorClass
 	"Answer the class of <SerialNumberProtector> that will be used for encrypting/decrypting

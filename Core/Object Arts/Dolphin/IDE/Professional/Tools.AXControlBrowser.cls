@@ -212,18 +212,23 @@ onViewOpened
 
 	| statusItem |
 	super onViewOpened.
-
 	site := self view viewNamed: 'site'.
 	site
-		when: #axEvent:withArguments: send: #onEvent:withArguments: to: self;
-		when: #controlPropertyChanged: send: #onPropertyChanged: to: self;
-		when: #controlPropertyChanging:accept: send: #onPropertyChanging:accept: to: self.
-
-	statusItem:= self view viewNamed: 'windowStatus' ifNone: [].
-	statusItem notNil ifTrue: [
-		windowStatus := ValueHolder new.
-		statusItem model: windowStatus].
-	traceWindow := self view viewNamed: 'trace'.!
+		when: #axEvent:withArguments:
+			send: #onEvent:withArguments:
+			to: self;
+		when: #controlPropertyChanged:
+			send: #onPropertyChanged:
+			to: self;
+		when: #controlPropertyChanging:accept:
+			send: #onPropertyChanging:accept:
+			to: self.
+	statusItem := self view viewNamed: 'windowStatus' ifNone: nil.
+	statusItem notNil
+		ifTrue: 
+			[windowStatus := ValueHolder new.
+			statusItem model: windowStatus].
+	traceWindow := self view viewNamed: 'trace'!
 
 progId: aString
 	"Set the progId of the component loaded in the container."

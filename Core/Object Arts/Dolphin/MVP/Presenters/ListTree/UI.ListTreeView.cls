@@ -134,7 +134,7 @@ additem: aChildObject toParent: aParentObject withSiblings: aCollection
 
 	| index sibling |
 	"try to find the correct position to insert it -- initial assumption is just after the parent (if any)"
-	index := self handleFromObject: aParentObject ifAbsent: [0].
+	index := self handleFromObject: aParentObject ifAbsent: 0.
 
 	"or better, just after the previous displayed sibling (if any) and its children (if any)"
 	sibling := self previousDisplayedSiblingOf: aChildObject in: aCollection.

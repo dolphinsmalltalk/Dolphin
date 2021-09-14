@@ -1769,7 +1769,7 @@ viewMode
 	"Answer the <Symbol>ic name of the receiver's view mode, e.g. #smallIcons. This controls
 	whether or not icons are displayed, and their size if they are."
 
-	^ViewModes keyAtEqualValue: iconExtent ifAbsent: [#custom]!
+	^ViewModes keyAtEqualValue: iconExtent ifAbsent: #custom!
 
 viewMode: aSymbol
 	(ViewModes lookup: aSymbol) ifNotNil: [:point | self iconExtent: point]!

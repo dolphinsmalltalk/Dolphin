@@ -147,7 +147,7 @@ dragLeave: session
 
 	session hideCursorWhile: [self hideDropHighlight]!
 
-dragOver: session 
+dragOver: session
 	"The drag operation described by the <DragDropSession>, session,
 	 has moved to a new position over the receiver's window. 
 	Implementation Note: Override in order to provide drop target highlighting
@@ -158,10 +158,10 @@ dragOver: session
 
 	| hit item target |
 	hit := self basicItemFromPoint: (session dragPointInView: self).
-	hit isItemHit 
+	hit isItemHit
 		ifTrue: 
 			[item := hit handle.
-			target := self objectFromHandle: item ifAbsent: []].
+			target := self objectFromHandle: item ifAbsent: nil].
 	"Set up the suggested target and give observers a chance to set the drop operation"
 	session suggestedTarget: target.
 	super dragOver: session.
@@ -455,7 +455,7 @@ nmBeginDrag: pNMHDR
 	nm := self notificationClass fromAddress: pNMHDR.
 	self isDragSource
 		ifTrue: 
-			[(self objectFromHandle: nm itemHandle ifAbsent: [])
+			[(self objectFromHandle: nm itemHandle ifAbsent: nil)
 				ifNotNil: [:dragee | self onBegin: #left drag: dragee]].
 	^nil!
 
@@ -487,31 +487,31 @@ nmBeginRDrag: pNMHDR
 	self isDragSource ifTrue: [self onBegin: #right drag: (self objectFromHandle: nm itemHandle)].
 	^nil!
 
-nmCustomDraw: pNMHDR 
+nmCustomDraw: pNMHDR
 	"Private - Handle a NM_CUSTOMDRAW notification message."
 
 	"Implementation Note: Defer creating the header struct as long as possible to avoid impacting 
 	draw speed too much as this message can be sent several times per sub-item."
 
 	| drawStage context item |
-	(drawStage := pNMHDR dwordAtOffset: 12) == CDDS_PREPAINT 
+	(drawStage := pNMHDR dwordAtOffset: 12) == CDDS_PREPAINT
 		ifTrue: 
 			["Before any painting"
-			^(self wantCustomDrawItemNotifications: pNMHDR) 
+			^(self wantCustomDrawItemNotifications: pNMHDR)
 				ifTrue: [CDRF_NOTIFYITEMDRAW]
 				ifFalse: [CDRF_DODEFAULT]].
 	"Before painting item"
 	(drawStage allMask: CDDS_ITEMPREPAINT) ifFalse: [^nil].
 	context := self customDrawContextClass fromAddress: pNMHDR.
-	item := self objectFromHandle: context itemHandle ifAbsent: [].
-	item isNil 
+	item := self objectFromHandle: context itemHandle ifAbsent: nil.
+	item isNil
 		ifTrue: 
 			["The control attempts to draw stuff that isn't there on occassion"
 			^CDRF_DODEFAULT].
 	context
 		item: item;
 		view: self.
-	^(drawStage allMask: CDDS_SUBITEM) 
+	^(drawStage allMask: CDDS_SUBITEM)
 		ifTrue: [self customDrawSubItem: context]
 		ifFalse: 
 			["If item pre-paint stage and we want sub-item, notify the control accordingly"

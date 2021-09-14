@@ -9686,7 +9686,7 @@ wmContextMenu: message wParam: wParam lParam: lParam
 	self cancelModes.
 	^super wmContextMenu: message wParam: wParam lParam: lParam!
 
-wmKeyDown: message wParam: wParam lParam: lParam 
+wmKeyDown: message wParam: wParam lParam: lParam
 	"Private - Handle WM_KEYDOWN. Implementation Note: We override here in order to allow
 	the correct behaviour for the RETURN key in dialogs (i.e. to send a the id of the default
 	button to the dialog).We only need to do this if the receiver has specifically said that it
@@ -9695,24 +9695,24 @@ wmKeyDown: message wParam: wParam lParam: lParam
 	Note also that we must accept VK_RETURN if it is being used to dismiss an auto completetion
 	box."
 
-	(wParam == VK_RETURN and: [self wantReturn not and: [self isAutoCompletionActive not]]) 
+	(wParam == VK_RETURN and: [self wantReturn not and: [self isAutoCompletionActive not]])
 		ifTrue: 
 			[| shell |
 			shell := self topShell view.
-			(shell getItemHandle: shell defaultButtonId ifAbsent: []) 
+			(shell getItemHandle: shell defaultButtonId ifAbsent: nil)
 				ifNil: 
-					[^super 
+					[^super
 						wmKeyDown: message
 						wParam: wParam
 						lParam: lParam]
 				ifNotNil: 
-					[:defId | 
-					shell 
+					[:defId |
+					shell
 						sendMessage: WM_COMMAND
 						wParam: ButtonConstants.BN_CLICKED << 16 | shell defaultButtonId
 						lParam: defId].
 			^0	"Suppress default processing"].
-	^super 
+	^super
 		wmKeyDown: message
 		wParam: wParam
 		lParam: lParam!

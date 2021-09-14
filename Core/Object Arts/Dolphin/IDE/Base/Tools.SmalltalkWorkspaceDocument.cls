@@ -211,17 +211,17 @@ onViewOpened
 	| modifiedModel toolbar |
 	super onViewOpened.
 	self view acceptDroppedFiles: true.
-	(self view viewNamed: 'errors' ifNone: []) 
+	(self view viewNamed: 'errors' ifNone: nil)
 		ifNotNil: [:item | item model: self workspace errorModel].
 	modifiedModel := self workspace modifiedModel.
-	(self view viewNamed: 'modified' ifNone: []) ifNotNil: [:item | item model: modifiedModel].
-	modifiedModel 
+	(self view viewNamed: 'modified' ifNone: nil) ifNotNil: [:item | item model: modifiedModel].
+	modifiedModel
 		when: #valueChanged
 		send: #updateCaption
 		to: self.
 	"Enable toolbar pulldowns"
 	toolbar := self view viewNamed: 'smalltalkTools'.
-	toolbar presenterConnectionPoint 
+	toolbar presenterConnectionPoint
 		when: #dropDown:
 		send: #onDropDown:
 		to: self.

@@ -1208,7 +1208,7 @@ resolveVariable: anStIdentifierToken
 	name = 'self' ifTrue: [^classScope selfVariable].
 	name = 'super' ifTrue: [^classScope superVariable].
 	name = 'thisContext' ifTrue: [^classScope thisContextVariable].
-	^(nameContext methodClass indexOfInstVar: name ifAbsent: [])
+	^(nameContext methodClass indexOfInstVar: name ifAbsent: nil)
 		ifNotNil: 
 			[:i |
 			(StInstanceVariable index: i name: name)

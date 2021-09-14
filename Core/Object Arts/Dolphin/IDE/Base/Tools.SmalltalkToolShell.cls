@@ -191,7 +191,7 @@ onViewOpened
 	self class defaultSlideyPinsMap notNil ifTrue: [self slideyPinMap: self class defaultSlideyPinsMap].
 
 	"Enable toolbar pulldowns"
-	(self view viewNamed: 'smalltalkTools' ifNone: [])
+	(self view viewNamed: 'smalltalkTools' ifNone: nil)
 		ifNotNil: 
 			[:toolbar |
 			toolbar presenterConnectionPoint

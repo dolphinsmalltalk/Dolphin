@@ -136,12 +136,9 @@ printOn: aStream
 retCodeError: anInteger
 	"Private - Add to our collection, a new error whose code is anIteger."
 
-	self addErrorDetails: (
-	        DBErrorDetails new
-			msg: ('SQL Error: ',
-					(OS.ODBCRetCodes keyAtValue: code
-				                ifAbsent: ['Unknown']));
-			yourself)! !
+	self addErrorDetails: (DBErrorDetails new
+				msg: 'SQL Error: ' , (OS.ODBCRetCodes keyAtValue: code ifAbsent: 'Unknown');
+				yourself)! !
 !Database.DBExceptionDetails categoriesForMethods!
 addErrorDetails:!operations!private! !
 buildErrorInfo!operations!private! !

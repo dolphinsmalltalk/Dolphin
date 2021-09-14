@@ -45,7 +45,7 @@ testAssignResource
 	readBack := rid resource.
 	self assert: readBack equals: self tempViewResource]
 			ensure: 
-				[self class class removeSelector: #resource_Test_view ifAbsent: [].
+				[self class class removeSelector: #resource_Test_view ifAbsent: nil.
 				self assert: (self class respondsTo: #resource_Test_view) not]!
 
 testDeserializeAll
@@ -71,7 +71,7 @@ testReferenceToNonExistentView
 		createResourceNamed: 'Parent Test view issue990'
 		for: paretView
 		on: anonPresenterClass.
-	anonMetaclass removeSelector: #resource_Test_view_issue990 ifAbsent: [].
+	anonMetaclass removeSelector: #resource_Test_view_issue990 ifAbsent: nil.
 	self assert: (anonMetaclass respondsTo: #resource_Test_view_issue990) not.
 	self
 		should: [childRid hiddenObjects]
@@ -80,7 +80,7 @@ testReferenceToNonExistentView
 			[:err |
 			err description
 				= 'Resource [a subclass of UI.Presenter>>#resource_Test_view_issue990] does not exist'].
-	anonMetaclass removeSelector: #resource_Parent_Test_view_issue990 ifAbsent: [].
+	anonMetaclass removeSelector: #resource_Parent_Test_view_issue990 ifAbsent: nil.
 	self assert: (anonMetaclass respondsTo: #resource_Parent_Test_view_issue990) not!
 
 testResourceSelector

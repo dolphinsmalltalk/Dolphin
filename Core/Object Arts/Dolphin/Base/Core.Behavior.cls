@@ -688,7 +688,7 @@ referenceFilterFor: anObject
 	anObject isSymbol
 		ifTrue: 
 			[| index |
-			index := VM indexOfSpecialSelector: anObject ifAbsent: [].
+			index := VM indexOfSpecialSelector: anObject ifAbsent: nil.
 			index notNil
 				ifTrue: 
 					[| dispatcher |
@@ -709,7 +709,7 @@ referenceFilterForAnyOf: aCollection
 			[:each |
 			each isSymbol
 				ifTrue: 
-					[(VM indexOfSpecialSelector: each ifAbsent: [])
+					[(VM indexOfSpecialSelector: each ifAbsent: nil)
 						ifNotNil: [:index | specialSelectorIndices := specialSelectorIndices copyWith: index]]].
 	^specialSelectorIndices isEmpty
 		ifTrue: [[:method | method refersToAnyOf: array]]

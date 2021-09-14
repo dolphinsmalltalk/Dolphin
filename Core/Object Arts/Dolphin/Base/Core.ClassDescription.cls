@@ -49,7 +49,7 @@ addProtocol: protocol
 	protName := protocol asSymbol.
 	protocols isNil ifTrue: [protocols := IdentitySet new].
 	protocols add: protName.
-	self allSubclassesDo: [:q | q removeProtocol: protName ifAbsent: []]!
+	self allSubclassesDo: [:q | q removeProtocol: protName ifAbsent: nil]!
 
 addSharedPool: aPoolDictionary
 	"Add the argument, aPoolDictionary, as one of the pool dictionaries referenced by the

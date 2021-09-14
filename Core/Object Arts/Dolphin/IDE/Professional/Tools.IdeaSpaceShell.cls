@@ -396,7 +396,7 @@ removeShellDecorations: aShell
 		recreateIfChanged: false) ifTrue: [shellView frameChanged]!
 
 removeSizeGrip: aSmalltalkToolShell
-	(aSmalltalkToolShell view viewNamed: 'statusbar' ifNone: [])
+	(aSmalltalkToolShell view viewNamed: 'statusbar' ifNone: nil)
 		ifNotNil: [:statusbar | statusbar hasSizeGrip: false]!
 
 restorePreviousCard: last 

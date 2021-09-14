@@ -160,7 +160,7 @@ emitPackagePrerequisiteNames: aPackage
 			[:each |
 			old
 				add: (pkgmgr packageNamed: (each name copyFrom: 1 to: each name size - ##('(Old Names)' size + 1))
-						ifNone: [])].
+						ifNone: nil)].
 	downgrades := self equivalentLegacyPrerequisites.
 	prereqs do: 
 			[:each |

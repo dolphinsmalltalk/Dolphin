@@ -71,7 +71,7 @@ actualRequiredPackages
 	required := Set new.
 	names do: 
 			[:each |
-			(pacman packageNamed: each ifNone: [])
+			(pacman packageNamed: each ifNone: nil)
 				ifNotNil: 
 					[:package |
 					required
@@ -1199,7 +1199,7 @@ prepareCycle4
 prepareCycle5
 	deploymentContext supersentMethods: nil.	"Dispense with detection of unreachable methods of abstract classes, as these should be done now"
 	#(#class:overrides: #unreachableMethodsOfNonInstantiablesIn: #removeRedundantMethodsOnceFrom:)
-		do: [:each | ##(self) removeSelector: each ifAbsent: []].
+		do: [:each | ##(self) removeSelector: each ifAbsent: nil].
 	self shrinkEventsRegister.
 	self finishedWithAll: #(#shrinkEventsRegister)!
 
@@ -1819,7 +1819,7 @@ uncheckedDeleteClass: aClass
 			self
 				logComment: 'Discarding preserved resource messages: ' , resourceMessages asArray sort printString.
 			deploymentContext preservedMessages: (preserved difference: resourceMessages).
-			##(self) removeSelector: #uncheckedDeleteClass: ifAbsent: []].
+			##(self) removeSelector: #uncheckedDeleteClass: ifAbsent: nil].
 	^super uncheckedDeleteClass: aClass!
 
 unreachableMethodsOfNonInstantiablesIn: aCollectionOfClasses

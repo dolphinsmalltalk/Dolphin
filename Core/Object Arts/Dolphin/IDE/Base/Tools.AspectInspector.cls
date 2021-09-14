@@ -27,7 +27,7 @@ aspectValue
 	"Private - Answer the value associated with the currently selected
 	aspect variable name or nil if there is no selection."
 
-	^(aspectTreePresenter selectionIfNone: [^nil]) value!
+	^(aspectTreePresenter selectionIfNone: nil) value!
 
 beLargeIcons
 	"Sets the receiver to display large icons"

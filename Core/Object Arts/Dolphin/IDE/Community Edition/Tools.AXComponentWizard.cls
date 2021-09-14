@@ -109,7 +109,7 @@ choosePackage
 	| oldPkg |
 	oldPkg := packageName value isEmpty
 				ifTrue: [nil]
-				ifFalse: [Package manager packageNamed: packageName value ifNone: []].
+				ifFalse: [Package manager packageNamed: packageName value ifNone: nil].
 	(PackagePrompter
 		showModalOn: oldPkg asValue
 		caption: 'Select default package…'

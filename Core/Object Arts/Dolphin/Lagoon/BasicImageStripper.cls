@@ -548,7 +548,7 @@ removeNotRequiredMethods
 						do: 
 							[:each |
 							self logMethod: each.
-							each methodClass removeSelector: each selector ifAbsent: []].
+							each methodClass removeSelector: each selector ifAbsent: nil].
 					self endElement: true.
 					self]].
 	self endElement: true.

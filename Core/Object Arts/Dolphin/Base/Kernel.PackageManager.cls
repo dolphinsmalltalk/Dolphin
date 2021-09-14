@@ -416,7 +416,7 @@ includesPackageNamed: aString
 	"Answer whether the receiver holds a <Package> whose name matches 
 	that specified."
 
-	^(self packageNamed: aString ifNone: []) notNil!
+	^(self packageNamed: aString ifNone: nil) notNil!
 
 initialize
 	"Private - Initialize the receiver's instance variables and connect to a number of system
@@ -605,7 +605,7 @@ loadPrereqsForPackage: aPackage relativeTo: pathString extension: extensionStrin
 lookup: packageNameString
 	"Answer the <Package> held by the receiver whose name matches <readableString>, packageName, or nil if there is no such package."
 
-	^self packageNamed: packageNameString ifNone: []!
+	^self packageNamed: packageNameString ifNone: nil!
 
 looseMethodRemoved: aCompiledMethod
 	"Private - The loose <CompiledMethod> argument has been (or is about to be) removed from the
@@ -1073,7 +1073,7 @@ renamePackage: aPackage to: aStringPathname
 
 	| existing newName |
 	newName := File splitStemFrom: aStringPathname.
-	existing := self packageNamed: newName ifNone: [].
+	existing := self packageNamed: newName ifNone: nil.
 	(existing isNil or: [existing == aPackage]) ifFalse: [^self error: 'Package already exists'].
 	self packages
 		removeKey: aPackage name ifAbsent: nil;

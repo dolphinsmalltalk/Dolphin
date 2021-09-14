@@ -180,7 +180,7 @@ getTextBlock: aOneArgBlock
 !
 
 handleFromObject: anObject
-	^self handleFromObject: anObject ifAbsent: []!
+	^self handleFromObject: anObject ifAbsent: nil!
 
 handleFromObject: anObject ifAbsent: exceptionHandler
 	"Private - Answer the 'handle' or index associated with anObject in the receiver.
@@ -417,15 +417,15 @@ selection: newSelection
 
 	^self selection: newSelection ifAbsent: [self errorNotFound: newSelection]!
 
-selection: newSelection ifAbsent: exceptionHandler 
+selection: newSelection ifAbsent: exceptionHandler
 	"Select the first occurrence of the <Object>, newSelection, in the receiver and answer
 	newSelection. If there are no occurrences then answer the result of evaluating the
 	<niladicValuable>, exceptionHandler."
 
-	^(self handleFromObject: newSelection ifAbsent: []) 
+	^(self handleFromObject: newSelection ifAbsent: nil)
 		ifNil: [exceptionHandler cull: newSelection]
 		ifNotNil: 
-			[:index | 
+			[:index |
 			self selectionByIndex: index.
 			newSelection]!
 
@@ -458,13 +458,13 @@ selectionByIndexIfNone: exceptionHandler
 
 	^self hasSelection ifTrue: [self selectionByIndex] ifFalse: [exceptionHandler value]!
 
-selectionIfNone: aBlock 
+selectionIfNone: aBlock
 	"Answer the selected element in the receiver, or the result of evaluating the
 	<niladicValuable>, exceptionHandler, if there is not exactly one."
 
 	| index |
 	index := self selectionByIndex.
-	^index == 0 ifTrue: [aBlock value] ifFalse: [self objectFromHandle: index ifAbsent: []]!
+	^index == 0 ifTrue: [aBlock value] ifFalse: [self objectFromHandle: index ifAbsent: nil]!
 
 selectionOrNil
 	"Answer the single selected object, or nil if there is not exactly one selection."
@@ -474,7 +474,7 @@ selectionOrNil
 	D6, in which the ListBox and ListView classes themselves can be configured to work in either
 	single or multi-select mode."
 
-	^self selectionIfNone: []!
+	^self selectionIfNone: nil!
 
 selectionOrNil: anObject 
 	"Select the first occurrence of the <Object> argument, in the receiver. If anObject
@@ -493,7 +493,7 @@ selections
 	answer := Array writeStream: indices size.
 	"There is a window of opportunity for the list content to change between retrieving the selections and looking up the objects"
 	indices
-		do: [:each | (self objectFromHandle: each ifAbsent: []) ifNotNil: [:object | answer nextPut: object]].
+		do: [:each | (self objectFromHandle: each ifAbsent: nil) ifNotNil: [:object | answer nextPut: object]].
 	^answer grabContents!
 
 selections: aSequencedReadableCollection

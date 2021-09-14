@@ -373,7 +373,7 @@ resolveIdentifier: aString ifDefined: aMonadicValuable
 		ifTrue: 
 			[aString = 'self' ifTrue: [^aMonadicValuable value: self evaluationContext].
 			(self contextBindingFor: aString) ifNotNil: [:var | ^aMonadicValuable value: var value].
-			(methodClass indexOfInstVar: aString ifAbsent: [])
+			(methodClass indexOfInstVar: aString ifAbsent: nil)
 				ifNotNil: [:i | ^aMonadicValuable value: (self evaluationContext instVarAt: i)]].
 	(methodClass fullBindingFor: aString environment: context environment)
 		ifNotNil: [:binding | binding value ifNotNil: [:value | ^aMonadicValuable value: value]].

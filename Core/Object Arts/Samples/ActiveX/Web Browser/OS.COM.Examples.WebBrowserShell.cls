@@ -148,10 +148,8 @@ onViewOpened
 
 	| statusItem |
 	super onViewOpened.
-
-	statusItem := self view viewNamed: 'status' ifNone: [].
-	statusItem model: statusModel.
-!
+	statusItem := self view viewNamed: 'status' ifNone: nil.
+	statusItem model: statusModel!
 
 openUrl: url
 	"Browse the specified URL."

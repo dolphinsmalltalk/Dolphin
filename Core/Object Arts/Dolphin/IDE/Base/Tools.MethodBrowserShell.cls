@@ -102,10 +102,10 @@ onViewOpened
 	Transfer the caption across to the view"
 
 	super onViewOpened.
-	(self view viewNamed: 'errors' ifNone: []) ifNotNil: [:item | item model: self statusModel].
-	(self view viewNamed: 'modified' ifNone: [])
+	(self view viewNamed: 'errors' ifNone: nil) ifNotNil: [:item | item model: self statusModel].
+	(self view viewNamed: 'modified' ifNone: nil)
 		ifNotNil: [:item | item model: self browser modifiedModel].
-	(self view viewNamed: 'namespace' ifNone: [])
+	(self view viewNamed: 'namespace' ifNone: nil)
 		ifNotNil: [:item | item model: browserPresenter namespaceModel]!
 
 parseContext

@@ -59,8 +59,8 @@ arrangeToolbarButtons
 	"For single line views we arrange the toolbar buttons at #east. Otherwise at #south"
 
 	| toobarButtonsView |
-	toobarButtonsView := self view viewNamed: 'toolbarButtons' ifNone: [].
-	toobarButtonsView notNil 
+	toobarButtonsView := self view viewNamed: 'toolbarButtons' ifNone: nil.
+	toobarButtonsView notNil
 		ifTrue: [toobarButtonsView arrangement: (self isSingleLine ifTrue: [#east] ifFalse: [#south])]!
 
 createAspectPresenters: anAspectAccessor for: aspectValueModel

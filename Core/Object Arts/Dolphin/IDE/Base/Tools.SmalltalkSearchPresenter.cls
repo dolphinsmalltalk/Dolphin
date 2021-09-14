@@ -247,7 +247,7 @@ searchObject
 	searchText isEmpty ifTrue: [^nil].
 	(searchText first isUppercase not and: [Symbol isLiteralSymbol: searchText])
 		ifTrue: [^Symbol findInterned: searchText].
-	(Package manager packageNamed: searchText ifNone: []) ifNotNil: [:a | ^a].
+	(Package manager packageNamed: searchText ifNone: nil) ifNotNil: [:a | ^a].
 	(self classMatchingName: searchText) ifNotNil: [:class | ^class].
 	^[Compiler evaluate: (searchText copyReplaceAll: '>>' with: '>>#')] on: Exception do: [:x | nil]!
 

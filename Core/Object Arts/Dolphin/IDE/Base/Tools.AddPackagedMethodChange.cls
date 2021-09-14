@@ -65,7 +65,7 @@ method
 	^method!
 
 package
-	^packageName isNil ifFalse: [Package manager packageNamed: packageName ifNone: []]!
+	^packageName isNil ifFalse: [Package manager packageNamed: packageName ifNone: nil]!
 
 package: aPackage 
 	packageName := aPackage isNil ifFalse: [aPackage name]!

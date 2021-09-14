@@ -1680,7 +1680,7 @@ onDisplayDetailsRequired: anLVITEM
 	#report mode and the other modes."
 
 	| rowObject mask column subItem |
-	rowObject := self objectFromHandle: anLVITEM handle ifAbsent: [UnknownItem].
+	rowObject := self objectFromHandle: anLVITEM handle ifAbsent: UnknownItem.
 	"List sometimes asks for lvitem we no longer have, answer nil to accept default processing"
 	rowObject == UnknownItem ifTrue: [^nil].
 	subItem := anLVITEM iSubItem.

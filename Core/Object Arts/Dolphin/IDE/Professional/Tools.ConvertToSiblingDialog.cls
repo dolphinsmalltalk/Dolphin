@@ -63,7 +63,7 @@ onSelectionChanged
 
 onViewOpened
 	super onViewOpened.
-	(self view viewNamed: 'status' ifNone: []) ifNotNil: [:item | item model: statusModel].
+	(self view viewNamed: 'status' ifNone: nil) ifNotNil: [:item | item model: statusModel].
 	subclassesPresenter view selectAll!
 
 queryCommand: aCommandQuery 

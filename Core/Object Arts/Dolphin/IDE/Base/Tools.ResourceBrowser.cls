@@ -50,10 +50,10 @@ onViewOpened
 	super onViewOpened.
 
 	"Enable view mode pulldown"
-	(self view viewNamed: 'viewTools' ifNone: []) 
+	(self view viewNamed: 'viewTools' ifNone: nil)
 		ifNotNil: 
-			[:toolbar | 
-			toolbar presenterConnectionPoint 
+			[:toolbar |
+			toolbar presenterConnectionPoint
 				when: #dropDown:
 				send: #onDropDown:
 				to: resourceToolboxPresenter categoriesPresenter view]!

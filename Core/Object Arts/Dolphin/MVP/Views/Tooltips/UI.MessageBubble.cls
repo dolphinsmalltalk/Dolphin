@@ -159,10 +159,10 @@ iconStyleFlag
 
 	^IconIds at: iconId ifAbsent: 0!
 
-iconStyleFlag: anInteger 
+iconStyleFlag: anInteger
 	"Private - Set the receiver's icon to be that named by the argument."
 
-	iconId := IconIds keyAtValue: anInteger ifAbsent: [0]!
+	iconId := IconIds keyAtValue: anInteger ifAbsent: 0!
 
 initialize
 	iconId := 0.

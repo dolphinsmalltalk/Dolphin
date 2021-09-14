@@ -455,20 +455,20 @@ tabOrientation
 
 	^TabOrientations at: (self baseStyle bitAnd: OrientationMask)!
 
-tabOrientation: aSymbol 
+tabOrientation: aSymbol
 	"Set the orientation (i.e. the edge along which the tabs are displayed) of the receiver
 	to that named by the <Symbol> argument. Note that if a vertical mode is selected then the
 	single-line (scrolling tabs) mode is not supported so we switch on the multiline flag implicitly."
 
 	| orientationFlags mask initialSelections |
 	initialSelections := self selections.
-	orientationFlags := TabOrientations keyAtValue: aSymbol ifAbsent: [0].
-	mask := (orientationFlags allMask: TCS_VERTICAL) 
+	orientationFlags := TabOrientations keyAtValue: aSymbol ifAbsent: 0.
+	mask := (orientationFlags allMask: TCS_VERTICAL)
 				ifTrue: 
 					[orientationFlags := orientationFlags | TCS_MULTILINE.
 					OrientationMask | TCS_MULTILINE]
 				ifFalse: [OrientationMask].
-	(self 
+	(self
 		baseStyle: orientationFlags
 		maskedBy: mask
 		recreateIfChanged: true) ifTrue: [self invalidateLayout].

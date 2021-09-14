@@ -645,8 +645,8 @@ nmRClick: pNMHDR
 	(newSel = curSel or: 
 			["Selection change permitted?"
 			(self
-				onSelChangingFrom: (self objectFromHandle: curSel ifAbsent: [])
-				to: (self objectFromHandle: newSel ifAbsent: [])
+				onSelChangingFrom: (self objectFromHandle: curSel ifAbsent: nil)
+				to: (self objectFromHandle: newSel ifAbsent: nil)
 				cause: #mouse) and: 
 						[self selectionByIndex: newSel.
 						true]])
@@ -853,8 +853,8 @@ onSelChanging: anExternalAddress
 	action > TVC_BYKEYBOARD ifTrue: [^false].
 	^action == TVC_UNKNOWN or: 
 			[self
-				onSelChangingFrom: (self objectFromHandle: nmtv itemOld hItem ifAbsent: [])
-				to: (self objectFromHandle: nmtv itemNew hItem ifAbsent: [])
+				onSelChangingFrom: (self objectFromHandle: nmtv itemOld hItem ifAbsent: nil)
+				to: (self objectFromHandle: nmtv itemNew hItem ifAbsent: nil)
 				cause: (#(#mouse #keyboard) at: action)]!
 
 onSelChangingFrom: oldSelection to: newSelection cause: aSymbol
@@ -978,7 +978,7 @@ selectionByIndex: itemHandle ifAbsent: exceptionHandler
 	(oldSel := self selectionByIndex) = itemHandle
 		ifFalse: 
 			[(self setSingleSelection: itemHandle)
-				ifTrue: [(self objectFromHandle: itemHandle ifAbsent: []) ifNil: [^exceptionHandler value]]
+				ifTrue: [(self objectFromHandle: itemHandle ifAbsent: nil) ifNil: [^exceptionHandler value]]
 				ifFalse: [^itemHandle]].
 	"Either the selection was already that indicated or the change was refused by onSelChanging handlers"
 	^oldSel!
@@ -995,9 +995,7 @@ selectionIfNone: aBlock
 
 	| h |
 	h := self selectionByIndex.
-	^h isNull
-		ifTrue: [aBlock value]
-		ifFalse:[self objectFromHandle: h ifAbsent: []]!
+	^h isNull ifTrue: [aBlock value] ifFalse: [self objectFromHandle: h ifAbsent: nil]!
 
 selectionState
 	"Private - Answer a <MessageSend> which, when evaluated, will restore the current selection, or nil if there is no selection to restore."
@@ -1006,7 +1004,7 @@ selectionState
 	h := self selectionByIndex.
 	^h == 0
 		ifFalse: 
-			[(self objectFromHandle: h ifAbsent: [])
+			[(self objectFromHandle: h ifAbsent: nil)
 				ifNotNil: 
 					[:selection |
 					MessageSend
@@ -1134,7 +1132,7 @@ tvnGetInfoTip: pNMHDR
 		ifFalse: 
 			[| nmtv |
 			nmtv := NMTVGETINFOTIPW fromAddress: pNMHDR.
-			(self objectFromHandle: nmtv itemHandle ifAbsent: [])
+			(self objectFromHandle: nmtv itemHandle ifAbsent: nil)
 				ifNotNil: [:object | nmtv text: (getInfoTipBlock value: object) displayString].
 			0]!
 
@@ -1158,7 +1156,7 @@ tvnItemExpanding: pNMHDR
 	nmtv action = TVE_EXPAND ifFalse: [^nil].	"See if we have been expanded before"
 	tviParent := nmtv itemNew.
 	tviParent isStateExpandedOnce ifTrue: [^nil].	"If not, add the children"
-	(self objectFromHandle: tviParent hItem ifAbsent: [])
+	(self objectFromHandle: tviParent hItem ifAbsent: nil)
 		ifNotNil: 
 			[:parentObject |
 			Cursor wait showWhile: 

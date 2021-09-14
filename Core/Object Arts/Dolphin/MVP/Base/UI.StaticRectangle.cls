@@ -28,7 +28,7 @@ style
 
 	| styleFlags |
 	styleFlags := self baseStyle bitAnd: SS_TYPEMASK.
-	^StyleMap keyAtValue: styleFlags ifAbsent: [#blackFrame]!
+	^StyleMap keyAtValue: styleFlags ifAbsent: #blackFrame!
 
 style: rectangleStyleName
 	"Set the style of rectangle required of the receiver to that identifier by the symbolic

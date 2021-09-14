@@ -35,9 +35,9 @@ alignment
 	control."
 
 	| alignment |
-	alignment := self baseStyle 
+	alignment := self baseStyle
 				bitAnd: ##(BS_LEFT | BS_RIGHT | BS_BOTTOM | BS_TOP | BS_CENTER | BS_VCENTER).
-	^AlignmentMap keyAtValue: alignment ifAbsent: [#leftCenter]!
+	^AlignmentMap keyAtValue: alignment ifAbsent: #leftCenter!
 
 alignment: aSymbol 
 	"Set the alignment of the button to be the mode named by the <Symbol> argument, which must

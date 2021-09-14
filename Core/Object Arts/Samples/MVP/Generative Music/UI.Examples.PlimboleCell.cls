@@ -28,7 +28,7 @@ direction
 	^self velocity degrees truncated!
 
 directionIndex
-	^self directions keyAtEqualValue: self velocity ifAbsent: []!
+	^self directions keyAtEqualValue: self velocity ifAbsent: nil!
 
 directions
 	^##((Dictionary new)

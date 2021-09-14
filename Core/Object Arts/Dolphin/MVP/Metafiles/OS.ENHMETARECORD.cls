@@ -21,7 +21,7 @@ getField: fieldNameString
 	| selector |
 	selector := fieldNameString asSymbol.
 	selector == #iType
-		ifTrue: [(EnhancedMetafileRecordTypes keyAtValue: self iType ifAbsent: []) ifNotNil: [:name | ^name]].
+		ifTrue: [(EnhancedMetafileRecordTypes keyAtValue: self iType ifAbsent: nil) ifNotNil: [:name | ^name]].
 	^self perform: selector!
 
 iType

@@ -253,7 +253,7 @@ setItem: anInteger font: aFontOrHandle
 	"Private - Set the font of the receiver's control with the specified id."
 
 	User32
-		sendMessage: (self getItemHandle: anInteger ifAbsent: [])
+		sendMessage: (self getItemHandle: anInteger ifAbsent: nil)
 		msg: WM_SETFONT
 		wParam: aFontOrHandle asParameter
 		lParam: 0!
@@ -351,14 +351,14 @@ wmInitDialog: message wParam: wParam lParam: lParam
 		text: 'The deployment process may take up to a minute depending on the deployment options. 
 
 This progress dialog will disappear some seconds before deployment is complete. A message box will appear informing you when the procedure is finished and, once confirmed, the development image will exit.'.
-	progress := self getItemHandle: ProgressId ifAbsent: [].
+	progress := self getItemHandle: ProgressId ifAbsent: nil.
 	bkcolor := User32 getSysColor: COLOR_WINDOW.
 	User32
 		sendMessage: progress
 		msg: 8193
 		wParam: 0
 		lParam: bkcolor.	"CCM_SETBKCOLOR"
-	status := self getItemHandle: StatusId ifAbsent: [].
+	status := self getItemHandle: StatusId ifAbsent: nil.
 	self forkProgressMonitor.
 	^true!
 

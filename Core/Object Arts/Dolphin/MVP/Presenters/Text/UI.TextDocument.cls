@@ -72,7 +72,7 @@ onViewOpened
 	"Received when the receiver's view has been connected."
 
 	super onViewOpened.
-	(self view viewNamed: 'status' ifNone: []) ifNotNil: [:item | item model: statusModel].
+	(self view viewNamed: 'status' ifNone: nil) ifNotNil: [:item | item model: statusModel].
 	modifiedModel
 		when: #valueChanged
 		send: #updateCaption

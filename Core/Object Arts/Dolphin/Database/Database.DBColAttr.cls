@@ -169,7 +169,7 @@ precision: anInteger
 
 	precision := anInteger!
 
-printOn: aStream 
+printOn: aStream
 	"Append the ASCII representation of
 	 the receiver to aStream."
 
@@ -180,7 +180,7 @@ printOn: aStream
 		nextPutAll: ', ';
 		nextPutAll: self name;
 		nextPutAll: ', ';
-		nextPutAll: (OS.ODBCTypes keyAtValue: self type ifAbsent: ['SQL_TYPE_NULL']);
+		nextPutAll: (OS.ODBCTypes keyAtValue: self type ifAbsent: 'SQL_TYPE_NULL');
 		nextPutAll: ', ';
 		print: self length;
 		nextPut: $)!

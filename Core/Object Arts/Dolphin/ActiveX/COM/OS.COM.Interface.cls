@@ -987,7 +987,7 @@ registerClass: anInterfaceClass forIID: aGUID
 
 	| existingKey |
 	InterfaceClasses isNil ifTrue: [self initializeRegister].
-	existingKey := InterfaceClasses keyAtValue: anInterfaceClass ifAbsent: [].
+	existingKey := InterfaceClasses keyAtValue: anInterfaceClass ifAbsent: nil.
 	existingKey isNil ifFalse: [InterfaceClasses removeKey: existingKey].
 	InterfaceClasses at: aGUID put: anInterfaceClass!
 

@@ -36,7 +36,7 @@ browserClass
 	^self subclassResponsibility!
 
 deleteTestMethods: aCollection
-	aCollection do: [:each | each methodClass removeSelector: each selector ifAbsent: []]!
+	aCollection do: [:each | each methodClass removeSelector: each selector ifAbsent: nil]!
 
 inheritedMethodAddRemoveTests
 	"Private - "

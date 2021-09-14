@@ -1557,7 +1557,7 @@ setVariablesList: aSequenceableCollection
 
 	| wasExpanded treeModel newSelection |
 	treeModel := self newLocalsTreeWithRoots: aSequenceableCollection.
-	(variablesPresenter selectionIfNone: [])
+	(variablesPresenter selectionIfNone: nil)
 		ifNil: [wasExpanded := false]
 		ifNotNil: 
 			[:selection |

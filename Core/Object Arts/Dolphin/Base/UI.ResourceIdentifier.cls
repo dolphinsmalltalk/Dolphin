@@ -249,7 +249,7 @@ onPreStripImage
 	self allResourceIdentifiersDo: [:each | each icon: nil]!
 
 removeResource: aResourceIdentifier 
-	^aResourceIdentifier owningClass class removeSelector: aResourceIdentifier selector ifAbsent: []!
+	^aResourceIdentifier owningClass class removeSelector: aResourceIdentifier selector ifAbsent: nil!
 
 selectorFromName: aString
 	| selector prefix |

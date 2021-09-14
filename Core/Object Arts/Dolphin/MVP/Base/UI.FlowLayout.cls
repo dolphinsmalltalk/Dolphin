@@ -32,7 +32,7 @@ Instance Variables:
 alignment
 	"Answers the alignment of the receiver. This will be either #left, #center or #right."
 
-	^AlignmentMap keyAtValue: (flags bitAnd: AlignmentMask) ifAbsent: [#topLeft]!
+	^AlignmentMap keyAtValue: (flags bitAnd: AlignmentMask) ifAbsent: #topLeft!
 
 alignment: aSymbol
 	"Sets the alignment of the receiver to aSymbol."

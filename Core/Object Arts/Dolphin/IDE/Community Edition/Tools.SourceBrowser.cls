@@ -147,7 +147,7 @@ onViewOpened
 
 	| statusItem |
 	super onViewOpened.
-	statusItem := self view viewNamed: 'status' ifNone: [].
+	statusItem := self view viewNamed: 'status' ifNone: nil.
 	statusItem notNil ifTrue: [statusItem model: statusModel]!
 
 queryCommand: query

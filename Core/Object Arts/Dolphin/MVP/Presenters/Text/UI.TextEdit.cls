@@ -37,7 +37,7 @@ alignment
 
 	| typeFlags |
 	typeFlags := self baseStyle bitAnd: ##(ES_LEFT | ES_CENTER | ES_RIGHT).
-	^AlignmentMap keyAtValue: typeFlags ifAbsent: [#left]!
+	^AlignmentMap keyAtValue: typeFlags ifAbsent: #left!
 
 alignment: aSymbol
 	"Sets the text alignment to the symbolic alignment name, aSymbol."
@@ -455,7 +455,7 @@ format
 
 	| fmtFlags |
 	fmtFlags := self baseStyle bitAnd: ##(ES_UPPERCASE | ES_LOWERCASE | ES_NUMBER).
-	^FormatMap keyAtValue: fmtFlags ifAbsent: [#mixed]!
+	^FormatMap keyAtValue: fmtFlags ifAbsent: #mixed!
 
 format: aSymbol 
 	"Sets the text format to the symbolic format name, aSymbol. 

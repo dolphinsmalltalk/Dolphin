@@ -193,7 +193,7 @@ name: aView as: aNameStringOrNil
 					^names removeKey: aView ifAbsent: nil].
 
 			"Otherwise name is specified so check that it is unique"
-			exists := names keyAtEqualValue: aNameStringOrNil ifAbsent: [].
+			exists := names keyAtEqualValue: aNameStringOrNil ifAbsent: nil.
 			(exists isNil or: [exists == self])
 				ifTrue: [names at: aView put: aNameStringOrNil]
 				ifFalse: [self errorDuplicateName: aNameStringOrNil]]!
@@ -293,16 +293,16 @@ validateUserInterface
 	self subViewsDo: [:each | each presenter validateUserInterface].
 	super validateUserInterface.!
 
-viewNamed: aString ifNone: aBlock 
+viewNamed: aString ifNone: aBlock
 	"Answer the sub-view within the receiver's hierarchy with aString as its
 	name. Evaluates aBlock if no matching named view exists."
 
-	names isNil 
+	names isNil
 		ifFalse: [names keysAndValuesDo: [:eachKey :eachValue | aString = eachValue ifTrue: [^eachKey]]].
 	self managedSubViewsDo: 
-			[:each | 
+			[:each |
 			| found |
-			found := each viewNamed: aString ifNone: [].
+			found := each viewNamed: aString ifNone: nil.
 			found notNil ifTrue: [^found]].
 	^aBlock value!
 

@@ -865,7 +865,7 @@ registerClass: structureClass forGUID: aGUID
 
 	| existingKey |
 	RecordClasses isNil ifTrue: [^self].
-	existingKey := RecordClasses keyAtValue: structureClass ifAbsent: [].
+	existingKey := RecordClasses keyAtValue: structureClass ifAbsent: nil.
 	existingKey isNil ifFalse: [RecordClasses removeKey: existingKey].
 	aGUID isNull ifFalse: [RecordClasses at: aGUID put: structureClass]!
 

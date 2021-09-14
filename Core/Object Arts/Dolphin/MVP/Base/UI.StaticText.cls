@@ -21,7 +21,7 @@ alignment
 
 	| typeFlags |
 	typeFlags := self getAlignment.
-	^AlignmentMap keyAtValue: typeFlags ifAbsent: [#left]!
+	^AlignmentMap keyAtValue: typeFlags ifAbsent: #left!
 
 alignment: aSymbol
 	"Sets the text alignment to the symbolic alignment name, aSymbol."

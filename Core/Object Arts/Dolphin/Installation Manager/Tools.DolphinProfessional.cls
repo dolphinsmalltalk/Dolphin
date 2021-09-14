@@ -108,7 +108,7 @@ developmentClasses
 	#('Object Arts Development' 'Installation Manager') do: 
 			[:p |
 			| package |
-			package := Package manager packageNamed: p ifNone: [].
+			package := Package manager packageNamed: p ifNone: nil.
 			package notNil ifTrue: [package classes do: [:c | classes remove: c ifAbsent: nil]]].
 	^classes!
 

@@ -1255,19 +1255,19 @@ filerProxy
 	self isTopView ifTrue: [filerProxy beTopView].
 	^filerProxy!
 
-findItemHandle: anInteger ifAbsent: exceptionHandler 
+findItemHandle: anInteger ifAbsent: exceptionHandler
 	"Private - Answer the handle of a child window within the receiver with the specified
 	<integer> id, or if no such immediate child, then the first child of a child with
 	encountered with that id, and so on. i.e. this is a recursive version of
 	#getItemHandle:ifAbsent: If there is no such child in the receiver, or its children, etc,
 	then answer the result of evaluating the niladic valuable, exceptionHandler."
 
-	(self getItemHandle: anInteger ifAbsent: []) 
+	(self getItemHandle: anInteger ifAbsent: nil)
 		ifNil: 
 			[self subViewsDo: 
-					[:each | 
+					[:each |
 					| hWnd |
-					hWnd := each findItemHandle: anInteger ifAbsent: [].
+					hWnd := each findItemHandle: anInteger ifAbsent: nil.
 					hWnd isNil ifFalse: [^hWnd]]]
 		ifNotNil: [:hWnd | ^hWnd].
 	^exceptionHandler value!

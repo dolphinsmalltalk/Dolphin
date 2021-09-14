@@ -398,7 +398,7 @@ visitSpecialCharacterToken: aStSpecialCharacterToken
 					#specialCharacter]].
 	char == $)
 		ifTrue: 
-			[(stack removeLastIfAbsent: [])
+			[(stack removeLastIfAbsent: nil)
 				ifNotNil: 
 					[:token |
 					token isLiteralArrayToken

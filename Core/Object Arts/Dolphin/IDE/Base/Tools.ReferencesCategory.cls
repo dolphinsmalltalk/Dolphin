@@ -61,7 +61,7 @@ initialize
 	self createDefaultInstances!
 
 newNamed: aString literal: anObject
-	^((VM indexOfSpecialSelector: anObject ifAbsent: [])
+	^((VM indexOfSpecialSelector: anObject ifAbsent: nil)
 		ifNil: [self newNamed: aString]
 		ifNotNil: 
 			[:index |

@@ -231,8 +231,8 @@ tearDown
 	"Manually remove the test components in case the uninstall failed or the test package didn't load correctly."
 	#{Smalltalk.ScribbleTest} ifDefined: [:class | class removeFromSystem].
 	scribbleClass := #{Smalltalk.Scribble} value.
-	#(#looseA #looseC) do: [:each | scribbleClass removeSelector: each ifAbsent: []].
-	#(#resource_Scribble_test) do: [:each | scribbleClass class removeSelector: each ifAbsent: []]!
+	#(#looseA #looseC) do: [:each | scribbleClass removeSelector: each ifAbsent: nil].
+	#(#resource_Scribble_test) do: [:each | scribbleClass class removeSelector: each ifAbsent: nil]!
 
 testForwardRefLoadPac
 	"#1720: Test loading and converting of old packages with forward reference view referereces"

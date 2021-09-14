@@ -51,7 +51,7 @@ createPools
 
 destroyPackage
 	package
-		ifNil: [(Package manager packageNamed: self class name ifNone: []) ifNotNil: [:p | p uninstall]]
+		ifNil: [(Package manager packageNamed: self class name ifNone: nil) ifNotNil: [:p | p uninstall]]
 		ifNotNil: [package uninstall].
 	package := nil!
 

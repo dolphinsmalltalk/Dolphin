@@ -827,22 +827,22 @@ onViewOpened
 
 	| toolbar |
 	super onViewOpened.
-	(self view viewNamed: 'errors' ifNone: []) 
+	(self view viewNamed: 'errors' ifNone: nil)
 		ifNotNil: 
-			[:item | 
+			[:item |
 			item model: statusModel.
 			scriptTextPresenter errorModel: statusModel].
 
 	"Enable view mode pulldown"
 	toolbar := self view viewNamed: 'viewTools'.
-	toolbar presenterConnectionPoint 
+	toolbar presenterConnectionPoint
 		when: #dropDown:
 		send: #onDropDown:
 		to: self.
 
 	"Really a CardContainer view, but we treat as if a presenter"
 	cardsPresenter := self view viewNamed: 'ownedCards'.
-	cardsPresenter 
+	cardsPresenter
 		when: #currentCardChangedFrom:to:
 		send: #onCardChangedFrom:to:
 		to: self.	";
@@ -1030,7 +1030,7 @@ saveScript
 scriptName
 	"Answer the currently selected script name."
 
-	^(scriptNamesPresenter selectionIfNone: []) ifNotNil: [:script | script key]!
+	^(scriptNamesPresenter selectionIfNone: nil) ifNotNil: [:script | script key]!
 
 scriptText
 	"Private - Answer the text for the currently selected script as a String"

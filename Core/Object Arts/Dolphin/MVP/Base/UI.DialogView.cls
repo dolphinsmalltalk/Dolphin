@@ -290,7 +290,7 @@ setItem: anInteger font: aFontOrHandle
 	"Private - Set the font of the receiver's control with the specified id."
 
 	User32
-		sendMessage: (self getItemHandle: anInteger ifAbsent: [])
+		sendMessage: (self getItemHandle: anInteger ifAbsent: nil)
 		msg: WM_SETFONT
 		wParam: aFontOrHandle asParameter
 		lParam: 0!

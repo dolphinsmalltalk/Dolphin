@@ -54,8 +54,8 @@ testAddRemoveResource
 	self assert: (self resourceDisplayList includes: sampleResourceId).
 	testClass class removeSelector: sampleResourceId selector.
 	self deny: (self resourceList includes: sampleResourceId).
-	self deny: (self resourceDisplayList includes: sampleResourceId)] 
-			ensure: [testClass class removeSelector: sampleResourceId selector ifAbsent: []]!
+	self deny: (self resourceDisplayList includes: sampleResourceId)]
+			ensure: [testClass class removeSelector: sampleResourceId selector ifAbsent: nil]!
 
 testBasicContents
 	self assert: self resourceList notEmpty.

@@ -270,7 +270,7 @@ validateUserInterface
 	self subViewsDo: [:each | each presenter validateUserInterface].
 	super validateUserInterface.!
 
-viewNamed: aString ifNone: exceptionHandler 
+viewNamed: aString ifNone: exceptionHandler
 	"Answer the sub-view within the receiver's hierarchy with aString as its
 	name. Evaluates the <niladicValuable>, exceptionHandler, if no matching 
 	named view exists."
@@ -278,9 +278,9 @@ viewNamed: aString ifNone: exceptionHandler
 	^names keyAtEqualValue: aString
 		ifAbsent: 
 			[self managedSubViewsDo: 
-					[:each | 
+					[:each |
 					| found |
-					found := each viewNamed: aString ifNone: [].
+					found := each viewNamed: aString ifNone: nil.
 					found notNil ifTrue: [^found]].
 			exceptionHandler value]! !
 !UI.ContainerView categoriesForMethods!
