@@ -181,9 +181,7 @@ dropHighlight
 	"Private - Answers the current drop highlight for within the receiver or
 	nil if there is none."
 
-	^self propertyAt: #dropHighlight ifAbsent: [].
-
-!
+	^self propertyAt: #dropHighlight ifAbsent: nil!
 
 editItemLabel: hItem 
 	"Private - Initiate in-place editing of the item with the specified handle. Answer the
@@ -332,7 +330,7 @@ hasSubItemCustomDraw
 hideDropHighlight
 	"Private - Hides any drop highlight within the receiver."
 
-	self removePropertyAt: #dropHighlight ifAbsent: []!
+	self removePropertyAt: #dropHighlight ifAbsent: nil!
 
 imageExtent
 	"Private - Answer the extent of images to use based on the current view mode"

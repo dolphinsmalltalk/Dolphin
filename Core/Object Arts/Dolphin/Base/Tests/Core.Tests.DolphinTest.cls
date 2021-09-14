@@ -87,7 +87,7 @@ verifyPropertyManagerOf: subject
 		should: [subject removePropertyAt: #foo]
 		raise: NotFoundError
 		matching: [:ex | ex tag == #foo and: [ex receiver == subject]].
-	self assert: (subject propertyAt: #foo ifAbsent: ['bar']) equals: 'bar'.
+	self assert: (subject propertyAt: #foo ifAbsent: 'bar') equals: 'bar'.
 	self assert: (subject removePropertyAt: #foo ifAbsent: ['bar']) equals: 'bar'.
 	subject propertyAt: #foo put: 123.
 	self assert: (subject propertyAt: #foo) equals: 123.
@@ -103,7 +103,7 @@ verifyPropertyManagerOf: subject
 	self assert: (subject removePropertyAt: #bar ifAbsent: ['bar']) equals: 'bar'.
 	self assert: (subject propertyAt: #foobar) equals: 'def'.
 	subject removeAllProperties.
-	self assertIsNil: (subject propertyAt: #foobar ifAbsent: []).
+	self assertIsNil: (subject propertyAt: #foobar ifAbsent: nil).
 	subject propertyAt: #foo put: #bar.
 	self assert: (subject propertyAt: #foo) equals: #bar!
 

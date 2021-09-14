@@ -51,7 +51,7 @@ isChanged
 	"Answer true if the receiver or any of it's contents have been changed since
 	their changed flag was last reset."
 
-	^self propertyAt: #isChanged ifAbsent: [false]!
+	^self propertyAt: #isChanged ifAbsent: false!
 
 isChanged: aBoolean
 	"Flag the receiver as changed or not changed, according to the value 
@@ -61,12 +61,13 @@ isChanged: aBoolean
 	"Note that we don't test the existing value of the change flag here, because
 	 we want to inform the package regardless (in case it isn't currently changed
 	 for some reason)"
-	aBoolean 
-		ifTrue: [ | package |
+
+	aBoolean
+		ifTrue: 
+			[| package |
 			self propertyAt: #isChanged put: true.
-			(package := self owningPackage) notNil ifTrue: [
-				package isChanged: true]]
-		ifFalse: [self removePropertyAt: #isChanged ifAbsent: []]!
+			(package := self owningPackage) notNil ifTrue: [package isChanged: true]]
+		ifFalse: [self removePropertyAt: #isChanged ifAbsent: nil]!
 
 isValidKey: aString
 	^SharedPool isValidKey: aString!

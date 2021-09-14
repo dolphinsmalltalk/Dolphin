@@ -68,7 +68,9 @@ hiddenObjects
 		readMap!
 
 icon: anIcon
-	anIcon isNil ifTrue: [self removePropertyAt: #icon ifAbsent: []] ifFalse: [self propertyAt: #_icon put: anIcon]!
+	anIcon isNil
+		ifTrue: [self removePropertyAt: #icon ifAbsent: nil]
+		ifFalse: [self propertyAt: #_icon put: anIcon]!
 
 isChanged
 	^false!

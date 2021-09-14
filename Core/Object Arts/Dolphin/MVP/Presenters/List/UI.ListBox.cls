@@ -183,7 +183,7 @@ dropHighlight
 	"Private - Answers the current drop highlight for within the receiver or
 	nil if there is none."
 
-	^self propertyAt: #dropHighlight ifAbsent: [].!
+	^self propertyAt: #dropHighlight ifAbsent: nil!
 
 ensureSelectionVisible
 	"Ensure the selected item is visible, scrolling it into view if necessary."
@@ -276,13 +276,13 @@ hideDropHighlight
 
 	| item |
 	item := self dropHighlight.
-	item notNil 
+	item notNil
 		ifTrue: 
 			[| canvas |
 			canvas := self canvas.
 			canvas invertRectangle: (self itemRect: item).
 			canvas free].
-	self removePropertyAt: #dropHighlight ifAbsent: []!
+	self removePropertyAt: #dropHighlight ifAbsent: nil!
 
 horizontalExtent
 	"Answers the effective width of the receiver when horizontal scrolling is enabled"

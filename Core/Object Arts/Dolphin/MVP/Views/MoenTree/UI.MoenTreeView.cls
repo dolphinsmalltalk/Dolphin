@@ -381,7 +381,7 @@ dropHighlight
 	"Private - Answers the current drop highlight for within the receiver or
 	nil if there is none."
 
-	^self propertyAt: #dropHighlight ifAbsent: [].!
+	^self propertyAt: #dropHighlight ifAbsent: nil!
 
 editSelectionLabel
 	"Initiate an in-place edit of the currently selected label."
@@ -576,13 +576,13 @@ hideDropHighlight
 
 	| node |
 	node := self dropHighlight.
-	node notNil 
+	node notNil
 		ifTrue: 
 			[| canvas |
 			canvas := self canvas.
 			canvas invertRectangle: node rectangle.
 			canvas free].
-	self removePropertyAt: #dropHighlight ifAbsent: []!
+	self removePropertyAt: #dropHighlight ifAbsent: nil!
 
 hitTest: position
 	"Private - Search for the node in the receiver that coincides with aPoint. Answer nil if 

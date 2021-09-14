@@ -1449,7 +1449,7 @@ getItemHandle: anInteger ifAbsent: exceptionHandler
 	^hwnd ifNil: [exceptionHandler value]!
 
 getNoRedrawCount
-	^self propertyAt: #_noRedrawCount ifAbsent: [0]!
+	^self propertyAt: #_noRedrawCount ifAbsent: 0!
 
 getOwner
 	"Private - Answers the handle of owner window, or nil if not owned."
@@ -3294,8 +3294,8 @@ setModel: aModel
 	model := aModel.
 !
 
-setNoRedrawCount: anInteger 
-	anInteger <= 0 ifTrue: [^self removePropertyAt: #_noRedrawCount ifAbsent: []].
+setNoRedrawCount: anInteger
+	anInteger <= 0 ifTrue: [^self removePropertyAt: #_noRedrawCount ifAbsent: nil].
 	^self propertyAt: #_noRedrawCount put: anInteger!
 
 setParent: aView
@@ -3663,7 +3663,7 @@ themeSubAppName
 toolTipWindow
 	"Private - Answer the WinToolTip for the receiver, or nil if one has not been set."
 
-	^self propertyAt: #toolTipWindow ifAbsent: []!
+	^self propertyAt: #toolTipWindow ifAbsent: nil!
 
 toolTipWindow: aWinToolTip
 	"Private - Set the tool tip for the receiver to aWinToolTip."

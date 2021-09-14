@@ -669,8 +669,7 @@ onPostSaveImage
 	"Triggered by the SessionManager after saving the image.
 	Remove the state property of the window that was saved by #onPreSaveImage"
 
-	self removePropertyAt: #state ifAbsent: [].
-!
+	self removePropertyAt: #state ifAbsent: nil!
 
 onPreSaveImage
 	"Triggered by the SessionManager prior to saving the image.

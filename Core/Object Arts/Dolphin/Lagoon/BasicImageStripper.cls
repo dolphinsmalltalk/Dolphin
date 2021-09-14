@@ -447,7 +447,7 @@ removeDevelopmentInfo
 	#{SmalltalkSystem} ifDefined: [:smsys | smsys reset].
 	Class allSubinstances do: 
 			[:b |
-			b removePropertyAt: #changeIndex ifAbsent: [].
+			b removePropertyAt: #changeIndex ifAbsent: nil.
 			"Remove all source references (may be LargeIntegers)"
 			b methodDictionary do: [:m | m sourceDescriptor: nil].
 			b class methodDictionary do: [:m | m sourceDescriptor: nil]].

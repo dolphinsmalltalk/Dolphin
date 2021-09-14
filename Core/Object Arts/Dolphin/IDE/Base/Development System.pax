@@ -1739,7 +1739,7 @@ literalTextStyle!constants!private! !
 !Core.Class methodsFor!
 
 changeIndex
-	^self propertyAt: #changeIndex ifAbsent: []!
+	^self propertyAt: #changeIndex ifAbsent: nil!
 
 changeIndexValue: aBlock 
 	self propertyManager 
@@ -1750,7 +1750,7 @@ changeIndexValue: aBlock
 isAbstract
 	^super isAbstract or: [self class isAbstract]!
 
-isChanged: aBoolean 
+isChanged: aBoolean
 	"Flag the receiver as changed or not changed, according to the value 
 	of the <Boolean> argument. If the receiver is marked as changed, then
 	its owning package (if any) is also so marked."
@@ -1759,11 +1759,11 @@ isChanged: aBoolean
 	"Note that we don't test the existing value of the change flag here, because
 	 we want to inform the package regardless (in case it isn't currently changed
 	 for some reason)"
-	aBoolean 
+	aBoolean
 		ifTrue: 
 			[self changeIndexValue: [self sourceManager changesFileSize].
 			self notifyPackageOfChange]
-		ifFalse: [self removePropertyAt: #changeIndex ifAbsent: []]!
+		ifFalse: [self removePropertyAt: #changeIndex ifAbsent: nil]!
 
 isDeprecated
 	^ClassCategory.Deprecated includesClass: self!

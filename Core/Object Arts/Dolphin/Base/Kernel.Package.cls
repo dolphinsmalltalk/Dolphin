@@ -147,7 +147,7 @@ allResourceIdentifiers
 allResourceNames
 	"Private - Answer a <Collection> of all the resource names directly owned by the receiver or by its owned classes."
 
-	^self propertyAt: #allResourceNames ifAbsent: [^OrderedCollection new]!
+	^self propertyAt: #allResourceNames ifAbsent: [OrderedCollection new]!
 
 allSourceObjects
 	"Answer a <collection> containing the members of the receiver that can be filed out as 
@@ -399,7 +399,7 @@ convertOldNames: aCollectionOfSymbols
 			refs]!
 
 convertOldNamesProperty: aSymbol
-	(self propertyAt: aSymbol ifAbsent: [])
+	(self propertyAt: aSymbol ifAbsent: nil)
 		ifNotNil: 
 			[:names |
 			| aCollectionOfBindingReferences |
@@ -487,7 +487,7 @@ environment
 
 	^self isLegacySourceFormat
 		ifTrue: [Smalltalk]
-		ifFalse: [(self propertyAt: #environmentName ifAbsent: []) ifNotNil: [:ref | ref valueOrNil]]!
+		ifFalse: [(self propertyAt: #environmentName ifAbsent: nil) ifNotNil: [:ref | ref valueOrNil]]!
 
 environment: aNamespace
 	"Set the default environment for the package, in the context of which any loose (extension) methods should be compiled, or nil if there is no default environment for loose methods and the extended class' own environment should be used for resolving static variable references in the method source."
@@ -750,7 +750,7 @@ initializeGlobals
 					[| value |
 					value := each valueOrNil.
 					(value respondsTo: #initializeAfterLoad) ifTrue: [value initializeAfterLoad]]].
-	(self propertyAt: #variableAliases ifAbsent: [#()]) do: 
+	(self propertyAt: #variableAliases ifAbsent: #()) do: 
 			[:each |
 			| target |
 			target := each value.
@@ -839,7 +839,7 @@ loadBinaryVariables
 	"Private - Load each of the receiver's binary variables from their individual STB files."
 
 	| varNames ston |
-	varNames := self propertyAt: #binaryVariables ifAbsent: [].
+	varNames := self propertyAt: #binaryVariables ifAbsent: nil.
 	varNames isNil ifTrue: [^self].
 	self isLegacySourceFormat
 		ifTrue: 
@@ -910,8 +910,7 @@ loadPAX
 	filer := self sourceFilerOn: stream.
 	filer environment: self environment.
 	
-	[| none |
-	"Initialize old style (pre D6) binary resources"
+	["Initialize old style (pre D6) binary resources"
 	filer nextChunk.	"Skip the first chunk since it represents the receiver."
 	self fileInScript: #preinstall.
 
@@ -923,9 +922,8 @@ loadPAX
 	self preDeclareClassesOnLoad ifTrue: [self declareClasses].
 
 	"Load source globals"
-	none := [#()].
-	self variableNames - (self propertyAt: #binaryVariables ifAbsent: none)
-		- (self propertyAt: #aliasVariables ifAbsent: none)
+	self variableNames - (self propertyAt: #binaryVariables ifAbsent: #())
+		- (self propertyAt: #aliasVariables ifAbsent: #())
 			do: [:each | self sourceManager fileIn: (self fileNameForSourceGlobal: each)].
 
 	"Load class definitions, aliases, and loose methods from the remainder of the PAX file"
@@ -1223,7 +1221,7 @@ paxVersion: aNumber
 	"Private - Record the PAX format version in which the package being loaded was saved. If the same as the current package version format, then forget the version."
 
 	aNumber = self class paxVersion
-		ifTrue: [self removePropertyAt: #paxVersion ifAbsent: []]
+		ifTrue: [self removePropertyAt: #paxVersion ifAbsent: nil]
 		ifFalse: [self propertyAt: #paxVersion put: aNumber]!
 
 postLoadInitialization: aNiladicValuable
@@ -1369,7 +1367,7 @@ removePAXProperties
 
 	| originalVersion |
 	#(#allResourceNames #binaryVariables #aliasVariables)
-		do: [:each | self removePropertyAt: each ifAbsent: []].
+		do: [:each | self removePropertyAt: each ifAbsent: nil].
 	originalVersion := self paxVersion.
 	self paxVersion: (originalVersion < 2.1 ifTrue: [1] ifFalse: [self class paxVersion]).
 	changeIndex := nil!
