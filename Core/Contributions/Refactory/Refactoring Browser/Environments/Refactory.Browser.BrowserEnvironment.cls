@@ -267,7 +267,7 @@ label: aString
 	label := aString!
 
 lookup: aKey
-	^(self associationAt: aKey) ifNotNil: [:assoc | assoc value]!
+	^(self associationAt: aKey) value!
 
 matches: aString
 	^SelectorEnvironment matches: aString in: self!

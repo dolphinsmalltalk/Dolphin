@@ -194,7 +194,7 @@ valueOrNil
 	"Answer the value of the variable named by the receiver, or nil if not defined.
 	Note that it will not be possible to distinguish the cases of an undefined variable and a defined variable with value nil."
 
-	^self bindingOrNil ifNotNil: [:var | var value]! !
+	^self bindingOrNil value! !
 !Kernel.BindingReference categoriesForMethods!
 =!comparing!public! !
 asString!converting!public! !

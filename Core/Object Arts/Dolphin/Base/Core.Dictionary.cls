@@ -379,7 +379,7 @@ lookup: keyObject
 	very common pattern of passing an empty block as absent handler to #at:ifAbsent:, e.g.
 		(dict at: key ifAbsent: []) ifNotNil: [:value | value ...]"
 
-	^(self basicAt: (self findKeyOrNil: keyObject)) ifNotNil: [:element | element value]!
+	^(self basicAt: (self findKeyOrNil: keyObject)) value!
 
 newAssociation: keyObject value: valueObject 
 	^self associationClass key: keyObject value: valueObject!

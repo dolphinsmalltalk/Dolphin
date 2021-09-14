@@ -829,7 +829,6 @@ queryClose
 releaseAccelerators
 	"Private - Unrealize self created accelerators."
 
-	combinedAcceleratorTable isNil ifTrue: [^self].
 	combinedAcceleratorTable free.
 	combinedAcceleratorTable := nil!
 

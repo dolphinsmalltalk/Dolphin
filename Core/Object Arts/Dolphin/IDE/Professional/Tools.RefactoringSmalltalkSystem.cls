@@ -1304,7 +1304,7 @@ selectTargetVariableOf: aClass parseTree: aStMethodNode
 		choices: variables
 		caption: 'Choose target variable…')
 		getTextBlock: [:each | each key ifNil: [each value] ifNotNil: [:eachClass | eachClass name , '.' , each value]];
-		showModal) ifNotNil: [:choice | choice value]!
+		showModal) value!
 
 validateRenameClass: aClass to: aString
 	| refactoring |

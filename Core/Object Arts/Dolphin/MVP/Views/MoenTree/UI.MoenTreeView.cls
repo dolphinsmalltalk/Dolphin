@@ -728,10 +728,10 @@ isExpanded: anObject
 
 	^anObject notNil and: [(self nodeForObject: anObject) isExpanded]!
 
-itemFromPoint: aPoint 
+itemFromPoint: aPoint
 	"Private - Answer the node of the receiver under the <Point> argument or nil if none."
 
-	^(self hitTest: aPoint) ifNotNil: [:assoc | assoc value]!
+	^(self hitTest: aPoint) value!
 
 join: aMoenTreeNode
 	"Private - Join the contours of all the children of the <MoenTreeNode> argument,

@@ -60,7 +60,6 @@ environment
 free
 	"Release the receiver's type library pointer."
 
-	tlbInterface isNil ifTrue: [^self].
 	tlbInterface free.
 	tlbInterface := nil!
 

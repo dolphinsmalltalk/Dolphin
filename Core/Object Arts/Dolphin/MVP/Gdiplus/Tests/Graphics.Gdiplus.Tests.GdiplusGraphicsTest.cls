@@ -23,18 +23,12 @@ setUp
 	graphics := GdiplusGraphics fromCanvas: canvas!
 
 tearDown
-	graphics ifNotNil: 
-			[:g | 
-			graphics := nil.
-			g free].
-	canvas ifNotNil: 
-			[:c | 
-			canvas := nil.
-			c free].
-	bitmap ifNotNil: 
-			[:b | 
-			bitmap := nil.
-			b free].
+	graphics free.	
+	graphics := nil.
+	canvas free.
+	canvas := nil.
+	bitmap free.
+	bitmap := nil.
 	super tearDown!
 
 testCompositingMode

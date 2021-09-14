@@ -136,10 +136,8 @@ free
 freeShared
 	"Private - Release the default IMalloc (task allocator)."
 
-	Shared isNil ifFalse: [
-		Shared free.
-		Shared := nil]
-!
+	Shared free.
+	Shared := nil!
 
 freeTask
 	"Private - Release the default IMalloc (task allocator)."

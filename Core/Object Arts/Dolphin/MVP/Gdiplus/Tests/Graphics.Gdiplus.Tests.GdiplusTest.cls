@@ -59,10 +59,8 @@ getSamplePen
 	^Pen red!
 
 tearDown
-	model 
-		ifNotNil: 
-			[model free.
-			model := nil].
+	model free.
+	model := nil.
 	super tearDown! !
 !Graphics.Gdiplus.Tests.GdiplusTest categoriesForMethods!
 assertPersistedValid!asserting!public! !

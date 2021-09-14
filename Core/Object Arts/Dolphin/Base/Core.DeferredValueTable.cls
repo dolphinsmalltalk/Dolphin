@@ -79,7 +79,7 @@ keysAndValuesDo: operation
 lookup: keyObject
 	"Answer the value named by the <Object> argument, keyObject, or nil if there is no such key in the receiver."
 
-	^(super lookup: keyObject) ifNotNil: [:deferredValue | deferredValue value]!
+	^(super lookup: keyObject) value!
 
 priority
 	"Answer the <Process> priority at which the deferred values will be calculated."

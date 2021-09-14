@@ -38,7 +38,7 @@ setUp
 tearDown
 	super tearDown.
 	sink ifNotNil: [sink disconnect].
-	object ifNotNil: [object free].
+	object free.
 	received ifNotNil: [received do: [:each | each value free]].
 	(MemoryManager current)
 		collectGarbage;

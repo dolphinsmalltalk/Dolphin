@@ -803,7 +803,7 @@ streamInFrom: aPositionableStream format: anInteger
 				lpParam: winStruct.
 	self isTextModified: false.	"It seems we have to increase the limit again after streaming in."
 	self setMaxTextLimit.
-	streamIn isNil ifFalse: [streamIn free].
+	streamIn free.
 	streamIn := callback.
 	^answer!
 
@@ -880,7 +880,8 @@ utfText: aUtfEncodedString
 winFinalize
 	"Private - Perform finalization actions for this View on destruction."
 
-	streamIn isNil ifFalse: [streamIn free. streamIn := nil].
+	streamIn free.
+	streamIn := nil.
 	^super winFinalize!
 
 wmInitMenu: message wParam: wParam lParam: lParam

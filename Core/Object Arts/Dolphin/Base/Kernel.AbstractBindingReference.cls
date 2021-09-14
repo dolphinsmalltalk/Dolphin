@@ -120,7 +120,7 @@ environment
 	^length > 1
 		ifTrue: 
 			[(scope localScope resolveBindingPath: (parts copyFrom: 1 to: length - 1)
-				environment: scope environment) ifNotNil: [:ns | ns value]]
+				environment: scope environment) value]
 		ifFalse: [scope localScope]!
 
 environmentName

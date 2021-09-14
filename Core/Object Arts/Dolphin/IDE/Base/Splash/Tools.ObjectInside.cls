@@ -145,7 +145,7 @@ position: aPoint
 	self resetMatrix!
 
 resetMatrix
-	matrix ifNotNil: [matrix free].
+	matrix free.
 	matrix := nil!
 
 rotation

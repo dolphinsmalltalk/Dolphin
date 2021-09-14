@@ -72,7 +72,7 @@ basicFree
 	"Private - Free the receiver's external resources by releasing the interface.
 	We must free the cached attributes before it is too late."
 
-	attributes isNil ifFalse: [attributes free].
+	attributes free.
 	super basicFree!
 
 CreateInstance: pUnkOuter riid: riid ppvObj: ppvObj

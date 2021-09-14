@@ -2725,7 +2725,7 @@ buildPublishedAspects: aLookupTable forObject: anIUnknown
 										ifFalse: 
 											[self assert: [each isPropSet].
 											AttributeDescriptor.WriteableMask]))]].
-	ppb ifNotNil: [ppb free]!
+	ppb free!
 
 classCategories
 	"Private - Answer a <Set> of the class categories to which any class generated for the receiver should be added."

@@ -94,7 +94,6 @@ free
 	"Free any external resources owned by the receiver."
 
 	self stopMonitoring.
-	callback isNil ifTrue: [^self].
 	callback free.
 	callback := nil!
 
