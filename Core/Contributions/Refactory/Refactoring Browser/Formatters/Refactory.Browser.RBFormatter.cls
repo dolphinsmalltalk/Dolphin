@@ -342,7 +342,9 @@ visitMessageNode: aMessageNode
 
 visitNode: aNode
 	(self needsParenthesisFor: aNode)
-		ifTrue: [self bracketWith: '()' around: [aNode acceptVisitor: self]]
+		ifTrue: 
+			[codeStream nextPut: $(.
+			[aNode acceptVisitor: self] ensure: [codeStream nextPut: $)]]
 		ifFalse: [aNode acceptVisitor: self]!
 
 visitOptimizedNode: anOptimizedNode

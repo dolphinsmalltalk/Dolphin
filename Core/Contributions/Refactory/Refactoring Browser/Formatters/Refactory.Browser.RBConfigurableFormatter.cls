@@ -349,22 +349,21 @@ visitMessageNode: aMessageNode
 	self formatSelectorAndArguments: aMessageNode!
 
 visitNode: aNode
-	| needsParenthesis |
-	(lookaheadCode includesKey: aNode)
-		ifTrue: [^self writeString: (lookaheadCode at: aNode)].
-	needsParenthesis := self needsParenthesisFor: aNode.
-	self
-		bracketWith:
-			(needsParenthesis
-				ifTrue: ['()']
-				ifFalse: [''])
-		around:
-			[needsParenthesis ifTrue: [codeStream nextPutAll: StringInsideParentheses].
-			super visitNode: aNode.
-			(FormatCommentWithStatements or: [aNode isMethod or: [aNode isSequence]])
-				ifFalse: [self formatCommentsFor: aNode].
-			needsParenthesis
-				ifTrue: [codeStream nextPutAll: StringInsideParentheses]]!
+	| commentsWithStatements |
+	(lookaheadCode lookup: aNode) ifNotNil: [:lookahead | ^self writeString: lookahead].
+	commentsWithStatements := FormatCommentWithStatements or: [aNode isMethod or: [aNode isSequence]].
+	(self needsParenthesisFor: aNode)
+		ifFalse: 
+			[aNode acceptVisitor: self.
+			commentsWithStatements ifFalse: [self formatCommentsFor: aNode]]
+		ifTrue: 
+			[codeStream nextPut: $(.
+			
+			[codeStream nextPutAll: StringInsideParentheses.
+			aNode acceptVisitor: self.
+			commentsWithStatements ifFalse: [self formatCommentsFor: aNode].
+			codeStream nextPutAll: StringInsideParentheses]
+					ensure: [codeStream nextPut: $)]]!
 
 visitOptimizedNode: anOptimizedNode
 	codeStream nextPutAll: '##'.

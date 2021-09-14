@@ -283,6 +283,11 @@ x := y + 3.
 testSmokeTest
 	self smokeTestAllMethodsOfHierarchy: Refactoring!
 
+testSmokeTestAll
+	self skip. "Very long running"
+	self smokeTestAllMethodsOfHierarchy: Object.
+	self smokeTestAllMethodsOfHierarchy: Object class!
+
 testUnaryMessage
 	self runTestForPairs: #(#('self halt') #('self halt halt'))! !
 !Refactory.Browser.Tests.FormatterTest categoriesForMethods!
@@ -312,6 +317,7 @@ testPeriodTerminators!public! !
 testReturn!public!tests! !
 testSequence!public!tests! !
 testSmokeTest!public!tests! !
+testSmokeTestAll!public!tests! !
 testUnaryMessage!public!tests! !
 !
 
