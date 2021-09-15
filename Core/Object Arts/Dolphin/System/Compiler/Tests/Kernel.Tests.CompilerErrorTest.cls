@@ -168,7 +168,6 @@ testErrorsTooManyBytecodes
 
 testErrorsTooManyLiterals
 	| source max len |
-	self skipIfCiBuild. "Takes around 30 seconds to run due to a compiler perf issue with folding of strings"
 	source := String writeStream.
 	source print: String empty.
 	max := self maxLiterals.

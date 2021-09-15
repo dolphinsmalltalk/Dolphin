@@ -952,44 +952,26 @@ size_t Compiler::AddToFrame(Oop object, const TEXTRANGE& errRange, LiteralType t
 	return index;
 }
 
-size_t Compiler::AddStringToFrame(const LPUTF8 string, size_t cch, const TEXTRANGE& range)
+size_t Compiler::AddStringToFrame(const u8string& string, const TEXTRANGE& range)
 {
-	// Adds (object) to the literal frame if it is not already there.
-	// Returns the index to the object in the literal frame.
-	//
-	POTE utf8StringClass = GetVMPointers().ClassUtf8String;
-	if (cch > 0)
+	if (string.length() > 0)
 	{
-		for (LiteralMap::iterator it = m_literals.begin(); it != m_literals.end(); it++)
+		auto iter = m_literalStrings.find(string);
+		if (iter == m_literalStrings.end())
 		{
-			Oop literalPointer = (*it).first;
-			_ASSERTE(literalPointer);
-
-			if (!IsIntegerObject(literalPointer)
-				&& FetchClassOf((POTE)literalPointer) == utf8StringClass
-				&& FetchByteLengthOf((POTE)literalPointer) == static_cast<size_t>(cch)
-				&& memcmp(string, FetchBytesOf(POTE(literalPointer)), cch) == 0)
-			{
-				// Found an equivalent string already among the literals
-
-				// If just a reference literal at present, we need to add it to the frame fully
-				size_t index = (*it).second;
-				if (index == -1)
-				{
-					index = AddToFrameUnconditional(literalPointer, range);
-					(*it).second = index;
-				}
-
-				return index;
-			}
+			POTE utf8String = NewUtf8String(string);
+			m_literalStrings[string] = utf8String;
+			Oop oopString = reinterpret_cast<Oop>(utf8String);
+			m_piVM->MakeImmutable(oopString, TRUE);
+			size_t index = AddToFrameUnconditional(oopString, range);
+			m_piVM->AddReference(oopString);
+			m_literals[oopString] = index;
+			return index;
 		}
-
-		Oop oopString = reinterpret_cast<Oop>(m_piVM->NewUtf8String((LPCSTR)string, cch));
-		m_piVM->MakeImmutable(oopString, TRUE);
-		size_t index = AddToFrameUnconditional(oopString, range);
-		m_piVM->AddReference(oopString);
-		m_literals[oopString] = index;
-		return index;
+		else
+		{
+			return AddToFrame(reinterpret_cast<Oop>((*iter).second), range, LiteralType::Normal);
+		}
 	}
 	else
 	{
@@ -1057,7 +1039,7 @@ void Compiler::GenPushConstant(Oop objectPointer, const TEXTRANGE& range)
 		POTE oteLiteral = reinterpret_cast<POTE>(objectPointer);
 		POTE literalClass = FetchClassOf(oteLiteral);
 		GenConstant(literalClass == GetVMPointers().ClassUtf8String
-			? AddStringToFrame(reinterpret_cast<LPUTF8>(FetchBytesOf(oteLiteral)), FetchByteLengthOf(oteLiteral), range)
+			? AddStringToFrame(u8string(reinterpret_cast<LPUTF8>(FetchBytesOf(oteLiteral)), FetchByteLengthOf(oteLiteral)), range)
 			: AddToFrame(objectPointer, range, LiteralType::Normal));
 	}
 }
@@ -1805,13 +1787,14 @@ POTE Compiler::ParseQualifiedReference(textpos_t textPosition)
 
 		while (ThisTokenType == TokenType::NameConst)
 		{
-			if (ThisTokenText == u8"class"s)
+			u8string qualifier = ThisTokenText;
+			if (qualifier == u8"class"s)
 			{
 				flags |= BindingReferenceFlags::IsMeta;
 				range.m_stop = ThisTokenRange.m_stop;
 				NextToken();
 			}
-			else if (ThisTokenText == u8"private"s)
+			else if (qualifier == u8"private"s)
 			{
 				flags |= BindingReferenceFlags::IsPrivate;
 				range.m_stop = ThisTokenRange.m_stop;
@@ -1944,7 +1927,7 @@ void Compiler::ParseTerm(textpos_t textPosition)
 	case TokenType::AsciiStringConst:	// We no longer create AnsiString literals, only Utf8Strings
 	case TokenType::Utf8StringConst:
 	{
-		GenConstant(AddStringToFrame(ThisTokenRaw, ThisTokenLength, ThisTokenRange));
+		GenConstant(AddStringToFrame(ThisTokenText,ThisTokenRange));
 		NextToken();
 	}
 	break;
@@ -2273,7 +2256,7 @@ ip_t Compiler::ParseUnaryContinuation(ip_t exprMark, textpos_t textPosition)
 		
 		if (!isSpecialCase)
 		{
-			ip_t sendIP = GenMessage(ThisTokenText, 0, textPosition);
+			ip_t sendIP = GenMessage(strToken, 0, textPosition);
 			AddTextMap(sendIP, textPosition, ThisTokenRange.m_stop);
 		}
 		

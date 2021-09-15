@@ -181,7 +181,7 @@ private:
 	enum class LiteralType { ReferenceOnly, Normal };
 	size_t AddToFrameUnconditional(Oop object, const TEXTRANGE&);
 	size_t AddToFrame(Oop object, const TEXTRANGE&, LiteralType type);
-	size_t AddStringToFrame(const LPUTF8 sz, size_t cch, const TEXTRANGE&);
+	size_t AddStringToFrame(const u8string& str, const TEXTRANGE&);
 	POTE AddSymbolToFrame(const u8string&, const TEXTRANGE&, LiteralType refOnly);
 	void AddAnnotation(POTE tag, Oop arg);
 	void InsertByte(ip_t pos, uint8_t value, BYTECODE::Flags flags, LexicalScope* pScope);
@@ -523,8 +523,8 @@ private:
 
 	typedef map<u8string, POTE> NAMEDOBJECTS;
 	NAMEDOBJECTS m_bindingRefs;
-
 	NAMEDOBJECTS m_internedSymbols;
+	NAMEDOBJECTS m_literalStrings;
 };
 
 OBJECT_ENTRY_AUTO(__uuidof(DolphinCompiler), Compiler)
