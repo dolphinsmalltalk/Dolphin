@@ -406,7 +406,6 @@ void Lexer::ScanName()
 {
 	while (isIdentifierSubsequent(NextChar()))
 		*m_tp++ = m_cc;
-	*m_tp = 0;
 	u8string name = ThisTokenText;
 	if (name == u8"true"s)
 		m_tokenType = TokenType::TrueConst;
