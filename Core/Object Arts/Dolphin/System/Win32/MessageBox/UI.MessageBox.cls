@@ -1255,24 +1255,6 @@ initialize
 		MessageBox initialize
 	"
 
-	self addClassConstant: 'ButtonStyles'
-		value: (IdentityDictionary new
-				at: #ok put: MB_OK;
-				at: #okCancel put: MB_OKCANCEL;
-				at: #abortRetryIgnore put: MB_ABORTRETRYIGNORE;
-				at: #yesNoCancel put: MB_YESNOCANCEL;
-				at: #yesNo put: MB_YESNO;
-				at: #retryCancel put: MB_RETRYCANCEL;
-				at: #cancelRetryContinue put: MB_CANCELTRYCONTINUE;
-				shrink;
-				yourself).
-	self addClassConstant: 'ModeStyles'
-		value: (IdentityDictionary new
-				at: #application put: MB_APPLMODAL;
-				at: #task put: MB_TASKMODAL;
-				at: #system put: MB_SYSTEMMODAL;
-				shrink;
-				yourself).
 	self addClassConstant: 'CommonButtonFlags'
 		value: ((Array new: 11)
 				at: IDOK put: TDCBF_OK_BUTTON;
