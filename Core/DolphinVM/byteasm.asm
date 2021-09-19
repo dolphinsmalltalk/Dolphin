@@ -1622,15 +1622,18 @@ BEGINBYTECODE popStoreContextTemp
 	mov		edx, (OTE PTR[edx]).m_location
 	ASSUME	edx:PTR Context
 
+	lea edx, [edx].m_tempFrame[ecx*OOPSIZE-(FIRSTPOPSTORECTXTTEMP*OOPSIZE)]
+	ASSUME	edx:PTR Oop
+
 	; We must count up the new value as we are going to store it into a heap object
 	CountUpOopIn<a>
 	
 	; Swap existing value with new value
-	; TODO: Get rid of xchg, as this is slow (interlocked)
-	xchg	eax, [edx].m_tempFrame[ecx*OOPSIZE-(FIRSTPOPSTORECTXTTEMP*OOPSIZE)]
+	mov		ecx, [edx]
+	mov		[edx], eax
 
 	; Since count down destroys register contents, we can't pre-fetch
-	CountDownOopIn<a>
+	CountDownOopIn<c>
 	
 	DispatchByteCode
 ENDBYTECODE popStoreContextTemp
@@ -1652,15 +1655,18 @@ BEGINBYTECODE shortPopStoreOuterTemp
 	mov		edx, [edx].m_location
 	ASSUME	edx:PTR Context
 
+	lea edx, [edx].m_tempFrame[ecx*OOPSIZE-(FIRSTPOPSTOREOUTERTEMP*OOPSIZE)]
+	ASSUME edx:PTR Oop
+
 	; We must count up the new value as we are going to store it into a heap object
 	CountUpOopIn<a>
 
 	; Swap existing value with new value
-	; TODO: Get rid of slow xchg instruction
-	xchg	eax, [edx].m_tempFrame[ecx*OOPSIZE-(FIRSTPOPSTOREOUTERTEMP*OOPSIZE)]
+	mov		ecx, [edx]
+	mov		[edx], eax
 
 	; Since count down destroys registers we can't prefetch
-	CountDownOopIn<a>
+	CountDownOopIn<c>
 	
 	DispatchByteCode
 ENDBYTECODE shortPopStoreOuterTemp
@@ -1890,6 +1896,7 @@ overflow:
 	SendSelectorOneArg <Pointers.minusSelector>
 
 ENDBYTECODE decrementTempAndPush
+
 BEGINBYTECODE popStoreOuterTemp
 	OuterTempPreamble
 	ASSUME	edx:PTR Context		; EDX points to the Context containing the temp
@@ -1927,10 +1934,9 @@ BEGINBYTECODE storeOuterTemp
 	CountUpOopIn <c>
 
 	mov		eax, [edx]								;; Load existing value of temporary
+	inc		_IP
 	mov		[edx], ecx								;; And overwrite with new value
 
-	inc		_IP
-	
 	; Must count down overwritten context temp - may destroy registers, so can't prefetch
 	CountDownOopIn <a>
 	
@@ -2982,7 +2988,7 @@ BEGINBYTECODE sendArithmeticBitShift
 	jz		storeDispatchNext				; If receiver is zero, then result always zero
 
 	cmp		ecx, 30							; We can't shift more than 30 places this way, since receiver not zero
-	ja		sendMessage
+	jg		sendMessage
 
 	; To avoid using a loop, we use the double precision shift first
 	; to detect potential overflow.
