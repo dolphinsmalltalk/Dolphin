@@ -14,13 +14,6 @@ OS.StdioUtf8FileStream comment: ''!
 basicNext: anInteger
 	^(super basicNext: anInteger) asUtf8String!
 
-contents
-	"Answer a <Utf8String> containing the complete contents of the file accessed by the
-	receiver."
-
-	self reset.
-	^self upToEnd!
-
 contentsSpecies
 	"Private - Answer the class of Object to be used when answering collections of elements
 	from the receiver."
@@ -64,7 +57,6 @@ upToEnd
 	^super upToEnd asUtf8String! !
 !OS.StdioUtf8FileStream categoriesForMethods!
 basicNext:!accessing!private! !
-contents!accessing!public! !
 contentsSpecies!constants!private! !
 position!accessing!public! !
 position:!positioning!public! !

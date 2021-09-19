@@ -1470,7 +1470,7 @@ UI.ValueDialog subclass: #'UI.Scintilla.TextStylesDialog'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.ValuePresenter subclass: #'UI.Scintilla.StylesCollectionPresenter'
-	instanceVariableNames: 'collectionPresenter detailPresenter settingSelection'
+	instanceVariableNames: 'collectionPresenter detailPresenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

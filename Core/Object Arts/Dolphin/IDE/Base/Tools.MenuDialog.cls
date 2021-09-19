@@ -31,14 +31,10 @@ model: aMenu
 	super model: aMenu.
 	aspectBuffer := self model.
 	checkColumnModePresenter model: (aspectBuffer aspectValue: #hasSharedImageColumn).
-	autoDismissPresenter model: (aspectBuffer aspectValue: #isAutoDismiss)!
-
-onCardChangedFrom: previousView to: currentView
-	currentView == inspector view parentView ifTrue: [inspector refresh]! !
+	autoDismissPresenter model: (aspectBuffer aspectValue: #isAutoDismiss)! !
 !Tools.MenuDialog categoriesForMethods!
 createComponents!initializing!public! !
 model:!accessing!public! !
-onCardChangedFrom:to:!event handling!private! !
 !
 
 !Tools.MenuDialog class methodsFor!

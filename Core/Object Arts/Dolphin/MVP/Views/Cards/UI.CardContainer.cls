@@ -276,11 +276,10 @@ refreshTabs
 	"Rebuild the associated tab view to include all the managed subviews
 	of the receiver in the correct z order sequence"
 
-	| currentCard arrangements layout |
+	| currentCard layout |
 	layout := self cardLayout.
 	currentCard := layout currentCard.
-	arrangements := self cards collect: [:each | each arrangement].
-	tabs model list: arrangements.
+	tabs model list: (self cards collect: [:each | each arrangement]) asOrderedCollection.
 	currentCard ifNotNil: [layout showCard: currentCard]!
 
 removeSubView: aView

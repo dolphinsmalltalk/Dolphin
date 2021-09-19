@@ -81,11 +81,8 @@ asArray
 
 	| answer i |
 	answer := Array new: self size.
-	i := 1.
-	self do: 
-			[:each |
-			answer at: i put: each.
-			i := i + 1].
+	i := 0.
+	self do: [:each | answer at: (i := i + 1) put: each].
 	^answer!
 
 asBag
@@ -109,11 +106,8 @@ asByteArray
 
 	| anArray i |
 	anArray := ByteArray new: self size.
-	i := 1.
-	self do: 
-			[:each |
-			anArray basicAt: i put: each.
-			i := i + 1].
+	i := 0.
+	self do: [:each | anArray basicAt: (i := i + 1) put: each].
 	^anArray!
 
 asIdentitySet
@@ -523,22 +517,19 @@ split: aReadableString
 	answer nextPut: (aReadableString copyFrom: start to: size).
 	^answer contents!
 
-storeOn: aStream 
+storeOn: aStream
 	"Append to the <puttableStream> argument, target, an expression which when 
 	evaluated will answer a collection similar to the receiver."
 
-	| first |
 	aStream nextPutAll: '(('.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' new)'.
-	first := true.
-	self do: [:value |
-		first
-			ifTrue: [first := false]
-			ifFalse: [aStream nextPut: $;].
-		aStream nextPutAll: ' add: '.
-		value storeOn: aStream].
-	first ifFalse: [aStream nextPutAll: '; yourself'].
+	self do: 
+			[:value |
+			aStream nextPutAll: ' add: '.
+			value storeOn: aStream.
+			aStream nextPut: $;].
+	self isEmpty ifFalse: [aStream nextPutAll: ' yourself'].
 	aStream nextPut: $)!
 
 symmetricDifference: comperand

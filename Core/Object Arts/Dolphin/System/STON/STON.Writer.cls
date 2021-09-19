@@ -183,8 +183,7 @@ keepNewLines: boolean
 	keepNewLines := boolean!
 
 listElementSeparator
-	writeStream nextPut: $,.
-	self newlineIndent
+	writeStream nextPut: $,
 !
 
 mapElementSeparator

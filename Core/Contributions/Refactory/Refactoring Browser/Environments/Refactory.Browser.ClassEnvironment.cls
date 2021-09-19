@@ -56,11 +56,7 @@ classNames
 		yourself!
 
 defaultLabel
-	| stream |
-	stream := String new writeStream.
-	#rbFix.	"Use #do:separatedBy: to avoid extraneous space at end"
-	classes do: [:each | stream nextPutAll: each] separatedBy: [stream space].
-	^stream contents!
+	^$\x20 join: classes!
 
 definesClass: aClass
 	^self includesClass: aClass!

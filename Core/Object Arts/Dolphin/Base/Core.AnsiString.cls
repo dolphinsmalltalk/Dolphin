@@ -85,14 +85,6 @@ nextIndexOfCharacter: aCharacter from: startInteger to: stopInteger
 		from: startInteger
 		to: stopInteger!
 
-skipEncodingMarkerFrom: aGettableStream
-	"Private - Skip over any encoding marker used for the stream encoding this collection represents on the <gettableStream> argument, which 
-	is assumed to be at the start of its sequence."
-
-	"Nothing to do for ANSI strings"
-
-	!
-
 trimNulls
 	"Answer a copy of the receiver with trailing nulls removed."
 	
@@ -141,7 +133,6 @@ encodedSizeAt:!encode/decode!private! !
 encodeOn:put:!encode/decode!private! !
 first:!copying!public! !
 nextIndexOfCharacter:from:to:!private!searching! !
-skipEncodingMarkerFrom:!encode/decode!private! !
 trimNulls!copying!public! !
 urlDecoded!operations!public! !
 !

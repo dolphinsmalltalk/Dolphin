@@ -28,6 +28,11 @@ Instance Variables:
 >> aSymbol
 	^self compiledMethodAt: aSymbol!
 
+absoluteReference
+	"Answer a <BindingReference> representing a path from Root to the receiver."
+
+	^self subclassResponsibility!
+
 addInstVarName: aString
 	"Add a new instance variable to the receiver with the specified <readableString> name."
 
@@ -86,15 +91,6 @@ allInstances
 
 	MemoryManager current collectGarbage.
 	^self primAllInstances!
-
-allInstVarNames
-	"Answer an <Array> of the <readableString> names of the receiver's instance variables, 
-	those specified in the receiver and in all of its superclasses. The array ordering is the order 
-	in which the variables are stored and accessed by the interpreter."
-
-	^superclass isNil
-		ifTrue: [self instVarNames]
-		ifFalse: [superclass allInstVarNames , self instVarNames]!
 
 allMethodsDo: operation
 	"Evaluate the monadic valuable, operation, for each and every method defined in the hierarchy rooted in the receiver."
@@ -294,11 +290,7 @@ classVariables
 classVariableString
 	"Answer a space separated string of the names of the receiver's class variables. Note for legacy reasons this will include class constant names too."
 
-	| aStream |
-	aStream := String smalltalkWriteStream: 40.
-	self classPool keys asArray sort do: [:key | aStream nextPutAll: key]
-		separatedBy: [aStream space].
-	^aStream contents!
+	^$\x20 join: self classPool keys asArray sort!
 
 comment
 	"Answer the class comment for the receiver"
@@ -562,12 +554,9 @@ instanceVariableString
 	"Answer a string containing the names of the instance variables in instances of the
 	receiver, in the order they appear in those instances. The names are separated by spaces."
 
-	| aStream |
 	instanceVariables isNil ifTrue: [^''].
 	instanceVariables isString ifTrue: [^instanceVariables].
-	aStream := String smalltalkWriteStream: instanceVariables size * 11.
-	instanceVariables do: [:instVarName | aStream nextPutAll: instVarName] separatedBy: [aStream space].
-	^aStream contents!
+	^$\x20 join: instanceVariables!
 
 instanceVariableString: aString
 	"Private - Set the receiver's instanceVariables inst var to the <String> argument."
@@ -1038,13 +1027,13 @@ withAllSubclassesDo: aMonadicValuable
 !Core.ClassDescription categoriesForMethods!
 <=!comparing!public! !
 >>!accessing!public! !
+absoluteReference!accessing!namespaces!public! !
 addInstVarName:!class hierarchy-mutating!instance variables!public! !
 addProtocol:!private!protocols! !
 addSharedPool:!pool variables!public! !
 allClassVarNames!class variables!public! !
 allGettersDo:!accessing!private! !
 allInstances!instances!public! !
-allInstVarNames!instance variables!public! !
 allMethodsDo:!enumerating!public! !
 allProtocols!protocols!public! !
 allSelectors!methods-accessing!public! !

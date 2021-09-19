@@ -180,18 +180,12 @@ fromGlobalHandle: anExternalHandle
 width: widthInteger height: heightInteger
 	"Answers a true-colour DIBSection bitmap of dimensions width*height*24 bits/pixel."
 
-	^self extent: widthInteger @ heightInteger!
-
-width: widthInteger height: heightInteger depth: depthInteger
-	"Answers a DIBSection bitmap of dimensions width*height. The number of colour bits per pixel are given by depth, which must be one of 1,4,8,16,24 or 32."
-
-	^self extent: widthInteger @ heightInteger depth: depthInteger! !
+	^self extent: widthInteger @ heightInteger! !
 !Graphics.DIBSection class categoriesForMethods!
 blankInitializerClass!constants!private! !
 defaultLoadFlags!constants!private! !
 displayCompatibleWithExtent:!instance creation!public! !
 fromGlobalHandle:!instance creation!public! !
 width:height:!instance creation!public! !
-width:height:depth:!instance creation!public! !
 !
 

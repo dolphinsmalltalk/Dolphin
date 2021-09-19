@@ -162,11 +162,7 @@ variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:class
 !Core.ClassDescription methodsFor!
 
 sharedVariableString
-	| aStream |
-	aStream := String smalltalkWriteStream: 32.
-	self sharedPoolNames asSortedCollection do: [:s | aStream nextPutAll: s]
-		separatedBy: [aStream space].
-	^aStream contents! !
+	^$\x20 join: self sharedPoolNames asSortedCollection! !
 !Core.ClassDescription categoriesForMethods!
 sharedVariableString!accessing!public! !
 !

@@ -19,9 +19,6 @@ Instance Variables (inherited)
 !UI.ReferenceView categoriesForClass!MVP-Views! !
 !UI.ReferenceView methodsFor!
 
-clearReferee
-	referee := nil!
-
 configureReferee
 	referee
 		rectangle: (Point.Zero extent: self extent);
@@ -138,7 +135,6 @@ validateUserInterface
 
 	self referee presenter validateUserInterface! !
 !UI.ReferenceView categoriesForMethods!
-clearReferee!event handling!private! !
 configureReferee!helpers!private! !
 createDelegate!event handling!private! !
 filerProxy!binary filing!private! !

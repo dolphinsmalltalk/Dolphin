@@ -31,12 +31,11 @@ addCategory: aCategory
 			[| names moniker |
 			names := sep split: name.
 			moniker := String writeStream.
-			names
-				from: 1
-				to: names size - 1
+			1 to: names size - 1
 				do: 
-					[:part |
-					| branch |
+					[:i |
+					| part branch |
+					part := names at: i.
 					moniker nextPutAll: part.
 					branch := self add: (IntermediateCategory name: moniker contents) asChildOf: parent.
 					moniker nextPut: sep.

@@ -79,16 +79,17 @@ bindingScope
 environmentName
 	"Answer the <String> qualified name of the receiver's full namespace qualifier. This includes the path for the binding scope."
 
-	| stream parts first |
+	| parts count stream |
 	parts := self path.
+	(count := parts size) < 2 ifTrue: [^nil].
 	stream := String writeStream: 32.
-	parts size <= 1 ifTrue: [^nil] ifFalse: [first := true].
-	first := true.
-	1 to: parts size - 1
+	stream nextPutAll: (parts at: 1).
+	2 to: count - 1
 		do: 
 			[:i |
-			first ifTrue: [first := false] ifFalse: [stream nextPut: $.].
-			stream nextPutAll: (parts at: i)].
+			stream
+				nextPut: $.;
+				nextPutAll: (parts at: i)].
 	^stream contents!
 
 hash

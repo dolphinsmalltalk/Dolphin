@@ -215,9 +215,7 @@ doubleAtOffset: anInteger
 		OutOfBounds		- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(double)+1))."
 
 	<primitive: 128>
-	self
-		validateOffset: anInteger
-		failureCode: _failureCode.
+	self validOffset: anInteger failureCode: _failureCode.
 	^self primitiveFailed: _failureCode!
 
 doubleAtOffset: anInteger put: aFloat
@@ -264,13 +262,6 @@ dwordAtOffset: anInteger put: anObject
 		retryDwordAtOffset: anInteger
 		put: anObject
 		failureCode: _failureCode!
-
-encodedAt: anInteger put: anObject
-	"Private - Encoded the specified object beginning at the specified position in the receiver. Answer
-	the <integer> index of the last element updated."
-
-	self at: anInteger put: anObject.
-	^anInteger!
 
 floatAtOffset: anInteger
 	"Answer the single precision floating point value at offset (i.e. zero relative) anInteger in the receiver, as a Smalltalk Float object (double precision).
@@ -392,9 +383,7 @@ longDoubleAtOffset: anInteger
 		OutOfBounds	 	- anInteger is out of bounds (not in the range 0..receiver's size - (sizeof(long double)+1))."
 
 	<primitive: 159>
-	self
-		validateOffset: anInteger
-		failureCode: _failureCode.
+	self validOffset: anInteger failureCode: _failureCode.
 	^self primitiveFailed: _failureCode!
 
 notNull
@@ -743,7 +732,6 @@ doubleAtOffset:!accessing!primitives!public! !
 doubleAtOffset:put:!accessing!primitives!public! !
 dwordAtOffset:!accessing!primitives!public! !
 dwordAtOffset:put:!accessing!primitives!public! !
-encodedAt:put:!accessing!encode/decode!private! !
 floatAtOffset:!accessing!primitives!public! !
 floatAtOffset:put:!accessing!primitives!public! !
 hash!comparing!primitives!public! !

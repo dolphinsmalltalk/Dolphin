@@ -428,12 +428,12 @@ isWhitespace
 	^(self classify: CT_CTYPE1) anyMask: C1_SPACE!
 
 join: aCollection
-	"Answer a new <String> composed from the elements of the <collection> argument separated by the instances of the receiver."
+	"Answer a new <String> composed from the displayStrings of elements of the <collection> argument, separated by the instances of the receiver."
 
 	| stream |
 	stream := String writeStream: aCollection size * 6.
 	aCollection do: [:each | each displayOn: stream] separatedBy: [stream nextPut: self].
-	^stream contents!
+	^stream grabContents!
 
 printEscapedOn: aStream
 	"Append the escaped literal representation of the receiver to the <puttableStream> argument."

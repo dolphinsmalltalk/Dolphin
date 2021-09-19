@@ -292,13 +292,6 @@ next
 
 	^self subclassResponsibility!
 
-next: anInteger put: anObject
-	"Store the argument, anObject, as the next anInteger number of elements accessible by the receiver. 
-	Answer anObject."
-
-	anInteger timesRepeat: [self nextPut: anObject].
-	^anObject!
-
 next: countInteger putAll: aSequenceableCollection startingAt: startInteger
 	"Append countInteger elements of aSequenceableCollection from startInteger
 	to the receiver. Answer aSequenceableCollection."
@@ -469,7 +462,6 @@ locale!accessing!public! !
 locale:!accessing!public! !
 name!accessing!public! !
 next!accessing!public! !
-next:put:!accessing!public! !
 next:putAll:startingAt:!accessing!public! !
 nextAvailable!accessing!public! !
 nextAvailable:!accessing!public! !

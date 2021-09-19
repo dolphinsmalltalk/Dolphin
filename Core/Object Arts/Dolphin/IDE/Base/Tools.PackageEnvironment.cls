@@ -55,10 +55,7 @@ classesDo: aBlock
 								add: className meta]]]!
 
 defaultLabel
-	| stream |
-	stream := String new writeStream.
-	self packageNames do: [:each | stream nextPutAll: each] separatedBy: [stream nextPutAll: ', '].
-	^stream contents!
+	^', ' join: self packageNames!
 
 definesClass: aClass
 	^packages identityIncludes: aClass owningPackage!

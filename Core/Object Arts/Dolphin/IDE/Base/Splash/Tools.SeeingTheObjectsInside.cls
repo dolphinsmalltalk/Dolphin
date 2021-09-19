@@ -1,10 +1,10 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.Gdiplus.DoubleBufferedView subclass: #'Tools.SeeingTheObjectsInside'
-	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside splashDelay hintBubble startTime info baseScale'
+	instanceVariableNames: 'background dolphinOutline points sun stepProcess random insideObjectsScale dolphinIntensity textureMap objects dolphins dolphinInside hintBubble startTime info baseScale'
 	classVariableNames: ''
 	imports: #(#{Graphics private} #{Graphics.Gdiplus private})
-	classInstanceVariableNames: 'splashPlayTheGame difficultyLevel'
+	classInstanceVariableNames: 'splashPlayTheGame'
 	classConstants: {}!
 Tools.SeeingTheObjectsInside guid: (Core.GUID fromString: '{66a4dee3-a72c-4a2f-a14f-bffd6813ceef}')!
 Tools.SeeingTheObjectsInside comment: '"Seeing the Objects Inside" is the Dolphin tag line. The implication is that the fine grained approach of Smalltalk helps you, as a developer, to find the objects (and  classes) in your problem domain more easily than you can in many other languages. The SeeingTheObjectsInside class is intended to be a fun way to represent this idea as a game that can be played as part of the Dolphin splash screen. Try to find the hidden Dolphin object inside the larger Dolphin outline. Once found, click on it to dismiss the splash.

@@ -44,27 +44,28 @@ KnownHeaders
 	^self subclassResponsibility!
 
 printFieldsOn: aStream
-	| first |
+	| separator |
 	self isNull
 		ifTrue: 
 			[aStream nextPutAll: 'NULL'.
 			^self].
-	first := true.
+	separator := [separator := ', '. ''].
 	self KnownHeaders keysAndValuesDo: 
 			[:i :each |
 			| value |
 			value := each pRawValue.
 			value isNil
 				ifFalse: 
-					[first ifTrue: [first := false] ifFalse: [aStream nextPutAll: ', '].
+					[
 					aStream
+						nextPutAll: separator value;
 						display: (self knownHeaderName: i - 1);
 						nextPutAll: ': ';
 						print: value]].
 	self pUnknownHeaders do: 
 			[:each |
-			first ifTrue: [first := false] ifFalse: [aStream nextPutAll: ', '].
 			aStream
+				nextPutAll: separator value;
 				display: each pName;
 				nextPutAll: ': ';
 				print: each pRawValue]!

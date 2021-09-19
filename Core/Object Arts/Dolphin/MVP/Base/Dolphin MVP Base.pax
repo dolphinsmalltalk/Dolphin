@@ -2140,7 +2140,7 @@ UI.View subclass: #'UI.ControlView'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.View subclass: #'UI.DesktopView'
-	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'
+	instanceVariableNames: 'resolution _unused14 _unused15 _unused16'
 	classVariableNames: 'Current'
 	imports: #()
 	classInstanceVariableNames: ''

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Tools.SmalltalkToolShell subclass: #'Tools.ClassBrowserAbstract'
-	instanceVariableNames: 'classesPresenter categoriesPresenter methodBrowserPresenter definitionPresenter modePresenter flags history variablesPresenter protocolsPresenter filterPresenter packageModel statusModel versionModel cardsPresenter loadedPlugins methodCategories'
+	instanceVariableNames: 'classesPresenter categoriesPresenter methodBrowserPresenter definitionPresenter modePresenter flags history variablesPresenter protocolsPresenter filterPresenter packageModel statusModel cardsPresenter loadedPlugins methodCategories'
 	classVariableNames: 'GrayedMethodFadeFactor HistoryListSize LooseMethodColor WordWrapDefinition'
 	imports: #()
 	classInstanceVariableNames: 'defaultShowInheritedMethods defaultFilterObjectMethods plugins'
@@ -980,10 +980,8 @@ onBrowserCardChangedFrom: previousView to: currentView
 
 onCategory: aMethodCategory renameTo: aString accept: aValueHolder
 	| newCategory newName |
-	newName := String writeStream.
-	(aMethodCategory subNames allButLast copyWith: aString) do: [:each | newName nextPutAll: each]
-		separatedBy: [newName nextPut: aMethodCategory class separator].
-	newName := newName contents.
+	newName := aMethodCategory class separator
+				join: (aMethodCategory subNames allButLast copyWith: aString).
 	newCategory := aMethodCategory class name: newName.
 	self renameMethodCategory: aMethodCategory to: newCategory.
 	aValueHolder value: true!

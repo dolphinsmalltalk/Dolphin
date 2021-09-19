@@ -418,7 +418,7 @@ newSelectionsFromEvent: aMouseEvent
 	aMouseEvent isShiftDown
 		ifFalse: 
 			[newSelections := newSelections asSortedCollection.
-			newSelections remove: itemClicked ifAbsent: [newSelections add: itemClicked].
+			(newSelections remove: itemClicked ifAbsent: nil) ifNil: [newSelections add: itemClicked].
 			^newSelections asArray].
 	"At least Shift is down, so we must start examining the 'anchor'. This is the last item
 	that was clicked with no modifiers, only ctrl, or ctrl + shift (shift-clicks do *not* move the

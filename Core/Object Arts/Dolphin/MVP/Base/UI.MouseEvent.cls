@@ -72,14 +72,17 @@ isXButtonDown: anInteger
 	^wParam anyMask: (MK_XBUTTON1 bitShift: anInteger - 1)!
 
 printWParamOn: aStream
-	| first |
-	first := true.
+	| separator |
+	separator := 
+			[separator := '|'.
+			''].
 	#('MK_CONTROL' 'MK_SHIFT' 'MK_LBUTTON' 'MK_RBUTTON' 'MK_MBUTTON' 'MK_XBUTTON1' 'MK_XBUTTON2') do: 
 			[:each |
 			(wParam allMask: (Win32Constants at: each))
 				ifTrue: 
-					[first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
-					aStream nextPutAll: each]]! !
+					[aStream
+						nextPutAll: separator value;
+						nextPutAll: each]]! !
 !UI.MouseEvent categoriesForMethods!
 button!accessing!public! !
 buttonFlag!accessing!public! !

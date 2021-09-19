@@ -534,20 +534,18 @@ visitAnnotationNode: anStAnnotationNode
 				ifFalse: [self signalError: CErrExpectNamespace forNode: arg]]!
 
 visitArgumentNodes: aNodeCollection
-	| count max |
 	aNodeCollection isEmpty ifTrue: [^self].
-	count := self countOuterTemps.
-	max := VMConstants.MaxTemps.
-	aNodeCollection do: 
-			[:each |
+	aNodeCollection inject: self countOuterTemps
+		into: 
+			[:count :each |
 			self visitNode: each.
-			count := count + 1.
-			count > max
+			count >= VMConstants.MaxTemps
 				ifTrue: 
 					[self
 						signalError: CErrTooManyTemps
 						forNode: each
-						extra: each name]]!
+						extra: each name].
+			count + 1]!
 
 visitAssignmentNode: anStAssignmentNode
 	| variableNode |
@@ -709,18 +707,18 @@ visitTempDeclNode: anStTempDeclNode
 	currentScope declareTemp: anStTempDeclNode!
 
 visitTemporaryNodes: aNodeCollection
-	| count |
 	aNodeCollection isEmpty ifTrue: [^self].
-	count := self countOuterTemps + self currentScope argumentCount.
-	aNodeCollection do: 
-			[:each |
+	aNodeCollection inject: self countOuterTemps + self currentScope argumentCount
+		into: 
+			[:count :each |
 			self visitNode: each.
-			(count := count + 1) > VMConstants.MaxTemps
+			count >= VMConstants.MaxTemps
 				ifTrue: 
 					[self
 						signalError: CErrTooManyTemps
 						forNode: each
-						extra: each name]]!
+						extra: each name].
+			count + 1]!
 
 visitVariableNode: aStVariableNode
 	(self bindVariable: aStVariableNode)

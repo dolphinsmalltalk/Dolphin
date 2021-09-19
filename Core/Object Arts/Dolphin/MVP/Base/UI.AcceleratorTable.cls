@@ -44,21 +44,20 @@ createHandle
 
 	"NB: CreateAcceleratorTable requires a pointer to a variable sized array of ACCEL structures."
 
-	| accels count cmds i |
+	| accels count cmds struct structSize |
 	cmds := self commands.
 	count := cmds size.
 	accels := StructureArray length: count elementClass: ACCEL.
 	accels beUnfinalizable.	"Nothing to free here"
-	i := 1.
+	struct := accels uncheckedAt: 1.
+	structSize := ACCEL byteSize.
 	cmds keysAndValuesDo: 
 			[:vkey :command |
-			| struct |
-			struct := accels at: i.
 			struct
 				fVirt: ((vkey bitShift: -9) bitOr: FVIRTKEY);
 				key: (vkey bitAnd: 16rFF);
 				cmd: command id.	"Always add virtual key flag, or modifiers ignored"
-			i := i + 1].
+			struct initializeAtAddress: (struct yourAddress + structSize)].
 	^User32 createAcceleratorTable: accels cEntries: count!
 
 includes: commandSymbol 

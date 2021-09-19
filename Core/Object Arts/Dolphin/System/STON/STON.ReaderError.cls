@@ -23,9 +23,6 @@ _descriptionFormat
 
 	^streamPosition ifNil: ['%1'] ifNotNil: ['At character %1!!d!!: %2']!
 
-messageText
-	^ messageText!
-
 streamPosition
 	^ streamPosition!
 
@@ -34,7 +31,6 @@ streamPosition: aNumber
 !STON.ReaderError categoriesForMethods!
 _descriptionArguments!displaying!public! !
 _descriptionFormat!displaying!public! !
-messageText!accessing!public! !
 streamPosition!accessing!public! !
 streamPosition:!accessing!public! !
 !

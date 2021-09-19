@@ -253,23 +253,23 @@ removePseud: pseud
 	^Pseuds notNil
 		ifTrue: [Pseuds remove: (Table removeKey: pseud asString ifAbsent: nil) ifAbsent: nil]!
 
-setMethod: method categories: categories
+setMethod: aCompiledMethod categories: aCollectionOfCategories
 	"Private - Set the categories of the <CompiledMethod>, method, to be the <Collection> of
 	<methodCategory>s, categories, only (i.e. any existing non-pseudo classifications
 	not in 'categories' are removed)."
 
-	| newCategories original unwanted |
-	original := method realCategories.
-	newCategories := IdentitySet new.
-	categories do: 
+	| nonPseudo newCategories original unwanted |
+	nonPseudo := IdentitySet new.
+	aCollectionOfCategories do: 
 			[:each |
 			| category |
 			category := each asMethodCategory.
-			each isPseud ifFalse: [newCategories add: category]].
-	unwanted := original difference: newCategories.
-	newCategories := newCategories difference: original.
-	unwanted do: [:c | c removeMethodSilently: method].
-	newCategories do: [:each | each addMethodSilently: method].
+			each isPseud ifFalse: [nonPseudo add: category]].
+	original := aCompiledMethod realCategories.
+	unwanted := original difference: nonPseudo.
+	newCategories := nonPseudo difference: original.
+	unwanted do: [:each | each removeMethodSilently: aCompiledMethod].
+	newCategories do: [:each | each addMethodSilently: aCompiledMethod].
 	^unwanted notEmpty or: [newCategories notEmpty]!
 
 unclassifiedName

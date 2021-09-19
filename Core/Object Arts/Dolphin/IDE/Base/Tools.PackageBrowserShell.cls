@@ -735,9 +735,6 @@ onMethodRepackaged: aCompiledMethod from: oldPackage to: newPackage
 			[(displayingNewPackage and: [aCompiledMethod isLoose]) 
 				ifTrue: [methodsPresenter model add: aCompiledMethod]]!
 
-onMethodSelected
-	self updateMethodNamespace!
-
 onMethodUpdated: aCompilationResult 
 	"Private - A method has been updated in the system. Ensure that the methods presenter
 	is updated if necessary."
@@ -1328,7 +1325,6 @@ onDropOverPackage:!event handling!private! !
 onMethodAdded:!event handling!private! !
 onMethodRemoved:!event handling!private! !
 onMethodRepackaged:from:to:!event handling!private! !
-onMethodSelected!event handling!private! !
 onMethodUpdated:!event handling!private! !
 onPackageChanged:!event handling!private! !
 onPackageSelected!event handling!private! !

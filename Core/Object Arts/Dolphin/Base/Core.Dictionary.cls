@@ -499,24 +499,21 @@ stbSaveOn: anSTBOutFiler
 	anSTBOutFiler saveObject: self
 		as: (STBCollectionProxy class: self class array: self associations asArray)!
 
-storeOn: aStream 
+storeOn: aStream
 	"Append to the <puttableStream> argument, target, an expression which when 
 	evaluated will answer a collection similar to the receiver."
 
-	| first |
 	aStream nextPutAll: '(('.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' new)'.
-	first := true.
-	self keysAndValuesDo: [:key :value |
-		first
-			ifTrue: [first := false]
-			ifFalse: [aStream nextPut: $;].
-		aStream nextPutAll: ' at: '.
-		key storeOn: aStream.
-		aStream nextPutAll: ' put: '.
-		value storeOn: aStream].
-	first ifFalse: [aStream nextPutAll: '; yourself'].
+	self keysAndValuesDo: 
+			[:key :value |
+			aStream nextPutAll: ' at: '.
+			key storeOn: aStream.
+			aStream nextPutAll: ' put: '.
+			value storeOn: aStream.
+			aStream nextPut: $;].
+	self isEmpty ifFalse: [aStream nextPutAll: ' yourself'].
 	aStream nextPut: $)!
 
 values

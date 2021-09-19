@@ -334,9 +334,6 @@ storeableProperties
 	name ifNotNil: [attribs := {#name} , attribs].
 	^attribs!
 
-value
-	^self!
-
 view
 	^nil!
 
@@ -401,7 +398,6 @@ restyleFont:!accessing!public! !
 setPredefinedId!accessing!private! !
 setThreeStateFlag:value:!helpers!private! !
 storeableProperties!development!printing!private! !
-value!accessing!public! !
 view!accessing!private! !
 view:!accessing!private! !
 weight!accessing!public! !

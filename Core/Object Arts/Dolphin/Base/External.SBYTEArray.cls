@@ -32,7 +32,7 @@ uncheckedAt:put:!private! !
 elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."
 
-	^BYTE! !
+	^SBYTE! !
 !External.SBYTEArray class categoriesForMethods!
 elementClass!constants!public! !
 !

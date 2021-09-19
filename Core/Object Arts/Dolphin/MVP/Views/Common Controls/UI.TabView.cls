@@ -621,7 +621,7 @@ ensureVisible:!public! !
 getEditControl!accessing!private! !
 getItem:!helpers!private! !
 getSelectionsByIndex!private!selection! !
-getSingleSelection!public!selection! !
+getSingleSelection!private!selection! !
 hasButtons!accessing-styles!public! !
 hasButtons:!accessing-styles!public! !
 hasFlatSeparators!accessing-styles!public! !

@@ -777,6 +777,14 @@ isString
 
 	^true!
 
+join: aCollection
+	"Answer a new <String> composed from the displayStrings of elements of the <collection> argument, separated by the occurrences of the receiver."
+
+	| stream |
+	stream := String writeStream: aCollection size * (5 + self size).
+	aCollection do: [:each | each displayOn: stream] separatedBy: [stream nextPutAll: self].
+	^stream grabContents!
+
 leftString: anInteger
 	"Answer a new string comprising up to the leftmost anInteger <Characters> of the receiver. 
 	If the receiver has less than anInteger characters, then copy only those characters in the receiver."
@@ -1372,6 +1380,7 @@ indexOfAnyOf:startingAt:!public!searching! !
 indexOfSubCollection:startingAt:!public!searching! !
 isLiteral!public!testing! !
 isString!public!testing! !
+join:!printing!public! !
 leftString:!copying!public! !
 length!accessing!public! !
 lines!copying!public! !

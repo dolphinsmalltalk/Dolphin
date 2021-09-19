@@ -112,9 +112,6 @@ createTooltip
 			to: self.
 	tooltip create!
 
-defaultCaption
-	^self class defaultCaption: self iconStyle!
-
 font
 	"Answer the <Font> to be used for the tip text, or nil if the default font is to be applied.
 	The font cannot be changed after the bubble has been opened."
@@ -346,7 +343,6 @@ backcolor!accessing!public! !
 backcolor:!accessing!public! !
 close!public!realizing/unrealizing! !
 createTooltip!private!realizing/unrealizing! !
-defaultCaption!displaying!private! !
 font!accessing!public! !
 font:!accessing!public! !
 forecolor!accessing!public! !

@@ -22,6 +22,7 @@ package setMethodNames: #(
 	#(#{Core.ArithmeticValue} #_expandRectangle:)
 	#(#{Core.ArithmeticValue} #_insetRectangle:)
 	#(#{Core.ArithmeticValue} #_offsetRectangle:)
+	#(#{Core.ArithmeticValue} #asPoint)
 	#(#{Core.Number} #@)
 	#(#{Core.Number} #asPoint)
 	#(#{Core.Number} #asPoint3D)
@@ -111,11 +112,17 @@ _offsetRectangle: aRectangle
 	"Private - Offset the <Rectangle> argument by the magnitude of the receiver.
 	Double-dispatched from the Rectangle itself."
 
-	^aRectangle species origin: aRectangle origin + self corner: aRectangle corner + self! !
+	^aRectangle species origin: aRectangle origin + self corner: aRectangle corner + self!
+
+asPoint
+	"Answer a Point with the receiver as both co-ordinates."
+
+	^self subclassResponsibility! !
 !Core.ArithmeticValue categoriesForMethods!
 _expandRectangle:!double dispatch!private! !
 _insetRectangle:!double dispatch!private! !
 _offsetRectangle:!double dispatch!private! !
+asPoint!converting!public! !
 !
 
 !Core.Number methodsFor!

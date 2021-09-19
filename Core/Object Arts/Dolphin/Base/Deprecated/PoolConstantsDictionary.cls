@@ -128,13 +128,3 @@ sourceFilerClass!public!source filing! !
 
 PoolConstantsDictionary methodProtocol: #sourceObject attributes: #(#readOnly) selectors: #(#canFileOut #fileOut #fileOutName #isChanged #isChanged: #owningPackage #sourceFilerClass)!
 
-!PoolConstantsDictionary class methodsFor!
-
-named: aSymbol 
-	^(self new)
-		name: aSymbol;
-		yourself! !
-!PoolConstantsDictionary class categoriesForMethods!
-named:!instance creation!public! !
-!
-

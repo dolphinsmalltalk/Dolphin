@@ -162,6 +162,12 @@ getSelectionsByIndex
 
 	^self subclassResponsibility!
 
+getSingleSelection
+	"Private - Answer the one-based <integer> 'index' of the selected object in the receiver or
+	zero if there is none."
+
+	^self subclassResponsibility!
+
 getTextBlock
 	"Answer the <monadicValuable> which is evaluated to determine the text to display 
 	for each of the receiver's rows/nodes. Note that this is also the text used by the
@@ -626,6 +632,7 @@ errorNotMultiSelect!private!selection! !
 getInfoTipBlock!accessing!public! !
 getInfoTipBlock:!accessing!public! !
 getSelectionsByIndex!private!selection! !
+getSingleSelection!helpers!private!selection! !
 getTextBlock!adapters!public! !
 getTextBlock:!adapters!public! !
 handleFromObject:!accessing!private! !

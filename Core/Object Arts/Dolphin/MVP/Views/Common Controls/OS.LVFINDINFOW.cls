@@ -32,17 +32,6 @@ lParam
 
 	^bytes uintPtrAtOffset: _OffsetOf_lParam!
 
-maskIn: anInteger
-	"OR in to receiver's mask field the bit flags represented by anInteger"
-
-	self flags: (self flags bitOr: anInteger)!
-
-param: findId
-	"Set the param field of the receiver to findId."
-
-	self lParam: findId.
-	self maskIn: LVFI_PARAM!
-
 psz
 	"Answer the <Utf16String> value of the receiver's 'psz' field."
 
@@ -60,8 +49,6 @@ vkDirection
 !OS.LVFINDINFOW categoriesForMethods!
 flags!**compiled accessors**!public! !
 lParam!**compiled accessors**!public! !
-maskIn:!accessing!public! !
-param:!accessing!public! !
 psz!**compiled accessors**!public! !
 pt!**compiled accessors**!public! !
 vkDirection!**compiled accessors**!public! !

@@ -93,9 +93,6 @@ foregroundUpdate
 	originalText := buffer value.
 	self refreshIcon!
 
-icon
-	^self class icon!
-
 isModified
 	^textPresenter isModified!
 
@@ -194,7 +191,6 @@ currentClassUpdated!event handling!private! !
 defaultHelpId!constants!public! !
 displayOn:!displaying!public! !
 foregroundUpdate!private!updating! !
-icon!accessing!public! !
 isModified!public!testing! !
 modifiedModel!accessing!public! !
 newAspectBufferOn:!helpers!private! !

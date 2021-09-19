@@ -128,11 +128,14 @@ remove: oldElement ifAbsent: exceptionHandler
 	the result of evaluating the <niladicValuable>, exceptionHandler, 
 	else answer oldElement."
 
-	| count |
-	(count := contents at: oldElement ifAbsent: [^exceptionHandler value]) == 1
-		ifTrue:  [contents removeKey: oldElement]
-		ifFalse: [contents at: oldElement put: count - 1].
-	^oldElement!
+	^(contents at: oldElement ifAbsent: [])
+		ifNil: [exceptionHandler value]
+		ifNotNil: 
+			[:count |
+			count == 1
+				ifTrue: [contents removeKey: oldElement]
+				ifFalse: [contents at: oldElement put: count - 1].
+			oldElement]!
 
 removeAll
 	"Remove each element from the receiver and leave it empty."

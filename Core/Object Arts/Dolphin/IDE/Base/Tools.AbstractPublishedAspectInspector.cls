@@ -122,18 +122,18 @@ getAspectsFor: anObject
 			ex toTrace.
 			LookupTable with: (Aspect name: #yourself)]!
 
-getSubAspectAccessorsFor: anAspectAccessor 
+getSubAspectAccessorsFor: anAspectAccessor
 	"Private - Answer a <sequencedReadableCollection> of the <AspectAccessor> child nodes 
 	below the <AspectAccessor> argument."
 
-	| subValue subject |
 	anAspectAccessor isReadable ifFalse: [^#()].
-	
-	[subValue := anAspectAccessor value.
-	subject := anAspectAccessor isMutable ifTrue: [subValue] ifFalse: [subValue copy]] 
+	^
+	[| subValue subject |
+	subValue := anAspectAccessor value.
+	subject := anAspectAccessor isMutable ifTrue: [subValue] ifFalse: [subValue copy].
+	(self getSubAspectsFor: subValue) collect: [:each | each accessorFor: subject]]
 			on: Error
-			do: [:ex | subValue := subject := ex].
-	^(self getSubAspectsFor: subValue) collect: [:each | each accessorFor: subject]!
+			do: [:ex | (self getSubAspectsFor: ex) collect: [:each | each accessorFor: ex]]!
 
 getSubAspectsFor: anObject
 	"Private - Answer a <sequencedReadableCollection> of the published aspects of the argument."

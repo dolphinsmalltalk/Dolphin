@@ -451,14 +451,6 @@ writeString:!formatting!private! !
 
 !Refactory.Browser.RBConfigurableFormatter class methodsFor!
 
-format: aParseTree 
-	^self format: aParseTree withIndents: 0!
-
-format: aParseTree withIndents: anInteger 
-	^(self new)
-		indent: anInteger;
-		format: aParseTree!
-
 formatCommentWithStatements
 	^FormatCommentWithStatements!
 
@@ -614,8 +606,6 @@ useTraditionalBinaryPrecedenceForParentheses
 useTraditionalBinaryPrecedenceForParentheses: aBoolean 
 	UseTraditionalBinaryPrecedenceForParentheses := aBoolean! !
 !Refactory.Browser.RBConfigurableFormatter class categoriesForMethods!
-format:!public!public interface! !
-format:withIndents:!public!public interface! !
 formatCommentWithStatements!public!settings! !
 formatCommentWithStatements:!public!settings! !
 indentsForKeywords!public!settings! !

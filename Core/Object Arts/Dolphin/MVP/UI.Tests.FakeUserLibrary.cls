@@ -18,9 +18,6 @@ close
 			handle := user32 := nil.
 			UserLibrary setDefault: original]!
 
-free
-	self close!
-
 getActiveWindow
 	^(getActiveWindowBlock notNil and: [Processor activeProcess == process])
 		ifTrue: [getActiveWindowBlock value]
@@ -60,7 +57,6 @@ open
 	UserLibrary setDefault: self! !
 !UI.Tests.FakeUserLibrary categoriesForMethods!
 close!public!realizing/unrealizing! !
-free!finalizing!public!realizing/unrealizing! !
 getActiveWindow!public!win32 functions-keyboard input! !
 getActiveWindowBlock:!initializing!private! !
 getCursorPos:!public!win32 functions-cursor! !

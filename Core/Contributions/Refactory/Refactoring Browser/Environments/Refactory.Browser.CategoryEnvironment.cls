@@ -29,14 +29,7 @@ classNames
 				yourself]!
 
 defaultLabel
-	| stream |
-	stream := String new writeStream.
-	categories do: 
-			[:each |
-			stream
-				nextPutAll: each;
-				nextPut: $\x20].
-	^stream contents!
+	^$\x20 join: categories!
 
 definesClass: aClass
 	^self includesClass: aClass!

@@ -12,8 +12,12 @@ External.Tests.SDWORDArrayTest comment: ''!
 !External.Tests.SDWORDArrayTest methodsFor!
 
 arrayClass
-	^SDWORDArray! !
+	^SDWORDArray!
+
+numericElementClass
+	^SDWORD! !
 !External.Tests.SDWORDArrayTest categoriesForMethods!
 arrayClass!constants!private! !
+numericElementClass!constants!private! !
 !
 

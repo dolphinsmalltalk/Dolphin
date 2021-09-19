@@ -82,10 +82,7 @@ filters: anArrayOfStrings
 	filters := anArrayOfStrings isEmpty ifFalse: [anArrayOfStrings asArray]!
 
 filterString
-	| stream |
-	stream := String writeStream.
-	self filters do: [:each | stream nextPutAll: each] separatedBy: [stream nextPut: $;].
-	^stream contents!
+	^$; join: self filters!
 
 filterString: aString
 	self filters: ($; split: aString)!

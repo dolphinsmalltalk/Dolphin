@@ -15,9 +15,13 @@ arrayClass
 	^FLOATArray!
 
 elementFromValue: anObject 
-	^anObject asFloat! !
+	^anObject asFloat!
+
+numericElementClass
+	^FLOAT! !
 !External.Tests.FLOATArrayTest categoriesForMethods!
 arrayClass!constants!private! !
 elementFromValue:!private!unit tests! !
+numericElementClass!constants!private! !
 !
 

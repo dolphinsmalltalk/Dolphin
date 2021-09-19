@@ -66,7 +66,6 @@ package setMethodNames: #(
 	#(#{External.ExternalArray class} #fieldType)
 	#(#{External.ExternalArray class} #fieldType:indirections:)
 	#(#{External.ExternalArray class} #pointerFieldType)
-	#(#{External.ExternalArray class} #printStructField:indirections:on:)
 	#(#{External.Field class} #printArrayField:length:on:)
 	#(#{External.Field class} #printArrayField:type:on:)
 	#(#{External.Field class} #printConformantArrayLength:on:)
@@ -83,7 +82,6 @@ package setMethodNames: #(
 	#(#{External.INT_PTR class} #arrayType)
 	#(#{External.INT_PTR class} #fieldType)
 	#(#{External.IntegerBytes class} #fieldType)
-	#(#{External.IntegerBytes class} #printStructField:indirections:on:)
 	#(#{External.POINT} #printOn:)
 	#(#{External.PointerArray class} #fieldType)
 	#(#{External.PointerArray class} #pointerFieldType)
@@ -473,7 +471,6 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeInfoObject} #namespaceClashSignal)
 	#(#{OS.COM.TypeInfoObject} #namespaceImports)
 	#(#{OS.COM.TypeInfoObject} #packageCheck:)
-	#(#{OS.COM.TypeInfoObject} #printAttributeList:on:)
 	#(#{OS.COM.TypeInfoObject} #printIDL)
 	#(#{OS.COM.TypeInfoObject} #printIDLAttributes:on:indent:)
 	#(#{OS.COM.TypeInfoObject} #printIDLAttributesOn:indent:)
@@ -537,7 +534,6 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeLibraryAnalyzer} #packageCheck:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #packageName)
 	#(#{OS.COM.TypeLibraryAnalyzer} #packageName:)
-	#(#{OS.COM.TypeLibraryAnalyzer} #prefixGlobalNames)
 	#(#{OS.COM.TypeLibraryAnalyzer} #printIDLForwardRefsOn:indent:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #printIDLOn:indent:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #printOn:)
@@ -1058,22 +1054,12 @@ fieldType: aVARDESC indirections: anInteger
 		ifFalse: [anInteger == 0 ifTrue: [self fieldType] ifFalse: [self pointerFieldType]]!
 
 pointerFieldType
-	^ArrayPointerField!
-
-printStructField: aVARDESC indirections: anInteger on: aCodeGenerationContext
-	"Private - Print a structure field definition message onto the <CodeGenerationContext> argument, for the array variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
-
-	(self fieldType: aVARDESC indirections: anInteger)
-		printVariable: aVARDESC
-		type: self
-		indirections: anInteger
-		on: aCodeGenerationContext! !
+	^ArrayPointerField! !
 !External.ExternalArray class categoriesForMethods!
 arrayType!constants!private! !
 fieldType!constants!private! !
 fieldType:indirections:!private! !
 pointerFieldType!constants!private! !
-printStructField:indirections:on:!private! !
 !
 
 !External.Field class methodsFor!
@@ -1252,21 +1238,9 @@ fieldType!constants!private! !
 !External.IntegerBytes class methodsFor!
 
 fieldType
-	^self subclassResponsibility!
-
-printStructField: aVARDESC indirections: anInteger on: aCodeGenerationContext
-	"Private - Print a structure field definition message onto the <CodeGenerationContext> argument, for the array variable described by the <VARDESC> argument, with the specified <integer> number of indirections."
-
-	"Implementation Note: Copy <ExternalStructure>'s implementation."
-
-	(self fieldType: aVARDESC indirections: anInteger)
-		printVariable: aVARDESC
-		type: self
-		indirections: anInteger
-		on: aCodeGenerationContext! !
+	^self subclassResponsibility! !
 !External.IntegerBytes class categoriesForMethods!
 fieldType!constants!development!private! !
-printStructField:indirections:on:!private! !
 !
 
 !External.POINT methodsFor!
@@ -6400,10 +6374,6 @@ packageCheck: anAssociation
 
 	^self subclassResponsibility!
 
-printAttributeList: aCollection on: aPuttableStream 
-	aCollection do: [:each | aPuttableStream nextPutAll: each]
-		separatedBy: [aPuttableStream nextPutAll: ', ']!
-
 printIDL
 	"Answer a <readableString> containing the Microsoft Interface Definition Language
 	description of the receiver."
@@ -6513,7 +6483,6 @@ isTracingVerbose:!accessing!public! !
 namespaceClashSignal!constants!public! !
 namespaceImports!constants!private! !
 packageCheck:!helpers!private! !
-printAttributeList:on:!printing-IDL!private! !
 printIDL!printing!public! !
 printIDLAttributes:on:indent:!printing!private! !
 printIDLAttributesOn:indent:!printing-IDL!private! !
@@ -7008,11 +6977,6 @@ packageName: aString
 
 	packageName := aString!
 
-prefixGlobalNames
-	"Answer whether generated globals (e.g. classes) will be prefixed."
-
-	^self prefix notEmpty!
-
 printIDLForwardRefsOn: aPuttableStream indent: anInteger 
 	"Print the IDL description of the receiver on the <puttableStream>, target."
 
@@ -7191,7 +7155,6 @@ package:!accessing!public! !
 packageCheck:!helpers!private! !
 packageName!accessing!public! !
 packageName:!accessing!public! !
-prefixGlobalNames!accessing!public! !
 printIDLForwardRefsOn:indent:!printing!public! !
 printIDLOn:indent:!printing!public! !
 printOn:!printing!public! !

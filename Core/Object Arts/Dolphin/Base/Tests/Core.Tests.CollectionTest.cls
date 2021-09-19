@@ -181,7 +181,16 @@ testSingle
 	subject := self newCollection: #($a).
 	self assert: subject single equals: (self assimilate: $a).
 	subject := self newCollection: #($a $b).
-	self should: [subject single] raise: Error! !
+	self should: [subject single] raise: Error!
+
+testStoreOn
+	#(#() #($a) #($a $b) #($a $b $a)) do: 
+			[:each |
+			| subject rehydrated storeString |
+			subject := self newCollection: each.
+			storeString := subject storeString.
+			rehydrated := Compiler evaluate: storeString.
+			self assert: rehydrated equals: subject]! !
 !Core.Tests.CollectionTest categoriesForMethods!
 assimilate:!private!unit tests! !
 assimilateElements:!helpers!private! !
@@ -197,5 +206,6 @@ testDistinct!public!unit tests! !
 testDoSeparatedBy!public!unit tests! !
 testFold!public!unit tests! !
 testSingle!public!unit tests! !
+testStoreOn!public!unit tests! !
 !
 

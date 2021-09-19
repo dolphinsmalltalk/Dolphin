@@ -12,9 +12,6 @@ Kernel.StTagNode comment: ''!
 !Kernel.StTagNode categoriesForClass!System-Compiler! !
 !Kernel.StTagNode methodsFor!
 
-acceptVisitor: aProgramNodeVisitor 
-	^self subclassResponsibility!
-
 isExternalCall
 	^false!
 
@@ -30,7 +27,6 @@ stop
 stop: anInteger
 	stop := anInteger! !
 !Kernel.StTagNode categoriesForMethods!
-acceptVisitor:!public!visitor! !
 isExternalCall!public!testing! !
 start!accessing!public! !
 start:!accessing!private! !

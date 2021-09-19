@@ -653,6 +653,14 @@ testInvalidComparisons
 	literals do: [:each | self should: [each > str] raise: Error].
 	literals do: [:each | self should: [each >= str] raise: Error]!
 
+testJoin
+	self assert: (', ' join: #()) equals: ''.
+	self assert: (', ' join: 'b') equals: 'b'.
+	self assert: (', ' join: #('b')) equals: 'b'.
+	self assert: (', ' join: 'ab') equals: 'a, b'.
+	self assert: (', ' join: #('a' 'b')) equals: 'a, b'.
+	self assert: (', ' join: {Object. Association}) equals: 'Core.Object, Core.Association'!
+
 testLastIndexOf
 	self indexOfTestCases pairsDo: 
 			[:each :char |
@@ -1187,6 +1195,7 @@ testFindStringStartingAtIgnoreCase!public!unit tests! !
 testHash!public!unit tests! !
 testIndexOfStartingAt!public!unit tests! !
 testInvalidComparisons!public!unit tests! !
+testJoin!public!unit tests! !
 testLastIndexOf!public!unit tests! !
 testLength!public!unit tests! !
 testLines!public!unit tests! !

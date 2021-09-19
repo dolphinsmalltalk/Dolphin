@@ -56,9 +56,11 @@ flowSplit: aCompositeView context: aLayoutContext
 	lineWidth := 0 - horizontalGap.
 	lineHeight := 0.
 	items := OrderedCollection new.
-	subviews do: 
-			[:each |
-			| itemExtent |
+	1 to: subviews size
+		do: 
+			[:i |
+			| each itemExtent |
+			each := subviews at: i.
 			itemExtent := each layoutExtent: aLayoutContext.
 			(items notEmpty and: [lineWidth + horizontalGap + itemExtent x > maxWidth])
 				ifTrue: 

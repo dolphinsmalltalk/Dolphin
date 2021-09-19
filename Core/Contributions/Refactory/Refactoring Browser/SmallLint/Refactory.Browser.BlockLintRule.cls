@@ -394,7 +394,7 @@ refersToClass
 			| method nonMeta |
 			method := context compiledMethod.
 			nonMeta := method methodClass instanceBehavior.
-			(method refersToLiteral: (nonMeta environment fullBindingFor: nonMeta name))
+			(method refersToLiteral: nonMeta binding)
 				ifTrue: 
 					[result addClass: method methodClass selector: method selector.
 					result addSearchString: nonMeta name]].

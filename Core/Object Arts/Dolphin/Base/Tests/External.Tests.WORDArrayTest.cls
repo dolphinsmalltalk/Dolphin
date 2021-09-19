@@ -12,8 +12,12 @@ External.Tests.WORDArrayTest comment: ''!
 !External.Tests.WORDArrayTest methodsFor!
 
 arrayClass
-	^WORDArray! !
+	^WORDArray!
+
+numericElementClass
+	^WORD! !
 !External.Tests.WORDArrayTest categoriesForMethods!
 arrayClass!constants!private! !
+numericElementClass!constants!private! !
 !
 

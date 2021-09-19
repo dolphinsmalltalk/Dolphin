@@ -138,7 +138,18 @@ size
 species
 	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types."
 
-	^Array! !
+	^Array!
+
+storeOn: aWriteStream
+	"Append to the <puttableStream> argument an expression which when evaluated will answer a collection similar to the receiver."
+
+	aWriteStream nextPut: $(.
+	self class storeOn: aWriteStream.
+	aWriteStream nextPutAll: ' runs: '.
+	runs storeOn: aWriteStream.
+	aWriteStream nextPutAll: ' values: '.
+	values storeOn: aWriteStream.
+	aWriteStream nextPut: $)! !
 !Core.RunArray categoriesForMethods!
 allSatisfy:!enumerating!public! !
 anySatisfy:!enumerating!public! !
@@ -156,6 +167,7 @@ runStartAndValueAt:!accessing!private! !
 runStartAt:!accessing!public! !
 size!accessing!public! !
 species!accessing!public! !
+storeOn:!accessing!private! !
 !
 
 !Core.RunArray class methodsFor!

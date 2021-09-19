@@ -199,16 +199,17 @@ environment
 	^self subclassResponsibility!
 
 environmentName
-	| parts count stream first |
+	| parts count stream |
 	parts := $. split: self fullName.
 	(count := parts size) < 2 ifTrue: [^self baseEnvironmentName].
-	first := true.
-	stream := String writeStream.
-	1 to: count - 1
+	stream := String writeStream: 32.
+	stream nextPutAll: (parts at: 1).
+	2 to: count - 1
 		do: 
 			[:i |
-			first ifTrue: [first := false] ifFalse: [stream nextPut: $.].
-			stream nextPutAll: (parts at: i)].
+			stream
+				nextPut: $.;
+				nextPutAll: (parts at: i)].
 	^stream contents!
 
 existingMethodsThatReferTo: anObject

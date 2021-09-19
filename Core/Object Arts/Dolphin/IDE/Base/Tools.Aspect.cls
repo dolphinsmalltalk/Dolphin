@@ -270,12 +270,6 @@ type: aClass
 
 	type := aClass!
 
-value
-	"Private - Answer the value of the receiver when it is to appear as an
-	association (Aspects can be stored in Dictionaries)"
-
-	^self!
-
 writeInto: subjectObject value: valueObject
 	"Private - Set the attribute of subjectObject described by the receiver 
 	to valueObject."
@@ -333,7 +327,6 @@ putSelector!accessing!public! !
 readFrom:!indirect accessing!private! !
 type!initializing!public! !
 type:!initializing!public! !
-value!accessing!private! !
 writeInto:value:!indirect accessing!private! !
 !
 

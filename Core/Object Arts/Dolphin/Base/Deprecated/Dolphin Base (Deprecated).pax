@@ -26,6 +26,8 @@ package methodNames
 	add: #_FPIEEE_RECORD -> #causeCode;
 	add: #_FPIEEE_RECORD -> #causeName;
 	add: #_FPIEEE_VALUE -> #valueType;
+	add: #AbstractWindowsLocale -> #dateOrder;
+	add: #AbstractWindowsLocale -> #dateSeparator;
 	add: #ArithmeticValue -> #quoAndRem:;
 	add: #Behavior -> #makeIndirect;
 	add: #Behavior -> #makeNullTerminated;
@@ -68,8 +70,6 @@ package methodNames
 	add: #KernelLibrary -> #lstrcmp:lpString2:;
 	add: #KernelLibrary -> #lstrcmpi:lpString2:;
 	add: #KernelLibrary -> #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:;
-	add: #Locale -> #dateOrder;
-	add: #Locale -> #dateSeparator;
 	add: #Locale -> #isMonthBeforeDay;
 	add: #Package -> #addGlobalNamed:;
 	add: #Package -> #includesGlobalNamed:;
@@ -214,6 +214,27 @@ valueType
 	^self format! !
 !_FPIEEE_VALUE categoriesForMethods!
 valueType!accessing!public! !
+!
+
+!AbstractWindowsLocale methodsFor!
+
+dateOrder
+	"Answer the date ordering used in the receiver locale.
+		0	Month - Day - Year
+		1	Day - Month - Year
+		2	Year - Month - Day."
+
+	Notification deprecated.	"Use dateFormat"
+	^self getIntegerInfo: LOCALE_IDATE!
+
+dateSeparator
+	"Answer the character used in the receiver locale to separate date components."
+
+	Notification deprecated.	"Use dateFormat"
+	^self getStringInfo: LOCALE_SDATE! !
+!AbstractWindowsLocale categoriesForMethods!
+dateOrder!constants!public! !
+dateSeparator!constants!public! !
 !
 
 !ArithmeticValue methodsFor!
@@ -779,29 +800,12 @@ setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 f
 
 !Locale methodsFor!
 
-dateOrder
-	"Answer the date ordering used in the receiver locale.
-		0	Month - Day - Year
-		1	Day - Month - Year
-		2	Year - Month - Day."
-
-	Notification deprecated.	"Use dateFormat"
-	^self getIntegerInfo: LOCALE_IDATE!
-
-dateSeparator
-	"Answer the character used in the receiver locale to separate date components."
-
-	Notification deprecated.	"Use dateFormat"
-	^self getStringInfo: LOCALE_SDATE!
-
 isMonthBeforeDay
 	"Answer true if the format for the receiver is expecting a month before a day"
 
 	Notification deprecated.	"Use dateFormat"
 	^self dateOrder ~= 1! !
 !Locale categoriesForMethods!
-dateOrder!constants!public! !
-dateSeparator!constants!public! !
 isMonthBeforeDay!helpers!public! !
 !
 

@@ -95,6 +95,7 @@ package setClassNames: #(
 	#{External.Tests.GUIDTest}
 	#{External.Tests.INTEGERTest}
 	#{External.Tests.ResourceLibraryTest}
+	#{External.Tests.SBYTEArrayTest}
 	#{External.Tests.SDWORDArrayTest}
 	#{External.Tests.StructureArrayFieldTest}
 	#{External.Tests.StructureArrayPointerFieldTest}
@@ -276,12 +277,6 @@ Core.Tests.DolphinTest subclass: #'External.Tests.AddressTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Core.Tests.AssociationTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Core.Tests.BagTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -715,6 +710,12 @@ Core.Tests.CollectionTest subclass: #'Core.Tests.AbstractDictionaryTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Tests.CollectionTest subclass: #'Core.Tests.BagTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Tests.CollectionTest subclass: #'Core.Tests.SequenceableCollectionTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -854,6 +855,12 @@ External.Tests.ExternalArrayTest subclass: #'External.Tests.FLOATArrayTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 External.Tests.ExternalArrayTest subclass: #'External.Tests.GenericExternalArrayTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.Tests.ExternalArrayTest subclass: #'External.Tests.SBYTEArrayTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

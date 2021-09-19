@@ -38,23 +38,23 @@ deferRectangles
 	^true!
 
 deferWindowPositions: aSequencedReadableCollection
-	| hdwp count |
+	| count |
 	count := aSequencedReadableCollection size.
 	count == 0 ifTrue: [^self].
-	hdwp := User32 beginDeferWindowPos: count.
-	aSequencedReadableCollection do: 
-			[:each |
-			| rect view flags |
-			view := each at: 1.
-			flags := ##(SWP_NOZORDER | SWP_NOACTIVATE).
-			rect := (each at: 2)
-						ifNil: 
-							[flags := flags bitOr: ##(SWP_NOSIZE | SWP_NOMOVE).
-							Rectangle.Empty]
-						ifNotNil: [:r | view adjustRectangle: r].
-			(each at: 3)
-				ifNotNil: [:show | flags := flags bitOr: (show ifTrue: [SWP_SHOWWINDOW] ifFalse: [SWP_HIDEWINDOW])].
-			hdwp := User32
+	User32 endDeferWindowPos: (aSequencedReadableCollection inject: (User32 beginDeferWindowPos: count)
+				into: 
+					[:hdwp :each |
+					| rect view flags |
+					view := each at: 1.
+					flags := ##(SWP_NOZORDER | SWP_NOACTIVATE).
+					rect := (each at: 2)
+								ifNil: 
+									[flags := flags bitOr: ##(SWP_NOSIZE | SWP_NOMOVE).
+									Rectangle.Empty]
+								ifNotNil: [:r | view adjustRectangle: r].
+					(each at: 3)
+						ifNotNil: [:show | flags := flags bitOr: (show ifTrue: [SWP_SHOWWINDOW] ifFalse: [SWP_HIDEWINDOW])].
+					User32
 						deferWindowPos: hdwp
 						hwnd: view asParameter
 						hwndInsertAfter: 0
@@ -62,8 +62,7 @@ deferWindowPositions: aSequencedReadableCollection
 						y: rect top
 						cx: rect width
 						cy: rect height
-						uFlags: flags].
-	User32 endDeferWindowPos: hdwp!
+						uFlags: flags])!
 
 extentOf: aView 
 	"Answer a <Point>, being the window extent (not client extent) of the specified <View>. This

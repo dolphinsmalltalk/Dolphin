@@ -33,6 +33,9 @@ newArrayOfIntegers: anArray
 newNumericArray: anInteger 
 	^self newArrayOfIntegers: (1 to: anInteger)!
 
+numericElementClass
+	^self subclassResponsibility!
+
 testAtAndAtPut
 	| array |
 	array := self newNumericArray: 0.
@@ -73,6 +76,9 @@ testAtAndAtPut
 			elem := self elementFromValue: each.
 			self assert: (array at: each put: elem) equals: elem.
 			self assert: (self elementToValue: (array at: each)) equals: each]!
+
+testElementClass
+	self assert: (self newNumericArray: 1) elementClass identicalTo: self numericElementClass!
 
 testFromToKeysAndValuesDo
 	"Empty array"
@@ -212,7 +218,9 @@ elementFromValue:!private!unit tests! !
 elementToValue:!private!unit tests! !
 newArrayOfIntegers:!helpers!private! !
 newNumericArray:!helpers!private! !
+numericElementClass!constants!private! !
 testAtAndAtPut!public!unit tests! !
+testElementClass!public!unit tests! !
 testFromToKeysAndValuesDo!public!unit tests! !
 testWithDo!public!unit tests! !
 !

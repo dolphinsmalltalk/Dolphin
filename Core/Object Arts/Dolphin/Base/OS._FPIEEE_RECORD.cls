@@ -184,17 +184,20 @@ precisionModes
 	^#(#Full 53 24 64 113)!
 
 printFlags: anInteger on: aStream
-	| first |
+	| separator |
 	anInteger == 0
 		ifTrue: 
 			[aStream nextPut: $0.
 			^self].
-	first := true.
+	separator := 
+			[separator := '|'.
+			''].
 	self exceptionFlags: anInteger
 		do: 
 			[:flag |
-			first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
-			aStream display: flag]!
+			aStream
+				nextPutAll: separator value;
+				display: flag]!
 
 roundingModes
 	^#(#Nearest #MinusInfinity #PlusInfinity #Chopped)! !

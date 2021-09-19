@@ -71,18 +71,17 @@ applyStyle: aSymbol toNext: anInteger
 atStart
 	^last isNil!
 
-colorComments: aCollection startingAt: anInteger 
-	"Note that the anInteger is the start position in the text of the token stream, not the text
-	of the view."
+colorComments: aCollection startingAt: anInteger
+	"Note that the anInteger is the start position in the text of the token stream, not the text of the view."
 
-	| currentPos |
-	currentPos := anInteger.
-	aCollection do: 
-			[:each | 
+	^aCollection inject: anInteger
+		into: 
+			[:currentPos :each |
+			| end |
 			self applyStyle: #whitespace toNext: each start - currentPos.
-			currentPos := each stop + 1.
-			self applyStyle: #comment toNext: currentPos - each start].
-	^currentPos!
+			end := each stop + 1.
+			self applyStyle: #comment toNext: end - each start.
+			end]!
 
 colorText: aString in: aScintillaView startingAt: anInteger 
 	| scanner currentPos |

@@ -26,17 +26,12 @@ name
 	^name ifNil: [name := self getName]!
 
 tags
-	^self getTags!
-
-view: aScintillaView id: anInteger
-	view := aScintillaView.
-	id := anInteger! !
+	^self getTags! !
 !UI.Scintilla.LexerNamedStyle categoriesForMethods!
 getDescription!accessing!private! !
 getName!accessing!private! !
 getTags!accessing!private! !
 name!accessing!public! !
 tags!accessing!public! !
-view:id:!initializing!private! !
 !
 

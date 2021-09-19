@@ -2143,14 +2143,13 @@ loadViewResource: aResourceArray forEdit: isLoadingForEdit
 			ensure: [stream close]!
 
 managedSubViews
-	"Answer an OrderedCollection of the sub views of the receiver that are managed.
-	Managed sub views can be edited by the ViewComposer and are arranged
-	by the layout manager (if any)"
+	"Answer a <sequencedReadableCollection> of the sub views of the receiver that are managed.
+	Managed sub views can be edited by the ViewComposer and are arranged by the layout manager (if any)"
 
 	| answer |
-	answer := OrderedCollection new.
-	self managedSubViewsDo: [:each | answer addLast: each].
-	^answer!
+	answer := Array writeStream.
+	self managedSubViewsDo: [:each | answer nextPut: each].
+	^answer grabContents!
 
 managedSubViewsDo: aMonadicValuable 
 	"Evaluate the <monadicValuable> argument for each of the receiver's managed sub-views, in

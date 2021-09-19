@@ -89,6 +89,15 @@ addToSuper
 
 	"Nothing to do at this level"!
 
+allInstVarNames
+	"Answer an <Array> of the <readableString> names of the receiver's instance variables, 
+	those specified in the receiver and in all of its superclasses. The array ordering is the order 
+	in which the variables are stored and accessed by the interpreter."
+
+	^superclass isNil
+		ifTrue: [self instVarNames]
+		ifFalse: [superclass allInstVarNames , self instVarNames]!
+
 allSuperclasses
 	"Answer a <collection> of the receiver's superclass and the receiver's ancestor's 
 	superclasses. The first element is the receiver's immediate superclass, followed by its
@@ -704,13 +713,13 @@ referenceFilterForAnyOf: aCollection
 	| array specialSelectorIndices |
 	array := aCollection asArray.
 	"Here we are expecting that aCollection is very small, and there will generally be no special selectors in it."
-	specialSelectorIndices := #().
+	specialSelectorIndices := OrderedCollection new.
 	array do: 
 			[:each |
 			each isSymbol
 				ifTrue: 
 					[(VM indexOfSpecialSelector: each ifAbsent: nil)
-						ifNotNil: [:index | specialSelectorIndices := specialSelectorIndices copyWith: index]]].
+						ifNotNil: [:index | specialSelectorIndices addLast: index]]].
 	^specialSelectorIndices isEmpty
 		ifTrue: [[:method | method refersToAnyOf: array]]
 		ifFalse: 
@@ -964,6 +973,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Core.Behavior categoriesForMethods!
 addSelector:withMethod:!methods-accessing!private! !
 addToSuper!class hierarchy-adding!private! !
+allInstVarNames!instance variables!public! !
 allSuperclasses!class hierarchy-accessing!public! !
 allSuperclassesDo:!class hierarchy-accessing!enumerating!private! !
 basicCompile:!compiling!private! !

@@ -190,15 +190,19 @@ autoResizeColumns: clientWidth
 	after subtracting for borders and such) between all automagically resizeable columns in the receiver.
 	This only has a visible effect in #report mode."
 
-	| cols autoCols fixedWidth idealWidth remainingWidth |
+	| cols count autoCols fixedWidth idealWidth remainingWidth |
 	fixedWidth := 0.
 	autoCols := 0.
 	cols := self allColumns.
-	cols keysAndValuesDo: 
-			[:eachKey :eachValue |
-			eachValue isAutoResize
+	count := cols size.
+	1 to: count
+		do: 
+			[:i |
+			| each |
+			each := cols at: i.
+			each isAutoResize
 				ifTrue: [autoCols := autoCols + 1]
-				ifFalse: [fixedWidth := fixedWidth + (self lvmGetColumnWidth: eachKey - 1)]].
+				ifFalse: [fixedWidth := fixedWidth + (self lvmGetColumnWidth: i - 1)]].
 	autoCols == 0 ifTrue: [^self].
 	remainingWidth := clientWidth - fixedWidth.
 	remainingWidth <= 0 ifTrue: [^self].
@@ -209,15 +213,18 @@ autoResizeColumns: clientWidth
 			[| actualAccum idealAccum |
 			idealAccum := 0.
 			actualAccum := 0.
-			cols keysAndValuesDo: 
-					[:eachKey :eachValue |
-					eachValue isAutoResize
+			1 to: count
+				do: 
+					[:i |
+					| each |
+					each := cols at: i.
+					each isAutoResize
 						ifTrue: 
 							[| thisWidth |
 							idealAccum := idealAccum + idealWidth.
 							thisWidth := (idealAccum - actualAccum) rounded.
-							eachValue basicWidth: thisWidth.
-							self lvmSetColumnWidth: eachKey - 1 to: thisWidth.
+							each basicWidth: thisWidth.
+							self lvmSetColumnWidth: i - 1 to: thisWidth.
 							actualAccum := actualAccum + thisWidth]]]!
 
 backcolorChanged

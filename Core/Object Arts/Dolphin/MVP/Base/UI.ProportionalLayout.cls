@@ -49,11 +49,15 @@ hideShowSplitters: aCompositeView context: aLayoutContext
 	visible splitter.The direction is reversed, and any splitters that are still visible that do
 	not have a succeeding visible resizable view since the last splitter are also hidden."
 
-	| resizable managed |
+	| resizable managed count |
 	resizable := false.
 	managed := aCompositeView managedSubViews.
-	managed do: 
-			[:each |
+	count := managed size.
+	1 to: count
+		do: 
+			[:i |
+			| each |
+			each := managed at: i.
 			each isSplitter
 				ifTrue: 
 					[resizable
@@ -65,8 +69,12 @@ hideShowSplitters: aCompositeView context: aLayoutContext
 					[((aLayoutContext isViewVisible: each) and: [(self hasFixedSize: each) not])
 						ifTrue: [resizable := true]]].
 	resizable := false.
-	managed reverseDo: 
-			[:each |
+	count to: 1
+		by: -1
+		do: 
+			[:i |
+			| each |
+			each := managed at: i.
 			(aLayoutContext isViewVisible: each)
 				ifTrue: 
 					[each isSplitter
@@ -92,15 +100,15 @@ isVertical: aBoolean
 
 	isVertical := aBoolean!
 
-layoutContainer: aCompositeView context: aLayoutContext 
+layoutContainer: aCompositeView context: aLayoutContext
 	"Private - Update the <LayoutContext> argument with rectangles for the sub-views of the
 	specified container view, laying out those sub-views according to the rules and
 	configuration of this particular layout manager."
 
-	| extent majorExtent minorExtent offset freeSize totalProportions fixedSize insets subViews |
+	| extent majorExtent minorExtent offset freeSize totalProportions fixedSize insets subViews count |
 	insets := aCompositeView actualInsets: aLayoutContext.
 	extent := ((aLayoutContext clientRectangleOf: aCompositeView) insetBy: insets) extent.
-	self isVertical 
+	self isVertical
 		ifTrue: 
 			[majorExtent := extent y.
 			minorExtent := extent x]
@@ -108,27 +116,33 @@ layoutContainer: aCompositeView context: aLayoutContext
 			[majorExtent := extent x.
 			minorExtent := extent y].
 	self hideShowSplitters: aCompositeView context: aLayoutContext.
-	subViews := self visibleSubViewsOf: aCompositeView context: aLayoutContext.
+	subViews := (self visibleSubViewsOf: aCompositeView context: aLayoutContext) asArray.
 	fixedSize := 0.
 	totalProportions := 0.
-	subViews do: 
-			[:each | 
-			(self hasFixedSize: each) 
+	count := subViews size.
+	1 to: count
+		do: 
+			[:i |
+			| each |
+			each := subViews at: i.
+			(self hasFixedSize: each)
 				ifTrue: [fixedSize := fixedSize + (self majorDimensionOf: (each layoutExtent: aLayoutContext))]
 				ifFalse: [totalProportions := totalProportions + (self arrangementOf: each)]].
 	freeSize := majorExtent - fixedSize max: 0.
 	offset := insets origin.
-	subViews keysAndValuesDo: 
-			[:index :aView | 
-			| viewMajorExtent viewExtent |
-			viewMajorExtent := (self hasFixedSize: aView) 
-						ifTrue: [self majorDimensionOf: (aView layoutExtent: aLayoutContext)]
+	1 to: count
+		do: 
+			[:index |
+			| each viewMajorExtent viewExtent |
+			each := subViews at: index.
+			viewMajorExtent := (self hasFixedSize: each)
+						ifTrue: [self majorDimensionOf: (each layoutExtent: aLayoutContext)]
 						ifFalse: 
-							[index = subViews size 
+							[index = count
 								ifTrue: [majorExtent + (self majorDimensionOf: insets origin) - (self majorDimensionOf: offset)]
-								ifFalse: [((self arrangementOf: aView) / totalProportions * freeSize) truncated]].
+								ifFalse: [((self arrangementOf: each) / totalProportions * freeSize) truncated]].
 			viewExtent := self pointWithMajor: viewMajorExtent minor: minorExtent.
-			aLayoutContext setView: aView rectangle: (offset extent: viewExtent).
+			aLayoutContext setView: each rectangle: (offset extent: viewExtent).
 			offset := offset + (self pointWithMajor: viewMajorExtent minor: 0)]!
 
 nearestResizableViewFrom: fromView inViews: views by: direction 

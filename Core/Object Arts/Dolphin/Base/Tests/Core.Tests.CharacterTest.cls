@@ -606,6 +606,14 @@ testIsWhitespace
 	#($\0 $\b $a $A $0 $\x200E $\x16 $\x3B4 $\x660 $@ $\x1F42C)
 		do: [:each | self deny: each isWhitespace]!
 
+testJoin
+	self assert: ($, join: #()) equals: ''.
+	self assert: ($, join: 'b') equals: 'b'.
+	self assert: ($, join: #('b')) equals: 'b'.
+	self assert: ($, join: 'ab') equals: 'a,b'.
+	self assert: ($, join: #('a' 'b')) equals: 'a,b'.
+	self assert: ($, join: {Object. Association}) equals: 'Core.Object,Core.Association'!
+
 testPrintString
 	self assert: $a printString equals: '$a'.
 	self assert: $a printString equals: '$a'.
@@ -693,6 +701,7 @@ testIsUppercase!public!unit tests! !
 testIsUtf16SurrogateTests!public!unit tests! !
 testIsUtf8SurrogateTests!public!unit tests! !
 testIsWhitespace!public!unit tests! !
+testJoin!public!unit tests! !
 testPrintString!public!unit tests! !
 testSize!public!unit tests! !
 testSplit!public!unit tests! !

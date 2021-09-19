@@ -98,6 +98,7 @@ package setMethodNames: #(
 	#(#{Core.Integer} #asVariant)
 	#(#{Core.LargeInteger} #asVariant)
 	#(#{Core.Locale} #variantBool:)
+	#(#{Core.Number} #asVariant)
 	#(#{Core.ScaledDecimal} #asVariant)
 	#(#{Core.SmallInteger} #asVariant)
 	#(#{Core.String} #asVariant)
@@ -1115,6 +1116,16 @@ variantBool: aBoolean
 	^self subclassResponsibility! !
 !Core.Locale categoriesForMethods!
 variantBool:!constants!public! !
+!
+
+!Core.Number methodsFor!
+
+asVariant
+	"Answer the <VARIANT> representation of the receiver."
+
+	^self subclassResponsibility! !
+!Core.Number categoriesForMethods!
+asVariant!converting!public! !
 !
 
 !Core.ScaledDecimal methodsFor!

@@ -106,12 +106,6 @@ moveToEnd
 	readLimit := collection size.
 	self setToEnd!
 
-next
-	"Answer the next object accessible by the receiver. WriteStreams do not support reading.
-	This effectively stubs out all the read methods inherited from superclasses."
-
-	^self errorNotReadable!
-
 next: countInteger putAll: aSequenceableCollection startingAt: startInteger
 	"Append countInteger elements of aSequenceableCollection from startInteger to the receiver.
 	Answer aSequenceableCollection.
@@ -204,7 +198,6 @@ growCollection!operations!private! !
 initialize!initializing!private! !
 isWriteable!public!testing! !
 moveToEnd!positioning!private! !
-next!accessing!public! !
 next:putAll:startingAt:!accessing!public! !
 nextPut:!accessing!public! !
 nextPutAll:!accessing!public! !

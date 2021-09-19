@@ -137,7 +137,6 @@ package setClassNames: #(
 package setMethodNames: #(
 	#(#{Core.Array} #assignToResourceIdentifier:)
 	#(#{Core.Array} #debugPrintOn:)
-	#(#{Core.ArrayedCollection} #newBatchAccessor)
 	#(#{Core.Association} #debugPrintOn:)
 	#(#{Core.Bag class} #publishedAspectsOfInstances)
 	#(#{Core.Behavior} #changedMethods)
@@ -642,9 +641,16 @@ package setMethodNames: #(
 	#(#{UI.RichTextEdit class} #publishedAspectsOfInstances)
 	#(#{UI.RichTextPresenter class} #publishedEventsOfInstances)
 	#(#{UI.Scintilla.Attribute class} #publishedAspectsOfInstances)
+	#(#{UI.Scintilla.BoolPropertyDescriptor} #aspectNamed:)
 	#(#{UI.Scintilla.CharacterRepresentation class} #publishedAspectsOfInstances)
+	#(#{UI.Scintilla.ColourAlphaPropertyDescriptor} #aspectNamed:)
+	#(#{UI.Scintilla.ColourPropertyDescriptor} #aspectNamed:)
+	#(#{UI.Scintilla.EnumPropertyDescriptor} #aspectNamed:)
+	#(#{UI.Scintilla.FloatPropertyDescriptor} #aspectNamed:)
+	#(#{UI.Scintilla.IntPropertyDescriptor} #aspectNamed:)
 	#(#{UI.Scintilla.KeyBinding class} #publishedAspectsOfInstances)
 	#(#{UI.Scintilla.MarkerDefinition class} #publishedAspectsOfInstances)
+	#(#{UI.Scintilla.PropertyDescriptor} #aspectNamed:)
 	#(#{UI.Scintilla.ScintillaView} #publishedAspects)
 	#(#{UI.Scintilla.ScintillaView class} #publishedAspectsOfInstances)
 	#(#{UI.Scintilla.ScintillaView class} #publishedEventsOfInstances)
@@ -1310,7 +1316,7 @@ Tools.MenuComposer subclass: #'Tools.MenuBarComposer'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.SmalltalkToolShell subclass: #'Tools.ClassBrowserAbstract'
-	instanceVariableNames: 'classesPresenter categoriesPresenter methodBrowserPresenter definitionPresenter modePresenter flags history variablesPresenter protocolsPresenter filterPresenter packageModel statusModel versionModel cardsPresenter loadedPlugins methodCategories'
+	instanceVariableNames: 'classesPresenter categoriesPresenter methodBrowserPresenter definitionPresenter modePresenter flags history variablesPresenter protocolsPresenter filterPresenter packageModel statusModel cardsPresenter loadedPlugins methodCategories'
 	classVariableNames: 'GrayedMethodFadeFactor HistoryListSize LooseMethodColor WordWrapDefinition'
 	imports: #()
 	classInstanceVariableNames: 'defaultShowInheritedMethods defaultFilterObjectMethods plugins'
@@ -1319,7 +1325,7 @@ Tools.SmalltalkToolShell subclass: #'Tools.ClassBrowserAbstract'
 		'ShowInheritedMethodsMask' -> 16r1
 	}!
 Tools.SmalltalkToolShell subclass: #'Tools.Debugger'
-	instanceVariableNames: 'process topFrame localAccessor depth flags breakWhen stackPresenter sourcePresenter variablesPresenter inspectorPresenter breakAction suspendingList _method refactoringTool aspectValueHolder'
+	instanceVariableNames: 'process topFrame localAccessor depth flags breakWhen stackPresenter sourcePresenter variablesPresenter inspectorPresenter breakAction suspendingList _method refactoringTool'
 	classVariableNames: 'AnimatePause DefaultStackDepth EnableDynamicMenus RestartOnMethodSave RunToCursorBehavior ShowWalkbacks SkipTable'
 	imports: #(#{Kernel.CompilerFlags} #{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
@@ -1368,7 +1374,7 @@ Tools.SmalltalkToolShell subclass: #'Tools.SmalltalkSystemShell'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.SmalltalkToolShell subclass: #'Tools.ViewComposer'
-	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter adornmentRegion primarySelection vcFlags modificationStatus image clipboard undoList'
+	instanceVariableNames: 'toolboxPresenter status arenaPresenter inspector composingView ownsComposingView resourceIdentifier addPositionOffset grabbers selections grid viewHierarchyPresenter adornmentRegion primarySelection vcFlags modificationStatus image undoList'
 	classVariableNames: 'Clipboard DefaultGridResolution ExtentImage PositionImage'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
@@ -1583,14 +1589,6 @@ debugPrintOn: aStream
 !Core.Array categoriesForMethods!
 assignToResourceIdentifier:!private! !
 debugPrintOn:!printing!public! !
-!
-
-!Core.ArrayedCollection methodsFor!
-
-newBatchAccessor
-	^KeyedAspectBatchAccessor subject: self batchSize: self publishedKeyedAspectsBatchSize! !
-!Core.ArrayedCollection categoriesForMethods!
-newBatchAccessor!public! !
 !
 
 !Core.Association methodsFor!
@@ -5859,7 +5857,7 @@ publishedAspectsOfInstances!constants!public! !
 printOn: aStream
 	"Append a textual representation of the receiver to aStream."
 
-	| flags first |
+	| flags separator |
 	self isNull ifTrue: [^super printOn: aStream].
 	aStream
 		basicPrint: self;
@@ -5872,13 +5870,17 @@ printOn: aStream
 				print: self rectangle;
 				nextPutAll: ', '].
 	flags := self flags.
-	first := true.
-	##((OS.Win32Constants keys select: [:each | each beginsWith: 'SWP_']) asSortedCollection asArray) do: 
+	separator := 
+			[separator := '|'.
+			''].
+	##((OS.Win32Constants keys select: [:each | each beginsWith: 'SWP_']) asSortedCollection asArray)
+		do: 
 			[:each |
 			(flags allMask: (OS.Win32Constants at: each))
 				ifTrue: 
-					[first ifTrue: [first := false] ifFalse: [aStream nextPut: $|].
-					aStream nextPutAll: each]]! !
+					[aStream
+						nextPutAll: separator value;
+						nextPutAll: each]]! !
 !OS.WINDOWPOS categoriesForMethods!
 printOn:!printing!public! !
 !
@@ -7502,6 +7504,14 @@ publishedAspectsOfInstances
 publishedAspectsOfInstances!constants!public! !
 !
 
+!UI.Scintilla.BoolPropertyDescriptor methodsFor!
+
+aspectNamed: aSymbol
+	^self isNullable ifTrue: [Aspect nullableBoolean: aSymbol] ifFalse: [Aspect boolean: aSymbol]! !
+!UI.Scintilla.BoolPropertyDescriptor categoriesForMethods!
+aspectNamed:!development!public! !
+!
+
 !UI.Scintilla.CharacterRepresentation class methodsFor!
 
 publishedAspectsOfInstances
@@ -7515,6 +7525,59 @@ publishedAspectsOfInstances
 		yourself! !
 !UI.Scintilla.CharacterRepresentation class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
+!
+
+!UI.Scintilla.ColourAlphaPropertyDescriptor methodsFor!
+
+aspectNamed: aSymbol
+	^(Aspect color: aSymbol)
+		isNullable: self isNullable;
+		yourself! !
+!UI.Scintilla.ColourAlphaPropertyDescriptor categoriesForMethods!
+aspectNamed:!development!public! !
+!
+
+!UI.Scintilla.ColourPropertyDescriptor methodsFor!
+
+aspectNamed: aSymbol
+	^(Aspect color: aSymbol)
+		isNullable: self isNullable;
+		yourself! !
+!UI.Scintilla.ColourPropertyDescriptor categoriesForMethods!
+aspectNamed:!development!public! !
+!
+
+!UI.Scintilla.EnumPropertyDescriptor methodsFor!
+
+aspectNamed: aSymbol
+	| nullable |
+	nullable := self isNullable.
+	^(Aspect choice: aSymbol from: (nullable ifTrue: [[#(nil) , self values value]] ifFalse: [self values]))
+		isNullable: nullable;
+		type: Symbol;
+		yourself! !
+!UI.Scintilla.EnumPropertyDescriptor categoriesForMethods!
+aspectNamed:!development!public! !
+!
+
+!UI.Scintilla.FloatPropertyDescriptor methodsFor!
+
+aspectNamed: aSymbol
+	^(Aspect float: aSymbol)
+		isNullable: self isNullable;
+		yourself! !
+!UI.Scintilla.FloatPropertyDescriptor categoriesForMethods!
+aspectNamed:!development!public! !
+!
+
+!UI.Scintilla.IntPropertyDescriptor methodsFor!
+
+aspectNamed: aSymbol
+	^(Aspect integer: aSymbol)
+		isNullable: self isNullable;
+		yourself! !
+!UI.Scintilla.IntPropertyDescriptor categoriesForMethods!
+aspectNamed:!development!public! !
 !
 
 !UI.Scintilla.KeyBinding class methodsFor!
@@ -7543,6 +7606,14 @@ publishedAspectsOfInstances
 		yourself! !
 !UI.Scintilla.MarkerDefinition class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
+!
+
+!UI.Scintilla.PropertyDescriptor methodsFor!
+
+aspectNamed: aSymbol
+	^Aspect name: aSymbol! !
+!UI.Scintilla.PropertyDescriptor categoriesForMethods!
+aspectNamed:!development!public! !
 !
 
 !UI.Scintilla.ScintillaView methodsFor!

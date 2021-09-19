@@ -23,11 +23,6 @@ allFilesType
 averageFilenameLength
 	^30!
 
-basicShowModal
-	"Private - Show a Open File dialog for the receiver."
-
-	^self subclassResponsibility!
-
 caption: aString 
 	"Sets the caption for the receiver to aString"
 
@@ -333,7 +328,6 @@ wmNotify: msgInteger wParam: wParamInteger lParam: lParamInteger
 !UI.FileDialog categoriesForMethods!
 allFilesType!constants!private! !
 averageFilenameLength!constants!private! !
-basicShowModal!private!realizing/unrealizing! !
 caption:!accessing!public! !
 cdnFileOk:!event handling-win32!private! !
 cdnFolderChange:!event handling-win32!private! !
