@@ -6,7 +6,7 @@ package paxVersion: 2.1;
 
 
 package setClassNames: #(
-	#{Tools.Tests.AddPackagedMethodChangeTest}
+	#{Refactory.Browser.Tests.AddMethodChangeTest}
 	#{Tools.Tests.ClassBrowserAbstractTest}
 	#{Tools.Tests.ClassBrowserTest}
 	#{Tools.Tests.ClassHierarchySelectorTest}
@@ -50,6 +50,7 @@ package setPrerequisites: #(
 	'..\..\..\Contributions\IDB\IDB Method History'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTestMethods'
 	'..\..\..\Contributions\Camp Smalltalk\SUnit\SUnit'
 	'..\ActiveX\Components\XML DOM\XML DOM'
 ).
@@ -70,7 +71,7 @@ XProgramming.SUnit.TestCase subclass: #'Tools.Tests.ClosedCommandDescriptionTest
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Tools.Tests.AddPackagedMethodChangeTest'
+Core.Tests.DolphinTest subclass: #'Refactory.Browser.Tests.AddMethodChangeTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

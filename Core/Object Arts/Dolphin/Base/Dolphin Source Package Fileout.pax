@@ -413,7 +413,9 @@ beNotUsingPAX
 	names := self allFileOutNames.
 	(UI.MessageBox new
 		headline: 'Convert <1p> to PAC mode?' << self name;
-		confirm: 'Placing this package into PAC mode will delete <2p> PAX source files in the directory <3s>.<n><n>Are you sure that you wish to proceed?'
+		customButtons: #(#(#yes 'Con&vert') #(#no 'Cancel'));
+		isCancellable: true;
+		confirm: 'Placing this package into PAC mode will delete <2p> PAX source files in the directory <3s>'
 					<< {self name. names size. self path})
 			ifTrue: [names do: [:each | (File exists: each) ifTrue: [File delete: each]]]!
 
@@ -426,7 +428,9 @@ beUsingPAX
 	self isUsingPAX ifTrue: [^self].
 	(UI.MessageBox new
 		headline: 'Convert <1p> to PAX mode?' << self name;
-		confirm: 'Placing this package into PAX source mode will create <1p> source files in the directory <2s>.<n><n>Are you sure that you wish to proceed?'
+		customButtons: #(#(#yes 'Con&vert') #(#no 'Cancel'));
+		isCancellable: true;
+		confirm: 'Placing this package into PAX source mode will create <1p> source files in the directory <2s>.'
 					<< {self allSourceObjects size. self path})
 			ifTrue: [self fileOutAll]!
 

@@ -113,17 +113,33 @@ primitiveExecute
 				package: self package
 				flags: self compilationFlags!
 
-printOn: aStream 
+printOn: aStream
+	| className |
+	className := self displayClassName.
 	aStream
 		nextPut: $!!;
-		nextPutAll: self displayClassName;
-		nextPutAll: ' methodsFor: ';
-		print: self protocol displayString;
+		nextPutAll: className;
+		nextPutAll: ' methodsFor';
 		nextPut: $!!;
 		cr;
 		cr;
 		nextPutAll: source;
-		nextPutAll: '!! !!'!
+		nextPutAll: '!! !!'.
+	protocols isEmpty ifTrue: [^self].
+	aStream
+		cr;
+		nextPut: $!!;
+		nextPutAll: className;
+		space;
+		nextPutAll: #categoriesFor:;
+		space;
+		print: selector.
+	protocols asSortedCollection do: 
+			[:each |
+			aStream
+				nextPut: $!!;
+				nextPutAll: each].
+	aStream nextPutAll: '!! !!'!
 
 protocol
 	Notification deprecated.

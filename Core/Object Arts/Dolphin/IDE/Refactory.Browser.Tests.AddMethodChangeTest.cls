@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Tools.Tests.AddPackagedMethodChangeTest'
+Core.Tests.DolphinTest subclass: #'Refactory.Browser.Tests.AddMethodChangeTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Tests.AddPackagedMethodChangeTest guid: (Core.GUID fromString: '{08457a65-10d4-409d-93df-440bce0fac93}')!
-Tools.Tests.AddPackagedMethodChangeTest comment: ''!
-!Tools.Tests.AddPackagedMethodChangeTest categoriesForClass!Unclassified! !
-!Tools.Tests.AddPackagedMethodChangeTest methodsFor!
+Refactory.Browser.Tests.AddMethodChangeTest guid: (Core.GUID fromString: '{08457a65-10d4-409d-93df-440bce0fac93}')!
+Refactory.Browser.Tests.AddMethodChangeTest comment: ''!
+!Refactory.Browser.Tests.AddMethodChangeTest categoriesForClass!Unclassified! !
+!Refactory.Browser.Tests.AddMethodChangeTest methodsFor!
 
 changeClass
 	^Refactory.Browser.AddMethodChange!
@@ -45,16 +45,21 @@ testPrintOn
 	| change |
 	change := self changeClass
 				compile: 'isAbstract ^false'
-				in: AddPackagedMethodChangeTest class
+				in: AddMethodChangeTest class
 				categories: #('testing').
-	self assert: change printString readStream nextLine
-		equals: '!!<1d> class methodsFor: ''testing''!!' << self class fullName.
+	self assert: change printString
+		equals: '!!<1d> class methodsFor!!
+
+isAbstract ^false!! !!
+!!<1d> class categoriesFor: #isAbstract!!testing!! !!'
+				<< self class fullName.
 	#'1593'.
 	change protocols: #().
-	self assertIsNil: change protocol.
-	self assert: change printString readStream nextLine
-		equals: '!!<1d> class methodsFor: ''''!!' << self class fullName! !
-!Tools.Tests.AddPackagedMethodChangeTest categoriesForMethods!
+	self assert: change printString
+		equals: '!!<1d> class methodsFor!!
+
+isAbstract ^false!! !!' << self class fullName! !
+!Refactory.Browser.Tests.AddMethodChangeTest categoriesForMethods!
 changeClass!public!unit tests! !
 testEnvironmentAndPackageMaintained!public!unit tests! !
 testPrintOn!public!unit tests! !
