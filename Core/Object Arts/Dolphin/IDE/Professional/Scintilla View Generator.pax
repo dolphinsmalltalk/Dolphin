@@ -31,7 +31,6 @@ package setClassNames: #(
 package setPrerequisites: #(
 	'..\Base\Development System'
 	'..\..\Base\Dolphin'
-	'..\Base\Dolphin Change Objects'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'Dolphin Refactoring Browser'

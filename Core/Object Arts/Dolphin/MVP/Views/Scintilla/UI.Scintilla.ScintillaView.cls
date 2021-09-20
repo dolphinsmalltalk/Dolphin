@@ -459,8 +459,8 @@ autoCompletionCancelChars: aString
 	self sciAutoCStops: aString!
 
 autoCompletionCurrentText
-	"Get currently selected item text in the auto-completion list. Returns the length of the item
-	text. Result is NUL-terminated."
+	"Get currently selected item text in the auto-completion list Returns the length of the item
+	text Result is NUL-terminated."
 
 	| len |
 	len := library
@@ -4897,6 +4897,15 @@ sciAllocateLineCharacterIndex: lineCharacterIndexInteger
 		wParam: lineCharacterIndexInteger
 		lParam: 0!
 
+sciAllocateLines: linesInteger
+	"Private - Enlarge the number of lines allocated."
+
+	library
+		directFunction: this
+		msg: SCI_ALLOCATELINES
+		wParam: linesInteger
+		lParam: 0!
+
 sciAllocateSubStyles: styleBaseInteger numberStyles: numberStylesInteger
 	"Private - Allocate a set of sub styles for a particular base style, returning start of
 	range"
@@ -5057,6 +5066,15 @@ sciAutoCGetMulti
 		wParam: 0
 		lParam: 0!
 
+sciAutoCGetOptions
+	"Private - Retrieve autocompletion options."
+
+	^library
+		directFunction: this
+		msg: SCI_AUTOCGETOPTIONS
+		wParam: 0
+		lParam: 0!
+
 sciAutoCGetOrder
 	"Private - Get the way autocompletion lists are ordered."
 
@@ -5111,6 +5129,15 @@ sciAutoCSetMulti: multiInteger
 		directFunction: this
 		msg: SCI_AUTOCSETMULTI
 		wParam: multiInteger
+		lParam: 0!
+
+sciAutoCSetOptions: optionsInteger
+	"Private - Set autocompletion options."
+
+	library
+		directFunction: this
+		msg: SCI_AUTOCSETOPTIONS
+		wParam: optionsInteger
 		lParam: 0!
 
 sciAutoCSetOrder: orderInteger
@@ -10415,6 +10442,7 @@ sciAddUndoAction:flags:!**auto generated**!private!scintilla interface!undo & re
 sciAllocate:!**auto generated**!private!scintilla interface!text retrieval & modification! !
 sciAllocateExtendedStyles:!**auto generated**!private!scintilla interface!style definition! !
 sciAllocateLineCharacterIndex:!**auto generated**!by character or utf16 code unit!private!scintilla interface! !
+sciAllocateLines:!**auto generated**!private!scintilla interface! !
 sciAllocateSubStyles:numberStyles:!**auto generated**!lexer-substyles!private!scintilla interface! !
 sciAnnotationGetLines:!**auto generated**!annotations!enquiries!private!scintilla interface! !
 sciAnnotationGetStyleOffset!**auto generated**!annotations!private!scintilla interface! !
@@ -10430,12 +10458,14 @@ sciAssignCmdKey:sciCommand:!**auto generated**!key bindings!private!scintilla in
 sciAutoCGetCaseInsensitiveBehaviour!**auto generated**!autocompletion!private!scintilla interface! !
 sciAutoCGetCurrent!**auto generated**!autocompletion!private!scintilla interface! !
 sciAutoCGetMulti!**auto generated**!autocompletion!private!scintilla interface! !
+sciAutoCGetOptions!**auto generated**!private!scintilla interface! !
 sciAutoCGetOrder!**auto generated**!autocompletion!private!scintilla interface! !
 sciAutoCGetSeparator!**auto generated**!autocompletion!private!scintilla interface! !
 sciAutoCGetTypeSeparator!**auto generated**!autocompletion!private!scintilla interface! !
 sciAutoCSetCaseInsensitiveBehaviour:!**auto generated**!autocompletion!private!scintilla interface! !
 sciAutoCSetFillUps:!**auto generated**!autocompletion!private!scintilla interface! !
 sciAutoCSetMulti:!**auto generated**!autocompletion!private!scintilla interface! !
+sciAutoCSetOptions:!**auto generated**!private!scintilla interface! !
 sciAutoCSetOrder:!**auto generated**!autocompletion!private!scintilla interface! !
 sciAutoCSetSeparator:!**auto generated**!autocompletion!private!scintilla interface! !
 sciAutoCSetTypeSeparator:!**auto generated**!autocompletion!private!scintilla interface! !

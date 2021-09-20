@@ -52,7 +52,7 @@ compile: aString selector: aSymbol in: targetClass categories: aCollectionOfMeth
 				union: ((targetClass compiledMethodAt: aSymbol ifAbsent: nil)
 						ifNotNil: [:value | value categories]
 						ifNil: [#()]).
-	(namespace classFor: targetClass) compile: source classified: allCategories!
+	(namespace classFor: targetClass) compile: source categories: allCategories!
 
 compileMethod: selector source: aString 
 	self 
@@ -155,6 +155,8 @@ defineConstantsPool
 				'SC_ALPHA_NOALPHA' -> 256.
 				'SC_ALPHA_OPAQUE' -> 255.
 				'SC_ALPHA_TRANSPARENT' -> 0.
+				'SC_AUTOCOMPLETE_FIXED_SIZE' -> 1.
+				'SC_AUTOCOMPLETE_NORMAL' -> 0.
 				'SC_AUTOMATICFOLD_CHANGE' -> 4.
 				'SC_AUTOMATICFOLD_CLICK' -> 2.
 				'SC_AUTOMATICFOLD_NONE' -> 0.
@@ -439,6 +441,7 @@ defineConstantsPool
 				'SCI_ALLOCATE' -> 2446.
 				'SCI_ALLOCATEEXTENDEDSTYLES' -> 2553.
 				'SCI_ALLOCATELINECHARACTERINDEX' -> 2711.
+				'SCI_ALLOCATELINES' -> 2089.
 				'SCI_ALLOCATESUBSTYLES' -> 4020.
 				'SCI_ANNOTATIONCLEARALL' -> 2547.
 				'SCI_ANNOTATIONGETLINES' -> 2546.
@@ -468,6 +471,7 @@ defineConstantsPool
 				'SCI_AUTOCGETMAXHEIGHT' -> 2211.
 				'SCI_AUTOCGETMAXWIDTH' -> 2209.
 				'SCI_AUTOCGETMULTI' -> 2637.
+				'SCI_AUTOCGETOPTIONS' -> 2639.
 				'SCI_AUTOCGETORDER' -> 2661.
 				'SCI_AUTOCGETSEPARATOR' -> 2107.
 				'SCI_AUTOCGETTYPESEPARATOR' -> 2285.
@@ -483,6 +487,7 @@ defineConstantsPool
 				'SCI_AUTOCSETMAXHEIGHT' -> 2210.
 				'SCI_AUTOCSETMAXWIDTH' -> 2208.
 				'SCI_AUTOCSETMULTI' -> 2636.
+				'SCI_AUTOCSETOPTIONS' -> 2638.
 				'SCI_AUTOCSETORDER' -> 2660.
 				'SCI_AUTOCSETSEPARATOR' -> 2106.
 				'SCI_AUTOCSETTYPESEPARATOR' -> 2286.
@@ -1343,7 +1348,7 @@ generateConstantsPool
 	((self class includesSelector: #defineConstantsPool) not
 		or: [source ~= (self class sourceCodeAt: #defineConstantsPool)])
 			ifTrue: 
-				[changes addChangeFirst: (Tools.AddPackagedMethodChange
+				[changes addChangeFirst: (Refactory.Browser.AddMethodChange
 							compile: source
 							in: self class
 							categories: {self autoGenCategoryName. 'development'})]!
