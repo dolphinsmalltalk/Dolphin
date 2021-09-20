@@ -486,7 +486,7 @@ timerResolution: aDuration set: aBoolean
 		set: aBoolean
 		actualResolution: actualResolution.
 	Resolution := (actualResolution dwordAtOffset: 0) // 10.
-	^Resolution!
+	^Resolution microseconds!
 
 timingProcess
 	"Private - Answer the <Process> which is used to manage the list of pending Delays."
@@ -499,13 +499,12 @@ untilMilliseconds: millisecondTime
 
 	^self new resumptionTime: millisecondTime * 1000!
 
-withTimerResolution: aDuration do: aNiladicValuable
-	"Evaluate the <monadicValuable> argument with the system timer resolution set to the number
-	of 100nS intervals specified by the <integer> argument. The actual timer resolution is
-	passed as the argument to the <monadicValuable>."
+withTimerResolution: aDuration do: aMonadicValuable
+	"Evaluate the <monadicValuable> argument with the system timer resolution set to the <Duration> argument. The maximum resolution is 500uS. The actual timer resolution achieved passed as the argument to the <monadicValuable>."
 
-	self timerResolution: aDuration set: true.
-	[aNiladicValuable value] ensure: [self timerResolution: aDuration set: false]! !
+	| resolution |
+	resolution := self timerResolution: aDuration set: true.
+	[aMonadicValuable cull: resolution] ensure: [self timerResolution: aDuration set: false]! !
 !Core.Delay class categoriesForMethods!
 aboutToIdle!event handling!private! !
 cancelTimer!operations!private! !

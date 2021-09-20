@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Tests.DolphinTest subclass: #'Core.Tests.DelayTest'
-	instanceVariableNames: 'delay startTime'
+	instanceVariableNames: 'delay startTime timerResolution'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -18,7 +18,7 @@ expectDelay: expectedDuration for: nowMicroseconds
 	"Although a Delay could end up waiting much longer than the expected duration,
 	e.g. if the CPU is very busy, this should happen only rarely, and we do not want
 	to tolerate it if it happens all the time as that would indicate an actual bug."
-	self assert: (delta between: -1 milliseconds and: 5 milliseconds)
+	self assert: (delta between: timerResolution negated and: timerResolution * 3)
 		description: 
 			[String smalltalkWriteStream
 				nextPutAll: 'Expected delay of ';
@@ -29,7 +29,8 @@ expectDelay: expectedDuration for: nowMicroseconds
 
 setUp
 	super setUp.
-	Delay timerResolution: 1 milliseconds set: true!
+	timerResolution := Delay timerResolution: 1 milliseconds set: true.
+!
 
 tearDown
 	Delay timerResolution: 1 milliseconds set: false.
@@ -37,7 +38,7 @@ tearDown
 
 testBasicWait
 	| endTime |
-	delay := Delay forMilliseconds: 20.
+	delay := Delay forDuration: (5 milliseconds max: timerResolution).
 	startTime := Time microsecondClockValue.
 	delay wait.
 	endTime := Time microsecondClockValue.
@@ -64,8 +65,8 @@ testCancelWithOtherShorterDelay
 
 testSchedulingMultipleDelays
 	| endTime delay2 |
-	delay := Delay forMilliseconds: 20.
-	delay2 := Delay forMilliseconds: 30.
+	delay := Delay forMilliseconds: 15.
+	delay2 := Delay forMilliseconds: 25.
 	
 	[startTime := Time microsecondClockValue.
 	delay wait.
@@ -77,9 +78,9 @@ testSchedulingMultipleDelays
 
 testSchedulingMultipleDelaysLongerFirst
 	| endTime delay2 delay3 endTime2 |
-	delay := Delay forMilliseconds: 30.
-	delay2 := Delay forMilliseconds: 20.
-	delay3 := Delay forMilliseconds: 20.
+	delay := Delay forMilliseconds: 25.
+	delay2 := Delay forMilliseconds: 15.
+	delay3 := Delay forMilliseconds: 15.
 	
 	[startTime := Time microsecondClockValue.
 	delay wait.
@@ -88,7 +89,7 @@ testSchedulingMultipleDelaysLongerFirst
 	"Wait for a shorter period than the other process"
 	delay2 wait.
 	"We should have waited for the correct time, other proc is still waiting"
-	self expectDelay: 20 milliseconds for: Time microsecondClockValue.
+	self expectDelay: delay2 duration for: Time microsecondClockValue.
 	self assertIsNil: endTime.
 	"Now wait long enough for it to be done"
 	delay3 wait.

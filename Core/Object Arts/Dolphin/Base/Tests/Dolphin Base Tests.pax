@@ -355,7 +355,7 @@ Core.Tests.DolphinTest subclass: #'Core.Tests.DateTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Core.Tests.DelayTest'
-	instanceVariableNames: 'delay startTime'
+	instanceVariableNames: 'delay startTime timerResolution'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
