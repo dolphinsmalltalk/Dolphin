@@ -110,6 +110,9 @@ allSuperclassesDo: aMonadicValuable
 	current isNil] 
 			whileFalse: [aMonadicValuable value: current]!
 
+asQualifiedReference
+	^self fullyQualifiedReference!
+
 baseEnvironmentName
 	"See Class>>baseEnvironment"
 	
@@ -132,14 +135,32 @@ bindingOrNil
 compile: aString 
 	#rbFix. "Support multiple method categories for Dolphin"
 	^self compile: aString
-		classified: (self protocolsFor: (RBParser parseMethodPattern: aString))!
+		categories: (self protocolsFor: (RBParser parseMethodPattern: aString))!
 
-compile: aString classified: aSymbolCollection
+compile: aString categories: aCollection
 	| change method |
 	change := model
 				compile: aString
 				in: self
-				classified: aSymbolCollection.
+				categories: aCollection.
+	method := RBMethod
+				for: self
+				source: aString
+				selector: change selector.
+	self addMethod: method.
+	^change!
+
+compile: aString classified: aSymbol
+	^self compile: aString categories: {aSymbol}!
+
+compile: aString environment: aNamespace categories: aSymbolCollection package: aPackage
+	| change method |
+	change := model
+				compile: aString
+				in: self
+				environment: aNamespace
+				categories: aSymbolCollection
+				package: aPackage.
 	method := RBMethod
 				for: self
 				source: aString
@@ -150,12 +171,21 @@ compile: aString classified: aSymbolCollection
 
 compileTree: aBRMethodNode 
 	^self compileTree: aBRMethodNode
-		classified: (self protocolsFor: aBRMethodNode selector)!
+		categories: (self protocolsFor: aBRMethodNode selector)!
 
-compileTree: aBRMethodNode classified: aSymbolCollection 
-	| source |
-	source := aBRMethodNode formattedCode.
-	^self compile: source classified: aSymbolCollection!
+compileTree: aBRMethodNode categories: aCollection
+	^self compile: aBRMethodNode formattedCode categories: aCollection!
+
+compileTree: aBRMethodNode classified: aSymbol
+	Notification deprecated.
+	^self compile: aBRMethodNode formattedCode classified: aSymbol!
+
+compileTree: aBRMethodNode environment: aRBNamespaceClass categories: aSymbolCollection package: aPackage
+	^self
+		compile: aBRMethodNode formattedCode
+		environment: aRBNamespaceClass
+		categories: aSymbolCollection
+		package: aPackage!
 
 definesClassVariable: aSymbol 
 	(self directlyDefinesClassVariable: aSymbol) ifTrue: [^true].
@@ -616,14 +646,19 @@ allSubclasses!accessing!public! !
 allSubclassesBreadthFirstDo:!accessing!public! !
 allSuperclasses!accessing!public! !
 allSuperclassesDo:!accessing!public! !
+asQualifiedReference!converting!public! !
 baseEnvironmentName!accessing!public! !
 binding!accessing!public! !
 bindingFor:!bindings!public! !
 bindingOrNil!bindings!public! !
-compile:!method accessing!public! !
-compile:classified:!method accessing!public! !
-compileTree:!method accessing!public! !
-compileTree:classified:!method accessing!public! !
+compile:!compiling!public! !
+compile:categories:!compiling!public! !
+compile:classified:!compiling!public! !
+compile:environment:categories:package:!compiling!public! !
+compileTree:!compiling!public! !
+compileTree:categories:!compiling!public! !
+compileTree:classified:!compiling!public! !
+compileTree:environment:categories:package:!compiling!public! !
 definesClassVariable:!public!testing! !
 definesInstanceVariable:!public!testing! !
 definesMethod:!public!testing! !

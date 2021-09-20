@@ -29,8 +29,7 @@ testNonExistantName
 testRedefinedTemporary
 	| class |
 	class := model classNamed: #Foo.
-	class compile: 'someMethod | instVarName1 | instVarName1 := 4. ^instVarName1'
-		classified: #(#accessing).
+	class compile: 'someMethod | instVarName1 | instVarName1 := 4. ^instVarName1' classified: #accessing.
 	self shouldFail: (TemporaryToInstanceVariableRefactoring
 				class: class
 				selector: #someMethod

@@ -25,7 +25,7 @@ testNonExistantName
 testPrimitiveMethods
 	| refactoring |
 	(model classNamed: #'Core.Object') compile: 'foo123: a <primitive: 100> ^#() primitiveFailed'
-		classified: #(#accessing).
+		classified: #accessing.
 	refactoring := RemoveParameterRefactoring
 				model: model
 				removeParameter: 'a'

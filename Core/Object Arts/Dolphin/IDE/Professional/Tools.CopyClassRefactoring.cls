@@ -54,12 +54,12 @@ copyInstVarsTo: clone
 						variable: each
 						class: clone)]!
 
-copyMethodsFrom: aRBAbstractClass to: cloneClass 
+copyMethodsFrom: aRBAbstractClass to: cloneClass
 	aRBAbstractClass selectors do: 
-			[:each | 
+			[:each |
 			| method |
 			method := aRBAbstractClass methodFor: each.
-			(cloneClass compile: method source classified: (aRBAbstractClass protocolsFor: each)) 
+			(cloneClass compile: method source categories: (aRBAbstractClass protocolsFor: each))
 				package: method method owningPackageIfLoose]!
 
 displayOn: aPuttableStream

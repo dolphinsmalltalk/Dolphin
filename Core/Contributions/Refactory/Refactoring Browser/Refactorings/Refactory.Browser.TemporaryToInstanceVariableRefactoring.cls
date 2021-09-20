@@ -61,7 +61,7 @@ transform
 	"class removeMethod: selector."
 	class addInstanceVariable: temporaryVariableName.
 	(matcher := ParseTreeRewriter removeTemporaryNamed: temporaryVariableName) executeTree: parseTree.
-	class compileTree: matcher tree classified: protocols! !
+	class compileTree: matcher tree categories: protocols! !
 !Refactory.Browser.TemporaryToInstanceVariableRefactoring categoriesForMethods!
 checkForValidTemporaryVariable!preconditions!public! !
 class:selector:variable:!initialize/release!public! !

@@ -24,10 +24,10 @@ testModelPushDownToMultipleSubclassesFailure
 		defineClass: 'Object subclass: #SomeClass instanceVariableNames: '''' classVariableNames: ''Foo'' poolDictionaries: '''''.
 	model
 		defineClass: 'SomeClass subclass: #Subclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
-	(model classNamed: #Subclass) compile: 'foo ^Foo' classified: #(#accessing).
+	(model classNamed: #Subclass) compile: 'foo ^Foo' classified: #accessing.
 	model
 		defineClass: 'SomeClass subclass: #AnotherSubclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
-	(model metaclassNamed: #AnotherSubclass) compile: 'bar ^Foo' classified: #(#accessing).
+	(model metaclassNamed: #AnotherSubclass) compile: 'bar ^Foo' classified: #accessing.
 	self shouldFail: (PushDownClassVariableRefactoring
 				model: model
 				variable: #Foo
@@ -40,7 +40,7 @@ testModelPushDownVariable
 	model
 		defineClass: 'SomeClass subclass: #Subclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
 	class := model classNamed: #Subclass.
-	class compile: 'foo ^Foo' classified: #(#accessing).
+	class compile: 'foo ^Foo' classified: #accessing.
 	self executeRefactoring: (PushDownClassVariableRefactoring
 				model: model
 				variable: #Foo
@@ -57,7 +57,7 @@ testModelPushDownVariableToClassDownTwoLevels
 	model
 		defineClass: 'Subclass subclass: #AnotherSubclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
 	class := model metaclassNamed: #AnotherSubclass.
-	class compile: 'bar ^Foo' classified: #(#accessing).
+	class compile: 'bar ^Foo' classified: #accessing.
 	class := class nonMetaclass.
 	self executeRefactoring: (PushDownClassVariableRefactoring
 				model: model
@@ -74,10 +74,10 @@ testModelPushDownVariableToMultipleClassesInSameHierarchy
 	model
 		defineClass: 'SomeClass subclass: #Subclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
 	class := model classNamed: #Subclass.
-	class compile: 'foo ^Foo' classified: #(#accessing).
+	class compile: 'foo ^Foo' classified: #accessing.
 	model
 		defineClass: 'Subclass subclass: #AnotherSubclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
-	(model metaclassNamed: #AnotherSubclass) compile: 'bar ^Foo' classified: #(#accessing).
+	(model metaclassNamed: #AnotherSubclass) compile: 'bar ^Foo' classified: #accessing.
 	self executeRefactoring: (PushDownClassVariableRefactoring
 				model: model
 				variable: #Foo

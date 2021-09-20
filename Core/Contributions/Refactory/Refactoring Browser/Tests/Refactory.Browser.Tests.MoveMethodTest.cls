@@ -36,7 +36,7 @@ testMoveMethodIntoArgument
 				ifFalse: 
 					[transformationRule builder compile: transformationRule rewriteRule tree printString
 						in: transformationRule class1
-						classified: self protocols]]').
+						categories: self protocols]]').
 	self assert: (class parseTreeFor: #class1) equals: (RBParser parseMethod: 'class1 ^class').
 	self assert: (class parseTreeFor: #class:)
 		equals: (RBParser parseMethod: 'class: anObject class := anObject').
@@ -81,7 +81,7 @@ testMoveMethodIntoClassVariable
 				ifFalse: 
 					[transformationRule builder compile: transformationRule rewriteRule tree printString
 						in: transformationRule class1
-						classified: aSmalllintContext protocols]]').
+						categories: aSmalllintContext protocols]]').
 	self assert: (class parseTreeFor: #class1) equals: (RBParser parseMethod: 'class1 ^class').
 	self assert: (class parseTreeFor: #class:)
 		equals: (RBParser parseMethod: 'class: anObject class := anObject').
@@ -122,7 +122,7 @@ testMoveMethodIntoInstanceVariable
 				ifFalse: 
 					[transformationRule builder compile: self tree printString
 						in: transformationRule class1
-						classified: aSmalllintContext protocols]]').
+						categories: aSmalllintContext protocols]]').
 	self assert: (class parseTreeFor: #class1) equals: (RBParser parseMethod: 'class1 ^class').
 	self assert: (class parseTreeFor: #class:)
 		equals: (RBParser parseMethod: 'class: anObject class := anObject').
@@ -158,7 +158,7 @@ testMoveMethodThatReferencesPoolDictionary
 testMovePrimitiveMethod
 	| refactoring |
 	(model classNamed: #'Core.Object') compile: 'foo <primitive: 100> ^#() primitiveFailed'
-		classified: #(#accessing).
+		classified: #accessing.
 	refactoring := MoveMethodRefactoring
 				model: model
 				selector: #foo

@@ -47,7 +47,7 @@ testModelBadName
 	model := RBNamespace new.
 	class := model classNamed: #'Core.Object'.
 	class compile: 'aMethod: temp1 ^[| temp2 | temp2 := [:temp3 | temp3 = 5] value: 5. temp2] value'
-		classified: #(#accessing).
+		classified: #accessing.
 	self
 		shouldFail: (RenameTemporaryRefactoring
 					renameTemporaryFrom: (20 to: 24)
@@ -61,9 +61,15 @@ testModelBadName
 					selector: #aMethod:)!
 
 testRenameTemporary
-	| refactoring |
+	| source start stop refactoring |
+	source := LintRuleTest sourceCodeAt: #openEditor.
+	start := (source indexOf: $|) + 2.
+	stop := (source
+				nextIndexOf: $|
+				from: start
+				to: source size) - 2.
 	refactoring := RenameTemporaryRefactoring
-				renameTemporaryFrom: (self convertInterval: (15 to: 19) for: (LintRuleTest sourceCodeAt: #openEditor))
+				renameTemporaryFrom: (start to: stop)
 				to: 'asdf'
 				in: LintRuleTest
 				selector: #openEditor.
@@ -72,11 +78,12 @@ testRenameTemporary
 				parseTreeFor: #openEditor)
 		equals: (RBParser
 				parseMethod: 'openEditor
+								<namespace: Tools>
 								| asdf |
 								asdf := self failedRules.
 								asdf isEmpty ifTrue: [^self].
 								asdf size == 1 ifTrue: [^asdf first viewResults].
-								SmalllintResultEditor openOn: self label: name')! !
+								SmalltalkSystem current browseEnvironment: self result')! !
 !Refactory.Browser.Tests.RenameTemporaryTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testBadName!failure tests!public! !

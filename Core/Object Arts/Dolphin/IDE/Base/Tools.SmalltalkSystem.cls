@@ -145,11 +145,10 @@ addClass: class toProtocol: newProtocol
 			[| stm args |
 			stm := String smalltalkWriteStream: 256.
 			stm
-				nextPutAll: 'The selectors of ';
-				display: newProtocol;
-				nextPutAll: ' that are missing implementations in ';
 				print: class;
-				nextPutAll: ' are:';
+				nextPutAll: ' is missing implementations of the following sectors of ';
+				display: newProtocol;
+				nextPut: $:;
 				cr.
 			missing do: 
 					[:m |
@@ -157,14 +156,15 @@ addClass: class toProtocol: newProtocol
 						cr;
 						nextPutAll: '    ';
 						display: m].
-			args := {class. newProtocol}.
+			args := {class. newProtocol. missing size. missing size > 1}.
 			(MessageBox new
-				headline: 'Adding protocol <2d> to <1p>' << args;
+				headline: 'Extend <1p> to implement protocol <2d>?' << args;
 				detailsText: stm contents;
-				confirm: 'Stub methods will be generated for selectors of <2d> that <1p> does not currently implement or inherit.
-<n>Do you still wish to add the protocol to the class?'
-							<< args)
-					ifFalse: [^false]].
+				footerText: 'Stub methods must be generated for <3p> unimplemented selector<4?s:>.' << args;
+				footerIcon: Icon warning;
+				customButtons: #(#(#yes '&Extend') #(#no 'Cancel'));
+				isCancellable: true;
+				confirm) ifFalse: [^false]].
 	newProtocol addClass: class.
 	self classChanged: class.
 	^true!
@@ -1363,7 +1363,7 @@ compilationWarningClass
 
 compile: aString in: class environment: aNamespace categories: anArray package: aPackageOrNil extraFlags: anInteger
 	| change flags |
-	change := AddPackagedMethodChange
+	change := AddMethodChange
 				compile: aString
 				in: class
 				environment: aNamespace
@@ -1422,7 +1422,7 @@ copyAllMethodsOf: aClass to: newClass changes: aCompositeRefactoryChange
 	aClass methodDictionary do: 
 			[:each |
 			| change |
-			change := AddPackagedMethodChange
+			change := AddMethodChange
 						compile: each getSource
 						in: aClass
 						environment: each environment

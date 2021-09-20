@@ -116,12 +116,23 @@ classNamed: aString
 comment: aString in: aClass
 	^ changes comment: aString in: aClass!
 
-compile: aString in: aRBClass classified: aSymbol 
+compile: aString in: aRBClass categories: aCollection
+	| change |
+	change := changes
+				compile: aString
+				in: aRBClass
+				categories: aCollection.
+	self flushCaches.
+	^change!
+
+compile: aString in: aRBClass environment: aRBNamespaceClass categories: aCollection package: aPackage
 	| change |
 	change := changes 
 				compile: aString
 				in: aRBClass
-				classified: aSymbol.
+				environment: aRBNamespaceClass
+				categories: aCollection
+				package: aPackage.
 	self flushCaches.
 	^change!
 
@@ -343,7 +354,8 @@ changes:!accessing!public! !
 classFor:!accessing/classes!public! !
 classNamed:!accessing/classes!public! !
 comment:in:!changes!private! !
-compile:in:classified:!changes!private! !
+compile:in:categories:!changes!private! !
+compile:in:environment:categories:package:!public! !
 createNewClassFor:!accessing/classes!public! !
 defineClass:!changes!public! !
 environment!accessing!public! !

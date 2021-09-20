@@ -19,14 +19,14 @@ testInlineComponentIntoCascadedMessage
 						inMethod: #inlineComponent
 						forClass: RefactoryTestDataApp.
 			(refactoring model classNamed: Behavior fullName) compile: 'hasImmediateInstances ^self format = 0'
-				classified: #(#accessing).
+				classified: #accessing.
 			self setupInlineExpressionFor: refactoring toReturn: false.
 			#rbFix.	"We don't want a prompt to choose between Behaviour and SmallInteger class"
 			refactoring options at: #implementorToInline
 				put: [:ref :imps | (imps select: [:each | each name = Behavior fullName]) first].
 			self executeRefactoring: refactoring].
-	self assert: ((refactoring model classNamed: RefactoryTestDataApp fullName)
-				parseTreeFor: #inlineComponent)
+	self
+		assert: ((refactoring model classNamed: RefactoryTestDataApp fullName) parseTreeFor: #inlineComponent)
 		equals: (RBParser
 				parseMethod: 'inlineComponent
 	| a aBehavior |
@@ -53,7 +53,7 @@ testInlineComponentMethodMax
 					self > aMagnitude
 						ifTrue: [^self]
 						ifFalse: [^aMagnitude]'
-				classified: #(#accessing).
+				classified: #accessing.
 			self setupImplementorToInlineFor: refactoring toReturn: class.
 			self executeRefactoring: refactoring].
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
@@ -101,10 +101,10 @@ testModelInlineMethodWithSameVariableNames
 	| class refactoring |
 	model := RBNamespace new.
 	class := model classNamed: self class fullName.
-	class compile: 'a9: a b9: b ^self + a + b' classified: #(#accessing).
+	class compile: 'a9: a b9: b ^self + a + b' classified: #accessing.
 	(model classNamed: Object fullName)
 		compile: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^a a9: b b9: c'
-		classified: #(#accessing).
+		classified: #accessing.
 	self proceedThroughWarning: 
 			[refactoring := InlineMethodFromComponentRefactoring
 						model: model
@@ -122,10 +122,10 @@ testModelInlineMethodWithSameVariableNames1
 	model := RBNamespace new.
 	class := model classNamed: Graphics.Rectangle fullName.
 	class compile: 'rectangleRelativeTo: aRectangle ^self origin extent: aRectangle extent'
-		classified: #(#accessing).
+		classified: #accessing.
 	(model classNamed: Object fullName)
 		compile: 'foo | aRectangle temp | aRectangle := 0@0 corner: 1@1. temp := aRectangle. ^aRectangle rectangleRelativeTo: temp'
-		classified: #(#accessing).
+		classified: #accessing.
 	self proceedThroughWarning: 
 			[refactoring := InlineMethodFromComponentRefactoring
 						model: model
@@ -143,10 +143,10 @@ testModelInlineMethodWithSameVariableNames2
 	| class refactoring |
 	model := RBNamespace new.
 	class := model classNamed: self class fullName.
-	class compile: 'a9: a b9: b ^self + a + b' classified: #(#accessing).
+	class compile: 'a9: a b9: b ^self + a + b' classified: #accessing.
 	(model classNamed: Object fullName)
 		compile: 'foo | a b c | a := InlineMethodFromComponentTest new. b := 1. c := 2. ^c a9: b b9: a'
-		classified: #(#accessing).
+		classified: #accessing.
 	self proceedThroughWarning: 
 			[refactoring := InlineMethodFromComponentRefactoring
 						model: model

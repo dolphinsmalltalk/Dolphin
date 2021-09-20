@@ -44,28 +44,31 @@ testExtractFailure
 testExtractMethodAtEndOfMethodThatNeedsReturn
 	| refactoring class selectorsSize |
 	refactoring := ExtractMethodToComponentRefactoring
-				extract: (self convertInterval: (52 to: 182) for: (LintRuleTest sourceCodeAt: #openEditor))
+				extract: (73 to: 216)
 				from: #openEditor
 				in: LintRuleTest.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self setupSelfArgumentNameFor: refactoring toReturn: 'asdf'.
 	self setupVariableToMoveToFor: refactoring toReturn: 'rules'.
-	self setupVariableTypesFor: refactoring toReturn: {refactoring model classNamed: Collection fullName}.
+	self setupVariableTypesFor: refactoring
+		toReturn: {refactoring model classNamed: Collection fullName}.
 	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest'.
 	selectorsSize := class selectors size.
 	self proceedThroughWarning: [self executeRefactoring: refactoring].
 	self assert: (class parseTreeFor: #openEditor)
 		equals: (RBParser
 				parseMethod: 'openEditor
+								<namespace: Tools>
 								| rules |
 								rules := self failedRules.
 								^rules foo: self').
 	self assert: ((refactoring model classNamed: Collection fullName) parseTreeFor: #foo:)
 		equals: (RBParser
 				parseMethod: 'foo: asdf
+								<namespace: Tools>
 								self isEmpty ifTrue: [^asdf].
 								self size == 1 ifTrue: [^self first viewResults].
-								SmalllintResultEditor openOn: asdf label: asdf name.
+								SmalltalkSystem current browseEnvironment: asdf result.
 								^asdf').
 	self assert: class selectors size equals: selectorsSize!
 

@@ -32,8 +32,8 @@ testRecursiveMethod
 	model := RBNamespace new.
 	class := model classNamed: self class fullName.
 	class
-		compile: 'foo ^self foo' classified: #(#accessing);
-		compile: 'bar ^self foo' classified: #(#accessing).
+		compile: 'foo ^self foo' classified: #accessing;
+		compile: 'bar ^self foo' classified: #accessing.
 	self executeRefactoring: (InlineAllSendersRefactoring
 				model: model
 				sendersOf: #foo

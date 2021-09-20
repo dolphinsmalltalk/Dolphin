@@ -44,7 +44,7 @@ pushDown: aSelector
 			(each directlyDefinesMethod: aSelector)
 				ifFalse: 
 					[| change |
-					change := each compile: code classified: protocols.
+					change := each compile: code categories: protocols.
 					package isNil ifFalse: [change package: package]]]!
 
 pushDown: selectorCollection from: aClass 

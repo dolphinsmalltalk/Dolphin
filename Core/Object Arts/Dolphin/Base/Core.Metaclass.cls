@@ -30,11 +30,6 @@ Metaclass has the following instance variables:
 absoluteReference
 	^self instanceClass absoluteReference meta!
 
-asQualifiedReference
-	"Answer a <BindingReference> to this class."
-
-	^self instanceClass fullyQualifiedReference meta!
-
 bindingFor: aString 
 	"Answer a variable binding for the named variable in the scope of this class. 
 	If there is no such variable, then answer nil."
@@ -216,7 +211,6 @@ subclassesDo: aMonadicValuable
 	instanceClass ifNotNil: [instanceClass subclassesDo: [:each | aMonadicValuable value: each class]]! !
 !Core.Metaclass categoriesForMethods!
 absoluteReference!public! !
-asQualifiedReference!converting!public! !
 bindingFor:!bindings!public! !
 classBindingNames!class variables!public! !
 classPool!class variables!public! !

@@ -104,7 +104,7 @@ Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.AddClassCha
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.AddMethodChange'
-	instanceVariableNames: 'source selector protocols'
+	instanceVariableNames: 'source selector protocols environment packageName compilationFlags method'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

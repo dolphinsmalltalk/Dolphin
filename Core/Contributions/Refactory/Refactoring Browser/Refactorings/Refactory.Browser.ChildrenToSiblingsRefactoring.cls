@@ -51,13 +51,12 @@ computeSubclassSupersOf: aClass
 		do: [:each | each selectors do: [:sel | selectors addAll: (each parseTreeFor: sel) superMessages]].
 	^selectors!
 
-createSubclassResponsibilityFor: aSelector in: aClass 
+createSubclassResponsibilityFor: aSelector in: aClass
 	| source |
 	(aClass superclass definesMethod: aSelector) ifTrue: [^self].
 	source := self subclassResponsibilityFor: aSelector in: aClass.
 	source isNil ifTrue: [^self].
-	aClass superclass compile: source
-		classified: (aClass protocolsFor: aSelector)!
+	aClass superclass compile: source categories: (aClass protocolsFor: aSelector)!
 
 name: aClassName class: aClass subclasses: subclassCollection 
 	self className: aClassName.
@@ -114,13 +113,11 @@ pullUpInstanceVariables
 						variable: each
 						class: newSuperclass)]!
 
-pushUp: aSelector in: aClass 
+pushUp: aSelector in: aClass
 	| source |
 	source := aClass sourceCodeFor: aSelector.
-	source isNil 
-		ifFalse: 
-			[aClass superclass compile: source
-				classified: (aClass protocolsFor: aSelector)]!
+	source isNil
+		ifFalse: [aClass superclass compile: source categories: (aClass protocolsFor: aSelector)]!
 
 pushUpMethods
 	self pushUpMethodsFrom: parent.

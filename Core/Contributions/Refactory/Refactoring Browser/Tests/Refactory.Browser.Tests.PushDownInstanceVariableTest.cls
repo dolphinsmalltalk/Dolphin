@@ -17,7 +17,7 @@ testModelPushDownToMetaclass
 	(model metaclassNamed: #SomeClass) addInstanceVariable: 'foo'.
 	model
 		defineClass: 'SomeClass subclass: #Subclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
-	(model metaclassNamed: #Subclass) compile: 'foo ^foo' classified: #(#accessing).
+	(model metaclassNamed: #Subclass) compile: 'foo ^foo' classified: #accessing.
 	self executeRefactoring: (PushDownInstanceVariableRefactoring
 				model: model
 				variable: 'foo'
@@ -30,10 +30,10 @@ testModelPushDownToMultipleSubclasses
 		defineClass: 'Object subclass: #SomeClass instanceVariableNames: ''foo'' classVariableNames: '''' poolDictionaries: '''''.
 	model
 		defineClass: 'SomeClass subclass: #Subclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
-	(model classNamed: #Subclass) compile: 'foo ^foo' classified: #(#accessing).
+	(model classNamed: #Subclass) compile: 'foo ^foo' classified: #accessing.
 	model
 		defineClass: 'SomeClass subclass: #AnotherSubclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
-	(model classNamed: #AnotherSubclass) compile: 'bar ^foo' classified: #(#accessing).
+	(model classNamed: #AnotherSubclass) compile: 'bar ^foo' classified: #accessing.
 	self executeRefactoring: (PushDownInstanceVariableRefactoring
 				model: model
 				variable: 'foo'

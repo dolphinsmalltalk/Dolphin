@@ -20,7 +20,7 @@ checkMethod: aSmalllintContext
 				ifFalse: 
 					[builder compile: rewriteRule tree printString
 						in: class
-						classified: aSmalllintContext protocols]]!
+						categories: aSmalllintContext protocols]]!
 
 hasConflicts
 	^true!

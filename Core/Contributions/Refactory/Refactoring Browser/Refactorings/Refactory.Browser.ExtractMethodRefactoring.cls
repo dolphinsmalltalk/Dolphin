@@ -119,6 +119,9 @@ extractMethod
 				ifTrue: [ParseTreeSearcher treeMatchingStatements: extractedParseTree body formattedCode in: parseTree]
 				ifFalse: [ParseTreeSearcher treeMatching: extractCode in: parseTree].
 	subtree isNil ifTrue: [self refactoringError: 'Could not extract code from method'].
+	"If the source method has a namespace annotation, we need to copy that over."
+	(parseTree tags detect: [:each | each isAnnotation and: [each selector == #namespace:]] ifNone: [])
+		ifNotNil: [:namespaceAnnotation | extractedParseTree tags: (extractedParseTree tags copyWith: namespaceAnnotation copy)].
 	newCode := self methodDelimiter.
 	isSequence
 		ifTrue: 
@@ -277,13 +280,23 @@ transform
 		nameNewMethod: (existingSelector isNil ifTrue: [self getNewMethodName] ifFalse: [existingSelector]).
 	existingSelector isNil
 		ifTrue: 
-			[| change |
-			#rbFix.	"Bodge the change object to ensure the new method is in the same package as the source method"
-			change := class compile: extractedParseTree newSource classified: (class protocolsFor: selector).
+			[| environment package |
+			"Update the change object to ensure the new method is in the same package and namespace as the source method"
+			environment := class environment.
+			package := nil.
 			class realClass
 				ifNotNil: 
-					[:c |
-					(c compiledMethodAt: selector ifAbsent: nil) ifNotNil: [:m | change package: m owningPackage]]].
+					[:realClass |
+					(realClass compiledMethodAt: selector ifAbsent: nil)
+						ifNotNil: 
+							[:method |
+							environment := self model classFor: method environment.
+							package := method owningPackage]].
+			class
+				compile: extractedParseTree newSource
+				environment: environment
+				categories: (class protocolsFor: selector)
+				package: package].
 	class compileTree: modifiedParseTree! !
 !Refactory.Browser.ExtractMethodRefactoring categoriesForMethods!
 checkAssignments:!public!transforming! !

@@ -25,6 +25,9 @@ argumentCount
 arguments
 	^arguments!
 
+isAnnotation
+	^true!
+
 selector
 	^selector!
 
@@ -37,6 +40,7 @@ setSelector: aSymbol arguments: anArray
 acceptVisitor:!public!visitor! !
 argumentCount!accessing!public! !
 arguments!accessing!public! !
+isAnnotation!public!testing! !
 selector!accessing!public! !
 setSelector:arguments:!initializing!private! !
 !

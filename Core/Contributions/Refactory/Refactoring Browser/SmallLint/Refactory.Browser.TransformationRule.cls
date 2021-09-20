@@ -34,7 +34,7 @@ checkMethod: aSmalllintContext
 					[changes 
 						compile: rewriteRule tree fullPrintString
 						in: class
-						classified: aSmalllintContext protocols]]!
+						categories: aSmalllintContext protocols]]!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."

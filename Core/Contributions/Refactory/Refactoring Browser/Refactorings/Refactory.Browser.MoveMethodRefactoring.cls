@@ -78,7 +78,7 @@ compileDelagatorMethod
 
 compileNewMethods
 	moveToClasses 
-		do: [:each | each compile: parseTree newSource classified: (class protocolsFor: selector)]!
+		do: [:each | each compile: parseTree newSource categories: (class protocolsFor: selector)]!
 
 getAllClassesForGlobalOrClassVariable
 	"rbDmm added for MoveMethodRefactoring>>getClassForGlobalOrClassVariable"

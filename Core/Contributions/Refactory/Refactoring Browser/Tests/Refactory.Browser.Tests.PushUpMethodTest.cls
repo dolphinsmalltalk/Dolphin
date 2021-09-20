@@ -22,7 +22,7 @@ testPushUpAndCopyDown
 	model
 		defineClass: 'SomeSubclass subclass: #Foo2 instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
 	class := model classNamed: #Foo1.
-	class compile: 'yourself ^1' classified: #(#accessing).
+	class compile: 'yourself ^1' classified: #accessing.
 	self executeRefactoring: (PushUpMethodRefactoring
 				model: model
 				pushUp: #(#yourself)
@@ -39,7 +39,7 @@ testPushUpClassMethod
 	| class |
 	class := model classNamed: #'Core.Object'.
 	class addClassVariable: #Foo.
-	class metaclass compile: 'foo ^Foo' classified: #(#accessing).
+	class metaclass compile: 'foo ^Foo' classified: #accessing.
 	self shouldFail: (PushUpMethodRefactoring
 				model: model
 				pushUp: #(#foo)
@@ -72,9 +72,9 @@ testPushUpWithInvalidSuperSend
 		defineClass: 'Subclass subclass: #Foo1 instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
 	model
 		defineClass: 'Subclass subclass: #Foo2 instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
-	(model classNamed: #Foo2) compile: 'yourself ^super yourself + 1' classified: #(#accessing).
+	(model classNamed: #Foo2) compile: 'yourself ^super yourself + 1' classified: #accessing.
 	class := model classNamed: #Foo1.
-	class compile: 'yourself ^1' classified: #(#accessing).
+	class compile: 'yourself ^1' classified: #accessing.
 	self shouldFail: (PushUpMethodRefactoring
 				model: model
 				pushUp: #(#yourself)
@@ -83,7 +83,7 @@ testPushUpWithInvalidSuperSend
 testPushUpWithMethodThatCannotBePushedDown
 	model
 		defineClass: 'Object subclass: #SomeClass instanceVariableNames: '''' classVariableNames: ''Foo'' poolDictionaries: '''''.
-	(model classNamed: #SomeClass) compile: 'yourself ^54' classified: #(#accessing).
+	(model classNamed: #SomeClass) compile: 'yourself ^54' classified: #accessing.
 	self shouldFail: (PushUpMethodRefactoring
 				model: model
 				pushUp: #(#yourself)
@@ -93,15 +93,15 @@ testPushUpWithSuperSendThatCannotBeCopiedDown
 	| class |
 	model
 		defineClass: 'Object subclass: #SomeClass instanceVariableNames: '''' classVariableNames: ''Foo'' poolDictionaries: '''''.
-	(model classNamed: #'Core.Object') compile: 'foo ^3' classified: #(#accessing).
+	(model classNamed: #'Core.Object') compile: 'foo ^3' classified: #accessing.
 	model
 		defineClass: 'SomeClass subclass: #Subclass instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
-	(model classNamed: #Subclass) compile: 'foo ^super foo' classified: #(#accessing).
+	(model classNamed: #Subclass) compile: 'foo ^super foo' classified: #accessing.
 	model
 		defineClass: 'Subclass subclass: #Foo1 instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
 	model
 		defineClass: 'Subclass subclass: #Foo2 instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
-	(class := model classNamed: #Foo2) compile: 'foo ^1' classified: #(#accessing).
+	(class := model classNamed: #Foo2) compile: 'foo ^1' classified: #accessing.
 	self shouldFail: (PushUpMethodRefactoring
 				model: model
 				pushUp: #(#foo)

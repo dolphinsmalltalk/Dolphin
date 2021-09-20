@@ -71,19 +71,28 @@ comment: aString in: aClass
 	^self addChange: (ClassCommentChange comment: aString in: aClass)!
 
 compile: aString in: aClassDescription
-	^self addChange: (AddMethodChange compile: aString in: aClassDescription)!
+	^self addChange: (self addMethodChangeClass compile: aString in: aClassDescription)!
 
 compile: aString in: aClass categories: anArray
-	^self addChange: (AddMethodChange
+	^self addChange: (self addMethodChangeClass
 				compile: aString
 				in: aClass
 				categories: anArray)!
 
 compile: source in: class classified: aProtocol
-	^self addChange: (AddMethodChange
+	Notification deprecated.
+	^self addChange: (self addMethodChangeClass
 				compile: source
 				in: class
 				classified: aProtocol)!
+
+compile: aString in: aRBClass environment: aRBNamespaceClass categories: aCollection package: aPackage
+	^self addChange: (self addMethodChangeClass
+				compile: aString
+				in: aRBClass
+				environment: aRBNamespaceClass
+				categories: aCollection
+				package: aPackage)!
 
 defineClass: aString 
 	^self addChange: (self addClassChangeClass definition: aString)!
@@ -159,6 +168,7 @@ comment:in:!public!refactory/changes! !
 compile:in:!public!refactory/changes! !
 compile:in:categories:!public! !
 compile:in:classified:!public!refactory/changes! !
+compile:in:environment:categories:package:!public! !
 defineClass:!public!refactory/changes! !
 executeNotifying:!private! !
 flattenOnto:!private! !

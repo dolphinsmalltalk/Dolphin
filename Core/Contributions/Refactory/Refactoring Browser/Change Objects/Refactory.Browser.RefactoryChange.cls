@@ -22,6 +22,9 @@ Instance Variables:
 addClassChangeClass
 	^AddClassChange!
 
+addMethodChangeClass
+	^AddMethodChange!
+
 changeForClass: aRBClass selector: aSelector 
 	^nil!
 
@@ -71,6 +74,7 @@ renameChangesForClass: aClassName to: newClassName
 	"No action required for most changes."! !
 !Refactory.Browser.RefactoryChange categoriesForMethods!
 addClassChangeClass!constants!public! !
+addMethodChangeClass!constants!public! !
 changeForClass:selector:!accessing!public! !
 changeForMetaclass:selector:!accessing!public! !
 changes!accessing!public! !

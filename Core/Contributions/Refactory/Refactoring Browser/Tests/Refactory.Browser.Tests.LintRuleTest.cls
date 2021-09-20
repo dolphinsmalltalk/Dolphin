@@ -51,11 +51,12 @@ name: aString
 	name := aString!
 
 openEditor
+	<namespace: Tools>
 	| rules |
 	rules := self failedRules.
 	rules isEmpty ifTrue: [^self].
 	rules size == 1 ifTrue: [^rules first viewResults].
-	SmalllintResultEditor openOn: self label: name!
+	SmalltalkSystem current browseEnvironment: self result!
 
 printOn: aStream 
 	name isNil

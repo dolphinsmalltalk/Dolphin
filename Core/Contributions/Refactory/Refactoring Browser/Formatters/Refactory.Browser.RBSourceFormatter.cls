@@ -55,7 +55,7 @@ formatTagsFor: aMethodNode
 			[:each | 
 			codeStream nextPutAll: each.
 			self newLine]"
-	aMethodNode tags do: [:each | self visitNode: each]!
+	aMethodNode tags do: [:each | self visitNode: each. self newLine]!
 
 indent: anInteger
 	indent := anInteger!
@@ -97,8 +97,7 @@ visitAnnotationNode: anStAnnotationNode
 						nextPutAll: (keywords at: i);
 						space.
 					self visitNode: (args at: i)]].
-	codeStream nextPut: $>.
-	self newLine!
+	codeStream nextPut: $>.!
 
 visitArrayNode: anArrayNode
 	self bracketWith: '{}' around: [self formatArray: anArrayNode]!
@@ -142,8 +141,7 @@ visitPrimitiveNode: anStPrimitiveNode
 			[:errorTemp |
 			codeStream nextPutAll: ' error: '.
 			self visitNode: errorTemp].
-	codeStream nextPut: $>.
-	self newLine!
+	codeStream nextPut: $>.!
 
 visitQualifiedReferenceNode: aQualifiedReferenceNode
 	codeStream

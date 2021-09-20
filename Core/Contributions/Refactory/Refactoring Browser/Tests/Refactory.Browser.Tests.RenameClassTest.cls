@@ -29,8 +29,8 @@ testModelRenameClass
 		defineClass: 'Core.Object subclass: #''Core.Foo'' instanceVariableNames: ''a'' classVariableNames: '''' poolDictionaries: ''Core.Object'''.
 	class := model classNamed: #'Core.Foo'.
 	class
-		compile: 'foo	^Object' classified: #(#accessing);
-		compile: 'objectName ^#(Object)' classified: #(#accessing).
+		compile: 'foo	^Object' classified: #accessing;
+		compile: 'objectName ^#(Object)' classified: #accessing.
 	"Ensure the test covers renaming an imported class"
 	self assert: (class imports includes: #{Core.Object}).
 	refactoring := RenameClassRefactoring
@@ -53,15 +53,16 @@ testModelRenameSequenceClass
 			classVariableNames: '''' poolDictionaries: ''''
 			category: #''Refactory-Test data'''.
 	(model classNamed: #Foo1)
-		compile: 'foo	 ^ Foo1' classified: #(#accessing);
-		compile: 'objectName ^ #(Foo1)' classified: #(#accessing).
+		compile: 'foo	 ^ Foo1' classified: #accessing;
+		compile: 'objectName ^ #(Foo1)' classified: #accessing.
 	self executeRefactoring: (RenameClassRefactoring
 				model: model
 				rename: (model classNamed: #Foo1)
 				to: #Foo2).
 	self deny: (model includesClassNamed: #Foo1).
 	self assert: (model includesClassNamed: #Foo2).
-	self assert: ((model classNamed: #Foo2) parseTreeFor: #foo) equals: (RBParser parseMethod: 'foo ^ Foo2').
+	self assert: ((model classNamed: #Foo2) parseTreeFor: #foo)
+		equals: (RBParser parseMethod: 'foo ^ Foo2').
 	self executeRefactoring: (RenameClassRefactoring
 				model: model
 				rename: (model classNamed: #Foo2)
@@ -69,7 +70,8 @@ testModelRenameSequenceClass
 	self deny: (model includesClassNamed: #Foo1).
 	self deny: (model includesClassNamed: #Foo2).
 	self assert: (model includesClassNamed: #Foo3).
-	self assert: ((model classNamed: #Foo3) parseTreeFor: #foo) equals: (RBParser parseMethod: 'foo ^ Foo3').
+	self assert: ((model classNamed: #Foo3) parseTreeFor: #foo)
+		equals: (RBParser parseMethod: 'foo ^ Foo3').
 	self assert: ((model classNamed: #Foo3) parseTreeFor: #objectName)
 				= (RBParser parseMethod: 'objectName ^ #(Foo3)')!
 
@@ -85,7 +87,7 @@ testRenameChangeNamespace
 			classVariableNames: '''' poolDictionaries: ''''
 			category: #''Refactory-Test data'''
 						<< each.
-			(model classNamed: each) compile: 'foo	 ^<1s>' << oldName classified: #(#accessing)].
+			(model classNamed: each) compile: 'foo	 ^<1s>' << oldName classified: #accessing].
 	classToRename := oldName asQualifiedReference value.
 	newName := 'Smalltalk.' , unqualifiedName.
 	refactoring := RenameClassRefactoring

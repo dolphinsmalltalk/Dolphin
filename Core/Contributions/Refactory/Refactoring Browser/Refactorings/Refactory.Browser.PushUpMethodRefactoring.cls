@@ -118,7 +118,7 @@ checkSuperSendsFromSiblings
 	siblings do: [:aRBClass | self checkSiblingSuperSendsFrom: aRBClass]!
 
 copyDownMethod: aSelector
-	| oldProtocol oldSource superclassDefiner subclasses refactoring |
+	| oldProtocols oldSource superclassDefiner subclasses refactoring |
 	superclassDefiner := class superclass whoDefinesMethod: aSelector.
 	superclassDefiner isNil ifTrue: [^self].
 	oldSource := superclassDefiner sourceCodeFor: aSelector.
@@ -126,7 +126,7 @@ copyDownMethod: aSelector
 		ifTrue: 
 			[self
 				refactoringError: ('Source code for <1s> superclass method not available' expandMacrosWith: aSelector)].
-	oldProtocol := superclassDefiner protocolsFor: aSelector.
+	oldProtocols := superclassDefiner protocolsFor: aSelector.
 	subclasses := class superclass subclasses reject: [:each | each directlyDefinesMethod: aSelector].
 	subclasses isEmpty ifTrue: [^self].
 	((superclassDefiner parseTreeFor: aSelector) superMessages
@@ -145,7 +145,7 @@ copyDownMethod: aSelector
 				fromClass: superclassDefiner
 				toClasses: subclasses.
 	self performComponentRefactoring: refactoring.
-	subclasses do: [:each | each compile: oldSource classified: oldProtocol]!
+	subclasses do: [:each | each compile: oldSource categories: oldProtocols]!
 
 copyDownMethods
 	selectors do: [:each | self copyDownMethod: each]!
@@ -170,7 +170,7 @@ pushUp: aSelector
 				fromClass: class
 				toClasses: {class superclass}.
 	self performComponentRefactoring: refactoring.
-	change := class superclass compile: source classified: (class protocolsFor: aSelector).
+	change := class superclass compile: source categories: (class protocolsFor: aSelector).
 	#rbFix.	"Bodge change object to maintain package relationship"
 	class realClass
 		ifNotNil: [:c | change package: (c compiledMethodAt: aSelector) owningPackageIfLoose]!

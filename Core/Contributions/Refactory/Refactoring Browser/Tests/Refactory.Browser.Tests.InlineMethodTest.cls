@@ -228,7 +228,7 @@ testInlineRecursiveCascadedMethod
 testModelInlineRecursiveMethod
 	| refactoring class |
 	class := model classNamed: #'Core.Object'.
-	class compile: 'foo self bar. self foo. self bar' classified: #(#accessing).
+	class compile: 'foo self bar. self foo. self bar' classified: #accessing.
 	refactoring := InlineMethodRefactoring
 				model: model
 				inline: (15 to: 23)

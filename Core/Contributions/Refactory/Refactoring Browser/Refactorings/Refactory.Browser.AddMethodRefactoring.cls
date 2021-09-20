@@ -43,7 +43,7 @@ storeOn: aStream
 	aStream nextPut: $)!
 
 transform
-	class compile: source classified: protocols! !
+	class compile: source categories: protocols! !
 !Refactory.Browser.AddMethodRefactoring categoriesForMethods!
 addMethod:toClass:inProtocols:!initialize/release!public! !
 preconditions!preconditions!public! !

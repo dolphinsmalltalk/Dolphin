@@ -58,7 +58,7 @@ testRenameClassVar
 											ifFalse: 
 												[builder compile: rewriteRule tree printString
 													in: class
-													classified: aSmalllintContext protocols]]')! !
+													categories: aSmalllintContext protocols]]')! !
 !Refactory.Browser.Tests.RenameClassVariableTest categoriesForMethods!
 testAlreadyExistingName!failure tests!public! !
 testMetaClassFailure!failure tests!public! !

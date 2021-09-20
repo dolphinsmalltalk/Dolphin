@@ -1431,7 +1431,7 @@ overrideMethods
 				nextPutAll: '^super';
 				space.
 			self systemModel printSignatureForKeywordsAndArgs: keywordsAndArgs on: stream.
-			changes addChange: (AddPackagedMethodChange
+			changes addChange: (AddMethodChange
 						compile: stream contents
 						in: class
 						environment: each environment

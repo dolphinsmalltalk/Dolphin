@@ -105,8 +105,7 @@ isMethod
 	^true!
 
 isPrimitive
-	#rbFix.	"On Dolphin primitives are parsed into an AST, so the tag is actually a node"
-	^tags notNil!
+	^tags notNil and: [tags anySatisfy: [:each | each isAnnotation not]]!
 
 lastIsReturn
 	^body lastIsReturn!

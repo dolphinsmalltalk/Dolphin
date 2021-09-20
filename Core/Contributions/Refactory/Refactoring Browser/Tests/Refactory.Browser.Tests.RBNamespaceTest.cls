@@ -83,7 +83,7 @@ testModelImplementorsSenders
 			poolDictionaries: ''''
 			category: ''Refactory-Testing'''.
 	class := model classNamed: #Asdf.
-	class compile: 'storeOn: aStream ^super storeOn: aStream' classified: #(#printing).
+	class compile: 'storeOn: aStream ^super storeOn: aStream' classified: #printing.
 	modelImps := model allImplementorsOf: #storeOn:.
 	self assert: (modelImps includes: class).
 	self assert: modelImps size - 1
@@ -130,19 +130,18 @@ testReferencesPrintOnAfterAddition
 	hasFoundObject := false.
 	hasFoundSelf := false.
 	smalltalk := RBNamespace new.
-	(smalltalk classNamed: #'Core.Object') 
-		compile: 'someTestReference self printOn: nil'
-		classified: #(testing).
-	(smalltalk classNamed: self class fullName)
-		compile: 'someTestReference ^ #printOn:'
-		classified: #(testing).
-	smalltalk allReferencesTo: #printOn: do: [ :each | 
-		hasFoundObject := hasFoundObject 
-			or: [ each selector = #someTestReference 
-			and: [ each modelClass = (smalltalk classNamed: #'Core.Object') ] ].
-		hasFoundSelf := hasFoundSelf
-			or: [ each selector = #someTestReference 
-			and: [ each modelClass = (smalltalk classNamed: self class fullName) ] ] ].
+	(smalltalk classNamed: #'Core.Object') compile: 'someTestReference self printOn: nil'
+		classified: #testing.
+	(smalltalk classNamed: self class fullName) compile: 'someTestReference ^ #printOn:'
+		classified: #testing.
+	smalltalk allReferencesTo: #printOn:
+		do: 
+			[:each |
+			hasFoundObject := hasFoundObject or: 
+							[each selector = #someTestReference and: [each modelClass = (smalltalk classNamed: #'Core.Object')]].
+			hasFoundSelf := hasFoundSelf or: 
+							[each selector = #someTestReference
+								and: [each modelClass = (smalltalk classNamed: self class fullName)]]].
 	self assert: hasFoundObject.
 	self assert: hasFoundSelf!
 

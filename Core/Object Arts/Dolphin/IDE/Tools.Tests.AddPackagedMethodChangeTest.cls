@@ -12,7 +12,7 @@ Tools.Tests.AddPackagedMethodChangeTest comment: ''!
 !Tools.Tests.AddPackagedMethodChangeTest methodsFor!
 
 changeClass
-	^AddPackagedMethodChange!
+	^Refactory.Browser.AddMethodChange!
 
 testEnvironmentAndPackageMaintained
 	"Verify that a method's environment is maintained if different from it's method class', and likewise the owning package"
@@ -46,7 +46,7 @@ testPrintOn
 	change := self changeClass
 				compile: 'isAbstract ^false'
 				in: AddPackagedMethodChangeTest class
-				classified: 'testing'.
+				categories: #('testing').
 	self assert: change printString readStream nextLine
 		equals: '!!<1d> class methodsFor: ''testing''!!' << self class fullName.
 	#'1593'.

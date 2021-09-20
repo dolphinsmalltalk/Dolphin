@@ -171,7 +171,7 @@ allSubinstances
 asQualifiedReference
 	"Answer a <BindingReference> to this class."
 
-	^self instanceClass fullyQualifiedReference!
+	^self fullyQualifiedReference!
 
 baseEnvironment
 	"Private - Answer the default environment for new subclasses of the receiver that the ClassBuilder should use when the provided subclass name is unqualified."

@@ -23,7 +23,7 @@ changeClass
 	^self classReference valueOrNil!
 
 changeClass: aBehavior
-	classReference := aBehavior fullyQualifiedReference!
+	classReference := aBehavior asQualifiedReference!
 
 changeClassName
 	^self classReference instance asString!
@@ -58,9 +58,11 @@ hash
 isMeta
 	^self classReference isMeta!
 
-methodSourceFor: aSymbol 
-	(self changeClass includesSelector: aSymbol) ifFalse: [^nil].
-	^self changeClass sourceCodeAt: aSymbol!
+methodSourceFor: aSymbol
+	| class |
+	class := self changeClass.
+	(class includesSelector: aSymbol) ifFalse: [^nil].
+	^class sourceCodeAt: aSymbol!
 
 primitiveExecute
 	^self subclassResponsibility!

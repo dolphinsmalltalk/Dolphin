@@ -30,7 +30,7 @@ defineGetterMethod
 	#rbFix. "Add private category"
 	definingClass 
 		compile: ('<1s><n><t>^<2s>' expandMacrosWith: selector with: variableName)
-		classified: #(#accessing #private).
+		categories: #(#accessing #private).
 	^selector!
 
 defineSetterMethod
@@ -44,7 +44,7 @@ defineSetterMethod
 	#rbFix. "Add private category"
 	definingClass 
 		compile: (string expandMacrosWith: selector with: variableName)
-		classified: #(#accessing #private).
+		categories: #(#accessing #private).
 	^selector!
 
 definingClass

@@ -14,11 +14,11 @@ Refactory.Browser.Tests.RemoveMethodTest comment: ''!
 testModelRecursiveMethodThatIsNotReferencedFromOtherMethods
 	| class otherClass |
 	class := model classNamed: #'Core.Object'.
-	class compile: 'someMethodThatIsNotReferenced ^2' classified: #(#accessing).
+	class compile: 'someMethodThatIsNotReferenced ^2' classified: #accessing.
 	self assert: (class definesMethod: #someMethodThatIsNotReferenced).
 	otherClass := model metaclassNamed: self class superclass fullName.
 	otherClass compile: 'someMethodThatIsNotReferenced ^3 someMethodThatIsNotReferenced'
-		classified: #(#accessing).
+		classified: #accessing.
 	model removeClassNamed: self class fullName.
 	self executeRefactoring: (RemoveMethodRefactoring
 				model: model

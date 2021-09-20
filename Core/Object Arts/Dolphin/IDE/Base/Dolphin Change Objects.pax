@@ -10,7 +10,6 @@ package paxVersion: 2.1;
 package setClassNames: #(
 	#{Tools.AddClassConstantChange}
 	#{Tools.AddNamespaceImportChange}
-	#{Tools.AddPackagedMethodChange}
 	#{Tools.AddSharedVariableChange}
 	#{Tools.MoveClassChange}
 	#{Tools.RemoveClassConstantChange}
@@ -20,8 +19,6 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
-	#(#{Refactory.Browser.AddMethodChange class} #compile:in:categories:)
-	#(#{Refactory.Browser.AddMethodChange class} #compile:in:environment:categories:package:)
 	#(#{Refactory.Browser.AddMethodChange class} #new)
 	#(#{Refactory.Browser.CompositeRefactoryChange} #addClassConstant:to:)
 	#(#{Refactory.Browser.CompositeRefactoryChange} #addImport:to:)
@@ -32,7 +29,6 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
-	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 ).
 
 package!
@@ -47,12 +43,6 @@ Refactory.Browser.RefactoryChange subclass: #'Tools.SharedVariableChange'
 	classConstants: {}!
 Refactory.Browser.RefactoryClassChange subclass: #'Tools.MoveClassChange'
 	instanceVariableNames: 'superclassName'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.AddMethodChange subclass: #'Tools.AddPackagedMethodChange'
-	instanceVariableNames: 'environment packageName compilationFlags method'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -98,32 +88,9 @@ Tools.SharedVariableChange subclass: #'Tools.RemoveSharedVariableChange'
 
 !Refactory.Browser.AddMethodChange class methodsFor!
 
-compile: aString in: aClass categories: aSequenceableCollection
-	"N.B. The new method will be assigned to its existing package (if a modification) or the
-	class' package (if an addition)."
-
-	| change |
-	change := self compile: aString in: aClass.
-	aSequenceableCollection notNil
-		ifTrue: [change protocols: (aSequenceableCollection collect: [:each | each asString])].
-	^change!
-
-compile: aString in: aClass environment: aNamespace categories: aSequenceableCollection package: aPackage
-	| change |
-	change := self
-				compile: aString
-				in: aClass
-				categories: aSequenceableCollection.
-	change
-		environment: aNamespace;
-		package: aPackage.
-	^change!
-
 new
-	^AddPackagedMethodChange basicNew initialize! !
+	^self basicNew initialize! !
 !Refactory.Browser.AddMethodChange class categoriesForMethods!
-compile:in:categories:!instance creation!public! !
-compile:in:environment:categories:package:!instance creation!public! !
 new!instance creation!public! !
 !
 

@@ -106,7 +106,7 @@ renameImplementors
 							[self refactoringError: ('<1p>''s implementation of #<2s> is a primitive' expandMacrosWith: each
 										with: oldSelector)]].
 			self modifyImplementorParseTree: parseTree in: each.
-			change := each compileTree: parseTree classified: (each protocolsFor: oldSelector).
+			change := each compileTree: parseTree categories: (each protocolsFor: oldSelector).
 			#rbFix.	"Bodge change object to maintain package relationship"
 			each realClass ifNotNil: [:c | change package: (c compiledMethodAt: oldSelector) owningPackage]]!
 

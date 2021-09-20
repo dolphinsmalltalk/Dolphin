@@ -1,13 +1,12 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.AddMethodChange'
-	instanceVariableNames: 'source selector protocols'
+	instanceVariableNames: 'source selector protocols environment packageName compilationFlags method'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.AddMethodChange guid: (Core.GUID fromString: '{67095785-de4e-4bb9-ae66-cb2d970c8a5f}')!
-Refactory.Browser.AddMethodChange isNonInstantiable: true!
 Refactory.Browser.AddMethodChange comment: ''!
 !Refactory.Browser.AddMethodChange categoriesForClass!Refactory-Change Objects! !
 !Refactory.Browser.AddMethodChange methodsFor!
@@ -27,8 +26,13 @@ asUndoOperation
 			^self class
 				compile: (self methodSourceFor: self selector)
 				in: self changeClass
-				classified: oldProtocol]
+				environment: environment
+				categories: protocols
+				package: self package]
 		ifFalse: [RemoveMethodChange remove: selector from: self changeClass]!
+
+categories
+	^protocols collect: [:each | each asMethodCategory]!
 
 changeForClass: aSymbol selector: aSelector 
 	^(self selector = aSelector and: [classReference asString = aSymbol])
@@ -41,7 +45,12 @@ changeForMetaclass: aSymbol selector: aSelector
 		ifFalse: [nil]!
 
 changeString
-	^self displayClassName , '>>#' , self selector!
+	^'<1s> <2s>>><3s>'
+		expandMacrosWith: ((self changeClass
+				ifNil: [false]
+				ifNotNil: [:class | class includesSelector: self selector]) ifTrue: ['Modify'] ifFalse: ['Add'])
+		with: self displayClassName
+		with: self selector!
 
 class: aClass protocol: aProtocol source: aString 
 	self changeClass: aClass.
@@ -54,21 +63,55 @@ class: aClass source: aString
 	#rbFix. "Extract lookup of current protocols to a method so can override"
 	self protocols: self currentProtocols!
 
+compilationFlags
+	^compilationFlags ifNil: [self changeClass defaultCompilationFlags]!
+
+compilationFlags: anInteger 
+	compilationFlags := anInteger!
+
 controller
 	^nil!
 
 currentProtocols
-	#rbFix.	"Private - Extracted from #class:source:"
-	^BrowserEnvironment new whichProtocolIncludes: self selector in: self changeClass!
+	^self changeClass
+		ifNil: [#()]
+		ifNotNil: [:class | Refactory.Browser.BrowserEnvironment new whichProtocolsInclude: self selector in: class]!
+
+environment
+	"Answer the <Namespace> into which the method should be compiled (or nil for the owning class' namespace)."
+
+	^environment value!
+
+environment: aNamespace
+	environment := aNamespace ifNotNil: [aNamespace asQualifiedReference]!
 
 hash
 	^self parseTree hash!
+
+method
+	"Answer the method resulting from the change. This will be nil if the change has not been
+	performed yet, or was unsuccessful."
+
+	^method!
+
+package
+	^packageName isNil ifFalse: [Package manager packageNamed: packageName ifNone: nil]!
+
+package: aPackage 
+	packageName := aPackage isNil ifFalse: [aPackage name]!
 
 parseTree
 	^RBParser parseMethod: source onError: [:str :pos | ^nil]!
 
 primitiveExecute
-	^self subclassResponsibility!
+	"Dolphin's compiler interface is different, plus we need to maintain the package relationship"
+
+	method := self changeClass
+				compile: source
+				environment: self environment
+				categories: self categories
+				package: self package
+				flags: self compilationFlags!
 
 printOn: aStream 
 	aStream
@@ -83,6 +126,7 @@ printOn: aStream
 		nextPutAll: '!! !!'!
 
 protocol
+	Notification deprecated.
 	^self protocols notEmpty ifTrue: [self protocols first]!
 
 protocols
@@ -97,18 +141,29 @@ selector
 		ifTrue: 
 			[selector := RBParser parseMethodPattern: source.
 			selector isNil ifTrue: [selector := #unknown]].
-	^selector! !
+	^selector!
+
+source
+	^source! !
 !Refactory.Browser.AddMethodChange categoriesForMethods!
 =!comparing!public! !
 asUndoOperation!converting!public! !
+categories!accessing!public! !
 changeForClass:selector:!accessing!public! !
 changeForMetaclass:selector:!accessing!public! !
 changeString!printing!public! !
 class:protocol:source:!initialize/release!public! !
 class:source:!initialize/release!public! !
+compilationFlags!accessing!public! !
+compilationFlags:!accessing!public! !
 controller!accessing!private! !
-currentProtocols!helpers!private! !
+currentProtocols!converting!public! !
+environment!accessing!public! !
+environment:!accessing!private! !
 hash!comparing!public! !
+method!accessing!public! !
+package!accessing!public! !
+package:!accessing!public! !
 parseTree!helpers!private! !
 primitiveExecute!operations!private! !
 printOn:!printing!public! !
@@ -116,20 +171,54 @@ protocol!accessing!public! !
 protocols!accessing!public! !
 protocols:!initialize/release!public! !
 selector!accessing!public! !
+source!accessing!public! !
 !
 
 !Refactory.Browser.AddMethodChange class methodsFor!
 
-compile: aString in: aClass 
-	^self new class: aClass source: aString!
+compile: aString in: aClass
+	| change |
+	change := self new class: aClass source: aString.
+	change changeClass
+		ifNotNil: 
+			[:class |
+			| programObject |
+			programObject := class compiledMethodAt: change selector ifAbsent: class.
+			change
+				package: programObject owningPackage;
+				environment: programObject environment].
+	^change!
 
-compile: aString in: aBehavior classified: aProtocol 
-	^self new 
-		class: aBehavior
-		protocol: aProtocol
-		source: aString! !
+compile: aString in: aClass categories: aSequenceableCollection
+	"N.B. The new method will be assigned to its existing package (if a modification) or the
+	class' package (if an addition)."
+
+	| change |
+	change := self compile: aString in: aClass.
+	aSequenceableCollection notNil
+		ifTrue: [change protocols: (aSequenceableCollection collect: [:each | each asString])].
+	^change!
+
+compile: aString in: aBehavior classified: aProtocol
+	Notification deprecated.
+	^self
+		compile: aString
+		in: aBehavior
+		categories: {aProtocol}!
+
+compile: aString in: aClass environment: aNamespace categories: aSequenceableCollection package: aPackage
+	| change |
+	change := self new class: aClass source: aString.
+	aSequenceableCollection notNil
+		ifTrue: [change protocols: (aSequenceableCollection collect: [:each | each asString])].
+	change
+		environment: aNamespace;
+		package: aPackage.
+	^change! !
 !Refactory.Browser.AddMethodChange class categoriesForMethods!
 compile:in:!instance creation!public! !
+compile:in:categories:!instance creation!public! !
 compile:in:classified:!instance creation!public! !
+compile:in:environment:categories:package:!instance creation!public! !
 !
 

@@ -41,10 +41,43 @@ testExtractFailure
 					from: #subclassResponsibilityNotDefined
 					in: BasicLintRuleTest class)!
 
+testExtractFromMethodInCustomNamespace
+	| method source refactoring class start stop |
+	method := Graphics.Rectangle class compiledMethodAt: #publishedAspectsOfInstances.
+	self assert: method environment equals: Tools.
+	source := method getSource.
+	start := source indexOf: $(.
+	stop := source
+				nextIndexOf: $)
+				from: start
+				to: source size.
+	refactoring := ExtractMethodRefactoring
+				extract: (start to: stop)
+				from: #publishedAspectsOfInstances
+				in: Graphics.Rectangle class.
+	self setupMethodNameFor: refactoring toReturn: #topAspect.
+	self executeRefactoring: refactoring.
+	class := refactoring model classFor: Graphics.Rectangle.
+	self assert: (class metaclass parseTreeFor: #publishedAspectsOfInstances)
+		equals: (RBParser
+				parseMethod: 'publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspectsOfInstances
+		add: self topAspect;
+		add: (Aspect integer: #left);
+		add: (Aspect integer: #bottom);
+		add: (Aspect integer: #right);
+		yourself').
+	self assert: (class metaclass parseTreeFor: #topAspect)
+		equals: (RBParser parseMethod: 'topAspect
+	^Aspect integer: #top').
+	self assert: refactoring model changes changes first environment identicalTo: Tools!
+
 testExtractMethodAtEndOfMethodThatNeedsReturn
 	| refactoring class |
 	refactoring := ExtractMethodRefactoring
-				extract: (self convertInterval: (52 to: 182) for: (LintRuleTest sourceCodeAt: #openEditor))
+				extract: (73 to: 216)
 				from: #openEditor
 				in: LintRuleTest.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
@@ -53,15 +86,17 @@ testExtractMethodAtEndOfMethodThatNeedsReturn
 	self assert: (class parseTreeFor: #openEditor)
 		equals: (RBParser
 				parseMethod: 'openEditor
+	<namespace: Tools>
 	| rules |
 	rules := self failedRules.
 	^self foo: rules').
 	self assert: (class parseTreeFor: #foo:)
 		equals: (RBParser
 				parseMethod: 'foo: rules
+	<namespace: Tools>
 	rules isEmpty ifTrue: [^self].
 	rules size == 1 ifTrue: [^rules first viewResults].
-	SmalllintResultEditor openOn: self label: name')!
+	SmalltalkSystem current browseEnvironment: self result')!
 
 testExtractMethodThatMovesTemporaryVariable
 	| refactoring class |
@@ -111,7 +146,7 @@ testExtractMethodThatNeedsArgument
 				ifFalse: 
 					[builder compile: rewriteRule tree printString
 						in: class
-						classified: aSmalllintContext protocols]')!
+						categories: aSmalllintContext protocols]')!
 
 testExtractMethodThatNeedsTemporaryVariable
 	| refactoring class |
@@ -140,7 +175,7 @@ testModelExtractMethodWithTemporariesSelected
 	| class refactoring |
 	model := RBNamespace new.
 	class := model classNamed: self class fullName.
-	class compile: 'foo [| temp | temp := 5. temp * temp] value' classified: #(#accessing).
+	class compile: 'foo [| temp | temp := 5. temp * temp] value' classified: #accessing.
 	refactoring := ExtractMethodRefactoring
 				model: model
 				extract: (6 to: 36)
@@ -158,7 +193,7 @@ testModelExtractMethodWithTemporaryAssigned
 	class := model classNamed: self class fullName.
 	class
 		compile: 'foo 				| temp bar | 				bar := 5. 				temp := bar * bar. 				Transcript show: temp printString; cr. 				^temp * temp'
-		classified: #(#accessing).
+		classified: #accessing.
 	refactoring := ExtractMethodRefactoring
 				model: model
 				extract: (26 to: 102)
@@ -181,6 +216,7 @@ testNonExistantSelector
 !Refactory.Browser.Tests.ExtractMethodTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testExtractFailure!failure tests!public! !
+testExtractFromMethodInCustomNamespace!failure tests!public! !
 testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !
 testExtractMethodThatMovesTemporaryVariable!public!tests! !
 testExtractMethodThatNeedsArgument!public!tests! !

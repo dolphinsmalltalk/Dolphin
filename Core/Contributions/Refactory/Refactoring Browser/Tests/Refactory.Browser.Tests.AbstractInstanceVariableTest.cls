@@ -48,7 +48,7 @@ testAbstractInstanceVariable
 					[builder 
 						compile: rewriteRule tree printString
 						in: self class1
-						classified: aSmalllintContext protocols]]')!
+						categories: aSmalllintContext protocols]]')!
 
 testAbstractWithAssignmentUsed
 	| refactoring class |
@@ -107,7 +107,7 @@ testMetaclassInstanceVariables
 	| refactoring class |
 	class := model metaclassNamed: #Foo.
 	class addInstanceVariable: 'foo'.
-	class compile: 'zzz ^foo := foo + foo * 2' classified: #(#testing).
+	class compile: 'zzz ^foo := foo + foo * 2' classified: #testing.
 	refactoring := AbstractInstanceVariableRefactoring
 				model: model
 				variable: 'foo'
