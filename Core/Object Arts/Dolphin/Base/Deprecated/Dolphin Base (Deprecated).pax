@@ -142,6 +142,9 @@ package methodNames
 	add: 'Date class' -> #nameOfMonth:;
 	add: 'Date class' -> #shortNameOfDay:;
 	add: 'Date class' -> #shortNameOfMonth:;
+	add: 'Delay class' -> #resolution;
+	add: 'Delay class' -> #resolution:do:;
+	add: 'Delay class' -> #resolution:set:;
 	add: 'ExternalCallback class' -> #receiver:prototype:;
 	add: 'ExternalCallback class' -> #receiver:prototype:closure:;
 	add: 'ExternalCallback class' -> #receiver:selector:;
@@ -741,6 +744,26 @@ nameOfDay:!enquiries!public! !
 nameOfMonth:!enquiries!public! !
 shortNameOfDay:!enquiries!public! !
 shortNameOfMonth:!enquiries!public! !
+!
+
+!Delay class methodsFor!
+
+resolution
+	Notification deprecated.
+	^self timerResolution!
+
+resolution: aDuration do: aNiladicValuable
+	Notification deprecated.
+	self withTimerResolution: aDuration do: aNiladicValuable!
+
+resolution: aDuration set: aBoolean
+	Notification deprecated.
+	^self timerResolution: aDuration set: aBoolean! !
+
+!Delay class categoriesForMethods!
+resolution!constants!public! !
+resolution:do:!operations!public! !
+resolution:set:!helpers!public! !
 !
 
 !ExternalCallback class methodsFor!

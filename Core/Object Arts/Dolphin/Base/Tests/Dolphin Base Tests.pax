@@ -285,7 +285,7 @@ DolphinTest subclass: #DateTest
 	classInstanceVariableNames: ''!
 
 DolphinTest subclass: #DelayTest
-	instanceVariableNames: 'delay startTime'
+	instanceVariableNames: 'delay startTime timerResolution'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!

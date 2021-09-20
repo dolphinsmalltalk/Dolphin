@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 DolphinTest subclass: #DelayTest
-	instanceVariableNames: 'delay startTime'
+	instanceVariableNames: 'delay startTime timerResolution'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -16,28 +16,42 @@ DelayTest comment: ''!
 
 expectDelay: expectedDuration for: nowMicroseconds
 	| elapsed delta |
-	elapsed := nowMicroseconds - startTime.
-	delta := elapsed - expectedDuration asMicroseconds.
+	elapsed := (nowMicroseconds - startTime) microseconds.
+	delta := elapsed - expectedDuration.
 	"Although a Delay could end up waiting much longer than the expected duration,
 	e.g. if the CPU is very busy, this should happen only rarely, and we do not want
 	to tolerate it if it happens all the time as that would indicate an actual bug."
-	self assert: (delta > -1000 and: [delta < 3000])
-		description: ('Expected delay of <1d>, got <2d>ms' expandMacrosWith: expectedDuration humanReadablePrintString
-				with: (elapsed // 100 / 10 asScaledDecimal: 1))!
+	self assert: (delta between: timerResolution negated * 2 and: timerResolution * 5)
+		description: 
+			[String writeStream
+				nextPutAll: 'Expected delay of ';
+				nextPutAll: expectedDuration humanReadablePrintString;
+				nextPutAll: ' got ';
+				nextPutAll: elapsed humanReadablePrintString;
+				contents]!
 
 setUp
 	super setUp.
-	startTime := Time microsecondClockValue.
-	Delay resolution: 1 milliseconds set: true!
+	"Note that if we ask for 1 millisecond resolution we may actually get 500uS"
+	timerResolution := (Delay timerResolution: 1 milliseconds set: true) max: 1 milliseconds!
 
 tearDown
-	Delay resolution: 1 milliseconds set: false.
+	Delay timerResolution: 1 milliseconds set: false.
 	super tearDown!
 
 testBasicWait
-	delay := Delay forMilliseconds: 20.
+	| duration endTime retries |
+	duration := 5 milliseconds max: timerResolution.
+	retries := 0.
+	
+	[delay := Delay forDuration: duration.
+	startTime := Time microsecondClockValue.
 	delay wait.
-	self expectDelay: 20 milliseconds for: Time microsecondClockValue!
+	endTime := Time microsecondClockValue.
+	((endTime - startTime) microseconds - duration between: timerResolution negated
+		and: timerResolution * 5) or: [retries > 3]]
+			whileFalse: [retries := retries + 1].
+	self expectDelay: duration for: endTime!
 
 testCancel
 	| proc endTime |
@@ -59,46 +73,58 @@ testCancelWithOtherShorterDelay
 	self testCancel!
 
 testSchedulingMultipleDelays
-	| endTime |
-	delay := Delay forMilliseconds: 20.
+	| endTime delay2 |
+	delay := Delay forMilliseconds: 15.
+	delay2 := Delay forMilliseconds: 25.
 	
-	[delay wait.
-	endTime := Time microsecondClockValue] forkAt: Processor userInterruptPriority.
-	(Delay forMilliseconds: 30) wait.
-	self expectDelay: 20 milliseconds for: endTime.
-	self expectDelay: 30 milliseconds for: Time microsecondClockValue!
+	[startTime := Time microsecondClockValue.
+	delay wait.
+	endTime := Time microsecondClockValue]
+			forkAt: Processor userInterruptPriority.
+	delay2 wait.
+	self expectDelay: delay duration for: endTime.
+	self expectDelay: delay2 duration for: Time microsecondClockValue!
 
 testSchedulingMultipleDelaysLongerFirst
-	| endTime |
-	delay := Delay forMilliseconds: 30.
+	| endTime delay2 delay3 endTime2 |
+	delay := Delay forMilliseconds: 25.
+	delay2 := Delay forMilliseconds: 15.
+	delay3 := Delay forMilliseconds: 15.
 	
-	[delay wait.
-	endTime := Time microsecondClockValue] forkAt: Processor userInterruptPriority.
+	[startTime := Time microsecondClockValue.
+	delay wait.
+	endTime := Time microsecondClockValue]
+			forkAt: Processor userInterruptPriority.
 	"Wait for a shorter period than the other process"
-	(Delay forMilliseconds: 20) wait.
+	delay2 wait.
 	"We should have waited for the correct time, other proc is still waiting"
-	self expectDelay: 20 milliseconds for: Time microsecondClockValue.
+	self expectDelay: delay2 duration for: Time microsecondClockValue.
 	self assertIsNil: endTime.
 	"Now wait long enough for it to be done"
-	(Delay forMilliseconds: 20) wait.
-	self expectDelay: 30 milliseconds for: endTime.
-	self expectDelay: 40 milliseconds for: Time microsecondClockValue!
+	delay3 wait.
+	endTime2 := Time microsecondClockValue.
+	self expectDelay: delay duration for: endTime.
+	self expectDelay: delay2 duration + delay3 duration for: endTime2!
 
 testSignal
-	| endTime |
+	| endTime delay2 |
 	delay := Delay forMilliseconds: 20.
+	delay2 := Delay forMilliseconds: 10.
 	
-	[delay wait.
-	endTime := Time microsecondClockValue] forkAt: Processor userInterruptPriority.
-	(Delay forMilliseconds: 10) wait.
+	[startTime := Time microsecondClockValue.
+	delay wait.
+	endTime := Time microsecondClockValue]
+			forkAt: Processor userInterruptPriority.
+	delay2 wait.
 	delay signal.
-	self expectDelay: 10 milliseconds for: endTime!
+	self expectDelay: delay2 duration for: endTime!
 
 testSimultaneousWaitAndSignal
 	| waitError signalError signalFinished endTime |
 	delay := Delay forMilliseconds: 20.
 	signalFinished := false.
 	Delay.AccessProtect wait.	"Ensure that the Delay wait will be blocked"
+	startTime := Time microsecondClockValue.
 	
 	[[delay wait] on: Error do: [:ex | waitError := ex].
 	endTime := Time microsecondClockValue] fork.	"Delay>>wait will calc a resumption time, then block"

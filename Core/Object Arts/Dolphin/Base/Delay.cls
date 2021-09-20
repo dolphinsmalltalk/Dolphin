@@ -80,6 +80,11 @@ delta: anInteger
 
 	resumptionTime := resumptionTime + anInteger!
 
+duration
+	"Answer the duration of the delay."
+
+	^duration microseconds!
+
 duration: anInteger
 	"Private - Initialize the receiver to be a Delay for the number of microseconds specified by
 	the <integer> argument. The resumptionTime is calculated when a #wait is sent.
@@ -223,6 +228,7 @@ basicCancel!private!process synchronisation! !
 calcResumptionTime!accessing!private! !
 cancel!process synchronisation!public! !
 delta:!operations!private! !
+duration!public! !
 duration:!accessing!private! !
 getDuration!accessing!private! !
 hasExpired!private!testing! !
@@ -415,18 +421,16 @@ prod
 	TimingSemaphore signal!
 
 queryOsTimerResolution
-	| min max actual |
-	min := ByteArray newFixed: 4.
-	max := ByteArray newFixed: 4.
-	actual := ByteArray newFixed: 4.
+	| buf |
+	buf := ByteArray newFixed: 12.
 	(NTLibrary default
-		ntQueryTimerResolution: min
-		maximum: max
-		actual: actual) == 0
+		ntQueryTimerResolution: buf
+		maximum: buf yourAddress + 4
+		actual: buf yourAddress + 8) == 0
 		ifTrue: 
-			[LowestResolution := self clampResolution: (min dwordAtOffset: 0) // 10.
-			HighestResolution := self clampResolution: (max dwordAtOffset: 0) // 10.
-			Resolution := self clampResolution: (actual dwordAtOffset: 0) // 10]
+			[LowestResolution := self clampResolution: (buf dwordAtOffset: 0) // 10.
+			HighestResolution := self clampResolution: (buf dwordAtOffset: 4) // 10.
+			Resolution := self clampResolution: (buf dwordAtOffset: 8) // 10]
 		ifFalse: [LowestResolution := HighestResolution := Resolution := DefaultResolution]!
 
 reschedule
@@ -440,37 +444,6 @@ reschedule
 			Current isNil ifFalse: [Current snooze].	"put current back into Pending"
 			Pending do: [:each | each delta: delta].
 			self scheduleNext]!
-
-resolution
-	"Answer a <Duration> which is current resolution of Delays. This is the underlying resolution of the OS timer. Dolphin will try to service delays of this period, but it may not be possible. The resolution can be increased temporarily by using the #resolution:do: message, or permanently (not recommended) with #resolution:set:"
-
-	^Resolution microseconds!
-
-resolution: aDuration do: aNiladicValuable
-	"Evaluate the <monadicValuable> argument with the system timer resolution set to the number
-	of 100nS intervals specified by the <integer> argument. The actual timer resolution is
-	passed as the argument to the <monadicValuable>."
-
-	self resolution: aDuration set: true.
-	[aNiladicValuable value] ensure: [self resolution: aDuration set: false]!
-
-resolution: aDuration set: aBoolean
-	"Attempt to set or relinquish a timer resolution specified by the <integer> argument, which
-	represents the desired number of microseconds between each timer tick. If the <boolean>
-	argument is true, then the timer resolution is requested. If the <boolean> argument is
-	false, then a previous request for the specified resolution is given up. Answer the actual
-	timer resolution established in microseconds. On current windows systems the maximum
-	resolution is 500uS, and the minimum (and default) ~15mS. Note that increasing the timer
-	resolution can reduce battery life, so this should be used with care."
-
-	| actualResolution |
-	actualResolution := DWORDBytes new.
-	NTLibrary default
-		setTimerResolution: aDuration asNanoseconds // 100
-		set: aBoolean
-		actualResolution: actualResolution.
-	Resolution := actualResolution value // 10.
-	^Resolution!
 
 scheduleNext
 	"Private - Schedule the next Pending Delay (if any). MUST be called from within
@@ -493,6 +466,29 @@ signalTimerAfter: anInteger
 	<primitive: 100>
 	^self primitiveFailed: _failureCode!
 
+timerResolution
+	"Answer a <Duration> which is current resolution of Delays. This is the underlying resolution of the OS timer. Dolphin will try to service delays of this period, but it may not be possible. The resolution can be increased temporarily by using the #resolution:do: message, or permanently (not recommended) with #resolution:set:"
+
+	^Resolution microseconds!
+
+timerResolution: aDuration set: aBoolean
+	"Attempt to set or relinquish a timer resolution specified by the <integer> argument, which
+	represents the desired number of microseconds between each timer tick. If the <boolean>
+	argument is true, then the timer resolution is requested. If the <boolean> argument is
+	false, then a previous request for the specified resolution is given up. Answer the actual
+	timer resolution established in microseconds. On current windows systems the maximum
+	resolution is 500uS, and the minimum (and default) ~15mS. Note that increasing the timer
+	resolution can reduce battery life, so this should be used with care."
+
+	| actualResolution |
+	actualResolution := ByteArray newFixed: 4.
+	NTLibrary default
+		setTimerResolution: aDuration asNanoseconds // 100
+		set: aBoolean
+		actualResolution: actualResolution.
+	Resolution := (actualResolution dwordAtOffset: 0) // 10.
+	^Resolution microseconds!
+
 timingProcess
 	"Private - Answer the <Process> which is used to manage the list of pending Delays."
 
@@ -502,7 +498,14 @@ untilMilliseconds: millisecondTime
 	"Answer a new instance of the receiver that will make the active Process
 	wait until the millisecond clock reaches the value millisecondTime."
 
-	^self new resumptionTime: millisecondTime * 1000! !
+	^self new resumptionTime: millisecondTime * 1000!
+
+withTimerResolution: aDuration do: aMonadicValuable
+	"Evaluate the <monadicValuable> argument with the system timer resolution set to the <Duration> argument. The maximum resolution is 500uS. The actual timer resolution achieved passed as the argument to the <monadicValuable>."
+
+	| resolution |
+	resolution := self timerResolution: aDuration set: true.
+	[aMonadicValuable cull: resolution] ensure: [self timerResolution: aDuration set: false]! !
 
 !Delay class categoriesForMethods!
 aboutToIdle!event handling!private! !
@@ -528,12 +531,12 @@ onStartup!event handling!public! !
 prod!operations!private! !
 queryOsTimerResolution!helpers!private! !
 reschedule!initializing!private! !
-resolution!constants!public! !
-resolution:do:!operations!public! !
-resolution:set:!helpers!public! !
 scheduleNext!initializing!private! !
 signalTimerAfter:!private!processes-synchronising! !
+timerResolution!constants!public! !
+timerResolution:set:!helpers!public! !
 timingProcess!initializing!private! !
 untilMilliseconds:!instance creation!public! !
+withTimerResolution:do:!operations!public! !
 !
 

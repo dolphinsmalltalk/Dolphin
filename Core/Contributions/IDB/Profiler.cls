@@ -31,7 +31,7 @@ profile: aProcess forSet: aProfilerSampleSet ignoring: anInteger
 	sample set. Multiple processes can be profiled at the same time, as long as they use
 	different sample sets"
 
-	Delay resolution: samplingInterval
+	Delay withTimerResolution: samplingInterval
 		do: 
 			[| delay elapsed |
 			delay := Delay forDuration: samplingInterval.
