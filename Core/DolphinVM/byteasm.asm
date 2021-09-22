@@ -2996,7 +2996,7 @@ BEGINBYTECODE sendArithmeticBitShift
 	; since the majority of shifts are <= 16, perhaps should loop?
 	push 	_BP								; We must preserve _BP
 	sar		edx, 31							; Sign extend part 2
-	inc		ecx								; Need to check space for sign too
+	add		ecx, 1							; Need to check space for sign too
 	mov		_BP, edx						; Save sign in _BP too
 	shld	edx, eax, cl					; May overflow into edx
 	dec		ecx

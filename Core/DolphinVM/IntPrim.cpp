@@ -184,7 +184,7 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveBitShift(Oop* const sp, 
 		// since the majority of shifts are <= 16, perhaps should loop ?
 		push 	ebx						// We must preserve EBX
 		sar		edx, 31					// Sign extend part 2
-		inc		ecx						// Need to check space for sign too
+		add		ecx, 1						// Need to check space for sign too
 		mov		ebx, edx				// Save sign in ebx too
 		shld	edx, eax, cl			// May overflow into edx
 		dec		ecx
