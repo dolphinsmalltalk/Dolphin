@@ -42,7 +42,7 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp
 {
 	_asm
 	{
-		lea		edx, [edx * 4]
+		shl		edx, 2		// Multiply arg count by Oop size
 		sub		ecx, edx
 		cmp		[m_bStepping], 0
 		mov		eax, 90000009H
@@ -58,7 +58,7 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* c
 	_asm
 	{
 		mov		eax, ecx
-		lea		edx, [edx * 4]
+		shl		edx, 2
 		mov		ecx, [m_registers.m_oopNewMethod]
 		sub		eax, edx
 		mov		ecx, [ecx]OTE.m_location
@@ -80,7 +80,7 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* co
 		mov		ecx, [m_registers.m_oopNewMethod]
 		mov		eax, esi
 		mov		ecx, [ecx]OTE.m_location
-		lea		edx, [edx * 4]
+		shl		edx, 2
 		mov		ecx, [ecx]CompiledMethod.m_aLiterals[0]
 		sub		eax, edx
 		mov		ecx, [ecx]OTE.m_location
@@ -139,15 +139,16 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveSetInstVar(Oop* const sp
 		lea		eax, [ecx]VariantObject.m_fields[eax * OOPSIZE]
 
 		mov		edx, [esi]
-		mov		ecx, [eax]
 
 		test	dl, 1
 		jnz		store
-		inc		[edx]OTE.m_count
-		jnz		store
-		mov		[edx]OTE.m_count, 0xff // MAXCOUNT
+		mov		cl, [edx]OTE.m_count
+		add		cl, 1
+		jz		store
+		mov		[edx]OTE.m_count, cl;
 
 	store:
+		mov		ecx, [eax]
 		mov		[eax], edx
 		call	ObjectMemory::countDown
 
@@ -176,16 +177,17 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveSetMutableInstVar(Oop* c
 		lea		eax, [ecx]VariantObject.m_fields[eax * OOPSIZE]
 
 		mov		edx, [esi]
-		mov		ecx, [eax]
 
 		test	dl, 1
 		jnz		store
-		inc		[edx]OTE.m_count
-		jnz		store
-		mov		[edx]OTE.m_count, 0xff // MAXCOUNT
+		mov		cl, [edx]OTE.m_count
+		add		cl, 1
+		jz		store
+		mov		[edx]OTE.m_count, cl
 
 	store:
-		mov[eax], edx
+		mov		ecx, [eax]
+		mov		[eax], edx
 		call	ObjectMemory::countDown
 
 		lea		eax, [esi - OOPSIZE]
@@ -197,11 +199,12 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveSetMutableInstVar(Oop* c
 
 Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, primargcount_t argCount)
 {
-	// This arrangement avoids any conditional jumps, although there is no guarantee a new version 
-	// of the compiler won't optimize it differently, hence the _asm block above as the performance 
-	// of this method is surprisingly important
+	// This arrangement should avoid conditional jumps (can use cmov), but although it has worked
+	// on some versions of the VC++ compiler, it is now generate conditional jumps again
+	// Given the important of this operation to overall performance, its better to use
+	// the hand coded _asm block above here
 	Oop* newSp = sp - argCount;
-	return m_bStepping ? primitiveFailure(_PrimitiveFailureCode::DebugStep) : newSp;
+	return !m_bStepping ? newSp : primitiveFailure(_PrimitiveFailureCode::DebugStep);
 }
 
 Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* const sp, primargcount_t argCount)
@@ -258,10 +261,12 @@ Oop* __fastcall Interpreter::primitiveSetInstVar(Oop* const sp, primargcount_t)
 	if (!m_bStepping)
 	{
 		auto pMethod = oteSetter->m_location;
-		PointersOTE* oteReceiver = reinterpret_cast<PointersOTE*>(*(sp - 1));
+		auto oteReceiver = reinterpret_cast<PointersOTE*>(*(sp - 1));
 		if (!oteReceiver->isImmutable())
 		{
-			ObjectMemory::storePointerOfObjectWithValue(pMethod->m_packedByteCodes.third, oteReceiver, *sp);
+			auto objReceiver = oteReceiver->m_location;
+			auto index = pMethod->m_packedByteCodes.third;
+			ObjectMemory::storePointerWithValue(objReceiver->m_fields[index], *sp);
 			return sp - 1;
 		}
 		else
@@ -277,8 +282,8 @@ Oop* __fastcall Interpreter::primitiveSetMutableInstVar(Oop* const sp, primargco
 {
 	MethodOTE* oteSetter = m_registers.m_oopNewMethod;
 	auto pMethod = oteSetter->m_location;
-	PointersOTE* oteReceiver = reinterpret_cast<PointersOTE*>(*(sp - 1));
-	ObjectMemory::storePointerOfObjectWithValue(pMethod->m_packedByteCodes.third, oteReceiver, *sp);
+	auto oteReceiver = reinterpret_cast<PointersOTE*>(*(sp - 1));
+	ObjectMemory::storePointerWithValue(oteReceiver->m_location->m_fields[pMethod->m_packedByteCodes.third], *sp);
 	return sp - 1;
 }
 #endif
