@@ -17,20 +17,20 @@
 // N.B. Must be kept in sync with istasm.inc
 struct InterpreterRegisters
 {
-	ST::Process*		m_pActiveProcess;
+	MethodOTE*			m_oopNewMethod;
 	ST::CompiledMethod* m_pMethod;
-	uint8_t*				m_instructionPointer;
-	StackFrame*			m_pActiveFrame;
+	uint8_t*			m_instructionPointer;
+	ST::StackFrame*		m_pActiveFrame;
 	Oop*				m_stackPointer;
 	Oop*				m_basePointer;
 
 	// These are the only Oops the VM refererences without ref. counting them (for performance)
-	MethodOTE*			m_oopNewMethod;
+	ST::Process*		m_pActiveProcess;
 	ProcessOTE*			m_oteActiveProcess;
 
 public:
 	Oop activeFrameOop()			{ return Oop(m_pActiveFrame)+1; }
-	StackFrame& activeFrame()		{ return *m_pActiveFrame; }
+	ST::StackFrame& activeFrame()		{ return *m_pActiveFrame; }
 
 	void StoreIPInFrame();			// Save down IP to active frame
 	void LoadIPFromFrame();			// Load IP from active frame

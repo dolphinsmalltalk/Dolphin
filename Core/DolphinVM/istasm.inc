@@ -451,14 +451,14 @@ oteFalse				EQU		Pointers.False
 PBYTE TYPEDEF PTR BYTE
 
 InterpRegisters STRUCT 2t
-	m_pActiveProcess		PProcess		?
+	m_oopNewMethod			DWORD ?
 	m_pMethod				PCompiledCode ?
 	m_instructionPointer	PBYTE ?
 	m_pActiveFrame			PStackFrame ?
 	m_stackPointer			DWORD ?
 	m_basePointer			DWORD ?
 
-	m_oopNewMethod			DWORD ?
+	m_pActiveProcess		PProcess		?
 	m_oopActiveProcess		POTE  ?
 InterpRegisters ENDS
 
