@@ -25,6 +25,9 @@ static const char8_t LITERAL = u8'#';
 
 ///////////////////////
 
+// Createing a _locale_t is quite slow, and we only need one after all, so make it static
+_locale_t Lexer::m_locale = _create_locale(LC_ALL, "C");
+
 Lexer::Lexer()
 {
 	m_base = textpos_t::start;
@@ -37,14 +40,12 @@ Lexer::Lexer()
 	m_token = nullptr;
 	m_tokenType = TokenType::None;
 	m_tp = nullptr;
-	m_locale = _create_locale(LC_ALL, "C");
 	m_piVM = nullptr;
 	m_pVMPointers = nullptr;
 }
 
 Lexer::~Lexer()
 {
-	_free_locale(m_locale);
 	delete[] m_token;
 }
 
