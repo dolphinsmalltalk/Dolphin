@@ -264,7 +264,7 @@ private:
 	TEXTRANGE m_thisTokenRange;
 	TEXTRANGE m_lastTokenRange;
 
-	_locale_t m_locale;
+	static _locale_t m_locale;
 };
 	
 ///////////////////////////////////////////////////////////////////////////////
