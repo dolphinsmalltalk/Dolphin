@@ -2977,7 +2977,7 @@ BEGINBYTECODE sendArithmeticBitShift
 	jz		sendMessageToObject				; No, skip primitive response
 
 	mov		ecx, [_SP]						; Load argument from stack
-	mov		edx, eax						; Sign extend into edx from eax part 1
+	cdq										; Sign extend into edx from eax
 	sar		ecx, 1							; Access integer value
 	jnc		sendMessage						; Not a SmallInteger, send it #bitShift:
 	js		rightShift						; If negative, perform right shift (simpler)
@@ -2995,11 +2995,10 @@ BEGINBYTECODE sendArithmeticBitShift
 	; This overflow check works, but is slow (about 12 cycles)
 	; since the majority of shifts are <= 16, perhaps should loop?
 	push 	_BP								; We must preserve _BP
-	sar		edx, 31							; Sign extend part 2
-	add		ecx, 1							; Need to check space for sign too
+	add		cl, 1							; Need to check space for sign too
 	mov		_BP, edx						; Save sign in _BP too
 	shld	edx, eax, cl					; May overflow into edx
-	dec		ecx
+	dec		cl
 	xor		edx, _BP						; Overflowed?
 	pop		_BP
 	jnz		sendMessage						; Yes, LargeInteger needed
@@ -3250,6 +3249,9 @@ pointerAt:
 	mov		ecx, [ecx].m_instanceSpec			; Load Instancespecification into edx
 	ASSUME	ecx:DWORD
 
+	mov		eax, [eax].m_location				; Load address of receiver into eax
+	ASSUME	eax:PTR Oop
+
 	and		ecx, MASK m_fixedFields				; Mask off flags
 	shr		ecx, 1								; Convert from SmallInteger
 	add		edx, ecx							; Add fixed offset for inst vars
@@ -3258,9 +3260,6 @@ pointerAt:
 	pop		ebx
 
 	ja		indexTooLarge						; No, out of bounds
-
-	mov		eax, [eax].m_location				; Load address of receiver into eax
-	ASSUME	eax:PTR Oop
 
 	sub		_SP, OOPSIZE
 	MPrefetch
@@ -3303,6 +3302,7 @@ sendMessageToSmallInteger:						; Sent #basicAt: to a SmallInteger, probably an 
 	jmp		sendMessageToClass
 
 indexTooLarge:
+	mov		eax, [_SP-OOPSIZE]					; Reload receiver
 	ASSUME	eax:PTR OTE
 	mov		ecx, [eax].m_oteClass
 
@@ -4194,27 +4194,31 @@ BEGINPRIMITIVE primitiveActivateMethod
 	ASSUME	edx:PTR CompiledCodeObj
 	mov		[pMethod], ecx							; Save down pointer to new method
 
-	.IF ((BYTE PTR([eax].m_byteCodes) & 1))
-		add		eax, CompiledCodeObj.m_byteCodes
-	.ELSE
+	.IF (!(BYTE PTR([eax].m_byteCodes) & 1))
 		mov		eax, [eax].m_byteCodes
 		ASSUME	eax:PTR OTE
-		mov		eax, [eax].m_location
+		sub		_IP, [eax].m_location
+		ASSUME	eax:NOTHING
+	.ELSE
+		sub		_IP, CompiledCodeObj.m_byteCodes
+		sub		_IP, eax
 	.ENDIF
-	ASSUME	eax:NOTHING
-	sub		_IP, eax
+
 	IFDEF _DEBUG
 		.IF (_IP > 16384)
 			int	3									;; Probably a bug - unusual to have a method with more than 16k bytecodes
 		.ENDIF
 	ENDIF
+
 	; At this point _IP is the offset into the byte codes
 
 	movzx	eax, [edx].m_header.argumentCount
 
 	; Work out the new base pointer (points at first argument - not receiver)
+
+	add		_IP, _IP								; Convert _IP to SmallInteger (part 1)
 	neg		eax										; We'll be subtracting arg count
-	lea		_IP, [_IP+_IP+1]						; Convert old IP offset to SmallInteger for later
+	inc		_IP										; Convert _IP to SmallInteger (part 2)
 
 	; We're don't need pointer to new method any more
 	ASSUME ecx:NOTHING
