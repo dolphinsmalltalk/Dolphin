@@ -104,6 +104,16 @@ Compiler::~Compiler()
 		}
 	}
 
+
+	// Binding references
+	{
+		for (NAMEDOBJECTS::const_iterator it = m_bindingRefs.cbegin(); it != m_bindingRefs.cend(); it++)
+		{
+			auto pair = *it;
+			m_piVM->RemoveReference(reinterpret_cast<Oop>(pair.second));
+		}
+	}
+
 	// Free annotations
 	{
 		for (AnnotationVector::const_iterator it = m_annotations.cbegin(); it != m_annotations.cend(); it++)
@@ -116,6 +126,8 @@ Compiler::~Compiler()
 			}
 		}
 	}
+
+
 }
 
 void Compiler::SetVMInterface(IDolphin* piVM) 
