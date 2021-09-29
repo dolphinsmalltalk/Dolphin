@@ -6,6 +6,7 @@ UI.Scintilla.Attribute subclass: #'UI.Scintilla.TextStyle'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'CheckMonospacedMask' -> 16rC000.
 		'EolFilledMask' -> 16rC0.
 		'HotspotMask' -> 16rC00.
 		'InvisibleMask' -> 16r3000.
@@ -234,6 +235,16 @@ isItalic: aBooleanOrNil
 
 	self setThreeStateFlag: ItalicMask value: aBooleanOrNil!
 
+isPossiblyMonospaced
+	"Answer true if Scintilla should check that the receiver's font is monospaced in the ASCII range. This is an optimisation - see the [Scintilla documentation](https://www.scintilla.org/ScintillaDoc.html#SCI_STYLEGETCHECKMONOSPACED)"
+
+	^self getThreeStateFlag: CheckMonospacedMask!
+
+isPossiblyMonospaced: aBooleanOrNil
+	"Set whether Scintilla should check that the receiver's font is monospaced in the ASCII range. This is an optimisation - see the [Scintilla documentation](https://www.scintilla.org/ScintillaDoc.html#SCI_STYLESETCHECKMONOSPACED)"
+
+	self setThreeStateFlag: CheckMonospacedMask value: aBooleanOrNil!
+
 isPredefined
 	"Answer whether the receiver represents one of the styles pre-defined by Scintilla."
 
@@ -382,6 +393,8 @@ isInvisible!public!testing! !
 isInvisible:!accessing!public! !
 isItalic!public!testing! !
 isItalic:!accessing!public! !
+isPossiblyMonospaced!public!testing! !
+isPossiblyMonospaced:!accessing!public! !
 isPredefined!public!testing! !
 isReadOnly!public!testing! !
 isReadOnly:!accessing!public! !
@@ -504,6 +517,14 @@ buildPropertyMap
 					defaultValue: SC_WEIGHT_NORMAL
 					setMessage: SCI_STYLESETWEIGHT)
 					beNullable;
+					yourself);
+		at: #isPossiblyMonospaced
+			put: ((BoolPropertyDescriptor
+					getSelector: #isPossiblyMonospaced
+					defaultValue: false
+					setMessage: SCI_STYLESETCHECKMONOSPACED)
+					beNullable;
+					isNonBrowsable: true;
 					yourself);
 		shrink;
 		yourself!
