@@ -72,6 +72,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.AddClassRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.ChildrenToSiblingsRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.ExtractMethodRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.RBSourceFormatter class} #correspondingTestCase)
 	#(#{Refactory.Browser.RemoveClassRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.RenameClassRefactoring class} #correspondingTestCase)
 	#(#{Smalltalk class} #isEqualTo:)
@@ -534,6 +535,14 @@ correspondingTestCase!public! !
 correspondingTestCase
 	^Tests.ExtractMethodTest! !
 !Refactory.Browser.ExtractMethodRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.RBSourceFormatter class methodsFor!
+
+correspondingTestCase
+	^Tests.FormatterTest! !
+!Refactory.Browser.RBSourceFormatter class categoriesForMethods!
 correspondingTestCase!public! !
 !
 

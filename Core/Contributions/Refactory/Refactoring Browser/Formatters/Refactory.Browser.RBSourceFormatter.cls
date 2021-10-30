@@ -125,8 +125,7 @@ visitExternalCallNode: aStExternalCallNode
 			[:each |
 			codeStream space.
 			self visitNode: each].
-	codeStream nextPut: $>.
-	self newLine!
+	codeStream nextPut: $>.!
 
 visitMethodNode: aMethodNode
 	self formatMethodPatternFor: aMethodNode.
