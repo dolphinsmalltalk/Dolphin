@@ -72,6 +72,26 @@ testMeta
 	subject := self subjectClass pathString: 'Object'.
 	self assert: subject meta identicalTo: subject!
 
+testPathString
+	| subject pathString |
+	self bindingTestCases do: 
+			[:each |
+			| path |
+			path := each first.
+			pathString := $. join: path.
+			subject := self subjectClass pathString: pathString.
+			self assert: subject path equals: path].
+	subject := self subjectClass pathString: ''.
+	self assert: subject path equals: #()!
+
+testPathStringWithClass
+	#('Association class' 'Core.Association class' 'Association private class' 'Core.Association class private')
+		do: 
+			[:each |
+			| subject |
+			subject := BindingReference pathString: each.
+			self assert: subject value identicalTo: Association class]!
+
 testRefersToLiteral
 	| method |
 	method := self class >> testSelector.
@@ -97,6 +117,8 @@ testLessOrEqual!public!unit tests! !
 testLiteral!public! !
 testLiteralImplicitEnvironmentRelative!public! !
 testMeta!public!unit tests! !
+testPathString!public!unit tests! !
+testPathStringWithClass!public!unit tests! !
 testRefersToLiteral!public!unit tests! !
 valueOfBinding:!helpers!private! !
 !

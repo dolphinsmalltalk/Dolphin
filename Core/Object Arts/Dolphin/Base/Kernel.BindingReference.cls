@@ -289,12 +289,30 @@ pathString: aString scope: aBindingScope
 	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is relative to the binding context, anObject. If anObject is nil, then the instance is a reference from Smalltalk.
 	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance is then a contextual BindingReference with that object as (potentially) its starting point for resolving the binding. However, the context is only relevant as a start point for binding if the path string is an unqualified name, or has the special relative prefix, '_', as the first component of the path. Otherwise the binding reference is considered to specify the full-name of the binding, and will always bind to the same static variable, regardless of context. Since the context is not needed for absolute bindings, it will be discarded - the context of absolute bindings is always nil, which in practice means their binding root is Smalltalk."
 
-	^self
-		pathString: aString
-		scope: aBindingScope
-		flags: ((aBindingScope notNil and: [(aString includes: $.) not or: [aString beginsWith: '_.']])
-				ifTrue: [RelativeMask]
-				ifFalse: [0])!
+	| components count |
+	components := $\x20 split: aString.
+	count := components size.
+	^count > 0
+		ifTrue: 
+			[| qualifiedName flags |
+			qualifiedName := components at: 1.
+			flags := (aBindingScope notNil
+						and: [(qualifiedName identityIncludes: $.) not or: [qualifiedName beginsWith: '_.']])
+							ifTrue: [RelativeMask]
+							ifFalse: [0].
+			count > 1
+				ifTrue: 
+					[(components includes: 'class') ifTrue: [flags := flags bitOr: MetaMask].
+					(components includes: 'private') ifTrue: [flags := flags bitOr: PrivateMask]].
+			self
+				pathString: qualifiedName
+				scope: aBindingScope
+				flags: flags]
+		ifFalse: 
+			[self
+				pathString: aString
+				scope: aBindingScope
+				flags: 0]!
 
 pathString: aString scope: aBindingScope flags: anInteger
 	"Private - Note that this is sent directly by the Compiler to construct literal instances."
