@@ -97,10 +97,10 @@ getDiskFreeSpace
 	"Private - Call the Win32 GetDiskFreeSpace() API to retrieve the cluster sizes, etc."
 
 	| sectorsPerClusterBuf bytesPerSectorBuf numberOfFreeClustersBuf totalNumberOfClustersBuf |
-	sectorsPerClusterBuf := DWORD new.
-	bytesPerSectorBuf := DWORD new.
-	numberOfFreeClustersBuf := DWORD new.
-	totalNumberOfClustersBuf := DWORD new.
+	sectorsPerClusterBuf := UInt32Bytes new.
+	bytesPerSectorBuf := UInt32Bytes new.
+	numberOfFreeClustersBuf := UInt32Bytes new.
+	totalNumberOfClustersBuf := UInt32Bytes new.
 	(Kernel32
 		getDiskFreeSpace: self rootPath
 		lpSectorsPerCluster: sectorsPerClusterBuf
@@ -124,9 +124,9 @@ getDiskFreeSpaceEx
 	"Private - Call the Win32 GetDiskFreeSpace() API to retrieve the free space etc, etc."
 
 	| freeBytesAvailableBuf totalNumberOfBytesBuf totalNumberOfFreeBytesBuf |
-	freeBytesAvailableBuf := ULARGE_INTEGER new.
-	totalNumberOfBytesBuf := ULARGE_INTEGER new.
-	totalNumberOfFreeBytesBuf := ULARGE_INTEGER new.
+	freeBytesAvailableBuf := UInt64Bytes new.
+	totalNumberOfBytesBuf := UInt64Bytes new.
+	totalNumberOfFreeBytesBuf := UInt64Bytes new.
 	(Kernel32
 		getDiskFreeSpaceEx: path
 		lpFreeBytesAvailable: freeBytesAvailableBuf
@@ -154,9 +154,9 @@ getVolumeInformation
 
 	| volumeNameBuffer volumeSerialNumber maximumComponentLengthBuffer fileSystemFlagsBuffer fileSystemNameBuffer |
 	volumeNameBuffer := Utf16String newFixed: CRTConstants._MAX_PATH.
-	volumeSerialNumber := DWORDBytes new.
-	maximumComponentLengthBuffer := DWORDBytes new.
-	fileSystemFlagsBuffer := DWORDBytes new.
+	volumeSerialNumber := UInt32Bytes new.
+	maximumComponentLengthBuffer := UInt32Bytes new.
+	fileSystemFlagsBuffer := UInt32Bytes new.
 	fileSystemNameBuffer := volumeNameBuffer copy.
 	(Kernel32
 		getVolumeInformation: self rootPath

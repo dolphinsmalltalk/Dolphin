@@ -33,7 +33,7 @@ createImage: anImage extent: aPoint
 		ifFalse: 
 			[| palBitmap hdc bits |
 			"Palettized usage"
-			bits := DWORDBytes new.
+			bits := UInt32Bytes new.
 			palBitmap := Gdi32
 						createBitmap: 1
 						nHeight: 1

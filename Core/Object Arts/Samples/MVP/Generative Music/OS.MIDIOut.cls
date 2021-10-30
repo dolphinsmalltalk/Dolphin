@@ -53,9 +53,9 @@ keyUp: noteNum channel: channel
 		with: noteNum
 		with: 0!
 
-openDeviceID: deviceID 
-	handle := DWORDBytes new.
-	^WinMMLibrary default 
+openDeviceID: deviceID
+	handle := UInt32Bytes new.
+	^WinMMLibrary default
 		midiOutOpenLphmo: handle
 		uDeviceID: deviceID
 		dwCallback: nil

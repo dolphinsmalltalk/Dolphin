@@ -146,7 +146,7 @@ isName: aString
 	"Answer whether specified string is the name of a member in the receiver."
 
 	| answer |
-	answer := DWORDBytes new.
+	answer := UInt32Bytes new.
 	self
 		IsName: aString asUtf16String
 		lHashVal: 0

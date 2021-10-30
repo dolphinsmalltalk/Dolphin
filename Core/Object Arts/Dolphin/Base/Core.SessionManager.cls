@@ -208,7 +208,7 @@ computerName
 
 	| name nameSize |
 	name := Utf16String newFixed: MAX_COMPUTERNAME_LENGTH.
-	nameSize := External.DWORDBytes fromInteger: name size + 1.
+	nameSize := External.UInt32Bytes fromInteger: name size + 1.
 	(Kernel32 getComputerName: name nSize: nameSize asParameter) ifFalse: [Kernel32 systemError].
 	^name leftString: nameSize asInteger!
 
@@ -1125,7 +1125,7 @@ userName
 
 	| name nameSize |
 	name := Utf16String new: 256.
-	nameSize := External.DWORDBytes fromInteger: name size.
+	nameSize := External.UInt32Bytes fromInteger: name size.
 	(AdvApi32 getUserName: name nSize: nameSize asParameter) ifFalse: [AdvApi32 systemError].
 	^name leftString: nameSize asInteger - 1!
 

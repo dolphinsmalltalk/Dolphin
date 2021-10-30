@@ -129,7 +129,7 @@ documentationForMember: memid ifAbsent: exceptionHandler
 	| bstrName bstrDocString dwHelpContext answer hr |
 	bstrName := BSTR basicNew.
 	bstrDocString := BSTR basicNew.
-	dwHelpContext := DWORDBytes new.
+	dwHelpContext := UInt32Bytes new.
 	hr := self tlbInterface
 				GetDocumentation: memid
 				pBstrName: bstrName

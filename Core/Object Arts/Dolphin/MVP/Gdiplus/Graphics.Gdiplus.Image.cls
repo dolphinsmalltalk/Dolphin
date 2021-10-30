@@ -1097,7 +1097,7 @@ exampleGdipIJPEGCompression
 		Guid: EncoderQuality;
 		Type: EncoderParameterValueTypeLong;
 		NumberOfValues: 1.
-	quality := DWORDBytes new.
+	quality := UInt32Bytes new.
 	encoderParameter Value: quality yourAddress.
 	images := OrderedCollection new.
 	#(0 30 70 100) do: 
@@ -1224,7 +1224,7 @@ exampleGdipIMultiFrame
 	| encoderParameters parameter value image1 image2 image3 toFile guids |
 	encoderParameters := GpEncoderParameters new Count: 1.
 	parameter := encoderParameters Parameter first.
-	value := DWORDBytes new.
+	value := UInt32Bytes new.
 	parameter
 		Guid: EncoderSaveFlag;
 		Type: EncoderParameterValueTypeLong;

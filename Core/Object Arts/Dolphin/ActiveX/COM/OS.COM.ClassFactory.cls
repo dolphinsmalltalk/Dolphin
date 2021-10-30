@@ -125,7 +125,7 @@ register
 
 	| iClassFactory dwCookie |
 	self revoke.	"revoke any existing registration"
-	dwCookie := DWORDBytes new.
+	dwCookie := UInt32Bytes new.
 	iClassFactory := IClassFactory on: self.
 	
 	[Ole32

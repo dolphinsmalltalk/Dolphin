@@ -270,10 +270,7 @@ gpFault: exceptionRecordBytes
 	| exceptionRecord |
 	self enableInterrupts.
 	exceptionRecord := EXCEPTION_RECORD fromBytes: exceptionRecordBytes.
-	GPFault signalWith: exceptionRecord
-	"
-ExternalAddress new dwordAtOffset:0
-"!
+	GPFault signalWith: exceptionRecord!
 
 highestPriority
 	"Answer the highest priority level available"

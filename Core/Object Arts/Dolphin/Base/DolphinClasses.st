@@ -1234,6 +1234,7 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'MAPVK_VSC_TO_VK_CHAR' -> 16r2.
 		'MAPVK_VSC_TO_VK_EX' -> 16r3.
 		'MAX_COMPUTERNAME_LENGTH' -> 16rF.
+		'MAX_PATH' -> 16r104.
 		'MAX_UCSCHAR' -> 16r10FFFF.
 		'MB_ERR_INVALID_CHARS' -> 16r8.
 		'MEM_COMMIT' -> 16r1000.
@@ -2021,7 +2022,6 @@ Kernel.SharedPool subclass: #'OS.WinRegConstants'
 		'HKEY_CLASSES_ROOT' -> 16r80000000.
 		'HKEY_CURRENT_CONFIG' -> 16r80000005.
 		'HKEY_CURRENT_USER' -> 16r80000001.
-		'HKEY_DYN_DATA' -> 16r80000006.
 		'HKEY_LOCAL_MACHINE' -> 16r80000002.
 		'HKEY_USERS' -> 16r80000003.
 		'KEY_ALL_ACCESS' -> 16rF003F.
@@ -2036,7 +2036,10 @@ Kernel.SharedPool subclass: #'OS.WinRegConstants'
 		'KEY_WRITE' -> 16r20006.
 		'REG_BINARY' -> 16r3.
 		'REG_DWORD' -> 16r4.
+		'REG_DWORD_BIG_ENDIAN' -> 16r5.
+		'REG_DWORD_LITTLE_ENDIAN' -> 16r4.
 		'REG_EXPAND_SZ' -> 16r2.
+		'REG_FULL_RESOURCE_DESCRIPTOR' -> 16r9.
 		'REG_MULTI_SZ' -> 16r7.
 		'REG_NONE' -> 16r0.
 		'REG_OPTION_CREATE_LINK' -> 16r2.
@@ -2044,6 +2047,9 @@ Kernel.SharedPool subclass: #'OS.WinRegConstants'
 		'REG_OPTION_OPEN_LINK' -> 16r8.
 		'REG_OPTION_VOLATILE' -> 16r1.
 		'REG_QWORD' -> 16rB.
+		'REG_QWORD_LITTLE_ENDIAN' -> 16rB.
+		'REG_RESOURCE_LIST' -> 16r8.
+		'REG_RESOURCE_REQUIREMENTS_LIST' -> 16rA.
 		'REG_SZ' -> 16r1.
 		'RRF_NOEXPAND' -> 16r10000000.
 		'RRF_RT_ANY' -> 16rFFFF.
@@ -2943,7 +2949,13 @@ Core.ByteArray variableByteSubclass: #'External.IntegerBytes'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-External.IntegerBytes variableByteSubclass: #'External.DWORDBytes'
+External.IntegerBytes variableByteSubclass: #'External.UInt32Bytes'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+External.IntegerBytes variableByteSubclass: #'External.UInt64Bytes'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

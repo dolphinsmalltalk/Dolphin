@@ -772,7 +772,7 @@ testErrorsExtArgCountMismatch
 		range: (mark to: (source lastIndexOf: $>) - 1)!
 
 testErrorsExtTypeIndirections
-	#(#('blah %<cdecl: <1s> blah%>' 'lppvoid*') #('blah %<cdecl: <1s> blah%>' 'lppvoid**') #('blah %<cdecl: <1s> blah%>' 'lpvoid**') #('blah %<cdecl: sdword blah <1s>%>' 'LPVOID**') #('blah %<cdecl: sdword blah DWORD** ExternalAddress* <1s>%>' 'ExternalAddress**') #('blah %<cdecl: sdword blah BSTR* <1s>%>' 'BSTR**') #('blah: a _: b _: c _d: d %<cdecl: sdword blah GUID** REFGUID* GUID* <1s>%>' 'REFGUID**'))
+	#(#('blah %<cdecl: <1s> blah%>' 'lppvoid*') #('blah %<cdecl: <1s> blah%>' 'lppvoid**') #('blah %<cdecl: <1s> blah%>' 'lpvoid**') #('blah %<cdecl: sdword blah <1s>%>' 'LPVOID**') #('blah %<cdecl: sdword blah DWORD** Address* <1s>%>' 'Address**') #('blah %<cdecl: sdword blah BSTR* <1s>%>' 'BSTR**') #('blah: a _: b _: c _d: d %<cdecl: sdword blah GUID** REFGUID* GUID* <1s>%>' 'REFGUID**'))
 		do: 
 			[:each |
 			| mark source |

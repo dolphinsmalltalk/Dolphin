@@ -428,13 +428,14 @@ initializeExternalTypes
 
 	"Convert a few class types to the special types to save space and time"
 	valueTypes
-		at: 'ExternalAddress' put: ExtCallArgLPVOID;
-		at: 'ExternalHandle' put: ExtCallArgHANDLE;
-		at: 'BSTR' put: ExtCallArgBSTR;
-		at: 'VARIANT' put: ExtCallArgVARIANT;
+		at: 'Address' put: ExtCallArgLPVOID;
+		at: 'Handle' put: ExtCallArgHANDLE;
+		at: 'BOOL' put: ExtCallArgBOOL;
 		at: 'SDWORD' put: ExtCallArgSDWORD;
+		at: 'UInt32Bytes' put: ExtCallArgDWORD;
 		at: 'DWORD' put: ExtCallArgDWORD;
 		at: 'INT_PTR' put: ExtCallArgINTPTR;
+		at: 'UIntPtrBytes' put: ExtCallArgUINTPTR;
 		at: 'UINT_PTR' put: ExtCallArgUINTPTR;
 		at: 'LPVOID' put: ExtCallArgLPVOID;
 		at: 'DOUBLE' put: ExtCallArgDOUBLE;
@@ -445,6 +446,7 @@ initializeExternalTypes
 		at: 'WORD' put: ExtCallArgWORD;
 		at: 'SWORD' put: ExtCallArgSWORD;
 		at: 'LPWSTR' put: ExtCallArgLPWSTR;
+		at: 'UInt64Bytes' put: ExtCallArgQWORD;
 		at: 'QWORD' put: ExtCallArgQWORD;
 		at: 'ULARGE_INTEGER' put: ExtCallArgQWORD;
 		at: 'SQWORD' put: ExtCallArgSQWORD;
@@ -452,14 +454,15 @@ initializeExternalTypes
 		at: 'GUID' put: ExtCallArgGUID;
 		at: 'IID' put: ExtCallArgGUID;
 		at: 'CLSID' put: ExtCallArgGUID;
+		at: 'BSTR' put: ExtCallArgBSTR;
+		at: 'VARIANT' put: ExtCallArgVARIANT;
 		at: 'VARIANT_BOOL' put: ExtCallArgVARBOOL;
 		at: 'DATE' put: ExtCallArgDATE;
 		shrink;
 		isImmutable: true.
 	"The ValueTypes variable is assigned for testing purposes"
 	self addClassVariable: 'ValueTypes' value: valueTypes.
-	self addClassConstant: 'TypeNames' value: typeNames.
-!
+	self addClassConstant: 'TypeNames' value: typeNames!
 
 initializeTypeSizes
 	| typeSizes |

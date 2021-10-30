@@ -478,6 +478,7 @@ Kernel.SharedPool subclass: #'OS.Win32Constants'
 		'MAPVK_VSC_TO_VK_CHAR' -> 16r2.
 		'MAPVK_VSC_TO_VK_EX' -> 16r3.
 		'MAX_COMPUTERNAME_LENGTH' -> 16rF.
+		'MAX_PATH' -> 16r104.
 		'MAX_UCSCHAR' -> 16r10FFFF.
 		'MB_ERR_INVALID_CHARS' -> 16r8.
 		'MEM_COMMIT' -> 16r1000.

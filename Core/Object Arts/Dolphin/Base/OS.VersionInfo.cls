@@ -77,7 +77,7 @@ getFixedInfo
 	version info from the receiver."
 
 	| info lib dwLen |
-	dwLen := DWORDBytes new.
+	dwLen := UInt32Bytes new.
 	info := VS_FIXEDFILEINFO newPointer.
 	lib := VersionLibrary default.
 	^(lib
@@ -144,7 +144,7 @@ queryValue: name into: buf
 	"Private - Get the language/code-page id from the version info block."
 
 	| dwLen |
-	dwLen := DWORDBytes fromInteger: 123.
+	dwLen := UInt32Bytes fromInteger: 123.
 	VersionLibrary default
 		verQueryValue: fileInfo
 		lpSubBlock: name

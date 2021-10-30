@@ -42,7 +42,7 @@ testAsInteger
 	| guids status |
 	self assert: self subjectClass null asInteger equals: 0.
 	guids := (1 to: 3) collect: [:i | self subjectClass newUnique].
-	status := DWORDBytes new.
+	status := UInt32Bytes new.
 	guids do: 
 			[:subject |
 			| int cmp |

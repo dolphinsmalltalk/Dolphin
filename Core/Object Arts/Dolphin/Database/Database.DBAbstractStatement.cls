@@ -123,10 +123,10 @@ describeCols: columnNumbers
 	"Similarly, re-usable buffers for all the other output parameters"
 	colNameLen := External.SWORD new.
 	dataType := External.SWORD new.
-	columnSize := External.DWORDBytes new.
+	columnSize := External.UInt32Bytes new.
 	decimalDigits := External.SWORD new.
 	nullable := External.SWORD new.
-	colLen := External.DWORDBytes new.
+	colLen := External.UInt32Bytes new.
 	hStmt := self executedHandle.
 	answer := Array new: columnNumbers size.
 	i := 1.

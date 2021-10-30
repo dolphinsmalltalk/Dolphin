@@ -35,7 +35,7 @@ displayOn: aPuttableStream
 	| buf len |
 	(self isNull or: [self sa_family == 0]) ifTrue: [^self].
 	buf := Utf16String newFixed: INET6_ADDRSTRLEN.
-	len := DWORDBytes fromInteger: buf size.
+	len := UInt32Bytes fromInteger: buf size.
 	Ws2_32
 		wsaAddressToStringW: bytes
 		dwAddressLength: self byteSize

@@ -123,7 +123,7 @@ Read: pv cb: cb pcbRead: pcbRead
 	<virtual stdcall: hresult 4 sbyte* dword dword*>
 	^self invalidCall: _failureCode!
 
-read: buffer count: anInteger 
+read: buffer count: anInteger
 	"Attempt to read the specified number of bytes from the receiver's stream
 	into the supplied buffer. Answer the actual number of bytes read.
 	N.B. This purposely simulates the File>>read:count: method in order to
@@ -131,8 +131,8 @@ read: buffer count: anInteger
 	equivalent of Files)"
 
 	| read |
-	read := DWORDBytes new.
-	self 
+	read := UInt32Bytes new.
+	self
 		Read: buffer
 		cb: anInteger
 		pcbRead: read.
@@ -179,13 +179,13 @@ Write: pv cb: cb pcbWritten: pcbWritten
 	<virtual stdcall: hresult 5 sbyte* dword dword*>
 	^self invalidCall: _failureCode!
 
-write: buffer count: anInteger 
+write: buffer count: anInteger
 	"Attempt to write the specified number of bytes into the receiver's stream
 	from the supplied buffer. Answer the actual number of bytes written."
 
 	| written |
-	written := DWORDBytes new.
-	self 
+	written := UInt32Bytes new.
+	self
 		Write: buffer
 		cb: anInteger
 		pcbWritten: written.

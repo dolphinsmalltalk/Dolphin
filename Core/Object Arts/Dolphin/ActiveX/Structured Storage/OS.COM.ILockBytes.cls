@@ -79,15 +79,15 @@ LockRegion: libOffset cb: cb dwLockType: dwLockType
 	<virtual stdcall: hresult 8 qword qword dword>
 	^self invalidCall: _failureCode!
 
-readAt: offset bytes: data count: count 
+readAt: offset bytes: data count: count
 	"Read the specified number of bytes into the supplied buffer (a byte object
 	or an address) from the specified offset. Answer the number of bytes actually read.
 	Raise a subscript bounds exception if the number of bytes read does not equal the number
 	requested."
 
 	| bytesRead |
-	bytesRead := DWORDBytes new.
-	self 
+	bytesRead := UInt32Bytes new.
+	self
 		ReadAt: offset
 		pv: data
 		cb: count
@@ -182,13 +182,13 @@ UnlockRegion: libOffset cb: cb dwLockType: dwLockType
 	<virtual stdcall: hresult 9 qword qword dword>
 	^self invalidCall: _failureCode!
 
-writeAt: offset bytes: data count: count 
+writeAt: offset bytes: data count: count
 	"Write the specified number of bytes from the supplied data (a byte object
 	or an address) at the specified offset. Answer the number of bytes actually written."
 
 	| bytesWritten |
-	bytesWritten := DWORDBytes new.
-	self 
+	bytesWritten := UInt32Bytes new.
+	self
 		WriteAt: offset
 		pv: data
 		cb: count

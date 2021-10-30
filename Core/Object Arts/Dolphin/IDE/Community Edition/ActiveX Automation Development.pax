@@ -60,7 +60,6 @@ package setMethodNames: #(
 	#(#{External.DOUBLE class} #fieldType)
 	#(#{External.DWORD class} #arrayType)
 	#(#{External.DWORD class} #fieldType)
-	#(#{External.DWORDBytes class} #fieldType)
 	#(#{External.DynamicLinkLibrary} #DllRegisterServer)
 	#(#{External.ExternalArray class} #arrayType)
 	#(#{External.ExternalArray class} #fieldType)
@@ -113,6 +112,8 @@ package setMethodNames: #(
 	#(#{External.SWORD class} #fieldType)
 	#(#{External.UINT_PTR class} #arrayType)
 	#(#{External.UINT_PTR class} #fieldType)
+	#(#{External.UInt32Bytes class} #fieldType)
+	#(#{External.UInt64Bytes class} #fieldType)
 	#(#{External.UIntPtrBytes class} #fieldType)
 	#(#{External.VOID class} #arrayType)
 	#(#{External.VOID class} #fieldType)
@@ -1014,17 +1015,6 @@ arrayType!constants!private! !
 fieldType!constants!private! !
 !
 
-!External.DWORDBytes class methodsFor!
-
-fieldType
-	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
-	other structures."
-
-	^DWORDField! !
-!External.DWORDBytes class categoriesForMethods!
-fieldType!constants!development!private! !
-!
-
 !External.DynamicLinkLibrary methodsFor!
 
 DllRegisterServer
@@ -1601,6 +1591,28 @@ fieldType
 !External.UINT_PTR class categoriesForMethods!
 arrayType!constants!private! !
 fieldType!constants!private! !
+!
+
+!External.UInt32Bytes class methodsFor!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^DWORDField! !
+!External.UInt32Bytes class categoriesForMethods!
+fieldType!constants!development!private! !
+!
+
+!External.UInt64Bytes class methodsFor!
+
+fieldType
+	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
+	other structures."
+
+	^QWORDField! !
+!External.UInt64Bytes class categoriesForMethods!
+fieldType!constants!development!private! !
 !
 
 !External.UIntPtrBytes class methodsFor!
@@ -5240,7 +5252,7 @@ idlAttributes
 idlAttributesOfFunc: aFUNCDESC
 	"Private - Answer a <sequencedReadableCollection> of IDL attribute strings for the receiver."
 
-	^{'entry("%s")' sprintfWith: aFUNCDESC name} , aFUNCDESC idlAttributes!
+	^{'entry("<1s>")' << aFUNCDESC name} , aFUNCDESC idlAttributes!
 
 idlKeyword
 	"Private - Answer a <readableString> IDL keyword for the type of object

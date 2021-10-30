@@ -63,7 +63,7 @@ beSparse
 	does not support sparse files, or if the file has not been opened with write permissions."
 
 	| bytesReturnedBuf |
-	bytesReturnedBuf := External.DWORDBytes new.
+	bytesReturnedBuf := External.UInt32Bytes new.
 	(Kernel32
 		deviceIoControl: self asParameter
 		dwIoControlCode: FSCTL_SET_SPARSE
@@ -946,37 +946,30 @@ initialize
 		NoCheckModes		Ditto, without error checking."
 
 	self addClassConstant: 'ShareModes'
-		value: ##(IdentityDictionary new
-				at: #read put: FILE_SHARE_READ;
-				at: #write put: FILE_SHARE_WRITE;
-				at: #readWrite put: FILE_SHARE_READ | FILE_SHARE_WRITE;
-				at: #exclusive put: 0;
-				shrink;
+		value: ##((IdentityDictionary withAll: {#read -> FILE_SHARE_READ.
+						#readWrite -> (FILE_SHARE_READ | FILE_SHARE_WRITE).
+						#write -> FILE_SHARE_WRITE.
+						#exclusive -> 0})
+				isImmutable: true;
 				yourself).
+	"open will only ever open an existing file"
 	self addClassConstant: 'CheckModes'
-		value: ##(IdentityDictionary new
-				at: #read put: OPEN_EXISTING | GENERIC_READ;
-				at: #create put: CREATE_NEW | GENERIC_READ | GENERIC_WRITE;
-				at: #open put: OPEN_EXISTING | GENERIC_READ | GENERIC_WRITE;
-				at: #append put: OPEN_EXISTING | GENERIC_READ | GENERIC_WRITE;
-				at: #truncate put: TRUNCATE_EXISTING | GENERIC_READ | GENERIC_WRITE;
-				shrink;
-				yourself
-			"open will only ever open an existing file").
-	"open will only ever open an existing file"
-	"open will only ever open an existing file"
-	self addClassConstant: 'NoCheckModes'
-		value: ##(IdentityDictionary new
-				at: #read put: OPEN_ALWAYS | GENERIC_READ;
-				at: #create put: OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE;
-				at: #open put: OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE;
-				at: #append put: OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE;
-				at: #truncate put: CREATE_ALWAYS | GENERIC_READ | GENERIC_WRITE;
-				shrink;
-				yourself
-			"No check read is a bit of a nonsense, but ...")
+		value: ##((IdentityDictionary withAll: {#read -> (OPEN_EXISTING | GENERIC_READ).
+						#create -> (CREATE_NEW | GENERIC_READ | GENERIC_WRITE).
+						#open -> (OPEN_EXISTING | GENERIC_READ | GENERIC_WRITE).
+						#append -> (OPEN_EXISTING | GENERIC_READ | GENERIC_WRITE).
+						#truncate -> (TRUNCATE_EXISTING | GENERIC_READ | GENERIC_WRITE)})
+				isImmutable: true;
+				yourself).
 	"No check read is a bit of a nonsense, but ..."
-	"No check read is a bit of a nonsense, but ..."!
+	self addClassConstant: 'NoCheckModes'
+		value: ##((IdentityDictionary withAll: {#read -> (OPEN_ALWAYS | GENERIC_READ).
+						#create -> (OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE).
+						#open -> (OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE).
+						#append -> (OPEN_ALWAYS | GENERIC_READ | GENERIC_WRITE).
+						#truncate -> (CREATE_ALWAYS | GENERIC_READ | GENERIC_WRITE)})
+				isImmutable: true;
+				yourself)!
 
 isDirectory: aString
 	"Answer true if there is a directory whose path is given by aString."

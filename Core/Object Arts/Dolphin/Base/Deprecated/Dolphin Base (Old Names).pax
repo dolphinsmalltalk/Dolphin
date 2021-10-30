@@ -8,6 +8,7 @@ The names are deprecated, but will be referenced by many pre-7.2 packages.'.
 
 
 package setVariableNames: #(
+	#{Smalltalk.DWORDBytes}
 	#{Smalltalk.ExternalAddress}
 	#{Smalltalk.ExternalCallback}
 	#{Smalltalk.ExternalDescriptor}
@@ -25,6 +26,7 @@ package setVariableNames: #(
 ).
 
 package setAliasVariableNames: #(
+	#{Smalltalk.DWORDBytes}
 	#{Smalltalk.ExternalAddress}
 	#{Smalltalk.ExternalCallback}
 	#{Smalltalk.ExternalDescriptor}
@@ -48,6 +50,8 @@ package setPrerequisites: #(
 package!
 
 "Variable Aliases"!
+
+Smalltalk.DWORDBytes := External.UInt32Bytes!
 
 Smalltalk.ExternalAddress := External.Address!
 

@@ -6944,7 +6944,7 @@ initialize
 	| input newToken |
 	input := GdiplusStartupInput new.
 	input GdiplusVersion: 1.
-	newToken := DWORDBytes new.
+	newToken := UInt32Bytes new.
 	self
 		gdiplusStartup: newToken
 		input: input

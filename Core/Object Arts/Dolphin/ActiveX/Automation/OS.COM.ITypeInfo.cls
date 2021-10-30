@@ -258,7 +258,7 @@ getNamesOfMember: memid count: cMaxNames
 
 	| names bstr cNames |
 	names := UINT_PTRArray new: cMaxNames.
-	cNames := DWORDBytes new.
+	cNames := UInt32Bytes new.
 	self
 		GetNames: memid
 		rgBstrNames: names
@@ -394,7 +394,7 @@ idOfName: name ifAbsent: exceptionHandler
 	dispId := SDWORD new.
 	uName := name asUtf16String.
 	hr := self
-				GetIDsOfNames: (DWORDBytes fromInteger: uName yourAddress)
+				GetIDsOfNames: (UInt32Bytes fromInteger: uName yourAddress)
 				cNames: 1
 				pMemId: dispId.
 	^hr < 0
@@ -409,7 +409,7 @@ index
 
 	| lib myIndex |
 	lib := ITypeLib newPointer.
-	myIndex := DWORDBytes new.
+	myIndex := UInt32Bytes new.
 	self GetContainingTypeLib: lib pIndex: myIndex.
 	lib free.
 	^myIndex asInteger + 1!
@@ -451,10 +451,10 @@ libraryAndIndex
 
 	| lib myIndex lib2 |
 	lib := ITypeLib newPointer.
-	myIndex := DWORDBytes new.
+	myIndex := UInt32Bytes new.
 	self GetContainingTypeLib: lib pIndex: myIndex.
 	lib2 := lib queryInterface: ITypeLib2 ifNone: [].
-	^(lib2 isNil 
+	^(lib2 isNil
 		ifTrue: [lib]
 		ifFalse: 
 			[lib free.

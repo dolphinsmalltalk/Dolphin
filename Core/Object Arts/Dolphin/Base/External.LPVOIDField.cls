@@ -12,8 +12,8 @@ External.LPVOIDField comment: '<LPVOIDField> is a <ScalarField> type to represen
 !External.LPVOIDField methodsFor!
 
 readFrom: anExternalStructure
-	"Private - Answer an <ExternalAddress> with the same value as the pointer field at the
-	receiver's offset in the <ExternalStructure> argument."
+	"Private - Answer an <External.Address> with the same value as the pointer field at the
+	receiver's offset in the <External.Structure> argument."
 
 	^(anExternalStructure bytes uintPtrAtOffset: offset) asExternalAddress!
 

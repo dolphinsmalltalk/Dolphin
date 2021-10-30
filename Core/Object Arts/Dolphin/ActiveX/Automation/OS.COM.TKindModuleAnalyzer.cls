@@ -31,7 +31,7 @@ getDllEntry: funcDesc
 	| pBstrDllName pBstrName pwOrdinal answer |
 	pBstrDllName := BSTR new.
 	pBstrName := BSTR new.
-	pwOrdinal := DWORDBytes new.
+	pwOrdinal := UInt32Bytes new.
 	self tlbInterface
 		GetDllEntry: funcDesc memid
 		invkind: funcDesc invkind

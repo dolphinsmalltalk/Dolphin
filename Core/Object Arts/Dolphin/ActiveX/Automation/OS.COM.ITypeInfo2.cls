@@ -138,7 +138,7 @@ getDocumentation2: memid lcid: lcid
 	| pbstrHelpStringDll pbstrHelpString pdwHelpStringContext |
 	pbstrHelpStringDll := BSTR new.
 	pbstrHelpString := BSTR new.
-	pdwHelpStringContext := DWORDBytes new.
+	pdwHelpStringContext := UInt32Bytes new.
 	self
 		GetDocumentation2: memid
 		lcid: lcid
@@ -322,7 +322,7 @@ typeFlags
 	represented there as 32-bits (cf ITypeInfo>>typeFlags)."
 
 	| answer |
-	answer := DWORDBytes new.
+	answer := UInt32Bytes new.
 	self GetTypeFlags: answer.
 	^answer asInteger!
 
@@ -330,7 +330,7 @@ typekind
 	"Answer the receiver's typekind (a member of the TYPEKIND enumeration)."
 
 	| answer |
-	answer := DWORDBytes new.
+	answer := UInt32Bytes new.
 	self GetTypeKind: answer.
 	^answer asSignedInteger! !
 !OS.COM.ITypeInfo2 categoriesForMethods!

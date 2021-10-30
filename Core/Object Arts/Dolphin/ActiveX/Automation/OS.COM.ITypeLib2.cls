@@ -58,7 +58,7 @@ getDocumentation2: memid lcid: lcid
 	| pbstrHelpStringDll pbstrHelpString pdwHelpStringContext |
 	pbstrHelpStringDll := BSTR new.
 	pbstrHelpString := BSTR new.
-	pdwHelpStringContext := DWORDBytes new.
+	pdwHelpStringContext := UInt32Bytes new.
 	self
 		GetDocumentation2: memid
 		lcid: lcid

@@ -105,10 +105,10 @@ getSysParamBool: anInteger
 		ifError: [^false]) value!
 
 getSysParamDword: anInteger
-	^(self getSysParamStruct: anInteger type: DWORDBytes) value!
+	^(self getSysParamStruct: anInteger type: UInt32Bytes) value!
 
 getSysParamSdword: anInteger
-	^(self getSysParamStruct: anInteger type: DWORDBytes) asSignedInteger!
+	^(self getSysParamStruct: anInteger type: UInt32Bytes) asSignedInteger!
 
 getSysParamStruct: anInteger type: anExternalStructureClass
 	^self
@@ -186,7 +186,7 @@ hasSmoothScrollingLists
 	hasSmoothScrollingLists isNil
 		ifTrue: 
 			[| bool |
-			bool := DWORDBytes new.
+			bool := UInt32Bytes new.
 			hasSmoothScrollingLists := (User32
 						systemParametersInfo: SPI_GETLISTBOXSMOOTHSCROLLING
 						uiParam: 0
@@ -225,7 +225,7 @@ initialize
 
 	"So many capabilities depend on these flag, we may as well query them immediately. These also cannot change because of a Windows settings change."
 
-	isVistaOrLater := Kernel32 isWindowsVistaOrGreater.
+	isVistaOrLater := true.
 	isNotWine := NtDll isWine not.
 	"Wine does not support the ComMCtrlLibrary>>loadIconWithScaleDown:.. method which is normally
 	availble under Vista and later. Hence we don't allow this to be called even if the Windows
@@ -306,7 +306,7 @@ monitorCount
 mouseHoverTime
 	^(self
 		getSysParam: SPI_GETMOUSEHOVERTIME
-		type: DWORDBytes
+		type: UInt32Bytes
 		ifError: [^400]) value!
 
 nonClientMetrics

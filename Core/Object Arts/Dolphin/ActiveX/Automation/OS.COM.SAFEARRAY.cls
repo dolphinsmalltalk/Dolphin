@@ -262,7 +262,7 @@ lowerBound: anInteger
 	"Answer the lower bound of the specified dimension of the receiver. Typically this will be 1."
 
 	| lBound |
-	lBound := DWORDBytes new.
+	lBound := UInt32Bytes new.
 	OleAut32
 		safeArrayGetLBound: self
 		nDim: anInteger
@@ -372,7 +372,7 @@ upperBound: anInteger
 	"Answer the upper bound of the specified dimension of the receiver."
 
 	| uBound |
-	uBound := DWORDBytes new.
+	uBound := UInt32Bytes new.
 	OleAut32
 		safeArrayGetUBound: self
 		nDim: anInteger

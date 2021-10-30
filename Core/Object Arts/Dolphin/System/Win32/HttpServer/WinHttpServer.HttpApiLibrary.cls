@@ -416,7 +416,7 @@ createRequestQueue: aString
 
 createServerSession
 	| sessionId |
-	sessionId := ULARGE_INTEGER new.
+	sessionId := UInt64Bytes new.
 	self checkReturnCode: (self
 				httpCreateServerSession: self class apiVersion
 				serverSessionId: sessionId
@@ -425,7 +425,7 @@ createServerSession
 
 createUrlGroup: anIntegerSessionId
 	| groupId |
-	groupId := ULARGE_INTEGER new.
+	groupId := UInt64Bytes new.
 	self checkReturnCode: (self
 				httpCreateUrlGroup: anIntegerSessionId
 				pUrlGroupId: groupId
@@ -909,7 +909,7 @@ querySession: sessionIdInteger property: propIdInteger
 				at: HttpServerTimeoutsProperty + 1 put: HTTP_TIMEOUT_LIMIT_INFO;
 				at: HttpServerQueueLengthProperty + 1 put: nil;
 				at: HttpServerStateProperty + 1 put: HTTP_STATE_INFO;
-				at: HttpServer503VerbosityProperty + 1 put: DWORDBytes;
+				at: HttpServer503VerbosityProperty + 1 put: UInt32Bytes;
 				at: HttpServerBindingProperty + 1 put: HTTP_BINDING_INFO;
 				at: HttpServerExtendedAuthenticationProperty + 1 put: HTTP_SERVER_AUTHENTICATION_INFO;
 				at: HttpServerListenEndpointProperty + 1 put: nil;
@@ -918,7 +918,7 @@ querySession: sessionIdInteger property: propIdInteger
 				yourself) at: propIdInteger + 1.
 	type isNil ifTrue: [^self error: 'Unable to query property ' , propIdInteger printString].
 	buf := type new.
-	bufSize := DWORDBytes new.
+	bufSize := UInt32Bytes new.
 	ret := self
 				httpQueryServerSessionProperty: sessionIdInteger
 				property: propIdInteger
@@ -943,7 +943,7 @@ querySession: sessionIdInteger qosProperty: qosTypeInteger
 	| query ret bufSize |
 	query := HTTP_QOS_SETTING_INFO new.
 	query QosType: qosTypeInteger.
-	bufSize := DWORDBytes new.
+	bufSize := UInt32Bytes new.
 	ret := self
 				httpQueryServerSessionProperty: sessionIdInteger
 				property: HttpServerQosProperty
@@ -966,7 +966,7 @@ queryUrlGroup: urlGroupId qosSetting: anInteger
 	query := HTTP_QOS_SETTING_INFO new
 				QosType: anInteger;
 				yourself.
-	bufSize := DWORDBytes new.
+	bufSize := UInt32Bytes new.
 	ret := self
 				httpQueryUrlGroupProperty: urlGroupId
 				property: HttpServerQosProperty
@@ -992,7 +992,7 @@ receiveRequest: anExternalHandle
 receiveRequest: anExternalHandle flags: anInteger
 	| bytesReceived buf requestId |
 	buf := HTTP_REQUEST new: 4096.
-	bytesReceived := DWORDBytes new.
+	bytesReceived := UInt32Bytes new.
 	requestId := 0.
 	
 	[| ret |
@@ -1024,7 +1024,7 @@ receiveRequestEntityBody: anExternalHandle requestId: requestId
 	bufLen := 32768.
 	buf := ByteArray new: bufLen.
 	data := WriteStream on: (ByteArray new: buf size).
-	bytesReceived := DWORDBytes new.
+	bytesReceived := UInt32Bytes new.
 	
 	[| ret |
 	ret := self
@@ -1307,7 +1307,7 @@ example3
 				configInformationLength: param byteSize
 				pOverlapped: nil.
 	(ret == 0 or: [ret == Win32Errors.ERROR_ALREADY_EXISTS]) ifFalse: [Win32Error signalWith: ret].
-	bufSize := DWORDBytes new.
+	bufSize := UInt32Bytes new.
 	buf := HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY new.
 	ret := lib
 				httpQueryServiceConfiguration: 0
@@ -1436,7 +1436,7 @@ querySslCertInfo
 	parms QueryDesc: HttpServiceConfigQueryNext.
 	lib := self default.
 	count := 0.
-	bufSize := DWORDBytes new.
+	bufSize := UInt32Bytes new.
 	answer := OrderedCollection new.
 	
 	[parms dwToken: count.
@@ -1479,7 +1479,7 @@ queryUrlAclInfo
 	parms QueryDesc: HttpServiceConfigQueryNext.
 	lib := self default.
 	count := 0.
-	bufSize := DWORDBytes new.
+	bufSize := UInt32Bytes new.
 	answer := OrderedCollection new.
 	
 	[parms dwToken: count.

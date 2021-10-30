@@ -53,7 +53,7 @@ maxSize
 	be growable)."
 
 	| answer |
-	answer := ULARGE_INTEGER new.
+	answer := UInt64Bytes new.
 	self GetSizeMax: answer.
 	^answer asInteger!
 

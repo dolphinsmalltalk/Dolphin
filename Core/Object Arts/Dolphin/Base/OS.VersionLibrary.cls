@@ -18,7 +18,7 @@ getFileVersionInfo: lpstrFilename
 	"Private - Answer file version info for the specified file."
 
 	| dwHandle size buf |
-	dwHandle := DWORDBytes new.
+	dwHandle := UInt32Bytes new.
 	size := self getFileVersionInfoSize: lpstrFilename lpdwHandle: dwHandle.
 	size == 0 ifTrue: [^self systemError].
 	buf := ByteArray newFixed: size.

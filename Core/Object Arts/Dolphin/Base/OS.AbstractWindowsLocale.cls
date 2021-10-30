@@ -143,7 +143,7 @@ getCalendarInfoInteger: anInteger
 
 	| buf lib size |
 	lib := self nlsLib.
-	buf := DWORDBytes new.
+	buf := UInt32Bytes new.
 	size := lib
 				getCalendarInfo: self lcid
 				calendar: self calendarId

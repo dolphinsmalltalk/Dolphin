@@ -185,7 +185,7 @@ documentationAt: index ifAbsent: exceptionHandler
 	bstrName := BSTR new.
 	bstrDocString := BSTR new.
 	bstrHelpFile := BSTR new.
-	dwHelpContext := DWORDBytes new.
+	dwHelpContext := UInt32Bytes new.
 	hr := self tlbInterface
 				GetDocumentation: index - 1
 				pBstrName: bstrName
@@ -236,7 +236,7 @@ find: memberName count: numToFind
 	| rgMemId ppTInfo pcFound infos |
 	rgMemId := SDWORDArray new: numToFind.
 	ppTInfo := DWORDArray new: numToFind.
-	pcFound := DWORDBytes fromInteger: numToFind.
+	pcFound := UInt32Bytes fromInteger: numToFind.
 	self tlbInterface
 		FindName: memberName
 		lHashVal: 0

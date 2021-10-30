@@ -23,7 +23,7 @@ asExternalAddress
 	^self value!
 
 value
-	"Answer the <ExternalAddress> value of the receiver's 'value' field."
+	"Answer the <External.Address> value of the receiver's 'value' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_value) asExternalAddress!
 

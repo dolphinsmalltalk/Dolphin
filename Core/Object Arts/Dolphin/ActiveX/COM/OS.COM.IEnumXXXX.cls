@@ -118,19 +118,21 @@ nextAvailable
 
 	| element fetched |
 	element := self newElement.
-	fetched := DWORDBytes new.
-	self Next: 1 rgelt: element pceltFetched: fetched.
-	^fetched asInteger == 1
-		ifTrue: [element]!
+	fetched := UInt32Bytes new.
+	self
+		Next: 1
+		rgelt: element
+		pceltFetched: fetched.
+	^fetched asInteger == 1 ifTrue: [element]!
 
-nextAvailable: anInteger 
+nextAvailable: anInteger
 	"Answer a collection of the next anInteger elements from the receiver,
 	or as many as remain if fewer."
 
 	| elements fetched |
 	elements := self newElements: anInteger.
-	fetched := DWORDBytes new.
-	self 
+	fetched := UInt32Bytes new.
+	self
 		Next: anInteger
 		rgelt: elements
 		pceltFetched: fetched.

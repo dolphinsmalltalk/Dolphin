@@ -240,7 +240,7 @@ surroundColors: colorsArray
 	Gdip
 		gdipSetPathGradientSurroundColorsWithCount: self asParameter
 		color: (DWORDArray withAll: (colorsArray collect: [:e | e argbCode]))
-		count: (DWORDBytes fromInteger: colorsArray size)!
+		count: (UInt32Bytes fromInteger: colorsArray size)!
 
 surroundColorsCount
 	| count |

@@ -281,7 +281,7 @@ position
 	"Answer the current position in the receiver's stream."
 
 	| position |
-	position := ULARGE_INTEGER new.
+	position := UInt64Bytes new.
 	self 
 		Seek: 0
 		dwOrigin: STREAM_SEEK_CUR
@@ -292,7 +292,7 @@ position: anInteger
 	"Seek to the specified position in the receiver's stream."
 
 	| newPosition |
-	newPosition := ULARGE_INTEGER new.
+	newPosition := UInt64Bytes new.
 	self 
 		Seek: anInteger
 		dwOrigin: STREAM_SEEK_SET
