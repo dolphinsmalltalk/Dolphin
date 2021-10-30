@@ -1125,10 +1125,7 @@ inputQueueMask
 	| qs_Input |
 	qs_Input := self isWindows8OrGreater
 				ifTrue: [##(QS_MOUSE | QS_KEY | QS_RAWINPUT | QS_TOUCH | QS_POINTER)]
-				ifFalse: 
-					[self isWindowsXPOrGreater
-						ifTrue: [##(QS_MOUSE | QS_KEY | QS_RAWINPUT)]
-						ifFalse: [##(QS_MOUSE | QS_KEY)]].
+				ifFalse: [##(QS_MOUSE | QS_KEY | QS_RAWINPUT)].
 	^qs_Input | ##(QS_POSTMESSAGE | QS_TIMER | QS_PAINT | QS_HOTKEY | QS_SENDMESSAGE)!
 
 isValidLocale: locale dwFlags: dwFlags
@@ -1214,10 +1211,9 @@ isWindowsVersionOrGreater: wMajorVersion wMinorVersion: wMinorVersion wServicePa
 								condition: VER_GREATER_EQUAL])!
 
 isWindowsVistaOrGreater
-	^self
-		isWindowsVersionOrGreater: 6
-		wMinorVersion: 0
-		wServicePackMajor: 0!
+	"Dolphin 7 and later no longer run on platforms prior to Vista."
+
+	^true!
 
 isWindowsVistaSP1OrGreater
 	^self
@@ -1232,10 +1228,9 @@ isWindowsVistaSP2OrGreater
 		wServicePackMajor: 2!
 
 isWindowsXPOrGreater
-	^self
-		isWindowsVersionOrGreater: 5
-		wMinorVersion: 1
-		wServicePackMajor: 0!
+	"Dolphin 7 and later no longer run on platforms prior to Vista."
+
+	^true!
 
 isWow64
 	"Answers whether this Dolphin process is running on 64-bit Windows on the WOW64 subsystem. The answer will be false if the host is 32-bit Windows."

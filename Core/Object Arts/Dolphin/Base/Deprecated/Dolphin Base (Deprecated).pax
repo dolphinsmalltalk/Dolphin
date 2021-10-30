@@ -1044,50 +1044,50 @@ subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!cla
 
 isWindows10OrGreater
 	Notification deprecated.
-	^KernelLibrary default isWindows10OrGreater!
+	^Kernel32 isWindows10OrGreater!
 
 isWindows7OrGreater
 	Notification deprecated.
-	^KernelLibrary default isWindows7OrGreater!
+	^Kernel32 isWindows7OrGreater!
 
 isWindows7SP1OrGreater
 	Notification deprecated.
-	^KernelLibrary default isWindows7SP1OrGreater!
+	^Kernel32 isWindows7SP1OrGreater!
 
 isWindows8OrGreater
 	Notification deprecated.
-	^KernelLibrary default isWindows8OrGreater!
+	^Kernel32 isWindows8OrGreater!
 
 isWindows8Point1OrGreater
 	Notification deprecated.
-	^KernelLibrary default isWindows8Point1OrGreater!
+	^Kernel32 isWindows8Point1OrGreater!
 
 isWindowsServer
 	Notification deprecated.
-	^KernelLibrary default isWindowsServer!
+	^Kernel32 isWindowsServer!
 
 isWindowsVersionOrGreater: wMajorVersion wMinorVersion: wMinorVersion wServicePackMajor: wServicePackMajor
 	Notification deprecated.
-	^KernelLibrary default
+	^Kernel32
 		isWindowsVersionOrGreater: wMajorVersion
 		wMinorVersion: wMinorVersion
 		wServicePackMajor: wServicePackMajor!
 
 isWindowsVistaOrGreater
 	Notification deprecated.
-	^KernelLibrary default isWindowsVistaOrGreater!
+	^true!
 
 isWindowsVistaSP1OrGreater
 	Notification deprecated.
-	^KernelLibrary default isWindowsVistaSP1OrGreater!
+	^Kernel32 isWindowsVistaSP1OrGreater!
 
 isWindowsVistaSP2OrGreater
 	Notification deprecated.
-	^KernelLibrary default isWindowsVistaSP2OrGreater!
+	^Kernel32 isWindowsVistaSP2OrGreater!
 
 isWindowsXPOrGreater
 	Notification deprecated.
-	^KernelLibrary default isWindowsXPOrGreater!
+	^Kernel32 isWindowsXPOrGreater!
 
 shortName
 	"Answer the localised short name for Dolphin."
