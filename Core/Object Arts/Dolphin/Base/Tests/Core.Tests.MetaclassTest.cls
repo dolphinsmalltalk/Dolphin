@@ -14,6 +14,9 @@ Core.Tests.MetaclassTest comment: ''!
 allClassHierarchyInstancesDo: aMonadicValuable
 	Smalltalk allRoots do: [:root | root class withAllSubclassesDo: aMonadicValuable]!
 
+testClassBindingNames
+	self assert: Object class classBindingNames asArray sort equals: #('_AssertionFailureSignal' '_DependentsRegister' '_EventsRegister' '_PropertyRegister')!
+
 testInstances
 	"Verifies that 
 		- all metaclasses are correctly linked into the class hierarchy
@@ -83,14 +86,19 @@ testName
 				allSubclassesDo: [:each | self assert: each name equals: each instanceClass name , ' class']]!
 
 testStoreOn
-	self assert: self class class storeString equals: 'Core.Tests.MetaclassTest class'! !
+	self assert: self class class storeString equals: 'Core.Tests.MetaclassTest class'!
+
+testWhichClassDefinesClassVar
+	self assert: (self class class whichClassDefinesClassVar: '_AssertionFailureSignal') identicalTo: Object! !
 !Core.Tests.MetaclassTest categoriesForMethods!
 allClassHierarchyInstancesDo:!helpers!private! !
+testClassBindingNames!public! !
 testInstances!public!unit tests! !
 testLessOrEqual!public!unit tests! !
 testLocalEnvironment!public!unit tests! !
 testLocalScope!public!unit tests! !
 testName!public!unit tests! !
 testStoreOn!public!unit tests! !
+testWhichClassDefinesClassVar!public!unit tests! !
 !
 

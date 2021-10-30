@@ -1003,7 +1003,7 @@ whichClassDefinesClassVar: aString
 	"Answer which <Class> in the receiver's inheritance chain, including the receiver,
 	defines the named class variable."
 
-	^self whichClassSatisfies: [:each | each classBindingNames includes: aString]!
+	^self instanceClass whichClassSatisfies: [:each | each classBindingNames includes: aString]!
 
 whichNonVirtualCategoriesIncludeSelector: aSelector
 	| answer |

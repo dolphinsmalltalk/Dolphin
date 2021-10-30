@@ -20,6 +20,9 @@ testAllRoots
 	self assert: roots first identicalTo: Object.
 	roots do: [:each | self assertIsNil: each superclass]!
 
+testClassBindingNames
+	self assert: Object classBindingNames asArray sort equals: #('_AssertionFailureSignal' '_DependentsRegister' '_EventsRegister' '_PropertyRegister')!
+
 testClassPoolsWellFormed
 	"https://github.com/dolphinsmalltalk/Dolphin/issues/562"
 
@@ -104,10 +107,14 @@ testPoolBinding
 	self assert: (Smalltalk fullBindingFor: 'Exception.WS_CHILD') isNil!
 
 testStoreOn
-	self assert: self class storeString equals: 'Core.Tests.ClassTest'! !
+	self assert: self class storeString equals: 'Core.Tests.ClassTest'!
+
+testWhichClassDefinesClassVar
+	self assert: (self class whichClassDefinesClassVar: '_AssertionFailureSignal') identicalTo: Object! !
 !Core.Tests.ClassTest categoriesForMethods!
 allClassHierarchyInstancesDo:!helpers!private! !
 testAllRoots!public!unit tests! !
+testClassBindingNames!public! !
 testClassPoolsWellFormed!public!unit tests! !
 testImportsValid!public!unit tests! !
 testIncludesNamespace!public!unit tests! !
@@ -117,5 +124,6 @@ testLocalScope!public!unit tests! !
 testNestedClasses!public!unit tests! !
 testPoolBinding!public!unit tests! !
 testStoreOn!public!unit tests! !
+testWhichClassDefinesClassVar!public!unit tests! !
 !
 

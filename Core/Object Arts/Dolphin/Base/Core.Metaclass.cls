@@ -39,7 +39,7 @@ bindingFor: aString
 classBindingNames
 	"Answer a Set of the class variable names of the receiver."
 
-	^Set new!
+	^self instanceClass classBindingNames!
 
 classPool
 	"Answer the dictionary of class variables."

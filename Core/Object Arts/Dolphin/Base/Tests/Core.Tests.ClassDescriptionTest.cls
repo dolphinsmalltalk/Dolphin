@@ -15,6 +15,9 @@ Core.Tests.ClassDescriptionTest comment: ''!
 allClassHierarchyInstancesDo: aMonadicValuable
 	self subclassResponsibility!
 
+testClassBindingNames
+	self subclassResponsibility!
+
 testInstVarName
 	Smalltalk allClasses do: 
 			[:each |
@@ -33,12 +36,17 @@ testSubclasses
 	self allClassHierarchyInstancesDo: 
 			[:each |
 			each subclasses do: [:subclass | self assert: subclass superclass identicalTo: each].
-			self assert: each subclasses equals: each subclasses distinct]! !
+			self assert: each subclasses equals: each subclasses distinct]!
+
+testWhichClassDefinesClassVar
+	self subclassResponsibility! !
 !Core.Tests.ClassDescriptionTest categoriesForMethods!
 allClassHierarchyInstancesDo:!helpers!private! !
+testClassBindingNames!public! !
 testInstVarName!public!unit tests! !
 testLessOrEqual!public!unit tests! !
 testStoreOn!public!unit tests! !
 testSubclasses!public!unit tests! !
+testWhichClassDefinesClassVar!public!unit tests! !
 !
 
