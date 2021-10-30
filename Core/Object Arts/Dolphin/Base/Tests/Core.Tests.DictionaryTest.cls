@@ -17,7 +17,7 @@ collectionClass
 testAllInstancesValid
 	| invalid |
 	invalid := IdentitySet new.
-	self collectionClass allSubinstances
+	self collectionClass allInstances
 		do: [:each | each keysDo: [:key | (each includesKey: key) ifFalse: [invalid add: each]]].
 	self assert: invalid isEmpty!
 

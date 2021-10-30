@@ -89,10 +89,28 @@ Certain methods are not overridden for the following reasons:
 !Core.SharedLookupTable categoriesForClass!Collections-Unordered! !
 !Core.SharedLookupTable methodsFor!
 
+allKeysSatisfy: aMonadicValuable
+	"Answer whether the <monadicValuable> argument evaluates to true for every key of the receiver."
+
+	self keysDo: [:e | (aMonadicValuable value: e) ifFalse: [^false]].
+	^true!
+
+allSatisfy: aMonadicValuable
+	"Answer whether the <monadicValuable> argument evaluates to true for every element of the receiver."
+
+	self do: [:each | (aMonadicValuable value: each) ifFalse: [^false]].
+	^true!
+
+anyKeysSatisfy: aMonadicValuable
+	"Answer whether the <monadicValuable> argument evaluates to true for any key of the receiver."
+
+	self keysDo: [:e | (aMonadicValuable value: e) ifTrue: [^true]].
+	^false!
+
 anySatisfy: aMonadicValuable
 	"Answer whether the <monadicValuable> argument evaluates to true for any element of the receiver."
 
-	self do: [:e | (aMonadicValuable value: e) ifTrue: [^true]].
+	self do: [:each | (aMonadicValuable value: each) ifTrue: [^true]].
 	^false!
 
 asArray
@@ -295,6 +313,9 @@ stbSaveOn: anSTBOutFiler
 
 	mutex critical: [super stbSaveOn: anSTBOutFiler]! !
 !Core.SharedLookupTable categoriesForMethods!
+allKeysSatisfy:!enumerating!public! !
+allSatisfy:!enumerating!public! !
+anyKeysSatisfy:!enumerating!public! !
 anySatisfy:!enumerating!public! !
 asArray!converting!public! !
 asByteArray!converting!public! !

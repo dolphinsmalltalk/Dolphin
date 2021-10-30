@@ -61,6 +61,18 @@ addNewElement: anAssociation
 			element value: anAssociation value.
 			false]!
 
+allKeysSatisfy: aMonadicValuable
+	"Answer whether the <monadicValuable> argument evaluates to true for every key of the receiver."
+
+	self keysDo: [:each | (aMonadicValuable value: each) ifFalse: [^false]].
+	^true!
+
+anyKeysSatisfy: aMonadicValuable
+	"Answer whether the <monadicValuable> argument evaluates to true for any of the receiver's keys."
+
+	self keysDo: [:each | (aMonadicValuable value: each) ifTrue: [^true]].
+	^false!
+
 asSet
 	"Answer a Set whose elements are the values stored in the receiver (any 
 	duplicates are therefore eliminated).
@@ -528,6 +540,8 @@ _deepCopyElementsInto:trail:!copying!private! !
 =!comparing!public! !
 add:!adding!public! !
 addNewElement:!adding!public! !
+allKeysSatisfy:!enumerating!public! !
+anyKeysSatisfy:!enumerating!public! !
 asSet!converting!public! !
 associationAt:!accessing!public! !
 associationAt:ifAbsent:!accessing!public! !

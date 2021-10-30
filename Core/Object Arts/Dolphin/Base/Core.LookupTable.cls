@@ -27,13 +27,40 @@ add: anAssociation
 	^anAssociation
 !
 
+allKeysSatisfy: aMonadicValuable
+	"Answer whether the <monadicValuable> argument evaluates to true for any of the receiver's keys."
+
+	"Implementation note: Override to avoid superclass full-block implementation."
+
+	1 to: self basicSize
+		do: [:i | (self basicAt: i) ifNotNil: [:key | (aMonadicValuable value: key) ifFalse: [^false]]].
+	^true!
+
+allSatisfy: aMonadicValuable
+	"Answer whether the <monadicValuable> argument evaluates to true for every element of the receiver."
+
+	"Implementation note: Override to avoid superclass full-block implementation."
+
+	1 to: self basicSize
+		do: [:i | ((self basicAt: i) isNil or: [aMonadicValuable value: (values at: i)]) ifFalse: [^false]].
+	^true!
+
+anyKeysSatisfy: aMonadicValuable
+	"Answer whether the <monadicValuable> argument evaluates to true for any of the receiver's keys."
+
+	"Implementation note: Override to avoid superclass full-block implementation."
+
+	1 to: self basicSize
+		do: [:i | (self basicAt: i) ifNotNil: [:key | (aMonadicValuable value: key) ifTrue: [^true]]].
+	^false!
+
 anySatisfy: aMonadicValuable
 	"Answer whether the <monadicValuable> argument evaluates to true for any element of the receiver."
 
 	"Implementation note: Override to avoid superclass full-block implementation."
 
 	1 to: self basicSize
-		do: [:i | (self basicAt: i) ifNotNil: [(aMonadicValuable value: (values at: i)) ifTrue: [^true]]].
+		do: [:i | ((self basicAt: i) notNil and: [aMonadicValuable value: (values at: i)]) ifTrue: [^true]].
 	^false!
 
 associationAt: anObject ifAbsent: aNiladicValuable
@@ -119,7 +146,7 @@ do: aMonadicValuable
 	performance is important here."
 
 	1 to: self basicSize
-		do: [:i | (self basicAt: i) isNil ifFalse: [aMonadicValuable value: (values at: i)]]!
+		do: [:i | (self basicAt: i) ifNotNil: [aMonadicValuable value: (values at: i)]]!
 
 findElementOrNil: anObject
 	"Private - Answer the index of the specified key object in the receiver, 
@@ -310,6 +337,9 @@ valuesClass
 	^Array! !
 !Core.LookupTable categoriesForMethods!
 add:!adding!public! !
+allKeysSatisfy:!enumerating!public! !
+allSatisfy:!enumerating!public! !
+anyKeysSatisfy:!enumerating!public! !
 anySatisfy:!enumerating!public! !
 associationAt:ifAbsent:!accessing!public! !
 associationsDo:!enumerating!public! !

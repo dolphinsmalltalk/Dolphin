@@ -48,6 +48,18 @@ newDictionary
 newEmpty
 	^self collectionClass new!
 
+testAllKeysSatisfy
+	| dictionary |
+	dictionary := self newDictionary.
+	self assert: (dictionary allKeysSatisfy: [:each | each isSymbol]).
+	self deny: (dictionary allKeysSatisfy: [:each | each isInteger])!
+
+testAnyKeysSatisfy
+	| dictionary |
+	dictionary := self newDictionary.
+	self assert: (dictionary anyKeysSatisfy: [:each | each isSymbol]).
+	self deny: (dictionary anyKeysSatisfy: [:each | each isInteger])!
+
 testAssociationsDo
 	| subject actual expected |
 	subject := self newEmpty.
@@ -262,6 +274,8 @@ makeKey:!helpers!private! !
 newCollection:!helpers!private! !
 newDictionary!private!unit tests! !
 newEmpty!helpers!public! !
+testAllKeysSatisfy!public!unit tests! !
+testAnyKeysSatisfy!public!unit tests! !
 testAssociationsDo!public!unit tests! !
 testAtIfAbsent!public!unit tests! !
 testAtIfAbsentPut!public!unit tests! !
