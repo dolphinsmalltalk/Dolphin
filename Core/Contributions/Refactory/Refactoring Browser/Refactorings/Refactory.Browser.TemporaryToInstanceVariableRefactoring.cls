@@ -53,15 +53,15 @@ storeOn: aStream
 	aStream nextPut: $)!
 
 transform
-	| parseTree matcher protocols |
+	| parseTree matcher |
 	parseTree := class parseTreeFor: selector.
 	parseTree isNil ifTrue: [self refactoringError: 'Could not parse method'].
-	protocols := class protocolsFor: selector.
 	#rbFix.	"Not necessary to remove the method first - it is not an error to shadow and inst var with a temp"
 	"class removeMethod: selector."
 	class addInstanceVariable: temporaryVariableName.
 	(matcher := ParseTreeRewriter removeTemporaryNamed: temporaryVariableName) executeTree: parseTree.
-	class compileTree: matcher tree categories: protocols! !
+	"We must maintain any custom packaging or namespace of the original method, or the new method may not compile"
+	class compileTree: matcher tree! !
 !Refactory.Browser.TemporaryToInstanceVariableRefactoring categoriesForMethods!
 checkForValidTemporaryVariable!preconditions!public! !
 class:selector:variable:!initialize/release!public! !

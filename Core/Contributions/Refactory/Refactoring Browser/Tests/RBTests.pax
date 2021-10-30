@@ -72,9 +72,16 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.AddClassRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.ChildrenToSiblingsRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.ExtractMethodRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.InlineParameterRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.PushDownInstanceVariableRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.RBSourceFormatter class} #correspondingTestCase)
 	#(#{Refactory.Browser.RemoveClassRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.RenameClassRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.RenameMethodRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.TemporaryToInstanceVariableRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.Tests.RefactoryTestDataApp} #inlineParameterMethod:)
+	#(#{Refactory.Browser.Tests.RefactoryTestDataApp} #sendInlineParameterMethod)
+	#(#{Refactory.Browser.Tests.RefactoryTestDataApp} #testMethod1)
 	#(#{Smalltalk class} #isEqualTo:)
 ).
 
@@ -538,6 +545,22 @@ correspondingTestCase
 correspondingTestCase!public! !
 !
 
+!Refactory.Browser.InlineParameterRefactoring class methodsFor!
+
+correspondingTestCase
+	^Refactory.Browser.Tests.InlineParameterTest! !
+!Refactory.Browser.InlineParameterRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.PushDownInstanceVariableRefactoring class methodsFor!
+
+correspondingTestCase
+	^Refactory.Browser.Tests.PushDownClassVariableTest! !
+!Refactory.Browser.PushDownInstanceVariableRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
 !Refactory.Browser.RBSourceFormatter class methodsFor!
 
 correspondingTestCase
@@ -560,6 +583,41 @@ correspondingTestCase
 	^Tests.RenameClassTest! !
 !Refactory.Browser.RenameClassRefactoring class categoriesForMethods!
 correspondingTestCase!public! !
+!
+
+!Refactory.Browser.RenameMethodRefactoring class methodsFor!
+
+correspondingTestCase
+	^Refactory.Browser.Tests.RenameMethodTest! !
+!Refactory.Browser.RenameMethodRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.TemporaryToInstanceVariableRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.TemporaryToInstanceVariableTest! !
+!Refactory.Browser.TemporaryToInstanceVariableRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.Tests.RefactoryTestDataApp methodsFor!
+
+inlineParameterMethod: aSymbol
+	<namespace: Tools>
+	^aSymbol isSymbol!
+
+sendInlineParameterMethod
+	^self inlineParameterMethod: #(#asdf)!
+
+testMethod1
+	<namespace: Tools>
+	^self testMethod1 
+		, ([:each | each testMethod1] value: #(#(#testMethod1) 2 #testMethod1))! !
+!Refactory.Browser.Tests.RefactoryTestDataApp categoriesForMethods!
+inlineParameterMethod:!public!test! !
+sendInlineParameterMethod!public!test! !
+testMethod1!public!test! !
 !
 
 !Smalltalk class methodsFor!

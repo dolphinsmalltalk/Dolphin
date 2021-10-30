@@ -208,9 +208,6 @@ inlineMethod
 				bar.
 	^temp!
 
-inlineParameterMethod: aSymbol
-	^aSymbol isSymbol!
-
 inlineTemporary
 	| temp |
 	self isNil ifTrue: [temp := 4].
@@ -324,9 +321,6 @@ searchingLiteral
 selectorNotReferenced
 	^self selectorNotReferenced + 4!
 
-sendInlineParameterMethod
-	^self inlineParameterMethod: #(#asdf)!
-
 sendsDifferentSuper
 	super printString!
 
@@ -362,10 +356,6 @@ testFoo: anObject
 
 testMethod
 	^self class!
-
-testMethod1
-	^self testMethod1 
-		, ([:each | each testMethod1] value: #(#(#testMethod1) 2 #testMethod1))!
 
 threeElementPoint
 	^5 @ 5 + 6 @ 6!
@@ -444,7 +434,6 @@ inlineJunk!public!test! !
 inlineLast!inline!public! !
 inlineMax!inline!public! !
 inlineMethod!public!test! !
-inlineParameterMethod:!public!test! !
 inlineTemporary!inline!public! !
 isLiteral!lint!public! !
 justSendsSuper!lint!public! !
@@ -468,7 +457,6 @@ returnsBooleanAndOther!lint!public! !
 returnsIfTrue!lint!public! !
 searchingLiteral!lint!public! !
 selectorNotReferenced!public!test! !
-sendInlineParameterMethod!public!test! !
 sendsDifferentSuper!lint!public! !
 sizeCheck!lint!public! !
 stringConcatenation!lint!public! !
@@ -477,7 +465,6 @@ tempsReadBeforeWritten!lint!public! !
 tempVarOverridesInstVar!lint!public! !
 testFoo:!public!test! !
 testMethod!public!test! !
-testMethod1!public!test! !
 threeElementPoint!lint!public! !
 toDo!lint!public! !
 toDoCollect!lint!public! !

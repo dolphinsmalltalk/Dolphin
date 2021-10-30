@@ -274,30 +274,31 @@ storeOn: aStream
 	aStream nextPut: $)!
 
 transform
-	| existingSelector |
+	| existingSelector namespace package categories |
 	existingSelector := self existingSelector.
-	self
-		nameNewMethod: (existingSelector isNil ifTrue: [self getNewMethodName] ifFalse: [existingSelector]).
-	existingSelector isNil
-		ifTrue: 
-			[| environment package |
-			"Update the change object to ensure the new method is in the same package and namespace as the source method"
-			environment := class environment.
-			package := nil.
-			class realClass
-				ifNotNil: 
-					[:realClass |
-					(realClass compiledMethodAt: selector ifAbsent: nil)
-						ifNotNil: 
-							[:method |
-							environment := self model classFor: method environment.
-							package := method owningPackage]].
-			class
+	self nameNewMethod: (existingSelector ifNil: [self getNewMethodName]).
+	"We want the new method to be in the same package and namespace as the source method"
+	(class existingMethodAt: selector)
+		ifNil: 
+			[namespace := class environment.
+			package := nil]
+		ifNotNil: 
+			[:method |
+			namespace := self model classFor: method environment.
+			package := method owningPackage].
+	categories := class protocolsFor: selector.
+	existingSelector
+		ifNil: 
+			[class
 				compile: extractedParseTree newSource
-				environment: environment
-				categories: (class protocolsFor: selector)
+				environment: namespace
+				categories: categories
 				package: package].
-	class compileTree: modifiedParseTree! !
+	class
+		compileTree: modifiedParseTree
+		environment: namespace
+		categories: categories
+		package: package! !
 !Refactory.Browser.ExtractMethodRefactoring categoriesForMethods!
 checkAssignments:!public!transforming! !
 checkReturn!public!transforming! !

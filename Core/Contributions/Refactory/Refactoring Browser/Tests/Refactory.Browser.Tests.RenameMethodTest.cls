@@ -82,7 +82,7 @@ testRenameTestMethod
 	self deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)!
 
 testRenameTestMethod1
-	| refactoring class |
+	| refactoring class change |
 	refactoring := RenameMethodRefactoring
 				renameMethod: ('test' , 'Method1') asSymbol
 				in: RefactoryTestDataApp
@@ -92,13 +92,16 @@ testRenameTestMethod1
 	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	self assert: (class parseTreeFor: #testMethod2)
 		equals: (RBParser
-				parseMethod: 'testMethod2
+				parseMethod: 'testMethod2 <namespace: Tools>
 	^self testMethod2 , ([:each | each testMethod2] value: #(#(#testMethod2) 2 #testMethod2))').
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.BasicLintRuleTest')
 				parseTreeFor: #classBlock:)
 		equals: (RBParser parseMethod: 'classBlock: aBlock
 	classBlock := aBlock testMethod2').
-	self deny: (class directlyDefinesMethod: ('test' , 'Method1') asSymbol)! !
+	self deny: (class directlyDefinesMethod: ('test' , 'Method1') asSymbol).
+	change := refactoring model changes changes first.
+	self assert: change package identicalTo: self class owningPackage.
+	self assert: change environment identicalTo: Tools! !
 !Refactory.Browser.Tests.RenameMethodTest categoriesForMethods!
 setUp!public!set up! !
 testExistingSelector!failure tests!public! !

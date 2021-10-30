@@ -151,6 +151,7 @@ compile: aString categories: aCollection
 	^change!
 
 compile: aString classified: aSymbol
+	#deprecated.
 	^self compile: aString categories: {aSymbol}!
 
 compile: aString environment: aNamespace categories: aSymbolCollection package: aPackage
@@ -169,12 +170,38 @@ compile: aString environment: aNamespace categories: aSymbolCollection package: 
 	#rbFix.	"Return the AddMethodChange object"
 	^change!
 
-compileTree: aBRMethodNode 
-	^self compileTree: aBRMethodNode
-		categories: (self protocolsFor: aBRMethodNode selector)!
+compileTree: aBRMethodNode
+	| namespace package selector |
+	selector := aBRMethodNode selector.
+	(self existingMethodAt: selector)
+		ifNil: 
+			[namespace := self environment.
+			package := nil]
+		ifNotNil: 
+			[:method |
+			namespace := self model classFor: method environment.
+			package := method owningPackage].
+	^self
+		compileTree: aBRMethodNode
+		environment: namespace
+		categories: (self protocolsFor: selector)
+		package: package!
 
 compileTree: aBRMethodNode categories: aCollection
-	^self compile: aBRMethodNode formattedCode categories: aCollection!
+	| methodEnv methodPackage |
+	Notification deprecated.
+	methodEnv := self environment.
+	methodPackage := nil.
+	(self existingMethodAt: aBRMethodNode selector)
+		ifNotNil: 
+			[:method |
+			methodEnv := self model classFor: method environment.
+			methodPackage := method owningPackage].
+	^self
+		compileTree: aBRMethodNode
+		environment: methodEnv
+		categories: aCollection
+		package: methodPackage!
 
 compileTree: aBRMethodNode classified: aSymbol
 	Notification deprecated.
@@ -241,6 +268,9 @@ environmentName
 				nextPut: $.;
 				nextPutAll: (parts at: i)].
 	^stream contents!
+
+existingMethodAt: aSymbol
+	^self realClass ifNotNil: [:class | class compiledMethodAt: aSymbol ifAbsent: nil]!
 
 existingMethodsThatReferTo: anObject
 	| existingMethods |
@@ -371,17 +401,13 @@ metaclass
 methodFor: aSelector
 	^self newMethods at: aSelector
 		ifAbsent: 
-			[| compiledMethod class |
-			(self hasRemoved: aSelector) ifTrue: [^nil].
-			class := self realClass.
-			class isNil ifTrue: [^nil].
-			compiledMethod := class compiledMethodAt: aSelector ifAbsent: [nil].
-			compiledMethod isNil
-				ifTrue: [nil]
-				ifFalse: 
-					[RBMethod
+			[(self hasRemoved: aSelector) ifTrue: [^nil].
+			(self existingMethodAt: aSelector)
+				ifNotNil: 
+					[:method |
+					RBMethod
 						for: self
-						fromMethod: compiledMethod
+						fromMethod: method
 						andSelector: aSelector]]!
 
 model
@@ -670,6 +696,7 @@ directlyDefinesVariable:!public!testing! !
 directlyImportsNamespace:!public!testing! !
 environment!accessing!public! !
 environmentName!accessing!public! !
+existingMethodAt:!method accessing!public! !
 existingMethodsThatReferTo:!method accessing!public! !
 existingMethodsThatReferToAnyOf:!method accessing!public! !
 fullBindingFor:!binding!public! !

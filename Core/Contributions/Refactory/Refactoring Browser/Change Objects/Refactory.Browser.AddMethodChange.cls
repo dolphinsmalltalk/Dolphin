@@ -95,10 +95,13 @@ method
 	^method!
 
 package
-	^packageName isNil ifFalse: [Package manager packageNamed: packageName ifNone: nil]!
+	^packageName ifNotNil: [Package manager packageNamed: packageName ifNone: nil]!
 
 package: aPackage 
 	packageName := aPackage isNil ifFalse: [aPackage name]!
+
+packageName
+	^packageName!
 
 parseTree
 	^RBParser parseMethod: source onError: [:str :pos | ^nil]!
@@ -180,6 +183,7 @@ hash!comparing!public! !
 method!accessing!public! !
 package!accessing!public! !
 package:!accessing!public! !
+packageName!accessing!public! !
 parseTree!helpers!private! !
 primitiveExecute!operations!private! !
 printOn:!printing!public! !

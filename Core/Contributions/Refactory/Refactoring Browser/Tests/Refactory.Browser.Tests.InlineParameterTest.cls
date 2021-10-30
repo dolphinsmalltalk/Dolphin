@@ -18,7 +18,7 @@ testInlineBlockFailure
 				selector: ('inline' , 'Foo:') asSymbol)!
 
 testInlineLiteralArray
-	| refactoring class |
+	| refactoring class change |
 	refactoring := InlineParameterRefactoring
 				inlineParameter: 'aSymbol'
 				in: RefactoryTestDataApp
@@ -27,10 +27,13 @@ testInlineLiteralArray
 	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	self assert: (class parseTreeFor: #inlineParameterMethod)
 		equals: (RBParser
-				parseMethod: 'inlineParameterMethod | aSymbol | aSymbol := #(asdf). ^aSymbol isSymbol').
+				parseMethod: 'inlineParameterMethod <namespace: Tools> | aSymbol | aSymbol := #(asdf). ^aSymbol isSymbol').
 	self assert: (class parseTreeFor: #sendInlineParameterMethod)
 		equals: (RBParser parseMethod: 'sendInlineParameterMethod ^self inlineParameterMethod').
-	self deny: (class directlyDefinesMethod: ('inline' , 'ParameterMethod:') asSymbol)! !
+	self deny: (class directlyDefinesMethod: ('inline' , 'ParameterMethod:') asSymbol).
+	change := refactoring model changes changes first.
+	self assert: change package identicalTo: self class owningPackage.
+	self assert: change environment identicalTo: Tools! !
 !Refactory.Browser.Tests.InlineParameterTest categoriesForMethods!
 testInlineBlockFailure!failure tests!public! !
 testInlineLiteralArray!public!tests! !
