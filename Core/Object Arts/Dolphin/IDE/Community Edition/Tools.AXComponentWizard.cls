@@ -511,7 +511,6 @@ initialize
 	SmalltalkSystem current
 		addAdditionalToolsFolderIcon: self toolsFolderIcon;
 		registerTool: self.
-	self reuseIfOpen: true.
 	StandardInterfaces := Set new.
 	StandardStructs := #(#RemotableHandle #ExternalHandle) asSet.
 	#(#{External.RECT} #{OS.OVERLAPPED} #{OS.FILETIME} #{OS.COM.IUnknown} #{OS.COM.IStream} #{OS.COM.IPersist} #{OS.COM.IDispatch} #{OS.COM.IConnectionPoint} #{OS.COM.IPropertyBag} #{Smalltalk.SOCKADDR})
@@ -526,6 +525,14 @@ initialize
 								ifTrue: [StandardInterfaces add: class guid]
 								ifFalse: [(class inheritsFrom: External.Structure) ifTrue: [StandardStructs add: class name]]]]].
 	StandardEnums := #(#TYPEKIND #VARKIND #INVOKEKIND #SECURITY_ATTRIBUTES #OVERLAPPED) asSet!
+
+publishedAspects
+	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
+
+	| aspects |
+	aspects := super publishedAspects.
+	(aspects at: #reuseIfOpen) defaultValue: true.
+	^aspects!
 
 registerServer
 	"Browse for a DLL, and register it as a COM component
@@ -580,6 +587,7 @@ defaultAdditionalAccelerators!constants!private! !
 displayOn:!displaying!public! !
 icon!constants!public! !
 initialize!initializing!private! !
+publishedAspects!options!public! !
 registerServer!operations!public! !
 resource_Default_view!public!resources-views! !
 toolsFolderHelpId!public! !

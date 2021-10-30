@@ -129,7 +129,7 @@ killAutocompleteTimer
 	self view killTimer: SCI_AUTOCSHOW!
 
 maxAutoCompletionListSize
-	^200!
+	^SmalltalkWorkspace maxAutoCompletionListSize!
 
 maybeShowCompletionList
 	| styleName last |

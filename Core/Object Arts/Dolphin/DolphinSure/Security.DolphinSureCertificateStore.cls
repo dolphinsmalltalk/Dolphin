@@ -103,13 +103,9 @@ removeAllCertificates
 	"Removes all certificates from the receiver"
 
 	| name |
-	name := File splitStemFrom: self regKey name.
-	self regKey parentKey removeKey: self regKey name.
-	self name: name
-
-	
-
-!
+	name := File splitStemFrom: regKey name.
+	regKey parentKey removeKey: regKey name.
+	self name: name!
 
 removeCertificate: aDolphinSureCertificate ifAbsent: exceptionHandler
 	"Removes aDolphinSureCertificate to the receiver. Evaluates the exceptionHandler

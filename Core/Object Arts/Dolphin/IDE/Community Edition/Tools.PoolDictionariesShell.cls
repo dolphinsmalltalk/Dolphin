@@ -159,6 +159,9 @@ defaultModel
 	^ListModel
 		on: (SmalltalkSystem current availablePools asSortedCollection: [:x :y | x name <= y name])!
 
+defaultOptionFlags
+	^##(ReuseIfOpenMask | CanUseIdeaSpaceMask)!
+
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
@@ -177,9 +180,7 @@ initialize
 
 	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
-		registerTool: self.
-	self reuseIfOpen: true.
-	self canUseIdeaSpace: true!
+		registerTool: self!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
@@ -202,11 +203,12 @@ toolsFolderHelpId
 	^10550! !
 !Tools.PoolDictionariesShell class categoriesForMethods!
 defaultModel!public! !
+defaultOptionFlags!constants!options!private! !
 displayOn:!public! !
 icon!constants!public! !
 initialize!initializing!private! !
 publishedAspects!public! !
 resource_Default_view!public!resources-views! !
-toolsFolderHelpId!private! !
+toolsFolderHelpId!constants!private! !
 !
 

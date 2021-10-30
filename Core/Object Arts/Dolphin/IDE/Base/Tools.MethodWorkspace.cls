@@ -2,7 +2,7 @@
 
 Tools.SmalltalkWorkspace subclass: #'Tools.MethodWorkspace'
 	instanceVariableNames: 'parseTree refactoringTool'
-	classVariableNames: 'AutoParseDwell IsAutoParseEnabled'
+	classVariableNames: 'AutoParseDwell'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -48,6 +48,12 @@ addToCommandRoute: route
 allDefinedVariablesDo: aMonadicValuable 
 	self parseTree 
 		ifNotNil: [:ast | ast allDefinedVariableNodesDo: [:each | aMonadicValuable value: each name]]!
+
+applyOptions
+	"Private - Apply the class options to the receiver"
+
+	super applyOptions.
+	self isAutoParseEnabled: self class isAutoParseEnabled!
 
 autoParse
 	self textLength > 0 ifFalse: [^self].
@@ -435,7 +441,7 @@ selfClass
 		ifNotNil: [:context | context basicClass]!
 
 setParseTimer
-	self view setTimer: 1000 interval: self class autoParseDwell!
+	self view setTimer: 1000 interval: self class autoParseDwell asMilliseconds!
 
 source
 	^self plainText!
@@ -489,6 +495,7 @@ widenSourceSelection
 accept!commands!public! !
 addToCommandRoute:!commands!public! !
 allDefinedVariablesDo:!autocompletion!enumerating!private! !
+applyOptions!operations!options!private! !
 autoParse!helpers!private! !
 browseDefinitionsCommand!commands!private! !
 browseMessage!commands!public! !
@@ -549,16 +556,17 @@ widenSourceSelection!commands!public! !
 !Tools.MethodWorkspace class methodsFor!
 
 autoParseDwell
-	"Answer the <integer> number of milliseconds that must elapse after the user stops typing
-	before an attempt is made to pro-actively parse the method source for errors."
+	"Answer the <Duration> that must elapse after the user stops typing before an attempt is made to pro-actively parse the method source for errors."
 
-	^AutoParseDwell!
+	self ensureOptionsLoaded.
+	^AutoParseDwell ?? ##(1 seconds)!
 
-autoParseDwell: anInteger
-	"Set the <integer> number of milliseconds that must elapse after the user stops typing
-	before an attempt is made to pro-actively parse the method source for errors."
+autoParseDwell: aDuration
+	"Set the <Duration> that must elapse after the user stops typing before an attempt is made to pro-actively parse the method source for errors."
 
-	AutoParseDwell := anInteger!
+	self autoParseDwell = aDuration ifTrue: [^self].
+	AutoParseDwell := aDuration.
+	self persistOptions!
 
 defaultAdditionalAccelerators
 	"Private - Answer a collection of additional accelerator definitions to be bound to the receiver's commands.
@@ -567,21 +575,51 @@ defaultAdditionalAccelerators
 
 	^super defaultAdditionalAccelerators copyWith: #(#widenSourceSelection 'Ctrl+U')!
 
-initialize
-	"Private - Initialize the receiver's class variables.
-		self initialize
-	"
-
-	AutoParseDwell := 1000.
-	IsAutoParseEnabled := true!
+invalidateLocalOptions
+	AutoParseDwell := nil!
 
 isAutoParseEnabled
 	"Answer whether the method source will be automatically parsed after the user has paused for a short while."
 
-	^IsAutoParseEnabled!
+	^self optionFlags allMask: AutoParseMask!
 
 isAutoParseEnabled: aBoolean
-	IsAutoParseEnabled := aBoolean!
+	(self setOptionFlag: AutoParseMask value: aBoolean)
+		ifTrue: [self primAllSubinstances do: [:each | each isAutoParseEnabled: aBoolean]]!
+
+loadOptions
+	SmalltalkToolShell loadOptionsFor: ##(self).
+	superclass loadOptions.
+!
+
+optionsAspects
+	"Answer the aspects that, for this class only, should be saved and restored as options."
+
+	^IdentityDictionary new
+		add: ((Aspect dictionary: #acceleratorKeyBindings)
+					beImmutable;
+					defaultValue: 
+							[Dictionary withAll: (self defaultAdditionalAccelerators
+										collect: [:each | (AcceleratorTable canonicalizeKeyString: each second) -> each first])];
+					yourself);
+		add: ((Aspect duration: #autoParseDwell)
+					defaultValue: 1 seconds;
+					yourself);
+		add: ((Aspect boolean: #isAutoParseEnabled)
+					defaultValue: true;
+					yourself);
+		yourself!
+
+persistOptions
+	super persistOptions.
+	^SmalltalkToolShell persistOptionsFor: ##(self)!
+
+publishedAspects
+	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
+
+	^super publishedAspects
+		addAll: self optionsAspects;
+		yourself!
 
 resource_Debugger_source
 	"Answer the literal data from which the 'Debugger source' resource can be reconstituted.
@@ -606,9 +644,13 @@ resource_Default_view
 autoParseDwell!accessing!public! !
 autoParseDwell:!accessing!public! !
 defaultAdditionalAccelerators!constants!private! !
-initialize!initializing!public! !
+invalidateLocalOptions!private! !
 isAutoParseEnabled!accessing!public! !
 isAutoParseEnabled:!accessing!public! !
+loadOptions!public! !
+optionsAspects!public! !
+persistOptions!public! !
+publishedAspects!public! !
 resource_Debugger_source!public!resources-views! !
 resource_Default_view!public!resources-views! !
 !

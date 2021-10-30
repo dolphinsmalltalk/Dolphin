@@ -132,7 +132,7 @@ wordWrap: aBoolean
 
 	WordWrap == aBoolean ifTrue: [^self].
 	WordWrap := aBoolean.
-	self allSubinstances do: [:each | each setWordWrap]! !
+	self primAllSubinstances do: [:each | each setWordWrap]! !
 !Tools.ClassCommentPlugin class categoriesForMethods!
 defaultBackcolor!accessing!public! !
 defaultBackcolor:!accessing!public! !

@@ -127,9 +127,6 @@ basicValues
 
 	^values!
 
-bestSlotFor: element boundedBy: capacity
-	^self hash: element max: capacity!
-
 copyElementsInto: newMe
 	"Private - Add the receiver's elements into the argument, newMe.
 	Private part of the implementation of hashed collection resizing. Override
@@ -347,7 +344,6 @@ at:ifAbsent:!accessing!public! !
 at:ifAbsentPutClean:!accessing!public! !
 at:put:!accessing!public! !
 basicValues!accessing!private! !
-bestSlotFor:boundedBy:!development!private!statistics! !
 copyElementsInto:!adding!private! !
 do:!debugger-step through!enumerating!public! !
 findElementOrNil:!private!searching! !

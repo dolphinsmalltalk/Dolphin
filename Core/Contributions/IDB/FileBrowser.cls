@@ -364,24 +364,28 @@ displayOn: aPuttableStream
 hexEnabled
 	"Answer whether the hex display is enabled"
 
-	HexEnabled isNil ifTrue: [^false].
+	self ensureOptionsLoaded.
 	^HexEnabled!
 
 hexEnabled: aBoolean 
 	"Set whether the hex display is enabled"
 
-	HexEnabled := aBoolean!
+	self hexEnabled = aBoolean ifTrue: [^self].
+	HexEnabled := aBoolean.
+	self persistOptions!
 
 hexFont
 	"Answer the font used for the hex view"
 
-	HexFont isNil ifTrue: [^Font name: 'Courier New' pointSize: 10].
+	self ensureOptionsLoaded.
 	^HexFont!
 
 hexFont: aFont 
 	"Set the font used for the hex view"
 
-	HexFont := aFont!
+	self hexFont = aFont ifTrue: [^self].
+	HexFont := aFont.
+	self persistOptions!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -397,24 +401,32 @@ publishedAspects
 	| aspects |
 	aspects := super publishedAspects.
 	aspects
-		add: (Aspect font: #textFont);
-		add: (Aspect font: #hexFont);
+		add: ((Aspect font: #textFont)
+					defaultValue: [Font name: 'Times New Roman' pointSize: 12];
+					yourself);
+		add: ((Aspect font: #hexFont)
+					defaultValue: [Font name: 'Courier New' pointSize: 10];
+					yourself);
 		add: (Aspect folder: #rootFolder);
 		add: (Aspect boolean: #hexEnabled);
 		add: (Aspect boolean: #removeCr);
-		add: (Aspect boolean: #warnings).
+		add: ((Aspect boolean: #warnings)
+					defaultValue: true;
+					yourself).
 	^aspects!
 
 removeCr
 	"Answer whether we reove Crs before saving"
 
-	RemoveCr isNil ifTrue: [^false].
+	self ensureOptionsLoaded.
 	^RemoveCr!
 
 removeCr: aBoolean 
 	"Set whether we remove Crs when saving"
 
-	RemoveCr := aBoolean!
+	self removeCr = aBoolean ifTrue: [^self].
+	RemoveCr := aBoolean.
+	self persistOptions!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -440,24 +452,28 @@ rootFolder: aString
 textFont
 	"Answer the font used for the text view"
 
-	TextFont isNil ifTrue: [^Font name: 'Times New Roman' pointSize: 12].
+	self ensureOptionsLoaded.
 	^TextFont!
 
 textFont: aFont 
 	"Set the font used for the text view"
 
-	TextFont := aFont!
+	self textFont = aFont ifTrue: [^self].
+	TextFont := aFont.
+	self persistOptions!
 
 warnings
 	"Answer whether warnings are enabled"
 
-	Warnings isNil ifTrue: [^true].
+	self ensureOptionsLoaded.
 	^Warnings!
 
 warnings: aBoolean 
 	"Set whether warnings are enabled"
 
-	Warnings := aBoolean! !
+	self warnings = aBoolean ifTrue: [^self].
+	Warnings := aBoolean.
+	self persistOptions! !
 !FileBrowser class categoriesForMethods!
 defaultFolder!accessing!public! !
 displayOn:!operations!public! !

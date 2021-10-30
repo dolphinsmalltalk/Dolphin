@@ -1799,7 +1799,7 @@ updateForBreakAt: interruptFrame
 	^self isAnimating
 		ifTrue: 
 			[
-			[OS.Kernel32 sleep: self animatePause.
+			[OS.Kernel32 sleep: self animatePause asMilliseconds.
 			process isDead ifFalse: [self step]]
 					forkAt: Processor userSchedulingPriority]!
 
@@ -2023,16 +2023,16 @@ Tools.Debugger methodProtocol: #variableMetadataProvider attributes: #(#readOnly
 !Tools.Debugger class methodsFor!
 
 animatePause
-	"Answer the number of milliseconds that instances of the receiver will pause between each step when 
-	animating debugged processes."
+	"Answer the <Duration> that instances of the receiver will pause between each step when animating debugged processes."
 
 	^AnimatePause!
 
-animatePause: anInteger 
-	"Set the number of milliseconds that instances of the receiver will pause between each step when 
-	animating debugged processes."
+animatePause: aDuration
+	"Set the <Duration> that instances of the receiver will pause between each step when animating debugged processes."
 
-	AnimatePause := anInteger!
+	self animatePause = aDuration ifTrue: [^self].
+	AnimatePause := aDuration.
+	self persistOptions!
 
 defaultAdditionalAccelerators
 	^super defaultAdditionalAccelerators , #(#(#renameIt 'F2'))!
@@ -2041,7 +2041,9 @@ defaultStackDepth
 	^DefaultStackDepth!
 
 defaultStackDepth: anInteger
-	DefaultStackDepth := anInteger!
+	DefaultStackDepth = anInteger ifTrue: [^self].
+	DefaultStackDepth := anInteger.
+	self persistOptions!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -2058,7 +2060,9 @@ enableDynamicMenus: aBoolean
 	"Set whether dynamic menus can be used in instances of the receiver. These can be
 	disabled to allow the dynamic menu framework to be debugged more easily."
 
-	EnableDynamicMenus := aBoolean!
+	self enableDynamicMenus == aBoolean ifTrue: [^self].
+	EnableDynamicMenus := aBoolean.
+	self persistOptions!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -2073,10 +2077,8 @@ initialize
 
 	| debugEmptyBlock |
 	DefaultStackDepth := 40.
-	self restartOnMethodSave: true.
-	self enableDynamicMenus: true.
-	self showWalkbacks: true.
-	self runToCursorBehavior: #precise.
+	ShowWalkbacks := true.
+	RunToCursorBehavior := #precise.
 	SmalltalkSystem current registerTool: self.
 	self interrupts do: [:each | ProcessorScheduler interruptSelectors at: each first put: each second].
 	self initializeSkipTable.
@@ -2117,16 +2119,24 @@ interrupts
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	^super publishedAspects
-		removeKey: #reuseIfOpen;
-		add: (Aspect boolean: #showWalkbacks);
-		add: (Aspect boolean: #restartOnMethodSave);
-		add: (Aspect boolean: #enableDynamicMenus);
+	| aspects |
+	aspects := super publishedAspects.
+	aspects removeKey: #reuseIfOpen.
+	#(#showWalkbacks #restartOnMethodSave #enableDynamicMenus)
+		do: [:each | aspects add: ((Aspect boolean: each)
+						defaultValue: true;
+						yourself)].
+	aspects
 		add: ((Aspect integer: #animatePause)
-					beNonNullable;
+					defaultValue: 200 milliseconds;
 					yourself);
-		add: (Aspect symbol: #runToCursorBehavior from: #(#precise #conservative));
-		yourself!
+		add: ((Aspect integer: #defaultStackDepth)
+					defaultValue: 40;
+					yourself);
+		add: ((Aspect symbol: #runToCursorBehavior from: #(#precise #conservative))
+					defaultValue: #precise;
+					yourself).
+	^aspects!
 
 resource_Basic_debugger
 	"Answer the literal data from which the 'Basic debugger' resource can be reconstituted.
@@ -2158,7 +2168,9 @@ restartOnMethodSave: aBoolean
 	"Sets whether instances of the receiver automatically restart a frame in which the method is
 	modified and saved."
 
-	RestartOnMethodSave := aBoolean!
+	self restartOnMethodSave == aBoolean ifTrue: [^self].
+	RestartOnMethodSave := aBoolean.
+	self persistOptions!
 
 runToCursorBehavior
 	"The #runToCursorBehavior option controls how the debugger determines the IP closest to the cursor at which the debugger will break.
@@ -2174,8 +2186,10 @@ runToCursorBehavior
 
 	^RunToCursorBehavior!
 
-runToCursorBehavior: aSymbol 
-	RunToCursorBehavior := aSymbol!
+runToCursorBehavior: aSymbol
+	self runToCursorBehavior == aSymbol ifTrue: [^self].
+	RunToCursorBehavior := aSymbol.
+	self persistOptions!
 
 show: titleString process: aProcess topFrame: aStackFrame resumable: aBoolean
 	"Private - Show an instance of the receiver on the <Process>, aProcess, configured appropriately
@@ -2196,7 +2210,9 @@ showWalkbacks
 showWalkbacks: aBoolean
 	"Set the option indicating whether a walkback is brought up before the debugger to aBoolean"
 
-	ShowWalkbacks := aBoolean!
+	self showWalkbacks == aBoolean ifTrue: [^self].
+	ShowWalkbacks := aBoolean.
+	self persistOptions!
 
 skipSelector: aSymbol of: aBehavior maskClear: maskInteger
 	(self skipTable lookup: aBehavior)

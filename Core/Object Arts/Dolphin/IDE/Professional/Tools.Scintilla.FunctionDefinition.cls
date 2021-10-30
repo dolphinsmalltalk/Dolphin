@@ -296,12 +296,7 @@ stringResultsCountNull
 	really as it defeats the ability to generate a correct wrapper from the interface 
 	metadata alone)."
 
-	^##((Set new)
-		add: 'SCI_GETSELTEXT';
-		add: 'SCI_GETTEXT';
-		add: 'SCI_GETCURLINE';
-		shrink;
-		yourself)!
+	^#('SCI_GETSELTEXT' 'SCI_GETTEXT' 'SCI_GETCURLINE')!
 
 wParam: anArray
 	wParam := self makeParam: anArray! !

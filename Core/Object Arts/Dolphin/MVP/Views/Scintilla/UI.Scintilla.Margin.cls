@@ -2,7 +2,7 @@
 
 UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.Margin'
 	instanceVariableNames: 'width type isSensitive mask cursorType backcolor'
-	classVariableNames: 'CursorTypes'
+	classVariableNames: 'BackcolorProperty CursorTypeProperty CursorTypes IsSensitiveProperty MaskProperty TypeProperty WidthProperty'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -53,7 +53,7 @@ backcolor: aColorOrNil
 	"Set the background <Color> for the margin, which is used to paint the background of the margin when it has the #color type. If the argument is nil, then the control's default margin background colour will be used (black), although typically this value should only be nil when the margin is not using the #color type (in which case the setting has no effect)."
 
 	self basicBackcolor: aColorOrNil.
-	self updateViewProperty: #backcolor!
+	self updateViewProperty: BackcolorProperty!
 
 basicBackcolor: aColorOrNil
 	backcolor := aColorOrNil!
@@ -108,7 +108,7 @@ cursorType: aSymbol
 
 	self basicCursorType: (aSymbol isNil
 				ifFalse: [CursorTypes keyAtValue: aSymbol ifAbsent: [self error: 'Invalid cursor type' , aSymbol]]).
-	self updateViewProperty: #cursorType!
+	self updateViewProperty: CursorTypeProperty!
 
 isFolders
 	^mask allMask: SC_MASK_FOLDERS!
@@ -123,7 +123,7 @@ isSensitive
 
 isSensitive: aBooleanOrNil
 	self basicIsSensitive: (aBooleanOrNil ?? false ifTrue: [1]).
-	self updateViewProperty: #isSensitive!
+	self updateViewProperty: IsSensitiveProperty!
 
 mask
 	"Answe the <integer> mask which controls which shapes will be visible in the margin.
@@ -153,7 +153,7 @@ mask
 
 mask: anInteger
 	mask := anInteger.
-	self updateViewProperty: #mask!
+	self updateViewProperty: MaskProperty!
 
 maskPrintString
 	| dword |
@@ -177,7 +177,7 @@ type: aSymbol
 	"Set the margin type by name."
 
 	self basicType: (aSymbol ifNotNil: [(MarginTypes keyAtValue: aSymbol) - 1]).
-	self updateViewProperty: #type!
+	self updateViewProperty: TypeProperty!
 
 width
 	"Answer the <integer> pixel width of this margin."
@@ -188,7 +188,7 @@ width: anInteger
 	"Answer the <integer> pixel width of this margin. Set to zero to make the margin invisible."
 
 	self basicWidth: (anInteger ifNotNil: [anInteger]).
-	self updateViewProperty: #width! !
+	self updateViewProperty: WidthProperty! !
 !UI.Scintilla.Margin categoriesForMethods!
 backcolor!accessing!public! !
 backcolor:!accessing!public! !
@@ -218,60 +218,64 @@ width:!accessing!public! !
 
 !UI.Scintilla.Margin class methodsFor!
 
-buildPropertyMap
-	^IdentityDictionary new
-		at: #isSensitive
-			put: (BoolPropertyDescriptor
-					getSelector: #basicIsSensitive
-					defaultValue: 0
-					setMessage: SCI_SETMARGINSENSITIVEN
-					setSelector: #basicIsSensitive:
-					getMessage: SCI_GETMARGINSENSITIVEN);
-		at: #mask
-			put: ((IntPropertyDescriptor
-					getSelector: #mask
-					defaultValue: 0
-					setMessage: SCI_SETMARGINMASKN
-					setSelector: #mask:
-					getMessage: SCI_GETMARGINMASKN)
-					beNullable;
-					printSelector: #maskPrintString;
-					yourself);
-		at: #type
-			put: ((EnumPropertyDescriptor
-					getSelector: #basicType
-					defaultValue: SC_MARGIN_SYMBOL
-					setMessage: SCI_SETMARGINTYPEN
-					setSelector: #basicType:
-					getMessage: SCI_GETMARGINTYPEN)
-					values: MarginTypes copy sort;
-					alwaysPrint: true;
-					yourself);
-		at: #width
-			put: (IntPropertyDescriptor
-					getSelector: #basicWidth
-					defaultValue: nil
-					setMessage: SCI_SETMARGINWIDTHN
-					setSelector: #basicWidth:
-					getMessage: SCI_GETMARGINWIDTHN);
-		at: #cursorType
-			put: ((EnumPropertyDescriptor
-					getSelector: #basicCursorType
-					defaultValue: SC_CURSORREVERSEARROW
-					setMessage: SCI_SETMARGINCURSORN
-					setSelector: #basicCursorType:
-					getMessage: SCI_GETMARGINCURSORN)
-					values: CursorTypes values asArray sort;
-					yourself);
-		at: #backcolor
-			put: (ColourPropertyDescriptor
-					getSelector: #backcolor
-					defaultValue: Color black
-					setMessage: SCI_SETMARGINBACKN
-					setSelector: #basicBackcolor:
-					getMessage: SCI_GETMARGINBACKN);
-		shrink;
-		yourself!
+buildPropertyDescriptors
+	IsSensitiveProperty := (BoolPropertyDescriptor
+				key: #isSensitive
+				defaultValue: 0
+				setMessage: SCI_SETMARGINSENSITIVEN)
+				getSelector: #basicIsSensitive;
+				setSelector: #basicIsSensitive:;
+				getMessage: SCI_GETMARGINSENSITIVEN;
+				yourself.
+	MaskProperty := (IntPropertyDescriptor
+				key: #mask
+				defaultValue: 0
+				setMessage: SCI_SETMARGINMASKN)
+				setSelector: #mask:;
+				getMessage: SCI_GETMARGINMASKN;
+				beNullable;
+				printSelector: #maskPrintString;
+				yourself.
+	TypeProperty := (EnumPropertyDescriptor
+				key: #type
+				defaultValue: SC_MARGIN_SYMBOL
+				setMessage: SCI_SETMARGINTYPEN)
+				getSelector: #basicType;
+				setSelector: #basicType:;
+				getMessage: SCI_GETMARGINTYPEN;
+				values: MarginTypes copy sort;
+				alwaysPrint: true;
+				yourself.
+	WidthProperty := (IntPropertyDescriptor
+				key: #width
+				defaultValue: nil
+				setMessage: SCI_SETMARGINWIDTHN)
+				getSelector: #basicWidth;
+				setSelector: #basicWidth:;
+				getMessage: SCI_GETMARGINWIDTHN;
+				yourself.
+	CursorTypeProperty := (EnumPropertyDescriptor
+				key: #cursorType
+				defaultValue: SC_CURSORREVERSEARROW
+				setMessage: SCI_SETMARGINCURSORN)
+				getSelector: #basicCursorType;
+				setSelector: #basicCursorType:;
+				getMessage: SCI_GETMARGINCURSORN;
+				values: CursorTypes values asArray sort;
+				yourself.
+	BackcolorProperty := (ColourPropertyDescriptor
+				key: #backcolor
+				defaultValue: Color black
+				setMessage: SCI_SETMARGINBACKN)
+				setSelector: #basicBackcolor:;
+				getMessage: SCI_GETMARGINBACKN;
+				yourself.
+	^{IsSensitiveProperty.
+		MaskProperty.
+		TypeProperty.
+		WidthProperty.
+		CursorTypeProperty.
+		BackcolorProperty}!
 
 initialize
 	"
@@ -281,15 +285,13 @@ initialize
 	self addClassConstant: 'MarginTypes'
 		value: #(#symbol #lineNumber #symbolBackground #symbolForeground #text #rightJustifiedText #color).
 	self addClassConstant: 'CursorTypes'
-		value: (LookupTable new
-				at: SC_CURSORARROW put: #arrow;
-				at: SC_CURSORREVERSEARROW put: #reverseArrow;
-				at: SC_CURSORWAIT put: #wait;
-				at: SC_CURSORNORMAL put: #normal;
-				shrink;
+		value: ((IdentityDictionary withAll: {SC_CURSORARROW -> #arrow.
+						SC_CURSORREVERSEARROW -> #reverseArrow.
+						SC_CURSORWAIT -> #wait.
+						SC_CURSORNORMAL -> #normal})
 				isImmutable: true;
 				yourself).
-	propertyMap := self buildPropertyMap
+	propertyDescriptors := self buildPropertyDescriptors
 				isImmutable: true;
 				yourself!
 
@@ -306,7 +308,7 @@ stbConvertFrom: anSTBClassFormat
 stbVersion
 	^3! !
 !UI.Scintilla.Margin class categoriesForMethods!
-buildPropertyMap!constants!must not strip!private! !
+buildPropertyDescriptors!constants!must not strip!private! !
 initialize!development!initializing!public! !
 stbConvertFrom:!binary filing!private! !
 stbVersion!binary filing!public! !

@@ -19,7 +19,7 @@ UI.Scintilla.QueryableAttribute comment: '`QueryableScintillaAttribute` is the a
 populateFromView: aScintillaView at: anInteger
 	id := anInteger.
 	view := nil.
-	self class propertyMap do: [:each | each getAttribute: self ofView: aScintillaView].
+	self class propertyDescriptors do: [:each | each getAttribute: self ofView: aScintillaView].
 	view := aScintillaView!
 
 postCopy

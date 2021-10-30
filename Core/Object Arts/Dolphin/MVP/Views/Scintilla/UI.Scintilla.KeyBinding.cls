@@ -89,7 +89,10 @@ printOn: target
 		nextPut: $)!
 
 scintillaKeyCode
-	^(self translateVirtualKey: acceleratorKey) + ((acceleratorKey bitAnd: 16r3800) bitShift: 5)!
+	"Private - Answer the Scintilla key code (SCK_xxx) that corresponds to the from the Windows Virtual Key code of the receiver."
+
+	^(VirtualKeyMap at: (acceleratorKey bitAnd: 16rFF) + 1)
+		+ ((acceleratorKey bitAnd: 16r3800) bitShift: 5)!
 
 translateVirtualKey: vkInteger 
 	"Private - Translate from a Windows Virtual Key code (VK_xxx) to the corresponding Scintilla
@@ -128,117 +131,115 @@ initialize
 	self initializeCommands!
 
 initializeCommands
-	Commands := IdentityDictionary new
-				at: SCI_BACKTAB put: #unindent;
-				at: SCI_CANCEL put: #cancelModes;
-				at: SCI_CHARLEFT put: #moveLeft;
-				at: SCI_CHARLEFTEXTEND put: #extendLeft;
-				at: SCI_CHARLEFTRECTEXTEND put: #extendRectangleLeft;
-				at: SCI_CHARRIGHT put: #moveRight;
-				at: SCI_CHARRIGHTEXTEND put: #extendRight;
-				at: SCI_CHARRIGHTRECTEXTEND put: #extendRectangleRight;
-				at: SCI_CLEAR put: #basicClearSelection;
-				at: SCI_CLEARALL put: #basicClearAll;
-				at: SCI_COPY put: #copySelection;
-				at: SCI_CUT put: #cutSelection;
-				at: SCI_DELETEBACK put: #backspace;
-				at: SCI_DELETEBACKNOTLINE put: #backspaceNoLine;
-				at: SCI_DELLINELEFT put: #deleteToStartOfLine;
-				at: SCI_DELLINERIGHT put: #deleteToEndOfLine;
-				at: SCI_DELWORDLEFT put: #deleteToStartOfWord;
-				at: SCI_DELWORDRIGHT put: #deleteToNextWord;
-				at: SCI_DELWORDRIGHTEND put: #deleteToEndOfWord;
-				at: SCI_DOCUMENTEND put: #moveToEndOfDocument;
-				at: SCI_DOCUMENTENDEXTEND put: #extendToEndOfDocument;
-				at: SCI_DOCUMENTSTART put: #moveToStartOfDocument;
-				at: SCI_DOCUMENTSTARTEXTEND put: #extendToStartOfDocument;
-				at: SCI_EDITTOGGLEOVERTYPE put: #toggleOvertype;
-				at: SCI_FORMFEED put: #formFeed;
-				at: SCI_HOME put: #moveToStartOfLine;
-				at: SCI_HOMEDISPLAY put: #moveToStartOfDisplayLine;
-				at: SCI_HOMEDISPLAYEXTEND put: #extendToStartOfDisplayLine;
-				at: SCI_HOMEEXTEND put: #extendToStartOfLine;
-				at: SCI_HOMERECTEXTEND put: #extendRectangleToStartOfLine;
-				at: SCI_HOMEWRAP put: #moveToStartOfWrappedLine;
-				at: SCI_HOMEWRAPEXTEND put: #extendToStartOfWrappedLine;
-				at: SCI_LINECOPY put: #copyLine;
-				at: SCI_LINECUT put: #cutLine;
-				at: SCI_LINEDELETE put: #deleteLine;
-				at: SCI_LINEDOWN put: #moveDown;
-				at: SCI_LINEDOWNEXTEND put: #extendDown;
-				at: SCI_LINEDOWNRECTEXTEND put: #extendRectangleDown;
-				at: SCI_LINEDUPLICATE put: #duplicateLine;
-				at: SCI_LINEEND put: #moveToEndOfLine;
-				at: SCI_LINEENDDISPLAY put: #moveToEndOfDisplayLine;
-				at: SCI_LINEENDDISPLAYEXTEND put: #extendToEndOfDisplayLine;
-				at: SCI_LINEENDEXTEND put: #extendToEndOfLine;
-				at: SCI_LINEENDRECTEXTEND put: #extendRectangleToEndOfLine;
-				at: SCI_LINEENDWRAP put: #moveToEndOfWrappedLine;
-				at: SCI_LINEENDWRAPEXTEND put: #extendToEndOfWrappedLine;
-				at: SCI_LINEREVERSE put: #reverseSelectedLines;
-				at: SCI_LINESCROLLDOWN put: #scrollDown;
-				at: SCI_LINESCROLLUP put: #scrollUp;
-				at: SCI_LINESJOIN put: #joinTarget;
-				at: SCI_LINETRANSPOSE put: #twiddleLines;
-				at: SCI_LINEUP put: #moveUp;
-				at: SCI_LINEUPEXTEND put: #extendUp;
-				at: SCI_LINEUPRECTEXTEND put: #extendRectangleUp;
-				at: SCI_LOWERCASE put: #convertToLowercase;
-				at: SCI_MOVECARETINSIDEVIEW put: #moveCaretInsideView;
-				at: SCI_MOVESELECTEDLINESDOWN put: #moveSelectedLinesDown;
-				at: SCI_MOVESELECTEDLINESUP put: #moveSelectedLinesUp;
-				at: SCI_NEWLINE put: #newLine;
-				at: SCI_PAGEDOWN put: #movePageDown;
-				at: SCI_PAGEDOWNEXTEND put: #extendPageDown;
-				at: SCI_PAGEDOWNRECTEXTEND put: #extendRectanglePageDown;
-				at: SCI_PAGEUP put: #movePageUp;
-				at: SCI_PAGEUPEXTEND put: #extendPageUp;
-				at: SCI_PAGEUPRECTEXTEND put: #extendRectanglePageUp;
-				at: SCI_PARADOWN put: #moveParaDown;
-				at: SCI_PARADOWNEXTEND put: #extendParaDown;
-				at: SCI_PARAUP put: #moveParaUp;
-				at: SCI_PARAUPEXTEND put: #extendParaUp;
-				at: SCI_PASTE put: #pasteClipboard;
-				at: SCI_REDO put: #redo;
-				at: SCI_SCROLLTOEND put: #scrollToEnd;
-				at: SCI_SCROLLTOSTART put: #scrollToStart;
-				at: SCI_SELECTALL put: #basicSelectAll;
-				at: SCI_SELECTIONDUPLICATE put: #duplicateSelection;
-				at: SCI_SETZOOM put: #resetZoom;
-				at: SCI_STARTRECORD put: #startRecording;
-				at: SCI_STOPRECORD put: #stopRecording;
-				at: SCI_STUTTEREDPAGEDOWN put: #moveStutteredPageDown;
-				at: SCI_STUTTEREDPAGEDOWNEXTEND put: #extendStutteredPageDown;
-				at: SCI_STUTTEREDPAGEUP put: #moveStutteredPageUp;
-				at: SCI_STUTTEREDPAGEUPEXTEND put: #extendStutteredPageUp;
-				at: SCI_TAB put: #indent;
-				at: SCI_TARGETFROMSELECTION put: #setTargetRangeFromSelection;
-				at: SCI_UNDO put: #basicUndo;
-				at: SCI_UPPERCASE put: #convertToUppercase;
-				at: SCI_VCHOME put: #moveToVcHome;
-				at: SCI_VCHOMEDISPLAY put: #moveToVcStartOfDisplayLine;
-				at: SCI_VCHOMEDISPLAYEXTEND put: #extendToStartOfVcDisplayLine;
-				at: SCI_VCHOMEEXTEND put: #extendToVcHome;
-				at: SCI_VCHOMERECTEXTEND put: #extendRectangleToVcHome;
-				at: SCI_VCHOMEWRAP put: #moveToWrappedVcHome;
-				at: SCI_VCHOMEWRAPEXTEND put: #extendToWrappedVcHome;
-				at: SCI_VERTICALCENTRECARET put: #centerCurrentLine;
-				at: SCI_WORDLEFT put: #moveToStartOfWord;
-				at: SCI_WORDLEFTEND put: #moveToEndOfPreviousWord;
-				at: SCI_WORDLEFTENDEXTEND put: #extendToEndOfPreviousWord;
-				at: SCI_WORDLEFTEXTEND put: #extendToStartOfWord;
-				at: SCI_WORDPARTLEFT put: #moveToStartOfWordPart;
-				at: SCI_WORDPARTLEFTEXTEND put: #extendToStartOfWordPart;
-				at: SCI_WORDPARTRIGHT put: #moveToEndOfWordPart;
-				at: SCI_WORDPARTRIGHTEXTEND put: #extendToEndOfWordPart;
-				at: SCI_WORDRIGHT put: #moveToEndOfWord;
-				at: SCI_WORDRIGHTEND put: #moveToEndOfNextWord;
-				at: SCI_WORDRIGHTENDEXTEND put: #extendToEndOfNextWord;
-				at: SCI_WORDRIGHTEXTEND put: #extendToEndOfWord;
-				at: SCI_ZOOMIN put: #zoomIn;
-				at: SCI_ZOOMOUT put: #zoomOut;
-				at: SCI_NULL put: #yourself;
-				shrink;
+	Commands := (IdentityDictionary withAll: {SCI_BACKTAB -> #unindent.
+						SCI_CANCEL -> #cancelModes.
+						SCI_CHARLEFT -> #moveLeft.
+						SCI_CHARLEFTEXTEND -> #extendLeft.
+						SCI_CHARLEFTRECTEXTEND -> #extendRectangleLeft.
+						SCI_CHARRIGHT -> #moveRight.
+						SCI_CHARRIGHTEXTEND -> #extendRight.
+						SCI_CHARRIGHTRECTEXTEND -> #extendRectangleRight.
+						SCI_CLEAR -> #basicClearSelection.
+						SCI_CLEARALL -> #basicClearAll.
+						SCI_COPY -> #copySelection.
+						SCI_CUT -> #cutSelection.
+						SCI_DELETEBACK -> #backspace.
+						SCI_DELETEBACKNOTLINE -> #backspaceNoLine.
+						SCI_DELLINELEFT -> #deleteToStartOfLine.
+						SCI_DELLINERIGHT -> #deleteToEndOfLine.
+						SCI_DELWORDLEFT -> #deleteToStartOfWord.
+						SCI_DELWORDRIGHT -> #deleteToNextWord.
+						SCI_DELWORDRIGHTEND -> #deleteToEndOfWord.
+						SCI_DOCUMENTEND -> #moveToEndOfDocument.
+						SCI_DOCUMENTENDEXTEND -> #extendToEndOfDocument.
+						SCI_DOCUMENTSTART -> #moveToStartOfDocument.
+						SCI_DOCUMENTSTARTEXTEND -> #extendToStartOfDocument.
+						SCI_EDITTOGGLEOVERTYPE -> #toggleOvertype.
+						SCI_FORMFEED -> #formFeed.
+						SCI_HOME -> #moveToStartOfLine.
+						SCI_HOMEDISPLAY -> #moveToStartOfDisplayLine.
+						SCI_HOMEDISPLAYEXTEND -> #extendToStartOfDisplayLine.
+						SCI_HOMEEXTEND -> #extendToStartOfLine.
+						SCI_HOMERECTEXTEND -> #extendRectangleToStartOfLine.
+						SCI_HOMEWRAP -> #moveToStartOfWrappedLine.
+						SCI_HOMEWRAPEXTEND -> #extendToStartOfWrappedLine.
+						SCI_LINECOPY -> #copyLine.
+						SCI_LINECUT -> #cutLine.
+						SCI_LINEDELETE -> #deleteLine.
+						SCI_LINEDOWN -> #moveDown.
+						SCI_LINEDOWNEXTEND -> #extendDown.
+						SCI_LINEDOWNRECTEXTEND -> #extendRectangleDown.
+						SCI_LINEDUPLICATE -> #duplicateLine.
+						SCI_LINEEND -> #moveToEndOfLine.
+						SCI_LINEENDDISPLAY -> #moveToEndOfDisplayLine.
+						SCI_LINEENDDISPLAYEXTEND -> #extendToEndOfDisplayLine.
+						SCI_LINEENDEXTEND -> #extendToEndOfLine.
+						SCI_LINEENDRECTEXTEND -> #extendRectangleToEndOfLine.
+						SCI_LINEENDWRAP -> #moveToEndOfWrappedLine.
+						SCI_LINEENDWRAPEXTEND -> #extendToEndOfWrappedLine.
+						SCI_LINEREVERSE -> #reverseSelectedLines.
+						SCI_LINESCROLLDOWN -> #scrollDown.
+						SCI_LINESCROLLUP -> #scrollUp.
+						SCI_LINESJOIN -> #joinTarget.
+						SCI_LINETRANSPOSE -> #twiddleLines.
+						SCI_LINEUP -> #moveUp.
+						SCI_LINEUPEXTEND -> #extendUp.
+						SCI_LINEUPRECTEXTEND -> #extendRectangleUp.
+						SCI_LOWERCASE -> #convertToLowercase.
+						SCI_MOVECARETINSIDEVIEW -> #moveCaretInsideView.
+						SCI_MOVESELECTEDLINESDOWN -> #moveSelectedLinesDown.
+						SCI_MOVESELECTEDLINESUP -> #moveSelectedLinesUp.
+						SCI_NEWLINE -> #newLine.
+						SCI_PAGEDOWN -> #movePageDown.
+						SCI_PAGEDOWNEXTEND -> #extendPageDown.
+						SCI_PAGEDOWNRECTEXTEND -> #extendRectanglePageDown.
+						SCI_PAGEUP -> #movePageUp.
+						SCI_PAGEUPEXTEND -> #extendPageUp.
+						SCI_PAGEUPRECTEXTEND -> #extendRectanglePageUp.
+						SCI_PARADOWN -> #moveParaDown.
+						SCI_PARADOWNEXTEND -> #extendParaDown.
+						SCI_PARAUP -> #moveParaUp.
+						SCI_PARAUPEXTEND -> #extendParaUp.
+						SCI_PASTE -> #pasteClipboard.
+						SCI_REDO -> #redo.
+						SCI_SCROLLTOEND -> #scrollToEnd.
+						SCI_SCROLLTOSTART -> #scrollToStart.
+						SCI_SELECTALL -> #basicSelectAll.
+						SCI_SELECTIONDUPLICATE -> #duplicateSelection.
+						SCI_SETZOOM -> #resetZoom.
+						SCI_STARTRECORD -> #startRecording.
+						SCI_STOPRECORD -> #stopRecording.
+						SCI_STUTTEREDPAGEDOWN -> #moveStutteredPageDown.
+						SCI_STUTTEREDPAGEDOWNEXTEND -> #extendStutteredPageDown.
+						SCI_STUTTEREDPAGEUP -> #moveStutteredPageUp.
+						SCI_STUTTEREDPAGEUPEXTEND -> #extendStutteredPageUp.
+						SCI_TAB -> #indent.
+						SCI_TARGETFROMSELECTION -> #setTargetRangeFromSelection.
+						SCI_UNDO -> #basicUndo.
+						SCI_UPPERCASE -> #convertToUppercase.
+						SCI_VCHOME -> #moveToVcHome.
+						SCI_VCHOMEDISPLAY -> #moveToVcStartOfDisplayLine.
+						SCI_VCHOMEDISPLAYEXTEND -> #extendToStartOfVcDisplayLine.
+						SCI_VCHOMEEXTEND -> #extendToVcHome.
+						SCI_VCHOMERECTEXTEND -> #extendRectangleToVcHome.
+						SCI_VCHOMEWRAP -> #moveToWrappedVcHome.
+						SCI_VCHOMEWRAPEXTEND -> #extendToWrappedVcHome.
+						SCI_VERTICALCENTRECARET -> #centerCurrentLine.
+						SCI_WORDLEFT -> #moveToStartOfWord.
+						SCI_WORDLEFTEND -> #moveToEndOfPreviousWord.
+						SCI_WORDLEFTENDEXTEND -> #extendToEndOfPreviousWord.
+						SCI_WORDLEFTEXTEND -> #extendToStartOfWord.
+						SCI_WORDPARTLEFT -> #moveToStartOfWordPart.
+						SCI_WORDPARTLEFTEXTEND -> #extendToStartOfWordPart.
+						SCI_WORDPARTRIGHT -> #moveToEndOfWordPart.
+						SCI_WORDPARTRIGHTEXTEND -> #extendToEndOfWordPart.
+						SCI_WORDRIGHT -> #moveToEndOfWord.
+						SCI_WORDRIGHTEND -> #moveToEndOfNextWord.
+						SCI_WORDRIGHTENDEXTEND -> #extendToEndOfNextWord.
+						SCI_WORDRIGHTEXTEND -> #extendToEndOfWord.
+						SCI_ZOOMIN -> #zoomIn.
+						SCI_ZOOMOUT -> #zoomOut.
+						SCI_NULL -> #yourself})
 				isImmutable: true;
 				yourself!
 
@@ -276,6 +277,7 @@ new
 	^self newAcceleratorKey: 0 message: SCI_NULL!
 
 newAcceleratorKey: keyInteger message: sciInteger
+	<primitive: 157>
 	^self basicNew
 		acceleratorKey: keyInteger;
 		message: sciInteger;

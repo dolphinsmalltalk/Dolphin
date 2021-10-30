@@ -408,18 +408,6 @@ initialize
 					helpId: self toolsFolderHelpId);
 		registerTool: self!
 
-publishedAspects
-	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
-
-	^super publishedAspects
-		add: ((Aspect
-					choice: #defaultView
-					from: [self resourceNames]
-					type: String)
-					icon: ResourceIdentifier icon;
-					yourself);
-		yourself!
-
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
@@ -436,7 +424,6 @@ toolsFolderHelpId
 displayOn:!displaying!public! !
 icon!constants!public! !
 initialize!initializing!must strip!private! !
-publishedAspects!public! !
 resource_Default_view!public!resources-views! !
 toolsFolderHelpId!constants!public! !
 !

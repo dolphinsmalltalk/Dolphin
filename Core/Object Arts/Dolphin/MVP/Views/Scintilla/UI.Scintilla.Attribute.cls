@@ -4,7 +4,7 @@ Core.Object subclass: #'UI.Scintilla.Attribute'
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	imports: #()
-	classInstanceVariableNames: 'propertyMap'
+	classInstanceVariableNames: 'propertyDescriptors'
 	classConstants: {}!
 UI.Scintilla.Attribute guid: (Core.GUID fromString: '{b73f94fe-0bb9-4c23-aee5-e77b3cf408af}')!
 UI.Scintilla.Attribute isNonInstantiable: true!
@@ -23,16 +23,12 @@ UI.Scintilla.Attribute comment: '`ScintillaAttribute` is the abstract superclass
 !UI.Scintilla.Attribute methodsFor!
 
 = aScintillaAttribute 
-	^self class == aScintillaAttribute and: [self name = aScintillaAttribute name]!
+	^self class == aScintillaAttribute class and: [self name = aScintillaAttribute name]!
 
-applyToView: aScintillaView initializing: aBoolean
+applyToView: aScintillaView
 	self view: aScintillaView.
-	self class propertyMap do: 
-			[:descriptor |
-			descriptor
-				setAttribute: self
-				ofView: aScintillaView
-				initializing: aBoolean]!
+	self class propertyDescriptors
+		do: [:descriptor | descriptor setAttribute: self ofView: aScintillaView]!
 
 asParameter
 	^self basicId!
@@ -52,6 +48,11 @@ id
 id: anInteger 
 	self basicId: anInteger!
 
+initializeView: aScintillaView
+	self view: aScintillaView.
+	self class propertyDescriptors
+		do: [:descriptor | descriptor initializeAttribute: self ofView: aScintillaView]!
+
 name
 	^self id!
 
@@ -68,8 +69,10 @@ printOn: aStream
 	aStream nextPut: $)!
 
 printPropertiesOn: aStream
-	self class propertyMap keysAndValuesDo: 
-			[:name :descriptor |
+	self class propertyDescriptors do: 
+			[:descriptor |
+			| name |
+			name := descriptor key.
 			(descriptor getPrintString: name of: self)
 				ifNotNil: 
 					[:value |
@@ -80,7 +83,7 @@ printPropertiesOn: aStream
 						display: value]]!
 
 storeableProperties
-	^{#basicId} , self class propertyMap keys asArray!
+	^{#basicId} , self class propertyDescriptors collect: [:each | each key]!
 
 storeOn: aStream
 	"Append to the <puttableStream> argument an expression which when evaluated will answer a
@@ -108,14 +111,8 @@ storeOn: aStream
 		display: #yourself;
 		nextPut: $)!
 
-updateView: aScintillaView property: aSymbol
-	(self class propertyMap at: aSymbol)
-		setAttribute: self
-		ofView: aScintillaView
-		initializing: false!
-
-updateViewProperty: aSymbol
-	self view ifNotNil: [:scintilla | self updateView: scintilla property: aSymbol]!
+updateViewProperty: aPropertyDescriptor
+	self view ifNotNil: [:scintilla | aPropertyDescriptor setAttribute: self ofView: scintilla]!
 
 view
 	^self subclassResponsibility!
@@ -124,19 +121,19 @@ view: aScintillaView
 	self subclassResponsibility! !
 !UI.Scintilla.Attribute categoriesForMethods!
 =!comparing!public! !
-applyToView:initializing:!helpers!private! !
+applyToView:!helpers!private! !
 asParameter!converting!public! !
 basicId!accessing!private! !
 basicId:!accessing!private! !
 hash!comparing!public! !
 id!accessing!public! !
 id:!accessing!public! !
+initializeView:!helpers!private! !
 name!accessing!public! !
 printOn:!development!printing!public! !
 printPropertiesOn:!development!helpers!printing!private! !
 storeableProperties!development!printing!private! !
 storeOn:!development!printing!public! !
-updateView:property:!helpers!private! !
 updateViewProperty:!helpers!private! !
 view!accessing!private! !
 view:!accessing!private! !
@@ -147,14 +144,14 @@ view:!accessing!private! !
 icon
 	^ScintillaView icon!
 
-propertyMap
-	^propertyMap!
+propertyDescriptors
+	^propertyDescriptors!
 
 sortByIdBlock
 	^[:a :b | a basicId ifNil: [true] ifNotNil: [:aId | b basicId ifNil: [false] ifNotNil: [:bId | aId <= bId]]]! !
 !UI.Scintilla.Attribute class categoriesForMethods!
 icon!constants!development!public! !
-propertyMap!constants!private! !
+propertyDescriptors!constants!private! !
 sortByIdBlock!constants!public! !
 !
 

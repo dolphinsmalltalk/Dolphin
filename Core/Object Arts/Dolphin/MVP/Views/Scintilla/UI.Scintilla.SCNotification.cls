@@ -113,44 +113,44 @@ getValidFields
 	};
 	"
 
-	^#(#code)
-		, (##(| positionOnly positionXY positionModifiers listSelection |
-			positionOnly := #(#scPosition).
-			positionXY := #(#scPosition #x #y).
-			positionModifiers := #(#scPosition #modifiers).
-			listSelection := #(#scPosition #ch #text #listCompletionMethod).
-			IdentityDictionary new
-				at: SCN_AUTOCCANCELLED put: #();
-				at: SCN_AUTOCCHARDELETED put: #();
-				at: SCN_AUTOCCOMPLETED put: listSelection;
-				at: SCN_AUTOCSELECTION put: listSelection;
-				at: SCN_CALLTIPCLICK put: positionOnly;
-				at: SCN_CHARADDED put: #(#ch);
-				at: SCN_DOUBLECLICK put: #(#scPosition #modifiers #scLine);
-				at: SCN_DWELLEND put: positionXY;
-				at: SCN_DWELLSTART put: positionXY;
-				at: SCN_FOCUSIN put: #();
-				at: SCN_FOCUSOUT put: #();
-				at: SCN_HOTSPOTCLICK put: positionModifiers;
-				at: SCN_HOTSPOTDOUBLECLICK put: positionModifiers;
-				at: SCN_HOTSPOTRELEASECLICK put: positionModifiers;
-				at: SCN_INDICATORCLICK put: positionModifiers;
-				at: SCN_INDICATORRELEASE put: positionModifiers;
-				at: SCN_KEY put: #(#ch #modifiers);
-				at: SCN_MACRORECORD put: #(#message #wParam #lParam);
-				at: SCN_MARGINCLICK put: #(#scPosition #modifiers #margin);
-				at: SCN_MODIFIED
-					put: #(#scPosition #modificationType #text #length #linesAdded #scLine #foldLevelNow #foldLevelPrev);
-				at: SCN_MODIFYATTEMPTRO put: #();
-				at: SCN_NEEDSHOWN put: positionOnly;
-				at: SCN_PAINTED put: #();
-				at: SCN_SAVEPOINTLEFT put: #();
-				at: SCN_SAVEPOINTREACHED put: #();
-				at: SCN_STYLENEEDED put: positionOnly;
-				at: SCN_UPDATEUI put: #(#updated);
-				at: SCN_URIDROPPED put: #(#text);
-				at: SCN_USERLISTSELECTION put: #(#scPosition #ch #text #listType #listCompletionMethod);
-				shrink) at: self code ifAbsent: #())!
+	^##(| codeOnly positionOnly positionXY positionModifiers listSelection |
+	codeOnly := #(#code).
+	positionOnly := #(#code #scPosition).
+	positionXY := #(#code #scPosition #x #y).
+	positionModifiers := #(#code #scPosition #modifiers).
+	listSelection := #(#code #scPosition #ch #text #listCompletionMethod).
+	IdentityDictionary withAll: {SCN_AUTOCCANCELLED -> codeOnly.
+				SCN_AUTOCCHARDELETED -> codeOnly.
+				SCN_AUTOCCOMPLETED -> listSelection.
+				SCN_AUTOCSELECTION -> listSelection.
+				SCN_CALLTIPCLICK -> positionOnly.
+				SCN_CHARADDED -> #(#code #ch).
+				SCN_DOUBLECLICK -> #(#code #scPosition #modifiers #scLine).
+				SCN_DWELLEND -> positionXY.
+				SCN_DWELLSTART -> positionXY.
+				SCN_FOCUSIN -> codeOnly.
+				SCN_FOCUSOUT -> codeOnly.
+				SCN_HOTSPOTCLICK -> positionModifiers.
+				SCN_HOTSPOTDOUBLECLICK -> positionModifiers.
+				SCN_HOTSPOTRELEASECLICK -> positionModifiers.
+				SCN_INDICATORCLICK -> positionModifiers.
+				SCN_INDICATORRELEASE -> positionModifiers.
+				SCN_KEY -> #(#code #ch #modifiers).
+				SCN_MACRORECORD -> #(#code #message #wParam #lParam).
+				SCN_MARGINCLICK -> #(#code #scPosition #modifiers #margin).
+				SCN_MODIFIED
+					-> #(#code #scPosition #modificationType #text #length #linesAdded #scLine #foldLevelNow #foldLevelPrev).
+				SCN_MODIFYATTEMPTRO -> codeOnly.
+				SCN_NEEDSHOWN -> positionOnly.
+				SCN_PAINTED -> codeOnly.
+				SCN_SAVEPOINTLEFT -> codeOnly.
+				SCN_SAVEPOINTREACHED -> codeOnly.
+				SCN_STYLENEEDED -> positionOnly.
+				SCN_UPDATEUI -> #(#code #updated).
+				SCN_URIDROPPED -> #(#code #text).
+				SCN_USERLISTSELECTION -> #(#code #scPosition #ch #text #listType #listCompletionMethod)})
+			at: self code
+			ifAbsent: #(#code)!
 
 isAltKeyDown
 	"Answer whether the ALT key was down when the event was raised.

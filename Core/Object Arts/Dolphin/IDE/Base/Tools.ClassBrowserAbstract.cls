@@ -4,12 +4,13 @@ Tools.SmalltalkToolShell subclass: #'Tools.ClassBrowserAbstract'
 	instanceVariableNames: 'classesPresenter categoriesPresenter methodBrowserPresenter definitionPresenter modePresenter flags history variablesPresenter protocolsPresenter filterPresenter packageModel statusModel cardsPresenter loadedPlugins methodCategories'
 	classVariableNames: 'GrayedMethodFadeFactor HistoryListSize LooseMethodColor WordWrapDefinition'
 	imports: #()
-	classInstanceVariableNames: 'defaultShowInheritedMethods defaultFilterObjectMethods plugins'
+	classInstanceVariableNames: 'plugins'
 	classConstants: {
-		'FilterObjectMethodsMask' -> 16r2.
-		'ShowInheritedMethodsMask' -> 16r1
+		'FilterObjectMethodsMask' -> 16r200.
+		'ShowInheritedMethodsMask' -> 16r100
 	}!
 Tools.ClassBrowserAbstract guid: (Core.GUID fromString: '{87b4c6bc-026e-11d3-9fd7-00a0cc3e4a32}')!
+Tools.ClassBrowserAbstract isNonInstantiable: true!
 Tools.ClassBrowserAbstract comment: 'ClassBrowserAbstract is an abstract <SmalltalkToolShell> that implements most of the functionality required for a class browser development tool. Concrete subclasses implement the Class Hierarchy Browser and System Browser development tools.
 
 Instance Variables:
@@ -2735,7 +2736,7 @@ Tools.ClassBrowserAbstract methodProtocol: #methodBrowserHost attributes: #(#rea
 !Tools.ClassBrowserAbstract class methodsFor!
 
 addPlugin: aClassBrowserPlugin 
-	^self plugins add: aClassBrowserPlugin!
+	^plugins add: aClassBrowserPlugin!
 
 availablePluginClasses
 	"Private - Answers a  collection of plugin classes to choose from"
@@ -2757,12 +2758,15 @@ defaultAdditionalAccelerators
 defaultFilterObjectMethods
 	"Answer true if instances of the receiver filter out <Object> methods by default."
 
-	^defaultFilterObjectMethods!
+	^self optionFlags allMask: FilterObjectMethodsMask!
 
-defaultFilterObjectMethods: aBoolean 
+defaultFilterObjectMethods: aBoolean
 	"Sets the default showing of filtering out of <Object> methods for instances of the receiver to aBoolean."
 
-	defaultFilterObjectMethods := aBoolean!
+	self setOptionFlag: FilterObjectMethodsMask value: aBoolean!
+
+defaultOptionFlags
+	^##(CanUseIdeaSpaceMask | FilterObjectMethodsMask)!
 
 defaultPluginsCollection
 	"Private - Answers a  collection of plugin classes to choose from"
@@ -2776,51 +2780,48 @@ defaultPluginsCollection
 defaultShowInheritedMethods
 	"Answer true if instances of the receiver show inherited methods by default."
 
-	^defaultShowInheritedMethods!
+	^self optionFlags allMask: ShowInheritedMethodsMask!
 
-defaultShowInheritedMethods: aBoolean 
+defaultShowInheritedMethods: aBoolean
 	"Sets the default showing of inherited methods for instances of the receiver to aBoolean."
 
-	defaultShowInheritedMethods := aBoolean!
+	self setOptionFlag: ShowInheritedMethodsMask value: aBoolean!
 
 grayedMethodFadeFactor
+	self ensureOptionsLoaded.
 	^GrayedMethodFadeFactor!
 
 grayedMethodFadeFactor: aNumber
-	GrayedMethodFadeFactor := aNumber!
+	self grayedMethodFadeFactor = aNumber ifTrue: [^self].
+	GrayedMethodFadeFactor := aNumber.
+	self persistOptions!
 
 historyListSize
-	^HistoryListSize ifNil: [self defaultHistoryListSize]!
+	self ensureOptionsLoaded.
+	^HistoryListSize!
 
-historyListSize: anInteger 
-	HistoryListSize := anInteger!
-
-initialize
-	"Private - Initialize the receiver's class variables.
-		self initialize
-	"
-
-	self looseMethodColor: Color purple.
-	self grayedMethodFadeFactor: 2.
-	self historyListSize: nil.
-	self historyDwellTime: nil.
-	self wordWrapDefinition: true.
-!
+historyListSize: anInteger
+	HistoryListSize = anInteger ifTrue: [^self].
+	HistoryListSize := anInteger.
+	self persistOptions!
 
 looseMethodColor
 	"Answer the <Color> used to highlight loose methods."
 
+	self ensureOptionsLoaded.
 	^LooseMethodColor!
 
 looseMethodColor: aColor
 	"Set the <Color> used to highlight loose methods."
 
-	LooseMethodColor := aColor!
+	self looseMethodColor = aColor ifTrue: [^self].
+	LooseMethodColor := aColor.
+	self persistOptions!
 
 plugins
 	"Answer the plugins installed by instances of the receiver"
 
-	plugins isNil ifTrue: [self plugins: self defaultPluginsCollection].
+	self ensureOptionsLoaded.
 	^OS.SystemMetrics current hasInternetExplorerControl
 		ifTrue: [plugins]
 		ifFalse: 
@@ -2830,32 +2831,39 @@ plugins
 plugins: anOrderedCollection 
 	"Sets the plugins installed by instances of the receiver"
 
-	plugins := anOrderedCollection!
+	plugins = anOrderedCollection ifTrue: [^self].
+	plugins := anOrderedCollection.
+	self persistOptions!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	^super publishedAspects
-		add: (Aspect boolean: #canUseIdeaSpace);
-		add: (Aspect boolean: #wordWrapSource);
-		add: (Aspect boolean: #wordWrapDefinition);
+	| aspects |
+	aspects := super publishedAspects.
+	aspects add: self canUseIdeaSpaceAspect.
+	#(#wordWrapSource #wordWrapDefinition #defaultFilterObjectMethods)
+		do: [:each | aspects add: ((Aspect boolean: each)
+						defaultValue: true;
+						yourself)].
+	aspects
 		add: (Aspect boolean: #defaultShowInheritedMethods);
-		add: (Aspect boolean: #defaultFilterObjectMethods);
 		add: ((Aspect color: #looseMethodColor)
-					beNonNullable;
+					defaultValue: Color purple;
 					yourself);
 		add: ((Aspect integer: #grayedMethodFadeFactor)
-					beNonNullable;
+					defaultValue: 2;
 					yourself);
 		add: ((Aspect sequenceableCollection: #plugins addFrom: [self availablePluginClasses])
 					beMutable;
-					beNullable;
+					defaultValue: [self defaultPluginsCollection];
 					yourself);
-		add: (Aspect integer: #historyListSize);
-		yourself!
+		add: ((Aspect integer: #historyListSize)
+					defaultValue: self defaultHistoryListSize;
+					yourself).
+	^aspects!
 
 removePlugin: aClassBrowserPlugin
-	^self plugins remove: aClassBrowserPlugin ifAbsent: nil!
+	^plugins remove: aClassBrowserPlugin ifAbsent: nil!
 
 wordWrapDefinition
 	"Answer true if instances of the receiver use definition word wrapping."
@@ -2865,7 +2873,9 @@ wordWrapDefinition
 wordWrapDefinition: aBoolean
 	"Sets the definition word wrapping state for instances of the receiver to aBoolean."
 
-	WordWrapDefinition := aBoolean!
+	self wordWrapDefinition == aBoolean ifTrue: [^self].
+	WordWrapDefinition := aBoolean.
+	self persistOptions!
 
 wordWrapSource
 	"Answer true if instances of the receiver use source word wrapping."
@@ -2875,7 +2885,9 @@ wordWrapSource
 wordWrapSource: aBoolean
 	"Sets the source word wrapping state for instances of the receiver to aBoolean."
 
-	MethodBrowser wordWrap: aBoolean! !
+	self wordWrapSource == aBoolean ifTrue: [^self].
+	MethodBrowser wordWrap: aBoolean.
+	self persistOptions! !
 !Tools.ClassBrowserAbstract class categoriesForMethods!
 addPlugin:!initializing!private! !
 availablePluginClasses!helpers!private! !
@@ -2883,6 +2895,7 @@ classCommentIcon!helpers!private! !
 defaultAdditionalAccelerators!constants!private! !
 defaultFilterObjectMethods!accessing!options!public! !
 defaultFilterObjectMethods:!accessing!options!public! !
+defaultOptionFlags!constants!options!private! !
 defaultPluginsCollection!helpers!private! !
 defaultShowInheritedMethods!accessing!options!public! !
 defaultShowInheritedMethods:!accessing!options!public! !
@@ -2890,7 +2903,6 @@ grayedMethodFadeFactor!options!public! !
 grayedMethodFadeFactor:!options!public! !
 historyListSize!accessing!public! !
 historyListSize:!accessing!public! !
-initialize!initializing!private! !
 looseMethodColor!accessing!options!public! !
 looseMethodColor:!accessing!options!public! !
 plugins!accessing!public!wine fix! !

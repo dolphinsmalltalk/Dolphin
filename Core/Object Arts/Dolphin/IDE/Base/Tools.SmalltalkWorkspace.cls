@@ -2,12 +2,19 @@
 
 UI.Presenter subclass: #'Tools.SmalltalkWorkspace'
 	instanceVariableNames: 'evaluationContext errorModel findDetails workspacePool evaluationPools compilationErrors textStyles searchEnvironment modifiedModel flags indicatorStyles variableMetadataProvider'
-	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles IsAutoCompletionCaseInsensitive IsAutoCompletionEnabled IsAutoCompletionSpaceAdded IsAutoCompletionTruncating KeyBindings KeywordCompletions MaxAutoCompletionListSize StandardUnaryReturnTypes TextStyles UseDirectWrite WordWrap WrapIndentMode'
+	classVariableNames: 'Abbreviations AnnotationMode AutoCompleteDwell DefaultCaretColor DefaultFont DefaultTabWidth FontQuality IndicatorStyles KeyBindings KeywordCompletions MaxAutoCompletionListHeight MaxAutoCompletionListSize MaxAutoCompletionListWidth OptionFlags StandardUnaryReturnTypes TextStyles WrapIndentMode'
 	imports: #(#{Kernel.CompilerFlags} #{UI.Scintilla private} #{Refactory.Browser private})
 	classInstanceVariableNames: 'additionalKeyBindings commandQueryHandlers'
 	classConstants: {
-		'AutoCompleteMask' -> 16r1.
-		'VariableTipsMask' -> 16r2
+		'AutoCompleteMask' -> 16r8.
+		'AutoCompletionCaseInsensitiveMask' -> 16r80.
+		'AutoCompletionEnabledMask' -> 16r10.
+		'AutoCompletionSpaceAddedMask' -> 16r40.
+		'AutoCompletionTruncatingMask' -> 16r20.
+		'LoadingMask' -> 16r1.
+		'UseDirectWriteMask' -> 16r100.
+		'VariableTipsMask' -> 16r2.
+		'WordWrapMask' -> 16r4
 	}!
 Tools.SmalltalkWorkspace guid: (Core.GUID fromString: '{87b4c687-026e-11d3-9fd7-00a0cc3e4a32}')!
 Tools.SmalltalkWorkspace comment: 'SmalltalkWorkspace is a <presenter> for displaying a workspace area within a <ScintillaView>. Note that, for efficiency purposes, a SmalltakWorkspace does not have a model. The textual data is held only within the associated view. since there seems little point in duplicating this text and holding it within the image as, say, a <readableString>.
@@ -57,15 +64,16 @@ applyOptions
 	view with SmalltalkWorkspace. This is no longer supported."
 	view textStyles: self textStyles.
 	view indicatorStyles: self indicatorStyles.
-	view wordChars: (Character byteCharacterSet
-				select: [:each | (Compiler isAValidIdentifierChar: each) or: [each == $:]]).
+	view
+		wordChars: ##((Character byteCharacterSet
+				select: [:each | (Compiler isAValidIdentifierChar: each) or: [each == $:]]) asUtf8String).
 	self hasSmalltalkStyler ifFalse: [self isAutoCompletionEnabled: false].
 	view isAutoCompletionCaseInsensitive: self class isAutoCompletionCaseInsensitive.
 	"This has no effect, since we takeover insertion of the completed word, but it's a useful
 	way to store the flag on a per-instance basis"
 	view isAutoCompletionTruncating: self class isAutoCompletionTruncating.
-	view maxCompletionListHeight: 10.
-	view maxCompletionListWidth: 40.
+	view maxCompletionListHeight: self class maxAutoCompletionListHeight.
+	view maxCompletionListWidth: self class maxAutoCompletionListWidth.
 	view autoCompletionSeparator: $\x7F.
 	self areVariableTipsEnabled ifTrue: [view isBackgroundDwellEnabled: true].
 	"#2137"
@@ -171,7 +179,7 @@ chunkFilerClass
 
 classForIdentifier: anStIdentifierToken
 	^(self resolveVariable: anStIdentifierToken)
-		ifNotNil: [:variable | variableMetadataProvider classForVariable: variable]!
+		ifNotNil: [:variable | self suggestClassForVariable: variable]!
 
 classForToken: anAssociation
 	"Private - Answer the inferred class of the specified token, or nil if not known."
@@ -180,22 +188,17 @@ classForToken: anAssociation
 	anAssociation isNil ifTrue: [^nil].
 	style := anAssociation value.
 	range := anAssociation key.
-	text := view plainTextRange: range .
-	style == #identifier ifTrue: [
-			^self classForIdentifier: (StIdentifierToken
-				start: range start
-				comments: nil
-				value: text)].
+	text := view plainTextRange: range.
+	style == #identifier
+		ifTrue: 
+			[^self classForIdentifier: (StIdentifierToken
+						start: range start
+						comments: nil
+						value: text)].
 	style == #literalPseudo
 		ifTrue: 
-			[| lookup |
-			lookup := ##(LookupTable new
-						at: 'nil' put: nil class;
-						at: 'false' put: false class;
-						at: 'true' put: true class;
-						shrink;
-						yourself).
-			^lookup lookup: text].
+			[^##(LookupTable withAll: {'nil' -> nil class. 'false' -> false class. 'true' -> true class})
+				lookup: text].
 	style == #literalNumber ifTrue: [^(SmalltalkStylingScanner on: text readStream) next valueClass].
 	style == #literalString ifTrue: [^String].
 	style == #literalSymbol ifTrue: [^Symbol].
@@ -373,7 +376,7 @@ completeWord
 completeWordAt: anInteger with: aString
 	| replaceRange addSpace |
 	replaceRange := self rangeToCompleteAt: anInteger.
-	addSpace := IsAutoCompletionSpaceAdded and: 
+	addSpace := self class isAutoCompletionSpaceAdded and: 
 					[| nextChar |
 					nextChar := view characterAt: replaceRange stop + 1.
 					nextChar ~~ $\0 and: [nextChar isSeparator not]].
@@ -879,9 +882,6 @@ isWhitespaceAt: anInteger
 killAutocompleteTimer
 	self view killTimer: SCI_AUTOCSHOW!
 
-maxAutoCompletionListSize
-	^self class maxAutoCompletionListSize!
-
 maxCompletionListSize
 	^10000!
 
@@ -897,7 +897,7 @@ maybeShowCompletionList
 	(self
 		autoComplete: styleName
 		at: last
-		maxItems: self maxAutoCompletionListSize)
+		maxItems: self class maxAutoCompletionListSize)
 			ifNil: 
 				[| char |
 				"If a space is typed after certain identifiers e.g. an instance
@@ -907,7 +907,7 @@ maybeShowCompletionList
 				((char == $^ and: [styleName == #specialCharacter])
 					or: [char == $\x20 and: [(view styleIdAt: last) = (view idOfStyleNamed: #whitespace)]])
 						ifTrue: 
-							[self showCompletionListAfterToken: (self tokenBefore: last) maxItems: self maxAutoCompletionListSize]]!
+							[self showCompletionListAfterToken: (self tokenBefore: last) maxItems: self class maxAutoCompletionListSize]]!
 
 messagesForToken: anAssociation startingWith: aString maxItems: anInteger
 	"Private - Answer the set of selectors that could potentially be sent as messages following
@@ -1346,7 +1346,10 @@ setCaretColor
 	self class defaultCaretColor ifNotNil: [:color | view caretForecolor: color]!
 
 setFont
-	view font: self class actualFont!
+	| requiredFont |
+	requiredFont := self class actualFont.
+	"Don't set the font unless it really has changed, as if we do we need to rebuild all the styles, which is quite expensive."
+	view actualFont = requiredFont ifFalse: [view font: requiredFont]!
 
 setTabWidth
 	view tabWidth: self class defaultTabWidth!
@@ -1525,6 +1528,9 @@ startAutocompleteTimer
 stylerClass: aScintillaStylerClass
 	self view stylerClass: aScintillaStylerClass!
 
+suggestClassForVariable: aStVariable
+	^variableMetadataProvider classForVariable: aStVariable!
+
 symbolsStartingWith: aString maxItems: anInteger
 	| stream ignoreCase |
 	stream := Array writeStream: (anInteger bitShift: -1).
@@ -1561,7 +1567,7 @@ textStyles
 	^textStyles!
 
 textStyles: aCollectionOfScintillaTextStyles 
-	textStyles := aCollectionOfScintillaTextStyles asOrderedCollection.
+	textStyles := aCollectionOfScintillaTextStyles asArray.
 	self isOpen ifTrue: [self view textStyles: textStyles]!
 
 tipForVariable: aStVariable
@@ -1710,7 +1716,6 @@ isSpecialToken:oneOf:!public!testing! !
 isSyntaxColoringEnabled!private!testing! !
 isWhitespaceAt:!accessing!autocompletion!private! !
 killAutocompleteTimer!autocompletion!private! !
-maxAutoCompletionListSize!autocompletion!constants!private! !
 maxCompletionListSize!autocompletion!constants!private! !
 maybeExtendingQualifiedNameAt:!autocompletion!helpers!private! !
 maybeShowCompletionList!autocompletion!helpers!private! !
@@ -1772,6 +1777,7 @@ showTipForIdentifier:!helpers!private! !
 showTipForIndicators:!helpers!private! !
 startAutocompleteTimer!autocompletion!helpers!private! !
 stylerClass:!accessing!public! !
+suggestClassForVariable:!autocompletion!helpers!public! !
 symbolsStartingWith:maxItems:!autocompletion!helpers!private! !
 systemModel!constants!private! !
 text!accessing!public! !
@@ -1804,26 +1810,39 @@ actualFont
 	^self defaultFont ifNil: [SmalltalkSystem current actualFont]!
 
 annotationMode
+	self ensureOptionsLoaded.
 	^AnnotationMode!
 
-annotationMode: anObject
-	AnnotationMode := anObject!
+annotationMode: aSymbol
+	self annotationMode = aSymbol ifTrue: [^self].
+	AnnotationMode := aSymbol.
+	self isLoadingOptions ifTrue: [^self].
+	self primAllSubinstances do: [:each | each view annotationMode: aSymbol].
+	self persistOptions
+!
+
+applyOptions
+	self primAllSubinstances do: [:each | each applyOptions]!
 
 autoCompleteDwell
 	"Answer the `Duration` that must elapse between characters being typed before the workspace will attempt to display an auto-completion list."
 
+	self ensureOptionsLoaded.
 	^AutoCompleteDwell!
 
 autoCompleteDwell: aDuration
-	AutoCompleteDwell := aDuration!
+	self autoCompleteDwell = aDuration ifTrue: [^self].
+	AutoCompleteDwell := aDuration.
+	self persistOptions!
 
 customEditorKeyBindings
 	| bindings |
-	bindings := KeyBindings asOrderedCollection.
+	bindings := self keyBindings asOrderedCollection.
+	"We have to disable the default Scintilla key bindings for any of the chords we want to use for something else."
 	self additionalKeyBindings do: 
 			[:each |
 			(ScintillaView.DefaultKeyBindings includesKey: each acceleratorKey)
-				ifTrue: [bindings add: (KeyBinding newAcceleratorKey: each acceleratorKey message: SCI_NULL)]].
+				ifTrue: [bindings addLast: (KeyBinding newAcceleratorKey: each acceleratorKey message: SCI_NULL)]].
 	^bindings!
 
 defaultAdditionalAccelerators
@@ -1836,9 +1855,13 @@ defaultAdditionalAccelerators
 
 	^#(#(#evaluateIt 'Ctrl+E') #(#displayIt 'Ctrl+D') #(#printIt 'Ctrl+P') #(#inspectIt 'Ctrl+I') #(#toggleWordWrap 'Ctrl+R') #(#completeWord 'Ctrl+.') #(#selectNext 'F8') #(#selectPrev 'Shift+F8') #(#inspectIt 'Ctrl+Q'))!
 
+defaultAutoCompleteDwell
+	^30 milliseconds!
+
 defaultBackcolor
 	"Answer the default background to use for instances of the receiver"
 
+	self ensureOptionsLoaded.
 	^(Color named: #smalltalkWorkspace) basicActualColor!
 
 defaultBackcolor: aColorOrNil
@@ -1848,11 +1871,14 @@ defaultBackcolor: aColorOrNil
 	current := Color named: #smalltalkWorkspace.
 	current = aColorOrNil ifTrue: [^self].
 	current actualColor: (aColorOrNil ifNil: [Color window]).
-	self allSubinstances do: [:each | each view backcolorChanged]!
+	self isLoadingOptions ifTrue: [^self].
+	self primAllSubinstances do: [:each | each view backcolorChanged].
+	self persistOptions!
 
 defaultCaretColor
 	"Answer the default color to use for the caret in instances of the receiver"
 
+	self ensureOptionsLoaded.
 	^DefaultCaretColor!
 
 defaultCaretColor: aColorOrNil 
@@ -1860,17 +1886,20 @@ defaultCaretColor: aColorOrNil
 
 	DefaultCaretColor = aColorOrNil ifTrue: [^self].
 	DefaultCaretColor := aColorOrNil.
-	self allSubinstances do: [:each | each setCaretColor]!
+	self isLoadingOptions ifTrue: [^self].
+	self primAllSubinstances do: [:each | each setCaretColor].
+	self persistOptions!
 
 defaultEditorKeyBindings
 	"Answer any differences from standard Scintilla key bindings to apply by default in workspaces.
 	Note that the defaultAdditionalAccelerators will also supplant any Scintilla commands normally associated with those key bindings."
 
-	^{KeyBinding newChord: 'CTRL+SHIFT+D' message: SCI_SELECTIONDUPLICATE}!
+	^##({KeyBinding newChord: 'CTRL+SHIFT+D' message: SCI_SELECTIONDUPLICATE})!
 
 defaultFont
 	"Answer the default  font to use for instances of the receiver"
 
+	self ensureOptionsLoaded.
 	^DefaultFont!
 
 defaultFont: aFontOrNil 
@@ -1878,7 +1907,9 @@ defaultFont: aFontOrNil
 
 	DefaultFont = aFontOrNil ifTrue: [^self].
 	DefaultFont := aFontOrNil.
-	self allSubinstances do: [:each | each setFont]!
+	self isLoadingOptions ifTrue: [^self].
+	self allSubinstances do: [:each | each setFont].
+	self persistOptions!
 
 defaultIndicatorStyles
 	"Answer the default indicators styles to be used in workspaces."
@@ -1925,52 +1956,60 @@ defaultKeywordCompletions
 	perform a more helpful insertion for commonly used keyword selectors where the arguments are
 	of a known type, for example the control structures."
 
-	^LookupTable new
-		at: 'at:ifAbsent:' put: 'at: ?key? ifAbsent: []';
-		at: 'ifTrue:' put: 'ifTrue: [??]';
-		at: 'ifFalse:' put: 'ifFalse: [??]';
-		at: 'ifTrue:ifFalse:' put: 'ifTrue: [??] ifFalse: []';
-		at: 'ifFalse:ifTrue:' put: 'ifFalse: [??] ifTrue: []';
-		at: 'ifNil:' put: 'ifNil: [??]';
-		at: 'ifNotNil:' put: 'ifNotNil: [:value | ?value?]';
-		at: 'ifNil:ifNotNil:' put: 'ifNil: [??] ifNotNil: [:value | ]';
-		at: 'ifNotNil:ifNil:' put: 'ifNotNil: [:value | ?value?] ifNil: []';
-		at: 'whileTrue:' put: 'whileTrue: [??]';
-		at: 'whileFalse:' put: 'whileFalse: [??]';
-		at: 'do:' put: 'do: [:each | ?each?]';
-		at: 'detect:' put: 'detect: [:each | ?each?]';
-		at: 'detect:ifNone:' put: 'detect: [:each | ?each?] ifNone: []';
-		at: 'collect:' put: 'collect: [:each | ?each?]';
-		at: 'select:' put: 'select: [:each | ?each?]';
-		at: 'reject:' put: 'reject: [:each | ?each?]';
-		at: 'allSatisfy:' put: 'allSatisfy: [:each | ?true?]';
-		at: 'anySatisfy:' put: 'anySatisfy: [:each | ?true?]';
-		at: 'keysAndValuesDo:' put: 'keysAndValuesDo: [:eachKey :eachValue | ?eachKey?]';
-		at: 'millisecondsToRun:' put: 'millisecondsToRun: [??]';
-		at: 'or:' put: 'or: [?condition?]';
-		at: 'and:' put: 'and: [?condition?]';
-		at: 'on:do:' put: 'on: ?Error? do: [:ex | ]';
-		at: 'timesRepeat:' put: 'timesRepeat: [??]';
-		shrink;
-		yourself!
+	^LookupTable withAll: {'at:ifAbsent:' -> 'at: ?key? ifAbsent: []'.
+				'ifTrue:' -> 'ifTrue: [??]'.
+				'ifFalse:' -> 'ifFalse: [??]'.
+				'ifTrue:ifFalse:' -> 'ifTrue: [??] ifFalse: []'.
+				'ifFalse:ifTrue:' -> 'ifFalse: [??] ifTrue: []'.
+				'ifNil:' -> 'ifNil: [??]'.
+				'ifNotNil:' -> 'ifNotNil: [:value | ?value?]'.
+				'ifNil:ifNotNil:' -> 'ifNil: [??] ifNotNil: [:value | ]'.
+				'ifNotNil:ifNil:' -> 'ifNotNil: [:value | ?value?] ifNil: []'.
+				'whileTrue:' -> 'whileTrue: [??]'.
+				'whileFalse:' -> 'whileFalse: [??]'.
+				'do:' -> 'do: [:each | ?each?]'.
+				'detect:' -> 'detect: [:each | ?each?]'.
+				'detect:ifNone:' -> 'detect: [:each | ?each?] ifNone: []'.
+				'collect:' -> 'collect: [:each | ?each?]'.
+				'select:' -> 'select: [:each | ?each?]'.
+				'reject:' -> 'reject: [:each | ?each?]'.
+				'allSatisfy:' -> 'allSatisfy: [:each | ?true?]'.
+				'anySatisfy:' -> 'anySatisfy: [:each | ?true?]'.
+				'keysAndValuesDo:' -> 'keysAndValuesDo: [:eachKey :eachValue | ?eachKey?]'.
+				'millisecondsToRun:' -> 'millisecondsToRun: [??]'.
+				'or:' -> 'or: [?condition?]'.
+				'and:' -> 'and: [?condition?]'.
+				'on:do:' -> 'on: ?Error? do: [:ex | ]'.
+				'timesRepeat:' -> 'timesRepeat: [??]'}!
 
 defaultSelectionColor
 	"Answer the default selection colour to use for instances of the receiver"
 
+	self ensureOptionsLoaded.
 	^(Color named: #workspaceSelection) basicActualColor!
 
 defaultSelectionColor: aColorOrNil
 	"Set the default selection colour to use for instances of the receiver"
 
-	(Color named: #workspaceSelection) actualColor: (aColorOrNil ifNil: [Color highlight alpha: 60])!
+	| actualColor themeColor |
+	actualColor := aColorOrNil ifNil: [Color highlight alpha: 60].
+	themeColor := Color named: #workspaceSelection.
+	themeColor actualColor = actualColor ifTrue: [^self].
+	themeColor actualColor: actualColor.
+	self isLoadingOptions ifTrue: [^self].
+	self allSubinstances do: [:each | each view setElementColor: SC_ELEMENT_SELECTION_BACK].
+	self persistOptions!
 
 defaultTabWidth
+	self ensureOptionsLoaded.
 	^DefaultTabWidth!
 
 defaultTabWidth: anInteger 
-	DefaultTabWidth = anInteger ifTrue: [^self].
+	self defaultTabWidth = anInteger ifTrue: [^self].
 	DefaultTabWidth := anInteger.
-	self allSubinstances do: [:each | each setTabWidth]!
+	self isLoadingOptions ifTrue: [^self].
+	self primAllSubinstances do: [:each | each setTabWidth].
+	self persistOptions!
 
 defaultTextStyle
 	| style |
@@ -1981,137 +2020,130 @@ defaultTextStyle
 		yourself!
 
 defaultTextStyles
-	"Answer the default text styles to be used for colouring text in workspaces. To configure
-	the styles to taste modify through Dolphin Options."
+	"Answer the default text styles to be used for colouring text in workspaces. To configure the styles to taste modify through Dolphin Options.
+	Braces and mismatch braces are styled using indicators now (see defaultIndicatorStyles)"
 
 	"
-	TextStyles := nil
-	(ScintillaTextStylesDialog createOn: self textStyles) defaultStyle: self defaultTextStyle; showModal
+	TextStyles := nil.
+	(UI.Scintilla.TextStylesDialog createOn: self textStyles) defaultStyle: self defaultTextStyle; showModal
 	"
 
 	| answer |
-	answer := IdentityDictionary new.
-	answer
-		add: ((TextStyle name: #illegal)
-					description: 'Illegal characters, e.g. £';
-					forecolor: Color red;
-					isBold: true;
-					yourself);
-		add: ((TextStyle name: #comment)
-					description: 'Comments in method source';
-					forecolor: Color commonGreen;
-					isItalic: true;
-					yourself);
-		add: ((TextStyle name: #identifier)
-					description: 'Variables references (instance, temporary and class)';
-					yourself);
-		add: ((TextStyle name: #argDecl)
+	answer := {(TextStyle name: #argDecl)
 					description: 'Argument declaration in method signature';
 					isItalic: true;
 					isBold: true;
-					yourself);
-		add: ((TextStyle name: #blockArgDecl)
-					description: 'Block argument declaration';
+					yourself.
+				(TextStyle name: #assignment)
+					description: 'Assignment operation, i.e. :=';
 					isItalic: true;
-					yourself);
-		add: ((TextStyle name: #tempDecl)
-					description: 'Temporary variable declaration';
-					isItalic: true;
-					yourself);
-		add: ((TextStyle name: #unarySelector)
-					description: 'Unary selectors (method signature)';
+					yourself.
+				(TextStyle name: #binaryMessage)
+					description: 'Binary in-fix messages such as + and -';
 					forecolor: Color blue;
-					isBold: true;
-					yourself);
-		add: ((TextStyle name: #unaryMessage)
-					description: 'Unary (no argument) messages';
-					forecolor: Color blue;
-					yourself);
-		add: ((TextStyle name: #binarySelector)
+					yourself.
+				(TextStyle name: #binarySelector)
 					description: 'Binary in-fix selectors such as + and - (method signature)';
 					forecolor: Color blue;
 					isBold: true;
-					yourself);
-		add: ((TextStyle name: #binaryMessage)
-					description: 'Binary in-fix messages such as + and -';
+					yourself.
+				(TextStyle name: #blockArgDecl)
+					description: 'Block argument declaration';
+					isItalic: true;
+					yourself.
+				(TextStyle name: #comment)
+					description: 'Comments in method source';
+					forecolor: Color commonGreen;
+					isItalic: true;
+					yourself.
+				(TextStyle name: #identifier)
+					description: 'Variables references (instance, temporary and class)';
+					yourself.
+				(TextStyle name: #illegal)
+					description: 'Illegal characters, e.g. £';
+					forecolor: Color red;
+					isBold: true;
+					yourself.
+				(TextStyle name: #indentGuide)
+					description: 'Indentation guides, when visible';
+					forecolor: Color gray;
+					yourself.
+				(TextStyle name: #keywordMessage)
+					description: 'Components of multi-keyword message selectors';
 					forecolor: Color blue;
-					yourself);
-		add: ((TextStyle name: #keywordSelector)
+					yourself.
+				(TextStyle name: #keywordSelector)
 					description: 'Components of multi-keyword message selectors';
 					forecolor: Color blue;
 					isBold: true;
-					yourself);
-		add: ((TextStyle name: #keywordMessage)
-					description: 'Components of multi-keyword message selectors';
-					forecolor: Color blue;
-					yourself);
-		add: ((TextStyle name: #literalPseudo)
-					description: 'The literal constants true, false and nil';
-					forecolor: Color teal;
-					yourself);
-		add: ((TextStyle name: #literalNumber)
-					description: 'Numeric literal constants, e.g. 1.2e6';
-					forecolor: Color maroon;
-					yourself);
-		add: ((TextStyle name: #literalString)
-					description: 'Literal string constants, e.g. ''abc''';
-					forecolor: Color purple;
-					yourself);
-		add: ((TextStyle name: #literalSymbol)
-					description: 'Literal symbol constants, e.g. #abc';
-					forecolor: Color navy;
-					yourself);
-		add: ((TextStyle name: #literalCharacter)
-					description: 'Literal character constants, e.g. $A';
-					forecolor: Color navy;
-					yourself);
-		add: ((TextStyle name: #literalBytes)
-					description: 'Literal byte arrays, e.g. #[0 1 2]';
-					forecolor: Color olive;
-					yourself);
-		add: ((TextStyle name: #literalBindingReference)
-					description: 'Literal binding references, e.g. #{Object}';
-					isItalic: true;
-					yourself);
-		add: ((TextStyle name: #assignment)
-					description: 'Assignment operation, i.e. :=';
-					isItalic: true;
-					yourself);
-		add: ((TextStyle name: #tempOpenBar)
-					description: 'Temporary declarations opening bar';
-					isItalic: true;
-					yourself);
-		add: ((TextStyle name: #tempCloseBar)
-					description: 'Temporary declarations closing bar';
-					isItalic: true;
-					yourself);
-		add: ((TextStyle name: #specialCharacter)
-					description: 'Special characters, e.g. normal and block parentheses';
-					yourself);
-		add: ((TextStyle name: #literalArray)
+					yourself.
+				(TextStyle name: #literalArray)
 					description: 'Opening/closing token of literal array, i.e. #()';
 					weight: SC_WEIGHT_SEMIBOLD;
-					yourself);
-		add: ((TextStyle name: #tag)
+					yourself.
+				(TextStyle name: #literalBindingReference)
+					description: 'Literal binding references, e.g. #{Object}';
+					isItalic: true;
+					yourself.
+				(TextStyle name: #literalBytes)
+					description: 'Literal byte arrays, e.g. #[0 1 2]';
+					forecolor: Color olive;
+					yourself.
+				(TextStyle name: #literalCharacter)
+					description: 'Literal character constants, e.g. $A';
+					forecolor: Color navy;
+					yourself.
+				(TextStyle name: #literalNumber)
+					description: 'Numeric literal constants, e.g. 1.2e6';
+					forecolor: Color maroon;
+					yourself.
+				(TextStyle name: #literalPseudo)
+					description: 'The literal constants true, false and nil';
+					forecolor: Color teal;
+					yourself.
+				(TextStyle name: #literalString)
+					description: 'Literal string constants, e.g. ''abc''';
+					forecolor: Color purple;
+					yourself.
+				(TextStyle name: #literalSymbol)
+					description: 'Literal symbol constants, e.g. #abc';
+					forecolor: Color navy;
+					yourself.
+				TextStyle normal.
+				(TextStyle name: #specialCharacter)
+					description: 'Special characters, e.g. normal and block parentheses';
+					yourself.
+				(TextStyle name: #tag)
 					description: 'Primitive or external call tag, e.g. <primitive: 1>';
 					forecolor: Color gray;
 					isItalic: true;
-					yourself);
-		add: ((TextStyle name: #whitespace)
+					yourself.
+				(TextStyle name: #tempCloseBar)
+					description: 'Temporary declarations closing bar';
+					isItalic: true;
+					yourself.
+				(TextStyle name: #tempDecl)
+					description: 'Temporary variable declaration';
+					isItalic: true;
+					yourself.
+				(TextStyle name: #tempOpenBar)
+					description: 'Temporary declarations opening bar';
+					isItalic: true;
+					yourself.
+				(TextStyle name: #unaryMessage)
+					description: 'Unary (no argument) messages';
+					forecolor: Color blue;
+					yourself.
+				(TextStyle name: #unarySelector)
+					description: 'Unary selectors (method signature)';
+					forecolor: Color blue;
+					isBold: true;
+					yourself.
+				(TextStyle name: #whitespace)
 					description: 'Whitespace, when visible';
 					forecolor: Color silver;
-					yourself);
-		yourself.
+					yourself}.
 	self assert: [answer size < 32].
-	"Scintilla pre-defined styles - note how #normal style inherits font of the view (which in turn should be the default system font).
-	braces and mismatch braces are styled using indicators now (see defaultIndicatorStyles)"
-	answer
-		add: TextStyle normal yourself;
-		add: ((TextStyle name: #indentGuide)
-					description: 'Indentation guides, when visible';
-					forecolor: Color gray;
-					yourself);
-		yourself.
 	^answer!
 
 defaultUnaryReturnTypes
@@ -2139,22 +2171,31 @@ defaultUnaryReturnTypes
 editorKeyBindings
 	"Answer the full set of editor key bindings. This only includes the Scintilla commands and is constructed from the default Scintilla key bindings and any workspace overrides."
 
-	^(ScintillaView mergeKeyBindings: KeyBindings)
+	^(ScintillaView mergeKeyBindings: self keyBindings)
 		asSortedCollection: [:a :b | a commandSymbol <= b commandSymbol]!
 
 editorKeyBindings: aCollectionOfScintillaKeyBindings
 	KeyBindings := aCollectionOfScintillaKeyBindings
-				ifNil: [self defaultEditorKeyBindings]
 				ifNotNil: [ScintillaView unmergeKeyBindings: aCollectionOfScintillaKeyBindings]!
 
+ensureOptionsLoaded
+	OptionFlags ifNil: [self loadOptions]!
+
+finishedLoadingOptions
+	OptionFlags := OptionFlags maskClear: LoadingMask!
+
 fontQuality
+	self ensureOptionsLoaded.
 	^FontQuality ?? #lcdOptimized!
 
 fontQuality: aSymbol
 	| quality |
+	self fontQuality = aSymbol ifTrue: [^self].
 	FontQuality := aSymbol.
+	self isLoadingOptions ifTrue: [^self].
 	quality := self fontQuality.
-	self primAllSubinstances do: [:each | each view fontQuality: quality]!
+	self primAllSubinstances do: [:each | each view fontQuality: quality].
+	self persistOptions!
 
 getAdditionalKeyBindings
 	^additionalKeyBindings ifNil: [self setAdditionalAccelerators: self defaultAdditionalAccelerators]!
@@ -2168,20 +2209,24 @@ icon
 	^##(self) defaultIcon!
 
 indicatorStyles
-	IndicatorStyles isNil ifTrue: [self indicatorStyles: self defaultIndicatorStyles].
+	self ensureOptionsLoaded.
 	^IndicatorStyles!
 
 indicatorStyles: aCollectionOfScintillaIndicatorStyles 
 	"Set the text styles used to colour text in the receiver's instances. These must have the
 	names used in the styler, which by default is a <SmalltalkStyler>."
 
+	IndicatorStyles = aCollectionOfScintillaIndicatorStyles ifTrue: [^self].
 	IndicatorStyles := aCollectionOfScintillaIndicatorStyles.
-	self primAllSubinstances do: [:each | each indicatorStyles: self indicatorStyles]!
+	self isLoadingOptions ifTrue: [^self].
+	self primAllSubinstances do: [:each | each indicatorStyles: IndicatorStyles].
+	self persistOptions!
 
 indicatorStylesAspect
 	^(Aspect sequenceableCollection: #indicatorStyles
 		addEvaluationFrom: [{IndicatorStyle shortName , ' new'}])
 		beImmutable;
+		defaultValue: [self defaultIndicatorStyles];
 		yourself!
 
 initialize
@@ -2189,58 +2234,45 @@ initialize
 		SmalltalkWorkspace initialize
 	"
 
-	ThemeColor addNamed: #smalltalkWorkspace color: Color window.
-	DefaultFont := Font name: 'Segoe UI' pointSize: 10.
-	WordWrap := true.
-	DefaultTabWidth := 8.
-	AutoCompleteDwell := 30 milliseconds.
 	KeywordCompletions := self defaultKeywordCompletions.
 	StandardUnaryReturnTypes := self defaultUnaryReturnTypes.
-	IsAutoCompletionCaseInsensitive := false.
-	IsAutoCompletionEnabled := true.
-	IsAutoCompletionTruncating := false.
-	IsAutoCompletionSpaceAdded := true.
-	MaxAutoCompletionListSize := 200.
-	AnnotationMode := #hidden.
-	"We set the wrap indent to same so that inline comments will wrap neatly."
-	WrapIndentMode := #same.
-	"Whether to configure Scintilla to use DirectWrite for drawing text - this offers better quality, colour fonts, h/w acceleration, but may not work on all platforms."
-	UseDirectWrite := true.
-	KeyBindings := self defaultEditorKeyBindings!
+	ThemeColor addNamed: #smalltalkWorkspace color: Color window.
+	self startLoadingOptions.
+	self optionsAspects do: [:each | each writeInto: self value: each defaultValue value].
+	self finishedLoadingOptions!
+
+invalidateLocalOptions
+	OptionFlags := nil!
+
+invalidateOptions
+	self withAllSubclassesDo: [:each | each invalidateLocalOptions]!
 
 isAutoCompletionCaseInsensitive
-	"Answer whether auto-completion ignores case. This has pros and cons: It is not necessary to
-	type exactly the right case in order to incrementally search the auto-completion list;
-	however the auto-completion lists may be longer, in some cases significantly so. For example
-	when completing an identifier for which a lower-case first letter has been entered, if
-	auto-completion is case-sensitive then this automatically excludes all class, pool, and
-	global variables. In some cases this might cut thousands of potential entries from the list.
-	By default auto-completion is case-sensitive because we feel it is more useful to have a
-	shorter list even if it means one has to press the Shift key a bit more often."
+	^self optionFlags allMask: AutoCompletionCaseInsensitiveMask!
 
-	^IsAutoCompletionCaseInsensitive!
-
-isAutoCompletionCaseInsensitive: aBoolean 
-	IsAutoCompletionCaseInsensitive := aBoolean!
+isAutoCompletionCaseInsensitive: aBoolean
+	(self setOptionFlag: AutoCompletionCaseInsensitiveMask value: aBoolean)
+		ifTrue: [self primAllSubinstances do: [:each | each view isAutoCompletionCaseInsensitive: aBoolean]]!
 
 isAutoCompletionEnabled
 	"Answer whether method workspaces should pro-actively show auto-completion lists as the user
 	types. If disabled then the auto-completion list can still be shown on demand by issuing the
 	#autoComplete command (see Help/Key Bindings for shortcut)."
 
-	^IsAutoCompletionEnabled!
+	^self optionFlags allMask: AutoCompletionEnabledMask!
 
 isAutoCompletionEnabled: aBoolean 
-	IsAutoCompletionEnabled := aBoolean!
+	(self setOptionFlag: AutoCompletionEnabledMask value: aBoolean)
+		ifTrue: [self primAllSubinstances do: [:each | each isAutoCompletionEnabled: aBoolean]]!
 
 isAutoCompletionSpaceAdded
 	"Answer whether auto-completion will insert a space after a completing a word if the
 	following character (if any) is not already a separator. By default this is enabled."
 
-	^IsAutoCompletionSpaceAdded!
+	^self optionFlags allMask: AutoCompletionSpaceAddedMask!
 
-isAutoCompletionSpaceAdded: aBoolean 
-	IsAutoCompletionSpaceAdded := aBoolean!
+isAutoCompletionSpaceAdded: aBoolean
+	self setOptionFlag: AutoCompletionSpaceAddedMask value: aBoolean!
 
 isAutoCompletionTruncating
 	"Answer whether the token which is being autocompleted will have any text after the caret
@@ -2249,10 +2281,39 @@ isAutoCompletionTruncating
 	you want to retain if you start entering a token without there being a space between it and
 	the next token."
 
-	^IsAutoCompletionTruncating!
+	^self optionFlags allMask: AutoCompletionTruncatingMask!
 
-isAutoCompletionTruncating: aBoolean 
-	IsAutoCompletionTruncating := aBoolean!
+isAutoCompletionTruncating: aBoolean
+	(self setOptionFlag: AutoCompletionTruncatingMask value: aBoolean)
+		ifTrue: [self primAllSubinstances do: [:each | each view isAutoCompletionTruncating: aBoolean]]!
+
+isLoadingOptions
+	^OptionFlags allMask: LoadingMask!
+
+keyBindings
+	self ensureOptionsLoaded.
+	^KeyBindings ifNil: [self defaultEditorKeyBindings]!
+
+keyBindings: anArray
+	KeyBindings := anArray!
+
+loadOptions
+	SmalltalkToolShell loadOptionsFor: ##(self).
+	self applyOptions!
+
+maxAutoCompletionListHeight
+	"Answer the maximum height (in rows) of the auto-completion list window."
+
+	self ensureOptionsLoaded.
+	^MaxAutoCompletionListHeight!
+
+maxAutoCompletionListHeight: anInteger 
+	anInteger < 2 ifTrue: [self errorSubscriptBounds: anInteger].
+	self maxAutoCompletionListHeight = anInteger ifTrue: [^self].
+	MaxAutoCompletionListHeight := anInteger.
+	self isLoadingOptions ifTrue: [^self].
+	self primAllSubinstances do: [:each | each view maxCompletionListHeight: anInteger].
+	self persistOptions!
 
 maxAutoCompletionListSize
 	"Answer the maximum number of items that will be shown in a pro-active auto-completion list.
@@ -2261,33 +2322,106 @@ maxAutoCompletionListSize
 	If you like 'eager' auto-completion, then set this number to a few hundred, if you don't
 	then a maximum of 50 might be about right."
 
+	self ensureOptionsLoaded.
 	^MaxAutoCompletionListSize!
 
 maxAutoCompletionListSize: anInteger 
 	anInteger < 2 ifTrue: [self errorSubscriptBounds: anInteger].
-	MaxAutoCompletionListSize := anInteger!
+	self maxAutoCompletionListSize = anInteger ifTrue: [^self].
+	MaxAutoCompletionListSize := anInteger.
+	self persistOptions!
+
+maxAutoCompletionListWidth
+	"Answer the maximum width (in characters) of the auto-completion list window."
+
+	self ensureOptionsLoaded.
+	^MaxAutoCompletionListWidth!
+
+maxAutoCompletionListWidth: anInteger
+	anInteger < 2 ifTrue: [self errorSubscriptBounds: anInteger].
+	self maxAutoCompletionListWidth = anInteger ifTrue: [^self].
+	MaxAutoCompletionListWidth := anInteger.
+	self isLoadingOptions ifTrue: [^self].
+	self primAllSubinstances do: [:each | each view maxCompletionListWidth: anInteger].
+	self persistOptions!
+
+optionFlags
+	self ensureOptionsLoaded.
+	^OptionFlags!
+
+optionsAspects
+	"Answer the aspects that, for this class only, should be saved and restored as options. This should not include any options of subclasses."
+
+	| aspects |
+	aspects := ##(self) publishedAspects.
+	#(#yourself #editorKeyBindings) do: [:each | aspects removeKey: each].
+	aspects add: ((Aspect name: #keyBindings)
+				defaultValue: [self defaultEditorKeyBindings];
+				yourself).
+	^aspects!
+
+persistOptions
+	^SmalltalkToolShell persistOptionsFor: ##(self)!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	| answer |
-	answer := super publishedAspects.
-	#(#isAutoCompletionEnabled #isAutoCompletionCaseInsensitive #isAutoCompletionTruncating #useDirectWrite)
-		do: [:each | answer add: (Aspect boolean: each)].
-	#(#defaultTabWidth #maxAutoCompletionListSize) do: [:each | answer add: (Aspect integer: each)].
-	answer add: (Aspect duration: #autoCompleteDwell).
-	#(#defaultBackcolor #defaultCaretColor #defaultSelectionColor) do: [:each | answer add: (Aspect color: each)].
-	^answer
-		add: (Aspect symbol: #annotationMode from: ScintillaView annotationModes);
-		add: (Aspect symbol: #wrapIndentMode from: ScintillaView wrapIndentModes);
-		add: (Aspect sequenceableCollection: #editorKeyBindings addEvaluationFrom: [{KeyBinding shortName , ' new'}])
+	| aspects |
+	aspects := super publishedAspects.
+	#(#isAutoCompletionEnabled #useDirectWrite #wordWrap)
+		do: [:each | aspects add: ((Aspect boolean: each)
+						defaultValue: true;
+						yourself)].
+	#(#isAutoCompletionCaseInsensitive #isAutoCompletionTruncating)
+		do: [:each | aspects add: (Aspect boolean: each)].
+	aspects
+		add: ((Aspect integer: #defaultTabWidth)
+					defaultValue: 8;
+					yourself);
+		add: ((Aspect integer: #maxAutoCompletionListSize)
+					defaultValue: 200;
+					yourself);
+		add: ((Aspect integer: #maxAutoCompletionListHeight)
+					defaultValue: 10;
+					yourself);
+		add: ((Aspect integer: #maxAutoCompletionListWidth)
+					defaultValue: 40;
+					yourself);
+		add: ((Aspect duration: #autoCompleteDwell)
+					defaultValue: self defaultAutoCompleteDwell;
+					yourself);
+		add: ((Aspect color: #defaultSelectionColor)
+					defaultValue: [Color highlight alpha: 60];
+					yourself);
+		add: ((Aspect color: #defaultBackcolor)
+					defaultValue: Color window;
+					yourself);
+		add: (Aspect color: #defaultCaretColor);
+		add: ((Aspect symbol: #annotationMode from: ScintillaView annotationModes)
+					defaultValue: #hidden;
+					yourself).
+	"We default the wrap indent to #same (i.e. maintain current indent in wrapped lines) so that inline comments will wrap neatly."
+	aspects add: ((Aspect symbol: #wrapIndentMode from: ScintillaView wrapIndentModes)
+				defaultValue: #same;
+				yourself).
+	aspects
+		add: (Aspect sequenceableCollection: #editorKeyBindings
+					addEvaluationFrom: [{KeyBinding shortName , ' new'}]) beImmutable;
+		add: ((Aspect dictionary: #acceleratorKeyBindings)
 					beImmutable;
-		add: (Aspect dictionary: #acceleratorKeyBindings) beImmutable;
+					defaultValue: 
+							[Dictionary withAll: (self defaultAdditionalAccelerators
+										collect: [:each | (AcceleratorTable canonicalizeKeyString: each second) -> each first])];
+					yourself);
 		add: self textStylesAspect;
 		add: self indicatorStylesAspect;
-		add: (Aspect symbol: #fontQuality from: ScintillaView fontQualities);
-		add: (Aspect font: #defaultFont);
-		yourself!
+		add: ((Aspect symbol: #fontQuality from: ScintillaView fontQualities)
+					defaultValue: #lcdOptimized;
+					yourself);
+		add: ((Aspect font: #defaultFont)
+					defaultValue: [Font name: 'Segoe UI' pointSize: 10];
+					yourself).
+	^aspects!
 
 publishedEventsOfInstances
 	"Answer a Set of Symbols that describe the published events triggered
@@ -2309,22 +2443,39 @@ resource_Default_view
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Scintilla.ScintillaView) 34 52 nil nil 34 2 8 1411453252 1 416 918598 2 ##(UI.ValueHolder) nil false 1769478 ##(Kernel.EqualitySearchPolicy) nil 1245702 ##(Graphics.ThemeColor) #smalltalkWorkspace nil 21 461638 4 ##(UI.Menu) nil true 34 13 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #accept 8 '&Accept' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 578 nil true 34 10 626 1 658 #undo 8 '&Undo' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'EditUndo.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr8.dll' nil nil nil 706 4097 626 1 658 #cutSelection 8 'Cu&t' 1 1 818 nil true 864 8 'EditCut.ico' 912 nil nil 626 1 658 #copySelection 8 '&Copy' 1 1 818 nil true 864 8 'EditCopy.ico' 912 nil nil 626 1 658 #pasteClipboard 8 '&Paste' 1 1 818 nil true 864 8 'EditPaste.ico' 912 nil nil 626 1 658 #clearSelection 8 'De&lete' 1 1 818 nil true 864 8 'EditClear.ico' 912 nil nil 706 4097 626 1 658 #reformatSource 8 'Re&format' 1 1 nil nil nil 706 4097 626 1 658 #selectAll 8 '&Select All' 1 1 nil nil nil 8 '&Edit' nil 134217729 nil nil nil nil nil 578 nil true 34 10 626 1 658 #inspectWorkspacePool 8 '&Variables' 1 1 nil nil nil 626 1 658 #cloneNew 8 'Clo&ne' 1 1 818 nil true 864 8 'SmalltalkWorkspace.ico' 912 nil nil 706 4097 626 1 658 #toggleAutoCompletion 8 'Auto-complete' 1 1 nil nil nil 626 1 658 #toggleIndentationGuides 8 'Indentation &Guides' 1 1 nil nil nil 626 1 658 #toggleLineEndings 8 'Line &Endings' 1 1 1378630 2 ##(Graphics.TextTileIcon) $¶ 8 'Arial' nil nil nil nil 1 nil nil nil nil 626 1 658 #toggleLineNumbers 8 'Line N&umbers' 1 1 nil nil nil 626 1 658 #toggleStyling 8 '&Syntax Coloring' 1 1 nil nil nil 626 1 658 #toggleWhitespace 8 'W&hitespace' 1 1 nil nil nil 626 1 658 #toggleWordWrap 8 '&Word Wrap' 1 1 nil nil nil 8 'Wor&kspace' nil 134217729 nil nil nil nil nil 706 4097 626 1 658 #browseIt 8 'Bro&wse It' 1 1 818 nil true 864 8 'ClassBrowserShell.ico' 912 nil nil 626 1 658 #displayIt 8 '&Display It' 1 1 818 nil true 864 8 'DisplayIt.ico' 912 nil nil 626 1 658 #printIt 8 '&Print It' 1 1 818 nil true 864 8 'PrintIt.ico' 912 nil nil 626 1 658 #evaluateIt 8 'E&valuate It' 1 1 818 nil true 864 8 'EvaluateIt.ico' 912 nil nil 626 1 658 #inspectIt 8 '&Inspect It' 1 1 818 nil true 864 8 'InspectIt.ico' 912 nil nil 626 1 658 #debugIt 8 'Deb&ug It' 1 1 818 nil true 864 8 'DebugIt.ico' 912 nil nil 706 4097 578 nil true 34 2 626 2097153 658 #browseDefinitions 8 'Defi&nitions…' 1 1 nil nil nil 626 1 658 #browseReferences 8 '&References…' 1 1 nil nil nil 8 '&Browse' nil 1 nil nil nil nil nil 8 '&Workspace' nil 134217729 nil nil nil nil nil nil nil 416 nil 8 2064654817 1049094 ##(UI.NullConverter) nil nil 9 nil 170 192 34 4 #normal 1444934 1 ##(UI.Scintilla.TextStyle) 1 nil nil 1 nil nil nil nil #normal nil nil nil #callTip 2754 77 917510 ##(Graphics.Color) #gray 2802 #white 1 nil nil nil nil #callTip nil nil nil nil 2032902 ##(Tools.SmalltalkExpressionStyler) 1 nil nil false 138 144 8 #() 170 192 34 2 #default 1903686 2 ##(UI.Scintilla.MarkerDefinition) 1 nil nil nil 416 #circle nil nil nil nil nil nil 138 ##(Core.IdentitySet) 2896 nil 170 176 2896 nil nil nil 170 176 34 4 81 2802 #windowText 23 546 #workspaceSelection nil 34 1 2360326 ##(UI.Scintilla.CharacterRepresentation) $\x2028 nil 33 3040 2162950 ##(UI.Scintilla.NullScintillaLibrary) nil 65 nil nil 170 192 34 6 #specialCharacter 8 '()[]<>' #literalBytes 8 '[]' #literalArray 8 '()' 8 '' 3 170 192 34 2 #container 2720 nil nil nil nil 208 nil 170 192 2896 nil nil 170 192 34 6 #Notification 2754 1029 nil 2802 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Warning 2754 1027 2802 #darkGoldenrod 2802 #ivory 1 nil nil nil nil #Warning nil nil nil #Error 2754 1031 2802 #firebrick 2802 #floralWhite 1 nil nil nil nil #Error nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 34 9 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 12287 21 3554 461 311 416 3506 #contextMenu: 34 1 592 416 3506 #sciSetMouseDwellTime: 8 #(500) 416 3506 #wordWrap: 8 #(true) 416 3506 #margins: 34 1 34 3 1247302 3 ##(UI.Scintilla.Margin) 1 416 1 3 nil nil nil nil 3746 3 416 1 nil nil 67108863 nil nil 3746 5 416 1 nil nil nil nil nil 416 3506 #tabWidth: 8 #(4) 416 3506 #maxCompletionListHeight: 8 #(9) 416 3506 #hasAdditionalSelectionTyping: 8 #(true) 416 3506 #sciSetSelectionLayer: 8 #(1) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 229 24 0 0 165 0 0 0] 8 #() 3554 193 193 nil 35 )!
 
 setAdditionalKeyBindings: anArray
-	additionalKeyBindings := anArray ifNotNil: [anArray]!
+	additionalKeyBindings = anArray ifTrue: [^self].
+	additionalKeyBindings := anArray.
+	self persistOptions!
 
 setCommandQueryHandlers: anArray 
 	commandQueryHandlers := anArray!
 
+setOptionFlag: anInteger value: aBoolean
+	"Private - Set the receiver to reuse an already open instance of the receiver instead of
+	creating an additional one according to aBoolean."
+
+	(self optionFlags allMask: anInteger) == aBoolean ifTrue: [^false].
+	OptionFlags := OptionFlags mask: anInteger set: aBoolean.
+	self persistOptions.
+	^self isLoadingOptions not!
+
+startLoadingOptions
+	OptionFlags := OptionFlags ?? 0 bitOr: LoadingMask!
+
 textStyles
-	TextStyles isNil ifTrue: [self textStyles: self defaultTextStyles].
+	self ensureOptionsLoaded.
 	^TextStyles!
 
 textStyles: aCollectionOfScintillaTextStyles
-	"Set the text styles used to colour text in the receiver's instances. These must have the
-	names used in the styler, which by default is a <SmalltalkStyler>."
+	"Set the text styles used to colour text in the receiver's instances. These must have the names used in the styler, which by default is a <SmalltalkStyler>."
 
-	TextStyles := aCollectionOfScintillaTextStyles asOrderedCollection
+	| textStyles |
+	textStyles := aCollectionOfScintillaTextStyles asArray
 				sortUsing: (SortAlgorithm defaultSort: [:a :b | a name <= b name]).
-	self primAllSubinstances do: [:each | each textStyles: self textStyles]!
+	TextStyles := textStyles.
+	self isLoadingOptions ifTrue: [^self].
+	self primAllSubinstances do: [:each | each textStyles: TextStyles].
+	self persistOptions!
 
 textStylesAspect
 	^(Aspect name: #textStyles
@@ -2335,6 +2486,7 @@ textStylesAspect
 				yourself])
 		type: SequenceableCollection;
 		beImmutable;
+		defaultValue: [self defaultTextStyles];
 		yourself!
 
 uninitialize
@@ -2346,41 +2498,46 @@ useDirectWrite
 	"Answer whether to use DirectWrite for drawing text in the workspace. This offers improved quality, coloured emoji's, and hardware acceleration, but may not 
 	work well in all circumstances, so it can be turned off."
 
-	^UseDirectWrite and: [OS.Kernel32 isWindowsVistaOrGreater]!
+	^self optionFlags allMask: UseDirectWriteMask!
 
 useDirectWrite: aBoolean
-	| tech |
-	UseDirectWrite := aBoolean.
-	tech := self useDirectWrite ifTrue: [#directWrite] ifFalse: [#default].
-	self primAllSubinstances do: [:each | each view drawingTechnology: tech]
-
-!
+	(self setOptionFlag: UseDirectWriteMask value: aBoolean)
+		ifTrue: 
+			[| tech |
+			tech := self useDirectWrite ifTrue: [#directWrite] ifFalse: [#default].
+			self primAllSubinstances do: [:each | each view drawingTechnology: tech]]!
 
 wordWrap
 	"Answer true if instances of the receiver use word wrapping by default."
 
-	^WordWrap!
+	^self optionFlags allMask: WordWrapMask!
 
-wordWrap: aBoolean 
+wordWrap: aBoolean
 	"Sets the word wrapping state for instances of the receiver to aBoolean."
 
-	WordWrap == aBoolean ifTrue: [^self].
-	WordWrap := aBoolean.
-	self allSubinstances do: [:each | each setWordWrap]!
+	(self setOptionFlag: WordWrapMask value: aBoolean)
+		ifTrue: [self primAllSubinstances do: [:each | each setWordWrap]]!
 
 wrapIndentMode
+	self ensureOptionsLoaded.
 	^WrapIndentMode!
 
 wrapIndentMode: aSymbol 
-	WrapIndentMode := aSymbol! !
+	self wrapIndentMode = aSymbol ifTrue: [^self].
+	WrapIndentMode := aSymbol.
+	self isLoadingOptions ifTrue: [^self].
+	self primAllSubinstances do: [:each | each view wrapIndentMode: aSymbol].
+	self persistOptions! !
 !Tools.SmalltalkWorkspace class categoriesForMethods!
 actualFont!accessing!options!public! !
 annotationMode!accessing!options!public! !
 annotationMode:!accessing!options!public! !
+applyOptions!private! !
 autoCompleteDwell!accessing!autocompletion!public! !
 autoCompleteDwell:!accessing!autocompletion!public! !
 customEditorKeyBindings!options!private! !
-defaultAdditionalAccelerators!constants!private! !
+defaultAdditionalAccelerators!constants!options!private! !
+defaultAutoCompleteDwell!autocompletion!constants!options!public! !
 defaultBackcolor!accessing!options!public! !
 defaultBackcolor:!accessing!options!public! !
 defaultCaretColor!accessing!options!public! !
@@ -2392,13 +2549,15 @@ defaultIndicatorStyles!constants!public! !
 defaultKeywordCompletions!autocompletion!private! !
 defaultSelectionColor!accessing!options!public! !
 defaultSelectionColor:!accessing!options!public! !
-defaultTabWidth!accessing!public! !
+defaultTabWidth!options!public! !
 defaultTabWidth:!accessing!public! !
-defaultTextStyle!private! !
-defaultTextStyles!constants!public! !
+defaultTextStyle!constants!options!private! !
+defaultTextStyles!constants!options!public! !
 defaultUnaryReturnTypes!autocompletion!private! !
 editorKeyBindings!accessing!public! !
 editorKeyBindings:!accessing!public! !
+ensureOptionsLoaded!public! !
+finishedLoadingOptions!options!private! !
 fontQuality!accessing!public! !
 fontQuality:!accessing!public! !
 getAdditionalKeyBindings!accessing!private! !
@@ -2406,26 +2565,41 @@ getCommandQueryHandlers!accessing!private! !
 icon!constants!public! !
 indicatorStyles!accessing!public! !
 indicatorStyles:!accessing!public! !
-indicatorStylesAspect!private! !
+indicatorStylesAspect!options!private! !
 initialize!initializing!public! !
-isAutoCompletionCaseInsensitive!accessing!autocompletion!public! !
-isAutoCompletionCaseInsensitive:!accessing!autocompletion!public! !
-isAutoCompletionEnabled!accessing!autocompletion!public! !
-isAutoCompletionEnabled:!accessing!autocompletion!public! !
-isAutoCompletionSpaceAdded!accessing!autocompletion!public! !
-isAutoCompletionSpaceAdded:!accessing!autocompletion!public! !
-isAutoCompletionTruncating!accessing!autocompletion!public! !
-isAutoCompletionTruncating:!accessing!autocompletion!public! !
+invalidateLocalOptions!options!private! !
+invalidateOptions!options!private! !
+isAutoCompletionCaseInsensitive!autocompletion!options!public! !
+isAutoCompletionCaseInsensitive:!autocompletion!options!public! !
+isAutoCompletionEnabled!autocompletion!options!public! !
+isAutoCompletionEnabled:!autocompletion!options!public! !
+isAutoCompletionSpaceAdded!autocompletion!options!public! !
+isAutoCompletionSpaceAdded:!autocompletion!options!public! !
+isAutoCompletionTruncating!autocompletion!options!public! !
+isAutoCompletionTruncating:!autocompletion!options!public! !
+isLoadingOptions!options!private! !
+keyBindings!options!private! !
+keyBindings:!options!private! !
+loadOptions!options!private! !
+maxAutoCompletionListHeight!accessing!autocompletion!public! !
+maxAutoCompletionListHeight:!accessing!autocompletion!public! !
 maxAutoCompletionListSize!accessing!autocompletion!public! !
 maxAutoCompletionListSize:!accessing!autocompletion!public! !
-publishedAspects!public! !
+maxAutoCompletionListWidth!accessing!autocompletion!public! !
+maxAutoCompletionListWidth:!accessing!autocompletion!public! !
+optionFlags!options!private! !
+optionsAspects!options!private! !
+persistOptions!options!private! !
+publishedAspects!options!public! !
 publishedEventsOfInstances!events!public! !
 resource_Default_view!public!resources-views! !
 setAdditionalKeyBindings:!accessing!private! !
 setCommandQueryHandlers:!accessing!private! !
+setOptionFlag:value:!options!private! !
+startLoadingOptions!options!private! !
 textStyles!accessing!public! !
 textStyles:!accessing!public! !
-textStylesAspect!private! !
+textStylesAspect!options!private! !
 uninitialize!class hierarchy-removing!private! !
 useDirectWrite!options!public! !
 useDirectWrite:!options!public! !

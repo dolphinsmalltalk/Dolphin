@@ -2,7 +2,7 @@
 
 UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.IndicatorStyle'
 	instanceVariableNames: 'forecolor style layer name alpha hoverStyle hoverForecolor flags foreAlpha strokeWidth'
-	classVariableNames: 'HoverForecolor HoverStyle'
+	classVariableNames: 'AlphaProperty FlagsProperty ForeAlphaProperty ForecolorProperty HoverForecolorProperty HoverStyleProperty LayerProperty StrokeWidthProperty StyleProperty'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -65,36 +65,30 @@ A fixed set of named styles is supported, although this tends to get added to ov
 !UI.Scintilla.IndicatorStyle categoriesForClass!MVP-Views-Support! !
 !UI.Scintilla.IndicatorStyle methodsFor!
 
+= anObject
+	"Answer whether the receiver and the <Object> argument are considered equivalent. A pair of
+	<ScintillaTextStyle>s are only considered equivalent if all attributes are equal."
+
+	^anObject class == self species and: 
+			[self name = anObject name and: 
+					[style = anObject basicStyle and: 
+							[flags = anObject flags and: 
+									[layer = anObject layer and: 
+											[alpha = anObject alpha and: 
+													[forecolor = anObject forecolor and: 
+															[foreAlpha = anObject foreAlpha and: 
+																	[strokeWidth = anObject basicStrokeWidth
+																		and: [hoverStyle = anObject basicHoverStyle and: [hoverForecolor = anObject hoverForecolor]]]]]]]]]]!
+
 alpha
-	"Answer the alpha value for the transparency of the background of box indicator styles"
+	"Answer the alpha value for the transparency of the background of #fullBox, #roundBox, and #straightBox indicator styles, i.e. the fill colour of box. Has no effect on other indicator styles, not even #box."
 
 	^alpha!
 
 alpha: anInteger
 	anInteger isNil ifFalse: [self validateAlpha: anInteger].
 	self basicAlpha: anInteger.
-	self updateViewProperty: #alpha!
-
-applyToView: aScintillaView initializing: aBoolean
-	"Private - Apply any non-default properties of this attribute to the <ScintillaView> argument. This should only be used for initialization, or after resetting the corresponding attributes of the view to defaults. See also #updateInView:"
-
-	self view: aScintillaView.
-	self class propertyMap do: 
-			[:descriptor |
-			(descriptor == HoverForecolor or: [descriptor == HoverStyle])
-				ifFalse: 
-					[descriptor
-						setAttribute: self
-						ofView: aScintillaView
-						initializing: aBoolean]].
-	HoverForecolor
-		setAttribute: self
-		ofView: aScintillaView
-		initializing: aBoolean.
-	HoverStyle
-		setAttribute: self
-		ofView: aScintillaView
-		initializing: aBoolean!
+	self updateViewProperty: AlphaProperty!
 
 basicAlpha: anIntegerOrNil
 	alpha := anIntegerOrNil!
@@ -137,15 +131,14 @@ flags: anInteger
 	flags := anInteger!
 
 foreAlpha
-	"Answer the alpha value for the transparency of the foreground of box indicator styles, or
-	nil if the default (50) is to be used."
+	"Answer the alpha value for the transparency of the foreground of #fullBox, #roundBox, and #straightBox indicator styles (e.g. the box edges), or nil if the default (50) is to be used. Has no effect on other indicator styles, even where one might expect that, i.e. it does not affect the way other line styles such as squiggles, underlining, etc, are drawn. It does not affect the #box style either."
 
 	^foreAlpha!
 
 foreAlpha: anInteger
 	anInteger isNil ifFalse: [self validateAlpha: anInteger].
 	self basicForeAlpha: anInteger.
-	self updateViewProperty: #foreAlpha!
+	self updateViewProperty: ForeAlphaProperty!
 
 forecolor
 	"Answer the foreground <Color> used to draw the indicator, or nil if the indicator style does not specify a colour and should use the Scintilla default (black)."
@@ -156,8 +149,8 @@ forecolor: aColorOrNil
 	"Set the foreground colour used to draw the indicator to the <Color> argument. If the argument is nil, then Scintilla's default indicator colour (black) is used."
 
 	self basicForecolor: aColorOrNil.
-	self updateViewProperty: #forecolor.
-	self hoverForecolor isNil ifFalse: [self updateViewProperty: #hoverForecolor]!
+	self updateViewProperty: ForecolorProperty.
+	self hoverForecolor ifNotNil: [self updateViewProperty: HoverForecolorProperty]!
 
 hoverForecolor
 	"Answer the foreground <Color> used to hot-highlight the indicator when the mouse cursor is hovering over it. Can be nil, indicating that hot-highlighting is disabled."
@@ -168,7 +161,7 @@ hoverForecolor: aColorOrNil
 	"Set the foreground colour used to hot-highlight the indicator when the mouse cursor hovering over it to the <Color> argument. If the argument is nil, then Scintilla's default indicator colour (black) is used."
 
 	self basicHoverForecolor: aColorOrNil.
-	self updateViewProperty: #hoverForecolor!
+	self updateViewProperty: HoverForecolorProperty!
 
 hoverStyle
 	"Answer the symbolic name of the indicator style used either an indicator of this style is
@@ -178,7 +171,7 @@ hoverStyle
 
 hoverStyle: aSymbol
 	self basicHoverStyle: (self styleFromName: aSymbol).
-	self updateViewProperty: #hoverStyle!
+	self updateViewProperty: HoverStyleProperty!
 
 initialize
 	"Private - Initialize the receiver's instance variables."
@@ -196,7 +189,7 @@ isUnderText
 
 isUnderText: aBooleanOrNil
 	self layer: (aBooleanOrNil ?? true) asParameter.
-	self updateViewProperty: #isUnderText!
+	self updateViewProperty: LayerProperty!
 
 layer
 	^layer!
@@ -227,17 +220,17 @@ strokeWidth
 
 strokeWidth: aNumberOrNil
 	self basicStrokeWidth: (aNumberOrNil ifNotNil: [:i | (i * 100) rounded]).
-	self updateViewProperty: #strokeWidth!
+	self updateViewProperty: StrokeWidthProperty!
 
 style
-	^style ifNotNil: [:s | IndicatorStyles at: s + 1 ifAbsent: nil]!
+	^style ifNotNil: [:s | IndicatorStyles lookup: s + 1]!
 
 style: aSymbol
 	self basicStyle: (self styleFromName: aSymbol).
-	self updateViewProperty: #style.
+	self updateViewProperty: StyleProperty.
 	"If the style is set, the control, rather annoyingly, overwrites the hover style, so we need
 	to set that again too (if set)."
-	hoverStyle isNil ifFalse: [self updateViewProperty: #hoverStyle]!
+	hoverStyle ifNotNil: [self updateViewProperty: HoverStyleProperty]!
 
 styleFromName: aSymbolOrNil
 	^aSymbolOrNil isNil ifFalse: [(IndicatorStyles keyAtValue: aSymbolOrNil) - 1]!
@@ -247,9 +240,9 @@ validateAlpha: anInteger
 		ifTrue: [anInteger]
 		ifFalse: [self error: 'Invalid alpha value ' , anInteger displayString]! !
 !UI.Scintilla.IndicatorStyle categoriesForMethods!
+=!comparing!public! !
 alpha!accessing!public! !
 alpha:!accessing!public! !
-applyToView:initializing:!helpers!private! !
 basicAlpha:!accessing!private! !
 basicForeAlpha:!accessing!private! !
 basicForecolor:!accessing!private! !
@@ -288,97 +281,102 @@ validateAlpha:!helpers!private! !
 
 !UI.Scintilla.IndicatorStyle class methodsFor!
 
-buildPropertyMap
+buildPropertyDescriptors
 	"Some magic numbers for default values are from the Scintilla code - no consts for these"
 
 	| sortedStyles |
 	sortedStyles := IndicatorStyles copy sort.
-	HoverStyle := (EnumPropertyDescriptor
-				getSelector: #basicHoverStyle
+	HoverStyleProperty := (EnumPropertyDescriptor
+				key: #hoverStyle
 				defaultValue: INDIC_SQUIGGLE
-				setMessage: SCI_INDICSETHOVERSTYLE
-				setSelector: #basicHoverStyle:
-				getMessage: SCI_INDICGETHOVERSTYLE)
+				setMessage: SCI_INDICSETHOVERSTYLE)
+				getSelector: #basicHoverStyle;
+				setSelector: #basicHoverStyle:;
+				getMessage: SCI_INDICGETHOVERSTYLE;
 				values: sortedStyles;
 				nilChoice: '<None>';
 				yourself.
-	HoverForecolor := ColourPropertyDescriptor
-				getSelector: #hoverForecolor
+	HoverForecolorProperty := (ColourPropertyDescriptor
+				key: #hoverForecolor
 				defaultValue: Color black
-				setMessage: SCI_INDICSETHOVERFORE
-				setSelector: #basicHoverForecolor:
-				getMessage: SCI_INDICGETHOVERFORE.
-	^IdentityDictionary new
-		at: #forecolor
-			put: (ColourPropertyDescriptor
-					getSelector: #forecolor
-					defaultValue: Color black
-					setMessage: SCI_INDICSETFORE
-					setSelector: #basicForecolor:
-					getMessage: SCI_INDICGETFORE);
-		at: #style
-			put: ((EnumPropertyDescriptor
-					getSelector: #basicStyle
-					defaultValue: nil
-					setMessage: SCI_INDICSETSTYLE
-					setSelector: #basicStyle:
-					getMessage: SCI_INDICGETSTYLE)
-					values: sortedStyles;
-					yourself);
-		at: #hoverStyle put: HoverStyle;
-		at: #isUnderText
-			put: (BoolPropertyDescriptor
-					getSelector: #layer
-					defaultValue: 0
-					setMessage: SCI_INDICSETUNDER
-					setSelector: #layer:
-					getMessage: SCI_INDICGETUNDER);
-		at: #alpha
-			put: ((IntPropertyDescriptor
-					getSelector: #alpha
-					defaultValue: 30
-					setMessage: SCI_INDICSETALPHA
-					setSelector: #basicAlpha:
-					getMessage: SCI_INDICGETALPHA)
-					beNullable;
-					yourself);
-		at: #hoverForecolor put: HoverForecolor;
-		at: #flags
-			put: ((IntPropertyDescriptor
-					getSelector: #flags
-					defaultValue: 0
-					setMessage: SCI_INDICSETFLAGS
-					setSelector: #flags:
-					getMessage: SCI_INDICGETFLAGS)
-					beNullable;
-					yourself);
-		at: #foreAlpha
-			put: ((IntPropertyDescriptor
-					getSelector: #foreAlpha
-					defaultValue: 50
-					setMessage: SCI_INDICSETOUTLINEALPHA
-					setSelector: #basicForeAlpha:
-					getMessage: SCI_INDICGETOUTLINEALPHA)
-					beNullable;
-					yourself);
-		at: #strokeWidth
-			put: ((FloatPropertyDescriptor
-					getSelector: #basicStrokeWidth
-					defaultValue: 100
-					setMessage: SCI_INDICSETSTROKEWIDTH
-					setSelector: #basicStrokeWidth:
-					getMessage: SCI_INDICGETSTROKEWIDTH)
-					beNullable;
-					yourself);
-		shrink;
-		yourself!
+				setMessage: SCI_INDICSETHOVERFORE)
+				setSelector: #basicHoverForecolor:;
+				getMessage: SCI_INDICGETHOVERFORE;
+				yourself.
+	ForecolorProperty := (ColourPropertyDescriptor
+				key: #forecolor
+				defaultValue: Color black
+				setMessage: SCI_INDICSETFORE)
+				setSelector: #basicForecolor:;
+				getMessage: SCI_INDICGETFORE;
+				yourself.
+	StyleProperty := (EnumPropertyDescriptor
+				key: #style
+				defaultValue: nil
+				setMessage: SCI_INDICSETSTYLE)
+				getSelector: #basicStyle;
+				setSelector: #basicStyle:;
+				getMessage: SCI_INDICGETSTYLE;
+				values: sortedStyles;
+				yourself.
+	LayerProperty := (BoolPropertyDescriptor
+				key: #isUnderText
+				defaultValue: 0
+				setMessage: SCI_INDICSETUNDER)
+				getSelector: #layer;
+				setSelector: #layer:;
+				getMessage: SCI_INDICGETUNDER;
+				yourself.
+	AlphaProperty := (IntPropertyDescriptor
+				key: #alpha
+				defaultValue: 30
+				setMessage: SCI_INDICSETALPHA)
+				setSelector: #basicAlpha:;
+				getMessage: SCI_INDICGETALPHA;
+				beNullable;
+				yourself.
+	FlagsProperty := (IntPropertyDescriptor
+				key: #flags
+				defaultValue: 0
+				setMessage: SCI_INDICSETFLAGS)
+				setSelector: #flags:;
+				getMessage: SCI_INDICGETFLAGS;
+				beNullable;
+				yourself.
+	ForeAlphaProperty := (IntPropertyDescriptor
+				key: #foreAlpha
+				defaultValue: 50
+				setMessage: SCI_INDICSETOUTLINEALPHA)
+				setSelector: #basicForeAlpha:;
+				getMessage: SCI_INDICGETOUTLINEALPHA;
+				beNullable;
+				yourself.
+	StrokeWidthProperty := (FloatPropertyDescriptor
+				key: #strokeWidth
+				defaultValue: 100
+				setMessage: SCI_INDICSETSTROKEWIDTH)
+				getSelector: #basicStrokeWidth;
+				setSelector: #basicStrokeWidth:;
+				getMessage: SCI_INDICGETSTROKEWIDTH;
+				beNullable;
+				yourself.
+	"In this case order is significant, since the HoverForecolorProperty must be applied before the HoverStyleProperty, and after the ForecolorProperty"
+	^{ForecolorProperty.
+		StyleProperty.
+		LayerProperty.
+		AlphaProperty.
+		FlagsProperty.
+		ForeAlphaProperty.
+		StrokeWidthProperty.
+		HoverForecolorProperty.
+		HoverStyleProperty}!
 
 initialize
 	"
 		self initialize
 	"
 
-	propertyMap := self buildPropertyMap
+	propertyDescriptors := self buildPropertyDescriptors
 				isImmutable: true;
 				yourself!
 
@@ -406,7 +404,7 @@ stbConvertFrom: anSTBClassFormat
 stbVersion
 	^4! !
 !UI.Scintilla.IndicatorStyle class categoriesForMethods!
-buildPropertyMap!constants!must not strip!private! !
+buildPropertyDescriptors!constants!must not strip!private! !
 initialize!development!initializing!public! !
 new!public! !
 stbConvertFrom:!binary filing!private! !

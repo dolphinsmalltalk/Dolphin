@@ -21,7 +21,10 @@ There are also the virtual colours, `ThemeColor` and `PluggableColor`, to repres
 = aColor
 	"Answer whether the receiver and argument are equivalent (i.e. represent the same colour)."
 
-	^self == aColor or: [aColor species == self species and: [aColor argbCode = self argbCode]]!
+	^self == aColor or: 
+			[aColor species == self species and: 
+					["We want to compare the RGBA (or ARGB) code, but to avoid working with LargeIntegers, compare the alpha and rgb separately"
+					aColor rgbCode == self rgbCode and: [aColor alpha == self alpha]]]!
 
 actualColor
 	^self!
@@ -164,7 +167,7 @@ green
 hash
 	"Answer the <SmallInteger> hash code for the receiver."
 
-	^self argbCode hashMultiply!
+	^(self rgbCode bitShift: 6) bitXor: self alpha!
 
 hls
 	"Answer a three-element <Array> containing hue, luminance, and saturation values that correspond to the receiver in the HLS colour system."
@@ -1590,7 +1593,7 @@ r:g:b:!instance creation!public! !
 red!**auto generated**!common colors!public! !
 red:green:blue:!instance creation!public! !
 removeNamed:!named colors!public! !
-rgbClass!constants!instance creation!public! !
+rgbClass!constants!public! !
 rosyBrown!**auto generated**!common colors!public! !
 royalBlue!**auto generated**!common colors!public! !
 saddleBrown!**auto generated**!common colors!public! !

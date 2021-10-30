@@ -201,16 +201,6 @@ icon
 
 	^##(self) defaultIcon!
 
-initialize
-	"Private - Initialize the receiver's class variables.
-		self initialize
-	"
-
-	self defaultShowInheritedMethods: false.
-	self defaultFilterObjectMethods: true.
-	self canUseIdeaSpace: true.
-!
-
 initializeTool
 	"
 	self initializeTool
@@ -261,7 +251,6 @@ toolsFolderIcon
 !Tools.EnvironmentBrowserShell class categoriesForMethods!
 displayOn:!displaying!public! !
 icon!constants!public! !
-initialize!initializing!private! !
 initializeTool!initializing!private! !
 onEnvironment:!instance creation!public! !
 resource_Default_view!public!resources-views! !

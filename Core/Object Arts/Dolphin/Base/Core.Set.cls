@@ -106,48 +106,6 @@ at: index put: value
 	^self errorNotKeyed
 !
 
-averageProbesPerElement
-	"Answer the average number of probes necessary to  find an element 
-	in the receiver. Ideally this should be close to 1."
-
-	| probes capacity |
-	self isEmpty ifTrue: [^1].
-	probes := 0.
-	capacity := self basicSize.
-	1 to: capacity
-		do: 
-			[:i | 
-			| element |
-			element := self basicAt: i.
-			element notNil 
-				ifTrue: 
-					[| pos distance |
-					pos := self bestSlotFor: element boundedBy: capacity.
-					distance := i - pos.
-					distance < 0 ifTrue: [distance := distance + capacity].
-					probes := probes + distance + 1]].
-	^probes asFloat / self size!
-
-bestSlotFor: element boundedBy: capacity
-	^self hash: element max: capacity!
-
-collisions
-	"Answer the <Integer> number of the elements which are not found
-	on first probe."
-
-	| answer capacity |
-	answer := 0.
-	capacity := self basicSize.
-	1 to: capacity
-		do: 
-			[:i | 
-			| element |
-			element := self basicAt: i.
-			element notNil 
-				ifTrue: 
-					[(self hash: element max: capacity) ~= i ifTrue: [answer := answer + 1]]].
-	^answer!
-
 copyElementsInto: newMe
 	"Private - Add the receiver's elements into the argument, newMe.
 	Part of the implementation of hashed collection resizing. Subclasses
@@ -412,9 +370,6 @@ approxSize!accessing!private! !
 asSet!converting!public! !
 at:!accessing!public! !
 at:put:!accessing!public! !
-averageProbesPerElement!development!public!statistics! !
-bestSlotFor:boundedBy:!development!private!statistics! !
-collisions!development!public!statistics! !
 copyElementsInto:!mutating!private! !
 copyWithoutDuplicates!copying!public! !
 distinct!public!set operations! !

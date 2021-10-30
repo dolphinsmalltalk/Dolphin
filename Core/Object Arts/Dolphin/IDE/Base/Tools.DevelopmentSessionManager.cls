@@ -656,6 +656,9 @@ tertiaryStartup
 	"Perform development system tertiary startup (e.g. ensure 
 	SmalltalkSystemShell is available)."
 
+	"Invalidate options before restoring window state"
+	SmalltalkToolShell invalidateOptions.
+
 	super tertiaryStartup.
 
 	self disableWindowGhosting.

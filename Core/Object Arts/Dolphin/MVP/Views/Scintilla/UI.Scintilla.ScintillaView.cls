@@ -362,7 +362,7 @@ appendText: aString
 	self modifyText: [self sciAppendText: text size text: text]!
 
 applyCharacterRepresentations
-	characterRepresentations do: [:each | each applyToView: self initializing: true]!
+	characterRepresentations do: [:each | each applyToView: self]!
 
 applyStyle: aSymbol toNext: anInteger
 	"Apply the named style to the next anInteger characters (from the current styling position)
@@ -829,9 +829,8 @@ callTipBackcolor: aColorOrNil
 	style := self callTipStyle.
 	style backcolor = aColorOrNil
 		ifFalse: 
-			[style
-				backcolor: color;
-				updateView: self property: #backcolor]!
+			[style backcolor: color.
+			CallTipStyle.Backcolor setAttribute: style ofView: self]!
 
 callTipForecolor
 	"Answer the foreground <Color> of the unhighlighted text in call tips. By default this is Color tooltipText."
@@ -846,9 +845,8 @@ callTipForecolor: aColorOrNil
 	style := self callTipStyle.
 	style forecolor = aColorOrNil
 		ifFalse: 
-			[style
-				forecolor: color;
-				updateView: self property: #forecolor]!
+			[style forecolor: color.
+			CallTipStyle.Forecolor setAttribute: style ofView: self]!
 
 callTipHighlightColor
 	"Answer the foreground <Color> for the highlighted part of the call tip, or nil if unspecified and the control's default (dark blue) should be used."
@@ -881,9 +879,9 @@ callTipPosition: posStartInteger
 		lParam: 0!
 
 callTipStyle
-	^currentTextStyles at: #callTip
-		ifAbsentPut: 
-			[styleIdMap at: STYLE_CALLTIP + 1
+	^(currentTextStyles lookup: #callTip)
+		ifNil: 
+			[styleIdMap at: ##(STYLE_CALLTIP + 1)
 				put: (self class defaultCallTipStyle
 						view: self;
 						yourself)]!
@@ -2393,7 +2391,7 @@ foldMarkerStyle: aSymbol
 				reject: [:each | each basicId between: SC_MARKNUM_FOLDEREND and: SC_MARKNUM_FOLDEROPEN].
 	folders do: 
 			[:each |
-			each applyToView: self initializing: false.
+			each applyToView: self.
 			markerDefinitions at: each name put: each].
 	foldMarkerStyle := aSymbol!
 
@@ -3025,7 +3023,7 @@ initializeControl
 	characterRepresentations ifNotNil: [self applyCharacterRepresentations]!
 
 initializeMarkerDefinitions
-	markerDefinitions do: [:each | each applyToView: self initializing: true]!
+	markerDefinitions do: [:each | each initializeView: self]!
 
 initializeRegisteredImages
 	registeredImages := LookupTable new!
@@ -3856,7 +3854,7 @@ margins: aSequenceableCollection
 			[:i :each |
 			each
 				basicId: i - 1;
-				applyToView: self initializing: false]!
+				applyToView: self]!
 
 marginWidths
 	"Private - Answer a two element <Array> containing the <integer> widths of left and right
@@ -3889,17 +3887,25 @@ markerDefinitions: aCollection
 	<ScintillaMarkerDefinition>s argument. See #markerDefinitions for further information."
 
 	| allocated available count userIds |
-	userIds := 0 to: (foldMarkerStyle ifNil: [MARKER_MAX] ifNotNil: [SC_MARKNUM_FOLDEREND - 1]).
-	aCollection size > userIds size ifTrue: [^self error: 'Too many marker definitions'].
+	userIds := foldMarkerStyle
+				ifNil: [##(0 to: MARKER_MAX)]
+				ifNotNil: [##(0 to: SC_MARKNUM_FOLDEREND - 1)].
 	count := aCollection size.
-	allocated := OrderedCollection new: count.
-	aCollection do: [:each | each basicId ifNotNil: [:id | allocated addLast: id]].
-	available := (userIds difference: allocated) readStream.
+	count > userIds size ifTrue: [^self error: 'Too many marker definitions'].
+	allocated := Set new: count.
+	aCollection do: [:each | allocated add: each basicId].
 	markerDefinitions := markerDefinitions reject: [:each | userIds includes: each basicId].
+	available := userIds asByteArray readStream.
 	aCollection do: 
 			[:each |
-			each basicId isNil ifTrue: [each basicId: available next].
-			each applyToView: self initializing: false.
+			each basicId
+				ifNil: 
+					[| nextId |
+					
+					[nextId := available next.
+					allocated includes: nextId] whileTrue.
+					each basicId: nextId].
+			each applyToView: self.
 			markerDefinitions at: each name put: each]!
 
 markers
@@ -4391,7 +4397,7 @@ onViewCreated
 	"Disable notifications via WM_COMMAND such as EN_CHANGE, EN_KILLFOCUS, etc. These are better handled through NM_NOTIFY."
 	self sendMessage: SCI_SETCOMMANDEVENTS wParam: 0.
 	"It would be nice to be able to used DirectWrite mode by default for for better quality text rendering, hardware acceleration, and support for fonts with colour (e.g. for emojis), but there are some circumstances under which it does not work very well. Interaction when drawing over other GDI windows can be slow, flash a lot, may show rendering errors, and there can be problems with the GDI-based autocompletion list. An example view that works poorly in DirectWrite modes is the single-line search presenter the Scintilla view. If switched out of default mode, this frequently fails to paint text, and the auto-completion list comes up at the wrong location (over the text)."
-	(false and: [Kernel32 isWindowsVistaOrGreater])
+	false
 		ifTrue: 
 			[self
 				drawingTechnology: #directWrite;
@@ -8806,20 +8812,29 @@ setCharacterClasses
 	whitespaces ifNotNil: [self sciSetWhitespaceChars: whitespaces].
 	punctuation ifNotNil: [self sciSetPunctuationChars: punctuation]!
 
-setCurrentTextStyles: aCollection 
+setCurrentTextStyles: aCollection
 	| newStylesByName allocatedStyles newStylesById availableStyles count |
 	count := aCollection size.
-	allocatedStyles := OrderedCollection new: count.
-	aCollection do: [:each | each basicId ifNotNil: [:id | allocatedStyles addLast: id]].
-	availableStyles := ((1 to: STYLE_DEFAULT - 1) , (STYLE_LASTPREDEFINED + 1 to: 255)
-				difference: allocatedStyles) readStream.
+	allocatedStyles := Set new: count.
+	aCollection do: [:each | allocatedStyles add: each basicId].
+	availableStyles := ##(((1 to: STYLE_DEFAULT - 1) , (STYLE_LASTPREDEFINED + 1 to: 255)) asByteArray)
+				readStream.
 	newStylesByName := IdentityDictionary new: count.
-	newStylesById := Array new: (STYLE_LASTPREDEFINED max: 255) + 1.
+	newStylesById := Array new: ##((STYLE_LASTPREDEFINED max: 255) + 1).
 	aCollection do: 
 			[:each |
-			each basicId isNil ifTrue: [each basicId: availableStyles next].
-			newStylesByName at: each name put: each.
-			newStylesById at: each basicId + 1 put: each].
+			newStylesById
+				at: (each basicId
+						ifNil: 
+							[| nextId |
+							
+							[nextId := availableStyles next.
+							allocatedStyles includes: nextId] whileTrue.
+							each basicId: nextId.
+							nextId])
+							+ 1
+				put: each.
+			newStylesByName at: each name put: each].
 	newStylesByName at: #normal ifAbsentPutClean: [TextStyle normal].
 	currentTextStyles := newStylesByName.
 	styleIdMap := newStylesById.
@@ -8836,12 +8851,16 @@ setDefaultTextStyle
 	self sciStyleResetDefault.
 	defaultStyle
 		basicId: STYLE_DEFAULT;
-		applyToView: self initializing: true.
+		initializeView: self.
 	self sciStyleClearAll!
 
 setElement: anInteger color: aColor
 	elementColors at: anInteger put: aColor.
 	self sciSetElementColour: anInteger colourElement: aColor!
+
+setElementColor: anInteger
+	(elementColors lookup: anInteger)
+		ifNotNil: [:color | self sciSetElementColour: anInteger colourElement: color]!
 
 setEolAnnotations: aCollectionOfScintillaAnnotations
 	aCollectionOfScintillaAnnotations do: 
@@ -8905,17 +8924,19 @@ setIndicators: anArray
 setIndicatorStyles: aCollection
 	| newStylesByName allocatedStyles availableStyles count |
 	count := aCollection size.
-	allocatedStyles := OrderedCollection new: count.
-	aCollection do: [:each | each basicId ifNotNil: [:id | allocatedStyles addLast: id]].
-	availableStyles := ((INDICATOR_CONTAINER to: INDICATOR_IME - 1) difference: allocatedStyles)
-				readStream.
+	allocatedStyles := Set new: count.
+	aCollection do: [:each | allocatedStyles add: each basicId].
+	availableStyles := ##((INDICATOR_CONTAINER to: INDICATOR_IME - 1) asByteArray) readStream.
 	newStylesByName := IdentityDictionary new: count.
 	aCollection do: 
 			[:each |
-			each basicId isNil
-				ifTrue: 
-					[availableStyles atEnd ifTrue: [self error: 'Too many styles'].
-					each basicId: availableStyles next].
+			each basicId
+				ifNil: 
+					[| nextId |
+					
+					[nextId := availableStyles next.
+					allocatedStyles includes: nextId] whileTrue.
+					each basicId: nextId].
 			newStylesByName at: each name put: each].
 	indicatorStyles := newStylesByName.
 	self updateIndicatorStyles!
@@ -9588,7 +9609,7 @@ updateIndicators
 updateIndicatorStyles
 	self hideIndicators.
 	indicatorStyles ifNil: [^self].
-	indicatorStyles do: [:each | each applyToView: self initializing: false].
+	indicatorStyles do: [:each | each applyToView: self].
 	(indicatorStyles lookup: #braceHighlight)
 		ifNil: [self sciBraceHighlightIndicator: false indicator: 0]
 		ifNotNil: [:indic | self sciBraceHighlightIndicator: true indicator: indic basicId].
@@ -9617,6 +9638,7 @@ updateSetting: aSettingsChangeEvent
 updateTextStyles
 	"Private - Sync. the control's knowledge of the text styles with those recorded in the receiver."
 
+	| applyStyle |
 	(self isOpen and: 
 			["Don't update the styles until the extended styles have been allocated (see #initializeControl)"
 			self sciMarginGetStyleOffset ~~ 0])
@@ -9626,9 +9648,10 @@ updateTextStyles
 	"Reset all the styles to defaults, and clear the annotation and margin styles too"
 	self setDefaultTextStyle.
 	"Because we have reset all styles, we need only send across non-default properties to the control."
-	currentTextStyles do: [:each | each applyToView: self initializing: true].
+	applyStyle := [:each | each initializeView: self].
+	currentTextStyles do: applyStyle.
 	self ensureHasAnnotationStyles.
-	annotationStyles do: [:each | each applyToView: self initializing: true]!
+	annotationStyles do: applyStyle!
 
 validateUserInterface
 	"Validates the user interface for the receiver. Usually performed at idle time
@@ -10875,6 +10898,7 @@ setCharacterClasses!character classes!helpers!private! !
 setCurrentTextStyles:!private!style definition! !
 setDefaultTextStyle!private!style definition! !
 setElement:color:!autocompletion!element colors!private! !
+setElementColor:!element colors!private! !
 setEolAnnotations:!annotations!private! !
 setFoldFlags!folding!private! !
 setFoldMarginColor!folding!margins!private! !
@@ -11206,33 +11230,30 @@ initialize
 		self initialize
 	"
 
-	| defaultKeyBindings |
+	| defaultKeyBindings keyMap |
 	self addClassConstant: 'CodePages'
-		value: (IdentityDictionary new
-				at: NlsConstants.CP_ACP put: #ansi;
-				at: SC_CP_UTF8 put: #utf8;
-				shrink;
+		value: ((IdentityDictionary withAll: {NlsConstants.CP_ACP -> #ansi. SC_CP_UTF8 -> #utf8})
 				isImmutable: true;
 				yourself).
 	self addClassConstant: 'DefaultTextStyles'
-		value: (LookupTable new
-				at: #container put: (self immutableCopyOfCollection: self defaultTextStyles);
-				at: #xml put: (self immutableCopyOfCollection: self xmlTextStyles);
-				at: #null put: (self immutableCopyOfCollection: self txtTextStyles);
-				at: #smalltalk put: (self immutableCopyOfCollection: self smalltalkTextStyles);
-				at: #markdown put: (self immutableCopyOfCollection: self markdownTextStyles);
-				at: #json put: (self immutableCopyOfCollection: self jsonTextStyles);
-				shrink;
+		value: ((LookupTable
+				withAll: {#container -> (self immutableCopyOfCollection: self defaultTextStyles).
+						#xml -> (self immutableCopyOfCollection: self xmlTextStyles).
+						#null -> (self immutableCopyOfCollection: self txtTextStyles).
+						#smalltalk -> (self immutableCopyOfCollection: self smalltalkTextStyles).
+						#markdown -> (self immutableCopyOfCollection: self markdownTextStyles).
+						#json -> (self immutableCopyOfCollection: self jsonTextStyles)})
 				isImmutable: true;
 				yourself).
 	self addClassConstant: 'LexerKeywords'
-		value: (LookupTable new
-				at: #json put: #('false true null' '@id @context @type @value @language @container @list @set @reverse @index @base @vocab @graph');
-				shrink;
+		value: ((LookupTable
+				withAll: {#json
+							-> #('false true null' '@id @context @type @value @language @container @list @set @reverse @index @base @vocab @graph')})
 				isImmutable: true;
 				yourself).
-	defaultKeyBindings := LookupTable new.
-	self defaultKeyMap do: 
+	keyMap := self defaultKeyMap.
+	defaultKeyBindings := LookupTable new: keyMap size.
+	keyMap do: 
 			[:each |
 			| keyCode |
 			keyCode := AcceleratorTable keyCode: each first asInteger modifiers: each second | FVIRTKEY.
@@ -11240,9 +11261,7 @@ initialize
 				put: ((KeyBinding newAcceleratorKey: keyCode message: each last)
 						isImmutable: true;
 						yourself)].
-	defaultKeyBindings
-		shrink;
-		isImmutable: true.
+	defaultKeyBindings isImmutable: true.
 	self addClassConstant: 'DefaultKeyBindings' value: defaultKeyBindings!
 
 jsonTextStyles

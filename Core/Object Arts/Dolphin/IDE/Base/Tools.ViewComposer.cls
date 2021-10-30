@@ -2771,6 +2771,13 @@ copyToClipboard: aView
 	self clearClipboard.
 	self addToClipboard: aView!
 
+defaultDefaultSlideyPinsMap
+	^##(IdentityDictionary new
+		at: #inspectorSlidey put: true;
+		at: #toolsSlidey put: false;
+		at: #toolbarsSlidey put: false;
+		yourself)!
+
 defaultDefaultView
 	^'Vertical view'!
 
@@ -2807,12 +2814,7 @@ initialize
 	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self.
-	self canUseIdeaSpace: true.
-	self defaultSlideyPinsMap: ##(IdentityDictionary new
-				at: #toolsSlidey put: false;
-				at: #toolbarsSlidey put: false;
-				yourself).
-	DefaultGridResolution := 5!
+	self defaultSlideyPinsMap: self defaultDefaultSlideyPinsMap!
 
 openOn: aResourceIdentifier
 	^self show openOn: aResourceIdentifier!
@@ -2826,9 +2828,12 @@ publishedAspects
 	| aspects |
 	aspects := super publishedAspects.
 	aspects
-		add: (Aspect boolean: #canUseIdeaSpace);
-		add: (Aspect integer: #defaultGridResolution);
-		yourself.
+		add: ((Aspect boolean: #canUseIdeaSpace)
+					defaultValue: true;
+					yourself);
+		add: ((Aspect integer: #defaultGridResolution)
+					defaultValue: 5;
+					yourself).
 	^aspects!
 
 resource_Vertical_view
@@ -2851,6 +2856,7 @@ clipboard!accessing!public! !
 clipboard:!accessing!public! !
 copyAllToClipboard:!clipboard operations!public! !
 copyToClipboard:!clipboard operations!public! !
+defaultDefaultSlideyPinsMap!initializing!private! !
 defaultDefaultView!initializing!private! !
 defaultGridResolution!constants!public! !
 defaultGridResolution:!constants!public! !

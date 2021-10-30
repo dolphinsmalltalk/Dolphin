@@ -38,7 +38,7 @@ brushClass
 	^SysColorBrush!
 
 id
-	"Private - Answer the system id of the receiver"
+	"Answer the identifier of the receiver from the Windows COLOR_xxxx enumeration, e.g. COLOR_WINDOW."
 
 	^id!
 
@@ -85,9 +85,9 @@ printOn: aPuttableStream
 					aPuttableStream nextPut: $)]]!
 
 rgbCode
-	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (blue, green, red) order."
+	"Answer the receiver's color value in 24-bit RGB encoding with 8-bits per component in (Blue, Green, Red) order."
 
-	^User32 getSysColor: self id!
+	^User32 getSysColor: id!
 
 setId: anInteger
 	"Private - Set the receiver's index to anInteger."
@@ -102,7 +102,7 @@ shallowCopy
 asParameter!converting!public! !
 asRGB!converting!public! !
 brushClass!constants!private! !
-id!accessing!private! !
+id!accessing!public! !
 isSymbolic!public!testing! !
 name!accessing!public! !
 printOn:!development!printing!public! !

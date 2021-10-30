@@ -339,20 +339,23 @@ moveTempToInnerScope
 				selector: method selector) isNil 
 				ifFalse: [presenter caretPosition: anchor]]!
 
-nameForArgument: aStProgramNode 
-	aStProgramNode isVariable 
+nameForArgument: aStProgramNode
+	aStProgramNode isVariable
 		ifTrue: 
-			[^(presenter classForIdentifier: aStProgramNode name) 
-				ifNil: [aStProgramNode name]
+			[aStProgramNode variable
 				ifNotNil: 
-					[:aClass | 
-					| type |
-					type := self systemModel typeForArgumentClass: aClass.
-					aClass isMeta 
-						ifTrue: ['aClass']
-						ifFalse: [(type name first isVowel ifTrue: ['an'] ifFalse: ['a']) , type name]]].
+					[:var |
+					(presenter suggestClassForVariable: var)
+						ifNotNil: 
+							[:aClass |
+							| type |
+							type := self systemModel typeForArgumentClass: aClass.
+							aClass isMeta
+								ifTrue: ['aClass']
+								ifFalse: [(type name first isVowel ifTrue: ['an'] ifFalse: ['a']) , type name]]].
+			^aStProgramNode name].
 	aStProgramNode isLiteralNode ifTrue: [^self systemModel nameForArgument: aStProgramNode value].
-	aStProgramNode isBlock 
+	aStProgramNode isBlock
 		ifTrue: [^self systemModel nameForBlockOfArity: aStProgramNode argumentCount].
 	^'anObject'!
 

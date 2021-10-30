@@ -50,7 +50,7 @@ pathSetDlgItemPath: hDlg id: id pszPath: pszPath
 	<stdcall: void PathSetDlgItemPathW handle sdword lpwstr>
 	^self invalidCall: _failureCode! !
 !OS.ShlwapiLibrary categoriesForMethods!
-pathSetDlgItemPath:id:pszPath:!**auto generated**!public! !
+pathSetDlgItemPath:id:pszPath:!**auto generated**!public!win32 functions-path! !
 !
 
 !UI.TextPresenter class methodsFor!

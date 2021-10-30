@@ -353,6 +353,9 @@ viewRefresh!commands!operations!public! !
 
 !Tools.SourceBrowser class methodsFor!
 
+defaultOptionFlags
+	^##(ReuseIfOpenMask | CanUseIdeaSpaceMask)!
+
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
@@ -378,9 +381,7 @@ initialize
 
 	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
-		registerTool: self.
-	self reuseIfOpen: true.
-	self canUseIdeaSpace: true!
+		registerTool: self!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -407,6 +408,7 @@ typeOfObject: aSourceObject
 		ifTrue: [ 'a Class']
 		ifFalse: [ aSourceObject basicPrintString ]! !
 !Tools.SourceBrowser class categoriesForMethods!
+defaultOptionFlags!constants!options!private! !
 displayOn:!displaying!public! !
 forSourcesOfPackages:!instance creation!public! !
 icon!constants!public! !

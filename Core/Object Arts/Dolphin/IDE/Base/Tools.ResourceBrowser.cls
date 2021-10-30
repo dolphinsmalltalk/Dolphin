@@ -114,6 +114,9 @@ showResourcesReferencingView:!public! !
 
 !Tools.ResourceBrowser class methodsFor!
 
+defaultOptionFlags
+	^##(ReuseIfOpenMask | CanUseIdeaSpaceMask)!
+
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
@@ -131,16 +134,16 @@ initialize
 
 	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
-		registerTool: self.
-	self reuseIfOpen: true.
-	self canUseIdeaSpace: true!
+		registerTool: self!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	^super publishedAspects
-		add: (Aspect boolean: #canUseIdeaSpace);
-		yourself!
+	| aspects |
+	aspects := super publishedAspects.
+	(aspects at: #reuseIfOpen) defaultValue: true.
+	aspects add: self canUseIdeaSpaceAspect.
+	^aspects!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -169,6 +172,7 @@ showAsToolboxFor: aView at: aPoint
 toolsFolderHelpId
 	^10594! !
 !Tools.ResourceBrowser class categoriesForMethods!
+defaultOptionFlags!constants!options!private! !
 displayOn:!displaying!public! !
 icon!constants!public! !
 initialize!initializing!private! !

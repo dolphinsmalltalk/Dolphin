@@ -83,7 +83,7 @@ initialize
 isBold
 	"Answer whether the receiver is bold."
 
-	^self weight = FW_BOLD!
+	^self weight == FW_BOLD!
 
 isBold: aBoolean
 	"Set the receiver's bold attribute."
@@ -98,7 +98,7 @@ isDefault
 isItalic
 	"Answer whether the receiver is itatic."
 
-	^logfont lfItalic ~= 0!
+	^logfont lfItalic ~~ 0!
 
 isItalic: aBoolean 
 	"Set whether the receiver is an italic typeface."
@@ -111,7 +111,7 @@ isItalic: aBoolean
 isStruckThrough
 	"Answer whether the strike-out effect is set."
 
-	^logfont lfStrikeOut ~= 0!
+	^logfont lfStrikeOut ~~ 0!
 
 isStruckThrough: aBoolean 
 	"Set the struck out character effect."
@@ -124,7 +124,7 @@ isStruckThrough: aBoolean
 isUnderlined
 	"Answer whether the receiver is underlined."
 
-	^logfont lfUnderline ~= 0!
+	^logfont lfUnderline ~~ 0!
 
 isUnderlined: aBoolean 
 	"Reset the receiver's underline attribute."

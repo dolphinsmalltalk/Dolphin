@@ -163,10 +163,19 @@ slideyPinNames!accessing!private! !
 !Tools.SystemBrowserShell class methodsFor!
 
 autoSelectPackages
+	self ensureOptionsLoaded.
 	^AutoSelectPackages!
 
 autoSelectPackages: aBoolean
-	AutoSelectPackages := aBoolean!
+	self autoSelectPackages = aBoolean ifTrue: [^self].
+	AutoSelectPackages := aBoolean.
+	self persistOptions!
+
+defaultDefaultSlideyPinsMap
+	^##(IdentityDictionary new
+		at: #filtersSlidey put: true;
+		at: #packagesSlidey put: true;
+		yourself)!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -183,10 +192,6 @@ initialize
 		self initialize
 	"
 
-	self defaultShowInheritedMethods: false.
-	self defaultFilterObjectMethods: true.
-	self canUseIdeaSpace: true.
-	self autoSelectPackages: true.
 	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self!
@@ -195,7 +200,9 @@ publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	^super publishedAspects
-		add: (Aspect boolean: #autoSelectPackages);
+		add: ((Aspect boolean: #autoSelectPackages)
+					defaultValue: true;
+					yourself);
 		yourself!
 
 resource_Default_view
@@ -219,8 +226,9 @@ uninitialize
 	SmalltalkSystem.Current
 		ifNotNil: [:devsys | devsys systemBrowserClass == self ifTrue: [devsys systemBrowserClass: nil]]! !
 !Tools.SystemBrowserShell class categoriesForMethods!
-autoSelectPackages!accessing!private! !
-autoSelectPackages:!accessing!private! !
+autoSelectPackages!accessing!options!public! !
+autoSelectPackages:!accessing!options!public! !
+defaultDefaultSlideyPinsMap!initializing!private! !
 displayOn:!displaying!public! !
 icon!constants!public! !
 initialize!initializing!private! !

@@ -2,10 +2,15 @@
 
 UI.AbstractDocumentShell subclass: #'Tools.SmalltalkWorkspaceDocument'
 	instanceVariableNames: 'workspacePresenter searchPresenter'
-	classVariableNames: 'CanUseIdeaSpace DefaultExtent DefaultView LanguageExtensions ReuseIfOpen VariableTips'
+	classVariableNames: 'DefaultExtent DefaultView LanguageExtensions OptionFlags'
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'CanUseIdeaSpaceMask' -> 16r8.
+		'LoadingMask' -> 16r1.
+		'ReUseIfOpenMask' -> 16r2.
+		'VariableTipsMask' -> 16r4
+	}!
 Tools.SmalltalkWorkspaceDocument guid: (Core.GUID fromString: '{87b4c6ba-026e-11d3-9fd7-00a0cc3e4a32}')!
 Tools.SmalltalkWorkspaceDocument comment: '`SmalltalkWorkspaceDocument` is a `<documentPresenter>` that can be used for displaying Smalltalk ST and CLS files. It also allows for the evaluation of Smalltalk expressions and the execution of various other commands targeted at the `SmalltalkSystem` singleton instance.
 
@@ -405,14 +410,13 @@ canUseIdeaSpace
 	to allow re-use. Therefore, although all tools support this functionality, only some
 	expose it as a published aspect so that it may be set as a system option."
 
-	CanUseIdeaSpace isNil ifTrue: [ CanUseIdeaSpace := false ].
-	^CanUseIdeaSpace!
+	^self optionFlags allMask: CanUseIdeaSpaceMask!
 
 canUseIdeaSpace: aBoolean
 	"Set the receiver to reuse an already open instance of the receiver instead of
 	creating an additional one according to aBoolean."
 
-	CanUseIdeaSpace := aBoolean
+	self setOptionFlag: CanUseIdeaSpaceMask value: aBoolean
 !
 
 defaultAdditionalAccelerators
@@ -442,17 +446,23 @@ defaultCaretColor: aColorOrNil
 
 	self workspaceClass defaultCaretColor: aColorOrNil!
 
+defaultDefaultExtent
+	^640 @ 480!
+
 defaultExtent
 	"Answer a <Point> which is the user's chosen default extent for new instances
 	of the receiver, or nil if left up to Windows."
 
-	^DefaultExtent!
+	DefaultExtent ifNil: [self loadOptions].
+	^DefaultExtent ifNil: [self defaultDefaultExtent]!
 
 defaultExtent: aPoint
 	"Set the default extent to be used for instances of the receiver to the <Point> argument.
 	If the argument is nil, then let Windows decide."
 
-	DefaultExtent := aPoint!
+	DefaultExtent = aPoint ifTrue: [^self].
+	DefaultExtent := aPoint.
+	self persistOptions!
 
 defaultFileExtension
 	"Answer a default extension that will be used for files saved from
@@ -475,6 +485,9 @@ defaultModel
 	is initialized."
 
 	^SmalltalkSystem current!
+
+defaultOptionFlags
+	^##(CanUseIdeaSpaceMask | VariableTipsMask)!
 
 defaultSelectionColor
 	"Answer the default selection highlight colour to use for instances of the receiver"
@@ -501,13 +514,15 @@ defaultView
 	This is configurable for tool shells so that the developer can easily replace the
 	standard Dolphin views if he or she wishes."
 
-	DefaultView isNil ifTrue: [DefaultView := super defaultView].
-	^DefaultView!
+	OptionFlags ifNil: [self loadOptions].
+	^DefaultView ifNil: [View defaultView]!
 
 defaultView: aString
 	"Set the default view name."
 
-	DefaultView := aString!
+	self defaultView = aString ifTrue: [^self].
+	DefaultView := aString.
+	self persistOptions!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -527,6 +542,9 @@ fileTypes
 		#('Text Files (*.txt)' '*.txt').
 		FileDialog allFilesType}!
 
+finishedLoadingOptions
+	OptionFlags := OptionFlags maskClear: LoadingMask!
+
 icon
 	"Answers an Icon that can be used to represent this class"
 
@@ -540,10 +558,6 @@ initialize
 	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self.
-	self wordWrap: true.
-	self canUseIdeaSpace: true.
-	self defaultExtent: 640 @ 480.
-	self variableTips: true.
 	LanguageExtensions := LookupTable new
 				at: 'xml' put: #xml;
 				at: 'json' put: #json;
@@ -553,31 +567,63 @@ initialize
 		do: [:each | LanguageExtensions at: each put: #container].
 	LanguageExtensions isImmutable: true!
 
+invalidateOptions
+	OptionFlags := nil!
+
+isLoadingOptions
+	^self optionFlags allMask: LoadingMask!
+
 isRichTextFile: aString
 	^aString notNil and: [(File splitExtensionFrom: aString) equalsIgnoreCase: 'rtf']!
+
+loadOptions
+	SmalltalkToolShell loadOptionsFor: self!
 
 openIcon
 	"Answers an Icon that can be used to represent the opening of an instance from a file"
 
 	^Icon fromId: 'FileOpen.ico'!
 
-publishedAspects
-	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
+optionFlags
+	OptionFlags ifNil: [self loadOptions].
+	^OptionFlags!
 
-	| answer |
-	answer := super publishedAspects.
-	#(#reuseIfOpen #canUseIdeaSpace #wordWrap #variableTips)
-		do: [:each | answer add: (Aspect boolean: each)].
-	#(#defaultBackcolor #defaultCaretColor #defaultSelectionColor) do: [:each | answer add: (Aspect color: each)].
-	answer
-		add: (Aspect font: #defaultFont);
+optionsAspects
+	"Private - Answer an <IdentityDictionary> of the <Aspect>s published by the receiver, not including those that are really just forwarders to SmalltalkWorkspace."
+
+	| aspects |
+	aspects := IdentityDictionary new.
+	#(#canUseIdeaSpace #variableTips)
+		do: [:each | aspects add: ((Aspect boolean: each)
+						defaultValue: true;
+						yourself)].
+	aspects add: (Aspect boolean: #reuseIfOpen).
+	aspects
 		add: ((Aspect
 					choice: #defaultView
 					from: [self resourceNames]
 					type: String)
 					icon: ResourceIdentifier icon;
+					defaultValue: [View defaultView];
 					yourself);
 		add: (Aspect extent: #defaultExtent);
+		yourself.
+	^aspects!
+
+persistOptions
+	^SmalltalkToolShell persistOptionsFor: self!
+
+publishedAspects
+	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
+
+	| answer |
+	answer := super publishedAspects.
+	answer addAll: self optionsAspects.
+	answer add: (Aspect boolean: #wordWrap).
+	#(#defaultBackcolor #defaultCaretColor #defaultSelectionColor)
+		do: [:each | answer add: (Aspect color: each)].
+	answer
+		add: (Aspect font: #defaultFont);
 		add: self workspaceClass textStylesAspect;
 		add: (Aspect integer: #defaultTabWidth);
 		yourself.
@@ -599,15 +645,26 @@ reuseIfOpen
 	to allow re-use. Therefore, although all tools support this functionality, only some
 	expose it as a published aspect so that it may be set as a system option."
 
-	ReuseIfOpen isNil ifTrue: [ ReuseIfOpen := false ].
-	^ReuseIfOpen!
+	^self optionFlags allMask: ReUseIfOpenMask!
 
 reuseIfOpen: aBoolean
 	"Set the receiver to reuse an already open instance of the receiver instead of
 	creating an additional one according to aBoolean."
 
-	ReuseIfOpen := aBoolean
+	self setOptionFlag: ReUseIfOpenMask value: aBoolean
 !
+
+setDefaultOptions
+	OptionFlags := ##(LoadingMask | CanUseIdeaSpaceMask | VariableTipsMask).
+	DefaultView := DefaultExtent := nil!
+
+setOptionFlag: anInteger value: aBoolean
+	"Private - Set the receiver to reuse an already open instance of the receiver instead of
+	creating an additional one according to aBoolean."
+
+	(self optionFlags allMask: anInteger) == aBoolean ifTrue: [^self].
+	OptionFlags := OptionFlags mask: anInteger set: aBoolean.
+	self persistOptions!
 
 show
 	"Shows an instance of the receiver. If reuseIfOpen has been set to true then an 
@@ -619,6 +676,9 @@ show
 	self reuseIfOpen
 		ifTrue: [(SmalltalkToolShell showExistingInstanceOf: self) ifNotNil: [:tool | ^tool]].
 	^super show!
+
+startLoadingOptions
+	OptionFlags := LoadingMask!
 
 textStyles
 	^self workspaceClass textStyles!
@@ -642,14 +702,16 @@ toolsFolderIcon
 		helpId: self toolsFolderHelpId!
 
 variableTips
-	^VariableTips!
+	"Answer whether tooltips will be displayed to show the value of workspace variables that the user hovers the mouse over."
+
+	^self optionFlags allMask: VariableTipsMask!
 
 variableTips: aBoolean 
 	"Set whether tooltips will be displayed to show the value of workspace variables that the user hovers the mouse over.
 	Note that this works even when the workspace is in the background, and uses a relatively high frequency timer to 
-	detect the dwell. It has a certain CPU overhead, and so is disabled by default."
+	detect the dwell. It has a certain CPU overhead, and so you may want to disable it if running on battery."
 
-	VariableTips := aBoolean!
+	self setOptionFlag: VariableTipsMask value: aBoolean!
 
 wordWrap
 	"Answer true if instances of the receiver use word wrapping by default."
@@ -664,46 +726,58 @@ wordWrap: aBoolean
 workspaceClass
 	^SmalltalkSystem current workspaceClass! !
 !Tools.SmalltalkWorkspaceDocument class categoriesForMethods!
-activeIdeaSpace!public! !
-canUseIdeaSpace!accessing!public! !
-canUseIdeaSpace:!accessing!public! !
-defaultAdditionalAccelerators!constants!private! !
-defaultBackcolor!accessing!options!public! !
-defaultBackcolor:!accessing!options!public! !
-defaultCaretColor!accessing!options!public! !
-defaultCaretColor:!accessing!options!public! !
-defaultExtent!accessing!public! !
-defaultExtent:!accessing!public! !
+activeIdeaSpace!helpers!private! !
+canUseIdeaSpace!options!public! !
+canUseIdeaSpace:!options!public! !
+defaultAdditionalAccelerators!constants!options!private! !
+defaultBackcolor!options!public! !
+defaultBackcolor:!options!public! !
+defaultCaretColor!options!public! !
+defaultCaretColor:!options!public! !
+defaultDefaultExtent!constants!options!private! !
+defaultExtent!options!public! !
+defaultExtent:!options!public! !
 defaultFileExtension!constants!public! !
-defaultFont!accessing!options!public! !
-defaultFont:!accessing!options!public! !
+defaultFont!options!public! !
+defaultFont:!options!public! !
 defaultModel!models!public! !
-defaultSelectionColor!accessing!options!public! !
-defaultSelectionColor:!accessing!options!public! !
-defaultTabWidth!accessing!options!public! !
-defaultTabWidth:!accessing!options!public! !
-defaultView!constants!public! !
-defaultView:!accessing!public! !
+defaultOptionFlags!constants!private! !
+defaultSelectionColor!options!public! !
+defaultSelectionColor:!options!public! !
+defaultTabWidth!options!public! !
+defaultTabWidth:!options!public! !
+defaultView!options!public! !
+defaultView:!options!public! !
 displayOn:!displaying!public! !
 fileTypes!constants!public! !
+finishedLoadingOptions!options!private! !
 icon!constants!public! !
 initialize!initializing!private! !
+invalidateOptions!private! !
+isLoadingOptions!options!private! !
 isRichTextFile:!helpers!private! !
+loadOptions!options!private! !
 openIcon!constants!public! !
+optionFlags!options!private! !
+optionsAspects!private! !
+persistOptions!options!private! !
 publishedAspects!public! !
 resource_Default_view!public!resources-views! !
-reuseIfOpen!accessing!public! !
-reuseIfOpen:!accessing!public! !
+reuseIfOpen!options!public! !
+reuseIfOpen:!options!public! !
+setDefaultOptions!options!private! !
+setOptionFlag:value:!options!private! !
 show!instance creation!public! !
-textStyles!accessing!public! !
-textStyles:!accessing!public! !
+startLoadingOptions!options!private! !
+textStyles!options!public! !
+textStyles:!options!public! !
 toolsFolderHelpId!public! !
 toolsFolderIcon!constants!public! !
-variableTips!accessing!public! !
-variableTips:!accessing!public! !
-wordWrap!accessing!options!public! !
-wordWrap:!accessing!options!public! !
-workspaceClass!accessing!options!public! !
+variableTips!options!public! !
+variableTips:!options!public! !
+wordWrap!options!public! !
+wordWrap:!options!public! !
+workspaceClass!options!public! !
 !
 
 Tools.SmalltalkWorkspaceDocument class methodProtocol: #installableSystemTool attributes: #(#readOnly) selectors: #(#registerAsToolWith: #unregisterAsToolWith:)!

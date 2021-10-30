@@ -697,8 +697,7 @@ isCompiled
 	^flags anyMask: CompiledMask!
 
 isFieldBrowsable: aSymbol
-	template notNil
-		ifTrue: [(template at: aSymbol ifAbsent: nil) ifNotNil: [:field | ^field isBrowsable]].
+	template notNil ifTrue: [(template lookup: aSymbol) ifNotNil: [:field | ^field isBrowsable]].
 	^self canUnderstand: aSymbol!
 
 libraryAndIndex

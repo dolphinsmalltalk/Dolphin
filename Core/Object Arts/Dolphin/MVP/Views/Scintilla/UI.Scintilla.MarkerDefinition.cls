@@ -2,7 +2,7 @@
 
 UI.Scintilla.Attribute subclass: #'UI.Scintilla.MarkerDefinition'
 	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor strokeWidth layerCode _reserved11 _reserved12'
-	classVariableNames: 'FolderNames'
+	classVariableNames: 'Alpha Backcolor FolderNames Forecolor GlyphName Layer SelectionBackcolor StrokeWidth'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -40,7 +40,7 @@ alpha: anInteger
 							[(anInteger between: SC_ALPHA_TRANSPARENT and: SC_ALPHA_OPAQUE)
 								ifTrue: [anInteger]
 								ifFalse: [self error: 'Invalid alpha value ' , anInteger displayString]]].
-	self updateViewProperty: #alpha!
+	self updateViewProperty: Alpha!
 
 alphaValue
 	"Private - Answer the integer alpha value to be passed to Scintilla"
@@ -54,7 +54,7 @@ backcolor
 
 backcolor: aColorOrNil
 	self basicBackcolor: aColorOrNil.
-	self updateViewProperty: #backcolor!
+	self updateViewProperty: Backcolor!
 
 basicBackcolor: aColorOrNil 
 	backcolor := aColorOrNil!
@@ -87,7 +87,7 @@ forecolor
 
 forecolor: aColorOrNil
 	self basicForecolor: aColorOrNil.
-	self updateViewProperty: #forecolor!
+	self updateViewProperty: Forecolor!
 
 glyphName
 	^self code
@@ -109,14 +109,14 @@ glyphName: aSymbolOrCharacter
 							[(aSymbolOrCharacter isCharacter and: [aSymbolOrCharacter isGraph])
 								ifTrue: [aSymbolOrCharacter codePoint + SC_MARK_CHARACTER]
 								ifFalse: [^self error: 'Invalid glyph  ' , aSymbolOrCharacter printString]]]).
-	self updateViewProperty: #glyphName!
+	self updateViewProperty: GlyphName!
 
 layer
 	^self layerCode ifNil: [#base] ifNotNil: [:c | ScintillaView layerNames at: c + 1]!
 
 layer: aSymbol
 	layerCode := aSymbol ifNotNil: [(ScintillaView layerNames indexOf: aSymbol) - 1].
-	self updateViewProperty: #layer!
+	self updateViewProperty: Layer!
 
 layerCode
 	^layerCode!
@@ -144,7 +144,7 @@ selectionBackcolor
 
 selectionBackcolor: aColor
 	self basicSelectionBackcolor: aColor.
-	self updateViewProperty: #selectionBackcolor!
+	self updateViewProperty: SelectionBackcolor!
 
 storeableProperties
 	^{#name} , super storeableProperties!
@@ -163,7 +163,7 @@ strokeWidth
 
 strokeWidth: aNumberOrNil
 	self basicStrokeWidth: (aNumberOrNil ifNotNil: [:i | (i * 100) rounded]).
-	self updateViewProperty: #strokeWidth!
+	self updateViewProperty: StrokeWidth!
 
 view
 	^view!
@@ -310,52 +310,46 @@ boxTree
 					yourself);
 		yourself!
 
-buildPropertyMap
-	^IdentityDictionary new
-		at: #backcolor
-			put: (ColourAlphaPropertyDescriptor
-					getSelector: #backcolor
-					defaultValue: Color white
-					setMessage: SCI_MARKERSETBACKTRANSLUCENT);
-		at: #forecolor
-			put: (ColourAlphaPropertyDescriptor
-					getSelector: #forecolor
-					defaultValue: Color black
-					setMessage: SCI_MARKERSETFORETRANSLUCENT);
-		at: #glyphName
-			put: ((EnumPropertyDescriptor
-					getSelector: #code
-					defaultValue: SC_MARK_CIRCLE
-					setMessage: SCI_MARKERDEFINE)
-					values: self glyphNames , self visibleCharacterGlyphs;
-					alwaysPrint: true;
-					yourself);
-		at: #alpha
-			put: (IntPropertyDescriptor
-					getSelector: #alpha
-					defaultValue: SC_ALPHA_NOALPHA
-					setMessage: SCI_MARKERSETALPHA);
-		at: #selectionBackcolor
-			put: (ColourAlphaPropertyDescriptor
-					getSelector: #selectionBackcolor
-					defaultValue: Color red
-					setMessage: SCI_MARKERSETBACKSELECTEDTRANSLUCENT);
-		at: #strokeWidth
-			put: ((FloatPropertyDescriptor
-					getSelector: #basicStrokeWidth
-					defaultValue: 100
-					setMessage: SCI_MARKERSETSTROKEWIDTH)
-					beNullable;
-					yourself);
-		at: #layer
-			put: ((EnumPropertyDescriptor
-					getSelector: #layerCode
-					defaultValue: SC_LAYER_BASE
-					setMessage: SCI_MARKERSETLAYER)
-					values: ScintillaView layerNames;
-					yourself);
-		shrink;
-		yourself!
+buildPropertyDescriptors
+	Backcolor := ColourAlphaPropertyDescriptor
+				key: #backcolor
+				defaultValue: Color white
+				setMessage: SCI_MARKERSETBACKTRANSLUCENT.
+	Forecolor := ColourAlphaPropertyDescriptor
+				key: #forecolor
+				defaultValue: Color black
+				setMessage: SCI_MARKERSETFORETRANSLUCENT.
+	GlyphName := (EnumPropertyDescriptor
+				key: #glyphName
+				defaultValue: SC_MARK_CIRCLE
+				setMessage: SCI_MARKERDEFINE)
+				getSelector: #code;
+				values: self glyphNames , self visibleCharacterGlyphs;
+				alwaysPrint: true;
+				yourself.
+	Alpha := IntPropertyDescriptor
+				key: #alpha
+				defaultValue: SC_ALPHA_NOALPHA
+				setMessage: SCI_MARKERSETALPHA.
+	SelectionBackcolor := ColourAlphaPropertyDescriptor
+				key: #selectionBackcolor
+				defaultValue: Color red
+				setMessage: SCI_MARKERSETBACKSELECTEDTRANSLUCENT.
+	StrokeWidth := (FloatPropertyDescriptor
+				key: #strokeWidth
+				defaultValue: 100
+				setMessage: SCI_MARKERSETSTROKEWIDTH)
+				getSelector: #basicStrokeWidth;
+				beNullable;
+				yourself.
+	Layer := (EnumPropertyDescriptor
+				key: #layer
+				defaultValue: SC_LAYER_BASE
+				setMessage: SCI_MARKERSETLAYER)
+				getSelector: #layerCode;
+				values: ScintillaView layerNames;
+				yourself.
+	^{Backcolor. Forecolor. GlyphName. Alpha. SelectionBackcolor. StrokeWidth. Layer}!
 
 circleTree
 	"Answer a set of marker definitions for fold margin markers in the 'Circle Tree' style. This
@@ -451,19 +445,17 @@ initialize
 	self initialize
 	"
 
-	propertyMap := self buildPropertyMap
+	propertyDescriptors := self buildPropertyDescriptors
 				isImmutable: true;
 				yourself.
 	self addClassConstant: 'FolderNames'
-		value: (IdentityDictionary new
-				at: #folderEnd put: SC_MARKNUM_FOLDEREND;
-				at: #folderOpenMid put: SC_MARKNUM_FOLDEROPENMID;
-				at: #folderMidTail put: SC_MARKNUM_FOLDERMIDTAIL;
-				at: #folderTail put: SC_MARKNUM_FOLDERTAIL;
-				at: #folderSub put: SC_MARKNUM_FOLDERSUB;
-				at: #folder put: SC_MARKNUM_FOLDER;
-				at: #folderOpen put: SC_MARKNUM_FOLDEROPEN;
-				shrink;
+		value: ((IdentityDictionary withAll: {#folderEnd -> SC_MARKNUM_FOLDEREND.
+						#folderOpenMid -> SC_MARKNUM_FOLDEROPENMID.
+						#folderMidTail -> SC_MARKNUM_FOLDERMIDTAIL.
+						#folderTail -> SC_MARKNUM_FOLDERTAIL.
+						#folderSub -> SC_MARKNUM_FOLDERSUB.
+						#folder -> SC_MARKNUM_FOLDER.
+						#folderOpen -> SC_MARKNUM_FOLDEROPEN})
 				isImmutable: true;
 				yourself)!
 
@@ -560,7 +552,7 @@ visibleCharacterGlyphs
 !UI.Scintilla.MarkerDefinition class categoriesForMethods!
 arrows!constants!public! !
 boxTree!constants!public! !
-buildPropertyMap!constants!must not strip!private! !
+buildPropertyDescriptors!constants!must not strip!private! !
 circleTree!constants!public! !
 folderIds!constants!public! !
 foldMarkerNames!constants!public! !

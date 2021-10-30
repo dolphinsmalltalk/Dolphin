@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'UI.Scintilla.PropertyDescriptor'
-	instanceVariableNames: 'getSelector defaultValue setMessage setSelector getMessage flags printSelector'
+	instanceVariableNames: 'key getSelector defaultValue setMessage setSelector getMessage flags printSelector'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -45,31 +45,44 @@ beNullable
 defaultFlags
 	^0!
 
+defaultValue: anObject
+	defaultValue := anObject!
+
 getAttribute: aScintillaAttribute ofView: aScintillaView
 	| value |
 	value := self
 				valueFromLResult: (aScintillaView sendMessage: getMessage wParam: aScintillaAttribute basicId).
-	^aScintillaAttribute perform: setSelector with: (value = defaultValue ifFalse: [value])!
+	^self setValueOfAttribute: aScintillaAttribute to: (value = defaultValue ifFalse: [value])!
+
+getMessage: anInteger
+	getMessage := anInteger!
 
 getPrintString: aSymbol of: aScintillaAttribute
 	^printSelector
 		ifNil: 
-			[(self alwaysPrint or: 
-					[| value |
-					value := aScintillaAttribute perform: getSelector.
-					value notNil and: [value ~= defaultValue]])
+			[(self alwaysPrint or: [self shouldPrint: aScintillaAttribute])
 				ifTrue: [(aScintillaAttribute perform: aSymbol) printString]]
 		ifNotNil: [aScintillaAttribute perform: printSelector]!
 
-getSelector: aSymbol defaultValue: anObject setMessage: anInteger
-	self initialize.
-	getSelector := aSymbol.
-	defaultValue := anObject.
-	setMessage := anInteger.
-	^self!
+getSelector: aSymbol
+	getSelector := aSymbol!
+
+getValueOfAttribute: aScintillaAttribute
+	^aScintillaAttribute perform: getSelector!
 
 initialize
 	flags := self defaultFlags!
+
+initializeAttribute: aScintillaAttribute ofView: aScintillaView
+	"Set the property described by the receiver of the attribute, aScintillaAttribute, of the control, aScintillaView, as if initializing a new view instance. This differs from #setAttribute:ofView: in that the property will only be transferred to the view if it has a non-default value."
+
+	| value |
+	value := self getValueOfAttribute: aScintillaAttribute.
+	(value isNil or: [value = defaultValue]) ifTrue: [^self].
+	aScintillaView
+		sendMessage: setMessage
+		wParam: aScintillaAttribute basicId
+		lParam: (self lParamFromAttributeValue: value)!
 
 isNonBrowsable
 	^flags allMask: NonBrowsableMask!
@@ -82,6 +95,16 @@ isNullable
 
 isNullable: aBoolean
 	flags := flags mask: NullableMask set: aBoolean!
+
+key
+	^key!
+
+key: aSymbol defaultValue: anObject setMessage: anInteger
+	self initialize.
+	key := getSelector := aSymbol.
+	defaultValue := anObject.
+	setMessage := anInteger.
+	^self!
 
 lParamFromAttributeValue: value
 	^value asUIntPtr!
@@ -98,24 +121,32 @@ printOn: aStream
 printSelector: aSymbol
 	printSelector := aSymbol!
 
-setAttribute: aScintillaAttribute ofView: aScintillaView initializing: aBoolean
+setAttribute: aScintillaAttribute ofView: aScintillaView
 	"Set the property described by the receiver of the attribute, aScintillaAttribute, of the control, aScintillaView.
 	If the final boolean parameter is true, then the property is only set if the attribute has a non-default value."
 
 	| value |
-	value := aScintillaAttribute perform: getSelector.
-	aBoolean
-		ifTrue: [(value isNil or: [value = defaultValue]) ifTrue: [^self]]
-		ifFalse: [value isNil ifTrue: [value := defaultValue]].
+	value := self getValueOfAttribute: aScintillaAttribute.
 	aScintillaView
 		sendMessage: setMessage
 		wParam: aScintillaAttribute basicId
-		lParam: (self lParamFromAttributeValue: value)!
+		lParam: (self lParamFromAttributeValue: (value ?? defaultValue))!
+
+setSelector: aSymbol
+	setSelector := aSymbol!
 
 setSelector: aSymbol getMessage: anInteger
-	setSelector := aSymbol.
-	getMessage := anInteger.
+	self setSelector: aSymbol.
+	self getMessage: anInteger.
 	^self!
+
+setValueOfAttribute: aScintillaAttribute to: anObject
+	^aScintillaAttribute perform: setSelector with: anObject!
+
+shouldPrint: aScintillaAttribute
+	| value |
+	value := self getValueOfAttribute: aScintillaAttribute.
+	^value notNil and: [value ~= defaultValue]!
 
 valueFromLResult: anObject 
 	^anObject! !
@@ -124,41 +155,43 @@ alwaysPrint!public!testing! !
 alwaysPrint:!accessing!public! !
 beNullable!modes!public! !
 defaultFlags!constants!private! !
+defaultValue:!public! !
 getAttribute:ofView:!operations!private! !
-getPrintString:of:!helpers!private! !
-getSelector:defaultValue:setMessage:!initializing!private! !
+getMessage:!initializing!public! !
+getPrintString:of:!printing!public! !
+getSelector:!initializing!public! !
+getValueOfAttribute:!private! !
 initialize!initializing!private! !
+initializeAttribute:ofView:!operations!private! !
 isNonBrowsable!modes!public!testing! !
 isNonBrowsable:!modes!public! !
 isNullable!modes!public!testing! !
 isNullable:!modes!public! !
+key!accessing!public! !
+key:defaultValue:setMessage:!initializing!private! !
 lParamFromAttributeValue:!helpers!private! !
-printOn:!displaying!public! !
+printOn:!printing!public! !
 printSelector:!initializing!public! !
-setAttribute:ofView:initializing:!operations!private! !
+setAttribute:ofView:!operations!private! !
+setSelector:!initializing!public! !
 setSelector:getMessage:!initializing!private! !
+setValueOfAttribute:to:!private! !
+shouldPrint:!printing!private! !
 valueFromLResult:!helpers!private! !
 !
 
 !UI.Scintilla.PropertyDescriptor class methodsFor!
 
-getSelector: aSymbol defaultValue: anObject setMessage: anInteger
-	^self new
-		getSelector: aSymbol
-		defaultValue: anObject
-		setMessage: anInteger!
-
-getSelector: getSymbol defaultValue: anObject setMessage: setInteger setSelector: setSymbol getMessage: getInteger
-	^(self
-		getSelector: getSymbol
-		defaultValue: anObject
-		setMessage: setInteger) setSelector: setSymbol getMessage: getInteger!
-
 icon
-	^ScintillaView icon! !
+	^ScintillaView icon!
+
+key: aSymbol defaultValue: anObject setMessage: anInteger
+	^self new
+		key: aSymbol
+		defaultValue: anObject
+		setMessage: anInteger! !
 !UI.Scintilla.PropertyDescriptor class categoriesForMethods!
-getSelector:defaultValue:setMessage:!instance creation!public! !
-getSelector:defaultValue:setMessage:setSelector:getMessage:!instance creation!public! !
 icon!constants!development!public! !
+key:defaultValue:setMessage:!instance creation!public! !
 !
 

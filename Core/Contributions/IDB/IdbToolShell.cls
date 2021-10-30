@@ -23,20 +23,18 @@ addToCommandRoute:!commands!public! !
 
 !IdbToolShell class methodsFor!
 
+defaultOptionFlags
+	^ReuseIfOpenMask!
+
 initializeAfterLoad
 	self == ##(self)
 		ifFalse:
 			[(Smalltalk developmentSystem)
 				addAdditionalToolsFolderIcon: self toolsFolderIcon;
 				registerTool: self].
-	super initializeAfterLoad!
-
-initializeOptionFlags
-	"Private - Set the default option flags."
-
-	optionFlags := ReuseIfOpenMask! !
+	super initializeAfterLoad! !
 !IdbToolShell class categoriesForMethods!
+defaultOptionFlags!initializing!private! !
 initializeAfterLoad!initializing!public! !
-initializeOptionFlags!initializing!private! !
 !
 

@@ -187,6 +187,9 @@ browseMethodsInEnvironments: aCollectionOfBrowserEnvironment
 defaultAdditionalAccelerators
 	^super defaultAdditionalAccelerators , #(#(#renameIt 'F2'))!
 
+defaultOptionFlags
+	^CanUseIdeaSpaceMask!
+
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
@@ -203,14 +206,15 @@ initialize
 		self initialize.
 	"
 
-	SmalltalkSystem current registerTool: self.
-	self canUseIdeaSpace: true!
+	SmalltalkSystem current registerTool: self!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	^super publishedAspects
-		add: (Aspect boolean: #canUseIdeaSpace);
+		add: ((Aspect boolean: #canUseIdeaSpace)
+					defaultValue: true;
+					yourself);
 		yourself!
 
 resource_Default_view
@@ -225,6 +229,7 @@ resource_Default_view
 !Tools.MethodBrowserShell class categoriesForMethods!
 browseMethodsInEnvironments:!instance creation!public! !
 defaultAdditionalAccelerators!constants!private! !
+defaultOptionFlags!constants!options!private! !
 displayOn:!displaying!public! !
 icon!constants!public! !
 initialize!initializing!private! !

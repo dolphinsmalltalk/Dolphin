@@ -154,6 +154,11 @@ productDetails
 productDetails: aLookupTable
 	productDetails := aLookupTable!
 
+productRegistryKey
+	"Private - Answers the <readableString> registry key of this product"
+
+	^'Software\Object Arts\Dolphin Smalltalk'!
+
 productVersion
 	#todo.	"Revise the Dolphin Product package handling of version numbers to not expect a Float version"
 	^Float fromString: (VM defaultProductDetails at: #registryVersion)!
@@ -340,6 +345,7 @@ openSources!operations-source files!private! !
 primaryStartup!operations-startup!private! !
 productDetails!accessing!private!product! !
 productDetails:!accessing!private!product! !
+productRegistryKey!accessing!product!public! !
 productVersion!accessing!product!public! !
 quit:!operations-shutdown!private! !
 reloadBootPackages!operations-startup!public! !

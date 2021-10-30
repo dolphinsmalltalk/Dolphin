@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Scintilla.Attribute subclass: #'UI.Scintilla.TextStyle'
-	instanceVariableNames: 'forecolor backcolor flags faceName centiPointSize characterSet case name description weight _reserved12'
+	instanceVariableNames: 'forecolor backcolor flags fontName centiPointSize characterSet case name description weight _reserved12'
 	classVariableNames: 'PredefinedStyleNames'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -66,13 +66,12 @@ Note that Scintilla style information is now queryable from the control, but thi
 
 	^anObject class == self species and: 
 			[self name = anObject name and: 
-					[self flags = anObject flags and: 
-							[self forecolor = anObject forecolor and: 
-									[self backcolor = anObject backcolor and: 
-											[self fontName = anObject fontName and: 
-													[self centiPointSize = anObject centiPointSize and: 
-															[self weight = anObject weight
-																and: [self characterSet = anObject characterSet and: [self case = anObject case]]]]]]]]]!
+					[flags = anObject flags and: 
+							[forecolor = anObject forecolor and: 
+									[backcolor = anObject backcolor and: 
+											[fontName = anObject fontName and: 
+													[centiPointSize = anObject centiPointSize
+														and: [weight = anObject weight and: [characterSet = anObject characterSet and: [case = anObject case]]]]]]]]]!
 
 backcolor
 	"Answer the background <Color> used to draw text in this style, or nil if the style does not specify a background colour and should inherit the default."
@@ -114,17 +113,17 @@ characterSet: anIntegerOrNil
 clearFont
 	"Clear all font settings so that these are inherited."
 
-	faceName := centiPointSize := characterSet := nil.
-	flags := flags maskClear: ItalicMask | UnderlinedMask.
+	fontName := centiPointSize := characterSet := nil.
+	flags := flags bitAnd: ##((ItalicMask | UnderlinedMask) bitInvert).
 	weight := nil!
 
 description
 	^description ifNil: [self name ifNotNil: [:string | string asPhrase]]!
 
-description: aString 
+description: aString
 	"Set the user-defined description of this text style to the specified <String>."
 
-	description := (aString notNil and: [aString notEmpty]) ifTrue: [aString]!
+	description := (aString isNil or: [aString isEmpty]) ifFalse: [aString]!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -149,11 +148,11 @@ font: aFont
 	self mergeFont: aFont!
 
 fontName
-	^faceName!
+	^fontName!
 
-fontName: aStringOrNil 
-	faceName = aStringOrNil ifTrue: [^self].
-	faceName := aStringOrNil!
+fontName: aStringOrNil
+	fontName = aStringOrNil ifTrue: [^self].
+	fontName := aStringOrNil!
 
 forecolor
 	"Answer the foreground <Color> used to draw text in this style, or nil if the style does not specify a foreground colour and should inherit the default."
@@ -167,7 +166,6 @@ getThreeStateFlag: anInteger
 	^#(nil true false) at: ((flags bitAnd: anInteger) bitShift: 1 - anInteger lowBit) + 1!
 
 initialize
-	super initialize.
 	flags := 0.
 !
 
@@ -277,15 +275,20 @@ isUnderlined: aBooleanOrNil
 isVisible
 	"Private - Answer whether text marked with this style is visible."
 
-	^(self getThreeStateFlag: InvisibleMask) ifNotNil: [:invisible | invisible not]!
+	^self isInvisible ifNotNil: [:invisible | invisible not]!
+
+isVisible: aBooleanOrNil 
+	"Private - Set  whether text marked with this style is hidden."
+
+	self isInvisible: (aBooleanOrNil ifNotNil: [aBooleanOrNil not])!
 
 key
 	^self name!
 
-mergeFont: aFont 
+mergeFont: aFont
 	"Initialize any font settings that are currently unspecified from the <Font> argument."
 
-	faceName ifNil: [faceName := aFont name].
+	fontName ifNil: [fontName := aFont name].
 	centiPointSize ifNil: [self pointSize: aFont pointSize].
 	self isItalic ifNil: [self setThreeStateFlag: ItalicMask value: aFont isItalic].
 	self isBold ifNil: [self isBold: aFont isBold].
@@ -330,14 +333,11 @@ setPredefinedId
 	^id := PredefinedStyleNames lookup: name!
 
 setThreeStateFlag: anInteger value: aBooleanOrNil
-	| state |
-	state := aBooleanOrNil isNil 
-				ifTrue: [0]
-				ifFalse: 
-					[aBooleanOrNil 
-						ifTrue: [(anInteger bitShift: -1) bitAnd: anInteger]
-						ifFalse: [(anInteger bitShift: 1) bitAnd: anInteger]].
-	flags := (flags maskClear: anInteger) maskSet: state!
+	flags := aBooleanOrNil
+				ifNil: [flags bitAnd: anInteger bitInvert]
+				ifNotNil: 
+					[(flags bitAnd: anInteger bitInvert)
+						bitOr: ((anInteger bitShift: (aBooleanOrNil ifTrue: [-1] ifFalse: [1])) bitAnd: anInteger)]!
 
 storeableProperties
 	| attribs |
@@ -401,6 +401,7 @@ isReadOnly:!accessing!public! !
 isUnderlined!public!testing! !
 isUnderlined:!accessing!public! !
 isVisible!private!testing! !
+isVisible:!accessing!private! !
 key!accessing!public! !
 mergeFont:!accessing!public! !
 name!accessing!public! !
@@ -419,115 +420,100 @@ weight:!accessing!public! !
 
 !UI.Scintilla.TextStyle class methodsFor!
 
-buildPropertyMap
-	^IdentityDictionary new
-		at: #forecolor
-			put: (ColourPropertyDescriptor
-					getSelector: #forecolor
-					defaultValue: Color black
-					setMessage: SCI_STYLESETFORE);
-		at: #backcolor
-			put: (ColourPropertyDescriptor
-					getSelector: #backcolor
-					defaultValue: Color white
-					setMessage: SCI_STYLESETBACK);
-		at: #fontName
-			put: ((EnumPropertyDescriptor
-					getSelector: #fontName
-					defaultValue: nil
-					setMessage: SCI_STYLESETFONT)
-					type: String;
-					values: [(Canvas forDesktop fontNames reject: [:each | (each at: 1) = $@]) asArray sort];
-					nilChoice: '<Inherited>';
-					yourself);
-		at: #isBold
-			put: ((BoolPropertyDescriptor
-					getSelector: #isBold
-					defaultValue: false
-					setMessage: SCI_STYLESETBOLD)
-					beNullable;
-					yourself);
-		at: #isItalic
-			put: ((BoolPropertyDescriptor
-					getSelector: #isItalic
-					defaultValue: false
-					setMessage: SCI_STYLESETITALIC)
-					beNullable;
-					yourself);
-		at: #isUnderlined
-			put: ((BoolPropertyDescriptor
-					getSelector: #isUnderlined
-					defaultValue: false
-					setMessage: SCI_STYLESETUNDERLINE)
-					beNullable;
-					yourself);
-		at: #case
-			put: ((EnumPropertyDescriptor
-					getSelector: #case
-					defaultValue: SC_CASE_MIXED
-					setMessage: SCI_STYLESETCASE)
-					values: self caseNames;
-					beNullable;
-					yourself);
-		at: #characterSet
-			put: ((IntPropertyDescriptor
-					getSelector: #characterSet
-					defaultValue: SC_CHARSET_DEFAULT
-					setMessage: SCI_STYLESETCHARACTERSET)
-					beNullable;
-					isNonBrowsable: true;
-					yourself);
-		at: #pointSize
-			put: (FloatPropertyDescriptor
-					getSelector: #centiPointSize
-					defaultValue: nil
-					setMessage: SCI_STYLESETSIZEFRACTIONAL);
-		at: #isBackcolorExtendedToEndOfLine
-			put: ((BoolPropertyDescriptor
-					getSelector: #isBackcolorExtendedToEndOfLine
-					defaultValue: false
-					setMessage: SCI_STYLESETEOLFILLED)
-					beNullable;
-					yourself);
-		at: #isChangeable
-			put: ((BoolPropertyDescriptor
-					getSelector: #isChangeable
-					defaultValue: true
-					setMessage: SCI_STYLESETCHANGEABLE)
-					beNullable;
-					isNonBrowsable: true;
-					yourself);
-		at: #isHotspot
-			put: ((BoolPropertyDescriptor
-					getSelector: #isHotspot
-					defaultValue: false
-					setMessage: SCI_STYLESETHOTSPOT)
-					beNullable;
-					yourself);
-		at: #isVisible
-			put: ((BoolPropertyDescriptor
-					getSelector: #isVisible
-					defaultValue: true
-					setMessage: SCI_STYLESETVISIBLE)
-					beNullable;
-					yourself);
-		at: #weight
-			put: ((IntPropertyDescriptor
-					getSelector: #weight
-					defaultValue: SC_WEIGHT_NORMAL
-					setMessage: SCI_STYLESETWEIGHT)
-					beNullable;
-					yourself);
-		at: #isPossiblyMonospaced
-			put: ((BoolPropertyDescriptor
-					getSelector: #isPossiblyMonospaced
-					defaultValue: false
-					setMessage: SCI_STYLESETCHECKMONOSPACED)
-					beNullable;
-					isNonBrowsable: true;
-					yourself);
-		shrink;
-		yourself!
+buildPropertyDescriptors
+	^{ColourPropertyDescriptor
+			key: #forecolor
+			defaultValue: Color black
+			setMessage: SCI_STYLESETFORE.
+		ColourPropertyDescriptor
+			key: #backcolor
+			defaultValue: Color white
+			setMessage: SCI_STYLESETBACK.
+		(EnumPropertyDescriptor
+			key: #fontName
+			defaultValue: nil
+			setMessage: SCI_STYLESETFONT)
+			type: String;
+			values: [(Canvas forDesktop fontNames reject: [:each | (each at: 1) = $@]) asArray sort];
+			nilChoice: '<Inherited>';
+			yourself.
+		(BoolPropertyDescriptor
+			key: #isBold
+			defaultValue: false
+			setMessage: SCI_STYLESETBOLD)
+			beNullable;
+			yourself.
+		(ThreeStateBooleanPropertyDescriptor
+			key: #isItalic
+			defaultValue: false
+			setMessage: SCI_STYLESETITALIC)
+			flagsMask: ItalicMask;
+			yourself.
+		(ThreeStateBooleanPropertyDescriptor
+			key: #isUnderlined
+			defaultValue: false
+			setMessage: SCI_STYLESETUNDERLINE)
+			flagsMask: UnderlinedMask;
+			yourself.
+		(EnumPropertyDescriptor
+			key: #case
+			defaultValue: SC_CASE_MIXED
+			setMessage: SCI_STYLESETCASE)
+			values: self caseNames;
+			beNullable;
+			yourself.
+		(IntPropertyDescriptor
+			key: #characterSet
+			defaultValue: SC_CHARSET_DEFAULT
+			setMessage: SCI_STYLESETCHARACTERSET)
+			beNullable;
+			isNonBrowsable: true;
+			yourself.
+		(FloatPropertyDescriptor
+			key: #pointSize
+			defaultValue: nil
+			setMessage: SCI_STYLESETSIZEFRACTIONAL)
+			getSelector: #centiPointSize;
+			yourself.
+		(ThreeStateBooleanPropertyDescriptor
+			key: #isBackcolorExtendedToEndOfLine
+			defaultValue: false
+			setMessage: SCI_STYLESETEOLFILLED)
+			flagsMask: EolFilledMask;
+			yourself.
+		(InvertedThreeStateBooleanPropertyDescriptor
+			key: #isReadOnly
+			defaultValue: false
+			setMessage: SCI_STYLESETCHANGEABLE)
+			flagsMask: ReadOnlyMask;
+			isNonBrowsable: true;
+			yourself.
+		(ThreeStateBooleanPropertyDescriptor
+			key: #isHotspot
+			defaultValue: false
+			setMessage: SCI_STYLESETHOTSPOT)
+			flagsMask: HotspotMask;
+			yourself.
+		(InvertedThreeStateBooleanPropertyDescriptor
+			key: #isInvisible
+			defaultValue: false
+			setMessage: SCI_STYLESETVISIBLE)
+			flagsMask: InvisibleMask;
+			isNonBrowsable: true;
+			yourself.
+		(IntPropertyDescriptor
+			key: #weight
+			defaultValue: SC_WEIGHT_NORMAL
+			setMessage: SCI_STYLESETWEIGHT)
+			beNullable;
+			yourself.
+		(ThreeStateBooleanPropertyDescriptor
+			key: #isPossiblyMonospaced
+			defaultValue: false
+			setMessage: SCI_STYLESETCHECKMONOSPACED)
+			flagsMask: CheckMonospacedMask;
+			isNonBrowsable: true;
+			yourself}!
 
 caseNames
 	^#(#mixed #upper #lower #camel)!
@@ -540,42 +526,28 @@ initialize
 		self initialize
 	"
 
-	| predefinedStyleNames |
 	self addClassConstant: 'ItalicMask' value: 2r1100.
 	self addClassConstant: 'UnderlinedMask' value: 2r110000.
 	self addClassConstant: 'EolFilledMask' value: 2r11000000.
 	self addClassConstant: 'ReadOnlyMask' value: 2r1100000000.
 	self addClassConstant: 'HotspotMask' value: 2r110000000000.
 	self addClassConstant: 'InvisibleMask' value: 2r11000000000000.
-	propertyMap := self buildPropertyMap
+	propertyDescriptors := self buildPropertyDescriptors
 				isImmutable: true;
 				yourself.
-	predefinedStyleNames := IdentityDictionary new: STYLE_LASTPREDEFINED + 1.
-	STYLE_NORMAL + 1 to: STYLE_LASTPREDEFINED do: [:each | predefinedStyleNames at: each put: each].
-	"These are not really Scintilla pre-defined styles, but some additional ones we add for convenience in the wrapping"
-	predefinedStyleNames
-		at: #normal put: STYLE_NORMAL;
-		yourself.
-	predefinedStyleNames
-		removeKey: STYLE_BRACELIGHT;
-		at: #braceHighlight put: STYLE_BRACELIGHT;
-		removeKey: STYLE_BRACEBAD;
-		at: #braceMismatch put: STYLE_BRACEBAD;
-		removeKey: STYLE_CONTROLCHAR;
-		at: #controlChar put: STYLE_CONTROLCHAR;
-		removeKey: STYLE_LINENUMBER;
-		at: #lineNumber put: STYLE_LINENUMBER;
-		removeKey: STYLE_INDENTGUIDE;
-		at: #indentGuide put: STYLE_INDENTGUIDE;
-		removeKey: STYLE_CALLTIP;
-		at: #callTip put: STYLE_CALLTIP;
-		removeKey: STYLE_FOLDDISPLAYTEXT;
-		at: #foldDisplayText put: STYLE_FOLDDISPLAYTEXT;
-		removeKey: STYLE_DEFAULT.
-	predefinedStyleNames
-		isImmutable: true;
-		shrink.
-	self addClassConstant: 'PredefinedStyleNames' value: predefinedStyleNames!
+	self addClassConstant: 'PredefinedStyleNames'
+		value: ((IdentityDictionary
+				withAll: ((STYLE_NORMAL + 1 to: STYLE_DEFAULT - 1) collect: [:each | each -> each])
+						, {#normal -> STYLE_NORMAL.
+								#braceHighlight -> STYLE_BRACELIGHT.
+								#braceMismatch -> STYLE_BRACEBAD.
+								#controlChar -> STYLE_CONTROLCHAR.
+								#lineNumber -> STYLE_LINENUMBER.
+								#indentGuide -> STYLE_INDENTGUIDE.
+								#callTip -> STYLE_CALLTIP.
+								#foldDisplayText -> STYLE_FOLDDISPLAYTEXT})
+				isImmutable: true;
+				yourself)!
 
 name: aSymbol 
 	^(self new)
@@ -605,7 +577,7 @@ stbConvertFrom: anSTBClassFormat
 stbVersion
 	^1! !
 !UI.Scintilla.TextStyle class categoriesForMethods!
-buildPropertyMap!constants!must not strip!private! !
+buildPropertyDescriptors!constants!must not strip!private! !
 caseNames!constants!public! !
 icon!constants!public! !
 initialize!development!initializing!public! !

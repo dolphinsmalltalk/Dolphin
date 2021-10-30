@@ -122,6 +122,11 @@ toggleLocalHierarchy!commands!public! !
 
 !Tools.ClassBrowserShell class methodsFor!
 
+defaultDefaultSlideyPinsMap
+	^##(IdentityDictionary new
+		at: #filtersSlidey put: true;
+		yourself)!
+
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
@@ -137,9 +142,6 @@ initialize
 		self initialize
 	"
 
-	self defaultShowInheritedMethods: false.
-	self defaultFilterObjectMethods: true.
-	self canUseIdeaSpace: true.
 	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self!
@@ -157,10 +159,11 @@ resource_Default_view
 toolsFolderHelpId
 	^10520! !
 !Tools.ClassBrowserShell class categoriesForMethods!
+defaultDefaultSlideyPinsMap!initializing!private! !
 displayOn:!displaying!public! !
 icon!constants!public! !
 initialize!initializing!private! !
 resource_Default_view!public!resources-views! !
-toolsFolderHelpId!public! !
+toolsFolderHelpId!constants!public! !
 !
 

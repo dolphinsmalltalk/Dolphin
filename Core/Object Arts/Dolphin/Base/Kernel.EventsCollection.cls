@@ -65,8 +65,7 @@ triggerEvent: anEventSymbol
 	"Private - Evaluate the sequence of MessageSends registered for the event, 
 	anEventSymbol.  Answer the result of the last evaluation, or nil if none."
 
-	^(self at: anEventSymbol ifAbsent: nil) value
-!
+	^(self lookup: anEventSymbol) value!
 
 triggerEvent: aSymbol with: anObject
 	"Private - Evaluate the sequence of MessageSends registered for the event named by

@@ -1387,6 +1387,9 @@ variableNames!accessing!public! !
 
 !Tools.PackageBrowserShell class methodsFor!
 
+defaultOptionFlags
+	^##(CanUseIdeaSpaceMask | ReuseIfOpenMask)!
+
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
@@ -1406,17 +1409,19 @@ initialize
 	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
 		registerTool: self.
-	self reuseIfOpen: true.
-	self canUseIdeaSpace: true.
-	self wordWrapComment: true!
+	WordWrapComment := true!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
-	^super publishedAspects
-		add: (Aspect boolean: #canUseIdeaSpace);
-		add: (Aspect boolean: #wordWrapComment);
-		yourself!
+	| aspects |
+	aspects := super publishedAspects.
+	(aspects at: #reuseIfOpen) defaultValue: true.
+	aspects add: self canUseIdeaSpaceAspect.
+	aspects add: ((Aspect boolean: #wordWrapComment)
+				defaultValue: true;
+				yourself).
+	^aspects!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -1444,8 +1449,11 @@ wordWrapComment
 wordWrapComment: aBoolean
 	"Sets the comment word wrapping state for instances of the receiver to aBoolean."
 
-	WordWrapComment := aBoolean! !
+	WordWrapComment == aBoolean ifTrue: [^self].
+	WordWrapComment := aBoolean.
+	self persistOptions! !
 !Tools.PackageBrowserShell class categoriesForMethods!
+defaultOptionFlags!constants!options!private! !
 displayOn:!displaying!public! !
 icon!constants!public! !
 initialize!initializing!private! !

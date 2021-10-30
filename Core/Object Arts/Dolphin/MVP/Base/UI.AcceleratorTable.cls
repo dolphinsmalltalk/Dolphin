@@ -103,6 +103,9 @@ postCopy!copying!public! !
 
 !UI.AcceleratorTable class methodsFor!
 
+canonicalizeKeyString: aString
+	^self invariantKeyStringFromCode: (self keyCodeFromInvariantString: aString)!
+
 icon
 	"Answers an Icon that can be used to represent this class"
 
@@ -229,6 +232,7 @@ stbConvertFrom: anSTBClassFormat
 stbVersion
 	^1! !
 !UI.AcceleratorTable class categoriesForMethods!
+canonicalizeKeyString:!enquiries!public!utilities! !
 icon!constants!public! !
 invariantKeyStringFromCode:!enquiries!public! !
 keyCode:modifiers:!helpers!public! !

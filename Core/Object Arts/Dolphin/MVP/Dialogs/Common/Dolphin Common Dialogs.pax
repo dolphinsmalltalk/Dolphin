@@ -344,18 +344,18 @@ titleOf: aString
 	The file title may or may not include the extension, depending on the user's
 	configuration."
 
-	| buf lib len |
-	lib := ComDlg32.
-	(len := lib
+	| buf len |
+	(len := ComDlg32
 				getFileTitle: aString
 				lpszTitle: nil
 				cbBuf: 0) < 0
-		ifTrue: [lib systemError: 123].
+		ifTrue: [ComDlg32 systemError: 123].
 	buf := Utf16String newFixed: len - 1.
-	(lib
+	(ComDlg32
 		getFileTitle: aString
 		lpszTitle: buf
-		cbBuf: len) < 0 ifTrue: [lib systemError: 123].
+		cbBuf: len) < 0
+		ifTrue: [ComDlg32 systemError: 123].
 	^buf! !
 !Core.File class categoriesForMethods!
 titleOf:!filename manipulation!public! !

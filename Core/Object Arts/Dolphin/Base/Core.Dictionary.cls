@@ -209,9 +209,6 @@ atAll: keys put: newElement
 
 	keys do: [:key | self at: key put: newElement]!
 
-bestSlotFor: element boundedBy: capacity
-	^self hash: element key max: capacity!
-
 bindingFor: aString
 	"Answer the association in the receiver whose key is equal to the argument, or nil if there is no association with that key."
 
@@ -557,7 +554,6 @@ at:ifAbsentPutClean:!accessing!public! !
 at:ifPresent:!accessing!public! !
 at:put:!accessing!public! !
 atAll:put:!accessing!public! !
-bestSlotFor:boundedBy:!development!private!statistics! !
 bindingFor:!bindings!public! !
 bindingsDo:!enumerating!public! !
 changeKey:to:!accessing!private! !

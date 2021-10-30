@@ -11,10 +11,9 @@ UI.Scintilla.CharacterRepresentation comment: ''!
 !UI.Scintilla.CharacterRepresentation categoriesForClass!MVP-Views-Support! !
 !UI.Scintilla.CharacterRepresentation methodsFor!
 
-applyToView: aScintillaView initializing: aBoolean
+applyToView: aScintillaView
 	| ch |
 	ch := self encodedCharacter.
-	aBoolean ifFalse: [aScintillaView sciClearRepresentation: ch].
 	aScintillaView sciSetRepresentation: ch representation: self representation.
 	color ifNotNil: [aScintillaView sciSetRepresentationColour: ch colour: color].
 	appearance == SC_REPRESENTATION_BLOB
@@ -69,7 +68,7 @@ representation
 representation: aString
 	representation := aString ifNotNil: [aString asUtf8String]! !
 !UI.Scintilla.CharacterRepresentation categoriesForMethods!
-applyToView:initializing:!private!updating! !
+applyToView:!private!updating! !
 character!accessing!public! !
 character:!public! !
 color!accessing!public! !

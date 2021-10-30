@@ -2,12 +2,13 @@
 
 UI.Shell subclass: #'Tools.SmalltalkToolShell'
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
-	classVariableNames: 'HistoryDwellTime SearchFieldFlashes'
+	classVariableNames: 'HistoryDwellTime PersistingOptions SearchFieldFlashes'
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'
 	classConstants: {
 		'CanUseIdeaSpaceMask' -> 16r2.
-		'ReuseIfOpenMask' -> 16r1
+		'LoadingMask' -> 16r1.
+		'ReuseIfOpenMask' -> 16r4
 	}!
 Tools.SmalltalkToolShell guid: (Core.GUID fromString: '{87b4c6a0-026e-11d3-9fd7-00a0cc3e4a32}')!
 Tools.SmalltalkToolShell isNonInstantiable: true!
@@ -104,8 +105,8 @@ forgetSize
 	"Forget the default size for new instances of this tool."
 
 	(self class)
-		defaultExtent: nil;
-		defaultSlideyPinsMap: nil!
+		defaultSlideyPinsMap: nil;
+		defaultExtent: nil!
 
 getPinStateFor: aSlideyInneyOuteyThingName 
 	"Private - Attempts to find a named SlideyInneyOuteyThing within the view hierarchy of the receiver.
@@ -188,7 +189,7 @@ onViewOpened
 	super onViewOpened.
 	self view acceptDroppedFiles: true.
 	fontSizePresenter model: (ValueAspectAdaptor subject: self aspect: #fontSize).
-	self class defaultSlideyPinsMap notNil ifTrue: [self slideyPinMap: self class defaultSlideyPinsMap].
+	self class defaultSlideyPinsMap ifNotNil: [:map | self slideyPinMap: map].
 
 	"Enable toolbar pulldowns"
 	(self view viewNamed: 'smalltalkTools' ifNone: nil)
@@ -233,8 +234,9 @@ rememberThisSize
 	"Record the size of the receiver as the default extent for its tool class."
 
 	(self class)
-		defaultExtent: self view extent;
-		defaultSlideyPinsMap: self slideyPinMap!
+		defaultSlideyPinsMap: self slideyPinMap;
+		defaultExtent: self view extent
+!
 
 saveStateAspects: aSymbolArray for: aStringName on: aWriteStream
 	"Private - Helper method for saving aSymbolArray of aspects of aStringName variable to aWriteStream"
@@ -399,8 +401,14 @@ workspaceClass!constants!private! !
 !Tools.SmalltalkToolShell class methodsFor!
 
 activeIdeaSpace
-	^#{IdeaSpaceShell}
-		ifDefined: [:ideaSpaceShellClass | (View active topShell isKindOf: ideaSpaceShellClass) ifTrue: [View active topShell]]!
+	^#{IdeaSpaceShell} ifDefined: 
+			[:ideaSpaceShellClass |
+			| active |
+			active := View active.
+			(active notNil and: [active topShell isKindOf: ideaSpaceShellClass]) ifTrue: [active topShell]]!
+
+applyOptions
+	"Override point for subclases that wish to update instances"!
 
 buildIdeaSpacePopup
 	| popup |
@@ -425,13 +433,21 @@ canUseIdeaSpace
 	to make use of an idea space. Therefore, although all tools support this functionality, only some
 	expose it as a published aspect so that it may be set as a system option."
 
-	^optionFlags allMask: CanUseIdeaSpaceMask
-!
+	^self optionFlags allMask: CanUseIdeaSpaceMask!
 
 canUseIdeaSpace: aBoolean 
 	"Set the receiver to create instances inside an available IdeaSpaceShell if appropriate"
 
-	optionFlags := optionFlags mask: CanUseIdeaSpaceMask set: aBoolean!
+	self setOptionFlag: CanUseIdeaSpaceMask value: aBoolean!
+
+canUseIdeaSpaceAspect
+	^(Aspect boolean: #canUseIdeaSpace)
+		defaultValue: true;
+		yourself!
+
+defaultAcceleratorKeyBindings
+	^Dictionary withAll: (self defaultAdditionalAccelerators
+				collect: [:each | (AcceleratorTable canonicalizeKeyString: each second) -> each first])!
 
 defaultAdditionalAccelerators
 	"Answer a collection of additional accelerator definitions for commands not on the menu bar of the receiver's view(s).
@@ -439,6 +455,9 @@ defaultAdditionalAccelerators
 	and the second the accelerator key string."
 
 	^#(#(#inspectIt 'Shift+Ctrl+I'))!
+
+defaultDefaultSlideyPinsMap
+	^nil!
 
 defaultDefaultView
 	"The default view to use if no other default view is configured."
@@ -449,13 +468,16 @@ defaultExtent
 	"Answer a <Point> which is the user's chosen default extent for new instances
 	of the receiver, or nil if left up to Windows."
 
+	self ensureOptionsLoaded.
 	^defaultExtent!
 
 defaultExtent: aPoint
 	"Set the default extent to be used for instances of the receiver to the <Point> argument.
 	If the argument is nil, then let Windows decide."
 
-	defaultExtent := aPoint!
+	self defaultExtent = aPoint ifTrue: [^self].
+	defaultExtent := aPoint.
+	self persistOptions!
 
 defaultHistoryDwellTime
 	"The default period of time, expressed in milliseconds, for which it is necessary to 'visit'
@@ -472,19 +494,23 @@ defaultModel
 
 	^SmalltalkSystem current!
 
+defaultOptionFlags
+	^0!
+
 defaultSearchFieldFlashes
 	^2!
 
 defaultSlideyPinsMap
-	"Answer an <IdentityDictionary> which is the user's chosen mapping for the pinned states
-	of any contained sliding trays"
+	"Private - Answer an <IdentityDictionary> which is the user's chosen mapping for the pinned states of any contained sliding trays, or nil if no preferences."
 
+	self ensureOptionsLoaded.
 	^defaultSlideyPinsMap!
 
-defaultSlideyPinsMap: anIdentityDictionary 
-	"Set the default mapping for the state of the sliding trays to be used for instances of the receiver"
+defaultSlideyPinsMap: anIdentityDictionary
+	"Private - Set the default mapping for the state of the sliding trays to be used for instances of the receiver"
 
-	defaultSlideyPinsMap := anIdentityDictionary!
+	defaultSlideyPinsMap := anIdentityDictionary
+				ifNotNil: [anIdentityDictionary isEmpty ifFalse: [anIdentityDictionary]]!
 
 defaultView
 	"Answer the resource name of the default view for the receiver.
@@ -493,16 +519,25 @@ defaultView
 	to use simple class browser view if using a portable machine with limited screen 
 	real estate."
 
-	defaultView isNil ifTrue: [defaultView := self defaultDefaultView].
+	self ensureOptionsLoaded.
 	^defaultView!
 
 defaultView: aString
 	"Set the default view name."
 
-	defaultView := aString!
+	defaultView = aString ifTrue: [^self].
+	defaultView := aString.
+	self persistOptions!
+
+ensureOptionsLoaded
+	optionFlags ifNil: [self loadOptions]!
+
+finishedLoadingOptions
+	optionFlags := optionFlags maskClear: LoadingMask!
 
 getAdditionalKeyBindings
-	^additionalKeyBindings ifNil: [self setAdditionalAccelerators: self defaultAdditionalAccelerators]!
+	self ensureOptionsLoaded.
+	^additionalKeyBindings!
 
 getCommandQueryHandlers
 	^commandQueryHandlers!
@@ -511,31 +546,75 @@ historyDwellTime
 	"Answer the period of time, expressed in milliseconds, for which it is necessary to 'visit'
 	a class, method, etc, before that visit is recorded in the visit history list."
 
-	^HistoryDwellTime ifNil: [self defaultHistoryDwellTime]!
+	self ensureOptionsLoaded.
+	^HistoryDwellTime!
 
-historyDwellTime: anInteger 
+historyDwellTime: anInteger
 	"Set the period of time, expressed in milliseconds, for which it is necessary to 'visit' a
 	class, method, etc, before that visit is recorded in the visit history list. If the argument
 	is nil, then the dwell time is restored to the default (which is the system mouse hover time)."
 
-	HistoryDwellTime := anInteger!
+	anInteger = self historyDwellTime ifTrue: [^self].
+	HistoryDwellTime := anInteger.
+	self persistOptions!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^##(self) defaultIcon.!
 
-initializeAfterLoad
-	"Perform any post-load initialisation for the class.
-	Superclass method only initializes direct implementors, so we must initialize others."
+invalidateLocalOptions
+	optionFlags := nil!
 
-	self initializeOptionFlags.
-	super initializeAfterLoad.!
+invalidateOptions
+	SmalltalkWorkspace invalidateOptions.
+	self allSubclassesDo: [:each | each invalidateLocalOptions].
+	SmalltalkWorkspaceDocument invalidateOptions!
 
-initializeOptionFlags
-	"Private - Set the default option flags."
+isLoadingOptions
+	^self optionFlags allMask: LoadingMask!
 
-	optionFlags := 0!
+loadOptions
+	self loadOptionsFor: self.
+	self applyOptions!
+
+loadOptionsFor: aClass
+	| start stop aspects |
+	Transcript
+		nextPutAll: 'Loading options for ';
+		print: aClass.
+	start := Time microsecondClockValue.
+	aClass startLoadingOptions.
+	aspects := aClass optionsAspects.
+	
+	[| regkey options |
+	regkey := self userSettingsRootKey.
+	options := regkey objectAt: aClass name ifAbsent: nil.
+	regkey free.
+	options
+		ifNotNil: 
+			[options keysAndValuesDo: 
+					[:eachKey :eachValue |
+					(aspects removeKey: eachKey ifAbsent: nil)
+						ifNotNil: [:aspect | aspect writeInto: aClass value: eachValue]]]]
+			on: Error
+			do: 
+				[:ex |
+				Transcript
+					cr;
+					nextPutAll: 'Error loading options for ';
+					print: aClass;
+					nextPutAll: ': ';
+					print: ex;
+					cr].
+	"Set any default values that were not read from the settings in the registry."
+	aspects do: [:each | each writeInto: aClass value: each defaultValue value].
+	aClass finishedLoadingOptions.
+	stop := Time microsecondClockValue.
+	Transcript
+		nextPutAll: ' completed in ';
+		display: (stop - start) microseconds;
+		cr!
 
 notificationGetImageBlock
 	"Private - Answer a monadic valuable used for getting the image for a compiler
@@ -549,6 +628,39 @@ notificationGetTextBlock
 
 	^Message selector: #displayString!
 
+optionFlags
+	self ensureOptionsLoaded.
+	^optionFlags!
+
+optionsAspects
+	^self publishedAspects
+		removeKey: #yourself;
+		add: ((Aspect dictionary: #defaultSlideyPinsMap)
+					defaultValue: self defaultDefaultSlideyPinsMap;
+					yourself);
+		yourself!
+
+persistOptions
+	^self persistOptionsFor: self
+!
+
+persistOptionsFor: aClass
+	| regkey options |
+	(aClass isNonInstantiable or: [aClass isLoadingOptions]) ifTrue: [^false].
+	options := IdentityDictionary new.
+	aClass optionsAspects do: 
+			[:each |
+			| aspectValue |
+			aspectValue := each readFrom: aClass.
+			aspectValue = each defaultValue value ifFalse: [options at: each key put: aspectValue]].
+	regkey := SmalltalkToolShell userSettingsRootKey.
+	OS.RegistrySerializer
+		write: options
+		to: regkey
+		name: aClass name.
+	regkey free.
+	^true!
+
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
@@ -558,11 +670,19 @@ publishedAspects
 					from: [self resourceNames]
 					type: String)
 					icon: UI.ResourceIdentifier icon;
+					defaultValue: self defaultDefaultView;
 					yourself);
 		add: (Aspect extent: #defaultExtent);
-		add: (Aspect dictionary: #acceleratorKeyBindings) beImmutable;
-		add: (Aspect integer: #historyDwellTime);
-		add: (Aspect integer: #searchFieldFlashes);
+		add: ((Aspect dictionary: #acceleratorKeyBindings)
+					beImmutable;
+					defaultValue: [self defaultAcceleratorKeyBindings];
+					yourself);
+		add: ((Aspect integer: #historyDwellTime)
+					defaultValue: self defaultHistoryDwellTime;
+					yourself);
+		add: ((Aspect integer: #searchFieldFlashes)
+					defaultValue: self defaultSearchFieldFlashes;
+					yourself);
 		add: (Aspect boolean: #reuseIfOpen);
 		yourself!
 
@@ -572,32 +692,45 @@ reuseIfOpen
 	to allow re-use. Therefore, although all tools support this functionality, only some
 	expose it as a published aspect so that it may be set as a system option."
 
-	^optionFlags allMask: ReuseIfOpenMask 
-!
+	^self optionFlags allMask: ReuseIfOpenMask!
 
 reuseIfOpen: aBoolean
 	"Set the receiver to reuse an already open instance of the receiver instead of
 	creating an additional one according to aBoolean."
 
-	optionFlags := optionFlags mask: ReuseIfOpenMask set: aBoolean!
+	self setOptionFlag: ReuseIfOpenMask value: aBoolean!
 
 searchFieldFlashes
 	"Answer the number of times the search field will flash when the search command key sequence
 	is pressed. This is to draw attention to the search window since it is not a dialog."
 
-	^SearchFieldFlashes ifNil: [self defaultSearchFieldFlashes]!
+	self ensureOptionsLoaded.
+	^SearchFieldFlashes!
 
 searchFieldFlashes: anInteger 
 	"Set the number of times the search field will flash when the search command key sequence
 	is pressed. This is to draw attention to the search window since it is not a dialog."
 
-	SearchFieldFlashes := anInteger!
+	SearchFieldFlashes = anInteger ifTrue: [^self].
+	SearchFieldFlashes := anInteger.
+	self persistOptions!
 
 setAdditionalKeyBindings: anArray
-	additionalKeyBindings := anArray!
+	additionalKeyBindings = anArray ifTrue: [^self].
+	additionalKeyBindings := anArray.
+	self persistOptions!
 
 setCommandQueryHandlers: anArray 
 	commandQueryHandlers := anArray!
+
+setOptionFlag: anInteger value: aBoolean
+	"Private - Set the receiver to reuse an already open instance of the receiver instead of
+	creating an additional one according to aBoolean."
+
+	(self optionFlags allMask: anInteger) == aBoolean ifTrue: [^false].
+	optionFlags := optionFlags mask: anInteger set: aBoolean.
+	self persistOptions.
+	^true!
 
 show
 	"Shows an instance of the receiver. If reuseIfOpen has been set to true then an 
@@ -643,6 +776,9 @@ showExistingInstanceOf: aClass
 				zOrderTop.
 			tool]!
 
+startLoadingOptions
+	optionFlags := LoadingMask!
+
 toolDescription
 	"Answer the description of this tool that should be displayed in, for example,
 	the system shell window."
@@ -659,46 +795,74 @@ toolsFolderIcon
 	^SmalltalkSystemIcon
 		show: self
 		description: self toolDescription
-		helpId: self toolsFolderHelpId! !
+		helpId: self toolsFolderHelpId!
+
+userSettingsKey
+	^OS.RegKey userRoot createKey: self userSettingsKeyName!
+
+userSettingsKeyName
+	^SessionManager.Current productRegistryKey , '\' , self name!
+
+userSettingsRootKey
+	^OS.RegKey userRoot createKey: SessionManager.Current productRegistryKey! !
 !Tools.SmalltalkToolShell class categoriesForMethods!
 activeIdeaSpace!public! !
+applyOptions!accessing!options!private! !
 buildIdeaSpacePopup!private! !
-canUseIdeaSpace!accessing!public! !
-canUseIdeaSpace:!accessing!public! !
+canUseIdeaSpace!options!public! !
+canUseIdeaSpace:!options!public! !
+canUseIdeaSpaceAspect!private! !
+defaultAcceleratorKeyBindings!options!private! !
 defaultAdditionalAccelerators!constants!private! !
+defaultDefaultSlideyPinsMap!constants!options!private! !
 defaultDefaultView!constants!public! !
-defaultExtent!accessing!public! !
-defaultExtent:!accessing!public! !
+defaultExtent!options!public! !
+defaultExtent:!options!public! !
 defaultHistoryDwellTime!constants!public! !
 defaultHistoryListSize!constants!public! !
 defaultModel!models!public! !
-defaultSearchFieldFlashes!public! !
-defaultSlideyPinsMap!accessing!public! !
-defaultSlideyPinsMap:!accessing!public! !
-defaultView!accessing!public! !
-defaultView:!accessing!public! !
-getAdditionalKeyBindings!accessing!private! !
-getCommandQueryHandlers!accessing!private! !
-historyDwellTime!accessing!public! !
-historyDwellTime:!accessing!public! !
+defaultOptionFlags!constants!options!private! !
+defaultSearchFieldFlashes!constants!options!public! !
+defaultSlideyPinsMap!options!private! !
+defaultSlideyPinsMap:!options!private! !
+defaultView!options!public! !
+defaultView:!options!public! !
+ensureOptionsLoaded!options!private! !
+finishedLoadingOptions!options!private! !
+getAdditionalKeyBindings!options!private! !
+getCommandQueryHandlers!options!private! !
+historyDwellTime!options!public! !
+historyDwellTime:!options!public! !
 icon!constants!public! !
-initializeAfterLoad!initializing!public! !
-initializeOptionFlags!initializing!private! !
+invalidateLocalOptions!options!private! !
+invalidateOptions!options!private! !
+isLoadingOptions!private! !
+loadOptions!options!private! !
+loadOptionsFor:!options!private! !
 notificationGetImageBlock!constants!private! !
 notificationGetTextBlock!constants!private! !
-publishedAspects!public! !
-reuseIfOpen!accessing!public! !
-reuseIfOpen:!accessing!public! !
-searchFieldFlashes!public! !
-searchFieldFlashes:!public! !
-setAdditionalKeyBindings:!accessing!private! !
-setCommandQueryHandlers:!accessing!private! !
+optionFlags!options!private! !
+optionsAspects!public! !
+persistOptions!options!private! !
+persistOptionsFor:!private! !
+publishedAspects!options!public! !
+reuseIfOpen!options!public! !
+reuseIfOpen:!options!public! !
+searchFieldFlashes!options!public! !
+searchFieldFlashes:!options!public! !
+setAdditionalKeyBindings:!options!private! !
+setCommandQueryHandlers:!options!private! !
+setOptionFlag:value:!options!private! !
 show!instance creation!public! !
 show:inIdeaSpace:!private! !
 showExistingInstanceOf:!initializing!instance creation!must strip!private! !
+startLoadingOptions!options!private! !
 toolDescription!constants!public! !
-toolsFolderHelpId!public! !
+toolsFolderHelpId!constants!public! !
 toolsFolderIcon!constants!public! !
+userSettingsKey!options!public! !
+userSettingsKeyName!constants!options!public! !
+userSettingsRootKey!options!public! !
 !
 
 Tools.SmalltalkToolShell class methodProtocol: #installableSystemTool attributes: #(#readOnly) selectors: #(#registerAsToolWith: #unregisterAsToolWith:)!

@@ -283,8 +283,13 @@ icon
 	^Profiler icon!
 
 publishedAspects
-	^(super publishedAspects)
-		add: (Aspect boolean: #showCounts);
+	| aspects |
+	aspects := super publishedAspects.
+	(aspects at: #reuseIfOpen) defaultValue: true.
+	^aspects
+		add: ((Aspect boolean: #showCounts)
+					defaultValue: [self defaultShowCounts];
+					yourself);
 		yourself!
 
 resource_Default_view

@@ -6,6 +6,7 @@ SmalltalkToolShell subclass: #SUnitAbsBrowser
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SUnitAbsBrowser guid: (GUID fromString: '{06e4ebda-12c8-4e54-9880-e09eba8bc764}')!
+SUnitAbsBrowser isNonInstantiable: true!
 SUnitAbsBrowser comment: ''!
 !SUnitAbsBrowser categoriesForClass!Unclassified! !
 !SUnitAbsBrowser methodsFor!
@@ -284,17 +285,18 @@ useDisplayNames!commands!private! !
 
 !SUnitAbsBrowser class methodsFor!
 
+defaultOptionFlags
+	^##(ReuseIfOpenMask | CanUseIdeaSpaceMask)!
+
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^TestRunner icon!
 
-initializeToolClass: aClass 
-	(Smalltalk developmentSystem)
+initializeToolClass: aClass
+	Smalltalk developmentSystem
 		addAdditionalToolsFolderIcon: self toolsFolderIcon;
-		registerTool: aClass.
-	self reuseIfOpen: true.
-	self canUseIdeaSpace: true!
+		registerTool: aClass!
 
 publishedAspects
 	"Answer a Set of the aspects published by instances of the receiver"
@@ -323,6 +325,7 @@ useDisplayNames: aBoolean
 
 	^self  defaultModelClass useDisplayNames: aBoolean! !
 !SUnitAbsBrowser class categoriesForMethods!
+defaultOptionFlags!constants!options!private! !
 icon!constants!public! !
 initializeToolClass:!initializing!must strip!private! !
 publishedAspects!development!public! !

@@ -2,7 +2,7 @@
 
 UI.Scintilla.TextStyle subclass: #'UI.Scintilla.CallTipStyle'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'Backcolor Forecolor'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -27,14 +27,12 @@ initialize
 		self initialize
 	"
 
-	propertyMap := self buildPropertyMap
-				at: #forecolor
-					put: (ColourPropertyDescriptor
-							getSelector: #forecolor
-							defaultValue: Color gray
-							setMessage: SCI_STYLESETFORE);
+	propertyDescriptors := self buildPropertyDescriptors
 				isImmutable: true;
-				yourself! !
+				yourself.
+	Forecolor := propertyDescriptors at: 1.
+	Forecolor defaultValue: Color gray.
+	Backcolor := propertyDescriptors at: 2! !
 !UI.Scintilla.CallTipStyle class categoriesForMethods!
 initialize!development!initializing!public! !
 !

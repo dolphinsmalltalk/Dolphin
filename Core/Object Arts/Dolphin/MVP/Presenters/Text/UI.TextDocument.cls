@@ -62,11 +62,9 @@ model: aStringValueModel
 	documentPresenter model: self model
 	!
 
-onViewClosed
-	"Sent by the receiver's view when it has been closed"
-
-	self saveUserSettings.
-	super onViewClosed!
+onCloseRequested: boolValueHolder
+	super onCloseRequested: boolValueHolder.
+	boolValueHolder value ifTrue: [self saveUserSettings]!
 
 onViewOpened
 	"Received when the receiver's view has been connected."
@@ -118,7 +116,7 @@ isModified!public!testing! !
 isModified:!modes!public! !
 isText!public!testing! !
 model:!accessing!public! !
-onViewClosed!event handling!public! !
+onCloseRequested:!event handling!private! !
 onViewOpened!event handling!public! !
 openFile:!operations!public! !
 restoreUserSettings!operations!options!private! !

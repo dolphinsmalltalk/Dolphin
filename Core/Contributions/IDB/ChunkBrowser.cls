@@ -410,19 +410,21 @@ bitmap
 			internalize!
 
 chunkTypeSelection
-	^ChunkTypeSelection ifNil: [self defaultChunkTypeSelection]!
+	self ensureOptionsLoaded.
+	^ChunkTypeSelection!
 
 chunkTypeSelection: aLookupTable
 	ChunkTypeSelection := aLookupTable!
 
 compareMethodsUsingParser
-	^CompareMethodsUsingParser ifNil: [self defaultCompareMethodsUsingParser]!
+	self ensureOptionsLoaded.
+	^CompareMethodsUsingParser!
 
 compareMethodsUsingParser: aBoolean
 	CompareMethodsUsingParser := aBoolean!
 
 defaultChunkTypeSelection
-	^(LookupTable new)
+	^(IdentityDictionary new)
 		at: #'Class Category' put: false;
 		at: #'Class Define' put: true;
 		at: #'Class Delete' put: true;
@@ -476,9 +478,16 @@ icon
 publishedAspects
 	"ss"
 
-	^(super publishedAspects)
-		add: (Aspect dictionary: #chunkTypeSelection);
-		add: (Aspect boolean: #compareMethodsUsingParser);
+	| aspects |
+	aspects := super publishedAspects.
+	(aspects at: #reuseIfOpen) defaultValue: true.
+	^aspects
+		add: ((Aspect dictionary: #chunkTypeSelection)
+					defaultValue: [self defaultChunkTypeSelection];
+					yourself);
+		add: ((Aspect boolean: #compareMethodsUsingParser)
+					defaultValue: self defaultCompareMethodsUsingParser;
+					yourself);
 		yourself!
 
 resource_Default_view

@@ -274,7 +274,9 @@ defaultUpdateInterval
 defaultUpdateInterval: aDuration
 	"Set the default Duration between the refreshes in instances of the receiver (not less than 200mS)."
 
-	UpdateIntervals at: #default put: (aDuration max: 200 milliseconds)!
+	self defaultUpdateInterval = aDuration ifTrue: [^self].
+	UpdateIntervals at: #default put: (aDuration max: 200 milliseconds).
+	self persistOptions!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -292,23 +294,22 @@ initialize
 	"
 
 	UpdateIntervals := IdentityDictionary new
-				at: #low put: 5000 milliseconds;
-				at: #default put: 2000 milliseconds;
+				at: #low put: 5 seconds;
+				at: #default put: 2 seconds;
 				at: #high put: 500 milliseconds;
 				at: #pause put: nil;
 				shrink.
-	optionFlags := 0.
 	SmalltalkSystem current
 		addSystemFolderIcon: self toolsFolderIcon;
-		registerTool: self.
-	self reuseIfOpen: true!
+		registerTool: self!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	^super publishedAspects
+		removeKey: #reuseIfOpen;
 		add: ((Aspect integer: #defaultUpdateInterval)
-					beNonNullable;
+					defaultValue: 2 seconds;
 					yourself);
 		yourself!
 
@@ -324,12 +325,12 @@ resource_Default_view
 
 reuseIfOpen
 	"Answers true if an already open instance of the receiver should be reused instead of
-	creating additional instances.
-	Implementation Note :opening more than one process monitor can mean that processes never
+	creating additional instances."
+
+	"Implementation Note: Opening more than one process monitor can mean that processes never
 	get GC'd, so always re-use the existing instance."
 
-	^true
-!
+	^true!
 
 toolsFolderHelpId
 	^10597! !

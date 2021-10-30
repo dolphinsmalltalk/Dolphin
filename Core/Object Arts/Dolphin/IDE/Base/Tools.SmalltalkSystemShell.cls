@@ -40,7 +40,7 @@ applyOptions
 	"Private - Apply the class options to the receiver"
 
 	super applyOptions.
-	(systemFolderPresenter view)
+	self folderView
 		backcolor: self class backcolor;
 		backImage: self class backImage;
 		backImageIsTiled: self class backImageIsTiled;
@@ -109,6 +109,9 @@ createSchematicWiring
 
 defaultHelpId
 	^10626!
+
+folderView
+	^systemFolderPresenter view!
 
 initialize
 	"Private - Initialize the receiver. 
@@ -287,6 +290,7 @@ browseUnclassifiedMethods!browsing!commands!public! !
 createComponents!**auto generated**!initializing!public! !
 createSchematicWiring!initializing!public! !
 defaultHelpId!constants!public! !
+folderView!accessing!private! !
 initialize!initializing!private! !
 inspectSystemOptions!commands!public! !
 model:!accessing!public! !
@@ -312,53 +316,61 @@ whatsThis!commands!public! !
 !Tools.SmalltalkSystemShell class methodsFor!
 
 applyOptions
-	self allSubinstances do: [:each | each applyOptions]!
+	self primAllSubinstances do: [:each | each applyOptions]!
 
 backcolor
 	"Answer the default background to use for instances of the receiver"
 
 	^self getBackcolor actualColor!
 
-backcolor: aColorOrNil
+backcolor: aColor
 	"Set the background to use for instances of the receiver"
 
-	self getBackcolor actualColor: (aColorOrNil ifNil: [self defaultBackcolor]).
-	self applyOptions!
+	self backcolor = aColor ifTrue: [^self].
+	self getBackcolor actualColor: (aColor ifNil: [self defaultBackcolor]).
+	self persistOptions
+		ifTrue: [self primAllSubinstances do: [:each | each folderView backcolor: aColor]]!
 
 backImage
 	"Answe the background image to use for instances of the receiver"
 
 	^BackImage!
 
-backImage: aBitmapOrNil 
+backImage: aBitmapOrNil
 	"Set the background image to use for instances of the receiver"
 
+	self backImage = aBitmapOrNil ifTrue: [^self].
 	BackImage := aBitmapOrNil.
-	self applyOptions!
+	self persistOptions
+		ifTrue: [self primAllSubinstances do: [:each | each folderView backImage: aBitmapOrNil]]!
 
 backImageAlphaPercent
 	"Answer the background image alpha for instances of the receiver"
 
-	BackImageAlphaPercent ifNil: [BackImageAlphaPercent := 80].
+	self ensureOptionsLoaded.
 	^BackImageAlphaPercent!
 
-backImageAlphaPercent: anInteger 
+backImageAlphaPercent: anInteger
 	"Set the background image alpha for instances of the receiver"
 
+	self backImageAlphaPercent = anInteger ifTrue: [^self].
 	BackImageAlphaPercent := anInteger.
-	self applyOptions!
+	self persistOptions.
+	self persistOptions
+		ifTrue: [self primAllSubinstances do: [:each | each folderView backImageAlphaPercent: anInteger]]!
 
 backImageIsTiled
 	"Answer the tiling mode to use for the background image of instances of the receiver"
 
-	BackImageIsTiled ifNil: [BackImageIsTiled := true].
-	^BackImageIsTiled!
+	^BackImageIsTiled ifNil: [BackImageIsTiled := true]!
 
-backImageIsTiled: aBoolean 
+backImageIsTiled: aBoolean
 	"Set the tiling mode to use for the background image of instances of the receiver"
 
+	self backImageIsTiled == aBoolean ifTrue: [^self].
 	BackImageIsTiled := aBoolean.
-	self applyOptions!
+	self persistOptions
+		ifTrue: [self primAllSubinstances do: [:each | each folderView backImageIsTiled: aBoolean]]!
 
 default
 	"Answer the default instance of the receiver
@@ -372,10 +384,7 @@ default
 defaultBackcolor
 	"Private - Answer the default background to use for instances of the receiver"
 
-	^Color
-		r: 41
-		g: 124
-		b: 182!
+	^Color seaGreen!
 
 defaultBackImage
 	^nil!
@@ -422,10 +431,12 @@ hotKey: anInteger
 	minimised or if another application is active."
 
 	| open |
+	self hotKey = anInteger ifTrue: [^self].
 	open := Default notNil and: [Default isOpen].
 	open ifTrue: [Default unregisterHotKey].
 	HotKey := anInteger = 0 ifFalse: [anInteger].
-	open ifTrue: [Default registerHotKey]!
+	open ifTrue: [Default registerHotKey].
+	self persistOptions!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -439,14 +450,7 @@ initialize
 
 	SmalltalkSystem current
 		registerTool: self;
-		systemFolderClass: self.
-	self backImage: self defaultBackImage.
-	self backcolor: self defaultBackcolor.
-	self textcolor: self defaultTextcolor.
-	self viewMode: #thumbnails.
-	self playSystemSounds: true.
-	self resetWhenInvisible: false.
-	HotKey := AcceleratorTable keyCodeFromInvariantString: 'CTRL+ALT+D'!
+		systemFolderClass: self!
 
 onNoVisibleWindows
 	"The system has detected that there are no visible windows. If so configured, open a new
@@ -480,25 +484,43 @@ playSystemSounds
 playSystemSounds: aBoolean
 	"Sets wherher the IDE sounds are turned on"
 
-	PlaySystemSounds := aBoolean
+	self playSystemSounds == aBoolean ifTrue: [^self].
+	PlaySystemSounds := aBoolean.
+	self persistOptions
 		
 !
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published the receiver."
 
-	^super publishedAspects
-		removeKey: #reuseIfOpen;
-		add: (Aspect color: #backcolor);
-		add: (Aspect color: #textcolor);
-		add: (Aspect bitmap: #backImage);
-		add: (Aspect boolean: #backImageIsTiled);
-		add: (Aspect integer: #backImageAlphaPercent);
-		add: (Aspect symbol: #viewMode from: #(#smallIcons #largeIcons #tileIcons #list #report));
-		add: (Aspect boolean: #playSystemSounds);
-		add: (Aspect hotkey: #hotKey);
-		add: (Aspect boolean: #resetWhenInvisible);
-		yourself!
+	| aspects |
+	aspects := super publishedAspects.
+	aspects removeKey: #reuseIfOpen.
+	aspects
+		add: ((Aspect color: #backcolor)
+					defaultValue: self defaultBackcolor;
+					yourself);
+		add: ((Aspect color: #textcolor)
+					defaultValue: self defaultTextcolor;
+					yourself);
+		add: ((Aspect bitmap: #backImage)
+					defaultValue: self defaultBackImage;
+					yourself);
+		add: ((Aspect integer: #backImageAlphaPercent)
+					defaultValue: 80;
+					yourself);
+		add: ((Aspect symbol: #viewMode from: #(#smallIcons #largeIcons #tileIcons #list #report #thumbnails))
+					defaultValue: #thumbnails;
+					yourself);
+		add: ((Aspect hotkey: #hotKey)
+					defaultValue: [AcceleratorTable keyCodeFromInvariantString: 'CTRL+ALT+D'];
+					yourself);
+		add: (Aspect boolean: #resetWhenInvisible).
+	#(#playSystemSounds #backImageIsTiled)
+		do: [:each | aspects add: ((Aspect boolean: #playSystemSounds)
+						defaultValue: true;
+						yourself)].
+	^aspects!
 
 reset
 	"Private - Reset the class. 
@@ -516,7 +538,9 @@ resetWhenInvisible
 	^ResetWhenInvisible!
 
 resetWhenInvisible: aBoolean 
-	ResetWhenInvisible := aBoolean!
+	self resetWhenInvisible == aBoolean ifTrue: [^self].
+	ResetWhenInvisible := aBoolean.
+	self persistOptions!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -531,14 +555,16 @@ resource_Default_view
 textcolor
 	"Answer the text color to use for instances of the receiver"
 
+	self ensureOptionsLoaded.
 	^Textcolor!
 
-textcolor: aColorOrNil
+textcolor: aColor
 	"Set the text color to use for instances of the receiver"
 
-	Textcolor := aColorOrNil.
-	self applyOptions
-	!
+	self textcolor = aColor ifTrue: [^self].
+	Textcolor := aColor.
+	self persistOptions
+		ifTrue: [self primAllSubinstances do: [:each | each folderView forecolor: aColor]]!
 
 uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
@@ -571,8 +597,10 @@ viewMode: aSymbol
 		#list
 		#report"
 
+	self viewMode == aSymbol ifTrue: [^self].
 	ViewMode := aSymbol.
-	self applyOptions! !
+	self persistOptions
+		ifTrue: [self primAllSubinstances do: [:each | each folderView viewMode: aSymbol]]! !
 !Tools.SmalltalkSystemShell class categoriesForMethods!
 applyOptions!accessing!options!private! !
 backcolor!accessing!options!public! !

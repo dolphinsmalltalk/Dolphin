@@ -135,6 +135,9 @@ defaultModel
 	^nil asValue
 !
 
+defaultOptionFlags
+	^CanUseIdeaSpaceMask!
+
 defaultRenderers
 	"Private - Answers a <Array> of default  classes that will be used to render views onto an inspected object"
 
@@ -161,17 +164,16 @@ initialize
 	SmalltalkSystem current
 		registerTool: self;
 		addSystemFolderIcon: self toolsFolderIcon.
-	self renderers: self defaultRenderers.
-	self canUseIdeaSpace: true!
+	Renderers := self defaultRenderers!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by the receiver."
 
 	^super publishedAspects
 		add: ((Aspect sequenceableCollection: #renderers)
-					beNonNullable;
+					defaultValue: [self defaultRenderers];
 					yourself);
-		add: (Aspect boolean: #canUseIdeaSpace);
+		add: self canUseIdeaSpaceAspect;
 		yourself!
 
 renderers
@@ -182,7 +184,9 @@ renderers
 renderers: anOrderedCollection
 	"Sets classes that will be used to render views of an inspected object to anOrderedCollection"
 
-	Renderers := anOrderedCollection!
+	Renderers = anOrderedCollection ifTrue: [^self].
+	Renderers := anOrderedCollection.
+	self persistOptions!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
@@ -206,6 +210,7 @@ toolsFolderHelpId
 	^10600! !
 !Tools.FlipperInspector class categoriesForMethods!
 defaultModel!models!public! !
+defaultOptionFlags!constants!options!private! !
 defaultRenderers!constants!private! !
 displayOn:!displaying!public! !
 icon!constants!public! !

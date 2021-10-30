@@ -3,15 +3,17 @@ package := Package name: 'Dolphin Scintilla View'.
 package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Scintilla Control Wrapper
-Copyright (c) Object Arts Ltd, 2002-2020.
+Copyright (c) Object Arts Ltd, 2002-2021.
 
-**Built against Scintilla version 4.3.3**
+**See `ScintillaLibrary class>>versionString` to determine the minimum Scintilla version expected**
 
-This package implements a Dolphin <textView>, <ScintillaView>, that wraps the open-source Scintilla programmers'' editor control. ScintillaView provides at least a basic interface (generated from the ''scintilla.iface'' file supplied with the source) to all of Scintilla''s features. It, and the supporting classes in the package, also provide higher level access to the majority of those features such as annotations, call tips, margins, margin markers, indicators, auto-completion lists, and text styling.
+This package implements a Dolphin `<valueView>`, `ScintillaView`, class that wraps the ["Scintilla" programmers'' edit control](https://www.scintilla.org/index.html). Scintilla is a very powerful control with an extensive range of features. It is inevitably somewhat complex, and you are urged to read the [Scintilla documentation](https://www.scintilla.org/ScintillaDoc.html) if you want to use this control in your own applications. In order to expose the full capabilities of Scintilla, the package is somewhat complex, but as far as reasonably possible this complexity is hidden from common use cases.
 
-Scintilla is used as the view for the development system''s workspaces.
+At least a basic interface is provided to all of Scintilla''s extensive functionality; almost every `SCI_XXX` message listed in the documentation has a corresponding wrapper method in this class. The wrapper methods have been auto-generated from Scintilla''s interface definition file, `scintilla.iface`, and are either of the form `#sciXXX:etc`, or have had a more readable symbol allocated. These can all be found in the ''scintilla interface'' method category. Likewise each of the `SCN_XXX` notification messages has a corresponding `#scnXXX` event handler that is (or can be) used to hook the event. These can all be found in the ''event handling-scintilla'' method category. In addition `ScintillaView` implements higher-level functionality for the majority of Scintilla''s features such as text styling, indicators, markers, margins, autocompletion, etc. Scintilla is used as the view for the development system''s workspaces. It can also be be used as a drop-in replacement for a `MultilineTextEdit`.
 
-See http://www.scintilla.org for further details of Scintilla, including complete API documentation. Check the package version number to see which version of Scintilla it was built against. New Scintilla releases are often not entirely backwards compatible so we recommend that you stick with version of the Scintilla DLL (SciLexer.dll) that matches the package.
+See [the Scintilla website](https://www.scintilla.org) for further details of Scintilla, including complete API documentation. 
+
+Scintilla is under active maintenance and new versions are released every month or two. The new releases are often not entirely backwards compatible so we recommend that you stick with version of the Scintilla DLL (SciLexer.dll) that matches  `ScintillaLibrary class>>versionString`.
 
 "License for Scintilla and SciTE
 
@@ -51,6 +53,7 @@ package setClassNames: #(
 	#{UI.Scintilla.Indicator}
 	#{UI.Scintilla.IndicatorStyle}
 	#{UI.Scintilla.IntPropertyDescriptor}
+	#{UI.Scintilla.InvertedThreeStateBooleanPropertyDescriptor}
 	#{UI.Scintilla.KeyBinding}
 	#{UI.Scintilla.LexerMetadata}
 	#{UI.Scintilla.LexerNamedStyle}
@@ -72,6 +75,7 @@ package setClassNames: #(
 	#{UI.Scintilla.TextStyle}
 	#{UI.Scintilla.TextStylePresenter}
 	#{UI.Scintilla.TextStylesDialog}
+	#{UI.Scintilla.ThreeStateBooleanPropertyDescriptor}
 ).
 
 package setMethodNames: #(
@@ -1343,7 +1347,7 @@ Core.Object subclass: #'UI.Scintilla.Attribute'
 	instanceVariableNames: 'id'
 	classVariableNames: ''
 	imports: #()
-	classInstanceVariableNames: 'propertyMap'
+	classInstanceVariableNames: 'propertyDescriptors'
 	classConstants: {}!
 Core.Object subclass: #'UI.Scintilla.CharacterRepresentation'
 	instanceVariableNames: 'character representation appearance color'
@@ -1382,7 +1386,7 @@ Core.Object subclass: #'UI.Scintilla.Marker'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'UI.Scintilla.PropertyDescriptor'
-	instanceVariableNames: 'getSelector defaultValue setMessage setSelector getMessage flags printSelector'
+	instanceVariableNames: 'key getSelector defaultValue setMessage setSelector getMessage flags printSelector'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1399,7 +1403,7 @@ Core.Object subclass: #'UI.Scintilla.Styler'
 	classConstants: {}!
 UI.Scintilla.Attribute subclass: #'UI.Scintilla.MarkerDefinition'
 	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor strokeWidth layerCode _reserved11 _reserved12'
-	classVariableNames: 'FolderNames'
+	classVariableNames: 'Alpha Backcolor FolderNames Forecolor GlyphName Layer SelectionBackcolor StrokeWidth'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -1410,7 +1414,7 @@ UI.Scintilla.Attribute subclass: #'UI.Scintilla.QueryableAttribute'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Scintilla.Attribute subclass: #'UI.Scintilla.TextStyle'
-	instanceVariableNames: 'forecolor backcolor flags faceName centiPointSize characterSet case name description weight _reserved12'
+	instanceVariableNames: 'forecolor backcolor flags fontName centiPointSize characterSet case name description weight _reserved12'
 	classVariableNames: 'PredefinedStyleNames'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1425,7 +1429,7 @@ UI.Scintilla.Attribute subclass: #'UI.Scintilla.TextStyle'
 	}!
 UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.IndicatorStyle'
 	instanceVariableNames: 'forecolor style layer name alpha hoverStyle hoverForecolor flags foreAlpha strokeWidth'
-	classVariableNames: 'HoverForecolor HoverStyle'
+	classVariableNames: 'AlphaProperty FlagsProperty ForeAlphaProperty ForecolorProperty HoverForecolorProperty HoverStyleProperty LayerProperty StrokeWidthProperty StyleProperty'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -1433,7 +1437,7 @@ UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.IndicatorStyle'
 	}!
 UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.Margin'
 	instanceVariableNames: 'width type isSensitive mask cursorType backcolor'
-	classVariableNames: 'CursorTypes'
+	classVariableNames: 'BackcolorProperty CursorTypeProperty CursorTypes IsSensitiveProperty MaskProperty TypeProperty WidthProperty'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -1441,7 +1445,7 @@ UI.Scintilla.QueryableAttribute subclass: #'UI.Scintilla.Margin'
 	}!
 UI.Scintilla.TextStyle subclass: #'UI.Scintilla.CallTipStyle'
 	instanceVariableNames: ''
-	classVariableNames: ''
+	classVariableNames: 'Backcolor Forecolor'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -1524,6 +1528,18 @@ UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.FloatPropertyDescriptor
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.IntPropertyDescriptor'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Scintilla.PropertyDescriptor subclass: #'UI.Scintilla.ThreeStateBooleanPropertyDescriptor'
+	instanceVariableNames: 'flagsMask'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Scintilla.ThreeStateBooleanPropertyDescriptor subclass: #'UI.Scintilla.InvertedThreeStateBooleanPropertyDescriptor'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
