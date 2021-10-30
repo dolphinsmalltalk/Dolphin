@@ -160,6 +160,9 @@ testName
 	#(1033 'en-US' 2057 'en-GB' 1106 'cy-GB' 11274 'es-AR')
 		pairsDo: [:lcid :name | self assert: (Locale lcid: lcid) name equals: name]!
 
+testNamed
+	self assert: (Locale named: 'cy-GB') lcid equals: 1106!
+
 testNameOfDay
 	| subject |
 	subject := Locale named: 'tr-Tr'.
@@ -263,6 +266,7 @@ testLowercaseString!public!unit tests! !
 testMonthAbbreviation!public!unit tests! !
 testMonthName!public!unit tests! !
 testName!public!unit tests! !
+testNamed!public!unit tests! !
 testNameOfDay!public!unit tests! !
 testPrintFloatGrouping!public!unit tests! !
 testPrintFloatSeparators!public!unit tests! !

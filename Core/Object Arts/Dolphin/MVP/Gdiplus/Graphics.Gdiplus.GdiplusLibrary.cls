@@ -6955,7 +6955,7 @@ invalidCall: anInteger
 	"Private - An invalid external call was attempted through one of the receiver's methods. The argument is the failure code from the external call primitive, which in the case of the GdiplusLibrary will be the non-zero GpStatus return code from the function call."
 
 	^anInteger < 0
-		ifTrue: [super invalidCall: anInteger]
+		ifTrue: [self invalidCall: anInteger fromFrame: Processor activeProcess topFrame sender]
 		ifFalse: 
 			[| method frame |
 			frame := Processor activeProcess topFrame sender.

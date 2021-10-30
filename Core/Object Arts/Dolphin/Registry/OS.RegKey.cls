@@ -7,34 +7,82 @@ OS.RegKeyAbstract variableSubclass: #'OS.RegKey'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.RegKey guid: (Core.GUID fromString: '{87b4c535-026e-11d3-9fd7-00a0cc3e4a32}')!
-OS.RegKey comment: 'RegKey is the class of objects which represent individual keys in the Windows Registration Database. The keys may themselves have sub-keys which are in turn represented by instances of RegKey. A RegKey is also a dictionary of registry values represented in Dolphin by instances of <RegKeyValues>.
+OS.RegKey comment: '`RegKey` is the class of objects which represent individual keys in the Windows Registration Database. The keys may themselves have sub-keys which are in turn represented by instances of `RegKey`. A `RegKey` is also a dictionary of registry values represented in Dolphin by instances of `RegKeyValues`.
 
-RegKey implements the <abstractDictionary> protocol as operations against its sub-keys. In order to operate on the values under the key one must first acquire an instance of RegKeyValues using the #subValues message.'!
+`RegKey` implements the `<abstractDictionary>` protocol as operations against its sub-keys. In order to operate on the values as if elements of a dictionary one must first acquire an instance of `RegKeyValues` using the `#subValues` message.'!
 !OS.RegKey categoriesForClass!System-Support! !
 !OS.RegKey methodsFor!
 
-at: key ifAbsent: exceptionHandler
-	"Answer the value named by the <readableString> argument, key.  If the key is not found,
-	answer the result of evaluating the niladic valuable, exceptionHandler.
-	May also raise a Win32Error exception if registry access fails for some reason."
-
-	^(self includesKey: key)
-		ifTrue: [self privateAt: key]
-		ifFalse: [exceptionHandler value]!
-
-at: key put: anObject
-	"Store the argument anObject with the <readableString> 
-	external key, key, in the receiver. Answer anObject.
-	For a registry key, this translates to setting the default value
-	of the subKey named, key, to anObject.
-	Implementation Note: If anObject is nil, then any existing
-	default value for the key must be removed (see #valueAt:put:)."
+associationAt: aString ifAbsent: aNiladicValuable
+	"Answer a new <association> between the key and value of the receiver at the <readableString> first argument.  If the specified key is not found, answer the result of evaluating the <niladicValuable> second argument."
 
 	| subKey |
-	subKey := self privateCreateKey: key.
+	subKey := self at: aString ifAbsent: [AbsentCookie].
+	^subKey == AbsentCookie ifTrue: [aNiladicValuable value] ifFalse: [subKey]!
+
+at: aString ifAbsent: aNiladicValuable
+	"Answer the value named by the <readableString> first argument.  If the key is not found, answer the result of evaluating the <niladicValuable> second argument.
+	May also raise a Win32Error exception if registry access fails for some reason."
+
+	| utf16 subHandle exists needsFree |
+	aString ifNil: [^aNiladicValuable value].
+	needsFree := self realize.
+	exists := (AdvApi32
+				regOpenKeyEx: handle
+				lpSubKey: (utf16 := aString asUtf16String)
+				ulOptions: 0
+				samDesired: sam
+				phkResult: (subHandle := Handle new)) == ERROR_SUCCESS.
+	needsFree ifTrue: [self free].
+	^exists
+		ifTrue: 
+			[(self newSubKey: utf16 sam: sam)
+				handle: subHandle;
+				beFinalizable;
+				yourself]
+		ifFalse: 
+			[aNiladicValuable value]!
+
+at: key put: anObject
+	"Store the argument anObject with the <readableString> external key, key, in the receiver. Answer anObject.
+	For a registry key, this translates to setting the default value of the subKey named, key, to anObject."
+
+	"Implementation Note: If anObject is nil, then any existing default value for the key must be removed (see RegKeyAbstract>>#valueAt:put:type:)."
+
+	| subKey |
+	subKey := self createKey: key.
 	subKey valueAt: nil put: anObject.
 	subKey free.
 	^anObject!
+
+at: aString put: aByteObject type: aSymbol
+	"Store the byte-object argument, aByteObject, as the default value of a sub-key named by the <readableString>, aString, with the registry value type specified by the <Symbol>, aSymbol. Answer anObject."
+
+	(aString isNil and: [aSymbol == #none])
+		ifTrue: 
+			[self removeSubValue: aString ifAbsent: nil.
+			^aByteObject].
+	^self
+		basicAt: aString
+		put: aByteObject
+		type: (ValueTypes at: aSymbol)!
+
+basicAt: aString put: aByteObject type: anInteger
+	"Store the argument, aByteObject, as the default value of a sub-key named by the <readableString>, aString, with the basic registry value type specified by the <integer>, anInteger. Answer anObject."
+
+	| needsFree |
+	needsFree := self realize.
+	"Note that here we are using the higher-level RegSetKeyValue API that can create the key and set the value in one stroke."
+	AdvApi32
+		regSetKeyValue: handle
+		lpSubKey: aString
+		lpValueName: nil
+		dwType: anInteger
+		lpData: aByteObject
+		cbData: aByteObject byteSize.
+	needsFree ifTrue: [self free].
+	keyInfo := nil.
+	^aByteObject!
 
 fileOutOn: aStream
 	"File out the receiver in the regedit text representation to the <puttableStream> argument."
@@ -51,43 +99,46 @@ fileOutOn: aStream
 includesKey: keyString
 	"Answer whether the receiver has a key equal to the argument, key"
 
-	| subKey dwErr lib |
+	| subKey err needsFree |
+	keyString isNil ifTrue: [^false].
 	subKey := Handle new.
-	lib := AdvApi32.
-	dwErr := lib
-				regOpenKeyEx: self asParameter
+	needsFree := self realize.
+	err := AdvApi32
+				regOpenKeyEx: handle
 				lpSubKey: keyString
 				ulOptions: 0
 				samDesired: KEY_READ
 				phkResult: subKey.
-	lib regCloseKey: subKey.
-	self free.
-	^dwErr = ERROR_SUCCESS!
+	AdvApi32 regCloseKey: subKey.
+	needsFree ifTrue: [self free].
+	^err == ERROR_SUCCESS!
 
-keysAndValuesDo: operation
-	"Evaluate the <dyadicValuable>, operation, for each key/value pair in the receiver."
+keysAndValuesDo: aDyadicValuable
+	"Evaluate the <dyadicValuable>, operation, for each key sub-key name and sub-key pair in the receiver."
 
-	^self keysDo: [:k | operation value: k value: (self privateAt: k)]!
+	| path |
+	path := self pathFromRoot.
+	^self subKeyNamesDo: 
+			[:each |
+			aDyadicValuable value: each
+				value: (RegKey
+						tally: nil
+						name: each
+						parentPath: path
+						rootKey: rootKey
+						sam: sam)]!
 
-keysDo: operation
-	"Evaluate the monadic valuable, operation, for each of the receiver's sub-keys."
+keysDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the receiver's sub-key names."
 
-	^self subKeyNamesDo: operation!
+	^self subKeyNamesDo: aMonadicValuable!
 
-privateAt: aString 
-	"Private - Answer the named sub-key of the receiver without error checking.
-	The new key inherits the same access rights."
+removeKey: aString ifAbsent: aNiladicValuable
+	"Remove the specified key (and its associated value), from the receiver. If the key is not in the receiver, answer the result of evaluating the <niladicValuable> second argument. Otherwise, answer the value named by the key."
 
-	^self newSubKey: aString sam: self sam!
-
-removeKey: key ifAbsent: exceptionHandler
-	"Remove the key (and its associated value), from the receiver. If key is
-	not in the receiver, answer the result of evaluating the niladic valuable,
-	exceptionHandler. Otherwise, answer the value named by key.
-	N.B. At present we delete the entire sub-tree below the specified
-	key, which Windows 95 does anyway."
-
-	^self removeSubTree: key ifAbsent: exceptionHandler!
+	^(self removeSubTree: aString)
+		ifTrue: [self newSubKey: aString sam: sam]
+		ifFalse: [aNiladicValuable value]!
 
 size
 	"Answer the number of elements in the receiver.
@@ -102,24 +153,27 @@ subKeys
 	^self!
 
 subValues
-	"Answer an <abstractDictionary> of sub-keys in the receiver (a RegKeyValues)."
+	"Answer an <abstractDictionary> of sub-values in the receiver (a RegKeyValues)."
 
-	^(self subValueClass
-		name: self name
-		parentPath: self parentPath
-		rootKey: self rootKey
-		sam: self sam)
-			handle: self handle;
-			yourself
-	! !
+	| values |
+	values := RegKeyValues
+				tally: nil
+				name: name
+				parentPath: parentPath
+				rootKey: rootKey
+				sam: sam.
+	self isRoot ifTrue: [values handle: handle].
+	^values! !
 !OS.RegKey categoriesForMethods!
+associationAt:ifAbsent:!accessing!public! !
 at:ifAbsent:!accessing!public! !
 at:put:!accessing!public! !
+at:put:type:!public! !
+basicAt:put:type:!public! !
 fileOutOn:!public!storing! !
 includesKey:!public!searching! !
 keysAndValuesDo:!enumerating!public! !
 keysDo:!enumerating!public! !
-privateAt:!accessing!private! !
 removeKey:ifAbsent:!public!removing! !
 size!accessing!public! !
 subKeys!accessing!public! !

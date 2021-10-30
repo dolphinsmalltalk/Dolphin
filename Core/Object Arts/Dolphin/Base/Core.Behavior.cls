@@ -94,9 +94,12 @@ allInstVarNames
 	those specified in the receiver and in all of its superclasses. The array ordering is the order 
 	in which the variables are stored and accessed by the interpreter."
 
-	^superclass isNil
-		ifTrue: [self instVarNames]
-		ifFalse: [superclass allInstVarNames , self instVarNames]!
+	^self instSize == 0
+		ifTrue: [#()]
+		ifFalse: 
+			[superclass isNil
+				ifTrue: [self instVarNames]
+				ifFalse: [superclass allInstVarNames , self instVarNames]]!
 
 allSuperclasses
 	"Answer a <collection> of the receiver's superclass and the receiver's ancestor's 
@@ -311,6 +314,9 @@ dynamicSelectorsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the extra message selectors understood by the receiver at run time that might not have an associated method."
 
 	"To be overridden by subclasses that handle #doesNotUnderstand: to process additional messages."!
+
+elementSize
+	^self isPointers ifTrue: [VMConstants.IntPtrSize] ifFalse: [self extraInstanceSpec]!
 
 environment
 	"Answer the receiver's name space."
@@ -995,6 +1001,7 @@ defaultCompilationFlags!compiling!constants!public! !
 definitionOf:!methods-testing!public! !
 dynamicSelectors!methods-accessing!public! !
 dynamicSelectorsDo:!methods-accessing!public! !
+elementSize!instance specification-accessing!public! !
 environment!accessing!public! !
 errorNonInstantiable!error handling!private! !
 errorNotPinnable!error handling!private! !

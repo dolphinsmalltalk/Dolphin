@@ -216,14 +216,16 @@ invalidArgErrorClass
 invalidCall: anInteger
 	"An invalid external call was attempted through one of the receiver's methods. The argument is the failure code from the external call primitive."
 
-	| frame descriptor method |
 	anInteger >= 0
 		ifTrue: 
 			[| error |
 			error := Kernel32 getLastError.
 			^error == 0 ifTrue: [self primitiveFailed: anInteger] ifFalse: [self systemError: error]].
-	frame := Processor activeProcess topFrame sender.
-	method := frame method.
+	^self invalidCall: anInteger fromFrame: Processor activeProcess topFrame sender!
+
+invalidCall: anInteger fromFrame: aStackFrame
+	| method descriptor |
+	method := aStackFrame method.
 	descriptor := method descriptor.
 	"Reporting of errors related to individual arguments is limited to a maximum of 12 arguments, although API functions with such large numbers of parameters are very rare.
 	If the error is with parameter 13+, then it will be the generic _PrimitiveFailureCode.InvalidParameter."
@@ -231,10 +233,10 @@ invalidCall: anInteger
 		ifTrue: 
 			[| arg i |
 			i := descriptor argumentIndexFromOffset: anInteger - InvalidParameter1.
-			arg := frame method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
+			arg := method isVirtualFunction ifTrue: [i - 1] ifFalse: [i].
 			self invalidArgErrorClass
 				invalidArgument: arg
-				got: (frame arguments at: arg)
+				got: (aStackFrame arguments at: arg)
 				expected: (descriptor argumentTypes at: i)]
 		ifFalse: 
 			[descriptor retType == ExtCallArgTypes.ExtCallArgNTSTATUS
@@ -350,6 +352,7 @@ handle:!accessing!private! !
 hash!comparing!public! !
 invalidArgErrorClass!constants!private! !
 invalidCall:!exceptions!public! !
+invalidCall:fromFrame:!exceptions!private! !
 isOpen!public!testing! !
 isSelfEvaluating!public!testing! !
 loadFlags!constants!private! !

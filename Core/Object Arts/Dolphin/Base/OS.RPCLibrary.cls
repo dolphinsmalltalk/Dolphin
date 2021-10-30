@@ -14,7 +14,9 @@ OS.RPCLibrary comment: ''!
 invalidCall: anInteger
 	"Private - An invalid external call was attempted through one of the receiver's methods. The argument is the failure code from the external call primitive, which in the case of the RPCLibrary can be a non-zero RPC_STATUS return code from the function call."
 
-	^anInteger < 0 ifTrue: [super invalidCall: anInteger] ifFalse: [RPCError signalWith: anInteger]!
+	^anInteger < 0
+		ifTrue: [self invalidCall: anInteger fromFrame: Processor activeProcess topFrame sender]
+		ifFalse: [RPCError signalWith: anInteger]!
 
 rpcStringFree: lppstr
 	"Free a character string allocated by the RPC library.

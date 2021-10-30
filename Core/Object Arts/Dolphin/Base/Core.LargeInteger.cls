@@ -97,6 +97,17 @@ addToInteger: anInteger
 	<primitive: 21>
 	^self primitiveFailed: _failureCode!
 
+asByteArray
+	"Answer a <ByteArray> containing a copy of the receiver's native bytes (little-endian, 32-bit granularity, 2's complement)."
+
+	| byteSize |
+	byteSize := self basicSize.
+	^self
+		replaceBytesOf: (ByteArray new: byteSize)
+		from: 1
+		to: byteSize
+		startingAt: 1!
+
 asFloat
 	"Answer the floating point representation of the receiver. Some precision may be lost. The result will be the nearest fp value calculated using IEEE round-to-nearest even rounding."
 
@@ -488,6 +499,7 @@ subtractFromInteger: anInteger
 >!comparing!public! !
 >=!comparing!public! !
 addToInteger:!double dispatch!private! !
+asByteArray!converting!public! !
 asFloat!converting!public! !
 bitAnd:!bit manipulation!public! !
 bitInvert!bit manipulation!public! !

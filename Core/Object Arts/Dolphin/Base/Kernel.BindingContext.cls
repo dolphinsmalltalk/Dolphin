@@ -44,7 +44,12 @@ visitImport: aBindingReference from: aNamespace
 		ifNotNil: 
 			[:namespace |
 			"We delay initializing the visited set until the last possible moment, as mostly is is not required."
-			((visited ifNil: [visited := Set with: methodClass]) addNewElement: namespace) ifTrue: [namespace]]! !
+			((visited
+				ifNil: 
+					[visited := (Set new: 8)
+								add: methodClass;
+								yourself])
+					addNewElement: namespace) ifTrue: [namespace]]! !
 !Kernel.BindingContext categoriesForMethods!
 environment!accessing!public! !
 identifier!accessing!public! !

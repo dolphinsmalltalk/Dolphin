@@ -5,163 +5,379 @@ package paxVersion: 2.1;
 	basicComment: 'Dolphin Smalltalk Windows Registry Serialisation.
 Copyright (c) Object Arts Ltd, 2004.
 
-This package implements object serialisation to/from the system Registry. It is useful for storing application settings, etc.'.
+This package implements object serialisation to/from the system Registry for a subset of classes. It is useful for storing application settings, etc, but is too slow to be a viable option for general storage. The registry is not intended for storing larger amounts of data in any case.
+
+See the class comment of `OS.RegistrySerializer` for details of the serialization format.'.
 
 package basicPackageVersion: '6.1'.
 
+package basicScriptAt: #postinstall put: 'RegKeyAbstract addProtocol: #registryWriter!!
+'.
+
+package setClassNames: #(
+	#{OS.RegistryDeserializer}
+	#{OS.RegistrySerializer}
+).
 
 package setMethodNames: #(
-	#(#{Core.ByteArray} #storeUnderRegKey:as:)
-	#(#{Core.ClassDescription} #readFromRegKey:)
-	#(#{Core.LargeInteger} #storeUnderRegKey:as:)
-	#(#{Core.LargeInteger class} #readFromRegKey:)
+	#(#{Core.ArrayedCollection class} #readFromRegistry:params:)
+	#(#{Core.Boolean} #writeToRegistry:name:)
+	#(#{Core.Class} #writeToRegistry:name:)
+	#(#{Core.ClassDescription} #readFromRegistry:params:)
+	#(#{Core.Collection} #writeToRegistry:name:)
+	#(#{Core.Collection class} #readFromRegistry:params:)
+	#(#{Core.Dictionary} #canWriteCompactRegistryFormat)
+	#(#{Core.Dictionary} #writeAssociationsToRegistry:key:)
+	#(#{Core.Dictionary} #writeToRegistry:name:)
+	#(#{Core.Dictionary class} #keyFromRegName:)
+	#(#{Core.Dictionary class} #readFromRegistry:params:)
+	#(#{Core.False class} #readFromRegistry:params:)
+	#(#{Core.IdentityDictionary} #canWriteCompactRegistryFormat)
+	#(#{Core.IdentityDictionary class} #keyFromRegName:)
+	#(#{Core.Interval} #writeToRegistry:name:)
+	#(#{Core.Interval class} #readFromRegistry:params:)
+	#(#{Core.LargeInteger class} #readFromRegistry:params:)
+	#(#{Core.Locale} #writeToRegistry:name:)
+	#(#{Core.Locale class} #readFromRegistry:params:)
+	#(#{Core.Metaclass} #readFromRegistry:params:)
+	#(#{Core.Metaclass} #writeToRegistry:name:)
+	#(#{Core.Metaclass class} #readFromRegistry:params:)
 	#(#{Core.Object} #storeUnderRegKey:as:)
+	#(#{Core.Object} #writeToRegistry:name:)
 	#(#{Core.Object class} #fromRegKey:)
-	#(#{Core.SmallInteger} #storeUnderRegKey:as:)
-	#(#{Core.String} #storeUnderRegKey:as:)
-	#(#{Core.Symbol} #storeUnderRegKey:as:)
-	#(#{Core.Symbol class} #readFromRegKey:)
-	#(#{Core.UndefinedObject} #storeUnderRegKey:as:)
-	#(#{External.DWORDBytes} #regKeyType)
+	#(#{Core.SequenceableCollection class} #readFromRegistry:params:)
+	#(#{Core.SortedCollection} #writeToRegistry:name:)
+	#(#{Core.SortedCollection class} #readFromRegistry:params:)
+	#(#{Core.Symbol} #writeToRegistry:name:)
+	#(#{Core.Symbol class} #readFromRegistry:params:)
+	#(#{Core.True class} #readFromRegistry:params:)
+	#(#{External.Handle} #writeToRegistry:name:)
 	#(#{External.IntegerBytes} #regKeyType)
-	#(#{External.IntegerBytes} #storeUnderRegKey:as:)
+	#(#{External.IntegerBytes} #writeToRegistry:name:)
+	#(#{External.UInt32Bytes} #regKeyType)
+	#(#{External.UInt64Bytes} #regKeyType)
 	#(#{External.UIntPtrBytes} #regKeyType)
+	#(#{Graphics.Color} #writeToRegistry:name:)
+	#(#{Graphics.Color class} #readFromRegistry:params:)
+	#(#{Graphics.Font} #writeToRegistry:name:)
+	#(#{Graphics.Font class} #readFromRegistry:params:)
+	#(#{Graphics.VirtualColor} #writeToRegistry:name:)
+	#(#{Kernel.DefaultSortAlgorithm class} #readFromRegistry:params:)
+	#(#{Kernel.MethodAnnotations class} #readFromRegistry:params:)
+	#(#{OS.RegKeyAbstract} #classAt:put:with:)
+	#(#{OS.RegKeyAbstract} #objectAt:)
+	#(#{OS.RegKeyAbstract} #objectAt:ifAbsent:)
+	#(#{OS.RegKeyAbstract} #objectAt:put:)
+	#(#{OS.RegKeyAbstract} #readValueAt:into:)
+	#(#{OS.ShlwapiLibrary} #strToInt:)
+	#(#{OS.ShlwapiLibrary} #strToUInt:)
 ).
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
+	'..\MVP\Graphics\Dolphin GDI Graphics'
+	'Dolphin Registry Access'
 ).
 
 package!
 
+"Class Definitions"!
+
+Core.Object subclass: #'OS.RegistryDeserializer'
+	instanceVariableNames: 'currentKey instVarMaps safeClasses objects validationBlock'
+	classVariableNames: ''
+	imports: #(#{OS private})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Object subclass: #'OS.RegistrySerializer'
+	instanceVariableNames: 'objects currentKey instVarsCache classNames'
+	classVariableNames: ''
+	imports: #(#{OS.WinRegConstants private})
+	classInstanceVariableNames: ''
+	classConstants: {
+		'BytesValueName' -> 'bytes'.
+		'ReferencePrefix' -> '@'.
+		'ValueSeparator' -> ':'
+	}!
+
 "Loose Methods"!
 
-!Core.ByteArray methodsFor!
+!Core.ArrayedCollection class methodsFor!
 
-storeUnderRegKey: aRegKey as: aString 
-	"Store a serialised representation of the receiver to the registry under the <RegKey>,
-	aRegKey, with the <readableString> name, aString."
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
 
-	aRegKey 
-		valueAt: aString
-		put: self
-		type: #binary! !
-!Core.ByteArray categoriesForMethods!
-storeUnderRegKey:as:!public! !
+	"Override back to the basic implementation."
+
+	^aRegistryDeserializer readObjectOfClass: self params: anArray! !
+!Core.ArrayedCollection class categoriesForMethods!
+readFromRegistry:params:!public! !
+!
+
+!Core.Boolean methodsFor!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	aRegistryWriter
+		classAt: aString
+		put: self class
+		with: nil! !
+!Core.Boolean categoriesForMethods!
+writeToRegistry:name:!public! !
+!
+
+!Core.Class methodsFor!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	aRegistryWriter
+		classAt: aString
+		put: self class
+		with: nil! !
+!Core.Class categoriesForMethods!
+writeToRegistry:name:!public! !
 !
 
 !Core.ClassDescription methodsFor!
 
-readFromRegKey: aRegKey
-	"Read an instance of the receiver previously serialised under the specified registry key."
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
 
-	| params inst basicSize instVars |
-	params := aRegKey value.
-	basicSize := params size > 1 ifTrue: [Integer fromString: params second] ifFalse: [0].
-	inst := basicSize > 0 ifTrue: [self basicNew: basicSize] ifFalse: [self basicNew].
-	instVars := LookupTable new.
-	self allInstVarNames keysAndValuesDo: [:i :name | instVars at: name put: i].
-	aRegKey subValues keysAndValuesDo: 
-			[:instVar :value |
-			instVar isEmpty
-				ifFalse: 
-					[| i |
-					i := Integer readFrom: instVar readStream.
-					i = 0
-						ifTrue: [inst instVarAt: (instVars at: instVar) put: value]
-						ifFalse: [inst basicAt: i put: value]]].
-	aRegKey subKeys keysAndValuesDo: 
-			[:instVar :key |
-			| i value |
-			value := Object fromRegKey: key.
-			i := Integer readFrom: instVar readStream.
-			i = 0
-				ifTrue: [inst instVarAt: (instVars at: instVar) put: value]
-				ifFalse: [inst basicAt: i put: value]].
-	^inst! !
+	^aRegistryDeserializer readObjectOfClass: self params: anArray! !
 !Core.ClassDescription categoriesForMethods!
-readFromRegKey:!public! !
+readFromRegistry:params:!public! !
 !
 
-!Core.LargeInteger methodsFor!
+!Core.Collection methodsFor!
 
-storeUnderRegKey: aRegKey as: aString
-	"Store a serialised representation of the receiver to the registry under the <RegKey>,
-	aRegKey, with the <readableString> name, aString."
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
 
-	self basicSize <= 4
+	aRegistryWriter writeCollection: self at: aString! !
+!Core.Collection categoriesForMethods!
+writeToRegistry:name:!public! !
+!
+
+!Core.Collection class methodsFor!
+
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
+
+	| rehydrated |
+	rehydrated := self new.
+	aRegistryDeserializer
+		registerCurrentObject: rehydrated;
+		namesAndObjectsDo: [:eachName :eachValue | rehydrated add: eachValue].
+	^rehydrated! !
+!Core.Collection class categoriesForMethods!
+readFromRegistry:params:!public! !
+!
+
+!Core.Dictionary methodsFor!
+
+canWriteCompactRegistryFormat
+	^self
+		allKeysSatisfy: [:each | each isString and: 
+					["But not Symbols"
+					each isAtomic not]]!
+
+writeAssociationsToRegistry: aRegistryWriter key: aString
+	aRegistryWriter
+		writeObject: self
+		name: aString
+		parameter: self size
+		do: 
+			[:writer :dict |
+			| i |
+			i := 1.
+			dict associationsDo: 
+					[:each |
+					each writeToRegistry: writer name: i printString.
+					i := i + 1]]!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	"Implementation Note: We assume that the Dictionary is likely to be a collection of name/value pairs where the keys are strings, so attempt to store the Dictionary in a simplified format where the string representation of the keys is uses as names for the registry keys and values. If any of the receiver's keys are not strings, we serialise in a more general format."
+
+	self canWriteCompactRegistryFormat
 		ifTrue: 
-			[aRegKey
-				valueAt: aString
-				put: (External.DWORD fromInteger: self)
-				type: #dword]
+			["Optimised format for common case (for Registry storage anyway) of String-name:value pairs. The sub-values/key names can represent the Dictionary keys."
+			aRegistryWriter
+				writeObject: self
+				name: aString
+				parameter: nil
+				do: 
+					[:writer :dictionary |
+					dictionary keysAndValuesDo: [:eachKey :eachValue | eachValue writeToRegistry: writer name: eachKey]]]
 		ifFalse: 
-			[self basicSize <= 8
-				ifTrue: 
-					[aRegKey
-						valueAt: aString
-						put: (OS.ULARGE_INTEGER fromInteger: self)
-						type: #qword]
-				ifFalse: 
-					[| key size |
-					key := aRegKey createKey: aString.
-					size := self basicSize.
-					key
-						valueAt: nil
-						put: self class name
-						type: #stringArray.
-					((ByteArray new: self basicSize)
-						replaceFrom: 1
-						to: size
-						with: self
-						startingAt: 1) storeUnderRegKey: key as: 'value']]! !
-!Core.LargeInteger categoriesForMethods!
-storeUnderRegKey:as:!public! !
+			["Generic format for non-String keys - we need to store the pairs and they must be rehashed on load, rather than storing the actual instance variables of the Dictionary"
+			self writeAssociationsToRegistry: aRegistryWriter key: aString]	"But not Symbols"! !
+!Core.Dictionary categoriesForMethods!
+canWriteCompactRegistryFormat!public! !
+writeAssociationsToRegistry:key:!private!serializing! !
+writeToRegistry:name:!public! !
+!
+
+!Core.Dictionary class methodsFor!
+
+keyFromRegName: aString
+	^aString!
+
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
+
+	| rehydrated |
+	anArray size > 1 ifTrue: [^super readFromRegistry: aRegistryDeserializer params: anArray].
+	rehydrated := self new.
+	aRegistryDeserializer
+		registerCurrentObject: rehydrated;
+		namesAndObjectsDo: [:eachName :each | rehydrated at: (self keyFromRegName: eachName) put: each].
+	^rehydrated! !
+!Core.Dictionary class categoriesForMethods!
+keyFromRegName:!public! !
+readFromRegistry:params:!public! !
+!
+
+!Core.False class methodsFor!
+
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
+
+	^false! !
+!Core.False class categoriesForMethods!
+readFromRegistry:params:!public! !
+!
+
+!Core.IdentityDictionary methodsFor!
+
+canWriteCompactRegistryFormat
+	^self allKeysSatisfy: [:each | each isKindOf: Symbol]! !
+!Core.IdentityDictionary categoriesForMethods!
+canWriteCompactRegistryFormat!public! !
+!
+
+!Core.IdentityDictionary class methodsFor!
+
+keyFromRegName: aString
+	^aString asSymbol! !
+!Core.IdentityDictionary class categoriesForMethods!
+keyFromRegName:!public! !
+!
+
+!Core.Interval methodsFor!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	"Override back to object implementation as we don't want to serialize the elements themselves."
+
+	aRegistryWriter basicObjectAt: aString put: self! !
+!Core.Interval categoriesForMethods!
+writeToRegistry:name:!public! !
+!
+
+!Core.Interval class methodsFor!
+
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
+
+	"Override back to the basic implementation."
+
+	^aRegistryDeserializer readObjectOfClass: self params: anArray! !
+!Core.Interval class categoriesForMethods!
+readFromRegistry:params:!public! !
 !
 
 !Core.LargeInteger class methodsFor!
 
-readFromRegKey: aRegKey 
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
+
 	"N.B. Will only get here for cases outside 64-bit 2's complement range."
 
 	| size answer bytes |
-	bytes := aRegKey valueAt: 'value'.
+	bytes := aRegistryDeserializer valueAt: ##('bytes' asUtf16String).
 	size := bytes size.
-	self assert: [(size bitAnd: 3) = 0].
 	answer := self basicNew: size.
 	1 to: size do: [:i | answer basicAt: i put: (bytes basicAt: i)].
+	answer isImmutable: true.
 	^answer! !
 !Core.LargeInteger class categoriesForMethods!
-readFromRegKey:!public! !
+readFromRegistry:params:!public! !
+!
+
+!Core.Locale methodsFor!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	aRegistryWriter
+		classAt: aString
+		put: Locale
+		with: self name! !
+!Core.Locale categoriesForMethods!
+writeToRegistry:name:!public! !
+!
+
+!Core.Locale class methodsFor!
+
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
+
+	^self named: (anArray at: 2)! !
+!Core.Locale class categoriesForMethods!
+readFromRegistry:params:!public! !
+!
+
+!Core.Metaclass methodsFor!
+
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
+
+	^self instanceClass!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	aRegistryWriter
+		classAt: aString
+		put: self class
+		with: (aRegistryWriter nameForClass: self)! !
+!Core.Metaclass categoriesForMethods!
+readFromRegistry:params:!public! !
+writeToRegistry:name:!public! !
+!
+
+!Core.Metaclass class methodsFor!
+
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
+
+	^aRegistryDeserializer findClass: (anArray at: 2)! !
+!Core.Metaclass class categoriesForMethods!
+readFromRegistry:params:!public! !
 !
 
 !Core.Object methodsFor!
 
 storeUnderRegKey: aRegKey as: aString
-	"Store a serialised representation of the receiver to the registry under the <RegKey>,
-	aRegKey, with the <readableString> name, aString."
+	"Store a serialised representation of the receiver to the registry under the <RegKey>, aRegKey, with the <readableString> name, aString."
 
-	| key instVars size |
-	aRegKey removeKey: aString ifAbsent: nil.
-	key := aRegKey createKey: aString.
-	size := self basicSize.
-	key
-		valueAt: nil
-		put: (size > 0
-				ifTrue: 
-					[String writeStream
-						nextPutAll: self class fullName;
-						nextPut: $\0;
-						display: size;
-						contents]
-				ifFalse: [self class fullName])
-		type: #stringArray.
-	instVars := self class allInstVarNames.
-	instVars
-		keysAndValuesDo: [:i :name | name first = $_ ifFalse: [(self instVarAt: i) storeUnderRegKey: key as: name]].
-	1 to: self basicSize do: [:i | (self basicAt: i) storeUnderRegKey: key as: i displayString]! !
+	Notification deprecated.
+	aRegKey objectAt: aString put: self!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	"Reflect back to the writer so it can write either an object reference, or the general purpose format if the object has been written already by the writer."
+
+	aRegistryWriter basicObjectAt: aString put: self! !
 !Core.Object categoriesForMethods!
 storeUnderRegKey:as:!public! !
+writeToRegistry:name:!public! !
 !
 
 !Core.Object class methodsFor!
@@ -169,95 +385,101 @@ storeUnderRegKey:as:!public! !
 fromRegKey: aRegKey
 	"Read an instance of the receiver previously serialised under the specified registry key."
 
-	| params |
-	params := aRegKey value.
-	^params first asQualifiedReference value readFromRegKey: aRegKey! !
+	Notification deprecated.
+	^aRegKey parentKey objectAt: aRegKey name! !
 !Core.Object class categoriesForMethods!
 fromRegKey:!public! !
 !
 
-!Core.SmallInteger methodsFor!
+!Core.SequenceableCollection class methodsFor!
 
-storeUnderRegKey: aRegKey as: aString
-	"Store a serialised representation of the receiver to the registry under the <RegKey>,
-	aRegKey, with the <readableString> name, aString."
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
 
-	self isSDWORD
-		ifTrue: 
-			[aRegKey
-				valueAt: aString
-				put: (External.DWORD fromInteger: self)
-				type: #dword]
-		ifFalse: 
-			[aRegKey
-				valueAt: aString
-				put: (OS.ULARGE_INTEGER fromInteger: self)
-				type: #qword]! !
-!Core.SmallInteger categoriesForMethods!
-storeUnderRegKey:as:!public! !
+	| inst |
+	inst := self ofSize: (OS.Shlwapi strToInt: (anArray at: 2)).
+	aRegistryDeserializer
+		registerCurrentObject: inst;
+		namesAndObjectsDo: [:indexString :each | inst at: (OS.Shlwapi strToInt: indexString) put: each].
+	^inst! !
+!Core.SequenceableCollection class categoriesForMethods!
+readFromRegistry:params:!public! !
 !
 
-!Core.String methodsFor!
+!Core.SortedCollection methodsFor!
 
-storeUnderRegKey: aRegKey as: aString 
-	"Store a serialised representation of the receiver to the registry under the <RegKey>,
-	aRegKey, with the <readableString> name, aString."
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
 
-	aRegKey 
-		valueAt: aString
-		put: self asString
-		type: #string! !
-!Core.String categoriesForMethods!
-storeUnderRegKey:as:!public! !
+	"Override back to generic implementation to preserve the inst vars. Not particularly important for OC, but necessary for SortedCollection."
+
+	aRegistryWriter
+		writeObject: self
+		name: aString
+		parameter: self size
+		do: 
+			[:writer :sorted |
+			sorted algorithm writeToRegistry: aRegistryWriter name: 'algorithm'.
+			sorted
+				keysAndValuesDo: [:eachKey :eachValue | eachValue writeToRegistry: writer name: eachKey printString]]! !
+!Core.SortedCollection categoriesForMethods!
+writeToRegistry:name:!public! !
+!
+
+!Core.SortedCollection class methodsFor!
+
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
+
+	| inst |
+	inst := self ofSize: (OS.Shlwapi strToInt: (anArray at: 2)).
+	aRegistryDeserializer readInstVarsOf: inst.
+	^inst! !
+!Core.SortedCollection class categoriesForMethods!
+readFromRegistry:params:!public! !
 !
 
 !Core.Symbol methodsFor!
 
-storeUnderRegKey: aRegKey as: aString
-	"Store a serialised representation of the receiver to the registry under the <RegKey>,
-	aRegKey, with the <readableString> name, aString."
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
 
-	(aRegKey createKey: aString)
-		valueAt: nil
-		put: (String writeStream
-				display: self class;
-				nextPut: Character null;
-				display: self;
-				contents)
-		type: #stringArray! !
+	aRegistryWriter
+		classAt: aString
+		put: self class
+		with: self! !
 !Core.Symbol categoriesForMethods!
-storeUnderRegKey:as:!public! !
+writeToRegistry:name:!public! !
 !
 
 !Core.Symbol class methodsFor!
 
-readFromRegKey: aRegKey 
+readFromRegistry: aRegistryDeserializer params: anArray
 	"Read an instance of the receiver previously serialised under the specified registry key."
 
-	| params |
-	params := aRegKey value.
-	^self intern: params second! !
+	^self intern: (anArray at: 2)! !
 !Core.Symbol class categoriesForMethods!
-readFromRegKey:!public! !
+readFromRegistry:params:!public! !
 !
 
-!Core.UndefinedObject methodsFor!
+!Core.True class methodsFor!
 
-storeUnderRegKey: aRegKey as: aString 
-	"Store a serialised representation of the receiver to the registry under the <RegKey>,
-	aRegKey, with the <readableString> name, aString."
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
 
-	"Implementation Note: We don't need to store anything for nil's when performing serialisation to the registry."! !
-!Core.UndefinedObject categoriesForMethods!
-storeUnderRegKey:as:!public! !
+	^true! !
+!Core.True class categoriesForMethods!
+readFromRegistry:params:!public! !
 !
 
-!External.DWORDBytes methodsFor!
+!External.Handle methodsFor!
 
-regKeyType
-	^#dword! !
-!External.DWORDBytes categoriesForMethods!
-regKeyType!constants!public! !
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	aRegistryWriter noneAtPut: aString! !
+!External.Handle categoriesForMethods!
+writeToRegistry:name:!public! !
 !
 
 !External.IntegerBytes methodsFor!
@@ -265,20 +487,32 @@ regKeyType!constants!public! !
 regKeyType
 	^self subclassResponsibility!
 
-storeUnderRegKey: aRegKey as: aString 
-	"Store a serialised representation of the receiver to the registry under the <RegKey>,
-	aRegKey, with the <readableString> name, aString."
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
 
-	(aRegKey createKey: aString)
-		valueAt: nil
-			put: self class name
-			type: #stringArray;
-		valueAt: #value
-			put: self
-			type: self regKeyType! !
+	aRegistryWriter
+		bytesAt: aString
+		put: self
+		as: self class! !
 !External.IntegerBytes categoriesForMethods!
 regKeyType!constants!public! !
-storeUnderRegKey:as:!public! !
+writeToRegistry:name:!public! !
+!
+
+!External.UInt32Bytes methodsFor!
+
+regKeyType
+	^#dword! !
+!External.UInt32Bytes categoriesForMethods!
+regKeyType!constants!public! !
+!
+
+!External.UInt64Bytes methodsFor!
+
+regKeyType
+	^#qword! !
+!External.UInt64Bytes categoriesForMethods!
+regKeyType!constants!public! !
 !
 
 !External.UIntPtrBytes methodsFor!
@@ -289,6 +523,185 @@ regKeyType
 	^VMConstants.IsWin64 ifTrue: [#qword] ifFalse: [#dword]! !
 !External.UIntPtrBytes categoriesForMethods!
 regKeyType!public! !
+!
+
+!Graphics.Color methodsFor!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	"Implementation Note: Colors are just stored as a class-key: If named the key includes the name as the 2nd element of the multi-string default value, and if unnamed the RGBA code. Note that the identity of unnamed Colors will not be preserved." 
+
+	aRegistryWriter
+		classAt: aString
+		put: Color
+		with: (self name ifNil: [self rgbaCode])! !
+!Graphics.Color categoriesForMethods!
+writeToRegistry:name:!public! !
+!
+
+!Graphics.Color class methodsFor!
+
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
+
+	^(anArray lookup: 2)
+		ifNil: [super readFromRegistry: aRegistryDeserializer params: anArray]
+		ifNotNil: 
+			[:param |
+			param first isDigit
+				ifTrue: [Color fromRgbaCode: (Shlwapi strToUInt: param)]
+				ifFalse: [self named: param]]! !
+!Graphics.Color class categoriesForMethods!
+readFromRegistry:params:!public! !
+!
+
+!Graphics.Font methodsFor!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	aRegistryWriter
+		writeObject: self
+		name: aString
+		parameter: nil
+		do: [:writer :font | writer objectAt: 'logfont' put: font logFont]! !
+!Graphics.Font categoriesForMethods!
+writeToRegistry:name:!public! !
+!
+
+!Graphics.Font class methodsFor!
+
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised under the specified registry key."
+
+	| font |
+	font := self new.
+	aRegistryDeserializer registerCurrentObject: font.
+	font logFont: (aRegistryDeserializer objectAt: 'logfont').
+	^font! !
+!Graphics.Font class categoriesForMethods!
+readFromRegistry:params:!public! !
+!
+
+!Graphics.VirtualColor methodsFor!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	"Implementation Note: VirtualColors are stored as a class-key if named, otherwise using the generic format."
+
+	self name
+		ifNotNil: 
+			[:n |
+			aRegistryWriter
+				classAt: aString
+				put: Color
+				with: n]
+		ifNil: [aRegistryWriter basicObjectAt: aString put: self]! !
+!Graphics.VirtualColor categoriesForMethods!
+writeToRegistry:name:!public! !
+!
+
+!Kernel.DefaultSortAlgorithm class methodsFor!
+
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
+
+	^self current! !
+!Kernel.DefaultSortAlgorithm class categoriesForMethods!
+readFromRegistry:params:!public! !
+!
+
+!Kernel.MethodAnnotations class methodsFor!
+
+readFromRegistry: aRegistryDeserializer params: anArray
+	"Read an instance of the receiver previously serialised to the registry."
+
+	"Override back to the basic implementation."
+
+	^aRegistryDeserializer readObjectOfClass: self params: anArray! !
+!Kernel.MethodAnnotations class categoriesForMethods!
+readFromRegistry:params:!public! !
+!
+
+!OS.RegKeyAbstract methodsFor!
+
+classAt: aString put: aClass with: parameterObject
+	"Write a class sub-key describing the <Object>, anObject, under the receiver's current key with the <readableString> name, aString. The default value of the sub-key is a REG_MULTISZ, the first element of which is the class short name (i.e. a name that can be used to bind the class in the context of the Smalltalk namespace). The final argument, parameterObject, represents optional additional  metadata and it's display string is stored as the 2nd element of the REG_MULTISZ default value. If parameterObject is nil, then only the class name is written. Typically parameterObject is the indexable size of anObject, but it may be an identifier that uniquely identifies anObject in its class in order that it can be deserialised to the same instance. Answer the REG_MULTISZ <Utf16String> value written as the default value of the key."
+
+	^(OS.RegistrySerializer regKey: self)
+		classAt: aString
+		put: aClass
+		with: parameterObject!
+
+objectAt: aString
+	"Deserialize an <Object> previously serialised to the sub-key/value of the receiver named by the <readableString> argument.
+	If there is no such sub-key/value, throw a NotFoundError."
+
+	^self objectAt: aString ifAbsent: [self errorNotFound: aString]!
+
+objectAt: aString ifAbsent: aNiladicValuable
+	"Deserialize an <Object> previously serialised to the sub-key/value of the receiver named by the <readableString> first argument.
+	If there is no such sub-key/value, answers the result of evaluating the <niladicValuable> second argument."
+
+	^(self subKeys at: aString ifAbsent: nil)
+		ifNil: [self valueAt: aString ifAbsent: aNiladicValuable]
+		ifNotNil: 
+			[:subKey |
+			| object |
+			object := OS.RegistryDeserializer readFrom: subKey.
+			subKey free.
+			object]!
+
+objectAt: aString put: anObject
+	"Serialize the <Object> last argument under a sub-key of the receiver named by the <readableString> first argument. Answer anObject."
+
+	OS.RegistrySerializer
+		write: anObject
+		to: self
+		name: aString.
+	^anObject!
+
+readValueAt: aString into: aByteObject
+	| metadata needsFree |
+	metadata := ByteArray newFixed: 8.
+	metadata dwordAtOffset: 4 put: aByteObject basicSize.
+	needsFree := self realize.
+	AdvApi32
+		regQueryValueEx: handle
+		lpValueName: aString
+		lpReserved: nil
+		lpType: metadata
+		lpData: aByteObject
+		lpcbData: metadata yourAddress + 4.
+	needsFree ifTrue: [self free]! !
+!OS.RegKeyAbstract categoriesForMethods!
+classAt:put:with:!public!serializing! !
+objectAt:!public!serializing! !
+objectAt:ifAbsent:!public!serializing! !
+objectAt:put:!public!serializing! !
+readValueAt:into:!helpers!private! !
+!
+
+!OS.ShlwapiLibrary methodsFor!
+
+strToInt: lpSrc
+	"Invoke the StrToInt() function of the module wrapped by the receiver.
+	Helpstring: Converts a decimal string to an integer
+
+		int __stdcall StrToInt(
+			LPCWSTR lpSrc);"
+
+	<stdcall: sdword StrToIntW lpwstr>
+	^self invalidCall: _failureCode!
+
+strToUInt: pszSrc
+	<stdcall: dword StrToIntW lpwstr>
+	^self invalidCall: _failureCode! !
+!OS.ShlwapiLibrary categoriesForMethods!
+strToInt:!**auto generated**!public!win32 functions-string manipulation! !
+strToUInt:!public!win32 functions-string manipulation! !
 !
 
 "End of package definition"!

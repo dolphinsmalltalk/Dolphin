@@ -506,6 +506,11 @@ bitRepresentation
 
 	^self qwordAtOffset: 0!
 
+byteSize
+	"Floating point objects in Dolphin are always doubles."
+
+	^8!
+
 ceiling
 	"Answer the integer nearest the receiver toward positive infinity."
 
@@ -1033,6 +1038,7 @@ asFloat!converting!public! !
 asFraction!converting!public! !
 asTrueFraction!converting!public! !
 bitRepresentation!accessing!private! !
+byteSize!constants!public! !
 ceiling!public!truncation and round off! !
 coerce:!coercing!private! !
 cos!mathematical!public! !

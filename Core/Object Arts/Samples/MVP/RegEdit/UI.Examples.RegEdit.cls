@@ -460,6 +460,7 @@ displayStringForValue: anObject
 	anObject isNil ifTrue: [^'(value not set)'].
 	anObject isInteger ifTrue: [^'0x%08x (%u)' sprintfWith: anObject with: anObject].
 	anObject isString ifTrue: [^anObject].
+	anObject class == Array ifTrue: [^$\x20 join: anObject].
 	"Assume its a byte array"
 	anObject isEmpty ifTrue: [^'(zero-length binary value)'].
 	n := anObject size.
@@ -495,7 +496,7 @@ initialize
 keyIcon
 	"Answers an Icon that can be used to registry keys."
 
-	^RegKey icon!
+	^Icon shellStock: SHSTOCKICONID.SIID_FOLDER!
 
 onPreStripImage
 	"Private - The image is about to be stripped. Nil any lazily initialized class variables."

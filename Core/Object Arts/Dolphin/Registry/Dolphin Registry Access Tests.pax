@@ -5,6 +5,7 @@ package paxVersion: 2.1;
 
 
 package setClassNames: #(
+	#{OS.Tests.RegistrySerializerTest}
 	#{OS.Tests.RegKeyTest}
 ).
 
@@ -12,17 +13,30 @@ package setPrerequisites: #(
 	'..\IDE\Base\Development System'
 	'..\Base\Dolphin'
 	'..\Base\Tests\Dolphin Base Tests'
+	'..\MVP\Graphics\Dolphin GDI Graphics'
 	'Dolphin Registry Access'
+	'Dolphin Registry Serialisation'
+	'..\MVP\Views\Scintilla\Dolphin Scintilla View'
+).
+
+package setManualPrerequisites: #(
+	'Dolphin Registry Serialisation'
 ).
 
 package!
 
 "Class Definitions"!
 
-Core.Tests.DolphinTest subclass: #'OS.Tests.RegKeyTest'
+Core.Tests.DolphinTest subclass: #'OS.Tests.RegistrySerializerTest'
 	instanceVariableNames: 'testKey'
 	classVariableNames: ''
 	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'OS.Tests.RegKeyTest'
+	instanceVariableNames: 'testKey'
+	classVariableNames: ''
+	imports: #(#{OS.WinRegConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

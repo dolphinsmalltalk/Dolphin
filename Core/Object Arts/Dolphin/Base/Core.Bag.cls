@@ -128,7 +128,7 @@ remove: oldElement ifAbsent: exceptionHandler
 	the result of evaluating the <niladicValuable>, exceptionHandler, 
 	else answer oldElement."
 
-	^(contents at: oldElement ifAbsent: [])
+	^(contents lookup: oldElement)
 		ifNil: [exceptionHandler value]
 		ifNotNil: 
 			[:count |

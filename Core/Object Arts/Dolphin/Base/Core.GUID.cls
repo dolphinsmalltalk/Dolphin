@@ -46,14 +46,11 @@ Class Variables:
 asByteArray
 	"Answer the raw contents of the receiver as a ByteArray."
 
-	| answer |
-	answer := ByteArray new: ByteSize.
-	self
-		replaceBytesOf: answer
+	^self
+		replaceBytesOf: (ByteArray new: ByteSize)
 		from: 1
 		to: ByteSize
-		startingAt: 1.
-	^answer!
+		startingAt: 1!
 
 asInteger
 	"Answer the 128-bit integer value of the receiver."
@@ -83,6 +80,9 @@ asString
 				yourself.
 	OS.Rpcrt4 rpcStringFree: pSz.
 	^string!
+
+byteSize
+	^ByteSize!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see.
@@ -191,8 +191,9 @@ value: guidBytes
 =!comparing!public! !
 asByteArray!converting!public! !
 asInteger!converting!public! !
-asObject!accessing!public! !
+asObject!converting!public! !
 asString!converting!public! !
+byteSize!accessing!public! !
 displayOn:!printing!public! !
 hash!comparing!public! !
 idlString!converting!public! !

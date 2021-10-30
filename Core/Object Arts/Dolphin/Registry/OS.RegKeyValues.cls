@@ -7,20 +7,20 @@ OS.RegKeyAbstract variableSubclass: #'OS.RegKeyValues'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.RegKeyValues guid: (Core.GUID fromString: '{87b4c536-026e-11d3-9fd7-00a0cc3e4a32}')!
-OS.RegKeyValues comment: 'RegKeyValues is the class of objects which represent the dictionary of named values under a particular key in  the Windows Registration Database.
+OS.RegKeyValues comment: '`RegKeyValues` is the class of objects which represent the dictionary of named values under a particular key in  the Windows Registration Database.
 
-RegKeyValues implements the <abstractDictionary> protocol mapping value names to keys and the registry values to dictionary values.'!
+`RegKeyValues` implements the `<abstractDictionary>` protocol mapping value names to dictionary keys and the registry values to dictionary values.'!
 !OS.RegKeyValues categoriesForClass!Collections-Unordered!System-Support! !
 !OS.RegKeyValues methodsFor!
 
 associationAt: key ifAbsent: exceptionHandler
-	"Answer a new <association> between the key and value of
-	the receiver at the argument, key.  If key is not found, answer the
-	result of evaluating the <niladicValuable>, exceptionHandler."
+	"Answer a new <association> between the key and value of the receiver at the <readableString> first argument.  If the specified key is not found, answer the result of evaluating the <niladicValuable> second argument."
 
-	^self associationClass
-		key: key
-		value: (self at: key ifAbsent: [^exceptionHandler value])!
+	| value |
+	value := self at: key ifAbsent: [AbsentCookie].
+	^value == AbsentCookie
+		ifTrue: [exceptionHandler value]
+		ifFalse: [self associationClass key: key value: value]!
 
 at: key ifAbsent: exceptionHandler
 	"Answer the value named by the argument, key.  If keyString is not found,
@@ -102,10 +102,10 @@ keysAndValuesDo: operation
 
 	^self subValueNamesAndValuesDo: operation!
 
-keysDo: operation
+keysDo: aMonadicValuable
 	"Evaluate the monadic valuable, operation, for each of the receiver's sub-keys."
 
-	^super subValueNamesDo: operation!
+	^self subValueNamesDo: aMonadicValuable!
 
 removeKey: key ifAbsent: exceptionHandler
 	"Remove the key (and its associated value), from the receiver. If key is
@@ -124,16 +124,18 @@ size
 subKeys
 	"Answer an <abstractDictionary> of sub-keys in the receiver (a RegKey)."
 
-	^(self subKeyClass
-		name: self name
-		parentPath: self pathFromRoot
-		rootKey: self rootKey
-		sam: self sam)
-			handle: self handle;
-			yourself!
+	| keys |
+	keys := RegKey
+				tally: nil
+				name: name
+				parentPath: self pathFromRoot
+				rootKey: rootKey
+				sam: sam.
+	self isRoot ifTrue: [keys handle: handle].
+	^keys!
 
 subValues
-	"Answer an <abstractDictionary> of sub-keys in the receiver (a RegKeyValues)."
+	"Answer an <abstractDictionary> of sub-values in the receiver (a RegKeyValues)."
 
 	^self! !
 !OS.RegKeyValues categoriesForMethods!

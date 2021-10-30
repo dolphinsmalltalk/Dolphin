@@ -22,20 +22,27 @@ package basicPackageVersion: '6.0'.
 package setClassNames: #(
 	#{OS.RegKey}
 	#{OS.RegKeyAbstract}
+	#{OS.REGKEYINFO}
 	#{OS.RegKeyValues}
-	#{OS.RegQueryInfo}
 ).
 
 package setMethodNames: #(
+	#(#{Core.Array} #writeToRegistry:name:)
+	#(#{Core.ByteArray} #writeToRegistry:name:)
+	#(#{Core.LargeInteger} #writeToRegistry:name:)
+	#(#{Core.SmallInteger} #writeToRegistry:name:)
+	#(#{Core.String} #writeToRegistry:name:)
+	#(#{Core.UndefinedObject} #writeToRegistry:name:)
 	#(#{OS.AdvApiLibrary} #regCloseKey:)
 	#(#{OS.AdvApiLibrary} #regConnectRegistry:hKey:phkResult:)
 	#(#{OS.AdvApiLibrary} #regCreateKeyEx:lpSubKey:reserved:lpClass:dwOptions:samDesired:lpSecurityAttributes:phkResult:lpdwDisposition:)
 	#(#{OS.AdvApiLibrary} #regDeleteKey:lpSubKey:)
+	#(#{OS.AdvApiLibrary} #regDeleteTree:lpSubKey:)
 	#(#{OS.AdvApiLibrary} #regDeleteValue:lpValueName:)
 	#(#{OS.AdvApiLibrary} #regEnumKeyEx:dwIndex:lpName:lpcbName:lpReserved:lpClass:lpcbClass:lpftLastWriteTime:)
 	#(#{OS.AdvApiLibrary} #regEnumValue:dwIndex:lpValueName:lpcbValueName:lpReserved:lpType:lpData:lpcbData:)
 	#(#{OS.AdvApiLibrary} #regOpenKeyEx:lpSubKey:ulOptions:samDesired:phkResult:)
-	#(#{OS.AdvApiLibrary} #regQueryInfoKey:lpClass:lpcbClass:lpReserved:lpcSubKeys:lpcbMaxSubKeyLen:lpcbMaxClassLen:lpcValues:lpcbMaxValueNameLen:lpcbMaxValueLen:lpcbSecurityDescriptor:lpftLastWriteTime:)
+	#(#{OS.AdvApiLibrary} #regQueryInfoKey:lpClass:lpcchClass:lpReserved:lpcSubKeys:lpcbMaxSubKeyLen:lpcbMaxClassLen:lpcValues:lpcbMaxValueNameLen:lpcbMaxValueLen:lpcbSecurityDescriptor:lpftLastWriteTime:)
 	#(#{OS.AdvApiLibrary} #regQueryValueEx:lpValueName:lpReserved:lpType:lpData:lpcbData:)
 	#(#{OS.AdvApiLibrary} #regSetValueEx:lpValueName:reserved:dwType:lpData:cbData:)
 ).
@@ -48,18 +55,14 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'OS.RegQueryInfo'
-	instanceVariableNames: 'keyClass subKeyCount maxSubKeyLen maxClassNameLen valueCount maxValueNameLen maxValueLen securityDescriptorLen lastWriteTime'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Dictionary variableSubclass: #'OS.RegKeyAbstract'
-	instanceVariableNames: 'handle name rootKey parentPath keyInfo sam'
-	classVariableNames: 'AccessModes ValueTypes'
+	instanceVariableNames: 'name parentPath rootKey sam handle keyInfo'
+	classVariableNames: 'AccessModes ValueTypes ValueUnmarshallers'
 	imports: #(#{OS.WinRegConstants} #{OS.Win32Errors})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'PathSeparator' -> '\'
+	}!
 OS.RegKeyAbstract variableSubclass: #'OS.RegKey'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -72,8 +75,100 @@ OS.RegKeyAbstract variableSubclass: #'OS.RegKeyValues'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+External.Structure subclass: #'OS.REGKEYINFO'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_ftLastWriteTime' -> 16r1C.
+		'_OffsetOf_maxClassLen' -> 16r8.
+		'_OffsetOf_maxSubKeyLen' -> 16r4.
+		'_OffsetOf_maxValueLen' -> 16r14.
+		'_OffsetOf_maxValueNameLen' -> 16r10.
+		'_OffsetOf_securityDescriptorLen' -> 16r18.
+		'_OffsetOf_subKeyCount' -> 16r0.
+		'_OffsetOf_valueCount' -> 16rC
+	}!
 
 "Loose Methods"!
+
+!Core.Array methodsFor!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	(self allSatisfy: [:each | each isString and: 
+					["But not Symbols"
+					each isAtomic not]])
+		ifTrue: [aRegistryWriter stringArrayAt: aString put: self]
+		ifFalse: [aRegistryWriter writeCollection: self at: aString]! !
+!Core.Array categoriesForMethods!
+writeToRegistry:name:!public! !
+!
+
+!Core.ByteArray methodsFor!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	aRegistryWriter binaryAt: aString put: self! !
+!Core.ByteArray categoriesForMethods!
+writeToRegistry:name:!public! !
+!
+
+!Core.LargeInteger methodsFor!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	^self basicSize <= 4
+		ifTrue: [aRegistryWriter dwordAt: aString put: self]
+		ifFalse: 
+			[self basicSize <= 8
+				ifTrue: [aRegistryWriter qwordAt: aString put: self]
+				ifFalse: 
+					[aRegistryWriter
+						bytesAt: aString
+						put: self asByteArray
+						as: self class]]! !
+!Core.LargeInteger categoriesForMethods!
+writeToRegistry:name:!public! !
+!
+
+!Core.SmallInteger methodsFor!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	"In the current 32-bit world, all SmallIntegers can be stored as DWORD values, but not so for a 64-bit future"
+
+	(VMConstants.IsWin64 and: [self isSDWORD not])
+		ifTrue: [aRegistryWriter qwordAt: aString put: self]
+		ifFalse: [aRegistryWriter dwordAt: aString put: self]! !
+!Core.SmallInteger categoriesForMethods!
+writeToRegistry:name:!public! !
+!
+
+!Core.String methodsFor!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	aRegistryWriter stringAt: aString put: self! !
+!Core.String categoriesForMethods!
+writeToRegistry:name:!public! !
+!
+
+!Core.UndefinedObject methodsFor!
+
+writeToRegistry: aRegistryWriter name: aString
+	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."
+
+	aRegistryWriter noneAtPut: aString! !
+!Core.UndefinedObject categoriesForMethods!
+writeToRegistry:name:!public! !
+!
 
 !OS.AdvApiLibrary methodsFor!
 
@@ -95,7 +190,7 @@ regConnectRegistry: lpMachineName hKey: hKey phkResult: phkResult
 			PHKEYphkResult 		// address of buffer for remote registry handle);
 	"
 
-	<stdcall: sdword RegConnectRegistryW lpwstr handle lpvoid>
+	<stdcall: errno RegConnectRegistryW lpwstr handle lpvoid>
 	^self invalidCall: _failureCode!
 
 regCreateKeyEx: hKey lpSubKey: lpSubKey reserved: reserved lpClass: lpClass dwOptions: dwOptions samDesired: samDesired lpSecurityAttributes: lpSecurityAttributes phkResult: phkResult lpdwDisposition: lpdwDisposition
@@ -113,7 +208,7 @@ regCreateKeyEx: hKey lpSubKey: lpSubKey reserved: reserved lpClass: lpClass dwOp
 			LPDWORD lpdwDisposition	// address of disposition value buffer 
 		); "
 
-	<stdcall: sdword RegCreateKeyExW handle lpwstr dword lpwstr dword dword lpvoid lpvoid dword*>
+	<stdcall: errno RegCreateKeyExW handle lpwstr dword lpwstr dword dword lpvoid lpvoid dword*>
 	^self invalidCall: _failureCode!
 
 regDeleteKey: hKey lpSubKey: lpSubKey
@@ -129,8 +224,18 @@ regDeleteKey: hKey lpSubKey: lpSubKey
 			LPCTSTRlpSubKey	// address of name of subkey to delete 
 		);"
 
-	<stdcall: sdword RegDeleteKeyW handle lpwstr>
-	^self invalidCall: _failureCode!
+	<stdcall: errno RegDeleteKeyW handle lpwstr>
+	"Custom error handling - ERROR_FILE_NOT_FOUND is returned when the named sub-key does not exist; not an exceptional case"
+	_failureCode == ERROR_FILE_NOT_FOUND
+		ifFalse: [self invalidCall: _failureCode].
+	^_failureCode!
+
+regDeleteTree: hKey lpSubKey: lpSubKey
+	<stdcall: errno RegDeleteTreeW handle lpwstr>
+	"Custom error handling - ERROR_FILE_NOT_FOUND is returned when the named sub-key does not exist; not an exceptional case"
+	_failureCode == ERROR_FILE_NOT_FOUND
+		ifFalse: [self invalidCall: _failureCode].
+	^_failureCode!
 
 regDeleteValue: hKey lpValueName: lpValueName
 	"Delete the specified registry value of the key whose handle is hKey.
@@ -140,7 +245,7 @@ regDeleteValue: hKey lpValueName: lpValueName
 			LPCTSTRlpValueName	// address of value name 
 		);"
 
-	<stdcall: sdword RegDeleteValueW handle lpwstr>
+	<stdcall: errno RegDeleteValueW handle lpwstr>
 	^self invalidCall: _failureCode!
 
 regEnumKeyEx: hKey dwIndex: dwIndex lpName: lpName lpcbName: lpcbName lpReserved: lpReserved lpClass: lpClass lpcbClass: lpcbClass lpftLastWriteTime: lpftLastWriteTime
@@ -157,8 +262,11 @@ regEnumKeyEx: hKey dwIndex: dwIndex lpName: lpName lpcbName: lpcbName lpReserved
 			PFILETIME lpftLastWriteTime	// address for time key last written to 
 		);"
 
-	<stdcall: sdword RegEnumKeyExW handle sdword lpwstr dword* dword* lpwstr dword* FILETIME*>
-	^self invalidCall: _failureCode!
+	<stdcall: errno RegEnumKeyExW handle sdword lpwstr dword* dword* lpwstr dword* FILETIME*>
+	"Custom error handling - ERROR_NO_MORE_ITEMS is not really an error, just an end of collection indication"
+	(_failureCode == ERROR_NO_MORE_ITEMS or: [_failureCode == ERROR_MORE_DATA])
+		ifFalse: [self invalidCall: _failureCode].
+	^_failureCode!
 
 regEnumValue: hKey dwIndex: dwIndex lpValueName: lpValueName lpcbValueName: lpcbValueName lpReserved: lpReserved lpType: lpType lpData: lpData lpcbData: lpcbData
 	"
@@ -173,8 +281,12 @@ regEnumValue: hKey dwIndex: dwIndex lpValueName: lpValueName lpcbValueName: lpcb
 			LPDWORD lpcbData 		// address for size of data buffer 
 		); "
 
-	<stdcall: sdword RegEnumValueW handle dword lpwstr dword* dword* dword* lpvoid dword*>
-	^self invalidCall: _failureCode!
+	"Custom error handling - ERROR_NO_MORE_ITEMS is not really an error, just an end of collection indication. ERROR_MORE_DATA indicates one of the buffers may be too small."
+
+	<stdcall: errno RegEnumValueW handle dword lpwstr dword* dword* dword* lpvoid dword*>
+	(_failureCode == ERROR_NO_MORE_ITEMS or: [_failureCode == ERROR_MORE_DATA])
+		ifFalse: [self invalidCall: _failureCode].
+	^_failureCode!
 
 regOpenKeyEx: hKey lpSubKey: lpSubKey ulOptions: ulOptions samDesired: samDesired phkResult: phkResult
 	"Opens the specified registry key. Answers appropriate Win32 extended error code.
@@ -186,10 +298,13 @@ regOpenKeyEx: hKey lpSubKey: lpSubKey ulOptions: ulOptions samDesired: samDesire
 			PHKEY phkResult 	// address of handle of open key 
 		);"
 
-	<stdcall: sdword RegOpenKeyExW handle lpwstr dword dword lpvoid>
-	^self invalidCall: _failureCode!
+	<stdcall: errno RegOpenKeyExW handle lpwstr dword dword lpvoid>
+	"Custom error handling - ERROR_FILE_NOT_FOUND is returned when the named sub-key does not exist; not an exceptional case"
+	_failureCode == ERROR_FILE_NOT_FOUND
+		ifFalse: [self invalidCall: _failureCode].
+	^_failureCode!
 
-regQueryInfoKey: hKey lpClass: lpClass lpcbClass: lpcbClass lpReserved: lpReserved lpcSubKeys: lpcSubKeys lpcbMaxSubKeyLen: lpcbMaxSubKeyLen lpcbMaxClassLen: lpcbMaxClassLen lpcValues: lpcValues lpcbMaxValueNameLen: lpcbMaxValueNameLen lpcbMaxValueLen: lpcbMaxValueLen lpcbSecurityDescriptor: lpcbSecurityDescriptor lpftLastWriteTime: lpftLastWriteTime
+regQueryInfoKey: hKey lpClass: lpClass lpcchClass: lpcbClass lpReserved: lpReserved lpcSubKeys: lpcSubKeys lpcbMaxSubKeyLen: lpcbMaxSubKeyLen lpcbMaxClassLen: lpcbMaxClassLen lpcValues: lpcValues lpcbMaxValueNameLen: lpcbMaxValueNameLen lpcbMaxValueLen: lpcbMaxValueLen lpcbSecurityDescriptor: lpcbSecurityDescriptor lpftLastWriteTime: lpftLastWriteTime
 	"Answer (a lot of) information about a specified registry key. 
 
 		LONG RegQueryInfoKey ( 
@@ -207,7 +322,7 @@ regQueryInfoKey: hKey lpClass: lpClass lpcbClass: lpcbClass lpReserved: lpReserv
 			PFILETIME lpftLastWriteTime			// address of buffer for last write time 
 	 ); "
 
-	<stdcall: sdword RegQueryInfoKeyW handle lpwstr dword* dword* dword* dword* dword* dword* dword* dword* dword* FILETIME*>
+	<stdcall: errno RegQueryInfoKeyW handle lpvoid dword* dword* dword* dword* dword* dword* dword* dword* dword* FILETIME*>
 	^self invalidCall: _failureCode!
 
 regQueryValueEx: kKey lpValueName: lpValueName lpReserved: lpReserved lpType: lpType lpData: lpData lpcbData: lpcbData
@@ -221,8 +336,11 @@ regQueryValueEx: kKey lpValueName: lpValueName lpReserved: lpReserved lpType: lp
 			LPDWORD lpcbData 		// address of data buffer size 
 		);"
 
-	<stdcall: sdword RegQueryValueExW handle lpwstr dword* dword* lpvoid dword*>
-	^self invalidCall: _failureCode!
+	<stdcall: errno RegQueryValueExW handle lpwstr dword* dword* lpvoid dword*>
+	"Custom error handling - ERROR_FILE_NOT_FOUND is returned when the named value does not exist; not an exceptional case"
+	_failureCode == ERROR_FILE_NOT_FOUND
+		ifFalse: [self invalidCall: _failureCode].
+	^_failureCode!
 
 regSetValueEx: kKey lpValueName: lpValueName reserved: dwReserved dwType: dwType lpData: lpData cbData: cbData
 	"Store the type and data for a specified value name associated with an open registry key.
@@ -235,18 +353,19 @@ regSetValueEx: kKey lpValueName: lpValueName reserved: dwReserved dwType: dwType
 			DWORD lpcbData 	// data buffer size 
 		);"
 
-	<stdcall: sdword RegSetValueExW handle lpwstr dword dword lpvoid dword>
+	<stdcall: errno RegSetValueExW handle lpwstr dword dword lpvoid dword>
 	^self invalidCall: _failureCode! !
 !OS.AdvApiLibrary categoriesForMethods!
 regCloseKey:!public!win32 functions-registry! !
 regConnectRegistry:hKey:phkResult:!public!win32 functions-registry! !
 regCreateKeyEx:lpSubKey:reserved:lpClass:dwOptions:samDesired:lpSecurityAttributes:phkResult:lpdwDisposition:!public!win32 functions-registry! !
 regDeleteKey:lpSubKey:!public!win32 functions-registry! !
+regDeleteTree:lpSubKey:!public!win32 functions-registry! !
 regDeleteValue:lpValueName:!public!win32 functions-registry! !
 regEnumKeyEx:dwIndex:lpName:lpcbName:lpReserved:lpClass:lpcbClass:lpftLastWriteTime:!public!win32 functions-registry! !
 regEnumValue:dwIndex:lpValueName:lpcbValueName:lpReserved:lpType:lpData:lpcbData:!public!win32 functions-registry! !
 regOpenKeyEx:lpSubKey:ulOptions:samDesired:phkResult:!public!win32 functions-registry! !
-regQueryInfoKey:lpClass:lpcbClass:lpReserved:lpcSubKeys:lpcbMaxSubKeyLen:lpcbMaxClassLen:lpcValues:lpcbMaxValueNameLen:lpcbMaxValueLen:lpcbSecurityDescriptor:lpftLastWriteTime:!public!win32 functions-registry! !
+regQueryInfoKey:lpClass:lpcchClass:lpReserved:lpcSubKeys:lpcbMaxSubKeyLen:lpcbMaxClassLen:lpcValues:lpcbMaxValueNameLen:lpcbMaxValueLen:lpcbSecurityDescriptor:lpftLastWriteTime:!public!win32 functions-registry! !
 regQueryValueEx:lpValueName:lpReserved:lpType:lpData:lpcbData:!public!win32 functions-registry! !
 regSetValueEx:lpValueName:reserved:dwType:lpData:cbData:!public!win32 functions-registry! !
 !

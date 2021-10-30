@@ -737,7 +737,12 @@ initialize
 invalidCall: anInteger
 	"Private - An invalid external call was attempted through one of the receiver's methods. The argument is the failure code from the external call primitive."
 
-	^anInteger == SOCKET_ERROR ifTrue: [Net.SocketError signal] ifFalse: [super invalidCall: anInteger]!
+	^anInteger == SOCKET_ERROR
+		ifTrue: [Net.SocketError signal]
+		ifFalse: 
+			[anInteger >= 0
+				ifTrue: [self primitiveFailed: anInteger]
+				ifFalse: [self invalidCall: anInteger fromFrame: Processor activeProcess topFrame sender]]!
 
 invalidOverlappedCall: anInteger
 	"Private - An invalid overlapped external call was attempted through one of the receiver's methods. The argument is the failure code from the external call primitive."

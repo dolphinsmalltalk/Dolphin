@@ -29,7 +29,7 @@ booleanOptions
 	^#(#('AutoCompleteEnabled' #isAutoCompleteEnabled #isAutoCompleteEnabled:))!
 
 booleanViewOptions
-	^#(#('IdentationGuides' #hasIndentationGuides #hasIndentationGuides:) #('FormattingMarks' #hasFormattingMarks #hasFormattingMarks:) #('WordWrap' #hasWordWrap #hasWordWrap:) #('LineNumbers' #hasLineNumbers #hasLineNumbers:) #('AutoCompleteSingle' #isAutoCompletionSingleMatchChosen #isAutoCompletionSingleMatchChosen:) #('AutoCompleteTruncate' #isAutoCompletionTruncating #isAutoCompletionTruncating:) #('Folding' #isFoldingEnabled #isFoldingEnabled:))!
+	^#(#('IdentationGuides' #hasIndentationGuides #hasIndentationGuides:) #('FormattingMarks' #hasFormattingMarks #hasFormattingMarks:) #('WordWrap' #hasWordWrap #hasWordWrap:) #('LineNumbers' #hasLineNumbers #hasLineNumbers:) #('AutoCompleteSingle' #isAutoCompletionSingleMatchChosen #isAutoCompletionSingleMatchChosen:) #('AutoCompleteTruncate' #isAutoCompletionTruncating #isAutoCompletionTruncating:) #('Folding' #isFoldingEnabled #isFoldingEnabled:) #('SavePlacement' #isRememberingPlacement #isRememberingPlacement:))!
 
 canSave
 	"Answer whether the document is in a valid state and can be saved. Here we check that the document consists of valid Xml."
@@ -70,7 +70,7 @@ hasWordWrap: aBoolean
 
 initialize
 	super initialize.
-	viewOptions := 0.!
+	viewOptions := RememberPlacementMask.!
 
 isAutoCompleteEnabled
 	^false!
@@ -103,6 +103,40 @@ isRememberingPlacement
 
 isRememberingPlacement: aBoolean 
 	viewOptions := viewOptions mask: RememberPlacementMask set: aBoolean!
+
+loadLegacySettings
+	"For legacy format settings, saved prior to Dolphin 8, we do not use the RegistryDeserializer."
+
+	^(self class userSettingsRootKey lookup: self class legacySettingsKeyName)
+		ifNotNil: 
+			[:settingsKey |
+			| settings bools |
+			settings := LookupTable new.
+			bools := Set new.
+			bools addAll: (self booleanOptions collect: [:each | each first]).
+			bools addAll: (self booleanViewOptions collect: [:each | each first]).
+			settingsKey subValueNamesAndValuesDo: 
+					[:eachName :each |
+					settings at: eachName put: ((bools includes: eachName) ifTrue: [each asBoolean] ifFalse: [each])].
+			(settingsKey objectAt: 'TextStyles' ifAbsent: nil)
+				ifNotNil: [:styles | settings at: 'TextStyles' put: styles].
+			settingsKey free.
+			settings]!
+
+loadSettings
+	^(self class userSettingsRootKey lookup: self class settingsKeyName)
+		ifNil: [self loadLegacySettings]
+		ifNotNil: 
+			[:settingsKey |
+			| settings deserializer |
+			deserializer := OS.RegistryDeserializer regKey: settingsKey.
+			deserializer
+				addSafeClass: WINDOWPLACEMENT;
+				addSafeClass: LOGFONTW;
+				addSafeClass: UI.Scintilla.TextStyle.
+			settings := deserializer readObject.
+			settingsKey free.
+			settings]!
 
 parseXml
 	^self parseXml: self getDocumentData validate: false!
@@ -138,6 +172,12 @@ queryCommand: query
 				isEnabled: true;
 				isChecked: self statusBar isWindowVisible.
 			^true].
+	cmd == #toggleRememberPlacement
+		ifTrue: 
+			[query
+				isEnabled: true;
+				isChecked: self isRememberingPlacement.
+			^true].
 	^super queryCommand: query!
 
 reformatXml
@@ -159,79 +199,49 @@ reformatXml
 		targetAll;
 		replaceTarget: reformatted!
 
-restoreBooleanOptions: anArrayOfPairs fromRegKey: aRegKey
-	| values |
-	values := aRegKey subValues.
-	anArrayOfPairs
-		do: [:each | values at: each first ifPresent: [:bool | self perform: each third with: bool asBoolean]]!
+restoreBooleanOptions: anArrayOfPairs from: values
+	"Note that we must be careful to #perform: only a fixed set of mutators configured in the application code itself. This avoids the potential for code injection that would arise if we sent messages with names loaded from the registry. We also clamp the values to true/false."
 
-restoreTabWidth: aRegKey
-	aRegKey subValues at: 'TabWidth' ifPresent: [:width | self tabWidth: width]!
-
-restoreTextStyles: aRegKey
-	aRegKey at: 'TextStyles'
-		ifPresent: 
-			[:key |
-			| styles |
-			styles := Object fromRegKey: key.
-			self scintilla textStyles: styles]!
+	anArrayOfPairs do: 
+			[:each |
+			values at: each first
+				ifPresent: 
+					[:value |
+					##(LookupTable withAll: {true -> true. false -> false. 1 -> true. 0 -> false}) at: value
+						ifPresent: [:bool | self perform: each third with: bool]]]!
 
 restoreUserSettings
-	| settingsKey rootKey |
-	rootKey := self class userSettingsRootKey.
-	settingsKey := rootKey at: self class settingsKeyName
-				ifAbsent: 
-					[rootKey at: self class legacySettingsKeyName
-						ifAbsent: [rootKey createKey: self class settingsKeyName]].
-	self restoreViewOptions: settingsKey.
-	self restoreBooleanOptions: self booleanOptions fromRegKey: settingsKey!
-
-restoreViewOptions: aRegKey
-	self restoreBooleanOptions: self booleanViewOptions fromRegKey: aRegKey.
-	self restoreTextStyles: aRegKey.
-	self restoreTabWidth: aRegKey!
-
-saveBooleanOptions: anArrayOfPairs underRegKey: aRegKey
-	| values |
-	values := aRegKey subValues.
-	anArrayOfPairs do: [:each | values at: each first put: (self perform: each second) asParameter]!
-
-saveFontSetting: aRegKey
-	aRegKey valueAt: 'Font' put: self view actualFont logFont!
-
-saveOptions: aRegKey
-	self saveViewOptions: aRegKey.
-	self saveBooleanOptions: self booleanOptions underRegKey: aRegKey!
-
-saveTabWidth: aRegKey
-	aRegKey valueAt: 'TabWidth' put: self tabWidth!
-
-saveTextStyles: aRegKey
-	self scintilla textStyles asArray storeUnderRegKey: aRegKey as: 'TextStyles'!
+	| settings |
+	settings := self loadSettings.
+	settings ifNil: [^self].
+	self restoreBooleanOptions: self booleanViewOptions from: settings.
+	self isRememberingPlacement
+		ifTrue: [(settings at: 'Placement' ifAbsent: nil) ifNotNil: [:placement | view placement: placement]].
+	(settings at: 'TextStyles' ifAbsent: nil) ifNotNil: [:styles | self scintilla textStyles: styles].
+	(settings at: 'TabWidth' ifAbsent: nil)
+		ifNotNil: [:width | (width isInteger and: [width between: 1 and: 16]) ifTrue: [self tabWidth: width]].
+	self restoreBooleanOptions: self booleanOptions from: settings!
 
 saveUserSettings
 	"Private - Save the users configuration to the registry."
 
-	| settingsKey |
-	settingsKey := self class userSettingsKey.
-	self
-		saveOptions: settingsKey;
-		saveWindowPlacement: settingsKey!
-
-saveViewOptions: aRegKey
-	aRegKey valueAt: 'SavePlacement' put: self isRememberingPlacement asParameter.
-	self saveTabWidth: aRegKey.
-	self saveBooleanOptions: self booleanViewOptions underRegKey: aRegKey.
-	self saveTextStyles: aRegKey!
-
-saveWindowPlacement: aRegKey
+	| settings |
+	settings := LookupTable new.
+	settings at: 'TabWidth' put: self tabWidth.
+	self booleanViewOptions do: [:each | settings at: each first put: (self perform: each second)].
+	settings at: 'TextStyles' put: self scintilla textStyles asArray.
+	self booleanOptions do: [:each | settings at: each first put: (self perform: each second)].
 	self isRememberingPlacement
 		ifTrue: 
 			[| placement |
 			placement := self view placement.
 			placement showCmd: (self view isMaximized ifTrue: [SW_SHOWMAXIMIZED] ifFalse: [SW_SHOW]).
-			aRegKey valueAt: 'placement' put: placement]
-		ifFalse: [aRegKey removeSubValue: 'placement' ifAbsent: []]!
+			settings at: 'Placement' put: placement].
+	settings at: 'Font' put: self view actualFont logFont.
+	OS.RegistrySerializer
+		write: settings
+		to: self class userSettingsRootKey
+		name: self class settingsKeyName!
 
 scintilla
 	^documentPresenter view!
@@ -244,6 +254,9 @@ tabWidth
 
 tabWidth: anInteger 
 	self scintilla tabWidth: anInteger!
+
+toggleRememberPlacement
+	self isRememberingPlacement: self isRememberingPlacement not!
 
 toolbar
 	^self view viewNamed: 'toolbar'!
@@ -288,27 +301,20 @@ isFoldingEnabled!public!testing! !
 isFoldingEnabled:!accessing!public! !
 isRememberingPlacement!commands!public! !
 isRememberingPlacement:!public!testing! !
+loadLegacySettings!public! !
+loadSettings!public! !
 parseXml!helpers!private! !
 parseXml:validate:!helpers!private! !
 queryCommand:!commands!private! !
 reformatXml!commands!public! !
-restoreBooleanOptions:fromRegKey:!operations!private! !
-restoreTabWidth:!operations!private! !
-restoreTextStyles:!helpers!private! !
+restoreBooleanOptions:from:!operations!private! !
 restoreUserSettings!helpers!private! !
-restoreViewOptions:!operations!private! !
-saveBooleanOptions:underRegKey:!helpers!private! !
-saveFontSetting:!helpers!private! !
-saveOptions:!helpers!private! !
-saveTabWidth:!helpers!private! !
-saveTextStyles:!helpers!private! !
 saveUserSettings!helpers!private! !
-saveViewOptions:!helpers!private! !
-saveWindowPlacement:!helpers!private! !
 scintilla!accessing!private! !
 statusBar!accessing!private! !
 tabWidth!accessing!private! !
 tabWidth:!accessing!private! !
+toggleRememberPlacement!public! !
 toolbar!accessing!private! !
 validateXml!commands!public! !
 viewStatusBar!commands!private! !
@@ -381,18 +387,13 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 917510 ##(Graphics.Color) #face3d nil 551 nil nil nil 416 984838 ##(UI.BorderLayout) 1 1 410 ##(UI.Toolbar) 34 28 nil 416 34 2 8 1140853508 131137 528 nil 466 #default nil 519 nil 852998 ##(Graphics.Font) nil true 655622 ##(OS.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 918022 ##(Graphics.Point) 193 193 nil 528 592 8 1731461760 170 192 8 #() nil nil nil 170 192 34 18 27643 1443398 1 ##(UI.ToolbarSystemButton) 528 1 1377606 4 ##(UI.CommandDescription) #copySelection 8 'Copy' 1 1 nil 27643 1 3 27639 802 528 1 834 #find 8 'Find' 1 1 nil 27639 1 25 27635 802 528 1 834 #fileOpen 8 'Open' 1 1 nil 27635 1 15 27649 802 528 1 834 #undo 8 'Undo' 1 1 nil 27649 1 7 27645 802 528 1 834 #pasteClipboard 8 'Paste' 1 1 nil 27645 1 5 27641 802 528 1 834 #cutSelection 8 'Cut' 1 1 nil 27641 1 1 27637 802 528 1 834 #fileSave 8 'Save' 1 1 nil 27637 1 17 27633 802 528 1 834 #fileNew 8 'New' 1 1 nil 27633 1 13 27647 802 528 1 834 #clearSelection 8 'Delete' 1 1 nil 27647 1 11 34 11 1168 928 1120 1245766 1 ##(UI.ToolbarSeparator) 528 1 880 1282 528 1 1072 816 1024 1216 976 nil nil 1 nil 690 33 33 690 45 45 nil 852806 1 ##(UI.FlowLayout) 1 1 1 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 690 1 1 690 2369 51 528 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 160 4 0 0 25 0 0 0] 8 #() 690 193 193 nil 29 410 ##(UI.StatusBar) 34 21 nil 416 34 2 8 1140850948 1 1616 nil 592 nil 7 nil 610 nil true 642 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 690 193 193 nil 1616 nil 8 1731009616 170 192 34 2 1050438 1 ##(UI.StatusBarItem) 8193 -1 1616 nil 786950 ##(Core.Message) #displayString 8 #() 1246566 3 ##(Kernel.BlockClosure) 0 nil 1377574 ##(Kernel.CompiledMethod) 3 3 1792 #defaultGetImageBlock 462740483 8 #[31 105 226 0 159 106] #icon #imageIndex 1888 7 257 nil nil 8 'status' nil nil nil 34 1 1808 1311814 1 ##(UI.StatusBarNullItem) 8705 1 1616 nil nil 1394 138 144 34 1 1458 #createAt:extent: 34 2 690 1 1491 690 2369 45 1616 1538 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 233 2 0 0 160 4 0 0 255 2 0 0] 8 #() 1600 nil 29 nil nil 410 ##(UI.Scintilla.ScintillaView) 34 52 nil 416 34 2 8 1174475012 262145 2176 918598 2 ##(UI.ValueHolder) nil false 1769478 ##(Kernel.EqualitySearchPolicy) nil 592 nil 23 nil nil nil 2176 nil 8 2031624084 1049094 ##(UI.NullConverter) nil nil 9 382953025 170 192 34 60 #comment 1444934 1 ##(UI.Scintilla.TextStyle) 19 466 #olive nil 1 nil nil nil nil #comment nil nil nil #sgmlFirstParam 2386 47 786758 1 ##(Graphics.RGB) 52225 2450 33546207 1 nil nil nil nil #sgmlFirstParam nil nil nil #sgmlSingleString 2386 51 2450 26419 2450 33546207 1 nil nil nil nil #sgmlSingleString nil nil nil #singleString 2386 15 2450 16646399 nil 1 nil nil nil nil #singleString nil nil nil #normal 2386 1 nil nil 1 nil nil nil nil #normal nil nil nil #attribute 2386 7 466 #teal nil 1 nil nil nil nil #attribute nil nil nil #tag 2386 3 466 #navy nil 1 nil nil nil nil #tag nil nil nil #otherInsideTag 2386 17 466 #purple nil 1 nil nil nil nil #otherInsideTag nil nil nil #indentGuide 2386 75 nil nil 1 nil nil nil nil #indentGuide nil nil nil #unknownAttribute 2386 9 2608 nil 1 nil nil nil nil #unknownAttribute nil nil nil #sgmlDoubleString 2386 49 466 #maroon 2450 33546207 1 nil nil nil nil #sgmlDoubleString nil nil nil #identifierStart 2386 27 2672 nil 3 nil nil nil nil #identifierStart nil 1401 nil #doubleString 2386 13 2450 16646399 nil 1 nil nil nil nil #doubleString nil nil nil #entity 2386 21 2672 nil 1 nil nil nil nil #entity nil nil nil #sgmlError 2386 53 2736 2450 13422079 1 nil nil nil nil #sgmlError nil nil nil #sgmlSpecial 2386 55 2450 33475687 2450 33546207 1 nil nil nil nil #sgmlSpecial nil nil nil #callTip 2386 77 466 #gray 466 #white 1 nil nil nil nil #callTip nil nil nil #sgmlTag 2386 43 2640 2450 33546207 1 nil nil nil nil #sgmlTag nil nil nil #identifierEnd 2386 25 2672 nil 3 nil nil nil nil #identifierEnd nil 1401 nil #unknownTag 2386 5 2640 nil 1 nil nil nil nil #unknownTag nil nil nil #question 2386 37 2736 nil 1 nil nil nil nil #question nil nil nil #CDATA 2386 35 2736 2450 31580671 129 nil nil nil nil #CDATA nil nil nil #sgmlBlock 2386 63 2450 13369345 2450 29464985 1 nil nil nil nil #sgmlBlock nil nil nil #sgmlCommand 2386 45 2640 2450 33546207 3 nil nil nil nil #sgmlCommand nil 1401 nil #lineNumber 2386 67 nil nil 1 nil nil nil nil #lineNumber nil nil nil #unquotedValue 2386 39 2450 12648641 nil 1 nil nil nil nil #unquotedValue nil nil nil #styleTagEnd 2386 23 2640 nil 1 nil nil nil nil #styleTagEnd nil nil nil #number 2386 11 2450 16711169 nil 1 nil nil nil nil #number nil nil nil #sgmlComment 2386 59 2416 2450 33546207 1 nil nil nil nil #sgmlComment nil nil nil #sgmlEntity 2386 57 2450 6710887 2450 33546207 1 nil nil nil nil #sgmlEntity nil nil nil nil 1507654 1 ##(UI.Scintilla.NullStyler) #normal 170 192 34 14 #folder 1903686 2 ##(UI.Scintilla.MarkerDefinition) 61 17 2944 466 #black 2176 #folder nil nil nil nil nil nil #folderMidTail 3394 55 11 2944 3424 2176 #folderMidTail nil nil nil nil nil nil #folderSub 3394 59 11 2944 3424 2176 #folderSub nil nil nil nil nil nil #folderEnd 3394 51 11 2944 3424 2176 #folderEnd nil nil nil nil nil nil #folderOpen 3394 63 15 2944 3424 2176 #folderOpen nil nil nil nil nil nil #folderOpenMid 3394 53 11 2944 3424 2176 #folderOpenMid nil nil nil nil nil nil #folderTail 3394 57 11 2944 3424 2176 #folderTail nil nil nil nil nil nil 138 ##(Core.IdentitySet) 752 nil 170 176 752 123903 nil nil 170 176 34 2 81 466 #windowText nil nil nil nil 65 nil nil nil 8 '' 5 170 192 34 4 #xml 2352 #container 170 192 34 60 #comment 2400 #sgmlFirstParam 2432 #sgmlSingleString 2496 #singleString 2544 #normal 2576 #attribute 2592 #tag 2624 #otherInsideTag 2656 #indentGuide 2688 #unknownAttribute 2704 #sgmlDoubleString 2720 #identifierStart 2768 #doubleString 2784 #entity 2816 #sgmlError 2832 #sgmlSpecial 2864 #callTip 2912 #sgmlTag 2960 #identifierEnd 2992 #unknownTag 3008 #question 3024 #CDATA 3040 #sgmlBlock 3072 #sgmlCommand 3120 #lineNumber 3152 #unquotedValue 3168 #styleTagEnd 3200 #number 3216 #sgmlComment 3248 #sgmlEntity 3280 nil nil #plusMinus 33 208 nil 170 192 34 6 8 'indicator1' 1772614 4 ##(UI.Scintilla.IndicatorStyle) 3 2176 466 #blue 5 1 nil nil nil nil nil nil nil 8 'indicator2' 3746 5 2176 466 #red 1 1 nil nil nil nil nil nil nil 8 'indicator0' 3746 1 2176 466 #commonGreen 3 1 nil nil nil nil nil nil nil nil nil 170 192 34 6 #Notification 2386 1029 nil 466 #gainsboro 1 nil nil nil nil #Notification nil nil nil #Warning 2386 1027 466 #darkGoldenrod 466 #ivory 1 nil nil nil nil #Warning nil nil nil #Error 2386 1031 466 #firebrick 466 #floralWhite 1 nil nil nil nil #Error nil nil nil nil nil nil 1394 138 144 34 6 1458 #createAt:extent: 34 2 690 1 51 690 2369 1441 2176 1458 #wordWrap: 8 #(true) 2176 1458 #margins: 34 1 34 3 1247302 3 ##(UI.Scintilla.Margin) 1 2176 1 3 nil nil nil nil 4242 3 2176 33 nil nil 67108863 nil nil 4242 5 2176 33 nil 3 -67108863 nil nil 2176 1458 #canHScroll: 8 #(false) 2176 1458 #maxCompletionListHeight: 8 #(9) 2176 1458 #setLexerLanguage: 8 #(#xml) 2176 1538 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 25 0 0 0 160 4 0 0 233 2 0 0] 8 #() 1600 nil 35 170 192 34 6 1616 8 'statusbar' 528 8 'toolbar' 2176 8 'document' nil 658246 4 ##(UI.MenuBar) nil true 34 4 461638 4 ##(UI.Menu) nil true 34 6 1180742 2 ##(UI.CommandMenuItem) 1 834 #fileNew 8 '&New' 9373 1 nil nil nil 4626 1 834 #fileOpen 8 '&Open…' 9375 1 nil nil nil 4626 1 834 #fileSave 8 '&Save' 9383 1 nil nil nil 4626 1 834 #fileSaveAs 8 'Save &As…' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 4626 1 834 #exit 8 'E&xit' 1025 1 nil nil nil 8 '&File' nil 1 nil nil 27661 nil nil 4578 nil true 34 15 4626 1 834 #undo 8 '&Undo' 9397 1 nil nil nil 4626 1 834 #redo 8 '&Redo' 9395 1 nil nil nil 4834 4097 4626 1 834 #cutSelection 8 'Cu&t' 9393 1 nil nil nil 4626 1 834 #copySelection 8 '&Copy' 9351 1 nil nil nil 4626 1 834 #pasteClipboard 8 '&Paste' 9389 1 nil nil nil 4626 1 834 #clearSelection 8 'Cle&ar' 1025 1 nil nil nil 4626 1 834 #selectAll 8 'Select All' 9347 1 nil nil nil 4834 4097 4626 1 834 #reformatXml 8 'Refor&mat' 1 1 nil nil nil 4626 1 834 #validateXml 8 '&Validate' 1 1 nil nil nil 4834 4097 4626 1 834 #find 8 '&Find…' 9357 1 nil nil nil 4626 1 834 #findNext 8 'Find &Next' 1253 1 nil nil nil 4626 1 834 #findReplace 8 'R&eplace…' 9361 1 nil nil nil 8 '&Edit' nil 1 nil nil 27687 nil nil 4578 nil true 34 7 4626 1 834 #viewToolbar 8 '&Toolbar' 1025 1 nil nil nil 4626 1 834 #viewStatusBar 8 '&Status Bar' 1025 1 nil nil nil 4834 4097 4626 1 834 #foldAll 8 '&Fold All' 1 1 nil nil nil 4626 1 834 #unfoldAll 8 '&Unfold All' 1 1 nil nil nil 4834 4097 4578 nil true 34 1 4626 1 834 #editStyles 8 'Text &Styles' 1 1 nil nil nil 8 '&Options' nil 134217729 nil nil 27699 nil nil 8 '&View' nil 1 nil nil 27701 nil nil 4578 nil true 34 3 4626 1 834 #help 8 '&Help Topics' 1025 1 nil nil nil 4834 4097 4626 1 834 #about 8 '&About' 1 1 nil nil nil 8 '&Help' nil 1 nil nil 27707 nil nil 8 '' nil 1 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 1394 138 144 34 1 1458 #createAt:extent: 34 2 690 12287 21 690 2401 1653 416 1538 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 175 28 0 0 68 3 0 0] 34 3 528 2176 1616 1600 nil 27 )!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 917510 ##(Graphics.Color) #face3d nil 551 nil nil nil 416 984838 ##(UI.BorderLayout) 1 1 410 ##(UI.Toolbar) 34 28 nil 416 34 2 8 1140853508 131137 528 nil 466 #default nil 519 nil 852998 ##(Graphics.Font) nil true 655622 ##(OS.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 918022 ##(Graphics.Point) 193 193 nil 528 592 8 1878972656 170 192 8 #() nil nil nil 170 192 34 18 15909 1443398 1 ##(UI.ToolbarSystemButton) 528 1 1377606 4 ##(UI.CommandDescription) #clearSelection 8 'Delete' 1 1 nil 15909 1 11 15905 802 528 1 834 #copySelection 8 'Copy' 1 1 nil 15905 1 3 15901 802 528 1 834 #find 8 'Find' 1 1 nil 15901 1 25 15897 802 528 1 834 #fileOpen 8 'Open' 1 1 nil 15897 1 15 15911 802 528 1 834 #undo 8 'Undo' 1 1 nil 15911 1 7 15907 802 528 1 834 #pasteClipboard 8 'Paste' 1 1 nil 15907 1 5 15903 802 528 1 834 #cutSelection 8 'Cut' 1 1 nil 15903 1 1 15899 802 528 1 834 #fileSave 8 'Save' 1 1 nil 15899 1 17 15895 802 528 1 834 #fileNew 8 'New' 1 1 nil 15895 1 13 34 11 1216 976 1168 1245766 1 ##(UI.ToolbarSeparator) 528 1 928 1282 528 1 1120 880 1072 816 1024 nil nil 1 nil 690 33 33 690 45 45 nil 852806 1 ##(UI.FlowLayout) 1 1 1 1310982 ##(Core.MessageSequence) 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 690 1 1 690 2369 51 528 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 160 4 0 0 25 0 0 0] 8 #() 690 193 193 nil 29 410 ##(UI.StatusBar) 34 21 nil 416 34 2 8 1140850948 1 1600 nil 592 nil 7 nil 610 nil true 642 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 690 193 193 nil 1600 nil 8 1878525968 170 192 34 2 1050438 1 ##(UI.StatusBarItem) 8193 -1 1600 nil 786950 ##(Core.Message) #displayString 8 #() 1246566 3 ##(Kernel.BlockClosure) 0 nil 1377574 ##(Kernel.CompiledMethod) 3 3 1776 #defaultGetImageBlock 462740483 8 #[31 105 226 0 159 106] #icon #imageIndex 1872 7 257 nil nil 8 'status' nil nil nil 34 1 1792 1311814 1 ##(UI.StatusBarNullItem) 8705 1 1600 nil nil 1394 34 1 1442 #createAt:extent: 34 2 690 1 1491 690 2369 45 1600 1522 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 233 2 0 0 160 4 0 0 255 2 0 0] 8 #() 1584 nil 29 nil nil 410 ##(UI.Scintilla.ScintillaView) 34 52 nil 416 34 2 8 1174475012 262145 2144 918598 2 ##(UI.ValueHolder) nil false 1769478 ##(Kernel.EqualitySearchPolicy) nil 592 nil 23 nil nil nil 2144 nil 8 1847796792 1049094 ##(UI.NullConverter) nil nil 9 nil 170 192 34 60 #callTip 1444934 1 ##(UI.Scintilla.TextStyle) 77 466 #gray 466 #white 1 nil nil nil nil #callTip nil nil nil #tag 2354 3 466 #navy nil 1 nil nil nil nil #tag nil nil nil #sgmlComment 2354 59 466 #olive 786758 1 ##(Graphics.RGB) 33546207 1 nil nil nil nil #sgmlComment nil nil nil #sgmlSpecial 2354 55 2482 33475687 2482 33546207 1 nil nil nil nil #sgmlSpecial nil nil nil #singleString 2354 15 2482 16646399 nil 1 nil nil nil nil #singleString nil nil nil #sgmlError 2354 53 466 #maroon 2482 13422079 1 nil nil nil nil #sgmlError nil nil nil #otherInsideTag 2354 17 466 #purple nil 1 nil nil nil nil #otherInsideTag nil nil nil #normal 2354 1 nil nil 1 nil nil nil nil #normal nil nil nil #identifierStart 2354 27 2656 nil 3 nil nil nil nil #identifierStart nil 1401 nil #lineNumber 2354 67 nil nil 1 nil nil nil nil #lineNumber nil nil nil #identifierEnd 2354 25 2656 nil 3 nil nil nil nil #identifierEnd nil 1401 nil #sgmlDoubleString 2354 49 2608 2482 33546207 1 nil nil nil nil #sgmlDoubleString nil nil nil #sgmlTag 2354 43 2432 2482 33546207 1 nil nil nil nil #sgmlTag nil nil nil #unknownTag 2354 5 2432 nil 1 nil nil nil nil #unknownTag nil nil nil #question 2354 37 2608 nil 1 nil nil nil nil #question nil nil nil #CDATA 2354 35 2608 2482 31580671 129 nil nil nil nil #CDATA nil nil nil #sgmlFirstParam 2354 47 2482 52225 2482 33546207 1 nil nil nil nil #sgmlFirstParam nil nil nil #sgmlSingleString 2354 51 2482 26419 2482 33546207 1 nil nil nil nil #sgmlSingleString nil nil nil #attribute 2354 7 466 #teal nil 1 nil nil nil nil #attribute nil nil nil #unquotedValue 2354 39 2482 12648641 nil 1 nil nil nil nil #unquotedValue nil nil nil #sgmlCommand 2354 45 2432 2482 33546207 3 nil nil nil nil #sgmlCommand nil 1401 nil #number 2354 11 2482 16711169 nil 1 nil nil nil nil #number nil nil nil #sgmlBlock 2354 63 2482 13369345 2482 29464985 1 nil nil nil nil #sgmlBlock nil nil nil #entity 2354 21 2656 nil 1 nil nil nil nil #entity nil nil nil #comment 2354 19 2464 nil 1 nil nil nil nil #comment nil nil nil #doubleString 2354 13 2482 16646399 nil 1 nil nil nil nil #doubleString nil nil nil #sgmlEntity 2354 57 2482 6710887 2482 33546207 1 nil nil nil nil #sgmlEntity nil nil nil #indentGuide 2354 75 nil nil 1 nil nil nil nil #indentGuide nil nil nil #unknownAttribute 2354 9 2976 nil 1 nil nil nil nil #unknownAttribute nil nil nil #styleTagEnd 2354 23 2432 nil 1 nil nil nil nil #styleTagEnd nil nil nil nil 1507654 1 ##(UI.Scintilla.NullStyler) #normal 170 192 34 14 #folderSub 1903686 2 ##(UI.Scintilla.MarkerDefinition) 59 11 2400 466 #black 2144 #folderSub nil nil nil nil nil nil #folder 3362 61 17 2400 3392 2144 #folder nil nil nil nil nil nil #folderTail 3362 57 11 2400 3392 2144 #folderTail nil nil nil nil nil nil #folderOpenMid 3362 53 11 2400 3392 2144 #folderOpenMid nil nil nil nil nil nil #folderMidTail 3362 55 11 2400 3392 2144 #folderMidTail nil nil nil nil nil nil #folderEnd 3362 51 11 2400 3392 2144 #folderEnd nil nil nil nil nil nil #folderOpen 3362 63 15 2400 3392 2144 #folderOpen nil nil nil nil nil nil 138 ##(Core.IdentitySet) 752 nil 170 176 752 123903 nil nil 170 176 34 2 81 466 #windowText nil nil 2162950 ##(UI.Scintilla.NullScintillaLibrary) nil 65 nil nil nil 8 '' 5 170 192 34 4 #xml 2320 #container 170 192 34 60 #callTip 2368 #tag 2416 #sgmlComment 2448 #sgmlSpecial 2512 #singleString 2560 #sgmlError 2592 #otherInsideTag 2640 #normal 2672 #identifierStart 2688 #lineNumber 2704 #identifierEnd 2720 #sgmlDoubleString 2736 #sgmlTag 2768 #unknownTag 2800 #question 2816 #CDATA 2832 #sgmlFirstParam 2864 #sgmlSingleString 2912 #attribute 2960 #unquotedValue 2992 #sgmlCommand 3024 #number 3056 #sgmlBlock 3088 #entity 3136 #comment 3152 #doubleString 3168 #sgmlEntity 3200 #indentGuide 3248 #unknownAttribute 3264 #styleTagEnd 3280 nil nil #plusMinus 33 208 nil 170 192 34 6 8 'indicator2' 1772614 4 ##(UI.Scintilla.IndicatorStyle) 5 2144 466 #red 1 1 nil nil nil nil nil nil nil 8 'indicator0' 3746 1 2144 466 #commonGreen 3 1 nil nil nil nil nil nil nil 8 'indicator1' 3746 3 2144 466 #blue 5 1 nil nil nil nil nil nil nil nil nil 170 192 34 6 #Warning 2354 1027 466 #darkGoldenrod 466 #ivory 1 nil nil nil nil #Warning nil nil nil #Error 2354 1031 466 #firebrick 466 #floralWhite 1 nil nil nil nil #Error nil nil nil #Notification 2354 1029 nil 466 #gainsboro 1 nil nil nil nil #Notification nil nil nil nil nil nil 1394 34 6 1442 #createAt:extent: 34 2 690 1 51 690 2369 1441 2144 1442 #wordWrap: 8 #(true) 2144 1442 #margins: 34 1 34 3 1247302 3 ##(UI.Scintilla.Margin) 1 2144 1 3 nil nil nil nil 4226 3 2144 33 nil nil 67108863 nil nil 4226 5 2144 33 nil 3 -67108863 nil nil 2144 1442 #canHScroll: 8 #(false) 2144 1442 #maxCompletionListHeight: 8 #(9) 2144 1442 #setLexerLanguage: 8 #(#xml) 2144 1522 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 25 0 0 0 160 4 0 0 233 2 0 0] 8 #() 1584 nil 35 170 192 34 6 528 8 'toolbar' 2144 8 'document' 1600 8 'statusbar' nil 658246 4 ##(UI.MenuBar) nil true 34 4 461638 4 ##(UI.Menu) nil true 34 6 1180742 2 ##(UI.CommandMenuItem) 1 834 #fileNew 8 '&New' 9373 1 nil nil nil 4610 1 834 #fileOpen 8 '&Open…' 9375 1 nil nil nil 4610 1 834 #fileSave 8 '&Save' 9383 1 nil nil nil 4610 1 834 #fileSaveAs 8 'Save &As…' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 4610 1 834 #exit 8 'E&xit' 1025 1 nil nil nil 8 '&File' nil 1 nil nil 16167 nil nil 4562 nil true 34 15 4610 1 834 #undo 8 '&Undo' 9397 1 nil nil nil 4610 1 834 #redo 8 '&Redo' 9395 1 nil nil nil 4818 4097 4610 1 834 #cutSelection 8 'Cu&t' 9393 1 nil nil nil 4610 1 834 #copySelection 8 '&Copy' 9351 1 nil nil nil 4610 1 834 #pasteClipboard 8 '&Paste' 9389 1 nil nil nil 4610 1 834 #clearSelection 8 'Cle&ar' 1025 1 nil nil nil 4610 1 834 #selectAll 8 'Select All' 9347 1 nil nil nil 4818 4097 4610 1 834 #reformatXml 8 'Refor&mat' 1 1 nil nil nil 4610 1 834 #validateXml 8 '&Validate' 1 1 nil nil nil 4818 4097 4610 1 834 #find 8 '&Find…' 9357 1 nil nil nil 4610 1 834 #findNext 8 'Find &Next' 1253 1 nil nil nil 4610 1 834 #findReplace 8 'R&eplace…' 9361 1 nil nil nil 8 '&Edit' nil 1 nil nil 16193 nil nil 4562 nil true 34 7 4610 1 834 #viewToolbar 8 '&Toolbar' 1025 1 nil nil nil 4610 1 834 #viewStatusBar 8 '&Status Bar' 1025 1 nil nil nil 4818 4097 4610 1 834 #foldAll 8 '&Fold All' 1 1 nil nil nil 4610 1 834 #unfoldAll 8 '&Unfold All' 1 1 nil nil nil 4818 4097 4562 nil true 34 2 4610 1 834 #editStyles 8 'Text &Styles' 1 1 nil nil nil 4610 1 834 #toggleRememberPlacement 8 '&Remember Placement' 1 1 nil nil nil 8 '&Options' nil 134217729 nil nil 16207 nil nil 8 '&View' nil 1 nil nil 16209 nil nil 4562 nil true 34 3 4610 1 834 #help 8 '&Help Topics' 1025 1 nil nil nil 4818 4097 4610 1 834 #about 8 '&About' 1 1 nil nil nil 8 '&Help' nil 1 nil nil 16215 nil nil 8 '' nil 1 nil nil nil nil nil nil nil nil 1 nil nil nil nil 1 nil nil 1394 34 1 1442 #createAt:extent: 34 2 690 12287 21 690 2401 1653 416 1522 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 175 28 0 0 68 3 0 0] 34 3 528 2144 1600 1584 nil 27 )!
 
 settingsKeyName
-	^self toolName, ' 7.2'!
+	^self toolName, ' 8.0'!
 
 toolName
 	^self name!
-
-userSettingsKey
-	"Private - Answer the <RegKey> under which user specific settings should be stored."
-
-	^self userSettingsRootKey createKey: self settingsKeyName!
 
 userSettingsRootKey
 	^RegKey userRoot createKey: self installKeyName! !
@@ -409,7 +410,6 @@ legacySettingsKeyName!private! !
 resource_Default_view!public!resources-views! !
 settingsKeyName!accessing!public! !
 toolName!accessing!public! !
-userSettingsKey!accessing!public! !
 userSettingsRootKey!accessing!public! !
 !
 

@@ -943,7 +943,9 @@ makeLcId: langIdWord sortId: sortIdBits
 named: aString
 	"Answer a sub-instance of the receiver to represent the Locale with the specified name."
 
-	^aString <=> 'smalltalk' == 0 ifTrue: [self smalltalk] ifFalse: [OS.WindowsLocale named: aString]!
+	(aString equalsIgnoreCase: 'smalltalk') ifTrue: [^self smalltalk].
+	(aString equalsIgnoreCase: 'invariant') ifTrue: [^self invariant].
+	^OS.WindowsLocale named: aString!
 
 onPreStripImage
 	"Private -  Assist in the image stripping process by clearning down any lazily initialized variables held by the receiver."

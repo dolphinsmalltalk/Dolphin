@@ -75,6 +75,9 @@ testMonthName
 testName
 	self assert: self defaultSubject name equals: 'invariant'!
 
+testNamed
+	self assert: (Locale named: 'Invariant') identicalTo: self defaultSubject!
+
 testNameOfDay
 	self verifyEnglishNamesOfDays: self defaultSubject!
 
@@ -153,6 +156,7 @@ testLowercaseString!public!unit tests! !
 testMonthAbbreviations!public!unit tests! !
 testMonthName!public!unit tests! !
 testName!public!unit tests! !
+testNamed!public!unit tests! !
 testNameOfDay!public!unit tests! !
 testPrintFloatGrouping!public!unit tests! !
 testPrintFloatSeparators!public!unit tests! !

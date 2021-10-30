@@ -503,6 +503,15 @@ broadcast: aSymbol with: aParameter
 	self dependents nonCorpsesDo: [:dependent | 
 		dependent perform: aSymbol with: aParameter]!
 
+byteSize
+	"Answer the size in bytes of the receiver."
+
+	| class |
+	class := self basicClass.
+	^class isPointers
+		ifTrue: [(class instSize + self basicSize) * VMConstants.IntPtrSize]
+		ifFalse: [self basicSize * class elementSize]!
+
 changed
 	"The receiver changed in some general way; inform all the dependents by sending 
 	each of them an #update: message with nil as an argument."
@@ -1571,6 +1580,7 @@ binaryStoreOn:!binary filing!public! !
 breakDependents!dependency!public! !
 broadcast:!dependency!public! !
 broadcast:with:!dependency!public! !
+byteSize!accessing!public! !
 changed!dependency!public! !
 changed:!dependency!public! !
 changed:with:!dependency!public! !

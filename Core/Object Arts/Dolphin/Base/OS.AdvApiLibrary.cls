@@ -29,6 +29,13 @@ getUserName: buffer nSize: pBufSize
 	<stdcall: bool GetUserNameW lpwstr dword*>
 	^self invalidCall: _failureCode!
 
+invalidCall: anInteger
+	"Private - An invalid external call was attempted through one of the receiver's methods. The argument is the failure code from the external call primitive."
+
+	^anInteger > 0
+		ifTrue: [self systemError: anInteger]
+		ifFalse: [self invalidCall: anInteger fromFrame: Processor activeProcess topFrame sender]!
+
 isTextUnicode: lpv iSize: iSize lpiResult: lpiResult
 	"
 	BOOL IsTextUnicode(
@@ -91,6 +98,7 @@ reportEvent: hEventLog wType: wType wCategory: wCategory dwEventId: dwEventId lp
 !OS.AdvApiLibrary categoriesForMethods!
 deregisterEventSource:!public!win32 functions-events! !
 getUserName:nSize:!public!win32 functions-system information! !
+invalidCall:!exceptions!private! !
 isTextUnicode:iSize:lpiResult:!public!win32 functions-unicode and character set! !
 regGetValue:lpSubKey:lpValue:dwFlags:pdwType:pvData:pcbData:!public!win32 functions-registry! !
 regSetKeyValue:lpSubKey:lpValueName:dwType:lpData:cbData:!public!win32 functions-registry! !
