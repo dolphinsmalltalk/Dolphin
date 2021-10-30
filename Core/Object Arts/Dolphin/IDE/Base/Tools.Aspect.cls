@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.AttributeDescriptor subclass: #'Tools.Aspect'
-	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category getBlock putBlock type icon'
+	instanceVariableNames: 'name presenterBlock editBlock immediateActionBlock category getBlock putBlock type icon defaultValue'
 	classVariableNames: 'DefaultPresenterBlock'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -103,6 +103,16 @@ category: aSymbol
 defaultFlags
 	^##(WriteableMask | ReadableMask | MutableMask | NullableMask)!
 
+defaultValue
+	"Answer the default value of the aspect, or nil if no default value is specified."
+
+	^defaultValue!
+
+defaultValue: aNiladicValuable
+	"Set the default value of the aspect. If the default is nil, then the aspect is assumed to be nullable. If the default is not nil, then the aspect is assumed to be non-nullable."
+
+	flags := flags mask: NullableMask set: (defaultValue := aNiladicValuable) isNil!
+
 displayAspectInfoOf: anObject on: aStream 
 	self displayAspectValueOf: anObject on: aStream!
 
@@ -154,8 +164,13 @@ getBlock: aMonadicValuable
 getSelector
 	"Private - Answers the selector used for getting the aspect value from the subject if the getBlock is not set."
 
-	^self name asSymbol
+	^name
 !
+
+hasDefault
+	"Answer whether the receiver has a default value (other than nil)."
+
+	^defaultValue notNil!
 
 hash
 	"Answer the <Integer> hash value for the receiver."
@@ -207,7 +222,7 @@ key
 	^self name!
 
 name
-	"Answer the aspect name Symbol of the receiver"
+	"Answer the aspect name <Symbol> of the receiver"
 
 	^name!
 
@@ -255,7 +270,7 @@ putBlock: aDyadicValuable
 	putBlock := aDyadicValuable!
 
 putSelector
-	^(self getSelector copyWith: $:) asSymbol!
+	^(self getSelector , ':') asSymbol!
 
 readFrom: anObject
 	^getBlock ifNil: [anObject perform: self getSelector] ifNotNil: [getBlock value: anObject]!
@@ -294,6 +309,8 @@ canWriteInto:!private!testing! !
 category!public! !
 category:!public! !
 defaultFlags!initializing!private! !
+defaultValue!accessing!public! !
+defaultValue:!accessing!public! !
 displayAspectInfoOf:on:!displaying!private! !
 displayAspectNameOf:on:!displaying!private! !
 displayAspectText:on:!displaying!private! !
@@ -305,6 +322,7 @@ editBlock!accessing!public! !
 editBlock:!initializing!public! !
 getBlock:!accessing!public! !
 getSelector!accessing!private! !
+hasDefault!public!testing! !
 hash!comparing!public! !
 icon!accessing!public! !
 icon:!initializing!public! !
@@ -386,6 +404,7 @@ boolean: aBooleanAspectSymbol
 		flags: ##(WriteableMask | ReadableMask | MutableMask);
 		immediateActionBlock: editBlock;
 		type: Boolean;
+		defaultValue: false;
 		yourself!
 
 choice: aChoiceAspectSymbol choiceBlock: aMonadicValuable

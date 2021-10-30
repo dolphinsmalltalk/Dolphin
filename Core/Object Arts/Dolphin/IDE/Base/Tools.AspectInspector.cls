@@ -39,11 +39,6 @@ beSmallIcons
 
 	aspectTreePresenter view viewMode: #smallIcons!
 
-canNilAspect
-	"Private - Answer true if the currently selected aspect can be set"
-
-	^self aspectAccessor ifNil: [false] ifNotNil: [:accessor | accessor canNil]!
-
 canSetAspect
 	"Private - Answer true if the currently selected aspect can be set"
 
@@ -137,13 +132,6 @@ model: aValueModel
 	self onValueChanged
 !
 
-nilAspect
-	"Clears the currently selected aspect to nil"
-
-	(MessageBox new
-		headline: 'Are you sure you wish to set this item to nil?';
-		confirm) ifTrue: [self setAspectValue: nil]!
-
 onAspectSelected
 	"Private - An aspect accessor has been selected within the aspect tree."
 
@@ -192,9 +180,13 @@ queryCommand: query
 		ifTrue: 
 			[query isEnabled: accessor notNil.
 			^true].
-	#nilAspect == command
+	#resetAspect == command
 		ifTrue: 
-			[query isEnabled: (accessor notNil and: [accessor canNil]).
+			[query
+				isEnabled: (accessor notNil and: [accessor canReset]);
+				text: (query commandDescription menuText
+							expandMacrosWithArguments: {accessor isNil or: [accessor aspectDescriptor hasDefault not]}
+							locale: Locale smalltalk).
 			^true].
 	#pasteAspect == command
 		ifTrue: 
@@ -214,6 +206,16 @@ queryCommand: query
 refresh
 	^self subclassResponsibility!
 
+resetAspect
+	"Clears the currently selected aspect to nil or its default value"
+
+	| aspect default |
+	aspect := self aspectAccessor aspectDescriptor.
+	default := aspect defaultValue.
+	(MessageBox new
+		headline: 'Are you sure you wish to set this item to <?nil:it''s default>?' << default isNil;
+		confirm) ifTrue: [self setAspectValue: default value]!
+
 setAspectValue: anObject
 	"Private - Set the value associated with the currently selected
 	instance variable name to anObject."
@@ -226,7 +228,6 @@ aspectTreePresenter!public! !
 aspectValue!accessing!private! !
 beLargeIcons!operations!public! !
 beSmallIcons!operations!public! !
-canNilAspect!operations!private! !
 canSetAspect!operations!private! !
 copyAspect!commands!public! !
 copyOfAccessorValue:!accessing!private! !
@@ -236,7 +237,6 @@ expandBatchAccessor:!event handling!private! !
 inspecteeSelection!accessing!private! !
 inspectReferences!commands!public! !
 model:!accessing!public! !
-nilAspect!commands!public! !
 onAspectSelected!event handling!private! !
 onDragObjectRef:!event handling!private! !
 onViewAvailable!event handling!public! !
@@ -244,6 +244,7 @@ onViewOpened!event handling!public! !
 pasteAspect!commands!public! !
 queryCommand:!commands!private! !
 refresh!commands!public! !
+resetAspect!commands!public! !
 setAspectValue:!accessing!private! !
 !
 

@@ -67,6 +67,11 @@ canNil
 
 	^self canSet and: [self aspectDescriptor isNullable]!
 
+canReset
+	"Private - Answer whether the receiver can be nulled or reset to its default."
+
+	^self canSet and: [aspectDescriptor isNullable or: [aspectDescriptor defaultValue notNil]]!
+
 canSet
 	"Private - Answer whether the receiver can be set using #value:."
 
@@ -238,6 +243,7 @@ canEdit!operations!public! !
 canGet!public!testing! !
 canImmediateAction!public!testing! !
 canNil!public!testing! !
+canReset!public!testing! !
 canSet!public!testing! !
 defaultComparisonPolicy!initializing!private! !
 displayOn:!displaying!public! !
