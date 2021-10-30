@@ -14,6 +14,25 @@ OS.Tests.FILETIMETest comment: ''!
 assertFromIntegerInvertible: anInteger
 	self assert: (FILETIME fromInteger: anInteger) asInteger equals: (anInteger bitAnd: 2 ** 64 - 1)!
 
+testAsDateAndTime
+	| epoch subject dt |
+	epoch := DateAndTime
+				year: 1601
+				day: 1
+				offset: 0 seconds.
+	subject := FILETIME new.
+	self assert: subject printString equals: 'a FILETIME( 1601-01-01T00:00:00+00:00)'.
+	self assert: subject asDateAndTime equals: epoch.
+	"We are only checking here for TZ issues, so use a fairly coarse comparison."
+	subject := FILETIME now.
+	dt := DateAndTime now.
+	self assert: dt - subject asDateAndTime < 1 minutes!
+
+testFromDateAndTime
+	| subject |
+	subject := FILETIME fromDateAndTime: (DateAndTime year: 1601 day: 1 offset: 0 seconds).
+	self assert: subject asInteger equals: 0!
+
 testFromInteger
 	self assertFromIntegerInvertible: 126661379535479952.
 	self assertFromIntegerInvertible: 0.
@@ -26,9 +45,17 @@ testFromInteger
 	self assertFromIntegerInvertible: -1.
 	self assertFromIntegerInvertible: -2 ** 31.
 	self assertFromIntegerInvertible: -2 ** 32.
-	self assertFromIntegerInvertible: -2 ** 63! !
+	self assertFromIntegerInvertible: -2 ** 63!
+
+testFromUnixTime
+	| subject |
+	subject := FILETIME fromUnixTime: 3.
+	self assert: subject printString equals: 'a FILETIME( 1970-01-01T00:00:03+00:00)'! !
 !OS.Tests.FILETIMETest categoriesForMethods!
 assertFromIntegerInvertible:!helpers!private! !
+testAsDateAndTime!public!unit tests! !
+testFromDateAndTime!public!unit tests! !
 testFromInteger!public!unit tests! !
+testFromUnixTime!public!unit tests! !
 !
 

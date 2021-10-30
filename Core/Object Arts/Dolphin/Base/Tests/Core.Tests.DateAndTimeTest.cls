@@ -94,6 +94,12 @@ testAsDate
 				monthIndex: 2
 				year: 2000)!
 
+testAsFILETIME
+	| filetime |
+	filetime := self canonicalInstance asFILETIME.
+	"Note that there is some small loss of precision as FILETIMEs do not have unlimited precision like DateAndTime."
+	self assert: filetime printString equals: 'a FILETIME( 2000-03-01T01:29:59.6666666+00:00)'!
+
 testAsSeconds
 	"For compatibility with traditional Smalltalk Dates, we use the same epoch as the base for asSeconds, i.e. 1st Jan 1901"
 
@@ -199,6 +205,18 @@ testDayOfWeekName
 
 testDayOfYear
 	self assert: self canonicalInstance dayOfYear equals: 31 + 29!
+
+testFromFILETIME
+	| ts ft |
+	"2021-10-03T17:15:44.3946219Z"
+	ft := OS.FILETIME fromInteger: 132777549443946219.
+	ts := DateAndTime fromFILETIME: ft.
+	self assert: ts dayOfMonth equals: 3.
+	self assert: ts month equals: 10.
+	self assert: ts year equals: 2021.
+	self assert: ts hour equals: 17.
+	self assert: ts minute equals: 15.
+	self assert: ts second equals: 443946219 / 1e7!
 
 testFromString
 	| fromString fromStringNoOffset |
@@ -733,6 +751,7 @@ canonicalInstance!constants!private! !
 julianEpoch!constants!private! !
 testAddDuration!public! !
 testAsDate!public!unit tests! !
+testAsFILETIME!public!unit tests! !
 testAsSeconds!public!unit tests! !
 testAsSYSTEMTIME!public!unit tests! !
 testAsSYSTEMTIMEInvalidMilliseconds!public!unit tests! !
@@ -744,6 +763,7 @@ testDayOfWeek!public!unit tests! !
 testDayOfWeekAbbreviation!public!unit tests! !
 testDayOfWeekName!public!unit tests! !
 testDayOfYear!public!unit tests! !
+testFromFILETIME!public! !
 testFromString!public!unit tests! !
 testFromSYSTEMTIME!public! !
 testHour!public!unit tests! !

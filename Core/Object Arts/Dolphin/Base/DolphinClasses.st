@@ -4305,12 +4305,14 @@ OS.Win32Structure subclass: #'OS.EXCEPTION_RECORD'
 	}!
 OS.Win32Structure subclass: #'OS.FILETIME'
 	instanceVariableNames: ''
-	classVariableNames: 'UnixEpoch'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwHighDateTime' -> 16r4.
-		'_OffsetOf_dwLowDateTime' -> 16r0
+		'_OffsetOf_dwLowDateTime' -> 16r0.
+		'SmalltalkEpoch' -> 16r150560D76A70000.
+		'UnixEpoch' -> 16r19DB1DED53E8000
 	}!
 OS.Win32Structure subclass: #'OS.MSG'
 	instanceVariableNames: ''

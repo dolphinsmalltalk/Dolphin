@@ -2,12 +2,14 @@
 
 OS.Win32Structure subclass: #'OS.FILETIME'
 	instanceVariableNames: ''
-	classVariableNames: 'UnixEpoch'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_dwHighDateTime' -> 16r4.
-		'_OffsetOf_dwLowDateTime' -> 16r0
+		'_OffsetOf_dwLowDateTime' -> 16r0.
+		'SmalltalkEpoch' -> 16r150560D76A70000.
+		'UnixEpoch' -> 16r19DB1DED53E8000
 	}!
 OS.FILETIME guid: (Core.GUID fromString: '{87b4c5f1-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.FILETIME comment: 'FILETIME is an ExternalStructure class to represent the Win32 FILETIME structure.
@@ -17,6 +19,9 @@ A FILETIME is a 64-bit integer count of the number of 100 nanosecond intervals s
 FILETIMEs are typically used to mark file creation/modification/access times with very high accurracy in a time zone independent manner.'!
 !OS.FILETIME categoriesForClass!External-Data-Structured-Win32! !
 !OS.FILETIME methodsFor!
+
+asDateAndTime
+	^DateAndTime fromFILETIME: self asUTC!
 
 asFILETIME
 	"Answer the receiver as a FILETIME (which it is already)."
@@ -65,7 +70,7 @@ basicAsSYSTEMTIME
 	^answer!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see. This will be in local time."
 
 	self asSYSTEMTIME displayOn: aPuttableStream!
 
@@ -75,6 +80,7 @@ integerValue: anInteger
 
 	bytes qwordAtOffset: 0 put: anInteger! !
 !OS.FILETIME categoriesForMethods!
+asDateAndTime!converting!public! !
 asFILETIME!converting!public! !
 asInteger!converting!public! !
 asLocalTime!converting!public! !
@@ -102,6 +108,11 @@ defineFields
 		defineField: #dwLowDateTime type: DWORDField filler;
 		defineField: #dwHighDateTime type: DWORDField filler!
 
+fromDateAndTime: aDateAndTime
+	"Answer a <FILETIME> equivalent to the specified <DateAndTime>"
+
+	^self fromInteger: (SmalltalkEpoch + (aDateAndTime asSeconds * 1e7)) truncated!
+
 fromInteger: anInteger 
 	"Answer an instance of the receiver for the specified <integer> number
 	of 100 nanosecond intervals since 01:00:00, 01 January 1601."
@@ -128,7 +139,7 @@ fromUnixTime: time_t
 	of seconds elapsed since midnight (00:00:00), January 1, 1970, coordinated
 	universal time."
 
-	^self fromInteger: UnixEpoch + (time_t * 10000000)!
+	^self fromInteger: UnixEpoch + (time_t * 1e7)!
 
 getFieldNames
 	^#()!
@@ -138,12 +149,11 @@ initialize
 		FILETIME initialize
 	"
 
-	| baseFiletime |
-	baseFiletime := (SYSTEMTIME
-				day: 1
-				month: 1
-				year: 1970) asFILETIME.
-	UnixEpoch := baseFiletime bytes qwordAtOffset: 0!
+	| filetimeEpoch |
+	filetimeEpoch := (DateAndTime year: 1601 day: 1 offset: 0 seconds) asSeconds.
+	self addClassConstant: 'UnixEpoch'
+		value: (0 - filetimeEpoch + (DateAndTime year: 1970 day: 1 offset: 0 seconds) asSeconds) * 1e7.
+	self addClassConstant: 'SmalltalkEpoch' value: (0 - filetimeEpoch) * 1e7!
 
 now
 	"Answer the current FILETIME. 
@@ -157,6 +167,7 @@ now
 	^answer! !
 !OS.FILETIME class categoriesForMethods!
 defineFields!public!template definition! !
+fromDateAndTime:!instance creation!public! !
 fromInteger:!instance creation!public! !
 fromLocalTime:!instance creation!public! !
 fromSYSTEMTIME:!instance creation!public! !

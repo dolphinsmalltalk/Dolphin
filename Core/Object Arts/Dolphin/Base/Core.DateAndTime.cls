@@ -57,6 +57,11 @@ Core.DateAndTime comment: '`DateAndTime` is an implementation of the ANSI Smallt
 
 	^self species == comparand species and: [self asSeconds = comparand asSeconds]!
 
+asFILETIME
+	"Answer a <FILETIME> representing the same point in time as the receiver. This is a fairly accurate conversion as FILETIME's have a precision of 100nS."
+
+	^OS.FILETIME fromDateAndTime: self!
+
 asLocal
 	"Answer a <DateAndTime> that represents the same UTC time as the receiver, but in the local time of the host OS."
 
@@ -154,9 +159,10 @@ dayOfYear
 	^self dayMonthYearDo: [:d :m :y | (self class daysToMonth: m forYear: y) + d]!
 
 displayOn: aPuttableStream
-	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see.
+	In this case a <Locale> appropriate representation of the local time equivalent to the receiver."
 
-	aPuttableStream locale displayDateTime: self on: aPuttableStream!
+	aPuttableStream locale displayDateTime: self asLocal on: aPuttableStream!
 
 hash
 	"Answer the SmallInteger hash value for the receiver."
@@ -407,6 +413,7 @@ year
 +!arithmetic!public! !
 <!comparing!public! !
 =!comparing!public! !
+asFILETIME!converting!public! !
 asLocal!comparing!public! !
 asSeconds!converting!public! !
 asSYSTEMTIME!converting!public! !
@@ -522,6 +529,14 @@ fromDate: aDate time: aTime
 				hour: aTime hour24
 				minute: aTime minute
 				second: aTime second]!
+
+fromFILETIME: aFILETIME
+	"A Windows FILETIME expresses the number of 100nS intervals that have elapsed since 1601-01-01T00:00:00+00:00
+
+		(DateAndTime year: 1601 day: 1 offset: 0 seconds) asSeconds = -9467020800
+	"
+
+	^self utcSeconds: (aFILETIME asInteger - OS.FILETIME.SmalltalkEpoch) / 1e7 offset: 0!
 
 fromString: aString 
 	"Answer a new <DateAndTime> constructed from aString <String> in the Reg. Ex. format:
@@ -891,6 +906,7 @@ daysToMonth:forYear:!enquiries!public! !
 encodeRataDieYear:month:day:!helpers!private! !
 errorInvalidFormat!exceptions!public! !
 fromDate:time:!instance creation!public! !
+fromFILETIME:!instance creation!public! !
 fromString:!instance creation!public! !
 fromSYSTEMTIME:!instance creation!public! !
 fromSYSTEMTIME:offset:!instance creation!public! !
