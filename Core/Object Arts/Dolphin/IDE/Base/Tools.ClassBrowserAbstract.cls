@@ -279,8 +279,8 @@ browseReferences
 	class and methods is handled by the <ClassHierarchyPresenter> and <MethodBrowser>
 	sub-presenters, respectively."
 
-	self browseInstVarReferences
-!
+	<acceleratorKey: 'Shift+F12'>
+	self browseInstVarReferences!
 
 browseReferencesMatching: aMethodSearch in: aBrowserEnvironment
 	| devsys |
@@ -2021,6 +2021,7 @@ renameInstanceVariable
 	variablesPresenter view editSelectionLabel!
 
 renameIt
+	<acceleratorKey: 'F2'>
 	self perform: self renameItCommand!
 
 renameItCommand
@@ -2748,13 +2749,6 @@ classCommentIcon
 
 	^Icon fromId: 'ClassComment.ico'!
 
-defaultAdditionalAccelerators
-	| accels |
-	accels := super defaultAdditionalAccelerators , #(#(#renameIt 'F2')).
-	SmalltalkSystem current canRefactor
-		ifTrue: [accels := accels , #(#(#pushUpMethods 'Shift+Ctrl+6') #(#pushDownMethods 'Shift+Ctrl+7'))].
-	^accels!
-
 defaultFilterObjectMethods
 	"Answer true if instances of the receiver filter out <Object> methods by default."
 
@@ -2892,7 +2886,6 @@ wordWrapSource: aBoolean
 addPlugin:!initializing!private! !
 availablePluginClasses!helpers!private! !
 classCommentIcon!helpers!private! !
-defaultAdditionalAccelerators!constants!private! !
 defaultFilterObjectMethods!accessing!options!public! !
 defaultFilterObjectMethods:!accessing!options!public! !
 defaultOptionFlags!constants!options!private! !

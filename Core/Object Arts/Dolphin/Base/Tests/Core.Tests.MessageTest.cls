@@ -11,6 +11,16 @@ Core.Tests.MessageTest comment: ''!
 !Core.Tests.MessageTest categoriesForClass!Unclassified! !
 !Core.Tests.MessageTest methodsFor!
 
+testPrintString
+	self assert: (Message selector: #x:y: arguments: #(123 456)) printString
+		equals: 'Message selector: #x:y: arguments: #(123 456)'.
+	self assert: (Message selector: #namespace:class: arguments: {Core. Object}) printString
+		equals: 'Message selector: #namespace:class: arguments: {Core. Object}'.
+	self assert: (Message selector: #namespace: argument: Core) printString
+		equals: 'Message selector: #namespace: argument: Core'.
+	self assert: (Message selector: #x:y: arguments: {123. Object new}) printString
+		equals: 'a Message(x: 123 y: an Object)'!
+
 testSelectorArguments
 	| msg1 msg2 originalMethod testMethod |
 	msg1 := Message selector: #x:y: arguments: #(123 456).
@@ -25,6 +35,7 @@ testSelectorArguments
 	msg2 := testMethod value: Message withArguments: #(#x:y: #(123 456)).
 	self assert: msg2 equals: msg1! !
 !Core.Tests.MessageTest categoriesForMethods!
+testPrintString!public!unit tests! !
 testSelectorArguments!public!unit tests! !
 !
 

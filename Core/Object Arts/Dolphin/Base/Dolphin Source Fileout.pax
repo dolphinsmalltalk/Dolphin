@@ -776,8 +776,7 @@ copyAndReopenSources: aString
 		ifFalse: 
 			[self createSources: aString.
 			"We have permanently lost access to any source information so mark all methods"
-			Smalltalk
-				allBehaviorsDo: [:aBehavior | aBehavior methodDictionary do: [:aMethod | aMethod loseSource]]].
+			Smalltalk allBehaviorsDo: [:aBehavior | aBehavior methodsDo: [:aMethod | aMethod loseSource]]].
 	self openSources: aString!
 
 createDirectoryPath: aString

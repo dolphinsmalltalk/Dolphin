@@ -391,6 +391,7 @@ queryCommand: aCommandQuery
 refresh
 	"Refresh the list of current AXTypeLibraryAnalyzers in the image"
 
+	<acceleratorKey: 'F5'>
 	typeLibs
 		list: (TypeLibraryAnalyzer allOpenableTypeLibs asSortedCollection: [:x :y | x name < y name])!
 
@@ -490,7 +491,7 @@ updateTypesList:!private!updating! !
 
 defaultAdditionalAccelerators
 	^super defaultAdditionalAccelerators 
-		, #(#(#help 'F1') #(#refresh 'F5') #(#selectAll 'Ctrl+A') #(#inspectIt 'Ctrl+I'))!
+		, #(#(#selectAll 'Ctrl+A') #(#inspectIt 'Ctrl+I'))!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."

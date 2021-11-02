@@ -147,8 +147,8 @@ asRunArray
 	elements."
 
 	| runs values |
-	runs := Array writeStream.
-	values := Array writeStream.
+	runs := WriteStream on: {}.
+	values := WriteStream on: {}.
 	self runsAndValuesDo: 
 			[:run :value |
 			runs nextPut: run.

@@ -4,7 +4,7 @@ Core.Object subclass: #'UI.Presenter'
 	instanceVariableNames: 'model view parentPresenter events subPresenters names helpId'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
-	classInstanceVariableNames: ''
+	classInstanceVariableNames: 'acceleratorKeyAnnotations'
 	classConstants: {}!
 UI.Presenter guid: (Core.GUID fromString: '{87b4c4a9-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.Presenter comment: 'Presenter is an abstract class whose subclasses conform to <presenter> and represent components in the Model-View-Presenter framework. A presenter is the equivalent of a "user interface component" in the Dolphin MVP framework. It achieves flexibility over other component based architectures by allowing its data (its model) and its screen representation (its view) to be pluggable. Thus, one can change the way a user sees and manipulates a component by changing its view and one can change the data that the component is representing  by changing the model. Substituting a presenter''s model also allows several  presenter and view pairs to share and interact with the same data.  
@@ -923,6 +923,14 @@ UI.Presenter methodProtocol: #whatsThisHelp attributes: #(#readOnly) selectors: 
 
 !UI.Presenter class methodsFor!
 
+acceleratorKeyAnnotations
+	"Private - Answer the {commandSymbol. acceleratorKeyString} pairs defined by annotationed command methods in the receiver or superclasses."
+
+	^acceleratorKeyAnnotations
+		ifNil: 
+			["All the commands are expected to be implemented on the instance side, so that is where we should find the annotated command methods (if any)"
+			acceleratorKeyAnnotations := self findAcceleratorKeyAnnotations]!
+
 acceleratorKeyBindings
 	"Answer a <Dictionary> mapping accelerator key sequences to commands, being the additional accelerator 
 	definitions for commands not on the menu bars (if any) of the receiver's view(s)."
@@ -952,11 +960,20 @@ addCommandQueryHandler: aSymbol
 additionalKeyBindings
 	^self getAdditionalKeyBindings
 		ifNil: 
-			[self defaultAdditionalAccelerators collect: 
+			[self combinedAdditionalAccelerators collect: 
 					[:each |
 					(CommandDescription command: each first)
 						acceleratorKeyString: each second;
 						yourself]]!
+
+annotationsUpdated: aCompilationResult
+	"Annotations may have been added or removed in the receiver's methods. This is an opportunity to update any metadata that might be based on method annotations."
+
+	(aCompilationResult affectsAnnotation: #acceleratorKey:)
+		ifTrue: [self updateDefaultAdditionalAccelerators: aCompilationResult]!
+
+combinedAdditionalAccelerators
+	^self acceleratorKeyAnnotations , self defaultAdditionalAccelerators!
 
 commandQueryHandlers
 	^self getCommandQueryHandlers ?? #()!
@@ -1023,9 +1040,9 @@ createOn: aModel
 	!
 
 defaultAdditionalAccelerators
-	"Answer a collection of additional accelerator definitions for commands not on the menu bar of the receiver's view(s).
-	Each element of the collection should be a two element <Array>, the first element of which is the command symbol
-	and the second the accelerator key string."
+	"Answer a collection of additional accelerator definitions for commands not on the menu bar of the receiver's view(s). Each element of the collection should be a two element <Array>, the first element of which is the command symbol and the second the accelerator key string, e.g. #(#(#widen 'Ctrl+W') #(#(#narrow 'Ctrl+N')).
+	Note that in Dolphin 8 the use of <acceleratorKey: 'key-chord-string'> annotations in the command methods is preferred. The defaultAdditionalAccelerators mechanism is retained for backwards compatibility, and as a way of registering accelerator keys for sub-views in a composite, i.e. to define accelerator keys to map to the commands in those views when they do not normally have those key bindings. It is not necessary to define
+	additional accelerators for sub-presenters, as these will be traversed for their contributed accelerators when building the combined accelerator table."
 
 	^#()!
 
@@ -1048,6 +1065,25 @@ defaultView
 
 	^View defaultView!
 
+findAcceleratorKeyAnnotations
+	| stream |
+	self == ##(self)
+		ifTrue: [stream := WriteStream on: {}]
+		ifFalse: 
+			[| inherited |
+			inherited := superclass acceleratorKeyAnnotations.
+			stream := WriteStream on: (Array new: inherited size).
+			stream nextPutAll: inherited].
+	"All the commands are expected to be implemented on the instance side, so that is where we should find the annotated command methods (if any)"
+	self methodsDo: 
+			[:each |
+			each annotations
+				ifNotNil: 
+					[:annotations |
+					annotations withSelector: #acceleratorKey:
+						do: [:args | stream nextPut: {each selector. AcceleratorTable canonicalizeKeyString: (args at: 1)}]]].
+	^stream contents!
+
 getAdditionalKeyBindings
 	^nil!
 
@@ -1065,6 +1101,10 @@ loadViewResource: aString inContext: aParentView
 	| resourceIdentifier |
 	resourceIdentifier := ResourceIdentifier class: self name: aString.
 	^resourceIdentifier loadWithContext: aParentView!
+
+methodRemoved: aCompiledMethod
+	(aCompiledMethod hasAnnotation: #acceleratorKey:)
+		ifTrue: [self updateDefaultAdditionalAccelerators: nil]!
 
 new
 	"Answer an instance of the receiver not yet connected to any view
@@ -1084,6 +1124,9 @@ removeCommandQueryHandler: aSymbol
 	uninstalling command handlers."
 
 	self setCommandQueryHandlers: (self commandQueryHandlers copyWithout: aSymbol)!
+
+resetDefaultAdditionalAccelerators
+	acceleratorKeyAnnotations := nil!
 
 resource_Container_view
 	"Answer the literal data from which the 'Container view' resource can be reconstituted.
@@ -1149,12 +1192,18 @@ showOn: aModel
 	and connected to aModel"
 
 	^(self createOn: aModel) showShell.
-	! !
+	!
+
+updateDefaultAdditionalAccelerators: aCompilationResult
+	self withAllSubclassesDo: [:each | each resetDefaultAdditionalAccelerators]! !
 !UI.Presenter class categoriesForMethods!
+acceleratorKeyAnnotations!constants!private! !
 acceleratorKeyBindings!constants!public! !
 acceleratorKeyBindings:!constants!public! !
 addCommandQueryHandler:!accessing!public! !
 additionalKeyBindings!accessing!private! !
+annotationsUpdated:!public! !
+combinedAdditionalAccelerators!accessing!private! !
 commandQueryHandlers!accessing!private! !
 create!instance creation!public! !
 create:!instance creation!public! !
@@ -1168,13 +1217,16 @@ defaultAdditionalAccelerators!constants!private! !
 defaultModel!models!public! !
 defaultResourceIdentifier!constants!public! !
 defaultView!constants!public! !
+findAcceleratorKeyAnnotations!constants!private! !
 getAdditionalKeyBindings!accessing!private! !
 getCommandQueryHandlers!accessing!private! !
 icon!constants!public! !
 loadViewResource:inContext:!operations!private! !
+methodRemoved:!public! !
 new!instance creation!public! !
 on:!instance creation!public! !
 removeCommandQueryHandler:!accessing!public! !
+resetDefaultAdditionalAccelerators!public! !
 resource_Container_view!public!resources-views! !
 resource_Default_view!public!resources-views! !
 setAdditionalAccelerators:!accessing!private! !
@@ -1184,6 +1236,7 @@ show!instance creation!public! !
 show:!instance creation!public! !
 show:on:!instance creation!public! !
 showOn:!instance creation!public! !
+updateDefaultAdditionalAccelerators:!private! !
 !
 
 UI.Presenter class methodProtocol: #'presenter factory' attributes: #(#readOnly) selectors: #(#create #create: #create:in: #create:in:on: #create:on: #createIn: #createIn:on: #createOn: #defaultModel #defaultView #on: #show #show: #show:on: #showOn:)!

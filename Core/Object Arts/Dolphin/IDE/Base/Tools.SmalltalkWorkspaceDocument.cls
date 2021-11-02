@@ -300,6 +300,7 @@ searchForSymbol: aSymbol
 								in: BrowserEnvironment new)))!
 
 searchSmalltalk
+	<acceleratorKey: 'Ctrl+Shift+F'>
 	| searchView |
 	searchView := searchPresenter view.
 	searchView hasFocus ifTrue: [^self].

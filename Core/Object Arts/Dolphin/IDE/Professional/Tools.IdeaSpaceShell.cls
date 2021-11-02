@@ -101,6 +101,7 @@ closeCard
 	"Close the current card after first giving it an opportunity to refuse the close. 
 	Answer true if the close is allowed."
 
+	<acceleratorKey: 'Ctrl+F4'>
 	^self closeCard: self currentCard!
 
 closeCard: cardToRemove 
@@ -593,7 +594,7 @@ watermarkBitmap!constants!private! !
 !Tools.IdeaSpaceShell class methodsFor!
 
 defaultAdditionalAccelerators
-	^#(#(#nextCard 'ALT+RIGHT') #(#previousCard 'ALT+LEFT') #(#closeCard 'Ctrl+F4'))!
+	^#(#(#nextCard 'ALT+RIGHT') #(#previousCard 'ALT+LEFT'))!
 
 defaultFileExtension
 	"Answer a default extension that will be used for files saved from
@@ -674,7 +675,7 @@ resource_Default_view
 toolsFolderHelpId
 	^10599! !
 !Tools.IdeaSpaceShell class categoriesForMethods!
-defaultAdditionalAccelerators!constants!public! !
+defaultAdditionalAccelerators!constants!private! !
 defaultFileExtension!constants!public! !
 displayOn:!displaying!public! !
 fileTypes!constants!private! !

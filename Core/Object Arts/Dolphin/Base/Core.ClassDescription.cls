@@ -83,8 +83,8 @@ allGettersDo: aMonadicAvaluable
 
 	self withAllSuperclassesDo: 
 			[:eachClass |
-			eachClass methodDictionary
-				do: [:eachMethod | eachMethod isGetter ifTrue: [aMonadicAvaluable value: eachMethod]]]!
+			eachClass
+				methodsDo: [:eachMethod | eachMethod isGetter ifTrue: [aMonadicAvaluable value: eachMethod]]]!
 
 allInstances
 	"Answer an <Array> of all direct instances of the receiver."
@@ -95,7 +95,7 @@ allInstances
 allMethodsDo: operation
 	"Evaluate the monadic valuable, operation, for each and every method defined in the hierarchy rooted in the receiver."
 
-	self withAllSubclassesDo: [:behavior | behavior methodDictionary do: operation]!
+	self withAllSubclassesDo: [:behavior | behavior methodsDo: operation]!
 
 allProtocols
 	"Answer a <collection> of all the <MethodProtocol>s implemented by the receiver's
@@ -359,17 +359,16 @@ compile: codeString classified: categoryString
 	protocol, but is of limited use in a multi-category system like Dolphin. We recommend that
 	#compile:categories: be used in preference."
 
-	| method result |
-	result := self basicCompile: codeString environment: self environment.
-	result notNil
-		ifTrue: 
-			[| category |
+	^(self basicCompile: codeString environment: self environment)
+		ifNotNil: 
+			[:result |
+			| method category |
 			method := result method.
 			category := categoryString asMethodCategory.
 			result isNew ifTrue: [category addMethodSilently: method] ifFalse: [category addMethod: method].
 			method storeCategories.
-			result fireSystemUpdateEvent].
-	^method!
+			result fireSystemUpdateEvent.
+			method]!
 
 compile: aString environment: aNamespaceOrNil categories: categories package: aPackageOrNil 
 	"Compile the <readableString> argument, aString, as source code in the context of the
@@ -402,27 +401,26 @@ compile: aString environment: aNamespaceOrNil categories: categories package: aP
 	then the suggestion made by the default MethodCategorizationPolicy is chosen. If a compile
 	error occurs then a <CompilerNotification> is signalled. Answers the new method or nil."
 
-	| method result |
-	result := self
-				basicCompile: aString
-				flags: anInteger
-				environment: aNamespaceOrNil.
-	result notNil
-		ifTrue: 
-			[| allCats |
-			result package: aPackageOrNil.
-			allCats := categories collect: [:each | each asMethodCategory].
-			method := result method.
-			(allCats anySatisfy: [:c | c isPrivacy])
-				ifFalse: 
-					[(self suggestedPrivacyFor: method)
-						ifNotNil: [:privacy | allCats := allCats asArray copyWith: privacy]].
-			"To avoid generating a recategorization event we eschew CompiledMethod>>categories:"
-			MethodCategory setMethod: method categories: allCats.
-			method storeCategories.
-			"Now we can safely trigger #methodAdded/Updated: since the source and categories are now available"
-			result fireSystemUpdateEvent].
-	^method!
+	^(self
+		basicCompile: aString
+		flags: anInteger
+		environment: aNamespaceOrNil)
+			ifNotNil: 
+				[:result |
+				| allCats method |
+				result package: aPackageOrNil.
+				allCats := categories collect: [:each | each asMethodCategory].
+				method := result method.
+				(allCats anySatisfy: [:c | c isPrivacy])
+					ifFalse: 
+						[(self suggestedPrivacyFor: method)
+							ifNotNil: [:privacy | allCats := allCats asArray copyWith: privacy]].
+				"To avoid generating a recategorization event we eschew CompiledMethod>>categories:"
+				MethodCategory setMethod: method categories: allCats.
+				method storeCategories.
+				"Now we can safely trigger #methodAdded/Updated: since the source and categories are now available"
+				result fireSystemUpdateEvent.
+				method]!
 
 compileAllSubclasses
 	"Compile all the methods in the receiver's subclasses' method dictionaries."
@@ -961,7 +959,7 @@ subclasses
 	"Answer a <collection> containing the receiver's immediate subclasses."
 
 	| stream |
-	stream := Array writeStream.
+	stream := WriteStream on: {}.
 	self subclassesDo: [:each | stream nextPut: each].
 	^stream contents!
 

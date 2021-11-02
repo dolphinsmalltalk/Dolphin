@@ -12,10 +12,18 @@ Kernel.Tests.MethodAnnotationsTest comment: ''!
 !Kernel.Tests.MethodAnnotationsTest methodsFor!
 
 canonicalSubject
-	^MethodAnnotations fromPairs: {{#namespace:. {Core}}. #(#mutable #()). #(#a:b:c: #(1 '2' #three))}!
+	^MethodAnnotations fromPairs: self messagePairs!
 
 emptySubject
 	^MethodAnnotations new: 0!
+
+messagePairs
+	^{{#namespace:. {Core}}.
+		#(#mutable #()).
+		#(#a:b:c: #(1 '2' #three)).
+		#(#selector: #(#notSelector)).
+		#(#notSelector: #(#selector:)).
+		#(#selector: #(#notSelector2))}!
 
 testAdd
 	| subject |
@@ -30,9 +38,12 @@ testAnySatisfy
 
 testAsArray
 	self assert: self canonicalSubject asArray
-		equals: {Message selector: #namespace: arguments: {Core}.
+		equals: {Message selector: #namespace: argument: Core.
 				Message selector: #mutable.
-				Message selector: #a:b:c: arguments: #(1 '2' #three)}.
+				Message selector: #a:b:c: arguments: #(1 '2' #three).
+				Message selector: #selector: argument: #notSelector.
+				Message selector: #notSelector: argument: #selector:.
+				Message selector: #selector: argument: #notSelector2}.
 	self assert: self emptySubject asArray equals: #()!
 
 testAsByteArray
@@ -44,7 +55,7 @@ testAt
 	self assert: (subject at: 1) equals: (Message selector: #namespace: arguments: {Core}).
 	self assert: (subject at: 3) equals: (Message selector: #a:b:c: arguments: #(1 '2' #three)).
 	self should: [subject at: 0] raise: BoundsError.
-	self should: [subject at: 4] raise: BoundsError.
+	self should: [subject at: self messagePairs size + 1] raise: BoundsError.
 !
 
 testAtPut
@@ -58,7 +69,7 @@ testAtPut
 testCollect
 	| actual |
 	actual := self canonicalSubject collect: [:each | each selector].
-	self assert: actual equals: #(#namespace: #mutable #a:b:c:).
+	self assert: actual equals: #(#namespace: #mutable #a:b:c: #selector: #notSelector: #selector:).
 	self assert: (self emptySubject collect: [:each | each wibble]) equals: #()!
 
 testCopyFromTo
@@ -91,6 +102,15 @@ testIncludes
 	self deny: (subject includes: #namespace:).
 	self deny: (self emptySubject includes: message)!
 
+testIncludesSelector
+	| subject |
+	subject := self canonicalSubject.
+	self assert: (subject includesSelector: #namespace:).
+	self assert: (subject includesSelector: #mutable).
+	self assert: (subject includesSelector: #notSelector:).
+	self deny: (subject includesSelector: #notSelector).
+	self deny: (subject includesSelector: #namespace).!
+
 testIndexOf
 	| subject |
 	subject := self canonicalSubject.
@@ -99,7 +119,7 @@ testIndexOf
 
 testPrintOn
 	self assert: self canonicalSubject printString
-		equals: 'a MethodAnnotations(<namespace: Core> <mutable> <a: 1 b: ''2'' c: #three>)'.
+		equals: 'a MethodAnnotations(<namespace: Core> <mutable> <a: 1 b: ''2'' c: #three> <selector: #notSelector> <notSelector: #selector:> <selector: #notSelector2>)'.
 	self assert: self emptySubject printString equals: 'a MethodAnnotations()'!
 
 testRefersToLiteral
@@ -123,15 +143,40 @@ testSelect
 	actual := self canonicalSubject select: [:each | each selector ~~ #mutable].
 	self assert: actual
 		equals: {Message selector: #namespace: arguments: {Core}.
-				Message selector: #a:b:c: arguments: #(1 '2' #three)}.
+				Message selector: #a:b:c: arguments: #(1 '2' #three).
+				Message selector: #selector: arguments: #(#notSelector).
+				Message selector: #notSelector: arguments: #(#selector:).
+				Message selector: #selector: arguments: #(#notSelector2)}.
 	self assert: (self emptySubject select: [:each | each wibble]) equals: #()!
 
+testSelectors
+	self assert: self canonicalSubject selectors
+		equals: (Set withAll: #(#namespace: #selector: #notSelector: #mutable #a:b:c:)).
+	self assert: self emptySubject selectors isEmpty!
+
 testSize
-	self assert: self canonicalSubject size equals: 3.
-	self assert: self emptySubject size equals: 0! !
+	self assert: self canonicalSubject size equals: self messagePairs size.
+	self assert: self emptySubject size equals: 0!
+
+testWithSelector
+	| subject |
+	subject := self canonicalSubject.
+	"First, and only"
+	self assert: (subject withSelector: #namespace:)
+		equals: {Message selector: #namespace: argument: Core}.
+	"Middle and last"
+	self assert: (subject withSelector: #selector:)
+		equals: {Message selector: #selector: argument: #notSelector.
+				Message selector: #selector: argument: #notSelector2}.
+	"Penultimate"
+	self assert: (subject withSelector: #notSelector:)
+		equals: {Message selector: #notSelector: argument: #selector:}.
+	"Shouldn't find the args that happen to be the same - this is not possible with the current representation since the args are always held in an Array, but a possible (space) optimisation would be to eschew the Array if there is only one arg, and just store the single argument in its place."
+	self assert: (subject withSelector: #notSelector) isEmpty! !
 !Kernel.Tests.MethodAnnotationsTest categoriesForMethods!
-canonicalSubject!helpers!private! !
-emptySubject!helpers!private! !
+canonicalSubject!constants!private! !
+emptySubject!constants!private! !
+messagePairs!constants!helpers!private! !
 testAdd!public!unit tests! !
 testAnySatisfy!public!unit tests! !
 testAsArray!public!unit tests! !
@@ -144,11 +189,14 @@ testEnvironment!public!unit tests! !
 testFirst!public!unit tests! !
 testIdentityIndexOf!public!unit tests! !
 testIncludes!public!unit tests! !
+testIncludesSelector!public!unit tests! !
 testIndexOf!public!unit tests! !
 testPrintOn!public!unit tests! !
 testRefersToLiteral!public!unit tests! !
 testResize!public!unit tests! !
 testSelect!public!unit tests! !
+testSelectors!public!unit tests! !
 testSize!public!unit tests! !
+testWithSelector!public!unit tests! !
 !
 

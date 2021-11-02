@@ -27,14 +27,8 @@ mailto:jpelrine@metaprog.com
 
 (Some modifications for Dolphin integration by Blair McGlashan, Object Arts, March 2003)'.
 
-package basicScriptAt: #postinstall put: 'SmalltalkWorkspace acceleratorKeyBindings: ((SmalltalkWorkspace acceleratorKeyBindings)
-			at: ''Shift+Space'' put: #expandAbbreviation;
-			at: ''Ctrl+Space'' put: #snatchAbbreviation;
-			yourself)!!'.
 package basicScriptAt: #postuninstall put: 'SmalltalkWorkspace classPool removeKey: ''Abbreviations'' ifAbsent: [].
-SmalltalkWorkspace setAdditionalKeyBindings: 
-	(SmalltalkWorkspace getAdditionalKeyBindings 
-		reject: [:each | #(#expandAbbreviation #snatchAbbreviation) includes: each command])'.
+'.
 
 package methodNames
 	add: #SmalltalkWorkspace -> #expandAbbreviation;
@@ -66,6 +60,7 @@ package!
 !SmalltalkWorkspace methodsFor!
 
 expandAbbreviation
+	<acceleratorKey: 'Shift+Space'>
 	| startAssoc replace end start abbrev |
 	"#2101"
 	self cancelAutoCompletion.
@@ -98,6 +93,7 @@ findSeparatorLeftAndKey: anInteger
 	^Association key: (text copyFrom: position + 1) value: position + start - 1!
 
 snatchAbbreviation
+	<acceleratorKey: 'Ctrl+Space'>
 	| key text |
 	(text := self selection) isNil ifTrue: [^self].
 	((key := Prompter prompt: 'Desired abbreviation for this text?') notNil 

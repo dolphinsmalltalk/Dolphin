@@ -167,6 +167,7 @@ hasLog
 help
 	"Bring up a help page for this tool."
 
+	<acceleratorKey: 'F1'>
 	SmalltalkSystem current openHelpTopicForTool: self!
 
 model: anImageStripperValueModel
@@ -364,9 +365,6 @@ validateUserInterface!operations!public! !
 
 !Tools.ApplicationDeploymentWizard class methodsFor!
 
-defaultAdditionalAccelerators
-	^super defaultAdditionalAccelerators , #(#(#help 'F1'))!
-
 defaultModel
 	"Answer a default model to be assigned to the receiver when it
 	is initialized."
@@ -526,7 +524,6 @@ toolsFolderIcon
 
 	^SmalltalkSystemIcon showModal: self description: self displayString! !
 !Tools.ApplicationDeploymentWizard class categoriesForMethods!
-defaultAdditionalAccelerators!constants!private! !
 defaultModel!models!public! !
 displayOn:!displaying!public! !
 icon!constants!public! !

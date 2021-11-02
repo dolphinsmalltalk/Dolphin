@@ -460,7 +460,7 @@ parseExternalCallName
 parseKeywordAnnotation: anInteger
 	| selector args |
 	selector := Utf8String writeStream.
-	args := Array writeStream.
+	args := WriteStream on: {}.
 	
 	[selector nextPutAll: currentToken value.
 	self step.

@@ -146,12 +146,14 @@ browseIt
 	"Evaluate currently selected text (or the current line if there is no selection) in the
 	receiver and browse the result."
 
+	<acceleratorKey: 'Ctrl+B'>
 	(self evaluateItIfFail: [^self]) browse!
 
 browseReferences
 	"Prompt for a selector and open a method browser displaying the references to that
 	selector."
 
+	<acceleratorKey: 'Shift+F12'>
 	self commandPolicy
 		route: (CommandDescription command: self browseReferencesCommand description: 'Browse References')!
 
@@ -362,6 +364,7 @@ completeWord
 	The list will be displayed unless the number of choices is far too large or there are none
 	matching, in which case a warning beep will sound."
 
+	<acceleratorKey: 'Ctrl+.'>
 	| last styleName |
 	last := view caretPosition - 1.
 	styleName := (view styleAt: last) name.
@@ -463,6 +466,7 @@ displayIt
 	"Evaluate the currently selected text (or the current line if there is no selection). 
 	Display the result at the current insert point (i.e. immediately after the selection)."
 
+	<acceleratorKey: 'Ctrl+D'>
 	self evaluateAndDisplay: [:obj | obj displayString: self systemModel displayItLocale]!
 
 dragOver: aDragDropSession
@@ -539,7 +543,9 @@ evaluateIt
 	"Evaluate the currently selected text (or the current line if there is no selection) within
 	the receiver's evaluation context"
 
-	^self evaluateItIfFail: []!
+	<acceleratorKey: 'Ctrl+E'>
+	^self evaluateItIfFail: []
+!
 
 evaluateItIfFail: failBlock
 	"Private - Evaluate the currently selected text (or the current line if there is no
@@ -816,6 +822,9 @@ inspectIt
 	"Evaluate and inspect the currently selected text (or the current line if there is no
 	selection). Inspect the result."
 
+	<acceleratorKey: 'Ctrl+I'>
+	<acceleratorKey: 'Ctrl+Shift+I'>	"Alternate inspector"
+	<acceleratorKey: 'Ctrl+Q'>		"VW compatibility"
 	(self evaluateItIfFail: [^self]) inspect!
 
 inspectWorkspacePool
@@ -1041,6 +1050,7 @@ printIt
 	(i.e. show the printString of) the result at the current insert point (i.e. immediately
 	after the selection)."
 
+	<acceleratorKey: 'Ctrl+P'>
 	self evaluateAndDisplay: [:obj | obj printString]!
 
 prompt: aString toSaveChanges: aSelectionChangingEvent
@@ -1278,6 +1288,7 @@ selectNext
 	cycle around to the first region. Indicators are used to mark errors, etc, so this typically
 	equates to moving to the next error."
 
+	<acceleratorKey: 'F8'>
 	| indicators pos |
 	indicators := view indicators.
 	indicators isEmpty
@@ -1325,6 +1336,7 @@ selectPrev
 	home cycle around to the last indicated region. Indicators are used to mark errors, etc, so
 	this typically equates to moving to the previous compilation error."
 
+	<acceleratorKey: 'Shift+F8'>
 	| indicators pos |
 	indicators := view indicators.
 	indicators isEmpty
@@ -1846,14 +1858,11 @@ customEditorKeyBindings
 	^bindings!
 
 defaultAdditionalAccelerators
-	"Private - Answer a collection of additional accelerator definitions to be bound to the
-	receiver's commands. Each element of the collection should be a two element <Array>, the
-	first element of which is the command symbol and the second the accelerator key string."
+	"Private - Answer a collection of additional accelerator definitions to be bound to the receiver's commands. Each element of the collection should be a two element <Array>, the first element of which is the command symbol and the second the accelerator key string."
 
-	"Note: The Ctrl+L and Ctrl+Shift+L shortcuts for cut and delete line respectively are no
-	longer defined here because they are default Scintilla key bindings."
+	"Note: The Ctrl+L and Ctrl+Shift+L shortcuts for cut and delete line respectively are no longer defined here because they are default Scintilla key bindings."
 
-	^#(#(#evaluateIt 'Ctrl+E') #(#displayIt 'Ctrl+D') #(#printIt 'Ctrl+P') #(#inspectIt 'Ctrl+I') #(#toggleWordWrap 'Ctrl+R') #(#completeWord 'Ctrl+.') #(#selectNext 'F8') #(#selectPrev 'Shift+F8') #(#inspectIt 'Ctrl+Q'))!
+	^#(#(#toggleWordWrap 'CTRL+R'))!
 
 defaultAutoCompleteDwell
 	^30 milliseconds!
@@ -2153,7 +2162,7 @@ defaultUnaryReturnTypes
 	| answer |
 	answer := LookupTable new.
 	#(#isNil #isEmpty #notNil #asBoolean #not #isBehavior #isNumber #isInteger #isString) do: [:each | answer at: each put: Boolean].
-	#(#size #basicSize #hash #asInteger #yourAddress) do: [:each | answer at: each put: Integer].
+	#(#size #basicSize #hash #identityHash #asInteger #yourAddress) do: [:each | answer at: each put: Integer].
 	#(#printString #displayString #asString) do: [:each | answer at: each put: String].
 	^answer
 		at: #asArray put: Array;
@@ -2198,7 +2207,7 @@ fontQuality: aSymbol
 	self persistOptions!
 
 getAdditionalKeyBindings
-	^additionalKeyBindings ifNil: [self setAdditionalAccelerators: self defaultAdditionalAccelerators]!
+	^additionalKeyBindings ifNil: [self setAdditionalAccelerators: self combinedAdditionalAccelerators]!
 
 getCommandQueryHandlers
 	^commandQueryHandlers!
@@ -2409,9 +2418,7 @@ publishedAspects
 					addEvaluationFrom: [{KeyBinding shortName , ' new'}]) beImmutable;
 		add: ((Aspect dictionary: #acceleratorKeyBindings)
 					beImmutable;
-					defaultValue: 
-							[Dictionary withAll: (self defaultAdditionalAccelerators
-										collect: [:each | (AcceleratorTable canonicalizeKeyString: each second) -> each first])];
+					defaultValue: [self defaultAcceleratorKeyBindings];
 					yourself);
 		add: self textStylesAspect;
 		add: self indicatorStylesAspect;

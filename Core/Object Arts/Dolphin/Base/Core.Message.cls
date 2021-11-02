@@ -19,6 +19,11 @@ Core.Message comment: ''!
 		self species == aMessage species and: [
 			self selector == aMessage selector and: [self arguments = aMessage arguments]]]!
 
+argument
+	"Answer the single argument to the message. Raise an error if it does not take one argument."
+
+	^args single!
+
 argumentCount
 	"Answer the <integer> number of arguments in the receiver's
 	message."
@@ -69,6 +74,9 @@ hash
 	
 	^selector hash + args hash!
 
+isSelfEvaluating
+	^self class == ##(self) and: [args isSelfEvaluating]!
+
 messages
 	"Answer a <collection> of the messages sent by the receiver."
 
@@ -77,20 +85,43 @@ messages
 numArgs
 	^self argumentCount!
 
-printOn: target 
-	"Append a short textual description of the receiver to the <puttableStream>, 
-	target, in the form a developer might want to see it (attempt an evaluable
-	literal representation)."
+printOn: aPuttableStream
+	"Append a short textual description of the receiver to the <puttableStream>, target, in the form a developer might want to see it, preferring an evaluable representation if available."
 
-	target
-		nextPutAll: self class name;
-		nextPutAll: ' selector: ';
-		print: selector.
-	args notEmpty 
+	| argCount |
+	self isSelfEvaluating
 		ifTrue: 
-			[target
-				nextPutAll: ' arguments: ';
-				print: args]!
+			[aPuttableStream
+				nextPutAll: self class name;
+				nextPutAll: ' selector: ';
+				print: selector.
+			argCount := args size.
+			argCount > 0
+				ifTrue: 
+					[argCount == 1
+						ifTrue: 
+							[aPuttableStream
+								nextPutAll: ' argument: ';
+								print: args first]
+						ifFalse: 
+							[aPuttableStream
+								nextPutAll: ' arguments: ';
+								print: args]]]
+		ifFalse: 
+			[| first |
+			aPuttableStream
+				basicPrint: self;
+				nextPut: $(.
+			first := true.
+			selector keywords with: args
+				do: 
+					[:eachKeyword :eachArg |
+					first ifTrue: [first := false] ifFalse: [aPuttableStream space].
+					aPuttableStream
+						nextPutAll: eachKeyword;
+						space;
+						print: eachArg].
+			aPuttableStream nextPut: $)]!
 
 selector
 	"Answer the receiver's <selector>"
@@ -136,6 +167,7 @@ valueWithArguments: argArray
 	^self forwardTo: argArray first withArguments: (argArray copyFrom: 2)! !
 !Core.Message categoriesForMethods!
 =!comparing!public! !
+argument!accessing!public! !
 argumentCount!accessing!public! !
 arguments!accessing!public! !
 arguments:!accessing!public! !
@@ -144,6 +176,7 @@ forwardTo:!operations!public! !
 forwardTo:with:!operations!private! !
 forwardTo:withArguments:!operations!private! !
 hash!comparing!public! !
+isSelfEvaluating!private!testing! !
 messages!enquiries!public! !
 numArgs!accessing!public! !
 printOn:!printing!public! !

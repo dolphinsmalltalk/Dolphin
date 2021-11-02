@@ -28,11 +28,11 @@ testIsLiteral
 	self deny: subject isLiteral.
 	subject at: 1 put: subject.
 	self deny: subject isLiteral.
-!
+	self deny: {Object} isLiteral!
 
 testIsSelfEvaluating
 	| subject |
-	subject := {1 to: 5. 123. 'abc'. #(1 2). 123. #a -> 'A'}.
+	subject := {1 to: 5. 123. 'abc'. #(1 2). 123. #a -> 'A'. Object}.
 	self assert: subject isSelfEvaluating.
 	subject at: 1 put: self.
 	self deny: subject isSelfEvaluating.

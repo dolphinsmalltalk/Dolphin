@@ -21,9 +21,20 @@ testCompareWith
 	self deny: (policy compare: 'Aa' with: 'a').
 	self deny: (policy compare: 'a' with: 'b').
 	self deny: (policy compare: 'a' with: 'ab').
-! !
+	"Ordinal, not a linguistic comparison"
+	self assert: (policy compare: 'i' with: 'I').
+	self assert: (policy compare: 'I' with: 'i').
+	self deny: (policy compare: ((Locale named: 'tr-Tr') uppercaseString: 'i') with: 'I')!
+
+testHash
+	self assert: (policy hash: 'aa') equals: (policy hash: 'Aa').
+	self deny: (policy hash: 'aa') equals: (policy hash: 'Ab').
+	"Ordinal, not a linguistic comparison"
+	self assert: (policy hash: 'i') equals: (policy hash: 'I').
+	self deny: (policy hash: ((Locale named: 'tr-Tr') uppercaseString: 'i')) equals: (policy hash: 'I')! !
 !Kernel.Tests.CaseInsensitiveSearchPolicyTest categoriesForMethods!
 policyClass!private!unit tests! !
 testCompareWith!public!unit tests! !
+testHash!public!unit tests! !
 !
 

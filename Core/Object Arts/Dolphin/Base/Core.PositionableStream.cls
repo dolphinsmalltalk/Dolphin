@@ -187,11 +187,9 @@ nextWORD
 on: aCollection
 	"Private - Set the <collection> over which the receiver will stream and initialize the receiver."
 
-	collection := aCollection.
-	readLimit := collection size.
+	readLimit := (collection := aCollection) size.
 	position := 0.
-	locale := Locale.UserDefault
-!
+	locale := Locale.UserDefault!
 
 originalContents
 	^collection!

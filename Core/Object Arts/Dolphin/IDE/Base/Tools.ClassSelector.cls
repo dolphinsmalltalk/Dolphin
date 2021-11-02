@@ -142,6 +142,7 @@ browsePublishedEvents
 browseReferences
 	"Context-sensitive browse references command (Shift+F12)."
 
+	<acceleratorKey: 'Shift+F12'>
 	self browseClassReferences!
 
 browserEnvironment

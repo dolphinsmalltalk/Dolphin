@@ -72,10 +72,6 @@ searchForClass:!private! !
 
 !Tools.ClassHierarchyDiagram class methodsFor!
 
-defaultAdditionalAccelerators
-	^super defaultAdditionalAccelerators 
-		, #(#(#findClass 'Ctrl+Shift+F') #(#browseClassReferences 'Shift+F12') #(#browseIt 'Ctrl+B') #(#inspectIt 'Ctrl+I'))!
-
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
@@ -117,7 +113,6 @@ resource_Default_view
 toolsFolderHelpId
 	^10590! !
 !Tools.ClassHierarchyDiagram class categoriesForMethods!
-defaultAdditionalAccelerators!initializing!private! !
 displayOn:!displaying!public! !
 icon!constants!public! !
 initialize!initializing!private! !

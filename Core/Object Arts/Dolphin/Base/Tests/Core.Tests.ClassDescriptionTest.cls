@@ -15,6 +15,9 @@ Core.Tests.ClassDescriptionTest comment: ''!
 allClassHierarchyInstancesDo: aMonadicValuable
 	self subclassResponsibility!
 
+canonicalInstance
+	^ClassDescriptionTest!
+
 testClassBindingNames
 	self subclassResponsibility!
 
@@ -26,11 +29,23 @@ testInstVarName
 			actual := (1 to: expected size) collect: [:i | each instVarName: i].
 			self assert: actual equals: expected]!
 
+testIsLiteral
+	self deny: self canonicalInstance isLiteral!
+
+testIsSelfEvaluating
+	self assert: self canonicalInstance isSelfEvaluating!
+
 testLessOrEqual
 	self subclassResponsibility!
 
+testLocalEnvironment
+	self assert: self canonicalInstance localEnvironment equals: Tests!
+
+testLocalScope
+	self assert: self canonicalInstance localScope equals: Core.Tests.ClassDescriptionTest!
+
 testStoreOn
-	self subclassResponsibility!
+	self assert: self canonicalInstance storeString equals: self canonicalInstance fullName!
 
 testSubclasses
 	self allClassHierarchyInstancesDo: 
@@ -39,12 +54,18 @@ testSubclasses
 			self assert: each subclasses equals: each subclasses distinct]!
 
 testWhichClassDefinesClassVar
-	self subclassResponsibility! !
+	self assert: (self canonicalInstance whichClassDefinesClassVar: '_AssertionFailureSignal')
+		identicalTo: Object! !
 !Core.Tests.ClassDescriptionTest categoriesForMethods!
 allClassHierarchyInstancesDo:!helpers!private! !
+canonicalInstance!constants!public! !
 testClassBindingNames!public! !
 testInstVarName!public!unit tests! !
+testIsLiteral!public! !
+testIsSelfEvaluating!public! !
 testLessOrEqual!public!unit tests! !
+testLocalEnvironment!public!unit tests! !
+testLocalScope!public!unit tests! !
 testStoreOn!public!unit tests! !
 testSubclasses!public!unit tests! !
 testWhichClassDefinesClassVar!public!unit tests! !

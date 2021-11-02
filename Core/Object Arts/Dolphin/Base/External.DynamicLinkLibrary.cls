@@ -378,7 +378,7 @@ clear
 	Similary function addresses will be lazily requeried as required."
 
 	default notNil ifTrue: [default handle: nil].
-	self methodDictionary do: [:m | m clear]!
+	self methodsDo: [:m | m clear]!
 
 closeAllDefaults
 	"Private - Close all open default libraries."

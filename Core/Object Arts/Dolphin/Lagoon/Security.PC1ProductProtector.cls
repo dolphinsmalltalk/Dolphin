@@ -76,7 +76,7 @@ hashKeyWith: aString
 	^ self key * aString hash.!
 
 methodsOf: aClass do: aBlockClosure 
-	aClass methodDictionary do: [:each | each whileMutableDo: [aBlockClosure value: each]]! !
+	aClass methodsDo: [:each | each whileMutableDo: [aBlockClosure value: each]]! !
 !Security.PC1ProductProtector categoriesForMethods!
 cipherClass:!operations!private! !
 cipherForMethod:!helpers!private! !

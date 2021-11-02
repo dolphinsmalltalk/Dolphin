@@ -5,7 +5,9 @@ Graphics.GraphicsTool subclass: #'UI.AcceleratorTable'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'KeySeparator' -> $+
+	}!
 UI.AcceleratorTable guid: (Core.GUID fromString: '{87b4c632-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.AcceleratorTable comment: '`AcceleratorTable` is the class used to represent the table of "accelerator" key sequences associated with a top-level view. These key-sequences provide keyboard shortcuts to commands on the menu or toolbar (or any other command sources).
 
@@ -104,7 +106,9 @@ postCopy!copying!public! !
 !UI.AcceleratorTable class methodsFor!
 
 canonicalizeKeyString: aString
-	^self invariantKeyStringFromCode: (self keyCodeFromInvariantString: aString)!
+	| keyboard |
+	keyboard := Keyboard invariant.
+	^self keyStringFromCode: (self keyCodeFromString: aString keyboard: keyboard) keyboard: keyboard!
 
 icon
 	"Answers an Icon that can be used to represent this class"
@@ -136,7 +140,7 @@ keyCodeFromString: aString keyboard: aKeyboard
 	"Answer an accelerator key code (an integer packed with a virtual key code and accelerator modifiers) created from the key descriptions of the specified <Keyboard>."
 
 	| keys count modifierKeys modifierFlags |
-	keys := self splitKeyString: aString.
+	keys := KeySeparator split: aString.
 	count := keys size.
 	count == 0 ifTrue: [^0].
 	modifierKeys := aKeyboard modifierKeys.
@@ -146,28 +150,6 @@ keyCodeFromString: aString keyboard: aKeyboard
 		do: [:i | modifierFlags := modifierFlags bitOr: (modifierKeys at: (keys at: i) ifAbsent: 0)].
 	^self keyCode: (aKeyboard virtualKeyFromString: (keys at: count)) modifiers: modifierFlags!
 
-keyModifierNames: anInteger keyboard: aKeyboard
-	"Private - Answer a <sequencedReadableCollection> of <String>s , being the names of the virtual key modifiers in the <integer> mask, anInteger, in the specified Keyboard layout."
-
-	| answer |
-	answer := OrderedCollection new.
-	self
-		keyModifierNames: anInteger
-		keyboard: aKeyboard
-		do: [:each | answer add: each value].
-	^answer!
-
-keyModifierNames: anInteger keyboard: aKeyboard do: aMonadicValuable
-	| modifierKeys |
-	modifierKeys := aKeyboard modifierKeys.
-	##({FCONTROL. FSHIFT. FALT})
-		do: [:each | (anInteger anyMask: each) ifTrue: [aMonadicValuable value: (modifierKeys keyAtValue: each)]]!
-
-keySeparator
-	"Private - Answer the <Character> used to separate the key names in a chord."
-
-	^$+!
-
 keyStringFromCode: anInteger
 	"Answer a localised accelerator string corresponding to the <integer> accelerator key code, anInteger, as described by the current keyboard layout."
 
@@ -176,35 +158,28 @@ keyStringFromCode: anInteger
 keyStringFromCode: anInteger keyboard: aKeyboard
 	"Answer a localised accelerator string corresponding to the accelerator key code, anInteger, as described by the specified Keyboard layout."
 
-	^self
-		keyStringFromCode: (anInteger bitAnd: 16r1FF)
-		modifiers: (anInteger bitShift: -9)
-		keyboard: aKeyboard!
-
-keyStringFromCode: vkInteger modifiers: maskInteger
-	"Private - Answer an accelerator string constructed for the specified virtual key and modifiers for the current keyboard layout."
-
-	^self
-		keyStringFromCode: vkInteger
-		modifiers: maskInteger
-		keyboard: Keyboard default!
-
-keyStringFromCode: vkInteger modifiers: maskInteger keyboard: aKeyboard
-	| keyString sep |
-	sep := self keySeparator.
-	keyString := String writeStream: 12.
-	self
-		keyModifierNames: maskInteger
-		keyboard: aKeyboard
-		do: 
-			[:each |
-			keyString
-				nextPutAll: each;
-				nextPut: sep].
-	keyString nextPutAll: (aKeyboard
-				keyNameFromVKey: ((vkInteger bitAnd: 16r1FF) bitOr: (maskInteger bitAnd: -16r100))
-				ifNone: ['']).
-	^keyString contents!
+	| modifiers keyString keys |
+	keyString := WriteStream on: (Utf8String new: 12).
+	keys := aKeyboard keyNames.
+	modifiers := anInteger bitShift: -9.
+	(modifiers allMask: FCONTROL)
+		ifTrue: 
+			[keyString
+				nextPutAll: (keys at: VK_CONTROL);
+				nextPut: KeySeparator].
+	(modifiers allMask: FSHIFT)
+		ifTrue: 
+			[keyString
+				nextPutAll: (keys at: VK_SHIFT);
+				nextPut: KeySeparator].
+	(modifiers allMask: FALT)
+		ifTrue: 
+			[keyString
+				nextPutAll: (keys at: VK_MENU);
+				nextPut: KeySeparator].
+	^keyString
+		nextPutAll: (keys at: (anInteger bitAnd: 16r1FF) ifAbsent: '');
+		contents!
 
 splitKeyCode: anInteger
 	"Answer a 2-element <Array> containing a virtual key code <integer> and accelerator table modifier flags <integer> from the <integer> accelerator key code argument."
@@ -214,7 +189,7 @@ splitKeyCode: anInteger
 splitKeyString: aString
 	"Answer an <Array> of <String>s containing the names of the keys specified in the <readableString> accelerator key chord, aString. Note that this must not contain any spaces."
 
-	^self keySeparator split: aString!
+	^KeySeparator split: aString!
 
 stbConvertFrom: anSTBClassFormat
 	"Version 1 changes format of the 'commands' (formerly 'accelerators') instance variable."
@@ -239,13 +214,8 @@ keyCode:modifiers:!helpers!public! !
 keyCodeFromInvariantString:!enquiries!public! !
 keyCodeFromString:!enquiries!public! !
 keyCodeFromString:keyboard:!enquiries!public! !
-keyModifierNames:keyboard:!enquiries!private! !
-keyModifierNames:keyboard:do:!enquiries!private! !
-keySeparator!constants!private! !
 keyStringFromCode:!enquiries!public! !
 keyStringFromCode:keyboard:!enquiries!public! !
-keyStringFromCode:modifiers:!enquiries!helpers!private! !
-keyStringFromCode:modifiers:keyboard:!enquiries!helpers!private! !
 splitKeyCode:!helpers!public! !
 splitKeyString:!helpers!public! !
 stbConvertFrom:!binary filing!private! !

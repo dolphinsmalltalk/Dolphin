@@ -874,8 +874,7 @@ isKindOf: candidateClass
 	^self class includesBehavior: candidateClass!
 
 isLiteral
-	"Answer whether or not the receiver has a literal representation (probably its
-	printString) which is directly recognised by the Compiler"
+	"Answer whether or not the receiver has a literal representation (probably its printString) which is directly recognised by the Compiler, including when embedded in a literal <Array>."
 
 	^false!
 

@@ -216,8 +216,8 @@ with: element1 with: element2 with: element3 with: element4 with: element5
 
 withAll: aCollection
 	| runs values runLength current |
-	runs := Array writeStream.
-	values := Array writeStream.
+	runs := WriteStream on: {}.
+	values := WriteStream on: {}.
 	runLength := 0.
 	current := AbsentCookie.
 	aCollection do: 

@@ -22,10 +22,11 @@ N.B. Unlike other SearchPolicy classes, instances of this class are only appropr
 !Kernel.CaseInsensitiveSearchPolicy methodsFor!
 
 compare: operand1 with: operand2
-	"Answer whether the <Object>, operand1, is considered equivalent to the <Object> argument,
-	operand2, by this search policy."
+	"Answer whether the <Object>, operand1, is considered equivalent to the <Object> argument, operand2, by this search policy."
 
-	^operand1 asString <=> operand2 asString == 0!
+	"Note that this is an ordinal case-insensitive comparison, not a linguistic one, and hence uses String>>#equalsIgnoreCase:, rather than the spaceship operator, String>>#<=>."
+
+	^operand1 asString equalsIgnoreCase: operand2 asString!
 
 hash: operand
 	"Answer a suitable hash value for the <Object>, operand, under this search policy."

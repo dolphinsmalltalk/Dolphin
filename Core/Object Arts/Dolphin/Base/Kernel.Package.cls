@@ -116,7 +116,7 @@ allMethodsDo: aMonadicValuable
 	loose := self manager looseMethods.
 	self behaviorsDo: 
 			[:eachBehavior |
-			eachBehavior methodDictionary do: ((loose lookup: eachBehavior)
+			eachBehavior methodsDo: ((loose lookup: eachBehavior)
 						ifNil: [aMonadicValuable]
 						ifNotNil: 
 							[:selectors |
@@ -529,8 +529,9 @@ environment: aNamespace
 			compilationResult method
 				ifNil: [failures add: each]
 				ifNotNil: 
-					[compilationResult oldMethod: each.
-					Smalltalk trigger: #methodUpdated: with: compilationResult]].
+					[compilationResult
+						oldMethod: each;
+						fireSystemUpdateEvent]].
 	failures isEmpty
 		ifFalse: 
 			[Warning

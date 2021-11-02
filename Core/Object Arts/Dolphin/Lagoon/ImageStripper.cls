@@ -882,7 +882,7 @@ logRemainingClasses
 			self
 				startElement: 'Class' attributes: attributes contents;
 				startElement: 'Methods' attributes: {'count' -> each key methodDictionary size}.
-			selectors := Array writeStream.
+			selectors := WriteStream on: {}.
 			each key methodDictionary keysDo: [:selector | selectors nextPut: selector].
 			selectors contents sort do: 
 					[:selector |
@@ -1827,7 +1827,7 @@ unreachableMethodsOfNonInstantiablesIn: aCollectionOfClasses
 	Note that we only include instance side methods, as there is a class instance (i.e. the metaclasses are never non-instantiable)."
 
 	| abstractClasses unreachable supersentMethods |
-	unreachable := Array writeStream.
+	unreachable := WriteStream on: {}.
 	abstractClasses := aCollectionOfClasses select: [:each | each isNonInstantiable].
 	supersentMethods := deploymentContext supersentMethods.
 	abstractClasses do: 

@@ -36,7 +36,7 @@ allAdditionalKeyBindings
 
 	| answer |
 	answer := OrderedCollection withAll: self additionalKeyBindings.
-	self allSubPresentersDo: [:each | answer addAll: each additionalKeyBindings].
+	self allSubPresentersDo: [:each | answer addAllLast: each additionalKeyBindings].
 	^answer!
 
 caption

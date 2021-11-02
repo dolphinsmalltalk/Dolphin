@@ -270,7 +270,7 @@ isAlphaNumeric
 isAscii
 	"Answer whether the receiver is an ascii character"
 
-	^(code bitAnd: 16r1FFFFF) < 16r80!
+	^code < 16r80!
 
 isAtomic
 	"Answer whether or not the receiver is the single unique instance of its class that
@@ -472,7 +472,7 @@ split: aReadableString
 
 	"Implementation Note: Although this routine is rather more complex than it need be, the performance of #subStrings(:) is important, so it pays to optimize this routine. In particular we try to avoid performing any work in the common cases where the string is either empty, or does not contain the separator at all. However, we must be careful not to over optimize and prevent correct operation for wide (Unicode) strings."
 
-	| start answer size end codeUnits |
+	| start end size answer codeUnits |
 	size := aReadableString size.
 	size == 0 ifTrue: [^#()].
 	end := aReadableString
@@ -485,10 +485,9 @@ split: aReadableString
 	codeUnits := aReadableString encodedSizeOf: self.
 	
 	[answer nextPut: (aReadableString copyFrom: start to: end - 1).
-	start := end + codeUnits.
 	end := aReadableString
 				nextIndexOf: self
-				from: start
+				from: (start := end + codeUnits)
 				to: size.
 	end == 0]
 			whileFalse.

@@ -2147,7 +2147,7 @@ managedSubViews
 	Managed sub views can be edited by the ViewComposer and are arranged by the layout manager (if any)"
 
 	| answer |
-	answer := Array writeStream.
+	answer := WriteStream on: {}.
 	self managedSubViewsDo: [:each | answer nextPut: each].
 	^answer grabContents!
 

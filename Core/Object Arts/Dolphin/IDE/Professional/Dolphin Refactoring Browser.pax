@@ -1462,6 +1462,7 @@ pushDownInstanceVariables
 	self model pushDownInstanceVariables: self variables!
 
 pushDownMethods
+	<acceleratorKey: 'Shift+Ctrl+7'>
 	self pushMethods: false!
 
 pushMethods: aBoolean
@@ -1479,6 +1480,7 @@ pushMethods: aBoolean
 	self selectedMethods: methods!
 
 pushUpMethods
+	<acceleratorKey: 'Shift+Ctrl+6'>
 	self pushMethods: true!
 
 queryRefactoringCommand: aCommandQuery

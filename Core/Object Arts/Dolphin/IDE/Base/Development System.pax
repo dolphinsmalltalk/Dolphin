@@ -627,6 +627,7 @@ package setMethodNames: #(
 	#(#{UI.MultilineTextEdit class} #publishedAspectsOfInstances)
 	#(#{UI.PluggableTypeConverter class} #publishedAspectsOfInstances)
 	#(#{UI.Presenter class} #addView:asResource:)
+	#(#{UI.Presenter class} #defaultAcceleratorKeyBindings)
 	#(#{UI.Presenter class} #editNewDefaultView)
 	#(#{UI.ProgressBar class} #publishedAspectsOfInstances)
 	#(#{UI.ProportionalLayout} #arrangementAspect)
@@ -7344,6 +7345,10 @@ addView: aViewClass asResource: aStringName
 
 	aViewClass makeResource: aStringName inClass: self !
 
+defaultAcceleratorKeyBindings
+	^Dictionary withAll: (self combinedAdditionalAccelerators
+				collect: [:each | (AcceleratorTable canonicalizeKeyString: each second) -> each first])!
+
 editNewDefaultView
 	"Open the View Composer to create a new view for the receiver."
 
@@ -7365,6 +7370,7 @@ editNewDefaultView
 		resourceIdentifier: resourceIdentifier! !
 !UI.Presenter class categoriesForMethods!
 addView:asResource:!operations!public! !
+defaultAcceleratorKeyBindings!options!private! !
 editNewDefaultView!operations!public! !
 !
 

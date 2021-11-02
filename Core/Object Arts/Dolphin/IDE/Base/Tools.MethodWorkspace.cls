@@ -481,6 +481,7 @@ variableClassification: anStVariableNode
 widenSourceSelection
 	"Expand the selection to encompass the next greater syntactic element."
 
+	<acceleratorKey: 'Ctrl+U'>
 	| node |
 	node := self selectedNode.
 	
@@ -543,12 +544,12 @@ selectedMessageNode!accessing!private!refactoring! !
 selectedMethod!accessing!public! !
 selectedNode!accessing!public! !
 selectionChanged!event handling!public! !
-selectorFromNode:!commands!private! !
+selectorFromNode:!helpers!private! !
 selfClass!autocompletion!private! !
 setParseTimer!helpers!private! !
 source!accessing!public! !
 source:!accessing!public! !
-targetOfMessage:!commands!private!refactoring! !
+targetOfMessage:!helpers!private! !
 variableClassification:!helpers!private! !
 widenSourceSelection!commands!public! !
 !
@@ -567,13 +568,6 @@ autoParseDwell: aDuration
 	self autoParseDwell = aDuration ifTrue: [^self].
 	AutoParseDwell := aDuration.
 	self persistOptions!
-
-defaultAdditionalAccelerators
-	"Private - Answer a collection of additional accelerator definitions to be bound to the receiver's commands.
-	Each element of the collection should be a two element <Array>, the first element of which is the command symbol
-	and the second the accelerator key string."
-
-	^super defaultAdditionalAccelerators copyWith: #(#widenSourceSelection 'Ctrl+U')!
 
 invalidateLocalOptions
 	AutoParseDwell := nil!
@@ -598,9 +592,7 @@ optionsAspects
 	^IdentityDictionary new
 		add: ((Aspect dictionary: #acceleratorKeyBindings)
 					beImmutable;
-					defaultValue: 
-							[Dictionary withAll: (self defaultAdditionalAccelerators
-										collect: [:each | (AcceleratorTable canonicalizeKeyString: each second) -> each first])];
+					defaultValue: [self defaultAcceleratorKeyBindings];
 					yourself);
 		add: ((Aspect duration: #autoParseDwell)
 					defaultValue: 1 seconds;
@@ -643,7 +635,6 @@ resource_Default_view
 !Tools.MethodWorkspace class categoriesForMethods!
 autoParseDwell!accessing!public! !
 autoParseDwell:!accessing!public! !
-defaultAdditionalAccelerators!constants!private! !
 invalidateLocalOptions!private! !
 isAutoParseEnabled!accessing!public! !
 isAutoParseEnabled:!accessing!public! !

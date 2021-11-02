@@ -186,6 +186,7 @@ browsePackages
 	^packagesPresenter browsePackageSources!
 
 browseReferences
+	<acceleratorKey: 'Shift+F12'>
 	(self selectedMethod notNil and: [currentCard == #methods]) ifTrue: [^self browseMessageReferences].
 	(self selectedClass notNil and: [currentCard == #classes]) ifTrue: [^self browseClassReferences].
 	(self sharedVariable notNil and: [currentCard == #variables])

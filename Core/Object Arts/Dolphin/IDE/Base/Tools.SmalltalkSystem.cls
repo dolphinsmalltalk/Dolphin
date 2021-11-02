@@ -1419,7 +1419,7 @@ Are you absolutely sure you want to continue?')
 	self sourceManager compressSourcesWith: progress!
 
 copyAllMethodsOf: aClass to: newClass changes: aCompositeRefactoryChange
-	aClass methodDictionary do: 
+	aClass methodsDo: 
 			[:each |
 			| change |
 			change := AddMethodChange

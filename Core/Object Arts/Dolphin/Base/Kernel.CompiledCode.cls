@@ -197,8 +197,7 @@ containsSource: aString
 customEnvironment
 	"Private - Answer the <Namespace> in whose scope this method was compiled, or nil if that namespace is the same as the method's owning class."
 
-	self annotations ifNotNil: [:annotations | annotations environment ifNotNil: [:env | ^env]].
-	^nil!
+	^self annotations ifNotNil: [:annotations | annotations environment]!
 
 debugInfo
 	"Private - Answer a compilation result containing a recompilation of the receiver, a
@@ -276,11 +275,7 @@ hasAnnotation: aSymbol
 
 	| annotations |
 	annotations := self annotations.
-	^annotations notNil
-		and: [(annotations
-				basicIdentityIndexOf: aSymbol
-				from: 1
-				to: annotations size) ~~ 0]!
+	^annotations notNil and: [annotations includesSelector: aSymbol]!
 
 hash
 	"Answer the <SmallInteger> hash value for the receiver."
@@ -688,7 +683,7 @@ accessesInstVar:at:!development!public!testing! !
 allLiteralsDo:!enumerating!private! !
 allSymbolLiterals!enumerating!private! !
 allSymbolLiteralsDo:!enumerating!private! !
-annotations!accessing!public! !
+annotations!accessing!annotations!public! !
 argumentCount!method header!public! !
 argumentCount:!accessing!method header!private! !
 basicByteCodes!accessing!private! !
@@ -700,7 +695,7 @@ byteCodeSegments!accessing!private! !
 clear!operations!private! !
 compilerClass!constants!private! !
 containsSource:!development!public!testing! !
-customEnvironment!accessing!private! !
+customEnvironment!accessing!annotations!private! !
 debugInfo!development!private! !
 envInfo!accessing!private! !
 environment!accessing!public! !
@@ -711,11 +706,11 @@ extraIndex:!method header!private! !
 fullBindingFor:!binding!public! !
 getDebugInfo!development!private! !
 getSource!accessing!development!public! !
-hasAnnotation:!enquiries!public! !
+hasAnnotation:!annotations!enquiries!public! !
 hash!comparing!public! !
 header!accessing!private! !
 header:!accessing!private! !
-isAnnotated!public!testing! !
+isAnnotated!annotations!public!testing! !
 isCompilationFailure!public!testing! !
 isDebugMethod!development!private!testing! !
 isExpression!private!testing! !

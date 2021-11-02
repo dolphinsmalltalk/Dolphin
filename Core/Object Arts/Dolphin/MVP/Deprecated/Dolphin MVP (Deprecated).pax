@@ -106,8 +106,6 @@ package methodNames
 	add: #View -> #winHelpPopup:topic:;
 	add: #View -> #winHelpPopup:topic:at:;
 	add: #VirtualColor -> #asIndexedColor;
-	add: 'AcceleratorTable class' -> #keyModifierNames:;
-	add: 'AcceleratorTable class' -> #keyModifierNames:do:;
 	add: 'Brush class' -> #dkGray;
 	add: 'Brush class' -> #hatchedDiagonal;
 	add: 'Brush class' -> #hollow;
@@ -210,23 +208,6 @@ addKey: vKeyCode commandDescription: aCommandDescription
 !AcceleratorTable categoriesForMethods!
 accelerators!accessing!public! !
 addKey:commandDescription:!adding!public! !
-!
-
-!AcceleratorTable class methodsFor!
-
-keyModifierNames: anInteger
-	Notification deprecated.
-	^self keyModifierNames: anInteger keyboard: Keyboard default!
-
-keyModifierNames: anInteger do: aMonadicValuable
-	Notification deprecated.
-	self
-		keyModifierNames: anInteger
-		keyboard: Keyboard default
-		do: aMonadicValuable! !
-!AcceleratorTable class categoriesForMethods!
-keyModifierNames:!enquiries!public! !
-keyModifierNames:do:!enquiries!public! !
 !
 
 !ARGB methodsFor!

@@ -349,9 +349,6 @@ autoCompleteDwell
 autoCompleteDwell: aDuration
 	AutoCompleteDwell := aDuration!
 
-defaultAdditionalAccelerators
-	^#(#(#searchSmalltalk 'Ctrl+Shift+F')).!
-
 icon
 	^Icon fromId: 'GoSearch.ico'!
 
@@ -375,7 +372,6 @@ resource_Default_view
 !Tools.SmalltalkSearchPresenter class categoriesForMethods!
 autoCompleteDwell!accessing!autocompletion!public! !
 autoCompleteDwell:!accessing!autocompletion!public! !
-defaultAdditionalAccelerators!public! !
 icon!constants!public! !
 initialize!initializing!public! !
 resource_Default_view!public!resources-views! !

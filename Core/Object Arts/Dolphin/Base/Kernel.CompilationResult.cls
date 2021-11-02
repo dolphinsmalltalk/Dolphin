@@ -11,6 +11,12 @@ Kernel.CompilationResult comment: ''!
 !Kernel.CompilationResult categoriesForClass!System-Support! !
 !Kernel.CompilationResult methodsFor!
 
+affectsAnnotation: aSymbol
+	"Answer whether the receiver has affect on the set of Annotations in the method class that match the specified selector. It may be that the new method adds a matching annotation, or that the original method had a matching annotation."
+
+	^(method notNil and: [method hasAnnotation: aSymbol])
+		or: [oldMethod notNil and: [oldMethod hasAnnotation: aSymbol]]!
+
 buildTempsMap
 	| stream |
 	stream := Array writeStream: rawTempsMap size.
@@ -34,6 +40,9 @@ buildTextMap
 	rawTextMap := nil!
 
 fireSystemUpdateEvent
+	"Before firing the event, let the class know if annotations may have been changed. This could be done by hooking the update event, but we want to ensure it is done as a priority before any UI response that might be triggered by the event."
+
+	method annotations ~= (oldMethod ifNotNil: [oldMethod annotations]) ifTrue: [method methodClass annotationsUpdated: self].
 	Smalltalk trigger: (self isNew ifTrue: [#methodAdded:] ifFalse: [#methodUpdated:]) with: self!
 
 isNew
@@ -94,6 +103,7 @@ textMap
 	textMap isNil ifTrue: [self buildTextMap].
 	^textMap! !
 !Kernel.CompilationResult categoriesForMethods!
+affectsAnnotation:!enquiries!public! !
 buildTempsMap!development!private! !
 buildTextMap!development!private! !
 fireSystemUpdateEvent!helpers!private! !

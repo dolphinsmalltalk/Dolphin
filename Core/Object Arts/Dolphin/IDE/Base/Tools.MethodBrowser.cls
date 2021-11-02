@@ -219,6 +219,7 @@ browseReferences
 	"Context-sensitive 'Browse References' command. In this case browse refs. to the 
 	current selector."
 
+	<acceleratorKey: 'Shift+F12'>
 	self browseReferencesMatching: (MethodSearch newSelector: self selection selector)
 		in: self searchEnvironment!
 

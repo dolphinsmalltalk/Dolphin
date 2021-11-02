@@ -127,6 +127,11 @@ allSuperclassesDo: aMonadicValuable
 	current isNil] 
 			whileFalse: [aMonadicValuable value: current]!
 
+annotationsUpdated: aCompilationResult 
+	"Annotations may have been added or removed in the receiver's methods. This is an opportunity to update any metadata that might be based on method annotations."
+	
+	"By default, do nothing"!
+
 basicCompile: aString
 	^self basicCompile: aString environment: nil!
 
@@ -230,19 +235,17 @@ compile: aString environment: aNamespace
 	"Compile the source code in the <String> argument in the context of the receiver, but overriding the receiver's own <Namespace> with the specified one for binding static variables that are not defined in the receiver's own hierarchy, or imported into it.
 	If the method is successfully compiled, then 
 		- enter the result into the receiver's method dictionary
-		- trigger a #methodAdded: event, and 
+		- trigger a #method[Added|Updated]: event, and 
 		- answer the new <CompiledMethod> or nil.
 	If a compilation error occurs:
 		- a CompilerNotification is signalled
 		- answer nil"
 
-	| method result |
-	result := self basicCompile: aString environment: aNamespace.
-	result notNil
-		ifTrue: 
-			[method := result method.
-			result fireSystemUpdateEvent].
-	^method!
+	^(self basicCompile: aString environment: aNamespace)
+		ifNotNil: 
+			[:result |
+			result fireSystemUpdateEvent.
+			result method]!
 
 compileAll
 	"Compile all the methods for which the receiver has selectors. We install stub methods for all
@@ -559,6 +562,16 @@ methodDictionary: aMethodDictionary
 	methodDictionary := (aMethodDictionary isNil or: [aMethodDictionary isEmpty])
 				ifFalse: [aMethodDictionary]!
 
+methodRemoved: aCompiledMethod 
+	"React to the removal of the specified method from this class. This is before the system update event with selector #methodRemoved: is triggered."
+
+	"Do nothing at this level - this is an override point for classes"!
+
+methodsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each method defined directly in the receiver."
+
+	methodDictionary ifNotNil: [methodDictionary do: aMonadicValuable]!
+
 new
 	"Answer an instance of the receiver with no indexed variables. Send the receiver the message {new: 0} if the receiver is indexable.
 
@@ -625,6 +638,10 @@ newFixed: aSmallInteger
 	_failureCode == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^self errorNotPinnable].
 	_failureCode == _PrimitiveFailureCode.NonInstantiable ifTrue: [^self errorNonInstantiable].
 	^self primitiveFailed: _failureCode!
+
+notifyMethodRemoved: aCompiledMethod
+	self methodRemoved: aCompiledMethod.
+	Smalltalk trigger: #methodRemoved: with: aCompiledMethod!
 
 primAllInstances
 	"Private - Answer an <Array> of all the instances of the receiver which currently exist in the system. 
@@ -769,7 +786,7 @@ removeSelector: aSymbol ifAbsent: aNiladicValuable
 		ifTrue: [^aNiladicValuable value].
 	methodDictionary isEmpty ifTrue: [methodDictionary := nil].
 	self flushMethodCache.
-	Smalltalk trigger: #methodRemoved: with: method.
+	self notifyMethodRemoved: method.
 	^method!
 
 removeSelectors: aCollection
@@ -798,7 +815,7 @@ selectMethods: aMonadicValuable
 
 	| answer |
 	answer := IdentitySet new: 25.
-	self methodDictionary do: [:each | (aMonadicValuable value: each) ifTrue: [answer add: each]].
+	self methodsDo: [:each | (aMonadicValuable value: each) ifTrue: [answer add: each]].
 	^answer!
 
 selectors
@@ -982,6 +999,7 @@ addToSuper!class hierarchy-adding!private! !
 allInstVarNames!instance variables!public! !
 allSuperclasses!class hierarchy-accessing!public! !
 allSuperclassesDo:!class hierarchy-accessing!enumerating!private! !
+annotationsUpdated:!public! !
 basicCompile:!compiling!private! !
 basicCompile:environment:!compiling!private! !
 basicCompile:flags:environment:!compiling!private! !
@@ -1040,10 +1058,13 @@ lookupMethod:!methods-accessing!public! !
 makeMourner!instance specification-accessing!private! !
 methodDictionary!methods-accessing!private! !
 methodDictionary:!methods-accessing!private! !
+methodRemoved:!public! !
+methodsDo:!enumerating!public! !
 new!instance creation!public! !
 new:!instance creation!public! !
 new:max:!instance creation!private! !
 newFixed:!instance creation!public! !
+notifyMethodRemoved:!methods-removing!private! !
 primAllInstances!instances!private! !
 primAllSubinstances!instances!private! !
 recompile:!compiling!development!public! !

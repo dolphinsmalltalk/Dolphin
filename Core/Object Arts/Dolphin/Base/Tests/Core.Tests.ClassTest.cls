@@ -86,12 +86,6 @@ testLessOrEqual
 	self deny: Kernel.Tests <= Core.Tests.
 	self assert: TestCase <= TestCaseResult!
 
-testLocalEnvironment
-	self assert: Object localEnvironment equals: Core!
-
-testLocalScope
-	self assert: Object localScope equals: Object!
-
 testNestedClasses
 	| expected actual |
 	expected := (Smalltalk allClasses select: [:each | each environment == Smalltalk]) asSet.
@@ -104,13 +98,7 @@ testPoolBinding
 
 	self assert: (Exception fullBindingFor: 'WS_CHILD') notNil.
 	"But the imports are private, and so not be exported as externally resolvable names"
-	self assert: (Smalltalk fullBindingFor: 'Exception.WS_CHILD') isNil!
-
-testStoreOn
-	self assert: self class storeString equals: 'Core.Tests.ClassTest'!
-
-testWhichClassDefinesClassVar
-	self assert: (self class whichClassDefinesClassVar: '_AssertionFailureSignal') identicalTo: Object! !
+	self assert: (Smalltalk fullBindingFor: 'Exception.WS_CHILD') isNil! !
 !Core.Tests.ClassTest categoriesForMethods!
 allClassHierarchyInstancesDo:!helpers!private! !
 testAllRoots!public!unit tests! !
@@ -119,11 +107,7 @@ testClassPoolsWellFormed!public!unit tests! !
 testImportsValid!public!unit tests! !
 testIncludesNamespace!public!unit tests! !
 testLessOrEqual!public!unit tests! !
-testLocalEnvironment!public!unit tests! !
-testLocalScope!public!unit tests! !
 testNestedClasses!public!unit tests! !
 testPoolBinding!public!unit tests! !
-testStoreOn!public!unit tests! !
-testWhichClassDefinesClassVar!public!unit tests! !
 !
 

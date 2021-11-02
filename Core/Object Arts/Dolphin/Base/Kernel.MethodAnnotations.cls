@@ -58,6 +58,14 @@ first
 
 	^Message selector: (self basicAt: 1) arguments: (self basicAt: 2)!
 
+includesSelector: aSymbol
+	"Answer whether any of the annotations in the receiver have the selector named by the <Symbol> argument."
+
+	^(self
+		basicNextIdentityIndexOf: aSymbol
+		from: 1
+		to: self basicSize) odd!
+
 printOn: aStream
 	self basicPrintOn: aStream.
 	aStream nextPut: $(.
@@ -93,6 +101,17 @@ refersTo: anObject asLiteralOf: aCompiledCode
 		do: [:i | ((self basicAt: i) refersTo: anObject asLiteralOf: aCompiledCode) ifTrue: [^true]].
 	^false!
 
+selectors
+	"Answer an <Set> of <Symbol>, being the annotation selectors in this collection."
+
+	| count selectors |
+	count := self size.
+	selectors := Set new: count.
+	1 to: (count bitShift: 1)
+		by: 2
+		do: [:i | selectors add: (self basicAt: i)].
+	^selectors!
+
 uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 	"Private - Evaluate the <dyadicValuable> argument for each element of the receiver in the
 	specified inclusive range, with the element and its index as respectively the second and
@@ -105,7 +124,30 @@ uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 			| offset |
 			offset := i * 2.
 			aDyadicValuable value: i
-				value: (Message selector: (self basicAt: offset - 1) arguments: (self basicAt: offset))]! !
+				value: (Message selector: (self basicAt: offset - 1) arguments: (self basicAt: offset))]!
+
+withSelector: aSymbol
+	"Answer a <sequencedReadableCollection> of the <Message>s in the receiver with the selector specified by the <Symbol> argument."
+
+	| stream |
+	stream := WriteStream on: {}.
+	self withSelector: aSymbol do: [:args | stream nextPut: (Message selector: aSymbol arguments: args)].
+	^stream grabContents!
+
+withSelector: aSymbol do: aMonadicValuable
+	"Evaluate the <monadicValuable> second argument for each of the <Message>s in the receiver with the selector specified by the <Symbol> first argument."
+
+	| i stop |
+	stop := self basicSize.
+	i := 0.
+	
+	[(i := self
+				basicNextIdentityIndexOf: aSymbol
+				from: i + 1
+				to: stop) even
+		ifFalse: [aMonadicValuable value: (self basicAt: i + 1)].
+	i == 0]
+			whileFalse! !
 !Kernel.MethodAnnotations categoriesForMethods!
 add:!adding!public! !
 at:!enumerating!public! !
@@ -115,9 +157,13 @@ copyingClass!copying!private! !
 do:!enumerating!public! !
 environment!public!searching! !
 first!enumerating!public! !
+includesSelector:!public!searching! !
 printOn:!printing!public! !
 refersTo:asLiteralOf:!private!testing! !
+selectors!accessing!public! !
 uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
+withSelector:!enumerating!public! !
+withSelector:do:!enumerating!public! !
 !
 
 !Kernel.MethodAnnotations class methodsFor!

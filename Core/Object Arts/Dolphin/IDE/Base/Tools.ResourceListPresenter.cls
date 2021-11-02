@@ -37,6 +37,7 @@ browseIt
 	self resourceIdentifier browse!
 
 browseReferences
+	<acceleratorKey: 'Shift+F12'>
 	self systemModel browseResourcesReferencingView: self resourceIdentifier!
 
 browseSystem

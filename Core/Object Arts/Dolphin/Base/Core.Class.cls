@@ -512,8 +512,8 @@ isAtomic
 
 	^true!
 
-isLiteral
-	"Private - Answer whether or not the receiver has a literal representation (probably its	printString) which is directly recognised by the Compiler"
+isSelfEvaluating
+	"Private - Answer whether or not the receiver has a printed representation which is directly recognised by the Compiler"
 
 	^name notNil!
 
@@ -1113,7 +1113,7 @@ instanceClass!accessing!public! !
 isAbstract:!instance specification-accessing!public! !
 isAnonymous!public!testing! !
 isAtomic!public!testing! !
-isLiteral!public!testing! !
+isSelfEvaluating!public!testing! !
 localBindingFor:!bindings!public! !
 name!accessing!public! !
 nestedClasses!accessing!public! !
@@ -1223,7 +1223,7 @@ allMethodsDo: operation
 	"Private - Evaluate the monadic valuable, operation, for each and every method in the system
 	which is connected into the class hierarchy. No ordering should be assumed."
 
-	self allBehaviorsDo: [:behavior | behavior methodDictionary do: operation]!
+	self allBehaviorsDo: [:behavior | behavior methodsDo: operation]!
 
 allRoots
 	"Private - Answer a Collection of all global root classes - ie. those that are subclasses of nil.

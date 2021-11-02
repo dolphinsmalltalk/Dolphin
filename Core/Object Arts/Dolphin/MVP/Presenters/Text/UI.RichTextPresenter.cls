@@ -84,16 +84,19 @@ queryCommand: query
 toggleBold
 	"Toggle bold mode for the selection in the receiver"
 
+	<acceleratorKey: 'Ctrl+B'>
 	self view isBold: self view isBold not!
 
 toggleItalic
 	"Toggle italic mode for the selection in the receiver"
 
+	<acceleratorKey: 'Ctrl+I'>
 	self view isItalic: self view isItalic not!
 
 toggleUnderlined
 	"Toggle underline mode for the selection in the receiver"
 
+	<acceleratorKey: 'Ctrl+U'>
 	self view isUnderlined: self view isUnderlined not! !
 !UI.RichTextPresenter categoriesForMethods!
 alignParagraphCenter!commands!public! !

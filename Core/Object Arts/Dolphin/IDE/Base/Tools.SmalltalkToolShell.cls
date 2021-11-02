@@ -127,6 +127,7 @@ hasPast
 help
 	"Bring up a help page for this tool."
 
+	<acceleratorKey: 'F1'>
 	self systemModel openHelpTopicForTool: self!
 
 historyBack
@@ -292,6 +293,7 @@ searchForSymbol: aSymbol
 								in: BrowserEnvironment new)))!
 
 searchSmalltalk
+	<acceleratorKey: 'Ctrl+Shift+F'>
 	| searchView |
 	searchView := searchPresenter view.
 	searchView hasFocus ifTrue: [^self].
@@ -444,10 +446,6 @@ canUseIdeaSpaceAspect
 	^(Aspect boolean: #canUseIdeaSpace)
 		defaultValue: true;
 		yourself!
-
-defaultAcceleratorKeyBindings
-	^Dictionary withAll: (self defaultAdditionalAccelerators
-				collect: [:each | (AcceleratorTable canonicalizeKeyString: each second) -> each first])!
 
 defaultAdditionalAccelerators
 	"Answer a collection of additional accelerator definitions for commands not on the menu bar of the receiver's view(s).
@@ -812,7 +810,6 @@ buildIdeaSpacePopup!private! !
 canUseIdeaSpace!options!public! !
 canUseIdeaSpace:!options!public! !
 canUseIdeaSpaceAspect!private! !
-defaultAcceleratorKeyBindings!options!private! !
 defaultAdditionalAccelerators!constants!private! !
 defaultDefaultSlideyPinsMap!constants!options!private! !
 defaultDefaultView!constants!public! !

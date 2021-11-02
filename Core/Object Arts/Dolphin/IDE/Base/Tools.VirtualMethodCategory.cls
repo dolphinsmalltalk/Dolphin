@@ -65,8 +65,7 @@ methodsInBehavior: aBehavior
 	^answer contents!
 
 methodsInBehavior: aBehavior do: aMonadicValuable 
-	aBehavior methodDictionary 
-		do: [:each | (self includesMethod: each) ifTrue: [aMonadicValuable value: each]]!
+	aBehavior methodsDo: [:each | (self includesMethod: each) ifTrue: [aMonadicValuable value: each]]!
 
 removeMethodSilently: aCompiledMethod 
 	"Private - Remove the <CompiledMethod> argument from the set of 

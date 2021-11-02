@@ -119,8 +119,11 @@ combinedAcceleratorTable
 	those accelerator keys registered in the current menu bar. This is the table sent to
 	windows."
 
-	combinedAcceleratorTable isNil ifTrue: [self buildCombinedAcceleratorTable].
-	^combinedAcceleratorTable!
+	^combinedAcceleratorTable
+		ifNil: 
+			[
+			self buildCombinedAcceleratorTable.
+			combinedAcceleratorTable]!
 
 commandPolicyClass
 	"Answers the class of <commandPolicy> to use for routing commands originating
@@ -983,10 +986,10 @@ translateAccelerator: aMSG
 
 	| hAccel |
 	hAccel := self combinedAcceleratorTable asParameter.
-	^hAccel ~= 0 and: 
+	^hAccel isNull not and: 
 			[(User32
 				translateAccelerator: self asParameter
-				haccl: combinedAcceleratorTable asParameter
+				haccl: hAccel
 				lpmsg: aMSG) ~~ false]	"useful on image restart of debugged process"!
 
 updateCaption

@@ -26,7 +26,7 @@ emitClassPoolOfClass: aClass
 
 	| literalConstants |
 	literalConstants := aClass classPool associations
-				select: [:each | each isImmutable and: [each value isLiteral]].
+				select: [:each | each isImmutable and: [each value isSelfEvaluating]].
 	literalConstants asSortedCollection
 		do: [:each | self emitDeclarationForClass: aClass variable: each]!
 
@@ -366,7 +366,7 @@ fileOutPoolDictionary: aPoolDictionary
 				print: a key;
 				nextPutAll: ' put: '.
 			value := a value.
-			value isLiteral
+			value isSelfEvaluating
 				ifTrue: 
 					[self emitChunk: (value isInteger ifTrue: [value printStringRadix: 16] ifFalse: [value printString])]
 				ifFalse: 

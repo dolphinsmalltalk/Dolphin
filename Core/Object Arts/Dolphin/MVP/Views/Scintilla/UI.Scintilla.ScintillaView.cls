@@ -344,8 +344,8 @@ annotationStyles: aCollection
 
 annotationStylesFromStyleBytes: aByteArray
 	| runs values styleLookup |
-	runs := Array writeStream.
-	values := Array writeStream.
+	runs := WriteStream on: {}.
+	values := WriteStream on: {}.
 	styleLookup := IdentityDictionary new: annotationStyles size.
 	annotationStyles do: [:each | styleLookup at: each id put: each name].
 	aByteArray runsAndValuesDo: 
@@ -2492,7 +2492,7 @@ getElementColor: anInteger
 
 getEolAnnotations
 	| annotations |
-	annotations := Array writeStream.
+	annotations := WriteStream on: {}.
 	1 to: self lineCount
 		do: 
 			[:each |
@@ -2541,7 +2541,7 @@ getRawAnnotations
 	corresponding positions."
 
 	| rawAnnotations |
-	rawAnnotations := Array writeStream.
+	rawAnnotations := WriteStream on: {}.
 	1 to: self lineCount
 		do: 
 			[:i |

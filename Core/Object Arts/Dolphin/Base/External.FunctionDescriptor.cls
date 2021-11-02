@@ -538,7 +538,7 @@ parseDescriptor: aString environment: aNamespace
 	returnType := self parseArgDesc: stream nextWord environment: aNamespace.
 	descriptor nextPut: returnType key.
 	descriptor nextPut: 0.
-	literals := Array writeStream.
+	literals := WriteStream on: {}.
 	returnType value notNil ifTrue: [literals nextPut: returnType value].
 	argCount := 0.
 	stream skipSeparators.

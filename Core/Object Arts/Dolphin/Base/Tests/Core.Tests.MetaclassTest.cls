@@ -14,6 +14,9 @@ Core.Tests.MetaclassTest comment: ''!
 allClassHierarchyInstancesDo: aMonadicValuable
 	Smalltalk allRoots do: [:root | root class withAllSubclassesDo: aMonadicValuable]!
 
+canonicalInstance
+	^super canonicalInstance!
+
 testClassBindingNames
 	self assert: Object class classBindingNames asArray sort equals: #('_AssertionFailureSignal' '_DependentsRegister' '_EventsRegister' '_PropertyRegister')!
 
@@ -73,32 +76,17 @@ testLessOrEqual
 	self deny: ArithmeticValue class <= ArithmeticError.
 	self deny: ArithmeticValue class <= ArithmeticError class!
 
-testLocalEnvironment
-	self assert: Object class localEnvironment equals: Core!
-
-testLocalScope
-	self assert: Object class localScope equals: Object!
-
 testName
 	Smalltalk allRoots do: 
 			[:root |
 			root class
-				allSubclassesDo: [:each | self assert: each name equals: each instanceClass name , ' class']]!
-
-testStoreOn
-	self assert: self class class storeString equals: 'Core.Tests.MetaclassTest class'!
-
-testWhichClassDefinesClassVar
-	self assert: (self class class whichClassDefinesClassVar: '_AssertionFailureSignal') identicalTo: Object! !
+				allSubclassesDo: [:each | self assert: each name equals: each instanceClass name , ' class']]! !
 !Core.Tests.MetaclassTest categoriesForMethods!
 allClassHierarchyInstancesDo:!helpers!private! !
+canonicalInstance!constants!private! !
 testClassBindingNames!public! !
 testInstances!public!unit tests! !
 testLessOrEqual!public!unit tests! !
-testLocalEnvironment!public!unit tests! !
-testLocalScope!public!unit tests! !
 testName!public!unit tests! !
-testStoreOn!public!unit tests! !
-testWhichClassDefinesClassVar!public!unit tests! !
 !
 
