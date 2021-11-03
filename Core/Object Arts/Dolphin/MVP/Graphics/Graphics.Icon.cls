@@ -51,7 +51,9 @@ asAlphaBitmap: aPoint
 	^bmp!
 
 asCursor
-	^Cursor initializer: initializer copy!
+	"Icon's can be used as Cursors. The only real difference is that cursors have a specific hotspot other than the top left corner."
+
+	^self!
 
 asIcon
 	^self!
@@ -270,6 +272,29 @@ loadResource: identifierObject fromModule: moduleObject extent: aPoint flags: an
 				extent: aPoint
 				flags: anInteger]!
 
+makeCurrent
+	"Make the receiver become the current global cursor."
+
+	Cursor current: self!
+
+setCursor
+	"Private - Set the receiver as the current Windows cursor. Answers the handle of the old
+	cursor."
+
+	^User32 setCursor: self asParameter!
+
+showWhile: aBlock
+	"Maintain the receiver as the current cursor while aBlock is executed, answering the result of the block.
+	The actual cursor which was current is restored (rather than the one we think is Current)."
+
+	| previous actual |
+	previous := Cursor.Current.
+	Cursor.Current := self.
+	actual := self setCursor.
+	^aBlock ensure: 
+			[Cursor.Current := previous.
+			User32 setCursor: actual]!
+
 valueWithHandle: operation extent: aPoint
 	"Private - Evaluate the <monadicValuable>, operation, with a handle for the receiver's icon at the best possible rendering for the specified extent. On Vista and later platforms the icon will be scaled down from the next largest icon if the requested size is not available, which generally yields a better result than scaling up."
 
@@ -309,6 +334,9 @@ imageIndex!accessing!public! !
 includesFrame:!public!searching! !
 loadFromSystem:extent:!private!realizing/unrealizing! !
 loadResource:fromModule:extent:flags:!private!realizing/unrealizing! !
+makeCurrent!operations!public! !
+setCursor!operations!private! !
+showWhile:!operations!public! !
 valueWithHandle:extent:!private! !
 withExtent:!converting!public! !
 !

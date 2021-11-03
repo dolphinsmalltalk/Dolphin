@@ -39,20 +39,20 @@ findObject
 	mouseTracker startTracking: self!
 
 foundCursor: aCursorOrIcon 
-	foundCursor := aCursorOrIcon asCursor!
+	foundCursor := aCursorOrIcon!
 
 initialize
 	super initialize.
 	foundCursor := self defaultFoundCursor.
 	notFoundCursor := self defaultNotFoundCursor!
 
-notFoundCursor: anObject
-	notFoundCursor := anObject asCursor!
+notFoundCursor: aCursorOrIcon
+	notFoundCursor := aCursorOrIcon!
 
 setCursor: anIconOrCursor
 	"Set the tracking cursor to anIconOrCursor. "
 
-	anIconOrCursor asCursor makeCurrent!
+	Cursor current: anIconOrCursor!
 
 shellClassFilter
 	^shellClassFilter!

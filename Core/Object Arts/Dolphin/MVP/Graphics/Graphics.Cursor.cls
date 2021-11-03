@@ -11,9 +11,6 @@ Graphics.Cursor comment: ''!
 !Graphics.Cursor categoriesForClass!Graphics-Tools! !
 !Graphics.Cursor methodsFor!
 
-asCursor
-	^self!
-
 loadFromSystem: anInteger extent: aPoint
 	^User32
 		loadImage: 0
@@ -34,37 +31,10 @@ loadResource: identifierObject fromModule: moduleObject extent: aPoint flags: an
 		uType: IMAGE_CURSOR
 		cxDesired: aPoint x
 		cyDesired: aPoint y
-		fuLoad: (aPoint = Point.Zero ifTrue: [anInteger bitOr: LR_DEFAULTSIZE] ifFalse: [anInteger])!
-
-makeCurrent
-	"Make the receiver become the current global cursor."
-
-	self class current: self!
-
-setCursor
-	"Private - Set the receiver as the current Windows cursor. Answers the handle of the old
-	cursor."
-
-	^User32 setCursor: self asParameter!
-
-showWhile: aBlock
-	"Maintain the wait cursor while aBlock is executed, answering the result of the block.
-	The actual cursor which was current is restored (rather than the one we think is Current)."
-
-	| previous actual |
-	previous := Current.
-	Current := self.
-	actual := self setCursor.
-	^aBlock ensure: 
-			[Current := previous.
-			User32 setCursor: actual]! !
+		fuLoad: (aPoint = Point.Zero ifTrue: [anInteger bitOr: LR_DEFAULTSIZE] ifFalse: [anInteger])! !
 !Graphics.Cursor categoriesForMethods!
-asCursor!converting!public! !
 loadFromSystem:extent:!private!realizing/unrealizing! !
 loadResource:fromModule:extent:flags:!private!realizing/unrealizing! !
-makeCurrent!operations!public! !
-setCursor!operations!private! !
-showWhile:!operations!public! !
 !
 
 !Graphics.Cursor class methodsFor!
