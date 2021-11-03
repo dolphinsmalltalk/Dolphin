@@ -420,13 +420,6 @@ canUseIdeaSpace: aBoolean
 	self setOptionFlag: CanUseIdeaSpaceMask value: aBoolean
 !
 
-defaultAdditionalAccelerators
-	"Private - Answer a collection of additional accelerator definitions for commands not on the menu bar of the receiver's view(s).
-	Each element of the collection should be a two element <Array>, the first element of which is the command symbol
-	and the second the accelerator key string."
-
-	^#(#(#inspectIt 'Shift+Ctrl+I'))!
-
 defaultBackcolor
 	"Answer the default background colour to use for instances of the receiver."
 
@@ -730,7 +723,6 @@ workspaceClass
 activeIdeaSpace!helpers!private! !
 canUseIdeaSpace!options!public! !
 canUseIdeaSpace:!options!public! !
-defaultAdditionalAccelerators!constants!options!private! !
 defaultBackcolor!options!public! !
 defaultBackcolor:!options!public! !
 defaultCaretColor!options!public! !

@@ -957,10 +957,17 @@ addCommandQueryHandler: aSymbol
 
 	self setCommandQueryHandlers: (self commandQueryHandlers copyWith: aSymbol)!
 
+additionalAccelerators
+	"Answer a collection of additional accelerator definitions for commands not on the menu bar of the receiver's view(s). Each element of the collection should be a two element <Array>, the first element of which is the command symbol and the second the accelerator key string."
+
+	"By default this is built by collection from methods with #acceleratorKey: annotations, and also any hard-coded in the class' implementation of #defaultAdditionAccelerators. The 2nd source is partly for backwards compatibility, since this existed before the annotation mechanism, and partly because it allows a Presenter class to define accelerator keys for commands that are implemented elsewhere. This allows keys to be bound to any of the commands that might be available on the command route initiated from the presenter. Typically this is used to specify accelerators for commands that are implemented in View classes."
+
+	^self acceleratorKeyAnnotations , self defaultAdditionalAccelerators!
+
 additionalKeyBindings
 	^self getAdditionalKeyBindings
 		ifNil: 
-			[self combinedAdditionalAccelerators collect: 
+			[self additionalAccelerators collect: 
 					[:each |
 					(CommandDescription command: each first)
 						acceleratorKeyString: each second;
@@ -970,10 +977,7 @@ annotationsUpdated: aCompilationResult
 	"Annotations may have been added or removed in the receiver's methods. This is an opportunity to update any metadata that might be based on method annotations."
 
 	(aCompilationResult affectsAnnotation: #acceleratorKey:)
-		ifTrue: [self updateDefaultAdditionalAccelerators: aCompilationResult]!
-
-combinedAdditionalAccelerators
-	^self acceleratorKeyAnnotations , self defaultAdditionalAccelerators!
+		ifTrue: [self updateAdditionalAccelerators: aCompilationResult]!
 
 commandQueryHandlers
 	^self getCommandQueryHandlers ?? #()!
@@ -1103,8 +1107,7 @@ loadViewResource: aString inContext: aParentView
 	^resourceIdentifier loadWithContext: aParentView!
 
 methodRemoved: aCompiledMethod
-	(aCompiledMethod hasAnnotation: #acceleratorKey:)
-		ifTrue: [self updateDefaultAdditionalAccelerators: nil]!
+	(aCompiledMethod hasAnnotation: #acceleratorKey:) ifTrue: [self updateAdditionalAccelerators: nil]!
 
 new
 	"Answer an instance of the receiver not yet connected to any view
@@ -1194,16 +1197,16 @@ showOn: aModel
 	^(self createOn: aModel) showShell.
 	!
 
-updateDefaultAdditionalAccelerators: aCompilationResult
+updateAdditionalAccelerators: aCompilationResult
 	self withAllSubclassesDo: [:each | each resetDefaultAdditionalAccelerators]! !
 !UI.Presenter class categoriesForMethods!
 acceleratorKeyAnnotations!constants!private! !
 acceleratorKeyBindings!constants!public! !
 acceleratorKeyBindings:!constants!public! !
 addCommandQueryHandler:!accessing!public! !
+additionalAccelerators!accessing!public! !
 additionalKeyBindings!accessing!private! !
 annotationsUpdated:!public! !
-combinedAdditionalAccelerators!accessing!private! !
 commandQueryHandlers!accessing!private! !
 create!instance creation!public! !
 create:!instance creation!public! !
@@ -1236,7 +1239,7 @@ show!instance creation!public! !
 show:!instance creation!public! !
 show:on:!instance creation!public! !
 showOn:!instance creation!public! !
-updateDefaultAdditionalAccelerators:!private! !
+updateAdditionalAccelerators:!event handling!private! !
 !
 
 UI.Presenter class methodProtocol: #'presenter factory' attributes: #(#readOnly) selectors: #(#create #create: #create:in: #create:in:on: #create:on: #createIn: #createIn:on: #createOn: #defaultModel #defaultView #on: #show #show: #show:on: #showOn:)!

@@ -2207,7 +2207,7 @@ fontQuality: aSymbol
 	self persistOptions!
 
 getAdditionalKeyBindings
-	^additionalKeyBindings ifNil: [self setAdditionalAccelerators: self combinedAdditionalAccelerators]!
+	^additionalKeyBindings ifNil: [self setAdditionalAccelerators: self additionalAccelerators]!
 
 getCommandQueryHandlers
 	^commandQueryHandlers!

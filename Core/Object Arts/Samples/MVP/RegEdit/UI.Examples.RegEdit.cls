@@ -35,9 +35,6 @@ aboutRegistryEditor
 
 	self class about!
 
-additionalAccelerators
-	^#(#(#renameIt 'F2'))!
-
 chooseFont
 	"Private - Pop the font dialog to allow selection of font for the text in the receiver.
 	Note how we easily we can modify the font simply by opening FontDialog on the
@@ -350,6 +347,7 @@ refresh
 rename
 	"Private - Initiate in-place label edit of the selected item."
 
+	<acceleratorKey: 'F2'>
 	keyPresenter view hasFocus ifTrue: [^self renameSelectedKey].
 	valuesPresenter view hasFocus ifTrue: [^self renameSelectedValue].
 	Sound warningBeep!
@@ -388,7 +386,6 @@ toggleStatusBar
 	statusBar isWindowVisible ifTrue: [statusBar hide] ifFalse: [statusBar show]! !
 !UI.Examples.RegEdit categoriesForMethods!
 aboutRegistryEditor!commands!private! !
-additionalAccelerators!constants!private! !
 chooseFont!commands!private! !
 copyKeyName!commands!private! !
 createComponents!initializing!public! !

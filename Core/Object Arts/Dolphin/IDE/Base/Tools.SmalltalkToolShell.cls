@@ -452,6 +452,8 @@ defaultAdditionalAccelerators
 	Each element of the collection should be a two element <Array>, the first element of which is the command symbol
 	and the second the accelerator key string."
 
+	"Ctrl+Shift+I to bring up an alternate inspector is not on the menus. In many tools this is picked up from the annotation associated with the inspectIt command in SmalltalkWorkspace, but not all tools contain a workspace but the inspect command is generally applicable to any selection in a tree or list, etc."
+
 	^#(#(#inspectIt 'Shift+Ctrl+I'))!
 
 defaultDefaultSlideyPinsMap

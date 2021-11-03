@@ -7346,7 +7346,7 @@ addView: aViewClass asResource: aStringName
 	aViewClass makeResource: aStringName inClass: self !
 
 defaultAcceleratorKeyBindings
-	^Dictionary withAll: (self combinedAdditionalAccelerators
+	^Dictionary withAll: (self additionalAccelerators
 				collect: [:each | (AcceleratorTable canonicalizeKeyString: each second) -> each first])!
 
 editNewDefaultView
