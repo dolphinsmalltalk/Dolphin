@@ -140,12 +140,9 @@ hasGdiPalettes
 	^isNotWine!
 
 hasIconScaleDown
-	"Answer whether the host supports scaling down of larger icons when the requested size is
-	not available (as opposed to scaling up)."
+	"Answer whether the host supports scaling down of larger icons when the requested size is not available (as opposed to scaling up)."
 
-	"Wine does not support the ComMCtrlLibrary>>loadIconWithScaleDown:.. method which is normally
-	availble under Vista and later. Hence we don't allow this to be called even if the Windows
-	version indicates Vista is available."
+	"Wine does not support the ComMCtrlLibrary>>loadIconWithScaleDown:.. method which is normally availble under Vista and later. Hence we don't allow this to be called even if the Windows version indicates Vista is available."
 
 	^isNotWine!
 

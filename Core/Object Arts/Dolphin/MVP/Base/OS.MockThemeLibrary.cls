@@ -24,7 +24,7 @@ beginBufferedAnimation: hwnd hdcTarget: hdcTarget prcTarget: prcTarget dwFormat:
 			[out]HDC* phdcFrom,
 			[out]HDC* phdcTo);"
 
-	^E_NOTIMPL!
+	^nil!
 
 beginBufferedPaint: hdcTarget prcTarget: prcTarget dwFormat: dwFormat pPaintParams: pPaintParams phDC: phDC
 	"Invoke the BeginBufferedPaint() function of the module wrapped by the receiver.
@@ -37,7 +37,7 @@ beginBufferedPaint: hdcTarget prcTarget: prcTarget dwFormat: dwFormat pPaintPara
 			[in]BP_PAINTPARAMS* pPaintParams,
 			[out]HDC* phDC);"
 
-	^E_NOTIMPL!
+	^nil!
 
 bufferedPaintClear: hBufferedPaint prc: prc
 	"Invoke the BufferedPaintClear() function of the module wrapped by the receiver.
@@ -64,7 +64,7 @@ bufferedPaintRenderAnimation: hwnd hdcTarget: hdcTarget
 			[in]HWND HWND,
 			[in]HDC hdcTarget);"
 
-	^E_NOTIMPL!
+	^false!
 
 bufferedPaintSetAlpha: hBufferedPaint prc: prc alpha: alpha
 	"Invoke the BufferedPaintSetAlpha() function of the module wrapped by the receiver.
@@ -269,7 +269,7 @@ getBufferedPaintDC: hBufferedPaint
 		HDC __stdcall GetBufferedPaintDC(
 			[in]HANDLE hBufferedPaint);"
 
-	^E_NOTIMPL!
+	^nil!
 
 getBufferedPaintTargetDC: hBufferedPaint
 	"Invoke the GetBufferedPaintTargetDC() function of the module wrapped by the receiver.
@@ -278,7 +278,7 @@ getBufferedPaintTargetDC: hBufferedPaint
 		HDC __stdcall GetBufferedPaintTargetDC(
 			[in]HANDLE hBufferedPaint);"
 
-	^E_NOTIMPL!
+	^nil!
 
 getBufferedPaintTargetRect: hBufferedPaint prc: prc
 	"Invoke the GetBufferedPaintTargetRect() function of the module wrapped by the receiver.
@@ -310,7 +310,7 @@ getThemeAppProperties
 
 		unsigned long __stdcall GetThemeAppProperties();"
 
-	^E_NOTIMPL!
+	^0!
 
 getThemeBackgroundContentRect: htheme hdc: hDC iPartId: iPartId iStateId: iStateId pBoundingRect: pBoundingRect pContentRect: pContentRect 
 	"Invoke the GetThemeBackgroundContentRect() function of the module wrapped by the receiver.
@@ -619,7 +619,7 @@ getThemeSysSize: htheme iSizeId: iSizeId
 			[in]HTHEME HTHEME,
 			[in]int iSizeId);"
 
-	^0!
+	^User32 getSystemMetrics: iSizeId!
 
 getThemeSysString: htheme iStringId: iStringId pszStringBuff: pszStringBuff cchMaxStringChars: cchMaxStringChars
 	"Invoke the GetThemeSysString() function of the module wrapped by the receiver.
@@ -704,7 +704,7 @@ isCompositionActive
 
 		BOOL __stdcall IsCompositionActive();"
 
-	^0!
+	^false!
 
 isThemeActive
 	"Invoke the IsThemeActive() function of the module wrapped by the receiver.
@@ -768,8 +768,7 @@ setThemeAppProperties: dwFlags
 
 		void __stdcall SetThemeAppProperties(
 			[in]unsigned long dwFlags);"
-
-	^E_NOTIMPL!
+!
 
 setWindowTheme: hwnd pszSubAppName: pszSubAppName pszSubIdList: pszSubIdList 
 	"Invoke the SetWindowTheme() function of the module wrapped by the receiver.

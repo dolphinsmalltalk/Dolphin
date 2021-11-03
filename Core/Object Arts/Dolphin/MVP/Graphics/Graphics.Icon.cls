@@ -296,7 +296,7 @@ showWhile: aBlock
 			User32 setCursor: actual]!
 
 valueWithHandle: operation extent: aPoint
-	"Private - Evaluate the <monadicValuable>, operation, with a handle for the receiver's icon at the best possible rendering for the specified extent. On Vista and later platforms the icon will be scaled down from the next largest icon if the requested size is not available, which generally yields a better result than scaling up."
+	"Private - Evaluate the <monadicValuable>, operation, with a handle for the receiver's icon at the best possible rendering for the specified extent.The icon will be scaled down from the next largest icon if the requested size is not available, which generally yields a better result than scaling up."
 
 	^initializer
 		image: self

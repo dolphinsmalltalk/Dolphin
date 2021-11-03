@@ -172,8 +172,7 @@ note
 	^note ?? ''!
 
 note: aString 
-	"Set the note (sub-text) associated with the Command Link button. Has no visual effect if
-	the receiver is not of Command Link button style and/or not running on Vista."
+	"Set the note (sub-text) associated with the Command Link button. Has no visual effect if the receiver is not of Command Link button style."
 
 	| newValue |
 	newValue := (aString isNil or: [aString isEmpty]) ifFalse: [aString].
