@@ -26,15 +26,6 @@ Class Variables:
 !UI.PushButton categoriesForClass!MVP-Views! !
 !UI.PushButton methodsFor!
 
-baseCreationStyle
-	| base |
-	base := self baseStyle.
-	"Command Link style is only supported on Vista. If not on Vista (or later) downgrade to a
-	normal push button"
-	((base allMask: BS_COMMANDLINK) and: [SystemMetrics current hasLinkButtons not])
-		ifTrue: [base := base maskClear: BS_COMMANDLINK].
-	^base!
-
 bmSetStyle: message wParam: wParam lParam: lParam 
 	"Private - Handler for BM_SETSTYLE message."
 
@@ -214,7 +205,7 @@ setDefault: aBoolean
 
 setNote
 	| text |
-	(self style == #link and: [SystemMetrics current hasButtonNotes]) ifFalse: [^self].
+	self style == #link ifFalse: [^self].
 	text := self note asUtf16String.
 	(self
 		sendMessage: BCM_SETNOTE
@@ -248,7 +239,6 @@ text: aString
 	super text: aString.
 	commandDescription description: aString! !
 !UI.PushButton categoriesForMethods!
-baseCreationStyle!private!realizing/unrealizing! !
 bmSetStyle:wParam:lParam:!event handling-win32!private! !
 command:id:!commands!private! !
 defaultWindowStyle!constants!private! !

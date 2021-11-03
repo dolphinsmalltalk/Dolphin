@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'OS.SystemMetrics'
-	instanceVariableNames: 'menuCheckExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth hasIconScaleDown isNotWine'
+	instanceVariableNames: 'menuCheckExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists defaultColorDepth isNotWine'
 	classVariableNames: 'Current'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
@@ -126,21 +126,6 @@ getSysParamW: anInteger type: anExternalStructureClass ifError: aNiladicValuable
 		fWinIni: 0) ifFalse: [^aNiladicValuable value].
 	^struct!
 
-hasButtonNotes
-	"Answer whether the host supports 'notes' for link buttons."
-
-	^isVistaOrLater!
-
-hasDesktopComposition
-	"Answer whether the host supports off-screen desktop composition,"
-
-	^isVistaOrLater!
-
-hasEnhancedThemes
-	"Answer whether the host supports enhanced desktop themes (Vista and later)."
-
-	^isVistaOrLater!
-
 hasFlatMenus
 	"Answer whether the host menu style is 'flat'"
 
@@ -158,7 +143,11 @@ hasIconScaleDown
 	"Answer whether the host supports scaling down of larger icons when the requested size is
 	not available (as opposed to scaling up)."
 
-	^hasIconScaleDown!
+	"Wine does not support the ComMCtrlLibrary>>loadIconWithScaleDown:.. method which is normally
+	availble under Vista and later. Hence we don't allow this to be called even if the Windows
+	version indicates Vista is available."
+
+	^isNotWine!
 
 hasImageListDragCursors
 	"Answer whether the host supports using image lists for drag cursors."
@@ -173,12 +162,6 @@ hasInternetExplorerControl
 
 	#wineFix.
 	^isNotWine!
-
-hasMenuBitmaps
-	"Answer whether the host support direct setting of menu bitmaps through the menu item info
-	structure. If false they have to be provided through a callback."
-
-	^isVistaOrLater!
 
 hasSmoothScrollingLists
 	"Answer whether the host supports smooth (as opposed to jump) scrolling of lists."
@@ -210,11 +193,6 @@ hasThemes
 	#wineFix.
 	^isNotWine!
 
-hasTreeViewHotTracking
-	"Does the host support hot tracking in tree views?"
-
-	^isVistaOrLater!
-
 iconTitleFont
 	"Answer a <Font> which is that used for icon titles on the desktop."
 
@@ -225,12 +203,7 @@ initialize
 
 	"So many capabilities depend on these flag, we may as well query them immediately. These also cannot change because of a Windows settings change."
 
-	isVistaOrLater := true.
 	isNotWine := NtDll isWine not.
-	"Wine does not support the ComMCtrlLibrary>>loadIconWithScaleDown:.. method which is normally
-	availble under Vista and later. Hence we don't allow this to be called even if the Windows
-	version indicates Vista is available."
-	hasIconScaleDown := isVistaOrLater & isNotWine.
 	SessionManager current
 		when: #settingChanged:
 		send: #onSettingChanged:
@@ -379,11 +352,6 @@ smallIconExtent
 
 	^self getMetric: SM_CXSMICON pair: SM_CYSMICON!
 
-supportsAlphaBlending
-	"Answer whether the host supports alpha blending."
-
-	^true!
-
 virtualScreenExtent
 	"Answer the extent of the virtual screen, i.e. including desktops on all monitors"
 
@@ -415,19 +383,14 @@ getSysParamDword:!helpers!private! !
 getSysParamSdword:!helpers!private! !
 getSysParamStruct:type:!helpers!private! !
 getSysParamW:type:ifError:!helpers!private! !
-hasButtonNotes!capability enquiries!public! !
-hasDesktopComposition!capability enquiries!public! !
-hasEnhancedThemes!capability enquiries!public! !
 hasFlatMenus!capability enquiries!public! !
 hasGdiPalettes!capability enquiries!public! !
 hasIconScaleDown!capability enquiries!public! !
 hasImageListDragCursors!capability enquiries!public! !
 hasInternetExplorerControl!capability enquiries!public! !
-hasMenuBitmaps!capability enquiries!public! !
 hasSmoothScrollingLists!capability enquiries!public! !
 hasTextBoxMargins!capability enquiries!public! !
 hasThemes!capability enquiries!public! !
-hasTreeViewHotTracking!capability enquiries!public! !
 iconTitleFont!geometry!public! !
 initialize!initializing!private! !
 isSlowMachine!public!testing! !
@@ -453,7 +416,6 @@ scrollThumbExtent!constants!public! !
 setSysParamBool:value:!helpers!private! !
 sizingFrameExtent!constants!public! !
 smallIconExtent!constants!public! !
-supportsAlphaBlending!capability enquiries!public! !
 virtualScreenExtent!constants!public! !
 virtualScreenOrigin!constants!public! !
 virtualScreenRectangle!constants!public! !

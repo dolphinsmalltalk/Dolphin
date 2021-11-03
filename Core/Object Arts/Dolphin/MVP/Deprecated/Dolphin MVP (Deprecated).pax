@@ -82,8 +82,14 @@ package methodNames
 	add: #StatusBarItemAbstract -> #beFullWidth;
 	add: #STBViewProxy -> #for:;
 	add: #SystemColor -> #asIndexedColor;
-	add: #SystemMetrics -> #hasFlashWindow;
+	add: #SystemMetrics -> #hasButtonNotes;
+	add: #SystemMetrics -> #hasDesktopComposition;
+	add: #SystemMetrics -> #hasEnhancedThemes;
+	add: #SystemMetrics -> #hasLinkButtons;
+	add: #SystemMetrics -> #hasMenuBitmaps;
 	add: #SystemMetrics -> #hasMenuImages;
+	add: #SystemMetrics -> #hasTreeViewHotTracking;
+	add: #SystemMetrics -> #supportsAlphaBlending;
 	add: #TextEdit -> #find:range:down:wholeWord:matchCase:;
 	add: #TextEdit -> #findNextWrapped:down:wholeWord:matchCase:;
 	add: #TextEdit -> #isLowercase;
@@ -858,22 +864,64 @@ fromId:!instance creation!public! !
 
 !SystemMetrics methodsFor!
 
-hasFlashWindow
-	"Answer whether the host supports the FlashWindowEx API."
+hasButtonNotes
+	"Answer whether the host supports 'notes' for link buttons."
 
+	#deprecated. "We no longer support OSs earlier than Vista, so this is always true."
+	^true!
 
+hasDesktopComposition
+	"Answer whether the host supports off-screen desktop composition,"
 
-	#deprecated.
+	#deprecated. "We no longer support OSs earlier than Vista, so this is always true."
+	^true!
+
+hasEnhancedThemes
+	"Answer whether the host supports enhanced desktop themes (Vista and later)."
+
+	#deprecated. "We no longer support OSs earlier than Vista, so this is always true."
+	^true!
+
+hasLinkButtons
+	"Answer whether the host supports link buttons (i.e. push buttons with the BS_COMMANDLINK
+	style)."
+
+	#deprecated. "We no longer support OSs earlier than Vista, so this is always true."
+	^true!
+
+hasMenuBitmaps
+	"Answer whether the host support direct setting of menu bitmaps through the menu item info
+	structure. If false they have to be provided through a callback."
+
+	#deprecated. "We no longer support OSs earlier than Vista, so this is always true."
 	^true!
 
 hasMenuImages
 	"Answer whether the host supports images on menus."
 
 	#deprecated. "We no longer support OSs earlier than Vista, let alone XP."
+	^true!
+
+hasTreeViewHotTracking
+	"Does the host support hot tracking in tree views?"
+
+	#deprecated. "We no longer support OSs earlier than Vista, so this is always true."
+	^true!
+
+supportsAlphaBlending
+	"Answer whether the host supports alpha blending."
+
+	#deprecated. "We no longer support OSs earlier than Vista, so this is always true."
 	^true! !
 !SystemMetrics categoriesForMethods!
-hasFlashWindow!capability enquiries!public! !
+hasButtonNotes!capability enquiries!public! !
+hasDesktopComposition!capability enquiries!public! !
+hasEnhancedThemes!capability enquiries!public! !
+hasLinkButtons!capability enquiries!public! !
+hasMenuBitmaps!capability enquiries!public! !
 hasMenuImages!capability enquiries!public! !
+hasTreeViewHotTracking!capability enquiries!public! !
+supportsAlphaBlending!capability enquiries!public! !
 !
 
 !TextEdit methodsFor!

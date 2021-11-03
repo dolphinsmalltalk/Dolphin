@@ -12,14 +12,12 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
-	#(#{OS.SystemMetrics} #hasLinkButtons)
 	#(#{UI.Presenter class} #resource_OK_Cancel_button_block)
 ).
 
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\Base\Dolphin Basic Geometry'
-	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Base\Dolphin MVP Base'
 ).
 
@@ -41,17 +39,6 @@ UI.CommandButton subclass: #'UI.PushButton'
 	classConstants: {}!
 
 "Loose Methods"!
-
-!OS.SystemMetrics methodsFor!
-
-hasLinkButtons
-	"Answer whether the host supports link buttons (i.e. push buttons with the BS_COMMANDLINK
-	style)."
-
-	^isVistaOrLater! !
-!OS.SystemMetrics categoriesForMethods!
-hasLinkButtons!capability enquiries!public! !
-!
 
 !UI.Presenter class methodsFor!
 

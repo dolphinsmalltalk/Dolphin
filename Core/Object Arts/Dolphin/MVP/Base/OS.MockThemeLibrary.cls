@@ -11,6 +11,88 @@ OS.MockThemeLibrary comment: 'MockThemeLibrary is a dummy ThemeLibrary used on h
 !OS.MockThemeLibrary categoriesForClass!Win32-Modules! !
 !OS.MockThemeLibrary methodsFor!
 
+beginBufferedAnimation: hwnd hdcTarget: hdcTarget prcTarget: prcTarget dwFormat: dwFormat pPaintParams: pPaintParams pAnimationParams: pAnimationParams phdcFrom: phdcFrom phdcTo: phdcTo
+	"Invoke the BeginBufferedAnimation() function of the module wrapped by the receiver.
+
+		HANDLE __stdcall BeginBufferedAnimation(
+			[in]HWND HWND,
+			[in]HDC hdcTarget,
+			[in]RECTL* prcTarget,
+			[in]BP_BUFFERFORMAT dwFormat,
+			[in]BP_PAINTPARAMS* pPaintParams,
+			[in]BP_ANIMATIONPARAMS* pAnimationParams,
+			[out]HDC* phdcFrom,
+			[out]HDC* phdcTo);"
+
+	^E_NOTIMPL!
+
+beginBufferedPaint: hdcTarget prcTarget: prcTarget dwFormat: dwFormat pPaintParams: pPaintParams phDC: phDC
+	"Invoke the BeginBufferedPaint() function of the module wrapped by the receiver.
+	Helpstring: Begins a buffered paint operation.
+
+		HANDLE __stdcall BeginBufferedPaint(
+			[in]HDC hdcTarget,
+			[in]RECTL* prcTarget,
+			[in]BP_BUFFERFORMAT dwFormat,
+			[in]BP_PAINTPARAMS* pPaintParams,
+			[out]HDC* phDC);"
+
+	^E_NOTIMPL!
+
+bufferedPaintClear: hBufferedPaint prc: prc
+	"Invoke the BufferedPaintClear() function of the module wrapped by the receiver.
+	Helpstring: Returns the target rectangle specified during BeginBufferedPaint.
+
+		HRESULT __stdcall BufferedPaintClear(
+			[in]HANDLE hBufferedPaint,
+			[in, optional]RECTL* prc);"
+
+	^E_NOTIMPL!
+
+bufferedPaintInit
+	"Invoke the BufferedPaintInit() function of the module wrapped by the receiver.
+	Helpstring: Initialize the Buffered Paint API.
+
+		HRESULT __stdcall BufferedPaintInit();"
+
+	^E_NOTIMPL!
+
+bufferedPaintRenderAnimation: hwnd hdcTarget: hdcTarget
+	"Invoke the BufferedPaintRenderAnimation() function of the module wrapped by the receiver.
+
+		BOOL __stdcall BufferedPaintRenderAnimation(
+			[in]HWND HWND,
+			[in]HDC hdcTarget);"
+
+	^E_NOTIMPL!
+
+bufferedPaintSetAlpha: hBufferedPaint prc: prc alpha: alpha
+	"Invoke the BufferedPaintSetAlpha() function of the module wrapped by the receiver.
+	Helpstring: Returns the target rectangle specified during BeginBufferedPaint.
+
+		HRESULT __stdcall BufferedPaintSetAlpha(
+			[in]HANDLE hBufferedPaint,
+			[in]RECTL* prc,
+			[in]BYTE Alpha);"
+
+	^E_NOTIMPL!
+
+bufferedPaintStopAllAnimations: hwnd
+	"Invoke the BufferedPaintStopAllAnimations() function of the module wrapped by the receiver.
+
+		HRESULT __stdcall BufferedPaintStopAllAnimations(
+			[in]HWND HWND);"
+
+	^E_NOTIMPL!
+
+bufferedPaintUnInit
+	"Invoke the BufferedPaintUnInit() function of the module wrapped by the receiver.
+	Helpstring: Uninitialize the Buffered Paint API.
+
+		HRESULT __stdcall BufferedPaintUnInit();"
+
+	^E_NOTIMPL!
+
 closeThemeData: htheme
 	"Invoke the CloseThemeData() function of the module wrapped by the receiver.
 	Helpstring: Closes the theme data handle.
@@ -156,6 +238,55 @@ enableTheming: fEnable
 
 		HRESULT __stdcall EnableTheming(
 			[in]BOOL fEnable);"
+
+	^E_NOTIMPL!
+
+endBufferedPaint: hBufferedPaint fUpdateTarget: fUpdateTarget
+	"Invoke the EndBufferedPaint() function of the module wrapped by the receiver.
+	Helpstring: Ends a buffered paint operation.
+
+		HRESULT __stdcall EndBufferedPaint(
+			[in]HANDLE hBufferedPaint,
+			[in]BOOL fUpdateTarget);"
+
+	^E_NOTIMPL!
+
+getBufferedPaintBits: hBufferedPaint ppbBuffer: ppbBuffer pcxRow: pcxRow
+	"Invoke the GetBufferedPaintBits() function of the module wrapped by the receiver.
+	Helpstring: Returns the target rectangle specified during BeginBufferedPaint.
+
+		HRESULT __stdcall GetBufferedPaintBits(
+			[in]HANDLE hBufferedPaint,
+			[out]RGBQUAD** ppbBuffer,
+			[out]int* pcxRow);"
+
+	^E_NOTIMPL!
+
+getBufferedPaintDC: hBufferedPaint
+	"Invoke the GetBufferedPaintDC() function of the module wrapped by the receiver.
+	Helpstring: Returns the target rectangle specified during BeginBufferedPaint.
+
+		HDC __stdcall GetBufferedPaintDC(
+			[in]HANDLE hBufferedPaint);"
+
+	^E_NOTIMPL!
+
+getBufferedPaintTargetDC: hBufferedPaint
+	"Invoke the GetBufferedPaintTargetDC() function of the module wrapped by the receiver.
+	Helpstring: Returns the target rectangle specified during BeginBufferedPaint.
+
+		HDC __stdcall GetBufferedPaintTargetDC(
+			[in]HANDLE hBufferedPaint);"
+
+	^E_NOTIMPL!
+
+getBufferedPaintTargetRect: hBufferedPaint prc: prc
+	"Invoke the GetBufferedPaintTargetRect() function of the module wrapped by the receiver.
+	Helpstring: Returns the target rectangle specified during BeginBufferedPaint.
+
+		HRESULT __stdcall GetBufferedPaintTargetRect(
+			[in]HANDLE hBufferedPaint,
+			[out, retval]RECTL* prc);"
 
 	^E_NOTIMPL!
 
@@ -567,6 +698,14 @@ isAppThemed
 
 	^false!
 
+isCompositionActive
+	"Invoke the IsCompositionActive() function of the module wrapped by the receiver.
+	Helpstring: Tells if the DWM is running, and composition effects are possible for this process (themes are active).
+
+		BOOL __stdcall IsCompositionActive();"
+
+	^0!
+
 isThemeActive
 	"Invoke the IsThemeActive() function of the module wrapped by the receiver.
 	Helpstring: Can be used to test if a system theme is active for the current user session.
@@ -643,6 +782,14 @@ setWindowTheme: hwnd pszSubAppName: pszSubAppName pszSubIdList: pszSubIdList
 
 	^E_NOTIMPL! !
 !OS.MockThemeLibrary categoriesForMethods!
+beginBufferedAnimation:hdcTarget:prcTarget:dwFormat:pPaintParams:pAnimationParams:phdcFrom:phdcTo:!**auto generated**!public! !
+beginBufferedPaint:prcTarget:dwFormat:pPaintParams:phDC:!**auto generated**!public! !
+bufferedPaintClear:prc:!**auto generated**!public! !
+bufferedPaintInit!**auto generated**!public! !
+bufferedPaintRenderAnimation:hdcTarget:!**auto generated**!public! !
+bufferedPaintSetAlpha:prc:alpha:!**auto generated**!public! !
+bufferedPaintStopAllAnimations:!**auto generated**!public! !
+bufferedPaintUnInit!public! !
 closeThemeData:!public!win32 functions-visual styles! !
 drawThemeBackground:hdc:iPartId:iStateId:pRect:pClipRect:!public!win32 functions-visual styles! !
 drawThemeBackgroundEx:hdc:iPartId:iStateId:pRect:pOptions:!public!win32 functions-visual styles! !
@@ -652,6 +799,11 @@ drawThemeParentBackground:hdc:prc:!public!win32 functions-visual styles! !
 drawThemeText:hdc:iPartId:iStateId:pszText:iCharCount:dwTextFlags:dwTextFlags2:pRect:!public!win32 functions-visual styles! !
 enableThemeDialogTexture:dwFlags:!public!win32 functions-visual styles! !
 enableTheming:!public!win32 functions-visual styles! !
+endBufferedPaint:fUpdateTarget:!**auto generated**!public! !
+getBufferedPaintBits:ppbBuffer:pcxRow:!**auto generated**!public! !
+getBufferedPaintDC:!**auto generated**!public! !
+getBufferedPaintTargetDC:!**auto generated**!public! !
+getBufferedPaintTargetRect:prc:!**auto generated**!public! !
 getCurrentThemeName:cchMaxNameChars:pszColorBuff:cchMaxColorChars:pszSizeBuff:cchMaxSizeChars:!public!win32 functions-visual styles! !
 getThemeAppProperties!public!win32 functions-visual styles! !
 getThemeBackgroundContentRect:hdc:iPartId:iStateId:pBoundingRect:pContentRect:!public!win32 functions-visual styles! !
@@ -684,6 +836,7 @@ getThemeTextMetrics:hdc:iPartId:iStateId:pTM:!public!win32 functions-visual styl
 getWindowTheme:!public!win32 functions-visual styles! !
 hitTestThemeBackground:hdc:iPartId:iStateId:dwOptions:pRect:hrgn:ptTest:pwHitTestCode:!public!win32 functions-visual styles! !
 isAppThemed!public!win32 functions-visual styles! !
+isCompositionActive!**auto generated**!public! !
 isThemeActive!public!win32 functions-visual styles! !
 isThemeBackgroundPartiallyTransparent:iPartId:iStateId:!public!win32 functions-visual styles! !
 isThemeDialogTextureEnabled:!public!win32 functions-visual styles! !

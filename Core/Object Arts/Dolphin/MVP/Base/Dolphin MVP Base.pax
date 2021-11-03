@@ -65,7 +65,6 @@ package setClassNames: #(
 	#{OS.ThemeConstants}
 	#{OS.ThemeLibrary}
 	#{OS.TRACKMOUSEEVENT}
-	#{OS.VistaThemeLibrary}
 	#{OS.WINDOWPLACEMENT}
 	#{OS.WINDOWPOS}
 	#{OS.WNDCLASS}
@@ -1528,12 +1527,6 @@ External.DynamicLinkLibrary subclass: #'OS.ThemeLibrary'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 OS.ThemeLibrary subclass: #'OS.MockThemeLibrary'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-OS.ThemeLibrary subclass: #'OS.VistaThemeLibrary'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

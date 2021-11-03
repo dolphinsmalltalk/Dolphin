@@ -90,8 +90,7 @@ canDisplay
 
 	| desktopCanvas |
 	desktopCanvas := Canvas forDesktop.
-	^(desktopCanvas colorDepth > 8 and: [desktopCanvas extent >= (800 @ 600)]) 
-		and: [OS.SystemMetrics current supportsAlphaBlending]!
+	^desktopCanvas colorDepth > 8 and: [desktopCanvas extent >= (800 @ 600)]!
 
 publishedAspects
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."

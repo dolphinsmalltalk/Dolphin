@@ -142,7 +142,7 @@ Core.Object subclass: #'Graphics.ImageManager'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'OS.SystemMetrics'
-	instanceVariableNames: 'menuCheckExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists isVistaOrLater defaultColorDepth hasIconScaleDown isNotWine'
+	instanceVariableNames: 'menuCheckExtent dragHysteresis scrollThumbExtent sizingFrameExtent dialogFrameExtent borderExtent nonClientMetrics menuFont edgeExtent hasFlatMenus iconTitleFont hasSmoothScrollingLists defaultColorDepth isNotWine'
 	classVariableNames: 'Current'
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''

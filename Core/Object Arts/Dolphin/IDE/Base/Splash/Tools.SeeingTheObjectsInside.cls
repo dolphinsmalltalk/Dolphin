@@ -470,8 +470,7 @@ canDisplay
 
 	| desktopCanvas |
 	desktopCanvas := Canvas forDesktop.
-	^(desktopCanvas colorDepth > 8 and: [desktopCanvas extent >= (800 @ 600)]) 
-		and: [OS.SystemMetrics current supportsAlphaBlending]!
+	^desktopCanvas colorDepth > 8 and: [desktopCanvas extent >= (800 @ 600)]!
 
 splashPlayTheGame
 	^splashPlayTheGame ifNil: [splashPlayTheGame := false]!
