@@ -56,7 +56,8 @@ browseKeyBindingsOfShell: aShellView
 
 	| stream presenter browser shell |
 	stream := ReadWriteStream on: String new.
-	stream nextPutAll: '<HTML>'.
+	stream nextPutAll: '<HTML>'; cr.
+	stream nextPutAll: '<meta charset="Utf-8">'; cr.
 	self printInlineStyleSheetOn: stream.
 	stream nextPutAll: '<BODY>'.
 	self printHtmlDescriptionOfKeyBindingsForShell: aShellView on: stream.
