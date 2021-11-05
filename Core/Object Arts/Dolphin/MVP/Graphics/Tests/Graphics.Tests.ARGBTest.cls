@@ -88,27 +88,39 @@ testFromArgbCode
 	self assert: argb2 equals: argb1!
 
 testPrintString
-	| model |
-	model := ARGB
+	| subject |
+	subject := ARGB
 				a: 1
 				r: 2
 				g: 3
 				b: 4.
-	self assert: model printString equals: '(Color a: 1 r: 2 g: 3 b: 4)'.
-	model := ARGB
+	self assert: subject printString equals: '(Color a: 1 r: 2 g: 3 b: 4)'.
+	subject := ARGB
 				a: 255
 				r: 1
 				g: 2
 				b: 3.
-	self assert: model printString equals: '(Color r: 1 g: 2 b: 3)'.
-	model := ARGB
+	self assert: subject printString equals: '(Color r: 1 g: 2 b: 3)'.
+	subject := ARGB
+				a: 255
+				r: 142
+				g: 142
+				b: 142.
+	self assert: subject printString equals: '(Color brightness: 142/255)'.
+	subject := ARGB
+				a: 254
+				r: 142
+				g: 142
+				b: 142.
+	self assert: subject printString equals: '(Color a: 254 r: 142 g: 142 b: 142)'.
+	subject := ARGB
 				a: 255
 				r: 218
 				g: 165
 				b: 32.
-	self assert: model printString equals: 'Color goldenrod'.
-	model := ARGB red.
-	self assert: model printString equals: 'Color red'!
+	self assert: subject printString equals: 'Color goldenrod'.
+	subject := ARGB red.
+	self assert: subject printString equals: 'Color red'!
 
 testStbRoundTrip
 	| subject bytes rehydrated |

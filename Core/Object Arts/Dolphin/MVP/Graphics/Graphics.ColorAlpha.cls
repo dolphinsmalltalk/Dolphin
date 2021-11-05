@@ -23,6 +23,11 @@ alpha: anAlphaInteger
 
 	^ColorAlpha color: color alpha: alpha * (anAlphaInteger clampBetween: 0 and: 255) // 255!
 
+isOpaque
+	"Answer whether this <Color> is completely opaque."
+
+	^alpha == 255!
+
 normalizedAlpha
 	"Answer the receiver's alpha component as a <Number> in the range [0,1], with 0 being completely transparent and 1 completely opaque."
 
@@ -43,6 +48,7 @@ setColor: aColor alpha: anInteger
 actualColor!accessing!private! !
 alpha!accessing!public! !
 alpha:!accessing!public! !
+isOpaque!public!testing! !
 normalizedAlpha!accessing!public! !
 printOn:!accessing!public! !
 setColor:alpha:!initializing!private! !

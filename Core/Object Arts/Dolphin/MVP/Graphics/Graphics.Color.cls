@@ -217,6 +217,11 @@ isNone
 
 	^false!
 
+isOpaque
+	"Answer whether this <Color> is completely opaque."
+
+	^true!
+
 isSelfEvaluating
 	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
 
@@ -231,7 +236,7 @@ isSymbolic
 isTransparent
 	"Answer whether this <Color> is completely transparent."
 
-	^self alpha = 0!
+	^self alpha == 0!
 
 lighter
 	"Answer a lighter shade of this color."
@@ -289,46 +294,60 @@ penClass
 
 	^Pen!
 
+printArgbOn: aPuttableStream
+	aPuttableStream
+		nextPut: $(;
+		print: Color.
+	self isOpaque
+		ifFalse: 
+			[aPuttableStream
+				display: ' a: ';
+				print: self alpha].
+	^aPuttableStream
+		display: ' r: ';
+		print: self red;
+		display: ' g: ';
+		print: self green;
+		display: ' b: ';
+		print: self blue;
+		nextPut: $)!
+
+printGrayscaleOn: aPuttableStream
+	aPuttableStream
+		nextPut: $(;
+		print: Color;
+		space;
+		display: #brightness:;
+		space;
+		display: self red / 255;
+		nextPut: $)!
+
+printNamed: aSymbol on: aPuttableStream
+	^(Color class canUnderstand: aSymbol)
+		ifTrue: 
+			[aPuttableStream
+				print: Color;
+				space;
+				display: aSymbol]
+		ifFalse: 
+			[aPuttableStream
+				nextPut: $(;
+				print: Color;
+				space;
+				display: #named:;
+				space;
+				print: aSymbol;
+				nextPut: $)]!
+
 printOn: aPuttableStream
 	"Append, to the <puttableStream> argument a string whose characters are the same as those which would result from sending a #printString message to the receiver."
 
 	self name
-		ifNotNil: 
-			[:symbol |
-			(Color class canUnderstand: symbol)
-				ifTrue: 
-					[aPuttableStream
-						print: Color;
-						space;
-						display: symbol]
-				ifFalse: 
-					[aPuttableStream
-						nextPut: $(;
-						display: Color;
-						space;
-						display: #named:;
-						space;
-						print: symbol;
-						nextPut: $)]]
+		ifNotNil: [:symbol | self printNamed: symbol on: aPuttableStream]
 		ifNil: 
-			[| a |
-			aPuttableStream
-				nextPut: $(;
-				print: Color.
-			a := self alpha.
-			a == 255
-				ifFalse: 
-					[aPuttableStream
-						display: ' a: ';
-						print: a].
-			aPuttableStream
-				display: ' r: ';
-				print: self red;
-				display: ' g: ';
-				print: self green;
-				display: ' b: ';
-				print: self blue;
-				nextPut: $)]!
+			[(self isGrayscale and: [self isOpaque])
+				ifTrue: [self printGrayscaleOn: aPuttableStream]
+				ifFalse: [self printArgbOn: aPuttableStream]]!
 
 red
 	"Answer the receiver's red component expressed as an <integer> in the range [0,255]."
@@ -372,7 +391,10 @@ stbSaveOn: anSTBOutFiler
 			anSTBOutFiler
 				writeClass: Color withPrefix: STBPrefix forData;
 				register: self.
-			anSTBOutFiler nextPut: symbol]! !
+			anSTBOutFiler nextPut: symbol]!
+
+wibble: a
+	^'wobble'! !
 !Graphics.Color categoriesForMethods!
 =!comparing!public! !
 actualColor!accessing!private! !
@@ -409,6 +431,7 @@ intensity:!converting!public! !
 isDefault!public!testing! !
 isGrayscale!public!testing! !
 isNone!public!testing! !
+isOpaque!public!testing! !
 isSelfEvaluating!public!testing! !
 isSymbolic!public!testing! !
 isTransparent!public!testing! !
@@ -423,6 +446,9 @@ normalizedGreen!accessing!public! !
 normalizedRed!accessing!public! !
 pen!converting!public! !
 penClass!constants!private! !
+printArgbOn:!printing!private! !
+printGrayscaleOn:!printing!private! !
+printNamed:on:!printing!private! !
 printOn:!printing!public! !
 red!accessing!public! !
 registerName:!private! !
@@ -432,6 +458,7 @@ rgbCode!accessing!public! !
 setAlpha:!public! !
 species!accessing!public! !
 stbSaveOn:!binary filing!public! !
+wibble:!accessing!public! !
 !
 
 Graphics.Color methodProtocol: #color attributes: #(#readOnly) selectors: #(#asParameter #asRGB #brush #pen)!

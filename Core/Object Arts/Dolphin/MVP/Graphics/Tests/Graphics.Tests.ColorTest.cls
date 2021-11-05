@@ -515,7 +515,8 @@ testPrintString
 	self assert: (PluggableColor with: ##([Color orchid alpha: 64])) printString
 		equals: 'PluggableColor with: [Color orchid alpha: 64]'.
 	self assert: ((Color named: #gradientActiveCaption) alpha: 64) printString
-		equals: '((Color named: #gradientActiveCaption) alpha: 64)'!
+		equals: '((Color named: #gradientActiveCaption) alpha: 64)'.
+	self assert: (Color brightness: 248 / 255) printString equals: '(Color brightness: 248/255)'!
 
 testRed
 	self assert: Color red red equals: 255.

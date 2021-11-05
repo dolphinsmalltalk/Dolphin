@@ -57,6 +57,11 @@ isNone
 
 	^code == 16r00FFFFFF!
 
+isOpaque
+	"Answer whether this <Color> is completely opaque."
+
+	^self alpha == 255!
+
 normalizedAlpha
 	"Answer the receiver's alpha component as a <Number> in the range [0,1], with 0 being completely transparent and 1 completely opaque."
 
@@ -79,6 +84,7 @@ argbCode!accessing!public! !
 asRGB!converting!public! !
 blue!accessing!public! !
 isNone!public!testing! !
+isOpaque!public!testing! !
 normalizedAlpha!accessing!public! !
 red!accessing!public! !
 rgbCode!public! !
