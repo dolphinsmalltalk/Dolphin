@@ -20,7 +20,7 @@ testInlineTemporary
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
 				parseTreeFor: #inlineMethod)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'inlineMethod
 										^self
 													foo;

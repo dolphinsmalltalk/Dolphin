@@ -48,6 +48,7 @@ package methodNames
 	add: #Image -> #fileLocator:;
 	add: #Image -> #identifier:;
 	add: #IndexedColor -> #asIndexedColor;
+	add: #InplaceTextEditor -> #validationBlock;
 	add: #ListBox -> #basicSelectionByIndex:;
 	add: #ListModel -> #updateAtIndex:;
 	add: #ListModel -> #updateItem:;
@@ -68,6 +69,7 @@ package methodNames
 	add: #Menu -> #remove:ifAbsent:;
 	add: #Menu -> #replace:with:;
 	add: #MoenTreeView -> #updateItem:andChildren:imagesOnly:;
+	add: #Prompter -> #validationBlock;
 	add: #RGB -> #asIndexedColorUsingPalette:;
 	add: #ScrollingDecorator -> #continuousTracking;
 	add: #ScrollingDecorator -> #continuousTracking:;
@@ -153,10 +155,12 @@ package setPrerequisites: #(
 	'..\Presenters\Choice\Dolphin Choice Presenter'
 	'..\Views\Common Controls\Dolphin Common Controls'
 	'..\Views\Control Bars\Dolphin Control Bars'
+	'..\Presenters\Prompters\Dolphin In-place Text Editor'
 	'..\Models\List\Dolphin List Models'
 	'..\Presenters\List\Dolphin List Presenter'
 	'..\Views\MoenTree\Dolphin MoenTree View'
 	'..\Base\Dolphin MVP Base'
+	'..\Presenters\Prompters\Dolphin Prompter'
 	'..\Views\Scrollbars\Dolphin Scrollbars'
 	'..\Views\Slider\Dolphin Slider Control'
 	'..\Presenters\Text\Dolphin Text Presenter'
@@ -527,6 +531,15 @@ asIndexedColor
 asIndexedColor!converting!public! !
 !
 
+!InplaceTextEditor methodsFor!
+
+validationBlock
+	#deprecated.
+	^[:response | (validater value: response) value]! !
+!InplaceTextEditor categoriesForMethods!
+validationBlock!accessing!public! !
+!
+
 !ListBox methodsFor!
 
 basicSelectionByIndex: sel
@@ -725,6 +738,15 @@ handle: hWnd wParam: wParam hdc: hdc paintStruct: ps
 		paintStruct: ps! !
 !PaintEvent class categoriesForMethods!
 handle:wParam:hdc:paintStruct:!instance creation!public! !
+!
+
+!Prompter methodsFor!
+
+validationBlock
+	#deprecated.
+	^[:response | (validater value: response) value]! !
+!Prompter categoriesForMethods!
+validationBlock!accessing!public! !
 !
 
 !RGB methodsFor!

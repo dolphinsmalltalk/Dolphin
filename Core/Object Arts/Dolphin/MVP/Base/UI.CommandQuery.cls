@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'UI.CommandQuery'
-	instanceVariableNames: 'commandDescription receiver source text flags image'
+	instanceVariableNames: 'commandDescription receiver source text flags image validationResult'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -195,7 +195,15 @@ text
 text: aString
 	"Set the text state of the receiver to aString"
 
-	text := aString! !
+	text := aString!
+
+validationResult
+	"Answer the <ValidationResult> set by a command query."
+
+	^validationResult ifNil: [ValidationResult value: self isEnabled]!
+
+validationResult: aValidationResult
+	validationResult := aValidationResult! !
 !UI.CommandQuery categoriesForMethods!
 applicationShell!accessing!public! !
 beChecked!accessing!public! !
@@ -226,6 +234,8 @@ source!accessing!public! !
 source:!accessing!private! !
 text!accessing!public! !
 text:!accessing!public! !
+validationResult!accessing!public! !
+validationResult:!accessing!public! !
 !
 
 !UI.CommandQuery class methodsFor!

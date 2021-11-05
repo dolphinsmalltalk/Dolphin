@@ -55,13 +55,13 @@ testModelRemoveUnusedVariable
 	self deny: ((model classNamed: #Subclass) directlyDefinesVariable: 'foo')!
 
 testNonExistantName
-	self shouldFail: (PushDownInstanceVariableRefactoring variable: 'foo' class: BasicLintRuleTest)!
+	self shouldFail: (PushDownInstanceVariableRefactoring variable: 'foo' class: BasicLintRuleTestData)!
 
 testPushDownInstanceVariable
 	| refactoring |
-	refactoring := PushDownInstanceVariableRefactoring variable: 'foo1' class: LintRuleTest.
+	refactoring := PushDownInstanceVariableRefactoring variable: 'foo1' class: LintRuleTestData.
 	self executeRefactoring: refactoring.
-	(refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest') withAllSubclasses
+	(refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData') withAllSubclasses
 		do: [:each | self deny: (each directlyDefinesInstanceVariable: 'foo1')]! !
 !Refactory.Browser.Tests.PushDownInstanceVariableTest categoriesForMethods!
 testModelPushDownToMetaclass!public!tests! !

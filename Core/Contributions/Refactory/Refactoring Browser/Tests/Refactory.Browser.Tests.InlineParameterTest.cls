@@ -26,10 +26,10 @@ testInlineLiteralArray
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	self assert: (class parseTreeFor: #inlineParameterMethod)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'inlineParameterMethod <namespace: Tools> | aSymbol | aSymbol := #(asdf). ^aSymbol isSymbol').
 	self assert: (class parseTreeFor: #sendInlineParameterMethod)
-		equals: (RBParser parseMethod: 'sendInlineParameterMethod ^self inlineParameterMethod').
+		equals: (self parseMethod: 'sendInlineParameterMethod ^self inlineParameterMethod').
 	self deny: (class directlyDefinesMethod: ('inline' , 'ParameterMethod:') asSymbol).
 	change := refactoring model changes changes first.
 	self assert: change package identicalTo: self class owningPackage.

@@ -148,7 +148,7 @@ queryCommand: aCommandQuery command: aCommand
 		ifTrue: 
 			[aCommandQuery isEnabled: true.
 			^true].
-	(#(#safeRemoveMethods #inlineAllSelfSends) identityIncludes: selector) 
+	(#(#inlineAllSelfSends) identityIncludes: selector) 
 		ifTrue: 
 			[aCommandQuery isEnabled: presenter hasEditableMethodsSelected.
 			^true].
@@ -203,13 +203,7 @@ renameMethodReferences
 	removing a duplicate method."
 
 	presenter 
-		performMethodRenameRefactoring: [:method | self systemModel renameMethodReferences: method]!
-
-safeRemoveMethods
-	"Invoke the 'Remove Method' refactoring"
-
-	presenter performMethodsRefactoring: [:methods | self systemModel safeRemoveMethods: methods]
-		name: 'Safe Remove Methods'! !
+		performMethodRenameRefactoring: [:method | self systemModel renameMethodReferences: method]! !
 !Tools.MethodRefactoringTool categoriesForMethods!
 addParameter!commands!public!refactoring! !
 allMethodTemps!event handling!menus!public! !
@@ -229,6 +223,5 @@ renameItCommand!constants!private!refactoring! !
 renameMethod!public!refactoring! !
 renameMethod:!commands!public!refactoring! !
 renameMethodReferences!commands!public!refactoring! !
-safeRemoveMethods!commands!public!refactoring! !
 !
 

@@ -14,7 +14,7 @@ Core.Error comment: ''!
 asWarning
 	"Private - Answer the receiver as a generic Warning message."
 
-	^Warning new messageText: self description!
+	^Warning messageText: self description!
 
 defaultAction
 	"Perform the default action for the receiver if it is not handled
@@ -61,6 +61,11 @@ Core.Error methodProtocol: #Error attributes: #(#ansi #readOnly) selectors: #(#d
 
 !Core.Error class methodsFor!
 
+iconStyle
+	"Answer an exception class describing the severity of the notification."
+
+	^#error!
+
 mbIconId
 	^MB_ICONERROR!
 
@@ -97,22 +102,17 @@ performFailed: anInteger of: selector for: receiver withArgs: arguments
 	receiver
 		error: ('Primitive perform of <1p> failed (<2p>)' expandMacrosWith: selector with: anInteger)!
 
-severityClass
-	"Answer an exception class describing the severity of the notification."
-
-	^Error!
-
 subclassResponsibility: selector
 	"Private - Raise an error that some message was sent to an abstract class."
 
 	^SubclassResponsibilityError signal: selector printString , ' is the responsibility of the subclass'! !
 !Core.Error class categoriesForMethods!
+iconStyle!constants!public! !
 mbIconId!parping!public! !
 nonIntegerIndex:!instance creation!private! !
 notIndexable:!instance creation!private! !
 notYetImplemented!instance creation!private! !
 performFailed:of:for:withArgs:!instance creation!private! !
-severityClass!constants!public! !
 subclassResponsibility:!instance creation!private! !
 !
 

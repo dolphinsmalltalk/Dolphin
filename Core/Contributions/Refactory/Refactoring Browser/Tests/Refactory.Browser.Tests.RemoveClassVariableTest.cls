@@ -13,16 +13,16 @@ Refactory.Browser.Tests.RemoveClassVariableTest comment: ''!
 
 testNonExistantName
 	self shouldFail: (RemoveClassVariableRefactoring variable: #RecursiveSelfRule1
-				class: TransformationRuleTest)!
+				class: TransformationRuleTestData)!
 
 testReferencedVariable
 	self shouldFail: (RemoveClassVariableRefactoring variable: #RecursiveSelfRule
-				class: TransformationRuleTest)!
+				class: TransformationRuleTestData)!
 
 testRemoveClassVar
 	| refactoring class |
-	refactoring := RemoveClassVariableRefactoring variable: 'Foo1' class: LintRuleTest.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest'.
+	refactoring := RemoveClassVariableRefactoring variable: 'Foo1' class: LintRuleTestData.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
 	self assert: (class definesClassVariable: 'Foo1').
 	self executeRefactoring: refactoring.
 	self deny: (class definesClassVariable: 'Foo1')! !

@@ -1,49 +1,53 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.MessageBoxAbstract subclass: #'UI.MessageBubble'
-	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth'
+	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth flags'
 	classVariableNames: ''
 	imports: #(#{OS.TooltipConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'IconIds' -> #[64 48 16]
+		'IconIds' -> #[64 48 16].
+		'LargeIconMask' -> 16r1.
+		'SilentMask' -> 16r2
 	}!
 UI.MessageBubble guid: (Core.GUID fromString: '{00e5c07e-c4fc-471c-b037-25bc55861176}')!
-UI.MessageBubble comment: 'MessageBubble is similar to <MessageBox>, and has a similar protocol. The principal difference is that messages are displayed using a Tooltip (normally a balloon tooltip), rather than in a traditional dialog. This provides a general capability for Dolphin applications to implement speech bubble style help like that which sometimes pops up for tray icons in Windows XP. 
+UI.MessageBubble comment: '`MessageBubble` is similar to `MessageBox`, and supports a subset of its API. The principal difference is that messages are displayed using a `Tooltip` (normally a balloon tooltip), rather than in a traditional dialog. This provides a general capability for Dolphin applications to implement speech bubble style help like that which sometimes pops up for Windows tray icons. 
 
-The other main differences from <MessageBox> are:
-- MessageBubbles can only be used to display information, not garner a response (i.e. prompting for a yes/no or abort/retry/ignore response is not supported). 
-- Normal message boxes are always modal, but MessageBubbles can be be modal (NOT YET IMPLEMENTED), or modeless.
-- The close box is optional on a MessageBubble; if absent then the bubble is closed when clicked.
-- HTML hyperlinks can be embedded in MessageBubbles, with an event being fired when these are clicked.
-- MessageBubbles support a timeout, allowing control over the maximum period for which a message is displayed.
-- The icon in a MessageBubble is limited to the standard system error, warning and notification icons, whereas MessageBox can display any icon (except on Win9X).
-- Traditional message boxes are usually displayed centred over the owner view, whereas the position of a MessageBubbles is either the current cursor position, or a pre-defined position (specified in screen co-ordinates). The arrow of balloon style bubbles points at this position.
-- MessageBubble has a more configurable appearance in that it allows one to define the width of the balloon, the font to be used, etc.
+The other main differences from `MessageBox` are:
+- `MessageBubble`s can only be used to display information, not garner a response (i.e. prompting for a yes/no or abort/retry/ignore response is not supported).
+- The rich capabilities of the new Task Dialog based `MessageBox` to display custom buttons, expanding detail, progress bars, etc, are not supported.
+- Normal message boxes are always modal, but MessageBubbles are modeless.
+- If the optional close box is optional is not present then the bubble is closed when clicked.
+- HTML hyperlinks can be embedded in MessageBubbles, with an event being fired when these are clicked, although this feature is now also available in the task-dialog based MessageBox.
+- MessageBubbles support a timeout, allowing control over the maximum period for which a message is displayed until it ''pops'' (closes).
+- The icon in a `MessageBubble` is limited to the standard system error, warning and notification icons, whereas `MessageBox` can display any icon. The icon can be displayed at small (16x16) or large (32x32) size.
+- Traditional message boxes are usually displayed centred over the owner view, whereas the position of a `MessageBubble` is either the current cursor position, or a pre-defined position (specified in screen co-ordinates). The arrow of balloon-style bubbles points at this position.
+- `MessageBubble` allows the message text font to be configured.
 
 Example usage:
+```
 	(MessageBubble new)
-		owner: SmalltalkSystemShell allSubinstances first view;
-		position: (SmalltalkSystemShell allSubinstances first view mapPoint: 10@10 to: View desktop);
+		owner: Tools.SmalltalkSystemShell default view;
+		position: (Tools.SmalltalkSystemShell default view mapPoint: 10@10 to: View desktop);
 		hasCloseButton: true;
-		timeout: 10000;
+		timeout: 10 seconds;
 		notify: ''Don''''t forget to save the image regularly!!''.
+```
 
-Instance Variables:
-	iconId		<integer> id of the system icon used in the caption.
-	tooltip		<Tooltip> window implementing the actual bubble.
-	position		<Point>. Absoluate screen position at which the bubble will appear.
-	itemFlags	<integer> flags from the TTF_XXXX enumeration.
-	timeout		<integer> number of milliseconds before the bubble closes automatically, or 0 if no timeout.
-	tooltipStyle	<integer> flags from the TTS_XXXX enumeration
-	timeoutProcess	<Process> used to close the balloon after the timeout delay (if set).
-	font		<Font> used to display text in the bubble (emboldened for the caption)
-	forecolor	<color> of text in the bubble, or nil if default.
-	backcolor	<color> of bubble background, or nil if default.
-	margins		<rectangle> top, left, bottom and right margins between bubble border and text, in pels. nil if default.
-	maxWidth	<integer> soft maximum width of the message text, or nil if default.
-
-'!
+## Instance Variables:
+  `iconId`			`<integer>` id of the system icon used in the caption.
+  `tooltip`			`<Tooltip>` window implementing the actual bubble.
+  `position`		`Point`. Absoluate screen position at which the bubble will appear.
+  `itemFlags`		`<integer>` flags from the TTF_XXXX enumeration.
+  `timeout`		`<Duration>` before the bubble closes automatically, or `nil` if no timeout.
+  `tooltipStyle`		`<integer>` flags from the TTS_XXXX enumeration
+  `timeoutProcess`	`Process` used to close the balloon after the timeout delay (if set).
+  `font`			`Font` used to display text in the bubble
+  `forecolor`		`<Color>` of text in the bubble, or `nil` if default.
+  `backcolor`		`<Color>` of bubble background, or nil if default.
+  `margins`		`<Object>` top, left, bottom and right margins between bubble border and text, in pels. `nil` if default.
+  `maxWidth`		`<integer>` soft maximum width of the message text, or `nil` if default (the bubble will attempt to calculate a suitable size based on its content).
+  `useLargeIcon`	`<boolean>` controlling whether the large (32x32) or small (16x16, default) icon is displayed in the bubble'!
 !UI.MessageBubble categoriesForClass!Kernel-Objects! !
 !UI.MessageBubble methodsFor!
 
@@ -56,7 +60,7 @@ addTool
 	hwnd := self ownerHandle.
 	ti := TOOLINFOW new
 				uFlags: (itemFlags bitOr: TTF_IDISHWND);
-				text: self text;
+				text: self text ?? '';
 				hwnd: hwnd;
 				uId: hwnd;
 				yourself.
@@ -167,12 +171,14 @@ initialize
 	itemFlags := ##(TTF_PARSELINKS | TTF_TRACK | TTF_ABSOLUTE).
 	timeout := 0 seconds.
 	tooltipStyle := ##(TTS_BALLOON | TTS_NOPREFIX | TTS_NOFADE).
-	maxWidth := SmallInteger maximum	"Allows a tooltip with embedded CRs to go onto multiple lines"!
+	maxWidth := SmallInteger maximum.	"Allows a tooltip with embedded CRs to go onto multiple lines"
+	flags := 0!
 
 initializeTooltip
 	| cap |
 	cap := self caption.
-	(cap notEmpty or: [iconId ~= 0]) ifTrue: [tooltip ttmSetTitle: cap icon: iconId].
+	(cap notEmpty or: [iconId ~= 0])
+		ifTrue: [tooltip ttmSetTitle: cap icon: iconId + (self useLargeIcon ifTrue: [3] ifFalse: [0])].
 	font isNil ifFalse: [tooltip font: font].
 	forecolor isNil ifFalse: [tooltip forecolor: forecolor].
 	backcolor isNil ifFalse: [tooltip backcolor: backcolor].
@@ -223,6 +229,16 @@ isModal
 	#todo.	"Support modal MessageBubbles"
 	^false!
 
+isSilent
+	"Answer whether the bubble will remain silent when opened. The default is to beep in an appropriate way depending on the icon style."
+
+	^(flags allMask: SilentMask) or: [super isSilent]!
+
+isSilent: aBoolean
+	"Set whether the bubble will remain silent when opened. The default is to beep in an appropriate way depending on the icon style."
+
+	flags := flags mask: SilentMask set: aBoolean!
+
 margins
 	"Answer a <Rectangle> specifying the left, right, top and bottom margins.
 	Each margin is the distance in pixels between the relevant edge and the 
@@ -263,7 +279,7 @@ maxWidth: anIntegerOrNil
 	tooltip isNil ifFalse: [tooltip maxWidth: anIntegerOrNil]!
 
 onPopped
-	"Private - The tooltip has just been closed, e.g. because the close button has been pressed."
+	"Private - The tooltip has just been closed, e.g. because the close button has been pressed, or because of timeout."
 
 	self close!
 
@@ -322,6 +338,12 @@ tooltip
 trackPosition
 	tooltip isNil ifFalse: [tooltip trackPosition: position]!
 
+useLargeIcon
+	^flags allMask: LargeIconMask!
+
+useLargeIcon: aBoolean
+	flags := flags mask: LargeIconMask set: aBoolean!
+
 willFade
 	"Answer whether the bubble message will use the fade away when closed 
 	(the default), assuming that the host system supports it."
@@ -360,6 +382,8 @@ isBalloon:!accessing-styles!public! !
 isCentered!public!testing! !
 isCentered:!accessing-styles!public! !
 isModal!accessing-styles!public!testing! !
+isSilent!public!testing! !
+isSilent:!public!testing! !
 margins!accessing!public! !
 margins:!accessing!public! !
 maxWidth!accessing!public! !
@@ -375,6 +399,8 @@ timeout!accessing!public! !
 timeout:!accessing!public! !
 tooltip!accessing!private! !
 trackPosition!operations!private! !
+useLargeIcon!accessing!public! !
+useLargeIcon:!accessing!public! !
 willFade!accessing-styles!public!testing! !
 willFade:!accessing-styles!public! !
 !
@@ -389,6 +415,10 @@ initialize
 		self initialize
 	"
 
+	defaultCaptions := (IdentityDictionary
+				withAll: {#notify -> 'Note'. #error -> 'Error'. #warning -> 'Warning'})
+				isImmutable: true;
+				yourself.
 	self addClassConstant: 'IconIds'
 		value: (ByteArray
 				with: MB_ICONINFORMATION

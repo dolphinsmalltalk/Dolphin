@@ -15,42 +15,42 @@ testAlreadyExistingName
 	self shouldFail: (RenameClassVariableRefactoring
 				rename: #RecursiveSelfRule
 				to: self objectClassVariable
-				in: TransformationRuleTest)!
+				in: TransformationRuleTestData)!
 
 testMetaClassFailure
 	self shouldFail: (RenameClassVariableRefactoring
 				rename: #RecursiveSelfRule
 				to: #Foo
-				in: TransformationRuleTest class)!
+				in: TransformationRuleTestData class)!
 
 testNonExistantName
 	self shouldFail: (RenameClassVariableRefactoring
 				rename: #foo
 				to: #newFoo
-				in: BasicLintRuleTest)!
+				in: BasicLintRuleTestData)!
 
 testRenameClassVar
 	| refactoring class |
 	refactoring := RenameClassVariableRefactoring
 				rename: #RecursiveSelfRule
 				to: #RSR
-				in: TransformationRuleTest.
+				in: TransformationRuleTestData.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: TransformationRuleTest fullName.
+	class := refactoring model classNamed: TransformationRuleTestData fullName.
 	self assert: (class directlyDefinesClassVariable: #RSR).
 	self deny: (class directlyDefinesClassVariable: #RecursiveSelfRule).
 	self assert: (class metaclass parseTreeFor: #initializeAfterLoad1)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'initializeAfterLoad1
 								RSR := ParseTreeSearcher new.
 								RSR
 									addMethodSearches: #(''`@methodName: `@args | `@temps | self `@methodName: `@args'' ''`@methodName: `@args | `@temps | ^self `@methodName: `@args'')
 											-> [:aNode :answer | true]').
 	self assert: (class metaclass parseTreeFor: #nuke)
-		equals: (RBParser parseMethod: 'nuke
+		equals: (self parseMethod: 'nuke
 								RSR := nil').
 	self assert: (class parseTreeFor: #checkMethod:)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'checkMethod: aSmalllintContext 
 								class := aSmalllintContext selectedClass.
 								(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 

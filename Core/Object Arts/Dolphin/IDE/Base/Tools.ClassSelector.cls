@@ -343,20 +343,21 @@ dropClass: aSourceClass onto: aTargetClass changes: aCompositeRefactoryChange
 		ifTrue: [^self].
 	aCompositeRefactoryChange addChange: (MoveClassChange move: aSourceClass toSuperclass: aTargetClass)!
 
-dropMethod: aCompiledMethod onto: aClass changes: aCompositeRefactoryChange
+dropMethod: aCompiledMethod onto: aClass isMove: aBoolean changes: aCompositeRefactoryChange
 	"Don't copy the method over itself, or over an existing method in the class only at user behest. Answer whether the method
 	will be compiled in the new class."
 
 	(aClass == aCompiledMethod methodClass or: 
 			[(aClass includesSelector: aCompiledMethod selector) and: 
 					[| args |
-					args := {aCompiledMethod selector. aClass}.
+					args := {aCompiledMethod selector. aClass shortName}.
 					(MessageBox new
-						headline: 'Overwrite <1p> in <2p>?' << args;
+						caption: '<2?Move:Copy> <1p>...' << {aCompiledMethod. aBoolean};
+						headline: 'Overwrite <1p> in <2d>?' << args;
 						customButtons: #(#(#yes '&Overwrite') #(#no '&Don''t Overwrite'));
 						defaultButton: 2;
 						iconStyle: #warning;
-						confirm: '<2p> already defines <1p>. Do you really want to replace the existing implementation?' << args) not]])
+						confirm: 'The existing <2d>>><1p> method will be replaced.' << args) not]])
 		ifTrue: [^false].
 	"If the method was not compiled in the same environment as the class from which it was dragged, we preserve that namespace, 
 	otherwise we compile it in the target class' namespace"
@@ -497,7 +498,10 @@ onClass: aClass renameTo: text accept: booleanValue
 			[booleanValue value: false.
 			^self].
 	(MessageBox new
-		headline: 'Rename <1p> to <2s>?' << {aClass fullName. text};
+		headline: 'Rename <1s>?' << aClass unqualifiedName;
+		text: '<1s> will be renamed to <2s>.<n><n>Any references in code will be updated, but not where the name appears in comments, literal strings, or argument names.' << {aClass fullName. text};
+		customButtons: #(#(#yes '&Rename') #(#no 'Cancel'));
+		isCancellable: true;
 		confirm)
 			ifTrue: 
 				["Queue deferred action as we can't delete the old item now while still in use (causes GPF in TreeView)"
@@ -573,6 +577,7 @@ onDropOver: aDragDropSession
 					((self
 						dropMethod: method
 						onto: (method isClassMethod ifTrue: [dropClass class] ifFalse: [dropClass])
+						isMove: isMove
 						changes: changes) and: [isMove])
 						ifTrue: [changes removeMethod: method selector from: method methodClass]].
 			(each isFormatAvailable: #Class)
@@ -780,29 +785,29 @@ queryMoveClass: aClass toPackage: aPackage
 				collect: [:s | Pair first: s second: (packMan packageOfClass: s)])
 					select: [:a | a second isNil or: [a second == classPackage]].
 	mb := MessageBox new.
-	mb
-		headline: 'Move <1p> to package <2p>?' << {aClass. aPackage name}.
 	classPackage isNil
 		ifTrue: [response := #yes	"Move all subclasses without package too"]
 		ifFalse: 
 			[| prompt |
-			prompt := 'The class <1p> is currently owned by the <2p> package' expandMacrosWith: aClass
-						with: classPackage name.
+			prompt := 'The class <1p> is currently owned by the <2p> package, and will be moved to the <3p> package.'
+						<< {aClass. classPackage name. aPackage name}.
 			subclasses isEmpty
 				ifTrue: 
-					[prompt := (prompt , '<n><n>Are you sure you would like to move it to <1p>?') << aPackage name.
-					response := mb
+					[response := mb
+								headline: 'Repackage <1p>?' << {aClass. aPackage name};
+								customButtons: #(#(#yes '&Repackage') #(#no '&Don''t Repackage'));
+								isCancellable: true;
 								defaultButton: 2;
 								confirm: prompt.
 					response ifFalse: [^false]]
 				ifFalse: 
-					[prompt := prompt
-								, (', and will be moved to <2p>.
-
-Would you like to move its subclasses in <1p>, or without a package, too?'
-										expandMacrosWith: classPackage name
-										with: aPackage name).
-					(response := mb confirmOrCancel: prompt) == #cancel ifTrue: [^false]]].
+					[response := mb
+								headline: 'Repackage <1p> and subclasses?' << {aClass. aPackage name};
+								customButtons: #(#(#yes '&Repackage All') #(#no 'Repackage Class &Only') #(#cancel '&Don''t Repackage'));
+								text: prompt , ('<n><n>Would you like to move its subclasses in <1p>, or without a package, too?'
+													<< {classPackage name. aPackage name});
+								confirmOrCancel.
+					response == #cancel ifTrue: [^false]]].
 	packMan addClass: aClass to: aPackage.
 	response == #yes
 		ifTrue: 
@@ -915,7 +920,7 @@ createVariableAccessors:!commands!public!refactoring! !
 deleteClassHierarchy!commands!private! !
 deleteItCommand!helpers!private! !
 dropClass:onto:changes:!operations!private! !
-dropMethod:onto:changes:!helpers!private! !
+dropMethod:onto:isMove:changes:!helpers!private! !
 editView:!commands!public! !
 fileInClass!commands!public! !
 fileOutClass!commands!public! !

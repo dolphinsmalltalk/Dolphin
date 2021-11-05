@@ -59,11 +59,11 @@ testHelloWorld
 		missing: self simpleGuiAppUnimplementedMessages!
 
 testNotepad
-	"Ideally the set of missing selectors would be empty and reasonable effort has been made to reduce this to a small set. Some of the missing methods contributed by the base package will still be missing, but others are present because Hello World is a GUI app and pulls in the base MVP packages that define those methods."
+	"Notepad has an Integer Prompter, and Prompter now depens on Tooltips, so ttmRelayEvent: will be present."
 
 	self verifyPackageClosure: (BrowserEnvironment new
 				forPackagesDeployment: {UI.Examples.Notepad owningPackage})
-		missing: self simpleGuiAppUnimplementedMessages!
+		missing: (self simpleGuiAppUnimplementedMessages copyWithout: #ttmRelayEvent:)!
 
 testRegEdit
 	"Regedit uses List and Tree views"

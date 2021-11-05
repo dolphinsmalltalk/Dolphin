@@ -543,13 +543,13 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.BrowserEnvironmentWrapper} #includesResource:)
 	#(#{Refactory.Browser.BrowserEnvironmentWrapper} #openEditor)
 	#(#{Refactory.Browser.ClassEnvironment} #includesResource:)
-	#(#{Refactory.Browser.ClassEnvironment} #openEditor)
 	#(#{Refactory.Browser.OrEnvironment} #includesResource:)
 	#(#{Refactory.Browser.RBConfigurableFormatter class} #publishedAspects)
 	#(#{Refactory.Browser.RBFormatter class} #publishedAspects)
 	#(#{Refactory.Browser.RBSourceFormatter class} #publishedAspects)
 	#(#{Refactory.Browser.RefactoryChange} #displayOn:)
 	#(#{Refactory.Browser.SelectorEnvironment} #addMethods:)
+	#(#{Refactory.Browser.SelectorEnvironment} #openEditor)
 	#(#{Refactory.Browser.VariableEnvironment} #includesMethodUncached:)
 	#(#{Refactory.Browser.VariableEnvironment} #updateCachesForMethod:)
 	#(#{Smalltalk class} #publishedEvents)
@@ -1249,7 +1249,7 @@ UI.ListPresenter subclass: #'Tools.ResourceToolboxPresenter'
 	classConstants: {}!
 UI.Shell subclass: #'Tools.SmalltalkToolShell'
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
-	classVariableNames: 'HistoryDwellTime PersistingOptions SearchFieldFlashes'
+	classVariableNames: 'HistoryDwellTime SearchFieldFlashes'
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'
 	classConstants: {
@@ -6073,7 +6073,7 @@ includesResource: aResourceIdentifier
 openEditor
 	"Open an appropriate Dolphin browser on this environment."
 
-	SmalltalkSystem current browseEnvironment: self! !
+	^SmalltalkSystem current browseEnvironment: self! !
 !Refactory.Browser.BrowserEnvironmentWrapper categoriesForMethods!
 includesResource:!public!testing! !
 openEditor!browsing!public! !
@@ -6082,15 +6082,9 @@ openEditor!browsing!public! !
 !Refactory.Browser.ClassEnvironment methodsFor!
 
 includesResource: aResourceIdentifier 
-	^self definesClass: aResourceIdentifier owningClass!
-
-openEditor
-	"Open an appropriate Dolphin browser on this environment."
-
-	^SmalltalkSystem current browseEnvironment: self! !
+	^self definesClass: aResourceIdentifier owningClass! !
 !Refactory.Browser.ClassEnvironment categoriesForMethods!
 includesResource:!public!testing! !
-openEditor!browsing!public! !
 !
 
 !Refactory.Browser.OrEnvironment methodsFor!
@@ -6198,9 +6192,15 @@ displayOn:!printing!public! !
 !Refactory.Browser.SelectorEnvironment methodsFor!
 
 addMethods: methodCollection 
-	methodCollection do: [:each | self addClass: each methodClass selector: each selector]! !
+	methodCollection do: [:each | self addClass: each methodClass selector: each selector]!
+
+openEditor
+	"Open an appropriate Dolphin browser on this environment."
+
+	^SmalltalkSystem current browseMethodsIn: self! !
 !Refactory.Browser.SelectorEnvironment categoriesForMethods!
 addMethods:!adding!public! !
+openEditor!browsing!public! !
 !
 
 !Refactory.Browser.VariableEnvironment methodsFor!

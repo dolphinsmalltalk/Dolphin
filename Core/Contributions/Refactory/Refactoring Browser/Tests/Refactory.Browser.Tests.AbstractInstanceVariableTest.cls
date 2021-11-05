@@ -17,15 +17,16 @@ setUp
 
 testAbstractInstanceVariable
 	| refactoring class |
-	refactoring := AbstractInstanceVariableRefactoring variable: 'class' class: TransformationRuleTest.
+	refactoring := AbstractInstanceVariableRefactoring variable: 'class'
+				class: TransformationRuleTestData.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTest'.
-	self assert: (class parseTreeFor: #class1) equals: (RBParser parseMethod: 'class1 ^class').
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData'.
+	self assert: (class parseTreeFor: #class1) equals: (self parseMethod: 'class1 ^class').
 	self assert: (class parseTreeFor: #class:)
-		equals: (RBParser parseMethod: 'class: anObject
+		equals: (self parseMethod: 'class: anObject
 	class := anObject').
 	self assert: (class parseTreeFor: #superSends)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'superSends
 	| rule |
 	rule := ParseTreeRewriter new.
@@ -38,7 +39,7 @@ testAbstractInstanceVariable
 							-> ''self `@message: ``@args'').
 	self rewriteUsing: rule').
 	self assert: (class parseTreeFor: #checkMethod:)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'checkMethod: aSmalllintContext 
 	self class: aSmalllintContext selectedClass.
 	(rewriteRule executeTree: aSmalllintContext parseTree) 
@@ -59,19 +60,19 @@ testAbstractWithAssignmentUsed
 				class: class.
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #foo)
-		equals: (RBParser parseMethod: 'foo
+		equals: (self parseMethod: 'foo
 						^self instVarName21: 3').
 	self assert: (class parseTreeFor: #instVarName2:)
-		equals: (RBParser parseMethod: 'instVarName2: anObject
+		equals: (self parseMethod: 'instVarName2: anObject
 						self instVarName21: anObject').
 	self assert: (class parseTreeFor: #instVarName21:)
-		equals: (RBParser parseMethod: 'instVarName21: anObject
+		equals: (self parseMethod: 'instVarName21: anObject
 						^instVarName2 := anObject').
 	self assert: (class parseTreeFor: #instVarName2)
-		equals: (RBParser parseMethod: 'instVarName2
+		equals: (self parseMethod: 'instVarName2
 						^instVarName2').
 	self assert: ((model classNamed: #Bar) parseTreeFor: #foo)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'foo
 						instVarName1 := instVarName1 + self instVarName2 + ClassVarName1')!
 
@@ -84,24 +85,24 @@ testAbstractWithDefaultNamesUsed
 				class: class.
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #bar)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'bar
 						"Add one to instVarName1"
 
 						self instVarName11: self instVarName11 + 1').
 	self assert: (class parseTreeFor: #instVarName11:)
-		equals: (RBParser parseMethod: 'instVarName11: anObject
+		equals: (self parseMethod: 'instVarName11: anObject
 						instVarName1 := anObject').
 	self assert: (class parseTreeFor: #instVarName11)
-		equals: (RBParser parseMethod: 'instVarName11
+		equals: (self parseMethod: 'instVarName11
 						^instVarName1').
 	self assert: ((model classNamed: #Bar) parseTreeFor: #foo)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'foo
 						self instVarName11: self instVarName11 + instVarName2 + ClassVarName1')!
 
 testInheritedName
-	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'name' class: BasicLintRuleTest)!
+	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'name' class: BasicLintRuleTestData)!
 
 testMetaclassInstanceVariables
 	| refactoring class |
@@ -113,16 +114,16 @@ testMetaclassInstanceVariables
 				variable: 'foo'
 				class: class.
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeFor: #foo1) equals: (RBParser parseMethod: 'foo1
+	self assert: (class parseTreeFor: #foo1) equals: (self parseMethod: 'foo1
 						^foo').
 	self assert: (class parseTreeFor: #foo:)
-		equals: (RBParser parseMethod: 'foo: anObject
+		equals: (self parseMethod: 'foo: anObject
 						^foo := anObject').
 	self assert: (class parseTreeFor: #zzz)
-		equals: (RBParser parseMethod: 'zzz ^self foo: self foo1 + self foo1 * 2')!
+		equals: (self parseMethod: 'zzz ^self foo: self foo1 + self foo1 * 2')!
 
 testNonExistantName
-	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'foo' class: BasicLintRuleTest)! !
+	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'foo' class: BasicLintRuleTestData)! !
 !Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesForMethods!
 setUp!public!set up! !
 testAbstractInstanceVariable!public!tests! !

@@ -31,7 +31,7 @@ buildSelectorString: aSelector withPermuteMap: anIntegerCollection
 				nextPut: $\x20].
 	^stream contents! !
 !Refactory.Browser.MethodRefactoring categoriesForMethods!
-buildSelectorString:!private! !
-buildSelectorString:withPermuteMap:!private! !
+buildSelectorString:!helpers!private! !
+buildSelectorString:withPermuteMap:!helpers!private! !
 !
 

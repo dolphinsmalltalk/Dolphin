@@ -13,17 +13,17 @@ Refactory.Browser.Tests.PushUpInstanceVariableTest comment: ''!
 
 testPullUpInstVar
 	| refactoring |
-	self proceedThroughWarning: 
-			[refactoring := PullUpInstanceVariableRefactoring variable: 'result' class: LintRuleTest.
-			self executeRefactoring: refactoring].
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest')
+	refactoring := PullUpInstanceVariableRefactoring variable: 'result' class: LintRuleTestData.
+	refactoring setOption: #pullUpNonSharedInstVar toUse: [:rcvr :name | true].
+	self executeRefactoring: refactoring.
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData')
 				directlyDefinesInstanceVariable: 'result').
-	self deny: ((refactoring model classNamed: #'Refactory.Browser.Tests.BasicLintRuleTest')
+	self deny: ((refactoring model classNamed: #'Refactory.Browser.Tests.BasicLintRuleTestData')
 				directlyDefinesInstanceVariable: 'result')!
 
 testPullUpVariableNotDefined
 	self
-		shouldFail: (PullUpInstanceVariableRefactoring variable: 'notDefinedVariable' class: LintRuleTest)! !
+		shouldFail: (PullUpInstanceVariableRefactoring variable: 'notDefinedVariable' class: LintRuleTestData)! !
 !Refactory.Browser.Tests.PushUpInstanceVariableTest categoriesForMethods!
 testPullUpInstVar!public!tests! !
 testPullUpVariableNotDefined!failure tests!public! !

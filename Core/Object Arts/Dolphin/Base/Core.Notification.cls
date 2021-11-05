@@ -61,6 +61,11 @@ deprecated
 	sender := Processor activeProcess topFrame sender.
 	^self signal: 'Deprecated message sent: ', sender method printString, ' from: ', sender sender method printString!
 
+iconStyle
+	"Answer an exception class describing the severity of the notification."
+
+	^#notify!
+
 mbIconId
 	^MB_ICONINFORMATION!
 
@@ -70,6 +75,7 @@ severityClass
 	^Notification! !
 !Core.Notification class categoriesForMethods!
 deprecated!instance creation!public! !
+iconStyle!constants!public! !
 mbIconId!parping!public! !
 severityClass!constants!public! !
 !

@@ -100,9 +100,9 @@ Kernel.SharedPool subclass: #'OS.TaskDialogConstants'
 	}!
 Core.Object subclass: #'UI.MessageBoxAbstract'
 	instanceVariableNames: 'text caption owner'
-	classVariableNames: 'DefaultCaptions IconStyles'
+	classVariableNames: 'IconStyles'
 	imports: #(#{OS.MessageBoxConstants})
-	classInstanceVariableNames: ''
+	classInstanceVariableNames: 'defaultCaptions'
 	classConstants: {}!
 Core.Warning subclass: #'UI.ConfirmationRequiredWarning'
 	instanceVariableNames: 'confirmBlock refuseBlock cancelBlock'

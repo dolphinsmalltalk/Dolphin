@@ -19,51 +19,51 @@ testBadInterval
 					in: RefactoryTestDataApp);
 		shouldFail: (ExtractMethodToComponentRefactoring
 					extract: (self convertInterval: (80 to: 147)
-							for: (BasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
+							for: (BasicLintRuleTestData class sourceCodeAt: #subclassOf:overrides:))
 					from: #subclassOf:overrides:
-					in: BasicLintRuleTest class)!
+					in: BasicLintRuleTestData class)!
 
 testExtractFailure
 	self
 		shouldFail: (ExtractMethodToComponentRefactoring
 					extract: (self convertInterval: (80 to: 269)
-							for: (BasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
+							for: (BasicLintRuleTestData class sourceCodeAt: #subclassOf:overrides:))
 					from: #subclassOf:overrides:
-					in: BasicLintRuleTest class);
+					in: BasicLintRuleTestData class);
 		shouldFail: (ExtractMethodToComponentRefactoring
 					extract: (self convertInterval: (53 to: 56)
-							for: (BasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
+							for: (BasicLintRuleTestData class sourceCodeAt: #subclassOf:overrides:))
 					from: #subclassOf:overrides:
-					in: BasicLintRuleTest class);
+					in: BasicLintRuleTestData class);
 		shouldFail: (ExtractMethodToComponentRefactoring
 					extract: (self convertInterval: (77 to: 222)
-							for: (BasicLintRuleTest class sourceCodeAt: #subclassResponsibilityNotDefined))
+							for: (BasicLintRuleTestData class sourceCodeAt: #subclassResponsibilityNotDefined))
 					from: #subclassResponsibilityNotDefined
-					in: BasicLintRuleTest class)!
+					in: BasicLintRuleTestData class)!
 
 testExtractMethodAtEndOfMethodThatNeedsReturn
 	| refactoring class selectorsSize |
 	refactoring := ExtractMethodToComponentRefactoring
 				extract: (73 to: 216)
 				from: #openEditor
-				in: LintRuleTest.
+				in: LintRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self setupSelfArgumentNameFor: refactoring toReturn: 'asdf'.
 	self setupVariableToMoveToFor: refactoring toReturn: 'rules'.
 	self setupVariableTypesFor: refactoring
 		toReturn: {refactoring model classNamed: Collection fullName}.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest'.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
 	selectorsSize := class selectors size.
-	self proceedThroughWarning: [self executeRefactoring: refactoring].
+	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #openEditor)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'openEditor
 								<namespace: Tools>
 								| rules |
 								rules := self failedRules.
 								^rules foo: self').
 	self assert: ((refactoring model classNamed: Collection fullName) parseTreeFor: #foo:)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'foo: asdf
 								<namespace: Tools>
 								self isEmpty ifTrue: [^asdf].
@@ -81,14 +81,16 @@ testMoveWithoutSelfReference
 				in: RBReadBeforeWrittenTester.
 	self setupMethodNameFor: refactoring toReturn: #copyWithAssociations.
 	self setupVariableToMoveToFor: refactoring toReturn: 'aDictionary'.
-	self setupVariableTypesFor: refactoring toReturn: {refactoring model classNamed: Dictionary fullName}.
+	self setupVariableTypesFor: refactoring
+		toReturn: {refactoring model classNamed: Dictionary fullName}.
 	class := refactoring model classNamed: #'Refactory.Browser.RBReadBeforeWrittenTester'.
 	selectorsSize := class selectors size.
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #copyDictionary:)
-		equals: (RBParser parseMethod: 'copyDictionary: aDictionary ^aDictionary copyWithAssociations').
-	self assert: ((refactoring model classNamed: Dictionary fullName) parseTreeFor: #copyWithAssociations)
-		equals: (RBParser
+		equals: (self parseMethod: 'copyDictionary: aDictionary ^aDictionary copyWithAssociations').
+	self
+		assert: ((refactoring model classNamed: Dictionary fullName) parseTreeFor: #copyWithAssociations)
+		equals: (self
 				parseMethod: 'copyWithAssociations 
 							| newDictionary |
 							newDictionary := Dictionary new: self size.
@@ -101,7 +103,7 @@ testNonExistantSelector
 	self shouldFail: (ExtractMethodToComponentRefactoring
 				extract: (10 to: 20)
 				from: #checkClass1:
-				in: BasicLintRuleTest)! !
+				in: BasicLintRuleTestData)! !
 !Refactory.Browser.Tests.ExtractMethodToComponentTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testExtractFailure!failure tests!public! !

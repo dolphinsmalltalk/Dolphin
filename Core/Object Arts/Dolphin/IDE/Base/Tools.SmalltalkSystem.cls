@@ -416,6 +416,12 @@ basicRemoveMethods: aCollection
 	self changeManager
 		performChange: (aCollection size = 1 ifTrue: [changes changes first] ifFalse: [changes])!
 
+basicRemoveMethods: aCollection within: aBrowserEnvironment
+	self basicRemoveMethods: aCollection!
+
+basicRemoveMethodsIn: aBrowserEnvironment within: searchEnvironment
+	self basicRemoveMethods: aBrowserEnvironment allMethods within: searchEnvironment!
+
 beginDrag: aDragDropSession methods: aCollection
 	| ddObjects stream chunks |
 	ddObjects := OrderedCollection new.
@@ -1347,11 +1353,12 @@ closeAll
 	mb := MessageBox new.
 	mb beTaskModal.
 	(mb
-		headline: 'Close all windows?';
-		confirm: 'All open windows will be closed, but you will be prompted to save or retain any changes.
-
-Are you sure that you would like to proceed?')
-			ifFalse: [^self].
+		headline: 'Close all open windows?';
+		text: 'All open windows will be closed, but you will be prompted to save or retain any changes.';
+		isSizedToContent: true;
+		customButtons: #(#(#yes '&Close All') #(#no 'Cancel'));
+		isCancellable: true;
+		confirm) ifFalse: [^self].
 	View topLevelViews
 		do: [:each | each presenter class == self systemFolderClass ifFalse: [each close]]!
 
@@ -2141,16 +2148,6 @@ isRegisteredTool: aClass
 	"Answer true if aClass is registered as a tool with the receiver"
 
 	^self class registeredTools includes: aClass!
-
-isValidClassVarName: aString for: aClass
-	^ClassBuilder isValidClassName: aString!
-
-isValidInstanceVariableName: name for: aClass
-	^(Compiler isAValidLocalIdentifier: name) and: [(aClass allInstVarNames includes: name) not]!
-
-isValidNewClassVarName: aString for: aClass
-	^(self isValidClassVarName: aString for: aClass) and: 
-			[(aClass allClassVarNames includes: aString) not and: [aString asQualifiedReference isDefined not]]!
 
 keywordsAndArgsForSelector: aSymbol 
 	| args argc |
@@ -3215,7 +3212,8 @@ promptForClassVarName: nameString in: aClass prompt: promptString caption: capti
 				createOn: nameString
 				prompt: promptString
 				caption: captionString)
-				validationBlock: [:name | self isValidNewClassVarName: name for: aClass];
+				validater: [:name | self validateNewClassVarName: name for: aClass];
+				showHintWhenEmpty: false;
 				showModal.
 	^newName!
 
@@ -3225,7 +3223,8 @@ promptForInstVarName: nameString in: aClass prompt: promptString caption: captio
 				createOn: nameString
 				prompt: promptString
 				caption: captionString)
-				validationBlock: [:name | self isValidInstanceVariableName: name for: aClass];
+				validater: [:name | self validateNewInstanceVariableName: name for: aClass];
+				showHintWhenEmpty: false;
 				showModal.
 	^newName!
 
@@ -3236,9 +3235,18 @@ promptForReferencesToGlobal: aString in: aBrowserEnvironment
 		createOn: suggestion
 		prompt: 'Enter the name of a global:'
 		caption: 'Browse References to Global…')
-		validationBlock: 
+		validater: 
 				[:value |
-				(BindingReference isValidQualifiedName: value) and: [value asQualifiedReference isDefined]];
+				value isEmpty
+					ifTrue: [ValidationResult failed]
+					ifFalse: 
+						[| result |
+						result := ValidationResult new.
+						(BindingReference isValidQualifiedName: value)
+							ifFalse: [result errorMessage: '<1p> is not a valid qualified name' << value]
+							ifTrue: 
+								[value asQualifiedReference isDefined ifFalse: [result errorMessage: '<1p> is undefined' << value]].
+						result]];
 		showModal)
 			ifNotNil: [:globalName | aBrowserEnvironment referencesToVariable: globalName asQualifiedReference binding]!
 
@@ -3604,15 +3612,6 @@ removeMethods: aCollectionOfMethods
 		confirm: stream contents) ifFalse: [^self].
 	self basicRemoveMethods: methods!
 
-removeMethodsIn: aBrowserEnvironment 
-	self basicRemoveMethods: aBrowserEnvironment allMethods!
-
-removeMethodsIn: methodsEnvironment within: searchEnvironment
-	(MessageBox new
-		headline: 'Remove methods?';
-		confirm: 'Are you sure you would like to remove <1p>?' << methodsEnvironment)
-			ifTrue: [self removeMethodsIn: methodsEnvironment]!
-
 removeSelector: sel fromProtocol: target
 	"Remove the <Symbol> selectors, sels from the <MethodProtocol>,	target."
 
@@ -3910,8 +3909,11 @@ saveImageAs
 					[MessageBox new
 						beTaskModal;
 						caption: self sessionManager applicationName;
-						confirm: ('The image <1p> already exists.<n><n>Are you sure you would like to overwrite it?'
-									expandMacrosWith: fileName)])
+						headline: 'Overwrite existing image?';
+						text: 'The existing image <1p> will be overwritten.' << fileName;
+						customButtons: #(#(#yes '&Overwrite') #(#no 'Cancel'));
+						isCancellable: true;
+						confirm])
 				ifTrue: 
 					[Cursor wait showWhile: 
 							[self playSaveImageSound.
@@ -4088,11 +4090,24 @@ upgradeAllResourcesReferencingClassNamed: aSymbol
 userPreferencesIcon
 	^Icon fromId: 'SMALLTALKOPTIONSFOLDER.ICO'!
 
+validateNewClassVarName: aString for: aClass
+	^ValidationResult
+		value: ((ClassBuilder isValidClassName: aString) and: 
+					[(aClass allClassVarNames includes: aString) not and: [aString asQualifiedReference isDefined not]])!
+
+validateNewInstanceVariableName: name for: aClass
+	^ValidationResult
+		value: ((Compiler isAValidLocalIdentifier: name) and: [(aClass allInstVarNames includes: name) not])!
+
 validateRenameInstVar: oldString to: newString in: aClass
-	(self isValidInstanceVariableName: newString for: aClass)
+	| result |
+	result := self validateNewInstanceVariableName: newString for: aClass.
+	result value
 		ifFalse: 
-			[self
-				error: ('<1s> is not a valid instance variable name in <2p>' expandMacrosWith: newString with: aClass)]!
+			[result
+				errorMessage: ('<1s> is not a valid instance variable name in <2p>' expandMacrosWith: newString
+						with: aClass)].
+	^result!
 
 viewComposerClass
 	"Answer the class of ViewComposer to be used for editing view resources in the
@@ -4263,6 +4278,8 @@ backupOnImageSave!accessing!public! !
 backupOnImageSave:!accessing!public! !
 basicCreateSubclass:of:subclasses:!private!refactoring! !
 basicRemoveMethods:!helpers!private! !
+basicRemoveMethods:within:!helpers!private! !
+basicRemoveMethodsIn:within:!helpers!private! !
 beginDrag:methods:!event handling!helpers!private! !
 beNotChanged!operations!private! !
 binaryClassFilesType!constants!private! !
@@ -4462,9 +4479,6 @@ interruptHotKey!options!public! !
 interruptHotKey:!options!public! !
 isOAD!accessing!private!product! !
 isRegisteredTool:!public!testing! !
-isValidClassVarName:for:!enquiries!helpers!private!refactoring! !
-isValidInstanceVariableName:for:!enquiries!helpers!private! !
-isValidNewClassVarName:for:!enquiries!helpers!private!refactoring! !
 keywordsAndArgsForSelector:!autocompletion!helpers!private! !
 keywordsAndArgsOfMethod:!autocompletion!helpers!private! !
 loadViewResource:inContext:!helpers!private! !
@@ -4583,8 +4597,6 @@ removeClass:fromProtocol:!operations!private!protocols! !
 removeMethod:!operations!public! !
 removeMethod:changes:!operations!private! !
 removeMethods:!commands!public! !
-removeMethodsIn:!helpers!private! !
-removeMethodsIn:within:!commands!private! !
 removeSelector:fromProtocol:!operations!protocols!public! !
 removeSelectors:fromProtocol:!operations!protocols!public! !
 removeSystemFolderIcon:!operations!public! !
@@ -4648,6 +4660,8 @@ uninitialize!class hierarchy-removing!private! !
 unregisterTool:!accessing!public! !
 upgradeAllResourcesReferencingClassNamed:!browsing!commands!public! !
 userPreferencesIcon!initializing!private! !
+validateNewClassVarName:for:!helpers!private!refactoring! !
+validateNewInstanceVariableName:for:!enquiries!helpers!private! !
 validateRenameInstVar:to:in:!helpers!private! !
 viewComposerClass!constants!public! !
 viewComposerClass:!options!public! !

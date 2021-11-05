@@ -19,23 +19,23 @@ testAddMethod
 	| refactoring |
 	refactoring := AddMethodRefactoring
 				addMethod: 'printString1 ^super printString'
-				toClass: BasicLintRuleTest
+				toClass: BasicLintRuleTestData
 				inProtocols: #(#accessing).
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.BasicLintRuleTest')
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.BasicLintRuleTestData')
 				parseTreeFor: #printString1)
-		equals: (RBParser parseMethod: 'printString1 ^super printString')!
+		equals: (self parseMethod: 'printString1 ^super printString')!
 
 testBadMethod
 	self shouldFail: (AddMethodRefactoring
 				addMethod: 'asdf ^super ^printString'
-				toClass: BasicLintRuleTest
+				toClass: BasicLintRuleTestData
 				inProtocols: #(#accessing))!
 
 testExistingSelector
 	self shouldFail: (AddMethodRefactoring
 				addMethod: 'printString ^super printString'
-				toClass: BasicLintRuleTest
+				toClass: BasicLintRuleTestData
 				inProtocols: #(#accessing))!
 
 testModelAddMethod
@@ -48,7 +48,7 @@ testModelAddMethod
 				inProtocols: #(#accessing).
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #printString1)
-		equals: (RBParser parseMethod: 'printString1 ^super printString')!
+		equals: (self parseMethod: 'printString1 ^super printString')!
 
 testModelExistingSelector
 	| refactoring |

@@ -22,24 +22,28 @@ testBadInterval
 testBadName
 	self
 		shouldFail: (RenameTemporaryRefactoring
-					renameTemporaryFrom: (self convertInterval: (15 to: 19) for: (LintRuleTest sourceCodeAt: #openEditor))
+					renameTemporaryFrom: (self convertInterval: (15 to: 19)
+							for: (LintRuleTestData sourceCodeAt: #openEditor))
 					to: 'name'
-					in: LintRuleTest
+					in: LintRuleTestData
 					selector: #openEditor);
 		shouldFail: (RenameTemporaryRefactoring
-					renameTemporaryFrom: (self convertInterval: (15 to: 19) for: (LintRuleTest sourceCodeAt: #openEditor))
+					renameTemporaryFrom: (self convertInterval: (15 to: 19)
+							for: (LintRuleTestData sourceCodeAt: #openEditor))
 					to: 'rules'
-					in: LintRuleTest
+					in: LintRuleTestData
 					selector: #openEditor);
 		shouldFail: (RenameTemporaryRefactoring
-					renameTemporaryFrom: (self convertInterval: (15 to: 19) for: (LintRuleTest sourceCodeAt: #openEditor))
+					renameTemporaryFrom: (self convertInterval: (15 to: 19)
+							for: (LintRuleTestData sourceCodeAt: #openEditor))
 					to: 'DependentFields'
-					in: LintRuleTest
+					in: LintRuleTestData
 					selector: #openEditor);
 		shouldFail: (RenameTemporaryRefactoring
-					renameTemporaryFrom: (self convertInterval: (15 to: 19) for: (LintRuleTest sourceCodeAt: #openEditor))
+					renameTemporaryFrom: (self convertInterval: (15 to: 19)
+							for: (LintRuleTestData sourceCodeAt: #openEditor))
 					to: 'a b'
-					in: LintRuleTest
+					in: LintRuleTestData
 					selector: #openEditor)!
 
 testModelBadName
@@ -62,7 +66,7 @@ testModelBadName
 
 testRenameTemporary
 	| source start stop refactoring |
-	source := LintRuleTest sourceCodeAt: #openEditor.
+	source := LintRuleTestData sourceCodeAt: #openEditor.
 	start := (source indexOf: $|) + 2.
 	stop := (source
 				nextIndexOf: $|
@@ -71,12 +75,12 @@ testRenameTemporary
 	refactoring := RenameTemporaryRefactoring
 				renameTemporaryFrom: (start to: stop)
 				to: 'asdf'
-				in: LintRuleTest
+				in: LintRuleTestData
 				selector: #openEditor.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest')
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData')
 				parseTreeFor: #openEditor)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'openEditor
 								<namespace: Tools>
 								| asdf |

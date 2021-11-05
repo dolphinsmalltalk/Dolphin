@@ -12,7 +12,7 @@ Refactory.Browser.Tests.RemoveClassTest comment: ''!
 !Refactory.Browser.Tests.RemoveClassTest methodsFor!
 
 removableClassWithSubclasses
-	^'Refactory.Browser.Tests.Foo' , 'LintRuleTest'!
+	^'Refactory.Browser.Tests.Foo' , 'LintRuleTestData'!
 
 testBadName
 	self shouldFail: (RemoveClassRefactoring classNames: #(#RecursiveSelfRule))!
@@ -23,8 +23,8 @@ testRemoveClass
 	refactoring := RemoveClassRefactoring classNames: {className}.
 	self executeRefactoring: refactoring.
 	self assertIsNil: (refactoring model classNamed: className).
-	self assert: (refactoring model classNamed: TransformationRuleTest fullName) superclass
-		equals: (refactoring model classNamed: LintRuleTest fullName)!
+	self assert: (refactoring model classNamed: TransformationRuleTestData fullName) superclass
+		equals: (refactoring model classNamed: LintRuleTestData fullName)!
 
 testRemoveClassModelReferenced
 	| refactoring className |
@@ -38,7 +38,7 @@ testRemoveClassModelReferenced
 
 testRemoveClassModelReferencedByFullName
 	| refactoring className |
-	className := 'Refactory.Browser.Tests.Foo' , 'LintRuleTest'.
+	className := 'Refactory.Browser.Tests.Foo' , 'LintRuleTestData'.
 	refactoring := RemoveClassRefactoring classNames: {className}.
 	"Create a reference only in the model"
 	(refactoring model classFor: self class) compile: 'fooLintRuleTest ^' , className
@@ -48,7 +48,7 @@ testRemoveClassModelReferencedByFullName
 
 testRemoveReferenced
 	self
-		shouldFail: (RemoveClassRefactoring classNames: #(#'Refactory.Browser.Tests.BasicLintRuleTest'))!
+		shouldFail: (RemoveClassRefactoring classNames: #(#'Refactory.Browser.Tests.BasicLintRuleTestData'))!
 
 testRemoveSelfReferenced
 	| refactoring classNames env refs |

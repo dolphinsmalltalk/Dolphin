@@ -103,9 +103,8 @@ fileSave
 	notSaved isEmpty ifTrue: [^self].
 	"Come here if some files are read only"
 	listPresenter selections: notSaved.
-	statusModel value: ((Warning new)
-				messageText: 'A number of the selected items could not be filed out. Ensure that all the selected items are writeable and try again.';
-				yourself)!
+	statusModel value: (Warning
+				messageText: 'A number of the selected items could not be filed out. Ensure that all the selected items are writeable and try again.')!
 
 fileSaveAll
 	"Attempt to save all the displayed source objects in response to the 

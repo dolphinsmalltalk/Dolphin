@@ -24,15 +24,15 @@ testModelRemoveInstanceVariable
 	self deny: (class definesInstanceVariable: 'foo1')!
 
 testNonExistantName
-	self shouldFail: (RemoveInstanceVariableRefactoring variable: 'name1' class: LintRuleTest)!
+	self shouldFail: (RemoveInstanceVariableRefactoring variable: 'name1' class: LintRuleTestData)!
 
 testReferencedVariable
-	self shouldFail: (RemoveInstanceVariableRefactoring variable: 'name' class: LintRuleTest)!
+	self shouldFail: (RemoveInstanceVariableRefactoring variable: 'name' class: LintRuleTestData)!
 
 testRemoveInstVar
 	| refactoring class |
-	refactoring := RemoveInstanceVariableRefactoring variable: 'foo1' class: LintRuleTest.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest'.
+	refactoring := RemoveInstanceVariableRefactoring variable: 'foo1' class: LintRuleTestData.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
 	self assert: (class definesInstanceVariable: 'foo1').
 	self executeRefactoring: refactoring.
 	self deny: (class definesInstanceVariable: 'foo1')! !

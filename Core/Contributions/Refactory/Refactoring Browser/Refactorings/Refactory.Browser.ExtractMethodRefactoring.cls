@@ -261,6 +261,15 @@ reorderParametersToMatch: aSelector
 					dictionary at: each name
 						ifAbsent: [self refactoringError: 'An internal error occured, please report this error.']]!
 
+shouldOverride: aSymbol in: aClass
+	^(self options at: #alreadyDefined)
+		value: self
+		value: aClass
+		value: aSymbol!
+
+shouldUseExistingMethod: aSymbol
+	^(self options at: #useExistingMethod) value: self value: aSymbol!
+
 storeOn: aStream 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -274,31 +283,24 @@ storeOn: aStream
 	aStream nextPut: $)!
 
 transform
-	| existingSelector namespace package categories |
+	| existingSelector packageAndEnv categories |
 	existingSelector := self existingSelector.
 	self nameNewMethod: (existingSelector ifNil: [self getNewMethodName]).
 	"We want the new method to be in the same package and namespace as the source method"
-	(class existingMethodAt: selector)
-		ifNil: 
-			[namespace := class environment.
-			package := nil]
-		ifNotNil: 
-			[:method |
-			namespace := self model classFor: method environment.
-			package := method owningPackage].
+	packageAndEnv := class existingMethodPackageAndEnvironment: selector.
 	categories := class protocolsFor: selector.
 	existingSelector
 		ifNil: 
 			[class
 				compile: extractedParseTree newSource
-				environment: namespace
+				environment: packageAndEnv second
 				categories: categories
-				package: package].
+				package: packageAndEnv first].
 	class
 		compileTree: modifiedParseTree
-		environment: namespace
+		environment: packageAndEnv second
 		categories: categories
-		package: package! !
+		package: packageAndEnv first! !
 !Refactory.Browser.ExtractMethodRefactoring categoriesForMethods!
 checkAssignments:!public!transforming! !
 checkReturn!public!transforming! !
@@ -320,6 +322,8 @@ placeholderNode!public!transforming! !
 preconditions!preconditions!public! !
 remainingTemporaries!public!transforming! !
 reorderParametersToMatch:!public!transforming! !
+shouldOverride:in:!public!requests! !
+shouldUseExistingMethod:!public!requests! !
 storeOn:!printing!public! !
 transform!public!transforming! !
 !

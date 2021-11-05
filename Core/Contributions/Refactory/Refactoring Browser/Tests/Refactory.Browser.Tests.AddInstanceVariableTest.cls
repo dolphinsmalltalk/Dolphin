@@ -17,9 +17,9 @@ setUp
 
 testAddInstanceVariable
 	| refactoring |
-	refactoring := AddInstanceVariableRefactoring variable: 'asdf' class: TransformationRuleTest.
+	refactoring := AddInstanceVariableRefactoring variable: 'asdf' class: TransformationRuleTestData.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTest')
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData')
 				directlyDefinesInstanceVariable: 'asdf')!
 
 testAddToModel
@@ -41,8 +41,8 @@ testAddToModel
 
 testAlreadyExistingName
 	self
-		shouldFail: (AddInstanceVariableRefactoring variable: 'class' class: TransformationRuleTest);
-		shouldFail: (AddInstanceVariableRefactoring variable: 'name' class: TransformationRuleTest)!
+		shouldFail: (AddInstanceVariableRefactoring variable: 'class' class: TransformationRuleTestData);
+		shouldFail: (AddInstanceVariableRefactoring variable: 'name' class: TransformationRuleTestData)!
 
 testModelAlreadyExistingName
 	| refactoring |

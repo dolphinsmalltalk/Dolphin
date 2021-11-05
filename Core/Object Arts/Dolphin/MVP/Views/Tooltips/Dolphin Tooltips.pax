@@ -101,7 +101,8 @@ Kernel.SharedPool subclass: #'OS.TooltipConstants'
 		'TTS_CLOSE' -> 16r80.
 		'TTS_NOANIMATE' -> 16r10.
 		'TTS_NOFADE' -> 16r20.
-		'TTS_NOPREFIX' -> 16r2
+		'TTS_NOPREFIX' -> 16r2.
+		'TTS_USEVISUALSTYLE' -> 16r100
 	}!
 Core.Object subclass: #'UI.OneOffNoteBubble'
 	instanceVariableNames: ''
@@ -110,12 +111,14 @@ Core.Object subclass: #'UI.OneOffNoteBubble'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.MessageBoxAbstract subclass: #'UI.MessageBubble'
-	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth'
+	instanceVariableNames: 'iconId tooltip position itemFlags timeout tooltipStyle timeoutProcess font forecolor backcolor margins maxWidth flags'
 	classVariableNames: ''
 	imports: #(#{OS.TooltipConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'IconIds' -> #[64 48 16]
+		'IconIds' -> #[64 48 16].
+		'LargeIconMask' -> 16r1.
+		'SilentMask' -> 16r2
 	}!
 OS.Win32Structure subclass: #'OS.TOOLINFOW'
 	instanceVariableNames: 'text'

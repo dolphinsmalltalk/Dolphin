@@ -21,68 +21,45 @@ readFile: aString
 setUp
 	| assoc |
 	super setUp.
-	assoc := RefactoringManager classPool associationAt: #Instance
-				ifAbsent: [RefactoringManager classPool associationAt: 'Instance'].
+	assoc := RefactoringManager localBindingFor: 'Instance'.
 	manager := assoc value.
 	assoc value: nil.
 	model := RBNamespace new!
 
-setupImplementorToInlineFor: aRefactoring toReturn: anObject 
-	| options |
-	options := aRefactoring options copy.
-	options at: #implementorToInline put: [:ref :imps | anObject].
-	aRefactoring options: options!
+setupImplementorToInlineFor: aRefactoring toReturn: anObject
+	aRefactoring setOption: #implementorToInline toUse: [:ref :imps | anObject]!
 
-setupInlineExpressionFor: aRefactoring toReturn: aBoolean 
-	| options |
-	options := aRefactoring options copy.
-	options at: #inlineExpression put: [:ref :string | aBoolean].
-	aRefactoring options: options!
+setupInlineExpressionFor: aRefactoring toReturn: aBoolean
+	aRefactoring setOption: #inlineExpression toUse: [:ref :string | aBoolean]!
 
-setupMethodNameFor: aRefactoring toReturn: aSelector 
-	| options |
-	options := aRefactoring options copy.
-	options at: #methodName
-		put: 
-			[:ref :aMethodName | 
+setupMethodNameFor: aRefactoring toReturn: aSelector
+	aRefactoring setOption: #methodName
+		toUse: 
+			[:ref :aMethodName |
 			aMethodName
 				selector: aSelector;
-				yourself].
-	aRefactoring options: options!
+				yourself]!
 
-setupMethodNameFor: aRefactoring toReturn: aSelector withArguments: stringCollection 
-	| options |
-	options := aRefactoring options copy.
-	options at: #methodName
-		put: 
-			[:ref :aMethodName | 
+setupMethodNameFor: aRefactoring toReturn: aSelector withArguments: stringCollection
+	aRefactoring setOption: #methodName
+		toUse: 
+			[:ref :aMethodName |
 			aMethodName
 				selector: aSelector;
 				arguments: stringCollection;
-				yourself].
-	aRefactoring options: options!
+				yourself]!
 
 setupSelfArgumentNameFor: aRefactoring toReturn: aString 
-	| options |
-	options := aRefactoring options copy.
-	options at: #selfArgumentName put: [:ref | aString].
-	aRefactoring options: options!
+	aRefactoring setOption: #selfArgumentName toUse: [:ref | aString]!
 
 setupVariableToMoveToFor: aRefactoring toReturn: aString 
-	| options |
-	options := aRefactoring options copy.
-	options at: #selectVariableToMoveTo put: [:ref :class :selector | aString].
-	aRefactoring options: options!
+	aRefactoring setOption: #selectVariableToMoveTo toUse: [:ref :class :selector | aString]!
 
-setupVariableTypesFor: aRefactoring toReturn: anObject 
-	| options |
-	options := aRefactoring options copy.
-	options at: #variableTypes put: [:ref :ignore1 :ignore2 | anObject].
-	aRefactoring options: options!
+setupVariableTypesFor: aRefactoring toReturn: anObject
+	aRefactoring setOption: #variableTypes toUse: [:ref :ignore1 :ignore2 | anObject]!
 
 shouldFail: aRefactoring
-	self
-		proceedThroughWarning: [self should: [self executeRefactoring: aRefactoring] raise: RefactoringError]!
+	self should: [self executeRefactoring: aRefactoring] raise: RefactoringError!
 
 shouldWarn: aRefactoring
 	self should: [self executeRefactoring: aRefactoring] raise: RefactoringWarning!

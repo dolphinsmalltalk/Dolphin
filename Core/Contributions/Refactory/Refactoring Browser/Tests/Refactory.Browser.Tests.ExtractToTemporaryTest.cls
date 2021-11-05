@@ -47,7 +47,7 @@ testExtractToTemporaryForLastStatementInBlock
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
 				parseTreeFor: #caller2)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'caller2
 	^(1 to: 10) inject: 1 into: [:sum :each | | temp | temp := sum * (self foo: each). temp]')!
 
@@ -62,7 +62,7 @@ testExtractToTemporaryInsideBlock
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
 				parseTreeFor: #noMoveDefinition)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'noMoveDefinition
 	| temp |
 	^(self collect: 

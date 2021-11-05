@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Tests.LintRuleTest subclass: #'Refactory.Browser.Tests.CompositeLintRuleTest'
+Refactory.Browser.Tests.LintRuleTestData subclass: #'Refactory.Browser.Tests.CompositeLintRuleTestData'
 	instanceVariableNames: 'rules'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.Tests.CompositeLintRuleTest guid: (Core.GUID fromString: '{e17dd387-d4f7-4713-878e-41a7c57e54dd}')!
-Refactory.Browser.Tests.CompositeLintRuleTest comment: ''!
-!Refactory.Browser.Tests.CompositeLintRuleTest categoriesForClass!Refactory-Test data! !
-!Refactory.Browser.Tests.CompositeLintRuleTest methodsFor!
+Refactory.Browser.Tests.CompositeLintRuleTestData guid: (Core.GUID fromString: '{e17dd387-d4f7-4713-878e-41a7c57e54dd}')!
+Refactory.Browser.Tests.CompositeLintRuleTestData comment: ''!
+!Refactory.Browser.Tests.CompositeLintRuleTestData categoriesForClass!Refactory-Test data! !
+!Refactory.Browser.Tests.CompositeLintRuleTestData methodsFor!
 
 checkClass: aSmalllintContext 
 	rules do: 
@@ -49,7 +49,7 @@ rules: aCollection
 
 viewResults
 	rules do: [:each | each viewResults]! !
-!Refactory.Browser.Tests.CompositeLintRuleTest categoriesForMethods!
+!Refactory.Browser.Tests.CompositeLintRuleTestData categoriesForMethods!
 checkClass:!accessing!public! !
 checkMethod:!accessing!public! !
 failedRules!accessing!public! !
@@ -63,14 +63,14 @@ rules:!initialize/release!public! !
 viewResults!private! !
 !
 
-!Refactory.Browser.Tests.CompositeLintRuleTest class methodsFor!
+!Refactory.Browser.Tests.CompositeLintRuleTestData class methodsFor!
 
 allRules
 	^self ruleFor: self protocol: 'all checks'!
 
 lintChecks
-	^self
-		rules: (BasicLintRuleTest protocols collect: [:each | self ruleFor: BasicLintRuleTest protocol: each])
+	^self rules: (BasicLintRuleTestData protocols
+				collect: [:each | self ruleFor: BasicLintRuleTestData protocol: each])
 		name: 'Lint checks'!
 
 ruleFor: aClass protocol: aProtocol
@@ -90,8 +90,8 @@ rules: aCollection name: aString
 		yourself!
 
 transformations
-	^self ruleFor: TransformationRuleTest protocol: 'transformations'! !
-!Refactory.Browser.Tests.CompositeLintRuleTest class categoriesForMethods!
+	^self ruleFor: TransformationRuleTestData protocol: 'transformations'! !
+!Refactory.Browser.Tests.CompositeLintRuleTestData class categoriesForMethods!
 allRules!instance creation!public! !
 lintChecks!all checks!public! !
 ruleFor:protocol:!instance creation!public! !

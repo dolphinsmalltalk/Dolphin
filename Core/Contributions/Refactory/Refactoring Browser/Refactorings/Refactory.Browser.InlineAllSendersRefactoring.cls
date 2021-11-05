@@ -35,7 +35,7 @@ number > # of initial self sends."
 									inMethod: aSelector
 									forClass: aClass).
 						numberReplaced := numberReplaced + 1]
-					do: []].
+					do: [:ex | ex toTrace]].
 	numberNotReplaced := numberNotReplaced + messagesToInline!
 
 inlineSelfSends
@@ -63,11 +63,15 @@ preconditions
 
 removeMethod
 	self onError: 
-			[self performComponentRefactoring: (RemoveMethodRefactoring
+			[| removeMethod |
+			removeMethod := RemoveMethodRefactoring
 						model: self model
 						removeMethods: {selector}
-						from: class)]
-		do: []!
+						from: class.
+			"It may not be possible to preserve behaviour and remove the inlined method if it is sent from call sites other than the inline sites"
+			removeMethod setOption: #removeReferencedSelector toUse: [:ref :symbol :references | false].
+			self performComponentRefactoring: removeMethod]
+		do: [:ex | ex toTrace]!
 
 selfSendIn: aTree
 	| searcher |

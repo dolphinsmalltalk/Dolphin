@@ -17,6 +17,7 @@ package setPrerequisites: #(
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Base\Dolphin MVP Base'
 	'..\Text\Dolphin Text Presenter'
+	'..\..\Views\Tooltips\Dolphin Tooltips'
 	'..\..\Type Converters\Dolphin Type Converters'
 	'..\..\Models\Value\Dolphin Value Models'
 ).
@@ -26,7 +27,7 @@ package!
 "Class Definitions"!
 
 UI.Presenter subclass: #'UI.InplaceTextEditor'
-	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView validationBlock'
+	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView validater hintBubble'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

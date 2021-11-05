@@ -127,7 +127,7 @@ Core.Object subclass: #'Refactory.Browser.RBNamespace'
 	classConstants: {}!
 Core.Object subclass: #'Refactory.Browser.Refactoring'
 	instanceVariableNames: 'model options'
-	classVariableNames: 'AbortSignal RefactoringOptions'
+	classVariableNames: 'RefactoringOptions'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

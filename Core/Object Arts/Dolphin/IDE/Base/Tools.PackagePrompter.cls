@@ -44,6 +44,9 @@ initialize
 	super initialize.
 	validationBlock := self class defaultValidationBlock!
 
+isInputValid
+	^validationBlock value: self value!
+
 onPackageSelected
 	self value: packagesPresenter selectionOrNil!
 
@@ -53,15 +56,15 @@ onViewOpened
 	super onViewOpened.
 	packagesPresenter selectionOrNil: self model value!
 
-queryCommand: query 
+queryCommand: query
 	"Private - Enters details about a potential command for the receiver into 
 	the <CommandQuery>, query"
 
 	| cmd |
 	cmd := query commandSymbol.
-	cmd == #ok 
+	cmd == #ok
 		ifTrue: 
-			[query isEnabled: (self validationBlock value: self value).
+			[query isEnabled: self isInputValid.
 			^true].
 	^super queryCommand: query!
 
@@ -88,6 +91,7 @@ createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 defaultPackage:!accessing!private! !
 initialize!initializing!private! !
+isInputValid!helpers!private! !
 onPackageSelected!event handling!public! !
 onViewOpened!event handling!public! !
 queryCommand:!commands!private! !

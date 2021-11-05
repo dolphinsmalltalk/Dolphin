@@ -12,30 +12,30 @@ Refactory.Browser.Tests.PullUpClassVariableTest comment: ''!
 !Refactory.Browser.Tests.PullUpClassVariableTest methodsFor!
 
 testMetaClassFailure
-	self
-		shouldFail: (PullUpClassVariableRefactoring variable: #RecursiveSelfRule class: LintRuleTest class)!
+	self shouldFail: (PullUpClassVariableRefactoring variable: #RecursiveSelfRule
+				class: LintRuleTestData class)!
 
 testNonExistantName
-	self shouldFail: (PullUpClassVariableRefactoring variable: #Foo class: LintRuleTest)!
+	self shouldFail: (PullUpClassVariableRefactoring variable: #Foo class: LintRuleTestData)!
 
 testPullUpClassConstant
 	| refactoring bar |
-	refactoring := PullUpClassVariableRefactoring variable: #Bar class: LintRuleTest.
+	refactoring := PullUpClassVariableRefactoring variable: #Bar class: LintRuleTestData.
 	self executeRefactoring: refactoring.
-	bar := (refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest') classConstants
+	bar := (refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData') classConstants
 				detect: [:each | each key = 'Bar'].
 	self assert: bar value equals: 123.
 	self
-		deny: ((refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTest')
+		deny: ((refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData')
 				classConstants anySatisfy: [:each | each key = 'Bar'])!
 
 testPullUpClassVariable
 	| refactoring |
-	refactoring := PullUpClassVariableRefactoring variable: #RecursiveSelfRule class: LintRuleTest.
+	refactoring := PullUpClassVariableRefactoring variable: #RecursiveSelfRule class: LintRuleTestData.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest')
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData')
 				directlyDefinesClassVariable: #RecursiveSelfRule).
-	self deny: ((refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTest')
+	self deny: ((refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData')
 				directlyDefinesClassVariable: #RecursiveSelfRule)! !
 !Refactory.Browser.Tests.PullUpClassVariableTest categoriesForMethods!
 testMetaClassFailure!failure tests!public! !

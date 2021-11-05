@@ -161,7 +161,7 @@ preconditions
 						true])!
 
 pushUp: aSelector
-	| source refactoring environment package |
+	| source refactoring packageAndEnv |
 	source := class sourceCodeFor: aSelector.
 	source isNil ifTrue: [self refactoringError: 'Source for method not available'].
 	refactoring := ExpandReferencedPoolsRefactoring
@@ -171,18 +171,12 @@ pushUp: aSelector
 				toClasses: {class superclass}.
 	self performComponentRefactoring: refactoring.
 	"Maintain package and any custom namespace"
-	package := nil.
-	environment := class environment.
-	(class existingMethodAt: aSelector)
-		ifNotNil: 
-			[:method |
-			package := method owningPackageIfLoose.
-			environment := method environment].
+	packageAndEnv := class existingMethodPackageAndEnvironment: aSelector.
 	class superclass
 		compile: source
-		environment: environment
+		environment: packageAndEnv second
 		categories: (class protocolsFor: aSelector)
-		package: package!
+		package: packageAndEnv first!
 
 pushUp: selectorCollection from: aClass 
 	#rbFix. "Ensure displayString works when model is lazily created for Undo/Redo name (needs inst. vars set up)."

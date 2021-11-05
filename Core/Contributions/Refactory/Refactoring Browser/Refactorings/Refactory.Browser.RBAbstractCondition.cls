@@ -33,9 +33,7 @@ errorBlockFor: aBoolean
 	^nil!
 
 errorMacro
-	^errorMacro isNil
-		ifTrue: ['unknown']
-		ifFalse: [errorMacro]!
+	^errorMacro value ?? 'unknown'!
 
 errorMacro: aString 
 	errorMacro := aString!

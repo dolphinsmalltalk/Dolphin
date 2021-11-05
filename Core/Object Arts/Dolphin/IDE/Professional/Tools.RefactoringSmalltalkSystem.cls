@@ -12,6 +12,12 @@ Tools.RefactoringSmalltalkSystem comment: 'RefactoringSmalltalkSystem extends Sm
 !Tools.RefactoringSmalltalkSystem categoriesForClass!MVP-Models!System-Support! !
 !Tools.RefactoringSmalltalkSystem methodsFor!
 
+abortSignal
+	"Private - Answer an <exceptionSelector> which can be used to trap abort signals raised during
+	a refactoring operation."
+
+	^Refactoring abortSignal!
+
 abstractClassVariable: aString in: aClass within: aBrowserEnvironment
 	"Implement the 'Abstract Class Variable' class refactoring: 'Performs the create accessors refactoring 
 	and then converts all direct variable to use the accessor methods.'"
@@ -86,29 +92,11 @@ addInstanceVariableTo: aClass
 				caption: ('Add Instance Variable to <1p>…' expandMacrosWith: aClass).
 	varName isNil ifFalse: [self addInstanceVariable: varName to: aClass]!
 
-addParameterName: anRBMethodName initializer: initializer
-	^self handleRefactoringException: 
-			[| model refactoring |
-			model := RBNamespace onEnvironment: anRBMethodName scope.
-			refactoring := AddParameterRefactoring
-						model: model
-						addParameterToMethod: anRBMethodName originalSelector
-						in: anRBMethodName methodClass
-						newSelector: anRBMethodName selectorSymbol
-						initializer: initializer.
-			model name: refactoring displayString.
-			refactoring
-				execute;
-				yourself]!
+addParameterToMethod: aCompiledMethod
+	^self addParameterToMethod: aCompiledMethod inPackages: #()!
 
-addParameterToMethod: aCompiledMethod 
-	^self 
-		addParameterToMethod: aCompiledMethod
-		inPackages: #()
-		caption: 'Add Parameter to <1p>>><2d>'!
-
-addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages caption: aString
-	| args argc newName headline suffix newArg selector initializer model refactoring |
+addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages
+	| args argc newName suffix newArg selector model refactoring |
 	newName := ScopedMethodName fromMethod: aCompiledMethod.
 	args := newName arguments.
 	argc := args size.
@@ -119,7 +107,6 @@ addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages caption:
 	args addLast: newArg.
 	selector := aCompiledMethod selector.
 	newName selector: (argc == 0 ifTrue: [selector , ':'] ifFalse: [selector]).
-	headline := aString expandMacrosWith: aCompiledMethod methodClass name with: selector.
 	newName := ((aCollectionOfPackages isEmpty
 				ifTrue: [RenameMethodDialog]
 				ifFalse: 
@@ -128,40 +115,26 @@ addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages caption:
 					createOn: newName)
 				allowParameterReordering: false;
 				allowParameterRename: false;
-				caption: headline;
+				caption: 'Add Parameter to <1p><2? in Package(s)...>'
+							<< {aCompiledMethod selector. aCollectionOfPackages notEmpty};
 				showModal.
 	newName isNil ifTrue: [^nil].
 	model := RBNamespace onEnvironment: newName scope.
-	initializer := 'nil'.
-
-	"Prompt for an initializer until it either passes muster or the user cancels"
-	
-	[initializer := self
-				promptForInitializationExpression: initializer
-				in: aCompiledMethod methodClass
-				caption: headline.
-	(initializer isNil or: [initializer isEmpty]) ifTrue: [^nil].
+	"Reset the enviornment label to the default rather than one of the abbreviated labels used in the MethodNameDialog."
+	model environment label: nil.
 	refactoring := AddParameterRefactoring
 				model: model
 				addParameterToMethod: newName originalSelector
 				in: newName methodClass
 				newSelector: newName selectorSymbol
-				initializer: initializer.
-	
-	[refactoring verifyInitializationExpression.
-	true] on: self refactoringError
-			do: 
-				[:ex |
-				MessageBox new
-					headline: headline;
-					errorMsg: ('Error in proposed initializer:<n><n>    <1d>' expandMacrosWith: ex).
-				false]]
-			whileFalse.
-	^self handleRefactoringException: 
-			[model name: refactoring displayString.
-			refactoring
-				execute;
-				yourself]!
+				initializer: 'nil'.
+	^(self promptForInitializationExpression: refactoring)
+		ifNotNil: 
+			[self performRefactoring: 
+					[model name: refactoring displayString.
+					refactoring
+						execute;
+						yourself]]!
 
 addSharedVariable: aString to: aNamespace
 	self changeManager performChange: (AddSharedVariableChange addSharedVariable: aString to: aNamespace )!
@@ -174,13 +147,69 @@ basicCreateSubclass: aSymbol of: aClass subclasses: aCollection
 
 	| categories |
 	categories := aClass isNil ifTrue: [{ClassCategory unclassified}] ifFalse: [aClass categories].
-	self handleRefactoringException: 
+	self performRefactoring: 
 			[(AddClassRefactoring
 				addClass: aSymbol
 				superclass: aClass
 				subclasses: aCollection
 				category: categories first name) execute].
 	^aSymbol asQualifiedReference valueOrNil!
+
+basicRemoveMethods: aCollectionOfCompiledMethods within: aBrowserEnvironment
+	| classes |
+	classes := (aCollectionOfCompiledMethods collect: [:each | each methodClass]) asSet.
+	classes size = 1
+		ifTrue: 
+			[self
+				safeRemoveSelectors: (aCollectionOfCompiledMethods collect: [:each | each selector])
+				from: classes anyOne
+				inEnvironment: aBrowserEnvironment]
+		ifFalse: 
+			[self basicRemoveMethodsIn: (aBrowserEnvironment forMethods: aCollectionOfCompiledMethods)
+				within: aBrowserEnvironment]!
+
+basicRemoveMethodsIn: methodsEnvironment within: searchEnvironment
+	| model errors |
+	model := RBNamespace onEnvironment: searchEnvironment.
+	model name: 'Safe Remove ' , methodsEnvironment label.
+	errors := OrderedCollection new.
+	methodsEnvironment classesAndSelectorsDo: 
+			[:eachClass :eachSelector |
+			
+			[(RemoveMethodRefactoring
+				model: model
+				removeMethods: {eachSelector}
+				from: eachClass) primitiveExecute]
+					on: self refactoringError
+					do: 
+						[:ex |
+						errors addLast: ex.
+						ex return]].
+	errors notEmpty
+		ifTrue: 
+			[| prompt mb |
+			prompt := String writeStream.
+			prompt
+				display: errors size;
+				nextPutAll: ' non-fatal error(s) occured while constructing the refactoring:';
+				cr.
+			errors do: 
+					[:each |
+					prompt
+						crtab;
+						nextPutAll: each description readStream nextLine].
+			prompt
+				cr;
+				cr;
+				nextPutAll: 'If you contine with the refactoring then the erroneous methods will be ignored. The Refactoring is undoable.';
+				cr;
+				cr;
+				nextPutAll: 'Press OK to proceed, or Cancel to abort'.
+			mb := MessageBox new.
+			mb buttonStyle: #okCancel.
+			mb caption: model name.
+			(mb warning: prompt contents) == #cancel ifTrue: [^self]].
+	self changeManager performChange: model changes!
 
 browseMethodsIn: aBrowserEnvironment
 	| browser |
@@ -224,7 +253,7 @@ chooseSelectorInEnvironment: aBrowserEnvironment caption: aString
 	^ChoicePrompter choices: selectors caption: aString!
 
 cloneClass: aClass as: newClassName under: superclass in: package
-	^self handleRefactoringException: 
+	^self performRefactoring: 
 			[| newClass |
 			(CopyClassRefactoring
 				clone: aClass
@@ -237,7 +266,7 @@ cloneClass: aClass as: newClassName under: superclass in: package
 convertTemporaryToInstanceVariable: aString in: aClass selector: aSelector
 	"Implement the 'Convert to Instance Variable' code refactoring."
 
-	self handleRefactoringException: 
+	self performRefactoring: 
 			[(TemporaryToInstanceVariableRefactoring
 				class: aClass
 				selector: aSelector
@@ -256,7 +285,7 @@ convertToSibling: aClass
 				subclasses: aClass subclasses))
 		ifNotNil: 
 			[:refactoring |
-			self handleRefactoringException: 
+			self performRefactoring: 
 					[refactoring execute.
 					refactoring className asQualifiedReference
 						ifDefined: [:newSuperclass | newSuperclass owningPackage: aClass owningPackage]]]!
@@ -276,7 +305,7 @@ createVariableAccessors: variableNamePairs classVariables: aBoolean within: aBro
 	namespace := RBNamespace onEnvironment: aBrowserEnvironment.
 	name := String writeStream.
 	name nextPutAll: 'Create accessors for '.
-	^self handleRefactoringException: 
+	^self performRefactoring: 
 			[variableNamePairs do: 
 					[:each |
 					| aClass variable |
@@ -337,7 +366,7 @@ duplicateSuperclassMethodsOf: aClass
 	^answer!
 
 executeVariableRefactoring: refactoringClass variables: aCollection within: aBrowserEnvironment
-	^self handleRefactoringException: 
+	^self performRefactoring: 
 			[| namespace refactoring caption |
 			namespace := RBNamespace onEnvironment: aBrowserEnvironment.
 			caption := String writeStream.
@@ -386,7 +415,7 @@ extractMethod: anInterval from: aSymbol in: aBehavior
 	method. This refactoring determines what temporary variables are needed in the new method, 
 	and prompts for a selector that takes these arguments.'"
 
-	^self handleRefactoringException: 
+	^self performRefactoring: 
 			[(ExtractMethodRefactoring
 				extract: anInterval
 				from: aSymbol
@@ -399,7 +428,7 @@ extractToComponent: anInterval from: aSelector in: aClass
 	information.
 	Implements the 'Extract to Component' refactoring."
 
-	self handleRefactoringException: 
+	self performRefactoring: 
 			[(ExtractMethodToComponentRefactoring
 				extract: anInterval
 				from: aSelector
@@ -411,58 +440,59 @@ extractToTemporary: anInterval from: aSelector in: aClass
 	chosen by the user.
 	Implements the 'Extract to Temporary' refactoring."
 
-	| newName method existing |
-	method := aClass compiledMethodAt: aSelector.
-	existing := method parseTreeNoError ifNil: [#()] ifNotNil: [:ast | ast allDefinedVariables].
+	| newName existing |
+	existing := (aClass compiledMethodAt: aSelector) parseTreeNoError
+				ifNil: [#()]
+				ifNotNil: [:ast | ast allDefinedVariables].
 	newName := (Prompter
 				createOn: ''
 				prompt: 'Please enter the name of the new temporary:'
 				caption: 'Extract to Temporary…')
-				validationBlock: 
-						[:name |
-						(existing includes: name) not and: 
-								[((RBCondition isValidTemporaryVariableName: name for: aClass)
-									& (RBCondition definesInstanceVariable: name in: aClass) not) check]];
+				validater: 
+						[:tempName |
+						tempName isEmpty
+							ifTrue: [ValidationResult failed]
+							ifFalse: 
+								[((Refactory.Browser.RBCondition withBlock: [(existing includes: tempName) not]
+									errorString: ['<1d> is already in use as a local variable' << tempName])
+										& (Refactory.Browser.RBCondition isValidTemporaryVariableName: tempName for: aClass)
+										& (Refactory.Browser.RBCondition definesInstanceVariable: tempName in: aClass) not) validate]];
 				showModal.
 	newName isNil ifTrue: [^nil].
-	^self handleRefactoringException: 
+	^self performRefactoring: 
 			[(ExtractToTemporaryRefactoring
 				extract: anInterval
 				to: newName
 				from: aSelector
 				in: aClass) execute]!
 
-handleRefactoringError: ex
-	| text caption |
-	text := ex messageText.
-	caption := '<1d>…' expandMacrosWith: ex refactoring.
-	ex isResumable
+handleRefactoringException: aRefactoringException
+	| text mb lines count |
+	mb := MessageBox new
+				caption: '<1d>…' << aRefactoringException refactoring;
+				yourself.
+	text := aRefactoringException messageText.
+	lines := text lines reject: [:each | each isEmpty].
+	count := lines size.
+	count > 1
 		ifTrue: 
-			[(MessageBox confirm: (text last == $?
-						ifTrue: [ex messageText]
-						ifFalse: ['<1s><n><n>Do you want to proceed?' expandMacrosWith: ex messageText])
-				caption: caption) ifTrue: [ex resume]]
+			[mb text: (lines at: count).
+			mb headline: (String lineDelimiter join: (lines copyFrom: 1 to: count - 1))]
+		ifFalse: [mb headline: text].
+	mb iconStyle: aRefactoringException iconStyle.
+	aRefactoringException isResumable
+		ifTrue: 
+			[mb isCancellable.
+			text last == $?
+				ifTrue: [mb customButtons: #(#(#yes '&Yes') #(#no 'Cancel'))]
+				ifFalse: [mb customButtons: #(#(#yes '&Proceed') #(#no 'Cancel'))].
+			mb confirm ifTrue: [aRefactoringException resume]]
 		ifFalse: 
-			[ex hasTag
-				ifTrue: [(MessageBox confirm: text caption: caption) ifTrue: [ex tag value]]
-				ifFalse: [MessageBox warning: text caption: caption]].
-	^ex return!
-
-handleRefactoringException: aBlock
-	"Private - Evaluate the refactoring <niladicValuable>, aBlock, trapping any refactoring
-	errors it raises and reporting to the user appropriately. If any unhandled error occurs, or
-	the refactoring is aborted, then answer nil, otherwise answer the value from the block."
-
-	^aBlock
-		on: self refactoringError
-		do: [:ex | self handleRefactoringError: ex]
-		on: self refactoringAborted
-		do: 
-			[:ex |
-			"Translate to a Notification that will be displayed on Transcript, or in browser status bar"
-			Sound warningBeep.
-			Notification signal: ex messageText.
-			nil]!
+			[aRefactoringException hasTag
+				ifTrue: [mb confirm ifTrue: [aRefactoringException tag value]]
+				ifFalse: [mb warning].
+			self abortSignal signal: '<1d> aborted' << aRefactoringException refactoring].
+	^aRefactoringException return!
 
 inlineAllSelfSendsOf: aCollectionOfMethods within: aBrowserEnvironment
 	"Implement the 'Inline all Self Sends' method refactoring (on multiple methods): 'Inlines
@@ -473,7 +503,7 @@ inlineAllSelfSendsOf: aCollectionOfMethods within: aBrowserEnvironment
 	namespace := RBNamespace onEnvironment: aBrowserEnvironment.
 	caption := String writeStream.
 	caption nextPutAll: 'Inline self sends of '.
-	^self handleRefactoringException: 
+	^self performRefactoring: 
 			[aCollectionOfMethods do: 
 					[:each |
 					(InlineAllSendersRefactoring
@@ -493,7 +523,7 @@ inlineMessage: anStMessageNode inMethod: aSelector of: aBehavior
 	Implements the 'Inline Message' refactoring: 'Inlines a message send. If there are multiple implementors 
 	of the message, it will prompt for the implementation that should be inlined.'"
 
-	self handleRefactoringException: 
+	self performRefactoring: 
 			[(((anStMessageNode isMessage and: 
 					[| receiver |
 					receiver := anStMessageNode receiver.
@@ -509,7 +539,7 @@ inlineParameter: aString from: aSelector in: aClass
 	an assignment at the beginning of the method. This can only be performed if all senders of the method have 
 	the same value for the parameter'"
 
-	^self handleRefactoringException: 
+	^self performRefactoring: 
 			[(InlineParameterRefactoring
 				inlineParameter: aString
 				in: aClass
@@ -523,7 +553,7 @@ inlineTemporary: anInterval from: aSelector in: aClass
 	chosen by the user.
 	Implements the 'Inline Temporary' refactoring."
 
-	self handleRefactoringException: 
+	self performRefactoring: 
 			[(InlineTemporaryRefactoring
 				inline: anInterval
 				from: aSelector
@@ -540,15 +570,6 @@ isOAD: aBoolean
 
 	isOAD := aBoolean!
 
-isValidClassVarName: aString for: aClass 
-	^(RBCondition isValidClassVarName: aString asString for: aClass) check!
-
-isValidInstanceVariableName: aString for: aClass
-	^((RBCondition isValidInstanceVariableName: aString for: aClass)
-		& (RBCondition hierarchyOf: aClass definesVariable: aString) not
-			& (RBCondition isGlobal: aString in: (RBNamespace onEnvironment: self systemEnvironment)) not)
-			check!
-
 moveAllTempsToInnerScope: aBrowserEnvironment
 	| model errorCount |
 	model := RBNamespace onEnvironment: aBrowserEnvironment.
@@ -556,7 +577,7 @@ moveAllTempsToInnerScope: aBrowserEnvironment
 	
 	[model
 		allClassesDo: [:eachClass | errorCount := errorCount + (self moveAllTempsToInnerScopeIn: eachClass)]]
-			on: self refactoringAborted
+			on: self abortSignal
 			do: [:ex | ^self].
 	model name: 'Move All Temps To Inner Scope'.
 	errorCount > 0
@@ -627,7 +648,7 @@ moveAllTempsToInnerScopeIn: anRBClass selector: aSelector
 				i := i + 1.
 				notifyError value: 'refactoring' value: ex description.
 				ex return]
-			on: self refactoringAborted
+			on: self abortSignal
 			do: 
 				[:ex |
 				"Most likely temp already bound as tightly as possible - ignore it"
@@ -638,7 +659,7 @@ moveTempToInnerScope: anInterval in: aClass selector: aSelector
 	"Implement the 'Move to Inner Scope' code refactoring: 'Moves a temporary variable definition 
 	into the tightest scope that contains both the variable assignment and references.'"
 
-	^self handleRefactoringException: 
+	^self performRefactoring: 
 			[(MoveVariableDefinitionRefactoring
 				bindTight: anInterval
 				in: aClass
@@ -649,7 +670,7 @@ moveToComponent: aSelector in: aClass variable: aString
 	to another class (or classes) as defined by the variable named, aString.
 	Implements the 'Move to Component' refactoring."
 
-	self handleRefactoringException: 
+	self performRefactoring: 
 			[(MoveMethodRefactoring
 				selector: aSelector
 				class: aClass
@@ -665,22 +686,36 @@ nukeChangeHistory
 	super nukeChangeHistory.
 	RefactoringManager nuke!
 
-promptForInitializationExpression: aString in: aClass caption: captionString
-	| initializer |
-	initializer := (Prompter
-				createOn: aString
-				prompt: 'Enter default value for new parameter:'
-				caption: captionString)
-				validationBlock: 
-						[:source |
-						| tree |
-						"name ~= nameString and: 
-								[(existing includes: name) not 
-									and: [(RBCondition isValidTemporaryVariableName: name for: class) check]]"
-						tree := Parser parseExpressionNoError: source in: aClass.
-						tree notNil and: [tree isValue]];
-				showModal.
-	^initializer!
+performRefactoring: aBlock
+	"Private - Evaluate the refactoring <niladicValuable>, aBlock, trapping any refactoring
+	errors it raises and reporting to the user appropriately. If any unhandled error occurs, or
+	the refactoring is aborted, then answer nil, otherwise answer the value from the block."
+
+	^aBlock
+		on: self refactoringError
+		do: [:ex | self handleRefactoringException: ex]!
+
+promptForInitializationExpression: anAddParameterRefactoring
+	^(Prompter
+		createOn: anAddParameterRefactoring initializer
+		prompt: 'Enter default value for new parameter:'
+		caption: anAddParameterRefactoring displayString)
+		validationDwell: 1 seconds;
+		showHintWhenEmpty: false;
+		validater: 
+				[:source |
+				| result |
+				result := ValidationResult new.
+				anAddParameterRefactoring initializer: source.
+				[anAddParameterRefactoring verifyInitializationExpression] on: self refactoringError
+					do: 
+						[:ex |
+						result
+							caption: 'Invalid parameter value';
+							value: false;
+							hint: ex].
+				result];
+		showModal!
 
 promptForMethodName: anRBMethodName caption: aString allowExisting: aBoolean
 	^(RenameMethodDialog createOn: anRBMethodName)
@@ -695,24 +730,12 @@ promptForMethodRename: aCompiledMethod caption: aString allowExisting: aBoolean
 		caption: aString
 		allowExisting: aBoolean!
 
-promptForNewClassName: promptString caption: captionString
-	^(Prompter
-		createOn: String new
-		prompt: promptString
-		caption: captionString)
-		validationBlock: 
-				[:candidateName |
-				candidateName notEmpty and: 
-						[(ClassBuilder isValidClassName: candidateName)
-							and: [(self environment includesKey: candidateName asSymbol) not]]];
-		showModal!
-
 protectInstanceVariable: aString in: aClass
 	"Implement the 'Protect/Concrete instance variable' class refactoring: 'Converts all variable 
 	accessor sends to direct variable references. If the accessor is no longer used then it will be removed.'"
 
-	self handleRefactoringException: 
-			[(ProtectInstanceVariableRefactoring variable: aString class: aClass) execute]!
+	self
+		performRefactoring: [(ProtectInstanceVariableRefactoring variable: aString class: aClass) execute]!
 
 protectInstanceVariables: pairs 
 	"Invoke the 'Protect/Concrete Instance Variable' refactoring for each of the 
@@ -814,7 +837,7 @@ pushDownMethods: aCollectionOfMethods
 pushMethods: aCollectionOfMethods up: aBoolean
 	"Private - Implement a multi-method push up or push down refactoring as an atomic unit."
 
-	^self handleRefactoringException: 
+	^self performRefactoring: 
 			[| caption namespace byClass |
 			byClass := LookupTable new.
 			aCollectionOfMethods
@@ -871,12 +894,6 @@ queryCommand: aCommandQuery
 			^true].
 	^super queryCommand: aCommandQuery!
 
-refactoringAborted
-	"Private - Answer an <exceptionSelector> which can be used to trap abort signals raised during
-	a refactoring operation."
-
-	^Refactoring abortSignal!
-
 refactoringError
 	"Private - Answer an <exceptionSelector> which can be used to trap exceptions raised during
 	a refactoring operation."
@@ -916,6 +933,9 @@ removeInstanceVariables: aCollectionOfAssociations within: aBrowserEnvironment
 		variables: aCollectionOfAssociations
 		within: aBrowserEnvironment!
 
+removeMethods: aCollectionOfCompiledMethods
+	self basicRemoveMethods: aCollectionOfCompiledMethods within: self systemEnvironment!
+
 removeMethodsDuplicatedInSuperclassOf: aClass
 	"Private - Identify all methods of the <Behavior>, aClass, that have an equivalent definition in a superclass,
 	list them for the user, and remove them depending on the response. Answers whether there were
@@ -941,22 +961,10 @@ removeMethodsDuplicatedInSuperclassOf: aClass
 		uniqueId: [self] method;
 		confirm: msg contents)
 			ifTrue: 
-				[self handleRefactoringException: 
+				[self performRefactoring: 
 						[(RemoveMethodRefactoring removeMethods: (duplicated collect: [:each | each selector]) from: aClass)
 							execute]].
 	^true!
-
-removeMethodsIn: methodsEnvironment within: searchEnvironment
-	MessageBox new
-		headline: 'Remove Methods?';
-		defaultButton: 2;
-		detailsText: 'Press Yes to remove all methods regardless of whether they are referenced.
-Press No to remove only those methods that are unreferenced.
-Press Cancel to abort the operation.';
-		confirm: 'Are you sure you would like to remove <1p>?' << methodsEnvironment
-			onYes: [self removeMethodsIn: methodsEnvironment]
-			onNo: [self safeRemoveMethodsIn: methodsEnvironment within: searchEnvironment]
-			onCancel: []!
 
 removeParameter: aString from: aSelector in: aClass environment: aBrowserEnvironment
 	"Implements the Remove Parameter refactoring: 'Removes an unused parameter from 
@@ -964,7 +972,7 @@ removeParameter: aString from: aSelector in: aClass environment: aBrowserEnviron
 	aString, identifies the name of the argument which is removed, not the selector keyword.
 	Answer the new selector after removal of the parameter."
 
-	^self handleRefactoringException: 
+	^self performRefactoring: 
 			[| model refactoring |
 			model := RBNamespace onEnvironment: aBrowserEnvironment.
 			refactoring := RemoveParameterRefactoring
@@ -981,7 +989,7 @@ renameClass: aClass to: newClassName
 	"Rename aClass to newClassName. Also list all of the methods which reference
 	the class. Their source must be modified to include the newClassName."
 
-	self handleRefactoringException: [(RenameClassRefactoring rename: aClass to: newClassName) execute]!
+	self performRefactoring: [(RenameClassRefactoring rename: aClass to: newClassName) execute]!
 
 renameClassVariable: aString to: newName in: aClass within: aBrowserEnvironment 
 	self 
@@ -1013,7 +1021,7 @@ renameMethod: aCompiledMethod
 	^newName isNil ifFalse: [self renameMethod: aCompiledMethod to: newName]!
 
 renameMethod: aCompiledMethod to: anRBMethodName
-	^self handleRefactoringException: 
+	^self performRefactoring: 
 			[| model refactoring |
 			model := RBNamespace onEnvironment: anRBMethodName scope.
 			refactoring := RenameMethodRefactoring
@@ -1041,7 +1049,7 @@ renameMethodReferences: aCompiledMethod
 	^newName notNil ifTrue: [self renameMethodReferences: aCompiledMethod to: newName]!
 
 renameMethodReferences: aCompiledMethod to: anRBMethodName
-	^self handleRefactoringException: 
+	^self performRefactoring: 
 			[| model refactoring |
 			model := RBNamespace onEnvironment: anRBMethodName scope.
 			refactoring := RenameMethodReferencesRefactoring
@@ -1069,21 +1077,28 @@ renameTemporary: aStVariableNode to: aString in: aClass selector: aSelector
 						createOn: oldName
 						prompt: ('Please enter the new name for <1p>:' expandMacrosWith: oldName)
 						caption: 'Rename Temporary…')
-						validationBlock: 
+						validater: 
 								[:name |
+								| result |
+								result := ValidationResult new.
 								
-								[self
-									validateRenameTemp: aStVariableNode
-									to: name
-									in: aClass.
-								true]
+								[result value: (self
+											validateRenameTemp: aStVariableNode
+											to: name
+											in: aClass)]
 										on: RefactoringError
-										do: [:ex | ex return: false]];
+										do: 
+											[:ex |
+											result
+												caption: 'Invalid name';
+												value: false;
+												hint: ex.
+											ex return: false]];
 						showModal.
 			newName])
 			ifNotNil: 
 				[:newName |
-				self handleRefactoringException: 
+				self performRefactoring: 
 						[(RenameTemporaryRefactoring
 							renameTemporaryFrom: aStVariableNode sourceInterval
 							to: newName
@@ -1091,7 +1106,7 @@ renameTemporary: aStVariableNode to: aString in: aClass selector: aSelector
 							selector: aSelector) execute]]!
 
 renameVariable: aString to: newName in: aClass classVariable: aBoolean within: aBrowserEnvironment
-	^self handleRefactoringException: 
+	^self performRefactoring: 
 			[| refactoringClass env model refactoring |
 			"Drop through"
 			env := self
@@ -1128,75 +1143,8 @@ safeRemoveClass: aClass
 		isSuppressible: true;
 		headline: 'Remove class <1s>?' << oldClassName;
 		confirm: 'The class will only be removed if it has no references.') ifFalse: [^false].
-	self handleRefactoringException: [(RemoveClassRefactoring classNames: {aClass fullName}) execute].
+	self performRefactoring: [(RemoveClassRefactoring classNames: {aClass fullName}) execute].
 	^true!
-
-safeRemoveMethod: aCompiledMethod
-	"Implement the 'Remove Method' method refactoring."
-
-	self
-		safeRemoveSelectors: {aCompiledMethod selector}
-		from: aCompiledMethod methodClass
-		inEnvironment: self systemEnvironment!
-
-safeRemoveMethods: aCollectionOfCompiledMethods
-	self safeRemoveMethods: aCollectionOfCompiledMethods within: self systemEnvironment!
-
-safeRemoveMethods: aCollectionOfCompiledMethods within: aBrowserEnvironment 
-	| classes |
-	classes := (aCollectionOfCompiledMethods collect: [:each | each methodClass]) asSet.
-	classes size = 1 
-		ifTrue: 
-			[self 
-				safeRemoveSelectors: (aCollectionOfCompiledMethods collect: [:each | each selector])
-				from: classes anyOne
-				inEnvironment: aBrowserEnvironment]
-		ifFalse: 
-			[self safeRemoveMethodsIn: (aBrowserEnvironment forMethods: aCollectionOfCompiledMethods)
-				within: aBrowserEnvironment]!
-
-safeRemoveMethodsIn: methodsEnvironment within: searchEnvironment
-	| model errors |
-	model := RBNamespace onEnvironment: searchEnvironment.
-	model name: 'Safe Remove ' , methodsEnvironment label.
-	errors := OrderedCollection new.
-	methodsEnvironment classesAndSelectorsDo: 
-			[:eachClass :eachSelector |
-			
-			[(RemoveMethodRefactoring
-				model: model
-				removeMethods: {eachSelector}
-				from: eachClass) primitiveExecute]
-					on: self refactoringError
-					do: 
-						[:ex |
-						errors addLast: ex.
-						ex return]].
-	errors notEmpty
-		ifTrue: 
-			[| prompt mb |
-			prompt := String writeStream.
-			prompt
-				display: errors size;
-				nextPutAll: ' non-fatal error(s) occured while constructing the refactoring:';
-				cr.
-			errors do: 
-					[:each |
-					prompt
-						crtab;
-						nextPutAll: each description readStream nextLine].
-			prompt
-				cr;
-				cr;
-				nextPutAll: 'If you contine with the refactoring then the erroneous methods will be ignored. The Refactoring is undoable.';
-				cr;
-				cr;
-				nextPutAll: 'Press OK to proceed, or Cancel to abort'.
-			mb := MessageBox new.
-			mb buttonStyle: #okCancel.
-			mb caption: model name.
-			(mb warning: prompt contents) == #cancel ifTrue: [^self]].
-	self changeManager performChange: model changes!
 
 safeRemoveSelectors: anArrayOfSelectors from: aClass inEnvironment: aBrowserEnvironment
 	| mb |
@@ -1220,18 +1168,18 @@ safeRemoveSelectors: anArrayOfSelectors from: aClass inEnvironment: aBrowserEnvi
 						display: each].
 			mb
 				detailsText: details contents;
-				text: 'The methods of <1p> will be removed if they have no references or are equivalent to the superclass implementations.'
-							<< aClass]
+				text: 'The methods of <1p> will be removed if they have no references in <2p> or are equivalent to the superclass implementations.'
+							<< {aClass. aBrowserEnvironment}]
 		ifFalse: 
 			[mb
 				headline: 'Remove method if unused/redundant?';
-				text: '<1p>>><2s> will be removed if it has no references or is equivalent to the superclass implementation.'
-							<< {aClass. anArrayOfSelectors first}].
+				text: '<1p>>><2s> will be removed if it has no references in <3p> or is equivalent to the superclass implementation.'
+							<< {aClass. anArrayOfSelectors first. aBrowserEnvironment}].
 	(mb
 		isCancellable: true;
 		customButtons: #(#(#yes '&Remove') #(#no 'Cancel'));
 		confirm) ifFalse: [^false].
-	^self handleRefactoringException: 
+	^self performRefactoring: 
 			[| model refactoring |
 			model := RBNamespace onEnvironment: aBrowserEnvironment.
 			refactoring := RemoveMethodRefactoring
@@ -1260,7 +1208,7 @@ scopeToRenameAccessorsFor: aString in: aClass classVariable: aBoolean within: aB
 				with: (aBoolean ifTrue: ['class'] ifFalse: ['instance'])).
 	dialog selectors: selectors.
 	scope := dialog showModal.
-	scope isNil ifTrue: [self refactoringAborted signal].
+	scope isNil ifTrue: [self abortSignal signal].
 	scope == #Class
 		ifTrue: [^aBrowserEnvironment forClasses: {aClass instanceClass. aClass instanceClass class}].
 	scope == #Hierarchy ifTrue: [^aBrowserEnvironment forClassHierarchyFrom: aClass].
@@ -1303,48 +1251,56 @@ selectTargetVariableOf: aClass parseTree: aStMethodNode
 		createOn: default asValue
 		choices: variables
 		caption: 'Choose target variable…')
-		getTextBlock: [:each | each key ifNil: [each value] ifNotNil: [:eachClass | eachClass name , '.' , each value]];
+		getTextBlock: [:each | each key ifNil: [each value] ifNotNil: [:eachClass | eachClass unqualifiedName , '.' , each value]];
 		showModal) value!
 
+validateNewClassVarName: aString for: aClass
+	^(AddClassVariableRefactoring variable: aString class: aClass) preconditions validate
+		caption: 'Invalid new class variable name <1p>' << aString;
+		yourself!
+
+validateNewInstanceVariableName: aString for: aClass
+	^((AddInstanceVariableRefactoring variable: aString class: aClass) preconditions
+		& (RBCondition definesTemporaryVariable: aString in: aClass) not) validate
+		caption: 'Invalid new instance variable name <1p>' << aString;
+		yourself!
+
 validateRenameClass: aClass to: aString
-	| refactoring |
-	refactoring := RenameClassRefactoring rename: aClass to: aString.
-	refactoring checkPreconditions.
-	(aClass hierarchyDefinesVariable: aString)
-		ifTrue: 
-			[refactoring
-				refactoringError: ('<1p> is already defined in hierarchy of <2p>' expandMacrosWith: aString
-						with: aClass)]!
+	^((RenameClassRefactoring rename: aClass to: aString) preconditions
+		& (RBCondition hierarchyOf: aClass definesVariable: aString) not) validate!
 
 validateRenameClassVar: oldString to: newString in: aClass
-	(RenameClassVariableRefactoring
+	^(RenameClassVariableRefactoring
 		rename: oldString
 		to: newString
-		in: aClass) checkPreconditions!
+		in: aClass) preconditions
+		validate!
 
 validateRenameInstVar: oldString to: newString in: aClass
-	| refactoring conditions |
-	refactoring := RenameInstanceVariableRefactoring
-				rename: oldString
-				to: newString
-				in: aClass.
-	conditions := refactoring preconditions
-				& (RBCondition definesTemporaryVariable: newString in: aClass) not.
-	refactoring checkPreconditions: conditions!
+	"The RenameInstanceVariableRefactoring does not pick up the fact that a candidate inst var name is already in use as a temporary name in one of more of a classes methods until it is executed, so we add a condition for that."
+
+	^((RenameInstanceVariableRefactoring
+		rename: oldString
+		to: newString
+		in: aClass) preconditions
+		& (RBCondition definesTemporaryVariable: newString in: aClass) not) validate!
 
 validateRenameTemp: aStVariableNode to: aString in: aClass
-	| refactoring definingNode |
-	refactoring := RenameTemporaryRefactoring
-				renameTemporaryFrom: aStVariableNode sourceInterval
-				to: aString
-				in: aClass
-				selector: aStVariableNode methodNode selector.
-	"Find the scope definining the existing temp"
+	| definingNode |
+	"The RenameTemporaryRefactoring does not pick up the fact that a candidate temp name is already in use until it is executed, so we add a condition for that"
 	definingNode := aStVariableNode whoDefines: aStVariableNode name.
-	((definingNode whoDefines: aString) notNil or: [definingNode allDefinedVariables includes: aString])
-		ifTrue: [refactoring refactoringError: ('<1p> is already defined' expandMacrosWith: aString)].
-	refactoring checkPreconditions! !
+	^((RenameTemporaryRefactoring
+		renameTemporaryFrom: aStVariableNode sourceInterval
+		to: aString
+		in: aClass
+		selector: aStVariableNode methodNode selector) preconditions
+		& (RBCondition withBlock: 
+					[(definingNode whoDefines: aString) isNil
+						and: [(definingNode allDefinedVariables includes: aString) not]]
+				errorString: ('<1p> is already defined' expandMacrosWith: aString)))
+			validate! !
 !Tools.RefactoringSmalltalkSystem categoriesForMethods!
+abortSignal!constants!private! !
 abstractClassVariable:in:within:!public!refactoring! !
 abstractClassVariables:within:!public!refactoring! !
 abstractInstanceVariable:in:within:!public!refactoring! !
@@ -1354,11 +1310,12 @@ addClassVariableTo:!public!refactoring! !
 addFilteredMethod:forLintRule:!public!refactoring! !
 addInstanceVariable:to:!public!refactoring! !
 addInstanceVariableTo:!public!refactoring! !
-addParameterName:initializer:!public!refactoring! !
 addParameterToMethod:!commands!public!refactoring! !
-addParameterToMethod:inPackages:caption:!public!refactoring! !
+addParameterToMethod:inPackages:!public!refactoring! !
 addSharedVariable:to:!commands!public! !
 basicCreateSubclass:of:subclasses:!private!refactoring! !
+basicRemoveMethods:within:!private!refactoring! !
+basicRemoveMethodsIn:within:!private!refactoring! !
 browseMethodsIn:!browsing!public! !
 browseMethodsInEnvironments:!browsing!public! !
 browseSelectors:caption:environment:!browsing!private! !
@@ -1377,7 +1334,6 @@ extendMethodBrowserMenus:!browsing!private! !
 extractMethod:from:in:!public!refactoring! !
 extractToComponent:from:in:!public!refactoring! !
 extractToTemporary:from:in:!public!refactoring! !
-handleRefactoringError:!private!refactoring! !
 handleRefactoringException:!private!refactoring! !
 inlineAllSelfSendsOf:within:!public!refactoring! !
 inlineMessage:inMethod:of:!public!refactoring! !
@@ -1385,8 +1341,6 @@ inlineParameter:from:in:!public!refactoring! !
 inlineTemporary:from:in:!public!refactoring! !
 isOAD!accessing!private!product! !
 isOAD:!accessing!private!product! !
-isValidClassVarName:for:!helpers!private!refactoring! !
-isValidInstanceVariableName:for:!enquiries!helpers!private!refactoring! !
 moveAllTempsToInnerScope:!public!refactoring! !
 moveAllTempsToInnerScopeIn:!helpers!private!refactoring! !
 moveAllTempsToInnerScopeIn:selector:!private!refactoring! !
@@ -1395,10 +1349,10 @@ moveToComponent:in:variable:!public!refactoring! !
 newCodeRefactoringToolFor:!helpers!private!refactoring! !
 newMethodRefactoringToolFor:!helpers!private!refactoring! !
 nukeChangeHistory!private!refactoring! !
-promptForInitializationExpression:in:caption:!private!refactoring! !
+performRefactoring:!private!refactoring! !
+promptForInitializationExpression:!private!refactoring! !
 promptForMethodName:caption:allowExisting:!helpers!private!refactoring! !
 promptForMethodRename:caption:allowExisting:!helpers!private!refactoring! !
-promptForNewClassName:caption:!helpers!private! !
 protectInstanceVariable:in:!public!refactoring! !
 protectInstanceVariables:!public!refactoring! !
 pullUpClassVariable:into:!public!refactoring! !
@@ -1414,15 +1368,14 @@ pushDownMethods:!public!refactoring! !
 pushMethods:up:!private!refactoring! !
 pushUpMethods:!public!refactoring! !
 queryCommand:!commands!private! !
-refactoringAborted!constants!private! !
 refactoringError!constants!private! !
 removeClassVariable:from:within:!public!refactoring! !
 removeClassVariables:within:!public!refactoring! !
 removeFilteredMethod:forLintRule:!public!refactoring! !
 removeInstanceVariable:from:within:!public!refactoring! !
 removeInstanceVariables:within:!public!refactoring! !
+removeMethods:!public!refactoring! !
 removeMethodsDuplicatedInSuperclassOf:!private!refactoring! !
-removeMethodsIn:within:!commands!private! !
 removeParameter:from:in:environment:!public!refactoring! !
 renameClass:to:!public!refactoring! !
 renameClassVariable:to:in:within:!private!refactoring! !
@@ -1434,13 +1387,11 @@ renameMethodReferences:to:!private!refactoring! !
 renameTemporary:to:in:selector:!public!refactoring! !
 renameVariable:to:in:classVariable:within:!private!refactoring! !
 safeRemoveClass:!public!refactoring! !
-safeRemoveMethod:!public!refactoring! !
-safeRemoveMethods:!public!refactoring! !
-safeRemoveMethods:within:!private!refactoring! !
-safeRemoveMethodsIn:within:!private!refactoring! !
 safeRemoveSelectors:from:inEnvironment:!private!refactoring! !
 scopeToRenameAccessorsFor:in:classVariable:within:!private!refactoring! !
 selectTargetVariableOf:parseTree:!helpers!private!refactoring! !
+validateNewClassVarName:for:!helpers!private!refactoring! !
+validateNewInstanceVariableName:for:!enquiries!helpers!private!refactoring! !
 validateRenameClass:to:!helpers!private! !
 validateRenameClassVar:to:in:!helpers!private! !
 validateRenameInstVar:to:in:!helpers!private! !

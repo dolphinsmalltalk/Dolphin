@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Presenter subclass: #'UI.InplaceTextEditor'
-	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView validationBlock'
+	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView validater hintBubble'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -58,6 +58,12 @@ cancel
 	self view isTextModified: false.
 	self view close!
 
+closeBubble
+	hintBubble
+		ifNotNil: 
+			[hintBubble close.
+			hintBubble := nil]!
+
 createSchematicWiring
 	self 
 		when: #focusLost
@@ -90,6 +96,9 @@ font: aFont
 	self view font: aFont.
 	maxCharWidth := self view canvas textMetrics tmMaxCharWidth!
 
+hintDwell
+	^10 seconds!
+
 implicitBorder
 	"Private - Widths of the implicit border on an edit control that has to be added to the
 	calculated extent."
@@ -102,7 +111,7 @@ initialize
 	super initialize.
 	self ownerView: View focus.
 	confirmed := false.
-	validationBlock := [:replyString | true]!
+	validater := [:replyString | ValidationResult new]!
 
 isConfirmed
 	"Answer true if the receiver has been confirmed and changes have been applied to the
@@ -112,7 +121,7 @@ isConfirmed
 	^confirmed!
 
 isInputValid
-	^(self validationBlock value: self editBox text) == true!
+	^(validater value: self editBox text) value == true!
 
 model: aValueModel 
 	"Set the model of the receiver to be aValueModel. Register with its #valueChanged event"
@@ -136,8 +145,8 @@ onFocusLost
 	"Private - If the user clicks outside the in-place edit box, then treat as a committed edit
 	if the value has changed and is valid, otherwise treat as cancel."
 
+	self closeBubble.
 	"If focus is lost because the window is closing then don't do anything"
-
 	self view isWindowVisible ifTrue: [self isInputValid ifTrue: [self ok] ifFalse: [self cancel]]!
 
 onGetCursor: aSymbol
@@ -147,13 +156,14 @@ onGetCursor: aSymbol
 	^Cursor iBeam!
 
 onKeyTyped: aKeyEvent
+	self closeBubble.
 	aKeyEvent code == VK_ESCAPE
 		ifTrue: 
 			[self commandPolicy route: (CommandDescription command: #cancel).
 			^0].
 	aKeyEvent code == VK_RETURN
 		ifTrue: 
-			[self commandPolicy route: (CommandDescription command: #ok).
+			[self performAction.
 			^0].
 	^super onKeyTyped: aKeyEvent!
 
@@ -176,13 +186,26 @@ ownerView
 ownerView: aView 
 	ownerView := aView!
 
-queryCommand: aCommandQuery 
+performAction
+	| query |
+	query := self commandPolicy query: (CommandDescription command: #ok).
+	query canPerform
+		ifTrue: [query perform]
+		ifFalse: 
+			[self showValidationResult: query validationResult.
+			User32 messageBeep: 0]!
+
+queryCommand: aCommandQuery
 	"Private - Enters details about a potential command for the receiver into the
 	<CommandQuery>."
 
-	aCommandQuery commandSymbol == #ok 
+	aCommandQuery commandSymbol == #ok
 		ifTrue: 
-			[aCommandQuery isEnabled: self isInputValid.
+			[| result |
+			result := validater value: self editBox text.
+			aCommandQuery
+				validationResult: result;
+				isEnabled: result value.
 			^true].
 	^super queryCommand: aCommandQuery!
 
@@ -228,6 +251,23 @@ showModalView
 	self runModalInProcessLoop] 
 			ensure: [self view basicDestroy]!
 
+showValidationResult: aValidationResult
+	| hint viewFont |
+	hint := aValidationResult hint.
+	hint ifNil: [^self].
+	hintBubble := MessageBubble new.
+	aValidationResult caption ifNotNil: [:title | hintBubble caption: title].
+	viewFont := self view actualFont.
+	hintBubble
+		font: (Font name: viewFont name pointSize: viewFont pointSize);
+		willFade: true;
+		timeout: self hintDwell;
+		position: self view screenRectangle centerRight;
+		iconStyle: hint iconStyle;
+		text: hint displayString;
+		isSilent: true;
+		open!
+
 textRectangle: aRectangle 
 	"Set the rectangle of the text being edited in-place. N.B. The Rectangle is expected to be
 	in the co-ordinates of the owner view (the parent with focus on whose behalf the receiver is
@@ -235,15 +275,21 @@ textRectangle: aRectangle
 
 	textRectangle := aRectangle!
 
-validationBlock
-	^validationBlock!
+validater
+	^validater!
 
-validationBlock: aBlock 
-	"Set the <monadicValuable> used to validate the user's reply. The valuable is passed the
-	current reply text as its argument, and is expected to answer whether it is valid. The
+validater: aMonadicValuable
+	"Set the <monadicValuable> used to validate the user's reply. The valuable is passed the current reply text as its argument first argument, and is expected to answer a <ValuationResult>, the value of which indicates whether the text is valid in context. The ability to commit the edit is not enabled until the value of the <ValuationResult> is true. The validator can also pass out a hint details to be displayed in a message bubble if desired (see ValidationResult for the options available). The hint is primarily intended as a means to explain to the user why the text cannot be committed."
+
+	validater := aMonadicValuable!
+
+validationBlock: aBlock
+	"Set the <monadicValuable> used to validate the user's reply. The valuable is passed the current reply text as its argument first argument and should answer true/false indicating whether the text is valid or not. The
 	ability to commit the edit is not enabled until the validationBlock answers true."
 
-	validationBlock := aBlock!
+	"This method is present mainly for backwards compatibility. Although not deprecated because the old-style true/false result is adequate for many purposes, the alternative of providing a block that returns a full <ValidationResult> (see #validater:) is preferred."
+
+	validater := [:response | ValidationResult value: (aBlock value: response)]!
 
 value
 	"Answer the model value of the receiver"
@@ -261,11 +307,13 @@ apply!commands!public! !
 bufferClass!accessing!private! !
 bufferedModelFor:!accessing!private! !
 cancel!commands!public! !
+closeBubble!helpers!private! !
 createSchematicWiring!initializing!public! !
 createView:!operations!private! !
 editBox!helpers!private! !
 findDetails!public!searching & replacing! !
 font:!initializing!public! !
+hintDwell!constants!public! !
 implicitBorder!constants!private! !
 initialize!initializing!private! !
 isConfirmed!public!testing! !
@@ -280,6 +328,7 @@ onValueChanged!event handling!public! !
 onViewOpened!event handling!private! !
 ownerView!accessing!public! !
 ownerView:!accessing!public! !
+performAction!operations!public! !
 queryCommand:!commands!private! !
 requiredExtent!helpers!private! !
 resizeToFit!helpers!private! !
@@ -287,8 +336,10 @@ runModalInProcessLoop!helpers!private! !
 setInitialFocus!operations!public! !
 showModal!public!realizing/unrealizing! !
 showModalView!helpers!private! !
+showValidationResult:!commands!private! !
 textRectangle:!initializing!public! !
-validationBlock!accessing!public! !
+validater!accessing!public! !
+validater:!accessing!public! !
 validationBlock:!accessing!public! !
 value!accessing!public! !
 value:!accessing!public! !

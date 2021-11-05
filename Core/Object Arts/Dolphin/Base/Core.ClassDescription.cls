@@ -980,6 +980,11 @@ suggestedPrivacyFor: aCompiledMethod
 	^#{Tools.MethodCategorizationPolicy}
 		ifDefined: [:policy | policy default suggestedPrivacyFor: aCompiledMethod]!
 
+unqualifiedName
+	"Answer a <readableString> that is the name of the receiver in it's environment."
+
+	^self subclassResponsibility!
+
 variableAdded: aVariableBinding
 	self bindingsChanged!
 
@@ -1145,6 +1150,7 @@ subclasses!class hierarchy-accessing!public! !
 subclassesDo:!class hierarchy-accessing!public! !
 subclassInstVarNames!instance variables!public! !
 suggestedPrivacyFor:!compiling!private! !
+unqualifiedName!accessing!public! !
 variableAdded:!class variables!private! !
 variableRemoved:!class variables!private! !
 whichCategoriesIncludeSelector:!categories-accessing!private! !

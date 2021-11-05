@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Tests.LintRuleTest subclass: #'Refactory.Browser.Tests.BasicLintRuleTest'
+Refactory.Browser.Tests.LintRuleTestData subclass: #'Refactory.Browser.Tests.BasicLintRuleTestData'
 	instanceVariableNames: 'classBlock methodBlock result'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.Tests.BasicLintRuleTest guid: (Core.GUID fromString: '{0c2676b4-1e69-400c-8d24-80f8510c0996}')!
-Refactory.Browser.Tests.BasicLintRuleTest comment: ''!
-!Refactory.Browser.Tests.BasicLintRuleTest categoriesForClass!Refactory-Test data! !
-!Refactory.Browser.Tests.BasicLintRuleTest methodsFor!
+Refactory.Browser.Tests.BasicLintRuleTestData guid: (Core.GUID fromString: '{0c2676b4-1e69-400c-8d24-80f8510c0996}')!
+Refactory.Browser.Tests.BasicLintRuleTestData comment: ''!
+!Refactory.Browser.Tests.BasicLintRuleTestData categoriesForClass!Refactory-Test data! !
+!Refactory.Browser.Tests.BasicLintRuleTestData methodsFor!
 
 checkClass: aSmalllintContext 
 	^classBlock value: aSmalllintContext value: result!
@@ -50,7 +50,7 @@ resultClass: aClass
 
 viewResults
 	result openEditor! !
-!Refactory.Browser.Tests.BasicLintRuleTest categoriesForMethods!
+!Refactory.Browser.Tests.BasicLintRuleTestData categoriesForMethods!
 checkClass:!accessing!public! !
 checkMethod:!accessing!public! !
 classBlock:!initialize/release!public! !
@@ -65,7 +65,7 @@ resultClass:!initialize/release!public! !
 viewResults!private! !
 !
 
-!Refactory.Browser.Tests.BasicLintRuleTest class methodsFor!
+!Refactory.Browser.Tests.BasicLintRuleTestData class methodsFor!
 
 abstractClass
 	| detector subclassResponsibilitySymbol |
@@ -1133,7 +1133,7 @@ yourselfNotUsed
 			(addSearcher executeTree: context parseTree initialAnswer: false)
 				ifTrue: [result addClass: context selectedClass selector: context selector]].
 	^detector! !
-!Refactory.Browser.Tests.BasicLintRuleTest class categoriesForMethods!
+!Refactory.Browser.Tests.BasicLintRuleTestData class categoriesForMethods!
 abstractClass!possible bugs!public! !
 addRemoveDependents!possible bugs!public! !
 anySatisfy!intention revealing!public! !

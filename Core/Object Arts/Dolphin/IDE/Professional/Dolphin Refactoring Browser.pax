@@ -64,27 +64,37 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.AddClassVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.AddInstanceVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.AddMethodRefactoring} #displayOn:)
+	#(#{Refactory.Browser.AddMethodRefactoring} #maxDetails)
 	#(#{Refactory.Browser.AddParameterRefactoring} #displayOn:)
 	#(#{Refactory.Browser.BasicLintRule} #failedClasses)
 	#(#{Refactory.Browser.BasicLintRule} #failedMethods)
 	#(#{Refactory.Browser.BasicLintRule} #publishedAspects)
 	#(#{Refactory.Browser.BasicLintRule} #searchStrings)
+	#(#{Refactory.Browser.ChangeMethodNameRefactoring} #getOptionRenameAllDefinitions:of:)
 	#(#{Refactory.Browser.ChildrenToSiblingsRefactoring} #displayOn:)
 	#(#{Refactory.Browser.CreateAccessorsForVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.ExpandReferencedPoolsRefactoring} #displayOn:)
 	#(#{Refactory.Browser.ExtractMethodRefactoring} #displayOn:)
+	#(#{Refactory.Browser.ExtractMethodRefactoring} #getOptionUseExistingMethod:)
 	#(#{Refactory.Browser.ExtractMethodToComponentRefactoring} #displayOn:)
 	#(#{Refactory.Browser.ExtractMethodToComponentRefactoring} #getOptionVariableToMoveToOf:in:)
 	#(#{Refactory.Browser.ExtractToTemporaryRefactoring} #displayOn:)
 	#(#{Refactory.Browser.InlineAllSendersRefactoring} #displayOn:)
 	#(#{Refactory.Browser.InlineMethodRefactoring} #displayOn:)
+	#(#{Refactory.Browser.InlineMethodRefactoring} #getOptionImplementorToInline:)
+	#(#{Refactory.Browser.InlineMethodRefactoring} #getOptionInlineOverridden:of:)
+	#(#{Refactory.Browser.InlineMethodRefactoring} #getOptionInlineReordered:into:)
 	#(#{Refactory.Browser.InlineParameterRefactoring} #displayOn:)
 	#(#{Refactory.Browser.InlineTemporaryRefactoring} #displayOn:)
 	#(#{Refactory.Browser.LintRule} #failedClasses)
 	#(#{Refactory.Browser.LintRule} #failedMethods)
 	#(#{Refactory.Browser.LintRule} #searchStrings)
 	#(#{Refactory.Browser.LintRule class} #icon)
+	#(#{Refactory.Browser.MethodRefactoring} #getOptionAlreadyDefined:selector:)
+	#(#{Refactory.Browser.MethodRefactoring} #getOptionExtractAssignment:)
+	#(#{Refactory.Browser.MethodRefactoring} #getOptionInlineExpression:)
 	#(#{Refactory.Browser.MethodRefactoring} #getOptionMethodName:)
+	#(#{Refactory.Browser.MethodRefactoring} #getOptionRemoveMethod:referencedIn:)
 	#(#{Refactory.Browser.MoveMethodRefactoring} #displayOn:)
 	#(#{Refactory.Browser.MoveMethodRefactoring} #getOptionSelfArgumentName)
 	#(#{Refactory.Browser.MoveMethodRefactoring} #getOptionVariableTypes:selected:)
@@ -101,12 +111,16 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.PushUpMethodRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RBAbstractClass} #instVarNames)
 	#(#{Refactory.Browser.RBAbstractClass} #owningPackage)
+	#(#{Refactory.Browser.RBAbstractCondition} #validate)
+	#(#{Refactory.Browser.RBAbstractCondition} #validate:)
 	#(#{Refactory.Browser.RBClass} #addClassConstant:)
 	#(#{Refactory.Browser.RBClass} #removeClassConstant:)
 	#(#{Refactory.Browser.RBClass} #removeImport:)
 	#(#{Refactory.Browser.RBMethod} #owningPackage)
 	#(#{Refactory.Browser.RBNamespace} #removeImport:from:)
 	#(#{Refactory.Browser.Refactoring} #confirm:)
+	#(#{Refactory.Browser.Refactoring} #maxDetails)
+	#(#{Refactory.Browser.Refactoring} #printNameList:on:limit:type:)
 	#(#{Refactory.Browser.Refactoring class} #icon)
 	#(#{Refactory.Browser.Refactoring class} #renameIcon)
 	#(#{Refactory.Browser.RemoveClassRefactoring} #displayOn:)
@@ -138,6 +152,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.TransformationRule class} #renameArgument:to:)
 	#(#{Refactory.Browser.VariableRefactoring} #displayOn:)
 	#(#{Refactory.Browser.VariableRefactoring} #displayPrefix)
+	#(#{Refactory.Browser.VariableRefactoring} #getOptionPullUpNonSharedInstVar:)
 	#(#{Refactory.Browser.VariableRefactoring class} #displayPrefix)
 	#(#{Tools.ClassBrowserAbstract} #abstractInstanceVariables)
 	#(#{Tools.ClassBrowserAbstract} #methodRefactoringTool)
@@ -204,13 +219,13 @@ package setMethodNames: #(
 	#(#{Tools.PackageBrowserShell} #performMethodsRefactoring:name:)
 	#(#{Tools.PackageBrowserShell} #promptForMethodName:caption:allowExisting:)
 	#(#{Tools.PackageBrowserShell} #queryRefactoringCommand:)
+	#(#{Tools.PackageBrowserShell} #removeMethod)
+	#(#{Tools.PackageBrowserShell} #removeMethods)
 	#(#{Tools.PackageBrowserShell} #removeParameter)
 	#(#{Tools.PackageBrowserShell} #renameLooseMethod)
 	#(#{Tools.PackageBrowserShell} #renameLooseMethodReferences)
 	#(#{Tools.PackageBrowserShell} #renameMethod)
 	#(#{Tools.PackageBrowserShell} #renameMethodReferences:)
-	#(#{Tools.PackageBrowserShell} #safeRemoveMethod)
-	#(#{Tools.PackageBrowserShell} #safeRemoveMethods)
 	#(#{Tools.PackageSelector} #moveAllTempsToInnerScope)
 	#(#{Tools.PackageSelector} #queryRefactoringCommand:)
 	#(#{Tools.PackageSelector} #removeDuplicateMethods)
@@ -502,9 +517,13 @@ displayOn: aPuttableStream
 
 	aPuttableStream
 		nextPutAll: 'Add method to ';
-		print: class! !
+		print: class!
+
+maxDetails
+	^15! !
 !Refactory.Browser.AddMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
+maxDetails!constants!private! !
 !
 
 !Refactory.Browser.AddParameterRefactoring methodsFor!
@@ -514,7 +533,12 @@ displayOn: aPuttableStream
 
 	aPuttableStream
 		nextPutAll: 'Add parameter to ';
-		print: oldSelector! !
+		print: oldSelector.
+	model environment isSystem
+		ifFalse: 
+			[aPuttableStream
+				nextPutAll: ' in ';
+				display: model environment]! !
 !Refactory.Browser.AddParameterRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -559,6 +583,37 @@ failedClasses!accessing!private! !
 failedMethods!accessing!private! !
 publishedAspects!constants!development!public! !
 searchStrings!accessing!private! !
+!
+
+!Refactory.Browser.ChangeMethodNameRefactoring methodsFor!
+
+getOptionRenameAllDefinitions: aCollection of: aSymbol
+	| details count |
+	aCollection size <= 1 ifTrue: [^true].
+	details := String writeStream.
+	details
+		print: aSymbol;
+		nextPutAll: ' is implemented in:';
+		cr.
+	self
+		printNameList: (aCollection asSortedCollection: [:a :b | a name < b name])
+		on: details
+		limit: self maxDetails
+		type: 'classes'.
+	details
+		cr;
+		cr;
+		nextPutAll: 'All definitions must be renamed to preserve behaviour. You can re-initiate the rename and constrain the scope of the rename to package, hierarchy, class or even individual method level in the rename dialog if you wish, but this may not preserve behaviour.'.
+	count := aCollection size.
+	^MessageBox new
+		caption: self displayString;
+		headline: 'Rename <1p> methods defined in <2d> classes?' << {aSymbol. count};
+		customButtons: #(#(#yes '&Rename All') #(#no 'Cancel'));
+		defaultButton: 2;
+		detailsText: details contents;
+		confirm! !
+!Refactory.Browser.ChangeMethodNameRefactoring categoriesForMethods!
+getOptionRenameAllDefinitions:of:!options!public! !
 !
 
 !Refactory.Browser.ChildrenToSiblingsRefactoring methodsFor!
@@ -614,9 +669,18 @@ displayOn: aPuttableStream
 		nextPutAll: 'Extract method from ';
 		print: class;
 		nextPutAll: '>>';
-		print: selector! !
+		print: selector!
+
+getOptionUseExistingMethod: aSymbol
+	^MessageBox new
+		caption: self displayString;
+		headline: 'Use existing method <1p>?' << aSymbol;
+		text: 'The existing method contains the same code as that you are extracting, and can be used safely instead of creating a new method.';
+		customButtons: #(#(#yes '&Use Existing') #(#no '&Create New Method'));
+		confirm! !
 !Refactory.Browser.ExtractMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
+getOptionUseExistingMethod:!options!public! !
 !
 
 !Refactory.Browser.ExtractMethodToComponentRefactoring methodsFor!
@@ -673,9 +737,57 @@ displayOn: aPuttableStream
 		nextPutAll: 'Inline message in ';
 		print: class;
 		nextPutAll: '>>';
-		print: sourceSelector! !
+		print: sourceSelector!
+
+getOptionImplementorToInline: anOrderedCollection
+	^UI.ChoicePrompter
+		choices: (anOrderedCollection asSortedCollection: [:a :b | a displayString <= b displayString])
+		caption: 'Inline <1p> from…' << sourceMessage!
+
+getOptionInlineOverridden: aSymbol of: aClass
+	| details overrides fromClass |
+	details := String writeStream.
+	fromClass := self chosenInlineClass.
+	details
+		nextPutAll: '<1p> is overridden by the following subclasses of <2d>:'
+					<< {aSymbol. fromClass unqualifiedName};
+		cr.
+	overrides := fromClass allSubclasses
+				select: [:each | each directlyDefinesMethod: aSymbol].
+	self
+		printNameList: overrides
+		on: details
+		limit: self maxDetails
+		type: 'classes'.
+	^MessageBox new
+		caption: self displayString;
+		headline: 'Inline overridden method?';
+		iconStyle: #warning;
+		customButtons: #(#(#yes '&Inline') #(#no 'Cancel'));
+		defaultButton: 2;
+		text: '<1d>>><2p> is overridden in <3d> subclass<4?:es> of <5d>.<n><n>Inlining an overridden method may change behavior.'
+					<< {aClass. aSymbol. overrides size. overrides size = 1. fromClass};
+		detailsText: details contents;
+		confirm!
+
+getOptionInlineReordered: inlineRBMethod into: intoRBMethod
+	^MessageBox new
+		caption: self displayString;
+		headline: 'Inline with statement reordering?';
+		iconStyle: #warning;
+		customButtons: #(#(#yes '&Inline') #(#no 'Cancel'));
+		defaultButton: 2;
+		text: 'To inline <1p> into <2p> it will be necessary to move some of the inlined statements before the original message send.'
+					<< {inlineRBMethod. intoRBMethod};
+		detailsText: 'This could change the order of execution, which can change the behavior. If it is safe to do so you can continue with the refactoring and then modify or undo the results as required. Alternatively cancel the refactoring and modify the call site so that the inlined message send is an individual statement rather than part of a larger statement, for example as an expression calculating a value to use as an argument to another message send.';
+		expandLabel: 'Show help';
+		collapseLabel: 'Hide help';
+		confirm! !
 !Refactory.Browser.InlineMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
+getOptionImplementorToInline:!options!public! !
+getOptionInlineOverridden:of:!preconditions!public! !
+getOptionInlineReordered:into:!options!public! !
 !
 
 !Refactory.Browser.InlineParameterRefactoring methodsFor!
@@ -738,6 +850,45 @@ icon!constants!public! !
 
 !Refactory.Browser.MethodRefactoring methodsFor!
 
+getOptionAlreadyDefined: aClass selector: aSymbol
+	| response |
+	response := MessageBox new
+				caption: self displayString;
+				headline: 'Extract to existing selector?';
+				text: ('<1p> is already defined in the <2d> hierarchy.' expandMacrosWith: aSymbol with: aClass unqualifiedName);
+				customButtons: #(#(#yes '&Continue') #(#no '&Choose Another') #(#cancel 'Cancel'));
+				defaultButton: 2;
+				detailsText: 'Extracting to an existing selector may change behavior. You should only continue if you specifically intend to override the existing inherited definition of <1p>, otherwise choose another selector.'
+							<< aSymbol;
+				expandLabel: 'Show help';
+				collapseLabel: 'Hide help';
+				iconStyle: #warning;
+				confirmOrCancel.
+	response == #cancel ifTrue: [self refactoringAborted: 'Code not extracted'].
+	^response == #yes!
+
+getOptionExtractAssignment: aString
+	^MessageBox new
+		caption: self displayString;
+		headline: 'Extract final assignment?';
+		text: 'The assignment to ''<1s>'' at the end of the selection can be extracted to the new method, or remain behind to receive the result of the call to that method.'
+					<< aString;
+		customButtons: #(#(#yes '&Extract') #(#no '&Don''t Extract'));
+		defaultButton: 2;
+		confirm!
+
+getOptionInlineExpression: aString
+	^MessageBox new
+		caption: self displayString;
+		headline: 'Inline expression?';
+		text: 'The following expression can be inlined or assigned to a temporary:<n><n><t><1s>?' << aString;
+		customButtons: #(#(#yes '&Inline') #(#no '&Assign Temporary'));
+		defaultButton: 2;
+		detailsText: 'The expression shown is passed as one of the arguments to the method you are inlining. You can safely inline the expression if constant and/or side-effect free, or if it is only referred to once in the inlined method. If not, it should be assigned to a temporary to preserve existing behaviour. If unsure, choose ''Assign Temporary''. You can always inline the temporary later if you wish.';
+		expandLabel: 'Show help';
+		collapseLabel: 'Hide help';
+		confirm!
+
 getOptionMethodName: anRBMethodName
 	anRBMethodName selector isNil
 		ifTrue: 
@@ -755,9 +906,38 @@ getOptionMethodName: anRBMethodName
 										nextPut: $:].
 							stream contents].
 			anRBMethodName selector: mname asSymbol].
-	^(MethodNameDialog showModalOn: anRBMethodName) isNil ifFalse: [anRBMethodName]! !
+	^(MethodNameDialog showModalOn: anRBMethodName) isNil ifFalse: [anRBMethodName]!
+
+getOptionRemoveMethod: aSymbol referencedIn: aCollection
+	| details response |
+	details := String writeStream.
+	details
+		nextPutAll: 'Removing the method may not preserve behaviour. It is recommended that you first browse these references to verify that the method is safe to remove:';
+		cr.
+	self
+		printNameList: (aCollection asArray collect: [:each | each printString]) sort
+		on: details
+		limit: self maxDetails
+		type: 'methods'.
+	response := MessageBox new
+				caption: self displayString;
+				headline: '<1p> may not be safe to remove' << aSymbol;
+				text: ('The selector <1p> is referenced from <2d> other methods.' expandMacrosWith: aSymbol
+							with: aCollection size);
+				customButtons: #(#(#yes '&Remove Anyway') #(#no '&Browse References') #(#cancel 'Cancel'));
+				defaultButton: 2;
+				detailsText: details contents;
+				iconStyle: #warning;
+				confirmOrCancel.
+	response == #yes ifTrue: [^true].
+	response == #no ifTrue: [self openBrowserOn: (self model environment referencesTo: aSymbol)].
+	^false! !
 !Refactory.Browser.MethodRefactoring categoriesForMethods!
+getOptionAlreadyDefined:selector:!options!public! !
+getOptionExtractAssignment:!options!public! !
+getOptionInlineExpression:!options!public! !
 getOptionMethodName:!options!public! !
+getOptionRemoveMethod:referencedIn:!options!public! !
 !
 
 !Refactory.Browser.MoveMethodRefactoring methodsFor!
@@ -780,12 +960,23 @@ getOptionSelfArgumentName
 				createOn: String new
 				prompt: 'Enter name for argument to refer to "self" in extracted method'
 				caption: self displayString)
-				validationBlock: 
+				validater: 
 						[:name |
-						(existing includes: name) not and: 
-								[moveToClasses allSatisfy: [:each | (Refactory.Browser.RBCondition isValidTemporaryVariableName: name for: each) check]]];
+						(existing includes: name)
+							ifTrue: [ValidationResult errorMessage: '<1d> is already in use as a local variable' << name]
+							ifFalse: 
+								[| result |
+								result := ValidationResult new.
+								moveToClasses allSatisfy: 
+										[:each |
+										| condition |
+										condition := (Refactory.Browser.RBCondition isValidTemporaryVariableName: name for: each)
+													& (Refactory.Browser.RBCondition definesInstanceVariable: name in: each) not.
+										condition validate: result].
+								result]];
+				showHintWhenEmpty: false;
 				showModal.
-	newName isNil ifTrue: [^self refactoringAborted: 'Method not moved'].
+	newName isNil ifTrue: [^self refactoringAborted: 'Method not moved/extracted'].
 	^newName!
 
 getOptionVariableTypes: choicesCollection selected: suggestionsCollection
@@ -875,6 +1066,7 @@ displayOn: aPuttableStream
 
 	aPuttableStream
 		nextPutAll: self displayPrefix;
+		space;
 		print: variableName;
 		nextPutAll: ' into ';
 		print: class! !
@@ -946,6 +1138,24 @@ instVarNames!instance variables!public! !
 owningPackage!accessing!public! !
 !
 
+!Refactory.Browser.RBAbstractCondition methodsFor!
+
+validate
+	| result |
+	result := UI.ValidationResult new.
+	self validate: result.
+	^result!
+
+validate: aValidationResult
+	"Update the <ValidationResult> argument with results from evaluating this condition."
+
+	(aValidationResult value: self check) ifFalse: [aValidationResult errorMessage: self errorString].
+	^aValidationResult value! !
+!Refactory.Browser.RBAbstractCondition categoriesForMethods!
+validate!public! !
+validate:!helpers!public! !
+!
+
 !Refactory.Browser.RBClass methodsFor!
 
 addClassConstant: anAssociation
@@ -991,9 +1201,38 @@ removeImport:from:!changes!private! !
 confirm: aString
 	"Dolphin specific confirmation prompt"
 
-	^MessageBox confirm: aString caption: self displayString! !
+	^MessageBox confirm: aString caption: self displayString!
+
+maxDetails
+	^30!
+
+printNameList: aCollection on: aPuttableStream limit: anInteger type: aString
+	| count |
+	count := aCollection size.
+	aCollection
+		from: 1
+		to: (count min: anInteger)
+		do: 
+			[:each |
+			aPuttableStream
+				cr;
+				nextPutAll: '    ';
+				display: each].
+	count > anInteger
+		ifTrue: 
+			[aPuttableStream
+				cr;
+				nextPut: $…;
+				cr;
+				nextPutAll: 'And ';
+				print: count - anInteger;
+				nextPutAll: ' further ';
+				nextPutAll: aString;
+				nextPut: $.]! !
 !Refactory.Browser.Refactoring categoriesForMethods!
 confirm:!helpers!public! !
+maxDetails!constants!private! !
+printNameList:on:limit:type:!helpers!private! !
 !
 
 !Refactory.Browser.Refactoring class methodsFor!
@@ -1372,10 +1611,51 @@ displayOn: aPuttableStream
 		nextPutAll: variableName!
 
 displayPrefix
-	^self class displayPrefix! !
+	^self class displayPrefix!
+
+getOptionPullUpNonSharedInstVar: aString
+	| with without details max |
+	with := OrderedCollection new.
+	without := OrderedCollection new.
+	class subclasses do: 
+			[:each |
+			((each directlyDefinesInstanceVariable: variableName) ifTrue: [with] ifFalse: [without]) add: each].
+	details := String writeStream.
+	details
+		print: aString;
+		nextPutAll: ' is defined in:';
+		cr.
+	max := self maxDetails // 2.
+	self
+		printNameList: with
+		on: details
+		limit: max
+		type: 'classes'.
+	details
+		cr;
+		cr;
+		nextPutAll: 'But is not defined in:';
+		cr.
+	self
+		printNameList: without
+		on: details
+		limit: max
+		type: 'classes'.
+	^MessageBox new
+		caption: self displayString;
+		headline: 'Pull up non-shared instance variable?';
+		text: 'Not all subclasses of <1d> have an instance variable named <2p>.<n><n>Do you want pull up this variable anyway?'
+					<< {class. aString};
+		customButtons: #(#(#yes '&Pull Up') #(#no 'Cancel'));
+		defaultButton: 2;
+		detailsText: details contents;
+		isCancellable: true;
+		iconStyle: #warning;
+		confirm! !
 !Refactory.Browser.VariableRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 displayPrefix!displaying!public! !
+getOptionPullUpNonSharedInstVar:!options!public! !
 !
 
 !Refactory.Browser.VariableRefactoring class methodsFor!
@@ -2078,7 +2358,13 @@ executeRefactoring: aMonadicValuable
 			ex resume]!
 
 executeRefactoring: aMonadicValuable with: anObject
-	^[aMonadicValuable value: anObject] on: Notification
+	^[aMonadicValuable value: anObject]
+		on: OperationAborted
+		do: 
+			[:ex |
+			self errorModel ifNotNil: [:status | status value: ex].
+			nil]
+		on: Notification
 		do: 
 			[:ex |
 			self errorModel ifNotNil: [:status | status value: ex].
@@ -2101,22 +2387,21 @@ performMethodRenameRefactoring: aBlockClosure
 	^parentPresenter performMethodRenameRefactoring: aBlockClosure!
 
 renameVariable: aStVariableNode operation: operationBlock validationBlock: validationBlock
-	| name range style editor font zoom |
+	| name range style editor font zoom newName |
 	range := aStVariableNode sourceInterval.
 	name := self plainTextRange: range.
 	self assert: [aStVariableNode name = name].
 	editor := InplaceTextEditor createOn: name asValue.
-	editor validationBlock: 
+	editor validater: 
 			[:candidateName |
 			"If the name is unchanged, treat as valid and ignore later"
-			candidateName = name or: 
-					[| err |
-					[validationBlock value: candidateName] on: RefactoringError
-						do: 
-							[:ex |
-							self errorModel value: ex.
-							err := ex].
-					err isNil]].
+			candidateName = name
+				ifTrue: [ValidationResult new]
+				ifFalse: 
+					[| result |
+					result := validationBlock value: candidateName.
+					result hint ifNotNil: [:ex | self errorModel value: ex].
+					result]].
 	editor textRectangle: (view boundingRectangleOfTextRange: range).
 	"Set the same font as the existing text so there is no visible 'jump' - we need to account for any zooming too"
 	style := view styleAt: range start.
@@ -2129,9 +2414,9 @@ renameVariable: aStVariableNode operation: operationBlock validationBlock: valid
 			font := font copy.
 			font pointSize: points + zoom].
 	editor font: font.
-	editor showModal
-		ifNotNil: 
-			[:newName |
+	newName := editor showModal.
+	self errorModel value: nil.
+	newName isNil ifFalse: [
 			newName = name ifFalse: [self performMethodRefactoring: [:method | operationBlock value: newName]]]! !
 !Tools.MethodWorkspace categoriesForMethods!
 canRefactor!public!refactoring!testing! !
@@ -2155,11 +2440,8 @@ addParameter
 		ifNotNil: [:method | self addParameterTo: method]
 !
 
-addParameterTo: aCompiledMethod 
-	self model 
-		addParameterToMethod: aCompiledMethod
-		inPackages: self packages
-		caption: 'Add Parameter to <2p> in Package(s)'!
+addParameterTo: aCompiledMethod
+	self model addParameterToMethod: aCompiledMethod inPackages: self packages!
 
 addParameterToMethod
 	"Private - 'Loose Methods' card context menu command to invoke the 
@@ -2223,7 +2505,7 @@ queryRefactoringCommand: aCommandQuery
 		ifTrue: 
 			[aCommandQuery isEnabled: self hasPackages.
 			^true].
-	(#(#safeRemoveMethods) identityIncludes: selector) 
+	(#(#removeMethods) identityIncludes: selector) 
 		ifTrue: 
 			[aCommandQuery isEnabled: (self hasPackages and: [self selectedMethods notEmpty]).
 			^true].
@@ -2239,6 +2521,35 @@ queryRefactoringCommand: aCommandQuery
 			^true].
 	"Not a refactoring command"
 	^false!
+
+removeMethod
+	"Private - Prompt the user for a selector and invoke the 'Safe Remove Method' refactoring to 
+	remove the specified methods from the system if defined but not referenced from within 
+	any of the selected packages ((i.e. references from methods owned by other packages are not
+	considered as part of the decision as to whether it will be safe to remove the method)."
+
+	"Implemementation Note: This command implementation is used only if there are no 
+	methods selected on the methods tab. It allows the selection of an arbitrary method to be
+	renamed at package scope, not just loose methods."
+
+	| methods |
+	methods := self chooseMethodsForRefactoring: 'Safe Remove Methods from Package(s)…'.
+	methods isEmpty
+		ifFalse: [self model basicRemoveMethodsIn: methods within: self selectionEnvironment]!
+
+removeMethods
+	"Private - 'Loose Methods' card context menu command to invoke the 'Safe Remove Method' 
+	refactoring. Removes the selected methods from the system if not referenced from within any 
+	of the selected packages (i.e. references from methods owned by other packages are not
+	considered as part of the decision as to whether it will be safe to remove the method)."
+
+	(MessageBox new
+		headline: 'Remove unreferenced loose methods?';
+		defaultButton: 2;
+		customButtons: #(#(#yes '&Remove') #(#no '&Don''t Remove'));
+		isCancellable: true;
+		confirm: 'The selected methods will be removed if unreferenced from the selected packages. This may not preserve behaviour if the methods are referenced from other packages.')
+			ifTrue: [self model basicRemoveMethods: self selectedMethods within: self selectionEnvironment]!
 
 removeParameter
 	"Private - Command to invoke the Remove Parameter to Method refactoring, but constrained to operate
@@ -2284,30 +2595,7 @@ renameMethodReferences: aCompiledMethod
 				promptForMethodName: aCompiledMethod
 				caption: 'Rename References to <1p> in Package(s)…' << aCompiledMethod selector
 				allowExisting: true.
-	methodName notNil ifTrue: [self model renameMethodReferences: aCompiledMethod to: methodName]!
-
-safeRemoveMethod
-	"Private - Prompt the user for a selector and invoke the 'Safe Remove Method' refactoring to 
-	remove the specified methods from the system if defined but not referenced from within 
-	any of the selected packages ((i.e. references from methods owned by other packages are not
-	considered as part of the decision as to whether it will be safe to remove the method)."
-
-	"Implemementation Note: This command implementation is used only if there are no 
-	methods selected on the methods tab. It allows the selection of an arbitrary method to be
-	renamed at package scope, not just loose methods."
-
-	| methods |
-	methods := self chooseMethodsForRefactoring: 'Safe Remove Methods from Package(s)…'.
-	methods isEmpty 
-		ifFalse: [self model safeRemoveMethodsIn: methods within: self selectionEnvironment]!
-
-safeRemoveMethods
-	"Private - 'Loose Methods' card context menu command to invoke the 'Safe Remove Method' 
-	refactoring. Removes the selected methods from the system if not referenced from within any 
-	of the selected packages (i.e. references from methods owned by other packages are not
-	considered as part of the decision as to whether it will be safe to remove the method)."
-
-	self model safeRemoveMethods: self selectedMethods within: self selectionEnvironment! !
+	methodName notNil ifTrue: [self model renameMethodReferences: aCompiledMethod to: methodName]! !
 !Tools.PackageBrowserShell categoriesForMethods!
 addParameter!commands!private!refactoring! !
 addParameterTo:!private!refactoring! !
@@ -2319,13 +2607,13 @@ performMethodRenameRefactoring:!helpers!private!refactoring! !
 performMethodsRefactoring:name:!private! !
 promptForMethodName:caption:allowExisting:!helpers!private!refactoring! !
 queryRefactoringCommand:!commands!private!refactoring! !
+removeMethod!commands!public!refactoring! !
+removeMethods!commands!public!refactoring! !
 removeParameter!commands!private!refactoring! !
 renameLooseMethod!commands!private!refactoring! !
 renameLooseMethodReferences!commands!private!refactoring! !
 renameMethod!commands!public!refactoring! !
 renameMethodReferences:!operations!private!refactoring! !
-safeRemoveMethod!commands!public!refactoring! !
-safeRemoveMethods!commands!public!refactoring! !
 !
 
 !Tools.PackageSelector methodsFor!

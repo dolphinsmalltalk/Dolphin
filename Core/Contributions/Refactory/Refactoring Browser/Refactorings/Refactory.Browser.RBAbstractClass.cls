@@ -171,37 +171,24 @@ compile: aString environment: aNamespace categories: aSymbolCollection package: 
 	^change!
 
 compileTree: aBRMethodNode
-	| namespace package selector |
+	| selector packageAndEnvironment |
 	selector := aBRMethodNode selector.
-	(self existingMethodAt: selector)
-		ifNil: 
-			[namespace := self environment.
-			package := nil]
-		ifNotNil: 
-			[:method |
-			namespace := self model classFor: method environment.
-			package := method owningPackage].
+	packageAndEnvironment := self existingMethodPackageAndEnvironment: selector.
 	^self
 		compileTree: aBRMethodNode
-		environment: namespace
+		environment: packageAndEnvironment second
 		categories: (self protocolsFor: selector)
-		package: package!
+		package: packageAndEnvironment first!
 
 compileTree: aBRMethodNode categories: aCollection
-	| methodEnv methodPackage |
+	| packageAndEnv  |
 	Notification deprecated.
-	methodEnv := self environment.
-	methodPackage := nil.
-	(self existingMethodAt: aBRMethodNode selector)
-		ifNotNil: 
-			[:method |
-			methodEnv := self model classFor: method environment.
-			methodPackage := method owningPackage].
+	packageAndEnv := (self existingMethodPackageAndEnvironment: aBRMethodNode selector).
 	^self
 		compileTree: aBRMethodNode
-		environment: methodEnv
+		environment: packageAndEnv second
 		categories: aCollection
-		package: methodPackage!
+		package: packageAndEnv first!
 
 compileTree: aBRMethodNode classified: aSymbol
 	Notification deprecated.
@@ -271,6 +258,17 @@ environmentName
 
 existingMethodAt: aSymbol
 	^self realClass ifNotNil: [:class | class compiledMethodAt: aSymbol ifAbsent: nil]!
+
+existingMethodPackageAndEnvironment: aSymbol
+	^(self existingMethodAt: aSymbol)
+		ifNil: [Pair first: nil second: self environment]
+		ifNotNil: 
+			[:method |
+			| package |
+			package := method owningPackage.
+			Pair first: package
+				second: (self model classFor: (method customEnvironment
+								ifNil: [package environment ifNil: [method methodClass environment]]))]!
 
 existingMethodsThatReferTo: anObject
 	| existingMethods |
@@ -697,6 +695,7 @@ directlyImportsNamespace:!public!testing! !
 environment!accessing!public! !
 environmentName!accessing!public! !
 existingMethodAt:!method accessing!public! !
+existingMethodPackageAndEnvironment:!method accessing!public! !
 existingMethodsThatReferTo:!method accessing!public! !
 existingMethodsThatReferToAnyOf:!method accessing!public! !
 fullBindingFor:!binding!public! !

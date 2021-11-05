@@ -17,12 +17,12 @@ testInlineMethodWithMultipleSendersInMethod
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
 				parseTreeFor: #inlineLast)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'inlineLast
 	5 = 3 ifTrue: [^self caller] ifFalse: [^(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)]] ').
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
 				parseTreeFor: #multipleCalls)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'multipleCalls
 	(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)].
 	(1 to: 10) inject: 1 into: [:sum1 :each1 | sum1 * (self foo: each1)]')!
@@ -38,8 +38,8 @@ testRecursiveMethod
 				model: model
 				sendersOf: #foo
 				in: class).
-	self assert: (class parseTreeFor: #foo) equals: (RBParser parseMethod: 'foo ^self foo').
-	self assert: (class parseTreeFor: #bar) equals: (RBParser parseMethod: 'bar ^self foo')! !
+	self assert: (class parseTreeFor: #foo) equals: (self parseMethod: 'foo ^self foo').
+	self assert: (class parseTreeFor: #bar) equals: (self parseMethod: 'bar ^self foo')! !
 !Refactory.Browser.Tests.InlineAllMethodTest categoriesForMethods!
 testInlineMethodWithMultipleSendersInMethod!public!tests! !
 testRecursiveMethod!public!tests! !

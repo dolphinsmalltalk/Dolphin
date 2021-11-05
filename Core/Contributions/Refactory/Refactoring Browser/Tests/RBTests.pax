@@ -69,15 +69,40 @@ package setMethodNames: #(
 	#(#{Core.String} #withCRs)
 	#(#{Kernel.BlockClosure} #isEqualTo:)
 	#(#{Kernel.CompiledCode} #isEqualTo:)
+	#(#{Refactory.Browser.AbstractClassVariableRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.AbstractInstanceVariableRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.AddClassRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.AddClassVariableRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.AddInstanceVariableRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.AddMethodRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.ChildrenToSiblingsRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.ExtractMethodRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.ExtractMethodToComponentRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.ExtractToTemporaryRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.InlineAllSendersRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.InlineMethodFromComponentRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.InlineMethodRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.InlineParameterRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.InlineTemporaryRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.MoveMethodRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.MoveVariableDefinitionRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.ProtectInstanceVariableRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.PullUpClassVariableRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.PullUpInstanceVariableRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.PushDownClassVariableRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.PushDownInstanceVariableRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.PushDownMethodRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.PushUpMethodRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.RBSourceFormatter class} #correspondingTestCase)
 	#(#{Refactory.Browser.RemoveClassRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.RemoveClassVariableRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.RemoveInstanceVariableRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.RemoveMethodRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.RenameClassRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.RenameClassVariableRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.RenameInstanceVariableRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.RenameMethodRefactoring class} #correspondingTestCase)
+	#(#{Refactory.Browser.RenameTemporaryRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.TemporaryToInstanceVariableRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.Tests.RefactoryTestDataApp} #inlineParameterMethod:)
 	#(#{Refactory.Browser.Tests.RefactoryTestDataApp} #sendInlineParameterMethod)
@@ -521,11 +546,51 @@ isEqualTo: aMethod
 isEqualTo:!public!testing! !
 !
 
+!Refactory.Browser.AbstractClassVariableRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.AbstractClassVariableTest! !
+!Refactory.Browser.AbstractClassVariableRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.AbstractInstanceVariableRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.AbstractInstanceVariableTest! !
+!Refactory.Browser.AbstractInstanceVariableRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
 !Refactory.Browser.AddClassRefactoring class methodsFor!
 
 correspondingTestCase
 	^Tests.AddClassTest! !
 !Refactory.Browser.AddClassRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.AddClassVariableRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.AddClassVariableTest! !
+!Refactory.Browser.AddClassVariableRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.AddInstanceVariableRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.AddInstanceVariableTest! !
+!Refactory.Browser.AddInstanceVariableRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.AddMethodRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.AddMethodTest! !
+!Refactory.Browser.AddMethodRefactoring class categoriesForMethods!
 correspondingTestCase!public! !
 !
 
@@ -545,6 +610,46 @@ correspondingTestCase
 correspondingTestCase!public! !
 !
 
+!Refactory.Browser.ExtractMethodToComponentRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.ExtractMethodToComponentTest! !
+!Refactory.Browser.ExtractMethodToComponentRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.ExtractToTemporaryRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.ExtractToTemporaryTest! !
+!Refactory.Browser.ExtractToTemporaryRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.InlineAllSendersRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.InlineAllMethodTest! !
+!Refactory.Browser.InlineAllSendersRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.InlineMethodFromComponentRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.InlineMethodFromComponentTest! !
+!Refactory.Browser.InlineMethodFromComponentRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.InlineMethodRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.InlineMethodTest! !
+!Refactory.Browser.InlineMethodRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
 !Refactory.Browser.InlineParameterRefactoring class methodsFor!
 
 correspondingTestCase
@@ -553,11 +658,83 @@ correspondingTestCase
 correspondingTestCase!public! !
 !
 
+!Refactory.Browser.InlineTemporaryRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.InlineTemporaryTest! !
+!Refactory.Browser.InlineTemporaryRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.MoveMethodRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.MoveMethodTest! !
+!Refactory.Browser.MoveMethodRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.MoveVariableDefinitionRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.MoveVariableDefinitionTest! !
+!Refactory.Browser.MoveVariableDefinitionRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.ProtectInstanceVariableRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.ProtectInstanceVariableTest! !
+!Refactory.Browser.ProtectInstanceVariableRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.PullUpClassVariableRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.PullUpClassVariableTest! !
+!Refactory.Browser.PullUpClassVariableRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.PullUpInstanceVariableRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.PushUpInstanceVariableTest! !
+!Refactory.Browser.PullUpInstanceVariableRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.PushDownClassVariableRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.PushDownClassVariableTest! !
+!Refactory.Browser.PushDownClassVariableRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
 !Refactory.Browser.PushDownInstanceVariableRefactoring class methodsFor!
 
 correspondingTestCase
-	^Refactory.Browser.Tests.PushDownClassVariableTest! !
+	^Tests.PushDownInstanceVariableTest! !
 !Refactory.Browser.PushDownInstanceVariableRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.PushDownMethodRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.PushDownMethodTest! !
+!Refactory.Browser.PushDownMethodRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.PushUpMethodRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.PushUpMethodTest! !
+!Refactory.Browser.PushUpMethodRefactoring class categoriesForMethods!
 correspondingTestCase!public! !
 !
 
@@ -577,6 +754,30 @@ correspondingTestCase
 correspondingTestCase!public! !
 !
 
+!Refactory.Browser.RemoveClassVariableRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.RemoveClassVariableTest! !
+!Refactory.Browser.RemoveClassVariableRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.RemoveInstanceVariableRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.RemoveInstanceVariableTest! !
+!Refactory.Browser.RemoveInstanceVariableRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.RemoveMethodRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.RenameMethodTest! !
+!Refactory.Browser.RemoveMethodRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
 !Refactory.Browser.RenameClassRefactoring class methodsFor!
 
 correspondingTestCase
@@ -585,11 +786,35 @@ correspondingTestCase
 correspondingTestCase!public! !
 !
 
+!Refactory.Browser.RenameClassVariableRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.RenameClassVariableTest! !
+!Refactory.Browser.RenameClassVariableRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.RenameInstanceVariableRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.RenameInstanceVariableTest! !
+!Refactory.Browser.RenameInstanceVariableRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
 !Refactory.Browser.RenameMethodRefactoring class methodsFor!
 
 correspondingTestCase
 	^Refactory.Browser.Tests.RenameMethodTest! !
 !Refactory.Browser.RenameMethodRefactoring class categoriesForMethods!
+correspondingTestCase!public! !
+!
+
+!Refactory.Browser.RenameTemporaryRefactoring class methodsFor!
+
+correspondingTestCase
+	^Tests.RenameTemporaryTest! !
+!Refactory.Browser.RenameTemporaryRefactoring class categoriesForMethods!
 correspondingTestCase!public! !
 !
 

@@ -34,13 +34,13 @@ testInlineMethod
 	| refactoring |
 	refactoring := InlineMethodRefactoring
 				inline: (self convertInterval: (455 to: 504)
-						for: (BasicLintRuleTest class sourceCodeAt: #sentNotImplementedInApplication))
+						for: (BasicLintRuleTestData class sourceCodeAt: #sentNotImplementedInApplication))
 				inMethod: #sentNotImplementedInApplication
-				forClass: BasicLintRuleTest class.
+				forClass: BasicLintRuleTestData class.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model metaclassNamed: #'Refactory.Browser.Tests.BasicLintRuleTest')
+	self assert: ((refactoring model metaclassNamed: #'Refactory.Browser.Tests.BasicLintRuleTestData')
 				parseTreeFor: #sentNotImplementedInApplication)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'sentNotImplementedInApplication
 									| detector |
 									detector := self new.
@@ -90,7 +90,7 @@ testInlineMethod1
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
 				parseTreeFor: #caller)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'caller 
 									| anObject anObject1 | 
 									anObject := 5.
@@ -110,7 +110,7 @@ testInlineMethod2
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
 				parseTreeFor: #caller1)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'caller1 
 								| anObject each1 anObject1 | 
 								anObject := 5.
@@ -131,7 +131,7 @@ testInlineMethod3
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
 				parseTreeFor: #caller2)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'caller2
 								^(1 to: 10) inject: 1 into: [:sum :each | sum * ((1 to: 10) inject: each into: [:sum1 :each1 | sum1 + each1])]	')!
 
@@ -145,7 +145,7 @@ testInlineMethod4
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
 				parseTreeFor: #inlineJunk)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'inlineJunk
 										| asdf bar1 baz1 asdf1 |
 										bar1 := 
@@ -171,13 +171,14 @@ testInlineMethod5
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
 				parseTreeFor: #inlineLast)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'inlineLast
 									5 = 3 ifTrue: [^self caller] ifFalse: [^	(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)]]')!
 
 testInlineMethodForSuperSend
 	| refactoring |
-	model := [Compiler evaluate: (self readFile: 'InlineMethodTest.st')] on: CompilerErrorNotification do: [:ex | self fail: ex description].
+	model := [Compiler evaluate: (self readFile: 'InlineMethodTest.st')] on: CompilerErrorNotification
+				do: [:ex | self fail: ex description].
 	(model classNamed: #RenameVariableChange) removeMethod: #executeNotifying:.
 	refactoring := InlineMethodRefactoring
 				model: model
@@ -187,7 +188,7 @@ testInlineMethodForSuperSend
 				forClass: (model classNamed: #RenameInstanceVariableChange).
 	self executeRefactoring: refactoring.
 	self assert: ((model classNamed: #RenameInstanceVariableChange) parseTreeFor: #executeNotifying:)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'executeNotifying: aBlock 
 									| undo undos undo1 |
 									self addNewVariable.
@@ -217,7 +218,7 @@ testInlineRecursiveCascadedMethod
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
 				parseTreeFor: #inlineMethod)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'inlineMethod
 									| temp temp1 |
 									self foo.
@@ -234,9 +235,11 @@ testModelInlineRecursiveMethod
 				inline: (15 to: 23)
 				inMethod: #foo
 				forClass: class.
+	"Somebody may have added other foo methods into the system, and we don't care about those so proceed through the prompt"
+	refactoring setOption: #inlineOverridden toUse: [:rcvr :selector :class | true].
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #foo)
-		equals: (RBParser parseMethod: 'foo self bar. self bar. self foo. self bar. self bar')!
+		equals: (self parseMethod: 'foo self bar. self bar. self foo. self bar. self bar')!
 
 testNonExistantSelector
 	self shouldFail: (InlineMethodRefactoring
@@ -245,10 +248,29 @@ testNonExistantSelector
 				forClass: RefactoryTestDataApp)!
 
 testOverriden
-	self shouldWarn: (InlineMethodRefactoring
-				inline: (self convertInterval: (15 to: 26) for: (LintRuleTest sourceCodeAt: #failedRules))
+	| refactoring overridden |
+	refactoring := InlineMethodRefactoring
+				inline: (self convertInterval: (15 to: 26) for: (LintRuleTestData sourceCodeAt: #failedRules))
 				inMethod: #failedRules
-				forClass: LintRuleTest)!
+				forClass: LintRuleTestData.
+	overridden := nil.
+	refactoring setOption: #inlineOverridden
+		toUse: 
+			[:rcvr :symbol :class |
+			overridden := class methodFor: symbol.
+			true].
+	self executeRefactoring: refactoring.
+	self assert: overridden modelClass equals: (refactoring model classFor: LintRuleTestData).
+	self assert: overridden selector equals: #isEmpty!
+
+testOverridenAbort
+	| refactoring |
+	refactoring := InlineMethodRefactoring
+				inline: (self convertInterval: (15 to: 26) for: (LintRuleTestData sourceCodeAt: #failedRules))
+				inMethod: #failedRules
+				forClass: LintRuleTestData.
+	refactoring setOption: #inlineOverridden toUse: [:rcvr :symbol :class | false].
+	self should: [self executeRefactoring: refactoring] raise: OperationAborted!
 
 testPrimitive
 	self shouldFail: (InlineMethodRefactoring
@@ -259,9 +281,9 @@ testPrimitive
 testReturn
 	self shouldFail: (InlineMethodRefactoring
 				inline: (self convertInterval: (418 to: 485)
-						for: (BasicLintRuleTest class sourceCodeAt: #utilityMethods))
+						for: (BasicLintRuleTestData class sourceCodeAt: #utilityMethods))
 				inMethod: #utilityMethods
-				forClass: BasicLintRuleTest class)! !
+				forClass: BasicLintRuleTestData class)! !
 !Refactory.Browser.Tests.InlineMethodTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testInlineMethod!public!tests! !
@@ -276,6 +298,7 @@ testInlineRecursiveCascadedMethod!public!tests! !
 testModelInlineRecursiveMethod!public!tests! !
 testNonExistantSelector!failure tests!public! !
 testOverriden!failure tests!public! !
+testOverridenAbort!failure tests!public! !
 testPrimitive!failure tests!public! !
 testReturn!failure tests!public! !
 !

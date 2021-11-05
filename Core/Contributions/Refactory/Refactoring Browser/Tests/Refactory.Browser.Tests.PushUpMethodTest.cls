@@ -27,8 +27,7 @@ testPushUpAndCopyDown
 				model: model
 				pushUp: #(#yourself)
 				from: class).
-	self assert: (class superclass parseTreeFor: #yourself)
-		equals: (RBParser parseMethod: 'yourself ^1').
+	self assert: (class superclass parseTreeFor: #yourself) equals: (self parseMethod: 'yourself ^1').
 	self deny: (class directlyDefinesMethod: #yourself).
 	class := model classNamed: #Foo2.
 	self assert: (class directlyDefinesMethod: #yourself).
@@ -47,20 +46,21 @@ testPushUpClassMethod
 
 testPushUpMethodWithCopyOverriddenMethodsDown
 	| refactoring |
-	self proceedThroughWarning: 
-			[refactoring := PushUpMethodRefactoring pushUp: #(#isComposite) from: CompositeLintRuleTest.
-			self executeRefactoring: refactoring].
-	self assert: ((refactoring model classNamed: BasicLintRuleTest fullName) parseTreeFor: #isComposite)
-		equals: (RBParser parseMethod: 'isComposite ^false').
-	self assert: ((refactoring model classNamed: 'Refactory.Browser.Tests.Foo', 'LintRuleTest') parseTreeFor: #isComposite)
-		equals: (RBParser parseMethod: 'isComposite ^false').
-	self assert: ((refactoring model classNamed: LintRuleTest fullName) parseTreeFor: #isComposite)
-		equals: (RBParser parseMethod: 'isComposite ^true').
-	self deny: ((refactoring model classNamed: CompositeLintRuleTest fullName)
+	refactoring := PushUpMethodRefactoring pushUp: #(#isComposite) from: CompositeLintRuleTestData.
+	self executeRefactoring: refactoring.
+	self
+		assert: ((refactoring model classNamed: BasicLintRuleTestData fullName) parseTreeFor: #isComposite)
+		equals: (self parseMethod: 'isComposite ^false').
+	self assert: ((refactoring model classNamed: 'Refactory.Browser.Tests.Foo' , 'LintRuleTestData')
+				parseTreeFor: #isComposite)
+		equals: (self parseMethod: 'isComposite ^false').
+	self assert: ((refactoring model classNamed: LintRuleTestData fullName) parseTreeFor: #isComposite)
+		equals: (self parseMethod: 'isComposite ^true').
+	self deny: ((refactoring model classNamed: CompositeLintRuleTestData fullName)
 				directlyDefinesMethod: #isComposite)!
 
 testPushUpReferencesInstVar
-	self shouldFail: (PushUpMethodRefactoring pushUp: #(#checkClass:) from: BasicLintRuleTest)!
+	self shouldFail: (PushUpMethodRefactoring pushUp: #(#checkClass:) from: BasicLintRuleTestData)!
 
 testPushUpWithInvalidSuperSend
 	| class |

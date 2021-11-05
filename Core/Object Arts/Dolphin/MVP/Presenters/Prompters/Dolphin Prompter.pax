@@ -3,7 +3,7 @@ package := Package name: 'Dolphin Prompter'.
 package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Generic Prompter.
-Copyright (c) Object Arts Ltd. 1997-2003. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+Copyright (c) Object Arts Ltd. 1997-2021. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
 '.
 
 package basicPackageVersion: '6.1'.
@@ -19,6 +19,7 @@ package setPrerequisites: #(
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Base\Dolphin MVP Base'
 	'..\Text\Dolphin Text Presenter'
+	'..\..\Views\Tooltips\Dolphin Tooltips'
 	'..\..\Type Converters\Dolphin Type Converters'
 	'..\..\Models\Value\Dolphin Value Models'
 ).
@@ -28,11 +29,15 @@ package!
 "Class Definitions"!
 
 UI.ValueDialog subclass: #'UI.Prompter'
-	instanceVariableNames: 'promptPresenter replyPresenter validationBlock'
+	instanceVariableNames: 'promptPresenter replyPresenter validater validationResult hintBubble validationDwell hintDwell flags hintFont'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'NoHintBubble' -> 16r1.
+		'NoHintWhenEmpty' -> 16r2.
+		'ValidationTimerId' -> 16r1
+	}!
 
 "End of package definition"!
 

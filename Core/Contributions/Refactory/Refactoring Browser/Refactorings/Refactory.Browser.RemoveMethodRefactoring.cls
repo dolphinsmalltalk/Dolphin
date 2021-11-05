@@ -14,17 +14,14 @@ Refactory.Browser.RemoveMethodRefactoring comment: ''!
 checkReferencesToAnyOf: aSelectorCollection
 	aSelectorCollection do: 
 			[:each |
+			| refs |
+			refs := OrderedCollection new.
 			self model allReferencesTo: each
-				do: 
-					[:aRBMethod |
-					(aSelectorCollection includes: aRBMethod selector)
-						ifFalse: 
-							[self refactoringError: ('Possible call to <2p> in <1p>.<n><n>Would you like to browse references?'
-										expandMacrosWith: aRBMethod modelClass
-										with: each)
-								with: 
-									[#rbFix.	"Should use model's BrowserEnvironment to perform the reference search"
-									self openBrowserOn: (self model environment referencesTo: each)]]]]!
+				do: [:aRBMethod | (aSelectorCollection includes: aRBMethod selector) not ifTrue: [refs add: aRBMethod]].
+			refs notEmpty
+				ifTrue: 
+					[(self shouldRemoveSelector: each referencedIn: refs)
+						ifFalse: [self refactoringAborted: 'Method removal aborted because <1p> is referenced' << each]]]!
 
 checkReferencesToSuperSendsToAnyOf: superMessages
 	[superMessages isEmpty] whileFalse: 
@@ -81,6 +78,12 @@ removeMethods: selectorCollection from: aClass
 	class := self classObjectFor: aClass.
 !
 
+shouldRemoveSelector: aSymbol referencedIn: aCollection
+	^(self options at: #removeReferencedSelector)
+		value: self
+		value: aSymbol
+		value: aCollection!
+
 storeOn: aStream 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -107,6 +110,7 @@ checkSuperMethods!preconditions!public! !
 justSendsSuper:!preconditions!public! !
 preconditions!preconditions!public! !
 removeMethods:from:!initialize/release!public! !
+shouldRemoveSelector:referencedIn:!preconditions!public! !
 storeOn:!printing!public! !
 superclassEquivalentlyDefines:!preconditions!public! !
 transform!public!transforming! !

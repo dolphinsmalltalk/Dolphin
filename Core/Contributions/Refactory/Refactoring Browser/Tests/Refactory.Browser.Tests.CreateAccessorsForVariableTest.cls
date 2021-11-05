@@ -19,7 +19,7 @@ testExistingInstanceVariableAccessors
 	| ref |
 	ref := CreateAccessorsForVariableRefactoring
 				variable: 'name'
-				class: LintRuleTest
+				class: LintRuleTestData
 				classVariable: false.
 	self executeRefactoring: ref.
 	self assert: ref changes changes isEmpty.
@@ -30,41 +30,41 @@ testNewClassVariableAccessors
 	| ref class |
 	ref := CreateAccessorsForVariableRefactoring
 				variable: 'Foo1'
-				class: LintRuleTest
+				class: LintRuleTestData
 				classVariable: true.
 	self executeRefactoring: ref.
-	class := ref model metaclassNamed: #'Refactory.Browser.Tests.LintRuleTest'.
+	class := ref model metaclassNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
 	self deny: ref changes changes isEmpty.
 	self assert: ref setterMethod identicalTo: #foo1:.
 	self assert: ref getterMethod identicalTo: #foo1.
-	self assert: (class parseTreeFor: #foo1) equals: (RBParser parseMethod: 'foo1 ^Foo1').
+	self assert: (class parseTreeFor: #foo1) equals: (self parseMethod: 'foo1 ^Foo1').
 	self assert: (class parseTreeFor: #foo1:)
-		equals: (RBParser parseMethod: 'foo1: anObject Foo1 := anObject')!
+		equals: (self parseMethod: 'foo1: anObject Foo1 := anObject')!
 
 testNewInstanceVariableAccessors
 	| ref class |
 	ref := CreateAccessorsForVariableRefactoring
 				variable: 'foo1'
-				class: LintRuleTest
+				class: LintRuleTestData
 				classVariable: false.
 	self executeRefactoring: ref.
-	class := ref model classNamed: #'Refactory.Browser.Tests.LintRuleTest'.
+	class := ref model classNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
 	self deny: ref changes changes isEmpty.
 	self assert: ref setterMethod identicalTo: #foo1:.
 	self assert: ref getterMethod identicalTo: #foo1.
-	self assert: (class parseTreeFor: #foo1) equals: (RBParser parseMethod: 'foo1 ^foo1').
+	self assert: (class parseTreeFor: #foo1) equals: (self parseMethod: 'foo1 ^foo1').
 	self assert: (class parseTreeFor: #foo1:)
-		equals: (RBParser parseMethod: 'foo1: anObject foo1 := anObject')!
+		equals: (self parseMethod: 'foo1: anObject foo1 := anObject')!
 
 testNonExistantName
 	self
 		shouldFail: (CreateAccessorsForVariableRefactoring
 					variable: #Foo
-					class: BasicLintRuleTest
+					class: BasicLintRuleTestData
 					classVariable: true);
 		shouldFail: (CreateAccessorsForVariableRefactoring
 					variable: 'foo'
-					class: BasicLintRuleTest
+					class: BasicLintRuleTestData
 					classVariable: true)! !
 !Refactory.Browser.Tests.CreateAccessorsForVariableTest categoriesForMethods!
 setUp!public!set up! !

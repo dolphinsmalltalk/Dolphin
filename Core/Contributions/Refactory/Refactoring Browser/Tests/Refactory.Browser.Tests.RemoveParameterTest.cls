@@ -15,11 +15,11 @@ testNonExistantName
 	self
 		shouldFail: (RemoveParameterRefactoring
 					removeParameter: 'asdf'
-					in: BasicLintRuleTest
+					in: BasicLintRuleTestData
 					selector: #checkClass:);
 		shouldFail: (RemoveParameterRefactoring
 					removeParameter: 'aSmalllintContext'
-					in: BasicLintRuleTest
+					in: BasicLintRuleTestData
 					selector: #checkClass1:)!
 
 testPrimitiveMethods
@@ -42,10 +42,10 @@ testRemoveParameter
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	self assert: (class parseTreeFor: #renameThisMethod)
-		equals: (RBParser parseMethod: 'renameThisMethod
+		equals: (self parseMethod: 'renameThisMethod
 								^self').
 	self assert: (class parseTreeFor: #callMethod)
-		equals: (RBParser parseMethod: 'callMethod
+		equals: (self parseMethod: 'callMethod
 								^(self renameThisMethod)').
 	self deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)! !
 !Refactory.Browser.Tests.RemoveParameterTest categoriesForMethods!

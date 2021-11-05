@@ -19,27 +19,27 @@ testBadInterval
 					in: RefactoryTestDataApp);
 		shouldFail: (ExtractMethodRefactoring
 					extract: (self convertInterval: (80 to: 147)
-							for: (BasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
+							for: (BasicLintRuleTestData class sourceCodeAt: #subclassOf:overrides:))
 					from: #subclassOf:overrides:
-					in: BasicLintRuleTest class)!
+					in: BasicLintRuleTestData class)!
 
 testExtractFailure
 	self
 		shouldFail: (ExtractMethodRefactoring
 					extract: (self convertInterval: (80 to: 269)
-							for: (BasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
+							for: (BasicLintRuleTestData class sourceCodeAt: #subclassOf:overrides:))
 					from: #subclassOf:overrides:
-					in: BasicLintRuleTest class);
+					in: BasicLintRuleTestData class);
 		shouldFail: (ExtractMethodRefactoring
 					extract: (self convertInterval: (53 to: 56)
-							for: (BasicLintRuleTest class sourceCodeAt: #subclassOf:overrides:))
+							for: (BasicLintRuleTestData class sourceCodeAt: #subclassOf:overrides:))
 					from: #subclassOf:overrides:
-					in: BasicLintRuleTest class);
+					in: BasicLintRuleTestData class);
 		shouldFail: (ExtractMethodRefactoring
 					extract: (self convertInterval: (77 to: 222)
-							for: (BasicLintRuleTest class sourceCodeAt: #subclassResponsibilityNotDefined))
+							for: (BasicLintRuleTestData class sourceCodeAt: #subclassResponsibilityNotDefined))
 					from: #subclassResponsibilityNotDefined
-					in: BasicLintRuleTest class)!
+					in: BasicLintRuleTestData class)!
 
 testExtractFromMethodInCustomNamespace
 	| method source refactoring class start stop |
@@ -59,7 +59,7 @@ testExtractFromMethodInCustomNamespace
 	self executeRefactoring: refactoring.
 	class := refactoring model classFor: Graphics.Rectangle.
 	self assert: (class metaclass parseTreeFor: #publishedAspectsOfInstances)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
@@ -70,7 +70,7 @@ testExtractFromMethodInCustomNamespace
 		add: (Aspect integer: #right);
 		yourself').
 	self assert: (class metaclass parseTreeFor: #topAspect)
-		equals: (RBParser parseMethod: 'topAspect
+		equals: (self parseMethod: 'topAspect
 	^Aspect integer: #top').
 	self assert: refactoring model changes changes first environment identicalTo: Tools!
 
@@ -79,19 +79,19 @@ testExtractMethodAtEndOfMethodThatNeedsReturn
 	refactoring := ExtractMethodRefactoring
 				extract: (73 to: 216)
 				from: #openEditor
-				in: LintRuleTest.
+				in: LintRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest'.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
 	self assert: (class parseTreeFor: #openEditor)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'openEditor
 	<namespace: Tools>
 	| rules |
 	rules := self failedRules.
 	^self foo: rules').
 	self assert: (class parseTreeFor: #foo:)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'foo: rules
 	<namespace: Tools>
 	rules isEmpty ifTrue: [^self].
@@ -101,19 +101,20 @@ testExtractMethodAtEndOfMethodThatNeedsReturn
 testExtractMethodThatMovesTemporaryVariable
 	| refactoring class |
 	refactoring := ExtractMethodRefactoring
-				extract: (self convertInterval: (22 to: 280) for: (TransformationRuleTest sourceCodeAt: #superSends))
+				extract: (self convertInterval: (22 to: 280)
+						for: (TransformationRuleTestData sourceCodeAt: #superSends))
 				from: #superSends
-				in: TransformationRuleTest.
+				in: TransformationRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTest'.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData'.
 	self assert: (class parseTreeFor: #superSends)
-		equals: (RBParser parseMethod: 'superSends
+		equals: (self parseMethod: 'superSends
 	| rule |
 	rule := self foo.
 	self rewriteUsing: rule').
 	self assert: (class parseTreeFor: #foo)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'foo | rule | 	rule := ParseTreeRewriter new.
 	rule addSearch: ''super `@message: ``@args''
 				-> (
@@ -128,20 +129,20 @@ testExtractMethodThatNeedsArgument
 	| refactoring class |
 	refactoring := ExtractMethodRefactoring
 				extract: (self convertInterval: (145 to: 343)
-						for: (TransformationRuleTest sourceCodeAt: #checkMethod:))
+						for: (TransformationRuleTestData sourceCodeAt: #checkMethod:))
 				from: #checkMethod:
-				in: TransformationRuleTest.
+				in: TransformationRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTest'.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData'.
 	self assert: (class parseTreeFor: #checkMethod:)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'checkMethod: aSmalllintContext 
 	class := aSmalllintContext selectedClass.
 	(rewriteRule executeTree: aSmalllintContext parseTree) ifTrue: 
 			[self foo: aSmalllintContext]').
 	self assert: (class parseTreeFor: #foo:)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'foo: aSmalllintContext (RecursiveSelfRule executeTree: rewriteRule tree initialAnswer: false)
 				ifFalse: 
 					[builder compile: rewriteRule tree printString
@@ -151,21 +152,21 @@ testExtractMethodThatNeedsArgument
 testExtractMethodThatNeedsTemporaryVariable
 	| refactoring class |
 	refactoring := ExtractMethodRefactoring
-				extract: (self convertInterval: (78 to: 197) for: (LintRuleTest sourceCodeAt: #displayName))
+				extract: (self convertInterval: (78 to: 197) for: (LintRuleTestData sourceCodeAt: #displayName))
 				from: #displayName
-				in: LintRuleTest.
+				in: LintRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest'.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
 	self assert: (class parseTreeFor: #displayName)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'displayName
 	| nameStream |
 	nameStream := WriteStream on: (String new: 64).
 	self foo: nameStream.
 	^nameStream contents').
 	self assert: (class parseTreeFor: #foo:)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'foo: nameStream 	nameStream nextPutAll: self name;
 		nextPutAll: '' (''.
 	self problemCount printOn: nameStream.
@@ -183,9 +184,9 @@ testModelExtractMethodWithTemporariesSelected
 				in: class.
 	self setupMethodNameFor: refactoring toReturn: #foobar.
 	self executeRefactoring: refactoring.
-	self assert: (class parseTreeFor: #foo) equals: (RBParser parseMethod: 'foo [self foobar] value').
+	self assert: (class parseTreeFor: #foo) equals: (self parseMethod: 'foo [self foobar] value').
 	self assert: (class parseTreeFor: #foobar)
-		equals: (RBParser parseMethod: 'foobar |temp | temp := 5. ^temp * temp')!
+		equals: (self parseMethod: 'foobar |temp | temp := 5. ^temp * temp')!
 
 testModelExtractMethodWithTemporaryAssigned
 	| class refactoring |
@@ -202,9 +203,9 @@ testModelExtractMethodWithTemporaryAssigned
 	self setupMethodNameFor: refactoring toReturn: #foobar.
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #foo)
-		equals: (RBParser parseMethod: 'foo | temp | temp := self foobar. ^temp * temp').
+		equals: (self parseMethod: 'foo | temp | temp := self foobar. ^temp * temp').
 	self
-		assert: ((class parseTreeFor: #foobar) equalTo: (RBParser
+		assert: ((class parseTreeFor: #foobar) equalTo: (self
 						parseMethod: 'foobar | bar temp | bar := 5. temp := bar * bar. Transcript show: temp printString; cr. ^temp.')
 				exceptForVariables: #())!
 
@@ -212,7 +213,7 @@ testNonExistantSelector
 	self shouldFail: (ExtractMethodRefactoring
 				extract: (10 to: 20)
 				from: #checkClass1:
-				in: BasicLintRuleTest)! !
+				in: BasicLintRuleTestData)! !
 !Refactory.Browser.Tests.ExtractMethodTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testExtractFailure!failure tests!public! !

@@ -20,7 +20,7 @@ checkForValidTemporaryVariable
 		ifTrue: [self refactoringError: temporaryVariableName , ' is a block parameter'].
 	(RBReadBeforeWrittenTester isVariable: temporaryVariableName readBeforeWrittenIn: parseTree)
 		ifTrue: 
-			[self refactoringWarning: ('<1s> is read before it is written.<n>Proceed anyway?'
+			[self refactoringWarning: ('<1s> is read before it is written.'
 						expandMacrosWith: temporaryVariableName)]!
 
 class: aClass selector: aSelector variable: aVariableName 

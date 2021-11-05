@@ -1255,6 +1255,9 @@ initialize
 		MessageBox initialize
 	"
 
+	defaultCaptions := (IdentityDictionary withAll: {#prompt -> 'Please confirm…'. #notify -> 'Note'})
+				isImmutable: true;
+				yourself.
 	self addClassConstant: 'CommonButtonFlags'
 		value: ((Array new: 11)
 				at: IDOK put: TDCBF_OK_BUTTON;

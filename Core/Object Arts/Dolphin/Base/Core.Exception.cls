@@ -214,6 +214,11 @@ hresult
 
 	^OS.HRESULT fail!
 
+iconStyle
+	"Answer an exception class describing the severity of the notification."
+
+	^self severityClass iconStyle!
+
 ignore
 	"Perform the receiver's #resume action."
 
@@ -532,6 +537,7 @@ displayOn:!printing!public! !
 exit:!handler responses!public! !
 hasTag!public!testing! !
 hresult!accessing!public! !
+iconStyle!constants!public! !
 ignore!handler responses!public! !
 isNested!public!testing! !
 isResumable!public!testing! !
@@ -605,11 +611,23 @@ handles: exception
 mbIconId
 	^0!
 
+messageText: aString
+	"Answer a new unraised instance of the receiver with the specified <readableString> message text."
+
+	^self new
+		messageText: aString;
+		yourself!
+
 new
 	"Answer a new initialized instance of the receiver, conforming to 
 	the <Exception> protocol."
 
 	^super new initialize!
+
+severityClass
+	"Answer an exception class describing the severity of the notification."
+
+	^Error!
 
 signal
 	"Raise a new instance of the receiver conforming to <signaledException> with all <exceptionDescription>
@@ -651,7 +669,9 @@ signalWith: signallerTag
 beep!parping!public! !
 handles:!filtering!public! !
 mbIconId!constants!private! !
+messageText:!instance creation!public! !
 new!debugger-step through!instance creation!public! !
+severityClass!constants!public! !
 signal!instance creation!public! !
 signal:!debugger-step through!instance creation!public! !
 signal:with:!instance creation!public! !

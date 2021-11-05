@@ -29,6 +29,11 @@ Core.Warning methodProtocol: #Warning attributes: #(#ansi #readOnly) selectors: 
 
 !Core.Warning class methodsFor!
 
+iconStyle
+	"Answer an exception class describing the severity of the notification."
+
+	^#warning!
+
 mbIconId
 	^MB_ICONWARNING!
 
@@ -37,6 +42,7 @@ severityClass
 
 	^Warning! !
 !Core.Warning class categoriesForMethods!
+iconStyle!constants!public! !
 mbIconId!parping!public! !
 severityClass!constants!public! !
 !

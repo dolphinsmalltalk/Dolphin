@@ -13,14 +13,13 @@ Refactory.Browser.Tests.PushDownMethodTest comment: ''!
 
 testPushDownMethod
 	| refactoring class |
-	refactoring := PushDownMethodRefactoring pushDown: #(#name:) from: LintRuleTest.
+	refactoring := PushDownMethodRefactoring pushDown: #(#name:) from: LintRuleTestData.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest'.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
 	self deny: (class directlyDefinesMethod: #name:).
 	class subclasses do: 
 			[:each |
-			self assert: (each parseTreeFor: #name:)
-				equals: (RBParser parseMethod: 'name: aString name := aString')]!
+			self assert: (each parseTreeFor: #name:) equals: (self parseMethod: 'name: aString name := aString')]!
 
 testPushDownMethodOnNonAbstractClass
 	| refactoring |
@@ -29,11 +28,10 @@ testPushDownMethodOnNonAbstractClass
 
 testPushDownMethodThatReferencesPoolDictionary
 	| refactoring class parseTree |
-	parseTree := LintRuleTest parseTreeFor: #junk.
-	self proceedThroughWarning: 
-			[refactoring := PushDownMethodRefactoring pushDown: #(#junk) from: LintRuleTest.
-			self executeRefactoring: refactoring].
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest'.
+	parseTree := LintRuleTestData parseTreeFor: #junk.
+	refactoring := PushDownMethodRefactoring pushDown: #(#junk) from: LintRuleTestData.
+	self executeRefactoring: refactoring.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
 	self deny: (class directlyDefinesMethod: #junk).
 	class subclasses do: 
 			[:each |
@@ -43,7 +41,8 @@ testPushDownMethodThatReferencesPoolDictionary
 
 testPushDownNonExistantMenu
 	| refactoring |
-	refactoring := PushDownMethodRefactoring pushDown: #(#someMethodThatDoesNotExist) from: LintRuleTest.
+	refactoring := PushDownMethodRefactoring pushDown: #(#someMethodThatDoesNotExist)
+				from: LintRuleTestData.
 	self shouldFail: refactoring! !
 !Refactory.Browser.Tests.PushDownMethodTest categoriesForMethods!
 testPushDownMethod!public!tests! !

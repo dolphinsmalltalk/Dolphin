@@ -27,22 +27,24 @@ convertInterval: anInterval for: aString
 				ifFalse: [index := index + 1]].
 	^anInterval first + startOffset to: anInterval last + stopOffset!
 
-executeRefactoring: aRefactoring 
+executeRefactoring: aRefactoring
 	aRefactoring primitiveExecute.
-	RBParser parseExpression: aRefactoring storeString!
+	self parseExpression: aRefactoring storeString!
 
 objectClassVariable
 	^Object classPool keys detect: [:each | true]!
 
-proceedThroughWarning: aBlock
-	#rbFix.	"Use ANSI standard #resume"
-	"	aBlock on: RefactoringWarning do: [:ex | ex proceed]"
-	aBlock on: RefactoringWarning do: [:ex | ex resume]! !
+parseExpression: aString
+	^RBParser parseExpression: aString!
+
+parseMethod: aString
+	^RBParser parseMethod: aString! !
 !Refactory.Browser.Tests.RefactoringBrowserTest categoriesForMethods!
 convertInterval:for:!private! !
 executeRefactoring:!private! !
 objectClassVariable!private! !
-proceedThroughWarning:!private! !
+parseExpression:!helpers!public! !
+parseMethod:!helpers!public! !
 !
 
 !Refactory.Browser.Tests.RefactoringBrowserTest class methodsFor!

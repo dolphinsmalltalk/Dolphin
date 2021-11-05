@@ -48,6 +48,9 @@ checkSuperMessages
 	inlineParseTree superMessages notEmpty 
 		ifTrue: [self refactoringError: 'Cannot inline method since it sends a super message']!
 
+chosenInlineClass
+	^self inlineClass!
+
 findSelectedMessage
 	sourceParseTree := class parseTreeFor: sourceSelector.
 	sourceParseTree isNil 
@@ -78,10 +81,6 @@ inlineClass
 			[#rbFix.	"Use abort signal rather than error"
 			self refactoringAborted: 'No implementor selected'].
 	^inlineClass!
-
-isOverridden
-	^self inlineClass allSubclasses 
-		anySatisfy: [:each | each directlyDefinesMethod: self inlineSelector]!
 
 newNameForSelf
 	| variableName index originalName nonMetaClass name |
@@ -128,9 +127,9 @@ addArgumentToSelector:!public!transforming! !
 addSelfReferenceToInlineParseTree!public!transforming! !
 addSelfReferenceToSourceMessage!public!transforming! !
 checkSuperMessages!public!transforming! !
+chosenInlineClass!public! !
 findSelectedMessage!public!transforming! !
 inlineClass!public!transforming! !
-isOverridden!public! !
 newNameForSelf!public!transforming! !
 renameSelfReferences!public!transforming! !
 safeVariableNameBasedOn:!public!transforming! !

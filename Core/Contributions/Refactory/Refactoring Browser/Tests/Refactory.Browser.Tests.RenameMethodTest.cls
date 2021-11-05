@@ -19,16 +19,32 @@ setUp
 testExistingSelector
 	self shouldFail: (RenameMethodRefactoring
 				renameMethod: #checkClass:
-				in: BasicLintRuleTest
+				in: BasicLintRuleTestData
 				to: #runOnEnvironment:
 				permutation: (1 to: 1))!
 
 testMultipleSelectors
-	self shouldWarn: (RenameMethodRefactoring
+	| subject implementors |
+	"Constrain the refactoring to just the RBTestMethods package so that we get a known set of implementors"
+	model := RBNamespace
+				onEnvironment: (BrowserEnvironment new forPackages: {BasicLintRuleTestData owningPackage}).
+	subject := RenameMethodRefactoring
+				model: model
 				renameMethod: #checkClass:
-				in: BasicLintRuleTest
+				in: BasicLintRuleTestData
 				to: #foo:
-				permutation: (1 to: 1))!
+				permutation: (1 to: 1).
+	"In Dolphin 8 we no longer raise a warning for renames where there are multiple implementors because requesting option input allows for a better user experience"
+	subject setOption: #renameAllDefinitions
+		toUse: 
+			[:ref :classes :selector |
+			implementors := classes.
+			false].
+	self should: [self executeRefactoring: subject] raise: OperationAborted.
+	{Refactory.Browser.Tests.BasicLintRuleTestData.
+		Refactory.Browser.Tests.CompositeLintRuleTestData.
+		Refactory.Browser.Tests.LintRuleTestData}
+			do: [:each | self assert: (implementors includes: (subject model classFor: each))]!
 
 testRenamePermuteArgs
 	| refactoring class |
@@ -40,22 +56,23 @@ testRenamePermuteArgs
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: RefactoryTestDataApp fullName.
 	self assert: (class parseTreeFor: ('rename:' , 'two:') asSymbol)
-		equals: (RBParser
-				parseMethod: 'rename: argumentMethod two: this ^self printString, this, argumentMethod').
+		equals: (self parseMethod: 'rename: argumentMethod two: this ^self printString, this, argumentMethod').
 	self assert: (class parseTreeFor: #exampleCall)
-		equals: (RBParser parseMethod: 'exampleCall ^self rename: 2 two: 1')!
+		equals: (self parseMethod: 'exampleCall ^self rename: 2 two: 1')!
 
 testRenamePrimitive
 	| refactoring count |
 	count := 0.
 	model allReferencesTo: #basicAt:put: do: [:method | count := count + 1].
+	"Primitives can be renamed, as long as the argument count and order remains the same"
 	refactoring := RenameMethodRefactoring
 				model: model
 				renameMethod: #basicAt:put:
 				in: Object
 				to: ('at:' , 'bar:') asSymbol
 				permutation: (1 to: 2).
-	self proceedThroughWarning: [self executeRefactoring: refactoring].
+	refactoring setOption: #renameAllDefinitions toUse: [:ref :classes :selector | true].
+	self executeRefactoring: refactoring.
 	"All refs should have been rewritten"
 	model allReferencesTo: #basicAt:put: do: [:method | self assert: false].
 	model allReferencesTo: ('at:' , 'bar:') asSymbol do: [:method | count := count - 1].
@@ -71,13 +88,13 @@ testRenameTestMethod
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	self assert: (class parseTreeFor: #renameThisMethod2:)
-		equals: (RBParser parseMethod: 'renameThisMethod2: anArg
+		equals: (self parseMethod: 'renameThisMethod2: anArg
 	^self').
 	self assert: (class parseTreeFor: #callMethod)
-		equals: (RBParser parseMethod: 'callMethod
+		equals: (self parseMethod: 'callMethod
 	^(self renameThisMethod2: 5)').
 	self assert: (class parseTreeFor: #symbolReference)
-		equals: (RBParser parseMethod: 'symbolReference
+		equals: (self parseMethod: 'symbolReference
 		^ #(#renameThisMethod2: #(4 #renameThisMethod2:))').
 	self deny: (class directlyDefinesMethod: ('rename' , 'ThisMethod:') asSymbol)!
 
@@ -91,12 +108,12 @@ testRenameTestMethod1
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	self assert: (class parseTreeFor: #testMethod2)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'testMethod2 <namespace: Tools>
 	^self testMethod2 , ([:each | each testMethod2] value: #(#(#testMethod2) 2 #testMethod2))').
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.BasicLintRuleTest')
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.BasicLintRuleTestData')
 				parseTreeFor: #classBlock:)
-		equals: (RBParser parseMethod: 'classBlock: aBlock
+		equals: (self parseMethod: 'classBlock: aBlock
 	classBlock := aBlock testMethod2').
 	self deny: (class directlyDefinesMethod: ('test' , 'Method1') asSymbol).
 	change := refactoring model changes changes first.

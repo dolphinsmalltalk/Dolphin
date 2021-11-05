@@ -17,16 +17,17 @@ setUp
 
 testAddClassVariable
 	| refactoring |
-	refactoring := AddClassVariableRefactoring variable: 'Asdf' class: TransformationRuleTest.
+	refactoring := AddClassVariableRefactoring variable: 'Asdf' class: TransformationRuleTestData.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTest')
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData')
 				directlyDefinesClassVariable: #Asdf)!
 
 testAlreadyExistingName
 	self
-		shouldFail: (AddClassVariableRefactoring variable: #RecursiveSelfRule class: TransformationRuleTest);
+		shouldFail: (AddClassVariableRefactoring variable: #RecursiveSelfRule
+					class: TransformationRuleTestData);
 		shouldFail: (AddClassVariableRefactoring variable: self objectClassVariable
-					class: TransformationRuleTest)!
+					class: TransformationRuleTestData)!
 
 testMetaclass
 	| refactoring |
@@ -36,8 +37,8 @@ testMetaclass
 	self shouldFail: refactoring!
 
 testMetaClassFailure
-	self
-		shouldFail: (AddClassVariableRefactoring variable: #VariableName class: TransformationRuleTest class)!
+	self shouldFail: (AddClassVariableRefactoring variable: #VariableName
+				class: TransformationRuleTestData class)!
 
 testModelAddClassVariable
 	| refactoring |

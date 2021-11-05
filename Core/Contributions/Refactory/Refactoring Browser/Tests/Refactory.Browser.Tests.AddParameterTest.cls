@@ -25,14 +25,14 @@ testAddParameterForTwoArgumentMessage
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	self assert: (class parseTreeFor: #called:bar:on:)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'called: anObject bar: aBlock on: anArrayOfFloat
 							Transcript
 								show: anObject printString;
 								cr.
 								aBlock value').
 	self assert: (class parseTreeFor: #caller)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'caller
 							| anObject |
 							anObject := 5.
@@ -51,11 +51,11 @@ testAddParameterThatReferencesGlobalAndLiteral
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	self assert: (class parseTreeFor: #testFoo:bar:)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'testFoo: anObject bar: anOrderedCollection
 								^self class + anObject').
 	self assert: (class parseTreeFor: #callFoo)
-		equals: (RBParser parseMethod: 'callFoo ^self testFoo: 5 bar: (OrderedCollection new: 5)').
+		equals: (self parseMethod: 'callFoo ^self testFoo: 5 bar: (OrderedCollection new: 5)').
 	self deny: (class directlyDefinesMethod: ('test' , 'Foo:') asSymbol)!
 
 testAddParameterThatReferencesInstanceVariable
@@ -68,12 +68,12 @@ testAddParameterThatReferencesInstanceVariable
 	self executeRefactoring: refactoring.
 	class := refactoring model classFor: RefactoryTestDataApp.
 	self assert: (class parseTreeFor: #testFoo:bar:)
-		equals: (RBParser parseMethod: 'testFoo:
+		equals: (self parseMethod: 'testFoo:
 anObject bar: anObject1
 ^self class
 + anObject').
 	self assert: (class parseTreeFor: #callFoo)
-		equals: (RBParser parseMethod: 'callFoo ^self
+		equals: (self parseMethod: 'callFoo ^self
 testFoo: 5 bar: temporaryVariable').
 	self deny: (class directlyDefinesMethod: ('test' , 'Foo:') asSymbol)!
 
@@ -88,10 +88,10 @@ testAddParameterThatReferencesModelGlobal
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	self assert: (class parseTreeFor: #testFoo:bar:)
-		equals: (RBParser parseMethod: 'testFoo: anObject bar: anObject1
+		equals: (self parseMethod: 'testFoo: anObject bar: anObject1
 								^self class + anObject').
 	self assert: (class parseTreeFor: #callFoo)
-		equals: (RBParser parseMethod: 'callFoo ^self testFoo: 5 bar: (Bar new)').
+		equals: (self parseMethod: 'callFoo ^self testFoo: 5 bar: (Bar new)').
 	self deny: (class directlyDefinesMethod: ('test' , 'Foo:') asSymbol)!
 
 testAddParameterThatReferencesSelf
@@ -104,23 +104,23 @@ testAddParameterThatReferencesSelf
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	self assert: (class parseTreeFor: #testFoo:bar:)
-		equals: (RBParser parseMethod: 'testFoo: anObject bar: aString
+		equals: (self parseMethod: 'testFoo: anObject bar: aString
 
 								^self class + anObject').
 	self assert: (class parseTreeFor: #callFoo)
-		equals: (RBParser parseMethod: 'callFoo ^self testFoo: 5 bar: (self printString)').
+		equals: (self parseMethod: 'callFoo ^self testFoo: 5 bar: (self printString)').
 	self deny: (class directlyDefinesMethod: ('test' , 'Foo:') asSymbol)!
 
 testBadInitializationCode
 	self
 		shouldFail: (AddParameterRefactoring
 					addParameterToMethod: #name
-					in: LintRuleTest
+					in: LintRuleTestData
 					newSelector: #name:
 					initializer: 'foo:');
 		shouldFail: (AddParameterRefactoring
 					addParameterToMethod: #name
-					in: LintRuleTest
+					in: LintRuleTestData
 					newSelector: #name:
 					initializer: 'foo')!
 
@@ -130,18 +130,18 @@ testModelBadInitializationCode
 	refactoring := AddParameterRefactoring
 				model: model
 				addParameterToMethod: #name1
-				in: LintRuleTest
+				in: LintRuleTestData
 				newSelector: #name1:
 				initializer: 'AddParameterRefactoring new'.
 	self shouldFail: refactoring!
 
 testModelNonExistantName
 	| refactoring |
-	(model classNamed: #'Refactory.Browser.Tests.LintRuleTest') removeMethod: #name.
+	(model classNamed: #'Refactory.Browser.Tests.LintRuleTestData') removeMethod: #name.
 	refactoring := AddParameterRefactoring
 				model: model
 				addParameterToMethod: #name
-				in: LintRuleTest
+				in: LintRuleTestData
 				newSelector: #nameNew:
 				initializer: 'nil'.
 	self shouldFail: refactoring!
@@ -149,12 +149,12 @@ testModelNonExistantName
 testNonExistantName
 	self shouldFail: (AddParameterRefactoring
 				addParameterToMethod: #name1
-				in: LintRuleTest
+				in: LintRuleTestData
 				newSelector: #name1:
 				initializer: 'nil')!
 
 testPrimitiveMethods
-	| refactoring |
+	| refactoring implementors selector |
 	(model classNamed: #'Core.Object') compile: 'foo <primitive: 100> ^#() primitiveFailed'
 		classified: #accessing.
 	refactoring := AddParameterRefactoring
@@ -163,12 +163,26 @@ testPrimitiveMethods
 				in: Object
 				newSelector: #foo123124321s:
 				initializer: '1'.
+	refactoring setOption: #renameAllDefinitions
+		toUse: 
+			[:ref :classes :sel |
+			selector := sel.
+			implementors := classes.
+			true].
 	self shouldFail: refactoring.
+	self assert: selector identicalTo: #foo.
+	#(#'Core.Object' #Foo #Bar #'Foo class')
+		do: [:each | self assert: (implementors includes: (model classNamed: each))].
+	"There are many implementors of #at:, some of which are primitives."
 	refactoring := AddParameterRefactoring
 				addParameterToMethod: #at:
 				in: Object
 				newSelector: #at:foo:
 				initializer: '1'.
+	refactoring setOption: #renameAllDefinitions
+		toUse: 
+			[:ref :classes :sel |
+			true].
 	self shouldFail: refactoring! !
 !Refactory.Browser.Tests.AddParameterTest categoriesForMethods!
 setUp!public!set up! !

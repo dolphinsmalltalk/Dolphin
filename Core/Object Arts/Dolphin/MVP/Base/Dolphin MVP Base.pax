@@ -142,6 +142,7 @@ package setClassNames: #(
 	#{UI.StaticText}
 	#{UI.StaticView}
 	#{UI.STBViewProxy}
+	#{UI.ValidationResult}
 	#{UI.ValueConvertingControlView}
 	#{UI.ValueDialog}
 	#{UI.ValuePresenter}
@@ -1345,7 +1346,7 @@ Core.Object subclass: #'UI.CommandPolicy'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'UI.CommandQuery'
-	instanceVariableNames: 'commandDescription receiver source text flags image'
+	instanceVariableNames: 'commandDescription receiver source text flags image validationResult'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -1460,6 +1461,12 @@ Core.Object subclass: #'UI.Presenter'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: 'acceleratorKeyAnnotations'
+	classConstants: {}!
+Core.Object subclass: #'UI.ValidationResult'
+	instanceVariableNames: 'value caption hint'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'UI.View'
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'

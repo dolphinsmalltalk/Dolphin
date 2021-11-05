@@ -208,7 +208,12 @@ stbSaveOn: anSTBOutFiler
 subclassesDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the receiver's subclasses."
 
-	instanceClass ifNotNil: [instanceClass subclassesDo: [:each | aMonadicValuable value: each class]]! !
+	instanceClass ifNotNil: [instanceClass subclassesDo: [:each | aMonadicValuable value: each class]]!
+
+unqualifiedName
+	"Answer a <readableString> that is the name of the receiver in it's environment."
+
+	^self instanceClass unqualifiedName, ' class'! !
 !Core.Metaclass categoriesForMethods!
 absoluteReference!public! !
 bindingFor:!bindings!public! !
@@ -242,5 +247,6 @@ removeFromSuper!operations!private! !
 shortName!public! !
 stbSaveOn:!binary filing!public! !
 subclassesDo:!class hierarchy-accessing!public! !
+unqualifiedName!accessing!public! !
 !
 

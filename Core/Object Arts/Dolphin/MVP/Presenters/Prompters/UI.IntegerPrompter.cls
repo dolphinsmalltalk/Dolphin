@@ -39,7 +39,7 @@ initialize
 
 	super initialize.
 	interval := 1 to: 100.
-	validationBlock := [:reply | interval includes: reply]!
+	validater := [:reply | ValidationResult value: (interval includes: reply)]!
 
 interval
 	^interval!

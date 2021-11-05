@@ -49,6 +49,7 @@ package setMethodNames: #(
 	#(#{Core.Notification class} #icon)
 	#(#{Core.NotificationSignal class} #icon)
 	#(#{Core.Number class} #icon)
+	#(#{Core.OperationAborted class} #icon)
 	#(#{Core.Process class} #icon)
 	#(#{Core.ScaledDecimal class} #icon)
 	#(#{Core.SearchPolicy class} #icon)
@@ -573,6 +574,16 @@ icon
 		textcolor: Color darkBlue;
 		yourself)! !
 !Core.Number class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Core.OperationAborted class methodsFor!
+
+icon
+	"Answer the default icon for the receiver and its instances."
+
+	^Icon warning! !
+!Core.OperationAborted class categoriesForMethods!
 icon!constants!public! !
 !
 

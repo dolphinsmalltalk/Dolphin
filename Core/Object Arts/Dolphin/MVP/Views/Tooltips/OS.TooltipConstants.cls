@@ -66,7 +66,8 @@ Kernel.SharedPool subclass: #'OS.TooltipConstants'
 		'TTS_CLOSE' -> 16r80.
 		'TTS_NOANIMATE' -> 16r10.
 		'TTS_NOFADE' -> 16r20.
-		'TTS_NOPREFIX' -> 16r2
+		'TTS_NOPREFIX' -> 16r2.
+		'TTS_USEVISUALSTYLE' -> 16r100
 	}!
 OS.TooltipConstants guid: (Core.GUID fromString: '{19693950-d658-4428-a5e8-644838de7d68}')!
 OS.TooltipConstants isNonInstantiable: true!

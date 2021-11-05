@@ -14,31 +14,31 @@ Refactory.Browser.Tests.ChildrenToSiblingsTest comment: ''!
 testBadName
 	self shouldFail: (ChildrenToSiblingsRefactoring
 				name: #'Obje ct'
-				class: LintRuleTest
-				subclasses: {BasicLintRuleTest. CompositeLintRuleTest})!
+				class: LintRuleTestData
+				subclasses: {BasicLintRuleTestData. CompositeLintRuleTestData})!
 
 testExistingName
 	self
 		shouldFail: (ChildrenToSiblingsRefactoring
 					name: #'Core.Object'
-					class: LintRuleTest
-					subclasses: {BasicLintRuleTest. CompositeLintRuleTest});
+					class: LintRuleTestData
+					subclasses: {BasicLintRuleTestData. CompositeLintRuleTestData});
 		shouldFail: (ChildrenToSiblingsRefactoring
 					name: #Processor
-					class: LintRuleTest
-					subclasses: {BasicLintRuleTest. CompositeLintRuleTest})!
+					class: LintRuleTestData
+					subclasses: {BasicLintRuleTestData. CompositeLintRuleTestData})!
 
 testInvalidSubclass
 	self shouldFail: (ChildrenToSiblingsRefactoring
 				name: #Foo
-				class: LintRuleTest
+				class: LintRuleTestData
 				subclasses: {BasicLintRule. CompositeLintRule})!
 
 testMetaClassFailure
 	self shouldFail: (ChildrenToSiblingsRefactoring
 				name: #Foo
-				class: LintRuleTest class
-				subclasses: {BasicLintRuleTest class. CompositeLintRuleTest class})!
+				class: LintRuleTestData class
+				subclasses: {BasicLintRuleTestData class. CompositeLintRuleTestData class})!
 
 testModelChildrenToSibling
 	| refactoring class subclass superclass noMove |
@@ -56,17 +56,16 @@ testModelChildrenToSibling
 				subclasses: {subclass}.
 	self executeRefactoring: refactoring.
 	superclass := refactoring model classNamed: #'Refactory.Browser.Tests.AbstractSuperclass'.
-
 	self assert: class superclass equals: superclass.
 	self assert: class metaclass superclass equals: superclass metaclass.
 	self assert: subclass superclass equals: superclass.
 	self assert: subclass metaclass superclass equals: superclass metaclass.
 	self assert: (superclass parseTreeFor: #same)
-		equals: (RBParser parseMethod: 'same ^self initialize isKindOf: AbstractSuperclass').
+		equals: (self parseMethod: 'same ^self initialize isKindOf: AbstractSuperclass').
 	self assert: (superclass parseTreeFor: #different)
-		equals: (RBParser parseMethod: 'different self subclassResponsibility').
+		equals: (self parseMethod: 'different self subclassResponsibility').
 	self assert: (superclass parseTreeFor: #initialize)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'initialize
 							instVarName1 := instVarName2 := ClassVarName1 := ClassVarName2 := 0').
 	"The qualified name can be shortened. The comment should be preserved."
@@ -79,13 +78,13 @@ testModelChildrenToSibling
 	self assert: (superclass directlyDefinesClassVariable: 'ClassVarName2').
 	self assert: (superclass metaclass directlyDefinesInstanceVariable: 'classInstVarName1').
 	self assert: (superclass metaclass parseTreeFor: #foo)
-		equals: (RBParser parseMethod: 'foo
+		equals: (self parseMethod: 'foo
 							^classInstVarName1 + ClassVarName1 + ClassVarName2').
 	self assert: (superclass metaclass parseTreeFor: #new)
-		equals: (RBParser parseMethod: 'new
+		equals: (self parseMethod: 'new
 							^super new initialize').
 	self assert: (superclass metaclass parseTreeFor: #bar)
-		equals: (RBParser parseMethod: 'bar
+		equals: (self parseMethod: 'bar
 							self subclassResponsibility').
 	self deny: (class directlyDefinesInstanceVariable: 'instVarName1').
 	self deny: (class directlyDefinesInstanceVariable: 'instVarName2').
@@ -96,10 +95,10 @@ testModelChildrenToSibling
 	self deny: (class directlyDefinesMethod: #initialize).
 	self deny: (class metaclass directlyDefinesMethod: #new).
 	self assert: (class parseTreeFor: #different)
-		equals: (RBParser parseMethod: 'different
+		equals: (self parseMethod: 'different
 							^instVarName1 + instVarName2').
 	self assert: (class metaclass parseTreeFor: #bar)
-		equals: (RBParser parseMethod: 'bar
+		equals: (self parseMethod: 'bar
 							^self printString')! !
 !Refactory.Browser.Tests.ChildrenToSiblingsTest categoriesForMethods!
 testBadName!failure tests!public! !

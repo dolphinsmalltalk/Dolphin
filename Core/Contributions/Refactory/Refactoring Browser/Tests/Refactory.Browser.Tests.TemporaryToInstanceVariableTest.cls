@@ -18,11 +18,11 @@ setUp
 testNonExistantName
 	self
 		shouldFail: (TemporaryToInstanceVariableRefactoring
-					class: BasicLintRuleTest
+					class: BasicLintRuleTestData
 					selector: #checkClass:
 					variable: 'asdf');
 		shouldFail: (TemporaryToInstanceVariableRefactoring
-					class: BasicLintRuleTest
+					class: BasicLintRuleTestData
 					selector: #checkClass1:
 					variable: 'aSmalllintContext')!
 
@@ -38,13 +38,13 @@ testRedefinedTemporary
 testTemporaryToInstanceVariable
 	| refactoring class |
 	refactoring := TemporaryToInstanceVariableRefactoring
-				class: LintRuleTest
+				class: LintRuleTestData
 				selector: #displayName
 				variable: 'nameStream'.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTest'.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
 	self assert: (class parseTreeFor: #displayName)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'displayName
 								nameStream := WriteStream on: (String new: 64).
 								nameStream

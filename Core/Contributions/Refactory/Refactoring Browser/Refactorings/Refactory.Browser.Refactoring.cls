@@ -2,7 +2,7 @@
 
 Core.Object subclass: #'Refactory.Browser.Refactoring'
 	instanceVariableNames: 'model options'
-	classVariableNames: 'AbortSignal RefactoringOptions'
+	classVariableNames: 'RefactoringOptions'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -80,15 +80,13 @@ convertMethod: aRBMethod using: aParseTreeRewriter
 	(aParseTreeRewriter executeTree: parseTree)
 		ifTrue: [aRBMethod modelClass compileTree: aParseTreeRewriter tree]!
 
-copyOptionsFrom: aDictionary 
-	| dict |
+copyOptionsFrom: aDictionary
+	| dict defaults |
 	dict := self options.
-	dict == self class refactoringOptions 
-		ifTrue: [^self options: aDictionary copy].
-	dict keysAndValuesDo: 
-			[:key :value | 
-			value == (self class refactoringOptions at: key) 
-				ifTrue: [dict at: key put: (aDictionary at: key)]].
+	defaults := self class refactoringOptions.
+	dict == defaults ifTrue: [^self options: aDictionary copy].
+	dict
+		keysAndValuesDo: [:key :value | value == (defaults at: key) ifTrue: [dict at: key put: (aDictionary at: key)]].
 	self options: dict!
 
 defaultEnvironment
@@ -111,9 +109,23 @@ getOptionExtractAssignment: aString
 	^self confirm: ('Do you want to extract the assignment of <1s><n>at the end of selection?'
 				expandMacrosWith: aString)!
 
+getOptionImplementorToInline: anOrderedCollection
+	^self error: 'Option not implemented'!
+
 getOptionInlineExpression: aString
 	^self confirm: ('Do you want to inline "<1s>"? If not, it will be assigned as a temporary.'
 				expandMacrosWith: aString)!
+
+getOptionInlineOverridden: aSymbol of: aClass
+	^self confirm: ('<1d>>><2p> is overridden.<n>Do you want to inline it anyway?'
+				expandMacrosWith: aClass unqualifiedName
+				with: aSymbol)!
+
+getOptionInlineReordered: inlineRBMethod into: intoRBMethod
+	^self
+		confirm: ('To inline <1p> into <2p> we need to move some of its statements before the original message send.<n>This could change the order of execution, which can change the behavior.<n>Do you want to proceed?'
+				expandMacrosWith: inlineRBMethod
+				with: intoRBMethod)!
 
 getOptionMethodName: anRBMethodName
 	| mname |
@@ -125,6 +137,24 @@ getOptionMethodName: anRBMethodName
 
 getOptionOpenBrowser: anRBEnvironment
 	^anRBEnvironment openEditor!
+
+getOptionPullUpNonSharedInstVar: aString
+	^self
+		confirm: 'Not all subclasses have an instance variable named <1p>.<n>Do you want pull up this variable anyway?'
+				<< aString!
+
+getOptionRemoveMethod: aSymbol referencedIn: aCollection
+	(self
+		confirm: ('The selector <1p> is referenced from <2d> other methods.<n><n>Would you like to browse references?'
+				expandMacrosWith: aSymbol
+				with: aCollection size))
+			ifTrue: [self openBrowserOn: (self model environment referencesTo: aSymbol)].
+	^false!
+
+getOptionRenameAllDefinitions: aCollection of: aSymbol
+	^aCollection size <= 1 or: 
+			[self confirm: ('This will modify all <1p> implementors. Proceed anyway?'
+						expandMacrosWith: aCollection size)]!
 
 getOptionSelfArgumentName
 	^UI.Prompter prompt: 'Enter name for argument to refer to "self" in extracted method'!
@@ -157,22 +187,22 @@ model
 	#rbFix.	"Use #displayString instead of #printString for the name"
 	^model isNil
 		ifTrue: 
-			[model := (RBNamespace onEnvironment: self defaultEnvironment)
-						name: self displayString;
-						yourself]
+			[model := RBNamespace onEnvironment: self defaultEnvironment.
+			model name: self displayString.
+			model]
 		ifFalse: [model]!
 
 model: aRBNamespace 
 	model := aRBNamespace!
 
 onError: aBlock do: errorBlock 
-	^aBlock on: self class preconditionSignal
+	^aBlock on: self class preconditionSignal, self class abortSignal
 		do: 
 			[:ex | 
-			errorBlock value.
+			errorBlock cull: ex.
 			ex return: nil]!
 
-openBrowserOn: anEnvironment 
+openBrowserOn: anEnvironment
 	^(self options at: #openBrowser) value: self value: anEnvironment!
 
 options
@@ -201,13 +231,14 @@ primitiveExecute
 	self checkPreconditions.
 	self transform!
 
+refactoringAborted
+	^self refactoringAborted: '<1d> aborted' << self!
+
 refactoringAborted: aString
 	#rbFix.	"Added so can trap user cancellation separately from actual errors and avoid annoying extra message box"
-	^AbortSignal signal: aString!
+	^self class abortSignal signal: aString ?? 'Refactoring aborted'!
 
 refactoringError: aString
-	#rbFix.	"Non-ANSI VisualWorks specific signal"
-	"RefactoringError raiseSignal: aString"
 	RefactoringError refactoring: self signal: aString!
 
 refactoringError: aString with: aBlock
@@ -218,15 +249,9 @@ refactoringError: aString with: aBlock
 		with: aBlock!
 
 refactoringWarning: aString
-	#rbFix.	"Use ANSI standard #signal:with: message, and include the Refactoring in the exception too"
-	"RefactoringWarning raiseSignal: aString"
 	RefactoringWarning refactoring: self signal: aString!
 
-requestImplementorToInline: implementorsCollection 
-	^(self options at: #implementorToInline) value: self
-		value: implementorsCollection!
-
-requestMethodNameFor: aMethodName 
+requestMethodNameFor: aMethodName
 	^(self options at: #methodName) value: self value: aMethodName!
 
 requestSelfArgumentName
@@ -250,11 +275,16 @@ safeMethodNameFor: aClass basedOn: aString
 	^newString asSymbol!
 
 selectVariableToMoveMethodTo: aSelector class: aClass
-	^(self options at: #selectVariableToMoveTo) valueWithArguments: {self. aClass. aSelector}!
+	^(self options at: #selectVariableToMoveTo)
+		value: self
+		value: aClass
+		value: aSelector!
 
 selectVariableTypesFrom: initialTypeCollection selected: selectedTypeCollection
 	^(self options at: #variableTypes)
-		valueWithArguments: {self. initialTypeCollection. selectedTypeCollection}!
+		value: self
+		value: initialTypeCollection
+		value: selectedTypeCollection!
 
 setOption: aSymbol toUse: aBlock 
 	| dict |
@@ -263,17 +293,11 @@ setOption: aSymbol toUse: aBlock
 	dict at: aSymbol put: aBlock.
 	self options: dict!
 
-shouldExtractAssignmentTo: aString 
+shouldExtractAssignmentTo: aString
 	^(self options at: #extractAssignment) value: self value: aString!
 
-shouldInlineExpression: aString 
-	^(self options at: #inlineExpression) value: self value: aString!
-
-shouldOverride: aSelector in: aClass
-	^(self options at: #alreadyDefined) valueWithArguments: {self. aClass. aSelector}!
-
-shouldUseExistingMethod: aSelector 
-	^(self options at: #useExistingMethod) value: self value: aSelector!
+shouldPullUpNonSharedInstanceVariable: aString
+	^(self options at: #pullUpNonSharedInstVar) value: self value: aString!
 
 transform
 	self subclassResponsibility!
@@ -317,11 +341,17 @@ copyOptionsFrom:!accessing!public! !
 defaultEnvironment!public!transforming! !
 execute!public!transforming! !
 getOptionAlreadyDefined:selector:!options!public! !
-getOptionBrowseEnvironments:!public! !
+getOptionBrowseEnvironments:!options!public! !
 getOptionExtractAssignment:!options!public! !
+getOptionImplementorToInline:!options!public! !
 getOptionInlineExpression:!options!public! !
+getOptionInlineOverridden:of:!preconditions!public! !
+getOptionInlineReordered:into:!options!public! !
 getOptionMethodName:!options!public! !
 getOptionOpenBrowser:!options!public! !
+getOptionPullUpNonSharedInstVar:!options!public! !
+getOptionRemoveMethod:referencedIn:!options!public! !
+getOptionRenameAllDefinitions:of:!options!public! !
 getOptionSelfArgumentName!options!public! !
 getOptionUseExistingMethod:!options!public! !
 getOptionVariableToMoveToOf:in:!options!public! !
@@ -336,11 +366,11 @@ performComponentRefactoring:!public!transforming! !
 poolVariableNamesFor:!public!utilities! !
 preconditions!preconditions!public! !
 primitiveExecute!operations!private! !
+refactoringAborted!exceptions!private! !
 refactoringAborted:!exceptions!private! !
 refactoringError:!exceptions!private! !
 refactoringError:with:!exceptions!private! !
 refactoringWarning:!exceptions!private! !
-requestImplementorToInline:!public!requests! !
 requestMethodNameFor:!public!requests! !
 requestSelfArgumentName!public!requests! !
 safeMethodNameFor:basedOn:!public!utilities! !
@@ -348,9 +378,7 @@ selectVariableToMoveMethodTo:class:!public!requests! !
 selectVariableTypesFrom:selected:!public!requests! !
 setOption:toUse:!accessing!public! !
 shouldExtractAssignmentTo:!public!requests! !
-shouldInlineExpression:!public!requests! !
-shouldOverride:in:!public!requests! !
-shouldUseExistingMethod:!public!requests! !
+shouldPullUpNonSharedInstanceVariable:!preconditions!public! !
 transform!public!transforming! !
 uniqueMethodNameFor:!helpers!private! !
 whichVariableNode:inInterval:name:!public!utilities! !
@@ -359,29 +387,48 @@ whichVariableNode:inInterval:name:!public!utilities! !
 !Refactory.Browser.Refactoring class methodsFor!
 
 abortSignal
-	^AbortSignal!
+	^OperationAborted!
 
 initialize
-	AbortSignal := Signal description: 'Refactoring Aborted'!
+	self initializeRefactoringOptions!
 
 initializeRefactoringOptions
 	"
 		self initializeRefactoringOptions
 	"
 
-	#rbFix.	"Updated for Dolphin UI and extracted blocks into Refactoring methods so can override"
-	RefactoringOptions := IdentityDictionary new.
-	self
-		setDefaultOption: #methodName toMessage: #getOptionMethodName:;
-		setDefaultOption: #selfArgumentName toMessage: #getOptionSelfArgumentName;
-		setDefaultOption: #selectVariableToMoveTo toMessage: #getOptionVariableToMoveToOf:in:;
-		setDefaultOption: #variableTypes toMessage: #getOptionVariableTypes:selected:;
-		setDefaultOption: #extractAssignment toMessage: #getOptionExtractAssignment:;
-		setDefaultOption: #inlineExpression toMessage: #getOptionInlineExpression:;
-		setDefaultOption: #alreadyDefined toMessage: #getOptionAlreadyDefined:selector:;
-		setDefaultOption: #useExistingMethod toMessage: #getOptionUseExistingMethod:;
-		setDefaultOption: #openBrowser toMessage: #getOptionOpenBrowser:;
-		setDefaultOption: #browseEnvironments toMessage: #getOptionBrowseEnvironments:!
+	RefactoringOptions := (IdentityDictionary
+				withAll: {#methodName -> [:refactoring :methodName | refactoring getOptionMethodName: methodName].
+						#selfArgumentName -> [:refactoring | refactoring getOptionSelfArgumentName].
+						#selectVariableToMoveTo
+							-> [:refactoring :class :selector | refactoring getOptionVariableToMoveToOf: class in: selector].
+						#variableTypes
+							-> [:refactoring :initial :selected | refactoring getOptionVariableTypes: initial selected: selected].
+						#extractAssignment
+							-> [:refactoring :varName | refactoring getOptionExtractAssignment: varName].
+						#inlineExpression
+							-> [:refactoring :expression | refactoring getOptionInlineExpression: expression].
+						#alreadyDefined
+							-> [:refactoring :class :selector | refactoring getOptionAlreadyDefined: class selector: selector].
+						#useExistingMethod
+							-> [:refactoring :selector | refactoring getOptionUseExistingMethod: selector].
+						#openBrowser -> [:refactoring :env | refactoring getOptionOpenBrowser: env].
+						#browseEnvironments
+							-> [:refactoring :environments | refactoring getOptionBrowseEnvironments: environments].
+						#removeReferencedSelector
+							-> [:refactoring :selector :references | refactoring getOptionRemoveMethod: selector referencedIn: references].
+						#renameAllDefinitions
+							-> [:refactoring :definitions :selector | refactoring getOptionRenameAllDefinitions: definitions of: selector].
+						#inlineReordered
+							-> [:refactoring :from :into | refactoring getOptionInlineReordered: from into: into].
+						#pullUpNonSharedInstVar
+							-> [:refactoring :varName | refactoring getOptionPullUpNonSharedInstVar: varName].
+						#inlineOverridden
+							-> [:refactoring :selector :class | refactoring getOptionInlineOverridden: selector of: class].
+						#implementorToInline
+							-> [:rcvr :implementors | rcvr getOptionImplementorToInline: implementors]})
+				isImmutable: true;
+				yourself!
 
 new
 	^(super new)
@@ -396,29 +443,23 @@ preconditionSignal
 	^RefactoringError , RefactoringWarning!
 
 refactoringOptions
-	RefactoringOptions isNil ifTrue: [self initializeRefactoringOptions].
 	^RefactoringOptions!
 
-setDefaultOption: aSymbol to: aBlock 
-	self refactoringOptions at: aSymbol put: aBlock!
-
-setDefaultOption: aSymbol toMessage: aSelector
-	#rbFix.
-	self setDefaultOption: aSymbol to: (Message selector: aSelector)!
+setDefaultOption: aSymbol to: aBlock
+	RefactoringOptions whileMutableDo: [RefactoringOptions at: aSymbol put: aBlock]!
 
 uninitialize
 	#rbFix. "Assist uninstallation of Dolphin package."
 	RefactoringOptions := nil! !
 !Refactory.Browser.Refactoring class categoriesForMethods!
 abortSignal!accessing!public! !
-initialize!public! !
+initialize!initializing!public! !
 initializeRefactoringOptions!accessing!public! !
 new!instance creation!public! !
 onPreStripImage!class hierarchy-removing!public! !
 preconditionSignal!accessing signal!public! !
 refactoringOptions!accessing!public! !
 setDefaultOption:to:!accessing!public! !
-setDefaultOption:toMessage:!accessing!public! !
 uninitialize!class hierarchy-removing!public! !
 !
 

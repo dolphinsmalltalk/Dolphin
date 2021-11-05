@@ -687,6 +687,7 @@ dropMethods: aDragDropSession onto: aClass
 					((classesPresenter
 						dropMethod: method
 						onto: aClass
+						isMove: isMove
 						changes: changes) and: 
 								[count := count + 1.
 								isMove])
@@ -1496,20 +1497,26 @@ onRenameInstVar: anAssociation to: aString
 onRenameInstVar: anAssociation to: aString accept: aValueHolder
 	"Private - In-place inst var rename has been made by the user, validate it."
 
-	aValueHolder
-		value: (
-			[self systemModel
+	| result |
+	result := self systemModel
 				validateRenameInstVar: anAssociation value
 				to: aString
 				in: anAssociation key.
-			true]
-					on: Error
-					do: 
-						[:ex |
-						MessageBox new
-							headline: 'Unable to rename the <1d> instance variable ''<2d>'' to ''<3s>''' << {anAssociation key. anAssociation value. aString};
-							errorMsg: ex description.
-						false])!
+	result value
+		ifFalse: 
+			[| mb |
+			mb := MessageBox new.
+			mb text: 'Unable to rename <1d>.<2d> to ''<3s>'''
+						<< {anAssociation key. anAssociation value. aString}.
+			result hint
+				ifNil: [mb iconStyle: #error]
+				ifNotNil: 
+					[:ex |
+					mb
+						headline: ex displayString;
+						iconStyle: ex iconStyle].
+			mb open].
+	aValueHolder value: result value!
 
 onRenameMethodProtocol: aMethodProtocol to: aString accept: aValueHolder
 	(self validateProtocol: aMethodProtocol renameTo: aString) 
@@ -1985,15 +1992,21 @@ removeMethodsInCategory
 	"Private - Remove all of the methods in the currently selected category. As this is rather
 	drastic the user will be prompted."
 
-	| classEnvironment categoryEnvironment |
+	| classEnvironment categoryEnvironment searchEnvironment |
 	classEnvironment := self searchEnvironment forClasses: {self actualClass}.
 	categoryEnvironment := classEnvironment forMethodCategories: self categories.
 	categoryEnvironment label: ('methods of <1p> in the ''<2d>'' category and its subcategories'
 				expandMacrosWith: classEnvironment
 				with: self category).
-	[self systemModel removeMethodsIn: categoryEnvironment within: self searchEnvironment]
-		on: OperationAborted
-		do: [:ex | self statusModel value: ex]!
+	searchEnvironment := self searchEnvironment.
+	(MessageBox new
+		headline: 'Remove Methods?';
+		defaultButton: 2;
+		customButtons: #(#(#yes '&Remove') #(#no '&Don''t Remove'));
+		isCancellable: true;
+		confirm: 'Are you sure you would like to remove <1p>?' << categoryEnvironment)
+			ifTrue: [self systemModel basicRemoveMethodsIn: categoryEnvironment within: searchEnvironment].
+	self systemModel!
 
 removeMethodsInProtocol
 	"Private - Remove all of the methods in the currently selected protocol.
@@ -2265,7 +2278,7 @@ statusModel
 	^statusModel!
 
 statusText: aString
-	self statusModel value: (aString isNil ifFalse: [Notification new messageText: aString])!
+	self statusModel value: (aString isNil ifFalse: [Notification messageText: aString])!
 
 toggleFilterObjectMethods
 	"Toggle between showing <Object> methods or not"
@@ -2708,7 +2721,7 @@ setVisitTimer!helpers!private! !
 shortCaption!accessing!public! !
 slideyPinNames!accessing!private! !
 sourceCardName!constants!private! !
-statusModel!accessing!private! !
+statusModel!accessing!public! !
 statusText:!accessing!private! !
 toggleFilterObjectMethods!commands!public! !
 toggleProtocolReadOnly!commands!public! !

@@ -26,8 +26,7 @@ checkSendersAccessTo: name
 				ifNone: nil.
 	violatorClass notNil
 		ifTrue: 
-			[self refactoringError: ('<1s> doesn''t appear to be defined in <2p>' expandMacrosWith: name
-						with: violatorClass)]!
+			[self refactoringError: ('<1p> is not defined in <2p>' expandMacrosWith: name with: violatorClass)]!
 
 checkVariableReferencesIn: aParseTree
 	| searcher |
@@ -39,6 +38,12 @@ checkVariableReferencesIn: aParseTree
 			name := aNode name.
 			(aNode whoDefines: name) isNil ifTrue: [self checkSendersAccessTo: name]].
 	searcher executeTree: aParseTree!
+
+initializer
+	^initializer!
+
+initializer: aString
+	initializer := aString!
 
 modifyImplementorParseTree: parseTree in: aClass
 	| name newArg allTempVars |
@@ -126,19 +131,21 @@ suggestedVariableNameIn: aClass
 
 verifyInitializationExpression
 	| tree |
-	tree := RBParser parseExpression: initializer
-				onError: 
-					[:msg :index | 
-					self refactoringError: 'Illegal initialization code because:.' , msg].
-	tree isValue 
+	initializer isEmpty ifTrue: [self refactoringError: 'The initialization code cannot be empty'].
+	tree := RBParser
+				parseExpression: initializer
+				in: class
+				onError: [:ex | self refactoringError: ex errorMessage].
+	tree isValue
 		ifFalse: 
-			[self 
-				refactoringError: 'The initialization code cannot be a return node or a list of statements'].
+			[self refactoringError: 'The initialization code cannot be a return node or a list of statements'].
 	self checkVariableReferencesIn: tree! !
 !Refactory.Browser.AddParameterRefactoring categoriesForMethods!
 addParameterToMethod:in:newSelector:initializer:!initialize/release!public! !
 checkSendersAccessTo:!preconditions!public! !
 checkVariableReferencesIn:!preconditions!public! !
+initializer!accessing!public! !
+initializer:!accessing!public! !
 modifyImplementorParseTree:in:!private! !
 myConditions!preconditions!public! !
 newSelectorString!private! !

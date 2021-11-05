@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Tests.FooLintRuleTest subclass: #'Refactory.Browser.Tests.TransformationRuleTest'
+Refactory.Browser.Tests.FooLintRuleTestData subclass: #'Refactory.Browser.Tests.TransformationRuleTestData'
 	instanceVariableNames: 'rewriteRule builder class'
 	classVariableNames: 'RecursiveSelfRule'
 	imports: #()
@@ -8,10 +8,10 @@ Refactory.Browser.Tests.FooLintRuleTest subclass: #'Refactory.Browser.Tests.Tran
 	classConstants: {
 		'Bar' -> 16r7B
 	}!
-Refactory.Browser.Tests.TransformationRuleTest guid: (Core.GUID fromString: '{f92d7547-3000-44f7-94ae-0c8b01fc5f2d}')!
-Refactory.Browser.Tests.TransformationRuleTest comment: ''!
-!Refactory.Browser.Tests.TransformationRuleTest categoriesForClass!Refactory-Test data! !
-!Refactory.Browser.Tests.TransformationRuleTest methodsFor!
+Refactory.Browser.Tests.TransformationRuleTestData guid: (Core.GUID fromString: '{f92d7547-3000-44f7-94ae-0c8b01fc5f2d}')!
+Refactory.Browser.Tests.TransformationRuleTestData comment: ''!
+!Refactory.Browser.Tests.TransformationRuleTestData categoriesForClass!Refactory-Test data! !
+!Refactory.Browser.Tests.TransformationRuleTestData methodsFor!
 
 checkMethod: aSmalllintContext 
 	class := aSmalllintContext selectedClass.
@@ -55,7 +55,7 @@ viewResults
 
 	builder inspect.
 	self resetResult! !
-!Refactory.Browser.Tests.TransformationRuleTest categoriesForMethods!
+!Refactory.Browser.Tests.TransformationRuleTestData categoriesForMethods!
 checkMethod:!accessing!public! !
 hasConflicts!public!testing! !
 isEmpty!public!testing! !
@@ -66,7 +66,7 @@ superSends!public!rules! !
 viewResults!private! !
 !
 
-!Refactory.Browser.Tests.TransformationRuleTest class methodsFor!
+!Refactory.Browser.Tests.TransformationRuleTestData class methodsFor!
 
 assignmentInIfTrue
 	^self rewrite: #(
@@ -292,7 +292,7 @@ unwindBlocks
 				"->"	'^[| `@temps | ``@.Statements. ``@object] valueOnUnwindDo: ``@block'))
 		methods: false
 		name: 'Move assignment out of valueNowOrUnwindDo: blocks'! !
-!Refactory.Browser.Tests.TransformationRuleTest class categoriesForMethods!
+!Refactory.Browser.Tests.TransformationRuleTestData class categoriesForMethods!
 assignmentInIfTrue!public!transformations! !
 atIfAbsent!public!transformations! !
 betweenAnd!public!transformations! !

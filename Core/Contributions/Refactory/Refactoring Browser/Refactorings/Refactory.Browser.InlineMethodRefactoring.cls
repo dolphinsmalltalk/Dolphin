@@ -33,6 +33,9 @@ checkSuperMessages
 						refactoringError: ('Cannot inline method since it sends a super message <1s> that is overridden'
 								expandMacrosWith: each)]]!
 
+chosenInlineClass
+	^class!
+
 compileMethod
 	class compileTree: sourceParseTree!
 
@@ -47,11 +50,6 @@ findSelectedMessage
 		ifFalse: [self refactoringError: 'The selection doesn''t appear to be a message send'].
 	(sourceMessage receiver isSelfVariable or: [sourceMessage receiver isSuperVariable])
 		ifFalse: [self refactoringError: 'Cannot inline non-self messages']!
-
-getOptionImplementorToInline: anOrderedCollection
-	^UI.ChoicePrompter
-		choices: (anOrderedCollection asSortedCollection: [:a :b | a displayString <= b displayString])
-		caption: 'Inline <1p> from…' << sourceMessage selector!
 
 hasMultipleReturns
 	"Do we have multiple returns? If the last statement isn't a return, then we have an implicit return of self."
@@ -86,24 +84,20 @@ inlineSelector
 	sourceMessage isNil ifTrue: [self findSelectedMessage].
 	^sourceMessage selector!
 
-inlineSourceReplacing: aParseTree 
+inlineSourceReplacing: aParseTree
 	| statements nodeUnderSequence |
 	statements := inlineParseTree body statements.
-	(statements size > 1 and: [aParseTree isEvaluatedFirst not]) 
+	(statements size > 1 and: [aParseTree isEvaluatedFirst not])
 		ifTrue: 
-			[self 
-				refactoringWarning: 'To inline this method, we need to move some of its statements before the original message send.<n>This could change the order of execution, which can change the behavior.<n>Do you want to proceed?' 
-						expandMacros].
+			[(self shouldInlineReordered: (self inlineClass methodFor: self inlineSelector)
+				into: (class methodFor: sourceSelector)) ifFalse: [self refactoringAborted]].
 	nodeUnderSequence := aParseTree.
-	[nodeUnderSequence parent isSequence] 
-		whileFalse: [nodeUnderSequence := nodeUnderSequence parent].
-	(nodeUnderSequence parent)
-		addNodes: (statements copyFrom: 1 to: (statements size - 1 max: 0))
-			before: nodeUnderSequence;
+	[nodeUnderSequence parent isSequence] whileFalse: [nodeUnderSequence := nodeUnderSequence parent].
+	nodeUnderSequence parent
+		addNodes: (statements copyFrom: 1 to: (statements size - 1 max: 0)) before: nodeUnderSequence;
 		addTemporariesNamed: inlineParseTree body temporaryNames.
-	aParseTree replaceWith: (statements isEmpty 
-				ifTrue: [RBVariableNode named: 'self']
-				ifFalse: [statements last])!
+	aParseTree
+		replaceWith: (statements isEmpty ifTrue: [RBVariableNode named: 'self'] ifFalse: [statements last])!
 
 insertInlinedMethod
 	| node |
@@ -123,7 +117,7 @@ insertInlinedMethod
 	self removeImmediateBlocks!
 
 isOverridden
-	^class allSubclasses 
+	^self chosenInlineClass allSubclasses
 		anySatisfy: [:each | each directlyDefinesMethod: self inlineSelector]!
 
 isPrimitive
@@ -195,9 +189,8 @@ preconditions
 					self parseInlineMethod.
 					self isOverridden
 						ifTrue: 
-							[self refactoringWarning: ('<1p>>><2s> is overridden. Do you want to inline it anyway?'
-										expandMacrosWith: self inlineClass
-										with: self inlineSelector)].
+							[(self shouldInlineOverriddenMethod: self inlineSelector of: self inlineClass)
+								ifFalse: [self refactoringAborted]].
 					self isPrimitive ifTrue: [self refactoringError: 'Cannot inline primitives'].
 					self checkSuperMessages.
 					self rewriteInlinedTree.
@@ -288,6 +281,9 @@ replaceArguments
 				ifTrue: [self replaceArgument: source with: replacement]
 				ifFalse: [self addTemporary: source assignedTo: replacement]]!
 
+requestImplementorToInline: implementorsCollection
+	^(self options at: #implementorToInline) value: self value: implementorsCollection!
+
 rewriteCascadedMessage
 	| index messages |
 	messages := sourceMessage parent messages.
@@ -308,6 +304,27 @@ rewriteInlinedTree
 				normalizeIfTrues;
 				normalizeReturns;
 				addSelfReturn]!
+
+shouldInlineExpression: aString
+	"This option replaces use of a RefactoringWarning in Dolphin 8 for prompts as to whether expressions that were arguments to the method being inlined should be inlined into the resulting code, or assigned to a a temporary. Note that the 'inline' choice is not guaranteed to preserve behaviour, e.g. if the expression being inlined has side effects so executing it more than once will behave differently that the original code. The richer prompt that this option provides explains this.."
+
+	^(self options at: #inlineExpression) value: self value: aString!
+
+shouldInlineOverriddenMethod: aSymbol of: aClass
+	"This option replaces use of a RefactoringWarning in Dolphin 8 for inlines of overridden methods, allowing for a more informative message and allowing the user the option to proceed with the refactoring even when not behaviour preserving (i.e. not a true refactoring)."
+
+	^(self options at: #inlineOverridden)
+		value: self
+		value: aSymbol
+		value: aClass!
+
+shouldInlineReordered: inlineRBMethod into: intoRBMethod
+	"This option replaces use of a RefactoringWarning in Dolphin 8 for inlines of argument message-expressions where some statements from the inline will need to be placed before the message to which the message-expression forms an argument. It allows for a much more informative message with some help to try and understand the (rather complex) question."
+
+	^(self options at: #inlineReordered)
+		value: self
+		value: inlineRBMethod
+		value: intoRBMethod!
 
 storeOn: aStream 
 	aStream nextPut: $(.
@@ -344,16 +361,16 @@ writeGuardClauses
 addSelfReturn!public!transforming! !
 addTemporary:assignedTo:!public!transforming! !
 checkSuperMessages!public!transforming! !
+chosenInlineClass!accessing!public! !
 compileMethod!public!transforming! !
 findSelectedMessage!public!transforming! !
-getOptionImplementorToInline:!options!private! !
 hasMultipleReturns!public!testing! !
 inline:inMethod:forClass:!initialize/release!public! !
 inlineClass!public!transforming! !
 inlineSelector!public!transforming! !
 inlineSourceReplacing:!public!transforming! !
 insertInlinedMethod!public!transforming! !
-isOverridden!public! !
+isOverridden!public!testing! !
 isPrimitive!public!testing! !
 moveComments!public!transforming! !
 normalizeIfTrues!public!transforming! !
@@ -368,18 +385,18 @@ renameConflictingTemporary:!public!transforming! !
 renameTemporary:to:!public!transforming! !
 replaceArgument:with:!public!transforming! !
 replaceArguments!public!transforming! !
+requestImplementorToInline:!public!requests! !
 rewriteCascadedMessage!public!transforming! !
 rewriteInlinedTree!public!transforming! !
+shouldInlineExpression:!public!requests! !
+shouldInlineOverriddenMethod:of:!preconditions!public! !
+shouldInlineReordered:into:!public!requests! !
 storeOn:!printing!public! !
 transform!public!transforming! !
 writeGuardClauses!public!transforming! !
 !
 
 !Refactory.Browser.InlineMethodRefactoring class methodsFor!
-
-initialize
-	#rbFix.
-	self setDefaultOption: #implementorToInline toMessage: #getOptionImplementorToInline:!
 
 inline: anInterval inMethod: aSelector forClass: aClass 
 	^self new 
@@ -395,7 +412,6 @@ model: aRBNamespace inline: anInterval inMethod: aSelector forClass: aClass
 			forClass: aClass;
 		yourself! !
 !Refactory.Browser.InlineMethodRefactoring class categoriesForMethods!
-initialize!class initialization!public! !
 inline:inMethod:forClass:!instance creation!public! !
 model:inline:inMethod:forClass:!instance creation!public! !
 !

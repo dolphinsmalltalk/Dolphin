@@ -2,9 +2,9 @@
 
 Core.Object subclass: #'UI.MessageBoxAbstract'
 	instanceVariableNames: 'text caption owner'
-	classVariableNames: 'DefaultCaptions IconStyles'
+	classVariableNames: 'IconStyles'
 	imports: #(#{OS.MessageBoxConstants})
-	classInstanceVariableNames: ''
+	classInstanceVariableNames: 'defaultCaptions'
 	classConstants: {}!
 UI.MessageBoxAbstract guid: (Core.GUID fromString: '{32ce06b2-35c6-41eb-a41f-6b20f935676d}')!
 UI.MessageBoxAbstract isNonInstantiable: true!
@@ -36,9 +36,7 @@ areLinksParsed: aBoolean
 beep
 	"Private - Play the system parp appropriate for the style of the receiver."
 
-	| iStyle |
-	iStyle := self iconStyleFlag.
-	iStyle = 0 ifFalse: [User32 messageBeep: iStyle]!
+	self isSilent ifFalse: [User32 messageBeep: self iconStyleFlag]!
 
 caption
 	"Answer the receiver's current caption."
@@ -85,6 +83,11 @@ iconStyleFlag: anInteger
 	"Private - Set the receiver's icon to be that named by the argument."
 
 	^self subclassResponsibility!
+
+isSilent
+	"Answer whether the bubble will remain silent when opened. The default is to beep in an appropriate way depending on the icon style."
+
+	^self iconStyleFlag = 0!
 
 notify
 	self hasIcon ifFalse: [self iconStyle: #notify].
@@ -146,6 +149,7 @@ iconStyle!accessing-styles!public! !
 iconStyle:!accessing-styles!public! !
 iconStyleFlag!accessing-styles!private! !
 iconStyleFlag:!accessing-styles!private! !
+isSilent!parping!public!testing! !
 notify!operations!public! !
 notify:!operations!public! !
 open!displaying!public! !
@@ -164,7 +168,7 @@ defaultCaption: aSymbol
 	"Private - Answer a suitable default caption based on style of the 
 	message box."
 
-	^DefaultCaptions at: aSymbol ifAbsent: [SessionManager current applicationName]!
+	^defaultCaptions at: aSymbol ifAbsent: [SessionManager current applicationName]!
 
 errorMsg: aString 
 	"Display a message with the default error caption, standard error icon, the specified
@@ -183,25 +187,16 @@ errorMsg: errorString caption: titleString
 initialize
 	"Private - Initialize the class variables of the receiver:
 		self initialize
-
 	"
 
-	IconStyles := IdentityDictionary new
-				at: #none put: 0;
-				at: #error put: MB_ICONERROR;
-				at: #prompt put: MB_ICONQUESTION;
-				at: #warning put: MB_ICONWARNING;
-				at: #notify put: MB_ICONINFORMATION;
-				at: #user put: MB_USERICON;
-				shrink;
-				yourself.
-
-	"Where there is no entry in the table for the message box type, the application name is used."
-	DefaultCaptions := IdentityDictionary new
-				at: #prompt put: 'Please confirm…';
-				at: #notify put: 'Note';
-				shrink;
-				yourself	"Use the Windows default caption"!
+	IconStyles := (IdentityDictionary withAll: {#none -> 0.
+						#error -> MB_ICONERROR.
+						#prompt -> MB_ICONQUESTION.
+						#warning -> MB_ICONWARNING.
+						#notify -> MB_ICONINFORMATION.
+						#user -> MB_USERICON})
+				isImmutable: true;
+				yourself!
 
 new
 	"Answer a new, initialized, instance of the receiver."

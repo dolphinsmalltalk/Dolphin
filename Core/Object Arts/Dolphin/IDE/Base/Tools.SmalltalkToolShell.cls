@@ -2,7 +2,7 @@
 
 UI.Shell subclass: #'Tools.SmalltalkToolShell'
 	instanceVariableNames: 'searchPresenter fontSizePresenter'
-	classVariableNames: 'HistoryDwellTime PersistingOptions SearchFieldFlashes'
+	classVariableNames: 'HistoryDwellTime SearchFieldFlashes'
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: 'optionFlags defaultView defaultExtent defaultSlideyPinsMap additionalKeyBindings commandQueryHandlers'
 	classConstants: {
@@ -207,6 +207,13 @@ packageManager
 
 	^self systemModel packageManager!
 
+performCommand: aCommand
+	^[super performCommand: aCommand] on: OperationAborted
+		do: 
+			[:ex |
+			self statusModel value: ex.
+			nil]!
+
 queryCommand: aCommandQuery 
 	"Private - Enter details about a potential command for the receiver into the 
 	<CommandQuery>."
@@ -344,6 +351,9 @@ slideyPinMap: anIdentityDictionary
 slideyPinNames
 	^#()!
 
+statusModel
+	^[:ex | ex toTrace]!
+
 systemModel
 	^SmalltalkSystem current!
 
@@ -378,6 +388,7 @@ methodBrowserClass!constants!private! !
 onDropDown:!private! !
 onViewOpened!private! !
 packageManager!constants!private! !
+performCommand:!commands!public! !
 queryCommand:!commands!private! !
 rememberThisSize!commands!public! !
 saveStateAspects:for:on:!helpers!private!saved state! !
@@ -396,6 +407,7 @@ show!operations!public! !
 slideyPinMap!accessing!public! !
 slideyPinMap:!accessing!public! !
 slideyPinNames!accessing!private! !
+statusModel!accessing!private! !
 systemModel!accessing!private! !
 workspaceClass!constants!private! !
 !

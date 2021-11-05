@@ -13,14 +13,10 @@ Refactory.Browser.PullUpInstanceVariableRefactoring comment: ''!
 
 preconditions
 	^RBCondition withBlock: 
-			[(class hierarchyDefinesInstanceVariable: variableName) 
+			[(class hierarchyDefinesInstanceVariable: variableName)
 				ifFalse: [self refactoringError: 'No subclass defines ' , variableName].
-			(class subclasses 
-				anySatisfy: [:each | (each directlyDefinesInstanceVariable: variableName) not]) 
-					ifTrue: 
-						[self 
-							refactoringWarning: 'Not all subclasses have an instance variable named ' , variableName 
-									, '.'].
+			(class subclasses anySatisfy: [:each | (each directlyDefinesInstanceVariable: variableName) not])
+				ifTrue: [(self shouldPullUpNonSharedInstanceVariable: variableName) ifFalse: [self refactoringAborted]].
 			true]!
 
 transform

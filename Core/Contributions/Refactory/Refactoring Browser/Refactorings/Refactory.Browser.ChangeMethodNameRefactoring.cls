@@ -61,33 +61,7 @@ preconditions
 				into: [:condition :each | condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not].
 	^conditions
 		& (RBCondition withBlock: 
-					[| definitions |
-					definitions := self implementors.
-					definitions size > 1
-						ifTrue: 
-							[| msg |
-							#rbFix.	"Include list of classes (if short) so user can get better idea of effect"
-							msg := String writeStream.
-							definitions size < 30
-								ifTrue: 
-									[msg
-										print: oldSelector;
-										nextPutAll: ' is implemented in:';
-										cr.
-									(definitions asSortedCollection: [:a :b | a name < b name]) do: 
-											[:each |
-											msg
-												crtab;
-												print: each].
-									msg
-										cr;
-										cr].
-							msg
-								nextPutAll: 'This will modify all ';
-								display: definitions size;
-								nextPutAll: ' implementors.'.
-							self refactoringWarning: msg contents].
-					true])!
+					[(self shouldRenameDefinitions: self implementors of: oldSelector) or: [self refactoringAborted]])!
 
 removeRenamedImplementors
 	oldSelector == newSelector ifTrue: [^self].
@@ -96,7 +70,7 @@ removeRenamedImplementors
 renameImplementors
 	self implementors do: 
 			[:each |
-			| parseTree namespace package |
+			| parseTree packageAndEnv |
 			parseTree := each parseTreeFor: oldSelector.
 			parseTree isNil ifTrue: [self refactoringError: 'Could not parse source code.'].
 			self implementorsCanBePrimitives
@@ -107,19 +81,12 @@ renameImplementors
 										with: oldSelector)]].
 			self modifyImplementorParseTree: parseTree in: each.
 			"We must maintain any custom packaging or namespace of the original method, or the new method may not compile"
-			(each existingMethodAt: oldSelector)
-				ifNil: 
-					[namespace := each environment.
-					package := nil]
-				ifNotNil: 
-					[:method |
-					namespace := self model classFor: method environment.
-					package := method owningPackage].
+			packageAndEnv := (each existingMethodPackageAndEnvironment: oldSelector).
 			each
 				compileTree: parseTree
-				environment: namespace
+				environment: packageAndEnv second
 				categories: (each protocolsFor: oldSelector)
-				package: package]!
+				package: packageAndEnv first]!
 
 renameMessageSends
 	self convertAllReferencesTo: oldSelector using: self parseTreeRewriter!
@@ -131,6 +98,14 @@ renameMethod: aSelector in: aClass to: newSel permutation: aMap
 	newSelector := newSel asSymbol.
 	class := self classObjectFor: aClass.
 	permutation := aMap!
+
+shouldRenameDefinitions: aCollection of: aSymbol
+	"This option replaces use of a RefactoringWarning in Dolphin 8 for renames where there are multiple implementors because requesting option input allows for a better user experience with a much richer message box."
+
+	^(self options at: #renameAllDefinitions)
+		value: self
+		value: aCollection
+		value: aSymbol!
 
 transform
 	self renameImplementors.
@@ -151,6 +126,7 @@ removeRenamedImplementors!public!transforming! !
 renameImplementors!public!transforming! !
 renameMessageSends!public!transforming! !
 renameMethod:in:to:permutation:!initialize/release!public! !
+shouldRenameDefinitions:of:!public!requests! !
 transform!public!transforming! !
 !
 

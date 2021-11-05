@@ -18,11 +18,13 @@ testProtectInstanceVariable
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #'Refactory.Browser.Tests.SubclassOfClassToRename'.
 	self assert: (class parseTreeFor: #calls1)
-		equals: (RBParser parseMethod: 'calls1
+		equals: (self parseMethod: 'calls1
 								^rewriteRule1 := (rewriteRule1 := self calls)').
 	self assert: (class parseTreeFor: #calls)
-		equals: (RBParser parseMethod: 'calls
+		equals: (self parseMethod: 'calls
 								^rewriteRule1 := rewriteRule1 , rewriteRule1').
+	"The name method should be preserved, even though it returns the value of the instance variable, because it is sent from elsewhere and so cannot be removed if behaviour is to be preserved."
+	self assert: (class directlyDefinesMethod: 'name' asSymbol).
 	self deny: (class directlyDefinesMethod: ('rewrite' , 'Rule1') asSymbol).
 	self deny: (class directlyDefinesMethod: ('rewrite' , 'Rule1:') asSymbol)!
 

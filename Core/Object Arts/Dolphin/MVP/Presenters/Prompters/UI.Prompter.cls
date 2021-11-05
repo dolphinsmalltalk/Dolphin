@@ -1,22 +1,39 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ValueDialog subclass: #'UI.Prompter'
-	instanceVariableNames: 'promptPresenter replyPresenter validationBlock'
+	instanceVariableNames: 'promptPresenter replyPresenter validater validationResult hintBubble validationDwell hintDwell flags hintFont'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'NoHintBubble' -> 16r1.
+		'NoHintWhenEmpty' -> 16r2.
+		'ValidationTimerId' -> 16r1
+	}!
 UI.Prompter guid: (Core.GUID fromString: '{87b4c6ac-026e-11d3-9fd7-00a0cc3e4a32}')!
-UI.Prompter comment: 'Prompter is a <valueDialogPresenter> that can be used to prompt a user to enter a <readableString> response to a question. The <valueModel> initially holds the default response and, if the dialog is confirmed, will hold the actual response from the user.
+UI.Prompter comment: '`Prompter` is a `<valueDialogPresenter>` that can be used to prompt a user to enter a `<readableString>` response to a question. The `<valueModel>` initially holds the default response and, if the dialog is confirmed, will hold the actual response from the user.
 
-Instance Variables:
-	promptPresenter	<TextPresenter> holding the prompt text.
-	replyPresenter		<TextPresenter> holding the reply text.
-	validationBlock		<monadicValuable> evaluated against the current user input (the reply text) to distinguish valid from invalid input.
+The user input to a `Prompter` can be validated by supplying a validater block. This is passed the current input text as edited, and can follow the original simple pattern of answering true/false for valid/invalid (set through #validationBlock:), or for more flexibility can answer a `ValidationResult`. The returned result includes a valid/invalid boolean value, but also a validation hint represented as an `Exception` subinstance, which need not be an `Error`, but but could also be a `Warning` or even `Notification`. When a hint is provided, the 
 
+## Instance Variables:
+  `promptPresenter`		`<textPresenter>` holding the prompt text.
+  `replyPresenter`		`<textPresenter>` holding the reply text.
+  `validater`			`<monadicValuable>` evaluated against the current user input (the reply text) to distinguish valid from invalid input. Expected to answer a `ValidationResult`
+  `validationResult`		`ValidationResult` provided by the last evaluation of the `validater`
+  `hintBubble`			`MessageBubble` shown for a validation hint
+  `validationDwell`		`Duration` to wait after typing stops before displaying a validation hint (defaults to 1 second)
+  `hintDwell`			`Duration` for which the hint bubble should be shown (defaults to 10 seconds)
+  `flags`				`<integer>` holding various boolean flags
+  `hintFont`			`Font` to be used for the hint bubble text (not caption)
 '!
 !UI.Prompter categoriesForClass!MVP-Presenters! !
 !UI.Prompter methodsFor!
+
+closeBubble
+	hintBubble
+		ifNotNil: 
+			[hintBubble close.
+			hintBubble := nil]!
 
 createComponents
 	"Create the presenters contained by the receiver"
@@ -25,14 +42,65 @@ createComponents
 	promptPresenter := self add: TextPresenter new name: 'prompt'.
 	replyPresenter := self add: TextPresenter new name: 'reply'!
 
+createSchematicWiring
+	"Create the trigger wiring for the receiver"
+
+	super createSchematicWiring.
+	replyPresenter
+		when: #valueChanged
+			send: #onReplyChanged
+			to: self;
+		when: #keyReleased:
+			send: #onReplyKeyReleased:
+			to: self.
+	self
+		when: #timerTick:
+		send: #onTimerTick:
+		to: self!
+
+displayValidationHint: aValidationResult
+	| hint |
+	(self showHintBubble not or: [self value isEmpty and: [self showHintWhenEmpty not]])
+		ifTrue: [^self].
+	hintBubble := MessageBubble new.
+	aValidationResult caption ifNotNil: [:title | hintBubble caption: title].
+	hint := aValidationResult hint.
+	hintBubble
+		font: self hintFont;
+		willFade: true;
+		timeout: self hintDwell;
+		position: replyPresenter view screenRectangle centerRight;
+		iconStyle: hint iconStyle;
+		text: hint displayString;
+		isSilent: true;
+		open!
+
+hintDwell
+	"The <Duration> for which a hint bubble should be shown before fading."
+
+	^hintDwell!
+
+hintDwell: aDuration
+	hintDwell := aDuration!
+
+hintFont
+	^hintFont ifNil: [Font name: 'Segoe UI' pointSize: 10]!
+
+hintFont: aFont
+	hintFont := aFont!
+
 initialize
 	"Private - Initialize the receiver"
 
 	super initialize.
-	validationBlock := [:replyString | true]!
+	validater := [:replyString | ValidationResult new].
+	validationDwell := 1 seconds.
+	hintDwell := 10 seconds.
+	flags := 0!
 
 isInputValid
-	^(self validationBlock value: replyPresenter value) == true!
+	validationResult := validater value: self value.
+	^validationResult notNil and: [validationResult value]!
 
 model: aSubjectModel
 	"Connect the receiver to aSubjectModel. The reply presenter shares this
@@ -40,6 +108,25 @@ model: aSubjectModel
 
 	super model: aSubjectModel.	
 	replyPresenter model: self model.!
+
+onPositionChanged: aPositionEvent
+	self closeBubble.
+	^super onPositionChanged: aPositionEvent!
+
+onReplyChanged
+	"Private - The response has been edited. Initiate delayed validation."
+
+	self closeBubble.
+	self view setTimer: ValidationTimerId interval: self validationDwell!
+
+onReplyKeyReleased: aKeyEvent
+	"Private - If the Enter key has been pressed in the reply editor, run the validation and show the hint bubble to report any issues.
+	We have to do this on key-up, as we don't receiver the key-down for the Enter key."
+
+	aKeyEvent code = VK_RETURN ifTrue: [self validateReply]!
+
+onTimerTick: anInteger
+	anInteger == ValidationTimerId ifTrue:  [self validateReply]!
 
 prompt: aString
 	"Set the text to use as the description in the dialog box."
@@ -57,24 +144,77 @@ queryCommand: aCommandQuery
 			^true].
 	^super queryCommand: aCommandQuery!
 
-validationBlock
-	^validationBlock!
+showHintBubble
+	"Answer whether any hint provided by the validater should be shown when the reply is empty. If the hint bubble is entirely disabled, then this setting has no effect either way."
 
-validationBlock: aBlock 
-	"Set the <monadicValuable> used to validate the user's reply. The valuable is passed the
-	current reply text as its argument, and is expected to answer whether it is valid. The OK
-	button is not enabled until the validationBlock answers true."
+	^flags noMask: NoHintBubble!
 
-	validationBlock := aBlock! !
+showHintBubble: aBoolean
+	"Set whether any hint provided by the validater should be shown using a `MessageBubble`. By default the bubble will be shown, but this setting is to allow it to be disabled."
+
+	flags := flags mask: NoHintBubble set: aBoolean not!
+
+showHintWhenEmpty
+	"Answer whether any hint provided by the validater should be shown when the reply is empty. If the hint bubble is entirely disabled, then this setting has no effect either way."
+
+	^flags noMask: NoHintWhenEmpty!
+
+showHintWhenEmpty: aBoolean
+	"Set whether any hint provided by the validater is shown even if the reply is empty. Sometimes it can be a bit annoying to show a hint when the reply is emptied by deleting all the text, so this setting allows thevalidation hint bubble to be suppressed if the reply is emptied. By default the hint bubble will be shown even when the reply is empty, although not when the prompter is first opened."
+
+	flags := flags mask: NoHintWhenEmpty set: aBoolean not!
+
+validater: aMonadicValuable
+	"Set the <monadicValuable> used to validate the user's reply. The valuable is passed the current reply text as its argument first argument, and is expected to answer a <ValuationResult>, the value of which indicates whether the text is considered valid in context. The OK button is not enabled until the ValidationResult's value is true. The validator can also pass out a hint details to be displayed in a message bubble if desired (see ValidationResult for the options available). The hint is primarily intended as a means to explain to the user why the OK button is disabled, as this can otherwise be difficult to understand."
+
+	validater := aMonadicValuable!
+
+validateReply
+	| result |
+	self view killTimer: ValidationTimerId.
+	result := validater value: self value.
+	result hint ifNotNil: [:hint | self displayValidationHint: result]!
+
+validationBlock: aBlock
+	"Set the <monadicValuable> used to validate the user's reply. The valuable is passed the current reply text as its argument first argument and should answer true/false indicating whether the text is valid or not.
+	This method is present mainly for backwards compatibility. Although not deprecated because the old-style true/false result is adequate for many purposes, the alternative of providing a block that returns a full <ValidationResult> (see #validater:) is preferred."
+
+	validater := [:response | ValidationResult value: (aBlock value: response)]!
+
+validationDwell
+	"The <Duration> to wait after the user has stopped typing before re-validating and possibly showing a hint bubble."
+
+	^validationDwell!
+
+validationDwell: aDuration
+	validationDwell := aDuration! !
 !UI.Prompter categoriesForMethods!
+closeBubble!helpers!private! !
 createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
+displayValidationHint:!helpers!private! !
+hintDwell!accessing!public! !
+hintDwell:!accessing!public! !
+hintFont!accessing!public! !
+hintFont:!accessing!public! !
 initialize!initializing!private! !
 isInputValid!public!testing! !
 model:!accessing!public! !
+onPositionChanged:!event handling!public! !
+onReplyChanged!event handling!private! !
+onReplyKeyReleased:!event handling!private! !
+onTimerTick:!event handling!private! !
 prompt:!accessing!public! !
 queryCommand:!commands!private! !
-validationBlock!accessing!public! !
-validationBlock:!accessing!public! !
+showHintBubble!accessing!public! !
+showHintBubble:!accessing!public! !
+showHintWhenEmpty!accessing!public! !
+showHintWhenEmpty:!accessing!public! !
+validater:!initializing!public! !
+validateReply!helpers!private! !
+validationBlock:!initializing!public! !
+validationDwell!accessing!public! !
+validationDwell:!accessing!public! !
 !
 
 !UI.Prompter class methodsFor!
@@ -144,10 +284,10 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.DialogView) 34 30 nil nil 8 #(13107200 65536) 416 nil 1245702 ##(Graphics.ThemeColor) #dialog nil 165 nil 852998 ##(Graphics.Font) nil true 721158 ##(OS.LOGFONTW) 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 655878 ##(Graphics.Point) 193 193 nil 416 984838 ##(UI.BorderLayout) 1 17 nil 410 ##(UI.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 640 nil nil nil 7 nil nil nil 640 1376838 1 ##(UI.ResourceIdentifier) ##(UI.Presenter) #resource_OK_Cancel_button_block nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 578 31 183 578 519 61 640 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 15 0 0 0 91 0 0 0 18 1 0 0 121 0 0 0] 8 #() 578 193 193 nil 27 nil nil 410 ##(UI.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 960 nil nil nil 7 nil nil nil 960 610 1 1 410 ##(UI.StaticText) 34 16 nil 960 34 2 8 1140850944 1 1040 918598 2 ##(UI.ValueHolder) nil nil 1441798 ##(Kernel.NeverSearchPolicy) 8 '' nil nil 7 nil nil nil 1040 nil 8 1920531648 1049094 ##(UI.NullConverter) nil nil true 738 138 144 34 1 802 #createAt:extent: 34 2 578 1 1 578 519 71 1040 882 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 3 1 0 0 35 0 0 0] 8 #() 944 nil 27 410 ##(UI.TextEdit) 34 16 nil 960 34 2 8 1140916352 1025 1392 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 1392 nil 8 1920675248 1202 nil nil 5 738 138 144 34 2 802 #createAt:extent: 34 2 578 1 83 578 519 45 1392 802 #setMarginWidths: 34 1 8 #(3 3) 1392 882 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 41 0 0 0 3 1 0 0 63 0 0 0] 8 #() 944 nil 27 nil nil nil 170 192 34 4 1040 8 'prompt' 1392 8 'reply' nil 738 138 144 34 1 802 #createAt:extent: 34 2 578 31 41 578 519 127 960 882 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 15 0 0 0 20 0 0 0 18 1 0 0 83 0 0 0] 34 2 1040 1392 944 nil 27 170 192 928 1180166 ##(Graphics.Rectangle) 578 31 41 578 31 21 nil nil nil nil 31587 nil nil nil nil 1 nil nil 918278 ##(Core.Semaphore) nil nil 1 nil 8 2005493520 738 138 144 34 2 802 #createAt:extent: 34 2 578 6143 21 578 611 341 416 802 #text: 34 1 8 'Please respond:' 416 882 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 48 13 0 0 180 0 0 0] 34 2 960 640 944 nil 27)!
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.DialogView) 34 30 nil nil 8 #(13369344 65536) 416 nil 1245702 ##(Graphics.ThemeColor) #dialog nil 167 nil 852998 ##(Graphics.Font) nil true 721158 ##(OS.LOGFONTW) 8 #[244 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 83 0 101 0 103 0 111 0 101 0 32 0 85 0 73 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 918022 ##(Graphics.Point) 193 193 nil 416 984838 ##(UI.BorderLayout) 1 17 nil 410 ##(UI.ReferenceView) 34 14 nil 416 34 2 8 1140850688 131073 640 nil nil nil 7 nil nil nil 640 1376838 1 ##(UI.ResourceIdentifier) ##(UI.Presenter) #resource_OK_Cancel_button_block nil 1310982 ##(Core.MessageSequence) 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 578 31 183 578 519 61 640 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 15 0 0 0 91 0 0 0 18 1 0 0 121 0 0 0] 8 #() 578 193 193 nil 27 nil nil 410 ##(UI.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 944 nil nil nil 7 nil nil nil 944 610 1 1 410 ##(UI.StaticText) 34 16 nil 944 34 2 8 1140850944 1 1024 918598 2 ##(UI.ValueHolder) nil nil 1572870 ##(Kernel.NeverSearchPolicy) 8 '' nil nil 7 nil nil nil 1024 nil 8 1821690784 1049094 ##(UI.NullConverter) nil nil true 738 34 1 786 #createAt:extent: 34 2 578 1 1 578 519 71 1024 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 3 1 0 0 35 0 0 0] 8 #() 928 nil 27 410 ##(UI.TextEdit) 34 16 nil 944 34 2 8 1140916352 1025 1360 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 1360 nil 8 1821646592 1186 nil nil 5 738 34 2 786 #createAt:extent: 34 2 578 1 83 578 519 45 1360 786 #setMarginWidths: 34 1 8 #(3 3) 1360 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 41 0 0 0 3 1 0 0 63 0 0 0] 8 #() 928 nil 27 nil nil nil 170 192 34 4 1360 8 'reply' 1024 8 'prompt' nil 738 34 1 786 #createAt:extent: 34 2 578 31 41 578 519 127 944 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 15 0 0 0 20 0 0 0 18 1 0 0 83 0 0 0] 34 2 1024 1360 928 nil 27 170 192 912 1180166 ##(Graphics.Rectangle) 578 31 41 578 31 21 nil nil nil nil 13691 nil nil nil 578 441 331 1 nil nil 918278 ##(Core.Semaphore) nil nil 1 nil 8 2003401488 738 34 2 786 #createAt:extent: 34 2 578 12287 21 578 611 341 416 786 #text: 34 1 8 'Please respond:' 416 866 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 48 25 0 0 180 0 0 0] 34 2 944 640 928 nil 27 )!
 
 resource_Inplace_edit_view
 	"Answer the literal data from which the 'Inplace edit view' resource can be reconstituted.

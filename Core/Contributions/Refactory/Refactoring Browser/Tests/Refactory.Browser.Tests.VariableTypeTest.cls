@@ -14,11 +14,11 @@ Refactory.Browser.Tests.VariableTypeTest comment: ''!
 testBasicLintRuleTypes
 	| typer types |
 	typer := RefactoryTyper new.
-	types := typer guessTypesFor: 'classBlock' in: BasicLintRuleTest.
+	types := typer guessTypesFor: 'classBlock' in: BasicLintRuleTestData.
 	"self assert: types size = 1."
 	self assert: ([] class withAllSuperclasses
 				anySatisfy: [:each | types includes: (typer model classFor: each)]).
-	types := typer typesFor: 'methodBlock' in: (typer model classFor: BasicLintRuleTest).
+	types := typer typesFor: 'methodBlock' in: (typer model classFor: BasicLintRuleTestData).
 	"self should: [types size = 2]."
 	self assert: ([] class withAllSuperclasses
 				anySatisfy: [:each | types includes: (typer model classFor: each)]).
@@ -27,7 +27,7 @@ testBasicLintRuleTypes
 
 testCompositeLintRuleTypes
 	| typer types |
-	typer := RefactoryTyper new runOn: CompositeLintRuleTest.
+	typer := RefactoryTyper new runOn: CompositeLintRuleTestData.
 	types := typer guessTypesFor: 'rules'.
 	#rbFix.	"Dolphin's ExternalArray is also a candidate, and this test seems liable to break easily if one adds more collection like classes"
 	"self assert: types size = 1."
@@ -35,14 +35,14 @@ testCompositeLintRuleTypes
 	types := typer typesFor: '-rules-'.
 	self assert: types size equals: 2.
 	self assert: (types includes: (typer model classFor: LintRule)).
-	self assert: (types includes: (typer model classFor: LintRuleTest)).
+	self assert: (types includes: (typer model classFor: LintRuleTestData)).
 	self assert: (typer guessTypesFor: 'asdf') isEmpty.
 	typer printString!
 
 testLintRuleTypes
 	| typer types |
 	typer := RefactoryTyper new.
-	types := typer guessTypesFor: 'name' in: LintRuleTest.
+	types := typer guessTypesFor: 'name' in: LintRuleTestData.
 	self assert: types size equals: 1.
 	self assert: (types includes: (typer model classFor: String))!
 
@@ -51,7 +51,7 @@ testParseTreeTypes
 	model := RBNamespace new.
 	types := RefactoryTyper
 				typesFor: 'foo'
-				in: (RBParser parseExpression: 'foo printString; testBasicLintRuleTypes; testParseTreeTypes')
+				in: (self parseExpression: 'foo printString; testBasicLintRuleTypes; testParseTreeTypes')
 				model: model.
 	self assert: types size equals: 1.
 	self assert: (types includes: (model classFor: self class))! !

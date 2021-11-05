@@ -15,33 +15,33 @@ testAlreadyExistingName
 	self shouldFail: (RenameInstanceVariableRefactoring
 				rename: 'classBlock'
 				to: 'name'
-				in: BasicLintRuleTest)!
+				in: BasicLintRuleTestData)!
 
 testNonExistantName
 	self shouldFail: (RenameInstanceVariableRefactoring
 				rename: 'foo'
 				to: 'newFoo'
-				in: BasicLintRuleTest)!
+				in: BasicLintRuleTestData)!
 
 testRenameInstVar
 	| refactoring class |
 	refactoring := RenameInstanceVariableRefactoring
 				rename: 'classBlock'
 				to: 'asdf'
-				in: BasicLintRuleTest.
+				in: BasicLintRuleTestData.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.BasicLintRuleTest'.
+	class := refactoring model classNamed: #'Refactory.Browser.Tests.BasicLintRuleTestData'.
 	self assert: (class directlyDefinesInstanceVariable: 'asdf').
 	self deny: (class directlyDefinesInstanceVariable: 'classBlock').
 	self assert: (class parseTreeFor: #checkClass:)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'checkClass: aSmalllintContext 
 								^asdf value: aSmalllintContext value: result').
 	self assert: (class parseTreeFor: #classBlock:)
-		equals: (RBParser parseMethod: 'classBlock: aBlock
+		equals: (self parseMethod: 'classBlock: aBlock
 								asdf := aBlock testMethod1').
 	self assert: (class parseTreeFor: #initialize)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'initialize
 								super initialize.
 								asdf := [:context :aResult | ].

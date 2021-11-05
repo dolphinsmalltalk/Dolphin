@@ -21,7 +21,7 @@ testMoveDefinition
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
 				parseTreeFor: #moveDefinition)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'moveDefinition
 								^(self collect: 
 										[:each | 
@@ -44,7 +44,7 @@ testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
 				parseTreeFor: #referencesConditionFor:)
-		equals: (RBParser
+		equals: (self
 				parseMethod: 'referencesConditionFor: aClass 
 								| environment  |
 								^(RBCondition withBlock: 
@@ -69,19 +69,18 @@ testNonExistantName
 	self
 		shouldFail: (MoveVariableDefinitionRefactoring
 					bindTight: (1 to: 10)
-					in: LintRuleTest
+					in: LintRuleTestData
 					selector: #name1);
 		shouldFail: (MoveVariableDefinitionRefactoring
-					bindTight: (self convertInterval: (44 to: 54) for: (LintRuleTest sourceCodeAt: #displayName))
-					in: LintRuleTest
+					bindTight: (self convertInterval: (44 to: 54) for: (LintRuleTestData sourceCodeAt: #displayName))
+					in: LintRuleTestData
 					selector: #displayName).
 	"This isn't a test of a non-existant name, but of a move that is already as tightly bound as possible"
 	aRefactoring := MoveVariableDefinitionRefactoring
-				bindTight: (self convertInterval: (16 to: 25) for: (LintRuleTest sourceCodeAt: #displayName))
-				in: LintRuleTest
+				bindTight: (self convertInterval: (16 to: 25) for: (LintRuleTestData sourceCodeAt: #displayName))
+				in: LintRuleTestData
 				selector: #displayName.
-	self proceedThroughWarning: 
-			[self should: [self executeRefactoring: aRefactoring] raise: Refactoring abortSignal]! !
+	self should: [self executeRefactoring: aRefactoring] raise: Refactoring abortSignal! !
 !Refactory.Browser.Tests.MoveVariableDefinitionTest categoriesForMethods!
 testMoveDefinition!public!tests! !
 testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage!public!tests! !

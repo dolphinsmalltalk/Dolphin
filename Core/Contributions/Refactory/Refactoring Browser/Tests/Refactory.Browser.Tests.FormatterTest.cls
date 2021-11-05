@@ -13,7 +13,7 @@ Refactory.Browser.Tests.FormatterTest comment: ''!
 
 runMethodTestFor: method
 	| result tree |
-	tree := RBParser parseMethod: method.
+	tree := self parseMethod: method.
 	result := RBFormatter1 new format: tree.
 	self assert: result equals: method!
 
@@ -21,7 +21,7 @@ runTestForPairs: pairs
 	pairs do: 
 			[:each |
 			| result tree |
-			tree := RBParser parseExpression: each first.
+			tree := self parseExpression: each first.
 			result := RBFormatter1 format: tree.
 			self assert: result equals: each last]!
 
@@ -47,7 +47,7 @@ smokeTestAllMethodsOfHierarchy: baseClass
 			[:each |
 			| tree |
 			tree := each parseTree.
-			self assert: tree equals: (RBParser parseMethod: (RBFormatter1 format: tree))]!
+			self assert: tree equals: (self parseMethod: (RBFormatter1 format: tree))]!
 
 smokeTestForMethodsOfClasses: aCollectionOfClasses
 	aCollectionOfClasses do: 
@@ -56,7 +56,7 @@ smokeTestForMethodsOfClasses: aCollectionOfClasses
 					[:sel |
 					| tree |
 					tree := class parseTreeFor: sel.
-					self assert: tree equals: (RBParser parseMethod: (RBFormatter1 format: tree))]]!
+					self assert: tree equals: (self parseMethod: (RBFormatter1 format: tree))]]!
 
 tearDown
 	settings 
@@ -71,7 +71,7 @@ testAssignments
 testBeginningNewLines
 	| result tree method |
 	method := 'test\\| x |\\\^self size' withCRs.
-	tree := RBParser parseMethod: method.
+	tree := self parseMethod: method.
 	RBFormatter1 newLinesAfterMethodPattern: 2.
 	RBFormatter1 newLinesAfterTemporaries: 3.
 	RBFormatter1 indentString: ''.
@@ -154,7 +154,7 @@ testIndent
 	| result tree method |
 	method := 'test
 	^self size'.
-	tree := RBParser parseMethod: method.
+	tree := self parseMethod: method.
 	RBFormatter1 indentString: (String with: Character tab).
 	result := RBFormatter1 new format: tree.
 	self assert: result equals: method!
@@ -203,7 +203,7 @@ baz: z
 		do: 
 			[:each |
 			| result tree |
-			tree := RBParser parseMethod: each first.
+			tree := self parseMethod: each first.
 			result := RBFormatter1 format: tree.
 			self assert: result equals: each last]!
 
@@ -219,7 +219,7 @@ testMethodComment
 		do: 
 			[:each |
 			| result tree |
-			tree := RBParser parseMethod: each first.
+			tree := self parseMethod: each first.
 			result := RBFormatter1 format: tree.
 			self assert: result equals: each last]!
 

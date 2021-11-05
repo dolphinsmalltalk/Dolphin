@@ -35,6 +35,9 @@ testCenter
 	self assert: oddDesktop center equals: 639 @ 512.
 	self assert: unary center equals: 0 @ 0!
 
+testCenterRight
+	self assert: desktop centerRight equals: 1280 @ 512!
+
 testCenterX
 	self assert: desktop centerX equals: 640.
 	self assert: oddDesktop centerX equals: 639!
@@ -85,6 +88,7 @@ setUp!public!Running! !
 subjectClass!constants!private! !
 testBottom!public!unit tests! !
 testCenter!public!unit tests! !
+testCenterRight!public!unit tests! !
 testCenterX!public!unit tests! !
 testHeight!public!unit tests! !
 testLeft!public!unit tests! !

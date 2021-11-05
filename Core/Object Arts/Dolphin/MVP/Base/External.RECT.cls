@@ -45,6 +45,11 @@ center
 
 	^self centerX @ self centerY!
 
+centerRight
+	"Answer a <Point> representing the position of the centre of the receiver's right edge."
+
+	^self right @ self centerY!
+
 centerX
 	"Answer the x-coordinate of the point at the receiver's centre. Used in conjunction with
 	#centerX:"
@@ -123,6 +128,7 @@ bottom!accessing!public! !
 bottom:!accessing!public! !
 bottomRight!accessing!public! !
 center!accessing!public! !
+centerRight!public! !
 centerX!accessing!public! !
 centerY!accessing!public! !
 corner!accessing!public! !

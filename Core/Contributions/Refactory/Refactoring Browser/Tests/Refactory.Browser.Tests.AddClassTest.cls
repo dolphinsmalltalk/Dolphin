@@ -83,8 +83,8 @@ testExistingName
 testInvalidSubclass
 	self shouldFail: (AddClassRefactoring
 				addClass: #Foo
-				superclass: CompositeLintRuleTest
-				subclasses: {BasicLintRuleTest}
+				superclass: CompositeLintRuleTestData
+				subclasses: {BasicLintRuleTestData}
 				category: #'Refactory-Tesing')!
 
 testMetaClassFailure

@@ -28,7 +28,7 @@ preconditions
 	^condition & (RBCondition isAbstractClass: class)!
 
 pushDown: aSelector
-	| code protocols refactoring package namespace |
+	| code protocols refactoring packageAndEnv |
 	code := class sourceCodeFor: aSelector.
 	protocols := class protocolsFor: aSelector.
 	refactoring := ExpandReferencedPoolsRefactoring
@@ -38,23 +38,16 @@ pushDown: aSelector
 				toClasses: class subclasses.
 	self performComponentRefactoring: refactoring.
 	"Maintain package and any custom namespace of the method being pushed down"
-	(class existingMethodAt: aSelector)
-		ifNil: 
-			[namespace := class environment.
-			package := nil]
-		ifNotNil: 
-			[:method |
-			package := method owningPackage.
-			namespace := method environment].
+	packageAndEnv := (class existingMethodPackageAndEnvironment: aSelector).
 	class subclasses do: 
 			[:each |
 			(each directlyDefinesMethod: aSelector)
 				ifFalse: 
 					[each
 						compile: code
-						environment: namespace
+						environment: packageAndEnv second
 						categories: protocols
-						package: package]]!
+						package: packageAndEnv first]]!
 
 pushDown: selectorCollection from: aClass 
 	#rbFix. "Ensure displayString works when model is lazily created for Undo/Redo name (needs inst. vars set up)."

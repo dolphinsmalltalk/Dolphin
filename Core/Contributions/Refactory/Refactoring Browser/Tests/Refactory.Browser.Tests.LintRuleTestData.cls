@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Refactory.Browser.Tests.LintRuleTest'
+Core.Object subclass: #'Refactory.Browser.Tests.LintRuleTestData'
 	instanceVariableNames: 'name foo1'
 	classVariableNames: 'Foo1'
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.Tests.LintRuleTest guid: (Core.GUID fromString: '{ae7ff107-496e-46a9-8127-3cc651c7ccf7}')!
-Refactory.Browser.Tests.LintRuleTest isNonInstantiable: true!
-Refactory.Browser.Tests.LintRuleTest comment: ''!
-!Refactory.Browser.Tests.LintRuleTest categoriesForClass!Refactory-Test data! !
-!Refactory.Browser.Tests.LintRuleTest methodsFor!
+Refactory.Browser.Tests.LintRuleTestData guid: (Core.GUID fromString: '{ae7ff107-496e-46a9-8127-3cc651c7ccf7}')!
+Refactory.Browser.Tests.LintRuleTestData isNonInstantiable: true!
+Refactory.Browser.Tests.LintRuleTestData comment: ''!
+!Refactory.Browser.Tests.LintRuleTestData categoriesForClass!Refactory-Test data! !
+!Refactory.Browser.Tests.LintRuleTestData methodsFor!
 
 checkClass: aSmalllintContext!
 
@@ -76,7 +76,7 @@ runOnEnvironment: anEnvironment
 
 viewResults
 	self subclassResponsibility! !
-!Refactory.Browser.Tests.LintRuleTest categoriesForMethods!
+!Refactory.Browser.Tests.LintRuleTestData categoriesForMethods!
 checkClass:!accessing!public! !
 checkMethod:!accessing!public! !
 displayName!accessing!public! !
@@ -97,11 +97,11 @@ runOnEnvironment:!accessing!public! !
 viewResults!private! !
 !
 
-!Refactory.Browser.Tests.LintRuleTest class methodsFor!
+!Refactory.Browser.Tests.LintRuleTestData class methodsFor!
 
 new
 	^super new initialize! !
-!Refactory.Browser.Tests.LintRuleTest class categoriesForMethods!
+!Refactory.Browser.Tests.LintRuleTestData class categoriesForMethods!
 new!instance creation!public! !
 !
 
