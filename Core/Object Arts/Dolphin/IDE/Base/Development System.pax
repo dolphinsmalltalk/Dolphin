@@ -1255,7 +1255,8 @@ UI.Shell subclass: #'Tools.SmalltalkToolShell'
 	classConstants: {
 		'CanUseIdeaSpaceMask' -> 16r2.
 		'LoadingMask' -> 16r1.
-		'ReuseIfOpenMask' -> 16r4
+		'ReuseIfOpenMask' -> 16r4.
+		'ShowOptionLoadingTimes' -> false
 	}!
 UI.AbstractDocumentShell subclass: #'Tools.SmalltalkWorkspaceDocument'
 	instanceVariableNames: 'workspacePresenter searchPresenter'

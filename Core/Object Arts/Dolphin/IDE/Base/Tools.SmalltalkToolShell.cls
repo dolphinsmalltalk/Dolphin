@@ -8,7 +8,8 @@ UI.Shell subclass: #'Tools.SmalltalkToolShell'
 	classConstants: {
 		'CanUseIdeaSpaceMask' -> 16r2.
 		'LoadingMask' -> 16r1.
-		'ReuseIfOpenMask' -> 16r4
+		'ReuseIfOpenMask' -> 16r4.
+		'ShowOptionLoadingTimes' -> false
 	}!
 Tools.SmalltalkToolShell guid: (Core.GUID fromString: '{87b4c6a0-026e-11d3-9fd7-00a0cc3e4a32}')!
 Tools.SmalltalkToolShell isNonInstantiable: true!
@@ -592,10 +593,12 @@ loadOptions
 
 loadOptionsFor: aClass
 	| start stop aspects |
-	Transcript
-		nextPutAll: 'Loading options for ';
-		print: aClass.
-	start := Time microsecondClockValue.
+	ShowOptionLoadingTimes
+		ifTrue: 
+			[Transcript
+				nextPutAll: 'Loading options for ';
+				print: aClass.
+			start := Time microsecondClockValue].
 	aClass startLoadingOptions.
 	aspects := aClass optionsAspects.
 	
@@ -622,11 +625,13 @@ loadOptionsFor: aClass
 	"Set any default values that were not read from the settings in the registry."
 	aspects do: [:each | each writeInto: aClass value: each defaultValue value].
 	aClass finishedLoadingOptions.
-	stop := Time microsecondClockValue.
-	Transcript
-		nextPutAll: ' completed in ';
-		display: (stop - start) microseconds;
-		cr!
+	ShowOptionLoadingTimes
+		ifTrue: 
+			[stop := Time microsecondClockValue.
+			Transcript
+				nextPutAll: ' completed in ';
+				display: (stop - start) microseconds;
+				cr]!
 
 notificationGetImageBlock
 	"Private - Answer a monadic valuable used for getting the image for a compiler
