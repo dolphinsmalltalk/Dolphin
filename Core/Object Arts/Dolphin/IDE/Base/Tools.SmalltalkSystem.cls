@@ -1408,22 +1408,24 @@ compressSources
 	"Compresses the current changes file and transfers all source to the sources (.sml)
 	file."
 
-	| progress mb |
-	mb := MessageBox new.
-	mb
-		buttonStyle: #yesNo;
+	| progress srcmgr |
+	srcmgr := self sourceManager.
+	(MessageBox new
+		caption: 'Compress Sources…';
+		headline: 'Compact changes into sources file?';
+		text: 'The change log <1p> will be compacted into the source files <2p>'
+					<< {File splitFilenameFrom: srcmgr changesFileName. File splitFilenameFrom: srcmgr sourcesFileName};
+		detailsText: 'Compressing sources combines the latest method source from the the change log and/or sources (.sml) file for all source objects (e.g,. methods) in the system, and writes the result into a replacement sources file.<n><n>After compaction all record of what has changed will be lost and the change log will be empty. <n><n>Compressing sources is useful when you want to consolidate your work into a a new baseline image, but should otherwise be avoided as you will lose the ability to browse method histories, or to refer back to the log to see the history of evaluations.'
+					expandMacros;
+		expandLabel: 'Show &Help';
+		collapseLabel: 'Hide &Help';
+		customButtons: #(#(#yes '&Compact') #(#no '&Don''t Compact'));
+		isCancellable: true;
 		defaultButton: 2;
-		caption: 'Compress Sources…'.
-	(mb
-		warning: 'Compressing sources compacts the change log into the source (.sml) file. After compaction all record of what has changed will be lost and the change log will be empty. 
-
-Compressing sources is useful when you want to consolidate your work into a a new baseline image, but should otherwise be avoided.
-
-Are you absolutely sure you want to continue?')
-			== #yes ifFalse: [^self].
+		confirm) ifFalse: [^self].
 	progress := ProgressDialog create: 'No cancel view' operation: [].
 	progress caption: 'Compressing  sources, please wait…'.
-	self sourceManager compressSourcesWith: progress!
+	srcmgr compressSourcesWith: progress!
 
 copyAllMethodsOf: aClass to: newClass changes: aCompositeRefactoryChange
 	aClass methodsDo: 
