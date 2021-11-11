@@ -1390,19 +1390,23 @@ compilerNotification: aCompilerNotification
 	MessageBox notify: aCompilerNotification displayString!
 
 compressChanges
-	"Compresses the current changes file to remove duplicate entries"
+	"Compresses the current changes file to remove superseded entries and old expression evaluations."
 
-	| mb |
-	mb := MessageBox new.
-	mb
-		buttonStyle: #yesNo;
+	| srcmgr |
+	srcmgr := self sourceManager.
+	(MessageBox new
+		caption: 'Compress Changes…';
+		headline: 'Compact change log?';
+		text: 'The change log <1p> will be compacted, removing all but the latest sources.'
+					<< (File splitFilenameFrom: srcmgr changesFileName);
+		detailsText: 'Compressing changes removes superseded method source, and all expression evaluations from the change log.<n><n>Compressing changes can be useful when you want to collapse a very large log that you may have been working with for an extended period. Be aware, however, that you will lose the ability to browse method histories other than the original and latest source for changed methods. You will also be unable to refer back to the log to see the history of evaluations.'
+					expandMacros;
+		expandLabel: 'Show &Help';
+		collapseLabel: 'Hide &Help';
+		customButtons: #(#(#yes '&Compact') #(#no '&Don''t Compact'));
+		isCancellable: true;
 		defaultButton: 2;
-		caption: 'Compress Changes…'.
-	(mb
-		warning: 'Compressing changes removes old method source and expression evaluations from the change log.
-
-Are you sure you want to continue?')
-			== #yes ifTrue: [self sourceManager compressChanges]!
+		confirm) ifTrue: [srcmgr compressChanges]!
 
 compressSources
 	"Compresses the current changes file and transfers all source to the sources (.sml)
