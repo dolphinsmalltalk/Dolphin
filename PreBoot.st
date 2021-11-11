@@ -1,1 +1,1 @@
-﻿
+﻿#(#initialize #defaultCaption:) do: [:each | MessageBoxAbstract class removeSelector: each]!
