@@ -13,18 +13,20 @@ Refactory.Browser.Tests.TemporaryToInstanceVariableTest comment: ''!
 
 setUp
 	super setUp.
-	model := Compiler evaluate: (self readFile: 'AbstractVariableTestData.st')!
+	model := self abstractVariableTestData!
 
 testNonExistantName
 	self
 		shouldFail: (TemporaryToInstanceVariableRefactoring
 					class: BasicLintRuleTestData
 					selector: #checkClass:
-					variable: 'asdf');
+					variable: 'asdf')
+			withMessage: 'asdf isn''t a valid temporary variable name';
 		shouldFail: (TemporaryToInstanceVariableRefactoring
 					class: BasicLintRuleTestData
 					selector: #checkClass1:
-					variable: 'aSmalllintContext')!
+					variable: 'aSmalllintContext')
+			withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData does not define #checkClass1:'!
 
 testRedefinedTemporary
 	| class |
@@ -33,7 +35,8 @@ testRedefinedTemporary
 	self shouldFail: (TemporaryToInstanceVariableRefactoring
 				class: class
 				selector: #someMethod
-				variable: 'instVarName1')!
+				variable: 'instVarName1')
+		withMessage: 'Foo or one of its subclasses defines variable ''instVarName1'''!
 
 testTemporaryToInstanceVariable
 	| refactoring class |

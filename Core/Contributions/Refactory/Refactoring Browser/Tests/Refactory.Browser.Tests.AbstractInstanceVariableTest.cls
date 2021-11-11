@@ -13,7 +13,7 @@ Refactory.Browser.Tests.AbstractInstanceVariableTest comment: ''!
 
 setUp
 	super setUp.
-	model := Compiler evaluate: (self readFile: 'AbstractVariableTestData.st')!
+	model := self abstractVariableTestData!
 
 testAbstractInstanceVariable
 	| refactoring class |
@@ -102,7 +102,8 @@ testAbstractWithDefaultNamesUsed
 						self instVarName11: self instVarName11 + instVarName2 + ClassVarName1')!
 
 testInheritedName
-	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'name' class: BasicLintRuleTestData)!
+	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'name' class: BasicLintRuleTestData)
+		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData does not directly define instance variable ''name'''!
 
 testMetaclassInstanceVariables
 	| refactoring class |
@@ -123,7 +124,8 @@ testMetaclassInstanceVariables
 		equals: (self parseMethod: 'zzz ^self foo: self foo1 + self foo1 * 2')!
 
 testNonExistantName
-	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'foo' class: BasicLintRuleTestData)! !
+	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'foo' class: BasicLintRuleTestData)
+		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData does not directly define instance variable ''foo'''! !
 !Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesForMethods!
 setUp!public!set up! !
 testAbstractInstanceVariable!public!tests! !

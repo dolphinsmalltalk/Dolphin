@@ -91,7 +91,7 @@ testInlineComponentMethodOverriddenAbort
 			[:rcvr :symbol :inlineClass |
 			overridden := inlineClass methodFor: symbol.
 			false].
-	self should: [self executeRefactoring: refactoring] raise: OperationAborted.
+	self shouldAbort: refactoring.
 	self assert: overridden modelClass equals: class.
 	self assert: overridden selector equals: #max:!
 
@@ -121,7 +121,8 @@ testInlineMethodFromComponentFailure
 	self shouldFail: (InlineMethodFromComponentRefactoring
 				inline: (self convertInterval: (50 to: 64) for: (RefactoryTestDataApp sourceCodeAt: #inlineFailed))
 				inMethod: #inlineFailed
-				forClass: RefactoryTestDataApp)!
+				forClass: RefactoryTestDataApp)
+		withMessage: 'There are no definitions of #fooMax:'!
 
 testModelInlineMethodWithSameVariableNames
 	| class refactoring |

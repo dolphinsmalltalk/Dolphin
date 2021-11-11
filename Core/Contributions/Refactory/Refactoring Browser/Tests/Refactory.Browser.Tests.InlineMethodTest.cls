@@ -16,19 +16,23 @@ testBadInterval
 		shouldFail: (InlineMethodRefactoring
 					inline: (self convertInterval: (13 to: 23) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 					inMethod: #testMethod
-					forClass: RefactoryTestDataApp);
+					forClass: RefactoryTestDataApp)
+			withMessage: 'The selection doesn''t appear to be a message send';
 		shouldFail: (InlineMethodRefactoring
 					inline: (self convertInterval: (14 to: 17) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 					inMethod: #testMethod
-					forClass: RefactoryTestDataApp);
+					forClass: RefactoryTestDataApp)
+			withMessage: 'The selection doesn''t appear to be a message send';
 		shouldFail: (InlineMethodRefactoring
 					inline: (self convertInterval: (24 to: 30) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 					inMethod: #testMethod
-					forClass: RefactoryTestDataApp);
+					forClass: RefactoryTestDataApp)
+			withMessage: 'The selection doesn''t appear to be a message send';
 		shouldFail: (InlineMethodRefactoring
 					inline: (self convertInterval: (1 to: 30) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 					inMethod: #testMethod
-					forClass: RefactoryTestDataApp)!
+					forClass: RefactoryTestDataApp)
+			withMessage: 'The selection doesn''t appear to be a message send'!
 
 testInlineMethod
 	| refactoring |
@@ -177,8 +181,7 @@ testInlineMethod5
 
 testInlineMethodForSuperSend
 	| refactoring |
-	model := [Compiler evaluate: (self readFile: 'InlineMethodTest.st')] on: CompilerErrorNotification
-				do: [:ex | self fail: ex description].
+	model := self inlineMethodTestData.
 	(model classNamed: #RenameVariableChange) removeMethod: #executeNotifying:.
 	refactoring := InlineMethodRefactoring
 				model: model
@@ -202,12 +205,13 @@ testInlineMethodForSuperSend
 
 testInlineMethodForSuperSendThatAlsoSendsSuper
 	| refactoring |
-	model := Compiler evaluate: (self readFile: 'InlineMethodTest.st').
+	model := self inlineMethodTestData.
 	refactoring := InlineMethodRefactoring
 				inline: (102 to: 131)
 				inMethod: #executeNotifying:
 				forClass: (model classNamed: #'Refactory.Browser.RenameInstanceVariableChange').
-	self shouldFail: refactoring!
+	self shouldFail: refactoring
+		withMessage: 'Refactory.Browser.RenameInstanceVariableChange does not define #executeNotifying:'!
 
 testInlineRecursiveCascadedMethod
 	| refactoring |
@@ -245,7 +249,8 @@ testNonExistantSelector
 	self shouldFail: (InlineMethodRefactoring
 				inline: (14 to: 17)
 				inMethod: #checkClass1:
-				forClass: RefactoryTestDataApp)!
+				forClass: RefactoryTestDataApp)
+		withMessage: 'Refactory.Browser.Tests.RefactoryTestDataApp does not define #checkClass1:'!
 
 testOverriden
 	| refactoring overridden |
@@ -270,20 +275,22 @@ testOverridenAbort
 				inMethod: #failedRules
 				forClass: LintRuleTestData.
 	refactoring setOption: #inlineOverridden toUse: [:rcvr :symbol :class | false].
-	self should: [self executeRefactoring: refactoring] raise: OperationAborted!
+	self shouldAbort: refactoring!
 
 testPrimitive
 	self shouldFail: (InlineMethodRefactoring
 				inline: (self convertInterval: (14 to: 23) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 				inMethod: #testMethod
-				forClass: RefactoryTestDataApp)!
+				forClass: RefactoryTestDataApp)
+		withMessage: 'Cannot inline primitives'!
 
 testReturn
 	self shouldFail: (InlineMethodRefactoring
 				inline: (self convertInterval: (418 to: 485)
 						for: (BasicLintRuleTestData class sourceCodeAt: #utilityMethods))
 				inMethod: #utilityMethods
-				forClass: BasicLintRuleTestData class)! !
+				forClass: BasicLintRuleTestData class)
+		withMessage: 'The selection doesn''t appear to be a message send'! !
 !Refactory.Browser.Tests.InlineMethodTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testInlineMethod!public!tests! !

@@ -17,7 +17,8 @@ testModelNonExistantName
 	self shouldFail: (PushDownClassVariableRefactoring
 				model: model
 				variable: #Foo
-				class: (model classNamed: #SomeClass))!
+				class: (model classNamed: #SomeClass))
+		withMessage: 'SomeClass does not define class variable #Foo'!
 
 testModelPushDownToMultipleSubclassesFailure
 	model
@@ -31,7 +32,8 @@ testModelPushDownToMultipleSubclassesFailure
 	self shouldFail: (PushDownClassVariableRefactoring
 				model: model
 				variable: #Foo
-				class: (model classNamed: #SomeClass))!
+				class: (model classNamed: #SomeClass))
+		withMessage: 'Multiple subclasses reference Foo'!
 
 testModelPushDownVariable
 	| class |
@@ -99,7 +101,8 @@ testModelRemoveUnusedVariable
 	self deny: ((model classNamed: #Subclass) directlyDefinesVariable: #Foo)!
 
 testNonExistantName
-	self shouldFail: (PushDownClassVariableRefactoring variable: #Foo class: BasicLintRuleTestData)!
+	self shouldFail: (PushDownClassVariableRefactoring variable: #Foo class: BasicLintRuleTestData)
+		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData does not define class variable #Foo'!
 
 testPushDownClassVariable
 	| refactoring |

@@ -13,10 +13,12 @@ Refactory.Browser.Tests.PullUpClassVariableTest comment: ''!
 
 testMetaClassFailure
 	self shouldFail: (PullUpClassVariableRefactoring variable: #RecursiveSelfRule
-				class: LintRuleTestData class)!
+				class: LintRuleTestData class)
+		withMessage: 'Refactory.Browser.Tests.LintRuleTestData class is a metaclass'!
 
 testNonExistantName
-	self shouldFail: (PullUpClassVariableRefactoring variable: #Foo class: LintRuleTestData)!
+	self shouldFail: (PullUpClassVariableRefactoring variable: #Foo class: LintRuleTestData)
+		withMessage: 'Could not find a class defining Foo'!
 
 testPullUpClassConstant
 	| refactoring bar |

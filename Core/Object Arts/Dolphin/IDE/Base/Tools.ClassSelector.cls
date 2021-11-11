@@ -319,17 +319,8 @@ createVariableAccessors: aBoolean
 				classVariables: aBoolean
 				within: self searchEnvironment]!
 
-deleteClassHierarchy
-	"Private - Removes the selected class and any subclasses from the system, 
-	regardless of whether it is referenced from any methods.
-	Note: This is a general menu command available whenever a class is selected,
-	not just when the class hierarchy presenter has focus."
-
-	self permitSelectionChange 
-		ifTrue: [self systemModel deleteClassHierarchy: self selection]!
-
 deleteItCommand
-	classesPresenter hasFocus ifTrue: [^#deleteClassHierarchy].
+	classesPresenter hasFocus ifTrue: [^#removeClass].
 	^nil!
 
 dropClass: aSourceClass onto: aTargetClass changes: aCompositeRefactoryChange
@@ -731,7 +722,7 @@ queryCommand: aCommandQuery
 			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {name}
 						locale: Locale smalltalk).
 			^true].
-	(#(#browseClass #fileInClass #fileOutClass #checkInClass #checkOutClass #categorizeClass #clearSelection #deleteClassHierarchy #renameClass #inspectIt #browseMenu #browseHierarchy #browseReferences #browseClassReferences #browseClassVariables #browseInstanceVariables #browseAllMethods #browsePackages #classPackage #browseChangedMethods #browseVariablesMenu)
+	(#(#browseClass #fileInClass #fileOutClass #checkInClass #checkOutClass #categorizeClass #clearSelection #removeClass #renameClass #inspectIt #browseMenu #browseHierarchy #browseReferences #browseClassReferences #browseClassVariables #browseInstanceVariables #browseAllMethods #browsePackages #classPackage #browseChangedMethods #browseVariablesMenu)
 		identityIncludes: selector)
 			ifTrue: 
 				[aCommandQuery isEnabled: class notNil.
@@ -814,6 +805,11 @@ queryMoveClass: aClass toPackage: aPackage
 			["Move the subclasses too"
 			subclasses do: [:a | packMan addClass: a first to: aPackage]].
 	^true!
+
+removeClass
+	"Removes the selected class from the system. If refactoring is available, then the 'Remove Class' refactoring is employed."
+
+	self permitSelectionChange ifTrue: [self systemModel removeClass: self selection]!
 
 renameClass
 	"Private - Initiate in-place label edit for the selected class."
@@ -917,7 +913,6 @@ copyClass!commands!private! !
 createInstanceVariableAccessors!commands!public!refactoring! !
 createSchematicWiring!initializing!public! !
 createVariableAccessors:!commands!public!refactoring! !
-deleteClassHierarchy!commands!private! !
 deleteItCommand!helpers!private! !
 dropClass:onto:changes:!operations!private! !
 dropMethod:onto:isMove:changes:!helpers!private! !
@@ -952,6 +947,7 @@ permitSelectionChange!helpers!private! !
 populateVarMenu:class:command:variables:format:!menus!private! !
 queryCommand:!commands!private! !
 queryMoveClass:toPackage:!operations!private! !
+removeClass!commands!public! !
 renameClass!commands!private!refactoring! !
 renameClassVariable!commands!private!refactoring! !
 renameInstanceVariable!commands!private!refactoring! !

@@ -13,9 +13,7 @@ Refactory.Browser.Tests.AddClassTest comment: ''!
 
 setUp
 	super setUp.
-	model := [Compiler evaluate: (self readFile: 'AbstractVariableTestData.st')]
-				on: CompilerErrorNotification
-				do: [:err | self fail: err description]!
+	model := self abstractVariableTestData!
 
 testAddClass
 	| refactoring newClass superClass classTest |
@@ -73,26 +71,37 @@ testAddVariableClass
 	self assert: newClass metaclass subclasses isEmpty.
 	self assert: newClass kindOfSubclass equals: 'variableSubclass:'!
 
+testEmptyCategory
+	self shouldFail: (AddClassRefactoring
+				addClass: #FooTest
+				superclass: RefactoringTest
+				subclasses: {self class}
+				category: #'')
+		withMessage: 'Invalid category name'!
+
+testExistingClassName
+	self shouldFail: (AddClassRefactoring
+				addClass: #'Core.Object'
+				superclass: self class
+				subclasses: #()
+				category: #'Refactory-Testing')
+		withMessage: 'Core.Object is a class or global variable'!
+
 testExistingName
 	self shouldFail: (AddClassRefactoring
 				addClass: #'Core.Object'
 				superclass: self class
 				subclasses: #()
-				category: #'Refactory-Testing')!
+				category: #'Refactory-Testing')
+		withMessage: 'Core.Object is a class or global variable'!
 
-testInvalidSubclass
+testExistingVariableName
 	self shouldFail: (AddClassRefactoring
-				addClass: #Foo
-				superclass: CompositeLintRuleTestData
-				subclasses: {BasicLintRuleTestData}
-				category: #'Refactory-Tesing')!
-
-testMetaClassFailure
-	self shouldFail: (AddClassRefactoring
-				addClass: #Foo
-				superclass: self class class
+				addClass: #'Kernel.SourceFiles'
+				superclass: self class
 				subclasses: #()
-				category: #'Refactory-Testing')!
+				category: #'Refactory-Testing')
+		withMessage: 'Kernel.SourceFiles is a class or global variable'!
 
 testModelAddClass
 	| refactoring newClass superClass subclass |
@@ -115,7 +124,7 @@ testModelAddClass
 	self assert: subclass metaclass superclass equals: newClass metaclass.
 	self assert: (newClass metaclass subclasses includes: subclass metaclass)!
 
-testModelExistingName
+testModelExistingClassName
 	| refactoring |
 	refactoring := AddClassRefactoring
 				model: model
@@ -123,9 +132,9 @@ testModelExistingName
 				superclass: Object
 				subclasses: #()
 				category: #'Refactory-Testing'.
-	self shouldFail: refactoring!
+	self shouldFail: refactoring withMessage: 'Foo is a class or global variable'!
 
-testModelInvalidSubclass
+testModelNonImmediateSubclass
 	| refactoring |
 	refactoring := AddClassRefactoring
 				model: model
@@ -133,17 +142,45 @@ testModelInvalidSubclass
 				superclass: Object
 				subclasses: {model classNamed: #Bar}
 				category: #'Refactory-Tesing'.
-	self shouldFail: refactoring! !
+	self shouldFail: refactoring withMessage: 'Bar is not an immediate subclass of Core.Object'!
+
+testNonImmediateSubclass
+	self shouldFail: (AddClassRefactoring
+				addClass: #Foo
+				superclass: CompositeLintRuleTestData
+				subclasses: {BasicLintRuleTestData}
+				category: #'Refactory-Tesing')
+		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData is not an immediate subclass of Refactory.Browser.Tests.CompositeLintRuleTestData'!
+
+testSubclassIsMetaclass
+	self shouldFail: (AddClassRefactoring
+				addClass: #Foo
+				superclass: LintRuleTestData
+				subclasses: {CompositeLintRuleTestData class}
+				category: #'Refactory-Testing')
+		withMessage: 'Subclass must not be a metaclass'!
+
+testSuperclassIsMetaclass
+	self shouldFail: (AddClassRefactoring
+				addClass: #Foo
+				superclass: self class class
+				subclasses: #()
+				category: #'Refactory-Testing')
+		withMessage: 'Superclass must not be a metaclass'! !
 !Refactory.Browser.Tests.AddClassTest categoriesForMethods!
 setUp!public!set up! !
 testAddClass!public!tests! !
 testAddVariableByteClass!public!tests! !
 testAddVariableClass!public!tests! !
+testEmptyCategory!public!tests! !
+testExistingClassName!failure tests!public! !
 testExistingName!failure tests!public! !
-testInvalidSubclass!failure tests!public! !
-testMetaClassFailure!failure tests!public! !
+testExistingVariableName!failure tests!public! !
 testModelAddClass!public!tests! !
-testModelExistingName!failure tests!public! !
-testModelInvalidSubclass!failure tests!public! !
+testModelExistingClassName!failure tests!public! !
+testModelNonImmediateSubclass!failure tests!public! !
+testNonImmediateSubclass!failure tests!public! !
+testSubclassIsMetaclass!failure tests!public! !
+testSuperclassIsMetaclass!failure tests!public! !
 !
 

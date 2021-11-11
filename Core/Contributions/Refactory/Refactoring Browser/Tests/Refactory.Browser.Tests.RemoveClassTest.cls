@@ -15,7 +15,7 @@ removableClassWithSubclasses
 	^'Refactory.Browser.Tests.Foo' , 'LintRuleTestData'!
 
 testBadName
-	self shouldFail: (RemoveClassRefactoring classNames: #(#RecursiveSelfRule))!
+	self shouldFail: (RemoveClassRefactoring classNames: #(#RecursiveSelfRule)) withMessage: 'No such class'!
 
 testRemoveClass
 	| refactoring className |
@@ -34,7 +34,14 @@ testRemoveClassModelReferenced
 	(refactoring model classFor: self class) compile: 'fooLintRuleTest ^' , ($. split: className) last
 		classified: 'accessing'.
 	self assert: (refactoring hasReferencesTo: (refactoring model classNamed: className)).
-	self shouldFail: refactoring!
+	refactoring setOption: #removeReferencedClass toUse: [:rcvr :class | false].
+	self shouldAbort: refactoring.
+	self deny: (refactoring model hasRemoved: className).
+
+	"Now allow it to be removed"
+	refactoring setOption: #removeReferencedClass toUse: [:rcvr :class | true].
+	self executeRefactoring: refactoring.
+	self assert: (refactoring model hasRemoved: className)!
 
 testRemoveClassModelReferencedByFullName
 	| refactoring className |
@@ -44,11 +51,27 @@ testRemoveClassModelReferencedByFullName
 	(refactoring model classFor: self class) compile: 'fooLintRuleTest ^' , className
 		classified: 'accessing'.
 	self assert: (refactoring hasReferencesTo: (refactoring model classNamed: className)).
-	self shouldFail: refactoring!
+	refactoring setOption: #removeReferencedClass toUse: [:rcvr :class | false].
+	self shouldAbort: refactoring.
+	self deny: (refactoring model hasRemoved: className).
+	"Now allow it to be removed"
+	refactoring setOption: #removeReferencedClass toUse: [:rcvr :class | true].
+	self executeRefactoring: refactoring.
+	self assert: (refactoring model hasRemoved: className)!
 
 testRemoveReferenced
-	self
-		shouldFail: (RemoveClassRefactoring classNames: #(#'Refactory.Browser.Tests.BasicLintRuleTestData'))!
+	| refactoring className |
+	className := 'Refactory.Browser.Tests.BasicLintRuleTestData'.
+	refactoring := RemoveClassRefactoring classNames: {className}.
+	refactoring setOption: #removeReferencedClass toUse: [:rcvr :class | false].
+	self shouldAbort: refactoring.
+	self deny: (refactoring model hasRemoved: className).
+
+	"The option can allow it go ahead and be removed regardless of the fact that this is no longer a refactoring"
+	refactoring setOption: #removeReferencedClass toUse: [:rcvr :class | true].
+	model := refactoring model.
+	self executeRefactoring: refactoring.
+	self assert: (model hasRemoved: className)!
 
 testRemoveSelfReferenced
 	| refactoring classNames env refs |

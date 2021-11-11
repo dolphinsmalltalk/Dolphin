@@ -19,9 +19,7 @@ checkReferencesToAnyOf: aSelectorCollection
 			self model allReferencesTo: each
 				do: [:aRBMethod | (aSelectorCollection includes: aRBMethod selector) not ifTrue: [refs add: aRBMethod]].
 			refs notEmpty
-				ifTrue: 
-					[(self shouldRemoveSelector: each referencedIn: refs)
-						ifFalse: [self refactoringAborted: 'Method removal aborted because <1p> is referenced' << each]]]!
+				ifTrue: [(self shouldRemoveSelector: each referencedIn: refs) ifFalse: [self refactoringAborted]]]!
 
 checkReferencesToSuperSendsToAnyOf: superMessages
 	[superMessages isEmpty] whileFalse: 

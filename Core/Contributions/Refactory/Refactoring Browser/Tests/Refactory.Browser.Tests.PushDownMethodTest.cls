@@ -24,7 +24,7 @@ testPushDownMethod
 testPushDownMethodOnNonAbstractClass
 	| refactoring |
 	refactoring := PushDownMethodRefactoring pushDown: #(#key) from: Association.
-	self shouldFail: refactoring!
+	self shouldFail: refactoring withMessage: 'Core.Association is not an abstract class'!
 
 testPushDownMethodThatReferencesPoolDictionary
 	| refactoring class parseTree |
@@ -43,7 +43,8 @@ testPushDownNonExistantMenu
 	| refactoring |
 	refactoring := PushDownMethodRefactoring pushDown: #(#someMethodThatDoesNotExist)
 				from: LintRuleTestData.
-	self shouldFail: refactoring! !
+	self shouldFail: refactoring
+		withMessage: 'Refactory.Browser.Tests.LintRuleTestData does not define #someMethodThatDoesNotExist'! !
 !Refactory.Browser.Tests.PushDownMethodTest categoriesForMethods!
 testPushDownMethod!public!tests! !
 testPushDownMethodOnNonAbstractClass!failure tests!public! !

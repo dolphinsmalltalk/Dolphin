@@ -31,7 +31,7 @@ testProtectInstanceVariable
 testVariableNotDefined
 	| refactoring |
 	refactoring := ProtectInstanceVariableRefactoring variable: 'rewrite' class: SubclassOfClassToRename.
-	self shouldFail: refactoring! !
+	self shouldFail: refactoring withMessage: 'Refactory.Browser.Tests.SubclassOfClassToRename does not define an instance variable ''rewrite'''! !
 !Refactory.Browser.Tests.ProtectInstanceVariableTest categoriesForMethods!
 testProtectInstanceVariable!public!tests! !
 testVariableNotDefined!failure tests!public! !

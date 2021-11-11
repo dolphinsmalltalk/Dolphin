@@ -31,19 +31,22 @@ testInlineTemporaryBadInterval
 	self shouldFail: (InlineTemporaryRefactoring
 				inline: (self convertInterval: (29 to: 100) for: (RefactoryTestDataApp sourceCodeAt: #moveDefinition))
 				from: #moveDefinition
-				in: RefactoryTestDataApp)!
+				in: RefactoryTestDataApp)
+		withMessage: 'The selection does not appear to be an assignment'!
 
 testInlineTemporaryMutlipleAssignment
 	self shouldFail: (InlineTemporaryRefactoring
 				inline: (self convertInterval: (60 to: 83) for: (RefactoryTestDataApp sourceCodeAt: #moveDefinition))
 				from: #moveDefinition
-				in: RefactoryTestDataApp)!
+				in: RefactoryTestDataApp)
+		withMessage: 'There are multiple assignments to the variable'!
 
 testInlineTemporaryReadBeforeWritten
 	self shouldFail: (InlineTemporaryRefactoring
 				inline: (self convertInterval: (48 to: 56) for: (RefactoryTestDataApp sourceCodeAt: #inlineTemporary))
 				from: #inlineTemporary
-				in: RefactoryTestDataApp)! !
+				in: RefactoryTestDataApp)
+		withMessage: 'The variable is possibly read before it is assigned'! !
 !Refactory.Browser.Tests.InlineTemporaryTest categoriesForMethods!
 testInlineTemporary!public!tests! !
 testInlineTemporaryBadInterval!public!tests! !

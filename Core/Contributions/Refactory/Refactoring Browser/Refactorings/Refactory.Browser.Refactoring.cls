@@ -151,6 +151,16 @@ getOptionRemoveMethod: aSymbol referencedIn: aCollection
 			ifTrue: [self openBrowserOn: (self model environment referencesTo: aSymbol)].
 	^false!
 
+getOptionRemoveReferencedClass: aRBClass
+	(self
+		confirm: ('<1p> is referenced and cannot be removed safely.<n><n>Would you like to browse references?'
+				expandMacrosWith: aRBClass))
+			ifTrue: 
+				[| searches |
+				searches := self referenceSearchesForClass: aRBClass.
+				self browseEnvironments: searches].
+	^false!
+
 getOptionRenameAllDefinitions: aCollection of: aSymbol
 	^aCollection size <= 1 or: 
 			[self confirm: ('This will modify all <1p> implementors. Proceed anyway?'
@@ -250,6 +260,14 @@ refactoringError: aString with: aBlock
 
 refactoringWarning: aString
 	RefactoringWarning refactoring: self signal: aString!
+
+referenceSearchesForClass: aRBClass
+	| searches |
+	searches := OrderedCollection new.
+	aRBClass bindingOrNil
+		ifNotNil: [:binding | searches add: (self model environment referencesTo: binding)].
+	searches add: (self model environment referencesTo: aRBClass).
+	^searches!
 
 requestMethodNameFor: aMethodName
 	^(self options at: #methodName) value: self value: aMethodName!
@@ -351,6 +369,7 @@ getOptionMethodName:!options!public! !
 getOptionOpenBrowser:!options!public! !
 getOptionPullUpNonSharedInstVar:!options!public! !
 getOptionRemoveMethod:referencedIn:!options!public! !
+getOptionRemoveReferencedClass:!options!public! !
 getOptionRenameAllDefinitions:of:!options!public! !
 getOptionSelfArgumentName!options!public! !
 getOptionUseExistingMethod:!options!public! !
@@ -371,6 +390,7 @@ refactoringAborted:!exceptions!private! !
 refactoringError:!exceptions!private! !
 refactoringError:with:!exceptions!private! !
 refactoringWarning:!exceptions!private! !
+referenceSearchesForClass:!helpers!private! !
 requestMethodNameFor:!public!requests! !
 requestSelfArgumentName!public!requests! !
 safeMethodNameFor:basedOn:!public!utilities! !
@@ -415,6 +435,8 @@ initializeRefactoringOptions
 						#openBrowser -> [:refactoring :env | refactoring getOptionOpenBrowser: env].
 						#browseEnvironments
 							-> [:refactoring :environments | refactoring getOptionBrowseEnvironments: environments].
+						#removeReferencedClass
+							-> [:refactoring :class | refactoring getOptionRemoveReferencedClass: class].
 						#removeReferencedSelector
 							-> [:refactoring :selector :references | refactoring getOptionRemoveMethod: selector referencedIn: references].
 						#renameAllDefinitions

@@ -124,6 +124,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.Refactoring class} #icon)
 	#(#{Refactory.Browser.Refactoring class} #renameIcon)
 	#(#{Refactory.Browser.RemoveClassRefactoring} #displayOn:)
+	#(#{Refactory.Browser.RemoveClassRefactoring} #getOptionRemoveReferencedClass:)
 	#(#{Refactory.Browser.RemoveClassVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.RemoveInstanceVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.RemoveMethodRefactoring} #displayOn:)
@@ -191,7 +192,6 @@ package setMethodNames: #(
 	#(#{Tools.ClassSelector} #removeClassVariables)
 	#(#{Tools.ClassSelector} #removeDuplicateMethods)
 	#(#{Tools.ClassSelector} #removeInstanceVariables)
-	#(#{Tools.ClassSelector} #safeRemoveClass)
 	#(#{Tools.Debugger} #canMoveMethods)
 	#(#{Tools.Debugger} #hasRefactorableMethodSelected)
 	#(#{Tools.Debugger} #performMethodRefactoring:)
@@ -1265,9 +1265,42 @@ displayOn: aPuttableStream
 		ifFalse: 
 			[aPuttableStream nextPutAll: 'classes: '.
 			classNames do: [:each | aPuttableStream display: each]
-				separatedBy: [aPuttableStream nextPutAll: ', ']]! !
+				separatedBy: [aPuttableStream nextPutAll: ', ']]!
+
+getOptionRemoveReferencedClass: aRBClass
+	| details response references searches |
+	searches := self referenceSearchesForClass: aRBClass.
+	references := Set new.
+	searches do: [:each | references addAll: each allMethods].
+	details := String writeStream.
+	details
+		nextPutAll: 'Removing the class will leave ';
+		nextPutAll: (references size = 1
+					ifTrue: ['a dangling reference in this method']
+					ifFalse: ['dangling references in these methods']);
+		nextPutAll: ' and is potentially unsafe. It is recommended that you first browse these references and remove them before attempting to remove the class again:';
+		cr.
+	self
+		printNameList: (references asArray collect: [:each | each printString]) sort
+		on: details
+		limit: self maxDetails
+		type: 'methods'.
+	response := MessageBox new
+				caption: self displayString;
+				headline: 'Remove referenced class?' << aRBClass;
+				text: 'The class <1p> is referenced from <2d> method<3?:s>.'
+							<< {aRBClass. references size. references size = 1};
+				customButtons: #(#(#yes '&Remove Anyway') #(#no '&Browse References') #(#cancel 'Cancel'));
+				defaultButton: 2;
+				detailsText: details contents;
+				iconStyle: #warning;
+				confirmOrCancel.
+	response == #yes ifTrue: [^true].
+	response == #no ifTrue: [self browseEnvironments: searches].
+	^false! !
 !Refactory.Browser.RemoveClassRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
+getOptionRemoveReferencedClass:!options!public! !
 !
 
 !Refactory.Browser.RemoveClassVariableRefactoring class methodsFor!
@@ -2136,7 +2169,7 @@ queryRefactoringCommand: aCommandQuery
 	| selector class |
 	selector := aCommandQuery commandSymbol.
 	class := self actualClass.
-	(#(#classRefactoringsMenu #safeRemoveClass #addClassVariable) identityIncludes: selector)
+	(#(#classRefactoringsMenu #addClassVariable) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: class notNil.
 			^true].
@@ -2234,13 +2267,7 @@ removeInstanceVariables
 	choose only one instance variable at a time."
 
 	(self chooseVariables: false caption: 'Remove Instance Variables…') 
-		ifNotNil: [:varNames | self systemModel removeInstanceVariables: varNames within: self searchEnvironment]!
-
-safeRemoveClass
-	"Removes the selected class from the system, but not if it is referenced,
-	and any subclasses are removable (i.e. invoke the 'Remove Class' refactoring)."
-
-	self systemModel safeRemoveClass: self selection! !
+		ifNotNil: [:varNames | self systemModel removeInstanceVariables: varNames within: self searchEnvironment]! !
 !Tools.ClassSelector categoriesForMethods!
 abstractClassVariables!commands!public!refactoring! !
 abstractInstanceVariables!commands!public!refactoring! !
@@ -2266,7 +2293,6 @@ queryRefactoringCommand:!commands!private! !
 removeClassVariables!commands!public!refactoring! !
 removeDuplicateMethods!commands!private!refactoring! !
 removeInstanceVariables!commands!public!refactoring! !
-safeRemoveClass!commands!public!refactoring! !
 !
 
 !Tools.Debugger methodsFor!

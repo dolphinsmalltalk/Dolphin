@@ -16,11 +16,13 @@ testNonExistantName
 		shouldFail: (RemoveParameterRefactoring
 					removeParameter: 'asdf'
 					in: BasicLintRuleTestData
-					selector: #checkClass:);
+					selector: #checkClass:)
+			withMessage: 'Select a parameter!!!!';
 		shouldFail: (RemoveParameterRefactoring
 					removeParameter: 'aSmalllintContext'
 					in: BasicLintRuleTestData
-					selector: #checkClass1:)!
+					selector: #checkClass1:)
+			withMessage: 'Method doesn''t exist'!
 
 testPrimitiveMethods
 	| refactoring |
@@ -31,7 +33,7 @@ testPrimitiveMethods
 				removeParameter: 'a'
 				in: Object
 				selector: #foo123:.
-	self shouldFail: refactoring!
+	self shouldFail: refactoring withMessage: 'Core.Object''s implementation of #foo123: is a primitive'!
 
 testRemoveParameter
 	| refactoring class |

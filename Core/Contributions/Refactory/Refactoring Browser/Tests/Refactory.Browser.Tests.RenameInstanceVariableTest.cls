@@ -15,13 +15,15 @@ testAlreadyExistingName
 	self shouldFail: (RenameInstanceVariableRefactoring
 				rename: 'classBlock'
 				to: 'name'
-				in: BasicLintRuleTestData)!
+				in: BasicLintRuleTestData)
+		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData or one of its subclasses defines variable ''name'''!
 
 testNonExistantName
 	self shouldFail: (RenameInstanceVariableRefactoring
 				rename: 'foo'
 				to: 'newFoo'
-				in: BasicLintRuleTestData)!
+				in: BasicLintRuleTestData)
+		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData does not define an instance variable ''foo'''!
 
 testRenameInstVar
 	| refactoring class |

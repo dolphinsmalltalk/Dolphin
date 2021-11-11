@@ -62,7 +62,8 @@ testNoMoveDefinition
 				bindTight: (self convertInterval: (21 to: 24)
 						for: (RefactoryTestDataApp sourceCodeAt: #moveDefinition))
 				in: RefactoryTestDataApp
-				selector: #noMoveDefinition)!
+				selector: #noMoveDefinition)
+		withMessage: '''temp'' is possibly read before written'!
 
 testNonExistantName
 	| aRefactoring |
@@ -70,11 +71,13 @@ testNonExistantName
 		shouldFail: (MoveVariableDefinitionRefactoring
 					bindTight: (1 to: 10)
 					in: LintRuleTestData
-					selector: #name1);
+					selector: #name1)
+			withMessage: 'Refactory.Browser.Tests.LintRuleTestData does not define #name1';
 		shouldFail: (MoveVariableDefinitionRefactoring
 					bindTight: (self convertInterval: (44 to: 54) for: (LintRuleTestData sourceCodeAt: #displayName))
 					in: LintRuleTestData
-					selector: #displayName).
+					selector: #displayName)
+			withMessage: 'WriteStream does not seem to be a valid variable name.'.
 	"This isn't a test of a non-existant name, but of a move that is already as tightly bound as possible"
 	aRefactoring := MoveVariableDefinitionRefactoring
 				bindTight: (self convertInterval: (16 to: 25) for: (LintRuleTestData sourceCodeAt: #displayName))

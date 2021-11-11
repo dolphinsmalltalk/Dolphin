@@ -16,12 +16,14 @@ testBadInterval
 		shouldFail: (ExtractMethodRefactoring
 					extract: (self convertInterval: (24 to: 30) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 					from: #testMethod
-					in: RefactoryTestDataApp);
+					in: RefactoryTestDataApp)
+			withMessage: 'Invalid interval';
 		shouldFail: (ExtractMethodRefactoring
 					extract: (self convertInterval: (80 to: 147)
 							for: (BasicLintRuleTestData class sourceCodeAt: #subclassOf:overrides:))
 					from: #subclassOf:overrides:
-					in: BasicLintRuleTestData class)!
+					in: BasicLintRuleTestData class)
+			withMessage: 'Invalid source to extract'!
 
 testExtractFailure
 	self
@@ -29,17 +31,20 @@ testExtractFailure
 					extract: (self convertInterval: (80 to: 269)
 							for: (BasicLintRuleTestData class sourceCodeAt: #subclassOf:overrides:))
 					from: #subclassOf:overrides:
-					in: BasicLintRuleTestData class);
+					in: BasicLintRuleTestData class)
+			withMessage: 'Couldn''t extract code since it contains a return.';
 		shouldFail: (ExtractMethodRefactoring
 					extract: (self convertInterval: (53 to: 56)
 							for: (BasicLintRuleTestData class sourceCodeAt: #subclassOf:overrides:))
 					from: #subclassOf:overrides:
-					in: BasicLintRuleTestData class);
+					in: BasicLintRuleTestData class)
+			withMessage: 'Cannot extract left hand side of an assignment';
 		shouldFail: (ExtractMethodRefactoring
 					extract: (self convertInterval: (77 to: 222)
 							for: (BasicLintRuleTestData class sourceCodeAt: #subclassResponsibilityNotDefined))
 					from: #subclassResponsibilityNotDefined
-					in: BasicLintRuleTestData class)!
+					in: BasicLintRuleTestData class)
+			withMessage: 'Cannot extract assignment without all references: #(detector subclassResponsibilitySymbol)'!
 
 testExtractFromMethodInCustomNamespace
 	| method source refactoring class start stop |
@@ -213,7 +218,8 @@ testNonExistantSelector
 	self shouldFail: (ExtractMethodRefactoring
 				extract: (10 to: 20)
 				from: #checkClass1:
-				in: BasicLintRuleTestData)! !
+				in: BasicLintRuleTestData)
+		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData does not define #checkClass1:'! !
 !Refactory.Browser.Tests.ExtractMethodTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testExtractFailure!failure tests!public! !

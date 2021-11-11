@@ -24,10 +24,14 @@ testModelRemoveInstanceVariable
 	self deny: (class definesInstanceVariable: 'foo1')!
 
 testNonExistantName
-	self shouldFail: (RemoveInstanceVariableRefactoring variable: 'name1' class: LintRuleTestData)!
+	self shouldFail: (RemoveInstanceVariableRefactoring variable: 'name1' class: LintRuleTestData)
+		withMessage: 'Refactory.Browser.Tests.LintRuleTestData does not define an instance variable ''name1'''!
 
 testReferencedVariable
-	self shouldFail: (RemoveInstanceVariableRefactoring variable: 'name' class: LintRuleTestData)!
+	self shouldFail: (RemoveInstanceVariableRefactoring variable: 'name' class: LintRuleTestData)
+		withMessage: '''name'' is still referenced.
+
+Browse references?'!
 
 testRemoveInstVar
 	| refactoring class |

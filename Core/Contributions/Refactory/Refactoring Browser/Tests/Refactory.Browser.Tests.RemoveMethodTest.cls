@@ -50,7 +50,7 @@ testRemoveReferenced
 			senders := references.
 			selector := symbol.
 			false].
-	self should: [self executeRefactoring: subject] raise: OperationAborted.
+	self shouldAbort: subject.
 	self assert: selector equals: #checkClass:.
 	self assert: senders single printString equals: 'Refactory.Browser.SmalllintChecker>>#run'!
 

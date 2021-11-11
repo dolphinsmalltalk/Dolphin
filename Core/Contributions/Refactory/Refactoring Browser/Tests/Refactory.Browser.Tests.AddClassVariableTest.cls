@@ -13,7 +13,7 @@ Refactory.Browser.Tests.AddClassVariableTest comment: ''!
 
 setUp
 	super setUp.
-	model := Compiler evaluate: (self readFile: 'AbstractVariableTestData.st')!
+	model := self abstractVariableTestData!
 
 testAddClassVariable
 	| refactoring |
@@ -25,20 +25,17 @@ testAddClassVariable
 testAlreadyExistingName
 	self
 		shouldFail: (AddClassVariableRefactoring variable: #RecursiveSelfRule
-					class: TransformationRuleTestData);
+					class: TransformationRuleTestData)
+			withMessage: 'Refactory.Browser.Tests.TransformationRuleTestData or one of its subclasses defines variable ''RecursiveSelfRule''';
 		shouldFail: (AddClassVariableRefactoring variable: self objectClassVariable
-					class: TransformationRuleTestData)!
-
-testMetaclass
-	| refactoring |
-	refactoring := AddClassVariableRefactoring variable: #ClassVarName3
-				class: (model classNamed: #'Core.Object') metaclass.
-	refactoring model: model.
-	self shouldFail: refactoring!
+					class: TransformationRuleTestData)
+			withMessage: 'Refactory.Browser.Tests.TransformationRuleTestData or one of its subclasses defines variable <1p>'
+					<< self objectClassVariable!
 
 testMetaClassFailure
 	self shouldFail: (AddClassVariableRefactoring variable: #VariableName
-				class: TransformationRuleTestData class)!
+				class: TransformationRuleTestData class)
+		withMessage: 'Refactory.Browser.Tests.TransformationRuleTestData class is a metaclass'!
 
 testModelAddClassVariable
 	| refactoring |
@@ -55,23 +52,31 @@ testModelAlreadyExistingName
 				model: model
 				variable: #ClassVarName2
 				class: (model classNamed: #Bar).
-	self shouldFail: refactoring!
+	self shouldFail: refactoring
+		withMessage: 'Bar or one of its subclasses defines variable ''ClassVarName2'''!
 
-testModelMetaclass
+testModelMetaclassFailure
 	| refactoring |
 	refactoring := AddClassVariableRefactoring
 				model: model
 				variable: #ClassVarName3
 				class: (model classNamed: #Bar) metaclass.
-	self shouldFail: refactoring! !
+	self shouldFail: refactoring withMessage: 'Bar class is a metaclass'!
+
+testRBMetaclassFailure
+	| refactoring |
+	refactoring := AddClassVariableRefactoring variable: #ClassVarName3
+				class: (model classNamed: #'Core.Object') metaclass.
+	refactoring model: model.
+	self shouldFail: refactoring withMessage: 'Core.Object class is a metaclass'! !
 !Refactory.Browser.Tests.AddClassVariableTest categoriesForMethods!
 setUp!public!set up! !
 testAddClassVariable!public!tests! !
 testAlreadyExistingName!failure tests!public! !
-testMetaclass!failure tests!public! !
 testMetaClassFailure!failure tests!public! !
 testModelAddClassVariable!public!tests! !
 testModelAlreadyExistingName!failure tests!public! !
-testModelMetaclass!failure tests!public! !
+testModelMetaclassFailure!failure tests!public! !
+testRBMetaclassFailure!failure tests!public! !
 !
 

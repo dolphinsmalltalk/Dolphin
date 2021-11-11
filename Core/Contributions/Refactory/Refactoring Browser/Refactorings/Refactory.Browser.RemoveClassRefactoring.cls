@@ -12,18 +12,8 @@ Refactory.Browser.RemoveClassRefactoring comment: ''!
 !Refactory.Browser.RemoveClassRefactoring methodsFor!
 
 checkReferencesTo: aRBClass
-	(self hasReferencesTo: aRBClass)
-		ifTrue: 
-			[self
-				refactoringError: ('<1p> is referenced and cannot be removed safely.<n><n>Would you like to browse references?'
-						expandMacrosWith: aRBClass)
-				with: 
-					[| searches |
-					searches := OrderedCollection new.
-					aRBClass bindingOrNil
-						ifNotNil: [:binding | searches add: (self model environment referencesTo: binding)].
-					searches add: (self model environment referencesTo: aRBClass).
-					self browseEnvironments: searches]]!
+	((self hasReferencesTo: aRBClass) not or: [self shouldRemoveReferencedClass: aRBClass])
+		ifFalse: [self refactoringAborted]!
 
 classNames: aClassNameCollection 
 	classNames := aClassNameCollection!
@@ -60,6 +50,9 @@ reparentSubclasses
 			class := self model classNamed: each.
 			self model reparentClasses: class subclasses copy to: class superclass]!
 
+shouldRemoveReferencedClass: aRBClass
+	^(self options at: #removeReferencedClass) value: self value: aRBClass!
+
 storeOn: aStream 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -78,6 +71,7 @@ hasReferencesTo:!preconditions!public! !
 preconditions!preconditions!public! !
 removeClasses!public!transforming! !
 reparentSubclasses!public!transforming! !
+shouldRemoveReferencedClass:!options!private! !
 storeOn:!printing!public! !
 transform!public!transforming! !
 !

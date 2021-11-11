@@ -21,7 +21,8 @@ testExistingSelector
 				renameMethod: #checkClass:
 				in: BasicLintRuleTestData
 				to: #runOnEnvironment:
-				permutation: (1 to: 1))!
+				permutation: (1 to: 1))
+		withMessage: 'The selectors are not equivalent AND Refactory.Browser.Tests.BasicLintRuleTestData or a subclass understands #runOnEnvironment:'!
 
 testMultipleSelectors
 	| subject implementors |
@@ -40,7 +41,7 @@ testMultipleSelectors
 			[:ref :classes :selector |
 			implementors := classes.
 			false].
-	self should: [self executeRefactoring: subject] raise: OperationAborted.
+	self shouldAbort: subject.
 	{Refactory.Browser.Tests.BasicLintRuleTestData.
 		Refactory.Browser.Tests.CompositeLintRuleTestData.
 		Refactory.Browser.Tests.LintRuleTestData}

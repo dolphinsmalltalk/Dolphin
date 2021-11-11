@@ -13,7 +13,7 @@ Refactory.Browser.Tests.AddParameterTest comment: ''!
 
 setUp
 	super setUp.
-	model := Compiler evaluate: (self readFile: 'AbstractVariableTestData.st')!
+	model := self abstractVariableTestData!
 
 testAddParameterForTwoArgumentMessage
 	| refactoring class |
@@ -117,12 +117,14 @@ testBadInitializationCode
 					addParameterToMethod: #name
 					in: LintRuleTestData
 					newSelector: #name:
-					initializer: 'foo:');
+					initializer: 'foo:')
+			withMessage: 'invalid expression start';
 		shouldFail: (AddParameterRefactoring
 					addParameterToMethod: #name
 					in: LintRuleTestData
 					newSelector: #name:
-					initializer: 'foo')!
+					initializer: 'foo')
+			withMessage: '''foo'' is not defined in *'!
 
 testModelBadInitializationCode
 	| refactoring |
@@ -133,7 +135,9 @@ testModelBadInitializationCode
 				in: LintRuleTestData
 				newSelector: #name1:
 				initializer: 'AddParameterRefactoring new'.
-	self shouldFail: refactoring!
+	"The error will report that AppParameterRefactoring is not defined in one of the classes sending #name1 in the model. There are at least two senders, and we may get any of them."
+	self shouldFail: refactoring
+		withMessage: '''AddParameterRefactoring'' is not defined in Refactory.Browser.Tests.*Test'!
 
 testModelNonExistantName
 	| refactoring |
@@ -144,14 +148,16 @@ testModelNonExistantName
 				in: LintRuleTestData
 				newSelector: #nameNew:
 				initializer: 'nil'.
-	self shouldFail: refactoring!
+	self shouldFail: refactoring
+		withMessage: 'Refactory.Browser.Tests.LintRuleTestData does not define #name'!
 
 testNonExistantName
 	self shouldFail: (AddParameterRefactoring
 				addParameterToMethod: #name1
 				in: LintRuleTestData
 				newSelector: #name1:
-				initializer: 'nil')!
+				initializer: 'nil')
+		withMessage: 'Refactory.Browser.Tests.LintRuleTestData does not define #name1'!
 
 testPrimitiveMethods
 	| refactoring implementors selector |
@@ -169,7 +175,7 @@ testPrimitiveMethods
 			selector := sel.
 			implementors := classes.
 			true].
-	self shouldFail: refactoring.
+	self shouldFail: refactoring withMessage: '*''s implementation of #foo is a primitive'.
 	self assert: selector identicalTo: #foo.
 	#(#'Core.Object' #Foo #Bar #'Foo class')
 		do: [:each | self assert: (implementors includes: (model classNamed: each))].
@@ -179,11 +185,8 @@ testPrimitiveMethods
 				in: Object
 				newSelector: #at:foo:
 				initializer: '1'.
-	refactoring setOption: #renameAllDefinitions
-		toUse: 
-			[:ref :classes :sel |
-			true].
-	self shouldFail: refactoring! !
+	refactoring setOption: #renameAllDefinitions toUse: [:ref :classes :sel | true].
+	self shouldFail: refactoring withMessage: '*''s implementation of #at: is a primitive'! !
 !Refactory.Browser.Tests.AddParameterTest categoriesForMethods!
 setUp!public!set up! !
 testAddParameterForTwoArgumentMessage!public!tests! !

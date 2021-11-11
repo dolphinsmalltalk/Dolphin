@@ -13,7 +13,7 @@ Refactory.Browser.Tests.AddInstanceVariableTest comment: ''!
 
 setUp
 	super setUp.
-	model := Compiler evaluate: (self readFile: 'AbstractVariableTestData.st')!
+	model := self abstractVariableTestData!
 
 testAddInstanceVariable
 	| refactoring |
@@ -41,8 +41,10 @@ testAddToModel
 
 testAlreadyExistingName
 	self
-		shouldFail: (AddInstanceVariableRefactoring variable: 'class' class: TransformationRuleTestData);
-		shouldFail: (AddInstanceVariableRefactoring variable: 'name' class: TransformationRuleTestData)!
+		shouldFail: (AddInstanceVariableRefactoring variable: 'class' class: TransformationRuleTestData)
+			withMessage: 'Refactory.Browser.Tests.TransformationRuleTestData or one of its subclasses defines variable ''class''';
+		shouldFail: (AddInstanceVariableRefactoring variable: 'name' class: TransformationRuleTestData)
+			withMessage: 'Refactory.Browser.Tests.TransformationRuleTestData or one of its subclasses defines variable ''name'''!
 
 testModelAlreadyExistingName
 	| refactoring |
@@ -50,16 +52,17 @@ testModelAlreadyExistingName
 				model: model
 				variable: 'instVarName1'
 				class: (model classNamed: #Bar).
-	self shouldFail: refactoring!
+	self shouldFail: refactoring
+		withMessage: 'Bar or one of its subclasses defines variable ''instVarName1'''!
 
 testModelMetaclassAlreadyExistingName
 	| refactoring |
-	(model metaclassNamed: #Foo) addInstanceVariable: 'instVarName1'.
+	(model metaclassNamed: #Foo) addInstanceVariable: 'classInstVarName1'.
 	refactoring := AddInstanceVariableRefactoring
 				model: model
-				variable: 'instVarName1'
-				class: (model classNamed: #Bar).
-	self shouldFail: refactoring!
+				variable: 'classInstVarName1'
+				class: (model classNamed: #Bar) metaclass.
+	self shouldFail: refactoring withMessage: 'Bar class or one of its subclasses defines variable ''classInstVarName1'''!
 
 testNewExistingName
 	| refactoring |
@@ -75,7 +78,8 @@ testNewExistingName
 				model: model
 				variable: 'asdf'
 				class: (model classNamed: #FOOBAR).
-	self shouldFail: refactoring!
+	self shouldFail: refactoring
+		withMessage: 'FOOBAR or one of its subclasses defines variable ''asdf'''!
 
 testNewHierarchyExistingName
 	| refactoring |
@@ -97,7 +101,8 @@ testNewHierarchyExistingName
 				model: model
 				variable: 'asdf'
 				class: (model classNamed: #BARFOO).
-	self shouldFail: refactoring! !
+	self shouldFail: refactoring
+		withMessage: 'BARFOO or one of its subclasses defines variable ''asdf'''! !
 !Refactory.Browser.Tests.AddInstanceVariableTest categoriesForMethods!
 setUp!public!set up! !
 testAddInstanceVariable!public!tests! !

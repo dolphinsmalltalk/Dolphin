@@ -15,34 +15,39 @@ testBadName
 	self shouldFail: (ChildrenToSiblingsRefactoring
 				name: #'Obje ct'
 				class: LintRuleTestData
-				subclasses: {BasicLintRuleTestData. CompositeLintRuleTestData})!
+				subclasses: {BasicLintRuleTestData. CompositeLintRuleTestData})
+		withMessage: '#''Obje ct'' is not a valid class name'!
 
 testExistingName
 	self
 		shouldFail: (ChildrenToSiblingsRefactoring
 					name: #'Core.Object'
 					class: LintRuleTestData
-					subclasses: {BasicLintRuleTestData. CompositeLintRuleTestData});
+					subclasses: {BasicLintRuleTestData. CompositeLintRuleTestData})
+			withMessage: 'Core.Object is a class or global variable';
 		shouldFail: (ChildrenToSiblingsRefactoring
 					name: #Processor
 					class: LintRuleTestData
-					subclasses: {BasicLintRuleTestData. CompositeLintRuleTestData})!
+					subclasses: {BasicLintRuleTestData. CompositeLintRuleTestData})
+			withMessage: 'Processor is a class or global variable'!
 
 testInvalidSubclass
 	self shouldFail: (ChildrenToSiblingsRefactoring
 				name: #Foo
 				class: LintRuleTestData
-				subclasses: {BasicLintRule. CompositeLintRule})!
+				subclasses: {BasicLintRule. CompositeLintRule})
+		withMessage: 'Refactory.Browser.BasicLintRule is not an immediate subclass of Refactory.Browser.Tests.LintRuleTestData'!
 
 testMetaClassFailure
 	self shouldFail: (ChildrenToSiblingsRefactoring
 				name: #Foo
 				class: LintRuleTestData class
-				subclasses: {BasicLintRuleTestData class. CompositeLintRuleTestData class})!
+				subclasses: {BasicLintRuleTestData class. CompositeLintRuleTestData class})
+		withMessage: 'Superclass must not be a metaclass'!
 
 testModelChildrenToSibling
 	| refactoring class subclass superclass noMove |
-	model := Compiler evaluate: (self readFile: 'ChildrenToSiblingTest.st').
+	model := self childrenToSiblingTestData.
 	class := model classNamed: #'Refactory.Browser.Tests.ConcreteSuperclass'.
 	subclass := model classNamed: #'Refactory.Browser.Tests.ConcreteSubclass'.
 	noMove := model classNamed: #'Refactory.Browser.Tests.NoMoveSubclass'.

@@ -42,7 +42,8 @@ testPushUpClassMethod
 	self shouldFail: (PushUpMethodRefactoring
 				model: model
 				pushUp: #(#foo)
-				from: class metaclass)!
+				from: class metaclass)
+		withMessage: '#foo refers to Foo which is defined in Core.Object class'!
 
 testPushUpMethodWithCopyOverriddenMethodsDown
 	| refactoring |
@@ -60,7 +61,8 @@ testPushUpMethodWithCopyOverriddenMethodsDown
 				directlyDefinesMethod: #isComposite)!
 
 testPushUpReferencesInstVar
-	self shouldFail: (PushUpMethodRefactoring pushUp: #(#checkClass:) from: BasicLintRuleTestData)!
+	self shouldFail: (PushUpMethodRefactoring pushUp: #(#checkClass:) from: BasicLintRuleTestData)
+		withMessage: '#checkClass: refers to classBlock which is defined in Refactory.Browser.Tests.BasicLintRuleTestData'!
 
 testPushUpWithInvalidSuperSend
 	| class |
@@ -78,7 +80,8 @@ testPushUpWithInvalidSuperSend
 	self shouldFail: (PushUpMethodRefactoring
 				model: model
 				pushUp: #(#yourself)
-				from: class)!
+				from: class)
+		withMessage: 'Cannot push up #yourself since Foo2>>yourself sends a super message to it.'!
 
 testPushUpWithMethodThatCannotBePushedDown
 	model
@@ -87,7 +90,8 @@ testPushUpWithMethodThatCannotBePushedDown
 	self shouldFail: (PushUpMethodRefactoring
 				model: model
 				pushUp: #(#yourself)
-				from: (model classNamed: #SomeClass))!
+				from: (model classNamed: #SomeClass))
+		withMessage: 'SomeClass has no superclass'!
 
 testPushUpWithSuperSendThatCannotBeCopiedDown
 	| class |
@@ -105,7 +109,9 @@ testPushUpWithSuperSendThatCannotBeCopiedDown
 	self shouldFail: (PushUpMethodRefactoring
 				model: model
 				pushUp: #(#foo)
-				from: class)! !
+				from: class)
+		withMessage: 'Cannot push up #foo since we must copy down the superclass method in Subclass
+to the other subclasses, and the superclass method sends a super message which is overridden.'! !
 !Refactory.Browser.Tests.PushUpMethodTest categoriesForMethods!
 testPushUpAndCopyDown!public!tests! !
 testPushUpClassMethod!failure tests!public! !

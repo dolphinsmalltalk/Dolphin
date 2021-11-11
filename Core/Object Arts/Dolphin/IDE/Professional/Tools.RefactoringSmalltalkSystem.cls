@@ -900,6 +900,20 @@ refactoringError
 
 	^RefactoringSignal!
 
+removeClass: aClass
+	"Removes aClass from the system using the 'Remove Class' refactoring, which won't remove
+	the class if referenced, and which promotes all subclasses."
+
+	| oldClassName |
+	oldClassName := aClass fullName.
+	(MessageBox new
+		uniqueId: [self] method;
+		isSuppressible: true;
+		headline: 'Remove class <1s>?' << oldClassName;
+		confirm: 'The class will only be removed if it has no references.') ifFalse: [^false].
+	self performRefactoring: [(RemoveClassRefactoring classNames: {aClass fullName}) execute].
+	^true!
+
 removeClassVariable: aString from: aClass within: aBrowserEnvironment
 	self removeClassVariables: {aClass -> aString} within: aBrowserEnvironment!
 
@@ -1132,20 +1146,6 @@ renameVariable: aString to: newName in: aClass classVariable: aBoolean within: a
 			refactoring execute.
 			newName]!
 
-safeRemoveClass: aClass
-	"Removes aClass from the system using the 'Remove Class' refactoring, which won't remove
-	the class if referenced, and which promotes all subclasses."
-
-	| oldClassName |
-	oldClassName := aClass fullName.
-	(MessageBox new
-		uniqueId: [self] method;
-		isSuppressible: true;
-		headline: 'Remove class <1s>?' << oldClassName;
-		confirm: 'The class will only be removed if it has no references.') ifFalse: [^false].
-	self performRefactoring: [(RemoveClassRefactoring classNames: {aClass fullName}) execute].
-	^true!
-
 safeRemoveSelectors: anArrayOfSelectors from: aClass inEnvironment: aBrowserEnvironment
 	| mb |
 	mb := MessageBox new.
@@ -1369,6 +1369,7 @@ pushMethods:up:!private!refactoring! !
 pushUpMethods:!public!refactoring! !
 queryCommand:!commands!private! !
 refactoringError!constants!private! !
+removeClass:!public!refactoring! !
 removeClassVariable:from:within:!public!refactoring! !
 removeClassVariables:within:!public!refactoring! !
 removeFilteredMethod:forLintRule:!public!refactoring! !
@@ -1386,7 +1387,6 @@ renameMethodReferences:!public!refactoring! !
 renameMethodReferences:to:!private!refactoring! !
 renameTemporary:to:in:selector:!public!refactoring! !
 renameVariable:to:in:classVariable:within:!private!refactoring! !
-safeRemoveClass:!public!refactoring! !
 safeRemoveSelectors:from:inEnvironment:!private!refactoring! !
 scopeToRenameAccessorsFor:in:classVariable:within:!private!refactoring! !
 selectTargetVariableOf:parseTree:!helpers!private!refactoring! !

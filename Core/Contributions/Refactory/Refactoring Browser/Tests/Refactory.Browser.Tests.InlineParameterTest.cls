@@ -15,7 +15,8 @@ testInlineBlockFailure
 	self shouldFail: (InlineParameterRefactoring
 				inlineParameter: 'aBlock'
 				in: RefactoryTestDataApp
-				selector: ('inline' , 'Foo:') asSymbol)!
+				selector: ('inline' , 'Foo:') asSymbol)
+		withMessage: 'All values passed as this argument must be literal.'!
 
 testInlineLiteralArray
 	| refactoring class change |

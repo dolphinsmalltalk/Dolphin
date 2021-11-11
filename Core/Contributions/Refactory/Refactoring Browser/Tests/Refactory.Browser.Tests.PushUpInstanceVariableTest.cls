@@ -23,7 +23,8 @@ testPullUpInstVar
 
 testPullUpVariableNotDefined
 	self
-		shouldFail: (PullUpInstanceVariableRefactoring variable: 'notDefinedVariable' class: LintRuleTestData)! !
+		shouldFail: (PullUpInstanceVariableRefactoring variable: 'notDefinedVariable' class: LintRuleTestData)
+		withMessage: 'No subclass defines notDefinedVariable'! !
 !Refactory.Browser.Tests.PushUpInstanceVariableTest categoriesForMethods!
 testPullUpInstVar!public!tests! !
 testPullUpVariableNotDefined!failure tests!public! !

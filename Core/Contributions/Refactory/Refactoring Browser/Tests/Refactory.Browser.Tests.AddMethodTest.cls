@@ -13,7 +13,7 @@ Refactory.Browser.Tests.AddMethodTest comment: ''!
 
 setUp
 	super setUp.
-	model := Compiler evaluate: (self readFile: 'AbstractVariableTestData.st')!
+	model :=self abstractVariableTestData!
 
 testAddMethod
 	| refactoring |
@@ -30,13 +30,15 @@ testBadMethod
 	self shouldFail: (AddMethodRefactoring
 				addMethod: 'asdf ^super ^printString'
 				toClass: BasicLintRuleTestData
-				inProtocols: #(#accessing))!
+				inProtocols: #(#accessing))
+		withMessage: 'The sources could not be parsed'!
 
 testExistingSelector
 	self shouldFail: (AddMethodRefactoring
 				addMethod: 'printString ^super printString'
 				toClass: BasicLintRuleTestData
-				inProtocols: #(#accessing))!
+				inProtocols: #(#accessing))
+		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData understands #printString'!
 
 testModelAddMethod
 	| refactoring class |
@@ -57,7 +59,7 @@ testModelExistingSelector
 				addMethod: 'classVarName1 ^super printString'
 				toClass: (model classNamed: #Bar)
 				inProtocols: #(#accessing).
-	self shouldFail: refactoring!
+	self shouldFail: refactoring withMessage: 'Bar understands #classVarName1'!
 
 testModelInheritedSelector
 	| refactoring |
@@ -66,7 +68,7 @@ testModelInheritedSelector
 				addMethod: 'printString ^super printString'
 				toClass: (model classNamed: #Bar)
 				inProtocols: #(#accessing).
-	self shouldFail: refactoring! !
+	self shouldFail: refactoring withMessage: 'Bar understands #printString'! !
 !Refactory.Browser.Tests.AddMethodTest categoriesForMethods!
 setUp!public!set up! !
 testAddMethod!public!tests! !

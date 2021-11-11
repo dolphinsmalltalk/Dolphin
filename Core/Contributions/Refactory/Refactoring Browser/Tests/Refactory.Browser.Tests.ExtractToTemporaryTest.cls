@@ -17,25 +17,29 @@ testBadInterval
 					extract: (self convertInterval: (24 to: 30) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 					to: 'asdf'
 					from: #testMethod
-					in: RefactoryTestDataApp);
+					in: RefactoryTestDataApp)
+			withMessage: 'Invalid interval';
 		shouldFail: (ExtractToTemporaryRefactoring
 					extract: (self convertInterval: (14 to: 105) for: (RefactoryTestDataApp sourceCodeAt: #testMethod1))
 					to: 'asdf'
 					from: #testMethod1
-					in: RefactoryTestDataApp);
+					in: RefactoryTestDataApp)
+			withMessage: 'Invalid selection';
 		shouldFail: (ExtractToTemporaryRefactoring
 					extract: (self convertInterval: (61 to: 101)
 							for: (RefactoryTestDataApp sourceCodeAt: #noMoveDefinition))
 					to: 'asdf'
 					from: #noMoveDefinition
-					in: RefactoryTestDataApp)!
+					in: RefactoryTestDataApp)
+			withMessage: 'Cannot assign temp from multiple statements'!
 
 testBadName
 	self shouldFail: (ExtractToTemporaryRefactoring
 				extract: (self convertInterval: (14 to: 23) for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 				to: 'a sdf'
 				from: #testMethod
-				in: RefactoryTestDataApp)!
+				in: RefactoryTestDataApp)
+		withMessage: '''a sdf'' is not a valid instance variable name'!
 
 testExtractToTemporaryForLastStatementInBlock
 	| refactoring |
@@ -76,7 +80,8 @@ testNonExistantSelector
 				extract: (14 to: 23)
 				to: 'asdf'
 				from: #checkClass1:
-				in: RefactoryTestDataApp)! !
+				in: RefactoryTestDataApp)
+		withMessage: 'Refactory.Browser.Tests.RefactoryTestDataApp does not define #checkClass1:'! !
 !Refactory.Browser.Tests.ExtractToTemporaryTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testBadName!failure tests!public! !

@@ -13,7 +13,7 @@ Refactory.Browser.Tests.CreateAccessorsForVariableTest comment: ''!
 
 setUp
 	super setUp.
-	model := Compiler evaluate: (self readFile: 'AbstractVariableTestData.st')!
+	model := self abstractVariableTestData!
 
 testExistingInstanceVariableAccessors
 	| ref |
@@ -61,11 +61,13 @@ testNonExistantName
 		shouldFail: (CreateAccessorsForVariableRefactoring
 					variable: #Foo
 					class: BasicLintRuleTestData
-					classVariable: true);
+					classVariable: true)
+			withMessage: ('Refactory.Browser.Tests.BasicLintRuleTestData does not define class variable #Foo');
 		shouldFail: (CreateAccessorsForVariableRefactoring
 					variable: 'foo'
 					class: BasicLintRuleTestData
-					classVariable: true)! !
+					classVariable: true)
+			withMessage: ('Refactory.Browser.Tests.BasicLintRuleTestData does not define class variable #foo')! !
 !Refactory.Browser.Tests.CreateAccessorsForVariableTest categoriesForMethods!
 setUp!public!set up! !
 testExistingInstanceVariableAccessors!public!tests! !

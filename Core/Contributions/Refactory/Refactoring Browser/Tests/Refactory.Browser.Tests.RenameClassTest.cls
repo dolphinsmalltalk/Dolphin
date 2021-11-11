@@ -14,14 +14,18 @@ Refactory.Browser.Tests.RenameClassTest comment: ''!
 testBadName
 	#namespaceToDo.	"First case bodged to pass by forcing to a full name for the target; if passed an unqualified name RenameClassRefactoring has been modified to assume the namespace is not being changed, so it prepends the existing class namespace."
 	self
-		shouldFail: (RenameClassRefactoring rename: LintRuleTestData to: 'Object.' , self objectClassVariable);
-		shouldFail: (RenameClassRefactoring rename: LintRuleTestData to: #'Ob ject')!
+		shouldFail: (RenameClassRefactoring rename: LintRuleTestData to: 'Object.' , self objectClassVariable)
+			withMessage: 'Object._EventsRegister is a class or global variable';
+		shouldFail: (RenameClassRefactoring rename: LintRuleTestData to: #'Ob ject')
+			withMessage: '#''Refactory.Browser.Tests.Ob ject'' is not a valid class name'!
 
 testExistingName
-	self shouldFail: (RenameClassRefactoring rename: self class to: #'Core.Object')!
+	self shouldFail: (RenameClassRefactoring rename: self class to: #'Core.Object')
+		withMessage: 'Core.Object is a class or global variable'!
 
 testMetaClassFailure
-	self shouldFail: (RenameClassRefactoring rename: self class class to: #Foo)!
+	self shouldFail: (RenameClassRefactoring rename: self class class to: #Foo)
+		withMessage: 'Refactory.Browser.Tests.RenameClassTest class is not an existing class'!
 
 testModelRenameClass
 	| refactoring class |

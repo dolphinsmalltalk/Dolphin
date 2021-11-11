@@ -17,7 +17,8 @@ testBadInterval
 						for: (RefactoryTestDataApp sourceCodeAt: #testMethod))
 				to: 'asdf'
 				in: RefactoryTestDataApp
-				selector: #testMethod)!
+				selector: #testMethod)
+		withMessage: 'self isn''t defined by the method'!
 
 testBadName
 	self
@@ -26,25 +27,29 @@ testBadName
 							for: (LintRuleTestData sourceCodeAt: #openEditor))
 					to: 'name'
 					in: LintRuleTestData
-					selector: #openEditor);
+					selector: #openEditor)
+			withMessage: 'Refactory.Browser.Tests.LintRuleTestData or a superclass defines an instance variable ''name''';
 		shouldFail: (RenameTemporaryRefactoring
 					renameTemporaryFrom: (self convertInterval: (15 to: 19)
 							for: (LintRuleTestData sourceCodeAt: #openEditor))
 					to: 'rules'
 					in: LintRuleTestData
-					selector: #openEditor);
+					selector: #openEditor)
+			withMessage: 'amesp isn''t a valid variable';
 		shouldFail: (RenameTemporaryRefactoring
 					renameTemporaryFrom: (self convertInterval: (15 to: 19)
 							for: (LintRuleTestData sourceCodeAt: #openEditor))
 					to: 'DependentFields'
 					in: LintRuleTestData
-					selector: #openEditor);
+					selector: #openEditor)
+			withMessage: '''DependentFields'' is not a valid temporary variable name';
 		shouldFail: (RenameTemporaryRefactoring
 					renameTemporaryFrom: (self convertInterval: (15 to: 19)
 							for: (LintRuleTestData sourceCodeAt: #openEditor))
 					to: 'a b'
 					in: LintRuleTestData
-					selector: #openEditor)!
+					selector: #openEditor)
+			withMessage: '''a b'' is not a valid temporary variable name'!
 
 testModelBadName
 	| class |
@@ -57,12 +62,14 @@ testModelBadName
 					renameTemporaryFrom: (20 to: 24)
 					to: 'temp3'
 					in: class
-					selector: #aMethod:);
+					selector: #aMethod:)
+			withMessage: 'temp3 is already defined';
 		shouldFail: (RenameTemporaryRefactoring
 					renameTemporaryFrom: (20 to: 24)
 					to: 'temp1'
 					in: class
-					selector: #aMethod:)!
+					selector: #aMethod:)
+			withMessage: 'temp1 is already defined'!
 
 testRenameTemporary
 	| source start stop refactoring |

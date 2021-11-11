@@ -160,7 +160,7 @@ testMovePrimitiveMethod
 				selector: #foo
 				class: Object
 				variable: 'OrderedCollection'.
-	self shouldFail: refactoring! !
+	self shouldFail: refactoring withMessage: 'Cannot move primitive methods'! !
 !Refactory.Browser.Tests.MoveMethodTest categoriesForMethods!
 testMoveMethodIntoArgument!public!tests! !
 testMoveMethodIntoClassVariable!public!tests! !

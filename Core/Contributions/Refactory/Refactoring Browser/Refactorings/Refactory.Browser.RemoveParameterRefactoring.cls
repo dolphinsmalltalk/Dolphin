@@ -46,10 +46,10 @@ myConditions
 	self getNewSelector.
 	^imps inject: (RBCondition definesSelector: oldSelector in: class)
 		into: 
-			[:cond :each | 
-			cond 
-				& (RBCondition withBlock: [(self hasReferencesToTemporaryIn: each) not]
-						errorString: 'This argument is still referenced in atleast one implementor!!!!')]!
+			[:cond :each |
+			cond & (RBCondition withBlock: [(self hasReferencesToTemporaryIn: each) not]
+						errorString: 'Argument still referenced.<n><1p> is still referenced in <2p>>><3p>'
+								<< {argument. each. oldSelector})]!
 
 removeParameter: aString in: aClass selector: aSelector 
 	#rbFix. "Ensure the displayString works when the model name is initialized"

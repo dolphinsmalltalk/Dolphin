@@ -13,7 +13,7 @@ Refactory.Browser.Tests.AbstractClassVariableTest comment: ''!
 
 setUp
 	super setUp.
-	model := Compiler evaluate: (self readFile: 'AbstractVariableTestData.st')!
+	model := self abstractVariableTestData!
 
 testAbstractClassVariable
 	| refactoring meta class |
@@ -49,11 +49,17 @@ testAbstractClassVariable
 
 testInheritedName
 	self shouldFail: (AbstractClassVariableRefactoring variable: #DependentsFields
-				class: BasicLintRuleTestData)!
+				class: BasicLintRuleTestData)
+		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData does not directly define class variable #DependentsFields'!
+
+testInvalidClass
+	self shouldFail: (AbstractClassVariableRefactoring variable: #DependentsFields class: Object)
+		withMessage: 'Core.Object does not directly define class variable #DependentsFields'!
 
 testMetaClassFailure
 	self shouldFail: (AbstractClassVariableRefactoring variable: #RecursiveSelfRule
-				class: TransformationRuleTestData class)!
+				class: TransformationRuleTestData class)
+		withMessage: 'Refactory.Browser.Tests.TransformationRuleTestData class is a metaclass'!
 
 testModelAbstractClassVariable
 	| refactoring meta class |
@@ -106,11 +112,13 @@ testModelAbstractClassVariableOverridenMethodsInSubclass
 		equals: (self parseMethod: 'classVarName21: anObject ClassVarName2 := anObject')!
 
 testNonExistantName
-	self shouldFail: (AbstractClassVariableRefactoring variable: #Foo class: BasicLintRuleTestData)! !
+	self shouldFail: (AbstractClassVariableRefactoring variable: #Foo class: BasicLintRuleTestData)
+		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData does not directly define class variable #Foo'! !
 !Refactory.Browser.Tests.AbstractClassVariableTest categoriesForMethods!
 setUp!public!set up! !
 testAbstractClassVariable!public!tests! !
 testInheritedName!failure tests!public! !
+testInvalidClass!failure tests!public! !
 testMetaClassFailure!failure tests!public! !
 testModelAbstractClassVariable!public!tests! !
 testModelAbstractClassVariableOverridenMethodsInSubclass!public!tests! !
