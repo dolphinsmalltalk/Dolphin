@@ -149,10 +149,7 @@ directlyDefinesInstanceVariable: aString in: aClass
 empty
 	"Returns an empty condition"
 
-	^self new
-		type: {#empty}
-		block: [true]
-		errorString: 'Empty'!
+	^RBEmptyCondition.Current!
 
 hasNamespace: aSymbol
 	^self new

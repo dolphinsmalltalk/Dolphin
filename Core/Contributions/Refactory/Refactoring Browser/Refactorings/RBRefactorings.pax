@@ -47,6 +47,7 @@ package setClassNames: #(
 	#{Refactory.Browser.RBClass}
 	#{Refactory.Browser.RBCondition}
 	#{Refactory.Browser.RBConjunctiveCondition}
+	#{Refactory.Browser.RBEmptyCondition}
 	#{Refactory.Browser.RBMetaclass}
 	#{Refactory.Browser.RBMethod}
 	#{Refactory.Browser.RBMethodName}
@@ -188,6 +189,12 @@ Refactory.Browser.RBAbstractCondition subclass: #'Refactory.Browser.RBCondition'
 Refactory.Browser.RBAbstractCondition subclass: #'Refactory.Browser.RBConjunctiveCondition'
 	instanceVariableNames: 'left right failed'
 	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RBAbstractCondition subclass: #'Refactory.Browser.RBEmptyCondition'
+	instanceVariableNames: ''
+	classVariableNames: 'Current'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
