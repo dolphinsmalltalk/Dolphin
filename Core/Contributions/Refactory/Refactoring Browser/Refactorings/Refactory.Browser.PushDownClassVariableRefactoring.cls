@@ -13,19 +13,17 @@ Refactory.Browser.PushDownClassVariableRefactoring comment: ''!
 
 findDestinationClass
 	| classVarName classes |
-	classVarName := variableName asSymbol.
+	classVarName := variableName.
 	classes := class withAllSubclasses reject: 
-					[:each | 
-					(each whichSelectorsReferToClassVariable: classVarName) isEmpty and: 
-							[(each metaclass whichSelectorsReferToClassVariable: classVarName) isEmpty]].
+					[:each |
+					(each whichSelectorsReferToClassVariable: classVarName) isEmpty
+						and: [(each metaclass whichSelectorsReferToClassVariable: classVarName) isEmpty]].
 	destinationClass := classes isEmpty ifTrue: [nil] ifFalse: [classes first].
 	classes do: 
-			[:each | 
-			(destinationClass includesClass: each) 
+			[:each |
+			(destinationClass includesClass: each)
 				ifTrue: [destinationClass := each]
-				ifFalse: 
-					[(each includesClass: destinationClass) 
-						ifFalse: [self signalMultipleReferenceError]]].
+				ifFalse: [(each includesClass: destinationClass) ifFalse: [self signalMultipleReferenceError]]].
 	destinationClass = class ifTrue: [self signalStillReferencedError].
 	^destinationClass!
 
@@ -44,13 +42,10 @@ signalReferenceError: errorString
 	class realClass isNil
 		ifTrue: [self refactoringError: errorString]
 		ifFalse: 
-			[| classVarName error |
-			error := '<1s><n>Browse references?' expandMacrosWith: errorString.
-			classVarName := variableName asSymbol.
-			self refactoringError: error
+			[self refactoringError: ('<1s><n>Browse references?' expandMacrosWith: errorString)
 				with: 
 					[#rbFix.	"Should only browse references within the environment visible to the refactoring here"
-					self openBrowserOn: (self model environment classVarRefsTo: classVarName in: class realClass)]]!
+					self openBrowserOn: (self model environment classVarRefsTo: variableName in: class realClass)]]!
 
 signalStillReferencedError
 	self

@@ -12,7 +12,9 @@ Refactory.Browser.RemoveClassRefactoring comment: ''!
 !Refactory.Browser.RemoveClassRefactoring methodsFor!
 
 checkReferencesTo: aRBClass
-	((self hasReferencesTo: aRBClass) not or: [self shouldRemoveReferencedClass: aRBClass])
+	| refs |
+	refs := self referencesToClass: aRBClass.
+	(refs isEmpty or: [self shouldRemoveClass: aRBClass referencedIn: refs])
 		ifFalse: [self refactoringAborted]!
 
 classNames: aClassNameCollection 
@@ -28,17 +30,24 @@ preconditions
 		into: 
 			[:sum :each |
 			| aClass |
-			aClass := self model classNamed: each asSymbol.
+			aClass := self model classNamed: each.
 			aClass isNil ifTrue: [self refactoringError: 'No such class'].
 			sum
 				& (((RBCondition isMetaclass: aClass) errorMacro: 'Cannot remove just the metaclass') not
-						& (RBCondition withBlock: 
-									[self checkReferencesTo: aClass.
-									true])
-							& ((RBCondition hasSubclasses: aClass excluding: classNames) not
-									| ((RBCondition isEmptyClass: aClass) & ((RBCondition withBlock: [aClass superclass notNil])
-													errorMacro: 'Cannot remove top level class<n>when it has subclasses';
-													yourself))))]!
+						& ((RBCondition hasSubclasses: aClass excluding: classNames) not
+								| ((RBCondition isEmptyClass: aClass) & ((RBCondition withBlock: [aClass superclass notNil])
+												errorMacro: 'Cannot remove top level class<n>when it has subclasses';
+												yourself)))
+							& (RBCondition withBlock: 
+										[self checkReferencesTo: aClass.
+										true]))]!
+
+referencesToClass: aRBClass
+	| refs |
+	refs := OrderedCollection new.
+	model allReferencesToClass: aRBClass
+		do: [:each | (classNames includes: each modelClass name) ifFalse: [refs addLast: each]].
+	^refs!
 
 removeClasses
 	classNames do: [:each | self model removeClassNamed: each]!
@@ -50,8 +59,11 @@ reparentSubclasses
 			class := self model classNamed: each.
 			self model reparentClasses: class subclasses copy to: class superclass]!
 
-shouldRemoveReferencedClass: aRBClass
-	^(self options at: #removeReferencedClass) value: self value: aRBClass!
+shouldRemoveClass: aRBClass referencedIn: aCollection
+	^(self options at: #removeReferencedClass)
+		value: self
+		value: aRBClass
+		value: aCollection!
 
 storeOn: aStream 
 	aStream nextPut: $(.
@@ -69,9 +81,10 @@ checkReferencesTo:!preconditions!private! !
 classNames:!initialize/release!public! !
 hasReferencesTo:!preconditions!public! !
 preconditions!preconditions!public! !
+referencesToClass:!helpers!private! !
 removeClasses!public!transforming! !
 reparentSubclasses!public!transforming! !
-shouldRemoveReferencedClass:!options!private! !
+shouldRemoveClass:referencedIn:!options!private! !
 storeOn:!printing!public! !
 transform!public!transforming! !
 !

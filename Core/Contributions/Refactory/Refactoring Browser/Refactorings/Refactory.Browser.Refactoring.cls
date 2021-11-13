@@ -20,7 +20,7 @@ browseEnvironments: aCollectionOfBrowserEnvironments
 
 canReferenceVariable: aString in: aClass 
 	(aClass definesVariable: aString) ifTrue: [^true].
-	(self model includesGlobal: aString asSymbol) ifTrue: [^true].
+	(self model includesGlobal: aString) ifTrue: [^true].
 	^(self poolVariableNamesFor: aClass) includes: aString!
 
 changes
@@ -143,22 +143,19 @@ getOptionPullUpNonSharedInstVar: aString
 		confirm: 'Not all subclasses have an instance variable named <1p>.<n>Do you want pull up this variable anyway?'
 				<< aString!
 
+getOptionRemoveClass: aRBClass referencedIn: aCollection
+	(self
+		confirm: '<1p> is referenced in <2d> methods and cannot be removed safely.<n><n>Would you like to browse references?'
+				<< {aRBClass. aCollection size})
+			ifTrue: [self openBrowserOn: (self model environment forMethods: aCollection)].
+	^false!
+
 getOptionRemoveMethod: aSymbol referencedIn: aCollection
 	(self
 		confirm: ('The selector <1p> is referenced from <2d> other methods.<n><n>Would you like to browse references?'
 				expandMacrosWith: aSymbol
 				with: aCollection size))
 			ifTrue: [self openBrowserOn: (self model environment referencesTo: aSymbol)].
-	^false!
-
-getOptionRemoveReferencedClass: aRBClass
-	(self
-		confirm: ('<1p> is referenced and cannot be removed safely.<n><n>Would you like to browse references?'
-				expandMacrosWith: aRBClass))
-			ifTrue: 
-				[| searches |
-				searches := self referenceSearchesForClass: aRBClass.
-				self browseEnvironments: searches].
 	^false!
 
 getOptionRenameAllDefinitions: aCollection of: aSymbol
@@ -216,7 +213,7 @@ openBrowserOn: anEnvironment
 	^(self options at: #openBrowser) value: self value: anEnvironment!
 
 options
-	^options isNil ifTrue: [self class refactoringOptions] ifFalse: [options]!
+	^options ifNil: [RefactoringOptions]!
 
 options: aDictionary 
 	options := aDictionary!
@@ -260,14 +257,6 @@ refactoringError: aString with: aBlock
 
 refactoringWarning: aString
 	RefactoringWarning refactoring: self signal: aString!
-
-referenceSearchesForClass: aRBClass
-	| searches |
-	searches := OrderedCollection new.
-	aRBClass bindingOrNil
-		ifNotNil: [:binding | searches add: (self model environment referencesTo: binding)].
-	searches add: (self model environment referencesTo: aRBClass).
-	^searches!
 
 requestMethodNameFor: aMethodName
 	^(self options at: #methodName) value: self value: aMethodName!
@@ -368,8 +357,8 @@ getOptionInlineReordered:into:!options!public! !
 getOptionMethodName:!options!public! !
 getOptionOpenBrowser:!options!public! !
 getOptionPullUpNonSharedInstVar:!options!public! !
+getOptionRemoveClass:referencedIn:!options!public! !
 getOptionRemoveMethod:referencedIn:!options!public! !
-getOptionRemoveReferencedClass:!options!public! !
 getOptionRenameAllDefinitions:of:!options!public! !
 getOptionSelfArgumentName!options!public! !
 getOptionUseExistingMethod:!options!public! !
@@ -390,7 +379,6 @@ refactoringAborted:!exceptions!private! !
 refactoringError:!exceptions!private! !
 refactoringError:with:!exceptions!private! !
 refactoringWarning:!exceptions!private! !
-referenceSearchesForClass:!helpers!private! !
 requestMethodNameFor:!public!requests! !
 requestSelfArgumentName!public!requests! !
 safeMethodNameFor:basedOn:!public!utilities! !
@@ -436,7 +424,7 @@ initializeRefactoringOptions
 						#browseEnvironments
 							-> [:refactoring :environments | refactoring getOptionBrowseEnvironments: environments].
 						#removeReferencedClass
-							-> [:refactoring :class | refactoring getOptionRemoveReferencedClass: class].
+							-> [:refactoring :class :references | refactoring getOptionRemoveClass: class referencedIn: references].
 						#removeReferencedSelector
 							-> [:refactoring :selector :references | refactoring getOptionRemoveMethod: selector referencedIn: references].
 						#renameAllDefinitions

@@ -147,7 +147,7 @@ getClassForGlobalOrClassVariable
 	definingClass := class whoDefinesClassVariable: variable.
 	definingClass isNil
 		ifTrue: 
-			[type := self model classNamed: variable asSymbol.
+			[type := self model classNamed: variable.
 			type isNil ifTrue: [type := self model classNamed: #'Core.Object']]
 		ifFalse: [type := definingClass typeOfClassVariable: variable].
 	moveToClasses := self selectVariableTypesFrom: self getAllClassesForGlobalOrClassVariable

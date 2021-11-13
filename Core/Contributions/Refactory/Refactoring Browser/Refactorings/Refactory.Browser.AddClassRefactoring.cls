@@ -71,10 +71,10 @@ storeOn: aStream
 	aStream nextPut: $)!
 
 transform
-	#rbFix. "Factor out #definitionMessage in order to permit override in subclass"
-	(self model)
+	#rbFix.	"Factor out #definitionMessage in order to permit override in subclass"
+	self model
 		defineClass: self definitionMessage;
-		reparentClasses: subclasses to: (self model classNamed: className asSymbol)! !
+		reparentClasses: subclasses to: (self model classNamed: className)! !
 !Refactory.Browser.AddClassRefactoring categoriesForMethods!
 addClass:superclass:subclasses:category:!initialize/release!public! !
 definitionMessage!public!transforming! !

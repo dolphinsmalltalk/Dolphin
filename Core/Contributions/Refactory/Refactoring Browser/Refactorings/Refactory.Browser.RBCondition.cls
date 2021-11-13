@@ -210,12 +210,12 @@ isEmptyClass: anObject
 		block: 
 			[anObject classVariableNames isEmpty
 				and: [anObject instanceVariableNames isEmpty and: [anObject selectors isEmpty]]]
-		errorString: anObject printString , ' is <1?:not > empty'!
+		errorString: anObject printString , ' is <1?:not >empty'!
 
 isGlobal: aString in: aRBNamespace 
 	^self new 
 		type: {#isGlobal. aString}
-		block: [aRBNamespace includesGlobal: aString asSymbol]
+		block: [aRBNamespace includesGlobal: aString]
 		errorString: aString , ' is <1?:not >a class or global variable'!
 
 isImmediateSubclass: subclass of: superClass
@@ -336,7 +336,7 @@ withBlock: aBlock errorString: aString
 		errorString: aString! !
 !Refactory.Browser.RBCondition class categoriesForMethods!
 canUnderstand:in:!instance creation!public! !
-checkClassVarName:in:!public!utilities! !
+checkClassVarName:in:!private!utilities! !
 checkInstanceVariableName:in:!public!utilities! !
 checkMethodName:in:!public!utilities! !
 definesClassVariable:in:!instance creation!public! !
@@ -367,7 +367,7 @@ isValidClassVarName:for:!instance creation!public! !
 isValidInstanceVariableName:for:!instance creation!public! !
 isValidMethodName:for:!instance creation!public! !
 isValidTemporaryVariableName:for:!instance creation!public! !
-methodDefiningTemporary:in:ignore:!public!utilities! !
+methodDefiningTemporary:in:ignore:!private!utilities! !
 referencesInstanceVariable:in:!instance creation!public! !
 reservedNames!public!utilities! !
 subclassesOf:referToSelector:!instance creation!public! !

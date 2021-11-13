@@ -97,9 +97,7 @@ classNamed: aString
 	(changedClasses lookup: aString) ifNotNil: [:class | ^class].
 	index := aString indexOf: $\x20.
 	^index ~~ 0
-		ifTrue: 
-			[(self classNamed: (aString copyFrom: 1 to: index - 1) asSymbol)
-				ifNotNil: [:class | class metaclass]]
+		ifTrue: [(self classNamed: (aString copyFrom: 1 to: index - 1)) ifNotNil: [:class | class metaclass]]
 		ifFalse: 
 			[(environment associationAt: aString)
 				ifNotNil: 

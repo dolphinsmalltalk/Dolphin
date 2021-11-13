@@ -27,10 +27,10 @@ Note that in Dolphin all <abstractDictionary>s are implemented as instances of <
 accessorMethods
 	^#(#instanceVariables #instanceVariableReaders #instanceVariableWriters #classVariables)!
 
-addClass: aClass classVariable: aSymbol
-	(classVariables at: aClass fullName ifAbsentPutClean: [Set new]) add: aSymbol.
+addClass: aClass classVariable: aString
+	(classVariables at: aClass fullName ifAbsentPutClean: [Set new]) add: aString.
 	self flushCachesFor: aClass.
-	self addSearchString: aSymbol!
+	self addSearchString: aString!
 
 addClass: aClass instanceVariable: aString
 	(instanceVariables at: aClass fullName ifAbsentPutClean: [Set new]) add: aString.
@@ -382,10 +382,10 @@ on: anEnvironment readersOfInstanceVariable: aString in: aClass
 		addClass: aClass instanceVariableReader: aString;
 		yourself!
 
-on: anEnvironment referencesToClassVariable: aSymbol in: aClass
+on: anEnvironment referencesToClassVariable: aString in: aClass
 	^(self onEnvironment: anEnvironment)
-		label: 'References to ''' , aSymbol , ''' in ' , aClass fullName;
-		addClass: aClass classVariable: aSymbol;
+		label: 'References to ''' , aString , ''' in ' , aClass fullName;
+		addClass: aClass classVariable: aString;
 		yourself!
 
 on: anEnvironment referencesToInstanceVariable: aString in: aClass

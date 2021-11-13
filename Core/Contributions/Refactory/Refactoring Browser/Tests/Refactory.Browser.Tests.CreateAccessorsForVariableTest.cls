@@ -67,7 +67,7 @@ testNonExistantName
 					variable: 'foo'
 					class: BasicLintRuleTestData
 					classVariable: true)
-			withMessage: ('Refactory.Browser.Tests.BasicLintRuleTestData does not define class variable #foo')! !
+			withMessage: ('Refactory.Browser.Tests.BasicLintRuleTestData does not define class variable ''foo''')! !
 !Refactory.Browser.Tests.CreateAccessorsForVariableTest categoriesForMethods!
 setUp!public!set up! !
 testExistingInstanceVariableAccessors!public!tests! !

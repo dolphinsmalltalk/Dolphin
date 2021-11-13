@@ -124,7 +124,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.Refactoring class} #icon)
 	#(#{Refactory.Browser.Refactoring class} #renameIcon)
 	#(#{Refactory.Browser.RemoveClassRefactoring} #displayOn:)
-	#(#{Refactory.Browser.RemoveClassRefactoring} #getOptionRemoveReferencedClass:)
+	#(#{Refactory.Browser.RemoveClassRefactoring} #getOptionRemoveClass:referencedIn:)
 	#(#{Refactory.Browser.RemoveClassVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.RemoveInstanceVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.RemoveMethodRefactoring} #displayOn:)
@@ -752,8 +752,7 @@ getOptionInlineOverridden: aSymbol of: aClass
 		nextPutAll: '<1p> is overridden by the following subclasses of <2d>:'
 					<< {aSymbol. fromClass unqualifiedName};
 		cr.
-	overrides := fromClass allSubclasses
-				select: [:each | each directlyDefinesMethod: aSymbol].
+	overrides := fromClass allSubclasses select: [:each | each directlyDefinesMethod: aSymbol].
 	self
 		printNameList: overrides
 		on: details
@@ -1206,26 +1205,25 @@ confirm: aString
 maxDetails
 	^30!
 
-printNameList: aCollection on: aPuttableStream limit: anInteger type: aString
+printNameList: aCollection on: aPuttableStream limit: maxInteger type: aString
 	| count |
 	count := aCollection size.
 	aCollection
 		from: 1
-		to: (count min: anInteger)
+		to: (count min: maxInteger)
 		do: 
 			[:each |
 			aPuttableStream
 				cr;
-				nextPutAll: '    ';
 				display: each].
-	count > anInteger
+	count > maxInteger
 		ifTrue: 
 			[aPuttableStream
 				cr;
 				nextPut: $…;
 				cr;
 				nextPutAll: 'And ';
-				print: count - anInteger;
+				print: count - maxInteger;
 				nextPutAll: ' further ';
 				nextPutAll: aString;
 				nextPut: $.]! !
@@ -1267,11 +1265,9 @@ displayOn: aPuttableStream
 			classNames do: [:each | aPuttableStream display: each]
 				separatedBy: [aPuttableStream nextPutAll: ', ']]!
 
-getOptionRemoveReferencedClass: aRBClass
-	| details response references searches |
-	searches := self referenceSearchesForClass: aRBClass.
-	references := Set new.
-	searches do: [:each | references addAll: each allMethods].
+getOptionRemoveClass: aRBClass referencedIn: aCollection
+	| details response references |
+	references := aCollection.
 	details := String writeStream.
 	details
 		nextPutAll: 'Removing the class will leave ';
@@ -1296,11 +1292,16 @@ getOptionRemoveReferencedClass: aRBClass
 				iconStyle: #warning;
 				confirmOrCancel.
 	response == #yes ifTrue: [^true].
-	response == #no ifTrue: [self browseEnvironments: searches].
+	response == #no
+		ifTrue: 
+			[self
+				openBrowserOn: ((self model environment forMethods: (aCollection collect: [:each | each method]))
+						label: 'References to class <1p>, or its name' << aRBClass;
+						yourself)].
 	^false! !
 !Refactory.Browser.RemoveClassRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
-getOptionRemoveReferencedClass:!options!public! !
+getOptionRemoveClass:referencedIn:!options!public! !
 !
 
 !Refactory.Browser.RemoveClassVariableRefactoring class methodsFor!

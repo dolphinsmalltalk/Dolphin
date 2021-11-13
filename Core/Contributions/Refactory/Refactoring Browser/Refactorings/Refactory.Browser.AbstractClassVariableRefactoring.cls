@@ -53,7 +53,7 @@ createAccessors
 
 preconditions
 	^(RBCondition isMetaclass: class) not
-		& (RBCondition directlyDefinesClassVariable: variableName asSymbol in: class)
+		& (RBCondition directlyDefinesClassVariable: variableName in: class)
 			& ((RBCondition withBlock: 
 						[(#(#'Core.Object' #'Core.Behavior' #'Core.ClassDescription' #'Core.Class') includes: class name)
 							not])

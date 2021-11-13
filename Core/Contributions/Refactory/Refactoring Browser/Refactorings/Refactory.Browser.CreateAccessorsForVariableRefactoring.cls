@@ -103,8 +103,8 @@ possibleSetterSelectors
 	^self methodsReferencingVariable select: [:each | each argumentCount == 1]!
 
 preconditions
-	^classVariable 
-		ifTrue: [RBCondition definesClassVariable: variableName asSymbol in: class]
+	^classVariable
+		ifTrue: [RBCondition definesClassVariable: variableName in: class]
 		ifFalse: [RBCondition definesInstanceVariable: variableName in: class]!
 
 setterMethod

@@ -12,7 +12,7 @@ Refactory.Browser.ChildrenToSiblingsRefactoring comment: ''!
 !Refactory.Browser.ChildrenToSiblingsRefactoring methodsFor!
 
 abstractSuperclass
-	^self model classNamed: className asSymbol!
+	^self model classNamed: className!
 
 addSuperclass
 	self performComponentRefactoring: (AddClassRefactoring
