@@ -72,7 +72,7 @@ transform
 	self computePoolsToMove.
 	self hasPoolsToMove
 		ifTrue: 
-			[self refactoringWarning: 'This method contains references to pools which may need to be moved.'].
+			[self refactoringWarning: 'This method contains references to shared variables from namespaces that may need to be imported into the target.'].
 	self movePoolVariables!
 
 whichPoolDefines: varName
