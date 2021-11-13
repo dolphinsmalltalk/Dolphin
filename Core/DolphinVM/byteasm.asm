@@ -2728,25 +2728,31 @@ sendMessageToInteger:
 
 ENDBYTECODE sendArithmeticGreaterOrEqual
 
-
 BEGINBYTECODE sendArithmeticEqual
 	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
+	test	al, 1										; Is receiver a SmallInteger?
+	jnz		@F
+	
+	; Send the #= selector through normal message lookup to non-SmallInteger receiver
+	; It would be optimise away this send for all identical objects, but we can't 
+	; because some identical objects are not equal. A particular example is Float.NaN. 
+	; NaNs are not supposed to ever be equal to anything, even another NaN
+
+	SendSelectorOneArgToObjectEAX <Pointers.equalSelector>
+
+@@:
 	mov		ecx, [_SP]									; Load argument from stack
-	test	al, 1										; Is it a SmallInteger?
-	jz		sendMessageToObject							; No, skip primitive response
+	mov		edx, [oteTrue]
+	cmp		eax, ecx
+	je		@F
 	test	cl, 1										; Arg is a SmallInteger?
 	jz		sendMessageToInteger						; No, skip primitive response
-	mov		edx, [oteFalse]								; Default, true
-	sub		_SP, OOPSIZE								; Pop argument
-	cmp		eax, ecx									; receiver = arg?
-	cmove	edx, [oteTrue]								;
+	mov		edx, [oteFalse]								; Non-equal SmallIntegers
+@@:
+	mov		[_SP-OOPSIZE], edx
 	MPrefetch
-	mov		[_SP], edx
+	sub		_SP, OOPSIZE								; Pop argument
 	DispatchNext
-
-sendMessageToObject:
-	; Try sending the '=' selector through normal message lookup
-	SendSelectorOneArgToObjectEAX <Pointers.equalSelector>
 
 sendMessageToInteger:
 	SendSelectorOneArgToInteger <Pointers.equalSelector>
@@ -2756,22 +2762,23 @@ ENDBYTECODE sendArithmeticEqual
 
 BEGINBYTECODE sendArithmeticNotEqual
 	mov		eax, [_SP-OOPSIZE]							; Access receiver beneath argument
+	test	al, 1										; Is receiver a SmallInteger?
+	jnz		@F
+	; Send the #~= selector through normal message lookup to non-SmallInteger receiver
+	SendSelectorOneArgToObjectEAX <Pointers.notEqualSelector>
+@@:
 	mov		ecx, [_SP]									; Load argument from stack
-	test	al, 1										; Is it a SmallInteger?
-	jz		sendMessageToObject							; No, skip primitive response
+	mov		edx, [oteFalse]
+	cmp		eax, ecx
+	je		@F
 	test	cl, 1										; Arg is a SmallInteger?
 	jz		sendMessageToInteger						; No, skip primitive response
-	mov		edx, [oteFalse]								; Default, true
-	sub		_SP, OOPSIZE								; Pop argument
-	cmp		eax, ecx									; receiver != arg?
-	cmovne	edx, [oteTrue]								;
+	mov		edx, [oteTrue]								; Non-equal SmallIntegers
+@@:
+	mov		[_SP-OOPSIZE], edx
 	MPrefetch
-	mov		[_SP], edx
+	sub		_SP, OOPSIZE								; Pop argument
 	DispatchNext
-
-sendMessageToObject:
-	; Try sending the '~=' selector through normal message lookup
-	SendSelectorOneArgToObjectEAX <Pointers.notEqualSelector>
 
 sendMessageToInteger:
 	SendSelectorOneArgToInteger <Pointers.notEqualSelector>
