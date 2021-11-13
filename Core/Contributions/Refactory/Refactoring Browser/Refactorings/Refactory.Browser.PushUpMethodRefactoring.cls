@@ -133,9 +133,8 @@ copyDownMethod: aSelector
 		anySatisfy: [:each | superclassDefiner directlyDefinesMethod: each])
 			ifTrue: 
 				[self
-					refactoringError: ('Cannot push up <1p> since we must copy down the superclass method in <2p><n>to the other subclasses, and the superclass method sends a super message which is overridden.'
-							expandMacrosWith: aSelector
-							with: superclassDefiner)].
+					refactoringError: 'Cannot push up <1p>>><2p><n>The method in superclass <3p> must be copied down to its other subclasses, but sends a super message that will be overridden.'
+							<< {class. aSelector. superclassDefiner}].
 	self
 		refactoringWarning: ('Do you want to copy down the superclass method to the classes that don''t define <1p>?'
 				expandMacrosWith: aSelector).
