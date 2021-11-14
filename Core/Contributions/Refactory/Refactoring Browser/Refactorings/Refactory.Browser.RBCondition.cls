@@ -210,7 +210,30 @@ isEmptyClass: anObject
 		block: 
 			[anObject classVariableNames isEmpty
 				and: [anObject instanceVariableNames isEmpty and: [anObject selectors isEmpty]]]
-		errorString: anObject printString , ' is <1?:not >empty'!
+		errorString: 
+			[| stream hasMethods hasClassVars hasInstVars |
+			stream := String writeStream.
+			stream
+				print: anObject;
+				nextPutAll: ' is <1?:not >empty (has <1?no variables or methods):'.
+			hasMethods := anObject selectors notEmpty.
+			hasClassVars := anObject classVariableNames notEmpty.
+			hasClassVars ifTrue: [stream nextPutAll: 'class variables'].
+			hasInstVars := anObject instanceVariableNames notEmpty.
+			hasInstVars
+				ifTrue: 
+					[hasClassVars
+						ifTrue: 
+							[stream nextPutAll: ', '.
+							hasMethods ifFalse: [stream nextPutAll: 'and ']].
+					stream nextPutAll: 'instance variables'].
+			hasMethods
+				ifTrue: 
+					[(hasClassVars or: [hasInstVars]) ifTrue: [stream nextPutAll: ', and '].
+					stream nextPutAll: 'methods'].
+			stream
+				nextPut: $);
+				contents]!
 
 isGlobal: aString in: aRBNamespace 
 	^self new 

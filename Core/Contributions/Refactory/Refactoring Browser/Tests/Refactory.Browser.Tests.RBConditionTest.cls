@@ -33,8 +33,50 @@ testConditions
 	self deny: (newCondition := condition & condition) check.
 	self assert: newCondition errorString equals: 'false'.
 	self assert: (condition not & condition not) check.
-	self assert: (condition & condition) errorString equals: 'false OR false'! !
+	self assert: (condition & condition) errorString equals: 'false OR false'!
+
+testIsEmptyClass
+	| subject foo foobar |
+	model := self abstractVariableTestData.
+	foo := model classNamed: #Foo.
+	subject := RBCondition isEmptyClass: foo.
+	self deny: subject check.
+	self assert: (subject errorStringFor: false)
+		equals: 'Foo is not empty (has class variables, instance variables, and methods)'.
+	foo instanceVariableNames: #().
+	self deny: subject check.
+	self assert: (subject errorStringFor: false)
+		equals: 'Foo is not empty (has class variables, and methods)'.
+	foo instanceVariableNames: #('foo1').
+	foo classVariableNames: #().
+	self deny: subject check.
+	self assert: (subject errorStringFor: false)
+		equals: 'Foo is not empty (has instance variables, and methods)'.
+	subject := RBCondition isEmptyClass: (model classNamed: #Bar).
+	self deny: subject check.
+	self assert: subject errorString equals: 'Bar is not empty (has methods)'.
+	model
+		defineClass: 'Foo subclass: #FooBar
+	instanceVariableNames: ''''
+	classVariableNames: ''''
+	poolDictionaries: ''''
+	category: ''Testing'''.
+	foobar := model classNamed: #FooBar.
+	subject := RBCondition isEmptyClass: foobar.
+	self assert: subject check.
+	self assert: (subject errorStringFor: true) equals: 'FooBar is empty (has no variables or methods)'.
+	foobar instanceVariableNames: #('foobar1').
+	self deny: subject check.
+	self assert: subject errorString equals: 'FooBar is not empty (has instance variables)'.
+	foobar classVariableNames: #('FooBar1').
+	self deny: subject check.
+	self assert: (subject errorStringFor: false)
+		equals: 'FooBar is not empty (has class variables, and instance variables)'.
+	foobar instanceVariableNames: #().
+	self deny: subject check.
+	self assert: subject errorString equals: 'FooBar is not empty (has class variables)'! !
 !Refactory.Browser.Tests.RBConditionTest categoriesForMethods!
 testConditions!public!tests! !
+testIsEmptyClass!public!tests! !
 !
 
