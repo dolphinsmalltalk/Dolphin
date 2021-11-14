@@ -535,7 +535,7 @@ asIndexedColor!converting!public! !
 
 validationBlock
 	#deprecated.
-	^[:response | (validater value: response) value]! !
+	^[:response | (self validater value: response) value]! !
 !InplaceTextEditor categoriesForMethods!
 validationBlock!accessing!public! !
 !
@@ -744,7 +744,7 @@ handle:wParam:hdc:paintStruct:!instance creation!public! !
 
 validationBlock
 	#deprecated.
-	^[:response | (validater value: response) value]! !
+	^[:response | (self validater value: response) value]! !
 !Prompter categoriesForMethods!
 validationBlock!accessing!public! !
 !

@@ -14,7 +14,11 @@ Refactory.Browser.Tests.PushUpInstanceVariableTest comment: ''!
 testPullUpInstVar
 	| refactoring |
 	refactoring := PullUpInstanceVariableRefactoring variable: 'result' class: LintRuleTestData.
-	refactoring setOption: #pullUpNonSharedInstVar toUse: [:rcvr :name | true].
+	refactoring setOption: #pullUpNonSharedInstVar
+		toUse: 
+			[:rcvr :var |
+			self assert: var equals: 'result'.
+			true].
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData')
 				directlyDefinesInstanceVariable: 'result').

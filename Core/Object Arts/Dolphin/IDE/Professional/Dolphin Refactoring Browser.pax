@@ -48,6 +48,7 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Core.Behavior} #directlyDefinesMethod:)
 	#(#{Core.Class} #directlyDefinesClassVariable:)
 	#(#{Core.ClassDescription} #definesClassVariable:)
 	#(#{Core.ClassDescription} #definesInstanceVariable:)
@@ -60,6 +61,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.AbstractClassVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.AbstractInstanceVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.AbstractVariablesRefactoring} #displayOn:)
+	#(#{Refactory.Browser.AbstractVariablesRefactoring} #getOptionAbstractVariables)
 	#(#{Refactory.Browser.AddClassRefactoring} #displayOn:)
 	#(#{Refactory.Browser.AddClassVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.AddInstanceVariableRefactoring class} #displayPrefix)
@@ -74,6 +76,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.ChildrenToSiblingsRefactoring} #displayOn:)
 	#(#{Refactory.Browser.CreateAccessorsForVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.ExpandReferencedPoolsRefactoring} #displayOn:)
+	#(#{Refactory.Browser.ExpandReferencedPoolsRefactoring} #getOptionMovePools)
 	#(#{Refactory.Browser.ExtractMethodRefactoring} #displayOn:)
 	#(#{Refactory.Browser.ExtractMethodRefactoring} #getOptionUseExistingMethod:)
 	#(#{Refactory.Browser.ExtractMethodToComponentRefactoring} #displayOn:)
@@ -90,10 +93,11 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.LintRule} #failedMethods)
 	#(#{Refactory.Browser.LintRule} #searchStrings)
 	#(#{Refactory.Browser.LintRule class} #icon)
+	#(#{Refactory.Browser.MethodRefactoring} #generateDefaultSelector:)
 	#(#{Refactory.Browser.MethodRefactoring} #getOptionAlreadyDefined:selector:)
 	#(#{Refactory.Browser.MethodRefactoring} #getOptionExtractAssignment:)
 	#(#{Refactory.Browser.MethodRefactoring} #getOptionInlineExpression:)
-	#(#{Refactory.Browser.MethodRefactoring} #getOptionMethodName:)
+	#(#{Refactory.Browser.MethodRefactoring} #getOptionNewMethodName:classes:)
 	#(#{Refactory.Browser.MethodRefactoring} #getOptionRemoveMethod:referencedIn:)
 	#(#{Refactory.Browser.MoveMethodRefactoring} #displayOn:)
 	#(#{Refactory.Browser.MoveMethodRefactoring} #getOptionSelfArgumentName)
@@ -109,6 +113,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.PushDownInstanceVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.PushDownMethodRefactoring} #displayOn:)
 	#(#{Refactory.Browser.PushUpMethodRefactoring} #displayOn:)
+	#(#{Refactory.Browser.PushUpMethodRefactoring} #getOptionCopyDownSuperclassMethod:)
 	#(#{Refactory.Browser.PushUpMethodRefactoring} #getOptionPushUpRemoveDuplicates:in:)
 	#(#{Refactory.Browser.RBAbstractClass} #instVarNames)
 	#(#{Refactory.Browser.RBAbstractClass} #owningPackage)
@@ -129,6 +134,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.RemoveClassVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.RemoveInstanceVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.RemoveMethodRefactoring} #displayOn:)
+	#(#{Refactory.Browser.RemoveMethodRefactoring} #getOptionRemoveDuplicatesWithSupersends:)
 	#(#{Refactory.Browser.RemoveParameterRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RenameAccessorsForVariableRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RenameAccessorsForVariableRefactoring class} #displayPrefix)
@@ -148,6 +154,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.RenameTemporaryRefactoring class} #icon)
 	#(#{Refactory.Browser.SmalllintChecker class} #newWithCachingContext)
 	#(#{Refactory.Browser.TemporaryToInstanceVariableRefactoring} #displayOn:)
+	#(#{Refactory.Browser.TemporaryToInstanceVariableRefactoring} #getOptionConvertReadBeforeWritten:)
 	#(#{Refactory.Browser.TransformationRule class} #bitLogicElimination)
 	#(#{Refactory.Browser.TransformationRule class} #icon)
 	#(#{Refactory.Browser.TransformationRule class} #ifElimination)
@@ -264,6 +271,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Views\Splitter\Dolphin Splitter Control'
 	'..\..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\MVP\Icons\Dolphin Text Tile Icons'
+	'..\..\MVP\Views\Tooltips\Dolphin Tooltips'
 	'..\..\MVP\Models\Tree\Dolphin Tree Models'
 	'..\..\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
@@ -321,7 +329,7 @@ UI.Dialog subclass: #'Tools.ConvertToSiblingDialog'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Dialog subclass: #'Tools.MethodNameDialog'
-	instanceVariableNames: 'selectorPresenter parametersPresenter parameterNamesPresenter'
+	instanceVariableNames: 'selectorPresenter parametersPresenter parameterNamesPresenter hintBubble'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser private})
 	classInstanceVariableNames: ''
@@ -401,6 +409,14 @@ Refactory.Browser.SmalllintContext subclass: #'Tools.SmalllintCachingContext'
 
 "Loose Methods"!
 
+!Core.Behavior methodsFor!
+
+directlyDefinesMethod: aSymbol
+	^self includesSelector: aSymbol! !
+!Core.Behavior categoriesForMethods!
+directlyDefinesMethod:!methods-testing!public! !
+!
+
 !Core.Class methodsFor!
 
 directlyDefinesClassVariable: aString
@@ -478,9 +494,55 @@ displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	#todo.	"Implement more informative display string"
-	aPuttableStream nextPutAll: 'Abstract Variables'! !
+	aPuttableStream nextPutAll: 'Abstract Variables'!
+
+getOptionAbstractVariables
+	| details instVars classVars accessesInstVars |
+	details := String writeStream.
+	instVars := instVarReaders union: instVarWriters.
+	accessesInstVars := instVars isEmpty.
+	accessesInstVars
+		ifFalse: 
+			[details
+				nextPutAll: 'The following instance variables are directly accessed:';
+				cr.
+			self
+				printNameList: instVars asArray sort
+				on: details
+				limit: self maxDetails // 2
+				type: 'instance variables'].
+	classVars := classVarReaders union: classVarWriters.
+	classVars isEmpty
+		ifFalse: 
+			[accessesInstVars
+				ifTrue: 
+					[details
+						cr;
+						cr].
+			details
+				nextPutAll: 'The following class variables are directly accessed:';
+				cr.
+			self
+				printNameList: classVars asArray sort
+				on: details
+				limit: self maxDetails // 2
+				type: 'class variables'].
+	details
+		cr;
+		cr;
+		nextPutAll: 'Accessors will be added for all the variables that do not currently have them.'.
+	^MessageBox new
+		caption: self displayString;
+		headline: 'Abstract variable references?';
+		text: 'This method has direct variable references which will need to be converted to getter/setters in the extracted method<1?s:>.'
+					<< {toClasses size > 1};
+		customButtons: #(#(#yes '&Abstract Variables') #(#no 'Cancel'));
+		defaultButton: 2;
+		detailsText: details contents;
+		confirm! !
 !Refactory.Browser.AbstractVariablesRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
+getOptionAbstractVariables!options!public! !
 !
 
 !Refactory.Browser.AddClassRefactoring methodsFor!
@@ -656,9 +718,17 @@ displayOn: aPuttableStream
 		ifTrue: [toClasses asArray first displayOn: aPuttableStream]
 		ifFalse: 
 			[toClasses do: [:each | each name displayOn: aPuttableStream]
-				separatedBy: [aPuttableStream nextPutAll: ', ']]! !
+				separatedBy: [aPuttableStream nextPutAll: ', ']]!
+
+getOptionMovePools
+	^MessageBox new
+		caption: self displayString;
+		text: 'This method contains references to shared variables from namespaces that may need to be imported into the target.';
+		customButtons: #(#(#yes '&Add Imports') #(#no '&Cancel'));
+		confirm! !
 !Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
+getOptionMovePools!options!public! !
 !
 
 !Refactory.Browser.ExtractMethodRefactoring methodsFor!
@@ -850,21 +920,40 @@ icon!constants!public! !
 
 !Refactory.Browser.MethodRefactoring methodsFor!
 
+generateDefaultSelector: anRBMethodName
+	anRBMethodName selector isNil
+		ifTrue: 
+			[| args mname |
+			args := anRBMethodName arguments.
+			mname := args isEmpty
+						ifTrue: ['method']
+						ifFalse: 
+							[| stream |
+							stream := String writeStream.
+							anRBMethodName arguments do: 
+									[:arg |
+									stream
+										nextPutAll: arg;
+										nextPut: $:].
+							stream contents].
+			anRBMethodName selector: mname asSymbol]!
+
 getOptionAlreadyDefined: aClass selector: aSymbol
 	| response |
 	response := MessageBox new
 				caption: self displayString;
 				headline: 'Extract to existing selector?';
-				text: ('<1p> is already defined in the <2d> hierarchy.' expandMacrosWith: aSymbol with: aClass unqualifiedName);
+				text: ('<1p> is already defined in the <2d> hierarchy.' expandMacrosWith: aSymbol
+							with: aClass unqualifiedName);
 				customButtons: #(#(#yes '&Continue') #(#no '&Choose Another') #(#cancel 'Cancel'));
 				defaultButton: 2;
-				detailsText: 'Extracting to an existing selector may change behavior. You should only continue if you specifically intend to override the existing inherited definition of <1p>, otherwise choose another selector.'
+				detailsText: 'Extracting to an existing selector may change the behavior of the class hierarchy, for example by overriding an inherited method. You should only continue if you do not require a true behavior-preserving refactoring. Otherwise choose another selector.'
 							<< aSymbol;
 				expandLabel: 'Show help';
 				collapseLabel: 'Hide help';
 				iconStyle: #warning;
 				confirmOrCancel.
-	response == #cancel ifTrue: [self refactoringAborted: 'Code not extracted'].
+	response == #cancel ifTrue: [self refactoringAborted].
 	^response == #yes!
 
 getOptionExtractAssignment: aString
@@ -889,24 +978,18 @@ getOptionInlineExpression: aString
 		collapseLabel: 'Hide help';
 		confirm!
 
-getOptionMethodName: anRBMethodName
-	anRBMethodName selector isNil
-		ifTrue: 
-			[| args mname |
-			args := anRBMethodName arguments.
-			mname := args isEmpty
-						ifTrue: ['method']
-						ifFalse: 
-							[| stream |
-							stream := String writeStream.
-							anRBMethodName arguments do: 
-									[:arg |
-									stream
-										nextPutAll: arg;
-										nextPut: $:].
-							stream contents].
-			anRBMethodName selector: mname asSymbol].
-	^(MethodNameDialog showModalOn: anRBMethodName) isNil ifFalse: [anRBMethodName]!
+getOptionNewMethodName: anRBMethodName classes: anArray
+	| dialog |
+	self generateDefaultSelector: anRBMethodName.
+	dialog := MethodNameDialog createOn: anRBMethodName.
+	dialog validater: 
+			[:methodName |
+			| sel |
+			sel := methodName selectorSymbol.
+			(anArray inject: methodName conditions
+				into: [:conditions :each | conditions & (Refactory.Browser.RBCondition definesSelector: sel in: each) not])
+					validate].
+	^dialog showModal ifNotNil: [anRBMethodName]!
 
 getOptionRemoveMethod: aSymbol referencedIn: aCollection
 	| details response |
@@ -933,10 +1016,11 @@ getOptionRemoveMethod: aSymbol referencedIn: aCollection
 	response == #no ifTrue: [self openBrowserOn: (self model environment referencesTo: aSymbol)].
 	^false! !
 !Refactory.Browser.MethodRefactoring categoriesForMethods!
+generateDefaultSelector:!options!public! !
 getOptionAlreadyDefined:selector:!options!public! !
 getOptionExtractAssignment:!options!public! !
 getOptionInlineExpression:!options!public! !
-getOptionMethodName:!options!public! !
+getOptionNewMethodName:classes:!options!public! !
 getOptionRemoveMethod:referencedIn:!options!public! !
 !
 
@@ -1123,6 +1207,11 @@ displayOn: aPuttableStream
 		nextPutAll: ' from ';
 		nextPutAll: class unqualifiedName!
 
+getOptionCopyDownSuperclassMethod: aSelector
+	^self
+		confirm: 'Do you want to copy down the superclass method to the classes that don''t define <1p>?'
+				<< aSelector!
+
 getOptionPushUpRemoveDuplicates: aSymbol in: aCollection
 	| details response |
 	details := String writeStream.
@@ -1138,7 +1227,7 @@ getOptionPushUpRemoveDuplicates: aSymbol in: aCollection
 		type: 'classes'.
 	response := MessageBox new
 				caption: self displayString;
-				text: 'Pushing up <1p> from <2d> to <3d> will result in duplicate implementations in <4d> subclass<5?es:> of <2d>.'
+				text: 'Pushing up <1p> from <2d> to <3d> will result in duplicate implementations in <4d> subclass<5?es:> of <3d>.'
 							<< {aSymbol.
 									class unqualifiedName.
 									class superclass unqualifiedName.
@@ -1154,6 +1243,7 @@ getOptionPushUpRemoveDuplicates: aSymbol in: aCollection
 	^response == #yes! !
 !Refactory.Browser.PushUpMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
+getOptionCopyDownSuperclassMethod:!options!public! !
 getOptionPushUpRemoveDuplicates:in:!options!public! !
 !
 
@@ -1178,10 +1268,9 @@ validate
 	^result!
 
 validate: aValidationResult
-	"Update the <ValidationResult> argument with results from evaluating this condition."
+	"Update the <ValidationResult> argument with results from evaluating this condition, answering whether the condition is satisfied."
 
-	(aValidationResult value: self check) ifFalse: [aValidationResult errorMessage: self errorString].
-	^aValidationResult value! !
+	^(aValidationResult value: self check) or: [aValidationResult errorMessage: self errorString]! !
 !Refactory.Browser.RBAbstractCondition categoriesForMethods!
 validate!public! !
 validate:!helpers!public! !
@@ -1361,9 +1450,32 @@ displayOn: aPuttableStream
 		nextPutAll: 'Remove ';
 		print: (selectors size == 1 ifTrue: [selectors first] ifFalse: [selectors]);
 		nextPutAll: ' from ';
-		nextPutAll: class unqualifiedName! !
+		nextPutAll: class unqualifiedName!
+
+getOptionRemoveDuplicatesWithSupersends: superMessages
+	| details |
+	details := String writeStream.
+	details
+		nextPutAll: 'The following methods are equivalent to their superclass implementations, but contain a supersend so removing them might modify behavior.';
+		cr.
+	self
+		printNameList: (superMessages asArray
+				collect: [:each | '<1s>>><2p>' << {class unqualifiedName. each}]) sort
+		on: details
+		limit: self maxDetails
+		type: 'methods'.
+	^MessageBox new
+		caption: self displayString;
+		headline: 'Remove duplicate methods with supersends?';
+		text: details contents;
+		customButtons: #(#(#yes '&Remove') #(#no '&Don''t Remove'));
+		defaultButton: 2;
+		detailsText: details contents;
+		iconStyle: #warning;
+		confirm! !
 !Refactory.Browser.RemoveMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
+getOptionRemoveDuplicatesWithSupersends:!options!public! !
 !
 
 !Refactory.Browser.RemoveParameterRefactoring methodsFor!
@@ -1563,9 +1675,20 @@ displayOn: aPuttableStream
 		nextPutAll: 'Convert temp ';
 		print: temporaryVariableName;
 		nextPutAll: ' to inst var of ';
-		nextPutAll: class unqualifiedName! !
+		nextPutAll: class unqualifiedName!
+
+getOptionConvertReadBeforeWritten: aString
+	^MessageBox new
+		caption: self displayString;
+		headline: 'Convert read-before-written temporary?';
+		text: '<1p> is read before it is written and if converted to an instance variable it may not be initialized before use.' << aString;
+		customButtons: #(#(#yes '&Convert') #(#no '&Don''t Convert'));
+		defaultButton: 2;
+		iconStyle: #warning;
+		confirm! !
 !Refactory.Browser.TemporaryToInstanceVariableRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
+getOptionConvertReadBeforeWritten:!options!public! !
 !
 
 !Refactory.Browser.TransformationRule class methodsFor!

@@ -29,14 +29,13 @@ package!
 "Class Definitions"!
 
 UI.ValueDialog subclass: #'UI.Prompter'
-	instanceVariableNames: 'promptPresenter replyPresenter validater validationResult hintBubble validationDwell hintDwell flags hintFont'
+	instanceVariableNames: 'promptPresenter replyPresenter validationDwell hintDwell flags hintFont hintBubble'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'NoHintBubble' -> 16r1.
-		'NoHintWhenEmpty' -> 16r2.
-		'ValidationTimerId' -> 16r1
+		'NoHintWhenEmpty' -> 16r2
 	}!
 
 "End of package definition"!

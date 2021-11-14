@@ -11,6 +11,9 @@ Refactory.Browser.RBMethodName comment: ''!
 !Refactory.Browser.RBMethodName categoriesForClass!Refactory-Support! !
 !Refactory.Browser.RBMethodName methodsFor!
 
+argumentCount
+	^self arguments size!
+
 arguments
 	^arguments!
 
@@ -18,10 +21,23 @@ arguments: nameCollection
 	arguments := nameCollection.
 	self changed: #arguments!
 
+conditions
+	^(RBCondition isValidMethodName: self selectorSymbol)
+		& (RBCondition withBlock: [self selectorSymbol argumentCount = self argumentCount]
+				errorString: 
+					[| argc |
+					argc := self argumentCount.
+					argc == 0
+						ifTrue: ['Unary selector required']
+						ifFalse: 
+							[argc == 1
+								ifTrue: ['Binary or single keyword selector required']
+								ifFalse: ['<1d> keyword selector required' << argc]]])
+			& (RBCondition withBlock: [self arguments asSet size = self arguments size]
+					errorString: 'Parameter names must be unique')!
+
 isValid
-	^(RBCondition checkMethodName: self selector in: self methodClass) and: 
-			[self selector argumentCount = self arguments size 
-				and: [self arguments asSet size = self arguments size]]!
+	^self validate value!
 
 methodClass
 	^Object!
@@ -30,6 +46,9 @@ moveArgument: aName before: anotherName
 	arguments remove: aName ifAbsent: [^self].
 	arguments add: aName before: anotherName.
 	self changed: #arguments!
+
+originalSelector
+	^nil!
 
 postCopy
 	"Apply any final flourish to the copy that may be required."
@@ -54,19 +73,26 @@ selectorSymbol
 
 setSelector: aSymbol arguments: anArray 
 	selector := aSymbol.
-	arguments := anArray! !
+	arguments := anArray!
+
+validate
+	^self conditions validate! !
 !Refactory.Browser.RBMethodName categoriesForMethods!
+argumentCount!accessing!public! !
 arguments!accessing!public! !
 arguments:!accessing!public! !
+conditions!accessing!public! !
 isValid!public!testing! !
 methodClass!accessing!public! !
-moveArgument:before:!accessing!public! !
+moveArgument:before:!operations!public! !
+originalSelector!accessing!public! !
 postCopy!copying!public! !
 scope!public! !
 selector!accessing!public! !
 selector:!accessing!public! !
-selectorSymbol!public!refactoring! !
+selectorSymbol!accessing!public! !
 setSelector:arguments:!public! !
+validate!operations!public! !
 !
 
 !Refactory.Browser.RBMethodName class methodsFor!

@@ -240,7 +240,7 @@ testModelInlineRecursiveMethod
 				inMethod: #foo
 				forClass: class.
 	"Somebody may have added other foo methods into the system, and we don't care about those so proceed through the prompt"
-	refactoring setOption: #inlineOverridden toUse: [:rcvr :selector :class | true].
+	refactoring setOption: #inlineOverridden toUse: [true].
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #foo)
 		equals: (self parseMethod: 'foo self bar. self bar. self foo. self bar. self bar')!
@@ -253,20 +253,18 @@ testNonExistantSelector
 		withMessage: 'RefactoryTestDataApp does not define #checkClass1:'!
 
 testOverriden
-	| refactoring overridden |
+	| refactoring |
 	refactoring := InlineMethodRefactoring
 				inline: (self convertInterval: (15 to: 26) for: (LintRuleTestData sourceCodeAt: #failedRules))
 				inMethod: #failedRules
 				forClass: LintRuleTestData.
-	overridden := nil.
 	refactoring setOption: #inlineOverridden
 		toUse: 
 			[:rcvr :symbol :class |
-			overridden := class methodFor: symbol.
+			self assert: class equals: (refactoring model classFor: LintRuleTestData).
+			self assert: symbol equals: #isEmpty.
 			true].
-	self executeRefactoring: refactoring.
-	self assert: overridden modelClass equals: (refactoring model classFor: LintRuleTestData).
-	self assert: overridden selector equals: #isEmpty!
+	self executeRefactoring: refactoring!
 
 testOverridenAbort
 	| refactoring |
@@ -274,7 +272,12 @@ testOverridenAbort
 				inline: (self convertInterval: (15 to: 26) for: (LintRuleTestData sourceCodeAt: #failedRules))
 				inMethod: #failedRules
 				forClass: LintRuleTestData.
-	refactoring setOption: #inlineOverridden toUse: [:rcvr :symbol :class | false].
+	refactoring setOption: #inlineOverridden
+		toUse: 
+			[:rcvr :symbol :class |
+			self assert: symbol identicalTo: #isEmpty.
+			self assert: class identicalTo: (rcvr model classFor: LintRuleTestData).
+			false].
 	self shouldAbort: refactoring!
 
 testPrimitive

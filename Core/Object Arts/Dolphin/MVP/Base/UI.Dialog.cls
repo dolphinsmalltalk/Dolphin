@@ -5,7 +5,9 @@ UI.Shell subclass: #'UI.Dialog'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'ValidationTimerId' -> 16r101
+	}!
 UI.Dialog guid: (Core.GUID fromString: '{87b4c69a-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.Dialog isNonInstantiable: true!
 UI.Dialog comment: 'Dialog is an abstract <dialogPresenter> superclass for allowing model data to be displayed and edited within a top-level modal dialog window. The fact that a Dialog is modal means that any changes made to the displayed data are usually buffered and not written directly back to the model until they are explicitly applied. This happens, usually after clicking an OK button. Hence a user has the opportunity of cancelling out of a Dialog without any changes being made to the underlying model.
@@ -53,6 +55,15 @@ cancel
 	self view close.
 !
 
+createSchematicWiring
+	"Create the trigger wiring for the receiver"
+
+	super createSchematicWiring.
+	self
+		when: #timerTick:
+		send: #onTimerTick:
+		to: self!
+
 flushChanges
 	"Private - First ensure that any changes cached in the view with focus (if any) are flushed"
 
@@ -87,6 +98,9 @@ ok
 	self apply.
 	self view close.
 !
+
+onTimerTick: anInteger
+	anInteger == ValidationTimerId ifTrue: [self validate]!
 
 ownerView
 	"Answer the view that is parent/owner of the receiver"
@@ -126,20 +140,34 @@ showShell
 
 	self show!
 
+showValidationResult: aValidationResult
+	"Do nothing by default. Should be overridden by subclasses that want to show the validation result in their UI."
+
+	!
+
 subject
 	"Answer the original model onto which the receiver was created"
 	
-	^self model subject! !
+	^self model subject!
+
+validate
+	| result |
+	self view killTimer: ValidationTimerId.
+	result := self model validate.
+	self showValidationResult: result.
+	^result! !
 !UI.Dialog categoriesForMethods!
 answer!accessing!public! !
 apply!commands!public! !
 bufferedModelFor:!accessing!private! !
 cancel!commands!public! !
+createSchematicWiring!initializing!public! !
 flushChanges!commands!private! !
 initialize!initializing!private! !
 isConfirmed!public!testing! !
 model:!accessing!public! !
 ok!commands!public! !
+onTimerTick:!event handling!private! !
 ownerView!accessing!public! !
 ownerView:!accessing!not an aspect!private! !
 revert!commands!public! !
@@ -147,7 +175,9 @@ show!operations!public! !
 showModal!public!realizing/unrealizing! !
 showModalView!private!realizing/unrealizing! !
 showShell!operations!public! !
+showValidationResult:!helpers!public! !
 subject!accessing!public! !
+validate!operations!private! !
 !
 
 UI.Dialog methodProtocol: #dialogPresenter attributes: #(#readOnly) selectors: #(#apply #cancel #caption #caption: #clearCommandHistory #ensureVisible #hasCommandHistory #hasCommandHistory: #ok #onAboutToDisplayMenu: #onAboutToDisplaySystemMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewMinimized: #onViewOpened #onViewRestored: #parentPresenter #performAction #redo #revert #setFocus #show #topShell #undo #updateCaption #view)!

@@ -29,9 +29,16 @@ buildSelectorString: aSelector withPermuteMap: anIntegerCollection
 				nextPutAll: ' ``@arg';
 				print: i;
 				nextPut: $\x20].
-	^stream contents! !
+	^stream contents!
+
+shouldOverride: aSymbol in: aClass
+	^(self lookupOption: #alreadyDefined)
+		cull: self
+		cull: aClass
+		cull: aSymbol! !
 !Refactory.Browser.MethodRefactoring categoriesForMethods!
 buildSelectorString:!helpers!private! !
 buildSelectorString:withPermuteMap:!helpers!private! !
+shouldOverride:in:!private!requests! !
 !
 

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Model subclass: #'UI.AspectBuffer'
-	instanceVariableNames: 'subject subjectCopy aspects gate isValidBlock'
+	instanceVariableNames: 'subject subjectCopy aspects gate validater'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -64,29 +64,28 @@ initialize
 
 	gate := false asValue.
 	aspects := IdentityDictionary new.
-	isValidBlock := [:x | x isValid]!
+	validater := [:x | ValidationResult value: x isValid]!
 
 isValid
-	"Answer true if the updates to the model copy are valid.
-	Evaluate the isValidBlock to check validity of the copy"
+	"Answer true if the updates to the model copy are valid. The validater is invoked to check validity of the current value."
 
-	^self isValidBlock value: subjectCopy!
+	^self validate value == true!
 
 isValidBlock
 	"Answer the validation block for the receiver"
 
-	^isValidBlock!
+	#deprecated.
+	^[:response | (validater value: response) value]!
 
-isValidBlock: aOneArgBlock
-	"Sets the validation block to aOneArgBlock which will be passed the subject copy
-	as its parameter. The block should answer true if the copy can be considered to be
-	valid such that its changes can be applied back to the actual subject"
+isValidBlock: aMonadicValuable
+	"Sets the validation block to <MonadicValuable> argument, which will be passed the subject copy as its parameter. The block should answer true if the copy can be considered to be valid such that its changes can be applied back to the actual subject. See also #validater:"
 
-	isValidBlock := aOneArgBlock!
+	self validater: [:value | ValidationResult value: (aMonadicValuable value: value)]!
 
 notifyChanged
 	"Notify observers that all aspects of the receiver have changed."
 
+Sound bell.
 	aspects do: [:each | each notifyChanged]!
 
 onGateChanged
@@ -119,6 +118,17 @@ subject: aSubjectModel
 	subjectCopy := aSubjectModel copy.
 	aspects := IdentityDictionary new!
 
+validate
+	^self validater value: self value!
+
+validater
+	^validater!
+
+validater: aMonadicValuable
+	"Sets the validater to the <MonadicValuable> argument, which will be passed the subject copy as its parameter. The validater is expected to answer a <ValidationResult>, the value of which should be true if the copy can be considered to be valid such that its changes can be applied back to the actual subject, or false if not. The <ValidationResult> may optionally contain a validation hint in the form of an <exceptionDescription>."
+
+	validater := aMonadicValuable!
+
 value
 	"Answer the copy of the subject model"
 
@@ -138,6 +148,9 @@ onGateChanged!event handling!private! !
 revert!commands!public! !
 subject!accessing!public! !
 subject:!accessing!not an aspect!public! !
+validate!operations!public! !
+validater!accessing!public! !
+validater:!accessing!not an aspect!public! !
 value!accessing!public! !
 !
 

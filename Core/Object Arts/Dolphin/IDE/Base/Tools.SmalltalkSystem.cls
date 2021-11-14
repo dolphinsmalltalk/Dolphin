@@ -3198,16 +3198,14 @@ promptForReferencesToGlobal: aString in: aBrowserEnvironment
 		caption: 'Browse References to Global…')
 		validater: 
 				[:value |
-				value isEmpty
-					ifTrue: [ValidationResult failed]
-					ifFalse: 
-						[| result |
-						result := ValidationResult new.
-						(BindingReference isValidQualifiedName: value)
-							ifFalse: [result errorMessage: '<1p> is not a valid qualified name' << value]
-							ifTrue: 
-								[value asQualifiedReference isDefined ifFalse: [result errorMessage: '<1p> is undefined' << value]].
-						result]];
+				| result |
+				result := ValidationResult new.
+				(BindingReference isValidQualifiedName: value)
+					ifFalse: [result errorMessage: '<1p> is not a valid qualified name' << value]
+					ifTrue: 
+						[value asQualifiedReference isDefined ifFalse: [result errorMessage: '<1p> is undefined' << value]].
+				result];
+		showHintWhenEmpty: false;
 		showModal)
 			ifNotNil: [:globalName | aBrowserEnvironment referencesToVariable: globalName asQualifiedReference binding]!
 

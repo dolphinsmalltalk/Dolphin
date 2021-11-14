@@ -22,11 +22,9 @@ checkReferencesToAnyOf: aSelectorCollection
 				ifTrue: [(self shouldRemoveSelector: each referencedIn: refs) ifFalse: [self refactoringAborted]]]!
 
 checkReferencesToSuperSendsToAnyOf: superMessages
-	[superMessages isEmpty] whileFalse: 
-			[self
-				refactoringWarning: ('Although <1s> is equivalent to a superclass method,<n>it contains a super send so it might modify behavior.'
-						expandMacrosWith: superMessages first).
-			superMessages remove: superMessages first]!
+	superMessages isEmpty
+		ifFalse: 
+			[(self shouldRemoveDuplicatesWithSupersends: superMessages) ifFalse: [self refactoringAborted]]!
 
 checkSuperMethods
 	| superMessages nonSupers |
@@ -76,11 +74,14 @@ removeMethods: selectorCollection from: aClass
 	class := self classObjectFor: aClass.
 !
 
+shouldRemoveDuplicatesWithSupersends: superMessages
+	^(self lookupOption: #removeDuplicatesWithSupersends) cull: self cull: superMessages!
+
 shouldRemoveSelector: aSymbol referencedIn: aCollection
-	^(self options at: #removeReferencedSelector)
-		value: self
-		value: aSymbol
-		value: aCollection!
+	^(self lookupOption: #removeReferencedSelector)
+		cull: self
+		cull: aSymbol
+		cull: aCollection!
 
 storeOn: aStream 
 	aStream nextPut: $(.
@@ -108,7 +109,8 @@ checkSuperMethods!preconditions!public! !
 justSendsSuper:!preconditions!public! !
 preconditions!preconditions!public! !
 removeMethods:from:!initialize/release!public! !
-shouldRemoveSelector:referencedIn:!preconditions!public! !
+shouldRemoveDuplicatesWithSupersends:!private!requests! !
+shouldRemoveSelector:referencedIn:!private!requests! !
 storeOn:!printing!public! !
 superclassEquivalentlyDefines:!preconditions!public! !
 transform!public!transforming! !

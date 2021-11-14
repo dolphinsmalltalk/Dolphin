@@ -321,14 +321,18 @@ hierarchyDefinesVariable: aString
 	(self definesVariable: aString) ifTrue: [^true].
 	^self allSubclasses anySatisfy: [:each | each directlyDefinesVariable: aString]!
 
-hierarchyImportsNamespace: aString
-	(self importsNamespace: aString) ifTrue: [^true].
-	^self allSubclasses anySatisfy: [:each | each directlyImportsNamespace: aString]!
+hierarchyImportsNamespace: aBindingReference
+	| ref |
+	ref := aBindingReference asQualifiedReference.
+	(self importsNamespace: ref) ifTrue: [^true].
+	^self allSubclasses anySatisfy: [:each | each directlyImportsNamespace: aBindingReference]!
 
-importsNamespace: aSymbol
-	(self directlyImportsNamespace: aSymbol) ifTrue: [^true].
-	^self inheritsPoolDictionaries
-		and: [self superclass notNil and: [self superclass importsNamespace: aSymbol]]!
+importsNamespace: aBindingReference
+	| superc ref |
+	ref := aBindingReference asQualifiedReference.
+	(self directlyImportsNamespace: ref) ifTrue: [^true].
+	superc := self superclass.
+	^superc notNil and: [superc importsNamespace: ref]!
 
 includesClass: aRBClass 
 	| currentClass |

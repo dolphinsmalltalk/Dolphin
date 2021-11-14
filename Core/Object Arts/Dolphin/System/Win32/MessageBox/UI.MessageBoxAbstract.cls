@@ -61,6 +61,11 @@ errorMsg: textString
 	self text: textString.
 	^self errorMsg!
 
+exceptionDescription: anException
+	self
+		iconStyle: anException iconStyle;
+		text: anException displayString!
+
 hasIcon
 	^self iconStyle ~~ #none!
 
@@ -144,6 +149,7 @@ caption:!accessing!public! !
 defaultCaption!constants!private! !
 errorMsg!public! !
 errorMsg:!operations!public! !
+exceptionDescription:!accessing!public! !
 hasIcon!accessing-styles!public!testing! !
 iconStyle!accessing-styles!public! !
 iconStyle:!accessing-styles!public! !

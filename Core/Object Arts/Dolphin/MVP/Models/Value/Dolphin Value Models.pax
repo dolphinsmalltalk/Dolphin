@@ -11,6 +11,7 @@ package basicPackageVersion: '6.2'.
 package setClassNames: #(
 	#{UI.AspectBuffer}
 	#{UI.CompositeValueAdaptor}
+	#{UI.ValidationResult}
 	#{UI.ValueAdaptor}
 	#{UI.ValueAspectAdaptor}
 	#{UI.ValueBuffer}
@@ -36,8 +37,14 @@ package!
 
 "Class Definitions"!
 
+Core.Object subclass: #'UI.ValidationResult'
+	instanceVariableNames: 'value caption hint'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Model subclass: #'UI.AspectBuffer'
-	instanceVariableNames: 'subject subjectCopy aspects gate isValidBlock'
+	instanceVariableNames: 'subject subjectCopy aspects gate validater'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -91,7 +98,7 @@ UI.ValueAspectAdaptor subclass: #'UI.ValueModelAspectAdaptor'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.ValueHolder subclass: #'UI.ValueBuffer'
-	instanceVariableNames: 'subject modified gate'
+	instanceVariableNames: 'subject modified gate validater'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

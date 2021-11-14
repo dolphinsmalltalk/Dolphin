@@ -146,11 +146,12 @@ removeDefinedClassVariables
 	classVarReaders := classVarReaders select: selectionBlock.
 	classVarWriters := classVarWriters select: selectionBlock!
 
+shouldAbstractVariables
+	^(self lookupOption: #abstractVariables) cull: self!
+
 transform
 	self hasVariablesToAbstract
-		ifTrue: 
-			[self
-				refactoringWarning: 'This method has direct variable references which will need to be converted to getter/setters.'].
+		ifTrue: [self shouldAbstractVariables ifFalse: [self refactoringAborted]].
 	self abstractInstanceVariables.
 	self abstractClassVariables! !
 !Refactory.Browser.AbstractVariablesRefactoring categoriesForMethods!
@@ -168,6 +169,7 @@ preconditions!preconditions!public! !
 processAssignmentNode:!public!transforming! !
 processReferenceNode:!public!transforming! !
 removeDefinedClassVariables!public!transforming! !
+shouldAbstractVariables!private!requests! !
 transform!public!transforming! !
 !
 

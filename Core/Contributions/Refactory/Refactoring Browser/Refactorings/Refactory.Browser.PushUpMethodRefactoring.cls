@@ -133,9 +133,7 @@ copyDownMethod: aSelector
 				[self
 					refactoringError: 'The <2p> method in superclass <3d> must be copied down to its other subclasses, but sends a super message that will be overridden.'
 							<< {class. aSelector. superclassDefiner unqualifiedName}].
-	self
-		refactoringWarning: 'Do you want to copy down the superclass method to the classes that don''t define <1p>?'
-				<< aSelector.
+	(self shouldCopyDownSuperclassMethod: aSelector) ifFalse: [self refactoringAborted].
 	refactoring := ExpandReferencedPoolsRefactoring
 				model: self model
 				forMethod: (superclassDefiner parseTreeFor: aSelector)
@@ -203,11 +201,14 @@ removeDuplicatesOf: aSelector
 removePushedUpMethods
 	selectors do: [:each | class removeMethod: each]!
 
+shouldCopyDownSuperclassMethod: aSelector
+	^(self lookupOption: #copyDownSuperclassMethod) cull: self cull: aSelector!
+
 shouldRemoveDuplicatesOf: aSymbol in: aCollectionOfClasses
-	^(self options at: #pushUpRemoveDuplicates)
-		value: self
-		value: aSymbol
-		value: aCollectionOfClasses!
+	^(self lookupOption: #pushUpRemoveDuplicates)
+		cull: self
+		cull: aSymbol
+		cull: aCollectionOfClasses!
 
 storeOn: aStream 
 	aStream nextPut: $(.
@@ -235,7 +236,7 @@ checkSuperclass!preconditions!public! !
 checkSuperMessages!preconditions!public! !
 checkSuperSendsFromPushedUpMethods!preconditions!public! !
 checkSuperSendsFromSiblings!preconditions!public! !
-copyDownMethod:!public! !
+copyDownMethod:!private!transforming! !
 copyDownMethods!public!transforming! !
 preconditions!preconditions!public! !
 pushUp:!public!transforming! !
@@ -244,7 +245,8 @@ pushUpMethods!public!transforming! !
 removeDuplicateMethods!public!transforming! !
 removeDuplicatesOf:!public!transforming! !
 removePushedUpMethods!public!transforming! !
-shouldRemoveDuplicatesOf:in:!accessing!public! !
+shouldCopyDownSuperclassMethod:!private!requests! !
+shouldRemoveDuplicatesOf:in:!private!requests! !
 storeOn:!printing!public! !
 transform!public!transforming! !
 !

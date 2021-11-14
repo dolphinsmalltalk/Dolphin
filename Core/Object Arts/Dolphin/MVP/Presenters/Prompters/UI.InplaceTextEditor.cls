@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Presenter subclass: #'UI.InplaceTextEditor'
-	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView validater hintBubble'
+	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView hintBubble'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -96,8 +96,26 @@ font: aFont
 	self view font: aFont.
 	maxCharWidth := self view canvas textMetrics tmMaxCharWidth!
 
+getHintCaption: aValidationResult
+	^aValidationResult caption
+		ifNil: [aValidationResult hint iconStyle == #error ifTrue: ['Invalid Input']]!
+
 hintDwell
+	"Private - Answer the <Duration> for which a hint bubble should be shown before fading away."
+
 	^10 seconds!
+
+hintFont
+	"Private - Answer the `Font` to be used for the main text of any hint bubble. This does not affect the headline text, the font of which is not configurable."
+
+	"In this case it makes sense to use the same font as the edited text, but removing any bold/italic/underline style."
+
+	^self view actualFont unstyledCopy!
+
+hintPosition
+	"Private - Answer a <Point> representing the screen co-ordinate at which the hint bubble's arrow should point."
+
+	^self view screenRectangle centerRight!
 
 implicitBorder
 	"Private - Widths of the implicit border on an edit control that has to be added to the
@@ -110,8 +128,7 @@ initialize
 
 	super initialize.
 	self ownerView: View focus.
-	confirmed := false.
-	validater := [:replyString | ValidationResult new]!
+	confirmed := false!
 
 isConfirmed
 	"Answer true if the receiver has been confirmed and changes have been applied to the
@@ -121,7 +138,7 @@ isConfirmed
 	^confirmed!
 
 isInputValid
-	^(validater value: self editBox text) value == true!
+	^self model isValid!
 
 model: aValueModel 
 	"Set the model of the receiver to be aValueModel. Register with its #valueChanged event"
@@ -196,16 +213,11 @@ performAction
 			User32 messageBeep: 0]!
 
 queryCommand: aCommandQuery
-	"Private - Enters details about a potential command for the receiver into the
-	<CommandQuery>."
+	"Private - Enters details about a potential command for the receiver into the <CommandQuery>."
 
 	aCommandQuery commandSymbol == #ok
 		ifTrue: 
-			[| result |
-			result := validater value: self editBox text.
-			aCommandQuery
-				validationResult: result;
-				isEnabled: result value.
+			[aCommandQuery validationResult: self model validate.
 			^true].
 	^super queryCommand: aCommandQuery!
 
@@ -252,21 +264,19 @@ showModalView
 			ensure: [self view basicDestroy]!
 
 showValidationResult: aValidationResult
-	| hint viewFont |
-	hint := aValidationResult hint.
-	hint ifNil: [^self].
-	hintBubble := MessageBubble new.
-	aValidationResult caption ifNotNil: [:title | hintBubble caption: title].
-	viewFont := self view actualFont.
-	hintBubble
-		font: (Font name: viewFont name pointSize: viewFont pointSize);
-		willFade: true;
-		timeout: self hintDwell;
-		position: self view screenRectangle centerRight;
-		iconStyle: hint iconStyle;
-		text: hint displayString;
-		isSilent: true;
-		open!
+	self closeBubble.
+	aValidationResult hint
+		ifNotNil: 
+			[:hint |
+			hintBubble := MessageBubble new.
+			hintBubble
+				caption: (self getHintCaption: aValidationResult);
+				font: self hintFont;
+				timeout: self hintDwell;
+				position: self hintPosition;
+				exceptionDescription: hint;
+				isSilent: true;
+				open]!
 
 textRectangle: aRectangle 
 	"Set the rectangle of the text being edited in-place. N.B. The Rectangle is expected to be
@@ -276,12 +286,12 @@ textRectangle: aRectangle
 	textRectangle := aRectangle!
 
 validater
-	^validater!
+	^self model validater!
 
 validater: aMonadicValuable
-	"Set the <monadicValuable> used to validate the user's reply. The valuable is passed the current reply text as its argument first argument, and is expected to answer a <ValuationResult>, the value of which indicates whether the text is valid in context. The ability to commit the edit is not enabled until the value of the <ValuationResult> is true. The validator can also pass out a hint details to be displayed in a message bubble if desired (see ValidationResult for the options available). The hint is primarily intended as a means to explain to the user why the text cannot be committed."
+	"Set the <monadicValuable> used to validate the user's reply. The valuable is passed the current reply text as its argument first argument, and is expected to answer a <ValuationResult>, the value of which indicates whether the text is considered valid in context. The OK button is not enabled until the ValidationResult's value is true. The validator can also pass out a hint details to be displayed in a message bubble if desired (see ValidationResult for the options available). The hint is primarily intended as a means to explain to the user why the OK button is disabled, as this can otherwise be difficult to understand."
 
-	validater := aMonadicValuable!
+	self model validater: aMonadicValuable!
 
 validationBlock: aBlock
 	"Set the <monadicValuable> used to validate the user's reply. The valuable is passed the current reply text as its argument first argument and should answer true/false indicating whether the text is valid or not. The
@@ -289,7 +299,7 @@ validationBlock: aBlock
 
 	"This method is present mainly for backwards compatibility. Although not deprecated because the old-style true/false result is adequate for many purposes, the alternative of providing a block that returns a full <ValidationResult> (see #validater:) is preferred."
 
-	validater := [:response | ValidationResult value: (aBlock value: response)]!
+	self validater: [:response | ValidationResult value: (aBlock value: response)]!
 
 value
 	"Answer the model value of the receiver"
@@ -313,7 +323,10 @@ createView:!operations!private! !
 editBox!helpers!private! !
 findDetails!public!searching & replacing! !
 font:!initializing!public! !
-hintDwell!constants!public! !
+getHintCaption:!helpers!private! !
+hintDwell!constants!private! !
+hintFont!accessing!private! !
+hintPosition!accessing!private! !
 implicitBorder!constants!private! !
 initialize!initializing!private! !
 isConfirmed!public!testing! !
@@ -336,10 +349,10 @@ runModalInProcessLoop!helpers!private! !
 setInitialFocus!operations!public! !
 showModal!public!realizing/unrealizing! !
 showModalView!helpers!private! !
-showValidationResult:!commands!private! !
+showValidationResult:!helpers!private! !
 textRectangle:!initializing!public! !
 validater!accessing!public! !
-validater:!accessing!public! !
+validater:!initializing!public! !
 validationBlock:!accessing!public! !
 value!accessing!public! !
 value:!accessing!public! !

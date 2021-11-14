@@ -135,6 +135,12 @@ onXButtonReleased: aMouseEvent
 presenter
 	^presenter!
 
+preTranslateKeyboardInput: aMSG 
+	^self presenter preTranslateKeyboardInput: aMSG!
+
+preTranslateMouseInput: aMSG 
+	^self presenter preTranslateMouseInput: aMSG!
+
 setPresenter: aPresenter 
 	"Private - Initialise the receiver's instance variables. Answer the receiver."
 
@@ -168,6 +174,8 @@ onXButtonDoubleClicked:!event handling!public! !
 onXButtonPressed:!event handling!public! !
 onXButtonReleased:!event handling!public! !
 presenter!accessing!public! !
+preTranslateKeyboardInput:!dispatching!public! !
+preTranslateMouseInput:!dispatching!public! !
 setPresenter:!accessing!private! !
 view!public!testing! !
 !

@@ -12,7 +12,7 @@ Refactory.Browser.Tests.PushUpMethodTest comment: ''!
 !Refactory.Browser.Tests.PushUpMethodTest methodsFor!
 
 testPushUpAndCopyDown
-	| class |
+	| class refactoring |
 	model
 		defineClass: 'Core.Object subclass: #SomeClass instanceVariableNames: '''' classVariableNames: ''Foo'' poolDictionaries: '''''.
 	model
@@ -23,10 +23,16 @@ testPushUpAndCopyDown
 		defineClass: 'SomeSubclass subclass: #Foo2 instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''.
 	class := model classNamed: #Foo1.
 	class compile: 'yourself ^1' classified: #accessing.
-	self executeRefactoring: (PushUpMethodRefactoring
+	refactoring := PushUpMethodRefactoring
 				model: model
 				pushUp: #(#yourself)
-				from: class).
+				from: class.
+	refactoring setOption: #copyDownSuperclassMethod
+		toUse: 
+			[:rcvr :selector |
+			self assert: selector identicalTo: #yourself.
+			true].
+	self executeRefactoring: refactoring.
 	self assert: (class superclass parseTreeFor: #yourself) equals: (self parseMethod: 'yourself ^1').
 	self deny: (class directlyDefinesMethod: #yourself).
 	class := model classNamed: #Foo2.
@@ -48,6 +54,11 @@ testPushUpClassMethod
 testPushUpMethodWithCopyOverriddenMethodsDown
 	| refactoring |
 	refactoring := PushUpMethodRefactoring pushUp: #(#isComposite) from: CompositeLintRuleTestData.
+	refactoring setOption: #copyDownSuperclassMethod
+		toUse: 
+			[:rcvr :selector |
+			self assert: selector identicalTo: #isComposite.
+			true].
 	self executeRefactoring: refactoring.
 	self
 		assert: ((refactoring model classNamed: BasicLintRuleTestData fullName) parseTreeFor: #isComposite)

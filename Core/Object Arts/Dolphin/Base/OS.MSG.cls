@@ -42,6 +42,9 @@ isKeyboardInput
 	msg := self message.
 	^msg >= WM_KEYFIRST and: [msg <= WM_KEYLAST]!
 
+isKeyPress: anInteger
+	^self message == WM_KEYDOWN and: [self wParam == anInteger]!
+
 isMouseInput
 	"Answer whether the receiver represents a mouse event (e.g. a WM_MOUSEMOVE)."
 
@@ -88,6 +91,7 @@ y
 hwnd!**compiled accessors**!public! !
 isInput!public!testing! !
 isKeyboardInput!public!testing! !
+isKeyPress:!public!testing! !
 isMouseInput!public!testing! !
 lParam!**compiled accessors**!public! !
 message!**compiled accessors**!public! !

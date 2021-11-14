@@ -391,10 +391,7 @@ stbSaveOn: anSTBOutFiler
 			anSTBOutFiler
 				writeClass: Color withPrefix: STBPrefix forData;
 				register: self.
-			anSTBOutFiler nextPut: symbol]!
-
-wibble: a
-	^'wobble'! !
+			anSTBOutFiler nextPut: symbol]! !
 !Graphics.Color categoriesForMethods!
 =!comparing!public! !
 actualColor!accessing!private! !
@@ -458,7 +455,6 @@ rgbCode!accessing!public! !
 setAlpha:!public! !
 species!accessing!public! !
 stbSaveOn:!binary filing!public! !
-wibble:!accessing!public! !
 !
 
 Graphics.Color methodProtocol: #color attributes: #(#readOnly) selectors: #(#asParameter #asRGB #brush #pen)!

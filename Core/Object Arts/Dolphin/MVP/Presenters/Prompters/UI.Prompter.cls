@@ -1,14 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ValueDialog subclass: #'UI.Prompter'
-	instanceVariableNames: 'promptPresenter replyPresenter validater validationResult hintBubble validationDwell hintDwell flags hintFont'
+	instanceVariableNames: 'promptPresenter replyPresenter validationDwell hintDwell flags hintFont hintBubble'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'NoHintBubble' -> 16r1.
-		'NoHintWhenEmpty' -> 16r2.
-		'ValidationTimerId' -> 16r1
+		'NoHintWhenEmpty' -> 16r2
 	}!
 UI.Prompter guid: (Core.GUID fromString: '{87b4c6ac-026e-11d3-9fd7-00a0cc3e4a32}')!
 UI.Prompter comment: '`Prompter` is a `<valueDialogPresenter>` that can be used to prompt a user to enter a `<readableString>` response to a question. The `<valueModel>` initially holds the default response and, if the dialog is confirmed, will hold the actual response from the user.
@@ -48,35 +47,18 @@ createSchematicWiring
 	super createSchematicWiring.
 	replyPresenter
 		when: #valueChanged
-			send: #onReplyChanged
-			to: self;
-		when: #keyReleased:
-			send: #onReplyKeyReleased:
-			to: self.
-	self
-		when: #timerTick:
-		send: #onTimerTick:
+		send: #onReplyChanged
 		to: self!
 
-displayValidationHint: aValidationResult
-	| hint |
-	(self showHintBubble not or: [self value isEmpty and: [self showHintWhenEmpty not]])
-		ifTrue: [^self].
-	hintBubble := MessageBubble new.
-	aValidationResult caption ifNotNil: [:title | hintBubble caption: title].
-	hint := aValidationResult hint.
-	hintBubble
-		font: self hintFont;
-		willFade: true;
-		timeout: self hintDwell;
-		position: replyPresenter view screenRectangle centerRight;
-		iconStyle: hint iconStyle;
-		text: hint displayString;
-		isSilent: true;
-		open!
+getHintCaption: aValidationResult
+	^aValidationResult caption
+		ifNil: [aValidationResult hint iconStyle == #error ifTrue: ['Invalid Input']]!
+
+hasEmptyValue
+	^self value isEmpty!
 
 hintDwell
-	"The <Duration> for which a hint bubble should be shown before fading."
+	"Answer the <Duration> for which a hint bubble should be shown before fading away."
 
 	^hintDwell!
 
@@ -84,27 +66,28 @@ hintDwell: aDuration
 	hintDwell := aDuration!
 
 hintFont
+	"Answer the `Font` to be used for the main text of any hint bubble. This does not affect the headline text, the font of which is not configurable."
+
 	^hintFont ifNil: [Font name: 'Segoe UI' pointSize: 10]!
 
 hintFont: aFont
 	hintFont := aFont!
 
+hintPosition
+	"Private - Answer a <Point> representing the screen co-ordinate at which the hint bubble's arrow should point."
+
+	^replyPresenter view screenRectangle centerRight!
+
 initialize
 	"Private - Initialize the receiver"
 
 	super initialize.
-	validater := [:replyString | ValidationResult new].
 	validationDwell := 1 seconds.
 	hintDwell := 10 seconds.
 	flags := 0!
 
-isInputValid
-	validationResult := validater value: self value.
-	^validationResult notNil and: [validationResult value]!
-
 model: aSubjectModel
-	"Connect the receiver to aSubjectModel. The reply presenter shares this
-	same model since it is responsible for editing its value"
+	"Connect the receiver to aSubjectModel. The reply presenter shares this	same model since it is responsible for editing its value."
 
 	super model: aSubjectModel.	
 	replyPresenter model: self model.!
@@ -119,14 +102,13 @@ onReplyChanged
 	self closeBubble.
 	self view setTimer: ValidationTimerId interval: self validationDwell!
 
-onReplyKeyReleased: aKeyEvent
-	"Private - If the Enter key has been pressed in the reply editor, run the validation and show the hint bubble to report any issues.
-	We have to do this on key-up, as we don't receiver the key-down for the Enter key."
+preTranslateKeyboardInput: aMSG
+	"Answer whether the receiver would like to consume the argument aMSG, which is a keyboard message."
 
-	aKeyEvent code = VK_RETURN ifTrue: [self validateReply]!
+	"We want to show a validation hint if the user pressses the Enter key with the OK button the default, but disabled. In order to do this we have to intercept the key before it is dispatched to the dialog, or we will never see it."
 
-onTimerTick: anInteger
-	anInteger == ValidationTimerId ifTrue:  [self validateReply]!
+	(aMSG isKeyPress: VK_RETURN) ifTrue: [self validate].
+	^super preTranslateKeyboardInput: aMSG!
 
 prompt: aString
 	"Set the text to use as the description in the dialog box."
@@ -134,23 +116,28 @@ prompt: aString
 	promptPresenter value: aString
 !
 
-queryCommand: aCommandQuery 
-	"Private - Enters details about a potential command for the receiver into 
-	the <CommandQuery>."
+queryCommand: aCommandQuery
+	"Private - Enters details about a potential command for the receiver into the <CommandQuery>."
 
-	aCommandQuery commandSymbol == #ok 
+	aCommandQuery commandSymbol == #ok
 		ifTrue: 
-			[aCommandQuery isEnabled: self isInputValid.
+			["Ensure the reply has been flushed from the view to the model - the standard views have update-per-char set on the text edit views so will already have done this, but a custom view might not."
+			replyPresenter value.
+			aCommandQuery validationResult: self model validate.
 			^true].
 	^super queryCommand: aCommandQuery!
 
+shouldShowValidationHint: aValidationResult
+	^aValidationResult hint notNil
+		and: [self showHintBubble and: [self hasEmptyValue not or: [self showHintWhenEmpty]]]!
+
 showHintBubble
-	"Answer whether any hint provided by the validater should be shown when the reply is empty. If the hint bubble is entirely disabled, then this setting has no effect either way."
+	"Answer whether any hint provided by the validater should be shown using a <MessageBubble>. The validation hint is intended to help the user understand why the Ok button is disabled, as not knowing why the input is invalid can be very frustrating. By default the bubble will be shown if a validater is set that sets a hint on the <ValidationResult> it returns."
 
 	^flags noMask: NoHintBubble!
 
 showHintBubble: aBoolean
-	"Set whether any hint provided by the validater should be shown using a `MessageBubble`. By default the bubble will be shown, but this setting is to allow it to be disabled."
+	"Set whether any hint provided by the validater should be shown using a <MessageBubble>. By default the bubble will be shown, but this setting is to allow it to be disabled."
 
 	flags := flags mask: NoHintBubble set: aBoolean not!
 
@@ -160,29 +147,42 @@ showHintWhenEmpty
 	^flags noMask: NoHintWhenEmpty!
 
 showHintWhenEmpty: aBoolean
-	"Set whether any hint provided by the validater is shown even if the reply is empty. Sometimes it can be a bit annoying to show a hint when the reply is emptied by deleting all the text, so this setting allows thevalidation hint bubble to be suppressed if the reply is emptied. By default the hint bubble will be shown even when the reply is empty, although not when the prompter is first opened."
+	"Set whether any hint provided by the validater is shown even if the reply is empty. Sometimes it can be a bit annoying to show a hint when the reply is emptied by deleting all the text, so this setting allows the validation hint bubble to be suppressed if the reply is emptied. By default the hint bubble will be shown even when the reply is empty, although not when the prompter is first opened."
 
 	flags := flags mask: NoHintWhenEmpty set: aBoolean not!
+
+showValidationResult: aValidationResult
+	self closeBubble.
+	(self shouldShowValidationHint: aValidationResult)
+		ifTrue: 
+			[hintBubble := MessageBubble new.
+			hintBubble
+				caption: (self getHintCaption: aValidationResult);
+				font: self hintFont;
+				timeout: self hintDwell;
+				position: self hintPosition;
+				exceptionDescription: aValidationResult hint;
+				isSilent: true;
+				open]!
+
+validater
+	^self model validater!
 
 validater: aMonadicValuable
 	"Set the <monadicValuable> used to validate the user's reply. The valuable is passed the current reply text as its argument first argument, and is expected to answer a <ValuationResult>, the value of which indicates whether the text is considered valid in context. The OK button is not enabled until the ValidationResult's value is true. The validator can also pass out a hint details to be displayed in a message bubble if desired (see ValidationResult for the options available). The hint is primarily intended as a means to explain to the user why the OK button is disabled, as this can otherwise be difficult to understand."
 
-	validater := aMonadicValuable!
-
-validateReply
-	| result |
-	self view killTimer: ValidationTimerId.
-	result := validater value: self value.
-	result hint ifNotNil: [:hint | self displayValidationHint: result]!
+	self model validater: aMonadicValuable!
 
 validationBlock: aBlock
 	"Set the <monadicValuable> used to validate the user's reply. The valuable is passed the current reply text as its argument first argument and should answer true/false indicating whether the text is valid or not.
-	This method is present mainly for backwards compatibility. Although not deprecated because the old-style true/false result is adequate for many purposes, the alternative of providing a block that returns a full <ValidationResult> (see #validater:) is preferred."
+	This method is present mainly for backwards compatibility."
 
-	validater := [:response | ValidationResult value: (aBlock value: response)]!
+	"Although not deprecated because the old-style true/false result is adequate for many purposes, the alternative of providing a block that returns a full <ValidationResult> (see #validater:) is preferred."
+
+	self validater: [:response | ValidationResult value: (aBlock value: response)]!
 
 validationDwell
-	"The <Duration> to wait after the user has stopped typing before re-validating and possibly showing a hint bubble."
+	"Answer the <Duration> to wait after the user has stopped typing before re-validating and possibly showing a hint bubble."
 
 	^validationDwell!
 
@@ -192,26 +192,28 @@ validationDwell: aDuration
 closeBubble!helpers!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
-displayValidationHint:!helpers!private! !
+getHintCaption:!helpers!private! !
+hasEmptyValue!private!testing! !
 hintDwell!accessing!public! !
 hintDwell:!accessing!public! !
 hintFont!accessing!public! !
 hintFont:!accessing!public! !
+hintPosition!accessing!private! !
 initialize!initializing!private! !
-isInputValid!public!testing! !
 model:!accessing!public! !
-onPositionChanged:!event handling!public! !
+onPositionChanged:!event handling!private! !
 onReplyChanged!event handling!private! !
-onReplyKeyReleased:!event handling!private! !
-onTimerTick:!event handling!private! !
+preTranslateKeyboardInput:!dispatching!public! !
 prompt:!accessing!public! !
 queryCommand:!commands!private! !
+shouldShowValidationHint:!private!testing! !
 showHintBubble!accessing!public! !
 showHintBubble:!accessing!public! !
 showHintWhenEmpty!accessing!public! !
 showHintWhenEmpty:!accessing!public! !
+showValidationResult:!helpers!private! !
+validater!accessing!public! !
 validater:!initializing!public! !
-validateReply!helpers!private! !
 validationBlock:!initializing!public! !
 validationDwell!accessing!public! !
 validationDwell:!accessing!public! !

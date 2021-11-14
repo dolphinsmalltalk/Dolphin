@@ -17,14 +17,22 @@ testInlineComponentIntoCascadedMessage
 				inline: (self convertInterval: (35 to: 79) for: (RefactoryTestDataApp sourceCodeAt: #inlineComponent))
 				inMethod: #inlineComponent
 				forClass: RefactoryTestDataApp.
-	(refactoring model classNamed: Behavior fullName) compile: 'hasImmediateInstances ^self format = 0'
+	(refactoring model classFor: Behavior) compile: 'hasImmediateInstances ^self format = 0'
 		classified: #accessing.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	"We don't want a prompt to choose between Behaviour and SmallInteger class"
 	refactoring setOption: #implementorToInline
-		toUse: [:ref :imps | (imps select: [:each | each name = Behavior fullName]) first].
+		toUse: 
+			[:ref :imps |
+			self assert: imps asSet equals: (refactoring model allImplementorsOf: #hasImmediateInstances).
+			refactoring model classFor: Behavior].
 	"ignore the fact that it is overridden"
-	refactoring setOption: #inlineOverridden toUse: [:rcvr :symbol :inlineClass | true].
+	refactoring setOption: #inlineOverridden
+		toUse: 
+			[:rcvr :selector :class |
+			self assert: selector identicalTo: #hasImmediateInstances.
+			self assert: class identicalTo: (refactoring model classFor: Behavior).
+			true].
 	self executeRefactoring: refactoring.
 	self
 		assert: ((refactoring model classNamed: RefactoryTestDataApp fullName) parseTreeFor: #inlineComponent)
@@ -38,7 +46,7 @@ testInlineComponentIntoCascadedMessage
 	^aBehavior yourself')!
 
 testInlineComponentMethodMax
-	| refactoring class overridden |
+	| refactoring class |
 	refactoring := InlineMethodFromComponentRefactoring
 				inline: (self convertInterval: (47 to: 58) for: (RefactoryTestDataApp sourceCodeAt: #inlineMax))
 				inMethod: #inlineMax
@@ -55,11 +63,11 @@ testInlineComponentMethodMax
 						ifFalse: [^aMagnitude]'
 		classified: #accessing.
 	self setupImplementorToInlineFor: refactoring toReturn: class.
-	overridden := nil.
 	refactoring setOption: #inlineOverridden
 		toUse: 
 			[:rcvr :symbol :inlineClass |
-			overridden := inlineClass methodFor: symbol.
+			self assert: symbol identicalTo: #max:.
+			self assert: inlineClass equals: class.
 			true].
 	self executeRefactoring: refactoring.
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
@@ -72,12 +80,10 @@ testInlineComponentMethodMax
 								q := x + 1 > y
 									ifTrue: [x + 1]
 									ifFalse: [y].
-								^q').
-	self assert: overridden modelClass equals: class.
-	self assert: overridden selector equals: #max:!
+								^q')!
 
 testInlineComponentMethodOverriddenAbort
-	| refactoring class overridden |
+	| refactoring class |
 	refactoring := InlineMethodFromComponentRefactoring
 				inline: (self convertInterval: (47 to: 58) for: (RefactoryTestDataApp sourceCodeAt: #inlineMax))
 				inMethod: #inlineMax
@@ -85,27 +91,35 @@ testInlineComponentMethodOverriddenAbort
 	self setupInlineExpressionFor: refactoring toReturn: true.
 	class := refactoring model classNamed: Magnitude fullName.
 	self setupImplementorToInlineFor: refactoring toReturn: class.
-	overridden := nil.
 	refactoring setOption: #inlineOverridden
 		toUse: 
 			[:rcvr :symbol :inlineClass |
-			overridden := inlineClass methodFor: symbol.
+			self assert: inlineClass identicalTo: class.
+			self assert: symbol identicalTo: #max:.
 			false].
-	self shouldAbort: refactoring.
-	self assert: overridden modelClass equals: class.
-	self assert: overridden selector equals: #max:!
+	self shouldAbort: refactoring!
 
 testInlineEmptyComponentMethod
-	| refactoring |
+	| refactoring implementors optionCalled |
 	refactoring := InlineMethodFromComponentRefactoring
 				inline: (self convertInterval: (35 to: 91) for: (RefactoryTestDataApp sourceCodeAt: #inlineComponent))
 				inMethod: #inlineComponent
 				forClass: RefactoryTestDataApp.
 	self setupInlineExpressionFor: refactoring toReturn: false.
-	#rbFix.	"We don't want a prompt to choose between Object and any other #yourself implementor"
-	refactoring setOption: #implementorToInline
-		toUse: [:ref :imps | (imps select: [:each | each name == #'Core.Object']) first].
+	"We don't want a prompt to choose between Object and any other #yourself implementor"
+	implementors := refactoring model allImplementorsOf: #yourself.
+	implementors size > 1
+		ifTrue: 
+			[optionCalled := false.
+			refactoring setOption: #implementorToInline
+				toUse: 
+					[:ref :imps |
+					optionCalled := true.
+					self assert: imps equals: implementors.
+					refactoring model classFor: Object]]
+		ifFalse: [optionCalled := true].
 	self executeRefactoring: refactoring.
+	self assert: optionCalled.
 	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
 				parseTreeFor: #inlineComponent)
 		equals: (self

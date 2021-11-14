@@ -231,6 +231,11 @@ resolution: aPoint
 	self pointSize: ptSize] 
 			ifCurtailed: [resolution := oldres]!
 
+unstyledCopy
+	"Answer a new <Font> that is the same as the receiver, but without any styling (i.e. without italics, bold, or underlining)."
+
+	^self class name: self name pixelSize: self pixelSize!
+
 weight
 	"Answer the receiver's <integer> 'weight' (thickness)."
 
@@ -279,6 +284,7 @@ postCopy!copying!public! !
 printOn:!development!printing!public! !
 resolution!accessing!public! !
 resolution:!accessing!public! !
+unstyledCopy!copying!public! !
 weight!accessing!public! !
 weight:!accessing!public! !
 !

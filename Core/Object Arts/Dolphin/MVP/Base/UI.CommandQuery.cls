@@ -203,7 +203,8 @@ validationResult
 	^validationResult ifNil: [ValidationResult value: self isEnabled]!
 
 validationResult: aValidationResult
-	validationResult := aValidationResult! !
+	validationResult := aValidationResult.
+	self isEnabled: validationResult value! !
 !UI.CommandQuery categoriesForMethods!
 applicationShell!accessing!public! !
 beChecked!accessing!public! !

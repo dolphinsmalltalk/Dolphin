@@ -2873,9 +2873,8 @@ preTranslateMessage: aMSG
 	There are separate pre-translation handlers for mouse and keyboard
 	input, which can be overridden as necessary (e.g. see shells)."
 
-	^(aMSG isKeyboardInput and: [self preTranslateKeyboardInput: aMSG])
-		or: [aMSG isMouseInput and: [self preTranslateMouseInput: aMSG]]
-!
+	^(aMSG isKeyboardInput and: [self interactor preTranslateKeyboardInput: aMSG])
+		or: [aMSG isMouseInput and: [self interactor preTranslateMouseInput: aMSG]]!
 
 preTranslateMouseInput: aMSG
 	"Answer whether the receiver would like to consume the argument aMSG.

@@ -21,6 +21,7 @@ testMoveMethodIntoArgument
 	self setupVariableTypesFor: refactoring
 		toReturn: {refactoring model classNamed: #'Refactory.Browser.SmalllintContext'}.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
+	refactoring setOption: #abstractVariables toUse: [true].
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData'.
 	self assert: (class parseTreeFor: #checkMethod:)
@@ -64,6 +65,7 @@ testMoveMethodIntoClassVariable
 		setupMethodNameFor: refactoring
 		toReturn: #foo:foo:
 		withArguments: #('transformationRule' 'aSmalllintContext').
+	refactoring setOption: #abstractVariables toUse: [true].
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData'.
 	self assert: (class parseTreeFor: #checkMethod:)
@@ -104,6 +106,7 @@ testMoveMethodIntoInstanceVariable
 		setupMethodNameFor: refactoring
 		toReturn: #foo:foo:
 		withArguments: #('transformationRule' 'aSmalllintContext').
+	refactoring setOption: #abstractVariables toUse: [true].
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData'.
 	self assert: (class parseTreeFor: #checkMethod:)
@@ -149,7 +152,7 @@ testMoveMethodThatReferencesPoolDictionary
 		assert: ((refactoring model metaclassNamed: RefactoryTestDataApp fullName) parseTreeFor: #junk1)
 		equals: (self parseMethod: 'junk1
 	^self printString copyFrom: 1 to: _EM_INVALID').
-	self assert: (class directlyImportsNamespace: 'OS.CRTConstants' asSymbol)!
+	self assert: (class directlyImportsNamespace: #{OS.CRTConstants})!
 
 testMovePrimitiveMethod
 	| refactoring |

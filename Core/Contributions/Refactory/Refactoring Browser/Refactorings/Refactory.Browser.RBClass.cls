@@ -90,10 +90,12 @@ definitionString
 directlyDefinesClassVariable: aString
 	^self classVariableNames includes: aString!
 
-directlyImportsNamespace: aString
+directlyImportsNamespace: aBindingReference
 	"Namespace imports must always be absolute binding references, but they may be private, so we just compare the paths"
 
-	^self imports anySatisfy: [:each | each pathString = aString]!
+	| pathString |
+	pathString := aBindingReference asString.
+	^self imports anySatisfy: [:each | each pathString = pathString]!
 
 environment
 	^environment ifNil: [environment := model classNamed: self environmentName]!

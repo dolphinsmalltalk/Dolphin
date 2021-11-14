@@ -20,19 +20,49 @@ displayOn: aPuttableStream
 		nextPutAll: ' with ';
 		print: newSelector!
 
+getOptionReplaceReferencesTo: oldSymbol with: newSymbol
+	| references details |
+	references := OrderedCollection new.
+	self model allReferencesTo: oldSymbol do: [:method | references add: method].
+	details := String writeStream.
+	details
+		print: oldSymbol;
+		nextPutAll: ' is currently referenced from ';
+		print: references size;
+		nextPutAll: ' methods:';
+		cr.
+	self
+		printNameList: (references asArray collect: [:each | each printString]) sort
+		on: details
+		limit: self maxDetails
+		type: 'methods'.
+	^MessageBox new
+		caption: self displayString;
+		headline: 'Replace references to <1p> with <2p>?' << {oldSymbol. newSymbol};
+		text: 'Renaming method references is not a true refactoring, and may not preserve behavior.';
+		customButtons: #(#(#yes '&Rename') #(#no '&Don''t Rename'));
+		defaultButton: 2;
+		iconStyle: #warning;
+		confirm!
+
 initialize
 	implementors := #()!
 
 preconditions
-	^super preconditions 
-		& (RBCondition hierarchyOf: class canUnderstand: newSelector) 
-			& (RBCondition withBlock: 
-						[self 
-							refactoringWarning: 'Renaming method references may not preserve behaviour.'.
-						true])! !
+	^super preconditions & (RBCondition hierarchyOf: class canUnderstand: newSelector)
+		& (RBCondition withBlock: 
+					[(self shouldReplaceReferencesTo: oldSelector with: newSelector) or: [self refactoringAborted]])!
+
+shouldReplaceReferencesTo: oldSymbol with: newSymbol
+	^(self options at: #replaceReferences)
+		cull: self
+		cull: oldSymbol
+		cull: newSymbol! !
 !Tools.RenameMethodReferencesRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
+getOptionReplaceReferencesTo:with:!options!public! !
 initialize!initializing!public! !
 preconditions!preconditions!public! !
+shouldReplaceReferencesTo:with:!private!requests! !
 !
 

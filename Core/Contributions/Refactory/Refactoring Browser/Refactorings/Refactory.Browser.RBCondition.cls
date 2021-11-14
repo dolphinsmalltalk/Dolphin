@@ -74,7 +74,7 @@ checkInstanceVariableName: aName in: aClass
 	string first isUppercase ifTrue: [^false].
 	^RBScanner isVariable: string!
 
-checkMethodName: aName in: aClass 
+checkMethodName: aName
 	^aName isString and: [RBScanner isSelector: aName]!
 
 definesClassVariable: aString in: aClass
@@ -293,10 +293,10 @@ isValidInstanceVariableName: aString for: aClass
 		block: [self checkInstanceVariableName: aString in: aClass]
 		errorString: aString printString , ' is <1?:not >a valid instance variable name'!
 
-isValidMethodName: aString for: aClass
+isValidMethodName: aString
 	^self new
-		type: {#validMethodName. aString. aClass}
-		block: [self checkMethodName: aString in: aClass]
+		type: {#validMethodName. aString}
+		block: [self checkMethodName: aString]
 		errorString: aString printString , ' is <1?:not >a valid method name'!
 
 isValidTemporaryVariableName: aString for: aClass
@@ -363,7 +363,7 @@ withBlock: aBlock errorString: aString
 canUnderstand:in:!instance creation!public! !
 checkClassVarName:in:!private!utilities! !
 checkInstanceVariableName:in:!public!utilities! !
-checkMethodName:in:!public!utilities! !
+checkMethodName:!public!utilities! !
 definesClassVariable:in:!instance creation!public! !
 definesInstanceVariable:in:!instance creation!public! !
 definesSelector:in:!instance creation!public! !
@@ -390,7 +390,7 @@ isSymbol:!instance creation!public! !
 isValidClassName:!instance creation!public! !
 isValidClassVarName:for:!instance creation!public! !
 isValidInstanceVariableName:for:!instance creation!public! !
-isValidMethodName:for:!instance creation!public! !
+isValidMethodName:!instance creation!public! !
 isValidTemporaryVariableName:for:!instance creation!public! !
 methodDefiningTemporary:in:ignore:!private!utilities! !
 referencesInstanceVariable:in:!instance creation!public! !

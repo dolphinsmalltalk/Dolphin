@@ -28,6 +28,27 @@ testNonExistantName
 					variable: 'aSmalllintContext')
 			withMessage: 'BasicLintRuleTestData does not define #checkClass1:'!
 
+testReadBeforeWritten
+	| refactoring class |
+	refactoring := TemporaryToInstanceVariableRefactoring
+				class: RefactoryTestDataApp
+				selector: #tempsReadBeforeWritten
+				variable: 'temp'.
+	refactoring setOption: #convertReadBeforeWritten
+		toUse: 
+			[:rcvr :var |
+			self assert: var equals: 'temp'.
+			false].
+	self shouldAbort: refactoring.
+	refactoring setOption: #convertReadBeforeWritten toUse: [true].
+	self executeRefactoring: refactoring.
+	class := refactoring model classFor: RefactoryTestDataApp.
+	self assert: (class parseTreeFor: #tempsReadBeforeWritten)
+		equals: (self parseMethod: 'tempsReadBeforeWritten
+	self isVariable ifTrue: [temp := 4].
+	^temp').
+	self assert: (class directlyDefinesInstanceVariable: 'temp')!
+
 testRedefinedTemporary
 	| class |
 	class := model classNamed: #Foo.
@@ -60,6 +81,7 @@ testTemporaryToInstanceVariable
 !Refactory.Browser.Tests.TemporaryToInstanceVariableTest categoriesForMethods!
 setUp!public!set up! !
 testNonExistantName!failure tests!public! !
+testReadBeforeWritten!failure tests!public! !
 testRedefinedTemporary!failure tests!public! !
 testTemporaryToInstanceVariable!public!tests! !
 !

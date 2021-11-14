@@ -160,7 +160,7 @@ testNonExistantName
 		withMessage: 'LintRuleTestData does not define #name1'!
 
 testPrimitiveMethods
-	| refactoring implementors selector |
+	| refactoring |
 	(model classNamed: #'Core.Object') compile: 'foo <primitive: 100> ^#() primitiveFailed'
 		classified: #accessing.
 	refactoring := AddParameterRefactoring
@@ -171,21 +171,26 @@ testPrimitiveMethods
 				initializer: '1'.
 	refactoring setOption: #renameAllDefinitions
 		toUse: 
-			[:ref :classes :sel |
-			selector := sel.
-			implementors := classes.
+			[:ref :classes :selector |
+			self assert: selector identicalTo: #foo.
+			#(#'Core.Object' #Foo #Bar #'Foo class')
+				do: [:each | self assert: (classes includes: (model classNamed: each))].
 			true].
 	self shouldFail: refactoring withMessage: '*''s implementation of #foo is a primitive'.
-	self assert: selector identicalTo: #foo.
-	#(#'Core.Object' #Foo #Bar #'Foo class')
-		do: [:each | self assert: (implementors includes: (model classNamed: each))].
+
+
 	"There are many implementors of #at:, some of which are primitives."
 	refactoring := AddParameterRefactoring
 				addParameterToMethod: #at:
 				in: Object
 				newSelector: #at:foo:
 				initializer: '1'.
-	refactoring setOption: #renameAllDefinitions toUse: [:ref :classes :sel | true].
+	refactoring setOption: #renameAllDefinitions
+		toUse: 
+			[:ref :classes :sel |
+			self assert: sel identicalTo: #at:.
+			classes do: [:each | self assertNotNil: (each parseTreeFor: sel)].
+			true].
 	self shouldFail: refactoring withMessage: '*''s implementation of #at: is a primitive'! !
 !Refactory.Browser.Tests.AddParameterTest categoriesForMethods!
 setUp!public!set up! !

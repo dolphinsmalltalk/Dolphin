@@ -339,10 +339,10 @@ setUp
 	model := RBNamespace new!
 
 setupImplementorToInlineFor: aRefactoring toReturn: anObject
-	aRefactoring setOption: #implementorToInline toUse: [:ref :imps | anObject]!
+	aRefactoring setOption: #implementorToInline toUse: [anObject]!
 
 setupInlineExpressionFor: aRefactoring toReturn: aBoolean
-	aRefactoring setOption: #inlineExpression toUse: [:ref :string | aBoolean]!
+	aRefactoring setOption: #inlineExpression toUse: [aBoolean]!
 
 setupMethodNameFor: aRefactoring toReturn: aSelector
 	aRefactoring setOption: #methodName
@@ -362,16 +362,16 @@ setupMethodNameFor: aRefactoring toReturn: aSelector withArguments: stringCollec
 				yourself]!
 
 setupSelfArgumentNameFor: aRefactoring toReturn: aString 
-	aRefactoring setOption: #selfArgumentName toUse: [:ref | aString]!
+	aRefactoring setOption: #selfArgumentName toUse: [aString]!
 
 setupVariableToMoveToFor: aRefactoring toReturn: aString 
-	aRefactoring setOption: #selectVariableToMoveTo toUse: [:ref :class :selector | aString]!
+	aRefactoring setOption: #selectVariableToMoveTo toUse: [aString]!
 
 setupVariableTypesFor: aRefactoring toReturn: anObject
-	aRefactoring setOption: #variableTypes toUse: [:ref :ignore1 :ignore2 | anObject]!
+	aRefactoring setOption: #variableTypes toUse: [anObject]!
 
 shouldAbort: refactoring
-	self should: [self executeRefactoring: refactoring] raise: Refactoring abortSignal!
+	self assert: ([self executeRefactoring: refactoring. false] on: Refactoring abortSignal do: [:ex | true]) description: 'Refactoring failed to abort'!
 
 shouldFail: aRefactoring withMessage: aString
 	| exception |

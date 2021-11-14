@@ -15,7 +15,7 @@ removableClassWithSubclasses
 	^'Refactory.Browser.Tests.Foo' , 'LintRuleTestData'!
 
 setRemoveReferencedClassOption: refactoring toAnswer: aBoolean
-	refactoring setOption: #removeReferencedClass toUse: [:rcvr :class :references | aBoolean]!
+	refactoring setOption: #removeReferencedClass toUse: [aBoolean]!
 
 testBadName
 	self shouldFail: (RemoveClassRefactoring classNames: #(#RecursiveSelfRule)) withMessage: 'No such class'!

@@ -282,7 +282,7 @@ replaceArguments
 				ifFalse: [self addTemporary: source assignedTo: replacement]]!
 
 requestImplementorToInline: implementorsCollection
-	^(self options at: #implementorToInline) value: self value: implementorsCollection!
+	^(self lookupOption: #implementorToInline) cull: self cull: implementorsCollection!
 
 rewriteCascadedMessage
 	| index messages |
@@ -308,23 +308,23 @@ rewriteInlinedTree
 shouldInlineExpression: aString
 	"This option replaces use of a RefactoringWarning in Dolphin 8 for prompts as to whether expressions that were arguments to the method being inlined should be inlined into the resulting code, or assigned to a a temporary. Note that the 'inline' choice is not guaranteed to preserve behaviour, e.g. if the expression being inlined has side effects so executing it more than once will behave differently that the original code. The richer prompt that this option provides explains this.."
 
-	^(self options at: #inlineExpression) value: self value: aString!
+	^(self lookupOption: #inlineExpression) cull: self cull: aString!
 
 shouldInlineOverriddenMethod: aSymbol of: aClass
 	"This option replaces use of a RefactoringWarning in Dolphin 8 for inlines of overridden methods, allowing for a more informative message and allowing the user the option to proceed with the refactoring even when not behaviour preserving (i.e. not a true refactoring)."
 
-	^(self options at: #inlineOverridden)
-		value: self
-		value: aSymbol
-		value: aClass!
+	^(self lookupOption: #inlineOverridden)
+		cull: self
+		cull: aSymbol
+		cull: aClass!
 
 shouldInlineReordered: inlineRBMethod into: intoRBMethod
 	"This option replaces use of a RefactoringWarning in Dolphin 8 for inlines of argument message-expressions where some statements from the inline will need to be placed before the message to which the message-expression forms an argument. It allows for a much more informative message with some help to try and understand the (rather complex) question."
 
-	^(self options at: #inlineReordered)
-		value: self
-		value: inlineRBMethod
-		value: intoRBMethod!
+	^(self lookupOption: #inlineReordered)
+		cull: self
+		cull: inlineRBMethod
+		cull: intoRBMethod!
 
 storeOn: aStream 
 	aStream nextPut: $(.

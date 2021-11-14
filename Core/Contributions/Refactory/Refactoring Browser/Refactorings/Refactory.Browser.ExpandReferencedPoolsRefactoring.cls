@@ -52,10 +52,11 @@ hasPoolsToMove
 					nonMetaClass := eachClass nonMetaclass.
 					(nonMetaClass importsNamespace: eachPoolName) not]]!
 
-movePool: aSymbol toClass: aClass
+movePool: aBindingReference toClass: aClass
 	| nonMetaClass |
 	nonMetaClass := aClass nonMetaclass.
-	(nonMetaClass importsNamespace: aSymbol) ifFalse: [nonMetaClass addImport: aSymbol]!
+	(nonMetaClass importsNamespace: aBindingReference)
+		ifFalse: [nonMetaClass addImport: aBindingReference]!
 
 movePoolVariables
 	pools 
@@ -68,11 +69,12 @@ poolVariableNamesIn: poolName
 preconditions
 	^RBCondition empty!
 
+shouldMovePools
+	^(self lookupOption: #movePools) cull: self!
+
 transform
 	self computePoolsToMove.
-	self hasPoolsToMove
-		ifTrue: 
-			[self refactoringWarning: 'This method contains references to shared variables from namespaces that may need to be imported into the target.'].
+	self hasPoolsToMove ifTrue: [self shouldMovePools ifFalse: [self refactoringAborted]].
 	self movePoolVariables!
 
 whichPoolDefines: varName
@@ -91,6 +93,7 @@ movePool:toClass:!public!transforming! !
 movePoolVariables!public!transforming! !
 poolVariableNamesIn:!public!transforming! !
 preconditions!preconditions!public! !
+shouldMovePools!private!requests! !
 transform!public!transforming! !
 whichPoolDefines:!public!transforming! !
 !

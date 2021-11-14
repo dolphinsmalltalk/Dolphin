@@ -209,6 +209,7 @@ packageManager
 	^self systemModel packageManager!
 
 performCommand: aCommand
+	aCommand commandDescription isAbortable ifFalse: [^super performCommand: aCommand].
 	^[super performCommand: aCommand] on: OperationAborted
 		do: 
 			[:ex |

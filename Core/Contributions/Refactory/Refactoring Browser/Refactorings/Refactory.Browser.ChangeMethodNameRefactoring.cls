@@ -56,7 +56,7 @@ preconditions
 
 	| conditions |
 	conditions := self myConditions & (RBCondition definesSelector: oldSelector in: class)
-				& (RBCondition isValidMethodName: newSelector for: class).
+				& (RBCondition isValidMethodName: newSelector).
 	conditions := self implementors inject: conditions
 				into: [:condition :each | condition & (RBCondition hierarchyOf: each canUnderstand: newSelector) not].
 	^conditions
@@ -102,10 +102,10 @@ renameMethod: aSelector in: aClass to: newSel permutation: aMap
 shouldRenameDefinitions: aCollection of: aSymbol
 	"This option replaces use of a RefactoringWarning in Dolphin 8 for renames where there are multiple implementors because requesting option input allows for a better user experience with a much richer message box."
 
-	^(self options at: #renameAllDefinitions)
-		value: self
-		value: aCollection
-		value: aSymbol!
+	^(self lookupOption: #renameAllDefinitions)
+		cull: self
+		cull: aCollection
+		cull: aSymbol!
 
 transform
 	self renameImplementors.

@@ -89,23 +89,17 @@ getAllClassesForGlobalOrClassVariable
 
 getArgumentNameForSelf
 	self needsToReplaceSelfReferences ifFalse: [^self].
-	
-	[selfVariableName := self requestSelfArgumentName.
+	selfVariableName := self requestSelfArgumentName.
 	(self checkInstanceVariableName: selfVariableName in: class)
 		ifTrue: 
 			[self verifyTemporaryVariableDoesNotOverride
 				ifFalse: 
-					[self
-						refactoringWarning: ('The variable <1p> is already defined in one of the classes you''re moving the method to.<n>Try another?'
-								expandMacrosWith: selfVariableName).
-					selfVariableName := nil]]
+					[^self
+						refactoringError: 'The variable <1p> is already defined in one of the classes you''re moving the method to.'
+								<< selfVariableName]]
 		ifFalse: 
-			[self
-				refactoringWarning: ('The variable name <1p> is not a valid Smalltalk temporary variable name<n>Try again?'
-						expandMacrosWith: selfVariableName).
-			selfVariableName := nil].
-	selfVariableName isNil]
-			whileTrue: []!
+			[self refactoringError: 'The variable name <1p> is not a valid Smalltalk temporary variable name.'
+						<< selfVariableName]!
 
 getClassesForInstanceVariable
 	| definingClass typer types |
@@ -156,34 +150,23 @@ getClassForGlobalOrClassVariable
 	moveToClasses isNil ifTrue: [self refactoringAborted: 'Method not moved']!
 
 getNewMethodName
-	| newSelector parameters alreadyDefined methodName newMethodName |
+	| parameters methodName newMethodName newSelector |
 	parameters := OrderedCollection withAll: parseTree argumentNames.
 	parameters remove: variable ifAbsent: nil.
 	self needsToReplaceSelfReferences ifTrue: [parameters add: selfVariableName].
 	methodName := RBMethodName selector: selector arguments: parameters.
 	
-	[newMethodName := self requestMethodNameFor: methodName.
-	newMethodName isNil ifTrue: [self refactoringAborted: 'Did not move method'].
-	newMethodName isValid
-		ifTrue: [newSelector := newMethodName selector]
-		ifFalse: [self refactoringWarning: 'Invalid method name'].
-	parameters := newMethodName arguments.
-	(self checkMethodName: newSelector in: class)
-		ifFalse: 
-			[self refactoringWarning: newSelector , ' is not a valid selector name.'.
-			newSelector := nil].
+	[| alreadyDefined |
+	newMethodName := self requestNewMethodName: methodName forClasses: moveToClasses.
+	newMethodName ifNil: [^self refactoringAborted].
+	newMethodName isValid ifFalse: [^self refactoringError: 'Invalid method name'].
+	newSelector := newMethodName selectorSymbol.
 	alreadyDefined := moveToClasses detect: [:each | each hierarchyDefinesMethod: newSelector]
 				ifNone: nil.
-	alreadyDefined notNil
-		ifTrue: 
-			[self refactoringWarning: ('<1p> is already defined by <2p> or a super/subclass<n>Try another?'
-						expandMacrosWith: newSelector
-						with: alreadyDefined).
-			newSelector := nil].
-	newSelector isNil]
-			whileTrue: [].
+	alreadyDefined notNil and: [(self shouldOverride: newSelector in: class) not]]
+			whileTrue.
 	parseTree renameSelector: newSelector
-		andArguments: (parameters collect: [:each | RBVariableNode named: each]) asArray!
+		andArguments: (newMethodName arguments collect: [:each | RBVariableNode named: each]) asArray!
 
 hasOnlySelfReturns
 	^hasOnlySelfReturns isNil
@@ -291,12 +274,12 @@ checkTemporaryVariableNames!preconditions!public! !
 compileDelagatorMethod!public!transforming! !
 compileNewMethods!public!transforming! !
 getAllClassesForGlobalOrClassVariable!accessing!private! !
-getArgumentNameForSelf!public!transforming! !
+getArgumentNameForSelf!public!requests! !
 getClassesForInstanceVariable!accessing!private! !
 getClassesForTemporaryVariable!accessing!private! !
 getClassesToMoveTo!accessing!private! !
 getClassForGlobalOrClassVariable!accessing!private! !
-getNewMethodName!public!transforming! !
+getNewMethodName!public!requests! !
 hasOnlySelfReturns!public!transforming! !
 hasSelfReferences!public!testing! !
 isMovingToArgument!public!testing! !

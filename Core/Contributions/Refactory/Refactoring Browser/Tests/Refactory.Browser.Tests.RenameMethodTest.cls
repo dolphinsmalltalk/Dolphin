@@ -25,7 +25,7 @@ testExistingSelector
 		withMessage: 'The selectors are not equivalent AND LintRuleTestData or a subclass understands #runOnEnvironment:'!
 
 testMultipleSelectors
-	| subject implementors |
+	| subject optionCalled |
 	"Constrain the refactoring to just the RBTestMethods package so that we get a known set of implementors"
 	model := RBNamespace
 				onEnvironment: (BrowserEnvironment new forPackages: {BasicLintRuleTestData owningPackage}).
@@ -39,13 +39,15 @@ testMultipleSelectors
 	subject setOption: #renameAllDefinitions
 		toUse: 
 			[:ref :classes :selector |
-			implementors := classes.
+			optionCalled := true.
+			self assert: selector identicalTo: #checkClass:.
+			{Refactory.Browser.Tests.BasicLintRuleTestData.
+				Refactory.Browser.Tests.CompositeLintRuleTestData.
+				Refactory.Browser.Tests.LintRuleTestData}
+					do: [:each | self assert: (classes includes: (subject model classFor: each))].
 			false].
 	self shouldAbort: subject.
-	{Refactory.Browser.Tests.BasicLintRuleTestData.
-		Refactory.Browser.Tests.CompositeLintRuleTestData.
-		Refactory.Browser.Tests.LintRuleTestData}
-			do: [:each | self assert: (implementors includes: (subject model classFor: each))]!
+	self assert: optionCalled!
 
 testRenamePermuteArgs
 	| refactoring class |
@@ -62,9 +64,10 @@ testRenamePermuteArgs
 		equals: (self parseMethod: 'exampleCall ^self rename: 2 two: 1')!
 
 testRenamePrimitive
-	| refactoring count |
+	| refactoring count optionCalled |
 	count := 0.
 	model allReferencesTo: #basicAt:put: do: [:method | count := count + 1].
+
 	"Primitives can be renamed, as long as the argument count and order remains the same"
 	refactoring := RenameMethodRefactoring
 				model: model
@@ -72,8 +75,16 @@ testRenamePrimitive
 				in: Object
 				to: ('at:' , 'bar:') asSymbol
 				permutation: (1 to: 2).
-	refactoring setOption: #renameAllDefinitions toUse: [:ref :classes :selector | true].
+	optionCalled := false.
+	refactoring setOption: #renameAllDefinitions
+		toUse: 
+			[:ref :classes :selector |
+			optionCalled := true.
+			self assert: selector identicalTo: #basicAt:put:.
+			self assert: classes equals: (model allImplementorsOf: selector).
+			true].
 	self executeRefactoring: refactoring.
+	self assert: optionCalled.
 	"All refs should have been rewritten"
 	model allReferencesTo: #basicAt:put: do: [:method | self assert: false].
 	model allReferencesTo: ('at:' , 'bar:') asSymbol do: [:method | count := count - 1].

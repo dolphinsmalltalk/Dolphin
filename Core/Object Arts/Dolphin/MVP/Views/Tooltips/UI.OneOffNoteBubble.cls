@@ -58,7 +58,6 @@ name: aSymbol text: aString for: aView timeout: aDuration
 	bubble := MessageBubble new
 				caption: self defaultCaption;
 				maxWidth: self defaultWidth;
-				willFade: true;
 				timeout: aDuration.
 	aView notNil ifTrue: [bubble position: aView rectangle center].
 	bubble notify: aString!

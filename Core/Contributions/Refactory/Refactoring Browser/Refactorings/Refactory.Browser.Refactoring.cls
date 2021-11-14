@@ -16,7 +16,7 @@ associationForClassVariable: aName in: aClass ifAbsent: aBlock
 	^aClass realClass classPool associationAt: aName ifAbsent: aBlock!
 
 browseEnvironments: aCollectionOfBrowserEnvironments
-	^(self options at: #browseEnvironments) value: self value: aCollectionOfBrowserEnvironments!
+	^(self lookupOption: #browseEnvironments) cull: self cull: aCollectionOfBrowserEnvironments!
 
 canReferenceVariable: aString in: aClass 
 	(aClass definesVariable: aString) ifTrue: [^true].
@@ -35,8 +35,8 @@ checkClass: aRBClass selector: aSelector using: aMatcher
 checkInstanceVariableName: aName in: aClass 
 	^RBCondition checkInstanceVariableName: aName in: aClass!
 
-checkMethodName: aName in: aClass 
-	^RBCondition checkMethodName: aName in: aClass!
+checkMethodName: aName
+	^RBCondition checkMethodName: aName!
 
 checkPreconditions
 	self checkPreconditions: self preconditions!
@@ -81,13 +81,11 @@ convertMethod: aRBMethod using: aParseTreeRewriter
 		ifTrue: [aRBMethod modelClass compileTree: aParseTreeRewriter tree]!
 
 copyOptionsFrom: aDictionary
-	| dict defaults |
-	dict := self options.
-	defaults := self class refactoringOptions.
-	dict == defaults ifTrue: [^self options: aDictionary copy].
-	dict
-		keysAndValuesDo: [:key :value | value == (defaults at: key) ifTrue: [dict at: key put: (aDictionary at: key)]].
-	self options: dict!
+	aDictionary ifNil: [^self].
+	self assert: [aDictionary ~~ RefactoringOptions].
+	options ifNil: [^self options: aDictionary copy].
+	"Copy over any options that are not already set locally for this refactoring"
+	aDictionary keysAndValuesDo: [:eachKey :eachValue | options at: eachKey ifAbsentPutClean: [eachValue]]!
 
 defaultEnvironment
 	^BrowserEnvironment new!
@@ -96,14 +94,26 @@ execute
 	self primitiveExecute.
 	RefactoringManager instance addRefactoring: self!
 
+getOptionAbstractVariables
+	^self
+		confirm: 'This method has direct variable references which will need to be converted to getter/setters.'!
+
 getOptionAlreadyDefined: aClass selector: aSelection
 	^self
-		confirm: ('<1p> is already defined in the <2p> hierarchy.<n>Extracting it to an existing selector may change behavior.<n><n>Do you wish to use <1p> anyway?'
+		confirm: ('<1p> is already defined in the <2p> hierarchy.<n>Extracting to an existing selector may change behavior.<n><n>Do you wish to use <1p> anyway?'
 				expandMacrosWith: aSelection
 				with: aClass)!
 
 getOptionBrowseEnvironments: aCollectionOfBrowserEnvironments
 	^Smalltalk developmentSystem browseMethodsInEnvironments: aCollectionOfBrowserEnvironments!
+
+getOptionConvertReadBeforeWritten: aString
+	^self confirm: '<1s> is read before it is written. Are you sure you want to convert it to an instance variable?' << aString!
+
+getOptionCopyDownSuperclassMethod: aSelector
+	self
+		confirm: 'Do you want to copy down the superclass method to the classes that don''t define <1p>?'
+				<< aSelector!
 
 getOptionExtractAssignment: aString
 	^self confirm: ('Do you want to extract the assignment of <1s><n>at the end of selection?'
@@ -127,13 +137,20 @@ getOptionInlineReordered: inlineRBMethod into: intoRBMethod
 				expandMacrosWith: inlineRBMethod
 				with: intoRBMethod)!
 
-getOptionMethodName: anRBMethodName
-	| mname |
-	mname := UI.Prompter prompt: 'Enter the new method name (without the ''#'') '.
-	^mname notNil 
-		ifTrue: 
-			[mname := mname asSymbol.
-			anRBMethodName selector: mname]!
+getOptionMovePools
+	^self
+		confirm: 'This method contains references to shared variables from namespaces that may need to be imported into the target.'!
+
+getOptionNewMethodName: anRBMethodName classes: aCollection
+	| mname prompter |
+	prompter := UI.Prompter create
+				prompt: 'Enter the new method name (without the ''#'')';
+				caption: self displayString;
+				yourself.
+	prompter
+		validater: [:value | (RBMethodName selector: value arguments: anRBMethodName arguments) validate].
+	mname := prompter showModal.
+	^mname ifNotNil: [anRBMethodName selector: mname]!
 
 getOptionOpenBrowser: anRBEnvironment
 	^anRBEnvironment openEditor!
@@ -153,6 +170,13 @@ getOptionRemoveClass: aRBClass referencedIn: aCollection
 			ifTrue: [self openBrowserOn: (self model environment forMethods: aCollection)].
 	^false!
 
+getOptionRemoveDuplicatesWithSupersends: superMessages
+	^superMessages allSatisfy: 
+			[:each |
+			self
+				confirm: 'Although <1p> is equivalent to a superclass method,<n>it contains a super send so removing it might modify behavior.<n><n>Are you sure you want to remove it?'
+						<< each]!
+
 getOptionRemoveMethod: aSymbol referencedIn: aCollection
 	(self
 		confirm: ('The selector <1p> is referenced from <2d> other methods.<n><n>Would you like to browse references?'
@@ -165,6 +189,16 @@ getOptionRenameAllDefinitions: aCollection of: aSymbol
 	^aCollection size <= 1 or: 
 			[self confirm: ('This will modify all <1p> implementors. Proceed anyway?'
 						expandMacrosWith: aCollection size)]!
+
+getOptionRenameReferencesTo: aSymbol
+	^self
+		confirm: 'Renaming method references may not preserve behaviour.<n><n>Are you sure you want to proceed?'
+				expandMacros!
+
+getOptionReplaceReferencesTo: oldSymbol with: newSymbol
+	^self
+		confirm: 'Renaming method references may not preserve behaviour.<n><n>Are you sure you want to proceed?'
+				expandMacros!
 
 getOptionSelfArgumentName
 	^UI.Prompter prompt: 'Enter name for argument to refer to "self" in extracted method'!
@@ -193,6 +227,10 @@ getOptionVariableTypes: types selected: selected
 				caption: 'Select class of new method…'.
 	^classSelected notNil ifTrue: [{classSelected}] ifFalse: [nil]!
 
+lookupOption: aSymbol
+	options ifNotNil: [(options lookup: aSymbol) ifNotNil: [:option | ^option]].
+	^RefactoringOptions at: aSymbol!
+
 model
 	#rbFix.	"Use #displayString instead of #printString for the name"
 	^model isNil
@@ -213,16 +251,17 @@ onError: aBlock do: errorBlock
 			ex return: nil]!
 
 openBrowserOn: anEnvironment
-	^(self options at: #openBrowser) value: self value: anEnvironment!
+	^(self lookupOption: #openBrowser) cull: self cull: anEnvironment!
 
 options
 	^options ifNil: [RefactoringOptions]!
 
 options: aDictionary 
+	self assert: [aDictionary ~~ RefactoringOptions].
 	options := aDictionary!
 
 performComponentRefactoring: aRefactoring 
-	aRefactoring copyOptionsFrom: self options.
+	aRefactoring copyOptionsFrom: options.
 	aRefactoring primitiveExecute!
 
 poolVariableNamesFor: aClass
@@ -261,11 +300,14 @@ refactoringError: aString with: aBlock
 refactoringWarning: aString
 	RefactoringWarning refactoring: self signal: aString!
 
-requestMethodNameFor: aMethodName
-	^(self options at: #methodName) value: self value: aMethodName!
+requestNewMethodName: aMethodName forClasses: aCollection
+	^(self lookupOption: #methodName)
+		cull: self
+		cull: aMethodName
+		cull: aCollection!
 
 requestSelfArgumentName
-	^(self options at: #selfArgumentName) value: self!
+	^(self lookupOption: #selfArgumentName) cull: self!
 
 safeMethodNameFor: aClass basedOn: aString 
 	"Creates an unused method name containing aString"
@@ -285,29 +327,25 @@ safeMethodNameFor: aClass basedOn: aString
 	^newString asSymbol!
 
 selectVariableToMoveMethodTo: aSelector class: aClass
-	^(self options at: #selectVariableToMoveTo)
-		value: self
-		value: aClass
-		value: aSelector!
+	^(self lookupOption: #selectVariableToMoveTo)
+		cull: self
+		cull: aClass
+		cull: aSelector!
 
 selectVariableTypesFrom: initialTypeCollection selected: selectedTypeCollection
-	^(self options at: #variableTypes)
-		value: self
-		value: initialTypeCollection
-		value: selectedTypeCollection!
+	^(self lookupOption: #variableTypes)
+		cull: self
+		cull: initialTypeCollection
+		cull: selectedTypeCollection!
 
-setOption: aSymbol toUse: aBlock 
-	| dict |
-	dict := self options.
-	dict == self class refactoringOptions ifTrue: [dict := dict copy].
-	dict at: aSymbol put: aBlock.
-	self options: dict!
+setOption: aSymbol toUse: aBlock
+	(options ifNil: [options := IdentityDictionary new]) at: aSymbol put: aBlock!
 
 shouldExtractAssignmentTo: aString
-	^(self options at: #extractAssignment) value: self value: aString!
+	^(self lookupOption: #extractAssignment) cull: self cull: aString!
 
 shouldPullUpNonSharedInstanceVariable: aString
-	^(self options at: #pullUpNonSharedInstVar) value: self value: aString!
+	^(self lookupOption: #pullUpNonSharedInstVar) cull: self cull: aString!
 
 transform
 	self subclassResponsibility!
@@ -339,7 +377,7 @@ canReferenceVariable:in:!public!testing! !
 changes!accessing!public! !
 checkClass:selector:using:!public!support! !
 checkInstanceVariableName:in:!public!utilities! !
-checkMethodName:in:!public!utilities! !
+checkMethodName:!public!utilities! !
 checkPreconditions!preconditions!public! !
 checkPreconditions:!preconditions!public! !
 classObjectFor:!accessing!private! !
@@ -347,33 +385,41 @@ convertAllReferencesTo:using:!public!support! !
 convertAllReferencesToClass:using:!public!support! !
 convertClasses:select:using:!public!support! !
 convertMethod:using:!public!support! !
-copyOptionsFrom:!accessing!public! !
+copyOptionsFrom:!operations!public! !
 defaultEnvironment!public!transforming! !
 execute!public!transforming! !
+getOptionAbstractVariables!options!public! !
 getOptionAlreadyDefined:selector:!options!public! !
 getOptionBrowseEnvironments:!options!public! !
+getOptionConvertReadBeforeWritten:!options!public! !
+getOptionCopyDownSuperclassMethod:!public! !
 getOptionExtractAssignment:!options!public! !
 getOptionImplementorToInline:!options!public! !
 getOptionInlineExpression:!options!public! !
-getOptionInlineOverridden:of:!preconditions!public! !
+getOptionInlineOverridden:of:!options!public! !
 getOptionInlineReordered:into:!options!public! !
-getOptionMethodName:!options!public! !
+getOptionMovePools!options!public! !
+getOptionNewMethodName:classes:!options!public! !
 getOptionOpenBrowser:!options!public! !
 getOptionPullUpNonSharedInstVar:!options!public! !
 getOptionPushUpRemoveDuplicates:in:!options!public! !
 getOptionRemoveClass:referencedIn:!options!public! !
+getOptionRemoveDuplicatesWithSupersends:!options!public! !
 getOptionRemoveMethod:referencedIn:!options!public! !
 getOptionRenameAllDefinitions:of:!options!public! !
+getOptionRenameReferencesTo:!options!public! !
+getOptionReplaceReferencesTo:with:!options!public! !
 getOptionSelfArgumentName!options!public! !
 getOptionUseExistingMethod:!options!public! !
 getOptionVariableToMoveToOf:in:!options!public! !
 getOptionVariableTypes:selected:!options!public! !
+lookupOption:!accessing!options!private! !
 model!public!transforming! !
 model:!initialize/release!public! !
 onError:do:!exceptions!private! !
 openBrowserOn:!public!requests! !
-options!accessing!public! !
-options:!accessing!public! !
+options!accessing!options!public! !
+options:!accessing!options!public! !
 performComponentRefactoring:!public!transforming! !
 poolVariableNamesFor:!public!utilities! !
 preconditions!preconditions!public! !
@@ -382,13 +428,13 @@ refactoringAborted!exceptions!private! !
 refactoringAborted:!exceptions!private! !
 refactoringError:!exceptions!private! !
 refactoringError:with:!exceptions!private! !
-refactoringWarning:!exceptions!private! !
-requestMethodNameFor:!public!requests! !
+refactoringWarning:!public!requests! !
+requestNewMethodName:forClasses:!public!requests! !
 requestSelfArgumentName!public!requests! !
 safeMethodNameFor:basedOn:!public!utilities! !
 selectVariableToMoveMethodTo:class:!public!requests! !
 selectVariableTypesFrom:selected:!public!requests! !
-setOption:toUse:!accessing!public! !
+setOption:toUse:!accessing!options!public! !
 shouldExtractAssignmentTo:!public!requests! !
 shouldPullUpNonSharedInstanceVariable:!preconditions!public! !
 transform!public!transforming! !
@@ -410,39 +456,50 @@ initializeRefactoringOptions
 	"
 
 	RefactoringOptions := (IdentityDictionary
-				withAll: {#methodName -> [:refactoring :methodName | refactoring getOptionMethodName: methodName].
-						#selfArgumentName -> [:refactoring | refactoring getOptionSelfArgumentName].
-						#selectVariableToMoveTo
-							-> [:refactoring :class :selector | refactoring getOptionVariableToMoveToOf: class in: selector].
-						#variableTypes
-							-> [:refactoring :initial :selected | refactoring getOptionVariableTypes: initial selected: selected].
-						#extractAssignment
-							-> [:refactoring :varName | refactoring getOptionExtractAssignment: varName].
-						#inlineExpression
-							-> [:refactoring :expression | refactoring getOptionInlineExpression: expression].
+				withAll: {#abstractVariables -> [:refactoring | refactoring getOptionAbstractVariables].
 						#alreadyDefined
 							-> [:refactoring :class :selector | refactoring getOptionAlreadyDefined: class selector: selector].
-						#useExistingMethod
-							-> [:refactoring :selector | refactoring getOptionUseExistingMethod: selector].
-						#openBrowser -> [:refactoring :env | refactoring getOptionOpenBrowser: env].
 						#browseEnvironments
 							-> [:refactoring :environments | refactoring getOptionBrowseEnvironments: environments].
+						#copyDownSuperclassMethod
+							-> [:refactoring :selector | refactoring getOptionCopyDownSuperclassMethod: selector].
+						#extractAssignment
+							-> [:refactoring :varName | refactoring getOptionExtractAssignment: varName].
+						#implementorToInline
+							-> [:rcvr :implementors | rcvr getOptionImplementorToInline: implementors].
+						#inlineExpression
+							-> [:refactoring :expression | refactoring getOptionInlineExpression: expression].
+						#inlineOverridden
+							-> [:refactoring :selector :class | refactoring getOptionInlineOverridden: selector of: class].
+						#inlineReordered
+							-> [:refactoring :from :into | refactoring getOptionInlineReordered: from into: into].
+						#movePools -> [:refactoring | refactoring getOptionMovePools].
+						#methodName
+							-> [:refactoring :methodName :classes | refactoring getOptionNewMethodName: methodName classes: classes].
+						#openBrowser -> [:refactoring :env | refactoring getOptionOpenBrowser: env].
+						#pullUpNonSharedInstVar
+							-> [:refactoring :varName | refactoring getOptionPullUpNonSharedInstVar: varName].
+						#pushUpRemoveDuplicates
+							-> [:refactoring :selector :classes | refactoring getOptionPushUpRemoveDuplicates: selector in: classes].
+						#convertReadBeforeWritten
+							-> [:refactoring :temp | refactoring getOptionConvertReadBeforeWritten: temp].
+						#removeDuplicatesWithSupersends
+							-> [:refactoring :messages | refactoring getOptionRemoveDuplicatesWithSupersends: messages].
 						#removeReferencedClass
 							-> [:refactoring :class :references | refactoring getOptionRemoveClass: class referencedIn: references].
 						#removeReferencedSelector
 							-> [:refactoring :selector :references | refactoring getOptionRemoveMethod: selector referencedIn: references].
 						#renameAllDefinitions
 							-> [:refactoring :definitions :selector | refactoring getOptionRenameAllDefinitions: definitions of: selector].
-						#inlineReordered
-							-> [:refactoring :from :into | refactoring getOptionInlineReordered: from into: into].
-						#pullUpNonSharedInstVar
-							-> [:refactoring :varName | refactoring getOptionPullUpNonSharedInstVar: varName].
-						#pushUpRemoveDuplicates
-							-> [:refactoring :selector :classes | refactoring getOptionPushUpRemoveDuplicates: selector in: classes].
-						#inlineOverridden
-							-> [:refactoring :selector :class | refactoring getOptionInlineOverridden: selector of: class].
-						#implementorToInline
-							-> [:rcvr :implementors | rcvr getOptionImplementorToInline: implementors]})
+						#replaceReferences
+							-> [:refactoring :oldSelector :newSelector | refactoring getOptionReplaceReferencesTo: oldSelector with: newSelector].
+						#selectVariableToMoveTo
+							-> [:refactoring :class :selector | refactoring getOptionVariableToMoveToOf: class in: selector].
+						#selfArgumentName -> [:refactoring | refactoring getOptionSelfArgumentName].
+						#useExistingMethod
+							-> [:refactoring :selector | refactoring getOptionUseExistingMethod: selector].
+						#variableTypes
+							-> [:refactoring :initial :selected | refactoring getOptionVariableTypes: initial selected: selected]})
 				isImmutable: true;
 				yourself!
 

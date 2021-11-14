@@ -23,7 +23,8 @@ caption: aString
 
 errorMessage: aString
 	self value: false.
-	self hint: (Error messageText: aString)!
+	self hint: (Error messageText: aString).
+	^false!
 
 hint
 	"Answer the <Exception> representing the hint for the receiver, or nil if none. The <Exception> need not be an <Error>, it could be a <Warning>, or just a <Notification>. <Error> hints would typically be associated with validation that failed, and <Warnings> for validation that passed but with some concern, or <Notification> for general hints such as what might be expected when a value is empty."

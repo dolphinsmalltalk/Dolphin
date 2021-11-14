@@ -169,22 +169,27 @@ basicRemoveMethods: aCollectionOfCompiledMethods within: aBrowserEnvironment
 				within: aBrowserEnvironment]!
 
 basicRemoveMethodsIn: methodsEnvironment within: searchEnvironment
-	| model errors |
+	| model errors confirmed |
 	model := RBNamespace onEnvironment: searchEnvironment.
 	model name: 'Safe Remove ' , methodsEnvironment label.
 	errors := OrderedCollection new.
+	confirmed := Set new.
 	methodsEnvironment classesAndSelectorsDo: 
 			[:eachClass :eachSelector |
-			
-			[(RemoveMethodRefactoring
-				model: model
-				removeMethods: {eachSelector}
-				from: eachClass) primitiveExecute]
-					on: self refactoringError
-					do: 
-						[:ex |
-						errors addLast: ex.
-						ex return]].
+			| refactoring |
+			refactoring := RemoveMethodRefactoring
+						model: model
+						removeMethods: {eachSelector}
+						from: eachClass.
+			"We don't want to ask the user more than once to confirm that they want to remove a particular referenced selector"
+			(confirmed includes: eachSelector)
+				ifTrue: [refactoring setOption: #removeReferencedSelector toUse: [true]]
+				ifFalse: [confirmed add: eachSelector].
+			[refactoring primitiveExecute] on: self refactoringError
+				do: 
+					[:ex |
+					errors addLast: ex.
+					ex return]].
 	errors notEmpty
 		ifTrue: 
 			[| prompt mb |
@@ -450,13 +455,11 @@ extractToTemporary: anInterval from: aSelector in: aClass
 				caption: 'Extract to Temporary…')
 				validater: 
 						[:tempName |
-						tempName isEmpty
-							ifTrue: [ValidationResult failed]
-							ifFalse: 
-								[((Refactory.Browser.RBCondition withBlock: [(existing includes: tempName) not]
-									errorString: ['<1d> is already in use as a local variable' << tempName])
-										& (Refactory.Browser.RBCondition isValidTemporaryVariableName: tempName for: aClass)
-										& (Refactory.Browser.RBCondition definesInstanceVariable: tempName in: aClass) not) validate]];
+						((RBCondition withBlock: [(existing includes: tempName) not]
+							errorString: ['<1p> is already in use as a local variable' << tempName])
+								& (RBCondition isValidTemporaryVariableName: tempName for: aClass)
+								& (RBCondition definesInstanceVariable: tempName in: aClass) not) validate];
+				showHintWhenEmpty: false;
 				showModal.
 	newName isNil ifTrue: [^nil].
 	^self performRefactoring: 
@@ -483,7 +486,9 @@ handleRefactoringException: aRefactoringException
 				ifFalse: [mb customButtons: #(#(#yes '&Proceed') #(#no 'Cancel'))].
 			mb confirm ifTrue: [aRefactoringException resume]]
 		ifFalse: 
-			[mb headline: 'Unable to <1d>' << aRefactoringException refactoring.
+			[mb
+				caption: 'Refactoring Error';
+				headline: 'Unable to <1d>' << aRefactoringException refactoring.
 			aRefactoringException hasTag
 				ifTrue: [mb confirm ifTrue: [aRefactoringException tag value]]
 				ifFalse: [mb warning].

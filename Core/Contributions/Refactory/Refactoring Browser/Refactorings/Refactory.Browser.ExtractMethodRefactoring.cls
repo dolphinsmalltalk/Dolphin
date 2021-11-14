@@ -160,23 +160,22 @@ getExtractedSource
 	^source copyFrom: extractionInterval first to: extractionInterval last!
 
 getNewMethodName
-	| newSelector methodName newMethodName |
+	| methodName newMethodName newSelector |
 	methodName := RBMethodName new.
 	methodName arguments: parameters.
 	
-	[newMethodName := self requestMethodNameFor: methodName.
+	[newMethodName := self requestNewMethodName: methodName forClasses: {class}.
 	newMethodName isNil ifTrue: [^self refactoringAborted: 'Did not extract code'].
+	newMethodName isValid ifFalse: [^self refactoringError: 'Invalid method name'].
 	newSelector := newMethodName selector.
-	(self checkMethodName: newSelector in: class)
-		ifFalse: 
-			[self refactoringWarning: newSelector , ' is not a valid selector name.'.
-			newSelector := nil].
-	(class hierarchyDefinesMethod: newSelector asSymbol)
-		ifTrue: [(self shouldOverride: newSelector in: class) ifFalse: [newSelector := nil]].
-	newSelector isNil]
-			whileTrue: [].
+	(class hierarchyDefinesMethod: newSelector) and: [(self shouldOverride: newSelector in: class) not]]
+			whileTrue.
+	(class directlyDefinesMethod: newSelector)
+		ifTrue: 
+			["Adding a method that is already implemented in a superclass or subclass is one thing, replacing the definition of an existing method is quite another"
+			^self refactoringError: '<1s> already implements <2p>' << {class unqualifiedName. newSelector}].
 	parameters := newMethodName arguments asOrderedCollection.
-	^newSelector asSymbol!
+	^newSelector!
 
 isMethodEquivalentTo: aSelector
 	selector == aSelector ifTrue: [^false].
@@ -261,14 +260,8 @@ reorderParametersToMatch: aSelector
 					dictionary at: each name
 						ifAbsent: [self refactoringError: 'An internal error occured, please report this error.']]!
 
-shouldOverride: aSymbol in: aClass
-	^(self options at: #alreadyDefined)
-		value: self
-		value: aClass
-		value: aSymbol!
-
 shouldUseExistingMethod: aSymbol
-	^(self options at: #useExistingMethod) value: self value: aSymbol!
+	^(self lookupOption: #useExistingMethod) cull: self cull: aSymbol!
 
 storeOn: aStream 
 	aStream nextPut: $(.
@@ -313,7 +306,7 @@ existingSelector!public!transforming! !
 extract:from:in:!initialize/release!public! !
 extractMethod!public!transforming! !
 getExtractedSource!public!transforming! !
-getNewMethodName!public!transforming! !
+getNewMethodName!public!requests! !
 isMethodEquivalentTo:!public!transforming! !
 isParseTreeEquivalentTo:!public!transforming! !
 methodDelimiter!public!transforming! !
@@ -322,7 +315,6 @@ placeholderNode!public!transforming! !
 preconditions!preconditions!public! !
 remainingTemporaries!public!transforming! !
 reorderParametersToMatch:!public!transforming! !
-shouldOverride:in:!public!requests! !
 shouldUseExistingMethod:!public!requests! !
 storeOn:!printing!public! !
 transform!public!transforming! !

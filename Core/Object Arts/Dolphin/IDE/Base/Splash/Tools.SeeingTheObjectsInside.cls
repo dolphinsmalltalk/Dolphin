@@ -205,8 +205,8 @@ insideObjectMinScale
 insideObjectScaleInPeriod
 	^4500!
 
-isActionPoint: aPoint 
-	^self class splashPlayTheGame 
+isActionPoint: aPoint
+	^self class splashPlayTheGame
 		ifTrue: [self isPointInDolphin: aPoint]
 		ifFalse: [self rectangle containsPoint: aPoint]!
 
@@ -252,7 +252,6 @@ onGetCursor: aSymbol
 
 onLeftButtonPressed: aMouseEvent 
 	self render.
-	self class splashPlayTheGame ifFalse: [^self dismiss].
 	(self isActionPoint: aMouseEvent position) 
 		ifTrue: 
 			[Cursor reset.
@@ -348,7 +347,6 @@ showHintBubble
 	hintBubble := MessageBubble new
 				caption: 'Hint';
 				maxWidth: 140;
-				willFade: true;
 				timeout: 5 seconds.
 	hintBubble
 		position: (self mapPointToScreen: self sunPosition);

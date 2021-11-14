@@ -60,10 +60,10 @@ reparentSubclasses
 			self model reparentClasses: class subclasses copy to: class superclass]!
 
 shouldRemoveClass: aRBClass referencedIn: aCollection
-	^(self options at: #removeReferencedClass)
-		value: self
-		value: aRBClass
-		value: aCollection!
+	^(self lookupOption: #removeReferencedClass)
+		cull: self
+		cull: aRBClass
+		cull: aCollection!
 
 storeOn: aStream 
 	aStream nextPut: $(.
@@ -84,7 +84,7 @@ preconditions!preconditions!public! !
 referencesToClass:!helpers!private! !
 removeClasses!public!transforming! !
 reparentSubclasses!public!transforming! !
-shouldRemoveClass:referencedIn:!options!private! !
+shouldRemoveClass:referencedIn:!private!requests! !
 storeOn:!printing!public! !
 transform!public!transforming! !
 !

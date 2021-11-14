@@ -660,6 +660,18 @@ presenterNamed: aString ifNone: exceptionHandler
 
 !
 
+preTranslateKeyboardInput: aMSG
+	"Answer whether the receiver would like to consume the argument aMSG, which is a keyboard message."
+
+	^self view preTranslateKeyboardInput: aMSG!
+
+preTranslateMouseInput: aMSG
+	"Answer whether the receiver would like to consume the argument aMSG."
+
+	^self view preTranslateMouseInput: aMSG
+
+!
+
 queryCommand: aCommandQuery 
 	"Private - Enter details about a potential command for the receiver 
 	into the <CommandQuery>, query."
@@ -891,6 +903,8 @@ performAction!operations!public! !
 position:!accessing!public! !
 presenterNamed:!public!subpresenters! !
 presenterNamed:ifNone:!public!subpresenters! !
+preTranslateKeyboardInput:!dispatching!public! !
+preTranslateMouseInput:!dispatching!public! !
 queryCommand:!commands!private! !
 queryCommandHandlers:!commands!private! !
 remove:!public!subpresenters! !

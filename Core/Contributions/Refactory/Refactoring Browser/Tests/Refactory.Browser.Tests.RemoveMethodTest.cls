@@ -37,7 +37,7 @@ testRemoveMethod
 				directlyDefinesMethod: selectors first)!
 
 testRemoveReferenced
-	| subject senders selector |
+	| subject |
 	model := RBNamespace
 				onEnvironment: (BrowserEnvironment new forClasses: {SmalllintChecker. BasicLintRuleTestData}).
 	subject := RemoveMethodRefactoring
@@ -47,15 +47,20 @@ testRemoveReferenced
 	subject setOption: #removeReferencedSelector
 		toUse: 
 			[:ref :symbol :references |
-			senders := references.
-			selector := symbol.
+			self assert: references single printString equals: 'Refactory.Browser.SmalllintChecker>>#run'.
+			self assert: symbol equals: #checkClass:.
 			false].
-	self shouldAbort: subject.
-	self assert: selector equals: #checkClass:.
-	self assert: senders single printString equals: 'Refactory.Browser.SmalllintChecker>>#run'!
+	self shouldAbort: subject!
 
 testRemoveSameMethodButSendsSuper
-	self shouldWarn: (RemoveMethodRefactoring removeMethods: #(#new) from: BasicLintRuleTestData class)! !
+	| refactoring |
+	refactoring := RemoveMethodRefactoring removeMethods: #(#new) from: BasicLintRuleTestData class.
+	refactoring setOption: #removeDuplicatesWithSupersends
+		toUse: 
+			[:ref :selectors |
+			self assert: selectors asArray equals: #(#new).
+			true].
+	self executeRefactoring: refactoring! !
 !Refactory.Browser.Tests.RemoveMethodTest categoriesForMethods!
 testModelRecursiveMethodThatIsNotReferencedFromOtherMethods!public!tests! !
 testRemoveMethod!public!tests! !

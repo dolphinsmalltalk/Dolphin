@@ -27,7 +27,7 @@ package!
 "Class Definitions"!
 
 UI.Presenter subclass: #'UI.InplaceTextEditor'
-	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView validater hintBubble'
+	instanceVariableNames: 'textRectangle minExtent maxCharWidth confirmed ownerView hintBubble'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ValueHolder subclass: #'UI.ValueBuffer'
-	instanceVariableNames: 'subject modified gate'
+	instanceVariableNames: 'subject modified gate validater'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -40,16 +40,21 @@ gate: aValueModelGate
 	gate := aValueModelGate.
 	gate when: #valueChanged send: #onGateChanged to: self.!
 
+initialize
+	"Private - Initialize the receiver"
+
+	super initialize.
+	validater := [:val | ValidationResult value: val]!
+
 isModified
 	"Answer whether the buffer is holding a modified value that can be applied. If not then the value is that of the subject."
 
 	^modified!
 
 isValid
-	"Answer true if the updates to the model are valid. Provided for protocol compatibility with
-	AspectBuffer"
+	"Answer true if the updates to the model copy are valid. The validater is invoked to check validity of the current value."
 
-	^true!
+	^self validate value == true!
 
 onGateChanged
 	"Private - Received when the gate has been triggered. Use this to flush changes back
@@ -76,21 +81,36 @@ subject: aSubjectValueModel
 	subject := aSubjectValueModel.
 	modified := false!
 
+validate
+	^self validater value: self value!
+
+validater
+	^validater!
+
+validater: aMonadicValuable
+	"Sets the validater to the <MonadicValuable> argument, which will be passed the subject copy as its parameter. The validater is expected to answer a <ValidationResult>, the value of which should be true if the copy can be considered to be valid such that its changes can be applied back to the actual subject, or false if not. The <ValidationResult> may optionally contain a validation hint in the form of an <exceptionDescription>."
+
+	validater := aMonadicValuable!
+
 value
 	"Answers the value of the receiver. If the value has been modified then answer the buffered
 	value otherwise answer that of the subject"
 
-	^modified ifTrue: [super value] ifFalse: [subject value]! !
+	^modified ifTrue: [value] ifFalse: [subject value]! !
 !UI.ValueBuffer categoriesForMethods!
 apply!accessing!commands!public! !
 gate!accessing!public! !
 gate:!accessing!not an aspect!public! !
+initialize!initializing!private! !
 isModified!public!testing! !
 isValid!public!testing! !
 onGateChanged!event handling!private! !
 setValue:!accessing!private! !
 subject!initializing!public! !
 subject:!initializing!private! !
+validate!operations!public! !
+validater!accessing!public! !
+validater:!accessing!not an aspect!public! !
 value!accessing!public! !
 !
 

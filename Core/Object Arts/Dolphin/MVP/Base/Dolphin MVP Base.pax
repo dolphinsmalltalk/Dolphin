@@ -142,7 +142,6 @@ package setClassNames: #(
 	#{UI.StaticText}
 	#{UI.StaticView}
 	#{UI.STBViewProxy}
-	#{UI.ValidationResult}
 	#{UI.ValueConvertingControlView}
 	#{UI.ValueDialog}
 	#{UI.ValuePresenter}
@@ -1337,7 +1336,8 @@ Core.Object subclass: #'UI.CommandDescription'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'DefaultMask' -> 16r1.
-		'ModalMask' -> 16r2
+		'ModalMask' -> 16r2.
+		'NotAbortableMask' -> 16r3
 	}!
 Core.Object subclass: #'UI.CommandPolicy'
 	instanceVariableNames: 'source path'
@@ -1461,12 +1461,6 @@ Core.Object subclass: #'UI.Presenter'
 	classVariableNames: ''
 	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: 'acceleratorKeyAnnotations'
-	classConstants: {}!
-Core.Object subclass: #'UI.ValidationResult'
-	instanceVariableNames: 'value caption hint'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'UI.View'
 	instanceVariableNames: 'handle creationParent creationStyle presenter model backcolor preferredExtent flags contextMenu font events interactor'
@@ -1755,7 +1749,9 @@ UI.Shell subclass: #'UI.Dialog'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'ValidationTimerId' -> 16r101
+	}!
 UI.Dialog subclass: #'UI.ValueDialog'
 	instanceVariableNames: ''
 	classVariableNames: ''

@@ -18,10 +18,9 @@ checkForValidTemporaryVariable
 		ifFalse: [self refactoringError: temporaryVariableName , ' isn''t a valid temporary variable name'].
 	(parseTree allArgumentVariables includes: temporaryVariableName)
 		ifTrue: [self refactoringError: temporaryVariableName , ' is a block parameter'].
-	(RBReadBeforeWrittenTester isVariable: temporaryVariableName readBeforeWrittenIn: parseTree)
-		ifTrue: 
-			[self refactoringWarning: ('<1s> is read before it is written.'
-						expandMacrosWith: temporaryVariableName)]!
+	((RBReadBeforeWrittenTester isVariable: temporaryVariableName readBeforeWrittenIn: parseTree)
+		and: [(self shouldConvertReadBeforeWritten: temporaryVariableName) not])
+			ifTrue: [self refactoringAborted]!
 
 class: aClass selector: aSelector variable: aVariableName 
 	#rbFix. "Ensure displayString works when model is lazily created for Undo/Redo name (needs inst. vars set up)."
@@ -38,6 +37,9 @@ preconditions
 			& (RBCondition withBlock: 
 						[self checkForValidTemporaryVariable.
 						true])!
+
+shouldConvertReadBeforeWritten: aString
+	^(self lookupOption: #convertReadBeforeWritten) cull: self cull: aString!
 
 storeOn: aStream 
 	aStream nextPut: $(.
@@ -66,6 +68,7 @@ transform
 checkForValidTemporaryVariable!preconditions!public! !
 class:selector:variable:!initialize/release!public! !
 preconditions!preconditions!public! !
+shouldConvertReadBeforeWritten:!private!requests! !
 storeOn:!printing!public! !
 transform!public!transforming! !
 !

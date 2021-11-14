@@ -32,6 +32,9 @@ bufferedModelFor: aSubjectValueModel
 
 	^(self bufferClass subject: aSubjectValueModel asValue) comparisonPolicy: SearchPolicy equality!
 
+isInputValid
+	^self model isValid!
+
 model: aValueModel
 	"Set the model of the receiver to be aValueModel. Register with it's #valueChanged
 	event"
@@ -59,7 +62,8 @@ value: anObject
 !UI.ValueDialog categoriesForMethods!
 answer!accessing!public! !
 bufferClass!accessing!private! !
-bufferedModelFor:!accessing!private! !
+bufferedModelFor:!helpers!private! !
+isInputValid!public!testing! !
 model:!accessing!public! !
 onValueChanged!event handling!public! !
 value!accessing!public! !
