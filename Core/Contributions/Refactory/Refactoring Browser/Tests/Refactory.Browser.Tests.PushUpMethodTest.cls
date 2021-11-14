@@ -110,8 +110,7 @@ testPushUpWithSuperSendThatCannotBeCopiedDown
 				model: model
 				pushUp: #(#foo)
 				from: class)
-		withMessage: 'Cannot push up Foo2>>#foo
-The method in superclass Subclass must be copied down to its other subclasses, but sends a super message that will be overridden.'! !
+		withMessage: 'The #foo method in superclass Subclass must be copied down to its other subclasses, but sends a super message that will be overridden.'! !
 !Refactory.Browser.Tests.PushUpMethodTest categoriesForMethods!
 testPushUpAndCopyDown!public!tests! !
 testPushUpClassMethod!failure tests!public! !

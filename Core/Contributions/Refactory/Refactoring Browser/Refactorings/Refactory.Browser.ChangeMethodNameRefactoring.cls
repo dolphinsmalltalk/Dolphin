@@ -77,11 +77,11 @@ renameImplementors
 				ifFalse: 
 					[parseTree isPrimitive
 						ifTrue: 
-							[self refactoringError: ('<1p>''s implementation of #<2s> is a primitive' expandMacrosWith: each
-										with: oldSelector)]].
+							[self refactoringError: '<1d>''s implementation of #<2s> is a primitive'
+										<< {each unqualifiedName. oldSelector}]].
 			self modifyImplementorParseTree: parseTree in: each.
 			"We must maintain any custom packaging or namespace of the original method, or the new method may not compile"
-			packageAndEnv := (each existingMethodPackageAndEnvironment: oldSelector).
+			packageAndEnv := each existingMethodPackageAndEnvironment: oldSelector.
 			each
 				compileTree: parseTree
 				environment: packageAndEnv second

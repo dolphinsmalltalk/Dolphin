@@ -25,7 +25,7 @@ testModelRemoveInstanceVariable
 
 testNonExistantName
 	self shouldFail: (RemoveInstanceVariableRefactoring variable: 'name1' class: LintRuleTestData)
-		withMessage: 'Refactory.Browser.Tests.LintRuleTestData does not define an instance variable ''name1'''!
+		withMessage: 'LintRuleTestData does not define an instance variable ''name1'''!
 
 testReferencedVariable
 	self shouldFail: (RemoveInstanceVariableRefactoring variable: 'name' class: LintRuleTestData)

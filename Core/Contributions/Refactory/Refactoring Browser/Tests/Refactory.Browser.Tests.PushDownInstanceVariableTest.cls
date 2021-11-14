@@ -56,7 +56,7 @@ testModelRemoveUnusedVariable
 
 testNonExistantName
 	self shouldFail: (PushDownInstanceVariableRefactoring variable: 'foo' class: BasicLintRuleTestData)
-		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData does not define an instance variable ''foo'''!
+		withMessage: 'BasicLintRuleTestData does not define an instance variable ''foo'''!
 
 testPushDownInstanceVariable
 	| refactoring |

@@ -50,16 +50,16 @@ testAbstractClassVariable
 testInheritedName
 	self shouldFail: (AbstractClassVariableRefactoring variable: #DependentsFields
 				class: BasicLintRuleTestData)
-		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData does not directly define class variable #DependentsFields'!
+		withMessage: 'BasicLintRuleTestData does not directly define class variable #DependentsFields'!
 
 testInvalidClass
 	self shouldFail: (AbstractClassVariableRefactoring variable: #DependentsFields class: Object)
-		withMessage: 'Core.Object does not directly define class variable #DependentsFields'!
+		withMessage: 'Object does not directly define class variable #DependentsFields'!
 
 testMetaClassFailure
 	self shouldFail: (AbstractClassVariableRefactoring variable: #RecursiveSelfRule
 				class: TransformationRuleTestData class)
-		withMessage: 'Refactory.Browser.Tests.TransformationRuleTestData class is a metaclass'!
+		withMessage: 'TransformationRuleTestData class is a metaclass'!
 
 testModelAbstractClassVariable
 	| refactoring meta class |
@@ -113,7 +113,7 @@ testModelAbstractClassVariableOverridenMethodsInSubclass
 
 testNonExistantName
 	self shouldFail: (AbstractClassVariableRefactoring variable: #Foo class: BasicLintRuleTestData)
-		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData does not directly define class variable #Foo'! !
+		withMessage: 'BasicLintRuleTestData does not directly define class variable #Foo'! !
 !Refactory.Browser.Tests.AbstractClassVariableTest categoriesForMethods!
 setUp!public!set up! !
 testAbstractClassVariable!public!tests! !

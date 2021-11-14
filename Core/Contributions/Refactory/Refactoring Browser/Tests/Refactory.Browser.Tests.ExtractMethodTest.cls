@@ -219,7 +219,7 @@ testNonExistantSelector
 				extract: (10 to: 20)
 				from: #checkClass1:
 				in: BasicLintRuleTestData)
-		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData does not define #checkClass1:'! !
+		withMessage: 'BasicLintRuleTestData does not define #checkClass1:'! !
 !Refactory.Browser.Tests.ExtractMethodTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testExtractFailure!failure tests!public! !

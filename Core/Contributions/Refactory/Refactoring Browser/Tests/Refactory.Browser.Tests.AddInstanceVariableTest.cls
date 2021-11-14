@@ -42,9 +42,9 @@ testAddToModel
 testAlreadyExistingName
 	self
 		shouldFail: (AddInstanceVariableRefactoring variable: 'class' class: TransformationRuleTestData)
-			withMessage: 'Refactory.Browser.Tests.TransformationRuleTestData or one of its subclasses defines variable ''class''';
+			withMessage: 'TransformationRuleTestData or one of its subclasses defines variable ''class''';
 		shouldFail: (AddInstanceVariableRefactoring variable: 'name' class: TransformationRuleTestData)
-			withMessage: 'Refactory.Browser.Tests.TransformationRuleTestData or one of its subclasses defines variable ''name'''!
+			withMessage: 'TransformationRuleTestData or one of its subclasses defines variable ''name'''!
 
 testModelAlreadyExistingName
 	| refactoring |

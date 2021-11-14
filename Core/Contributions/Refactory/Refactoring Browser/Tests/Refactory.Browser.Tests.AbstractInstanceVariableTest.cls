@@ -103,7 +103,7 @@ testAbstractWithDefaultNamesUsed
 
 testInheritedName
 	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'name' class: BasicLintRuleTestData)
-		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData does not directly define instance variable ''name'''!
+		withMessage: 'BasicLintRuleTestData does not directly define instance variable ''name'''!
 
 testMetaclassInstanceVariables
 	| refactoring class |
@@ -125,7 +125,7 @@ testMetaclassInstanceVariables
 
 testNonExistantName
 	self shouldFail: (AbstractInstanceVariableRefactoring variable: 'foo' class: BasicLintRuleTestData)
-		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData does not directly define instance variable ''foo'''! !
+		withMessage: 'BasicLintRuleTestData does not directly define instance variable ''foo'''! !
 !Refactory.Browser.Tests.AbstractInstanceVariableTest categoriesForMethods!
 setUp!public!set up! !
 testAbstractInstanceVariable!public!tests! !

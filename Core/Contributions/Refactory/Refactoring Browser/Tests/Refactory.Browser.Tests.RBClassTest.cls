@@ -56,13 +56,18 @@ testHierarchy
 	| meta |
 	meta := objectClass metaclass.
 	self assert: (objectClass withAllSubclasses includes: meta).
-	self assert: (meta withAllSuperclasses includes: objectClass)! !
+	self assert: (meta withAllSuperclasses includes: objectClass)!
+
+testUnqualifiedName
+	self assert: objectClass unqualifiedName equals: #Object.
+	self assert: objectClass metaclass unqualifiedName equals: 'Object class'! !
 !Refactory.Browser.Tests.RBClassTest categoriesForMethods!
 setUp!public!set up! !
-testDefinesClassVariable!method tests!public! !
-testDefinesInstanceVariable!method tests!public! !
-testDefinesMethod!method tests!public! !
-testDefinesPoolDictionary!method tests!public! !
-testHierarchy!method tests!public! !
+testDefinesClassVariable!public!unit tests! !
+testDefinesInstanceVariable!public!unit tests! !
+testDefinesMethod!public!unit tests! !
+testDefinesPoolDictionary!public!unit tests! !
+testHierarchy!public!unit tests! !
+testUnqualifiedName!public!unit tests! !
 !
 

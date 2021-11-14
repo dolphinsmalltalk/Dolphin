@@ -66,7 +66,7 @@ storeOn: aStream
 unqualifiedName
 	"Answer the unqualified name of the non-metaclass."
 
-	^self nonMetaclass unqualifiedName! !
+	^self nonMetaclass unqualifiedName, ' class'! !
 !Refactory.Browser.RBMetaclass categoriesForMethods!
 allClassVariableNames!accessing!public! !
 allImports!accessing!public! !

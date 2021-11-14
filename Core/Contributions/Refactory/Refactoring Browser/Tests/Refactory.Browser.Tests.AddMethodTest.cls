@@ -38,7 +38,7 @@ testExistingSelector
 				addMethod: 'printString ^super printString'
 				toClass: BasicLintRuleTestData
 				inProtocols: #(#accessing))
-		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData understands #printString'!
+		withMessage: 'BasicLintRuleTestData understands #printString'!
 
 testModelAddMethod
 	| refactoring class |

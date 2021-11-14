@@ -26,7 +26,7 @@ testNonExistantName
 					class: BasicLintRuleTestData
 					selector: #checkClass1:
 					variable: 'aSmalllintContext')
-			withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData does not define #checkClass1:'!
+			withMessage: 'BasicLintRuleTestData does not define #checkClass1:'!
 
 testRedefinedTemporary
 	| class |

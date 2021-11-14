@@ -467,28 +467,24 @@ extractToTemporary: anInterval from: aSelector in: aClass
 				in: aClass) execute]!
 
 handleRefactoringException: aRefactoringException
-	| text mb lines count |
-	mb := MessageBox new
-				caption: '<1d>…' << aRefactoringException refactoring;
-				yourself.
+	| text mb |
 	text := aRefactoringException messageText.
-	lines := text lines reject: [:each | each isEmpty].
-	count := lines size.
-	count > 1
-		ifTrue: 
-			[mb text: (lines at: count).
-			mb headline: (String lineDelimiter join: (lines copyFrom: 1 to: count - 1))]
-		ifFalse: [mb headline: text].
-	mb iconStyle: aRefactoringException iconStyle.
+	mb := MessageBox new
+				text: text;
+				iconStyle: aRefactoringException iconStyle;
+				yourself.
 	aRefactoringException isResumable
 		ifTrue: 
-			[mb isCancellable.
+			[mb
+				caption: '<1d>…' << aRefactoringException refactoring;
+				isCancellable.
 			text last == $?
 				ifTrue: [mb customButtons: #(#(#yes '&Yes') #(#no 'Cancel'))]
 				ifFalse: [mb customButtons: #(#(#yes '&Proceed') #(#no 'Cancel'))].
 			mb confirm ifTrue: [aRefactoringException resume]]
 		ifFalse: 
-			[aRefactoringException hasTag
+			[mb headline: 'Unable to <1d>' << aRefactoringException refactoring.
+			aRefactoringException hasTag
 				ifTrue: [mb confirm ifTrue: [aRefactoringException tag value]]
 				ifFalse: [mb warning].
 			self abortSignal signal: '<1d> aborted' << aRefactoringException refactoring].

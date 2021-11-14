@@ -72,7 +72,7 @@ testNonExistantName
 					bindTight: (1 to: 10)
 					in: LintRuleTestData
 					selector: #name1)
-			withMessage: 'Refactory.Browser.Tests.LintRuleTestData does not define #name1';
+			withMessage: 'LintRuleTestData does not define #name1';
 		shouldFail: (MoveVariableDefinitionRefactoring
 					bindTight: (self convertInterval: (44 to: 54) for: (LintRuleTestData sourceCodeAt: #displayName))
 					in: LintRuleTestData

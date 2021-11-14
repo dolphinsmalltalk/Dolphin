@@ -149,7 +149,7 @@ testModelNonExistantName
 				newSelector: #nameNew:
 				initializer: 'nil'.
 	self shouldFail: refactoring
-		withMessage: 'Refactory.Browser.Tests.LintRuleTestData does not define #name'!
+		withMessage: 'LintRuleTestData does not define #name'!
 
 testNonExistantName
 	self shouldFail: (AddParameterRefactoring
@@ -157,7 +157,7 @@ testNonExistantName
 				in: LintRuleTestData
 				newSelector: #name1:
 				initializer: 'nil')
-		withMessage: 'Refactory.Browser.Tests.LintRuleTestData does not define #name1'!
+		withMessage: 'LintRuleTestData does not define #name1'!
 
 testPrimitiveMethods
 	| refactoring implementors selector |

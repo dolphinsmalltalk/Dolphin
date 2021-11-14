@@ -143,6 +143,9 @@ getOptionPullUpNonSharedInstVar: aString
 		confirm: 'Not all subclasses have an instance variable named <1p>.<n>Do you want pull up this variable anyway?'
 				<< aString!
 
+getOptionPushUpRemoveDuplicates: aString in: aCollectionOfClasses
+	^self confirm: 'Do you want to remove duplicate subclass methods?'!
+
 getOptionRemoveClass: aRBClass referencedIn: aCollection
 	(self
 		confirm: '<1p> is referenced in <2d> methods and cannot be removed safely.<n><n>Would you like to browse references?'
@@ -357,6 +360,7 @@ getOptionInlineReordered:into:!options!public! !
 getOptionMethodName:!options!public! !
 getOptionOpenBrowser:!options!public! !
 getOptionPullUpNonSharedInstVar:!options!public! !
+getOptionPushUpRemoveDuplicates:in:!options!public! !
 getOptionRemoveClass:referencedIn:!options!public! !
 getOptionRemoveMethod:referencedIn:!options!public! !
 getOptionRenameAllDefinitions:of:!options!public! !
@@ -433,6 +437,8 @@ initializeRefactoringOptions
 							-> [:refactoring :from :into | refactoring getOptionInlineReordered: from into: into].
 						#pullUpNonSharedInstVar
 							-> [:refactoring :varName | refactoring getOptionPullUpNonSharedInstVar: varName].
+						#pushUpRemoveDuplicates
+							-> [:refactoring :selector :classes | refactoring getOptionPushUpRemoveDuplicates: selector in: classes].
 						#inlineOverridden
 							-> [:refactoring :selector :class | refactoring getOptionInlineOverridden: selector of: class].
 						#implementorToInline

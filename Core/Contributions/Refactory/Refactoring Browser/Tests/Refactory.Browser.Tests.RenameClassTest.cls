@@ -25,7 +25,7 @@ testExistingName
 
 testMetaClassFailure
 	self shouldFail: (RenameClassRefactoring rename: self class class to: #Foo)
-		withMessage: 'Refactory.Browser.Tests.RenameClassTest class is not an existing class'!
+		withMessage: '<1s> class is not an existing class' << self class fullName!
 
 testModelRenameClass
 	| refactoring class |

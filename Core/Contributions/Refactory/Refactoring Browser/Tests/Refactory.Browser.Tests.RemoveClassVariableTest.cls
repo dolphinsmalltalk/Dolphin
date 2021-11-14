@@ -14,7 +14,7 @@ Refactory.Browser.Tests.RemoveClassVariableTest comment: ''!
 testNonExistantName
 	self shouldFail: (RemoveClassVariableRefactoring variable: #RecursiveSelfRule1
 				class: TransformationRuleTestData)
-		withMessage: 'Refactory.Browser.Tests.TransformationRuleTestData does not define class variable #RecursiveSelfRule1'!
+		withMessage: 'TransformationRuleTestData does not define class variable #RecursiveSelfRule1'!
 
 testReferencedVariable
 	self shouldFail: (RemoveClassVariableRefactoring variable: #RecursiveSelfRule

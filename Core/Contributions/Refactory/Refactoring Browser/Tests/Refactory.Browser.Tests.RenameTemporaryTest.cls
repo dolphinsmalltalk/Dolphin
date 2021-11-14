@@ -28,7 +28,7 @@ testBadName
 					to: 'name'
 					in: LintRuleTestData
 					selector: #openEditor)
-			withMessage: 'Refactory.Browser.Tests.LintRuleTestData or a superclass defines an instance variable ''name''';
+			withMessage: 'LintRuleTestData or a superclass defines an instance variable ''name''';
 		shouldFail: (RenameTemporaryRefactoring
 					renameTemporaryFrom: (self convertInterval: (15 to: 19)
 							for: (LintRuleTestData sourceCodeAt: #openEditor))

@@ -26,16 +26,16 @@ testAlreadyExistingName
 	self
 		shouldFail: (AddClassVariableRefactoring variable: #RecursiveSelfRule
 					class: TransformationRuleTestData)
-			withMessage: 'Refactory.Browser.Tests.TransformationRuleTestData or one of its subclasses defines variable ''RecursiveSelfRule''';
+			withMessage: 'TransformationRuleTestData or one of its subclasses defines variable ''RecursiveSelfRule''';
 		shouldFail: (AddClassVariableRefactoring variable: self objectClassVariable
 					class: TransformationRuleTestData)
-			withMessage: 'Refactory.Browser.Tests.TransformationRuleTestData or one of its subclasses defines variable <1p>'
+			withMessage: 'TransformationRuleTestData or one of its subclasses defines variable <1p>'
 					<< self objectClassVariable!
 
 testMetaClassFailure
 	self shouldFail: (AddClassVariableRefactoring variable: #VariableName
 				class: TransformationRuleTestData class)
-		withMessage: 'Refactory.Browser.Tests.TransformationRuleTestData class is a metaclass'!
+		withMessage: 'TransformationRuleTestData class is a metaclass'!
 
 testModelAddClassVariable
 	| refactoring |
@@ -68,7 +68,7 @@ testRBMetaclassFailure
 	refactoring := AddClassVariableRefactoring variable: #ClassVarName3
 				class: (model classNamed: #'Core.Object') metaclass.
 	refactoring model: model.
-	self shouldFail: refactoring withMessage: 'Core.Object class is a metaclass'! !
+	self shouldFail: refactoring withMessage: 'Object class is a metaclass'! !
 !Refactory.Browser.Tests.AddClassVariableTest categoriesForMethods!
 setUp!public!set up! !
 testAddClassVariable!public!tests! !

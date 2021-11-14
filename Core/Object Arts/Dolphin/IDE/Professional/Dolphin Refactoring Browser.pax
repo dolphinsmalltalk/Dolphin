@@ -109,6 +109,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.PushDownInstanceVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.PushDownMethodRefactoring} #displayOn:)
 	#(#{Refactory.Browser.PushUpMethodRefactoring} #displayOn:)
+	#(#{Refactory.Browser.PushUpMethodRefactoring} #getOptionPushUpRemoveDuplicates:in:)
 	#(#{Refactory.Browser.RBAbstractClass} #instVarNames)
 	#(#{Refactory.Browser.RBAbstractClass} #owningPackage)
 	#(#{Refactory.Browser.RBAbstractCondition} #validate)
@@ -517,7 +518,7 @@ displayOn: aPuttableStream
 
 	aPuttableStream
 		nextPutAll: 'Add method to ';
-		print: class!
+		nextPutAll: class unqualifiedName!
 
 maxDetails
 	^15! !
@@ -642,7 +643,7 @@ displayPrefix!displaying!public! !
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aPuttableStream nextPutAll: 'Add pool'.
+	aPuttableStream nextPutAll: 'Add import'.
 	pools size = 1
 		ifTrue: 
 			[aPuttableStream space.
@@ -667,7 +668,7 @@ displayOn: aPuttableStream
 
 	aPuttableStream
 		nextPutAll: 'Extract method from ';
-		print: class;
+		nextPutAll: class unqualifiedName;
 		nextPutAll: '>>';
 		print: selector!
 
@@ -690,7 +691,7 @@ displayOn: aPuttableStream
 
 	aPuttableStream
 		nextPutAll: 'Extract to component from ';
-		print: class;
+		nextPutAll: class unqualifiedName;
 		nextPutAll: '>>';
 		print: selector!
 
@@ -723,7 +724,7 @@ displayOn: aPuttableStream
 		nextPutAll: 'Inline sends of ';
 		print: selector;
 		nextPutAll: ' in ';
-		print: class! !
+		nextPutAll: class unqualifiedName! !
 !Refactory.Browser.InlineAllSendersRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -735,7 +736,7 @@ displayOn: aPuttableStream
 
 	aPuttableStream
 		nextPutAll: 'Inline message in ';
-		print: class;
+		nextPutAll: class unqualifiedName;
 		nextPutAll: '>>';
 		print: sourceSelector!
 
@@ -798,7 +799,7 @@ displayOn: aPuttableStream
 		nextPutAll: 'Inline parameter ';
 		print: argument;
 		nextPutAll: ' in ';
-		print: class;
+		nextPutAll: class unqualifiedName;
 		nextPutAll: '>>';
 		print: oldSelector! !
 !Refactory.Browser.InlineParameterRefactoring categoriesForMethods!
@@ -813,7 +814,7 @@ displayOn: aPuttableStream
 	aPuttableStream
 		nextPutAll: 'Inline temp ';
 		nextPutAll: ' in ';
-		print: class;
+		nextPutAll: class unqualifiedName;
 		nextPutAll: '>>';
 		print: selector
 	"		print: oldName;"! !
@@ -946,7 +947,7 @@ displayOn: aPuttableStream
 
 	aPuttableStream
 		nextPutAll: 'Move ';
-		display: class;
+		nextPutAll: class unqualifiedName;
 		nextPutAll: '>>';
 		print: selector;
 		nextPutAll: '  to ';
@@ -1017,7 +1018,7 @@ displayOn: aPuttableStream
 		nextPutAll: 'Move ';
 		display: 'variable';
 		nextPutAll: ' to inner scope in ';
-		print: class;
+		nextPutAll: class unqualifiedName;
 		nextPutAll: '>>';
 		print: selector! !
 !Refactory.Browser.MoveVariableDefinitionRefactoring categoriesForMethods!
@@ -1041,7 +1042,7 @@ displayOn: aPuttableStream
 		nextPutAll: self displayPrefix;
 		print: variableName;
 		nextPutAll: ' into ';
-		print: class! !
+		nextPutAll: class unqualifiedName! !
 !Refactory.Browser.PullUpClassVariableRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1068,7 +1069,7 @@ displayOn: aPuttableStream
 		space;
 		print: variableName;
 		nextPutAll: ' into ';
-		print: class! !
+		nextPutAll: class unqualifiedName! !
 !Refactory.Browser.PullUpInstanceVariableRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1106,7 +1107,7 @@ displayOn: aPuttableStream
 		nextPutAll: 'Push down ';
 		print: (selectors size == 1 ifTrue: [selectors first] ifFalse: [selectors]);
 		nextPutAll: ' from ';
-		print: class! !
+		nextPutAll: class unqualifiedName! !
 !Refactory.Browser.PushDownMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1120,9 +1121,40 @@ displayOn: aPuttableStream
 		nextPutAll: 'Push up ';
 		print: (selectors size == 1 ifTrue: [selectors first] ifFalse: [selectors]);
 		nextPutAll: ' from ';
-		print: class! !
+		nextPutAll: class unqualifiedName!
+
+getOptionPushUpRemoveDuplicates: aSymbol in: aCollection
+	| details response |
+	details := String writeStream.
+	details
+		nextPutAll: 'The following subclasses of ';
+		nextPutAll: class superclass unqualifiedName;
+		nextPutAll: ' will have a duplicate implementation:';
+		cr.
+	self
+		printNameList: (aCollection asSortedCollection: [:a :b | a name < b name])
+		on: details
+		limit: self maxDetails
+		type: 'classes'.
+	response := MessageBox new
+				caption: self displayString;
+				text: 'Pushing up <1p> from <2d> to <3d> will result in duplicate implementations in <4d> subclass<5?es:> of <2d>.'
+							<< {aSymbol.
+									class unqualifiedName.
+									class superclass unqualifiedName.
+									aCollection size.
+									aCollection size > 1};
+				headline: 'Remove duplicates of pushed up method?';
+				customButtons: #(#(#yes '&Remove Duplicates') #(#no 'Don''t Remove'));
+				defaultButton: 1;
+				isCancellable: true;
+				detailsText: details contents;
+				confirmOrCancel.
+	response == #cancel ifTrue: [self refactoringAborted].
+	^response == #yes! !
 !Refactory.Browser.PushUpMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
+getOptionPushUpRemoveDuplicates:in:!options!public! !
 !
 
 !Refactory.Browser.RBAbstractClass methodsFor!
@@ -1329,7 +1361,7 @@ displayOn: aPuttableStream
 		nextPutAll: 'Remove ';
 		print: (selectors size == 1 ifTrue: [selectors first] ifFalse: [selectors]);
 		nextPutAll: ' from ';
-		print: class! !
+		nextPutAll: class unqualifiedName! !
 !Refactory.Browser.RemoveMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1343,7 +1375,7 @@ displayOn: aPuttableStream
 		nextPutAll: 'Remove parameter ';
 		print: argument;
 		nextPutAll: ' from ';
-		print: class;
+		nextPutAll: class unqualifiedName;
 		nextPutAll: '>>';
 		print: oldSelector! !
 !Refactory.Browser.RemoveParameterRefactoring categoriesForMethods!
@@ -1430,7 +1462,7 @@ displayOn: aPuttableStream
 	aPuttableStream
 		nextPutAll: self displayPrefix;
 		space;
-		print: class;
+		nextPutAll: class unqualifiedName;
 		nextPut: $.;
 		nextPutAll: variableName;
 		nextPutAll: ' (and accessors) to ';
@@ -1497,7 +1529,7 @@ displayOn: aPuttableStream
 		nextPutAll: ' to ';
 		print: newName;
 		nextPutAll: ' in ';
-		print: class;
+		nextPutAll: class unqualifiedName;
 		nextPutAll: '>>';
 		print: selector! !
 !Refactory.Browser.RenameTemporaryRefactoring categoriesForMethods!
@@ -1531,7 +1563,7 @@ displayOn: aPuttableStream
 		nextPutAll: 'Convert temp ';
 		print: temporaryVariableName;
 		nextPutAll: ' to inst var of ';
-		print: class! !
+		nextPutAll: class unqualifiedName! !
 !Refactory.Browser.TemporaryToInstanceVariableRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 !
@@ -1640,7 +1672,7 @@ displayOn: aPuttableStream
 	aPuttableStream
 		nextPutAll: self displayPrefix;
 		space;
-		print: class;
+		nextPutAll: class unqualifiedName;
 		nextPut: $.;
 		nextPutAll: variableName!
 

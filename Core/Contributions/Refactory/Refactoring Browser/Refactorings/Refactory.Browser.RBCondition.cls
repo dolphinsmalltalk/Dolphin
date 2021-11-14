@@ -54,7 +54,7 @@ canUnderstand: aSelector in: aClass
 	^self new
 		type: {#understandsSelector. aClass. aSelector}
 		block: [aClass definesMethod: aSelector]
-		errorString: aClass printString , ' <1?:does not >understand<1?s:> ' , aSelector printString!
+		errorString: aClass unqualifiedName , ' <1?:does not >understand<1?s:> ' , aSelector printString!
 
 checkClassVarName: aName in: aClass 
 	| string |
@@ -81,20 +81,21 @@ definesClassVariable: aString in: aClass
 	^self new
 		type: {#definesClassVar. aClass. aString}
 		block: [aClass definesClassVariable: aString]
-		errorString: aClass printString , ' <1?:does not >define<1?s:> class variable ' , aString printString!
+		errorString: aClass unqualifiedName , ' <1?:does not >define<1?s:> class variable '
+				, aString printString!
 
 definesInstanceVariable: aString in: aClass
 	^self new
 		type: {#definesInstVar. aClass. aString}
 		block: [aClass definesInstanceVariable: aString]
-		errorString: aClass printString , ' <1?or a superclass :does not >define<1?s:> an instance variable '
-				, aString printString!
+		errorString: aClass unqualifiedName
+				, ' <1?or a superclass :does not >define<1?s:> an instance variable ' , aString printString!
 
 definesSelector: aSelector in: aClass
 	^self new
 		type: {#definesSelector. aClass. aSelector}
 		block: [aClass directlyDefinesMethod: aSelector]
-		errorString: aClass printString , ' <1?:does not >define<1?s:> ' , aSelector printString!
+		errorString: aClass unqualifiedName , ' <1?:does not >define<1?s:> ' , aSelector printString!
 
 definesTemporaryVariable: aString in: aClass
 	| condition |
@@ -110,7 +111,7 @@ definesTemporaryVariable: aString in: aClass
 			method notNil
 				ifTrue: [condition errorMacro: ('<1p> defines variable <2p>' expandMacrosWith: method with: aString)].
 			method notNil]
-		errorString: aClass printString , ' <1?:does not >define<1?s:> temporary variable '
+		errorString: aClass unqualifiedName , ' <1?:does not >define<1?s:> temporary variable '
 				, aString printString.
 	^condition!
 
@@ -128,7 +129,7 @@ definesTempVar: aString in: aClass ignoreClass: subclass
 			method notNil
 				ifTrue: [condition errorMacro: ('<1p> defines variable <2p>' expandMacrosWith: method with: aString)].
 			method notNil]
-		errorString: aClass printString , ' <1?:does not >define<1?s:> temporary variable '
+		errorString: aClass unqualifiedName , ' <1?:does not >define<1?s:> temporary variable '
 				, aString printString.
 	^condition!
 
@@ -136,14 +137,14 @@ directlyDefinesClassVariable: aString in: aClass
 	^self new
 		type: {#directlyDefinesClassVar. aClass. aString}
 		block: [aClass directlyDefinesClassVariable: aString]
-		errorString: aClass printString , ' <1?:does not >directly define<1?s:> class variable '
+		errorString: aClass unqualifiedName , ' <1?:does not >directly define<1?s:> class variable '
 				, aString printString!
 
 directlyDefinesInstanceVariable: aString in: aClass
 	^self new
 		type: {#directlyDefinesInstanceVariable. aClass. aString}
 		block: [aClass directlyDefinesInstanceVariable: aString]
-		errorString: aClass printString , ' <1?:does not >directly define<1?s:> instance variable '
+		errorString: aClass unqualifiedName , ' <1?:does not >directly define<1?s:> instance variable '
 				, aString printString!
 
 empty
@@ -161,27 +162,27 @@ hasSubclasses: aClass excluding: aCollection
 	^self new
 		type: {#hasSubclasses. aClass}
 		block: [aClass subclasses anySatisfy: [:each | (aCollection includes: each name) not]]
-		errorString: aClass printString , ' has <1?:no >subclasses'!
+		errorString: aClass unqualifiedName , ' has <1?:no >subclasses'!
 
 hasSuperclass: aClass
 	^self new
 		type: {#hasSuperclass. aClass}
 		block: [aClass superclass isNil not]
-		errorString: aClass printString , ' has <1?a:no> superclass'!
+		errorString: aClass unqualifiedName , ' has <1?a:no> superclass'!
 
 hierarchyOf: aClass canUnderstand: aSelector
 	^self new
 		type: {#hierarchyUnderstandsSelector. aClass. aSelector}
 		block: [aClass hierarchyDefinesMethod: aSelector]
-		errorString: aClass printString , ' <1?or a subclass:and all subclasses do not> understand<1?s:> '
+		errorString: aClass unqualifiedName , ' <1?or a subclass:and all subclasses do not> understand<1?s:> '
 				, aSelector printString!
 
 hierarchyOf: aClass definesVariable: aString
 	^self new
 		type: {#hierarchyDefinesInstVar. aClass. aString}
 		block: [aClass hierarchyDefinesVariable: aString]
-		errorString: aClass printString , ' or one of its subclasses <1?:does not >define<1?s:> variable '
-				, aString printString!
+		errorString: aClass unqualifiedName
+				, ' or one of its subclasses <1?:does not >define<1?s:> variable ' , aString printString!
 
 hierarchyOf: aClass referencesInstanceVariable: aString
 	^self new
@@ -189,14 +190,14 @@ hierarchyOf: aClass referencesInstanceVariable: aString
 		block: 
 			[aClass withAllSubclasses
 				anySatisfy: [:each | (each whichSelectorsReferToInstanceVariable: aString) notEmpty]]
-		errorString: aClass printString , ' or subclass <1?:does not >reference<1?s:> instance variable '
+		errorString: aClass unqualifiedName , ' or subclass <1?:does not >reference<1?s:> instance variable '
 				, aString!
 
 isAbstractClass: aClass
 	^self new
 		type: {#IsAbstractClass. aClass}
 		block: [aClass isAbstract]
-		errorString: aClass printString , ' is <1?:not >an abstract class'!
+		errorString: aClass unqualifiedName , ' is <1?:not >an abstract class'!
 
 isClass: anObject
 	^self new
@@ -251,7 +252,7 @@ isMetaclass: anObject
 	^self new
 		type: {#IsMetaclass. anObject}
 		block: [anObject isMeta]
-		errorString: anObject printString , ' is <1?:not >a metaclass'!
+		errorString: anObject unqualifiedName , ' is <1?:not >a metaclass'!
 
 isNamespace: aSymbol
 	^self new
@@ -326,7 +327,7 @@ referencesInstanceVariable: aString in: aClass
 	^self new
 		type: {#referencesInstVar. aClass. aString}
 		block: [(aClass whichSelectorsReferToInstanceVariable: aString) notEmpty]
-		errorString: aClass printString , ' <1?:does not >reference<1?s:> instance variable '
+		errorString: aClass unqualifiedName , ' <1?:does not >reference<1?s:> instance variable '
 				, aString printString!
 
 reservedNames
@@ -343,7 +344,8 @@ subclassesOf: aClass referToSelector: aSelector
 							| tree |
 							tree := each parseTreeFor: sel.
 							tree notNil and: [tree superMessages includes: aSelector]]]]
-		errorString: '<1?:no:a> subclass of ' , aClass printString , ' refers to ' , aSelector printString!
+		errorString: '<1?:no:a> subclass of ' , aClass unqualifiedName , ' refers to '
+				, aSelector printString!
 
 validClassName: aString 
 	"Class names and class variable names have the same restrictions"

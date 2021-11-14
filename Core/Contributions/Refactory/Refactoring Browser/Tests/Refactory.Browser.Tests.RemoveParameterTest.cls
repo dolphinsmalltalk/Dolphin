@@ -33,7 +33,7 @@ testPrimitiveMethods
 				removeParameter: 'a'
 				in: Object
 				selector: #foo123:.
-	self shouldFail: refactoring withMessage: 'Core.Object''s implementation of #foo123: is a primitive'!
+	self shouldFail: refactoring withMessage: 'Object''s implementation of #foo123: is a primitive'!
 
 testRemoveParameter
 	| refactoring class |

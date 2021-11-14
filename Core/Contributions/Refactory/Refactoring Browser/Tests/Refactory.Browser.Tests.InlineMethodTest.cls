@@ -211,7 +211,7 @@ testInlineMethodForSuperSendThatAlsoSendsSuper
 				inMethod: #executeNotifying:
 				forClass: (model classNamed: #'Refactory.Browser.RenameInstanceVariableChange').
 	self shouldFail: refactoring
-		withMessage: 'Refactory.Browser.RenameInstanceVariableChange does not define #executeNotifying:'!
+		withMessage: 'RenameInstanceVariableChange does not define #executeNotifying:'!
 
 testInlineRecursiveCascadedMethod
 	| refactoring |
@@ -250,7 +250,7 @@ testNonExistantSelector
 				inline: (14 to: 17)
 				inMethod: #checkClass1:
 				forClass: RefactoryTestDataApp)
-		withMessage: 'Refactory.Browser.Tests.RefactoryTestDataApp does not define #checkClass1:'!
+		withMessage: 'RefactoryTestDataApp does not define #checkClass1:'!
 
 testOverriden
 	| refactoring overridden |

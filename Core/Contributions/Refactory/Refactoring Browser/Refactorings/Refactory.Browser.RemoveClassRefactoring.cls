@@ -36,7 +36,7 @@ preconditions
 				& (((RBCondition isMetaclass: aClass) errorMacro: 'Cannot remove just the metaclass') not
 						& ((RBCondition hasSubclasses: aClass excluding: classNames) not
 								| ((RBCondition isEmptyClass: aClass) & ((RBCondition withBlock: [aClass superclass notNil])
-												errorMacro: 'Cannot remove top level class<n>when it has subclasses';
+												errorMacro: 'Cannot remove top level class when it has subclasses';
 												yourself)))
 							& (RBCondition withBlock: 
 										[self checkReferencesTo: aClass.

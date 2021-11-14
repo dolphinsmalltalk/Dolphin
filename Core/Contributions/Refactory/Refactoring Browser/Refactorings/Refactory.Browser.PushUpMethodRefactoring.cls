@@ -74,9 +74,9 @@ checkSiblingSuperSendsFrom: aRBClass
 									definer := aRBClass superclass whoDefinesMethod: aSelector.
 									(definer notNil and: [class includesClass: definer])
 										ifTrue: 
-											[self refactoringError: ('Cannot push up <1p> since <2p>>><3s> sends a super message to it.'
+											[self refactoringError: ('Cannot push up <1p> since <2d>>><3s> sends a super message to it.'
 														expandMacrosWith: aSelector
-														with: aRBClass
+														with: aRBClass unqualifiedName
 														with: each selector)]]]]].
 	aRBClass allSubclasses do: [:each | self checkSiblingSuperSendsFrom: each]!
 
@@ -123,9 +123,7 @@ copyDownMethod: aSelector
 	superclassDefiner isNil ifTrue: [^self].
 	oldSource := superclassDefiner sourceCodeFor: aSelector.
 	oldSource isNil
-		ifTrue: 
-			[self
-				refactoringError: ('Source code for <1s> superclass method not available' expandMacrosWith: aSelector)].
+		ifTrue: [self refactoringError: 'Source code for <1s> superclass method not available' << aSelector].
 	oldProtocols := superclassDefiner protocolsFor: aSelector.
 	subclasses := class superclass subclasses reject: [:each | each directlyDefinesMethod: aSelector].
 	subclasses isEmpty ifTrue: [^self].
@@ -133,11 +131,11 @@ copyDownMethod: aSelector
 		anySatisfy: [:each | superclassDefiner directlyDefinesMethod: each])
 			ifTrue: 
 				[self
-					refactoringError: 'Cannot push up <1p>>><2p><n>The method in superclass <3p> must be copied down to its other subclasses, but sends a super message that will be overridden.'
-							<< {class. aSelector. superclassDefiner}].
+					refactoringError: 'The <2p> method in superclass <3d> must be copied down to its other subclasses, but sends a super message that will be overridden.'
+							<< {class. aSelector. superclassDefiner unqualifiedName}].
 	self
-		refactoringWarning: ('Do you want to copy down the superclass method to the classes that don''t define <1p>?'
-				expandMacrosWith: aSelector).
+		refactoringWarning: 'Do you want to copy down the superclass method to the classes that don''t define <1p>?'
+				<< aSelector.
 	refactoring := ExpandReferencedPoolsRefactoring
 				model: self model
 				forMethod: (superclassDefiner parseTreeFor: aSelector)
@@ -190,24 +188,26 @@ pushUpMethods
 removeDuplicateMethods
 	selectors do: [:each | self removeDuplicatesOf: each]!
 
-removeDuplicatesOf: aSelector 
-	| tree |
+removeDuplicatesOf: aSelector
+	| tree duplicatedIn |
 	tree := class superclass parseTreeFor: aSelector.
-	class superclass allSubclasses do: 
-			[:each | 
-			((each directlyDefinesMethod: aSelector) and: 
-					[(tree equalTo: (each parseTreeFor: aSelector) exceptForVariables: #()) 
-						and: [(each superclass whoDefinesMethod: aSelector) == class superclass]]) 
-				ifTrue: 
-					[removeDuplicates 
-						ifFalse: 
-							[removeDuplicates := true.
-							self 
-								refactoringWarning: 'Do you want to remove duplicate subclass methods?'].
-					each removeMethod: aSelector]]!
+	duplicatedIn := class superclass allSubclasses select: 
+					[:each |
+					(each directlyDefinesMethod: aSelector) and: 
+							[(tree equalTo: (each parseTreeFor: aSelector) exceptForVariables: #())
+								and: [(each superclass whoDefinesMethod: aSelector) == class superclass]]].
+	(removeDuplicates or: [duplicatedIn isEmpty])
+		ifFalse: [removeDuplicates := self shouldRemoveDuplicatesOf: aSelector in: duplicatedIn].
+	removeDuplicates ifTrue: [duplicatedIn do: [:each | each removeMethod: aSelector]]!
 
 removePushedUpMethods
 	selectors do: [:each | class removeMethod: each]!
+
+shouldRemoveDuplicatesOf: aSymbol in: aCollectionOfClasses
+	^(self options at: #pushUpRemoveDuplicates)
+		value: self
+		value: aSymbol
+		value: aCollectionOfClasses!
 
 storeOn: aStream 
 	aStream nextPut: $(.
@@ -244,6 +244,7 @@ pushUpMethods!public!transforming! !
 removeDuplicateMethods!public!transforming! !
 removeDuplicatesOf:!public!transforming! !
 removePushedUpMethods!public!transforming! !
+shouldRemoveDuplicatesOf:in:!accessing!public! !
 storeOn:!printing!public! !
 transform!public!transforming! !
 !

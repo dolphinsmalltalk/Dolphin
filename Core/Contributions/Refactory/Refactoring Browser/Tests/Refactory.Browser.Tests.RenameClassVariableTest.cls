@@ -16,14 +16,14 @@ testAlreadyExistingName
 				rename: #RecursiveSelfRule
 				to: self objectClassVariable
 				in: TransformationRuleTestData)
-		withMessage: 'Refactory.Browser.Tests.TransformationRuleTestData or one of its subclasses defines variable ''_EventsRegister'''!
+		withMessage: 'TransformationRuleTestData or one of its subclasses defines variable ''_EventsRegister'''!
 
 testMetaClassFailure
 	self shouldFail: (RenameClassVariableRefactoring
 				rename: #RecursiveSelfRule
 				to: #Foo
 				in: TransformationRuleTestData class)
-		withMessage: 'Refactory.Browser.Tests.TransformationRuleTestData class is a metaclass'!
+		withMessage: 'TransformationRuleTestData class is a metaclass'!
 
 testNonExistantName
 	self shouldFail: (RenameClassVariableRefactoring

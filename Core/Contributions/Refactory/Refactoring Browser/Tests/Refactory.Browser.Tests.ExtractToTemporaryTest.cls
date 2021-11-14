@@ -81,7 +81,7 @@ testNonExistantSelector
 				to: 'asdf'
 				from: #checkClass1:
 				in: RefactoryTestDataApp)
-		withMessage: 'Refactory.Browser.Tests.RefactoryTestDataApp does not define #checkClass1:'! !
+		withMessage: 'RefactoryTestDataApp does not define #checkClass1:'! !
 !Refactory.Browser.Tests.ExtractToTemporaryTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testBadName!failure tests!public! !

@@ -48,8 +48,7 @@ myConditions
 		into: 
 			[:cond :each |
 			cond & (RBCondition withBlock: [(self hasReferencesToTemporaryIn: each) not]
-						errorString: 'Argument still referenced.<n><1p> is still referenced in <2p>>><3p>'
-								<< {argument. each. oldSelector})]!
+						errorString: '<1p> is still referenced in <2p>>><3p>' << {argument. each. oldSelector})]!
 
 removeParameter: aString in: aClass selector: aSelector 
 	#rbFix. "Ensure the displayString works when the model name is initialized"
