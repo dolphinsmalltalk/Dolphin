@@ -20,13 +20,13 @@ assert: aBoolean
 	aBoolean ifFalse: [self signalFailure: 'Assertion failed']!
 
 assert: aBoolean description: aStringOrValuable
-	aBoolean ifFalse: [self fail: (self getDescription: aStringOrValuable)]!
+	aBoolean ifFalse: [self fail: aStringOrValuable value]!
 
 assert: aBoolean description: aStringOrValuable resumable: resumableBoolean
 	aBoolean
 		ifFalse: 
 			[| exception description |
-			description := self getDescription: aStringOrValuable.
+			description := aStringOrValuable value.
 			self logFailure: description.
 			exception := resumableBoolean ifTrue: [TestResult resumableFailure] ifFalse: [TestResult failure].
 			exception signal: description]!
@@ -89,9 +89,6 @@ failureLog
 	
 	^Transcript
 !
-
-getDescription: aStringOrValuable
-	^aStringOrValuable isString ifTrue: [aStringOrValuable] ifFalse: [aStringOrValuable value]!
 
 isLogging
 	^false!
@@ -219,7 +216,6 @@ deny:description:resumable:!asserting!public! !
 executeShould:inScopeOf:!private!running! !
 fail:!asserting!public! !
 failureLog!Accessing!public! !
-getDescription:!helpers!private! !
 isLogging!accessing!public! !
 logFailure:!asserting!public! !
 openDebuggerOnFailingTestMethod!public!running! !

@@ -96,8 +96,8 @@ XProgramming.SUnit.TestRunLogger subclass: #'XProgramming.SUnit.TestRunConsoleLo
 assert: actualObject equals: expectedObject description: aStringOrValue
 	expectedObject = actualObject
 		ifFalse: 
-			[self fail: (self getDescription: aStringOrValue) , ': '
-						, (self comparingStringBetween: expectedObject and: actualObject)]!
+			[self
+				fail: aStringOrValue value , ': ' , (self comparingStringBetween: expectedObject and: actualObject)]!
 
 assert: actualObject identicalTo: expectedObject
 	expectedObject == actualObject
