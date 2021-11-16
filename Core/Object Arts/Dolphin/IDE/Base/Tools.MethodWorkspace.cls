@@ -6,7 +6,7 @@ Tools.SmalltalkWorkspace subclass: #'Tools.MethodWorkspace'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'AutoParseMask' -> 16r100000
+		'NoAutoParseMask' -> 16r100000
 	}!
 Tools.MethodWorkspace guid: (Core.GUID fromString: '{d7285d4c-35b2-4b52-a673-2e17fde39fec}')!
 Tools.MethodWorkspace comment: 'MethodWorkspace is a specialised <SmalltalkWorkspace> for displaying method source that expects to be contained in a <MethodBrowser>.
@@ -206,10 +206,10 @@ initialize
 	self isAutoParseEnabled: self class isAutoParseEnabled!
 
 isAutoParseEnabled
-	^flags allMask: AutoParseMask!
+	^flags allMask: NoAutoParseMask!
 
-isAutoParseEnabled: aBoolean 
-	flags := flags mask: AutoParseMask set: aBoolean!
+isAutoParseEnabled: aBoolean
+	flags := flags mask: NoAutoParseMask set: aBoolean!
 
 isEditable
 	^super isEditable and: [parentPresenter hasEditableMethodSelected]!
@@ -575,10 +575,10 @@ invalidateLocalOptions
 isAutoParseEnabled
 	"Answer whether the method source will be automatically parsed after the user has paused for a short while."
 
-	^self optionFlags allMask: AutoParseMask!
+	^self optionFlags noMask: NoAutoParseMask!
 
 isAutoParseEnabled: aBoolean
-	(self setOptionFlag: AutoParseMask value: aBoolean)
+	(self setOptionFlag: NoAutoParseMask value: aBoolean not)
 		ifTrue: [self primAllSubinstances do: [:each | each isAutoParseEnabled: aBoolean]]!
 
 loadOptions
