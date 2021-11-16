@@ -41,6 +41,9 @@ fullyQualifiedReference
 
 	^nonMetaclass fullyQualifiedReference meta!
 
+isDefined
+	^nonMetaclass isDefined!
+
 isMeta
 	^true!
 
@@ -64,12 +67,17 @@ nonMetaclass
 	^nonMetaclass!
 
 nonMetaclass: aRBClass
-	nonMetaclass := aRBClass.
-	nonMetaclass metaclass: self!
+	nonMetaclass := aRBClass!
 
 printOn: aStream
 	super printOn: aStream.
 	aStream nextPutAll: ' class'!
+
+realClass
+	^nonMetaclass realClass ifNotNil: [:realClass | realClass class]!
+
+realClass: aMetaclass
+	superclass isNil ifTrue: [superclass := LookupSuperclass]!
 
 realName: aSymbol 
 	self realClass: aSymbol asQualifiedReference value class!
@@ -91,6 +99,7 @@ directlyImportsNamespace:!public!testing! !
 environment!accessing!public! !
 fullName!converting!public! !
 fullyQualifiedReference!converting!public! !
+isDefined!public!testing! !
 isMeta!public!testing! !
 localBindingFor:!binding!public! !
 metaclass!accessing!public! !
@@ -99,24 +108,10 @@ name!accessing!public! !
 nonMetaclass!accessing!public! !
 nonMetaclass:!accessing!initializing!private! !
 printOn:!printing!public! !
+realClass!accessing!public! !
+realClass:!accessing!public! !
 realName:!initialize/release!public! !
 storeOn:!printing!public! !
 unqualifiedName!accessing!public! !
-!
-
-!Refactory.Browser.RBMetaclass class methodsFor!
-
-existing: aBehavior
-	^self basicNew
-		realClass: aBehavior instanceClass class;
-		yourself!
-
-nonMetaclass: aRBClass
-	^self basicNew
-		nonMetaclass: aRBClass;
-		yourself! !
-!Refactory.Browser.RBMetaclass class categoriesForMethods!
-existing:!instance creation!public! !
-nonMetaclass:!instance creation!public! !
 !
 

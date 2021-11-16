@@ -97,6 +97,8 @@ testRealClass
 	| myClass subclasses |
 	self assert: objectClass realClass identicalTo: Object.
 	self assert: objectClass metaclass realClass identicalTo: Object class.
+	self assert: newClass realClass isNil.
+	self assert: newClass metaclass realClass isNil.
 	self assertIsNil: objectClass superclass.
 	self assert: objectClass metaclass superclass realClass equals: Class.
 	subclasses := objectClass subclasses collect: [:each | each realClass].
@@ -108,6 +110,16 @@ testRealClass
 	myClass := model classFor: self class.
 	self assert: myClass realClass identicalTo: self class.
 	self assert: myClass metaclass realClass identicalTo: self class class!
+
+testSubclasses
+	| class |
+	self assert: (objectClass subclasses collect: [:each | each metaclass])
+		equals: objectClass metaclass subclasses.
+	class := model classFor: Class.
+	class subclasses do: [:each | self assert: each superclass identicalTo: class].
+	self assert: class metaclass subclasses isEmpty.
+	self assert: newClass subclasses isEmpty.
+	self assert: newClass metaclass subclasses isEmpty!
 
 testSuperclass
 	self assert: newClass superclass equals: objectClass.
@@ -122,13 +134,12 @@ testUnqualifiedName
 
 testWithAllSubclasses
 	| class all |
-	model := RBNamespace new.
-	class := model classFor: Object.
+	class := model classFor: Class.
 	all := class withAllSubclasses asSet.
-	all removeAll: (Object withAllSubclasses collect: [:each | model classFor: each]).
+	all remove: class.
 	"All classes are subclasses of Class, so that includes also classes under other root classes"
 	Smalltalk allClasses do: [:each | all remove: (model classFor: each) metaclass].
-	self assert: all isEmpty! !
+	self assert: all asArray equals: {newClass metaclass}! !
 !Refactory.Browser.Tests.RBClassTest categoriesForMethods!
 setUp!public!set up! !
 testClassSubclasses!public!unit tests! !
@@ -142,6 +153,7 @@ testHierarchy!public!unit tests! !
 testModel!public!unit tests! !
 testName!public!unit tests! !
 testRealClass!public!unit tests! !
+testSubclasses!public!unit tests! !
 testSuperclass!public! !
 testUnqualifiedName!public!unit tests! !
 testWithAllSubclasses!public!unit tests! !

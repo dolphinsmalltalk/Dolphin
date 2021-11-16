@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'model name metaclass unqualifiedName classVariableNames imports category classConstants comment environment'
+	instanceVariableNames: 'model name metaclass realClass unqualifiedName classVariableNames imports category classConstants comment environment'
 	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -132,6 +132,9 @@ includesNamespace: aClass
 
 	^self == aClass or: [(self inheritsFrom: aClass) or: [self environment includesEnvironment: aClass]]!
 
+isDefined
+	^realClass notNil!
+
 isMeta
 	^false!
 
@@ -152,7 +155,8 @@ metaclass
 	^metaclass!
 
 metaclass: aRBMetaclass
-	metaclass := aRBMetaclass!
+	metaclass := aRBMetaclass.
+	aRBMetaclass nonMetaclass: self!
 
 model
 	^model!
@@ -220,6 +224,13 @@ printDefinitionOn: puttableStream
 				separatedBy: [puttableStream nextPut: $.].
 			puttableStream crtab].
 	puttableStream nextPut: $}!
+
+realClass
+	^realClass!
+
+realClass: aClass 
+	realClass := aClass.
+	superclass isNil ifTrue: [superclass := LookupSuperclass]!
 
 realName: aSymbol 
 	self realClass: aSymbol asQualifiedReference value!
@@ -346,6 +357,7 @@ imports!accessing!public! !
 imports:!accessing!public! !
 includesEnvironment:!namespaces!private!testing! !
 includesNamespace:!private!testing! !
+isDefined!public!testing! !
 isMeta!public!testing! !
 kindOfSubclass!class hierarchy-testing!private! !
 localBindingFor:!bindings!public! !
@@ -358,6 +370,8 @@ name:!accessing!public! !
 newBindingContextForIdentifier:!bindings!private! !
 nonMetaclass!accessing!public! !
 printDefinitionOn:!accessing!public! !
+realClass!accessing!public! !
+realClass:!accessing!public! !
 realName:!initialize/release!public! !
 removeClassVariable:!public!variable accessing! !
 renameClassVariable:to:around:!public!variable accessing! !
@@ -373,13 +387,6 @@ unqualifiedName!public! !
 
 !Refactory.Browser.RBClass class methodsFor!
 
-existing: aBehavior
-	| class |
-	class := aBehavior instanceClass.
-	^(self named: class fullName)
-		realClass: class;
-		yourself!
-
 existingNamed: aSymbol 
 	^(self named: aSymbol)
 		realName: aSymbol;
@@ -388,14 +395,25 @@ existingNamed: aSymbol
 initialize
 	LookupComment := Object new!
 
+model: aRBNamespace existing: aBehavior
+	| class |
+	class := aBehavior instanceClass.
+	^(self named: class fullName)
+		model: aRBNamespace;
+		realClass: class;
+		metaclass: (RBMetaclass basicNew
+					realClass: class class;
+					yourself);
+		yourself!
+
 named: aSymbol
 	^self basicNew
 		setName: aSymbol;
 		yourself! !
 !Refactory.Browser.RBClass class categoriesForMethods!
-existing:!instance creation!public! !
 existingNamed:!instance creation!public! !
 initialize!class initialization!public! !
+model:existing:!instance creation!public! !
 named:!instance creation!public! !
 !
 

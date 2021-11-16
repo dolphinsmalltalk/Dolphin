@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Refactory.Browser.RBAbstractClass'
-	instanceVariableNames: 'newMethods instanceVariableNames subclasses removedMethods realClass superclass'
+	instanceVariableNames: 'newMethods instanceVariableNames subclasses removedMethods superclass'
 	classVariableNames: 'LookupSuperclass'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -379,7 +379,7 @@ isBytes
 	^self isPointers not!
 
 isDefined
-	^self realClass notNil!
+	^self subclassResponsibility!
 
 isMeta
 	self subclassResponsibility!
@@ -470,11 +470,7 @@ protocolsFor: aSelector
 		ifFalse: [change protocols]!
 
 realClass
-	^realClass!
-
-realClass: aClass 
-	realClass := aClass.
-	superclass isNil ifTrue: [superclass := LookupSuperclass]!
+	^self subclassResponsibility!
 
 removedMethods
 	^removedMethods isNil ifTrue: [removedMethods := Set new] ifFalse: [removedMethods]!
@@ -730,7 +726,6 @@ printOn:!printing!public! !
 privateInstanceVariableNames!accessing!private! !
 protocolsFor:!accessing!public! !
 realClass!accessing!public! !
-realClass:!accessing!public! !
 removedMethods!accessing!public! !
 removeInstanceVariable:!public!variable accessing! !
 removeMethod:!method accessing!public! !
@@ -760,9 +755,6 @@ withAllSuperclassesDo:!accessing!public! !
 
 !Refactory.Browser.RBAbstractClass class methodsFor!
 
-existing: aBehavior
-	^self subclassResponsibility!
-
 initialize
 	LookupSuperclass := Object new!
 
@@ -771,7 +763,6 @@ new
 
 	^self shouldNotImplement! !
 !Refactory.Browser.RBAbstractClass class categoriesForMethods!
-existing:!instance creation!public! !
 initialize!class initialization!public! !
 new!instance creation!public! !
 !

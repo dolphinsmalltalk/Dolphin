@@ -137,9 +137,7 @@ compile: aString in: aRBClass environment: aRBNamespaceClass categories: aCollec
 createNewClassFor: aBehavior
 	| nonMeta instanceClass |
 	instanceClass := aBehavior instanceClass.
-	nonMeta := instanceClass rbClass existing: instanceClass.
-	nonMeta model: self.
-	(RBMetaclass existing: instanceClass) nonMetaclass: nonMeta.
+	nonMeta := instanceClass rbClass model: self existing: instanceClass.
 	^changedClasses at: instanceClass fullName put: nonMeta!
 
 defineClass: aString
@@ -151,8 +149,9 @@ defineClass: aString
 		ifTrue: 
 			[removedClasses remove: newClassName ifAbsent: nil.
 			newClass := RBClass named: newClassName.
-			RBMetaclass nonMetaclass: newClass.
-			newClass model: self.
+			newClass
+				model: self;
+				metaclass: RBMetaclass basicNew.
 			newClasses at: newClassName put: newClass.
 			newClass environment addClass: newClass].
 	newClass superclass: (self classNamed: change superclassName).

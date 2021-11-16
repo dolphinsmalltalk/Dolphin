@@ -154,7 +154,7 @@ allSubBehaviorsPreOrderDo: aMonadicValuable
 subBehaviors
 	"Answer a <collection> containing the receiver's immediate subclasses."
 
-	^self == Class ifTrue: [Class allRoots collect: [:each | each class]] ifFalse: [self subclasses]!
+	^self == Class ifTrue: [Smalltalk allRoots collect: [:each | each class]] ifFalse: [self subclasses]!
 
 withAllSubBehaviorsDo: aMonadicValuable
 	"Evaluate the monadic valuable argument for the receiver and each 
