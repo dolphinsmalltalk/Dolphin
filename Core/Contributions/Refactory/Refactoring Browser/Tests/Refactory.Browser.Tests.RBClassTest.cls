@@ -24,6 +24,11 @@ setUp
 	category: ''Refactory-Testing'''.
 	newClass := model classNamed: #SomeClassName!
 
+testClassSubclasses
+	| class |
+	class := model classFor: Class.
+	self assert: class subclasses asArray equals: {objectClass metaclass. model classFor: ProtoObject class}!
+
 testDefinesClassVariable
 	self deny: (objectClass definesClassVariable: #ClassVariable1).
 	self assert: (objectClass definesClassVariable: self objectClassVariable).
@@ -76,9 +81,33 @@ testHierarchy
 	self assert: (objectClass withAllSubclasses includes: meta).
 	self assert: (meta withAllSuperclasses includes: objectClass)!
 
+testModel
+	| myClass |
+	self assert: objectClass model identicalTo: model.
+	self assert: objectClass metaclass model identicalTo: model.
+	myClass := model classFor: self class.
+	self assert: myClass model identicalTo: model.
+	self assert: myClass metaclass model identicalTo: model!
+
 testName
 	self assert: objectClass name equals: 'Core.Object'.
 	self assert: (model classFor: self class) name equals: self class fullName!
+
+testRealClass
+	| myClass subclasses |
+	self assert: objectClass realClass identicalTo: Object.
+	self assert: objectClass metaclass realClass identicalTo: Object class.
+	self assertIsNil: objectClass superclass.
+	self assert: objectClass metaclass superclass realClass equals: Class.
+	subclasses := objectClass subclasses collect: [:each | each realClass].
+	self assert: (subclasses difference: Object subclasses) asArray equals: #(nil).
+	self assert: (Object subclasses difference: subclasses) asArray equals: #().
+	subclasses := objectClass metaclass subclasses collect: [:each | each realClass].
+	self assert: (subclasses difference: Object class subclasses) asArray equals: #(nil).
+	self assert: (Object class subclasses difference: subclasses) asArray equals: #().
+	myClass := model classFor: self class.
+	self assert: myClass realClass identicalTo: self class.
+	self assert: myClass metaclass realClass identicalTo: self class class!
 
 testSuperclass
 	self assert: newClass superclass equals: objectClass.
@@ -89,9 +118,20 @@ testSuperclass
 testUnqualifiedName
 	self assert: objectClass unqualifiedName equals: #Object.
 	self assert: objectClass metaclass unqualifiedName equals: 'Object class'.
-	self assert: (model classFor: self class) unqualifiedName equals: self class unqualifiedName! !
+	self assert: (model classFor: self class) unqualifiedName equals: self class unqualifiedName!
+
+testWithAllSubclasses
+	| class all |
+	model := RBNamespace new.
+	class := model classFor: Object.
+	all := class withAllSubclasses asSet.
+	all removeAll: (Object withAllSubclasses collect: [:each | model classFor: each]).
+	"All classes are subclasses of Class, so that includes also classes under other root classes"
+	Smalltalk allClasses do: [:each | all remove: (model classFor: each) metaclass].
+	self assert: all isEmpty! !
 !Refactory.Browser.Tests.RBClassTest categoriesForMethods!
 setUp!public!set up! !
+testClassSubclasses!public!unit tests! !
 testDefinesClassVariable!public!unit tests! !
 testDefinesInstanceVariable!public!unit tests! !
 testDefinesMethod!public!unit tests! !
@@ -99,8 +139,11 @@ testDefinesPoolDictionary!public!unit tests! !
 testEnvironment!public!unit tests! !
 testFullName!public!unit tests! !
 testHierarchy!public!unit tests! !
+testModel!public!unit tests! !
 testName!public!unit tests! !
+testRealClass!public!unit tests! !
 testSuperclass!public! !
 testUnqualifiedName!public!unit tests! !
+testWithAllSubclasses!public!unit tests! !
 !
 

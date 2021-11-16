@@ -139,9 +139,7 @@ createNewClassFor: aBehavior
 	instanceClass := aBehavior instanceClass.
 	nonMeta := instanceClass rbClass existing: instanceClass.
 	nonMeta model: self.
-	(RBMetaclass existing: instanceClass)
-		model: self;
-		nonMetaclass: nonMeta.
+	(RBMetaclass existing: instanceClass) nonMetaclass: nonMeta.
 	^changedClasses at: instanceClass fullName put: nonMeta!
 
 defineClass: aString
@@ -151,12 +149,10 @@ defineClass: aString
 	newClass := self classNamed: newClassName.
 	newClass isNil
 		ifTrue: 
-			[| newMetaclass |
-			removedClasses remove: newClassName ifAbsent: nil.
+			[removedClasses remove: newClassName ifAbsent: nil.
 			newClass := RBClass named: newClassName.
-			newMetaclass := RBMetaclass nonMetaclass: newClass.
+			RBMetaclass nonMetaclass: newClass.
 			newClass model: self.
-			newMetaclass model: self.
 			newClasses at: newClassName put: newClass.
 			newClass environment addClass: newClass].
 	newClass superclass: (self classNamed: change superclassName).

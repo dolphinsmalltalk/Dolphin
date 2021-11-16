@@ -13,22 +13,22 @@ Refactory.Browser.RBMetaclass comment: 'RBMetaclass represents a Metaclass.
 !Refactory.Browser.RBMetaclass methodsFor!
 
 allClassVariableNames
-	^self nonMetaclass allClassVariableNames!
+	^nonMetaclass allClassVariableNames!
 
 allImports
-	^self nonMetaclass allImports!
+	^nonMetaclass allImports!
 
 classBindingNames
-	^self nonMetaclass classBindingNames!
+	^nonMetaclass classBindingNames!
 
-directlyDefinesClassVariable: aString 
-	^self nonMetaclass directlyDefinesClassVariable: aString!
+directlyDefinesClassVariable: aString
+	^nonMetaclass directlyDefinesClassVariable: aString!
 
 directlyImportsNamespace: aString
-	^self nonMetaclass directlyImportsNamespace: aString!
+	^nonMetaclass directlyImportsNamespace: aString!
 
 environment
-	^self nonMetaclass environment!
+	^nonMetaclass environment!
 
 fullName
 	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root.
@@ -39,7 +39,7 @@ fullName
 fullyQualifiedReference
 	"Answer a <BindingReference> to this class."
 
-	^self nonMetaclass fullyQualifiedReference meta!
+	^nonMetaclass fullyQualifiedReference meta!
 
 isMeta
 	^true!
@@ -52,10 +52,13 @@ localBindingFor: aString
 metaclass
 	^self!
 
+model
+	^nonMetaclass model!
+
 name
 	"Answer the name of the non-metaclass. Note that in Dolphin 8 this is always a fully-qualified name."
 
-	^self instanceClass name!
+	^nonMetaclass name!
 
 nonMetaclass
 	^nonMetaclass!
@@ -78,7 +81,7 @@ storeOn: aStream
 unqualifiedName
 	"Answer the unqualified name of the non-metaclass."
 
-	^self nonMetaclass unqualifiedName, ' class'! !
+	^nonMetaclass unqualifiedName , ' class'! !
 !Refactory.Browser.RBMetaclass categoriesForMethods!
 allClassVariableNames!accessing!public! !
 allImports!accessing!public! !
@@ -91,6 +94,7 @@ fullyQualifiedReference!converting!public! !
 isMeta!public!testing! !
 localBindingFor:!binding!public! !
 metaclass!accessing!public! !
+model!accessing!public! !
 name!accessing!public! !
 nonMetaclass!accessing!public! !
 nonMetaclass:!accessing!initializing!private! !

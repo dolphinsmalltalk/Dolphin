@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Refactory.Browser.RBAbstractClass'
-	instanceVariableNames: 'newMethods instanceVariableNames model subclasses removedMethods realClass superclass'
+	instanceVariableNames: 'newMethods instanceVariableNames subclasses removedMethods realClass superclass'
 	classVariableNames: 'LookupSuperclass'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -41,9 +41,9 @@ Class Variables:
 	^self class = aRBClass class 
 		and: [self name = aRBClass name and: [self model = aRBClass model]]!
 
-addInstanceVariable: aString 
+addInstanceVariable: aString
 	self privateInstanceVariableNames add: aString.
-	model addInstanceVariable: aString to: self!
+	self model addInstanceVariable: aString to: self!
 
 addMethod: aRBMethod
 	(newMethods ifNil: [newMethods := IdentityDictionary new]) at: aRBMethod selector put: aRBMethod.
@@ -139,7 +139,7 @@ compile: aString
 
 compile: aString categories: aCollection
 	| change method |
-	change := model
+	change := self model
 				compile: aString
 				in: self
 				categories: aCollection.
@@ -156,7 +156,7 @@ compile: aString classified: aSymbol
 
 compile: aString environment: aNamespace categories: aSymbolCollection package: aPackage
 	| change method |
-	change := model
+	change := self model
 				compile: aString
 				in: self
 				environment: aNamespace
@@ -370,7 +370,7 @@ instanceVariableNames: aCollectionOfStrings
 isAbstract
 	self realClass ifNotNil: [:real | real isNonInstantiable ifTrue: [^true]].
 	(self whichMethodsReferToSymbol: #subclassResponsibility) notEmpty ifTrue: [^true].
-	model allReferencesToClass: self do: [:each | ^false].
+	self model allReferencesToClass: self do: [:each | ^false].
 	^true!
 
 isBytes
@@ -398,7 +398,7 @@ localBindingFor: aString
 	^self subclassResponsibility!
 
 metaclass
-	^model metaclassNamed: self name!
+	^self subclassResponsibility!
 
 methodFor: aSelector
 	^self newMethods at: aSelector
@@ -413,10 +413,7 @@ methodFor: aSelector
 						andSelector: aSelector]]!
 
 model
-	^model!
-
-model: aRBNamespace 
-	model := aRBNamespace!
+	^self subclassResponsibility!
 
 name
 	"Answer the name of the non-metaclass. Note that in Dolphin 8 this is always a fully-qualified name."
@@ -437,7 +434,7 @@ newMethods
 				yourself)]!
 
 nonMetaclass
-	^model classNamed: self fullName!
+	^self subclassResponsibility!
 
 parseTreeFor: aSelector 
 	| class |
@@ -463,8 +460,8 @@ protocolsFor: aSelector
 	| change |
 	#rbFix.	"Added to support Dolphin's multiple method categories"
 	change := self isMeta
-				ifTrue: [model changes changeForMetaclass: self name selector: aSelector]
-				ifFalse: [model changes changeForClass: self name selector: aSelector].
+				ifTrue: [self model changes changeForMetaclass: self name selector: aSelector]
+				ifFalse: [self model changes changeForClass: self name selector: aSelector].
 	^change isNil
 		ifTrue: 
 			[self isDefined
@@ -482,23 +479,22 @@ realClass: aClass
 removedMethods
 	^removedMethods isNil ifTrue: [removedMethods := Set new] ifFalse: [removedMethods]!
 
-removeInstanceVariable: aString 
+removeInstanceVariable: aString
 	self privateInstanceVariableNames remove: aString.
-	model removeInstanceVariable: aString from: self!
+	self model removeInstanceVariable: aString from: self!
 
 removeMethod: aSelector
 	self newMethods removeKey: aSelector ifAbsent: nil.
-	model removeMethod: aSelector from: self.
+	self model removeMethod: aSelector from: self.
 	self removedMethods add: aSelector!
 
 removeSubclass: aRBClass
 	self subclasses remove: aRBClass ifAbsent: nil!
 
-renameInstanceVariable: oldName to: newName around: aBlock 
-	self privateInstanceVariableNames 
-		at: (self privateInstanceVariableNames indexOf: oldName asString)
+renameInstanceVariable: oldName to: newName around: aBlock
+	self privateInstanceVariableNames at: (self privateInstanceVariableNames indexOf: oldName asString)
 		put: newName asString.
-	model 
+	self model
 		renameInstanceVariable: oldName
 		to: newName
 		in: self
@@ -527,7 +523,7 @@ storeOn: aStream
 	aStream nextPutAll: self name!
 
 subclasses
-	#rbFix.	"Dolphin doesn't include Object class as a subclass of class, so we implement #subBehaviors which does"
+	#rbFix.	"Dolphin doesn't include Object class as a subclass of Class, so we implement #subBehaviors which does"
 	subclasses isNil
 		ifTrue: 
 			[#rbFix.	"If the model's environment doesn't include all the subclasses, then the original code ends up with nils in the collection"
@@ -535,7 +531,7 @@ subclasses
 			self isDefined
 				ifTrue: 
 					[self realClass subBehaviors
-						do: [:each | (model classFor: each) ifNotNil: [:class | subclasses addLast: class]]]].
+						do: [:each | (self model classFor: each) ifNotNil: [:class | subclasses addLast: class]]]].
 	^subclasses!
 
 subclassRedefines: aSelector 
@@ -546,8 +542,8 @@ subclassRedefines: aSelector
 	^false!
 
 superclass
-	^superclass == LookupSuperclass 
-		ifTrue: [model classFor: self realClass superclass]
+	^superclass == LookupSuperclass
+		ifTrue: [self model classFor: self realClass superclass]
 		ifFalse: [superclass]!
 
 superclass: aRBClass 
@@ -556,7 +552,7 @@ superclass: aRBClass
 	superclass notNil ifTrue: [superclass addSubclass: self].!
 
 typeOfClassVariable: aSymbol
-	^model classNamed: #'Core.Object'!
+	^self model classNamed: #'Core.Object'!
 
 unqualifiedName
 	"Answer the unqualified name of the non-metaclass."
@@ -597,7 +593,7 @@ whichSelectorsReferToClassVariable: aString
 		ifTrue: 
 			[| binding definingClass |
 			definingClass := self nonMetaclass realClass whichClassDefinesClassVar: aString asString.
-			definingClass notNil ifTrue: [binding := (model classFor: definingClass) bindingFor: aString].
+			definingClass notNil ifTrue: [binding := (self model classFor: definingClass) bindingFor: aString].
 			binding isNil ifTrue: [^selectors].
 			selectors
 				addAll: ((self realClass whichSelectorsReferTo: binding) reject: [:each | self hasRemoved: each])].
@@ -724,7 +720,6 @@ localBindingFor:!binding!public! !
 metaclass!accessing!public! !
 methodFor:!method accessing!public! !
 model!accessing!public! !
-model:!initialize/release!public! !
 name!accessing!public! !
 nearestRealClass!accessing!private! !
 newMethods!accessing!public! !

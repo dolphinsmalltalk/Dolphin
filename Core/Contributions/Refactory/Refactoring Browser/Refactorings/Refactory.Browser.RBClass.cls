@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'name metaclass unqualifiedName classVariableNames imports category classConstants comment environment'
+	instanceVariableNames: 'model name metaclass unqualifiedName classVariableNames imports category classConstants comment environment'
 	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -24,7 +24,7 @@ Instance Variables:
 	cmp := self unqualifiedName <==> aRBClass unqualifiedName.
 	^cmp == 0 ifTrue: [self fullName <= aRBClass fullName] ifFalse: [cmp < 0]!
 
-addClassVariable: aString 
+addClassVariable: aString
 	self classVariableNames add: aString.
 	model addClassVariable: aString to: self!
 
@@ -45,7 +45,7 @@ allImports
 	^self superclass ifNil: [self imports] ifNotNil: [:sprClass | sprClass allImports , self imports]!
 
 category
-	^category isNil 
+	^category isNil
 		ifTrue: [model environment whichCategoryIncludes: self name]
 		ifFalse: [category]!
 
@@ -153,6 +153,12 @@ metaclass
 
 metaclass: aRBMetaclass
 	metaclass := aRBMetaclass!
+
+model
+	^model!
+
+model: aRBNamespace 
+	model := aRBNamespace!
 
 name
 	"Answer the name of the non-metaclass. Note that in Dolphin 8 this is always a fully-qualified name."
@@ -275,7 +281,10 @@ resolveLocallyImportedBinding: aBindingContext
 			| each |
 			each := imports at: i.
 			(aBindingContext visitImport: each from: self)
-				ifNotNil: [:namespace | ((model classFor: namespace) resolvePublicBinding: aBindingContext) ifNotNil: [:binding | ^binding]]].
+				ifNotNil: 
+					[:namespace |
+					((model classFor: namespace) resolvePublicBinding: aBindingContext)
+						ifNotNil: [:binding | ^binding]]].
 	^nil!
 
 resolvePathString: aString
@@ -342,6 +351,8 @@ kindOfSubclass!class hierarchy-testing!private! !
 localBindingFor:!bindings!public! !
 metaclass!accessing!public! !
 metaclass:!initializing!private! !
+model!accessing!public! !
+model:!initialize/release!public! !
 name!accessing!public! !
 name:!accessing!public! !
 newBindingContextForIdentifier:!bindings!private! !
