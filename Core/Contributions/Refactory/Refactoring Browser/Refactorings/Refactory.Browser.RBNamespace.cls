@@ -138,12 +138,10 @@ createNewClassFor: aBehavior
 	| nonMeta instanceClass |
 	instanceClass := aBehavior instanceClass.
 	nonMeta := instanceClass rbClass existing: instanceClass.
-	nonMeta
+	nonMeta model: self.
+	(RBMetaclass existing: instanceClass)
 		model: self;
-		metaclass: ((RBMetaclass existing: instanceClass)
-					model: self;
-					nonMetaclass: nonMeta;
-					yourself).
+		nonMetaclass: nonMeta.
 	^changedClasses at: instanceClass fullName put: nonMeta!
 
 defineClass: aString
@@ -156,13 +154,9 @@ defineClass: aString
 			[| newMetaclass |
 			removedClasses remove: newClassName ifAbsent: nil.
 			newClass := RBClass named: newClassName.
-			newMetaclass := RBMetaclass named: newClassName.
-			newClass
-				model: self;
-				metaclass: newMetaclass.
-			newMetaclass
-				model: self;
-				nonMetaclass: newClass.
+			newMetaclass := RBMetaclass nonMetaclass: newClass.
+			newClass model: self.
+			newMetaclass model: self.
 			newClasses at: newClassName put: newClass.
 			newClass environment addClass: newClass].
 	newClass superclass: (self classNamed: change superclassName).
@@ -267,17 +261,15 @@ removeMethod: aSelector from: aRBClass
 	^changes removeMethod: aSelector from: aRBClass!
 
 renameClass: aRBClass to: aSymbol around: aBlock
-	| change value dict oldName meta refs |
+	| change value dict oldName refs |
 	oldName := aRBClass fullName.
 	change := RenameClassChange rename: oldName to: aSymbol.
 	"The ordering is tricky here. We want the namespaces to reflect the change so that any attempt to look up the old class name in its old environment will fail, but we need method searches to find references to the old class name. Therefore we have to capture the references in advance of making an model changes."
 	refs := OrderedCollection new.
 	self allReferencesToClass: aRBClass do: [:each | refs add: each].
-	meta := aRBClass metaclass.
 	aRBClass environment removeClass: aRBClass.
 	aRBClass name: aSymbol.
 	aRBClass environment addClass: aRBClass.
-	meta name: aSymbol.
 	self performChange: change around: [aBlock value: refs].
 	self flushCaches.
 	dict := (newClasses includesKey: oldName) ifTrue: [newClasses] ifFalse: [changedClasses].

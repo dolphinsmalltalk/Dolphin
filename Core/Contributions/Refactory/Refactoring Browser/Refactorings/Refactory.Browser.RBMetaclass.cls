@@ -30,6 +30,12 @@ directlyImportsNamespace: aString
 environment
 	^self nonMetaclass environment!
 
+fullName
+	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root.
+	Note that these names will also be bindable within the legacy Smalltalk namespace, because it is itself an immediate child of root, and so any of its siblings is bindable using that sibling's unqualified name."
+
+	^self instanceClass fullName, ' class'!
+
 fullyQualifiedReference
 	"Answer a <BindingReference> to this class."
 
@@ -46,11 +52,17 @@ localBindingFor: aString
 metaclass
 	^self!
 
+name
+	"Answer the name of the non-metaclass. Note that in Dolphin 8 this is always a fully-qualified name."
+
+	^self instanceClass name!
+
 nonMetaclass
 	^nonMetaclass!
 
 nonMetaclass: aRBClass
-	nonMetaclass := aRBClass!
+	nonMetaclass := aRBClass.
+	nonMetaclass metaclass: self!
 
 printOn: aStream
 	super printOn: aStream.
@@ -70,14 +82,16 @@ unqualifiedName
 !Refactory.Browser.RBMetaclass categoriesForMethods!
 allClassVariableNames!accessing!public! !
 allImports!accessing!public! !
-classBindingNames!public! !
+classBindingNames!accessing!public! !
 directlyDefinesClassVariable:!public!testing! !
 directlyImportsNamespace:!public!testing! !
 environment!accessing!public! !
+fullName!converting!public! !
 fullyQualifiedReference!converting!public! !
 isMeta!public!testing! !
 localBindingFor:!binding!public! !
 metaclass!accessing!public! !
+name!accessing!public! !
 nonMetaclass!accessing!public! !
 nonMetaclass:!accessing!initializing!private! !
 printOn:!printing!public! !
@@ -89,13 +103,16 @@ unqualifiedName!accessing!public! !
 !Refactory.Browser.RBMetaclass class methodsFor!
 
 existing: aBehavior
-	| meta class |
-	class := aBehavior instanceClass.
-	meta := class class.
-	^(self named: class fullName)
-		realClass: meta;
+	^self basicNew
+		realClass: aBehavior instanceClass class;
+		yourself!
+
+nonMetaclass: aRBClass
+	^self basicNew
+		nonMetaclass: aRBClass;
 		yourself! !
 !Refactory.Browser.RBMetaclass class categoriesForMethods!
 existing:!instance creation!public! !
+nonMetaclass:!instance creation!public! !
 !
 

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Refactory.Browser.RBAbstractClass'
-	instanceVariableNames: 'name newMethods instanceVariableNames model superclass subclasses removedMethods realClass'
+	instanceVariableNames: 'newMethods instanceVariableNames model subclasses removedMethods realClass superclass'
 	classVariableNames: 'LookupSuperclass'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -288,7 +288,7 @@ fullBindingFor: aString
 	^self nonMetaclass resolvePathString: aString!
 
 fullName
-	^name!
+	^self name!
 
 fullyQualifiedReference
 	^self subclassResponsibility!
@@ -419,12 +419,9 @@ model: aRBNamespace
 	model := aRBNamespace!
 
 name
-	"Answer the fully-qualified name of the non-metaclass."
+	"Answer the name of the non-metaclass. Note that in Dolphin 8 this is always a fully-qualified name."
 
-	^name!
-
-name: aString
-	name := aString!
+	^self subclassResponsibility!
 
 nearestRealClass
 	#rbFix.	"Added"
@@ -466,8 +463,8 @@ protocolsFor: aSelector
 	| change |
 	#rbFix.	"Added to support Dolphin's multiple method categories"
 	change := self isMeta
-				ifTrue: [model changes changeForMetaclass: name selector: aSelector]
-				ifFalse: [model changes changeForClass: name selector: aSelector].
+				ifTrue: [model changes changeForMetaclass: self name selector: aSelector]
+				ifFalse: [model changes changeForClass: self name selector: aSelector].
 	^change isNil
 		ifTrue: 
 			[self isDefined
@@ -516,9 +513,6 @@ selectors
 			[selectors addAll: self realClass selectors.
 			removedMethods notNil ifTrue: [removedMethods do: [:each | selectors remove: each ifAbsent: nil]]].
 	^selectors!
-
-setName: aSymbol 
-	name := aSymbol!
 
 soleInstance
 	^self nonMetaclass!
@@ -732,7 +726,6 @@ methodFor:!method accessing!public! !
 model!accessing!public! !
 model:!initialize/release!public! !
 name!accessing!public! !
-name:!accessing!public! !
 nearestRealClass!accessing!private! !
 newMethods!accessing!public! !
 nonMetaclass!accessing!public! !
@@ -749,7 +742,6 @@ removeMethod:!method accessing!public! !
 removeSubclass:!accessing!public! !
 renameInstanceVariable:to:around:!public!variable accessing! !
 selectors!method accessing!public! !
-setName:!initializing!private! !
 soleInstance!accessing!public! !
 sourceCodeFor:!method accessing!public! !
 storeOn:!printing!public! !
@@ -776,18 +768,8 @@ withAllSuperclassesDo:!accessing!public! !
 existing: aBehavior
 	^self subclassResponsibility!
 
-existingNamed: aSymbol 
-	^(self named: aSymbol)
-		realName: aSymbol;
-		yourself!
-
 initialize
 	LookupSuperclass := Object new!
-
-named: aSymbol
-	^self basicNew
-		setName: aSymbol;
-		yourself!
 
 new
 	"RBClasses must always be #named:"
@@ -795,9 +777,7 @@ new
 	^self shouldNotImplement! !
 !Refactory.Browser.RBAbstractClass class categoriesForMethods!
 existing:!instance creation!public! !
-existingNamed:!instance creation!public! !
 initialize!class initialization!public! !
-named:!instance creation!public! !
 new!instance creation!public! !
 !
 

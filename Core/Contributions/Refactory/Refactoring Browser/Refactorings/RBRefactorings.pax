@@ -97,7 +97,7 @@ package!
 "Class Definitions"!
 
 Core.Object subclass: #'Refactory.Browser.RBAbstractClass'
-	instanceVariableNames: 'name newMethods instanceVariableNames model superclass subclasses removedMethods realClass'
+	instanceVariableNames: 'newMethods instanceVariableNames model subclasses removedMethods realClass superclass'
 	classVariableNames: 'LookupSuperclass'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -163,7 +163,7 @@ Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.RBReadBeforeWrittenTester'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'metaclass unqualifiedName classVariableNames imports category classConstants comment environment'
+	instanceVariableNames: 'name metaclass unqualifiedName classVariableNames imports category classConstants comment environment'
 	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'metaclass unqualifiedName classVariableNames imports category classConstants comment environment'
+	instanceVariableNames: 'name metaclass unqualifiedName classVariableNames imports category classConstants comment environment'
 	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -98,6 +98,9 @@ directlyImportsNamespace: aBindingReference
 	^self imports anySatisfy: [:each | each pathString = pathString]!
 
 environment
+	"Rather confusingly, this is environment in the sense of being a namespace (i.e. an instance of RBNamespaceClass) and is compatible with the use of the term in the Behavior/ClassDescription/Class/Metaclass hierarchy.
+	It's not the BrowserEnvironment (another type of scope) environment of the RBNamespace (Refactoring model) class. I think I might rename RBNamespace...."
+
 	^environment ifNil: [environment := self getEnvironment]!
 
 fullyQualifiedReference
@@ -151,8 +154,13 @@ metaclass
 metaclass: aRBMetaclass
 	metaclass := aRBMetaclass!
 
+name
+	"Answer the name of the non-metaclass. Note that in Dolphin 8 this is always a fully-qualified name."
+
+	^name!
+
 name: aString
-	super name: aString.
+	name := aString.
 	unqualifiedName := environment := nil!
 
 newBindingContextForIdentifier: aString
@@ -334,6 +342,7 @@ kindOfSubclass!class hierarchy-testing!private! !
 localBindingFor:!bindings!public! !
 metaclass!accessing!public! !
 metaclass:!initializing!private! !
+name!accessing!public! !
 name:!accessing!public! !
 newBindingContextForIdentifier:!bindings!private! !
 nonMetaclass!accessing!public! !
@@ -360,10 +369,22 @@ existing: aBehavior
 		realClass: class;
 		yourself!
 
+existingNamed: aSymbol 
+	^(self named: aSymbol)
+		realName: aSymbol;
+		yourself!
+
 initialize
-	LookupComment := Object new! !
+	LookupComment := Object new!
+
+named: aSymbol
+	^self basicNew
+		setName: aSymbol;
+		yourself! !
 !Refactory.Browser.RBClass class categoriesForMethods!
 existing:!instance creation!public! !
+existingNamed:!instance creation!public! !
 initialize!class initialization!public! !
+named:!instance creation!public! !
 !
 

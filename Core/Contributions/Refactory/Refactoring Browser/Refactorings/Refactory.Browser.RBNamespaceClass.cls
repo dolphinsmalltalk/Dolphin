@@ -23,9 +23,6 @@ baseEnvironmentName
 	
 	^name = 'Root' ifFalse: [#Root]!
 
-environment
-	^self environmentName ifNotNil: [:envName | model classNamed: envName]!
-
 hierarchyBindingFor: aString
 	"Private - Answer a variable binding for the named variable in the scope of this class, i.e. one of its own class variables or those of its superclasses."
 
@@ -67,7 +64,6 @@ setName: aSymbol
 addClass:!public! !
 addVariableNamed:value:!public! !
 baseEnvironmentName!accessing!public! !
-environment!accessing!public! !
 hierarchyBindingFor:!bindings!private! !
 localBindingFor:!bindings!public! !
 removeClass:!public! !
