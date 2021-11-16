@@ -22,7 +22,7 @@ testExistingSelector
 				in: BasicLintRuleTestData
 				to: #runOnEnvironment:
 				permutation: (1 to: 1))
-		withMessage: 'The selectors are not equivalent AND LintRuleTestData or a subclass understands #runOnEnvironment:'!
+		withMessage: 'The selectors are not equivalent AND *LintRuleTestData or a subclass understands #runOnEnvironment:'!
 
 testMultipleSelectors
 	| subject optionCalled |

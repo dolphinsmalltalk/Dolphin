@@ -62,6 +62,10 @@ createSchematicWiring
 		send: #onSignatureChanged
 		to: self!
 
+getHintCaption: aValidationResult
+	^aValidationResult caption
+		ifNil: [aValidationResult hint iconStyle == #error ifTrue: ['Invalid Signature']]!
+
 hintDwell
 	"Private - Answer the <Duration> for which a hint bubble should be shown before fading away."
 
@@ -131,7 +135,7 @@ showValidationResult: aValidationResult
 	(aValidationResult hint isNil or: [self model selector isEmpty]) ifTrue: [^self].
 	hintBubble := MessageBubble new.
 	hintBubble
-		caption: aValidationResult caption;
+		caption: (self getHintCaption: aValidationResult);
 		font: self hintFont;
 		timeout: self hintDwell;
 		position: self hintPosition;
@@ -157,6 +161,7 @@ closeBubble!helpers!private! !
 conditionsFor:!helpers!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
+getHintCaption:!helpers!private! !
 hintDwell!constants!private! !
 hintFont!constants!private! !
 hintPosition!accessing!private! !

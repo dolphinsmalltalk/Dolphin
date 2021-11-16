@@ -98,10 +98,13 @@ directlyImportsNamespace: aBindingReference
 	^self imports anySatisfy: [:each | each pathString = pathString]!
 
 environment
-	^environment ifNil: [environment := model classNamed: self environmentName]!
+	^environment ifNil: [environment := self getEnvironment]!
 
 fullyQualifiedReference
 	^BindingReference pathString: name!
+
+getEnvironment
+	^model classNamed: self environmentName!
 
 getImports
 	#rbFix.	"Dolphin stores the pool names in its classes, rather than the pools themselves."
@@ -320,6 +323,7 @@ directlyDefinesClassVariable:!public!testing! !
 directlyImportsNamespace:!public!testing! !
 environment!accessing!public! !
 fullyQualifiedReference!accessing!namespaces!public! !
+getEnvironment!accessing!public! !
 getImports!helpers!private! !
 imports!accessing!public! !
 imports:!accessing!public! !

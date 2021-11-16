@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RBClassTest'
-	instanceVariableNames: 'objectClass newClass messageNodeClass'
+	instanceVariableNames: 'model objectClass newClass messageNodeClass'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -12,18 +12,17 @@ Refactory.Browser.Tests.RBClassTest comment: ''!
 !Refactory.Browser.Tests.RBClassTest methodsFor!
 
 setUp
-	| st |
 	super setUp.
-	st := RBNamespace new.
-	objectClass := st classNamed: 'Core.Object'.
-	messageNodeClass := st classNamed: RBMessageNode fullName.
-	st
+	model := RBNamespace new.
+	objectClass := model classNamed: 'Core.Object'.
+	messageNodeClass := model classNamed: RBMessageNode fullName.
+	model
 		defineClass: 'Core.Object subclass: #SomeClassName
 	instanceVariableNames: ''instanceVariable1 instanceVariable2''
 	classVariableNames: ''ClassVariable1''
 	poolDictionaries: ''OpcodePool''
 	category: ''Refactory-Testing'''.
-	newClass := st classNamed: #SomeClassName!
+	newClass := model classNamed: #SomeClassName!
 
 testDefinesClassVariable
 	self deny: (objectClass definesClassVariable: #ClassVariable1).
@@ -52,6 +51,17 @@ testDefinesPoolDictionary
 	self
 		assert: ((RBNamespace new classNamed: #'OS.HRESULTError') importsNamespace: #'OS.FacilityCodes')!
 
+testEnvironment
+	| rbTests myClass refactory root |
+	myClass := model classFor: self class.
+	rbTests := model classFor: self class environment.
+	self assert: myClass environment equals: rbTests.
+	refactory := model classNamed: #Refactory.
+	root := model classNamed: #Root.
+	self assert: rbTests environment environment equals: refactory.
+	self assert: refactory environment equals: root.
+	self assertIsNil: root environment!
+
 testHierarchy
 	| meta |
 	meta := objectClass metaclass.
@@ -67,6 +77,7 @@ testDefinesClassVariable!public!unit tests! !
 testDefinesInstanceVariable!public!unit tests! !
 testDefinesMethod!public!unit tests! !
 testDefinesPoolDictionary!public!unit tests! !
+testEnvironment!public!unit tests! !
 testHierarchy!public!unit tests! !
 testUnqualifiedName!public!unit tests! !
 !
