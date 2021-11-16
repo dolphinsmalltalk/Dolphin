@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'model name metaclass realClass unqualifiedName classVariableNames imports category classConstants comment environment'
+	instanceVariableNames: 'model name metaclass realClass superclass unqualifiedName classVariableNames imports category classConstants comment environment'
 	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -173,6 +173,12 @@ name: aString
 	name := aString.
 	unqualifiedName := environment := nil!
 
+nearestRealClass
+	#rbFix.	"Added"
+	^self realClass isNil 
+		ifTrue: [superclass notNil ifTrue: [superclass nearestRealClass]]
+		ifFalse: [self realClass]!
+
 newBindingContextForIdentifier: aString
 	^Kernel.BindingContext
 		methodClass: self
@@ -327,6 +333,16 @@ setName: aSymbol
 	name := aSymbol.
 	comment := LookupComment!
 
+superclass
+	^superclass == LookupSuperclass
+		ifTrue: [self model classFor: self realClass superclass]
+		ifFalse: [superclass]!
+
+superclass: aRBClass 
+	self superclass notNil ifTrue: [self superclass removeSubclass: self].
+	superclass := aRBClass.
+	superclass notNil ifTrue: [superclass addSubclass: self].!
+
 unqualifiedName
 	"Answer the fully-qualified name of the non-metaclass."
 
@@ -367,6 +383,7 @@ model!accessing!public! !
 model:!initialize/release!public! !
 name!accessing!public! !
 name:!accessing!public! !
+nearestRealClass!accessing!private! !
 newBindingContextForIdentifier:!bindings!private! !
 nonMetaclass!accessing!public! !
 printDefinitionOn:!accessing!public! !
@@ -382,6 +399,8 @@ resolvePathString:!bindings!private! !
 resolvePublicBinding:!bindings!private! !
 resolveUnqualifiedName:!bindings!private! !
 setName:!initializing!private! !
+superclass!accessing!public! !
+superclass:!accessing!private! !
 unqualifiedName!public! !
 !
 
@@ -401,9 +420,7 @@ model: aRBNamespace existing: aBehavior
 	^(self named: class fullName)
 		model: aRBNamespace;
 		realClass: class;
-		metaclass: (RBMetaclass basicNew
-					realClass: class class;
-					yourself);
+		metaclass: RBMetaclass basicNew;
 		yourself!
 
 named: aSymbol

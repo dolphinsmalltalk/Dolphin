@@ -71,6 +71,7 @@ testEnvironment
 testFullName
 	self assert: objectClass fullName equals: 'Core.Object'.
 	self assert: objectClass metaclass fullName equals: 'Core.Object class'.
+	self assert: messageNodeClass fullName equals: RBMessageNode fullName.
 	self assert: (model classFor: self class) fullName equals: self class fullName.
 	self assert: newClass fullName equals: 'SomeClassName'.
 	self assert: objectClass environment environment fullName equals: 'Root'!
@@ -85,13 +86,17 @@ testModel
 	| myClass |
 	self assert: objectClass model identicalTo: model.
 	self assert: objectClass metaclass model identicalTo: model.
+	self assert: newClass model identicalTo: model.
+	self assert: newClass metaclass model identicalTo: model.
 	myClass := model classFor: self class.
 	self assert: myClass model identicalTo: model.
 	self assert: myClass metaclass model identicalTo: model!
 
 testName
 	self assert: objectClass name equals: 'Core.Object'.
-	self assert: (model classFor: self class) name equals: self class fullName!
+	self assert: objectClass metaclass name equals: 'Core.Object'.
+	self assert: (model classFor: self class) name equals: self class fullName.
+	self assert: newClass name equals: 'SomeClassName'.!
 
 testRealClass
 	| myClass subclasses |
@@ -101,9 +106,11 @@ testRealClass
 	self assert: newClass metaclass realClass isNil.
 	self assertIsNil: objectClass superclass.
 	self assert: objectClass metaclass superclass realClass equals: Class.
+	self assert: (objectClass subclasses includes: newClass).
 	subclasses := objectClass subclasses collect: [:each | each realClass].
 	self assert: (subclasses difference: Object subclasses) asArray equals: #(nil).
 	self assert: (Object subclasses difference: subclasses) asArray equals: #().
+	self assert: (objectClass metaclass subclasses includes: newClass metaclass).
 	subclasses := objectClass metaclass subclasses collect: [:each | each realClass].
 	self assert: (subclasses difference: Object class subclasses) asArray equals: #(nil).
 	self assert: (Object class subclasses difference: subclasses) asArray equals: #().
@@ -113,6 +120,8 @@ testRealClass
 
 testSubclasses
 	| class |
+	self assert: (objectClass subclasses includes: newClass).
+	self assert: (objectClass metaclass subclasses includes: newClass metaclass).
 	self assert: (objectClass subclasses collect: [:each | each metaclass])
 		equals: objectClass metaclass subclasses.
 	class := model classFor: Class.
@@ -130,7 +139,9 @@ testSuperclass
 testUnqualifiedName
 	self assert: objectClass unqualifiedName equals: #Object.
 	self assert: objectClass metaclass unqualifiedName equals: 'Object class'.
-	self assert: (model classFor: self class) unqualifiedName equals: self class unqualifiedName!
+	self assert: (model classFor: self class) unqualifiedName equals: self class unqualifiedName.
+	self assert: newClass unqualifiedName equals: 'SomeClassName'.
+	self assert: newClass metaclass unqualifiedName equals: 'SomeClassName class'!
 
 testWithAllSubclasses
 	| class all |
@@ -139,6 +150,7 @@ testWithAllSubclasses
 	all remove: class.
 	"All classes are subclasses of Class, so that includes also classes under other root classes"
 	Smalltalk allClasses do: [:each | all remove: (model classFor: each) metaclass].
+	"We should only be left with the model-only defined class"
 	self assert: all asArray equals: {newClass metaclass}! !
 !Refactory.Browser.Tests.RBClassTest categoriesForMethods!
 setUp!public!set up! !

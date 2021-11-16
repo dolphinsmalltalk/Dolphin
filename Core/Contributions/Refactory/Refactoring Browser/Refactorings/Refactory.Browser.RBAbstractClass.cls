@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Refactory.Browser.RBAbstractClass'
-	instanceVariableNames: 'newMethods instanceVariableNames subclasses removedMethods superclass'
+	instanceVariableNames: 'newMethods instanceVariableNames subclasses removedMethods'
 	classVariableNames: 'LookupSuperclass'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -421,10 +421,7 @@ name
 	^self subclassResponsibility!
 
 nearestRealClass
-	#rbFix.	"Added"
-	^self realClass isNil 
-		ifTrue: [superclass notNil ifTrue: [superclass nearestRealClass]]
-		ifFalse: [self realClass]!
+	^self subclassResponsibility!
 
 newMethods
 	^newMethods
@@ -538,14 +535,7 @@ subclassRedefines: aSelector
 	^false!
 
 superclass
-	^superclass == LookupSuperclass
-		ifTrue: [self model classFor: self realClass superclass]
-		ifFalse: [superclass]!
-
-superclass: aRBClass 
-	self superclass notNil ifTrue: [self superclass removeSubclass: self].
-	superclass := aRBClass.
-	superclass notNil ifTrue: [superclass addSubclass: self].!
+	^self subclassResponsibility!
 
 typeOfClassVariable: aSymbol
 	^self model classNamed: #'Core.Object'!
@@ -738,7 +728,6 @@ storeOn:!printing!public! !
 subclasses!accessing!public! !
 subclassRedefines:!public!testing! !
 superclass!accessing!public! !
-superclass:!accessing!private! !
 typeOfClassVariable:!public!variable accessing! !
 unqualifiedName!accessing!public! !
 whichMethodsReferToSymbol:!method accessing!public! !

@@ -63,6 +63,9 @@ name
 
 	^nonMetaclass name!
 
+nearestRealClass
+	^nonMetaclass nearestRealClass!
+
 nonMetaclass
 	^nonMetaclass!
 
@@ -76,15 +79,18 @@ printOn: aStream
 realClass
 	^nonMetaclass realClass ifNotNil: [:realClass | realClass class]!
 
-realClass: aMetaclass
-	superclass isNil ifTrue: [superclass := LookupSuperclass]!
-
-realName: aSymbol 
-	self realClass: aSymbol asQualifiedReference value class!
-
 storeOn: aStream 
 	super storeOn: aStream.
 	aStream nextPutAll: ' class'!
+
+superclass
+	^nonMetaclass superclass
+		ifNil: [self model classFor: Class]
+		ifNotNil: [:superclass | superclass metaclass]!
+
+superclass: aRBClass
+	self superclass notNil ifTrue: [self superclass removeSubclass: self].
+	aRBClass notNil ifTrue: [aRBClass addSubclass: self]!
 
 unqualifiedName
 	"Answer the unqualified name of the non-metaclass."
@@ -105,13 +111,14 @@ localBindingFor:!binding!public! !
 metaclass!accessing!public! !
 model!accessing!public! !
 name!accessing!public! !
+nearestRealClass!accessing!private! !
 nonMetaclass!accessing!public! !
 nonMetaclass:!accessing!initializing!private! !
 printOn:!printing!public! !
 realClass!accessing!public! !
-realClass:!accessing!public! !
-realName:!initialize/release!public! !
 storeOn:!printing!public! !
+superclass!accessing!public! !
+superclass:!accessing!private! !
 unqualifiedName!accessing!public! !
 !
 
