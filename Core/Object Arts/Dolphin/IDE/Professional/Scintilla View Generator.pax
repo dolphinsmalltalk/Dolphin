@@ -65,7 +65,7 @@ Core.Object subclass: #'Tools.Scintilla.ParameterDefinition'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'Tools.Scintilla.ScintillaViewGenerator'
-	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated namespace constantsPool generatedSelectors aliases functions defaultReturnValues'
+	instanceVariableNames: 'events commentQueue lexerConstantPrefixes previewChanges commands parsingDeprecated model constantsPool generatedSelectors aliases functions defaultReturnValues'
 	classVariableNames: ''
 	imports: #(#{UI.Scintilla})
 	classInstanceVariableNames: ''

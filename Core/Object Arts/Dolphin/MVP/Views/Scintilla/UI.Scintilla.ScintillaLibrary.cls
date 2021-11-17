@@ -65,7 +65,7 @@ fileName
 versionString
 	"Answer the version of the Scintilla control for which this library was generated."
 
-	^'5.1.3'! !
+	^'5.1.4'! !
 !UI.Scintilla.ScintillaLibrary class categoriesForMethods!
 closeDefault!private!realizing/unrealizing! !
 fileName!constants!public! !
