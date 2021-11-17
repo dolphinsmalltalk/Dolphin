@@ -124,7 +124,7 @@ selectorsForClass: aClass do: aBlock
 	"#1325: Must enumerate any loose methods, regardless of whether one of the packages in this environment defines the class."
 	classExtensions keysAndValuesDo: 
 			[:eachSelector :eachPackage |
-			(packages includes: eachPackage)
+			(packages identityIncludes: eachPackage)
 				ifTrue: 
 					["Because BindingReferences cache the binding they resolve to, it is typically faster to compare the target than the reference."
 					(environment includesSelector: eachSelector in: aClass) ifTrue: [aBlock value: eachSelector]]]!

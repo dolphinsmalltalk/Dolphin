@@ -65,7 +65,7 @@ setKeywords: keywordsCollection argumentNames: argsCollection indices: indexColl
 	self assert: 
 			[keywordsCollection size = argsCollection size or: 
 					[argsCollection isEmpty 
-						and: [keywordsCollection size = 1 and: [keywordsCollection first last ~~ $:]]]].
+						and: [keywordsCollection size = 1 and: [keywordsCollection first lastCodeUnit ~~ $:]]]].
 	keywords := keywordsCollection.
 	argumentNames := argsCollection.
 	indices := indexCollection.

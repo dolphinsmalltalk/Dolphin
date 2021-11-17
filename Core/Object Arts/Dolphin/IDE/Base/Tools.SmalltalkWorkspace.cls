@@ -209,7 +209,7 @@ classForToken: anAssociation
 	style == #specialCharacter
 		ifTrue: 
 			[| ch |
-			ch := text last.
+			ch := text lastCodeUnit.
 			ch == $] ifTrue: [^BlockClosure].
 			ch == $} ifTrue: [^Array]].
 	style == #unaryMessage

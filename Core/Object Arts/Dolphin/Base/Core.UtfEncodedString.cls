@@ -364,6 +364,8 @@ keysAndValuesDo: aDyadicValuable
 last
 	"Answer an <Character> representing the last code point in the receiver. Raise an exception if the receiver is empty."
 
+	"This is relatively a lot more costly than `(self at: self size)` for a UtfEncodedString because the final code unit may not be a whole code point, in which case we will need to step back to find the leading surrogate, and then decode forwards from there. See also #lastCodeUnit."
+
 	^self decodeAt: (self indexOfLast: 1)!
 
 last: anInteger

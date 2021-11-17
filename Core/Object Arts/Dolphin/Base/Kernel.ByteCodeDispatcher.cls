@@ -109,7 +109,7 @@ dispatchNext
 			[:instr |
 			instructionLength == 1
 				ifTrue: 
-					[instr last == $:
+					[instr lastCodeUnit == $:
 						ifTrue: [interpreter perform: instr with: byteCode - (RunStarts at: instr)]
 						ifFalse: [interpreter perform: instr]]
 				ifFalse: 
@@ -166,7 +166,7 @@ instruction: aSymbol do: aDyadicValuable
 	instructionLength == 1
 		ifTrue: 
 			[^aDyadicValuable value: aSymbol
-				value: (aSymbol last == $: ifTrue: [{byteCode - (RunStarts at: aSymbol)}] ifFalse: [#()])].
+				value: (aSymbol lastCodeUnit == $: ifTrue: [{byteCode - (RunStarts at: aSymbol)}] ifFalse: [#()])].
 	instructionLength == 2 ifTrue: [^aDyadicValuable value: aSymbol value: {byteCodes at: ip - 1}].
 	instructionLength == 3
 		ifTrue: [^aDyadicValuable value: aSymbol value: {byteCodes at: ip - 2. byteCodes at: ip - 1}].

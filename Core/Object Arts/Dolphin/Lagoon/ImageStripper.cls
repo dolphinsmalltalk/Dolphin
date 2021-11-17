@@ -561,7 +561,7 @@ findPotentialAspectAccessorsIn: aClass excluding: aCollection
 			"Assume all one argument keyword messages are potentially setters if a
 			corresponding zero argument 'getter' exists"
 			(each argumentCount == 1
-				and: [each selector last = $: and: [(aCollection includes: each selector) not]])
+				and: [each selector lastCodeUnit = $: and: [(aCollection includes: each selector) not]])
 					ifTrue: 
 						[(Symbol findInterned: (each selector first: each selector size - 1))
 							ifNotNil: 

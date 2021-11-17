@@ -102,7 +102,16 @@ testEncodedSizeOf
 testKeys
 	| subject |
 	subject := self assimilateString: 'a£文🐬1🍺'.
-	self assert: subject keys equals: #(1 2 4 7 11 12)! !
+	self assert: subject keys equals: #(1 2 4 7 11 12)!
+
+testLastCodeUnit
+	| subject last |
+	super testLastCodeUnit.
+	subject := self assimilateString: '🐬a£文🍺'.
+	self assert: (subject basicAt: subject size) equals: 16rBA.
+	last := subject lastCodeUnit.
+	self assert: last isUtf8Trail.
+	self assert: last equals: (Character utf8Value: 16rBA)! !
 !Core.Tests.Utf8StringTest categoriesForMethods!
 assimilateString:!helpers!private! !
 collectionClass!helpers!private! !
@@ -116,5 +125,6 @@ testDecodeNextFrom5and6Byte!public! !
 testDecodeNextFromOverlong!public! !
 testEncodedSizeOf!public! !
 testKeys!public!unit tests! !
+testLastCodeUnit!public!unit tests! !
 !
 

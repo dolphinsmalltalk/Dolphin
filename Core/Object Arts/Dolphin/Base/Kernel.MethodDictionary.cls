@@ -19,8 +19,7 @@ findKeyOrNil: anObject
 	"Private - Answer the index of the given key in the receiver, or, if not found, the index of the first empty slot including and after that to which the key hashes."
 
 	| index mask |
-	mask := self basicSize - 1.
-	index := (anObject basicIdentityHash bitAnd: mask) + 1.
+	index := (anObject basicIdentityHash bitAnd: (mask := self basicSize - 1)) + 1.
 	
 	[| key |
 	(key := self basicAt: index) isNil or: [key == anObject]]

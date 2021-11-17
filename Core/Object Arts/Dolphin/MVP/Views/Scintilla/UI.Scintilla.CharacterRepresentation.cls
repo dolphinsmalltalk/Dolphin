@@ -104,7 +104,7 @@ initialize
 	"
 
 	| defaultRepresentations |
-	defaultRepresentations := LookupTable new.
+	defaultRepresentations := LookupTable new: 127.
 	0 to: 31
 		do: [:i | defaultRepresentations at: (Character codePoint: i) put: (Character codePoint: 16r2400 + i)].
 	defaultRepresentations at: $\x7F put: $\x2421.

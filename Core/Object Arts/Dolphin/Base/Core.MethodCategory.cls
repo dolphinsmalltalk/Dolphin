@@ -97,7 +97,7 @@ methodsInBehavior: aBehavior
 	selectors := aBehavior selectorsInCategory: self.
 	"This needs to be robust to the method catalogue being out of date with respect to the actual method dictionary, which can happen if something has removed methods directly from the MethodDictionary such that no system update events were triggered."
 	count := selectors size.
-	methods := Array writeStream: count.
+	methods := WriteStream on: (Array new: count).
 	1 to: count
 		do: 
 			[:i |

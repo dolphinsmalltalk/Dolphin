@@ -53,6 +53,15 @@ testKeys
 	subject := self assimilateString: 'a£文🐬1🍺'.
 	self assert: subject keys equals: #(1 2 3 4 6 7)!
 
+testLastCodeUnit
+	| subject last |
+	super testLastCodeUnit.
+	subject := self assimilateString: '🐬a£文🍺'.
+	self assert: (subject basicAt: subject size) equals: 16rDF7A.
+	last := subject lastCodeUnit.
+	self assert: last isUtf16Trail.
+	self assert: last equals: (Character utf16Value: 16rDF7A)!
+
 testMixedConcatenation
 	| subjects |
 	subjects := #('' 'd' 'ef') collect: [:each | self assimilateString: each].
@@ -109,6 +118,7 @@ decodeTestCases!constants!private! !
 testAssociations!public!unit tests! !
 testCopyWithAtIndex!public!unit tests! !
 testKeys!public!unit tests! !
+testLastCodeUnit!public!unit tests! !
 testMixedConcatenation!public! !
 testUtf8StringConversion!public!unit tests! !
 !

@@ -97,7 +97,7 @@ doesNotUnderstand: aMessage
 
 	| selector |
 	selector := aMessage selector.
-	^selector last == $: 
+	^selector lastCodeUnit == $: 
 		ifTrue: 
 			[self atIndex: (self selectors at: selector allButLast
 						ifAbsent: [^super doesNotUnderstand: aMessage])

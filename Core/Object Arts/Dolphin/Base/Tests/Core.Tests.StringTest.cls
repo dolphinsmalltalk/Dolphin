@@ -661,6 +661,12 @@ testJoin
 	self assert: (', ' join: #('a' 'b')) equals: 'a, b'.
 	self assert: (', ' join: {Object. Association}) equals: 'Core.Object, Core.Association'!
 
+testLastCodeUnit
+	self should: [(self newCollection: #()) lastCodeUnit] raise: BoundsError.
+	self assert: (self newCollection: #(49)) lastCodeUnit equals: (self assimilate: 49).
+	self assert: (self newCollection: #(49 127)) lastCodeUnit equals: (self assimilate: 127).
+	self assert: (self newCollection: #(49 50 51)) lastCodeUnit equals: (self assimilate: 51)!
+
 testLastIndexOf
 	self indexOfTestCases pairsDo: 
 			[:each :char |
@@ -1196,6 +1202,7 @@ testHash!public!unit tests! !
 testIndexOfStartingAt!public!unit tests! !
 testInvalidComparisons!public!unit tests! !
 testJoin!public!unit tests! !
+testLastCodeUnit!public!unit tests! !
 testLastIndexOf!public!unit tests! !
 testLength!public!unit tests! !
 testLines!public!unit tests! !

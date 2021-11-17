@@ -24,7 +24,7 @@ copyInContext: aDictionary
 		receiver: (receiver copyInContext: aDictionary);
 		selectorParts: (selectors collect: 
 						[:each |
-						(each last == $: ifTrue: [RBKeywordToken] ifFalse: [RBIdentifierToken])
+						(each lastCodeUnit == $: ifTrue: [RBKeywordToken] ifFalse: [RBIdentifierToken])
 							start: nil
 							comments: nil
 							value: each]);

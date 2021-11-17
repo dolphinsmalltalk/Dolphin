@@ -195,7 +195,7 @@ doesNotUnderstand: aMessage
 	if found the appropriate field is retrieved/set."
 
 	| key |
-	(key := aMessage selector) last == $: ifTrue: [key := key copyFrom: 1 to: key size - 1].
+	(key := aMessage selector) lastCodeUnit == $: ifTrue: [key := key copyFrom: 1 to: key size - 1].
 	^(self template lookup: key)
 		ifNil: [super doesNotUnderstand: aMessage]
 		ifNotNil: 
@@ -628,7 +628,7 @@ fieldNamesFromTemplate
 					xoff := x value offset.
 					yoff := y value offset.
 					xoff == yoff ifTrue: [x key <= y key] ifFalse: [xoff < yoff]]))
-			do: [:assoc | (assoc key last == $: or: [assoc value isFiller]) ifFalse: [answer add: assoc key]].
+			do: [:assoc | (assoc key lastCodeUnit == $: or: [assoc value isFiller]) ifFalse: [answer add: assoc key]].
 	^answer!
 
 fieldOffsetConstantPrefix

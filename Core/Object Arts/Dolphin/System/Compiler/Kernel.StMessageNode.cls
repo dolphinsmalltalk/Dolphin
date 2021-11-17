@@ -94,7 +94,7 @@ isInlineable
 	^InlinedBlockSelectors includes: self selector!
 
 isKeyword
-	^selectorParts first value last == $:!
+	^selectorParts first value lastCodeUnit == $:!
 
 isMessage
 	^true!
@@ -162,7 +162,7 @@ selector: aSelector
 							comments: nil
 							value: keywords first}]
 				ifFalse: 
-					[keywords first last == $:
+					[keywords first lastCodeUnit == $:
 						ifTrue: 
 							[keywords collect: 
 									[:each |

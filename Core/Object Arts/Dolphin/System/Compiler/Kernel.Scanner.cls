@@ -660,7 +660,7 @@ scanSymbol
 					lastPosition := stream position.
 					self step]].
 	value := buffer contents.
-	(hasColon and: [value last ~~ $:])
+	(hasColon and: [value lastCodeUnit ~~ $:])
 		ifTrue: 
 			[stream position: lastPosition.
 			self step.

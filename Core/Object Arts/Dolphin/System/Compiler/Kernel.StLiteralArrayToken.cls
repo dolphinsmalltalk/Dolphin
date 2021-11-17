@@ -15,7 +15,7 @@ acceptVisitor: aTokenVisitor
 	^aTokenVisitor visitLiteralArrayToken: self!
 
 isForByteArray
-	^value last == $[!
+	^value lastCodeUnit == $[!
 
 isLiteralArrayToken
 	^true! !

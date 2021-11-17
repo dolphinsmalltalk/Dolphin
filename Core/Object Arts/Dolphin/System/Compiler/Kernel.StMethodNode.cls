@@ -157,7 +157,7 @@ selector: aSelector
 							comments: nil
 							value: keywords first}]
 				ifFalse: 
-					[keywords first last == $:
+					[keywords first lastCodeUnit == $:
 						ifTrue: 
 							[keywords collect: 
 									[:each |

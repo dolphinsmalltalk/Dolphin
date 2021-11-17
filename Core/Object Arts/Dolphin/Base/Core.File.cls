@@ -575,13 +575,13 @@ Core.File methodProtocol: #'streamable File' attributes: #(#readOnly) selectors:
 
 !Core.File class methodsFor!
 
-appendPathDelimiter: aString 
+appendPathDelimiter: aString
 	"Answer a <readableString> that is the argument with a path separator appended to create the correct syntax for
 	a path. If aString already ends in a path separator then the answer is equivalent."
 
-	(aString notEmpty 
-		and: [self pathDelimiters identityIncludes: aString last]) 
-			ifTrue: [^aString].
+	| count |
+	count := aString size.
+	(count ~~ 0 and: [self pathDelimiters identityIncludes: (aString at: count)]) ifTrue: [^aString].
 	^aString copyWith: self pathDelimiter!
 
 attributes: aFileNameString
@@ -695,7 +695,7 @@ createDirectoryPath: path
 			end == 1
 				ifFalse: 
 					[| part |
-					(part := path copyFrom: 1 to: end - 1) last == $:
+					(part := path copyFrom: 1 to: end - 1) lastCodeUnit == $:
 						ifFalse: 
 							["Don't attempt to create the drive!!"
 							created := self createDirectory: part]].
@@ -1384,7 +1384,7 @@ splitExtensionFrom: aString
 				extLen: len + 1) == 0
 		ifFalse: [^CRTError signalWith: errno].
 	"CRT function includes leading period on extension, which we don't"
-	^ext copyFrom: (ext first == $. ifTrue: [2] ifFalse: [1]) to: ext strlen!
+	^ext copyFrom: ((ext at: 1) == $. ifTrue: [2] ifFalse: [1]) to: ext strlen!
 
 splitFilenameFrom: aString
 	"Splits the pathname, aString, and answers the file name portion (including extension).
