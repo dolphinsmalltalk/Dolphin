@@ -27,9 +27,9 @@ Instance Variables:
 !UI.InplaceTextEditor methodsFor!
 
 answer
-	"Answer the model if the receiver was confirmed (with #apply, #ok) or nil otherwise"
+	"Answer the model value if the receiver was confirmed (with #apply, #ok) or nil otherwise"
 
-	^self isConfirmed ifTrue: [self model value]!
+	^self isConfirmed ifTrue: [self model value asUtf8String]!
 
 apply
 	"Apply the changes cached in the receiver back to the original model. This can be used to
