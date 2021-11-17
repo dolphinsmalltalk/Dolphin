@@ -2757,6 +2757,12 @@ availablePluginClasses
 
 	^(ClassCategory name: 'Browser-Plugins') classes!
 
+basicPlugins
+	^plugins!
+
+basicPlugins: aSequencedReadableCollection
+	plugins := aSequencedReadableCollection!
+
 classCommentIcon
 	"Private - Answer the <Icon> to use for the class comment tab"
 
@@ -2898,6 +2904,8 @@ wordWrapSource: aBoolean
 !Tools.ClassBrowserAbstract class categoriesForMethods!
 addPlugin:!initializing!private! !
 availablePluginClasses!helpers!private! !
+basicPlugins!accessing!private! !
+basicPlugins:!accessing!private! !
 classCommentIcon!helpers!private! !
 defaultFilterObjectMethods!accessing!options!public! !
 defaultFilterObjectMethods:!accessing!options!public! !

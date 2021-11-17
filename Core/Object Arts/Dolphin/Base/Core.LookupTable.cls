@@ -86,40 +86,38 @@ associationsDo: operation
 	self keysAndValuesDo: [:k :v | 
 		operation value: (self associationClass key: k value: v)]!
 
-at: anObject ifAbsent: aNiladicValuable 
+at: anObject ifAbsent: aNiladicValuable
 	"Answer the value named by the key argument, anObject.  If the key is not found, 
 	answer the result of evaluating the <niladicValuable> argument."
 
 	| index |
-	index := self findKeyOrNil: anObject.
-	^(self basicAt: index) isNil ifTrue: [aNiladicValuable value] ifFalse: [values at: index]!
+	^(self basicAt: (index := self findKeyOrNil: anObject)) 
+		ifNil: [aNiladicValuable value]
+		ifNotNil: [values at: index]!
 
 at: keyObject ifAbsentPutClean: aMonadicValuable
 	"Answer the value of the receiver keyed by the first <Object> argument. If key is not one of the receiver's keys, then add the result of evaluating  the <niladicValuable> 2nd argument and answer that result.
 	Note that unlike #at:ifAbsentPut:, this method assumes that the valuable does not modify the receiver, and therefore it only looks up the key position once. Thus it is more efficient but less general purpose."
 
 	| index |
-	keyObject isNil ifTrue: [^self error: 'key cannot be nil'].
-	index := self findKeyOrNil: keyObject.
-	^(self basicAt: index)
+	keyObject ifNil: [^self error: 'key cannot be nil'].
+	^(self basicAt: (index := self findKeyOrNil: keyObject))
 		ifNil: 
 			[| value |
-			value := aMonadicValuable value.
-			values at: index put: value.
+			values at: index put: (value := aMonadicValuable value).
 			self privateAt: index put: keyObject.
 			value]
 		ifNotNil: [values at: index]!
 
-at: key put: newElement 
+at: key put: newElement
 	"Store the argument newElement with the external key, key,
 	in the receiver. Answer newElement."
 
 	| index |
-	key isNil ifTrue: [^self error: 'key cannot be nil'].
-	index := self findKeyOrNil: key.
+	key ifNil: [^self error: 'key cannot be nil'].
 	"We must store the value first, as a resize may occur during privateAt:put:"
-	values at: index put: newElement.
-	(self basicAt: index) isNil ifTrue: [self privateAt: index put: key].
+	values at: (index := self findKeyOrNil: key) put: newElement.
+	(self basicAt: index) ifNil: [self privateAt: index put: key].
 	^newElement!
 
 basicValues

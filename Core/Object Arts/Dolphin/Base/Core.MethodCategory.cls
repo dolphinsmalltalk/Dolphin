@@ -85,7 +85,7 @@ methods
 	"Answer a <collection> of all methods classified under the receiver."
 
 	| foundMethods |
-	foundMethods := IdentitySet new.
+	foundMethods := IdentitySet new: 32.
 	Smalltalk
 		allBehaviorsDo: [:each | self methodsInBehavior: each do: [:method | foundMethods add: method]].
 	^foundMethods!

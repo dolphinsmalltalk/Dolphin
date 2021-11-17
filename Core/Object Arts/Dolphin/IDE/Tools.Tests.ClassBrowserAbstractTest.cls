@@ -179,14 +179,14 @@ setUp
 	plugins := ClassBrowserAbstract allSubclasses collect: 
 					[:each |
 					| a |
-					a := each -> each plugins.
-					each plugins: #().
+					a := each -> each basicPlugins.
+					each basicPlugins: #().
 					a].
 	packageA := Core.Tests.DolphinTestPackages current a!
 
 tearDown
 	| methods |
-	plugins do: [:a | a key plugins: a value].
+	plugins do: [:a | a key basicPlugins: a value].
 	methods := packageA methods.
 	browser destroy.
 	self deleteTestMethods: methods.

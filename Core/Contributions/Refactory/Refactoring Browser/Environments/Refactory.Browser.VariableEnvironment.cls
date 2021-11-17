@@ -24,9 +24,6 @@ Note that in Dolphin all <abstractDictionary>s are implemented as instances of <
 !Refactory.Browser.VariableEnvironment categoriesForClass!Refactory-Environments! !
 !Refactory.Browser.VariableEnvironment methodsFor!
 
-accessorMethods
-	^#(#instanceVariables #instanceVariableReaders #instanceVariableWriters #classVariables)!
-
 addClass: aClass classVariable: aString
 	(classVariables at: aClass fullName ifAbsentPutClean: [Set new]) add: aString.
 	self flushCachesFor: aClass.
@@ -97,9 +94,6 @@ classNamesWithVariables
 		addAll: instanceVariableWriters keys;
 		addAll: classVariables keys.
 	^classNames!
-
-classVariables
-	^classVariables!
 
 classVariables: anObject
 	classVariables := anObject!
@@ -211,14 +205,8 @@ initialize
 	instanceVariableReaders := self lookupTableClass new.
 	instanceVariableWriters := self lookupTableClass new!
 
-instanceVariableReaders
-	^instanceVariableReaders!
-
 instanceVariableReaders: anObject
 	instanceVariableReaders := anObject!
-
-instanceVariables
-	^instanceVariables!
 
 instanceVariables: anObject
 	instanceVariables := anObject!
@@ -226,11 +214,11 @@ instanceVariables: anObject
 instanceVariableSelectorsFor: aClass
 	| selectors |
 	selectors := IdentitySet new.
-	(self instVarsFor: aClass in: self instanceVariables)
+	(self instVarsFor: aClass in: instanceVariables)
 		do: [:each | selectors addAll: (aClass whichSelectorsAccess: each)].
-	(self instVarsFor: aClass in: self instanceVariableReaders)
+	(self instVarsFor: aClass in: instanceVariableReaders)
 		do: [:each | selectors addAll: (aClass whichSelectorsRead: each)].
-	(self instVarsFor: aClass in: self instanceVariableWriters)
+	(self instVarsFor: aClass in: instanceVariableWriters)
 		do: [:each | selectors addAll: (aClass whichSelectorsAssign: each)].
 	^selectors!
 
@@ -243,9 +231,6 @@ instanceVariablesFor: aClass
 		addAll: (instanceVariableReaders at: name ifAbsent: #());
 		addAll: (instanceVariableWriters at: name ifAbsent: #()).
 	^vars!
-
-instanceVariableWriters
-	^instanceVariableWriters!
 
 instanceVariableWriters: anObject
 	instanceVariableWriters := anObject!
@@ -261,16 +246,16 @@ instVarsFor: aClass in: aDictionary
 	^instVars ?? #()!
 
 isEmpty
-	self accessorMethods do: [:each | (self perform: each) notEmpty ifTrue: [^false]].
-	^true!
+	^instanceVariables isEmpty and: 
+			[instanceVariableReaders isEmpty and: [instanceVariableWriters isEmpty and: [classVariables isEmpty]]]!
 
 lookupTableClass
 	#rbFix.	"Class ref. extracted to method, and use LookupTable rather than Dictionary for improved performance."
 	^LookupTable!
 
 numberVariables
-	^self accessorMethods inject: 0
-		into: [:sum :each | sum + ((self perform: each) inject: 0 into: [:s :e | s + e size])]!
+	^instanceVariables size + instanceVariableReaders size + instanceVariableWriters size
+		+ classVariables size!
 
 postCopy
 	super postCopy.
@@ -321,16 +306,27 @@ storeOn: aStream
 		nextPut: $(;
 		nextPutAll: self class fullName;
 		nextPutAll: ' new '.
-	#(#instanceVariables #instanceVariableReaders #instanceVariableWriters #classVariables) do: 
-			[:each |
-			aStream
-				nextPutAll: each;
-				nextPutAll: ': '.
-			(self perform: each) storeOn: aStream.
-			aStream nextPutAll: '; '].
-	aStream nextPutAll: ' yourself)'! !
+	aStream
+		nextPutAll: #instanceVariables:;
+		space.
+	instanceVariables storeOn: aStream.
+	aStream nextPutAll: '; '.
+	aStream
+		nextPutAll: #instanceVariableReaders:;
+		space.
+	instanceVariableReaders storeOn: aStream.
+	aStream nextPutAll: '; '.
+	aStream
+		nextPutAll: #instanceVariableWriters:;
+		space.
+	instanceVariableWriters storeOn: aStream.
+	aStream nextPutAll: '; '.
+	aStream
+		nextPutAll: #classVariables:;
+		space.
+	classVariables storeOn: aStream.
+	aStream nextPutAll: '; yourself)'! !
 !Refactory.Browser.VariableEnvironment categoriesForMethods!
-accessorMethods!constants!private! !
 addClass:classVariable:!accessing!public! !
 addClass:instanceVariable:!accessing!public! !
 addClass:instanceVariableReader:!accessing!public! !
@@ -338,7 +334,6 @@ addClass:instanceVariableWriter:!accessing!public! !
 allClassesDo:!enumerating!private! !
 classForName:!helpers!private! !
 classNamesWithVariables!accessing!public! !
-classVariables!accessing!private! !
 classVariables:!accessing!private! !
 classVariableSelectorsFor:!helpers!private! !
 classVariablesFor:!accessing!public! !
@@ -352,13 +347,10 @@ includesClass:!public!testing! !
 includesProtocol:in:!public!testing! !
 includesSelector:in:!public!testing! !
 initialize!initialize/release!public! !
-instanceVariableReaders!accessing!private! !
 instanceVariableReaders:!public! !
-instanceVariables!accessing!private! !
 instanceVariables:!accessing!private! !
 instanceVariableSelectorsFor:!helpers!private! !
 instanceVariablesFor:!accessing!public! !
-instanceVariableWriters!accessing!private! !
 instanceVariableWriters:!accessing!private! !
 instVarsFor:in:!helpers!private! !
 isEmpty!public!testing! !

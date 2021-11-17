@@ -196,9 +196,8 @@ at: keyObject put: valueObject
 	valueObject."
 
 	| index |
-	keyObject isNil ifTrue: [^self error: 'key cannot be nil'].
-	index := self findKeyOrNil: keyObject.
-	(self basicAt: index)
+	keyObject ifNil: [^self error: 'key cannot be nil'].
+	(self basicAt: (index := self findKeyOrNil: keyObject))
 		ifNil: [self privateAt: index put: (self newAssociation: keyObject value: valueObject)]
 		ifNotNil: [:assoc | assoc value: valueObject].
 	^valueObject!
@@ -281,8 +280,7 @@ findKeyOrNil: anObject
 	the index of the first empty slot including and after that to which the key hashes"
 
 	| capacity index |
-	capacity := self basicSize.
-	index := anObject hash \\ capacity + 1.
+	index := anObject hash \\ (capacity := self basicSize) + 1.
 	
 	[| element |
 	(element := self basicAt: index) isNil or: [anObject = element key]]

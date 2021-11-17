@@ -1257,10 +1257,11 @@ removeExtension: aString
 removePathDelimiter: aString
 	"Answer a <readableString> that is the argument with a path separator at its end, if any, removed."
 
-	^(aString notEmpty and: [self pathDelimiters identityIncludes: aString last])
-		ifTrue: 
-			["In this case we know that the path delimiters only ever require one code unit, so it is safe to trim off one code unit"
-			aString copyFrom: 1 to: aString size - 1]
+	| count |
+	count := aString size.
+	"In this case we know that the path delimiters only ever require one code unit (they are all ascii characters), so it is safe to work with code units"
+	^(count ~~ 0 and: [self pathDelimiters identityIncludes: (aString at: count)])
+		ifTrue: [aString copyFrom: 1 to: count - 1]
 		ifFalse: [aString]!
 
 rename: oldFileNameString to: newFileNameString

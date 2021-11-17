@@ -67,12 +67,16 @@ size
 value
 	"Plays all the messages in this sequence, which are assumed to be `MessageSend`s that are fully qualified with their receivers. Answers the result of the last message in the sequence."
 
-	^messages inject: nil into: [:answer :each | each value]!
+	| answer |
+	1 to: messages size do: [:i | answer := (messages at: i) value].
+	^answer!
 
 valueWithArguments: anArray
 	"Plays all the messages in this sequence, which are assumed to be `MessageSend`s that are fully qualified when provided with the specified arguments. Answers the result of the last message in the sequence."
 
-	^messages inject: nil into: [:answer :each | each valueWithArguments: anArray]! !
+	| answer |
+	1 to: messages size do: [:i | answer := (messages at: i) valueWithArguments: anArray].
+	^answer! !
 !Core.MessageSequence categoriesForMethods!
 add:!adding!public! !
 add:afterIndex:!adding!public! !

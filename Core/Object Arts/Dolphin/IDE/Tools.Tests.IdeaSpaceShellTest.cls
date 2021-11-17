@@ -64,14 +64,14 @@ setUp
 	browserPlugins := ClassBrowserAbstract subclasses collect: 
 					[:each |
 					| plugins |
-					plugins := each plugins.
-					each plugins: #().
+					plugins := each basicPlugins.
+					each basicPlugins: #().
 					each -> plugins]!
 
 tearDown
 	ideaShell destroy.
 	ideaShell := nil.
-	browserPlugins do: [:each | each key plugins: each value].
+	browserPlugins do: [:each | each key basicPlugins: each value].
 	super tearDown!
 
 testAbsorbCard

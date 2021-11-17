@@ -54,7 +54,7 @@ add: anObject
 	#addNewElement:"
 
 	| index |
-	anObject isNil ifTrue: [^anObject].	"Sets cannot store empty objects"
+	anObject ifNil: [^anObject].	"Sets cannot store empty objects"
 	(self basicAt: (index := self findElementOrNil: anObject)) isNil
 		ifTrue: [self privateAt: index put: anObject].
 	^anObject!
@@ -75,7 +75,7 @@ addNewElement: anObject
 	not already a member of the set, else false."
 
 	| index |
-	anObject isNil ifTrue: [^false].
+	anObject ifNil: [^false].
 	^(self basicAt: (index := self findElementOrNil: anObject))
 		ifNil: 
 			[self privateAt: index put: anObject.
