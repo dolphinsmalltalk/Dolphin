@@ -137,7 +137,7 @@ getOptionInlineReordered: inlineRBMethod into: intoRBMethod
 				expandMacrosWith: inlineRBMethod
 				with: intoRBMethod)!
 
-getOptionMovePools
+getOptionMovePools: aCollection
 	^self
 		confirm: 'This method contains references to shared variables from namespaces that may need to be imported into the target.'!
 
@@ -398,7 +398,7 @@ getOptionImplementorToInline:!options!public! !
 getOptionInlineExpression:!options!public! !
 getOptionInlineOverridden:of:!options!public! !
 getOptionInlineReordered:into:!options!public! !
-getOptionMovePools!options!public! !
+getOptionMovePools:!options!public! !
 getOptionNewMethodName:classes:!options!public! !
 getOptionOpenBrowser:!options!public! !
 getOptionPullUpNonSharedInstVar:!options!public! !
@@ -473,7 +473,7 @@ initializeRefactoringOptions
 							-> [:refactoring :selector :class | refactoring getOptionInlineOverridden: selector of: class].
 						#inlineReordered
 							-> [:refactoring :from :into | refactoring getOptionInlineReordered: from into: into].
-						#movePools -> [:refactoring | refactoring getOptionMovePools].
+						#movePools -> [:refactoring :pools | refactoring getOptionMovePools: pools].
 						#methodName
 							-> [:refactoring :methodName :classes | refactoring getOptionNewMethodName: methodName classes: classes].
 						#openBrowser -> [:refactoring :env | refactoring getOptionOpenBrowser: env].

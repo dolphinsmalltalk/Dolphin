@@ -19,7 +19,7 @@ Instance Variables:
 !Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesForClass!Refactory-Refactorings! !
 !Refactory.Browser.ExpandReferencedPoolsRefactoring methodsFor!
 
-computePoolsToMove
+computeReferencedPools
 	| poolVariables searcher |
 	poolVariables := self poolVariableNamesFor: fromClass.
 	pools := Set new.
@@ -43,15 +43,6 @@ forMethod: aParseTree fromClass: aClass toClasses: classCollection
 	parseTree := aParseTree.
 	toClasses := classCollection collect: [:each | self model classFor: each]!
 
-hasPoolsToMove
-	^pools anySatisfy: 
-			[:eachPoolName |
-			toClasses anySatisfy: 
-					[:eachClass |
-					| nonMetaClass |
-					nonMetaClass := eachClass nonMetaclass.
-					(nonMetaClass importsNamespace: eachPoolName) not]]!
-
 movePool: aBindingReference toClass: aClass
 	| nonMetaClass |
 	nonMetaClass := aClass nonMetaclass.
@@ -62,6 +53,15 @@ movePoolVariables
 	pools 
 		do: [:poolDict | toClasses do: [:each | self movePool: poolDict toClass: each]]!
 
+poolsToMove
+	^pools select: 
+			[:eachPoolName |
+			toClasses anySatisfy: 
+					[:eachClass |
+					| nonMetaClass |
+					nonMetaClass := eachClass nonMetaclass.
+					(nonMetaClass importsNamespace: eachPoolName) not]]!
+
 poolVariableNamesIn: poolName
 	^(poolName asQualifiedReference valueOrNil ifNil: [Dictionary new]) keys
 		collect: [:name | name asString]!
@@ -69,12 +69,14 @@ poolVariableNamesIn: poolName
 preconditions
 	^RBCondition empty!
 
-shouldMovePools
-	^(self lookupOption: #movePools) cull: self!
+shouldMovePools: aCollection
+	^(self lookupOption: #movePools) cull: self cull: aCollection!
 
 transform
-	self computePoolsToMove.
-	self hasPoolsToMove ifTrue: [self shouldMovePools ifFalse: [self refactoringAborted]].
+	| toMove |
+	self computeReferencedPools.
+	toMove := self poolsToMove.
+	toMove notEmpty ifTrue: [(self shouldMovePools: toMove) ifFalse: [self refactoringAborted]].
 	self movePoolVariables!
 
 whichPoolDefines: varName
@@ -86,14 +88,14 @@ whichPoolDefines: varName
 			currentClass := currentClass superclass].
 	^nil! !
 !Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesForMethods!
-computePoolsToMove!public!transforming! !
+computeReferencedPools!public!transforming! !
 forMethod:fromClass:toClasses:!initialize/release!public! !
-hasPoolsToMove!public!testing! !
 movePool:toClass:!public!transforming! !
 movePoolVariables!public!transforming! !
+poolsToMove!public! !
 poolVariableNamesIn:!public!transforming! !
 preconditions!preconditions!public! !
-shouldMovePools!private!requests! !
+shouldMovePools:!private!requests! !
 transform!public!transforming! !
 whichPoolDefines:!public!transforming! !
 !

@@ -76,7 +76,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.ChildrenToSiblingsRefactoring} #displayOn:)
 	#(#{Refactory.Browser.CreateAccessorsForVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.ExpandReferencedPoolsRefactoring} #displayOn:)
-	#(#{Refactory.Browser.ExpandReferencedPoolsRefactoring} #getOptionMovePools)
+	#(#{Refactory.Browser.ExpandReferencedPoolsRefactoring} #getOptionMovePools:)
 	#(#{Refactory.Browser.ExtractMethodRefactoring} #displayOn:)
 	#(#{Refactory.Browser.ExtractMethodRefactoring} #getOptionUseExistingMethod:)
 	#(#{Refactory.Browser.ExtractMethodToComponentRefactoring} #displayOn:)
@@ -530,7 +530,7 @@ getOptionAbstractVariables
 	details
 		cr;
 		cr;
-		nextPutAll: 'Accessors will be added for all the variables that do not currently have them.'.
+		nextPutAll: 'Any existing accessor will be used if possible, so accessors will only be added for read or written variables that do not currently have them.'.
 	^MessageBox new
 		caption: self displayString;
 		headline: 'Abstract variable references?';
@@ -720,15 +720,32 @@ displayOn: aPuttableStream
 			[toClasses do: [:each | each name displayOn: aPuttableStream]
 				separatedBy: [aPuttableStream nextPutAll: ', ']]!
 
-getOptionMovePools
+getOptionMovePools: aCollection
+	| details |
+	details := String writeStream.
+	details nextPutAll: 'The following namespaces will need to be imported'.
+	toClasses size == 1
+		ifTrue: 
+			[details
+				nextPutAll: ' into ';
+				nextPutAll: toClasses first unqualifiedName].
+	details
+		nextPut: $:;
+		cr.
+	self
+		printNameList: aCollection asSortedCollection
+		on: details
+		limit: self maxDetails
+		type: 'namespaces'.
 	^MessageBox new
 		caption: self displayString;
 		text: 'This method contains references to shared variables from namespaces that may need to be imported into the target.';
 		customButtons: #(#(#yes '&Add Imports') #(#no '&Cancel'));
+		detailsText: details contents;
 		confirm! !
 !Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
-getOptionMovePools!options!public! !
+getOptionMovePools:!options!public! !
 !
 
 !Refactory.Browser.ExtractMethodRefactoring methodsFor!

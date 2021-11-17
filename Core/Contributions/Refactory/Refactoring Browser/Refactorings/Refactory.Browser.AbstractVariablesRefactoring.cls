@@ -36,7 +36,7 @@ abstractClassVariable: aString
 
 abstractClassVariables
 	| variables |
-	classVarReaders isEmpty & classVarWriters isEmpty ifTrue: [^self].
+	(classVarReaders isEmpty and: [classVarWriters isEmpty]) ifTrue: [^self].
 	variables := Set new.
 	variables
 		addAll: classVarReaders;
@@ -60,7 +60,7 @@ abstractInstanceVariable: aString
 
 abstractInstanceVariables
 	| variables |
-	instVarReaders isEmpty & instVarWriters isEmpty ifTrue: [^self].
+	(instVarReaders isEmpty and: [instVarWriters isEmpty]) ifTrue: [^self].
 	variables := Set new.
 	variables
 		addAll: instVarReaders;
