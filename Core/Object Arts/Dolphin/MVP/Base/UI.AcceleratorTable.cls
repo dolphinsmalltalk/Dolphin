@@ -121,7 +121,7 @@ invariantKeyStringFromCode: anInteger
 	^self keyStringFromCode: anInteger keyboard: Keyboard invariant!
 
 keyCode: vkInteger modifiers: maskInteger
-	"Answer an accelerator key code (an <integer> packed with a virtual key code and accelerator modifiers) created from the 9-bit <integer> virtual key code (the high bit is used to mark extended keys), vkInteger, and the modifier flags <integer> (e.g. FALT), maskInteger."
+	"Answer an accelerator key code (a <SmallInteger> packed with a virtual key code and accelerator modifiers) created from the 9-bit <integer> virtual key code (the high bit is used to mark extended keys), vkInteger, and the modifier flags <integer> (e.g. FALT), maskInteger. The value will be < 16r4000"
 
 	^(vkInteger bitAnd: 16r1FF) bitOr: (maskInteger bitShift: 9)!
 
@@ -137,7 +137,7 @@ keyCodeFromString: aString
 	^self keyCodeFromString: aString keyboard: Keyboard default!
 
 keyCodeFromString: aString keyboard: aKeyboard
-	"Answer an accelerator key code (an integer packed with a virtual key code and accelerator modifiers) created from the key descriptions of the specified <Keyboard>."
+	"Answer an accelerator key code (a <SmallInteger> packed with a virtual key code and accelerator modifiers) created from the key descriptions of the specified <Keyboard>."
 
 	| keys count modifierKeys modifierFlags |
 	keys := KeySeparator split: aString.

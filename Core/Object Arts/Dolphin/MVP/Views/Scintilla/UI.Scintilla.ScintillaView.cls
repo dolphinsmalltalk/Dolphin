@@ -11252,7 +11252,7 @@ initialize
 				isImmutable: true;
 				yourself).
 	keyMap := self defaultKeyMap.
-	defaultKeyBindings := LookupTable new: keyMap size.
+	defaultKeyBindings := IdentityDictionary new: keyMap size.
 	keyMap do: 
 			[:each |
 			| keyCode |
