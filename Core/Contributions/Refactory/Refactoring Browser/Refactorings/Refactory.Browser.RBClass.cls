@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'model name metaclass realClass superclass unqualifiedName classVariableNames imports category classConstants comment environment'
+	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName classVariableNames imports category classConstants comment environment'
 	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -34,6 +34,9 @@ addImport: aString
 	imports := self imports copyWith: ref.
 	model addImport: ref to: self!
 
+addSubclass: aRBClass 
+	self subclasses add: aRBClass!
+
 allClassVariableNames
 	| sprClass |
 	sprClass := self superclass.
@@ -57,15 +60,15 @@ classBindingNames
 
 classConstants
 	classConstants
-		ifNil: [self classConstants: (self isDefined ifTrue: [self realClass classConstants] ifFalse: [#()])].
+		ifNil: [self classConstants: (realClass ifNotNil: [realClass classConstants] ifNil: [#()])].
 	^classConstants!
 
 classConstants: aCollectionOfVariableBindings
 	classConstants := aCollectionOfVariableBindings asOrderedCollection!
 
 classVariableNames
-	(classVariableNames isNil and: [self isDefined])
-		ifTrue: [self classVariableNames: self realClass classBindingNames].
+	(classVariableNames isNil and: [realClass notNil])
+		ifTrue: [self classVariableNames: realClass classBindingNames].
 	^classVariableNames!
 
 classVariableNames: aCollectionOfStrings 
@@ -73,7 +76,7 @@ classVariableNames: aCollectionOfStrings
 
 comment
 	^comment == LookupComment
-		ifTrue: [comment := self isDefined ifTrue: [self realClass comment]]
+		ifTrue: [comment := realClass ifNotNil: [realClass comment]]
 		ifFalse: [comment]!
 
 comment: aString
@@ -115,7 +118,7 @@ getImports
 	"sharedPools collect: [:each | Smalltalk keyAtValue: each]"!
 
 imports
-	imports ifNil: [imports := self isDefined ifTrue: [self realClass imports] ifFalse: [#()]].
+	imports ifNil: [imports := realClass ifNotNil: [realClass imports] ifNil: [#()]].
 	^imports!
 
 imports: aCollectionOfStrings
@@ -154,9 +157,8 @@ localBindingFor: aString
 metaclass
 	^metaclass!
 
-metaclass: aRBMetaclass
-	metaclass := aRBMetaclass.
-	aRBMetaclass nonMetaclass: self!
+metaSubclasses
+	^realClass == Class ifTrue: [#()] ifFalse: [self subclasses collect: [:each | each metaclass]]!
 
 model
 	^model!
@@ -175,9 +177,7 @@ name: aString
 
 nearestRealClass
 	#rbFix.	"Added"
-	^self realClass isNil 
-		ifTrue: [superclass notNil ifTrue: [superclass nearestRealClass]]
-		ifFalse: [self realClass]!
+	^realClass ifNil: [superclass ifNotNil: [superclass nearestRealClass]]!
 
 newBindingContextForIdentifier: aString
 	^Kernel.BindingContext
@@ -244,6 +244,9 @@ realName: aSymbol
 removeClassVariable: aString
 	self classVariableNames remove: aString ifAbsent: [self classConstants remove: aString].
 	model removeClassVariable: aString from: self!
+
+removeSubclass: aRBClass
+	self subclasses remove: aRBClass ifAbsent: nil!
 
 renameClassVariable: oldName to: newName around: aBlock
 	| varNames |
@@ -329,13 +332,28 @@ resolveUnqualifiedName: aString
 	^(self bindingFor: aString)
 		ifNil: [self resolveImportedBinding: (self newBindingContextForIdentifier: aString)]!
 
-setName: aSymbol 
-	name := aSymbol.
+setModel: aRBNamespace name: anObject
+	model := aRBNamespace.
+	name := anObject.
+	metaclass := RBMetaclass basicNew.
+	metaclass nonMetaclass: self.
 	comment := LookupComment!
+
+subclasses
+	#rbFix.	"Dolphin doesn't include Object class as a subclass of Class, so we implement #subBehaviors which does"
+	subclasses isNil
+		ifTrue: 
+			[#rbFix.	"If the model's environment doesn't include all the subclasses, then the original code ends up with nils in the collection"
+			subclasses := OrderedCollection new.
+			realClass
+				ifNotNil: 
+					[realClass subBehaviors
+						do: [:each | (model classFor: each) ifNotNil: [:class | subclasses addLast: class]]]].
+	^subclasses!
 
 superclass
 	^superclass == LookupSuperclass
-		ifTrue: [self model classFor: self realClass superclass]
+		ifTrue: [model classFor: self realClass superclass]
 		ifFalse: [superclass]!
 
 superclass: aRBClass 
@@ -351,6 +369,7 @@ unqualifiedName
 <=!public! !
 addClassVariable:!public!variable accessing! !
 addImport:!namespaces!public! !
+addSubclass:!class hierarchy-adding!private! !
 allClassVariableNames!accessing!public! !
 allImports!namespaces!public! !
 category!accessing!public! !
@@ -378,7 +397,7 @@ isMeta!public!testing! !
 kindOfSubclass!class hierarchy-testing!private! !
 localBindingFor:!bindings!public! !
 metaclass!accessing!public! !
-metaclass:!initializing!private! !
+metaSubclasses!accessing!private! !
 model!accessing!public! !
 model:!initialize/release!public! !
 name!accessing!public! !
@@ -391,6 +410,7 @@ realClass!accessing!public! !
 realClass:!accessing!public! !
 realName:!initialize/release!public! !
 removeClassVariable:!public!variable accessing! !
+removeSubclass:!accessing!public! !
 renameClassVariable:to:around:!public!variable accessing! !
 resolveBindingPath:!bindings!private! !
 resolveImportedBinding:!bindings!private! !
@@ -398,7 +418,8 @@ resolveLocallyImportedBinding:!bindings!private! !
 resolvePathString:!bindings!private! !
 resolvePublicBinding:!bindings!private! !
 resolveUnqualifiedName:!bindings!private! !
-setName:!initializing!private! !
+setModel:name:!accessing!initializing!private! !
+subclasses!accessing!public! !
 superclass!accessing!public! !
 superclass:!accessing!private! !
 unqualifiedName!public! !
@@ -406,31 +427,22 @@ unqualifiedName!public! !
 
 !Refactory.Browser.RBClass class methodsFor!
 
-existingNamed: aSymbol 
-	^(self named: aSymbol)
-		realName: aSymbol;
-		yourself!
-
 initialize
 	LookupComment := Object new!
 
-model: aRBNamespace existing: aBehavior
-	| class |
-	class := aBehavior instanceClass.
-	^(self named: class fullName)
-		model: aRBNamespace;
-		realClass: class;
-		metaclass: RBMetaclass basicNew;
+model: aRBNamespace existing: aClass
+	^self basicNew
+		setModel: aRBNamespace name: aClass fullName;
+		realClass: aClass;
 		yourself!
 
-named: aSymbol
+model: aRBNamespace named: aSymbol
 	^self basicNew
-		setName: aSymbol;
+		setModel: aRBNamespace name: aSymbol;
 		yourself! !
 !Refactory.Browser.RBClass class categoriesForMethods!
-existingNamed:!instance creation!public! !
 initialize!class initialization!public! !
 model:existing:!instance creation!public! !
-named:!instance creation!public! !
+model:named:!instance creation!public! !
 !
 

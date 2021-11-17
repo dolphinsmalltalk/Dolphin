@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Refactory.Browser.RBAbstractClass'
-	instanceVariableNames: 'newMethods instanceVariableNames subclasses removedMethods'
+	instanceVariableNames: 'newMethods instanceVariableNames removedMethods'
 	classVariableNames: 'LookupSuperclass'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -48,9 +48,6 @@ addInstanceVariable: aString
 addMethod: aRBMethod
 	(newMethods ifNil: [newMethods := IdentityDictionary new]) at: aRBMethod selector put: aRBMethod.
 	removedMethods notNil ifTrue: [removedMethods remove: aRBMethod selector ifAbsent: nil]!
-
-addSubclass: aRBClass 
-	self subclasses add: aRBClass!
 
 allClassVariableNames
 	^self subclassResponsibility!
@@ -225,11 +222,12 @@ directlyDefinesClassVariable: aString
 directlyDefinesInstanceVariable: aString 
 	^self instanceVariableNames includes: aString!
 
-directlyDefinesMethod: aSelector 
-	self isDefined 
-		ifTrue: 
-			[(self hasRemoved: aSelector) ifTrue: [^false].
-			(self realClass includesSelector: aSelector) ifTrue: [^true]].
+directlyDefinesMethod: aSelector
+	self realClass
+		ifNotNil: 
+			[:realClass |
+			(self hasRemoved: aSelector) ifTrue: [^false].
+			(realClass includesSelector: aSelector) ifTrue: [^true]].
 	^newMethods notNil and: [newMethods includesKey: aSelector]!
 
 directlyDefinesVariable: aVariableName 
@@ -271,16 +269,18 @@ existingMethodPackageAndEnvironment: aSymbol
 								ifNil: [package environment ifNil: [method methodClass environment]]))]!
 
 existingMethodsThatReferTo: anObject
-	| existingMethods |
+	| existingMethods new |
 	existingMethods := self realClass whichSelectorsReferTo: anObject.
 	(newMethods isNil and: [removedMethods isNil]) ifTrue: [^existingMethods].
-	^existingMethods reject: [:each | (self hasRemoved: each) or: [self newMethods includesKey: each]]!
+	new := self newMethods.
+	^existingMethods reject: [:each | (self hasRemoved: each) or: [new includesKey: each]]!
 
 existingMethodsThatReferToAnyOf: aCollection
-	| existingMethods |
+	| existingMethods new |
 	existingMethods := self realClass whichSelectorsReferToAnyOf: aCollection.
 	(newMethods isNil and: [removedMethods isNil]) ifTrue: [^existingMethods].
-	^existingMethods reject: [:each | (self hasRemoved: each) or: [self newMethods includesKey: each]]!
+	new := self newMethods.
+	^existingMethods reject: [:each | (self hasRemoved: each) or: [new includesKey: each]]!
 
 fullBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
@@ -403,14 +403,15 @@ metaclass
 methodFor: aSelector
 	^self newMethods at: aSelector
 		ifAbsent: 
-			[(self hasRemoved: aSelector) ifTrue: [^nil].
-			(self existingMethodAt: aSelector)
-				ifNotNil: 
-					[:method |
-					RBMethod
-						for: self
-						fromMethod: method
-						andSelector: aSelector]]!
+			[(self hasRemoved: aSelector)
+				ifFalse: 
+					[(self existingMethodAt: aSelector)
+						ifNotNil: 
+							[:method |
+							RBMethod
+								for: self
+								fromMethod: method
+								andSelector: aSelector]]]!
 
 model
 	^self subclassResponsibility!
@@ -448,9 +449,9 @@ printOn: aStream
 privateInstanceVariableNames
 	instanceVariableNames isNil
 		ifTrue: 
-			[self isDefined
-				ifTrue: [self instanceVariableNames: self realClass instVarNames]
-				ifFalse: [instanceVariableNames := OrderedCollection new]].
+			[self realClass
+				ifNotNil: [:realClass | self instanceVariableNames: realClass instVarNames]
+				ifNil: [instanceVariableNames := OrderedCollection new]].
 	^instanceVariableNames!
 
 protocolsFor: aSelector
@@ -461,16 +462,13 @@ protocolsFor: aSelector
 				ifFalse: [self model changes changeForClass: self name selector: aSelector].
 	^change isNil
 		ifTrue: 
-			[self isDefined
-				ifTrue: [BrowserEnvironment new whichProtocolsInclude: aSelector in: self realClass]
-				ifFalse: [#(#accessing)]]
+			[self realClass
+				ifNotNil: [:realClass | BrowserEnvironment new whichProtocolsInclude: aSelector in: realClass]
+				ifNil: [#(#accessing)]]
 		ifFalse: [change protocols]!
 
 realClass
 	^self subclassResponsibility!
-
-removedMethods
-	^removedMethods isNil ifTrue: [removedMethods := Set new] ifFalse: [removedMethods]!
 
 removeInstanceVariable: aString
 	self privateInstanceVariableNames remove: aString.
@@ -479,10 +477,7 @@ removeInstanceVariable: aString
 removeMethod: aSelector
 	self newMethods removeKey: aSelector ifAbsent: nil.
 	self model removeMethod: aSelector from: self.
-	self removedMethods add: aSelector!
-
-removeSubclass: aRBClass
-	self subclasses remove: aRBClass ifAbsent: nil!
+	(removedMethods ifNil: [removedMethods := Set new]) add: aSelector!
 
 renameInstanceVariable: oldName to: newName around: aBlock
 	self privateInstanceVariableNames at: (self privateInstanceVariableNames indexOf: oldName asString)
@@ -497,10 +492,11 @@ selectors
 	| selectors |
 	selectors := Set new.
 	selectors addAll: self newMethods keys.
-	self isDefined
-		ifTrue: 
-			[selectors addAll: self realClass selectors.
-			removedMethods notNil ifTrue: [removedMethods do: [:each | selectors remove: each ifAbsent: nil]]].
+	self realClass
+		ifNotNil: 
+			[:realClass |
+			selectors addAll: realClass selectors.
+			removedMethods ifNotNil: [removedMethods do: [:each | selectors remove: each ifAbsent: nil]]].
 	^selectors!
 
 soleInstance
@@ -516,16 +512,7 @@ storeOn: aStream
 	aStream nextPutAll: self name!
 
 subclasses
-	#rbFix.	"Dolphin doesn't include Object class as a subclass of Class, so we implement #subBehaviors which does"
-	subclasses isNil
-		ifTrue: 
-			[#rbFix.	"If the model's environment doesn't include all the subclasses, then the original code ends up with nils in the collection"
-			subclasses := OrderedCollection new.
-			self isDefined
-				ifTrue: 
-					[self realClass subBehaviors
-						do: [:each | (self model classFor: each) ifNotNil: [:class | subclasses addLast: class]]]].
-	^subclasses!
+	^self subclassResponsibility!
 
 subclassRedefines: aSelector 
 	"Return true, if one of your subclasses redefines the method with name, aMethod"
@@ -575,10 +562,11 @@ whichSelectorsReferToClassVariable: aString
 	selectors := Set new.
 	self newMethods
 		do: [:each | (each refersToVariable: aString) ifTrue: [selectors add: each selector]].
-	self nonMetaclass isDefined
-		ifTrue: 
-			[| binding definingClass |
-			definingClass := self nonMetaclass realClass whichClassDefinesClassVar: aString asString.
+	self nonMetaclass realClass
+		ifNotNil: 
+			[:realClass |
+			| binding definingClass |
+			definingClass := realClass whichClassDefinesClassVar: aString asString.
 			definingClass notNil ifTrue: [binding := (self model classFor: definingClass) bindingFor: aString].
 			binding isNil ifTrue: [^selectors].
 			selectors
@@ -590,10 +578,11 @@ whichSelectorsReferToInstanceVariable: aString
 	selectors := Set new.
 	self newMethods
 		do: [:each | (each refersToVariable: aString) ifTrue: [selectors add: each selector]].
-	self isDefined
-		ifTrue: 
-			[selectors
-				addAll: ((self realClass whichSelectorsAccess: aString) reject: [:each | self hasRemoved: each])].
+	self realClass
+		ifNotNil: 
+			[:realClass |
+			selectors
+				addAll: ((realClass whichSelectorsAccess: aString) reject: [:each | self hasRemoved: each])].
 	^selectors!
 
 whoDefinesClassVariable: aString 
@@ -641,7 +630,6 @@ withAllSuperclassesDo: aMonadicValuable
 =!comparing!public! !
 addInstanceVariable:!public!variable accessing! !
 addMethod:!method accessing!public! !
-addSubclass:!class hierarchy-adding!private! !
 allClassVariableNames!accessing!public! !
 allImports!accessing!public! !
 allInstanceVariableNames!accessing!public! !
@@ -716,10 +704,8 @@ printOn:!printing!public! !
 privateInstanceVariableNames!accessing!private! !
 protocolsFor:!accessing!public! !
 realClass!accessing!public! !
-removedMethods!accessing!public! !
 removeInstanceVariable:!public!variable accessing! !
 removeMethod:!method accessing!public! !
-removeSubclass:!accessing!public! !
 renameInstanceVariable:to:around:!public!variable accessing! !
 selectors!method accessing!public! !
 soleInstance!accessing!public! !

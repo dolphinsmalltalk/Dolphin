@@ -56,6 +56,11 @@ resolveImportedBinding: aBindingContext
 	(self resolveLocallyImportedBinding: aBindingContext) ifNotNil: [:binding | ^binding].
 	^self environment ifNotNil: [:env | env resolveImportedBinding: aBindingContext]!
 
+setModel: aRBNamespace name: anObject
+	super setModel: aRBNamespace name: anObject.
+	newVariables := Dictionary new.
+	removedVariables := Set new!
+
 setName: aSymbol 
 	name := aSymbol.
 	newVariables := Dictionary new.
@@ -69,6 +74,7 @@ localBindingFor:!bindings!public! !
 removeClass:!public! !
 removeVariableNamed:!public! !
 resolveImportedBinding:!binding!private! !
+setModel:name:!accessing!initializing!private! !
 setName:!initializing!private! !
 !
 

@@ -83,14 +83,13 @@ storeOn: aStream
 	super storeOn: aStream.
 	aStream nextPutAll: ' class'!
 
+subclasses
+	^nonMetaclass metaSubclasses!
+
 superclass
 	^nonMetaclass superclass
 		ifNil: [self model classFor: Class]
 		ifNotNil: [:superclass | superclass metaclass]!
-
-superclass: aRBClass
-	self superclass notNil ifTrue: [self superclass removeSubclass: self].
-	aRBClass notNil ifTrue: [aRBClass addSubclass: self]!
 
 unqualifiedName
 	"Answer the unqualified name of the non-metaclass."
@@ -117,8 +116,8 @@ nonMetaclass:!accessing!initializing!private! !
 printOn:!printing!public! !
 realClass!accessing!public! !
 storeOn:!printing!public! !
+subclasses!accessing!public! !
 superclass!accessing!public! !
-superclass:!accessing!private! !
 unqualifiedName!accessing!public! !
 !
 

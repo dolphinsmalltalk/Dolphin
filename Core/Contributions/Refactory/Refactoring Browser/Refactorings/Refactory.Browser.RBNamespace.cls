@@ -51,11 +51,11 @@ allClassesDo: aBlock
 
 allImplementorsOf: aSelector 
 	^implementorsCache at: aSelector
-		ifAbsentPut: [self privateImplementorsOf: aSelector]!
+		ifAbsentPutClean: [self privateImplementorsOf: aSelector]!
 
 allReferencesTo: aSymbol do: aBlock
 	(sendersCache at: aSymbol
-		ifAbsentPut: 
+		ifAbsentPutClean: 
 			[| refs |
 			refs := OrderedCollection new.
 			self allClassesDo: 
@@ -148,18 +148,11 @@ defineClass: aString
 	newClass isNil
 		ifTrue: 
 			[removedClasses remove: newClassName ifAbsent: nil.
-			newClass := RBClass named: newClassName.
-			newClass
-				model: self;
-				metaclass: RBMetaclass basicNew.
+			newClass := RBClass model: self named: newClassName.
 			newClasses at: newClassName put: newClass.
 			newClass environment addClass: newClass].
 	newClass superclass: (self classNamed: change superclassName).
-	newClass superclass isNil
-		ifTrue: 
-			[self rootClasses add: newClass.
-			newClass metaclass superclass: (self classFor: Object class superclass)]
-		ifFalse: [newClass metaclass superclass: newClass superclass metaclass].
+	newClass superclass isNil ifTrue: [self rootClasses add: newClass].
 	newClass instanceVariableNames: change instanceVariableNames.
 	newClass classVariableNames: change classVariableNames copy.
 	newClass imports: change imports copy.
@@ -272,7 +265,6 @@ renameClass: aRBClass to: aSymbol around: aBlock
 	value := dict removeKey: oldName.
 	dict at: aSymbol put: value.
 	value subclasses do: [:each | each superclass: value].
-	value metaclass subclasses do: [:each | each superclass: value metaclass].
 	^change!
 
 renameClassVariable: oldName to: newName in: aRBClass around: aBlock
