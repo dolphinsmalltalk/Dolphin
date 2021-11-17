@@ -40,13 +40,13 @@ chunkType
 	^#'Class Comment'!
 
 isChunkClassFor: aString
-	"Abc comment: ''''
+	"Abc comment:'
 	Don't check for trailing space in aString as the change log adds multiple entries for class
 	comments - some delimited with a space but some with a crlf"
 
 	| firstSpaceIndex |
-	^(firstSpaceIndex := aString indexOf: Character space) ~= 0
-		and: [(aString indexOfSubCollection: ' comment: ''') = firstSpaceIndex]! !
+	^(firstSpaceIndex := aString indexOf: $\x20) ~~ 0
+		and: [(aString indexOfSubCollection: ' comment:') = firstSpaceIndex]! !
 !ChunkBrowserClassCommentChunk class categoriesForMethods!
 chunkType!constants!public! !
 isChunkClassFor:!public!testing! !
