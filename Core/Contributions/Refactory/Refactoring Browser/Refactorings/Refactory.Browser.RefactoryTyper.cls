@@ -126,7 +126,7 @@ implementorsOf: aSelector in: aClass storeIn: classes
 				storeIn: classes]!
 
 initialize
-	model := RBNamespace new.
+	model := RBModel new.
 	class := model classFor: Object.
 	variableTypes := Dictionary new.
 	variableMessages := Dictionary new.
@@ -144,8 +144,8 @@ merge: aName
 model
 	^model!
 
-model: aRBNamespace 
-	model := aRBNamespace!
+model: aRBModel
+	model := aRBModel!
 
 printOn: aStream 
 	aStream
@@ -344,12 +344,12 @@ new
 		initialize;
 		yourself!
 
-newFor: aRBNamespace 
-	^(self new)
-		model: aRBNamespace;
+newFor: aRBModel
+	^self new
+		model: aRBModel;
 		yourself!
 
-typesFor: variableName in: aParseTree model: aRBNamespace
+typesFor: variableName in: aParseTree model: aRBModel
 	| searcher messages |
 	searcher := ParseTreeSearcher new.
 	searcher matches: variableName , ' `@message: ``@args'
@@ -360,7 +360,7 @@ typesFor: variableName in: aParseTree model: aRBNamespace
 				yourself].
 	messages := searcher executeTree: aParseTree initialAnswer: Set new.
 	^self new
-		model: aRBNamespace;
+		model: aRBModel;
 		findTypeFor: messages! !
 !Refactory.Browser.RefactoryTyper class categoriesForMethods!
 new!instance creation!public! !

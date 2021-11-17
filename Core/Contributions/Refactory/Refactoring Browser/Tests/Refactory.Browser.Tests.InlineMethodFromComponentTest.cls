@@ -140,7 +140,7 @@ testInlineMethodFromComponentFailure
 
 testModelInlineMethodWithSameVariableNames
 	| class refactoring |
-	model := RBNamespace new.
+	model := RBModel new.
 	class := model classNamed: self class fullName.
 	class compile: 'a9: a b9: b ^self + a + b' classified: #accessing.
 	(model classNamed: Object fullName)
@@ -159,7 +159,7 @@ testModelInlineMethodWithSameVariableNames
 
 testModelInlineMethodWithSameVariableNames1
 	| class refactoring |
-	model := RBNamespace new.
+	model := RBModel new.
 	class := model classNamed: Graphics.Rectangle fullName.
 	class compile: 'rectangleRelativeTo: aRectangle ^self origin extent: aRectangle extent'
 		classified: #accessing.
@@ -180,7 +180,7 @@ testModelInlineMethodWithSameVariableNames1
 
 testModelInlineMethodWithSameVariableNames2
 	| class refactoring |
-	model := RBNamespace new.
+	model := RBModel new.
 	class := model classNamed: self class fullName.
 	class compile: 'a9: a b9: b ^self + a + b' classified: #accessing.
 	(model classNamed: Object fullName)

@@ -123,7 +123,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.RBClass} #removeClassConstant:)
 	#(#{Refactory.Browser.RBClass} #removeImport:)
 	#(#{Refactory.Browser.RBMethod} #owningPackage)
-	#(#{Refactory.Browser.RBNamespace} #removeImport:from:)
+	#(#{Refactory.Browser.RBModel} #removeImport:from:)
 	#(#{Refactory.Browser.Refactoring} #confirm:)
 	#(#{Refactory.Browser.Refactoring} #maxDetails)
 	#(#{Refactory.Browser.Refactoring} #printNameList:on:limit:type:)
@@ -1325,11 +1325,11 @@ owningPackage
 owningPackage!accessing!public! !
 !
 
-!Refactory.Browser.RBNamespace methodsFor!
+!Refactory.Browser.RBModel methodsFor!
 
 removeImport: aBindingReference from: aRBClass
 	^changes removeImport: aBindingReference from: aRBClass! !
-!Refactory.Browser.RBNamespace categoriesForMethods!
+!Refactory.Browser.RBModel categoriesForMethods!
 removeImport:from:!changes!private! !
 !
 
@@ -2115,7 +2115,7 @@ buildVariablesMenu: aMenu instVarSelectors: instVarSelectors classVarSelectors: 
 
 cloneClass: aClass under: superClass changes: aCompositeRefactoryChange
 	| namespace newName |
-	namespace := RBNamespace new
+	namespace := RBModel new
 				changes: aCompositeRefactoryChange;
 				yourself.
 	

@@ -68,9 +68,9 @@ storeOn:!printing!public! !
 
 !Refactory.Browser.RenameMethodRefactoring class methodsFor!
 
-model: aRBNamespace renameMethod: aSelector in: aClass to: newSelector permutation: aMap 
-	^(self new)
-		model: aRBNamespace;
+model: aRBmodel renameMethod: aSelector in: aClass to: newSelector permutation: aMap
+	^self new
+		model: aRBmodel;
 		renameMethod: aSelector
 			in: aClass
 			to: newSelector

@@ -92,9 +92,9 @@ addClass: aName superclass: aClass subclasses: aCollection category: aSymbol
 		subclasses: aCollection
 		category: aSymbol!
 
-model: aRBNamespace addClass: aName superclass: aClass subclasses: aCollection category: aSymbol 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel addClass: aName superclass: aClass subclasses: aCollection category: aSymbol
+	^self new
+		model: aRBModel;
 		addClass: aName
 			superclass: aClass
 			subclasses: aCollection

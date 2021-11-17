@@ -58,9 +58,9 @@ addMethod: aString toClass: aClass inProtocols: protocolList
 		toClass: aClass
 		inProtocols: protocolList!
 
-model: aRBNamespace addMethod: aString toClass: aClass inProtocols: protocolList 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel addMethod: aString toClass: aClass inProtocols: protocolList
+	^self new
+		model: aRBModel;
 		addMethod: aString
 			toClass: aClass
 			inProtocols: protocolList;

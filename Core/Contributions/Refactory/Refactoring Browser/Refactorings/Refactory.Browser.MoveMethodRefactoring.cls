@@ -296,9 +296,9 @@ verifyTemporaryVariableDoesNotOverride!public!transforming! !
 
 !Refactory.Browser.MoveMethodRefactoring class methodsFor!
 
-model: aRBNamespace selector: aSymbol class: aClass variable: aVariableName 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel selector: aSymbol class: aClass variable: aVariableName
+	^self new
+		model: aRBModel;
 		selector: aSymbol
 			class: aClass
 			variable: aVariableName;

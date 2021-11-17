@@ -163,8 +163,8 @@ metaSubclasses
 model
 	^model!
 
-model: aRBNamespace 
-	model := aRBNamespace!
+model: aRBModel
+	model := aRBModel!
 
 name
 	"Answer the name of the non-metaclass. Note that in Dolphin 8 this is always a fully-qualified name."
@@ -332,8 +332,8 @@ resolveUnqualifiedName: aString
 	^(self bindingFor: aString)
 		ifNil: [self resolveImportedBinding: (self newBindingContextForIdentifier: aString)]!
 
-setModel: aRBNamespace name: anObject
-	model := aRBNamespace.
+setModel: aRBModel name: anObject
+	model := aRBModel.
 	name := anObject.
 	metaclass := RBMetaclass basicNew.
 	metaclass nonMetaclass: self.
@@ -348,7 +348,7 @@ subclasses
 			realClass
 				ifNotNil: 
 					[realClass subBehaviors
-						do: [:each | (model classFor: each) ifNotNil: [:class | subclasses addLast: class]]]].
+						do: [:each | (model classNamed: each fullName) ifNotNil: [:class | subclasses addLast: class]]]].
 	^subclasses!
 
 superclass
@@ -430,15 +430,15 @@ unqualifiedName!public! !
 initialize
 	LookupComment := Object new!
 
-model: aRBNamespace existing: aClass
+model: aRBModel existing: aClass
 	^self basicNew
-		setModel: aRBNamespace name: aClass fullName;
+		setModel: aRBModel name: aClass fullName;
 		realClass: aClass;
 		yourself!
 
-model: aRBNamespace named: aSymbol
+model: aRBModel named: aSymbol
 	^self basicNew
-		setModel: aRBNamespace name: aSymbol;
+		setModel: aRBModel name: aSymbol;
 		yourself! !
 !Refactory.Browser.RBClass class categoriesForMethods!
 initialize!class initialization!public! !

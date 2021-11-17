@@ -1496,7 +1496,7 @@ initialize
 	"Special case"
 	commands at: 'SCI_SETZOOM' put: #resetZoom.
 	parsingDeprecated := false.
-	namespace := Refactory.Browser.RBNamespace new.
+	namespace := Refactory.Browser.RBModel new.
 	generatedSelectors := LookupTable new.
 	constantsPool := Dictionary new.
 	aliases := LookupTable new.

@@ -38,7 +38,7 @@ testRemoveMethod
 
 testRemoveReferenced
 	| subject |
-	model := RBNamespace
+	model := RBModel
 				onEnvironment: (BrowserEnvironment new forClasses: {SmalllintChecker. BasicLintRuleTestData}).
 	subject := RemoveMethodRefactoring
 				model: model

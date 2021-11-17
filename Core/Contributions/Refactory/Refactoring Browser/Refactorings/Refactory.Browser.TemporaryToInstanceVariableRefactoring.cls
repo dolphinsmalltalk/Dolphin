@@ -81,9 +81,9 @@ class: aClass selector: aSelector variable: aVariableName
 		selector: aSelector
 		variable: aVariableName!
 
-model: aRBNamespace class: aClass selector: aSelector variable: aVariableName 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel class: aClass selector: aSelector variable: aVariableName
+	^self new
+		model: aRBModel;
 		class: aClass
 			selector: aSelector
 			variable: aVariableName;

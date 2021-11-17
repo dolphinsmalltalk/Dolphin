@@ -236,10 +236,10 @@ isEmptyClass: anObject
 				nextPut: $);
 				contents]!
 
-isGlobal: aString in: aRBNamespace 
-	^self new 
+isGlobal: aString in: aRBModel
+	^self new
 		type: {#isGlobal. aString}
-		block: [aRBNamespace includesGlobal: aString]
+		block: [aRBModel includesGlobal: aString]
 		errorString: aString , ' is <1?:not >a class or global variable'!
 
 isImmediateSubclass: subclass of: superClass

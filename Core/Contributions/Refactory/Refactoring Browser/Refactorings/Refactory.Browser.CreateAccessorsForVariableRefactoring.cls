@@ -167,9 +167,9 @@ usesAssignmentOf:in:classVariable:!public!testing! !
 
 !Refactory.Browser.CreateAccessorsForVariableRefactoring class methodsFor!
 
-model: aRBNamespace variable: aVarName class: aClass classVariable: aBoolean 
-	^(self 
-		model: aRBNamespace
+model: aRBModel variable: aVarName class: aClass classVariable: aBoolean
+	^(self
+		model: aRBModel
 		variable: aVarName
 		class: aClass)
 		classVariable: aBoolean;

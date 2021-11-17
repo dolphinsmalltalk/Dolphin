@@ -118,9 +118,9 @@ transform!public!transforming! !
 
 !Refactory.Browser.RemoveMethodRefactoring class methodsFor!
 
-model: aRBNamespace removeMethods: selectorCollection from: aClass 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel removeMethods: selectorCollection from: aClass
+	^self new
+		model: aRBModel;
 		removeMethods: selectorCollection from: aClass;
 		yourself!
 

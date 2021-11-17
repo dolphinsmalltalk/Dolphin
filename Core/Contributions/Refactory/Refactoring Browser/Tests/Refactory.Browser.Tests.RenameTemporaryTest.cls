@@ -53,7 +53,7 @@ testBadName
 
 testModelBadName
 	| class |
-	model := RBNamespace new.
+	model := RBModel new.
 	class := model classNamed: #'Core.Object'.
 	class compile: 'aMethod: temp1 ^[| temp2 | temp2 := [:temp3 | temp3 = 5] value: 5. temp2] value'
 		classified: #accessing.

@@ -14,7 +14,7 @@ Refactory.Browser.Tests.RefactoringTest comment: ''!
 
 abstractVariableTestData
 	| testModel |
-	(testModel := Refactory.Browser.RBNamespace
+	(testModel := Refactory.Browser.RBModel
 				onEnvironment: ((Refactory.Browser.ClassEnvironment
 						onEnvironment: Refactory.Browser.BrowserEnvironment new)
 							classes: (#(#Bar #Foo) inject: OrderedCollection new
@@ -68,7 +68,7 @@ abstractVariableTestData
 
 childrenToSiblingTestData
 	| testModel |
-	(testModel := Refactory.Browser.RBNamespace
+	(testModel := Refactory.Browser.RBModel
 				onEnvironment: ((Refactory.Browser.ClassEnvironment
 						onEnvironment: Refactory.Browser.BrowserEnvironment new)
 							classes: (#(#ConcreteSubclass #ConcreteSuperclass #NoMoveSubclass) inject: OrderedCollection new
@@ -125,7 +125,7 @@ instVarName1 := instVarName2 := ClassVarName1 := ClassVarName2 := 0' #everyone))
 
 inlineMethodTestData
 	| testModel |
-	(testModel := Refactory.Browser.RBNamespace
+	(testModel := Refactory.Browser.RBModel
 				onEnvironment: ((Refactory.Browser.ClassEnvironment
 						onEnvironment: Refactory.Browser.BrowserEnvironment new)
 							classes: (#(#RenameClassVariableChange #VariableCompositeRefactoryChange #RenameInstanceVariableChange #CompositeRefactoryChange #RenameVariableChange #RefactoryChange)
@@ -336,7 +336,7 @@ setUp
 	assoc := RefactoringManager localBindingFor: 'Instance'.
 	manager := assoc value.
 	assoc value: nil.
-	model := RBNamespace new!
+	model := RBModel new!
 
 setupImplementorToInlineFor: aRefactoring toReturn: anObject
 	aRefactoring setOption: #implementorToInline toUse: [anObject]!

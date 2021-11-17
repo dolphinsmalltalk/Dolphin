@@ -253,9 +253,9 @@ transform!public!transforming! !
 
 !Refactory.Browser.PushUpMethodRefactoring class methodsFor!
 
-model: aRBNamespace pushUp: selectorCollection from: aClass 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel pushUp: selectorCollection from: aClass
+	^self new
+		model: aRBModel;
 		pushUp: selectorCollection from: aClass;
 		yourself!
 

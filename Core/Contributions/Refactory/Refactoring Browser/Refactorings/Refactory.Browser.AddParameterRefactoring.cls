@@ -165,9 +165,9 @@ addParameterToMethod: aSelector in: aClass newSelector: newSelector initializer:
 		newSelector: newSelector
 		initializer: init!
 
-model: aRBNamespace addParameterToMethod: aSelector in: aClass newSelector: newSelector initializer: init 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel addParameterToMethod: aSelector in: aClass newSelector: newSelector initializer: init
+	^self new
+		model: aRBModel;
 		addParameterToMethod: aSelector
 			in: aClass
 			newSelector: newSelector

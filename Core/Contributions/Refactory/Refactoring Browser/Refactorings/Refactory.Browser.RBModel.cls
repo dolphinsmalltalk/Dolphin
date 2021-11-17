@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Refactory.Browser.RBNamespace'
+Core.Object subclass: #'Refactory.Browser.RBModel'
 	instanceVariableNames: 'changes environment newClasses removedClasses changedClasses rootClasses implementorsCache sendersCache'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RBNamespace guid: (Core.GUID fromString: '{e04ee960-3b00-47a4-b10a-e93cb600dad5}')!
-Refactory.Browser.RBNamespace comment: ''!
-!Refactory.Browser.RBNamespace categoriesForClass!Refactory-Model! !
-!Refactory.Browser.RBNamespace methodsFor!
+Refactory.Browser.RBModel guid: (Core.GUID fromString: '{e04ee960-3b00-47a4-b10a-e93cb600dad5}')!
+Refactory.Browser.RBModel comment: ''!
+!Refactory.Browser.RBModel categoriesForClass!Refactory-Model! !
+!Refactory.Browser.RBModel methodsFor!
 
 addChangeToClass: aRBClass
 	^changedClasses at: aRBClass name put: {aRBClass nonMetaclass. aRBClass metaclass}!
@@ -41,10 +41,12 @@ allClassesDo: aBlock
 			[:each |
 			each isMeta
 				ifFalse: 
-					[((seen includes: each fullName) or: [self hasRemoved: each fullName])
+					[| fullName |
+					fullName := each fullName.
+					((seen includes: fullName) or: [self hasRemoved: fullName])
 						ifFalse: 
 							[| class |
-							class := self classFor: each.
+							class := self classNamed: fullName.
 							aBlock
 								value: class;
 								value: class metaclass]]]!
@@ -82,12 +84,10 @@ changes: aCompositeRefactoryChange
 	changes := aCompositeRefactoryChange!
 
 classFor: aBehavior
-	| nonMetaclass |
 	aBehavior isNil ifTrue: [^nil].
-	nonMetaclass := aBehavior instanceClass.
 	^aBehavior isMeta
-		ifTrue: [self metaclassNamed: nonMetaclass fullName]
-		ifFalse: [self classNamed: nonMetaclass fullName]!
+		ifTrue: [self metaclassNamed: aBehavior instanceClass fullName]
+		ifFalse: [self classNamed: aBehavior fullName]!
 
 classNamed: aString
 	| index |
@@ -315,7 +315,7 @@ setEnvironment: aBrowserEnvironment
 
 whichCategoryIncludes: aSymbol
 	^self environment whichCategoryIncludes: aSymbol! !
-!Refactory.Browser.RBNamespace categoriesForMethods!
+!Refactory.Browser.RBModel categoriesForMethods!
 addChangeToClass:!changes!private! !
 addClassConstant:to:!changes!private! !
 addClassVariable:to:!changes!private! !
@@ -361,7 +361,7 @@ setEnvironment:!initialize/release!private! !
 whichCategoryIncludes:!accessing/classes!public! !
 !
 
-!Refactory.Browser.RBNamespace class methodsFor!
+!Refactory.Browser.RBModel class methodsFor!
 
 new
 	^self onEnvironment: BrowserEnvironment new!
@@ -370,7 +370,7 @@ onEnvironment: aBrowserEnvironment
 	^self basicNew
 		setEnvironment: aBrowserEnvironment;
 		yourself! !
-!Refactory.Browser.RBNamespace class categoriesForMethods!
+!Refactory.Browser.RBModel class categoriesForMethods!
 new!instance creation!public! !
 onEnvironment:!instance creation!public! !
 !

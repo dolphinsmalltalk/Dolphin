@@ -89,9 +89,9 @@ inlineParameter: aString in: aClass selector: aSelector
 		in: aClass
 		selector: aSelector!
 
-model: aRBNamespace inlineParameter: aString in: aClass selector: aSelector 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel inlineParameter: aString in: aClass selector: aSelector
+	^self new
+		model: aRBModel;
 		inlineParameter: aString
 			in: aClass
 			selector: aSelector;

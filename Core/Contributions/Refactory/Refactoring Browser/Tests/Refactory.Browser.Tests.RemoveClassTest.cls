@@ -89,7 +89,7 @@ testRemoveSelfReferenced
 	"We don't expect the subclass to have any references at present, certainly not outside the hierarchy"
 	refs := env referencesTo: SubclassOfClassToRename.
 	self assert: (refs classNames difference: classNames) isEmpty.
-	model := RBNamespace onEnvironment: env.
+	model := RBModel onEnvironment: env.
 	refactoring := RemoveClassRefactoring model: model classNames: classNames.
 	"Create a reference only in the model class to itself, and to the subclass (which has existing refs to the parent)"
 	(model classFor: ClassToRename)

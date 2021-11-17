@@ -179,7 +179,7 @@ testExtractMethodThatNeedsTemporaryVariable
 
 testModelExtractMethodWithTemporariesSelected
 	| class refactoring |
-	model := RBNamespace new.
+	model := RBModel new.
 	class := model classNamed: self class fullName.
 	class compile: 'foo [| temp | temp := 5. temp * temp] value' classified: #accessing.
 	refactoring := ExtractMethodRefactoring
@@ -195,7 +195,7 @@ testModelExtractMethodWithTemporariesSelected
 
 testModelExtractMethodWithTemporaryAssigned
 	| class refactoring |
-	model := RBNamespace new.
+	model := RBModel new.
 	class := model classNamed: self class fullName.
 	class
 		compile: 'foo 				| temp bar | 				bar := 5. 				temp := bar * bar. 				Transcript show: temp printString; cr. 				^temp * temp'

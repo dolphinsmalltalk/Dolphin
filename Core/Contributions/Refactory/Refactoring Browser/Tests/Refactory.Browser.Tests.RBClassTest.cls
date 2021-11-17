@@ -13,7 +13,7 @@ Refactory.Browser.Tests.RBClassTest comment: ''!
 
 setUp
 	super setUp.
-	model := RBNamespace new.
+	model := RBModel new.
 	objectClass := model classNamed: 'Core.Object'.
 	messageNodeClass := model classNamed: RBMessageNode fullName.
 	model
@@ -53,8 +53,7 @@ testDefinesPoolDictionary
 	self deny: (objectClass importsNamespace: #OpcodePool).
 	self assert: (newClass importsNamespace: #OpcodePool).
 	self deny: (messageNodeClass importsNamespace: #'OS.Win32Constants').
-	self
-		assert: ((RBNamespace new classNamed: #'OS.HRESULTError') importsNamespace: #'OS.FacilityCodes')!
+	self assert: ((RBModel new classNamed: #'OS.HRESULTError') importsNamespace: #'OS.FacilityCodes')!
 
 testEnvironment
 	| rbTests myClass refactory root |

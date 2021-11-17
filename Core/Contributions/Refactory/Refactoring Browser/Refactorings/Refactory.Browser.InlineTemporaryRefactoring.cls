@@ -118,9 +118,9 @@ inline: anInterval from: aSelector in: aClass
 		from: aSelector
 		in: aClass!
 
-model: aRBNamespace inline: anInterval from: aSelector in: aClass 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel inline: anInterval from: aSelector in: aClass
+	^self new
+		model: aRBModel;
 		inline: anInterval
 			from: aSelector
 			in: aClass;

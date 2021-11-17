@@ -14,7 +14,7 @@ Refactory.Browser.Tests.RBNamespaceTest comment: ''!
 testAllClassesDo
 	| model classes |
 	classes := 0.
-	model := RBNamespace new.
+	model := RBModel new.
 	model allClassesDo: 
 			[:each |
 			each name = #'Core.Object' ifTrue: [each allSubclasses].
@@ -24,7 +24,7 @@ testAllClassesDo
 
 testCommentChange
 	| st cl |
-	st := RBNamespace new.
+	st := RBModel new.
 	cl := st classNamed: self class fullName.
 	self assert: cl comment isString.
 	cl comment: 'a comment'.
@@ -38,7 +38,7 @@ testCommentChange
 
 testDefineClassAfterDeletedChange
 	| st className |
-	st := RBNamespace new.
+	st := RBModel new.
 	className := self class fullName.
 	st removeClassNamed: className.
 	self deny: (st includesClassNamed: className).
@@ -48,7 +48,7 @@ testDefineClassAfterDeletedChange
 
 testDefineClassChange
 	| st |
-	st := RBNamespace new.
+	st := RBModel new.
 	st
 		defineClass: 'RefactoringBrowserTest subclass: #SmalltalkTestXXX
 				instanceVariableNames: ''''
@@ -60,22 +60,22 @@ testDefineClassChange
 
 testImplementors
 	| st |
-	st := RBNamespace new.
+	st := RBModel new.
 	self assert: ((st allImplementorsOf: #printString) includes: (st classNamed: #'Core.Object')).
 	(st classNamed: #'Core.Object') removeMethod: #printString.
 	self deny: ((st allImplementorsOf: #printString) includes: (st classNamed: #'Core.Object'))!
 
 testIncludesClass
-	self assert: (RBNamespace new includesClassNamed: #'Core.Object').
-	self deny: (RBNamespace new includesClassNamed: #Object1).
+	self assert: (RBModel new includesClassNamed: #'Core.Object').
+	self deny: (RBModel new includesClassNamed: #Object1).
 	self
-		deny: ((RBNamespace
+		deny: ((RBModel
 				onEnvironment: (ClassEnvironment onEnvironment: BrowserEnvironment new classes: {Object}))
 					includesClassNamed: #OrderedCollection)!
 
 testModelImplementorsSenders
 	| model class modelImps refs found |
-	model := RBNamespace new.
+	model := RBModel new.
 	model
 		defineClass: 'Object subclass: #Asdf
 			instanceVariableNames: ''''
@@ -100,7 +100,7 @@ testModelImplementorsSenders
 
 testRedefineClassChange
 	| st |
-	st := RBNamespace new.
+	st := RBModel new.
 	st
 		defineClass: 'nil subclass: #Object
 				instanceVariableNames: ''a''
@@ -114,14 +114,14 @@ testReferencesPrintOn
 	| hasFoundObject hasFoundSelf st |
 	hasFoundObject := false.
 	hasFoundSelf := false.
-	st := RBNamespace new.
+	st := RBModel new.
 	st allReferencesTo: #printOn:
 		do: 
 			[:each |
 			hasFoundObject := hasFoundObject
 						or: [each selector = #fullPrintString and: [each modelClass = (st classNamed: #'Core.Object')]].
-			hasFoundSelf := hasFoundSelf
-						or: [each selector = #testReferencesPrintOn and: [each modelClass = (st classNamed: self class fullName)]]].
+			hasFoundSelf := hasFoundSelf or: 
+							[each selector = #testReferencesPrintOn and: [each modelClass = (st classNamed: self class fullName)]]].
 	self assert: hasFoundObject.
 	self assert: hasFoundSelf!
 
@@ -129,7 +129,7 @@ testReferencesPrintOnAfterAddition
 	| hasFoundObject hasFoundSelf smalltalk |
 	hasFoundObject := false.
 	hasFoundSelf := false.
-	smalltalk := RBNamespace new.
+	smalltalk := RBModel new.
 	(smalltalk classNamed: #'Core.Object') compile: 'someTestReference self printOn: nil'
 		classified: #testing.
 	(smalltalk classNamed: self class fullName) compile: 'someTestReference ^ #printOn:'
@@ -149,7 +149,7 @@ testReferencesPrintOnAfterRemove
 	| hasFoundObject hasFoundSelf st |
 	hasFoundObject := false.
 	hasFoundSelf := false.
-	st := RBNamespace new.
+	st := RBModel new.
 	(st classNamed: #'Core.Object') removeMethod: #printString.
 	st allReferencesTo: #printOn:
 		do: 
@@ -164,7 +164,7 @@ testReferencesPrintOnAfterRemove
 
 testRemoveClassChange
 	| st className |
-	st := RBNamespace new.
+	st := RBModel new.
 	className := self class fullName.
 	st removeClassNamed: className.
 	self deny: (st includesClassNamed: className).
@@ -172,7 +172,7 @@ testRemoveClassChange
 
 testReparentSuperclassChange
 	| st superclass subclasses |
-	st := RBNamespace new.
+	st := RBModel new.
 	superclass := st classFor: TestCase superclass.
 	subclasses := TestCase subclasses collect: [:each | st classFor: each].
 	st reparentClasses: subclasses to: superclass.
@@ -180,7 +180,7 @@ testReparentSuperclassChange
 
 testRoots
 	| model |
-	model := RBNamespace new.
+	model := RBModel new.
 	self assert: (model rootClasses asSortedCollection: [:a :b | a name < b name]) asArray
 		equals: ((Class rootsOfTheWorld collect: [:each | model classFor: each])
 				asSortedCollection: [:a :b | a name < b name]) asArray! !

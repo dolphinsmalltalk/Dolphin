@@ -235,13 +235,13 @@ model
 	#rbFix.	"Use #displayString instead of #printString for the name"
 	^model isNil
 		ifTrue: 
-			[model := RBNamespace onEnvironment: self defaultEnvironment.
+			[model := RBModel onEnvironment: self defaultEnvironment.
 			model name: self displayString.
 			model]
 		ifFalse: [model]!
 
-model: aRBNamespace 
-	model := aRBNamespace!
+model: aRBModel
+	model := aRBModel!
 
 onError: aBlock do: errorBlock 
 	^aBlock on: self class preconditionSignal, self class abortSignal

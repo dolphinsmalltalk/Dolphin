@@ -13,7 +13,7 @@ Refactory.Browser.Tests.RBMethodTest comment: ''!
 
 testLiteralStringsDoNotMatchSymbols
 	| model class method |
-	model := RBNamespace new.
+	model := RBModel new.
 	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	method := class methodFor: #returnInEnsure.
 	self deny: (method refersToSymbol: #asdf).
@@ -22,7 +22,7 @@ testLiteralStringsDoNotMatchSymbols
 
 testRefersToSymbol
 	| model class method |
-	model := RBNamespace new.
+	model := RBModel new.
 	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
 	method := class methodFor: #searchingLiteral.
 	self assert: (method refersToSymbol: #printString).

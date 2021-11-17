@@ -118,9 +118,9 @@ transform!public!transforming! !
 
 !Refactory.Browser.InlineAllSendersRefactoring class methodsFor!
 
-model: aRBNamespace sendersOf: aSelector in: aClass 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel sendersOf: aSelector in: aClass
+	^self new
+		model: aRBModel;
 		sendersOf: aSelector in: aClass;
 		yourself!
 

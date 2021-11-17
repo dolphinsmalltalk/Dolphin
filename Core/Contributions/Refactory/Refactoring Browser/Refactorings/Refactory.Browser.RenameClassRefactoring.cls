@@ -70,9 +70,9 @@ transform!public!transforming! !
 
 !Refactory.Browser.RenameClassRefactoring class methodsFor!
 
-model: aRBNamespace rename: aClass to: aNewName 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel rename: aClass to: aNewName
+	^self new
+		model: aRBModel;
 		className: aClass fullName newName: aNewName;
 		yourself!
 

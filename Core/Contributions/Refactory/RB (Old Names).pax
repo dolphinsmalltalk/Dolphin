@@ -15,6 +15,7 @@ package setVariableNames: #(
 	#{Smalltalk.ParseTreeSearcher}
 	#{Smalltalk.RBCondition}
 	#{Smalltalk.RBMethodName}
+	#{Smalltalk.RBNamespace}
 	#{Smalltalk.RBPatternMethodNode}
 	#{Smalltalk.RefactoringError}
 	#{Smalltalk.RefactoryChangeManager}
@@ -37,6 +38,7 @@ package setAliasVariableNames: #(
 	#{Smalltalk.ParseTreeSearcher}
 	#{Smalltalk.RBCondition}
 	#{Smalltalk.RBMethodName}
+	#{Smalltalk.RBNamespace}
 	#{Smalltalk.RBPatternMethodNode}
 	#{Smalltalk.RefactoringError}
 	#{Smalltalk.RefactoryChangeManager}
@@ -79,6 +81,8 @@ Smalltalk.ParseTreeSearcher := Refactory.Browser.ParseTreeSearcher!
 Smalltalk.RBCondition := Refactory.Browser.RBCondition!
 
 Smalltalk.RBMethodName := Refactory.Browser.RBMethodName!
+
+Smalltalk.RBNamespace := Refactory.Browser.RBModel!
 
 Smalltalk.RBPatternMethodNode := Refactory.Browser.RBPatternMethodNode!
 

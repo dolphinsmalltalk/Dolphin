@@ -94,9 +94,9 @@ transform!public!transforming! !
 classNames: aClassNameCollection 
 	^self new classNames: aClassNameCollection!
 
-model: aRBNamespace classNames: aClassNameCollection 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel classNames: aClassNameCollection
+	^self new
+		model: aRBModel;
 		classNames: aClassNameCollection;
 		yourself! !
 !Refactory.Browser.RemoveClassRefactoring class categoriesForMethods!

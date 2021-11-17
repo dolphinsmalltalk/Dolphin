@@ -119,7 +119,7 @@ addParameterToMethod: aCompiledMethod inPackages: aCollectionOfPackages
 							<< {aCompiledMethod selector. aCollectionOfPackages notEmpty};
 				showModal.
 	newName isNil ifTrue: [^nil].
-	model := RBNamespace onEnvironment: newName scope.
+	model := RBModel onEnvironment: newName scope.
 	"Reset the enviornment label to the default rather than one of the abbreviated labels used in the MethodNameDialog."
 	model environment label: nil.
 	refactoring := AddParameterRefactoring
@@ -170,7 +170,7 @@ basicRemoveMethods: aCollectionOfCompiledMethods within: aBrowserEnvironment
 
 basicRemoveMethodsIn: methodsEnvironment within: searchEnvironment
 	| model errors confirmed |
-	model := RBNamespace onEnvironment: searchEnvironment.
+	model := RBModel onEnvironment: searchEnvironment.
 	model name: 'Safe Remove ' , methodsEnvironment label.
 	errors := OrderedCollection new.
 	confirmed := Set new.
@@ -307,7 +307,7 @@ createVariableAccessors: variableNamePairs classVariables: aBoolean within: aBro
 	"Generate get and set accessors for the specified class and variable name pairs."
 
 	| namespace name |
-	namespace := RBNamespace onEnvironment: aBrowserEnvironment.
+	namespace := RBModel onEnvironment: aBrowserEnvironment.
 	name := String writeStream.
 	name nextPutAll: 'Create accessors for '.
 	^self performRefactoring: 
@@ -373,7 +373,7 @@ duplicateSuperclassMethodsOf: aClass
 executeVariableRefactoring: refactoringClass variables: aCollection within: aBrowserEnvironment
 	^self performRefactoring: 
 			[| namespace refactoring caption |
-			namespace := RBNamespace onEnvironment: aBrowserEnvironment.
+			namespace := RBModel onEnvironment: aBrowserEnvironment.
 			caption := String writeStream.
 			caption
 				nextPutAll: refactoringClass displayPrefix;
@@ -501,7 +501,7 @@ inlineAllSelfSendsOf: aCollectionOfMethods within: aBrowserEnvironment
 	have been performed, then it will remove the method'"
 
 	| namespace caption |
-	namespace := RBNamespace onEnvironment: aBrowserEnvironment.
+	namespace := RBModel onEnvironment: aBrowserEnvironment.
 	caption := String writeStream.
 	caption nextPutAll: 'Inline self sends of '.
 	^self performRefactoring: 
@@ -573,7 +573,7 @@ isOAD: aBoolean
 
 moveAllTempsToInnerScope: aBrowserEnvironment
 	| model errorCount |
-	model := RBNamespace onEnvironment: aBrowserEnvironment.
+	model := RBModel onEnvironment: aBrowserEnvironment.
 	errorCount := 0.
 	
 	[model
@@ -848,7 +848,7 @@ pushMethods: aCollectionOfMethods up: aBoolean
 				nextPutAll: 'Push ';
 				nextPutAll: (aBoolean ifTrue: ['up'] ifFalse: ['down']);
 				space.
-			namespace := RBNamespace new.
+			namespace := RBModel new.
 			(byClass associations asSortedCollection: [:a :b | a key name <= b key name]) do: 
 					[:each |
 					| selectors class |
@@ -989,7 +989,7 @@ removeParameter: aString from: aSelector in: aClass environment: aBrowserEnviron
 
 	^self performRefactoring: 
 			[| model refactoring |
-			model := RBNamespace onEnvironment: aBrowserEnvironment.
+			model := RBModel onEnvironment: aBrowserEnvironment.
 			refactoring := RemoveParameterRefactoring
 						model: model
 						removeParameter: aString
@@ -1038,7 +1038,7 @@ renameMethod: aCompiledMethod
 renameMethod: aCompiledMethod to: anRBMethodName
 	^self performRefactoring: 
 			[| model refactoring |
-			model := RBNamespace onEnvironment: anRBMethodName scope.
+			model := RBModel onEnvironment: anRBMethodName scope.
 			refactoring := RenameMethodRefactoring
 						model: model
 						renameMethod: aCompiledMethod selector
@@ -1066,7 +1066,7 @@ renameMethodReferences: aCompiledMethod
 renameMethodReferences: aCompiledMethod to: anRBMethodName
 	^self performRefactoring: 
 			[| model refactoring |
-			model := RBNamespace onEnvironment: anRBMethodName scope.
+			model := RBModel onEnvironment: anRBMethodName scope.
 			refactoring := RenameMethodReferencesRefactoring
 						model: model
 						renameMethod: aCompiledMethod selector
@@ -1137,7 +1137,7 @@ renameVariable: aString to: newName in: aClass classVariable: aBoolean within: a
 							[aBoolean
 								ifTrue: [RenameClassVariableAndAccessorsRefactoring]
 								ifFalse: [RenameInstanceVariableAndAccessorsRefactoring]].
-			model := RBNamespace onEnvironment: env.
+			model := RBModel onEnvironment: env.
 			refactoring := refactoringClass
 						model: model
 						rename: aString
@@ -1182,7 +1182,7 @@ safeRemoveSelectors: anArrayOfSelectors from: aClass inEnvironment: aBrowserEnvi
 		confirm) ifFalse: [^false].
 	^self performRefactoring: 
 			[| model refactoring |
-			model := RBNamespace onEnvironment: aBrowserEnvironment.
+			model := RBModel onEnvironment: aBrowserEnvironment.
 			refactoring := RemoveMethodRefactoring
 						model: model
 						removeMethods: anArrayOfSelectors

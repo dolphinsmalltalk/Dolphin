@@ -81,9 +81,9 @@ storeOn:!printing!public! !
 
 !Refactory.Browser.RemoveParameterRefactoring class methodsFor!
 
-model: aRBNamespace removeParameter: aString in: aClass selector: aSelector 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel removeParameter: aString in: aClass selector: aSelector
+	^self new
+		model: aRBModel;
 		removeParameter: aString
 			in: aClass
 			selector: aSelector;

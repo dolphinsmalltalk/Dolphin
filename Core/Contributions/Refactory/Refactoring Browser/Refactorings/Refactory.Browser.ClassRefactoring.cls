@@ -65,9 +65,9 @@ unqualifiedClassName:!accessing!public! !
 className: aName
 	^self new className: aName!
 
-model: aRBNamespace className: aName 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel className: aName
+	^self new
+		model: aRBModel;
 		className: aName;
 		yourself! !
 !Refactory.Browser.ClassRefactoring class categoriesForMethods!

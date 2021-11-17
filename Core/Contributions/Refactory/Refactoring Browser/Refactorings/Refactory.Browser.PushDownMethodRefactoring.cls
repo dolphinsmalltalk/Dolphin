@@ -77,9 +77,9 @@ transform!public!transforming! !
 
 !Refactory.Browser.PushDownMethodRefactoring class methodsFor!
 
-model: aRBNamespace pushDown: selectorCollection from: aClass 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel pushDown: selectorCollection from: aClass
+	^self new
+		model: aRBModel;
 		pushDown: selectorCollection from: aClass;
 		yourself!
 

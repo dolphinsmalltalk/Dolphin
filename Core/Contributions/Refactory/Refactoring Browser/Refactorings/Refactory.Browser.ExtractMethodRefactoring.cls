@@ -328,9 +328,9 @@ extract: anInterval from: aSelector in: aClass
 		from: aSelector
 		in: aClass!
 
-model: aRBNamespace extract: anInterval from: aSelector in: aClass 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel extract: anInterval from: aSelector in: aClass
+	^self new
+		model: aRBModel;
 		extract: anInterval
 			from: aSelector
 			in: aClass;

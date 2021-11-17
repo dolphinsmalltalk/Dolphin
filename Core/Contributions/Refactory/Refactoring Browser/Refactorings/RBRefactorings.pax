@@ -51,7 +51,7 @@ package setClassNames: #(
 	#{Refactory.Browser.RBMetaclass}
 	#{Refactory.Browser.RBMethod}
 	#{Refactory.Browser.RBMethodName}
-	#{Refactory.Browser.RBNamespace}
+	#{Refactory.Browser.RBModel}
 	#{Refactory.Browser.RBNamespaceClass}
 	#{Refactory.Browser.RBNegationCondition}
 	#{Refactory.Browser.RBReadBeforeWrittenTester}
@@ -120,7 +120,7 @@ Core.Object subclass: #'Refactory.Browser.RBMethodName'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Refactory.Browser.RBNamespace'
+Core.Object subclass: #'Refactory.Browser.RBModel'
 	instanceVariableNames: 'changes environment newClasses removedClasses changedClasses rootClasses implementorsCache sendersCache'
 	classVariableNames: ''
 	imports: #()

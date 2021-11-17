@@ -404,9 +404,9 @@ inline: anInterval inMethod: aSelector forClass: aClass
 		inMethod: aSelector
 		forClass: aClass!
 
-model: aRBNamespace inline: anInterval inMethod: aSelector forClass: aClass 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel inline: anInterval inMethod: aSelector forClass: aClass
+	^self new
+		model: aRBModel;
 		inline: anInterval
 			inMethod: aSelector
 			forClass: aClass;

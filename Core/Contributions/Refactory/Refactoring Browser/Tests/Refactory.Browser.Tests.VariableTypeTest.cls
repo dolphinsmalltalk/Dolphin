@@ -48,7 +48,7 @@ testLintRuleTypes
 
 testParseTreeTypes
 	| types model |
-	model := RBNamespace new.
+	model := RBModel new.
 	types := RefactoryTyper
 				typesFor: 'foo'
 				in: (self parseExpression: 'foo printString; testBasicLintRuleTypes; testParseTreeTypes')

@@ -175,17 +175,17 @@ transform!public!transforming! !
 
 !Refactory.Browser.AbstractVariablesRefactoring class methodsFor!
 
-model: aRBNamespace abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection 
-	^self 
-		model: aRBNamespace
+model: aRBModel abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection
+	^self
+		model: aRBModel
 		abstractVariablesIn: aBRProgramNode
 		from: fromBehavior
 		toAll: behaviorCollection
 		ignoring: nil!
 
-model: aRBNamespace abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName
+	^self new
+		model: aRBModel;
 		abstractVariablesIn: aBRProgramNode
 			from: fromBehavior
 			toAll: behaviorCollection

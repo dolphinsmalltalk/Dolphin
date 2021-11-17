@@ -34,9 +34,9 @@ variable:class:!initialize/release!public! !
 
 !Refactory.Browser.VariableRefactoring class methodsFor!
 
-model: aRBNamespace variable: aVarName class: aClass 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel variable: aVarName class: aClass
+	^self new
+		model: aRBModel;
 		variable: aVarName class: aClass;
 		yourself!
 

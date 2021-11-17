@@ -121,9 +121,9 @@ bindTight: anInterval in: aClass selector: aSelector
 		selector: aSelector
 		interval: anInterval!
 
-model: aRBNamespace bindTight: anInterval in: aClass selector: aSelector 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel bindTight: anInterval in: aClass selector: aSelector
+	^self new
+		model: aRBModel;
 		class: aClass
 			selector: aSelector
 			interval: anInterval;

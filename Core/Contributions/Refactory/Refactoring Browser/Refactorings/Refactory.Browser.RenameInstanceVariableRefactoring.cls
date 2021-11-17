@@ -64,9 +64,9 @@ transform!public!transforming! !
 
 !Refactory.Browser.RenameInstanceVariableRefactoring class methodsFor!
 
-model: aRBNamespace rename: aVarName to: aName in: aClass 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel rename: aVarName to: aName in: aClass
+	^self new
+		model: aRBModel;
 		rename: aVarName
 			to: aName
 			in: aClass;

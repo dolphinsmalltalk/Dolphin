@@ -87,9 +87,9 @@ transform!public!transforming! !
 
 !Refactory.Browser.RenameTemporaryRefactoring class methodsFor!
 
-model: aRBNamespace renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel renameTemporaryFrom: anInterval to: newName in: aClass selector: aSelector
+	^self new
+		model: aRBModel;
 		class: aClass
 			selector: aSelector
 			interval: anInterval

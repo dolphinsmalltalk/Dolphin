@@ -13,7 +13,7 @@ Refactory.Browser.Tests.RenameMethodTest comment: ''!
 
 setUp
 	super setUp.
-	model := RBNamespace onEnvironment: (BrowserEnvironment new
+	model := RBModel onEnvironment: (BrowserEnvironment new
 						forClasses: {Object. SmallInteger. OrderedCollection. Kernel.DefaultSortAlgorithm})!
 
 testExistingSelector
@@ -27,7 +27,7 @@ testExistingSelector
 testMultipleSelectors
 	| subject optionCalled |
 	"Constrain the refactoring to just the RBTestMethods package so that we get a known set of implementors"
-	model := RBNamespace
+	model := RBModel
 				onEnvironment: (BrowserEnvironment new forPackages: {BasicLintRuleTestData owningPackage}).
 	subject := RenameMethodRefactoring
 				model: model

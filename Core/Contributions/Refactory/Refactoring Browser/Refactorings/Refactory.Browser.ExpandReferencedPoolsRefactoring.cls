@@ -109,9 +109,9 @@ forMethod: aParseTree fromClass: aClass toClasses: classCollection
 			toClasses: classCollection;
 		yourself!
 
-model: aRBNamespace forMethod: aParseTree fromClass: aClass toClasses: classCollection 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel forMethod: aParseTree fromClass: aClass toClasses: classCollection
+	^self new
+		model: aRBModel;
 		forMethod: aParseTree
 			fromClass: aClass
 			toClasses: classCollection;

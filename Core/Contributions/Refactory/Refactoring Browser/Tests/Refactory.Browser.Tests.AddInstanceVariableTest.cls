@@ -24,7 +24,7 @@ testAddInstanceVariable
 
 testAddToModel
 	| refactoring |
-	model := RBNamespace new.
+	model := RBModel new.
 	model name: 'Add instance variable'.
 	model
 		defineClass: 'Object subclass: #FOOBAR 
@@ -66,7 +66,7 @@ testModelMetaclassAlreadyExistingName
 
 testNewExistingName
 	| refactoring |
-	model := RBNamespace new.
+	model := RBModel new.
 	model name: 'Add instance variable'.
 	model
 		defineClass: 'Object subclass: #FOOBAR 
@@ -83,7 +83,7 @@ testNewExistingName
 
 testNewHierarchyExistingName
 	| refactoring |
-	model := RBNamespace new.
+	model := RBModel new.
 	model name: 'Add instance variable'.
 	model
 		defineClass: 'Object subclass: #FOOBAR 

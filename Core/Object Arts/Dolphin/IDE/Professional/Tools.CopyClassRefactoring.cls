@@ -124,10 +124,12 @@ transform!public!transforming! !
 clone: aClass as: aNewName superclass: superClass
 	^self new className: aClass fullName newName: aNewName superclass: superClass!
 
-model: aRBNamespace clone: aClass as: aNewName superclass: superClass
+model: aRBModel clone: aClass as: aNewName superclass: superClass
 	^self new
-		model: aRBNamespace;
-		className: aClass fullName newName: aNewName superclass: superClass! !
+		model: aRBModel;
+		className: aClass fullName
+			newName: aNewName
+			superclass: superClass! !
 !Tools.CopyClassRefactoring class categoriesForMethods!
 clone:as:superclass:!instance creation!public! !
 model:clone:as:superclass:!instance creation!public! !

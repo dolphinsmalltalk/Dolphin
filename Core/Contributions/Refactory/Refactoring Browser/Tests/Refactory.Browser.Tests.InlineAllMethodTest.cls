@@ -29,7 +29,7 @@ testInlineMethodWithMultipleSendersInMethod
 
 testRecursiveMethod
 	| class |
-	model := RBNamespace new.
+	model := RBModel new.
 	class := model classNamed: self class fullName.
 	class
 		compile: 'foo ^self foo' classified: #accessing;

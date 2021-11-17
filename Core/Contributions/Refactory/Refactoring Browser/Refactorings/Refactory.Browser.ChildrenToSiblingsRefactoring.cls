@@ -217,9 +217,9 @@ transform!public!transforming! !
 
 !Refactory.Browser.ChildrenToSiblingsRefactoring class methodsFor!
 
-model: aRBNamespace name: aClassName class: aClass subclasses: subclassCollection 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel name: aClassName class: aClass subclasses: subclassCollection
+	^self new
+		model: aRBModel;
 		name: aClassName
 			class: aClass
 			subclasses: subclassCollection;

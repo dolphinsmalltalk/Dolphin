@@ -121,9 +121,9 @@ class: class instanceVariables: instVars newClassName: className referenceVariab
 			referenceVariableName: newVariable;
 		yourself!
 
-model: aRBNamespace class: class instanceVariables: instVars newClassName: className referenceVariableName: newVariable 
-	^(self new)
-		model: aRBNamespace;
+model: aRBModel class: class instanceVariables: instVars newClassName: className referenceVariableName: newVariable
+	^self new
+		model: aRBModel;
 		class: class
 			instanceVariables: instVars
 			newClassName: className
