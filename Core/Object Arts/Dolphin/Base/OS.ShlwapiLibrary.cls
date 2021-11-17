@@ -11,10 +11,6 @@ OS.ShlwapiLibrary comment: 'ShlwapiLibrary is the <ExternalLibrary> class to rep
 !OS.ShlwapiLibrary categoriesForClass!External-Libraries-Win32! !
 !OS.ShlwapiLibrary methodsFor!
 
-pathCchRemoveFileSpec: pszPath cchPath: cchPath
-	<stdcall: hresult PathCchRemoveFileSpec lpwstr uintptr>
-	^self invalidCall: _failureCode!
-
 pathCombine: szDest lpszDir: lpszDir lpszFile: lpszFile
 	"Invoke the PathCombine() function of the module wrapped by the receiver.
 	Helpstring: Concatenates two strings that represent properly formed paths into one path, as well as any relative path pieces
@@ -128,7 +124,6 @@ pathRelativePathTo: pszPath pszFrom: pszFrom dwAttrFrom: dwAttrFrom pszTo: pszTo
 	<stdcall: bool PathRelativePathToW lpwstr lpwstr dword lpwstr dword>
 	^self invalidCall: _failureCode! !
 !OS.ShlwapiLibrary categoriesForMethods!
-pathCchRemoveFileSpec:cchPath:!public!win32 functions-path! !
 pathCombine:lpszDir:lpszFile:!**auto generated**!public!win32 functions-path! !
 pathCommonPrefix:pszFile2:achPath:!public!win32 functions-path! !
 pathCompactPath:pszPath:dx:!public!win32 functions-path! !
