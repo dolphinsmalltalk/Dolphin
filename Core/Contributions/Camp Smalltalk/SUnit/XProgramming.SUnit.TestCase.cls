@@ -33,7 +33,12 @@ assert: aBoolean description: aStringOrValuable resumable: resumableBoolean
 
 assert: actualObject equals: expectedObject
 	expectedObject = actualObject
-		ifFalse: [self fail: (self comparingStringBetween: expectedObject and: actualObject)]!
+		ifFalse: [self fail: (self comparingStringBetween: expectedObject and: actualObject)].
+
+	"
+	(Smalltalk.DiffBrowser show: 'Vertical view') compare: actualObject printString id: 'Actual' and: expectedObject printString id: 'Expected'
+	"
+!
 
 comparingStringBetween: expectedObject and: actualObject
 	^(String writeStream: 128)
@@ -143,8 +148,11 @@ run: aResult
 
 runCase
 	
-	[self setUp.
-	self performTest] ensure: [self tearDown]!
+	[#todo.	"Modified to replace original separate statements with a cascade to workaround compiler/debugger bug mapping from release to debug IP if halt inside the setUp method"
+	self
+		setUp;
+		performTest]
+			ensure: [self tearDown]!
 
 runCaseAsFailure: aSemaphore
 	
