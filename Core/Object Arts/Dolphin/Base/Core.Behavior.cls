@@ -736,18 +736,18 @@ referenceFilterForAnyOf: aCollection
 	| array specialSelectorIndices |
 	array := aCollection asArray.
 	"Here we are expecting that aCollection is very small, and there will generally be no special selectors in it."
-	specialSelectorIndices := OrderedCollection new.
 	array do: 
 			[:each |
 			each isSymbol
 				ifTrue: 
 					[(VM indexOfSpecialSelector: each ifAbsent: nil)
-						ifNotNil: [:index | specialSelectorIndices addLast: index]]].
-	^specialSelectorIndices isEmpty
-		ifTrue: [[:method | method refersToAnyOf: array]]
-		ifFalse: 
+						ifNotNil: [:index | (specialSelectorIndices ifNil: [specialSelectorIndices := Set new]) add: index]]].
+	^specialSelectorIndices
+		ifNil: [[:method | method refersToAnyOf: array]]
+		ifNotNil: 
 			[| dispatcher |
 			dispatcher := ByteCodeDispatcher new.
+			specialSelectorIndices := specialSelectorIndices asArray.
 			
 			[:method |
 			(method refersToAnyOf: array) or: 
