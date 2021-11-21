@@ -36,13 +36,6 @@ codePointsDo: operation
 
 	1 to: self size do: [:i | operation value: (self at: i)]!
 
-copyToBuffer: anAddress ofSize: anInteger
-	OS.Ucrt
-		strncpy_s: anAddress
-		bufferSize: anInteger
-		strSource: self
-		count: OS.CRTConstants._TRUNCATE!
-
 decodeAt: anInteger
 	"Private - Answer the <Character> with code point beginning at the specified position in the receiver."
 
@@ -126,7 +119,6 @@ urlDecoded
 _beginsString:!comparing!double dispatch!private! !
 asAnsiString!converting!public! !
 codePointsDo:!enumerating!public! !
-copyToBuffer:ofSize:!copying!private! !
 decodeAt:!encode/decode!private! !
 decodeNextFrom:!encode/decode!private! !
 encodedSizeAt:!encode/decode!private! !

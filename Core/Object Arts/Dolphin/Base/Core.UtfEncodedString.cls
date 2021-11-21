@@ -278,7 +278,7 @@ findFirst: aMonadicValuable
 findLast: discriminator
 	"Answer the <integer> index of the last element of the receiver for which the <monadicValuable> argument evaluates to true. If there are no such elements, answer 0."
 
-	| index stream ch last |
+	| stream ch index last |
 	index := 1.
 	stream := self readStream.
 	last := 0.
@@ -331,7 +331,7 @@ inject: anObject into: aDyadicValuable
 	"Evaluate the <dyadicValuable> argument, aDyadicValuable, once for each <Character> in the receiver, passing the elements as the second argument, and passing the value of the previous evaluation as the first argument, starting with the <Object> argument, initialValue. The operation must answer the value it wishes to have passed as its first argument the next time
 	it is evaluated. Answer the final value of the operation. This enumeration is particularly useful for performing summations and other statistical operations."
 
-	| nextValue stream ch |
+	| nextValue ch stream |
 	nextValue := anObject.
 	stream := self readStream.
 	[(ch := stream nextAvailable) isNil]
@@ -443,11 +443,6 @@ skipEncodingMarkerFrom: aPositionableStream
 				startingAt: 1.
 			preamble = bom ifFalse: [aPositionableStream position: 0]]!
 
-strlen
-	"Answer the length of the receiver (in code units) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
-
-	^self subclassResponsibility!
-
 third
 	"Answer a <Character> representing the third code point of the receiver. Raise an exception if there are fewer than three code points in the receiver."
 
@@ -526,7 +521,6 @@ second!accessing!public! !
 select:!enumerating!public! !
 sixth!accessing!public! !
 skipEncodingMarkerFrom:!encode/decode!private! !
-strlen!accessing!private! !
 third!accessing!public! !
 uncheckedFrom:to:keysAndValuesDo:!debugger-step through!enumerating!private! !
 with:do:!enumerating!public! !

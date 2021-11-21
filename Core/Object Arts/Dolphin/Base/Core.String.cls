@@ -454,7 +454,13 @@ copyReplaceAll: oldSequencedReadableCollection with: newSequencedReadableCollect
 		with: (self class coerceString: newSequencedReadableCollection asString)!
 
 copyToBuffer: anAddress ofSize: anInteger
-	^self subclassResponsibility!
+	"Private - Copy the receiver into the buffer at the specified address, truncating if necessary to fit within the specified size. Answer whether the text could be copied without truncation."
+
+	^(OS.Ucrt
+		strncpy_s: anAddress
+		bufferSize: anInteger
+		strSource: self
+		count: OS.CRTConstants._TRUNCATE) == 0!
 
 decodeAt: anInteger
 	"Private - Answer the encoded object beginning at the specified position in the receiver."
@@ -465,12 +471,12 @@ decodeNextAvailable: anInteger from: aReadStream
 	"Private - Answer the next anInteger future sequence values of the <ReadStream>, aReadStream, or as
 	many as are available before the end of stream."
 
-	| newStream count next |
+	| count next newStream |
 	newStream := self copyingClass writeStream: (count := anInteger).
 	[count == 0 or: [(next := aReadStream nextAvailable) isNil]] whileFalse: 
 			[newStream nextPut: next.
 			count := count - 1].
-	^newStream contents!
+	^newStream grabContents!
 
 decodeNextFrom: aReadStream
 	"Private - Answer the next <Character> in the receiver's encoding from the <ReadStream> argument ."
@@ -665,16 +671,13 @@ findString: aString startingAt: anInteger
 	<primitive: 149>
 	^self basicIndexOfSubCollection: (self class coerceString: aString) startingAt: anInteger!
 
-findString: aString startingAt: anInteger ignoreCase: aBoolean 
+findString: aString startingAt: anInteger ignoreCase: aBoolean
 	"Answer the index of the <String> argument within the receiver, ignoring case differences, starting at the <integer>
 	argument. If the receiver does not contain aString, answer 0."
 
-	| meLower subLower |
 	#todo.	"More efficient implementation needed."
 	aBoolean ifFalse: [^self findString: aString startingAt: anInteger].
-	meLower := self asLowercase.
-	subLower := aString asLowercase.
-	^meLower findString: subLower startingAt: anInteger!
+	^self asLowercase findString: aString asLowercase startingAt: anInteger!
 
 formatWith: anObject
 	"Answer a <readableString> which is a message formatted from the receiver (assumed to be a
@@ -984,7 +987,7 @@ occurrencesOf: anObject from: startInteger to: endInteger
 prevIndexOf: anObject from: hiInteger to: loInteger
 	"Answer the <integer> index of the first occurrence of anElement in the receiver that is before index, hiInteger, but after index, loInteger. The range is inclusive. If there are no such occurrences, answer 0."
 
-	| last next |
+	| next last |
 	last := 0.
 	next := self
 				nextIndexOf: anObject
@@ -1195,17 +1198,17 @@ subStrings
 	"Answer an Array containing the substrings of the receiver which are separated by one or 
 	more Characters which answer true to #isSeparator."
 
-	| stream answer wordStream |
-	answer := OrderedCollection new.
-	stream := self readStream.
-	wordStream := self copyingClass writeStream: 10.
+	| stream wordStream answer |
+	answer := WriteStream on: (Array new: 5).
+	stream := ReadStream on: self.
+	wordStream := WriteStream on: (self copyingClass new: 10).
 	[stream atEnd] whileFalse: 
 			[| word next |
 			wordStream reset.
 			[stream atEnd or: [(next := stream next) isSeparator]] whileFalse: [wordStream nextPut: next].
 			word := wordStream contents.
-			word notEmpty ifTrue: [answer add: word]].
-	^answer asArray!
+			word notEmpty ifTrue: [answer nextPut: word]].
+	^answer contents!
 
 subStrings: separatorOrSeparators
 	"Answer an array containing the substrings of the receiver separated by occurrences of the <Character> or <readableString> argument, separator.
@@ -1213,30 +1216,6 @@ subStrings: separatorOrSeparators
 
 	#todo. "N.B. This does not comply with the current ANSI definition, which expects that the argument is a <sequencedReadableCollection> of separators, any one of which may separate each token. In the next major release (7.2) this behaviour will be changed to be ANSI compliant. Also the historic asymmetric behaviour of ignoring a terminating separator will be corrected so that the operation behaves in the same was as Character>>split:"
 	^separatorOrSeparators split: self!
-
-subStringsAnsi: separators
-	"Answer an array containing the substrings of the receiver separated by occurrences
-	of any of the <Character>s in the <collection> argument, separators.
-	Repeated separators produce empty strings in the array (cf. #subStrings).
-	The separators are removed."
-
-	| start answer size end |
-	#deprecated.	"Will be removed in 7.2"
-	size := self size.
-	size == 0 ifTrue: [^{}].
-	end := self indexOfAnyOf: separators startingAt: 1.
-	end == 0 ifTrue: [^{self}].
-	answer := Array writeStream: 5.
-	start := 1.
-	
-	[answer nextPut: (self copyFrom: start to: end - 1).
-	start := end + 1.
-	end := self indexOfAnyOf: separators startingAt: start.
-	end == 0]
-			whileFalse.
-	"Copy any remaining chars after the last separator"
-	start <= size ifTrue: [answer nextPut: (self copyFrom: start to: size)].
-	^answer contents!
 
 titleCased
 	"Answer a <readableString> which is a copy of the receiver but with the first letter of each major word capitalized."
@@ -1355,7 +1334,7 @@ compare:!comparing!public! !
 compare:ignoreCase:!comparing!public! !
 contains:!public!searching! !
 copyReplaceAll:with:!copying!public! !
-copyToBuffer:ofSize:!constants!copying!private! !
+copyToBuffer:ofSize:!copying!private! !
 decodeAt:!encode/decode!private! !
 decodeNextAvailable:from:!encode/decode!private! !
 decodeNextFrom:!encode/decode!private! !
@@ -1421,7 +1400,6 @@ strcspn:start:!private!searching! !
 strlen!accessing!private! !
 subStrings!public!tokenizing! !
 subStrings:!public!tokenizing! !
-subStringsAnsi:!copying!public! !
 titleCased!converting!public! !
 trimBlanks!copying!public! !
 trimNulls!copying!public! !

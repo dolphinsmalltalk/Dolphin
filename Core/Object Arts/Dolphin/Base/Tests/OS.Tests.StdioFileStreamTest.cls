@@ -72,6 +72,12 @@ testCharacterTranslation
 					self assert: actual equals: each].
 			self closeTempStream: subject]!
 
+testFileNotFound
+	self
+		should: [StdioFileStream read: 'Hopefully not there']
+		raise: CRTError
+		matching: [:ex | ex errno = OS.CRTConstants.ENOENT]!
+
 testFromHandleOnDevice
 	"Test that a StdioFileStream instantiated by StdioFileStream class>>fromHandle: is non-blocking on a tty."
 
@@ -82,18 +88,17 @@ testFromHandleOnDevice
 testFromHandleOnFile
 	"Test that a StdioFileStream instantiated by StdioFileStream class>>fromHandle: on a file is blocking."
 
-	| handle errno written read |
+	| handle written read |
 	filestream := self tempWriteStream.
 	self deny: filestream isNonBlocking.
 	written := 'Hello world'.
 	filestream nextPutAll: written.
 	filestream close.
 	handle := Handle new.
-	errno := Ucrt
-				_wfopen_s: handle
-				filename: tempFileName
-				mode: 'rt, ccs=UTF-8'.
-	self assert: errno equals: 0.
+	Ucrt
+		_wfopen_s: handle
+		filename: tempFileName
+		mode: 'rt, ccs=UTF-8'.
 	filestream := StdioFileStream fromHandle: handle.
 	self assert: filestream isFinalizable.
 	self deny: filestream isNonBlocking.
@@ -162,6 +167,7 @@ streamOnFile:type:!helpers!private! !
 strings!constants!private! !
 subjectCollection:!helpers!public! !
 testCharacterTranslation!public!unit tests! !
+testFileNotFound!public!unit tests! !
 testFromHandleOnDevice!public!unit tests! !
 testFromHandleOnFile!public!unit tests! !
 testFromHandleOnPipe!public!unit tests! !

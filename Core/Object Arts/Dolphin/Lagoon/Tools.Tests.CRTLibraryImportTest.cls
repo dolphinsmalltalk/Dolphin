@@ -12,8 +12,8 @@ Tools.Tests.CRTLibraryImportTest comment: ''!
 !Tools.Tests.CRTLibraryImportTest methodsFor!
 
 devOnlyCrtFunctions
-	^((MethodCategory deprecatedMethods methodsInBehavior: OS.CRTLibrary) select: [:each | each isKindOf: External.ExternalMethod])
-		collect: [:each | each functionName]!
+	^((MethodCategory deprecatedMethods methodsInBehavior: OS.CRTLibrary)
+		select: [:each | each isExternalCall]) collect: [:each | each functionName]!
 
 minimumVmVersion
 	"The minimum VM version on which to run this test specified as a 64-bit integer. This allows

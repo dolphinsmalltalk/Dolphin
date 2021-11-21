@@ -93,7 +93,7 @@ _isatty: anInteger
 	^self invalidCall: _failureCode!
 
 _makepath_s: path bufferSize: sizeInBytes drive: drive dir: dir fname: fname ext: ext
-	<cdecl: sdword _makepath_s char* intptr char* char* char* char*>
+	<cdecl: errno _makepath_s char* intptr char* char* char* char*>
 	^self invalidCall: _failureCode!
 
 _open_osfhandle: osfhandle flags: flags
@@ -105,7 +105,7 @@ _setmode: fd mode: modeFlag
 	^self invalidCall: _failureCode!
 
 _splitpath_s: path drive: drive driveLen: driveInteger dir: dir dirLen: dirInteger fname: fname fnameLen: nameInteger ext: ext extLen: extInteger
-	<cdecl: sdword _splitpath_s char* char* intptr char* intptr char* intptr char* intptr>
+	<cdecl: errno _splitpath_s char* char* intptr char* intptr char* intptr char* intptr>
 	^self invalidCall: _failureCode!
 
 _statusfp
@@ -121,7 +121,7 @@ _stricmp: string1 string2: string2
 	^self invalidCall: _failureCode!
 
 _wfopen_s: pFile filename: nameString mode: modeString
-	<cdecl: sdword _wfopen_s handle* lpwstr lpwstr>
+	<cdecl: errno _wfopen_s handle* lpwstr lpwstr>
 	^self invalidCall: _failureCode!
 
 atoi: aString
@@ -207,6 +207,14 @@ initialize
 	self synchronizeLocale.
 	^self!
 
+invalidCall: anInteger
+	"Private - An invalid external call was attempted through one of the receiver's methods. The argument is the failure code from the external call primitive. If the function has an errno return type, then the value may be a errno_t value (a small positive integer) from the CRT error codes. Usually only the more modern 'secure' CRT functions have a signature with an errno_t return code. One of these error codes, STRUNCATE, is more of a status code than an error, indicating that the function truncated input, e.g. when copying to a buffer. For all other errno's we throw a CRTError exception."
+
+	^anInteger < 0
+		ifTrue: [self invalidCall: anInteger fromFrame: Processor activeProcess topFrame sender]
+		ifFalse: 
+			[anInteger == CRTConstants.STRUNCATE ifTrue: [anInteger] ifFalse: [CRTError signalWith: anInteger]]!
+
 memcmp: buf1 buf2: buf2 count: count
 	"Compare the first count bytes in two buffers, answering <0 if buf1 is < buf2, 0 if equal,
 	and >0 if buf2 > buf1.
@@ -217,7 +225,7 @@ memcmp: buf1 buf2: buf2 count: count
 	^self invalidCall: _failureCode!
 
 memcpy_s: dest destSize: destSize src: src count: count
-	<cdecl: sdword memcpy_s void* dword void* dword>
+	<cdecl: errno memcpy_s void* dword void* dword>
 	^self invalidCall: _failureCode!
 
 setlocale: category locale: localeString
@@ -229,7 +237,7 @@ setlocale: category locale: localeString
 	^self invalidCall: _failureCode!
 
 strcat_s: destString bufferSize: anInteger strSource: sourceString
-	<cdecl: sdword strcat_s lpstr intptr lpstr>
+	<cdecl: errno strcat_s lpstr intptr lpstr>
 	^self invalidCall: _failureCode!
 
 strcmp: string1 string2: string2
@@ -246,15 +254,15 @@ strcspn: string strCharSet: strCharSet
 	^self invalidCall: _failureCode!
 
 strerror_s: aString bufferSize: sizeInteger errnum: errnoInteger
-	<cdecl: sdword strerror_s lpstr intptr sdword>
-	^self invalidCall: _failureCode!
+	<cdecl: errno strerror_s lpstr intptr sdword>
+	^_failureCode!
 
 strlen: aString
 	<cdecl: sdword strlen lpvoid>
 	^self invalidCall: _failureCode!
 
 strncpy_s: desString bufferSize: anInteger strSource: sourceString count: countInteger
-	<cdecl: sdword strncpy_s lpvoid uintptr lpstr uintptr>
+	<cdecl: errno strncpy_s lpvoid uintptr lpstr uintptr>
 	^self invalidCall: _failureCode!
 
 synchronizeLocale
@@ -279,7 +287,7 @@ wcscspn: aWideString strCharSet: strCharSet
 	^self invalidCall: _failureCode!
 
 wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource count: count
-	<cdecl: sdword wcsncpy_s lpvoid uintptr lpwstr uintptr>
+	<cdecl: errno wcsncpy_s lpvoid uintptr lpwstr uintptr>
 	^self invalidCall: _failureCode! !
 !OS.CRTLibrary categoriesForMethods!
 _clearfp!CRT functions-floating point support!public! !
@@ -320,6 +328,7 @@ fread_s:bufferSize:elementSize:count:stream:!CRT functions-stream I/O!public! !
 free:!CRT functions-memory allocation!public! !
 fwrite:size:count:stream:!CRT functions-stream I/O!public! !
 initialize!initializing!private! !
+invalidCall:!exceptions!private! !
 memcmp:buf2:count:!CRT functions-buffer manipulation!public! !
 memcpy_s:destSize:src:count:!public! !
 setlocale:locale:!CRT functions-localization!public! !

@@ -43,33 +43,14 @@ package methodNames
 	add: #ClassDescription -> #sharedPools;
 	add: #ClassDescription -> #sharedPoolsDo:;
 	add: #CompilerNotification -> #extra;
-	add: #CRTLibrary -> #__iscsym:;
-	add: #CRTLibrary -> #__iscsymf:;
-	add: #CRTLibrary -> #_chdir:;
-	add: #CRTLibrary -> #_chmod:pmode:;
 	add: #CRTLibrary -> #_spawnvp:cmdname:argv:;
-	add: #CRTLibrary -> #_strnicmp:string2:count:;
-	add: #CRTLibrary -> #_strrev:;
-	add: #CRTLibrary -> #_wgetcwd:maxlen:;
-	add: #CRTLibrary -> #iswcntrl:;
-	add: #CRTLibrary -> #iswgraph:;
-	add: #CRTLibrary -> #iswprint:;
-	add: #CRTLibrary -> #iswpunct:;
-	add: #CRTLibrary -> #memset:c:count:;
-	add: #CRTLibrary -> #strpbrk:strCharSet:;
-	add: #CRTLibrary -> #wcsncmp:string2:count:;
 	add: #Dictionary -> #at:ifAbsentPutValue:;
 	add: #ExternalLibrary -> #invalidCall;
 	add: #ExternalStructure -> #do:;
 	add: #ExternalStructure -> #do:separatedBy:;
 	add: #File -> #readCharacter;
 	add: #Integer -> #digitSize;
-	add: #KernelLibrary -> #getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:;
-	add: #KernelLibrary -> #getFileSize:lpFileSizeHigh:;
 	add: #KernelLibrary -> #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:;
-	add: #KernelLibrary -> #lstrcmp:lpString2:;
-	add: #KernelLibrary -> #lstrcmpi:lpString2:;
-	add: #KernelLibrary -> #setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:;
 	add: #Locale -> #isMonthBeforeDay;
 	add: #Package -> #addGlobalNamed:;
 	add: #Package -> #includesGlobalNamed:;
@@ -98,11 +79,9 @@ package methodNames
 	add: #VMLibrary -> #isWindowsVistaSP2OrGreater;
 	add: #VMLibrary -> #isWindowsXPOrGreater;
 	add: #VMLibrary -> #shortName;
-	add: #WinMMLibrary -> #timeGetTime;
 	add: 'Category class' -> #categoryIcon;
 	add: 'Character class' -> #safeCodePoint:;
 	add: 'Class class' -> #foldLiteralStrings;
-	add: 'CompiledMethod class' -> #fromString:;
 	add: 'Compiler class' -> #compileDebugExpression:in:evaluationPools:;
 	add: 'Compiler class' -> #compileDebugMethod:in:;
 	add: 'Compiler class' -> #compileExpression:in:flags:;
@@ -410,30 +389,6 @@ sharedPools!pool variables!public! !
 sharedPoolsDo:!pool variables!public! !
 !
 
-!CompiledMethod class methodsFor!
-
-fromString: aString
-	"Answers the CompiledMethod identified by aString or nil if none is found."
-
-	| className stream |
-	Notification deprecated.
-	stream := aString readStream.
-	className := stream upToAll: '>>'.
-	stream atEnd ifTrue: [^nil].
-	(className endsWith: ' class')
-		ifTrue: [className := (className allButLast: 6) asQualifiedReference meta]
-		ifFalse: [className := className asQualifiedReference].
-	^className valueOrNil
-		ifNotNil: 
-			[:theClass |
-			| selector |
-			stream peekFor: $#.
-			selector := stream upToEnd asSymbol.
-			theClass compiledMethodAt: selector ifAbsent: nil]! !
-!CompiledMethod class categoriesForMethods!
-fromString:!converting!development!public! !
-!
-
 !Compiler class methodsFor!
 
 compileDebugExpression: aString in: aClass evaluationPools: anArray
@@ -515,36 +470,6 @@ extra!accessing!public! !
 
 !CRTLibrary methodsFor!
 
-__iscsym: aCharacter
-	"Answer whether the argument is a letter, underscore, or digit.
-		int __iscsym(int c)"
-
-	<cdecl: bool __iscsym char>
-	#deprecated.	"No longer used"
-	^self invalidCall: _failureCode!
-
-__iscsymf: aCharacter
-	"Answer whether the argument is a letter or underscore.
-		int __iscsymf(int c)"
-
-	<cdecl: bool __iscsymf char>
-	#deprecated.	"No longer used"
-	^self invalidCall: _failureCode!
-
-_chdir: aString
-	"Change the current working directory to that identified by the path, aString.
-
-		int _chdir( const char *dirname);"
-
-	<cdecl: sdword _chdir lpstr>
-	#deprecated. "In favour of KernelLibrary>>setCurrentDirectory:, as this did not handle Unicode"
-	^self invalidCall: _failureCode!
-
-_chmod: aFilenameString pmode: aModeInteger
-	<cdecl: sdword _chmod lpstr sdword>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
 _spawnvp: mode cmdname: aString argv: argv
 	"Spawn a new process.
 
@@ -556,113 +481,9 @@ _spawnvp: mode cmdname: aString argv: argv
 
 	<overlap cdecl: sdword _spawnvp sdword lpstr lpvoid>
 	#deprecated. "Not used; see ExternalProcess contribution"
-	^self invalidCall: _failureCode!
-
-_strnicmp: string1 string2: string2 count: count
-	"Answer the result of a case insensitive string comparison between string1 and
-	string2, comparing only the first, count, characters. Answer <0, 0, or >0 according to
-	whether the first count characters of are lexicographically less than, equal to, or greater
-	than the first count characters of string2."
-
-	<cdecl: sdword _strnicmp lpstr lpstr intptr>
-	#deprecated ."Not used"
-	^self invalidCall: _failureCode!
-
-_strrev: aString
-	"Answer aString, reversed.
-
-		char *_strrev( char *string );
-
-	N.B. We ignore the return value, as it will be a pointer to the argument,
-	and the functions works 'in-place'"
-
-	<cdecl: void _strrev lpstr>
-	#deprecated. "Not used"
-	^self invalidCall: _failureCode!
-
-_wgetcwd: aString maxlen: anInteger
-	<cdecl: lpvoid _wgetcwd lpwstr sdword>
-	#deprecated. "In favour of KernelLibrary>>getCurrentDirectory:lpBuffer:"
-	^self invalidCall: _failureCode!
-
-iswcntrl: aCharacter
-	"Answer whether the argument is a control character.
-		int iswcntrl( wint_t c )"
-
-	<cdecl: bool iswcntrl char>
-	#deprecated.	"Doesn't work correctly for chars outside BMP"
-	^self invalidCall: _failureCode!
-
-iswgraph: aCharacter
-	"Answer whether the argument is a printable character other than a space.
-		int iswgraph( wint_t c )"
-
-	<cdecl: bool iswgraph char>
-	#deprecated. "Doesn't work correctly for chars outside BMP"
-	^self invalidCall: _failureCode!
-
-iswprint: aCharacter
-	"Answer whether the argument is a printable character.
-		int iswprint( wint_t c )"
-
-	<cdecl: bool iswprint char>
-	#deprecated. "Doesn't work correctly for chars outside BMP"
-	^self invalidCall: _failureCode!
-
-iswpunct: aCharacter
-	"Answer whether the argument is a punctuation character.
-		int iswpunct( wint_t c )"
-
-	<cdecl: bool iswpunct char>
-	#deprecated. "Doesn't work correctly for chars outside BMP"
-	^self invalidCall: _failureCode!
-
-memset: dest c: c count: count
-	"Fill a block of memory.
-				void *memset( void *dest, int c, size_t count );
-	"
-
-	<cdecl: sdword memset lpvoid sdword intptr>
-	#deprecated. "Not used. If required define KernelLibrary FillMemory/RtlFillMemory"
-	^self invalidCall: _failureCode!
-
-strpbrk: string strCharSet: strCharSet
-	"Answer a pointer to the first occurrence of any of the characters
-	from the <String>, strCharSet, in the <String>, string.
-
-		char *strpbrk( const char *string, const char *strCharSet 
-	"
-
-	<cdecl: char* strpbrk char* char*>
-	#deprecated. "Unused. CRT string functions are generally not useful because they stop at null terminators."
-	^self invalidCall: _failureCode!
-
-wcsncmp: string1 string2: string2 count: count
-	"Answer the order between the <Utf16String> arguments, string1 and string2,
-	considering up to <integer>, count, characters.
-
-		int wcscmp( const wchar_t *string1, const wchar_t *string2, size_t count );
-	"
-
-	<cdecl: sdword wcsncmp lpwstr lpwstr intptr>
-	#deprecated. "Unused. CRT string functions are generally not useful because they stop at null terminators."
 	^self invalidCall: _failureCode! !
 !CRTLibrary categoriesForMethods!
-__iscsym:!CRT functions-character classification!public! !
-__iscsymf:!CRT functions-character classification!public! !
-_chdir:!CRT functions-directory control!public! !
-_chmod:pmode:!CRT functions-file handling!public! !
 _spawnvp:cmdname:argv:!CRT functions-process and environment control!public! !
-_strnicmp:string2:count:!CRT functions-string manipulation!public! !
-_strrev:!CRT functions-string manipulation!public! !
-_wgetcwd:maxlen:!CRT functions-directory control!public! !
-iswcntrl:!CRT functions-character classification!public! !
-iswgraph:!CRT functions-character classification!public! !
-iswprint:!CRT functions-character classification!public! !
-iswpunct:!CRT functions-character classification!public! !
-memset:c:count:!CRT functions-buffer manipulation!public! !
-strpbrk:strCharSet:!CRT functions-string manipulation!public! !
-wcsncmp:string2:count:!CRT functions-string manipulation!public! !
 !
 
 !Delay class methodsFor!
@@ -756,46 +577,14 @@ digitSize!accessing!public! !
 
 !KernelLibrary methodsFor!
 
-getDateFormat: locale dwFlags: dwFlags lpDate: aWinSYSTEMTIME lpFormat: formatString lpDateStr: outputStringOutput cchDate: anInteger
-	<stdcall: sdword GetDateFormatW dword dword void* lpwstr lpwstr sdword>
-	#deprecated. "Deprecated by Microsoft - use GetDateFormatEx"
-	^self invalidCall: _failureCode
-
-!
-
-getFileSize: hfile lpFileSizeHigh: lpFileSizeHigh
-	<stdcall: dword GetFileSize handle dword*>
-	#deprecated. "Use #getFileSizeEx:lpFileSize:"
-	^self invalidCall: _failureCode!
-
 getTimeFormat: locale dwFlags: dwFlags lpTime: aWinSYSTEMTIME lpFormat: formatString lpTimeStr: outputStringOutput cchBuf: anInteger
 	<stdcall: sdword GetTimeFormatW dword dword void* lpwstr lpwstr sdword>
 	#deprecated. "Deprecated by Microsoft - use GetTimeFormatEx instead"
 	^self invalidCall: _failureCode
 
-!
-
-lstrcmp: aString1 lpString2: aString2
-	<stdcall: sdword lstrcmpW lpwstr lpwstr>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-lstrcmpi: aString1 lpString2: aString2
-	<stdcall: sdword lstrcmpiW lpwstr lpwstr>
-	#deprecated.
-	^self invalidCall: _failureCode!
-
-setFilePointer: aHandle lDistanceToMove: loInteger lpDistanceToMoveHigh: anAddress dwMoveMethod: senseOfMove
-	<stdcall: dword SetFilePointer handle dword lpvoid dword>
-	#deprecated. "Use #setFilePointerEx:liDistanceToMove:lpNewFilePointer:dwMoveMethod:"
-	^self invalidCall: _failureCode! !
+! !
 !KernelLibrary categoriesForMethods!
-getDateFormat:dwFlags:lpDate:lpFormat:lpDateStr:cchDate:!public!win32 functions-national language support! !
-getFileSize:lpFileSizeHigh:!public!win32 functions-file management! !
 getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:!public!win32 functions-national language support! !
-lstrcmp:lpString2:!public!win32 functions-string manipulation! !
-lstrcmpi:lpString2:!public!win32 functions-string manipulation! !
-setFilePointer:lDistanceToMove:lpDistanceToMoveHigh:dwMoveMethod:!public!win32 functions-file management! !
 !
 
 !Locale methodsFor!
@@ -1106,16 +895,6 @@ isWindowsVistaSP1OrGreater!public!win32 functions-version helpers! !
 isWindowsVistaSP2OrGreater!public!win32 functions-version helpers! !
 isWindowsXPOrGreater!public!win32 functions-version helpers! !
 shortName!accessing!public! !
-!
-
-!WinMMLibrary methodsFor!
-
-timeGetTime
-	<stdcall: dword timeGetTime>
-	#deprecated.	"Use Time class>>millisecondClockValue (which is highly accurate, and does not wrap after ~49.7 days either)"
-	^self invalidCall: _failureCode! !
-!WinMMLibrary categoriesForMethods!
-timeGetTime!public!win32 functions-timer! !
 !
 
 "End of package definition"!

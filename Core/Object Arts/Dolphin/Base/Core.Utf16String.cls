@@ -93,11 +93,13 @@ byteSize
 	^self basicSize + 1 bitShift: 1!
 
 copyToBuffer: anAddress ofSize: anInteger
-	OS.Ucrt
+	"Private - Copy the receiver into the buffer at the specified address, truncating if necessary to fit within the specified size. Answer whether the text could be copied without truncation."
+
+	^(OS.Ucrt
 		wcsncpy_s: anAddress
 		bufferSize: anInteger
 		strSource: self
-		count: OS.CRTConstants._TRUNCATE!
+		count: OS.CRTConstants._TRUNCATE) == 0!
 
 countElements
 	| length |

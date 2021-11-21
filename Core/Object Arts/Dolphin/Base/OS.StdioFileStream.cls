@@ -324,13 +324,12 @@ nextPutAll: aCollection
 	^aCollection appendToStream: self!
 
 open: pathString mode: modeString
-	| handle errno |
+	| handle |
 	handle := External.Handle new.
-	errno := Ucrt
-				_wfopen_s: handle
-				filename: pathString
-				mode: modeString.
-	errno ~~ 0 ifTrue: [^CRTError signalWith: errno].
+	Ucrt
+		_wfopen_s: handle
+		filename: pathString
+		mode: modeString.
 	self
 		setStream: handle
 		name: pathString
@@ -559,7 +558,7 @@ on: aFile type: aSymbol
 	"Answer an new concrete sub-instance of the receiver attached to the open <File>, aFile, with content type named by the <Symbol>, aSymbol.
 	Valid content types are #binary, to read/write raw bytes, #text (for text translation mode - sniffing the current encoding) or one of the valid String encodings - see String.Encodings."
 
-	| oshandle proc fd handle mode encoding flags |
+	| oshandle proc fd mode encoding flags |
 	aFile isReadable ifFalse: [self error: 'must be attached to a readable file'].
 	encoding := aSymbol == #text ifTrue: [String encodingName: aFile sniffEncoding] ifFalse: [aSymbol].
 	oshandle := External.Handle new.
@@ -580,12 +579,14 @@ on: aFile type: aSymbol
 		ifFalse: 
 			[flags := ReadOnlyMask.
 			mode := 'r'].
-	handle := Ucrt _fdopen: fd mode: (mode copyWith: (encoding == #binary ifTrue: [$b] ifFalse: [$t])).
-	handle isNil ifTrue: [CRTError signal].
-	^(self newForEncoding: encoding)
-		setStream: handle
-		name: aFile name
-		flags: flags!
+	^(Ucrt _fdopen: fd mode: (mode copyWith: (encoding == #binary ifTrue: [$b] ifFalse: [$t])))
+		ifNil: [CRTError signal]
+		ifNotNil: 
+			[:handle |
+			(self newForEncoding: encoding)
+				setStream: handle
+				name: aFile name
+				flags: flags]!
 
 open: fileId mode: modeSymbol check: aBoolean type: typeSymbol
 	| stream concreteClass path exists mode |
@@ -606,11 +607,11 @@ open: fileId mode: modeSymbol check: aBoolean type: typeSymbol
 	modes it is not possible to overwrite the existing data."
 	(modeSymbol == #append or: [modeSymbol == #open])
 		ifTrue: 
-			[(aBoolean and: [exists not]) ifTrue: [CRTError signalWith: 2].
+			[(aBoolean and: [exists not]) ifTrue: [^CRTError signalWith: CRTConstants.ENOENT].
 			mode := exists ifTrue: ['r+'] ifFalse: ['w+']].
 	modeSymbol == #truncate
 		ifTrue: 
-			[(aBoolean and: [exists not]) ifTrue: [CRTError signalWith: 2].
+			[(aBoolean and: [exists not]) ifTrue: [^CRTError signalWith: CRTConstants.ENOENT].
 			mode := 'w+'].
 	modeSymbol == #read ifTrue: [mode := 'r'].
 	concreteClass := typeSymbol == #text

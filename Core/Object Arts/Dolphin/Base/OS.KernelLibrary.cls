@@ -119,13 +119,11 @@ copyFile: fromString lpNewFileName: toString bfailIfExists: fail
 copyMemory: destination source: source length: length
 	"CopyMemory is a macro defined to RtlCopyMemory, which in turn is a macro defined to memcpy"
 
-	| errno |
-	(errno := Ucrt
-				memcpy_s: destination
-				destSize: length
-				src: source
-				count: length) == 0
-		ifFalse: [CRTError signalWith: errno]!
+	Ucrt
+		memcpy_s: destination
+		destSize: length
+		src: source
+		count: length!
 
 createDirectory: path lpSecurityAttributes: aSECURITYATTRIBUTES
 	"Create a new directory with the specified <String> path, 

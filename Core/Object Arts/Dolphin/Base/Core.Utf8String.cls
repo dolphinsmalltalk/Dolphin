@@ -59,13 +59,6 @@ before: aCharacter ifAbsent: aNiladicValuable
 bom 
 	^Bom!
 
-copyToBuffer: anAddress ofSize: anInteger
-	OS.Ucrt
-		strncpy_s: anAddress
-		bufferSize: anInteger
-		strSource: self
-		count: OS.CRTConstants._TRUNCATE!
-
 countElements
 	| length |
 	length := 0.
@@ -430,11 +423,6 @@ reversedFrom: startInteger to: stopInteger
 									i := i + 4]]]].
 	^reversed!
 
-strlen
-	"Private - Answer the length of the receiver in code units (not code points) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
-
-	^OS.Ucrt strlen: self!
-
 urlEncoded
 	"Percent encode the receiver as described in RFC 3986 (https://tools.ietf.org/html/rfc3986) Section 2.
 	Not every part in a URI should be encoded as it is explained in section 2.4 so you should be cautious."
@@ -458,7 +446,6 @@ _beginsString:!comparing!double dispatch!private! !
 asUtf8String!converting!public! !
 before:ifAbsent:!public!searching! !
 bom!constants!encode/decode!private! !
-copyToBuffer:ofSize:!copying!private! !
 countElements!accessing!public! !
 decodeAt:!encode/decode!private! !
 decodeNextFrom:!encode/decode!private! !
@@ -470,7 +457,6 @@ isLeadCodeUnit:!encode/decode!public!testing! !
 maxEncoding!constants!private! !
 nextIndexOfCharacter:from:to:!private!searching! !
 reversedFrom:to:!copying!public! !
-strlen!accessing!private! !
 urlEncoded!public! !
 !
 
