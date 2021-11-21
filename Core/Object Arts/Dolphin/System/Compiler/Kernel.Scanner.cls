@@ -356,7 +356,7 @@ scanIdentifierOrKeyword
 		value: name!
 
 scanKeyword
-	| outputPosition inputPosition words |
+	| words outputPosition inputPosition  |
 	words := 0.
 	
 	[words := words + 1.

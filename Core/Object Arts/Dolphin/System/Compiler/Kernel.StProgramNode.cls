@@ -90,6 +90,9 @@ assigns: aVariableName
 	self childrenDo: [:each | (each assigns: aVariableName) ifTrue: [^true]].
 	^false!
 
+basicMethodNode
+	^nil!
+
 bestNodeFor: anInterval
 	| selectedChildren |
 	(self intersectsInterval: anInterval) ifFalse: [^nil].
@@ -285,7 +288,15 @@ methodComments
 	^self comments!
 
 methodNode
-	^parent ifNotNil: [parent methodNode]!
+	"Answer the StMethodNode at the top of the receiver's AST."
+
+	"Implementation Note: A recursive solution would be more elegant, but the trees can be very deep, and there is a small (5-10%) perf advantage in an iterative solution."
+
+	| current next |
+	current := self.
+	[(next := current parent) isNil] whileFalse: [current := next].
+	"Allow for the top-most node not being an StMethodNode, although this should not be the case for a well-formed tree."
+	^current basicMethodNode!
 
 newSource
 	^self formattedCode!
@@ -415,6 +426,7 @@ allTemporaryVariableNodes!accessing!public! !
 allTemporaryVariableNodesDo:!enumerating!public! !
 allTemporaryVariables!accessing!public! !
 assigns:!public!testing! !
+basicMethodNode!accessing!private! !
 bestNodeFor:!public!querying! !
 blockVariables!accessing!public! !
 cascadeListCharacter!meta variable/accessing!public! !

@@ -21,12 +21,14 @@ Instance Variables:
 !Kernel.StMethodNode categoriesForClass!System-Compiler! !
 !Kernel.StMethodNode methodsFor!
 
-= anObject 
+= anObject
+	| myArgs count hisArgs |
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
 	(self selector = anObject selector and: [self body = anObject body]) ifFalse: [^false].
-	1 to: self arguments size
-		do: [:i | (self arguments at: i) = (anObject arguments at: i) ifFalse: [^false]].
+	count := (myArgs := self arguments) size.
+	count == (hisArgs := anObject arguments) size ifFalse: [^false].
+	1 to: count do: [:i | (myArgs at: i) = (hisArgs at: i) ifFalse: [^false]].
 	^self tags = anObject tags!
 
 acceptVisitor: aProgramNodeVisitor
@@ -58,6 +60,9 @@ arguments: variableNodes
 	arguments := variableNodes.
 	arguments do: [:each | each parent: self]!
 
+basicMethodNode
+	^self!
+
 body
 	^body!
 
@@ -81,13 +86,24 @@ defines: aName
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aPuttableStream nextPutAll: 'Method'!
+	methodClass
+		ifNil: [aPuttableStream nextPutAll: 'Method']
+		ifNotNil: 
+			[aPuttableStream
+				print: methodClass;
+				nextPutAll: '>>';
+				print: self selector]!
 
 environment
 	^environment!
 
 environment: anObject
 	environment := anObject!
+
+fullBindingFor: aString
+	"Answer a variable binding for the named variable in the scope of this method, and failing that in the receiver's environment. If there is no such variable, then answer nil."
+
+	^methodClass fullBindingFor: aString environment: environment!
 
 hash
 	^(self selector hash bitXor: self body hash) bitXor: self arguments hash!
@@ -213,6 +229,7 @@ argumentCount!accessing!public! !
 argumentNames!accessing!public! !
 arguments!accessing!public! !
 arguments:!accessing!public! !
+basicMethodNode!accessing!private! !
 body!accessing!public! !
 body:!accessing!public! !
 buildSelector!helpers!private! !
@@ -221,6 +238,7 @@ defines:!public!testing! !
 displayOn:!printing!public! !
 environment!accessing!public! !
 environment:!accessing!public! !
+fullBindingFor:!binding!public! !
 hash!comparing!public! !
 isExternalCall!public!testing! !
 isInlined!public!testing! !

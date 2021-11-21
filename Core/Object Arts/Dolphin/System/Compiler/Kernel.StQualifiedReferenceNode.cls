@@ -21,6 +21,10 @@ Kernel.StQualifiedReferenceNode comment: '`StQualifiedReferenceNode` is a kind o
 !Kernel.StQualifiedReferenceNode categoriesForClass!System-Compiler! !
 !Kernel.StQualifiedReferenceNode methodsFor!
 
+= anObject
+	self == anObject ifTrue: [^true].
+	^self class == anObject class and: [self value = anObject value]!
+
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitQualifiedReferenceNode: self!
 
@@ -67,6 +71,7 @@ value
 valueClass
 	^BindingReference! !
 !Kernel.StQualifiedReferenceNode categoriesForMethods!
+=!public! !
 acceptVisitor:!public!visitor! !
 isMeta!public!testing! !
 isMeta:!accessing!public!testing! !

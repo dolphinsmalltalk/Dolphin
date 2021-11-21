@@ -5217,7 +5217,7 @@ valueInFrame:!accessing!public! !
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aPuttableStream nextPutAll: '#()'! !
+	aPuttableStream nextPutAll: (self isForByteArray ifTrue: ['#[]'] ifFalse: ['#()'])! !
 !Kernel.StLiteralArrayNode categoriesForMethods!
 displayOn:!printing!public! !
 !

@@ -85,6 +85,13 @@ valueClass!accessing!public! !
 
 !Kernel.StLiteralArrayNode class methodsFor!
 
+contents: anArrayOfStLiteralNodes
+	^self
+		startPosition: nil
+		contents: anArrayOfStLiteralNodes
+		stopPosition: nil
+		isByteArray: false!
+
 startPosition: startInteger contents: anArray stopPosition: stopInteger isByteArray: aBoolean 
 	^(self new)
 		startPosition: startInteger
@@ -100,6 +107,7 @@ value: aValue
 		stopPosition: nil
 		isByteArray: aValue class ~~ Array! !
 !Kernel.StLiteralArrayNode class categoriesForMethods!
+contents:!instance creation!public! !
 startPosition:contents:stopPosition:isByteArray:!instance creation!public! !
 value:!instance creation!public! !
 !
