@@ -130,6 +130,12 @@ testReplaceIdentityWith
 testResize
 	self should: [super testResize] raise: Processor constWriteSignal!
 
+testSortColon
+	self
+		should: [#testSortColon sort]
+		raise: Error
+		matching: [:ex | ex messageText = 'Symbol should not implement #sortUsing:']!
+
 testSpecies
 	self assert: self collectionClass empty species identicalTo: Symbol!
 
@@ -153,6 +159,7 @@ testRefersToLiteral!public!unit tests! !
 testReplaceFromToWithStartingAt!public!unit tests! !
 testReplaceIdentityWith!public!unit tests! !
 testResize!public!unit tests! !
+testSortColon!public!unit tests! !
 testSpecies!public!unit tests! !
 testSymbolTable!public!unit tests! !
 !

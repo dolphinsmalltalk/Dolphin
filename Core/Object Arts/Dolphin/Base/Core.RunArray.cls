@@ -135,6 +135,11 @@ size
 	1 to: runs size do: [:i | tally := tally + (runs at: i)].
 	^tally!
 
+sortUsing: aSortAlgorithm
+	"Perform an in-place sort against the receiver using the specified sort algorithm"
+	
+	self shouldNotImplement!
+
 species
 	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types."
 
@@ -166,6 +171,7 @@ runsAndValuesDo:!enumerating!public! !
 runStartAndValueAt:!accessing!private! !
 runStartAt:!accessing!public! !
 size!accessing!public! !
+sortUsing:!public!sorting! !
 species!accessing!public! !
 storeOn:!accessing!private! !
 !
@@ -215,7 +221,7 @@ with: element1 with: element2 with: element3 with: element4 with: element5
 		values: {element1. element2. element3. element4. element5}!
 
 withAll: aCollection
-	| runs values runLength current |
+	| runLength current runs values |
 	runs := WriteStream on: {}.
 	values := WriteStream on: {}.
 	runLength := 0.

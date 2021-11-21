@@ -115,7 +115,7 @@ anyIndexOf: anObject
 	"Answer the <integer> index of any element of the receiver, not necessarily the first, which is equal to the <Object> argument. If the receiver does not contain any elements equal to target, answer 0.
 	This search is performed using a binary chop, and so should be faster than #indexOf: for larger collections most circumstances, however the argument must be compatible with the receiver's sort block."
 
-	| searchBlock index low high |
+	| index low high searchBlock |
 	searchBlock := self sortBlock.
 	low := firstIndex.
 	high := lastIndex.
@@ -292,15 +292,15 @@ select: aMonadicValuable
 
 	"Implementation Note: The superclass implementation works, but ends up sorting the selected elements again, which is unnecessary since we know they will be selected in sorted order."
 
-	| newCollection j |
+	| j newCollection |
 	newCollection := self copyEmpty.
 	j := 0.
 	firstIndex to: lastIndex
 		do: 
 			[:i |
 			| each |
-			each := self basicAt: i.
-			(aMonadicValuable value: each) ifTrue: [newCollection basicAt: (j := j + 1) put: each]].
+			(aMonadicValuable value: (each := self basicAt: i))
+				ifTrue: [newCollection basicAt: (j := j + 1) put: each]].
 	newCollection firstIndex: 1 lastIndex: j.
 	^newCollection!
 
@@ -329,6 +329,13 @@ sortFrom: startInteger to: stopInteger
 		sort: self
 		from: startInteger
 		to: stopInteger!
+
+sortUsing: aSortAlgorithm
+	"Perform an in-place sort against the receiver using the specified sort algorithm.
+	Note that this must change the receiver's sort algorithm, as well as perform an in-place sort, in order to maintain the invariant that the receiver's elements are maintained in the order determined by the receiver's sort comparison."
+
+	algorithm := aSortAlgorithm.
+	super sortUsing: aSortAlgorithm!
 
 stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
@@ -369,6 +376,7 @@ setSortAlgorithm:!initializing!private! !
 sortBlock!accessing!public! !
 sortBlock:!accessing!operations!public! !
 sortFrom:to:!algorithms!private! !
+sortUsing:!public!sorting! !
 stbSaveOn:!binary filing!public! !
 !
 

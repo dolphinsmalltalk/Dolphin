@@ -21,11 +21,20 @@ testReplaceIdentityWith
 	self should: [super testReplaceIdentityWith] raise: Error!
 
 testResize
-	self shouldnt: [super testResize] implement: #resize:! !
+	self shouldnt: [super testResize] implement: #resize:!
+
+testSortColon
+	| subject |
+	subject := self newCollection: #(3 1 2 4 1).
+	self
+		should: [subject sort]
+		raise: Error
+		matching: [:ex | ex messageText = 'RunArray should not implement #sortUsing:']! !
 !Core.Tests.RunArrayTest categoriesForMethods!
 collectionClass!helpers!private! !
 testReplaceFromToWithStartingAt!public! !
 testReplaceIdentityWith!public! !
 testResize!public!unit tests! !
+testSortColon!public!unit tests! !
 !
 

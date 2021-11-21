@@ -1763,7 +1763,7 @@ uninstallClasses
 	classes := self remainingClasses.
 
 	"Remove classes, bottom up so as to remove subclasses first"
-	classes := classes asArray sortUsing: (SortAlgorithm defaultSort: [:a :b | (self depthOfClass: a) > (self depthOfClass: b)]).
+	classes := classes asArray sort: [:a :b | (self depthOfClass: a) > (self depthOfClass: b)].
 	classes do: 
 			[:aClass |
 			"Notification signal: 'Removing class ', aClass name."

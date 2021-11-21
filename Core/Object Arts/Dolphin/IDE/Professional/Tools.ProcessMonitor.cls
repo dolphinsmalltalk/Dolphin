@@ -190,7 +190,7 @@ refresh
 	"Try not to prevent process' being GC'd"
 	(proc notNil and: [proc isTerminated]) ifTrue: [proc := nil].
 	listPresenter list: #().
-	listPresenter list: (Process allInstances sortUsing: (SortAlgorithm defaultSort: [:a :b | a id <= b id])).
+	listPresenter list: (Process allInstances sort: [:a :b | a id <= b id]).
 	proc notNil ifTrue: [self process: proc]!
 
 renameIt

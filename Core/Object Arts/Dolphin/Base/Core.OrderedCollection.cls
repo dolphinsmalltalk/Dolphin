@@ -480,6 +480,11 @@ size
 	^lastIndex - firstIndex + 1
 !
 
+sort: aDyadicValuable
+	"Perform an in-place sort against the receiver using the specified <dyadicValuable> sort block."
+
+	self sortUsing: (SortAlgorithm defaultSort: aDyadicValuable)!
+
 sortUsing: aSortAlgorithm
 	"Perform an in-place sort against the receiver using the specified sort algorithm"
 	
@@ -544,6 +549,7 @@ reverseDo:!enumerating!public! !
 select:!enumerating!public! !
 setSize:!accessing!public! !
 size!accessing!public! !
+sort:!public!sorting! !
 sortUsing:!public!sorting! !
 stbSaveOn:!binary filing!public! !
 uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !

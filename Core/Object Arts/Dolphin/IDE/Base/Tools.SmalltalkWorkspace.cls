@@ -2477,8 +2477,7 @@ textStyles: aCollectionOfScintillaTextStyles
 	"Set the text styles used to colour text in the receiver's instances. These must have the names used in the styler, which by default is a <SmalltalkStyler>."
 
 	| textStyles |
-	textStyles := aCollectionOfScintillaTextStyles asArray
-				sortUsing: (SortAlgorithm defaultSort: [:a :b | a name <= b name]).
+	textStyles := aCollectionOfScintillaTextStyles asArray sort: [:a :b | a name <= b name].
 	TextStyles := textStyles.
 	self isLoadingOptions ifTrue: [^self].
 	self primAllSubinstances do: [:each | each textStyles: TextStyles].

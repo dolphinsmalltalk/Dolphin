@@ -240,6 +240,11 @@ sort
 
 	self sortUsing: self class defaultSortAlgorithm!
 
+sort: aDyadicValuable
+	"Perform an in-place sort against the receiver using the specified <dyadicValuable> sort block."
+
+	self sortUsing: (SortAlgorithm defaultSort: aDyadicValuable)!
+
 sortUsing: aSortAlgorithm
 	"Perform an in-place sort against the receiver using the specified sort algorithm"
 	
@@ -272,6 +277,7 @@ replaceIdentity:with:!public!replacing! !
 resize:!mutating!public! !
 size!accessing!public! !
 sort!public!sorting! !
+sort:!public!sorting! !
 sortUsing:!public!sorting! !
 !
 

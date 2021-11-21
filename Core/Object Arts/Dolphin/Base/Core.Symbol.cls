@@ -194,6 +194,11 @@ shallowCopy
 
 	^self!
 
+sortUsing: aSortAlgorithm
+	"Perform an in-place sort against the receiver using the specified sort algorithm"
+	
+	self shouldNotImplement!
+
 species
 	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types. Symbols are equal to Strings in Dolphin, but we don't want them to be considered interchangeable as Symbols have a distinctly different purpose."
 
@@ -227,6 +232,7 @@ printOn:!printing!public! !
 refersTo:asLiteralOf:!private!testing! !
 replaceFrom:to:with:startingAt:!public!replacing! !
 shallowCopy!copying!public! !
+sortUsing:!public!sorting! !
 species!accessing!public! !
 stbSaveOn:!binary filing!public! !
 !

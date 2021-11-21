@@ -202,7 +202,15 @@ testRemoveAtIndex
 			subject removeAtIndex: i.
 			self assert: subject equals: expected].
 	subject := self newCollection: (1 to: 5).
-	#(0 6) do: [:i | self should: [subject removeAtIndex: i] raise: BoundsError]! !
+	#(0 6) do: [:i | self should: [subject removeAtIndex: i] raise: BoundsError]!
+
+testSortColon
+	| subject |
+	subject := self newCollection: #(3 1 2 4).
+	subject sort: [:a :b | a <= b].
+	self assert: subject asArray equals: #(1 2 3 4).
+	subject sort: [:a :b | a >= b].
+	self assert: subject asArray equals: #(4 3 2 1)! !
 !Core.Tests.SequencedGrowableCollectionTest categoriesForMethods!
 testAddAfterIndex!public!unit tests! !
 testAddAllFirst!public!unit tests! !
@@ -211,5 +219,6 @@ testAddAllLast!public!unit tests! !
 testAddFirst!public!unit tests! !
 testCopyWithoutIndex!public!unit tests! !
 testRemoveAtIndex!public!unit tests! !
+testSortColon!public!unit tests! !
 !
 

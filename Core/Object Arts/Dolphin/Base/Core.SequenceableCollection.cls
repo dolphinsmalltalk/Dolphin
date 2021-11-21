@@ -388,7 +388,7 @@ copyReplaceFrom: start to: stop with: replacementElements
 		stop must = start-1
 		Else treat as replacement"
 
-	| newSize repSize |
+	| repSize newSize |
 	repSize := replacementElements size.
 	newSize := self size + repSize - (stop - start + 1).
 	^(self copyLikeOfSize: newSize)
@@ -1011,11 +1011,11 @@ prevIndexOfSubCollection: aSequenceableCollection startingAt: anInteger ifAbsent
 		ifFalse: [index]
 !
 
-randomizeUsing: aRandom 
+randomizeUsing: aRandom
 	| order |
 	3 timesRepeat: [aRandom next].
 	order := self collect: [:each | aRandom next -> each].
-	order := order sortUsing: (SortAlgorithm defaultSort: [:a :b | a key <= b key]).
+	order := order sort: [:a :b | a key <= b key].
 	^order collect: [:each | each value]!
 
 readStream
