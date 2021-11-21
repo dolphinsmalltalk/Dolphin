@@ -160,6 +160,16 @@ size
 	contents do: [:elemCount | tally := tally + elemCount].
 	^tally!
 
+sortedCounts
+	"Answer collection of counts against elements, sorted by decreasing count."
+
+	| stream answer |
+	answer := Array new: contents size.
+	stream := WriteStream on: answer.
+	contents keysAndValuesDo: [:each :eachCount | stream nextPut: eachCount -> each].
+	answer sort: [:a :b | a key > b key].
+	^answer!
+
 valuesAndCountsDo: aBlock 
 	contents keysAndValuesDo: aBlock! !
 !Core.Bag categoriesForMethods!
@@ -181,6 +191,7 @@ remove:ifAbsent:!public!removing! !
 removeAll!public! !
 removeAllOccurrencesOf:ifAbsent:!public!removing! !
 size!accessing!public! !
+sortedCounts!accessing!public! !
 valuesAndCountsDo:!enumerating!public! !
 !
 

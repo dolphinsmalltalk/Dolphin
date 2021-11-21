@@ -40,10 +40,17 @@ testRemoveIfAbsent
 			self assert: (subject remove: each) equals: each.
 			self assert: (subject occurrencesOf: each) equals: 0.
 			self assert: (subject remove: each ifAbsent: [#absent]) identicalTo: #absent].
-	self assert: subject isEmpty! !
+	self assert: subject isEmpty!
+
+testSortedCounts
+	| subject |
+	subject := self collectionClass withAll: #('a' 'b' 'c' 'a' 'b' 'b').
+	self assert: subject sortedCounts equals: {3 -> 'b'. 2 -> 'a'. 1 -> 'c'}.
+	self assert: self collectionClass new sortedCounts equals: #()! !
 !Core.Tests.BagTest categoriesForMethods!
 collectionClass!constants!private! !
 testDeepCopy!public! !
 testRemoveIfAbsent!public! !
+testSortedCounts!public!unit tests! !
 !
 
