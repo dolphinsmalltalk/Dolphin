@@ -60,6 +60,23 @@ testAnyKeysSatisfy
 	self assert: (dictionary anyKeysSatisfy: [:each | each isSymbol]).
 	self deny: (dictionary anyKeysSatisfy: [:each | each isInteger])!
 
+testAssociations
+	| subject actual expected |
+	subject := self newEmpty.
+	self assert: subject associations equals: #().
+	expected := OrderedCollection new.
+	(1 to: 5) do: 
+			[:each |
+			| key value |
+			key := self makeKey: each.
+			value := self assimilate: each.
+			expected add: (subject associationClass key: key value: value).
+			subject at: key put: value].
+	expected := expected asArray.
+	actual := subject associations.
+	self assert: actual class identicalTo: Array.
+	self assert: actual sort equals: expected sort!
+
 testAssociationsDo
 	| subject actual expected |
 	subject := self newEmpty.
@@ -276,6 +293,7 @@ newDictionary!private!unit tests! !
 newEmpty!helpers!public! !
 testAllKeysSatisfy!public!unit tests! !
 testAnyKeysSatisfy!public!unit tests! !
+testAssociations!public!unit tests! !
 testAssociationsDo!public!unit tests! !
 testAtIfAbsent!public!unit tests! !
 testAtIfAbsentPut!public!unit tests! !

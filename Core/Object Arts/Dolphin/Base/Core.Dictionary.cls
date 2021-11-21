@@ -111,12 +111,12 @@ associationClass
 	^Association!
 
 associations
-	"Answer an OrderedCollection containing the receiver's associations"
+	"Answer an <Collection> containing the receiver's associations"
 
 	| answer |
-	answer := OrderedCollection new: self size.
-	self associationsDo: [:assoc | answer addLast: assoc].
-	^answer!
+	answer := WriteStream on: (Array new: self size).
+	self associationsDo: [:assoc | answer nextPut: assoc].
+	^answer grabContents!
 
 associationsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument, for each of the receiver's key/value mappings."
