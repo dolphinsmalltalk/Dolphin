@@ -307,17 +307,18 @@ viewNamed: aString ifNone: aBlock
 	^aBlock value!
 
 wmNotify: message wParam: wParam lParam: lParam
-	"Private - Redirects WM_NOTIFY messages to the appropriate control as a notify message.
-	Overridden here to handle notifications from the receiver's tool tip control which 
-	does not itself have an associated View so cannot receive the redirected message.
-	In any case it is more convenient to direct the notification to the receiver's
-	#ttnNeedText: handler."
+	"Private - Redirects WM_NOTIFY messages to the appropriate control as a notify message."
 
-	| pnmhdr code |
+	"Overridden here to handle notifications from the receiver's tool tip control which does not itself have an associated View so cannot receive the redirected message.
+	In any case it is more convenient to direct the notification to the receiver's #ttnNeedText: handler."
+
+	| pnmhdr |
 	pnmhdr := lParam asExternalAddress.
-	code := pnmhdr sdwordAtOffset: 8.
-	(code == TTN_GETDISPINFOW or: [code == TTN_GETDISPINFOW]) ifTrue: [^self nmNotify: pnmhdr].
-	^super wmNotify: message wParam: wParam lParam: lParam! !
+	(pnmhdr sdwordAtOffset: 8) == TTN_GETDISPINFOW ifTrue: [^self nmNotify: pnmhdr].
+	^super
+		wmNotify: message
+		wParam: wParam
+		lParam: lParam! !
 !UI.ControlBarAbstract categoriesForMethods!
 actualInsets:!accessing!private! !
 actualPreferredExtent:!private! !
