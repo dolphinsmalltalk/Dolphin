@@ -4784,7 +4784,7 @@ publishedEventsOfInstances
 registeredTools
 	"Answers the collection of tools registered for the receiver"
 
-	RegisteredTools isNil ifTrue: [RegisteredTools := Set new].
+	RegisteredTools isNil ifTrue: [RegisteredTools := IdentitySet new].
 	^RegisteredTools!
 
 registerTool: aToolClass
