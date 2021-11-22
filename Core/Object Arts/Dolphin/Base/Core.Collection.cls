@@ -500,7 +500,7 @@ size
 split: aReadableString
 	"Answer an Array containing the substrings in aReadableString separated by any of the elements of the receiver (which must be instances of Character)."
 
-	| start answer size end |
+	| end start answer size |
 	size := aReadableString size.
 	size == 0 ifTrue: [^#()].
 	end := aReadableString indexOfAnyOf: self startingAt: 1.

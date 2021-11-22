@@ -92,10 +92,11 @@ storeOn: aStream
 	class storeOn: aStream.
 	aStream nextPut: $)!
 
-superclassEquivalentlyDefines: aSelector 
-	| superTree myTree |
-	class superclass isNil ifTrue: [^false].
-	superTree := class superclass parseTreeFor: aSelector.
+superclassEquivalentlyDefines: aSelector
+	| superTree myTree superclass |
+	superclass := class superclass.
+	superclass isNil ifTrue: [^false].
+	superTree := superclass parseTreeFor: aSelector.
 	myTree := class parseTreeFor: aSelector.
 	(superTree isNil or: [myTree isNil]) ifTrue: [^false].
 	^superTree equalTo: myTree exceptForVariables: #()!

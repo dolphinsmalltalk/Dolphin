@@ -35,7 +35,7 @@ findKeyOrNil: anObject
 	the index of the first empty slot including and after that to which 
 	the key hashes. A pluggable <searchPolicy> is used for key comparisons and hashing."
 
-	| policy capacity index |
+	| index policy capacity  |
 	index := (policy := self searchPolicy) hash: anObject max: (capacity := self basicSize).
 	
 	[| key |

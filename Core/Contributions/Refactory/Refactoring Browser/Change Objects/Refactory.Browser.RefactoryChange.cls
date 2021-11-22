@@ -25,6 +25,15 @@ addClassChangeClass
 addMethodChangeClass
 	^AddMethodChange!
 
+afterText
+	^self changeString!
+
+beforeText
+	^''!
+
+changeClass
+	^nil!
+
 changeForClass: aRBClass selector: aSelector 
 	^nil!
 
@@ -39,6 +48,9 @@ changesSize
 
 changeString
 	^self class name!
+
+displayClassName
+	^''!
 
 displayString
 	^name isNil ifTrue: [self changeString] ifFalse: [name]!
@@ -71,15 +83,22 @@ renameChangesForClass: aClassName to: newClassName
 	the class name, we need to change the class name to the new 
 	name to perform the compiles."
 
-	"No action required for most changes."! !
+	"No action required for most changes."!
+
+selector
+	^nil! !
 !Refactory.Browser.RefactoryChange categoriesForMethods!
 addClassChangeClass!constants!public! !
 addMethodChangeClass!constants!public! !
+afterText!printing!public! !
+beforeText!printing!public! !
+changeClass!public! !
 changeForClass:selector:!accessing!public! !
 changeForMetaclass:selector:!accessing!public! !
 changes!accessing!public! !
 changesSize!accessing!public! !
 changeString!printing!public! !
+displayClassName!public! !
 displayString!printing!public! !
 execute!performing/changes!public! !
 executeNotifying:!private! !
@@ -89,6 +108,7 @@ initialize!initialize/release!public! !
 name!accessing!public! !
 name:!initialize/release!public! !
 renameChangesForClass:to:!accessing!public! !
+selector!public! !
 !
 
 !Refactory.Browser.RefactoryChange class methodsFor!

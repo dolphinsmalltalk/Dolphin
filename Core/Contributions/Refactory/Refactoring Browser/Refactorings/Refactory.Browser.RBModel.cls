@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Refactory.Browser.RBModel'
-	instanceVariableNames: 'changes environment newClasses removedClasses changedClasses rootClasses implementorsCache sendersCache'
+	instanceVariableNames: 'changes environment newClasses removedClasses changedClasses rootClasses implementorsCache sendersCache totalBindingsLoadTime totalBindingsLoaded'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -10,6 +10,10 @@ Refactory.Browser.RBModel guid: (Core.GUID fromString: '{e04ee960-3b00-47a4-b10a
 Refactory.Browser.RBModel comment: ''!
 !Refactory.Browser.RBModel categoriesForClass!Refactory-Model! !
 !Refactory.Browser.RBModel methodsFor!
+
+accumulateBindingLoad: anInteger time: aDuration
+	totalBindingsLoaded := totalBindingsLoaded + anInteger.
+	totalBindingsLoadTime := totalBindingsLoadTime + aDuration!
 
 addChangeToClass: aRBClass
 	^changedClasses at: aRBClass name put: {aRBClass nonMetaclass. aRBClass metaclass}!
@@ -92,7 +96,7 @@ classFor: aBehavior
 classNamed: aString
 	| index |
 	aString isNil ifTrue: [^nil].
-	(self hasRemoved: aString) ifTrue: [^nil].
+	(removedClasses includes: aString) ifTrue: [^nil].
 	(newClasses lookup: aString) ifNotNil: [:class | ^class].
 	(changedClasses lookup: aString) ifNotNil: [:class | ^class].
 	index := aString indexOf: $\x20.
@@ -103,9 +107,8 @@ classNamed: aString
 				ifNotNil: 
 					[:binding |
 					| class |
-					class := binding value.
 					"The environment could be the SystemDictionary, and may return non-Class objects, or a BrowserEnvironment, which won't, so we need to check it is a class"
-					(class isBehavior and: [class fullName = aString])
+					(binding isClassBinding and: [(class := binding value) fullName = aString])
 						ifTrue: 
 							[| nonMeta |
 							nonMeta := self createNewClassFor: class.
@@ -145,16 +148,17 @@ defineClass: aString
 	change := changes defineClass: aString.
 	newClassName := change changeClassName.
 	newClass := self classNamed: newClassName.
-	newClass isNil
-		ifTrue: 
+	newClass
+		ifNil: 
 			[removedClasses remove: newClassName ifAbsent: nil.
 			newClass := RBClass model: self named: newClassName.
 			newClasses at: newClassName put: newClass.
 			newClass environment addClass: newClass].
 	newClass superclass: (self classNamed: change superclassName).
-	newClass superclass isNil ifTrue: [self rootClasses add: newClass].
+	newClass superclass ifNil: [self rootClasses add: newClass].
 	newClass instanceVariableNames: change instanceVariableNames.
 	newClass classVariableNames: change classVariableNames copy.
+	newClass classConstants: change classConstants.
 	newClass imports: change imports copy.
 	newClass category: change category.
 	^change!
@@ -234,7 +238,7 @@ removeClassNamed: aSymbol
 	removedClasses add: aSymbol.
 	newClasses removeKey: aSymbol ifAbsent: nil.
 	changedClasses removeKey: aSymbol ifAbsent: nil.
-	removedClass environment ifNotNil: [:env | env removeVariableNamed: removedClass unqualifiedName].
+	removedClass environment ifNotNil: [:env | env removeClass: removedClass].
 	self flushCaches.
 	^changes removeClassNamed: aSymbol!
 
@@ -249,16 +253,19 @@ removeMethod: aSelector from: aRBClass
 	^changes removeMethod: aSelector from: aRBClass!
 
 renameClass: aRBClass to: aSymbol around: aBlock
-	| change value dict oldName refs |
+	| change value dict oldName refs oldUnqualified originalEnvironment |
 	oldName := aRBClass fullName.
 	change := RenameClassChange rename: oldName to: aSymbol.
-	"The ordering is tricky here. We want the namespaces to reflect the change so that any attempt to look up the old class name in its old environment will fail, but we need method searches to find references to the old class name. Therefore we have to capture the references in advance of making an model changes."
+	"The ordering is tricky here. We want the namespaces to reflect the change so that any attempt to look up the old class name in its old environment will fail, but we need method searches to find references to the old class name. Therefore we have to capture the references in advance of making any model changes."
 	refs := OrderedCollection new.
 	self allReferencesToClass: aRBClass do: [:each | refs add: each].
-	aRBClass environment removeClass: aRBClass.
+	oldUnqualified := aRBClass unqualifiedName.
+	originalEnvironment := aRBClass environment.
 	aRBClass name: aSymbol.
 	aRBClass environment addClass: aRBClass.
 	self performChange: change around: [aBlock value: refs].
+	originalEnvironment removeVariableNamed: oldUnqualified.
+	aRBClass environment.
 	self flushCaches.
 	dict := (newClasses includesKey: oldName) ifTrue: [newClasses] ifFalse: [changedClasses].
 	removedClasses add: oldName.
@@ -311,11 +318,20 @@ setEnvironment: aBrowserEnvironment
 	changedClasses := LookupTable new.
 	removedClasses := Set new.
 	implementorsCache := IdentityDictionary new.
-	sendersCache := IdentityDictionary new!
+	sendersCache := IdentityDictionary new.
+	totalBindingsLoadTime := 0 seconds.
+	totalBindingsLoaded := 0!
+
+totalBindingsLoaded
+	^totalBindingsLoaded!
+
+totalBindingsLoadTime
+	^totalBindingsLoadTime!
 
 whichCategoryIncludes: aSymbol
 	^self environment whichCategoryIncludes: aSymbol! !
 !Refactory.Browser.RBModel categoriesForMethods!
+accumulateBindingLoad:time:!accessing!public! !
 addChangeToClass:!changes!private! !
 addClassConstant:to:!changes!private! !
 addClassVariable:to:!changes!private! !
@@ -358,6 +374,8 @@ reparentClasses:to:!changes!public! !
 replaceClassNameIn:to:!changes!private! !
 rootClasses!accessing!public! !
 setEnvironment:!initialize/release!private! !
+totalBindingsLoaded!accessing!public! !
+totalBindingsLoadTime!accessing!public! !
 whichCategoryIncludes:!accessing/classes!public! !
 !
 

@@ -41,14 +41,14 @@ preconditions
 shouldConvertReadBeforeWritten: aString
 	^(self lookupOption: #convertReadBeforeWritten) cull: self cull: aString!
 
-storeOn: aStream 
+storeOn: aStream
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' class: '.
 	class storeOn: aStream.
 	aStream
-		nextPutAll: ' selector: #';
-		nextPutAll: selector;
+		nextPutAll: ' selector: ';
+		print: selector;
 		nextPutAll: ' variable: ''';
 		nextPutAll: temporaryVariableName;
 		nextPut: $'.

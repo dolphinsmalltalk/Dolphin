@@ -170,8 +170,7 @@ withSelector:do:!enumerating!public! !
 
 fromPairs: aSequencedReadableCollection
 	| count instance |
-	count := aSequencedReadableCollection size.
-	instance := self new: count * 2.
+	instance := self new: (count := aSequencedReadableCollection size) * 2.
 	1 to: count
 		do: 
 			[:i |
@@ -180,8 +179,9 @@ fromPairs: aSequencedReadableCollection
 			instance
 				basicAt: i * 2 - 1 put: pair first;
 				basicAt: i * 2 put: pair second].
-	instance isImmutable: true.
-	^instance!
+	^instance
+		isImmutable: true;
+		yourself!
 
 initialize
 	"Private - Initialize the receiver's class variables.

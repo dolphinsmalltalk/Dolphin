@@ -29,7 +29,10 @@ convertInterval: anInterval for: aString
 
 executeRefactoring: aRefactoring
 	aRefactoring primitiveExecute.
-	self parseExpression: aRefactoring storeString!
+	UI.Keyboard default isShiftDown
+		ifTrue: [Tools.RewriteChangesBrowser showOn: aRefactoring model changes].
+	[self parseExpression: aRefactoring storeString] on: Parser notificationClass
+		do: [:ex | self fail: ex displayString]!
 
 objectClassVariable
 	^Object classPool keys detect: [:each | true]!

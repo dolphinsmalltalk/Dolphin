@@ -68,7 +68,7 @@ preconditions
 					self checkParseTree.
 					true])!
 
-storeOn: aStream 
+storeOn: aStream
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' bindTight: '.
@@ -76,8 +76,8 @@ storeOn: aStream
 	aStream nextPutAll: ' in: '.
 	class storeOn: aStream.
 	aStream
-		nextPutAll: ' selector: #';
-		nextPutAll: selector.
+		nextPutAll: ' selector: ';
+		print: selector.
 	aStream nextPut: $)!
 
 subblocksIn: aParseTree

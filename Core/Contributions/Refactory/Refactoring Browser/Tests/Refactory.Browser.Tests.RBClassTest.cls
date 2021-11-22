@@ -15,6 +15,7 @@ setUp
 	super setUp.
 	model := RBModel new.
 	objectClass := model classNamed: 'Core.Object'.
+	objectClass addClassVariable: 'ModelOnlyClassVariable'.
 	messageNodeClass := model classNamed: RBMessageNode fullName.
 	model
 		defineClass: 'Core.Object subclass: #SomeClassName
@@ -60,6 +61,7 @@ testEnvironment
 	myClass := model classFor: self class.
 	rbTests := model classFor: self class environment.
 	self assert: myClass environment equals: rbTests.
+	self assert: (rbTests bindings at: self class unqualifiedName) identicalTo: myClass.
 	refactory := model classNamed: #Refactory.
 	root := model classNamed: #Root.
 	self assert: rbTests environment environment equals: refactory.
@@ -80,6 +82,27 @@ testHierarchy
 	meta := objectClass metaclass.
 	self assert: (objectClass withAllSubclasses includes: meta).
 	self assert: (meta withAllSuperclasses includes: objectClass)!
+
+testLocalBindingFor
+	| binding |
+	binding := objectClass localBindingFor: 'ModelOnlyClassVariable'.
+	self assertNotNil: binding.
+	self assert: binding environment identicalTo: objectClass.
+	self assertIsNil: binding value.
+	self assert: binding targetVariable identicalTo: binding.
+	binding := objectClass localBindingFor: '_DependentsRegister'.
+	self assertNotNil: binding.
+	self assert: binding environment identicalTo: objectClass.
+	self assert: binding value identicalTo: Object._DependentsRegister.
+	self assert: binding targetVariable identicalTo: (Object localBindingFor: '_DependentsRegister').
+	binding := (model classFor: TransformationRuleTestData) localBindingFor: 'Bar'.
+	self assertNotNil: binding.
+	self assert: binding isImmutable.
+	self assert: binding environment realClass identicalTo: TransformationRuleTestData.
+	self assert: binding value identicalTo: TransformationRuleTestData.Bar.
+	self assert: binding targetVariable identicalTo: (TransformationRuleTestData localBindingFor: 'Bar').
+	
+!
 
 testModel
 	| myClass |
@@ -161,6 +184,7 @@ testDefinesPoolDictionary!public!unit tests! !
 testEnvironment!public!unit tests! !
 testFullName!public!unit tests! !
 testHierarchy!public!unit tests! !
+testLocalBindingFor!public!unit tests! !
 testModel!public!unit tests! !
 testName!public!unit tests! !
 testRealClass!public!unit tests! !

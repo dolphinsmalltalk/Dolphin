@@ -385,6 +385,7 @@ shouldWarn: aRefactoring
 	self should: [self executeRefactoring: aRefactoring] raise: RefactoringWarning!
 
 tearDown
+	Transcript print: self; nextPutAll: ' loaded '; print: model totalBindingsLoaded; nextPutAll: ' total bindings in '; display: model totalBindingsLoadTime; cr.
 	super tearDown.
 	RefactoringManager instance release.
 	(RefactoringManager classPool associationAt: #Instance

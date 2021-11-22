@@ -45,7 +45,7 @@ renameNode: aParseTree
 		ifTrue: [self refactoringError: newName , ' is already defined'].
 	(ParseTreeRewriter rename: oldName to: newName) executeTree: aParseTree!
 
-storeOn: aStream 
+storeOn: aStream
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' renameTemporaryFrom: '.
@@ -56,8 +56,8 @@ storeOn: aStream
 		nextPutAll: ''' in: '.
 	class storeOn: aStream.
 	aStream
-		nextPutAll: ' selector: #';
-		nextPutAll: selector.
+		nextPutAll: ' selector: ';
+		print: selector.
 	aStream nextPut: $)!
 
 transform

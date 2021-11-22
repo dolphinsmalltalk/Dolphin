@@ -65,7 +65,7 @@ classesAndSelectorsDo: aBlock
 classesDo: aBlock
 	classSelectors keysDo: 
 			[:each |
-			(Smalltalk resolveBindingPath: ($. split: each))
+			(Smalltalk resolveBindingPath: (BindingReference.PathSeparator split: each))
 				ifNotNil: 
 					[:binding |
 					| class |

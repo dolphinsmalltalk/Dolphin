@@ -23,6 +23,9 @@ asUndoOperation
 				do: [:selector | classChanges compile: (each class sourceCodeAt: selector) in: each class]].
 	^classChanges!
 
+beforeText
+	^self changeClass definition!
+
 changeString
 	^'Remove class ', self displayClassName!
 
@@ -36,6 +39,7 @@ printOn: aStream
 		nextPut: $!!! !
 !Refactory.Browser.RemoveClassChange categoriesForMethods!
 asUndoOperation!converting!public! !
+beforeText!printing!public! !
 changeString!printing!public! !
 primitiveExecute!private! !
 printOn:!printing!public! !

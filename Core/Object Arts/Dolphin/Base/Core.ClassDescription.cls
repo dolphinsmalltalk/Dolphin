@@ -362,10 +362,11 @@ compile: codeString classified: categoryString
 	^(self basicCompile: codeString environment: self environment)
 		ifNotNil: 
 			[:result |
-			| method category |
+			| method |
 			method := result method.
-			category := categoryString asMethodCategory.
-			result isNew ifTrue: [category addMethodSilently: method] ifFalse: [category addMethod: method].
+			result isNew
+				ifTrue: [categoryString asMethodCategory addMethodSilently: method]
+				ifFalse: [categoryString asMethodCategory addMethod: method].
 			method storeCategories.
 			result fireSystemUpdateEvent.
 			method]!

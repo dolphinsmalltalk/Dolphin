@@ -182,18 +182,17 @@ findElementOrNil: anObject
 	^index!
 
 fixCollisionsFrom: index
-	"Private - Rehashes objects in the collection after index to see if any of
-	them hash to index.  If so, that object is copied to index, and the
-	process repeats with that object's index, until a nil is encountered."
+	"Private - Rehashes objects in the collection after index to see if any of them hash to index.  If so, that object is copied to index, and the algorithm repeats with that object's index, until a nil is encountered."
 
-	| slotIndex capacity element |
+	| slotIndex element capacity |
 	slotIndex := index.
 	capacity := self basicSize.
+	
 	[slotIndex := slotIndex \\ capacity + 1.
-	  (element := self basicAt: slotIndex) isNil]
-		whileFalse:  [ | hashIndex |
-			hashIndex := self findElementOrNil: element.
-			(self basicAt: hashIndex) isNil ifTrue: [self moveFrom: slotIndex to: hashIndex]]!
+	(element := self basicAt: slotIndex) isNil] whileFalse: 
+				[| hashIndex |
+				hashIndex := self findElementOrNil: element.
+				(self basicAt: hashIndex) isNil ifTrue: [self moveFrom: slotIndex to: hashIndex]]!
 
 grow
 	"Private - Expand the receiver to a capacity suitable for holding more elements"

@@ -3,7 +3,7 @@
 Refactory.Browser.Tests.ClassToRename subclass: #'Refactory.Browser.Tests.SubclassOfClassToRename'
 	instanceVariableNames: 'rewriteRule1'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Refactory.Browser.Tests.ClassToRename private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.Tests.SubclassOfClassToRename guid: (Core.GUID fromString: '{b07793cb-e421-4358-b250-e15c44d940e5}')!
@@ -20,9 +20,6 @@ calls1
 externalReference: aClassToRename _: aClassToRename2
 	<stdcall: ClassToRename* dummy Refactory.Browser.Tests.ClassToRename Tests.ClassToRename*>!
 
-fullyQualifiedReference
-	^Refactory.Browser.Tests.ClassToRename new!
-
 name
 	^rewriteRule1!
 
@@ -32,8 +29,11 @@ partiallyQualifiedReference1
 partiallyQualifiedReference2
 	^Browser.Tests.ClassToRename new!
 
-reference
-	^ClassToRename new!
+qualifiedReferences
+	^{Refactory.Browser.Tests.ClassToRename new.
+		Tests.ClassToRename new.
+		Browser.Tests.ClassToRename new.
+		ClassToRename new}!
 
 rewriteRule1
 	^rewriteRule1!
@@ -41,19 +41,18 @@ rewriteRule1
 rewriteRule1: anObject
 	^rewriteRule1 := anObject!
 
-symbolReference
-	^#ClassToRename! !
+symbolicReferences
+	^#(#ClassToRename #'Tests.ClassToRename' #'Refactory.Browser.Tests.ClassToRename' #'Tools.ClassToRename' #'Smalltalk.ClassToRename')! !
 !Refactory.Browser.Tests.SubclassOfClassToRename categoriesForMethods!
 calls!accessing!public! !
 calls1!accessing!public! !
 externalReference:_:!performing!public! !
-fullyQualifiedReference!performing!public! !
 name!accessing!public! !
 partiallyQualifiedReference1!performing!public! !
 partiallyQualifiedReference2!performing!public! !
-reference!performing!public! !
+qualifiedReferences!performing!public! !
 rewriteRule1!accessing!public! !
 rewriteRule1:!accessing!public! !
-symbolReference!performing!public! !
+symbolicReferences!performing!public! !
 !
 

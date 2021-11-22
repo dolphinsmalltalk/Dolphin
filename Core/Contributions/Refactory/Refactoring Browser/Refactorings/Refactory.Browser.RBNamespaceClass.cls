@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RBClass subclass: #'Refactory.Browser.RBNamespaceClass'
-	instanceVariableNames: 'removedVariables newVariables'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -12,11 +12,10 @@ Refactory.Browser.RBNamespaceClass comment: ''!
 !Refactory.Browser.RBNamespaceClass methodsFor!
 
 addClass: aRBClass
-	self addVariableNamed: aRBClass unqualifiedName value: aRBClass!
-
-addVariableNamed: aSymbol value: anObject
-	removedVariables remove: aSymbol ifAbsent: nil.
-	newVariables add: (VariableBinding key: aSymbol value: anObject)!
+	self bindings add: ((RBVariableBinding name: aRBClass unqualifiedName class: self)
+				setFlags: 0;
+				value: aRBClass;
+				yourself)!
 
 baseEnvironmentName
 	"See Class>>baseEnvironment"
@@ -28,53 +27,23 @@ hierarchyBindingFor: aString
 
 	^self localBindingFor: aString!
 
-localBindingFor: aString
-	"Answer a variable binding for the named variable directly in the scope of this class, i.e. one of its own class variables. If there is no such class variable, then answer nil."
-
-	^(removedVariables includes: aString)
-		ifFalse: 
-			[(newVariables bindingFor: aString)
-				ifNil: 
-					[(self realClass localBindingFor: aString)
-						ifNotNil: 
-							[:realBinding |
-							(VariableBinding key: realBinding key value: (model classFor: realBinding value))
-								environment: self;
-								setFlags: realBinding flags;
-								yourself]]]!
-
 removeClass: aRBClass
 	self removeVariableNamed: aRBClass unqualifiedName!
 
-removeVariableNamed: aSymbol
-	newVariables removeKey: aSymbol ifAbsent: nil.
-	removedVariables add: aSymbol!
+removeVariableNamed: aString
+	self bindings removeKey: aString!
 
 resolveImportedBinding: aBindingContext
 	"Private - Search imported namespaces for a binding that matches the identifier in the <BindingContext> supplied. The search proceeds up through the class hierarchy (i.e. imports in the class hierarchy are inherited), and then out to the imports of the enclosing namespace. Imports into the enclosing namespaces of superclasses are not searched."
 
 	(self resolveLocallyImportedBinding: aBindingContext) ifNotNil: [:binding | ^binding].
-	^self environment ifNotNil: [:env | env resolveImportedBinding: aBindingContext]!
-
-setModel: aRBModel name: anObject
-	super setModel: aRBModel name: anObject.
-	newVariables := Dictionary new.
-	removedVariables := Set new!
-
-setName: aSymbol 
-	name := aSymbol.
-	newVariables := Dictionary new.
-	removedVariables := Set new! !
+	^self environment ifNotNil: [:env | env resolveImportedBinding: aBindingContext]! !
 !Refactory.Browser.RBNamespaceClass categoriesForMethods!
 addClass:!public! !
-addVariableNamed:value:!public! !
 baseEnvironmentName!accessing!public! !
 hierarchyBindingFor:!bindings!private! !
-localBindingFor:!bindings!public! !
 removeClass:!public! !
 removeVariableNamed:!public! !
 resolveImportedBinding:!binding!private! !
-setModel:name:!accessing!initializing!private! !
-setName:!initializing!private! !
 !
 

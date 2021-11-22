@@ -326,12 +326,13 @@ nextIdentityIndexOf: anElement from: start to: stop
 	Override the inherited implementation to make use of the primitive as the receiver's elements
 	are contiguous between the first and last indices."
 
-	| index offset |
+	| offset index |
 	offset := firstIndex - 1.
-	index := self basicIdentityIndexOf: anElement from: start+offset to: stop+offset.
-	^index == 0
-		ifTrue: [0]
-		ifFalse: [index - offset]!
+	index := self
+				basicIdentityIndexOf: anElement
+				from: start + offset
+				to: stop + offset.
+	^index == 0 ifTrue: [0] ifFalse: [index - offset]!
 
 nextIndexOf: anElement from: start to: stop
 	"Answer the index of the next occurrence of anElement in the receiver between 

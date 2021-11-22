@@ -92,7 +92,7 @@ superclass
 		ifNotNil: [:superclass | superclass metaclass]!
 
 unqualifiedName
-	"Answer the unqualified name of the non-metaclass."
+	"Answer the unqualified name of the class."
 
 	^nonMetaclass unqualifiedName , ' class'! !
 !Refactory.Browser.RBMetaclass categoriesForMethods!

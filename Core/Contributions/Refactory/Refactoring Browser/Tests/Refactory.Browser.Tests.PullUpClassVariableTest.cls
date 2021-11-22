@@ -21,15 +21,16 @@ testNonExistantName
 		withMessage: 'Could not find a class defining Foo'!
 
 testPullUpClassConstant
-	| refactoring bar |
+	| refactoring bar modelClass modelSubclass |
 	refactoring := PullUpClassVariableRefactoring variable: #Bar class: LintRuleTestData.
 	self executeRefactoring: refactoring.
-	bar := (refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData') classConstants
-				detect: [:each | each key = 'Bar'].
+	modelClass := refactoring model classFor: LintRuleTestData.
+	bar := modelClass localBindingFor: 'Bar'.
 	self assert: bar value equals: 123.
-	self
-		deny: ((refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData')
-				classConstants anySatisfy: [:each | each key = 'Bar'])!
+	self assert: bar environment identicalTo: modelClass.
+	self assert: bar isImmutable.
+	modelSubclass := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData'.
+	self assertIsNil: (modelSubclass localBindingFor: 'Bar')!
 
 testPullUpClassVariable
 	| refactoring |

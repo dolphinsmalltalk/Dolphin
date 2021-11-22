@@ -236,12 +236,12 @@ selector: aSymbol class: aClass variable: aVariableName
 	variable := aVariableName.
 	class := self classObjectFor: aClass!
 
-storeOn: aStream 
+storeOn: aStream
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream
-		nextPutAll: ' selector: #';
-		nextPutAll: selector;
+		nextPutAll: ' selector: ';
+		print: selector;
 		nextPutAll: ' class: '.
 	class storeOn: aStream.
 	aStream

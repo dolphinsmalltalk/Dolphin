@@ -81,10 +81,8 @@ abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection
 	self performComponentRefactoring: poolRefactoring.
 	self computeVariablesToAbstract!
 
-classVariableNames
-	| nonMetaClass |
-	nonMetaClass := fromClass nonMetaclass.
-	^(nonMetaClass allClassVariableNames collect: [:each | each asString]) asSet!
+classBindingNames
+	^fromClass nonMetaclass allClassBindingNames!
 
 computeVariablesToAbstract
 	| searcher |
@@ -115,25 +113,21 @@ parseTree
 preconditions
 	^RBCondition empty!
 
-processAssignmentNode: aNode 
+processAssignmentNode: aNode
 	| varName |
 	varName := aNode variable name.
 	ignore = varName ifTrue: [^self].
 	(aNode whoDefines: varName) notNil ifTrue: [^self].
-	(self instanceVariableNames includes: varName) 
-		ifTrue: [instVarWriters add: varName].
-	(self classVariableNames includes: varName) 
-		ifTrue: [classVarWriters add: varName]!
+	(self instanceVariableNames includes: varName) ifTrue: [instVarWriters add: varName].
+	(self classBindingNames includes: varName) ifTrue: [classVarWriters add: varName]!
 
-processReferenceNode: aNode 
+processReferenceNode: aNode
 	| varName |
 	varName := aNode name.
 	ignore = varName ifTrue: [^self].
 	(aNode whoDefines: varName) notNil ifTrue: [^self].
-	(self instanceVariableNames includes: varName) 
-		ifTrue: [instVarReaders add: varName].
-	(self classVariableNames includes: varName) 
-		ifTrue: [classVarReaders add: varName]!
+	(self instanceVariableNames includes: varName) ifTrue: [instVarReaders add: varName].
+	(self classBindingNames includes: varName) ifTrue: [classVarReaders add: varName]!
 
 removeDefinedClassVariables
 	| selectionBlock nonMetaClass |
@@ -160,7 +154,7 @@ abstractClassVariables!public!transforming! !
 abstractInstanceVariable:!public!transforming! !
 abstractInstanceVariables!public!transforming! !
 abstractVariablesIn:from:toAll:ignoring:!initialize/release!public! !
-classVariableNames!public!transforming! !
+classBindingNames!public!transforming! !
 computeVariablesToAbstract!public!transforming! !
 hasVariablesToAbstract!public!testing! !
 instanceVariableNames!public!transforming! !

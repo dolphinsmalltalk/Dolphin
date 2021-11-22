@@ -64,8 +64,8 @@ storeOn: aStream
 	aStream nextPutAll: ' extract: '.
 	extractionInterval storeOn: aStream.
 	aStream
-		nextPutAll: ' from: #';
-		nextPutAll: selector;
+		nextPutAll: ' from: ';
+		print: selector;
 		nextPutAll: ' in: '.
 	class storeOn: aStream.
 	aStream nextPut: $)!

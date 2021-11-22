@@ -15,8 +15,14 @@ Refactory.Browser.RemoveMethodChange comment: ''!
 	super = aRemoveMethodChange ifFalse: [^false].
 	^selector = aRemoveMethodChange selector!
 
+afterText
+	^''!
+
 asUndoOperation
 	^self addMethodChangeClass compile: (self methodSourceFor: selector) in: self changeClass!
+
+beforeText
+	^(self methodSourceFor: selector) !
 
 changeString
 	^'Remove <1s>>><2s>' expandMacrosWith: self displayClassName with: self selector!
@@ -47,7 +53,9 @@ source
 	^''! !
 !Refactory.Browser.RemoveMethodChange categoriesForMethods!
 =!comparing!public! !
+afterText!printing!public! !
 asUndoOperation!converting!public! !
+beforeText!printing!public! !
 changeString!printing!public! !
 hash!comparing!public! !
 primitiveExecute!private! !

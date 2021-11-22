@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName classVariableNames imports category classConstants comment environment'
+	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName bindings imports category comment environment'
 	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -25,7 +25,7 @@ Instance Variables:
 	^cmp == 0 ifTrue: [self fullName <= aRBClass fullName] ifFalse: [cmp < 0]!
 
 addClassVariable: aString
-	self classVariableNames add: aString.
+	self bindings add: (RBVariableBinding name: aString class: self).
 	model addClassVariable: aString to: self!
 
 addImport: aString
@@ -37,15 +37,40 @@ addImport: aString
 addSubclass: aRBClass 
 	self subclasses add: aRBClass!
 
+allClassBindingNames
+	^self superclass
+		ifNil: [self classBindingNames]
+		ifNotNil: [:sprClass | sprClass allClassBindingNames , self classBindingNames]!
+
 allClassVariableNames
-	| sprClass |
-	sprClass := self superclass.
-	^sprClass isNil
-		ifTrue: [self classVariableNames]
-		ifFalse: [sprClass allClassVariableNames , self classVariableNames]!
+	^self superclass
+		ifNil: [self classVariableNames]
+		ifNotNil: 
+			[:sprClass |
+			sprClass allClassVariableNames
+				addAll: self classVariableNames;
+				yourself]!
 
 allImports
 	^self superclass ifNil: [self imports] ifNotNil: [:sprClass | sprClass allImports , self imports]!
+
+bindings
+	(bindings isNil and: [realClass notNil])
+		ifTrue: 
+			[| time |
+			time := 
+					[| realBindings |
+					realBindings := realClass bindings.
+					bindings := Dictionary new: realBindings size.
+					realBindings do: 
+							[:each |
+							| binding |
+							binding := RBVariableBinding realBinding: each class: self.
+							each isClassBinding ifTrue: [binding setValue: (model classFor: each value)].
+							bindings add: binding]]
+							timeToRun.
+			model accumulateBindingLoad: bindings size time: time].
+	^bindings!
 
 category
 	^category isNil
@@ -56,23 +81,24 @@ category: aSymbol
 	category := aSymbol!
 
 classBindingNames
-	^self classVariableNames , (self classConstants collect: [:each | each key])!
+	^self definedBindings collect: [:each | each key]!
 
 classConstants
-	classConstants
-		ifNil: [self classConstants: (realClass ifNotNil: [realClass classConstants] ifNil: [#()])].
-	^classConstants!
+	"The answer is a temporary value representing a subset of the class variable bindings collection, so mark it immutable to catch errors of attempting to modify it"
+
+	^(self definedBindings select: [:each | each isImmutable])
+		isImmutable: true;
+		yourself!
 
 classConstants: aCollectionOfVariableBindings
-	classConstants := aCollectionOfVariableBindings asOrderedCollection!
+	self bindings addAll: aCollectionOfVariableBindings!
 
 classVariableNames
-	(classVariableNames isNil and: [realClass notNil])
-		ifTrue: [self classVariableNames: realClass classBindingNames].
-	^classVariableNames!
+	^(self definedBindings select: [:each | each isImmutable not]) collect: [:each | each key]!
 
-classVariableNames: aCollectionOfStrings 
-	classVariableNames := aCollectionOfStrings asOrderedCollection!
+classVariableNames: aCollectionOfStrings
+	bindings := Dictionary new: aCollectionOfStrings size.
+	aCollectionOfStrings do: [:each | bindings add: (RBVariableBinding name: each class: self)]!
 
 comment
 	^comment == LookupComment
@@ -81,6 +107,9 @@ comment
 
 comment: aString
 	model comment: (comment := aString) in: self!
+
+definedBindings
+	^self bindings associations select: [:each | each isClassVariable]!
 
 definitionString
 	| definitionStream |
@@ -91,7 +120,7 @@ definitionString
 	^definitionStream contents!
 
 directlyDefinesClassVariable: aString
-	^self classVariableNames includes: aString!
+	^self bindings includesKey: aString!
 
 directlyImportsNamespace: aBindingReference
 	"Namespace imports must always be absolute binding references, but they may be private, so we just compare the paths"
@@ -152,7 +181,7 @@ kindOfSubclass
 localBindingFor: aString
 	"Answer a variable binding for the named variable directly in the scope of this class, i.e. one of its own class variables. If there is no such class variable, then answer nil."
 
-	^self realClass localBindingFor: aString!
+	^self bindings bindingFor: aString!
 
 metaclass
 	^metaclass!
@@ -204,7 +233,7 @@ printDefinitionOn: puttableStream
 		nextPut: $';
 		crtab;
 		nextPutAll: 'classVariableNames: '''.
-	self classVariableNames do: [:each | puttableStream nextPutAll: each]
+	self classVariableNames asSortedCollection do: [:each | puttableStream nextPutAll: each]
 		separatedBy: [puttableStream space].
 	puttableStream
 		nextPut: $';
@@ -242,21 +271,21 @@ realName: aSymbol
 	self realClass: aSymbol asQualifiedReference value!
 
 removeClassVariable: aString
-	self classVariableNames remove: aString ifAbsent: [self classConstants remove: aString].
+	self bindings removeKey: aString.
 	model removeClassVariable: aString from: self!
 
 removeSubclass: aRBClass
 	self subclasses remove: aRBClass ifAbsent: nil!
 
 renameClassVariable: oldName to: newName around: aBlock
-	| varNames |
-	varNames := self classVariableNames.
-	varNames at: (varNames indexOf: oldName) put: newName.
+	| variables |
+	variables := self bindings.
 	model
 		renameClassVariable: oldName
 		to: newName
 		in: self
-		around: aBlock!
+		around: aBlock.
+	variables changeKey: oldName to: newName!
 
 resolveBindingPath: anArray
 	"Private - Attempt to resolve a <VariableBinding> by walking the names in the argument through nested namespaces."
@@ -298,13 +327,10 @@ resolveLocallyImportedBinding: aBindingContext
 	1 to: self imports size
 		do: 
 			[:i |
-			| each |
-			each := imports at: i.
-			(aBindingContext visitImport: each from: self)
+			(aBindingContext visitImport: (imports at: i) from: self)
 				ifNotNil: 
 					[:namespace |
-					((model classFor: namespace) resolvePublicBinding: aBindingContext)
-						ifNotNil: [:binding | ^binding]]].
+					((model classFor: namespace) resolvePublicBinding: aBindingContext) ifNotNil: [:binding | ^binding]]].
 	^nil!
 
 resolvePathString: aString
@@ -356,13 +382,12 @@ superclass
 		ifTrue: [model classFor: self realClass superclass]
 		ifFalse: [superclass]!
 
-superclass: aRBClass 
-	self superclass notNil ifTrue: [self superclass removeSubclass: self].
-	superclass := aRBClass.
-	superclass notNil ifTrue: [superclass addSubclass: self].!
+superclass: aRBClass
+	self superclass ifNotNil: [:sprClass | sprClass removeSubclass: self].
+	(superclass := aRBClass) ifNotNil: [aRBClass addSubclass: self]!
 
 unqualifiedName
-	"Answer the fully-qualified name of the non-metaclass."
+	"Answer the unqualified name of the class."
 
 	^unqualifiedName ifNil: [unqualifiedName := ($. split: name) last asSymbol]! !
 !Refactory.Browser.RBClass categoriesForMethods!
@@ -370,8 +395,10 @@ unqualifiedName
 addClassVariable:!public!variable accessing! !
 addImport:!namespaces!public! !
 addSubclass:!class hierarchy-adding!private! !
+allClassBindingNames!accessing!public! !
 allClassVariableNames!accessing!public! !
 allImports!namespaces!public! !
+bindings!accessing!public! !
 category!accessing!public! !
 category:!accessing!public! !
 classBindingNames!public! !
@@ -381,6 +408,7 @@ classVariableNames!accessing!public! !
 classVariableNames:!accessing!public! !
 comment!accessing!public! !
 comment:!accessing!public! !
+definedBindings!accessing!public! !
 definitionString!accessing!public! !
 directlyDefinesClassVariable:!public!testing! !
 directlyImportsNamespace:!public!testing! !

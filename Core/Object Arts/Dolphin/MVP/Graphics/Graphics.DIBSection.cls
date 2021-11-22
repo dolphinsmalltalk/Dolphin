@@ -102,9 +102,8 @@ setColorTable: anRGBQUADArray
 	Signals #errorInvalidColorTable if the table is the wrong size, or not appropriate,
 	for the receiver"
 
-	| bits size newSize canvas |
-	bits := self depth.
-	size := 2 raisedToInteger: bits.
+	| size newSize canvas |
+	size := 2 raisedToInteger: self depth.
 	anRGBQUADArray size = size
 		ifFalse: 
 			["Inappropriate colour table size"

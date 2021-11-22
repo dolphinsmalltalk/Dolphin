@@ -12,11 +12,12 @@ Refactory.Browser.PushUpMethodRefactoring comment: ''!
 !Refactory.Browser.PushUpMethodRefactoring methodsFor!
 
 checkBackReferencesTo: aSelector
-	| definingClass pushUpParseTree |
-	definingClass := class superclass whoDefinesMethod: aSelector.
+	| definingClass pushUpParseTree superclass |
+	superclass := class superclass.
+	definingClass := superclass whoDefinesMethod: aSelector.
 	definingClass isNil ifTrue: [^self].
 	pushUpParseTree := class parseTreeFor: aSelector.
-	class superclass allSubclasses do: 
+	superclass allSubclasses do: 
 			[:each |
 			each selectors do: 
 					[:sel |
@@ -37,7 +38,7 @@ checkClassVars
 	selectors do: [:each | self checkClassVarsFor: each]!
 
 checkClassVarsFor: aSelector
-	class nonMetaclass classVariableNames do: 
+	class nonMetaclass classBindingNames do: 
 			[:each |
 			((class whichSelectorsReferToClassVariable: each) includes: aSelector)
 				ifTrue: 
@@ -60,6 +61,8 @@ checkInstVarsFor: aSelector
 								with: class)]]!
 
 checkSiblingSuperSendsFrom: aRBClass
+	| superclass |
+	superclass := aRBClass superclass.
 	selectors do: 
 			[:aSelector |
 			(aRBClass whichMethodsReferToSymbol: aSelector) do: 
@@ -71,7 +74,7 @@ checkSiblingSuperSendsFrom: aRBClass
 							[(tree superMessages includes: aSelector)
 								ifTrue: 
 									[| definer |
-									definer := aRBClass superclass whoDefinesMethod: aSelector.
+									definer := superclass whoDefinesMethod: aSelector.
 									(definer notNil and: [class includesClass: definer])
 										ifTrue: 
 											[self refactoringError: ('Cannot push up <1p> since <2d>>><3s> sends a super message to it.'
@@ -81,20 +84,21 @@ checkSiblingSuperSendsFrom: aRBClass
 	aRBClass allSubclasses do: [:each | self checkSiblingSuperSendsFrom: each]!
 
 checkSuperclass
-	| overrideSelectors |
-	overrideSelectors := selectors select: [:each | class superclass definesMethod: each].
+	| overrideSelectors superclass |
+	superclass := class superclass.
+	overrideSelectors := selectors select: [:each | superclass definesMethod: each].
 	overrideSelectors := overrideSelectors reject: 
 					[:each |
 					| myTree superTree |
 					myTree := class parseTreeFor: each.
-					superTree := class superclass parseTreeFor: each.
+					superTree := superclass parseTreeFor: each.
 					superTree equalTo: myTree exceptForVariables: #()].
 	overrideSelectors isEmpty ifTrue: [^self].
-	class superclass isAbstract
+	superclass isAbstract
 		ifFalse: 
 			[self refactoringError: ('Non-abstract class <2p> or one of its superclasses already define <1p>'
 						expandMacrosWith: overrideSelectors asArray first
-						with: class superclass)].
+						with: superclass)].
 	overrideSelectors do: [:each | self checkBackReferencesTo: each]!
 
 checkSuperMessages
@@ -102,11 +106,13 @@ checkSuperMessages
 	self checkSuperSendsFromSiblings!
 
 checkSuperSendsFromPushedUpMethods
+	| superclass |
+	superclass := class superclass.
 	selectors do: 
 			[:each |
 			| parseTree |
 			parseTree := class parseTreeFor: each.
-			(parseTree superMessages anySatisfy: [:sup | class superclass directlyDefinesMethod: sup])
+			(parseTree superMessages anySatisfy: [:sup | superclass directlyDefinesMethod: sup])
 				ifTrue: 
 					[self
 						refactoringError: ('Cannot push up <1p> since it sends a super message that is defined in the superclass.'
@@ -156,18 +162,19 @@ preconditions
 						true])!
 
 pushUp: aSelector
-	| source refactoring packageAndEnv |
+	| source refactoring packageAndEnv superclass |
 	source := class sourceCodeFor: aSelector.
 	source isNil ifTrue: [self refactoringError: 'Source for method not available'].
+	superclass := class superclass.
 	refactoring := ExpandReferencedPoolsRefactoring
 				model: self model
 				forMethod: (class parseTreeFor: aSelector)
 				fromClass: class
-				toClasses: {class superclass}.
+				toClasses: {superclass}.
 	self performComponentRefactoring: refactoring.
 	"Maintain package and any custom namespace"
 	packageAndEnv := class existingMethodPackageAndEnvironment: aSelector.
-	class superclass
+	superclass
 		compile: source
 		environment: packageAndEnv second
 		categories: (class protocolsFor: aSelector)
@@ -187,9 +194,10 @@ removeDuplicateMethods
 	selectors do: [:each | self removeDuplicatesOf: each]!
 
 removeDuplicatesOf: aSelector
-	| tree duplicatedIn |
-	tree := class superclass parseTreeFor: aSelector.
-	duplicatedIn := class superclass allSubclasses select: 
+	| tree duplicatedIn superclass |
+	superclass := class superclass.
+	tree := superclass parseTreeFor: aSelector.
+	duplicatedIn := superclass allSubclasses select: 
 					[:each |
 					(each directlyDefinesMethod: aSelector) and: 
 							[(tree equalTo: (each parseTreeFor: aSelector) exceptForVariables: #())

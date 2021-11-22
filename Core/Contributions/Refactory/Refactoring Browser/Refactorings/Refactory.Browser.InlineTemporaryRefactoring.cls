@@ -75,8 +75,8 @@ storeOn: aStream
 	aStream nextPutAll: ' inline: '.
 	sourceInterval storeOn: aStream.
 	aStream
-		nextPutAll: ' from: #';
-		nextPutAll: selector;
+		nextPutAll: ' from: ';
+		print: selector;
 		nextPutAll: ' in: '.
 	class storeOn: aStream.
 	aStream nextPut: $)!

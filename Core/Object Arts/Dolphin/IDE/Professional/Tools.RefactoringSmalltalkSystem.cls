@@ -306,12 +306,12 @@ createInstanceVariableAccessors: aString in: aClass within: aBrowserEnvironment
 createVariableAccessors: variableNamePairs classVariables: aBoolean within: aBrowserEnvironment
 	"Generate get and set accessors for the specified class and variable name pairs."
 
-	| namespace name |
-	namespace := RBModel onEnvironment: aBrowserEnvironment.
-	name := String writeStream.
-	name nextPutAll: 'Create accessors for '.
 	^self performRefactoring: 
-			[variableNamePairs do: 
+			[| model name |
+			model := RBModel onEnvironment: aBrowserEnvironment.
+			name := String writeStream.
+			name nextPutAll: 'Create accessors for '.
+			variableNamePairs do: 
 					[:each |
 					| aClass variable |
 					variable := each value.
@@ -321,14 +321,14 @@ createVariableAccessors: variableNamePairs classVariables: aBoolean within: aBro
 						nextPut: $.;
 						nextPutAll: variable.
 					(CreateAccessorsForVariableRefactoring
-						model: namespace
+						model: model
 						variable: variable
 						class: aClass
 						classVariable: aBoolean) primitiveExecute]
 				separatedBy: [name nextPut: $,].
-			namespace name: name contents.
-			self changeManager performChange: namespace changes.
-			namespace]!
+			model name: name contents.
+			self changeManager performChange: model changes.
+			model]!
 
 duplicateOf: aCompiledMethod in: superClass
 	| superTree superMethod myTree |

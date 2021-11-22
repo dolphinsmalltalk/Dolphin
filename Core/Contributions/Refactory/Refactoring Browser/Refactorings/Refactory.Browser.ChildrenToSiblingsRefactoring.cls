@@ -40,7 +40,7 @@ changeIsKindOfReferences
 			[:msg |
 			| binding |
 			"This may be over the top - we can only be here if the method references the class, but maybe an ambiguous partially qualified reference is also present that actually binds more tightly to another variable?"
-			binding := msg methodNode methodClass fullBindingFor: msg arguments first name.
+			binding := msg methodNode fullBindingFor: msg arguments first name.
 			binding notNil and: [binding value = parent]].
 	self convertAllReferencesToClass: parent using: replacer!
 
@@ -52,11 +52,12 @@ computeSubclassSupersOf: aClass
 	^selectors!
 
 createSubclassResponsibilityFor: aSelector in: aClass
-	| source |
-	(aClass superclass definesMethod: aSelector) ifTrue: [^self].
+	| source superclass |
+	superclass := aClass superclass.
+	(superclass definesMethod: aSelector) ifTrue: [^self].
 	source := self subclassResponsibilityFor: aSelector in: aClass.
 	source isNil ifTrue: [^self].
-	aClass superclass compile: source categories: (aClass protocolsFor: aSelector)!
+	superclass compile: source categories: (aClass protocolsFor: aSelector)!
 
 name: aClassName class: aClass subclasses: subclassCollection 
 	self className: aClassName.
@@ -89,12 +90,14 @@ pullUpClassInstanceVariables
 pullUpClassVariables
 	| newSuperclass |
 	newSuperclass := self abstractSuperclass.
-	parent classVariableNames do: 
+	parent classBindingNames do: 
 			[:each |
 			self performComponentRefactoring: (PullUpClassVariableRefactoring
 						model: self model
 						variable: each
-						class: newSuperclass)]!
+						class: newSuperclass)]
+
+!
 
 pullUpImports
 	"Don't remove the pool variables from the subclass since they might be referenced there."
@@ -154,12 +157,12 @@ shouldPushUp: aSelector from: aClass
 		ifTrue: [subclasses collect: [:each | each metaclass]]
 		ifFalse: [subclasses]) anySatisfy: [:each | (each directlyDefinesMethod: aSelector) not]!
 
-storeOn: aStream 
+storeOn: aStream
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream
-		nextPutAll: ' name: #';
-		nextPutAll: className;
+		nextPutAll: ' name: ';
+		print: className;
 		nextPutAll: ' class: '.
 	parent storeOn: aStream.
 	aStream nextPutAll: ' subclasses: '.

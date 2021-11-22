@@ -741,22 +741,22 @@ buildDefaultStyle
 	^defaultStyle!
 
 buildItemList: aCollection withIcons: aBoolean
-	| itemList sep typesep |
+	| itemList sep |
 	itemList := stringClass writeStream: 256.
 	sep := self autoCompletionSeparator.
-	typesep := self autoCompletionImageIdSeparator.
-	aCollection do: 
-			[:each |
-			itemList display: each.
-			aBoolean
+	aCollection do: (aBoolean
 				ifTrue: 
-					[itemList
+					[| typesep |
+					typesep := self autoCompletionImageIdSeparator.
+					
+					[:each |
+					itemList
+						display: each;
 						nextPut: typesep;
-						display: (self imageIndexForIcon: each icon)].
-			itemList nextPut: sep].
-	^itemList
-		pop;
-		contents!
+						display: (self imageIndexForIcon: each icon)]]
+				ifFalse: [[:each | itemList display: each]])
+		separatedBy: [itemList nextPut: sep].
+	^itemList contents!
 
 buildRawAnnotations: aCollectionOfScintillaAnnotations
 	"Private - Convert the specified <collection> of <ScintillaAnnotation>s in public API format
@@ -3886,7 +3886,7 @@ markerDefinitions: aCollection
 	"Set the margin markers currently defined for this view to be those in the <Collection> of
 	<ScintillaMarkerDefinition>s argument. See #markerDefinitions for further information."
 
-	| allocated available count userIds |
+	| allocated available userIds count |
 	userIds := foldMarkerStyle
 				ifNil: [##(0 to: MARKER_MAX)]
 				ifNotNil: [##(0 to: SC_MARKNUM_FOLDEREND - 1)].

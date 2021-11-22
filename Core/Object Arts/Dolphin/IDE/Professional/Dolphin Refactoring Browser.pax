@@ -34,7 +34,6 @@ package setClassNames: #(
 	#{Tools.LintRuleFailuresBrowserShell}
 	#{Tools.MethodNameDialog}
 	#{Tools.MethodRefactoringTool}
-	#{Tools.PullUpClassStaticRefactoring}
 	#{Tools.RefactoringSmalltalkSystem}
 	#{Tools.RefactoringTool}
 	#{Tools.RenameAccessorsDialog}
@@ -62,9 +61,11 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.AbstractInstanceVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.AbstractVariablesRefactoring} #displayOn:)
 	#(#{Refactory.Browser.AbstractVariablesRefactoring} #getOptionAbstractVariables)
+	#(#{Refactory.Browser.AddClassChange class} #icon)
 	#(#{Refactory.Browser.AddClassRefactoring} #displayOn:)
 	#(#{Refactory.Browser.AddClassVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.AddInstanceVariableRefactoring class} #displayPrefix)
+	#(#{Refactory.Browser.AddMethodChange class} #icon)
 	#(#{Refactory.Browser.AddMethodRefactoring} #displayOn:)
 	#(#{Refactory.Browser.AddMethodRefactoring} #maxDetails)
 	#(#{Refactory.Browser.AddParameterRefactoring} #displayOn:)
@@ -74,6 +75,8 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.BasicLintRule} #searchStrings)
 	#(#{Refactory.Browser.ChangeMethodNameRefactoring} #getOptionRenameAllDefinitions:of:)
 	#(#{Refactory.Browser.ChildrenToSiblingsRefactoring} #displayOn:)
+	#(#{Refactory.Browser.ClassCommentChange class} #icon)
+	#(#{Refactory.Browser.CompositeRefactoryChange class} #icon)
 	#(#{Refactory.Browser.CreateAccessorsForVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.ExpandReferencedPoolsRefactoring} #displayOn:)
 	#(#{Refactory.Browser.ExpandReferencedPoolsRefactoring} #getOptionMovePools:)
@@ -106,7 +109,6 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.ProtectInstanceVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.PullUpClassVariableRefactoring} #displayOn:)
 	#(#{Refactory.Browser.PullUpClassVariableRefactoring class} #displayPrefix)
-	#(#{Refactory.Browser.PullUpClassVariableRefactoring class} #new)
 	#(#{Refactory.Browser.PullUpInstanceVariableRefactoring} #displayOn:)
 	#(#{Refactory.Browser.PullUpInstanceVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.PushDownClassVariableRefactoring class} #displayPrefix)
@@ -129,16 +131,23 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.Refactoring} #printNameList:on:limit:type:)
 	#(#{Refactory.Browser.Refactoring class} #icon)
 	#(#{Refactory.Browser.Refactoring class} #renameIcon)
+	#(#{Refactory.Browser.RefactoryClassChange class} #icon)
+	#(#{Refactory.Browser.RefactoryVariableChange class} #icon)
+	#(#{Refactory.Browser.RemoveClassChange class} #icon)
 	#(#{Refactory.Browser.RemoveClassRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RemoveClassRefactoring} #getOptionRemoveClass:referencedIn:)
+	#(#{Refactory.Browser.RemoveClassVariableChange class} #icon)
 	#(#{Refactory.Browser.RemoveClassVariableRefactoring class} #displayPrefix)
+	#(#{Refactory.Browser.RemoveInstanceVariableChange class} #icon)
 	#(#{Refactory.Browser.RemoveInstanceVariableRefactoring class} #displayPrefix)
+	#(#{Refactory.Browser.RemoveMethodChange class} #icon)
 	#(#{Refactory.Browser.RemoveMethodRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RemoveMethodRefactoring} #getOptionRemoveDuplicatesWithSupersends:)
 	#(#{Refactory.Browser.RemoveParameterRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RenameAccessorsForVariableRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RenameAccessorsForVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.RenameAccessorsForVariableRefactoring class} #icon)
+	#(#{Refactory.Browser.RenameClassChange class} #icon)
 	#(#{Refactory.Browser.RenameClassRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RenameClassRefactoring class} #new)
 	#(#{Refactory.Browser.RenameClassVariableRefactoring} #displayOn:)
@@ -152,6 +161,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.RenameMethodRefactoring class} #icon)
 	#(#{Refactory.Browser.RenameTemporaryRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RenameTemporaryRefactoring class} #icon)
+	#(#{Refactory.Browser.RenameVariableChange class} #icon)
 	#(#{Refactory.Browser.SmalllintChecker class} #newWithCachingContext)
 	#(#{Refactory.Browser.TemporaryToInstanceVariableRefactoring} #displayOn:)
 	#(#{Refactory.Browser.TemporaryToInstanceVariableRefactoring} #getOptionConvertReadBeforeWritten:)
@@ -163,6 +173,8 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.VariableRefactoring} #displayPrefix)
 	#(#{Refactory.Browser.VariableRefactoring} #getOptionPullUpNonSharedInstVar:)
 	#(#{Refactory.Browser.VariableRefactoring class} #displayPrefix)
+	#(#{Tools.AddSharedVariableChange class} #icon)
+	#(#{Tools.BasicRenameClassChange class} #icon)
 	#(#{Tools.ClassBrowserAbstract} #abstractInstanceVariables)
 	#(#{Tools.ClassBrowserAbstract} #methodRefactoringTool)
 	#(#{Tools.ClassBrowserAbstract} #methodsToOverride)
@@ -237,6 +249,9 @@ package setMethodNames: #(
 	#(#{Tools.PackageSelector} #moveAllTempsToInnerScope)
 	#(#{Tools.PackageSelector} #queryRefactoringCommand:)
 	#(#{Tools.PackageSelector} #removeDuplicateMethods)
+	#(#{Tools.RemoveClassConstantChange class} #icon)
+	#(#{Tools.RemoveNamespaceImportChange class} #icon)
+	#(#{Tools.RemoveSharedVariableChange class} #icon)
 	#(#{Tools.SmalltalkToolShell} #chooseMethodForRefactoring:)
 	#(#{Tools.SmalltalkToolShell} #queryRefactoringCommand:)
 ).
@@ -261,6 +276,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Prompters\Dolphin Key-Value Prompter'
 	'..\..\MVP\Models\List\Dolphin List Models'
 	'..\..\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\MVP\Presenters\ListTree\Dolphin List Tree Presenter'
 	'..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Presenters\Number\Dolphin Number Presenter'
@@ -371,21 +387,17 @@ Refactory.Browser.ClassRefactoring subclass: #'Tools.CopyClassRefactoring'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.RenameClassRefactoring subclass: #'Tools.RenameNamespacedClassRefactoring'
-	instanceVariableNames: ''
+	instanceVariableNames: 'oldClassReference newClassReference oldUnqualified hasSymbolRenames'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'RewriteTracing' -> true
+	}!
 Refactory.Browser.RenameMethodRefactoring subclass: #'Tools.RenameMethodReferencesRefactoring'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.PullUpClassVariableRefactoring subclass: #'Tools.PullUpClassStaticRefactoring'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.RefactoringTool subclass: #'Tools.CodeRefactoringTool'
@@ -545,6 +557,16 @@ displayOn:!displaying!public! !
 getOptionAbstractVariables!options!public! !
 !
 
+!Refactory.Browser.AddClassChange class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 'NewClass.ico'! !
+!Refactory.Browser.AddClassChange class categoriesForMethods!
+icon!constants!public! !
+!
+
 !Refactory.Browser.AddClassRefactoring methodsFor!
 
 displayOn: aPuttableStream
@@ -571,6 +593,16 @@ displayPrefix
 	^'Add'! !
 !Refactory.Browser.AddInstanceVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
+!
+
+!Refactory.Browser.AddMethodChange class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 'NewMethod.ico'! !
+!Refactory.Browser.AddMethodChange class categoriesForMethods!
+icon!constants!public! !
 !
 
 !Refactory.Browser.AddMethodRefactoring methodsFor!
@@ -690,6 +722,26 @@ displayOn: aPuttableStream
 		nextPutAll: ' to sibling'! !
 !Refactory.Browser.ChildrenToSiblingsRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
+!
+
+!Refactory.Browser.ClassCommentChange class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 'ClassComment.ico'! !
+!Refactory.Browser.ClassCommentChange class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Refactory.Browser.CompositeRefactoryChange class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Collection icon! !
+!Refactory.Browser.CompositeRefactoryChange class categoriesForMethods!
+icon!constants!public! !
 !
 
 !Refactory.Browser.CreateAccessorsForVariableRefactoring class methodsFor!
@@ -1151,13 +1203,9 @@ displayOn:!displaying!public! !
 !Refactory.Browser.PullUpClassVariableRefactoring class methodsFor!
 
 displayPrefix
-	^'Pull up'!
-
-new
-	^Tools.PullUpClassStaticRefactoring basicNew initialize! !
+	^'Pull up'! !
 !Refactory.Browser.PullUpClassVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
-new!instance creation!public! !
 !
 
 !Refactory.Browser.PullUpInstanceVariableRefactoring methodsFor!
@@ -1296,12 +1344,13 @@ validate:!helpers!public! !
 !Refactory.Browser.RBClass methodsFor!
 
 addClassConstant: anAssociation
-	self classConstants add: anAssociation.
+	self bindings add: anAssociation.
+	anAssociation environment: self.
 	model addClassConstant: anAssociation to: self!
 
 removeClassConstant: anAssociation
 	| binding |
-	binding := self classConstants remove: anAssociation.
+	binding := self bindings removeAssociation: anAssociation.
 	model removeClassConstant: binding from: self!
 
 removeImport: aString
@@ -1387,6 +1436,36 @@ icon!constants!public! !
 renameIcon!constants!public! !
 !
 
+!Refactory.Browser.RefactoryClassChange class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Class icon! !
+!Refactory.Browser.RefactoryClassChange class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Refactory.Browser.RefactoryVariableChange class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 'NewThing.ico'! !
+!Refactory.Browser.RefactoryVariableChange class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Refactory.Browser.RemoveClassChange class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 'EditClear.ico'! !
+!Refactory.Browser.RemoveClassChange class categoriesForMethods!
+icon!constants!public! !
+!
+
 !Refactory.Browser.RemoveClassRefactoring methodsFor!
 
 displayOn: aPuttableStream
@@ -1442,6 +1521,16 @@ displayOn:!displaying!public! !
 getOptionRemoveClass:referencedIn:!options!public! !
 !
 
+!Refactory.Browser.RemoveClassVariableChange class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 'EditClear.ico'! !
+!Refactory.Browser.RemoveClassVariableChange class categoriesForMethods!
+icon!constants!public! !
+!
+
 !Refactory.Browser.RemoveClassVariableRefactoring class methodsFor!
 
 displayPrefix
@@ -1450,12 +1539,32 @@ displayPrefix
 displayPrefix!displaying!public! !
 !
 
+!Refactory.Browser.RemoveInstanceVariableChange class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 'EditClear.ico'! !
+!Refactory.Browser.RemoveInstanceVariableChange class categoriesForMethods!
+icon!constants!public! !
+!
+
 !Refactory.Browser.RemoveInstanceVariableRefactoring class methodsFor!
 
 displayPrefix
 	^'Remove'! !
 !Refactory.Browser.RemoveInstanceVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
+!
+
+!Refactory.Browser.RemoveMethodChange class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 'EditClear.ico'! !
+!Refactory.Browser.RemoveMethodChange class categoriesForMethods!
+icon!constants!public! !
 !
 
 !Refactory.Browser.RemoveMethodRefactoring methodsFor!
@@ -1533,6 +1642,16 @@ icon
 	^self renameIcon! !
 !Refactory.Browser.RenameAccessorsForVariableRefactoring class categoriesForMethods!
 displayPrefix!displaying!public! !
+icon!constants!public! !
+!
+
+!Refactory.Browser.RenameClassChange class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 'Rename.ico'! !
+!Refactory.Browser.RenameClassChange class categoriesForMethods!
 icon!constants!public! !
 !
 
@@ -1670,6 +1789,16 @@ displayOn:!displaying!public! !
 icon
 	^self renameIcon! !
 !Refactory.Browser.RenameTemporaryRefactoring class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Refactory.Browser.RenameVariableChange class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 'Rename.ico'! !
+!Refactory.Browser.RenameVariableChange class categoriesForMethods!
 icon!constants!public! !
 !
 
@@ -1870,6 +1999,26 @@ displayPrefix
 	^self subclassResponsibility! !
 !Refactory.Browser.VariableRefactoring class categoriesForMethods!
 displayPrefix!constants!displaying!public! !
+!
+
+!Tools.AddSharedVariableChange class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 'NewThing.ico'! !
+!Tools.AddSharedVariableChange class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Tools.BasicRenameClassChange class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 'Rename.ico'! !
+!Tools.BasicRenameClassChange class categoriesForMethods!
+icon!constants!public! !
 !
 
 !Tools.ClassBrowserAbstract methodsFor!
@@ -2862,6 +3011,36 @@ removeDuplicateMethods
 moveAllTempsToInnerScope!commands!private!refactoring! !
 queryRefactoringCommand:!commands!private!refactoring! !
 removeDuplicateMethods!development!private! !
+!
+
+!Tools.RemoveClassConstantChange class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 'EditClear.ico'! !
+!Tools.RemoveClassConstantChange class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Tools.RemoveNamespaceImportChange class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 'EditClear.ico'! !
+!Tools.RemoveNamespaceImportChange class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Tools.RemoveSharedVariableChange class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Icon fromId: 'EditClear.ico'! !
+!Tools.RemoveSharedVariableChange class categoriesForMethods!
+icon!constants!public! !
 !
 
 !Tools.SmalltalkToolShell methodsFor!

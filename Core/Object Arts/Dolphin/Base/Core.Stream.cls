@@ -231,7 +231,7 @@ next: countInteger into: aSequenceableCollection startingAt: startInteger
 	<integer> interval (startAt..startAt+count-1) with the next countInteger elements of the
 	receiver. Answer aSequenceableCollection."
 
-	| last pos |
+	| pos last |
 	last := startInteger + countInteger.
 	pos := startInteger.
 	[pos >= last] whileFalse: [pos := (aSequenceableCollection encodedAt: pos put: self next) + 1].

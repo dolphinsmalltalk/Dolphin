@@ -79,7 +79,7 @@ preconditions
 			& (RBCondition definesTemporaryVariable: referenceVariableName in: class) 
 					not!
 
-storeOn: aStream 
+storeOn: aStream
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' class: '.
@@ -87,8 +87,8 @@ storeOn: aStream
 	aStream nextPutAll: ' instanceVariables: '.
 	instanceVariables asArray storeOn: aStream.
 	aStream
-		nextPutAll: ' newClassName: #';
-		nextPutAll: newClassName;
+		nextPutAll: ' newClassName: ';
+		print: newClassName asSymbol;
 		nextPutAll: ' referenceVariableName: ''';
 		nextPutAll: referenceVariableName;
 		nextPutAll: ''')'!

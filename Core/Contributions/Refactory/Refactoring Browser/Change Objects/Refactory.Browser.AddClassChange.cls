@@ -15,6 +15,9 @@ Refactory.Browser.AddClassChange comment: ''!
 	self class = anAddClassChange class ifFalse: [^false].
 	^definition = anAddClassChange definition!
 
+afterText
+	^self definition!
+
 areSubclassCreationMessageArgumentsValid: aMessageNode
 	^aMessageNode arguments allSatisfy: [:each | each isLiteralNode or: [each isDynamicArray]]!
 
@@ -155,6 +158,7 @@ superclassName
 	^superclassName! !
 !Refactory.Browser.AddClassChange categoriesForMethods!
 =!comparing!public! !
+afterText!printing!public! !
 areSubclassCreationMessageArgumentsValid:!private!testing! !
 asUndoOperation!converting!public! !
 category!accessing!public! !

@@ -184,7 +184,7 @@ isMethodEquivalentTo: aSelector
 	self reorderParametersToMatch: aSelector.
 	^true!
 
-isParseTreeEquivalentTo: aSelector 
+isParseTreeEquivalentTo: aSelector
 	| tree definingClass |
 	definingClass := class whoDefinesMethod: aSelector.
 	tree := definingClass parseTreeFor: aSelector.
@@ -193,10 +193,13 @@ isParseTreeEquivalentTo: aSelector
 	(tree body equalTo: extractedParseTree body
 		exceptForVariables: (tree arguments collect: [:each | each name])) ifFalse: [^false].
 	(definingClass = class or: 
-			[tree superMessages allSatisfy: 
-					[:each | 
-					(class superclass whichClassIncludesSelector: aSelector) 
-						= (definingClass superclass whichClassIncludesSelector: each)]]) 
+			[| superclass definingSuper |
+			superclass := class superclass.
+			definingSuper := definingClass superclass.
+			tree superMessages allSatisfy: 
+					[:each |
+					(superclass whichClassIncludesSelector: aSelector)
+						= (definingSuper whichClassIncludesSelector: each)]])
 		ifFalse: [^false].
 	^self shouldUseExistingMethod: aSelector!
 
@@ -269,8 +272,8 @@ storeOn: aStream
 	aStream nextPutAll: ' extract: '.
 	extractionInterval storeOn: aStream.
 	aStream
-		nextPutAll: ' from: #';
-		nextPutAll: selector;
+		nextPutAll: ' from: ';
+		print: selector;
 		nextPutAll: ' in: '.
 	class storeOn: aStream.
 	aStream nextPut: $)!

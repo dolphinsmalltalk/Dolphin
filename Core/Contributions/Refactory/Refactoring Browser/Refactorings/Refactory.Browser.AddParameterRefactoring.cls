@@ -108,17 +108,17 @@ senders
 			self model allReferencesTo: oldSelector do: [:each | senders add: each modelClass]].
 	^senders!
 
-storeOn: aStream 
+storeOn: aStream
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream
-		nextPutAll: ' addParameterToMethod: #';
-		nextPutAll: oldSelector;
+		nextPutAll: ' addParameterToMethod: ';
+		print: oldSelector;
 		nextPutAll: ' in: '.
 	class storeOn: aStream.
 	aStream
-		nextPutAll: ' newSelector: #';
-		nextPutAll: newSelector;
+		nextPutAll: ' newSelector: ';
+		print: newSelector;
 		nextPutAll: ' initializer: ''';
 		nextPutAll: initializer;
 		nextPutAll: ''')'!

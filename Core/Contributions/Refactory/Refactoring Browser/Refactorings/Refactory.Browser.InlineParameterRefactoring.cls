@@ -36,7 +36,7 @@ expressionsToInlineFrom: aTree
 inlineParameter: aString in: aClass selector: aSelector
 	#rbFix. "Ensure the displayString works when the model name is initialized"
 	class := aClass.
-	oldSelector := aSelector.
+	oldSelector := aSelector asSymbol.
 	argument := aString.
 	class := self classObjectFor: aClass.
 !
@@ -69,8 +69,8 @@ storeOn: aStream
 		nextPutAll: ''' in: '.
 	class storeOn: aStream.
 	aStream
-		nextPutAll: ' selector: #';
-		nextPutAll: oldSelector;
+		nextPutAll: ' selector: ';
+		print: oldSelector;
 		nextPut: $)! !
 !Refactory.Browser.InlineParameterRefactoring categoriesForMethods!
 allExpressionsToInline!enquiries!private! !

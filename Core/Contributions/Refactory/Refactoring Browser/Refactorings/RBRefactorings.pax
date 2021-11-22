@@ -55,6 +55,7 @@ package setClassNames: #(
 	#{Refactory.Browser.RBNamespaceClass}
 	#{Refactory.Browser.RBNegationCondition}
 	#{Refactory.Browser.RBReadBeforeWrittenTester}
+	#{Refactory.Browser.RBVariableBinding}
 	#{Refactory.Browser.Refactoring}
 	#{Refactory.Browser.RefactoringError}
 	#{Refactory.Browser.RefactoringManager}
@@ -121,7 +122,7 @@ Core.Object subclass: #'Refactory.Browser.RBMethodName'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'Refactory.Browser.RBModel'
-	instanceVariableNames: 'changes environment newClasses removedClasses changedClasses rootClasses implementorsCache sendersCache'
+	instanceVariableNames: 'changes environment newClasses removedClasses changedClasses rootClasses implementorsCache sendersCache totalBindingsLoadTime totalBindingsLoaded'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -156,6 +157,12 @@ Core.Warning subclass: #'Refactory.Browser.RefactoringWarning'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Kernel.VariableBinding subclass: #'Refactory.Browser.RBVariableBinding'
+	instanceVariableNames: 'realBinding'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.RBReadBeforeWrittenTester'
 	instanceVariableNames: 'read checkNewTemps scopeStack'
 	classVariableNames: ''
@@ -163,7 +170,7 @@ Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.RBReadBeforeWrittenTester'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName classVariableNames imports category classConstants comment environment'
+	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName bindings imports category comment environment'
 	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -175,7 +182,7 @@ Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBMetaclass'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.RBClass subclass: #'Refactory.Browser.RBNamespaceClass'
-	instanceVariableNames: 'removedVariables newVariables'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

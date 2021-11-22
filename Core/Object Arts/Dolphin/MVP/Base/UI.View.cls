@@ -1149,17 +1149,16 @@ enterIdle
 	self presenter onIdleEntered.
 	^true!
 
-eraseParentBackground: aCanvas 
-	| lResult canvas parent org |
+eraseParentBackground: aCanvas
+	| lResult parent org |
 	parent := self parentView.
 	org := self mapPoint: 0 @ 0 to: parent.
-	canvas := aCanvas.
-	org := canvas offsetWindowOrigin: org.
-	lResult := parent 
+	org := aCanvas offsetWindowOrigin: org.
+	lResult := parent
 				sendMessage: WM_ERASEBKGND
 				wParam: aCanvas asParameter
 				lParam: 0.
-	canvas windowOrigin: org.
+	aCanvas windowOrigin: org.
 	^lResult!
 
 exStyle: exStyleBitsToSet maskedBy: exStyleBitMask 
@@ -3602,7 +3601,7 @@ tabNextSiblingFrom: aView forward: aBoolean
 			"Find the first item in the TAB sequence ..."
 			first := User32
 						getNextDlgTabItem: handle
-						hCtl: nil asParameter
+						hCtl: nil
 						bPrevious: false.
 			"... and then ask for the item before it.
 			This will give us the last item."
@@ -3616,8 +3615,8 @@ tabNextSiblingFrom: aView forward: aBoolean
 						hCtl: aView asParameter
 						bPrevious: aBoolean not].
 	nextView := View fromHandle: nextHandle.
-	nextView = aView ifTrue: [^nil].
-	nextView = self ifTrue: [^nil].
+	nextView == aView ifTrue: [^nil].
+	nextView == self ifTrue: [^nil].
 
 	"There's another bug in GetNextDlgTabItem().
 	If there are no TABSTOP children in a container, then the function answers an (arbitary)
@@ -4099,15 +4098,13 @@ wmInitMenu: message wParam: wParam lParam: lParam
 !
 
 wmInitMenuPopup: message wParam: wParam lParam: lParam
-	"Private - Context menu or sub-menu can update its state on screen to reflect the
-	current event target."
+	"Private - Context menu or sub-menu can update its state on screen to reflect the current event target."
 
 	| ctxtMenu subMenu |
-	lParam highWord ~= 0 ifTrue: [^nil "default processing for system menus" ].
-	^((ctxtMenu := self queryContextMenu) notNil 
-			and: [(subMenu := ctxtMenu menuFromHandle: wParam) notNil])
-		ifTrue: [subMenu queryAllFromView: self].
-!
+	lParam highWord ~~ 0 ifTrue: [^nil	"default processing for system menus"].
+	^((ctxtMenu := self queryContextMenu) notNil
+		and: [(subMenu := ctxtMenu menuFromHandle: wParam) notNil])
+			ifTrue: [subMenu queryAllFromView: self]!
 
 wmInputLangChange: message wParam: wParam lParam: lParam
 	"Private - Handle the Win32 WM_INPUTLANGCHANGE message.
@@ -4375,14 +4372,14 @@ wmRButtonUp: message wParam: wParam lParam: lParam
 wmSetCursor: message wParam: wParam lParam: lParam
 	"Private - Handle the Win32 WM_SETCURSOR message."
 
-	| myCursor hitType |
+	| hitType |
 	hitType := #(#transparent #nowhere #client #caption #sysMenu #size #menu #hscroll #vscroll #minimize #maximize #left #right #top #topLeft #topRight #bottom #bottomLeft #bottomRight #border #object #close #help)
 				at: lParam lowPartSigned + 2
 				ifAbsent: #error.
-	myCursor := self interactor onGetCursor: hitType.
-	^myCursor isNil
-		ifFalse: 
-			[myCursor setCursor.
+	^(self interactor onGetCursor: hitType)
+		ifNotNil: 
+			[:myCursor |
+			myCursor setCursor.
 			true]!
 
 wmSetFocus: message wParam: wParam lParam: lParam

@@ -176,8 +176,7 @@ instruction: aSymbol do: aDyadicValuable
 				value: {byteCodes at: ip - 3. byteCodes at: ip - 2. byteCodes at: ip - 1}]
 		ifFalse: 
 			[| args argc |
-			argc := instructionLength - 1.
-			args := Array new: argc.
+			args := Array new: (argc := instructionLength - 1).
 			1 to: argc do: [:i | args at: argc - i + 1 put: (byteCodes at: ip - i)].
 			aDyadicValuable value: aSymbol value: args]!
 

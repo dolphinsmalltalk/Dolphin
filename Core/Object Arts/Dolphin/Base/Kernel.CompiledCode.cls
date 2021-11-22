@@ -50,8 +50,7 @@ Note: These are implementation details, and should not be relied upon as they ma
 			[self methodClass == aMethod methodClass
 				and: [self selector = aMethod selector and: [self byteCodes = aMethod byteCodes]]])
 		ifFalse: [^false].
-	count := self literalCount.
-	aMethod literalCount = count ifFalse: [^false].
+	aMethod literalCount == (count := self literalCount) ifFalse: [^false].
 	"We need to special case static blocks in the literal frame to avoid infinite recursion"
 	1 to: count
 		do: 

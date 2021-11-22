@@ -92,7 +92,6 @@ package methodNames
 	add: #SystemMetrics -> #hasMenuImages;
 	add: #SystemMetrics -> #hasTreeViewHotTracking;
 	add: #SystemMetrics -> #supportsAlphaBlending;
-	add: #TextEdit -> #find:range:down:wholeWord:matchCase:;
 	add: #TextEdit -> #findNextWrapped:down:wholeWord:matchCase:;
 	add: #TextEdit -> #isLowercase;
 	add: #TextEdit -> #isLowercase:;
@@ -948,18 +947,6 @@ supportsAlphaBlending!capability enquiries!public! !
 
 !TextEdit methodsFor!
 
-find: findWhat range: rangeInterval down: downBoolean wholeWord: wordBoolean matchCase: caseBoolean
-	#deprecated.
-	^(self find: (FindDetails new
-				action: #findNext;
-				findWhat: findWhat;
-				isForwards: downBoolean;
-				isWholeWord: wordBoolean;
-				isCaseSensitive: caseBoolean;
-				isRegularExpression: false;
-				yourself)
-		range: rangeInterval) start!
-
 findNextWrapped: aString down: downBoolean wholeWord: wordBoolean matchCase: caseBoolean
 	#deprecated.
 	self findNextWrapped: (FindDetails new
@@ -998,7 +985,6 @@ lines
 	#deprecated. "5.0"
 	^self lineCount! !
 !TextEdit categoriesForMethods!
-find:range:down:wholeWord:matchCase:!private!searching & replacing! !
 findNextWrapped:down:wholeWord:matchCase:!public!searching & replacing! !
 isLowercase!public!testing! !
 isLowercase:!public!testing! !

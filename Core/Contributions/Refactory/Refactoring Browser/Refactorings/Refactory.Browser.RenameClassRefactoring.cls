@@ -45,14 +45,14 @@ renameReferences
 				convertMethod: method
 				using: replacer]!
 
-storeOn: aStream 
+storeOn: aStream
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream nextPutAll: ' rename: '.
 	class storeOn: aStream.
 	aStream
-		nextPutAll: ' to: #';
-		nextPutAll: newName;
+		nextPutAll: ' to: ';
+		print: newName;
 		nextPut: $)!
 
 transform

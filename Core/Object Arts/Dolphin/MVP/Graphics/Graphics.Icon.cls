@@ -257,7 +257,7 @@ loadResource: identifierObject fromModule: moduleObject extent: aPoint flags: an
 	^(HasScaleDown and: [aPoint ~= Point.Zero])
 		ifTrue: 
 			[| hIcon |
-			hIcon := External.Handle new.
+			hIcon := Handle new.
 			(ComCtl32
 				loadIconWithScaleDown: moduleObject asParameter
 				pszName: identifierObject asResourceId

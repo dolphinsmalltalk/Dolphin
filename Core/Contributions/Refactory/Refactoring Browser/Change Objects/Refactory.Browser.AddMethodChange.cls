@@ -15,6 +15,9 @@ Refactory.Browser.AddMethodChange comment: ''!
 	super = anAddMethodChange ifFalse: [^false].
 	^self parseTree = anAddMethodChange parseTree!
 
+afterText
+	^source!
+
 asUndoOperation
 	^(self changeClass includesSelector: self selector)
 		ifTrue: 
@@ -30,6 +33,9 @@ asUndoOperation
 				categories: protocols
 				package: self package]
 		ifFalse: [RemoveMethodChange remove: selector from: self changeClass]!
+
+beforeText
+	^(self methodSourceFor: selector) !
 
 categories
 	^protocols collect: [:each | each asMethodCategory]!
@@ -166,7 +172,9 @@ source
 	^source! !
 !Refactory.Browser.AddMethodChange categoriesForMethods!
 =!comparing!public! !
+afterText!printing!public! !
 asUndoOperation!converting!public! !
+beforeText!printing!public! !
 categories!accessing!public! !
 changeForClass:selector:!accessing!public! !
 changeForMetaclass:selector:!accessing!public! !

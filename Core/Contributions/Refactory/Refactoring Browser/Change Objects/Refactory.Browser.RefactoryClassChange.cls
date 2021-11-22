@@ -59,10 +59,8 @@ isMeta
 	^self classReference isMeta!
 
 methodSourceFor: aSymbol
-	| class |
-	class := self changeClass.
-	(class includesSelector: aSymbol) ifFalse: [^nil].
-	^class sourceCodeAt: aSymbol!
+	^self changeClass
+		ifNotNil: [:class | (class includesSelector: aSymbol) ifTrue: [class sourceCodeAt: aSymbol]]!
 
 primitiveExecute
 	^self subclassResponsibility!

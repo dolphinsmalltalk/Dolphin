@@ -60,8 +60,8 @@ storeOn: aStream
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream
-		nextPutAll: ' addClass: #';
-		nextPutAll: className;
+		nextPutAll: ' addClass: ';
+		print: className;
 		nextPutAll: ' superclass: '.
 	superclass storeOn: aStream.
 	aStream nextPutAll: ' subclasses: '.

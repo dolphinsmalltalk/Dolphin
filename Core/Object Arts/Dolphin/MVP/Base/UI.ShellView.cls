@@ -1094,16 +1094,19 @@ wmInitMenuPopup: message wParam: wParam lParam: lParam
 	Direct the popup menu indicated, which should be connected to menuBar,
 	to update its items current state for our view."
 
-	| popup focusWindow |
-	lParam highWord ~= 0 ifTrue: [^self onAboutToDisplaySystemMenu: wParam].
+	| popup |
+	lParam highWord ~~ 0 ifTrue: [^self onAboutToDisplaySystemMenu: wParam].
 	(menuBar isNil or: [(popup := menuBar menuFromHandle: wParam) isNil])
-		ifTrue: [^super wmInitMenuPopup: message wParam: wParam lParam: lParam].
+		ifTrue: 
+			[^super
+				wmInitMenuPopup: message
+				wParam: wParam
+				lParam: lParam].
 
 	"Starting with the focus window, query the command route for the menu and its items,
 	 and enable/disable as appropriate. The menu may also be dynamically updated by
 	 the command target, which is sent a #onAboutToDisplayMenu: event"
-	(focusWindow := self class focus) isNil ifTrue: [focusWindow := self].
-	popup queryAllFromView: focusWindow.
+	popup queryAllFromView: (self class focus ifNil: [self]).
 	^0!
 
 wmNcActivate: message wParam: wParam lParam: lParam

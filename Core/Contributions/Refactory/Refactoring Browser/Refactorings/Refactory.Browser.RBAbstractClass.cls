@@ -56,11 +56,14 @@ allImports
 	^self subclassResponsibility!
 
 allInstanceVariableNames
-	| sprClass |
-	sprClass := self superclass.
-	^sprClass isNil 
-		ifTrue: [self instanceVariableNames]
-		ifFalse: [sprClass allInstanceVariableNames , self instanceVariableNames]!
+	^self superclass
+		ifNil: [self instanceVariableNames]
+		ifNotNil: [:sprClass | sprClass allInstanceVariableNames , self instanceVariableNames]!
+
+allInstVarNames
+	"Required for StSemanticAnalyzer"
+
+	^self allInstanceVariableNames!
 
 allSelectors
 	| class selectors |
@@ -198,19 +201,23 @@ compileTree: aBRMethodNode environment: aRBNamespaceClass categories: aSymbolCol
 		categories: aSymbolCollection
 		package: aPackage!
 
-definesClassVariable: aSymbol 
+definesClassVariable: aSymbol
+	| sprClass |
 	(self directlyDefinesClassVariable: aSymbol) ifTrue: [^true].
-	^self superclass notNil 
-		and: [self superclass definesClassVariable: aSymbol]!
+	sprClass := self superclass.
+	^sprClass notNil and: [sprClass definesClassVariable: aSymbol]!
 
-definesInstanceVariable: aString 
+definesInstanceVariable: aString
+	| sprClass |
 	(self directlyDefinesInstanceVariable: aString) ifTrue: [^true].
-	^self superclass notNil 
-		and: [self superclass definesInstanceVariable: aString]!
+	sprClass := self superclass.
+	^sprClass notNil and: [sprClass definesInstanceVariable: aString]!
 
-definesMethod: aSelector 
+definesMethod: aSelector
+	| sprClass |
 	(self directlyDefinesMethod: aSelector) ifTrue: [^true].
-	^self superclass notNil and: [self superclass definesMethod: aSelector]!
+	sprClass := self superclass.
+	^sprClass notNil and: [sprClass definesMethod: aSelector]!
 
 definesVariable: aVariableName 
 	^(self definesClassVariable: aVariableName) 
@@ -285,6 +292,12 @@ existingMethodsThatReferToAnyOf: aCollection
 fullBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
 
+	^self fullBindingFor: aString environment: self environment!
+
+fullBindingFor: aString environment: aRBNamespaceClass
+	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
+
+	#todo.	"Take account of the environment argument."
 	^self nonMetaclass resolvePathString: aString!
 
 fullName
@@ -303,7 +316,7 @@ hierarchyBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class, i.e. one of its own class variables or those of its superclasses. The imported namespaces and enclosing environment are not searched. If there is no such variable defined in the hierarchy answer nil."
 
 	^(self localBindingFor: aString)
-		ifNil: [self superclass ifNotNil: [:superc | superc hierarchyBindingFor: aString]]!
+		ifNil: [self superclass ifNotNil: [:sprClass | sprClass hierarchyBindingFor: aString]]!
 
 hierarchyDefinesClassVariable: aString 
 	(self definesClassVariable: aString) ifTrue: [^true].
@@ -328,11 +341,11 @@ hierarchyImportsNamespace: aBindingReference
 	^self allSubclasses anySatisfy: [:each | each directlyImportsNamespace: aBindingReference]!
 
 importsNamespace: aBindingReference
-	| superc ref |
+	| sprClass ref |
 	ref := aBindingReference asQualifiedReference.
 	(self directlyImportsNamespace: ref) ifTrue: [^true].
-	superc := self superclass.
-	^superc notNil and: [superc importsNamespace: ref]!
+	sprClass := self superclass.
+	^sprClass notNil and: [sprClass importsNamespace: ref]!
 
 includesClass: aRBClass 
 	| currentClass |
@@ -528,7 +541,7 @@ typeOfClassVariable: aSymbol
 	^self model classNamed: #'Core.Object'!
 
 unqualifiedName
-	"Answer the unqualified name of the non-metaclass."
+	"Answer the unqualified name of the class."
 
 	^self subclassResponsibility!
 
@@ -540,37 +553,33 @@ whichMethodsReferToSymbol: aSymbol
 	^selectors collect: [:sel | self methodFor: sel]!
 
 whichSelectorsReferToClass: aRBClass
-	| selectors |
+	| selectors class |
 	selectors := IdentitySet new.
 	self newMethods do: [:each | (each refersToClass: aRBClass) ifTrue: [selectors add: each selector]].
-	(self isDefined and: [aRBClass isDefined])
+	(self isDefined and: [(class := aRBClass realClass) notNil])
 		ifTrue: 
-			[| literals |
-			#namespaceToDo.	"Bodge to search for unqualified name symbols"
-			literals := aRBClass realClass
-						ifNil: [{aRBClass name asSymbol. aRBClass unqualifiedName}]
-						ifNotNil: 
-							[:class | | instClass |
-							instClass := class instanceClass.
-							{instClass. instClass binding. aRBClass name asSymbol. aRBClass unqualifiedName}].
-			selectors addAll: (self existingMethodsThatReferToAnyOf: literals)].
+			[| instClass |
+			"Search for unqualified name symbols as well as the fully-qualified name. This is justified on the basis that in practice the predominant use of Symbols for indirect lookup will be in legacy (pre-namespace) code, since BindingReferences should now be used and the `Smalltalk at: #Model` pattern is deprecated. Even with the former single global namespace (Smalltalk) we couldn't be sure that Symbols appearing in the code that happened to be the names of classes were actually intended to be used at some point to refer to the class. If the fully-qualified name appears as a Symbol, then we can be much more confident that it is the class name, although lookups like `Smalltalk at: #'Core.Model'` will fail. Partially qualified symbolic names won't be matched as these would not have appeared in legacy code."
+			instClass := class instanceClass.
+			selectors
+				addAll: (self existingMethodsThatReferToAnyOf: {instClass.
+								instClass binding.
+								instClass fullName asSymbol.
+								instClass unqualifiedName})].
 	^selectors!
 
 whichSelectorsReferToClassVariable: aString
-	| selectors |
+	| selectors class binding |
 	#rbFix.	"From John Brant, 2001-08-03, supercedes wiki patch"
 	selectors := Set new.
 	self newMethods
 		do: [:each | (each refersToVariable: aString) ifTrue: [selectors add: each selector]].
-	self nonMetaclass realClass
-		ifNotNil: 
-			[:realClass |
-			| binding definingClass |
-			definingClass := realClass whichClassDefinesClassVar: aString asString.
-			definingClass notNil ifTrue: [binding := (self model classFor: definingClass) bindingFor: aString].
-			binding isNil ifTrue: [^selectors].
-			selectors
-				addAll: ((self realClass whichSelectorsReferTo: binding) reject: [:each | self hasRemoved: each])].
+	(class := self nonMetaclass realClass) ifNil: [^selectors].
+	(class := class whichClassDefinesClassVar: aString asString) ifNil: [^selectors].
+	(binding := (self model classFor: class) bindingFor: aString) ifNil: [^selectors].
+	(binding := binding realBinding) ifNil: [^selectors].
+	selectors
+		addAll: ((self realClass whichSelectorsReferTo: binding) reject: [:each | self hasRemoved: each]).
 	^selectors!
 
 whichSelectorsReferToInstanceVariable: aString
@@ -585,29 +594,17 @@ whichSelectorsReferToInstanceVariable: aString
 				addAll: ((realClass whichSelectorsAccess: aString) reject: [:each | self hasRemoved: each])].
 	^selectors!
 
-whoDefinesClassVariable: aString 
-	| sprClass |
+whoDefinesClassVariable: aString
 	(self directlyDefinesClassVariable: aString) ifTrue: [^self].
-	sprClass := self superclass.
-	^sprClass isNil 
-		ifTrue: [nil]
-		ifFalse: [sprClass whoDefinesClassVariable: aString]!
+	^self superclass ifNotNil: [:sprClass | sprClass whoDefinesClassVariable: aString]!
 
-whoDefinesInstanceVariable: aString 
-	| sprClass |
+whoDefinesInstanceVariable: aString
 	(self directlyDefinesInstanceVariable: aString) ifTrue: [^self].
-	sprClass := self superclass.
-	^sprClass isNil 
-		ifTrue: [nil]
-		ifFalse: [sprClass whoDefinesInstanceVariable: aString]!
+	^self superclass ifNotNil: [:sprClass | sprClass whoDefinesInstanceVariable: aString]!
 
-whoDefinesMethod: aSelector 
-	| sprClass |
+whoDefinesMethod: aSelector
 	(self directlyDefinesMethod: aSelector) ifTrue: [^self].
-	sprClass := self superclass.
-	^sprClass isNil 
-		ifTrue: [nil]
-		ifFalse: [sprClass whoDefinesMethod: aSelector]!
+	^self superclass ifNotNil: [:sprClass | sprClass whoDefinesMethod: aSelector]!
 
 withAllSubclasses
 	^(self allSubclasses)
@@ -633,6 +630,7 @@ addMethod:!method accessing!public! !
 allClassVariableNames!accessing!public! !
 allImports!accessing!public! !
 allInstanceVariableNames!accessing!public! !
+allInstVarNames!accessing!public! !
 allSelectors!method accessing!public! !
 allSubclasses!accessing!public! !
 allSubclassesBreadthFirstDo:!accessing!public! !
@@ -667,6 +665,7 @@ existingMethodPackageAndEnvironment:!method accessing!public! !
 existingMethodsThatReferTo:!method accessing!public! !
 existingMethodsThatReferToAnyOf:!method accessing!public! !
 fullBindingFor:!binding!public! !
+fullBindingFor:environment:!public! !
 fullName!accessing!public! !
 fullyQualifiedReference!accessing!private! !
 hash!comparing!public! !

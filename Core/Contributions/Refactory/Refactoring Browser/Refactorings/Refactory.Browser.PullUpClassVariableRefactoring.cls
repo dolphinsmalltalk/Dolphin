@@ -26,10 +26,16 @@ subclassDefiningVariable
 	^subclasses asArray first!
 
 transform
-	| subclass |
+	| subclass binding |
 	subclass := self subclassDefiningVariable.
-	subclass removeClassVariable: variableName.
-	class addClassVariable: variableName! !
+	binding := subclass localBindingFor: variableName.
+	binding isImmutable
+		ifTrue: 
+			[subclass removeClassConstant: binding.
+			class addClassConstant: binding]
+		ifFalse: 
+			[subclass removeClassVariable: variableName.
+			class addClassVariable: variableName]! !
 !Refactory.Browser.PullUpClassVariableRefactoring categoriesForMethods!
 preconditions!preconditions!public! !
 subclassDefiningVariable!accessing!private! !

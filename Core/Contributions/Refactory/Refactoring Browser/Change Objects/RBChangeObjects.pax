@@ -30,6 +30,7 @@ package setClassNames: #(
 	#{Refactory.Browser.RenameClassVariableChange}
 	#{Refactory.Browser.RenameInstanceVariableChange}
 	#{Refactory.Browser.RenameVariableChange}
+	#{Tools.BasicRenameClassChange}
 ).
 
 package setPrerequisites: #(
@@ -105,6 +106,12 @@ Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.AddClassCha
 	classConstants: {}!
 Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.AddMethodChange'
 	instanceVariableNames: 'source selector protocols environment packageName compilationFlags method'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RefactoryClassChange subclass: #'Tools.BasicRenameClassChange'
+	instanceVariableNames: 'newName'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

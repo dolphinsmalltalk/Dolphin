@@ -35,6 +35,16 @@ addClassVariable: variableName to: aClass
 addInstanceVariable: variableName to: aClass
 	^self addChange: (AddInstanceVariableChange add: variableName to: aClass)!
 
+afterText
+	| stream |
+	stream := String writeStream.
+	self flattenedChanges do: [:each | stream print: each]
+		separatedBy: 
+			[stream
+				cr;
+				cr].
+	^stream contents!
+
 basicExecuteNotifying: aBlock
 	| undo undos |
 	undos := changes collect: [:each | each executeNotifying: aBlock].
@@ -158,6 +168,7 @@ addChange:!accessing!public! !
 addChangeFirst:!accessing!public! !
 addClassVariable:to:!public!refactory/changes! !
 addInstanceVariable:to:!public!refactory/changes! !
+afterText!printing!public! !
 basicExecuteNotifying:!private! !
 changeForClass:selector:!accessing!public! !
 changeForMetaclass:selector:!accessing!public! !

@@ -23,11 +23,14 @@ addTemporary: sourceNode assignedTo: replacementNode
 					value: replacementNode)!
 
 checkSuperMessages
+	| inlineSuper superclass |
 	self inlineClass = class ifTrue: [^self].
-	self inlineClass superclass isNil ifTrue: [^self].
+	inlineSuper := self inlineClass superclass.
+	inlineSuper isNil ifTrue: [^self].
+	superclass := class superclass.
 	inlineParseTree superMessages do: 
 			[:each |
-			(self inlineClass superclass whoDefinesMethod: each) = (class superclass whoDefinesMethod: each)
+			(inlineSuper whoDefinesMethod: each) = (superclass whoDefinesMethod: each)
 				ifFalse: 
 					[self
 						refactoringError: ('Cannot inline method since it sends a super message <1s> that is overridden'
@@ -332,8 +335,8 @@ storeOn: aStream
 	aStream nextPutAll: ' inline: '.
 	sourceInterval storeOn: aStream.
 	aStream
-		nextPutAll: ' inMethod: #';
-		nextPutAll: sourceSelector;
+		nextPutAll: ' inMethod: ';
+		print: sourceSelector;
 		nextPutAll: ' forClass: '.
 	class storeOn: aStream.
 	aStream nextPut: $)!

@@ -97,7 +97,7 @@ Core.Model subclass: #'Refactory.Browser.Tests.ClassToRename'
 Refactory.Browser.Tests.ClassToRename subclass: #'Refactory.Browser.Tests.SubclassOfClassToRename'
 	instanceVariableNames: 'rewriteRule1'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Refactory.Browser.Tests.ClassToRename private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

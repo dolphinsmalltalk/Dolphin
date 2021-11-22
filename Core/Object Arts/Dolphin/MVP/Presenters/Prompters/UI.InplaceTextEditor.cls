@@ -209,8 +209,7 @@ performAction
 	query canPerform
 		ifTrue: [query perform]
 		ifFalse: 
-			[self showValidationResult: query validationResult.
-			User32 messageBeep: 0]!
+			[self showValidationResult: query validationResult]!
 
 queryCommand: aCommandQuery
 	"Private - Enters details about a potential command for the receiver into the <CommandQuery>."
@@ -275,7 +274,6 @@ showValidationResult: aValidationResult
 				timeout: self hintDwell;
 				position: self hintPosition;
 				exceptionDescription: hint;
-				isSilent: true;
 				open]!
 
 textRectangle: aRectangle 

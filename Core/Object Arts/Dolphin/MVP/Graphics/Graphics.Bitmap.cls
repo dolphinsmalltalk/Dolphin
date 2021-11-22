@@ -441,14 +441,15 @@ isShared: aBoolean
 pixelData
 	"Answer a DWORDArray of the (A)RGB pixel data contained in the receiver. This simple but NOT FAST."
 
-	| pixData n canvas |
-	pixData := DWORDArray new: self extent x * self extent y.
+	| pixData n canvas ext |
+	ext := self extent.
+	pixData := DWORDArray new: ext x * ext y.
 	n := 1.
 	canvas := self canvas.
-	0 to: self extent x - 1
+	0 to: ext x - 1
 		do: 
 			[:x |
-			0 to: self extent y - 1
+			0 to: ext y - 1
 				do: 
 					[:y |
 					pixData at: n put: (canvas getPixel: x @ y).
