@@ -216,6 +216,9 @@ basicClassPool: aDictionaryOrNil
 
 	classPool := aDictionaryOrNil ifNotNil: [aDictionaryOrNil isEmpty ifFalse: [aDictionaryOrNil]]!
 
+basicEnvironment
+	^environment!
+
 basicRemoveBinding: aVariableBinding
 	classPool removeKey: aVariableBinding key ifAbsent: nil!
 
@@ -760,9 +763,7 @@ resolveLocallyImportedBinding: aBindingContext
 	1 to: imports size
 		do: 
 			[:i |
-			| each |
-			each := imports at: i.
-			(aBindingContext visitImport: each from: self)
+			(aBindingContext visitImport: (imports at: i) from: self)
 				ifNotNil: [:namespace | (namespace resolvePublicBinding: aBindingContext) ifNotNil: [:binding | ^binding]]].
 	^nil!
 
@@ -1064,6 +1065,7 @@ allEnvironmentsDo:!class hierarchy-accessing!enumerating!private! !
 allImports!namespaces!public! !
 basicAddBinding:!class variables!private! !
 basicClassPool:!class variables!private! !
+basicEnvironment!accessing!public! !
 basicRemoveBinding:!bindings!private! !
 binding!bindings!public! !
 bindingFor:!bindings!public! !

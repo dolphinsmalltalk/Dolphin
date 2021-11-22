@@ -27,6 +27,14 @@ testFullyQualifiedReference
 	{Object. XProgramming.SUnit. XProgramming.SUnit.TestCase. Root. Smalltalk}
 		do: [:each | self assert: each binding fullyQualifiedReference equals: each fullyQualifiedReference]!
 
+testIsClassBinding
+	self assert: Object binding isClassBinding.
+	self assert: Smalltalk binding isClassBinding.
+	self assert: (Root bindingFor: #Core) isClassBinding.
+	self assert: Root binding isClassBinding.
+	self deny: (Core bindingFor: #Processor) isClassBinding.
+	self deny: (Smalltalk bindingFor: #ExternalHandle) isClassBinding!
+
 testRefersToLiteral
 	| method subject |
 	method := self class lookupMethod: testSelector.
@@ -51,6 +59,7 @@ testRefersToLiteral
 testAbsoluteName!public!unit tests! !
 testFullName!public! !
 testFullyQualifiedReference!public! !
+testIsClassBinding!public! !
 testRefersToLiteral!public!unit tests! !
 !
 

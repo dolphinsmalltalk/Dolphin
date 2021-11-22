@@ -60,7 +60,7 @@ fullyQualifiedReference
 	^BindingReference path: (environment fullPath copyWith: key)!
 
 isClassBinding
-	^value class isMeta and: [key == value name and: [environment == value environment]]!
+	^value class isMeta and: [key == value name and: [environment == value basicEnvironment]]!
 
 isClassVariable
 	"Answer whether the receiver is a class variable binding (as opposed to a namespace variable binding)."
