@@ -113,6 +113,11 @@ scope
 
 	^instance scope!
 
+scope: anObject
+	"Answer a <RelativeBindingReference> with the receiver's path, but with the specified <bindingScope>."
+
+	^self instance: (instance scope: anObject)!
+
 setInstance: aBindingReference
 	instance := aBindingReference!
 
@@ -151,6 +156,7 @@ path!accessing!public! !
 pathString!accessing!public! !
 private!converting!public! !
 scope!constants!private! !
+scope:!constants!public! !
 setInstance:!converting!private! !
 setScope:!initializing!private! !
 shortName!accessing!public! !

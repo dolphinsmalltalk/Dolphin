@@ -9,9 +9,9 @@ Kernel.AbstractBindingReference subclass: #'Kernel.BindingReference'
 Kernel.BindingReference guid: (Core.GUID fromString: '{801fde8c-7556-4b95-bb9d-eafb33552e79}')!
 Kernel.BindingReference comment: '`BindingReference`s represent symbolic references to static variables in the system. They describe a path through nested namespaces to locate a particular <VariableBinding>, with an optional context specifying the root namespace from which to start resolving the binding path.
 
-`BindingReference` has a literal syntax of the form #{<identifier>}, where identifier can be an unqualified or dot qualified name. If unqualified then the binding reference is assumed to be relative to the method in which it is defined, and so should follow the same binding rules as an unqualified identifier that might appear in the code of the same method. Note that this may also find static variables in enclosing or imported scopes. If the identifier is qualified, then it is assumed to be an absolute reference to be bound starting in Smalltalk. Because Smalltalk is directly nested in `Root` (the root namespace), starting the binding search in `Smalltalk` will also find variables accessible using the same path from `Root` even if they are not part of a namespace imported into `Smalltalk`. For those cases where a partially qualified relative reference is required, the first component of the name can be an underscore, in which case the compiler regards it as a relative reference even though it contains more than one name component.
+`BindingReference` has a literal syntax of the form #{<identifier>}, where <identifier> can be an unqualified or dot qualified name. If unqualified then the binding reference is assumed to be relative to the method in which it is defined, and so should follow the same binding rules as an unqualified identifier that might appear in the code of the same method. Note that this may also find static variables in enclosing or imported scopes. If the identifier is qualified, then it is assumed to be an absolute reference to be bound starting in Smalltalk. Because Smalltalk is directly nested in `Root` (the root namespace), starting the binding search in `Smalltalk` will also find variables accessible using the same path from `Root` even if they are not part of a namespace imported into `Smalltalk`. For those cases where a partially qualified relative reference is required, the first component of the name can be an underscore, in which case the compiler regards it as a relative reference even though it contains more than one name component.
 
-It might have been better if literal binding references were always relative, unless having a special prefix or other marker, or conversely always relative unless so marked. However there is an established precedent, hence the rather confusing implicit distinction between the treatment of single and multi-part names for literal binding references.
+It might have been better if literal binding references were always relative, unless having a special prefix or other marker, or conversely always relative unless so marked. However there is an established precedent in the ecosystem, hence the rather confusing implicit distinction between the treatment of single and multi-part names for literal binding references.
 
 ## Instance Variables:
   `pathString`		`<string>`. The qualified name.
@@ -28,12 +28,10 @@ It might have been better if literal binding references were always relative, un
 !Kernel.BindingReference methodsFor!
 
 = anObject
-	"Answer whether the receiver and the <Object> argument should be considered equivalent. Binding references are considered equivalent if they have the same path and starting point.
-	Note that two binding references that would resolve to the same actual variable binding may not be considered equivalent as the binding resolution is a dynamic quality determined 
-	at the time of resolution, and is not necessarily temporally stable. Equality of binding references is a static property based and is such that two equal references will always bind
-	to the same variable if bound at the same time."
+	"Answer whether the receiver and the <Object> argument should be considered equivalent. Binding references are considered equivalent if they have the same path and starting point, and the same privacy.
+	Note that two binding references that would resolve to the same actual variable binding may not be considered equivalent as the binding resolution is a dynamic quality determined  at the time of resolution, and is not necessarily temporally stable. Equality of binding references is a static property such that two equal references would always bind to the same variable if bound at the same time."
 
-	"Implementation Note: This implementation depends on the fact that for absolute references the context is always nil, and for (useful) relative references, the context is not nil."
+	"Implementation Note: This implementation depends on the fact that for absolute references the context is always nil. Relative references are of a different class, so will never be equal to absolute references."
 
 	^self == anObject or: 
 			[self class == anObject class
@@ -76,6 +74,11 @@ bindingScope
 
 	^Smalltalk!
 
+displayOn: aPuttableStream
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream nextPutAll: self pathString!
+
 environmentName
 	"Answer the <String> qualified name of the receiver's full namespace qualifier. This includes the path for the binding scope."
 
@@ -88,7 +91,7 @@ environmentName
 		do: 
 			[:i |
 			stream
-				nextPut: $.;
+				nextPut: PathSeparator;
 				nextPutAll: (parts at: i)].
 	^stream contents!
 
@@ -133,7 +136,7 @@ path
 
 	^path
 		ifNil: 
-			[self setPath: ($. split: pathString).
+			[self setPath: (PathSeparator split: pathString).
 			path]!
 
 pathString
@@ -141,7 +144,7 @@ pathString
 
 	^pathString
 		ifNil: 
-			[self setPathString: ($. join: path).
+			[self setPathString: (PathSeparator join: path).
 			pathString]!
 
 private
@@ -151,6 +154,14 @@ scope
 	"Private - Answer the <bindingScope> in which the reference was created. For relative references this is used to determine the start point for binding resolution. For absolute references this should always be nil."
 
 	^nil!
+
+scope: anObject
+	"Answer a <RelativeBindingReference> with the receiver's path, but with the specified <bindingScope>."
+
+	^self class
+		pathString: self pathString
+		private: private
+		scope: anObject!
 
 setBinding: aVariableBindingOrNil
 	<mutable>
@@ -203,6 +214,7 @@ baseClass!accessing!public! !
 bind!operations!private! !
 bindingOrNil!accessing!public! !
 bindingScope!accessing!public! !
+displayOn:!displaying!public! !
 environmentName!accessing!public! !
 hash!comparing!public! !
 home!accessing!public! !
@@ -215,6 +227,7 @@ path!accessing!public! !
 pathString!accessing!public! !
 private!converting!public! !
 scope!accessing!private! !
+scope:!constants!public! !
 setBinding:!accessing!private! !
 setGeneration:!accessing!private! !
 setPath:!accessing!private! !
@@ -266,7 +279,7 @@ newPath: anArray private: aBoolean scope: aBindingScope
 						private: aBoolean
 						scope: aBindingScope]]
 		ifFalse: 
-			[(anArray at: 1) = '_'
+			[(anArray at: 1) = RelativePathPrefix
 				ifTrue: 
 					[RelativeBindingReference
 						newPath: (anArray copyFrom: 2 to: anArray size)
@@ -286,36 +299,39 @@ pathString: aString private: aBoolean scope: aBindingScope
 		scope: aBindingScope!
 
 pathString: aString scope: aBindingScope
-	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is relative to the binding context, anObject. If anObject is nil, then the instance is a reference from Smalltalk.
-	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance is then a contextual BindingReference with that object as (potentially) its starting point for resolving the binding. However, the context is only relevant as a start point for binding if the path string is an unqualified name, or has the special relative prefix, '_', as the first component of the path. Otherwise the binding reference is considered to specify the full-name of the binding, and will always bind to the same static variable, regardless of context. Since the context is not needed for absolute bindings, it will be discarded - the context of absolute bindings is always nil, which in practice means their binding root is Smalltalk."
+	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is relative to the binding context, anObject. If anObject is nil, then the instance is a reference from Smalltalk. If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance is then a contextual BindingReference with that object as (potentially) its starting point for resolving the binding. However, the context is only relevant as a start point for binding if the path string is an unqualified name, or has the special relative prefix, '_', as the first component of the path. Otherwise the binding reference is considered to specify the full-name of the binding, and will always bind to the same static variable, regardless of context. Since the context is not needed for absolute bindings, it will be discarded - the context of absolute bindings is always nil, which in practice means their binding root is Smalltalk."
 
-	| components count |
+	| components count qualifiedName flags scope |
 	components := $\x20 split: aString.
 	count := components size.
-	^count > 0
-		ifTrue: 
-			[| qualifiedName flags |
-			qualifiedName := components at: 1.
-			flags := (aBindingScope notNil
-						and: [(qualifiedName identityIncludes: $.) not or: [qualifiedName beginsWith: '_.']])
-							ifTrue: [RelativeMask]
-							ifFalse: [0].
-			count > 1
-				ifTrue: 
-					[(components includes: 'class') ifTrue: [flags := flags bitOr: MetaMask].
-					(components includes: 'private') ifTrue: [flags := flags bitOr: PrivateMask]].
-			self
-				pathString: qualifiedName
-				scope: aBindingScope
-				flags: flags]
+	count > 0
 		ifFalse: 
-			[self
+			[^self
 				pathString: aString
 				scope: aBindingScope
-				flags: 0]!
+				flags: 0].
+	qualifiedName := components at: 1.
+	scope := aBindingScope.
+	flags := (qualifiedName beginsWith: RelativePathStringPrefix)
+				ifTrue: 
+					[scope := aBindingScope ?? Smalltalk.
+					qualifiedName := qualifiedName copyFrom: 3 to: qualifiedName size.
+					RelativeMask]
+				ifFalse: 
+					[(aBindingScope notNil and: [(qualifiedName identityIncludes: PathSeparator) not])
+						ifTrue: [RelativeMask]
+						ifFalse: [0]].
+	count > 1
+		ifTrue: 
+			[(components includes: 'class') ifTrue: [flags := flags bitOr: MetaMask].
+			(components includes: 'private') ifTrue: [flags := flags bitOr: PrivateMask]].
+	^self
+		pathString: qualifiedName
+		scope: scope
+		flags: flags!
 
 pathString: aString scope: aBindingScope flags: anInteger
-	"Private - Note that this is sent directly by the Compiler to construct literal instances."
+	"Private - Note that this is sent directly by the Compiler to construct literal instances. The path string is expected not to have a relative prefix, but rather to pass the RelativeMask flag to request a relative binding reference."
 
 	"Implementation Note: If the reference is absolute, then the <bindingScope> is ignored as it is not needed. This avoids keeping the object alive unnecessarily, e.g. if it is a method, and also allows for cheaper implementations of the #= and #hash methods."
 

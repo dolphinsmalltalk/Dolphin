@@ -41,7 +41,6 @@ tearDown
 
 	dirtiedClasses ifTrue: [ClassBuilderTestClasses current makeCleanClasses].
 	Smalltalk developmentSystem isOAD: wasOAD.
-	self assert: Package manager unpackagedVariables equals: Set new.
 	^super tearDown!
 
 testAddClassInstVars
@@ -434,7 +433,17 @@ testReshapeSubClass
 	self assert: testInstance class identicalTo: self classBuilderTestSubclass1.
 	self assert: testClass identicalTo: self classBuilderTestSubclass1.
 	self assert: testMeta identicalTo: self classBuilderTestSubclass1 class.
-	dirtiedClasses := true! !
+	dirtiedClasses := true!
+
+testValidateImports
+	| subject |
+	subject := ClassBuilder forModifying: self class.
+	subject imports: (Compiler
+				evaluate: '#(#{Tests.DolphinTest private} #{TestCase private} #{Core.Tests.DolphinTest} #{DolphinTest} #{SUnit.TestCase private})').
+	subject validateImports.
+	"The final import is unbindable, and left unchanged. If imported privately and non-privately, the private import should be dropped."
+	self assert: subject imports
+		equals: #(#{Core.Tests.DolphinTest} #{XProgramming.SUnit.TestCase private} #{SUnit.TestCase private})! !
 !Kernel.Tests.ClassBuilderTest categoriesForMethods!
 classBuilderTestClass!public!unit tests! !
 classBuilderTestSubclass1!public!unit tests! !
@@ -458,6 +467,7 @@ testReparentSubClassWithSameAllInstVars!public!unit tests! !
 testReshapeClass!public!unit tests! !
 testReshapeClassWithJugglingInstVars!public!unit tests! !
 testReshapeSubClass!public!unit tests! !
+testValidateImports!public!unit tests! !
 !
 
 !Kernel.Tests.ClassBuilderTest class methodsFor!

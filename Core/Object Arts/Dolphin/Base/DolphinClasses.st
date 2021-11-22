@@ -202,11 +202,14 @@ Kernel.SharedPool subclass: #'OS.CRTConstants'
 		'_TRUNCATE' -> -16r1.
 		'EBADF' -> 16r9.
 		'EINVAL' -> 16r16.
+		'ENOENT' -> 16r2.
+		'ERANGE' -> 16r22.
 		'LC_ALL' -> 16r0.
 		'RAND_MAX' -> 16r7FFF.
 		'SEEK_CUR' -> 16r1.
 		'SEEK_END' -> 16r2.
-		'SEEK_SET' -> 16r0
+		'SEEK_SET' -> 16r0.
+		'STRUNCATE' -> 16r50
 	}!
 Kernel.SharedPool subclass: #'External.ExtCallArgTypes'
 	instanceVariableNames: ''
@@ -2086,8 +2089,12 @@ Core.Object subclass: #'Kernel.AbstractBindingReference'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'MetaMask' -> 16r1.
+		'PathSeparator' -> $..
+		'PathSeparatorString' -> '.'.
 		'PrivateMask' -> 16r2.
-		'RelativeMask' -> 16r4
+		'RelativeMask' -> 16r4.
+		'RelativePathPrefix' -> '_'.
+		'RelativePathStringPrefix' -> '_.'
 	}!
 Core.Object subclass: #'External.ArrayFieldLength'
 	instanceVariableNames: ''

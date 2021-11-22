@@ -260,7 +260,25 @@ testPathString
 			path := each first.
 			pathString := $. join: path.
 			subject := self subjectClass pathString: pathString.
-			self assert: subject path equals: path].
+			self assert: subject path equals: (path copyWithout: '_')].
+	subject := self subjectClass pathString: ''.
+	self assert: subject path equals: #()!
+
+testPathStringScope
+	| subject pathString |
+	self bindingTestCases do: 
+			[:each |
+			| path |
+			path := each first.
+			pathString := $. join: path.
+			subject := self subjectClass pathString: pathString scope: each second.
+			path first = '_'
+				ifTrue: 
+					[self assert: subject path equals: path allButFirst.
+					self assert: subject pathString equals: (pathString copyFrom: 3)]
+				ifFalse: 
+					[self assert: subject path equals: path.
+					self assert: subject pathString equals: pathString]].
 	subject := self subjectClass pathString: ''.
 	self assert: subject path equals: #()!
 
@@ -269,6 +287,10 @@ testPrintString
 			[:each |
 			| subject |
 			subject := self subjectClass path: each first scope: self class.
+			self assert: subject printString equals: each last.
+			subject := self subjectClass
+						pathString: (each last copyFrom: 3 to: (each last indexOfAnyOf: ' }' startingAt: 3) - 1)
+						scope: self class.
 			self assert: subject printString equals: each last]!
 
 testPrivate
@@ -390,6 +412,7 @@ testLessOrEqual!public!unit tests! !
 testMeta!public!unit tests! !
 testPath!public!unit tests! !
 testPathString!public!unit tests! !
+testPathStringScope!public!unit tests! !
 testPrintString!public!unit tests! !
 testPrivate!public!unit tests! !
 testRefersToLiteral!public!unit tests! !

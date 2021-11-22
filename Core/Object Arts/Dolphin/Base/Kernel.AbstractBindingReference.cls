@@ -7,8 +7,12 @@ Core.Object subclass: #'Kernel.AbstractBindingReference'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'MetaMask' -> 16r1.
+		'PathSeparator' -> $..
+		'PathSeparatorString' -> '.'.
 		'PrivateMask' -> 16r2.
-		'RelativeMask' -> 16r4
+		'RelativeMask' -> 16r4.
+		'RelativePathPrefix' -> '_'.
+		'RelativePathStringPrefix' -> '_.'
 	}!
 Kernel.AbstractBindingReference guid: (Core.GUID fromString: '{2d52489e-7275-4df4-9022-294a7b2f9381}')!
 Kernel.AbstractBindingReference isNonInstantiable: true!
@@ -40,9 +44,7 @@ append: aString
 asFullyQualifiedReference
 	"Answer a<BindingReference> that references the same binding as the receiver does currently in its home context, but from Smalltalk or Root."
 
-	^self isRelative
-		ifTrue: [BindingReference path: (self environment fullPath copyWith: self unqualifiedName)]
-		ifFalse: [self]!
+	^self!
 
 asQualifiedReference
 	"Answer the <BindingReference> equivalent of the receiver."
@@ -105,10 +107,7 @@ declare: anObject
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	| identifier |
-	identifier := self pathString.
-	(self isRelative and: [identifier includes: $.]) ifTrue: [aPuttableStream nextPutAll: '_.'].
-	aPuttableStream nextPutAll: identifier!
+	^self subclassResponsibility!
 
 environment
 	"Answer the namespace (i.e. any Class, not just Namespaces) in which the target binding should be found, or nil if any of the namespaces on the path do not exist."
@@ -264,6 +263,11 @@ scope
 
 	^self subclassResponsibility!
 
+scope: anObject
+	"Answer a <RelativeBindingReference> with the receiver's path, but with the specified <bindingScope>."
+
+	^self subclassResponsibility!
+
 shortName
 	"Answer the shortest <String> name equivalent to the receiver's pathString that is bindable from Smalltalk. i.e. for variables defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
 
@@ -354,6 +358,7 @@ printOn:!printing!public! !
 private!converting!public! !
 refersTo:asLiteralOf:!private!testing! !
 scope!constants!private! !
+scope:!constants!private! !
 shortName!accessing!public! !
 simpleName!accessing!public! !
 species!comparing!public! !
@@ -368,9 +373,6 @@ valueOrNil!accessing!public! !
 
 !Kernel.AbstractBindingReference class methodsFor!
 
-errorInvalidIdentifier: aString
-	^self error: ('Invalid identifier: ''<s>''' expandMacrosWith: aString)!
-
 initialize
 	Undeclared := UndeclaredVariable new!
 
@@ -378,7 +380,7 @@ isQualifiedName: aString
 	"Answer whether the argument is probably a qualified name (as opposed to an unqualified, or simple, name)."
 
 	^(aString
-		nextIdentityIndexOf: $.
+		nextIdentityIndexOf: PathSeparator
 		from: 1
 		to: aString size) ~~ 0!
 
@@ -461,9 +463,8 @@ simpleName: aString in: aNamespace
 	^self pathString: aString home: aNamespace!
 
 splitQualifiedName: aString
-	^$. split: aString! !
+	^PathSeparator split: aString! !
 !Kernel.AbstractBindingReference class categoriesForMethods!
-errorInvalidIdentifier:!exceptions!private! !
 initialize!class initialization!public! !
 isQualifiedName:!enquiries!public! !
 isValidQualifiedName:!enquiries!public! !

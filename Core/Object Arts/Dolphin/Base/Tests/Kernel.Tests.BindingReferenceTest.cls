@@ -89,13 +89,15 @@ testLessOrEqual
 
 testLiteral
 	| subject |
-	#(#{Object} #{_.Object} #{_.Core.Object}) do: 
+	#(#{Object} #{_.Object private} #{_.Core.Object}) do: 
 			[:each |
+			self assert: each isRelative.
 			"When a relative literal BindingReference is compiled in a method in the method class' namespace, then the context can be the method class"
 			self assert: each scope identicalTo: ##(self).
 			self assert: each valueOrNil identicalTo: Object].
 	"Absolute references always have nil context"
 	subject := #{Core.Object}.
+	self deny: subject isRelative.
 	self assertIsNil: subject scope.
 	self assert: subject bindingScope identicalTo: Smalltalk.
 	self assert: subject valueOrNil identicalTo: Object!

@@ -12,10 +12,8 @@ Kernel.RelativeBindingReference comment: ''!
 !Kernel.RelativeBindingReference methodsFor!
 
 = anObject
-	"Answer whether the receiver and the <Object> argument should be considered equivalent. Binding references are considered equivalent if they have the same path and starting point.
-	Note that two binding references that would resolve to the same actual variable binding may not be considered equivalent as the binding resolution is a dynamic quality determined 
-	at the time of resolution, and is not necessarily temporally stable. Equality of binding references is a static property based and is such that two equal references will always bind
-	to the same variable if bound at the same time."
+	"Answer whether the receiver and the <Object> argument should be considered equivalent. Binding references are considered equivalent if they have the same path and starting point, and the same privacy.
+	Note that two binding references that would resolve to the same actual variable binding may not be considered equivalent as the binding resolution is a dynamic quality determined at the time of resolution, and is not necessarily temporally stable. Equality of binding references is a static property such that two equal references would always bind to the same variable if bound at the same time."
 
 	"Implementation Note: This implementation depends on the fact that for absolute references the context is always nil, and for (useful) relative references, the context is not nil."
 
@@ -26,6 +24,12 @@ Kernel.RelativeBindingReference comment: ''!
 									[| otherScope |
 									otherScope := anObject bindingScope.
 									otherScope localScope == scope localScope and: [scope environment == otherScope environment]]]]]!
+
+asFullyQualifiedReference
+	"Answer a<BindingReference> that references the same binding as the receiver does currently in its home context, but from Smalltalk or Root."
+
+	^BindingReference pathString: self environmentName , PathSeparatorString , self unqualifiedName
+		private: private!
 
 baseClass
 	"Answer the 'class' context of the receiver, if a relative reference defined within the context of a class or method, or nil if absolute.
@@ -43,6 +47,14 @@ bindingScope
 
 	^scope!
 
+displayOn: aPuttableStream
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	| identifier |
+	identifier := self pathString.
+	(identifier includes: PathSeparator) ifTrue: [aPuttableStream nextPutAll: RelativePathStringPrefix].
+	aPuttableStream nextPutAll: identifier!
+
 environmentName
 	"Answer the <String> qualified name of the receiver's full namespace qualifier. This includes the path for the binding scope."
 
@@ -54,7 +66,7 @@ environmentName
 		do: 
 			[:i |
 			stream
-				nextPut: $.;
+				nextPut: PathSeparator;
 				nextPutAll: (parts at: i)].
 	^stream contents!
 
@@ -106,8 +118,10 @@ setScope: anObject
 	scope := anObject! !
 !Kernel.RelativeBindingReference categoriesForMethods!
 =!comparing!public! !
+asFullyQualifiedReference!converting!public! !
 baseClass!accessing!public! !
 bindingScope!accessing!public! !
+displayOn:!displaying!public! !
 environmentName!accessing!public! !
 hash!comparing!public! !
 home!accessing!public! !

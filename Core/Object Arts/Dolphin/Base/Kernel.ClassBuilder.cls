@@ -67,6 +67,24 @@ canMutateInSitu
 		ifFalse: [^false].
 	^true!
 
+canonicalizeImport: aBindingReference
+	| ref private |
+	private := false.
+	ref := aBindingReference isString
+				ifTrue: [aBindingReference asQualifiedReference]
+				ifFalse: 
+					[private := aBindingReference isPrivate.
+					aBindingReference].
+	^((self resolveImport: ref)
+		ifNil: 
+			[ref := ref scope: superclass.
+			(self resolveImport: ref)
+				ifNil: 
+					[Notification signal: 'Imported namespace <1p> does not currently exist.' << ref asString.
+					aBindingReference]])
+		isPrivate: private;
+		yourself!
+
 categories
 	^categories!
 
@@ -130,7 +148,7 @@ className: aString
 
 	| path len |
 	(className := aString) ifNil: [^self].
-	path := $. split: aString.
+	path := BindingReference.PathSeparator split: aString.
 	len := path size.
 	len == 1
 		ifTrue: 
@@ -311,9 +329,7 @@ imports: anArrayOfBindingReferences
 	"Set the receiver's sharedPools from the pool name list aString.
 	Any duplicate names in the list are dropped, but we must preserve the import order."
 
-	| seen |
-	seen := Set new.
-	imports := anArrayOfBindingReferences select: [:each | seen addNewElement: each]!
+	imports := anArrayOfBindingReferences!
 
 initialize
 	"Private - Initialize the instance."
@@ -755,6 +771,14 @@ requiresMutation
 	^self superclassIsBeingChanged
 		or: [self instanceShapeIsBeingChanged or: [self instanceVariablesAreBeingChanged]]!
 
+resolveImport: aBindingReference
+	^aBindingReference valueOrNil
+		ifNotNil: 
+			[:imported |
+			(imported class conformsToProtocol: #importableNamespace)
+				ifFalse: [self error: 'Invalid import: <1p>' << aBindingReference].
+			imported asQualifiedReference]!
+
 setCommentOf: aClass
 	"Private - Set the comment of aClass to the receiver's comment inst var unless it
 	is nil in which case make no change."
@@ -953,30 +977,21 @@ validateForRename
 validateImports
 	"Private - Ensure that the proposed imports exist in the environment and ensure they are of canonical form."
 
+	| seen distinct |
 	imports := self imports.
 	imports isEmpty ifTrue: [^self].
-	imports := imports collect: 
-					[:each |
-					| namespace fullRef private |
-					each isString
-						ifTrue: 
-							[fullRef := each asQualifiedReference.
-							private := false]
-						ifFalse: 
-							[private := each isPrivate.
-							fullRef := each asString asQualifiedReference].
-					namespace := fullRef valueOrNil.
-					namespace
-						ifNotNil: 
-							[(namespace class conformsToProtocol: #importableNamespace)
-								ifFalse: [self error: 'Invalid import: ' , each printString]]
-						ifNil: 
-							[Notification
-								signal: ('Imported namespace <1p> does not currently exist.' expandMacrosWith: fullRef asString).
-							namespace := fullRef asSymbol].
-					namespace asQualifiedReference
-						isPrivate: private;
-						yourself]!
+	seen := (PluggableSearchPolicy newCompareBlock: [:a :b | a pathString = b pathString]
+				hashBlock: [:ref | ref hash]) newSet.
+	distinct := Array writeStream: imports size.
+	imports do: 
+			[:each |
+			| canonical added |
+			canonical := self canonicalizeImport: each.
+			added := seen addIfAbsent: canonical.
+			added == canonical
+				ifTrue: [distinct nextPut: canonical]
+				ifFalse: [canonical isPrivate ifFalse: [added isPrivate: false]]].
+	imports := distinct grabContents!
 
 validateInstanceSpec
 	"Private - Validate and complete the instanceSpec inst var."
@@ -1197,6 +1212,7 @@ beFixed!class type!private! !
 beNonInstantiable!class type!private! !
 beVariable!class type!private! !
 canMutateInSitu!mutating!private! !
+canonicalizeImport:!helpers!private! !
 categories!accessing!private! !
 categories:!accessing!private! !
 categoryNames:!accessing!public! !
@@ -1265,6 +1281,7 @@ remove!operations!private! !
 removeUnimplementedProtocols!helpers!private! !
 rename!operations!private! !
 requiresMutation!mutating!private! !
+resolveImport:!helpers!private! !
 setCommentOf:!comments!private! !
 setImportsOf:!pool dictionaries!private! !
 setInstanceVariablesOf:!instance variables!private! !

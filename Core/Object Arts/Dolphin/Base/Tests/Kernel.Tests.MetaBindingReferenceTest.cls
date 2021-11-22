@@ -80,7 +80,8 @@ testPathString
 			path := each first.
 			pathString := $. join: path.
 			subject := self subjectClass pathString: pathString.
-			self assert: subject path equals: path].
+			self assert: subject pathString
+				equals: (path first = '_' ifTrue: [pathString copyFrom: 3] ifFalse: [pathString])].
 	subject := self subjectClass pathString: ''.
 	self assert: subject path equals: #()!
 
