@@ -181,11 +181,19 @@ textCallback
 	self maskIn: self textValidMask!
 
 textInBuffer: aString
-	"Writes aString into a system buffer pointed to by pszText
-	and of size cchTextMax."
+	"Writes aString into a system buffer pointed to by pszText and of size cchTextMax (including null terminator). This is used to provide text back to the control, and it has allocated the buffer. If the string is too large for the buffer, it is ellipsised with U+2026."
 
-	aString displayString asUtf16String copyToBuffer: (bytes sdwordAtOffset: self textPointerOffset)
-		ofSize: self cchTextMax!
+	| utf16 max |
+	utf16 := aString displayString asUtf16String.
+	utf16 size >= (max := self cchTextMax)
+		ifTrue: 
+			[| last |
+			"We need to allow space for a U+2026 and the null terminator"
+			last := max - 2.
+			"Ensure we don't truncate in the middle of a character"
+			(utf16 at: last) isUtf16Lead ifTrue: [last := last - 1].
+			utf16 := (utf16 copyFrom: 1 to: last) , '…'].
+	utf16 copyToBuffer: (bytes sdwordAtOffset: self textPointerOffset) ofSize: max!
 
 textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "

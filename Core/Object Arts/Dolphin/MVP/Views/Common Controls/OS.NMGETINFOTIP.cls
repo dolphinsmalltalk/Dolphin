@@ -32,11 +32,11 @@ text: text
 
 	| tipText max |
 	tipText := text displayString asUtf16String.
-	max := self cchTextMax.
-	tipText size >= max
+	tipText size >= (max := self cchTextMax)
 		ifTrue: 
 			[| last |
-			last := max - 4.
+			"We need to allow space for a U+2026 and the null terminator"
+			last := max - 2.
 			"Ensure we don't truncate in the middle of a character"
 			(tipText at: last) isUtf16Lead ifTrue: [last := last - 1].
 			tipText := (tipText copyFrom: 1 to: last) , '…'].

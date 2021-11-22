@@ -453,9 +453,8 @@ columnOrder: positions
 	"Set the column order of the receiver to the specified <sequencedReadableCollection> 
 	of 1-based positions."
 
-	| iArray iCount oldPositions |
-	oldPositions := self columnOrder.
-	oldPositions = positions ifTrue: [^self	"Order not changed"].
+	| iArray iCount |
+	self columnOrder = positions ifTrue: [^self	"Order not changed"].
 	iCount := positions size.
 	iArray := DWORDArray new: iCount.
 	1 to: positions size do: [:i | iArray at: i put: (positions at: i) - 1].
@@ -1499,7 +1498,7 @@ lvnGetEmptyMarkup: pNMHDR
 lvnGetInfoTip: pNMHDR
 	"Private - Default handler for the LVN_GETINFOTIPW notification message."
 
-	| target prefixText nmlv |
+	| nmlv target prefixText |
 	nmlv := NMLVGETINFOTIPW fromAddress: pNMHDR.
 	target := self objectFromHandle: nmlv itemHandle ifAbsent: [^0].	"ListView may occassionally ask for info tip for item we don't have (e.g. off end of list)"
 	prefixText := nmlv dwFlags == 0 ifTrue: [nmlv text] ifFalse: [''].	"If in report mode and the column has an info. tip block then we delegate to it, otherwise fill it in."
