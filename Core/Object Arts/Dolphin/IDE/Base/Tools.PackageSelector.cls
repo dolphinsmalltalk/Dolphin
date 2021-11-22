@@ -151,16 +151,18 @@ confirmUninstall: aPackage
 	uninstalled anyway. If this method returns then all dependent packages were successfully
 	uninstalled, and uninstallation of the package may proceed."
 
-	| deps details max mb response |
-	self promptToSavePackageChanges: aPackage.
+	| deps details max mb response prompted |
+	prompted := self promptToSavePackageChanges: aPackage.
 	Cursor wait showWhile: [deps := aPackage allDependentPackages].
 	mb := MessageBox new.
 	mb
 		headline: 'Uninstall package <1p>?' << aPackage name;
-		beTaskModal.
+		beTaskModal;
+		customButtons: #(#(#yes '&Uninstall') #(#no '&Don''t Uninstall')).
 	deps isEmpty
 		ifTrue: 
-			[response := mb
+			[prompted ifTrue: [^true].
+			response := mb
 						confirmOrCancel: 'Do you really want to uninstall the package and remove all its owned objects from the system?'.
 			^response == #cancel
 				ifTrue: [self operationAbortedSignal signalWith: aPackage]
@@ -169,7 +171,7 @@ confirmUninstall: aPackage
 	details
 		nextPutAll: 'The following packages depend on ';
 		print: aPackage name;
-		nextPutAll: ' as a prerequisite:';
+		nextPut: $:;
 		cr;
 		cr.
 	max := 30.
@@ -193,7 +195,8 @@ confirmUninstall: aPackage
 	mb detailsText: details contents.
 	mb iconStyle: #warning.
 	response := mb
-				confirmOrCancel: '<1d> package<2?s:> depend on <3p> as a prerequisite, and will also be uninstalled<n><n>Are you sure that you would like to proceed?' << {deps size. deps size > 1. aPackage name}.
+				confirmOrCancel: '<1d> package<2?s:> depend on <3p> as a prerequisite, and will also be uninstalled should you choose to proceed.'
+						<< {deps size. deps size > 1. aPackage name}.
 	^response == #cancel
 		ifTrue: [self operationAbortedSignal signalWith: aPackage]
 		ifFalse: 
@@ -595,18 +598,20 @@ promptToSavePackageChanges: package
 	any changes."
 
 	| resp mb |
-	package isChanged ifFalse: [^self].
+	package isChanged ifFalse: [^false].
 	mb := MessageBox new.
 	mb beTaskModal.
 	resp := mb
 				headline: 'Save <1p> before uninstallation?' << package name;
 				iconStyle: #warning;
-				confirmOrCancel: 'The package has unsaved changes. Would you like to save it before uninstalling it?' << package name.
+				customButtons: #(#(#yes '&Save && Uninstall') #(#no '&Uninstall'));
+				confirmOrCancel: 'The package has unsaved changes that will be discarded if the package is uninstalled.'.
 	resp == #no
 		ifFalse: 
 			[resp == #yes
-				ifTrue: [(Cursor wait showWhile: [self savePackageChanges: {package}]) ifTrue: [^self]].
-			self operationAbortedSignal signalWith: package]!
+				ifTrue: [(Cursor wait showWhile: [self savePackageChanges: {package}]) ifTrue: [^true]].
+			self operationAbortedSignal signalWith: package].
+	^true!
 
 queryCommand: aCommandQuery
 	"Private - Enters details about a potential command for the receiver into 
@@ -1086,11 +1091,11 @@ resource_Choice_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Choice_view)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 1376774 ##(UI.ProportionalLayout) 170 176 34 4 410 ##(UI.ListView) 34 45 nil 416 34 2 8 1140920397 1025 544 787270 2 ##(UI.ListModel) 138 144 8 #() nil 1769478 ##(Kernel.IdentitySearchPolicy) 917510 ##(Graphics.Color) #default nil 21 461638 4 ##(UI.Menu) nil true 34 9 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #synchronizeFilter 8 '&Goto Folder' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 786 1 818 #newPackage 8 '&New Package…' 1 1 nil nil nil 786 1 818 #savePackages 8 '&Save' 1 1 853318 3 ##(Graphics.Icon) nil true 2031622 ##(Kernel.ImageRelativeFileLocator) 8 'FileSave.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil nil 786 1 818 #savePackageAs 8 'Save &As…' 1 1 nil nil nil 738 nil true 34 10 786 1 818 #toggleUsingPAX 8 'Use PA&X Source Format' 1 1 nil nil nil 786 1 818 #browsePackageSources 8 'Bro&wse PAX Sources' 1 1 nil nil nil 866 4097 786 1 818 #checkOut 8 'Check Out &All' 1 1 nil nil nil 786 1 818 #checkOutChanges 8 'Check &Out Changes' 1 1 nil nil nil 786 1 818 #checkIn 8 'Check &In' 1 1 nil nil nil 866 4097 786 2097153 818 #savePackageChanges 8 'Save &Changes' 1 1 nil nil nil 866 4097 786 1 818 #resetChangeFlags 8 'Clear Change &Markers' 1 1 nil nil nil 8 'Sou&rce Control' #sourceControlMenu 1 nil nil nil nil nil 866 4097 786 1 818 #inspectPackage 8 '&Properties' 1 1 994 nil true 1040 8 'SMALLTALKOPTIONSFOLDER.ICO' 1088 nil nil 786 1 818 #aboutPackage 8 'Abou&t this Package…' 1 1 nil nil nil 8 '&Package' nil 134217729 nil nil nil nil nil nil nil 544 nil 8 1801282304 786950 ##(Core.Message) #name 8 #() ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil 1246566 3 ##(Kernel.BlockClosure) 0 nil 1639718 ##(Kernel.CompiledExpression) 5 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:ctx | 
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil nil nil 5 nil nil nil 416 1376774 ##(UI.ProportionalLayout) 170 176 34 4 410 ##(UI.TreeView) 34 27 nil 416 34 2 8 1140916771 1025 544 787526 3 ##(UI.TreeModel) nil 1769478 ##(Kernel.IdentitySearchPolicy) 721670 ##(UI.TreeNode) nil nil nil 170 192 8 #() 917510 ##(Graphics.Color) #default nil 5 461638 4 ##(UI.Menu) nil true 34 1 1180742 2 ##(UI.CommandMenuItem) 1 1377606 4 ##(UI.CommandDescription) #newPackage 8 '&New Package…' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 544 nil 8 1811812304 ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil 170 176 720 nil #smallIcons 1 170 192 720 1310982 ##(Core.MessageSequence) 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 1 1 1090 737 227 544 1042 #contextMenu: 34 1 784 544 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 112 1 0 0 113 0 0 0] 8 #() 1090 193 193 nil 27 3 410 ##(UI.ListView) 34 45 nil 416 34 2 8 1140920397 1025 1248 787270 2 ##(UI.ListModel) 138 144 720 nil 656 752 nil 21 770 nil true 34 9 818 1 850 #synchronizeFilter 8 '&Goto Folder' 1 1 nil nil nil 1179974 1 ##(UI.DividerMenuItem) 4097 818 1 850 #newPackage 8 '&New Package…' 1 1 nil nil nil 818 1 850 #savePackages 8 '&Save' 1 1 852806 4 ##(Graphics.Icon) nil true 2819078 ##(Graphics.ImageFromStringResourceInitializer) 8 'FileSave.ico' 2490894 ##(Kernel.STBExternalResourceLibraryProxy) 8 'dolphindr8.dll' nil 65541 nil nil nil 818 1 850 #savePackageAs 8 'Save &As…' 1 1 nil nil nil 770 nil true 34 10 818 1 850 #toggleUsingPAX 8 'Use PA&X Source Format' 1 1 nil nil nil 818 1 850 #browsePackageSources 8 'Bro&wse PAX Sources' 1 1 nil nil nil 1442 4097 818 1 850 #checkOut 8 'Check Out &All' 1 1 nil nil nil 818 1 850 #checkOutChanges 8 'Check &Out Changes' 1 1 nil nil nil 818 1 850 #checkIn 8 'Check &In' 1 1 nil nil nil 1442 4097 818 2097153 850 #savePackageChanges 8 'Save &Changes' 1 1 nil nil nil 1442 4097 818 1 850 #resetChangeFlags 8 'Clear Change &Markers' 1 1 nil nil nil 8 'Sou&rce Control' #sourceControlMenu 1 nil nil nil nil nil 1442 4097 818 1 850 #inspectPackage 8 '&Properties' 1 1 1570 nil true 1602 8 'SMALLTALKOPTIONSFOLDER.ICO' 1664 65541 nil nil nil 818 1 850 #aboutPackage 8 'Abou&t this Package…' 1 1 nil nil nil 8 '&Package' nil 134217729 nil nil nil nil nil nil nil 1248 nil 8 1812034736 786950 ##(Core.Message) #name 8 #() ##(UI.IconicListAbstract) 944 nil nil 1246566 3 ##(Kernel.BlockClosure) 0 nil 1639718 ##(Kernel.CompiledExpression) 5 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:ctx | 
 ctx item isDefaultPackage ifTrue: [
-	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 1872 7 257 nil nil nil nil 138 144 34 2 1117254 5 ##(UI.ListViewColumn) 8 '' 41 #left nil 1858 0 nil 1890 3 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:x : y | x & y not ]' 8 #[31 105 233 1 158 177 106] #not #& 2048 7 513 nil 1778 #isChanged 8 #() nil 544 1858 0 nil 1890 4 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:x | x ifTrue: [Package changedIcon imageIndex]]' 8 #[32 105 17 121 45 159 160 106 60 106] 1049094 ##(Core.Association) #Package ##(Kernel.Package) #changedIcon #imageIndex 2160 7 257 nil 1 nil nil 2002 8 'Packages' 689 #left ##(UI.BasicListAbstract) 1858 0 nil 1890 2 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 2304 7 513 nil nil nil 544 ##(UI.IconicListAbstract) 3 nil 1858 0 nil 1890 5 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:ctx | 
+	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2432 7 257 nil nil nil nil 138 144 34 2 1117254 5 ##(UI.ListViewColumn) 8 '' 41 #left nil 2418 0 nil 2450 3 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:x : y | x & y not ]' 8 #[31 105 233 1 158 177 106] #not #& 2608 7 513 nil 2370 #isChanged 8 #() nil 1248 2418 0 nil 2450 4 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:x | x ifTrue: [Package changedIcon imageIndex]]' 8 #[32 105 17 121 45 159 160 106 60 106] 1049094 ##(Core.Association) #Package ##(Kernel.Package) #changedIcon #imageIndex 2720 7 257 nil 1 nil nil 2562 8 'Packages' 689 #left ##(UI.BasicListAbstract) 2418 0 nil 2450 2 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:a :b | a name < b name]' 8 #[30 105 17 158 18 158 128 106] #name 2864 7 513 nil nil nil 1248 ##(UI.IconicListAbstract) 3 nil 2418 0 nil 2450 5 1 ##(Core.UndefinedObject) 8 'doIt' 8 '[:ctx | 
 ctx item isDefaultPackage ifTrue: [
-	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2384 7 257 nil #report 8 #() nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 1 237 2594 737 229 544 2546 #contextMenu: 34 1 752 544 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 118 0 0 0 112 1 0 0 232 0 0 0] 8 #() 2594 193 193 nil 35 3 410 ##(UI.TreeView) 34 27 nil 416 34 2 8 1140916771 1025 2752 787526 3 ##(UI.TreeModel) nil 688 721670 ##(UI.TreeNode) nil nil nil 170 192 656 720 nil 5 738 nil true 34 1 786 1 818 #newPackage 8 '&New Package…' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 2752 nil 8 1801125840 ##(UI.BasicListAbstract) ##(UI.IconicListAbstract) 1840 nil nil nil nil nil 170 176 656 nil #smallIcons 1 170 192 656 2482 138 144 34 2 2546 #createAt:extent: 34 2 2594 1 1 2594 737 227 2752 2546 #contextMenu: 34 1 2896 2752 2674 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 112 1 0 0 113 0 0 0] 8 #() 2736 nil 27 3 true 170 192 34 4 544 8 'packages' 2752 8 'filter' nil 2482 138 144 34 1 2546 #createAt:extent: 34 2 2594 6143 21 2594 737 465 416 2674 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 111 13 0 0 242 0 0 0] 34 3 2752 410 ##(UI.Splitter) 34 12 nil 416 34 2 8 1140850688 1 3456 nil nil nil 517 nil nil nil 1707078 1 ##(UI.DraggableViewInteractor) 3456 nil 1 #left nil nil nil 2594 1 1 2594 9 9 nil 3552 nil 2482 138 144 34 1 2546 #createAt:extent: 34 2 2594 1 227 2594 737 11 3456 2674 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 113 0 0 0 112 1 0 0 118 0 0 0] 8 #() 2736 nil 27 544 2736 nil 27 )!
+	ctx font beBold]]' 8 #[33 105 17 158 159 121 17 160 161 106 60 106] #item #isDefaultPackage #font #beBold 2944 7 257 nil #report 8 #() nil 133221 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 994 34 2 1042 #createAt:extent: 34 2 1090 1 237 1090 737 229 1248 1042 #contextMenu: 34 1 1360 1248 1170 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 118 0 0 0 112 1 0 0 232 0 0 0] 8 #() 1232 nil 35 3 true 170 192 34 4 544 8 'filter' 1248 8 'packages' nil 994 34 1 1042 #createAt:extent: 34 2 1090 12287 21 1090 737 465 416 1170 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 111 25 0 0 242 0 0 0] 34 3 544 410 ##(UI.Splitter) 34 12 nil 416 34 2 8 1140850688 1 3424 nil nil nil 517 nil nil nil 1707078 1 ##(UI.DraggableViewInteractor) 3424 nil 1 #left nil nil nil 1090 1 1 1090 9 9 nil 3520 nil 994 34 1 1042 #createAt:extent: 34 2 1090 1 227 1090 737 11 3424 1170 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 113 0 0 0 112 1 0 0 118 0 0 0] 8 #() 1232 nil 27 1248 1232 nil 27 )!
 
 resource_Default_view
 	"Answer the literal data from which the 'Default view' resource can be reconstituted.
