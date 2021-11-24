@@ -78,13 +78,22 @@ showWhile: aBlock
 	"Maintain the wait cursor while aBlock is executed, answering the result of the block.
 	The actual cursor which was current is restored (rather than the one we think is Current)."
 
-	| previous actual |
-	previous := Current.
+	| previousCurrent previousActual nowActual |
+	previousCurrent := Current.
 	Current := self.
-	actual := self setCursor.
-	^aBlock ensure: 
-			[Current := previous.
-			UserLibrary default setCursor: actual]! !
+	previousActual := UserLibrary default getCursor.
+	self setCursor.
+	^aBlock ensure: [
+		Current := previousCurrent.
+		nowActual := UserLibrary default getCursor.
+		nowActual handle = previousActual handle ifFalse: [
+			UserLibrary default showCursor: false.
+			"https://github.com/dolphinsmalltalk/Dolphin/issues/1154"
+			(Delay forMilliseconds: 100) wait.
+			UserLibrary default setCursor: previousActual.
+			UserLibrary default showCursor: true.
+		].
+	]! !
 !Cursor categoriesForMethods!
 imageType!constants!private! !
 load:fromInstance:extent:!private!realizing/unrealizing! !
