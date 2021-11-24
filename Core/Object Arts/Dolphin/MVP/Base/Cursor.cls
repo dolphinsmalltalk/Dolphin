@@ -86,7 +86,7 @@ showWhile: aBlock
 	^aBlock ensure: [
 		Current := previousCurrent.
 		nowActual := UserLibrary default getCursor.
-		nowActual handle = previousActual handle ifFalse: [
+		nowActual handle = (previousActual ifNil: [0] ifNotNil: [previousActual handle]) ifFalse: [
 			UserLibrary default showCursor: false.
 			"https://github.com/dolphinsmalltalk/Dolphin/issues/1154"
 			(Delay forMilliseconds: 100) wait.
