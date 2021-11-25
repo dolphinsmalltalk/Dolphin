@@ -215,10 +215,10 @@ do: operation
 do: aMonadicValuable separatedBy: aNiladicValuable
 	"Evaluate the <monadicValuable> first argument for each of the receiver's elements, interspersed with evaluations of the <niladicValuable> second argument. The separator argument is first evaluated after the first element, and is not evaluated after the last element (i.e. it is not evaluated at all if there are less than two elements)."
 
-	"Implementation Note: We have to override the superclass in order to enumerate code points."
+	"Implementation Note: We have to override the superclass in order to enumerate code points rather than code units."
 
 	| stream ch |
-	stream := self readStream.
+	stream := ReadStream on: self.
 	(ch := stream nextAvailable) ifNil: [^self].
 	
 	[aMonadicValuable value: ch.

@@ -209,6 +209,19 @@ do: operation
 
 	firstIndex to: lastIndex do: [:i | operation value: (self basicAt: i)]!
 
+do: aMonadicValuable separatedBy: aNiladicValuable
+	"Evaluate the <monadicValuable> first argument for each of the receiver's elements, interspersed with evaluations of the <niladicValuable> second argument. The separator argument is first evaluated after the first element, and is not evaluated after the last element (i.e. it is not evaluated at all if there are less than two elements)."
+
+	"Implementation Note: As elegant as the <Collection> implementation is, it is not particularly efficient as it requires two full blocks. Therefore we override here for efficiency, as this is a very useful operation for printing and joining."
+
+	self size == 0 ifTrue: [^self].
+	aMonadicValuable value: (self basicAt: firstIndex).
+	firstIndex + 1 to: lastIndex
+		do: 
+			[:i |
+			aNiladicValuable value.
+			aMonadicValuable value: (self basicAt: i)]!
+
 findFirst: discriminator
 	"Answer the <integer> index of the first element of the receiver for which the 
 	<monadicValuable> argument, discriminator, evaluates to true. If there are 
@@ -526,6 +539,7 @@ copyWithout:!copying!public! !
 copyWithoutIndex:!copying!public! !
 detect:ifNone:!public!searching! !
 do:!enumerating!public! !
+do:separatedBy:!enumerating!public! !
 findFirst:!public!searching! !
 first!accessing!public! !
 firstIndex:lastIndex:!accessing!private! !

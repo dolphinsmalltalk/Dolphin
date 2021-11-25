@@ -188,18 +188,17 @@ do: operation
 
 	self keysAndValuesDo: [:i :elem | operation value: elem]!
 
-do: operation separatedBy: separator
-	"Evaluate the <monadicValuable> argument, operation, for each of the 
-	receiver's elements, interspersed with evaluations of the <niladicValuable>
-	argument, separator. The separator is first evaluated after the first
-	element, and is not evaluated after the last element (i.e. it is not evaluated
-	at all if there are less than two elements)."
+do: aMonadicValuable separatedBy: aNiladicValuable
+	"Evaluate the <monadicValuable> first argument for each of the receiver's elements, interspersed with evaluations of the <niladicValuable> second argument. The separator argument is first evaluated after the first element, and is not evaluated after the last element (i.e. it is not evaluated at all if there are less than two elements)."
 
-	| sep |
-	sep := [sep := separator].	"Switch to the real separator after first eval."
-	self do: [:e |
-		sep value.
-		operation value: e]!
+	| count |
+	(count := self size) == 0 ifTrue: [^self].
+	aMonadicValuable value: (self uncheckedAt: 1).
+	2 to: count
+		do: 
+			[:i |
+			aNiladicValuable value.
+			aMonadicValuable value: (self uncheckedAt: i)]!
 
 elementClass
 	"Answer the class of <ExternalStructure> used to represent elements of the receiver."

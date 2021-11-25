@@ -119,12 +119,15 @@ do: operation
 do: aMonadicValuable separatedBy: aNiladicValuable
 	"Evaluate the <monadicValuable> first argument for each of the receiver's elements, interspersed with evaluations of the <niladicValuable> second argument. The separator argument is first evaluated after the first element, and is not evaluated after the last element (i.e. it is not evaluated at all if there are less than two elements)."
 
-	"Implementation Note: As elegant as the superclass implementation is, it is not particularly efficient as it requires two full blocks. Therefore we override here for efficiency, as this is a very useful operation for printing and joining."
+	"Implementation Note: As elegant as the <Collection> implementation is, it is not particularly efficient as it requires two full blocks. Therefore we override here for efficiency, as this is a very useful operation for printing and joining."
 
-	1 to: self size
+	| count |
+	(count := self size) == 0 ifTrue: [^self].
+	aMonadicValuable value: (self at: 1).
+	2 to: count
 		do: 
 			[:i |
-			i > 1 ifTrue: [aNiladicValuable value].
+			aNiladicValuable value.
 			aMonadicValuable value: (self at: i)]!
 
 findFirst: discriminator

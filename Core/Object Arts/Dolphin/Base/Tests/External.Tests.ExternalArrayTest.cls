@@ -77,6 +77,18 @@ testAtAndAtPut
 			self assert: (array at: each put: elem) equals: elem.
 			self assert: (self elementToValue: (array at: each)) equals: each]!
 
+testDoSeparatedBy
+	0 to: 4
+		do: 
+			[:count |
+			| interstices array elements |
+			array := self newNumericArray: count.
+			elements := Array writeStream.
+			interstices := 0.
+			array do: [:each | elements nextPut: each] separatedBy: [interstices := interstices + 1].
+			self assert: elements contents equals: ((1 to: count) collect: [:i | self elementFromValue: i]).
+			self assert: interstices equals: (count - 1 max: 0)]!
+
 testElementClass
 	self assert: (self newNumericArray: 1) elementClass identicalTo: self numericElementClass!
 
@@ -220,6 +232,7 @@ newArrayOfIntegers:!helpers!private! !
 newNumericArray:!helpers!private! !
 numericElementClass!constants!private! !
 testAtAndAtPut!public!unit tests! !
+testDoSeparatedBy!public!unit tests! !
 testElementClass!public!unit tests! !
 testFromToKeysAndValuesDo!public!unit tests! !
 testWithDo!public!unit tests! !
