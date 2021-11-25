@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.ValueDialog subclass: #'UI.ChoicePrompter'
-	instanceVariableNames: 'choicePresenter newBlock newCaption newPrompt'
+	instanceVariableNames: 'choicePresenter newBlock newCaption newPrompt validater'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -117,41 +117,22 @@ newChoice
 	"New command has been issued. Create a new choice by prompting the user for
 	its name."
 
-	| default chosenName new |
-	default := choicePresenter value.
-	default := default notNil ifTrue: [choicePresenter view getTextBlock value: default] ifFalse: [''].
-	chosenName := Prompter
-				on: default
-				prompt: self newPrompt
-				caption: self newCaption.
-	chosenName isNil ifTrue: [^self].
-	new := newBlock value: chosenName.
-	"newBlock answers nil if new 'name' is not valid"
-	new notNil
-		ifTrue: 
-			[(choicePresenter viewModel includes: new) ifFalse: [choicePresenter viewModel add: new].
-			self value: new
-			"self ok"]!
+	(self promptForNewNamed: choicePresenter value)
+		ifNotNil: 
+			[:new |
+			(choicePresenter viewModel includes: new) ifFalse: [choicePresenter viewModel add: new].
+			self value: new]!
 
 newMultipleChoice
 	"New command has been issued for a multi-selection prompter. 
 	Create a new choice by prompting the user for its name."
 
-	| default chosenName new |
+	| default |
 	default := choicePresenter value.
-	default := default notEmpty
-				ifTrue: [choicePresenter view getTextBlock value: default first]
-				ifFalse: [''].
-	chosenName := Prompter
-				on: default
-				prompt: self newPrompt
-				caption: self newCaption.
-	chosenName isNil ifTrue: [^self].
-	new := newBlock value: chosenName.
-	"newBlock answers nil if new 'name' is not valid"
-	new notNil
-		ifTrue: 
-			[(choicePresenter viewModel includes: new) ifFalse: [choicePresenter viewModel add: new].
+	(self promptForNewNamed: (default isEmpty ifFalse: [default first]))
+		ifNotNil: 
+			[:new |
+			(choicePresenter viewModel includes: new) ifFalse: [choicePresenter viewModel add: new].
 			choicePresenter view addSelections: {new}]!
 
 newPrompt
@@ -167,7 +148,26 @@ newPrompt: anObject
 nilChoice: anObject
 	"Sets the choice that can be used to represent a nil value in the model"
 
-	choicePresenter nilChoice: anObject! !
+	choicePresenter nilChoice: anObject!
+
+promptForNewNamed: anObject
+	| newPrompter default |
+	default := anObject ifNil: [''] ifNotNil: [choicePresenter view getTextBlock value: anObject].
+	newPrompter := Prompter
+				createOn: default
+				prompt: self newPrompt
+				caption: self newCaption.
+	self validater ifNotNil: [:v | newPrompter validater: v].
+	^newPrompter showModal ifNotNil: [:chosenName | newBlock value: chosenName]!
+
+validater
+	^validater!
+
+validater: aMonadicValuable
+	validater := aMonadicValuable!
+
+validationBlock: aMonadicValuable
+	self validater: [:response | ValidationResult value: (aMonadicValuable value: response)]! !
 !UI.ChoicePrompter categoriesForMethods!
 choices:!accessing!private! !
 createComponents!initializing!public! !
@@ -185,6 +185,10 @@ newMultipleChoice!commands!public! !
 newPrompt!accessing!public! !
 newPrompt:!accessing!public! !
 nilChoice:!accessing!public! !
+promptForNewNamed:!helpers!private! !
+validater!accessing!public! !
+validater:!accessing!public! !
+validationBlock:!accessing!public! !
 !
 
 !UI.ChoicePrompter class methodsFor!

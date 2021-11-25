@@ -24,6 +24,7 @@ package setPrerequisites: #(
 	'..\..\Base\Dolphin MVP Base'
 	'Dolphin Prompter'
 	'..\..\Views\Buttons\Dolphin Push Buttons'
+	'..\..\Models\Value\Dolphin Value Models'
 ).
 
 package!
@@ -31,7 +32,7 @@ package!
 "Class Definitions"!
 
 UI.ValueDialog subclass: #'UI.ChoicePrompter'
-	instanceVariableNames: 'choicePresenter newBlock newCaption newPrompt'
+	instanceVariableNames: 'choicePresenter newBlock newCaption newPrompt validater'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

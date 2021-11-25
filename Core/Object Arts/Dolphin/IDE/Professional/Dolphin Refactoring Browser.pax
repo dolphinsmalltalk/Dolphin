@@ -105,6 +105,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.MoveMethodRefactoring} #displayOn:)
 	#(#{Refactory.Browser.MoveMethodRefactoring} #getOptionSelfArgumentName)
 	#(#{Refactory.Browser.MoveMethodRefactoring} #getOptionVariableTypes:selected:)
+	#(#{Refactory.Browser.MoveMethodRefactoring} #resolveClass:)
 	#(#{Refactory.Browser.MoveVariableDefinitionRefactoring} #displayOn:)
 	#(#{Refactory.Browser.ProtectInstanceVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.PullUpClassVariableRefactoring} #displayOn:)
@@ -1140,26 +1141,28 @@ getOptionVariableTypes: choicesCollection selected: suggestionsCollection
 				asSortedCollection: [:a :b | a name < b name])
 		caption: 'Select class(es) of new method… ')
 		newCaption: 'Add Other Class…';
-		newBlock: 
+		validater: 
 				[:aString |
-				| global index |
-				index := aString identityIndexOf: $\x20.
-				global := index == 0
-							ifTrue: [aString asQualifiedReference valueOrNil]
-							ifFalse: [(aString leftString: index - 1) asQualifiedReference ifDefined: [:c | c class]].
-				(global notNil
-					and: [(global isKindOf: Behavior) and: [self model environment includesClass: global]])
-						ifFalse: 
-							[MessageBox new
-								headline: 'Sorry, but <1s> is not a valid class name' << aString;
-								errorMsg.
-							nil]
-						ifTrue: [self model classFor: global]];
-		showModal! !
+				| result |
+				result := ValidationResult new.
+				(self resolveClass: aString)
+					ifNil: [result errorMessage: '<1s> is not a valid class name' << aString].
+				result];
+		newBlock: [:aString | self resolveClass: aString];
+		showModal!
+
+resolveClass: aString
+	| binding |
+	aString isEmpty ifTrue: [^nil].
+	binding := aString asQualifiedReference bindingOrNil.
+	^(binding notNil
+		and: [binding isClassBinding and: [self model environment includesClass: binding value]])
+			ifTrue: [self model classFor: binding value]! !
 !Refactory.Browser.MoveMethodRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 getOptionSelfArgumentName!public! !
 getOptionVariableTypes:selected:!options!public! !
+resolveClass:!helpers!private! !
 !
 
 !Refactory.Browser.MoveVariableDefinitionRefactoring methodsFor!

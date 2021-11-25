@@ -44,7 +44,7 @@ initialize
 	"Private - Initialize the receiver"
 
 	super initialize.
-	validater := [:val | ValidationResult value: val]!
+	validater := [:val | ValidationResult new]!
 
 isModified
 	"Answer whether the buffer is holding a modified value that can be applied. If not then the value is that of the subject."
