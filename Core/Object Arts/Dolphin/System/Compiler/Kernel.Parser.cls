@@ -459,7 +459,7 @@ parseExternalCallName
 
 parseKeywordAnnotation: anInteger
 	| selector args |
-	selector := Utf8String writeStream.
+	selector := WriteStream on: (Utf8String new: 16).
 	args := WriteStream on: {}.
 	
 	[selector nextPutAll: currentToken value.

@@ -49,6 +49,16 @@ testAnnotationEquality
 						deny: ((self parserClass parseMethod: (strings at: i))
 								= (self parserClass parseMethod: (strings at: j)) xor: i = j)]]!
 
+testAnnotationParents
+	| ast annotation annotationArg |
+	ast := self parserClass parseMethod: 'test <namespace: XProgramming>'.
+	annotation := ast tags first.
+	self assert: annotation parent identicalTo: ast.
+	self assert: annotation methodNode identicalTo: ast.
+	annotationArg := annotation arguments first.
+	self assert: annotationArg parent identicalTo: annotation.
+	self assert: annotationArg methodNode identicalTo: ast!
+
 testCharacterScanning
 	| subject tok |
 	subject := self scannerClass on: '$a$b$\t$\$  $c' readStream.
@@ -143,20 +153,23 @@ testExternalCalls
 	self assert: tree formattedCode trimBlanks equals: 'blah
 	<stdcall: void blah>'.
 	ffiCall := tree tags first.
+	self assert: ffiCall methodNode identicalTo: tree.
 	self assert: ffiCall argumentTypes isEmpty.
 	self assert: ffiCall returnType typeOrdinal equals: ExtCallArgVOID.
 	self assert: ffiCall returnType indirections equals: 0.
 	self assertIsNil: ffiCall returnType structClass.
+	self assert: ffiCall selector identicalTo: #stdcall:.
 
 	"One simple arg"
-	tree := self parserClass parseMethod: 'blah: x <stdcall: dword blah sdword>'.
+	tree := self parserClass parseMethod: 'blah: x <cdecl: dword blah sdword>'.
 	self assert: tree formattedCode trimBlanks equals: 'blah: x
-	<stdcall: dword blah sdword>'.
+	<cdecl: dword blah sdword>'.
 	ffiCall := tree tags first.
 	self assert: ffiCall returnType typeOrdinal equals: ExtCallArgDWORD.
 	self assert: ffiCall returnType indirections equals: 0.
 	self assertIsNil: ffiCall returnType structClass.
 	self assert: ffiCall argumentTypes size equals: 1.
+	self assert: ffiCall selector identicalTo: #cdecl:.
 	ffiCall argumentTypes with: {ExtCallArgSDWORD}
 		do: 
 			[:eachArg :eachType |
@@ -230,10 +243,11 @@ testFloatScanning
 assertToken:isChar:!helpers!private! !
 parserClass!constants!private! !
 scannerClass!constants!private! !
-scanNonNumericEnd:class:!public! !
+scanNonNumericEnd:class:!helpers!private! !
 testAnnotationEquality!public!unit tests! !
+testAnnotationParents!public!unit tests! !
 testCharacterScanning!public!unit tests! !
-testExpressionSolver!public! !
+testExpressionSolver!public!unit tests! !
 testExternalCallEquality!public!unit tests! !
 testExternalCalls!public!unit tests! !
 testFloatScanning!public!unit tests! !

@@ -34,6 +34,7 @@ selector
 setSelector: aSymbol arguments: anArray
 	selector := aSymbol asSymbol.
 	arguments := anArray asArray.
+	arguments do: [:each | each parent: self].
 	^self! !
 !Kernel.StAnnotationNode categoriesForMethods!
 =!comparing!public! !
