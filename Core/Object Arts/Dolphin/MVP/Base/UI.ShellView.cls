@@ -725,7 +725,6 @@ onViewCreated
 	"The receiver has just been fully created. This is a suitable place to perform
 	initialization of the window from the receiver's instance variables."
 
-	self lastFocus: nil.
 	self updateIcons!
 
 onViewDeactivated: anEvent
