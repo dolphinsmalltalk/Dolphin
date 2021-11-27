@@ -73,7 +73,6 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
 	'IDB Common'
 	'IDB Method History'
-	'..\..\Object Arts\Dolphin\MVP\Icons\Internal Bitmaps and Icons'
 	'..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
 	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell').
 
