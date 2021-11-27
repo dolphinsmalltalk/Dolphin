@@ -12,12 +12,7 @@ Refactory.Browser.RefactoringManager comment: ''!
 !Refactory.Browser.RefactoringManager methodsFor!
 
 addRefactoring: aRefactoring
-	[RefactoryChangeManager instance performChange: aRefactoring changes] on: CompilerErrorNotification
-		do: 
-			[:ex |
-			ex resignalAs: ((RefactoringError messageText: ex description)
-						refactoring: aRefactoring;
-						yourself)].
+	RefactoryChangeManager instance performChange: aRefactoring changes.
 	refactorings add: aRefactoring class name!
 
 initialize
