@@ -70,6 +70,9 @@ canAcceptSubViews
 
 	^true!
 
+defaultButtonId
+	^0!
+
 defaultExtent
 	"Private - Answer the default size of the receiver. This is used only to
 	set the size of a view when it is created. Thereafter preferredExtent is
@@ -290,6 +293,7 @@ addSubView:name:!hierarchy!public!sub views! !
 arrangementOf:!accessing!public! !
 arrangementOf:put:!accessing!public! !
 canAcceptSubViews!hierarchy!public!sub views! !
+defaultButtonId!accessing!default button!private! !
 defaultExtent!constants!private! !
 defaultExtentOf:!geometry!public! !
 defaultLayoutManager!constants!private! !

@@ -153,6 +153,11 @@ isDefault: aBoolean
 
 	self isOpen ifTrue: [self setDefault: aBoolean] ifFalse: [isDefault := aBoolean]!
 
+isDefaultButton
+	"Answer whether the receiver has the default button style."
+
+	^self isDefault!
+
 isMultiline
 	"Answers whether the receiver can display multiple lines of button text."
 
@@ -252,6 +257,7 @@ isChecked!accessing!public! !
 isChecked:!accessing!public! !
 isDefault!public!testing! !
 isDefault:!accessing-styles!public! !
+isDefaultButton!public!testing! !
 isMultiline!accessing-styles!public! !
 isMultiline:!accessing-styles!public! !
 note!accessing!public! !

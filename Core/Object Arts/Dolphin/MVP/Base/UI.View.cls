@@ -1254,20 +1254,19 @@ filerProxy
 	self isTopView ifTrue: [filerProxy beTopView].
 	^filerProxy!
 
+findItem: anInteger ifAbsent: exceptionHandler
+	"Private - Answer a <View> representing the child window within the receiver with the specified <integer> id, or if no such immediate child, then the first child of a child with encountered with that id, and so on. i.e. this is a recursive version of #getItem:ifAbsent:. If there is no such child in the receiver, or its children, etc, then answer the result of evaluating the <niladicValuable>, exceptionHandler."
+
+	^(self findItemHandle: anInteger ifAbsent: nil)
+		ifNil: [exceptionHandler value]
+		ifNotNil: [:hWnd | View fromHandle: hWnd]!
+
 findItemHandle: anInteger ifAbsent: exceptionHandler
-	"Private - Answer the handle of a child window within the receiver with the specified
-	<integer> id, or if no such immediate child, then the first child of a child with
-	encountered with that id, and so on. i.e. this is a recursive version of
-	#getItemHandle:ifAbsent: If there is no such child in the receiver, or its children, etc,
-	then answer the result of evaluating the niladic valuable, exceptionHandler."
+	"Private - Answer the handle of a child window within the receiver with the specified <integer> id, or if no such immediate child, then the first child of a child with encountered with that id, and so on. i.e. this is a recursive version of #getItemHandle:ifAbsent:. If there is no such child in the receiver, or its children, etc, then answer the result of evaluating the <niladicValuable>, exceptionHandler."
 
 	(self getItemHandle: anInteger ifAbsent: nil)
 		ifNil: 
-			[self subViewsDo: 
-					[:each |
-					| hWnd |
-					hWnd := each findItemHandle: anInteger ifAbsent: nil.
-					hWnd isNil ifFalse: [^hWnd]]]
+			[self subViewsDo: [:each | (each findItemHandle: anInteger ifAbsent: nil) ifNotNil: [:hWnd | ^hWnd]]]
 		ifNotNil: [:hWnd | ^hWnd].
 	^exceptionHandler value!
 
@@ -1413,39 +1412,26 @@ getFirstChild
 
 getItem: anInteger
 	"Private - Answer the receiver's sub view with the specified ID.
-	Note: This method is not only useful for Dialogs, as it can be used any parent-child 
-	pair, as long as the child window has a unique identifier (as specified by the hMenu parameter in 
-	the CreateWindowEx() function that created the child window)."
+	Note: This method is not only useful for Dialogs, as it can be used for any parent-child pair, as long as the child window has a unique identifier (specified by the hMenu parameter to the CreateWindowEx() function that created the child window)."
 
 	^self getItem: anInteger ifAbsent: [Win32Error signal]!
 
 getItem: anInteger ifAbsent: exceptionHandler
-	"Private - Answer the receiver's sub view with the specified ID, or if there is no such child,
-	then answer the result of evaluating the niladic valuable, exceptionHandler.
-	Note: This method is not only useful for Dialogs, as it can be used any parent-child 
-	pair, as long as the child window has a unique identifier (as specified by the hMenu parameter in 
-	the CreateWindowEx() function that created the child window). By default Dolphin allocates all
-	child windows unique id's.
+	"Private - Answer the receiver's sub view with the specified ID, or if there is no such child, then answer the result of evaluating the niladic valuable, exceptionHandler.
+	Note: This method is not only useful for Dialogs, as it can be used for any parent-child pair, as long as the child window has a unique identifier (specified by the hMenu parameter to the CreateWindowEx() function that created the child window). By default Dolphin allocates all child windows unique id's.
 
-	N.B. We deliberately reference View specifically rather than 'self' because
-	if the item is not a registered Dolphin View then we want a generic
-	instance of View to represent it, not an instance of whatever subclass
+	N.B. We deliberately reference View specifically rather than 'self' because if the item is not a registered Dolphin View then we want a generic instance of View to represent it, not an instance of whatever subclass
 	sent the message."
 
-	^View fromHandle: (self getItemHandle: anInteger ifAbsent: [^exceptionHandler value])!
+	^(self getItemHandle: anInteger ifAbsent: nil)
+		ifNil: [exceptionHandler value]
+		ifNotNil: [:hWnd | View fromHandle: hWnd]!
 
 getItemHandle: anInteger ifAbsent: exceptionHandler
-	"Private - Answer the handle of the receiver's sub view with the specified ID, 
-	or if there is no such child, then answer the result of evaluating the niladic 
-	valuable, exceptionHandler.
-	Note: This method is not only useful for Dialogs, as it can be used any parent-child
-	pair, as long as the child window has a unique identifier (as specified by the hMenu parameter in 
-	the CreateWindowEx() function that created the child window). By default Dolphin allocates all
-	child windows unique id's."
+	"Private - Answer the handle of the receiver's sub view with the specified <integer> ID, or if there is no such child, then answer the result of evaluating the <niladicValuable>, exceptionHandler.
+	Note: This method is not only useful for Dialogs, as it can be used for any parent-child pair, as long as the child window has a unique identifier (specified by the hMenu parameter in the CreateWindowEx() function that created the child window). By default Dolphin allocates all child windows unique id's."
 
-	| hwnd |
-	hwnd := User32 getDlgItem: handle nIDDlgItem: anInteger.
-	^hwnd ifNil: [exceptionHandler value]!
+	^(User32 getDlgItem: handle nIDDlgItem: anInteger) ifNil: [exceptionHandler value]!
 
 getNoRedrawCount
 	^self propertyAt: #_noRedrawCount ifAbsent: 0!
@@ -1836,6 +1822,11 @@ isActive
 	"Answer whether the receiver is the current active window."
 
 	^self class activeHandle = self handle!
+
+isDefaultButton
+	"Answer whether the receiver is a <PushBuitton> with default button style."
+
+	^false!
 
 isDesktop
 	"Answer whether the receiver represents the desktop window"
@@ -2872,8 +2863,9 @@ preTranslateMessage: aMSG
 	There are separate pre-translation handlers for mouse and keyboard
 	input, which can be overridden as necessary (e.g. see shells)."
 
-	^(aMSG isKeyboardInput and: [self interactor preTranslateKeyboardInput: aMSG])
-		or: [aMSG isMouseInput and: [self interactor preTranslateMouseInput: aMSG]]!
+	^aMSG isKeyboardInput
+		ifTrue: [self interactor preTranslateKeyboardInput: aMSG]
+		ifFalse: [aMSG isMouseInput and: [self interactor preTranslateMouseInput: aMSG]]!
 
 preTranslateMouseInput: aMSG
 	"Answer whether the receiver would like to consume the argument aMSG.
@@ -3555,8 +3547,7 @@ subViews
 	^answer!
 
 subViewsDo: aMonadicValuable
-	"Evaluate the <monadicValuable> argument for each of the receiver's sub-views, in z-order
-	sequence"
+	"Evaluate the <monadicValuable> argument for each of the receiver's sub-views, in z-order sequence"
 
 	| child |
 	child := User32 getWindow: handle uCmd: GW_HWNDCHILD.
@@ -4746,6 +4737,7 @@ extendedStyle:!accessing-styles!private! !
 extent!geometry!public! !
 extent:!geometry!public! !
 filerProxy!binary filing!private! !
+findItem:ifAbsent:!hierarchy!private! !
 findItemHandle:ifAbsent:!hierarchy!private! !
 findMatch:inRange:!private!searching & replacing! !
 firstSubView!hierarchy!public!sub views! !
@@ -4822,6 +4814,7 @@ invalidateRgn:!drawing!public! !
 invalidateRgn:erase:!drawing!public! !
 invalidateUserInterface!accessing!public! !
 isActive!public!testing! !
+isDefaultButton!public!testing! !
 isDesktop!public!testing! !
 isDialogMessage:!dispatching!private! !
 isDolphinWindow!private!testing! !

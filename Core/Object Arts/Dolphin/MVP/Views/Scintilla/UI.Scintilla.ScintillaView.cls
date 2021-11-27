@@ -9157,12 +9157,10 @@ state
 				attrib := self perform: each second.
 				attrib = each last
 					ifFalse: 
-						[| msg |
-						msg := MessageSend
+						[answer add: (MessageSend
 									receiver: self
 									selector: each first
-									argument: attrib.
-						answer add: msg]].
+									argument: attrib)]].
 	^answer!
 
 stopDwellTimer

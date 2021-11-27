@@ -133,17 +133,10 @@ forkProgressMonitor
 					forkAt: Processor userInterruptPriority!
 
 getItemHandle: anInteger ifAbsent: exceptionHandler
-	"Private - Answer the handle of the receiver's sub view with the specified ID, 
-	or if there is no such child, then answer the result of evaluating the niladic 
-	valuable, exceptionHandler.
-	Note: This method is not only useful for Dialogs, as it can be used any parent-child
-	pair, as long as the child window has a unique identifier (as specified by the hMenu parameter in 
-	the CreateWindowEx() function that created the child window). By default Dolphin allocates all
-	child windows unique id's."
+	"Private - Answer the handle of the receiver's sub view with the specified <integer> ID, or if there is no such child, then answer the result of evaluating the <niladicValuable>, exceptionHandler.
+	Note: This method is not only useful for Dialogs, as it can be used for any parent-child pair, as long as the child window has a unique identifier (specified by the hMenu parameter in the CreateWindowEx() function that created the child window). By default Dolphin allocates all child windows unique id's."
 
-	| hwnd |
-	hwnd := User32 getDlgItem: handle nIDDlgItem: anInteger.
-	^hwnd ifNil: [exceptionHandler value]!
+	^(User32 getDlgItem: handle nIDDlgItem: anInteger) ifNil: [exceptionHandler value]!
 
 isEnabled
 	"Private - Answer whether the receiver is enabled for input"

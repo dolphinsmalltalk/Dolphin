@@ -57,6 +57,26 @@ cardViews
 	views := names collect: [:each | each value].
 	^views asSet!
 
+changeDefaultButton: aView
+	| shellView |
+	currentCard
+		ifNotNil: 
+			[shellView := currentCard topView.
+			currentCard allSubViewsDo: 
+					[:each |
+					each isDefaultButton
+						ifTrue: 
+							[shellView defaultButtonId: each id.
+							^self]]].
+	aView ifNil: [^self].
+	"The new current card has no default button, but we may still want to reset the shell's default if it was on the previous card"
+	shellView := aView topView.
+	(shellView defaultButtonId ~~ 0
+		and: [(aView findItemHandle: shellView defaultButtonId ifAbsent: nil) notNil])
+			ifTrue: 
+				["Default button was indeed on the hidden card"
+				shellView resetDefaultButton]!
+
 currentCard
 	"Answer the current card or nil if there is none"
 
@@ -195,6 +215,8 @@ showCard: aView
 	currentCard notNil ifTrue: [currentCard hide].
 	previousCard := currentCard.
 	currentCard := aView.
+	"We may need to change the default button id if it referred to a button on the hidden card"
+	self changeDefaultButton: previousCard.
 	self
 		trigger: #currentCardChangedFrom:to:
 		with: previousCard
@@ -223,6 +245,7 @@ arrangementOf:!accessing!public! !
 arrangementOf:put:!accessing!public! !
 cards!accessing!private! !
 cardViews!accessing!private! !
+changeDefaultButton:!helpers!private! !
 currentCard!accessing!public! !
 cycleNextCard!operations!public! !
 cyclePreviousCard!operations!public! !
