@@ -400,15 +400,6 @@ updateStatus!helpers!public! !
 
 !ChunkBrowser class methodsFor!
 
-bitmap
-	"Answer the chunk browser toolbar bitmap. This is provided for development convenience only - the bitmap is saved directly in the view resource.
-		self bitmap
-	"
-
-	^(InternalBitmap
-		fromFile: (File composePath: self owningPackage path subPath: 'Resources\ChunkBrowserToolbar.png'))
-			internalize!
-
 chunkTypeSelection
 	self ensureOptionsLoaded.
 	^ChunkTypeSelection!
@@ -521,7 +512,6 @@ stFileTypes
 		add: #('All Files (*.*)' '*.*');
 		yourself! !
 !ChunkBrowser class categoriesForMethods!
-bitmap!constants!development!public! !
 chunkTypeSelection!accessing!public! !
 chunkTypeSelection:!accessing!public! !
 compareMethodsUsingParser!accessing!public! !
