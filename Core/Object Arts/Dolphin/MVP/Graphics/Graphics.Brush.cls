@@ -196,7 +196,7 @@ white
 withStyle: styleFlags color: aColour hatch: hatchObject
 	"Answer a new instance of the receiver with the specified style, colour and hatching attributes. The hatchObject can be either a <Bitmap> or one of the <integer> constants from the Win32 HS_xxx enumeration."
 
-	^self fromLogBrush: (LOGBRUSH new
+	^self fromLogBrush: (LOGBRUSH newBuffer
 				lbStyle: styleFlags;
 				color: aColour;
 				hatch: hatchObject;

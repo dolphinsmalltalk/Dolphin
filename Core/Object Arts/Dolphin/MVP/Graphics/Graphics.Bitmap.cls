@@ -136,11 +136,7 @@ cacheInfo
 canvas
 	"Answer a Canvas to access the bitmap"
 
-	hdc isNil
-		ifTrue: 
-			[hdc := Gdi32 createCompatibleDC: nil.
-			Gdi32 selectObject: hdc hgdiobj: self asParameter].
-	^Canvas withNonOwnedDC: hdc!
+	^Canvas withNonOwnedDC: self hdc!
 
 clearCached
 	"Private - Clear down the receiver's handles and cached info."
@@ -204,68 +200,11 @@ createPalette
 			lp palNumEntries: len.
 			Gdi32 createPalette: lp]!
 
-createWatermarkAlphaPercent: percent backcolor: backcolor
-	| blend combined transparentColor mask rect watermark hasAlpha |
-	transparentColor := self canvas pixelAt: Point.Zero.
-	rect := Point.Zero extent: self extent.
-	"Create the watermark image by fading the source bitmap"
-	watermark := Bitmap displayCompatibleWithExtent: self extent.
-	watermark canvas
-		backcolor: backcolor;
-		erase.
-	blend := BLENDFUNCTION new.
-	hasAlpha := self hasAlpha.
-	blend
-		blendPercentage: percent;
-		usePerPixelAlpha: hasAlpha.
-	self
-		alphaBlendOn: watermark canvas
-		at: Point.Zero
-		extent: self extent
-		from: Point.Zero
-		extent: self extent
-		blend: blend.
-	hasAlpha ifTrue: [^watermark].
-	"If no alpha channel, we must do our own masking, so create a monochrome AND mask bitmap"
-	mask := Bitmap
-				width: self extent x
-				height: self extent y
-				depth: 1.
-	mask canvas
-		backcolor: transparentColor;
-		bitBlt: self canvas
-			rectangle: rect
-			to: Point.Zero
-			rop: SRCCOPY.
-	self free.
-	"Mask out the transparent areas of the image (i.e. those in the transparent colour)"
-	watermark canvas
-		backcolor: Color black;
-		forecolor: Color white;
-		bitBlt: mask canvas
-			rectangle: rect
-			to: Point.Zero
-			rop: SRCAND.
-
-	"Now use the mask to paint the background colour in the transparent areas"
-	combined := Bitmap displayCompatibleWithExtent: self extent.
-	combined canvas
-		backcolor: backcolor;
-		bitBlt: mask canvas
-			rectangle: rect
-			to: Point.Zero
-			rop: MERGECOPY.
-	mask free.
-	"Finally combine background and image"
-	combined canvas
-		bitBlt: watermark canvas
-		rectangle: rect
-		to: Point.Zero
-		rop: SRCPAINT.
-	watermark free.
-	self freeDC.
-	combined freeDC.
-	^combined!
+createWatermarkAlphaPercent: anInteger backcolor: aColor
+	^self class initializer: (WatermarkBitmapInitializer
+				image: self
+				alphaPercent: anInteger
+				backcolor: aColor)!
 
 depth
 	"Answer the color depth (number of bits per pixel) of the receiver.
@@ -375,7 +314,7 @@ freeDC
 	"Private - Free the receiver's cached memory DC.
 	Implementation Note: The hdc is lazily created by #canvas so needs to be tested first."
 
-	hdc isNil ifTrue: [^self].
+	hdc ifNil: [^self].
 	Gdi32 deleteDC: hdc.	"Ignore errors"
 	hdc := nil!
 
@@ -420,6 +359,13 @@ hasAlpha
 
 	#todo. "Work out how to determine this, if indeed it is possible. Otherwise an explicit flag will be needed"
 	^false!
+
+hdc
+	^hdc
+		ifNil: 
+			[hdc := Gdi32 createCompatibleDC: nil.
+			Gdi32 selectObject: hdc hgdiobj: self asParameter.
+			hdc]!
 
 initialize
 	"Private - Initialize the state of the receiver."
@@ -512,6 +458,7 @@ getInfo!accessing!public! !
 getMap3DColors!accessing!public! !
 getPaletteEntries!accessing!public! !
 hasAlpha!public!testing! !
+hdc!accessing!public! !
 initialize!initializing!private! !
 isShared!private!testing! !
 isShared:!accessing!private! !

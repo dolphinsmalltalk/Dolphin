@@ -35,20 +35,9 @@ addToImageList: aWinImageList mask: aColorOrNil
 		extent: aWinImageList extent!
 
 asAlphaBitmap: aPoint
-	"Answer a 32-bpp bitmap (i.e. with Alpha channel) that contains the receiver's
-	image rendered at the specified size."
+	"Answer a 32-bpp RGBA DIBSection (i.e. with Alpha channel) that contains the receiver's image rendered at the specified size."
 
-	| bmp |
-	bmp := DIBSection extent: aPoint depth: 32.
-	"Use the services of an ImageList to get the correct sized icon automagically, and to
-	provide an alpha channel even if the original icon had no more than a simple mask."
-	(self imageManager imageListWithExtent: aPoint)
-		draw: self imageIndex
-		on: bmp canvas
-		at: Point.Zero
-		flags: ImageList.ILD_PRESERVEALPHA.
-	bmp freeDC.
-	^bmp!
+	^DIBSection initializer: (BitmapFromIconInitializer extent: aPoint icon: self)!
 
 asCursor
 	"Icon's can be used as Cursors. The only real difference is that cursors have a specific hotspot other than the top left corner."

@@ -15,7 +15,11 @@ classToTest
 	^ImageView!
 
 image
-	^Bitmap fromFile: 'Resources\IdeaSpaceBackdrop.bmp' usingLocator: FileLocator installRelative! !
+	| bitmap |
+	bitmap := Bitmap fromFile: 'Resources\Beach Ball.bmp' usingLocator: FileLocator installRelative.
+	self assert: bitmap handle notNull.
+	bitmap free.
+	^bitmap! !
 !UI.Tests.ImageViewTest categoriesForMethods!
 classToTest!helpers!private! !
 image!private!Running! !

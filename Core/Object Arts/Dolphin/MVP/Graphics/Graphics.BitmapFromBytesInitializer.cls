@@ -11,6 +11,9 @@ Graphics.BitmapFromBytesInitializer comment: ''!
 !Graphics.BitmapFromBytesInitializer categoriesForClass!Unclassified! !
 !Graphics.BitmapFromBytesInitializer methodsFor!
 
+bytes
+	^bytes!
+
 bytes: anObject
 	bytes := anObject!
 
@@ -20,6 +23,7 @@ isPersistent
 
 	^bytes isIndirection not! !
 !Graphics.BitmapFromBytesInitializer categoriesForMethods!
+bytes!accessing!public! !
 bytes:!initializing!private! !
 isPersistent!public!testing! !
 !

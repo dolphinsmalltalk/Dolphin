@@ -518,13 +518,10 @@ updateCaption
 	self caption: (self hasCurrentCard ifTrue: [self currentCard caption] ifFalse: [self basicCaption])!
 
 watermarkBitmap
-	(Watermark isNil or: [Watermark handle isNull])
-		ifTrue: 
-			[| bitmap |
-			bitmap := Bitmap fromFile: 'Resources\IdeaSpaceBackdrop.bmp'
-						usingLocator: FileLocator installRelative.
-			Watermark := bitmap createWatermarkAlphaPercent: 60 backcolor: backgroundPresenter view backcolor].
-	^Watermark! !
+	^Watermark
+		ifNil: 
+			[Watermark := (self icon asAlphaBitmap: 256 @ 256) createWatermarkAlphaPercent: 60
+						backcolor: backgroundPresenter view backcolor]! !
 !Tools.IdeaSpaceShell categoriesForMethods!
 absorbCard:!private! !
 addIdeaCardTools:!helpers!private! !

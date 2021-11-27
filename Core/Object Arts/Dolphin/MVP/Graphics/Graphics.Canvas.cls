@@ -47,24 +47,26 @@ alphaBlend: aCanvas rectangle: aRectangle to: dstOrigin extent: dstExtent blend:
 		ftn: blendFunction!
 
 alphaBlendBitmap: aBitmap at: dstOrigin extent: dstExtent from: srcOrigin extent: srcExtent blend: blendFunction
-	"Private - Alpha blend the specified rectangle of aBitmap to the specified destination
-	rectangle with the specified blendFunction. The receiver is stretched to
-	fit the destination rectangle. Handles and palette changes required
-	by the bitmap. Answers zero if the operation fails"
-
-	"Create and apply the receiver's palette (if any)"
+	"Private - Alpha blend the specified rectangle of aBitmap to the specified destination rectangle with the specified blendFunction. The receiver is stretched to fit the destination rectangle. Handles any palette changes required by the bitmap. Answers false if the operation fails"
 
 	| hPalette oldPalette answer |
+	"Create and apply the receiver's palette (if any)"
 	hPalette := aBitmap createPalette.
-	hPalette notNil ifTrue: [oldPalette := self palette: hPalette].
-	answer := self
-				alphaBlend: aBitmap canvas
-				rectangle: (Rectangle origin: srcOrigin extent: srcExtent)
-				to: dstOrigin
-				extent: dstExtent
-				blend: blendFunction.
-	hPalette notNil
-		ifTrue: 
+	hPalette ifNotNil: [oldPalette := self palette: hPalette].
+	answer := Gdi32
+				gdiAlphaBlend: self asParameter
+				xoriginDest: dstOrigin x
+				yoriginDest: dstOrigin y
+				wDest: dstExtent x
+				hDest: dstExtent y
+				hdcSrc: aBitmap hdc
+				xoriginSrc: srcOrigin x
+				yoriginSrc: srcOrigin y
+				wSrc: srcExtent x
+				hSrc: srcExtent y
+				ftn: blendFunction.
+	hPalette
+		ifNotNil: 
 			["Tidy up palette manipulation"
 			self selectPalette: oldPalette.
 			Gdi32 deleteObject: hPalette].
@@ -215,12 +217,7 @@ ellipse: aRectangle
 erase
 	"Erase the receiver to the current background colour (not the current brush)."
 
-	self fillRectangle: (RECTL
-				left: 0
-				top: 0
-				right: self width
-				bottom: self height)
-		color: self backcolor!
+	self fillRectangle: (RECTL width: self width height: self height) color: self backcolor!
 
 excludeClipRectangle: aRectangle
 	"Exclude the specified <Rectangle> from the receiver's clip region, this means that any

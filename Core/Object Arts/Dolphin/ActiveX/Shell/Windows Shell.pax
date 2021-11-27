@@ -286,8 +286,8 @@ External.DynamicLinkLibrary subclass: #'OS.ShellLibrary'
 	imports: #(#{OS.ShellConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Graphics.ImageInitializer subclass: #'Graphics.IconFromShellStockInitializer'
-	instanceVariableNames: 'identifier extent'
+Graphics.IconFromSystemInitializer subclass: #'Graphics.IconFromShellStockInitializer'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.ShellConstants private} #{OS.SHSTOCKICONINFO private})
 	classInstanceVariableNames: ''
@@ -331,7 +331,7 @@ shellStock: anInteger
 shellStock: anInteger extent: aPointOrNil
 	"Answer a new instance of receiver representing the shell stock icon with the specified SHSTOCKICONID and extent."
 
-	^self initializer: (IconFromShellStockInitializer identifier: anInteger extent: aPointOrNil)! !
+	^self initializer: (IconFromShellStockInitializer extent: aPointOrNil identifier: anInteger)! !
 !Graphics.Icon class categoriesForMethods!
 shellStock:!instance creation!public! !
 shellStock:extent:!instance creation!public! !

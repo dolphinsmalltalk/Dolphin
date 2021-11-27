@@ -172,8 +172,8 @@ testBackImage
 	self assert: presenter view backImageOffset equals: Point zero.
 	self assert: presenter view backImageAlphaPercent equals: 100.
 	self assert: presenter view backImage isNil.
-	watermark := Bitmap fromFile: 'Resources\IdeaSpaceBackdrop.bmp'
-				usingLocator: FileLocator installRelative.
+	watermark := Bitmap fromFile: 'Resources\Beach Ball.bmp' usingLocator: FileLocator installRelative.
+	self assert: watermark handle notNull.
 	presenter view
 		backImage: watermark;
 		backImageAlphaPercent: 60;

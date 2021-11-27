@@ -42,10 +42,10 @@ testCreateHandleFreesDC
 	model bitmap: bitmap.
 	"force the bitmap to be selected into a dc"
 	bitmap canvas.
-	self deny: bitmap hdc isNil.
+	self assertNotNil: bitmap basicHdc.
 	"SW: note comment in GdiplusBitmap class>>fromBitmap: ... not sure if this should succeed"
 	model createHandle.
-	self assertIsNil: bitmap hdc! !
+	self assertIsNil: bitmap basicHdc! !
 !Graphics.Gdiplus.Tests.BitmapFromBitmapInitializerTest categoriesForMethods!
 gdipCreateBitmapFromHBITMAP:hpal:bitmap:!accessing!public! !
 setUp!public!setup! !

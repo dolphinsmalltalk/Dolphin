@@ -12,26 +12,26 @@ Graphics.DIBSectionFromBlankInitializer comment: ''!
 !Graphics.DIBSectionFromBlankInitializer methodsFor!
 
 createImage: anImage extent: aPoint
-	| info dibSection |
+	| info |
 	info := BITMAPINFOHEADER newBuffer.
 	info
 		biWidth: aPoint x;
 		biHeight: aPoint y negated;
 		biPlanes: 1;
-		biBitCount: depth;
-		biCompression: BI_RGB.	"Top down pixel order"
-	depth > 8
+		biBitCount: depth.
+	"The default compression is BI_RGB (0), so we don't need to set it"
+	^depth > 8
 		ifTrue: 
 			["RGB usage"
-			dibSection := Gdi32
-						createDIBSection: 0
-						pbmi: info
-						iUsage: DIB_RGB_COLORS
-						ppvBits: nil
-						hSection: 0
-						dwOffset: 0]
+			Gdi32
+				createDIBSection: 0
+				pbmi: info
+				iUsage: DIB_RGB_COLORS
+				ppvBits: nil
+				hSection: 0
+				dwOffset: 0]
 		ifFalse: 
-			[| palBitmap hdc bits |
+			[| palBitmap hdc bits dibSection |
 			"Palettized usage"
 			bits := UInt32Bytes new.
 			palBitmap := Gdi32
@@ -51,8 +51,8 @@ createImage: anImage extent: aPoint
 						dwOffset: 0.
 			Gdi32
 				deleteDC: hdc;
-				deleteObject: palBitmap].
-	^dibSection! !
+				deleteObject: palBitmap.
+			dibSection]! !
 !Graphics.DIBSectionFromBlankInitializer categoriesForMethods!
 createImage:extent:!private!realizing/unrealizing! !
 !

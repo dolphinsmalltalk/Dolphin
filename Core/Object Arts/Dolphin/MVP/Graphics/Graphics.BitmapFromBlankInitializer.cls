@@ -11,13 +11,16 @@ Graphics.BitmapFromBlankInitializer comment: ''!
 !Graphics.BitmapFromBlankInitializer categoriesForClass!Unclassified! !
 !Graphics.BitmapFromBlankInitializer methodsFor!
 
+bytes
+	^nil!
+
 createImage: anImage extent: aPoint
 	^Gdi32
 		createBitmap: aPoint x
 		nHeight: aPoint y
 		cPlanes: planes
 		cBitsPerPel: depth
-		lpvBits: nil!
+		lpvBits: self bytes!
 
 planes: anObject
 	planes := anObject!
@@ -32,6 +35,7 @@ printImage: aBitmap on: aWriteStream
 				nextPutAll: ' planes: ';
 				print: planes]! !
 !Graphics.BitmapFromBlankInitializer categoriesForMethods!
+bytes!accessing!public! !
 createImage:extent:!private!realizing/unrealizing! !
 planes:!initializing!private! !
 printImage:on:!printing!private! !

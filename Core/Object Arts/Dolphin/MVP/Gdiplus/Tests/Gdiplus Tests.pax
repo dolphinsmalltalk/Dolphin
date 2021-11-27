@@ -51,7 +51,7 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
-	#(#{Graphics.Bitmap} #hdc)
+	#(#{Graphics.Bitmap} #basicHdc)
 	#(#{Graphics.Bitmap class} #gdipCopyOfIcon:extent:backcolor:)
 	#(#{Graphics.Bitmap class} #gdipCopyOfImageIndex:extent:backcolor:)
 	#(#{Graphics.Tests.BitmapTest} #testAsColorKeyedBitmap)
@@ -307,12 +307,12 @@ XProgramming.SUnit.TestResource subclass: #'Graphics.Gdiplus.Tests.FileResource'
 
 !Graphics.Bitmap methodsFor!
 
-hdc
+basicHdc
 	"Private - Unit test helper"
 
 	^hdc! !
 !Graphics.Bitmap categoriesForMethods!
-hdc!private!test accessing! !
+basicHdc!private!test accessing! !
 !
 
 !Graphics.Bitmap class methodsFor!
@@ -349,8 +349,8 @@ gdipCopyOfImageIndex:extent:backcolor:!instance creation!public! !
 
 testAsColorKeyedBitmap
 	| subject colorKeyed result canvas |
-	subject := Bitmap fromFile: 'Resources\IdeaSpaceBackdrop.bmp'
-				usingLocator: FileLocator installRelative.
+	subject := Bitmap fromFile: 'Resources\Beach Ball.bmp' usingLocator: FileLocator installRelative.
+	self assert: subject handle notNull.
 	colorKeyed := subject asColorKeyedBitmap.
 	result := Bitmap displayCompatibleWithExtent: subject extent.
 	canvas := result canvas.
@@ -359,7 +359,7 @@ testAsColorKeyedBitmap
 	colorKeyed drawOn: canvas.
 	self assert: (canvas pixelAt: Point zero) equals: Color black! !
 !Graphics.Tests.BitmapTest categoriesForMethods!
-testAsColorKeyedBitmap!private!unit tests! !
+testAsColorKeyedBitmap!public!unit tests! !
 !
 
 "End of package definition"!

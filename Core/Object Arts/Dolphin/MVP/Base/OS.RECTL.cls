@@ -137,11 +137,20 @@ left: leftInteger top: topInteger right: rightInteger bottom: bottomInteger
 				sdwordAtOffset: 4 put: topInteger;
 				sdwordAtOffset: 8 put: rightInteger;
 				sdwordAtOffset: 12 put: bottomInteger;
+				yourself)!
+
+width: widthInteger height: heightInteger
+	"Answer a new instance of the receiver with zero origin and the specified width and height."
+
+	^self basicNew bytes: ((ByteArray newFixed: 16)
+				sdwordAtOffset: 8 put: widthInteger;
+				sdwordAtOffset: 12 put: heightInteger;
 				yourself)! !
 !OS.RECTL class categoriesForMethods!
 defineFields!public!template definition! !
 extent:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 left:top:right:bottom:!instance creation!public! !
+width:height:!instance creation!public! !
 !
 

@@ -103,12 +103,12 @@ imageListWithExtent: aPoint
 		ifTrue: [imageList := self buildImageListWithExtent: aPoint].
 	^imageList!
 
-indexOfImage: anImage 
+indexOfImage: anImage
 	"Locates anObject in the receiver and returns the integer index of its image.
 	If anObject has not yet been added to the receiver then it is added automatically.
 	This method is a synonym for #addImage:"
 
-	^images at: anImage ifAbsent: [self addImage: anImage]!
+	^(images lookup: anImage) ifNil: [self addImage: anImage]!
 
 initialize
 	"Private - Initialize the receiver. An ImageManager maintains a Dictionary of

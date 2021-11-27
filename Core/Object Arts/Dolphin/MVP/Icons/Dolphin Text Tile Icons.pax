@@ -39,7 +39,7 @@ Core.Object subclass: #'Graphics.TextTileIcon'
 		'RotationMask' -> 16r3
 	}!
 Graphics.ImageInitializer subclass: #'Graphics.IconFromTextTileIconInitializer'
-	instanceVariableNames: 'textTile extent'
+	instanceVariableNames: 'extent textTile'
 	classVariableNames: ''
 	imports: #(#{Graphics.Gdiplus})
 	classInstanceVariableNames: ''
@@ -53,7 +53,7 @@ fromTextTile: aTextTileIcon
 	^self fromTextTile: aTextTileIcon extent: LargeExtent!
 
 fromTextTile: aTextTileIcon extent: aPoint
-	^self initializer: (IconFromTextTileIconInitializer textTile: aTextTileIcon extent: aPoint)! !
+	^self initializer: (IconFromTextTileIconInitializer extent: aPoint textTile: aTextTileIcon)! !
 !Graphics.Icon class categoriesForMethods!
 fromTextTile:!converting!public! !
 fromTextTile:extent:!converting!public! !

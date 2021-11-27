@@ -13,6 +13,7 @@ package setClassNames: #(
 	#{Graphics.Bitmap}
 	#{Graphics.BitmapFromBlankInitializer}
 	#{Graphics.BitmapFromBytesInitializer}
+	#{Graphics.BitmapFromIconInitializer}
 	#{Graphics.Brush}
 	#{Graphics.Canvas}
 	#{Graphics.Color}
@@ -52,6 +53,7 @@ package setClassNames: #(
 	#{Graphics.SystemColor}
 	#{Graphics.ThemeColor}
 	#{Graphics.VirtualColor}
+	#{Graphics.WatermarkBitmapInitializer}
 	#{OS.AbstractLOGFONT}
 	#{OS.BITMAP}
 	#{OS.BITMAPFILEHEADER}
@@ -364,6 +366,12 @@ Graphics.ImageInitializer subclass: #'Graphics.AbstractBitmapFromBlankInitialize
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Graphics.ImageInitializer subclass: #'Graphics.BitmapFromIconInitializer'
+	instanceVariableNames: 'extent icon'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Graphics.ImageInitializer subclass: #'Graphics.DisplayCompatibleBitmapInitializer'
 	instanceVariableNames: 'extent'
 	classVariableNames: ''
@@ -371,7 +379,7 @@ Graphics.ImageInitializer subclass: #'Graphics.DisplayCompatibleBitmapInitialize
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.ImageInitializer subclass: #'Graphics.IconFromSystemInitializer'
-	instanceVariableNames: 'identifier extent'
+	instanceVariableNames: 'extent identifier'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -390,6 +398,12 @@ Graphics.ImageInitializer subclass: #'Graphics.ImageFromHandleInitializer'
 	classConstants: {}!
 Graphics.ImageInitializer subclass: #'Graphics.ImageFromResourceInitializer'
 	instanceVariableNames: 'identifier module flags extent'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Graphics.ImageInitializer subclass: #'Graphics.WatermarkBitmapInitializer'
+	instanceVariableNames: 'image alphaPercent backcolor'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

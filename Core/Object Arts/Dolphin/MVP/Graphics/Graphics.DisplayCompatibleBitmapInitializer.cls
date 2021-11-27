@@ -13,12 +13,12 @@ Graphics.DisplayCompatibleBitmapInitializer comment: ''!
 
 createImage: anImage extent: aPoint
 	| hBitmap dc |
-	dc := Canvas forDesktop.
+	dc := User32 getDC: nil.
 	hBitmap := Gdi32
-				createCompatibleBitmap: dc asParameter
+				createCompatibleBitmap: dc
 				nWidth: aPoint x
 				nHeight: aPoint y.
-	dc free.
+	User32 releaseDC: dc.
 	^hBitmap!
 
 extent
@@ -29,7 +29,7 @@ extent: aPoint
 	^self!
 
 isPersistent
-	"Answer true if the receiver holds sufficient information such that it can recreate the <Image> it describes exactly as it was across Smalltalk image save/restore. This is generally true."
+	"Answer true if the receiver holds sufficient information such that it can recreate the <Image> it describes exactly as it was across Smalltalk image save/restore."
 
 	^false!
 

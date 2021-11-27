@@ -22,7 +22,7 @@ extent: aPoint
 	extent := aPoint!
 
 isPersistent
-	"Answer true if the receiver holds sufficient information such that it can recreate the <Image> it describes exactly as it was across Smalltalk image save/restore. This is generally true."
+	"Answer true if the receiver holds sufficient information such that it can recreate the <Image> it describes exactly as it was across Smalltalk image save/restore. This is generally false for blank bitmaps as the expectation is that they will be painted on-the-fly."
 
 	^false!
 

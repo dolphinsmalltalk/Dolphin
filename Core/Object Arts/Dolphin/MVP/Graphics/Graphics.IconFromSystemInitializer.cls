@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.ImageInitializer subclass: #'Graphics.IconFromSystemInitializer'
-	instanceVariableNames: 'identifier extent'
+	instanceVariableNames: 'extent identifier'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -74,20 +74,19 @@ printImage:on:!printing!private! !
 
 !Graphics.IconFromSystemInitializer class methodsFor!
 
-identifier: anInteger
+extent: aPoint identifier: anInteger
 	<primitive: 157>
 	^self new
+		extent: aPoint;
 		identifier: anInteger;
 		yourself!
 
-identifier: anInteger extent: aPoint
-	<primitive: 157>
+identifier: anInteger
 	^self new
 		identifier: anInteger;
-		extent: aPoint;
 		yourself! !
 !Graphics.IconFromSystemInitializer class categoriesForMethods!
+extent:identifier:!instance creation!public! !
 identifier:!instance creation!public! !
-identifier:extent:!instance creation!public! !
 !
 

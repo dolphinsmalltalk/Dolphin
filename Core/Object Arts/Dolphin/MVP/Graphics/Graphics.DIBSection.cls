@@ -86,6 +86,11 @@ getColorTable
 	quads length: size.
 	^quads!
 
+hasAlpha
+	"Answer whether the receiver has an alpha channel. Assume that 32-bit color depth bitmaps have alpha."
+
+	^self depth >= 32!
+
 imageBits
 	"Answer the handle of the receiver's image bits"
 
@@ -125,6 +130,7 @@ copyToGlobalHeap!accessing!private! !
 depth!accessing!public! !
 errorInappropriateColorTable:!exceptions!public! !
 getColorTable!accessing!public! !
+hasAlpha!public!testing! !
 imageBits!accessing!public! !
 imageBytes!copying!public! !
 setColorTable:!accessing!public! !

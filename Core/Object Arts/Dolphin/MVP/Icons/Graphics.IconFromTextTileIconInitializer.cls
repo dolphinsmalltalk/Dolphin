@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Graphics.ImageInitializer subclass: #'Graphics.IconFromTextTileIconInitializer'
-	instanceVariableNames: 'textTile extent'
+	instanceVariableNames: 'extent textTile'
 	classVariableNames: ''
 	imports: #(#{Graphics.Gdiplus})
 	classInstanceVariableNames: ''
@@ -66,13 +66,13 @@ textTile:!initializing!private! !
 
 !Graphics.IconFromTextTileIconInitializer class methodsFor!
 
-textTile: aTextTileIcon extent: aPoint
+extent: aPoint textTile: aTextTileIcon
 	<primitive: 157>
 	^self new
-		textTile: aTextTileIcon;
 		extent: aPoint;
+		textTile: aTextTileIcon;
 		yourself! !
 !Graphics.IconFromTextTileIconInitializer class categoriesForMethods!
-textTile:extent:!public! !
+extent:textTile:!public! !
 !
 

@@ -104,23 +104,9 @@ applyTransforms: aGdiplusGraphics rect: aRectangle
 	matrix free!
 
 asAlphaBitmap: aPoint
-	"Answer a 32-bpp RGBA DIBSection (i.e. with Alpha channel) that contains the receiver's
-	image rendered at the specified size."
+	"Answer a 32-bpp RGBA DIBSection (i.e. with Alpha channel) that contains the receiver's image rendered at the specified size."
 
-	| bmp |
-	bmp := DIBSection
-				width: aPoint x
-				height: aPoint y
-				depth: 32.
-	"Use the services of an ImageList to get the correct sized icon automagically, and to
-	provide an alpha channel even if the original icon had no more than a simple mask."
-	(self imageManager imageListWithExtent: aPoint)
-		draw: self imageIndex
-		on: bmp canvas
-		at: Point.Zero
-		flags: ImageList.ILD_PRESERVEALPHA.
-	bmp freeDC.
-	^bmp!
+	^DIBSection initializer: (BitmapFromIconInitializer extent: aPoint icon: self)!
 
 asBitmap
 	^self bitmapWithExtent: self extent!
@@ -149,7 +135,7 @@ asParameter
 asSmallIcon
 	"Answer a 'small' (16x16) `Icon` equivalent of the receiver."
 
-	^Icon initializer: (IconFromTextTileIconInitializer textTile: self extent: Icon.SmallExtent)!
+	^Icon initializer: (IconFromTextTileIconInitializer extent: Icon.SmallExtent textTile: self)!
 
 bitmapWithExtent: aPoint
 	| bitmap graphics |

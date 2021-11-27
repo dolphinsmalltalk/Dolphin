@@ -102,3 +102,13 @@ isSelfEvaluatingImage:!enquiries!private! !
 printImage:on:!printing!private! !
 !
 
+!Graphics.ImageInitializer class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^Image icon! !
+!Graphics.ImageInitializer class categoriesForMethods!
+icon!constants!public! !
+!
+
