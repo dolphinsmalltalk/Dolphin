@@ -269,6 +269,7 @@ fromFile: aString usingLocator: aFileLocator
 
 fromHandle: aHandle
 	^(self initializer: (ImageFromHandleInitializer handle: aHandle))
+		ownsHandle: false;
 		handle: aHandle;
 		yourself!
 

@@ -20,6 +20,20 @@ imageFile
 subjectClass
 	^Cursor!
 
+testFromHandle
+	| subject |
+	subject := Cursor fromHandle: Cursor cross handle.
+	self assert: subject handle equals: Cursor cross handle.
+	self deny: subject ownsHandle!
+
+testFromOwnedHandle
+	| subject |
+	subject := Cursor fromOwnedHandle: Cursor cross copyHandle.
+	self deny: subject handle equals: Cursor cross handle.
+	self assert: subject ownsHandle.
+	self assert: subject isFinalizable.
+	subject free!
+
 testFromResource
 	| cursor1 cursor2 |
 	cursor1 := Cursor fromId: 'hsplit' in: VM.
@@ -83,6 +97,8 @@ testStbConvertFromVersion3_system
 expectedImageExtent!constants!private! !
 imageFile!constants!private! !
 subjectClass!constants!private! !
+testFromHandle!public! !
+testFromOwnedHandle!public! !
 testFromResource!public! !
 testFromSystemId!public! !
 testStbConvertFromVersion3_file!public! !
