@@ -283,14 +283,11 @@ Kernel.StLiteralNode subclass: #'Kernel.StLiteralValueNode'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StLiteralNode subclass: #'Kernel.StQualifiedReferenceNode'
-	instanceVariableNames: 'pathString flags private start stop'
+	instanceVariableNames: 'pathString flags private start stop binding'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'MetaMask' -> 16r1.
-		'PrivateMask' -> 16r2
-	}!
+	classConstants: {}!
 Kernel.StToken subclass: #'Kernel.StAssignmentToken'
 	instanceVariableNames: ''
 	classVariableNames: ''

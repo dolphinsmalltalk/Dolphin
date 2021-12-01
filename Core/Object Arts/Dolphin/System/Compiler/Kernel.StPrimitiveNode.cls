@@ -19,24 +19,33 @@ Kernel.StPrimitiveNode comment: ''!
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitPrimitiveNode: self!
 
+childrenDo: aMonadicValuable
+	errorTemp ifNotNil: [aMonadicValuable value: errorTemp]!
+
 errorTemp
 	^errorTemp!
 
-errorTemp: anObject
-	errorTemp := anObject!
+errorTemp: aStTempDeclNode
+	errorTemp := aStTempDeclNode.
+	aStTempDeclNode parent: self!
 
 primitiveIndex
 	^primitiveIndex!
 
 primitiveIndex: anInteger 
-	primitiveIndex := anInteger! !
+	primitiveIndex := anInteger!
+
+selector
+	^errorTemp ifNil: [#primitive:] ifNotNil: [#primitive:error:]! !
 !Kernel.StPrimitiveNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
+childrenDo:!accessing!public! !
 errorTemp!accessing!public! !
 errorTemp:!accessing!private! !
 primitiveIndex!accessing!public! !
 primitiveIndex:!accessing!private! !
+selector!accessing!public! !
 !
 
 !Kernel.StPrimitiveNode class methodsFor!

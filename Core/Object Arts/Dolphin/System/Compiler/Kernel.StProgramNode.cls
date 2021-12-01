@@ -261,6 +261,9 @@ isSuperVariable
 
 	^false!
 
+isTag
+	^false!
+
 isUsed
 	"Answer true if this node could be used as part of another expression. For example, you could use the 
 	result of this node as a receiver of a message, an argument, the right part of an assignment, or the 
@@ -283,6 +286,9 @@ listCharacter
 
 literalCharacter
 	^$#!
+
+methodClass
+	^self methodNode methodClass!
 
 methodComments
 	^self comments!
@@ -468,12 +474,14 @@ isSelfVariable!public!testing! !
 isSequence!public!testing! !
 isSpecialVariable!public!testing! !
 isSuperVariable!public!testing! !
+isTag!public!testing! !
 isUsed!public!testing! !
 isValue!public!testing! !
 isVariable!public!testing! !
 lastIsReturn!public!testing! !
 listCharacter!meta variable/accessing!public! !
 literalCharacter!meta variable/accessing!public! !
+methodClass!accessing!public! !
 methodComments!accessing!public! !
 methodNode!accessing!public! !
 newSource!accessing!public! !

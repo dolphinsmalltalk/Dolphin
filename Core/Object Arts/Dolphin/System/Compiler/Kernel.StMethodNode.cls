@@ -25,7 +25,7 @@ Instance Variables:
 	| myArgs count hisArgs |
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
-	(self selector = anObject selector and: [self body = anObject body]) ifFalse: [^false].
+	(self selector = anObject selector and: [body = anObject body]) ifFalse: [^false].
 	count := (myArgs := self arguments) size.
 	count == (hisArgs := anObject arguments) size ifFalse: [^false].
 	1 to: count do: [:i | (myArgs at: i) = (hisArgs at: i) ifFalse: [^false]].
@@ -76,8 +76,9 @@ buildSelector
 	selectorParts do: [:each | selectorStream nextPutAll: each value].
 	^selectorStream contents asSymbol!
 
-childrenDo: aMonadicValuable 
-	self arguments do: aMonadicValuable.
+childrenDo: aMonadicValuable
+	arguments do: aMonadicValuable.
+	tags ifNotNil: [tags do: aMonadicValuable].
 	aMonadicValuable value: self body!
 
 defines: aName 
@@ -152,6 +153,7 @@ outer
 postCopy
 	super postCopy.
 	self body: body copy.
+	tags ifNotNil: [self tags: (tags collect: [:each | each copy])].
 	self arguments: (arguments collect: [:each | each copy]).
 	^self!
 

@@ -11,10 +11,10 @@ Kernel.StLiteralValueNode comment: ''!
 !Kernel.StLiteralValueNode categoriesForClass!Unclassified! !
 !Kernel.StLiteralValueNode methodsFor!
 
-= anObject 
-	^super = anObject and: 
-			[self value = anObject value 
-				and: [self value species == anObject value species]]!
+= anObject
+	^self == anObject or: 
+			[self class == anObject class
+				and: [self value = anObject value and: [self value species == anObject value species]]]!
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitLiteralNode: self!

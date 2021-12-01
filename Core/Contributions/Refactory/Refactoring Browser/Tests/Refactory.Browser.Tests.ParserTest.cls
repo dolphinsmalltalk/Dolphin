@@ -197,16 +197,6 @@ testArray
 			self assert: tree right equals: each first size]]
 			ensure: [RBParser allowEmptyStatements: allowEmpty]!
 
-testBestNodeFor
-	| tree |
-	tree := self treeWithEverything.
-	tree nodesDo: 
-			[:each | 
-			each sourceInterval notEmpty 
-				ifTrue: 
-					[self assert: ((tree bestNodeFor: each sourceInterval) = each 
-								or: [each parent isCascade and: [each parent messages last = each]])]]!
-
 testBlockRewrites
 	| rewriter tree |
 	tree := self parseMethod: 'method: asdf
@@ -238,13 +228,6 @@ testComparingTrees
 	class := BasicLintRuleTestData class.
 	class selectors
 		do: [:each | self compare: (class parseTreeFor: each) to: (class parseTreeFor: each)]!
-
-testCopy
-	| tree copy |
-	tree := self treeWithEverything.
-	copy := tree copy.
-	self compare: tree to: copy.
-	self verifyTree: copy isDeepCopyOf: tree!
 
 testCreationProtocol
 	| messageNode |
@@ -327,7 +310,7 @@ testFormatter
 	class selectors do: 
 			[:each |
 			self compare: (class parseTreeFor: each)
-				to: (self parseMethod: (class parseTreeFor: each) printString)]!
+				to: (self parseMethod: (class parseTreeFor: each) printString in: class)]!
 
 testIntervals
 	| tree |
@@ -422,12 +405,6 @@ testMultimatch
 				executeTree: (self parseExpression: 'self at: (bar at: 3)');
 				tree)
 		to: (self parseExpression: 'self at: (bar foo: 3)')!
-
-testNodesDo
-	| size |
-	size := 0.
-	self treeWithEverything nodesDo: [:e | size := size + 1].
-	self assert: size equals: 27!
 
 testNumberParsing
 	2 to: 32
@@ -743,11 +720,9 @@ parseError:!private! !
 setUp!accessing!public! !
 testAllSearches!public!unit tests! !
 testArray!public!unit tests! !
-testBestNodeFor!public! !
 testBlockRewrites!public!unit tests! !
 testCascadeReplacement!public!unit tests! !
 testComparingTrees!public!unit tests! !
-testCopy!public!unit tests! !
 testCreationProtocol!public!unit tests! !
 testEquality!public!unit tests! !
 testEqualToWithMappingAfterRewrite!public!unit tests! !
@@ -763,7 +738,6 @@ testLiterals!public!unit tests! !
 testMethodPatterns!public!unit tests! !
 testModifying!public!unit tests! !
 testMultimatch!public!unit tests! !
-testNodesDo!public!unit tests! !
 testNumberParsing!public!unit tests! !
 testParserErrors!public!unit tests! !
 testParsingLiteralMessages!public!unit tests! !
@@ -783,6 +757,6 @@ testTokens!public!unit tests! !
 treeWithEverything!private! !
 verifyParser!long running!public! !
 verifySelector:inClass:!private! !
-verifyTree:isDeepCopyOf:!private! !
+verifyTree:isDeepCopyOf:!helpers!private! !
 !
 

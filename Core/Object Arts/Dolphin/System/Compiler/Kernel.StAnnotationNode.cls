@@ -25,23 +25,37 @@ argumentCount
 arguments
 	^arguments!
 
+arguments: aSequencedReadableCollection
+	arguments := aSequencedReadableCollection asArray.
+	arguments do: [:each | each parent: self]!
+
+childrenDo: aMonadicValuable
+	arguments do: aMonadicValuable!
+
 isAnnotation
 	^true!
+
+postCopy
+	super postCopy.
+	self arguments: (arguments collect: [:each | each copy]).
+	^self!
 
 selector
 	^selector!
 
 setSelector: aSymbol arguments: anArray
 	selector := aSymbol asSymbol.
-	arguments := anArray asArray.
-	arguments do: [:each | each parent: self].
+	self arguments: anArray.
 	^self! !
 !Kernel.StAnnotationNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
 argumentCount!accessing!public! !
 arguments!accessing!public! !
+arguments:!accessing!public! !
+childrenDo:!accessing!public! !
 isAnnotation!public!testing! !
+postCopy!copying!public! !
 selector!accessing!public! !
 setSelector:arguments:!initializing!private! !
 !

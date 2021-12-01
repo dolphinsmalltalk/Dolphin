@@ -18,6 +18,12 @@ isAnnotation
 isExternalCall
 	^false!
 
+isTag
+	^true!
+
+selector
+	^self subclassResponsibility!
+
 start
 	^start!
 
@@ -32,6 +38,8 @@ stop: anInteger
 !Kernel.StTagNode categoriesForMethods!
 isAnnotation!public!testing! !
 isExternalCall!public!testing! !
+isTag!public!testing! !
+selector!accessing!public! !
 start!accessing!public! !
 start:!accessing!private! !
 stop!accessing!public! !

@@ -11,12 +11,13 @@ Kernel.StLiteralArrayNode comment: ''!
 !Kernel.StLiteralArrayNode categoriesForClass!Unclassified! !
 !Kernel.StLiteralArrayNode methodsFor!
 
-= anObject 
-	super = anObject ifFalse: [^false].
+= anObject
+	| hisContents |
+	self == anObject ifTrue: [^true].
+	self class == anObject class ifFalse: [^false].
 	self isForByteArray = anObject isForByteArray ifFalse: [^false].
-	self contents size = anObject contents size ifFalse: [^false].
-	1 to: self contents size
-		do: [:i | (self contents at: i) = (anObject contents at: i) ifFalse: [^false]].
+	contents size = (hisContents := anObject contents) size ifFalse: [^false].
+	1 to: contents size do: [:i | (contents at: i) = (hisContents at: i) ifFalse: [^false]].
 	^true!
 
 acceptVisitor: aProgramNodeVisitor

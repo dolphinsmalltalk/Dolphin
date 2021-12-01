@@ -36,6 +36,10 @@ callingConvention
 callingConvention: anInteger 
 	callingConvention := anInteger!
 
+childrenDo: aMonadicValuable
+	aMonadicValuable value: returnType.
+	argumentTypes do: aMonadicValuable!
+
 initialize
 	flags := 0.
 	argumentTypes := #().!
@@ -61,6 +65,12 @@ nameOrOrdinal
 nameOrOrdinal: anObject
 	nameOrOrdinal := anObject!
 
+postCopy
+	super postCopy.
+	self returnType: returnType copy.
+	self argumentTypes: (argumentTypes collect: [:each | each copy]).
+	^self!
+
 primitiveIndex
 	^self isVirtual ifTrue: [80] ifFalse: [self isOverlapped ifTrue: [48] ifFalse: [96]]!
 
@@ -69,7 +79,10 @@ returnType
 
 returnType: aStExternalArgTypeNode
 	returnType := aStExternalArgTypeNode.
-	aStExternalArgTypeNode parent: self! !
+	aStExternalArgTypeNode parent: self!
+
+selector
+	^FunctionDescriptor nameOfConvention: callingConvention! !
 !Kernel.StExternalCallNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
@@ -77,6 +90,7 @@ argumentTypes!accessing!public! !
 argumentTypes:!accessing!public! !
 callingConvention!accessing!public! !
 callingConvention:!accessing!public! !
+childrenDo:!accessing!public! !
 initialize!initializing!public! !
 isExternalCall!public!testing! !
 isOverlapped!public!testing! !
@@ -85,9 +99,11 @@ isVirtual!public!testing! !
 isVirtual:!accessing!public! !
 nameOrOrdinal!accessing!public! !
 nameOrOrdinal:!accessing!public! !
+postCopy!copying!public! !
 primitiveIndex!accessing!public! !
 returnType!accessing!public! !
 returnType:!accessing!public! !
+selector!accessing!public! !
 !
 
 !Kernel.StExternalCallNode class methodsFor!

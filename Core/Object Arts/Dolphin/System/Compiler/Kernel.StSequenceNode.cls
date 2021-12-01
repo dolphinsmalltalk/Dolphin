@@ -23,15 +23,15 @@ Instance Variables:
 = anObject
 	"Can't send = to the temporaries and statements collection since they might change from arrays to OCs"
 
-	| count myChildren hisChildren |
+	| count hisChildren |
 	self == anObject ifTrue: [^true].
 	self class == anObject class ifFalse: [^false].
-	count := (myChildren := self temporaries) size.
+	count := temporaries size.
 	count == (hisChildren := anObject temporaries) size ifFalse: [^false].
-	1 to: count do: [:i | (myChildren at: i) = (hisChildren at: i) ifFalse: [^false]].
-	count := (myChildren := self statements) size.
+	1 to: count do: [:i | (temporaries at: i) = (hisChildren at: i) ifFalse: [^false]].
+	count := statements size.
 	count == (hisChildren := anObject statements) size ifFalse: [^false].
-	1 to: count do: [:i | (myChildren at: i) = (hisChildren at: i) ifFalse: [^false]].
+	1 to: count do: [:i | (statements at: i) = (hisChildren at: i) ifFalse: [^false]].
 	^true!
 
 acceptVisitor: aProgramNodeVisitor

@@ -29,7 +29,7 @@ visitArgumentNodes: aNodeCollection
 	^aNodeCollection do: [:each | self visitNode: each]!
 
 visitArrayNode: anStBraceArrayNode
-	anStBraceArrayNode children do: [:each | self visitNode: each]!
+	anStBraceArrayNode statements do: [:each | self visitNode: each]!
 
 visitAssignmentNode: anAssignmentNode
 	self visitNode: anAssignmentNode variable.

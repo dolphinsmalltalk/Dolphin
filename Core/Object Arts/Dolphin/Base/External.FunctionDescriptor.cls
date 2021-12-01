@@ -6,7 +6,7 @@ Core.Object variableSubclass: #'External.FunctionDescriptor'
 	imports: #(#{External.ExtCallArgTypes})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'CallingConventions' -> #('stdcall:' 'cdecl:' 'fastcall:' 'thiscall:').
+		'CallingConventions' -> #(#stdcall: #cdecl: #fastcall: #thiscall:).
 		'ReferenceTypes' -> #(16r1 16rF 16rC 16r1 16r1 #WORD #SWORD #DWORD #SDWORD #DWORD #DWORD #DOUBLE 16rF 16rF #FLOAT nil #HRESULT 16rF #ULARGE_INTEGER #LARGE_INTEGER 16rF 16rF #'OS.COM.VARIANT' #'OS.COM.DATE' #'OS.COM.VARIANT_BOOL' #REFGUID #UINT_PTR #INT_PTR #SDWORD #SDWORD nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 16r35 16r35 16r35 nil nil nil nil nil nil nil nil nil nil nil).
 		'RetClassIndex' -> 16r4.
 		'RetTypeMask' -> 16r3F.
@@ -340,7 +340,7 @@ initialize
 initializeCallingConventions
 	"Private - All possible calling conventions (not all are supported)"
 
-	self addClassConstant: 'CallingConventions' value: #('stdcall:' 'cdecl:' 'fastcall:' 'thiscall:')!
+	self addClassConstant: 'CallingConventions' value: #(#stdcall: #cdecl: #fastcall: #thiscall:)!
 
 initializeExternalRefTypes
 	"Private - Reference types are the types to be used for the value type with one level of indirection, where the name

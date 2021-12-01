@@ -1,14 +1,11 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.StLiteralNode subclass: #'Kernel.StQualifiedReferenceNode'
-	instanceVariableNames: 'pathString flags private start stop'
+	instanceVariableNames: 'pathString flags private start stop binding'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {
-		'MetaMask' -> 16r1.
-		'PrivateMask' -> 16r2
-	}!
+	classConstants: {}!
 Kernel.StQualifiedReferenceNode guid: (Core.GUID fromString: '{48916d12-a942-4b84-b786-71ba3d982f2e}')!
 Kernel.StQualifiedReferenceNode comment: '`StQualifiedReferenceNode` is a kind of `StLiteralNode` to represent qualified reference literals.
 
@@ -29,26 +26,34 @@ acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitQualifiedReferenceNode: self!
 
 isMeta
-	^flags allMask: MetaMask!
+	^flags allMask: BindingReference.MetaMask!
 
 isMeta: aBoolean
-	flags := flags mask: MetaMask set: aBoolean!
+	flags := flags mask: BindingReference.MetaMask set: aBoolean!
 
 isPrivate
-	^flags allMask: PrivateMask!
+	^flags allMask: BindingReference.PrivateMask!
 
 isPrivate: aBoolean
-	flags := flags mask: PrivateMask set: aBoolean!
+	flags := flags mask: BindingReference.PrivateMask set: aBoolean!
 
 isQualifiedReference
 	^true!
+
+isRelative
+	^flags allMask: BindingReference.RelativeMask!
+
+isRelative: aBoolean
+	flags := flags mask: BindingReference.RelativeMask set: aBoolean!
 
 pathString
 	^pathString!
 
 pathString: aString start: startInteger
 	pathString := aString.
-	flags := 0.
+	flags := ((aString at: 1) == $_ or: [(BindingReference isQualifiedName: aString) not])
+				ifTrue: [BindingReference.RelativeMask]
+				ifFalse: [0].
 	start := startInteger.
 	stop := -1.
 	^self!
@@ -65,7 +70,7 @@ stopWithoutParentheses
 value
 	^self valueClass
 		pathString: self pathString
-		scope: nil
+		scope: self methodClass
 		flags: flags!
 
 valueClass
@@ -78,6 +83,8 @@ isMeta:!accessing!public!testing! !
 isPrivate!public!testing! !
 isPrivate:!accessing!public!testing! !
 isQualifiedReference!public!testing! !
+isRelative!public!testing! !
+isRelative:!accessing!public!testing! !
 pathString!accessing!public! !
 pathString:start:!initializing!private! !
 startWithoutParentheses!accessing!public! !
