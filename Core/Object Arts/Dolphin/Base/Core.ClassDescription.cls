@@ -480,6 +480,12 @@ fullyQualifiedReference
 
 	^self subclassResponsibility!
 
+globalScope
+	"Answer the Namespace to use as the binding root for fully-qualified names in the receiver."
+
+	^Smalltalk
+!
+
 hasCompilationFailures
 	"Answer whether any of the methods in the receiver or any of its subclasses have previously failed to compile."
 
@@ -911,7 +917,11 @@ setInstanceVariables: aCollection
 	"Private - Set the instance variable string of the receiver to be the list
 	of names in aCollection, separated by spaces."
 
-	instanceVariables := aCollection isEmpty ifFalse: [aCollection asArray]!
+	instanceVariables := aCollection isEmpty
+				ifFalse: 
+					[aCollection asArray
+						isImmutable: true;
+						yourself]!
 
 setShapeFlags: anIntegerMask to: aBoolean
 	"Private - Set/Reset the receiver's shape/structure flags (as defined by anIntegerMask)
@@ -1082,6 +1092,7 @@ fullBindingFor:!binding!public! !
 fullBindingFor:environment:!binding!public! !
 fullName!accessing!namespaces!public! !
 fullyQualifiedReference!accessing!public! !
+globalScope!accessing!public! !
 hasCompilationFailures!public!testing! !
 hierarchyBindingFor:!bindings!public! !
 importedNamespacesDo:!pool variables!public! !

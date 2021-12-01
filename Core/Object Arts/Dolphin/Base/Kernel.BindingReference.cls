@@ -51,19 +51,16 @@ baseClass
 	^nil
 !
 
-bind
-	| scope |
-	scope := self bindingScope.
+bind: aBindingScope
 	self
 		setGeneration: Generation;
-		setBinding: ((scope localScope resolveBindingPath: self path environment: scope environment)
-					ifNil: [Undeclared])!
+		setBinding: ((aBindingScope localScope resolveBindingPath: self path
+					environment: aBindingScope environment) ifNil: [Undeclared])!
 
 bindingOrNil
 	"Answer the <VariableBinding> referenced by the receiver (i.e. resolve the variable), or nil if there is no such variable."
 
-	(binding isNil or: [generation ~~ Generation])
-		ifTrue: [self bind].
+	(binding isNil or: [generation ~~ Generation]) ifTrue: [self bind: self bindingScope].
 	^binding targetVariable!
 
 bindingScope
@@ -211,7 +208,7 @@ valueOrNil
 =!comparing!public! !
 asString!converting!public! !
 baseClass!accessing!public! !
-bind!operations!private! !
+bind:!operations!private! !
 bindingOrNil!accessing!public! !
 bindingScope!accessing!public! !
 displayOn:!displaying!public! !

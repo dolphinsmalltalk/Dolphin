@@ -393,7 +393,7 @@ Refactory.Browser.RenameClassRefactoring subclass: #'Tools.RenameNamespacedClass
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {
-		'RewriteTracing' -> true
+		'RewriteTracing' -> false
 	}!
 Refactory.Browser.RenameMethodRefactoring subclass: #'Tools.RenameMethodReferencesRefactoring'
 	instanceVariableNames: ''
@@ -464,9 +464,10 @@ directlyDefinesVariable: aVariableName
 	^(self directlyDefinesClassVariable: aVariableName) 
 		or: [self directlyDefinesInstanceVariable: aVariableName]!
 
-hierarchyDefinesVariable: aString 
+hierarchyDefinesVariable: aString
 	(self definesVariable: aString) ifTrue: [^true].
-	^self allSubclasses anySatisfy: [:each | each directlyDefinesVariable: aString]! !
+	self allSubclassesBreadthFirstDo: [:each | (each directlyDefinesVariable: aString) ifTrue: [^true]].
+	^false! !
 !Core.ClassDescription categoriesForMethods!
 definesClassVariable:!public!testing! !
 definesInstanceVariable:!public!testing! !

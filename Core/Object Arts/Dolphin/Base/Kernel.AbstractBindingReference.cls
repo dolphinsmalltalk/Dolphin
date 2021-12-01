@@ -163,6 +163,11 @@ ifDefinedDo: aMonadicValuable elseDo: aNiladicValuable
 
 	^self ifDefined: aMonadicValuable ifNotDefined: aNiladicValuable!
 
+ifNotDefined: aNiladicValuable
+	"Answer the the value of the receiver's binding, or the result of evaluating the <niladicValuable> argument if the receiver is not defined."
+
+	^self bindingOrNil ifNil: [aNiladicValuable value] ifNotNil: [:var | self valueOfBinding: var]!
+
 instance
 	"Answer a `BindingReference` that resolves to the value of the binding with the receiver's path."
 
@@ -339,6 +344,7 @@ ifDefined:!evaluating!public! !
 ifDefined:ifNotDefined:!evaluating!public! !
 ifDefinedDo:!evaluating!public! !
 ifDefinedDo:elseDo:!evaluating!public! !
+ifNotDefined:!evaluating!public! !
 instance!converting!public! !
 isAbsolute!public!testing! !
 isDefined!public!testing! !

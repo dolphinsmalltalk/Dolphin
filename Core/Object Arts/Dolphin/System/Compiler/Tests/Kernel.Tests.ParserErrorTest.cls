@@ -41,7 +41,7 @@ parseExpression: aString in: aClass
 	^errors isEmpty
 		ifTrue: 
 			[semanticAnalyserClass
-				analyzeParseTree: ast
+				analyseParseTree: ast
 				for: aClass
 				environment: Smalltalk
 				context: nil
@@ -61,12 +61,9 @@ parseMethod: aString in: aClass
 	^syntaxErrors isEmpty
 		ifTrue: 
 			[semanticAnalyserClass
-				analyzeParseTree: ast
+				analyseParseTree: ast
 				for: aClass
-				environment: Smalltalk
-				context: nil
-				pools: #()
-				onError: nil]
+				environment: Smalltalk]
 		ifFalse: [ast]!
 
 parserClass

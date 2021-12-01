@@ -120,14 +120,8 @@ owningPackage: aPackageOrNil
 refersTo: anObject asLiteralOf: aCompiledMethod
 	^(anObject == environment and: 
 			["Not useful to show every variable in a Namespace as an implicit reference to it, nor a class hierarchy's references to its own class variables."
-			self isClassVariable and: [(aCompiledMethod methodClass includesBehavior: environment) not]])
-		or: [self = anObject]!
-
-refersToLiteral: anObject from: aCompiledMethod
-	^(anObject == environment and: 
-			["Not useful to show every variable in Smalltalk as an implicit reference to it. Probably true of all Namespaces except pools and classes."
-			environment ~~ Smalltalk])
-		or: [self = anObject]!
+			self isClassVariable and: [(aCompiledMethod methodClass instanceClass includesBehavior: environment) not]])
+		or: [self = anObject or: [value == anObject and: [self isClassBinding]]]!
 
 setFlags: anInteger
 	<mutable>
@@ -159,7 +153,6 @@ key:value:!initializing!private! !
 owningPackage!accessing!development!public! !
 owningPackage:!accessing!development!public! !
 refersTo:asLiteralOf:!private!testing! !
-refersToLiteral:from:!private!testing! !
 setFlags:!accessing!private! !
 targetVariable!accessing!public! !
 !

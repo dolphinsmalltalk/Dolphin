@@ -62,7 +62,7 @@ autoParse
 	ast := self parseTree.
 	methodNode := ast methodNode.
 	BrowserSemanticAnalyser
-		analyzeParseTree: ast
+		analyseParseTree: ast
 		for: methodNode methodClass
 		environment: methodNode environment
 		context: self evaluationContext
@@ -468,7 +468,7 @@ variableClassification: anStVariableNode
 	context := self parseContext.
 	methodClass := context methodClass.
 	(methodClass allInstVarNames includes: anStVariableNode name) ifTrue: [^#instance].
-	(methodClass bindingFor: anStVariableNode name) ifNotNil: [^#class].
+	(methodClass hierarchyBindingFor: anStVariableNode name) ifNotNil: [^#class].
 	(context environment fullBindingFor: anStVariableNode name)
 		ifNotNil: 
 			[:var |

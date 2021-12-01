@@ -770,7 +770,7 @@ resolveLocallyImportedBinding: aBindingContext
 resolvePathString: aString environment: aNamespace
 	(BindingReference isQualifiedName: aString)
 		ifFalse: [^self resolveUnqualifiedName: aString environment: aNamespace].
-	^self resolveBindingPath: ($. split: aString) environment: aNamespace!
+	^self resolveBindingPath: (BindingReference.PathSeparator split: aString) environment: aNamespace!
 
 resolvePublicBinding: aBindingContext
 	"Private - Resolve a binding with public visibility in the receiver's hierarchy, or among its local imports.

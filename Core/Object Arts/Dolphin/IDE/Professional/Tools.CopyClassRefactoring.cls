@@ -18,9 +18,9 @@ className: aName newName: aNewName superclass: aClass
 				ifTrue: [aNewName]
 				ifFalse: 
 					[| parts |
-					parts := $. split: aName.
+					parts := BindingReference.PathSeparator split: aName.
 					parts at: parts size put: aNewName.
-					$. join: parts])
+					BindingReference.PathSeparator join: parts])
 					asSymbol.
 	class := self model classNamed: className.
 	superclass := self classObjectFor: aClass.

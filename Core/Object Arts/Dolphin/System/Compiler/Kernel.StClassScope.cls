@@ -11,6 +11,9 @@ Kernel.StClassScope comment: ''!
 !Kernel.StClassScope categoriesForClass!Kernel-Objects! !
 !Kernel.StClassScope methodsFor!
 
+classScope
+	^self!
+
 environment
 	^environment!
 
@@ -59,6 +62,7 @@ superVariable
 						scope: self;
 						yourself]! !
 !Kernel.StClassScope categoriesForMethods!
+classScope!accessing!public! !
 environment!public! !
 environment:!accessing!public! !
 lookupVariable:!operations!public! !

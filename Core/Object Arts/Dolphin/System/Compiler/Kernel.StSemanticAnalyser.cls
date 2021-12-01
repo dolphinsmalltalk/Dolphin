@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.ParseNodeVisitor subclass: #'Kernel.StSemanticAnalyser'
-	instanceVariableNames: 'methodNode classScope evaluationContext currentScope scopes literals stringLiterals addToFrame tempDecls inStaticExpression evalScope annotations errorBlock isMutator inTag'
+Kernel.AbstractSemanticAnalyser subclass: #'Kernel.StSemanticAnalyser'
+	instanceVariableNames: 'literals stringLiterals tempDecls isMutator'
 	classVariableNames: 'OptimizedMessages RestrictedSelectors SpecialSelectors'
-	imports: #(#{Kernel.ParseErrorCodes})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StSemanticAnalyser guid: (Core.GUID fromString: '{3922cac3-8a81-45a8-adb3-2795a6e7bc2f}')!
@@ -40,9 +40,6 @@ addToFrameStatic: aLiteralNode
 	that are referenced in the static expression so that these can be searched on later."
 	(value isSymbol or: [(value isKindOf: Array) or: [value isKindOf: VariableBinding]])
 		ifTrue: [self addLiteral: aLiteralNode value: value]!
-
-annotations
-	^annotations ifNil: [annotations := OrderedCollection new]!
 
 assignStaticVariable: anStVariableNode
 	self accessStaticVariable: anStVariableNode!
@@ -378,8 +375,9 @@ countOuterTemps
 			count := count + scope localCount].
 	^count!
 
-currentScope
-	^currentScope!
+enterMethodNode: aMethodNode
+	self checkRestrictedSelectors: aMethodNode.
+	super enterMethodNode: aMethodNode!
 
 errorAssignConstant: anStVariableNode
 	anStVariableNode variable isArgument
@@ -395,20 +393,16 @@ errorAssignConstant: anStVariableNode
 				extra: anStVariableNode name].
 	^nil!
 
-errorBlock: aMonadicValuable
-	"Set the <monadicValuable> that is evaluated for any semantic errors (not warnings) detected while analysing the AST.
-	The argument will be a CompilerErrorNotification. If the block returns, then the error will be signalled, but as these 
-	are resumable the analysis can recover and continue in order to detect any further errors."
-
-	errorBlock := aMonadicValuable!
+exitMethodNode: aMethodNode
+	isMutator ifTrue: [self checkMutatorMethod: aMethodNode].
+	super exitMethodNode: aMethodNode!
 
 initialize
 	super initialize.
-	scopes := OrderedCollection new.
 	literals := IdentitySet new.
 	stringLiterals := Set new.
 	addToFrame := [:literal | self addToFrame: literal].
-	inTag := isMutator := inStaticExpression := false!
+	isMutator := false!
 
 isReceiverOfNilTest: aVariableNode 
 	| parentNode |
@@ -424,114 +418,26 @@ isTempVariable: anStVariableNode
 
 	^self tempDecls includes: anStVariableNode!
 
-lineOfSourcePosition: position 
-	| line stream |
-	stream := methodNode source readStream.
-	line := 1.
-	[stream atEnd not and: [stream position < position]] 
-		whileTrue: [stream next == $\n ifTrue: [line := line + 1]].
-	^line!
-
-methodClass
-	^classScope methodClass!
-
 newLiteralsCollection
 	^IdentityDictionary new!
 
-pushActiveFrame
-	!
-
-pushImmediate: anInteger!
-
-pushSelf
-!
-
-pushSuper
-!
+processBlock: aBlockNode
+	self blockDepth > VMConstants.MaxBlockNesting
+		ifTrue: [self signalError: CErrBlockNestingTooDeep forNode: aBlockNode].
+	super processBlock: aBlockNode!
 
 readStaticVariable: aStVariableNode
 	self accessStaticVariable: aStVariableNode!
 
-removeScope
-	^currentScope := currentScope outer!
-
 restrictedSelectors
 	^RestrictedSelectors!
-
-scopes
-	^scopes!
-
-setMethodNode: aStMethodNode methodClass: aClass environment: aNamespace context: anObject pools: anArray errorBlock: aMonadicValuable
-	methodNode := aStMethodNode.
-	evaluationContext := anObject.
-	currentScope := classScope := StClassScope methodClass: aClass environment: aNamespace.
-	anArray isEmpty
-		ifFalse: 
-			[evalScope := (StEvalScope pools: anArray)
-						outer: currentScope;
-						yourself.
-			currentScope := evalScope].
-	errorBlock := aMonadicValuable!
-
-signalError: anInteger forNode: aNode 
-	^self 
-		signalError: anInteger
-		forNode: aNode
-		extras: #()!
-
-signalError: anInteger forNode: aNode extra: anObject
-	^self
-		signalError: anInteger
-		forNode: aNode
-		extras: {anObject}!
-
-signalError: anInteger forNode: aNode extras: anArray 
-	^self 
-		signalError: anInteger
-		forNode: aNode
-		range: aNode sourceInterval
-		extras: anArray!
-
-signalError: codeInteger forNode: anStProgramNode range: anInterval extras: anArray
-	| source position err |
-	source := methodNode source.
-	position := anStProgramNode startWithoutParentheses.
-	err := self compilationErrorClass
-				code: codeInteger
-				in: source
-				for: self methodClass
-				selector: methodNode selector
-				position: position
-				line: (self lineOfSourcePosition: position)
-				range: anInterval
-				extras: anArray.
-	"Warnings are not passed to the error block"
-	(err severityClass == Error and: [errorBlock notNil]) ifTrue: [errorBlock value: err].
-	"If the error block returns, then the exception is signalled"
-	^err signal!
 
 tempDecls
 	^tempDecls ifNil: [tempDecls := methodNode allDefinedVariableNodes]!
 
 visitAnnotationNode: anStAnnotationNode
-	"Visiting the args will detect any undeclared variables."
-
-	| selector |
-	inTag := true.
-	[super visitAnnotationNode: anStAnnotationNode] ensure: [inTag := false].
-	selector := anStAnnotationNode selector.
-	selector == #mutable ifTrue: [isMutator := true].
-	selector == #namespace:
-		ifTrue: 
-			[| arg var ns |
-			arg := anStAnnotationNode arguments first.
-			(arg isVariable and: 
-					[var := arg variable.
-					var isStaticVariable and: 
-							[ns := var binding value.
-							ns class isMeta]])
-				ifTrue: [currentScope environment: ns]
-				ifFalse: [self signalError: CErrExpectNamespace forNode: arg]]!
+	super visitAnnotationNode: anStAnnotationNode.
+	anStAnnotationNode selector == #mutable ifTrue: [isMutator := true]!
 
 visitArgumentNodes: aNodeCollection
 	aNodeCollection isEmpty ifTrue: [^self].
@@ -554,14 +460,6 @@ visitAssignmentNode: anStAssignmentNode
 	variableNode scope: currentScope.
 	variableNode isConstantNode ifTrue: [^self].
 	self assignVariable: variableNode!
-
-visitBlockNode: aBlockNode
-	currentScope := scopes addLast: (StBlockScope forScopeNode: aBlockNode outer: currentScope).
-	aBlockNode scope: currentScope.
-	self blockDepth > VMConstants.MaxBlockNesting
-		ifTrue: [self signalError: CErrBlockNestingTooDeep forNode: aBlockNode].
-	self processBlock: aBlockNode.
-	self removeScope!
 
 visitExternalArgTypeNode: anStExternalArgTypeNode
 	anStExternalArgTypeNode structClass
@@ -596,21 +494,13 @@ visitExternalArgTypeNode: anStExternalArgTypeNode
 							[self
 								signalError: CErrInvalidStructArg
 								forNode: anStExternalArgTypeNode
-								extra: structVar]]].
-	^super visitExternalArgTypeNode: anStExternalArgTypeNode!
-
-visitExternalCallNode: anStExternalCallNode
-	self currentScope
-		declareLocalVariable: (StGeneratedTempVariable node: (StTempDeclNode named: '_failureCode')).
-	super visitExternalCallNode: anStExternalCallNode!
+								extra: structVar]].
+			self visitNode: structVar]!
 
 visitLiteralArrayNode: aLiteralArrayNode
 	"We don't want to visit the individual elements"
 
 	!
-
-visitLiteralNode: aLiteralNode
-	addToFrame value: aLiteralNode!
 
 visitMessageNode: aMessageNode
 	"Process a message send (check for wrong argument types for optimized messages, etc)"
@@ -624,51 +514,9 @@ visitMessageNode: aMessageNode
 	receiver isSuperVariable ifTrue: [self checkSupersend: aMessageNode].
 	self checkTryBlock: aMessageNode!
 
-visitMethodNode: aMethodNode
-	self checkRestrictedSelectors: aMethodNode.
-	currentScope := scopes addLast: (StMethodScope forScopeNode: aMethodNode outer: currentScope).
-	aMethodNode scope: currentScope.
-	super visitMethodNode: aMethodNode.
-	isMutator ifTrue: [self checkMutatorMethod: aMethodNode].
-	self removeScope!
-
-visitNode: aNode 
-	aNode scope: currentScope.
-	^aNode acceptVisitor: self!
-
-visitOptimizedNode: anOptimizedNode
-	| wasInStaticExpression outerAddToFrame outerScopes outerCurrentScope |
-	outerAddToFrame := addToFrame.
-	outerCurrentScope := currentScope.
-	outerScopes := scopes.
-	(wasInStaticExpression := inStaticExpression)
-		ifFalse: 
-			[ | methodClass |
-			"If entering a static expression the scope is different (static expressions
-			 are compiled in the context of the class side), and only some literals are
-			 retained in the frame."
-			addToFrame := [:literal | self addToFrameStatic: literal].
-			methodClass := self methodClass.
-			currentScope := StClassScope
-						methodClass: (methodClass isMeta ifTrue: [methodClass] ifFalse: [methodClass class]) environment: classScope environment.
-			scopes := OrderedCollection new].
-	currentScope := scopes addLast: (StMethodScope forScopeNode: anOptimizedNode outer: currentScope).
-	anOptimizedNode scope: currentScope.
-	inStaticExpression := true.
-	[super visitOptimizedNode: anOptimizedNode] ensure: 
-			[self removeScope.
-			inStaticExpression := wasInStaticExpression.
-			addToFrame := outerAddToFrame.
-			currentScope := outerCurrentScope.
-			scopes := outerScopes]!
-
 visitParameterNode: anStParameterNode
 	self checkRedefines: anStParameterNode.
-	self currentScope declareArgument: anStParameterNode!
-
-visitPrimitiveNode: anStPrimitiveNode
-	self currentScope declareLocalVariable: (StGeneratedTempVariable
-				node: (anStPrimitiveNode errorTemp ifNil: [StTempDeclNode named: '_failureCode']))!
+	super visitParameterNode: anStParameterNode!
 
 visitReturnNode: aReturnNode
 	currentScope markFarReturn.
@@ -679,10 +527,9 @@ visitSelfVariableNode: anStSelfVariableNode
 	currentScope markNeedsSelf!
 
 visitSequenceNode: aSequenceNode
-	| answer scope |
+	| answer |
 	answer := super visitSequenceNode: aSequenceNode.
-	scope := currentScope.
-	scope temporaries do: 
+	currentScope temporaries do: 
 			[:each |
 			| reads writes |
 			reads := each reads.
@@ -704,7 +551,7 @@ visitSuperVariableNode: anStSuperVariableNode
 
 visitTempDeclNode: anStTempDeclNode
 	self checkRedefines: anStTempDeclNode.
-	currentScope declareTemp: anStTempDeclNode!
+	super visitTempDeclNode: anStTempDeclNode!
 
 visitTemporaryNodes: aNodeCollection
 	aNodeCollection isEmpty ifTrue: [^self].
@@ -739,7 +586,6 @@ addLiteral:value:!helpers!private! !
 addMessageToFrame:!helpers!private! !
 addToFrame:!helpers!private! !
 addToFrameStatic:!helpers!private! !
-annotations!accessing!private! !
 assignStaticVariable:!helpers!private! !
 assignVariable:!helpers!private! !
 bindVariable:!helpers!private! !
@@ -753,7 +599,7 @@ checkMessage:hasNonEmptyNiladicBlockArg:code:!helpers!private! !
 checkMessageArgumentCount:!helpers!private! !
 checkMessageHasNiladicBlockReceiver:!helpers!private! !
 checkMessageHasNonEmptyNiladicBlockReceiver:!helpers!private! !
-checkMutatorMethod:!public! !
+checkMutatorMethod:!helpers!private! !
 checkOptimizedKeywordMessages:!helpers!private! !
 checkOptimizedMessages:!helpers!private! !
 checkOptimizedUnaryMessages:!helpers!private! !
@@ -763,43 +609,24 @@ checkSupersend:!helpers!private! !
 checkTryBlock:!helpers!private! !
 compilationErrorClass!constants!private! !
 countOuterTemps!helpers!private! !
-currentScope!accessing!private! !
+enterMethodNode:!helpers!private! !
 errorAssignConstant:!error handling!private! !
-errorBlock:!accessing!private! !
+exitMethodNode:!helpers!private! !
 initialize!initializing!public! !
 isReceiverOfNilTest:!helpers!private! !
 isTempVariable:!helpers!private! !
-lineOfSourcePosition:!helpers!private! !
-methodClass!accessing!private! !
 newLiteralsCollection!helpers!initializing!private! !
-pushActiveFrame!instructions-stack ops!private! !
-pushImmediate:!instructions-stack ops!private! !
-pushSelf!instructions-stack ops!private! !
-pushSuper!instructions-stack ops!private! !
+processBlock:!helpers!private! !
 readStaticVariable:!helpers!private! !
-removeScope!helpers!private! !
 restrictedSelectors!constants!private! !
-scopes!accessing!public! !
-setMethodNode:methodClass:environment:context:pools:errorBlock:!initializing!private! !
-signalError:forNode:!error handling!private! !
-signalError:forNode:extra:!error handling!private! !
-signalError:forNode:extras:!error handling!private! !
-signalError:forNode:range:extras:!error handling!private! !
 tempDecls!accessing!private! !
 visitAnnotationNode:!public!visiting! !
 visitArgumentNodes:!public!visiting! !
 visitAssignmentNode:!public!visitor/double dispatching! !
-visitBlockNode:!public!visitor/double dispatching! !
 visitExternalArgTypeNode:!public!visiting! !
-visitExternalCallNode:!public!visiting! !
 visitLiteralArrayNode:!public!visitor/double dispatching! !
-visitLiteralNode:!public!visitor/double dispatching! !
 visitMessageNode:!public!visitor/double dispatching! !
-visitMethodNode:!public!visitor/double dispatching! !
-visitNode:!public!visiting! !
-visitOptimizedNode:!public!visitor/double dispatching! !
 visitParameterNode:!public!visiting! !
-visitPrimitiveNode:!public!visiting! !
 visitReturnNode:!public!visiting! !
 visitSelfVariableNode:!public!visiting! !
 visitSequenceNode:!public!visitor/double dispatching! !
@@ -810,18 +637,6 @@ visitVariableNode:!public!visitor/double dispatching! !
 !
 
 !Kernel.StSemanticAnalyser class methodsFor!
-
-analyzeParseTree: aParseTree for: aClass environment: aNamespace context: anObject pools: anArray onError: aMonadicValuable
-	| methodNode |
-	methodNode := aParseTree isMethod ifTrue: [aParseTree] ifFalse: [aParseTree methodNode].
-	^self new
-		setMethodNode: methodNode
-			methodClass: aClass
-			environment: aNamespace
-			context: anObject
-			pools: anArray
-			errorBlock: aMonadicValuable;
-		visitNode: methodNode!
 
 initialize
 	" self initialize "
@@ -850,7 +665,6 @@ initialize
 	self addClassConstant: 'RestrictedSelectors' value: restrictedSelectors.
 	self addClassConstant: 'SpecialSelectors' value: VM specialSelectors! !
 !Kernel.StSemanticAnalyser class categoriesForMethods!
-analyzeParseTree:for:environment:context:pools:onError:!accessing!public! !
 initialize!development!initializing!public! !
 !
 

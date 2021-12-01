@@ -160,7 +160,7 @@ changeKey: aString to: aString2
 	| binding path targetNamespace |
 	binding := self localBindingFor: aString.
 	self basicRemoveBinding: binding.
-	path := $. split: aString2.
+	path := BindingReference.PathSeparator split: aString2.
 	binding setKey: path last asSymbol.
 	targetNamespace := (BindingReference path: path allButLast) value.
 	targetNamespace basicAddBinding: binding.

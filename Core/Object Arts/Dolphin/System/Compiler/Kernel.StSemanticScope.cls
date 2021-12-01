@@ -12,6 +12,9 @@ Kernel.StSemanticScope comment: ''!
 !Kernel.StSemanticScope categoriesForClass!Kernel-Objects! !
 !Kernel.StSemanticScope methodsFor!
 
+classScope
+	^outer classScope!
+
 environment: aNamespace
 	outer environment: aNamespace!
 
@@ -39,6 +42,7 @@ superVariable
 thisContextVariable
 	^self shouldNotImplement! !
 !Kernel.StSemanticScope categoriesForMethods!
+classScope!accessing!public! !
 environment:!accessing!public! !
 isInlined!accessing!public! !
 lookupVariable:!operations!public! !
