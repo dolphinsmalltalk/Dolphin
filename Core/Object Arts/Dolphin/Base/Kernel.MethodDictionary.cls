@@ -43,27 +43,23 @@ privateAt: index put: newObject
 	(capacity - tally bitShift: 2) < capacity ifTrue: [self grow].
 	^newObject!
 
-removeKey: key ifAbsent: exceptionHandler 
-	"Remove the key (and its associated value), from the receiver. If key is not in the 
-	receiver, answer the result of evaluating the niladic valuable, exceptionHandler.
-	Otherwise, answer the value named by key.
-	Implementation Note: Override to perform the update in a copy which is then
-	swapped with the receiver. This is to avoid any problems with removing methods
-	from the Dictionary hierarchy causing the method dictionaries of these classes
-	to become temporarily invalid."
+removeKey: key ifAbsent: exceptionHandler
+	"Remove the key (and its associated value), from the receiver. If key is not in the receiver, answer the result of evaluating the niladic valuable, exceptionHandler. Otherwise, answer the value named by key."
+
+	"Implementation Note: Override to perform the update in a copy which is then swapped with the receiver. This is to avoid any problems with removing methods from the Dictionary hierarchy causing the method dictionaries of these classes to become temporarily invalid."
 
 	| index |
 	index := self findKeyOrNil: key.
-	^(self basicAt: index) isNil 
+	^(self basicAt: index) isNil
 		ifTrue: [exceptionHandler value]
 		ifFalse: 
-			[| newMe value |
-			value := values basicAt: index.
+			[| newMe method |
+			method := values basicAt: index.
 			newMe := self copy.
 			newMe basicValues basicAt: index put: nil.
 			newMe removeIndex: index.
 			self become: newMe.
-			value]! !
+			method]! !
 !Kernel.MethodDictionary categoriesForMethods!
 findKeyOrNil:!private!searching! !
 hash:max:!private!searching! !

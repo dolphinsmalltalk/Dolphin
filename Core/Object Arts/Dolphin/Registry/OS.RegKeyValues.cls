@@ -13,14 +13,14 @@ OS.RegKeyValues comment: '`RegKeyValues` is the class of objects which represent
 !OS.RegKeyValues categoriesForClass!Collections-Unordered!System-Support! !
 !OS.RegKeyValues methodsFor!
 
-associationAt: key ifAbsent: exceptionHandler
+associationAt: aString ifAbsent: aNiladicValuable
 	"Answer a new <association> between the key and value of the receiver at the <readableString> first argument.  If the specified key is not found, answer the result of evaluating the <niladicValuable> second argument."
 
 	| value |
-	value := self at: key ifAbsent: [AbsentCookie].
+	value := self at: aString ifAbsent: AbsentCookie.
 	^value == AbsentCookie
-		ifTrue: [exceptionHandler value]
-		ifFalse: [self associationClass key: key value: value]!
+		ifTrue: [aNiladicValuable value]
+		ifFalse: [self associationClass key: aString value: value]!
 
 at: key ifAbsent: exceptionHandler
 	"Answer the value named by the argument, key.  If keyString is not found,
@@ -107,6 +107,15 @@ keysDo: aMonadicValuable
 
 	^self subValueNamesDo: aMonadicValuable!
 
+removeAssociationAt: aString ifAbsent: aNiladicValuable
+	"Remove the key and value association with the specified key from the receiver. If the key is not in the receiver, return the result of evaluating the <NiladicValuable>, aNiladicValuable. Otherwise, answer the removed <association>."
+
+	| value |
+	value := self removeSubValue: aString ifAbsent: AbsentCookie.
+	^value == AbsentCookie
+		ifTrue: [aNiladicValuable value]
+		ifFalse: [self associationClass key: aString value: value]!
+
 removeKey: key ifAbsent: exceptionHandler
 	"Remove the key (and its associated value), from the receiver. If key is
 	not in the receiver, answer the result of evaluating the niladic valuable,
@@ -147,6 +156,7 @@ fileOutOn:!public!storing! !
 includesKey:!public!searching! !
 keysAndValuesDo:!enumerating!public! !
 keysDo:!enumerating!public! !
+removeAssociationAt:ifAbsent:!public!removing! !
 removeKey:ifAbsent:!public!removing! !
 size!accessing!public! !
 subKeys!accessing!public! !

@@ -382,6 +382,11 @@ realize
 	self beFinalizable.
 	^true!
 
+removeAssociationAt: anObject ifAbsent: aNiladicValuable
+	"Remove the key and value association with the specified key from the receiver. If the key is not in the receiver, return the result of evaluating the <NiladicValuable>, aNiladicValuable. Otherwise, answer the removed <association>."
+
+	^self subclassResponsibility!
+
 removeKey: aString ifAbsent: aNiladicValuable
 	"Remove the specified key (and its associated value), from the receiver. If the key is not in the receiver, answer the result of evaluating the <niladicValuable> second argument. Otherwise, answer the value named by the key."
 
@@ -420,7 +425,7 @@ removeSubValue: aString ifAbsent: aNiladicValuable
 
 	| value needsFree |
 	needsFree := self realize.
-	value := self valueAt: aString ifAbsent: [AbsentCookie].
+	value := self valueAt: aString ifAbsent: AbsentCookie.
 	value == AbsentCookie
 		ifTrue: [value := aNiladicValuable value]
 		ifFalse: 
@@ -786,6 +791,7 @@ printOn:!printing!public! !
 queryKeyInfo!accessing!private! !
 qwordAt:put:!accessing!public! !
 realize!public!realizing/unrealizing! !
+removeAssociationAt:ifAbsent:!public!removing! !
 removeKey:ifAbsent:!public!removing! !
 removeSubKey:ifAbsent:!public!removing! !
 removeSubTree:!public!removing! !

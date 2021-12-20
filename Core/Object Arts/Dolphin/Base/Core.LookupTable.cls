@@ -264,6 +264,15 @@ postCopy
 	values := values copy.
 	^self!
 
+removeAssociationAt: anObject ifAbsent: aNiladicValuable
+	"Remove the key and value association with the specified key from the receiver. Answer the removed <Association>."
+
+	| value |
+	value := self removeKey: anObject ifAbsent: AbsentCookie.
+	^value == AbsentCookie
+		ifTrue: [aNiladicValuable value]
+		ifFalse: [self associationClass key: anObject value: value]!
+
 removeKey: key ifAbsent: exceptionHandler 
 	"Remove the key (and its associated value), from the receiver. If key is not in the 
 	receiver, answer the result of evaluating the niladic valuable, exceptionHandler.
@@ -357,6 +366,7 @@ keysDo:!enumerating!public! !
 lookup:!accessing!public! !
 moveFrom:to:!private!removing! !
 postCopy!copying!public! !
+removeAssociationAt:ifAbsent:!public!removing! !
 removeKey:ifAbsent:!public!removing! !
 select:!enumerating!public! !
 species!accessing!public! !

@@ -34,17 +34,18 @@ _deepCopyElementsInto: aDictionary trail: anIdentityDictionary
 	^true!
 
 add: anAssociation
-	"Add anAssociation to the receiver. Answer anAssociation.
-	Although very similar to at:put:, we store the actual association passed
-	as an argument here in order to maintain its references."
+	"Add the <Association> argument to the receiver. Answer the argument."
 
-	| index element |
+	"Although very similar to at:put:, we store the actual `Association` passed as an argument here in order to maintain its references."
+
+	| index |
 	index := self findKeyOrNil: anAssociation key.
-	element := self basicAt: index.
-	element isNil
-		ifTrue: [self privateAt: index put: anAssociation]
-		ifFalse: [element value: anAssociation value].
-	^anAssociation!
+	^(self basicAt: index)
+		ifNil: [self privateAt: index put: anAssociation]
+		ifNotNil: 
+			[:element |
+			element value: anAssociation value.
+			anAssociation]!
 
 addNewElement: anAssociation
 	"Include the <Association> newElement as one of the elements of the receiver, or update the value of the existing association with the same key.
@@ -443,43 +444,52 @@ removeAllKeys: keys ifAbsent: operation
 	keys do: [:k | self removeKey: k ifAbsent: [operation cull: k]]!
 
 removeAssociation: anAssociation
-	"Remove the key and value association, anAssociation, from the receiver. Answer anAssociation."
+	"Remove the key and value <association>, anAssociation, from the receiver. Answer the removed <association>."
 
-	self removeKey: anAssociation key.
-	^anAssociation
-!
+	^self removeAssociationAt: anAssociation key!
 
 removeAssociation: anAssociation ifAbsent: aNiladicValuable
-	"Remove the <association> from the receiver with the same key as the <association> argument.
-	Answer anAssociation. If there is no such association in the receiver, answer the result of
-	evaluating the <niladicValuable>, operation."
+	"Remove the <association> from the receiver with the same key as the <association> argument. If there is no such association in the receiver, answer the result of evaluating the <niladicValuable>, operation. Otherwise answer the removed <association>."
 
-	^(self removeKey: anAssociation key ifAbsent: AbsentCookie) == AbsentCookie
-		ifTrue: [aNiladicValuable value]
-		ifFalse: [anAssociation]!
+	^self removeAssociationAt: anAssociation key ifAbsent: aNiladicValuable!
 
-removeKey: key
-	"Remove the <Object> key (and its associated value), from the receiver. 
-	If key is not in the receiver, report an error. Otherwise, answer the value 
-	named by key."
+removeAssociationAt: anObject
+	"Remove the association from the receiver with the <Object> key, anObject. If the key is not in the receiver, report an error. Otherwise, answer the removed <association>."
 
 	| removed |
-	removed := self removeKey: key ifAbsent: AbsentCookie.
-	^removed == AbsentCookie ifTrue: [self errorKeyNotFound: key] ifFalse: [removed]!
+	removed := self removeAssociationAt: anObject ifAbsent: AbsentCookie.
+	^removed == AbsentCookie ifTrue: [self errorKeyNotFound: anObject] ifFalse: [removed]!
 
-removeKey: key ifAbsent: operation 
-	"Remove the <Object> key (and its associated value), from the receiver. If key is
-	not in the receiver, answer the result of evaluating the <niladicValuable>,
-	operation. Otherwise, answer the value named by key."
+removeAssociationAt: anObject ifAbsent: aNiladicValuable
+	"Remove the key and value association with the specified key from the receiver. If the key is not in the receiver, return the result of evaluating the <NiladicValuable>, aNiladicValuable. Otherwise, answer the removed <association>."
 
 	| index |
-	index := self findKeyOrNil: key.
-	^(self basicAt: index) 
-		ifNil: [operation value]
+	index := self findKeyOrNil: anObject.
+	^(self basicAt: index)
+		ifNil: [aNiladicValuable value]
 		ifNotNil: 
-			[:element | 
+			[:association |
 			self removeIndex: index.
-			element value]!
+			association]!
+
+removeKey: anObject
+	"Remove the association from the receiver with the <Object> key, anObject. If the key is not in the receiver, report an error. Otherwise, answer the value associated with the key."
+
+	| removed |
+	removed := self removeKey: anObject ifAbsent: AbsentCookie.
+	^removed == AbsentCookie ifTrue: [self errorKeyNotFound: anObject] ifFalse: [removed]!
+
+removeKey: anObject ifAbsent: aNiladicValuable
+	"Remove the association from the receiver with the <Object> key, anObject. If the key is not in the receiver, answer the result of evaluating the <niladicValuable>, aNiladicValuable. Otherwise, answer the value associated with the key."
+
+	| index |
+	index := self findKeyOrNil: anObject.
+	^(self basicAt: index)
+		ifNil: [aNiladicValuable value]
+		ifNotNil: 
+			[:association |
+			self removeIndex: index.
+			association value]!
 
 searchPolicy
 	"Answer the receiver's <searchPolicy>."
@@ -582,6 +592,8 @@ removeAllKeys:!public!removing! !
 removeAllKeys:ifAbsent:!public!removing! !
 removeAssociation:!public!removing! !
 removeAssociation:ifAbsent:!public!removing! !
+removeAssociationAt:!public!removing! !
+removeAssociationAt:ifAbsent:!public!removing! !
 removeKey:!public!removing! !
 removeKey:ifAbsent:!public!removing! !
 searchPolicy!constants!public! !

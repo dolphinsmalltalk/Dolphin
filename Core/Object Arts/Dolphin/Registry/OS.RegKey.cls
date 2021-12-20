@@ -17,7 +17,7 @@ associationAt: aString ifAbsent: aNiladicValuable
 	"Answer a new <association> between the key and value of the receiver at the <readableString> first argument.  If the specified key is not found, answer the result of evaluating the <niladicValuable> second argument."
 
 	| subKey |
-	subKey := self at: aString ifAbsent: [AbsentCookie].
+	subKey := self at: aString ifAbsent: AbsentCookie.
 	^subKey == AbsentCookie ifTrue: [aNiladicValuable value] ifFalse: [subKey]!
 
 at: aString ifAbsent: aNiladicValuable
@@ -133,6 +133,11 @@ keysDo: aMonadicValuable
 
 	^self subKeyNamesDo: aMonadicValuable!
 
+removeAssociationAt: anObject ifAbsent: aNiladicValuable
+	"Remove the key and value association with the specified key from the receiver. If the key is not in the receiver, return the result of evaluating the <NiladicValuable>, aNiladicValuable. Otherwise, answer the removed <association>."
+
+	^self removeKey: anObject ifAbsent: aNiladicValuable!
+
 removeKey: aString ifAbsent: aNiladicValuable
 	"Remove the specified key (and its associated value), from the receiver. If the key is not in the receiver, answer the result of evaluating the <niladicValuable> second argument. Otherwise, answer the value named by the key."
 
@@ -174,6 +179,7 @@ fileOutOn:!public!storing! !
 includesKey:!public!searching! !
 keysAndValuesDo:!enumerating!public! !
 keysDo:!enumerating!public! !
+removeAssociationAt:ifAbsent:!public!removing! !
 removeKey:ifAbsent:!public!removing! !
 size!accessing!public! !
 subKeys!accessing!public! !

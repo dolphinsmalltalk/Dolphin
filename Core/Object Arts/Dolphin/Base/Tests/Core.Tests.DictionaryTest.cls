@@ -14,6 +14,18 @@ Core.Tests.DictionaryTest comment: ''!
 collectionClass
 	^Dictionary!
 
+testAdd
+	| subject assoc1 assoc2 assoc3 |
+	subject := self newDictionary.
+	assoc1 := subject associationAt: #key.
+	assoc2 := subject newAssociation: #key2 value: 2.
+	self assert: (subject add: assoc2) identicalTo: assoc2.
+	self assert: (subject associationAt: #key2) identicalTo: assoc2.
+	assoc3 := subject newAssociation: #key value: 3.
+	self assert: (subject add: assoc3) identicalTo: assoc3.
+	self assert: (subject associationAt: #key) identicalTo: assoc1.
+	self assert: assoc1 value equals: 3!
+
 testAllInstancesValid
 	| invalid |
 	invalid := IdentitySet new.
@@ -50,6 +62,7 @@ testAtIfAbsentPutValue
 	self assert: dictionary size identicalTo: initialSize + 1! !
 !Core.Tests.DictionaryTest categoriesForMethods!
 collectionClass!helpers!private! !
+testAdd!public!unit tests! !
 testAllInstancesValid!public!unit tests! !
 testAtIfAbsentPutClean!public!unit tests! !
 testAtIfAbsentPutValue!public!unit tests! !

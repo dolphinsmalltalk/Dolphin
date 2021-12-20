@@ -48,6 +48,16 @@ newDictionary
 newEmpty
 	^self collectionClass new!
 
+testAdd
+	| subject assoc2 |
+	subject := self newDictionary.
+	assoc2 := subject newAssociation: #key2 value: 2.
+	self assert: (subject add: assoc2) identicalTo: assoc2.
+	self assert: (subject associationAt: #key2) equals: assoc2.
+	assoc2 := subject newAssociation: #key value: 3.
+	self assert: (subject add: assoc2) identicalTo: assoc2.
+	self assert: (subject associationAt: #key) equals: assoc2!
+
 testAllKeysSatisfy
 	| dictionary |
 	dictionary := self newDictionary.
@@ -231,6 +241,13 @@ testNilKey
 	self should: [dictionary at: nil put: 1] raise: Error.
 	self should: [dictionary at: nil ifAbsentPut: [1]] raise: Error!
 
+testRemoveAssociationAt
+	| dictionary |
+	dictionary := self newDictionary.
+	self assert: (dictionary removeAssociationAt: #key)
+		equals: (dictionary associationClass key: #key value: 1).
+	self should: [dictionary removeAssociationAt: #key] raise: NotFoundError!
+
 testRemoveKey
 	| dictionary |
 	dictionary := self newDictionary.
@@ -291,6 +308,7 @@ makeKey:!helpers!private! !
 newCollection:!helpers!private! !
 newDictionary!private!unit tests! !
 newEmpty!helpers!public! !
+testAdd!public!unit tests! !
 testAllKeysSatisfy!public!unit tests! !
 testAnyKeysSatisfy!public!unit tests! !
 testAssociations!public!unit tests! !
@@ -305,6 +323,7 @@ testDeepCopy!public!unit tests! !
 testEquals!public!unit tests! !
 testIncludesKey!public!unit tests! !
 testNilKey!public!unit tests! !
+testRemoveAssociationAt!public!unit tests! !
 testRemoveKey!public!unit tests! !
 testStrongTalkTests!benchmarking!public! !
 !
