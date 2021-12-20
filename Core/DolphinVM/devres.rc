@@ -73,6 +73,8 @@ CLASSCOMMENT.ICO        ICON                    "Res\\ClassComment.ico"
 
 CLASSDEFINITION.ICO     ICON                    "Res\\ClassDefinition.ico"
 
+CLASSDELETE.ICO         ICON                    "Res\\ClassDelete.ico"
+
 CLASSHIERARCHYDIAGRAM.ICO ICON                  "Res\\ClassHierarchyDiagram.ico"
 
 CLEARDOCUMENT.ICO       ICON                    "Res\\ClearDocument.ico"
@@ -328,6 +330,8 @@ MESSAGESEQUENCEABSTRACT.ICO ICON                "Res\\MessageSequenceAbstract.ic
 METACLASS.ICO           ICON                    "Res\\Metaclass.ico"
 
 METHODBROWSER.ICO       ICON                    "res\\MethodBrowser.ico"
+
+METHODDELETE.ICO        ICON                    "Res\\MethodDelete.ico"
 
 METHODPROTOCOL.ICO      ICON                    "Res\\methodprotocol.ico"
 

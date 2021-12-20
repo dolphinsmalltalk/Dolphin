@@ -208,6 +208,7 @@
     <Image Include="Res\ClassBrowserShell.ico" />
     <Image Include="Res\ClassComment.ico" />
     <Image Include="Res\ClassDefinition.ico" />
+    <Image Include="Res\ClassDelete.ico" />
     <Image Include="Res\ClassHierarchyDiagram.ico" />
     <Image Include="Res\ClearDocument.ico" />
     <Image Include="Res\Clipboard.ico" />
@@ -236,6 +237,8 @@
     <Image Include="Res\Debugger.ico" />
     <Image Include="Res\DebugInfoPlugin.ico" />
     <Image Include="Res\Delay.ico" />
+    <Image Include="Res\DeleteClass.ico" />
+    <Image Include="Res\DeleteMethod.ico" />
     <Image Include="Res\DesktopView.ico" />
     <Image Include="Res\Dialog.ico" />
     <Image Include="Res\DialogView.ico" />
@@ -301,6 +304,7 @@
     <Image Include="Res\LintSleep.ico" />
     <Image Include="Res\LintWait.ico" />
     <Image Include="Res\ListView.ico" />
+    <Image Include="Res\MethodDelete.ico" />
     <Image Include="Res\MethodHistory.ico" />
     <Image Include="Res\MethodHistoryErase.ico" />
     <Image Include="Res\MethodSource.ico" />

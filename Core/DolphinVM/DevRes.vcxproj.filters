@@ -1036,6 +1036,18 @@
     <Image Include="Res\ToolsNamespace.ico">
       <Filter>Icons</Filter>
     </Image>
+    <Image Include="Res\DeleteClass.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\DeleteMethod.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\ClassDelete.ico">
+      <Filter>Icons</Filter>
+    </Image>
+    <Image Include="Res\MethodDelete.ico">
+      <Filter>Icons</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Res\hsplit.cur">
