@@ -18,7 +18,7 @@ expectDelay: expectedDuration for: nowMicroseconds
 	"Although a Delay could end up waiting much longer than the expected duration,
 	e.g. if the CPU is very busy, this should happen only rarely, and we do not want
 	to tolerate it if it happens all the time as that would indicate an actual bug."
-	self assert: (delta between: timerResolution negated and: timerResolution * 3)
+	self assert: (delta between: timerResolution negated and: timerResolution * 5)
 		description: 
 			[String smalltalkWriteStream
 				nextPutAll: 'Expected delay of ';
