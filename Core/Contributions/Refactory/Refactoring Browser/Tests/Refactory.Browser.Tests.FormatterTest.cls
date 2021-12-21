@@ -47,7 +47,7 @@ smokeTestAllMethodsOfHierarchy: baseClass
 			[:each |
 			| tree |
 			tree := each parseTree.
-			self assert: tree equals: (self parseMethod: (RBFormatter1 format: tree))]!
+			self assert: tree equals: (self parseMethod: (RBFormatter1 format: tree) in: each methodClass)]!
 
 smokeTestForMethodsOfClasses: aCollectionOfClasses
 	aCollectionOfClasses do: 
@@ -56,7 +56,7 @@ smokeTestForMethodsOfClasses: aCollectionOfClasses
 					[:sel |
 					| tree |
 					tree := class parseTreeFor: sel.
-					self assert: tree equals: (self parseMethod: (RBFormatter1 format: tree))]]!
+					self assert: tree equals: (self parseMethod: (RBFormatter1 format: tree) in: class)]]!
 
 tearDown
 	settings 

@@ -18,11 +18,6 @@ Instance Variables:
 !Refactory.Browser.RBSourceFormatter categoriesForClass!Refactory-ParseTree Matching! !
 !Refactory.Browser.RBSourceFormatter methodsFor!
 
-bracketWith: bracketString around: aBlock 
-	bracketString isEmpty ifTrue: [^aBlock value].
-	codeStream nextPut: bracketString first.
-	^aBlock ensure: [codeStream nextPut: bracketString last]!
-
 currentLineLength
 	^codeStream position - lineStart!
 
@@ -60,20 +55,13 @@ formatTagsFor: aMethodNode
 indent: anInteger
 	indent := anInteger!
 
-indent: anInteger around: aBlock 
-	indent := indent + anInteger.
-	^aBlock ensure: [indent := indent - anInteger]!
-
 initialize
 	super initialize.
 	indent := lineStart := 0.
 	codeStream := WriteStream on: (Utf8String new: 256)!
 
 isLineTooLong: aString
-	^self currentLineLength + aString size >= self maxLineLength!
-
-maxLineLength
-	^self class maxLineLength!
+	^self currentLineLength + aString size >= MaxLineLength!
 
 newLine
 	^self subclassResponsibility!
@@ -100,7 +88,9 @@ visitAnnotationNode: anStAnnotationNode
 	codeStream nextPut: $>.!
 
 visitArrayNode: anArrayNode
-	self bracketWith: '{}' around: [self formatArray: anArrayNode]!
+	codeStream nextPut: ${.
+	self formatArray: anArrayNode.
+	codeStream nextPut: $}!
 
 visitExternalArgTypeNode: anStExternalArgTypeNode
 	anStExternalArgTypeNode structClass
@@ -153,7 +143,6 @@ visitQualifiedReferenceNode: aQualifiedReferenceNode
 visitVariableNode: aVariableNode
 	codeStream nextPutAll: aVariableNode name! !
 !Refactory.Browser.RBSourceFormatter categoriesForMethods!
-bracketWith:around:!helpers!private! !
 currentLineLength!accessing!private! !
 format:!operations!public! !
 formatArray:!private! !
@@ -163,10 +152,8 @@ formatMethodPatternFor:!formatting!private! !
 formatStatementCommentsFor:!formatting!private! !
 formatTagsFor:!formatting!private! !
 indent:!formatting!private! !
-indent:around:!formatting!private! !
 initialize!initializing!private! !
 isLineTooLong:!helpers!private! !
-maxLineLength!constants!private! !
 newLine!formatting!private! !
 space!formatting!private! !
 visitAnnotationNode:!public!visitor/double dispatching! !

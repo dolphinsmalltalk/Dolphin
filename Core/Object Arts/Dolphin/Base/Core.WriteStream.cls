@@ -164,7 +164,7 @@ position: anInteger
 	the receiver's collection, report an error.
 	Override to update the readLimit."
 
-	readLimit := readLimit max: position.
+	readLimit < position ifTrue: [readLimit := position].
 	super position: anInteger!
 
 primitiveBasicNextPut: anObject
@@ -180,7 +180,7 @@ primitiveNextPutAll: aCollection
 	^aCollection appendToStream: self!
 
 reset
-	readLimit := readLimit max: position.
+	readLimit < position ifTrue: [readLimit := position].
 	position := 0!
 
 setToEnd

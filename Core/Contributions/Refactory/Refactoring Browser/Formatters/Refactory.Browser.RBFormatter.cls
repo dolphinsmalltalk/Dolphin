@@ -12,14 +12,13 @@ Refactory.Browser.RBFormatter comment: 'RBFormatter is an <StParseNodeVisitor> f
 !Refactory.Browser.RBFormatter categoriesForClass!System-Compiler-Formatters! !
 !Refactory.Browser.RBFormatter methodsFor!
 
-acceptBlockNode: aBlockNode startBlockString: startBlockString endBlockString: endBlockString
-	| seqNode multiline formattedBody formatter |
-	seqNode := aBlockNode body.
+acceptBlockNode: aBlockNode startBlockString: startBlockString
+	| multiline formattedBody formatter |
 	formatter := self copy
 				lineStart: 0;
 				yourself.
-	formattedBody := formatter format: seqNode.
-	multiline := self currentLineLength + formattedBody size > self maxLineLength or: [formatter isMultiLine].
+	formattedBody := formatter format: aBlockNode body.
+	multiline := self currentLineLength + formattedBody size > MaxLineLength or: [formatter isMultiLine].
 	multiline ifTrue: [self newLine].
 	codeStream nextPutAll: startBlockString.
 	aBlockNode arguments do: 
@@ -31,89 +30,86 @@ acceptBlockNode: aBlockNode startBlockString: startBlockString endBlockString: e
 		ifTrue: 
 			[codeStream nextPut: $|.
 			multiline ifTrue: [self newLine] ifFalse: [codeStream space]].
-	codeStream
-		nextPutAll: formattedBody;
-		nextPutAll: endBlockString!
+	codeStream nextPutAll: formattedBody!
 
 firstLineLength
 	^firstLineLength isNil ifTrue: [codeStream position] ifFalse: [firstLineLength]!
-
-for: aValue do: doBlock separatedBy: separatorBlock
-	"This is implemented here since IBM Smalltalk doesn't implement a do:separatedBy: method"
-
-	aValue isEmpty ifTrue: [^self].
-	1 to: aValue size - 1
-		do: 
-			[:i |
-			doBlock value: (aValue at: i).
-			separatorBlock value].
-	doBlock value: aValue last!
 
 formatArray: anArrayNode
 	| formattedArgs multiline length |
 	formattedArgs := Array writeStream: anArrayNode statements size.
 	multiline := false.
 	length := 0.
-	self indent: 1
-		around: 
-			[anArrayNode statements do: 
-					[:each |
-					| formatter string |
-					formatter := self copy.
-					string := formatter format: each.
-					formattedArgs nextPut: string.
-					length := length + string size + 2.
-					multiline := multiline or: [formatter isMultiLine]].
-			formattedArgs := formattedArgs collection.
-			multiline := multiline or: [length + 1 + self currentLineLength > self maxLineLength].
-			formattedArgs do: [:each | codeStream nextPutAll: each]
-				separatedBy: 
-					[codeStream nextPut: $..
-					multiline ifTrue: [self newLine] ifFalse: [self space]]]!
+	indent := indent + 1.
+	anArrayNode statements do: 
+			[:each |
+			| formatter string |
+			formatter := self copy.
+			string := formatter format: each.
+			formattedArgs nextPut: string.
+			length := length + string size + 2.
+			multiline := multiline or: [formatter isMultiLine]].
+	formattedArgs := formattedArgs collection.
+	multiline := multiline or: [length + 1 + self currentLineLength > MaxLineLength].
+	formattedArgs do: [:each | codeStream nextPutAll: each]
+		separatedBy: 
+			[codeStream nextPut: $..
+			multiline ifTrue: [self newLine] ifFalse: [self space]].
+	indent := indent - 1!
 
 formatMessage: aMessageNode cascade: cascadeBoolean
-	| selectorParts arguments multiLine formattedArgs indentFirst firstArgLength length argumentCount |
+	| selectorParts arguments multiLine formattedArgs length firstArgLength argumentCount |
 	selectorParts := aMessageNode selectorParts.
 	arguments := aMessageNode arguments.
 	argumentCount := arguments size.
-	formattedArgs := OrderedCollection new: argumentCount.
-	multiLine := argumentCount > self maximumArgumentsPerLine.
+	formattedArgs := Array new: argumentCount.
+	multiLine := argumentCount > MaximumArgumentsPerLine.
 	length := aMessageNode selector size + argumentCount + 1.
 	firstArgLength := 0.
-	self indentWhile: 
-			[1 to: argumentCount
-				do: 
-					[:i |
-					| formatter string |
-					formatter := self copy
-								lineStart: (selectorParts at: i) length negated;
-								yourself.
-					string := formatter format: (arguments at: i).
-					formattedArgs addLast: string.
-					i == 1 ifTrue: [firstArgLength := formatter firstLineLength].
-					length := length + string size.
-					multiLine := multiLine or: [formatter isMultiLine]]].
-	multiLine := multiLine or: [length + 1 + self currentLineLength > self maxLineLength].
-	indentFirst := cascadeBoolean not and: [multiLine and: [(self startMessageSendOnNewLine: aMessageNode) or: [self currentLineLength + selectorParts first length + 2 + firstArgLength > self maxLineLength]]].
-	indentFirst ifTrue: [self newLine] ifFalse: [cascadeBoolean ifFalse: [codeStream space]].
+	indent := indent + 1.
+	1 to: argumentCount
+		do: 
+			[:i |
+			| formatter string |
+			formatter := self copy
+						lineStart: 0 - (selectorParts at: i) length;
+						yourself.
+			string := formatter format: (arguments at: i).
+			formattedArgs at: i put: string.
+			i == 1 ifTrue: [firstArgLength := formatter firstLineLength].
+			length := length + string size.
+			multiLine := multiLine or: [formatter isMultiLine]].
+	indent := indent - 1.
+	multiLine := multiLine or: [length + 1 + self currentLineLength > MaxLineLength].
+	cascadeBoolean
+		ifFalse: 
+			[(multiLine and: 
+					[(self startMessageSendOnNewLine: aMessageNode)
+						or: [self currentLineLength + selectorParts first length + 2 + firstArgLength > MaxLineLength]])
+				ifTrue: [self newLine]
+				ifFalse: [codeStream space]].
 	self
 		formatMessageSelector: selectorParts
 		withArguments: formattedArgs
 		multiline: multiLine!
 
 formatMessageSelector: selectorParts withArguments: formattedArgs multiline: multiLine
-	formattedArgs isEmpty
+	| count |
+	count := formattedArgs size.
+	count == 0
 		ifTrue: [codeStream nextPutAll: selectorParts first value]
 		ifFalse: 
-			[1 to: formattedArgs size
-				do: 
-					[:i |
-					i ~~ 1 & multiLine not ifTrue: [self space].
-					codeStream
-						nextPutAll: (selectorParts at: i) value;
-						space;
-						nextPutAll: (formattedArgs at: i).
-					(multiLine and: [i < formattedArgs size]) ifTrue: [self newLine]]]!
+			[| i |
+			i := 1.
+			
+			[codeStream
+				nextPutAll: (selectorParts at: i) value;
+				space;
+				nextPutAll: (formattedArgs at: i).
+			i < count]
+					whileTrue: 
+						[i := i + 1.
+						multiLine ifTrue: [self newLine] ifFalse: [self space]]]!
 
 formatMethodBodyFor: aMethodNode
 	self indentWhile: 
@@ -167,36 +163,49 @@ formatStatementCommentsFor: aNode
 			codeStream nextPutAll: (source copyFrom: each first to: each last)]!
 
 formatStatementsFor: aSequenceNode
-	| statements |
+	| statements count statement |
 	statements := aSequenceNode statements.
-	statements isEmpty ifTrue: [^self].
-	1 to: statements size - 1
+	count := statements size.
+	count == 0 ifTrue: [^self].
+	1 to: count - 1
 		do: 
 			[:i |
-			self visitNode: (statements at: i).
+			self visitNode: (statement := statements at: i).
 			codeStream nextPut: $..
-			self formatStatementCommentsFor: (statements at: i).
-			self newLine].
-	self visitNode: statements last.
-	aSequenceNode parent
-		ifNotNil: [:parent | (parent isMethod and: [self class periodsAtEndOfMethod]) ifTrue: [codeStream nextPut: $.]].
-	self formatStatementCommentsFor: statements last!
+			self
+				formatStatementCommentsFor: statement;
+				newLine].
+	self visitNode: (statement := statements at: count).
+	(PeriodsAtEndOfMethod and: 
+			[| parent |
+			(parent := aSequenceNode parent) notNil and: [parent isMethod]])
+		ifTrue: [codeStream nextPut: $.].
+	self formatStatementCommentsFor: statement!
 
 formatTemporariesFor: aSequenceNode
 	| temps |
 	temps := aSequenceNode temporaries.
 	temps isEmpty ifTrue: [^self].
-	self bracketWith: '|'
-		around: 
-			[self space.
-			temps do: 
-					[:each |
-					self visitArgumentNode: each.
-					self space]].
+	codeStream nextPut: $|.
+	self space.
+	temps do: 
+			[:each |
+			self visitArgumentNode: each.
+			self space].
+	codeStream nextPut: $|.
 	self newLine!
 
+indent: anInteger around: aBlock
+	| answer |
+	indent := indent + anInteger.
+	answer := aBlock value.
+	indent := indent - anInteger.
+	^answer!
+
 indentWhile: aBlock
-	self indent: 1 around: aBlock!
+	indent := indent + 1.
+	aBlock value.
+	indent := indent - 1!
 
 isMultiLine
 	^firstLineLength notNil!
@@ -206,9 +215,6 @@ lastLineLength
 
 lineStart: aPosition
 	lineStart := aPosition!
-
-maximumArgumentsPerLine
-	^self class maximumArgumentsPerLine!
 
 needsParenthesisFor: aNode
 	| parent |
@@ -258,7 +264,7 @@ newLinesFor: aString startingAt: anIndex
 
 postCopy
 	super postCopy.
-	lineStart := self currentLineLength negated.
+	lineStart := 0 - self currentLineLength.
 	codeStream := WriteStream on: (Utf8String new: 60).
 	firstLineLength := nil.
 	^self!
@@ -278,73 +284,64 @@ precedenceOf: parentSelector greaterThan: childSelector
 			((operators at: i) includes: childSelector first) ifTrue: [childIndex := i]].
 	^childIndex < parentIndex!
 
-selectorsToLeaveOnLine
-	^self class selectorsToLeaveOnLine!
-
-selectorsToStartOnNewLine
-	^self class selectorsToStartOnNewLine!
-
 startMessageSendOnNewLine: aMessageNode
-	(self selectorsToStartOnNewLine includes: aMessageNode selector) ifTrue: [^true].
-	(self selectorsToLeaveOnLine includes: aMessageNode selector) ifTrue: [^false].
-	#rbFix.	"Use ANSI standard #argumentCount message instead of #numArgs"
-	^aMessageNode selector argumentCount > self maximumArgumentsPerLine!
+	(SelectorsToStartOnNewLine includes: aMessageNode selector) ifTrue: [^true].
+	(SelectorsToLeaveOnLine includes: aMessageNode selector) ifTrue: [^false].
+	^aMessageNode selector argumentCount > MaximumArgumentsPerLine!
 
 visitAssignmentNode: anAssignmentNode
-	self indent: 2
-		around: 
-			[self visitNode: anAssignmentNode variable.
-			codeStream nextPutAll: ' := '.
-			self visitNode: anAssignmentNode value]!
+	indent := indent + 2.
+	self visitNode: anAssignmentNode variable.
+	codeStream nextPutAll: ' := '.
+	self visitNode: anAssignmentNode value.
+	indent := indent - 2!
 
 visitBlockNode: aBlockNode
-	self
-		acceptBlockNode: aBlockNode
-		startBlockString: '['
-		endBlockString: ']'!
+	self acceptBlockNode: aBlockNode startBlockString: '['.
+	codeStream nextPut: $]!
 
 visitCascadeNode: aCascadeNode
 	| messages |
 	messages := aCascadeNode messages.
 	self visitNode: messages first receiver.
 	self indentWhile: 
-			[self
-				for: messages
-				do: 
+			[messages do: 
 					[:each |
 					self
 						newLine;
 						indentWhile: [self formatMessage: each cascade: true]]
-				separatedBy: [codeStream nextPut: $;]]!
+				separatedBy: [codeStream nextPut: $;].
+			self]!
 
 visitLiteralArrayNode: aRBArrayLiteralNode
-	| brackets |
-	codeStream nextPut: $#.
-	brackets := aRBArrayLiteralNode isForByteArray ifTrue: ['[]'] ifFalse: ['()'].
-	self bracketWith: brackets
-		around: 
-			[self
-				for: aRBArrayLiteralNode contents
-				do: [:each | self visitNode: each]
-				separatedBy: [self space]]!
+	codeStream
+		nextPut: $#;
+		nextPut: aRBArrayLiteralNode openBracket.
+	aRBArrayLiteralNode contents do: [:each | self visitNode: each] separatedBy: [self space].
+	codeStream nextPut: aRBArrayLiteralNode closeBracket!
 
 visitLiteralNode: aLiteralNode
 	aLiteralNode token formatOn: codeStream source: aLiteralNode source!
 
 visitMessageNode: aMessageNode
-	| newFormatter code |
+	| newFormatter messageIndent |
 	newFormatter := self copy.
-	code := newFormatter format: aMessageNode receiver.
-	codeStream nextPutAll: code.
-	newFormatter isMultiLine ifTrue: [lineStart := codeStream position - newFormatter lastLineLength].
-	self indent: (newFormatter isMultiLine ifTrue: [2] ifFalse: [1])
-		around: [self formatMessage: aMessageNode cascade: false]!
+	codeStream nextPutAll: (newFormatter format: aMessageNode receiver).
+	messageIndent := newFormatter isMultiLine
+				ifTrue: 
+					[lineStart := codeStream position - newFormatter lastLineLength.
+					2]
+				ifFalse: [1].
+	indent := indent + messageIndent.
+	self formatMessage: aMessageNode cascade: false.
+	indent := indent - messageIndent!
 
 visitNode: aNode
 	(self needsParenthesisFor: aNode)
 		ifTrue: 
 			[codeStream nextPut: $(.
-			[aNode acceptVisitor: self] ensure: [codeStream nextPut: $)]]
+			aNode acceptVisitor: self.
+			codeStream nextPut: $)]
 		ifFalse: [aNode acceptVisitor: self]!
 
 visitOptimizedNode: anOptimizedNode
@@ -353,10 +350,8 @@ visitOptimizedNode: anOptimizedNode
 	codeStream nextPut: $)!
 
 visitPatternBlockNode: aRBPatternBlockNode
-	self
-		acceptBlockNode: aRBPatternBlockNode
-		startBlockString: '`{'
-		endBlockString: '}'!
+	self acceptBlockNode: aRBPatternBlockNode startBlockString: '`{'.
+	codeStream nextPut: $}!
 
 visitReturnNode: aReturnNode
 	codeStream nextPut: $^.
@@ -367,9 +362,8 @@ visitSequenceNode: aSequenceNode
 	self formatMethodCommentFor: aSequenceNode indentBefore: false.
 	self formatStatementsFor: aSequenceNode! !
 !Refactory.Browser.RBFormatter categoriesForMethods!
-acceptBlockNode:startBlockString:endBlockString:!private!visitor/double dispatching! !
+acceptBlockNode:startBlockString:!private!visitor/double dispatching! !
 firstLineLength!accessing!public! !
-for:do:separatedBy:!enumerating!private! !
 formatArray:!formatting!private! !
 formatMessage:cascade:!formatting!private! !
 formatMessageSelector:withArguments:multiline:!formatting!private! !
@@ -379,18 +373,16 @@ formatMethodPatternFor:!formatting!private! !
 formatStatementCommentsFor:!formatting!private! !
 formatStatementsFor:!formatting!private! !
 formatTemporariesFor:!formatting!private! !
+indent:around:!formatting!private! !
 indentWhile:!helpers!private! !
 isMultiLine!accessing!public! !
 lastLineLength!accessing!public! !
 lineStart:!accessing!private! !
-maximumArgumentsPerLine!constants!public! !
 needsParenthesisFor:!helpers!private! !
 newLine!helpers!private! !
 newLinesFor:startingAt:!formatting!private! !
 postCopy!copying!public! !
 precedenceOf:greaterThan:!helpers!private! !
-selectorsToLeaveOnLine!constants!public! !
-selectorsToStartOnNewLine!constants!public! !
 startMessageSendOnNewLine:!private!testing! !
 visitAssignmentNode:!public!visitor/double dispatching! !
 visitBlockNode:!public!visitor/double dispatching! !
@@ -423,8 +415,8 @@ maximumArgumentsPerLine
 	#rbFix.	"Added"
 	^MaximumArgumentsPerLine!
 
-maximumArgumentsPerLine: anObject
-	MaximumArgumentsPerLine := anObject!
+maximumArgumentsPerLine: anInteger
+	MaximumArgumentsPerLine := anInteger!
 
 selectorsToLeaveOnLine
 	^SelectorsToLeaveOnLine!

@@ -1425,10 +1425,8 @@ visitPatternWrapperBlockNode:!public!visitor/double dispatching! !
 
 visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
 	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
-	self
-		acceptBlockNode: aRBPatternWrapperBlockNode
-		startBlockString: '`{'
-		endBlockString: '}'! !
+	self acceptBlockNode: aRBPatternWrapperBlockNode startBlockString: '`{'.
+	codeStream nextPut: $}! !
 !Refactory.Browser.RBFormatter categoriesForMethods!
 visitPatternWrapperBlockNode:!public!visitor/double dispatching! !
 !

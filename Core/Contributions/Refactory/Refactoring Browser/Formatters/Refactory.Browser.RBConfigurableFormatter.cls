@@ -211,17 +211,22 @@ formattedSourceFor: aNode
 
 formatTemporariesFor: aSequenceNode
 	aSequenceNode temporaries isEmpty ifTrue: [^self].
-	self
-		bracketWith: '|'
-		around:
-			[self space.
-			aSequenceNode temporaries
-				do:
-					[:each | 
-					self visitNode: each.
-					FormatCommentWithStatements ifTrue: [self formatCommentsFor: each].
-					self space]].
+	codeStream nextPut: $|.
+	self space.
+	aSequenceNode temporaries do: 
+			[:each |
+			self visitNode: each.
+			FormatCommentWithStatements ifTrue: [self formatCommentsFor: each].
+			self space].
+	codeStream nextPut: $|.
 	self newLines: NewLinesAfterTemporaries!
+
+indent: anInteger around: aBlock
+	| answer |
+	indent := indent + anInteger.
+	answer := aBlock value.
+	indent := indent - anInteger.
+	^answer!
 
 indentAround: aBlock 
 	self indent: 1 around: aBlock!
@@ -317,7 +322,9 @@ visitAssignmentNode: anAssignmentNode
 	self visitNode: anAssignmentNode value!
 
 visitBlockNode: aBlockNode
-	self bracketWith: '[]' around: [self formatBlock: aBlockNode]!
+	codeStream nextPut: $[.
+	self formatBlock: aBlockNode.
+	codeStream nextPut: $]!
 
 visitCascadeNode: aCascadeNode
 	self visitNode: aCascadeNode receiver.
@@ -335,11 +342,11 @@ visitCascadeNode: aCascadeNode
 					NewLineAfterCascade ifTrue: [self newLine] ifFalse: [self space]]]!
 
 visitLiteralArrayNode: aRBArrayLiteralNode
-	| brackets |
-	codeStream nextPut: $#.
-	brackets := aRBArrayLiteralNode isForByteArray ifTrue: ['[]'] ifFalse: ['()'].
-	self bracketWith: brackets
-		around: [aRBArrayLiteralNode contents do: [:each | self visitNode: each] separatedBy: [self space]]!
+	codeStream
+		nextPut: $#;
+		nextPut: aRBArrayLiteralNode openBracket.
+	aRBArrayLiteralNode contents do: [:each | self visitNode: each] separatedBy: [self space].
+	codeStream nextPut: aRBArrayLiteralNode closeBracket!
 
 visitLiteralNode: aLiteralNode
 	self writeString: (aLiteralNode token formattedFrom: originalSource)!
@@ -366,12 +373,14 @@ visitNode: aNode
 					ensure: [codeStream nextPut: $)]]!
 
 visitOptimizedNode: anOptimizedNode
-	codeStream nextPutAll: '##'.
-	self bracketWith: '()' around: [self indentAround: [self visitNode: anOptimizedNode body]]!
+	codeStream nextPutAll: '##('.
+	self indentAround: [self visitNode: anOptimizedNode body].
+	codeStream nextPut: $)!
 
 visitPatternBlockNode: aRBPatternBlockNode
-	codeStream nextPut: $`.
-	self bracketWith: '{}' around: [self formatBlock: aRBPatternBlockNode]!
+	codeStream nextPutAll: '`{'.
+	self formatBlock: aRBPatternBlockNode.
+	codeStream nextPut: $}!
 
 visitReturnNode: aReturnNode
 	codeStream
@@ -424,6 +433,7 @@ formatSequenceNodeStatementsFor:!formatting!private! !
 formatStatementCommentsFor:!formatting!private! !
 formattedSourceFor:!formatting!private! !
 formatTemporariesFor:!formatting!private! !
+indent:around:!formatting!private! !
 indentAround:!formatting!private! !
 initialize!initializing!private! !
 isMultilineBlock:!helpers!private! !
