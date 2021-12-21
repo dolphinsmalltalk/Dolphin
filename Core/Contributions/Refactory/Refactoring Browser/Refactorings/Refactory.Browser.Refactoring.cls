@@ -3,7 +3,7 @@
 Core.Object subclass: #'Refactory.Browser.Refactoring'
 	instanceVariableNames: 'model options'
 	classVariableNames: 'RefactoringOptions'
-	imports: #()
+	imports: #(#{Kernel})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.Refactoring guid: (Core.GUID fromString: '{fa372b47-a5ce-4ce3-b6dc-f4a2e26195b5}')!
@@ -18,9 +18,9 @@ associationForClassVariable: aName in: aClass ifAbsent: aBlock
 browseEnvironments: aCollectionOfBrowserEnvironments
 	^(self lookupOption: #browseEnvironments) cull: self cull: aCollectionOfBrowserEnvironments!
 
-canReferenceVariable: aString in: aClass 
+canReferenceVariable: aString in: aClass
 	(aClass definesVariable: aString) ifTrue: [^true].
-	(self model includesGlobal: aString) ifTrue: [^true].
+	(self model includesStaticVariable: aString) ifTrue: [^true].
 	^(self poolVariableNamesFor: aClass) includes: aString!
 
 changes
@@ -56,7 +56,8 @@ classObjectFor: anObject
 	^anObject!
 
 convertAllReferencesTo: aSymbol using: searchReplacer
-	self model allReferencesTo: aSymbol do: [:method | self convertMethod: method using: searchReplacer]!
+	(self model allReferencesTo: aSymbol)
+		do: [:method | self convertMethod: method using: searchReplacer]!
 
 convertAllReferencesToClass: aRBClass using: searchReplacer
 	self model allReferencesToClass: aRBClass
@@ -105,7 +106,8 @@ getOptionAlreadyDefined: aClass selector: aSelection
 				with: aClass)!
 
 getOptionBrowseEnvironments: aCollectionOfBrowserEnvironments
-	^Smalltalk developmentSystem browseMethodsInEnvironments: aCollectionOfBrowserEnvironments!
+	^#{Tools.SmalltalkSystem} value current
+		browseMethodsInEnvironments: aCollectionOfBrowserEnvironments!
 
 getOptionConvertReadBeforeWritten: aString
 	^self confirm: '<1s> is read before it is written. Are you sure you want to convert it to an instance variable?' << aString!
@@ -142,14 +144,8 @@ getOptionMovePools: aCollection
 		confirm: 'This method contains references to shared variables from namespaces that may need to be imported into the target.'!
 
 getOptionNewMethodName: anRBMethodName classes: aCollection
-	| mname prompter |
-	prompter := UI.Prompter create
-				prompt: 'Enter the new method name (without the ''#'')';
-				caption: self displayString;
-				yourself.
-	prompter
-		validater: [:value | (RBMethodName selector: value arguments: anRBMethodName arguments) validate].
-	mname := prompter showModal.
+	| mname |
+	mname := self prompt: 'Enter the new method name (without the ''#'')'.
 	^mname ifNotNil: [anRBMethodName selector: mname]!
 
 getOptionOpenBrowser: anRBEnvironment
@@ -201,7 +197,7 @@ getOptionReplaceReferencesTo: oldSymbol with: newSymbol
 				expandMacros!
 
 getOptionSelfArgumentName
-	^UI.Prompter prompt: 'Enter name for argument to refer to "self" in extracted method'!
+	^self prompt: 'Enter name for argument to refer to "self" in extracted method'!
 
 getOptionUseExistingMethod: aSelector
 	^self
@@ -218,13 +214,11 @@ getOptionVariableToMoveToOf: aClass in: aSelector
 		addAll: parseTree argumentNames asSortedCollection;
 		add: '---- Instance Variables ----'.
 	nameList addAll: aClass allInstanceVariableNames asSortedCollection.
-	^UI.ChoicePrompter choices: nameList caption: 'Select variable to move method into:'!
+	^#{UI.ChoicePrompter} value choices: nameList caption: 'Select variable to move method into:'!
 
-getOptionVariableTypes: types selected: selected
+getOptionVariableTypes: choicesCollection selected: suggestionsCollection
 	| classSelected |
-	selected.
-	classSelected := UI.ChoicePrompter choices: types asOrderedCollection
-				caption: 'Select class of new method…'.
+	classSelected := self chooseFrom: choicesCollection caption: 'Select class of new method…'.
 	^classSelected notNil ifTrue: [{classSelected}] ifFalse: [nil]!
 
 lookupOption: aSymbol

@@ -71,6 +71,16 @@ flushChanges
 	focus := View focus.
 	focus isNil ifFalse: [focus updateModel]!
 
+hintDwell
+	"Private - Answer the <Duration> for which a hint bubble should be shown before fading away."
+
+	^10 seconds!
+
+hintFont
+	"Answer the `Font` to be used for the main text of any hint bubble. This does not affect the headline text, the font of which is not configurable."
+
+	^Font name: 'Segoe UI' pointSize: 10!
+
 initialize
 	"Private - Initialize the receiver"
 
@@ -153,9 +163,12 @@ subject
 validate
 	| result |
 	self view killTimer: ValidationTimerId.
-	result := self model validate.
+	result := self validateModel.
 	self showValidationResult: result.
-	^result! !
+	^result!
+
+validateModel
+	^self model validate! !
 !UI.Dialog categoriesForMethods!
 answer!accessing!public! !
 apply!commands!public! !
@@ -163,6 +176,8 @@ bufferedModelFor:!accessing!private! !
 cancel!commands!public! !
 createSchematicWiring!initializing!public! !
 flushChanges!commands!private! !
+hintDwell!constants!private! !
+hintFont!constants!public! !
 initialize!initializing!private! !
 isConfirmed!public!testing! !
 model:!accessing!public! !
@@ -178,6 +193,7 @@ showShell!operations!public! !
 showValidationResult:!helpers!public! !
 subject!accessing!public! !
 validate!operations!private! !
+validateModel!helpers!private! !
 !
 
 UI.Dialog methodProtocol: #dialogPresenter attributes: #(#readOnly) selectors: #(#apply #cancel #caption #caption: #clearCommandHistory #ensureVisible #hasCommandHistory #hasCommandHistory: #ok #onAboutToDisplayMenu: #onAboutToDisplaySystemMenu: #onActionPerformed #onCloseRequested #onIdleEntered #onInputMaskRequired: #onKeyPressed: #onKeyReleased: #onKeyTyped: #onKillFocus #onLeftButtonDoubleClicked: #onLeftButtonPressed: #onLeftButtonReleased: #onMouseMoved: #onPositionChanged: #onPositionChanging: #onRightButtonDoubleClicked: #onRightButtonPressed: #onRightButtonReleased: #onSetFocus #onTipTextRequired: #onViewClosed #onViewMinimized: #onViewOpened #onViewRestored: #parentPresenter #performAction #redo #revert #setFocus #show #topShell #undo #updateCaption #view)!

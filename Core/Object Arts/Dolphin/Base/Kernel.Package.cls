@@ -593,13 +593,13 @@ fileNameForBinaryVariable: globalName extension: aString
 		stem: globalName asString
 		extension: aString!
 
-fileNameForSourceGlobal: globalName
+fileNameForSourceVariable: globalName
 	"Private - Answer a filename for storing the source globalObject."
 
 	^File
 		composePath: self path
 		stem: globalName asString
-		extension: self sourceGlobalExtension!
+		extension: self sourceVariableExtension!
 
 fileOutName
 	"Answer the pathname used to store the PAX file for the sources of the receiver"
@@ -925,7 +925,7 @@ loadPAX
 	"Load source globals"
 	self variableNames - (self propertyAt: #binaryVariables ifAbsent: #())
 		- (self propertyAt: #aliasVariables ifAbsent: #())
-			do: [:each | self sourceManager fileIn: (self fileNameForSourceGlobal: each)].
+			do: [:each | self sourceManager fileIn: (self fileNameForSourceVariable: each)].
 
 	"Load class definitions, aliases, and loose methods from the remainder of the PAX file"
 	filer fileIn.
@@ -1292,7 +1292,7 @@ privateUninstall
 	emergency situations it should be called from PackageManager>>uninstall:."
 
 	self
-		uninstallGlobals;
+		uninstallVariables;
 		uninstallClasses;
 		uninstallMethods!
 
@@ -1504,15 +1504,15 @@ sourceFilerClass
 sourceFilerOn: stream
 	^self sourceFilerClass on: stream!
 
-sourceGlobalExtension
-	"Private - Answer the file extension for the files to which source globals are stored."
-
-	^ 'st'!
-
 sourceManager
 	"Answer the receiver's source manager."
 
 	^self class sourceManager!
+
+sourceVariableExtension
+	"Private - Answer the file extension for the files to which source globals are stored."
+
+	^'st'!
 
 sourceVariableNames
 	"Private - Answer a <collection> of <BindingReferences>'s, being the shared variables owned by the receiver with values that can be filed out as separate source objects."
@@ -1793,13 +1793,6 @@ uninstallClasses
 					[aClass class methodDictionary: nil.
 					aClass methodDictionary: nil]]!
 
-uninstallGlobals
-	"Private - Uninstall the globals owned by the receiver. Should be done before classes 
-	in case globals hold onto instances of any of the classes."
-
-	self variableNames
-		do: [:globalName | [globalName undeclare] on: Error do: [:ignoredException | ignoredException notify]]!
-
 uninstallMethods
 	"Private - Uninstall the methods owned by the receiver that belong to classes which are not
 	owned by the receiver (i.e. methods installed into classes outside this package)."
@@ -1807,13 +1800,19 @@ uninstallMethods
 	self methodNames
 		do: [:methodName | methodName valueOrNil ifNotNil: [:method | method methodClass removeSelector: method selector]]!
 
+uninstallVariables
+	"Private - Uninstall the static variables owned by the receiver. Should be done before classes in case variables hold onto instances of any of the classes."
+
+	self variableNames
+		do: [:varName | [varName undeclare] on: Error do: [:ignoredException | ignoredException notify]]!
+
 untracedGlobals: aCollectionOfSymbols
 	"For loading of pre-V2 packages."
 
 	untracedVariables := aCollectionOfSymbols!
 
 untracedVariables
-	"Answer a <Set> of <BindingReference>s, being the names of the shared variables which should be ignored when tracing prerequisites. This allows a shared variable to reference an object from another package without creating a dependency on that package. An example of where this is useful is that the Transcript global owned by the base package is assigned an instance of TranscriptShell by the Transcript development package when the latter is loaded. "
+	"Answer a <Set> of <BindingReference>s, being the names of the static variables which should be ignored when tracing prerequisites. This allows a static variable to reference an object from another package without creating a dependency on that package. An example of where this is useful is that the Transcript global owned by the base package is assigned an instance of TranscriptShell by the Transcript development package when the latter is loaded. "
 
 	^untracedVariables ifNil: [Set new]!
 
@@ -1862,7 +1861,7 @@ validate
 	methodNames isEmpty ifTrue: [methodNames := nil]!
 
 variableNames
-	"Answer a <Collection> of <BindingReferences>s, naming all shared variable objects (including pools but excluding classes) owned by the receiver."
+	"Answer a <Collection> of <BindingReferences>s, naming all shared variable objects (excluding classes) owned by the receiver."
 
 	^variableNames!
 
@@ -1870,7 +1869,7 @@ variableNames: aSet
 	variableNames := aSet!
 
 variables
-	"Private - Answer a <collection> of <VariableBindings>s, being the receiver's shared variables."
+	"Private - Answer a <collection> of <VariableBindings>s, being the receiver's owned static variables."
 
 	^self variableNames collect: 
 			[:each |
@@ -1970,7 +1969,7 @@ evaluateScript:source:!private!source filing! !
 fileInClasses!private!source filing! !
 fileInScript:!private!source filing! !
 fileNameForBinaryVariable:extension:!helpers!private! !
-fileNameForSourceGlobal:!helpers!private! !
+fileNameForSourceVariable:!helpers!private! !
 fileOutName!public!source filing! !
 getEvents!accessing!private! !
 getPrerequisites!accessing!private! !
@@ -2083,8 +2082,8 @@ sourceDescriptor!accessing!private! !
 sourceDescriptor:!accessing!private! !
 sourceFilerClass!private!source filing-class definition! !
 sourceFilerOn:!loading!private! !
-sourceGlobalExtension!constants!private! !
 sourceManager!accessing!public! !
+sourceVariableExtension!constants!private! !
 sourceVariableNames!accessing!private! !
 stbSaveOn:!binary filing!public! !
 storeComment!helpers!private! !
@@ -2102,8 +2101,8 @@ tracePrerequisitesOfMethods:!operations!private! !
 tracePrerequisitesOfVariables:packagedVariables:!operations!private! !
 uninstall!public!removing! !
 uninstallClasses!class hierarchy-removing!private!removing! !
-uninstallGlobals!private!removing! !
 uninstallMethods!private!removing! !
+uninstallVariables!private!removing! !
 untracedGlobals:!legacy package loading!private! !
 untracedVariables!accessing!public! !
 untracedVariables:!accessing!public! !

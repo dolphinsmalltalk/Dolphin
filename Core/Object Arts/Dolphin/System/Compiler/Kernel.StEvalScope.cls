@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.StSemanticScope subclass: #'Kernel.StEvalScope'
-	instanceVariableNames: 'pools'
+	instanceVariableNames: 'pools outer'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -11,9 +11,17 @@ Kernel.StEvalScope comment: ''!
 !Kernel.StEvalScope categoriesForClass!Kernel-Objects! !
 !Kernel.StEvalScope methodsFor!
 
-lookupVariable: anStVariableNode
-	"Lookup and return an <StVariable> describing the variable definition in this scope matching
-	the variable reference specified by the <StVariableNode> argument."
+outer
+	^outer!
+
+outer: aStSemanticScope
+	outer := aStSemanticScope!
+
+pools: anArray
+	pools := anArray!
+
+resolveVariable: anStVariableNode
+	"Private - Lookup and return an <StVariable> describing the variable definition in this scope matching the variable reference specified by the (non-special) <StVariableNode> argument."
 
 	| identifier |
 	identifier := anStVariableNode name.
@@ -21,20 +29,23 @@ lookupVariable: anStVariableNode
 			[:each |
 			(each bindingFor: identifier)
 				ifNotNil: [:binding | ^StWorkspaceVariable scope: self binding: binding]].
-	^outer lookupVariable: anStVariableNode!
-
-setPools: anArray
-	pools := anArray! !
+	^outer resolveVariable: anStVariableNode! !
 !Kernel.StEvalScope categoriesForMethods!
-lookupVariable:!operations!public! !
-setPools:!initializing!private! !
+outer!accessing!public! !
+outer:!initializing!private! !
+pools:!initializing!private! !
+resolveVariable:!operations!private! !
 !
 
 !Kernel.StEvalScope class methodsFor!
 
-pools: pools
-	^self new setPools: pools! !
+pools: pools outer: aStSemanticScope
+	<primitive: 157>
+	^self new
+		pools: pools;
+		outer: aStSemanticScope;
+		yourself! !
 !Kernel.StEvalScope class categoriesForMethods!
-pools:!instance creation!public! !
+pools:outer:!instance creation!public! !
 !
 

@@ -23,17 +23,50 @@ externalReference: aClassToRename _: aClassToRename2
 name
 	^rewriteRule1!
 
-partiallyQualifiedReference1
-	^Tests.ClassToRename new!
+refersToClassFullyQualified
+	^Refactory.Browser.Tests.ClassToRename!
 
-partiallyQualifiedReference2
-	^Browser.Tests.ClassToRename new!
+refersToClassFullyQualifiedBinding
+	^#{Refactory.Browser.Tests.ClassToRename}!
 
-qualifiedReferences
-	^{Refactory.Browser.Tests.ClassToRename new.
-		Tests.ClassToRename new.
-		Browser.Tests.ClassToRename new.
-		ClassToRename new}!
+refersToClassFullyQualifiedName
+	^#'Refactory.Browser.Tests.ClassToRename'!
+
+refersToClassPartiallyQualified1
+	^Tests.ClassToRename!
+
+refersToClassPartiallyQualified2
+	^Browser.Tests.ClassToRename!
+
+refersToClassPartiallyQualifiedBinding1
+	^#{_.Tests.ClassToRename}!
+
+refersToClassPartiallyQualifiedBinding2
+	^#{_.Browser.Tests.ClassToRename}!
+
+refersToClassPartiallyQualifiedName
+	"Not considered a reference. Will not be renamed"
+
+	^#'Tests.ClassToRename'!
+
+refersToClassUnqualified
+	^ClassToRename!
+
+refersToClassUnqualifiedBinding
+	^#{ClassToRename}!
+
+refersToClassUnqualifiedName
+	^#ClassToRename!
+
+refersToOtherClassPartiallyQualifiedBinding
+	"Not a valid relative reference to the superclass (does not bind - try sending it #value)"
+
+	^#{_.Tools.ClassToRename}!
+
+refersToOtherClassPartiallyQualifiedName
+	"Definitely not a reference. Will not be renamed"
+
+	^#'Tools.ClassToRename'!
 
 rewriteRule1
 	^rewriteRule1!
@@ -41,18 +74,30 @@ rewriteRule1
 rewriteRule1: anObject
 	^rewriteRule1 := anObject!
 
-symbolicReferences
-	^#(#ClassToRename #'Tests.ClassToRename' #'Refactory.Browser.Tests.ClassToRename' #'Tools.ClassToRename' #'Smalltalk.ClassToRename')! !
+unqualifiedBindingReference
+	"This is a relative reference"
+
+	^#{ClassToRename}! !
 !Refactory.Browser.Tests.SubclassOfClassToRename categoriesForMethods!
 calls!accessing!public! !
 calls1!accessing!public! !
 externalReference:_:!performing!public! !
 name!accessing!public! !
-partiallyQualifiedReference1!performing!public! !
-partiallyQualifiedReference2!performing!public! !
-qualifiedReferences!performing!public! !
+refersToClassFullyQualified!performing!public! !
+refersToClassFullyQualifiedBinding!lint!public! !
+refersToClassFullyQualifiedName!performing!public! !
+refersToClassPartiallyQualified1!performing!public! !
+refersToClassPartiallyQualified2!performing!public! !
+refersToClassPartiallyQualifiedBinding1!performing!public! !
+refersToClassPartiallyQualifiedBinding2!performing!public! !
+refersToClassPartiallyQualifiedName!performing!public! !
+refersToClassUnqualified!performing!public! !
+refersToClassUnqualifiedBinding!performing!public! !
+refersToClassUnqualifiedName!performing!public! !
+refersToOtherClassPartiallyQualifiedBinding!performing!public! !
+refersToOtherClassPartiallyQualifiedName!performing!public! !
 rewriteRule1!accessing!public! !
 rewriteRule1:!accessing!public! !
-symbolicReferences!performing!public! !
+unqualifiedBindingReference!performing!public! !
 !
 

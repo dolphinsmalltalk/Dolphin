@@ -35,8 +35,8 @@ needsOuter
 
 	^flags anyMask: NeedsOuterMask! !
 !Kernel.StBlockScope categoriesForMethods!
-isEmptyBlock!public! !
-markEmpty!public! !
+isEmptyBlock!public!testing! !
+markEmpty!accessing!public! !
 needsOuter!accessing!public! !
 !
 
@@ -44,7 +44,7 @@ needsOuter!accessing!public! !
 
 forScopeNode: anStBlockNode outer: anStLexicalScope
 	^(anStBlockNode isInlined ifTrue: [StOptimizedBlockScope] ifFalse: [self]) new
-		setNode: anStBlockNode outer: anStLexicalScope;
+		node: anStBlockNode outer: anStLexicalScope;
 		yourself! !
 !Kernel.StBlockScope class categoriesForMethods!
 forScopeNode:outer:!instance creation!public! !

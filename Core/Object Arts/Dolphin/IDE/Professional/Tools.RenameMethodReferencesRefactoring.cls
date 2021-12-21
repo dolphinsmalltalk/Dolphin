@@ -22,8 +22,7 @@ displayOn: aPuttableStream
 
 getOptionReplaceReferencesTo: oldSymbol with: newSymbol
 	| references details |
-	references := OrderedCollection new.
-	self model allReferencesTo: oldSymbol do: [:method | references add: method].
+	references := self model allReferencesTo: oldSymbol.
 	details := String writeStream.
 	details
 		print: oldSymbol;

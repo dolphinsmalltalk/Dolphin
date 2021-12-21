@@ -26,6 +26,11 @@ addAssignment: anStVariableNode fromScope: anStSemanticScope
 addRead: anStVariableNode fromScope: anStSemanticScope
 	(reads ifNil: [reads := OrderedCollection new]) addLast: anStVariableNode!
 
+binding
+	"Answer the <VariableBinding> which is the underlying representation of the static variable described by the receiver."
+
+	^nil!
+
 isArgument
 	"Answer whether the receiver describes an argument variable."
 
@@ -105,6 +110,7 @@ writes
 !Kernel.StVariable categoriesForMethods!
 addAssignment:fromScope:!public! !
 addRead:fromScope:!public! !
+binding!accessing!public! !
 isArgument!public!testing! !
 isConstant!public!testing! !
 isInstanceVariable!public!testing! !
@@ -114,7 +120,7 @@ isStaticVariable!public!testing! !
 isTempVariable!public!testing! !
 isWritten!public!testing! !
 name!accessing!public! !
-printOn:!public! !
+printOn:!printing!public! !
 reads!accessing!public! !
 scope!accessing!public! !
 scope:!accessing!public! !

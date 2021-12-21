@@ -1,7 +1,9 @@
 ﻿| package |
 package := Package name: 'RB (Old Names)'.
 package paxVersion: 2.1;
-	basicComment: ''.
+	basicComment: 'Refactory classes Old (Pre-namespace) Names.
+
+This package includes legacy aliases for Refactory classes that have been renamed in Dolphin 8.x following the addition of Namespaces. The names are deprecated, but may be referenced by pre-8.x packages.'.
 
 
 package setVariableNames: #(

@@ -12,10 +12,10 @@ Refactory.Browser.RenameInstanceVariableRefactoring comment: ''!
 !Refactory.Browser.RenameInstanceVariableRefactoring methodsFor!
 
 preconditions
-	^(RBCondition isValidInstanceVariableName: newName for: class) 
-		& (RBCondition definesInstanceVariable: variableName in: class) 
-			& (RBCondition hierarchyOf: class definesVariable: newName) not 
-			& (RBCondition isGlobal: newName in: self model) not!
+	^(RBCondition isValidInstanceVariableName: newName for: class)
+		& (RBCondition definesInstanceVariable: variableName in: class)
+			& (RBCondition hierarchyOf: class definesVariable: newName) not
+			& (RBCondition isStatic: newName in: self model) not!
 
 rename: aVarName to: aName in: aClass
 	#rbFix. "Set the newName first so displayString works."

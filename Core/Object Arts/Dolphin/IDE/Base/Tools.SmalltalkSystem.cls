@@ -3650,7 +3650,7 @@ removeSelectors: aCollection fromProtocol: aMethodProtocol
 				defaultButton: 2;
 				buttonStyle: #okCancel;
 				iconStyle: #prompt;
-				headline: 'Remove selectors from <1d>' << aMethodProtocol;
+				headline: 'Remove selectors from <1d>?' << aMethodProtocol;
 				text: prompt;
 				detailsText: 'Removing selectors from a protocol may also affect other conforming classes or the users of those classes.<n><n>It is recommended that you cancel this operation unless you are sure.'
 							expandMacros;

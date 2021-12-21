@@ -31,6 +31,15 @@ asFullyQualifiedReference
 	^BindingReference pathString: self environmentName , PathSeparatorString , self unqualifiedName
 		private: private!
 
+asString
+	"Answer a <readableString> that is the receiver's qualified name expression."
+
+	| identifier |
+	identifier := self pathString.
+	^(identifier includes: PathSeparator)
+		ifTrue: [RelativePathStringPrefix , identifier]
+		ifFalse: [identifier]!
+
 baseClass
 	"Answer the 'class' context of the receiver, if a relative reference defined within the context of a class or method, or nil if absolute.
 	When non-nil, this is the starting point for resolution of the binding path, and that 'class' context is asked to resolve the binding."
@@ -119,6 +128,7 @@ setScope: anObject
 !Kernel.RelativeBindingReference categoriesForMethods!
 =!comparing!public! !
 asFullyQualifiedReference!converting!public! !
+asString!converting!public! !
 baseClass!accessing!public! !
 bindingScope!accessing!public! !
 displayOn:!displaying!public! !

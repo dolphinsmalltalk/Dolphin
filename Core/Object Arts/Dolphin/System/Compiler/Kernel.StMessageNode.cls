@@ -67,9 +67,9 @@ buildSelector
 	selectorParts do: [:each | selectorStream nextPutAll: each value].
 	^selectorStream contents asSymbol!
 
-childrenDo: aMonadicValuable 
+childrenDo: aMonadicValuable
 	aMonadicValuable value: self receiver.
-	self arguments do: aMonadicValuable!
+	arguments do: aMonadicValuable!
 
 hash
 	^(self receiver hash bitXor: self selector hash) 
@@ -85,6 +85,9 @@ isCascaded
 
 isFirstCascaded
 	^self isCascaded and: [parent messages first == self]!
+
+isFirstSendToReceiver
+	^parent isNil or: [parent isCascade not or: [parent messages first == self]]!
 
 isInlineable
 	"Answer whether this is an optimisable message, such as #whileTrue."
@@ -210,7 +213,8 @@ hash!comparing!public! !
 isBinary!public!testing! !
 isCascaded!public!testing! !
 isFirstCascaded!public!testing! !
-isInlineable!public! !
+isFirstSendToReceiver!public!testing! !
+isInlineable!public!testing! !
 isKeyword!public!testing! !
 isMessage!public!testing! !
 isUnary!public!testing! !

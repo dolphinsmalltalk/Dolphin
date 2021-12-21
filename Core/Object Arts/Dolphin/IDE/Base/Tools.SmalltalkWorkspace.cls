@@ -1230,7 +1230,9 @@ resolveVariable: anStIdentifierToken
 				ifNil: 
 					["Workspace pool is lowest priority"
 					(self workspacePool bindingFor: name)
-						ifNotNil: [:var | ^StWorkspaceVariable scope: (StEvalScope pools: {self workspacePool}) binding: var]]]!
+						ifNotNil: 
+							[:var |
+							^StWorkspaceVariable scope: (StEvalScope pools: {self workspacePool} outer: nil) binding: var]]]!
 
 searchEnvironment
 	^searchEnvironment ifNil: [self systemModel systemEnvironment]!

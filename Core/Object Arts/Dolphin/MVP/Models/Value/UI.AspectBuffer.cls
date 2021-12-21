@@ -64,7 +64,7 @@ initialize
 
 	gate := false asValue.
 	aspects := IdentityDictionary new.
-	validater := [:x | ValidationResult value: x isValid]!
+	validater := [:x | ValidationResult value: ((x respondsTo: #isValid) not or: [x isValid])]!
 
 isValid
 	"Answer true if the updates to the model copy are valid. The validater is invoked to check validity of the current value."
@@ -85,7 +85,6 @@ isValidBlock: aMonadicValuable
 notifyChanged
 	"Notify observers that all aspects of the receiver have changed."
 
-Sound bell.
 	aspects do: [:each | each notifyChanged]!
 
 onGateChanged

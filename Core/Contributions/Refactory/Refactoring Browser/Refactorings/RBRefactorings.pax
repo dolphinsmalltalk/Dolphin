@@ -55,6 +55,7 @@ package setClassNames: #(
 	#{Refactory.Browser.RBNamespaceClass}
 	#{Refactory.Browser.RBNegationCondition}
 	#{Refactory.Browser.RBReadBeforeWrittenTester}
+	#{Refactory.Browser.RBVariableAnalyser}
 	#{Refactory.Browser.RBVariableBinding}
 	#{Refactory.Browser.Refactoring}
 	#{Refactory.Browser.RefactoringError}
@@ -66,7 +67,6 @@ package setClassNames: #(
 	#{Refactory.Browser.RemoveInstanceVariableRefactoring}
 	#{Refactory.Browser.RemoveMethodRefactoring}
 	#{Refactory.Browser.RemoveParameterRefactoring}
-	#{Refactory.Browser.RenameClassRefactoring}
 	#{Refactory.Browser.RenameClassVariableRefactoring}
 	#{Refactory.Browser.RenameInstanceVariableRefactoring}
 	#{Refactory.Browser.RenameMethodRefactoring}
@@ -80,16 +80,26 @@ package setMethodNames: #(
 	#(#{Core.Class} #rbClass)
 	#(#{Core.Class class} #rootsOfTheWorld)
 	#(#{Kernel.Namespace class} #rbClass)
+	#(#{Kernel.StAbstractVariableNode} #refersToClass:)
+	#(#{Kernel.StLiteralArrayNode} #refersToClass:)
+	#(#{Kernel.StLiteralNode} #refersToClass:)
+	#(#{Kernel.StParameterNode} #refersToClass:)
+	#(#{Kernel.StQualifiedReferenceNode} #refersToClass:)
+	#(#{Kernel.StStaticVariable} #refersToClass:)
+	#(#{Kernel.StTempDeclNode} #refersToClass:)
+	#(#{Kernel.StVariable} #refersToClass:)
+	#(#{Kernel.StVariableNode} #refersToClass:)
+	#(#{Kernel.VariableBinding} #refersToClass:)
+	#(#{Refactory.Browser.RBPatternVariableNode} #refersToClass:)
 ).
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
-	'..\..\..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter'
-	'..\..\..\..\Object Arts\Dolphin\MVP\Presenters\Prompters\Dolphin Prompter'
 	'..\Change Objects\RBChangeObjects'
 	'..\Environments\RBEnvironments'
 	'..\..\RBNamespaces'
 	'..\Parser\RBParser'
+	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Compiler'
 	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
 ).
 
@@ -110,7 +120,7 @@ Core.Object subclass: #'Refactory.Browser.RBAbstractCondition'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'Refactory.Browser.RBMethod'
-	instanceVariableNames: 'class compiledMethod source selector'
+	instanceVariableNames: 'class compiledMethod source selector parseTree'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -122,7 +132,7 @@ Core.Object subclass: #'Refactory.Browser.RBMethodName'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'Refactory.Browser.RBModel'
-	instanceVariableNames: 'changes environment newClasses removedClasses changedClasses rootClasses implementorsCache sendersCache totalBindingsLoadTime totalBindingsLoaded'
+	instanceVariableNames: 'changes environment newClasses removedClasses modelClasses rootClasses implementorsCache sendersCache enumerating'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -130,7 +140,7 @@ Core.Object subclass: #'Refactory.Browser.RBModel'
 Core.Object subclass: #'Refactory.Browser.Refactoring'
 	instanceVariableNames: 'model options'
 	classVariableNames: 'RefactoringOptions'
-	imports: #()
+	imports: #(#{Kernel})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'Refactory.Browser.RefactoringManager'
@@ -169,8 +179,14 @@ Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.RBReadBeforeWrittenTester'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Kernel.AbstractSemanticAnalyser subclass: #'Refactory.Browser.RBVariableAnalyser'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName bindings imports category comment environment'
+	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName bindings imports category comment environment binding'
 	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -261,12 +277,6 @@ Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.AddClassRefacto
 	classConstants: {}!
 Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.ChildrenToSiblingsRefactoring'
 	instanceVariableNames: 'parent subclasses'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.RenameClassRefactoring'
-	instanceVariableNames: 'newName class'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -501,6 +511,97 @@ rbClass
 	^Refactory.Browser.RBNamespaceClass! !
 !Kernel.Namespace class categoriesForMethods!
 rbClass!constants!public! !
+!
+
+!Kernel.StAbstractVariableNode methodsFor!
+
+refersToClass: aRBClass
+	^false! !
+!Kernel.StAbstractVariableNode categoriesForMethods!
+refersToClass:!public!testing! !
+!
+
+!Kernel.StLiteralArrayNode methodsFor!
+
+refersToClass: aClass
+	^self contents anySatisfy: [:each | each refersToClass: aClass]! !
+!Kernel.StLiteralArrayNode categoriesForMethods!
+refersToClass:!public!testing! !
+!
+
+!Kernel.StLiteralNode methodsFor!
+
+refersToClass: aClass
+	^false! !
+!Kernel.StLiteralNode categoriesForMethods!
+refersToClass:!public!testing! !
+!
+
+!Kernel.StParameterNode methodsFor!
+
+refersToClass: aRBClass
+	^false! !
+!Kernel.StParameterNode categoriesForMethods!
+refersToClass:!public!testing! !
+!
+
+!Kernel.StQualifiedReferenceNode methodsFor!
+
+refersToClass: aClass
+	| var |
+	var := self binding.
+	#namespaceToDo.	"What about the reference a VariableBinding has to it's environment?"
+	^var notNil and: [var refersToClass: aClass]! !
+!Kernel.StQualifiedReferenceNode categoriesForMethods!
+refersToClass:!public!testing! !
+!
+
+!Kernel.StStaticVariable methodsFor!
+
+refersToClass: aClass
+	^binding notNil and: [binding refersToClass: aClass]! !
+!Kernel.StStaticVariable categoriesForMethods!
+refersToClass:!public!testing! !
+!
+
+!Kernel.StTempDeclNode methodsFor!
+
+refersToClass: aRBClass
+	^false! !
+!Kernel.StTempDeclNode categoriesForMethods!
+refersToClass:!public!testing! !
+!
+
+!Kernel.StVariable methodsFor!
+
+refersToClass: aClass
+	^false! !
+!Kernel.StVariable categoriesForMethods!
+refersToClass:!public!testing! !
+!
+
+!Kernel.StVariableNode methodsFor!
+
+refersToClass: aClass
+	^variable notNil and: [variable refersToClass: aClass]! !
+!Kernel.StVariableNode categoriesForMethods!
+refersToClass:!public!testing! !
+!
+
+!Kernel.VariableBinding methodsFor!
+
+refersToClass: aClass
+	^self isClassBinding and: [value == aClass]! !
+!Kernel.VariableBinding categoriesForMethods!
+refersToClass:!public!testing! !
+!
+
+!Refactory.Browser.RBPatternVariableNode methodsFor!
+
+refersToClass: aRBClass
+	^false! !
+!Refactory.Browser.RBPatternVariableNode categoriesForMethods!
+refersToClass:!public!testing! !
 !
 
 "End of package definition"!

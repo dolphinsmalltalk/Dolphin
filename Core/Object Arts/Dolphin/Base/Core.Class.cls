@@ -25,8 +25,24 @@ In reality, `Class` has no instances. All classes in the system are actually ins
 !Core.Class categoriesForClass!Kernel-Classes! !
 !Core.Class methodsFor!
 
+_rename: aString in: aNamespace
+	"Private - Rename the receiver to aString.
+	This will change the receiver's key in the specified Namespace whilst maintaining the binding. This means that any existing references will be maintained but method source code will still contain the old name and will subsequently fail to compile unless edited.
+
+	We Remove the receiver from the subclass collection of its superclass for the	duration of the rename just in case the subclass collection is ordered by name."
+
+	| oldName binding |
+	self removeFromSuper.
+	oldName := name.
+	
+	[binding := aNamespace changeKey: oldName to: aString.
+	self setName: binding key asSymbol environment: binding environment]
+			ensure: [self addToSuper].
+	"Note how the event is delayed until the class is correctly wired in"
+	aNamespace variableRenamed: binding from: oldName!
+
 absoluteName
-	"Answer the <String> fully qualified name of this namespace, inclusive of 'Root'. This is guaranteed to be unambiguous."
+	"Answer the <String> absolute qualified name of this class, inclusive of 'Root'. This is guaranteed to be unambiguous."
 
 	| stream |
 	stream := WriteStream on: (Utf8String new: 40).
@@ -525,6 +541,11 @@ localBindingFor: aString
 
 	^classPool bindingFor: aString!
 
+metaclass
+	"Answer the <Metaclass> of the Class/Metaclass pair."
+
+	^self class!
+
 name
 	"Answer a <readableString> that is the name of the receiver
 	Implementation Note: For compatibility reasons, the answer is actually a Symbol."
@@ -627,6 +648,14 @@ printString
 
 	^self shortName!
 
+removeBindingFor: aString
+	^(self localBindingFor: aString)
+		ifNotNil: 
+			[:binding |
+			self basicRemoveBinding: binding.
+			self variableRemoved: binding.
+			binding]!
+
 removeClassConstant: anAssociation
 	self removeClassVarName: anAssociation key!
 
@@ -635,7 +664,7 @@ removeClassVarName: aString
 	Note: This is a low-level operation and does not recompile affected classes. Generally 
 	speaking any modification to a class should be made through a <ClassBuilder>."
 
-	self removeLocalBindingFor: aString.
+	self removeBindingFor: aString.
 	classPool isEmpty ifTrue: [classPool := nil]!
 
 removeFromCategory: category
@@ -663,14 +692,6 @@ removeFromSystem
 removeImport: aBindingReference
 	imports := imports copyWithout: aBindingReference!
 
-removeLocalBindingFor: aString
-	^(self localBindingFor: aString)
-		ifNotNil: 
-			[:binding |
-			self basicRemoveBinding: binding.
-			self variableRemoved: binding.
-			binding]!
-
 removeSubclass: aClass
 	"Private - Remove the argument, aClass, from the subclasses of the receiver.
 	WARNING: This method does not completely remove a class from the system."
@@ -686,7 +707,7 @@ rename: aString
 
 	| currentName |
 	currentName := self absoluteName.
-	self rename: aString in: self environment.
+	self _rename: aString in: self environment.
 	self sourceManager logEvaluate: (String writeStream
 				nextPutAll: currentName;
 				space;
@@ -694,21 +715,6 @@ rename: aString
 				space;
 				print: aString;
 				contents)!
-
-rename: aString in: aNamespace
-	"Private - Rename the receiver to aString.
-	This will change the receiver's key in the specified Namespace whilst maintaining the binding. This means that any existing references will be maintained but method source code will still contain the old name and will subsequently fail to compile unless edited.
-
-	We Remove the receiver from the subclass collection of its superclass for the	duration of the rename just in case the subclass collection is ordered by name."
-
-	| oldName binding |
-	self removeFromSuper.
-	oldName := name.
-	binding := aNamespace changeKey: oldName to: aString.
-	self setName: binding key asSymbol environment: binding environment.
-	self addToSuper.
-	"Note how the event is delayed until the class is correctly wired in"
-	aNamespace variableRenamed: binding from: oldName!
 
 requiresInstallation
 	"Answer whether the receiver requires 'installing' into its environment."
@@ -931,6 +937,18 @@ subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: 
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass!
 
+subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
+	"If aClassSymbol is not an existing class then create and answer a new fixed pointer subclass, otherwise modify the class with name aClassSymbol to have the indicated features and answer it.
+	Primarily present for backwards compatibility with Smalltalk-80 and used by the Refactory Browser classes."
+
+	^(self
+		subclass: aClassSymbol
+		instanceVariableNames: instVarString
+		classVariableNames: classVarString
+		imports: (self importsFromPoolsString: poolDictString))
+		categories: {ClassCategory name: aCategoryOrString};
+		yourself!
+
 subclasses
 	"Answer a <collection> containing the receiver's immediate subclasses.
 
@@ -1045,10 +1063,11 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 	subclass class instanceVariableNames: classInstVarString.
 	^subclass! !
 !Core.Class categoriesForMethods!
+_rename:in:!class hierarchy-mutating!private! !
 absoluteName!accessing!namespaces!public! !
 absoluteNameFor:!public! !
 absoluteReference!accessing!namespaces!public! !
-addBinding:!class variables!private! !
+addBinding:!class variables!public! !
 addClassConstant:!class variables!development!public! !
 addClassConstant:value:!class variables!development!public! !
 addClassVariable:value:!class hierarchy-mutating!class variables!public! !
@@ -1109,7 +1128,7 @@ imports:!pool variables!public! !
 importsFromPoolsString:!class hierarchy-adding!private! !
 includeInCategory:!categories-adding!public! !
 includesEnvironment:!private!testing! !
-includesNamespace:!private!testing! !
+includesNamespace:!public!testing! !
 initializeAfterLoad!class initialization!public! !
 instanceClass!accessing!public! !
 isAbstract:!instance specification-accessing!public! !
@@ -1117,6 +1136,7 @@ isAnonymous!public!testing! !
 isAtomic!public!testing! !
 isSelfEvaluating!public!testing! !
 localBindingFor:!bindings!public! !
+metaclass!accessing!public! !
 name!accessing!public! !
 nestedClasses!accessing!public! !
 nestedClassesDo:!enumerating!public! !
@@ -1131,16 +1151,15 @@ printFullNameOn:!helpers!private! !
 printNameOn:relativeTo:!printing!private! !
 printOn:!printing!public! !
 printString!printing!public! !
+removeBindingFor:!bindings!public! !
 removeClassConstant:!class variables!development!public! !
 removeClassVarName:!class hierarchy-mutating!class variables!public! !
 removeFromCategory:!categories-removing!public! !
 removeFromSuper!operations!private! !
 removeFromSystem!class hierarchy-removing!private! !
 removeImport:!namespaces!public! !
-removeLocalBindingFor:!bindings!public! !
 removeSubclass:!helpers!private! !
 rename:!class hierarchy-mutating!private! !
-rename:in:!class hierarchy-mutating!private! !
 requiresInstallation!public!testing! !
 resolveBindingPath:!bindings!private! !
 resolveBindingPath:environment:!bindings!private! !
@@ -1164,6 +1183,7 @@ stbVersion!binary filing!public! !
 storeGUID!private!source filing-class definition! !
 subclass:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!public! !
 subclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
+subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 subclasses!class hierarchy-accessing!public! !
 subclasses:!class hierarchy-mutating!public! !
 subclassesDo:!class hierarchy-accessing!public! !
@@ -1180,6 +1200,7 @@ variableSubclass:instanceVariableNames:classVariableNames:imports:classInstanceV
 !
 
 Core.Class methodProtocol: #importableNamespace attributes: #(#readOnly) selectors: #(#asQualifiedReference #resolvePublicBinding:)!
+Core.Class methodProtocol: #namespace attributes: #(#readOnly) selectors: #(#addBinding: #addImport: #environment #fullBindingFor:environment: #fullName #hierarchyBindingFor: #imports #includesNamespace: #localBindingFor: #removeBindingFor: #removeImport: #unqualifiedName)!
 
 !Core.Class class methodsFor!
 

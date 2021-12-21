@@ -12,11 +12,9 @@ Refactory.Browser.AddClassVariableRefactoring comment: ''!
 !Refactory.Browser.AddClassVariableRefactoring methodsFor!
 
 preconditions
-	^(RBCondition isMetaclass: class) not 
-		& (RBCondition isValidClassVarName: variableName for: class) 
-			& (RBCondition hierarchyOf: class definesVariable: variableName asString) 
-					not 
-			& (RBCondition isGlobal: variableName in: self model) not!
+	^(RBCondition isMetaclass: class) not & (RBCondition isValidClassVarName: variableName for: class)
+		& (RBCondition hierarchyOf: class definesVariable: variableName asString) not
+			& (RBCondition isStatic: variableName in: self model) not!
 
 transform
 	class addClassVariable: variableName! !

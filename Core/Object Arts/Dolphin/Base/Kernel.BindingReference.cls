@@ -40,7 +40,7 @@ It might have been better if literal binding references were always relative, un
 asString
 	"Answer a <readableString> that is the receiver's qualified name expression."
 
-	^self displayString!
+	^self pathString!
 
 baseClass
 	"Answer the 'class' context of the receiver, if a relative reference defined within the context of a class or method, or nil if absolute.

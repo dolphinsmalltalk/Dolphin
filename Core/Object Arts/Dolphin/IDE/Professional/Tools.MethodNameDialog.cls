@@ -66,11 +66,6 @@ getHintCaption: aValidationResult
 	^aValidationResult caption
 		ifNil: [aValidationResult hint iconStyle == #error ifTrue: ['Invalid Signature']]!
 
-hintDwell
-	"Private - Answer the <Duration> for which a hint bubble should be shown before fading away."
-
-	^10 seconds!
-
 hintFont
 	"Private - Answer the `Font` to be used for the main text of any hint bubble. This does not affect the headline text, the font of which is not configurable."
 
@@ -117,7 +112,12 @@ onSignatureChanged
 preTranslateKeyboardInput: aMSG
 	"Answer whether the receiver would like to consume the argument aMSG, which is a keyboard message."
 
-	(aMSG isKeyPress: VK_RETURN) ifTrue: [self validate].
+	(aMSG isKeyPress: VK_RETURN)
+		ifTrue: 
+			[| button |
+			"If the default button is disabled, it may be helpful to show validation errors"
+			button := self view defaultButton.
+			(button notNil and: [button isEnabled not]) ifTrue: [self validate]].
 	^super preTranslateKeyboardInput: aMSG!
 
 queryCommand: aCommandQuery
@@ -147,12 +147,7 @@ validater
 	^self model validater!
 
 validater: aMonadicValuable
-	self model validater: aMonadicValuable!
-
-validationDwell
-	"The <Duration> to wait after the user has stopped typing before re-validating and possibly showing a hint bubble."
-
-	^1 seconds! !
+	self model validater: aMonadicValuable! !
 !Tools.MethodNameDialog categoriesForMethods!
 allowExistingSelector!public!testing! !
 allowParameterRename:!accessing!public! !
@@ -162,7 +157,6 @@ conditionsFor:!helpers!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 getHintCaption:!helpers!private! !
-hintDwell!constants!private! !
 hintFont!constants!private! !
 hintPosition!accessing!private! !
 isInputValid!private!testing! !
@@ -175,7 +169,6 @@ queryCommand:!commands!private! !
 showValidationResult:!helpers!private! !
 validater!accessing!public! !
 validater:!accessing!public! !
-validationDwell!constants!public! !
 !
 
 !Tools.MethodNameDialog class methodsFor!

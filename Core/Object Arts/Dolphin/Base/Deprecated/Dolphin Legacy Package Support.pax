@@ -48,7 +48,6 @@ package setMethodNames: #(
 	#(#{Kernel.Package} #versionLookup)
 	#(#{Kernel.Package class} #binaryGlobalExtension)
 	#(#{Kernel.Package class} #name:comment:)
-	#(#{Kernel.Package class} #sourceGlobalExtension)
 ).
 
 package setPrerequisites: #(
@@ -419,16 +418,10 @@ name: nameString comment: commentString
 	#deprecated.	"In 4.0, but retained becaused needed to load some old format packages"
 	^(self name: nameString)
 		basicComment: commentString;
-		yourself!
-
-sourceGlobalExtension
-	"Private - Answer the file extension for the files to which source globals are stored."
-
-	^ 'st'! !
+		yourself! !
 !Kernel.Package class categoriesForMethods!
 binaryGlobalExtension!constants!private! !
 name:comment:!instance creation!public! !
-sourceGlobalExtension!constants!private! !
 !
 
 "End of package definition"!

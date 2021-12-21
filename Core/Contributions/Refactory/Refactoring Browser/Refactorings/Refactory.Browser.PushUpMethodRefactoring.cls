@@ -17,7 +17,7 @@ checkBackReferencesTo: aSelector
 	definingClass := superclass whoDefinesMethod: aSelector.
 	definingClass isNil ifTrue: [^self].
 	pushUpParseTree := class parseTreeFor: aSelector.
-	superclass allSubclasses do: 
+	superclass allSubclassesBreadthFirstDo: 
 			[:each |
 			each selectors do: 
 					[:sel |
@@ -81,7 +81,7 @@ checkSiblingSuperSendsFrom: aRBClass
 														expandMacrosWith: aSelector
 														with: aRBClass unqualifiedName
 														with: each selector)]]]]].
-	aRBClass allSubclasses do: [:each | self checkSiblingSuperSendsFrom: each]!
+	aRBClass allSubclassesBreadthFirstDo: [:each | self checkSiblingSuperSendsFrom: each]!
 
 checkSuperclass
 	| overrideSelectors superclass |

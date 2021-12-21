@@ -90,10 +90,12 @@ Refactory.Browser.Tests.FooLintRuleTestData subclass: #'Refactory.Browser.Tests.
 	}!
 Core.Model subclass: #'Refactory.Browser.Tests.ClassToRename'
 	instanceVariableNames: 'rewriteRule builder class'
-	classVariableNames: ''
+	classVariableNames: 'ClassVar1'
 	imports: #()
 	classInstanceVariableNames: 'notUsed'
-	classConstants: {}!
+	classConstants: {
+		'ClassConst1' -> 16r1
+	}!
 Refactory.Browser.Tests.ClassToRename subclass: #'Refactory.Browser.Tests.SubclassOfClassToRename'
 	instanceVariableNames: 'rewriteRule1'
 	classVariableNames: ''

@@ -13,6 +13,7 @@ package setClassNames: #(
 	#{Kernel.Tests.DolphinCompilerTestMethodsSubclass}
 	#{Kernel.Tests.ParserErrorTest}
 	#{Kernel.Tests.ParserTest}
+	#{Kernel.Tests.ScannerTest}
 	#{Kernel.Tests.StIdentifierTokenTest}
 	#{Kernel.Tests.StLiteralArrayTokenTest}
 	#{Kernel.Tests.StLiteralTokenTest}
@@ -68,6 +69,12 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.ParserTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{External.ExtCallArgTypes} #{Kernel.ParseErrorCodes})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.ScannerTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.StLiteralValueNodeTest'

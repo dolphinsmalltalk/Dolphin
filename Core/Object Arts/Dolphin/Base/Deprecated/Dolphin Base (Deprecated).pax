@@ -33,7 +33,6 @@ package methodNames
 	add: #Behavior -> #makeNullTerminated;
 	add: #ByteCodeDispatcher -> #byteCodeSegments;
 	add: #Class -> #allSharedPoolNames;
-	add: #Class -> #subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:;
 	add: #Class -> #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:;
 	add: #Class -> #variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:;
 	add: #Class -> #variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:;
@@ -275,20 +274,6 @@ allSharedPoolNames
 	#deprecated.
 	^self allSharedPools collect: [:each | each name]!
 
-subclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
-	"If aClassSymbol is not an existing class then create and answer a new fixed pointer subclass,
-	otherwise modify the class with name aClassSymbol to have the indicated features and answer it.
-	Primarily present for backwards compatibility with Smalltalk-80."
-
-	Notification deprecated.
-	^(self
-		subclass: aClassSymbol
-		instanceVariableNames: instVarString
-		classVariableNames: classVarString
-		poolDictionaries: poolDictString)
-		categories: {ClassCategory name: aCategoryOrString};
-		yourself!
-
 variableByteSubclass: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString poolDictionaries: poolDictString category: aCategoryOrString
 	"If aClassSymbol is not an existing class then create an answer a new variable byte subclass,
 	otherwise modify the class with name aClassSymbol to have the indicated features and answer 
@@ -331,7 +316,6 @@ variableSubclass: aClassSymbol instanceVariableNames: instVarString classVariabl
 		yourself! !
 !Class categoriesForMethods!
 allSharedPoolNames!pool variables!public! !
-subclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !
 variableByteSubclass:instanceVariableNames:classVariableNames:poolDictionaries:classInstanceVariableNames:!class hierarchy-adding!public! !
 variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:category:!class hierarchy-adding!public! !

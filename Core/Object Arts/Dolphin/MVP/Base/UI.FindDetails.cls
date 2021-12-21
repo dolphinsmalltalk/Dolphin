@@ -59,6 +59,9 @@ isRegularExpression
 
 	^false!
 
+isValid
+	^pattern notEmpty!
+
 isWholeWord
 	"Answer true if this is a whole word match operation"
 
@@ -115,7 +118,7 @@ searchMode: aSymbol
 !UI.FindDetails categoriesForMethods!
 action!accessing!public! !
 action:!accessing!public! !
-findIn:range:!public! !
+findIn:range:!operations!public! !
 findWhat!accessing!public! !
 hasValidRegularExpression!public!testing! !
 initialize!initializing!public! !
@@ -124,6 +127,7 @@ isCaseSensitive:!accessing!public! !
 isForwards!public!testing! !
 isForwards:!accessing!public! !
 isRegularExpression!public!testing! !
+isValid!public!testing! !
 isWholeWord!public!testing! !
 isWholeWord:!accessing!public! !
 isWildcard!public!testing! !

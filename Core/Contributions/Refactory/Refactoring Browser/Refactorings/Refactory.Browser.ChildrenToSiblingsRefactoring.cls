@@ -65,17 +65,13 @@ name: aClassName class: aClass subclasses: subclassCollection
 	self subclasses: (subclassCollection collect: [:each | self model classFor: each])!
 
 preconditions
-	^subclasses 
-		inject: ((RBCondition isMetaclass: parent) 
-				errorMacro: 'Superclass must not be a metaclass') not 
-				& (RBCondition isValidClassName: className) 
-					& (RBCondition isGlobal: className in: self model) not
+	^subclasses
+		inject: ((RBCondition isMetaclass: parent) errorMacro: 'Superclass must not be a metaclass') not
+				& (RBCondition isValidClassName: className) & (RBCondition isStatic: className in: self model) not
 		into: 
-			[:sub :each | 
-			sub 
-				& ((RBCondition isMetaclass: each) 
-						errorMacro: 'Subclass must <1?not :>be a metaclass') not 
-					& (RBCondition isImmediateSubclass: each of: parent)]!
+			[:sub :each |
+			sub & ((RBCondition isMetaclass: each) errorMacro: 'Subclass must <1?not :>be a metaclass') not
+				& (RBCondition isImmediateSubclass: each of: parent)]!
 
 pullUpClassInstanceVariables
 	| newSuperclass |

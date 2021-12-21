@@ -73,10 +73,10 @@ displayOn: aPuttableStream
 
 preconditions
 	^(RBCondition withBlock: [class notNil and: [class isMeta not]]
-		errorString: className , ' is not a valid class name') & (superclass isNil 
+		errorString: className , ' is not a valid class name') & (superclass isNil
 					ifTrue: [RBCondition empty]
-					ifFalse: [((RBCondition isMetaclass: superclass) errorMacro: 'Superclass must not be a metaclass') not]) 
-		& (RBCondition isValidClassName: newName) & (RBCondition isGlobal: newName in: self model) not!
+					ifFalse: [((RBCondition isMetaclass: superclass) errorMacro: 'Superclass must not be a metaclass') not])
+		& (RBCondition isValidClassName: newName) & (RBCondition isStatic: newName in: self model) not!
 
 storeOn: aStream 
 	aStream nextPut: $(.

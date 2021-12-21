@@ -31,6 +31,11 @@ getEvents
 
 	^events!
 
+isValid
+	"Answer true if the model state is valid."
+
+	^true!
+
 postCopy
 	"Apply any final flourish to the copy that may be required in order to ensure that the copy
 	does not share any state with the original. Answer the receiver."
@@ -52,6 +57,7 @@ stbSaveOn: anSTBOutFiler
 	super stbSaveOn: anSTBOutFiler.! !
 !Core.Model categoriesForMethods!
 getEvents!events!private! !
+isValid!public!testing! !
 postCopy!copying!public! !
 setEvents:!events!private! !
 stbSaveOn:!binary filing!public! !

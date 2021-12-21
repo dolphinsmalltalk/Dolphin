@@ -8,15 +8,17 @@ Core.Object subclass: #'Kernel.Namespace'
 	classConstants: {}!
 Kernel.Namespace guid: (Core.GUID fromString: '{e40d6edd-5883-4edc-b117-c508f7c8d47c}')!
 Kernel.Namespace isNonInstantiable: true!
-Kernel.Namespace comment: 'Behavior common to all <Namespace>s, although as Classes are namespaces much of the namespace functionality is already implemented on `Class`. `Namespace` adds dictionary protocol. All the behaviour is implemented on the class side as `Namespaces` never have any instances.
+Kernel.Namespace comment: '`Namespace` defines behavior common to all namespaces, although as Classes are namespaces much of the namespace functionality is inherited from `Class`. `Namespace` adds dictionary protocol for convenience and backwards compatibility. All `Namespace` behaviour is implemented on the class side as `Namespaces` are not instantiable.
 
-We tend to define sub-namespaces as subclasses of the enclosing namespace. This is a slight misuse of subclassing since a sub-namespace is not really a sub-type of its enclosing namespace in a behavioural sense, however it is convenient and means that existing tooling presents the hierarchy in a useful way.
+It is a good practice to define sub-namespaces as subclasses of their enclosing namespace. This is a slight misuse of subclassing since a sub-namespace is not really a sub-type of its enclosing namespace in a behavioral sense, however it is convenient and means that existing tooling presents the hierarchy in a useful way.
 
 Terminology:
 
-Absolute name - Fully qualified name including ''Root.Smalltalk'', e.g. Root.Smalltalk.Core.Object
-Full name - Fully qualified name below Root , e.g. Core.Object
-Simple name - Unqualified name, e.g. Object
+Top-level namespace - a Namespace defined in Root, e.g. Smalltalk and Core.
+Absolute name - Fully qualified name including ''Root'', e.g. Root.Core.Object, is the absolute name of the Object class.
+Binding References or Qualified References - a smart name that should be used to refer indirectly to classes (and other static variables) where symbolic names might previously have been used, e.g. #{Core.Object}.
+Full name - Fully qualified name bindable from any top-level namespace, e.g. Smalltalk , e.g. Core.Object is the full name of the Object class.
+Simple name or unqualified name, e.g. Object
 Short name - A name bindable in Smalltalk, preferring unqualified form where possible.
 '!
 !Kernel.Namespace categoriesForClass!Kernel-Objects! !
@@ -90,13 +92,15 @@ asSet
 	^classPool asSet!
 
 associationAt: key
-	"Answer the association named by the argument, key.  If key is not found,
-	raise an exception."
+	"Answer the association named by the argument, key.  If key is not found, raise a <NotFoundError>."
 
-	^classPool associationAt: key!
+	^(self associationAt: key ifAbsent: nil) ifNil: [self errorNotFound: key] ifNotNil: [:assoc | assoc]!
 
 associationAt: aString ifAbsent: aNiladicValuable
 	^classPool associationAt: aString ifAbsent: aNiladicValuable!
+
+associationAt: aString ifPresent: aMonadicValuable
+	^(self associationAt: aString ifAbsent: nil) ifNotNil: [:assoc | aMonadicValuable value: assoc]!
 
 associations
 	^classPool associations!
@@ -110,15 +114,19 @@ asSortedCollection
 asSortedCollection: aDyadicValuable
 	^classPool asSortedCollection: aDyadicValuable!
 
-at: aString
+at: anObject
 	"Answer the value at the specified <Object> key in the receiver, or if the key	is not found raise a <NotFoundError>."
 
-	^classPool at: aString!
+	^(self associationAt: anObject ifAbsent: nil)
+		ifNil: [self errorNotFound: anObject]
+		ifNotNil: [:binding | binding value]!
 
 at: aString ifAbsent: aNiladicValuable
 	"Answer the value of the receiver's binding named by the <String> 1st argument.  If the identifier is not found, answer the result of evaluating the <niladicValuable> 2nd argument."
 
-	^classPool at: aString ifAbsent: aNiladicValuable!
+	^(self associationAt: aString ifAbsent: nil)
+		ifNil: [aNiladicValuable value]
+		ifNotNil: [:binding | binding value]!
 
 at: aString ifAbsentPut: aNiladicValuable
 	"Answer the value of the binding in the receiver's scope identified by the <String> 1st argument.
@@ -133,7 +141,7 @@ at: aString ifAbsentPut: aNiladicValuable
 at: aString ifPresent: aMonadicValuable
 	"Answer the result of evaluating the <moadicValuable> 2nd argument with the value of the binding in the receiver's scope identified by the <String> 1st argument, of nil if there is no variable with that identifier in this scope."
 
-	^classPool at: aString ifPresent: aMonadicValuable!
+	^(self associationAt: aString ifAbsent: nil) ifNotNil: [:binding | aMonadicValuable value: binding value]!
 
 at: aString put: anObject
 	"Store the <Object> 2nd argument as the value of the <VariableBinding> in the receiver with the identifier which is the <String> 1st argument. 
@@ -189,20 +197,23 @@ do:  aMonadicValuable
 do: aMonadicValuable separatedBy: aNiladicValuable
 	classPool do: aMonadicValuable separatedBy: aNiladicValuable!
 
+errorNonInstantiable
+	self error: 'Namespaces cannot have any instances'!
+
 hierarchyBindingFor: aString
-	"Private - Answer a variable binding for the named variable in the scope of this class, i.e. one of its own class variables or those of its superclasses."
+	"Answer a variable binding for the named variable in the scope of this class, i.e. one of its own class variables or those of its superclasses."
 
 	^classPool bindingFor: aString!
 
 includes: anObject
 	^self classPool includes: anObject!
 
-includesKey: anObject
-	"Answer whether the receiver has a key equal to the <Object> argument."
+includesKey: aString
+	"Answer whether the receiver has a key equal to the <String> argument."
 
 	"In the context of a Namespace, this will only be true if the argument is a <String> identifier with an associated binding in this namespace."
 
-	^classPool includesKey: anObject!
+	^(self associationAt: aString ifAbsent: nil) notNil!
 
 inject: anObject into: aDyadicValuable
 	^classPool inject: anObject into: aDyadicValuable!
@@ -238,12 +249,7 @@ lookup: keyObject
 	very common pattern of passing an empty block as absent handler to #at:ifAbsent:, e.g.
 		(dict at: key ifAbsent: []) ifNotNil: [:value | value ...]"
 
-	^classPool lookup: keyObject!
-
-new
-	"Namespaces do not have instances, only meta-instances (i.e. the class itself)."
-
-	^self shouldNotImplement!
+	^(self associationAt: keyObject ifAbsent: nil) ifNotNil: [:binding | binding value]!
 
 newClassBuilder: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString imports: anArrayOfBindingReferences
 	^(super
@@ -276,7 +282,7 @@ removeKey: aString
 	^self removeKey: aString ifAbsent: [self errorNotFound: aString]!
 
 removeKey: aString ifAbsent: aNiladicValuable
-	^(self removeLocalBindingFor: aString)
+	^(self removeBindingFor: aString)
 		ifNil: [aNiladicValuable value]
 		ifNotNil: [:binding | binding value]!
 
@@ -320,14 +326,15 @@ asOrderedCollection!dictionary-converting!public! !
 asSet!dictionary-converting!public! !
 associationAt:!accessing!public! !
 associationAt:ifAbsent:!dictionary-accessing!public! !
+associationAt:ifPresent:!dictionary-accessing!public! !
 associations!private! !
 associationsDo:!enumerating!public! !
 asSortedCollection!dictionary-converting!public! !
 asSortedCollection:!dictionary-converting!public! !
-at:!dictionary-accessing!public! !
+at:!accessing!public! !
 at:ifAbsent:!dictionary-accessing!public! !
 at:ifAbsentPut:!dictionary-accessing!public! !
-at:ifPresent:!dictionary-accessing!public! !
+at:ifPresent:!accessing!public! !
 at:put:!dictionary-accessing!public! !
 baseEnvironment!constants!private! !
 basicClassPool:!binding!private! !
@@ -338,7 +345,8 @@ detect:!dictionary-enumerating!public! !
 detect:ifNone:!dictionary-enumerating!public! !
 do:!dictionary-enumerating!public! !
 do:separatedBy:!dictionary-enumerating!public! !
-hierarchyBindingFor:!bindings!private! !
+errorNonInstantiable!public! !
+hierarchyBindingFor:!bindings!public! !
 includes:!dictionary-searching!public! !
 includesKey:!dictionary-searching!public! !
 inject:into:!dictionary-enumerating!public! !
@@ -350,7 +358,6 @@ keysAndValuesDo:!dictionary-enumerating!public! !
 keysDo:!dictionary-enumerating!public! !
 localEnvironment!accessing!private! !
 lookup:!dictionary-accessing!public! !
-new!instance creation!public! !
 newClassBuilder:instanceVariableNames:classVariableNames:imports:!class hierarchy-adding!private! !
 notEmpty!dictionary-testing!public! !
 occurrencesOf:!dictionary-searching!public! !

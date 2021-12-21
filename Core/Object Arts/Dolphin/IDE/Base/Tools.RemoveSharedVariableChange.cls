@@ -18,7 +18,7 @@ changeString
 	^'Remove global <1p>' expandMacrosWith: variable asString!
 
 primitiveExecute
-	self environment removeLocalBindingFor: variable! !
+	self environment removeBindingFor: variable! !
 !Tools.RemoveSharedVariableChange categoriesForMethods!
 asUndoOperation!converting!public! !
 changeString!printing!public! !

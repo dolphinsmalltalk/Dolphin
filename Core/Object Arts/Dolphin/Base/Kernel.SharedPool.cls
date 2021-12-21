@@ -8,11 +8,13 @@ Kernel.Namespace subclass: #'Kernel.SharedPool'
 	classConstants: {}!
 Kernel.SharedPool guid: (Core.GUID fromString: '{bcc094b0-f447-4e0c-a96b-884f8324757d}')!
 Kernel.SharedPool isNonInstantiable: true!
-Kernel.SharedPool comment: 'Abstract base for the special `Namespace`s that contain only shared pool constants. These classes replace `PoolConstantsDictionary` instances.
+Kernel.SharedPool comment: '`SharedPool` is the abstract base class of the special `Namespace`s that contain only shared pool constants. These classes replace `PoolConstantsDictionary` instances.
 
-Shared pool variables that are not constant are no longer explicitly supported. Public class variables are recommended for this purpose, although mutable variables can be added to SharedPools from the class initialize method (for example).
+Shared pool variables that are _not_ constant are no longer explicitly supported. Public class variables are recommended for this purpose, although mutable variables can be added to SharedPools from the class initialize method (for example).
 
-In most cases, the shared pool constants will have a literal form (or at least a self-evaluating form), so they can be represented directly in the pool class definition. Where this is not the case, the constants must be added and initialized from the class initialize method. If this is not done, the values will not be preserved by file-out/file-in.'!
+In most cases, the shared pool constants will have a literal form (or at least a self-evaluating form), so they can be represented directly in the pool class definition. Where this is not the case, the constants must be added and initialized from the class initialize method. If this is not done, the values will not be preserved by file-out/file-in.
+
+Aside from class initialization (when required, as mentioned above), SharedPools subclasses do not normally define any behavior.'!
 !Kernel.SharedPool categoriesForClass!Kernel-Objects! !
 !Kernel.SharedPool class methodsFor!
 

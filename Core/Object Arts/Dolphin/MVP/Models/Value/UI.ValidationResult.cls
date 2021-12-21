@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'UI.ValidationResult'
-	instanceVariableNames: 'value caption hint'
+	instanceVariableNames: 'value caption hint presenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -40,6 +40,12 @@ hint: anException
 message: aString
 	self hint: (Notification messageText: aString)!
 
+presenter
+	^presenter!
+
+presenter: aPresenterOrView
+	presenter := aPresenterOrView!
+
 value
 	"Answer true if the validation represented by the receiver passed, or false if it failed."
 
@@ -60,6 +66,8 @@ errorMessage:!accessing!public! !
 hint!accessing!public! !
 hint:!accessing!public! !
 message:!accessing!public! !
+presenter!accessing!public! !
+presenter:!accessing!public! !
 value!accessing!public! !
 value:!public! !
 warningMessage:!accessing!public! !

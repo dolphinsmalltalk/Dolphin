@@ -74,9 +74,23 @@ testIsEmptyClass
 		equals: 'FooBar is not empty (has class variables, and instance variables)'.
 	foobar instanceVariableNames: #().
 	self deny: subject check.
-	self assert: subject errorString equals: 'FooBar is not empty (has class variables)'! !
+	self assert: subject errorString equals: 'FooBar is not empty (has class variables)'!
+
+testIsGlobalIn
+	| subject |
+	model := RBModel new.
+	subject := RBCondition isStatic: 'Graphics.Gdiplus.Bitmap' in: model.
+	self assert: subject check description: subject errorString.
+	model removeClassNamed: 'Graphics.Gdiplus.Bitmap'.
+	self deny: subject check description: (subject errorStringFor: true).
+	subject := RBCondition isStatic: 'Graphics.Bitmap' in: model.
+	self assert: subject check description: subject errorString.
+	"UI.Bitmap is bindable, but as an import so there is no actual UI.Bitmap 'global'"
+	subject := RBCondition isStatic: 'UI.Bitmap' in: model.
+	self deny: subject check description: (subject errorStringFor: true)! !
 !Refactory.Browser.Tests.RBConditionTest categoriesForMethods!
 testConditions!public!tests! !
 testIsEmptyClass!public!tests! !
+testIsGlobalIn!public!tests! !
 !
 

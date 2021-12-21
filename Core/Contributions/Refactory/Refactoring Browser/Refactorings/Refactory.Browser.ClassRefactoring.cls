@@ -16,7 +16,7 @@ className
 	^className!
 
 className: aString 
-	className := aString asSymbol!
+	className := aString!
 
 environment
 	^self className asQualifiedReference environment!
@@ -25,21 +25,21 @@ environment: aNamespace
 	self className: (aNamespace fullNameFor: self unqualifiedClassName)!
 
 nameForReferenceToClass: aRBClass fromNode: aStProgramNode
-	"Private - Answer the shortest name for the RBClass first argument that will bind to that class from the method of which the StProgramNode 2nd argument is part. The RBClass already has its target name.
-	As noted in RenameNamespacedClassRefactory>>buildParseTreeRewriter, this is currently a hack that will sometimes use a fully-qualified name when it is not actually required, but a correct implementation really requires a proper RB model of the Namespace hierarchy."
+	"Private - Answer the shortest name for the RBClass first argument that will bind to that class from the method of which the StProgramNode 2nd argument is part. The RBClass already has its target name."
 
-	| unqualifiedName methodNode |
+	| methodNode |
 	methodNode := aStProgramNode methodNode.
-	unqualifiedName := aRBClass unqualifiedName.
-	^methodNode methodClass environment == aRBClass environment
+	^methodNode environment == aRBClass environment
 		ifTrue: 
 			["The method's environment is the same, we can definitely use the unqualified name"
-			unqualifiedName]
+			aRBClass unqualifiedName]
 		ifFalse: 
-			[| found |
+			[| unqualified binding |
 			"We can also use the unqualified name if it can be bound using the unqualified name from the method."
-			found := methodNode fullBindingFor: unqualifiedName.
-			(found notNil and: [found value == aRBClass]) ifTrue: [unqualifiedName] ifFalse: [aRBClass fullName]]!
+			binding := methodNode fullBindingFor: (unqualified := aRBClass unqualifiedName).
+			(binding notNil and: [binding refersToClass: aRBClass])
+				ifTrue: [unqualified]
+				ifFalse: [aRBClass fullName]]!
 
 unqualifiedClassName
 	^className asQualifiedReference unqualifiedName!

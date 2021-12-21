@@ -17,8 +17,8 @@ tearDown
 
 testNewNamespaceSubclass
 	subject := CreateSubclassDialog newSubclassOf: Namespace inPackage: nil.
-	self assert: subject namespacePresenter value equals: Root.
-	self assert: subject subclassName equals: 'Namespace'.
+	self assert: subject namespace equals: Root.
+	self assert: subject subclassName equals: ''.
 	self deny: subject canApply.
 	subject subclassName: 'Root.__Namespace__'.
 	self assert: subject canApply.
@@ -26,14 +26,14 @@ testNewNamespaceSubclass
 	subject subclassName: '__Namespace__'.
 	self assert: subject subclassName equals: 'Smalltalk.__Namespace__'.
 	self assert: subject canApply.
-	subject namespacePresenter value: Core.
+	subject namespace: Core.
 	self assert: subject canApply.
 	self assert: subject subclassName equals: 'Core.__Namespace__'!
 
 testNewRootNamespaceSubclass
 	subject := CreateSubclassDialog newSubclassOf: Root inPackage: nil.
-	self assert: subject namespacePresenter value equals: Root.
-	self assert: subject subclassName equals: 'Root'.
+	self assert: subject namespace equals: Root.
+	self assert: subject subclassName equals: ''.
 	self deny: subject canApply.
 	subject subclassName: 'Root.__Root__'.
 	self assert: subject canApply.

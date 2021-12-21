@@ -49,11 +49,15 @@ allClassesDo: aBlock
 	Smalltalk allBehaviorsDo: aBlock!
 
 associationAt: aKey
-	^(Smalltalk resolveBindingPath: ($. split: aKey))
+	^(Smalltalk resolveBindingPath: (BindingReference.PathSeparator split: aKey))
 		ifNotNil: 
 			[:binding |
 			| class |
-			(class := binding value) isBehavior ifFalse: [class := class class].
+			class := binding isClassBinding
+						ifTrue: [binding value]
+						ifFalse: 
+							["We want to include non-class bindings if the Namespace is included"
+							binding environment].
 			((self includesClass: class) or: [self includesClass: class class]) ifTrue: [binding]]!
 
 at: aKey
@@ -318,15 +322,12 @@ referencesTo: aLiteral in: aClass
 	^(self forClassHierarchyOf: aClass) referencesTo: aLiteral!
 
 referencesToVariable: aVariableBinding
-	| matched |
-	matched := self filterMethods: 
-					[:method |
-					(method refersToLiteral: aVariableBinding value) or: [method refersToLiteral: aVariableBinding]].
-	matched
+	^(self filterMethods: [:method | method refersToLiteral: aVariableBinding value])
 		label: ('Direct and indirect references to <1s> in <2p>' expandMacrosWith: aVariableBinding key
 					with: self);
-		addSearchString: aVariableBinding key.
-	^matched!
+		"addSearchString: aVariableBinding fullName;"
+		addSearchString: aVariableBinding key;
+		yourself!
 
 searchStrings
 	^searchStrings isNil

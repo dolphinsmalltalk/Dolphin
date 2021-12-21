@@ -17,20 +17,17 @@ abstractVariableTestData
 	(testModel := Refactory.Browser.RBModel
 				onEnvironment: ((Refactory.Browser.ClassEnvironment
 						onEnvironment: Refactory.Browser.BrowserEnvironment new)
-							classes: (#(#Bar #Foo) inject: OrderedCollection new
+							classes: (#(#{Smalltalk.Bar} #{Smalltalk.Foo}) inject: OrderedCollection new
 									into: 
 										[:sum :each |
 										| class |
-										class := Smalltalk at: each ifAbsent: [nil].
-										class notNil ifTrue: [sum add: class].
-										sum])
-										, (#(#Bar #Foo) inject: OrderedCollection new
-												into: 
-													[:sum :each |
-													| class |
-													class := Smalltalk at: each ifAbsent: [nil].
-													class notNil ifTrue: [sum add: class class].
-													sum]))
+										class := each valueOrNil.
+										class notNil
+											ifTrue: 
+												[sum
+													add: class;
+													add: class class].
+										sum]))
 							not)
 			name: 'Test'.
 	#('Core.Object subclass: #Foo
@@ -128,19 +125,19 @@ inlineMethodTestData
 	(testModel := Refactory.Browser.RBModel
 				onEnvironment: ((Refactory.Browser.ClassEnvironment
 						onEnvironment: Refactory.Browser.BrowserEnvironment new)
-							classes: (#(#RenameClassVariableChange #VariableCompositeRefactoryChange #RenameInstanceVariableChange #CompositeRefactoryChange #RenameVariableChange #RefactoryChange)
+							classes: (#(#{RenameClassVariableChange} #{VariableCompositeRefactoryChange} #{RenameInstanceVariableChange} #{CompositeRefactoryChange} #{RenameVariableChange} #{RefactoryChange})
 									inject: OrderedCollection new
 									into: 
 										[:sum :each |
 										| class |
-										class := Smalltalk at: each ifAbsent: [nil].
+										class := each valueOrNil.
 										class notNil ifTrue: [sum add: class].
 										sum])
 										, (#() inject: OrderedCollection new
 												into: 
 													[:sum :each |
 													| class |
-													class := Smalltalk at: each ifAbsent: [nil].
+													class := each valueOrNil.
 													class notNil ifTrue: [sum add: class class].
 													sum]))
 							not)
@@ -385,7 +382,6 @@ shouldWarn: aRefactoring
 	self should: [self executeRefactoring: aRefactoring] raise: RefactoringWarning!
 
 tearDown
-	Transcript print: self; nextPutAll: ' loaded '; print: model totalBindingsLoaded; nextPutAll: ' total bindings in '; display: model totalBindingsLoadTime; cr.
 	super tearDown.
 	RefactoringManager instance release.
 	(RefactoringManager classPool associationAt: #Instance

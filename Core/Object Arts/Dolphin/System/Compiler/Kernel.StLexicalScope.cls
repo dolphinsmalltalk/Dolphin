@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.StSemanticScope subclass: #'Kernel.StLexicalScope'
-	instanceVariableNames: 'locals node thisContextVariable flags'
+	instanceVariableNames: 'node outer locals thisContextVariable flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -65,14 +65,6 @@ localCount
 locals
 	^locals!
 
-lookupVariable: anStVariableNode
-	"Lookup and return an <StVariable> describing the variable definition in this scope matching
-	the variable reference specified by the <StVariableNode> argument."
-
-	anStVariableNode isSpecialVariable ifTrue: [^anStVariableNode specialVariableInScope: self].
-	^(locals lookup: anStVariableNode name)
-		ifNil: [outer ifNotNil: [outer lookupVariable: anStVariableNode]]!
-
 markFarReturn
 	"Mark this scope as containing a ^-return."
 
@@ -98,6 +90,15 @@ needsSelf
 node
 	^node!
 
+node: aBlockOrMethodNode outer: anStLexicalScope
+	node := aBlockOrMethodNode.
+	outer := anStLexicalScope.
+	self initialize.
+	^self!
+
+outer
+	^outer!
+
 printOn: aPuttableStream
 	self basicPrintOn: aPuttableStream.
 	aPuttableStream
@@ -112,10 +113,9 @@ realScope
 
 	^self!
 
-setNode: aBlockOrMethodNode outer: anStLexicalScope
-	node := aBlockOrMethodNode.
-	outer := anStLexicalScope.
-	self initialize!
+resolveVariable: anStVariableNode
+	^(locals lookup: anStVariableNode name)
+		ifNil: [outer ifNotNil: [outer resolveVariable: anStVariableNode]]!
 
 temporaries
 	^locals select: [:each | each isTempVariable]!
@@ -147,17 +147,18 @@ initialize!initializing!private! !
 isInlined!accessing!public! !
 localCount!accessing!public! !
 locals!accessing!public! !
-lookupVariable:!operations!public! !
 markFarReturn!public!visiting! !
 markNeedsSelf!public!visiting! !
 needsContext!accessing!public! !
 needsSelf!accessing!public! !
 node!accessing!public! !
+node:outer:!initializing!private! !
+outer!accessing!public! !
 printOn:!printing!public! !
-realScope!public! !
-setNode:outer:!initializing!private! !
+realScope!accessing!public! !
+resolveVariable:!operations!private! !
 temporaries!accessing!private! !
-thisContextVariable!public! !
+thisContextVariable!accessing!public! !
 unreferencedArguments!accessing!public! !
 !
 

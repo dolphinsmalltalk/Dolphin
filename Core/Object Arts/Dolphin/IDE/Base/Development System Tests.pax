@@ -9,6 +9,7 @@ package setClassNames: #(
 	#{OS.Tests.VersionResourceTest}
 	#{Refactory.Browser.Tests.RewriteTestCase}
 	#{Tools.Tests}
+	#{Tools.Tests.ClassNameToBindingReferenceRefactoringTest}
 	#{Tools.Tests.CreateSubclassDialogTest}
 	#{Tools.Tests.DisassemblerTest}
 	#{Tools.Tests.ImageListViewTest}
@@ -18,6 +19,7 @@ package setClassNames: #(
 	#{Tools.Tests.MockScintillaView}
 	#{Tools.Tests.PackageEnvironmentTest}
 	#{Tools.Tests.ProductReleaseTest}
+	#{Tools.Tests.RenameClassRefactoringTest}
 	#{Tools.Tests.SmalltalkSystemTest}
 	#{Tools.Tests.SmalltalkWorkspaceTest}
 	#{Tools.Tests.StStyler}
@@ -34,7 +36,7 @@ package setMethodNames: #(
 	#(#{Kernel.Tests.ParserErrorTest} #testWarnMsgUnimplemented)
 	#(#{Kernel.Tests.ParserErrorTest} #testWarnUndefinedSelector)
 	#(#{Kernel.Tests.ParserErrorTest} #testWarnUnimplementedAbstractMethod)
-	#(#{Tools.CreateSubclassDialog} #namespacePresenter)
+	#(#{Refactory.Browser.Tests.RefactoringTest} #verifyMethod:of:equals:)
 	#(#{UI.Scintilla.Tests.ScintillaViewTest} #testTokensFromTo)
 	#(#{UI.Tests.BorderLayoutTest} #testResourceBrowserPreview)
 ).
@@ -46,13 +48,20 @@ package setPrerequisites: #(
 	'..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
+	'..\..\MVP\Graphics\Tests\Dolphin GDI Graphics Tests'
+	'..\..\Base\Deprecated\Dolphin Legacy Package Support'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Dolphin MVP Tests'
 	'..\Professional\Dolphin Professional Tools'
+	'..\Professional\Dolphin Refactoring Browser'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\..\MVP\Views\Scintilla\Tests\Dolphin Scintilla View Tests'
+	'..\..\MVP\Gdiplus\Gdiplus'
+	'..\..\MVP\Gdiplus\Tests\Gdiplus Tests'
 	'..\..\Lagoon\Lagoon Image Stripper'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\..\..\Contributions\Refactory\RBNamespaces'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTestMethods'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTests'
@@ -154,6 +163,18 @@ Refactory.Browser.Tests.BrowserEnvironmentTest subclass: #'Tools.Tests.PackageEn
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.RefactoringTest subclass: #'Tools.Tests.ClassNameToBindingReferenceRefactoringTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.RefactoringTest subclass: #'Tools.Tests.RenameClassRefactoringTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 
@@ -301,13 +322,27 @@ testWarnUndefinedSelector!public!unit tests! !
 testWarnUnimplementedAbstractMethod!public!unit tests! !
 !
 
-!Tools.CreateSubclassDialog methodsFor!
+!Refactory.Browser.Tests.RefactoringTest methodsFor!
 
-namespacePresenter
-	"Private - For testing only"
-	^namespacePresenter! !
-!Tools.CreateSubclassDialog categoriesForMethods!
-namespacePresenter!accessing!private! !
+verifyMethod: aSymbol of: aRBClass equals: aString
+	| source parseTree |
+	source := aRBClass sourceCodeFor: aSymbol.
+	self assertNotNil: source.
+	parseTree := Parser
+				parseMethod: source
+				in: aRBClass
+				environment: aRBClass environment
+				onError: [:str :pos | self fail: str].
+	
+	[Refactory.Browser.RBVariableAnalyser
+		analyseParseTree: parseTree
+		for: aRBClass
+		environment: aRBClass environment]
+			on: Parser notificationClass
+			do: [:ex | self fail: ex displayString].
+	self assert: parseTree equals: (self parseMethod: aString << aSymbol in: aRBClass)! !
+!Refactory.Browser.Tests.RefactoringTest categoriesForMethods!
+verifyMethod:of:equals:!helpers!private! !
 !
 
 !UI.Scintilla.Tests.ScintillaViewTest methodsFor!

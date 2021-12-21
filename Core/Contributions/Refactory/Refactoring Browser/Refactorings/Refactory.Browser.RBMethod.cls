@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Refactory.Browser.RBMethod'
-	instanceVariableNames: 'class compiledMethod source selector'
+	instanceVariableNames: 'class compiledMethod source selector parseTree'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -17,17 +17,30 @@ Instance Variables:
 !Refactory.Browser.RBMethod categoriesForClass!Refactory-Model! !
 !Refactory.Browser.RBMethod methodsFor!
 
-literal: anObject containsReferenceTo: aSymbol
-	anObject == aSymbol ifTrue: [^true].
-	anObject class = Array ifFalse: [^false].
-	anObject do: [:each | (self literal: each containsReferenceTo: aSymbol) ifTrue: [^true]].
-	^false!
+boundParseTree
+	"Answer an <StMethodNode> representing the parse tree for the receiver, with any variable bindings resolved."
+
+	| ast |
+	ast := self parseTree.
+	ast scope
+		ifNil: 
+			[RBVariableAnalyser
+				analyseParseTree: ast
+				for: class
+				environment: class environment].
+	^ast!
+
+environment
+	^self boundParseTree environment!
 
 method
 	^compiledMethod!
 
 method: aCompiledMethod 
 	compiledMethod := aCompiledMethod!
+
+methodClass
+	^class!
 
 modelClass
 	^class!
@@ -36,11 +49,13 @@ modelClass: aRBClass
 	class := aRBClass!
 
 parseTree
-	^RBParser
-		parseMethod: self source
-		in: class
-		environment: class environment
-		onError: [:str :pos | ^nil]!
+	^parseTree
+		ifNil: 
+			[parseTree := RBParser
+						parseMethod: self source
+						in: class
+						environment: class environment
+						onError: [:str :pos | ^nil]]!
 
 printOn: aStream
 	aStream
@@ -48,37 +63,19 @@ printOn: aStream
 		nextPutAll: '>>';
 		print: self selector!
 
-refersToAnySymbol: aCollection
-	| searcher |
-	searcher := ParseTreeSearcher new.
-	searcher matches: '`#literal'
-		do: 
-			[:node :answer |
-			answer or: 
-					[| value |
-					value := node value.
-					aCollection anySatisfy: [:each | self literal: value containsReferenceTo: each]]].
-	aCollection do: 
-			[:each |
-			(RBScanner isSelector: each)
-				ifTrue: 
-					[searcher matches: '`@object ' , (ParseTreeSearcher buildSelectorString: each)
-						do: [:node :answer | true]]].
-	^searcher executeTree: self parseTree initialAnswer: false!
-
-refersToClass: anRBClass
-	| searcher names |
-	searcher := ParseTreeSearcher new.
-	#namespaceToDo.	"Bodge to also search for the unqualified name - this might get hits that are not real matches."
-	names := {anRBClass fullName asSymbol. anRBClass unqualifiedName asSymbol}.
-	searcher matchesAnyOf: names do: [:node :answer | true].
-	^(searcher executeTree: self parseTree initialAnswer: false) or: [self refersToAnySymbol: names]!
+refersToClass: aRBClass
+	| matchBlock |
+	matchBlock := [:node :answer | answer or: [node refersToClass: aRBClass]].
+	^ParseTreeSearcher new
+		matches: '`identifier' do: matchBlock;
+		matches: '`#literal' do: matchBlock;
+		executeTree: self boundParseTree initialAnswer: false!
 
 refersToSymbol: aSymbol
 	| searcher |
 	searcher := ParseTreeSearcher new.
 	searcher matches: '`#literal'
-		do: [:node :answer | answer or: [self literal: node value containsReferenceTo: aSymbol]].
+		do: [:node :answer | answer or: [node value refersTo: aSymbol asLiteralOf: self]].
 	(RBScanner isSelector: aSymbol)
 		ifTrue: 
 			[searcher matches: '`@object ' , (ParseTreeSearcher buildSelectorString: aSymbol)
@@ -107,21 +104,20 @@ selector: aSymbol
 	selector := aSymbol!
 
 source
-	^source isNil 
-		ifTrue: [source := compiledMethod getSource]
-		ifFalse: [source]!
+	^source ifNil: [source := compiledMethod getSource]!
 
 source: aString 
 	source := aString! !
 !Refactory.Browser.RBMethod categoriesForMethods!
-literal:containsReferenceTo:!private! !
+boundParseTree!accessing!public! !
+environment!accessing!public! !
 method!accessing!public! !
 method:!accessing!public! !
+methodClass!accessing!public! !
 modelClass!accessing!public! !
 modelClass:!accessing!public! !
 parseTree!accessing!public! !
 printOn:!printing!public! !
-refersToAnySymbol:!public!testing! !
 refersToClass:!public!testing! !
 refersToSymbol:!public!testing! !
 refersToVariable:!public!testing! !

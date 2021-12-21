@@ -29,6 +29,9 @@ children
 childrenDo: aMonadicValuable
 	contents do: aMonadicValuable!
 
+closeBracket
+	^isByteArray ifTrue: [$]] ifFalse: [$)]!
+
 contents
 	^contents!
 
@@ -41,6 +44,9 @@ isForByteArray
 
 isLiteralArray
 	^true!
+
+openBracket
+	^isByteArray ifTrue: [$[] ifFalse: [$(]!
 
 postCopy
 	super postCopy.
@@ -72,10 +78,12 @@ valueClass
 acceptVisitor:!public!visitor! !
 children!accessing!public! !
 childrenDo:!accessing!public! !
+closeBracket!accessing!public! !
 contents!accessing!public! !
 contents:!accessing!public! !
 isForByteArray!public!testing! !
 isLiteralArray!public!testing! !
+openBracket!accessing!public! !
 postCopy!copying!public! !
 startPosition:contents:stopPosition:isByteArray:!initializing!public! !
 startWithoutParentheses!accessing!public! !

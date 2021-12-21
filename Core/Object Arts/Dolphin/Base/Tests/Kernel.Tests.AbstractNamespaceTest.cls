@@ -52,13 +52,13 @@ testRemoveLocalBindingFor
 		to: self.
 	ref := BindingReference pathString: key scope: subject.
 	self assert: ref bindingOrNil identicalTo: binding.
-	removed := subject removeLocalBindingFor: key.
+	removed := subject removeBindingFor: key.
 	self assert: removed identicalTo: binding.
 	self assert: removedVariables asArray equals: {binding}.
 	"Binding ref should no longer resolve, and should not returned previously cached binding"
 	self assertIsNil: ref bindingOrNil.
 	"Already gone, so should return nil."
-	self assertIsNil: (subject removeLocalBindingFor: key).
+	self assertIsNil: (subject removeBindingFor: key).
 	"This will fail if something got written to the change log when we removed the binding, which we do not expect."
 	self assert: SourceManager default changesFileSize equals: changesPos]
 			ensure: 

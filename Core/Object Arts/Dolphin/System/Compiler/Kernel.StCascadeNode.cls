@@ -45,8 +45,8 @@ bestNodeFor: anInterval
 children
 	^self messages!
 
-childrenDo: aMonadicValuable 
-	self messages do: aMonadicValuable!
+childrenDo: aMonadicValuable
+	messages do: aMonadicValuable!
 
 directlyUses: aNode 
 	^messages last = aNode and: [self isDirectlyUsed]!

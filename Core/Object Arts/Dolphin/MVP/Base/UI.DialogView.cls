@@ -57,6 +57,11 @@ defaultBackcolor
 
 	^(self hasCaption or: [self isThemed not]) ifTrue: [Color face3d] ifFalse: [super defaultBackcolor]!
 
+defaultButton
+	"Answer the default <PushButton> in the receiver, or nil if none."
+
+	^self findItem: self defaultButtonId ifAbsent: nil!
+
 defaultExtent
 	"Answer the default size of the receiver"
 
@@ -406,6 +411,7 @@ answer:!accessing!not an aspect!public! !
 basicCreateAt:extent:!private!realizing/unrealizing! !
 cancel!commands!public! !
 defaultBackcolor!colors!constants!private! !
+defaultButton!colors!constants!public! !
 defaultExtent!constants!public! !
 defaultPositionWithin:forExtent:!geometry!private! !
 defaultWindowProcessing:wParam:lParam:!dispatching!private! !

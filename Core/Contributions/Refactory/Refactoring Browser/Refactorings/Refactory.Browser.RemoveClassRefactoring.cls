@@ -54,9 +54,9 @@ removeClasses
 
 reparentSubclasses
 	classNames do: 
-			[:each | 
+			[:each |
 			| class |
-			class := self model classNamed: each.
+			class := self model instanceClassNamed: each.
 			self model reparentClasses: class subclasses copy to: class superclass]!
 
 shouldRemoveClass: aRBClass referencedIn: aCollection

@@ -971,8 +971,9 @@ validateForRename
 	self
 		validateClassForRename;
 		validateClassName.
-	(self environment includesKey: className)
-		ifTrue: [self error: ('<1p>.<1s> already exists.' expandMacrosWith: self environment with: className)]!
+	(self environment localBindingFor: className)
+		ifNotNil: 
+			[self error: ('<1p>.<2s> already exists.' expandMacrosWith: self environment with: className)]!
 
 validateImports
 	"Private - Ensure that the proposed imports exist in the environment and ensure they are of canonical form."

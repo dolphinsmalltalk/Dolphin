@@ -3650,7 +3650,9 @@ Core.ArithmeticValue subclass: #'Core.Number'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'MaxLiteralIntegerExponent' -> 16r7D0
+	}!
 Core.Number variableByteSubclass: #'Core.Float'
 	instanceVariableNames: ''
 	classVariableNames: 'DefaultDecimalExponents FMinDenormalized Infinity NaN NegativeInfinity'

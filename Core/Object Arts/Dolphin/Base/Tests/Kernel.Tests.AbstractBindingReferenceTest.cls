@@ -300,18 +300,37 @@ testPrivate
 	self deny: subject isPrivate.
 	self deny: subject equals: subject private!
 
-testRefersToLiteral
-	"A BindingReference matches literals for the same path..."
-
-	| method objectRef poolConstRef poolConst |
+testRefersToLiteralClass
+	| method objectRef |
 	method := self class lookupMethod: testSelector.
 	objectRef := self subjectClass pathString: #'Core.Object'.
-	self assert: (objectRef refersTo: (self subjectClass path: #(#Core #Object))
-				asLiteralOf: method).
+	self assert: (objectRef refersTo: (self subjectClass path: #(#Core #Object)) asLiteralOf: method).
 	".. and the binding to which it would resolve ..."
 	self assert: (objectRef refersTo: Object binding asLiteralOf: method).
-	"... but not the target value."
+	"... and the target class."
+	self assert: (objectRef refersTo: Object asLiteralOf: method).
+	self deny: (objectRef refersTo: nil asLiteralOf: method).
+	#namespaceToDo. "Should refer to the Namespace too"
+	self assert: (objectRef refersTo: Core asLiteralOf: method) | true!
+
+testRefersToLiteralNotFound
+	| method objectRef |
+	method := self class lookupMethod: testSelector.
+	objectRef := self subjectClass pathString: #'Core.Object2'.
+	self deny: (objectRef refersTo: (self subjectClass path: #(#Core #Object)) asLiteralOf: method).
+	".. and the binding to which it would resolve ..."
+	self deny: (objectRef refersTo: Object binding asLiteralOf: method).
+	"... and the target class."
 	self deny: (objectRef refersTo: Object asLiteralOf: method).
+	self deny: (objectRef refersTo: nil asLiteralOf: method).
+	"It doesn't refer to the namespace along the path either. This could perhaps be correct either way, but as the reference itself doesn't resolve it doesn't really refer to anything."
+	self deny: (objectRef refersTo: Core asLiteralOf: method)!
+
+testRefersToLiteralPoolVariable
+	"A BindingReference matches literals for the same path..."
+
+	| method poolConstRef poolConst |
+	method := self class lookupMethod: testSelector.
 	"BindingRef to a pool variable."
 	poolConstRef := self subjectClass pathString: '_PrimitiveFailureCode.AccessViolation'.
 	poolConst := _PrimitiveFailureCode localBindingFor: 'AccessViolation'.
@@ -319,15 +338,11 @@ testRefersToLiteral
 		assert: (poolConstRef refersTo: (self subjectClass path: #(#_PrimitiveFailureCode 'AccessViolation'))
 				asLiteralOf: method).
 	self assert: (poolConstRef refersTo: poolConst asLiteralOf: method).
-	"Should a BindingRef implicitly refers to refs along its path? Not sure."
-	false
-		ifTrue: 
-			[self
-				assert: (poolConstRef refersTo: #{Kernel._PrimitiveFailureCode} asLiteralOf: method)].
+	self deny: (poolConstRef refersTo: poolConst value asLiteralOf: method).
+	"Should a BindingRef implicitly refers to refs along its path? Not entirely sure, but at the moment not"
+	self deny: (poolConstRef refersTo: #{Kernel._PrimitiveFailureCode} asLiteralOf: method).
 	#namespaceToDo.	"This should be true - a reference to a nested binding is implicitly a reference to the outer binding."
-	false
-		ifTrue: 
-			[self assert: (poolConstRef refersTo: _PrimitiveFailureCode binding asLiteralOf: method)]!
+	self deny: (poolConstRef refersTo: _PrimitiveFailureCode binding asLiteralOf: method)!
 
 testShortName
 	#(#Root #Smalltalk #Core #'Core.Class' #'Kernel.BindingContext') do: 
@@ -415,7 +430,9 @@ testPathString!public!unit tests! !
 testPathStringScope!public!unit tests! !
 testPrintString!public!unit tests! !
 testPrivate!public!unit tests! !
-testRefersToLiteral!public!unit tests! !
+testRefersToLiteralClass!public!unit tests! !
+testRefersToLiteralNotFound!public!unit tests! !
+testRefersToLiteralPoolVariable!public!unit tests! !
 testShortName!public!unit tests! !
 testStoreString!public!unit tests! !
 testUnqualifiedName!public!unit tests! !

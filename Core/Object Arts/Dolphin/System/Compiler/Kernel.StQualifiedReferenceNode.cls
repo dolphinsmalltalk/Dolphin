@@ -46,14 +46,18 @@ isRelative
 isRelative: aBoolean
 	flags := flags mask: BindingReference.RelativeMask set: aBoolean!
 
+path
+	^BindingReference.PathSeparator split: pathString!
+
 pathString
 	^pathString!
 
 pathString: aString start: startInteger
 	pathString := aString.
-	flags := ((aString at: 1) == $_ or: [(BindingReference isQualifiedName: aString) not])
-				ifTrue: [BindingReference.RelativeMask]
-				ifFalse: [0].
+	flags := (aString size > 0
+				and: [(aString at: 1) == $_ or: [(BindingReference isQualifiedName: aString) not]])
+					ifTrue: [BindingReference.RelativeMask]
+					ifFalse: [0].
 	start := startInteger.
 	stop := -1.
 	^self!
@@ -76,7 +80,7 @@ value
 valueClass
 	^BindingReference! !
 !Kernel.StQualifiedReferenceNode categoriesForMethods!
-=!public! !
+=!comparing!public! !
 acceptVisitor:!public!visitor! !
 isMeta!public!testing! !
 isMeta:!accessing!public!testing! !
@@ -85,6 +89,7 @@ isPrivate:!accessing!public!testing! !
 isQualifiedReference!public!testing! !
 isRelative!public!testing! !
 isRelative:!accessing!public!testing! !
+path!accessing!public! !
 pathString!accessing!public! !
 pathString:start:!initializing!private! !
 startWithoutParentheses!accessing!public! !

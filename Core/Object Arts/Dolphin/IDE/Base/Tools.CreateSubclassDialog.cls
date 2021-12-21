@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.Dialog subclass: #'Tools.CreateSubclassDialog'
-	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter namespacePresenter usePackagePresenter package superclassPresenter'
+	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter namespacePresenter usePackagePresenter package superclassPresenter hintBubble'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -22,13 +22,7 @@ Instance Variables:
 !Tools.CreateSubclassDialog methodsFor!
 
 canApply
-	^(self isPackaged not or: [self package notNil]) and: 
-			[(BindingReference isQualifiedName: namePresenter value) not and: 
-					[| candidateName |
-					candidateName := self subclassName.
-					candidateName notEmpty and: 
-							[(ClassBuilder isValidClassName: candidateName)
-								and: [candidateName asQualifiedReference isDefined not]]]]!
+	^self validateModel value!
 
 chooseNamespace
 	| choice namespaces |
@@ -37,14 +31,20 @@ chooseNamespace
 	(ChooseClassDialog
 		on: choice
 		choices: namespaces
-		caption: 'Select Namespace…')
-		showModal!
+		caption: 'Select Namespace…') showModal.
+	self validate!
 
 chooseSuperclass
 	SmalltalkSystem current
 		chooseClass: superclassPresenter model
 		caption: 'Choose Superclass…'
 		allowNil: true!
+
+closeBubble
+	hintBubble
+		ifNotNil: 
+			[hintBubble close.
+			hintBubble := nil]!
 
 createComponents
 	super createComponents.
@@ -61,15 +61,19 @@ createComponents
 
 createSchematicWiring
 	super createSchematicWiring.
-	packagesPresenter 
+	namePresenter
+		when: #valueChanged
+		send: #onNameChanged
+		to: self.
+	packagesPresenter
 		when: #selectionChanged
 		send: #onPackageSelected
 		to: self.
-	usePackagePresenter 
+	usePackagePresenter
 		when: #valueChanged
 		send: #toggleSetPackage
 		to: self.
-	superclassPresenter 
+	superclassPresenter
 		when: #valueChanged
 		send: #onSuperclassChanged
 		to: self!
@@ -78,10 +82,9 @@ defaultNamespaceForSubclassOf: aClass
 	^##(LookupTable withAll: {Namespace -> Root. SharedPool -> OS}) at: aClass
 		ifAbsent: [aClass localEnvironment]!
 
-environment
-	"Private - Answer the global environment for which we are defining a subclass."
-
-	^self superclass isNil ifTrue: [Smalltalk] ifFalse: [self superclass environment]!
+getHintCaption: aValidationResult
+	^aValidationResult caption
+		ifNil: [aValidationResult hint iconStyle == #error ifTrue: ['Invalid Input']]!
 
 isPackaged
 	^usePackagePresenter model value!
@@ -93,16 +96,29 @@ model: aSubjectModel
 	package := SmalltalkSystem current defaultPackage.
 	superclassPresenter model: aClassOrNil.
 	aClassOrNil
-		ifNil: 
-			[namespacePresenter model: Smalltalk asValue.
-			namePresenter model: 'ProtoObject2' asValue]
-		ifNotNil: 
-			[namespacePresenter model: (self defaultNamespaceForSubclassOf: aClassOrNil).
-			namePresenter model: aClassOrNil name asValue].
+		ifNil: [namespacePresenter model: Smalltalk asValue]
+		ifNotNil: [namespacePresenter model: (self defaultNamespaceForSubclassOf: aClassOrNil)].
 	self onSuperclassChanged!
 
+namespace
+	"Private - Answer the <Namespace> into which which we are defining a subclass."
+
+	^namespacePresenter value!
+
+namespace: aNamespace
+	"Private - Set the <Namespace> into which which we are defining a subclass."
+
+	namespacePresenter value: aNamespace!
+
+onNameChanged
+	"Private - The subclass name has been edited. Initiate delayed validation."
+
+	self closeBubble.
+	self view setTimer: ValidationTimerId interval: self validationDwell!
+
 onPackageSelected
-	package := packagesPresenter selectionOrNil!
+	package := packagesPresenter selectionOrNil.
+	self validate!
 
 onSuperclassChanged
 	| superClass |
@@ -136,6 +152,23 @@ queryCommand: aCommandQuery
 			^true].
 	^super queryCommand: aCommandQuery!
 
+shouldShowValidationHint: aValidationResult
+	^aValidationResult hint notNil and: [namePresenter value notEmpty]!
+
+showValidationResult: aValidationResult
+	self closeBubble.
+	(self shouldShowValidationHint: aValidationResult)
+		ifTrue: 
+			[hintBubble := MessageBubble new.
+			hintBubble
+				caption: (self getHintCaption: aValidationResult);
+				font: self hintFont;
+				timeout: self hintDwell;
+				position: aValidationResult presenter view screenRectangle centerRight;
+				exceptionDescription: aValidationResult hint;
+				isSilent: true;
+				open]!
+
 subclasses
 	^subclassesPresenter model value ?? #()!
 
@@ -145,49 +178,90 @@ subclassName
 subclassName: aString
 	| bindingRef |
 	bindingRef := aString asQualifiedReference.
-	namespacePresenter value: (bindingRef environment ifNil: [Smalltalk]).
+	self namespace: (bindingRef environment ifNil: [Smalltalk]).
 	namePresenter value: bindingRef unqualifiedName!
 
 superclass
 	^superclassPresenter value!
 
 toggleSetPackage
-	self isPackaged 
+	self isPackaged
 		ifTrue: 
 			[package := packagesPresenter selectionOrNil.
 			packagesPresenter isEnabled: true]
 		ifFalse: 
 			[package := nil.
-			packagesPresenter isEnabled: false]!
+			packagesPresenter isEnabled: false].
+	self validate!
 
 updatePackage
 	package isNil 
 		ifTrue: [usePackagePresenter value: false]
 		ifFalse: 
 			[usePackagePresenter value: true.
-			packagesPresenter selection: package]! !
+			packagesPresenter selection: package]!
+
+validateModel
+	| result candidateName |
+	(self isPackaged and: [self package isNil])
+		ifTrue: 
+			[^(ValidationResult errorMessage: 'No package selected')
+				presenter: (packagesPresenter view viewNamed: 'packages');
+				yourself].
+	result := ValidationResult new
+				presenter: namePresenter;
+				yourself.
+	(BindingReference isQualifiedName: namePresenter value)
+		ifTrue: 
+			[^result
+				errorMessage: 'New class name cannot be qualified';
+				yourself].
+	candidateName := self subclassName.
+	candidateName isEmpty
+		ifTrue: 
+			[^result
+				errorMessage: 'Please specify a new class name';
+				yourself].
+	(ClassBuilder isValidClassName: candidateName)
+		ifFalse: 
+			[^result
+				errorMessage: 'Invalid class name <1p>' << candidateName;
+				yourself].
+	(self namespace localBindingFor: namePresenter value)
+		ifNotNil: 
+			[^result
+				errorMessage: '<1p> already exists' << candidateName;
+				yourself].
+	^result! !
 !Tools.CreateSubclassDialog categoriesForMethods!
 canApply!private!testing! !
 chooseNamespace!commands!private! !
 chooseSuperclass!commands!public! !
+closeBubble!helpers!private! !
 createComponents!initializing!public! !
 createSchematicWiring!initializing!public! !
 defaultNamespaceForSubclassOf:!helpers!private! !
-environment!constants!private! !
+getHintCaption:!helpers!private! !
 isPackaged!commands!private! !
 model:!accessing!public! !
+namespace!constants!private! !
+namespace:!constants!private! !
+onNameChanged!event handling!private! !
 onPackageSelected!event handling!private! !
 onSuperclassChanged!event handling!private! !
 onViewOpened!event handling!public! !
 package!accessing!public! !
 package:!accessing!public! !
 queryCommand:!commands!private! !
+shouldShowValidationHint:!private!testing! !
+showValidationResult:!helpers!private! !
 subclasses!accessing!public! !
 subclassName!accessing!public! !
 subclassName:!accessing!public! !
 superclass!accessing!public! !
 toggleSetPackage!commands!private! !
 updatePackage!private!updating! !
+validateModel!private!testing! !
 !
 
 !Tools.CreateSubclassDialog class methodsFor!

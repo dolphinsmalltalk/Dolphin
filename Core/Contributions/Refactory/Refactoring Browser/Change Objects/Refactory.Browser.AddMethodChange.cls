@@ -81,7 +81,7 @@ controller
 currentProtocols
 	^self changeClass
 		ifNil: [#()]
-		ifNotNil: [:class | Refactory.Browser.BrowserEnvironment new whichProtocolsInclude: self selector in: class]!
+		ifNotNil: [:class | BrowserEnvironment new whichProtocolsInclude: self selector in: class]!
 
 environment
 	"Answer the <Namespace> into which the method should be compiled (or nil for the owning class' namespace)."
@@ -162,11 +162,7 @@ protocols: aCollection
 	protocols isNil ifTrue: [protocols := #(#accessing)]!
 
 selector
-	selector isNil 
-		ifTrue: 
-			[selector := RBParser parseMethodPattern: source.
-			selector isNil ifTrue: [selector := #unknown]].
-	^selector!
+	^selector ifNil: [selector := (RBParser parseMethodPattern: source) ?? #unknown]!
 
 source
 	^source! !

@@ -81,9 +81,9 @@ body: stmtsNode
 	body := stmtsNode.
 	body parent: self!
 
-childrenDo: aMonadicValuable 
-	self arguments do: aMonadicValuable.
-	aMonadicValuable value: self body!
+childrenDo: aMonadicValuable
+	arguments do: aMonadicValuable.
+	aMonadicValuable value: body!
 
 defines: aName 
 	^arguments anySatisfy: [:each | each name = aName]!
@@ -152,7 +152,7 @@ uses: aNode
 !Kernel.StBlockNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
-actualScope!public! !
+actualScope!accessing!public! !
 addStatementCommentsTo:!accessing!private! !
 allArgumentVariableNodesDo:!accessing!public! !
 allDefinedVariableNodesDo:!accessing!public! !
@@ -173,7 +173,7 @@ hash!comparing!public! !
 isBlock!public!testing! !
 isEmptyBlock!public!testing! !
 isImmediateNode!public!testing! !
-isInlined!public! !
+isInlined!public!testing! !
 isLast:!public!testing! !
 left!accessing!public! !
 left:!accessing!public! !

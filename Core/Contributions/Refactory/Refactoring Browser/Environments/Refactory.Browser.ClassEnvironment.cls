@@ -39,11 +39,11 @@ classesAndSelectorsDo: aBlock
 classesDo: aBlock
 	classes do: 
 			[:each |
-			(Smalltalk resolveBindingPath: ($. split: each))
+			(Smalltalk resolveBindingPath: (BindingReference.PathSeparator split: each))
 				ifNotNil: [:binding | (environment includesClass: binding value) ifTrue: [aBlock value: binding value]]].
 	metaClasses do: 
 			[:each |
-			(Smalltalk resolveBindingPath: ($. split: each))
+			(Smalltalk resolveBindingPath: (BindingReference.PathSeparator split: each))
 				ifNotNil: 
 					[:binding |
 					| meta |
@@ -68,7 +68,7 @@ includesCategory: aCategory
 					[:bool :each |
 					bool or: 
 							[| binding |
-							binding := Smalltalk resolveBindingPath: ($. split: each).
+							binding := Smalltalk resolveBindingPath: (BindingReference.PathSeparator split: each).
 							binding notNil
 								and: [(self includesClass: binding value) or: [self includesClass: binding value class]]]]]!
 

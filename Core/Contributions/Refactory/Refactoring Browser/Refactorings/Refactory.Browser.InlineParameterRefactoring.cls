@@ -14,8 +14,7 @@ Refactory.Browser.InlineParameterRefactoring comment: ''!
 allExpressionsToInline
 	| coll |
 	coll := Set new.
-	self model allReferencesTo: oldSelector
-		do: 
+	(self model allReferencesTo: oldSelector) do: 
 			[:each |
 			| tree |
 			tree := each parseTree.

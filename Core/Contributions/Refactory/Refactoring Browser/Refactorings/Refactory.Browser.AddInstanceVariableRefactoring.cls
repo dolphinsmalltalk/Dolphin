@@ -12,9 +12,9 @@ Refactory.Browser.AddInstanceVariableRefactoring comment: ''!
 !Refactory.Browser.AddInstanceVariableRefactoring methodsFor!
 
 preconditions
-	^(RBCondition isValidInstanceVariableName: variableName for: class) 
-		& (RBCondition hierarchyOf: class definesVariable: variableName) not 
-			& (RBCondition isGlobal: variableName in: self model) not!
+	^(RBCondition isValidInstanceVariableName: variableName for: class)
+		& (RBCondition hierarchyOf: class definesVariable: variableName) not
+			& (RBCondition isStatic: variableName in: self model) not!
 
 transform
 	class addInstanceVariable: variableName! !

@@ -1416,8 +1416,7 @@ replaceNode:withNodes:!public!replacing! !
 
 visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
 	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
-	codeStream nextPut: $`.
-	self bracketWith: '{}' around: [self formatBlock: aRBPatternWrapperBlockNode]! !
+	self visitPatternBlockNode: aRBPatternWrapperBlockNode! !
 !Refactory.Browser.RBConfigurableFormatter categoriesForMethods!
 visitPatternWrapperBlockNode:!public!visitor/double dispatching! !
 !

@@ -18,7 +18,7 @@ isSpecial
 	^true!
 
 isSpecial: aCharacter
-	^self value == aCharacter!
+	^value == aCharacter!
 
 length
 	^1! !

@@ -38,11 +38,11 @@ Class Variables:
 !Refactory.Browser.RBAbstractClass methodsFor!
 
 = aRBClass 
-	^self class = aRBClass class 
+	^self class == aRBClass class 
 		and: [self name = aRBClass name and: [self model = aRBClass model]]!
 
 addInstanceVariable: aString
-	self privateInstanceVariableNames add: aString.
+	instanceVariableNames := self instanceVariableNames copyWith: aString.
 	self model addInstanceVariable: aString to: self!
 
 addMethod: aRBMethod
@@ -118,8 +118,11 @@ baseEnvironmentName
 	
 	^#Smalltalk!
 
+basicEnvironment
+	^self subclassResponsibility!
+
 binding
-	^self bindingOrNil ifNil: [Smalltalk errorNotFound: self name asQualifiedReference]!
+	^self bindingOrNil ifNil: [self globalScope errorNotFound: self name asQualifiedReference]!
 
 bindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class (not including imports). If there is no such variable, then answer nil."
@@ -130,7 +133,7 @@ bindingFor: aString
 bindingOrNil
 	"Resolve the binding for the receiver's real class, if any. The name is always a fully qualified name"
 
-	^Smalltalk resolveBindingPath: ($. split: self name)!
+	^self subclassResponsibility!
 
 compile: aString 
 	#rbFix. "Support multiple method categories for Dolphin"
@@ -245,11 +248,11 @@ directlyImportsNamespace: aString
 	^self subclassResponsibility!
 
 environment
-	^self subclassResponsibility!
+	^self basicEnvironment!
 
 environmentName
 	| parts count stream |
-	parts := $. split: self fullName.
+	parts := BindingReference.PathSeparator split: self fullName.
 	(count := parts size) < 2 ifTrue: [^self baseEnvironmentName].
 	stream := String writeStream: 32.
 	stream nextPutAll: (parts at: 1).
@@ -257,7 +260,7 @@ environmentName
 		do: 
 			[:i |
 			stream
-				nextPut: $.;
+				nextPut: BindingReference.PathSeparator;
 				nextPutAll: (parts at: i)].
 	^stream contents!
 
@@ -272,22 +275,26 @@ existingMethodPackageAndEnvironment: aSymbol
 			| package |
 			package := method owningPackage.
 			Pair first: package
-				second: (self model classFor: (method customEnvironment
+				second: (self model modelClassFor: (method customEnvironment
 								ifNil: [package environment ifNil: [method methodClass environment]]))]!
 
 existingMethodsThatReferTo: anObject
 	| existingMethods new |
-	existingMethods := self realClass whichSelectorsReferTo: anObject.
+	existingMethods := self realClass whichMethodsReferTo: anObject.
 	(newMethods isNil and: [removedMethods isNil]) ifTrue: [^existingMethods].
 	new := self newMethods.
-	^existingMethods reject: [:each | (self hasRemoved: each) or: [new includesKey: each]]!
+	^existingMethods reject: 
+			[:each |
+			| selector |
+			(self hasRemoved: (selector := each selector)) or: [new includesKey: selector]]!
 
 existingMethodsThatReferToAnyOf: aCollection
 	| existingMethods new |
-	existingMethods := self realClass whichSelectorsReferToAnyOf: aCollection.
+	existingMethods := self realClass whichMethodsReferToAnyOf: aCollection.
 	(newMethods isNil and: [removedMethods isNil]) ifTrue: [^existingMethods].
 	new := self newMethods.
-	^existingMethods reject: [:each | (self hasRemoved: each) or: [new includesKey: each]]!
+	^existingMethods
+		reject: [:each | (self hasRemoved: each selector) or: [new includesKey: each selector]]!
 
 fullBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
@@ -297,14 +304,21 @@ fullBindingFor: aString
 fullBindingFor: aString environment: aRBNamespaceClass
 	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
 
-	#todo.	"Take account of the environment argument."
-	^self nonMetaclass resolvePathString: aString!
+	^self nonMetaclass resolvePathString: aString environment: aRBNamespaceClass!
 
 fullName
-	^self name!
+	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root.
+	Note that these names will also be bindable within the legacy Smalltalk namespace, because it is itself an immediate child of root, and so any of its siblings is bindable using that sibling's unqualified name."
+
+	^self subclassResponsibility!
 
 fullyQualifiedReference
 	^self subclassResponsibility!
+
+globalScope
+	"Answer the <RBNamespaceClass> to use as the binding root for fully-qualified names in the receiver."
+
+	^self model smalltalkNamespace!
 
 hash
 	^self name hash bitXor: self class hash!
@@ -318,27 +332,33 @@ hierarchyBindingFor: aString
 	^(self localBindingFor: aString)
 		ifNil: [self superclass ifNotNil: [:sprClass | sprClass hierarchyBindingFor: aString]]!
 
-hierarchyDefinesClassVariable: aString 
+hierarchyDefinesClassVariable: aString
 	(self definesClassVariable: aString) ifTrue: [^true].
-	^self allSubclasses anySatisfy: [:each | each directlyDefinesClassVariable: aString]!
+	self
+		allSubclassesBreadthFirstDo: [:each | (each directlyDefinesClassVariable: aString) ifTrue: [^true]].
+	^false!
 
 hierarchyDefinesInstanceVariable: aString 
 	(self definesInstanceVariable: aString) ifTrue: [^true].
-	^self allSubclasses anySatisfy: [:each | each directlyDefinesInstanceVariable: aString]!
+	self allSubclassesBreadthFirstDo: [:each | (each directlyDefinesInstanceVariable: aString) ifTrue: [^true]].
+	^false!
 
 hierarchyDefinesMethod: aSelector 
 	(self definesMethod: aSelector) ifTrue: [^true].
 	^self subclassRedefines: aSelector!
 
-hierarchyDefinesVariable: aString 
+hierarchyDefinesVariable: aString
 	(self definesVariable: aString) ifTrue: [^true].
-	^self allSubclasses anySatisfy: [:each | each directlyDefinesVariable: aString]!
+	self allSubclassesBreadthFirstDo: [:each | (each directlyDefinesVariable: aString) ifTrue: [^true]].
+	^false!
 
 hierarchyImportsNamespace: aBindingReference
 	| ref |
 	ref := aBindingReference asQualifiedReference.
 	(self importsNamespace: ref) ifTrue: [^true].
-	^self allSubclasses anySatisfy: [:each | each directlyImportsNamespace: aBindingReference]!
+	self
+		allSubclassesBreadthFirstDo: [:each | (each directlyImportsNamespace: aBindingReference) ifTrue: [^true]].
+	^false!
 
 importsNamespace: aBindingReference
 	| sprClass ref |
@@ -375,10 +395,15 @@ instanceClass
 	^self nonMetaclass!
 
 instanceVariableNames
-	^self privateInstanceVariableNames copy!
+	instanceVariableNames
+		ifNil: 
+			[self realClass
+				ifNotNil: [:realClass | self instanceVariableNames: realClass instVarNames]
+				ifNil: [instanceVariableNames := #()]].
+	^instanceVariableNames!
 
 instanceVariableNames: aCollectionOfStrings
-	instanceVariableNames := OrderedCollection withAll: aCollectionOfStrings!
+	instanceVariableNames := aCollectionOfStrings!
 
 isAbstract
 	self realClass ifNotNil: [:real | real isNonInstantiable ifTrue: [^true]].
@@ -410,6 +435,9 @@ localBindingFor: aString
 
 	^self subclassResponsibility!
 
+localScope
+	^self subclassResponsibility!
+
 metaclass
 	^self subclassResponsibility!
 
@@ -430,12 +458,18 @@ model
 	^self subclassResponsibility!
 
 name
-	"Answer the name of the non-metaclass. Note that in Dolphin 8 this is always a fully-qualified name."
+	"Answer the name of the non-metaclass. Note that in Dolphin 8 this is always a fully-qualified name. It does not include the ' class' suffix for metaclasses."
 
-	^self subclassResponsibility!
+	^self fullName!
 
 nearestRealClass
 	^self subclassResponsibility!
+
+newMethodFor: each
+	^RBMethod
+		for: self
+		fromMethod: each
+		andSelector: each selector!
 
 newMethods
 	^newMethods
@@ -459,14 +493,6 @@ primaryInstance
 printOn: aStream 
 	aStream nextPutAll: self name!
 
-privateInstanceVariableNames
-	instanceVariableNames isNil
-		ifTrue: 
-			[self realClass
-				ifNotNil: [:realClass | self instanceVariableNames: realClass instVarNames]
-				ifNil: [instanceVariableNames := OrderedCollection new]].
-	^instanceVariableNames!
-
 protocolsFor: aSelector
 	| change |
 	#rbFix.	"Added to support Dolphin's multiple method categories"
@@ -484,7 +510,7 @@ realClass
 	^self subclassResponsibility!
 
 removeInstanceVariable: aString
-	self privateInstanceVariableNames remove: aString.
+	instanceVariableNames := instanceVariableNames copyWithout: aString.
 	self model removeInstanceVariable: aString from: self!
 
 removeMethod: aSelector
@@ -493,8 +519,9 @@ removeMethod: aSelector
 	(removedMethods ifNil: [removedMethods := Set new]) add: aSelector!
 
 renameInstanceVariable: oldName to: newName around: aBlock
-	self privateInstanceVariableNames at: (self privateInstanceVariableNames indexOf: oldName asString)
-		put: newName asString.
+	self instanceVariableNames isImmutable
+		ifTrue: [instanceVariableNames := instanceVariableNames copy].
+	instanceVariableNames at: (instanceVariableNames indexOf: oldName asString) put: newName asString.
 	self model
 		renameInstanceVariable: oldName
 		to: newName
@@ -527,46 +554,41 @@ storeOn: aStream
 subclasses
 	^self subclassResponsibility!
 
-subclassRedefines: aSelector 
+subclassRedefines: aSelector
 	"Return true, if one of your subclasses redefines the method with name, aMethod"
 
-	self allSubclasses 
-		do: [:each | (each directlyDefinesMethod: aSelector) ifTrue: [^true]].
+	self allSubclassesBreadthFirstDo: [:each | (each directlyDefinesMethod: aSelector) ifTrue: [^true]].
 	^false!
 
 superclass
 	^self subclassResponsibility!
 
 typeOfClassVariable: aSymbol
-	^self model classNamed: #'Core.Object'!
+	^self model instanceClassFor: Object!
 
 unqualifiedName
 	"Answer the unqualified name of the class."
 
 	^self subclassResponsibility!
 
-whichMethodsReferToSymbol: aSymbol
-	| selectors |
-	selectors := Set new.
-	self newMethods do: [:each | (each refersToSymbol: aSymbol) ifTrue: [selectors add: each selector]].
-	self isDefined ifTrue: [selectors addAll: (self existingMethodsThatReferTo: aSymbol)].
-	^selectors collect: [:sel | self methodFor: sel]!
-
-whichSelectorsReferToClass: aRBClass
-	| selectors class |
-	selectors := IdentitySet new.
-	self newMethods do: [:each | (each refersToClass: aRBClass) ifTrue: [selectors add: each selector]].
+whichMethodsReferToClass: aRBClass
+	| methods class |
+	methods := IdentitySet new.
+	newMethods ifNotNil: [newMethods do: [:each | (each refersToClass: aRBClass) ifTrue: [methods add: each]]].
 	(self isDefined and: [(class := aRBClass realClass) notNil])
 		ifTrue: 
-			[| instClass |
-			"Search for unqualified name symbols as well as the fully-qualified name. This is justified on the basis that in practice the predominant use of Symbols for indirect lookup will be in legacy (pre-namespace) code, since BindingReferences should now be used and the `Smalltalk at: #Model` pattern is deprecated. Even with the former single global namespace (Smalltalk) we couldn't be sure that Symbols appearing in the code that happened to be the names of classes were actually intended to be used at some point to refer to the class. If the fully-qualified name appears as a Symbol, then we can be much more confident that it is the class name, although lookups like `Smalltalk at: #'Core.Model'` will fail. Partially qualified symbolic names won't be matched as these would not have appeared in legacy code."
-			instClass := class instanceClass.
-			selectors
-				addAll: (self existingMethodsThatReferToAnyOf: {instClass.
-								instClass binding.
-								instClass fullName asSymbol.
-								instClass unqualifiedName})].
-	^selectors!
+			[(self existingMethodsThatReferTo: class instanceClass)
+				do: [:each | methods add: (self newMethodFor: each)]].
+	^methods!
+
+whichMethodsReferToSymbol: aSymbol
+	| methods |
+	methods := Set new.
+	self newMethods do: [:each | (each refersToSymbol: aSymbol) ifTrue: [methods add: each]].
+	self isDefined
+		ifTrue: 
+			[(self existingMethodsThatReferTo: aSymbol) do: [:each | methods add: (self newMethodFor: each)]].
+	^methods!
 
 whichSelectorsReferToClassVariable: aString
 	| selectors class binding |
@@ -576,7 +598,7 @@ whichSelectorsReferToClassVariable: aString
 		do: [:each | (each refersToVariable: aString) ifTrue: [selectors add: each selector]].
 	(class := self nonMetaclass realClass) ifNil: [^selectors].
 	(class := class whichClassDefinesClassVar: aString asString) ifNil: [^selectors].
-	(binding := (self model classFor: class) bindingFor: aString) ifNil: [^selectors].
+	(binding := (self model instanceClassFor: class) bindingFor: aString) ifNil: [^selectors].
 	(binding := binding realBinding) ifNil: [^selectors].
 	selectors
 		addAll: ((self realClass whichSelectorsReferTo: binding) reject: [:each | self hasRemoved: each]).
@@ -638,6 +660,7 @@ allSuperclasses!accessing!public! !
 allSuperclassesDo:!accessing!public! !
 asQualifiedReference!converting!public! !
 baseEnvironmentName!accessing!public! !
+basicEnvironment!accessing!public! !
 binding!accessing!public! !
 bindingFor:!bindings!public! !
 bindingOrNil!bindings!public! !
@@ -668,6 +691,7 @@ fullBindingFor:!binding!public! !
 fullBindingFor:environment:!public! !
 fullName!accessing!public! !
 fullyQualifiedReference!accessing!private! !
+globalScope!accessing!public! !
 hash!comparing!public! !
 hasRemoved:!public!testing! !
 hierarchyBindingFor:!bindings!public! !
@@ -690,17 +714,18 @@ isMeta!public!testing! !
 isPointers!public!testing! !
 isVariable!public!testing! !
 localBindingFor:!binding!public! !
+localScope!accessing!public! !
 metaclass!accessing!public! !
 methodFor:!method accessing!public! !
 model!accessing!public! !
 name!accessing!public! !
 nearestRealClass!accessing!private! !
+newMethodFor:!method accessing!private! !
 newMethods!accessing!public! !
 nonMetaclass!accessing!public! !
 parseTreeFor:!method accessing!public! !
 primaryInstance!accessing!public! !
 printOn:!printing!public! !
-privateInstanceVariableNames!accessing!private! !
 protocolsFor:!accessing!public! !
 realClass!accessing!public! !
 removeInstanceVariable:!public!variable accessing! !
@@ -715,8 +740,8 @@ subclassRedefines:!public!testing! !
 superclass!accessing!public! !
 typeOfClassVariable:!public!variable accessing! !
 unqualifiedName!accessing!public! !
+whichMethodsReferToClass:!method accessing!public! !
 whichMethodsReferToSymbol:!method accessing!public! !
-whichSelectorsReferToClass:!method accessing!public! !
 whichSelectorsReferToClassVariable:!method accessing!public! !
 whichSelectorsReferToInstanceVariable:!method accessing!public! !
 whoDefinesClassVariable:!public!variable accessing! !
@@ -726,6 +751,8 @@ withAllSubclasses!accessing!public! !
 withAllSuperclasses!accessing!public! !
 withAllSuperclassesDo:!accessing!public! !
 !
+
+Refactory.Browser.RBAbstractClass methodProtocol: #classDescription attributes: #(#ansi #readOnly) selectors: #(#allSubclasses #allSuperclasses #name #subclasses #superclass)!
 
 !Refactory.Browser.RBAbstractClass class methodsFor!
 

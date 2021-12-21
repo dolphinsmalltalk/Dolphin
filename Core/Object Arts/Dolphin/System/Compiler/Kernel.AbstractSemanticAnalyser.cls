@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.ParseNodeVisitor subclass: #'Kernel.AbstractSemanticAnalyser'
-	instanceVariableNames: 'methodNode classScope currentScope evaluationContext evalScope errorBlock scopes addToFrame inStaticExpression inTag'
+	instanceVariableNames: 'methodNode classScope currentScope evalScope errorBlock scopes inStaticExpression inTag'
 	classVariableNames: ''
 	imports: #(#{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
@@ -11,8 +11,6 @@ Kernel.AbstractSemanticAnalyser isNonInstantiable: true!
 Kernel.AbstractSemanticAnalyser comment: ''!
 !Kernel.AbstractSemanticAnalyser categoriesForClass!Refactory-ParseTree Matching! !
 !Kernel.AbstractSemanticAnalyser methodsFor!
-
-addToFrameStatic: aLiteralNode!
 
 currentScope
 	^currentScope!
@@ -34,7 +32,6 @@ exitMethodNode: aMethodNode
 initialize
 	super initialize.
 	scopes := OrderedCollection new.
-	addToFrame := [:literal | ].
 	inTag := inStaticExpression := false!
 
 lineOfSourcePosition: position 
@@ -54,15 +51,12 @@ removeScope
 scopes
 	^scopes!
 
-setMethodNode: aStMethodNode methodClass: aClass environment: aNamespace context: anObject pools: anArray errorBlock: aMonadicValuable
+setMethodNode: aStMethodNode methodClass: aClass environment: aNamespace pools: anArray errorBlock: aMonadicValuable
 	methodNode := aStMethodNode.
-	evaluationContext := anObject.
 	currentScope := classScope := StClassScope methodClass: aClass environment: aNamespace.
 	anArray isEmpty
 		ifFalse: 
-			[evalScope := (StEvalScope pools: anArray)
-						outer: currentScope;
-						yourself.
+			[evalScope := StEvalScope pools: anArray outer: currentScope.
 			currentScope := evalScope].
 	errorBlock := aMonadicValuable!
 
@@ -114,16 +108,15 @@ visitAnnotationNode: anStAnnotationNode
 			arg := anStAnnotationNode arguments first.
 			(arg isVariable and: 
 					[var := arg variable.
-					var notNil and: [var isStaticVariable and: [(binding := var binding) isClassBinding]]])
+					var notNil and: 
+							[binding := var binding.
+							binding notNil and: [binding isClassBinding]]])
 				ifTrue: [currentScope environment: binding value]
 				ifFalse: [self signalError: CErrExpectNamespace forNode: arg]]!
 
 visitAssignmentNode: anStAssignmentNode
-	| variableNode |
 	self visitNode: anStAssignmentNode value.
-	variableNode := anStAssignmentNode variable.
-	variableNode scope: currentScope.
-	self visitNode: variableNode!
+	self visitNode: anStAssignmentNode variable!
 
 visitBlockNode: aBlockNode
 	currentScope := scopes addLast: (StBlockScope forScopeNode: aBlockNode outer: currentScope).
@@ -135,12 +128,9 @@ visitExternalArgTypeNode: anStExternalArgTypeNode
 	anStExternalArgTypeNode structClass ifNotNil: [:structVar | self visitNode: structVar]!
 
 visitExternalCallNode: anStExternalCallNode
-	self currentScope
+	currentScope
 		declareLocalVariable: (StGeneratedTempVariable node: (StTempDeclNode named: '_failureCode')).
 	super visitExternalCallNode: anStExternalCallNode!
-
-visitLiteralNode: aLiteralNode
-	addToFrame value: aLiteralNode!
 
 visitMethodNode: aMethodNode
 	self enterMethodNode: aMethodNode.
@@ -152,20 +142,15 @@ visitNode: aNode
 	^aNode acceptVisitor: self!
 
 visitOptimizedNode: anOptimizedNode
-	| wasInStaticExpression outerAddToFrame outerScopes outerCurrentScope |
-	outerAddToFrame := addToFrame.
+	| wasInStaticExpression outerScopes outerCurrentScope |
 	outerCurrentScope := currentScope.
 	outerScopes := scopes.
 	(wasInStaticExpression := inStaticExpression)
 		ifFalse: 
-			[ | methodClass |
-			"If entering a static expression the scope is different (static expressions
-			 are compiled in the context of the class side), and only some literals are
-			 retained in the frame."
-			addToFrame := [:literal | self addToFrameStatic: literal].
+			[| methodClass |
+			"If entering a static expression the scope is different (static expressions are compiled in the context of the class side), and only some literals are retained in the frame."
 			methodClass := self methodClass.
-			currentScope := StClassScope
-						methodClass: (methodClass isMeta ifTrue: [methodClass] ifFalse: [methodClass class]) environment: classScope environment.
+			currentScope := StClassScope methodClass: methodClass metaclass environment: classScope environment.
 			scopes := OrderedCollection new].
 	currentScope := scopes addLast: (StMethodScope forScopeNode: anOptimizedNode outer: currentScope).
 	anOptimizedNode scope: currentScope.
@@ -173,19 +158,15 @@ visitOptimizedNode: anOptimizedNode
 	[super visitOptimizedNode: anOptimizedNode] ensure: 
 			[self removeScope.
 			inStaticExpression := wasInStaticExpression.
-			addToFrame := outerAddToFrame.
 			currentScope := outerCurrentScope.
 			scopes := outerScopes]!
 
 visitParameterNode: anStParameterNode
-	self currentScope declareArgument: anStParameterNode!
+	currentScope declareArgument: anStParameterNode!
 
 visitPrimitiveNode: anStPrimitiveNode
-	self currentScope declareLocalVariable: (StGeneratedTempVariable
+	currentScope declareLocalVariable: (StGeneratedTempVariable
 				node: (anStPrimitiveNode errorTemp ifNil: [StTempDeclNode named: '_failureCode']))!
-
-visitSelfVariableNode: anStSelfVariableNode
-	self visitVariableNode: anStSelfVariableNode!
 
 visitTempDeclNode: anStTempDeclNode
 	currentScope declareTemp: anStTempDeclNode!
@@ -193,7 +174,6 @@ visitTempDeclNode: anStTempDeclNode
 visitVariableNode: aStVariableNode
 	self subclassResponsibility! !
 !Kernel.AbstractSemanticAnalyser categoriesForMethods!
-addToFrameStatic:!helpers!private! !
 currentScope!accessing!private! !
 enterMethodNode:!helpers!private! !
 errorBlock:!accessing!private! !
@@ -203,7 +183,7 @@ lineOfSourcePosition:!helpers!private! !
 methodClass!accessing!private! !
 removeScope!helpers!private! !
 scopes!accessing!public! !
-setMethodNode:methodClass:environment:context:pools:errorBlock:!initializing!private! !
+setMethodNode:methodClass:environment:pools:errorBlock:!initializing!private! !
 signalError:forNode:!error handling!private! !
 signalError:forNode:extra:!error handling!private! !
 signalError:forNode:extras:!error handling!private! !
@@ -213,13 +193,11 @@ visitAssignmentNode:!public!visitor/double dispatching! !
 visitBlockNode:!public!visitor/double dispatching! !
 visitExternalArgTypeNode:!public!visiting! !
 visitExternalCallNode:!public!visiting! !
-visitLiteralNode:!public!visitor/double dispatching! !
 visitMethodNode:!public!visitor/double dispatching! !
 visitNode:!public!visiting! !
 visitOptimizedNode:!public!visitor/double dispatching! !
 visitParameterNode:!public!visiting! !
 visitPrimitiveNode:!public!visiting! !
-visitSelfVariableNode:!public!visiting! !
 visitTempDeclNode:!public!visiting! !
 visitVariableNode:!public!visitor/double dispatching! !
 !
@@ -231,23 +209,21 @@ analyseParseTree: aStMethodNode for: aClass environment: aNamespace
 		analyseParseTree: aStMethodNode
 		for: aClass
 		environment: aNamespace
-		context: nil
 		pools: #()
 		onError: nil!
 
-analyseParseTree: aParseTree for: aClass environment: aNamespace context: anObject pools: anArray onError: aMonadicValuable
+analyseParseTree: aParseTree for: aClass environment: aNamespace pools: anArray onError: aMonadicValuable
 	| methodNode |
-	methodNode := aParseTree isMethod ifTrue: [aParseTree] ifFalse: [aParseTree methodNode].
+	methodNode := aParseTree methodNode.
 	^self new
 		setMethodNode: methodNode
 			methodClass: aClass
 			environment: aNamespace
-			context: anObject
 			pools: anArray
 			errorBlock: aMonadicValuable;
 		visitNode: methodNode! !
 !Kernel.AbstractSemanticAnalyser class categoriesForMethods!
 analyseParseTree:for:environment:!operations!public! !
-analyseParseTree:for:environment:context:pools:onError:!operations!public! !
+analyseParseTree:for:environment:pools:onError:!operations!public! !
 !
 

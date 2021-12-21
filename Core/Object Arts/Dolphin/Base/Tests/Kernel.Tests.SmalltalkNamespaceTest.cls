@@ -29,16 +29,37 @@ testAllClasses
 testAllEnvironments
 	self assert: self subject allEnvironments equals: {Root}!
 
+testAt
+	self assert: (Smalltalk at: 'ExternalHandle') identicalTo: Handle.
+	"Core is imported into Smalltalk"
+	self should: [Smalltalk at: #Wibble] raise: NotFoundError!
+
+testAtIfAbsent
+	| missing |
+	missing := Object new.
+	self assert: (Smalltalk at: 'ExternalHandle' ifAbsent: [missing]) identicalTo: Handle.
+	self assert: (Smalltalk at: 'NothingToSeeHere' ifAbsent: [missing]) identicalTo: missing!
+
+testAtIfPresent
+	"Smalltalk's Dictionary protocol is special-cased to perform qualified name lookup."
+
+	| present foundBlock |
+	present := Object new.
+	foundBlock := [:obj | present -> obj].
+	self assert: (Smalltalk at: 'ExternalHandle' ifPresent: foundBlock) equals: present -> Handle.
+	self assertIsNil: (Smalltalk at: 'NothingToSeeHere' ifPresent: foundBlock).
+	self assertIsNil: (Smalltalk at: 'Core.Tests.NothingToSeeHere'
+				ifPresent: [:obj | self fail: 'Unexpectedly present'])!
+
 testEnvironment
 	self assert: self subject environment equals: Root!
 
 testIncludesKey
 	"At the moment all classes are still in the system namespace."
 
-	"Smalltalk no longer includes a variable for itself - this is held in the Root namespace and will be find by normal binding resolution"
+	"Smalltalk no longer includes a variable for itself - this is held in the Root namespace but will be find by normal binding resolution. Smalltalk also has a special implementation of common Dictionary protocols that might be used in legacy code for indirect lookup of classes and static variables."
 
-	#(#Root #Smalltalk) do: [:each | self deny: (self subject includesKey: each)].
-	#('ExternalHandle') do: [:each | self assert: (self subject includesKey: each)].
+	self assert: (self subject includesKey: 'ExternalHandle').
 	self deny: (self subject includesKey: GUID newUnique asString)!
 
 testWellFormed
@@ -54,6 +75,9 @@ testAbsoluteNameOfIdentifier!public!unit tests! !
 testAbsoluteReference!public!unit tests! !
 testAllClasses!public!unit tests! !
 testAllEnvironments!public!unit tests! !
+testAt!public! !
+testAtIfAbsent!public! !
+testAtIfPresent!public! !
 testEnvironment!public!unit tests! !
 testIncludesKey!public!unit tests! !
 testWellFormed!public!unit tests! !

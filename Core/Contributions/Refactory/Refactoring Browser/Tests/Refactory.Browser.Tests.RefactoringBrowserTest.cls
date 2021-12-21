@@ -41,13 +41,19 @@ parseExpression: aString
 	^RBParser parseExpression: aString!
 
 parseMethod: aString
-	^RBParser parseMethod: aString! !
+	^RBParser parseMethod: aString!
+
+parseMethod: aString in: aRBClass
+	^RBParser
+		parseMethod: aString
+		in: aRBClass! !
 !Refactory.Browser.Tests.RefactoringBrowserTest categoriesForMethods!
 convertInterval:for:!private! !
 executeRefactoring:!private! !
 objectClassVariable!private! !
 parseExpression:!helpers!public! !
 parseMethod:!helpers!public! !
+parseMethod:in:!helpers!public! !
 !
 
 !Refactory.Browser.Tests.RefactoringBrowserTest class methodsFor!

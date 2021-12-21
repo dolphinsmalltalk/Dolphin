@@ -174,7 +174,7 @@ newIntegerToken: significandInteger exponent: exponentInteger
 	for accidentally large exponents, impose an arbitrary limit."
 
 	| intValue |
-	intValue := exponentInteger <= Number maxLiteralIntegerExponent
+	intValue := exponentInteger <= Number.MaxLiteralIntegerExponent
 				ifTrue: [significandInteger * exponentInteger exp10]
 				ifFalse: 
 					[self illegalNumber.
@@ -321,11 +321,7 @@ scanExtendedLiterals
 scanIdentifierOrKeyword
 	| name |
 	self scanName.
-	currentCharacter == $.
-		ifTrue: 
-			[| token |
-			token := self scanNameSpaceName.
-			token notNil ifTrue: [^token]].
+	currentCharacter == $. ifTrue: [self scanNameSpaceName ifNotNil: [:token | ^token]].
 	(currentCharacter == $: and: [stream peek ~~ $=]) ifTrue: [^self scanKeyword].
 	name := buffer contents.
 	name = 'nil'
@@ -349,7 +345,6 @@ scanIdentifierOrKeyword
 				comments: nil
 				value: false
 				stop: self previousStepPosition].
-
 	^self identifierTokenClass
 		start: tokenStart
 		comments: nil
@@ -648,23 +643,21 @@ scanStringSymbol
 	^literalToken!
 
 scanSymbol
-	| lastPosition hasColon value startPosition |
-	hasColon := false.
-	startPosition := lastPosition := stream position.
+	| lastColon value startPosition |
+	startPosition := stream position.
 	[characterType == #alphabetic] whileTrue: 
 			[self scanName.
 			currentCharacter == $:
 				ifTrue: 
 					[buffer nextPut: $:.
-					hasColon := true.
-					lastPosition := stream position.
+					lastColon := stream position.
 					self step]].
 	value := buffer contents.
-	(hasColon and: [value lastCodeUnit ~~ $:])
+	(lastColon notNil and: [value lastCodeUnit ~~ $:])
 		ifTrue: 
-			[stream position: lastPosition.
+			[stream position: lastColon.
 			self step.
-			value := value first: lastPosition - startPosition + 1].
+			value := value first: lastColon - startPosition + 1].
 	^self literalTokenClass
 		start: tokenStart
 		comments: nil
@@ -832,7 +825,7 @@ initializeClassificationTable
 isSelector: aSymbol
 	| scanner token |
 	scanner := self basicNew.
-	scanner on: (ReadStream on: aSymbol asString).
+	scanner on: (ReadStream on: aSymbol).
 	scanner step.
 	token := scanner scanAnySymbol.
 	token isLiteralToken ifFalse: [^false].

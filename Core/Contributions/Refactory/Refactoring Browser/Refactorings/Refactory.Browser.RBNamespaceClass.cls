@@ -12,7 +12,7 @@ Refactory.Browser.RBNamespaceClass comment: ''!
 !Refactory.Browser.RBNamespaceClass methodsFor!
 
 addClass: aRBClass
-	self bindings add: ((RBVariableBinding name: aRBClass unqualifiedName class: self)
+	self bindings add: ((RBVariableBinding name: aRBClass unqualifiedName environment: self)
 				setFlags: 0;
 				value: aRBClass;
 				yourself)!
@@ -20,30 +20,32 @@ addClass: aRBClass
 baseEnvironmentName
 	"See Class>>baseEnvironment"
 	
-	^name = 'Root' ifFalse: [#Root]!
+	^#Root!
+
+environment
+	^self unqualifiedName == #Root ifFalse: [self basicEnvironment]!
 
 hierarchyBindingFor: aString
-	"Private - Answer a variable binding for the named variable in the scope of this class, i.e. one of its own class variables or those of its superclasses."
+	"Answer a variable binding for the named variable in the scope of this class, i.e. one of its own class variables or those of its superclasses."
 
 	^self localBindingFor: aString!
 
 removeClass: aRBClass
-	self removeVariableNamed: aRBClass unqualifiedName!
-
-removeVariableNamed: aString
-	self bindings removeKey: aString!
+	self removeBindingFor: aRBClass unqualifiedName!
 
 resolveImportedBinding: aBindingContext
 	"Private - Search imported namespaces for a binding that matches the identifier in the <BindingContext> supplied. The search proceeds up through the class hierarchy (i.e. imports in the class hierarchy are inherited), and then out to the imports of the enclosing namespace. Imports into the enclosing namespaces of superclasses are not searched."
 
-	(self resolveLocallyImportedBinding: aBindingContext) ifNotNil: [:binding | ^binding].
+	(self resolveLocallyImportedBinding: aBindingContext) ifNotNil: [:var | ^var].
 	^self environment ifNotNil: [:env | env resolveImportedBinding: aBindingContext]! !
 !Refactory.Browser.RBNamespaceClass categoriesForMethods!
 addClass:!public! !
 baseEnvironmentName!accessing!public! !
-hierarchyBindingFor:!bindings!private! !
+environment!accessing!public! !
+hierarchyBindingFor:!bindings!public! !
 removeClass:!public! !
-removeVariableNamed:!public! !
 resolveImportedBinding:!binding!private! !
 !
+
+Refactory.Browser.RBNamespaceClass methodProtocol: #bindingScope attributes: #(#readOnly) selectors: #(#environment #fullBindingFor: #localScope)!
 

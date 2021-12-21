@@ -26,6 +26,7 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
+	#{Tools.ClassNameToBindingReferenceRefactoring}
 	#{Tools.CodeMentorPlugin}
 	#{Tools.CodeRefactoringTool}
 	#{Tools.CodeRewriterPlugin}
@@ -37,9 +38,9 @@ package setClassNames: #(
 	#{Tools.RefactoringSmalltalkSystem}
 	#{Tools.RefactoringTool}
 	#{Tools.RenameAccessorsDialog}
+	#{Tools.RenameClassRefactoring}
 	#{Tools.RenameMethodDialog}
 	#{Tools.RenameMethodReferencesRefactoring}
-	#{Tools.RenameNamespacedClassRefactoring}
 	#{Tools.RewriteChangesBrowser}
 	#{Tools.ScopedMethodName}
 	#{Tools.SmalllintCachingContext}
@@ -57,6 +58,8 @@ package setMethodNames: #(
 	#(#{Core.ClassDescription} #directlyDefinesVariable:)
 	#(#{Core.ClassDescription} #hierarchyDefinesVariable:)
 	#(#{Core.Metaclass} #directlyDefinesClassVariable:)
+	#(#{Kernel.StQualifiedReferenceNode} #isBindingChanged)
+	#(#{Kernel.StVariableNode} #isBindingChanged)
 	#(#{Refactory.Browser.AbstractClassVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.AbstractInstanceVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.AbstractVariablesRefactoring} #displayOn:)
@@ -126,10 +129,13 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.RBClass} #removeClassConstant:)
 	#(#{Refactory.Browser.RBClass} #removeImport:)
 	#(#{Refactory.Browser.RBMethod} #owningPackage)
+	#(#{Refactory.Browser.RBModel} #browseChanges)
 	#(#{Refactory.Browser.RBModel} #removeImport:from:)
+	#(#{Refactory.Browser.Refactoring} #chooseFrom:caption:)
 	#(#{Refactory.Browser.Refactoring} #confirm:)
 	#(#{Refactory.Browser.Refactoring} #maxDetails)
 	#(#{Refactory.Browser.Refactoring} #printNameList:on:limit:type:)
+	#(#{Refactory.Browser.Refactoring} #prompt:)
 	#(#{Refactory.Browser.Refactoring class} #icon)
 	#(#{Refactory.Browser.Refactoring class} #renameIcon)
 	#(#{Refactory.Browser.RefactoryClassChange class} #icon)
@@ -149,8 +155,6 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.RenameAccessorsForVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.RenameAccessorsForVariableRefactoring class} #icon)
 	#(#{Refactory.Browser.RenameClassChange class} #icon)
-	#(#{Refactory.Browser.RenameClassRefactoring} #displayOn:)
-	#(#{Refactory.Browser.RenameClassRefactoring class} #new)
 	#(#{Refactory.Browser.RenameClassVariableRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RenameClassVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.RenameClassVariableRefactoring class} #icon)
@@ -255,6 +259,7 @@ package setMethodNames: #(
 	#(#{Tools.RemoveSharedVariableChange class} #icon)
 	#(#{Tools.SmalltalkToolShell} #chooseMethodForRefactoring:)
 	#(#{Tools.SmalltalkToolShell} #queryRefactoringCommand:)
+	#(#{UI.Dialog} #validationDwell)
 ).
 
 package setPrerequisites: #(
@@ -381,20 +386,24 @@ Refactory.Browser.RBMethodName subclass: #'Tools.ScopedMethodName'
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Refactory.Browser.ClassRefactoring subclass: #'Tools.ClassNameToBindingReferenceRefactoring'
+	instanceVariableNames: 'class unqualifiedName'
+	classVariableNames: ''
+	imports: #(#{Refactory.Browser})
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Refactory.Browser.ClassRefactoring subclass: #'Tools.CopyClassRefactoring'
 	instanceVariableNames: 'newName class superclass'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RenameClassRefactoring subclass: #'Tools.RenameNamespacedClassRefactoring'
-	instanceVariableNames: 'oldClassReference newClassReference oldUnqualified hasSymbolRenames'
+Refactory.Browser.ClassRefactoring subclass: #'Tools.RenameClassRefactoring'
+	instanceVariableNames: 'newName class oldClassReference newClassReference oldUnqualified hasSymbolRenames classBinding'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
-	classConstants: {
-		'RewriteTracing' -> false
-	}!
+	classConstants: {}!
 Refactory.Browser.RenameMethodRefactoring subclass: #'Tools.RenameMethodReferencesRefactoring'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -484,6 +493,28 @@ directlyDefinesClassVariable: aString
 	^self instanceClass directlyDefinesClassVariable: aString! !
 !Core.Metaclass categoriesForMethods!
 directlyDefinesClassVariable:!public!testing! !
+!
+
+!Kernel.StQualifiedReferenceNode methodsFor!
+
+isBindingChanged
+	"Private - Assuming that this node has been bound by the RBVariableAnalyser, would it bind differently now?"
+
+	^binding notNil and: [self isRelative and: [self resolveBinding ~~ binding]]! !
+!Kernel.StQualifiedReferenceNode categoriesForMethods!
+isBindingChanged!accessing!private! !
+!
+
+!Kernel.StVariableNode methodsFor!
+
+isBindingChanged
+	"Private - Assuming that this node has been bound by a semantic analyser, would it bind differently now?"
+
+	| binding |
+	binding := self binding.
+	^binding notNil and: [binding ~~ self resolveBinding]! !
+!Kernel.StVariableNode categoriesForMethods!
+isBindingChanged!accessing!private! !
 !
 
 !Refactory.Browser.AbstractClassVariableRefactoring class methodsFor!
@@ -1347,14 +1378,13 @@ validate:!helpers!public! !
 
 !Refactory.Browser.RBClass methodsFor!
 
-addClassConstant: anAssociation
-	self bindings add: anAssociation.
-	anAssociation environment: self.
-	model addClassConstant: anAssociation to: self!
+addClassConstant: aRBVariableBinding
+	self addBinding: aRBVariableBinding.
+	model addClassConstant: aRBVariableBinding to: self!
 
 removeClassConstant: anAssociation
 	| binding |
-	binding := self bindings removeAssociation: anAssociation.
+	binding := self removeBindingFor: anAssociation key.
 	model removeClassConstant: binding from: self!
 
 removeImport: aString
@@ -1380,13 +1410,22 @@ owningPackage!accessing!public! !
 
 !Refactory.Browser.RBModel methodsFor!
 
+browseChanges
+	Tools.RewriteChangesBrowser showOn: self changes!
+
 removeImport: aBindingReference from: aRBClass
 	^changes removeImport: aBindingReference from: aRBClass! !
 !Refactory.Browser.RBModel categoriesForMethods!
+browseChanges!helpers!public! !
 removeImport:from:!changes!private! !
 !
 
 !Refactory.Browser.Refactoring methodsFor!
+
+chooseFrom: aCollection caption: aString
+	"Dolphin specific choice prompt"
+
+	^UI.ChoicePrompter choices: aCollection asOrderedCollection caption: aString!
 
 confirm: aString
 	"Dolphin specific confirmation prompt"
@@ -1417,11 +1456,18 @@ printNameList: aCollection on: aPuttableStream limit: maxInteger type: aString
 				print: count - maxInteger;
 				nextPutAll: ' further ';
 				nextPutAll: aString;
-				nextPut: $.]! !
+				nextPut: $.]!
+
+prompt: aString
+	"Dolphin specific prompt for text input"
+
+	^UI.Prompter prompt: aString caption: self displayString! !
 !Refactory.Browser.Refactoring categoriesForMethods!
+chooseFrom:caption:!helpers!private! !
 confirm:!helpers!public! !
 maxDetails!constants!private! !
 printNameList:on:limit:type:!helpers!private! !
+prompt:!helpers!private! !
 !
 
 !Refactory.Browser.Refactoring class methodsFor!
@@ -1465,7 +1511,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Icon fromId: 'EditClear.ico'! !
+	^Icon fromId: 'ClassDelete.ico'! !
 !Refactory.Browser.RemoveClassChange class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1566,7 +1612,7 @@ displayPrefix!displaying!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Icon fromId: 'EditClear.ico'! !
+	^Icon fromId: 'MethodDelete.ico'! !
 !Refactory.Browser.RemoveMethodChange class categoriesForMethods!
 icon!constants!public! !
 !
@@ -1597,7 +1643,6 @@ getOptionRemoveDuplicatesWithSupersends: superMessages
 	^MessageBox new
 		caption: self displayString;
 		headline: 'Remove duplicate methods with supersends?';
-		text: details contents;
 		customButtons: #(#(#yes '&Remove') #(#no '&Don''t Remove'));
 		defaultButton: 2;
 		detailsText: details contents;
@@ -1657,28 +1702,6 @@ icon
 	^Icon fromId: 'Rename.ico'! !
 !Refactory.Browser.RenameClassChange class categoriesForMethods!
 icon!constants!public! !
-!
-
-!Refactory.Browser.RenameClassRefactoring methodsFor!
-
-displayOn: aPuttableStream
-	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
-
-	aPuttableStream
-		nextPutAll: 'Rename class ';
-		nextPutAll: className;
-		nextPutAll: ' to ';
-		nextPutAll: newName! !
-!Refactory.Browser.RenameClassRefactoring categoriesForMethods!
-displayOn:!displaying!public! !
-!
-
-!Refactory.Browser.RenameClassRefactoring class methodsFor!
-
-new
-	^RenameNamespacedClassRefactoring basicNew initialize! !
-!Refactory.Browser.RenameClassRefactoring class categoriesForMethods!
-new!instance creation!public! !
 !
 
 !Refactory.Browser.RenameClassVariableRefactoring methodsFor!
@@ -3060,6 +3083,16 @@ queryRefactoringCommand: aCommandQuery
 !Tools.SmalltalkToolShell categoriesForMethods!
 chooseMethodForRefactoring:!private!refactoring! !
 queryRefactoringCommand:!commands!private!refactoring! !
+!
+
+!UI.Dialog methodsFor!
+
+validationDwell
+	"The <Duration> to wait after the user has stopped typing before re-validating and possibly showing a hint bubble."
+
+	^1 seconds! !
+!UI.Dialog categoriesForMethods!
+validationDwell!constants!public! !
 !
 
 "End of package definition"!

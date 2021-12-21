@@ -26,10 +26,10 @@ testExistingName
 					subclasses: {BasicLintRuleTestData. CompositeLintRuleTestData})
 			withMessage: 'Core.Object is a class or global variable';
 		shouldFail: (ChildrenToSiblingsRefactoring
-					name: #Processor
+					name: 'Core.Processor'
 					class: LintRuleTestData
 					subclasses: {BasicLintRuleTestData. CompositeLintRuleTestData})
-			withMessage: 'Processor is a class or global variable'!
+			withMessage: 'Core.Processor is a class or global variable'!
 
 testInvalidSubclass
 	self shouldFail: (ChildrenToSiblingsRefactoring

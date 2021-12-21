@@ -70,14 +70,12 @@ createReference
 				class: class)!
 
 preconditions
-	^(RBCondition isValidClassName: newClassName) 
-		& (RBCondition isGlobal: newClassName in: self model) not 
-			& (RBCondition isValidInstanceVariableName: referenceVariableName for: class) 
-			& (RBCondition hierarchyOf: class definesVariable: referenceVariableName) 
-					not 
-			& (RBCondition isGlobal: referenceVariableName in: self model) not 
-			& (RBCondition definesTemporaryVariable: referenceVariableName in: class) 
-					not!
+	^(RBCondition isValidClassName: newClassName)
+		& (RBCondition isStatic: newClassName in: self model) not
+			& (RBCondition isValidInstanceVariableName: referenceVariableName for: class)
+			& (RBCondition hierarchyOf: class definesVariable: referenceVariableName) not
+			& (RBCondition isStatic: referenceVariableName in: self model) not
+			& (RBCondition definesTemporaryVariable: referenceVariableName in: class) not!
 
 storeOn: aStream
 	aStream nextPut: $(.

@@ -161,6 +161,9 @@ do: aBlock
 
 	aBlock value: self!
 
+environment
+	^self methodNode environment!
+
 equalTo: aNode exceptForVariables: variableNameCollection
 	| dictionary |
 	dictionary := Dictionary new.
@@ -387,7 +390,7 @@ statementComments
 	| statementComments |
 	statementComments := OrderedCollection new.
 	self addStatementCommentsTo: statementComments.
-	^statementComments asSortedCollection: [:a :b | a first < b first]!
+	^statementComments sort: [:a :b | a first < b first]!
 
 statementNode
 	"Return your topmost node that is contained by a sequence node."
@@ -448,6 +451,7 @@ defines:!public!testing! !
 directlyUses:!public!testing! !
 displayOn:!printing!public! !
 do:!enumerating!public! !
+environment!accessing!public! !
 equalTo:exceptForVariables:!comparing!public! !
 evaluatedFirst:!public!testing! !
 formattedCode!accessing!public! !
@@ -486,7 +490,7 @@ methodComments!accessing!public! !
 methodNode!accessing!public! !
 newSource!accessing!public! !
 nodesDo:!iterating!public! !
-outer!public! !
+outer!accessing!public! !
 parent!accessing!public! !
 parent:!accessing!public! !
 postCopy!copying!public! !

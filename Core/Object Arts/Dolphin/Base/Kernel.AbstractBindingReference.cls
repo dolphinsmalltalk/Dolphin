@@ -257,11 +257,8 @@ private
 refersTo: anObject asLiteralOf: aCompiledCode
 	"Private - Answer whether the receiver, a literal of the <CompiledCode> 2nd argument, is a reference to the <Object> first argument."
 
-	^self = anObject or: 
-			[anObject notNil and: 
-					[self bindingOrNil
-						ifNil: [false]
-						ifNotNil: [:binding | binding refersTo: anObject asLiteralOf: aCompiledCode]]]!
+	^self = anObject
+		or: [anObject notNil and: [self bindingOrNil refersTo: anObject asLiteralOf: aCompiledCode]]!
 
 scope
 	"Private - Answer the <bindingScope> in which the reference was created. For relative references this is used to determine the start point for binding resolution. For absolute references this should always be nil."
@@ -295,7 +292,7 @@ storeOn: aStream
 undeclare
 	"Remove the binding in the target namespace that would be resolved by the receiver, if it exists."
 
-	self environment ifNotNil: [:env | env removeLocalBindingFor: self path last]!
+	^self environment ifNotNil: [:env | env removeBindingFor: self path last]!
 
 unqualifiedName
 	"Answer the unqualified name part of the receiver (the final component of the name)."

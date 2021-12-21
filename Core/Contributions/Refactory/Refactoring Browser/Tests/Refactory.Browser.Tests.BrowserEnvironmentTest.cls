@@ -108,6 +108,14 @@ testAndEnvironment
 	self assert: andEnvironment classNames asSortedCollection
 		equals: (originalEnvironment referencesTo: #printString) classNames asSortedCollection!
 
+testAssociationAt
+	| subject |
+	subject := ClassEnvironment onEnvironment: universalEnvironment
+				classes: {Object. Object class. Core}.
+	self assert: (subject associationAt: #'Core.Object') identicalTo: Object binding.
+	self assertIsNil: (subject associationAt: #'Core.Association').
+	self assert: (subject associationAt: #'Core.Processor') identicalTo: (Core bindingFor: #Processor)!
+
 testBrowserEnvironment
 	self universalTestFor: universalEnvironment.
 	#rbFix.	"Also test #definesClass:"
@@ -349,6 +357,7 @@ storeStringFor:!public!universal tests! !
 tearDown!public!Running! !
 testAllClassesDo!BrowserEnvironment tests!public! !
 testAndEnvironment!AndEnvironment tests!public! !
+testAssociationAt!BrowserEnvironment tests!public! !
 testBrowserEnvironment!BrowserEnvironment tests!public! !
 testCategoryEnvironment!BrowserEnvironment tests!public! !
 testClassEnvironment!BrowserEnvironment tests!public! !

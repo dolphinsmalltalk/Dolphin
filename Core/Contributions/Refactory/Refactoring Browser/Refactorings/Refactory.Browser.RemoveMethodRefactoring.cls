@@ -16,8 +16,8 @@ checkReferencesToAnyOf: aSelectorCollection
 			[:each |
 			| refs |
 			refs := OrderedCollection new.
-			self model allReferencesTo: each
-				do: [:aRBMethod | (aSelectorCollection includes: aRBMethod selector) not ifTrue: [refs add: aRBMethod]].
+			refs := (self model allReferencesTo: each)
+						reject: [:aRBMethod | aSelectorCollection includes: aRBMethod selector].
 			refs notEmpty
 				ifTrue: [(self shouldRemoveSelector: each referencedIn: refs) ifFalse: [self refactoringAborted]]]!
 

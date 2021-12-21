@@ -32,7 +32,9 @@ package setClassNames: #(
 package setMethodNames: #(
 	#(#{Kernel.StMethodNode} #analyze)
 	#(#{Kernel.StQualifiedReferenceNode} #binding)
+	#(#{Kernel.StQualifiedReferenceNode} #resolveBinding)
 	#(#{Kernel.StVariableNode} #binding)
+	#(#{Kernel.StVariableNode} #resolveBinding)
 ).
 
 package setPrerequisites: #(
@@ -45,7 +47,7 @@ package!
 "Class Definitions"!
 
 Core.Object subclass: #'Kernel.StSemanticScope'
-	instanceVariableNames: 'outer'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -57,7 +59,7 @@ Core.Object subclass: #'Kernel.StVariable'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.ParseNodeVisitor subclass: #'Kernel.AbstractSemanticAnalyser'
-	instanceVariableNames: 'methodNode classScope currentScope evaluationContext evalScope errorBlock scopes addToFrame inStaticExpression inTag'
+	instanceVariableNames: 'methodNode classScope currentScope evalScope errorBlock scopes inStaticExpression inTag'
 	classVariableNames: ''
 	imports: #(#{Kernel.ParseErrorCodes})
 	classInstanceVariableNames: ''
@@ -75,13 +77,13 @@ Kernel.StSemanticScope subclass: #'Kernel.StClassScope'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StSemanticScope subclass: #'Kernel.StEvalScope'
-	instanceVariableNames: 'pools'
+	instanceVariableNames: 'pools outer'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StSemanticScope subclass: #'Kernel.StLexicalScope'
-	instanceVariableNames: 'locals node thisContextVariable flags'
+	instanceVariableNames: 'node outer locals thisContextVariable flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -187,43 +189,43 @@ analyze
 		for: self methodClass
 		environment: self environment! !
 !Kernel.StMethodNode categoriesForMethods!
-analyze!public! !
+analyze!operations!public! !
 !
 
 !Kernel.StQualifiedReferenceNode methodsFor!
 
 binding
-	^binding
-		ifNil: 
-			[binding := self isRelative
-						ifTrue: 
-							[| classScope |
-							classScope := scope classScope.
-							classScope methodClass
-								fullBindingFor: ((pathString beginsWith: '_.') ifTrue: [pathString copyFrom: 3] ifFalse: [pathString])
-								environment: classScope environment]
-						ifFalse: 
-							[| globalScope |
-							globalScope := scope classScope methodClass globalScope.
-							globalScope fullBindingFor: pathString environment: globalScope environment]]! !
+	^binding ifNil: [binding := self resolveBinding]!
+
+resolveBinding
+	^self isRelative
+		ifTrue: 
+			[| classScope |
+			classScope := scope classScope.
+			classScope methodClass
+				fullBindingFor: ((pathString beginsWith: '_.') ifTrue: [pathString copyFrom: 3] ifFalse: [pathString])
+				environment: classScope environment]
+		ifFalse: 
+			[| globalScope |
+			globalScope := scope classScope methodClass globalScope.
+			globalScope fullBindingFor: pathString environment: globalScope environment]! !
 !Kernel.StQualifiedReferenceNode categoriesForMethods!
 binding!accessing!private! !
+resolveBinding!accessing!private! !
 !
 
 !Kernel.StVariableNode methodsFor!
 
 binding
-	| binding |
-	binding := variable
-				ifNil: 
-					[| initial identifier |
-					identifier := self name.
-					initial := identifier first.
-					(initial isUppercase or: [initial == $_]) ifTrue: [self methodNode fullBindingFor: identifier]]
-				ifNotNil: [variable isStaticVariable ifTrue: [variable binding]].
-	^binding! !
+	^variable ifNil: [self resolveBinding] ifNotNil: [variable binding]!
+
+resolveBinding
+	| initial |
+	initial := name at: 1.
+	^(initial isUppercase or: [initial == $_]) ifTrue: [self methodNode fullBindingFor: name]! !
 !Kernel.StVariableNode categoriesForMethods!
 binding!accessing!private! !
+resolveBinding!accessing!private! !
 !
 
 "End of package definition"!

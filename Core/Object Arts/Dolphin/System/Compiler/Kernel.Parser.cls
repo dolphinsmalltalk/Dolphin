@@ -46,15 +46,8 @@ blockNodeClass
 braceArrayNodeClass
 	^StBraceArrayNode!
 
-canHaveStatementsAfterReturn
-	#rbFix. "Dolphin can have statements after the return"
-	^true!
-
 cascadeNodeClass
 	^StCascadeNode!
-
-environment: aNamespace
-	environment := aNamespace!
 
 errorBlock: aBlock
 	"Set the errorBlock to be evaluated when a syntax error is detected in the input stream.
@@ -102,8 +95,9 @@ literalValueNodeClass
 messageNodeClass
 	^StMessageNode!
 
-methodClass: aClass 
-	methodClass := aClass!
+methodClass: aClass environment: aNamespace
+	methodClass := aClass.
+	aNamespace == methodClass environment ifFalse: [environment := aNamespace]!
 
 methodNodeClass
 	^StMethodNode!
@@ -313,8 +307,7 @@ parseExpression: aString
 				arguments: #().
 	method
 		source: aString;
-		methodClass: methodClass;
-		environment: environment.
+		methodClass: methodClass environment: environment.
 	body := self parseStatementsOf: method.
 	method body: body.
 	self atEnd
@@ -595,7 +588,7 @@ parseLiteralByteArrayObject
 	(currentToken isLiteralToken and: 
 			[| value |
 			value := currentToken value.
-			value isInteger and: [value between: 0 and: 255]])
+			value isInteger and: [value == (value bitAnd: 255)]])
 		ifFalse: 
 			[| token |
 			self parserError: CErrBadValueInByteArray.
@@ -635,7 +628,6 @@ parseMethod
 	self parseTags.
 	self addCommentsTo: methodNode.
 	methodNode body: (self parseStatementsOf: methodNode).
-	"	methodNode tags: tags."
 	^methodNode!
 
 parseMethod: aString
@@ -647,14 +639,12 @@ parseMethod: aString
 			"Error ignored, but at EOF so no recovery needed."].
 	^node
 		source: aString;
-		methodClass: methodClass;
-		environment: environment;
+		methodClass: methodClass environment: environment;
 		yourself!
 
 parseMethod: aString in: aClass environment: aNamespace errorBlock: monadicBlock
 	self errorBlock: monadicBlock.
-	methodClass := aClass.
-	environment := aNamespace.
+	self methodClass: aClass environment: aNamespace.
 	self initializeParserWith: aString.
 	^self parseMethod: aString!
 
@@ -862,8 +852,8 @@ parserError: anInteger range: anInterval extras: anArray
 parseStatementList: sequenceNode
 	| statements end periods node firstReturn |
 	end := false.
-	statements := OrderedCollection new.
-	periods := OrderedCollection new.
+	statements := OrderedCollection new: 4.
+	periods := OrderedCollection new: 4.
 	self addCommentsTo: sequenceNode.
 	AllowEmptyStatements
 		ifTrue: 
@@ -885,7 +875,7 @@ parseStatementList: sequenceNode
 					node := self returnNodeClass return: returnPosition value: self parseAssignment.
 					statements addLast: node.
 					firstReturn ifNil: [firstReturn := statements size].
-					end := self canHaveStatementsAfterReturn not]
+					end := false]
 				ifFalse: 
 					[node := self parseAssignment.
 					statements addLast: node].
@@ -1229,9 +1219,7 @@ assignmentNodeClass!constants!private! !
 atEnd!public!testing! !
 blockNodeClass!constants!private! !
 braceArrayNodeClass!constants!private! !
-canHaveStatementsAfterReturn!public!testing! !
 cascadeNodeClass!constants!private! !
-environment:!initializing!public! !
 errorBlock:!accessing!public! !
 errorPosition!error handling!public! !
 externalReferenceTypeFor:!parsing!private! !
@@ -1241,7 +1229,7 @@ line!accessing!public! !
 literalArrayNodeClass!constants!private! !
 literalValueNodeClass!constants!private! !
 messageNodeClass!constants!private! !
-methodClass:!accessing!public! !
+methodClass:environment:!initializing!private! !
 methodNodeClass!constants!private! !
 nextToken!helpers!private! !
 optimizedNodeClass!constants!private! !
@@ -1277,7 +1265,7 @@ parseLiteralByteArrayObject!parsing!private! !
 parseMessagePattern!parsing!private! !
 parseMethod!parsing!private! !
 parseMethod:!accessing!private! !
-parseMethod:in:environment:errorBlock:!parsing!public! !
+parseMethod:in:environment:errorBlock:!parsing!private! !
 parseMethodParameter!parsing!private! !
 parseNumberLiteral!parsing!private! !
 parseOptimizedExpression!parsing!private! !
@@ -1383,8 +1371,7 @@ parseExpression: aString in: aClass environment: aNamespace onError: aBlock
 	| node parser |
 	parser := self new
 				errorBlock: aBlock;
-				methodClass: aClass;
-				environment: aNamespace;
+				methodClass: aClass environment: aNamespace;
 				initializeParserWith: aString;
 				yourself.
 	node := parser parseExpression: aString.

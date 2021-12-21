@@ -34,6 +34,6 @@ hasFarReturn!accessing!public! !
 markFarReturn!public!visiting! !
 markNeedsSelf!public!visiting! !
 needsSelf!accessing!public! !
-realScope!public! !
+realScope!accessing!public! !
 !
 

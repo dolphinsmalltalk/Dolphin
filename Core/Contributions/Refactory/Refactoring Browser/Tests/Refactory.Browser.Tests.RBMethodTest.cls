@@ -20,6 +20,54 @@ testLiteralStringsDoNotMatchSymbols
 	method := class methodFor: #literalArrayStringsAndSymbols.
 	self deny: (method refersToSymbol: #abc)!
 
+testParseTreeEnvironment
+	| model class methodWithCustomNamespace methodInClassNamespace |
+	model := RBModel new.
+	class := model classNamed: 'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	methodWithCustomNamespace := class
+				methodFor: #refersToDolphinTestPartiallyQualifiedBindingMethodNamespace.
+	self assert: methodWithCustomNamespace environment identicalTo: (model classFor: Core).
+	methodInClassNamespace := class methodFor: #refersToClassUnqualified.
+	self assert: methodInClassNamespace environment identicalTo: (model classFor: Refactory.Browser.Tests).
+	"It is important for class renames that move a class between namespaces that the parse trees of methods in the class namespace do not cache the class namespace"
+	class name: 'Refactory.Browser.RefactoryTestDataApp'.
+	self assert: methodWithCustomNamespace environment identicalTo: (model classFor: Core).
+	methodInClassNamespace := class methodFor: #refersToClassUnqualified.
+	self assert: methodInClassNamespace environment identicalTo: class environment
+!
+
+testRefersToClassBinding
+	| model class targetClass |
+	model := RBModel new.
+	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	targetClass := model classNamed: 'Refactory.Browser.Tests.ClassToRename'.
+	#(#refersToClassFullyQualifiedBinding #refersToClassFullyQualifiedBindingInArray #refersToClassUnqualifiedBinding #refersToClassUnqualifiedBindingInArray)
+		do: 
+			[:each |
+			| method |
+			method := class methodFor: each.
+			self assert: (method refersToClass: targetClass)]!
+
+testRefersToClassBindingFromCustomNamespace
+	| model class |
+	model := RBModel new.
+	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	self assert: ((class methodFor: #refersToDolphinTestPartiallyQualifiedBindingMethodNamespace)
+				refersToClass: (model classNamed: 'Core.Tests.DolphinTest'))!
+
+testRefersToClassVariable
+	| model class method targetClass |
+	model := RBModel new.
+	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	method := class methodFor: #atIfAbsent.
+	self assert: (method refersToClass: (model classNamed: #Smalltalk)).
+	targetClass := model classNamed: 'Refactory.Browser.Tests.ClassToRename'.
+	#(#refersToClassUnqualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassFullyQualified)
+		do: 
+			[:each |
+			method := class methodFor: each.
+			self assert: (method refersToClass: targetClass)]!
+
 testRefersToSymbol
 	| model class method |
 	model := RBModel new.
@@ -31,6 +79,10 @@ testRefersToSymbol
 	self assert: (method refersToSymbol: #def)! !
 !Refactory.Browser.Tests.RBMethodTest categoriesForMethods!
 testLiteralStringsDoNotMatchSymbols!public! !
+testParseTreeEnvironment!public! !
+testRefersToClassBinding!public! !
+testRefersToClassBindingFromCustomNamespace!public! !
+testRefersToClassVariable!public! !
 testRefersToSymbol!public! !
 !
 

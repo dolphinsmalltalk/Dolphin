@@ -236,12 +236,6 @@ isEmptyClass: anObject
 				nextPut: $);
 				contents]!
 
-isGlobal: aString in: aRBModel
-	^self new
-		type: {#isGlobal. aString}
-		block: [aRBModel includesGlobal: aString]
-		errorString: aString , ' is <1?:not >a class or global variable'!
-
 isImmediateSubclass: subclass of: superClass
 	^self new
 		type: {#immediateSubclass. superClass. subclass}
@@ -259,6 +253,12 @@ isNamespace: aSymbol
 		type: {#isNamespace. aSymbol}
 		block: [aSymbol asQualifiedReference namespaceBinding isNil]
 		errorString: aSymbol , ' is <1?:not >a namespace'!
+
+isStatic: aString in: aRBModel
+	^self new
+		type: {#isGlobal. aString}
+		block: [aRBModel definesStaticVariable: aString]
+		errorString: aString , ' is <1?:not >a class or global variable'!
 
 isString: aString
 	"added by DMM  Dolphin's categories are *strings* NOT symbols.
@@ -381,10 +381,10 @@ hierarchyOf:referencesInstanceVariable:!instance creation!public! !
 isAbstractClass:!instance creation!public! !
 isClass:!instance creation!public! !
 isEmptyClass:!instance creation!public! !
-isGlobal:in:!instance creation!public! !
 isImmediateSubclass:of:!instance creation!public! !
 isMetaclass:!instance creation!public! !
 isNamespace:!instance creation!public! !
+isStatic:in:!instance creation!public! !
 isString:!instance creation!public! !
 isSymbol:!instance creation!public! !
 isValidClassName:!instance creation!public! !

@@ -3,11 +3,10 @@ package := Package name: 'RBChangeObjects'.
 package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Refactoring Browser Change Objects
-Copyright (c) John Brant & Don Roberts.
+Copyright © John Brant & Don Roberts.
 
-Ported to Dolphin by Blair McGlashan and Andy Bower at Camp Smalltalk 1 in San Diego, 2000.
-
-Browse the ''*-RB fixes'' pseudo-category to find the modifications made as part of the Dolphin port.'.
+Originally ported to Dolphin by Blair McGlashan and Andy Bower at Camp Smalltalk 1 in San Diego, 2000. Fairly extensively modified since, especially in Dolphin 8 due to the introduction of namespaces.
+'.
 
 
 package setClassNames: #(

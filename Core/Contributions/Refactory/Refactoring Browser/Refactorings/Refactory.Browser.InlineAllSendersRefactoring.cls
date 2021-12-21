@@ -17,7 +17,7 @@ checkInlinedMethods
 
 inlineMessagesInClass: aClass andSelector: aSelector
 	| messagesToInline previousCountOfMessages |
-	previousCountOfMessages := 4294967295.	"Some really large
+	previousCountOfMessages := SmallInteger maximum.	"Some really large
 number > # of initial self sends."
 	
 	[| tree |

@@ -44,7 +44,6 @@ parseExpression: aString in: aClass
 				analyseParseTree: ast
 				for: aClass
 				environment: Smalltalk
-				context: nil
 				pools: #()
 				onError: errorBlock]
 		ifFalse: [ast]!

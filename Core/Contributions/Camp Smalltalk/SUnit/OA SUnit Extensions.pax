@@ -101,7 +101,11 @@ assert: actualObject equals: expectedObject description: aStringOrValue
 
 assert: actualObject identicalTo: expectedObject
 	expectedObject == actualObject
-		ifFalse: [self fail: (self comparingStringBetween: expectedObject and: actualObject)]!
+		ifFalse: [self fail: (self comparingStringBetween: expectedObject and: actualObject)]
+
+	"
+	(Smalltalk.DiffBrowser show: 'Vertical view') compare: actualObject printString id: 'Actual' and: expectedObject printString id: 'Expected'
+	"!
 
 assert: actualObject isKindOf: expectedType
 	(actualObject isKindOf: expectedType)

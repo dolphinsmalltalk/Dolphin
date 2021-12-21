@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.StSemanticScope'
-	instanceVariableNames: 'outer'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -13,43 +13,45 @@ Kernel.StSemanticScope comment: ''!
 !Kernel.StSemanticScope methodsFor!
 
 classScope
-	^outer classScope!
+	^self outer classScope!
 
 environment: aNamespace
-	outer environment: aNamespace!
+	self outer environment: aNamespace!
 
 isInlined
 	^false!
 
 lookupVariable: anStVariableNode
-	"Lookup and return an <StVariable> describing the variable definition in this scope matching
-	the variable reference specified by the <StVariableNode> argument."
+	"Lookup and return an <StVariable> describing the variable definition in this scope matching the variable reference specified by the <StVariableNode> argument."
+
+	anStVariableNode isSpecialVariable ifTrue: [^anStVariableNode specialVariableInScope: self].
+	^self resolveVariable: anStVariableNode!
+
+outer
+	^self subclassResponsibility!
+
+resolveVariable: anStVariableNode
+	"Private - Lookup and return an <StVariable> describing the variable definition in this scope matching the variable reference specified by the <StVariableNode> argument. The argument is assumed to be a real variable, as opposed to one of the special variables self, super, or thisContext."
 
 	^self subclassResponsibility!
 
-outer
-	^outer!
-
-outer: anStSemanticScope
-	outer := anStSemanticScope!
-
 selfVariable
-	^outer selfVariable!
+	^self outer selfVariable!
 
 superVariable
-	^outer superVariable!
+	^self outer superVariable!
 
 thisContextVariable
-	^self shouldNotImplement! !
+	^nil! !
 !Kernel.StSemanticScope categoriesForMethods!
 classScope!accessing!public! !
 environment:!accessing!public! !
 isInlined!accessing!public! !
 lookupVariable:!operations!public! !
 outer!accessing!public! !
-outer:!accessing!public! !
-selfVariable!public! !
-superVariable!public! !
-thisContextVariable!public! !
+resolveVariable:!operations!private! !
+selfVariable!accessing!public! !
+superVariable!accessing!public! !
+thisContextVariable!accessing!public! !
 !
 

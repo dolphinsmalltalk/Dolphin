@@ -11,10 +11,14 @@ Refactory.Browser.RBVariableBinding comment: ''!
 !Refactory.Browser.RBVariableBinding categoriesForClass!Collections-Support! !
 !Refactory.Browser.RBVariableBinding methodsFor!
 
+isClassBinding
+	^(value isKindOf: RBClass)
+		and: [key == value unqualifiedName and: [environment == value basicEnvironment]]!
+
 model
 	^environment model!
 
-name: aString class: aRBClass
+name: aString environment: aRBClass
 	key := aString.
 	environment := aRBClass.
 	flags := ClassMask.
@@ -23,7 +27,7 @@ name: aString class: aRBClass
 realBinding
 	^realBinding!
 
-realBinding: aVariableBinding class: aRBClass
+realBinding: aVariableBinding environment: aRBClass
 	key := aVariableBinding key.
 	value := aVariableBinding value.
 	environment := aRBClass.
@@ -35,22 +39,19 @@ realBinding: aVariableBinding class: aRBClass
 targetVariable
 	^realBinding ?? self! !
 !Refactory.Browser.RBVariableBinding categoriesForMethods!
+isClassBinding!public!testing! !
 model!accessing!public! !
-name:class:!initializing!private! !
+name:environment:!initializing!private! !
 realBinding!accessing!public! !
-realBinding:class:!initializing!private! !
+realBinding:environment:!initializing!private! !
 targetVariable!accessing!public! !
 !
 
 !Refactory.Browser.RBVariableBinding class methodsFor!
 
-name: aString class: aRBClass
-	^self new name: aString class: aRBClass!
-
-realBinding: aVariableBinding class: aRBClass
-	^self new realBinding: aVariableBinding class: aRBClass! !
+name: aString environment: aRBClass
+	^self new name: aString environment: aRBClass! !
 !Refactory.Browser.RBVariableBinding class categoriesForMethods!
-name:class:!instance creation!public! !
-realBinding:class:!instance creation!public! !
+name:environment:!instance creation!public! !
 !
 

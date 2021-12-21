@@ -84,7 +84,7 @@ getAllClassesForGlobalOrClassVariable
 	"rbDmm added for MoveMethodRefactoring>>getClassForGlobalOrClassVariable"
 
 	| baseClass |
-	baseClass := self model classNamed: #'Core.Object'.
+	baseClass := self model instanceClassFor: Object.
 	^baseClass allSubclasses asSortedCollection: [:x :y | x name < y name]!
 
 getArgumentNameForSelf
@@ -107,7 +107,7 @@ getClassesForInstanceVariable
 	typer := RefactoryTyper newFor: self model.
 	typer runOn: definingClass.
 	types := typer typesFor: variable.
-	types isEmpty ifTrue: [types := OrderedCollection with: (self model classNamed: #'Core.Object')].
+	types isEmpty ifTrue: [types := OrderedCollection with: (self model instanceClassFor: Object)].
 	moveToClasses := self selectVariableTypesFrom: types selected: (typer guessTypesFor: variable).
 	#rbFix.	"Use the abort signal rather than an error to avoid annoying message box"
 	moveToClasses isNil ifTrue: [self refactoringAborted: 'Method not moved']!
@@ -118,7 +118,7 @@ getClassesForTemporaryVariable
 				typesFor: variable
 				in: parseTree
 				model: self model.
-	types isEmpty ifTrue: [types := OrderedCollection with: (self model classNamed: #'Core.Object')].
+	types isEmpty ifTrue: [types := OrderedCollection with: (self model instanceClassFor: Object)].
 	moveToClasses := self selectVariableTypesFrom: types selected: types.
 	#rbFix.	"Use the abort signal rather than an error to avoid annoying message box"
 	moveToClasses isNil ifTrue: [self refactoringAborted: 'Method not moved']!
@@ -142,7 +142,7 @@ getClassForGlobalOrClassVariable
 	definingClass isNil
 		ifTrue: 
 			[type := self model classNamed: variable.
-			type isNil ifTrue: [type := self model classNamed: #'Core.Object']]
+			type isNil ifTrue: [type := self model instanceClassFor: Object]]
 		ifFalse: [type := definingClass typeOfClassVariable: variable].
 	moveToClasses := self selectVariableTypesFrom: self getAllClassesForGlobalOrClassVariable
 				selected: {type}.

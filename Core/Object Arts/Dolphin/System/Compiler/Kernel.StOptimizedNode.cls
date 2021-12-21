@@ -104,16 +104,16 @@ value: anObject
 !Kernel.StOptimizedNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
-argumentCount!public! !
+argumentCount!accessing!public! !
 arguments!accessing!public! !
 body!accessing!public! !
 body:!accessing!public! !
 childrenDo:!accessing!public! !
 evaluateStatements!helpers!private! !
 hash!comparing!public! !
-initialize!public! !
+initialize!initializing!public! !
 isImmediateNode!public!testing! !
-isInlined!public! !
+isInlined!public!testing! !
 left:body:right:!initializing!public! !
 methodClass!accessing!private! !
 methodClass:!accessing!private! !
@@ -147,7 +147,7 @@ new
 	^super new initialize! !
 !Kernel.StOptimizedNode class categoriesForMethods!
 body:!instance creation!public! !
-initialize!public! !
+initialize!class initialization!public! !
 left:body:right:!instance creation!public! !
 new!instance creation!public! !
 !

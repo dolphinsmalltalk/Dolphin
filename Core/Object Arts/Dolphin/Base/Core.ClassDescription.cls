@@ -481,7 +481,7 @@ fullyQualifiedReference
 	^self subclassResponsibility!
 
 globalScope
-	"Answer the Namespace to use as the binding root for fully-qualified names in the receiver."
+	"Answer the <Namespace> to use as the binding root for fully-qualified names in the receiver."
 
 	^Smalltalk
 !
@@ -639,6 +639,11 @@ logRemoveSelectors: aCollection
 	aCollection do: [:each | stream print: each] separatedBy: [stream space].
 	stream nextPut: $).
 	self sourceManager logEvaluate: stream contents!
+
+metaclass
+	"Answer the <Metaclass> of the Class/Metaclass pair."
+
+	^self subclassResponsibility!
 
 methodCategories
 	"Answer a <collection> of all the <methodCategory>s in which 
@@ -1019,6 +1024,14 @@ whichClassDefinesClassVar: aString
 
 	^self instanceClass whichClassSatisfies: [:each | each classBindingNames includes: aString]!
 
+whichClassImplementsProtocol: aMethodProtocol
+	"Answer which <Class> in the receiver's inheritance chain, including the receiver, implements the specified <MethodProtocol>."
+
+	| protocolName |
+	protocolName := aMethodProtocol asSymbol.
+	self withAllSuperclassesDo: [:each | (each protocolNames includes: protocolName) ifTrue: [^each]].
+	^nil!
+
 whichNonVirtualCategoriesIncludeSelector: aSelector
 	| answer |
 	answer := IdentitySet new: 5.
@@ -1116,6 +1129,7 @@ localScope!accessing!public! !
 logDefinition!class hierarchy-mutating!instance variables!private! !
 logRemoveSelector:!development!helpers!private! !
 logRemoveSelectors:!development!helpers!private! !
+metaclass!accessing!public! !
 methodCategories!categories-accessing!public! !
 methodChanged:!helpers!private! !
 methodProtocol:attributes:selectors:!development!public!source filing-methods! !
@@ -1167,12 +1181,13 @@ variableAdded:!class variables!private! !
 variableRemoved:!class variables!private! !
 whichCategoriesIncludeSelector:!categories-accessing!private! !
 whichClassDefinesClassVar:!class variables!public! !
+whichClassImplementsProtocol:!class variables!public! !
 whichNonVirtualCategoriesIncludeSelector:!categories-accessing!private! !
 withAllSubclasses!class hierarchy-accessing!public! !
 withAllSubclassesDo:!enumerating!public! !
 !
 
-Core.ClassDescription methodProtocol: #bindingScope attributes: #(#readOnly) selectors: #(#environment #localScope)!
+Core.ClassDescription methodProtocol: #bindingScope attributes: #(#readOnly) selectors: #(#environment #fullBindingFor: #localScope)!
 Core.ClassDescription methodProtocol: #classDescription attributes: #(#ansi #readOnly) selectors: #(#allSubclasses #allSuperclasses #name #subclasses #superclass)!
 Core.ClassDescription methodProtocol: #'Object class' attributes: #(#ansi #readOnly) selectors: #(#allSubclasses #allSuperclasses #name #new #subclasses #superclass)!
 

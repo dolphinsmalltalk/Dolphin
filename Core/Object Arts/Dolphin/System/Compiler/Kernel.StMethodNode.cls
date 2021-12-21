@@ -79,7 +79,7 @@ buildSelector
 childrenDo: aMonadicValuable
 	arguments do: aMonadicValuable.
 	tags ifNotNil: [tags do: aMonadicValuable].
-	aMonadicValuable value: self body!
+	aMonadicValuable value: body!
 
 defines: aName 
 	^arguments anySatisfy: [:each | each name = aName]!
@@ -96,15 +96,15 @@ displayOn: aPuttableStream
 				print: self selector]!
 
 environment
-	^environment!
+	^environment ifNil: [methodClass environment]!
 
-environment: anObject
-	environment := anObject!
+environment: aNamespace
+	environment := aNamespace!
 
 fullBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this method, and failing that in the receiver's environment. If there is no such variable, then answer nil."
 
-	^methodClass fullBindingFor: aString environment: environment!
+	^methodClass fullBindingFor: aString environment: self environment!
 
 hash
 	^(self selector hash bitXor: self body hash) bitXor: self arguments hash!
@@ -130,14 +130,15 @@ lastIsReturn
 methodClass
 	^methodClass!
 
-methodClass: aClass 
-	methodClass := aClass!
+methodClass: aClass environment: aNamespaceOrNil
+	methodClass := aClass.
+	environment := aNamespaceOrNil!
 
 methodComments
 	| methodComments |
 	methodComments := OrderedCollection withAll: self comments.
 	arguments do: [:each | methodComments addAll: each comments].
-	^methodComments asSortedCollection: [:a :b | a first < b first]!
+	^methodComments sort: [:a :b | a first < b first]!
 
 methodNode
 	^self!
@@ -224,7 +225,7 @@ uses: aNode
 !Kernel.StMethodNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
-actualScope!public! !
+actualScope!accessing!public! !
 allArgumentVariableNodesDo:!accessing!public! !
 allDefinedVariableNodesDo:!accessing!public! !
 argumentCount!accessing!public! !
@@ -249,11 +250,11 @@ isMethod!public!testing! !
 isPrimitive!public!testing! !
 lastIsReturn!public!testing! !
 methodClass!accessing!public! !
-methodClass:!accessing!public! !
+methodClass:environment:!initializing!private! !
 methodComments!accessing!public! !
 methodNode!accessing!public! !
 numArgs!accessing!public! !
-outer!public! !
+outer!accessing!public! !
 postCopy!copying!public! !
 printOn:!printing!public! !
 selector!accessing!public! !

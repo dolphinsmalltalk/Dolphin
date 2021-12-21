@@ -62,10 +62,9 @@ autoParse
 	ast := self parseTree.
 	methodNode := ast methodNode.
 	BrowserSemanticAnalyser
-		analyzeParseTree: ast
+		analyseParseTree: ast
 		for: methodNode methodClass
 		environment: methodNode environment
-		context: self evaluationContext
 		pools: self allPools
 		onError: nil]
 			on: Parser notificationClass

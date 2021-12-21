@@ -38,7 +38,7 @@ package!
 "Class Definitions"!
 
 Core.Object subclass: #'UI.ValidationResult'
-	instanceVariableNames: 'value caption hint'
+	instanceVariableNames: 'value caption hint presenter'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

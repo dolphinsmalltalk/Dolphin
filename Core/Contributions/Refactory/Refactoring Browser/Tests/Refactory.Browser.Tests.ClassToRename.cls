@@ -2,10 +2,12 @@
 
 Core.Model subclass: #'Refactory.Browser.Tests.ClassToRename'
 	instanceVariableNames: 'rewriteRule builder class'
-	classVariableNames: ''
+	classVariableNames: 'ClassVar1'
 	imports: #()
 	classInstanceVariableNames: 'notUsed'
-	classConstants: {}!
+	classConstants: {
+		'ClassConst1' -> 16r1
+	}!
 Refactory.Browser.Tests.ClassToRename guid: (Core.GUID fromString: '{83c27f52-b80f-487b-bd8c-b4035ca0cf2e}')!
 Refactory.Browser.Tests.ClassToRename comment: 'Class used to excercise RenameClassRefactory by RenameClassTest'!
 !Refactory.Browser.Tests.ClassToRename categoriesForClass!Refactory-Test data! !

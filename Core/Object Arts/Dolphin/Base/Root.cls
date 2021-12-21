@@ -8,7 +8,7 @@ Kernel.Namespace subclass: #Root
 	classConstants: {}!
 Root guid: (Core.GUID fromString: '{7a840345-c6bf-4463-bf2a-353375064f5a}')!
 Root isNonInstantiable: true!
-Root comment: 'The distinguished `Namespace`, `Root`, that is the root of the `Namespace` hierarchy. It has no outer environment, and is the environment of the top-level namespaces such as `Core` and `Kernel`, and `Smalltalk` too.'!
+Root comment: '`Root` represents the distinguished `Namespace` that is the root of the `Namespace` hierarchy. It has no outer environment, and is the environment of the top-level namespaces such as `Core` and `Kernel`, and `Smalltalk`.'!
 !Root categoriesForClass!Kernel-Objects! !
 !Root class methodsFor!
 

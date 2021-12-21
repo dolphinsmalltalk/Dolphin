@@ -1276,7 +1276,7 @@ UI.Dialog subclass: #'Tools.AspectEditorDialog'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.Dialog subclass: #'Tools.CreateSubclassDialog'
-	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter namespacePresenter usePackagePresenter package superclassPresenter'
+	instanceVariableNames: 'packagesPresenter subclassesPresenter namePresenter namespacePresenter usePackagePresenter package superclassPresenter hintBubble'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -5143,7 +5143,7 @@ category
 
 	^'Block'! !
 !Kernel.StBlockScope categoriesForMethods!
-category!public! !
+category!constants!public! !
 !
 
 !Kernel.StCascadeNode methodsFor!
@@ -5163,7 +5163,7 @@ category
 
 	^'Class'! !
 !Kernel.StClassScope categoriesForMethods!
-category!public! !
+category!constants!public! !
 !
 
 !Kernel.StEvalScope methodsFor!
@@ -5173,7 +5173,7 @@ category
 
 	^'Workspace'! !
 !Kernel.StEvalScope categoriesForMethods!
-category!public! !
+category!constants!public! !
 !
 
 !Kernel.StGeneratedTempVariable methodsFor!
@@ -5279,7 +5279,7 @@ category!accessing!public! !
 debugInfoInFrame:!accessing!public! !
 printInfoTipOn:!accessing!public! !
 printInfoTipOn:frame:!accessing!public! !
-valueClass:!public! !
+valueClass:!enquiries!public! !
 !
 
 !Kernel.StMessageNode methodsFor!
@@ -5301,7 +5301,7 @@ category
 
 	^'Method'! !
 !Kernel.StMethodScope categoriesForMethods!
-category!public! !
+category!constants!public! !
 !
 
 !Kernel.StNumberLiteralToken methodsFor!
@@ -5319,7 +5319,7 @@ category
 
 	^'Optimized Block'! !
 !Kernel.StOptimizedBlockScope categoriesForMethods!
-category!public! !
+category!constants!public! !
 !
 
 !Kernel.StOptimizedNode methodsFor!
@@ -5446,7 +5446,7 @@ valueClass: aStackFrame
 !Kernel.StSelfVariable categoriesForMethods!
 printInfoTipOn:frame:!accessing!public! !
 valueClass!accessing!public! !
-valueClass:!public! !
+valueClass:!enquiries!public! !
 !
 
 !Kernel.StSelfVariableNode methodsFor!
@@ -5464,7 +5464,7 @@ category
 
 	^self subclassResponsibility! !
 !Kernel.StSemanticScope categoriesForMethods!
-category!public! !
+category!constants!public! !
 !
 
 !Kernel.StSequenceNode methodsFor!
@@ -5552,7 +5552,7 @@ valueClass: aStackFrame
 !Kernel.StSuperVariable categoriesForMethods!
 printInfoTipOn:!accessing!public! !
 valueClass!accessing!public! !
-valueClass:!public! !
+valueClass:!enquiries!public! !
 !
 
 !Kernel.StSuperVariableNode methodsFor!

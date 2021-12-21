@@ -66,6 +66,37 @@ testAssociationAtIfAbsent
 	self assert: (UI associationAt: #Object ifAbsent: absent) identicalTo: absent.
 	self assert: (UI associationAt: #'Core.Object' ifAbsent: absent) identicalTo: absent!
 
+testAt
+	| assoc |
+	assoc := Core at: #Association.
+	self assert: assoc identicalTo: Association.
+	self should: [Core at: #Wibble] raise: NotFoundError.
+	"at: is a local lookup, i.e. it will only resolve unqualfied names from the classPool of the Namespace"
+	self should: [Root at: #'Core.Object'] raise: NotFoundError.
+	self should: [UI at: #Object] raise: NotFoundError.
+	self should: [UI at: #'Core.Object'] raise: NotFoundError.!
+
+testAtIfAbsent
+	| missing |
+	missing := Object new.
+	self assert: (External at: 'Handle' ifAbsent: [missing]) identicalTo: Handle.
+	self assert: (External at: 'NothingToSeeHere' ifAbsent: [missing]) identicalTo: missing.
+	"Core is imported into most namespaces, but the Dictionary protocols perform a local lookup"
+	self assert: (External at: #Association ifAbsent: [missing]) identicalTo: missing.
+	self assert: (External at: self class fullName ifAbsent: [missing]) identicalTo: missing.
+	self assert: (External at: 'Core.Tests.NothingToSeeHere' ifAbsent: [missing]) identicalTo: missing!
+
+testAtIfPresent
+	| foundBlock present |
+	present := Object new.
+	foundBlock := [:obj | present -> obj].
+	self assert: (Core at: #Association ifPresent: foundBlock) equals: present -> Association.
+	self assertIsNil: (Core at: 'NothingToSeeHere' ifPresent: foundBlock).
+	"at: is a local lookup, i.e. it will only resolve unqualfied names from the classPool of the Namespace"
+	self assertIsNil: (Core at: 'Core.Object' ifPresent: foundBlock).
+	self assertIsNil: (UI at: #Object ifPresent: foundBlock).
+	self assertIsNil: (UI at: 'Core.Object' ifPresent: foundBlock)!
+
 testBindingFromNamespaceWithCustomEnvironment
 	"Test the case of resolving an unqualified name in a method that is defined in a Namespace class in a different environment than that of the Namespace class itself, where the identifier is not bindable in the namespace class, but is bindable in the method environment (bug #1129)."
 
@@ -235,6 +266,9 @@ testAllClasses!public!unit tests! !
 testAllEnvironments!public!unit tests! !
 testAssociationAt!public! !
 testAssociationAtIfAbsent!public! !
+testAt!public! !
+testAtIfAbsent!public! !
+testAtIfPresent!public! !
 testBindingFromNamespaceWithCustomEnvironment!public! !
 testBindingInParentNamespace!public!unit tests! !
 testEnvironment!public!unit tests! !

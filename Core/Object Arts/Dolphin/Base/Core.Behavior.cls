@@ -814,8 +814,9 @@ selectMethods: aMonadicValuable
 	for which the monadic valuable, discriminator, evaluates to true."
 
 	| answer |
-	answer := IdentitySet new: 25.
-	self methodsDo: [:each | (aMonadicValuable value: each) ifTrue: [answer add: each]].
+	methodDictionary ifNil: [^##(IdentitySet new)].
+	answer := IdentitySet new.
+	methodDictionary do: [:each | (aMonadicValuable value: each) ifTrue: [answer add: each]].
 	^answer!
 
 selectors

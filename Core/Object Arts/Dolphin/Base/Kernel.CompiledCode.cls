@@ -763,7 +763,7 @@ writesInstVar:!development!public!testing! !
 writesInstVar:at:!development!public!testing! !
 !
 
-Kernel.CompiledCode methodProtocol: #bindingScope attributes: #(#readOnly) selectors: #(#environment #localScope)!
+Kernel.CompiledCode methodProtocol: #bindingScope attributes: #(#readOnly) selectors: #(#environment #fullBindingFor: #localScope)!
 Kernel.CompiledCode methodProtocol: #messageSender attributes: #(#readOnly) selectors: #(#messages)!
 Kernel.CompiledCode methodProtocol: #parseContext attributes: #(#readOnly) selectors: #(#environment #methodClass #owningPackage)!
 

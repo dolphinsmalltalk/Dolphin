@@ -64,9 +64,9 @@ testRenamePermuteArgs
 		equals: (self parseMethod: 'exampleCall ^self rename: 2 two: 1')!
 
 testRenamePrimitive
-	| refactoring count optionCalled |
+	| refactoring count optionCalled refs |
 	count := 0.
-	model allReferencesTo: #basicAt:put: do: [:method | count := count + 1].
+	count := (model allReferencesTo: #basicAt:put:) size.
 
 	"Primitives can be renamed, as long as the argument count and order remains the same"
 	refactoring := RenameMethodRefactoring
@@ -85,10 +85,10 @@ testRenamePrimitive
 			true].
 	self executeRefactoring: refactoring.
 	self assert: optionCalled.
-	"All refs should have been rewritten"
-	model allReferencesTo: #basicAt:put: do: [:method | self assert: false].
-	model allReferencesTo: ('at:' , 'bar:') asSymbol do: [:method | count := count - 1].
-	self assert: count equals: 0!
+	refs := model allReferencesTo: #basicAt:put:.
+	self assert: refs isEmpty description: 'All refs should have been rewritten'.
+	refs := model allReferencesTo: ('at:' , 'bar:') asSymbol.
+	self assert: refs size equals: count!
 
 testRenameTestMethod
 	| refactoring class |

@@ -54,9 +54,9 @@ bestNodeFor: anInterval
 				ifTrue: [^statements first]].
 	^node!
 
-childrenDo: aMonadicValuable 
-	self temporaries do: aMonadicValuable.
-	self statements do: aMonadicValuable!
+childrenDo: aMonadicValuable
+	temporaries do: aMonadicValuable.
+	statements do: aMonadicValuable!
 
 defines: aName 
 	^temporaries anySatisfy: [:each | each name = aName]!
@@ -96,7 +96,7 @@ methodComments
 	temporaries do: [:each | methodComments addAll: each comments].
 	(parent notNil and: [parent isBlock]) 
 		ifTrue: [parent arguments do: [:each | methodComments addAll: each comments]].
-	^methodComments asSortedCollection: [:a :b | a first < b first]!
+	^methodComments sort: [:a :b | a first < b first]!
 
 outer
 	"Answer the <StMethodNode> or <StBlockNode> being the scope in which this node exists."
@@ -168,10 +168,10 @@ hash!comparing!public! !
 isLast:!public!testing! !
 isSequence!public!testing! !
 lastIsReturn!public!testing! !
-leftBar!public! !
+leftBar!accessing!public! !
 leftBar:temporaries:rightBar:!initializing!public! !
 methodComments!accessing!public! !
-outer!public! !
+outer!accessing!public! !
 periods:!accessing!public! !
 postCopy!copying!public! !
 rightBar!accessing!private! !

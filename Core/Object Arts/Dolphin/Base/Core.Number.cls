@@ -5,7 +5,9 @@ Core.ArithmeticValue subclass: #'Core.Number'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'MaxLiteralIntegerExponent' -> 16r7D0
+	}!
 Core.Number guid: (Core.GUID fromString: '{87b4c657-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.Number isNonInstantiable: true!
 Core.Number comment: 'Number is the abstract class which defines the common protocol of all numeric objects.
@@ -379,8 +381,8 @@ fromString: aString
 	stream atEnd ifFalse: [^self errorInvalidFormat].
 	^answer!
 
-maxLiteralIntegerExponent
-	"Private - The maximum allowed exponent (power of 10) in the literal integer form '<int>e<powerOf10>'.
+initialize
+	"The maximum allowed exponent (power of 10) in the literal integer form '<int>e<powerOf10>'.
 	This is an arbitrary limit imposed to prevent accidentally causing pathologically long
 	computations, for example by accidentally evaluating the string representation of a Guid like 
 	this one: 5e967948-0810-11d4-a876-0050da643bf9."
@@ -390,7 +392,7 @@ maxLiteralIntegerExponent
 	sufficient bearing in mind that the absolute maximum decimal exponent of a 64-bit Float is
 	308!!"
 
-	^2000!
+	self addClassConstant: 'MaxLiteralIntegerExponent' value: 2000!
 
 new
 	"Answer a new instance of the receiver.
@@ -433,7 +435,7 @@ readExponentIntegerFrom: aStream initialInteger: anInteger
 			anInteger]
 		ifNotNil: 
 			[:exponent |
-			exponent > self maxLiteralIntegerExponent
+			exponent > MaxLiteralIntegerExponent
 				ifTrue: [self errorExponentTooLarge: exponent]
 				ifFalse: [anInteger * exponent exp10]]!
 
@@ -631,7 +633,7 @@ zero
 errorExponentTooLarge:!parsing!private! !
 errorInvalidFormat!exceptions!private! !
 fromString:!instance creation!public! !
-maxLiteralIntegerExponent!constants!private! !
+initialize!constants!private! !
 new!instance creation!public! !
 one!instance creation!public! !
 readDecimalIntegerFrom:allowPlus:!parsing!private! !

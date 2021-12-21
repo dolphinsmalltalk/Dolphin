@@ -38,7 +38,7 @@ setScope: anStLexicalScope binding: aVariableBinding
 	binding := aVariableBinding.
 	self initialize! !
 !Kernel.StStaticVariable categoriesForMethods!
-binding!public! !
+binding!accessing!public! !
 isConstant!public!testing! !
 isStaticVariable!constants!public! !
 name!accessing!public! !

@@ -43,16 +43,22 @@ compileMethod
 	class compileTree: sourceParseTree!
 
 findSelectedMessage
-	sourceParseTree := class parseTreeFor: sourceSelector.
-	sourceParseTree isNil ifTrue: [self refactoringError: 'Could not parse sources'].
-	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
-	sourceMessage isNil
-		ifTrue: [self refactoringError: 'The selection doesn''t appear to be a message send'].
-	sourceMessage isCascade ifTrue: [sourceMessage := sourceMessage messages last].
-	sourceMessage isMessage
-		ifFalse: [self refactoringError: 'The selection doesn''t appear to be a message send'].
+	self findSelectedMessageCommon.
 	(sourceMessage receiver isSelfVariable or: [sourceMessage receiver isSuperVariable])
 		ifFalse: [self refactoringError: 'Cannot inline non-self messages']!
+
+findSelectedMessageCommon
+	"Private - "
+
+	"Because we may be inlining a method into itself, we have to work with a copy of the source parse tree"
+
+	sourceParseTree := (class parseTreeFor: sourceSelector) copy.
+	sourceParseTree ifNil: [^self refactoringError: 'Could not parse sources'].
+	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
+	(sourceMessage isNil or: 
+			[sourceMessage isCascade ifTrue: [sourceMessage := sourceMessage messages last].
+			sourceMessage isMessage not])
+		ifTrue: [self refactoringError: 'The selection doesn''t appear to be a message send']!
 
 hasMultipleReturns
 	"Do we have multiple returns? If the last statement isn't a return, then we have an implicit return of self."
@@ -120,8 +126,7 @@ insertInlinedMethod
 	self removeImmediateBlocks!
 
 isOverridden
-	^self chosenInlineClass allSubclasses
-		anySatisfy: [:each | each directlyDefinesMethod: self inlineSelector]!
+	^self chosenInlineClass subclassRedefines: self inlineSelector!
 
 isPrimitive
 	^inlineParseTree isPrimitive!
@@ -367,6 +372,7 @@ checkSuperMessages!public!transforming! !
 chosenInlineClass!accessing!public! !
 compileMethod!public!transforming! !
 findSelectedMessage!public!transforming! !
+findSelectedMessageCommon!private!transforming! !
 hasMultipleReturns!public!testing! !
 inline:inMethod:forClass:!initialize/release!public! !
 inlineClass!public!transforming! !

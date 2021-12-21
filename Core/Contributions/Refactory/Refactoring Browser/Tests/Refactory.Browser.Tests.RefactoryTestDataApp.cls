@@ -292,8 +292,98 @@ referencesConditionFor: aClass
 		errorBlock: [environment openEditor];
 		yourself!
 
-refersToClass
-	^RefactoryTestDataApp!
+refersToClassBindingNotFound
+	^#{_.Tests.DolphinTest}!
+
+refersToClassConstantFullyQualified
+	^Refactory.Browser.Tests.ClassToRename.ClassConst1!
+
+refersToClassConstantUnqualified
+	^ClassToRename.ClassConst1!
+
+refersToClassFullyQualified
+	^Refactory.Browser.Tests.ClassToRename!
+
+refersToClassFullyQualifiedBinding
+	^#{Refactory.Browser.Tests.ClassToRename}!
+
+refersToClassFullyQualifiedBindingInArray
+	^#(#{Refactory.Browser.Tests.ClassToRename})!
+
+refersToClassFullyQualifiedName
+	"Symbols are no longer renamed, even if fully-qualified. BindingReferences should always be used to refer indirectly to classes by name."
+
+	^#'Refactory.Browser.Tests.ClassToRename'!
+
+refersToClassFullyQualifiedNameInArray
+	^#(#'Refactory.Browser.Tests.ClassToRename')!
+
+refersToClassPartiallyQualified1
+	^Tests.ClassToRename!
+
+refersToClassPartiallyQualified2
+	^Browser.Tests.ClassToRename!
+
+refersToClassPartiallyQualifiedBinding1
+	^#{_.Tests.ClassToRename}!
+
+refersToClassPartiallyQualifiedBinding2
+	^#{_.Browser.Tests.ClassToRename}!
+
+refersToClassPartiallyQualifiedBindingInArray
+	^#(#{_.Tests.ClassToRename})!
+
+refersToClassPartiallyQualifiedName
+	"We don't expect this to be recognised as a refercne to ClassToRename"
+
+	^#'Tests.ClassToRename'!
+
+refersToClassUnqualified
+	^ClassToRename!
+
+refersToClassUnqualifiedBinding
+	^#{ClassToRename}!
+
+refersToClassUnqualifiedBindingInArray
+	^#(#{ClassToRename})!
+
+refersToClassUnqualifiedInArray
+	^{ClassToRename}!
+
+refersToClassUnqualifiedName
+	"Symbols are no longer renamed and not considered to be class references"
+
+	^#ClassToRename!
+
+refersToClassUnqualifiedNameInArray
+	^#(#ClassToRename)!
+
+refersToClassVariableFullyQualified
+	^Refactory.Browser.Tests.ClassToRename.ClassVar1!
+
+refersToClassVariableUnqualified
+	^ClassToRename.ClassVar1!
+
+refersToDolphinTestBindingFullyQualified
+	^#{Core.Tests.DolphinTest}!
+
+refersToDolphinTestPartiallyQualifiedBindingMethodNamespace
+	<namespace: Core>
+	^#{_.Tests.DolphinTest}!
+
+refersToDolphinTestUnqualifiedNameMethodNamespace
+	<namespace: Core.Tests>
+	^#DolphinTest!
+
+refersToOtherClassPartiallyQualifiedBinding
+	"Not a valid relative reference to the superclass (does not bind - try sending it #value)"
+
+	^#{_.Tools.ClassToRename}!
+
+refersToOtherClassPartiallyQualifiedName
+	"Definitely not a reference. Will not be renamed"
+
+	^#'Tools.ClassToRename'!
 
 release
 	self printString!
@@ -331,6 +421,39 @@ sizeCheck
 					Transcript
 						show: each;
 						cr]]!
+
+smalltalkAssociationAt
+	^Smalltalk associationAt: #PoolConstantsDictionary!
+
+smalltalkAssociationAtIfAbsent
+	^Smalltalk associationAt: #PoolConstantsDictionary ifAbsent: [self error: 'absent']!
+
+smalltalkAssociationAtIfPresent
+	^Smalltalk associationAt: #PoolConstantsDictionary ifPresent: [:pc | pc value name , ' is present']!
+
+smalltalkAtAlias
+	^Smalltalk at: #ExternalHandle!
+
+smalltalkAtIfAbsent
+	^Smalltalk at: #PoolConstantsDictionary ifAbsent: [self error: 'absent']!
+
+smalltalkAtIfPresent
+	^Smalltalk at: #PoolConstantsDictionary ifPresent: [:pc | pc name , ' is present']!
+
+smalltalkAtPut
+	^Smalltalk at: #PoolConstantsDictionary put: nil!
+
+smalltalkIncludesKey
+	^Smalltalk includesKey: #PoolConstantsDictionary!
+
+smalltalkLookup
+	^Smalltalk lookup: #PoolConstantsDictionary!
+
+smalltalkRemoveKey
+	^Smalltalk removeKey: #PoolConstantsDictionary!
+
+smalltalkRemoveKeyIfAbsent
+	^Smalltalk removeKey: #PoolConstantsDictionary ifAbsent: [self error: 'absent']!
 
 stringConcatenation
 	| string |
@@ -448,7 +571,33 @@ multipleCalls!inline!public! !
 noMoveDefinition!public!test! !
 precedence!lint!public! !
 referencesConditionFor:!accessing!public! !
-refersToClass!lint!public! !
+refersToClassBindingNotFound!lint!public! !
+refersToClassConstantFullyQualified!lint!public! !
+refersToClassConstantUnqualified!lint!public! !
+refersToClassFullyQualified!lint!public! !
+refersToClassFullyQualifiedBinding!lint!public! !
+refersToClassFullyQualifiedBindingInArray!lint!public! !
+refersToClassFullyQualifiedName!lint!public! !
+refersToClassFullyQualifiedNameInArray!lint!public! !
+refersToClassPartiallyQualified1!lint!public! !
+refersToClassPartiallyQualified2!lint!public! !
+refersToClassPartiallyQualifiedBinding1!lint!public! !
+refersToClassPartiallyQualifiedBinding2!performing!public! !
+refersToClassPartiallyQualifiedBindingInArray!lint!public! !
+refersToClassPartiallyQualifiedName!lint!public! !
+refersToClassUnqualified!lint!public! !
+refersToClassUnqualifiedBinding!lint!public! !
+refersToClassUnqualifiedBindingInArray!lint!public! !
+refersToClassUnqualifiedInArray!lint!public! !
+refersToClassUnqualifiedName!lint!public! !
+refersToClassUnqualifiedNameInArray!lint!public! !
+refersToClassVariableFullyQualified!lint!public! !
+refersToClassVariableUnqualified!lint!public! !
+refersToDolphinTestBindingFullyQualified!lint!public! !
+refersToDolphinTestPartiallyQualifiedBindingMethodNamespace!lint!public! !
+refersToDolphinTestUnqualifiedNameMethodNamespace!lint!public! !
+refersToOtherClassPartiallyQualifiedBinding!performing!public! !
+refersToOtherClassPartiallyQualifiedName!performing!public! !
 release!lint!public! !
 rename:two:!public!test! !
 renameThisMethod:!public!test! !
@@ -459,6 +608,17 @@ searchingLiteral!lint!public! !
 selectorNotReferenced!public!test! !
 sendsDifferentSuper!lint!public! !
 sizeCheck!lint!public! !
+smalltalkAssociationAt!performing!public! !
+smalltalkAssociationAtIfAbsent!performing!public! !
+smalltalkAssociationAtIfPresent!performing!public! !
+smalltalkAtAlias!performing!public! !
+smalltalkAtIfAbsent!performing!public! !
+smalltalkAtIfPresent!performing!public! !
+smalltalkAtPut!performing!public! !
+smalltalkIncludesKey!performing!public! !
+smalltalkLookup!performing!public! !
+smalltalkRemoveKey!performing!public! !
+smalltalkRemoveKeyIfAbsent!performing!public! !
 stringConcatenation!lint!public! !
 symbolReference!public!test! !
 tempsReadBeforeWritten!lint!public! !

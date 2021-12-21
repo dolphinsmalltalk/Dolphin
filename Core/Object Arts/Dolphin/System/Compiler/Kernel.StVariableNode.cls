@@ -21,6 +21,11 @@ identifierToken: anIdentifierToken
 	name := anIdentifierToken value.
 	start := anIdentifierToken start!
 
+isStaticVariable
+	"Answer whether the receiver is a reference to a static variable - this is only valid after binding variables in a parse tree using a semantic analyser."
+
+	^variable isStaticVariable!
+
 name
 	^name!
 
@@ -30,6 +35,7 @@ setName: aString start: anInteger
 !Kernel.StVariableNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 identifierToken:!initializing!private! !
+isStaticVariable!public!testing! !
 name!accessing!public! !
 setName:start:!initializing!private! !
 !

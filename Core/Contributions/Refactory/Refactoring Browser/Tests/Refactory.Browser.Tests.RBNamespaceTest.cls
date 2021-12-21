@@ -17,7 +17,7 @@ testAllClassesDo
 	model := RBModel new.
 	model allClassesDo: 
 			[:each |
-			each name = #'Core.Object' ifTrue: [each allSubclasses].
+			each name = 'Core.Object' ifTrue: [each allSubclasses].
 			classes := classes + 1].
 	BrowserEnvironment new classesDo: [:each | classes := classes - 1].
 	self assert: classes equals: 0!
@@ -90,8 +90,7 @@ testModelImplementorsSenders
 		equals: (BrowserEnvironment new implementorsOf: #storeOn:) numberSelectors.
 	refs := BrowserEnvironment new referencesTo: #storeOn:.
 	found := false.
-	model allReferencesTo: #storeOn:
-		do: 
+	(model allReferencesTo: #storeOn:) do: 
 			[:each |
 			each modelClass = class
 				ifTrue: [found := true]
@@ -115,8 +114,7 @@ testReferencesPrintOn
 	hasFoundObject := false.
 	hasFoundSelf := false.
 	st := RBModel new.
-	st allReferencesTo: #printOn:
-		do: 
+	(st allReferencesTo: #printOn:) do: 
 			[:each |
 			hasFoundObject := hasFoundObject
 						or: [each selector = #fullPrintString and: [each modelClass = (st classNamed: #'Core.Object')]].
@@ -134,8 +132,7 @@ testReferencesPrintOnAfterAddition
 		classified: #testing.
 	(smalltalk classNamed: self class fullName) compile: 'someTestReference ^ #printOn:'
 		classified: #testing.
-	smalltalk allReferencesTo: #printOn:
-		do: 
+	(smalltalk allReferencesTo: #printOn:) do: 
 			[:each |
 			hasFoundObject := hasFoundObject or: 
 							[each selector = #someTestReference and: [each modelClass = (smalltalk classNamed: #'Core.Object')]].
@@ -151,8 +148,7 @@ testReferencesPrintOnAfterRemove
 	hasFoundSelf := false.
 	st := RBModel new.
 	(st classNamed: #'Core.Object') removeMethod: #printString.
-	st allReferencesTo: #printOn:
-		do: 
+	(st allReferencesTo: #printOn:) do: 
 			[:each |
 			hasFoundObject := hasFoundObject
 						or: [each selector = #printString and: [each modelClass = (st classNamed: #'Core.Object')]].

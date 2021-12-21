@@ -139,7 +139,7 @@ inverseArithmeticOperator
 		at: #// put: #*;
 		shrink) at: self selector! !
 !Kernel.StMessageNode categoriesForMethods!
-inverseArithmeticOperator!public! !
+inverseArithmeticOperator!accessing!public! !
 !
 
 "End of package definition"!

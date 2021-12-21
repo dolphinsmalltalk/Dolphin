@@ -20,29 +20,33 @@ environment
 environment: aNamespace
 	environment := aNamespace!
 
-lookupVariable: anStVariableNode
-	"Lookup and return an <StVariable> describing the variable definition in this scope matching
-	the variable reference specified by the <StVariableNode> argument."
-
-	| identifier |
-	identifier := anStVariableNode name.
-	anStVariableNode isSpecialVariable ifTrue: [^anStVariableNode specialVariableInScope: self].
-	instanceVariables isNil
-		ifTrue: 
+instanceVariables
+	^instanceVariables
+		ifNil: 
 			[instanceVariables := LookupTable new: 5.
 			methodClass allInstVarNames keysAndValuesDo: 
 					[:i :v |
 					instanceVariables at: v
 						put: ((StInstanceVariable index: i name: v)
 								scope: self;
-								yourself)]].
-	^(instanceVariables lookup: identifier)
-		ifNil: 
-			[(methodClass fullBindingFor: identifier environment: environment)
-				ifNotNil: [:b | StStaticVariable scope: self binding: b]]!
+								yourself)].
+			instanceVariables]!
 
 methodClass
 	^methodClass!
+
+methodClass: aClassDescription
+	methodClass := aClassDescription!
+
+outer
+	^nil!
+
+resolveVariable: anStVariableNode
+	| identifier |
+	^(self instanceVariables lookup: (identifier := anStVariableNode name))
+		ifNil: 
+			[(methodClass fullBindingFor: identifier environment: environment)
+				ifNotNil: [:b | StStaticVariable scope: self binding: b]]!
 
 selfVariable
 	^selfVariable
@@ -50,10 +54,6 @@ selfVariable
 			[selfVariable := StSelfVariable new
 						scope: self;
 						yourself]!
-
-setMethodClass: aClassDescription environment: aNamespace
-	methodClass := aClassDescription.
-	environment := aNamespace!
 
 superVariable
 	^superVariable
@@ -63,19 +63,25 @@ superVariable
 						yourself]! !
 !Kernel.StClassScope categoriesForMethods!
 classScope!accessing!public! !
-environment!public! !
+environment!accessing!public! !
 environment:!accessing!public! !
-lookupVariable:!operations!public! !
+instanceVariables!accessing!public! !
 methodClass!accessing!public! !
+methodClass:!initializing!private! !
+outer!accessing!public! !
+resolveVariable:!operations!private! !
 selfVariable!operations!public! !
-setMethodClass:environment:!accessing!initializing!private! !
 superVariable!operations!public! !
 !
 
 !Kernel.StClassScope class methodsFor!
 
 methodClass: aClassDescription environment: aNamespace
-	^self new setMethodClass: aClassDescription environment: aNamespace! !
+	<primitive: 157>
+	^self new
+		methodClass: aClassDescription;
+		environment: aNamespace;
+		yourself! !
 !Kernel.StClassScope class categoriesForMethods!
 methodClass:environment:!instance creation!public! !
 !

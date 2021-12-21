@@ -896,7 +896,8 @@ testErrorsIfNotNil
 		code: CErrTooManyIfNotNilBlockArgs!
 
 testErrorsIllegalByteArrays
-	#(#('#[1 1234 4]' 5 8) #('#[1 1.0]' 5 7) #('#[1 a]' 5 5) #('#[1 10000000000 2]' 5 15)) do: 
+	#(#('#[1 1234 4]' 5 8) #('#[1 1.0]' 5 7) #('#[1 a]' 5 5) #('#[1 10000000000 2]' 5 15) #('#[0 -1 1]' 5 6) #('#[0 1 256 255]' 7 9))
+		do: 
 			[:each |
 			self
 				parseExprError: each first

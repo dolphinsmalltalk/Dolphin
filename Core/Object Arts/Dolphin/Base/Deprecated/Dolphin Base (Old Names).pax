@@ -3,8 +3,9 @@ package := Package name: 'Dolphin Base (Old Names)'.
 package paxVersion: 2.1;
 	basicComment: 'Dolphin Smalltalk Base System (Pre-namespace Names).
 
-This package includes legacy aliases for base classes that have been renamed in Dolphin 7.2 following the addition of Namespaces.
-The names are deprecated, but will be referenced by many pre-7.2 packages.'.
+This package includes legacy aliases for base classes that have been renamed in Dolphin 8.x following the addition of Namespaces.
+The names are deprecated, but will be referenced by many pre-8.x packages.
+'.
 
 
 package setVariableNames: #(

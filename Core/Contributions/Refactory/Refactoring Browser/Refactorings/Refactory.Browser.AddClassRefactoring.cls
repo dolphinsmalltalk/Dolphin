@@ -35,25 +35,20 @@ definitionMessage
 preconditions
 	| cond superNotMeta |
 	#rbFix.	"Bodge to allow for nil superclass"
-	superNotMeta := superclass isNil 
+	superNotMeta := superclass isNil
 				ifTrue: [RBCondition empty]
-				ifFalse: 
-					[((RBCondition isMetaclass: superclass) errorMacro: 'Superclass must not be a metaclass') 
-						not].
+				ifFalse: [((RBCondition isMetaclass: superclass) errorMacro: 'Superclass must not be a metaclass') not].
 	cond := subclasses inject: superNotMeta
 				into: 
-					[:sub :each | 
-					sub 
-						& ((RBCondition isMetaclass: each) errorMacro: 'Subclass must <1?not :>be a metaclass') 
-								not 
-							& (RBCondition isImmediateSubclass: each of: superclass)].
+					[:sub :each |
+					sub & ((RBCondition isMetaclass: each) errorMacro: 'Subclass must <1?not :>be a metaclass') not
+						& (RBCondition isImmediateSubclass: each of: superclass)].
 	#rbFix.	"Dolphin's categories are Strings, not Symbols"
-	^cond & (RBCondition isValidClassName: className) 
-		& (RBCondition isGlobal: className in: self model) not & (RBCondition isString: category) 
+	^cond & (RBCondition isValidClassName: className)
+		& (RBCondition isStatic: className in: self model) not & (RBCondition isString: category)
 		& ((RBCondition withBlock: 
 					["*** & (RBCondition isSymbol: category) "
-
-					category notEmpty]) 
+					category notEmpty])
 				errorMacro: 'Invalid category name')!
 
 storeOn: aStream 

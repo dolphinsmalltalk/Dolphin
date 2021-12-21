@@ -14,12 +14,12 @@ Kernel.Tests.VariableBindingTest comment: ''!
 !Kernel.Tests.VariableBindingTest methodsFor!
 
 testAbsoluteName
-	self assert: Object binding absoluteName equals: Object absoluteName.
+	self assert: Object binding absoluteName equals: 'Root.Core.Object'.
 	self assert: (_PrimitiveFailureCode bindingFor: 'InvalidParameter') absoluteName
 		equals: 'Root.Kernel._PrimitiveFailureCode.InvalidParameter'!
 
 testFullName
-	self assert: Object binding fullName equals: Object fullName.
+	self assert: Object binding fullName equals: 'Core.Object'.
 	self assert: (_PrimitiveFailureCode bindingFor: 'InvalidParameter') fullName
 		equals: 'Kernel._PrimitiveFailureCode.InvalidParameter'!
 
@@ -28,17 +28,25 @@ testFullyQualifiedReference
 		do: [:each | self assert: each binding fullyQualifiedReference equals: each fullyQualifiedReference]!
 
 testIsClassBinding
-	self assert: Object binding isClassBinding.
+	| subject |
+	subject := Object binding.
+	self assert: subject isClassBinding.
+	self assert: subject identicalTo: (Core localBindingFor: #Object).
 	self assert: Smalltalk binding isClassBinding.
 	self assert: (Root bindingFor: #Core) isClassBinding.
 	self assert: Root binding isClassBinding.
+	"A traditional global variable that is not a class"
 	self deny: (Core bindingFor: #Processor) isClassBinding.
+	"An 'old-name' alias for a class"
 	self deny: (Smalltalk bindingFor: #ExternalHandle) isClassBinding!
 
 testRefersToLiteral
 	| method subject |
 	method := self class lookupMethod: testSelector.
-	self assert: (method refersToLiteral: Object binding).
+	subject := Object binding.
+	self assert: (method refersToLiteral: subject).
+	self assert: (subject refersTo: subject asLiteralOf: method).
+	self assert: (subject refersTo: Object asLiteralOf: method).
 	"Shouldn't matter that the ref is fully qualified (makes no difference to compiled literals)"
 	self assert: (method refersToLiteral: Core.Association binding).
 	"We don't want a ref to a class in a namespace to be treated as implicit reference to the namespace - not for general reference searches anyway"

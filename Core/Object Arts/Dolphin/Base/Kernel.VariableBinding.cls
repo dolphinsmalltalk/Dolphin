@@ -15,20 +15,20 @@ Kernel.VariableBinding comment: ''!
 !Kernel.VariableBinding categoriesForClass!Collections-Support! !
 !Kernel.VariableBinding methodsFor!
 
-= anAssociation
+= anObject
 	"Answer whether the receiver is equal to the argument."
 
-	^super = anAssociation and: [environment == anAssociation environment]!
+	^super = anObject and: [environment == anObject environment]!
 
 absoluteName
-	"Answer the <String> fully qualified name of this namespace, which is a dot-separated path to this binding from (but not including) Smalltalk."
+	"Answer the <String> absolute qualified name of this binding, inclusive of 'Root'. This is guaranteed to be unambiguous."
 
-	^self environment absoluteNameFor: self key!
+	^environment absoluteNameFor: key!
 
 asQualifiedReference
 	"Answer a <BindingReference> that refs to this binding."
 
-	^BindingReference pathString: self key home: self environment!
+	^BindingReference pathString: key home: environment!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -49,9 +49,9 @@ flags
 	^flags!
 
 fullName
-	"Answer the <String> fully qualified name of this namespace, which is a dot-separated path to this binding from (but not including) Smalltalk."
+	"Answer the <String> fully qualified name of this variable, which is a dot-separated path from (but not including) Smalltalk."
 
-	^self environment fullNameFor: self key!
+	^environment fullNameFor: key!
 
 fullyQualifiedReference
 	"Answer a <BindingReference> that represents a fully qualified reference to the receiver relative to Smalltalk. If the Class is not in the hierarchy below Smalltalk (i.e. it is in Root, or another namespace hierarchy under Root), then it will be an absolute binding reference.
@@ -60,7 +60,7 @@ fullyQualifiedReference
 	^BindingReference path: (environment fullPath copyWith: key)!
 
 isClassBinding
-	^value class isMeta and: [key == value name and: [environment == value basicEnvironment]]!
+	^value class isMeta and: [key == value unqualifiedName and: [environment == value basicEnvironment]]!
 
 isClassVariable
 	"Answer whether the receiver is a class variable binding (as opposed to a namespace variable binding)."
@@ -128,7 +128,10 @@ setFlags: anInteger
 	flags := anInteger!
 
 targetVariable
-	^self! !
+	^self!
+
+unqualifiedName
+	^key! !
 !Kernel.VariableBinding categoriesForMethods!
 =!comparing!public! !
 absoluteName!accessing!public! !
@@ -155,6 +158,7 @@ owningPackage:!accessing!development!public! !
 refersTo:asLiteralOf:!private!testing! !
 setFlags:!accessing!private! !
 targetVariable!accessing!public! !
+unqualifiedName!accessing!public! !
 !
 
 !Kernel.VariableBinding class methodsFor!

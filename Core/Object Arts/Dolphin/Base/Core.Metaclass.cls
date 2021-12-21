@@ -142,6 +142,11 @@ localBindingFor: aString
 
 	^self instanceClass localBindingFor: aString!
 
+metaclass
+	"Answer the <Metaclass> of the Class/Metaclass pair."
+
+	^self!
+
 name
 	"Answer a String containing the receiver name. 
 	For speed code directly rather than use concatenation.
@@ -235,6 +240,7 @@ instanceVariableNames:!class hierarchy-mutating!instance variables!public! !
 isAnonymous!public!testing! !
 isMeta!public!testing! !
 localBindingFor:!binding!public! !
+metaclass!accessing!public! !
 name!accessing!public! !
 new!instance creation!public! !
 owningPackage!accessing!development!public! !

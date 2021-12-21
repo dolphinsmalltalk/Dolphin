@@ -56,18 +56,48 @@ testDefinesPoolDictionary
 	self deny: (messageNodeClass importsNamespace: #'OS.Win32Constants').
 	self assert: ((RBModel new classNamed: #'OS.HRESULTError') importsNamespace: #'OS.FacilityCodes')!
 
+testDefinitionString
+	self assert: objectClass definitionString
+		equals: 'nil subclass: #''Core.Object''
+	instanceVariableNames: ''''
+	classVariableNames: ''_AssertionFailureSignal _DependentsRegister _EventsRegister _PropertyRegister ModelOnlyClassVariable''
+	imports: #()
+	classInstanceVariableNames: ''''
+	classConstants: {}'.
+	self assert: newClass definitionString
+		equals:'Core.Object subclass: #SomeClassName
+	instanceVariableNames: ''instanceVariable1 instanceVariable2''
+	classVariableNames: ''ClassVariable1''
+	imports: #(#{OpcodePool})
+	classInstanceVariableNames: ''''
+	classConstants: {}'.
+	{External.FunctionDescriptor. External.Structure. SessionManager. Scanner} do: 
+			[:each |
+			| class |
+			class := model classFor: each.
+			self assert: class definitionString equals: class realClass definition]!
+
 testEnvironment
-	| rbTests myClass refactory root |
+	| rbTests myClass refactory root smalltalk |
 	myClass := model classFor: self class.
 	rbTests := model classFor: self class environment.
 	self assert: myClass environment equals: rbTests.
+	self assert: myClass basicEnvironment equals: rbTests.
 	self assert: (rbTests bindings at: self class unqualifiedName) identicalTo: myClass.
-	refactory := model classNamed: #Refactory.
+	smalltalk := model classNamed: #Smalltalk.
+	self assert: newClass environment identicalTo: smalltalk.
+	self assert: newClass basicEnvironment identicalTo: smalltalk.
 	root := model classNamed: #Root.
-	self assert: rbTests environment environment equals: refactory.
-	self assert: refactory environment equals: root.
+	self assert: smalltalk environment identicalTo: root.
+	self assert: smalltalk basicEnvironment identicalTo: root.
+	refactory := model classNamed: #Refactory.
+	self assert: rbTests environment environment identicalTo: refactory.
+	self assert: refactory environment identicalTo: root.
+	self assert: refactory basicEnvironment identicalTo: root.
+
+	"As in the real class hierarchy, the public environment of Root is nil (in order to terminate tree traversal at the root), even though its actual environment is itself."
 	self assertIsNil: root environment.
-	self assert: newClass environment equals: (model classNamed: #Smalltalk)!
+	self assert: root basicEnvironment identicalTo: root!
 
 testFullName
 	self assert: objectClass fullName equals: 'Core.Object'.
@@ -147,10 +177,22 @@ testSubclasses
 	self assert: (objectClass subclasses collect: [:each | each metaclass])
 		equals: objectClass metaclass subclasses.
 	class := model classFor: Class.
-	class subclasses do: [:each | self assert: each superclass identicalTo: class].
+	class subclasses do: 
+			[:each |
+			self assert: each superclass identicalTo: class.
+			self assertIsNil: each instanceClass superclass].
 	self assert: class metaclass subclasses isEmpty.
 	self assert: newClass subclasses isEmpty.
 	self assert: newClass metaclass subclasses isEmpty!
+
+testSubclassesFilteredByEnvironment
+	| object |
+	model := RBModel onEnvironment: (BrowserEnvironment new
+						forClasses: {Object. Behavior. ClassDescription. Class. Boolean. Collection}).
+	object := model classFor: Object.
+	self assert: object subclasses
+		equals: {model classFor: Behavior. model classFor: Boolean. model classFor: Collection}.
+	self assert: (model classFor: Class) subclasses equals: {object metaclass}!
 
 testSuperclass
 	self assert: newClass superclass equals: objectClass.
@@ -164,6 +206,27 @@ testUnqualifiedName
 	self assert: (model classFor: self class) unqualifiedName equals: self class unqualifiedName.
 	self assert: newClass unqualifiedName equals: 'SomeClassName'.
 	self assert: newClass metaclass unqualifiedName equals: 'SomeClassName class'!
+
+testWhichMethodsReferToClass
+	| class method targetClass referers |
+	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	method := class methodFor: #atIfAbsent.
+	self assert: (method refersToClass: (model classNamed: #Smalltalk)).
+	targetClass := model classNamed: 'Refactory.Browser.Tests.ClassToRename'.
+	referers := ((class whichMethodsReferToClass: targetClass) asArray collect: [:each | each selector])
+				sort.
+	"Note that we don't expect to see any of the symbolic references any more as these are deliberately not matched. Symbolic name references are superseded by BindingReferences as we know these are intended to refer to static variables, which is not necessarily true of symbols."
+	self assert: referers
+		equals: #(#refersToClassConstantFullyQualified #refersToClassConstantUnqualified #refersToClassFullyQualified #refersToClassFullyQualifiedBinding #refersToClassFullyQualifiedBindingInArray #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassPartiallyQualifiedBindingInArray #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToClassUnqualifiedBindingInArray #refersToClassUnqualifiedInArray #refersToClassVariableFullyQualified #refersToClassVariableUnqualified)!
+
+testWhichMethodsReferToClassViaMethodNamespace
+	| class targetClass referers |
+	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	targetClass := model classFor: Core.Tests.DolphinTest.
+	referers := ((class whichMethodsReferToClass: targetClass) asArray collect: [:each | each selector])
+				sort.
+	self assert: referers
+		equals: #(#refersToDolphinTestBindingFullyQualified #refersToDolphinTestPartiallyQualifiedBindingMethodNamespace)!
 
 testWithAllSubclasses
 	| class all |
@@ -181,6 +244,7 @@ testDefinesClassVariable!public!unit tests! !
 testDefinesInstanceVariable!public!unit tests! !
 testDefinesMethod!public!unit tests! !
 testDefinesPoolDictionary!public!unit tests! !
+testDefinitionString!public!unit tests! !
 testEnvironment!public!unit tests! !
 testFullName!public!unit tests! !
 testHierarchy!public!unit tests! !
@@ -189,8 +253,11 @@ testModel!public!unit tests! !
 testName!public!unit tests! !
 testRealClass!public!unit tests! !
 testSubclasses!public!unit tests! !
+testSubclassesFilteredByEnvironment!public!unit tests! !
 testSuperclass!public! !
 testUnqualifiedName!public!unit tests! !
+testWhichMethodsReferToClass!public! !
+testWhichMethodsReferToClassViaMethodNamespace!public! !
 testWithAllSubclasses!public!unit tests! !
 !
 

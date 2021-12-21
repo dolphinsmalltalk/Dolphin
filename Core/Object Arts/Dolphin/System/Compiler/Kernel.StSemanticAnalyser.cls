@@ -25,22 +25,6 @@ addMessageToFrame: aMessageNode
 	(SpecialSelectors identityIncludes: selector) ifTrue: [^self].
 	self addLiteral: aMessageNode value: selector!
 
-addToFrame: aLiteralNode
-	| value |
-	value := aLiteralNode value.
-	(VMLibrary hasBytecodeRepresentation: value) ifTrue: [^self].
-	value isString
-		ifTrue: [(value isSymbol not and: [(stringLiterals addNewElement: value) not]) ifTrue: [^self]].
-	self addLiteral: aLiteralNode value: value!
-
-addToFrameStatic: aLiteralNode
-	| value |
-	value := aLiteralNode value.
-	"When parsing static expressions we record all the symbols, literal arrays, and variables
-	that are referenced in the static expression so that these can be searched on later."
-	(value isSymbol or: [(value isKindOf: Array) or: [value isKindOf: VariableBinding]])
-		ifTrue: [self addLiteral: aLiteralNode value: value]!
-
 assignStaticVariable: anStVariableNode
 	self accessStaticVariable: anStVariableNode!
 
@@ -401,7 +385,6 @@ initialize
 	super initialize.
 	literals := IdentitySet new.
 	stringLiterals := Set new.
-	addToFrame := [:literal | self addToFrame: literal].
 	isMutator := false!
 
 isReceiverOfNilTest: aVariableNode 
@@ -502,6 +485,20 @@ visitLiteralArrayNode: aLiteralArrayNode
 
 	!
 
+visitLiteralNode: aLiteralNode
+	| value |
+	value := aLiteralNode value.
+	inStaticExpression
+		ifTrue: 
+			["When parsing static expressions we record all the symbols, literal arrays, and variables that are referenced in the static expression so that these can be searched on later."
+			(value isSymbol or: [(value isKindOf: Array) or: [value isKindOf: VariableBinding]])
+				ifFalse: [^self]]
+		ifFalse: 
+			[(VMLibrary hasBytecodeRepresentation: value) ifTrue: [^self].
+			value isString
+				ifTrue: [(value isSymbol not and: [(stringLiterals addNewElement: value) not]) ifTrue: [^self]]].
+	self addLiteral: aLiteralNode value: value!
+
 visitMessageNode: aMessageNode
 	"Process a message send (check for wrong argument types for optimized messages, etc)"
 
@@ -555,7 +552,7 @@ visitTempDeclNode: anStTempDeclNode
 
 visitTemporaryNodes: aNodeCollection
 	aNodeCollection isEmpty ifTrue: [^self].
-	aNodeCollection inject: self countOuterTemps + self currentScope argumentCount
+	aNodeCollection inject: self countOuterTemps + currentScope argumentCount
 		into: 
 			[:count :each |
 			self visitNode: each.
@@ -584,8 +581,6 @@ visitVariableNode: aStVariableNode
 accessStaticVariable:!helpers!private! !
 addLiteral:value:!helpers!private! !
 addMessageToFrame:!helpers!private! !
-addToFrame:!helpers!private! !
-addToFrameStatic:!helpers!private! !
 assignStaticVariable:!helpers!private! !
 assignVariable:!helpers!private! !
 bindVariable:!helpers!private! !
@@ -625,6 +620,7 @@ visitArgumentNodes:!public!visiting! !
 visitAssignmentNode:!public!visitor/double dispatching! !
 visitExternalArgTypeNode:!public!visiting! !
 visitLiteralArrayNode:!public!visitor/double dispatching! !
+visitLiteralNode:!public!visitor/double dispatching! !
 visitMessageNode:!public!visitor/double dispatching! !
 visitParameterNode:!public!visiting! !
 visitReturnNode:!public!visiting! !

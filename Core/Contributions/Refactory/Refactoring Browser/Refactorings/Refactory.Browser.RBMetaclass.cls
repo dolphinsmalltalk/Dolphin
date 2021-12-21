@@ -18,6 +18,14 @@ allClassVariableNames
 allImports
 	^nonMetaclass allImports!
 
+basicEnvironment
+	^nonMetaclass basicEnvironment!
+
+bindingOrNil
+	"Resolve the binding for the receiver's real class, if any. The name is always a fully qualified name"
+
+	^self globalScope fullBindingFor: self name!
+
 classBindingNames
 	^nonMetaclass classBindingNames!
 
@@ -34,7 +42,7 @@ fullName
 	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root.
 	Note that these names will also be bindable within the legacy Smalltalk namespace, because it is itself an immediate child of root, and so any of its siblings is bindable using that sibling's unqualified name."
 
-	^self instanceClass fullName, ' class'!
+	^nonMetaclass fullName , ' class'!
 
 fullyQualifiedReference
 	"Answer a <BindingReference> to this class."
@@ -50,7 +58,10 @@ isMeta
 localBindingFor: aString
 	"Answer a variable binding for the named variable directly in the scope of this class, i.e. one of its own class variables. If there is no such class variable, then answer nil."
 
-	^self instanceClass localBindingFor: aString!
+	^nonMetaclass localBindingFor: aString!
+
+localScope
+	^nonMetaclass!
 
 metaclass
 	^self!
@@ -88,7 +99,7 @@ subclasses
 
 superclass
 	^nonMetaclass superclass
-		ifNil: [self model classFor: Class]
+		ifNil: [self model instanceClassFor: Class]
 		ifNotNil: [:superclass | superclass metaclass]!
 
 unqualifiedName
@@ -98,6 +109,8 @@ unqualifiedName
 !Refactory.Browser.RBMetaclass categoriesForMethods!
 allClassVariableNames!accessing!public! !
 allImports!accessing!public! !
+basicEnvironment!accessing!public! !
+bindingOrNil!bindings!public! !
 classBindingNames!accessing!public! !
 directlyDefinesClassVariable:!public!testing! !
 directlyImportsNamespace:!public!testing! !
@@ -107,6 +120,7 @@ fullyQualifiedReference!converting!public! !
 isDefined!public!testing! !
 isMeta!public!testing! !
 localBindingFor:!binding!public! !
+localScope!accessing!public! !
 metaclass!accessing!public! !
 model!accessing!public! !
 name!accessing!public! !
