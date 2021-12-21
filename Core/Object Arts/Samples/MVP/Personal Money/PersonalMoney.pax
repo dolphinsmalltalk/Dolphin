@@ -7,7 +7,7 @@ Copyright (c) Object Arts Ltd, 1998-2005
 
 To start the application evaluate: 
 ```
-PersonalMoneyShell show
+UI.Examples.PersonalMoneyShell show
 ```
 
 ## Deployment:
