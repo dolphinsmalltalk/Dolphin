@@ -294,8 +294,8 @@ ALIGN 16
 byteCodeTable DD		break										; All push[0] instructions are now odd
 
 	CreateInstructionLabels <shortPushInstVar>,					<NUMSHORTPUSHIVS>
-	DWORD		shortPushTemp0
-	CreateInstructionLabels <shortPushTemp>,					<(NUMSHORTPUSHTEMPS-1)>
+	CreateUniqueInstructionLabels <shortPushTemp>, <NUMSHORTPUSHTEMPS>
+
 	CreateInstructionLabels <shortPushContextTemp>,				<NUMPUSHCTXTTEMPS>
 	CreateInstructionLabels <shortPushOuterTemp>,				<NUMPUSHOUTERTEMPS>
 	CreateInstructionLabels <shortPushConstant>,				<NUMSHORTPUSHCONSTANTS>
@@ -546,11 +546,6 @@ BEGINRARECODE MACRO name
 	ENTERBYTECODE
 ENDM
 
-FetchByteNoClear MACRO regLetter:=<c>
-	mov		regLetter&l, BYTE PTR[_IP]
-	inc		_IP
-ENDM	
-
 FetchByte MACRO regLetter:=<c>
 	movzx	e&regLetter&x, BYTE PTR[_IP]
 	inc		_IP
@@ -788,20 +783,18 @@ PushTemporary MACRO index
 ENDM
 
 PushTemporaryN MACRO index
-	BEGINBYTECODE shortPushTemp&index
+	ALIGN 4
+	BEGINBYTECODENOALIGN shortPushTemp&index
 		PushTemporary index
 	ENDBYTECODE shortPushTemp&index
 ENDM
 
 ALIGN 16 
-; Worth inlining this one, as reduced instruction size
-PushTemporaryN 0
-
-ALIGN 16
-BEGINBYTECODE shortPushTemp
-	mov     eax, [_BP+(ecx*OOPSIZE)-(FIRSTSHORTPUSHTEMP*OOPSIZE)]		;; Load temp var Oop from _BP
-	PushAndDispatch <a>													;; Push Oop in edx, and dispatch next (no clear ECX)
-ENDBYTECODE shortPushTemp
+index = 0
+REPEAT NUMSHORTPUSHTEMPS
+	PushTemporaryN %index
+	index = index + 1
+ENDM
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Special push instructions (single byte)
