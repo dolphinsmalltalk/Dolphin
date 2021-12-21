@@ -3,7 +3,7 @@ pull_requests:
   do_not_increment_build_number: true
 skip_tags: true
 skip_branch_with_pr: true
-image: Visual Studio 2019
+image: Visual Studio 2022
 init:
 - net start MSSQL$SQL2019
 configuration: Release
