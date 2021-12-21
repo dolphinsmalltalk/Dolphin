@@ -211,19 +211,6 @@ storeOn: aStream
 		print: newName;
 		nextPut: $)!
 
-traceRewriteEnter: variableNode
-	Transcript
-		nextPutAll: 'Rewriting ';
-		print: variableNode;
-		nextPutAll: ' in ';
-		display: variableNode methodNode;
-		nextPutAll: ' ==> '!
-
-traceRewriteExit: node
-	Transcript
-		print: node;
-		cr!
-
 transform
 	self rewriteSymbolicReferencesToClass.
 	self model
@@ -244,8 +231,6 @@ rewriteQualifiedReference:!private!transforming! !
 rewriteSymbolicReferencesToClass!private!transforming! !
 rewriteVariable:!private!transforming! !
 storeOn:!printing!public! !
-traceRewriteEnter:!private!transforming! !
-traceRewriteExit:!private!transforming! !
 transform!public!transforming! !
 !
 
