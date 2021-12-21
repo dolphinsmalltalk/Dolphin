@@ -247,16 +247,12 @@ onGetCursor: aSymbol
 	Answer the appropriate mouse cursor, or nil to accept the default."
 
 	| wantHandCursor |
-	wantHandCursor := self isActionPoint: self cursorPosition.
+	wantHandCursor := self isPointInDolphin: self cursorPosition.
 	^wantHandCursor ifTrue: [Cursor hand] ifFalse: [super onGetCursor: aSymbol]!
 
-onLeftButtonPressed: aMouseEvent 
+onLeftButtonPressed: aMouseEvent
 	self render.
-	(self isActionPoint: aMouseEvent position) 
-		ifTrue: 
-			[Cursor reset.
-			self dismiss]
-		ifFalse: [self showHintBubble]!
+	(self isActionPoint: aMouseEvent position) ifTrue: [self dismiss] ifFalse: [self showHintBubble]!
 
 onViewCreated
 	"Private - The receiver has just been created."
