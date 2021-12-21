@@ -307,6 +307,12 @@ asUtf8String
 	<primitive: 216>
 	^self asUtf16String asByteString: Utf8String!
 
+asUtf8StringCopy
+	"Answer a UTF-8 encoded string representation of the receiver."
+
+	<primitive: 216>
+	^self asUtf16String asByteString: Utf8String!
+
 at: index
 	"Answer the <Character> with the code unit at the <integer> index, in the receiver."
 
@@ -1318,6 +1324,7 @@ asUppercase:!converting!public! !
 asUtf16String!converting!public! !
 asUtf16StringCopy!converting!public! !
 asUtf8String!converting!public! !
+asUtf8StringCopy!converting!public! !
 at:!accessing!public! !
 at:ifAbsent:!accessing!public! !
 at:put:!accessing!public! !

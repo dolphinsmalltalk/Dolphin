@@ -27,10 +27,10 @@ caseConversionCases
 		, #(#('кракозябры' 'КРАКОЗЯБРЫ') #('文字化け') #('маймуница' 'МАЙМУНИЦА') #('ａｂｃ' 'ＡＢＣ') #('straße' 'STRAßE') #('ınteresting' 'ıNTERESTING'))!
 
 decodeIncompleteContinuations
-	^Error notYetImplemented!
+	^self subclassResponsibility!
 
 decodeInvalidContinuations
-	^Error notYetImplemented!
+	^self subclassResponsibility!
 
 decodeTestCases
 	^self subclassResponsibility!
@@ -290,10 +290,8 @@ testFindFirst
 	| subject index |
 	super testFindFirst.
 	subject := self assimilateString: 'a£🍺文1'.
-	subject do: 
-			[:ch |
-			index := subject findFirst: [:each | each = ch].
-			self assert: index equals: (subject indexOf: ch)].
+	subject
+		do: [:ch | self assert: (subject findFirst: [:each | each = ch]) equals: (subject indexOf: ch)].
 	index := subject findFirst: [:each | each = Character dolphin].
 	self assert: index equals: 0.
 	index := self collectionClass empty findFirst: [:each | each = $a].
@@ -302,10 +300,8 @@ testFindFirst
 testFindLast
 	| subject index |
 	subject := self assimilateString: 'a£🍺文1a£🍺文1'.
-	subject do: 
-			[:ch |
-			index := subject findLast: [:each | each = ch].
-			self assert: index equals: (subject lastIndexOf: ch)].
+	subject
+		do: [:ch | self assert: (subject findLast: [:each | each = ch]) equals: (subject lastIndexOf: ch)].
 	index := subject findLast: [:each | each = Character dolphin].
 	self assert: index equals: 0.
 	index := self collectionClass empty findLast: [:each | each = $a].
@@ -587,10 +583,10 @@ testWithDo
 	pairs := OrderedCollection new.
 	subject with: reversed asUtf8String do: [:a :b | pairs add: {a. b}].
 	self assert: pairs asArray equals: expected.
-	pairs := OrderedCollection new.
+	pairs removeAll.
 	subject with: reversed asUtf16String do: [:a :b | pairs add: {a. b}].
 	self assert: pairs asArray equals: expected.
-	pairs := OrderedCollection new.
+	pairs removeAll.
 	subject with: reversed asArray do: [:a :b | pairs add: {a. b}].
 	self assert: pairs asArray equals: expected.
 	self should: [subject with: (1 to: 6) do: [:a :b | ]] raise: Error.

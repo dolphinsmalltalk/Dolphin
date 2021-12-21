@@ -43,6 +43,12 @@ asUtf8String
 
 	^self!
 
+asUtf8StringCopy
+	"Answer a UTF8-encoded copy of the receiver."
+
+	<primitive: 155>
+	^self shallowCopy!
+
 before: aCharacter ifAbsent: aNiladicValuable
 	"Answer the <Character> representing the code point before the <Character> argument, or if not present the result of evaluating the <niladicValuable> argument."
 
@@ -444,6 +450,7 @@ urlEncoded
 !Core.Utf8String categoriesForMethods!
 _beginsString:!comparing!double dispatch!private! !
 asUtf8String!converting!public! !
+asUtf8StringCopy!converting!public! !
 before:ifAbsent:!public!searching! !
 bom!constants!encode/decode!private! !
 countElements!accessing!public! !

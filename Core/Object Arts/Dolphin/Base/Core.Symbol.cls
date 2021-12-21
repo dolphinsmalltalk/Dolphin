@@ -308,9 +308,7 @@ initialize
 intern: aString
 	"Answer the unique Symbol for aString."
 
-	| utf8 |
-	^(self findInterned: (utf8 := aString asUtf8String))
-		ifNil: [self addUnique: (utf8 shallowCopy becomeA: Symbol)]!
+	^(self findInterned: aString) ifNil: [self addUnique: (aString asUtf8StringCopy becomeA: Symbol)]!
 
 intern: aString cookie: cookie
 	"Private - Callback from VM, returns the unique Symbol for aString.
