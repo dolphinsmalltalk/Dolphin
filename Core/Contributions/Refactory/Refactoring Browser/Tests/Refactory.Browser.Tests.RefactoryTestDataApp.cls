@@ -351,7 +351,7 @@ refersToClassUnqualifiedInArray
 	^{ClassToRename}!
 
 refersToClassUnqualifiedName
-	"Symbols are no longer renamed and not considered to be class references"
+	"Symbols are no longer renamed and are not considered to be class references"
 
 	^#ClassToRename!
 

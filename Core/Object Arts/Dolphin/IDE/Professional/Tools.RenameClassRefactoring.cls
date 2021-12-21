@@ -13,7 +13,7 @@ Renaming classes with namespaces and qualified names is considerably more compli
 
 The original `RenameClassRefactoring` renamed references in code that were direct references to the class in question, but also symbolic references using the (unqualified) class name. The renaming of symbolic references has always been a bit questionable from a _refactorings must preserve behaviour_ perspective since it is possible that another `Symbol` used for another purpose just happens to be the name of a class being renamed. This was fairly unlikely, but the assumption that all `Symbol`s that look like class names and match a class name, must be class names, is not guaranteed to be true. We now have `BindingReference`s, so the former use of plain `Symbol`s for the purpose of late bound lookups has been superseded. We know that the name components of a `BindingReference`  must be the names of program objects (actually static variables) since this is the explicit purpose of `BindingReference`s. In Dolphin `Namespace`s are just classes, so all but the final component of a `BindingReference` path must be class names. The final component of the name is usually a class name, but may also refer to other static variables in the namespace referred to by the path up to that terminal component. As the non-terminal components of a qualified `BindingReference` must be classes, then these are candidates to rename if they would have bound to the class being renamed at some point along the path. 
 
-The renaming of `Symbol`s is no longer performed. In order to assist migrating code into namespaces, which will typically involve renaming classes out of Smalltalk and into some other namespace, any symbolic lookups of the renamed class in the Smalltalk "dictionary" are first refactored into literal `BindingReferences`. Not all such lookups can be readily identified, so some symbolic references may remain. Where this is the case a refactoring option is used to warn the user and allow them to choose how to proceed.
+The renaming of `Symbol`s is no longer performed. In order to assist migrating code into namespaces, which will typically involve renaming classes out of Smalltalk and into some other namespace, any symbolic lookups of the renamed class in the `Smalltalk` "dictionary" are first refactored into literal `BindingReferences`. Not all such lookups can be readily identified, so some symbolic references may remain. Where this is the case a refactoring option is used to warn the user and allow them to choose how to proceed.
 
 Renaming a class in Dolphin can change any of the components (and any number of them) of the fully qualified name of a class. Unless it is only the leaf identifier (aka the short name, or unqualified name) that is changed, then the class is effectively moved to a different `Namespace`. When moving a class to a new `Namespace` it is entirely possible that unqualified and partially qualified names in the methods of the class itself will either no longer bind at all, or will bind to different static variables (where there is ambiguity and some part of the name is not globally unique). This means we must also rewrite the renamed class'' own methods, updating any variable references as required to maintain the previous binding. As with the references to the class being renamed, the references in the class being renamed should also have a minimal form after renaming.
 
@@ -30,7 +30,7 @@ buildReferenceRewriter
 		replace: '`identifier'
 		withValueFrom: [:variableNode | self rewriteVariable: variableNode]
 		when: [:variableNode | variableNode isBindingChanged].
-	"We replace any symbols naming the class if they are fully qualified (new namespaced class name), or if unqualified and renaming a class in Smalltalk (i.e. legacy indirect class lookup). BindingReferences should also be rewritten. Either can be embedded in literal arrays."
+	"We rewrite any BindingReferences that bind to the renamed class before it is renamed, even if embedded in literal arrays. Symbols are not renamed."
 	rewriter
 		replace: '`#literal'
 		withValueFrom: [:literalNode | self rewriteLiteral: literalNode]
@@ -41,6 +41,12 @@ buildReferenceRewriter
 			[:aNode |
 			self refactoringError: '<1s> already exists within the reference scope' << newUnqualified].
 	^rewriter!
+
+checkForSymbolicReferences
+	| symbolicRefs |
+	symbolicRefs := model allReferencesTo: oldUnqualified.
+	symbolicRefs isEmpty ifFalse: [
+		self shouldIgnoreRemainingSymbolicReferences: symbolicRefs]!
 
 className: aName newName: aNewName
 	"If the new name is unqualified, preserve the original namespace of the class."
@@ -68,6 +74,37 @@ displayOn: aPuttableStream
 		nextPutAll: className;
 		nextPutAll: ' to ';
 		nextPutAll: newName!
+
+getOptionIgnoreSymbolicClassReferences: aCollection
+	| details response |
+	details := String writeStream.
+	details
+		nextPutAll: 'The following methods still reference the original unqualified class name symbol ';
+		print: oldUnqualified;
+		nextPut: $:;
+		cr.
+	self
+		printNameList: (aCollection asArray collect: [:each | each printString]) sort
+		on: details
+		limit: self maxDetails // 2
+		type: 'methods'.
+	response := UI.MessageBox new
+				caption: self displayString;
+				headline: 'Class may have symbolic references.';
+				text: 'The original class name ''<1s>'' may still be referenced symbolically in <2d> methods. If you proceed with the class rename these Symbols will not be renamed as it cannot be guaranteed that these are intended as references to the class being renamed.<n><n>It is recommended that you first browse all references to understand the use, and replace any real references to the class with literal BindingReferences.'
+							<< {oldUnqualified. aCollection size};
+				customButtons: #(#(#yes '&Rename Class') #(#no '&Browse Methods'));
+				defaultButton: 2;
+				detailsText: details contents;
+				iconStyle: #warning;
+				confirmOrCancel.
+	response == #yes ifTrue: [^true].
+	response == #no
+		ifTrue: 
+			[self openBrowserOn: ((self model environment forMethods: aCollection)
+						label: 'Remaining references to class being renamed from <1p>' << oldUnqualified;
+						yourself)].
+	^false!
 
 isImpactedLiteral: aStLiteralNode
 	aStLiteralNode isLiteralArray
@@ -172,12 +209,18 @@ rewriteQualifiedReference: aStQualifiedReferenceNode
 rewriteSymbolicReferencesToClass
 	"Private - If renaming a class that is currently in Smalltalk into another Namespace, we first rewrite any definite symbolic references to the class into literal binding references."
 
-	| rewriteClassNames |
+	| rewriteClassNames symbolicRefs |
 	(classBinding environment == self model smalltalkNamespace
-		and: [newClassReference environment ~~ classBinding environment]) ifFalse: [^self].
-	rewriteClassNames := ClassNameToBindingReferenceRefactoring model: model
-				replaceSymbolicReferencesTo: class.
-	self performComponentRefactoring: rewriteClassNames!
+		and: [newClassReference environment ~~ classBinding environment])
+			ifTrue: 
+				[rewriteClassNames := ClassNameToBindingReferenceRefactoring model: model
+							replaceSymbolicReferencesTo: class.
+				self performComponentRefactoring: rewriteClassNames].
+	"self halt."
+	symbolicRefs := model allReferencesTo: oldUnqualified.
+	symbolicRefs isEmpty
+		ifFalse: 
+			[(self shouldIgnoreRemainingSymbolicReferences: symbolicRefs) ifFalse: [self refactoringAborted]]!
 
 rewriteVariable: aStVariableNode
 	^aStVariableNode binding == classBinding
@@ -201,6 +244,9 @@ rewriteVariable: aStVariableNode
 				ifTrue: [StVariableNode named: aStVariableNode binding fullName]
 				ifFalse: [aStVariableNode copy]]!
 
+shouldIgnoreRemainingSymbolicReferences: aCollection
+	^(self lookupOption: #ignoreSymbolicClassReferences) cull: self cull: aCollection!
+
 storeOn: aStream
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -219,8 +265,10 @@ transform
 		around: [:methods | self renameReferences: methods]! !
 !Tools.RenameClassRefactoring categoriesForMethods!
 buildReferenceRewriter!private!transforming! !
+checkForSymbolicReferences!private!transforming! !
 className:newName:!initializing!private! !
 displayOn:!displaying!public! !
+getOptionIgnoreSymbolicClassReferences:!options!public! !
 isImpactedLiteral:!helpers!private! !
 preconditions!accessing!public! !
 renameImports!private!transforming! !
@@ -230,6 +278,7 @@ rewriteLiteralArray:!private!transforming! !
 rewriteQualifiedReference:!private!transforming! !
 rewriteSymbolicReferencesToClass!private!transforming! !
 rewriteVariable:!private!transforming! !
+shouldIgnoreRemainingSymbolicReferences:!options!private! !
 storeOn:!printing!public! !
 transform!public!transforming! !
 !

@@ -809,6 +809,7 @@ package setPrerequisites: #(
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters'
 	'..\..\..\..\Contributions\Refactory\RBNamespaces'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
 	'..\..\System\Compiler\Smalltalk Compiler'
 	'..\..\System\Compiler\Smalltalk Parser'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
@@ -1051,7 +1052,7 @@ Tools.MethodSearch subclass: #'Tools.MethodSourceSearch'
 Core.Model subclass: #'Tools.SmalltalkSystem'
 	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize displayItLocale'
 	classVariableNames: 'Current FileDrops RegisteredTools'
-	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser} #{Kernel.ParseErrorCodes} #{XProgramming.SUnit private} #{Refactory.Browser private})
+	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser} #{Kernel.ParseErrorCodes} #{XProgramming.SUnit private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.TreeModel subclass: #'Tools.CategoryTreeModel'

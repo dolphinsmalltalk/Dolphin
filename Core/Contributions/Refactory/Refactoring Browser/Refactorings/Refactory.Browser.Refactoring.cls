@@ -121,6 +121,11 @@ getOptionExtractAssignment: aString
 	^self confirm: ('Do you want to extract the assignment of <1s><n>at the end of selection?'
 				expandMacrosWith: aString)!
 
+getOptionIgnoreSymbolicClassReferences: aCollection
+	^self
+		confirm: 'The original class name is still referenced as a Symbol in <1d> methods. If you proceed these Symbols will not be renamed as it cannot be guaranteed that they are referring to the class name. It is recommended that you first browse all references to verify the use, and replace any that are real references to the class with literal BindingReferences.<n><n>Are you sure you want to proceed?'
+				<< aCollection size!
+
 getOptionImplementorToInline: anOrderedCollection
 	^self error: 'Option not implemented'!
 
@@ -388,6 +393,7 @@ getOptionBrowseEnvironments:!options!public! !
 getOptionConvertReadBeforeWritten:!options!public! !
 getOptionCopyDownSuperclassMethod:!public! !
 getOptionExtractAssignment:!options!public! !
+getOptionIgnoreSymbolicClassReferences:!options!public! !
 getOptionImplementorToInline:!options!public! !
 getOptionInlineExpression:!options!public! !
 getOptionInlineOverridden:of:!options!public! !
@@ -459,6 +465,8 @@ initializeRefactoringOptions
 							-> [:refactoring :selector | refactoring getOptionCopyDownSuperclassMethod: selector].
 						#extractAssignment
 							-> [:refactoring :varName | refactoring getOptionExtractAssignment: varName].
+						#ignoreSymbolicClassReferences
+							-> [:refactoring :references | refactoring getOptionIgnoreSymbolicClassReferences: references].
 						#implementorToInline
 							-> [:rcvr :implementors | rcvr getOptionImplementorToInline: implementors].
 						#inlineExpression

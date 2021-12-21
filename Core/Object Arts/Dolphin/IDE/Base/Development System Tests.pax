@@ -174,7 +174,7 @@ Refactory.Browser.Tests.RefactoringTest subclass: #'Tools.Tests.ClassNameToBindi
 Refactory.Browser.Tests.RefactoringTest subclass: #'Tools.Tests.RenameClassRefactoringTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Refactory.Browser})
+	imports: #(#{Refactory.Browser} #{Refactory.Browser.Tests})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

@@ -473,7 +473,13 @@ onClass: aClass renamedTo: text
 	model to actually rename the class, converting any exception raised to a
 	friendlier message box."
 
-	[Cursor wait showWhile: [self systemModel renameClass: aClass to: text]] on: Error
+	[Cursor wait showWhile: [self systemModel renameClass: aClass to: text]]
+		on: Refactoring abortSignal
+		do: 
+			[:ex |
+			"Cancelled by user"
+			self topShell statusModel value: ex]
+		on: Error
 		do: [:e | e okCancel]!
 
 onClass: aClass renameTo: text accept: booleanValue

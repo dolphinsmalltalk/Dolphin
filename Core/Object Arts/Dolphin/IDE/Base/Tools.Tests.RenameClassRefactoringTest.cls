@@ -3,7 +3,7 @@
 Refactory.Browser.Tests.RefactoringTest subclass: #'Tools.Tests.RenameClassRefactoringTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Refactory.Browser})
+	imports: #(#{Refactory.Browser} #{Refactory.Browser.Tests})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.Tests.RenameClassRefactoringTest guid: (Core.GUID fromString: '{1c8b1cc4-4d25-46fc-9e56-b959e7a8e2f1}')!
@@ -60,6 +60,7 @@ testModelRenameClass
 				model: model
 				rename: Object
 				to: #Thing.
+	refactoring setOption: #ignoreSymbolicClassReferences toUse: [:rename :refs | true].
 	self executeRefactoring: refactoring.
 	"Object should be renamed in the model"
 	self assert: (model includesClassNamed: #'Core.Thing').
@@ -83,6 +84,7 @@ testModelRenameClass
 		equals: '<1s> ^#(#Object #''Core.Object'')'!
 
 testModelRenameSequenceClass
+	| refactoring symbolicRefs refactoring2 |
 	model
 		defineClass: 'Object subclass: #Foo1 
 			instanceVariableNames: '''' 
@@ -91,20 +93,36 @@ testModelRenameSequenceClass
 	(model classNamed: #Foo1)
 		compile: 'foo	 ^ Foo1' classified: #accessing;
 		compile: 'objectName ^ #(Foo1)' classified: #accessing.
-	self executeRefactoring: (RenameClassRefactoring
+	refactoring := RenameClassRefactoring
 				model: model
 				rename: (model classNamed: #Foo1)
-				to: #Foo2).
+				to: #Foo2.
+	refactoring setOption: #ignoreSymbolicClassReferences
+		toUse: 
+			[:rename :refs |
+			symbolicRefs := refs.
+			true].
+	self executeRefactoring: refactoring.
+	self assert: (symbolicRefs
+				anySatisfy: [:each | each methodClass realClass == self class and: [each selector == self selector]]).
 	self deny: (model includesClassNamed: #Foo1).
 	self assert: (model includesClassNamed: #Foo2).
 	self
 		verifyMethod: #foo
 		of: (model classNamed: #Foo2)
 		equals: '<1s> ^ Foo2'.
-	self executeRefactoring: (RenameClassRefactoring
+	refactoring := RenameClassRefactoring
 				model: model
 				rename: (model classNamed: #Foo2)
-				to: #Foo3).
+				to: #Foo3.
+	refactoring setOption: #ignoreSymbolicClassReferences
+		toUse: 
+			[:rename :refs |
+			symbolicRefs := refs.
+			true].
+	self executeRefactoring: refactoring.
+	self assert: (symbolicRefs
+				anySatisfy: [:each | each methodClass realClass == self class and: [each selector == self selector]]).
 	self deny: (model includesClassNamed: #Foo1).
 	self deny: (model includesClassNamed: #Foo2).
 	self assert: (model includesClassNamed: #Foo3).
@@ -132,6 +150,7 @@ testModelRenameUpdatesUnqualifiedBindingReference
 				model: model
 				rename: fooClass
 				to: #'Core.FooBar'.
+	refactoring setOption: #ignoreSymbolicClassReferences toUse: [:rename :refs | true].
 	self executeRefactoring: refactoring.
 	self
 		verifyMethod: #refersToClassUnqualifiedBinding
@@ -164,7 +183,7 @@ testRenameAmbiguousClassName
 testRenameChangeNamespace
 	"Tests a rename that changes a class' namespace (i.e. moves it to a new namespace), but not it's unqualified name"
 
-	| refactoring subclass oldName newClass classToRename foo smalltalk |
+	| refactoring subclass oldName newClass classToRename foo smalltalk symbolicRefs |
 	oldName := 'Refactory.Browser.Tests.ClassToRename'.
 	#('Foo' 'Kernel.Bar' 'Refactory.Browser.Tests.FooBar') do: 
 			[:each |
@@ -183,6 +202,7 @@ testRenameChangeNamespace
 				model: model
 				rename: classToRename
 				to: 'Smalltalk.ClassToRename'.
+	refactoring setOption: #ignoreSymbolicClassReferences toUse: [:rename :refs | symbolicRefs := refs. true].
 	self executeRefactoring: refactoring.
 	newClass := refactoring model classNamed: 'Smalltalk.ClassToRename'.
 	self denyIsNil: newClass.
@@ -225,6 +245,7 @@ testRenameChangeNamespaceToImported
 				model: model
 				rename: classToRename
 				to: newFullName.
+	refactoring setOption: #ignoreSymbolicClassReferences toUse: [:rename :refs | true].
 	self executeRefactoring: refactoring.
 	newClass := model classNamed: newFullName.
 	self denyIsNil: newClass.
@@ -244,13 +265,18 @@ testRenameChangeNamespaceToImported
 testRenameClass
 	"Test the relatively simple case of renaming an existing class' unqualified name, without changing its namespace. The class has a variety of references from a subclass that exists (no model only classes in this test)"
 
-	| refactoring subclass oldName newFullName newClass classToRename |
+	| refactoring subclass oldName newFullName newClass classToRename symbolicRefs |
 	oldName := 'Refactory.Browser.Tests.ClassToRename'.
 	classToRename := oldName asQualifiedReference value.
 	refactoring := RenameClassRefactoring
 				model: model
 				rename: classToRename
 				to: 'NewClassName'.
+	refactoring setOption: #ignoreSymbolicClassReferences
+		toUse: 
+			[:rename :refs |
+			symbolicRefs := refs collect: [:each | each method].
+			true].
 	self executeRefactoring: refactoring.
 	self showChanges.
 	newFullName := oldName asQualifiedReference environment fullNameFor: 'NewClassName'.
@@ -268,7 +294,8 @@ testRenameClass
 	self
 		verifyRenames: newClass
 		unqualified: newClass unqualifiedName
-		full: newClass fullName!
+		full: newClass fullName.
+	self assert: symbolicRefs asArray sort equals: {RefactoryTestDataApp>>#refersToClassUnqualifiedName.  RefactoryTestDataApp>>#refersToClassUnqualifiedNameInArray. SubclassOfClassToRename>>#refersToClassUnqualifiedName}!
 
 testRenameClassShadowingImported
 	"Test the case of renaming a class to a new name that shadows an imported class, changing the binding of existing unqualified/part-qualified references to the imported class."
@@ -290,6 +317,7 @@ testRenameClassShadowingImported
 				model: model
 				rename: class
 				to: #'Core.RenameClassRefactoringTest'.
+	refactoring setOption: #ignoreSymbolicClassReferences toUse: [:rename :refs | true].
 	self executeRefactoring: refactoring.
 	self showChanges.
 	"Note that symbolic names are no longer changed"
