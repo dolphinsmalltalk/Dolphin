@@ -138,10 +138,7 @@ emitStringResultFunctionOn: aPuttableStream
 		display: resultClassExpression;
 		nextPutAll: ' empty] ifFalse: [| result | result := ';
 		display: resultClassExpression;
-		nextPutAll: ' newFixed: len'.
-	(self stringResultsCountNull includes: self constName) ifTrue: [aPuttableStream nextPutAll: '-1'].
-	aPuttableStream
-		nextPutAll: '. library directFunction: this msg: ';
+		nextPutAll: ' newFixed: len. library directFunction: this msg: ';
 		nextPutAll: self constName;
 		nextPutAll: ' wParam: 0 lpParam: result. result]'!
 
@@ -179,10 +176,7 @@ emitWParamStringResultFunctionOn: aWriteStream
 		display: resultClassExpression;
 		nextPutAll: ' empty] ifFalse: [| result | result := ';
 		display: resultClassExpression;
-		nextPutAll: ' newFixed: len'.
-	(self stringResultsCountNull includes: constName) ifTrue: [aWriteStream display: -1].
-	aWriteStream
-		nextPutAll: '. library directFunction: this msg: ';
+		nextPutAll: ' newFixed: len. library directFunction: this msg: ';
 		nextPutAll: constName.
 	ignoreWParam
 		ifTrue: [aWriteStream nextPutAll: ' wParam: len']
@@ -290,14 +284,6 @@ selector
 					stream contents asSymbol].
 	^selector!
 
-stringResultsCountNull
-	"Answer the set of all Scintilla control stringresult messages that include the null
-	terminator in the count returned. Most do not (this inconsistency is a Scintilla bug
-	really as it defeats the ability to generate a correct wrapper from the interface 
-	metadata alone)."
-
-	^#('SCI_GETSELTEXT' 'SCI_GETTEXT' 'SCI_GETCURLINE')!
-
 wParam: anArray
 	wParam := self makeParam: anArray! !
 !Tools.Scintilla.FunctionDefinition categoriesForMethods!
@@ -335,7 +321,6 @@ remappedReturnTypes!private! !
 retType:!accessing!private! !
 returnType!accessing!public! !
 selector!generating!private! !
-stringResultsCountNull!constants!private! !
 wParam:!accessing!private! !
 !
 

@@ -1338,7 +1338,7 @@ currentLineText
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
-			result := stringClass newFixed: len - 1.
+			result := stringClass newFixed: len.
 			library
 				directFunction: this
 				msg: SCI_GETCURLINE
@@ -4450,7 +4450,7 @@ plainText
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
-			result := stringClass newFixed: len - 1.
+			result := stringClass newFixed: len.
 			library
 				directFunction: this
 				msg: SCI_GETTEXT
@@ -8612,7 +8612,7 @@ selection
 		ifTrue: [stringClass empty]
 		ifFalse: 
 			[| result |
-			result := stringClass newFixed: len - 1.
+			result := stringClass newFixed: len.
 			library
 				directFunction: this
 				msg: SCI_GETSELTEXT
