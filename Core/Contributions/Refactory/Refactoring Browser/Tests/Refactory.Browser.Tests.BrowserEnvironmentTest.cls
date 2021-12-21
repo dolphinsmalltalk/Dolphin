@@ -273,6 +273,19 @@ testProtocolEnvironment
 				assert: (#(#printing #testing)
 						intersection: (universalEnvironment whichProtocolsInclude: each in: Object)) notEmpty]!
 
+testReferencesToVariable
+	| subject methods |
+	subject := BrowserEnvironment new referencesToVariable: #{Transcript} binding.
+	methods := subject allMethods.
+	self assert: (methods includes: self class >> self selector).
+	subject := BrowserEnvironment new referencesToVariable: ClassToRename binding.
+	methods := subject allMethods.
+	self
+		assert: ((methods select: [:each | each methodClass == RefactoryTestDataApp])
+				collect: [:each | each selector]) asArray
+				sort
+		equals: #(#refersToClassFullyQualified #refersToClassFullyQualifiedBinding #refersToClassFullyQualifiedBindingInArray #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassPartiallyQualifiedBindingInArray #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToClassUnqualifiedBindingInArray #refersToClassUnqualifiedInArray)!
+
 testRemoveSelectorByAndAndNot
 	| objectPrintString |
 	objectPrintString := SelectorEnvironment onEnvironment: universalEnvironment.
@@ -369,6 +382,7 @@ testMatches!BrowserEnvironment tests!public! !
 testNotEnvironment!NotEnvironment tests!public! !
 testOrEnvironment!OrEnvironment tests!public! !
 testProtocolEnvironment!BrowserEnvironment tests!public! !
+testReferencesToVariable!BrowserEnvironment tests!public! !
 testRemoveSelectorByAndAndNot!BrowserEnvironment tests!public! !
 testSelectMethods!BrowserEnvironment tests!public! !
 testSelectorEnvironment!BrowserEnvironment tests!public! !

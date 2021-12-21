@@ -322,12 +322,12 @@ referencesTo: aLiteral in: aClass
 	^(self forClassHierarchyOf: aClass) referencesTo: aLiteral!
 
 referencesToVariable: aVariableBinding
-	^(self filterMethods: [:method | method refersToLiteral: aVariableBinding value])
+	^(self filterMethods: [:method | method refersToLiteral: aVariableBinding])
 		label: ('Direct and indirect references to <1s> in <2p>' expandMacrosWith: aVariableBinding key
 					with: self);
-		"addSearchString: aVariableBinding fullName;"
 		addSearchString: aVariableBinding key;
-		yourself!
+		yourself
+	"addSearchString: aVariableBinding fullName;"!
 
 searchStrings
 	^searchStrings isNil
