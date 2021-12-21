@@ -28,7 +28,7 @@ actualClass
 actualClass: aClass
 	"Select the <Class> aClass in the receiver"
 
-	^classesPresenter selectionOrNil: aClass!
+	^classesPresenter selectionOrNil: aClass instanceClass!
 
 addClass
 	"Adds the selected class to the currently selected protocol"
