@@ -31,7 +31,7 @@ createDatabase
 	process commandLine: cmd.
 	^
 	[process executeSync.
-	true] on: Smalltalk.ExternalProcessExecuteError do: [:ex | false]!
+	process processExitCode == 0] on: Smalltalk.ExternalProcessExecuteError do: [:ex | false]!
 
 dropDatabase
 	self connection
