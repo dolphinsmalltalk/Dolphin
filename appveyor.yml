@@ -4,8 +4,6 @@ pull_requests:
 skip_tags: true
 skip_branch_with_pr: true
 image: Visual Studio 2022
-init:
-- net start MSSQL$SQL2019
 configuration: Release
 install:
 - cmd: >-
