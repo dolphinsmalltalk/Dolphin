@@ -19,6 +19,10 @@ Refactory.Browser.RenameClassChange comment: ''!
 changeClass
 	^(self classReference bindingOrNil ifNil: [newName asQualifiedReference bindingOrNil]) value!
 
+changesDo: aMonadicValuable
+	aMonadicValuable value: (Tools.BasicRenameClassChange rename: oldName to: newName).
+	super changesDo: aMonadicValuable!
+
 changeString
 	^'ClassBuilder renameClass: <1s> to: <2p>' << {oldName. newName}!
 
@@ -38,10 +42,6 @@ executeNotifying: aBlock
 		changes: undos reverse;
 		rename: newName to: oldName;
 		yourself!
-
-flattenOnto: aCollection
-	aCollection add: (Tools.BasicRenameClassChange rename: oldName to: newName).
-	super flattenOnto: aCollection!
 
 newName
 	^newName!
@@ -64,15 +64,15 @@ renameChangesForClass: aClassName to: newClassName
 !Refactory.Browser.RenameClassChange categoriesForMethods!
 =!comparing!public! !
 changeClass!accessing!public! !
+changesDo:!enumerating!public! !
 changeString!printing!public! !
 classReference!accessing!public! !
 displayClassName!printing!public! !
-executeNotifying:!private! !
-flattenOnto:!private! !
-newName!private! !
-oldName!private! !
-rename:to:!initialize/release!public! !
-renameChangesForClass:to:!accessing!public! !
+executeNotifying:!applying!private! !
+newName!accessing!private! !
+oldName!accessing!private! !
+rename:to:!initializing!private! !
+renameChangesForClass:to:!helpers!private! !
 !
 
 !Refactory.Browser.RenameClassChange class methodsFor!

@@ -1674,7 +1674,7 @@ stubTextFor: aMessage inClass: aClass
 		ifTrue: 
 			[source nextPutAll: aMessage selector.
 			(aClass allInstVarNames includes: aMessage selector asString)
-				ifTrue: [body := '^<1s>' expandMacrosWith: aMessage selector]]
+				ifTrue: [body := '^<1s>' << aMessage selector]]
 		ifFalse: 
 			[aMessage argumentCount == 1
 				ifTrue: 
@@ -1691,8 +1691,7 @@ stubTextFor: aMessage inClass: aClass
 										in: aClass
 										on: source.
 							name := aMessage selector allButLast.
-							(aClass allInstVarNames includes: name)
-								ifTrue: [body := '<1s> := <2s>' expandMacrosWith: name with: argNames first]]]
+							(aClass allInstVarNames includes: name) ifTrue: [body := '<1s> := <2s>' << {name. argNames first}]]]
 				ifFalse: 
 					[self
 						emitKeywordSignatureFor: aMessage

@@ -167,8 +167,8 @@ removeChangesMatching: discriminatorBlock
 	self removeChanges: (changesPresenter model select: discriminatorBlock)!
 
 removeClassChanges
-	self change changeClass 
-		ifNotNil: [:class | self removeChangesMatching: [:each | each changeClass == class]]!
+	self change classReference
+		ifNotNil: [:class | self removeChangesMatching: [:each | each classReference = class]]!
 
 removePackageChanges
 	self change package 

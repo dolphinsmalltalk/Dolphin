@@ -29,20 +29,23 @@ addChangeFirst: aRefactoryChange
 	changes addFirst: aRefactoryChange.
 	^aRefactoryChange!
 
-addClassVariable: variableName to: aClass
-	^self addChange: (AddClassVariableChange add: variableName to: aClass)!
+addClassVariable: aString to: aClass
+	^self addChange: (AddClassVariableChange add: aString to: aClass)!
 
-addInstanceVariable: variableName to: aClass
-	^self addChange: (AddInstanceVariableChange add: variableName to: aClass)!
+addInstanceVariable: aString to: aClass
+	^self addChange: (AddInstanceVariableChange add: aString to: aClass)!
 
 afterText
 	| stream |
 	stream := String writeStream.
-	self flattenedChanges do: [:each | stream print: each]
-		separatedBy: 
-			[stream
-				cr;
-				cr].
+	self changesDo: 
+			[:each |
+			stream position == 0
+				ifFalse: 
+					[stream
+						cr;
+						cr].
+			stream print: each].
 	^stream contents!
 
 basicExecuteNotifying: aBlock
@@ -74,6 +77,9 @@ changes
 changes: aCollection 
 	changes := aCollection!
 
+changesDo: aMonadicValuable
+	changes do: [:each | each changesDo: aMonadicValuable]!
+
 changesSize
 	^changes inject: 0 into: [:sum :each | sum + each changesSize]!
 
@@ -81,38 +87,35 @@ comment: aString in: aClass
 	^self addChange: (ClassCommentChange comment: aString in: aClass)!
 
 compile: aString in: aClassDescription
-	^self addChange: (self addMethodChangeClass compile: aString in: aClassDescription)!
+	^self addChange: (AddMethodChange compile: aString in: aClassDescription)!
 
 compile: aString in: aClass categories: anArray
-	^self addChange: (self addMethodChangeClass
+	^self addChange: (AddMethodChange
 				compile: aString
 				in: aClass
 				categories: anArray)!
 
 compile: source in: class classified: aProtocol
 	Notification deprecated.
-	^self addChange: (self addMethodChangeClass
+	^self addChange: (AddMethodChange
 				compile: source
 				in: class
 				classified: aProtocol)!
 
 compile: aString in: aRBClass environment: aRBNamespaceClass categories: aCollection package: aPackage
-	^self addChange: (self addMethodChangeClass
+	^self addChange: (AddMethodChange
 				compile: aString
 				in: aRBClass
 				environment: aRBNamespaceClass
 				categories: aCollection
 				package: aPackage)!
 
-defineClass: aString 
-	^self addChange: (self addClassChangeClass definition: aString)!
+defineClass: aString
+	^self addChange: (AddClassChange definition: aString)!
 
 executeNotifying: aBlock
 	#rbFix.	"Extract to method so can invoke from subclass of subclass where both override"
 	^self basicExecuteNotifying: aBlock!
-
-flattenOnto: aCollection 
-	changes do: [:each | each flattenOnto: aCollection]!
 
 hash
 	^changes size!
@@ -140,19 +143,19 @@ removeChange: aChange
 	changes remove: aChange ifAbsent: nil!
 
 removeClass: aClass
-	^self addChange: (RemoveClassChange removeClassName: aClass fullName)!
+	^self removeClassNamed: aClass fullName!
 
-removeClassNamed: aSymbol
-	self addChange: (RemoveClassChange removeClassName: aSymbol)!
+removeClassNamed: aString
+	^self addChange: (RemoveClassChange removeClassName: aString)!
 
-removeClassVariable: variableName from: aClass
-	^self addChange: (RemoveClassVariableChange remove: variableName from: aClass)!
+removeClassVariable: aString from: aClass
+	^self addChange: (RemoveClassVariableChange remove: aString from: aClass)!
 
-removeInstanceVariable: variableName from: aClass
-	^self addChange: (RemoveInstanceVariableChange remove: variableName from: aClass)!
+removeInstanceVariable: aString from: aClass
+	^self addChange: (RemoveInstanceVariableChange remove: aString from: aClass)!
 
-removeMethod: aSelector from: aClass
-	^self addChange: (RemoveMethodChange remove: aSelector from: aClass)!
+removeMethod: aSymbol from: aClass
+	^self addChange: (RemoveMethodChange remove: aSymbol from: aClass)!
 
 renameChangesForClass: aClassName to: newClassName 
 	^(self copy)
@@ -160,42 +163,42 @@ renameChangesForClass: aClassName to: newClassName
 					collect: [:each | each renameChangesForClass: aClassName to: newClassName]);
 		yourself!
 
-renameClass: class to: newName
-	^self addChange: (RenameClassChange rename: class name to: newName)! !
+renameClass: aClass to: aString
+	^self addChange: (RenameClassChange rename: aClass name to: aString)! !
 !Refactory.Browser.CompositeRefactoryChange categoriesForMethods!
 =!comparing!public! !
-addChange:!accessing!public! !
-addChangeFirst:!accessing!public! !
-addClassVariable:to:!public!refactory/changes! !
-addInstanceVariable:to:!public!refactory/changes! !
+addChange:!adding!public! !
+addChangeFirst:!adding!public! !
+addClassVariable:to:!adding!public! !
+addInstanceVariable:to:!adding!public! !
 afterText!printing!public! !
-basicExecuteNotifying:!private! !
-changeForClass:selector:!accessing!public! !
-changeForMetaclass:selector:!accessing!public! !
-changes!inspector accessing!private! !
-changes:!inspector accessing!private! !
+basicExecuteNotifying:!applying!private! !
+changeForClass:selector:!public!searching! !
+changeForMetaclass:selector:!public!searching! !
+changes!accessing!private! !
+changes:!accessing!private! !
+changesDo:!enumerating!public! !
 changesSize!accessing!public! !
-comment:in:!public!refactory/changes! !
-compile:in:!public!refactory/changes! !
-compile:in:categories:!public! !
-compile:in:classified:!public!refactory/changes! !
-compile:in:environment:categories:package:!public! !
-defineClass:!public!refactory/changes! !
-executeNotifying:!private! !
-flattenOnto:!private! !
+comment:in:!adding!public! !
+compile:in:!adding!public! !
+compile:in:categories:!adding!public! !
+compile:in:classified:!adding!public! !
+compile:in:environment:categories:package:!adding!public! !
+defineClass:!adding!public! !
+executeNotifying:!applying!private! !
 hash!comparing!public! !
-initialize!initializing!public! !
-postCopy!copying!public! !
+initialize!initializing!private! !
+postCopy!copying!private! !
 printOn:!printing!public! !
 problemCount!accessing!public! !
-removeChange:!inspector accessing!private! !
-removeClass:!public!refactory/changes! !
-removeClassNamed:!public!refactory/changes! !
-removeClassVariable:from:!public!refactory/changes! !
-removeInstanceVariable:from:!public!refactory/changes! !
-removeMethod:from:!public!refactory/changes! !
-renameChangesForClass:to:!accessing!public! !
-renameClass:to:!public!refactory/changes! !
+removeChange:!private!removing! !
+removeClass:!adding!public! !
+removeClassNamed:!adding!public! !
+removeClassVariable:from:!adding!public! !
+removeInstanceVariable:from:!adding!public! !
+removeMethod:from:!adding!public! !
+renameChangesForClass:to:!helpers!private! !
+renameClass:to:!adding!public! !
 !
 
 !Refactory.Browser.CompositeRefactoryChange class methodsFor!

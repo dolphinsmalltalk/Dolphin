@@ -22,7 +22,7 @@ primitiveExecute
 !Tools.AddSharedVariableChange categoriesForMethods!
 asUndoOperation!converting!public! !
 changeString!printing!public! !
-primitiveExecute!private! !
+primitiveExecute!applying!private! !
 !
 
 !Tools.AddSharedVariableChange class methodsFor!

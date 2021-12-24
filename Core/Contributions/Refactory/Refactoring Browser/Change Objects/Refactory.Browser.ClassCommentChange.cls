@@ -44,7 +44,7 @@ changeClass:!accessing!public! !
 changeString!printing!public! !
 comment!accessing!public! !
 comment:!accessing!public! !
-primitiveExecute!accessing!public! !
+primitiveExecute!applying!private! !
 printOn:!printing!public! !
 !
 

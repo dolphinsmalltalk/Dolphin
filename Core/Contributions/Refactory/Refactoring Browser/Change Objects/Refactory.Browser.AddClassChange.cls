@@ -170,17 +170,17 @@ classVariableNames!accessing!public! !
 controller!accessing!private! !
 definingSuperclass!accessing!private! !
 definition!accessing!private! !
-definition:!initialize/release!public! !
+definition:!initializing!public! !
 fillOutDefinition!helpers!private! !
 fillOutDefinitionArguments:!helpers!private! !
 hash!comparing!public! !
 imports!accessing!public! !
 instanceVariableNames!accessing!public! !
-isValidMessageName:!public!testing! !
-isValidSubclassCreationMessage:!public!testing! !
+isValidMessageName:!private!testing! !
+isValidSubclassCreationMessage:!private!testing! !
 namesIn:!helpers!private! !
 parseDefinitionError!helpers!private! !
-primitiveExecute!public! !
+primitiveExecute!applying!private! !
 printOn:!printing!public! !
 superclassName!accessing!public! !
 !

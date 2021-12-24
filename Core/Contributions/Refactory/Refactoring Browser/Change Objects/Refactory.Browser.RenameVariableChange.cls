@@ -26,12 +26,11 @@ changeClass: aBehavior
 changeClassName
 	^classReference asString!
 
-changeClassName: aSymbol 
+changeClassName: aString
 	| wasMeta |
 	wasMeta := classReference notNil and: [classReference isMeta].
-	classReference := BindingReference pathString: aSymbol.
-	wasMeta ifTrue: [classReference := classReference meta]
-!
+	classReference := BindingReference pathString: aString.
+	wasMeta ifTrue: [classReference := classReference meta]!
 
 changeString
 	^'Rename ' , oldName , ' to ' , newName!
@@ -83,17 +82,17 @@ changeClass:!accessing!public! !
 changeClassName!accessing!public! !
 changeClassName:!accessing!public! !
 changeString!printing!public! !
-classReference!accessing!private! !
+classReference!accessing!public! !
 displayClassName!printing!public! !
-executeNotifying:!private! !
+executeNotifying:!applying!private! !
 hash!comparing!public! !
-isMeta!private! !
+isMeta!private!testing! !
 newName!accessing!public! !
-newName:!private! !
+newName:!accessing!private! !
 oldName!accessing!public! !
-oldName:!private! !
+oldName:!accessing!private! !
 printOn:!printing!public! !
-renameVariable!private! !
+renameVariable!applying!private! !
 !
 
 !Refactory.Browser.RenameVariableChange class methodsFor!

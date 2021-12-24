@@ -75,9 +75,6 @@ compilationFlags
 compilationFlags: anInteger 
 	compilationFlags := anInteger!
 
-controller
-	^nil!
-
 currentProtocols
 	^self changeClass
 		ifNil: [#()]
@@ -113,8 +110,6 @@ parseTree
 	^RBParser parseMethod: source onError: [:str :pos | ^nil]!
 
 primitiveExecute
-	"Dolphin's compiler interface is different, plus we need to maintain the package relationship"
-
 	method := self changeClass
 				compile: source
 				environment: self environment
@@ -175,11 +170,10 @@ categories!accessing!public! !
 changeForClass:selector:!accessing!public! !
 changeForMetaclass:selector:!accessing!public! !
 changeString!printing!public! !
-class:protocol:source:!initialize/release!public! !
-class:source:!initialize/release!public! !
+class:protocol:source:!initializing!private! !
+class:source:!initializing!private! !
 compilationFlags!accessing!public! !
 compilationFlags:!accessing!public! !
-controller!accessing!private! !
 currentProtocols!converting!public! !
 environment!accessing!public! !
 environment:!accessing!private! !
@@ -193,7 +187,7 @@ primitiveExecute!operations!private! !
 printOn:!printing!public! !
 protocol!accessing!public! !
 protocols!accessing!public! !
-protocols:!initialize/release!public! !
+protocols:!initializing!private! !
 selector!accessing!public! !
 source!accessing!public! !
 !

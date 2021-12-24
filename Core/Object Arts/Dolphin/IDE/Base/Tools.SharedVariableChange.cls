@@ -54,8 +54,8 @@ variable
 asUndoOperation!converting!public! !
 environment!accessing!private! !
 environmentName!accessing!private! !
-executeNotifying:!private! !
-primitiveExecute!operations!private! !
+executeNotifying:!applying!private! !
+primitiveExecute!applying!private! !
 setVariable:environment:!initializing!private! !
 variable!accessing!private! !
 !

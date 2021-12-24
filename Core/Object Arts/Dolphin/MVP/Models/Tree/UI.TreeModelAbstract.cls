@@ -346,6 +346,12 @@ removeAll
 
 	!
 
+removeAll: aCollection
+	"Remove each element of the <collection> argument from the receiver, raising an Exception if any are not elements of the receiver. Answer the argument."
+
+	aCollection do: [:each | self remove: each].
+	^aCollection!
+
 reset
 	"Private - Reinitialize the receiver."
 
@@ -461,6 +467,7 @@ refreshTree:!public!updating! !
 remove:!public!removing! !
 remove:ifAbsent:!public!removing! !
 removeAll!public!removing! !
+removeAll:!public!removing! !
 reset!private!removing! !
 roots!hierarchy!public! !
 roots:!accessing!public! !

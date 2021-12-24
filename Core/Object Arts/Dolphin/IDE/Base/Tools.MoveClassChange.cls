@@ -48,8 +48,8 @@ superclassName: aString
 =!comparing!public! !
 asUndoOperation!converting!public! !
 changeString!printing!public! !
-expression!private! !
-primitiveExecute!public! !
+expression!helpers!private! !
+primitiveExecute!applying!private! !
 superclassName!accessing!public! !
 superclassName:!accessing!public! !
 !

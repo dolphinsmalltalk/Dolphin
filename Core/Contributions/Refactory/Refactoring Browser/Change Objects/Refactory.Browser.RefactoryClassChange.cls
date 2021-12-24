@@ -83,14 +83,14 @@ changeClass:!accessing!public! !
 changeClassName!accessing!public! !
 changeClassName:!accessing!public! !
 changeString!printing!public! !
-classReference!accessing!private! !
+classReference!accessing!public! !
 displayClassName!printing!public! !
-executeNotifying:!private! !
+executeNotifying:!applying!private! !
 hash!comparing!public! !
-isMeta!private! !
-methodSourceFor:!accessing!public! !
-primitiveExecute!private! !
+isMeta!private!testing! !
+methodSourceFor:!helpers!private! !
+primitiveExecute!applying!private! !
 printOn:!printing!public! !
-renameChangesForClass:to:!accessing!public! !
+renameChangesForClass:to:!helpers!private! !
 !
 

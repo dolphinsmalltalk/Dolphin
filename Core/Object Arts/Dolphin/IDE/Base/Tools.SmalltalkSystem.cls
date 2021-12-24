@@ -3,7 +3,7 @@
 Core.Model subclass: #'Tools.SmalltalkSystem'
 	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize displayItLocale'
 	classVariableNames: 'Current FileDrops RegisteredTools'
-	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser} #{Kernel.ParseErrorCodes} #{XProgramming.SUnit private} #{Refactory.Browser private})
+	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser} #{Kernel.ParseErrorCodes} #{XProgramming.SUnit private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.SmalltalkSystem guid: (Core.GUID fromString: '{87b4c66c-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -168,9 +168,6 @@ addClass: class toProtocol: newProtocol
 	newProtocol addClass: class.
 	self classChanged: class.
 	^true!
-
-addClassChangeClass
-	^AddClassChange!
 
 addGlobalName: aSymbol
 	"Adds a global called aSymbol to the system dictionary"
@@ -400,7 +397,7 @@ basicCreateSubclass: aSymbol of: aClass subclasses: aCollection
 		ifTrue: 
 			[^self
 				error: 'Unable to reparent subclasses in this version of the system (requires Dolphin Professional)'].
-	addClass := self addClassChangeClass
+	addClass := AddClassChange
 				definition: ('<1p> <2s> <3p> instanceVariableNames: '''' classVariableNames: '''' poolDictionaries: '''''
 						expandMacrosWith: aClass
 						with: aClass kindOfSubclass
@@ -1331,7 +1328,7 @@ cloneClass: aClass as: newClassName under: superclass in: package
 		display: 'classInstanceVariableNames: '.
 	buildVarString value: (aClass class allInstVarNames
 				difference: (superclass ifNil: [#()] ifNotNil: [superclass class allInstVarNames])).
-	changes addChange: (self addClassChangeClass definition: definition contents).
+	changes defineClass: definition contents.
 	self
 		copyAllMethodsOf: aClass
 		to: newClassName
@@ -2256,13 +2253,14 @@ myDolphinAccount
 	self openUrl: self sessionManager myDolphinUrl!
 
 nameForArgument: anObject
-	| type answer |
+	| type answer name |
 	answer := String writeStream.
 	type := self typeForArgumentClass: anObject class.
 	type == BlockClosure ifTrue: [^self nameForBlockOfArity: anObject argumentCount].
+	name := type name.
 	answer
-		nextPutAll: (type name first isVowel ifTrue: ['an'] ifFalse: ['a']);
-		print: type.
+		nextPutAll: (name first isVowel ifTrue: ['an'] ifFalse: ['a']);
+		nextPutAll: name.
 	((anObject isKindOf: Collection)
 		and: [(anObject isKindOf: Interval) not and: [anObject notEmpty and: [anObject class isBytes not]]])
 			ifTrue: 
@@ -2279,7 +2277,7 @@ nameForArgument: anObject
 					ifTrue: 
 						[answer
 							nextPutAll: 'Of';
-							print: (self typeForArgumentClass: commonBase)]].
+							nextPutAll: (self typeForArgumentClass: commonBase) name]].
 	^answer contents!
 
 nameForBlockOfArity: anInteger
@@ -4253,7 +4251,6 @@ add:toProtocolWarning:!operations!private!protocols! !
 addAdditionalToolsFolderIcon:!operations!public! !
 addAdditionalToolsFolderIconFor:description:!operations!public! !
 addClass:toProtocol:!private!protocols! !
-addClassChangeClass!constants!private! !
 addGlobalName:!operations!public! !
 additionalToolsFolder!accessing!private! !
 addMethod:toProtocol:!operations!protocols!public! !

@@ -96,22 +96,22 @@ new!instance creation!public! !
 
 !Refactory.Browser.CompositeRefactoryChange methodsFor!
 
-addClassConstant: anAssociation to: aRBClass
-	^self addChange: (AddClassConstantChange add: anAssociation to: aRBClass)!
+addClassConstant: aVariableBinding to: aRBClass
+	^self addChange: (AddClassConstantChange add: aVariableBinding to: aRBClass)!
 
 addImport: aBindingReference to: aClass
 	^self addChange: (AddNamespaceImportChange add: aBindingReference to: aClass)!
 
-removeClassConstant: anAssociation from: aClass
-	^self addChange: (RemoveClassConstantChange remove: anAssociation from: aClass)!
+removeClassConstant: aVariableBinding from: aClass
+	^self addChange: (RemoveClassConstantChange remove: aVariableBinding from: aClass)!
 
-removeImport: oldBindingReference from: aRBClass
-	^self addChange: (RemoveNamespaceImportChange remove: oldBindingReference from: aRBClass)! !
+removeImport: aBindingReference from: aRBClass
+	^self addChange: (RemoveNamespaceImportChange remove: aBindingReference from: aRBClass)! !
 !Refactory.Browser.CompositeRefactoryChange categoriesForMethods!
-addClassConstant:to:!private! !
-addImport:to:!public!refactory/changes! !
-removeClassConstant:from:!public!refactory/changes! !
-removeImport:from:!public!refactory/changes! !
+addClassConstant:to:!adding!private! !
+addImport:to:!adding!public! !
+removeClassConstant:from:!adding!public! !
+removeImport:from:!adding!public! !
 !
 
 "End of package definition"!

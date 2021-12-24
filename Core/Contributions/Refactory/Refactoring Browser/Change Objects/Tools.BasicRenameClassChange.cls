@@ -43,10 +43,10 @@ rename: oldString to: newString
 asUndoOperation!converting!public! !
 changeClass:!accessing!public! !
 changeString!printing!public! !
-newName!public! !
-primitiveExecute!accessing!public! !
+newName!accessing!public! !
+primitiveExecute!applying!private! !
 printOn:!printing!public! !
-rename:to:!initialize/release!initializing!private! !
+rename:to:!initializing!private! !
 !
 
 !Tools.BasicRenameClassChange class methodsFor!

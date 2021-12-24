@@ -19,12 +19,6 @@ Instance Variables:
 !Refactory.Browser.RefactoryChange categoriesForClass!Refactory-Change Objects! !
 !Refactory.Browser.RefactoryChange methodsFor!
 
-addClassChangeClass
-	^AddClassChange!
-
-addMethodChangeClass
-	^AddMethodChange!
-
 afterText
 	^self changeString!
 
@@ -43,11 +37,17 @@ changeForMetaclass: aSymbol selector: aSelector
 changes
 	^{self}!
 
+changesDo: aMonadicValuable
+	aMonadicValuable value: self!
+
 changesSize
 	^1!
 
 changeString
 	^self class name!
+
+classReference
+	^nil!
 
 displayClassName
 	^''!
@@ -61,54 +61,48 @@ execute
 executeNotifying: aBlock 
 	self subclassResponsibility!
 
-flattenedChanges
-	| changes |
-	changes := OrderedCollection new.
-	self flattenOnto: changes.
-	^changes!
-
-flattenOnto: aCollection 
-	aCollection add: self!
-
-initialize!
-
 name
 	^name isNil ifTrue: [self changeString] ifFalse: [name]!
 
 name: aString
 	name := aString!
 
+package
+	"Answer the affected <Package>, or nil if none."
+
+	^nil!
+
 renameChangesForClass: aClassName to: newClassName 
-	"We're in the middle of performing a rename operation. If we stored 
+	"Private - We're in the middle of performing a rename operation. If we stored 
 	the class name, we need to change the class name to the new 
 	name to perform the compiles."
 
 	"No action required for most changes."!
 
 selector
+	"Answer the selector of the affected method, or nil if none."
+
 	^nil! !
 !Refactory.Browser.RefactoryChange categoriesForMethods!
-addClassChangeClass!constants!public! !
-addMethodChangeClass!constants!public! !
 afterText!printing!public! !
 beforeText!printing!public! !
-changeClass!public! !
-changeForClass:selector:!accessing!public! !
-changeForMetaclass:selector:!accessing!public! !
+changeClass!accessing!public! !
+changeForClass:selector:!public!searching! !
+changeForMetaclass:selector:!public!searching! !
 changes!accessing!public! !
+changesDo:!enumerating!public! !
 changesSize!accessing!public! !
 changeString!printing!public! !
-displayClassName!public! !
+classReference!accessing!public! !
+displayClassName!printing!public! !
 displayString!printing!public! !
-execute!performing/changes!public! !
-executeNotifying:!private! !
-flattenedChanges!accessing!private! !
-flattenOnto:!private! !
-initialize!initialize/release!public! !
+execute!applying!public! !
+executeNotifying:!applying!private! !
 name!accessing!public! !
-name:!initialize/release!public! !
-renameChangesForClass:to:!accessing!public! !
-selector!public! !
+name:!initializing!public! !
+package!accessing!public! !
+renameChangesForClass:to:!helpers!private! !
+selector!accessing!public! !
 !
 
 !Refactory.Browser.RefactoryChange class methodsFor!

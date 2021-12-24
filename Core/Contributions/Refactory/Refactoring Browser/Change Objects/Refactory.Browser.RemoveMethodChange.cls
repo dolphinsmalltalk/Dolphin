@@ -19,7 +19,7 @@ afterText
 	^''!
 
 asUndoOperation
-	^self addMethodChangeClass compile: (self methodSourceFor: selector) in: self changeClass!
+	^AddMethodChange compile: (self methodSourceFor: selector) in: self changeClass!
 
 beforeText
 	^(self methodSourceFor: selector) !
@@ -58,10 +58,10 @@ asUndoOperation!converting!public! !
 beforeText!printing!public! !
 changeString!printing!public! !
 hash!comparing!public! !
-primitiveExecute!private! !
+primitiveExecute!applying!private! !
 printOn:!printing!public! !
-selector!accessing!private! !
-selector:!initialize/release!public! !
+selector!accessing!public! !
+selector:!initializing!private! !
 source!accessing!public! !
 !
 

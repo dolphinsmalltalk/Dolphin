@@ -41,7 +41,7 @@ printOn: aStream
 asUndoOperation!converting!public! !
 beforeText!printing!public! !
 changeString!printing!public! !
-primitiveExecute!private! !
+primitiveExecute!applying!private! !
 printOn:!printing!public! !
 !
 

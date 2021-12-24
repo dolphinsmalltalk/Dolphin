@@ -60,13 +60,13 @@ variableName
 	^variable! !
 !Refactory.Browser.RefactoryVariableChange categoriesForMethods!
 =!comparing!public! !
-changeObject!private! !
+changeObject!accessing!private! !
 changeString!printing!public! !
 changeStringFormat!constants!printing!private! !
 changeSymbol!constants!private! !
-class:variable:!initialize/release!private! !
+class:variable:!initializing!private! !
 hash!comparing!public! !
-primitiveExecute!private! !
+primitiveExecute!applying!private! !
 printOn:!printing!public! !
 variable!accessing!private! !
 variableName!accessing!private! !
