@@ -16,6 +16,13 @@ amDesignator
 
 	^'am'!
 
+basicLcid
+	"Private - Answer the <integer> id (LCID) of the receiver, including any flags encoded in the high order bits outside the 24-bit range of LCIDs."
+
+	"The receiver is not a Windows locale, but it is basically the same as LOCALE_INVARIANT."
+
+	^##(LOCALE_INVARIANT bitOr: NoUserOverrideMask)!
+
 code
 	"Answer the RFC4646 locale code (aka tag) for this locale."
 
@@ -244,11 +251,6 @@ lastTwoDigitYear
 	"For backwards compatibility with original Dolphin year pivot (30)"
 	^29!
 
-lcid
-	"Answer the <integer> Windows Locale Id. The Smalltalk locale is similar to the invariant locale"
-
-	^LOCALE_INVARIANT!
-
 listSeparator
 	"Answer the String used in the receiver locale to separate items in lists, typically a comma."
 
@@ -435,6 +437,7 @@ yearMonthFormat
 	^'MMMM yyyy'! !
 !Kernel.SmalltalkLocale categoriesForMethods!
 amDesignator!constants!public! !
+basicLcid!constants!private! !
 code!constants!public! !
 dayNames!constants!public! !
 dayOfWeekAbbreviation:!constants!public! !
@@ -460,7 +463,6 @@ isInstalled!public!testing! !
 iso639LanguageName!constants!public! !
 isValidLocale!public!testing! !
 lastTwoDigitYear!constants!public! !
-lcid!accessing!public! !
 listSeparator!constants!public! !
 localizedDisplayName!constants!public! !
 longDateFormat!constants!public! !

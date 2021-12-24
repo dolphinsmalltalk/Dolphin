@@ -11,15 +11,15 @@ OS.InvariantLocale comment: ''!
 !OS.InvariantLocale categoriesForClass!Unclassified! !
 !OS.InvariantLocale methodsFor!
 
+basicLcid
+	"Private - Answer the <integer> id (LCID) of the receiver, including any flags encoded in the high order bits outside the 24-bit range of LCIDs."
+
+	^##(LOCALE_INVARIANT bitOr: NoUserOverrideMask)!
+
 isInstalled
 	"Answer whether the receiver is a recognised (valid) Locale that is installed on the host OS."
 
 	^true!
-
-lcid
-	"Answer the <integer> Windows Locale Id of the receiver."
-
-	^LOCALE_INVARIANT!
 
 name
 	"Answer the <String> unique name of the Locale."
@@ -47,8 +47,8 @@ stbSaveOn: anSTBOutFiler
 		register: self.
 	anSTBOutFiler nextPut: #invariant! !
 !OS.InvariantLocale categoriesForMethods!
+basicLcid!constants!private! !
 isInstalled!public!testing! !
-lcid!accessing!public! !
 name!accessing!public! !
 primary!printing!public! !
 printOn:!printing!public! !

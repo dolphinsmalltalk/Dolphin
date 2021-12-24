@@ -12,7 +12,21 @@ OS.Tests.WindowsLocaleTest comment: ''!
 !OS.Tests.WindowsLocaleTest methodsFor!
 
 defaultSubject
-	^Locale named: 'en-GB'!
+	^Locale standard: 'en-GB'!
+
+testComparing
+	| subject subject2 |
+	subject := self defaultSubject.
+	self assert: subject noUserOverrides.
+	subject2 := subject copy.
+	self assert: subject equals: subject2.
+	self assert: subject hash equals: subject2 hash.
+	{Locale invariant. Locale smalltalk. Locale standard: 'es-ES'} do: 
+			[:each |
+			self deny: subject equals: each.
+			self deny: subject equals: Locale invariant hash].
+	"WindowsLocale with user-override suppression is not equal to the same named WindowsLocale without override suppression"
+	self deny: subject equals: (Locale named: subject name)!
 
 testDayOfWeek
 	| subject |
@@ -29,7 +43,7 @@ testDayOfWeekName
 
 testDisplayFloatOn
 	| subject |
-	{{Locale named: 'en-GB'.
+	{{Locale standard: 'en-GB'.
 			{{Float infinity. '∞'}.
 				{Float negativeInfinity. '-∞'}.
 				{Float nan. 'NaN'}.
@@ -51,7 +65,7 @@ testDisplayFloatOn
 				{1234567.89. '1,234,567.89'}.
 				{-1234567.89. '-1,234,567.89'}.
 				{1.25e22. '12,500,000,000,000,000,000,000.00'}}}.
-		{Locale named: 'es-ES_tradnl'.
+		{Locale standard: 'es-ES_tradnl'.
 			{{Float infinity. 'Infinito'}.
 				{Float negativeInfinity. '-Infinito'}.
 				{Float nan. 'NeuN'}.
@@ -86,7 +100,7 @@ testDisplayFloatOn
 testDisplayFloatOnNegativeModes
 	| subject format |
 	"Different negative number mode (2)"
-	subject := Locale lcid: 1050.
+	subject := Locale standard: 'hr-HR'.
 	self assert: (subject printFloat: -0.0) equals: '0,00'.
 	self assert: (subject printFloat: -1.25) equals: '- 1,25'.
 	self assert: (subject printFloat: -0.0001) equals: '0,00'.
@@ -95,7 +109,7 @@ testDisplayFloatOnNegativeModes
 	self assert: (subject printFloat: Float negativeInfinity) equals: '-∞'.
 
 	"Different negative number mode (3)"
-	subject := Locale lcid: 1065.
+	subject := Locale standard: 'fa-IR'.
 	self assert: (subject printFloat: -0.0) equals: '0/00'.
 	self assert: (subject printFloat: -1.25) equals: '1/25-'.
 	self assert: (subject printFloat: -0.0001) equals: '0/00'.
@@ -104,7 +118,7 @@ testDisplayFloatOnNegativeModes
 	self assert: (subject printFloat: Float negativeInfinity) equals: '-∞'.
 
 	"Fake up the other modes - zero is bracketed"
-	subject := Locale lcid: 1033.
+	subject := Locale standard: 'en-US'.
 	format := subject numberFormat copy.
 	format negativeNumberMode: 0.
 	self assert: (subject printFloat: -0.0 format: format) equals: '0.00'.
@@ -124,11 +138,13 @@ testEnglishName
 		pairsDo: [:lcid :language | self assert: (Locale named: lcid) englishLanguageName equals: language]!
 
 testFirstDayOfWeek
-	"In the US the first day of the week is Sunday"
+	"Test that the Windows 'First day of week' setting is correctly decoded. We have to be careful to ignore user overrides as this test relies on the standard configurations."
 
-	self assert: (Locale named: 'en-US') firstDayOfWeek equals: 7.
-	"In the UK the first day of the week is Monday"
-	self assert: (Locale named: 'en-GB') firstDayOfWeek equals: 1!
+	"In the US the first day of the week is traditionally Sunday."
+
+	self assert: (Locale standard: 'en-US') firstDayOfWeek equals: 7.
+	"In the UK the first day of the week is traditionally Monday"
+	self assert: (Locale standard: 'en-GB') firstDayOfWeek equals: 1!
 
 testIndexOfMonth
 	| subject |
@@ -138,8 +154,8 @@ testIndexOfMonth
 	#('en-US' 'en-GB') do: [:each | self verifyIndexOfEnglishMonths: (Locale named: each)]!
 
 testLongDateFormats
-	self assert: ((Locale named: 'en-US') longDateFormats includes: 'MMMM dd, yyyy').
-	self assert: ((Locale named: 'en-GB') longDateFormats includes: 'dd MMMM yyyy')!
+	self assert: ((Locale standard: 'en-US') longDateFormats includes: 'MMMM dd, yyyy').
+	self assert: ((Locale standard: 'en-GB') longDateFormats includes: 'dd MMMM yyyy')!
 
 testLowercaseString
 	| subject |
@@ -168,6 +184,9 @@ testNameOfDay
 	subject := Locale named: 'tr-Tr'.
 	self assert: ((1 to: 7) collect: [:i | subject nameOfDay: i]) equals: #('Pazartesi' 'Salı' 'Çarşamba' 'Perşembe' 'Cuma' 'Cumartesi' 'Pazar').
 	#('en-US' 'en-GB') do: [:each | self verifyEnglishNamesOfDays: (Locale named: each)]!
+
+testNoUserOverrides
+	self assert: self defaultSubject noUserOverrides!
 
 testPrintFloatGrouping
 	"Test printing with different number grouping."
@@ -254,6 +273,7 @@ testUppercaseString
 	self assert: (subject uppercaseString: 'ınteresting') equals: 'INTERESTİNG'! !
 !OS.Tests.WindowsLocaleTest categoriesForMethods!
 defaultSubject!helpers!private! !
+testComparing!public!unit tests! !
 testDayOfWeek!public!unit tests! !
 testDayOfWeekName!public!unit tests! !
 testDisplayFloatOn!public!unit tests! !
@@ -268,6 +288,7 @@ testMonthName!public!unit tests! !
 testName!public!unit tests! !
 testNamed!public!unit tests! !
 testNameOfDay!public!unit tests! !
+testNoUserOverrides!public!unit tests! !
 testPrintFloatGrouping!public!unit tests! !
 testPrintFloatSeparators!public!unit tests! !
 testPrintNoLeadingZero!public!unit tests! !

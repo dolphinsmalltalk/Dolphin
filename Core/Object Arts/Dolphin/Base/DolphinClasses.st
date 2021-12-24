@@ -326,6 +326,7 @@ Kernel.SharedPool subclass: #'OS.NlsConstants'
 		'C1_XDIGIT' -> 16r80.
 		'CAL_ITWODIGITYEARMAX' -> 16r30.
 		'CAL_IYEAROFFSETRANGE' -> 16r3.
+		'CAL_NOUSEROVERRIDE' -> 16r80000000.
 		'CAL_RETURN_NUMBER' -> 16r20000000.
 		'CAL_SABBREVERASTRING' -> 16r39.
 		'CAL_SERASTRING' -> 16r4.
@@ -398,7 +399,7 @@ Kernel.SharedPool subclass: #'OS.NlsConstants'
 		'LOCALE_IPOSSYMPRECEDES' -> 16r54.
 		'LOCALE_IREADINGLAYOUT' -> 16r70.
 		'LOCALE_NEUTRAL' -> 16r0.
-		'LOCALE_NOUSEROVERRIDE' -> -16r80000000.
+		'LOCALE_NOUSEROVERRIDE' -> 16r80000000.
 		'LOCALE_RETURN_GENITIVE_NAMES' -> 16r10000000.
 		'LOCALE_RETURN_NUMBER' -> 16r20000000.
 		'LOCALE_SABBREVDAYNAME1' -> 16r31.
@@ -510,6 +511,7 @@ Kernel.SharedPool subclass: #'OS.NlsConstants'
 		'MUI_LANGUAGE_NAME' -> 16r8.
 		'MUI_LIP_LANGUAGE' -> 16r4.
 		'MUI_PARTIAL_LANGUAGE' -> 16r2.
+		'NLS_VALID_LOCALE_MASK' -> 16rFFFFF.
 		'NORM_IGNORECASE' -> 16r1.
 		'NORM_IGNOREKANATYPE' -> 16r10000.
 		'NORM_IGNORENONCASE' -> 16r2.
@@ -2341,7 +2343,9 @@ Core.Object subclass: #'Core.Locale'
 	classVariableNames: 'InstalledUILanguages Invariant SystemDefault TimeZoneInfo UserDefault'
 	imports: #(#{OS.NlsConstants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'NoUserOverrideMask' -> 16r1000000
+	}!
 Core.Object subclass: #'Core.Magnitude'
 	instanceVariableNames: ''
 	classVariableNames: ''

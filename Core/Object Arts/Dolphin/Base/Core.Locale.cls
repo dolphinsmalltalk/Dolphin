@@ -5,7 +5,9 @@ Core.Object subclass: #'Core.Locale'
 	classVariableNames: 'InstalledUILanguages Invariant SystemDefault TimeZoneInfo UserDefault'
 	imports: #(#{OS.NlsConstants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'NoUserOverrideMask' -> 16r1000000
+	}!
 Core.Locale guid: (Core.GUID fromString: '{87b4c49a-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.Locale isNonInstantiable: true!
 Core.Locale comment: ''!
@@ -19,6 +21,11 @@ Core.Locale comment: ''!
 
 amDesignator
 	"Answer the String used in the receiver locale to designate AM (morning)."
+
+	^self subclassResponsibility!
+
+basicLcid
+	"Private - Answer the <integer> id (LCID) of the receiver, including any flags encoded in the high order bits outside the 24-bit range of LCIDs."
 
 	^self subclassResponsibility!
 
@@ -377,9 +384,9 @@ lastTwoDigitYear
 	^self subclassResponsibility!
 
 lcid
-	"Answer the <integer> Windows Locale Id."
+	"Answer the <integer> Windows locale id (LCID) of the receiver."
 
-	^self subclassResponsibility!
+	^self basicLcid bitAnd: ##(NLS_VALID_LOCALE_MASK | (16rF << 20)	"sort version")!
 
 listSeparator
 	"Answer the String used in the receiver locale to separate items in lists, typically a comma."
@@ -492,6 +499,9 @@ negativeSign
 	"Answer a <String> which is the symbol used to denote negative numbers in this locale."
 
 	^self subclassResponsibility!
+
+noUserOverrides
+	^self basicLcid allMask: NoUserOverrideMask!
 
 numberFormat
 	^numberFormat
@@ -738,7 +748,7 @@ stbSaveOn: anSTBOutFiler
 		ifTrue: 
 			[anSTBOutFiler nextPut: #userDefault.
 			^self].
-	id := self lcid.
+	id := self basicLcid.
 	id = OS.Kernel32 getSystemDefaultLCID
 		ifTrue: 
 			[anSTBOutFiler nextPut: #systemDefault.
@@ -796,6 +806,7 @@ yearMonthFormat
 !Core.Locale categoriesForMethods!
 =!comparing!public! !
 amDesignator!constants!public! !
+basicLcid!accessing!private! !
 boolFormat!constants!public! !
 code!constants!public! !
 dateAndTimeFormatters!printing!private! !
@@ -851,6 +862,7 @@ nativeDigits!constants!public! !
 negativeInfinity!constants!public! !
 negativeNumberMode!constants!public! !
 negativeSign!constants!public! !
+noUserOverrides!public!testing! !
 numberFormat!constants!public! !
 numberFormat:!accessing!private! !
 numberGrouping!constants!public! !
@@ -920,10 +932,16 @@ invariant
 
 	^Invariant ifNil: [Invariant := OS.InvariantLocale new initialize]!
 
-lcid: anLCID
-	"Answer an instance of the receiver to represent the Locale with the specified id."
+lcid: anInteger
+	"Answer an instance of the receiver to represent the Locale with the specified <integer> LCID."
 
-	^OS.WindowsLocale lcid: anLCID!
+	"This method is soft-deprecated. It will remain because it is needed in some cases, but in application code creating Locale's by name is to be preferred. For example instead of:
+		Locale lcid: 1033
+	prefer:
+		Locale named: 'en-US'
+	"
+
+	^OS.WindowsLocale lcid: anInteger!
 
 makeLangId: langIdBits subLang: subLangIdBits
 	"Private - Answer a Win32 language Id word constructed from langIdBits (10 bits
@@ -941,11 +959,19 @@ makeLcId: langIdWord sortId: sortIdBits
 		bitOr: (langIdWord bitAnd: 16rFFFF)!
 
 named: aString
-	"Answer a sub-instance of the receiver to represent the Locale with the specified name."
+	"Answer an instance of the receiver to represent the locale with the specified name, e.g. 'en-US', including any user customisation of the settings."
 
+	^self named: aString withOverrides: true!
+
+named: aString withOverrides: aBoolean
+	"Private - Answer a sub-instance of the receiver to represent the Locale with the specified name."
+
+	| lcid |
 	(aString equalsIgnoreCase: 'smalltalk') ifTrue: [^self smalltalk].
 	(aString equalsIgnoreCase: 'invariant') ifTrue: [^self invariant].
-	^OS.WindowsLocale named: aString!
+	lcid := OS.Kernel32 localeNameToLCID: aString dwFlags: 0.
+	lcid == 0 ifTrue: [OS.Kernel32 systemError].
+	^OS.WindowsLocale lcid: lcid withOverrides: aBoolean!
 
 onPreStripImage
 	"Private -  Assist in the image stripping process by clearning down any lazily initialized variables held by the receiver."
@@ -981,6 +1007,11 @@ smalltalk
 	"Answer the special 'Smalltalk' locale instance. This isn't a real Locale, but is configured to print Floats, etc, in Smalltalk syntax."
 
 	^SmalltalkLocale.Current!
+
+standard: aString
+	"Answer an instance of the receiver to represent the locale with the specified name, e.g. 'en-US', ignoring any user customisation of the settings."
+
+	^self named: aString withOverrides: false!
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from previous version resource. 
@@ -1048,11 +1079,13 @@ lcid:!instance creation!public! !
 makeLangId:subLang:!enquiries!private! !
 makeLcId:sortId:!enquiries!private! !
 named:!instance creation!public! !
+named:withOverrides:!instance creation!private! !
 onPreStripImage!class hierarchy-removing!private! !
 onSettingChanged:!event handling!private! !
 onStartup!event handling!private! !
 reset!initializing!public! !
 smalltalk!instance creation!public! !
+standard:!instance creation!public! !
 stbConvertFrom:!public! !
 stbReadFrom:format:!public! !
 stbVersion!public! !

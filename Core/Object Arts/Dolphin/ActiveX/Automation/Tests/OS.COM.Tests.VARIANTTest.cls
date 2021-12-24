@@ -167,7 +167,8 @@ testDisplayString
 		{'en'. {true. 'True'. false. 'False'. 1.23. '1.23'. dateTime. '6/28/2020 5:59:01 PM'. #(true false). '(True, False)'}}} do: 
 				[:each |
 				| locale |
-				locale := Locale named: each first.
+				"Use a locale without user overrides so that the date ordering and decimal separator follow standard conventions for the locale and match the test expectation"
+				locale := Locale standard: each first.
 				each second pairsDo: 
 						[:value :expected |
 						| actual |

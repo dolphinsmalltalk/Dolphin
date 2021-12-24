@@ -141,37 +141,42 @@ firstDayOfWeek
 getCalendarInfoInteger: anInteger
 	"Private - Get the specified <integer> calendar information from Windows."
 
-	| buf lib size |
-	lib := self nlsLib.
+	| buf |
 	buf := UInt32Bytes new.
-	size := lib
-				getCalendarInfo: self lcid
-				calendar: self calendarId
-				calType: (anInteger bitOr: CAL_RETURN_NUMBER)
-				lpCalData: nil
-				cchData: 0
-				lpValue: buf.
-	size == 2 ifFalse: [^lib systemError].
+	(Kernel32
+		getCalendarInfo: self lcid
+		calendar: self calendarId
+		calType: (anInteger bitOr: (self noUserOverrides
+						ifTrue: [##(CAL_RETURN_NUMBER | CAL_NOUSEROVERRIDE)]
+						ifFalse: [CAL_RETURN_NUMBER]))
+		lpCalData: nil
+		cchData: 0
+		lpValue: buf) == 0
+		ifTrue: [^Kernel32 systemError].
 	^buf value!
 
 getCalendarInfoString: anIntegerLcType
 	"Private - Get the specified <Utf8String> calendar information from Windows."
 
-	| buf lib size |
-	lib := self nlsLib.
-	size := lib
-				getCalendarInfo: self lcid
-				calendar: self calendarId
-				calType: anIntegerLcType
+	| buf size calType lcid calId |
+	calType := self noUserOverrides
+				ifTrue: [anIntegerLcType bitOr: CAL_NOUSEROVERRIDE]
+				ifFalse: [anIntegerLcType].
+	lcid := self lcid.
+	calId := self calendarId.
+	size := Kernel32
+				getCalendarInfo: lcid
+				calendar: calId
+				calType: calType
 				lpCalData: nil
 				cchData: 0
 				lpValue: nil.
-	size == 0 ifTrue: [^lib systemError].
+	size == 0 ifTrue: [^Kernel32 systemError].
 	"Strings allocate extra space for null automatically"
 	buf := Utf16String newFixed: size - 1.
-	lib
-		getCalendarInfo: self lcid
-		calendar: self calendarId
+	Kernel32
+		getCalendarInfo: lcid
+		calendar: calId
 		calType: anIntegerLcType
 		lpCalData: buf
 		cchData: size
@@ -189,11 +194,11 @@ getDateFormats: aBoolean
 					formats nextPut: format.
 					true]
 				descriptor: EnumNamesDescriptor.
-	(self nlsLib
+	(Kernel32
 		enumDateFormats: enum asParameter
 		locale: self asParameter
 		dwFlags: (aBoolean ifTrue: [DATE_LONGDATE] ifFalse: [DATE_SHORTDATE]))
-			ifFalse: [self nlsLib systemError].
+			ifFalse: [Kernel32 systemError].
 	enum free.
 	^formats contents!
 
@@ -206,30 +211,36 @@ getIntegerInfo: anIntegerLcType
 getLocaleInfoInteger: anIntegerLcType
 	| buf |
 	buf := ByteArray newFixed: 4.
-	(self nlsLib
+	"Note that the API is expecting a data count expressed as the number of (wide) characters, so for a 32-bit buffer the correct size is 2"
+	(Kernel32
 		getLocaleInfo: self lcid
-		lCType: (anIntegerLcType bitOr: LOCALE_RETURN_NUMBER)
+		lCType: (anIntegerLcType bitOr: (self noUserOverrides
+						ifTrue: [##(LOCALE_RETURN_NUMBER | LOCALE_NOUSEROVERRIDE)]
+						ifFalse: [LOCALE_RETURN_NUMBER]))
 		lpLCData: buf
-		cchData: 4) == 0
-		ifTrue: [self nlsLib systemError].
+		cchData: 2) == 0
+		ifTrue: [Kernel32 systemError].
 	^buf dwordAtOffset: 0!
 
 getLocaleInfoString: anIntegerLcType
 	"Private - Get the specified <Utf8String> locale information from Windows."
 
-	| buf lib size |
-	lib := self nlsLib.
-	size := lib
-				getLocaleInfo: self lcid
-				lCType: anIntegerLcType
+	| buf size lcType lcid |
+	lcType := self noUserOverrides
+				ifTrue: [anIntegerLcType bitOr: LOCALE_NOUSEROVERRIDE]
+				ifFalse: [anIntegerLcType].
+	lcid := self lcid.
+	size := Kernel32
+				getLocaleInfo: lcid
+				lCType: lcType
 				lpLCData: nil
 				cchData: 0.
-	size == 0 ifTrue: [^lib systemError].
+	size == 0 ifTrue: [^Kernel32 systemError].
 	"Strings allocate extra space for null automatically"
 	buf := Utf16String newFixed: size - 1.
-	lib
-		getLocaleInfo: self lcid
-		lCType: anIntegerLcType
+	Kernel32
+		getLocaleInfo: lcid
+		lCType: lcType
 		lpLCData: buf
 		cchData: size.
 	^buf asUtf8String!
@@ -248,10 +259,10 @@ getTimeFormats
 					formats nextPut: format.
 					true]
 				descriptor: EnumNamesDescriptor.
-	(self nlsLib
+	(Kernel32
 		enumTimeFormats: enum asParameter
 		locale: self asParameter
-		dwFlags: 0) ifFalse: [self nlsLib systemError].
+		dwFlags: 0) ifFalse: [Kernel32 systemError].
 	enum free.
 	^formats contents!
 
@@ -272,7 +283,7 @@ initialize
 isInstalled
 	"Answer whether the receiver is a recognised (valid) Locale that is installed on the host OS."
 
-	^self nlsLib isValidLocale: self lcid dwFlags: LCID_INSTALLED!
+	^Kernel32 isValidLocale: self lcid dwFlags: LCID_INSTALLED!
 
 iso639LanguageName
 	"The abbreviated (two-character) <String> name of the language of the primary language of the locale as defined in ISO-639."
@@ -282,7 +293,7 @@ iso639LanguageName
 isValidLocale
 	"Answer whether the receiver is a recognised (valid) Locale."
 
-	^self nlsLib isValidLocale: self lcid dwFlags: LCID_SUPPORTED!
+	^Kernel32 isValidLocale: self lcid dwFlags: LCID_SUPPORTED!
 
 lastTwoDigitYear
 	"Answer the <integer> year that is the end of the 100 year interval into which 2-digit years are interpreted.
@@ -378,11 +389,6 @@ negativeNumberMode
 
 negativeSign
 	^self getStringInfo: LOCALE_SNEGATIVESIGN!
-
-nlsLib
-	"Private - Answer the library responsible for locale support."
-
-	^Kernel32!
 
 numberGrouping
 	"Answer a <string> which describes the way in which number digits should be grouped in the receiver locale. The format string consists of a series of integers specifying from left to right how many digits of the number should be formed into a group before the next group (if needed), each group being separated by the 'thousands' separator for the locale. There can be up to 9 characters in the string. If the last character is zero, then the preceding group specification is repeated.
@@ -530,7 +536,6 @@ nativeDigits!constants!public! !
 negativeInfinity!constants!public! !
 negativeNumberMode!constants!public! !
 negativeSign!constants!public! !
-nlsLib!constants!private! !
 numberGrouping!constants!public! !
 parentName!constants!public! !
 percentSymbol!constants!public! !
@@ -572,18 +577,19 @@ installedUILanguages: anInteger
 	enum free.
 	^languages contents collect: [:each | self named: each]!
 
-lcid: anLCID
-	"Answer an instance of the receiver to represent the Locale with the specified id."
+lcid: anInteger
+	"Answer an instance of the receiver to represent the Locale with the specified LCID."
 
-	^anLCID == LOCALE_INVARIANT ifTrue: [self invariant] ifFalse: [WindowsLocale new lcid: anLCID]!
+	^self lcid: anInteger withOverrides: true!
 
-named: aString
-	"Answer an instance of the receiver to represent the locale with the specified name, e.g. 'en-US'"
+lcid: anInteger withOverrides: aBoolean
+	"Private - Answer an instance of the receiver to represent the Locale with the specified LCID."
 
-	| lcid |
-	lcid := Kernel32 localeNameToLCID: aString dwFlags: 0.
-	lcid == 0 ifTrue: [Kernel32 systemError].
-	^self lcid: lcid!
+	^anInteger == LOCALE_INVARIANT
+		ifTrue: [self invariant]
+		ifFalse: 
+			[WindowsLocale new
+				lcid: (aBoolean ifTrue: [anInteger] ifFalse: [anInteger bitOr: NoUserOverrideMask])]!
 
 reset
 	SystemDefault := nil.
@@ -606,7 +612,7 @@ systemLocales: anInteger
 initialize!class initialization!development!public! !
 installedUILanguages:!enquiries!private! !
 lcid:!instance creation!public! !
-named:!instance creation!public! !
+lcid:withOverrides:!instance creation!private! !
 reset!initializing!private! !
 systemLocales:!enquiries!private! !
 !

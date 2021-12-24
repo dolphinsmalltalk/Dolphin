@@ -34,6 +34,10 @@ testDisplayFloatOn
 testName
 	self subclassResponsibility!
 
+testNoUserOverrides
+	self assert: self defaultSubject noUserOverrides.
+	self deny: (Locale named: 'en-US') noUserOverrides!
+
 testPrimary
 	"Sad, but true"
 
@@ -151,10 +155,14 @@ testUppercaseString
 	self subclassResponsibility!
 
 verifyEnglishDayOfWeek: aLocale
+	"Note that this test is not sensitive to the configured first day of the week, because Locale>>dayOfWeek: always uses the US convention that Sunday is day 1. This is for interoperability with `Core.Date`."
+
 	^#('SUnday' 'MONDAY' 'Tue' 'Wednesday' 'THU' 'friday' 'sat')
 		keysAndValuesDo: [:eachKey :eachValue | self assert: (aLocale dayOfWeek: eachValue) equals: eachKey]!
 
 verifyEnglishDayOfWeekNames: aLocale
+	"Note that this test is not sensitive to the configured first day of the week, because Locale>>dayOfWeekName: always uses the US convention that Sunday is day 1. This is for interoperability with `Core.Date`."
+
 	^self assert: ((1 to: 7) collect: [:i | aLocale dayOfWeekName: i])
 		equals: #('Sunday' 'Monday' 'Tuesday' 'Wednesday' 'Thursday' 'Friday' 'Saturday')!
 
@@ -167,6 +175,8 @@ verifyEnglishMonthNames: aLocale
 		equals: #('January' 'February' 'March' 'April' 'May' 'June' 'July' 'August' 'September' 'October' 'November' 'December')!
 
 verifyEnglishNamesOfDays: aLocale
+	"Note that this test is not sensitive to the configured first day of the week, because Locale>>nameOfDay: always uses the convention that Monday is day 1. For reasons of backwards compatibility with a historic Core.Date API, this is not consistent with some other Locale APIs that use the US convention. Locale>>dayOfWeekName: is a similar API that follows the US convention."
+
 	^self assert: ((1 to: 7) collect: [:i | aLocale nameOfDay: i])
 		equals: #('Monday' 'Tuesday' 'Wednesday' 'Thursday' 'Friday' 'Saturday' 'Sunday')!
 
@@ -221,6 +231,7 @@ setUp!private!running! !
 tearDown!private!running! !
 testDisplayFloatOn!public!unit tests! !
 testName!public!unit tests! !
+testNoUserOverrides!public!unit tests! !
 testPrimary!public!unit tests! !
 testPrintDateTimeOnFormat!public!unit tests! !
 testPrintDurationOnFormat!public!unit tests! !

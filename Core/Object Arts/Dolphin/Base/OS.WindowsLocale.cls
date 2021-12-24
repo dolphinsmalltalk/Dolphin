@@ -11,8 +11,13 @@ OS.WindowsLocale comment: ''!
 !OS.WindowsLocale categoriesForClass!Unclassified! !
 !OS.WindowsLocale methodsFor!
 
-lcid
-	"Answer the <integer> Windows Locale Id."
+= anObject
+	"Answer whether the receiver and argument are equivalent (i.e. represent the same Locale)."
+
+	^self == anObject or: [anObject species == self species and: [anObject basicLcid = lcid]]!
+
+basicLcid
+	"Private - Answer the <integer> id (LCID) of the receiver, including any flags encoded in the high order bits outside the 24-bit range of LCIDs."
 
 	^lcid!
 
@@ -43,7 +48,8 @@ printOn: aStream
 		print: self name;
 		nextPut: $)! !
 !OS.WindowsLocale categoriesForMethods!
-lcid!accessing!public! !
+=!comparing!public! !
+basicLcid!accessing!private! !
 lcid:!initializing!private! !
 printOn:!development!printing!public! !
 !
