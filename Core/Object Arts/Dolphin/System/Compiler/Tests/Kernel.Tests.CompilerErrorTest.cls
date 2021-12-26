@@ -133,36 +133,29 @@ testErrorsNonsenseAtEndOfMethod
 		code: ParseErrorCodes.CErrInvalExprStart!
 
 testErrorsTooManyBytecodes
-	"This is one error that the parser cannot detect since it does not do code generation.
-	The number of bytecodes in a method has no real limit, except that imposed by the
-	maximum lengths of jumps (and in practice by the maximum size of the literal frame).
-	In order to provoke the 'method tool long' error we need to generate a long jump
-	around a large inlined block. To avoid requring a lot of literals we use expressions
-	with immediate values, i.e. 1+2 .Each 1+2 sequence generates 4 bytecodes:
-		Push 1
-		Push 2
-		Send +
-		Pop.
-	The maximum length of a jump is 32k."
+	"The number of bytecodes in a method has no real limit, except that imposed by the maximum lengths of jumps (and in practice by the maximum size of the literal frame).
+	In order to provoke the 'method tool long' error we need to generate a long jump around a large inlined block. To avoid requiring a lot of literals we use expressions with immediate integer values large enough to require the largest push-immediate instruction, ExLongPushImmediate, each of which requires 5 bytes. Each expression has a sequence of adds to reduce the compilation time.
+	The maximum length of a jump is 32k.
+	This is one error that the parser cannot detect since it does not do code generation."
 
-	| source max |
-	self skipIfCiBuild. "Very long running"
-	source := String writeStream.
+	| source max len |
+	source := String writeStream: 35002.
 	source
 		nextPutAll: 'Object isNil ifFalse: [';
 		cr.
-	max := 32768 / 4.
+	max := (32768 / (5 * (5 + 1))) truncated + 1.
 	1 to: max
 		do: 
 			[:i |
 			source
-				nextPutAll: '1+2.';
+				nextPutAll: '32768+32768+32768+32768+32768.';
 				cr].
 	source nextPut: $].
-	source := source contents.
+	source := source grabContents.
+	len := source size.
 	self
 		parseExprError: source
-		range: (source size + 1 to: source size)
+		range: (len + 1 to: len)
 		line: max + 2
 		code: CErrMethodTooLarge!
 

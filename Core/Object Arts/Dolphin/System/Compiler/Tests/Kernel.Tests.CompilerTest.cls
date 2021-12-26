@@ -1801,7 +1801,7 @@ resources
 	^{CompilerTestClasses}! !
 !Kernel.Tests.CompilerTest class categoriesForMethods!
 buildSuiteFromSelectors!Building Suites!public! !
-initialize!public!unit tests-long running! !
+initialize!class initialization!public! !
 resources!Accessing!public! !
 !
 
