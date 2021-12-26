@@ -291,7 +291,9 @@ coerce: anArithmeticValue
 	^anArithmeticValue asInteger!
 
 decimalDigitLength
-	"Private - Answer the number of digits (only) necessary to print this number in base 10. The receiver must be positive."
+	"Private - Answer the number of digits (only) necessary to print this number in base 10."
+
+	"N.B. The receiver is assumed to be positive."
 
 	^self numberOfDigitsInBase: 10!
 

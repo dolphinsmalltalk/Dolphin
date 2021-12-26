@@ -168,18 +168,18 @@ testErrorsTooManyBytecodes
 
 testErrorsTooManyLiterals
 	| source max len |
-	source := String writeStream.
-	source print: String empty.
 	max := self maxLiterals.
+	source := String writeStream: max * 10.
+	source print: String empty.
 	"The empty string and concatenation operator will push it over max literals by 1 if we concatenate max-1 strings"
 	1 to: max - 1
 		do: 
 			[:i |
 			source
 				nextPut: $,;
-				crtab;
+				cr;
 				nextPut: $';
-				display: i;
+				nextPutAll: i printString;
 				nextPut: $'].
 	source := source contents.
 	len := source size.
@@ -207,7 +207,7 @@ testErrorsLexicalExpectExtendedLiteral!public!unit tests! !
 testErrorsNonsenseAtEndOfExpression!public!unit tests! !
 testErrorsNonsenseAtEndOfMethod!public!unit tests! !
 testErrorsTooManyBytecodes!public!unit tests! !
-testErrorsTooManyLiterals!public!unit tests-long running! !
+testErrorsTooManyLiterals!public!unit tests! !
 writtenNotReadRange:!helpers!private! !
 !
 

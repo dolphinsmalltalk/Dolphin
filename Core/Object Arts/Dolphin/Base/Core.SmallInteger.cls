@@ -264,7 +264,9 @@ coerce: anArithmeticValue
 !
 
 decimalDigitLength
-	"Private - Answer the number of digits (only) necessary to print this number in base 10. The receiver must be positive."
+	"Private - Answer the number of digits (only) necessary to print this number in base 10."
+
+	"N.B. The receiver is assumed to be positive."
 
 	self < 10000
 		ifTrue: 
@@ -276,23 +278,23 @@ decimalDigitLength
 			[^self < 1000000
 				ifTrue: [self < 100000 ifTrue: [5] ifFalse: [6]]
 				ifFalse: [self < 10000000 ifTrue: [7] ifFalse: [8]]].
-	self < 1000000000 ifTrue: [^9] 
-		ifFalse: [
-			"Special case while still 32-bit"
-			self <= 16r3FFFFFFF ifTrue: [^10]].
+	self < 1000000000
+		ifTrue: [^9]
+		ifFalse: 
+			["Special case while still 32-bit"
+			VMConstants.IsWin64 ifFalse: [^10]].
 	"Allow for future 64-bit SmallIntegers. Can't get here at present"
 	self < 10000000000000
-		ifTrue:
+		ifTrue: 
 			[^self < 100000000000
-					ifTrue: [self < 10000000000 ifTrue: [10] ifFalse: [11]]
-					ifFalse: [self < 1000000000000 ifTrue: [12] ifFalse: [13]]].
-	self < 100000000000000000 
-			ifTrue: [
-				^self < 1000000000000000 
-					ifTrue: [self < 100000000000000 ifTrue: [14] ifFalse: [15]]
-					ifFalse: [self < 10000000000000000 ifTrue: [16] ifFalse: [17]]].
-	^self < 1000000000000000000 ifTrue: [18] ifFalse: [19]
-!
+				ifTrue: [self < 10000000000 ifTrue: [10] ifFalse: [11]]
+				ifFalse: [self < 1000000000000 ifTrue: [12] ifFalse: [13]]].
+	self < 100000000000000000
+		ifTrue: 
+			[^self < 1000000000000000
+				ifTrue: [self < 100000000000000 ifTrue: [14] ifFalse: [15]]
+				ifFalse: [self < 10000000000000000 ifTrue: [16] ifFalse: [17]]].
+	^self < 1000000000000000000 ifTrue: [18] ifFalse: [19]!
 
 deepCopy
 	"SmallIntegers have an immediate representation - i.e. they have only

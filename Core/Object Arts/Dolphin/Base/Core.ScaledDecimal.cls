@@ -72,7 +72,7 @@ addToScaledDecimal: operand
 
 	^self species
 		newFromNumber: operand asFraction + fraction
-		scale: (self scale max: operand scale)!
+		scale: (scale max: operand scale)!
 
 asFloat
 	"Answer the receiver represented as the nearest possible <Float>."

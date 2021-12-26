@@ -119,10 +119,9 @@ contentsSpecies
 	^Array!
 
 cr
-	"Store the line delimiter character sequence (as required by
-	the environment) as the next element(s) of the receiver."
+	"Store the line delimiter character sequence (as required by the environment) as the next element(s) of the receiver."
 
-	self nextPutAll: String lineDelimiter!
+	self nextPutAll: String.LineDelimiter!
 
 crtab
 	"Append a line-delimiter and a tab to the receiver."
