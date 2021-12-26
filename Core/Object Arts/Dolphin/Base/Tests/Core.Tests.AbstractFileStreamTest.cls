@@ -134,12 +134,12 @@ tempWriteStream: aSymbol
 		type: aSymbol!
 
 test1065
-	| r |
-	r := Random new.
 	#(0 1 512 4095 4096 8191 8192 8193 16383 16384 16385) do: 
-			[:i |
+			[:size |
 			| data written |
-			data := ((1 to: i) collect: [:each | (r next * 256) truncated]) asByteArray.
+			data := WriteStream on: (ByteArray new: size).
+			size timesRepeat: [data nextPut: (OS.Ucrt rand bitAnd: 255)].
+			data := data grabContents.
 			filestream := self streamClass write: tempFileName text: false.
 			filestream
 				next: data size
@@ -147,10 +147,7 @@ test1065
 				startingAt: 1.
 			filestream close.
 			written := File readAllBytes: tempFileName.
-			self
-				assert: data = written
-				description: 'Failed on write of ' , i printString , ' bytes'
-				resumable: true]!
+			self assert: data equals: written]!
 
 test64BitPosition
 	filestream := self tempWriteStream: #binary.
