@@ -386,37 +386,7 @@ Compiler::StaticType Compiler::FindNameAsStatic(const u8string& name, POTE& oteS
 
 	if (oteBinding == nil && autoDefine)
 	{
-		if (IsCharUpper(name[0]))
-		{
-			if (IsInteractive)
-			{
-				char szPrompt[256];
-				::LoadString(GetResLibHandle(), IDP_AUTO_DEFINE_GLOBAL, szPrompt, sizeof(szPrompt)-1);
-				char* msg = new char[strlen(szPrompt)+name.size()+32];
-				::wsprintf(msg, szPrompt, name.c_str());
-				char szCaption[256];
-				::LoadString(GetResLibHandle(), IDR_COMPILER, szCaption, sizeof(szCaption)-1);
-				int answer = ::MessageBox(nullptr, msg, szCaption, MB_YESNOCANCEL|MB_ICONQUESTION|MB_TASKMODAL);
-				delete[] msg;
-				
-				switch(answer)
-				{
-				case IDYES:
-					{
-						DictAtPut(GetVMPointers().SmalltalkDictionary, name, Oop(Nil()));
-						oteBinding = FindDictVariable(GetVMPointers().SmalltalkDictionary, name);
-					}
-					break;
-				case IDCANCEL:
-					return StaticType::Cancel;
-					
-				case IDNO:
-				default:
-					break;
-				}
-			}
-		}
-		else
+		if (!IsCharUpper(name[0]))
 		{
 			if (!WantSyntaxCheckOnly && pools != nullptr)
 			{

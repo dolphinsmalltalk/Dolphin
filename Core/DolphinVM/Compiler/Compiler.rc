@@ -55,7 +55,6 @@ STRINGTABLE
 BEGIN
     IDR_COMPILER            "Dolphin Compiler"
     IDS_P_NOTACLASS         "not a class (%s)"
-    IDP_AUTO_DEFINE_GLOBAL  "Define '%s' as a global variable?"
 END
 
 #endif    // English (United Kingdom) resources

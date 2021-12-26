@@ -435,7 +435,6 @@ public:
 	POTE GetInstVarNames()/* throws SE_VMCALLBACKUNWIND */;
 	POTE GetClassEnvironment(POTE oteClass);
 	POTE FindDictVariable(POTE dict, const u8string&)/* throws SE_VMCALLBACKUNWIND */;
-	//POTE FindClass(const u8string&)/* throws SE_VMCALLBACKUNWIND */;
 	POTE FindGlobal(const u8string&)/* throws SE_VMCALLBACKUNWIND */;
 	POTE DictAtPut(POTE dict, const u8string&, Oop value)/* throws SE_VMCALLBACKUNWIND */;
 	bool CanUnderstand(POTE oteBehavior, POTE oteSelector);

@@ -4,7 +4,6 @@
 //
 #define IDR_COMPILER                    1
 #define IDS_P_NOTACLASS                 10
-#define IDP_AUTO_DEFINE_GLOBAL          11
 
 // Next default values for new objects
 // 
