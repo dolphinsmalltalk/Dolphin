@@ -35,5 +35,6 @@ Package manager
 	install: 'Core\Object Arts\Dolphin\ActiveX\Components\ADO\Tests\ADODB Tests.pax';
 	install: 'Core\Object Arts\Dolphin\ActiveX\Components\XML DOM\Tests\XML DOM Tests.pax';
 	install: 'Core\Object Arts\Dolphin\System\SemVer\Tests\Dolphin SemVer Tests.pax';
+	install: 'Core\Object Arts\Dolphin\ActiveX\Components\Picture\Tests\OLE Picture Tests.pax';
 	yourself.
 !

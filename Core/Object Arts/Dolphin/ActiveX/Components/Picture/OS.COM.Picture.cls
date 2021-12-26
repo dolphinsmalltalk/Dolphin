@@ -10,7 +10,7 @@ OS.COM.Picture guid: (OS.COM.CLSID fromString: '{0be35204-8f91-11ce-9de3-00aa004
 OS.COM.Picture comment: '`OS.COM.Picture` is an `Image` class which wraps the standard OLE picture object.
 
 `Picture` is capable of representing a wide range of image types, including icons, bitmaps, metafiles, and also JPEGs and GIFs. It won''t load PNG''s, however.
-The main functionality that `Picture` offers that is not readily available elsewhere is the ability to save images to files, although this has the limitation that it can only save the bitmaps as BMPs, icons as ICOs, and metafiles as EMF. There are much richer capabilities in Gdiplus.
+The main functionality that `Picture` offers that is not readily available elsewhere is the ability to save images to files, although this has the limitation that it can only save the bitmaps as BMPs, icons as ICOs, and metafiles as EMF. There are much richer capabilities in Gdiplus, so this class is retained for backwards compatibility only.
 
 Example:
 ```
@@ -57,20 +57,18 @@ createHandle
 
 	| hPic |
 	picture := super createHandle.
-	hPic := picture handle.
-	hPic isNull 
-		ifTrue: 
+	^picture
+		ifNil: 
 			["By setting a non-zero extent we avoid client code getting division by zero when scaling"
-
-			hmExtent := extent := 1 @ 1]
-		ifFalse: 
+			hmExtent := extent := 1 @ 1.
+			0]
+		ifNotNil: 
 			[| dc |
-			self assert: [picture notNull].
 			hmExtent := picture extent.
 			dc := Canvas forDesktop.
 			extent := dc hiMetricToPels: hmExtent.
-			dc free].
-	^hPic!
+			dc free.
+			picture handle]!
 
 drawDisabledOn: aCanvas at: aPoint extent: sizePoint
 	"Draw a disabled/grayed representation of the receiver on aCanvas at aPoint with extent sizePoint."
@@ -128,8 +126,12 @@ loadFromFile: pathString extent: aPoint flags: anInteger
 	ipicture isNull
 		ifTrue: 
 			["Create a stand-in image"
-			ipicture := IPicture fromIcon: Icon default].
+			ipicture := IPicture
+						fromIcon: (Icon default withExtent: (aPoint isZero ifTrue: [256 @ 256] ifFalse: [aPoint]))].
 	^ipicture!
+
+loadResource: aString fromModule: aResourceLibrary extent: aPoint flags: anInteger 
+	^nil!
 
 picture
 	"Private - Answer the <IPicture> wrapped by the receiver."
@@ -164,6 +166,7 @@ drawOn:at:extent:!drawing-bitmaps!public! !
 extent!accessing!public! !
 imageType!constants!private!testing! !
 loadFromFile:extent:flags:!private!realizing/unrealizing! !
+loadResource:fromModule:extent:flags:!public! !
 picture!accessing!private! !
 picture:!accessing!private! !
 saveAsFile:!file operations!public! !

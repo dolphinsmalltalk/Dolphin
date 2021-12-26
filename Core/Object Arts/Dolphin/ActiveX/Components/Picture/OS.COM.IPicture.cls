@@ -484,7 +484,7 @@ fromBitmap: aBitmap
 	"Answer a new instance of the receiver on a StdPicture object wrapping the <Bitmap> (or handle),
 	anIcon. The bitmap will NOT be destroyed when the picture is destroyed."
 
-	^self fromImage: aBitmap type: "PICTYPE_BITMAP" 1.!
+	^self fromImage: aBitmap type: PICTYPE_BITMAP!
 
 fromFile: path
 	"Answer an instance loaded from the file whose path is specified by the <readableString>
@@ -506,7 +506,7 @@ fromIcon: anIcon
 	"Answer a new instance of the receiver on a StdPicture object wrapping the <Icon> (or handle),
 	anIcon. The icon will NOT be destroyed when the picture is destroyed."
 
-	^self fromImage: anIcon type: "PICTYPE_ICON" 3.!
+	^self fromImage: anIcon type: PICTYPE_ICON!
 
 fromImage: anImage type: picType
 	"Private - Answer a new instance of the receiver on a StdPicture object 
@@ -519,13 +519,13 @@ fromOwnedBitmap: aBitmap
 	"Answer a new instance of the receiver on a StdPicture object wrapping the <Bitmap> (or handle),
 	anIcon. The bitmap will be destroyed when the picture is destroyed."
 
-	^self fromOwnedImage: aBitmap type: "PICTYPE_BITMAP" 1.!
+	^self fromOwnedImage: aBitmap type: PICTYPE_BITMAP!
 
 fromOwnedIcon: anIcon
 	"Answer a new instance of the receiver on a StdPicture object wrapping the <Icon> (or handle),
 	anIcon. The icon will be destroyed when the picture is destroyed."
 
-	^self fromOwnedImage: anIcon type: "PICTYPE_ICON" 3.!
+	^self fromOwnedImage: anIcon type: PICTYPE_ICON!
 
 fromOwnedImage: anImage type: picType
 	"Private - Answer a new instance of the receiver on a StdPicture object 

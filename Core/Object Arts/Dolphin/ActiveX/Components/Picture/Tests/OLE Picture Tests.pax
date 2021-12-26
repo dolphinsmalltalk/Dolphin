@@ -1,0 +1,29 @@
+﻿| package |
+package := Package name: 'OLE Picture Tests'.
+package paxVersion: 2.1;
+	basicComment: ''.
+
+
+package setClassNames: #(
+	#{OS.COM.Tests.PictureTest}
+).
+
+package setPrerequisites: #(
+	'..\..\..\..\MVP\Graphics\Tests\Dolphin GDI Graphics Tests'
+	'..\..\..\COM\Tests\OLE COM Tests'
+	'..\OLE Picture'
+).
+
+package!
+
+"Class Definitions"!
+
+Graphics.Tests.ImageTest subclass: #'OS.COM.Tests.PictureTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+
