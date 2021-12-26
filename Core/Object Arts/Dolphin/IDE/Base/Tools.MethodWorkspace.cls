@@ -6,7 +6,8 @@ Tools.SmalltalkWorkspace subclass: #'Tools.MethodWorkspace'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'NoAutoParseMask' -> 16r100000
+		'NoAutoParseMask' -> 16r100000.
+		'NoSelectionMatching' -> 16r200000
 	}!
 Tools.MethodWorkspace guid: (Core.GUID fromString: '{d7285d4c-35b2-4b52-a673-2e17fde39fec}')!
 Tools.MethodWorkspace comment: 'MethodWorkspace is a specialised <SmalltalkWorkspace> for displaying method source that expects to be contained in a <MethodBrowser>.
@@ -205,13 +206,19 @@ initialize
 	self isAutoParseEnabled: self class isAutoParseEnabled!
 
 isAutoParseEnabled
-	^flags allMask: NoAutoParseMask!
+	^flags noMask: NoAutoParseMask!
 
 isAutoParseEnabled: aBoolean
-	flags := flags mask: NoAutoParseMask set: aBoolean!
+	flags := flags mask: NoAutoParseMask set: aBoolean not!
 
 isEditable
 	^super isEditable and: [parentPresenter hasEditableMethodSelected]!
+
+isSelectionMatched
+	^flags noMask: NoSelectionMatching!
+
+isSelectionMatched: aBoolean
+	flags := flags mask: NoSelectionMatching set: aBoolean not!
 
 isTempVariable: anStVariableNode 
 	"Private - Answer whether the specified variable node represents one of the temporaries in
@@ -425,7 +432,8 @@ selectedNode
 selectionChanged
 	"The receiver highlights all text matching <view selection>"
 
-	view identifyTextMatchingSelectionWithStyleName: #secondarySelection.!
+	self isSelectionMatched
+		ifTrue: [view identifyTextMatchingSelectionWithStyleName: #secondarySelection]!
 
 selectorFromNode: aStProgramNode
 	^aStProgramNode isMessage
@@ -515,6 +523,8 @@ initialize!initializing!private! !
 isAutoParseEnabled!accessing!public! !
 isAutoParseEnabled:!accessing!public! !
 isEditable!private!testing! !
+isSelectionMatched!accessing!public! !
+isSelectionMatched:!accessing!public! !
 isTempVariable:!private!refactoring! !
 killParseTimer!helpers!private! !
 lineFromPosition:!enquiries!public! !

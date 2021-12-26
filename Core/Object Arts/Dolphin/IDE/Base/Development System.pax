@@ -1429,7 +1429,8 @@ Tools.SmalltalkWorkspace subclass: #'Tools.MethodWorkspace'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'NoAutoParseMask' -> 16r100000
+		'NoAutoParseMask' -> 16r100000.
+		'NoSelectionMatching' -> 16r200000
 	}!
 Tools.SmalltalkWorkspace subclass: #'Tools.ValueWorkspace'
 	instanceVariableNames: 'textModel'

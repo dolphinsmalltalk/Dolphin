@@ -33,7 +33,9 @@ createComponents
 	super createComponents.
 	disassemblyPresenter := self add: SmalltalkSystem current workspaceClass new name: 'disassembly'.
 	sourcePresenter := self add: SmalltalkSystem current methodWorkspaceClass new name: 'source'.
-	sourcePresenter isAutoParseEnabled: false.
+	sourcePresenter
+		isAutoParseEnabled: false;
+		isSelectionMatched: false.
 	textMapPresenter := self add: ListPresenter new name: 'textMap'.
 	toggleDebugPresenter := self add: BooleanPresenter new name: 'debugToggle'.
 	toggleOptimisedPresenter := self add: BooleanPresenter new name: 'optimisedToggle'.
