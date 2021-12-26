@@ -36,7 +36,7 @@ package setPrerequisites: #(
 	'..\MVP\Type Converters\Dolphin Type Converters'
 	'..\MVP\Models\Value\Dolphin Value Models'
 	'DolphinSure'
-	'..\ActiveX\Components\Picture\OLE Picture'
+	'..\MVP\Gdiplus\Gdiplus'
 ).
 
 package!
@@ -61,12 +61,12 @@ image
 
 	| background image extent canvas labelBox textBox |
 	self validData.
-	background := OS.COM.Picture fromFile: self backgroundImageFile
+	background := Graphics.Gdiplus.Bitmap fromFile: self backgroundImageFile
 				usingLocator: FileLocator installRelative.
 	extent := background extent.
 	image := Graphics.DIBSection width: extent x height: extent y.
 	canvas := image canvas.
-	background 
+	background
 		drawOn: canvas
 		at: Graphics.Point zero
 		extent: extent.
@@ -76,10 +76,11 @@ image
 
 	"Draw attributes"
 	self imageAttributes do: 
-			[:each | 
+			[:each |
 			canvas save.
-			each value == #validityString ifTrue: [self info hasExpired ifTrue: [canvas forecolor: Graphics.Color red]].
-			self 
+			each value == #validityString
+				ifTrue: [self info hasExpired ifTrue: [canvas forecolor: Graphics.Color red]].
+			self
 				imagePrint: each
 				on: canvas
 				labelBox: labelBox

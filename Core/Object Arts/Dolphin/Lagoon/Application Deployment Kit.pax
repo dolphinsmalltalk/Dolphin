@@ -94,8 +94,8 @@ package setPrerequisites: #(
 	'..\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\MVP\Type Converters\Dolphin Type Converters'
 	'..\MVP\Models\Value\Dolphin Value Models'
+	'..\MVP\Gdiplus\Gdiplus'
 	'Lagoon Image Stripper'
-	'..\ActiveX\Components\Picture\OLE Picture'
 ).
 
 package!

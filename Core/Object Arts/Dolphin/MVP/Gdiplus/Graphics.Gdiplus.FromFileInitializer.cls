@@ -17,10 +17,24 @@ absoluteFilename
 
 filename: aFilename fileLocator: aFileLocator
 	filename := aFilename.
-	fileLocator := aFileLocator! !
+	fileLocator := aFileLocator!
+
+printImage: anImage on: aWriteStream
+	"Private - Print an expression on the <WriteStream> argument that will create a copy of the <Graphics.Gdiplus.Image> initialized by the receiver."
+
+	aWriteStream
+		print: anImage class;
+		nextPutAll: ' fromFile: ';
+		print: filename.
+	fileLocator = FileLocator default
+		ifFalse: 
+			[aWriteStream
+				nextPutAll: ' usingLocator: ';
+				print: fileLocator]! !
 !Graphics.Gdiplus.FromFileInitializer categoriesForMethods!
 absoluteFilename!enquiries!public! !
 filename:fileLocator:!initializing!private! !
+printImage:on:!public! !
 !
 
 !Graphics.Gdiplus.FromFileInitializer class methodsFor!

@@ -362,6 +362,9 @@ pixelFormat
 	Gdip gdipGetImagePixelFormat: self asParameter format: flags.
 	^flags sdwordAtOffset: 0!
 
+printOn: aStream
+	initializer printImage: self on: aStream!
+
 properties
 	"Answer a <GpPropertyItem> list of all the receiver's property items."
 
@@ -726,6 +729,7 @@ palette!accessing!public! !
 palette:!accessing!public! !
 paletteSize!accessing!private! !
 pixelFormat!accessing!public! !
+printOn:!printing!public! !
 properties!accessing-properties!public! !
 propertiesCount!accessing-properties!private! !
 propertiesSize!accessing-properties!private! !
