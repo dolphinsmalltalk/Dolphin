@@ -45,17 +45,13 @@ testClassVars
 	self universalTestFor: classRefs!
 
 testInstVars
-	| refs writers readers classRefs |
+	| refs writers readers |
 	refs := VariableEnvironment referencesToInstanceVariable: 'refactorings' in: RefactoringManager.
 	writers := VariableEnvironment writersOfInstanceVariable: 'refactorings' in: RefactoringManager.
 	readers := VariableEnvironment readersOfInstanceVariable: 'refactorings' in: RefactoringManager.
-	classRefs := VariableEnvironment
-		referencesToClassVariable: 'ClassVariable'
-		in: self class.
 	self universalTestFor: refs.
 	self universalTestFor: writers.
 	self universalTestFor: readers.
-	self universalTestFor: classRefs.
 	self assert: refs numberSelectors equals: (writers | readers) numberSelectors! !
 !Refactory.Browser.Tests.VariableEnvironmentTest categoriesForMethods!
 classVariableReader!private! !
