@@ -19,17 +19,16 @@ testBadName
 		withMessage: '#''Obje ct'' is not a valid class name'!
 
 testExistingName
-	self
-		shouldFail: (ChildrenToSiblingsRefactoring
-					name: #'Core.Object'
-					class: LintRuleTestData
-					subclasses: {BasicLintRuleTestData. CompositeLintRuleTestData})
-			withMessage: 'Core.Object is a class or global variable';
-		shouldFail: (ChildrenToSiblingsRefactoring
-					name: 'Core.Processor'
-					class: LintRuleTestData
-					subclasses: {BasicLintRuleTestData. CompositeLintRuleTestData})
-			withMessage: 'Core.Processor is a class or global variable'!
+	self shouldFail: (ChildrenToSiblingsRefactoring
+				name: #'Core.Object'
+				class: LintRuleTestData
+				subclasses: {BasicLintRuleTestData. CompositeLintRuleTestData})
+		existingVariable: 'Core.Object'.
+	self shouldFail: (ChildrenToSiblingsRefactoring
+				name: 'Core.Processor'
+				class: LintRuleTestData
+				subclasses: {BasicLintRuleTestData. CompositeLintRuleTestData})
+		existingVariable: 'Core.Processor'!
 
 testInvalidSubclass
 	self shouldFail: (ChildrenToSiblingsRefactoring

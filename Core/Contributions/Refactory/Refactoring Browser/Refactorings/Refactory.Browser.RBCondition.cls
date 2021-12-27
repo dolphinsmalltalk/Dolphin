@@ -258,7 +258,7 @@ isStatic: aString in: aRBModel
 	^self new
 		type: {#isGlobal. aString}
 		block: [aRBModel definesStaticVariable: aString]
-		errorString: aString , ' is <1?:not >a class or global variable'!
+		errorString: aString , ' is <1?:not >an existing class or static variable'!
 
 isString: aString
 	"added by DMM  Dolphin's categories are *strings* NOT symbols.

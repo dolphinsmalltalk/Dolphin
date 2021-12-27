@@ -85,7 +85,7 @@ testExistingClassName
 				superclass: self class
 				subclasses: #()
 				category: #'Refactory-Testing')
-		withMessage: 'Core.Object is a class or global variable'!
+		existingVariable: 'Core.Object'!
 
 testExistingName
 	self shouldFail: (AddClassRefactoring
@@ -93,7 +93,7 @@ testExistingName
 				superclass: self class
 				subclasses: #()
 				category: #'Refactory-Testing')
-		withMessage: 'Core.Object is a class or global variable'!
+		existingVariable: 'Core.Object'!
 
 testExistingVariableName
 	self shouldFail: (AddClassRefactoring
@@ -101,7 +101,7 @@ testExistingVariableName
 				superclass: self class
 				subclasses: #()
 				category: #'Refactory-Testing')
-		withMessage: 'Kernel.SourceFiles is a class or global variable'!
+		existingVariable: 'Kernel.SourceFiles'!
 
 testModelAddClass
 	| refactoring newClass superClass subclass |
@@ -125,14 +125,13 @@ testModelAddClass
 	self assert: (newClass metaclass subclasses includes: subclass metaclass)!
 
 testModelExistingClassName
-	| refactoring |
-	refactoring := AddClassRefactoring
+	self shouldFail: (AddClassRefactoring
 				model: model
 				addClass: #Foo
 				superclass: Object
 				subclasses: #()
-				category: #'Refactory-Testing'.
-	self shouldFail: refactoring withMessage: 'Foo is a class or global variable'!
+				category: #'Refactory-Testing')
+		existingVariable: #Foo!
 
 testModelNonImmediateSubclass
 	| refactoring |

@@ -58,7 +58,7 @@ Core.Object subclass: #'Refactory.Browser.Tests.LintRuleTestData'
 	classConstants: {}!
 Core.Object subclass: #'Refactory.Browser.Tests.RefactoryTestDataApp'
 	instanceVariableNames: 'temporaryVariable'
-	classVariableNames: ''
+	classVariableNames: 'ClassVar1'
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!

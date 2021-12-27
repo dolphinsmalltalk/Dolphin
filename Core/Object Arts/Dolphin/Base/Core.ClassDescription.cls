@@ -910,7 +910,7 @@ resources
 resourceSelectorsDo: aMonadicValuable
 	| prefix |
 	prefix := UI.ResourceIdentifier.SelectorPrefix.
-	self instanceClass class
+	self metaclass
 		selectorsDo: [:each | (each beginsWith: prefix) ifTrue: [aMonadicValuable value: each]]!
 
 selectorsInCategory: category

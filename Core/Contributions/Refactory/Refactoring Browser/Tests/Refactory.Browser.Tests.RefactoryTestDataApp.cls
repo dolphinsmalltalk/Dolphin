@@ -2,7 +2,7 @@
 
 Core.Object subclass: #'Refactory.Browser.Tests.RefactoryTestDataApp'
 	instanceVariableNames: 'temporaryVariable'
-	classVariableNames: ''
+	classVariableNames: 'ClassVar1'
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -361,8 +361,11 @@ refersToClassUnqualifiedNameInArray
 refersToClassVariableFullyQualified
 	^Refactory.Browser.Tests.ClassToRename.ClassVar1!
 
-refersToClassVariableUnqualified
+refersToClassVariablePartiallyQualified
 	^ClassToRename.ClassVar1!
+
+refersToClassVariablePartiallyQualifiedBinding
+	^#{_.ClassToRename.ClassVar1} binding!
 
 refersToDolphinTestBindingFullyQualified
 	^#{Core.Tests.DolphinTest}!
@@ -384,6 +387,12 @@ refersToOtherClassPartiallyQualifiedName
 	"Definitely not a reference. Will not be renamed"
 
 	^#'Tools.ClassToRename'!
+
+refersToOwnClassVariable
+	^ClassVar1!
+
+refersToOwnClassVariableUnqualifiedBinding
+	^#{ClassVar1} value!
 
 release
 	self printString!
@@ -592,12 +601,15 @@ refersToClassUnqualifiedInArray!lint!public! !
 refersToClassUnqualifiedName!lint!public! !
 refersToClassUnqualifiedNameInArray!lint!public! !
 refersToClassVariableFullyQualified!lint!public! !
-refersToClassVariableUnqualified!lint!public! !
+refersToClassVariablePartiallyQualified!lint!public! !
+refersToClassVariablePartiallyQualifiedBinding!lint!public! !
 refersToDolphinTestBindingFullyQualified!lint!public! !
 refersToDolphinTestPartiallyQualifiedBindingMethodNamespace!lint!public! !
 refersToDolphinTestUnqualifiedNameMethodNamespace!lint!public! !
 refersToOtherClassPartiallyQualifiedBinding!performing!public! !
 refersToOtherClassPartiallyQualifiedName!performing!public! !
+refersToOwnClassVariable!lint!public! !
+refersToOwnClassVariableUnqualifiedBinding!lint!public! !
 release!lint!public! !
 rename:two:!public!test! !
 renameThisMethod:!public!test! !
@@ -639,8 +651,12 @@ yourselfNotUsed!lint!public! !
 
 comment
 	#rbFix.	"Added to test #overridesSpecialMessage"
-	^'Test class for Smalllint. Contains lots of smelly code'! !
+	^'Test class for Smalllint. Contains lots of smelly code'!
+
+initialize
+	ClassVar1 := 'ClassVar1 of RefactoryTestDataApp'! !
 !Refactory.Browser.Tests.RefactoryTestDataApp class categoriesForMethods!
 comment!accessing!public! !
+initialize!class initialization!public! !
 !
 

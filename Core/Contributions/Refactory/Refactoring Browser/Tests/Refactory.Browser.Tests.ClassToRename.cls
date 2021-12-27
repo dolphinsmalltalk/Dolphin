@@ -34,10 +34,14 @@ byteSize
 
 	^4!
 
+initialize
+	ClassVar1 := 'ClassVar1 of ClassToRename'!
+
 new
 	^super new initialize! !
 !Refactory.Browser.Tests.ClassToRename class categoriesForMethods!
 byteSize!accessing!private! !
+initialize!public! !
 new!performing!public! !
 !
 

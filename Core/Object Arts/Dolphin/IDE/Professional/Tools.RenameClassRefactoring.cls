@@ -25,12 +25,12 @@ Renaming a class in such a way as to change its `Namespace` can result in ambigu
 buildReferenceRewriter
 	| newUnqualified rewriter |
 	rewriter := ParseTreeRewriter new.
-	"Any real references to the variable will need to be rewritten using the minimally-qualified form that still binds to the same (renamed) variable."
+	"Any real references to the variable will need to be rewritten using a form that still binds to the same (renamed) variable."
 	rewriter
 		replace: '`identifier'
 		withValueFrom: [:variableNode | self rewriteVariable: variableNode]
 		when: [:variableNode | variableNode isBindingChanged].
-	"We rewrite any BindingReferences that bind to the renamed class before it is renamed, even if embedded in literal arrays. Symbols are not renamed."
+	"We rewrite any BindingReferences that bind to class before it is renamed, even if embedded in literal arrays. Symbols are not renamed."
 	rewriter
 		replace: '`#literal'
 		withValueFrom: [:literalNode | self rewriteLiteral: literalNode]
@@ -141,30 +141,13 @@ renameImports
 								addImport: (oldImport isPrivate ifTrue: [newPrivate] ifFalse: [newClassReference]);
 								removeImport: oldImport]]]!
 
-renameReferences: aCollectionOfRBMethods
-	"Private - Note that renaming a class will rename any Symbols that happen to be the name of the class, whether directly held literals or embedded in literal arrays. To minimize the chance of renaming some arbitrary symbol or qualified reference that is not intended to refer to the renamed class, we only rename those that would actually bind to the class from the scope of each method. Even so, this is not strictly a refactoring as one cannot be certain that an arbitrary Symbol in a method that happens to be the same as a class name in scope in the method is actually intended for use as the name of that class. This is one good reason to use qualified references (aka BindingReferences) instead, since these are intended as references to classes so if they are bound to the original class, we can be almost certain that they should also be renamed. "
+renameInboundReferences: aCollectionOfRBMethods
+	"Private - Note that renaming a class will no longer rename any Symbols that happen to be the name of the class, whether directly held literals or embedded in literal arrays. This was never strictly a refactoring as Symbols are not necessarily the names of program objects, so one cannot be certain that an arbitrary Symbol in a method that happens to be the same as a class name in scope in the method is actually intended for use as the name of that class. This is one good reason to use qualified references (aka BindingReferences) instead, since these are intended as references to classes so if they are bound to the original class, we can be certain that they should also be renamed. "
 
-	| rewriter checkedClasses |
-	"The old and new names are full names"
+	| rewriter |
 	rewriter := self buildReferenceRewriter.
 	self renameImports.
-	checkedClasses := IdentitySet new.
-	aCollectionOfRBMethods do: 
-			[:method |
-			| methodClass |
-			methodClass := method modelClass.
-			(checkedClasses includes: methodClass)
-				ifFalse: 
-					[(methodClass hierarchyDefinesVariable: newName)
-						ifTrue: 
-							[self refactoringError: '<1s> is already defined in hierarchy of <2p>'
-										<< {newName. method modelClass printString}].
-					"Must have visited all the superclasses and subclasses, or would not be here"
-					checkedClasses
-						add: methodClass;
-						addAll: methodClass allSuperclasses;
-						addAll: methodClass allSubclasses].
-			self convertMethod: method using: rewriter]!
+	aCollectionOfRBMethods do: [:method | self convertMethod: method using: rewriter]!
 
 rewriteLiteral: aStLiteralNode
 	aStLiteralNode isLiteralArray ifTrue: [^self rewriteLiteralArray: aStLiteralNode].
@@ -177,12 +160,12 @@ rewriteLiteralArray: aStLiteralArrayNode
 		contents: (aStLiteralArrayNode contents collect: [:each | self rewriteLiteral: each])!
 
 rewriteQualifiedReference: aStQualifiedReferenceNode
-	| binding pathString path i methodNode |
-	binding := aStQualifiedReferenceNode binding.
-	binding == classBinding
+	| targetBinding pathString path i methodNode |
+	targetBinding := aStQualifiedReferenceNode binding.
+	targetBinding == classBinding
 		ifFalse: 
 			[^aStQualifiedReferenceNode isBindingChanged
-				ifTrue: [StQualifiedReferenceNode pathString: binding fullName start: nil]
+				ifTrue: [StQualifiedReferenceNode pathString: targetBinding fullName start: nil]
 				ifFalse: [aStQualifiedReferenceNode copy]].
 	aStQualifiedReferenceNode isRelative
 		ifFalse: 
@@ -195,7 +178,7 @@ rewriteQualifiedReference: aStQualifiedReferenceNode
 	pathString := ''.
 	
 	[pathString := (path at: i) , pathString.
-	(methodNode fullBindingFor: pathString) == classBinding
+	(methodNode fullBindingFor: pathString) == targetBinding
 		ifTrue: 
 			[^StQualifiedReferenceNode
 				pathString: (i == path size ifTrue: [pathString] ifFalse: ['_.' , pathString])
@@ -225,19 +208,15 @@ rewriteSymbolicReferencesToClass
 rewriteVariable: aStVariableNode
 	^aStVariableNode binding == classBinding
 		ifTrue: 
-			[| unqualifiedName methodNode |
-			"The static variable is the renamed class' binding"
-			methodNode := aStVariableNode methodNode.
+			[| unqualifiedName |
+			"The static variable is the renamed class' binding - try and use the unqualified name if we can (iff it binds to the class from the method)"
 			unqualifiedName := class unqualifiedName.
-			StVariableNode named: (methodNode environment == class environment
-						ifTrue: 
-							["The method's environment is the same, we can definitely use the unqualified name"
-							unqualifiedName]
+			"Even if the method's environment is the same, it may be shadowed by a same named class variable in the referencing class, so we have to check."
+			StVariableNode named: ((aStVariableNode methodNode fullBindingFor: unqualifiedName) == classBinding
+						ifTrue: [unqualifiedName]
 						ifFalse: 
-							["We can also use the unqualified name if it can be bound using the unqualified name from the method."
-							(methodNode fullBindingFor: unqualifiedName) == classBinding
-								ifTrue: [unqualifiedName]
-								ifFalse: [class fullName]])]
+							["We don't bother to try and find a partially qualified name that will bind correctly, but just use the fully-qualified name"
+							class fullName])]
 		ifFalse: 
 			["The static variable is not the renamed class' binding, but we may need to rewrite it if it can no longer be resolved using an unqualified or partially qualified name"
 			aStVariableNode isBindingChanged
@@ -262,7 +241,7 @@ transform
 	self model
 		renameClass: class
 		to: newName
-		around: [:methods | self renameReferences: methods]! !
+		around: [:inbound | self renameInboundReferences: inbound]! !
 !Tools.RenameClassRefactoring categoriesForMethods!
 buildReferenceRewriter!private!transforming! !
 checkForSymbolicReferences!private!transforming! !
@@ -272,7 +251,7 @@ getOptionIgnoreSymbolicClassReferences:!options!public! !
 isImpactedLiteral:!helpers!private! !
 preconditions!accessing!public! !
 renameImports!private!transforming! !
-renameReferences:!private!transforming! !
+renameInboundReferences:!private!transforming! !
 rewriteLiteral:!private!transforming! !
 rewriteLiteralArray:!private!transforming! !
 rewriteQualifiedReference:!private!transforming! !

@@ -370,6 +370,9 @@ setupVariableTypesFor: aRefactoring toReturn: anObject
 shouldAbort: refactoring
 	self assert: ([self executeRefactoring: refactoring. false] on: Refactoring abortSignal do: [:ex | true]) description: 'Refactoring failed to abort'!
 
+shouldFail: aRefactoring existingVariable: aString
+	self shouldFail: aRefactoring withMessage: '<1s> is an existing class or static variable' << aString!
+
 shouldFail: aRefactoring withMessage: aString
 	| exception |
 	exception := 
@@ -399,6 +402,7 @@ setupSelfArgumentNameFor:toReturn:!public!set up! !
 setupVariableToMoveToFor:toReturn:!public!set up! !
 setupVariableTypesFor:toReturn:!public!set up! !
 shouldAbort:!helpers!private! !
+shouldFail:existingVariable:!helpers!private! !
 shouldFail:withMessage:!helpers!private! !
 shouldWarn:!helpers!private! !
 tearDown!public!set up! !
