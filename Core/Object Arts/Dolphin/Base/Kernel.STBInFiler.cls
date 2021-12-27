@@ -256,7 +256,7 @@ readClassData:!helpers!private! !
 readClassLocator:!helpers!private! !
 readInteger!helpers!private! !
 readMap!accessing!private! !
-readObjectOfClass:format:!operations!private! !
+readObjectOfClass:format:!operations!public! !
 readObjectWithPrefix:!accessing!private! !
 readVersion!initializing!private! !
 register:!helpers!private! !

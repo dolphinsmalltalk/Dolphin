@@ -57,15 +57,6 @@ isVariable
 
 	^isVariable!
 
-prefix: anSTBPrefix
-	"Initialise the receiver from the details contained in anSTBPrefix."
-
-	| aBoolean |
-	instSize := anSTBPrefix instSize.
-	aBoolean := anSTBPrefix isBytes.
-	self isBytes: aBoolean.
-	isVariable := anSTBPrefix isVariable!
-
 version
 	"Answer the receiver's version inst var."
 
@@ -88,7 +79,6 @@ isBytes!public!testing! !
 isBytes:!accessing!public! !
 isUpgrading!public!testing! !
 isVariable!public!testing! !
-prefix:!accessing!public! !
 version!accessing!public! !
 version:prefix:filer:!accessing!private! !
 !
