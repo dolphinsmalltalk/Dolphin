@@ -55,8 +55,8 @@ testAddRemove
 			classes := objects copyFrom: 1 to: n.
 			classes do: [:each | self treeModel add: each asChildOf: each superclass].
 			classes do: [:each | self assertContains: each].
-			classes reverse do: [:each | self treeModel remove: each].
-			classes reverse do: [:each | self denyContains: each]].
+			classes reverseDo: [:each | self treeModel remove: each].
+			classes reverseDo: [:each | self denyContains: each]].
 	self assert: self treeModel isEmpty.
 	self assert: presenter model isEmpty.
 	"Test removal of a branch with children"

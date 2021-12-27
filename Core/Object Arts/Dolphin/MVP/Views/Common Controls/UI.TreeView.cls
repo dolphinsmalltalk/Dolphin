@@ -328,6 +328,15 @@ expandHandle: aHandle
 
 !
 
+findNode: anObject
+	^(self handleFromObject: anObject)
+		ifNil: 
+			["Maybe the object does not exist in the model, so lets check"
+			(self model includes: anObject) ifFalse: [^nil].
+			"The object is not yet expanded in the tree"
+			(self model allParentsOf: anObject) do: [:each | self expand: each].
+			self handleFromObject: anObject]!
+
 forecolor: aColorOrNil 
 	"Sets the foreground colour of the receiver to aColorOrNil.
 	If aColorOrNil is nil then use the default color"
@@ -950,16 +959,7 @@ selection: anObject ifAbsent: exceptionHandler
 
 	| nodeHandle |
 	anObject isNil ifTrue: [^self resetSelection].
-	nodeHandle := (self handleFromObject: anObject)
-				ifNil: 
-					["Maybe the object does not exist in the model, so lets check"
-					(self model includes: anObject) ifFalse: [^exceptionHandler cull: anObject].
-					"The object is not yet expanded in the tree"
-					(self model allParentsOf: anObject) do: [:each | self expand: each].
-					(self handleFromObject: anObject)
-						ifNil: 
-							["This may occur if, for example, #= not correctly implemented on objects."
-							^exceptionHandler cull: anObject]].
+	nodeHandle := (self findNode: anObject) ifNil: [^exceptionHandler cull: anObject].
 	^(self selectionByIndex: nodeHandle ifAbsent: [])
 		ifNil: [exceptionHandler cull: anObject]
 		ifNotNil: [anObject]!
@@ -1286,6 +1286,7 @@ expand:!expanding/collapsing!public! !
 expandAll!commands!public! !
 expandAll:!expanding/collapsing!public! !
 expandHandle:!expanding/collapsing!private! !
+findNode:!public!selection! !
 forecolor:!accessing!public! !
 getEditControl!accessing!private! !
 getIndent!accessing!private! !

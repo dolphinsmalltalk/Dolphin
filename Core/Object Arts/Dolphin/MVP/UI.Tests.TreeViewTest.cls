@@ -11,6 +11,9 @@ UI.Tests.TreeViewTest comment: ''!
 !UI.Tests.TreeViewTest categoriesForClass!Unclassified! !
 !UI.Tests.TreeViewTest methodsFor!
 
+assertContains: anObject
+	self assertNotNil: (presenter findNode: anObject)!
+
 classToTest
 	^TreeView!
 
@@ -126,6 +129,7 @@ testSetTextBlockDoesNotAffectSelection
 			super testSetTextBlockDoesNotAffectSelection.
 			presenter view model clear]! !
 !UI.Tests.TreeViewTest categoriesForMethods!
+assertContains:!helpers!private! !
 classToTest!helpers!private! !
 getItemText:!helpers!private! !
 paintTree!helpers!private! !
