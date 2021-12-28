@@ -50,6 +50,12 @@ Kernel.SharedPool subclass: #'OS.ListBoxConstants'
 		'LB_SETSEL' -> 16r185.
 		'LB_SETTABSTOPS' -> 16r192.
 		'LB_SETTOPINDEX' -> 16r197.
+		'LBN_DBLCLK' -> 16r2.
+		'LBN_ERRSPACE' -> -16r2.
+		'LBN_KILLFOCUS' -> 16r5.
+		'LBN_SELCANCEL' -> 16r3.
+		'LBN_SELCHANGE' -> 16r1.
+		'LBN_SETFOCUS' -> 16r4.
 		'LBS_DISABLENOSCROLL' -> 16r1000.
 		'LBS_EXTENDEDSEL' -> 16r800.
 		'LBS_HASSTRINGS' -> 16r40.

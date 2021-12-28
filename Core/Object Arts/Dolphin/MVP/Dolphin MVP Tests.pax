@@ -41,6 +41,7 @@ package setClassNames: #(
 	#{UI.Tests.GridLayoutTest}
 	#{UI.Tests.ImageViewAbstractTest}
 	#{UI.Tests.ImageViewTest}
+	#{UI.Tests.InplaceTextEditorTest}
 	#{UI.Tests.KeyboardTest}
 	#{UI.Tests.LayoutManagerTest}
 	#{UI.Tests.LinkButtonTest}
@@ -107,6 +108,7 @@ package setPrerequisites: #(
 	'Models\Tree\Dolphin Folder Tree Model'
 	'Graphics\Dolphin GDI Graphics'
 	'Presenters\Image\Dolphin Image Presenter'
+	'Presenters\Prompters\Dolphin In-place Text Editor'
 	'..\Base\Dolphin Legacy Date & Time'
 	'Models\List\Dolphin List Models'
 	'Presenters\List\Dolphin List Presenter'
@@ -420,6 +422,12 @@ UI.Tests.PresenterTest subclass: #'UI.Tests.DifferencesPresenterTest'
 	classConstants: {}!
 UI.Tests.PresenterTest subclass: #'UI.Tests.ImageViewAbstractTest'
 	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.Tests.PresenterTest subclass: #'UI.Tests.InplaceTextEditorTest'
+	instanceVariableNames: 'clipboard savedText'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

@@ -84,17 +84,12 @@ createView: aResourceNameString
 	self view: (self class loadViewResource: aResourceNameString inContext: contextView).
 	^self view!
 
-editBox
-	"Private - Answer the TextEdit control"
-
-	^self view!
-
 findDetails
 	^nil!
 
-font: aFont 
+font: aFont
 	self view font: aFont.
-	maxCharWidth := self view canvas textMetrics tmMaxCharWidth!
+	maxCharWidth := nil!
 
 getHintCaption: aValidationResult
 	^aValidationResult caption
@@ -128,7 +123,8 @@ initialize
 
 	super initialize.
 	self ownerView: View focus.
-	confirmed := false!
+	confirmed := false.
+	textRectangle := 0@0 extent: 100@20!
 
 isConfirmed
 	"Answer true if the receiver has been confirmed and changes have been applied to the
@@ -139,6 +135,9 @@ isConfirmed
 
 isInputValid
 	^self model isValid!
+
+maxCharWidth
+	^maxCharWidth ifNil: [maxCharWidth := self view canvas textMetrics tmMaxCharWidth]!
 
 model: aValueModel 
 	"Set the model of the receiver to be aValueModel. Register with its #valueChanged event"
@@ -195,6 +194,7 @@ onValueChanged
 
 onViewOpened
 	super onViewOpened.
+	self maxCharWidth.
 	self setInitialFocus!
 
 ownerView
@@ -202,6 +202,21 @@ ownerView
 
 ownerView: aView 
 	ownerView := aView!
+
+pasteClipboard
+	"Paste the clipboard text into the receiver's edit box."
+
+	"Implementation note: We have to resize the control in advance to be of sufficient size to receive the pasted text, and any existing text retained, or it may be truncated."
+
+	| insertionRange pastedText currentText newText |
+	currentText := view plainText.
+	insertionRange := view selectionRange.
+	pastedText := Clipboard current getTextOrEmpty.
+	newText := (currentText copyFrom: 1 to: insertionRange start - 1) , pastedText
+				, (currentText copyFrom: insertionRange stop + 1 to: currentText size).
+	view
+		extent: (self requiredExtent: newText);
+		pasteClipboard!
 
 performAction
 	| query |
@@ -220,22 +235,38 @@ queryCommand: aCommandQuery
 			^true].
 	^super queryCommand: aCommandQuery!
 
-requiredExtent
+requiredExtent: aString
 	| min preferred borders |
 	borders := self implicitBorder.
-	preferred := self editBox calculateExtent 
-				+ ((maxCharWidth + (borders left + borders right)) @ (borders top + borders bottom)).
+	preferred := (view extentForText: aString)
+				+ ((self maxCharWidth + (borders left + borders right)) @ (borders top + borders bottom)).
 	min := minExtent ifNil: [minExtent := preferred].
 	^min max: preferred!
 
 resizeToFit
-	self view extent: self requiredExtent!
+	view extent: (self requiredExtent: view plainText)!
 
 runModalInProcessLoop
 	^SessionManager inputState loopWhile: [self isOpen]!
 
 setInitialFocus
-	self editBox setFocus!
+	self view setFocus!
+
+show
+	| pos offset preferred |
+	"Adjust the position of the dialog to be over the edited text."
+	self view
+		selectAll;
+		setMarginWidths: #(0 0).
+	minExtent := nil.
+	self resizeToFit.
+	preferred := self view calculateExtent.
+	offset := (preferred - textRectangle extent) // 2 + self implicitBorder left.
+	pos := textRectangle origin - offset.
+	self view
+		position: pos;
+		layout;
+		show!
 
 showModal
 	"Show the receiver's view as a modal 'dialog'. Answer the revised text, or the original text if cancelled."
@@ -245,22 +276,8 @@ showModal
 
 showModalView
 	
-	["Adjust the position of the dialog to be over the edited text."
-	| offset preferred pos |
-	(self editBox)
-		selectAll;
-		setMarginWidths: #(0 0).
-	minExtent := nil.
-	self resizeToFit.
-	preferred := self editBox calculateExtent.
-	offset := (preferred - textRectangle extent) // 2 + self implicitBorder left.
-	pos := textRectangle origin - offset.
-	(self view)
-		position: pos;
-		layout;
-		show.
-	self runModalInProcessLoop] 
-			ensure: [self view basicDestroy]!
+	[self show.
+	self runModalInProcessLoop] ensure: [self view basicDestroy]!
 
 showValidationResult: aValidationResult
 	self closeBubble.
@@ -318,7 +335,6 @@ cancel!commands!public! !
 closeBubble!helpers!private! !
 createSchematicWiring!initializing!public! !
 createView:!operations!private! !
-editBox!helpers!private! !
 findDetails!public!searching & replacing! !
 font:!initializing!public! !
 getHintCaption:!helpers!private! !
@@ -329,6 +345,7 @@ implicitBorder!constants!private! !
 initialize!initializing!private! !
 isConfirmed!public!testing! !
 isInputValid!private!testing! !
+maxCharWidth!accessing!private! !
 model:!accessing!public! !
 ok!commands!public! !
 onFocusLost!event handling!private! !
@@ -339,12 +356,14 @@ onValueChanged!event handling!public! !
 onViewOpened!event handling!private! !
 ownerView!accessing!public! !
 ownerView:!accessing!public! !
+pasteClipboard!commands!public! !
 performAction!operations!public! !
 queryCommand:!commands!private! !
-requiredExtent!helpers!private! !
+requiredExtent:!helpers!private! !
 resizeToFit!helpers!private! !
 runModalInProcessLoop!helpers!private! !
 setInitialFocus!operations!public! !
+show!helpers!public! !
 showModal!public!realizing/unrealizing! !
 showModalView!helpers!private! !
 showValidationResult:!helpers!private! !
@@ -376,10 +395,10 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.TextEdit) 34 16 nil nil 34 2 8 1149304832 1 416 918598 2 ##(UI.ValueHolder) nil false 1638406 ##(Kernel.EqualitySearchPolicy) nil 917510 ##(Graphics.Color) #window nil 1543 nil nil nil 416 nil 8 1920675248 1049094 ##(UI.NullConverter) nil 8 '' 65 1310982 ##(Core.MessageSequence) 138 144 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 754 191 41 416 706 #text: 34 1 8 'Text to be edited' 416 706 #setMarginWidths: 34 1 8 #(2 2) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 94 12 0 0 30 0 0 0] 8 #() 754 193 193 nil 27)! !
+	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.TextEdit) 34 16 nil nil 34 2 8 1149304832 1 416 918598 2 ##(UI.ValueHolder) nil false 1769478 ##(Kernel.EqualitySearchPolicy) nil 917510 ##(Graphics.Color) #window nil 1543 nil nil nil 416 nil 8 1845370624 1049094 ##(UI.NullConverter) nil 8 '' 65 1310982 ##(Core.MessageSequence) 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 12287 21 738 191 41 416 690 #text: 34 1 8 'Text to be edited' 416 690 #setMarginWidths: 34 1 8 #(2 2) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 94 24 0 0 30 0 0 0] 8 #() 738 193 193 nil 27 )! !
 !UI.InplaceTextEditor class categoriesForMethods!
 createOn:!public! !
 defaultModel!models!public! !

@@ -3924,26 +3924,15 @@ wmCommand: message wParam: wParam lParam: lParam
 		Pull down menu commmand		-	Pass onto focus window via #onCommand:
 		Context menu command			- 	Pass onto receiver window via #onCommand:"
 
-	| id |
-	id := wParam lowWord.
 	^lParam isNull
 		ifTrue: 
-			[| foundCommand |
-			"Check for context menus"
-			(foundCommand := CommandDescription withId: id ifAbsent: []) notNil
-				ifTrue: [self onCommand: foundCommand]
-				ifFalse: 
-					["accept the default processing"
-					]]
+			["Check for context menus"
+			(CommandDescription withId: wParam lowWord ifAbsent: nil)
+				ifNotNil: [:command | self onCommand: command]]
 		ifFalse: 
-			[| control |
-			"Command notification from a control."
-			control := self class withHandle: lParam.
-			control notNil
-				ifTrue: [control command: wParam highWord id: id]
-				ifFalse: 
-					["accept the default processing"
-					]]!
+			["Command notification from a control."
+			(self class withHandle: lParam)
+				ifNotNil: [:control | control command: wParam highWord id: wParam lowWord]]!
 
 wmContextMenu: message wParam: wParam lParam: lParam
 	"Private - Shows and tracks a context menu for the receiver"
