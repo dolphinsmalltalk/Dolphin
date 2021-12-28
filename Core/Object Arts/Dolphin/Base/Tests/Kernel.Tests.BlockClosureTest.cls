@@ -235,6 +235,11 @@ testEqualityOfBlocksFromSameMethod
 	"Again, perhaps these should be considered equal, but more trouble than it's worth."
 	self deny: [temp] equals: [temp]!
 
+testExceptionInEnsure
+	| result |
+	result := [[1+2] ensure: [Object new blah. self fail: 'Should not get here']. self fail: 'Should not get here either'] on: MessageNotUnderstood do: [:ex | ex return: 'success']. 
+	self assert: result equals: 'success'!
+
 testNesting
 	| a b c |
 	a := 
@@ -344,6 +349,7 @@ testCullCullCullCull!public!tests / evaluating! !
 testEmptyBlock!public!unit tests! !
 testEnsure!public!unit tests! !
 testEqualityOfBlocksFromSameMethod!public!unit tests! !
+testExceptionInEnsure!public!unit tests! !
 testNesting!public!unit tests! !
 testNoArguments!public!unit tests! !
 testOneArgument!public!unit tests! !

@@ -242,10 +242,7 @@ ensure: terminationBlock
 	See also #ifCurtailed:"
 
 	| answer |
-	answer := self valueOnUnwind: 
-					[:retValue :retFrame |
-					terminationBlock value.
-					Processor returnValue: retValue toFrame: retFrame].
+	answer := self ifCurtailed: terminationBlock.
 	terminationBlock value.
 	^answer!
 
