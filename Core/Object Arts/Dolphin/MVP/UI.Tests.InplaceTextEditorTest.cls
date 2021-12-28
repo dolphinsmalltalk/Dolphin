@@ -16,7 +16,7 @@ classToTest
 
 setUp
 	clipboard := Clipboard current.
-	savedText := clipboard getTextOrEmpty.
+	savedText := clipboard getTextIfNone: nil.
 	presenter := self classToTest createOn: 'a 🐬' asValue!
 
 tearDown
