@@ -2692,6 +2692,12 @@ hiddenLineColor: aColor
 
 	self setOrResetElement: SC_ELEMENT_HIDDEN_LINE color: aColor!
 
+hideCaretWhile: aNiladicBlock
+	| caretStyle |
+	caretStyle := self sciGetCaretStyle.
+	self sciSetCaretStyle: CARETSTYLE_INVISIBLE.
+	^aNiladicBlock ensure: [self sciSetCaretStyle: caretStyle]!
+
 hideIndicators
 	"Private - Reconfigure all indicator styles to hidden apart from the default 3 pre-configured styles."
 
@@ -10253,6 +10259,7 @@ hasVisibleLineEndings!**auto generated**!line endings!public!scintilla interface
 hasVisibleLineEndings:!**auto generated**!line endings!public!scintilla interface!testing! !
 hiddenLineColor!element colors!public! !
 hiddenLineColor:!element colors!public! !
+hideCaretWhile:!caret!public! !
 hideIndicators!helpers!indicators!private! !
 hideLinesFrom:to:!**auto generated**!folding!public!scintilla interface! !
 hideSelection:!**auto generated**!public!scintilla interface!selection! !
