@@ -161,6 +161,7 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Kernel.STBFiler class} #correspondingTestCase)
 	#(#{OS.CRTLibrary} #_chmod:pmode:)
 	#(#{OS.CRTLibraryNonBlocking} #_chmod:pmode:)
 	#(#{Tools.SmalltalkSystem} #baselinedSlowTests)
@@ -1133,6 +1134,14 @@ Smalltalk.DolphinTest := Core.Tests.DolphinTest!
 
 
 "Loose Methods"!
+
+!Kernel.STBFiler class methodsFor!
+
+correspondingTestCase
+	^Tests.STBTest! !
+!Kernel.STBFiler class categoriesForMethods!
+correspondingTestCase!public! !
+!
 
 !OS.CRTLibrary methodsFor!
 

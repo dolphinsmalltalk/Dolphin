@@ -16,9 +16,7 @@ Kernel.STBInFiler comment: ''!
 basicNext
 	"Private - Answer the next object from the receiver's stream."
 
-	| prefix |
-	prefix := self readInteger.
-	^self readObjectWithPrefix: prefix!
+	^self readObjectWithPrefix: self readInteger!
 
 classAt: anInteger
 	"Private - Answer the map value for a class at anInteger. If anInteger is zero then answer nil.
@@ -143,37 +141,42 @@ readMap
 	^readMap!
 
 readObjectOfClass: aClass format: anSTBClassConversion
-	"Private - Read the stream for the data to create an instance of aClass."
+	"Read the stream for the data to create an instance of aClass."
 
-	| basicSize fullSize newObject variable |
-	variable := aClass isVariable.
-	basicSize := (variable or: [self version < 3]) ifTrue: [self readInteger] ifFalse: [0].
+	| basicSize newObject |
+	basicSize := self sizeForNext: aClass.
 	"Create a new object of sufficient size to hold the stored data."
-	anSTBClassConversion isNil
-		ifTrue: 
-			["The object is of the current format.
-			Create an instance of the appropriate class."
-			fullSize := aClass instSize + basicSize.
-			newObject := variable ifTrue: [aClass basicNew: basicSize] ifFalse: [aClass basicNew]]
-		ifFalse: 
-			["The object is of an old format.
-			Create an Array or ByteArray to hold the stored data. This is
-			passed to the converter block which answers an instance of the
-			real class initialised from it."
-			fullSize := anSTBClassConversion instSize + basicSize.
-			newObject := anSTBClassConversion dataClass basicNew: fullSize].
-	"Register the new object before reading its instance variables, in case of circular references"
-	self register: newObject.
-
-	"Read the object's instance data."
-	aClass isPointers
-		ifTrue: [1 to: fullSize do: [:i | newObject instVarAt: i put: self basicNext]]
-		ifFalse: 
-			["Many of these objects will be Strings, so some optimization may be possible"
-			1 to: fullSize do: [:i | newObject basicAt: i put: stream next]].
-	anSTBClassConversion notNil
-		ifTrue: 
-			["Initialise a new instance from the old format object data and become it."
+	anSTBClassConversion
+		ifNil: 
+			["The object is of the current format."
+			aClass isPointers
+				ifTrue: 
+					["Create an instance of the appropriate class."
+					newObject := basicSize == 0 ifTrue: [aClass basicNew] ifFalse: [aClass basicNew: basicSize].
+					"Register the new object before reading its instance variables, in case of circular references"
+					self register: newObject.
+					1 to: aClass instSize + basicSize do: [:i | newObject instVarAt: i put: self basicNext]]
+				ifFalse: 
+					["Similarly for byte objects, but cannot have any instance variables"
+					newObject := aClass basicNew: basicSize.
+					self register: newObject.
+					1 to: basicSize do: [:i | newObject basicAt: i put: stream next]]]
+		ifNotNil: 
+			[| writeStream |
+			"The object is of an old format: Create an Array or ByteArray into which the stored instance variables are deserialized. This is passed to the converter block which answers an instance of the real class initialised from the array."
+			aClass isPointers
+				ifTrue: 
+					[| fullSize |
+					newObject := Array new: (fullSize := anSTBClassConversion instSize + basicSize).
+					self register: newObject.
+					writeStream := WriteStream on: newObject.
+					fullSize timesRepeat: [writeStream nextPut: self basicNext]]
+				ifFalse: 
+					[newObject := ByteArray new: basicSize.
+					self register: newObject.
+					writeStream := WriteStream on: newObject.
+					basicSize timesRepeat: [writeStream nextPut: stream next]].
+			"Initialise a new instance from the old format object data and become it."
 			newObject become: (anSTBClassConversion converterBlock value: newObject)].
 	^newObject!
 
@@ -236,7 +239,10 @@ resetAndValidateStream
 						with: self class signature asAnsiString)]!
 
 setRefOffset: anInteger
-	readMap setSize: anInteger! !
+	readMap setSize: anInteger!
+
+sizeForNext: aClass
+	^(aClass isVariable or: [version < 3]) ifTrue: [stream nextSDWORD] ifFalse: [0]! !
 !Kernel.STBInFiler categoriesForMethods!
 basicNext!accessing!private! !
 classAt:!accessing!private! !
@@ -263,6 +269,7 @@ register:!helpers!private! !
 reset!initializing!private! !
 resetAndValidateStream!initializing!private! !
 setRefOffset:!accessing!private! !
+sizeForNext:!operations!private! !
 !
 
 !Kernel.STBInFiler class methodsFor!

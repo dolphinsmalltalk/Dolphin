@@ -296,6 +296,38 @@ testRecursiveBlock
 	self assert: factorial size equals: 0.
 	self assert: (factorial value: 6) equals: 720!
 
+testStbUpgradeFromVersion0
+	"An STB'd block from Dolphin 5, before Dolphin had full block closures, will get rewritten to the new byte code set (see BytecodeRewriter). It won't be very efficient, but it should work as it did before."
+
+	| block |
+	"[:a | ([:b | a printString, ': ', b factorial printString ] value: a)]"
+	block := Object
+				fromBinaryStoreBytes: #[33 83 84 66 32 48 32 6 4 12 0 66 108 111 99 107 67 108 111 115 117 114 101 0 0 0 0 38 3 13 0 77 101 116 104 111 100 67 111 110 116 101 120 116 2 0 0 0 1 0 0 0 38 5 18 0 67 111 109 112 105 108 101 100 69 120 112 114 101 115 115 105 111 110 4 0 0 0 129 2 0 0 78 2 13 0 1 0 0 0 83 84 66 67 108 97 115 115 80 114 111 120 121 0 0 0 0 54 0 6 0 83 116 114 105 110 103 7 0 0 0 68 111 108 112 104 105 110 210 0 0 0 15 0 0 0 85 110 100 101 102 105 110 101 100 79 98 106 101 99 116 210 0 0 0 4 0 0 0 100 111 73 116 38 0 5 0 65 114 114 97 121 2 0 0 0 210 0 0 0 72 0 0 0 91 58 97 32 124 32 40 91 58 98 32 124 32 97 32 112 114 105 110 116 83 116 114 105 110 103 44 32 39 58 32 39 44 32 98 32 102 97 99 116 111 114 105 97 108 32 112 114 105 110 116 83 116 114 105 110 103 32 93 32 118 97 108 117 101 58 32 97 41 93 13 10 18 1 0 0 1 0 0 0 14 2 18 0 83 84 66 67 111 108 108 101 99 116 105 111 110 80 114 111 120 121 0 0 0 0 186 0 0 0 0 0 0 0 224 0 0 0 210 0 0 0 14 0 0 0 80 111 111 108 68 105 99 116 105 111 110 97 114 121 18 1 0 0 1 0 0 0 6 2 11 0 65 115 115 111 99 105 97 116 105 111 110 0 0 0 0 210 0 0 0 5 0 0 0 98 108 111 99 107 82 0 0 0 0 0 0 0 114 0 0 0 2 0 0 0 1 0 0 0 146 0 0 0 2 0 0 0 129 2 0 0 192 0 0 0 210 0 0 0 4 0 0 0 100 111 73 116 18 1 0 0 2 0 0 0 210 0 0 0 57 0 0 0 98 108 111 99 107 32 58 61 32 91 58 105 110 116 32 124 32 40 91 58 105 110 116 32 124 32 105 110 116 32 102 97 99 116 111 114 105 97 108 93 32 118 97 108 117 101 58 32 105 110 116 41 32 43 32 49 93 18 1 0 0 1 0 0 0 96 1 0 0 54 0 9 0 66 121 116 101 65 114 114 97 121 21 0 0 0 251 1 13 0 89 251 1 4 0 90 18 158 106 17 143 98 106 210 1 100 105 14 1 14 0 83 84 66 83 121 109 98 111 108 80 114 111 120 121 0 0 0 0 210 0 0 0 9 0 0 0 102 97 99 116 111 114 105 97 108 176 1 0 0 0 0 0 0 7 0 0 0 7 0 0 0 3 0 0 0 11 0 0 0 240 1 0 0 66 2 0 0 24 0 0 0 251 1 18 0 89 251 1 10 0 90 17 158 30 176 18 161 158 176 106 17 143 106 100 105 106 2 0 0 0 0 0 0 210 0 0 0 11 0 0 0 112 114 105 110 116 83 116 114 105 110 103 210 0 0 0 2 0 0 0 58 32 106 2 0 0 0 0 0 0 210 0 0 0 1 0 0 0 44 112 2 0 0 0 0 0 0 21 0 0 0 21 0 0 0 3 0 0 0 11 0 0 0 160 0 0 0].
+	self assert: block method disassembly
+		equals: 'Normal, 0 args, 2 env temps, 4 literals, needs context
+
+	1	Block Copy, 1 args, needs self, needs outer, skip +28 to 36
+	8	Push Temp[0]
+	9	Pop Outer[1] Temp[0]
+	11	Block Copy, 1 args, needs self, needs outer, skip +14 to 32
+	18	Push Temp[0]
+	19	Pop Outer[1] Temp[1]
+	21	Push Outer[1] Temp[0]
+	23	Send[0]: #printString with 0 args
+	24	Push Const[1]: '': ''
+	25	Send[2]: #, with 1 args
+	26	Push Outer[1] Temp[1]
+	28	Send[3]: #factorial with 0 args
+	29	Send[0]: #printString with 0 args
+	30	Send[2]: #, with 1 args
+	31	Return From Block
+	32	Push Outer[1] Temp[0]
+	34	Special Send #value:
+	35	Return From Block
+	36	Dup
+	37	Return '.
+	self assert: (block value: 9) equals: '9: 362880'!
+
 testValueWithArguments
 	| hash |
 	hash := self identityHash.
@@ -354,6 +386,7 @@ testNesting!public!unit tests! !
 testNoArguments!public!unit tests! !
 testOneArgument!public!unit tests! !
 testRecursiveBlock!public!unit tests! !
+testStbUpgradeFromVersion0!public!unit tests! !
 testValueWithArguments!public!unit tests! !
 !
 

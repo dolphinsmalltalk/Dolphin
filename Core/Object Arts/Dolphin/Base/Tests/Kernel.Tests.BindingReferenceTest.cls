@@ -98,6 +98,8 @@ testLiteral
 	"Absolute references always have nil context"
 	subject := #{Core.Object}.
 	self deny: subject isRelative.
+	self assert: subject isLiteral.
+	self assert: subject isSelfEvaluating.
 	self assertIsNil: subject scope.
 	self assert: subject bindingScope identicalTo: Smalltalk.
 	self assert: subject valueOrNil identicalTo: Object!

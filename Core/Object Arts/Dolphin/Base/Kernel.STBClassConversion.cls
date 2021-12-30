@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.STBClassConversion'
-	instanceVariableNames: 'version instSize dataClass isVariable converterBlock filer'
+	instanceVariableNames: 'version instSize isBytes isVariable converterBlock filer'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -33,9 +33,6 @@ converterBlock: aBlock
 
 	converterBlock := aBlock!
 
-dataClass
-	^dataClass!
-
 instSize
 	"Answer the receiver's instSize inst var."
 
@@ -44,10 +41,10 @@ instSize
 isBytes
 	"Answer whether the target class is a byte class."
 
-	^dataClass == ByteArray!
+	^isBytes!
 
 isBytes: aBoolean
-	dataClass := aBoolean ifTrue: [ByteArray] ifFalse: [Array]!
+	isBytes := aBoolean!
 
 isUpgrading
 	^filer isUpgrading!
@@ -73,7 +70,6 @@ version: versionInteger prefix: anInteger filer: anSTBInFiler
 !Kernel.STBClassConversion categoriesForMethods!
 converterBlock!accessing!public! !
 converterBlock:!accessing!public! !
-dataClass!accessing!public! !
 instSize!accessing!public! !
 isBytes!public!testing! !
 isBytes:!accessing!public! !

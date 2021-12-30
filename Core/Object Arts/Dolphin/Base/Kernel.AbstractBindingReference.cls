@@ -186,7 +186,9 @@ isDefined
 isLiteral
 	"Answer whether or not the receiver has a literal representation (probably its printString) which is directly recognised by the Compiler"
 
-	^true!
+	"Although relative binding references can be expressed as literals, two compiled literals in different scopes may bind to different variables. The general expectation of literals is that two instances with the same literal representation will compile up into two equal, though not necessarily identical, objects, which is generally not the case for relative binding references."
+
+	^self isRelative not!
 
 isMeta
 	"Is this a meta binding reference?"

@@ -43,7 +43,10 @@ readVersion
 registerPredefinedObjects
 	"Private - Post version 3 the out filer stores everything."
 
-	version < 4 ifTrue: [super registerPredefinedObjects] ifFalse: [self registerPredefinedClasses]! !
+	version < 4 ifTrue: [super registerPredefinedObjects] ifFalse: [self registerPredefinedClasses]!
+
+sizeForNext: aClass
+	^(aClass isVariable or: [version < 3]) ifTrue: [stream next] ifFalse: [0]! !
 !Kernel.STLInFiler categoriesForMethods!
 basicNext!accessing!private! !
 readClassLocator:!helpers!private! !
@@ -51,6 +54,7 @@ readInteger!helpers!private! !
 readLiteralData!private! !
 readVersion!initializing!private! !
 registerPredefinedObjects!initializing!private! !
+sizeForNext:!operations!private! !
 !
 
 !Kernel.STLInFiler class methodsFor!

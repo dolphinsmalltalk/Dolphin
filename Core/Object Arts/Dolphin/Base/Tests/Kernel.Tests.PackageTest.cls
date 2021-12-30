@@ -244,12 +244,6 @@ testForwardRefLoadPac
 		close.
 	[loadedPackages := Package manager install: pacName] ensure: [File delete: pacName]!
 
-testImageStripperPrereqs
-	"#1476"
-	self skip.
-	self assert: ((Package manager packageNamed: 'Autoplay') prerequisiteNames asArray 
-				includes: 'Lagoon Image Stripper')!
-
 testLegacyFormatErrorAliasToQualifiedName
 	| package ref filer filerClass |
 	package := Package new.
@@ -549,7 +543,6 @@ loadTestAndUninstallPackage:!helpers!private! !
 setUp!private!running! !
 tearDown!private!running! !
 testForwardRefLoadPac!public!unit tests! !
-testImageStripperPrereqs!public!unit tests! !
 testLegacyFormatErrorAliasToQualifiedName!public!unit tests! !
 testLegacyFormatErrorMethodOfNamespacedClass!public!unit tests! !
 testLegacyFormatErrorQualifiedAliasName!public!unit tests! !

@@ -11,7 +11,7 @@ package basicPackageVersion: '6.1.1'.
 
 
 package setClassNames: #(
-	#{Kernel.BytecodeRewriter}
+	#{Kernel.D5BytecodeRewriter}
 	#{Smalltalk.Resource}
 	#{Smalltalk.ResourceAccessor}
 	#{Smalltalk.ResourceDummyAccessor}
@@ -45,7 +45,7 @@ package!
 
 "Class Definitions"!
 
-Core.Object subclass: #'Kernel.BytecodeRewriter'
+Core.Object subclass: #'Kernel.D5BytecodeRewriter'
 	instanceVariableNames: 'blockStack instructions ip ipMap bytecodes bytecode newIP blockMap needsContext'
 	classVariableNames: 'DispatchMap'
 	imports: #(#{Kernel.OpcodePool})
@@ -180,7 +180,7 @@ convertMethodContext: aMethodContext
 	^context!
 
 rewriterClass
-	^BytecodeRewriter!
+	^D5BytecodeRewriter!
 
 stbConvertFrom: anSTBClassFormat 
 	"Convert from earlier binary filed versions."

@@ -193,8 +193,14 @@ testIsDefined
 			self assert: subject isDefined equals: each last notNil]!
 
 testIsLiteral
-	self bindingTestCases
-		do: [:each | self assert: (self subjectClass path: each first scope: each second) isLiteral]!
+	| subject |
+	subject := self subjectClass path: #(#Object) scope: Core.
+	self deny: subject isLiteral.
+	subject := self subjectClass path: #('_' #SUnit #TestCase) scope: XProgramming.
+	self deny: subject isLiteral.
+	subject := self subjectClass path: #(#Core #Object) scope: nil.
+	self assert: subject isLiteral.
+	self assert: subject private isLiteral!
 
 testIsRelative
 	| subject |
@@ -216,8 +222,14 @@ testIsRelative
 	self assert: subject isAbsolute!
 
 testIsSelfEvaluating
-	self bindingTestCases
-		do: [:each | self assert: (self subjectClass path: each first scope: each second) isSelfEvaluating]!
+	| subject |
+	subject := self subjectClass path: #(#Object) scope: Core.
+	self deny: subject isSelfEvaluating.
+	subject := self subjectClass path: #('_' #SUnit #TestCase) scope: XProgramming.
+	self deny: subject isSelfEvaluating.
+	subject := self subjectClass path: #(#Core #Object) scope: nil.
+	self assert: subject isSelfEvaluating.
+	self assert: subject private isSelfEvaluating!
 
 testLessOrEqual
 	| a a1 b |

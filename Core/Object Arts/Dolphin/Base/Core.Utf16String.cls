@@ -480,6 +480,11 @@ initialize
 	self addClassConstant: 'SurrogateOffset'
 		value: (Character.Utf16LeadMask bitShift: 10) + Character.Utf16TrailMask - 16r10000!
 
+stbConvertFrom: aSTBClassConversion
+	"version 0 would have been a UnicodeString instance, which will translate directly to a Utf16String."
+
+	^[:data | self fromByteArray: data]!
+
 with: aCharacter
 	"Answer a new instance of the receiver containing the single <Character> element,
 	aCharacter."
@@ -505,6 +510,7 @@ fromAtomId:!instance creation!public! !
 fromBytes:codePage:!instance creation!public! !
 fromUtf16String:!instance creation!public! !
 initialize!development!initializing!public! !
+stbConvertFrom:!binary filing!public! !
 with:!instance creation!public! !
 !
 

@@ -2528,7 +2528,7 @@ Core.Object subclass: #'Kernel.StackFrame'
 		'SPOffset' -> 16r4
 	}!
 Core.Object subclass: #'Kernel.STBClassConversion'
-	instanceVariableNames: 'version instSize dataClass isVariable converterBlock filer'
+	instanceVariableNames: 'version instSize isBytes isVariable converterBlock filer'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

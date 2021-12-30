@@ -36,7 +36,7 @@ assert: actualObject equals: expectedObject
 		ifFalse: [self fail: (self comparingStringBetween: expectedObject and: actualObject)].
 
 	"
-	(Smalltalk.DiffBrowser show: 'Vertical view') compare: actualObject printString id: 'Actual' and: expectedObject printString id: 'Expected'
+	(Smalltalk.DiffBrowser show: 'Vertical view') compare: actualObject fullPrintString id: 'Actual' and: expectedObject fullPrintString id: 'Expected'
 	"
 !
 

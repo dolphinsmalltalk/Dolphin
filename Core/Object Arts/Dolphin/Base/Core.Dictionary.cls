@@ -513,8 +513,7 @@ select: discriminator
 stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
 
-	anSTBOutFiler saveObject: self
-		as: (STBCollectionProxy class: self class array: self associations asArray)!
+	anSTBOutFiler saveObject: self as: (STBCollectionProxy class: self class array: self associations)!
 
 storeOn: aStream
 	"Append to the <puttableStream> argument, target, an expression which when 

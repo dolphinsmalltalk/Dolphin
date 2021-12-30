@@ -3,3 +3,4 @@ AbstractBindingReference addClassConstant: 'PathSeparator' value: $.!
 !Kernel.BindingReference methodsFor!
 displayOn: aPuttableStream
 	aPuttableStream nextPutAll: self pathString! !
+STBClassConversion instanceVariableString: 'version instSize isBytes isVariable converterBlock filer'!

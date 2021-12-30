@@ -434,12 +434,15 @@ stats
 stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
-	| stream size answer bytes |
-	anSTBInFiler version < 2 ifTrue: [^self stbReadFromProxy: anSTBInFiler].
+	| stream answer stringClass |
+	stringClass := anSTBInFiler version < 4
+				ifTrue: 
+					[anSTBInFiler version < 2 ifTrue: [^self stbReadFromProxy: anSTBInFiler].
+					"Symbols would definitely have been ANSI encoded. Unfortunately there was no STB version change specifically for the switch to unicode, and because Symbol's are a built-in class they do not benefit from the normal STB versioning mechanism, so there is nothing we can do now to correct any misencodings read from Symbols in STB files created in versions of 7.0 post 7.0.30 up to the first 7.1 versions with Unicode."
+					AnsiString]
+				ifFalse: [Utf8String].
 	stream := anSTBInFiler stream.
-	size := stream nextSDWORD.
-	bytes := stream next: size.
-	answer := self intern: (Utf8String fromByteArray: bytes).
+	answer := self intern: (stringClass fromByteArray: (stream next: stream nextSDWORD)).
 	anSTBInFiler register: answer.
 	^answer!
 

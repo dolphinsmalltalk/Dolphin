@@ -138,50 +138,14 @@ printOffsets: aBoolean
 printValueToTrace: anObject
 	traceStream print: anObject!
 
-readObjectOfClass: aClass format: anObject
-	"Private - Read the stream for the data to create an instance of aClass."
-
-	"First, read the basicSize (number of indexed variables)."
-
-	| basicSize fullSize stbClassFormat newObject |
-	basicSize := (self version < 3 or: [aClass isVariable]) ifTrue: [self readInteger] ifFalse: [0].
+sizeForNext: aClass
+	| size |
+	size := super sizeForNext: aClass.
 	traceStream
 		nextPut: $[;
-		print: basicSize;
+		print: size;
 		nextPut: $].
-
-	"Create a new object of sufficient size to hold the stored data."
-	(stbClassFormat := converters lookup: aClass) isNil
-		ifTrue: 
-			["The object is of the current format.
-			Create an instance of the appropriate class."
-			fullSize := aClass instSize + basicSize.
-			newObject := aClass isVariable ifTrue: [aClass basicNew: basicSize] ifFalse: [aClass basicNew]]
-		ifFalse: 
-			["The object is of an old format.
-			Create an Array or ByteArray to hold the stored data. This is
-			passed to the converter block which answers an instance of the
-			real class initialised from it."
-			fullSize := stbClassFormat instSize + basicSize.
-			newObject := (stbClassFormat isBytes ifTrue: [ByteArray] ifFalse: [Array]) basicNew: fullSize].
-	self register: newObject.
-
-	"Read the object's instance data."
-	newObject class isBytes
-		ifTrue: [1 to: fullSize do: [:i | newObject basicAt: i put: stream next]]
-		ifFalse: 
-			[| instVarNames |
-			instVarNames := stbClassFormat ifNil: [newObject class allInstVarNames] ifNotNil: [#()].
-			1 to: fullSize
-				do: 
-					[:i |
-					slotName := instVarNames at: i ifAbsent: [i].
-					newObject instVarAt: i put: self basicNext]].
-	stbClassFormat notNil
-		ifTrue: 
-			["Initialise a new instance from the old format object data and become it."
-			newObject become: (stbClassFormat converterBlock value: newObject)].
-	^newObject!
+	^size!
 
 traceStream
 	^traceStream!
@@ -196,7 +160,7 @@ objectAt:!accessing!private! !
 printOffsets!accessing!public! !
 printOffsets:!accessing!public! !
 printValueToTrace:!accessing!private! !
-readObjectOfClass:format:!operations!private! !
+sizeForNext:!operations!private! !
 traceStream!accessing!public! !
 traceStream:!accessing!public! !
 !

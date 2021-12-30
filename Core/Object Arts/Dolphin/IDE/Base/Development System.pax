@@ -4964,11 +4964,7 @@ emitResourceMethod: aResourceIdentifier literals: aLiteralArray
 		tab;
 		nextPut: $^;
 		nextPutAll: '#('.
-	"Should be a do:separateBy:, but to avoid creating a diff for old packages, leave the extra space at the end."
-	aLiteralArray do: 
-			[:each |
-			self emitLiteral: each.
-			stream space].
+	aLiteralArray do: [:each | each literalPrintOn: stream] separatedBy: [stream space].
 	stream nextPut: $)!
 
 emitResourceMethodHeader: aResourceIdentifier

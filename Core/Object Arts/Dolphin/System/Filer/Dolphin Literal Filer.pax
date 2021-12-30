@@ -31,6 +31,7 @@ package setMethodNames: #(
 	#(#{Core.String} #literalPrintOn:)
 	#(#{Core.Symbol} #literalPrintOn:)
 	#(#{Core.UndefinedObject} #literalPrintOn:)
+	#(#{Kernel.AbstractBindingReference} #literalPrintOn:)
 	#(#{Kernel.ProcessorScheduler} #literalPrintOn:)
 ).
 
@@ -232,6 +233,14 @@ literalPrintOn:!public! !
 literalPrintOn: aWriteStream
 	self printOn: aWriteStream! !
 !Core.UndefinedObject categoriesForMethods!
+literalPrintOn:!public! !
+!
+
+!Kernel.AbstractBindingReference methodsFor!
+
+literalPrintOn: aWriteStream 
+	self printOn: aWriteStream! !
+!Kernel.AbstractBindingReference categoriesForMethods!
 literalPrintOn:!public! !
 !
 

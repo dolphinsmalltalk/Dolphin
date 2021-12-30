@@ -18,6 +18,31 @@ Bear in mind that filing out a package/class in D7 format does not guarantee tha
 collateClass: aClass1 against: aClass2
 	^aClass1 name <==> aClass2 name!
 
+emitBinaryVariableDefinition: aBindingReference
+	"File out the text representation of the non-<sourceObject> which is the target of the
+	<BindingReference> argument onto the receiver's source stream."
+
+	| value binaryStream |
+	value := aBindingReference value.
+	self emitPackageVariableReference: aBindingReference.
+	stream
+		nextPutAll: ' := ';
+		print: Object;
+		space;
+		display: #fromBinaryStoreBytes:;
+		space;
+		cr.
+	binaryStream := ByteArray writeStream: 256.
+	STBOutFiler new
+		stream: binaryStream;
+		version: 4;
+		initialize;
+		nextPut: value.
+	binaryStream contents base64StoreOn: stream.
+	stream
+		nextPut: $!!;
+		cr!
+
 emitClassName: aClass
 	stream nextPutAll: ((Smalltalk oldNames lookup: aClass) ifNil: [self getShortName: aClass])!
 
@@ -43,14 +68,6 @@ emitDeclarationForClass: aClass variable: anAssociation
 	self
 		nextChunkPut: (value isInteger ifTrue: [value printStringRadix: 16] ifFalse: [value storeString]).
 	stream cr!
-
-emitLiteral: anObject
-	anObject isBehavior
-		ifTrue: 
-			[stream nextPutAll: '##(Smalltalk.'.
-			self emitClassName: anObject.
-			stream nextPut: $)]
-		ifFalse: [anObject literalPrintOn: stream]!
 
 emitPackageBinaryVariables: aPackage
 	"Private - Emit the definitions for variables of the specified <Package> that are not aliases and which refer to non-source objects onto the receiver's stream."
@@ -231,6 +248,28 @@ emitPaxVariableNames: aCollectionOfBindingReferences accessor: aSymbol
 		nextPut: $.;
 		cr;
 		cr!
+
+emitResourceMethod: aResourceIdentifier literals: aLiteralArray
+	self emitResourceMethodHeader: aResourceIdentifier.
+	stream
+		tab;
+		nextPut: $^;
+		nextPutAll: '#('.
+	aLiteralArray first literalPrintOn: stream.
+	"Pretend it is a version 4 stream to give D7 a fighting chance of loading it - it will fail if D8 specific objects have been added, e.g. BindingReferences.
+	On the whole, if forwards compatibility must be maintained it is better not to attempt to edit view resources in D8 that must be loaded in D7."
+	stream nextPutAll: ' 4 '.
+	aLiteralArray from: 3
+		do: 
+			[:each |
+			each isBehavior
+				ifTrue: 
+					[stream nextPutAll: '##(Smalltalk.'.
+					self emitClassName: each.
+					stream nextPut: $)]
+				ifFalse: [each literalPrintOn: stream].
+			stream space].
+	stream nextPut: $)!
 
 environment
 	^Smalltalk
@@ -442,10 +481,10 @@ printBasicDefinitionOfClass: aClass
 		print: aClass class instanceVariableString! !
 !Kernel.LegacyChunkSourceFiler categoriesForMethods!
 collateClass:against:!private!source filing! !
+emitBinaryVariableDefinition:!public!source filing-file out! !
 emitClassName:!private!source filing-file out! !
 emitClassPoolOfClass:!private!source filing-file out! !
 emitDeclarationForClass:variable:!private!source filing-file out! !
-emitLiteral:!private!source filing! !
 emitPackageBinaryVariables:!private!source filing! !
 emitPackageClassNames:!accessing!private!source filing-pax! !
 emitPackageManualPrerequisites:!private!source filing-pax! !
@@ -458,6 +497,7 @@ emitPackageVariableNameSubsets:!private!source filing-pax! !
 emitPackageVariableReference:!accessing!private!source filing! !
 emitPaxNames:!private!source filing-pax! !
 emitPaxVariableNames:accessor:!private!source filing-pax! !
+emitResourceMethod:literals:!private!source filing! !
 environment!accessing!public! !
 environment:!accessing!public! !
 equivalentLegacyPrerequisites!constants!private! !

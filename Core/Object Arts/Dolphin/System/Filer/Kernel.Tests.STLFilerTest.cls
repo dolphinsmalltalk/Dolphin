@@ -32,6 +32,42 @@ simpleReadWriteOf: value context: anObject
 	in context: anObject.
 	^in next!
 
+testArraysWithSharedLiterals
+	"Verify that the identity of shared literals that are not atomic is preserved."
+
+	| float arrays deserialized bindingRef relativeBindingRef storeArray |
+	float := 1.23.
+	bindingRef := #{Kernel.Tests.STLFilerTest}.
+	relativeBindingRef := #{STLFilerTest}.
+	arrays := {{1. float. bindingRef}. {2. float. relativeBindingRef}. bindingRef. relativeBindingRef}.
+	storeArray := arrays literalStoreArray.
+	self assert: (storeArray select: [:each | each == float]) size equals: 1.
+	self assert: (storeArray select: [:each | each == bindingRef]) size equals: 1.
+	"Relative binding references cannot be filed in literal form"
+	self assert: (storeArray select: [:each | each == relativeBindingRef]) size equals: 0.
+	deserialized := Compiler evaluate: arrays literalStoreEvaluationString.
+	self assert: deserialized equals: arrays.
+	self deny: deserialized third identicalTo: bindingRef.
+	self deny: deserialized first second identicalTo: float.
+	self assert: deserialized first second identicalTo: deserialized second second.
+	self assert: deserialized third identicalTo: deserialized first third.
+	self assert: deserialized fourth identicalTo: deserialized second third!
+
+testBlockReadWrite
+	| block1 contents1 in contents2 block2 block3 |
+	block1 := [1 + 2].
+	contents1 := self writeLiteralsFor: block1.
+	in := STLInFiler on: contents1 readStream.
+	block2 := in next.
+	self assert: block2 method literalCount equals: block1 method literalCount.
+	self assert: block2 equals: block1.
+	contents2 := self writeLiteralsFor: block2.
+	in := STLInFiler on: contents2 readStream.
+	block3 := in next.
+	self assert: block3 equals: block1.
+	self assert: contents1 size equals: contents2 size
+!
+
 testClassReadWrite
 	| contents answer data |
 	contents := self checkSimpleReadWriteOf: STLFilerTest.
@@ -88,16 +124,18 @@ testSystemDictionaryReadWrite
 	self assert: array2 equals: array.
 	self assert: array first identicalTo: Smalltalk!
 
-writeLiteralsFor: value
+writeLiteralsFor: anObject
 	| out |
 	out := STLOutFiler on: Array writeStream.
-	out nextPut: value.
+	out nextPut: anObject.
 	^out stream contents! !
 !Kernel.Tests.STLFilerTest categoriesForMethods!
 checkSimpleReadWriteOf:!private!unit tests! !
 checkSimpleReadWriteOf:context:!private!unit tests! !
 simpleReadWriteOf:!private!unit tests! !
 simpleReadWriteOf:context:!private!unit tests! !
+testArraysWithSharedLiterals!public!unit tests! !
+testBlockReadWrite!public!unit tests! !
 testClassReadWrite!public!unit tests! !
 testEmptyStream!public!unit tests! !
 testIntegerReadWrite!public!unit tests! !

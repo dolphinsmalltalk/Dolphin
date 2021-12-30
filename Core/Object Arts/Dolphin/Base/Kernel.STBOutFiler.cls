@@ -128,7 +128,7 @@ reset
 resetStream
 	stream
 		nextPutAll: self class signature;
-		nextPutAll: self class version displayString asByteArray;
+		nextPutAll: version displayString asByteArray;
 		nextPut: 16r20!
 
 saveObject: aNonImmediateObject

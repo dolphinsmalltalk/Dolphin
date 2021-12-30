@@ -39,7 +39,6 @@ package setMethodNames: #(
 	#(#{Kernel.SourceFiler} #emitCategoriesOfClass:)
 	#(#{Kernel.SourceFiler} #emitCategoriesOfMethod:)
 	#(#{Kernel.SourceFiler} #emitComment:)
-	#(#{Kernel.SourceFiler} #emitLiteral:)
 	#(#{Kernel.SourceFiler} #emitMessages:ofBehavior:)
 	#(#{Kernel.SourceFiler} #emitMethod:)
 	#(#{Kernel.SourceFiler} #fileOutAllMethodsOfBehavior:)
@@ -511,9 +510,6 @@ emitComment: aString
 
 	^self subclassResponsibility!
 
-emitLiteral: each
-	each literalPrintOn: stream!
-
 emitMessages: aClass ofBehavior: selectors
 	| methods sortedSelectors |
 	sortedSelectors := selectors asSortedCollection: SortedCollection caseSensitiveSortBlock.
@@ -592,9 +588,8 @@ fileOutMethods: aCollection
 			[:each |
 			"Note that the selectors will be filed out in sorted order, so we don't need to sort them"
 			(methodsByClass at: each methodClass ifAbsentPutClean: [OrderedCollection new]) add: each selector].
-	(methodsByClass associations
-		asSortedCollection: [:a :b | (self collateClass: a key against: b key) <= 0])
-			do: [:each | self fileOutMessages: each value ofBehavior: each key]!
+	(methodsByClass associations sort: [:a :b | (self collateClass: a key against: b key) <= 0])
+		do: [:each | self fileOutMessages: each value ofBehavior: each key]!
 
 fileOutProtocols: aCollection ofBehavior: aClassDescription 
 	"File out the <MethodProtocol>s in the <collection>, aCollection, to the source stream,
@@ -619,7 +614,6 @@ collateClass:against:!private!source filing! !
 emitCategoriesOfClass:!private!source filing-file out! !
 emitCategoriesOfMethod:!private!source filing-file out! !
 emitComment:!operations-logging!private! !
-emitLiteral:!private!source filing! !
 emitMessages:ofBehavior:!private!source filing! !
 emitMethod:!private!source filing! !
 fileOutAllMethodsOfBehavior:!public!source filing! !

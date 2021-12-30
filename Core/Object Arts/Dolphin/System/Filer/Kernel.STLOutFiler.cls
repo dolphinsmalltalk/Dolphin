@@ -36,15 +36,13 @@ serializeObject: anObject
 		ifTrue: [stream nextPut: anObject]
 		ifFalse: 
 			["Certain other objects with literal representations can also be saved to the stream directly, but need to be registered in case they are shared in the object graph being serialized. Note that with the exception of LargeInteger, these are literal collections of atomic objects (e.g. Strings are collections of Characters)."
-			(anObject isString or: 
-					[| class |
-					class := anObject class.
-					class == LargeInteger
-						or: [class == ByteArray or: [class == Array and: [anObject allSatisfy: [:each | each isAtomic]]]]])
-				ifTrue: [self putLiteral: anObject]
-				ifFalse: 
-					["No literal form, need to break it down"
-					anObject stbSaveOn: self]]!
+			(anObject class == Array
+				ifTrue: [anObject allSatisfy: [:each | each isAtomic]]
+				ifFalse: [anObject isLiteral])
+					ifTrue: [self putLiteral: anObject]
+					ifFalse: 
+						["No literal form, need to break it down"
+						anObject stbSaveOn: self]]!
 
 writeClass: aClass withLocator: locatorString 
 	stream nextPut: aClass!

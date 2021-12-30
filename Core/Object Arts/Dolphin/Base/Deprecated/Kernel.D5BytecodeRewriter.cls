@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.BytecodeRewriter'
+Core.Object subclass: #'Kernel.D5BytecodeRewriter'
 	instanceVariableNames: 'blockStack instructions ip ipMap bytecodes bytecode newIP blockMap needsContext'
 	classVariableNames: 'DispatchMap'
 	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.BytecodeRewriter guid: (Core.GUID fromString: '{37e0086f-1ccb-4fd0-a9c1-ef51056facb4}')!
-Kernel.BytecodeRewriter comment: 'BytecodeRewrite is a private system utility class for upgrading Dolphin 5 methods stored in STB files to be compatible with Dolphin 6. Note that the translation is not optimal, and where possible methods (blocks) saved in resources should be recompiled.'!
-!Kernel.BytecodeRewriter categoriesForClass!Unclassified! !
-!Kernel.BytecodeRewriter methodsFor!
+Kernel.D5BytecodeRewriter guid: (Core.GUID fromString: '{37e0086f-1ccb-4fd0-a9c1-ef51056facb4}')!
+Kernel.D5BytecodeRewriter comment: '`D5BytecodeRewriter` is a private system utility class for upgrading Dolphin 5 (pre-block closure) methods stored in STB files to be compatible with Dolphin 6 and later. Note that the translation is far from optimal, and where possible methods (blocks) saved in resources should be recompiled.'!
+!Kernel.D5BytecodeRewriter categoriesForClass!Unclassified! !
+!Kernel.D5BytecodeRewriter methodsFor!
 
 assemble
 	| bytestream |
@@ -33,6 +33,7 @@ blockCopy
 	originalIP := ip.
 	"BlockCopy is now a much more complex instruction reflecting the multiple types of temps that are supported"
 	args := ByteArray new: 6.
+	"With the original Dolphin blocks, all temps were stored in a MethodContext (i.e. they were all env temps), so to reproduce that we never have any stack or env temps defined by the blocks themselves"
 	args
 		at: 1 put: argc;
 		at: 2 put: 0;
@@ -422,10 +423,7 @@ shortTempInstr: shortInteger outerInstr: outerInteger
 	self assert: [temp < 12].
 	byte := needsContext
 				ifTrue: 
-					[| outer |
-					outer := blockStack size.
-					self assert: [outer < 8].
-					args := ByteArray with: (outer << 5 bitOr: temp).
+					[args := ByteArray with: (1 << 5 bitOr: temp).
 					outerInteger]
 				ifFalse: 
 					[args := #[].
@@ -452,11 +450,10 @@ tempInstr: codeInteger outerInstr: outerInteger ip: ipInteger
 	temp := self fetch.
 	pushTemp := needsContext
 				ifTrue: 
-					[| outer |
+					[
 					self assert: [temp < 32].
-					outer := blockStack size.
-					self assert: [outer < 8].
-					temp := outer << 5 bitOr: temp.
+	"In the original Dolphin block implementation, the temps were always allocated in a MethodContext. Later with BlockClosures (D6) temps could be on the stack, or in a Context. Where there are nested blocks, not all in the nesting stack need have their own Context. In rewriting to simulate the original implementation, only the outermost block will have a context. At some point in the D6 history an optimisation was added so that Context's would only be allocated where required, so for example there could be a doubly-nested block accessing a temp from the outermost block, but the immediate parent block does not itself have any shared temps, and so need not have its own context. This would mean that the intermediate context would be optimised away, so the outer depth is always 1 in the rewritten methods."
+					temp := 1 << 5 bitOr: temp.
 					outerInteger]
 				ifFalse: [codeInteger].
 	self emitInstruction: (Bytecode
@@ -495,7 +492,7 @@ updateJumps
 			[:each | 
 			each jumpTarget notNil 
 				ifTrue: [each jumpOffset: (ipMap at: each jumpTarget) ip - (each ip + 1 + each args size)]]! !
-!Kernel.BytecodeRewriter categoriesForMethods!
+!Kernel.D5BytecodeRewriter categoriesForMethods!
 assemble!operations!public! !
 atEnd!private!testing! !
 blockCopy!interpreting!private! !
@@ -551,7 +548,7 @@ unusedTrebleByte!exceptions!private! !
 updateJumps!helpers!private! !
 !
 
-!Kernel.BytecodeRewriter class methodsFor!
+!Kernel.D5BytecodeRewriter class methodsFor!
 
 initialize
 	"
@@ -569,7 +566,7 @@ initialize
 
 rewriteMethod: aCompiledMethod 
 	^self new rewriteMethod: aCompiledMethod! !
-!Kernel.BytecodeRewriter class categoriesForMethods!
+!Kernel.D5BytecodeRewriter class categoriesForMethods!
 initialize!initializing!public! !
 rewriteMethod:!operations!public! !
 !

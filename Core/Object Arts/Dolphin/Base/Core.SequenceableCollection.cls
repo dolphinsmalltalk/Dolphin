@@ -163,9 +163,9 @@ associations
 	this is no different to the implementation for LookupTable/IdentityDictionary."
 
 	| answer |
-	answer := self copyLikeOfSize: self copySize.
+	answer := WriteStream on: (Array new: self size).
 	self keysAndValuesDo: [:i :each | answer at: i put: i -> each].
-	^answer!
+	^answer grabContents!
 
 asString
 	"Answer a <String> containing the same <Character>s as the receiver. This can be expected to fail if any of the elements of the receiver are not <Character>s."

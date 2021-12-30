@@ -959,8 +959,7 @@ acceleratorKeyBindings: aDictionary
 	The argument should be an <abstractDictionary> mapping accelerator key strings, e.g. 'Ctrl+I' to command name
 	<Symbol>s."
 
-	self setAdditionalAccelerators: (aDictionary associations asArray
-				collect: [:each | {each value. each key}])!
+	self setAdditionalAccelerators: (aDictionary associations collect: [:each | {each value. each key}])!
 
 addCommandQueryHandler: aSymbol 
 	"Register an additional CommandQuery handler to be invoked by the #queryCommand: processing

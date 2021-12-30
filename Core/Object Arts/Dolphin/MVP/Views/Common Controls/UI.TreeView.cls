@@ -586,16 +586,8 @@ newMaps
 
 	"Not IdentityDictionary as handles may be large ints"
 
-	| searchPolicy |
 	handleObjectMap := LookupTable new.
-	"As an optimisation, avoid using slower PluggableLookupTable if we can"
-	searchPolicy := self model searchPolicy.
-	objectHandleMap := searchPolicy isIdentity
-				ifTrue: [IdentityDictionary new]
-				ifFalse: 
-					[searchPolicy isEquality
-						ifTrue: [LookupTable new]
-						ifFalse: [PluggableLookupTable searchPolicy: searchPolicy]]!
+	objectHandleMap := self model searchPolicy newLookupTable!
 
 nmDeleteItem: pNMHDR
 	"Private - Default handler for the TVN_DELETEITEM notification message.
