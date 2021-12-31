@@ -578,7 +578,7 @@ initialize
 				at: #Dispatcher put: 102;
 				at: #LPVOID put: 103;
 				at: #Utf8String put: 104;
-				at: #BindingReference put: 105;
+				at: #AbstractBindingReference put: 105;
 				at: #ArrayBinding put: 106;
 				at: #LargeInteger put: 107;
 				at: #VARIANT put: 108;

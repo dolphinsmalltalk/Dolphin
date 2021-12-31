@@ -259,11 +259,7 @@ fullPathString: aString
 		yourself!
 
 initialize
-	self flushBindings.
-	VM
-		registryAt: self name put: self;
-		registryAtIndex: 65 put: #pathString:scope:flags:;
-		registryAtIndex: 69 put: #setScope:!
+	self flushBindings!
 
 newPath: anArray private: aBoolean scope: aBindingScope
 	^(anArray size <= 1
@@ -285,15 +281,6 @@ newPath: anArray private: aBoolean scope: aBindingScope
 				ifFalse: [BindingReference basicNew setPath: anArray private: aBoolean]])
 		isImmutable: true;
 		yourself!
-
-pathString: aString private: aBoolean
-	^BindingReference basicNew setPathString: aString private: aBoolean!
-
-pathString: aString private: aBoolean scope: aBindingScope
-	^RelativeBindingReference basicNew
-		setPathString: aString
-		private: aBoolean
-		scope: aBindingScope!
 
 pathString: aString scope: aBindingScope
 	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is relative to the binding context, anObject. If anObject is nil, then the instance is a reference from Smalltalk. If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance is then a contextual BindingReference with that object as (potentially) its starting point for resolving the binding. However, the context is only relevant as a start point for binding if the path string is an unqualified name, or has the special relative prefix, '_', as the first component of the path. Otherwise the binding reference is considered to specify the full-name of the binding, and will always bind to the same static variable, regardless of context. Since the context is not needed for absolute bindings, it will be discarded - the context of absolute bindings is always nil, which in practice means their binding root is Smalltalk."
@@ -326,23 +313,6 @@ pathString: aString scope: aBindingScope
 		pathString: qualifiedName
 		scope: scope
 		flags: flags!
-
-pathString: aString scope: aBindingScope flags: anInteger
-	"Private - Note that this is sent directly by the Compiler to construct literal instances. The path string is expected not to have a relative prefix, but rather to pass the RelativeMask flag to request a relative binding reference."
-
-	"Implementation Note: If the reference is absolute, then the <bindingScope> is ignored as it is not needed. This avoids keeping the object alive unnecessarily, e.g. if it is a method, and also allows for cheaper implementations of the #= and #hash methods."
-
-	| ref |
-	ref := ((anInteger allMask: RelativeMask)
-				ifTrue: 
-					[self
-						pathString: aString
-						private: (anInteger allMask: PrivateMask)
-						scope: aBindingScope]
-				ifFalse: [self pathString: aString private: (anInteger allMask: PrivateMask)])
-				isImmutable: true;
-				yourself.
-	^(anInteger allMask: MetaMask) ifTrue: [ref meta] ifFalse: [ref]!
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from version 0:
@@ -378,10 +348,7 @@ flushBindings!operations!private! !
 fullPathString:!instance creation!public! !
 initialize!class initialization!public! !
 newPath:private:scope:!instance creation!private! !
-pathString:private:!instance creation!public! !
-pathString:private:scope:!instance creation!public! !
 pathString:scope:!instance creation!public! !
-pathString:scope:flags:!instance creation!private! !
 stbConvertFrom:!public! !
 stbVersion!public! !
 uninitialize!class hierarchy-removing!private! !

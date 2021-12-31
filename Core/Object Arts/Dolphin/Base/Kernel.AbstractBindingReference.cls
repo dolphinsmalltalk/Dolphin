@@ -283,9 +283,6 @@ simpleName
 
 	^self unqualifiedName!
 
-species
-	^BindingReference!
-
 storeOn: aStream
 	"This should probably store the full path."
 
@@ -366,7 +363,6 @@ scope!constants!private! !
 scope:!constants!private! !
 shortName!accessing!public! !
 simpleName!accessing!public! !
-species!comparing!public! !
 storeOn:!public!storing! !
 undeclare!operations!public! !
 unqualifiedName!accessing!public! !
@@ -379,7 +375,11 @@ valueOrNil!accessing!public! !
 !Kernel.AbstractBindingReference class methodsFor!
 
 initialize
-	Undeclared := UndeclaredVariable new!
+	Undeclared := UndeclaredVariable new.
+	VM
+		registryAt: self name put: self;
+		registryAtIndex: 65 put: #pathString:scope:flags:;
+		registryAtIndex: 69 put: #setScope:!
 
 isQualifiedName: aString
 	"Answer whether the argument is probably a qualified name (as opposed to an unqualified, or simple, name)."
@@ -451,11 +451,37 @@ pathString: aString home: aNamespace
 
 	^self pathString: aString scope: (aNamespace == Smalltalk ifFalse: [aNamespace])!
 
+pathString: aString private: aBoolean
+	^BindingReference basicNew setPathString: aString private: aBoolean!
+
+pathString: aString private: aBoolean scope: aBindingScope
+	^RelativeBindingReference basicNew
+		setPathString: aString
+		private: aBoolean
+		scope: aBindingScope!
+
 pathString: aString scope: aBindingScope
 	"Answer a new sub-instance of the receiver representing the qualified name identified by the <readableString> argument, which is relative to the binding context, anObject. If anObject is nil, then an AbsoluteBindingPath is returned. 
 	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance will be a contextual BindingReference with that object as its starting point for resolving the binding."
 
 	^self subclassResponsibility!
+
+pathString: aString scope: aBindingScope flags: anInteger
+	"Private - Note that this is sent directly by the Compiler to construct literal instances. The path string is expected not to have a relative prefix, but rather to pass the RelativeMask flag to request a relative binding reference."
+
+	"Implementation Note: If the reference is absolute, then the <bindingScope> is ignored as it is not needed. This avoids keeping the object alive unnecessarily, e.g. if it is a method, and also allows for cheaper implementations of the #= and #hash methods."
+
+	| ref |
+	ref := ((anInteger allMask: RelativeMask)
+				ifTrue: 
+					[self
+						pathString: aString
+						private: (anInteger allMask: PrivateMask)
+						scope: aBindingScope]
+				ifFalse: [self pathString: aString private: (anInteger allMask: PrivateMask)])
+				isImmutable: true;
+				yourself.
+	^(anInteger allMask: MetaMask) ifTrue: [ref meta] ifFalse: [ref]!
 
 simpleName: aString
 	"Answer a new instance of the receiver representing the variable with the specified unqualified name."
@@ -482,7 +508,10 @@ path:private:scope:!instance creation!public! !
 path:scope:!instance creation!public! !
 pathString:!instance creation!public! !
 pathString:home:!compatibility!instance creation!public! !
+pathString:private:!instance creation!public! !
+pathString:private:scope:!instance creation!public! !
 pathString:scope:!instance creation!public! !
+pathString:scope:flags:!instance creation!private! !
 simpleName:!instance creation!public! !
 simpleName:in:!instance creation!public! !
 splitQualifiedName:!helpers!public! !

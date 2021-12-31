@@ -176,12 +176,27 @@ testRelativeNoScope
 
 testStbConvertFromVersion0
 	| subject |
-	subject := Object
-				fromLiteralStoreArray: #(#'!!STL' 4 1508870 ##(Kernel.BindingReference) nil 34 2 8 'Core' 8 'Object' nil 5 1442886 2 ##(Kernel.VariableBinding) #Object ##(Core.Object) ##(Core) 1 1).
+	subject := Compiler evaluate: 'Object
+				fromLiteralStoreArray: #(#''!!STL'' 4 1508870 ##(Kernel.BindingReference) nil 34 2 8 ''Core'' 8 ''Object'' nil 5 1442886 2 ##(Kernel.VariableBinding) #Object ##(Core.Object) ##(Core) 1 1)'.
 	self assert: subject class identicalTo: BindingReference.
 	self assert: subject isPrivate.
 	self assert: subject value identicalTo: Object.
-	subject := (Object fromLiteralStoreArray: #(#'!!STL' 4 1508870 ##(Kernel.BindingReference) 8 'Object' nil ##(Core) 9 nil nil)).
+	subject := Compiler evaluate: 'Object fromLiteralStoreArray: #(#''!!STL'' 4 1508870 ##(Kernel.BindingReference) 8 ''Object'' nil ##(Core) 9 nil nil)'.
+	self assert: subject class identicalTo: RelativeBindingReference.
+	self deny: subject isPrivate.
+	self assert: subject scope identicalTo: Core.
+	self assert: subject value identicalTo: Object
+!
+
+testStbConvertFromVersion1
+	| subject |
+	subject := Object
+				fromBinaryStoreBytes: #[33 83 84 66 32 52 32 70 5 23 0 1 0 0 0 75 101 114 110 101 108 46 66 105 110 100 105 110 103 82 101 102 101 114 101 110 99 101 18 1 0 0 11 0 0 0 67 111 114 101 46 79 98 106 101 99 116 0 0 0 0 16 0 0 0 0 0 0 0 0 0 0 0].
+	self assert: subject class identicalTo: BindingReference.
+	self assert: subject isPrivate.
+	self assert: subject value identicalTo: Object.
+	subject := Object
+				fromBinaryStoreBytes: #[33 83 84 66 32 52 32 70 6 31 0 1 0 0 0 75 101 114 110 101 108 46 82 101 108 97 116 105 118 101 66 105 110 100 105 110 103 82 101 102 101 114 101 110 99 101 18 1 0 0 6 0 0 0 79 98 106 101 99 116 0 0 0 0 32 0 0 0 0 0 0 0 0 0 0 0 154 0 0 0 18 1 0 0 7 0 0 0 68 111 108 112 104 105 110 18 1 0 0 4 0 0 0 67 111 114 101].
 	self assert: subject class identicalTo: RelativeBindingReference.
 	self deny: subject isPrivate.
 	self assert: subject scope identicalTo: Core.
@@ -202,5 +217,6 @@ testLiteralImplicitEnvironmentRelative!public! !
 testLiteralImplicitExplicitEnvironmentRelative!public! !
 testRelativeNoScope!public!unit tests! !
 testStbConvertFromVersion0!public! !
+testStbConvertFromVersion1!public! !
 !
 
