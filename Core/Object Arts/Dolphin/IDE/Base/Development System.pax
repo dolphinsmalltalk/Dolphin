@@ -514,7 +514,6 @@ package setMethodNames: #(
 	#(#{Kernel.StWorkspaceVariable} #staticValueClass)
 	#(#{OS._FPIEEE_RECORD} #printFieldsOn:)
 	#(#{OS._FPIEEE_VALUE} #printFieldsOn:)
-	#(#{OS.COM.Picture class} #fileTypes)
 	#(#{OS.FILETIME} #printOn:)
 	#(#{OS.KernelLibrary} #queryThreadCycleTime:cycleTime:)
 	#(#{OS.LOGBRUSH} #printFieldsOn:)
@@ -804,7 +803,6 @@ package setPrerequisites: #(
 	'..\..\MVP\Gdiplus\Gdiplus ImageView'
 	'..\..\Utilities\HTML Help\HTML Help'
 	'..\..\MVP\Icons\Internal Bitmaps and Icons'
-	'..\..\ActiveX\Components\Picture\OLE Picture'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters'
@@ -5762,15 +5760,6 @@ printFieldsOn: aStream
 		ifFalse: [aStream nextPutAll: '<invalid>']! !
 !OS._FPIEEE_VALUE categoriesForMethods!
 printFieldsOn:!printing!private! !
-!
-
-!OS.COM.Picture class methodsFor!
-
-fileTypes
-	^#(#('BMP (*.bmp;*.dib;*.rle)' '*.bmp;*.dib;*.rle') #('JPEG (*.jpg;*.jpeg;*.jpe;*.jfif)' '*.jpg;*.jpeg;*.jpe;*.jfif') #('GIF (*.gif)' '*.gif') #('EMF (*.emf)' '*.emf') #('WMF (*.wmf)' '*.wmf') #('ICO (*.ico)' '*.ico') #('All Images' ';*.bmp;*.dib;*.rle;*.jpg;*.jpeg;*.jpe;*.jfif;*.gif;*.emf;*.wmf;*.ico'))
-		, {FileDialog allFilesType}! !
-!OS.COM.Picture class categoriesForMethods!
-fileTypes!instance creation!private! !
 !
 
 !OS.FILETIME methodsFor!

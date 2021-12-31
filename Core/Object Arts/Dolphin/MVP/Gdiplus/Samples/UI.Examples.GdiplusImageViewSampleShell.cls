@@ -30,7 +30,12 @@ attemptDisplayOABitmap
 	"Try opening an OA bitmap ... will show warning icon in deployed version"
 
 	filename := FileLocator installRelative localFileSpecFor: 'Resources/DolphinSplash.png'.
-	[self displayImage] on: Error do: [:e | ]!
+	[self displayImage] on: Error
+		do: 
+			[:e |
+			Transcript
+				print: e;
+				cr]!
 
 createComponents
 	super createComponents.
@@ -44,6 +49,7 @@ createComponents
 
 displayImage
 	| theImage |
+	self caption: filename.
 	theImage := self useImageClass fromFile: filename.
 	theImage handle.
 	image value: theImage!
@@ -70,13 +76,18 @@ initialize
 	super initialize!
 
 onViewOpened
-	| paddingModel |
+	| paddingModel imageClasses |
 	super onViewOpened.
-	image view insets: 0; viewMode: #scaleToFit.
+	image view
+		insets: 0;
+		viewMode: #scaleToFit.
 	edgeChoice choices: Graphics.Gdiplus.ImageView edgeStyles.
 	viewChoice choices: Graphics.Gdiplus.ImageView viewModes.
 	interpolationChoice choices: Graphics.Gdiplus.ImageView interpolationStyles.
-	classChoice choices: {Image. Bitmap. Graphics.Bitmap. Icon. OS.COM.Picture}.
+	imageClasses := {Image. Bitmap. Graphics.Bitmap. DIBSection. Icon}.
+	#{OS.COM.Picture} valueOrNil
+		ifNotNil: [:olePicture | imageClasses := imageClasses copyWith: olePicture].
+	classChoice choices: imageClasses.
 	edgeChoice model: (image view aspectValue: #imageBorder).
 	viewChoice model: (image view aspectValue: #viewMode).
 	interpolationChoice model: (image view aspectValue: #interpolationMode).

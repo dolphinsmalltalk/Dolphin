@@ -174,6 +174,9 @@ saveAsFile:!file operations!public! !
 
 !OS.COM.Picture class methodsFor!
 
+fileTypes
+	^#(#('BMP (*.bmp;*.dib;*.rle)' '*.bmp;*.dib;*.rle') #('JPEG (*.jpg;*.jpeg;*.jpe;*.jfif)' '*.jpg;*.jpeg;*.jpe;*.jfif') #('GIF (*.gif)' '*.gif') #('EMF (*.emf)' '*.emf') #('WMF (*.wmf)' '*.wmf') #('ICO (*.ico)' '*.ico') #('All Images' ';*.bmp;*.dib;*.rle;*.jpg;*.jpeg;*.jpe;*.jfif;*.gif;*.emf;*.wmf;*.ico') #('All Files (*.*)' '*.*'))!
+
 fromIPicture: anIPicture 
 	^(super new)
 		picture: anIPicture;
@@ -187,6 +190,7 @@ imageType
 resourceInitializerClass
 	^Error notYetImplemented! !
 !OS.COM.Picture class categoriesForMethods!
+fileTypes!instance creation!private! !
 fromIPicture:!public! !
 imageType!private! !
 resourceInitializerClass!constants!private! !

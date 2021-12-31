@@ -30,7 +30,6 @@ package setPrerequisites: #(
 	'..\..\Models\Value\Dolphin Value Models'
 	'..\Gdiplus'
 	'..\Gdiplus ImageView'
-	'..\..\..\ActiveX\Components\Picture\OLE Picture'
 	'..\..\..\..\Samples\MVP\UI Examples'
 ).
 
