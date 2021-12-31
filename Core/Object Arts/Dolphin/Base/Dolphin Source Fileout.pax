@@ -133,7 +133,7 @@ storeClassCategories
 	"Private - Record the categories of the receiver to the change log.
 	The job is simply delegated to the receiver's source manager (if available)."
 
-	self instanceClass storeClassCategories! !
+	instanceClass storeClassCategories! !
 !Core.Metaclass categoriesForMethods!
 storeClassCategories!private!source filing-methods! !
 !

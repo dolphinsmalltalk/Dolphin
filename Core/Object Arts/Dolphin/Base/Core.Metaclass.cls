@@ -28,18 +28,23 @@ Metaclass has the following instance variables:
 !Core.Metaclass methodsFor!
 
 absoluteReference
-	^self instanceClass absoluteReference meta!
+	^instanceClass absoluteReference meta!
 
-bindingFor: aString 
+basicEnvironment
+	"Answer the receiver's <Namespace>."
+
+	^instanceClass basicEnvironment!
+
+bindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class. 
 	If there is no such variable, then answer nil."
 
-	^self instanceClass bindingFor: aString!
+	^instanceClass bindingFor: aString!
 
 classBindingNames
 	"Answer a Set of the class variable names of the receiver."
 
-	^self instanceClass classBindingNames!
+	^instanceClass classBindingNames!
 
 classPool
 	"Answer the dictionary of class variables."
@@ -54,49 +59,47 @@ classVariables
 comment
 	"Answer the class comment for the receiver."
 
-	^self instanceClass comment
-!
+	^instanceClass comment!
 
 comment: aString
 	"Set the class comment for the receiver to aString."
 
-	self instanceClass comment: aString
-!
+	instanceClass comment: aString!
 
 environment
 	"Answer the receiver's <Namespace>."
 
-	^self instanceClass environment!
+	^instanceClass environment!
 
 fullBindingFor: aString environment: aNamespace
 	"Answer a variable binding for the named variable in the scope of this class, and failing that in the specified environment (or the receiver's environment if aNamespace is nil). If there is no such variable, then answer nil."
 
-	^self instanceClass fullBindingFor: aString environment: aNamespace!
+	^instanceClass fullBindingFor: aString environment: aNamespace!
 
 fullName
 	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root.
 	Note that these names will also be bindable within the legacy Smalltalk namespace, because it is itself an immediate child of root, and so any of its siblings is bindable using that sibling's unqualified name."
 
-	^self instanceClass fullName, ' class'!
+	^instanceClass fullName , ' class'!
 
 fullyQualifiedReference
 	"Answer a <BindingReference> that represents a fully qualified reference to the receiver relative to Smalltalk. If the Class is not in the hierarchy below Smalltalk (i.e. it is in Root, or another namespace hierarchy under Root), then it will be an absolute binding reference.
 	This will be a meta-binding reference, the value of which is this Metaclass."
 
-	^self instanceClass fullyQualifiedReference meta!
+	^instanceClass fullyQualifiedReference meta!
 
 importedNamespacesDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the namespaces imported by the receiver."
 
-	self instanceClass importedNamespacesDo: aMonadicValuable!
+	instanceClass importedNamespacesDo: aMonadicValuable!
 
 imports
 	"Answer a <sequencedReadableCollection> of the <Namespaces> imported into the receiver's scope."
 
-	^self instanceClass imports!
+	^instanceClass imports!
 
 imports: anArray
-	self instanceClass imports: anArray!
+	instanceClass imports: anArray!
 
 instanceClass
 	"Answer the receiver's singleton instance (the actual class object)."
@@ -130,7 +133,7 @@ instanceVariableNames: aString
 isAnonymous
 	"Answer whether this is an anonymous (unbound) class."
 
-	^self instanceClass isAnonymous!
+	^instanceClass isAnonymous!
 
 isMeta
 	"Answer whether the receiver is a <Metaclass>."
@@ -140,7 +143,7 @@ isMeta
 localBindingFor: aString
 	"Answer a variable binding for the named variable directly in the scope of this class, i.e. one of its own class variables. If there is no such class variable, then answer nil."
 
-	^self instanceClass localBindingFor: aString!
+	^instanceClass localBindingFor: aString!
 
 metaclass
 	"Answer the <Metaclass> of the Class/Metaclass pair."
@@ -164,10 +167,10 @@ new
 	^instanceClass := super new!
 
 owningPackage
-	^self instanceClass owningPackage!
+	^instanceClass owningPackage!
 
 packageManager
-	^self instanceClass packageManager!
+	^instanceClass packageManager!
 
 printDefinitionOn: target
 	"Private - Append the textual definition of the receiver to the <puttableStream>, target."
@@ -180,20 +183,20 @@ printDefinitionOn: target
 		print: self instanceVariableString!
 
 printFullNameOn: aPuttableStream
-	self instanceClass printFullNameOn: aPuttableStream.
+	instanceClass printFullNameOn: aPuttableStream.
 	aPuttableStream nextPutAll: ' class'!
 
 printOn: aStream
 	"Append the name of the receiver to aStream."
 
 	aStream
-		print: self instanceClass;
+		print: instanceClass;
 		nextPutAll: ' class'!
 
-removeClassVarName: aString 
+removeClassVarName: aString
 	"Remove the class variable from the receiver with the specified <readableString> name."
 
-	^self instanceClass removeClassVarName: aString!
+	^instanceClass removeClassVarName: aString!
 
 removeFromSuper
 	"Private - Remove the receiver from its superclasses' subclass collection.
@@ -203,7 +206,7 @@ removeFromSuper
 	^superclass ~~ Class ifTrue: [super removeFromSuper]!
 
 shortName
-	^self instanceClass shortName, ' class'!
+	^instanceClass shortName , ' class'!
 
 stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
@@ -218,9 +221,10 @@ subclassesDo: aMonadicValuable
 unqualifiedName
 	"Answer a <readableString> that is the name of the receiver in it's environment."
 
-	^self instanceClass unqualifiedName, ' class'! !
+	^instanceClass unqualifiedName , ' class'! !
 !Core.Metaclass categoriesForMethods!
 absoluteReference!public! !
+basicEnvironment!accessing!public! !
 bindingFor:!bindings!public! !
 classBindingNames!class variables!public! !
 classPool!class variables!public! !

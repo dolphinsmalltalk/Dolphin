@@ -20,6 +20,12 @@ canonicalInstance
 testClassBindingNames
 	self assert: Object class classBindingNames asArray sort equals: #('_AssertionFailureSignal' '_DependentsRegister' '_EventsRegister' '_PropertyRegister')!
 
+testEnvironment
+	self assertIsNil: Root class environment.
+	self assert: Root class basicEnvironment identicalTo: Root.
+	self assert: Object class environment identicalTo: Core.
+	self assert: Object class basicEnvironment identicalTo: Core!
+
 testInstances
 	"Verifies that 
 		- all metaclasses are correctly linked into the class hierarchy
@@ -85,6 +91,7 @@ testName
 allClassHierarchyInstancesDo:!helpers!private! !
 canonicalInstance!constants!private! !
 testClassBindingNames!public! !
+testEnvironment!public!unit tests! !
 testInstances!public!unit tests! !
 testLessOrEqual!public!unit tests! !
 testName!public!unit tests! !

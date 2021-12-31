@@ -178,6 +178,11 @@ baseEnvironment
 
 	^Smalltalk!
 
+basicEnvironment
+	"Answer the receiver's <Namespace>."
+
+	^self subclassResponsibility!
+
 bindingNames
 	"Answer a Set of the names of all the bindings in the receiver. The answer will include constant names, if any."
 
@@ -1072,6 +1077,7 @@ allSubclassesPreOrderDo:!class hierarchy-accessing!private! !
 allSubinstances!instances!public! !
 asQualifiedReference!converting!public! !
 baseEnvironment!constants!private! !
+basicEnvironment!accessing!public! !
 bindingNames!bindings!public! !
 bindings!accessing!public! !
 bindingsChanged!adding!private! !

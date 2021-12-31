@@ -99,6 +99,33 @@ testEnvironment
 	self assertIsNil: root environment.
 	self assert: root basicEnvironment identicalTo: root!
 
+testExistingMethodPackageAndEnvironment
+	| class packageAndEnv |
+	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	packageAndEnv := class existingMethodPackageAndEnvironment: #refersToClassFullyQualified.
+	self assert: packageAndEnv
+		equals: (Pair first: class realClass owningPackage second: (model classFor: self class environment))!
+
+testExistingMethodPackageAndEnvironmentLoose
+	| class packageAndEnv |
+	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	packageAndEnv := class existingMethodPackageAndEnvironment: #sendInlineParameterMethod.
+	self assert: packageAndEnv
+		equals: (Pair first: self class owningPackage second: (model classFor: self class environment))!
+
+testExistingMethodPackageAndEnvironmentLooseCustom
+	| class packageAndEnv |
+	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	packageAndEnv := class existingMethodPackageAndEnvironment: #inlineParameterMethod:.
+	self assert: packageAndEnv
+		equals: (Pair first: self class owningPackage second: (model classFor: Tools))!
+
+testExistingMethodPackageAndEnvironmentRootClass
+	| class packageAndEnv |
+	class := model classNamed: #Root.
+	packageAndEnv := class metaclass existingMethodPackageAndEnvironment: #fullyQualifiedReference.
+	self assert: packageAndEnv equals: (Pair first: Root owningPackage second: class)!
+
 testFullName
 	self assert: objectClass fullName equals: 'Core.Object'.
 	self assert: objectClass metaclass fullName equals: 'Core.Object class'.
@@ -246,6 +273,10 @@ testDefinesMethod!public!unit tests! !
 testDefinesPoolDictionary!public!unit tests! !
 testDefinitionString!public!unit tests! !
 testEnvironment!public!unit tests! !
+testExistingMethodPackageAndEnvironment!public! !
+testExistingMethodPackageAndEnvironmentLoose!public! !
+testExistingMethodPackageAndEnvironmentLooseCustom!public! !
+testExistingMethodPackageAndEnvironmentRootClass!public! !
 testFullName!public!unit tests! !
 testHierarchy!public!unit tests! !
 testLocalBindingFor!public!unit tests! !

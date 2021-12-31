@@ -489,8 +489,8 @@ hierarchyDefinesVariable:!public!testing! !
 
 !Core.Metaclass methodsFor!
 
-directlyDefinesClassVariable: aString 
-	^self instanceClass directlyDefinesClassVariable: aString! !
+directlyDefinesClassVariable: aString
+	^instanceClass directlyDefinesClassVariable: aString! !
 !Core.Metaclass categoriesForMethods!
 directlyDefinesClassVariable:!public!testing! !
 !

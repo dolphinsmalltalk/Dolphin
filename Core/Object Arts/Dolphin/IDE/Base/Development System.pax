@@ -2230,24 +2230,24 @@ bestSlotFor:boundedBy:!development!private!statistics! !
 !Core.Metaclass methodsFor!
 
 changeIndex
-	^self instanceClass changeIndex!
+	^instanceClass changeIndex!
 
 isChanged: aBoolean
 	"Flag the receiver as changed or not changed, according to the value 
 	of the <Boolean> argument.
 	Implementation Note: The change flags are held on the instance side."
 
-	self instanceClass isChanged: aBoolean!
+	instanceClass isChanged: aBoolean!
 
 isDeprecated
-	^self instanceClass isDeprecated!
+	^instanceClass isDeprecated!
 
 methodChanged: aCompiledMethod
 	"Private - Flag the receiver as changed or not changed, according to the value 
 	of the <Boolean> argument. If the receiver is marked as changed, then
 	its owning package (if any) is also so marked."
 
-	self instanceClass methodChanged: aCompiledMethod! !
+	instanceClass methodChanged: aCompiledMethod! !
 !Core.Metaclass categoriesForMethods!
 changeIndex!accessing!private! !
 isChanged:!public!source filing! !

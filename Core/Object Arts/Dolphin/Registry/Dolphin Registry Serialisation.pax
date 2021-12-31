@@ -337,7 +337,7 @@ readFromRegistry:params:!public! !
 readFromRegistry: aRegistryDeserializer params: anArray
 	"Read an instance of the receiver previously serialised to the registry."
 
-	^self instanceClass!
+	^instanceClass!
 
 writeToRegistry: aRegistryWriter name: aString
 	"Store a serialised representation of the receiver to the registry using the services of the <registryWriter> first argument, as a sub-key or value of its current key with the with the <readableString> name, aString."

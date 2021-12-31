@@ -276,7 +276,7 @@ existingMethodPackageAndEnvironment: aSymbol
 			package := method owningPackage.
 			Pair first: package
 				second: (self model modelClassFor: (method customEnvironment
-								ifNil: [package environment ifNil: [method methodClass environment]]))]!
+								ifNil: [package environment ifNil: [method methodClass basicEnvironment]]))]!
 
 existingMethodsThatReferTo: anObject
 	| existingMethods new |
