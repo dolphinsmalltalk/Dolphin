@@ -5,7 +5,9 @@ Core.Object subclass: #'Core.Category'
 	classVariableNames: 'PermanentCategories'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'Separator' -> $-
+	}!
 Core.Category guid: (Core.GUID fromString: '{87b4c45f-026e-11d3-9fd7-00a0cc3e4a32}')!
 Core.Category isNonInstantiable: true!
 Core.Category comment: 'The abstract Category class is used to organize <Class> and <CompiledMethod> objects into subgroupings independent of the implementation hierarchy. This structuring is for the benefit of the user navigating through thousands of classes and methods in the Dolphin Smalltalk development system, and has no run-time significance.
@@ -104,7 +106,7 @@ isVirtual
 localName
 	"Answer the local name of the receiver unique only within the parent category"
 
-	^name copyFrom: (name lastIndexOf: self class separator)+1 to: name size!
+	^name copyFrom: (name lastIndexOf: Separator)+1 to: name size!
 
 name
 	"Answer a unique, amongst Category objects, <readableString> name for the receiver."
@@ -141,7 +143,7 @@ subNames
 	"Answer an OrderedCollection of the receiver's name split
 	on category separator."
 
-	^self class separator split: self name! !
+	^Separator split: self name! !
 !Core.Category categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
@@ -188,12 +190,6 @@ newNamed: categoryName
 		setName: categoryName asString;
 		yourself!
 
-separator
-	"Private - Answer a Character used to split the individual names in a
-	complete category."
-
-	^ $-!
-
 unclassified
 	"Answer a Category used to mark an unclassified object."
 
@@ -212,7 +208,6 @@ uninitialize
 name:!instance creation!public! !
 new!instance creation!public! !
 newNamed:!instance creation!private! !
-separator!constants!private! !
 unclassified!instance creation!public! !
 unclassifiedName!constants!private! !
 uninitialize!class hierarchy-removing!private! !

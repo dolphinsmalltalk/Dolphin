@@ -25,7 +25,7 @@ addMethodsOfClass: aClass startingWith: aString toSearchCandidates: anOrderedCol
 applyOptions
 	"Private - Apply the class options to the receiver"
 
-	view wordChars: (Character byteCharacterSet
+	view wordChars: ##(Character byteCharacterSet
 				select: [:each | (Compiler isAValidIdentifierChar: each) or: [each == $:]]).
 	view maxCompletionListHeight: 10.
 	view maxCompletionListWidth: 40.

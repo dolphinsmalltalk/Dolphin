@@ -523,12 +523,6 @@ removeProtocol: protocolName
 	Protocols removeKey: symbol.
 	Smalltalk trigger: #protocolRemoved: with: prot!
 
-separator
-	"Private - Answer a Character used to split the individual names in a
-	complete category."
-
-	^ $-!
-
 stubAddedSignal
 	"Private - Answer the signal which is raised when a stub method is added
 	automatically in order to keep a class' protocol implementation complete."
@@ -544,7 +538,6 @@ name:!instance creation!public! !
 new!instance creation!public! !
 purgeUnused!operations!public! !
 removeProtocol:!public!removing! !
-separator!constants!private! !
 stubAddedSignal!accessing!private! !
 !
 

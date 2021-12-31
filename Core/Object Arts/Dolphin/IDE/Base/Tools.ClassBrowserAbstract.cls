@@ -982,8 +982,7 @@ onBrowserCardChangedFrom: previousView to: currentView
 
 onCategory: aMethodCategory renameTo: aString accept: aValueHolder
 	| newCategory newName |
-	newName := aMethodCategory class separator
-				join: (aMethodCategory subNames allButLast copyWith: aString).
+	newName := Category.Separator join: (aMethodCategory subNames allButLast copyWith: aString).
 	newCategory := aMethodCategory class name: newName.
 	self renameMethodCategory: aMethodCategory to: newCategory.
 	aValueHolder value: true!
@@ -2077,7 +2076,7 @@ renameMethodCategory: aMethodCategory to: aString
 			newSubNames := rootSubNames copy , (subNames copyFrom: originalSubNames size + 1).
 			name := String new.
 			newSubNames do: [:subName | name := name , subName]
-				separatedBy: [name := name copyWith: MethodCategory separator].
+				separatedBy: [name := name copyWith: Category.Separator].
 			newCategory := MethodCategory name: name.
 
 			"Ensure it is in the category tree"

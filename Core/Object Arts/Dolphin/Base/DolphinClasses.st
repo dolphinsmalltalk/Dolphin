@@ -2184,7 +2184,9 @@ Core.Object subclass: #'Core.Category'
 	classVariableNames: 'PermanentCategories'
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'Separator' -> $-
+	}!
 Core.Object subclass: #'Kernel.ChunkReader'
 	instanceVariableNames: 'chunkBlock endAction context'
 	classVariableNames: 'Null'

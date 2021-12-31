@@ -1960,7 +1960,7 @@ methodsFor: categoryName
 	first that the category name doesn''t, falsely, appear hierarchical."
 
 	| useName |
-	useName := categoryName copyReplacing: #{Category} value separator withObject: $/.
+	useName := categoryName copyReplacing: #{Category.Separator} value withObject: $/.
 	^ChunkReader
 		do: [:chunkString :filer | self compile: chunkString classified: useName]
 		inContext: self
@@ -1972,7 +1972,7 @@ methodsFor: name stamp: aString
 	The stamp is ignored. This method is for compatibility with the Pharo fileout format."
 
 	| useName |
-	useName := name copyReplacing: #{Category} value separator withObject: $/.
+	useName := name copyReplacing: #{Category.Separator} value withObject: $/.
 	^ChunkReader
 		do: [:chunkString :filer | self compile: chunkString classified: useName]
 		inContext: self

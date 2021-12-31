@@ -183,11 +183,6 @@ callback: anInteger withArgumentsAt: anAddress
 
 	^(self fromCookie: anInteger) valueWithArgumentsAt: anAddress!
 
-callbackPrimitive
-	"Private - Answer the index of the callback method primitive (which is only a marker)."
-
-	^0!
-
 clear
 	"Private - Clear down the registry of outstanding instances of the receiver.
 
@@ -251,10 +246,8 @@ onStartup
 	self clear!
 
 receiver: anObject prototype: anExternalMethod
-	#deprecated.	"Use #receiver:selector:descriptor:"
-	self assert: 
-			[(anExternalMethod isKindOf: ExternalMethod)
-				and: [anExternalMethod primitiveIndex == self callbackPrimitive]].
+	self
+		assert: [(anExternalMethod isKindOf: ExternalMethod) and: [anExternalMethod primitiveIndex == 0]].
 	^MessageCallback
 		receiver: anObject
 		selector: anExternalMethod selector
@@ -294,7 +287,6 @@ allocateThunks!helpers!private! !
 block:argumentTypes:!instance creation!public! !
 block:descriptor:!instance creation!public! !
 callback:withArgumentsAt:!operations!private! !
-callbackPrimitive!constants!private! !
 clear!initializing!private! !
 deallocateThunks!initializing!private! !
 descriptorClass!constants!private! !

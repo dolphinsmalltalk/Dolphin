@@ -361,10 +361,9 @@ keepAlive
 	(TimingProcess isNil or: [TimingProcess suspendingList isNil]) ifTrue: [self forkTimingProcess]!
 
 lowestResolution
-	"Answer the maximum resolution of Delays in microseconds, i.e. the shortest period for which
-	one could theoretically request a Delay on the current host."
+	"Answer a <Duration> which is the minimum resolution of Delays."
 
-	^LowestResolution!
+	^LowestResolution microseconds!
 
 microsecondClockValue
 	"Answer the current value of the microsecond clock."

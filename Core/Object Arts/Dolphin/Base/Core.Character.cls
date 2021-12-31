@@ -759,11 +759,11 @@ onStartup
 				yourself.
 	#todo.	"Integers from 0 to 255 with a few gaps substituted by large values do not make for good hash distribution, so make the table larger than normal until #766 is fixed."
 	ansiCharacters := IdentityDictionary new: 513.
-	Character byteCharacterSet do: [:each | ansiCharacters at: each codePoint put: each].
+	self byteCharacterSet do: [:each | ansiCharacters at: each codePoint put: each].
 	ansiCharacters isImmutable: true.
 	AnsiCharacters := ansiCharacters.
 	"In practice the replacement character is always $\xFFFD, but we fetch it from the VM (which in turn has retrieved it from Windows) just in case"
-	Utf8Default := Character
+	Utf8Default := self
 				codePoint: ((VM getProcAddress: 'UnicodeDefaultChar' ifAbsent: [#[16rFD 16rFF]]) wordAtOffset: 0)!
 
 replacement

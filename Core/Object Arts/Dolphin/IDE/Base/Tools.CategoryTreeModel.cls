@@ -20,16 +20,15 @@ addCategory: aCategory
 	"Private - Adds aCategory and all of its parent categories to the receiver. 
 	Parses the name of aCategory to split off the parents"
 
-	| name sep parent |
+	| name parent |
 	name := aCategory name.
-	sep := aCategory class separator.
 	parent := title.
 
 	"Do fast check to avoid expense of subStrings: for common case"
-	(name identityIncludes: sep)
+	(name identityIncludes: Category.Separator)
 		ifTrue: 
 			[| names moniker |
-			names := sep split: name.
+			names := Category.Separator split: name.
 			moniker := String writeStream.
 			1 to: names size - 1
 				do: 
@@ -38,7 +37,7 @@ addCategory: aCategory
 					part := names at: i.
 					moniker nextPutAll: part.
 					branch := self add: (IntermediateCategory name: moniker contents) asChildOf: parent.
-					moniker nextPut: sep.
+					moniker nextPut: Category.Separator.
 					parent := branch]].
 	self add: aCategory asChildOf: parent!
 
