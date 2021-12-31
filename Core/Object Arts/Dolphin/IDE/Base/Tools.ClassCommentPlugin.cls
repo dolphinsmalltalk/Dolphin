@@ -49,7 +49,7 @@ icon
 		ifFalse: [self class icon]!
 
 setTextStyles
-	textPresenter view textStyles: self class textStyles!
+	textPresenter textStyles: self class textStyles!
 
 setWordWrap
 	textPresenter view wordWrap: self class wordWrap!

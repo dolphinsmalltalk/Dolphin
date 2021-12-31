@@ -17,25 +17,45 @@ UI.Presenter subclass: #'Tools.SmalltalkWorkspace'
 		'WordWrapMask' -> 16r4
 	}!
 Tools.SmalltalkWorkspace guid: (Core.GUID fromString: '{87b4c687-026e-11d3-9fd7-00a0cc3e4a32}')!
-Tools.SmalltalkWorkspace comment: 'SmalltalkWorkspace is a <presenter> for displaying a workspace area within a <ScintillaView>. Note that, for efficiency purposes, a SmalltakWorkspace does not have a model. The textual data is held only within the associated view. since there seems little point in duplicating this text and holding it within the image as, say, a <readableString>.
+Tools.SmalltalkWorkspace comment: '`SmalltalkWorkspace` is a `<presenter>` for displaying a workspace area within a `ScintillaView`. Note that, for efficiency purposes, a SmalltakWorkspace does not have a model. The textual data is held only within the associated view. since there seems little point in duplicating this text and holding it within the image as, say, a `<readableString>`.
 
-In Dolphin 5.1 and earlier SmalltalkWorkspace could work with an <TextEdit> view, however as of Dolphin 6 it is specialised to support only <ScintillaView> as this allows it to take advantage of the advanced features of that control.
+In Dolphin 5.1 and earlier `SmalltalkWorkspace` could work with an `TextEdit` view, however as of Dolphin 6 it is specialised to support only `ScintillaView` as this allows it to take advantage of the advanced features of that control.
 
-Instance Variables:
-	evaluationContext		<Object> used as the "self" context for evaluations.
-	errorModel				<valueModel> holding the first error notification from the last compilation.
-	findDetails				<Array> specifying text search details.
-	workspacePool			<PoolDictionary> holding local variables held by the workspace.
-	evaluationPools			<Array> of <PoolDictionary>s for lookup pools during evaluations.
-	compilationErrors		<OrderedCollection> of <CompilerNotification>s (not necessarily all errors)
-	textStyles				<collection> of <ScintillaTextStyle>s use to colour text in the view.
+## Instance Variables:
+  `evaluationContext`		`Object` that is the "self" context for evaluations
+  `errorModel`				`<valueModel>` holding the first error notification from the last compilation
+  `findDetails`				`Array` specifying text search details
+  `workspacePool`			`Dictionary` holding local variables held by the workspace
+  `evaluationPools`			`Array` of `Dictionary` being variable pools for evaluations
+  `compilationErrors`		`<sequencedReadableCollection>` of `CompilerNotification`s (not necessarily all errors)
+  `textStyles`				`<collection>` of `Scintilla.TextStyle`s use to colour text in the view.
+  `searchEnvironment`		`BrowserEnvironment` defining the scope of code searches
+  `modifiedModel`			`<valueModel>` indicating whether the text has been edited
+  `flags`					`<integer>` various flags
+  `indicatorStyles`			`<sequencedReadableCollection>` of `Scintilla.IndicatorStyle`
+  `variableMetadataProvider`	`<variableMetadataProvider>` 
 
-Class Variables:
-	DefaultBackcolor			<color> of the background to use.
-	WordWrap				<boolean> indicating whether the workspace should word wrap text.
-	DefaultFont				<Font> for source text
-	AdditionalAccelerators	<Array> of 2-element <Array>s, being command <Symbol> accelerator key <String> pairs
+## Class Variables:
+  `AnnotationMode`			One of `#hidden`, `#standard`, `#boxed`, or `#indented`, being the style used to display annotations
+  `AutoCompleteDwell`			`Duration` that must elapse after text input before any auto-completion list is shown
+  `DefaultCaretColor`			`Color` of the caret
+  `DefaultFont`					`Font` of text in the normal style. Most text styles will at most modify one or two attributes of this.
+  `DefaultTabWidth`				`<integer>` width of tabs (equivalent number of spaces)
+  `FontQuality`					Scintilla font quality setting; one of `#default`, `#unaliased`, `#antialiased`, `#lcdOptimized`
+  `IndicatorStyles`				`<sequencedReadableCollection>` of  `Scintilla.IndicatorStyle`. Default indicator styles.
+  `KeyBindings`				`<sequencedReadableCollection>` of `Scintiall.KeyBinding`. Default additional key bindings
+  `KeywordCompletions`			`LookupTable` mapping common selector strings to completions
+  `MaxAutoCompletionListHeight`	`<integer>` maximum number of visible rows in auto-completion lists
+  `MaxAutoCompletionListSize`	`<integer>` maximum number of rows in auto-completions lists
+  `MaxAutoCompletionListWidth`	`<integer>` maximum character width of auto-completion lists
+  `OptionFlags`					`<integer>`. Various option flags.
+  `StandardUnaryReturnTypes`	`LookupTable` mapping some common selectors to the type of object they return
+  `TextStyles`					`Array` of `Scintilla.TextStyle` being the text styles for Smalltalk code
+  `WrapIndentMode`			Style of indentation of wrapped lines; one of `#fixed`, `#same`, `#indent`, `#deepIndent`
 
+## Class Instance Variables:
+  `additionalKeyBindings`		`<sequencedReadableCollection>` of `CommandDescription`. Additional key bindings, e.g. for extension commands
+  `commandQueryHandlers`		`<sequencedReadableCollection>` of `Symbol`. Selectors of extension command query methods.
 '!
 !Tools.SmalltalkWorkspace categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools! !
 !Tools.SmalltalkWorkspace methodsFor!
@@ -2478,11 +2498,13 @@ textStyles
 textStyles: aCollectionOfScintillaTextStyles
 	"Set the text styles used to colour text in the receiver's instances. These must have the names used in the styler, which by default is a <SmalltalkStyler>."
 
-	| textStyles |
+	| textStyles prevTextStyles |
 	textStyles := aCollectionOfScintillaTextStyles asArray sort: [:a :b | a name <= b name].
+	prevTextStyles := TextStyles.
 	TextStyles := textStyles.
 	self isLoadingOptions ifTrue: [^self].
-	self primAllSubinstances do: [:each | each textStyles: TextStyles].
+	self primAllSubinstances
+		do: [:each | each textStyles == prevTextStyles ifTrue: [each textStyles: TextStyles]].
 	self persistOptions!
 
 textStylesAspect
