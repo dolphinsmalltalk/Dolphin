@@ -470,11 +470,13 @@ nmBeginLabelEdit: pNMHDR
 		item: item;
 		object: (self objectFromHandle: item handle).
 	self presenter onAboutToEditLabel: event.
-	(event cancel not and: [event text ~~ item text])
-		ifTrue: 
+	event cancel
+		ifFalse: 
 			[| editor |
 			editor := self attachEditControl: self getEditControl.
-			editor plainText: event text].
+			event text ~= item text ifTrue: [editor plainText: event text].
+			event font ifNotNil: [editor font: event font].
+			event forecolor ifNotNil: [editor forecolor: event forecolor]].
 	^event cancel!
 
 nmBeginRDrag: pNMHDR

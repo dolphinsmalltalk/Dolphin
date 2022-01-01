@@ -464,8 +464,22 @@ onAboutToDisplayMenu: aMenu
 	menuName == #browseVariablesMenu ifTrue: [^self buildAllVariablesMenu: aMenu].
 	self canRefactor ifTrue: [^self populateRefactoringMenu: aMenu]!
 
-onAboutToRenameClass: aLabelEditingEvent 
-	aLabelEditingEvent text: aLabelEditingEvent object fullName!
+onAboutToRenameClass: aLabelEditingEvent
+	| class env |
+	class := aLabelEditingEvent object.
+	aLabelEditingEvent text: class fullName.
+	class isVisiblyAbstract
+		ifTrue: [aLabelEditingEvent font: (self view actualFont copy
+						isItalic: true;
+						yourself)].
+	env := self browserEnvironment.
+	(env includesClass: class)
+		ifTrue: 
+			[(env definesClass: class)
+				ifFalse: [aLabelEditingEvent forecolor: ClassBrowserAbstract.LooseMethodColor]]
+		ifFalse: 
+			[aLabelEditingEvent
+				forecolor: (Color windowText fadedBy: ClassBrowserAbstract.GrayedMethodFadeFactor)]!
 
 onClass: aClass renamedTo: text
 	"The class, aClass, has been renamed by the user to, text, by editing the label

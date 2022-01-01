@@ -495,7 +495,7 @@ UI.LabelEditEvent subclass: #'UI.LabelEditedEvent'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.LabelEditEvent subclass: #'UI.LabelEditingEvent'
-	instanceVariableNames: ''
+	instanceVariableNames: 'font forecolor'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
