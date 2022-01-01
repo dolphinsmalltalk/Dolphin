@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.BindingReference subclass: #'Kernel.RelativeBindingReference'
+Kernel.FullBindingReference subclass: #'Kernel.RelativeBindingReference'
 	instanceVariableNames: 'scope'
 	classVariableNames: ''
 	imports: #()
@@ -28,7 +28,8 @@ Kernel.RelativeBindingReference comment: ''!
 asFullyQualifiedReference
 	"Answer a<BindingReference> that references the same binding as the receiver does currently in its home context, but from Smalltalk or Root."
 
-	^BindingReference newPathString: self environmentName , PathSeparatorString , self unqualifiedName
+	^FullBindingReference
+		newPathString: self environmentName , PathSeparatorString , self unqualifiedName
 		private: private!
 
 asString

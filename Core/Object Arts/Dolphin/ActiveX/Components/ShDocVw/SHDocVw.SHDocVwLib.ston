@@ -9,7 +9,7 @@
 	#attributes : OS.COM.TLIBATTR {
 		#bytes : ByteArray [ 'c02ab2eac130cf11a7eb0000c05bae0b00000000010000000100010008000000' ]
 	},
-	#namespaceName : BindingReference {
+	#namespaceName : FullBindingReference {
 		#pathString : 'SHDocVw',
 		#path : [
 			'SHDocVw'

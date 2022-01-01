@@ -375,7 +375,7 @@ clearCachedBindings
 
 flushBindings
 	| instances |
-	instances := BindingReference primAllSubinstances.
+	instances := FullBindingReference primAllSubinstances.
 	1 to: instances size do: [:i | (instances at: i) setBinding: nil].
 	Generation := 0!
 
@@ -420,7 +420,7 @@ newPath: anArray private: aBoolean scope: aBindingScope
 	^(anArray size <= 1
 		ifTrue: 
 			[aBindingScope
-				ifNil: [BindingReference basicNew setPath: anArray private: aBoolean]
+				ifNil: [FullBindingReference basicNew setPath: anArray private: aBoolean]
 				ifNotNil: 
 					[RelativeBindingReference
 						newPath: anArray
@@ -433,7 +433,7 @@ newPath: anArray private: aBoolean scope: aBindingScope
 						newPath: (anArray copyFrom: 2 to: anArray size)
 						private: aBoolean
 						scope: aBindingScope]
-				ifFalse: [BindingReference basicNew setPath: anArray private: aBoolean]])
+				ifFalse: [FullBindingReference basicNew setPath: anArray private: aBoolean]])
 		isImmutable: true;
 		yourself!
 
@@ -483,7 +483,7 @@ pathString: aString private: aBoolean
 
 pathString: aString private: aBoolean scope: aBindingScope
 	^aBindingScope
-		ifNil: [BindingReference newPathString: aString private: aBoolean]
+		ifNil: [FullBindingReference newPathString: aString private: aBoolean]
 		ifNotNil: 
 			[RelativeBindingReference
 				newPathString: aString
@@ -534,7 +534,7 @@ pathString: aString scope: aBindingScope flags: anInteger
 						newPathString: aString
 						private: (anInteger allMask: PrivateMask)
 						scope: aBindingScope]
-				ifFalse: [BindingReference newPathString: aString private: (anInteger allMask: PrivateMask)])
+				ifFalse: [FullBindingReference newPathString: aString private: (anInteger allMask: PrivateMask)])
 				isImmutable: true;
 				yourself.
 	^(anInteger allMask: MetaMask) ifTrue: [ref meta] ifFalse: [ref]!

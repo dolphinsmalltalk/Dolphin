@@ -171,7 +171,7 @@ fullNameFor: aString
 	^stream contents!
 
 fullyQualifiedReference
-	^BindingReference fullPathString: name!
+	^FullBindingReference fullPathString: name!
 
 getEnvironment
 	^model modelClassFor: ((realClass notNil and: [realClass fullName = name])

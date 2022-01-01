@@ -86,7 +86,6 @@ package setMethodNames: #(
 	#(#{Kernel class} #icon)
 	#(#{Kernel.AbstractBindingReference class} #icon)
 	#(#{Kernel.Announcement class} #icon)
-	#(#{Kernel.BindingReference class} #icon)
 	#(#{Kernel.BlockClosure class} #icon)
 	#(#{Kernel.CompiledCode class} #icon)
 	#(#{Kernel.CompileFailedMethod} #icon)
@@ -95,6 +94,7 @@ package setMethodNames: #(
 	#(#{Kernel.CompilerNotification class} #icon)
 	#(#{Kernel.DeadObject class} #icon)
 	#(#{Kernel.DeafObject class} #icon)
+	#(#{Kernel.FullBindingReference class} #icon)
 	#(#{Kernel.InputState class} #icon)
 	#(#{Kernel.MemoryManager class} #icon)
 	#(#{Kernel.MetaBindingReference class} #icon)
@@ -988,18 +988,6 @@ icon
 icon!constants!public! !
 !
 
-!Kernel.BindingReference class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '#{}' fontName: 'Arial Narrow')
-		textcolor: Color darkBlue;
-		yourself)! !
-!Kernel.BindingReference class categoriesForMethods!
-icon!constants!public! !
-!
-
 !Kernel.BlockClosure class methodsFor!
 
 icon
@@ -1079,6 +1067,18 @@ icon
 	^##(self) defaultIcon! !
 !Kernel.DeafObject class categoriesForMethods!
 icon!constants!development!public! !
+!
+
+!Kernel.FullBindingReference class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((TextTileIcon text: '#{}' fontName: 'Arial Narrow')
+		textcolor: Color darkBlue;
+		yourself)! !
+!Kernel.FullBindingReference class categoriesForMethods!
+icon!constants!public! !
 !
 
 !Kernel.InputState class methodsFor!

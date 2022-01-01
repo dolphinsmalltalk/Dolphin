@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.AbstractBindingReference subclass: #'Kernel.BindingReference'
+Kernel.AbstractBindingReference subclass: #'Kernel.FullBindingReference'
 	instanceVariableNames: 'pathString path private binding generation'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.BindingReference guid: (Core.GUID fromString: '{801fde8c-7556-4b95-bb9d-eafb33552e79}')!
-Kernel.BindingReference comment: '`BindingReference`s represent symbolic references to static variables in the system. They describe a path through nested namespaces to locate a particular <VariableBinding>, with an optional context specifying the root namespace from which to start resolving the binding path.
+Kernel.FullBindingReference guid: (Core.GUID fromString: '{801fde8c-7556-4b95-bb9d-eafb33552e79}')!
+Kernel.FullBindingReference comment: '`BindingReference`s represent symbolic references to static variables in the system. They describe a path through nested namespaces to locate a particular <VariableBinding>, with an optional context specifying the root namespace from which to start resolving the binding path.
 
 `BindingReference` has a literal syntax of the form #{<identifier>}, where <identifier> can be an unqualified or dot qualified name. If unqualified then the binding reference is assumed to be relative to the method in which it is defined, and so should follow the same binding rules as an unqualified identifier that might appear in the code of the same method. Note that this may also find static variables in enclosing or imported scopes. If the identifier is qualified, then it is assumed to be an absolute reference to be bound starting in Smalltalk. Because Smalltalk is directly nested in `Root` (the root namespace), starting the binding search in `Smalltalk` will also find variables accessible using the same path from `Root` even if they are not part of a namespace imported into `Smalltalk`. For those cases where a partially qualified relative reference is required, the first component of the name can be an underscore, in which case the compiler regards it as a relative reference even though it contains more than one name component.
 
@@ -24,8 +24,8 @@ It might have been better if literal binding references were always relative, un
   `Generation`		`<integer>`. Latest valid generation. Incremented whenever a system change is made that could alter binding resolution, e.g. addition of a new class.
 
 '!
-!Kernel.BindingReference categoriesForClass!System-Namespaces! !
-!Kernel.BindingReference methodsFor!
+!Kernel.FullBindingReference categoriesForClass!System-Namespaces! !
+!Kernel.FullBindingReference methodsFor!
 
 = anObject
 	"Answer whether the receiver and the <Object> argument should be considered equivalent. Binding references are considered equivalent if they have the same path and starting point, and the same privacy.
@@ -204,7 +204,7 @@ valueOrNil
 	Note that it will not be possible to distinguish the cases of an undefined variable and a defined variable with value nil."
 
 	^self bindingOrNil value! !
-!Kernel.BindingReference categoriesForMethods!
+!Kernel.FullBindingReference categoriesForMethods!
 =!comparing!public! !
 asString!converting!public! !
 baseClass!accessing!public! !
@@ -237,7 +237,7 @@ undeclare!operations!public! !
 valueOrNil!accessing!public! !
 !
 
-!Kernel.BindingReference class methodsFor!
+!Kernel.FullBindingReference class methodsFor!
 
 fullPathString: aString
 	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is expected to be a fully qualified name."
@@ -278,7 +278,7 @@ uninitialize
 		registryAt: self name put: nil;
 		registryAtIndex: 65 put: nil;
 		registryAtIndex: 69 put: nil! !
-!Kernel.BindingReference class categoriesForMethods!
+!Kernel.FullBindingReference class categoriesForMethods!
 fullPathString:!instance creation!public! !
 newPathString:private:!instance creation!private! !
 stbConvertFrom:!public! !

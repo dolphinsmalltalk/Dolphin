@@ -234,7 +234,7 @@ testBindingReferences
 					binding;
 					yourself}.
 	rehydrated := self serializeAndMaterialize: objects.
-	bindingIndex := BindingReference indexOfInstVar: 'binding'.
+	bindingIndex := FullBindingReference indexOfInstVar: 'binding'.
 	self assert: (rehydrated allSatisfy: [:each | (each instVarAt: bindingIndex) isNil])!
 
 testCompiledMethodsAndBlocks

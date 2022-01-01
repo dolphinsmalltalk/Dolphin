@@ -2602,7 +2602,7 @@ Core.Object subclass: #'OS.VersionInfo'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.AbstractBindingReference subclass: #'Kernel.BindingReference'
+Kernel.AbstractBindingReference subclass: #'Kernel.FullBindingReference'
 	instanceVariableNames: 'pathString path private binding generation'
 	classVariableNames: ''
 	imports: #()
@@ -2614,7 +2614,7 @@ Kernel.AbstractBindingReference subclass: #'Kernel.MetaBindingReference'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.BindingReference subclass: #'Kernel.RelativeBindingReference'
+Kernel.FullBindingReference subclass: #'Kernel.RelativeBindingReference'
 	instanceVariableNames: 'scope'
 	classVariableNames: ''
 	imports: #()

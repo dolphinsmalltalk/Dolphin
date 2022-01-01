@@ -109,7 +109,6 @@ package setClassNames: #(
 	#{Kernel.Tests.AbstractBindingReferenceTest}
 	#{Kernel.Tests.AbstractNamespaceTest}
 	#{Kernel.Tests.AlwaysSearchPolicyTest}
-	#{Kernel.Tests.BindingReferenceTest}
 	#{Kernel.Tests.BlockClosureTest}
 	#{Kernel.Tests.CaseInsensitiveSearchPolicyTest}
 	#{Kernel.Tests.ChunkSourceFilerTest}
@@ -122,6 +121,7 @@ package setClassNames: #(
 	#{Kernel.Tests.EqualitySearchPolicyTest}
 	#{Kernel.Tests.EventMessageSendTest}
 	#{Kernel.Tests.EventMessageSequenceTest}
+	#{Kernel.Tests.FullBindingReferenceTest}
 	#{Kernel.Tests.HeapsortAlgorithmTest}
 	#{Kernel.Tests.IdentitySearchPolicyTest}
 	#{Kernel.Tests.InsertionSortAlgorithmTest}
@@ -645,7 +645,7 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.VMTest'
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Tests.AbstractBindingReferenceTest subclass: #'Kernel.Tests.BindingReferenceTest'
+Kernel.Tests.AbstractBindingReferenceTest subclass: #'Kernel.Tests.FullBindingReferenceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
