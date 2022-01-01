@@ -39,7 +39,7 @@ autoComplete: aSymbol at: posInteger maxItems: maxInteger
 	^nil!
 
 classMatchingName: aString
-	^(AbstractBindingReference isQualifiedName: aString)
+	^(BindingReference isQualifiedName: aString)
 		ifTrue: [aString asQualifiedReference valueOrNil]
 		ifFalse: [environment classes detect: [:each | each name = aString] ifNone: nil]!
 
@@ -72,7 +72,7 @@ createSchematicWiring
 
 filterForClassNamesMatching: aString
 	| isQualifiedName |
-	isQualifiedName := AbstractBindingReference isQualifiedName: aString.
+	isQualifiedName := BindingReference isQualifiedName: aString.
 	^(aString includes: $\x20)
 		ifTrue: 
 			[isQualifiedName

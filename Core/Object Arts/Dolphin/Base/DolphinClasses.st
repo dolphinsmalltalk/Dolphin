@@ -2084,20 +2084,6 @@ nil subclass: #'Kernel.ProtoObject'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Object subclass: #'Kernel.AbstractBindingReference'
-	instanceVariableNames: ''
-	classVariableNames: 'Generation Undeclared'
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'MetaMask' -> 16r1.
-		'PathSeparator' -> $..
-		'PathSeparatorString' -> '.'.
-		'PrivateMask' -> 16r2.
-		'RelativeMask' -> 16r4.
-		'RelativePathPrefix' -> '_'.
-		'RelativePathStringPrefix' -> '_.'
-	}!
 Core.Object subclass: #'External.ArrayFieldLength'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -2147,6 +2133,20 @@ Core.Object subclass: #'Kernel.BindingContext'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Object subclass: #'Kernel.BindingReference'
+	instanceVariableNames: ''
+	classVariableNames: 'Generation Undeclared'
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'MetaMask' -> 16r1.
+		'PathSeparator' -> $..
+		'PathSeparatorString' -> '.'.
+		'PrivateMask' -> 16r2.
+		'RelativeMask' -> 16r4.
+		'RelativePathPrefix' -> '_'.
+		'RelativePathStringPrefix' -> '_.'
+	}!
 Core.Object variableSubclass: #'Kernel.BlockClosure'
 	instanceVariableNames: 'outer method initialIP info receiver'
 	classVariableNames: ''
@@ -2602,24 +2602,6 @@ Core.Object subclass: #'OS.VersionInfo'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.AbstractBindingReference subclass: #'Kernel.FullBindingReference'
-	instanceVariableNames: 'pathString path private binding generation'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.AbstractBindingReference subclass: #'Kernel.MetaBindingReference'
-	instanceVariableNames: 'instance'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.FullBindingReference subclass: #'Kernel.RelativeBindingReference'
-	instanceVariableNames: 'scope'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 External.ArrayFieldLength subclass: #'External.FixedArrayFieldLength'
 	instanceVariableNames: 'elementCount'
 	classVariableNames: ''
@@ -2832,6 +2814,24 @@ Core.ClassDescription subclass: #'Core.Class'
 	classConstants: {}!
 Core.ClassDescription subclass: #'Core.Metaclass'
 	instanceVariableNames: 'instanceClass'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.BindingReference subclass: #'Kernel.FullBindingReference'
+	instanceVariableNames: 'pathString path private binding generation'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.BindingReference subclass: #'Kernel.MetaBindingReference'
+	instanceVariableNames: 'instance'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.FullBindingReference subclass: #'Kernel.RelativeBindingReference'
+	instanceVariableNames: 'scope'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

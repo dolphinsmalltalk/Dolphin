@@ -84,8 +84,8 @@ package setMethodNames: #(
 	#(#{Graphics.Point class} #icon)
 	#(#{Graphics.Rectangle class} #icon)
 	#(#{Kernel class} #icon)
-	#(#{Kernel.AbstractBindingReference class} #icon)
 	#(#{Kernel.Announcement class} #icon)
+	#(#{Kernel.BindingReference class} #icon)
 	#(#{Kernel.BlockClosure class} #icon)
 	#(#{Kernel.CompiledCode class} #icon)
 	#(#{Kernel.CompileFailedMethod} #icon)
@@ -963,19 +963,6 @@ icon
 icon!constants!public! !
 !
 
-!Kernel.AbstractBindingReference class methodsFor!
-
-icon
-	"Answers an Icon that can be used to represent this class"
-
-	^##((TextTileIcon text: '#{}' fontName: 'Arial Narrow')
-		textcolor: Color darkBlue;
-		fontStyle: #italic;
-		yourself)! !
-!Kernel.AbstractBindingReference class categoriesForMethods!
-icon!constants!public! !
-!
-
 !Kernel.Announcement class methodsFor!
 
 icon
@@ -985,6 +972,19 @@ icon
 		textcolor: Color darkBlue;
 		yourself)! !
 !Kernel.Announcement class categoriesForMethods!
+icon!constants!public! !
+!
+
+!Kernel.BindingReference class methodsFor!
+
+icon
+	"Answers an Icon that can be used to represent this class"
+
+	^##((TextTileIcon text: '#{․}' fontName: 'Arial Narrow')
+		textcolor: Color darkBlue;
+		fontStyle: #italic;
+		yourself)! !
+!Kernel.BindingReference class categoriesForMethods!
 icon!constants!public! !
 !
 
@@ -1074,7 +1074,7 @@ icon!constants!development!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((TextTileIcon text: '#{}' fontName: 'Arial Narrow')
+	^##((TextTileIcon text: '#{․}' fontName: 'Arial Narrow')
 		textcolor: Color darkBlue;
 		yourself)! !
 !Kernel.FullBindingReference class categoriesForMethods!
@@ -1106,7 +1106,7 @@ icon!constants!development!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##((TextTileIcon text: '#{}′' fontName: 'Arial Narrow')
+	^##((TextTileIcon text: '#{․}′' fontName: 'Arial Narrow')
 		textcolor: Color darkBlue;
 		yourself)! !
 !Kernel.MetaBindingReference class categoriesForMethods!

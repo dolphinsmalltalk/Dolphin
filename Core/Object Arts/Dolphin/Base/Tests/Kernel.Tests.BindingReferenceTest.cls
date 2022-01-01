@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.AbstractBindingReferenceTest'
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.BindingReferenceTest'
 	instanceVariableNames: ''
 	classVariableNames: 'TestVar'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.Tests.AbstractBindingReferenceTest guid: (Core.GUID fromString: '{aca86665-9b25-4f35-bdb8-0c0e434df4e6}')!
-Kernel.Tests.AbstractBindingReferenceTest isNonInstantiable: true!
-Kernel.Tests.AbstractBindingReferenceTest comment: ''!
-!Kernel.Tests.AbstractBindingReferenceTest categoriesForClass!Unclassified! !
-!Kernel.Tests.AbstractBindingReferenceTest methodsFor!
+Kernel.Tests.BindingReferenceTest guid: (Core.GUID fromString: '{aca86665-9b25-4f35-bdb8-0c0e434df4e6}')!
+Kernel.Tests.BindingReferenceTest isNonInstantiable: true!
+Kernel.Tests.BindingReferenceTest comment: ''!
+!Kernel.Tests.BindingReferenceTest categoriesForClass!Unclassified! !
+!Kernel.Tests.BindingReferenceTest methodsFor!
 
 bindingTestCases
 	| missingNamespace |
@@ -90,7 +90,7 @@ testBindingOrNil
 					expected := Smalltalk resolveBindingPath: path.
 					self assert: actual identicalTo: expected]].
 	"Check that we don't arbitrarily bind class variables of Object"
-	subject := AbstractBindingReference pathString: '_EventsRegister'.
+	subject := BindingReference pathString: '_EventsRegister'.
 	self assertIsNil: subject bindingOrNil!
 
 testBindingOrNilInContext
@@ -301,11 +301,25 @@ testPrintString
 			self assert: subject printString equals: each last]!
 
 testPrivate
-	| subject |
+	| subject private |
 	subject := self subjectClass pathString: 'Object'.
-	self assert: subject private isPrivate.
 	self deny: subject isPrivate.
-	self deny: subject equals: subject private!
+	self deny: subject isRelative.
+	private := subject private.
+	self assert: private isPrivate.
+	self deny: private isRelative.
+	self deny: subject equals: private.
+	BindingReference pathString: 'Object' scope: Core!
+
+testPrivateRelative
+	| subject private |
+	subject := BindingReference pathString: 'Object' scope: Core.
+	self deny: subject isPrivate.
+	self assert: subject isRelative.
+	private := subject private.
+	self assert: private isPrivate.
+	self assert: private isRelative.
+	self deny: subject equals: private!
 
 testRefersToLiteralClass
 	| method objectRef |
@@ -350,6 +364,9 @@ testRefersToLiteralPoolVariable
 	self deny: (poolConstRef refersTo: #{Kernel._PrimitiveFailureCode} asLiteralOf: method).
 	#namespaceToDo.	"This should be true - a reference to a nested binding is implicitly a reference to the outer binding."
 	self deny: (poolConstRef refersTo: _PrimitiveFailureCode binding asLiteralOf: method)!
+
+testRelativeNoScope
+	self should: [self subjectClass path: #('_' 'Object')] raise: Error!
 
 testShortName
 	#(#Root #Smalltalk #Core #'Core.Class' #'Kernel.BindingContext') do: 
@@ -406,13 +423,13 @@ testValueOrNil
 
 valueOfBinding: aVariableBinding
 	^aVariableBinding value! !
-!Kernel.Tests.AbstractBindingReferenceTest categoriesForMethods!
+!Kernel.Tests.BindingReferenceTest categoriesForMethods!
 bindingTestCases!constants!private! !
 nameSuffix!constants!private! !
 printStringTestCases!constants!private! !
 subjectClass!constants!private! !
-testAppend!public! !
-testAsQualifiedReference!public! !
+testAppend!public!unit tests! !
+testAsQualifiedReference!public!unit tests! !
 testAsString!public!unit tests! !
 testAsSymbol!public!unit tests! !
 testBinding!public!unit tests! !
@@ -437,9 +454,11 @@ testPathString!public!unit tests! !
 testPathStringScope!public!unit tests! !
 testPrintString!public!unit tests! !
 testPrivate!public!unit tests! !
+testPrivateRelative!public!unit tests! !
 testRefersToLiteralClass!public!unit tests! !
 testRefersToLiteralNotFound!public!unit tests! !
 testRefersToLiteralPoolVariable!public!unit tests! !
+testRelativeNoScope!public!unit tests! !
 testShortName!public!unit tests! !
 testStoreString!public!unit tests! !
 testUnqualifiedName!public!unit tests! !

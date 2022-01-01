@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Kernel.AbstractBindingReference'
+Core.Object subclass: #'Kernel.BindingReference'
 	instanceVariableNames: ''
 	classVariableNames: 'Generation Undeclared'
 	imports: #()
@@ -14,11 +14,22 @@ Core.Object subclass: #'Kernel.AbstractBindingReference'
 		'RelativePathPrefix' -> '_'.
 		'RelativePathStringPrefix' -> '_.'
 	}!
-Kernel.AbstractBindingReference guid: (Core.GUID fromString: '{2d52489e-7275-4df4-9022-294a7b2f9381}')!
-Kernel.AbstractBindingReference isNonInstantiable: true!
-Kernel.AbstractBindingReference comment: '`AbstractBindingReference` is the abstract superclass of binding reference objects.'!
-!Kernel.AbstractBindingReference categoriesForClass!System-Namespaces! !
-!Kernel.AbstractBindingReference methodsFor!
+Kernel.BindingReference guid: (Core.GUID fromString: '{2d52489e-7275-4df4-9022-294a7b2f9381}')!
+Kernel.BindingReference isNonInstantiable: true!
+Kernel.BindingReference comment: '`BindingReference` is the abstract superclass of binding reference objects.
+
+`BindingReference`s represent symbolic references to static variables in the system. They describe a path through nested namespaces to locate a particular `VariableBinding`, with an optional context specifying the root namespace from which to start resolving the binding path.
+
+`BindingReference` has a literal syntax of the form #{<identifier>}, where <identifier> can be an unqualified or dot qualified name. If unqualified then the binding reference is assumed to be relative to the method in which it is defined, and so should follow the same binding rules as an unqualified identifier that might appear in the code of the same method. Note that this may also find static variables in enclosing or imported scopes. If the identifier is qualified, then it is assumed to be an absolute reference to be bound starting in Smalltalk. Because Smalltalk is directly nested in `Root` (the root namespace), starting the binding search in `Smalltalk` will also find variables accessible using the same path from `Root` even if they are not part of a namespace imported into `Smalltalk`. For those cases where a partially qualified relative reference is required, the first component of the name can be an underscore, in which case the compiler regards it as a relative reference even though it contains more than one name component.
+
+It might have been better if literal binding references were always relative, unless having a special prefix or other marker, or conversely always relative unless so marked. However there is an established precedent in the ecosystem, hence the rather confusing implicit distinction between the treatment of single and multi-part names for literal binding references.
+
+## Class Variables:
+  `Generation`		`<integer>`. Latest valid generation. Incremented whenever a system change is made that could alter binding resolution, e.g. addition of a new class.
+
+'!
+!Kernel.BindingReference categoriesForClass!System-Namespaces! !
+!Kernel.BindingReference methodsFor!
 
 <= aBindingReference
 	"Answer whether the receiver should sort before the argument."
@@ -95,7 +106,7 @@ declare
 	^self environment
 		ifNil: 
 			[self bindingScope localScope
-				errorNotFound: (AbstractBindingReference path: self path allButLast scope: self scope)]
+				errorNotFound: (BindingReference path: self path allButLast scope: self scope)]
 		ifNotNil: [:env | env declareVariable: self path last]!
 
 declare: anObject
@@ -311,7 +322,7 @@ valueOrNil
 	Note that it will not be possible to distinguish the cases of an undefined variable and a defined variable with value nil."
 
 	^self bindingOrNil ifNotNil: [:var | self valueOfBinding: var]! !
-!Kernel.AbstractBindingReference categoriesForMethods!
+!Kernel.BindingReference categoriesForMethods!
 <=!comparing!public! !
 =!comparing!public! !
 append:!copying!public! !
@@ -366,7 +377,7 @@ valueOrDo:!accessing!public! !
 valueOrNil!accessing!public! !
 !
 
-!Kernel.AbstractBindingReference class methodsFor!
+!Kernel.BindingReference class methodsFor!
 
 clearCachedBindings
 	Generation := Generation + 1.
@@ -550,8 +561,47 @@ simpleName: aString in: aNamespace
 	^self pathString: aString home: aNamespace!
 
 splitQualifiedName: aString
-	^PathSeparator split: aString! !
-!Kernel.AbstractBindingReference class categoriesForMethods!
+	^PathSeparator split: aString!
+
+stbConvertFrom: anSTBClassFormat
+	"Convert from version 0:
+		- RelativeBindingReference introduced - context pushed down
+		- flags replaced with private inst var"
+
+	^
+	[:data |
+	| ver |
+	ver := anSTBClassFormat version.
+	ver < 1 ifTrue: [self stbConvertFromVersion0: data] ifFalse: [self stbConvertFromVersion1: data]]!
+
+stbConvertFromVersion0: anArray
+	"Private - Version 0 inst vars: 'pathString path context flags binding generation'
+	Version 1&2 inst vars: 'pathString path private binding generation'"
+
+	^(anArray at: 1)
+		ifNil: 
+			[self
+				path: (anArray at: 2)
+				private: ((anArray at: 4) allMask: PrivateMask)
+				scope: (anArray at: 3)]
+		ifNotNil: 
+			[:pathString |
+			self
+				pathString: pathString
+				private: ((anArray at: 4) allMask: PrivateMask)
+				scope: (anArray at: 3)]!
+
+stbConvertFromVersion1: anArray
+	"Private - Version 2 same instance vars, but classes renamed so that BindingReference is the abstract class, and FullBindingReference is the concrete equivalent of what was BindingReference"
+
+	| newInstance |
+	newInstance := FullBindingReference basicNew.
+	1 to: anArray size do: [:i | newInstance instVarAt: i put: (anArray at: i)].
+	^newInstance!
+
+stbVersion
+	^2! !
+!Kernel.BindingReference class categoriesForMethods!
 clearCachedBindings!operations!private! !
 flushBindings!operations!private! !
 initialize!class initialization!public! !
@@ -573,5 +623,9 @@ pathString:scope:flags:!instance creation!private! !
 simpleName:!instance creation!public! !
 simpleName:in:!instance creation!public! !
 splitQualifiedName:!helpers!public! !
+stbConvertFrom:!binary filing!public! !
+stbConvertFromVersion0:!binary filing!private! !
+stbConvertFromVersion1:!binary filing!private! !
+stbVersion!binary filing!public! !
 !
 

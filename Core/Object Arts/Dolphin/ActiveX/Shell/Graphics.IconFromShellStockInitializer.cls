@@ -43,7 +43,7 @@ printImage: anIcon on: aWriteStream
 		nextPutAll: ' shellStock: ';
 		display: ((SHSTOCKICONID keyAtValue: identifier ifAbsent: nil)
 					ifNil: [identifier]
-					ifNotNil: [:siid | AbstractBindingReference path: {#OS. #SHSTOCKICONID. siid}]).
+					ifNotNil: [:siid | BindingReference path: {#OS. #SHSTOCKICONID. siid}]).
 	extent
 		ifNotNil: 
 			[aWriteStream

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Tests.AbstractBindingReferenceTest subclass: #'Kernel.Tests.MetaBindingReferenceTest'
+Kernel.Tests.BindingReferenceTest subclass: #'Kernel.Tests.MetaBindingReferenceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -29,7 +29,7 @@ testEqualityOfMetaAndInstance
 
 testInstance
 	| inst subject |
-	inst := AbstractBindingReference pathString: 'Object'.
+	inst := BindingReference pathString: 'Object'.
 	subject := inst meta.
 	self assert: subject instance identicalTo: inst!
 
@@ -114,7 +114,7 @@ testPathStringWithClass
 		do: 
 			[:each |
 			| subject |
-			subject := AbstractBindingReference pathString: each.
+			subject := BindingReference pathString: each.
 			self assert: subject value identicalTo: Association class]!
 
 testRefersToLiteral
@@ -130,6 +130,42 @@ testRefersToLiteral
 	"... but not the target value."
 	self deny: (#{Object class} refersTo: #{Object class} value asLiteralOf: method)!
 
+testStbConvertFromVersion1
+	| subject expected |
+	subject := Object
+				fromBinaryStoreBytes: #[33 83 84 66 32 52 32 6 1 27 0 75 101 114 110 101 108 46 77 101 116 97 66 105 110 100 105 110 103 82 101 102 101 114 101 110 99 101 70 5 23 0 1 0 0 0 75 101 114 110 101 108 46 66 105 110 100 105 110 103 82 101 102 101 114 101 110 99 101 18 1 0 0 11 0 0 0 67 111 114 101 46 79 98 106 101 99 116 0 0 0 0 16 0 0 0 0 0 0 0 0 0 0 0].
+	self deny: subject isRelative.
+	expected := MetaBindingReference pathString: 'Core.Object' private: true.
+	self assert: subject equals: expected.
+	self assert: subject value identicalTo: Object class!
+
+testStbConvertRelativeFromVersion1
+	| subject expected |
+	subject := Object
+				fromBinaryStoreBytes: #[33 83 84 66 32 52 32 6 1 27 0 75 101 114 110 101 108 46 77 101 116 97 66 105 110 100 105 110 103 82 101 102 101 114 101 110 99 101 70 6 31 0 1 0 0 0 75 101 114 110 101 108 46 82 101 108 97 116 105 118 101 66 105 110 100 105 110 103 82 101 102 101 114 101 110 99 101 18 1 0 0 6 0 0 0 79 98 106 101 99 116 0 0 0 0 32 0 0 0 0 0 0 0 0 0 0 0 154 0 0 0 18 1 0 0 7 0 0 0 68 111 108 112 104 105 110 18 1 0 0 4 0 0 0 67 111 114 101].
+	self assert: subject isRelative.
+	expected := MetaBindingReference pathString: 'Object' scope: Core.
+	self assert: subject equals: expected.
+	self assert: subject value identicalTo: Object class!
+
+testStlConvertFromVersion1
+	| subject expected |
+	expected := MetaBindingReference pathString: 'Core.Object' private: true.
+	subject := Compiler
+				evaluate: '(Object fromLiteralStoreArray: #(#''!!STL'' 4 1769734 ##(Kernel.MetaBindingReference) 1508678 1 ##(Kernel.BindingReference) 8 ''Core.Object'' nil true nil nil))'.
+	self deny: subject isRelative.
+	self assert: subject equals: expected.
+	self assert: subject value identicalTo: Object class!
+
+testStlConvertRelativeFromVersion1
+	| subject expected |
+	expected := MetaBindingReference pathString: 'Object' scope: Core.
+	subject := Compiler
+				evaluate: '(Object fromLiteralStoreArray: #(#''!!STL'' 4 1769734 ##(Kernel.MetaBindingReference) 2033222 1 ##(Kernel.RelativeBindingReference) 8 ''Object'' nil false nil nil ##(Core)))'.
+	self assert: subject isRelative.
+	self assert: subject equals: expected.
+	self assert: subject value identicalTo: Object class!
+
 valueOfBinding: aVariableBinding
 	^aVariableBinding value class! !
 !Kernel.Tests.MetaBindingReferenceTest categoriesForMethods!
@@ -139,14 +175,18 @@ subjectClass!constants!private! !
 testEqualityOfMetaAndInstance!public!unit tests! !
 testInstance!public!unit tests! !
 testLessOrEqual!public!unit tests! !
-testLiteral!public! !
-testLiteralImplicitEnvironmentRelative!public! !
+testLiteral!public!unit tests! !
+testLiteralImplicitEnvironmentRelative!public!unit tests! !
 testMeta!public!unit tests! !
-testPathPrivateScope!public! !
+testPathPrivateScope!public!unit tests! !
 testPathString!public!unit tests! !
-testPathStringScope!public! !
+testPathStringScope!public!unit tests! !
 testPathStringWithClass!public!unit tests! !
 testRefersToLiteral!public!unit tests! !
+testStbConvertFromVersion1!public!unit tests! !
+testStbConvertRelativeFromVersion1!public!unit tests! !
+testStlConvertFromVersion1!public!unit tests! !
+testStlConvertRelativeFromVersion1!public!unit tests! !
 valueOfBinding:!helpers!private! !
 !
 

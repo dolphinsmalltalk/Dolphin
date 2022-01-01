@@ -27,7 +27,11 @@ package setMethodNames: #(
 	#(#{STON.Tests.STONTestUser class} #icon)
 	#(#{STON.Tests.TestDomainObject class} #icon)
 	#(#{STON.Tests.TestKnownObject class} #icon)
+	#(#{STON.Tests.WriteReadTest} #testBindingReferenceFull)
+	#(#{STON.Tests.WriteReadTest} #testBindingReferenceMeta)
+	#(#{STON.Tests.WriteReadTest} #testBindingReferenceRelative)
 	#(#{STON.Tests.WriteReadTest} #testBindingReferences)
+	#(#{STON.Tests.WriteReadTest} #testColorReferences)
 	#(#{STON.Tests.WriteReadTest} #testCompiledMethodsAndBlocks)
 	#(#{STON.Tests.WriteReadTest} #testDynamicLinkLibraries)
 	#(#{STON.Tests.WriteReadTest} #testExtendedCharacters)
@@ -37,6 +41,10 @@ package setMethodNames: #(
 	#(#{STON.Tests.WriteReadTest} #testProcessor)
 	#(#{STON.Tests.WriteReadTest} #testSearchPolicy)
 	#(#{STON.Tests.WriteReadTest} #testSystemDictionary)
+	#(#{STON.Tests.WriterTest} #testBindingReferenceFull)
+	#(#{STON.Tests.WriterTest} #testBindingReferenceMeta)
+	#(#{STON.Tests.WriterTest} #testBindingReferenceRelative)
+	#(#{STON.Tests.WriterTest} #testColorReferences)
 	#(#{STON.Tests.WriterTest} #testFramingCalculation)
 	#(#{STON.Tests.WriterTest} #testIsSimpleSymbol2)
 	#(#{STON.Tests.WriterTest} #testLegacyDate)
@@ -225,6 +233,33 @@ icon!constants!public! !
 
 !STON.Tests.WriteReadTest methodsFor!
 
+testBindingReferenceFull
+	| rehydrated |
+	rehydrated := self serializeAndMaterialize: #{Core.Object private}.
+	self deny: rehydrated isRelative.
+	self assert: rehydrated isPrivate.
+	self assert: rehydrated value identicalTo: Object!
+
+testBindingReferenceMeta
+	| rehydrated |
+	rehydrated := self serializeAndMaterialize: #{Core.Object class private}.
+	self deny: rehydrated isRelative.
+	self assert: rehydrated isPrivate.
+	self assert: rehydrated value identicalTo: Core.Object class
+	!
+
+testBindingReferenceRelative
+	| rehydrated |
+	rehydrated := self serializeAndMaterialize: (BindingReference
+						path: #('_' 'Tests' 'WriterTest')
+						private: true
+						scope: STON).
+	self assert: rehydrated isRelative.
+	self assert: rehydrated isPrivate.
+	rehydrated := self serializeAndMaterialize: #{WriterTest}.
+	self assert: rehydrated isRelative.
+	self deny: rehydrated isPrivate!
+
 testBindingReferences
 	| objects rehydrated bindingIndex |
 	objects := {self class fullyQualifiedReference.
@@ -236,6 +271,12 @@ testBindingReferences
 	rehydrated := self serializeAndMaterialize: objects.
 	bindingIndex := FullBindingReference indexOfInstVar: 'binding'.
 	self assert: (rehydrated allSatisfy: [:each | (each instVarAt: bindingIndex) isNil])!
+
+testColorReferences
+	| light lighter |
+	light := Color red lighter lighter.
+	lighter := light lighter.
+	self serializeAndMaterialize: {Color red. light. lighter. light. Color red. lighter}!
 
 testCompiledMethodsAndBlocks
 	self serializeAndMaterialize: self class methodDictionary!
@@ -284,7 +325,11 @@ testSearchPolicy
 testSystemDictionary
 	self serializeAndMaterialize: {'Foo'. Smalltalk. 'Bar'}! !
 !STON.Tests.WriteReadTest categoriesForMethods!
+testBindingReferenceFull!public!tests! !
+testBindingReferenceMeta!public!tests! !
+testBindingReferenceRelative!public!tests! !
 testBindingReferences!public!tests! !
+testColorReferences!public!tests! !
 testCompiledMethodsAndBlocks!public!tests! !
 testDynamicLinkLibraries!public!tests! !
 testExtendedCharacters!public!tests! !
@@ -297,6 +342,39 @@ testSystemDictionary!public!tests! !
 !
 
 !STON.Tests.WriterTest methodsFor!
+
+testBindingReferenceFull
+	self assert: (self serialize: (#{Core.Object private}
+						binding;
+						yourself))
+		equals: 'BindingReference{#pathString:''Core.Object private''}'!
+
+testBindingReferenceMeta
+	self assert: (self serialize: (#{Core.Object class private}
+						binding;
+						yourself))
+		equals: 'BindingReference{#pathString:''Core.Object class private''}'!
+
+testBindingReferenceRelative
+	self
+		assert: (self serialize: ((BindingReference
+						path: #('_' 'Tests' 'WriterTest')
+						private: true
+						scope: STON)
+						binding;
+						yourself))
+		equals: 'BindingReference{#pathString:''_.Tests.WriterTest private'',#scope:Class[#STON]}'.
+	self assert: (self serialize: #{ReaderTest})
+		equals: 'BindingReference{#pathString:''ReaderTest'',#scope:Class[#STON.Tests.WriterTest]}'.
+	self assert: (self serialize: #{_.ReaderTest})
+		equals: 'BindingReference{#pathString:''ReaderTest'',#scope:Class[#STON.Tests.WriterTest]}'!
+
+testColorReferences
+	| serialized light |
+	light := Color red lighter lighter.
+	serialized := self serialize: {Color red. light. light. light. Color red. light}.
+	self assert: serialized
+		equals: '[Color[#red],Color{#red:1.0,#green:0.063,#blue:0.063,#alpha:1.0},@3,@3,@2,@3]'!
 
 testFramingCalculation
 	self assert: (self serialize: UI.FramingCalculation fixedParentLeft)
@@ -331,6 +409,10 @@ testSymbolMultiByte
 	self assert: (self serialize: #'你好') equals: '#''你好'''.
 	self assert: (self serialize: #'🐬') equals: '#''🐬'''! !
 !STON.Tests.WriterTest categoriesForMethods!
+testBindingReferenceFull!public!tests! !
+testBindingReferenceMeta!public!tests! !
+testBindingReferenceRelative!public!tests! !
+testColorReferences!public!tests! !
 testFramingCalculation!public!tests! !
 testIsSimpleSymbol2!public!tests! !
 testLegacyDate!public!tests! !

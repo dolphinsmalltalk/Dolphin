@@ -139,6 +139,9 @@ package setMethodNames: #(
 	#(#{Core.UndefinedObject} #stonOn:)
 	#(#{External.DynamicLinkLibrary} #stonOn:)
 	#(#{External.DynamicLinkLibrary class} #fromSton:)
+	#(#{Kernel.BindingReference} #stonOn:)
+	#(#{Kernel.BindingReference class} #fromSton:)
+	#(#{Kernel.BindingReference class} #stonName)
 	#(#{Kernel.BlockClosure} #fromSton:)
 	#(#{Kernel.BlockClosure} #stonOn:)
 	#(#{Kernel.CompiledCode} #fromSton:)
@@ -920,6 +923,37 @@ fromSton: stonReader
 ! !
 !External.DynamicLinkLibrary class categoriesForMethods!
 fromSton:!public!ston! !
+!
+
+!Kernel.BindingReference methodsFor!
+
+stonOn: stonWriter
+	stonWriter writeObject: self
+		streamMap: 
+			[:dictionary |
+			| pathString |
+			pathString := String smalltalkWriteStream: 32.
+			self displayOn: pathString.
+			self isPrivate ifTrue: [pathString nextPutAll: ' private'].
+			dictionary at: #pathString put: pathString contents.
+			self scope ifNotNil: [:scope | dictionary at: #scope put: scope]]! !
+!Kernel.BindingReference categoriesForMethods!
+stonOn:!public!ston/core! !
+!
+
+!Kernel.BindingReference class methodsFor!
+
+fromSton: stonReader
+	| values |
+	values := LookupTable new.
+	stonReader parseMapDo: [:key :value | values at: key put: value].
+	^self pathString: (values at: #pathString) scope: (values lookup: #scope)!
+
+stonName
+	^#BindingReference! !
+!Kernel.BindingReference class categoriesForMethods!
+fromSton:!public!ston! !
+stonName!public!ston! !
 !
 
 !Kernel.BlockClosure methodsFor!

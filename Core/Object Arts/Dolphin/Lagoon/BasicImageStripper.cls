@@ -63,7 +63,7 @@ collectGarbage: iterations
 
 	| memMan |
 	Smalltalk clearCachedClasses.
-	AbstractBindingReference flushBindings.
+	BindingReference flushBindings.
 	memMan := MemoryManager current.
 	iterations timesRepeat: 
 			[memMan

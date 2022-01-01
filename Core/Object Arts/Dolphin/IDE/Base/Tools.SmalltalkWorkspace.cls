@@ -225,7 +225,7 @@ classForToken: anAssociation
 	style == #literalString ifTrue: [^String].
 	style == #literalSymbol ifTrue: [^Symbol].
 	style == #literalCharacter ifTrue: [^Character].
-	style == #literalBindingReference ifTrue: [^AbstractBindingReference].
+	style == #literalBindingReference ifTrue: [^BindingReference].
 	style == #specialCharacter
 		ifTrue: 
 			[| ch |
@@ -2183,13 +2183,15 @@ defaultUnaryReturnTypes
 
 	| answer |
 	answer := LookupTable new.
-	#(#isNil #isEmpty #notNil #asBoolean #not #isBehavior #isNumber #isInteger #isString) do: [:each | answer at: each put: Boolean].
-	#(#size #basicSize #hash #identityHash #asInteger #yourAddress) do: [:each | answer at: each put: Integer].
+	#(#isNil #isEmpty #notNil #asBoolean #not #isBehavior #isNumber #isInteger #isString)
+		do: [:each | answer at: each put: Boolean].
+	#(#size #basicSize #hash #identityHash #asInteger #yourAddress)
+		do: [:each | answer at: each put: Integer].
 	#(#printString #displayString #asString) do: [:each | answer at: each put: String].
 	^answer
 		at: #asArray put: Array;
 		at: #asOrderedCollection put: OrderedCollection;
-		at: #asQualifiedReference put: AbstractBindingReference;
+		at: #asQualifiedReference put: BindingReference;
 		at: #asSet put: Set;
 		at: #asSortedCollection put: SortedCollection;
 		at: #asSymbol put: Symbol;

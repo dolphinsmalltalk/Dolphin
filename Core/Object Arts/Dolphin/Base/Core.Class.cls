@@ -63,7 +63,7 @@ absoluteNameFor: aString
 absoluteReference
 	"Answer a <BindingReference> representing a path from Root to the receiver."
 
-	^AbstractBindingReference path: (self pathFrom: nil)!
+	^BindingReference path: (self pathFrom: nil)!
 
 addBinding: aVariableBinding
 	^(self basicAddBinding: aVariableBinding) and: 
@@ -774,10 +774,9 @@ resolveLocallyImportedBinding: aBindingContext
 	^nil!
 
 resolvePathString: aString environment: aNamespace
-	(AbstractBindingReference isQualifiedName: aString)
+	(BindingReference isQualifiedName: aString)
 		ifFalse: [^self resolveUnqualifiedName: aString environment: aNamespace].
-	^self resolveBindingPath: (AbstractBindingReference.PathSeparator split: aString)
-		environment: aNamespace!
+	^self resolveBindingPath: (BindingReference.PathSeparator split: aString) environment: aNamespace!
 
 resolvePublicBinding: aBindingContext
 	"Private - Resolve a binding with public visibility in the receiver's hierarchy, or among its local imports.
@@ -836,7 +835,7 @@ setGuid: id
 setName: aSymbolOrNil environment: aNamespace
 	"Private - Set the name of the receiver to be the <Symbol> or nil argument. The name can be nil for anonymous classes."
 
-	(aSymbolOrNil notNil and: [AbstractBindingReference isQualifiedName: aSymbolOrNil])
+	(aSymbolOrNil notNil and: [BindingReference isQualifiedName: aSymbolOrNil])
 		ifTrue: [self error: 'Invalid simple name ' , aSymbolOrNil].
 	name := aSymbolOrNil.
 	environment := aNamespace.

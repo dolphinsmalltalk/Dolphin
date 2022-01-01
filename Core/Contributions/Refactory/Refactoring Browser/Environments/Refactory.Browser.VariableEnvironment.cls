@@ -82,8 +82,8 @@ classForName: aString
 				from: 1
 				to: aString size.
 	^(index == 0
-		ifTrue: [AbstractBindingReference pathString: aString]
-		ifFalse: [(AbstractBindingReference pathString: (aString copyFrom: 1 to: index - 1)) meta]) valueOrNil!
+		ifTrue: [BindingReference pathString: aString]
+		ifFalse: [(BindingReference pathString: (aString copyFrom: 1 to: index - 1)) meta]) valueOrNil!
 
 classNamesWithVariables
 	| classNames |

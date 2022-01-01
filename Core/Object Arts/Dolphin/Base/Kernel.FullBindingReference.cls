@@ -1,27 +1,20 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.AbstractBindingReference subclass: #'Kernel.FullBindingReference'
+Kernel.BindingReference subclass: #'Kernel.FullBindingReference'
 	instanceVariableNames: 'pathString path private binding generation'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.FullBindingReference guid: (Core.GUID fromString: '{801fde8c-7556-4b95-bb9d-eafb33552e79}')!
-Kernel.FullBindingReference comment: '`BindingReference`s represent symbolic references to static variables in the system. They describe a path through nested namespaces to locate a particular <VariableBinding>, with an optional context specifying the root namespace from which to start resolving the binding path.
-
-`BindingReference` has a literal syntax of the form #{<identifier>}, where <identifier> can be an unqualified or dot qualified name. If unqualified then the binding reference is assumed to be relative to the method in which it is defined, and so should follow the same binding rules as an unqualified identifier that might appear in the code of the same method. Note that this may also find static variables in enclosing or imported scopes. If the identifier is qualified, then it is assumed to be an absolute reference to be bound starting in Smalltalk. Because Smalltalk is directly nested in `Root` (the root namespace), starting the binding search in `Smalltalk` will also find variables accessible using the same path from `Root` even if they are not part of a namespace imported into `Smalltalk`. For those cases where a partially qualified relative reference is required, the first component of the name can be an underscore, in which case the compiler regards it as a relative reference even though it contains more than one name component.
-
-It might have been better if literal binding references were always relative, unless having a special prefix or other marker, or conversely always relative unless so marked. However there is an established precedent in the ecosystem, hence the rather confusing implicit distinction between the treatment of single and multi-part names for literal binding references.
+Kernel.FullBindingReference comment: '`FullBindingReference`s represent fully-qualified `BindingReferences`.
 
 ## Instance Variables:
   `pathString`		`<string>`. The qualified name.
   `path`			`<sequencedReadableCollection>`. The components of the qualified name.
-  `context`		`<Class>`. The namespace from which binding resolution should start, or nil if an absolute reference.
-  `binding`		`<VariableBinding>`. The resolved binding, or `Undeclared` if there is no binding for the name path in context.
-  `generation`		`<integer>`. Value of Generation when the binding was resolved.
-
-## Class Variables:
-  `Generation`		`<integer>`. Latest valid generation. Incremented whenever a system change is made that could alter binding resolution, e.g. addition of a new class.
+  `private`			`<boolean>` indicating whether this is a private reference (typically only relevant when used to specify an import into a namespace).
+  `binding`		`VariableBinding`. The resolved binding, or `Undeclared` if there is no binding for the name path in context.
+  `generation`		`<integer>`. Value of `BindingReference.Generation` when the binding was resolved.
 
 '!
 !Kernel.FullBindingReference categoriesForClass!System-Namespaces! !
@@ -250,29 +243,6 @@ fullPathString: aString
 newPathString: aString private: aBoolean
 	^self basicNew setPathString: aString private: aBoolean!
 
-stbConvertFrom: anSTBClassFormat
-	"Convert from version 0:
-		- RelativeBindingReference introduced - context pushed down
-		- flags replaced with private inst var"
-
-	^
-	[:data |
-	(data at: 1)
-		ifNil: 
-			[self
-				path: (data at: 2)
-				private: ((data at: 4) allMask: PrivateMask)
-				scope: (data at: 3)]
-		ifNotNil: 
-			[:pathString |
-			self
-				pathString: pathString
-				private: ((data at: 4) allMask: PrivateMask)
-				scope: (data at: 3)]]!
-
-stbVersion
-	^1!
-
 uninitialize
 	VM
 		registryAt: self name put: nil;
@@ -281,8 +251,6 @@ uninitialize
 !Kernel.FullBindingReference class categoriesForMethods!
 fullPathString:!instance creation!public! !
 newPathString:private:!instance creation!private! !
-stbConvertFrom:!public! !
-stbVersion!public! !
 uninitialize!class hierarchy-removing!private! !
 !
 

@@ -562,7 +562,7 @@ parseDoubleIndirection: assoc typeName: typeName environment: aNamespace
 	(pointerType == ExtCallArgLPPVOID or: 
 			[pointerType isInteger not and: 
 					[assoc key == ExtCallArgSTRUCT
-						and: [(AbstractBindingReference pathString: pointerType home: aNamespace) value isIndirection]]])
+						and: [(BindingReference pathString: pointerType home: aNamespace) value isIndirection]]])
 		ifTrue: 
 			[^self error: ('<1s>: Only one further level of indirection to an indirection type is possible'
 						expandMacrosWith: typeName)].
@@ -570,7 +570,7 @@ parseDoubleIndirection: assoc typeName: typeName environment: aNamespace
 
 parsePointerToStruct: anAssociation environment: aNamespace
 	| structClass |
-	structClass := (AbstractBindingReference pathString: anAssociation value home: aNamespace) value.
+	structClass := (BindingReference pathString: anAssociation value home: aNamespace) value.
 	^(structClass isIndirection and: [anAssociation key == ExtCallArgSTRUCT])
 		ifTrue: [ExtCallArgLPPVOID -> nil]
 		ifFalse: 
@@ -592,7 +592,7 @@ parseSingleIndirection: anAssociation environment: aNamespace
 
 parseStructArg: assoc environment: aNamespace
 	| structClass |
-	structClass := (AbstractBindingReference pathString: assoc value home: aNamespace) value.
+	structClass := (BindingReference pathString: assoc value home: aNamespace) value.
 	^(structClass isIndirection
 		ifTrue: [ExtCallArgLP]
 		ifFalse: 

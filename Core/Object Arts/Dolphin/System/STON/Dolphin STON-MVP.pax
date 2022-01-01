@@ -78,7 +78,8 @@ fromSton: stonReader
 		ifTrue: [self named: stonReader parseListSingleton]
 		ifFalse: 
 			[| values |
-			values := stonReader parseMap.
+			values := LookupTable new: 4.
+			stonReader parseMapDo: [:key :value | values at: key put: value].
 			self
 				alpha: (values at: #alpha) * 255
 				red: (values at: #red) * 255

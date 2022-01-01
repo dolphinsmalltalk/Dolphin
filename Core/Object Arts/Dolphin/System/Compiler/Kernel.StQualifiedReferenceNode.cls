@@ -47,7 +47,7 @@ isRelative: aBoolean
 	flags := flags mask: BindingReference.RelativeMask set: aBoolean!
 
 path
-	^AbstractBindingReference.PathSeparator split: pathString!
+	^BindingReference.PathSeparator split: pathString!
 
 pathString
 	^pathString!
@@ -55,7 +55,7 @@ pathString
 pathString: aString start: startInteger
 	pathString := aString.
 	flags := (aString size > 0
-				and: [(aString at: 1) == $_ or: [(AbstractBindingReference isQualifiedName: aString) not]])
+				and: [(aString at: 1) == $_ or: [(BindingReference isQualifiedName: aString) not]])
 					ifTrue: [BindingReference.RelativeMask]
 					ifFalse: [0].
 	start := startInteger.
@@ -78,7 +78,7 @@ value
 		flags: flags!
 
 valueClass
-	^AbstractBindingReference! !
+	^BindingReference! !
 !Kernel.StQualifiedReferenceNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !

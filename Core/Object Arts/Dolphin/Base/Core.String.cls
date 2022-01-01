@@ -234,7 +234,7 @@ asPhrase
 	^stream contents!
 
 asQualifiedReference
-	^AbstractBindingReference pathString: self!
+	^BindingReference pathString: self!
 
 asResourceId
 	"On Windows wide string APIs will be expecting string resource names to be in UTF-16."

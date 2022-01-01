@@ -7,7 +7,13 @@ Kernel.FullBindingReference subclass: #'Kernel.RelativeBindingReference'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.RelativeBindingReference guid: (Core.GUID fromString: '{48e74cb4-00b3-4999-b434-cfea5b961756}')!
-Kernel.RelativeBindingReference comment: ''!
+Kernel.RelativeBindingReference comment: '`RelativeBindingReference`s represent partially-qualified `BindingReferences`.
+
+  # Instance Variables:
+  `scope`		`<bindingScope>`. The namespace from which relative binding resolution should start.
+
+
+'!
 !Kernel.RelativeBindingReference categoriesForClass!System-Namespaces! !
 !Kernel.RelativeBindingReference methodsFor!
 
@@ -103,7 +109,7 @@ private
 		ifFalse: 
 			[self class
 				newPathString: self pathString
-				private: private
+				private: true
 				scope: scope]!
 
 scope
@@ -163,10 +169,19 @@ pathString: aString private: aBoolean scope: aBindingScope
 	^self basicNew
 		setPathString: aString
 		private: aBoolean
-		scope: aBindingScope! !
+		scope: aBindingScope!
+
+stbConvertFromVersion1: anArray
+	"Private - Version 2 - no change at this level"
+
+	| newInstance |
+	newInstance := self basicNew.
+	1 to: anArray size do: [:i | newInstance instVarAt: i put: (anArray at: i)].
+	^newInstance! !
 !Kernel.RelativeBindingReference class categoriesForMethods!
 newPath:private:scope:!instance creation!private! !
 newPathString:private:scope:!instance creation!private! !
 pathString:private:scope:!instance creation!private! !
+stbConvertFromVersion1:!binary filing!private! !
 !
 

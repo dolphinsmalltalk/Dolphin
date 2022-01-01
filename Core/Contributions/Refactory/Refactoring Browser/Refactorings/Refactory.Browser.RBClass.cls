@@ -383,9 +383,9 @@ resolveLocallyImportedBinding: aBindingContext
 	^nil!
 
 resolvePathString: aString environment: aRBNamespaceClass
-	(AbstractBindingReference isQualifiedName: aString)
+	(BindingReference isQualifiedName: aString)
 		ifFalse: [^self resolveUnqualifiedName: aString environment: aRBNamespaceClass].
-	^self resolveBindingPath: (AbstractBindingReference.PathSeparator split: aString)
+	^self resolveBindingPath: (BindingReference.PathSeparator split: aString)
 		environment: aRBNamespaceClass!
 
 resolvePublicBinding: aBindingContext
@@ -442,7 +442,7 @@ unqualifiedName
 	"Answer the unqualified name of the class."
 
 	^unqualifiedName
-		ifNil: [unqualifiedName := (AbstractBindingReference.PathSeparator split: name) last asSymbol]! !
+		ifNil: [unqualifiedName := (BindingReference.PathSeparator split: name) last asSymbol]! !
 !Refactory.Browser.RBClass categoriesForMethods!
 <=!public! !
 addBinding:!public! !

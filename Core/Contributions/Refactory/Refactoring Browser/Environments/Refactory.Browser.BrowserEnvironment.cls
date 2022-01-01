@@ -49,7 +49,7 @@ allClassesDo: aBlock
 	Smalltalk allBehaviorsDo: aBlock!
 
 associationAt: aKey
-	^(Smalltalk resolveBindingPath: (AbstractBindingReference.PathSeparator split: aKey))
+	^(Smalltalk resolveBindingPath: (BindingReference.PathSeparator split: aKey))
 		ifNotNil: 
 			[:binding |
 			| class |

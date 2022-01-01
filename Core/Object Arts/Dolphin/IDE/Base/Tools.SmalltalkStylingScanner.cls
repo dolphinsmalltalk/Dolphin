@@ -62,13 +62,13 @@ scanQualifiedReference
 	self step.	"{"
 	self stripSeparators.
 	characterType == #alphabetic
-		ifFalse: [^self literalErrorToken: (AbstractBindingReference pathString: '') stop: self previousStepPosition].
+		ifFalse: [^self literalErrorToken: (BindingReference pathString: '') stop: self previousStepPosition].
 	self scanName.
 	[currentCharacter == $. and: [(self classify: stream peek) == #alphabetic]] whileTrue: 
 			[buffer nextPut: $..
 			self step.
 			self scanName].
-	bindingRef := AbstractBindingReference pathString: buffer contents.
+	bindingRef := BindingReference pathString: buffer contents.
 	self stripSeparators.
 	characterType == #alphabetic
 		ifFalse: 

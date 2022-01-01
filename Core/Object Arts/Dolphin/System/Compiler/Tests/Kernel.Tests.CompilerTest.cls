@@ -1017,7 +1017,7 @@ testQualifiedReference
 			[:eachContext :eachReceiver |
 			| compiled ref |
 			compiled := self compileExpression: '#(#{Object} #{Object class})' in: eachContext.
-			ref := AbstractBindingReference pathString: 'Object' scope: eachContext.
+			ref := BindingReference pathString: 'Object' scope: eachContext.
 			self assert: (compiled method value: eachReceiver) equals: {ref. ref meta}]!
 
 testRadixInteger

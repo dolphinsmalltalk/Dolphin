@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.Tests.AbstractBindingReferenceTest subclass: #'Kernel.Tests.FullBindingReferenceTest'
+Kernel.Tests.BindingReferenceTest subclass: #'Kernel.Tests.FullBindingReferenceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -75,9 +75,9 @@ testEqualsLiteral
 
 testIsValidGlobalName
 	#('A' 'A1' 'A_' '_A' 'a' '_a' '__A_B' 'A.B' 'Abc.D' '_Abc._d' 'abc.d')
-		do: [:each | self assert: (AbstractBindingReference isValidQualifiedName: each)].
+		do: [:each | self assert: (BindingReference isValidQualifiedName: each)].
 	#('_' '_.' 'A.' '.A' '_A.' '_.A' '.' 'a.' '_.a' '*' '' 'A.*' '*.' 'A..B')
-		do: [:each | self deny: (AbstractBindingReference isValidQualifiedName: each)]!
+		do: [:each | self deny: (BindingReference isValidQualifiedName: each)]!
 
 testLessOrEqual
 	| a b |
@@ -171,9 +171,6 @@ testLiteralImplicitExplicitEnvironmentRelative
 	self assert: method customEnvironment identicalTo: env.
 	self assert: (method value: Object new withArguments: #()) identicalTo: self class!
 
-testRelativeNoScope
-	self should: [AbstractBindingReference path: #('_' 'Object')] raise: Error!
-
 testScope
 	| subject coreRelative |
 	subject := 'Object' asQualifiedReference.
@@ -191,12 +188,6 @@ testStbConvertFromVersion0
 				fromLiteralStoreArray: #(#''!!STL'' 4 1508870 ##(Kernel.BindingReference) nil 34 2 8 ''Core'' 8 ''Object'' nil 5 1442886 2 ##(Kernel.VariableBinding) #Object ##(Core.Object) ##(Core) 1 1)'.
 	self assert: subject class identicalTo: FullBindingReference.
 	self assert: subject isPrivate.
-	self assert: subject value identicalTo: Object.
-	subject := Compiler
-				evaluate: 'Object fromLiteralStoreArray: #(#''!!STL'' 4 1508870 ##(Kernel.BindingReference) 8 ''Object'' nil ##(Core) 9 nil nil)'.
-	self assert: subject class identicalTo: RelativeBindingReference.
-	self deny: subject isPrivate.
-	self assert: subject scope identicalTo: Core.
 	self assert: subject value identicalTo: Object!
 
 testStbConvertFromVersion1
@@ -205,30 +196,62 @@ testStbConvertFromVersion1
 				fromBinaryStoreBytes: #[33 83 84 66 32 52 32 70 5 23 0 1 0 0 0 75 101 114 110 101 108 46 66 105 110 100 105 110 103 82 101 102 101 114 101 110 99 101 18 1 0 0 11 0 0 0 67 111 114 101 46 79 98 106 101 99 116 0 0 0 0 16 0 0 0 0 0 0 0 0 0 0 0].
 	self assert: subject class identicalTo: FullBindingReference.
 	self assert: subject isPrivate.
-	self assert: subject value identicalTo: Object.
+	self assert: subject value identicalTo: Object!
+
+testStbConvertRelativeFromVersion0
+	| subject |
+	subject := Compiler
+				evaluate: 'Object fromLiteralStoreArray: #(#''!!STL'' 4 1508870 ##(Kernel.BindingReference) 8 ''Object'' nil ##(Core) 9 nil nil)'.
+	self assert: subject class identicalTo: RelativeBindingReference.
+	self deny: subject isPrivate.
+	self assert: subject scope identicalTo: Core.
+	self assert: subject value identicalTo: Object!
+
+testStbConvertRelativeFromVersion1
+	| subject |
 	subject := Object
 				fromBinaryStoreBytes: #[33 83 84 66 32 52 32 70 6 31 0 1 0 0 0 75 101 114 110 101 108 46 82 101 108 97 116 105 118 101 66 105 110 100 105 110 103 82 101 102 101 114 101 110 99 101 18 1 0 0 6 0 0 0 79 98 106 101 99 116 0 0 0 0 32 0 0 0 0 0 0 0 0 0 0 0 154 0 0 0 18 1 0 0 7 0 0 0 68 111 108 112 104 105 110 18 1 0 0 4 0 0 0 67 111 114 101].
+	self assert: subject class identicalTo: RelativeBindingReference.
+	self deny: subject isPrivate.
+	self assert: subject scope identicalTo: Core.
+	self assert: subject value identicalTo: Object!
+
+testStlConvertFromVersion1
+	| subject |
+	subject := Compiler
+				evaluate: '(Object fromLiteralStoreArray: #(#''!!STL'' 4 1508678 1 ##(Kernel.BindingReference) 8 ''Core.Object'' nil true nil nil))'.
+	self assert: subject class identicalTo: FullBindingReference.
+	self assert: subject isPrivate.
+	self assert: subject value identicalTo: Object!
+
+testStlConvertRelativeFromVersion1
+	| subject |
+	subject := Compiler
+				evaluate: '(Object fromLiteralStoreArray: #(#''!!STL'' 4 2033222 1 ##(Kernel.RelativeBindingReference) 8 ''Object'' nil false nil nil ##(Core)))'.
 	self assert: subject class identicalTo: RelativeBindingReference.
 	self deny: subject isPrivate.
 	self assert: subject scope identicalTo: Core.
 	self assert: subject value identicalTo: Object! !
 !Kernel.Tests.FullBindingReferenceTest categoriesForMethods!
 subjectClass!constants!private! !
-testAsQualifiedReference!public! !
+testAsQualifiedReference!public!unit tests! !
 testEnvironmentName!public!unit tests! !
 testEnvironmentNameRelative!public!unit tests! !
 testEqualityOfRelativeAndAbsolute!public!unit tests! !
 testEqualsLiteral!public!unit tests! !
 testIsValidGlobalName!public!unit tests! !
 testLessOrEqual!public!unit tests! !
-testLiteral!public! !
-testLiteralExplicitEnvironmentRelative!public! !
-testLiteralExplicitEnvironmentRelative2!public! !
-testLiteralImplicitEnvironmentRelative!public! !
-testLiteralImplicitExplicitEnvironmentRelative!public! !
-testRelativeNoScope!public!unit tests! !
+testLiteral!public!unit tests! !
+testLiteralExplicitEnvironmentRelative!public!unit tests! !
+testLiteralExplicitEnvironmentRelative2!public!unit tests! !
+testLiteralImplicitEnvironmentRelative!public!unit tests! !
+testLiteralImplicitExplicitEnvironmentRelative!public!unit tests! !
 testScope!public!unit tests! !
-testStbConvertFromVersion0!public! !
-testStbConvertFromVersion1!public! !
+testStbConvertFromVersion0!public!unit tests! !
+testStbConvertFromVersion1!public!unit tests! !
+testStbConvertRelativeFromVersion0!public!unit tests! !
+testStbConvertRelativeFromVersion1!public!unit tests! !
+testStlConvertFromVersion1!public!unit tests! !
+testStlConvertRelativeFromVersion1!public!unit tests! !
 !
 

@@ -50,7 +50,7 @@ testRemoveLocalBindingFor
 		when: #variableRemoved:
 		send: #onVariableRemoved:
 		to: self.
-	ref := AbstractBindingReference pathString: key scope: subject.
+	ref := BindingReference pathString: key scope: subject.
 	self assert: ref bindingOrNil identicalTo: binding.
 	removed := subject removeBindingFor: key.
 	self assert: removed identicalTo: binding.

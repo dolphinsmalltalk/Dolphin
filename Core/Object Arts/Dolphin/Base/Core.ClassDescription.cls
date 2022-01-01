@@ -194,7 +194,7 @@ bindings
 	^self classPool associations!
 
 bindingsChanged
-	AbstractBindingReference clearCachedBindings!
+	BindingReference clearCachedBindings!
 
 bindingsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the receiver's localled defined <VariableBinding>s."

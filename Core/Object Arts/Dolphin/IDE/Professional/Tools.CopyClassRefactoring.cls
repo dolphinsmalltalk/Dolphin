@@ -14,13 +14,13 @@ Tools.CopyClassRefactoring comment: ''!
 className: aName newName: aNewName superclass: aClass
 	self className: aName.
 	"If the new name is unqualified, preserve the original namespace of the class."
-	newName := ((AbstractBindingReference isQualifiedName: aNewName)
+	newName := ((BindingReference isQualifiedName: aNewName)
 				ifTrue: [aNewName]
 				ifFalse: 
 					[| parts |
-					parts := AbstractBindingReference.PathSeparator split: aName.
+					parts := BindingReference.PathSeparator split: aName.
 					parts at: parts size put: aNewName.
-					AbstractBindingReference.PathSeparator join: parts])
+					BindingReference.PathSeparator join: parts])
 					asSymbol.
 	class := self model classNamed: className.
 	superclass := self classObjectFor: aClass.

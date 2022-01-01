@@ -10,10 +10,7 @@
 		#bytes : ByteArray [ 'd2f1590ebe1fd0118ff200a0d10038bc00000000010000000100000008000000' ]
 	},
 	#namespaceName : BindingReference {
-		#pathString : 'MSScriptControl',
-		#path : [
-			'MSScriptControl'
-		]
+		#pathString : 'MSScriptControl'
 	},
 	#packageName : 'ActiveX Scripting',
 	#aliasMap : LookupTable { }

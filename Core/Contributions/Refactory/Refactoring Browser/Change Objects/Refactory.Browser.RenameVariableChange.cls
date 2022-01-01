@@ -29,7 +29,7 @@ changeClassName
 changeClassName: aString
 	| wasMeta |
 	wasMeta := classReference notNil and: [classReference isMeta].
-	classReference := AbstractBindingReference pathString: aString.
+	classReference := BindingReference pathString: aString.
 	wasMeta ifTrue: [classReference := classReference meta]!
 
 changeString

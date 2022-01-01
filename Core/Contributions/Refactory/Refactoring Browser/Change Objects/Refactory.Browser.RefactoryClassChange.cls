@@ -28,12 +28,11 @@ changeClass: aBehavior
 changeClassName
 	^self classReference instance asString!
 
-changeClassName: aSymbol 
+changeClassName: aSymbol
 	| wasMeta |
 	wasMeta := classReference notNil and: [classReference isMeta].
-	classReference := AbstractBindingReference pathString: aSymbol.
-	wasMeta ifTrue: [classReference := classReference meta]
-!
+	classReference := BindingReference pathString: aSymbol.
+	wasMeta ifTrue: [classReference := classReference meta]!
 
 changeString
 	^self displayClassName!

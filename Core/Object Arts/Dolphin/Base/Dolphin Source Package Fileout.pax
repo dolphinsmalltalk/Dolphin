@@ -519,7 +519,7 @@ fileOutBinaryVariables
 					[:each |
 					| stem stream |
 					stem := each shortName.
-					(AbstractBindingReference isQualifiedName: stem) ifTrue: [^SourceFormatNotSupportedError signalWith: each].
+					(BindingReference isQualifiedName: stem) ifTrue: [^SourceFormatNotSupportedError signalWith: each].
 					stream := FileStream write: (File
 										composePath: self path
 										stem: stem

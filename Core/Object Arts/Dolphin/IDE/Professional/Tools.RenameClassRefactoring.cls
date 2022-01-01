@@ -52,13 +52,13 @@ className: aName newName: aNewName
 	"If the new name is unqualified, preserve the original namespace of the class."
 
 	oldClassReference := aName asQualifiedReference.
-	newClassReference := (AbstractBindingReference isQualifiedName: aNewName)
-				ifTrue: [AbstractBindingReference pathString: aNewName]
+	newClassReference := (BindingReference isQualifiedName: aNewName)
+				ifTrue: [BindingReference pathString: aNewName]
 				ifFalse: 
 					[| parts |
 					parts := oldClassReference path copy.
 					parts at: parts size put: aNewName.
-					AbstractBindingReference path: parts].
+					BindingReference path: parts].
 	self className: aName.
 	newName := newClassReference pathString.
 	class := self model classNamed: className.
