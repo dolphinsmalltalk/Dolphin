@@ -43,7 +43,7 @@ classes: classArray metaClasses: metaArray
 classesAndSelectorsDo: aBlock
 	classSelectors keysAndValuesDo: 
 			[:eachClassName :eachSelectors |
-			(Smalltalk resolveBindingPath: (BindingReference.PathSeparator split: eachClassName))
+			(Smalltalk resolveBindingPath: (AbstractBindingReference.PathSeparator split: eachClassName))
 				ifNotNil: 
 					[:binding |
 					| class |
@@ -53,7 +53,7 @@ classesAndSelectorsDo: aBlock
 							[eachSelectors do: [:each | (class includesSelector: each) ifTrue: [aBlock value: class value: each]]]]].
 	metaClassSelectors keysAndValuesDo: 
 			[:eachClassName :eachSelectors |
-			(Smalltalk resolveBindingPath: (BindingReference.PathSeparator split: eachClassName))
+			(Smalltalk resolveBindingPath: (AbstractBindingReference.PathSeparator split: eachClassName))
 				ifNotNil: 
 					[:binding |
 					| meta |
@@ -65,7 +65,7 @@ classesAndSelectorsDo: aBlock
 classesDo: aBlock
 	classSelectors keysDo: 
 			[:each |
-			(Smalltalk resolveBindingPath: (BindingReference.PathSeparator split: each))
+			(Smalltalk resolveBindingPath: (AbstractBindingReference.PathSeparator split: each))
 				ifNotNil: 
 					[:binding |
 					| class |
@@ -73,7 +73,7 @@ classesDo: aBlock
 					(environment includesClass: class) ifTrue: [aBlock value: class]]].
 	metaClassSelectors keysDo: 
 			[:each |
-			(Smalltalk resolveBindingPath: (BindingReference.PathSeparator split: each))
+			(Smalltalk resolveBindingPath: (AbstractBindingReference.PathSeparator split: each))
 				ifNotNil: 
 					[:binding |
 					| meta |

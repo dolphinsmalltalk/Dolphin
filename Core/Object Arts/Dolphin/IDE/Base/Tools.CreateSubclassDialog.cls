@@ -211,7 +211,7 @@ validateModel
 	result := ValidationResult new
 				presenter: namePresenter;
 				yourself.
-	(BindingReference isQualifiedName: namePresenter value)
+	(AbstractBindingReference isQualifiedName: namePresenter value)
 		ifTrue: 
 			[^result
 				errorMessage: 'New class name cannot be qualified';

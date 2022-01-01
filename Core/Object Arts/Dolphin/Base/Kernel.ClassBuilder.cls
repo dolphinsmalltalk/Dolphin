@@ -148,7 +148,7 @@ className: aString
 
 	| path len |
 	(className := aString) ifNil: [^self].
-	path := BindingReference.PathSeparator split: aString.
+	path := AbstractBindingReference.PathSeparator split: aString.
 	len := path size.
 	len == 1
 		ifTrue: 
@@ -156,7 +156,7 @@ className: aString
 			environment := self baseEnvironment]
 		ifFalse: 
 			[className := (path at: len) asSymbol.
-			environment := (BindingReference path: (path copyFrom: 1 to: len - 1) scope: Root) value]!
+			environment := (AbstractBindingReference path: (path copyFrom: 1 to: len - 1) scope: Root) value]!
 
 classOf: aClass
 	"Private - Answer the class of aClass or Class if it is nil."
@@ -1402,14 +1402,14 @@ isValidClassName: aString
 	"Private - Answer whether aString is a valid class name."
 
 	| parts |
-	parts := BindingReference splitQualifiedName: aString.
+	parts := AbstractBindingReference.PathSeparator split: aString.
 	^(parts allSatisfy: 
 			[:each |
 			each notEmpty
 				and: [(self isValidIdentifier: each) and: [each first == $_ or: [each first isUppercase]]]])
 		and: 
 			[| ns |
-			ns := (BindingReference path: parts allButLast) valueOrNil.
+			ns := (AbstractBindingReference path: parts allButLast) valueOrNil.
 			ns notNil and: [ns class isMeta]]!
 
 isValidIdentifier: aString

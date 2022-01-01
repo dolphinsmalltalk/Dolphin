@@ -5859,7 +5859,7 @@ Press No to keep the existing class name <1d>.
 Press Cancel to quit.'
 				expandMacrosWith: aClass fullName
 				with: environment
-				with: (BindingReference pathString: aClass unqualifiedName home: environment)
+				with: (AbstractBindingReference pathString: aClass unqualifiedName home: environment)
 						asFullyQualifiedReference).
 	mb
 		buttonStyle: #yesNoCancel;
@@ -6895,7 +6895,7 @@ maybeChangeNamespaceOf: existingClass
 	(self namespaceClashSignal signalWith: existingClass)
 		ifTrue: 
 			[Tools.SmalltalkSystem current renameClass: existingClass
-				to: (BindingReference pathString: existingClass unqualifiedName home: self environment)
+				to: (AbstractBindingReference pathString: existingClass unqualifiedName home: self environment)
 						asFullyQualifiedReference asSymbol].
 	^existingClass binding!
 
@@ -6915,7 +6915,7 @@ namespaceBinding
 					[typelibVarName := self variableName.
 					ns := binding value.
 					ns at: typelibVarName put: self.
-					self package addVariableNamed: (BindingReference pathString: typelibVarName home: ns)]].
+					self package addVariableNamed: (AbstractBindingReference pathString: typelibVarName home: ns)]].
 	^binding!
 
 namespaceImports

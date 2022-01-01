@@ -31,7 +31,7 @@ changeClassName
 changeClassName: aSymbol 
 	| wasMeta |
 	wasMeta := classReference notNil and: [classReference isMeta].
-	classReference := BindingReference pathString: aSymbol.
+	classReference := AbstractBindingReference pathString: aSymbol.
 	wasMeta ifTrue: [classReference := classReference meta]
 !
 

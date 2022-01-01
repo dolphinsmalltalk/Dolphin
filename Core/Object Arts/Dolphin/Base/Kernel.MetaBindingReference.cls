@@ -173,7 +173,7 @@ instance: aBindingReference
 		yourself!
 
 newPath: anArray private: aBoolean scope: aBindingScope
-	^self instance: (BindingReference
+	^self instance: (AbstractBindingReference
 				newPath: anArray
 				private: aBoolean
 				scope: aBindingScope)!
@@ -182,7 +182,7 @@ pathString: aString scope: anObject
 	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is relative to the binding context, anObject. If anObject is nil, then an AbsoluteBindingPath is returned. 
 	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance will be a contextual BindingReference with that object as its starting point for resolving the binding."
 
-	^self instance: (BindingReference pathString: aString scope: anObject)! !
+	^self instance: (AbstractBindingReference pathString: aString scope: anObject)! !
 !Kernel.MetaBindingReference class categoriesForMethods!
 instance:!instance creation!public! !
 newPath:private:scope:!instance creation!private! !

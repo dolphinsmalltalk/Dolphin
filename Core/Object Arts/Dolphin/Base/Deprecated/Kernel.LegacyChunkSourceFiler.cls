@@ -116,7 +116,7 @@ emitPackageMethodNames: aPackage
 					| class name |
 					class := each className value.
 					name := (Smalltalk oldNames lookup: class) ifNil: [class shortName].
-					(BindingReference isQualifiedName: name)
+					(AbstractBindingReference isQualifiedName: name)
 						ifTrue: 
 							[^SourceFormatNotSupportedError
 								signal: 'Extended classes must be bindable by unqualified name from Smalltalk.'
@@ -303,7 +303,7 @@ fileOutBasicDefinitionOfClass: aClass
 
 	| superclass |
 	superclass := aClass superclass.
-	(BindingReference isQualifiedName: superclass shortName)
+	(AbstractBindingReference isQualifiedName: superclass shortName)
 		ifTrue: 
 			[^SourceFormatNotSupportedError
 				signal: 'The superclass <1p> is not bindable by unqualified name from Smalltalk.' << superclass
@@ -368,7 +368,7 @@ fileOutPackageVariableAliases: aPackage
 				nextPutAll: ' := '.
 			target := var value.
 			name := target unaliasedName.
-			(BindingReference isQualifiedName: name)
+			(AbstractBindingReference isQualifiedName: name)
 				ifTrue: 
 					[SourceFormatNotSupportedError
 						signal: 'Alias targets must be bindable by unqualified name from Smalltalk'
@@ -423,7 +423,7 @@ fileOutPoolDictionary: aPoolDictionary
 getShortName: aProgramObject
 	| name |
 	name := aProgramObject shortName.
-	^(BindingReference isQualifiedName: name)
+	^(AbstractBindingReference isQualifiedName: name)
 		ifTrue: [SourceFormatNotSupportedError signalWith: aProgramObject]
 		ifFalse: [name]!
 

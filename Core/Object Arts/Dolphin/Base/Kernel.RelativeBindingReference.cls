@@ -28,7 +28,7 @@ Kernel.RelativeBindingReference comment: ''!
 asFullyQualifiedReference
 	"Answer a<BindingReference> that references the same binding as the receiver does currently in its home context, but from Smalltalk or Root."
 
-	^BindingReference pathString: self environmentName , PathSeparatorString , self unqualifiedName
+	^BindingReference newPathString: self environmentName , PathSeparatorString , self unqualifiedName
 		private: private!
 
 asString
@@ -100,10 +100,10 @@ private
 	^self isPrivate
 		ifTrue: [self]
 		ifFalse: 
-			[BindingReference
-				pathString: self pathString
-				scope: self bindingScope
-				flags: PrivateMask]!
+			[self class
+				newPathString: self pathString
+				private: private
+				scope: scope]!
 
 scope
 	"Private - Answer the <bindingScope> in which the reference was created. For relative references this is used to determine the start point for binding resolution and must never be nil."
@@ -150,8 +150,22 @@ newPath: anArray private: aBoolean scope: aBindingScope
 	^self basicNew
 		setPath: anArray
 		private: aBoolean
+		scope: aBindingScope!
+
+newPathString: aString private: aBoolean scope: aBindingScope
+	^self basicNew
+		setPathString: aString
+		private: aBoolean
+		scope: aBindingScope!
+
+pathString: aString private: aBoolean scope: aBindingScope
+	^self basicNew
+		setPathString: aString
+		private: aBoolean
 		scope: aBindingScope! !
 !Kernel.RelativeBindingReference class categoriesForMethods!
 newPath:private:scope:!instance creation!private! !
+newPathString:private:scope:!instance creation!private! !
+pathString:private:scope:!instance creation!private! !
 !
 

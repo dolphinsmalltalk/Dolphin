@@ -385,7 +385,7 @@ convertOldMethodNames
 			[:each |
 			| parts className |
 			parts := each key subStrings.
-			className := classes addIfAbsent: (BindingReference pathString: parts first).
+			className := classes addIfAbsent: (AbstractBindingReference pathString: parts first).
 			parts size > 1 ifTrue: [className := classes addIfAbsent: className meta].
 			names add: (MethodName className: className selector: each value)].
 	methodNames := names!

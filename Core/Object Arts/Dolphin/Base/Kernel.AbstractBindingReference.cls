@@ -2,7 +2,7 @@
 
 Core.Object subclass: #'Kernel.AbstractBindingReference'
 	instanceVariableNames: ''
-	classVariableNames: 'Undeclared'
+	classVariableNames: 'Generation Undeclared'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -95,7 +95,7 @@ declare
 	^self environment
 		ifNil: 
 			[self bindingScope localScope
-				errorNotFound: (BindingReference path: self path allButLast scope: self scope)]
+				errorNotFound: (AbstractBindingReference path: self path allButLast scope: self scope)]
 		ifNotNil: [:env | env declareVariable: self path last]!
 
 declare: anObject
@@ -172,11 +172,6 @@ instance
 	"Answer a `BindingReference` that resolves to the value of the binding with the receiver's path."
 
 	^self subclassResponsibility!
-
-isAbsolute
-	"Answer whether the receiver specifies an absolute, fully-qualified, binding reference that always resolves to the same binding, no matter the initial binding context."
-
-	^self isRelative not!
 
 isDefined
 	"Answer whether the receiver refers to a defined variable."
@@ -342,7 +337,6 @@ ifDefinedDo:!evaluating!public! !
 ifDefinedDo:elseDo:!evaluating!public! !
 ifNotDefined:!evaluating!public! !
 instance!converting!public! !
-isAbsolute!public!testing! !
 isDefined!public!testing! !
 isLiteral!public!testing! !
 isMeta!public!testing! !
@@ -374,12 +368,24 @@ valueOrNil!accessing!public! !
 
 !Kernel.AbstractBindingReference class methodsFor!
 
+clearCachedBindings
+	Generation := Generation + 1.
+	"Avoid the generation number becoming a large integer - unlikely, but possible"
+	Generation >= VMConstants.SmallIntegerMax ifTrue: [self flushBindings]!
+
+flushBindings
+	| instances |
+	instances := BindingReference primAllSubinstances.
+	1 to: instances size do: [:i | (instances at: i) setBinding: nil].
+	Generation := 0!
+
 initialize
 	Undeclared := UndeclaredVariable new.
 	VM
 		registryAt: self name put: self;
 		registryAtIndex: 65 put: #pathString:scope:flags:;
-		registryAtIndex: 69 put: #setScope:!
+		registryAtIndex: 69 put: #setScope:.
+	self flushBindings!
 
 isQualifiedName: aString
 	"Answer whether the argument is probably a qualified name (as opposed to an unqualified, or simple, name)."
@@ -393,7 +399,7 @@ isValidQualifiedName: aString
 	"Answer whether the argument is a valid static variable name, qualified or unqualified."
 
 	^(self isQualifiedName: aString)
-		ifTrue: [(self splitQualifiedName: aString) allSatisfy: [:each | self isValidUnqualifiedName: each]]
+		ifTrue: [(PathSeparator split: aString) allSatisfy: [:each | self isValidUnqualifiedName: each]]
 		ifFalse: [self isValidUnqualifiedName: aString]!
 
 isValidUnqualifiedName: aString
@@ -411,7 +417,25 @@ new
 	^self pathString: ''!
 
 newPath: anArray private: aBoolean scope: aBindingScope
-	^self subclassResponsibility!
+	^(anArray size <= 1
+		ifTrue: 
+			[aBindingScope
+				ifNil: [BindingReference basicNew setPath: anArray private: aBoolean]
+				ifNotNil: 
+					[RelativeBindingReference
+						newPath: anArray
+						private: aBoolean
+						scope: aBindingScope]]
+		ifFalse: 
+			[(anArray at: 1) = RelativePathPrefix
+				ifTrue: 
+					[RelativeBindingReference
+						newPath: (anArray copyFrom: 2 to: anArray size)
+						private: aBoolean
+						scope: aBindingScope]
+				ifFalse: [BindingReference basicNew setPath: anArray private: aBoolean]])
+		isImmutable: true;
+		yourself!
 
 path: aSequencedReadableCollection
 	"Answer a new instance of the receiver representing the qualified name composed of the <readableString> elements of the argument."
@@ -452,19 +476,51 @@ pathString: aString home: aNamespace
 	^self pathString: aString scope: (aNamespace == Smalltalk ifFalse: [aNamespace])!
 
 pathString: aString private: aBoolean
-	^BindingReference basicNew setPathString: aString private: aBoolean!
+	^self
+		pathString: aString
+		private: aBoolean
+		scope: nil!
 
 pathString: aString private: aBoolean scope: aBindingScope
-	^RelativeBindingReference basicNew
-		setPathString: aString
-		private: aBoolean
-		scope: aBindingScope!
+	^aBindingScope
+		ifNil: [BindingReference newPathString: aString private: aBoolean]
+		ifNotNil: 
+			[RelativeBindingReference
+				newPathString: aString
+				private: aBoolean
+				scope: aBindingScope]!
 
 pathString: aString scope: aBindingScope
-	"Answer a new sub-instance of the receiver representing the qualified name identified by the <readableString> argument, which is relative to the binding context, anObject. If anObject is nil, then an AbsoluteBindingPath is returned. 
-	If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance will be a contextual BindingReference with that object as its starting point for resolving the binding."
+	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is relative to the binding context, anObject. If anObject is nil, then the instance is a reference from Smalltalk. If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance is then a contextual BindingReference with that object as (potentially) its starting point for resolving the binding. However, the context is only relevant as a start point for binding if the path string is an unqualified name, or has the special relative prefix, '_', as the first component of the path. Otherwise the binding reference is considered to specify the full-name of the binding, and will always bind to the same static variable, regardless of context. Since the context is not needed for absolute bindings, it will be discarded - the context of absolute bindings is always nil, which in practice means their binding root is Smalltalk."
 
-	^self subclassResponsibility!
+	| components count qualifiedName flags scope |
+	components := $\x20 split: aString.
+	count := components size.
+	count > 0
+		ifFalse: 
+			[^self
+				pathString: aString
+				scope: aBindingScope
+				flags: 0].
+	qualifiedName := components at: 1.
+	scope := aBindingScope.
+	flags := (qualifiedName beginsWith: RelativePathStringPrefix)
+				ifTrue: 
+					[scope := aBindingScope ?? Smalltalk.
+					qualifiedName := qualifiedName copyFrom: 3 to: qualifiedName size.
+					RelativeMask]
+				ifFalse: 
+					[(aBindingScope notNil and: [(qualifiedName identityIncludes: PathSeparator) not])
+						ifTrue: [RelativeMask]
+						ifFalse: [0]].
+	count > 1
+		ifTrue: 
+			[(components includes: 'class') ifTrue: [flags := flags bitOr: MetaMask].
+			(components includes: 'private') ifTrue: [flags := flags bitOr: PrivateMask]].
+	^self
+		pathString: qualifiedName
+		scope: scope
+		flags: flags!
 
 pathString: aString scope: aBindingScope flags: anInteger
 	"Private - Note that this is sent directly by the Compiler to construct literal instances. The path string is expected not to have a relative prefix, but rather to pass the RelativeMask flag to request a relative binding reference."
@@ -474,11 +530,11 @@ pathString: aString scope: aBindingScope flags: anInteger
 	| ref |
 	ref := ((anInteger allMask: RelativeMask)
 				ifTrue: 
-					[self
-						pathString: aString
+					[RelativeBindingReference
+						newPathString: aString
 						private: (anInteger allMask: PrivateMask)
 						scope: aBindingScope]
-				ifFalse: [self pathString: aString private: (anInteger allMask: PrivateMask)])
+				ifFalse: [BindingReference newPathString: aString private: (anInteger allMask: PrivateMask)])
 				isImmutable: true;
 				yourself.
 	^(anInteger allMask: MetaMask) ifTrue: [ref meta] ifFalse: [ref]!
@@ -496,12 +552,14 @@ simpleName: aString in: aNamespace
 splitQualifiedName: aString
 	^PathSeparator split: aString! !
 !Kernel.AbstractBindingReference class categoriesForMethods!
+clearCachedBindings!operations!private! !
+flushBindings!operations!private! !
 initialize!class initialization!public! !
 isQualifiedName:!enquiries!public! !
 isValidQualifiedName:!enquiries!public! !
 isValidUnqualifiedName:!enquiries!public! !
 new!instance creation!public! !
-newPath:private:scope:!public! !
+newPath:private:scope:!instance creation!private! !
 path:!instance creation!public! !
 path:home:!compatibility!instance creation!public! !
 path:private:scope:!instance creation!public! !

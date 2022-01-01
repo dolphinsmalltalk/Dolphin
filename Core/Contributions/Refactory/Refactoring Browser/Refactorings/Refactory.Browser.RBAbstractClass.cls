@@ -252,7 +252,7 @@ environment
 
 environmentName
 	| parts count stream |
-	parts := BindingReference.PathSeparator split: self fullName.
+	parts := AbstractBindingReference.PathSeparator split: self fullName.
 	(count := parts size) < 2 ifTrue: [^self baseEnvironmentName].
 	stream := String writeStream: 32.
 	stream nextPutAll: (parts at: 1).
@@ -260,7 +260,7 @@ environmentName
 		do: 
 			[:i |
 			stream
-				nextPut: BindingReference.PathSeparator;
+				nextPut: AbstractBindingReference.PathSeparator;
 				nextPutAll: (parts at: i)].
 	^stream contents!
 

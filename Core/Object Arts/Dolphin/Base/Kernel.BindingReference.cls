@@ -2,7 +2,7 @@
 
 Kernel.AbstractBindingReference subclass: #'Kernel.BindingReference'
 	instanceVariableNames: 'pathString path private binding generation'
-	classVariableNames: 'Generation'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -145,7 +145,7 @@ pathString
 			pathString]!
 
 private
-	^private ifTrue: [self] ifFalse: [BindingReference pathString: self pathString private: true]!
+	^private ifTrue: [self] ifFalse: [self class newPathString: self pathString private: true]!
 
 scope
 	"Private - Answer the <bindingScope> in which the reference was created. For relative references this is used to determine the start point for binding resolution. For absolute references this should always be nil."
@@ -239,17 +239,6 @@ valueOrNil!accessing!public! !
 
 !Kernel.BindingReference class methodsFor!
 
-clearCachedBindings
-	Generation := Generation + 1.
-	"Avoid the generation number becoming a large integer - unlikely, but possible"
-	Generation >= VMConstants.SmallIntegerMax ifTrue: [self flushBindings]!
-
-flushBindings
-	| instances |
-	instances := self primAllSubinstances.
-	1 to: instances size do: [:i | (instances at: i) setBinding: nil].
-	Generation := 0!
-
 fullPathString: aString
 	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is expected to be a fully qualified name."
 
@@ -258,61 +247,8 @@ fullPathString: aString
 		isImmutable: true;
 		yourself!
 
-initialize
-	self flushBindings!
-
-newPath: anArray private: aBoolean scope: aBindingScope
-	^(anArray size <= 1
-		ifTrue: 
-			[aBindingScope
-				ifNil: [BindingReference basicNew setPath: anArray private: aBoolean]
-				ifNotNil: 
-					[RelativeBindingReference
-						newPath: anArray
-						private: aBoolean
-						scope: aBindingScope]]
-		ifFalse: 
-			[(anArray at: 1) = RelativePathPrefix
-				ifTrue: 
-					[RelativeBindingReference
-						newPath: (anArray copyFrom: 2 to: anArray size)
-						private: aBoolean
-						scope: aBindingScope]
-				ifFalse: [BindingReference basicNew setPath: anArray private: aBoolean]])
-		isImmutable: true;
-		yourself!
-
-pathString: aString scope: aBindingScope
-	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is relative to the binding context, anObject. If anObject is nil, then the instance is a reference from Smalltalk. If anObject is not nil, then it is expected to be some kind of name binding context (i.e. a namespace, class, or method), and the new instance is then a contextual BindingReference with that object as (potentially) its starting point for resolving the binding. However, the context is only relevant as a start point for binding if the path string is an unqualified name, or has the special relative prefix, '_', as the first component of the path. Otherwise the binding reference is considered to specify the full-name of the binding, and will always bind to the same static variable, regardless of context. Since the context is not needed for absolute bindings, it will be discarded - the context of absolute bindings is always nil, which in practice means their binding root is Smalltalk."
-
-	| components count qualifiedName flags scope |
-	components := $\x20 split: aString.
-	count := components size.
-	count > 0
-		ifFalse: 
-			[^self
-				pathString: aString
-				scope: aBindingScope
-				flags: 0].
-	qualifiedName := components at: 1.
-	scope := aBindingScope.
-	flags := (qualifiedName beginsWith: RelativePathStringPrefix)
-				ifTrue: 
-					[scope := aBindingScope ?? Smalltalk.
-					qualifiedName := qualifiedName copyFrom: 3 to: qualifiedName size.
-					RelativeMask]
-				ifFalse: 
-					[(aBindingScope notNil and: [(qualifiedName identityIncludes: PathSeparator) not])
-						ifTrue: [RelativeMask]
-						ifFalse: [0]].
-	count > 1
-		ifTrue: 
-			[(components includes: 'class') ifTrue: [flags := flags bitOr: MetaMask].
-			(components includes: 'private') ifTrue: [flags := flags bitOr: PrivateMask]].
-	^self
-		pathString: qualifiedName
-		scope: scope
-		flags: flags!
+newPathString: aString private: aBoolean
+	^self basicNew setPathString: aString private: aBoolean!
 
 stbConvertFrom: anSTBClassFormat
 	"Convert from version 0:
@@ -343,12 +279,8 @@ uninitialize
 		registryAtIndex: 65 put: nil;
 		registryAtIndex: 69 put: nil! !
 !Kernel.BindingReference class categoriesForMethods!
-clearCachedBindings!operations!private! !
-flushBindings!operations!private! !
 fullPathString:!instance creation!public! !
-initialize!class initialization!public! !
-newPath:private:scope:!instance creation!private! !
-pathString:scope:!instance creation!public! !
+newPathString:private:!instance creation!private! !
 stbConvertFrom:!public! !
 stbVersion!public! !
 uninitialize!class hierarchy-removing!private! !

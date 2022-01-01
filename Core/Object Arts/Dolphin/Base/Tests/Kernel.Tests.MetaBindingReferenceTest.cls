@@ -29,7 +29,7 @@ testEqualityOfMetaAndInstance
 
 testInstance
 	| inst subject |
-	inst := BindingReference pathString: 'Object'.
+	inst := AbstractBindingReference pathString: 'Object'.
 	subject := inst meta.
 	self assert: subject instance identicalTo: inst!
 
@@ -72,6 +72,19 @@ testMeta
 	subject := self subjectClass pathString: 'Object'.
 	self assert: subject meta identicalTo: subject!
 
+testPathPrivateScope
+	| subject |
+	subject := MetaBindingReference
+				path: #('MetaBindingReferenceTest')
+				private: true
+				scope: Kernel.Tests.
+	self assert: subject value identicalTo: self class class.
+	subject := MetaBindingReference
+				path: #('_' 'Tests' 'MetaBindingReferenceTest')
+				private: true
+				scope: Kernel.
+	self assert: subject value identicalTo: self class class!
+
 testPathString
 	| subject pathString |
 	self bindingTestCases do: 
@@ -85,12 +98,23 @@ testPathString
 	subject := self subjectClass pathString: ''.
 	self assert: subject path equals: #()!
 
+testPathStringScope
+	| subject |
+	subject := MetaBindingReference
+				pathString: 'MetaBindingReferenceTest'
+				scope: Kernel.Tests.
+	self assert: subject value identicalTo: self class class.
+	subject := MetaBindingReference
+				pathString: '_.Tests.MetaBindingReferenceTest'
+				scope: Kernel.
+	self assert: subject value identicalTo: self class class!
+
 testPathStringWithClass
 	#('Association class' 'Core.Association class' 'Association private class' 'Core.Association class private')
 		do: 
 			[:each |
 			| subject |
-			subject := BindingReference pathString: each.
+			subject := AbstractBindingReference pathString: each.
 			self assert: subject value identicalTo: Association class]!
 
 testRefersToLiteral
@@ -118,7 +142,9 @@ testLessOrEqual!public!unit tests! !
 testLiteral!public! !
 testLiteralImplicitEnvironmentRelative!public! !
 testMeta!public!unit tests! !
+testPathPrivateScope!public! !
 testPathString!public!unit tests! !
+testPathStringScope!public! !
 testPathStringWithClass!public!unit tests! !
 testRefersToLiteral!public!unit tests! !
 valueOfBinding:!helpers!private! !

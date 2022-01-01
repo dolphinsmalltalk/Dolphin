@@ -40,8 +40,10 @@ testFullName
 	self assert: self subject fullName equals: self subject name!
 
 testFullyQualifiedReference
-	self assert: self subject fullyQualifiedReference
-		equals: self subject name asQualifiedReference!
+	| ref |
+	ref := self subject fullyQualifiedReference.
+	self assert: ref equals: self subject fullName asQualifiedReference.
+	self deny: ref isRelative!
 
 testIncludesKey
 	self subclassResponsibility!

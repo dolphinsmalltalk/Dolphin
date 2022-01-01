@@ -90,7 +90,7 @@ testBindingOrNil
 					expected := Smalltalk resolveBindingPath: path.
 					self assert: actual identicalTo: expected]].
 	"Check that we don't arbitrarily bind class variables of Object"
-	subject := BindingReference pathString: '_EventsRegister'.
+	subject := AbstractBindingReference pathString: '_EventsRegister'.
 	self assertIsNil: subject bindingOrNil!
 
 testBindingOrNilInContext
@@ -206,20 +206,15 @@ testIsRelative
 	| subject |
 	subject := self subjectClass path: #(#Object) scope: Core.
 	self assert: subject isRelative.
-	self deny: subject isAbsolute.
 	subject := self subjectClass path: #('_' #SUnit #TestCase) scope: XProgramming.
 	self assert: subject isRelative.
-	self deny: subject isAbsolute.
 	subject := self subjectClass path: #(#Object) scope: Association.
 	self assert: subject isRelative.
-	self deny: subject isAbsolute.
 	subject := self subjectClass path: #(#Core #Object) scope: nil.
 	self deny: subject isRelative.
-	self assert: subject isAbsolute.
 	"If the path has multiple components, then unless the first component is '_', it is assumed to be an absolute path and the context is ignored"
 	subject := self subjectClass path: #(#Core #Object) scope: Association.
-	self deny: subject isRelative.
-	self assert: subject isAbsolute!
+	self deny: subject isRelative!
 
 testIsSelfEvaluating
 	| subject |

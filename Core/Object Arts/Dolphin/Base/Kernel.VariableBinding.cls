@@ -28,7 +28,7 @@ absoluteName
 asQualifiedReference
 	"Answer a <BindingReference> that refs to this binding."
 
-	^BindingReference pathString: key home: environment!
+	^AbstractBindingReference pathString: key home: environment!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -57,7 +57,7 @@ fullyQualifiedReference
 	"Answer a <BindingReference> that represents a fully qualified reference to the receiver relative to Smalltalk. If the Class is not in the hierarchy below Smalltalk (i.e. it is in Root, or another namespace hierarchy under Root), then it will be an absolute binding reference.
 	The resulting binding reference can be used to resolve the receiver, if installed, or to redeclare it, when not."
 
-	^BindingReference path: (environment fullPath copyWith: key)!
+	^AbstractBindingReference path: (environment fullPath copyWith: key)!
 
 isClassBinding
 	^value class isMeta and: [key == value unqualifiedName and: [environment == value basicEnvironment]]!

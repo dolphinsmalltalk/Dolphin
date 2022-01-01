@@ -171,7 +171,7 @@ fullNameFor: aString
 	^stream contents!
 
 fullyQualifiedReference
-	^BindingReference pathString: name!
+	^BindingReference fullPathString: name!
 
 getEnvironment
 	^model modelClassFor: ((realClass notNil and: [realClass fullName = name])
@@ -383,9 +383,9 @@ resolveLocallyImportedBinding: aBindingContext
 	^nil!
 
 resolvePathString: aString environment: aRBNamespaceClass
-	(BindingReference isQualifiedName: aString)
+	(AbstractBindingReference isQualifiedName: aString)
 		ifFalse: [^self resolveUnqualifiedName: aString environment: aRBNamespaceClass].
-	^self resolveBindingPath: (BindingReference.PathSeparator split: aString)
+	^self resolveBindingPath: (AbstractBindingReference.PathSeparator split: aString)
 		environment: aRBNamespaceClass!
 
 resolvePublicBinding: aBindingContext
@@ -442,7 +442,7 @@ unqualifiedName
 	"Answer the unqualified name of the class."
 
 	^unqualifiedName
-		ifNil: [unqualifiedName := (BindingReference.PathSeparator split: name) last asSymbol]! !
+		ifNil: [unqualifiedName := (AbstractBindingReference.PathSeparator split: name) last asSymbol]! !
 !Refactory.Browser.RBClass categoriesForMethods!
 <=!public! !
 addBinding:!public! !

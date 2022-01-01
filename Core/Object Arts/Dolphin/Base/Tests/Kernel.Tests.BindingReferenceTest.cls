@@ -75,9 +75,9 @@ testEqualsLiteral
 
 testIsValidGlobalName
 	#('A' 'A1' 'A_' '_A' 'a' '_a' '__A_B' 'A.B' 'Abc.D' '_Abc._d' 'abc.d')
-		do: [:each | self assert: (BindingReference isValidQualifiedName: each)].
+		do: [:each | self assert: (AbstractBindingReference isValidQualifiedName: each)].
 	#('_' '_.' 'A.' '.A' '_A.' '_.A' '.' 'a.' '_.a' '*' '' 'A.*' '*.' 'A..B')
-		do: [:each | self deny: (BindingReference isValidQualifiedName: each)]!
+		do: [:each | self deny: (AbstractBindingReference isValidQualifiedName: each)]!
 
 testLessOrEqual
 	| a b |
@@ -172,7 +172,17 @@ testLiteralImplicitExplicitEnvironmentRelative
 	self assert: (method value: Object new withArguments: #()) identicalTo: self class!
 
 testRelativeNoScope
-	self should: [BindingReference path: #('_' 'Object')] raise: Error!
+	self should: [AbstractBindingReference path: #('_' 'Object')] raise: Error!
+
+testScope
+	| subject coreRelative |
+	subject := 'Object' asQualifiedReference.
+	self deny: subject isRelative.
+	self assert: (subject scope: nil) equals: subject.
+	coreRelative := subject scope: Core.
+	self deny: coreRelative equals: subject.
+	self assert: coreRelative isRelative.
+	self assert: coreRelative scope identicalTo: Core!
 
 testStbConvertFromVersion0
 	| subject |
@@ -216,6 +226,7 @@ testLiteralExplicitEnvironmentRelative2!public! !
 testLiteralImplicitEnvironmentRelative!public! !
 testLiteralImplicitExplicitEnvironmentRelative!public! !
 testRelativeNoScope!public!unit tests! !
+testScope!public!unit tests! !
 testStbConvertFromVersion0!public! !
 testStbConvertFromVersion1!public! !
 !

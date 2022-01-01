@@ -15,7 +15,7 @@ Graphics comment: ''!
 uninitialize
 	"We must remove the receiver from the imports of Smalltalk when uninstalled to workaround a bug in binding resolution, which can go into an infinite loop trying to resolve Smalltalk's imports when looking up an imported binding. The bug otherwise prevents deployment of console applications."
 
-	Smalltalk removeImport: (BindingReference pathString: self fullName)! !
+	Smalltalk removeImport: self fullyQualifiedReference! !
 !Graphics class categoriesForMethods!
 uninitialize!class hierarchy-removing!private! !
 !

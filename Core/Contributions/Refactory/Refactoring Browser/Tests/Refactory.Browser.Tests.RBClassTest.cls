@@ -123,7 +123,7 @@ testExistingMethodPackageAndEnvironmentLooseCustom
 testExistingMethodPackageAndEnvironmentRootClass
 	| class packageAndEnv |
 	class := model classNamed: #Root.
-	packageAndEnv := class metaclass existingMethodPackageAndEnvironment: #fullyQualifiedReference.
+	packageAndEnv := class metaclass existingMethodPackageAndEnvironment: #nestedClasses.
 	self assert: packageAndEnv equals: (Pair first: Root owningPackage second: class)!
 
 testFullName

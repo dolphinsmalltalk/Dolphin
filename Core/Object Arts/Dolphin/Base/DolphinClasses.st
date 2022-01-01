@@ -2086,7 +2086,7 @@ nil subclass: #'Kernel.ProtoObject'
 	classConstants: {}!
 Core.Object subclass: #'Kernel.AbstractBindingReference'
 	instanceVariableNames: ''
-	classVariableNames: 'Undeclared'
+	classVariableNames: 'Generation Undeclared'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -2604,7 +2604,7 @@ Core.Object subclass: #'OS.VersionInfo'
 	classConstants: {}!
 Kernel.AbstractBindingReference subclass: #'Kernel.BindingReference'
 	instanceVariableNames: 'pathString path private binding generation'
-	classVariableNames: 'Generation'
+	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!

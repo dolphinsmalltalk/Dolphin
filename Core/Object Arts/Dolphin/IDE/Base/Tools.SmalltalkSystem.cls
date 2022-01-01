@@ -3198,7 +3198,7 @@ promptForReferencesToGlobal: aString in: aBrowserEnvironment
 				[:value |
 				| result |
 				result := ValidationResult new.
-				(BindingReference isValidQualifiedName: value)
+				(AbstractBindingReference isValidQualifiedName: value)
 					ifFalse: [result errorMessage: '<1p> is not a valid qualified name' << value]
 					ifTrue: 
 						[value asQualifiedReference isDefined ifFalse: [result errorMessage: '<1p> is undefined' << value]].
