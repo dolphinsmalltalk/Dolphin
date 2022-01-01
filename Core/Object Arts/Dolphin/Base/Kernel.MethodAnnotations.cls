@@ -112,6 +112,9 @@ selectors
 		do: [:i | selectors add: (self basicAt: i)].
 	^selectors!
 
+size
+	^self basicSize bitShift: -1!
+
 uncheckedFrom: startInteger to: stopInteger keysAndValuesDo: aDyadicValuable
 	"Private - Evaluate the <dyadicValuable> argument for each element of the receiver in the
 	specified inclusive range, with the element and its index as respectively the second and
@@ -161,6 +164,7 @@ includesSelector:!public!searching! !
 printOn:!printing!public! !
 refersTo:asLiteralOf:!private!testing! !
 selectors!accessing!public! !
+size!accessing!public! !
 uncheckedFrom:to:keysAndValuesDo:!enumerating!private! !
 withSelector:!enumerating!public! !
 withSelector:do:!enumerating!public! !
