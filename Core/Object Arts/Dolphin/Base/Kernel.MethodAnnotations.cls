@@ -36,6 +36,32 @@ basicNextIdentityIndexOf: anObject from: startInteger to: stopInteger
 copyingClass
 	^Array!
 
+displayOn: aStream
+	| startNext |
+	startNext := '<'.
+	1 to: self basicSize
+		by: 2
+		do: 
+			[:i |
+			| selector keywords |
+			aStream nextPutAll: startNext.
+			keywords := $: split: (selector := self basicAt: i).
+			keywords size == 1
+				ifTrue: [aStream nextPutAll: selector]
+				ifFalse: 
+					[| args |
+					args := self basicAt: i + 1.
+					1 to: keywords size - 1
+						do: 
+							[:k |
+							k > 1 ifTrue: [aStream space].
+							aStream
+								nextPutAll: (keywords at: k);
+								nextPutAll: ': ';
+								print: (args at: k)]].
+			aStream nextPut: $>.
+			startNext := ' <']!
+
 do: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the annotation <Message>s in the receiver."
 
@@ -67,32 +93,11 @@ includesSelector: aSymbol
 		to: self basicSize) odd!
 
 printOn: aStream
-	self basicPrintOn: aStream.
-	aStream nextPut: $(.
-	1 to: self basicSize
-		by: 2
-		do: 
-			[:i |
-			| selector keywords args |
-			i > 1 ifTrue: [aStream space].
-			selector := self basicAt: i.
-			aStream nextPut: $<.
-			keywords := $: split: selector.
-			args := self basicAt: i + 1.
-			keywords size = 1
-				ifTrue: [aStream nextPutAll: selector]
-				ifFalse: 
-					[1 to: keywords size - 1
-						do: 
-							[:k |
-							k > 1 ifTrue: [aStream space].
-							aStream
-								nextPutAll: (keywords at: k);
-								nextPut: $:;
-								space;
-								print: (args at: k)]].
-			aStream nextPut: $>].
-	aStream nextPut: $)!
+	aStream
+		basicPrint: self;
+		nextPut: $(;
+		display: self;
+		nextPut: $)!
 
 refersTo: anObject asLiteralOf: aCompiledCode
 	"Private - Answer whether the receiver is a reference to the literal argument."
@@ -157,6 +162,7 @@ at:!enumerating!public! !
 at:put:!accessing!public! !
 basicNextIdentityIndexOf:from:to:!private!searching! !
 copyingClass!copying!private! !
+displayOn:!printing!public! !
 do:!enumerating!public! !
 environment!public!searching! !
 first!enumerating!public! !

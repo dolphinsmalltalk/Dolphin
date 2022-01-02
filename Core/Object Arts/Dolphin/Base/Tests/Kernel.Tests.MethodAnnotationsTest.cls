@@ -79,6 +79,11 @@ testCopyFromTo
 		equals: {Message selector: #namespace: arguments: {Core}. Message selector: #mutable}.
 	self assert: (subject copyFrom: 4 to: 3) equals: #()!
 
+testDisplayOn
+	self assert: self canonicalSubject displayString
+		equals: '<namespace: Core> <mutable> <a: 1 b: ''2'' c: #three> <selector: #notSelector> <notSelector: #selector:> <selector: #notSelector2>'.
+	self assert: self emptySubject displayString equals: ''!
+
 testEnvironment
 	self assert: self canonicalSubject environment identicalTo: Core.
 	self assert: (MethodAnnotations fromPairs: #(#(#mutable #()))) environment equals: nil.
@@ -185,6 +190,7 @@ testAt!public!unit tests! !
 testAtPut!public!unit tests! !
 testCollect!public!unit tests! !
 testCopyFromTo!public!unit tests! !
+testDisplayOn!public!unit tests! !
 testEnvironment!public!unit tests! !
 testFirst!public!unit tests! !
 testIdentityIndexOf!public!unit tests! !

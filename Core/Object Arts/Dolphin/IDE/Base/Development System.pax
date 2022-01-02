@@ -408,6 +408,7 @@ package setMethodNames: #(
 	#(#{Kernel.CompileFailedMethod} #asDebugMethod)
 	#(#{Kernel.CompilerNotification} #okToContinue)
 	#(#{Kernel.InputState class} #publishedEventsOfInstances)
+	#(#{Kernel.MethodAnnotations} #aspectDisplayOn:)
 	#(#{Kernel.MethodProtocol} #icon)
 	#(#{Kernel.MethodProtocol class} #ansiIcon)
 	#(#{Kernel.MethodProtocol class} #publishedEventsOfInstances)
@@ -4592,6 +4593,18 @@ publishedEventsOfInstances
     ! !
 !Kernel.InputState class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
+!
+
+!Kernel.MethodAnnotations methodsFor!
+
+aspectDisplayOn: aStream
+	"Private - Append a single-line textual representation of the receiver to the <puttableStream>
+	argument in a form that a user viewing the receiver as the value of a published aspect would 
+	like to see it."
+
+	self displayOn: aStream! !
+!Kernel.MethodAnnotations categoriesForMethods!
+aspectDisplayOn:!private! !
 !
 
 !Kernel.MethodProtocol methodsFor!
