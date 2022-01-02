@@ -236,6 +236,45 @@ testLessOrEqual
 	self assert: a1 <= a.
 	self deny: a <= b!
 
+testLiteralStoreFull
+	"The literal form should be used for fully qualified references"
+
+	| full |
+	full := self subjectClass path: #('Core' 'Object').
+	{full. full private} do: 
+			[:each |
+			| expected actual binding rehydrated |
+			binding := each binding.
+			self assert: each literalStoreArray last identicalTo: each.
+			actual := each literalStoreEvaluationString.
+			rehydrated := Compiler evaluate: actual.
+			self assert: rehydrated equals: each.
+			self assertIsNil: (rehydrated instance instVarAt: 4).
+			self assertIsNil: (rehydrated instance instVarAt: 5).
+			self assert: rehydrated binding identicalTo: binding.
+			expected := '(Object fromLiteralStoreArray: #(#''!!STL'' <1p> 8 <2p>))' << {STBFiler version. each}.
+			self assert: actual equals: expected]!
+
+testLiteralStoreRelative
+	"The literal form cannot be used for unqualified or partially qualified (i.e. relative) references."
+
+	| relative |
+	relative := self subjectClass path: {'_'. self class name} scope: self class environment.
+	{relative. relative private} do: 
+			[:each |
+			| actual rehydrated binding |
+			binding := each binding.
+			actual := each literalStoreArray.
+			self deny: (actual includes: each).
+			self assert: (actual includes: RelativeBindingReference).
+			self assert: (actual includes: self class name).
+			self assert: (actual includes: self class environment).
+			rehydrated := Compiler evaluate: each literalStoreEvaluationString.
+			self assert: rehydrated equals: each.
+			self assertIsNil: (rehydrated instance instVarAt: 4).
+			self assertIsNil: (rehydrated instance instVarAt: 5).
+			self assert: rehydrated binding identicalTo: binding]!
+
 testMeta
 	| subject meta |
 	subject := self subjectClass pathString: #'Core.Object'.
@@ -448,6 +487,8 @@ testIsLiteral!public!unit tests! !
 testIsRelative!public!unit tests! !
 testIsSelfEvaluating!public!unit tests! !
 testLessOrEqual!public!unit tests! !
+testLiteralStoreFull!public!unit tests! !
+testLiteralStoreRelative!public!unit tests! !
 testMeta!public!unit tests! !
 testPath!public!unit tests! !
 testPathString!public!unit tests! !

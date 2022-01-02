@@ -183,7 +183,9 @@ setScope: aBindingScope
 stbSaveOn: anSTBOutFiler
 	"Implmentation Note: We don't want to save out any cached binding. Easiest is to flush it - it isn't that expensive to re-cache when needed"
 
-	self setBinding: nil.
+	self
+		setBinding: nil;
+		setGeneration: nil.
 	^super stbSaveOn: anSTBOutFiler!
 
 undeclare

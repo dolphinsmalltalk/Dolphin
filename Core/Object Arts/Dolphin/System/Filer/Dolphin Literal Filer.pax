@@ -127,7 +127,7 @@ literalStoreArray
 	self literalStoreOn: stream.
 	^stream contents!
 
-literalStoreEvaluationOn: aCharacterStream 
+literalStoreEvaluationOn: aCharacterStream
 	"Stores the receiver in a <readableString> form on aStream that can be reconstituted by
 	evaluating the string. Uses the STL filing mechanism to achieve this. This operation
 	provides an alternative to the legacy #storeOn:/#storeString mechanism. While still used in
@@ -137,9 +137,7 @@ literalStoreEvaluationOn: aCharacterStream
 
 	aCharacterStream nextPutAll: '(Object fromLiteralStoreArray: '.
 	self literalStoreArray literalPrintOn: aCharacterStream.
-	aCharacterStream
-		nextPut: $);
-		cr!
+	aCharacterStream nextPut: $)!
 
 literalStoreEvaluationString
 	"Stores the receiver in a <readableString> form that can be reconstituted by evaluating the
