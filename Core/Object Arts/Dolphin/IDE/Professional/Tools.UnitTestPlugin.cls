@@ -384,7 +384,7 @@ update: anObject
 		ifFalse: [super update: anObject]!
 
 updateDefects
-	self displayDefects: (result defects collect: [:each | result resultFor: each])!
+	self displayDefects: (result defects , result skipped collect: [:each | result resultFor: each])!
 
 updateWindow
 	result hasErrors

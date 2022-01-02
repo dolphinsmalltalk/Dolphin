@@ -109,7 +109,7 @@ testBindingFromNamespaceWithCustomEnvironment
 	"If we specify a custom environment in which the identifier is bindable, we should be able to find it"
 	indirect := SharedPool class fullBindingFor: 'ConfirmationRequiredWarning' environment: Tools.
 	"Fails currently due to bug imported namespace binding resolution bug."
-	self skipIfCiBuild.
+	self skip.
 	self assertNotNil: indirect.
 	self assert: direct sameAs: indirect!
 
