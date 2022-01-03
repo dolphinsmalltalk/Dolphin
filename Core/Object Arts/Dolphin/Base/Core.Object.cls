@@ -40,6 +40,8 @@ In addition any selector in Object with a ''basic'' prefix may be subject to inl
 ?? anObject
 	"Answer the receiver if not nil, else the operand."
 
+	"N.B. This implementation cannot be overridden, and is never, in fact, received (unless #perform'd), because #?? is inlined by the VM."
+
 	^self!
 
 _deepCopy: copiesDictionary 

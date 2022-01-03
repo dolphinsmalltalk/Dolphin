@@ -48,7 +48,7 @@ static const u8string VarThisContext = u8"thisContext"s;
 
 LPUTF8 s_restrictedSelectors[] =
 {
-	u8"==",			// Cannot be overridded or redefined at all
+	u8"==", u8"??",		// Cannot be overridded or redefined at all
 	u8"and:", u8"or:",	// Compiler assumes receiver is a boolean, so can't be overridden/redefined
 	u8"ifTrue:", u8"ifFalse:", u8"ifTrue:ifFalse:", u8"ifFalse:ifTrue:",	// "ditto"
 	u8"ifNil:", u8"ifNotNil:", u8"ifNil:ifNotNil:", u8"ifNotNil:ifNil:",

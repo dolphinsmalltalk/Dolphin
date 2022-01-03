@@ -24,6 +24,8 @@ UndefinedObject implements the following ANSI protocols:
 ?? anObject
 	"Answer the receiver if not nil, else the operand."
 
+	"N.B. This implementation cannot be overridden, and is never, in fact, received (unless #perform'd), because #?? is inlined by the VM."
+
 	^anObject!
 
 _deepCopy: copiesDictionary

@@ -128,7 +128,7 @@ struct VMPointers //: public Object
 			SymbolOTE* setScopeSelector;						// 69
 			SymbolOTE* virtualCallbackSelector;					// 70
 			SymbolOTE* exSpecialSelectors[NumExSpecialSends];	// 71,72,73,74
-			Oop _reservedSymbols[6];							// 75, 76,77,78,79,80
+			Oop _reservedSymbols[6];							// 75,76,77,78,79,80
 
 			// Classes required by Dolphin VM
 			// 81..90

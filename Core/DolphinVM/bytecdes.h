@@ -141,12 +141,10 @@ enum class OpCode : uint8_t {
 	PushActiveFrame,
 
 	ShortSpecialSendEx,
-	SpecialSendNotIdentical = ShortSpecialSendEx,
-	SpecialSendNot,
-
-	// Some unused space before double byte instructions...
-	UnusedShortSend202,
-	UnusedShortSend203,
+	SpecialSendNotIdentical = ShortSpecialSendEx,	// #~~
+	SpecialSendNot,									// #not
+	SpecialSendNullCoalesce,						// #??
+	_ReservedSpecialSendEx203,						// Currently unassigned
 	
 	PushInstVar = FirstDoubleByteInstruction, 
 	PushTemp,

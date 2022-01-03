@@ -308,7 +308,7 @@ checkRedefines: anStVariableNode
 
 checkRestrictedSelectors: aMethodNode
 	| last first |
-	(self restrictedSelectors identityIncludes: aMethodNode selector) ifFalse: [^self].
+	(RestrictedSelectors identityIncludes: aMethodNode selector) ifFalse: [^self].
 	(OptimizedMessages lookup: self methodClass)
 		ifNotNil: [:selectors | (selectors identityIncludes: aMethodNode selector) ifTrue: [^self]].
 	first := aMethodNode selectorParts first sourceInterval.
@@ -411,9 +411,6 @@ processBlock: aBlockNode
 
 readStaticVariable: aStVariableNode
 	self accessStaticVariable: aStVariableNode!
-
-restrictedSelectors
-	^RestrictedSelectors!
 
 tempDecls
 	^tempDecls ifNil: [tempDecls := methodNode allDefinedVariableNodes]!
@@ -613,7 +610,6 @@ isTempVariable:!helpers!private! !
 newLiteralsCollection!helpers!initializing!private! !
 processBlock:!helpers!private! !
 readStaticVariable:!helpers!private! !
-restrictedSelectors!constants!private! !
 tempDecls!accessing!private! !
 visitAnnotationNode:!public!visiting! !
 visitArgumentNodes:!public!visiting! !
@@ -642,8 +638,8 @@ initialize
 	boolean := #(#and: #or: #not #ifTrue: #ifFalse: #ifTrue:ifFalse: #ifFalse:ifTrue:).
 	optimizedMessages
 		at: Object
-			put: #(#~~ #== #basicAt: #basicAt:put: #basicClass #basicSize #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil: #yourself);
-		at: UndefinedObject put: #(#ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:);
+			put: #(#?? #~~ #== #basicAt: #basicAt:put: #basicClass #basicSize #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil: #yourself);
+		at: UndefinedObject put: #(#?? #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:);
 		at: true class put: boolean;
 		at: false class put: boolean;
 		at: Boolean put: boolean;

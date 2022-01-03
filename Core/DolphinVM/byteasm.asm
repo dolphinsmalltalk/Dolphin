@@ -185,7 +185,7 @@ ENDM
 
 ;; N.B. These must be carefully maintained to ensure that Double Byte instructions start at 204 and Triple Byte
 ;; instructions at 240
-NUMRESERVEDSINGLEBYTE	EQU 2			; Number of extra single byte instructions reserved before start of double byte
+NUMRESERVEDSINGLEBYTE	EQU 1			; Number of extra single byte instructions reserved before start of double byte
 NUMRESERVEDDOUBLEBYTE	EQU 0			; Number of extra double byte instructions reserved before start of triple byte
 NUMRESERVEDTRIPLEBYTE	EQU	0			; Number of extra triple byte instructions reserved before start of quad byte
 
@@ -388,6 +388,7 @@ byteCodeTable DD		break										; All push[0] instructions are now odd
 
 	DWORD		shortSpecialSendNotIdentical
 	DWORD		shortSpecialSendNot
+	DWORD		shortSpecialSendNullCoalesce
 
 	CreateInstructionLabels <_invalidByteCode>, <NUMRESERVEDSINGLEBYTE>
 
@@ -3503,6 +3504,23 @@ isFalse:
 notABoolean:
 	SendSelectorNoArgs <Pointers.notSymbol>
 ENDBYTECODE shortSpecialSendNot
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;
+BEGINBYTECODE shortSpecialSendNullCoalesce
+	mov		eax, [_SP-OOPSIZE]
+	cmp		eax, [oteNil]
+	jne		@F
+
+	; Receiver is nil, replace with argument
+	mov		eax, [_SP]
+	mov		[_SP-OOPSIZE], eax
+
+@@:
+	MPrefetch
+	sub		_SP, OOPSIZE
+	DispatchNext
+ENDBYTECODE shortSpecialSendNullCoalesce
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Block Copy Instruction (quad byte)
