@@ -8,19 +8,20 @@ Core.Object subclass: #'Core.SearchPolicy'
 	classConstants: {}!
 Core.SearchPolicy guid: (Core.GUID fromString: '{123a1501-7cb8-11d3-93ca-00a024ca708a}')!
 Core.SearchPolicy isNonInstantiable: true!
-Core.SearchPolicy comment: 'SearchPolicy is for configuring pluggable collections and models to use different searching policies, e.g. equality vs. identity. SearchPolicy itself implements an equality based policy using #= and #hash, etc.
+Core.SearchPolicy comment: '`SearchPolicy` is for configuring pluggable collections and models to use different searching policies, e.g. equality vs. identity.
 
-SearchPolicy is the canonical implementation of the <searchPolicy> and <comparisonPolicy> protocols (the latter is really a subset of the former).
+`SearchPolicy` is the canonical implementation of the `<searchPolicy>` and `<comparisonPolicy>` protocols (the latter is really a subset of the former).
 
-The <comparisonPolicy> protocol can be used to compare two objects in order to determine if they are the "same". Different comparison policies can be employed which, for example, consider that two objects are the same iff they are the exact same identical object (i.e. ''''obj1 == obj2'''' is true), or on the other hand if they are of equal value (i.e. ''''obj1 = obj2'''' is true).
+The `<comparisonPolicy>` protocol can be used to compare two objects in order to determine if they are the "same". Different comparison policies can be employed which, for example, consider that two objects are the same iff they are the exact same identical object (i.e. ''''obj1 == obj2'''' is true), or on the other hand if they are of equal value (i.e. ''''obj1 = obj2'''' is true).
 
-SearchPolicy maintains a number of prebuilt instances which implement popular search/comparison policies. These are accessible via class side methods in the ''''instance creation'''' category.
+`SearchPolicy` maintains a number of prebuilt instances which implement popular search/comparison policies. These are accessible via class side methods in the ''''instance creation'''' category.
 
 Class Variables:
-	Always		<AlwaysSearchPolicy>. Maintains that two objects are always equal.
-	Identity		<IdentitySearchPolicy>. Singleton instance for identity searching.
-	Equality		<SearchPolicy>. Singleton instance for equality searching.
-	Never		<NeverSearchPolicy>. Maintains that two objects are never equal.
+	Always			`AlwaysSearchPolicy`. Maintains that two objects are always equal.
+	Identity			`IdentitySearchPolicy`. Singleton instance for identity searching.
+	Equality			`EqualitySearchPolicy`. Singleton instance for equality searching.
+	Never			`NeverSearchPolicy`. Maintains that two objects are never equal.
+	CaseInsensitive	`CaseInsensitiveSearchPolicy`. Singelton instance for comparing strings regardless of case (ordinal case-insensitive)
 
 '!
 !Core.SearchPolicy categoriesForClass!Collections-Support! !
@@ -154,12 +155,19 @@ never
 	false to #compare:with: (i.e. under this comparison policy two objects 
 	are never considered equal)."
 
-	^NeverSearchPolicy current! !
+	^NeverSearchPolicy current!
+
+newCompareBlock: discriminator hashBlock: hasher
+	"Answer a new instance of the receiver configured with the <dyadicValuable comparison block,
+	discriminator, and the <monadicValuable> hashing block, hasher."
+
+	^PluggableSearchPolicy basicNew compareBlock: discriminator hashBlock: hasher! !
 !Core.SearchPolicy class categoriesForMethods!
 always!instance creation!public! !
 caseInsensitive!instance creation!public! !
 equality!instance creation!public! !
 identity!instance creation!public! !
 never!instance creation!public! !
+newCompareBlock:hashBlock:!instance creation!public! !
 !
 

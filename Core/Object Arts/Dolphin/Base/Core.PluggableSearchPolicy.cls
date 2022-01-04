@@ -7,7 +7,7 @@ Core.SearchPolicy subclass: #'Core.PluggableSearchPolicy'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.PluggableSearchPolicy guid: (Core.GUID fromString: '{916f2071-ed60-40eb-9152-d25fc0567f6f}')!
-Core.PluggableSearchPolicy comment: 'PluggableSearchPolicy is for configuring pluggable collections and models to use pluggable search and comparison operations, i.e. one can define new search policies as instances of this class without writing a new <SearchPolicy> class, however performance will suffer slightly.'!
+Core.PluggableSearchPolicy comment: '`PluggableSearchPolicy` is for configuring pluggable collections and models to use pluggable search and comparison operations, i.e. one can define new search policies as instances of this class without writing a new `SearchPolicy` class, however performance will suffer slightly.'!
 !Core.PluggableSearchPolicy categoriesForClass!Collections-Support! !
 !Core.PluggableSearchPolicy methodsFor!
 
@@ -35,7 +35,7 @@ hash: operand
 	^hashBlock value: operand! !
 !Core.PluggableSearchPolicy categoriesForMethods!
 compare:with:!comparing!public! !
-compareBlock:hashBlock:!accessing!initializing!public! !
+compareBlock:hashBlock:!accessing!initializing!private! !
 hash:!comparing!public! !
 !
 
@@ -45,16 +45,8 @@ new
 	"Instances of the receiver require that hashing and comparison valuables
 	be supplied - use newCompareBlock:hashBlock:"
 
-	^self shouldNotImplement!
-
-newCompareBlock: discriminator hashBlock: hasher
-	"Answer a new instance of the receiver configured with the <dyadicValuable comparison block,
-	discriminator, and the <monadicValuable> hashing block, hasher."
-
-	^super new
-		compareBlock: discriminator hashBlock: hasher! !
+	^self shouldNotImplement! !
 !Core.PluggableSearchPolicy class categoriesForMethods!
 new!instance creation!public! !
-newCompareBlock:hashBlock:!instance creation!public! !
 !
 

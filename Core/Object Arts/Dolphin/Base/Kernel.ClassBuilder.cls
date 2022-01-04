@@ -981,7 +981,7 @@ validateImports
 	| seen distinct |
 	imports := self imports.
 	imports isEmpty ifTrue: [^self].
-	seen := (PluggableSearchPolicy newCompareBlock: [:a :b | a pathString = b pathString]
+	seen := (SearchPolicy newCompareBlock: [:a :b | a pathString = b pathString]
 				hashBlock: [:ref | ref hash]) newSet.
 	distinct := Array writeStream: imports size.
 	imports do: 

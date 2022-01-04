@@ -45,7 +45,7 @@ stbConvertFrom: anSTBClassFormat
 			[compareBlock method methodClass == self class
 				and: [SearchPolicy respondsTo: compareBlock method selector]])
 		ifTrue: [(SearchPolicy perform: compareBlock method selector) shallowCopy]
-		ifFalse: [PluggableSearchPolicy newCompareBlock: compareBlock hashBlock: [:each | each hash]]]!
+		ifFalse: [SearchPolicy newCompareBlock: compareBlock hashBlock: [:each | each hash]]]!
 
 stbVersion
 	^1! !
