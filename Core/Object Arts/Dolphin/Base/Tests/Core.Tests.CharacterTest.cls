@@ -229,7 +229,17 @@ testCodePointString
 		pairsDo: [:char :expected | self assert: char codePointString equals: expected]!
 
 testDigitValue
-	self assert: Character null digitValue equals: -1!
+	self assert: Character null digitValue equals: -1.
+	self assert: $: digitValue equals: -1.
+	self assert: $@ digitValue equals: -1.
+	($0 to: $9)
+		keysAndValuesDo: [:eachKey :eachValue | self assert: eachValue digitValue equals: eachKey - 1].
+	($A to: $Z)
+		keysAndValuesDo: [:eachKey :eachValue | self assert: eachValue digitValue equals: eachKey + 9].
+	"All other characters have no digit value"
+	(Character byteCharacterSet difference: ($0 to: $9) , ($A to: $Z))
+		do: [:each | self assert: each digitValue equals: -1].
+	self assert: Character dolphin digitValue equals: -1!
 
 testEquals
 	self assert: (Character codePoint: 97) equals: $a.

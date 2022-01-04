@@ -33,7 +33,7 @@ actualBackcolor
 	local backcolor is nil then the backcolor is inherited from the parent chain. If the
 	parent's actual background colour is nil, then the default background colour is used."
 
-	^Color face3d!
+	^Color.Face3d!
 
 callStack: aString
 	"Set the call stack to be displayed by the receiver."

@@ -56,7 +56,7 @@ actualTextcolor
 	^textcolor
 		ifNil: 
 			[tilecolor
-				ifNil: [Color windowText]
+				ifNil: [Color.WindowText]
 				ifNotNil: [tilecolor luminance > 0.6 ifTrue: [Color black] ifFalse: [Color white]]]!
 
 addToImageList: aWinImageList mask: aColorOrNil

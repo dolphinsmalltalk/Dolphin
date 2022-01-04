@@ -98,7 +98,7 @@ itemHandle
 reset
 	"Reset the canvas to default settings."
 
-	self forecolor: (self view forecolor ifNil: [Graphics.Color windowText])!
+	self forecolor: self view forecolor ?? Graphics.Color.WindowText!
 
 subItem
 	| row |

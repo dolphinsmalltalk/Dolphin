@@ -26,12 +26,9 @@ alignment
 alignment: aSymbol
 	"Sets the text alignment to the symbolic alignment name, aSymbol."
 
-	| flag |
-	flag := AlignmentMap lookup: aSymbol.
-	flag
-		ifNil: 
-			["We also map the Checkbox alignments to make it easy to mutate a Checkbox to a StaticText label, mapping them to the closest substitute"
-			flag := ##(IdentityDictionary withAll: {#topRight -> SS_RIGHT.
+	self setAlignment: ((AlignmentMap lookup: aSymbol)
+				ifNil: 
+					[##(IdentityDictionary withAll: {#topRight -> SS_RIGHT.
 								#topCenter -> SS_CENTER.
 								#rightCenter -> SS_RIGHT.
 								#bottomCenter -> SS_CENTER.
@@ -39,8 +36,7 @@ alignment: aSymbol
 								#bottomRight -> SS_RIGHT.
 								#leftCenter -> SS_LEFT.
 								#topLeft -> SS_LEFT})
-						at: aSymbol].
-	self setAlignment: flag!
+						at: aSymbol])!
 
 beCenterAligned
 	"Sets the receiver into center aligned mode"

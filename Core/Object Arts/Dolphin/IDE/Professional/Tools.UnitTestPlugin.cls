@@ -189,8 +189,7 @@ hasTests
 	^self testClasses notEmpty!
 
 icon
-	icon ifNil: [^super icon].
-	^icon!
+	^icon ifNil: [super icon]!
 
 icon: anIconOrNil
 	"Private - Set the icon displayed in the receiver's tab. This is used to indicate whether tests have passed or failed etc."

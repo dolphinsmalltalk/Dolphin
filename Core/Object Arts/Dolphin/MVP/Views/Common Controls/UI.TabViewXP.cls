@@ -45,7 +45,7 @@ onPaintRequired: aPaintEvent
 
 	| backSurface pageRect clientRect tabOrientation backBitmap canvas insets extent itemTransform |
 	canvas := aPaintEvent canvas.
-	canvas forecolor: (self forecolor ifNil: [Color windowText]).
+	canvas forecolor: self forecolor ?? Color.WindowText.
 	clientRect := self clientRectangle.
 	extent := clientRect extent.
 	insets := clientRect insetBy: (self tcmAdjustRect: false for: clientRect).

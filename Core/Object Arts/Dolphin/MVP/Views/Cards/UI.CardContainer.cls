@@ -52,7 +52,7 @@ createTabs
 	tabs backcolor: nil!
 
 defaultBackcolor
-	^Color face3d!
+	^Color.Face3d!
 
 defaultViewClass
 	^TabViewXP!

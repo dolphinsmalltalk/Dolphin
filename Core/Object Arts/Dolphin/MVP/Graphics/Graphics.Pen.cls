@@ -19,9 +19,9 @@ Instance Variables:
 color
 	^logPen color!
 
-color: aColor 
+color: aColor
 	self color = aColor ifTrue: [^self].
-	logPen color: (aColor ifNil: [Color black]).
+	logPen color: aColor ?? Color.Black.
 	self free!
 
 createHandle

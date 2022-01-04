@@ -264,7 +264,7 @@ compiledMethodAt: aSymbol
 	"Answer the compiled method associated with the selector argument, aSymbol, in 
 	the receiver's local method dictionary. Report an error if the selector cannot be found."
 
-	^(methodDictionary ifNil: [_NullMethodDictionary]) at: aSymbol!
+	^methodDictionary ?? _NullMethodDictionary at: aSymbol!
 
 compiledMethodAt: aSymbol ifAbsent: aNiladicValuable
 	"Answer the compiled method associated with the selector argument, aSymbol, in 

@@ -399,7 +399,7 @@ newSelectionsFromEvent: aMouseEvent
 	self isMultiSelect
 		ifFalse: 
 			[^aMouseEvent isSelectionButtonDown
-				ifTrue: [itemClicked ifNil: [#()] ifNotNil: [:item | {item}]]
+				ifTrue: [itemClicked ifNil: [#()] ifNotNil: [{itemClicked}]]
 				ifFalse: 
 					["Other buttons have no effect on the selection"
 					self selectionsByIndex]].
@@ -413,7 +413,7 @@ newSelectionsFromEvent: aMouseEvent
 	(aMouseEvent button ~= #left and: [anyKeysDown or: [newSelections includes: itemClicked]])
 		ifTrue: [^newSelections].
 	"Having taken care of the above edge cases, if no keys are down, the behavior is equivalent to the single-select case."
-	anyKeysDown ifFalse: [^itemClicked ifNil: [#()] ifNotNil: [:item | {item}]].
+	anyKeysDown ifFalse: [^itemClicked ifNil: [#()] ifNotNil: [{itemClicked}]].
 	"Only Ctrl is down, so we flip the selection state of the clicked item."
 	aMouseEvent isShiftDown
 		ifFalse: 

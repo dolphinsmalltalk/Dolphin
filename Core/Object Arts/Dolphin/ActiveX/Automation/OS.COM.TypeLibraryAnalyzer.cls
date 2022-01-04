@@ -478,7 +478,7 @@ suggestBindingForType: userType
 
 	"Not currently defined, or defined but _may_ not be correct object, so suggest name"
 	^(VariableBinding key: suggestedName value: nil)
-		environment: (ns ifNil: [Smalltalk]);
+		environment: ns ?? Smalltalk;
 		yourself!
 
 suggestedBinding

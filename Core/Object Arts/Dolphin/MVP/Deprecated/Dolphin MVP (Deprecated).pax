@@ -434,7 +434,7 @@ saturation!accessing!public! !
 
 buttonFace
 	Notification deprecated.
-	^Color face3d! !
+	^Face3d! !
 !Color class categoriesForMethods!
 buttonFace!instance creation!public! !
 !

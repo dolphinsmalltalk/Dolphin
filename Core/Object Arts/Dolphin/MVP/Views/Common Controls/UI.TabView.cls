@@ -101,7 +101,7 @@ canEditLabels
 defaultBackcolor
 	"Private - Answer the default colour for the receiver's background"
 
-	^Color face3d!
+	^Color.Face3d!
 
 defaultExtent
 	"Private - Answer the default size of the receiver

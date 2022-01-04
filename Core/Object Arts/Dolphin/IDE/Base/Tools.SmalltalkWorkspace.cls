@@ -1901,7 +1901,7 @@ defaultBackcolor: aColorOrNil
 	| current |
 	current := Color named: #smalltalkWorkspace.
 	current = aColorOrNil ifTrue: [^self].
-	current actualColor: (aColorOrNil ifNil: [Color window]).
+	current actualColor: aColorOrNil ?? Color.Window.
 	self isLoadingOptions ifTrue: [^self].
 	self primAllSubinstances do: [:each | each view backcolorChanged].
 	self persistOptions!

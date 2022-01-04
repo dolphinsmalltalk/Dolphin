@@ -1105,7 +1105,7 @@ wmInitMenuPopup: message wParam: wParam lParam: lParam
 	"Starting with the focus window, query the command route for the menu and its items,
 	 and enable/disable as appropriate. The menu may also be dynamically updated by
 	 the command target, which is sent a #onAboutToDisplayMenu: event"
-	popup queryAllFromView: (self class focus ifNil: [self]).
+	popup queryAllFromView: self class focus ?? self.
 	^0!
 
 wmNcActivate: message wParam: wParam lParam: lParam

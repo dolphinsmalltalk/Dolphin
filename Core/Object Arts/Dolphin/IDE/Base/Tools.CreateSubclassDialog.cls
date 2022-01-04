@@ -178,7 +178,7 @@ subclassName
 subclassName: aString
 	| bindingRef |
 	bindingRef := aString asQualifiedReference.
-	self namespace: (bindingRef environment ifNil: [Smalltalk]).
+	self namespace: bindingRef environment ?? Smalltalk.
 	namePresenter value: bindingRef unqualifiedName!
 
 superclass

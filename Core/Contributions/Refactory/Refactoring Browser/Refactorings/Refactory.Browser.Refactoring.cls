@@ -253,7 +253,7 @@ openBrowserOn: anEnvironment
 	^(self lookupOption: #openBrowser) cull: self cull: anEnvironment!
 
 options
-	^options ifNil: [RefactoringOptions]!
+	^options ?? RefactoringOptions!
 
 options: aDictionary 
 	self assert: [aDictionary ~~ RefactoringOptions].

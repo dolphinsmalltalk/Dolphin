@@ -345,7 +345,7 @@ testNilRow
 	presenter model: m.
 	c := presenter view columnAtIndex: 1.
 	txt := 'this is nil'.
-	c getTextBlock: [:it | it ifNil: [txt]].
+	c getTextBlock: [:it | it ?? txt].
 	item := self getItem: 1.
 	self assert: item pszText equals: txt.
 	self assert: item iImage equals: nil icon imageIndex - 1!

@@ -1091,7 +1091,7 @@ updateElement: anInteger text: aUtf16String
 updateProgressRange
 	| range |
 	handle ifNil: [^self].
-	range := progressRange ?? (0 to: 100).
+	range := progressRange ?? ##(0 to: 100).
 	User32
 		sendMessage: handle
 		msg: TDM_SET_PROGRESS_BAR_RANGE

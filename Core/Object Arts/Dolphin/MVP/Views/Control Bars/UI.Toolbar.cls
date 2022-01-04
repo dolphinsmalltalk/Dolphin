@@ -1216,7 +1216,7 @@ resource_Tool_bar
 
 	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Toolbar) 34 25 nil nil 34 2 8 1409288972 131137 416 nil 917510 ##(Graphics.Color) #default nil 517 nil nil nil 416 496 8 1920642432 170 192 8 #() 170 192 544 138 144 544 nil nil 1 nil nil nil nil 852806 1 ##(UI.FlowLayout) 1 1 1 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 738 701 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 35 0 0 0] 8 #() 738 193 193 nil 27)!
 
-stbConvertFromVersion12: anArray 
+stbConvertFromVersion12: anArray
 	"Private - Perform an STB conversion from a version 12 <View> to version 13."
 
 	| creationStyle |
@@ -1227,7 +1227,7 @@ stbConvertFromVersion12: anArray
 	embedded toolbars be marked as transparent, or they will always paint a face3d background."
 	creationStyle at: 2 put: ((creationStyle at: 2) bitOr: WS_EX_TRANSPARENT).
 	anArray at: 13 put: Color default.
-	(anArray at: 6) = Color face3d ifTrue: [anArray at: 6 put: Color default].
+	(anArray at: 6) = Color.Face3d ifTrue: [anArray at: 6 put: Color default].
 	^super stbConvertFromVersion12: anArray!
 
 stbConvertFromVersion13: anArray

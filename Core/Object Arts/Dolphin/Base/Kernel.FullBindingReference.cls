@@ -47,8 +47,8 @@ baseClass
 bind: aBindingScope
 	self
 		setGeneration: Generation;
-		setBinding: ((aBindingScope localScope resolveBindingPath: self path
-					environment: aBindingScope environment) ifNil: [Undeclared])!
+		setBinding: (aBindingScope localScope resolveBindingPath: self path
+					environment: aBindingScope environment) ?? Undeclared!
 
 bindingOrNil
 	"Answer the <VariableBinding> referenced by the receiver (i.e. resolve the variable), or nil if there is no such variable."

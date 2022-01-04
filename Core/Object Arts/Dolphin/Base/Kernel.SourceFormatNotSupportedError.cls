@@ -17,7 +17,7 @@ _descriptionFormat
 	^'%2 cannot be saved in legacy (pre-namespace) format. %1'!
 
 messageText
-	^messageText ifNil: ['The variable is not bindable by unqualified name from Smalltalk.']! !
+	^messageText ?? 'The variable is not bindable by unqualified name from Smalltalk.'! !
 !Kernel.SourceFormatNotSupportedError categoriesForMethods!
 _descriptionFormat!displaying!private! !
 messageText!initializing!public! !

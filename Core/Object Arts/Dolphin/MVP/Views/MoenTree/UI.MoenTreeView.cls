@@ -650,7 +650,7 @@ initialize
 	self linePen: (Pen
 				withStyle: PS_SOLID
 				width: 1
-				color: Color face3d).
+				color: Color.Face3d).
 	anchorNode := MoenTreeNode object: nil parent: nil.
 	anchorNode
 		hasExpanded: true;
@@ -1404,7 +1404,7 @@ paintNode: aMoenTreeNode on: aCanvas
 				ifTrue: 
 					[bkColour := Color highlight.
 					aCanvas forecolor: Color highlightText]
-				ifFalse: [bkColour := Color face3d].
+				ifFalse: [bkColour := Color.Face3d].
 			aCanvas
 				backcolor: bkColour;
 				fillRectangle: rect color: bkColour].

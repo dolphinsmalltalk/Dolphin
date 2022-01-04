@@ -20,7 +20,7 @@ applyToView: aScintillaView
 		ifFalse: [aScintillaView sciSetRepresentationAppearance: ch appearance: appearance]!
 
 character
-	^character ifNil: [$\xE000]!
+	^character ?? $\xE000!
 
 character: aCharacter
 	character := aCharacter!
@@ -92,7 +92,7 @@ forCharacter: aCharacter
 forLineEnding
 	^(self forCharacter: $\x2028)
 		isBlob: false;
-		color: Color windowText;
+		color: Color.WindowText;
 		yourself!
 
 icon

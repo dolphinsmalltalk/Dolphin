@@ -682,7 +682,9 @@ braceChars
 	values are the <String>s containing the set of <Character>s that should be considered as
 	brace characters for that style."
 
-	^braceChars ifNil: [self defaultBraceChars]!
+	^braceChars ?? ##(IdentityDictionary new
+				at: #normal put: '()[]{}<>';
+				yourself)!
 
 braceChars: aLookupTable 
 	"Set the map between <Symbol>ic style names and the brace characters in that style to be the
@@ -734,7 +736,7 @@ buildDefaultStyle
 	| defaultStyle |
 	defaultStyle := (currentTextStyles at: #normal) copy.
 	defaultStyle mergeFont: self actualFont.
-	defaultStyle forecolor ifNil: [defaultStyle forecolor: (self forecolor ifNil: [Color windowText])].
+	defaultStyle forecolor ifNil: [defaultStyle forecolor: self forecolor ?? Color.WindowText].
 	defaultStyle backcolor ifNil: [defaultStyle backcolor: self actualBackcolor].
 	defaultStyle case ifNil: [defaultStyle case: SC_CASE_MIXED].
 	defaultStyle characterSet ifNil: [defaultStyle characterSet: SC_CHARSET_DEFAULT].
@@ -812,8 +814,8 @@ buildRawAnnotations: aCollectionOfScintillaAnnotations
 buildViewStyle
 	^TextStyle new
 		font: self actualFont;
-		backcolor: (self backcolor ifNil: [Color window]);
-		forecolor: (self forecolor ifNil: [Color windowText]);
+		backcolor: self backcolor ?? Color.Window;
+		forecolor: self forecolor ?? Color.WindowText;
 		yourself!
 
 callTipBackcolor
@@ -1013,7 +1015,7 @@ caretForecolor: aColor
 	"Set the foreground colour of the caret. Note that we default to Color windowText in order to reflect the Windows theme rather than using the Scintilla default.
 	At present Scintilla does not track the system window text colour for SC_ELEMENT_CARET (in fact it only tracks the system colours for the list elements)."
 
-	self setOrResetElement: SC_ELEMENT_CARET color: (aColor ifNil: [Color windowText])!
+	self setOrResetElement: SC_ELEMENT_CARET color: aColor ?? Color.WindowText!
 
 caretPeriod: anInteger
 	#deprecated.	"Use caretBlinkTime:. Retained for loading legacy view state."
@@ -1392,14 +1394,6 @@ decodeStyledText: aByteArray
 					buffer nextPut: char]].
 	pair value: buffer contents asString.
 	^tokens!
-
-defaultBraceChars
-	"Private - Answer a <String> containing the set of <Character>s that Scintilla considers to be brace
-	characters by default."
-
-	^##(IdentityDictionary new
-		at: #normal put: '()[]{}<>';
-		yourself)!
 
 defaultCurrentLineBackcolor
 	"Private - `self sciGetElementBaseColour: SC_ELEMENT_CARET_LINE_BACK` returns transparent black, which is not what was used when making the caret line visible before 5.0.3, so retain the original colour for backwards compatibility."
@@ -2356,7 +2350,7 @@ foldMargin
 foldMarginColor
 	"Answer the background colour of the fold margin."
 
-	^foldMarginColor ifNil: [Color face3d]!
+	^foldMarginColor ?? Color.Face3d!
 
 foldMarginColor: aColorOrNil 
 	"Set the background colour of the fold margin."
@@ -2980,7 +2974,7 @@ indicatorsUnder: aPoint
 	^self indicatorsAt: (self charCloseToPosition: aPoint)!
 
 initialize
-	| styles windowText |
+	| styles |
 	super initialize.
 	library := NullScintillaLibrary default.
 	markerDefinitions := self defaultMarkerDefinitions.
@@ -2989,11 +2983,10 @@ initialize
 	styles := self class defaultTextStyles.
 	self setCurrentTextStyles: styles.
 	elementColors := LookupTable new.
-	windowText := Color windowText.
 	elementColors
-		at: SC_ELEMENT_CARET put: windowText;
-		at: SC_ELEMENT_LIST put: windowText;
-		at: SC_ELEMENT_LIST_BACK put: Color window.
+		at: SC_ELEMENT_CARET put: Color.WindowText;
+		at: SC_ELEMENT_LIST put: Color.WindowText;
+		at: SC_ELEMENT_LIST_BACK put: Color.Window.
 	scFlags := 0.
 	stringClass := Utf8String.
 	self initializeRegisteredImages!
@@ -3799,24 +3792,24 @@ linesOnScreen
 listBackcolor
 	"Answer the background <Color> lists, e.g, autocompletion lists."
 
-	^(elementColors lookup: SC_ELEMENT_LIST_BACK) ifNil: [Color window]!
+	^(elementColors lookup: SC_ELEMENT_LIST_BACK) ?? Color.Window!
 
 listBackcolor: aColor
 	self
 		setOrResetElement: SC_ELEMENT_LIST_BACK
 		color: aColor
-		defaultSystem: Color window!
+		defaultSystem: Color.Window!
 
 listForecolor
 	"Answer the foreground <Color> (i.e. text colour) of list items in, e.g, autocompletion lists."
 
-	^(elementColors lookup: SC_ELEMENT_LIST) ifNil: [Color windowText]!
+	^(elementColors lookup: SC_ELEMENT_LIST) ?? Color.WindowText!
 
 listForecolor: aColor
 	self
 		setOrResetElement: SC_ELEMENT_LIST
 		color: aColor
-		defaultSystem: Color windowText!
+		defaultSystem: Color.WindowText!
 
 listSelectionBackcolor
 	"Answer the selection background hilight <Color> used in lists, e.g, autocompletion lists."
@@ -8883,7 +8876,7 @@ setFoldFlags
 
 setFoldMarginColor
 	foldMarginColor
-		ifNil: [self sciSetFoldMarginColour: false back: Color face3d]
+		ifNil: [self sciSetFoldMarginColour: false back: Color.Face3d]
 		ifNotNil: [self sciSetFoldMarginColour: true back: foldMarginColor]!
 
 setFoldMarginHiColor
@@ -10108,7 +10101,6 @@ currentLineText!**auto generated**!public!scintilla interface!selection! !
 cutLine!**auto generated**!clipboard operations!commands!public!scintilla interface! !
 cutSelection!**auto generated**!clipboard operations!commands!public!scintilla interface! !
 decodeStyledText:!private!text retrieval & modification! !
-defaultBraceChars!brace highlighting!constants!private! !
 defaultCurrentLineBackcolor!caret, selection, and hotspot styles!constants!element colors!private! !
 defaultEdgeColor!long lines!private!scintilla interface! !
 defaultFoldTextTag!**auto generated**!folding!public!scintilla interface! !
@@ -11679,7 +11671,7 @@ stbConvertFromVersion16: anArray
 		startingAt: 66.
 	instVars at: 28 put: elementColors.
 	"Some more special cases"
-	elementColors at: SC_ELEMENT_CARET put: ((instVars at: 50) ifNil: [Color windowText]).
+	elementColors at: SC_ELEMENT_CARET put: (instVars at: 50) ?? Color.WindowText.
 	instVars at: 50 put: nil.
 	(instVars at: 30)
 		ifNotNil: 
@@ -11716,7 +11708,7 @@ txtTextStyles
 	| styles |
 	styles := self defaultTextStyles.
 	styles add: ((TextStyle name: #normal)
-				backcolor: Color window;
+				backcolor: Color.Window;
 				yourself).
 	^styles!
 
@@ -11758,7 +11750,7 @@ xmlTextStyles
 	| styles sgmlBackcolour |
 	styles := self defaultTextStyles.
 	styles add: ((TextStyle name: #normal)
-				backcolor: Color window;
+				backcolor: Color.Window;
 				yourself).
 	styles add: ((TextStyle name: #tag)
 				id: 1;

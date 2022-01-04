@@ -21,7 +21,7 @@ Graphics.ThemeColor comment: '`ThemeColor` is a class of `VirtualColor`s that pr
 !Graphics.ThemeColor methodsFor!
 
 actualColor
-	^(actualColor ?? Color window) actualColor!
+	^(actualColor ?? Window) actualColor!
 
 actualColor: aColor
 	actualColor := aColor!
@@ -89,7 +89,7 @@ addNamed: aSymbol color: aColor
 	^super addNamed: aSymbol color: wrapper!
 
 initialize
-	self addNamed: #dialog color: Color face3d!
+	self addNamed: #dialog color: Face3d!
 
 name: aSymbol actualColor: aColor
 	<primitive: 157>

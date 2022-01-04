@@ -337,14 +337,14 @@ findNode: anObject
 			(self model allParentsOf: anObject) do: [:each | self expand: each].
 			self handleFromObject: anObject]!
 
-forecolor: aColorOrNil 
+forecolor: aColorOrNil
 	"Sets the foreground colour of the receiver to aColorOrNil.
 	If aColorOrNil is nil then use the default color"
 
 	| clrref |
 	super forecolor: aColorOrNil.
-	clrref := (aColorOrNil ifNil: [Color windowText]) asCOLORREF.
-	self 
+	clrref := (aColorOrNil ?? Color.WindowText) asCOLORREF.
+	self
 		sendMessage: TVM_SETTEXTCOLOR
 		wParam: 0
 		lParam: clrref!

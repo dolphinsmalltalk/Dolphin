@@ -921,7 +921,7 @@ resourceSelectorsDo: aMonadicValuable
 selectorsInCategory: category
 	"Answer a <Collection> of selector <Symbol>s, of the receiver's methods which are included in the <methodCategory>, category."
 
-	^methodsCatalogue ifNil: [#()] ifNotNil: [(methodsCatalogue lookup: category) ifNil: [#()]]!
+	^methodsCatalogue ifNil: [#()] ifNotNil: [(methodsCatalogue lookup: category) ?? #()]!
 
 setInstanceVariables: aCollection
 	"Private - Set the instance variable string of the receiver to be the list

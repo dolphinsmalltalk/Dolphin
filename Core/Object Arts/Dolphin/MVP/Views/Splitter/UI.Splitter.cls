@@ -61,7 +61,7 @@ defaultBackcolor
 	"Private - Answers the default colour to be used for the receiver."
 
 	^self hasFlatAppearance
-		ifTrue: [Color face3d]
+		ifTrue: [Color.Face3d]
 		ifFalse: 
 			["This is the shadow colour in the XP luna theme - this has to be fairly
 			 dark or the gradient is not visible.."
@@ -260,7 +260,7 @@ stbConvertFromVersion12: anArray
 
 	| backcolor |
 	backcolor := anArray at: 6.
-	(backcolor = ##(Color brightness: 225 / 255) or: [backcolor = Color face3d])
+	(backcolor = ##(Color brightness: 225 / 255) or: [backcolor = Color.Face3d])
 		ifTrue: [anArray at: 6 put: Color default].
 	^super stbConvertFromVersion12: anArray! !
 !UI.Splitter class categoriesForMethods!

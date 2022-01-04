@@ -55,7 +55,7 @@ cancel
 defaultBackcolor
 	"Private - Answer the default colour for the receiver's background"
 
-	^(self hasCaption or: [self isThemed not]) ifTrue: [Color face3d] ifFalse: [super defaultBackcolor]!
+	^(self hasCaption or: [self isThemed not]) ifTrue: [Color.Face3d] ifFalse: [super defaultBackcolor]!
 
 defaultButton
 	"Answer the default <PushButton> in the receiver, or nil if none."

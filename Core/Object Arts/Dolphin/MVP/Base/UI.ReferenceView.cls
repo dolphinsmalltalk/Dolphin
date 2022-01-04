@@ -187,7 +187,7 @@ stbConvertFromVersion9: anArray
 	| rid array |
 	array := super stbConvertFromVersion9: anArray.
 	rid := array at: 13.
-	rid owningClass == #{Toolbar} valueOrNil ifTrue: [array at: 6 put: Color face3d].
+	rid owningClass == #{Toolbar} valueOrNil ifTrue: [array at: 6 put: Color.Face3d].
 	^array! !
 !UI.ReferenceView class categoriesForMethods!
 icon!constants!public! !

@@ -816,7 +816,7 @@ ddScroll: session
 defaultBackcolor
 	"Private - Answer the default colour for the receiver's background"
 
-	^Color window!
+	^Color.Window!
 
 defaultExtent
 	"Private - Answer the default size of the receiver. This is used only to
@@ -1350,8 +1350,7 @@ forecolor
 	"Answers the foreground colour of the receiver.
 	Overidden by subclasses that support foreground colours"
 
-	^Color windowText
-!
+	^Color.WindowText!
 
 forecolor: aColorOrNil
 	"Sets the foreground colour of the receiver to aColorOrNil.

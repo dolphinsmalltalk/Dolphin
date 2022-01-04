@@ -48,7 +48,7 @@ buildDefaultStyle
 	style
 		font: desktop actualFont;
 		forecolor: desktop forecolor;
-		backcolor: Color window.
+		backcolor: Color.Window.
 	^style!
 
 chooseBackcolor

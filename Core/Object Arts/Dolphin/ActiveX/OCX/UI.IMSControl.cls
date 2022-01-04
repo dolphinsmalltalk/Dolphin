@@ -71,11 +71,11 @@ borderStyle: psBorderStyle
 
 	self put_BorderStyle: psBorderStyle!
 
-convertToBackColorRef: aColor 
-	^(aColor ifNil: [Graphics.Color window]) asCOLORREF!
+convertToBackColorRef: aColor
+	^(aColor ?? Color.Window) asCOLORREF!
 
-convertToForeColorRef: aColor 
-	^(aColor ifNil: [Color windowText]) asCOLORREF!
+convertToForeColorRef: aColor
+	^(aColor ?? Color.WindowText) asCOLORREF!
 
 enabled
 	"Answer the <varbool> value of the 'Enabled' property of the receiver.

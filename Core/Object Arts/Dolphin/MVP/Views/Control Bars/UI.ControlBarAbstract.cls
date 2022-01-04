@@ -75,7 +75,7 @@ canAcceptSubViews
 defaultBackcolor
 	"Private - Answer the default colour for the receiver's background"
 
-	^Color face3d!
+	^Color.Face3d!
 
 defaultExtentOf: arg1
 	"This is an auto-generated target implementation for the protocol <compositeView>

@@ -148,7 +148,7 @@ color: aColor
 	"Set the character colour."
 
 	self maskIn: CFM_COLOR.
-	self crTextColor: (aColor ifNil: [Graphics.Color windowText]) asCOLORREF!
+	self crTextColor: (aColor ?? Graphics.Color.WindowText) asCOLORREF!
 
 crBackColor
 	"Answer the <Integer> value of the receiver's 'crBackColor' field."

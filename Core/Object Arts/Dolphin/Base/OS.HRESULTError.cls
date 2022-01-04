@@ -43,7 +43,7 @@ hasMessageText
 hresult
 	"Answer the HRESULT error code associated with the receiver."
 
-	^tag ifNil: [HRESULT fail]!
+	^tag ?? HRESULT.Fail!
 
 hresult: hr
 	"Set the HRESULT error code associated with the receiver to the <integer>

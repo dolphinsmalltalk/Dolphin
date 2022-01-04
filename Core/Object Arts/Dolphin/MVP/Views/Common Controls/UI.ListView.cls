@@ -618,12 +618,11 @@ forecolor: aColorOrNil
 
 	| clrref |
 	super forecolor: aColorOrNil.
-	clrref := (aColorOrNil isNil 
-			ifTrue: [Color windowText]
-			ifFalse: [aColorOrNil]) asCOLORREF.
-	self sendMessage: LVM_SETTEXTCOLOR wParam: 0 lParam: clrref.
-
-!
+	clrref := (aColorOrNil ?? Color.WindowText) asCOLORREF.
+	self
+		sendMessage: LVM_SETTEXTCOLOR
+		wParam: 0
+		lParam: clrref!
 
 forgetLastClickedColumn
 	lastClickedColIndex isNil ifTrue: [^self].
