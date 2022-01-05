@@ -131,7 +131,8 @@ onViewAvailable
 	differencesPresenter
 		textFont: MethodWorkspace actualFont;
 		styler: SmalltalkMethodStyler new;
-		textStyles: MethodWorkspace textStyles!
+		textStyles: MethodWorkspace textStyles.
+	changesPresenter expand: compositeChange!
 
 queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver 
