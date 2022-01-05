@@ -14,14 +14,10 @@ Kernel.StLiteralArrayToken comment: ''!
 acceptVisitor: aTokenVisitor
 	^aTokenVisitor visitLiteralArrayToken: self!
 
-isForByteArray
-	^value lastCodeUnit == $[!
-
 isLiteralArrayToken
 	^true! !
 !Kernel.StLiteralArrayToken categoriesForMethods!
 acceptVisitor:!public!visitor! !
-isForByteArray!public!testing! !
 isLiteralArrayToken!public!testing! !
 !
 

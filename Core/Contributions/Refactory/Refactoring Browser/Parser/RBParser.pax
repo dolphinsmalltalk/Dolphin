@@ -68,10 +68,6 @@ package setMethodNames: #(
 	#(#{Kernel.StCascadeNode} #equalTo:withMapping:)
 	#(#{Kernel.StCascadeNode} #match:inContext:)
 	#(#{Kernel.StCascadeNode} #replaceNode:withNode:)
-	#(#{Kernel.StLiteralArrayNode} #copyInContext:)
-	#(#{Kernel.StLiteralArrayNode} #equalTo:withMapping:)
-	#(#{Kernel.StLiteralArrayNode} #match:inContext:)
-	#(#{Kernel.StLiteralArrayNode} #replaceNode:withNode:)
 	#(#{Kernel.StLiteralNode} #replaceSourceFrom:)
 	#(#{Kernel.StLiteralNode} #replaceSourceWith:)
 	#(#{Kernel.StLiteralValueNode} #copyInContext:)
@@ -708,44 +704,6 @@ replaceNode: aNode withNode: anotherNode
 	self messages: (messages 
 				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
 !Kernel.StCascadeNode categoriesForMethods!
-copyInContext:!matching!public! !
-equalTo:withMapping:!comparing!public! !
-match:inContext:!matching!public! !
-replaceNode:withNode:!public!replacing! !
-!
-
-!Kernel.StLiteralArrayNode methodsFor!
-
-copyInContext: aDictionary 
-	^self class 
-		startPosition: nil
-		contents: (self copyList: contents inContext: aDictionary)
-		stopPosition: nil
-		isByteArray: isByteArray!
-
-equalTo: anObject withMapping: aDictionary 
-	self class = anObject class ifFalse: [^false].
-	self isForByteArray = anObject isForByteArray ifFalse: [^false].
-	self contents size = anObject contents size ifFalse: [^false].
-	1 to: self contents size
-		do: 
-			[:i | 
-			((self contents at: i) equalTo: (anObject contents at: i) withMapping: aDictionary) 
-				ifFalse: [^false]].
-	^true!
-
-match: aNode inContext: aDictionary 
-	aNode class == self class ifFalse: [^false].
-	self isForByteArray = aNode isForByteArray ifFalse: [^false].
-	^self 
-		matchList: contents
-		against: aNode contents
-		inContext: aDictionary!
-
-replaceNode: aNode withNode: anotherNode 
-	self contents: (contents 
-				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
-!Kernel.StLiteralArrayNode categoriesForMethods!
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
 match:inContext:!matching!public! !

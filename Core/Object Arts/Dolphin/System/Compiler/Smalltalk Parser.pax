@@ -21,6 +21,7 @@ package basicPackageVersion: '7.0'.
 
 
 package setClassNames: #(
+	#{Kernel.AbstractLiteralArrayNode}
 	#{Kernel.ParseNodeVisitor}
 	#{Kernel.Parser}
 	#{Kernel.Scanner}
@@ -40,6 +41,8 @@ package setClassNames: #(
 	#{Kernel.StKeywordToken}
 	#{Kernel.StLiteralArrayNode}
 	#{Kernel.StLiteralArrayToken}
+	#{Kernel.StLiteralByteArrayNode}
+	#{Kernel.StLiteralByteArrayToken}
 	#{Kernel.StLiteralNode}
 	#{Kernel.StLiteralToken}
 	#{Kernel.StLiteralValueNode}
@@ -270,8 +273,8 @@ Kernel.StVariableNode subclass: #'Kernel.StTempDeclNode'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StLiteralNode subclass: #'Kernel.StLiteralArrayNode'
-	instanceVariableNames: 'isByteArray stop contents start'
+Kernel.StLiteralNode subclass: #'Kernel.AbstractLiteralArrayNode'
+	instanceVariableNames: 'stop contents start'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -284,6 +287,18 @@ Kernel.StLiteralNode subclass: #'Kernel.StLiteralValueNode'
 	classConstants: {}!
 Kernel.StLiteralNode subclass: #'Kernel.StQualifiedReferenceNode'
 	instanceVariableNames: 'pathString flags private start stop binding'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.AbstractLiteralArrayNode subclass: #'Kernel.StLiteralArrayNode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.AbstractLiteralArrayNode subclass: #'Kernel.StLiteralByteArrayNode'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -343,6 +358,12 @@ Kernel.StValueToken subclass: #'Kernel.StKeywordToken'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StValueToken subclass: #'Kernel.StLiteralArrayToken'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StValueToken subclass: #'Kernel.StLiteralByteArrayToken'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

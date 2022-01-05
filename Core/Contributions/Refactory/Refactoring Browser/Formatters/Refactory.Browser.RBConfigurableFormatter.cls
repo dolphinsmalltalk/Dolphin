@@ -341,13 +341,6 @@ visitCascadeNode: aCascadeNode
 					[codeStream nextPut: $;.
 					NewLineAfterCascade ifTrue: [self newLine] ifFalse: [self space]]]!
 
-visitLiteralArrayNode: aRBArrayLiteralNode
-	codeStream
-		nextPut: $#;
-		nextPut: aRBArrayLiteralNode openBracket.
-	aRBArrayLiteralNode contents do: [:each | self visitNode: each] separatedBy: [self space].
-	codeStream nextPut: aRBArrayLiteralNode closeBracket!
-
 visitLiteralNode: aLiteralNode
 	self writeString: (aLiteralNode token formattedFrom: originalSource)!
 
@@ -446,7 +439,6 @@ precedenceOf:greaterThan:!helpers!private! !
 visitAssignmentNode:!public!visitor/double dispatching! !
 visitBlockNode:!public!visitor/double dispatching! !
 visitCascadeNode:!public!visitor/double dispatching! !
-visitLiteralArrayNode:!public!visitor/double dispatching! !
 visitLiteralNode:!public!visitor/double dispatching! !
 visitMessageNode:!public!visitor/double dispatching! !
 visitNode:!formatting!private!visiting! !

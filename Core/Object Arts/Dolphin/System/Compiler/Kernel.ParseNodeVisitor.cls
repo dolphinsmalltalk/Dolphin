@@ -53,6 +53,9 @@ visitExternalCallNode: anStExternalCallNode
 visitLiteralArrayNode: aLiteralArrayNode
 	aLiteralArrayNode contents do: [:each | self visitNode: each]!
 
+visitLiteralByteArrayNode: aLiteralByteArrayNode
+	self visitLiteralArrayNode: aLiteralByteArrayNode!
+
 visitLiteralNode: aLiteralNode
 	!
 
@@ -124,6 +127,7 @@ visitCascadeNode:!public!visiting! !
 visitExternalArgTypeNode:!public!visiting! !
 visitExternalCallNode:!public!visiting! !
 visitLiteralArrayNode:!public!visiting! !
+visitLiteralByteArrayNode:!public!visiting! !
 visitLiteralNode:!public!visiting! !
 visitMessageNode:!public!visiting! !
 visitMethodNode:!public!visiting! !

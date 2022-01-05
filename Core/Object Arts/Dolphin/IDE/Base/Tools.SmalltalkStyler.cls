@@ -41,9 +41,9 @@ Note that the `#whitespace` style is optional. If it is not set up in the View, 
 
 The actual visual styles associated with these classifications can be configured by modifying the view configuration. This is exposed as the `#textStyles` published aspect of `Tools.SmalltalkWorkspace`.
 
-The colouring is largely based on identification of tokens through lexical analysis. This has three significant advantages over colouring based on syntax analysis: i) it is faster, ii) it can be initiated in the middle of some source text much more easily, iii) it is tolerant of syntax errors. These features allow the colouring to be performed in "real-time" as the user types, and also allow reasonable colouring of very large workspaces. Large amounts of text are coloured in chunks. 
+The colouring is largely based on identification of tokens through lexical analysis, i.e. it works from `Scanner` output, not `Parser` output. This has three significant advantages over colouring based on syntax analysis: i) it is faster, ii) it can be initiated in the middle of some source text much more easily, iii) it is tolerant of syntax errors. These features allow the colouring to be performed in "real-time" as the user types, and also allow reasonable colouring of very large workspaces. Large amounts of text are coloured in chunks. 
 
-Pure lexical analysis has the drawback that it isn''t able to distinguish between different uses of the same token type. In Smalltalk there are a number of such ambiguities, for example identifiers that might be variable names or unary selectors. Another example is the use of the vertical bar symbol as a temporary declaration delimiter and also as a binary selector. In order to handle these cases efficiently a number of extra style names are introduced to record an informal parse state as the colouring progresses. Since the style set up for the last token (mostly) encodes the parse state, it is possible to style the current token without looking any further back. This does, however, mean that there are more styles than are strictly needed for visual purposes - for example there are styles for opening and closing temp bars, but it is unlikely one would want these to have a different appearance. There is one case, that of literal arrays, where it is necessary to look back further when styling. This is because literal arrays may contain unquoted literal symbols and nester arrays, at least in Smalltalk-80 syntax.
+Pure lexical analysis has the drawback that it isn''t able to distinguish between different uses of the same token type. In Smalltalk there are a number of such ambiguities, for example identifiers that might be variable names or unary selectors. Another example is the use of the vertical bar symbol as a temporary declaration delimiter and also as a binary selector. In order to handle these cases efficiently a number of extra style names are introduced to record an informal parse state as the colouring progresses. Since the style set up for the last token (mostly) encodes the parse state, it is possible to style the current token without looking any further back. This does, however, mean that there are more styles than are strictly needed for visual purposes - for example there are styles for opening and closing temp bars, but it is unlikely one would want these to have a different appearance. There is one case, that of literal arrays, where it is necessary to look back further when styling. This is because literal arrays may contain unquoted literal symbols and nested arrays, at least in Smalltalk-80 syntax.
 
 ## Instance Variables:
   `arrayDepth`		`<integer>`
@@ -341,12 +341,12 @@ visitKeywordToken: aStKeywordToken
 		ifFalse: [#keywordMessage]!
 
 visitLiteralArrayToken: aStLiteralArrayToken
-	^aStLiteralArrayToken isForByteArray
-		ifTrue: [#literalBytes]
-		ifFalse: 
-			[arrayDepth := arrayDepth + 1.
-			stack addLast: aStLiteralArrayToken.
-			#literalArray]!
+	arrayDepth := arrayDepth + 1.
+	stack addLast: aStLiteralArrayToken.
+	^#literalArray!
+
+visitLiteralByteArrayToken: aStLiteralByteArrayToken
+	^#literalBytes!
 
 visitLiteralToken: aStLiteralToken
 	self atStart ifTrue: [^self initialLiteralStyle: aStLiteralToken].
@@ -443,6 +443,7 @@ visitIdentifierToken:!public!visiting! !
 visitIllegalCharacterToken:!public!visiting! !
 visitKeywordToken:!public!visiting! !
 visitLiteralArrayToken:!public!visiting! !
+visitLiteralByteArrayToken:!public!visiting! !
 visitLiteralToken:!public!visiting! !
 visitNumberLiteralToken:!public!visiting! !
 visitOptimizedToken:!public!visiting! !

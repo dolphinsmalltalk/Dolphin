@@ -117,6 +117,16 @@ visitExternalCallNode: aStExternalCallNode
 			self visitNode: each].
 	codeStream nextPut: $>.!
 
+visitLiteralArrayNode: aRBArrayLiteralNode
+	codeStream nextPutAll: '#('.
+	aRBArrayLiteralNode contents do: [:each | self visitNode: each] separatedBy: [self space].
+	codeStream nextPut: $)!
+
+visitLiteralByteArrayNode: aRBLiteralByteArrayNode
+	codeStream nextPutAll: '#['.
+	aRBLiteralByteArrayNode contents do: [:each | self visitNode: each] separatedBy: [self space].
+	codeStream nextPut: $]!
+
 visitMethodNode: aMethodNode
 	self formatMethodPatternFor: aMethodNode.
 	self formatMethodBodyFor: aMethodNode!
@@ -160,6 +170,8 @@ visitAnnotationNode:!public!visitor/double dispatching! !
 visitArrayNode:!public!visiting! !
 visitExternalArgTypeNode:!public!visitor/double dispatching! !
 visitExternalCallNode:!public!visitor/double dispatching! !
+visitLiteralArrayNode:!public!visitor/double dispatching! !
+visitLiteralByteArrayNode:!public!visitor/double dispatching! !
 visitMethodNode:!public!visitor/double dispatching! !
 visitPrimitiveNode:!public!visitor/double dispatching! !
 visitQualifiedReferenceNode:!public!visiting! !

@@ -18,7 +18,7 @@ newFloatToken: significandInteger precision: precisionInteger exponent: exponent
 	<Float> value for styling purposes, so can avoid the final cost of computing it, which may
 	not be cheap if the exponent is large."
 
-	^self numberTokenClass
+	^StNumberLiteralToken
 		start: tokenStart
 		comments: nil
 		value: significandInteger sign asFloat
@@ -40,7 +40,7 @@ newScaledDecimalToken: significandInteger precision: precisionInteger scale: sca
 	actual value for styling purposes, so can avoid the final cost of computing it, which may
 	not be insignificant since this involves exponentiation and fractional arithmetic."
 
-	^self numberTokenClass
+	^StNumberLiteralToken
 		start: tokenStart
 		comments: nil
 		value: (significandInteger negative ifTrue: [-1s] ifFalse: [1s])
@@ -76,7 +76,7 @@ scanQualifiedReference
 			^currentCharacter == $}
 				ifTrue: 
 					[self step.
-					self literalTokenClass
+					StLiteralToken
 						start: tokenStart
 						comments: nil
 						value: bindingRef
@@ -98,7 +98,7 @@ scanQualifiedReference
 	currentCharacter == $}
 		ifFalse: [^self literalErrorToken: bindingRef stop: self previousStepPosition].
 	self step.	"}"
-	^self literalTokenClass
+	^StLiteralToken
 		start: tokenStart
 		comments: nil
 		value: bindingRef

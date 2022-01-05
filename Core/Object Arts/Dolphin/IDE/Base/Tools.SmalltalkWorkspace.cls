@@ -206,40 +206,45 @@ classForIdentifier: anStIdentifierToken
 classForToken: anAssociation
 	"Private - Answer the inferred class of the specified token, or nil if not known."
 
-	| style text range |
+	| style tokenRange |
 	anAssociation isNil ifTrue: [^nil].
 	style := anAssociation value.
-	range := anAssociation key.
-	text := view plainTextRange: range.
+	(##(IdentityDictionary withAll: {#literalString -> String.
+				#literalSymbol -> Symbol.
+				#literalCharacter -> Character.
+				#literalArray -> Array.
+				#literalBytes -> ByteArray.
+				#literalBindingReference -> BindingReference})
+		lookup: style) ifNotNil: [:literalClass | ^literalClass].
+	tokenRange := anAssociation key.
 	style == #identifier
 		ifTrue: 
 			[^self classForIdentifier: (StIdentifierToken
-						start: range start
+						start: tokenRange start
 						comments: nil
-						value: text)].
+						value: (view plainTextRange: tokenRange))].
 	style == #literalPseudo
 		ifTrue: 
 			[^##(LookupTable withAll: {'nil' -> nil class. 'false' -> false class. 'true' -> true class})
-				lookup: text].
-	style == #literalNumber ifTrue: [^(SmalltalkStylingScanner on: text readStream) next valueClass].
-	style == #literalString ifTrue: [^String].
-	style == #literalSymbol ifTrue: [^Symbol].
-	style == #literalCharacter ifTrue: [^Character].
-	style == #literalBindingReference ifTrue: [^BindingReference].
+				lookup: (view plainTextRange: tokenRange)].
+	style == #literalNumber
+		ifTrue: [^(SmalltalkStylingScanner on: (view plainTextRange: tokenRange) readStream) next valueClass].
 	style == #specialCharacter
 		ifTrue: 
 			[| ch |
-			ch := text lastCodeUnit.
+			ch := view characterAt: tokenRange stop.
 			ch == $] ifTrue: [^BlockClosure].
 			ch == $} ifTrue: [^Array]].
 	style == #unaryMessage
 		ifTrue: 
-			[text = 'class'
+			[| tokenText |
+			tokenText := view plainTextRange: tokenRange.
+			tokenText = 'class'
 				ifTrue: 
 					[| penultimate |
-					penultimate := self tokenBefore: anAssociation key start - 1.
+					penultimate := self tokenBefore: tokenRange start - 1.
 					^(self classForToken: penultimate) ifNotNil: [:class | class basicClass]].
-			(StandardUnaryReturnTypes lookup: text) ifNotNil: [:class | ^class]].
+			(StandardUnaryReturnTypes lookup: tokenText) ifNotNil: [:class | ^class]].
 	^nil!
 
 classForVariable: aStVariable

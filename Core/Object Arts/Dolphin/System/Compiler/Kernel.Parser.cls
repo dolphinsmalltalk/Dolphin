@@ -78,19 +78,13 @@ initialize
 
 initializeParserWith: aString
 	source := aString.
-	self scanner: (self scannerClass on: (ReadStream on: self source) errorHandler: self)!
+	self scanner: (self scannerClass on: (ReadStream on: source) errorHandler: self)!
 
 line
 	"Anwswer one-based <integer> line number of the receiver's current position in the 
 	source text."
 
 	^scanner line!
-
-literalArrayNodeClass
-	^StLiteralArrayNode!
-
-literalValueNodeClass
-	^StLiteralValueNode!
 
 messageNodeClass
 	^StMessageNode!
@@ -120,20 +114,19 @@ parseAnnotationArgument
 			^node].
 	(currentToken isLiteralToken and: [currentToken isMultiKeyword not])
 		ifTrue: [^self parsePrimitiveLiteral].
-	currentToken isLiteralArrayToken
-		ifTrue: 
-			[^currentToken isForByteArray ifTrue: [self parseLiteralByteArray] ifFalse: [self parseLiteralArray]].
+	currentToken isLiteralArrayToken ifTrue: [^self parseLiteralArray].
+	currentToken isLiteralByteArrayToken ifTrue: [^self parseLiteralByteArray].
 	currentToken isOptimized ifTrue: [^self parseOptimizedExpression].
 	currentToken isQualifiedReference ifTrue: [^self parseQualifiedReference].
 	self parserError: CErrExpectAnnotationArg.
 	"Attempt to recover by treating it as a literal value, the AST will be invalid of course"
-	token := scanner literalTokenClass
+	token := StLiteralToken
 				start: currentToken start
 				comments: nil
-				value: (self source copyFrom: currentToken start to: currentToken stop)
+				value: (source copyFrom: currentToken start to: currentToken stop)
 				stop: currentToken stop.
 	self step.
-	node := self literalValueNodeClass literalToken: token.
+	node := StLiteralValueNode new literalToken: token.
 	self addCommentsTo: node.
 	^node!
 
@@ -300,7 +293,7 @@ parseCascadeMessage
 parseExpression: aString
 	| body method |
 	method := self methodNodeClass
-				selectorParts: {scanner identifierTokenClass
+				selectorParts: {StIdentifierToken
 							start: nil
 							comments: nil
 							value: 'doIt'}
@@ -311,7 +304,7 @@ parseExpression: aString
 	body := self parseStatementsOf: method.
 	method body: body.
 	self atEnd
-		ifFalse: [self parserError: CErrNonsenseAtExprEnd range: (self errorPosition to: self source size)].
+		ifFalse: [self parserError: CErrNonsenseAtExprEnd range: (self errorPosition to: source size)].
 	^body!
 
 parseExternalArgType
@@ -535,7 +528,7 @@ parseLiteralArray
 	start := currentToken start.
 	stream := WriteStream on: (Array new: 30).
 	self step.
-	[self atEnd or: [currentToken isSpecial: $)]]
+	[currentToken isEof or: [currentToken isSpecial: $)]]
 		whileFalse: [stream nextPut: self parseLiteralArrayObject].
 	(currentToken isSpecial: $))
 		ifFalse: 
@@ -543,22 +536,18 @@ parseLiteralArray
 			"Error ignored, no recovery needed as at EOF"].
 	stop := currentToken stop.
 	self step.
-	^self literalArrayNodeClass
+	^StLiteralArrayNode new
 		startPosition: start
 		contents: stream contents
-		stopPosition: stop
-		isByteArray: false!
+		stopPosition: stop!
 
 parseLiteralArrayObject
-	currentToken isSpecial 
+	currentToken isSpecial
 		ifTrue: 
 			[currentToken value == $( ifTrue: [^self parseLiteralArray].
 			currentToken value == $[ ifTrue: [^self parseLiteralByteArray]].
-	currentToken isLiteralArrayToken 
-		ifTrue: 
-			[^currentToken isForByteArray 
-				ifTrue: [self parseLiteralByteArray]
-				ifFalse: [self parseLiteralArray]].
+	currentToken isLiteralArrayToken ifTrue: [^self parseLiteralArray].
+	currentToken isLiteralByteArrayToken ifTrue: [^self parseLiteralByteArray].
 	currentToken isOptimized ifTrue: [^self parseOptimizedExpression].
 	currentToken isQualifiedReference ifTrue: [^self parseQualifiedReference].
 	currentToken isLiteralToken ifFalse: [self patchLiteralArrayToken].
@@ -569,7 +558,7 @@ parseLiteralByteArray
 	start := currentToken start.
 	stream := WriteStream on: (Array new: 30).
 	self step.
-	[self atEnd or: [currentToken isSpecial: $]]]
+	[currentToken isEof or: [currentToken isSpecial: $]]]
 		whileFalse: [stream nextPut: self parseLiteralByteArrayObject].
 	(currentToken isSpecial: $])
 		ifTrue: [stop := currentToken stop]
@@ -578,29 +567,28 @@ parseLiteralByteArray
 			self parserError: CErrByteArrayNotClosed range: (start to: stop)
 			"Error ignored, but at EOF so no recovery needed..."].
 	self step.
-	^self literalArrayNodeClass
+	^StLiteralByteArrayNode new
 		startPosition: start
 		contents: stream contents
-		stopPosition: stop
-		isByteArray: true!
+		stopPosition: stop!
 
 parseLiteralByteArrayObject
-	(currentToken isLiteralToken and: 
+	| token |
+	token := currentToken.
+	(token isNumberLiteralToken and: 
 			[| value |
-			value := currentToken value.
+			value := token value.
 			value isInteger and: [value == (value bitAnd: 255)]])
 		ifFalse: 
-			[| token |
-			self parserError: CErrBadValueInByteArray.
+			[self parserError: CErrBadValueInByteArray.
 			"Error ignored, attempt to recover"
-			token := scanner numberTokenClass
+			token := StNumberLiteralToken
 						start: currentToken start
 						comments: nil
 						value: 0
-						stop: currentToken stop.
-			self step.
-			^self literalValueNodeClass literalToken: token].
-	^self parsePrimitiveLiteral!
+						stop: currentToken stop].
+	self step.
+	^StLiteralValueNode new literalToken: token!
 
 parseMessagePattern
 	currentToken isLiteralToken ifTrue: [self patchLiteralMessage].
@@ -617,7 +605,7 @@ parseMessagePattern
 							"Error ignored, attempt to recover by
 							constructing a dummy pattern and method node..."
 							self methodNodeClass
-								selectorParts: {scanner identifierTokenClass
+								selectorParts: {StIdentifierToken
 											start: 1
 											comments: nil
 											value: ''}
@@ -650,12 +638,6 @@ parseMethod: aString in: aClass environment: aNamespace errorBlock: monadicBlock
 
 parseMethodParameter
 	^self parseVariableNode: self parameterNodeClass!
-
-parseNumberLiteral
-	| token |
-	token := currentToken.
-	self step.
-	^self literalValueNodeClass literalToken: token!
 
 parseOptimizedExpression
 	| position node body isClosed |
@@ -730,18 +712,18 @@ parsePrimitiveIdentifier: anStVariableNodeClass
 	^node!
 
 parsePrimitiveLiteral
-	^currentToken isNumberLiteralToken
-		ifTrue: [self parseNumberLiteral]
-		ifFalse: [self parsePrimitiveValueLiteral]!
+	| token |
+	token := currentToken.
+	self step.
+	^StLiteralValueNode new literalToken: token!
 
 parsePrimitiveObject
 	| token node |
 	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier: self variableNodeClass].
 	(currentToken isLiteralToken and: [currentToken isMultiKeyword not])
 		ifTrue: [^self parsePrimitiveLiteral].
-	currentToken isLiteralArrayToken
-		ifTrue: 
-			[^currentToken isForByteArray ifTrue: [self parseLiteralByteArray] ifFalse: [self parseLiteralArray]].
+	currentToken isLiteralArrayToken ifTrue: [^self parseLiteralArray].
+	currentToken isLiteralByteArrayToken ifTrue: [^self parseLiteralByteArray].
 	currentToken isSpecial
 		ifTrue: 
 			[| char |
@@ -753,21 +735,15 @@ parsePrimitiveObject
 	currentToken isQualifiedReference ifTrue: [^self parseQualifiedReference].
 	self parserError: CErrInvalExprStart.
 	"Attempt to recover by treating it as a literal value, the AST will be invalid of course"
-	token := scanner literalTokenClass
+	token := StLiteralToken
 				start: currentToken start
 				comments: nil
-				value: (self source copyFrom: currentToken start to: currentToken stop)
+				value: (source copyFrom: currentToken start to: currentToken stop)
 				stop: currentToken stop.
 	self step.
-	node := self literalValueNodeClass literalToken: token.
+	node := StLiteralValueNode new literalToken: token.
 	self addCommentsTo: node.
 	^node!
-
-parsePrimitiveValueLiteral
-	| token |
-	token := currentToken.
-	self step.
-	^self literalValueNodeClass literalToken: token!
 
 parseQualifiedReference
 	| start stop node |
@@ -896,7 +872,7 @@ parseStatementList: sequenceNode
 		ifTrue: 
 			[self parserError: CWarnUnreachable
 				range: ((statements at: firstReturn + 1) start to: statements last stop)].
-	statements notEmpty ifTrue: [self addCommentsTo: statements last].
+	statements isEmpty ifFalse: [self addCommentsTo: statements last].
 	sequenceNode
 		statements: statements;
 		periods: periods.
@@ -1027,10 +1003,10 @@ parseVariableNode: anStVariableNodeClass
 	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier: anStVariableNodeClass].
 	self parserError: CErrExpectVariable.
 	"Error ignored, attempt to recover..."
-	token := scanner identifierTokenClass
+	token := StIdentifierToken
 				start: currentToken start
 				comments: nil
-				value: (self source copyFrom: currentToken start to: currentToken stop).
+				value: (source copyFrom: currentToken start to: currentToken stop).
 	self step.
 	node := anStVariableNodeClass identifierToken: token.
 	self addCommentsTo: node.
@@ -1080,8 +1056,8 @@ patchLiteralArrayToken
 				ifFalse: 
 					[self parserError: CErrBadTokenInArray.
 					"Error ignored, attempt to recover..."
-					self source copyFrom: currentToken start to: currentToken stop].
-	currentToken := scanner literalTokenClass
+					source copyFrom: currentToken start to: currentToken stop].
+	currentToken := StLiteralToken
 				start: currentToken start
 				comments: nil
 				value: value asSymbol
@@ -1113,13 +1089,13 @@ patchNegativeLiteral
 	"Private - Handle the special negative number case for binary message sends."
 
 	| intValue |
-	(currentToken value isKindOf: Number) ifFalse: [^self].
 	intValue := currentToken value.
+	(intValue isKindOf: Number) ifFalse: [^self].
 	intValue <= 0 ifFalse: [^self].
 	intValue == 0
 		ifTrue: 
-			[(self source notNil
-				and: [self source notEmpty and: [(self source at: (currentToken start min: self source size)) == $-]])
+			[(source notNil
+				and: [source notEmpty and: [(source at: (currentToken start min: source size)) == $-]])
 					ifFalse: [^self]].
 	nextToken := currentToken.
 	currentToken := StBinarySelectorToken
@@ -1159,9 +1135,6 @@ scannerClass
 
 sequenceNodeClass
 	^StSequenceNode!
-
-source
-	^ source!
 
 step
 	(currentToken notNil and: [currentToken comments notNil]) 
@@ -1226,8 +1199,6 @@ externalReferenceTypeFor:!parsing!private! !
 initialize!initializing!public! !
 initializeParserWith:!initializing!private! !
 line!accessing!public! !
-literalArrayNodeClass!constants!private! !
-literalValueNodeClass!constants!private! !
 messageNodeClass!constants!private! !
 methodClass:environment:!initializing!private! !
 methodNodeClass!constants!private! !
@@ -1267,7 +1238,6 @@ parseMethod!parsing!private! !
 parseMethod:!accessing!private! !
 parseMethod:in:environment:errorBlock:!parsing!private! !
 parseMethodParameter!parsing!private! !
-parseNumberLiteral!parsing!private! !
 parseOptimizedExpression!parsing!private! !
 parseOverlappedCall:!parsing!private! !
 parseParenthesizedExpression!parsing!private! !
@@ -1275,7 +1245,6 @@ parsePrimitive:!parsing!private! !
 parsePrimitiveIdentifier:!parsing!private! !
 parsePrimitiveLiteral!parsing!private! !
 parsePrimitiveObject!parsing!private! !
-parsePrimitiveValueLiteral!parsing!private! !
 parseQualifiedReference!parsing!private! !
 parseQualifiedRefModifiers:!parsing!private! !
 parserError:!error handling!private! !
@@ -1304,7 +1273,6 @@ returnNodeClass!constants!private! !
 scanner:!accessing!public! !
 scannerClass!constants!private! !
 sequenceNodeClass!constants!private! !
-source!accessing!private! !
 step!parsing!private! !
 tempDeclClass!parsing!private! !
 validateArg:args:!parsing!private! !

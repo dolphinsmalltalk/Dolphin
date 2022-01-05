@@ -313,13 +313,6 @@ visitCascadeNode: aCascadeNode
 				separatedBy: [codeStream nextPut: $;].
 			self]!
 
-visitLiteralArrayNode: aRBArrayLiteralNode
-	codeStream
-		nextPut: $#;
-		nextPut: aRBArrayLiteralNode openBracket.
-	aRBArrayLiteralNode contents do: [:each | self visitNode: each] separatedBy: [self space].
-	codeStream nextPut: aRBArrayLiteralNode closeBracket!
-
 visitLiteralNode: aLiteralNode
 	aLiteralNode token formatOn: codeStream source: aLiteralNode source!
 
@@ -387,7 +380,6 @@ startMessageSendOnNewLine:!private!testing! !
 visitAssignmentNode:!public!visitor/double dispatching! !
 visitBlockNode:!public!visitor/double dispatching! !
 visitCascadeNode:!public!visitor/double dispatching! !
-visitLiteralArrayNode:!public!visitor/double dispatching! !
 visitLiteralNode:!public!visitor/double dispatching! !
 visitMessageNode:!public!visitor/double dispatching! !
 visitNode:!public!visiting! !

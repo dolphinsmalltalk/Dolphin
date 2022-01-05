@@ -464,6 +464,7 @@ package setMethodNames: #(
 	#(#{Kernel.StInstanceVariable} #printInfoTipOn:frame:)
 	#(#{Kernel.StInstanceVariable} #valueInFrame:)
 	#(#{Kernel.StLiteralArrayNode} #displayOn:)
+	#(#{Kernel.StLiteralByteArrayNode} #displayOn:)
 	#(#{Kernel.StLiteralToken} #textStyle)
 	#(#{Kernel.StLiteralValueNode} #displayOn:)
 	#(#{Kernel.StLocalVariable} #category)
@@ -5226,8 +5227,18 @@ valueInFrame:!accessing!public! !
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	aPuttableStream nextPutAll: (self isForByteArray ifTrue: ['#[]'] ifFalse: ['#()'])! !
+	aPuttableStream nextPutAll: '#(‥)'! !
 !Kernel.StLiteralArrayNode categoriesForMethods!
+displayOn:!printing!public! !
+!
+
+!Kernel.StLiteralByteArrayNode methodsFor!
+
+displayOn: aPuttableStream
+	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
+
+	aPuttableStream nextPutAll: '#[‥]'! !
+!Kernel.StLiteralByteArrayNode categoriesForMethods!
 displayOn:!printing!public! !
 !
 
@@ -8471,7 +8482,7 @@ publishedAspectsOfInstances!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class."
 
-	^##(TextTileIcon text: '|' color: Color face3d)!
+	^##(TextTileIcon text: '|' color: Color.Face3d)!
 
 publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."

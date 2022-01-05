@@ -317,7 +317,7 @@ testNodesDoAll
 	concreteNodeTypes := StProgramNode withAllSubclasses
 				select: [:each | each isAbstract not and: [each owningPackage == StProgramNode owningPackage]].
 	self assert: (concreteNodeTypes difference: nodeTypes) asArray equals: #().
-	self assert: size equals: 39!
+	self assert: size equals: 41!
 
 testPrimitiveTagChildren
 	| parseTree tag errorTempDecl |
@@ -357,7 +357,7 @@ treeWithAllNodeTypes
 	thisContext. 
 	temps := #(10 ##(#sequence -> true. #{Core.Object})). 
 	self foo; foo. 
-	^(temps collect: [:e | {e} ])'!
+	^(temps collect: [:e | {e. #[127]} ])'!
 
 verifyTree: copiedNode isDeepCopyOf: originalNode
 	self assert: originalNode class identicalTo: copiedNode class.

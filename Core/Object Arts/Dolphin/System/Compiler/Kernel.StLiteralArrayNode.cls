@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StLiteralNode subclass: #'Kernel.StLiteralArrayNode'
-	instanceVariableNames: 'isByteArray stop contents start'
+Kernel.AbstractLiteralArrayNode subclass: #'Kernel.StLiteralArrayNode'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -11,113 +11,17 @@ Kernel.StLiteralArrayNode comment: ''!
 !Kernel.StLiteralArrayNode categoriesForClass!Unclassified! !
 !Kernel.StLiteralArrayNode methodsFor!
 
-= anObject
-	| hisContents |
-	self == anObject ifTrue: [^true].
-	self class == anObject class ifFalse: [^false].
-	self isForByteArray = anObject isForByteArray ifFalse: [^false].
-	contents size = (hisContents := anObject contents) size ifFalse: [^false].
-	1 to: contents size do: [:i | (contents at: i) = (hisContents at: i) ifFalse: [^false]].
-	^true!
-
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitLiteralArrayNode: self!
-
-children
-	^contents!
-
-childrenDo: aMonadicValuable
-	contents do: aMonadicValuable!
-
-closeBracket
-	^isByteArray ifTrue: [$]] ifFalse: [$)]!
-
-contents
-	^contents!
-
-contents: aRBLiteralNodeCollection 
-	contents := aRBLiteralNodeCollection.
-	contents do: [:each | each parent: self]!
-
-isForByteArray
-	^isByteArray!
 
 isLiteralArray
 	^true!
 
-openBracket
-	^isByteArray ifTrue: [$[] ifFalse: [$(]!
-
-postCopy
-	super postCopy.
-	self contents: (contents collect: [:each | each copy]).
-	^self!
-
-startPosition: startInteger contents: anArray stopPosition: stopInteger isByteArray: aBoolean 
-	start := startInteger.
-	self contents: anArray.
-	stop := stopInteger.
-	isByteArray := aBoolean!
-
-startWithoutParentheses
-	^start!
-
-stopWithoutParentheses
-	^stop!
-
-value
-	| array |
-	array := self valueClass new: contents size.
-	1 to: contents size do: [:each | array at: each put: (contents at: each) value].
-	^array!
-
 valueClass
-	^isByteArray ifTrue: [ByteArray] ifFalse: [Array]! !
+	^Array! !
 !Kernel.StLiteralArrayNode categoriesForMethods!
-=!comparing!public! !
 acceptVisitor:!public!visitor! !
-children!accessing!public! !
-childrenDo:!accessing!public! !
-closeBracket!accessing!public! !
-contents!accessing!public! !
-contents:!accessing!public! !
-isForByteArray!public!testing! !
 isLiteralArray!public!testing! !
-openBracket!accessing!public! !
-postCopy!copying!public! !
-startPosition:contents:stopPosition:isByteArray:!initializing!public! !
-startWithoutParentheses!accessing!public! !
-stopWithoutParentheses!accessing!public! !
-value!accessing!public! !
 valueClass!accessing!public! !
-!
-
-!Kernel.StLiteralArrayNode class methodsFor!
-
-contents: anArrayOfStLiteralNodes
-	^self
-		startPosition: nil
-		contents: anArrayOfStLiteralNodes
-		stopPosition: nil
-		isByteArray: false!
-
-startPosition: startInteger contents: anArray stopPosition: stopInteger isByteArray: aBoolean 
-	^(self new)
-		startPosition: startInteger
-			contents: anArray
-			stopPosition: stopInteger
-			isByteArray: aBoolean;
-		yourself!
-
-value: aValue
-	^self
-		startPosition: nil
-		contents: (aValue asArray collect: [:each | StLiteralNode value: each])
-		stopPosition: nil
-		isByteArray: aValue class ~~ Array! !
-!Kernel.StLiteralArrayNode class categoriesForMethods!
-contents:!instance creation!public! !
-startPosition:contents:stopPosition:isByteArray:!instance creation!public! !
-value:!instance creation!public! !
 !
 

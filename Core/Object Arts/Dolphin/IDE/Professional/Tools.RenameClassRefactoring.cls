@@ -109,8 +109,8 @@ getOptionIgnoreSymbolicClassReferences: aCollection
 isImpactedLiteral: aStLiteralNode
 	aStLiteralNode isLiteralArray
 		ifTrue: 
-			[^aStLiteralNode isForByteArray not and: 
-					[aStLiteralNode contents anySatisfy: [:each | each isLiteralNode and: [self isImpactedLiteral: each]]]].
+			[^aStLiteralNode contents
+				anySatisfy: [:each | each isLiteralNode and: [self isImpactedLiteral: each]]].
 	aStLiteralNode isQualifiedReference
 		ifTrue: 
 			[| binding |
@@ -155,7 +155,6 @@ rewriteLiteral: aStLiteralNode
 	^aStLiteralNode copy!
 
 rewriteLiteralArray: aStLiteralArrayNode
-	aStLiteralArrayNode isForByteArray ifTrue: [^aStLiteralArrayNode copy].
 	^StLiteralArrayNode
 		contents: (aStLiteralArrayNode contents collect: [:each | self rewriteLiteral: each])!
 

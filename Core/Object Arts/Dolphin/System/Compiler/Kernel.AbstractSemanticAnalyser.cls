@@ -132,6 +132,10 @@ visitExternalCallNode: anStExternalCallNode
 		declareLocalVariable: (StGeneratedTempVariable node: (StTempDeclNode named: '_failureCode')).
 	super visitExternalCallNode: anStExternalCallNode!
 
+visitLiteralByteArrayNode: aLiteralByteArrayNode
+	"We don't need to visit the individual elements (i.e. the value nodes for the bytes)"
+!
+
 visitMethodNode: aMethodNode
 	self enterMethodNode: aMethodNode.
 	super visitMethodNode: aMethodNode.
@@ -193,6 +197,7 @@ visitAssignmentNode:!public!visitor/double dispatching! !
 visitBlockNode:!public!visitor/double dispatching! !
 visitExternalArgTypeNode:!public!visiting! !
 visitExternalCallNode:!public!visiting! !
+visitLiteralByteArrayNode:!public!visiting! !
 visitMethodNode:!public!visitor/double dispatching! !
 visitNode:!public!visiting! !
 visitOptimizedNode:!public!visitor/double dispatching! !

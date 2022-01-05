@@ -11,20 +11,6 @@ Tools.Tests.StStyler comment: 'StStyler is a <StParseNodeVisitor>s that generate
 !Tools.Tests.StStyler categoriesForClass!Refactory-ParseTree Matching! !
 !Tools.Tests.StStyler methodsFor!
 
-acceptLiteralByteArrayNode: aStLiteralArrayNode 
-	| style |
-	style := #literalBytes.
-	view applyStyle: style toNext: 2.
-	aStLiteralArrayNode contents do: 
-			[:each | 
-			self colourBefore: each.
-			self assert: [each value isKindOf: Number].
-			view applyStyle: style toNext: each sourceInterval size.
-			self colorComments: each postComments.
-			self].
-	self styleIntersticesUpTo: aStLiteralArrayNode stop - 1.
-	view applyStyle: style toNext: 1!
-
 colorComments: aCollection 
 	"Note that the anInteger is the start position in the text of the token stream, not the text
 	of the view."
@@ -187,10 +173,6 @@ visitExternalCallNode: anStExternalCallNode
 	self visitPrimitiveNode: anStExternalCallNode!
 
 visitLiteralArrayNode: aRBLiteralArrayNode
-	aRBLiteralArrayNode isForByteArray
-		ifTrue: 
-			[self acceptLiteralByteArrayNode: aRBLiteralArrayNode.
-			^self].
 	arrayDepth := arrayDepth + 1.
 	view applyStyle: #literalArray
 		toNext: ((view characterAt: view stylingPosition) = $# ifTrue: [2] ifFalse: [1]).
@@ -199,6 +181,20 @@ visitLiteralArrayNode: aRBLiteralArrayNode
 	self styleIntersticesUpTo: aRBLiteralArrayNode stop - 1.
 	view applyStyle: #literalArray toNext: 1.
 	arrayDepth := arrayDepth - 1!
+
+visitLiteralByteArrayNode: aStLiteralByteArrayNode
+	| style |
+	style := #literalBytes.
+	view applyStyle: style toNext: 2.
+	aStLiteralByteArrayNode contents do: 
+			[:each |
+			self colourBefore: each.
+			self assert: [each value isKindOf: Number].
+			view applyStyle: style toNext: each sourceInterval size.
+			self colorComments: each postComments.
+			self].
+	self styleIntersticesUpTo: aStLiteralByteArrayNode stop - 1.
+	view applyStyle: style toNext: 1!
 
 visitLiteralNode: aLiteralNode
 	| value sourceSize |
@@ -257,7 +253,6 @@ visitSequenceNode: aSequenceNode
 visitVariableNode: aVariableNode
 	view applyStyle: #identifier toNext: aVariableNode name size! !
 !Tools.Tests.StStyler categoriesForMethods!
-acceptLiteralByteArrayNode:!public!unit tests! !
 colorComments:!helpers!private! !
 colourBefore:!helpers!private! !
 emitWhitespaceBefore:!private!unit tests! !
@@ -277,6 +272,7 @@ visitBlockNode:!public!visitor/double dispatching! !
 visitCascadeNode:!public!visitor/double dispatching! !
 visitExternalCallNode:!public!visitor/double dispatching! !
 visitLiteralArrayNode:!public!visitor/double dispatching! !
+visitLiteralByteArrayNode:!public!visitor/double dispatching! !
 visitLiteralNode:!public!visitor/double dispatching! !
 visitMessageNode:!public!visitor/double dispatching! !
 visitMethodNode:!public!visitor/double dispatching! !

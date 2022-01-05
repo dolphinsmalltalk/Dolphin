@@ -51,6 +51,9 @@ isKeyword
 isLiteralArrayToken
 	^false!
 
+isLiteralByteArrayToken
+	^false!
+
 isLiteralToken
 	^false!
 
@@ -113,6 +116,7 @@ isEof!public!testing! !
 isIdentifier!public!testing! !
 isKeyword!public!testing! !
 isLiteralArrayToken!public!testing! !
+isLiteralByteArrayToken!public!testing! !
 isLiteralToken!public!testing! !
 isNumberLiteralToken!public!testing! !
 isOptimized!public!testing! !
