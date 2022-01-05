@@ -7,4 +7,8 @@ var := ByteCodeDispatcher classPool associationAt: 'FirstShowSpecialSend'.
 ByteCodeDispatcher classPool removeKey: 'FirstShowSpecialSend'.
 var setKey: 'FirstShortSpecialSend'.
 ByteCodeDispatcher classPool add: var!
+!Root class methodsFor!
 
+bindingFor: aString
+
+	^classPool bindingFor: aString! !

@@ -251,8 +251,7 @@ binding
 bindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class (not including imports). If there is no such variable, then answer nil."
 
-	^(self hierarchyBindingFor: aString)
-		ifNil: [self environment ifNotNil: [:env | env bindingFor: aString]]!
+	^(self hierarchyBindingFor: aString) ifNil: [environment bindingFor: aString]!
 
 bindingFor: aString environment: aNamespace
 	"Answer a variable binding for the named variable in the scope of this class (not including imports). If there is no such variable, then answer nil."

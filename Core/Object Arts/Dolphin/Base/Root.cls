@@ -12,6 +12,11 @@ Root comment: '`Root` represents the distinguished `Namespace` that is the root 
 !Root categoriesForClass!Kernel-Objects! !
 !Root class methodsFor!
 
+bindingFor: aString
+	"Answer a variable binding for the named variable in the scope of this class (not including imports). If there is no such variable, then answer nil."
+
+	^classPool bindingFor: aString!
+
 environment
 	"Logically the Root namespace has no enclosing environment, although physically it has a binding in itself."
 
@@ -26,6 +31,7 @@ fullNameFor: aString
 nestedClasses
 	^super nestedClasses copyWithout: self! !
 !Root class categoriesForMethods!
+bindingFor:!bindings!public! !
 environment!public! !
 fullNameFor:!helpers!private! !
 nestedClasses!accessing!public! !
