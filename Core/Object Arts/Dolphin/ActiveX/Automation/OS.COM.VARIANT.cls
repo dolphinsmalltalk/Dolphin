@@ -11,7 +11,7 @@ OS.COM.FinalizableStructure subclass: #'OS.COM.VARIANT'
 		'_OffsetOf_wReserved1' -> 16r2.
 		'_OffsetOf_wReserved2' -> 16r4.
 		'_OffsetOf_wReserved3' -> 16r6.
-		'VTClasses' -> #(#{UndefinedObject} nil #{SWORD} #{SDWORD} #{FLOAT} #{DOUBLE} #{CURRENCY} #{DATE} #{BSTR} #{IDispatch} #{HRESULT} #{VARIANT_BOOL} #{VARIANT} #{IUnknown} #{DECIMAL} nil #{SBYTE} #{BYTE} #{WORD} #{DWORD} #{LARGE_INTEGER} #{ULARGE_INTEGER} #{SDWORD} #{DWORD} #{VOID} #{HRESULT} #{Address} #{SAFEARRAY} #{External.Array} #{Record} #{AnsiString} #{Utf16String} nil nil nil nil #{Structure} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{FILETIME} nil nil nil nil nil nil #{DWORD} #{CLSID}).
+		'VTClasses' -> #(#{Core.UndefinedObject} #{Core.UndefinedObject} #{External.SWORD} #{External.SDWORD} #{External.FLOAT} #{External.DOUBLE} #{OS.COM.CURRENCY} #{OS.COM.DATE} #{OS.COM.BSTR} #{OS.COM.IDispatch} #{OS.HRESULT} #{OS.COM.VARIANT_BOOL} #{OS.COM.VARIANT} #{OS.COM.IUnknown} #{OS.COM.DECIMAL} nil #{External.SBYTE} #{External.BYTE} #{External.WORD} #{External.DWORD} #{OS.LARGE_INTEGER} #{OS.ULARGE_INTEGER} #{External.SDWORD} #{External.DWORD} #{External.VOID} #{OS.HRESULT} #{External.Address} #{OS.COM.SAFEARRAY} #{External.Array} #{OS.COM.Record} #{Core.AnsiString} #{Core.Utf16String} nil nil nil nil #{External.Structure} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{OS.FILETIME} #{Core.ByteArray} #{OS.COM.IStream} #{OS.COM.IStorage} #{OS.COM.IStream} #{OS.COM.IStorage} #{Core.ByteArray} #{External.DWORD} #{OS.COM.CLSID}).
 		'VTNames' -> #(#nil #null #sword #sdword #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #sbyte #byte #word #dword #sqword #qword #sdword #dword #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
 	}!
 OS.COM.VARIANT guid: (Core.GUID fromString: '{c06f3b65-0868-11d3-93af-00a024ca708a}')!
@@ -1053,50 +1053,51 @@ initializeVTClasses
 	N.B. Not all VT_XXX members of the VARENUM enumeration are valid as types in a VARIANT
 	used for Automation purposes (see wtypes.h) so a number have no mapping."
 
+	"The BindingReferences must all be full if the resulting Array is to be a literal constant"
+
 	| vtClasses |
 	vtClasses := (Array new: VT_CLSID + 1)
-		"at: VT_BLOB+1			put: #{ByteArray};		Blob - OLE Property sets only"
-		"at: VT_BLOB_OBJECT+1	put: #{ByteArray};		Blob containing an object - OLE Property sets only"
-		at: VT_BOOL+1			put: #{VARIANT_BOOL};	"Automation (Basic) boolean"
-		at: VT_BSTR+1			put: #{BSTR};			"Automation (Basic) String"
-		at: VT_CARRAY+1		put: #{External.Array};	"C-style array - TYPEDESC only"
-		at: VT_CF+1			put: #{DWORD};		"Clipboard format - OLE Property sets only"
-		at: VT_CLSID+1			put: #{CLSID};		"Class ID - OLE Property sets only"
-		at: VT_CY+1			put: #{CURRENCY};	"Automation Currency - 64-bit fixed point, 4 decimal places"
-		at: VT_DATE+1			put: #{DATE};			"Automation (double) date"
-		at: VT_DECIMAL+1		put: #{DECIMAL};		"16-byte fixed point"
-		at: VT_DISPATCH+1		put: #{IDispatch};		"IDispatch pointer"
-		at: VT_EMPTY+1		put: #{UndefinedObject};"nil (in ST) or Nothing (in VB)"
-		at: VT_ERROR+1		put: #{HRESULT};		"Status code (SCODE)"
-		at: VT_FILETIME+1		put: #{FILETIME};		"FILETIME - OLE Property sets only"
-		at: VT_I1+1			put: #{SBYTE};		"Signed 8-bit integer"
-		at: VT_I2+1			put: #{SWORD};		"16-bit signed integer"
-		at: VT_I4+1			put: #{SDWORD};		"32-bit signed integer"
-		at: VT_I8+1			put: #{LARGE_INTEGER};	"64-bit signed integer - supported type on WinXP"
-		at: VT_INT+1			put: #{SDWORD};		"signed machine dependent integer - TYPEDESC only"
-		at: VT_LPSTR+1			put: #{AnsiString};		"Null-terminated ANSI string - OLE Property Sets and TYPEDESC only"
-		at: VT_LPWSTR+1		put: #{Utf16String};	"Null-terminated UTF16 string - OLE Property Sets and TYPEDESC only"
-		"at: VT_NULL+1			put: #{UndefinedObject};	""SQL Null (i.e. nil)"
-		at: VT_PTR+1			put: #{Address};	"Pointer type - TYPEDESC only"
-		at: VT_R4+1			put: #{FLOAT};		"Single precision floating point"
-		at: VT_R8+1			put: #{DOUBLE};		"Double precision floating point"
-		at: VT_SAFEARRAY+1		put: #{SAFEARRAY};	"As VT_ARRAY, but TYPEDESC only"
-		"at: VT_STORAGE+1		put: #{IStorage};		Name of storage - OLE Property Sets only"
-		"at: VT_STORED_OBJECT+1	put: #{IStorage};		Storage containing object - OLE Property Sets only"
-		"at: VT_STREAM+1			put: #{IStream};	Name of storage - OLE Property Sets only"
-		"at: VT_STREAMED_OBJECT+1	put: #{IStream};	Stream containing object - OLE Property Sets only"
-		at: VT_UINT+1			put: #{DWORD};		"unsigned machine dependent integer - TYPEDESC only"
-		at: VT_UI1+1			put: #{BYTE};			"8-bit unsigned integer (byte)"
-		at: VT_UI2+1			put: #{WORD};		"16-bit unsigned integer (word)"
-		at: VT_UI4+1			put: #{DWORD};		"32-bit unsigned integer (qword)"
-		at: VT_UI8+1			put: #{ULARGE_INTEGER};"64-bit unsigned integer - OLE Prop Sets, TYPEDESC only"
-		at: VT_UNKNOWN+1		put: #{IUnknown};		"IUnknown pointer"
-		at: VT_USERDEFINED+1	put: #{Record};		"user defined type, a typedef in face - TYPEDESC only"
-		at: VT_RECORD+1		put: #{Structure};
-		at: VT_VARIANT+1		put: #{VARIANT};		"Reference to another VARIANT"
-		"at: VT_VECTOR+1		put: #{External.Array};	Simple counted array - OLE property sets only"
-		at: VT_VOID+1			put: #{VOID};			"C void - TYPEDESC only, for generic pointer outputs"
-		at: VT_HRESULT+1		put: #{HRESULT}; 		"HRESULT return code - TYPEDESC only"
+		at: VT_BLOB+1			put: #{Core.ByteArray};			"Blob - OLE Property sets only"
+		at: VT_BLOB_OBJECT+1		put: #{Core.ByteArray};			"Blob containing an object - OLE Property sets only"
+		at: VT_BOOL+1			put: #{OS.COM.VARIANT_BOOL};	"Automation (Basic) boolean"
+		at: VT_BSTR+1				put: #{OS.COM.BSTR};			"Automation (Basic) String"
+		at: VT_CARRAY+1			put: #{External.Array};			"C-style array - TYPEDESC only"
+		at: VT_CF+1				put: #{External.DWORD};			"Clipboard format - OLE Property sets only"
+		at: VT_CLSID+1			put: #{OS.COM.CLSID};			"Class ID - OLE Property sets only"
+		at: VT_CY+1				put: #{OS.COM.CURRENCY};		"Automation Currency - 64-bit fixed point, 4 decimal places"
+		at: VT_DATE+1				put: #{OS.COM.DATE};			"Automation (double) date"
+		at: VT_DECIMAL+1			put: #{OS.COM.DECIMAL};		"16-byte fixed point"
+		at: VT_DISPATCH+1			put: #{OS.COM.IDispatch};		"IDispatch pointer"
+		at: VT_EMPTY+1			put: #{Core.UndefinedObject};		"nil (in ST) or Nothing (in VB)"
+		at: VT_ERROR+1			put: #{OS.HRESULT};			"Status code (SCODE)"
+		at: VT_FILETIME+1			put: #{OS.FILETIME};			"FILETIME - OLE Property sets only"
+		at: VT_I1+1				put: #{External.SBYTE};			"Signed 8-bit integer"
+		at: VT_I2+1				put: #{External.SWORD};			"16-bit signed integer"
+		at: VT_I4+1				put: #{External.SDWORD};		"32-bit signed integer"
+		at: VT_I8+1				put: #{OS.LARGE_INTEGER};		"64-bit signed integer - supported type on WinXP"
+		at: VT_INT+1				put: #{External.SDWORD};		"signed machine dependent integer - TYPEDESC only"
+		at: VT_LPSTR+1			put: #{Core.AnsiString};			"Null-terminated ANSI string - OLE Property Sets and TYPEDESC only"
+		at: VT_LPWSTR+1			put: #{Core.Utf16String};			"Null-terminated UTF16 string - OLE Property Sets and TYPEDESC only"
+		at: VT_NULL+1			put: #{Core.UndefinedObject};		"SQL Null (i.e. nil)"
+		at: VT_PTR+1				put: #{External.Address};			"Pointer type - TYPEDESC only"
+		at: VT_R4+1				put: #{External.FLOAT};			"Single precision floating point"
+		at: VT_R8+1				put: #{External.DOUBLE};			"Double precision floating point"
+		at: VT_SAFEARRAY+1		put: #{OS.COM.SAFEARRAY};		"As VT_ARRAY, but TYPEDESC only"
+		at: VT_STORAGE+1			put: #{OS.COM.IStorage};		"Name of storage - OLE Property Sets only"
+		at: VT_STORED_OBJECT+1	put: #{OS.COM.IStorage};		"Storage containing object - OLE Property Sets only"
+		at: VT_STREAM+1			put: #{OS.COM.IStream};			"Name of storage - OLE Property Sets only"
+		at: VT_STREAMED_OBJECT+1	put: #{OS.COM.IStream};			"Stream containing object - OLE Property Sets only"
+		at: VT_UINT+1				put: #{External.DWORD};			"unsigned machine dependent integer - TYPEDESC only"
+		at: VT_UI1+1				put: #{External.BYTE};			"8-bit unsigned integer (byte)"
+		at: VT_UI2+1				put: #{External.WORD};			"16-bit unsigned integer (word)"
+		at: VT_UI4+1				put: #{External.DWORD};			"32-bit unsigned integer (qword)"
+		at: VT_UI8+1				put: #{OS.ULARGE_INTEGER};		"64-bit unsigned integer - OLE Prop Sets, TYPEDESC only"
+		at: VT_UNKNOWN+1		put: #{OS.COM.IUnknown};		"IUnknown pointer"
+		at: VT_USERDEFINED+1		put: #{OS.COM.Record};			"user defined type, a typedef in face - TYPEDESC only"
+		at: VT_RECORD+1			put: #{External.Structure};
+		at: VT_VARIANT+1			put: #{OS.COM.VARIANT};		"Reference to another VARIANT"
+		at: VT_VOID+1			put: #{External.VOID};			"C void - TYPEDESC only, for generic pointer outputs"
+		at: VT_HRESULT+1			put: #{OS.HRESULT}; 			"HRESULT return code - TYPEDESC only"
 		yourself.
 	self addClassConstant: 'VTClasses' value: vtClasses!
 
