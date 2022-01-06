@@ -20,11 +20,17 @@ method2
 	^self method1!
 
 selfReference
-	^ClassToRename new! !
+	^ClassToRename new!
+
+testFailure
+	"Can be resolved by unqualified name through the import into the receiver's namespace"
+
+	^TestFailure! !
 !Refactory.Browser.Tests.ClassToRename categoriesForMethods!
 method1!performing!public! !
 method2!performing!public! !
 selfReference!performing!public! !
+testFailure!performing!public! !
 !
 
 !Refactory.Browser.Tests.ClassToRename class methodsFor!
@@ -38,10 +44,16 @@ initialize
 	ClassVar1 := 'ClassVar1 of ClassToRename'!
 
 new
-	^super new initialize! !
+	^super new initialize!
+
+testSkip
+	"Can be resolved by unqualified name through the import into the receiver's namespace"
+
+	^TestSkip! !
 !Refactory.Browser.Tests.ClassToRename class categoriesForMethods!
 byteSize!accessing!private! !
 initialize!public! !
 new!performing!public! !
+testSkip!public! !
 !
 

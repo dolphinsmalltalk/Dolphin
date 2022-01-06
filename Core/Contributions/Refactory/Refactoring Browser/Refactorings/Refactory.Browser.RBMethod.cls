@@ -17,21 +17,30 @@ Instance Variables:
 !Refactory.Browser.RBMethod categoriesForClass!Refactory-Model! !
 !Refactory.Browser.RBMethod methodsFor!
 
+= anObject
+	"Answer whether the argument is considered equivalent to the receiver."
+
+	^self == anObject or: 
+			[self class == anObject class and: 
+					[class == anObject modelClass and: 
+							[selector = anObject selector
+								and: [self parseTree ifNil: [source = anObject source] ifNotNil: [:ast | ast = anObject parseTree]]]]]!
+
 boundParseTree
 	"Answer an <StMethodNode> representing the parse tree for the receiver, with any variable bindings resolved."
 
 	| ast |
 	ast := self parseTree.
-	ast scope
-		ifNil: 
-			[RBVariableAnalyser
-				analyseParseTree: ast
-				for: class
-				environment: class environment].
+	ast scope ifNil: [RBVariableAnalyser analyseParseTree: ast].
 	^ast!
 
 environment
 	^self boundParseTree environment!
+
+hash
+	"Answer the <SmallInteger> hash value for the receiver."
+
+	^selector hash bitXor: class hash!
 
 method
 	^compiledMethod!
@@ -109,8 +118,10 @@ source
 source: aString 
 	source := aString! !
 !Refactory.Browser.RBMethod categoriesForMethods!
+=!comparing!public! !
 boundParseTree!accessing!public! !
 environment!accessing!public! !
+hash!comparing!public! !
 method!accessing!public! !
 method:!accessing!public! !
 methodClass!accessing!public! !

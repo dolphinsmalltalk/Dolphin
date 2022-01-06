@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.StSemanticScope subclass: #'Kernel.StClassScope'
-	instanceVariableNames: 'methodClass environment instanceVariables selfVariable superVariable'
+	instanceVariableNames: 'methodClass environment instanceVariables selfVariable superVariable metaScope staticVariables'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -23,8 +23,10 @@ environment: aNamespace
 instanceVariables
 	^instanceVariables
 		ifNil: 
-			[instanceVariables := LookupTable new: 5.
-			methodClass allInstVarNames keysAndValuesDo: 
+			[| names |
+			names := methodClass allInstVarNames.
+			instanceVariables := LookupTable new: names size.
+			names keysAndValuesDo: 
 					[:i :v |
 					instanceVariables at: v
 						put: ((StInstanceVariable index: i name: v)
@@ -32,11 +34,21 @@ instanceVariables
 								yourself)].
 			instanceVariables]!
 
+metaScope
+	^metaScope
+		ifNil: 
+			[metaScope := methodClass isMeta
+						ifTrue: [self]
+						ifFalse: [StClassScope methodClass: methodClass metaclass environment: environment]]!
+
 methodClass
 	^methodClass!
 
-methodClass: aClassDescription
-	methodClass := aClassDescription!
+methodClass: aClassDescription environment: aNamespace
+	methodClass := aClassDescription.
+	environment := aNamespace.
+	staticVariables := LookupTable new.
+	^self!
 
 outer
 	^nil!
@@ -45,8 +57,10 @@ resolveVariable: anStVariableNode
 	| identifier |
 	^(self instanceVariables lookup: (identifier := anStVariableNode name))
 		ifNil: 
-			[(methodClass fullBindingFor: identifier environment: environment)
-				ifNotNil: [:b | StStaticVariable scope: self binding: b]]!
+			[staticVariables at: identifier
+				ifAbsentPutClean: 
+					[(methodClass fullBindingFor: identifier environment: environment)
+						ifNotNil: [:b | StStaticVariable scope: self binding: b]]]!
 
 selfVariable
 	^selfVariable
@@ -66,8 +80,9 @@ classScope!accessing!public! !
 environment!accessing!public! !
 environment:!accessing!public! !
 instanceVariables!accessing!public! !
+metaScope!accessing!public! !
 methodClass!accessing!public! !
-methodClass:!initializing!private! !
+methodClass:environment:!initializing!private! !
 outer!accessing!public! !
 resolveVariable:!operations!private! !
 selfVariable!operations!public! !
@@ -76,13 +91,14 @@ superVariable!operations!public! !
 
 !Kernel.StClassScope class methodsFor!
 
+methodClass: aClassDescription
+	^self methodClass: aClassDescription environment: aClassDescription environment!
+
 methodClass: aClassDescription environment: aNamespace
-	<primitive: 157>
 	^self new
-		methodClass: aClassDescription;
-		environment: aNamespace;
-		yourself! !
+		methodClass: aClassDescription environment: aNamespace! !
 !Kernel.StClassScope class categoriesForMethods!
+methodClass:!instance creation!public! !
 methodClass:environment:!instance creation!public! !
 !
 

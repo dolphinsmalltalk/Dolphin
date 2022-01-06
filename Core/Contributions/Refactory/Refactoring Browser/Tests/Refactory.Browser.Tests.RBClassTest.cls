@@ -161,6 +161,47 @@ testLocalBindingFor
 	
 !
 
+testMethodsReferencingExternals1
+	| class referers expectedSelectors subclass |
+	class := model classNamed: #'Refactory.Browser.Tests.ClassToRename'.
+	referers := (class methodsReferencingExternals asArray collect: [:each | each selector]) sort.
+	expectedSelectors := #(#selfReference #testFailure).
+	self assert: referers equals: expectedSelectors.
+	expectedSelectors do: [:each | class removeMethod: each].
+	self assert: class methodsReferencingExternals isEmpty.
+	class compile: 'selfReference ^Core.Object'.
+	self assert: (class methodsReferencingExternals collect: [:each | each selector]) asArray
+		equals: #(#selfReference).
+	"initialize method references class var ClassVar1, but that is locally defined and so should not be considered an external reference"
+	self assert: class metaclass methodsReferencingExternals single
+		equals: (class metaclass methodFor: #testSkip).
+	subclass := class subclasses first.
+	self assert: (subclass methodsReferencingExternals collect: [:each | each selector]) asArray sort
+		equals: #(#refersToClassFullyQualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToOtherClassPartiallyQualifiedBinding #testSkip #unqualifiedBindingReference)!
+
+testMethodsReferencingExternals2
+	| class referers |
+	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	referers := class methodsReferencingExternals asSet collect: [:each | each selector].
+	#(#refersToClassBindingNotFound #refersToClassConstantFullyQualified #refersToClassConstantUnqualified #refersToClassFullyQualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassPartiallyQualifiedBindingInArray #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToClassUnqualifiedBindingInArray #refersToClassUnqualifiedInArray #refersToClassVariableFullyQualified #refersToClassVariablePartiallyQualified #refersToClassVariablePartiallyQualifiedBinding #refersToOtherClassPartiallyQualifiedBinding)
+		do: [:each | self assert: (referers includes: each)].
+	"These should perhaps be excluded"
+	#(#refersToDolphinTestPartiallyQualifiedBindingMethodNamespace #refersToOwnClassVariableUnqualifiedBinding)
+		do: [:each | self assert: (referers includes: each)].
+	"Example of a reference to a namespace"
+	self assert: (referers includes: #smalltalkAssociationAt).
+	"Brace array syntax creates an implict reference to Array"
+	self assert: (referers includes: #braceArray).
+	"We don't strictly need to include the fully-qualified bindings for rename purposes, so although they are external refs they are not included"
+	#(#refersToClassFullyQualifiedBinding #refersToClassFullyQualifiedBindingInArray #refersToClassPartiallyQualifiedName #refersToClassUnqualifiedName #refersToClassUnqualifiedNameInArray #refersToOtherClassPartiallyQualifiedName)
+		do: [:each | self deny: (referers includes: each)].
+	"References Tools, but as a custom method namespace, so this is not an external reference"
+	self deny: (referers includes: #inlineParameterMethod:).
+	self deny: (referers includes: #refersToOwnClassVariable).
+	"References to the symbolic name are not considered to be references to the named variable as they may not be"
+	#(#refersToClassFullyQualifiedName #refersToClassFullyQualifiedNameInArray #refersToDolphinTestBindingFullyQualified)
+		do: [:each | self deny: (referers includes: each)]!
+
 testModel
 	| myClass |
 	self assert: objectClass model identicalTo: model.
@@ -280,6 +321,8 @@ testExistingMethodPackageAndEnvironmentRootClass!public! !
 testFullName!public!unit tests! !
 testHierarchy!public!unit tests! !
 testLocalBindingFor!public!unit tests! !
+testMethodsReferencingExternals1!public! !
+testMethodsReferencingExternals2!public! !
 testModel!public!unit tests! !
 testName!public!unit tests! !
 testRealClass!public!unit tests! !

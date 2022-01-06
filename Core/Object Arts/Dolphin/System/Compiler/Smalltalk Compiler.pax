@@ -31,6 +31,7 @@ package setClassNames: #(
 
 package setMethodNames: #(
 	#(#{Kernel.StMethodNode} #analyze)
+	#(#{Kernel.StMethodNode} #newClassScope)
 	#(#{Kernel.StQualifiedReferenceNode} #binding)
 	#(#{Kernel.StQualifiedReferenceNode} #resolveBinding)
 	#(#{Kernel.StVariableNode} #binding)
@@ -53,7 +54,7 @@ Core.Object subclass: #'Kernel.StSemanticScope'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'Kernel.StVariable'
-	instanceVariableNames: 'scope reads writes'
+	instanceVariableNames: 'scope'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -71,7 +72,7 @@ Kernel.AbstractSemanticAnalyser subclass: #'Kernel.StSemanticAnalyser'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StSemanticScope subclass: #'Kernel.StClassScope'
-	instanceVariableNames: 'methodClass environment instanceVariables selfVariable superVariable'
+	instanceVariableNames: 'methodClass environment instanceVariables selfVariable superVariable metaScope staticVariables'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -119,13 +120,13 @@ Kernel.StVariable subclass: #'Kernel.StInstanceVariable'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StVariable subclass: #'Kernel.StLocalVariable'
-	instanceVariableNames: 'node storage'
+	instanceVariableNames: 'node storage reads'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StVariable subclass: #'Kernel.StSpecialVariable'
-	instanceVariableNames: ''
+	instanceVariableNames: 'reads'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -149,7 +150,7 @@ Kernel.StLocalVariable subclass: #'Kernel.StGeneratedTempVariable'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StLocalVariable subclass: #'Kernel.StTempVariable'
-	instanceVariableNames: ''
+	instanceVariableNames: 'writes'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -184,12 +185,13 @@ Kernel.StStaticVariable subclass: #'Kernel.StWorkspaceVariable'
 !Kernel.StMethodNode methodsFor!
 
 analyze
-	StSemanticAnalyser
-		analyseParseTree: self
-		for: self methodClass
-		environment: self environment! !
+	StSemanticAnalyser analyseParseTree: self!
+
+newClassScope
+	^StClassScope methodClass: methodClass environment: self environment! !
 !Kernel.StMethodNode categoriesForMethods!
 analyze!operations!public! !
+newClassScope!accessing!private! !
 !
 
 !Kernel.StQualifiedReferenceNode methodsFor!

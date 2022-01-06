@@ -11,6 +11,9 @@ Kernel.StArgumentVariable comment: '<StArgumentVariable> is a specialised class 
 !Kernel.StArgumentVariable categoriesForClass!Kernel-Objects! !
 !Kernel.StArgumentVariable methodsFor!
 
+addAssignment: anStVariableNode fromScope: anStSemanticScope
+	self error: 'Illegal assignment to constant.'!
+
 isArgument
 	"Answer whether the receiver describes an argument variable."
 
@@ -22,6 +25,7 @@ isConstant
 
 	^true! !
 !Kernel.StArgumentVariable categoriesForMethods!
+addAssignment:fromScope:!public! !
 isArgument!public!testing! !
 isConstant!public!testing! !
 !

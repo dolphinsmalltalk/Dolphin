@@ -331,15 +331,9 @@ verifyMethod: aSymbol of: aRBClass equals: aString
 	parseTree := Parser
 				parseMethod: source
 				in: aRBClass
-				environment: aRBClass environment
 				onError: [:str :pos | self fail: str].
-	
-	[Refactory.Browser.RBVariableAnalyser
-		analyseParseTree: parseTree
-		for: aRBClass
-		environment: aRBClass environment]
-			on: Parser notificationClass
-			do: [:ex | self fail: ex displayString].
+	[RBVariableAnalyser analyseParseTree: parseTree] on: Parser notificationClass
+		do: [:ex | self fail: ex displayString].
 	self assert: parseTree equals: (self parseMethod: aString << aSymbol in: aRBClass)! !
 !Refactory.Browser.Tests.RefactoringTest categoriesForMethods!
 verifyMethod:of:equals:!helpers!private! !

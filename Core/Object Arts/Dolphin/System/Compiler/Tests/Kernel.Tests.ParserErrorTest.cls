@@ -39,13 +39,7 @@ parseExpression: aString in: aClass
 				in: aClass
 				onError: errorBlock.
 	^errors isEmpty
-		ifTrue: 
-			[semanticAnalyserClass
-				analyseParseTree: ast
-				for: aClass
-				environment: Smalltalk
-				pools: #()
-				onError: errorBlock]
+		ifTrue: [semanticAnalyserClass analyseParseTree: ast pools: #() onError: errorBlock]
 		ifFalse: [ast]!
 
 parseMethod: aString in: aClass
@@ -57,13 +51,7 @@ parseMethod: aString in: aClass
 				environment: Smalltalk
 				onError: [:err | syntaxErrors addLast: err].
 	"Don't perform semantic analysis if there are syntax errors"
-	^syntaxErrors isEmpty
-		ifTrue: 
-			[semanticAnalyserClass
-				analyseParseTree: ast
-				for: aClass
-				environment: Smalltalk]
-		ifFalse: [ast]!
+	^syntaxErrors isEmpty ifTrue: [semanticAnalyserClass analyseParseTree: ast] ifFalse: [ast]!
 
 parserClass
 	^Parser!

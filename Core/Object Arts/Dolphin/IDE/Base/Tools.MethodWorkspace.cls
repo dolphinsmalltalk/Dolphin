@@ -59,15 +59,9 @@ applyOptions
 autoParse
 	self textLength > 0 ifFalse: [^self].
 	
-	[| ast methodNode |
+	[| ast |
 	ast := self parseTree.
-	methodNode := ast methodNode.
-	BrowserSemanticAnalyser
-		analyseParseTree: ast
-		for: methodNode methodClass
-		environment: methodNode environment
-		pools: self allPools
-		onError: nil]
+	BrowserSemanticAnalyser analyseParseTree: ast pools: self allPools onError: nil]
 			on: Parser notificationClass
 			do: 
 				[:err |

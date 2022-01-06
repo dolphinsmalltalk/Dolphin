@@ -446,14 +446,14 @@ parseExternalCallName
 parseKeywordAnnotation: anInteger
 	| selector args |
 	selector := WriteStream on: (Utf8String new: 16).
-	args := WriteStream on: {}.
+	args := WriteStream on: (Array new: 1).
 	
 	[selector nextPutAll: currentToken value.
 	self step.
 	args nextPut: self parseAnnotationArgument.
 	currentToken isKeyword]
 			whileTrue.
-	^(StAnnotationNode selector: selector contents asSymbol arguments: args contents)
+	^(StAnnotationNode selector: selector contents asSymbol arguments: args grabContents)
 		start: anInteger;
 		yourself!
 
@@ -1389,6 +1389,13 @@ parseMethod: aString in: aClass environment: aNamespace onError: aBlock
 		environment: aNamespace
 		errorBlock: aBlock!
 
+parseMethod: aString in: aClass onError: aMonadicValuable
+	^self
+		parseMethod: aString
+		in: aClass
+		environment: aClass environment
+		onError: aMonadicValuable!
+
 parseMethod: aString onError: aBlock
 	^self
 		parseMethod: aString
@@ -1440,6 +1447,7 @@ parseMethod:!parsing!public! !
 parseMethod:in:!parsing!public! !
 parseMethod:in:environment:!parsing!public! !
 parseMethod:in:environment:onError:!parsing!public! !
+parseMethod:in:onError:!parsing!public! !
 parseMethod:onError:!parsing!public! !
 parseMethodNoError:!parsing!public! !
 parseMethodNoError:in:!parsing!public! !

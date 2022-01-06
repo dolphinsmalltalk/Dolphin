@@ -11,12 +11,16 @@ Kernel.StGeneratedTempVariable comment: '<StGeneratedTempVariable> is a speciali
 !Kernel.StGeneratedTempVariable categoriesForClass!Kernel-Objects! !
 !Kernel.StGeneratedTempVariable methodsFor!
 
+addAssignment: anStVariableNode fromScope: anStSemanticScope
+	self error: 'Illegal assignment to constant.'!
+
 isConstant
 	"Answer whether the receiver describes a reference to a variable that has a constant value.
 	Arguments cannot be assigned to in Smalltalk."
 
 	^true! !
 !Kernel.StGeneratedTempVariable categoriesForMethods!
+addAssignment:fromScope:!public! !
 isConstant!public!testing! !
 !
 

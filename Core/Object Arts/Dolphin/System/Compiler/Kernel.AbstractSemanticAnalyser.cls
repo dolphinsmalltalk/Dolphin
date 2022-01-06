@@ -51,9 +51,9 @@ removeScope
 scopes
 	^scopes!
 
-setMethodNode: aStMethodNode methodClass: aClass environment: aNamespace pools: anArray errorBlock: aMonadicValuable
+setMethodNode: aStMethodNode pools: anArray errorBlock: aMonadicValuable
 	methodNode := aStMethodNode.
-	currentScope := classScope := StClassScope methodClass: aClass environment: aNamespace.
+	currentScope := classScope := aStMethodNode newClassScope.
 	anArray isEmpty
 		ifFalse: 
 			[evalScope := StEvalScope pools: anArray outer: currentScope.
@@ -151,15 +151,13 @@ visitOptimizedNode: anOptimizedNode
 	outerScopes := scopes.
 	(wasInStaticExpression := inStaticExpression)
 		ifFalse: 
-			[| methodClass |
-			"If entering a static expression the scope is different (static expressions are compiled in the context of the class side), and only some literals are retained in the frame."
-			methodClass := self methodClass.
-			currentScope := StClassScope methodClass: methodClass metaclass environment: classScope environment.
+			["If entering a static expression the scope is different (static expressions are compiled in the context of the class side), and only some literals are retained in the frame."
+			currentScope := classScope metaScope.
 			scopes := OrderedCollection new].
 	currentScope := scopes addLast: (StMethodScope forScopeNode: anOptimizedNode outer: currentScope).
 	anOptimizedNode scope: currentScope.
 	inStaticExpression := true.
-	[super visitOptimizedNode: anOptimizedNode] ensure: 
+	[self visitNode: anOptimizedNode body] ensure: 
 			[self removeScope.
 			inStaticExpression := wasInStaticExpression.
 			currentScope := outerCurrentScope.
@@ -187,7 +185,7 @@ lineOfSourcePosition:!helpers!private! !
 methodClass!accessing!private! !
 removeScope!helpers!private! !
 scopes!accessing!public! !
-setMethodNode:methodClass:environment:pools:errorBlock:!initializing!private! !
+setMethodNode:pools:errorBlock:!initializing!private! !
 signalError:forNode:!error handling!private! !
 signalError:forNode:extra:!error handling!private! !
 signalError:forNode:extras:!error handling!private! !
@@ -209,26 +207,19 @@ visitVariableNode:!public!visitor/double dispatching! !
 
 !Kernel.AbstractSemanticAnalyser class methodsFor!
 
-analyseParseTree: aStMethodNode for: aClass environment: aNamespace
-	^self
-		analyseParseTree: aStMethodNode
-		for: aClass
-		environment: aNamespace
-		pools: #()
-		onError: nil!
+analyseParseTree: aStMethodNode
+	^self analyseParseTree: aStMethodNode pools: #() onError: nil!
 
-analyseParseTree: aParseTree for: aClass environment: aNamespace pools: anArray onError: aMonadicValuable
+analyseParseTree: aParseTree pools: anArray onError: aMonadicValuableOrNil
 	| methodNode |
 	methodNode := aParseTree methodNode.
 	^self new
 		setMethodNode: methodNode
-			methodClass: aClass
-			environment: aNamespace
 			pools: anArray
-			errorBlock: aMonadicValuable;
+			errorBlock: aMonadicValuableOrNil;
 		visitNode: methodNode! !
 !Kernel.AbstractSemanticAnalyser class categoriesForMethods!
-analyseParseTree:for:environment:!operations!public! !
-analyseParseTree:for:environment:pools:onError:!operations!public! !
+analyseParseTree:!operations!public! !
+analyseParseTree:pools:onError:!operations!public! !
 !
 

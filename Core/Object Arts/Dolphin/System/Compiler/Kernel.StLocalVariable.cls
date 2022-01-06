@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.StVariable subclass: #'Kernel.StLocalVariable'
-	instanceVariableNames: 'node storage'
+	instanceVariableNames: 'node storage reads'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -11,28 +11,8 @@ Kernel.StLocalVariable comment: '<StlocalVariable> is an abstract class of <StVa
 !Kernel.StLocalVariable categoriesForClass!Kernel-Objects! !
 !Kernel.StLocalVariable methodsFor!
 
-addAssignment: anStVariableNode fromScope: anStSemanticScope
-	super addAssignment: anStVariableNode fromScope: anStSemanticScope.
-	anStSemanticScope realScope == self scope realScope
-		ifTrue: 
-			["Write to the temp from within its defining scope"
-			storage isNil
-				ifTrue: 
-					["Previously unaccessed temp has been initialised in
-					 defining scope - promote to stack var"
-					storage := #stack]
-				ifFalse: 
-					["Previously accessed temp written again in defining scope"
-					storage == #copied
-						ifTrue: 
-							["... but is read from nested scope, so promote to shared"
-							storage := #shared]]]
-		ifFalse: 
-			["Write from a nested scope - promote to shared."
-			storage := #shared]!
-
 addRead: anStVariableNode fromScope: anStSemanticScope
-	super addRead: anStVariableNode fromScope: anStSemanticScope.
+	reads addLast: anStVariableNode.
 	anStSemanticScope realScope == self scope realScope
 		ifTrue: 
 			["Temp is read in its defining scope"
@@ -53,6 +33,11 @@ isLocalVariable
 
 	^true!
 
+isRead
+	"Answer whether the variable described by the receiver is read from anywhere within the method under semantic analysis."
+
+	^reads notEmpty!
+
 markNestedRead
 	storage == #shared ifFalse: [storage := #copied]!
 
@@ -68,18 +53,25 @@ node
 
 	^node!
 
+reads
+	"Answer the <sequencedReadableCollection> of <StVariableNode>'s that describe reads from the variable described by the receiver."
+
+	^reads!
+
 setNode: anStVariableNode
-	node := anStVariableNode!
+	node := anStVariableNode.
+	reads := OrderedCollection new!
 
 storage
 	^storage! !
 !Kernel.StLocalVariable categoriesForMethods!
-addAssignment:fromScope:!public! !
 addRead:fromScope:!public! !
 isLocalVariable!public!testing! !
+isRead!public!testing! !
 markNestedRead!private! !
 name!accessing!public! !
 node!accessing!public! !
+reads!accessing!public! !
 setNode:!accessing!initializing!private! !
 storage!accessing!private! !
 !

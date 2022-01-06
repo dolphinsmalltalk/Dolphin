@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.StLocalVariable subclass: #'Kernel.StTempVariable'
-	instanceVariableNames: ''
+	instanceVariableNames: 'writes'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -11,11 +11,50 @@ Kernel.StTempVariable comment: '<StTempVariable> is a specialised class of <StLo
 !Kernel.StTempVariable categoriesForClass!Kernel-Objects! !
 !Kernel.StTempVariable methodsFor!
 
+addAssignment: anStVariableNode fromScope: anStSemanticScope
+	writes addLast: anStVariableNode.
+	anStSemanticScope realScope == self scope realScope
+		ifTrue: 
+			["Write to the temp from within its defining scope"
+			storage isNil
+				ifTrue: 
+					["Previously unaccessed temp has been initialised in
+					 defining scope - promote to stack var"
+					storage := #stack]
+				ifFalse: 
+					["Previously accessed temp written again in defining scope"
+					storage == #copied
+						ifTrue: 
+							["... but is read from nested scope, so promote to shared"
+							storage := #shared]]]
+		ifFalse: 
+			["Write from a nested scope - promote to shared."
+			storage := #shared]!
+
 isTempVariable
 	"Answer whether the receiver describes a temporary variable."
 
-	^true! !
+	^true!
+
+isWritten
+	"Answer whether the variable described by the receiver is written to anywhere within the method under semantic analysis."
+
+	^writes notEmpty!
+
+setNode: anStVariableNode
+	super setNode: anStVariableNode.
+	writes := OrderedCollection new!
+
+writes
+	"Answer the <sequencedReadableCollection> of <StVariableNode>'s that describe writes into
+	the variable described by the receiver."
+
+	^writes! !
 !Kernel.StTempVariable categoriesForMethods!
+addAssignment:fromScope:!public! !
 isTempVariable!public!testing! !
+isWritten!public!testing! !
+setNode:!accessing!initializing!private! !
+writes!accessing!public! !
 !
 

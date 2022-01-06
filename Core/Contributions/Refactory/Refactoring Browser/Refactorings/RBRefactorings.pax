@@ -77,8 +77,10 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Core.Array} #hasLiteralMatching:)
 	#(#{Core.Class} #rbClass)
 	#(#{Core.Class class} #rootsOfTheWorld)
+	#(#{Kernel.CompiledCode} #hasLiteralMatching:)
 	#(#{Kernel.Namespace class} #rbClass)
 	#(#{Kernel.StAbstractVariableNode} #refersToClass:)
 	#(#{Kernel.StLiteralArrayNode} #refersToClass:)
@@ -108,7 +110,7 @@ package!
 "Class Definitions"!
 
 Core.Object subclass: #'Refactory.Browser.RBAbstractClass'
-	instanceVariableNames: 'newMethods instanceVariableNames removedMethods'
+	instanceVariableNames: 'newMethods instanceVariableNames removedMethods scope'
 	classVariableNames: 'LookupSuperclass'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -488,6 +490,21 @@ Refactory.Browser.VariableRefactoring subclass: #'Refactory.Browser.RenameInstan
 
 "Loose Methods"!
 
+!Core.Array methodsFor!
+
+hasLiteralMatching: aMonadicValuable
+	1 to: self size
+		do: 
+			[:i |
+			| each |
+			each := self at: i.
+			((aMonadicValuable value: each)
+				or: [each class == Array and: [each hasLiteralMatching: aMonadicValuable]]) ifTrue: [^true]].
+	^false! !
+!Core.Array categoriesForMethods!
+hasLiteralMatching:!private!testing! !
+!
+
 !Core.Class methodsFor!
 
 rbClass
@@ -503,6 +520,21 @@ rootsOfTheWorld
 	^Smalltalk allRoots! !
 !Core.Class class categoriesForMethods!
 rootsOfTheWorld!class hierarchy-accessing!private! !
+!
+
+!Kernel.CompiledCode methodsFor!
+
+hasLiteralMatching: aMonadicValuable
+	1 to: self size
+		do: 
+			[:i |
+			| literal |
+			literal := self basicAt: i.
+			((aMonadicValuable value: literal)
+				or: [literal class == Array and: [literal hasLiteralMatching: aMonadicValuable]]) ifTrue: [^true]].
+	^false! !
+!Kernel.CompiledCode categoriesForMethods!
+hasLiteralMatching:!private!testing! !
 !
 
 !Kernel.Namespace class methodsFor!

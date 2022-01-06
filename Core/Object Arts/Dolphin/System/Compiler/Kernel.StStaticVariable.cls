@@ -11,6 +11,9 @@ Kernel.StStaticVariable comment: '<StStaticVariable> is a concrete class of <StV
 !Kernel.StStaticVariable categoriesForClass!Kernel-Objects! !
 !Kernel.StStaticVariable methodsFor!
 
+addAssignment: anStVariableNode fromScope: anStSemanticScope
+	self isConstant ifTrue: [self error: 'Illegal assignment to constant.']!
+
 binding
 	"Answer the <VariableBinding> which is the underlying representation of the static variable
 	described by the receiver."
@@ -38,6 +41,7 @@ setScope: anStLexicalScope binding: aVariableBinding
 	binding := aVariableBinding.
 	self initialize! !
 !Kernel.StStaticVariable categoriesForMethods!
+addAssignment:fromScope:!public! !
 binding!accessing!public! !
 isConstant!public!testing! !
 isStaticVariable!constants!public! !

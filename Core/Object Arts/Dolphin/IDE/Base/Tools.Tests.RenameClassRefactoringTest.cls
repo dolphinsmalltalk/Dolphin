@@ -112,16 +112,16 @@ testModelRenameSequenceClass
 		verifyMethod: #foo
 		of: (model classNamed: #Foo2)
 		equals: '<1s> ^ Foo2'.
-	refactoring := RenameClassRefactoring
+	refactoring2 := RenameClassRefactoring
 				model: model
 				rename: (model classNamed: #Foo2)
 				to: #Foo3.
-	refactoring setOption: #ignoreSymbolicClassReferences
+	refactoring2 setOption: #ignoreSymbolicClassReferences
 		toUse: 
 			[:rename :refs |
 			symbolicRefs := refs.
 			true].
-	self executeRefactoring: refactoring.
+	self executeRefactoring: refactoring2.
 	self assert: (symbolicRefs
 				anySatisfy: [:each | each methodClass realClass == self class and: [each selector == self selector]]).
 	self deny: (model includesClassNamed: #Foo1).
@@ -184,7 +184,7 @@ testRenameAmbiguousClassName
 testRenameChangeNamespace
 	"Tests a rename that changes a class' namespace (i.e. moves it to a new namespace), but not it's unqualified name"
 
-	| refactoring subclass oldName newClass classToRename foo smalltalk symbolicRefs |
+	| refactoring subclass oldName newClass classToRename foo smalltalk |
 	oldName := 'Refactory.Browser.Tests.ClassToRename'.
 	#('Foo' 'Kernel.Bar' 'Refactory.Browser.Tests.FooBar') do: 
 			[:each |
@@ -203,7 +203,7 @@ testRenameChangeNamespace
 				model: model
 				rename: classToRename
 				to: 'Smalltalk.ClassToRename'.
-	refactoring setOption: #ignoreSymbolicClassReferences toUse: [:rename :refs | symbolicRefs := refs. true].
+	refactoring setOption: #ignoreSymbolicClassReferences toUse: [:rename :refs | true].
 	self executeRefactoring: refactoring.
 	newClass := refactoring model classNamed: 'Smalltalk.ClassToRename'.
 	self denyIsNil: newClass.
@@ -212,6 +212,11 @@ testRenameChangeNamespace
 		verifyMethod: #method1
 		of: newClass
 		equals: '<1s> ^self method2'.
+	self assertIsNil: (newClass fullBindingFor: 'TestFailure').
+	self
+		verifyMethod: #testFailure
+		of: newClass
+		equals: '<1s> ^XProgramming.SUnit.TestFailure'.
 	"Model class Foo was defined in Smalltalk, so it can now reference Smalltalk.ClassToRename using just its unqualified name"
 	self
 		verifyMethod: #foo

@@ -58,6 +58,12 @@ refersToClassUnqualifiedBinding
 refersToClassUnqualifiedName
 	^#ClassToRename!
 
+refersToInheritedClassConstant
+	^ClassConst1!
+
+refersToInheritedClassVariable
+	^ClassVar1!
+
 refersToOtherClassPartiallyQualifiedBinding
 	"Not a valid relative reference to the superclass (does not bind - try sending it #value)"
 
@@ -73,6 +79,11 @@ rewriteRule1
 
 rewriteRule1: anObject
 	^rewriteRule1 := anObject!
+
+testSkip
+	"Can be resolved by unqualified name through the import into the receiver's namespace"
+
+	^TestSkip!
 
 unqualifiedBindingReference
 	"This is a relative reference"
@@ -94,10 +105,13 @@ refersToClassPartiallyQualifiedName!performing!public! !
 refersToClassUnqualified!performing!public! !
 refersToClassUnqualifiedBinding!performing!public! !
 refersToClassUnqualifiedName!performing!public! !
+refersToInheritedClassConstant!public! !
+refersToInheritedClassVariable!public! !
 refersToOtherClassPartiallyQualifiedBinding!performing!public! !
 refersToOtherClassPartiallyQualifiedName!performing!public! !
 rewriteRule1!accessing!public! !
 rewriteRule1:!accessing!public! !
+testSkip!performing!public! !
 unqualifiedBindingReference!performing!public! !
 !
 

@@ -45,6 +45,9 @@ badMessage
 booleanPrecedence
 	^true & 4 = 45!
 
+braceArray
+	^{1. 2. 3. 4. 5}!
+
 called: anObject on: aBlock 
 	Transcript
 		show: anObject printString;
@@ -536,6 +539,7 @@ assignmentInIfTrue!lint!public! !
 atIfAbsent!lint!public! !
 badMessage!lint!public! !
 booleanPrecedence!lint!public! !
+braceArray!lint!public! !
 called:on:!inline!public! !
 called:on1:!inline!public! !
 caller!inline!public! !

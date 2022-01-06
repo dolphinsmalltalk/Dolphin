@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Kernel.StVariable'
-	instanceVariableNames: 'scope reads writes'
+	instanceVariableNames: 'scope'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -20,11 +20,10 @@ Instance Variables:
 !Kernel.StVariable methodsFor!
 
 addAssignment: anStVariableNode fromScope: anStSemanticScope
-	self isConstant ifTrue: [self error: 'Illegal assignment to constant.'].
-	(writes ifNil: [writes := OrderedCollection new]) addLast: anStVariableNode!
+	"We don't need to track variable accesses for all variable types, only locals."!
 
 addRead: anStVariableNode fromScope: anStSemanticScope
-	(reads ifNil: [reads := OrderedCollection new]) addLast: anStVariableNode!
+	"We don't need to track variable accesses for all variable types, only locals."!
 
 binding
 	"Answer the <VariableBinding> which is the underlying representation of the static variable described by the receiver."
@@ -52,10 +51,9 @@ isLocalVariable
 	^false!
 
 isRead
-	"Answer whether the variable described by the receiver is read from anywhere within the
-	method under semantic analysis."
+	"Answer whether the variable described by the receiver is read from anywhere within the method under semantic analysis."
 
-	^reads notNil!
+	^true!
 
 isStaticVariable
 	"Answer whether the receiver describes a reference to a 'static' variable such as a class
@@ -69,10 +67,9 @@ isTempVariable
 	^false!
 
 isWritten
-	"Answer whether the variable described by the receiver is written to anywhere within the
-	method under semantic analysis."
+	"Answer whether the variable described by the receiver is written to anywhere within the method under semantic analysis. This is only tracked for temporary variables."
 
-	^writes notNil!
+	^false!
 
 name
 	"Answer the <readableString> identifier of the variable described by the receiver."
@@ -87,10 +84,9 @@ printOn: aPuttableStream
 		nextPut: $)!
 
 reads
-	"Answer the <sequencedReadableCollection> of <StVariableNode>'s that describe reads from the
-	variable described by the receiver."
+	"Answer the <sequencedReadableCollection> of <StVariableNode>'s that describe reads from the variable described by the receiver."
 
-	^reads ?? #()!
+	^#()!
 
 scope
 	"Answer the <StSemanticScope> in which the variable described by the receiver is defined."
@@ -103,10 +99,9 @@ scope: anStSemanticScope
 	scope := anStSemanticScope!
 
 writes
-	"Answer the <sequencedReadableCollection> of <StVariableNode>'s that describe writes into
-	the variable described by the receiver."
+	"Answer the <sequencedReadableCollection> of <StVariableNode>'s that describe writes into the variable described by the receiver."
 
-	^writes ?? #()! !
+	^#()! !
 !Kernel.StVariable categoriesForMethods!
 addAssignment:fromScope:!public! !
 addRead:fromScope:!public! !

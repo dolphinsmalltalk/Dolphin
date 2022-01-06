@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.StVariable subclass: #'Kernel.StSpecialVariable'
-	instanceVariableNames: ''
+	instanceVariableNames: 'reads'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -11,12 +11,33 @@ Kernel.StSpecialVariable comment: '<StSpecialVariable> is an abstract class of <
 !Kernel.StSpecialVariable categoriesForClass!Kernel-Objects! !
 !Kernel.StSpecialVariable methodsFor!
 
+addAssignment: anStVariableNode fromScope: anStSemanticScope
+	self error: 'Illegal assignment to constant.'!
+
+addRead: anStVariableNode fromScope: anStSemanticScope
+	(reads ifNil: [reads := OrderedCollection new]) addLast: anStVariableNode!
+
 isConstant
 	"Answer whether the receiver describes a variable that has a constant value. The special
 	variables self, super and thisContext, cannot be assigned to."
 
-	^true! !
+	^true!
+
+isRead
+	"Answer whether the variable described by the receiver is read from anywhere within the method under semantic analysis."
+
+	^reads notNil!
+
+reads
+	"Answer the <sequencedReadableCollection> of <StVariableNode>'s that describe reads from the
+	variable described by the receiver."
+
+	^reads ?? #()! !
 !Kernel.StSpecialVariable categoriesForMethods!
+addAssignment:fromScope:!public! !
+addRead:fromScope:!public! !
 isConstant!public!testing! !
+isRead!public!testing! !
+reads!accessing!public! !
 !
 

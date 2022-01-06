@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Refactory.Browser.RBAbstractClass'
-	instanceVariableNames: 'newMethods instanceVariableNames removedMethods'
+	instanceVariableNames: 'newMethods instanceVariableNames removedMethods scope'
 	classVariableNames: 'LookupSuperclass'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -278,23 +278,34 @@ existingMethodPackageAndEnvironment: aSymbol
 				second: (self model modelClassFor: (method customEnvironment
 								ifNil: [package environment ifNil: [method methodClass basicEnvironment]]))]!
 
+existingMethodsReferencingExternals
+	| class excluded |
+	class := self realClass.
+	class ifNil: [^#()].
+	excluded := self newMethods keys addAll: self removedMethods.
+	^class selectMethods: 
+			[:each |
+			(excluded includes: each selector) not and: 
+					[each hasLiteralMatching: 
+							[:literal |
+							(literal isKindOf: VariableBinding)
+								ifTrue: 
+									["We want to exlude any class variables defined in the local hierarchy"
+									(literal isClassVariable and: [each methodClass instanceClass includesBehavior: literal environment])
+										not]
+								ifFalse: 
+									[(literal isKindOf: BindingReference) and: 
+											["Fully qualified references should be unaffected by renames if they are not to the renamed class"
+											literal isRelative]]]]]!
+
 existingMethodsThatReferTo: anObject
-	| existingMethods new |
+	| existingMethods rejects |
 	existingMethods := self realClass whichMethodsReferTo: anObject.
 	(newMethods isNil and: [removedMethods isNil]) ifTrue: [^existingMethods].
-	new := self newMethods.
-	^existingMethods reject: 
-			[:each |
-			| selector |
-			(self hasRemoved: (selector := each selector)) or: [new includesKey: selector]]!
-
-existingMethodsThatReferToAnyOf: aCollection
-	| existingMethods new |
-	existingMethods := self realClass whichMethodsReferToAnyOf: aCollection.
-	(newMethods isNil and: [removedMethods isNil]) ifTrue: [^existingMethods].
-	new := self newMethods.
-	^existingMethods
-		reject: [:each | (self hasRemoved: each selector) or: [new includesKey: each selector]]!
+	rejects := self newMethods keys
+				addAll: self removedMethods;
+				yourself.
+	^existingMethods reject: [:each | rejects includes: each selector]!
 
 fullBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
@@ -454,6 +465,14 @@ methodFor: aSelector
 								fromMethod: method
 								andSelector: aSelector]]]!
 
+methodsReferencingExternals
+	| methods |
+	methods := IdentitySet new.
+	#namespaceToDo.	"Filter the newMethods by a parse tree match to find external variable references"
+	methods addAll: self newMethods.
+	self existingMethodsReferencingExternals do: [:each | methods add: (self newMethodFor: each)].
+	^methods!
+
 model
 	^self subclassResponsibility!
 
@@ -472,11 +491,9 @@ newMethodFor: each
 		andSelector: each selector!
 
 newMethods
-	^newMethods
-		ifNil: 
-			[##(IdentityDictionary new
+	^newMethods ?? ##(IdentityDictionary new
 				isImmutable: true;
-				yourself)]!
+				yourself)!
 
 nonMetaclass
 	^self subclassResponsibility!
@@ -509,6 +526,11 @@ protocolsFor: aSelector
 realClass
 	^self subclassResponsibility!
 
+removedMethods
+	^removedMethods ?? ##(IdentitySet new
+				isImmutable: true;
+				yourself)!
+
 removeInstanceVariable: aString
 	instanceVariableNames := instanceVariableNames copyWithout: aString.
 	self model removeInstanceVariable: aString from: self!
@@ -527,6 +549,9 @@ renameInstanceVariable: oldName to: newName around: aBlock
 		to: newName
 		in: self
 		around: aBlock!
+
+scope
+	^scope ifNil: [scope := StClassScope methodClass: self]!
 
 selectors
 	| selectors |
@@ -633,6 +658,12 @@ withAllSubclasses
 		add: self;
 		yourself!
 
+withAllSubclassesDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for the receiver and each of its subclasses using a depth-first traversal."
+
+	aMonadicValuable value: self.
+	self allSubclassesBreadthFirstDo: aMonadicValuable!
+
 withAllSuperclasses
 	#rbFix.	"Ensure in reverse hierarchy order"
 	^(self allSuperclasses)
@@ -685,8 +716,8 @@ environment!accessing!public! !
 environmentName!accessing!public! !
 existingMethodAt:!method accessing!public! !
 existingMethodPackageAndEnvironment:!method accessing!public! !
-existingMethodsThatReferTo:!method accessing!public! !
-existingMethodsThatReferToAnyOf:!method accessing!public! !
+existingMethodsReferencingExternals!method accessing!private! !
+existingMethodsThatReferTo:!method accessing!private! !
 fullBindingFor:!binding!public! !
 fullBindingFor:environment:!public! !
 fullName!accessing!public! !
@@ -717,6 +748,7 @@ localBindingFor:!binding!public! !
 localScope!accessing!public! !
 metaclass!accessing!public! !
 methodFor:!method accessing!public! !
+methodsReferencingExternals!method accessing!public! !
 model!accessing!public! !
 name!accessing!public! !
 nearestRealClass!accessing!private! !
@@ -728,9 +760,11 @@ primaryInstance!accessing!public! !
 printOn:!printing!public! !
 protocolsFor:!accessing!public! !
 realClass!accessing!public! !
+removedMethods!accessing!public! !
 removeInstanceVariable:!public!variable accessing! !
 removeMethod:!method accessing!public! !
 renameInstanceVariable:to:around:!public!variable accessing! !
+scope!accessing!public! !
 selectors!method accessing!public! !
 soleInstance!accessing!public! !
 sourceCodeFor:!method accessing!public! !
@@ -748,6 +782,7 @@ whoDefinesClassVariable:!public!variable accessing! !
 whoDefinesInstanceVariable:!public!variable accessing! !
 whoDefinesMethod:!method accessing!public! !
 withAllSubclasses!accessing!public! !
+withAllSubclassesDo:!enumerating!public! !
 withAllSuperclasses!accessing!public! !
 withAllSuperclassesDo:!accessing!public! !
 !

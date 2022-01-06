@@ -198,6 +198,22 @@ instanceClassNamed: aString
 metaclassNamed: aString
 	^(self instanceClassNamed: aString) ifNotNil: [:class | class metaclass]!
 
+methodsToRewriteForRenameOf: aRBClass
+	| methods inbound block |
+	methods := self allReferencesToClass: aRBClass.
+	inbound := SearchPolicy method newSet.
+	inbound addAll: methods.
+	block := 
+			[:method |
+			(inbound includes: method)
+				ifFalse: 
+					[method boundParseTree.
+					methods addLast: method]].
+	#namespaceToDo.	"A subclass may refer to external variables that it can only bind via an import that it inherits via the namespace of its superclass (if different to its own). There is therefore (rare) potential for external references in subclasses to be affected by a class rename when that rename moves a class to a new namespace. Enumerating all subclasses could be prohibitively expensive with the current search, however, as it is too broad in scope. If we were to rename Object, for example, then a significant proportion of the methods in the entire system would be in scope."
+	aRBClass methodsReferencingExternals do: block.
+	aRBClass metaclass methodsReferencingExternals do: block.
+	^methods!
+
 modelClassFor: aClass
 	"Private - Answer an RBClass for the real <Class> argument, whether or not it is in the receiver's environment."
 
@@ -265,7 +281,7 @@ renameClass: aRBClass to: aString around: aBlock
 	oldName := aRBClass fullName.
 	change := RenameClassChange rename: oldName to: aString.
 	"The ordering is tricky here. We want the namespaces to reflect the change so that any attempt to look up the old class name in its old environment will fail, but we need method searches to find references to the old class name. Therefore we have to capture the references in advance of making any model changes."
-	methods := self allReferencesToClass: aRBClass.
+	methods := self methodsToRewriteForRenameOf: aRBClass.
 	oldUnqualified := aRBClass unqualifiedName.
 	originalEnvironment := aRBClass environment.
 	self assert: [(originalEnvironment localBindingFor: oldUnqualified) value == aRBClass].
@@ -360,6 +376,7 @@ includesStaticVariable:!public!testing! !
 instanceClassFor:!accessing/classes!public! !
 instanceClassNamed:!accessing/classes!public! !
 metaclassNamed:!accessing/classes!public! !
+methodsToRewriteForRenameOf:!changes!private! !
 modelClassFor:!accessing/classes!private! !
 name!accessing!public! !
 name:!accessing!public! !

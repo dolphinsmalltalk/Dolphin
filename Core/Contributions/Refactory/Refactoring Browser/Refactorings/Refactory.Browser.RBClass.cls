@@ -243,7 +243,7 @@ name
 
 name: aString
 	name := aString.
-	unqualifiedName := environment := nil!
+	unqualifiedName := environment := scope := nil!
 
 nearestRealClass
 	#rbFix.	"Added"
