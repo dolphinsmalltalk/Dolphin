@@ -72,6 +72,21 @@ testCollect
 	self assert: actual equals: #(#namespace: #mutable #a:b:c: #selector: #notSelector: #selector:).
 	self assert: (self emptySubject collect: [:each | each wibble]) equals: #()!
 
+testComparing
+	| subject comparand |
+	subject := self canonicalSubject.
+	self deny: subject equals: Object new.
+	comparand := self canonicalSubject.
+	self deny: subject identicalTo: comparand.
+	self assert: subject hash equals: comparand hash.
+	self assert: subject equals: comparand.
+	self assert: comparand equals: subject.
+	comparand := MethodAnnotations fromPairs: #(#(#mutable #())).
+	self deny: subject identicalTo: comparand.
+	self deny: subject hash equals: comparand hash.
+	self deny: subject equals: comparand.
+	self deny: comparand equals: subject.!
+
 testCopyFromTo
 	| subject |
 	subject := self canonicalSubject.
@@ -189,6 +204,7 @@ testAsByteArray!public!unit tests! !
 testAt!public!unit tests! !
 testAtPut!public!unit tests! !
 testCollect!public!unit tests! !
+testComparing!public!unit tests! !
 testCopyFromTo!public!unit tests! !
 testDisplayOn!public!unit tests! !
 testEnvironment!public!unit tests! !

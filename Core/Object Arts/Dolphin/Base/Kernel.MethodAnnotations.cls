@@ -11,6 +11,17 @@ Kernel.MethodAnnotations comment: ''!
 !Kernel.MethodAnnotations categoriesForClass!Kernel-Objects! !
 !Kernel.MethodAnnotations methodsFor!
 
+= anObject
+	"Answer whether the receiver and the <Object> argument are considered equivalent - that is the argument is an equivalent <MethodAnnotations>"
+
+	| size |
+	self == anObject ifTrue: [^true].
+	self class == anObject class ifFalse: [^false].
+	size := self basicSize.
+	size = anObject basicSize ifFalse: [^false].
+	1 to: size do: [:i | (self basicAt: i) = (anObject basicAt: i) ifFalse: [^false]].
+	^true!
+
 add: newElement
 	"MethodAnnotations are not extensible."
 
@@ -157,6 +168,7 @@ withSelector: aSymbol do: aMonadicValuable
 	i == 0]
 			whileFalse! !
 !Kernel.MethodAnnotations categoriesForMethods!
+=!comparing!public! !
 add:!adding!public! !
 at:!enumerating!public! !
 at:put:!accessing!public! !
