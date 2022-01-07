@@ -217,6 +217,9 @@ isEvaluatedFirst
 isImmediateNode
 	^false!
 
+isInStaticExpression
+	^self scope methodScope node isStaticExpressionNode!
+
 isLast: aNode 
 	| children |
 	children := self children.
@@ -257,6 +260,9 @@ isSequence
 isSpecialVariable
 	"Answer whether the variable described by the receiver is one of the special (aka pseudo) variables 'self', 'super' or 'thisContext'."
 
+	^false!
+
+isStaticExpressionNode
 	^false!
 
 isSuperVariable
@@ -465,6 +471,7 @@ isDirectlyUsed!public!testing! !
 isDynamicArray!public!testing! !
 isEvaluatedFirst!public!testing! !
 isImmediateNode!public!testing! !
+isInStaticExpression!private!transforming! !
 isLast:!public!testing! !
 isList!public!testing/matching! !
 isLiteralArray!public!testing! !
@@ -477,6 +484,7 @@ isReturn!public!testing! !
 isSelfVariable!public!testing! !
 isSequence!public!testing! !
 isSpecialVariable!public!testing! !
+isStaticExpressionNode!public!testing! !
 isSuperVariable!public!testing! !
 isTag!public!testing! !
 isUsed!public!testing! !

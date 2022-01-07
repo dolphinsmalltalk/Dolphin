@@ -27,6 +27,9 @@ lookupVariable: anStVariableNode
 	anStVariableNode isSpecialVariable ifTrue: [^anStVariableNode specialVariableInScope: self].
 	^self resolveVariable: anStVariableNode!
 
+methodScope
+	^self outer methodScope!
+
 outer
 	^self subclassResponsibility!
 
@@ -48,6 +51,7 @@ classScope!accessing!public! !
 environment:!accessing!public! !
 isInlined!accessing!public! !
 lookupVariable:!operations!public! !
+methodScope!accessing!public! !
 outer!accessing!public! !
 resolveVariable:!operations!private! !
 selfVariable!accessing!public! !

@@ -59,6 +59,9 @@ isImmediateNode
 isInlined
 	^false!
 
+isStaticExpressionNode
+	^true!
+
 left: leftInteger body: aSequenceNode right: rightInteger 
 	left := leftInteger.
 	self body: aSequenceNode.
@@ -114,6 +117,7 @@ hash!comparing!public! !
 initialize!initializing!public! !
 isImmediateNode!public!testing! !
 isInlined!public!testing! !
+isStaticExpressionNode!public!testing! !
 left:body:right:!initializing!public! !
 methodClass!accessing!private! !
 methodClass:!accessing!private! !

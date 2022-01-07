@@ -13,9 +13,13 @@ Kernel.StMethodScope comment: ''!
 
 environment: aNamespace
 	super environment: aNamespace.
-	node environment: aNamespace! !
+	node environment: aNamespace!
+
+methodScope
+	^self! !
 !Kernel.StMethodScope categoriesForMethods!
 environment:!accessing!public! !
+methodScope!accessing!public! !
 !
 
 !Kernel.StMethodScope class methodsFor!

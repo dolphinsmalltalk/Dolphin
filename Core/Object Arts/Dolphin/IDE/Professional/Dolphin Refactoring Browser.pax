@@ -399,7 +399,7 @@ Refactory.Browser.ClassRefactoring subclass: #'Tools.CopyClassRefactoring'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.ClassRefactoring subclass: #'Tools.RenameClassRefactoring'
-	instanceVariableNames: 'newName class oldClassReference newClassReference oldUnqualified hasSymbolRenames classBinding'
+	instanceVariableNames: 'newName class newClassReference oldUnqualified classBinding'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''

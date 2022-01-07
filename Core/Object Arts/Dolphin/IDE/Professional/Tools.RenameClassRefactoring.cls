@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.ClassRefactoring subclass: #'Tools.RenameClassRefactoring'
-	instanceVariableNames: 'newName class oldClassReference newClassReference oldUnqualified hasSymbolRenames classBinding'
+	instanceVariableNames: 'newName class newClassReference oldUnqualified classBinding'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
@@ -48,23 +48,21 @@ checkForSymbolicReferences
 	symbolicRefs isEmpty ifFalse: [
 		self shouldIgnoreRemainingSymbolicReferences: symbolicRefs]!
 
-className: aName newName: aNewName
+className: oldString newName: newString
 	"If the new name is unqualified, preserve the original namespace of the class."
 
-	oldClassReference := aName asQualifiedReference.
-	newClassReference := (BindingReference isQualifiedName: aNewName)
-				ifTrue: [BindingReference pathString: aNewName]
+	newClassReference := (BindingReference isQualifiedName: newString)
+				ifTrue: [BindingReference pathString: newString]
 				ifFalse: 
 					[| parts |
-					parts := oldClassReference path copy.
-					parts at: parts size put: aNewName.
+					parts := oldString asQualifiedReference path.
+					parts at: parts size put: newString.
 					BindingReference path: parts].
-	self className: aName.
+	self className: oldString.
 	newName := newClassReference pathString.
 	class := self model classNamed: className.
 	oldUnqualified := class unqualifiedName.
-	classBinding := class globalScope fullBindingFor: aName environment: class environment.
-	hasSymbolRenames := false!
+	classBinding := class globalScope fullBindingFor: oldString environment: class environment!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -218,15 +216,22 @@ rewriteSymbolicReferencesToClass
 rewriteVariable: aStVariableNode
 	^aStVariableNode binding == classBinding
 		ifTrue: 
-			[| unqualifiedName |
-			"The static variable is the renamed class' binding - try and use the unqualified name if we can (iff it binds to the class from the method)"
-			unqualifiedName := class unqualifiedName.
-			"Even if the method's environment is the same, it may be shadowed by a same named class variable in the referencing class, so we have to check."
-			StVariableNode named: ((aStVariableNode methodNode fullBindingFor: unqualifiedName) == classBinding
-						ifTrue: [unqualifiedName]
+			["The static variable is the renamed class' binding"
+			StVariableNode
+				named: ((aStVariableNode name = className and: [aStVariableNode isInStaticExpression])
+						ifTrue: 
+							["As a bit of a hack, if the original reference was fully-qualified and is in a static expression, leave it fully-qualfified"
+							newName]
 						ifFalse: 
-							["We don't bother to try and find a partially qualified name that will bind correctly, but just use the fully-qualified name"
-							class fullName])]
+							[| unqualifiedName |
+							"The original reference was unqualified or partially qualified. Try and use the unqualified name if we can (iff it binds to the class from the method)"
+							unqualifiedName := class unqualifiedName.
+							"Even if the method's environment is the same, it may be shadowed by a same named class variable in the referencing class, so we have to check."
+							(aStVariableNode methodNode fullBindingFor: unqualifiedName) == classBinding
+								ifTrue: [unqualifiedName]
+								ifFalse: 
+									["We don't bother to try and find a partially qualified name that will bind correctly, but just use the fully-qualified name"
+									newName]])]
 		ifFalse: 
 			["The static variable is not the renamed class' binding, but we may need to rewrite it if it can no longer be resolved using an unqualified or partially qualified name"
 			aStVariableNode isBindingChanged
