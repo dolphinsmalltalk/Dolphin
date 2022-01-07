@@ -3767,7 +3767,7 @@ Kernel.ObjectRegistry subclass: #'Kernel.WeakRegistry'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.SearchPolicy subclass: #'Core.PluggableSearchPolicy'
+Core.SearchPolicy subclass: #'Kernel.PluggableSearchPolicy'
 	instanceVariableNames: 'compareBlock hashBlock'
 	classVariableNames: ''
 	imports: #()
