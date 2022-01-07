@@ -164,12 +164,19 @@ rewriteQualifiedReference: aStQualifiedReferenceNode
 	targetBinding == classBinding
 		ifFalse: 
 			[^aStQualifiedReferenceNode isBindingChanged
-				ifTrue: [StQualifiedReferenceNode pathString: targetBinding fullName start: nil]
+				ifTrue: 
+					[StQualifiedReferenceNode
+						pathString: targetBinding fullName
+						start: nil
+						flags: aStQualifiedReferenceNode flags]
 				ifFalse: [aStQualifiedReferenceNode copy]].
 	aStQualifiedReferenceNode isRelative
 		ifFalse: 
 			["Previous fully qualified reference, just answer the new fully-qualifed reference"
-			^StQualifiedReferenceNode pathString: class fullName start: nil].
+			^StQualifiedReferenceNode
+				pathString: class fullName
+				start: nil
+				flags: aStQualifiedReferenceNode flags].
 	"Relative bindings are more complex - for now do the brute force implementation that should always work, and just keep adding qualification to the path until it binds, or we reach the fully-qualified path anyway."
 	methodNode := aStQualifiedReferenceNode methodNode.
 	path := newClassReference path.
@@ -181,12 +188,16 @@ rewriteQualifiedReference: aStQualifiedReferenceNode
 		ifTrue: 
 			[^StQualifiedReferenceNode
 				pathString: (i == path size ifTrue: [pathString] ifFalse: ['_.' , pathString])
-				start: nil].
+				start: nil
+				flags: aStQualifiedReferenceNode flags].
 	i > 2]
 			whileTrue: 
 				[i := i - 1.
 				pathString := BindingReference.PathSeparatorString , pathString].
-	^StQualifiedReferenceNode pathString: newClassReference pathString start: nil!
+	^StQualifiedReferenceNode
+		pathString: newClassReference pathString
+		start: nil
+		flags: aStQualifiedReferenceNode flags!
 
 rewriteSymbolicReferencesToClass
 	"Private - If renaming a class that is currently in Smalltalk into another Namespace, we first rewrite any definite symbolic references to the class into literal binding references."

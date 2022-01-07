@@ -25,6 +25,12 @@ Kernel.StQualifiedReferenceNode comment: '`StQualifiedReferenceNode` is a kind o
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitQualifiedReferenceNode: self!
 
+flags
+	^flags!
+
+flags: anInteger
+	flags := anInteger!
+
 isMeta
 	^flags allMask: BindingReference.MetaMask!
 
@@ -52,12 +58,11 @@ path
 pathString
 	^pathString!
 
-pathString: aString start: startInteger
+pathString: aString start: startInteger flags: flagsInteger
 	pathString := aString.
-	flags := (aString size > 0
-				and: [(aString at: 1) == $_ or: [(BindingReference isQualifiedName: aString) not]])
-					ifTrue: [BindingReference.RelativeMask]
-					ifFalse: [0].
+	flags := flagsInteger.
+	(aString size > 0 and: [(aString at: 1) == $_ or: [(BindingReference isQualifiedName: aString) not]])
+		ifTrue: [flags := flags bitOr: BindingReference.RelativeMask].
 	start := startInteger.
 	stop := -1.
 	^self!
@@ -82,6 +87,8 @@ valueClass
 !Kernel.StQualifiedReferenceNode categoriesForMethods!
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
+flags!accessing!public! !
+flags:!accessing!public! !
 isMeta!public!testing! !
 isMeta:!accessing!public!testing! !
 isPrivate!public!testing! !
@@ -91,7 +98,7 @@ isRelative!public!testing! !
 isRelative:!accessing!public!testing! !
 path!accessing!public! !
 pathString!accessing!public! !
-pathString:start:!initializing!private! !
+pathString:start:flags:!initializing!private! !
 startWithoutParentheses!accessing!public! !
 stop:!accessing!public! !
 stopWithoutParentheses!accessing!public! !
@@ -101,9 +108,9 @@ valueClass!accessing!public! !
 
 !Kernel.StQualifiedReferenceNode class methodsFor!
 
-pathString: aString start: startInteger
-	^self new pathString: aString start: startInteger! !
+pathString: aString start: startInteger flags: flagsInteger
+	^self new pathString: aString start: startInteger flags: flagsInteger! !
 !Kernel.StQualifiedReferenceNode class categoriesForMethods!
-pathString:start:!instance creation!public! !
+pathString:start:flags:!instance creation!public! !
 !
 

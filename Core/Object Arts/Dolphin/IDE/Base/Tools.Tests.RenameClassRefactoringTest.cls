@@ -350,18 +350,22 @@ testRenameClassShadowedByClassVariable
 	"Relative binding references are kept as short as they can be. Fully-qualified remain so."
 	partiallyQualifiedBinding := #{_.Tests.ClassVar1}.
 	{#refersToClassUnqualifiedBinding.
-		partiallyQualifiedBinding.
+		partiallyQualifiedBinding private.
 		#refersToClassPartiallyQualifiedBinding1.
 		partiallyQualifiedBinding.
 		#refersToClassPartiallyQualifiedBinding2.
 		partiallyQualifiedBinding.
 		#refersToClassFullyQualifiedBinding.
-		newFullName asQualifiedReference} pairsDo: 
+		newFullName asQualifiedReference private} pairsDo: 
 				[:selector :expected |
 				self
 					verifyMethod: selector
 					of: class
-					equals: '<1s> ^' , expected printString]!
+					equals: '<1s> ^' , expected printString].
+	self
+		verifyMethod: #refersToClassUnqualifiedBindingInArray
+		of: class
+		equals: '<1s> ^#(' , partiallyQualifiedBinding meta printString , ')'!
 
 testRenameClassShadowingImported
 	"Test the case of renaming a class to a new name that shadows an imported class, changing the binding of existing unqualified/part-qualified references to the imported class."
@@ -433,7 +437,7 @@ verifyRenames: aRBClass unqualified: unqualified full: fullyQualified
 	{subclass. class} do: 
 			[:eachClass |
 			{#refersToClassUnqualifiedBinding.
-				unqualified asQualifiedReference.
+				unqualified asQualifiedReference private.
 				#refersToClassPartiallyQualifiedBinding1.
 				unqualified asQualifiedReference.
 				#refersToClassPartiallyQualifiedBinding2.
@@ -441,7 +445,7 @@ verifyRenames: aRBClass unqualified: unqualified full: fullyQualified
 				#refersToOtherClassPartiallyQualifiedBinding.
 				#{_.Tools.ClassToRename}.
 				#refersToClassFullyQualifiedBinding.
-				fullyQualified asQualifiedReference} pairsDo: 
+				fullyQualified asQualifiedReference private} pairsDo: 
 						[:selector :expected |
 						self
 							verifyMethod: selector

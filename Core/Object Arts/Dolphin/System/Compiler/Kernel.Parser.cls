@@ -752,10 +752,10 @@ parseQualifiedReference
 	self step.
 	currentToken isIdentifier
 		ifTrue: 
-			[node := self qualifiedReferenceNodeClass pathString: currentToken value start: start.
+			[node := self qualifiedReferenceNodeClass pathString: currentToken value start: start flags: 0.
 			stop := self parseQualifiedRefModifiers: node]
 		ifFalse: 
-			[node := self qualifiedReferenceNodeClass pathString: '' start: start.
+			[node := self qualifiedReferenceNodeClass pathString: '' start: start flags: 0.
 			self parserError: CErrExpectVariable].
 	(currentToken isSpecial: $})
 		ifTrue: 

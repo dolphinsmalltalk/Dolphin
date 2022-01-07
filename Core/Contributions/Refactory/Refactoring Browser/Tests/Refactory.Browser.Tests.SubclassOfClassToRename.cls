@@ -27,7 +27,7 @@ refersToClassFullyQualified
 	^Refactory.Browser.Tests.ClassToRename!
 
 refersToClassFullyQualifiedBinding
-	^#{Refactory.Browser.Tests.ClassToRename}!
+	^#{Refactory.Browser.Tests.ClassToRename private}!
 
 refersToClassFullyQualifiedName
 	^#'Refactory.Browser.Tests.ClassToRename'!
@@ -53,7 +53,7 @@ refersToClassUnqualified
 	^ClassToRename!
 
 refersToClassUnqualifiedBinding
-	^#{ClassToRename}!
+	^#{ClassToRename private}!
 
 refersToClassUnqualifiedName
 	^#ClassToRename!
