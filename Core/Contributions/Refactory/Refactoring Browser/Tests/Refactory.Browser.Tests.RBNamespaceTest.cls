@@ -58,6 +58,31 @@ testDefineClassChange
 	self assert: (st includesClassNamed: #SmalltalkTestXXX).
 	self denyIsNil: (st classNamed: #SmalltalkTestXXX)!
 
+testDefineClassChangeD8
+	| subject class classVars classConsts |
+	subject := RBModel new.
+	subject
+		defineClass: 'Refactory.Browser.Tests.RefactoringBrowserTest subclass: #''Refactory.Browser.Tests.SmalltalkTestXXX''
+				instanceVariableNames: ''iv1 iv2''
+				classVariableNames: ''Cv1 Cv2''
+				imports: #(#{Tools})
+				classInstanceVariableNames: ''ci1 ci2''
+				classConstants: { ''Cc1'' -> 1. ''Cc2'' -> 2 }'.
+	class := subject classNamed: 'Refactory.Browser.Tests.SmalltalkTestXXX'.
+	self denyIsNil: class.
+	classVars := class classVariables.
+	self assert: (classVars collect: [:each | each key]) asArray sort equals: #('Cv1' 'Cv2').
+	self assert: (classVars allSatisfy: [:each | each isVariableBinding]).
+	self assert: (classVars allSatisfy: [:each | each isClassVariable and: [each isImmutable not]]).
+	self assert: (classVars allSatisfy: [:each | each environment == class]).
+	classConsts := class classConstants.
+	self assert: (classConsts collect: [:each | each printString]) asSortedCollection asArray
+		equals: #('''Cc1'' -> 1' '''Cc2'' -> 2').
+	self assert: (classConsts allSatisfy: [:each | each isVariableBinding]).
+	self assert: (classConsts allSatisfy: [:each | each isClassVariable and: [each isImmutable]]).
+	self assert: (classConsts allSatisfy: [:each | each environment == class]).
+	self assert: class imports equals: {Tools fullyQualifiedReference}!
+
 testImplementors
 	| st |
 	st := RBModel new.
@@ -193,6 +218,7 @@ testAllClassesDo!class tests!public! !
 testCommentChange!class tests!public! !
 testDefineClassAfterDeletedChange!class tests!public! !
 testDefineClassChange!class tests!public! !
+testDefineClassChangeD8!class tests!public! !
 testImplementors!class tests!public! !
 testIncludesClass!class tests!public! !
 testMetaclassNamed!public! !

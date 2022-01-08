@@ -49,9 +49,6 @@ isQualifiedReference
 isRelative
 	^flags allMask: BindingReference.RelativeMask!
 
-isRelative: aBoolean
-	flags := flags mask: BindingReference.RelativeMask set: aBoolean!
-
 path
 	^BindingReference.PathSeparator split: pathString!
 
@@ -95,7 +92,6 @@ isPrivate!public!testing! !
 isPrivate:!accessing!public!testing! !
 isQualifiedReference!public!testing! !
 isRelative!public!testing! !
-isRelative:!accessing!public!testing! !
 path!accessing!public! !
 pathString!accessing!public! !
 pathString:start:flags:!initializing!private! !

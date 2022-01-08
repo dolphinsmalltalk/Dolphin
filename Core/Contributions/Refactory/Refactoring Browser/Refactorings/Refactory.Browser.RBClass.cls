@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName bindings imports category comment environment binding'
+	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName classPool imports category comment environment binding'
 	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -27,10 +27,10 @@ Instance Variables:
 addBinding: aRBVariableBinding
 	self assert: [aRBVariableBinding model == self model].
 	aRBVariableBinding environment: self.
-	self bindings add: aRBVariableBinding!
+	self classPool add: aRBVariableBinding!
 
 addClassVariable: aString
-	self bindings add: (RBVariableBinding name: aString environment: self).
+	self classPool add: (RBVariableBinding name: aString environment: self).
 	model addClassVariable: aString to: self!
 
 addImport: aString
@@ -74,18 +74,7 @@ bindingOrNil
 			binding]!
 
 bindings
-	^bindings
-		ifNil: 
-			[| realBindings |
-			realBindings := realClass classPool.
-			bindings := Dictionary new: realBindings size.
-			realBindings associationsDo: 
-					[:each |
-					| var |
-					var := RBVariableBinding new realBinding: each environment: self.
-					each isClassBinding ifTrue: [var setValue: (model modelClassFor: each value)].
-					bindings add: var].
-			bindings]!
+	^self classPool associations!
 
 category
 	^category isNil
@@ -105,15 +94,36 @@ classConstants
 		isImmutable: true;
 		yourself!
 
-classConstants: aCollectionOfVariableBindings
-	self bindings addAll: aCollectionOfVariableBindings!
+classConstants: aCollectionOfAssociations
+	| pool |
+	pool := self classPool.
+	aCollectionOfAssociations do: 
+			[:each |
+			pool add: ((RBVariableBinding name: each key environment: self)
+						value: each value;
+						isImmutable: true;
+						yourself)]!
+
+classPool
+	^classPool
+		ifNil: 
+			[| realBindings |
+			realBindings := realClass classPool.
+			classPool := Dictionary new: realBindings size.
+			realBindings associationsDo: 
+					[:each |
+					| var |
+					var := RBVariableBinding new realBinding: each environment: self.
+					each isClassBinding ifTrue: [var setValue: (model modelClassFor: each value)].
+					classPool add: var].
+			classPool]!
 
 classVariableNames
 	^(self definedBindings select: [:each | each isImmutable not]) collect: [:each | each key]!
 
 classVariableNames: aCollectionOfStrings
-	bindings := Dictionary new: aCollectionOfStrings size.
-	aCollectionOfStrings do: [:each | bindings add: (RBVariableBinding name: each environment: self)]!
+	classPool := Dictionary new: aCollectionOfStrings size.
+	aCollectionOfStrings do: [:each | classPool add: (RBVariableBinding name: each environment: self)]!
 
 classVariables
 	"Answer a <collection> of <VariableBinding>s, being the class variables of the receiver, but not including class constants."
@@ -129,7 +139,7 @@ comment: aString
 	model comment: (comment := aString) in: self!
 
 definedBindings
-	^self bindings associations select: [:each | each isClassVariable]!
+	^self bindings select: [:each | each isClassVariable]!
 
 definitionString
 	| definitionStream |
@@ -140,7 +150,7 @@ definitionString
 	^definitionStream contents!
 
 directlyDefinesClassVariable: aString
-	^self bindings includesKey: aString!
+	^self classPool includesKey: aString!
 
 directlyImportsNamespace: aBindingReference
 	"Namespace imports must always be absolute binding references, but they may be private, so we just compare the paths"
@@ -187,8 +197,9 @@ imports
 	imports ifNil: [imports := realClass ifNotNil: [realClass imports] ifNil: [#()]].
 	^imports!
 
-imports: aCollectionOfStrings
-	imports := (aCollectionOfStrings collect: [:each | each asQualifiedReference]) asArray!
+imports: aCollection
+	imports := (aCollection collect: [:each | each asQualifiedReference asFullyQualifiedReference])
+				asArray!
 
 includesEnvironment: aClass
 	"Answer whether the receiver includes the namespace argument (i.e. is it nested within it somewhere in its environment chain)."
@@ -219,7 +230,7 @@ kindOfSubclass
 localBindingFor: aString
 	"Answer a variable binding for the named variable directly in the scope of this class, i.e. one of its own class variables. If there is no such class variable, then answer nil."
 
-	^self bindings bindingFor: aString!
+	^self classPool bindingFor: aString!
 
 localScope
 	^self!
@@ -317,7 +328,7 @@ realName: aSymbol
 	self realClass: aSymbol asQualifiedReference value!
 
 removeBindingFor: aString
-	^self bindings removeAssociationAt: aString!
+	^self classPool removeAssociationAt: aString!
 
 removeClassVariable: aString
 	self removeBindingFor: aString.
@@ -328,7 +339,7 @@ removeSubclass: aRBClass
 
 renameClassVariable: oldName to: newName around: aBlock
 	| variables |
-	variables := self bindings.
+	variables := self classPool.
 	model
 		renameClassVariable: oldName
 		to: newName
@@ -460,6 +471,7 @@ category:!accessing!public! !
 classBindingNames!public! !
 classConstants!accessing!public! !
 classConstants:!accessing!public! !
+classPool!accessing!public! !
 classVariableNames!accessing!public! !
 classVariableNames:!accessing!public! !
 classVariables!class variables!public! !

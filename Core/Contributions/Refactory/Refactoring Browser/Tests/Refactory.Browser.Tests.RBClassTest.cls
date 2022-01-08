@@ -21,9 +21,18 @@ setUp
 		defineClass: 'Core.Object subclass: #SomeClassName
 	instanceVariableNames: ''instanceVariable1 instanceVariable2''
 	classVariableNames: ''ClassVariable1''
-	poolDictionaries: ''OpcodePool''
-	category: ''Refactory-Testing'''.
+	imports: #(#{Kernel.OpcodePool})
+	classInstanceVariableNames: ''''
+	classConstants: { ''ClassConstant1'' -> 1.23 }'.
 	newClass := model classNamed: #SomeClassName!
+
+testBindings
+	| bindings |
+	bindings := objectClass bindings.
+	self assert: (bindings allSatisfy: [:each | each isVariableBinding]).
+	self assert: (bindings allSatisfy: [:each | each environment == objectClass]).
+	self assert: (bindings collect: [:each | each key]) sort
+		equals: #('_AssertionFailureSignal' '_DependentsRegister' '_EventsRegister' '_PropertyRegister' 'ModelOnlyClassVariable')!
 
 testClassSubclasses
 	| class |
@@ -51,10 +60,10 @@ testDefinesMethod
 	self assert: (messageNodeClass definesMethod: #printString)!
 
 testDefinesPoolDictionary
-	self deny: (objectClass importsNamespace: #OpcodePool).
-	self assert: (newClass importsNamespace: #OpcodePool).
-	self deny: (messageNodeClass importsNamespace: #'OS.Win32Constants').
-	self assert: ((RBModel new classNamed: #'OS.HRESULTError') importsNamespace: #'OS.FacilityCodes')!
+	self deny: (objectClass importsNamespace: 'Kernel.OpcodePool').
+	self assert: (newClass importsNamespace: 'Kernel.OpcodePool').
+	self deny: (messageNodeClass importsNamespace: 'OS.Win32Constants').
+	self assert: ((RBModel new classNamed: 'OS.HRESULTError') importsNamespace: 'OS.FacilityCodes')!
 
 testDefinitionString
 	self assert: objectClass definitionString
@@ -68,9 +77,11 @@ testDefinitionString
 		equals:'Core.Object subclass: #SomeClassName
 	instanceVariableNames: ''instanceVariable1 instanceVariable2''
 	classVariableNames: ''ClassVariable1''
-	imports: #(#{OpcodePool})
+	imports: #(#{Kernel.OpcodePool})
 	classInstanceVariableNames: ''''
-	classConstants: {}'.
+	classConstants: {
+		''ClassConstant1'' -> 1.23
+	}'.
 	{External.FunctionDescriptor. External.Structure. SessionManager. Scanner} do: 
 			[:each |
 			| class |
@@ -83,7 +94,7 @@ testEnvironment
 	rbTests := model classFor: self class environment.
 	self assert: myClass environment equals: rbTests.
 	self assert: myClass basicEnvironment equals: rbTests.
-	self assert: (rbTests bindings at: self class unqualifiedName) identicalTo: myClass.
+	self assert: (rbTests classPool at: self class unqualifiedName) identicalTo: myClass.
 	smalltalk := model classNamed: #Smalltalk.
 	self assert: newClass environment identicalTo: smalltalk.
 	self assert: newClass basicEnvironment identicalTo: smalltalk.
@@ -307,6 +318,7 @@ testWithAllSubclasses
 	self assert: all asArray equals: {newClass metaclass}! !
 !Refactory.Browser.Tests.RBClassTest categoriesForMethods!
 setUp!public!set up! !
+testBindings!public!unit tests! !
 testClassSubclasses!public!unit tests! !
 testDefinesClassVariable!public!unit tests! !
 testDefinesInstanceVariable!public!unit tests! !

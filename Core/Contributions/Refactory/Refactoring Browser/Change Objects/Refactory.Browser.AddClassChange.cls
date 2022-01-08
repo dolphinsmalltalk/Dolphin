@@ -87,7 +87,9 @@ fillOutDefinitionArguments: parseTree
 	classVariableNames := self namesIn: (pairs at: 'classVariableNames:') value.
 	imports := (pairs lookup: 'imports:')
 				ifNil: [(pairs lookup: 'poolDictionaries:') ifNil: [#()] ifNotNil: [:arg | self namesIn: arg value]]
-				ifNotNil: [:arg | arg children collect: [:each | each value]].
+				ifNotNil: 
+					[:arg |
+					arg children collect: [:each | BindingReference pathString: each pathString private: each isPrivate]].
 	category := (pairs lookup: 'category:') ifNil: [#Unknown] ifNotNil: [:arg | arg value asSymbol].
 	"We defer evaluating the brace array expression until needed, as mostly it is not"
 	classConstants := (pairs lookup: 'classConstants:')
@@ -136,7 +138,8 @@ parseDefinitionError
 	classReference := #{Unknown}.
 	instanceVariableNames := #().
 	classVariableNames := #().
-	imports := #()!
+	imports := #().
+	classConstants := #()!
 
 primitiveExecute
 	#rbFix. "rbDmm changed "

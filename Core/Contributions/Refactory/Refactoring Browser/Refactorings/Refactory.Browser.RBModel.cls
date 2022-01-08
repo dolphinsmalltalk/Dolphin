@@ -137,9 +137,9 @@ defineClass: aString
 	newClass superclass: (self instanceClassNamed: change superclassName).
 	newClass superclass ifNil: [self rootClasses add: newClass].
 	newClass instanceVariableNames: change instanceVariableNames.
-	newClass classVariableNames: change classVariableNames copy.
+	newClass classVariableNames: change classVariableNames.
 	newClass classConstants: change classConstants.
-	newClass imports: change imports copy.
+	newClass imports: change imports.
 	newClass category: change category.
 	^change!
 

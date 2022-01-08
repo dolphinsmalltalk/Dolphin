@@ -188,7 +188,7 @@ Kernel.AbstractSemanticAnalyser subclass: #'Refactory.Browser.RBVariableAnalyser
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBClass'
-	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName bindings imports category comment environment binding'
+	instanceVariableNames: 'model name metaclass realClass superclass subclasses unqualifiedName classPool imports category comment environment binding'
 	classVariableNames: 'LookupComment'
 	imports: #()
 	classInstanceVariableNames: ''

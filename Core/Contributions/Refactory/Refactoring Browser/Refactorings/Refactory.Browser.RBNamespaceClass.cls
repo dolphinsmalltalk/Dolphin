@@ -12,7 +12,7 @@ Refactory.Browser.RBNamespaceClass comment: ''!
 !Refactory.Browser.RBNamespaceClass methodsFor!
 
 addClass: aRBClass
-	self bindings add: ((RBVariableBinding name: aRBClass unqualifiedName environment: self)
+	self classPool add: ((RBVariableBinding name: aRBClass unqualifiedName environment: self)
 				setFlags: 0;
 				value: aRBClass;
 				yourself)!

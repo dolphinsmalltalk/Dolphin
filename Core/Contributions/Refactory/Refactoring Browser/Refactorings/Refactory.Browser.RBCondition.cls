@@ -209,7 +209,7 @@ isEmptyClass: anObject
 	^self new
 		type: {#IsEmptyClass. anObject}
 		block: 
-			[anObject bindings isEmpty
+			[anObject classPool isEmpty
 				and: [anObject instanceVariableNames isEmpty and: [anObject selectors isEmpty]]]
 		errorString: 
 			[| stream hasMethods hasClassVars hasInstVars |
@@ -218,7 +218,7 @@ isEmptyClass: anObject
 				print: anObject;
 				nextPutAll: ' is <1?:not >empty (has <1?no variables or methods):'.
 			hasMethods := anObject selectors notEmpty.
-			hasClassVars := anObject bindings notEmpty.
+			hasClassVars := anObject classPool notEmpty.
 			hasClassVars ifTrue: [stream nextPutAll: 'class variables'].
 			hasInstVars := anObject instanceVariableNames notEmpty.
 			hasInstVars

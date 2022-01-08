@@ -81,7 +81,8 @@ canonicalizeImport: aBindingReference
 			(self resolveImport: ref)
 				ifNil: 
 					[Notification signal: 'Imported namespace <1p> does not currently exist.' << ref asString.
-					aBindingReference]])
+					"Must not be relative so treat as full even if has only an unqualified name"
+					aBindingReference asFullyQualifiedReference]])
 		isPrivate: private;
 		yourself!
 
