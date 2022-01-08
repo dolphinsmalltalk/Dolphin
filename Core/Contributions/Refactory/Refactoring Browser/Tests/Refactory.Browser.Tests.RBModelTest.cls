@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RBNamespaceTest'
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RBModelTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.Tests.RBNamespaceTest guid: (Core.GUID fromString: '{79170e4b-f3f8-4b46-8093-dac62f866cba}')!
-Refactory.Browser.Tests.RBNamespaceTest comment: ''!
-!Refactory.Browser.Tests.RBNamespaceTest categoriesForClass!Refactory-Testing! !
-!Refactory.Browser.Tests.RBNamespaceTest methodsFor!
+Refactory.Browser.Tests.RBModelTest guid: (Core.GUID fromString: '{79170e4b-f3f8-4b46-8093-dac62f866cba}')!
+Refactory.Browser.Tests.RBModelTest comment: ''!
+!Refactory.Browser.Tests.RBModelTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.RBModelTest methodsFor!
 
 testAllClassesDo
 	| model classes |
@@ -213,7 +213,7 @@ testRoots
 	self assert: (model rootClasses asSortedCollection: [:a :b | a name < b name]) asArray
 		equals: ((Class rootsOfTheWorld collect: [:each | model classFor: each])
 				asSortedCollection: [:a :b | a name < b name]) asArray! !
-!Refactory.Browser.Tests.RBNamespaceTest categoriesForMethods!
+!Refactory.Browser.Tests.RBModelTest categoriesForMethods!
 testAllClassesDo!class tests!public! !
 testCommentChange!class tests!public! !
 testDefineClassAfterDeletedChange!class tests!public! !
