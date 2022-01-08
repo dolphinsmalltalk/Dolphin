@@ -39,7 +39,6 @@ package setClassNames: #(
 	#{Refactory.Browser.Tests.RBClassTest}
 	#{Refactory.Browser.Tests.RBConditionTest}
 	#{Refactory.Browser.Tests.RBMethodTest}
-	#{Refactory.Browser.Tests.RBModelTest}
 	#{Refactory.Browser.Tests.RBNamespaceTest}
 	#{Refactory.Browser.Tests.RefactoringBrowserTest}
 	#{Refactory.Browser.Tests.RefactoringManagerTest}
@@ -171,12 +170,6 @@ Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tes
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RBMethodTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RBModelTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

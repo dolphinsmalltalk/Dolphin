@@ -73,6 +73,14 @@ testIncludesClass
 				onEnvironment: (ClassEnvironment onEnvironment: BrowserEnvironment new classes: {Object}))
 					includesClassNamed: #OrderedCollection)!
 
+testMetaclassNamed
+	| model metaclass |
+	model := RBModel new.
+	metaclass := model metaclassNamed: 'Core.Symbol'.
+	self assert: metaclass realClass identicalTo: Symbol class.
+	self assert: (model metaclassNamed: 'Core.Symbol') identicalTo: metaclass
+	!
+
 testModelImplementorsSenders
 	| model class modelImps refs found |
 	model := RBModel new.
@@ -187,6 +195,7 @@ testDefineClassAfterDeletedChange!class tests!public! !
 testDefineClassChange!class tests!public! !
 testImplementors!class tests!public! !
 testIncludesClass!class tests!public! !
+testMetaclassNamed!public! !
 testModelImplementorsSenders!class tests!public! !
 testRedefineClassChange!class tests!public! !
 testReferencesPrintOn!class tests!public! !
