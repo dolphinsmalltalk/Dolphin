@@ -50,7 +50,7 @@ testStbConversion15
 
 	instVarNames := EditableListView allInstVarNames.
 	elv := Object fromBinaryStoreBytes: self editableListViewBytes15 context: View desktop.
-
+	self assert: elv lvFlags equals: 0.
 	[self assert: (elv instVarAt: (instVarNames indexOf: 'originalColumns')) equals: nil.
 	self assert: (elv instVarAt: (instVarNames indexOf: 'headerControl')) equals: nil] ensure: [elv close]! !
 !EditableListViewTest categoriesForMethods!
