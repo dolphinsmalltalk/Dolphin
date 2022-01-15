@@ -2379,7 +2379,8 @@ testPrimitiveNewColonFailure
 	self assert: (method value: Array withArguments: #(-1)) equals: 'InvalidParameter1'.
 	"CompiledCode is abstract"
 	self assert: (method value: CompiledCode withArguments: #(0)) equals: 'NonInstantiable'.
-	self assert: (method value: Object withArguments: #(0)) equals: 'ObjectTypeMismatch'!
+	self assert: (method value: Object withArguments: #(0)) class identicalTo: Object.
+	self assert: (method value: Object withArguments: #(1)) equals: 'ObjectTypeMismatch'!
 
 testPrimitiveNewFailure
 	| method |

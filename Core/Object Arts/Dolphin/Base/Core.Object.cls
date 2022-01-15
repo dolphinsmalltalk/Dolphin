@@ -379,7 +379,7 @@ basicShallowCopy
 	| class copy size |
 	class := self basicClass.
 	size := self basicSize.
-	copy := class isVariable ifTrue: [class basicNew: size] ifFalse: [class basicNew].
+	copy := class basicNew: size.
 	size := size + class instSize.
 	1 to: size do: [:i | copy instVarAt: i put: (self instVarAt: i)].
 	^copy!

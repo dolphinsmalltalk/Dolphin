@@ -591,7 +591,7 @@ new
 
 new: aSmallInteger
 	"Answer an instance of the receiver with the specified number of indexed instance variables.
-	Report an error if the receiver is not indexable, or the argument is invalid.
+	Report an error if the receiver is not indexable (and the argument ~= 0), or the argument is invalid.
 
 	This is the fundamental method by which new instances of indexable classes are are created.
 	It is inherited by class objects (Metaclass instance instances) through the route:
@@ -599,9 +599,9 @@ new: aSmallInteger
 			-> Object class -> Class -> ClassDescription -> Behavior"
 
 	"Primitive failure reasons:
-		InvalidParameter1	- the argument is not a positive <SmallInteger>.
+		InvalidParameter1		- the argument is not a positive <SmallInteger>.
 		NonInstantiable		- the receiver is non-instantiable (abstract).
-		ObjectTypeMismatch	- the receiver's instances are not indexable."
+		ObjectTypeMismatch	- the receiver's instances are not indexable and arg ~= 0."
 
 	<primitive: 71>
 	_failureCode == _PrimitiveFailureCode.ObjectTypeMismatch ifTrue: [^Error notIndexable: self].

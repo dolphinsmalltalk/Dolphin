@@ -282,7 +282,8 @@ Oop* __fastcall Interpreter::primitiveNewWithArg(Oop* const sp, primargcount_t)
 	if (isIntegerObject(oopArg) && (size = ObjectMemoryIntegerValueOf(oopArg)) >= 0)
 	{
 		InstanceSpecification instSpec = oteClass->m_location->m_instanceSpec;
-		if ((instSpec.m_value & (InstanceSpecification::IndexableMask | InstanceSpecification::NonInstantiableMask)) == InstanceSpecification::IndexableMask)
+		SmallUinteger mask = size == 0 ? 0 : InstanceSpecification::IndexableMask;
+		if ((instSpec.m_value & (InstanceSpecification::NonInstantiableMask | mask)) == mask)
 		{
 			if (instSpec.m_pointers)
 			{
