@@ -101,7 +101,7 @@ displayColor: aColor
 	detailsPresenter view backcolor: aColor!
 
 displayDefects: aCollection
-	defectsPresenter list: (aCollection asSortedCollection: [:a :b | a case <= b case]).
+	defectsPresenter list: aCollection.
 	defectsPresenter view isEnabled: aCollection notEmpty!
 
 displayDetails: aString 
@@ -155,7 +155,7 @@ displayReset
 			[self icon: (Icon fromId: 'UnitTestPluginNoTest.ico').
 			self displayMode: 'No Tests'].
 	self displayDetails: ''.
-	self displayDefects: OrderedCollection new.
+	self displayDefects: #().
 	result := nil!
 
 displayRunning
@@ -383,7 +383,8 @@ update: anObject
 		ifFalse: [super update: anObject]!
 
 updateDefects
-	self displayDefects: (result defects , result skipped collect: [:each | result resultFor: each])!
+	self displayDefects: (result defects asArray sort , result skipped asArray sort
+				collect: [:each | result resultFor: each])!
 
 updateWindow
 	result hasErrors
