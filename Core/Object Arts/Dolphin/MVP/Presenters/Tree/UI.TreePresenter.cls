@@ -96,10 +96,10 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.TreeView) 34 27 nil nil 34 2 8 1409352231 1025 416 787526 3 ##(UI.TreeModel) nil 1638406 ##(Kernel.IdentitySearchPolicy) 721670 ##(UI.TreeNode) nil nil nil 170 192 8 #() 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1920462864 786950 ##(Core.Message) #displayString 8 #() ##(UI.IconicListAbstract) 1639750 1 ##(Graphics.IconImageManager) nil nil nil nil nil 170 176 592 nil #noIcons 1 170 192 592 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 882 401 571 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 199 12 0 0 39 1 0 0] 8 #() 882 193 193 nil 27)! !
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.TreeView} 34 27 nil nil 34 2 8 1409352231 1025 416 787526 3 #{UI.TreeModel} nil 1769478 #{Kernel.IdentitySearchPolicy} 721670 #{UI.TreeNode} nil nil nil 170 192 8 #() 917510 #{Graphics.Color} #default nil 5 nil nil nil 416 nil 8 1814826960 786950 #{Core.Message} #displayString 8 #() 658 #iconImageIndex 592 1639750 1 #{Graphics.IconImageManager} nil nil nil nil nil 170 176 592 nil #noIcons 1 170 192 592 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 882 401 571 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 199 24 0 0 39 1 0 0] 8 #() 882 193 193 nil 27)! !
 !UI.TreePresenter class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !

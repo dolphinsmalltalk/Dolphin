@@ -65,10 +65,10 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.AnimatedImageView) 34 14 nil nil 34 2 8 1409286144 1 416 918598 2 ##(UI.ValueHolder) nil false 1638406 ##(Kernel.EqualitySearchPolicy) nil 917510 ##(Graphics.Color) #white nil 5 nil nil nil 416 nil true 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 690 247 201 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 122 12 0 0 110 0 0 0] 8 #() 690 193 193 nil 27)! !
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.AnimatedImageView} 34 14 nil nil 34 2 8 1409286144 1 416 918598 2 #{UI.ValueHolder} nil false 1769478 #{Kernel.EqualitySearchPolicy} nil 917510 #{Graphics.Color} #white nil 5 nil nil nil 416 nil true 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 674 247 201 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 122 24 0 0 110 0 0 0] 8 #() 674 193 193 nil 27)! !
 !UI.AnimatedImageView class categoriesForMethods!
 defaultModel!models!public! !
 resource_Default_view!public!resources-views! !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBOutFiler subclass: #'Kernel.STLOutFiler'
+Kernel.AbstractSTBOutFiler subclass: #'Kernel.STLOutFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -16,7 +16,7 @@ putCharacter: aCharacter
 
 putLiteral: anObject 
 	self writeInteger: STBPrefix.LiteralPrefixMask.
-	self stream nextPut: anObject.
+	stream nextPut: anObject.
 	self register: anObject!
 
 registerPredefinedObjects
@@ -44,7 +44,9 @@ serializeObject: anObject
 						["No literal form, need to break it down"
 						anObject stbSaveOn: self]]!
 
-writeClass: aClass withLocator: locatorString 
+writeClass: aClass withLocator: locatorString
+	"The class will be printed as a binding reference when converted to source, at least for v5 format."
+
 	stream nextPut: aClass!
 
 writeInteger: anInteger 
@@ -71,8 +73,16 @@ signature
 	"Private - Answer the signature that identifies the data as
 	being in Smalltalk Literal (STL) format."
 
-	^#'!!STL'! !
+	^#'!!STL'!
+
+version
+	"Private - Answer the version number of the format produced by the receiver.
+		Version 5 - Literal filer saves class locators as BindingReferences"
+
+	^STLFilerVersion
+! !
 !Kernel.STLOutFiler class categoriesForMethods!
 signature!constants!private! !
+version!public! !
 !
 

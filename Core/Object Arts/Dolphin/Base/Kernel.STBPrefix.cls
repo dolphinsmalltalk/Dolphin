@@ -121,7 +121,7 @@ encodeClass: aClass locator: aString
 	aClass isVariable
 		ifTrue: 
 			[code := code bitOr: (aClass isBytes ifTrue: [##(BytesMask | VariableMask)] ifFalse: [VariableMask])].
-	aClass stbVersion ~= 0 ifTrue: [code := code bitOr: NonZeroVersionMask].
+	aClass stbVersion ~~ 0 ifTrue: [code := code bitOr: NonZeroVersionMask].
 	^code!
 
 encodeClassRef: anInteger

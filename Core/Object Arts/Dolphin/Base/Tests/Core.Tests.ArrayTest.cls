@@ -39,30 +39,6 @@ testIsSelfEvaluating
 	subject at: 1 put: subject.
 	self deny: subject isSelfEvaluating!
 
-testLiteralStoreOn
-	| stream subject storeString rehydrated stlArray |
-	stream := Array writeStream.
-	subject := {Object. 1. 's'. {Core.Tests.ArrayTest}}.
-	subject literalStoreOn: stream.
-	stlArray := stream contents.
-	stream := String writeStream.
-	stlArray literalPrintOn: stream.
-	storeString := stream contents.
-	rehydrated := Compiler evaluate: storeString.
-	self assert: rehydrated equals: stlArray.
-	rehydrated := Object fromLiteralStoreArray: stlArray.
-	self assert: rehydrated equals: subject!
-
-testLiteralStoreString
-	| stream storeString rehydrated |
-	stream := String writeStream.
-	#(1 2) storeOn: stream.
-	storeString := stream contents.
-	rehydrated := Compiler evaluate: storeString.
-	self assert: rehydrated class identicalTo: Array.
-	self assert: rehydrated isLiteral.
-	self assert: rehydrated equals: #(1 2)!
-
 testMixedConcatenation
 	"Test concatenating other types of sequenceable collection onto an array"
 
@@ -103,10 +79,22 @@ testMixedConcatenation
 						self deny: eachArray identicalTo: result.
 						self assert: result class identicalTo: Array]]!
 
-testNonLiteralStoreString
+testStoreOnLiteral
 	| stream storeString rehydrated array |
 	stream := String writeStream.
-	array := {1 -> '1'. 2 -> '2'}.
+	array := #(1 1.2 'abc' #(#abc true false nil #[1 2 3] #{Core.Object} $a 1.25s)).
+	array storeOn: stream.
+	storeString := stream contents.
+	self assert: storeString equals: '#(1 1.2 ''abc'' #(#abc true false nil #[1 2 3] #{Core.Object} $a 1.25s))'.
+	rehydrated := Compiler evaluate: storeString.
+	self assert: rehydrated class identicalTo: Array.
+	self assert: rehydrated isLiteral.
+	self assert: rehydrated equals: array!
+
+testStoreOnNonLiteral
+	| stream storeString rehydrated array |
+	stream := String writeStream.
+	array := {1 -> '1'. 2 -> '2'. Object}.
 	self deny: array isLiteral.
 	array storeOn: stream.
 	storeString := stream contents.
@@ -196,10 +184,9 @@ collectionClass!helpers!private! !
 testCyclicRefPrinting!public! !
 testIsLiteral!public!unit tests! !
 testIsSelfEvaluating!public!unit tests! !
-testLiteralStoreOn!public!unit tests! !
-testLiteralStoreString!public!unit tests! !
 testMixedConcatenation!public! !
-testNonLiteralStoreString!public!unit tests! !
+testStoreOnLiteral!public!unit tests! !
+testStoreOnNonLiteral!public!unit tests! !
 testWith!public!unit tests! !
 testWithWith!public!unit tests! !
 testWithWithWith!public!unit tests! !

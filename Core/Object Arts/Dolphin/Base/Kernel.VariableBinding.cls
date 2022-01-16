@@ -172,15 +172,26 @@ stbConvertFrom: anSTBClassFormat
 
 	^
 	[:data |
-	| answer value |
-	answer := self basicNew.
-	1 to: data size do: [:i | answer instVarAt: i put: (data at: i)].
-	answer environment ifNil: [
-		"In most cases a VariableBinding will be in STB because it is referenced from the literal frame of a method. For those cases where the reference is to a class, it is very likely that the variable is from the Smalltalk dictionary, so we patch the environment to that. For other cases, we don't have enough context here to be able to determine the correct environment, so we leave it nil."
-		value := answer value.
-		(value class isMeta and: [answer key == value name]) ifTrue: [answer environment: Smalltalk]].
-	answer setFlags: 0.
-	answer]!
+	| binding value |
+	binding := self basicNew.
+	1 to: data size do: [:i | binding instVarAt: i put: (data at: i)].
+	binding setFlags: 0.
+	binding environment
+		ifNil: 
+			["In most cases a VariableBinding will be in STB/STL because it is referenced from the literal frame of a method. We have to try and deduce the environment:
+				- If the variable has the same name as a variable in Smalltalk that references the exact same value, we patch the environment to Smalltalk; or
+				- If the variable refers to a class and has the same unqualified name as the class, we patch it to the environment of that class; otherwise
+				- we leave the envionment as we are unable to determine the correct class"
+			value := binding value.
+			(Smalltalk at: binding key ifAbsent: Collection.AbsentCookie) == value
+				ifTrue: [binding environment: Smalltalk]
+				ifFalse: 
+					[(value class isMeta and: [binding key == value name])
+						ifTrue: [binding environment: value environment]
+						ifFalse: 
+							["Mark it as a class variable which will exclude it from treatment as a class binding"
+							binding isClassVariable: true]]].
+	binding]!
 
 stbVersion
 	^2! !

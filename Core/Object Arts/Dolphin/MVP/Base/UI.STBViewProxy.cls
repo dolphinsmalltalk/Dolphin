@@ -140,10 +140,10 @@ setView: aView
 	This is a case of storing the Smalltalk class of aView, an Array containing its instance variables,
 	its state sequence, placement info and subViews."
 
-	| size |
-	viewClass := aView class.
-	version := viewClass stbVersion.
-	size := viewClass instSize.
+	| size class |
+	class := aView class.
+	self viewClass: class.
+	size := class instSize.
 	instVars := Array new: size.
 	1 to: size do: [:i | instVars at: i put: (aView instVarAt: i)].
 	state := aView state.
@@ -208,7 +208,8 @@ viewClass
 viewClass: aClass
 	"Set the class of <View> of which the receiver is representing an instance."
 
-	viewClass := aClass! !
+	viewClass := aClass.
+	version := aClass stbVersion! !
 !UI.STBViewProxy categoriesForMethods!
 beTopView!accessing!public! !
 clearSubViews!accessing!public! !

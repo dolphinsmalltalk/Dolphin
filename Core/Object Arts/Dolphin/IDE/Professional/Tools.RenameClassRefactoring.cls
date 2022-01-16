@@ -216,22 +216,15 @@ rewriteSymbolicReferencesToClass
 rewriteVariable: aStVariableNode
 	^aStVariableNode binding == classBinding
 		ifTrue: 
-			["The static variable is the renamed class' binding"
-			StVariableNode
-				named: ((aStVariableNode name = className and: [aStVariableNode isInStaticExpression])
-						ifTrue: 
-							["As a bit of a hack, if the original reference was fully-qualified and is in a static expression, leave it fully-qualfified"
-							newName]
+			[| unqualifiedName |
+			"The static variable is the renamed class' binding - try and shorten to an unqualified name if we can (iff it binds to the class from the method)"
+			unqualifiedName := class unqualifiedName.
+			"Even if the method's environment is the same, it may be shadowed by a same named class variable in the referencing class, so we have to check."
+			StVariableNode named: ((aStVariableNode methodNode fullBindingFor: unqualifiedName) == classBinding
+						ifTrue: [unqualifiedName]
 						ifFalse: 
-							[| unqualifiedName |
-							"The original reference was unqualified or partially qualified. Try and use the unqualified name if we can (iff it binds to the class from the method)"
-							unqualifiedName := class unqualifiedName.
-							"Even if the method's environment is the same, it may be shadowed by a same named class variable in the referencing class, so we have to check."
-							(aStVariableNode methodNode fullBindingFor: unqualifiedName) == classBinding
-								ifTrue: [unqualifiedName]
-								ifFalse: 
-									["We don't bother to try and find a partially qualified name that will bind correctly, but just use the fully-qualified name"
-									newName]])]
+							["We don't bother to try and find a partially qualified name that will bind correctly, but just use the fully-qualified name"
+							newName])]
 		ifFalse: 
 			["The static variable is not the renamed class' binding, but we may need to rewrite it if it can no longer be resolved using an unqualified or partially qualified name"
 			aStVariableNode isBindingChanged

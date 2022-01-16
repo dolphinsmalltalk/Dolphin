@@ -410,10 +410,10 @@ resource_Status_bar
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Status_bar)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Status_bar)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.StatusBar) 34 18 nil nil 34 2 8 1409288460 1 416 nil 917510 ##(Graphics.Color) #default nil 5 nil 852998 ##(Graphics.Font) nil true 655622 ##(OS.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 159 4 0 134 63 1 0 0 204 53 63 1 2 0 20 59 0 0 0 0 247 0 5 86 111 1] 655878 ##(Graphics.Point) 193 193 nil 416 nil 8 1920343920 170 192 8 #() 34 1 1050374 ##(UI.StatusBarItem) 1 -1 416 nil 786950 ##(Core.Message) #displayString 8 #() 722 #iconImageIndex 8 #() nil 1311750 ##(UI.StatusBarNullItem) 513 1 416 nil nil 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 594 6143 21 594 701 45 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 93 13 0 0 32 0 0 0] 8 #() 594 193 193 nil 27)!
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.StatusBar} 34 21 nil nil 34 2 8 1409288460 1 416 nil 917510 #{Graphics.Color} #default nil 5 nil 852998 #{Graphics.Font} nil true 655622 #{OS.LOGFONT} 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 34 65 114 105 97 108 0 159 4 0 134 63 1 0 0 204 53 63 1 2 0 20 59 0 0 0 0 247 0 5 86 111 1] 918022 #{Graphics.Point} 193 193 nil 416 nil 8 1814628368 170 192 8 #() nil nil nil 34 1 1050438 1 #{UI.StatusBarItem} 8193 -1 416 nil 786950 #{Core.Message} #displayString 8 #() 722 #iconImageIndex 8 #() nil 1311814 1 #{UI.StatusBarNullItem} 8705 1 416 nil nil 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 594 12287 21 594 701 45 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 93 25 0 0 32 0 0 0] 8 #() 594 193 193 nil 29)!
 
 themePartName
 	^'STATUS'

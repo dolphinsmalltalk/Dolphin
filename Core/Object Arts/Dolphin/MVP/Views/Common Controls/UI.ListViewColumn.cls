@@ -128,13 +128,13 @@ defaultGetTextBlock
 	get the text object for this column's contents. A sensible default is for 
 	this valuable to answer the content's #displayString."
 
-	^Message selector: #displayString!
+	^View defaultGetTextBlock!
 
 defaultSortBlock
 	"Private - Answer a <dyadicValuable> (e.g. a two argument block)
 	that can be used to compare two contents objects in this column."
 
-	^Message selector: #<=!
+	^##(Message selector: #<=)!
 
 defaultWidth
 	"Private - Answer the default width of a newly created column"

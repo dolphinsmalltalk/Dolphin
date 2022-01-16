@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.STBInFiler subclass: #'Kernel.STLInFiler'
+Kernel.AbstractSTBInFiler subclass: #'Kernel.STLInFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -14,15 +14,21 @@ Kernel.STLInFiler comment: ''!
 basicNext
 	| prefixOrLiteral |
 	prefixOrLiteral := stream next.
-	^prefixOrLiteral isInteger
-		ifTrue: 
-			[prefixOrLiteral == STBPrefix.LiteralPrefixMask
-				ifTrue: [self readLiteralData]
-				ifFalse: [self readObjectWithPrefix: prefixOrLiteral]]
-		ifFalse: [prefixOrLiteral]!
+	prefixOrLiteral isInteger
+		ifFalse: 
+			["Atomic values, or an indirection to them; classes are represented by BindingReferences as these have a literal form that can be embedded in literal arrays. This will not include integers, but does include nil, true, false, Symbols, BindingReferences (except as an indirection to a class object), and (in old version STL content) class objects. It cannot include arrays, even of atomic objects, because the array itself is not atomic and may be shared."
+			^prefixOrLiteral value].
+	STBPrefix.LiteralPrefixMask == prefixOrLiteral
+		ifFalse: [^self readObjectWithPrefix: prefixOrLiteral].
+	^self readLiteralData!
 
-readClassLocator: anIntegerFlags 
-	^stream next!
+newClassLocator
+	^self defaultClassLocatorClass new!
+
+readClassLocator: anIntegerFlags
+	"Private - The class might be present directly (STL version 4) or as a BindingReference (STL version 5)"
+
+	^stream next value!
 
 readInteger
 	"Private - Answer the next 32-bit integer in the stream."
@@ -32,9 +38,20 @@ readInteger
 readLiteralData
 	| newObject |
 	newObject := stream next.
-	newObject isImmutable ifTrue: [newObject := newObject copy].
+	newObject basicClass == Array
+		ifTrue: 
+			[| array size |
+			array := Array basicNew: (size := newObject size).
+			1 to: size do: [:i | array at: i put: (newObject at: i) value].
+			newObject := array]
+		ifFalse: [newObject isImmutable ifTrue: [newObject := newObject copy]].
 	self register: newObject.
 	^newObject!
+
+readSizeBlock
+	^version < 3
+		ifTrue: [[:class | stream next]]
+		ifFalse: [[:class | class isVariable ifTrue: [stream next] ifFalse: [0]]]!
 
 readVersion
 	version := stream next.
@@ -43,18 +60,16 @@ readVersion
 registerPredefinedObjects
 	"Private - Post version 3 the out filer stores everything."
 
-	version < 4 ifTrue: [super registerPredefinedObjects] ifFalse: [self registerPredefinedClasses]!
-
-sizeForNext: aClass
-	^(aClass isVariable or: [version < 3]) ifTrue: [stream next] ifFalse: [0]! !
+	version < 4 ifTrue: [super registerPredefinedObjects] ifFalse: [self registerPredefinedClasses]! !
 !Kernel.STLInFiler categoriesForMethods!
 basicNext!accessing!private! !
+newClassLocator!helpers!private! !
 readClassLocator:!helpers!private! !
 readInteger!helpers!private! !
-readLiteralData!private! !
+readLiteralData!helpers!private! !
+readSizeBlock!operations!private! !
 readVersion!initializing!private! !
 registerPredefinedObjects!initializing!private! !
-sizeForNext:!operations!private! !
 !
 
 !Kernel.STLInFiler class methodsFor!
@@ -75,9 +90,16 @@ signature
 	"Private - Answer the signature that identifies the data as
 	being in Smalltalk Literal (STL) format."
 
-	^#'!!STL'! !
+	^#'!!STL'!
+
+version
+	"Private - Answer the version number of the format produced by the receiver.
+		Version 5 - Literal filer saves class locators as BindingReferences"
+
+	^STLFilerVersion! !
 !Kernel.STLInFiler class categoriesForMethods!
 peekForSignatureIn:!public!testing! !
 signature!constants!private! !
+version!public! !
 !
 

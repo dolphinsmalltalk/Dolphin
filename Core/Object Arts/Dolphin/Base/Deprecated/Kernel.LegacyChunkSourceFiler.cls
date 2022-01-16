@@ -250,24 +250,21 @@ emitPaxVariableNames: aCollectionOfBindingReferences accessor: aSymbol
 		cr!
 
 emitResourceMethod: aResourceIdentifier literals: aLiteralArray
+	| printer |
 	self emitResourceMethodHeader: aResourceIdentifier.
 	stream
 		tab;
 		nextPut: $^;
 		nextPutAll: '#('.
-	aLiteralArray first literalPrintOn: stream.
 	"Pretend it is a version 4 stream to give D7 a fighting chance of loading it - it will fail if D8 specific objects have been added, e.g. BindingReferences.
-	On the whole, if forwards compatibility must be maintained it is better not to attempt to edit view resources in D8 that must be loaded in D7."
+	On the whole, if forwards compatibility must be maintained it is better not to attempt to edit view resources in D8 that must be loaded in D7, although more of the D8 changes could be back-ported (e.g. the ImageInitializer hierarchy) if there is an incentive."
+	printer := LegacySTLPrinter on: stream.
+	aLiteralArray first literalPrintOn: printer.
 	stream nextPutAll: ' 4 '.
-	aLiteralArray from: 3
+	3 to: aLiteralArray size
 		do: 
-			[:each |
-			each isBehavior
-				ifTrue: 
-					[stream nextPutAll: '##(Smalltalk.'.
-					self emitClassName: each.
-					stream nextPut: $)]
-				ifFalse: [each literalPrintOn: stream].
+			[:i |
+			(aLiteralArray at: i) literalPrintOn: printer.
 			stream space].
 	stream nextPut: $)!
 

@@ -69,10 +69,10 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.StaticRectangle) 34 14 nil nil 34 2 8 1140850951 1 416 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 nil 8 1920531648 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 642 211 51 416 594 #isEnabled: 8 #(false) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 104 12 0 0 35 0 0 0] 8 #() 642 193 193 nil 27)!
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.StaticRectangle} 34 14 nil nil 34 2 8 1140850951 1 416 nil 917510 #{Graphics.Color} #default nil 7 nil nil nil 416 nil 8 1815137184 1310982 #{Core.MessageSequence} 34 2 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 626 211 51 416 578 #isEnabled: 8 #(false) 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 104 24 0 0 35 0 0 0] 8 #() 626 193 193 nil 27)!
 
 winClassName
 	"Private - Answer the name of the Windows window class to use when realizing the receiver."

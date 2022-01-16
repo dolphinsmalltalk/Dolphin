@@ -6,7 +6,8 @@ Core.Object subclass: #'Kernel.STBFiler'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'MaxPredefinedRef' -> 16r18
+		'MaxPredefinedRef' -> 16r18.
+		'STLFilerVersion' -> 16r5
 	}!
 Kernel.STBFiler guid: (Core.GUID fromString: '{87b4c4c1-026e-11d3-9fd7-00a0cc3e4a32}')!
 Kernel.STBFiler isNonInstantiable: true!
@@ -49,8 +50,11 @@ register: anObject
 
 	^self subclassResponsibility!
 
+registerAll: anArray
+	anArray do: [:each | self register: each]!
+
 registerPredefinedClasses
-	self class fixedClasses do: [:each | self register: each].
+	self registerAll: self class fixedClasses.
 	self setRefOffset: MaxPredefinedRef!
 
 registerPredefinedObjects
@@ -94,6 +98,7 @@ context:!accessing!public! !
 initialize!initializing!private! !
 position:!operations!public! !
 register:!helpers!public! !
+registerAll:!initializing!private! !
 registerPredefinedClasses!initializing!private! !
 registerPredefinedObjects!initializing!private! !
 reset!initializing!private! !

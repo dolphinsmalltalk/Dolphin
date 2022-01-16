@@ -60,10 +60,10 @@ resource_Path_text
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Path_text)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Path_text)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.StaticPath) 34 17 nil nil 34 2 8 1140850944 1 416 nil nil nil 7 nil nil nil 416 nil 8 1920531648 1049094 ##(UI.NullConverter) nil nil nil 8 'c:\Program Files\Dolphin Smalltalk' 1310982 ##(Core.MessageSequence) 138 144 34 2 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 658 241 39 416 610 #text: 34 1 528 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 119 12 0 0 29 0 0 0] 8 #() 658 193 193 nil 27)! !
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.StaticPath} 34 17 nil nil 34 2 8 1140850944 1 416 nil nil nil 7 nil nil nil 416 nil 8 1815137184 1049094 #{UI.NullConverter} nil nil nil 8 'c:\Program Files\Dolphin Smalltalk' 1310982 #{Core.MessageSequence} 34 2 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 642 241 39 416 594 #text: 34 1 528 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 119 24 0 0 29 0 0 0] 8 #() 642 193 193 nil 27)! !
 !UI.TextPresenter class categoriesForMethods!
 resource_Path_text!public!resources-views! !
 !

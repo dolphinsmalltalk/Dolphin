@@ -6,25 +6,50 @@ package paxVersion: 2.1;
 
 
 package setClassNames: #(
+	#{Kernel.Tests.STLClassCollectorTest}
 	#{Kernel.Tests.STLFilerTest}
 ).
 
 package setMethodNames: #(
+	#(#{Core.Tests.ArrayTest} #testLiteralStoreOn)
+	#(#{Core.Tests.FileLocatorTest} #testSingletonSerialisationToStl)
+	#(#{External.Tests.DynamicLinkLibraryTest} #testSingletonSerialisationToStl)
+	#(#{Graphics.Tests.ColorTest} #testSingletonSerialisationToStl)
+	#(#{Graphics.Tests.ColorTest} #testStlRoundTrip)
+	#(#{Graphics.Tests.ColorTest} #testStlRoundTripColourAlpha)
+	#(#{Graphics.Tests.ColorTest} #testStlRoundTripPluggableColor)
+	#(#{Graphics.Tests.ColorTest} #testStlRoundTripUnnamedARGB)
+	#(#{Graphics.Tests.ColorTest} #testStlRoundTripUnnamedRGB)
+	#(#{Kernel.STLClassCollector class} #correspondingTestCase)
 	#(#{Kernel.STLInFiler class} #correspondingTestCase)
 	#(#{Kernel.STLOutFiler class} #correspondingTestCase)
+	#(#{Kernel.Tests.BindingReferenceTest} #testLiteralStoreFull)
+	#(#{Kernel.Tests.BindingReferenceTest} #testLiteralStoreRelative)
 ).
 
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'..\..\Base\Tests\Dolphin Base Tests'
+	'..\..\MVP\Base\Dolphin Basic Geometry'
+	'..\..\MVP\Graphics\Dolphin GDI Graphics'
+	'..\..\MVP\Graphics\Tests\Dolphin GDI Graphics Tests'
+	'..\..\MVP\Models\List\Dolphin List Models'
 	'Dolphin Literal Filer'
+	'..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Samples\MVP\Scribble\Scribble'
 ).
 
 package!
 
 "Class Definitions"!
 
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.STLFilerTest'
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.STLClassCollectorTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.AbstractSTBFilerTest subclass: #'Kernel.Tests.STLFilerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -32,6 +57,149 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.STLFilerTest'
 	classConstants: {}!
 
 "Loose Methods"!
+
+!Core.Tests.ArrayTest methodsFor!
+
+testLiteralStoreOn
+	| stream subject storeString rehydrated stlArray |
+	stream := Array writeStream.
+	subject := {Object. 1. 's'. {Core.Tests.ArrayTest}}.
+	subject literalStoreOn: stream.
+	stlArray := stream contents.
+	stream := String writeStream.
+	stlArray literalPrintOn: (LiteralPrinter on: stream).
+	storeString := stream contents.
+	rehydrated := Compiler evaluate: storeString.
+	self assert: rehydrated equals: stlArray.
+	rehydrated := Object fromLiteralStoreArray: stlArray.
+	self assert: rehydrated equals: subject! !
+!Core.Tests.ArrayTest categoriesForMethods!
+testLiteralStoreOn!public!unit tests! !
+!
+
+!Core.Tests.FileLocatorTest methodsFor!
+
+testSingletonSerialisationToStl
+	| singletons array |
+	singletons := {FileLocator absolute. FileLocator imageRelative. FileLocator installRelative}.
+	array := #(#'!!STL' 3 98 3 1114638 ##(Smalltalk.STBSingletonProxy) 8 ##(Kernel.AbsoluteFileLocator) 8 #current 426 8 ##(Kernel.ImageRelativeFileLocator) 464 426 8 ##(Kernel.InstallRelativeFileLocator) 464).
+	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty.
+	array := singletons literalStoreArray.
+	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty! !
+!Core.Tests.FileLocatorTest categoriesForMethods!
+testSingletonSerialisationToStl!public!unit tests! !
+!
+
+!External.Tests.DynamicLinkLibraryTest methodsFor!
+
+testSingletonSerialisationToStl
+	| singletons array |
+	singletons := {Kernel32. VersionLibrary default. User32}.
+	array := #(#'!!STL' 3 98 3 1114638 ##(Kernel.STBSingletonProxy) 8 ##(OS.KernelLibrary) 8 #default 426 8 ##(OS.VersionLibrary) 464 426 8 ##(UserLibrary) 464).
+	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty.
+	array := singletons literalStoreArray.
+	self assert: ((Object fromLiteralStoreArray: array) asIdentitySet - singletons) isEmpty! !
+!External.Tests.DynamicLinkLibraryTest categoriesForMethods!
+testSingletonSerialisationToStl!public!unit tests! !
+!
+
+!Graphics.Tests.ColorTest methodsFor!
+
+testSingletonSerialisationToStl
+	| subject1 subject2 subject3 dehydrated rehydrated array |
+	subject1 := Color window.
+	subject2 := Color menu.
+	subject3 := Color magenta.
+	array := {subject1. subject2. subject3. subject1. subject2. subject3}.
+	dehydrated := array literalStoreArray.
+	rehydrated := Object fromLiteralStoreArray: dehydrated.
+	self assert: rehydrated first identicalTo: subject1.
+	self assert: rehydrated second identicalTo: subject2.
+	self assert: rehydrated third identicalTo: subject3.
+	self assert: rehydrated fourth identicalTo: subject1.
+	self assert: rehydrated fifth identicalTo: subject2.
+	self assert: rehydrated sixth identicalTo: subject3!
+
+testStlRoundTrip
+	| subject stl rehydrated |
+	"Various types of named colour"
+	{Color red.
+		Color face3d.
+		Color named: #smalltalkSystem.
+		Color none.
+		Color default.
+		Color named: #gradientActiveCaption} do: 
+				[:each |
+				| array |
+				array := Object fromLiteralStoreArray: {each. 'blah'. each} literalStoreArray.
+				self assert: array first identicalTo: each.
+				self assert: array last identicalTo: each].
+	subject := IndexedColor gray.
+	stl := {subject. Color silver. subject} literalStoreArray.
+	"self assert: stl equals: #(#'!!STL' 4 34 3 327686 ##(Color) #silver 418 #silver 418 #silver)."
+	rehydrated := Object fromLiteralStoreArray: stl.
+	self assert: rehydrated first identicalTo: Color silver.
+	self assert: rehydrated last identicalTo: Color silver!
+
+testStlRoundTripColourAlpha
+	| subject rehydrated |
+	"ColorAlpha"
+	subject := (Color named: #gradientActiveCaption) alpha: 63.
+	rehydrated := Object fromLiteralStoreArray: subject literalStoreArray.
+	self assert: rehydrated isKindOf: ColorAlpha.
+	self assert: rehydrated equals: subject.
+	self assert: rehydrated actualColor
+		equals: ((Color named: #gradientActiveCaption) alpha: 63) actualColor!
+
+testStlRoundTripPluggableColor
+	| subject rehydrated |
+	"PluggableColor"
+	subject := PluggableColor with: [Color window].
+	self assert: subject actualColor identicalTo: Color window.
+	rehydrated := Object fromLiteralStoreArray: subject literalStoreArray.
+	self assert: rehydrated isKindOf: PluggableColor.
+	self assert: rehydrated equals: subject.
+	self assert: rehydrated actualColor identicalTo: Color window!
+
+testStlRoundTripUnnamedARGB
+	| subject rehydrated |
+	subject := Color
+				a: 128
+				r: 50
+				g: 100
+				b: 200.
+	rehydrated := Object fromLiteralStoreArray: subject literalStoreArray.
+	self assert: rehydrated equals: subject.
+	self assert: rehydrated isKindOf: ARGB!
+
+testStlRoundTripUnnamedRGB
+	| subject rehydrated |
+	"Unnamed RGB"
+	subject := Color
+				r: 50
+				g: 100
+				b: 200.
+	rehydrated := Object fromLiteralStoreArray: {subject. Color blue. subject} literalStoreArray.
+	self assert: rehydrated first equals: subject.
+	self assert: rehydrated first isKindOf: RGB.
+	self assert: rehydrated last identicalTo: rehydrated first.
+	self assert: rehydrated second identicalTo: Color blue! !
+!Graphics.Tests.ColorTest categoriesForMethods!
+testSingletonSerialisationToStl!public!unit tests! !
+testStlRoundTrip!public! !
+testStlRoundTripColourAlpha!public! !
+testStlRoundTripPluggableColor!public! !
+testStlRoundTripUnnamedARGB!public! !
+testStlRoundTripUnnamedRGB!public! !
+!
+
+!Kernel.STLClassCollector class methodsFor!
+
+correspondingTestCase
+	^Tests.STLClassCollectorTest! !
+!Kernel.STLClassCollector class categoriesForMethods!
+correspondingTestCase!public! !
+!
 
 !Kernel.STLInFiler class methodsFor!
 
@@ -47,6 +215,55 @@ correspondingTestCase
 	^Tests.STLFilerTest! !
 !Kernel.STLOutFiler class categoriesForMethods!
 correspondingTestCase!public! !
+!
+
+!Kernel.Tests.BindingReferenceTest methodsFor!
+
+testLiteralStoreFull
+	"The literal form should be used for fully qualified references"
+
+	| full |
+	full := self subjectClass path: #('Core' 'Object').
+	{full. full private} do: 
+			[:each |
+			| expected actual binding rehydrated array |
+			binding := each binding.
+			self assert: each literalStoreArray last identicalTo: each.
+			actual := each literalStoreEvaluationString.
+			rehydrated := Compiler evaluate: actual.
+			self assert: rehydrated equals: each.
+			self assertIsNil: (rehydrated instance instVarAt: 4).
+			self assertIsNil: (rehydrated instance instVarAt: 5).
+			self assert: rehydrated binding identicalTo: binding.
+			expected := '(Object fromLiteralStoreArray: #(#''!!STL'' <1p> 8 <2p>))'
+						<< {STLOutFiler version. each}.
+			self assert: actual equals: expected.
+			array := {each. each value}.
+			rehydrated := Compiler evaluate: array literalStoreEvaluationString.
+			self assert: rehydrated equals: array]!
+
+testLiteralStoreRelative
+	"The literal form cannot be used for unqualified or partially qualified (i.e. relative) references."
+
+	| relative |
+	relative := self subjectClass path: {'_'. self class name} scope: self class environment.
+	{relative. relative private} do: 
+			[:each |
+			| actual rehydrated binding |
+			binding := each binding.
+			actual := each literalStoreArray.
+			self deny: (actual includes: each).
+			self assert: (actual includes: RelativeBindingReference).
+			self assert: (actual includes: self class name).
+			self assert: (actual includes: self class environment).
+			rehydrated := Compiler evaluate: each literalStoreEvaluationString.
+			self assert: rehydrated equals: each.
+			self assertIsNil: (rehydrated instance instVarAt: 4).
+			self assertIsNil: (rehydrated instance instVarAt: 5).
+			self assert: rehydrated binding identicalTo: binding]! !
+!Kernel.Tests.BindingReferenceTest categoriesForMethods!
+testLiteralStoreFull!public!unit tests! !
+testLiteralStoreRelative!public!unit tests! !
 !
 
 "End of package definition"!

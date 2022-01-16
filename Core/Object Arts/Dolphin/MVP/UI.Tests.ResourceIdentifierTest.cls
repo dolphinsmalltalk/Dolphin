@@ -30,7 +30,7 @@ setUp
 	filer := STLOutFiler on: Array writeStream.
 	filer nextPut: shellView.
 	shellView destroy.
-	tempViewResource := filer stream contents!
+	tempViewResource := Compiler evaluate: (STLPrinter print: filer stream contents)!
 
 tempViewResource
 	^tempViewResource!

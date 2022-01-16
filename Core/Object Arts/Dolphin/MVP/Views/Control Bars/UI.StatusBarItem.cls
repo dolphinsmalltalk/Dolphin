@@ -17,18 +17,11 @@ UI.StatusBarItem comment: '`StatusItem` is a class describing the standard items
 !UI.StatusBarItem categoriesForClass!MVP-Views-Support! !
 !UI.StatusBarItem methodsFor!
 
-defaultGetImageBlock
-	"Private - Answer a default block to use to find out the image index of an object 
-	that will be placed in the receiver. By default we assume icons can be used
-	for images"
-
-	^Message selector: #iconImageIndex!
-
 defaultGetTextBlock
 	"Private - Answer a default block to use to find out the children of an object
 	that will be placed in the receiver"
 
-	^Message selector: #displayString!
+	^View defaultGetTextBlock!
 
 drawImageOn: aCanvas in: aRectangle
 	^self getImage
@@ -148,7 +141,7 @@ initialize
 	"Private - Initialize the state of the receiver."
 
 	super initialize.
-	self getImageBlock: self defaultGetImageBlock.
+	self getImageBlock: View defaultGetImageBlock.
 	self getTextBlock: self defaultGetTextBlock.!
 
 printOn: aStream
@@ -202,7 +195,6 @@ toolTipText
 					^nil]].
 	^tipText! !
 !UI.StatusBarItem categoriesForMethods!
-defaultGetImageBlock!adapters!constants!private! !
 defaultGetTextBlock!adapters!constants!private! !
 drawImageOn:in:!drawing!private! !
 drawItem:bounding:!drawing!private! !
@@ -228,8 +220,7 @@ toolTipText!enquiries!private! !
 !UI.StatusBarItem class methodsFor!
 
 value: anObject 
-	"#deprecated."
-
+	Notification deprecated.
 	^anObject iconImageIndex! !
 !UI.StatusBarItem class categoriesForMethods!
 value:!evaluating!private! !

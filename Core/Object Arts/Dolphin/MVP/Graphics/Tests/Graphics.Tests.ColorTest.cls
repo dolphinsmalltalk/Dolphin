@@ -575,7 +575,7 @@ testRGBNamedColors
 	self assert: Color red isImmutable!
 
 testSingletons
-	| subject1 subject2 subject3 dehydrated rehydrated array |
+	| subject1 subject2 subject3 |
 	subject1 := Color window.
 	subject2 := Color menu.
 	subject3 := Color magenta.
@@ -586,7 +586,13 @@ testSingletons
 	self assert: subject1 shallowCopy identicalTo: subject1.
 	self assert: subject1 deepCopy identicalTo: subject1.
 	self assert: subject2 identicalTo: (SystemColor withIndex: Win32Constants.COLOR_MENU).
-	self assert: subject3 identicalTo: Color magenta.
+	self assert: subject3 identicalTo: Color magenta!
+
+testSingletonSerialisationToStb
+	| subject1 subject2 subject3 dehydrated rehydrated array |
+	subject1 := Color window.
+	subject2 := Color menu.
+	subject3 := Color magenta.
 	array := {subject1. subject2. subject3. subject1. subject2. subject3}.
 	dehydrated := array binaryStoreBytes.
 	rehydrated := Object fromBinaryStoreBytes: dehydrated.
@@ -595,80 +601,7 @@ testSingletons
 	self assert: rehydrated third identicalTo: subject3.
 	self assert: rehydrated fourth identicalTo: subject1.
 	self assert: rehydrated fifth identicalTo: subject2.
-	self assert: rehydrated sixth identicalTo: subject3.
-	dehydrated := array literalStoreArray.
-	rehydrated := Object fromLiteralStoreArray: dehydrated.
-	self assert: rehydrated first identicalTo: subject1.
-	self assert: rehydrated second identicalTo: subject2.
-	self assert: rehydrated third identicalTo: subject3.
-	self assert: rehydrated fourth identicalTo: subject1.
-	self assert: rehydrated fifth identicalTo: subject2.
-	self assert: rehydrated sixth identicalTo: subject3!
-
-testStlRoundTrip
-	| subject stl rehydrated |
-	"Various types of named colour"
-	{Color red.
-		Color face3d.
-		Color named: #smalltalkSystem.
-		Color none.
-		Color default.
-		Color named: #gradientActiveCaption} do: 
-				[:each |
-				| array |
-				array := Object fromLiteralStoreArray: {each. 'blah'. each} literalStoreArray.
-				self assert: array first identicalTo: each.
-				self assert: array last identicalTo: each].
-	subject := IndexedColor gray.
-	stl := {subject. Color silver. subject} literalStoreArray.
-	"self assert: stl equals: #(#'!!STL' 4 34 3 327686 ##(Color) #silver 418 #silver 418 #silver)."
-	rehydrated := Object fromLiteralStoreArray: stl.
-	self assert: rehydrated first identicalTo: Color silver.
-	self assert: rehydrated last identicalTo: Color silver!
-
-testStlRoundTripColourAlpha
-	| subject rehydrated |
-	"ColorAlpha"
-	subject := (Color named: #gradientActiveCaption) alpha: 63.
-	rehydrated := Object fromLiteralStoreArray: subject literalStoreArray.
-	self assert: rehydrated isKindOf: ColorAlpha.
-	self assert: rehydrated equals: subject.
-	self assert: rehydrated actualColor
-		equals: ((Color named: #gradientActiveCaption) alpha: 63) actualColor!
-
-testStlRoundTripPluggableColor
-	| subject stl rehydrated |
-	"PluggableColor"
-	subject := PluggableColor with: [Color window].
-	self assert: subject actualColor identicalTo: Color window.
-	rehydrated := Object fromLiteralStoreArray: subject literalStoreArray.
-	self assert: rehydrated isKindOf: PluggableColor.
-	self assert: rehydrated equals: subject.
-	self assert: rehydrated actualColor identicalTo: Color window!
-
-testStlRoundTripUnnamedARGB
-	| subject rehydrated |
-	subject := Color
-				a: 128
-				r: 50
-				g: 100
-				b: 200.
-	rehydrated := Object fromLiteralStoreArray: subject literalStoreArray.
-	self assert: rehydrated equals: subject.
-	self assert: rehydrated isKindOf: ARGB!
-
-testStlRoundTripUnnamedRGB
-	| subject rehydrated |
-	"Unnamed RGB"
-	subject := Color
-				r: 50
-				g: 100
-				b: 200.
-	rehydrated := Object fromLiteralStoreArray: {subject. Color blue. subject} literalStoreArray.
-	self assert: rehydrated first equals: subject.
-	self assert: rehydrated first isKindOf: RGB.
-	self assert: rehydrated last identicalTo: rehydrated first.
-	self assert: rehydrated second identicalTo: Color blue! !
+	self assert: rehydrated sixth identicalTo: subject3! !
 !Graphics.Tests.ColorTest categoriesForMethods!
 shouldRaiseNotARealColorError:!helpers!private! !
 testActualColor!public!unit tests! !
@@ -713,10 +646,6 @@ testRgbaCode!public!unit tests! !
 testRgbCode!public!unit tests! !
 testRGBNamedColors!public!unit tests! !
 testSingletons!public!unit tests! !
-testStlRoundTrip!public! !
-testStlRoundTripColourAlpha!public! !
-testStlRoundTripPluggableColor!public! !
-testStlRoundTripUnnamedARGB!public! !
-testStlRoundTripUnnamedRGB!public! !
+testSingletonSerialisationToStb!public!unit tests! !
 !
 

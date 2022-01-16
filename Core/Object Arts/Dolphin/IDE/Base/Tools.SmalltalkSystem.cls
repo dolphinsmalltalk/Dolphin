@@ -2,7 +2,7 @@
 
 Core.Model subclass: #'Tools.SmalltalkSystem'
 	instanceVariableNames: 'systemFolderClass workspaceClass defaultInspectorClass defaultBrowserClass systemFolder packageBrowserClass debuggerClass viewComposerClass protocolBrowserClass workspaceShellClass resourceBrowserClass changedIcon hierarchyBrowserClass preferAlternateInspectors formatterClass classChooserClass resourceIdentifierDialogClass findDetails methodWorkspaceClass allSelectors argumentClasses methodExplorerClass aboutBoxClass testBrowserClass toolbarBitmapSize displayItLocale'
-	classVariableNames: 'Current FileDrops RegisteredTools'
+	classVariableNames: 'ChangedIcon Current FileDrops RegisteredTools'
 	imports: #(#{Kernel.CompilerFlags} #{Refactory.Browser} #{Kernel.ParseErrorCodes} #{XProgramming.SUnit private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -1130,11 +1130,7 @@ canRefactor
 changedIcon
 	"Private - Answer the icon to mark source objects that have been changed: ✨"
 
-	^changedIcon
-		ifNil: 
-			[changedIcon := (TextTileIcon text: $\x2728)
-						textcolor: Color gold;
-						yourself	"Sparkles"]!
+	^ChangedIcon!
 
 changedMethodCategory
 	^'*-changed'!
@@ -4680,6 +4676,11 @@ Tools.SmalltalkSystem methodProtocol: #commandTarget attributes: #(#readOnly) se
 
 !Tools.SmalltalkSystem class methodsFor!
 
+changedIcon
+	"Private - Answer the icon to mark source objects that have been changed: ✨"
+
+	^ChangedIcon!
+
 current
 	"Answer the singleton instance of the receiver.
 	N.B. Special boot handling to create this."
@@ -4701,6 +4702,10 @@ icon
 
 initialize
 	self initializeFileDrops.
+	self addClassConstant: 'ChangedIcon'
+		value: ((TextTileIcon text: $\x2728)
+				textcolor: Color gold;
+				yourself).	"Sparkles"
 	ThemeColor
 		addNamed: #toolBackground color: Color face3d;
 		addNamed: #workspaceSelection color: (Color highlight alpha: 60)!
@@ -4812,6 +4817,7 @@ unregisterTool: aToolClass
 		ifTrue: [aToolClass unregisterAsToolWith: self].
 	self registeredTools remove: aToolClass ifAbsent: nil! !
 !Tools.SmalltalkSystem class categoriesForMethods!
+changedIcon!constants!private! !
 current!instance creation!public! !
 help:!operations!public! !
 icon!constants!public! !

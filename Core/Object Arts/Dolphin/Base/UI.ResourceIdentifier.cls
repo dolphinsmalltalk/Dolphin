@@ -23,9 +23,8 @@ UI.ResourceIdentifier comment: ''!
 = aResourceIdentifier
 	"Answer true if aResourceIdentifier is equal to (represents the same resource as) the receiver."
 
-	^self species == aResourceIdentifier species and: [ 
-		self owningClass == aResourceIdentifier owningClass and: [
-			self name = aResourceIdentifier name]]!
+	^self species == aResourceIdentifier species and: 
+			[self owningClass == aResourceIdentifier owningClass and: [selector = aResourceIdentifier selector]]!
 
 compiledMethod
 	^self owningClass class compiledMethodAt: self selector ifAbsent: nil!
@@ -33,7 +32,7 @@ compiledMethod
 copy
 	"Answer a new instance like the receiver."
 
-	^self class class: owningClass name: self name!
+	^self class class: owningClass selector: selector!
 
 exists
 	^(self owningClass class includesSelector: self selector)!
@@ -54,18 +53,28 @@ hash
 
 	^owningClass hash bitXor: self name hash!
 
+hiddenClasses
+	"Private - Answers a <collection> of the <Class>es that are referenced directly or indirectly (i.e. as instances) in the receiver's resource."
+
+	#{Kernel.STLClassCollector} valueOrNil
+		ifNotNil: [:stlInFilerClass | self resource ifNotNil: [:resource | ^(stlInFilerClass on: resource readStream) contents]].
+	^#()!
+
 hiddenObjects
 	"Private - Answers a <collection> of the <Object>s that are contained in the receiver's resource
-	Implementation note. This is not particularly fast since it loads the resource
-	classes it needs into the image. View resources will not be realized as windows however."
+	The View resources will not be realized as actual windows."
 
-	| stlInFilerClass resource |
-	stlInFilerClass := #{STLInFiler} value.
-	resource := self resource.
-	resource ifNil: [^self error: ('Resource [', owningClass fullName, '>>#', selector, '] does not exist')].
-	^(stlInFilerClass on: resource readStream)
-		basicNext;
-		readMap!
+	#{Kernel.STLInFiler} valueOrNil
+		ifNotNil: 
+			[:stlInFilerClass |
+			self resource
+				ifNil: [self error: ('Resource [', owningClass fullName, '>>#', selector, '] does not exist')]
+				ifNotNil: 
+					[:resource |
+					^((stlInFilerClass on: resource readStream)
+						basicNext;
+						readMap) copyFrom: STBFiler.MaxPredefinedRef + 1]].
+	^#()!
 
 icon: anIcon
 	anIcon isNil
@@ -157,6 +166,7 @@ copy!copying!public! !
 exists!public!testing! !
 exportedFileName!accessing!development!private! !
 hash!comparing!public! !
+hiddenClasses!accessing!private! !
 hiddenObjects!accessing!private! !
 icon:!accessing!public! !
 isChanged!development!public!source filing!testing! !

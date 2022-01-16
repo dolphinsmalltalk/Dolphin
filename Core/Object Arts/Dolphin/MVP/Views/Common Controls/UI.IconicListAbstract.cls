@@ -118,12 +118,6 @@ defaultExtent
 
 	^##(200 @ 350)!
 
-defaultGetImageBlock
-	"Private - Answer a monadic valuable to use to find out the image index of an object 
-	that will be placed in the receiver."
-
-	^[:each | each iconImageIndex]!
-
 defaultImageManager
 	^IconImageManager current!
 
@@ -352,7 +346,7 @@ initialize
 	"Private - Initialize the receiver"
 
 	super initialize.
-	getImageBlock := self defaultGetImageBlock.
+	getImageBlock := self class defaultGetImageBlock.
 	imageManager := self defaultImageManager!
 
 itemFromNMHDRW: pNMHDR
@@ -797,7 +791,6 @@ customDrawContextClass!constants!private! !
 customDrawItem:!event handling!private! !
 customDrawSubItem:!event handling!private! !
 defaultExtent!constants!private! !
-defaultGetImageBlock!adapters!constants!private! !
 defaultImageManager!initializing!private! !
 defaultWindowExStyle!constants!private! !
 disableLabelEdit!helpers!private! !

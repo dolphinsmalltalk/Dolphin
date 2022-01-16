@@ -2541,7 +2541,8 @@ Core.Object subclass: #'Kernel.STBFiler'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'MaxPredefinedRef' -> 16r18
+		'MaxPredefinedRef' -> 16r18.
+		'STLFilerVersion' -> 16r5
 	}!
 Core.Object subclass: #'Kernel.STBPrefix'
 	instanceVariableNames: 'dword'
@@ -3865,21 +3866,33 @@ Kernel.StackFrame subclass: #'Kernel.BlockFrame'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.STBFiler subclass: #'Kernel.STBInFiler'
-	instanceVariableNames: 'readMap converters classLocator deferredActions flags'
+Kernel.STBFiler subclass: #'Kernel.AbstractSTBInFiler'
+	instanceVariableNames: 'readMap converters deferredActions flags readSize'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'UpgradingMask' -> 16r1
 	}!
-Kernel.STBFiler subclass: #'Kernel.STBOutFiler'
+Kernel.STBFiler subclass: #'Kernel.AbstractSTBOutFiler'
 	instanceVariableNames: 'writeMap globals globalNils proxyOverrides refOffset'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Kernel.AbstractSTBInFiler subclass: #'Kernel.STBInFiler'
+	instanceVariableNames: 'classLocator'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Kernel.STBInFiler subclass: #'Kernel.STBValidatingInFiler'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.AbstractSTBOutFiler subclass: #'Kernel.STBOutFiler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

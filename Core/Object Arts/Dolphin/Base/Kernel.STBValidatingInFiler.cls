@@ -33,14 +33,14 @@ validationBlock
 	"Private - Answer the monadic valuable (usually a block) that when passed a class name symbol will answer true if objects
 	of this class are valid for loading from the receiver."
 
-	^self classLocator validationBlock
+	^classLocator validationBlock
 !
 
 validationBlock: aMonadicValuable 
 	"Set the monadic valuable (usually a block) that when passed a class name symbol will answer true if objects
 	of this class are valid for loading from the receiver."
 
-	self classLocator validationBlock: aMonadicValuable.! !
+	classLocator validationBlock: aMonadicValuable.! !
 !Kernel.STBValidatingInFiler categoriesForMethods!
 classAt:!accessing!private! !
 defaultClassLocatorClass!constants!private! !

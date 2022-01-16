@@ -5269,6 +5269,16 @@ cursor
 
 	^nil!
 
+defaultGetImageBlock
+	"Answer a monadic valuable to use to find out the image index of an object that will be placed in sub-instances of the receiver."
+
+	^##(Message selector: #iconImageIndex)!
+
+defaultGetTextBlock
+	"Answer a monadic valuable to use to find out the image index of an object that will be placed in sub-instances of the receiver."
+
+	^##(Message selector: #displayString)!
+
 defaultId
 	"Private - Answer a new id to use for a View"
 
@@ -5510,10 +5520,10 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.View) 34 12 nil nil 34 2 8 1140850688 1 416 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 626 201 201 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 99 12 0 0 110 0 0 0] 8 #() 626 193 193 nil 27)!
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.View} 34 12 nil nil 34 2 8 1140850688 1 416 nil 917510 #{Graphics.Color} #default nil 7 nil nil nil 416 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 610 201 201 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 99 24 0 0 110 0 0 0] 8 #() 610 193 193 nil 27)!
 
 selectorForMessage: anInteger
 	"Private - Answer the selector for the specified message, or nil if not recognised."
@@ -5779,6 +5789,8 @@ buildMessageMap!constants!must not strip!private! !
 capture!accessing!public! !
 closeAll!operations!private! !
 cursor!accessing!public! !
+defaultGetImageBlock!adapters!constants!public! !
+defaultGetTextBlock!adapters!constants!public! !
 defaultId!accessing!private! !
 defaultModel!models!public! !
 defaultView!constants!public! !

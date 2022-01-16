@@ -123,14 +123,18 @@ printOffsets
 printOffsets: anObject
 	printOffsets := anObject!
 
-sizeForNext: aClass
+readSizeBlock
+	| read |
+	read := super readSizeBlock.
+	^
+	[:class |
 	| size |
-	size := super sizeForNext: aClass.
+	size := read value: class.
 	traceStream
 		nextPut: $[;
 		print: size;
 		nextPut: $].
-	^size!
+	size]!
 
 traceStream
 	^traceStream!
@@ -144,7 +148,7 @@ next!accessing!public! !
 objectAt:!accessing!private! !
 printOffsets!accessing!public! !
 printOffsets:!accessing!public! !
-sizeForNext:!operations!private! !
+readSizeBlock!operations!private! !
 traceStream!accessing!public! !
 traceStream:!accessing!public! !
 !

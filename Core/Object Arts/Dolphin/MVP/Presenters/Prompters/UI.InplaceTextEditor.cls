@@ -398,7 +398,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.TextEdit) 34 16 nil nil 34 2 8 1149304832 1 416 918598 2 ##(UI.ValueHolder) nil false 1769478 ##(Kernel.EqualitySearchPolicy) nil 917510 ##(Graphics.Color) #window nil 1543 nil nil nil 416 nil 8 1845370624 1049094 ##(UI.NullConverter) nil 8 '' 65 1310982 ##(Core.MessageSequence) 34 3 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 12287 21 738 191 41 416 690 #text: 34 1 8 'Text to be edited' 416 690 #setMarginWidths: 34 1 8 #(2 2) 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 94 24 0 0 30 0 0 0] 8 #() 738 193 193 nil 27 )! !
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.TextEdit} 34 16 nil nil 34 2 8 1149304832 1 416 918598 2 #{UI.ValueHolder} nil false 1769478 #{Kernel.EqualitySearchPolicy} nil 917510 #{Graphics.Color} #window nil 1543 nil nil nil 416 nil 8 1815092992 1049094 #{UI.NullConverter} nil 8 '' 65 1310982 #{Core.MessageSequence} 34 3 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 738 191 41 416 690 #text: 34 1 8 'Text to be edited' 416 690 #setMarginWidths: 34 1 8 #(2 2) 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 94 24 0 0 30 0 0 0] 8 #() 738 193 193 nil 27)! !
 !UI.InplaceTextEditor class categoriesForMethods!
 createOn:!public! !
 defaultModel!models!public! !

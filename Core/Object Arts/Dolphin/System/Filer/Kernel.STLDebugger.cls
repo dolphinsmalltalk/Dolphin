@@ -122,13 +122,6 @@ next
 	traceStream cr.
 	^answer!
 
-objectAt: anInteger
-	"Private - Answer the map value at anInteger. If anInteger is zero then answer nil.
-	Signal an exception if there is no such entry."
-
-	^anInteger == 0
-		ifFalse: [(readMap lookup: anInteger) ifNil: [self class errorInconsistentSTB: anInteger]]!
-
 printOffsets
 	^printOffsets!
 
@@ -138,14 +131,18 @@ printOffsets: aBoolean
 printValueToTrace: anObject
 	traceStream print: anObject!
 
-sizeForNext: aClass
+readSizeBlock
+	| read |
+	read := super readSizeBlock.
+	^
+	[:class |
 	| size |
-	size := super sizeForNext: aClass.
+	size := read value: class.
 	traceStream
 		nextPut: $[;
 		print: size;
 		nextPut: $].
-	^size!
+	size]!
 
 traceStream
 	^traceStream!
@@ -156,11 +153,10 @@ traceStream: aPuttableStream
 basicNext!accessing!private! !
 initialize!initializing!private! !
 next!accessing!public! !
-objectAt:!accessing!private! !
 printOffsets!accessing!public! !
 printOffsets:!accessing!public! !
 printValueToTrace:!accessing!private! !
-sizeForNext:!operations!private! !
+readSizeBlock!operations!private! !
 traceStream!accessing!public! !
 traceStream:!accessing!public! !
 !

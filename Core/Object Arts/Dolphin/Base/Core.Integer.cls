@@ -746,7 +746,7 @@ setBit: index
 	"Answer the Integer which results from setting the index'th bit of the receiver,
 	where the least significant bit is considered to have index 1."
 
-	^self maskSet: (1 bitShift: index-1)!
+	^self bitOr: (1 bitShift: index - 1)!
 
 size
 	"Integer's do not support indexed instance variables."

@@ -27,10 +27,10 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.HotKey) 34 17 nil nil 34 2 8 1409351680 1 416 918598 2 ##(UI.ValueHolder) nil nil 1441798 ##(Kernel.NeverSearchPolicy) 1 917510 ##(Graphics.Color) #default nil 5 nil nil nil 416 nil 8 1920979280 1049094 ##(UI.AccelToHotKey) nil nil 1 1 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 655878 ##(Graphics.Point) 6143 21 738 211 51 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 104 12 0 0 35 0 0 0] 8 #() 738 193 193 nil 27)! !
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.HotKey} 34 17 nil nil 34 2 8 1409351680 1 416 918598 2 #{UI.ValueHolder} nil nil 1572870 #{Kernel.NeverSearchPolicy} 1 917510 #{Graphics.Color} #default nil 5 nil nil nil 416 nil 8 1815486448 1049094 #{UI.AccelToHotKey} nil nil 1 1 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 722 211 51 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 104 24 0 0 35 0 0 0] 8 #() 722 193 193 nil 27)! !
 !UI.AcceleratorPresenter class categoriesForMethods!
 defaultModel!constants!public! !
 icon!constants!public! !

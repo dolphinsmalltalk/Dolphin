@@ -597,6 +597,14 @@ isAnonymous
 
 	^self subclassResponsibility!
 
+isAtomic
+	"Answer whether or not the receiver has a single unique instance for any individual value it
+	can represent."
+
+	"Each class is the singleton instance of a unique metaclass."
+
+	^true!
+
 isChanged
 	"Answer true if the receiver or any of it's contents have been changed since
 	their changed flag was last reset."
@@ -1127,6 +1135,7 @@ instanceVariableString:!accessing!private! !
 instVarName:!accessing!public! !
 instVarNames!instance variables!public! !
 isAnonymous!public!testing! !
+isAtomic!public!testing! !
 isChanged!public!source filing!testing! !
 isChanged:!public!source filing! !
 localBindingFor:!binding!public! !

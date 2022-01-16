@@ -135,12 +135,14 @@ allPrerequisites
 	^answer!
 
 allResourceIdentifiers
-	"Answer a Set of all the ResourceIdentifiers directly owned by
-	the receiver or by owning the class in which it is situated."
+	"Answer a Set of all the ResourceIdentifiers directly owned by the receiver or by owning the class in which it is situated and the resource method is not a loose method of another package."
 
 	| resources |
 	resources := Set new.
-	self classesDo: [:each | each resourceIdentifiersDo: [:eachResId | resources add: eachResId]].
+	self classesDo: 
+			[:each |
+			each
+				resourceIdentifiersDo: [:eachResId | eachResId owningPackage == self ifTrue: [resources add: eachResId]]].
 	self looseResourceIdentifiersDo: [:each | resources add: each].
 	^resources!
 
@@ -1573,11 +1575,8 @@ tracePrerequisites
 	"Notification signal: 'Tracing prerequisites of ', self name."
 	^self tracePrerequisites: self manager packagedVariables!
 
-tracePrerequisites: anIdentityDictionary
-	"Private - Answer an <IdentityDictionary> of prerequisite package keys against an
-	<OrderedCollection> of traces of the owned objects which forced a prerequisite link and the
-	reason why. The argument is an <IdentityDictionary>, the keys of which are# the names of all
-	packaged globals, with the associated values being the owning <Package> of the global.
+tracePrerequisites: aLookupTable
+	"Private - Answer an <IdentityDictionary> of prerequisite package keys against an <OrderedCollection> of traces of the owned objects which forced a prerequisite link and the reason why. The argument is a <LookupTable>, the keys of which are <FullBindingReference> repreenting the  names of all packaged variables, with the associated values being the owning <Package> of the variable.
 
 	1	from	The owned object of the receiver
 	2	to		The object belonging to a prerequsite package which from references
@@ -1587,20 +1586,21 @@ tracePrerequisites: anIdentityDictionary
 
 	*	'from' is a Class which is a subclass of the Class 'to'.
 	*	'from' is a directly owned CompiledMethod which is a method of the Class 'to'.
-	*	'from' is a CompiledMethod which references the global object 'to'.
-	*	'from' is a Class whose shared pools includes the global object 'to'.
-	*	'from' is a global that aliases the class 'to'
-	*	'from' is a global that references an instance of the class 'to'."
+	*	'from' is a CompiledMethod which references the shared variable 'to'.
+	*	'from' is a Class whose shared pools includes the shared variable 'to'.
+	*	'from' is a shared variable that aliases the class 'to'
+	*	'from' is a shared variable that references an instance of the class 'to'."
 
 	| trace |
 	trace := IdentityDictionary new: 16.
 	self
 		tracePrerequisitesOfEnvironment: trace;
-		tracePrerequisitesOfClasses: trace packagedVariables: anIdentityDictionary;
-		tracePrerequisitesOfVariables: trace packagedVariables: anIdentityDictionary;
+		tracePrerequisitesOfClasses: trace packagedVariables: aLookupTable;
+		tracePrerequisitesOfVariables: trace packagedVariables: aLookupTable;
 		tracePrerequisitesOfMethods: trace;
 		tracePrerequisitesOfImageStripper: trace;
-		tracePrerequisitesOfLiterals: trace packagedVariables: anIdentityDictionary.
+		tracePrerequisitesOfLiterals: trace packagedVariables: aLookupTable;
+		tracePrerequisitesOfResources: trace packagedVariables: aLookupTable.
 	^trace!
 
 tracePrerequisitesOfClasses: anIdentityDictionary packagedVariables: aLookupTable
@@ -1714,6 +1714,25 @@ tracePrerequisitesOfMethods: anIdentityDictionary
 				from: each
 				to: class
 				dependency: 'is a method of']!
+
+tracePrerequisitesOfResources: anIdentityDictionary packagedVariables: aLookupTable
+	"Private - Trace the prerequisite method classes of the receiver's loose methods (i.e. the extended classes)."
+
+	self allResourceIdentifiers do: 
+			[:each |
+			| method |
+			method := each compiledMethod.
+			each hiddenClasses do: 
+					[:eachLiteral |
+					(self bindingRefToLiteral: eachLiteral)
+						ifNotNil: 
+							[:ref |
+							self
+								trace: anIdentityDictionary
+								prerequisite: (aLookupTable lookup: ref)
+								from: method
+								to: ref
+								dependency: 'references variable']]]!
 
 tracePrerequisitesOfVariables: anIdentityDictionary packagedVariables: aLookupTable
 	"Private - Trace the prerequisites of the receiver's shared variables."
@@ -2098,6 +2117,7 @@ tracePrerequisitesOfEnvironment:!operations!private! !
 tracePrerequisitesOfImageStripper:!operations!private! !
 tracePrerequisitesOfLiterals:packagedVariables:!operations!private! !
 tracePrerequisitesOfMethods:!operations!private! !
+tracePrerequisitesOfResources:packagedVariables:!operations!private! !
 tracePrerequisitesOfVariables:packagedVariables:!operations!private! !
 uninstall!public!removing! !
 uninstallClasses!class hierarchy-removing!private!removing! !

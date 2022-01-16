@@ -330,19 +330,6 @@ defaultDrawTextFlags
 
 	^SingleLineMask!
 
-defaultGetImageBlock
-	"Private - Answer a default block to use to find out the image index of an object 
-	that will be placed in the receiver. By default we assume icons can be used
-	for images."
-
-	^self class!
-
-defaultGetTextBlock
-	"Private - Answer a default block to use to find out the children of an object
-	that will be placed in the receiver."
-
-	^[:item | item displayString]!
-
 dragLeave: session 
 	"The drag operation described by the <DragDropSession> session has moved 
 	to a new position outside the receiver's window. Remove any drop highlighting
@@ -644,8 +631,8 @@ initialize
 	"Private - Initialize the receiver"
 
 	super initialize.
-	getTextBlock := self defaultGetTextBlock.
-	getImageBlock := self defaultGetImageBlock.
+	getTextBlock := self class defaultGetTextBlock.
+	getImageBlock := self class defaultGetImageBlock.
 	imageManager := IconImageManager current.
 	self linePen: (Pen
 				withStyle: PS_SOLID
@@ -1829,8 +1816,6 @@ collapseNode:cause:!operations!private! !
 collapseSubtree:!operations!private! !
 connectModel!models!public! !
 defaultDrawTextFlags!adapters!constants!private! !
-defaultGetImageBlock!adapters!constants!private! !
-defaultGetTextBlock!adapters!constants!private! !
 dragLeave:!drag & drop!public! !
 dragOver:!drag & drop!public! !
 drop:!drag & drop!public! !

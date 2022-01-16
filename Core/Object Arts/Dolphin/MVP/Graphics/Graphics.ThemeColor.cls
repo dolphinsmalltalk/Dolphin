@@ -95,15 +95,17 @@ name: aSymbol actualColor: aColor
 	<primitive: 157>
 	^self basicNew setName: aSymbol actualColor: aColor!
 
-stbReadFrom: anSTBInFiler format: anSTBClassConversion 
+stbReadFrom: anSTBInFiler format: anSTBClassConversion
 	"Read an instance of the receiver from the binary filer, aSTBInFiler."
 
-	"Implementation Note: Overridden in order to maintain unique instances without using an
-	STBSingletonProxy."
+	"Implementation Note: Overridden in order to maintain unique instances without using a STBSingletonProxy."
 
-	| answer ref |
+	| answer ref colorName |
 	ref := anSTBInFiler register: nil.
-	answer := self named: anSTBInFiler basicNext.
+	colorName := anSTBInFiler basicNext.
+	answer := NamedColors at: colorName ifAbsent: [
+		"If the theme colour is not defined, return a colour that will make the fault obvious"
+		self name: colorName actualColor: Color magenta].
 	anSTBInFiler fixup: ref to: answer.
 	^answer!
 

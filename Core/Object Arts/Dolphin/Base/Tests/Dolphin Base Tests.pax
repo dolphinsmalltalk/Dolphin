@@ -107,6 +107,7 @@ package setClassNames: #(
 	#{Graphics.Tests}
 	#{Kernel.Tests}
 	#{Kernel.Tests.AbstractNamespaceTest}
+	#{Kernel.Tests.AbstractSTBFilerTest}
 	#{Kernel.Tests.AlwaysSearchPolicyTest}
 	#{Kernel.Tests.BindingReferenceTest}
 	#{Kernel.Tests.BlockClosureTest}
@@ -263,6 +264,12 @@ XProgramming.SUnit.TestCase subclass: #'Core.Tests.DolphinTest'
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Kernel.Tests.AbstractNamespaceTest'
 	instanceVariableNames: 'removedVariables'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'Kernel.Tests.AbstractSTBFilerTest'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -603,12 +610,6 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.StackFrameTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.STBTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'Core.Tests.StreamTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -664,6 +665,12 @@ Kernel.Tests.SystemNamespaceTest subclass: #'Kernel.Tests.RootNamespaceTest'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.Tests.SystemNamespaceTest subclass: #'Kernel.Tests.SmalltalkNamespaceTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Tests.AbstractSTBFilerTest subclass: #'Kernel.Tests.STBTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

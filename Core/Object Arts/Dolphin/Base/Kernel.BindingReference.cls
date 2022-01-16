@@ -192,7 +192,7 @@ isDefined
 isLiteral
 	"Answer whether or not the receiver has a literal representation (probably its printString) which is directly recognised by the Compiler"
 
-	"Although relative binding references can be expressed as literals, two compiled literals in different scopes may bind to different variables. The general expectation of literals is that two instances with the same literal representation will compile up into two equal, though not necessarily identical, objects, which is generally not the case for relative binding references."
+	"Although relative binding references can be expressed as literals, two compiled literals in different scopes may bind to different variables. The general expectation of literals is that the literal representation will compile back into a new instance equivalent to the original. This is only the case for relative references when they are compiled in the same scope."
 
 	^self isRelative not!
 

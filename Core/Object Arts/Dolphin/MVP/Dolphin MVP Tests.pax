@@ -86,6 +86,7 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Kernel.Tests.PackageTest} #testAllResourceIdentifiers)
 	#(#{Kernel.Tests.STLFilerTest} #testRectangleReadWrite)
 	#(#{Kernel.Tests.STLFilerTest} #testResourceReadWrite)
 	#(#{Kernel.Tests.STLFilerTest} #testShellReadWrite)
@@ -608,6 +609,18 @@ UI.Tests.SelectableTreeItemsTest subclass: #'UI.Tests.TreeViewTest'
 	classConstants: {}!
 
 "Loose Methods"!
+
+!Kernel.Tests.PackageTest methodsFor!
+
+testAllResourceIdentifiers
+	<namespace: UI>
+	| rids mvpBase |
+	mvpBase := View owningPackage.
+	rids := mvpBase allResourceIdentifiers.
+	rids do: [:each | self assert: each owningPackage equals: mvpBase]! !
+!Kernel.Tests.PackageTest categoriesForMethods!
+testAllResourceIdentifiers!public!unit tests! !
+!
 
 !Kernel.Tests.STLFilerTest methodsFor!
 

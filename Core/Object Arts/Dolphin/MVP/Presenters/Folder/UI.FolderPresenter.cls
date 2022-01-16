@@ -271,9 +271,20 @@ defaultModel
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^##(self) instanceClass defaultIcon! !
+	^##(self) instanceClass defaultIcon!
+
+resource_Default_view
+	"Answer the literal data from which the 'Default view' resource can be reconstituted.
+	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
+
+	If you wish to modify this resource evaluate:
+	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
+	"
+
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.ListView} 34 45 nil nil 34 2 8 1409372236 1025 416 787270 2 #{UI.ListModel} 138 144 8 #() nil 1769478 #{Kernel.IdentitySearchPolicy} 917510 #{Graphics.Color} #default nil 5 nil nil nil 416 nil 8 1815049392 786950 #{Core.Message} #displayString 528 626 #iconImageIndex 528 1639750 1 #{Graphics.IconImageManager} nil nil nil 918022 #{Graphics.Point} 65 65 nil nil 138 144 34 1 1117254 5 #{UI.ListViewColumn} 8 'Column 1' 201 #left 640 626 #<= 8 #() nil nil 416 nil 1 nil nil #largeIcons 8 #() nil 131169 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 1310982 #{Core.MessageSequence} 34 2 1049350 #{Core.MessageSend} #createAt:extent: 34 2 706 12287 21 706 491 311 416 914 #text: 34 1 8 'Column 1' 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 244 24 0 0 165 0 0 0] 8 #() 706 193 193 nil 35)! !
 !UI.FolderPresenter class categoriesForMethods!
 defaultModel!models!public! !
 icon!constants!public! !
+resource_Default_view!public!resources-views! !
 !
 

@@ -307,7 +307,7 @@ resource_Default_view
 	Tools.ViewComposer openOn: (UI.ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 985166 10 ##(UI.STBViewProxy) ##(UI.Examples.PlimboleView) 34 12 nil nil 34 2 8 1140850688 1 416 nil 917510 ##(Graphics.Color) #default nil 7 nil nil nil 416 1310982 ##(Core.MessageSequence) 138 144 34 1 1049350 ##(Core.MessageSend) #createAt:extent: 34 2 918022 ##(Graphics.Point) 6143 21 626 201 201 416 1179910 ##(OS.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 11 0 0 10 0 0 0 99 12 0 0 110 0 0 0] 8 #() 626 193 193 nil 27 )! !
+	^#(#'!!STL' 5 985166 10 #{UI.STBViewProxy} #{UI.Examples.PlimboleView} 34 12 nil nil 34 2 8 1140850688 1 416 nil 917510 #{Graphics.Color} #default nil 7 nil nil nil 416 1310982 #{Core.MessageSequence} 34 1 1049350 #{Core.MessageSend} #createAt:extent: 34 2 918022 #{Graphics.Point} 12287 21 610 201 201 416 1179910 #{OS.WINDOWPLACEMENT} 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 99 24 0 0 110 0 0 0] 8 #() 610 193 193 nil 27)! !
 !UI.Examples.PlimbolePresenter class categoriesForMethods!
 defaultModel!public! !
 defaultPalette!constants!private! !

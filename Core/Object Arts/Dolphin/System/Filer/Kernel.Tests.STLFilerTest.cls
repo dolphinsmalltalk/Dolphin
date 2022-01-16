@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Tests.DolphinTest subclass: #'Kernel.Tests.STLFilerTest'
+Kernel.Tests.AbstractSTBFilerTest subclass: #'Kernel.Tests.STLFilerTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -22,6 +22,12 @@ checkSimpleReadWriteOf: value context: anObject
 	self assert: in next equals: value.
 	^streamContents!
 
+deserialize: aString
+	^Compiler evaluate: aString!
+
+serialize: anObject
+	^anObject literalStoreEvaluationString!
+
 simpleReadWriteOf: value 
 	^self simpleReadWriteOf: value context: nil!
 
@@ -31,6 +37,20 @@ simpleReadWriteOf: value context: anObject
 	in := STLInFiler on: streamContents readStream.
 	in context: anObject.
 	^in next!
+
+testArrayOfAtomics
+	| array1 storeArray rehydrated array2 |
+	array1 := {Object. #abc. 123. $a}.
+	self assert: (array1 allSatisfy: [:each | each isAtomic]).
+	storeArray := array1 literalStoreArray.
+	self assert: (storeArray identityIncludes: array1).
+	rehydrated := Object fromLiteralStoreArray: storeArray.
+	"We must not get back a direct copy of the array, as this would mean it was shared and any modifications to the restored array would affect the original and the literal store array (which might be a literal in a method)"
+	self deny: rehydrated identicalTo: array1.
+	"Check that the array itself is properly shared"
+	array2 := { array1. array1 }.
+	storeArray := array2 literalStoreArray.
+	self assert: (storeArray occurrencesOf: array1) equals: 1!
 
 testArraysWithSharedLiterals
 	"Verify that the identity of shared literals that are not atomic is preserved."
@@ -52,6 +72,37 @@ testArraysWithSharedLiterals
 	self assert: deserialized first second identicalTo: deserialized second second.
 	self assert: deserialized third identicalTo: deserialized first third.
 	self assert: deserialized fourth identicalTo: deserialized second third!
+
+testBindingReference
+	"BindingReferences are a special case because they are used to represent classes in the literal array in STL 5, as well as themselves. This is to test that binding references can themselves be round tripped and don't get dereferenced when they should not be."
+
+	| ref storeArray rehydrated array assoc text restoredArray |
+	ref := #{Core.Object}.
+	storeArray := ref literalStoreArray.
+	rehydrated := Object fromLiteralStoreArray: storeArray.
+	self assert: rehydrated class identicalTo: FullBindingReference.
+	self assert: rehydrated equals: ref.
+	array := {ref. 2. ref}.
+	storeArray := array literalStoreArray.
+	rehydrated := Object fromLiteralStoreArray: storeArray.
+	self assert: rehydrated first class identicalTo: FullBindingReference.
+	self assert: rehydrated last identicalTo: rehydrated first.
+	self assert: rehydrated equals: array.
+	assoc := ref -> Object.
+	storeArray := assoc literalStoreArray.
+	self assert: (storeArray identityIncludes: Object).
+	self assert: (storeArray identityIncludes: ref).
+	rehydrated := Object fromLiteralStoreArray: storeArray.
+	self assert: rehydrated key class identicalTo: FullBindingReference.
+	self assert: rehydrated key equals: ref.
+	self assert: rehydrated value identicalTo: Object.
+	text := STLPrinter print: storeArray.
+	restoredArray := Compiler evaluate: text.
+	self deny: (restoredArray includes: Object).
+	rehydrated := Object fromLiteralStoreArray: restoredArray.
+	self assert: rehydrated key equals: ref.
+	self assert: rehydrated value identicalTo: Object.
+	!
 
 testBlockReadWrite
 	| block1 contents1 in contents2 block2 block3 |
@@ -115,14 +166,8 @@ testSymbolReadWrite
 	self assert: deserialized first identicalTo: testSymbol.
 	self assert: deserialized first identicalTo: deserialized second!
 
-testSystemDictionaryReadWrite
-	| sysdict array array2 |
-	sysdict := self simpleReadWriteOf: Smalltalk.
-	self assert: sysdict identicalTo: Smalltalk.
-	array := {Smalltalk}.
-	array2 := self simpleReadWriteOf: array.
-	self assert: array2 equals: array.
-	self assert: array first identicalTo: Smalltalk!
+verifyRehydrateNonExistantClass: dessicated
+	self should: [self deserialize: dessicated] raise: NotFoundError!
 
 writeLiteralsFor: anObject
 	| out |
@@ -132,16 +177,20 @@ writeLiteralsFor: anObject
 !Kernel.Tests.STLFilerTest categoriesForMethods!
 checkSimpleReadWriteOf:!private!unit tests! !
 checkSimpleReadWriteOf:context:!private!unit tests! !
+deserialize:!helpers!private! !
+serialize:!helpers!private! !
 simpleReadWriteOf:!private!unit tests! !
 simpleReadWriteOf:context:!private!unit tests! !
+testArrayOfAtomics!public!unit tests! !
 testArraysWithSharedLiterals!public!unit tests! !
+testBindingReference!public!unit tests! !
 testBlockReadWrite!public!unit tests! !
 testClassReadWrite!public!unit tests! !
 testEmptyStream!public!unit tests! !
 testIntegerReadWrite!public!unit tests! !
 testInvalidStream!public!unit tests! !
 testSymbolReadWrite!public!unit tests! !
-testSystemDictionaryReadWrite!public!unit tests! !
+verifyRehydrateNonExistantClass:!helpers!private! !
 writeLiteralsFor:!private!unit tests! !
 !
 

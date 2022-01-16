@@ -54,7 +54,8 @@ addAllLast: aCollection
 addAnsweringIndex: anObject
 	"Append the argument as the last element of the receiver. Answer the index at which the object was added."
 
-	self addLast: anObject.
+	lastIndex == self basicSize ifTrue: [self makeRoomAtEndFor: 1].
+	self basicAt: (lastIndex := lastIndex + 1) put: anObject.
 	^lastIndex - firstIndex + 1!
 
 addFirst: anObject

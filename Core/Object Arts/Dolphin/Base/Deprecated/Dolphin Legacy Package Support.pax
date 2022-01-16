@@ -5,7 +5,7 @@ package paxVersion: 2.1;
 	basicComment: 'Dolphin Smalltalk Legacy Package Support.
 Copyright © Object Arts Ltd. 1997-2020. 
 
-The classes and loose methods here are only required when loading packages saved from earlier Dolphin versions.'.
+The classes and loose methods here are only required when loading packages saved from earlier Dolphin versions, including support for saving packages in the final Dolphin 7.x format (where feasible) from Dolphin 8. This is to allow for limited round-tripping between Dolphin 7 and Dolphin 8, but as Dolphin 7 does not support namespaces and Dolphin 8 has many other changes, this is quite easy to defeat. In some cases the situation can be improved by back-porting changes from Dolphin 8 as and when required.'.
 
 package basicPackageVersion: '6.1.1'.
 
@@ -15,6 +15,7 @@ package basicScriptAt: #postuninstall put: 'Package binaryPacLoader: nil'.
 package setClassNames: #(
 	#{Kernel.Bytecode}
 	#{Kernel.LegacyChunkSourceFiler}
+	#{Kernel.LegacySTLPrinter}
 	#{Smalltalk.MethodContext}
 	#{Smalltalk.PoolConstantsDictionary}
 ).
@@ -52,6 +53,7 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\Dolphin'
+	'..\..\System\Filer\Dolphin Literal Filer'
 	'..\Dolphin Source Fileout'
 ).
 
@@ -73,6 +75,12 @@ Core.Object variableSubclass: #MethodContext
 	classConstants: {}!
 Kernel.PoolDictionary variableSubclass: #PoolConstantsDictionary
 	instanceVariableNames: 'name'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.LiteralPrinter subclass: #'Kernel.LegacySTLPrinter'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

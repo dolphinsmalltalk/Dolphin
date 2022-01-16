@@ -34,7 +34,7 @@ stbFixup: inFiler at: anInteger
 	| behaviourOrStub classLocator |
 
 	"Create a class locator that can be used to find this class"
-	classLocator := inFiler classLocator copyWithCodeBase.
+	classLocator := inFiler newClassLocator.
 	classLocator key: locatorKey; packageName: packageName.
 
 	behaviourOrStub := self resolveWithClassLocator: classLocator.

@@ -5,7 +5,7 @@ package paxVersion: 2.1;
 	basicComment: 'Dolphin Smalltalk Legacy Resource Framework.
 Copyright (c) Object Arts Ltd. 1997-2006. 
 
-Many of the classes here are the vestigial remains of the legacy resource framework from versions of Dolphin prior to 6.0. These are only required when loading view resources saved from these earlier versions of the system. '.
+Many of the classes here are the vestigial remains of the legacy resource framework from versions of Dolphin prior to 6.0. These are only required when loading the binary view resources saved from these earlier versions of the system. '.
 
 package basicPackageVersion: '6.1.1'.
 

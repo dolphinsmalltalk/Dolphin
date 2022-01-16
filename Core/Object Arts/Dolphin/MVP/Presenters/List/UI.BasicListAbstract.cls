@@ -283,11 +283,8 @@ uninitialize
 	View unregisterMessageMappings: {WM_CTLCOLORLISTBOX}!
 
 value: anObject
-	"Private - Implement #value: in order to provide a default 'get text'
-	monadic valuable for the receiver's subinstances.
-	Implementation Note: More efficient replacement for a block or message
-	valuable, mainly to save space in view resources."
-
+	"Replace with `View defaultGetTextBlock`"
+	#deprecated.
 	^anObject displayString! !
 !UI.BasicListAbstract class categoriesForMethods!
 initialize!development!initializing!private! !

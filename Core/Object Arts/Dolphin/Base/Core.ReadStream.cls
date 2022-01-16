@@ -92,7 +92,10 @@ nextAvailable
 	being streamed over is known not to contain nils."
 
 	<primitive: 65>
-	^position >= readLimit ifFalse: [collection decodeNextFrom: self]! !
+	^position >= readLimit ifFalse: [collection decodeNextFrom: self]!
+
+readStream
+	^self! !
 !Core.ReadStream categoriesForMethods!
 basicNext!accessing!public! !
 basicNext:into:startingAt:!accessing!public! !
@@ -100,6 +103,7 @@ basicNextAvailable!accessing!private! !
 isReadable!public!testing! !
 next!accessing!public! !
 nextAvailable!accessing!public! !
+readStream!accessing!public! !
 !
 
 Core.ReadStream methodProtocol: #ReadStream attributes: #(#ansi #readOnly) selectors: #(#atEnd #close #contents #do: #isEmpty #next #next: #nextLine #nextMatchFor: #peek #peekFor: #position #position: #reset #setToEnd #skip: #skipTo: #upTo:)!

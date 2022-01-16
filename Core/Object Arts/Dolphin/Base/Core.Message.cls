@@ -146,10 +146,7 @@ value: anObject
 	large number of parameterization cases where blocks would otherwise
 	be required."
 
-	^self forwardTo: anObject
-
-
-!
+	^anObject perform: selector withArguments: args!
 
 value: receiver value: argument
 	"Answer the result of sending the receiving message to the object, receiver,

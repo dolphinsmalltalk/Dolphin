@@ -117,12 +117,6 @@ connectModel
 		when: #item:removedAtIndex: send: #onItem:removedAtIndex: to: self;
 		when: #item:updatedAtIndex: send: #onItem:updatedAtIndex: to: self.!
 
-defaultGetTextBlock
-	"Private - Answer a monadic valuable evaluated to provide the displayable text
-	for objects inserted into the receiver."
-
-	^[:item | item displayString]!
-
 dispatchRegistered: registeredId wParam: wParam lParam: lParam
 	"Private - Dispatch the registered message which was sent to the receiver."
 
@@ -225,7 +219,7 @@ initialize
 	"Private - Initialise the receiver."
 
 	super initialize.
-	getTextBlock := self defaultGetTextBlock.
+	getTextBlock := self class defaultGetTextBlock.
 !
 
 isMultiSelect
@@ -624,7 +618,6 @@ basicResetSelection!private!selection! !
 basicSelectionsByIndex:!private!selection! !
 caretIndex!public!selection! !
 connectModel!models!public! !
-defaultGetTextBlock!constants!private! !
 dispatchRegistered:wParam:lParam:!operations!private! !
 ensureSelectionVisible!public!selection! !
 errorNoSelection!exceptions!private! !

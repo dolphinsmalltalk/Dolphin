@@ -522,14 +522,6 @@ isAnonymous
 
 	^name isNil!
 
-isAtomic
-	"Answer whether or not the receiver has a single unique instance for any individual value it
-	can represent."
-
-	"Each class is the singleton instance of a unique metaclass."
-
-	^true!
-
 isSelfEvaluating
 	"Private - Answer whether or not the receiver has a printed representation which is directly recognised by the Compiler"
 
@@ -743,6 +735,7 @@ resolveBindingPath: anArray environment: aNamespace
 					"We don't want to attempt to drill into normal class variables"
 					binding isClassVariable ifTrue: [^nil].
 					namespace := binding value.
+					namespace class isMeta ifFalse: [^nil].
 					identifier := anArray at: i.
 					binding := namespace
 								resolvePublicBinding: (self newBindingContextForIdentifier: identifier environment: aNamespace).
@@ -892,6 +885,8 @@ stbModifyExportProxy: anSTBImportedClassProxy
 
 stbSaveOn: anSTBOutFiler
 	"Save out a binary representation of the receiver to anSTBOutFiler."
+
+	"Note that the STL filer does not use this - Classes are stored as literal references in the literal store array"
 
 	anSTBOutFiler saveObject: self as: (STBClassProxy forClass: self)!
 
@@ -1132,7 +1127,6 @@ initializeAfterLoad!class initialization!public! !
 instanceClass!accessing!public! !
 isAbstract:!instance specification-accessing!public! !
 isAnonymous!public!testing! !
-isAtomic!public!testing! !
 isSelfEvaluating!public!testing! !
 localBindingFor:!bindings!public! !
 metaclass!accessing!public! !
