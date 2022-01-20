@@ -1966,38 +1966,65 @@ POTE Compiler::NewMethod()
 		m_bytecodes[ip_t::zero].Opcode = OpCode::ShortPushStatic;
 		MakeQuickMethod(hdr, PRIMITIVE_RETURN_STATIC_ZERO);
 	}
-	else if (m_bytecodes[ip_t::zero].IsShortPushInstVar && static_cast<OpCode>(byte1) == OpCode::ReturnMessageStackTop && ArgumentCount == 0)
+	else if (m_bytecodes[ip_t::zero].IsShortPushInstVar && ArgumentCount == 0)
 	{
-		// instance variable accessor method (<=15)
-		_ASSERTE(!bNeedsContext);
-		MakeQuickMethod(hdr, PRIMITIVE_RETURN_INSTVAR);
-		
-		// Convert to long form to simplify the interpreter's code to exec. this quick method.
-		byte1 = m_bytecodes[ip_t::zero].indexOfPushInstVar();
-		m_bytecodes[ip_t::zero].Opcode = OpCode::PushInstVar;
-		m_codePointer = ip_t::one;
-		GenData(byte1);
-		m_codePointer++;
-		byte2 = static_cast<uint8_t>(OpCode::ReturnMessageStackTop);
+		if (static_cast<OpCode>(byte1) == OpCode::ReturnMessageStackTop)
+		{
+			// instance variable accessor method (<=15)
+			_ASSERTE(!bNeedsContext);
+			MakeQuickMethod(hdr, PRIMITIVE_RETURN_INSTVAR);
 
-		// We must adjust the debug info to account for the longer (two byte) first instruction
-		//_ASSERTE(m_allScopes.size() == 1); Some inlined scopes may have been optimised away
-		_ASSERTE(pMethodScope->FinalIP == ip_t::one);
-		pMethodScope->FinalIP = ip_t::two;
+			// Convert to long form to simplify the interpreter's code to exec. this quick method.
+			byte1 = m_bytecodes[ip_t::zero].indexOfPushInstVar();
+			m_bytecodes[ip_t::zero].Opcode = OpCode::PushInstVar;
+			m_codePointer = ip_t::one;
+			GenData(byte1);
+			m_codePointer++;
+			byte2 = static_cast<uint8_t>(OpCode::ReturnMessageStackTop);
 
-		// We must go ahead and generate the bytes anyway as they are needed by the interpreter to 
-		// determine which inst. var to push (they'll fit in a SmallInteger anyway)
-		_ASSERTE(CodeSize == 3);
+			// We must adjust the debug info to account for the longer (two byte) first instruction
+			//_ASSERTE(m_allScopes.size() == 1); Some inlined scopes may have been optimised away
+			_ASSERTE(pMethodScope->FinalIP == ip_t::one);
+			pMethodScope->FinalIP = ip_t::two;
+
+			// We must go ahead and generate the bytes anyway as they are needed by the interpreter to 
+			// determine which inst. var to push (they'll fit in a SmallInteger anyway)
+			_ASSERTE(CodeSize == 3);
+		}
+		else if (static_cast<OpCode>(byte1) == OpCode::DuplicateStackTop && IsReturnIfNotNil(ip_t::two))
+		{
+			// Lazy instance variable accessor method (<=15)
+			_ASSERTE(!bNeedsContext);
+			MakeQuickMethod(hdr, PRIMITIVE_LAZY_RETURN_INSTVAR);
+
+			byte1 = m_bytecodes[ip_t::zero].indexOfPushInstVar();
+			m_bytecodes[ip_t::zero].Opcode = OpCode::PushInstVar;
+			InsertByte(ip_t::one, byte1, BYTECODE::Flags::IsData, nullptr);
+			IncrementIPs();
+			m_codePointer++;
+			_ASSERTE(CodeSize >= 4);
+			// We must adjust the IP ranges of all the scopes and any clean blocks already created
+		}
 	}
-	else if (isPushInstVarX(byte0, byte1) && static_cast<OpCode>(byte2) == OpCode::ReturnMessageStackTop && ArgumentCount == 0)
+	else if (isPushInstVarX(byte0, byte1) && ArgumentCount == 0)
 	{
-		// instance variable accessor method (>15)
-		_ASSERTE(!bNeedsContext);
-		MakeQuickMethod(hdr, PRIMITIVE_RETURN_INSTVAR);
-		
-		// We must go ahead and generate the bytes anyway as they are needed by the interpreter to 
-		// determine which inst. var to push (they'll fit in a SmallInteger anyway)
-		_ASSERTE(CodeSize == 3);
+		if (static_cast<OpCode>(byte2) == OpCode::ReturnMessageStackTop)
+		{
+			// instance variable accessor method (>15)
+			_ASSERTE(!bNeedsContext);
+			MakeQuickMethod(hdr, PRIMITIVE_RETURN_INSTVAR);
+
+			// We must go ahead and generate the bytes anyway as they are needed by the interpreter to 
+			// determine which inst. var to push (they'll fit in a SmallInteger anyway)
+			_ASSERTE(CodeSize == 3);
+		} 
+		else if (static_cast<OpCode>(byte2) == OpCode::DuplicateStackTop && IsReturnIfNotNil(ip_t::three))
+		{
+			// Lazy instance variable accessor method (<=15)
+			_ASSERTE(!bNeedsContext);
+			MakeQuickMethod(hdr, PRIMITIVE_LAZY_RETURN_INSTVAR);
+			_ASSERTE(CodeSize >= 4);
+		}
 	}
 	else if (static_cast<OpCode>(byte1) == OpCode::ReturnMessageStackTop && m_bytecodes[ip_t::zero].IsShortPushImmediate)
 	{
@@ -2130,16 +2157,8 @@ POTE Compiler::NewMethod()
 		if ((static_cast<uint8_t>(byte0) & 1) == 0)
 		{
 			*pByteCodes++ = static_cast<uint8_t>(OpCode::Nop);
-			// Must adjust the debug info maps to account for the leading Nop
-			// Method scope expands for leading Nop
-			pMethodScope->AdjustFinalIP(1);
-			// Should only be here for 3 byte methods, so don't nested scopes are unlikely, but possible
-			const size_t count = m_allScopes.size();
-			for (size_t i = 1; i < count; i++)
-			{
-				LexicalScope* pScope = m_allScopes[i];
-				pScope->IncrementIPs();
-			}
+			// Method scope expands for leading Nop 
+			IncrementIPs();
 
 			// Adjust ip of any TextMaps
 			{
@@ -2222,6 +2241,25 @@ POTE Compiler::NewMethod()
 	// to contain the source pointer, etc
 	//m_piVM->MakeImmutable(reinterpret_cast<Oop>(method), TRUE);
 	return method;
+}
+
+void Compiler::IncrementIPs()
+{
+	LexicalScope* pMethodScope = m_allScopes[0];
+	pMethodScope->AdjustFinalIP(1);
+	// Should only be here for 3 byte methods, so nested scopes are unlikely, but possible
+	const size_t count = m_allScopes.size();
+	for (size_t i = 1; i < count; i++)
+	{
+		LexicalScope* pScope = m_allScopes[i];
+		pScope->IncrementIPs();
+	}
+}
+
+bool Compiler::IsReturnIfNotNil(ip_t ip) const
+{
+	const BYTECODE& bc = m_bytecodes[ip];
+	return bc.IsJumpIfNotNil && m_bytecodes[bc.target].Opcode == OpCode::ReturnMessageStackTop;
 }
 
 //////////////////////////////////////////////////

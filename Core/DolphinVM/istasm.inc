@@ -158,7 +158,7 @@ VMPointers		STRUCT 2t
 	virtualCallbackSymbol				POTE	?			; 70
 	notIdenticalSymbol					POTE	?			; 71, #~~
 	notSymbol							POTE	?			; 72, #not
-										POTE	?			; 72 reserved ex special send
+	nilCoalesceSymbol					POTE	?			; 72 reserved ex special send
 										POTE	?			; 73 reserved ex special send
 										POTE	6t DUP (?)	; Unused & reserved for more symbols/selectors
 

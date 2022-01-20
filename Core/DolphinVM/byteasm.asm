@@ -388,7 +388,7 @@ byteCodeTable DD		break										; All push[0] instructions are now odd
 
 	DWORD		shortSpecialSendNotIdentical
 	DWORD		shortSpecialSendNot
-	DWORD		shortSpecialSendNullCoalesce
+	DWORD		shortSpecialSendNilCoalesce
 
 	CreateInstructionLabels <_invalidByteCode>, <NUMRESERVEDSINGLEBYTE>
 
@@ -3507,7 +3507,7 @@ ENDBYTECODE shortSpecialSendNot
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;
-BEGINBYTECODE shortSpecialSendNullCoalesce
+BEGINBYTECODE shortSpecialSendNilCoalesce
 	mov		eax, [_SP-OOPSIZE]
 	cmp		eax, [oteNil]
 	jne		@F
@@ -3520,7 +3520,7 @@ BEGINBYTECODE shortSpecialSendNullCoalesce
 	MPrefetch
 	sub		_SP, OOPSIZE
 	DispatchNext
-ENDBYTECODE shortSpecialSendNullCoalesce
+ENDBYTECODE shortSpecialSendNilCoalesce
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Block Copy Instruction (quad byte)
@@ -4055,7 +4055,10 @@ execMethod:
 	pop		eax										; failure code
 	jz		noStackTemps
 	
-	mov		[_SP], eax								; Store primitive failure code (a SmallInteger) into _failureCode temp slot (always the first temp)
+	; Store primitive failure code (a SmallInteger) into _failureCode temp slot (always the first temp) if not stepping into the Smalltalk code
+	cmp		eax, 090000009h							
+	cmove	eax, [oteNil]
+	mov		[_SP], eax								
 	mov		eax, [oteNil]							; All other temps must have initial value of Nil
 	jmp		first
 
@@ -4500,7 +4503,10 @@ BEGINPROC EXECUTENEWMETHOD
 	pop		eax										; failure code
 	jz		noStackTemps
 	
-	mov		[_SP], eax								; Store primitive failure code (a SmallInteger) into _failureCode temp slot (always the first temp)
+	; Store primitive failure code (a SmallInteger) into _failureCode temp slot (always the first temp) if not stepping into the Smalltalk code
+	cmp		eax, 090000009h							
+	cmove	eax, [oteNil]
+	mov		[_SP], eax								
 	mov		eax, [oteNil]							; All other temps must have initial value of Nil
 	jmp		first
 
@@ -4675,7 +4681,10 @@ BEGINPROC ACTIVATEPRIMITIVEMETHOD
 	pop		eax										; failure code
 	jz		noStackTemps
 	
-	mov		[_SP], eax								; Store primitive failure code (a SmallInteger) into _failureCode temp slot (always the first temp)
+	; Store primitive failure code (a SmallInteger) into _failureCode temp slot (always the first temp) if not stepping into the Smalltalk code
+	cmp		eax, 090000009h							
+	cmove	eax, [oteNil]
+	mov		[_SP], eax								
 	mov		eax, [oteNil]							; All other temps must have initial value of Nil
 	jmp		first
 

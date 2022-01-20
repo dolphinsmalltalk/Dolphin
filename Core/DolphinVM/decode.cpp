@@ -1018,7 +1018,6 @@ void AppendAllInstVarNames(ClassDescriptionOTE* oteClass, std::vector<string>& i
 			for (size_t i = 0; i < oteNamesArray->pointersSize(); i++)
 			{
 				// TODO: Use Utf8String
-				_ASSERTE(ObjectMemory::isKindOf(pNames->m_elements[i], Pointers.ClassAnsiString));
 				AnsiStringOTE* oteEach = (AnsiStringOTE*)pNames->m_elements[i];
 				instVarNames.push_back(oteEach->m_location->m_characters);
 			}

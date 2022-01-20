@@ -256,6 +256,6 @@ template <int Index> Oop* __fastcall Interpreter::primitiveReturnConst(Oop* cons
 	}
 	else
 	{
-		return primitiveFailure(_PrimitiveFailureCode::DebugStep);
+		return primitiveFailure(_PrimitiveFailureCode::StepInto);
 	}
 }

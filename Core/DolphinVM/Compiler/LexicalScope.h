@@ -594,15 +594,9 @@ public:
 			++m_initialIP;
 			++m_finalIP;
 
-			// If associated with a clean block, we need to update it's initialIP too
-			// Note that the initialIP of the block is 1-based, whereas the m_initialIP
-			// of this object is zero-based.
-			//STBlockClosure* pBlock = GetBlock();
-			//if (pBlock != nullptr)
-			//{
-			//	_ASSERTE(IntegerValueOf(pBlock->m_initialIP) == m_initialIP);
-			//	pBlock->m_initialIP = IntegerObjectOf(m_initialIP + 1);
-			//}
+			// We don't need to update the initial IP of any clean blocks as this is not
+			// set until after all bytecode generation is complete
+			_ASSERTE(Block == nullptr || !IsIntegerObject(Block->m_initialIP));
 		}
 	}
 

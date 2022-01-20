@@ -88,7 +88,7 @@ enum class _PrimitiveFailureCode : SmallInteger
 	UndefinedCharacter = PFC_FROM_NT(STATUS_UNDEFINED_CHARACTER),					// The Unicode character is not defined in the Unicode character set installed on the system.
 	WrongNumberOfArgs = PFC_FROM_HRESULT(TYPE_E_OUTOFBOUNDS),						// Invalid number of arguments
 	DebugBreakpoint = PFC_FROM_NT(STATUS_BREAKPOINT),								// A breakpoint has been reached.
-	DebugStep = PFC_FROM_NT(STATUS_SINGLE_STEP),									// A single step or trace operation has just been completed.
+	StepInto = PFC_FROM_NT(STATUS_SINGLE_STEP),										// A single step or trace operation has just been completed.
 	CrtFault = PFC_FROM_HRESULT(static_cast<DWORD>(VMExceptions::CrtFault)),
 	PrivilegedInstruction = PFC_FROM_NT(STATUS_PRIVILEGED_INSTRUCTION),				// Privileged instruction
 	IllegalInstruction = PFC_FROM_NT(STATUS_ILLEGAL_INSTRUCTION),					// An attempt was made to execute an illegal instruction.

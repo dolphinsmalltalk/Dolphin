@@ -193,6 +193,38 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveSetMutableInstVar(Oop* c
 	}
 }
 
+__declspec(naked) Oop* __fastcall Interpreter::primitiveLazyReturnInstVar(Oop* const sp, primargcount_t)
+{
+	// We need a to extract the inst var index from the byte codes, which should be in unpacked (ByteArray) form
+	//	1 PushInstVarN
+	//	2 (inst var index)
+	//	3 Jmp if Not Nil to N
+	//  ...
+	//  N Return
+
+	_asm
+	{
+		mov		ecx, [m_registers.m_oopNewMethod]
+		mov		edx, [esi]								// receiver Oop at stack top
+		mov		ecx, [ecx]OTE.m_location
+		cmp[m_bStepping], 0
+		mov		ecx, [ecx]CompiledMethod.m_byteCodes	// Get bytecodes into ecx
+		mov		edx, [edx]OTE.m_location				// edx points at receiver object
+		mov		ecx, [ecx]OTE.m_location
+		jnz		stepInto
+		movzx	ecx, [ecx]VariantByteObject.m_fields[1]	// Get inst var index into ecx
+		mov		eax, esi
+		mov		edx, [edx]VariantObject.m_fields[ecx * OOPSIZE]
+		cmp		edx, [Pointers.Nil]
+		je		stepInto
+		mov		[esi], edx								// Overwrite receiver with inst.var Oop
+		ret
+
+	stepInto:
+		mov		eax, 90000009H
+		ret
+	}
+}
 #else
 
 Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, primargcount_t argCount)
@@ -284,6 +316,30 @@ Oop* __fastcall Interpreter::primitiveSetMutableInstVar(Oop* const sp, primargco
 	ObjectMemory::storePointerWithValue(oteReceiver->m_location->m_fields[pMethod->m_packedByteCodes.third], *sp);
 	return sp - 1;
 }
+
+Oop* __fastcall Interpreter::primitiveLazyReturnInstVar(Oop* const sp, primargcount_t)
+{
+	auto pMethod = m_registers.m_oopNewMethod->m_location;
+	HARDASSERT(isIntegerObject(pMethod->m_byteCodes));
+	BytesOTE* byteCodes = reinterpret_cast<BytesOTE*>(pMethod->m_byteCodes);
+	auto pByteCodes = byteCodes->m_location;
+	PointersOTE* oteReceiver = reinterpret_cast<PointersOTE*>(*sp);
+	auto receiver = oteReceiver->m_location;
+	if (!m_bStepping)
+	{
+		uint8_t i = pByteCodes->m_fields[1];
+		Oop field = receiver->m_fields[i];
+		if (field != Oop(Pointers.Nil))
+		{
+			*sp = field;
+			return sp;
+		}
+		// The inst var has a nil value, so the Smalltalk code must be run; drop through and fail
+	}
+
+	return primitiveFailure(_PrimitiveFailureCode::StepInto);
+}
+
 #endif
 
 // In order to keep the message lookup routines 'tight' we ensure that the infrequently executed code

@@ -84,6 +84,7 @@ public:
 	void GetInstVars();
 
 	POTE NewMethod();
+	void IncrementIPs();
 	POTE __stdcall NewCompiledMethod(POTE classPointer, size_t numBytes, const STMethodHeader& hdr);
 	POTE MakeMethodAnnotations();
 
@@ -365,6 +366,7 @@ private:
 	bool LastIsPushSmallInteger(intptr_t& value) const;
 	Oop LastIsPushNumber() const;
 	Oop IsPushLiteral(ip_t pos) const;
+	bool IsReturnIfNotNil(ip_t pos) const;
 
 	// Temporaries
 	TempVarDecl* AddTemporary(const u8string& name, const TEXTRANGE& range, bool isArg);

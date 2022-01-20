@@ -2200,6 +2200,13 @@ testPrimitiveIsKindOf
 	self deny: (proto isKindOf: 1).
 	self deny: (proto isKindOf: Object)!
 
+testPrimitiveLazyReturnInstVar
+	| method assoc |
+	method := Compiler compile: 'defaultKey | temp | ^key ifNil: [temp printString]' in: Association.
+	self assert: method primitiveIndex equals: 228.
+	assoc := nil -> #value.
+	self assert: (method value: assoc withArguments: #()) equals: 'nil'!
+
 testPrimitiveLessOrEqual
 	| method |
 	method := self createPrimitiveMethodLike: SmallInteger >> #<=.
@@ -3915,6 +3922,7 @@ testPrimitiveInstanceCounts2!public!unit tests! !
 testPrimitiveInstVarAt!public!unit tests! !
 testPrimitiveInstVarAtPut!public!unit tests! !
 testPrimitiveIsKindOf!public!unit tests! !
+testPrimitiveLazyReturnInstVar!public!unit tests! !
 testPrimitiveLessOrEqual!public!unit tests! !
 testPrimitiveLessThan!public!unit tests! !
 testPrimitiveLookupMethod!public!unit tests! !
