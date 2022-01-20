@@ -15,15 +15,14 @@ Mergesort is a fast O(n log n) algorithm with no worst cases that has the additi
 !Kernel.MergesortAlgorithm categoriesForClass!Kernel-Objects! !
 !Kernel.MergesortAlgorithm methodsFor!
 
-merge: anObject aux: anArray from: startInteger to: stopInteger pivot: midInteger 
-	| i j k a cmp |
+merge: anObject aux: anArray from: startInteger to: stopInteger pivot: midInteger
+	| i j k a |
 	i := startInteger.
 	j := midInteger + 1.
 	k := 0.
 	a := anObject basicAt: i.
-	cmp := sortBlock.
 	[i <= midInteger and: [j <= stopInteger]] whileTrue: 
-			[(cmp value: a value: (anObject basicAt: j)) 
+			[(sortBlock value: a value: (anObject basicAt: j))
 				ifTrue: 
 					[anArray at: (k := k + 1) put: a.
 					a := anObject basicAt: (i := i + 1)]

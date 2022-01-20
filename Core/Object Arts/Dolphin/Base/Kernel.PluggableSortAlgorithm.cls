@@ -23,8 +23,45 @@ compare: operand1 with: operand2
 
 	^sortBlock value: operand1 value: operand2!
 
+insertionSort: anObject from: startInteger to: stopInteger
+	startInteger + 1 to: stopInteger
+		do: 
+			[:j |
+			| a t i |
+			a := anObject basicAt: j.
+			i := j.
+			[i <= startInteger or: [sortBlock value: (t := anObject basicAt: i - 1) value: a]] whileFalse: 
+					[anObject basicAt: i put: t.
+					i := i - 1].
+			anObject basicAt: i put: a]!
+
 setSortBlock: aDyadicValuable 
 	sortBlock := aDyadicValuable!
+
+sift: anObject from: anInteger between: startInteger and: stopInteger
+	| val i |
+	val := anObject basicAt: anInteger.
+	i := anInteger.
+	
+	[| left right max j leftVal rightVal |
+	max := val.
+	j := i.
+	left := j + j + 1 - startInteger.
+	(left <= stopInteger and: [sortBlock value: max value: (leftVal := anObject basicAt: left)])
+		ifTrue: 
+			[i := left.
+			max := leftVal].
+	right := left + 1.
+	(right <= stopInteger and: [sortBlock value: max value: (rightVal := anObject basicAt: right)])
+		ifTrue: 
+			[i := right.
+			max := rightVal].
+	i == j
+		ifTrue: 
+			[j > anInteger ifTrue: [anObject basicAt: j put: val].
+			^self].
+	anObject basicAt: j put: max]
+			repeat!
 
 sortBlock
 	"Answer a <dyadicVariable> that implements the sort-order comparison in use by the receiver."
@@ -32,7 +69,9 @@ sortBlock
 	^sortBlock! !
 !Kernel.PluggableSortAlgorithm categoriesForMethods!
 compare:with:!comparing!public! !
+insertionSort:from:to:!operations!private! !
 setSortBlock:!initializing!private! !
+sift:from:between:and:!helpers!private! !
 sortBlock!accessing!public! !
 !
 

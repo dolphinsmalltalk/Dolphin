@@ -12,15 +12,15 @@ Core.Tests.SortAlgorithmTest comment: ''!
 !Core.Tests.SortAlgorithmTest categoriesForClass!Unclassified! !
 !Core.Tests.SortAlgorithmTest methodsFor!
 
-add: aCollection sortBlock: block
+add: aCollection sortBlock: aDyadicValuable
 	| duration sorted comp collection |
 	collection := aCollection asArray.
 	comp := 0.
 	sorted := SortedCollection
-				sortAlgorithm: (self algorithmToTest newSortBlock: 
+				sortAlgorithm: (self newTestSubject: 
 							[:a :b |
 							comp := comp + 1.
-							block value: a value: b]).
+							aDyadicValuable value: a value: b]).
 	duration := [1 to: (collection size min: 5000) do: [:i | sorted add: (collection at: i)]] timeToRun.
 	collection size > 500
 		ifTrue: 
@@ -32,17 +32,15 @@ add: aCollection sortBlock: block
 				display: duration;
 				cr;
 				flush].
-	self assertSorted: sorted!
+	self assertSorted: sorted by: aDyadicValuable!
 
 algorithmToTest
 	^self subclassResponsibility!
 
-assertSorted: sorted 
+assertSorted: aSortedCollection
 	"Private - Asssert that each element of the collection is in the correct sequence relative to its successor"
 
-	| block |
-	block := sorted sortBlock.
-	self assertSorted: sorted by: block!
+	self assertSorted: aSortedCollection by: aSortedCollection sortBlock!
 
 assertSorted: sorted by: block 
 	1 to: sorted size - 1
@@ -55,7 +53,7 @@ assertSorted: sorted by: block
 
 bigStringSort
 	| sorted |
-	sorted := self sort: Symbol allSubinstances sortBlock: SortedCollection defaultSortBlock.
+	sorted := self sort: Symbol primAllSubinstances sortBlock: SortedCollection defaultSortBlock.
 	"Now invert it"
 	sorted := self sort: sorted sortBlock: [:a :b | a >= b]!
 
@@ -65,14 +63,14 @@ integerSortSize
 newAscending: anInteger
 	| s |
 	s := SortedCollection new: anInteger.
-	s algorithm: self algorithmToTest new.
+	s algorithm: self newTestSubject.
 	^s!
 
-newDescending: anInteger
-	| s |
-	s := SortedCollection new: anInteger.
-	s algorithm: (self algorithmToTest sortBlock: [:a :b | a >= b]).
-	^s!
+newTestSubject
+	^self algorithmToTest new!
+
+newTestSubject: aDyadicValuable
+	^self algorithmToTest newSortBlock: aDyadicValuable!
 
 partialSort: source using: algorithm
 	1 to: source size
@@ -92,11 +90,11 @@ partialSort: source using: algorithm
 					sorted := array copyFrom: i to: j.
 					self assertSorted: sorted by: algorithm sortBlock]]!
 
-sort: aCollection sortBlock: block
+sort: aCollection sortBlock: aDyadicValuable
 	| sorted |
-	sorted := aCollection asSortedCollectionUsing: (self algorithmToTest newSortBlock: block).
-	self assertSorted: sorted.
-	self add: aCollection sortBlock: block.
+	sorted := aCollection asArray.
+	sorted sortUsing: (self newTestSubject: aDyadicValuable).
+	self assertSorted: sorted by: aDyadicValuable.
 	^sorted!
 
 sortMagnitudes: collection
@@ -193,11 +191,10 @@ testAdd
 	self assert: (s at: 4) equals: #d!
 
 testDefault
-	| sorted |
-	sorted := (SortedCollection sortAlgorithm: self algorithmToTest new)
-				addAll: (100 to: 1 by: -1);
-				yourself.
-	self assertSorted: sorted!
+	| sorted subject |
+	subject := self newTestSubject.
+	sorted := (100 to: 1 by: -1) asArray sortUsing: subject.
+	self assertSorted: sorted by: subject sortBlock!
 
 testExtremeSortBlocks
 	"This is a worst case ..."
@@ -220,17 +217,17 @@ testIncludes
 	self assert: (sorted includes: (selectorCounts associationAt: #printOn:)).
 
 	"Ordering by partial keys"
-	sorted := self sort: #('aaa' 'abb' 'acc') sortBlock: [:a :b | a first < b first].
+	sorted := self sort: #('aaa' 'abb' 'acc') copy sortBlock: [:a :b | a first < b first].
 	self assert: (sorted includes: 'aaa').
 
 	"And again"
-	sorted := self sort: #('aa' 'ab' 'ac' 'ba' 'bb' 'bc') sortBlock: [:a :b | a first < b first].
+	sorted := self sort: #('aa' 'ab' 'ac' 'ba' 'bb' 'bc') copy sortBlock: [:a :b | a first < b first].
 	sorted do: [:each | self assert: (sorted includes: each)].
 	self assert: ('abc' asSortedCollection includes: 3) not!
 
 testPartialSort
 	| r algorithm |
-	algorithm := self algorithmToTest new.
+	algorithm := self newTestSubject.
 	self partialSort: (19 to: 1 by: -1) using: algorithm.
 	r := Random new.
 	#(1 2 3 4 5 7 10 11 13 17 19 23 29 30 53)
@@ -253,7 +250,7 @@ testSortIntegers
 
 	| collection |
 	collection := #(138 150 55 99 131 119 43 130 149 138 5 109 30 135 44 14 11 131 147 65 104 3 141 93 93 5 19 90 133 78 136 44 11 14 140 3 125 76 23 58 130 26 101 138 39 12 11 64 121 62 80 122 78 48 93 105 22 13 79 151 147 77 149 46 41 53 136 20 66 110 128 96 3 65 128 79 137 9 129 5 135 144 19 62 3 113 6 135 96 59 34 45 61 14 103 125 29 79 48 45 47 139 64 145 23 147 82 81 110 63 64 86 38 59 72 152 132 9 88 107 42 41 53 141 70 61 84 86 137 145 125 147 91 46 146 140 111 56 104 18 87 16 56 120 8 101 109 19 101 60 71 98 76 75 125).
-	self sortMagnitudes: collection.
+	self sortMagnitudes: collection copy.
 	collection := self integerSortSize to: 1 by: -1.
 	self sortMagnitudes: collection.
 	collection := 1 to: self integerSortSize.
@@ -266,15 +263,16 @@ assertSorted:by:!helpers!private! !
 bigStringSort!private!unit tests! !
 integerSortSize!constants!private! !
 newAscending:!private!unit tests! !
-newDescending:!private!unit tests! !
-partialSort:using:!private!testing! !
+newTestSubject!helpers!private! !
+newTestSubject:!helpers!private! !
+partialSort:using:!helpers!private! !
 sort:sortBlock:!helpers!private! !
 sortMagnitudes:!private!unit tests! !
 testAdd!public!unit tests! !
-testDefault!public!testing! !
+testDefault!public!unit tests! !
 testExtremeSortBlocks!public!unit tests! !
 testIncludes!public!unit tests! !
-testPartialSort!public!testing! !
+testPartialSort!public!unit tests! !
 testRandomSort!public!unit tests! !
 testSortIntegers!public!unit tests! !
 !

@@ -27,17 +27,21 @@ add: aCollection sortBlock: block
 				display: duration;
 				cr;
 				flush].
-	self assertSorted: sorted!
+	self assertSorted: sorted by: block!
 
 algorithmToTest
 	^DefaultSortAlgorithm!
 
-sort: aCollection sortBlock: block
+newTestSubject
+	^DefaultSortAlgorithm current!
+
+sort: aCollection sortBlock: aDyadicValuable
 	| duration sorted |
+	sorted := aCollection asArray.
 	duration := 
-			[sorted := block == SortedCollection defaultSortBlock
-						ifTrue: [aCollection asSortedCollection]
-						ifFalse: [aCollection asSortedCollection: block]]
+			[aDyadicValuable == SortedCollection defaultSortBlock
+				ifTrue: [sorted sort]
+				ifFalse: [sorted sort: aDyadicValuable]]
 					timeToRun.
 	aCollection size > 500
 		ifTrue: 
@@ -48,12 +52,18 @@ sort: aCollection sortBlock: block
 				display: duration;
 				cr;
 				flush].
-	self assertSorted: sorted.
-	self add: aCollection sortBlock: block.
-	^sorted! !
+	self assertSorted: sorted by: aDyadicValuable.
+	self add: aCollection sortBlock: aDyadicValuable.
+	^sorted!
+
+testBigStringSort
+	self skipIfCiBuild. "Long running"
+	self bigStringSort! !
 !Kernel.Tests.DefaultSortAlgorithmTest categoriesForMethods!
 add:sortBlock:!helpers!private! !
 algorithmToTest!private!unit tests! !
+newTestSubject!private!unit tests! !
 sort:sortBlock:!helpers!private! !
+testBigStringSort!public! !
 !
 

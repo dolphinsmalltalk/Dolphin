@@ -15,7 +15,7 @@ testMethodCategoryEnvironment
 	| env selectors |
 	env := universalEnvironment forMethodCategories: #('*-subclass responsibility' 'comparing').
 	self universalTestFor: env.
-	"Use SortAlgorithm class because it is unlikely to change"
+	"Use SortAlgorithm class because it is unlikely to change - yeah, right"
 	self assert: (env includesClass: SortAlgorithm).
 	self deny: (env definesClass: SortAlgorithm).
 	self assert: (env includesSelector: #compare:with: in: SortAlgorithm).
@@ -25,7 +25,8 @@ testMethodCategoryEnvironment
 	self deny: (env includesSelector: #sort:from:to: in: DefaultSortAlgorithm).
 	selectors := SortedCollection new.
 	env selectorsForClass: SortAlgorithm do: [:each | selectors add: each].
-	self assert: selectors asArray equals: #(#compare:with: #sort:from:to: #sortBlock).
+	self assert: selectors asArray
+		equals: #(#compare:with: #insertionSort:from:to: #sift:from:between:and: #sort:from:to: #sortBlock).
 	self assert: (env includesClass: SortAlgorithm class).
 	self deny: (env definesClass: SortAlgorithm class).
 	selectors := SortedCollection new.

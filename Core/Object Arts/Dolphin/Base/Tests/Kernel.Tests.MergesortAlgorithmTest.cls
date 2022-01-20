@@ -20,7 +20,7 @@ testBigStringSort
 
 testTempArrayLargeEnough
 	| sorted |
-	sorted := SortedCollection sortAlgorithm: self algorithmToTest new.
+	sorted := SortedCollection sortAlgorithm: self newTestSubject.
 	sorted addAll: (100 to: 200).
 	60 timesRepeat: [sorted removeFirst].
 	sorted addAll: (130 to: 200).

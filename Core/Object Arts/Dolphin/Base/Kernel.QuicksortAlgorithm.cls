@@ -33,16 +33,16 @@ sort: anObject from: startInteger to: stopInteger
 			a := anObject basicAt: j.
 			anObject basicAt: j put: (anObject basicAt: i).
 			anObject basicAt: i put: a.
-			(self compare: (anObject basicAt: up) with: a)
+			(sortBlock value: (anObject basicAt: up) value: a)
 				ifTrue: 
 					[anObject basicAt: i put: (anObject basicAt: up).
 					anObject basicAt: up put: a].
-			(self compare: (anObject basicAt: up) with: (anObject basicAt: lo))
+			(sortBlock value: (anObject basicAt: up) value: (anObject basicAt: lo))
 				ifTrue: 
 					[a := anObject basicAt: up.
 					anObject basicAt: up put: (anObject basicAt: lo).
 					anObject basicAt: lo put: a].
-			(self compare: (anObject basicAt: lo) with: (anObject basicAt: i))
+			(sortBlock value: (anObject basicAt: lo) value: (anObject basicAt: i))
 				ifTrue: 
 					[a := anObject basicAt: lo.
 					anObject basicAt: lo put: (anObject basicAt: i).
@@ -52,8 +52,8 @@ sort: anObject from: startInteger to: stopInteger
 			j := up.	"i.e. start from up-1"
 			b := anObject basicAt: lo.
 			
-			[[i < j and: [self compare: (anObject basicAt: (i := i + 1)) with: b]] whileTrue.
-			[j >= i and: [self compare: b with: (anObject basicAt: (j := j - 1))]] whileTrue.
+			[[i < j and: [sortBlock value: (anObject basicAt: (i := i + 1)) value: b]] whileTrue.
+			[j >= i and: [sortBlock value: b value: (anObject basicAt: (j := j - 1))]] whileTrue.
 			j < i]
 					whileFalse: 
 						[a := anObject basicAt: i.
@@ -63,7 +63,7 @@ sort: anObject from: startInteger to: stopInteger
 			anObject basicAt: lo put: (anObject basicAt: j).
 			anObject basicAt: j put: b.
 			"Skip sort-equal elements to speed up worst cases - suggested by John Brant"
-			[(j := j - 1) > lo and: [self compare: b with: (anObject basicAt: j)]] whileTrue.
+			[(j := j - 1) > lo and: [sortBlock value: b value: (anObject basicAt: j)]] whileTrue.
 			"Recursively sort smaller sub-interval and process larger remainder on the
 			next loop iteration"
 			up - i < (j - lo)

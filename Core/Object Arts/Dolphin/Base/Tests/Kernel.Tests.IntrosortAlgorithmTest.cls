@@ -21,7 +21,7 @@ testBigStringSort
 testNewSortBlock
 	| algo1 algo2 block originalMethod testMethod |
 	block := [:a :b | a < b].
-	algo1 := self algorithmToTest newSortBlock: block.
+	algo1 := self newTestSubject: block.
 	self assert: algo1 sortBlock identicalTo: block.
 	originalMethod := self algorithmToTest class lookupMethod: #newSortBlock:.
 	testMethod := originalMethod copy.

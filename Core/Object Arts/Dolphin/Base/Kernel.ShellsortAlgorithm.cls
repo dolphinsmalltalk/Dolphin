@@ -31,7 +31,7 @@ sort: anObject from: startInteger to: stopInteger
 					[| ei j ej |
 					ei := anObject basicAt: i.
 					j := i + d.
-					[j <= stopInteger and: [self compare: (ej := anObject basicAt: j) with: ei]] whileTrue: 
+					[j <= stopInteger and: [sortBlock value: (ej := anObject basicAt: j) value: ei]] whileTrue: 
 							[anObject basicAt: j - d put: ej.
 							j := j + d].
 					anObject basicAt: j - d put: ei.
