@@ -69,27 +69,27 @@
   <Type Name="TOTE&lt;ST::Utf16String&gt;">
     <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
     <DisplayString Condition="m_flags.m_free">**a Freed Utf16String**</DisplayString>
-    <DisplayString Condition="!m_flags.m_free">{m_location,su} (size {(m_size&amp;0x7fffffff)/2})</DisplayString>
+    <DisplayString Condition="!m_flags.m_free">u{m_location,su} (size {(m_size&amp;0x7fffffff)/2})</DisplayString>
     <Expand HideRawView="true">
       <ExpandedItem>m_location</ExpandedItem>
     </Expand>
   </Type>
   <Type Name="ST::Utf16String">
     <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
-    <DisplayString >{m_characters,su}</DisplayString>
+    <DisplayString >u{m_characters,su}</DisplayString>
     <Expand HideRawView="0"></Expand>
   </Type>
   <Type Name="TOTE&lt;ST::Utf8String&gt;">
     <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
     <DisplayString Condition="m_flags.m_free">**a Freed Utf16String**</DisplayString>
-    <DisplayString Condition="!m_flags.m_free">{m_location,s8} (size {m_size&amp;0x7fffffff})</DisplayString>
+    <DisplayString Condition="!m_flags.m_free">u8{m_location,s8} (size {m_size&amp;0x7fffffff})</DisplayString>
     <Expand HideRawView="true">
       <ExpandedItem>m_location</ExpandedItem>
     </Expand>
   </Type>
   <Type Name="ST::Utf8String">
     <DisplayString Condition="(Oop)this == Pointers.Nil">nil</DisplayString>
-    <DisplayString >{m_characters,s8}</DisplayString>
+    <DisplayString >u8{m_characters,s8}</DisplayString>
     <Expand HideRawView="true"></Expand>
   </Type>
   <!--Other scalar values-->
