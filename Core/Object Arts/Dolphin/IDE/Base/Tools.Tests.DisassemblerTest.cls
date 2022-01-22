@@ -24,7 +24,7 @@ testExLongPushImmediate
 	21	Push Static[0]: #Array -> Array
 	22	Push 4
 	24	Send[1]: #newFromStack: with 1 args
-	25	Return '! !
+	25	Return'! !
 !Tools.Tests.DisassemblerTest categoriesForMethods!
 testExLongPushImmediate!public! !
 !

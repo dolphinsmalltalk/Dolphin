@@ -144,7 +144,7 @@ enum class OpCode : uint8_t {
 	SpecialSendNotIdentical = ShortSpecialSendEx,	// #~~
 	SpecialSendNot,									// #not
 	SpecialSendNullCoalesce,						// #??
-	_ReservedSpecialSendEx203,						// Currently unassigned
+	ReturnIfNotNil,
 	
 	PushInstVar = FirstDoubleByteInstruction, 
 	PushTemp,
@@ -163,7 +163,7 @@ enum class OpCode : uint8_t {
 	PushChar,
 	Send,
 	Supersend,
-	SpecialSend,				// Not implemented yet
+	_unusedDoubleByte218,					// Reserved for SpecialSendWithArg
 	NearJump,
 	NearJumpIfTrue,
 	NearJumpIfFalse,
@@ -177,7 +177,7 @@ enum class OpCode : uint8_t {
 	StoreOuterTemp,
 	PopStoreOuterTemp,
 	SendSelfWithNoArgs,
-	PopSendSelfNoArgs,
+	_unusedDoubleByte232,					// Could be PopSendSelfNoArgs
 	PushTempPair,
 
 	LongPushConst = FirstTripleByteInstruction,
@@ -214,7 +214,7 @@ static constexpr unsigned LastPseudoPush = static_cast<unsigned>(OpCode::ShortPu
 static constexpr unsigned LastPush = static_cast<unsigned>(OpCode::ShortPushSelfAndTemp) + NumShortPushSelfAndTemps - 1;
 static constexpr unsigned LastShortJump = static_cast<unsigned>(OpCode::ShortJump) + NumShortJumps - 1;
 static constexpr unsigned LastShortSend = static_cast<unsigned>(OpCode::ShortSendWith2Args) + NumShortSendsWith2Args - 1;
-static constexpr unsigned NumExSpecialSends = 4;
+static constexpr unsigned NumExSpecialSends = 3;
 static constexpr unsigned FirstExtendedStore = static_cast<unsigned>(OpCode::StoreInstVar);
 static constexpr unsigned LastExtendedStore = static_cast<unsigned>(OpCode::StoreStatic);
 static constexpr unsigned FirstPopStore = static_cast<unsigned>(OpCode::PopStoreInstVar);
@@ -391,9 +391,10 @@ inline uint8_t indexOfPseudoReturn(OpCode code)
 	return static_cast<uint8_t>(code - OpCode::ReturnSelf);
 }
 
+// Unconditional returns
 inline bool isReturn(OpCode code)
 {
-	return code >= OpCode::ReturnSelf && code <= OpCode::PopReturnSelf;
+	return (code >= OpCode::ReturnSelf && code <= OpCode::PopReturnSelf);
 }
 
 inline bool isShortSend(OpCode code)

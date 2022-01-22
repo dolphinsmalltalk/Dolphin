@@ -306,11 +306,6 @@ printPushPrefix
 
 	stream nextPutAll: 'Push '!
 
-printReturnPrefix
-	"Private - Append the return instruction prefix to the stream"
-
-	stream nextPutAll: 'Return '!
-
 printSendPrefix
 	"Private - Append the send instruction prefix to the stream."
 
@@ -440,8 +435,7 @@ reset
 returnFromBlock
 	"Private - Interpret a return from block."
 
-	self printReturnPrefix.
-	stream nextPutAll: 'From Block'!
+	stream nextPutAll: 'Return From Block'!
 
 returnFromBlockHome
 	"Private - Interpret a return from block's home method."
@@ -451,16 +445,19 @@ returnFromBlockHome
 returnFromMessage
 	"Private - Interpret a return from message."
 
-	self printReturnPrefix!
+	stream nextPutAll: 'Return'!
+
+returnIfNotNil
+	stream nextPutAll: 'Return If Not Nil'!
 
 returnPseudo: offset
 	"Private - Interpret a Return nil/true/false/self instruction."
 
-	self printReturnPrefix.
+	stream nextPutAll: 'Return '.
 	self printPseudoSuffix: offset!
 
 returnSelf
-	self printReturnPrefix.
+	stream nextPutAll: 'Return '.
 	stream nextPutAll: 'self'!
 
 send: literalIndex args: argumentCount 
@@ -598,7 +595,6 @@ printOuter:temp:!printing!private! !
 printPopPrefix!printing!private! !
 printPseudoSuffix:!printing!private! !
 printPushPrefix!printing!private! !
-printReturnPrefix!printing!private! !
 printSendPrefix!printing!private! !
 printSendSuffix:!printing!private! !
 printSendSuffix:args:!printing!private! !
@@ -623,6 +619,7 @@ reset!public! !
 returnFromBlock!instructions-returning!private! !
 returnFromBlockHome!instructions-returning!private! !
 returnFromMessage!instructions-returning!private! !
+returnIfNotNil!private! !
 returnPseudo:!instructions-returning!private! !
 returnSelf!instructions-returning!private! !
 send:args:!interpreting!private! !

@@ -432,6 +432,14 @@ public:
 			stream << L"Special Send #not";
 			break;
 
+		case OpCode::SpecialSendNullCoalesce:
+			stream << L"Special Send #??";
+			break;
+
+		case OpCode::ReturnIfNotNil:
+			stream << L"Return If Not Nil";
+			break;
+
 		case OpCode::PushInstVar:
 			PrintInstVarInstruction(ip, stream, "Push", GetBytecode(ip + 1));
 			break;

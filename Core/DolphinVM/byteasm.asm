@@ -185,7 +185,7 @@ ENDM
 
 ;; N.B. These must be carefully maintained to ensure that Double Byte instructions start at 204 and Triple Byte
 ;; instructions at 240
-NUMRESERVEDSINGLEBYTE	EQU 1			; Number of extra single byte instructions reserved before start of double byte
+NUMRESERVEDSINGLEBYTE	EQU 0			; Number of extra single byte instructions reserved before start of double byte
 NUMRESERVEDDOUBLEBYTE	EQU 0			; Number of extra double byte instructions reserved before start of triple byte
 NUMRESERVEDTRIPLEBYTE	EQU	0			; Number of extra triple byte instructions reserved before start of quad byte
 
@@ -389,6 +389,8 @@ byteCodeTable DD		break										; All push[0] instructions are now odd
 	DWORD		shortSpecialSendNotIdentical
 	DWORD		shortSpecialSendNot
 	DWORD		shortSpecialSendNilCoalesce
+
+	DWORD		returnIfNotNil
 
 	CreateInstructionLabels <_invalidByteCode>, <NUMRESERVEDSINGLEBYTE>
 
@@ -1388,6 +1390,23 @@ BEGINBYTECODE returnNil
 	mov		ecx, [oteNil]				; Load Nil Oop
 	ReturnOopToSender
 ENDBYTECODE returnNil
+
+BEGINBYTECODE returnIfNotNil
+	mov		ecx, [_SP]
+	sub		_SP, OOPSIZE								; Always pops
+	cmp		ecx, [oteNil]
+	je		@F
+
+	; ReturnOopToSender
+	mov		edx, [ACTIVEFRAME]							; Load pointer to top stack frame into EDX
+	ASSUME	edx:PStackFrame
+	mov		edx, [edx].m_caller							; Load sender frame of active frame (Does not affect flags)
+	ASSUME	edx:PTR Oop
+
+	call	shortReturn
+@@:
+	DispatchByteCode
+ENDBYTECODE returnIfNotNil
 
 ;; When returning from a block using this instruction, we always return from our
 ;; caller. As we are a block context, then ACTIVECONTEXT must be a genuine

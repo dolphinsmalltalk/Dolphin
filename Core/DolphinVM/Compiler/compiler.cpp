@@ -3175,8 +3175,8 @@ POTE Compiler::ParseArray()
 		case TokenType::LargeIntegerConst:
 		case TokenType::ScaledDecimalConst:
 			{
-				// Result of NewNumber already has ref. count
 				Oop oopElem = NewNumber(ThisTokenText);
+				// Result of NewNumber already has ref. count
 				m_piVM->MakeImmutable(oopElem, TRUE);
 				elems.push_back(oopElem);
 				NextToken();
@@ -3727,6 +3727,7 @@ void Compiler::AssertValidIpForTextMapEntry(ip_t ip, bool bFinal)
 			|| (op == OpCode::IncrementStackTop || op == OpCode::DecrementStackTop)
 			|| (op == OpCode::IncrementPushTemp|| op == OpCode::DecrementPushTemp)
 			|| (op == OpCode::IsZero)
+			|| (op == OpCode::ReturnIfNotNil)
 			);
 	}
 }
@@ -3909,6 +3910,8 @@ STDMETHODIMP_(POTE) Compiler::CompileForClass(IUnknown* piVM, Oop compilerOop, c
 
 POTE Compiler::TryCompileForClass(const u8string& source, Oop compilerOop, Oop notifier, POTE aClass, POTE aNamespace, FLAGS flags)
 {
+	CHECKREFERENCES
+
 	POTE resultPointer = Nil();
 	int crtFlag;
 	__try
@@ -3949,6 +3952,8 @@ POTE Compiler::TryCompileForClass(const u8string& source, Oop compilerOop, Oop n
 	{
 		_CrtSetDbgFlag(crtFlag);
 	}
+
+	CHECKREFERENCES
 
 	return resultPointer;
 }

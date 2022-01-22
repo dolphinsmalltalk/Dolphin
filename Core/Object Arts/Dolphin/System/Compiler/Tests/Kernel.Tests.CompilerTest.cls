@@ -377,7 +377,7 @@ testDecrementPushTempOptimisation
 	15	Jump If False -9 to 8
 	17	Pop
 	18	Pop; Push Temp[0]
-	19	Return '
+	19	Return'
 				expandMacrosWith: expr literalCount.
 	self assert: disasm equals: expected.
 	self assert: (expr value: nil) equals: 1.
@@ -410,7 +410,7 @@ testDecrementPushTempOptimisation
 	31	Pop
 	32	Pop
 	33	Push Temp[7]
-	34	Return '
+	34	Return'
 				expandMacrosWith: expr literalCount.
 	self assert: disasm equals: expected.
 	self assert: (expr value: nil) equals: 1.
@@ -443,7 +443,7 @@ testDecrementTempOptimisation
 	9	Decrement Temp[0]
 	12	Jump -10 to 4
 	14	Push Temp[0]
-	15	Return '
+	15	Return'
 				expandMacrosWith: expr literalCount.
 	self assert: disasm equals: expected.
 	self assert: (expr value: nil) equals: 0.
@@ -471,7 +471,7 @@ testDecrementTempOptimisation
 	24	Decrement Temp[8]
 	27	Jump -11 to 18
 	29	Push Temp[8]
-	31	Return '
+	31	Return'
 				expandMacrosWith: expr literalCount.
 	self assert: disasm equals: expected.
 	"DiffBrowser  compare: disasm with: expected."
@@ -763,7 +763,7 @@ testIncrementPushTempOptimisation
 	8	Store Temp[1]
 	9	Special Send #class
 	10	Pop; Push Temp[1]
-	11	Return '.
+	11	Return'.
 	self assert: (self evalTestMethod: method) equals: 2.
 
 	"Need to be careful that optimisations like this (which combine instructions) map correctly to debug methods. In this case the optimised instruction
@@ -823,7 +823,7 @@ testIncrementTempOptimisation
 	9	Increment Temp[0]
 	12	Jump -11 to 3
 	14	Push Temp[0]
-	15	Return '
+	15	Return'
 				expandMacrosWith: method literalCount.
 	self assert: disasm equals: expected.
 	self assert: (self evalTestMethod: method) equals: 6.
@@ -1054,7 +1054,7 @@ testReturnFromOptimizedBlock
 	3	Special Send #>
 	4	Jump If False +2 to 7
 	5	Push 1
-	6	Return 
+	6	Return
 	7	Block Copy, 0 args, needs self, needs outer, skip +2 to 16
 	14	Push Self
 	15	Far Return

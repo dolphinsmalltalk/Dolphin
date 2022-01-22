@@ -325,7 +325,7 @@ testStbUpgradeFromVersion0
 	34	Special Send #value:
 	35	Return From Block
 	36	Dup
-	37	Return '.
+	37	Return'.
 	self assert: (block value: 9) equals: '9: 362880'!
 
 testValueWithArguments

@@ -413,6 +413,8 @@ returnFromMessage
 
 	!
 
+returnIfNotNil!
+
 returnPseudo: offset
 	"Interpret a Return nil/true/false/self instruction."
 !
@@ -697,6 +699,7 @@ reset!positioning!public! !
 returnFromBlock!instructions-returning!public! !
 returnFromBlockHome!instructions-returning!public! !
 returnFromMessage!instructions-returning!public! !
+returnIfNotNil!public! !
 returnPseudo:!instructions-returning!public! !
 returnSelf!instructions-returning!public! !
 send:!instructions-sending!public! !

@@ -394,13 +394,6 @@ struct BYTECODE
 		return Opcode == OpCode::ReturnMessageStackTop || Opcode == OpCode::ReturnBlockStackTop;
 	}
 
-	__declspec(property(get = get_IsMethodReturn)) bool IsMethodReturn;
-	INLINE bool get_IsMethodReturn() const
-	{
-		OpCode op = Opcode;
-		return op != OpCode::ReturnBlockStackTop && ::isReturn(op);
-	}
-
 	__declspec(property(get = get_IsShortSend)) bool IsShortSend;
 	INLINE bool get_IsShortSend() const
 	{
@@ -412,8 +405,8 @@ struct BYTECODE
 	{
 		OpCode op = Opcode;
 		return ::isShortSend(op)
-			|| op == OpCode::Send || op == OpCode::Supersend || op == OpCode::SpecialSend
-			|| op == OpCode::SendTempWithNoArgs || op == OpCode::SendSelfWithNoArgs || op == OpCode::PopSendSelfNoArgs
+			|| op == OpCode::Send || op == OpCode::Supersend // || op == OpCode::SpecialSend
+			|| op == OpCode::SendTempWithNoArgs || op == OpCode::SendSelfWithNoArgs // || op == OpCode::PopSendSelfNoArgs
 			|| op == OpCode::LongSend || op == OpCode::LongSupersend
 			|| op == OpCode::ExLongSend || op == OpCode::ExLongSupersend;
 	}

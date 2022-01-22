@@ -636,7 +636,15 @@ size_t Compiler::OptimizePairs()
 				{
 					// Dup, LongJumpIfNotNil
 					BYTECODE& target = m_bytecodes[bytecode2.target];
-					if (target.Opcode == OpCode::PopStackTop && target.jumpsTo == 1)
+					if (target.IsReturnStackTop)
+					{
+						target.removeJumpTo();
+						bytecode2.makeNonJump();
+						bytecode2.Opcode = OpCode::ReturnIfNotNil;
+						RemoveBytes(next + 1, 2);
+						count++;
+					}
+					else if (target.Opcode == OpCode::PopStackTop && target.jumpsTo == 1)
 					{
 						ip_t nilBranch = next + bytecode2.InstructionLength;
 						BYTECODE& bytecode3 = m_bytecodes[nilBranch];
@@ -654,6 +662,17 @@ size_t Compiler::OptimizePairs()
 
 							continue;	// A new instruction will now be at i to be considered, so don't advance
 						}
+					}
+				}
+				else if (byte2 == OpCode::ReturnIfNotNil)
+				{
+					BYTECODE& bytecode3 = m_bytecodes[next+1];
+					if (bytecode3.Opcode == OpCode::PopStackTop && !bytecode3.IsJumpTarget)
+					{
+						// We can remove the Dup and the Pop
+						RemoveInstruction(next + 1);
+						RemoveInstruction(i);
+						continue;
 					}
 				}
 			}
