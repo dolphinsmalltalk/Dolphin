@@ -440,6 +440,12 @@ inline bool isShortPopStoreInstVar(OpCode op)
 	return op >= OpCode::ShortPopStoreInstVar && op < OpCode::ShortPopStoreInstVar + NumShortPopStoreInstVars;
 }
 
+inline uint8_t indexOfShortPopStoreInstVar(OpCode op)
+{
+	_ASSERTE(isShortPopStoreInstVar(op));
+	return static_cast<uint8_t>(op - OpCode::ShortPopStoreInstVar);
+}
+
 inline bool isShortPopStoreContextTemp(OpCode op)
 {
 	return op >= OpCode::PopStoreContextTemp && op < OpCode::PopStoreContextTemp + NumPopStoreContextTemps;

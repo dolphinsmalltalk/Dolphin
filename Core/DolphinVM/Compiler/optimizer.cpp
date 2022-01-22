@@ -768,8 +768,28 @@ size_t Compiler::OptimizePairs()
 				count++;
 				continue;	// A new instruction will now be at i to be considered, so don't advance
 			}
+
+			else if (bytecode1.IsShortPopStoreInstVar && bytecode2.Opcode == OpCode::ShortPushInstVar + bytecode1.indexOfShortPopStoreInstVar())
+			{
+				bytecode2.makeData();
+				bytecode2.byte = bytecode1.indexOfShortPopStoreInstVar();
+				bytecode1.Opcode = OpCode::StoreInstVar;
+				count++;
+				continue;
+			}
+
+			// There are more ShortPushInstVar instructions that ShortPopStoreInstVar, so we may be the long/short combination
+			else if (byte1 == OpCode::PopStoreInstVar 
+				&& ((m_bytecodes[i+1].byte < NumShortPushInstVars && byte2 == OpCode::ShortPushInstVar + m_bytecodes[i + 1].byte)
+					|| (byte2 == OpCode::PushInstVar && m_bytecodes[i + 1].byte == m_bytecodes[next + 1].byte)))
+			{
+				bytecode1.Opcode = OpCode::StoreInstVar;
+				RemoveInstruction(next);
+				count++;
+				continue;
+			}
 		}
-		
+
 		// A store into a temp followed by a return from method is redundant, even if
 		// either is a jump target
 		if (bytecode1.IsStoreStackTemp && bytecode2.IsReturn)

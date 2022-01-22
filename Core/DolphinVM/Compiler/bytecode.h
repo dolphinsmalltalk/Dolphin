@@ -159,6 +159,11 @@ struct BYTECODE
 		return ::isShortPopStoreInstVar(Opcode);
 	}
 
+	INLINE uint8_t indexOfShortPopStoreInstVar() const
+	{
+		return ::indexOfShortPopStoreInstVar(Opcode);
+	}
+
 	__declspec(property(get = get_IsShortPopStoreContextTemp)) bool IsShortPopStoreContextTemp;
 	INLINE bool get_IsShortPopStoreContextTemp() const
 	{
