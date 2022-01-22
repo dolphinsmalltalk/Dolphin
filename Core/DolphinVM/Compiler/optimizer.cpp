@@ -343,6 +343,41 @@ size_t Compiler::OptimizePairs()
 					continue;	// Continue optimization on the pseudo return now move to i
 				}
 				
+				else if (byte2 == OpCode::LongJumpIfNotNil)
+				{
+					// If jump on non-nil following a Push to the same Push followed by return TOS, can replace with ReturnIfNotNil
+					// e.g. Code of the form
+					//	var isNil ifTrue: [var := ...].
+					//	^var
+					ip_t jumpTo = bytecode2.target;
+					BYTECODE& target = m_bytecodes[jumpTo];
+					if (AreBytecodesSame(i, jumpTo) && m_bytecodes[jumpTo + target.InstructionLength].IsReturnStackTop)
+					{
+						target.removeJumpTo();
+						_ASSERTE(bytecode2.InstructionLength == 3);
+						bytecode2.Opcode = OpCode::ReturnIfNotNil;
+						bytecode2.makeNonJump();
+						RemoveBytes(next + 1, 2);		// Delete the jump extension bytes
+						count++;
+					}
+				}
+				// Same as previous optimisation in a debug method to keep text maps the same
+				else if (byte2 == OpCode::Break && m_bytecodes[next+1].Opcode == OpCode::LongJumpIfNotNil)
+				{
+					BYTECODE& jump = m_bytecodes[next + 1];
+					ip_t jumpTo = jump.target;
+					BYTECODE& target = m_bytecodes[jumpTo];
+					if (AreBytecodesSame(i, jumpTo) && m_bytecodes[jumpTo + target.InstructionLength+1].IsReturnStackTop)
+					{
+						target.removeJumpTo();
+						_ASSERTE(jump.InstructionLength == 3);
+						jump.Opcode = OpCode::ReturnIfNotNil;
+						jump.makeNonJump();
+						RemoveBytes(next + 2, 2);		// Delete the jump extension bytes
+						count++;
+					}
+				}
+
 				else if (byte1 == OpCode::ShortPushTrue && byte2 == OpCode::LongJumpIfTrue)
 				{
 					// If push true followed by jump if true (which is not a jump target)
@@ -756,6 +791,20 @@ size_t Compiler::OptimizePairs()
 		i += len;
 	}
 	return count;
+}
+
+bool Compiler::AreBytecodesSame(ip_t i, ip_t j) const
+{
+	const BYTECODE& a = m_bytecodes[i];
+	const BYTECODE& b = m_bytecodes[j];
+	if (a.Opcode != b.Opcode) return false;
+	size_t count = a.InstructionLength;
+	if (b.InstructionLength != count) return false;
+	for (auto x = 1u; x < count; x++)
+	{
+		if (m_bytecodes[i + x].byte != m_bytecodes[j + x].byte) return false;
+	}
+	return true;
 }
 
 // Hmmm, there's what looks like a code generation bug here - or at least enabling global optimisation

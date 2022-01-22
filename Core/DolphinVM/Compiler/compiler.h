@@ -245,6 +245,7 @@ private:
 	size_t CombinePairs1();
 	size_t CombinePairs2();
 	size_t OptimizePairs();
+	bool AreBytecodesSame(ip_t i, ip_t j) const;
 	size_t OptimizeJumps();
 	size_t InlineReturns();
 	size_t ShortenJumps();

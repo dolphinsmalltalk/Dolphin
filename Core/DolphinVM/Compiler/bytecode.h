@@ -40,6 +40,11 @@ struct BYTECODE
 
 	LexicalScope*	pScope;
 
+	bool operator==(const BYTECODE& comperand) const
+	{
+
+	}
+
 	bool isInstruction(OpCode b) const
 	{
 		return IsOpCode && Opcode == b; 
@@ -418,6 +423,7 @@ struct BYTECODE
 		return  ::isShortStoreTemp(op) || ::isShortPopStore(op) || ::isExtendedStore(op) || ::isExtendedPopStore(op)
 				|| op == OpCode::LongStoreStatic || op == OpCode::LongStoreOuterTemp;
 	}
+
 };
 
 ENABLE_BITMASK_OPERATORS(BYTECODE::Flags)
