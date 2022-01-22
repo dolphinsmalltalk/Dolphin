@@ -2010,20 +2010,6 @@ POTE Compiler::NewMethod()
 			// determine which inst. var to push (they'll fit in a SmallInteger anyway)
 			_ASSERTE(CodeSize == 3);
 		}
-		else if (static_cast<OpCode>(byte1) == OpCode::DuplicateStackTop && IsReturnIfNotNil(ip_t::two))
-		{
-			// Lazy instance variable accessor method (<=15)
-			_ASSERTE(!bNeedsContext);
-			MakeQuickMethod(hdr, PRIMITIVE_LAZY_RETURN_INSTVAR);
-
-			byte1 = m_bytecodes[ip_t::zero].indexOfPushInstVar();
-			m_bytecodes[ip_t::zero].Opcode = OpCode::PushInstVar;
-			InsertByte(ip_t::one, byte1, BYTECODE::Flags::IsData, nullptr);
-			IncrementIPs();
-			m_codePointer++;
-			_ASSERTE(CodeSize >= 4);
-			// We must adjust the IP ranges of all the scopes and any clean blocks already created
-		}
 	}
 	else if (isPushInstVarX(byte0, byte1) && ArgumentCount == 0)
 	{
@@ -2037,13 +2023,6 @@ POTE Compiler::NewMethod()
 			// determine which inst. var to push (they'll fit in a SmallInteger anyway)
 			_ASSERTE(CodeSize == 3);
 		} 
-		else if (static_cast<OpCode>(byte2) == OpCode::DuplicateStackTop && IsReturnIfNotNil(ip_t::three))
-		{
-			// Lazy instance variable accessor method (<=15)
-			_ASSERTE(!bNeedsContext);
-			MakeQuickMethod(hdr, PRIMITIVE_LAZY_RETURN_INSTVAR);
-			_ASSERTE(CodeSize >= 4);
-		}
 	}
 	else if (static_cast<OpCode>(byte1) == OpCode::ReturnMessageStackTop && m_bytecodes[ip_t::zero].IsShortPushImmediate)
 	{

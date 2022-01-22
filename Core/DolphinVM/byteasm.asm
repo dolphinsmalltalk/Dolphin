@@ -4074,9 +4074,7 @@ execMethod:
 	pop		eax										; failure code
 	jz		noStackTemps
 	
-	; Store primitive failure code (a SmallInteger) into _failureCode temp slot (always the first temp) if not stepping into the Smalltalk code
-	cmp		eax, 090000009h							
-	cmove	eax, [oteNil]
+	; Store primitive failure code (a SmallInteger) into _failureCode temp slot (always the first temp)
 	mov		[_SP], eax								
 	mov		eax, [oteNil]							; All other temps must have initial value of Nil
 	jmp		first
@@ -4522,9 +4520,7 @@ BEGINPROC EXECUTENEWMETHOD
 	pop		eax										; failure code
 	jz		noStackTemps
 	
-	; Store primitive failure code (a SmallInteger) into _failureCode temp slot (always the first temp) if not stepping into the Smalltalk code
-	cmp		eax, 090000009h							
-	cmove	eax, [oteNil]
+	; Store primitive failure code (a SmallInteger) into _failureCode temp slot (always the first temp)
 	mov		[_SP], eax								
 	mov		eax, [oteNil]							; All other temps must have initial value of Nil
 	jmp		first
@@ -4700,9 +4696,7 @@ BEGINPROC ACTIVATEPRIMITIVEMETHOD
 	pop		eax										; failure code
 	jz		noStackTemps
 	
-	; Store primitive failure code (a SmallInteger) into _failureCode temp slot (always the first temp) if not stepping into the Smalltalk code
-	cmp		eax, 090000009h							
-	cmove	eax, [oteNil]
+	; Store primitive failure code (a SmallInteger) into _failureCode temp slot (always the first temp)
 	mov		[_SP], eax								
 	mov		eax, [oteNil]							; All other temps must have initial value of Nil
 	jmp		first

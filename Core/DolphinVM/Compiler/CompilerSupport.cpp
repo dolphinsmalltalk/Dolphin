@@ -100,7 +100,7 @@ Oop Compiler::EvaluateExpression(const u8string& text, POTE oteMethod, Oop conte
 	STCompiledMethod& exprMethod = *(STCompiledMethod*)GetObj(oteMethod);
 	auto primitive = exprMethod.header.primitiveIndex;
 	Oop result;
-	// As an optimization avoid calling back into Smalltalk if we the expression is of simple form, e.g. a class ref
+	// As an optimization avoid calling back into Smalltalk if the expression is of simple form, e.g. a class ref
 	switch (primitive)
 	{
 	case PRIMITIVE_RETURN_SELF:
