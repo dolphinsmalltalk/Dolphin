@@ -56,7 +56,13 @@ model: aProfilerSampleSet
 	self filterChanged!
 
 parseContext
-	^self selectedMethod! !
+	^self selectedMethod!
+
+selectedMethod
+	^nil!
+
+selectionOrNil
+	^self subclassResponsibility! !
 !ProfilerPresenter categoriesForMethods!
 filter:!filtering!public! !
 filterChanged!filtering!public! !
@@ -66,6 +72,8 @@ filterSelector:!filtering!public! !
 initialize!initializing!public! !
 model:!accessing!public! !
 parseContext!public! !
+selectedMethod!public!selection! !
+selectionOrNil!accessing!public! !
 !
 
 !ProfilerPresenter class methodsFor!

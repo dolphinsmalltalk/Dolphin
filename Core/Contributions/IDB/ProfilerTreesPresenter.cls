@@ -77,7 +77,7 @@ onSelectionChanged
 	"The frame selection has changed so update the source view accordingly"
 
 	| sourceText sourceSelectionRange disassemblyText disassemblySelectionLine styler |
-	self selectedNode 
+	self selectionOrNil
 		ifNil: 
 			[sourceText := String new.
 			sourceSelectionRange := 0 to: 0.
@@ -85,18 +85,18 @@ onSelectionChanged
 			disassemblySelectionLine := 0.
 			styler := NullScintillaStyler]
 		ifNotNil: 
-			[:arg | 
+			[:arg |
 			sourceText := arg object coloredSource.
 			sourceSelectionRange := arg object selectionRange.
 			disassemblyText := arg object disassemblySource.
 			disassemblySelectionLine := arg object disassemblySelectionLine.
 			styler := arg object compiledCode stylerClass].
-	(self workspacePresenter)
+	self workspacePresenter
 		text: sourceText;
 		stylerClass: styler;
 		selectionRange: sourceSelectionRange.
 	(self presenterNamed: 'disassembly') text: disassemblyText.
-	disassemblySelectionLine ~~ 0 
+	disassemblySelectionLine ~~ 0
 		ifTrue: [(self presenterNamed: 'disassembly') selectLine: disassemblySelectionLine]!
 
 onViewOpened
@@ -132,9 +132,9 @@ onViewOpened
 				stream contents]!
 
 selectedMethod
-	^self selectedNode ifNotNil: [:node | node object compiledCode]!
+	^self selectionOrNil ifNotNil: [:node | node object compiledCode]!
 
-selectedNode
+selectionOrNil
 	^self treePresenter selectionOrNil!
 
 total
@@ -173,8 +173,8 @@ filterPercentage:!filtering!public! !
 filterSelector:!filtering!public! !
 onSelectionChanged!event handling!public! !
 onViewOpened!event handling!public! !
-selectedMethod!event handling!public! !
-selectedNode!event handling!public! !
+selectedMethod!public!selection! !
+selectionOrNil!public!selection! !
 total!accessing!public! !
 treePresenter!accessing!public! !
 treeValueFor:!accessing!public! !
@@ -189,10 +189,10 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil 327686 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 1180166 ##(Smalltalk.ProportionalLayout) 170 176 34 2 410 ##(Smalltalk.Splitter) 34 12 nil 416 34 2 8 1140850688 1 576 nil 496 nil 5 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 576 nil 1 #left nil nil nil 328198 ##(Smalltalk.Point) 1 1 674 9 9 nil 688 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 674 1 227 674 701 7 576 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 113 0 0 0 94 1 0 0 116 0 0 0] 8 #() 674 193 193 nil 27 1 true 170 192 34 2 410 ##(Smalltalk.TreeView) 34 27 nil 416 34 2 8 1140916775 1025 976 590918 3 ##(Smalltalk.TreeModel) nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 525062 ##(Smalltalk.TreeNode) nil nil nil 170 192 8 #() 496 nil 5 265030 4 ##(Smalltalk.Menu) nil true 34 2 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #expand 8 'Expand' 591 1 nil nil nil 1218 1 1250 #collapse 8 'Collapse' 587 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 976 nil 8 1921400880 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil 170 176 1152 nil #smallIcons 1 170 ##(Smalltalk.PluggableLookupTable) 1152 722 138 144 34 2 786 #createAt:extent: 34 2 674 1 1 674 701 227 976 786 #contextMenu: 34 1 1184 976 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 113 0 0 0] 8 #() 928 nil 27 8 'tree' nil 722 138 144 34 1 786 #createAt:extent: 34 2 674 3839 21 674 701 461 416 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 221 8 0 0 240 0 0 0] 34 3 976 576 410 ##(Smalltalk.CardContainer) 34 16 nil 416 34 2 8 1140850688 131073 1808 nil 496 nil 5 nil nil nil 1808 656710 1 ##(Smalltalk.CardLayout) 138 144 34 2 721414 ##(Smalltalk.Association) 8 'Workspace' 410 ##(Smalltalk.ReferenceView) 34 14 nil 1808 34 2 8 1140850688 131073 1984 nil nil nil 5 nil nil nil 1984 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.MethodWorkspace) #resource_Default_view nil 722 138 144 34 1 786 #createAt:extent: 34 2 674 9 53 674 685 169 1984 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 26 0 0 0 90 1 0 0 110 0 0 0] 1152 928 nil 27 1938 8 'Disassembly' 410 ##(Smalltalk.ReferenceView) 34 14 nil 1808 34 2 8 1140850688 131073 2256 nil nil nil 5 nil nil nil 2256 2050 ##(Smalltalk.SmalltalkWorkspace) #resource_Default_view nil 722 138 144 34 1 786 #createAt:extent: 34 2 674 9 53 674 685 169 2256 866 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 26 0 0 0 90 1 0 0 110 0 0 0] 1152 928 nil 27 1984 nil nil nil 170 192 34 4 1984 8 'workspace' 2256 8 'disassembly' nil 410 ##(Smalltalk.TabViewXP) 34 28 nil 1808 34 2 8 1140916736 1 2544 590662 2 ##(Smalltalk.ListModel) 138 144 34 2 1968 2240 nil 1088 482 #face3d nil 1 nil nil nil 2544 nil 8 1921705120 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1392 nil nil nil nil nil #noIcons nil nil nil nil nil 722 138 144 34 3 786 #createAt:extent: 34 2 674 1 1 674 701 229 2544 786 #basicSelectionsByIndex: 34 1 8 #(1) 2544 786 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 2544 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 114 0 0 0] 8 #() 928 nil 27 722 138 144 34 1 786 #createAt:extent: 34 2 674 1 233 674 701 229 1808 866 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 116 0 0 0 94 1 0 0 230 0 0 0] 34 3 1984 2256 2544 928 nil 27 928 nil 27 )! !
+	^#(#'!!STL' 4 985166 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil 917510 ##(Smalltalk.Color) #default nil 5 nil nil nil 416 1376774 ##(Smalltalk.ProportionalLayout) 170 176 34 2 410 ##(Smalltalk.Splitter) 34 12 nil 416 34 2 8 1140850688 1 576 nil 496 nil 5 461638 4 ##(Smalltalk.Menu) nil true 34 1 1180742 2 ##(Smalltalk.CommandMenuItem) 1 1377606 4 ##(Smalltalk.CommandDescription) #browseIt 8 'Bro&wse It' 1 1 852806 4 ##(Smalltalk.Icon) nil true 2819078 ##(Smalltalk.ImageFromStringResourceInitializer) 8 'ClassBrowserShell.ico' 2490894 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr8.dll' nil 65541 nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 1707078 1 ##(Smalltalk.DraggableViewInteractor) 576 nil 1 #left nil nil nil 918022 ##(Smalltalk.Point) 1 1 946 9 9 nil 960 nil 1310982 ##(Smalltalk.MessageSequence) 34 2 1049350 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 946 1 227 946 701 7 576 1042 #contextMenu: 34 1 656 576 1179910 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 113 0 0 0 94 1 0 0 116 0 0 0] 8 #() 946 193 193 nil 27 1 true 170 192 34 2 410 ##(Smalltalk.TreeView) 34 27 nil 416 34 2 8 1140916775 1025 1264 787526 3 ##(Smalltalk.TreeModel) nil 1769478 ##(Smalltalk.IdentitySearchPolicy) 721670 ##(Smalltalk.TreeNode) nil nil nil 170 192 8 #() 496 nil 5 642 nil true 34 4 690 1 722 #expand 8 'Expand' 591 1 nil nil nil 690 1 722 #collapse 8 'Collapse' 587 1 nil nil nil 1179974 1 ##(Smalltalk.DividerMenuItem) 4097 690 1 722 #browseIt 8 'Bro&wse It' 1 1 770 nil true 802 8 'ClassBrowserShell.ico' 864 65541 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 1264 nil 8 1840320464 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1639750 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil 170 176 1440 nil #smallIcons 1 170 192 1440 994 34 2 1042 #createAt:extent: 34 2 946 1 1 946 701 227 1264 1042 #contextMenu: 34 1 1456 1264 1154 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 113 0 0 0] 8 #() 1216 nil 27 8 'tree' nil 994 34 1 1042 #createAt:extent: 34 2 946 12287 21 946 701 461 416 1154 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 93 25 0 0 240 0 0 0] 34 3 1264 576 410 ##(Smalltalk.CardContainer) 34 16 nil 416 34 2 8 1140850688 131073 2144 nil 496 nil 5 nil nil nil 2144 853318 1 ##(Smalltalk.CardLayout) 138 144 34 2 1049094 ##(Smalltalk.Association) 8 'Workspace' 410 ##(Smalltalk.ReferenceView) 34 14 nil 2144 34 2 8 1140850688 131073 2320 nil nil nil 5 nil nil nil 2320 1376838 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.MethodWorkspace) #resource_Default_view nil 994 34 1 1042 #createAt:extent: 34 2 946 9 53 946 685 169 2320 1154 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 26 0 0 0 90 1 0 0 110 0 0 0] 1440 1216 nil 27 2274 8 'Disassembly' 410 ##(Smalltalk.ReferenceView) 34 14 nil 2144 34 2 8 1140850688 131073 2576 nil nil nil 5 nil nil nil 2576 2386 ##(Smalltalk.SmalltalkWorkspace) #resource_Default_view nil 994 34 1 1042 #createAt:extent: 34 2 946 9 53 946 685 169 2576 1154 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 4 0 0 0 26 0 0 0 90 1 0 0 110 0 0 0] 1440 1216 nil 27 2320 nil nil nil 170 192 34 4 2320 8 'workspace' 2576 8 'disassembly' nil 410 ##(Smalltalk.TabViewXP) 34 28 nil 2144 34 2 8 1140916736 1 2848 787270 2 ##(Smalltalk.ListModel) 138 144 34 2 2304 2560 nil 1376 482 #face3d nil 1 nil nil nil 2848 nil 8 1840356208 ##(Smalltalk.BasicListAbstract) ##(Smalltalk.IconicListAbstract) 1760 nil nil nil nil nil #noIcons nil nil nil nil nil 994 34 3 1042 #createAt:extent: 34 2 946 1 1 946 701 229 2848 1042 #setSingleSelection: 8 #(1) 2848 1042 #tcmSetExtendedStyle:dwExStyle: 8 #(-1 0) 2848 1154 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 94 1 0 0 114 0 0 0] 8 #() 1216 nil 27 994 34 1 1042 #createAt:extent: 34 2 946 1 233 946 701 229 2144 1154 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 116 0 0 0 94 1 0 0 230 0 0 0] 34 3 2320 2576 2848 1216 nil 27 1216 nil 27 )! !
 !ProfilerTreesPresenter class categoriesForMethods!
 resource_Default_view!public!resources-views! !
 !

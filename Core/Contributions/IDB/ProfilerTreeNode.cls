@@ -70,6 +70,9 @@ allSelectors
 						ifFalse: [Set new]].
 	^selectors!
 
+browse
+	self object compiledCode browse!
+
 children
 	"Answers an SortedColletion of the child nodes of the receiver
 	The profiler tree looks better if the children nodes are in ip order so
@@ -151,6 +154,7 @@ addFrame:elapsedTime:!profiling!public! !
 allClasses!operations!public! !
 allParentFrames!operations!public! !
 allSelectors!operations!public! !
+browse!commands!public! !
 children!accessing!public! !
 clearCache!operations!public! !
 firstChild!accessing!public! !

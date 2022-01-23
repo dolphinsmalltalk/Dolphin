@@ -20,6 +20,12 @@ createComponents
 	super createComponents.
 	self add: ListPresenter new name: 'items'!
 
+createSchematicWiring
+	self itemsPresenter
+		when: #actionPerformed
+		send: #onActionPerformed
+		to: self!
+
 filterPercentage: aFloat 
 	"Set the filterBlock to answer true if any of the fileds ar > aFloat%"
 
@@ -43,6 +49,9 @@ items
 	"Answers a collection of the items to go in the list"
 
 	self subclassResponsibility!
+
+itemsPresenter
+	^self presenterNamed: 'items'!
 
 reportIdentityOf: aProfilerListItem to: aStream 
 	"Add the identity of the receiver to aStream"
@@ -71,20 +80,22 @@ reportTo: aStream
 selectionOrNil
 	"Answer the item (an ProfilerListItem) selected in the list or nil if there is no selection"
 
-	^(self presenterNamed: 'items') selectionOrNil!
+	^self itemsPresenter selectionOrNil!
 
 update
 	"Select the items from the model that should be displayed in the list. Only
 	display those that answer true to the current filterBlock"
 
-	(self presenterNamed: 'items') list: (self items select: [:each | self filter: each]).
-	(self presenterNamed: 'items') view layout! !
+	self itemsPresenter list: (self items select: [:each | self filter: each]).
+	self itemsPresenter view layout! !
 !ProfilerListsPresenter categoriesForMethods!
 createComponents!initializing!public! !
+createSchematicWiring!initializing!public! !
 filterPercentage:!filtering!public! !
 filterSelector:!filtering!public! !
 hasSelection!public!testing! !
 items!accessing!public! !
+itemsPresenter!accessing!private! !
 reportIdentityOf:to:!public!reporting! !
 reportItems!public!reporting! !
 reportTitleTo:!public!reporting! !

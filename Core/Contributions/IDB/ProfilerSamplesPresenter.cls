@@ -27,11 +27,14 @@ createSchematicWiring
 	"Create the trigger wiring for the receiver"
 
 	super createSchematicWiring.
-	(self presenterNamed: 'frames') 
+	self framesPresenter
 		when: #selectionChanged
-		send: #onFrameSelectionChanged
-		to: self.
-	(self presenterNamed: 'sampleSelector') 
+			send: #onFrameSelectionChanged
+			to: self;
+		when: #actionPerformed
+			send: #onActionPerformed
+			to: self.
+	(self presenterNamed: 'sampleSelector')
 		when: #valueChanged
 		send: #onSampleIndexChanged
 		to: self!
@@ -88,6 +91,9 @@ filterStopped
 						ifNone: []].
 	self showSample!
 
+framesPresenter
+	^self presenterNamed: 'frames'!
+
 initialize
 	"Initialize the receiver"
 
@@ -109,8 +115,8 @@ onFrameSelectionChanged
 	"The frame selection has changed so update the source view accordingly"
 
 	| selection text selectionRange styler |
-	selection := (self presenterNamed: 'frames') selectionOrNil.
-	selection isNil 
+	selection := self selectionOrNil.
+	selection isNil
 		ifTrue: 
 			[text := String new.
 			selectionRange := 0 to: 0.
@@ -154,7 +160,10 @@ sampleIndicator: anInteger
 		contents!
 
 selectedMethod
-	^(self presenterNamed: 'frames') selectionOrNil ifNotNil: [:f | f compiledCode]!
+	^self selectionOrNil ifNotNil: [:f | f compiledCode]!
+
+selectionOrNil
+	^self framesPresenter selectionOrNil!
 
 setSampleRange
 	"Set the range and initial index of the sampleSelector, the values reflecting the model"
@@ -173,18 +182,18 @@ showSample
 
 	(self presenterNamed: 'sampleIndicator') value: (self sampleIndicator: index).
 	(self presenterNamed: 'sampleSelector') view scrollPosition: index.
-	index = 0 
+	index = 0
 		ifTrue: 
-			[(self presenterNamed: 'frames') list: OrderedCollection new.
+			[self framesPresenter list: OrderedCollection new.
 			self onFrameSelectionChanged]
 		ifFalse: 
 			[| frames |
 			frames := (self model sampleAt: index) frames.
 			frame isNil ifTrue: [frame := frames first].
-			(self presenterNamed: 'frames')
+			self framesPresenter
 				list: frames;
 				selection: frame	"reverse"].
-	(self presenterNamed: 'frames') view layout.
+	self framesPresenter view layout.
 	frame := nil! !
 !ProfilerSamplesPresenter categoriesForMethods!
 createComponents!initializing!public! !
@@ -193,6 +202,7 @@ filterNext!filtering!public! !
 filterPrevious!filtering!public! !
 filterSelector:!filtering!public! !
 filterStopped!filtering!public! !
+framesPresenter!accessing!private! !
 initialize!initializing!public! !
 model:!accessing!public! !
 onFrameSelectionChanged!event handling!public! !
@@ -201,6 +211,7 @@ onViewOpened!event handling!public! !
 parseContext!public! !
 sampleIndicator:!helpers!private! !
 selectedMethod!public! !
+selectionOrNil!public!selection! !
 setSampleRange!helpers!private! !
 showSample!helpers!private! !
 !
@@ -215,10 +226,10 @@ resource_Default_view
 	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
 
 	If you wish to modify this resource evaluate:
-	Tools.ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
+	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil 327686 ##(Smalltalk.Color) #face3d nil 5 nil nil nil 416 852230 ##(Smalltalk.FramingLayout) 170 176 34 4 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 576 nil 482 #default nil 5 nil nil nil 576 1180166 ##(Smalltalk.ProportionalLayout) 170 176 34 2 410 ##(Smalltalk.Splitter) 34 12 nil 576 34 2 8 1140850688 1 720 nil 640 nil 5 nil nil nil 1510470 1 ##(Smalltalk.DraggableViewInteractor) 720 nil 1 #left nil nil nil 328198 ##(Smalltalk.Point) 1 1 818 9 9 nil 832 nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 818 1 287 818 1021 7 720 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 143 0 0 0 254 1 0 0 146 0 0 0] 8 #() 818 193 193 nil 27 1 true 170 192 34 4 410 ##(Smalltalk.ReferenceView) 34 14 nil 576 34 2 8 1140850688 131073 1120 nil 482 #window nil 5 nil nil nil 1120 1180230 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.MethodWorkspace) #resource_Default_view nil 866 138 144 34 1 930 #createAt:extent: 34 2 818 1 293 818 1021 289 1120 1010 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 146 0 0 0 254 1 0 0 34 1 0 0] 8 #() 1072 nil 27 8 'workspace' 410 ##(Smalltalk.ListView) 34 30 nil 576 34 2 8 1140953165 1025 1408 590662 2 ##(Smalltalk.ListModel) 138 144 1376 nil 1310726 ##(Smalltalk.IdentitySearchPolicy) 640 nil 5 nil nil nil 1408 nil 8 1891845904 ##(Smalltalk.BasicListAbstract) 459270 ##(Smalltalk.Message) #profilerIconIndex 8 #() 1049926 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 1 920646 5 ##(Smalltalk.ListViewColumn) 8 'Frame' 1013 #left ##(Smalltalk.BasicListAbstract) 1570 #<= 8 #() 1570 #yourself 8 #() nil 1408 1680 3 nil nil #report 1376 nil 131169 nil 34 4 nil nil 818 1 1 nil 866 138 144 34 2 930 #createAt:extent: 34 2 818 1 1 818 1021 287 1408 930 #text: 34 1 8 'Frame' 1408 1010 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 254 1 0 0 143 0 0 0] 8 #() 1072 nil 27 8 'frames' nil 866 138 144 34 1 930 #createAt:extent: 34 2 818 1 51 818 1021 581 576 1010 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 25 0 0 0 254 1 0 0 59 1 0 0] 34 3 1408 720 1120 1072 nil 27 1181766 2 ##(Smalltalk.FramingConstraints) 1180678 ##(Smalltalk.FramingCalculation) #fixedParentLeft 1 2242 #fixedParentRight 1 2242 #fixedParentTop 51 2242 #fixedParentBottom 1 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 2320 nil 496 nil 5 nil nil nil 2320 nil 170 192 34 4 410 ##(Smalltalk.StaticText) 34 16 nil 2320 34 2 8 1140850945 1 2416 nil nil nil 5 nil nil nil 2416 nil 8 1891791312 852486 ##(Smalltalk.NullConverter) nil nil nil 866 138 144 34 1 930 #createAt:extent: 34 2 818 1 9 818 351 47 2416 1010 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 4 0 0 0 175 0 0 0 27 0 0 0] 8 #() 1072 nil 27 8 'sampleIndicator' 410 ##(Smalltalk.ScrollBar) 34 16 nil 2320 34 2 8 1140916224 1 2704 721990 2 ##(Smalltalk.ValueHolder) nil false 1376774 ##(Smalltalk.PluggableSearchPolicy) 1570 #= 8 #() 1570 #hash 8 #() 1 640 nil 5 nil nil nil 2704 nil 8 1891970592 2498 nil nil true 866 138 144 34 3 930 #createAt:extent: 34 2 818 471 3 818 431 47 2704 930 #range: 34 1 525062 ##(Smalltalk.Interval) 1 201 3 2704 930 #pageSize: 8 #(0) 2704 1010 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 235 0 0 0 1 0 0 0 194 1 0 0 24 0 0 0] 8 #() 1072 nil 27 8 'sampleSelector' nil 866 138 144 34 1 930 #createAt:extent: 34 2 818 1 1 818 1021 49 2320 1010 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 254 1 0 0 24 0 0 0] 34 4 2416 410 ##(Smalltalk.PushButton) 34 20 nil 2320 34 2 8 1140924416 1 3360 nil 640 818 81 47 5 nil nil nil 3360 nil 8 1891826416 1180998 4 ##(Smalltalk.CommandDescription) #filterPrevious 8 '<<?' 1 1 nil nil false nil nil nil 866 138 144 34 3 930 #createAt:extent: 34 2 818 381 3 818 81 47 3360 930 #isEnabled: 8 #(false) 3360 930 #text: 34 1 8 '<<?' 3360 1010 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 190 0 0 0 1 0 0 0 230 0 0 0 24 0 0 0] 8 #() 1072 nil 29 2704 410 ##(Smalltalk.PushButton) 34 20 nil 2320 34 2 8 1140924416 1 3744 nil 640 818 81 47 5 nil nil nil 3744 nil 8 1891826416 3458 #filterNext 8 '?>>' 1 1 nil nil false nil nil nil 866 138 144 34 3 930 #createAt:extent: 34 2 818 911 3 818 81 47 3744 930 #isEnabled: 8 #(false) 3744 930 #text: 34 1 8 '?>>' 3744 1010 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 199 1 0 0 1 0 0 0 239 1 0 0 24 0 0 0] 8 #() 1072 nil 29 1072 nil 27 2210 2256 1 2272 1 2288 1 2288 49 170 192 1376 590342 ##(Smalltalk.Rectangle) 818 1 1 818 1 1 866 138 144 34 1 930 #createAt:extent: 34 2 818 3839 21 818 1021 631 416 1010 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 127 7 0 0 10 0 0 0 125 9 0 0 69 1 0 0] 34 2 2320 576 1072 nil 27 )! !
+	^#(#'!!STL' 4 985166 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ContainerView) 34 15 nil nil 34 2 8 1409286144 131073 416 nil 917510 ##(Smalltalk.Color) #face3d nil 5 nil nil nil 416 1048838 ##(Smalltalk.FramingLayout) 170 176 34 4 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 576 nil 496 nil 5 nil nil nil 576 nil 170 192 34 4 410 ##(Smalltalk.ScrollBar) 34 16 nil 576 34 2 8 1140916224 1 672 918598 2 ##(Smalltalk.ValueHolder) nil false 1835526 ##(Smalltalk.PluggableSearchPolicy) 786950 ##(Smalltalk.Message) #= 8 #() 802 #hash 8 #() 1 482 #default nil 5 nil nil nil 672 nil 8 1840641056 1049094 ##(Smalltalk.NullConverter) nil nil true 1310982 ##(Smalltalk.MessageSequence) 34 3 1049350 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 918022 ##(Smalltalk.Point) 471 3 1042 431 47 672 994 #range: 34 1 852742 ##(Smalltalk.Interval) 1 201 3 672 994 #pageSize: 8 #(0) 672 1179910 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 235 0 0 0 1 0 0 0 194 1 0 0 24 0 0 0] 8 #() 1042 193 193 nil 27 8 'sampleSelector' 410 ##(Smalltalk.StaticText) 34 16 nil 576 34 2 8 1140850945 1 1280 nil nil nil 5 nil nil nil 1280 nil 8 1840630688 914 nil nil nil 946 34 1 994 #createAt:extent: 34 2 1042 1 9 1042 351 47 1280 1186 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 4 0 0 0 175 0 0 0 27 0 0 0] 8 #() 1248 nil 27 8 'sampleIndicator' nil 946 34 1 994 #createAt:extent: 34 2 1042 1 1 1042 1021 49 576 1186 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 254 1 0 0 24 0 0 0] 34 4 1280 410 ##(Smalltalk.PushButton) 34 20 nil 576 34 2 8 1140924416 1 1680 nil 880 1042 81 47 5 nil nil nil 1680 nil 8 1840590976 1377606 4 ##(Smalltalk.CommandDescription) #filterPrevious 8 '<<?' 1 1 nil nil false nil nil nil 946 34 3 994 #createAt:extent: 34 2 1042 381 3 1042 81 47 1680 994 #isEnabled: 8 #(false) 1680 994 #text: 34 1 8 '<<?' 1680 1186 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 190 0 0 0 1 0 0 0 230 0 0 0 24 0 0 0] 8 #() 1248 nil 29 672 410 ##(Smalltalk.PushButton) 34 20 nil 576 34 2 8 1140924416 1 2048 nil 880 1042 81 47 5 nil nil nil 2048 nil 8 1840590976 1778 #filterNext 8 '?>>' 1 1 nil nil false nil nil nil 946 34 3 994 #createAt:extent: 34 2 1042 911 3 1042 81 47 2048 994 #isEnabled: 8 #(false) 2048 994 #text: 34 1 8 '?>>' 2048 1186 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 199 1 0 0 1 0 0 0 239 1 0 0 24 0 0 0] 8 #() 1248 nil 29 1248 nil 27 1378374 2 ##(Smalltalk.FramingConstraints) 1377286 ##(Smalltalk.FramingCalculation) #fixedParentLeft 1 2434 #fixedParentRight 1 2434 #fixedParentTop 1 2480 49 410 ##(Smalltalk.ContainerView) 34 15 nil 416 34 2 8 1140850688 131073 2496 nil 880 nil 5 nil nil nil 2496 1376774 ##(Smalltalk.ProportionalLayout) 170 176 34 2 410 ##(Smalltalk.Splitter) 34 12 nil 2496 34 2 8 1140850688 1 2624 nil 880 nil 5 nil nil nil 1707078 1 ##(Smalltalk.DraggableViewInteractor) 2624 nil 1 #left nil nil nil 1042 1 1 1042 9 9 nil 2720 nil 946 34 1 994 #createAt:extent: 34 2 1042 1 287 1042 1021 7 2624 1186 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 143 0 0 0 254 1 0 0 146 0 0 0] 8 #() 1248 nil 27 1 true 170 192 34 4 410 ##(Smalltalk.ListView) 34 45 nil 2496 34 2 8 1140953165 1025 2928 787270 2 ##(Smalltalk.ListModel) 138 144 8 #() nil 1769478 ##(Smalltalk.IdentitySearchPolicy) 880 nil 5 461638 4 ##(Smalltalk.Menu) nil true 34 1 1180742 2 ##(Smalltalk.CommandMenuItem) 1 1778 #browseIt 8 'Bro&wse It' 1 1 852806 4 ##(Smalltalk.Icon) nil true 2819078 ##(Smalltalk.ImageFromStringResourceInitializer) 8 'ClassBrowserShell.ico' 2490894 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr8.dll' nil 65541 nil nil nil 8 '' nil 134217729 nil nil nil nil nil nil nil 2928 nil 8 1840542896 ##(Smalltalk.BasicListAbstract) 802 #profilerIconIndex 8 #() 1639750 1 ##(Smalltalk.IconImageManager) nil nil nil nil nil nil 138 144 34 1 1117254 5 ##(Smalltalk.ListViewColumn) 8 'Frame' 1013 #left ##(Smalltalk.BasicListAbstract) 802 #<= 8 #() 802 #yourself 8 #() nil 2928 3456 3 nil nil #report 8 #() nil 131169 nil 1 nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil 946 34 3 994 #createAt:extent: 34 2 1042 1 1 1042 1021 287 2928 994 #contextMenu: 34 1 3104 2928 994 #text: 34 1 8 'Frame' 2928 1186 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 254 1 0 0 143 0 0 0] 8 #() 1248 nil 35 8 'frames' 410 ##(Smalltalk.ReferenceView) 34 14 nil 2496 34 2 8 1140850688 131073 3824 nil 482 #window nil 5 nil nil nil 3824 1376838 1 ##(Smalltalk.ResourceIdentifier) ##(Smalltalk.MethodWorkspace) #resource_Default_view nil 946 34 1 994 #createAt:extent: 34 2 1042 1 293 1042 1021 289 3824 1186 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 146 0 0 0 254 1 0 0 34 1 0 0] 3040 1248 nil 27 8 'workspace' nil 946 34 1 994 #createAt:extent: 34 2 1042 1 51 1042 1021 581 2496 1186 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 25 0 0 0 254 1 0 0 59 1 0 0] 34 3 2928 2624 3824 1248 nil 27 2402 2448 1 2464 1 2480 51 2434 #fixedParentBottom 1 170 192 3040 1180166 ##(Smalltalk.Rectangle) 1042 1 1 1042 1 1 946 34 1 994 #createAt:extent: 34 2 1042 12287 21 1042 1021 631 416 1186 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 253 25 0 0 69 1 0 0] 34 2 576 2496 1248 nil 27 )! !
 !ProfilerSamplesPresenter class categoriesForMethods!
 defaultModel!models!public! !
 resource_Default_view!public!resources-views! !
