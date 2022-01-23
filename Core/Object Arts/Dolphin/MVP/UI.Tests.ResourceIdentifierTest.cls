@@ -58,18 +58,18 @@ testDeserializeAll
 	ResourceIdentifier allResourceIdentifiers do: [:each | each hiddenObjects]!
 
 testReferenceToNonExistentView
-	| childRid paretView anonPresenterClass anonMetaclass |
+	| childRid parentView anonPresenterClass anonMetaclass |
 	anonPresenterClass := Presenter newAnonymousSubclass.
 	anonMetaclass := anonPresenterClass class.
 	childRid := self
 				createResourceNamed: 'Test view issue990'
 				for: ContainerView new create
 				on: anonPresenterClass.
-	paretView := ShellView new create.
-	paretView addSubView: (ReferenceView resourceIdentifier: childRid).
+	parentView := ShellView new create.
+	parentView addSubView: (ReferenceView resourceIdentifier: childRid).
 	self
 		createResourceNamed: 'Parent Test view issue990'
-		for: paretView
+		for: parentView
 		on: anonPresenterClass.
 	anonMetaclass removeSelector: #resource_Test_view_issue990 ifAbsent: nil.
 	self assert: (anonMetaclass respondsTo: #resource_Test_view_issue990) not.

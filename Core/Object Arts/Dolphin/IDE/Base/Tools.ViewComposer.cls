@@ -2379,9 +2379,25 @@ viewRevert
 viewSave
 	"Save the view as a resource."
 
+	| rid |
 	self hasResource ifFalse: [^self viewSaveAs].
-	self resourceIdentifier assign: self composingView literalStoreArray.
-	self isModified: false!
+	rid := self resourceIdentifier.
+	
+	[rid assign: self composingView literalStoreArray.
+	self isModified: false] on: Compiler errorClass
+			do: 
+				[:ex |
+				| syntaxError |
+				syntaxError := ex description.
+				(MessageBox new
+					caption: 'Unable to save ' , rid printString;
+					iconStyle: #error;
+					customButtons: #(#(#yes '&Debug') #(#no 'Cancel'));
+					defaultButton: 2;
+					headline: 'Syntax error in literal resource';
+					text: syntaxError;
+					isCancellable: true;
+					confirm) ifTrue: [Processor activeProcess debug] ifFalse: [syntaxError return]]!
 
 viewSaveAs
 	"Save the composed view as a resource."

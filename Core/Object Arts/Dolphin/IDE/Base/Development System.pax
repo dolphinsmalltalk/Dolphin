@@ -2466,9 +2466,12 @@ attachDebugger: titleString topFrame: aStackFrame resumable: aBoolean
 		resumable: aBoolean!
 
 debug
-    	"Private - Bring up a debugger on the receiver."
-    
-    	self debug: self printString topFrame: self topFrame resumable: self isTerminated not!
+	"Private - Bring up a debugger on the receiver."
+
+	self
+		debug: self printString
+		topFrame: self topFrame sender
+		resumable: self isTerminated not!
 
 debug: titleString topFrame: aStackFrame resumable: aBoolean
 	"Private - Bring up a debugger on the receiver with the specified
@@ -7534,7 +7537,7 @@ reassign
 	view destroy! !
 !UI.ResourceIdentifier categoriesForMethods!
 assign:!accessing!public! !
-assignLiteralResourceData:!accessing!private! !
+assignLiteralResourceData:!development!private! !
 browse!public! !
 edit!operations!public! !
 editViewUsing:!operations!public! !

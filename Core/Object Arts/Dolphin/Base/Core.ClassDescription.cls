@@ -921,10 +921,9 @@ resources
 	^resources!
 
 resourceSelectorsDo: aMonadicValuable
-	| prefix |
-	prefix := UI.ResourceIdentifier.SelectorPrefix.
-	self metaclass
-		selectorsDo: [:each | (each beginsWith: prefix) ifTrue: [aMonadicValuable value: each]]!
+	self metaclass selectorsDo: 
+			[:each |
+			(each beginsWith: UI.ResourceIdentifier.SelectorPrefix) ifTrue: [aMonadicValuable value: each]]!
 
 selectorsInCategory: category
 	"Answer a <Collection> of selector <Symbol>s, of the receiver's methods which are included in the <methodCategory>, category."
