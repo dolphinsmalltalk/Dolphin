@@ -789,9 +789,8 @@ browseMethodProtocols: protocolNames
 	"Browse all the methods which participate in the implementation of the named method
 	protocols."
 
-	| protocols protClass env |
-	protClass := Object methodProtocolClass.
-	protocols := protocolNames collect: [:p | protClass name: p asSymbol].
+	| protocols env |
+	protocols := protocolNames collect: [:each | MethodProtocol name: each asSymbol].
 	env := MethodProtocolEnvironment onEnvironment: self systemEnvironment protocols: protocols.
 	self browseMethodsIn: env!
 

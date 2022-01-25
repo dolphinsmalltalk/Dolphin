@@ -45,10 +45,10 @@ addProtocol
 	"Prompts for a new protocol to be added to the system"
 
 	| name |
-	(name := Prompter prompt: 'Protocol name:') notNil 
+	(name := Prompter prompt: 'Protocol name:') notNil
 		ifTrue: 
 			[| newProtocol |
-			newProtocol := Object methodProtocolClass name: name.
+			newProtocol := MethodProtocol name: name.
 			self
 				refreshProtocols;
 				protocol: newProtocol]!
@@ -247,7 +247,7 @@ protocol: aMethodProtocol
 purgeUnused
 	"Purge all unused protocols from the system"
 
-	Object methodProtocolClass purgeUnused.
+	MethodProtocol purgeUnused.
 	self refreshProtocols!
 
 queryCommand: query 
@@ -307,7 +307,7 @@ queryCommand: query
 refreshProtocols
 	"Private - Fill the protocols list with the available MethodProtocols."
 
-	protocolsPresenter list: (Object methodProtocolClass allMethodProtocols).
+	protocolsPresenter list: MethodProtocol allMethodProtocols.
 	self onProtocolSelected!
 
 removeClassFromProtocol
@@ -318,7 +318,7 @@ removeClassFromProtocol
 removeProtocol
 	"Removes the currently selected protocol from the system."
 
-	Object methodProtocolClass removeProtocol: self protocol
+	MethodProtocol removeProtocol: self protocol
 !
 
 removeSelectors

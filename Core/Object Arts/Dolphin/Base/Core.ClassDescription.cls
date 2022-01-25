@@ -202,12 +202,10 @@ bindingsDo: aMonadicValuable
 	self classPool associationsDo: aMonadicValuable!
 
 canUnderstandProtocol: protName
-	"Answer whether the receiver can understand the named <MethodProtocol>,
-	even if it does not necessarily claim to implement it. See also #conformsToProtocol:"
+	"Answer whether the receiver can understand the named <MethodProtocol>, even if it does not necessarily claim to implement it. See also #conformsToProtocol:"
 
-	| protocol |
-	protocol := self methodProtocolClass name: protName asSymbol.
-	^protocol selectors allSatisfy: [:s | self canUnderstand: s]!
+	^(#{Kernel.MethodProtocol} value name: protName asSymbol) selectors
+		allSatisfy: [:each | self canUnderstand: each]!
 
 categoriesFor: selector
 	"Answer a chunk reader which will include the selector in
@@ -675,20 +673,14 @@ methodChanged: aCompiledMethod
 !
 
 methodProtocol: protocolName attributes: attributes selectors: selectors
-	"Instantiate and install the MethodProtocol named by the <Symbol>, protocolName,
-	with the attributes named in the <Array> of <Symbol>s, attributes, with the selectors 
-	in the <Array> of <Symbol>s selectors."
+	"Instantiate and install the MethodProtocol named by the <Symbol>, protocolName, with the attributes named in the <Array> of <Symbol>s, attributes, with the selectors in the <Array> of <Symbol>s selectors."
 
-	
-	(self methodProtocolClass name: protocolName)
+	"Note that this is primarily used as part of the chunk source format, e.g. in .cls files. It may not be sent in the image."
+
+	(#{Kernel.MethodProtocol} value name: protocolName)
 		attributes: attributes;
 		addAllSelectors: selectors;
 		addClass: self!
-
-methodProtocolClass
-	"Private - Answer the class of object used to represent method protocols for the receiver."
-
-	^#{MethodProtocol} value!
 
 methods
 	"For compatibility with Visual Smalltalk/Smalltalk Express
@@ -755,18 +747,17 @@ protocolNames
 	<MethodProtocol>s  implemented directly by the receiver's instances (i.e. 
 	excluding inherited protocols)."
 
-	^protocols ifNil: [IdentitySet new]!
+	^protocols ifNil: [##(IdentitySet new)]!
 
 protocols
-	"Private - Answer the <collection> of <MethodProtocol>s  implemented 
-	directly by the receiver's instances (i.e. excluding inherited protocols)."
+	"Private - Answer the <collection> of <MethodProtocol>s  implemented directly by the receiver's instances (i.e. excluding inherited protocols)."
 
-	^protocols isNil
-		ifTrue: [IdentitySet new]
-		ifFalse: 
-			[| mpc |
-			mpc := self methodProtocolClass.
-			protocols collect: [:p | mpc name: p]]!
+	^protocols
+		ifNil: [##(IdentitySet new)]
+		ifNotNil: 
+			[| protocolClass |
+			protocolClass := #{Kernel.MethodProtocol} value.
+			protocols collect: [:each | protocolClass name: each]]!
 
 protocols: anIdentitySetOrNil
 	"Private - Set the protocols collection to anIdentitySetOrNil"
@@ -884,19 +875,19 @@ removeSelectors: aCollection
 	methods do: [:each | self removeMethodFromNonVirtualCategories: each].
 	^methods!
 
-removeUnsupportedProtocols: superUnsupported selector: removedSelector
-	"Private - Remove any protocols that are no longer supported after the removal of the <selector>, removedSelector, from the receiver. Any removed protocols still  supported by subclasses are migrated down."
+removeUnsupportedProtocols: aCollectionOfMethodProtocols selector: aSymbol
+	"Private - Remove any protocols that are no longer supported after the removal of the <selector>, aSymbol, from the receiver. Any removed protocols still  supported by subclasses are migrated down."
 
 	| unsupported |
-	unsupported := self protocols select: [:p | p includesSelector: removedSelector].
-	unsupported do: [:p | p removeClass: self].
-	unsupported addAll: superUnsupported.
+	unsupported := self protocols select: [:each | each includesSelector: aSymbol].
+	unsupported do: [:each | each removeClass: self].
+	unsupported addAll: aCollectionOfMethodProtocols.
 	self subclassesDo: 
-			[:s |
+			[:eachSubclass |
 			"If the subclass has its own implementation for the selector, then it can still support the protocol, otherwise it might need to remove further protocols"
-			(s canUnderstand: removedSelector)
-				ifTrue: [unsupported do: [:p | p addClass: s]]
-				ifFalse: [s removeUnsupportedProtocols: unsupported selector: removedSelector]]!
+			(eachSubclass canUnderstand: aSymbol)
+				ifTrue: [unsupported do: [:eachProtocol | eachProtocol addClass: eachSubclass]]
+				ifFalse: [eachSubclass removeUnsupportedProtocols: unsupported selector: aSymbol]]!
 
 resourceIdentifiers
 	| identifiers |
@@ -1147,7 +1138,6 @@ metaclass!accessing!public! !
 methodCategories!categories-accessing!public! !
 methodChanged:!helpers!private! !
 methodProtocol:attributes:selectors:!development!public!source filing-methods! !
-methodProtocolClass!constants!private! !
 methods!public!source filing-methods! !
 methodsCatalogue!categories-accessing!private! !
 methodsCatalogue:!categories-accessing!private! !

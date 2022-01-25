@@ -145,17 +145,16 @@ addMethodCategory
 addMethodProtocol
 	"Private - Add a new <MethodProtocol> to the selected class in the receiver."
 
-	| actualClass newProtocol protocols protClass |
+	| actualClass newProtocol protocols |
 	actualClass := self actualClass.
-	protClass := actualClass methodProtocolClass.
-	protocols := protClass allMethodProtocols asSortedCollection: [:a :b | a name < b name].
+	protocols := MethodProtocol allMethodProtocols asSortedCollection: [:a :b | a name < b name].
 	newProtocol := (ChoicePrompter
 				create: 'Extensible choice prompter'
 				on: nil asValue
 				choices: protocols
 				caption: 'Add Protocol to ' , actualClass name , '…')
 				getTextBlock: [:protocol | protocol name];
-				newBlock: [:aString | protClass name: aString];
+				newBlock: [:aString | MethodProtocol name: aString];
 				showModal.
 	newProtocol notNil ifTrue: [self model addClass: actualClass toProtocol: newProtocol]!
 
@@ -2442,7 +2441,7 @@ validateProtocol: targetProtocol renameTo: newName
 	classes."
 
 	| otherClasses msg |
-	(Object methodProtocolClass exists: newName)
+	(MethodProtocol exists: newName)
 		ifTrue: 
 			[MessageBox new
 				headline: 'Unable to rename <1d> to <2p>' << {targetProtocol. newName};

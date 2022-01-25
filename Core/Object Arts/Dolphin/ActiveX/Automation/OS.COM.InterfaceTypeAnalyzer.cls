@@ -92,8 +92,8 @@ methods
 
 protocol
 	"Private - Answer the value of the receiver's 'protocol' instance variable."
-	
-	protocol isNil ifTrue: [protocol := Object methodProtocolClass name: self fullyQualifiedName].
+
+	protocol isNil ifTrue: [protocol := MethodProtocol name: self fullyQualifiedName].
 	^protocol!
 
 suggestedBinding
