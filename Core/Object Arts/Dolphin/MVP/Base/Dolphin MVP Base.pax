@@ -1582,7 +1582,7 @@ UI.WindowsEvent subclass: #'UI.PointEvent'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.WindowsEvent subclass: #'UI.PositionEvent'
-	instanceVariableNames: 'lpwp'
+	instanceVariableNames: 'lpwp flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

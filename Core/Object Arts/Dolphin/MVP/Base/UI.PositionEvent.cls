@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.WindowsEvent subclass: #'UI.PositionEvent'
-	instanceVariableNames: 'lpwp'
+	instanceVariableNames: 'lpwp flags'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -30,7 +30,12 @@ flags
 
 	"Implementation Note: For most PositionEvents we only need to access the flags, so optimise for this case, avoiding creation of a WINDOWPOS structure."
 
-	^lParam dwordAtOffset: WINDOWPOS._OffsetOf_flags!
+	^flags ifNil: [flags := lParam asExternalAddress dwordAtOffset: WINDOWPOS._OffsetOf_flags]!
+
+flags: anInteger
+	"Private - For testing purposes"
+
+	flags := anInteger!
 
 height
 	"Answer the height of the window after the size event.
@@ -89,7 +94,7 @@ isZOrderChanged
 lpwp
 	"Private - Answer the value of the receiver's 'lpwp' instance variable."
 
-	^lpwp ifNil: [lpwp := WINDOWPOS fromAddress: lParam]!
+	^lpwp ifNil: [lpwp := WINDOWPOS fromAddress: lParam asExternalAddress]!
 
 position
 	"Answer the position of the window origin."
@@ -132,6 +137,7 @@ y
 extent!accessing!public! !
 extent:!accessing!public! !
 flags!accessing!public! !
+flags:!accessing!private! !
 height!accessing!public! !
 height:!accessing!public! !
 isActivate!public!testing! !
@@ -150,19 +156,5 @@ width!accessing!public! !
 width:!accessing!public! !
 x!accessing!public! !
 y!accessing!public! !
-!
-
-!UI.PositionEvent class methodsFor!
-
-window: aView message: msgInteger wParam: wInteger lParam: lInteger
-	"Answer an instance of the receiver containing the message details specified by the parameters."
-
-	^super
-		window: aView
-		message: msgInteger
-		wParam: wInteger
-		lParam: lInteger asExternalAddress! !
-!UI.PositionEvent class categoriesForMethods!
-window:message:wParam:lParam:!instance creation!public! !
 !
 

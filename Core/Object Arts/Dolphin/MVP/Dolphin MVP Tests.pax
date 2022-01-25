@@ -55,6 +55,7 @@ package setClassNames: #(
 	#{UI.Tests.MultilineTextEditTest}
 	#{UI.Tests.MultiSelectListBoxTest}
 	#{UI.Tests.MultiSelectListViewTest}
+	#{UI.Tests.PositionEventTest}
 	#{UI.Tests.PresenterTest}
 	#{UI.Tests.ProportionalLayoutTest}
 	#{UI.Tests.PushButtonTest}
@@ -251,6 +252,12 @@ Core.Tests.DolphinTest subclass: #'Graphics.Tests.Point3DTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Core.Tests.DolphinTest subclass: #'UI.Tests.PositionEventTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #(#{OS.Win32Constants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Tests.DolphinTest subclass: #'UI.Tests.PresenterTest'

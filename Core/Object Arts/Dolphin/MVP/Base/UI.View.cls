@@ -4493,7 +4493,7 @@ wmWindowPosChanged: message wParam: wParam lParam: lParam
 						window: self
 						message: message
 						wParam: wParam
-						lParam: lParam)].
+						lParam: lParam asExternalAddress)].
 	"Ignore any return value from the high-level event, and answer 0 to 
 	prevent the DefWindowProc being invoked, which in turn prevents
 	WM_SIZE and WM_MOVE which we don't use anymore"
@@ -4508,7 +4508,7 @@ wmWindowPosChanging: message wParam: wParam lParam: lParam
 						window: self
 						message: message
 						wParam: wParam
-						lParam: lParam)]!
+						lParam: lParam asExternalAddress)]!
 
 wmXButtonDblClk: message wParam: wParam lParam: lParam
 	"Private - Default handler for a WM_XBUTTONDBLCLICK event."

@@ -145,6 +145,11 @@ anyMask: mask
 	<primitive: 145>
 	^super anyMask: mask!
 
+asExternalAddress
+	"Answer the receiver as an ExternalAddress."
+
+	^self becomeA: External.Address!
+
 asFloat
 	"Answer the floating point representation of the receiver. The primitive should not fail."
 
@@ -544,6 +549,7 @@ _deepCopy:!copying!private! !
 >=!comparing!public! !
 allMask:!bit manipulation!public! !
 anyMask:!bit manipulation!public! !
+asExternalAddress!converting!public! !
 asFloat!converting!public! !
 asStackPointer!converting!private! !
 basicAt:!accessing!private! !
