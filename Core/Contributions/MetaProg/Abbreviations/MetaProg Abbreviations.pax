@@ -62,6 +62,7 @@ package!
 expandAbbreviation
 	<acceleratorKey: 'Shift+Space'>
 	| startAssoc replace end start abbrev |
+	self isReadOnly ifTrue: [^self].
 	"#2101"
 	self cancelAutoCompletion.
 	startAssoc := self findSeparatorLeftAndKey: self selectionRange stop.
