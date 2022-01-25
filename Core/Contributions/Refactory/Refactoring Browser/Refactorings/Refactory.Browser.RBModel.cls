@@ -35,15 +35,16 @@ allClassesDo: aBlock
 	seen addAll: removedClasses.
 	environment classesDo: 
 			[:each |
-			| fullName |
-			(each isMeta or: [seen includes: (fullName := each fullName)])
+			| class fullName |
+			(seen includes: (fullName := (class := each instanceClass) fullName))
 				ifFalse: 
-					[| class |
-					class := (modelClasses lookup: fullName)
-								ifNil: [modelClasses at: fullName put: (each rbClass model: self existing: each)].
+					[| rbClass |
+					seen add: fullName.
+					rbClass := (modelClasses lookup: fullName)
+								ifNil: [modelClasses at: fullName put: (class rbClass model: self existing: class)].
 					aBlock
-						value: class;
-						value: class metaclass]]!
+						value: rbClass;
+						value: rbClass metaclass]]!
 
 allImplementorsOf: aSelector
 	^(implementorsCache ifNil: [implementorsCache := IdentityDictionary new]) at: aSelector

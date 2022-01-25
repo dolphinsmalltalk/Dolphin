@@ -15,12 +15,23 @@ testAllClassesDo
 	| model classes |
 	classes := 0.
 	model := RBModel new.
-	model allClassesDo: 
-			[:each |
-			each name = 'Core.Object' ifTrue: [each allSubclasses].
-			classes := classes + 1].
+	model allClassesDo: [:each | classes := classes + 1].
+	self assert: classes equals: Smalltalk allClasses size * 2.
 	BrowserEnvironment new classesDo: [:each | classes := classes - 1].
 	self assert: classes equals: 0!
+
+testAllClassesDoOnSelectorEnvironment
+	| env model classes |
+	classes := Set new.
+	env := BrowserEnvironment new
+				forMethods: {Smalltalk class >> #allClassesDo:. self class >> self selector}.
+	model := RBModel onEnvironment: env.
+	model allClassesDo: [:each | classes add: each].
+	self assert: classes
+		equals: {model classFor: Smalltalk.
+				model classFor: Smalltalk class.
+				model classFor: self class.
+				model classFor: self class class} asSet!
 
 testCommentChange
 	| st cl |
@@ -215,6 +226,7 @@ testRoots
 				asSortedCollection: [:a :b | a name < b name]) asArray! !
 !Refactory.Browser.Tests.RBModelTest categoriesForMethods!
 testAllClassesDo!class tests!public! !
+testAllClassesDoOnSelectorEnvironment!class tests!public! !
 testCommentChange!class tests!public! !
 testDefineClassAfterDeletedChange!class tests!public! !
 testDefineClassChange!class tests!public! !
