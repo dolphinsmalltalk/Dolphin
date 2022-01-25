@@ -339,17 +339,28 @@ insertIntoMenu: parentMenu at: position info: aMENUITEMINFO
 	"Append the receiver to the <Menu>, parentMenu, which can be nil if this is to be a 
 	top-level menu."
 
-	| hParent |
+	| hParent mask |
 	hParent := parentMenu asParameter.
 	self realize.
 	hParent isNull ifTrue: [^self].
-	aMENUITEMINFO subMenu: self text: self text.
+	mask := ##(MIIM_SUBMENU | MIIM_STRING | MIIM_ID).
+	self image
+		ifNotNil: 
+			[:img |
+			aMENUITEMINFO bitmap: img.
+			mask := mask bitOr: MIIM_BITMAP].
+	aMENUITEMINFO
+		basicText: self text;
+		wID: self id;
+		hSubMenu: self asParameter;
+		fMask: mask.
 	(User32
 		insertMenuItem: hParent
 		uItem: position
 		fByPosition: true
 		lpmii: aMENUITEMINFO)
-			ifFalse: [Win32Error signal: ('Unable to realize <1p> in >2p' expandMacrosWith: self with: parentMenu)]!
+			ifFalse: 
+				[Win32Error signal: ('Unable to realize <1p> in <2p>' expandMacrosWith: self with: parentMenu)]!
 
 insertItem: item after: predecessor
 	"Append the <MenuItem>, item,  to this menu after the <Command>, predecessor.
