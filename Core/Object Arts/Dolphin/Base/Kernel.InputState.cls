@@ -293,7 +293,7 @@ lookupWindow: aHandle
 			wasEnabled := Processor enableAsyncEvents: false.
 			window := windows lookup: hWnd.
 			Processor enableAsyncEvents: wasEnabled.
-			^window]!
+			window]!
 
 loopWhile: aBlock
 	"Pump messages until the <niladicValuable> argument evaluates to false."

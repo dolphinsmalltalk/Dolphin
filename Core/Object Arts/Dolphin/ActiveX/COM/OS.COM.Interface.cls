@@ -666,7 +666,8 @@ defineTemplate
 	"Initialize the receiver class' structure template and VTable."
 
 	super defineTemplate.
-	self defineVTable!
+	self defineVTable.
+	^template!
 
 defineVTable
 	"Initialize the receiver class' structure template and callback table.

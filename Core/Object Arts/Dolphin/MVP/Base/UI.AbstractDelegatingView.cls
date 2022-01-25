@@ -171,12 +171,12 @@ validateUserInterface
 
 	self referee validateUserInterface!
 
-viewNamed: aString ifNone: aBlock
-	"Answer the sub-view within the receiver's hierarchy with aString as its
-	name. Evaluates aBlock if no matching named view exists. Forward this
-	on to our referee."
+viewNamed: aString ifNone: aNiladicValuable
+	"Answer the sub-view within the receiver's hierarchy with aString as its name. Evaluates the <niladicValuable>, aNiladicValuable, if no matching named view exists."
 
-	^self referee viewNamed: aString ifNone: aBlock! !
+	"Forward this on to our referee."
+
+	^self referee viewNamed: aString ifNone: aNiladicValuable! !
 !UI.AbstractDelegatingView categoriesForMethods!
 applyFont!font!private!updating! !
 backcolor:!accessing!public! !

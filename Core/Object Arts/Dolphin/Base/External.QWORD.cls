@@ -95,18 +95,8 @@ defineFields
 			offset: 0;
 		defineField: #highPart
 			type: DWORDField new
-			offset: 4!
-
-defineTemplate
-	"Initialize the receiver class' structure template.
-
-		QWORD compileDefinition.
-	"
-
-	super defineTemplate.
-	self assert: [self alignment = 8]! !
+			offset: 4! !
 !External.QWORD class categoriesForMethods!
 defineFields!public!template definition! !
-defineTemplate!public!template definition! !
 !
 

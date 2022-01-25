@@ -576,7 +576,7 @@ definesNewFields
 	^self class includesSelector: #defineFields!
 
 defineTemplate
-	"Initialize the receiver class' structure template.
+	"Initialize and answer the receiver class' structure template.
 	Implementation Note: We try and share a superclass template if we don't directly implement #defineFields in a particular class. This is a space saving measure, and is necessary because 'template' is a class instance variable."
 
 	| oldByteSize |
@@ -592,7 +592,8 @@ defineTemplate
 			["Receiver doesn't define any new fields, so inherit the lot"
 			self inheritTemplate].
 	self removeRedundantOffsetConstants.
-	template notNil ifTrue: [self changedByteSizeFrom: oldByteSize]!
+	template notNil ifTrue: [self changedByteSizeFrom: oldByteSize].
+	^template!
 
 descriptorClass
 	"Private - Return the class of external function descriptor associated with
@@ -615,7 +616,7 @@ elementSize
 	^self byteSize!
 
 ensureDefined
-	template isNil ifTrue: [self defineTemplate]	"ensure the structure accessors are correctly defined"!
+	^template ifNil: [self defineTemplate]!
 
 fieldNamesFromTemplate
 	| answer pairs |
@@ -627,13 +628,13 @@ fieldNamesFromTemplate
 			xoff := x value offset.
 			yoff := y value offset.
 			xoff == yoff ifTrue: [x key <= y key] ifFalse: [xoff < yoff]])
-		do: [:assoc | (assoc key lastCodeUnit == $: or: [assoc value isFiller]) ifFalse: [answer add: assoc key]].
+		do: [:assoc | (assoc key lastCodeUnit == $: or: [assoc value isFiller]) ifFalse: [answer addLast: assoc key]].
 	^answer!
 
 fieldOffsetConstantPrefix
 	^'_OffsetOf_'!
 
-fromAddress: anAddress 
+fromAddress: anAddress
 	"Answer a new instance that points to the ExternalAddress 
 	respresented by anAddress (which responds to the protocol
 	#isNull and #asExternalAddress).
@@ -642,7 +643,7 @@ fromAddress: anAddress
 	an ExternalStructure from a PointerField, since such pointers
 	are commonly Null."
 
-	^anAddress isNull 
+	^anAddress isNull
 		ifFalse: 
 			[self ensureDefined.
 			self basicNew initializeAtAddress: anAddress]!
@@ -919,8 +920,7 @@ template
 	"Private - Answer the receiver's structure template (defines the types and 
 	offsets of the fields)"
 
-	self ensureDefined.
-	^template!
+	^self ensureDefined!
 
 uninitializeBeforeRemove
 	"Perform any pre-removal uninitialisation for the class.

@@ -21,7 +21,7 @@ Instance Variables (inherited)
 
 configureReferee
 	referee
-		rectangle: (Point.Zero extent: self extent);
+		rectangle: (Rectangle extent: self extent);
 		isManaged: false;
 		isTabStop: self isTabStop;
 		isGroupStop: self isGroupStop;

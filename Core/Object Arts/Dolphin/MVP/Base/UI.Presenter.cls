@@ -124,9 +124,8 @@ attachSubPresenterViews: aView
 
 	self subPresenters do: 
 			[:eachSubPresenter |
-			| name matchingSubView |
-			name := self nameOf: eachSubPresenter.
-			matchingSubView := aView viewNamed: name ifNone: nil.
+			| matchingSubView |
+			matchingSubView := aView viewNamed: (self nameOf: eachSubPresenter) ifNone: nil.
 			matchingSubView notNil
 				ifTrue: [eachSubPresenter view: matchingSubView presenterConnectionPoint]
 				ifFalse: 
@@ -369,7 +368,7 @@ nameOf: aPresenter
 	"Answer the name of aPresenter within the receiver or nil
 	if it has not been assigned a name"
 
-	^names isNil ifFalse: [names lookup: aPresenter]!
+	^names ifNotNil: [names lookup: aPresenter]!
 
 on: aSubjectModel
 	"Private - Initializes the model connection for the receiver to aSubjectModel.
@@ -655,10 +654,9 @@ presenterNamed: aString ifNone: exceptionHandler
 	name. Evaluates the <niladicValuable>, exceptionHandler, if no matching 
 	named view exists."
 
-	names isNil ifFalse: [names keysAndValuesDo: [ :k :v | aString = v ifTrue: [^k]]].
-	^exceptionHandler value.
-
-!
+	^names
+		ifNil: [exceptionHandler value]
+		ifNotNil: [names keyAtEqualValue: aString ifAbsent: exceptionHandler]!
 
 preTranslateKeyboardInput: aMSG
 	"Answer whether the receiver would like to consume the argument aMSG, which is a keyboard message."

@@ -3548,11 +3548,25 @@ subViews
 subViewsDo: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the receiver's sub-views, in z-order sequence"
 
-	| child |
+	| child inputState |
+	inputState := SessionManager.Current inputState.
 	child := User32 getWindow: handle uCmd: GW_HWNDCHILD.
 	[child isNil] whileFalse: 
-			[(View withHandle: child) ifNotNil: [:childView | aMonadicValuable value: childView].
+			[(inputState lookupWindow: child) ifNotNil: [:childView | aMonadicValuable value: childView].
 			child := User32 getWindow: child uCmd: GW_HWNDNEXT]!
+
+subViewsFind: aMonadicValuable
+	"Private - Evaluate the <monadicValuable> argument for each of the receiver's sub-views, in z-order sequence.
+	Answer the first non-nil value returned by the block, or nil if there are no non-nil results."
+
+	| child inputState |
+	inputState := SessionManager.Current inputState.
+	child := User32 getWindow: handle uCmd: GW_HWNDCHILD.
+	[child isNil] whileFalse: 
+			[(inputState lookupWindow: child)
+				ifNotNil: [:childView | (aMonadicValuable value: childView) ifNotNil: [:result | ^result]].
+			child := User32 getWindow: child uCmd: GW_HWNDNEXT].
+	^nil!
 
 tabFirst
 	"Set focus to the receiver"
@@ -3807,12 +3821,12 @@ viewNamed: aString
 
 	^self viewNamed: aString ifNone: [self errorNotFound: aString]!
 
-viewNamed: aString ifNone: aBlock
-	"Answer the sub-view within the receiver's hierarchy with aString as its
-	name. Evaluates aBlock if no matching named view exists. Elementary views
-	have no named sub views"
+viewNamed: aString ifNone: aNiladicValuable
+	"Answer the sub-view within the receiver's hierarchy with aString as its name. Evaluates the <niladicValuable>, aNiladicValuable, if no matching named view exists."
 
-	^aBlock value!
+	"Elementary views have no named sub-views."
+
+	^aNiladicValuable value!
 
 whileInvisibleDo: aNiladicValuable 
 	| wasVisible |
@@ -4287,8 +4301,9 @@ wmNotify: message wParam: wParam lParam: lParam
 	 are very frequent and mostly ignored."
 
 	| pNMHdr |
-	^(self class withHandle: ((pNMHdr := VM addressFromInteger: lParam) dwordAtOffset: 0))
-		ifNotNil: [:control | control nmNotify: pNMHdr]!
+	^(SessionManager.Current inputState
+		lookupWindow: ((pNMHdr := lParam asExternalAddress) dwordAtOffset: 0))
+			ifNotNil: [:control | control nmNotify: pNMHdr]!
 
 wmPaint: message wParam: wParam lParam: lParam
 	"Private - This window requires painting. By default we use the internal painting
@@ -5020,6 +5035,7 @@ subViewFromPoint:!hierarchy!public! !
 subViewFromPoint:flags:!hierarchy!private! !
 subViews!hierarchy!public!sub views! !
 subViewsDo:!hierarchy!public!sub views! !
+subViewsFind:!hierarchy!private!sub views! !
 tabFirst!public!tabbing! !
 tabFocus!private!tabbing! !
 tabNext!commands!public! !

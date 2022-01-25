@@ -293,18 +293,12 @@ validateUserInterface
 	self subViewsDo: [:each | each presenter validateUserInterface].
 	super validateUserInterface.!
 
-viewNamed: aString ifNone: aBlock
-	"Answer the sub-view within the receiver's hierarchy with aString as its
-	name. Evaluates aBlock if no matching named view exists."
+viewNamed: aString ifNone: aNiladicValuable
+	"Answer the sub-view within the receiver's hierarchy with aString as its name. Evaluates the <niladicValuable>, aNiladicValuable, if no matching named view exists."
 
-	names isNil
-		ifFalse: [names keysAndValuesDo: [:eachKey :eachValue | aString = eachValue ifTrue: [^eachKey]]].
-	self managedSubViewsDo: 
-			[:each |
-			| found |
-			found := each viewNamed: aString ifNone: nil.
-			found notNil ifTrue: [^found]].
-	^aBlock value!
+	names ifNotNil: [(names keyAtEqualValue: aString ifAbsent: nil) ifNotNil: [:subView | ^subView]].
+	^(self subViewsFind: [:each | each isManaged ifTrue: [each viewNamed: aString ifNone: nil]])
+		ifNil: [aNiladicValuable value]!
 
 wmNotify: message wParam: wParam lParam: lParam
 	"Private - Redirects WM_NOTIFY messages to the appropriate control as a notify message."

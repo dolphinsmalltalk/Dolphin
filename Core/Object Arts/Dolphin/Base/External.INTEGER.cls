@@ -93,7 +93,8 @@ defineTemplate
 	"Initialize the receiver class' structure template."
 
 	super defineTemplate.
-	alignment := self elementSize!
+	alignment := self elementSize.
+	^template!
 
 fromInteger: anInteger
 	"Answer a new instance of the receiver with contents copied from anInteger"

@@ -693,8 +693,8 @@ onDisplayDetailsRequired: aTVITEM
 	object := handleObjectMap lookup: aTVITEM handle.
 	"The TreeView sometimes asks for display details for items that are being removed"
 	object ifNil: [^0].
-	requestMask := aTVITEM mask.
 	saveDetails := tvFlags anyMask: UpdateModeMask.
+	requestMask := aTVITEM mask.
 	((requestMask allMask: TVIF_IMAGE) and: [self hasIcons])
 		ifTrue: 
 			[self getImageBlock

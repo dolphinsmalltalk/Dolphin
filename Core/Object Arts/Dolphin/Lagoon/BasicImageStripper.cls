@@ -85,7 +85,7 @@ compileExternalStructuresNow: aCollection
 	self systemPackageManager noEventsDo: 
 			[aCollection do: [:each | each fullyCompileDefinition].
 			"Lazy template definition is not required (or possible), so stub it out"
-			External.Structure class compile: 'ensureDefined'.
+			External.Structure class compile: 'ensureDefined ^nil'.
 			aCollection do: [:each | each removeTemplate].
 			"ExternalStructure DNU processing is no longer needed since fully compiled"
 			self removeSelectors: #(#getFieldNames #canUnderstand:) of: External.Structure class.
