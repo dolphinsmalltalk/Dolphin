@@ -38,77 +38,19 @@ onEraseRequired: aColorEvent
 	^true!
 
 onPaintRequired: aPaintEvent
-	"Private - Default handler for paint.
-	N.B. Do not invoke default processing from this event because BeginPaint() has already
-	been called. If you need to invoke default processing then you will have to override
-	#wmPaint:wParam:lParam: (e.g. see ControlView)."
-
-	| backSurface pageRect clientRect tabOrientation backBitmap canvas insets extent itemTransform |
+	| orientation canvas |
 	canvas := aPaintEvent canvas.
 	canvas forecolor: self forecolor ?? Color.WindowText.
-	clientRect := self clientRectangle.
-	extent := clientRect extent.
-	insets := clientRect insetBy: (self tcmAdjustRect: false for: clientRect).
-	pageRect := clientRect copy.
-	tabOrientation := self tabOrientation.
-	tabOrientation == #top
-		ifTrue: 
-			[pageRect := clientRect left @ (clientRect top + insets top - (insets bottom // 2))
-						corner: clientRect corner.
-			self paintThemedBackgroundOn: canvas in: pageRect.
-			itemTransform := [:rc | rc].
-			self paintThemedTabsOn: canvas offset: itemTransform.
-			self paintTabLabelsOn: canvas.
-			^0].
-	tabOrientation == #bottom
-		ifTrue: 
-			[| offset |
-			pageRect := clientRect left @ (clientRect top + insets bottom - (insets top // 2))
-						corner: clientRect corner.
-			offset := 0 @ (-1 * (clientRect height - insets bottom)).
-			itemTransform := [:rc | rc translatedBy: offset]].
-	tabOrientation == #left
-		ifTrue: 
-			[extent := extent transpose.
-			pageRect := clientRect left @ (clientRect top + insets left - (insets right // 2))
-						corner: clientRect corner transpose.
-			itemTransform := [:rc | rc topLeft transpose extent: rc extent transpose]].
-	tabOrientation == #right
-		ifTrue: 
-			[extent := extent transpose.
-			pageRect := clientRect left @ (clientRect top + insets right - (insets left // 2))
-						corner: clientRect corner transpose.
-			itemTransform := [:rc | rc top @ (clientRect right - rc right) extent: rc extent transpose]].
-	backBitmap := Bitmap compatible: canvas extent: extent.
-	backSurface := backBitmap canvas.
-	self paintThemedBackgroundOn: backSurface in: pageRect.
-	self paintThemedTabsOn: backSurface offset: itemTransform.
-	tabOrientation == #bottom
-		ifTrue: 
-			[backBitmap
-				drawOn: canvas
-				at: clientRect bottomLeft - (0 @ 1)
-				extent: extent * (1 @ -1).
-			self paintTabLabelsOn: canvas].
-	tabOrientation == #right
-		ifTrue: 
-			[canvas
-				plgBlt: backSurface
-				rectangle: (0 @ 0 extent: extent)
-				topLeft: clientRect topRight
-				topRight: clientRect bottomRight
-				bottomLeft: clientRect topLeft.
-			self paintVerticalTabLabelsOn: canvas].
-	tabOrientation == #left
-		ifTrue: 
-			[canvas
-				plgBlt: backSurface
-				rectangle: (0 @ 0 extent: extent)
-				topLeft: clientRect topLeft
-				topRight: clientRect bottomLeft
-				bottomLeft: clientRect topRight.
-			self paintVerticalTabLabelsOn: canvas].
-	backBitmap free.
+	orientation := self tabOrientation.
+	orientation == #top
+		ifTrue: [self paintTopOrientationOn: canvas]
+		ifFalse: 
+			[orientation == #left
+				ifTrue: [self paintLeftOrientationOn: canvas]
+				ifFalse: 
+					[orientation == #bottom
+						ifTrue: [self paintBottomOrientationOn: canvas]
+						ifFalse: [self paintRightOrientationOn: canvas]]].
 	^0!
 
 onSelChanged: anArray 
@@ -127,6 +69,24 @@ onSelectionChanging: aSelectionChangingEvent
 onViewDestroyed
 	super onViewDestroyed.
 	self freeTheme!
+
+paintBottomOrientationOn: aCanvas
+	| clientRect insets extent backSurface offset backBitmap |
+	clientRect := self clientRectangle.
+	insets := clientRect insetBy: (self tcmAdjustRect: false for: clientRect).
+	extent := clientRect extent.
+	backBitmap := Bitmap compatible: aCanvas extent: extent.
+	backSurface := backBitmap canvas.
+	self paintThemedBackgroundOn: backSurface
+		in: (clientRect left @ (clientRect top + insets bottom - (insets top // 2)) corner: clientRect corner).
+	offset := 0 @ (-1 * (clientRect height - insets bottom)).
+	self paintThemedTabsOn: backSurface offset: [:rc | rc translatedBy: offset].
+	backBitmap
+		drawOn: aCanvas
+			at: clientRect bottomLeft - ##(0 @ 1)
+			extent: extent * ##(1 @ -1);
+		free.
+	self paintTabLabelsOn: aCanvas!
 
 paintLabel: anInteger on: aCanvas in: aRectangle
 	| inverted rcItem textExtent labelRect textOffset text tcItem imageIndex |
@@ -164,6 +124,47 @@ paintLabel: anInteger on: aCanvas in: aRectangle
 		formatText: text
 		in: labelRect
 		flags: ##(DT_VCENTER | DT_SINGLELINE | DT_END_ELLIPSIS)!
+
+paintLeftOrientationOn: aCanvas
+	| clientRect insets extent backSurface backBitmap |
+	clientRect := self clientRectangle.
+	extent := clientRect extent transpose.
+	backBitmap := Bitmap compatible: aCanvas extent: extent.
+	backSurface := backBitmap canvas.
+	insets := clientRect insetBy: (self tcmAdjustRect: false for: clientRect).
+	self paintThemedBackgroundOn: backSurface
+		in: (clientRect left @ (clientRect top + insets left - (insets right // 2))
+				corner: clientRect corner transpose).
+	self paintThemedTabsOn: backSurface offset: [:rc | rc topLeft transpose extent: rc extent transpose].
+	aCanvas
+		plgBlt: backSurface
+		rectangle: (Rectangle extent: extent)
+		topLeft: clientRect topLeft
+		topRight: clientRect bottomLeft
+		bottomLeft: clientRect topRight.
+	backBitmap free.
+	self paintVerticalTabLabelsOn: aCanvas!
+
+paintRightOrientationOn: aCanvas
+	| clientRect extent insets backSurface backBitmap |
+	clientRect := self clientRectangle.
+	extent := clientRect extent transpose.
+	backBitmap := Bitmap compatible: aCanvas extent: extent.
+	backSurface := backBitmap canvas.
+	insets := clientRect insetBy: (self tcmAdjustRect: false for: clientRect).
+	self paintThemedBackgroundOn: backSurface
+		in: (clientRect left @ (clientRect top + insets right - (insets left // 2))
+				corner: clientRect corner transpose).
+	self paintThemedTabsOn: backSurface
+		offset: [:rc | rc top @ (clientRect right - rc right) extent: rc extent transpose].
+	aCanvas
+		plgBlt: backSurface
+		rectangle: (Rectangle extent: extent)
+		topLeft: clientRect topRight
+		topRight: clientRect bottomRight
+		bottomLeft: clientRect topLeft.
+	backBitmap free.
+	self paintVerticalTabLabelsOn: aCanvas!
 
 paintTabLabelsOn: aCanvas
 	| selectedIndex nOldMode oldFont rect itemCount |
@@ -216,7 +217,7 @@ paintThemedBackgroundOn: aCanvas in: aRectangle
 			aCanvas fillRectangle: (aCanvas clipBox subtract: aRectangle) color: bkColor]!
 
 paintThemedTabsOn: aCanvas offset: aMonadicValuable
-	| selected hot numItems dc part rcItem hTheme |
+	| selected hot numItems dc hTheme part rcItem  |
 	numItems := self itemCount.
 	numItems <= 0 ifTrue: [^self].
 	"Paint all the tabs except for the selected one (assuming there is one; in very unusual circumstances there may not be)"
@@ -255,12 +256,10 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 				pClipRect: nil].
 	selected == numItems
 		ifFalse: 
-			[| anInteger |
-			anInteger := TABP_TABITEMRIGHTEDGE.
-			UxTheme
+			[UxTheme
 				drawThemeBackground: hTheme
 				hdc: dc
-				iPartId: anInteger
+				iPartId: TABP_TABITEMRIGHTEDGE
 				iStateId: (numItems == hot ifTrue: [TIS_HOT] ifFalse: [TIS_NORMAL])
 				pRect: (aMonadicValuable value: (self itemRect: numItems)) asParameter
 				pClipRect: nil].
@@ -285,6 +284,16 @@ paintThemedTabsOn: aCanvas offset: aMonadicValuable
 		iStateId: TIS_SELECTED
 		pRect: rcItem asParameter
 		pClipRect: nil!
+
+paintTopOrientationOn: aCanvas
+	| clientRect insets |
+	clientRect := self clientRectangle.
+	insets := clientRect insetBy: (self tcmAdjustRect: false for: clientRect).
+	self
+		paintThemedBackgroundOn: aCanvas
+			in: (clientRect left @ (clientRect top + insets top - (insets bottom // 2)) corner: clientRect corner);
+		paintThemedTabsOn: aCanvas offset: [:rc | rc];
+		paintTabLabelsOn: aCanvas!
 
 paintVerticalLabel: anInteger on: aCanvas in: aRectangle
 	| text inverted textExtent textOffset labelRect tcItem imageIndex |
@@ -399,16 +408,20 @@ calcClientRectangleFromRectangle:!geometry!private! !
 createVerticalFont!event handling!private! !
 imageTextGap!constants!private! !
 onEraseRequired:!event handling!private! !
-onPaintRequired:!event handling!private! !
+onPaintRequired:!event handling!painting!private! !
 onSelChanged:!event handling!private! !
 onSelectionChanging:!event handling!private! !
 onViewDestroyed!event handling!private! !
+paintBottomOrientationOn:!painting!private! !
 paintLabel:on:in:!painting!private! !
-paintTabLabelsOn:!event handling!private! !
+paintLeftOrientationOn:!painting!private! !
+paintRightOrientationOn:!painting!private! !
+paintTabLabelsOn:!painting!private! !
 paintThemedBackgroundOn:in:!painting!private! !
 paintThemedTabsOn:offset:!painting!private! !
+paintTopOrientationOn:!event handling!painting!private! !
 paintVerticalLabel:on:in:!painting!private! !
-paintVerticalTabLabelsOn:!event handling!private! !
+paintVerticalTabLabelsOn:!painting!private! !
 selExtra!constants!private! !
 supportsThemedVertical!constants!private! !
 wmPaint:wParam:lParam:!event handling-win32!private! !

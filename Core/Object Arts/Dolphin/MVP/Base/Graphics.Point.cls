@@ -258,11 +258,9 @@ roundTo: aNumber
 	^(x roundTo: aNumber) @ (y roundTo: aNumber)!
 
 subtractFromPoint: aPoint
-	"Private - Answer the result of subtracting the receiver from the known Point,
-	aPoint, by coercing the less general of it and the receiver. Overridden by 
-	subclasses which can implement more efficiently."
+	"Private - Answer the result of subtracting the receiver from the known Point, aPoint."
 
-	^(aPoint x - x) @ (aPoint y - y)!
+	^Point x: aPoint x - x y: aPoint y - y!
 
 transpose
 	"Answer a new Point with the x and y coordinates of the receiver

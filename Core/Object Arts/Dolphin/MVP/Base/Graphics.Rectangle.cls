@@ -220,10 +220,9 @@ expandedBy: delta
 	^self expandBy: delta!
 
 extent
-	"Answer a <Point> representing the extent of the receiver. The x-coordinate is the width and
-	the y-coordinate is the height."
+	"Answer a <Point> representing the extent of the receiver. The x-coordinate is the width and the y-coordinate is the height."
 
-	^self width @ self height!
+	^corner - origin!
 
 extent: aPoint 
 	"Set the extent of the receiver to equal the <Point> argument. The origin remains the same and the
@@ -637,7 +636,7 @@ center: centrePoint extent: extentPoint
 extent: aPoint
 	"Answer an instance of the receiver of the extent, aPoint with origin at (0@0)."
 
-	^self origin: Point.Zero extent: aPoint!
+	^self origin: Point.Zero corner: aPoint!
 
 initialize
 	"Empty can't be a class constant or it creates a load order problem in that the Number>>@ method is not defined when the class is declared in the .pax file"
