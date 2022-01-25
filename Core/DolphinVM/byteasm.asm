@@ -772,7 +772,8 @@ BEGINBYTECODE shortPushInstVar
 	MPrefetch
 	mov     eax, [eax].fields[edx*OOPSIZE-(FIRSTSHORTPUSHIV*OOPSIZE)]
 	ASSUME	eax:Oop
-	PushOop <a>
+	mov		[_SP+OOPSIZE], eax
+	add     _SP, OOPSIZE
 	DispatchNext
 ENDBYTECODE shortPushInstVar
 
@@ -1362,10 +1363,11 @@ ENDM
 BEGINBYTECODE popReturnSelf
 	mov		eax, [_SP]
 	sub		_SP, OOPSIZE
-	; Drop through...
+	mov		ecx, [_BP-OOPSIZE]				; Receiver is one below _BP
+	ReturnOopToSender
 ENDBYTECODE popReturnSelf
 
-BEGINBYTECODENOALIGN returnSelf
+BEGINBYTECODE returnSelf
 ;;
 ;; Return receiver to sending context is a very common operation (default method
 ;; return), but dynamically it occurs much less frequently than return message
@@ -2006,9 +2008,11 @@ BEGINBYTECODE longPushImmediate
 	xor		ecx, ecx							; Clear ECX (avoid partial register stall on PPro and later PIIs it would appear)
 	
 	add		_SP, OOPSIZE
-	mov		cl, [_IP+2]
-	
-	lea		eax, [eax+eax+1]					; Convert to SmallInteger
+	mov		cl, [_IP+2]							; Load next instruction
+
+	add		eax, eax							; Convert to SmallInteger
+	or		al, 1
+
 	add		_IP, 3								; Advance instruction pointer (over next instruction)
 	
 	mov		[_SP], eax							; push SmallInteger onto stack
@@ -2039,9 +2043,11 @@ BEGINBYTECODE exLongPushImmediate
 	xor		ecx, ecx							; Clear ECX (avoid partial register stall on PPro and later PIIs it would appear)
 
 	add		_SP, OOPSIZE
-	mov		cl, [_IP+4]
+	mov		cl, [_IP+4]							; Load next instruction
 
-	lea		eax, [eax+eax+1]					; Convert to SmallInteger
+	add		eax, eax							; Convert to SmallInteger
+	or		al, 1
+
 	add		_IP, 5								; Advance instruction pointer (over next instruction)
 	
 	mov		[_SP], eax							; push SmallInteger onto stack
