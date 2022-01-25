@@ -118,7 +118,7 @@ primitiveComputeLiterals
 
 protocol
 	#rbFix.	"Dolphin support multiple categories for each method"
-	^self protocols asSortedCollection first!
+	^self protocols asSortedArray first!
 
 protocols
 	#rbFix.	"Added"

@@ -275,7 +275,7 @@ buildSuiteFromLocalSelectors
 	^self buildSuiteFromMethods: self testSelectors!
 
 buildSuiteFromMethods: testMethods 
-	^testMethods asSortedCollection
+	^testMethods asSortedArray
 		inject: ((TestSuite new)
 				name: self name asString;
 				yourself)
@@ -320,8 +320,7 @@ suite
 	^self buildSuite!
 
 testSelectors
-	^self selectors asSortedCollection asOrderedCollection
-		select: [:each | (each beginsWith: 'test') and: [each numArgs isZero]]!
+	^self selectors asSortedArray select: [:each | (each beginsWith: 'test') and: [each numArgs isZero]]!
 
 version
 	^'3.1'! !

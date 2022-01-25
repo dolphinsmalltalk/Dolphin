@@ -44,9 +44,9 @@ associationClass
 associations
 	"Answer a <sequencedReadableCollection> containing the receiver's associations.
 	Although DOMNodeList is a <sequencedReadableCollection> callers will tend to assume
-	that the collection is a copy, so we convert it to an OrderedCollection here."
+	that the collection is a copy, so we convert it to an <Array> here."
 
-	^(DOMNodeList on: interface) asOrderedCollection!
+	^(DOMNodeList on: interface) asArray!
 
 associationsDo: operation
 	"Evaluate the monadic valuable, operation, for each of the receiver's 

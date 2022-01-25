@@ -12,7 +12,7 @@ Tools.ClassHierarchyModel comment: 'ClassHierarchyModel implements a <treeModel>
 !Tools.ClassHierarchyModel methodsFor!
 
 defaultGetChildrenBlock
-	^[:aClass | aClass subclasses asSortedCollection]!
+	^[:aClass | aClass subclasses asSortedArray]!
 
 defaultGetParentBlock
 	^[:aClass | aClass superclass]!

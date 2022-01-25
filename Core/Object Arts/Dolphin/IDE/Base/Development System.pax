@@ -4508,8 +4508,8 @@ infoTip
 	stream
 		display: self;
 		nextPutAll: ' ('.
-	self realCategories asSortedCollection asArray
-		, (self protocols asSortedCollection: [:a :b | a asSymbol < b asSymbol])
+	self realCategories asSortedArray
+		, (self protocols asSortedArray: [:a :b | a asSymbol < b asSymbol])
 			do: [:each | stream display: each]
 			separatedBy: [stream nextPutAll: ', '].
 	stream nextPut: $).

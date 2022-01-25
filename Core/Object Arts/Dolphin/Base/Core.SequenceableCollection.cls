@@ -1420,7 +1420,7 @@ binarySearch: aSequenceableCollection for: anObject using: searchBlock
 defaultSortAlgorithm
 	"Answer an instance of the default <SortAlgorithm>."
 
-	^DefaultSortAlgorithm current!
+	^DefaultSortAlgorithm.Current!
 
 emitEncodingMarkerOn: aPositionableStream
 	"Private - Emit any encoding marker used for the stream encoding this collection represents onto the

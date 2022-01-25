@@ -85,6 +85,11 @@ asArray
 	self do: [:each | answer at: (i := i + 1) put: each].
 	^answer!
 
+asArrayCopy
+	"Answer an <Array> whose elements are those of the receiver, but guaranteed not to be the same object as the receiver."
+	
+	^self asArray!
+
 asBag
 	"Answer a <Bag> containing the same elements as the receiver
 	Note: As Bags identify multiple occurrences with the equality relationship
@@ -144,6 +149,18 @@ asSet
 	^(Set new: self approxSize)
 		addAll: self;
 		yourself!
+
+asSortedArray
+	"Answer an <Array> of the same size as the receiver with the receiver's elements sorted using the default sort order comparision (i.e. #<=).
+	Exceptions may occur if any of the pairs of elements of the receiver are not comparable using #<=."
+
+	^self asArrayCopy sort!
+
+asSortedArray: aDyadicValuable
+	"Answer an <Array> containing the receiver's elements ordered by a one-off sort according to the <dynadicValuable> argument.
+	Exceptions may occur if any of the pairs of elements of the receiver are not appropriate parameters for the sort-order block."
+
+	^self asArrayCopy sort: aDyadicValuable!
 
 asSortedCollection
 	"Answer a <SortedCollection> of the same size as the receiver
@@ -522,7 +539,7 @@ storeOn: aStream
 	evaluated will answer a collection similar to the receiver."
 
 	aStream nextPutAll: '(('.
-	self class storeOn: aStream.
+	self storingClass storeOn: aStream.
 	aStream nextPutAll: ' new)'.
 	self do: 
 			[:value |
@@ -531,6 +548,9 @@ storeOn: aStream
 			aStream nextPut: $;].
 	self isEmpty ifFalse: [aStream nextPutAll: ' yourself'].
 	aStream nextPut: $)!
+
+storingClass
+	^self class!
 
 symmetricDifference: comperand
 	"Answer a <collection> like the receiver containing the symmetric
@@ -559,11 +579,14 @@ anySatisfy:!enumerating!public! !
 appendToStream:!double dispatch!private! !
 approxSize!accessing!private! !
 asArray!converting!public! !
+asArrayCopy!converting!public! !
 asBag!converting!public! !
 asByteArray!converting!public! !
 asIdentitySet!converting!public! !
 asOrderedCollection!converting!public! !
 asSet!converting!public! !
+asSortedArray!converting!public! !
+asSortedArray:!converting!public! !
 asSortedCollection!converting!public! !
 asSortedCollection:!converting!public! !
 asSortedCollectionUsing:!converting!public! !
@@ -609,7 +632,8 @@ select:thenCollect:!enumerating!public! !
 single!accessing!public! !
 size!accessing!public! !
 split:!public!tokenizing! !
-storeOn:!printing!public! !
+storeOn:!public!storing! !
+storingClass!private!storing! !
 symmetricDifference:!public!set operations! !
 union:!public!set operations! !
 !

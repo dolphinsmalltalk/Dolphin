@@ -169,7 +169,7 @@ variableSubclass:instanceVariableNames:classVariableNames:poolDictionaries:class
 !Core.ClassDescription methodsFor!
 
 sharedVariableString
-	^$\x20 join: self sharedPoolNames asSortedCollection! !
+	^$\x20 join: self sharedPoolNames asSortedArray! !
 !Core.ClassDescription categoriesForMethods!
 sharedVariableString!accessing!public! !
 !

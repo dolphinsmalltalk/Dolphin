@@ -48,7 +48,7 @@ printOn: target indent: tabs
 		nextPutAll: '#( ';
 		display: clsid.
 	indent := tabs + 1.
-	propertyTable keys asSortedCollection do: 
+	propertyTable keys asSortedArray do: 
 			[:k | 
 			| prop |
 			target

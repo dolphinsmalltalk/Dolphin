@@ -38,6 +38,9 @@ at: anObject put: aNiladicValuable
 
 	^super at: anObject put: (aNiladicValuable deferredValueAt: priority)!
 
+copyingClass
+	^LookupTable!
+
 do: operation
 	"Evaluate monadic value argument, operation, for each of the elements (values) of the 
 	receiver. Answers the receiver."
@@ -89,12 +92,16 @@ priority
 priority: anInteger
 	"Set the <Process> priority at which the deferred values will be calculated."
 
-	priority := anInteger! !
+	priority := anInteger!
+
+storingClass
+	^LookupTable! !
 !Core.DeferredValueTable categoriesForMethods!
 at:ifAbsent:!accessing!public! !
 at:ifAbsentPut:!accessing!public! !
 at:ifAbsentPutClean:!accessing!public! !
 at:put:!accessing!public! !
+copyingClass!copying!private! !
 do:!enumerating!public! !
 initialize!initializing!private! !
 keyAtEqualValue:ifAbsent:!accessing!public! !
@@ -103,5 +110,6 @@ keysAndValuesDo:!enumerating!public! !
 lookup:!accessing!public! !
 priority!accessing!public! !
 priority:!accessing!public! !
+storingClass!private!storing! !
 !
 

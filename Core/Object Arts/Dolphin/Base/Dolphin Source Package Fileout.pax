@@ -128,7 +128,7 @@ emitCategories: aCollection for: aSymbol in: aClass
 	"#2144."
 	self emitString: aSymbol printString.
 	stream nextPut: $!!.
-	aCollection asSortedCollection do: [:each | self nextChunkPut: each name].
+	aCollection asSortedArray do: [:each | self nextChunkPut: each name].
 	self endChunk!
 
 emitPackageAboutBlock: aPackage
@@ -182,7 +182,7 @@ emitPackagePrerequisiteNames: aPackage
 	self subclassResponsibility!
 
 emitPackageScripts: aPackage
-	aPackage scripts keys asSortedCollection do: 
+	aPackage scripts keys asSortedArray do: 
 			[:each |
 			stream
 				nextPutAll: 'package basicScriptAt: ';
@@ -309,7 +309,7 @@ emitPackageBinaryVariables: aPackage
 	self
 		emitComment: 'Binary Variables';
 		cr.
-	aPackage binaryVariableNames asSortedCollection do: 
+	aPackage binaryVariableNames asSortedArray do: 
 			[:each |
 			self
 				emitBinaryVariableDefinition: each;
@@ -341,18 +341,18 @@ emitPackageManualPrerequisites: aPackage
 
 emitPackageMethodNames: aPackage
 	| names |
-	names := aPackage methodNames asSortedCollection: (self methodNameSortBlock: aPackage).
+	names := aPackage methodNames asSortedArray: (self methodNameSortBlock: aPackage).
 	self emitPackageCollection: (names collect: [:each | {each className. each selector}])
 		initializer: #setMethodNames:!
 
 emitPackageNameCollection: aCollectionOfBindingReferences initializer: aSymbol
-	self emitPackageCollection: aCollectionOfBindingReferences asSortedCollection initializer: aSymbol!
+	self emitPackageCollection: aCollectionOfBindingReferences asSortedArray initializer: aSymbol!
 
 emitPackagePrerequisiteNames: aPackage
 	| basePath |
 	basePath := aPackage path.
 	self
-		emitPackageCollection: ((aPackage prerequisites asSortedCollection: [:a :b | a name <==> b name < 0])
+		emitPackageCollection: ((aPackage prerequisites asSortedArray: [:a :b | a name <==> b name < 0])
 				collect: [:each | File removeExtension: (File relativePathOf: each packageFileName to: basePath)])
 		initializer: #setPrerequisites:!
 
@@ -815,7 +815,7 @@ fileOutPackageSourceVariables: aPackage
 	self
 		emitComment: 'Source Variables';
 		cr.
-	names asSortedCollection do: 
+	names asSortedArray do: 
 			[:var |
 			var value fileOutOn: self.
 			self cr]!
@@ -830,8 +830,7 @@ fileOutPackageVariableAliases: aPackage
 			[self
 				emitComment: 'Variable Aliases';
 				cr.
-			names asSortedCollection
-				do: [:var | self fileOutExpression: var asString , ' := ' , var value fullName].
+			names asSortedArray do: [:var | self fileOutExpression: var asString , ' := ' , var value fullName].
 			self cr]!
 
 packageClassesInFileoutOrder: aPackage

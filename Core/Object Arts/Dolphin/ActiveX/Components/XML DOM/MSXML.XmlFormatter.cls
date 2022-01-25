@@ -64,7 +64,7 @@ visitAttribute: anIXMLDOMAttribute
 	stream nextPutAll: anIXMLDOMAttribute xml!
 
 visitAttributes: anIXMLDOMNode 
-	anIXMLDOMNode attributes associations asSortedCollection do: 
+	anIXMLDOMNode attributes associations sort do: 
 			[:each | 
 			"Redundant empty namespace declarations are removed"
 			(each key = 'xmlns' and: 

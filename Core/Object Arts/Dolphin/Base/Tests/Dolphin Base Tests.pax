@@ -25,6 +25,7 @@ package setClassNames: #(
 	#{Core.Tests.CollectionTest}
 	#{Core.Tests.DateAndTimeTest}
 	#{Core.Tests.DateTest}
+	#{Core.Tests.DeferredValueTableTest}
 	#{Core.Tests.DelayTest}
 	#{Core.Tests.DictionaryTest}
 	#{Core.Tests.DolphinTest}
@@ -762,6 +763,12 @@ Core.Tests.AbstractDictionaryTest subclass: #'Kernel.Tests.MethodDictionaryTest'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Core.Tests.LookupTableTest subclass: #'Core.Tests.DeferredValueTableTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Tests.LookupTableTest subclass: #'Core.Tests.IdentityDictionaryTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -1191,7 +1198,7 @@ regressionTestsLogFilename
 regressionTestSuite
 	| suite |
 	suite := TestSuite named: 'RegressionTests'.
-	suite addTests: TestCase buildSuite allTests asSortedCollection.
+	suite addTests: TestCase buildSuite allTests asSortedArray.
 	^suite!
 
 runRegressionTests
@@ -1261,7 +1268,7 @@ writeJunitTestLog: aTestSuite result: aTestResult
 	classElapsed := Duration zero.
 	currentClass := nil.
 	suiteNode := nil.
-	(aTestResult results asSortedCollection: [:a :b | a case <= b case]) do: 
+	(aTestResult results asSortedArray: [:a :b | a case <= b case]) do: 
 			[:each |
 			| caseNode outcome |
 			each case class == currentClass

@@ -523,8 +523,7 @@ browseClassVariables: aClass
 	classVars := OrderedCollection new.
 	aClass withAllSuperclassesDo: 
 			[:each |
-			each classBindingNames asSortedCollection asArray
-				reverseDo: [:eachName | classVars addFirst: eachName]].
+			each classBindingNames asSortedArray reverseDo: [:eachName | classVars addFirst: eachName]].
 	aVariable := ChoicePrompter choices: classVars caption: 'Class Variables'.
 	aVariable notNil
 		ifTrue: 
@@ -1200,8 +1199,7 @@ chooseSelectorsInProtocol: protocol forClass: class
 	| selectors newSelectors oldSelectors |
 	selectors := class isNil ifTrue: [#()] ifFalse: [class allSelectors].
 	oldSelectors := protocol selectors.
-	selectors := oldSelectors asSortedCollection asArray
-				, (selectors difference: oldSelectors) asSortedCollection asArray.
+	selectors := oldSelectors asSortedArray , (selectors difference: oldSelectors) asSortedArray.
 	newSelectors := protocol selectors asArray asValue.
 	(ChoicePrompter
 		on: newSelectors
@@ -2759,7 +2757,7 @@ populateMenu: popup tree: folderModel items: folderItems
 			| i |
 			(i := each text indexOf: $&) ~= 0 ifTrue: [accels add: (each text at: i + 1)]].
 	popup itemsDo: aMonadicValuable.
-	(folderItems asSortedCollection: [:a :b | a description < b description]) do: 
+	(folderItems asSortedArray: [:a :b | a description < b description]) do: 
 			[:each |
 			| text i |
 			"First generate the item text, with keyboard shortcut"
@@ -3583,7 +3581,7 @@ removeMethods: aCollectionOfMethods
 	stream
 		nextPutAll: 'The following method(s) will be removed from the system:';
 		cr.
-	methods := aCollectionOfMethods asSortedCollection: CompiledMethod defaultSortBlock.
+	methods := aCollectionOfMethods asSortedArray: CompiledMethod defaultSortBlock.
 	max := 40.
 	methods
 		from: 1
@@ -3632,7 +3630,7 @@ removeSelectors: aCollection fromProtocol: aMethodProtocol
 					stream
 						nextPutAll: 'Are you sure that you would like to remove the following selectors from the protocol?';
 						cr.
-					aCollection asSortedCollection do: 
+					aCollection asSortedArray do: 
 							[:each |
 							stream
 								cr;

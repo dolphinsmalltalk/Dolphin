@@ -43,15 +43,16 @@ testAllSatisfy
 		do: 
 			[:i |
 			| elems visited |
-			elems := (1 to: i) collect: [:c | self assimilate: c].
+			elems := 1 to: i.
 			subject := self newCollection: elems.
+			elems := self assimilateElements: elems.
 			visited := OrderedCollection new.
 			self
 				assert: (subject allSatisfy: 
 							[:e |
 							visited add: e.
-							e between: elems first and: elems last]).
-			self assert: visited asSet equals: elems asSet.
+							e between: elems first value and: elems last value]).
+			self assert: visited asSet equals: (elems collect: [:each | each value]) asSet.
 			"Fail on first, middle, last"
 			elems keysAndValuesDo: 
 					[:k :c |
@@ -68,7 +69,7 @@ testAnyone
 	subject := self newCollection: #().
 	self should: [subject anyOne] raise: Error.
 	subject := self newCollection: #($a).
-	self assert: subject anyOne equals: (self assimilate: $a).
+	self assert: subject anyOne equals: (self assimilate: $a) value.
 	subject := self newCollection: #($a $b).
 	any := subject anyOne.
 	self assert: (subject anySatisfy: [:each | each == any])!
@@ -83,15 +84,16 @@ testAnySatisfy
 		do: 
 			[:i |
 			| elems visited |
-			elems := (1 to: i) collect: [:c | self assimilate: c].
+			elems := 1 to: i.
 			subject := self newCollection: elems.
+			elems := self assimilateElements: elems.
 			visited := OrderedCollection new.
 			"None satisfy - whole collection evaluated against predicate"
 			self deny: (subject anySatisfy: 
 							[:e |
 							visited add: e.
 							false]).
-			self assert: visited asSet equals: elems asSet.
+			self assert: visited asSet equals: (elems collect: [:each | each value]) asSet.
 			"Find a match on first, middle, last"
 			elems keysAndValuesDo: 
 					[:k :c |
@@ -112,7 +114,7 @@ testCount
 		do: 
 			[:i |
 			| elems subject |
-			elems := (1 to: i) collect: [:c | self assimilate: c].
+			elems := (1 to: i).
 			subject := self newCollection: elems.
 			self assert: (subject count: all) equals: i.
 			self assert: (subject count: none) equals: 0.
@@ -128,7 +130,7 @@ testDetectIfNone
 			eachCase do: 
 					[:elem |
 					| actualElem |
-					actualElem := self assimilate: elem.
+					actualElem := (self assimilate: elem) value.
 					self assert: (subject detect: [:each | each = actualElem] ifNone: [absent]) equals: actualElem.
 					actualElem := self assimilate: $f.
 					self assert: (subject detect: [:each | each = actualElem] ifNone: [absent]) identicalTo: absent]]!
@@ -179,7 +181,7 @@ testSingle
 	subject := self newCollection: #().
 	self should: [subject single] raise: Error.
 	subject := self newCollection: #($a).
-	self assert: subject single equals: (self assimilate: $a).
+	self assert: subject single equals: (self assimilate: $a) value.
 	subject := self newCollection: #($a $b).
 	self should: [subject single] raise: Error!
 

@@ -371,13 +371,12 @@ storeOn: aStream
 
 whichCategoryIncludes: aClassName
 	#rbFix. "Dolphin's category system completely different"
-	^aClassName asQualifiedReference value categories asSortedCollection first name
+	^aClassName asQualifiedReference value categories asSortedArray first name
 "	^Smalltalk organization categoryOfElement: aClassName"!
 
 whichProtocolIncludes: aSelector in: aClass
 	#rbFix.	"Dolphin allows methods to be in multiple categories"
-	^(self whichProtocolsInclude: aSelector in: aClass) asSortedCollection 
-		first!
+	^(self whichProtocolsInclude: aSelector in: aClass) asSortedArray first!
 
 whichProtocolsInclude: aSelector in: aClass
 	#rbFix.	"Dolphin specific method to support multiple method categories, also map names from strings to symbols."

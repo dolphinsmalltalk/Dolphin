@@ -196,7 +196,7 @@ printHtmlTableOfKeyBindingsForView: aView on: aPuttableStream inUse: aSet
 	| acceleratorKeys commands |
 	acceleratorKeys := Set new.
 	commands := aView keyboardCommands
-				asSortedCollection: [:a :b | a acceleratorKeyDisplayString < b acceleratorKeyDisplayString].
+				asSortedArray: [:a :b | a acceleratorKeyDisplayString < b acceleratorKeyDisplayString].
 	commands notEmpty
 		ifTrue: 
 			[| stream path |

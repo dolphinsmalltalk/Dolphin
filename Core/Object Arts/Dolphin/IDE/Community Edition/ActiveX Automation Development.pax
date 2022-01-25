@@ -3500,7 +3500,7 @@ idlCustomAttributes
 	| attrs |
 	attrs := Array writeStream.
 	(self customAttributes associations
-		asSortedCollection: [:a :b | a key displayString < b key displayString]) do: 
+		asSortedArray: [:a :b | a key displayString < b key displayString]) do: 
 				[:each |
 				| attr |
 				attr := String writeStream.

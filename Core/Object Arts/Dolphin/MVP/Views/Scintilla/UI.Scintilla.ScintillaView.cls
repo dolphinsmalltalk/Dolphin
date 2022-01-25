@@ -329,7 +329,7 @@ annotationStyles
 	change annotation styles the entire collection must be replaced."
 
 	self ensureHasAnnotationStyles.
-	^annotationStyles values asArray sort: Attribute sortByIdBlock!
+	^annotationStyles values asSortedArray: Attribute sortByIdBlock!
 
 annotationStyles: aCollection 
 	"Set the collection of <ScintillaTextStyle>s configured for annotations in the receiver to
@@ -9073,6 +9073,7 @@ showAutoCompletionList: aCollection prefixLength: anInteger withIcons: aBoolean
 		ifTrue: [self cancelAutoCompletion]
 		ifFalse: 
 			[| string |
+			"The collection needs to be sorted as described above, but it may already be a SortedCollection"
 			string := self buildItemList: aCollection asSortedCollection withIcons: aBoolean.
 			self sciAutoCShow: anInteger itemList: string]!
 
@@ -9439,7 +9440,7 @@ textStyles
 	addition/removal/replacement of elements, will not result in the view being updated. To
 	change text styles the entire collection must be replaced."
 
-	^currentTextStyles values asArray sort: Attribute sortByIdBlock!
+	^currentTextStyles values asSortedArray: Attribute sortByIdBlock!
 
 textStyles: aCollection 
 	"Set the collection of <ScintillaTextStyle>s configured for the receiver to be those

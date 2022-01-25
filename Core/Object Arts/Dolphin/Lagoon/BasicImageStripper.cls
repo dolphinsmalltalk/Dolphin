@@ -541,7 +541,7 @@ removeNotRequiredMethods
 				ifTrue: 
 					["We don't go through #removeMethods:notifying:, since we want the packages to be updated to reflect the lost methods so that when their pre-requisites are recalculated the removed methods do not affect the result."
 					self startElement: 'StripMethods' attributes: {'reason' -> (pair at: 1)}.
-					(methods asSortedCollection: 
+					(methods asSortedArray: 
 							[:a :b |
 							a methodClass name < b methodClass name
 								or: [a methodClass == b methodClass and: [a selector < b selector]]])
@@ -664,7 +664,7 @@ removeRedundantPackages
 	"We don't want to uninstall the DevelopmentSessionManager until it has been replaced by the run-time session manager"
 	pacman addClass: SessionManager current class to: nil.
 	self startElement: 'RedundantPackages' attributes: #().
-	(redundantPackages asSortedCollection: [:a :b | a name < b name]) do: 
+	(redundantPackages asSortedArray: [:a :b | a name < b name]) do: 
 			[:each |
 			self
 				logElement: 'Package'

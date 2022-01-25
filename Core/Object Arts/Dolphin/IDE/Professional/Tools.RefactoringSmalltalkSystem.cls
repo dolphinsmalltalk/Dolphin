@@ -849,10 +849,10 @@ pushMethods: aCollectionOfMethods up: aBoolean
 				nextPutAll: (aBoolean ifTrue: ['up'] ifFalse: ['down']);
 				space.
 			namespace := RBModel new.
-			(byClass associations asSortedCollection: [:a :b | a key name <= b key name]) do: 
+			(byClass associations asSortedArray: [:a :b | a key name <= b key name]) do: 
 					[:each |
 					| selectors class |
-					selectors := each value asSortedCollection asArray.
+					selectors := each value asSortedArray.
 					class := each key.
 					selectors do: [:eachSelector | caption print: eachSelector] separatedBy: [caption nextPut: $,].
 					caption
@@ -963,7 +963,7 @@ removeMethodsDuplicatedInSuperclassOf: aClass
 	msg
 		nextPutAll: 'The following duplicate methods will be removed:';
 		cr.
-	duplicated := duplicated asSortedCollection: [:a :b | a printString < b printString].
+	duplicated := duplicated asSortedArray: [:a :b | a printString < b printString].
 	duplicated do: 
 			[:each |
 			msg
@@ -1226,7 +1226,7 @@ selectTargetVariableOf: aClass parseTree: aStMethodNode
 	variables := OrderedCollection new.
 	"Method arguments"
 	aStMethodNode isNil
-		ifFalse: [aStMethodNode argumentNames asSortedCollection do: [:each | variables addLast: nil -> each]].
+		ifFalse: [aStMethodNode argumentNames asSortedArray do: [:each | variables addLast: nil -> each]].
 	classes := aClass withAllSuperclasses.
 	"Instance variables"
 	classes
@@ -1234,7 +1234,7 @@ selectTargetVariableOf: aClass parseTree: aStMethodNode
 	"Class variables - excluding system defined"
 	classes do: 
 			[:eachClass |
-			(eachClass classBindingNames reject: [:each | each first = $_]) asSortedCollection
+			(eachClass classBindingNames reject: [:each | each first = $_]) asSortedArray
 				do: [:eachVar | variables addLast: eachClass -> eachVar]].
 	"Non-class Globals referenced in the method"
 	aStMethodNode isNil

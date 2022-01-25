@@ -175,7 +175,7 @@ emitCategoriesForMethods: aSequencableCollection of: aClass
 			[:method |
 			self emitString: method selector.
 			stream nextPut: $!!.
-			method realCategories asSortedCollection do: [:each | self nextChunkPut: each name].
+			method realCategories asSortedArray do: [:each | self nextChunkPut: each name].
 			self endChunk].
 	stream
 		nextPut: $!!;
@@ -194,7 +194,7 @@ emitCategoriesOfClass: aClass
 		space;
 		nextPutAll: #categoriesForClass;
 		nextPut: $!!.
-	categories asSortedCollection do: [:aCategory | self nextChunkPut: aCategory name].
+	categories asSortedArray do: [:aCategory | self nextChunkPut: aCategory name].
 	self endChunk!
 
 emitCategoriesOfMethod: aCompiledMethod
@@ -209,7 +209,7 @@ emitCategoriesOfMethod: aCompiledMethod
 		space.	"#2144."
 	self emitString: aCompiledMethod selector printString.
 	stream nextPut: $!!.
-	aCompiledMethod realCategories asSortedCollection do: [:each | self nextChunkPut: each name].
+	aCompiledMethod realCategories asSortedArray do: [:each | self nextChunkPut: each name].
 	self endChunk!
 
 emitComment: aString
@@ -281,7 +281,7 @@ fileOutMessages: aCollection ofBehavior: aClass
 	| methods |
 	aCollection isEmpty ifTrue: [^self].
 	self emitHeaderForMethodsOf: aClass.
-	methods := self emitMessages: aClass ofBehavior: aCollection.
+	methods := self emitMessages: aCollection ofBehavior: aClass.
 	self emitFooterForMethodsOf: aClass.
 	self isSourceOnly ifFalse: [self emitCategoriesForMethods: methods of: aClass].
 	self cr!
@@ -291,7 +291,7 @@ fileOutProtocols: aCollection ofBehavior: aClassDescription
 	associating them with the <ClassDescription>, aClassDescription."
 
 	aCollection isEmpty ifTrue: [^self].
-	(aCollection asSortedCollection: [:a :b | a name <==> b name <= 0]) do: 
+	(aCollection asSortedArray: [:a :b | a name <==> b name <= 0]) do: 
 			[:p |
 			self emitClassName: aClassDescription.
 			stream
@@ -302,7 +302,7 @@ fileOutProtocols: aCollection ofBehavior: aClassDescription
 				nextPutAll: ' selectors: #('.
 			"We must print the selectors individually as their may be very many and the default print truncates after
 			 a certain number of characters."
-			p selectors asSortedCollection do: [:s | stream print: s] separatedBy: [stream space].
+			p selectors asSortedArray do: [:s | stream print: s] separatedBy: [stream space].
 			self
 				nextChunkPut: ')';
 				cr].
@@ -510,10 +510,10 @@ emitComment: aString
 
 	^self subclassResponsibility!
 
-emitMessages: aClass ofBehavior: selectors
+emitMessages: aCollection ofBehavior: aClass
 	| methods sortedSelectors |
-	sortedSelectors := selectors asSortedCollection: SortedCollection caseSensitiveSortBlock.
-	methods := sortedSelectors asArray collect: 
+	sortedSelectors := aCollection asSortedArray: SortedCollection caseSensitiveSortBlock.
+	methods := sortedSelectors collect: 
 					[:selector |
 					| method |
 					self

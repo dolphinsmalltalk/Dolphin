@@ -670,9 +670,8 @@ findDetails: aFindDetails
 
 firstError
 	| ordered |
-	ordered := compilationErrors asSortedCollection: 
-					[:a :b | 
-					a severity > b severity or: [a severity = b severity and: [a position <= b position]]].
+	ordered := compilationErrors
+				asSortedArray: [:a :b | a severity > b severity or: [a severity = b severity and: [a position <= b position]]].
 	^ordered isEmpty ifFalse: [ordered first]!
 
 getCompletionSignatureFor: aString at: anInteger
@@ -2506,7 +2505,7 @@ textStyles: aCollectionOfScintillaTextStyles
 	"Set the text styles used to colour text in the receiver's instances. These must have the names used in the styler, which by default is a <SmalltalkStyler>."
 
 	| textStyles prevTextStyles |
-	textStyles := aCollectionOfScintillaTextStyles asArray sort: [:a :b | a name <= b name].
+	textStyles := aCollectionOfScintillaTextStyles asSortedArray: [:a :b | a name <= b name].
 	prevTextStyles := TextStyles.
 	TextStyles := textStyles.
 	self isLoadingOptions ifTrue: [^self].

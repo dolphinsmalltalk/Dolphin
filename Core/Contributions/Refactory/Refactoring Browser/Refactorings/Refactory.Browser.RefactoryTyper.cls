@@ -178,15 +178,14 @@ printType: aClass for: aString on: aStream
 			colTypes size > 1 ifTrue: [aStream nextPut: $)]].
 	colTypes notEmpty ifTrue: [aStream nextPut: $)]!
 
-printTypeFor: aString on: aStream 
+printTypeFor: aString on: aStream
 	| types |
-	types := (self guessTypesFor: aString) 
-				asSortedCollection: [:a :b | a name < b name].
+	types := (self guessTypesFor: aString) asSortedArray: [:a :b | a name < b name].
 	1 to: types size
 		do: 
-			[:i | 
+			[:i |
 			i == 1 ifFalse: [aStream nextPutAll: ' | '].
-			self 
+			self
 				printType: (types at: i)
 				for: aString
 				on: aStream]!

@@ -2117,10 +2117,10 @@ selections: anOrderedCollection
 	self updatePrimarySelection] ensure: [self isMouseClick: wasClick]!
 
 selectionsByHorizontalPosition
-	^self selections asSortedCollection: [:a :b | a x < b x]!
+	^self selections asSortedArray: [:a :b | a x < b x]!
 
 selectionsByVerticalPosition
-	^self selections asSortedCollection: [:a :b | a y < b y]!
+	^self selections asSortedArray: [:a :b | a y < b y]!
 
 setModified
 	"Private - Sets the modification flag for the receiver"

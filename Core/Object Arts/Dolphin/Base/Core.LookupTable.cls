@@ -131,11 +131,10 @@ basicValues
 
 copyElementsInto: newMe
 	"Private - Add the receiver's elements into the argument, newMe.
-	Private part of the implementation of hashed collection resizing. Override
-	to use keysAndValuesDo: to enumerate through the keys as well as the values."
+	Private part of the implementation of hashed collection resizing."
 
-	self keysAndValuesDo: [:key :value | newMe uncheckedAt: key put: value]
-!
+	1 to: self basicSize
+		do: [:i | (self basicAt: i) ifNotNil: [:key | newMe uncheckedAt: key put: (values at: i)]]!
 
 do: aMonadicValuable
 	"Evaluate <monadicValuable> argument, for each of the elements (values) 

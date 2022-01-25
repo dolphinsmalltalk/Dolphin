@@ -52,8 +52,7 @@ emitClassPoolOfClass: aClass
 	| literalConstants |
 	literalConstants := aClass classPool associations
 				select: [:each | each isImmutable and: [each value isSelfEvaluating]].
-	literalConstants asSortedCollection
-		do: [:each | self emitDeclarationForClass: aClass variable: each]!
+	literalConstants sort do: [:each | self emitDeclarationForClass: aClass variable: each]!
 
 emitDeclarationForClass: aClass variable: anAssociation
 	| value |
@@ -76,7 +75,7 @@ emitPackageBinaryVariables: aPackage
 		emitComment: 'Binary Globals';
 		cr.
 	"Note that it is assumed that the variable names have already been validated as suitable for legacy format (i.e. all are defined in Smalltalk)."
-	aPackage binaryVariableNames asSortedCollection do: 
+	aPackage binaryVariableNames asSortedArray do: 
 			[:each |
 			self
 				emitBinaryVariableDefinition: each;
@@ -126,7 +125,7 @@ emitPackageMethodNames: aPackage
 		nextPutAll: 'package ';
 		display: #methodNames;
 		cr.
-	(names asSortedCollection: SortedCollection caseSensitiveSortBlock) do: 
+	(names asSortedArray: SortedCollection caseSensitiveSortBlock) do: 
 			[:eachName |
 			stream
 				tab;
@@ -191,7 +190,7 @@ emitPackagePrerequisiteNames: aPackage
 	prereqs := (prereqs difference: new) union: old.
 	basePath := aPackage path.
 	legacyPaths := self legacyPackagePaths.
-	(prereqs asSortedCollection: [:a :b | a name <==> b name < 0]) do: 
+	(prereqs asSortedArray: [:a :b | a name <==> b name < 0]) do: 
 			[:each |
 			| filename |
 			filename := File fullPathOf: ((legacyPaths lookup: each name) ifNil: [each packagePathname])
@@ -224,7 +223,7 @@ emitPackageVariableReference: aBindingReference
 	stream nextPutAll: aBindingReference unqualifiedName!
 
 emitPaxNames: aCollectionOfSymbols
-	(aCollectionOfSymbols asSortedCollection: SortedCollection caseSensitiveSortBlock) do: 
+	(aCollectionOfSymbols asSortedArray: SortedCollection caseSensitiveSortBlock) do: 
 			[:each |
 			stream
 				tab;
@@ -343,7 +342,7 @@ fileOutPackageSourceVariables: aPackage
 	self
 		emitComment: 'Source Globals';
 		cr.
-	names asSortedCollection do: 
+	names asSortedArray do: 
 			[:var |
 			var value fileOutOn: self.
 			self cr]!
@@ -356,7 +355,7 @@ fileOutPackageVariableAliases: aPackage
 		emitComment: 'Global Aliases';
 		cr.
 	names := aPackage aliasVariableNames.
-	names asSortedCollection do: 
+	names asSortedArray do: 
 			[:var |
 			| name target |
 			"Anything we define in a legacy format package must in the Smalltalk namespace."
@@ -393,7 +392,7 @@ fileOutPoolDictionary: aPoolDictionary
 		nextPutAll: ' named: ';
 		print: poolName.
 	self emitChunk: ')'.
-	aPoolDictionary associations asSortedCollection do: 
+	aPoolDictionary associations sort do: 
 			[:a |
 			| value |
 			stream

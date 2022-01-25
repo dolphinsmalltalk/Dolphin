@@ -1344,8 +1344,8 @@ removeLooseMethod: aCompiledMethod
 	"Private - Remove the <CompiledMethod> argument which is directly owned by the receiver
 	(i.e. a loose method) from this package. Do not fire any events."
 
-	self assert: [(self includesClass: aCompiledMethod methodClass) not].
-	self removeMethodNames: {MethodName class: aCompiledMethod methodClass selector: aCompiledMethod selector}!
+	self
+		removeMethodNames: {MethodName class: aCompiledMethod methodClass selector: aCompiledMethod selector}!
 
 removeMethod: aCompiledMethod
 	"Remove the <CompiledMethod> argument from the list of loose methods owned by  the receiver, and answer that method.
@@ -1782,7 +1782,7 @@ uninstallClasses
 	classes := self remainingClasses.
 
 	"Remove classes, bottom up so as to remove subclasses first"
-	classes := classes asArray sort: [:a :b | (self depthOfClass: a) > (self depthOfClass: b)].
+	classes := classes asSortedArray: [:a :b | (self depthOfClass: a) > (self depthOfClass: b)].
 	classes do: 
 			[:aClass |
 			"Notification signal: 'Removing class ', aClass name."

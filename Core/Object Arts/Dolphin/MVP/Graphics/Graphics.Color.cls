@@ -1077,7 +1077,7 @@ initializeCommonColors
 			self addNamed: n color: color.
 			color isTransparent ifFalse: [commonColors add: color]].
 	self addClassVariable: 'CommonColors'
-		value: (commonColors asArray sort: 
+		value: (commonColors asSortedArray: 
 					[:c1 :c2 |
 					| a b |
 					a := c1 hsv.

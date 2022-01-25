@@ -30,6 +30,11 @@ asArray
 
 	^self!
 
+asArrayCopy
+	"Answer an instance of <Array> containing the same elements as the receiver, but not the same object as the receiver."
+
+	^self shallowCopy!
+
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see.
 	Print an Array in the simplest possible form, ideally as a literal if all elements are literals, or failing that as a brace array if all elements have self-evaluating printStrings, or failing that in general collection printString form."
@@ -155,6 +160,7 @@ storeOn: aStream
 !Core.Array categoriesForMethods!
 addAnsweringIndex:!adding!public! !
 asArray!converting!public! !
+asArrayCopy!converting!public! !
 displayOn:!printing!public! !
 isLiteral!public!testing! !
 isLiteral:!public!testing! !

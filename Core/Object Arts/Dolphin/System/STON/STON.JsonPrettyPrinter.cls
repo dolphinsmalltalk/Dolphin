@@ -35,7 +35,7 @@ encodeMap: pairs
 			[| keys |
 			level := level + 1.
 			"In Json mode the keys must be strings, so we know we can sort them for stable ordering."
-			keys := pairs keys asSortedCollection.
+			keys := pairs keys asSortedArray.
 			keys do: 
 					[:key |
 					self newlineIndent.

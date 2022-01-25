@@ -168,12 +168,12 @@ warnOfUnlistedContent
 	unpackaged isEmpty
 		ifFalse: 
 			[Notification signal: 'The image contains the following unpackaged classes: '
-						, unpackaged asSortedCollection asArray fullPrintString].
+						, unpackaged asSortedArray fullPrintString].
 	unpackaged := Package manager unpackagedVariables.
 	unpackaged isEmpty
 		ifFalse: 
 			[Notification signal: 'The image contains the following unpackaged variables: '
-						, unpackaged asSortedCollection asArray fullPrintString].
+						, unpackaged asSortedArray fullPrintString].
 	unlistedContent := self unlistedPrerequisites.
 	unlistedContent isEmpty
 		ifFalse: 

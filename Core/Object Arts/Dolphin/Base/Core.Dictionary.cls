@@ -522,7 +522,7 @@ storeOn: aStream
 	evaluated will answer a collection similar to the receiver."
 
 	aStream nextPutAll: '(('.
-	self class storeOn: aStream.
+	self storingClass storeOn: aStream.
 	aStream nextPutAll: ' new)'.
 	self keysAndValuesDo: 
 			[:key :value |

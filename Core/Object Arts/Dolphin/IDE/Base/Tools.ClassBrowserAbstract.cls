@@ -1698,7 +1698,7 @@ printCaptionForClass: aClass on: aWriteStream
 					^self]].
 	self printClassTitle: aClass on: aWriteStream.
 	aWriteStream nextPutAll: ' ('.
-	aClass instanceClass categories asSortedCollection 
+	aClass instanceClass categories asSortedArray 
 		do: [:category | aWriteStream nextPutAll: category name]
 		separatedBy: [aWriteStream nextPutAll: ', '].
 	aWriteStream nextPut: $)!

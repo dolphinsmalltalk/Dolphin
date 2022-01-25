@@ -869,7 +869,7 @@ savePackages: aCollection toFolder: aPackageFolder
 		print: aPackageFolder folderName;
 		nextPut: $:;
 		cr.
-	(aCollection asSortedCollection: Package defaultSortBlock) do: 
+	(aCollection asSortedArray: Package defaultSortBlock) do: 
 			[:each |
 			msg
 				crtab;

@@ -294,7 +294,7 @@ enumsWithPrefix: aString
 	"
 
 	^(Gdiplus classConstants select: [:each | each key beginsWith: aString])
-		asSortedCollection: [:a :b | a value < b value]!
+		asSortedArray: [:a :b | a value < b value]!
 
 enumsWrapMode
 	"Answer a key-value collection of Win32 WrapMode enumerated types.
@@ -342,8 +342,8 @@ guidsWithPrefix: aString
 		self guidsWithPrefix: 'Encoder'
 	"
 
-	^((self guidNamesWithPrefix: aString) collect: [:e | e -> (GdiplusGUIDs at: e)]) 
-		asSortedCollection: [:a :b | a key < b key]!
+	^((self guidNamesWithPrefix: aString) collect: [:e | e -> (GdiplusGUIDs at: e)])
+		asSortedArray: [:a :b | a key < b key]!
 
 showExample: anImage
 	"Display anImage."

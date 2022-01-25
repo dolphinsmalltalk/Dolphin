@@ -36,7 +36,7 @@ encodeMap: pairs
 			level := level + 1.
 			keys := pairs keys.
 			"Attempt to sort the keys so the output order is stable if possible"
-			[keys := keys asSortedCollection] on: Error do: [:ex | ].
+			[keys := keys asSortedArray] on: Error do: [:ex | ].
 			keys do: 
 					[:key |
 					self

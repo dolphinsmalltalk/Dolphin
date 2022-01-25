@@ -33,7 +33,7 @@ browseTrace
 		trace first first browse]!
 
 buildChildNodes: aCollection for: aTreeNode
-	^(aCollection asSortedCollection: Package defaultSortBlock) collect: [:p | p -> aTreeNode]!
+	^(aCollection asSortedArray: Package defaultSortBlock) collect: [:p | p -> aTreeNode]!
 
 childrenFor: aTreeNode 
 	"Private - Answer a <sequencedReadableCollection> of the child nodes below the package
@@ -226,7 +226,7 @@ queryMoveObjects: aCollection toPackage: aPackage
 		print: aPackage name;
 		nextPut: $?;
 		cr.
-	sorted := aCollection asSortedCollection: [:a :b | a displayString <= b displayString].
+	sorted := aCollection asSortedArray: [:a :b | a displayString <= b displayString].
 	max := 30.
 	sorted
 		from: 1

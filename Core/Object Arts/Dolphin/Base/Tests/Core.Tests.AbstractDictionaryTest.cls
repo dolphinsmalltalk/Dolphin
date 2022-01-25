@@ -42,7 +42,7 @@ newCollection: anArray
 newDictionary
 	| dictionary |
 	dictionary := self newEmpty.
-	dictionary at: #key put: 1.
+	dictionary at: #key put: (self assimilate: 1).
 	^dictionary!
 
 newEmpty
@@ -51,10 +51,10 @@ newEmpty
 testAdd
 	| subject assoc2 |
 	subject := self newDictionary.
-	assoc2 := subject newAssociation: #key2 value: 2.
+	assoc2 := subject newAssociation: #key2 value: (self assimilate: 2).
 	self assert: (subject add: assoc2) identicalTo: assoc2.
 	self assert: (subject associationAt: #key2) equals: assoc2.
-	assoc2 := subject newAssociation: #key value: 3.
+	assoc2 := subject newAssociation: #key value: (self assimilate: 3).
 	self assert: (subject add: assoc2) identicalTo: assoc2.
 	self assert: (subject associationAt: #key) equals: assoc2!
 
@@ -80,7 +80,7 @@ testAssociations
 			| key value |
 			key := self makeKey: each.
 			value := self assimilate: each.
-			expected add: (subject associationClass key: key value: value).
+			expected add: (subject associationClass key: key value: value value).
 			subject at: key put: value].
 	expected := expected asArray.
 	actual := subject associations.
@@ -97,7 +97,7 @@ testAssociationsDo
 			| key value |
 			key := self makeKey: each.
 			value := self assimilate: each.
-			expected add: (subject associationClass key: key value: value).
+			expected add: (subject associationClass key: key value: value value).
 			subject at: key put: value].
 	actual := Set new.
 	subject associationsDo: [:each | actual add: each].
@@ -134,7 +134,7 @@ testAtIfAbsentPutClean
 testAtIfAbsentPutModifyingCollection
 	"Test at:ifAbsentPut: when modifying the collection in the block"
 
-	| keys key3 key1 key2 dictionary |
+	| keys key3 key1 key2 dictionary value1 value3 |
 	dictionary := self newEmpty.
 	key1 := self makeKey: $a.
 
@@ -143,21 +143,23 @@ testAtIfAbsentPutModifyingCollection
 	self assert: (dictionary findKeyOrNil: key3) equals: (dictionary findKeyOrNil: key1).
 	key2 := self makeKey: $b.
 	self deny: key3 equals: key2.
+	value3 := self assimilate: 4.
+	value1 := self assimilate: 1.
 	dictionary at: key1
 		ifAbsentPut: 
-			[dictionary at: key3 put: 4.
-			1].
+			[dictionary at: key3 put: value3.
+			value1].
 	self assert: dictionary size equals: 2.
-	self assert: (dictionary at: key3) identicalTo: 4.
-	self assert: (dictionary at: key1) identicalTo: 1.
+	self assert: (dictionary at: key3) value identicalTo: value3 value.
+	self assert: (dictionary at: key1) value identicalTo: value1 value.
 	"Another test, this time attempting to create duplicate key entries"
 	dictionary := self newEmpty.
 	dictionary at: key1
 		ifAbsentPut: 
 			[dictionary
-				at: key3 put: 2;
-				at: key2 put: 3;
-				at: key1 put: 10].
+				at: key3 put: (self assimilate: 2);
+				at: key2 put: (self assimilate: 3);
+				at: key1 put: (self assimilate: 10)].
 	keys := OrderedCollection new.
 	dictionary keysDo: [:each | keys addLast: each].
 	self assert: keys asSortedCollection asArray equals: {key1. key2. key3}!
@@ -166,20 +168,20 @@ testAtIfAbsentPutValue
 	| initialSize x dictionary |
 	dictionary := self newDictionary.
 	initialSize := dictionary size.
-	x := Object new.
-	self assert: (dictionary at: #key ifAbsentPutValue: x) identicalTo: 1.
+	x := self assimilate: Object new.
+	self assert: (dictionary at: #key ifAbsentPutValue: x) value identicalTo: 1.
 	self assert: dictionary size identicalTo: initialSize.
-	self assert: (dictionary at: #value ifAbsentPutValue: x) identicalTo: x.
+	self assert: (dictionary at: #value ifAbsentPutValue: x) value identicalTo: x value.
 	self assert: dictionary size identicalTo: initialSize + 1.
-	self assert: (dictionary at: #value ifAbsentPutValue: x) identicalTo: x.
+	self assert: (dictionary at: #value ifAbsentPutValue: x) value identicalTo: x value.
 	self assert: dictionary size identicalTo: initialSize + 1.
-	self assert: (dictionary at: #value ifAbsentPutValue: 3) identicalTo: x.
+	self assert: (dictionary at: #value ifAbsentPutValue: 3) value identicalTo: x value.
 	self assert: dictionary size identicalTo: initialSize + 1!
 
 testCyclicRefPrinting
 	| dictionary |
 	dictionary := self newDictionary.
-	dictionary at: dictionary put: dictionary.
+	dictionary at: dictionary put: (self assimilate: dictionary).
 	self
 		assert: 0 < (dictionary debugPrintString indexOfSubCollection: '... a cyclic ref to ' startingAt: 1)!
 
@@ -188,7 +190,7 @@ testDeepCopy
 
 	| copy any dictionary |
 	dictionary := self newDictionary.
-	1 to: 5 do: [:i | dictionary at: (Character value: $A codePoint + i) put: i].
+	1 to: 5 do: [:i | dictionary at: (Character value: $A codePoint + i) put: (self assimilate: i)].
 	"Ensure that the hashed collection is the standard capacity for size of contents as the assertIs:deepCopyOf: method expects
 	the basic size of the two objects to be the same (which is not relevant for hashed collections)."
 	dictionary shrink.
@@ -212,18 +214,18 @@ testEquals
 	dict2 := self newDictionary.
 	self assertCommutativelyEqual: dict1 other: dict2.
 	"Extra {key,value} in one Dictionary - not equal"
-	dict2 at: 'key2' put: 'value2' copy.
+	dict2 at: 'key2' put: (self assimilate: 'value2' copy).
 	self denyCommutativelyEqual: dict1 other: dict2.
 	"Equal keys and values (two pairs)"
-	dict1 at: 'key2' put: 'value2' copy.
+	dict1 at: 'key2' put: (self assimilate: 'value2' copy).
 	self assertCommutativelyEqual: dict1 other: dict2.
 	"Value differs"
-	dict1 at: 'key3' put: 'value3' copy.
-	dict2 at: 'key3' put: 'value3a' copy.
+	dict1 at: 'key3' put: (self assimilate: 'value3' copy).
+	dict2 at: 'key3' put: (self assimilate: 'value3a' copy).
 	self denyCommutativelyEqual: dict1 other: dict2.
 	"Key differs"
 	dict2 removeKey: 'key3'.
-	dict2 at: 'key4' put: 'value3' copy.
+	dict2 at: 'key4' put: (self assimilate: 'value3' copy).
 	self denyCommutativelyEqual: dict1 other: dict2
 
 	"Dictionaries and LookupTables are equal if they have the same elements"!
@@ -242,16 +244,18 @@ testNilKey
 	self should: [dictionary at: nil ifAbsentPut: [1]] raise: Error!
 
 testRemoveAssociationAt
-	| dictionary |
+	| dictionary removed |
 	dictionary := self newDictionary.
-	self assert: (dictionary removeAssociationAt: #key)
-		equals: (dictionary associationClass key: #key value: 1).
+	removed := dictionary removeAssociationAt: #key.
+	self assert: removed isKindOf: dictionary associationClass.
+	self assert: removed key identicalTo: #key.
+	self assert: removed value value equals: 1.
 	self should: [dictionary removeAssociationAt: #key] raise: NotFoundError!
 
 testRemoveKey
 	| dictionary |
 	dictionary := self newDictionary.
-	self assert: (dictionary removeKey: #key) identicalTo: 1.
+	self assert: (dictionary removeKey: #key) value identicalTo: 1.
 	self should: [dictionary removeKey: #key] raise: NotFoundError!
 
 testStrongTalkTests

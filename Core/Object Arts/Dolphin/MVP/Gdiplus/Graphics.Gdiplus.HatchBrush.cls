@@ -58,7 +58,7 @@ exampleGdipHBStyles
 	bitmap := Bitmap extent: 800 @ 530.
 	font := Font name: 'Arial' pointSize: 10.
 	styles := self enumsHatchStyle.
-	styles removeLast.	"HatchStyleTotal doesn't work"
+	styles := styles copyFrom: 1 to: styles size - 1.	"HatchStyleTotal doesn't work"
 	styles keysAndValuesDo: 
 			[:i :e |
 			brush := HatchBrush

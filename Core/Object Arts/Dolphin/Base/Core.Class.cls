@@ -330,7 +330,7 @@ classCategories
 classCategories: categoryCollection
 	"Private - Set the class categories of the receiver to categoryCollection."
 
-	classCategories := categoryCollection isEmpty ifFalse: [categoryCollection asArray sort]!
+	classCategories := categoryCollection isEmpty ifFalse: [categoryCollection asSortedArray]!
 
 classConstants
 	"Answer a <Set> of <VariableBinding>s, being the class constants of the receiver."

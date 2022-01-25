@@ -29,7 +29,7 @@ addCategory: aCategory
 		ifTrue: 
 			[| names moniker |
 			names := Category.Separator split: name.
-			moniker := String writeStream.
+			moniker := String writeStream: name size.
 			1 to: names size - 1
 				do: 
 					[:i |
