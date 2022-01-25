@@ -35,6 +35,12 @@ forwardTo: anObject
 
 	^messages inject: nil into: [:answer :each | each forwardTo: anObject]!
 
+freeze
+	"The sequence is complete; freeze it so that further messages cannot be added."
+
+	messages := messages asArray.
+	^self!
+
 includes: aMessage
 	"Answer whether the argument, anObject, is equal to one of the receiver's elements."
 
@@ -82,6 +88,7 @@ add:!adding!public! !
 add:afterIndex:!adding!public! !
 addAll:afterIndex:!adding!public! !
 forwardTo:!operations!public! !
+freeze!operations!public! !
 includes:!public!searching! !
 initialize!initializing!private! !
 messages!accessing!public! !

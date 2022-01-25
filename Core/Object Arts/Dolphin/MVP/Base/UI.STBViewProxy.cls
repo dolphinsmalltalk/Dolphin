@@ -146,8 +146,7 @@ setView: aView
 	size := class instSize.
 	instVars := Array new: size.
 	1 to: size do: [:i | instVars at: i put: (aView instVarAt: i)].
-	state := aView state.
-	state messages: state messages asArray.
+	self state: aView state.
 	aView isOpen
 		ifTrue: 
 			[placement := aView placement.
@@ -162,6 +161,10 @@ setView: aView
 
 state
 	^state!
+
+state: aMessageSequence
+	state := aMessageSequence.
+	state freeze!
 
 stbFixup: inFiler at: anInteger
 	"We can't answer the real object at this stage as it is difficult to restore the
@@ -231,6 +234,7 @@ restoreView!converting!private! !
 setEvents:!events!private! !
 setView:!accessing!public! !
 state!accessing!public! !
+state:!accessing!public! !
 stbFixup:at:!converting!public! !
 subViews!accessing!public! !
 version!accessing!public! !

@@ -668,20 +668,6 @@ onPositionChanged: aPositionEvent
 			self validateLayout].
 	self presenter trigger: #positionChanged: with: aPositionEvent!
 
-onPostSaveImage
-	"Triggered by the SessionManager after saving the image.
-	Remove the state property of the window that was saved by #onPreSaveImage"
-
-	self removePropertyAt: #state ifAbsent: nil!
-
-onPreSaveImage
-	"Triggered by the SessionManager prior to saving the image.
-	Save the state of the window as a property so it can be restored on
-	image startup. We only need to do this if the receiver is a true top
-	level View"
-
-	self isTopView ifTrue: [self propertyAt: #state put: self state]!
-
 onSettingChanged: aSettingsChangeEvent
 	SessionManager current onSettingChanged: aSettingsChangeEvent.
 	self presenter trigger: #settingChanged: with: aSettingsChangeEvent.
@@ -1294,8 +1280,6 @@ onDrawMenuItem:!event handling-win32!public! !
 onGetCursor:!event handling!public! !
 onIdleEntered!event handling!public! !
 onPositionChanged:!event handling!public! !
-onPostSaveImage!event handling!public! !
-onPreSaveImage!event handling!public! !
 onSettingChanged:!event handling-win32!public! !
 onStateRestored!event handling!private! !
 onSubViewRemoved:!event handling!public! !

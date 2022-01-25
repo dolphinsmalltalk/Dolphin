@@ -24,6 +24,7 @@ recordStateOf: aView forRecreate: aBoolean
 	view := aView.
 	aBoolean ifTrue: [view setStateRestoring].
 	state := aView state.
+	state freeze.
 	placement := aView placement.
 	subViewStates := aView subViews
 				collect: [:each | ViewState recordStateOf: each forRecreate: aBoolean]!

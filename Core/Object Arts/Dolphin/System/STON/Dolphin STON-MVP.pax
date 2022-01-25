@@ -207,7 +207,7 @@ fromSton:!public!ston! !
 !UI.ReferenceView methodsFor!
 
 stonExtras
-	^{#state -> self state}! !
+	^{#state -> self state freeze}! !
 !UI.ReferenceView categoriesForMethods!
 stonExtras!public!ston! !
 !
@@ -246,7 +246,7 @@ stonAllInstVarNames!public! !
 !UI.View methodsFor!
 
 stonExtras
-	^{#state -> self state. #subViews -> self subViews}!
+	^{#state -> self state freeze. #subViews -> self subViews}!
 
 stonOn: stonWriter
 	"At present this is more experiment than anything useful. To show the potential though try Display-It on the following in a workspace:
