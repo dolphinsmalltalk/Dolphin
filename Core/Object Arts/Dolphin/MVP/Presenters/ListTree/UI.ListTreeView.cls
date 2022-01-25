@@ -783,7 +783,8 @@ hasHotTracking
 	"answer whether the receiver has the hot-tracking style"
 
 	"this seems to be the nearest equivalent"
-	^ self listViewStyleAllMask: LVS_EX_TWOCLICKACTIVATE.!
+
+	^lvStyle allMask: LVS_EX_TWOCLICKACTIVATE!
 
 hasHotTracking: aBool
 	"set whether the receiver has the hot-tracking style"
@@ -2298,7 +2299,7 @@ stateImageExtent
 	"answer a Point indicating the size we use for state images.
 	Note that the state images don't visibly fill the extent"
 
-	^SystemMetrics current smallIconExtent!
+	^Icon.SmallExtent!
 
 stateImageManager
 	"answer the shared ImageMaster that contains the image lists for the

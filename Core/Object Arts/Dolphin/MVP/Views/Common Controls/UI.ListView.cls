@@ -185,34 +185,30 @@ autoResizeColumns
 	self isReportMode
 		ifTrue: [self autoResizeColumns: (self adjustForStaticEdgeBug: self clientRectangle) width]!
 
-autoResizeColumns: clientWidth
+autoResizeColumns: anInteger
 	"Private - Attempt to share the specified <integer> width (which must be the client width of the view,
 	after subtracting for borders and such) between all automagically resizeable columns in the receiver.
 	This only has a visible effect in #report mode."
 
 	| cols count autoCols fixedWidth idealWidth remainingWidth |
-	fixedWidth := 0.
-	autoCols := 0.
+	fixedWidth := autoCols := 0.
 	cols := self allColumns.
 	count := cols size.
 	1 to: count
 		do: 
 			[:i |
-			| each |
-			each := cols at: i.
-			each isAutoResize
+			(cols at: i) isAutoResize
 				ifTrue: [autoCols := autoCols + 1]
 				ifFalse: [fixedWidth := fixedWidth + (self lvmGetColumnWidth: i - 1)]].
 	autoCols == 0 ifTrue: [^self].
-	remainingWidth := clientWidth - fixedWidth.
+	remainingWidth := anInteger - fixedWidth.
 	remainingWidth <= 0 ifTrue: [^self].
 	"Split the available width between the auto columns - note the use of fractional arithmetic to avoid accumulating a rounding error"
 	idealWidth := remainingWidth / autoCols.
 	"Suppress painting while changing the columns widths as, if there are multiple auto-resize columns, there is no point repainting the intermediate states"
 	self noRedrawDo: 
 			[| actualAccum idealAccum |
-			idealAccum := 0.
-			actualAccum := 0.
+			idealAccum := actualAccum := 0.
 			1 to: count
 				do: 
 					[:i |
@@ -690,7 +686,7 @@ hasBorderSelect
 	rather than the background colour. This is not available in pre-IE5 versions of the CommCtrl
 	Library, and only has any effect in the #largeIcons and #tileIcons modes."
 
-	^self listViewStyleAllMask: LVS_EX_BORDERSELECT!
+	^lvStyle allMask: LVS_EX_BORDERSELECT!
 
 hasBorderSelect: aBoolean 
 	"Set whether the receiver displays selected by changing the border colour of an item rather
@@ -707,7 +703,7 @@ hasButtons
 hasCheckBoxes
 	"Answer whether the receiver has check-boxes associated with its items. This feature is only supported in non-virtual mode."
 
-	^(self listViewStyleAllMask: LVS_EX_CHECKBOXES) and: [self isVirtual not]!
+	^(lvStyle allMask: LVS_EX_CHECKBOXES) and: [self isVirtual not]!
 
 hasCheckBoxes: aBoolean
 	"Set whether the receiver has check-boxes associated with its items. Note that check-boxes are only supported when in non-virtual mode, and are also mutually exclusive with any other use of state images in the list."
@@ -740,7 +736,7 @@ hasColumnImages
 	"Answer whether the receiver displays images for additional columns.
 	This is not available in pre-IE4 versions of the CommCtrl Library."
 
-	^self listViewStyleAllMask: LVS_EX_SUBITEMIMAGES!
+	^lvStyle allMask: LVS_EX_SUBITEMIMAGES!
 
 hasColumnImages: aBoolean 
 	"Sets the receiver to have images for individual columns depending on the value of aBoolean."
@@ -751,7 +747,7 @@ hasFlatScrollbars
 	"Answer whether the receiver has the new flat scrollbars style.
 	This is not available in pre-IE4 versions of the CommCtrl Library."
 
-	^self listViewStyleAllMask: LVS_EX_FLATSB!
+	^lvStyle allMask: LVS_EX_FLATSB!
 
 hasFlatScrollbars: aBoolean
 	"Set whether the receiver has the new flat scrollbars style.
@@ -763,7 +759,7 @@ hasFullRowSelect
 	"Answer whether the receiver has the full row select style.
 	This is not available in pre-IE4 versions of the CommCtrl Library."
 
-	^self listViewStyleAllMask: LVS_EX_FULLROWSELECT!
+	^lvStyle allMask: LVS_EX_FULLROWSELECT!
 
 hasFullRowSelect: aBoolean
 	"Sets the receiver to have full row select or not depending on the 
@@ -775,7 +771,7 @@ hasGridLines
 	"Answer whether the receiver has the gridlines style.
 	This is not available in pre-IE4 versions of the CommCtrl Library."
 
-	^self listViewStyleAllMask: LVS_EX_GRIDLINES!
+	^lvStyle allMask: LVS_EX_GRIDLINES!
 
 hasGridLines: aBoolean
 	"Sets the receiver to have grid lines or not depending on the 
@@ -787,7 +783,7 @@ hasHeaderDragDrop
 	"Answer whether the receiver has the header drag drop style.
 	This is not available in pre-IE4 versions of the CommCtrl Library."
 
-	^self listViewStyleAllMask: LVS_EX_HEADERDRAGDROP!
+	^lvStyle allMask: LVS_EX_HEADERDRAGDROP!
 
 hasHeaderDragDrop: aBoolean
 	"Sets the receiver to have header drag drop or not depending on the 
@@ -799,7 +795,7 @@ hasHotTracking
 	"Answer whether the receiver has the track select style. This means that the item under the cursor is automatically selected when hovered over for a period of time. 
 	See [Extended List-View Styles](https://docs.microsoft.com/en-us/windows/win32/controls/extended-list-view-styles)."
 
-	^self listViewStyleAllMask: LVS_EX_TRACKSELECT!
+	^lvStyle allMask: LVS_EX_TRACKSELECT!
 
 hasHotTracking: aBoolean 
 	"Sets the receiver to have track select or not depending on the 
@@ -813,7 +809,7 @@ hasInfoTips
 	info tips at all, including the default tips which display the full text
 	of clipped items."
 
-	^self listViewStyleAllMask: LVS_EX_INFOTIP!
+	^lvStyle allMask: LVS_EX_INFOTIP!
 
 hasInfoTips: aBoolean
 	"Sets whether the receiver has Info. Tips.
@@ -979,7 +975,7 @@ isDoubleBuffered
 	"Answer whether the list display is double-buffered to avoid flicker. This is useful for
 	lists that are frequently updated by background events."
 
-	^self listViewStyleAllMask: LVS_EX_DOUBLEBUFFER!
+	^lvStyle allMask: LVS_EX_DOUBLEBUFFER!
 
 isDoubleBuffered: aBoolean 
 	"Set whether the list display is double-buffered to avoid flicker. This is useful for
@@ -1081,12 +1077,6 @@ listMode
 	"Place the receiver in list mode"
 
 	self viewMode: #list!
-
-listViewStyleAllMask: anInteger
-	"Private - Answers true if the list views extended style bits contains all the bits in anInteger"
-
-	^lvStyle allMask: anInteger.
-!
 
 listViewStyleMask: mask set: aBoolean
 	"Private - Sets/clears the list view extended style bits in the <integer>, mask, 
@@ -1695,11 +1685,10 @@ onDisplayDetailsRequired: anLVITEM
 	"Image Request?"
 	(mask allMask: LVIF_IMAGE)
 		ifTrue: 
-			[| imgIdx |
-			imgIdx := ((((column notNil and: [self hasColumnImages]) ifTrue: [column] ifFalse: [self])
+			[anLVITEM
+				iImage: ((((column notNil and: [self hasColumnImages]) ifTrue: [column] ifFalse: [self])
 						imageFromRow: rowObject) ?? NoImageIndex)
-						- 1.
-			anLVITEM iImage: imgIdx].
+						- 1].
 
 	"Text request?"
 	(mask allMask: LVIF_TEXT)
@@ -2452,7 +2441,6 @@ largeIconExtent:!constants!public! !
 largeIconMode!commands!public! !
 lastSelIndices!accessing!private! !
 listMode!commands!public! !
-listViewStyleAllMask:!accessing-styles!private! !
 listViewStyleMask:set:!accessing-styles!private! !
 lvFlags!accessing!private! !
 lvmApproximateViewRect:cx:cy:!geometry!private! !
