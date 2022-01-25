@@ -25,7 +25,7 @@ add: leafObject asChildOf: parentObject
 	overwritten with the new object). If the parent does not exist then raise a <NotFoundError>."
 
 	| parentNode |
-	(self lookupNode: leafObject) ifNotNil: [:childNode | ^childNode object].
+	(objectNodeMap lookup: leafObject) ifNotNil: [:childNode | ^childNode object].
 	parentNode := parentObject isNil ifTrue: [anchorNode] ifFalse: [self getNodeFor: parentObject].
 	self addChild: leafObject parentNode: parentNode.
 	self
@@ -41,7 +41,7 @@ add: anObject asChildOfNode: aTreeNode
 	answered and no change is made to the tree (an invariant of TreeModels is that they may
 	not contain duplicate nodes)."
 
-	^(self lookupNode: anObject) ifNil: [self addChild: anObject parentNode: aTreeNode]!
+	^(objectNodeMap lookup: anObject) ifNil: [self addChild: anObject parentNode: aTreeNode]!
 
 addChild: anObject parentNode: parentNode
 	"Private - Create a child leaf and add under the specified parent node.
@@ -93,7 +93,7 @@ collapse: anObject ifAbsent: exceptionHandler
 	exist in the tree then answer the result of evaluating the <niladicValuable>, 
 	exceptionHandler, otherwise answer anObject."
 
-	^(self lookupNode: anObject)
+	^(objectNodeMap lookup: anObject)
 		ifNil: [exceptionHandler value]
 		ifNotNil: 
 			[:node |
@@ -136,7 +136,7 @@ getNodeFor: anObject
 	"Private - Answer the <TreeNode> that represents the <Object>, anObject, which
 	must be an element of this tree model."
 
-	^(self lookupNode: anObject) ifNil: [self errorNotFound: anObject]!
+	^(objectNodeMap lookup: anObject) ifNil: [self errorNotFound: anObject]!
 
 hasChildren: anObject
 	"Answer true if anObject has children within the hierarchy managed by the
@@ -152,17 +152,12 @@ includes: anObject
 	"Answer whether the argument, anObject, is one of the elements of the receiver.
 	Uses the receiver's searchPolicy for comparison."
 
-	^(self lookupNode: anObject) notNil!
+	^(objectNodeMap lookup: anObject) notNil!
 
 initialize
 	"Private - Initialize the receiver"
 
 	self reset!
-
-lookupNode: anObject
-	"Private - Answers the <TreeNode> in the receiver that corresponds to anObject, or nil if anObject does not exist in the tree."
-
-	^objectNodeMap lookup: anObject!
 
 move: anObject asChildOf: aParentObject
 	"Moves anObject in the receiver to be a child of aParentObject. If
@@ -198,7 +193,7 @@ nodeClass
 	^TreeNode!
 
 parentNodeOf: anObject
-	^(self lookupNode: anObject) ifNotNil: [:node | node parent]!
+	^(objectNodeMap lookup: anObject) ifNotNil: [:node | node parent]!
 
 parentOf: anObject
 	"Answer the parent of anObject within the hierarchy managed by the
@@ -210,12 +205,12 @@ parentOf: anObject
 		ifNil: [self errorNotFound: anObject]
 		ifNotNil: [:parent | parent object]!
 
-remove: anObject ifAbsent: aNiladicValuable 
+remove: anObject ifAbsent: aNiladicValuable
 	"Removes anObject from the receiver. If anObject does not exist in the tree then answer the
 	result of evaluating the <niladicValuable> argument, otherwise answer anObject."
 
 	| node parentNode |
-	node := self lookupNode: anObject.
+	node := objectNodeMap lookup: anObject.
 	node isNil ifTrue: [^aNiladicValuable value].
 	"Inform observers before the remove (item is still a valid element of the model)"
 	self trigger: #removingItem: with: anObject.
@@ -223,7 +218,7 @@ remove: anObject ifAbsent: aNiladicValuable
 	parentNode removeChildNode: node.
 	self forgetNode: node.
 	"Inform observers after the remove (item is no longer in the model)"
-	self 
+	self
 		trigger: #item:removedFromParent:
 		with: anObject
 		with: parentNode object.
@@ -267,7 +262,6 @@ getNodeFor:!hierarchy!private! !
 hasChildren:!hierarchy!public!testing! !
 includes:!hierarchy!public!searching! !
 initialize!initializing!private! !
-lookupNode:!operations!private! !
 move:asChildOf:!public!updating! !
 newNode:!adding!private! !
 nodeClass!constants!public! !
