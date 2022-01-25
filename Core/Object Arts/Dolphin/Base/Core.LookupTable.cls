@@ -32,6 +32,7 @@ allKeysSatisfy: aMonadicValuable
 
 	"Implementation note: Override to avoid superclass full-block implementation."
 
+	tally == 0 ifTrue: [^true].
 	1 to: self basicSize
 		do: [:i | (self basicAt: i) ifNotNil: [:key | (aMonadicValuable value: key) ifFalse: [^false]]].
 	^true!
@@ -41,6 +42,7 @@ allSatisfy: aMonadicValuable
 
 	"Implementation note: Override to avoid superclass full-block implementation."
 
+	tally == 0 ifTrue: [^true].
 	1 to: self basicSize
 		do: [:i | ((self basicAt: i) isNil or: [aMonadicValuable value: (values at: i)]) ifFalse: [^false]].
 	^true!
@@ -50,6 +52,7 @@ anyKeysSatisfy: aMonadicValuable
 
 	"Implementation note: Override to avoid superclass full-block implementation."
 
+	tally == 0 ifTrue: [^false].
 	1 to: self basicSize
 		do: [:i | (self basicAt: i) ifNotNil: [:key | (aMonadicValuable value: key) ifTrue: [^true]]].
 	^false!
@@ -59,6 +62,7 @@ anySatisfy: aMonadicValuable
 
 	"Implementation note: Override to avoid superclass full-block implementation."
 
+	tally == 0 ifTrue: [^false].
 	1 to: self basicSize
 		do: [:i | ((self basicAt: i) notNil and: [aMonadicValuable value: (values at: i)]) ifTrue: [^true]].
 	^false!
@@ -133,15 +137,15 @@ copyElementsInto: newMe
 	self keysAndValuesDo: [:key :value | newMe uncheckedAt: key put: value]
 !
 
-do: aMonadicValuable 
+do: aMonadicValuable
 	"Evaluate <monadicValuable> argument, for each of the elements (values) 
 	of the receiver. Answers the receiver."
 
 	"Implementation Note: We could implement in terms of #keyAndValuesDo:, but 
 	performance is important here."
 
-	1 to: self basicSize
-		do: [:i | (self basicAt: i) ifNotNil: [aMonadicValuable value: (values at: i)]]!
+	tally == 0 ifTrue: [^self].
+	1 to: self basicSize do: [:i | (self basicAt: i) ifNotNil: [aMonadicValuable value: (values at: i)]]!
 
 findElementOrNil: anObject
 	"Private - Answer the index of the specified key object in the receiver, 
@@ -224,17 +228,19 @@ keyAtValue: value ifAbsent: operation
 		ifTrue: [operation value]
 		ifFalse: [self basicAt: index]!
 
-keysAndValuesDo: operation 
+keysAndValuesDo: operation
 	"Evaluate the dyadic valuable, operation, for each key/value pair in the receiver.
 	Implementation Note: As LookupTables do not store Associations, we must
 	override superclass implementation."
 
+	tally == 0 ifTrue: [^self].
 	1 to: self basicSize
 		do: [:i | (self basicAt: i) ifNotNil: [:key | operation value: key value: (values at: i)]]!
 
 keysDo: operation 
 	"Evaluate the <monadicValuable>, operation, for each of the receiver's keys."
 
+	tally == 0 ifTrue: [^self].
 	1 to: self basicSize do: [:i | (self basicAt: i) ifNotNil: [:key | operation value: key]]!
 
 lookup: keyObject

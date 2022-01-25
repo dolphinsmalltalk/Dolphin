@@ -112,7 +112,7 @@ associationClass
 	^Association!
 
 associations
-	"Answer an <Collection> containing the receiver's associations"
+	"Answer a <Collection> containing the receiver's associations"
 
 	| answer |
 	answer := WriteStream on: (Array new: self size).
@@ -257,6 +257,7 @@ do: operation
 	Implementation Note: Could use #associationsDo: (or keysAndValuesDo:), but 
 	performance important here."
 
+	tally == 0 ifTrue: [^self].
 	1 to: self basicSize
 		do: 
 			[:i | 
@@ -363,6 +364,7 @@ keysAndValuesDo: operation
 	The key/values pairs are visited in an arbitray order.
 	Implementation Note: Could use #associationsDo:, but performance important here."
 
+	tally == 0 ifTrue: [^self].
 	1 to: self basicSize
 		do: 
 			[:i | 
