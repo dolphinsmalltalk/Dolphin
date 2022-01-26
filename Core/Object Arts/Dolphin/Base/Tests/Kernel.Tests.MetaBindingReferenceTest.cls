@@ -36,8 +36,8 @@ testInstance
 testLessOrEqual
 	| a b |
 	super testLessOrEqual.
-	a := self subjectClass pathString: 'Core.Object'.
-	b := self subjectClass pathString: 'Core.object'.
+	a := self newSubjectWithPathString: 'Core.Object'.
+	b := self newSubjectWithPathString: 'Core.object'.
 	self deny: a <= b instance.
 	self deny: a <= b instance!
 
@@ -69,7 +69,7 @@ testLiteralImplicitEnvironmentRelative
 
 testMeta
 	| subject |
-	subject := self subjectClass pathString: 'Object'.
+	subject := self newSubjectWithPathString: 'Object'.
 	self assert: subject meta identicalTo: subject!
 
 testPathPrivateScope
@@ -92,10 +92,10 @@ testPathString
 			| path |
 			path := each first.
 			pathString := $. join: path.
-			subject := self subjectClass pathString: pathString.
+			subject := self newSubjectWithPathString: pathString.
 			self assert: subject pathString
 				equals: (path first = '_' ifTrue: [pathString copyFrom: 3] ifFalse: [pathString])].
-	subject := self subjectClass pathString: ''.
+	subject := self newSubjectWithPathString: ''.
 	self assert: subject path equals: #()!
 
 testPathStringScope

@@ -223,7 +223,7 @@ testLiteralStoreFull
 	"The literal form should be used for fully qualified references"
 
 	| full |
-	full := self subjectClass path: #('Core' 'Object').
+	full := self newSubjectWithPath: #('Core' 'Object').
 	{full. full private} do: 
 			[:each |
 			| expected actual binding rehydrated array |
@@ -246,7 +246,7 @@ testLiteralStoreRelative
 	"The literal form cannot be used for unqualified or partially qualified (i.e. relative) references."
 
 	| relative |
-	relative := self subjectClass path: {'_'. self class name} scope: self class environment.
+	relative := self newSubjectWithPath: {'_'. self class name} scope: self class environment.
 	{relative. relative private} do: 
 			[:each |
 			| actual rehydrated binding |
@@ -254,7 +254,7 @@ testLiteralStoreRelative
 			actual := each literalStoreArray.
 			self deny: (actual includes: each).
 			self assert: (actual includes: RelativeBindingReference).
-			self assert: (actual includes: self class name).
+			self assert: (actual includes: {self class name}).
 			self assert: (actual includes: self class environment).
 			rehydrated := Compiler evaluate: each literalStoreEvaluationString.
 			self assert: rehydrated equals: each.

@@ -428,25 +428,27 @@ new
 	^self pathString: ''!
 
 newPath: anArray private: aBoolean scope: aBindingScope
-	^(anArray size <= 1
+	anArray size <= 1
 		ifTrue: 
 			[aBindingScope
-				ifNil: [FullBindingReference basicNew setPath: anArray private: aBoolean]
 				ifNotNil: 
-					[RelativeBindingReference
-						newPath: anArray
+					[^RelativeBindingReference
+						pathString: nil
+						path: anArray
 						private: aBoolean
 						scope: aBindingScope]]
 		ifFalse: 
 			[(anArray at: 1) = RelativePathPrefix
 				ifTrue: 
-					[RelativeBindingReference
-						newPath: (anArray copyFrom: 2 to: anArray size)
+					[^RelativeBindingReference
+						pathString: nil
+						path: (anArray copyFrom: 2 to: anArray size)
 						private: aBoolean
-						scope: aBindingScope]
-				ifFalse: [FullBindingReference basicNew setPath: anArray private: aBoolean]])
-		isImmutable: true;
-		yourself!
+						scope: aBindingScope]].
+	^FullBindingReference
+		pathString: nil
+		path: anArray
+		private: aBoolean!
 
 path: aSequencedReadableCollection
 	"Answer a new instance of the receiver representing the qualified name composed of the <readableString> elements of the argument."
@@ -494,10 +496,15 @@ pathString: aString private: aBoolean
 
 pathString: aString private: aBoolean scope: aBindingScope
 	^aBindingScope
-		ifNil: [FullBindingReference newPathString: aString private: aBoolean]
+		ifNil: 
+			[FullBindingReference
+				pathString: aString
+				path: nil
+				private: aBoolean]
 		ifNotNil: 
 			[RelativeBindingReference
-				newPathString: aString
+				pathString: aString
+				path: nil
 				private: aBoolean
 				scope: aBindingScope]!
 
@@ -539,15 +546,18 @@ pathString: aString scope: aBindingScope flags: anInteger
 	"Implementation Note: If the reference is absolute, then the <bindingScope> is ignored as it is not needed. This avoids keeping the object alive unnecessarily, e.g. if it is a method, and also allows for cheaper implementations of the #= and #hash methods."
 
 	| ref |
-	ref := ((anInteger allMask: RelativeMask)
+	ref := (anInteger allMask: RelativeMask)
 				ifTrue: 
 					[RelativeBindingReference
-						newPathString: aString
+						pathString: aString
+						path: nil
 						private: (anInteger allMask: PrivateMask)
 						scope: aBindingScope]
-				ifFalse: [FullBindingReference newPathString: aString private: (anInteger allMask: PrivateMask)])
-				isImmutable: true;
-				yourself.
+				ifFalse: 
+					[FullBindingReference
+						pathString: aString
+						path: nil
+						private: (anInteger allMask: PrivateMask)].
 	^(anInteger allMask: MetaMask) ifTrue: [ref meta] ifFalse: [ref]!
 
 simpleName: aString

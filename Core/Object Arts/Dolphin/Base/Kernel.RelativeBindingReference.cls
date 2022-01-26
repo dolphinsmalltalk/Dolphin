@@ -35,7 +35,8 @@ asFullyQualifiedReference
 	"Answer a<BindingReference> that references the same binding as the receiver does currently in its home context, but from Smalltalk or Root."
 
 	^FullBindingReference
-		newPathString: self environmentName , PathSeparatorString , self unqualifiedName
+		pathString: self environmentName , PathSeparatorString , self unqualifiedName
+		path: nil
 		private: private!
 
 asString
@@ -108,7 +109,8 @@ private
 		ifTrue: [self]
 		ifFalse: 
 			[self class
-				newPathString: self pathString
+				pathString: pathString
+				path: path
 				private: true
 				scope: scope]!
 
@@ -116,16 +118,6 @@ scope
 	"Private - Answer the <bindingScope> in which the reference was created. For relative references this is used to determine the start point for binding resolution and must never be nil."
 
 	^scope!
-
-setPath: anArray private: aBoolean scope: anObject
-	path := anArray.
-	private := aBoolean.
-	scope := anObject!
-
-setPathString: aString private: aBoolean scope: anObject
-	pathString := aString.
-	private := aBoolean.
-	scope := anObject!
 
 setScope: anObject
 	"Private - Sent by Compiler."
@@ -145,31 +137,19 @@ home!accessing!public! !
 isRelative!public!testing! !
 private!converting!public! !
 scope!accessing!private! !
-setPath:private:scope:!initializing!private! !
-setPathString:private:scope:!initializing!private! !
 setScope:!accessing!private! !
 !
 
 !Kernel.RelativeBindingReference class methodsFor!
 
-newPath: anArray private: aBoolean scope: aBindingScope
-	aBindingScope isNil ifTrue: [self error: 'Relative binding references require a scope'].
-	^self basicNew
-		setPath: anArray
-		private: aBoolean
-		scope: aBindingScope!
-
-newPathString: aString private: aBoolean scope: aBindingScope
-	^self basicNew
-		setPathString: aString
-		private: aBoolean
-		scope: aBindingScope!
-
-pathString: aString private: aBoolean scope: aBindingScope
-	^self basicNew
-		setPathString: aString
-		private: aBoolean
-		scope: aBindingScope!
+pathString: aString path: anArray private: aBoolean scope: aBindingScope
+	aBindingScope ifNil: [self error: 'Relative binding references require a scope'].
+	^(self
+		pathString: aString
+		path: anArray
+		private: aBoolean)
+		setScope: aBindingScope;
+		yourself!
 
 stbConvertFromVersion1: anArray
 	"Private - Version 2 - no change at this level"
@@ -179,9 +159,7 @@ stbConvertFromVersion1: anArray
 	1 to: anArray size do: [:i | newInstance instVarAt: i put: (anArray at: i)].
 	^newInstance! !
 !Kernel.RelativeBindingReference class categoriesForMethods!
-newPath:private:scope:!instance creation!private! !
-newPathString:private:scope:!instance creation!private! !
-pathString:private:scope:!instance creation!private! !
+pathString:path:private:scope:!instance creation!private! !
 stbConvertFromVersion1:!binary filing!private! !
 !
 

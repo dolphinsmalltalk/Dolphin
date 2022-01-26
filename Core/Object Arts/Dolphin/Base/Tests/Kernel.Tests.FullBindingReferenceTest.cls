@@ -17,24 +17,24 @@ subjectClass
 testAsQualifiedReference
 	| object |
 	super testAsQualifiedReference.
-	object := self subjectClass path: #(#'Core.Object').
+	object := self newSubjectWithPath: #(#'Core.Object').
 	self assert: #'Core.Object' asQualifiedReference equals: object.
 	"Although these two binding refs would resolve to the same binding, they are not equivalent as one has a more specific path."
 	self deny: 'Smalltalk.Object' asQualifiedReference equals: object.
 	self assert: object asQualifiedReference identicalTo: object.
 	self assert: 'Object._EventsRegister' asQualifiedReference
-		equals: (self subjectClass path: #(#Object #_EventsRegister))!
+		equals: (self newSubjectWithPath: #(#Object #_EventsRegister))!
 
 testEnvironmentName
 	| subject |
 	#('Core.Object' 'Core' 'Smalltalk' nil 'Root' nil 'Root.Smalltalk' 'Root' 'Smalltalk.Animal' 'Smalltalk' 'Animal' nil 'XProgramming.SUnit' 'XProgramming' 'XProgramming.SUnit.TestRunConsoleLogger' 'XProgramming.SUnit')
 		pairsDo: 
 			[:each :expected |
-			subject := self subjectClass pathString: each.
+			subject := self newSubjectWithPathString: each.
 			self assert: subject environmentName equals: expected].
-	subject := (self subjectClass pathString: 'Root' scope: Root) instance.
+	subject := (self newSubjectWithPathString: 'Root' scope: Root) instance.
 	self assert: subject environmentName equals: 'Root'.
-	subject := (self subjectClass pathString: 'TestCase' scope: XProgramming.SUnit) instance.
+	subject := (self newSubjectWithPathString: 'TestCase' scope: XProgramming.SUnit) instance.
 	self assert: subject environmentName equals: 'XProgramming.SUnit'!
 
 testEnvironmentNameRelative
@@ -48,9 +48,9 @@ testEqualityOfRelativeAndAbsolute
 	self deny: #'Core.Object' asQualifiedReference equals: #{Object}.
 	self assert: #'Core.Object' asQualifiedReference equals: #{Core.Object}.
 	"Even if we specify a context, an absolute reference should still be equal to one without a specified context."
-	self assert: (self subjectClass path: #('Core' 'Object') scope: self class)
+	self assert: (self newSubjectWithPath: #('Core' 'Object') scope: self class)
 		equals: 'Core.Object' asQualifiedReference.
-	subject := self subjectClass path: #('_' 'Object') scope: self class.
+	subject := self newSubjectWithPath: #('_' 'Object') scope: self class.
 	self assert: #{_.Object} equals: subject.
 	self deny: subject equals: 'Core.Object' asQualifiedReference.
 	self assert: subject equals: #{Object}.
@@ -59,10 +59,10 @@ testEqualityOfRelativeAndAbsolute
 testEqualsLiteral
 	"Literal binding references may be relative, or absolute. Simple unqualified names are considered to be relative by default. Qualified names are considered to be absolute by default. The addition of a '_' name component prefix to a qualified name makes it relative. Relative binding references are never equivalent to absolute binding references, even if they would actually bind to the same target - i.e. the equality comparison is based on static equivalence of the reference itself and so is independent of its result when evaluated. This makes sense because it provides a temporally stable comparison for references, whereas the binding to which they evaluate may differ over time, as it depends on other properties of its context that may change after it is created. For example a class may have relative literal binding references in its methods. If the class is moved to a different environment, or its imports are changed, then the value of the binding references may change. In consequence many BindingReferences that are not considered equivalent may eventually bind to the same target binding - this is a necessary condition for BindingReference equivalence at a point in time, but it is not sufficient. BindingReferences are only equivalent if they represent the same binding path and, if relative, from the same starting point. Absolute binding references with the same path are considered equivalent even if they are compiled in a different context, or provided with a different context when instantiated."
 
-	self assert: #{Object} equals: (self subjectClass pathString: #Object scope: self class).
+	self assert: #{Object} equals: (self newSubjectWithPathString: #Object scope: self class).
 	self assert: #{Object}
-		equals: (self subjectClass pathString: #Object scope: (self class lookupMethod: self selector)).
-	self assert: #{_.Object} equals: (self subjectClass pathString: #Object scope: self class).
+		equals: (self newSubjectWithPathString: #Object scope: (self class lookupMethod: self selector)).
+	self assert: #{_.Object} equals: (self newSubjectWithPathString: #Object scope: self class).
 	self assert: #{_.Object} equals: #{Object}.
 	self deny: #{Object} equals: #'Core.Object' asQualifiedReference.
 	self deny: #{_.Object} equals: #'Core.Object' asQualifiedReference.
@@ -71,7 +71,7 @@ testEqualsLiteral
 	self deny: #{_.Object} equals: #'Core.Object' asQualifiedReference.
 	self deny: #{_.Core.Object} equals: #'Core.Object' asQualifiedReference.
 	self assert: #{_.Core.Object}
-		equals: (self subjectClass path: #('_' 'Core' 'Object') scope: self class)!
+		equals: (self newSubjectWithPath: #('_' 'Core' 'Object') scope: self class)!
 
 testIsValidGlobalName
 	#('A' 'A1' 'A_' '_A' 'a' '_a' '__A_B' 'A.B' 'Abc.D' '_Abc._d' 'abc.d')
@@ -82,8 +82,8 @@ testIsValidGlobalName
 testLessOrEqual
 	| a b |
 	super testLessOrEqual.
-	a := self subjectClass pathString: 'Core.Object'.
-	b := self subjectClass pathString: 'Core.object'.
+	a := self newSubjectWithPathString: 'Core.Object'.
+	b := self newSubjectWithPathString: 'Core.object'.
 	self assert: a <= a meta.
 	self deny: a <= b meta!
 

@@ -138,7 +138,13 @@ pathString
 			pathString]!
 
 private
-	^private ifTrue: [self] ifFalse: [self class newPathString: self pathString private: true]!
+	^private
+		ifTrue: [self]
+		ifFalse: 
+			[self class
+				pathString: pathString
+				path: path
+				private: true]!
 
 scope
 	"Private - Answer the <bindingScope> in which the reference was created. For relative references this is used to determine the start point for binding resolution. For absolute references this should always be nil."
@@ -165,17 +171,9 @@ setPath: anArray
 	<mutable>
 	path := anArray!
 
-setPath: anArray private: aBoolean
-	path := anArray.
-	private := aBoolean!
-
 setPathString: aString
 	<mutable>
 	pathString := aString!
-
-setPathString: aString private: aBoolean
-	pathString := aString.
-	private := aBoolean!
 
 setScope: aBindingScope
 	self shouldNotImplement!
@@ -212,7 +210,7 @@ hash!comparing!public! !
 home!accessing!public! !
 instance!converting!public! !
 isPrivate!public!testing! !
-isPrivate:!accessing!private! !
+isPrivate:!initializing!private! !
 isRelative!public!testing! !
 meta!converting!displaying!public! !
 path!accessing!public! !
@@ -222,10 +220,8 @@ scope!accessing!private! !
 scope:!constants!public! !
 setBinding:!accessing!private! !
 setGeneration:!accessing!private! !
-setPath:!accessing!private! !
-setPath:private:!initializing!private! !
-setPathString:!accessing!private! !
-setPathString:private:!initializing!private! !
+setPath:!initializing!private! !
+setPathString:!initializing!private! !
 setScope:!initializing!private! !
 stbSaveOn:!binary filing!public! !
 undeclare!operations!public! !
@@ -237,13 +233,26 @@ valueOrNil!accessing!public! !
 fullPathString: aString
 	"Answer a new instance of the receiver representing the qualified name identified by the <readableString> argument, which is expected to be a fully qualified name."
 
+	^self
+		pathString: aString
+		path: nil
+		private: false!
+
+newPathString: aString path: anArray private: aBoolean
+	<primitive: 157>
 	^self basicNew
-		setPathString: aString private: false;
-		isImmutable: true;
+		setPathString: aString;
+		setPath: anArray;
+		isPrivate: aBoolean;
 		yourself!
 
-newPathString: aString private: aBoolean
-	^self basicNew setPathString: aString private: aBoolean!
+pathString: aString path: anArray private: aBoolean
+	^(self
+		newPathString: aString
+		path: anArray
+		private: aBoolean)
+		isImmutable: true;
+		yourself!
 
 uninitialize
 	VM
@@ -252,7 +261,8 @@ uninitialize
 		registryAtIndex: 69 put: nil! !
 !Kernel.FullBindingReference class categoriesForMethods!
 fullPathString:!instance creation!public! !
-newPathString:private:!instance creation!private! !
+newPathString:path:private:!instance creation!private! !
+pathString:path:private:!instance creation!private! !
 uninitialize!class hierarchy-removing!private! !
 !
 
