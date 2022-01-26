@@ -23,8 +23,7 @@ testAllForHost
 
 	"google.com has only one"
 	addresses := InternetAddress allForHost: 'google.com'.
-	self assert: addresses size = 1.
-	self assert: (addresses first host endsWith: '1e100.net')!
+	self assert: (addresses anySatisfy: [:each | each host endsWith: '1e100.net'])!
 
 testHost
 	| name ip |
