@@ -22,13 +22,13 @@ Renaming a class in such a way as to change its `Namespace` can result in ambigu
 !Tools.RenameClassRefactoring categoriesForClass!Refactory-Refactorings! !
 !Tools.RenameClassRefactoring methodsFor!
 
-buildReferenceRewriter
+buildInboundReferenceRewriter
 	| newUnqualified rewriter |
 	rewriter := ParseTreeRewriter new.
 	"Any real references to the variable will need to be rewritten using a form that still binds to the same (renamed) variable."
 	rewriter
 		replace: '`identifier'
-		withValueFrom: [:variableNode | self rewriteVariable: variableNode]
+		withValueFrom: [:variableNode | self rewriteInboundVariable: variableNode]
 		when: [:variableNode | variableNode isBindingChanged].
 	"We rewrite any BindingReferences that bind to class before it is renamed, even if embedded in literal arrays. Symbols are not renamed."
 	rewriter
@@ -40,6 +40,29 @@ buildReferenceRewriter
 		withValueFrom: 
 			[:aNode |
 			self refactoringError: '<1s> already exists within the reference scope' << newUnqualified].
+	^rewriter!
+
+buildOutboundReferenceRewriter
+	| rewriter |
+	rewriter := ParseTreeRewriter new.
+	"Any real references to the variable will need to be rewritten using a form that still binds to the same (renamed) variable."
+	rewriter
+		replace: '`identifier'
+		withValueFrom: [:variableNode | self rewriteOutboundVariable: variableNode]
+		when: 
+			[:variableNode |
+			variableNode isStaticVariable and: 
+					["A class' own variables should not never need rewriting."
+					variableNode isBindingChanged or: 
+							[variableNode hasQualifiedName and: 
+									[| binding |
+									binding := variableNode binding.
+									(variableNode methodNode fullBindingFor: binding unqualifiedName) == binding]]]].
+	"We rewrite any BindingReferences that bind to class before it is renamed, even if embedded in literal arrays. Symbols are not renamed."
+	rewriter
+		replace: '`#literal'
+		withValueFrom: [:literalNode | self rewriteLiteral: literalNode]
+		when: [:literalNode | self isImpactedLiteral: literalNode].
 	^rewriter!
 
 checkForSymbolicReferences
@@ -140,12 +163,33 @@ renameImports
 								removeImport: oldImport]]]!
 
 renameInboundReferences: aCollectionOfRBMethods
-	"Private - Note that renaming a class will no longer rename any Symbols that happen to be the name of the class, whether directly held literals or embedded in literal arrays. This was never strictly a refactoring as Symbols are not necessarily the names of program objects, so one cannot be certain that an arbitrary Symbol in a method that happens to be the same as a class name in scope in the method is actually intended for use as the name of that class. This is one good reason to use qualified references (aka BindingReferences) instead, since these are intended as references to classes so if they are bound to the original class, we can be certain that they should also be renamed. "
+	"Private - Note that renaming a class will no longer rename any Symbols that happen to be the name of the class, whether directly held literals or embedded in literal arrays. This was never strictly a refactoring as Symbols are not necessarily the names of program objects, so one cannot be certain that an arbitrary Symbol in a method that happens to be the same as a class name in scope in the method is actually intended for use as the name of that class. This is one good reason to use qualified references (aka BindingReferences) instead, since these are intended as references to classes so if they bind using the original class name before the refactoring, we can be certain that they should also be renamed. "
 
 	| rewriter |
-	rewriter := self buildReferenceRewriter.
+	rewriter := self buildInboundReferenceRewriter.
 	self renameImports.
 	aCollectionOfRBMethods do: [:method | self convertMethod: method using: rewriter]!
+
+renameOutboundReferences: aCollectionOfRBMethods
+	| rewriter |
+	rewriter := self buildOutboundReferenceRewriter.
+	aCollectionOfRBMethods do: [:method | self convertMethod: method using: rewriter]!
+
+rewriteInboundVariable: aStVariableNode
+	| binding unqualifiedName newVar |
+	newVar := aStVariableNode copy.
+	"Obviously we may need to update variable references to the renamed class. Even if not a reference to the renamed, we may need to rewrite it if it can no longer be resolved using an unqualified or partially qualified name.
+	Also, if the variable is a ref to the renamed class and the referencing method's environment is the same, the reference may be shadowed by a same named class variable in the referencing class, so we still have to check. In all cases we can determine the need to rewrite based on whether the original binding is still the one we get (if any) on attempting to rebind."
+	binding := aStVariableNode binding.
+	(binding == classBinding or: [aStVariableNode isBindingChanged])
+		ifTrue: 
+			[unqualifiedName := binding unqualifiedName.
+			newVar name: ((aStVariableNode methodNode fullBindingFor: unqualifiedName) == binding
+						ifTrue: [unqualifiedName]
+						ifFalse: 
+							["We don't bother to try and find a partially qualified name that will bind correctly, but just use the fully-qualified name"
+							binding fullName])].
+	^newVar!
 
 rewriteLiteral: aStLiteralNode
 	aStLiteralNode isLiteralArray ifTrue: [^self rewriteLiteralArray: aStLiteralNode].
@@ -156,25 +200,29 @@ rewriteLiteralArray: aStLiteralArrayNode
 	^StLiteralArrayNode
 		contents: (aStLiteralArrayNode contents collect: [:each | self rewriteLiteral: each])!
 
+rewriteOutboundVariable: aStVariableNode
+	| binding unqualifiedName |
+	binding := aStVariableNode binding.
+	unqualifiedName := binding unqualifiedName.
+	^aStVariableNode copy
+		name: ((aStVariableNode methodNode fullBindingFor: binding unqualifiedName) == binding
+					ifTrue: [unqualifiedName]
+					ifFalse: [binding fullName]);
+		yourself!
+
 rewriteQualifiedReference: aStQualifiedReferenceNode
-	| targetBinding pathString path i methodNode |
+	| targetBinding pathString path i methodNode newNode |
 	targetBinding := aStQualifiedReferenceNode binding.
+	newNode := aStQualifiedReferenceNode copy.
 	targetBinding == classBinding
 		ifFalse: 
-			[^aStQualifiedReferenceNode isBindingChanged
-				ifTrue: 
-					[StQualifiedReferenceNode
-						pathString: targetBinding fullName
-						start: nil
-						flags: aStQualifiedReferenceNode flags]
-				ifFalse: [aStQualifiedReferenceNode copy]].
+			[aStQualifiedReferenceNode isBindingChanged ifTrue: [newNode pathString: targetBinding fullName].
+			^newNode].
 	aStQualifiedReferenceNode isRelative
 		ifFalse: 
 			["Previous fully qualified reference, just answer the new fully-qualifed reference"
-			^StQualifiedReferenceNode
-				pathString: class fullName
-				start: nil
-				flags: aStQualifiedReferenceNode flags].
+			newNode pathString: class fullName.
+			^newNode].
 	"Relative bindings are more complex - for now do the brute force implementation that should always work, and just keep adding qualification to the path until it binds, or we reach the fully-qualified path anyway."
 	methodNode := aStQualifiedReferenceNode methodNode.
 	path := newClassReference path.
@@ -184,18 +232,14 @@ rewriteQualifiedReference: aStQualifiedReferenceNode
 	[pathString := (path at: i) , pathString.
 	(methodNode fullBindingFor: pathString) == targetBinding
 		ifTrue: 
-			[^StQualifiedReferenceNode
-				pathString: (i == path size ifTrue: [pathString] ifFalse: ['_.' , pathString])
-				start: nil
-				flags: aStQualifiedReferenceNode flags].
+			[newNode pathString: (i == path size ifTrue: [pathString] ifFalse: ['_.' , pathString]).
+			^newNode].
 	i > 2]
 			whileTrue: 
 				[i := i - 1.
 				pathString := BindingReference.PathSeparatorString , pathString].
-	^StQualifiedReferenceNode
-		pathString: newClassReference pathString
-		start: nil
-		flags: aStQualifiedReferenceNode flags!
+	newNode pathString: newClassReference pathString.
+	^newNode!
 
 rewriteSymbolicReferencesToClass
 	"Private - If renaming a class that is currently in Smalltalk into another Namespace, we first rewrite any definite symbolic references to the class into literal binding references."
@@ -212,24 +256,6 @@ rewriteSymbolicReferencesToClass
 	symbolicRefs isEmpty
 		ifFalse: 
 			[(self shouldIgnoreRemainingSymbolicReferences: symbolicRefs) ifFalse: [self refactoringAborted]]!
-
-rewriteVariable: aStVariableNode
-	^aStVariableNode binding == classBinding
-		ifTrue: 
-			[| unqualifiedName |
-			"The static variable is the renamed class' binding - try and shorten to an unqualified name if we can (iff it binds to the class from the method)"
-			unqualifiedName := class unqualifiedName.
-			"Even if the method's environment is the same, it may be shadowed by a same named class variable in the referencing class, so we have to check."
-			StVariableNode named: ((aStVariableNode methodNode fullBindingFor: unqualifiedName) == classBinding
-						ifTrue: [unqualifiedName]
-						ifFalse: 
-							["We don't bother to try and find a partially qualified name that will bind correctly, but just use the fully-qualified name"
-							newName])]
-		ifFalse: 
-			["The static variable is not the renamed class' binding, but we may need to rewrite it if it can no longer be resolved using an unqualified or partially qualified name"
-			aStVariableNode isBindingChanged
-				ifTrue: [StVariableNode named: aStVariableNode binding fullName]
-				ifFalse: [aStVariableNode copy]]!
 
 shouldIgnoreRemainingSymbolicReferences: aCollection
 	^(self lookupOption: #ignoreSymbolicClassReferences) cull: self cull: aCollection!
@@ -249,9 +275,13 @@ transform
 	self model
 		renameClass: class
 		to: newName
-		around: [:inbound | self renameInboundReferences: inbound]! !
+		around: 
+			[:inbound :outbound |
+			self renameInboundReferences: inbound.
+			self renameOutboundReferences: outbound]! !
 !Tools.RenameClassRefactoring categoriesForMethods!
-buildReferenceRewriter!private!transforming! !
+buildInboundReferenceRewriter!private!transforming! !
+buildOutboundReferenceRewriter!private!transforming! !
 checkForSymbolicReferences!private!transforming! !
 className:newName:!initializing!private! !
 displayOn:!displaying!public! !
@@ -260,11 +290,13 @@ isImpactedLiteral:!helpers!private! !
 preconditions!accessing!public! !
 renameImports!private!transforming! !
 renameInboundReferences:!private!transforming! !
+renameOutboundReferences:!private!transforming! !
+rewriteInboundVariable:!private!transforming! !
 rewriteLiteral:!private!transforming! !
 rewriteLiteralArray:!private!transforming! !
+rewriteOutboundVariable:!private!transforming! !
 rewriteQualifiedReference:!private!transforming! !
 rewriteSymbolicReferencesToClass!private!transforming! !
-rewriteVariable:!private!transforming! !
 shouldIgnoreRemainingSymbolicReferences:!options!private! !
 storeOn:!printing!public! !
 transform!public!transforming! !

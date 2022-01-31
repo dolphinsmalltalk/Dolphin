@@ -199,32 +199,15 @@ instanceClassNamed: aString
 metaclassNamed: aString
 	^(self instanceClassNamed: aString) ifNotNil: [:class | class metaclass]!
 
-methodsToRewriteForRenameOf: aRBClass
-	| methods inbound block |
-	methods := self allReferencesToClass: aRBClass.
-	inbound := SearchPolicy method newSet.
-	inbound addAll: methods.
-	block := 
-			[:method |
-			(inbound includes: method)
-				ifFalse: 
-					[method boundParseTree.
-					methods addLast: method]].
-	#namespaceToDo.	"A subclass may refer to external variables that it can only bind via an import that it inherits via the namespace of its superclass (if different to its own). There is therefore (rare) potential for external references in subclasses to be affected by a class rename when that rename moves a class to a new namespace. Enumerating all subclasses could be prohibitively expensive with the current search, however, as it is too broad in scope. If we were to rename Object, for example, then a significant proportion of the methods in the entire system would be in scope."
-	aRBClass methodsReferencingExternals do: block.
-	aRBClass metaclass methodsReferencingExternals do: block.
-	^methods!
-
 modelClassFor: aClass
 	"Private - Answer an RBClass for the real <Class> argument, whether or not it is in the receiver's environment."
 
 	| fullName |
 	fullName := aClass fullName.
 	(removedClasses includes: fullName) ifTrue: [^nil].
-	^(newClasses lookup: fullName)
-		ifNil: 
-			[(modelClasses lookup: fullName)
-				ifNil: [modelClasses at: fullName put: (aClass rbClass model: self existing: aClass)]]!
+	(newClasses lookup: fullName) ifNotNil: [:newClass | ^newClass].
+	^(modelClasses lookup: fullName)
+		ifNil: [modelClasses at: fullName put: (aClass rbClass model: self existing: aClass)]!
 
 name
 	^changes name!
@@ -277,12 +260,20 @@ removeMethod: aSelector from: aRBClass
 	self flushCaches.
 	^changes removeMethod: aSelector from: aRBClass!
 
-renameClass: aRBClass to: aString around: aBlock
-	| change oldName methods oldUnqualified originalEnvironment binding |
+renameClass: aRBClass to: aString around: aDyadicValuable
+	| change oldName methods oldUnqualified originalEnvironment binding inbound outbound block |
 	oldName := aRBClass fullName.
 	change := RenameClassChange rename: oldName to: aString.
-	"The ordering is tricky here. We want the namespaces to reflect the change so that any attempt to look up the old class name in its old environment will fail, but we need method searches to find references to the old class name. Therefore we have to capture the references in advance of making any model changes."
-	methods := self methodsToRewriteForRenameOf: aRBClass.
+	"The ordering is important here. We need the RB model namespaces to reflect the change so that any attempt to look up the old class name in its old environment will fail, but we also need method searches to find references to the old class name. Therefore we have to capture the references in advance of making any model changes, and build the parse trees now so that we can bind any variables/qualified refs to their original target. This will allow us to detect if the bindings change after the rename. Note that the bindings may change because they refer to the original name, directly or indirectly, or because the rename is changing the class' namespace, or because of shadowing."
+	inbound := self allReferencesToClass: aRBClass.
+	outbound := OrderedCollection new.
+	methods := SearchPolicy method newSet.
+	methods addAll: inbound.
+	block := [:method | (outbound addLast: (methods addIfAbsent: method)) boundParseTree].
+	#namespaceToDo.	"A subclass may refer to external variables that it can only bind via an import that it inherits via the namespace of its superclass (if different to its own). There is therefore (rare) potential for external references in subclasses to be affected by a class rename when that rename moves a class to a new namespace. Enumerating all subclasses could be prohibitively expensive with the current search, however, as it is too broad in scope. If we were to rename Object, for example, then a significant proportion of the methods in the entire system would be in scope."
+	#namespaceToDo.	"References to class variables may be fully qualified, and so may require renaming. We could either eliminate these from consideration by reducing them first (a refactoring to do that would be useful anyway), or just include all methods containing static variable references in the search, rather than trying to be clever and exclude the 'internal' references."
+	aRBClass methodsReferencingExternals do: block.
+	aRBClass metaclass methodsReferencingExternals do: block.
 	oldUnqualified := aRBClass unqualifiedName.
 	originalEnvironment := aRBClass environment.
 	self assert: [(originalEnvironment localBindingFor: oldUnqualified) value == aRBClass].
@@ -296,7 +287,7 @@ renameClass: aRBClass to: aString around: aBlock
 	((newClasses includesKey: oldName) ifTrue: [newClasses] ifFalse: [modelClasses]) removeKey: oldName.
 	newClasses at: aString put: aRBClass.
 	aRBClass subclasses do: [:each | each superclass: aRBClass].
-	self performChange: change around: [aBlock value: methods].
+	self performChange: change around: [aDyadicValuable value: inbound value: outbound].
 	self flushCaches.
 	^change!
 
@@ -377,7 +368,6 @@ includesStaticVariable:!public!testing! !
 instanceClassFor:!accessing/classes!public! !
 instanceClassNamed:!accessing/classes!public! !
 metaclassNamed:!accessing/classes!public! !
-methodsToRewriteForRenameOf:!changes!private! !
 modelClassFor:!accessing/classes!private! !
 name!accessing!public! !
 name:!accessing!public! !
