@@ -357,8 +357,10 @@ testRefersToLiteralClass
 	"... and the target class."
 	self assert: (objectRef refersTo: Object asLiteralOf: method).
 	self deny: (objectRef refersTo: nil asLiteralOf: method).
-	#namespaceToDo.	"Should refer to the Namespace too"
-	self assert: (objectRef refersTo: Core asLiteralOf: method) | true!
+	"Should refer to the Namespace too"
+	self assert: (objectRef refersTo: Core asLiteralOf: method).
+	"And so on up the namespace hierarchy"
+	self assert: (objectRef refersTo: Root asLiteralOf: method)!
 
 testRefersToLiteralNotFound
 	| method objectRef |

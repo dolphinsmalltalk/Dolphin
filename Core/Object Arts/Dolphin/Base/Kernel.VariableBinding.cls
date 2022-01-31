@@ -118,10 +118,11 @@ owningPackage: aPackageOrNil
 	self class packageManager addVariableNamed: self fullyQualifiedReference to: aPackageOrNil!
 
 refersTo: anObject asLiteralOf: aCompiledMethod
-	^(anObject == environment and: 
-			["Not useful to show every variable in a Namespace as an implicit reference to it, nor a class hierarchy's references to its own class variables."
-			self isClassVariable and: [(aCompiledMethod methodClass instanceClass includesBehavior: environment) not]])
-		or: [self = anObject or: [value == anObject and: [self isClassBinding]]]!
+	^(self = anObject or: [value == anObject and: [self isClassBinding]]) or: 
+			[(environment includesEnvironment: anObject) and: 
+					["Not useful to show every variable in a Namespace as an implicit reference to it, nor a class hierarchy's references to its own class variables."
+					(self isClassVariable and: [aCompiledMethod methodClass instanceClass includesBehavior: environment])
+						not]]!
 
 setFlags: anInteger
 	<mutable>

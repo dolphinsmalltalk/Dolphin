@@ -48,9 +48,13 @@ testRefersToLiteral
 	self assert: (subject refersTo: subject asLiteralOf: method).
 	self assert: (subject refersTo: Object asLiteralOf: method).
 	"Shouldn't matter that the ref is fully qualified (makes no difference to compiled literals)"
+	self assert: (method refersToLiteral: Core.Association).
 	self assert: (method refersToLiteral: Core.Association binding).
-	"We don't want a ref to a class in a namespace to be treated as implicit reference to the namespace - not for general reference searches anyway"
-	self deny: (method refersToLiteral: Core.Association environment).
+	"A ref to a class in a namespace is implicitly a reference to the namespace - necessary for refactorings to find all references that may need renaming when renaming a namespace (for example)"
+	self assert: (method refersToLiteral: Core.Association environment).
+	"But the browser's search for references to VariableBindings, which means we don't want to see these"
+	self deny: (method refersToLiteral: Core.Association environment binding).
+
 	"Neither do we want a ref to a class variable that is 'local' (i.e. defined in the class hierarchy) to be recorded as a reference to itself."
 	TestClassVar ifNil: [TestClassConst] ifNotNil: [OS.Win32Constants.GENERIC_READ].
 	self deny: (method refersToLiteral: (self class fullBindingFor: 'OS')).
@@ -61,8 +65,8 @@ testRefersToLiteral
 	subject := self class fullBindingFor: 'OS.Win32Constants.GENERIC_READ'.
 	self assert: (method refersToLiteral: subject).
 	self assert: (method refersToLiteral: subject environment).
-	self deny: (method refersToLiteral: subject environment environment).
-	self deny: (method refersToLiteral: subject environment environment environment)! !
+	self assert: (method refersToLiteral: subject environment environment).
+	self assert: (method refersToLiteral: subject environment environment environment)! !
 !Kernel.Tests.VariableBindingTest categoriesForMethods!
 testAbsoluteName!public!unit tests! !
 testFullName!public! !
