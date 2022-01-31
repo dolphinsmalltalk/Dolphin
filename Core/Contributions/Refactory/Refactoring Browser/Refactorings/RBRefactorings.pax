@@ -55,6 +55,7 @@ package setClassNames: #(
 	#{Refactory.Browser.RBNamespaceClass}
 	#{Refactory.Browser.RBNegationCondition}
 	#{Refactory.Browser.RBReadBeforeWrittenTester}
+	#{Refactory.Browser.RBRootNamespace}
 	#{Refactory.Browser.RBVariableAnalyser}
 	#{Refactory.Browser.RBVariableBinding}
 	#{Refactory.Browser.Refactoring}
@@ -90,6 +91,7 @@ package setMethodNames: #(
 	#(#{Kernel.StVariable} #refersToClass:)
 	#(#{Kernel.StVariableNode} #refersToClass:)
 	#(#{Kernel.VariableBinding} #refersToClass:)
+	#(#{Root class} #rbClass)
 ).
 
 package setPrerequisites: #(
@@ -197,6 +199,12 @@ Refactory.Browser.RBAbstractClass subclass: #'Refactory.Browser.RBMetaclass'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.RBClass subclass: #'Refactory.Browser.RBNamespaceClass'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RBNamespaceClass subclass: #'Refactory.Browser.RBRootNamespace'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -607,6 +615,14 @@ refersToClass: aClass
 	^(self isClassBinding and: [value == aClass]) or: [self environment includesEnvironment: aClass]! !
 !Kernel.VariableBinding categoriesForMethods!
 refersToClass:!public!testing! !
+!
+
+!Root class methodsFor!
+
+rbClass
+	^Refactory.Browser.RBRootNamespace! !
+!Root class categoriesForMethods!
+rbClass!constants!public! !
 !
 
 "End of package definition"!

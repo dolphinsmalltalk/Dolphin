@@ -163,7 +163,7 @@ environment
 	"Rather confusingly, this is environment in the sense of being a namespace (i.e. an instance of RBNamespaceClass) and is compatible with the use of the term in the Behavior/ClassDescription/Class/Metaclass hierarchy.
 	It's not the BrowserEnvironment (another type of scope) environment of the RBNamespace (Refactoring model) class. I think I might rename RBNamespace...."
 
-	^environment ifNil: [environment := self getEnvironment]!
+	^self basicEnvironment!
 
 fullName
 	"Answer the <String> fully qualified name of the receiver, which is a dot-separated path that binds to the receiver from the global namespace, Root.
@@ -489,7 +489,7 @@ getEnvironment!accessing!public! !
 getImports!helpers!private! !
 imports!accessing!public! !
 imports:!accessing!public! !
-includesEnvironment:!namespaces!private!testing! !
+includesEnvironment:!namespaces!public!testing! !
 includesNamespace:!public!testing! !
 isDefined!public!testing! !
 isMeta!public!testing! !

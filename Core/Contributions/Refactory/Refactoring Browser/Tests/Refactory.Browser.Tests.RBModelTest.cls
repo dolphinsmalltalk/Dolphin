@@ -218,6 +218,13 @@ testReparentSuperclassChange
 	st reparentClasses: subclasses to: superclass.
 	subclasses do: [:each | self assert: each superclass equals: superclass]!
 
+testRoot
+	| model root |
+	model := RBModel new.
+	root := model classFor: Root.
+	self assert: root isKindOf: RBRootNamespace.
+	self assertIsNil: root environment!
+
 testRoots
 	| model |
 	model := RBModel new.
@@ -241,6 +248,7 @@ testReferencesPrintOnAfterAddition!class tests!public! !
 testReferencesPrintOnAfterRemove!class tests!public! !
 testRemoveClassChange!class tests!public! !
 testReparentSuperclassChange!class tests!public! !
+testRoot!class tests!public! !
 testRoots!class tests!public! !
 !
 

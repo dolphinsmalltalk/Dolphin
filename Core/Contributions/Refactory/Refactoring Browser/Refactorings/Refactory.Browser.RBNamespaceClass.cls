@@ -22,9 +22,6 @@ baseEnvironmentName
 	
 	^#Root!
 
-environment
-	^self unqualifiedName == #Root ifFalse: [self basicEnvironment]!
-
 hierarchyBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class, i.e. one of its own class variables or those of its superclasses."
 
@@ -41,7 +38,6 @@ resolveImportedBinding: aBindingContext
 !Refactory.Browser.RBNamespaceClass categoriesForMethods!
 addClass:!public! !
 baseEnvironmentName!accessing!public! !
-environment!accessing!public! !
 hierarchyBindingFor:!bindings!public! !
 removeClass:!public! !
 resolveImportedBinding:!binding!private! !
