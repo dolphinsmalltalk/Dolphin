@@ -212,7 +212,7 @@ getOptionVariableToMoveToOf: aClass in: aSelector
 	| parseTree nameList |
 	parseTree := aClass parseTreeFor: aSelector.
 	parseTree isNil
-		ifTrue: [parseTree := RBMethodNode selector: #value body: (RBSequenceNode statements: #())].
+		ifTrue: [parseTree := StMethodNode selector: #value body: (StSequenceNode statements: #())].
 	nameList := OrderedCollection new.
 	nameList
 		add: '---- Arguments ----';

@@ -33,9 +33,8 @@ package setMethodNames: #(
 	#(#{Kernel.StMethodNode} #analyze)
 	#(#{Kernel.StMethodNode} #newClassScope)
 	#(#{Kernel.StQualifiedReferenceNode} #binding)
+	#(#{Kernel.StQualifiedReferenceNode} #binding:)
 	#(#{Kernel.StQualifiedReferenceNode} #resolveBinding)
-	#(#{Kernel.StVariableNode} #binding)
-	#(#{Kernel.StVariableNode} #resolveBinding)
 ).
 
 package setPrerequisites: #(
@@ -199,6 +198,9 @@ newClassScope!accessing!private! !
 binding
 	^binding ifNil: [binding := self resolveBinding]!
 
+binding: aVariableBinding
+	binding := aVariableBinding!
+
 resolveBinding
 	^self isRelative
 		ifTrue: 
@@ -213,20 +215,7 @@ resolveBinding
 			globalScope fullBindingFor: pathString environment: globalScope environment]! !
 !Kernel.StQualifiedReferenceNode categoriesForMethods!
 binding!accessing!private! !
-resolveBinding!accessing!private! !
-!
-
-!Kernel.StVariableNode methodsFor!
-
-binding
-	^variable ifNil: [self resolveBinding] ifNotNil: [variable binding]!
-
-resolveBinding
-	| initial |
-	initial := name at: 1.
-	^(initial isUppercase or: [initial == $_]) ifTrue: [self methodNode fullBindingFor: name]! !
-!Kernel.StVariableNode categoriesForMethods!
-binding!accessing!private! !
+binding:!accessing!private! !
 resolveBinding!accessing!private! !
 !
 

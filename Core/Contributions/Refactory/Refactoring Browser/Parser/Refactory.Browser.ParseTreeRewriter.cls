@@ -65,7 +65,7 @@ replaceArgument: searchString withValueFrom: replaceBlock when: conditionBlock
 				when: conditionBlock)!
 
 replaceLiteral: literal with: newLiteral
-	self replaceTree: (RBLiteralNode value: literal) withTree: (RBLiteralNode value: newLiteral)!
+	self replaceTree: (StLiteralNode value: literal) withTree: (StLiteralNode value: newLiteral)!
 
 replaceMethod: searchString with: replaceString
 	self addRule: (RBStringReplaceRule searchForMethod: searchString replaceWith: replaceString)!
@@ -285,7 +285,7 @@ replaceLiteral: literal with: newLiteral
 replaceStatements: code with: newCode in: aParseTree onInterval: anInterval
 	| tree replaceStmt |
 	tree := self buildTree: code method: false.
-	tree isSequence ifFalse: [tree := RBSequenceNode statements: {tree}].
+	tree isSequence ifFalse: [tree := StSequenceNode statements: {tree}].
 	tree temporaries: {RBPatternVariableNode named: '`@temps'}.
 	tree addNodeFirst: (RBPatternVariableNode named: '`@.S1').
 	tree lastIsReturn

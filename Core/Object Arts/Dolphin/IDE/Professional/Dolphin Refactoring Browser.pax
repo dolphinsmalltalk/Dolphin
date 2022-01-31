@@ -59,7 +59,6 @@ package setMethodNames: #(
 	#(#{Core.ClassDescription} #hierarchyDefinesVariable:)
 	#(#{Core.Metaclass} #directlyDefinesClassVariable:)
 	#(#{Kernel.StQualifiedReferenceNode} #isBindingChanged)
-	#(#{Kernel.StVariableNode} #isBindingChanged)
 	#(#{Refactory.Browser.AbstractClassVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.AbstractInstanceVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.AbstractVariablesRefactoring} #displayOn:)
@@ -502,18 +501,6 @@ isBindingChanged
 
 	^binding notNil and: [self isRelative and: [self resolveBinding ~~ binding]]! !
 !Kernel.StQualifiedReferenceNode categoriesForMethods!
-isBindingChanged!accessing!private! !
-!
-
-!Kernel.StVariableNode methodsFor!
-
-isBindingChanged
-	"Private - Assuming that this node has been bound by a semantic analyser, would it bind differently now?"
-
-	| binding |
-	binding := self binding.
-	^binding notNil and: [binding ~~ self resolveBinding]! !
-!Kernel.StVariableNode categoriesForMethods!
 isBindingChanged!accessing!private! !
 !
 

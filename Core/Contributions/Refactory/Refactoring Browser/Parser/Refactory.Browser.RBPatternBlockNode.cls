@@ -14,7 +14,7 @@ Refactory.Browser.RBPatternBlockNode comment: ''!
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitPatternBlockNode: self!
 
-addArgumentWithNameBasedOn: aString to: aRBBlockNode 
+addArgumentWithNameBasedOn: aString to: aRBBlockNode
 	| name index vars |
 	name := aString.
 	vars := aRBBlockNode allDefinedVariables.
@@ -22,18 +22,17 @@ addArgumentWithNameBasedOn: aString to: aRBBlockNode
 	[vars includes: name] whileTrue: 
 			[index := index + 1.
 			name := name , index printString].
-	aRBBlockNode 
-		arguments: (aRBBlockNode arguments copyWith: (RBVariableNode named: name))!
+	aRBBlockNode arguments: (aRBBlockNode arguments copyWith: (StParameterNode named: name))!
 
 constructLookupNodeFor: aString in: aRBBlockNode
 	| argumentNode |
-	argumentNode := RBLiteralValueNode literalToken: (RBLiteralToken
+	argumentNode := StLiteralValueNode literalToken: (StLiteralToken
 						start: nil
 						comments: nil
 						value: aString
 						stop: nil).
-	^RBMessageNode
-		receiver: (RBVariableNode named: 'self')
+	^StMessageNode
+		receiver: (StSelfVariableNode start: 0)
 		selector: #lookupMatchFor:in:
 		arguments: {argumentNode. aRBBlockNode arguments last}!
 
@@ -52,7 +51,7 @@ createMatchingBlock
 		ifTrue: 
 			[self 
 				error: 'Search blocks can only contain arguments for the node and matching dictionary'].
-	newBlock := RBBlockNode arguments: arguments body: body.
+	newBlock := StBlockNode arguments: arguments body: body.
 	newBlock arguments isEmpty 
 		ifTrue: [self addArgumentWithNameBasedOn: 'aNode' to: newBlock].
 	newBlock arguments size = 1 
@@ -65,7 +64,7 @@ createReplacingBlock
 		ifTrue: 
 			[self 
 				error: 'Replace blocks can only contain an argument for the matching dictionary'].
-	newBlock := RBBlockNode arguments: arguments body: body.
+	newBlock := StBlockNode arguments: arguments body: body.
 	self arguments isEmpty 
 		ifTrue: [self addArgumentWithNameBasedOn: 'aDictionary' to: newBlock].
 	^self createBlockFor: newBlock!

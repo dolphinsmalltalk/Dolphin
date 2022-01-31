@@ -21,10 +21,10 @@ copyInContext: aDictionary
 	selectors := self isSelectorList
 				ifTrue: [(aDictionary at: selectorParts first value) keywords]
 				ifFalse: [selectorParts collect: [:each | aDictionary at: each value]].
-	^RBMethodNode new
+	^StMethodNode new
 		selectorParts: (selectors collect: 
 						[:each |
-						(each lastCodeUnit == $: ifTrue: [RBKeywordToken] ifFalse: [RBIdentifierToken])
+						(each lastCodeUnit == $: ifTrue: [StKeywordToken] ifFalse: [StIdentifierToken])
 							start: nil
 							comments: nil
 							value: each]);
@@ -66,7 +66,7 @@ matchArgumentsAgainst: aNode inContext: aDictionary
 	^true!
 
 matchingClass
-	^RBMethodNode!
+	^StMethodNode!
 
 matchSelectorAgainst: aNode inContext: aDictionary 
 	1 to: selectorParts size
@@ -102,7 +102,7 @@ selectorParts: tokenCollection arguments: variableNodes
 	^(tokenCollection anySatisfy: [:each | each isPatternVariable]) 
 		ifTrue: [super selectorParts: tokenCollection arguments: variableNodes]
 		ifFalse: 
-			[RBMethodNode selectorParts: tokenCollection arguments: variableNodes]! !
+			[StMethodNode selectorParts: tokenCollection arguments: variableNodes]! !
 !Refactory.Browser.RBPatternMethodNode class categoriesForMethods!
 selectorParts:arguments:!instance creation!public! !
 !

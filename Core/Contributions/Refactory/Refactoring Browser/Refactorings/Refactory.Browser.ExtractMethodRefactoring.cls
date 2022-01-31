@@ -56,7 +56,7 @@ checkSingleAssignment: varName
 				[self
 					refactoringError: ('Cannot extract assignments to temporaries without all references (check ''<1s>'')'
 							expandMacrosWith: varName)].
-	extractedParseTree addNode: (RBReturnNode value: (RBVariableNode named: varName)).
+	extractedParseTree addNode: (StReturnNode value: (StVariableNode named: varName)).
 	modifiedParseTree := ParseTreeRewriter
 				replace: self methodDelimiter
 				with: varName , ' := ' , self methodDelimiter
@@ -99,18 +99,18 @@ extract: anInterval from: aSelector in: aClass
 extractMethod
 	| parseTree isSequence extractCode subtree newCode |
 	extractCode := self getExtractedSource.
-	extractedParseTree := RBParser parseExpression: extractCode
+	extractedParseTree := Parser parseExpression: extractCode
 				onError: [:string :pos | self refactoringError: 'Invalid source to extract'].
 	extractedParseTree isNil ifTrue: [self refactoringError: 'Invalid source to extract'].
 	(extractedParseTree isSequence and: [extractedParseTree statements isEmpty])
 		ifTrue: [self refactoringError: 'Select some code to extract'].
 	isSequence := extractedParseTree isSequence or: [extractedParseTree isReturn].
-	extractedParseTree := RBMethodNode
+	extractedParseTree := StMethodNode
 				selector: #value
 				arguments: #()
 				body: (extractedParseTree isSequence
 						ifTrue: [extractedParseTree]
-						ifFalse: [RBSequenceNode temporaries: #() statements: (OrderedCollection with: extractedParseTree)]).
+						ifFalse: [StSequenceNode temporaries: #() statements: (OrderedCollection with: extractedParseTree)]).
 	extractedParseTree body temporaries notEmpty ifTrue: [extractedParseTree body temporaries: #()].
 	extractedParseTree source: extractCode.
 	parseTree := class parseTreeFor: selector.
@@ -208,7 +208,7 @@ methodDelimiter
 
 nameNewMethod: aSymbol
 	| args newSend |
-	args := parameters collect: [:each | RBVariableNode named: each].
+	args := parameters collect: [:each | StVariableNode named: each].
 	extractedParseTree renameSelector: aSymbol andArguments: args asArray.
 	aSymbol argumentCount = 0
 		ifTrue: 

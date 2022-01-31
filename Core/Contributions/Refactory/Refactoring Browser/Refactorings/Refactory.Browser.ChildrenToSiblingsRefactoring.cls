@@ -32,7 +32,7 @@ changeIsKindOfReferences
 		withValueFrom: 
 			[:msg |
 			msg
-				arguments: {(RBVariableNode named: (self nameForReferenceToClass: superclass fromNode: msg))
+				arguments: {(StVariableNode named: (self nameForReferenceToClass: superclass fromNode: msg))
 							comments: msg arguments first comments;
 							yourself}.
 			msg]
@@ -174,7 +174,7 @@ subclasses: aCollectionOfRBClasses
 subclassResponsibilityFor: aSelector in: aClass 
 	| methodNode position source |
 	source := aClass sourceCodeFor: aSelector.
-	methodNode := RBParser parseMethod: source onError: [:err :pos | ^nil].
+	methodNode := Parser parseMethod: source onError: [:err :pos | ^nil].
 	position := methodNode arguments isEmpty 
 				ifTrue: [methodNode selectorParts last stop]
 				ifFalse: [methodNode arguments last stop].

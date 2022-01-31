@@ -129,7 +129,7 @@ messages
 			[:each |
 			| searchMessages |
 			searchMessages := each sentMessages.
-			RBProgramNode optimizedSelectors do: [:sel | searchMessages remove: sel ifAbsent: nil].
+			StProgramNode optimizedSelectors do: [:sel | searchMessages remove: sel ifAbsent: nil].
 			searchMessages isEmpty ifTrue: [^messages := #()].
 			messages addAll: searchMessages].
 	^messages := messages asArray!
@@ -169,7 +169,7 @@ visitArgumentNodes: aNodeCollection
 visitNode: aNode
 	^(self performSearches: searches on: aNode)
 		ifNil: 
-			[super visitNode: aNode.
+			[aNode acceptVisitor: self.
 			aNode]! !
 !Refactory.Browser.ParseTreeSearcher categoriesForMethods!
 addArgumentRule:!accessing!public! !
@@ -223,16 +223,16 @@ buildSelectorString: aSelector
 				nextPut: $\x20].
 	^stream contents!
 
-buildSelectorTree: aSelector 
+buildSelectorTree: aSelector
 	aSelector isEmpty ifTrue: [^nil].
-	^RBParser parseRewriteExpression: '``@receiver ' 
-				, (self buildSelectorString: aSelector)
+	^Refactory.Browser.RBPatternParser
+		parseExpression: '``@receiver ' , (self buildSelectorString: aSelector)
 		onError: [:err :pos | ^nil]!
 
-buildTree: aString method: aBoolean 
-	^aBoolean 
-		ifTrue: [RBParser parseRewriteMethod: aString]
-		ifFalse: [RBParser parseRewriteExpression: aString]!
+buildTree: aString method: aBoolean
+	^aBoolean
+		ifTrue: [RBPatternParser parseMethod: aString]
+		ifFalse: [RBPatternParser parseExpression: aString]!
 
 getterMethod: aVarName 
 	^(self new)
@@ -269,12 +269,12 @@ treeMatching: aString in: aParseTree
 treeMatchingStatements: aString in: aParseTree
 	| notifier tree |
 	notifier := self new.
-	tree := RBParser parseExpression: aString.
-	tree isSequence ifFalse: [tree := RBSequenceNode statements: {tree}].
+	tree := Parser parseExpression: aString.
+	tree isSequence ifFalse: [tree := StSequenceNode statements: {tree}].
 	tree temporaries: {RBPatternVariableNode named: '`@temps'}.
 	tree addNodeFirst: (RBPatternVariableNode named: '`@.S1').
 	tree lastIsReturn ifFalse: [tree addNode: (RBPatternVariableNode named: '`@.S2')].
-	notifier matchesTree: tree do: [:aNode :answer | ^RBParser parseExpression: aString].
+	notifier matchesTree: tree do: [:aNode :answer | ^Parser parseExpression: aString].
 	notifier executeTree: aParseTree.
 	^nil! !
 !Refactory.Browser.ParseTreeSearcher class categoriesForMethods!

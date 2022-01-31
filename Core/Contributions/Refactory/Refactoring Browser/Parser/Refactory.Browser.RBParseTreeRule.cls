@@ -20,8 +20,8 @@ context
 foundMatchFor: aProgramNode
 	^aProgramNode!
 
-methodSearchString: aString 
-	searchTree := RBParser parseRewriteMethod: aString!
+methodSearchString: aString
+	searchTree := RBPatternParser parseMethod: aString!
 
 owner: aParseTreeSearcher
 	owner := aParseTreeSearcher!
@@ -36,8 +36,8 @@ performOn: aProgramNode
 			self foundMatchFor: aProgramNode]
 		ifFalse: [nil]!
 
-searchString: aString 
-	searchTree := RBParser parseRewriteExpression: aString!
+searchString: aString
+	searchTree := RBPatternParser parseExpression: aString onError: nil!
 
 sentMessages
 	^searchTree sentMessages! !

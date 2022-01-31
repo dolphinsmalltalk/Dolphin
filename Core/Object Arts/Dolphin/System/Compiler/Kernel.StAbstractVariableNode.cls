@@ -26,6 +26,16 @@ Instance Variables:
 hash
 	^self name hash!
 
+hasQualifiedName
+	"Answer whether the receiver has a qualified name (i.e. it is a static variable reference with a dot separated path)."
+
+	^false!
+
+isBindingChanged
+	"Private - Assuming that this node has been bound by a semantic analyser, would it bind differently now?"
+
+	^false!
+
 isConstantNode
 	"Answer whether the receiver describes a variable that cannot be assigned to (i.e. a constant)."
 
@@ -33,6 +43,11 @@ isConstantNode
 
 isImmediateNode
 	^true!
+
+isStaticVariable
+	"Answer whether the receiver is a reference to a static variable - this is only valid after binding variables in a parse tree using a semantic analyser."
+
+	^false!
 
 isVariable
 	^true!
@@ -63,8 +78,11 @@ variable: anStVariable
 !Kernel.StAbstractVariableNode categoriesForMethods!
 =!comparing!public! !
 hash!comparing!public! !
+hasQualifiedName!public!testing! !
+isBindingChanged!accessing!private! !
 isConstantNode!public!testing! !
 isImmediateNode!public!testing! !
+isStaticVariable!public!testing! !
 isVariable!public!testing! !
 name!constants!public! !
 needsParenthesis!public!testing! !

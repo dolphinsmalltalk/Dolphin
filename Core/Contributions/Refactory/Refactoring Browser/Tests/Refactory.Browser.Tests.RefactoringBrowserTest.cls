@@ -38,13 +38,13 @@ objectClassVariable
 	^Object classPool keys detect: [:each | true]!
 
 parseExpression: aString
-	^RBParser parseExpression: aString!
+	^Parser parseExpression: aString!
 
 parseMethod: aString
-	^RBParser parseMethod: aString!
+	^Parser parseMethod: aString!
 
 parseMethod: aString in: aRBClass
-	^RBParser
+	^Parser
 		parseMethod: aString
 		in: aRBClass! !
 !Refactory.Browser.Tests.RefactoringBrowserTest categoriesForMethods!

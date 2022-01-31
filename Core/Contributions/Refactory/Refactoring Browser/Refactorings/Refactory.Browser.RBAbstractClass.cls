@@ -138,7 +138,7 @@ bindingOrNil
 compile: aString 
 	#rbFix. "Support multiple method categories for Dolphin"
 	^self compile: aString
-		categories: (self protocolsFor: (RBParser parseMethodPattern: aString))!
+		categories: (self protocolsFor: (Parser parseMethodPattern: aString))!
 
 compile: aString categories: aCollection
 	| change method |

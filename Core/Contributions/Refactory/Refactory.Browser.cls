@@ -3,7 +3,7 @@
 Refactory subclass: #'Refactory.Browser'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Kernel private})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser guid: (Core.GUID fromString: '{ecd34b76-9126-4288-bbc0-5476dd32e408}')!

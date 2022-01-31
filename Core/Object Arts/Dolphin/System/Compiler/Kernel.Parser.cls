@@ -1420,12 +1420,6 @@ parseMethodPattern: aString
 	parser initializeParserWith: aString.
 	^parser parseMessagePattern selector!
 
-parseRewriteExpression: aString 
-	^self parseRewriteExpression: aString onError: nil!
-
-parseRewriteMethod: aString 
-	^self parseRewriteMethod: aString onError: nil!
-
 warningClass
 	^CompilerWarningNotification! !
 !Kernel.Parser class categoriesForMethods!
@@ -1452,8 +1446,6 @@ parseMethod:onError:!parsing!public! !
 parseMethodNoError:!parsing!public! !
 parseMethodNoError:in:!parsing!public! !
 parseMethodPattern:!parsing!public! !
-parseRewriteExpression:!parsing!public! !
-parseRewriteMethod:!parsing!public! !
 warningClass!constants!public! !
 !
 

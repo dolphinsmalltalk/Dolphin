@@ -41,7 +41,7 @@ categories
 	^protocols collect: [:each | each asMethodCategory]!
 
 changeForClass: aSymbol selector: aSelector 
-	^(self selector = aSelector and: [classReference asString = aSymbol])
+	^(self selector == aSelector and: [classReference asString = aSymbol])
 		ifTrue: [self]
 		ifFalse: [nil]!
 
@@ -107,7 +107,7 @@ packageName
 	^packageName!
 
 parseTree
-	^RBParser parseMethod: source onError: [:str :pos | ^nil]!
+	^Parser parseMethod: source onError: [:str :pos | ^nil]!
 
 primitiveExecute
 	method := self changeClass
@@ -157,7 +157,7 @@ protocols: aCollection
 	protocols isNil ifTrue: [protocols := #(#accessing)]!
 
 selector
-	^selector ifNil: [selector := (RBParser parseMethodPattern: source) ?? #unknown]!
+	^selector ifNil: [selector := (Parser parseMethodPattern: source) ?? #unknown]!
 
 source
 	^source! !

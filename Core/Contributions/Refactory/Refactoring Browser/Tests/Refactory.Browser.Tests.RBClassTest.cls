@@ -16,7 +16,7 @@ setUp
 	model := RBModel new.
 	objectClass := model classNamed: 'Core.Object'.
 	objectClass addClassVariable: 'ModelOnlyClassVariable'.
-	messageNodeClass := model classNamed: RBMessageNode fullName.
+	messageNodeClass := model classNamed: StMessageNode fullName.
 	model
 		defineClass: 'Core.Object subclass: #SomeClassName
 	instanceVariableNames: ''instanceVariable1 instanceVariable2''
@@ -94,13 +94,16 @@ testEnvironment
 	rbTests := model classFor: self class environment.
 	self assert: myClass environment equals: rbTests.
 	self assert: myClass basicEnvironment equals: rbTests.
+	self assert: myClass baseEnvironmentName equals: #Smalltalk.
 	self assert: (rbTests classPool at: self class unqualifiedName) identicalTo: myClass.
 	smalltalk := model classNamed: #Smalltalk.
 	self assert: newClass environment identicalTo: smalltalk.
 	self assert: newClass basicEnvironment identicalTo: smalltalk.
+	self assert: newClass baseEnvironmentName equals: #Smalltalk.
 	root := model classNamed: #Root.
 	self assert: smalltalk environment identicalTo: root.
 	self assert: smalltalk basicEnvironment identicalTo: root.
+	
 	refactory := model classNamed: #Refactory.
 	self assert: rbTests environment environment identicalTo: refactory.
 	self assert: refactory environment identicalTo: root.
@@ -108,7 +111,9 @@ testEnvironment
 
 	"As in the real class hierarchy, the public environment of Root is nil (in order to terminate tree traversal at the root), even though its actual environment is itself."
 	self assertIsNil: root environment.
-	self assert: root basicEnvironment identicalTo: root!
+	self assert: root basicEnvironment identicalTo: root.
+	self assert: root baseEnvironmentName equals: #Root.
+!
 
 testExistingMethodPackageAndEnvironment
 	| class packageAndEnv |
@@ -140,7 +145,7 @@ testExistingMethodPackageAndEnvironmentRootClass
 testFullName
 	self assert: objectClass fullName equals: 'Core.Object'.
 	self assert: objectClass metaclass fullName equals: 'Core.Object class'.
-	self assert: messageNodeClass fullName equals: RBMessageNode fullName.
+	self assert: messageNodeClass fullName equals: StMessageNode fullName.
 	self assert: (model classFor: self class) fullName equals: self class fullName.
 	self assert: newClass fullName equals: 'SomeClassName'.
 	self assert: objectClass environment environment fullName equals: 'Root'!

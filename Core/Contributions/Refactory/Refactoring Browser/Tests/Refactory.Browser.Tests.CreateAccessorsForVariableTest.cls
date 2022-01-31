@@ -11,10 +11,6 @@ Refactory.Browser.Tests.CreateAccessorsForVariableTest comment: ''!
 !Refactory.Browser.Tests.CreateAccessorsForVariableTest categoriesForClass!Refactory-Testing! !
 !Refactory.Browser.Tests.CreateAccessorsForVariableTest methodsFor!
 
-setUp
-	super setUp.
-	model := self abstractVariableTestData!
-
 testExistingInstanceVariableAccessors
 	| ref |
 	ref := CreateAccessorsForVariableRefactoring
@@ -69,7 +65,6 @@ testNonExistantName
 					classVariable: true)
 			withMessage: ('BasicLintRuleTestData does not define class variable ''foo''')! !
 !Refactory.Browser.Tests.CreateAccessorsForVariableTest categoriesForMethods!
-setUp!public!set up! !
 testExistingInstanceVariableAccessors!public!tests! !
 testNewClassVariableAccessors!public!tests! !
 testNewInstanceVariableAccessors!public!tests! !

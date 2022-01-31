@@ -18,16 +18,16 @@ foundMatchFor: aProgramNode
 	newNode copyCommentsFrom: aProgramNode.
 	^newNode!
 
-methodReplaceString: replaceString 
-	replaceTree := RBParser parseRewriteMethod: replaceString!
+methodReplaceString: replaceString
+	replaceTree := RBPatternParser parseMethod: replaceString!
 
 replaceString: replaceString
-	replaceTree := RBParser parseRewriteExpression: replaceString.
+	replaceTree := RBPatternParser parseExpression: replaceString.
 	searchTree isSequence = replaceTree isSequence
 		ifFalse: 
 			[searchTree isSequence
-				ifTrue: [replaceTree := RBSequenceNode statements: {replaceTree}]
-				ifFalse: [searchTree := RBSequenceNode statements: {searchTree}]]!
+				ifTrue: [replaceTree := StSequenceNode statements: {replaceTree}]
+				ifFalse: [searchTree := StSequenceNode statements: {searchTree}]]!
 
 searchFor: searchString replaceWith: replaceString 
 	self searchString: searchString.

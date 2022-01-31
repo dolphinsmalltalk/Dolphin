@@ -57,7 +57,7 @@ parsePrimitiveLiteral
 				ifTrue: 
 					[self step.
 					^node].
-			currentToken := RBLiteralToken
+			currentToken := StLiteralToken
 						start: currentToken start
 						comments: nil
 						value: currentToken value asSymbol

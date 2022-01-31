@@ -16,10 +16,7 @@ addImplementationSpecificLiterals
 	VM registry do: [:each | each isSymbol ifTrue: [literals add: each]]!
 
 buildParseTree
-	| tree |
-	tree := self selectedClass parseTreeFor: self selector.
-	tree isNil ifTrue: [^RBParser parseMethod: 'method'].
-	^tree!
+	^(self selectedClass parseTreeFor: self selector) ifNil: [Parser parseMethod: 'method']!
 
 checkLiteral: aLiteral
 	aLiteral isSymbol

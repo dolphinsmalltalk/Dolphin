@@ -21,7 +21,7 @@ addMethod: aString toClass: aClass inProtocols: protocolList
 
 preconditions
 	| selector method |
-	method := RBParser parseMethod: source
+	method := Parser parseMethod: source
 				onError: 
 					[:string :position | 
 					^RBCondition 

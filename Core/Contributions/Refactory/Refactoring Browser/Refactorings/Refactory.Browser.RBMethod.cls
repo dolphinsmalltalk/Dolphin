@@ -57,13 +57,18 @@ modelClass
 modelClass: aRBClass
 	class := aRBClass!
 
+parseEnvironment
+	compiledMethod notNil
+		and: [compiledMethod customEnvironment ifNotNil: [:env | ^class model classFor: env]].
+	^class environment!
+
 parseTree
 	^parseTree
 		ifNil: 
-			[parseTree := RBParser
+			[parseTree := Parser
 						parseMethod: self source
 						in: class
-						environment: class environment
+						environment: self parseEnvironment
 						onError: [:str :pos | ^nil]]!
 
 printOn: aStream
@@ -85,7 +90,7 @@ refersToSymbol: aSymbol
 	searcher := ParseTreeSearcher new.
 	searcher matches: '`#literal'
 		do: [:node :answer | answer or: [node value refersTo: aSymbol asLiteralOf: self]].
-	(RBScanner isSelector: aSymbol)
+	(Scanner isSelector: aSymbol)
 		ifTrue: 
 			[searcher matches: '`@object ' , (ParseTreeSearcher buildSelectorString: aSymbol)
 				do: [:node :answer | true]].
@@ -127,6 +132,7 @@ method:!accessing!public! !
 methodClass!accessing!public! !
 modelClass!accessing!public! !
 modelClass:!accessing!public! !
+parseEnvironment!accessing!private! !
 parseTree!accessing!public! !
 printOn:!printing!public! !
 refersToClass:!public!testing! !

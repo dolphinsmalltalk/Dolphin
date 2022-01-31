@@ -63,7 +63,7 @@ checkClassVarName: aName in: aClass
 	(self reservedNames includes: string) ifTrue: [^false].
 	string isEmpty ifTrue: [^false].
 	(string first isUppercase or: [string first == $_]) ifFalse: [^false].
-	^RBScanner isVariable: string!
+	^Scanner isVariable: string!
 
 checkInstanceVariableName: aName in: aClass 
 	| string |
@@ -72,10 +72,10 @@ checkInstanceVariableName: aName in: aClass
 	string isEmpty ifTrue: [^false].
 	(self reservedNames includes: string) ifTrue: [^false].
 	string first isUppercase ifTrue: [^false].
-	^RBScanner isVariable: string!
+	^Scanner isVariable: string!
 
 checkMethodName: aName
-	^aName isString and: [RBScanner isSelector: aName]!
+	^aName isString and: [Scanner isSelector: aName]!
 
 definesClassVariable: aString in: aClass
 	^self new

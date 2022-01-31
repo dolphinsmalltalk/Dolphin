@@ -155,7 +155,7 @@ parseAll
 	^progress showModal!
 
 parseError: each
-	RBParser parseExpression: each first onError: [:string :pos | ^self assert: pos equals: each last].
+	Parser parseExpression: each first onError: [:string :pos | ^self assert: pos equals: each last].
 	self error: 'Parser didn''t fail'!
 
 setUp
@@ -184,8 +184,8 @@ testAllSearches
 
 testArray
 	| tree allowEmpty |
-	allowEmpty := RBParser allowEmptyStatements.
-	RBParser allowEmptyStatements: true.
+	allowEmpty := Parser allowEmptyStatements.
+	Parser allowEmptyStatements: true.
 	
 	[#(#('{}' 0 0) #('{.}' 0 1) #('{..}' 0 2) #('{foo. bar}' 2 1) #('{foo. bar.}' 2 2) #('{foo. bar. .}' 2 3) #('{. foo. bar}' 2 2) #('{foo.. bar}' 2 2))
 		do: 
@@ -195,7 +195,7 @@ testArray
 			self assert: tree periods size equals: each last.
 			self assert: tree left equals: 1.
 			self assert: tree right equals: each first size]]
-			ensure: [RBParser allowEmptyStatements: allowEmpty]!
+			ensure: [Parser allowEmptyStatements: allowEmpty]!
 
 testBlockRewrites
 	| rewriter tree |
@@ -207,10 +207,10 @@ testBlockRewrites
 		replace: 'asdf'
 		with: 'fdsa'
 		when: [:aNode | aNode parent parent isReturn].
-	rewriter replace: 'self foo' withValueFrom: [:aNode | RBVariableNode named: aNode selector asString].
+	rewriter replace: 'self foo' withValueFrom: [:aNode | StVariableNode named: aNode selector asString].
 	rewriter
 		replaceArgument: 'asdf'
-		withValueFrom: [:aNode | RBVariableNode named: 'xxx']
+		withValueFrom: [:aNode | StVariableNode named: 'xxx']
 		when: [:aNode | false].
 	rewriter executeTree: tree.
 	self compare: tree to: (self parseMethod: 'method: asdf
@@ -231,14 +231,14 @@ testComparingTrees
 
 testCreationProtocol
 	| messageNode |
-	self compare: (RBMessageNode
-				receiver: (RBVariableNode named: 'self')
+	self compare: (StMessageNode
+				receiver: (StVariableNode named: 'self')
 				selector: #+
-				arguments: {RBLiteralNode value: 0})
+				arguments: {StLiteralNode value: 0})
 		to: (self parseExpression: 'self + 0').
-	messageNode := RBMessageNode receiver: (RBVariableNode named: 'self') selector: #foo.
-	self compare: (RBMethodNode selector: #bar
-				body: (RBSequenceNode statements: {RBCascadeNode messages: {messageNode. messageNode}}))
+	messageNode := StMessageNode receiver: (StSelfVariableNode start: 0) selector: #foo.
+	self compare: (StMethodNode selector: #bar
+				body: (StSequenceNode statements: {StCascadeNode messages: {messageNode. messageNode}}))
 		to: (self parseMethod: 'bar self foo; foo')!
 
 testEquality
@@ -260,10 +260,10 @@ testEqualToWithMappingAfterRewrite
 	*was* being picky about it, and it shouldn't be"
 
 	| pattern tree1 tree2 context |
-	pattern := RBParser parseRewriteMethod: 'foo: `arg ^`arg baz'.
+	pattern := RBPatternParser parseMethod: 'foo: `arg ^`arg baz'.
 	context := RBSmallDictionary new
 				at: '-source-' put: nil;
-				at: (RBPatternVariableNode named: '`arg') put: (RBVariableNode named: 'bar');
+				at: (RBPatternVariableNode named: '`arg') put: (StVariableNode named: 'bar');
 				yourself.
 	tree1 := pattern copyInContext: context.
 	tree2 := self parseMethod: 'foo: abc ^abc baz'.
@@ -271,7 +271,7 @@ testEqualToWithMappingAfterRewrite
 	self assert: (tree1 equalTo: tree2 withMapping: (LookupTable with: 'bar' -> 'abc')).
 	self deny: (tree1 equalTo: tree2 withMapping: (LookupTable with: 'bar' -> 'def')).
 	"The base case is the following:"
-	self assert: ((RBVariableNode named: 'foo') equalTo: (Kernel.StParameterNode named: 'foo')
+	self assert: ((StVariableNode named: 'foo') equalTo: (StParameterNode named: 'foo')
 				withMapping: LookupTable new)!
 
 testEqualToWithMappingRename
@@ -351,17 +351,17 @@ testLiteralMessages
 			[:string :literal |
 			self assert: (self parseMethod: ('<1s> ^<1s>
 <1s>' expandMacrosWith: string))
-				equals: (RBMethodNode selector: string asSymbol
-						body: (RBSequenceNode
-								statements: {RBReturnNode
-											value: (RBMessageNode receiver: (RBLiteralNode value: literal) selector: string asSymbol)}))]!
+				equals: (StMethodNode selector: string asSymbol
+						body: (StSequenceNode
+								statements: {StReturnNode
+											value: (StMessageNode receiver: (StLiteralNode value: literal) selector: string asSymbol)}))]!
 
 testLiterals
-	self assert: (RBLiteralNode value: #(1 2 #(#asdf))) formattedCode equals: '#(1 2 #(#asdf))'!
+	self assert: (StLiteralNode value: #(1 2 #(#asdf))) formattedCode equals: '#(1 2 #(#asdf))'!
 
 testMethodPatterns
 	#(#('+ a ^self + a' #+) #('foo ^self foo' #foo) #('foo: a bar: b ^a + b' #foo:bar:))
-		do: [:each | self assert: (RBParser parseMethodPattern: each first) identicalTo: each last]!
+		do: [:each | self assert: (Parser parseMethodPattern: each first) identicalTo: each last]!
 
 testModifying
 	| tree |
@@ -434,8 +434,8 @@ testPatternCascade
 
 testPatternNodeCopy
 	| tree copy |
-	tree := RBParser
-				parseRewriteMethod: 'method: arg1 | temps | temps := #(10 ##(#sequence -> true. #optimized -> true)). temps foo; foo. `@patternVar bar. ^(temps collect: [:e | e `patternMsg `{:msgNode | ''*pattern*'' match: msgNode selector}])'.
+	tree := RBPatternParser
+				parseMethod: 'method: arg1 | temps | temps := #(10 ##(#sequence -> true. #optimized -> true)). temps foo; foo. `@patternVar bar. ^(temps collect: [:e | e `patternMsg `{:msgNode | ''*pattern*'' match: msgNode selector}])'.
 	copy := tree copy.
 	self compare: copy to: tree.
 	self verifyTree: copy isDeepCopyOf: tree!
@@ -449,18 +449,18 @@ testPositions
 	self assert: blockNode sourceInterval equals: (1 to: 10).
 	self assert: blockNode size equals: 1.	"test dummy collection protocol"
 	blockNode printString.	"coverage"
-	self deny: (blockNode isLast: (RBVariableNode named: 'b')).
+	self deny: (blockNode isLast: (StVariableNode named: 'b')).
 	self compare: blockNode
-		to: (RBBlockNode
-				arguments: (OrderedCollection with: (RBVariableNode named: 'a') with: (RBVariableNode named: 'b'))
-				body: (RBSequenceNode statements: #())).
+		to: (StBlockNode
+				arguments: (OrderedCollection with: (StParameterNode named: 'a') with: (StParameterNode named: 'b'))
+				body: (StSequenceNode statements: #())).
 	optimized := self parseExpression: '(##(| a | a := 5. a * a))'.
 	self assert: optimized startWithoutParentheses equals: 2.
 	self assert: optimized stopWithoutParentheses equals: 24.
 	self
 		assert: (optimized equalTo: (self parseExpression: '##(| b | b := 5. b * b)') exceptForVariables: #()).
 	self assert: optimized isImmediateNode.
-	RBProgramNodeVisitor new visitNode: optimized.
+	ParseNodeVisitor new visitNode: optimized.
 	optimized body replaceWith: (self parseExpression: '| c | c := 5. c * 45').
 	self compare: optimized to: (self parseExpression: '##(| c | c := 5. c * 45)')!
 
@@ -567,7 +567,7 @@ testReplacingNodes
 	tree := self
 				parseMethod: '+ a | a b | self ifTrue: [a] ifFalse: [b := c]. a := b. [:b :c :a | a foo: a; foo1: a; foo2: a foo: b]. ^a'.
 	search := ParseTreeSearcher new.
-	block := [:aNode :answer | aNode replaceWith: (RBVariableNode named: 'q')].
+	block := [:aNode :answer | aNode replaceWith: (StVariableNode named: 'q')].
 	search
 		matches: 'a' do: block;
 		matchesArgument: 'a' do: block.
@@ -591,8 +591,8 @@ testRewriteMethods
 								tree) formattedCode)
 				to: (self parseMethod: (each at: 2)).
 			rewrite := ParseTreeRewriter new.
-			rewrite replaceTree: (RBParser parseRewriteMethod: (each at: 3))
-				withTree: (RBParser parseRewriteMethod: each last).
+			rewrite replaceTree: (RBPatternParser parseMethod: (each at: 3))
+				withTree: (RBPatternParser parseMethod: each last).
 			self compare: (self
 						parseMethod: (rewrite
 								executeTree: (self parseMethod: each first);
@@ -653,7 +653,7 @@ testSmallDictionary
 
 testTokens
 	| tokens scanner |
-	scanner := RBScanner on: '#foo foo: bar := [ ##( + foo.bar.baz' readStream.
+	scanner := Scanner on: '#foo foo: bar := [ ##( + foo.bar.baz' readStream.
 	tokens := scanner contents.
 	tokens printString.
 	tokens with: #(4 4 3 2 1 3 1 11) do: [:token :length | self assert: token length equals: length]!

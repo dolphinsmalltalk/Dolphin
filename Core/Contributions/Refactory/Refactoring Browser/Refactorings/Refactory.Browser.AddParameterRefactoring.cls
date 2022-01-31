@@ -49,7 +49,7 @@ modifyImplementorParseTree: parseTree in: aClass
 	| name newArg allTempVars |
 	allTempVars := parseTree allDefinedVariables.
 	name := self safeVariableNameFor: aClass temporaries: allTempVars.
-	newArg := RBVariableNode named: name.
+	newArg := StVariableNode named: name.
 	parseTree arguments: parseTree arguments , {newArg}.
 	super modifyImplementorParseTree: parseTree in: aClass!
 
@@ -132,7 +132,7 @@ suggestedVariableNameIn: aClass
 verifyInitializationExpression
 	| tree |
 	initializer isEmpty ifTrue: [self refactoringError: 'The initialization code cannot be empty'].
-	tree := RBParser
+	tree := Parser
 				parseExpression: initializer
 				in: class
 				onError: [:ex | self refactoringError: ex errorMessage].

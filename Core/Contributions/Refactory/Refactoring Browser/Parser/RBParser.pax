@@ -34,8 +34,6 @@ package setMethodNames: #(
 	#(#{Kernel.CompileFailedMethod} #refersToVariable:)
 	#(#{Kernel.ParseNodeVisitor} #visitPatternBlockNode:)
 	#(#{Kernel.ParseNodeVisitor} #visitPatternWrapperBlockNode:)
-	#(#{Kernel.Parser class} #parseRewriteExpression:onError:)
-	#(#{Kernel.Parser class} #parseRewriteMethod:onError:)
 	#(#{Kernel.Scanner} #scanPatternVariable)
 	#(#{Kernel.StAbstractVariableNode} #copyInContext:)
 	#(#{Kernel.StAbstractVariableNode} #equalTo:withMapping:)
@@ -147,70 +145,6 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.RBFormatter} #visitPatternWrapperBlockNode:)
 ).
 
-package setVariableNames: #(
-	#{Refactory.Browser.RBAssignmentNode}
-	#{Refactory.Browser.RBAssignmentToken}
-	#{Refactory.Browser.RBBinarySelectorToken}
-	#{Refactory.Browser.RBBlockNode}
-	#{Refactory.Browser.RBCascadeNode}
-	#{Refactory.Browser.RBIdentifierToken}
-	#{Refactory.Browser.RBKeywordToken}
-	#{Refactory.Browser.RBLiteralArrayNode}
-	#{Refactory.Browser.RBLiteralArrayToken}
-	#{Refactory.Browser.RBLiteralNode}
-	#{Refactory.Browser.RBLiteralToken}
-	#{Refactory.Browser.RBLiteralValueNode}
-	#{Refactory.Browser.RBMessageNode}
-	#{Refactory.Browser.RBMethodNode}
-	#{Refactory.Browser.RBMultiKeywordLiteralToken}
-	#{Refactory.Browser.RBNumberLiteralToken}
-	#{Refactory.Browser.RBOptimizedNode}
-	#{Refactory.Browser.RBOptimizedToken}
-	#{Refactory.Browser.RBParser}
-	#{Refactory.Browser.RBProgramNode}
-	#{Refactory.Browser.RBProgramNodeVisitor}
-	#{Refactory.Browser.RBReturnNode}
-	#{Refactory.Browser.RBScanner}
-	#{Refactory.Browser.RBSequenceNode}
-	#{Refactory.Browser.RBSpecialCharacterToken}
-	#{Refactory.Browser.RBToken}
-	#{Refactory.Browser.RBValueNode}
-	#{Refactory.Browser.RBValueToken}
-	#{Refactory.Browser.RBVariableNode}
-).
-
-package setAliasVariableNames: #(
-	#{Refactory.Browser.RBAssignmentNode}
-	#{Refactory.Browser.RBAssignmentToken}
-	#{Refactory.Browser.RBBinarySelectorToken}
-	#{Refactory.Browser.RBBlockNode}
-	#{Refactory.Browser.RBCascadeNode}
-	#{Refactory.Browser.RBIdentifierToken}
-	#{Refactory.Browser.RBKeywordToken}
-	#{Refactory.Browser.RBLiteralArrayNode}
-	#{Refactory.Browser.RBLiteralArrayToken}
-	#{Refactory.Browser.RBLiteralNode}
-	#{Refactory.Browser.RBLiteralToken}
-	#{Refactory.Browser.RBLiteralValueNode}
-	#{Refactory.Browser.RBMessageNode}
-	#{Refactory.Browser.RBMethodNode}
-	#{Refactory.Browser.RBMultiKeywordLiteralToken}
-	#{Refactory.Browser.RBNumberLiteralToken}
-	#{Refactory.Browser.RBOptimizedNode}
-	#{Refactory.Browser.RBOptimizedToken}
-	#{Refactory.Browser.RBParser}
-	#{Refactory.Browser.RBProgramNode}
-	#{Refactory.Browser.RBProgramNodeVisitor}
-	#{Refactory.Browser.RBReturnNode}
-	#{Refactory.Browser.RBScanner}
-	#{Refactory.Browser.RBSequenceNode}
-	#{Refactory.Browser.RBSpecialCharacterToken}
-	#{Refactory.Browser.RBToken}
-	#{Refactory.Browser.RBValueNode}
-	#{Refactory.Browser.RBValueToken}
-	#{Refactory.Browser.RBVariableNode}
-).
-
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\Formatters\RBFormatters'
@@ -298,7 +232,7 @@ Kernel.StMethodNode subclass: #'Refactory.Browser.RBPatternMethodNode'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StVariableNode subclass: #'Refactory.Browser.RBPatternVariableNode'
+Kernel.StRealVariableNode subclass: #'Refactory.Browser.RBPatternVariableNode'
 	instanceVariableNames: 'recurseInto isList isLiteral isStatement isAnything'
 	classVariableNames: ''
 	imports: #()
@@ -328,67 +262,6 @@ Kernel.StValueToken subclass: #'Refactory.Browser.PatternBlockToken'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-
-"Variable Aliases"!
-
-Refactory.Browser.RBAssignmentNode := Kernel.StAssignmentNode!
-
-Refactory.Browser.RBAssignmentToken := Kernel.StAssignmentToken!
-
-Refactory.Browser.RBBinarySelectorToken := Kernel.StBinarySelectorToken!
-
-Refactory.Browser.RBBlockNode := Kernel.StBlockNode!
-
-Refactory.Browser.RBCascadeNode := Kernel.StCascadeNode!
-
-Refactory.Browser.RBIdentifierToken := Kernel.StIdentifierToken!
-
-Refactory.Browser.RBKeywordToken := Kernel.StKeywordToken!
-
-Refactory.Browser.RBLiteralArrayNode := Kernel.StLiteralArrayNode!
-
-Refactory.Browser.RBLiteralArrayToken := Kernel.StLiteralArrayToken!
-
-Refactory.Browser.RBLiteralNode := Kernel.StLiteralNode!
-
-Refactory.Browser.RBLiteralToken := Kernel.StLiteralToken!
-
-Refactory.Browser.RBLiteralValueNode := Kernel.StLiteralValueNode!
-
-Refactory.Browser.RBMessageNode := Kernel.StMessageNode!
-
-Refactory.Browser.RBMethodNode := Kernel.StMethodNode!
-
-Refactory.Browser.RBMultiKeywordLiteralToken := Kernel.StMultiKeywordLiteralToken!
-
-Refactory.Browser.RBNumberLiteralToken := Kernel.StNumberLiteralToken!
-
-Refactory.Browser.RBOptimizedNode := Kernel.StOptimizedNode!
-
-Refactory.Browser.RBOptimizedToken := Kernel.StOptimizedToken!
-
-Refactory.Browser.RBParser := Kernel.Parser!
-
-Refactory.Browser.RBProgramNode := Kernel.StProgramNode!
-
-Refactory.Browser.RBProgramNodeVisitor := Kernel.ParseNodeVisitor!
-
-Refactory.Browser.RBReturnNode := Kernel.StReturnNode!
-
-Refactory.Browser.RBScanner := Kernel.Scanner!
-
-Refactory.Browser.RBSequenceNode := Kernel.StSequenceNode!
-
-Refactory.Browser.RBSpecialCharacterToken := Kernel.StSpecialCharacterToken!
-
-Refactory.Browser.RBToken := Kernel.StToken!
-
-Refactory.Browser.RBValueNode := Kernel.StValueNode!
-
-Refactory.Browser.RBValueToken := Kernel.StValueToken!
-
-Refactory.Browser.RBVariableNode := Kernel.StVariableNode!
-
 
 "Loose Methods"!
 
@@ -425,18 +298,6 @@ visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
 !Kernel.ParseNodeVisitor categoriesForMethods!
 visitPatternBlockNode:!public!visiting! !
 visitPatternWrapperBlockNode:!public!visiting! !
-!
-
-!Kernel.Parser class methodsFor!
-
-parseRewriteExpression: aString onError: aBlock
-	^Refactory.Browser.RBPatternParser parseExpression: aString onError: aBlock!
-
-parseRewriteMethod: aString onError: aBlock
-	^Refactory.Browser.RBPatternParser parseMethod: aString onError: aBlock! !
-!Kernel.Parser class categoriesForMethods!
-parseRewriteExpression:onError:!parsing!public! !
-parseRewriteMethod:onError:!parsing!public! !
 !
 
 !Kernel.Scanner methodsFor!
@@ -947,7 +808,7 @@ reformatSource
 							each stopPosition + 1])
 				to: source size).
 	newSource := stream contents.
-	self = (Refactory.Browser.RBParser parseMethod: newSource onError: [:s :p | ^self formattedCode])
+	self = (Parser parseMethod: newSource onError: [:s :p | ^self formattedCode])
 		ifFalse: [^self formattedCode].	"Sanity check -- make sure the formatted code is = self"
 	^newSource!
 
@@ -1141,15 +1002,16 @@ selfMessages
 	^searcher executeTree: self initialAnswer: Set new!
 
 superMessages
+	<namespace: Refactory.Browser>
 	| searcher |
 	SuperSearch isNil
 		ifTrue: 
-			[SuperSearch := Refactory.Browser.RBParser parseRewriteExpression: 'super `@msg: ``@args'.
+			[SuperSearch := RBPatternParser parseExpression: 'super `@msg: ``@args' onError: nil.
 			SuperSearch
 				selector;
 				isImmutable: true].
-	searcher := Refactory.Browser.ParseTreeSearcher new.
-	searcher addRule: (Refactory.Browser.RBSearchRule searchForTree: SuperSearch
+	searcher := ParseTreeSearcher new.
+	searcher addRule: (RBSearchRule searchForTree: SuperSearch
 				thenDo: 
 					[:aNode :answer |
 					answer
@@ -1262,7 +1124,7 @@ addReturn
 addSelfReturn
 	| node |
 	self lastIsReturn ifTrue: [^self].
-	node := Refactory.Browser.RBReturnNode value: (Refactory.Browser.RBVariableNode named: 'self').
+	node := StReturnNode value: (StSelfVariableNode start: 0).
 	self addNode: node!
 
 addTemporariesNamed: aCollection 
@@ -1270,7 +1132,7 @@ addTemporariesNamed: aCollection
 
 addTemporaryNamed: aString 
 	| variableNode |
-	variableNode := Refactory.Browser.RBVariableNode named: aString.
+	variableNode := StTempDeclNode named: aString.
 	variableNode parent: self.
 	temporaries := temporaries copyWith: variableNode!
 

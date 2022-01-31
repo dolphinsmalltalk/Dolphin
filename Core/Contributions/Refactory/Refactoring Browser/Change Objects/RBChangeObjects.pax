@@ -36,7 +36,7 @@ package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\Environments\RBEnvironments'
 	'..\..\RBNamespaces'
-	'..\Parser\RBParser'
+	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
 ).
 
 package!

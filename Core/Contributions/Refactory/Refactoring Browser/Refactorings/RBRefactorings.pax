@@ -85,14 +85,11 @@ package setMethodNames: #(
 	#(#{Kernel.StAbstractVariableNode} #refersToClass:)
 	#(#{Kernel.StLiteralArrayNode} #refersToClass:)
 	#(#{Kernel.StLiteralNode} #refersToClass:)
-	#(#{Kernel.StParameterNode} #refersToClass:)
 	#(#{Kernel.StQualifiedReferenceNode} #refersToClass:)
 	#(#{Kernel.StStaticVariable} #refersToClass:)
-	#(#{Kernel.StTempDeclNode} #refersToClass:)
 	#(#{Kernel.StVariable} #refersToClass:)
 	#(#{Kernel.StVariableNode} #refersToClass:)
 	#(#{Kernel.VariableBinding} #refersToClass:)
-	#(#{Refactory.Browser.RBPatternVariableNode} #refersToClass:)
 ).
 
 package setPrerequisites: #(
@@ -569,14 +566,6 @@ refersToClass: aClass
 refersToClass:!public!testing! !
 !
 
-!Kernel.StParameterNode methodsFor!
-
-refersToClass: aRBClass
-	^false! !
-!Kernel.StParameterNode categoriesForMethods!
-refersToClass:!public!testing! !
-!
-
 !Kernel.StQualifiedReferenceNode methodsFor!
 
 refersToClass: aClass
@@ -593,14 +582,6 @@ refersToClass:!public!testing! !
 refersToClass: aClass
 	^binding notNil and: [binding refersToClass: aClass]! !
 !Kernel.StStaticVariable categoriesForMethods!
-refersToClass:!public!testing! !
-!
-
-!Kernel.StTempDeclNode methodsFor!
-
-refersToClass: aRBClass
-	^false! !
-!Kernel.StTempDeclNode categoriesForMethods!
 refersToClass:!public!testing! !
 !
 
@@ -623,16 +604,8 @@ refersToClass:!public!testing! !
 !Kernel.VariableBinding methodsFor!
 
 refersToClass: aClass
-	^self isClassBinding and: [value == aClass]! !
+	^(self isClassBinding and: [value == aClass]) or: [self environment includesEnvironment: aClass]! !
 !Kernel.VariableBinding categoriesForMethods!
-refersToClass:!public!testing! !
-!
-
-!Refactory.Browser.RBPatternVariableNode methodsFor!
-
-refersToClass: aRBClass
-	^false! !
-!Refactory.Browser.RBPatternVariableNode categoriesForMethods!
 refersToClass:!public!testing! !
 !
 

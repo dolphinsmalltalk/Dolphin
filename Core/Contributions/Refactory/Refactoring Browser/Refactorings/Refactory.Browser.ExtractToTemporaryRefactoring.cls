@@ -30,8 +30,8 @@ compileNewMethod
 
 constructAssignmentFrom: aNode 
 	| valueNode |
-	valueNode := RBVariableNode named: newVariableName.
-	^RBAssignmentNode variable: valueNode value: aNode!
+	valueNode := StVariableNode named: newVariableName.
+	^StAssignmentNode variable: valueNode value: aNode!
 
 extract: anInterval to: aString from: aSelector in: aClass 
 	#rbFix. "Ensure displayString works when model is lazily created for Undo/Redo name (needs inst. vars set up)."
@@ -47,11 +47,11 @@ insertTemporary
 	(node notNil and: [node isValue]) 
 		ifFalse: [self refactoringError: 'Cannot assign to non-value nodes'].
 	statementNode := node statementNode.
-	node replaceWith: (RBVariableNode named: newVariableName).
+	node replaceWith: (StVariableNode named: newVariableName).
 	(statementNode parent)
 		addNode: (self constructAssignmentFrom: node)
 			before: (node == statementNode 
-					ifTrue: [RBVariableNode named: newVariableName]
+					ifTrue: [StVariableNode named: newVariableName]
 					ifFalse: [statementNode]);
 		addTemporaryNamed: newVariableName!
 
@@ -101,7 +101,7 @@ transform
 verifySelectedInterval
 	| selectedParseTree selectedSources |
 	selectedSources := self selectedSource.
-	selectedParseTree := RBParser parseExpression: selectedSources
+	selectedParseTree := Parser parseExpression: selectedSources
 				onError: [:message :position | self refactoringError: 'Invalid selection'].
 	selectedParseTree isSequence 
 		ifTrue: [self refactoringError: 'Cannot assign temp from multiple statements']! !

@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StVariableNode subclass: #'Refactory.Browser.RBPatternVariableNode'
+Kernel.StRealVariableNode subclass: #'Refactory.Browser.RBPatternVariableNode'
 	instanceVariableNames: 'recurseInto isList isLiteral isStatement isAnything'
 	classVariableNames: ''
 	imports: #()
@@ -79,7 +79,7 @@ match: aNode inContext: aDictionary
 	^(aDictionary at: self ifAbsentPut: [aNode]) = aNode!
 
 matchingClass
-	^RBVariableNode!
+	^StAbstractVariableNode!
 
 matchLiteral: aNode inContext: aDictionary 
 	^aNode isLiteralNode
@@ -126,7 +126,7 @@ setName:start:!initializing!private! !
 identifierToken: anIdentifierToken
 	^anIdentifierToken isPatternVariable
 		ifTrue: [self named: anIdentifierToken value start: anIdentifierToken start]
-		ifFalse: [RBVariableNode named: anIdentifierToken value start: anIdentifierToken start]! !
+		ifFalse: [StVariableNode named: anIdentifierToken value start: anIdentifierToken start]! !
 !Refactory.Browser.RBPatternVariableNode class categoriesForMethods!
 identifierToken:!instance creation!public! !
 !

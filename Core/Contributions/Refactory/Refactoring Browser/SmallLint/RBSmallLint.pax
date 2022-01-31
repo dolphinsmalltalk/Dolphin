@@ -35,6 +35,7 @@ package setPrerequisites: #(
 	'..\..\RBNamespaces'
 	'..\Parser\RBParser'
 	'..\Refactorings\RBRefactorings'
+	'..\..\..\..\Object Arts\Dolphin\System\Compiler\Smalltalk Parser'
 ).
 
 package!
@@ -153,10 +154,10 @@ equivalentTo: aCompiledMethod
 	self literals = aCompiledMethod literals ifFalse: [^false].
 	source := self getSource.
 	source isNil ifTrue: [^false].
-	selfParseTree := Refactory.Browser.RBParser parseMethod: source onError: [:string :pos | ^false].
+	selfParseTree := Parser parseMethod: source onError: [:string :pos | ^false].
 	source := aCompiledMethod getSource.
 	source isNil ifTrue: [^false].
-	^selfParseTree equalTo: (Refactory.Browser.RBParser parseMethod: source onError: [:string :pos | ^false])
+	^selfParseTree equalTo: (Parser parseMethod: source onError: [:string :pos | ^false])
 		exceptForVariables: #()
 	"
 	^self = aCompiledMethod or: [self class == aCompiledMethod class and: [self numArgs == aCompiledMethod numArgs

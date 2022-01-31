@@ -57,6 +57,7 @@ package setClassNames: #(
 	#{Kernel.StProgramNode}
 	#{Kernel.StQualifiedReferenceNode}
 	#{Kernel.StQualifiedReferenceToken}
+	#{Kernel.StRealVariableNode}
 	#{Kernel.StReturnNode}
 	#{Kernel.StSelfVariableNode}
 	#{Kernel.StSequenceNode}
@@ -231,14 +232,32 @@ Kernel.StValueNode subclass: #'Kernel.StOptimizedNode'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Kernel.StAbstractVariableNode subclass: #'Kernel.StRealVariableNode'
+	instanceVariableNames: 'name'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Kernel.StAbstractVariableNode subclass: #'Kernel.StSpecialVariableNode'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StAbstractVariableNode subclass: #'Kernel.StVariableNode'
-	instanceVariableNames: 'name'
+Kernel.StRealVariableNode subclass: #'Kernel.StParameterNode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StRealVariableNode subclass: #'Kernel.StTempDeclNode'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StRealVariableNode subclass: #'Kernel.StVariableNode'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -261,18 +280,6 @@ Kernel.StSpecialVariableNode subclass: #'Kernel.StThisContextVariableNode'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.StVariableNode subclass: #'Kernel.StParameterNode'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.StVariableNode subclass: #'Kernel.StTempDeclNode'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Kernel.StLiteralNode subclass: #'Kernel.AbstractLiteralArrayNode'
 	instanceVariableNames: 'stop contents start'
 	classVariableNames: ''
@@ -286,7 +293,7 @@ Kernel.StLiteralNode subclass: #'Kernel.StLiteralValueNode'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.StLiteralNode subclass: #'Kernel.StQualifiedReferenceNode'
-	instanceVariableNames: 'pathString flags private start stop binding'
+	instanceVariableNames: 'pathString flags start stop binding'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

@@ -19,7 +19,7 @@ addTemporary: sourceNode assignedTo: replacementNode
 	newName := self renameConflictingTemporary: sourceNode name.
 	(inlineParseTree body)
 		addTemporaryNamed: newName;
-		addNodeFirst: (RBAssignmentNode variable: (RBVariableNode named: newName)
+		addNodeFirst: (StAssignmentNode variable: (StVariableNode named: newName)
 					value: replacementNode)!
 
 checkSuperMessages
@@ -106,7 +106,7 @@ inlineSourceReplacing: aParseTree
 		addNodes: (statements copyFrom: 1 to: (statements size - 1 max: 0)) before: nodeUnderSequence;
 		addTemporariesNamed: inlineParseTree body temporaryNames.
 	aParseTree
-		replaceWith: (statements isEmpty ifTrue: [RBVariableNode named: 'self'] ifFalse: [statements last])!
+		replaceWith: (statements isEmpty ifTrue: [StSelfVariableNode start: 0] ifFalse: [statements last])!
 
 insertInlinedMethod
 	| node |

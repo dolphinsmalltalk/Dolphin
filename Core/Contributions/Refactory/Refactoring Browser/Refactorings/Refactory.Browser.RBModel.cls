@@ -322,8 +322,8 @@ reparentClasses: aRBClassCollection to: newClass
 
 replaceClassNameIn: definitionString to: aSymbol 
 	| parseTree |
-	parseTree := RBParser parseExpression: definitionString.
-	parseTree receiver: (RBVariableNode named: aSymbol).
+	parseTree := Parser parseExpression: definitionString.
+	parseTree receiver: (StVariableNode named: aSymbol).
 	^parseTree formattedCode!
 
 rootClasses

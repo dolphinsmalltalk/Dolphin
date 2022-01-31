@@ -20,13 +20,13 @@ package!
 Kernel.Namespace subclass: #Refactory
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Core})
+	imports: #(#{Core} #{Kernel private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory subclass: #'Refactory.Browser'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Kernel private})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

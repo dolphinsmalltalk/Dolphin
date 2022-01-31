@@ -20,11 +20,11 @@ copyInContext: aDictionary
 	selectors := self isSelectorList
 				ifTrue: [(aDictionary at: selectorParts first value) keywords]
 				ifFalse: [selectorParts collect: [:each | aDictionary at: each value]].
-	^RBMessageNode new
+	^StMessageNode new
 		receiver: (receiver copyInContext: aDictionary);
 		selectorParts: (selectors collect: 
 						[:each |
-						(each lastCodeUnit == $: ifTrue: [RBKeywordToken] ifFalse: [RBIdentifierToken])
+						(each lastCodeUnit == $: ifTrue: [StKeywordToken] ifFalse: [StIdentifierToken])
 							start: nil
 							comments: nil
 							value: each]);
@@ -65,7 +65,7 @@ matchArgumentsAgainst: aNode inContext: aDictionary
 	^true!
 
 matchingClass
-	^RBMessageNode!
+	^StMessageNode!
 
 matchSelectorAgainst: aNode inContext: aDictionary 
 	1 to: selectorParts size
@@ -128,7 +128,7 @@ receiver: aValueNode selectorParts: keywordTokens arguments: valueNodes
 				selectorParts: keywordTokens
 				arguments: valueNodes]
 		ifFalse: 
-			[RBMessageNode 
+			[StMessageNode 
 				receiver: aValueNode
 				selectorParts: keywordTokens
 				arguments: valueNodes]! !

@@ -47,7 +47,7 @@ testRemoveReferenced
 	subject setOption: #removeReferencedSelector
 		toUse: 
 			[:ref :symbol :references |
-			self assert: references single printString equals: 'Refactory.Browser.SmalllintChecker>>#run'.
+			self assert: references single printString equals: SmalllintChecker fullName , '>>#run'.
 			self assert: symbol equals: #checkClass:.
 			false].
 	self shouldAbort: subject!

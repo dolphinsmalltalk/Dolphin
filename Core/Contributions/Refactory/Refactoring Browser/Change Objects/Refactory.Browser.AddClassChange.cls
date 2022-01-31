@@ -67,7 +67,7 @@ definition: aString
 
 fillOutDefinition
 	| parseTree |
-	parseTree := RBParser parseExpression: definition onError: [:str :pos | ^self parseDefinitionError].
+	parseTree := Parser parseExpression: definition onError: [:str :pos | ^self parseDefinitionError].
 	parseTree isMessage ifFalse: [^self parseDefinitionError].
 	(self isValidSubclassCreationMessage: parseTree) ifFalse: [^self parseDefinitionError].
 	superclassName := parseTree receiver isVariable

@@ -64,15 +64,16 @@ checkTemporaryVariableNames
 							[self
 								refactoringError: ('<1p> already defines a variable called <2s>' expandMacrosWith: each with: name)]]]!
 
-compileDelagatorMethod
+compileDelegatorMethod
 	| statementNode delegatorNode tree |
-	delegatorNode := RBMessageNode
-				receiver: (RBVariableNode named: variable)
+	delegatorNode := StMessageNode
+				receiver: (StVariableNode named: variable)
 				selectorParts: parseTree selectorParts
-				arguments: (parseTree argumentNames
-						collect: [:each | RBVariableNode named: (each = selfVariableName ifTrue: ['self'] ifFalse: [each])]).
-	self hasOnlySelfReturns ifFalse: [delegatorNode := RBReturnNode value: delegatorNode].
-	statementNode := RBSequenceNode temporaries: #() statements: {delegatorNode}.
+				arguments: (parseTree argumentNames collect: 
+							[:each |
+							each = selfVariableName ifTrue: [StSelfVariableNode start: 0] ifFalse: [StVariableNode named: each]]).
+	self hasOnlySelfReturns ifFalse: [delegatorNode := StReturnNode value: delegatorNode].
+	statementNode := StSequenceNode temporaries: #() statements: {delegatorNode}.
 	(tree := class parseTreeFor: selector) body: statementNode.
 	class compileTree: tree!
 
@@ -166,7 +167,7 @@ getNewMethodName
 	alreadyDefined notNil and: [(self shouldOverride: newSelector in: class) not]]
 			whileTrue.
 	parseTree renameSelector: newSelector
-		andArguments: (newMethodName arguments collect: [:each | RBVariableNode named: each]) asArray!
+		andArguments: (newMethodName arguments collect: [:each | StParameterNode named: each]) asArray!
 
 hasOnlySelfReturns
 	^hasOnlySelfReturns isNil
@@ -257,7 +258,7 @@ transform
 		replaceSelfReferences;
 		replaceVariableReferences;
 		compileNewMethods;
-		compileDelagatorMethod!
+		compileDelegatorMethod!
 
 verifyTemporaryVariableDoesNotOverride
 	(parseTree allDefinedVariables includes: selfVariableName) ifTrue: [^false].
@@ -271,7 +272,7 @@ checkAssignmentsToVariable!preconditions!public! !
 checkForPrimitiveMethod!preconditions!public! !
 checkForSuperReferences!preconditions!public! !
 checkTemporaryVariableNames!preconditions!public! !
-compileDelagatorMethod!public!transforming! !
+compileDelegatorMethod!public!transforming! !
 compileNewMethods!public!transforming! !
 getAllClassesForGlobalOrClassVariable!accessing!private! !
 getArgumentNameForSelf!public!requests! !

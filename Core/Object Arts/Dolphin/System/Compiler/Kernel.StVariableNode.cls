@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.StAbstractVariableNode subclass: #'Kernel.StVariableNode'
-	instanceVariableNames: 'name'
+Kernel.StRealVariableNode subclass: #'Kernel.StVariableNode'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -14,29 +14,35 @@ Instance Variables:
 !Kernel.StVariableNode categoriesForClass!System-Compiler! !
 !Kernel.StVariableNode methodsFor!
 
-acceptVisitor: aProgramNodeVisitor
-	^aProgramNodeVisitor visitVariableNode: self!
+binding
+	^variable ifNil: [self resolveBinding] ifNotNil: [variable binding]!
 
-identifierToken: anIdentifierToken
-	name := anIdentifierToken value.
-	start := anIdentifierToken start!
+hasQualifiedName
+	"Answer whether the receiver has a qualified name (i.e. it is a static variable reference with a dot separated path)."
+
+	^BindingReference isQualifiedName: name!
+
+isBindingChanged
+	"Private - Assuming that this node has been bound by a semantic analyser, would it bind differently now?"
+
+	| binding |
+	binding := self binding.
+	^binding notNil and: [binding ~~ self resolveBinding]!
 
 isStaticVariable
 	"Answer whether the receiver is a reference to a static variable - this is only valid after binding variables in a parse tree using a semantic analyser."
 
 	^variable isStaticVariable!
 
-name
-	^name!
-
-setName: aString start: anInteger
-	name := aString.
-	start := anInteger! !
+resolveBinding
+	| initial |
+	initial := name at: 1.
+	^(initial isUppercase or: [initial == $_]) ifTrue: [self methodNode fullBindingFor: name]! !
 !Kernel.StVariableNode categoriesForMethods!
-acceptVisitor:!public!visitor! !
-identifierToken:!initializing!private! !
+binding!accessing!private! !
+hasQualifiedName!public!testing! !
+isBindingChanged!accessing!private! !
 isStaticVariable!public!testing! !
-name!accessing!public! !
-setName:start:!initializing!private! !
+resolveBinding!accessing!private! !
 !
 

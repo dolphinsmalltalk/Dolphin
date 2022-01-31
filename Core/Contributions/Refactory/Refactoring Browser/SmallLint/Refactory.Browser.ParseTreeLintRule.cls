@@ -428,7 +428,7 @@ modifiesTree: aCollectionTree in: aParseTree
 	notifier
 		matchesAnyTreeOf: (#(#add: #addAll: #remove: #removeAll:) collect: 
 					[:each |
-					RBMessageNode
+					StMessageNode
 						receiver: aCollectionTree
 						selector: each
 						arguments: args])

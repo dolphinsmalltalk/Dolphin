@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.StLiteralNode subclass: #'Kernel.StQualifiedReferenceNode'
-	instanceVariableNames: 'pathString flags private start stop binding'
+	instanceVariableNames: 'pathString flags start stop binding'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -55,6 +55,9 @@ path
 pathString
 	^pathString!
 
+pathString: aString
+	pathString := aString!
+
 pathString: aString start: startInteger flags: flagsInteger
 	pathString := aString.
 	flags := flagsInteger.
@@ -94,6 +97,7 @@ isQualifiedReference!public!testing! !
 isRelative!public!testing! !
 path!accessing!public! !
 pathString!accessing!public! !
+pathString:!accessing!private! !
 pathString:start:flags:!initializing!private! !
 startWithoutParentheses!accessing!public! !
 stop:!accessing!public! !

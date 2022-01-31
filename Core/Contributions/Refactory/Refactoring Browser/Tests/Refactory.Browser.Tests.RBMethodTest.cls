@@ -49,11 +49,14 @@ testRefersToClassBinding
 			self assert: (method refersToClass: targetClass)]!
 
 testRefersToClassBindingFromCustomNamespace
-	| model class |
+	| model class method |
 	model := RBModel new.
 	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
-	self assert: ((class methodFor: #refersToDolphinTestPartiallyQualifiedBindingMethodNamespace)
-				refersToClass: (model classNamed: 'Core.Tests.DolphinTest'))!
+	method := class methodFor: #refersToDolphinTestPartiallyQualifiedBindingMethodNamespace.
+	self assert: (method refersToClass: (model classNamed: 'Core.Tests.DolphinTest')).
+	class := model classFor: Object class.
+	method := class methodFor: #publishedAspectsOfInstances.
+	self assert: (method refersToClass: (model classNamed: 'Tools.Aspect'))!
 
 testRefersToClassVariable
 	| model class method targetClass |
