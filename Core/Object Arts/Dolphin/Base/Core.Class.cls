@@ -1121,7 +1121,7 @@ imports!namespaces!public! !
 imports:!pool variables!public! !
 importsFromPoolsString:!class hierarchy-adding!private! !
 includeInCategory:!categories-adding!public! !
-includesEnvironment:!private!testing! !
+includesEnvironment:!public!testing! !
 includesNamespace:!public!testing! !
 initializeAfterLoad!class initialization!public! !
 instanceClass!accessing!public! !
@@ -1192,7 +1192,7 @@ variableSubclass:instanceVariableNames:classVariableNames:imports:!class hierarc
 variableSubclass:instanceVariableNames:classVariableNames:imports:classInstanceVariableNames:classConstants:!class hierarchy-adding!public! !
 !
 
-Core.Class methodProtocol: #importableNamespace attributes: #(#readOnly) selectors: #(#asQualifiedReference #resolvePublicBinding:)!
+Core.Class methodProtocol: #importableNamespace attributes: #(#readOnly) selectors: #(#asQualifiedReference #includesEnvironment: #resolvePublicBinding:)!
 Core.Class methodProtocol: #namespace attributes: #(#readOnly) selectors: #(#addBinding: #addImport: #environment #fullBindingFor:environment: #fullName #hierarchyBindingFor: #imports #includesNamespace: #localBindingFor: #removeBindingFor: #removeImport: #unqualifiedName)!
 
 !Core.Class class methodsFor!

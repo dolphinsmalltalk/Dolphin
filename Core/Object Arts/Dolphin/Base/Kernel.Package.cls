@@ -409,14 +409,12 @@ convertOldNamesProperty: aSymbol
 			self propertyAt: aSymbol put: aCollectionOfBindingReferences]!
 
 convertPoolDictionariesToSharedPools
-	#{PoolDictionary} ifDefined: 
-			[:pcClass |
-			(self variableNames select: [:each | each valueOrNil isKindOf: pcClass]) do: 
-					[:each |
-					| poolClass |
-					poolClass := each value convertToSharedPool.
-					self basicRemoveVariableNamed: each.
-					classNames add: poolClass fullyQualifiedReference]]!
+	(self variableNames select: [:each | each valueOrNil isKindOf: PoolDictionary]) do: 
+			[:each |
+			| poolClass |
+			poolClass := each value convertToSharedPool.
+			self basicRemoveVariableNamed: each.
+			classNames add: poolClass fullyQualifiedReference]!
 
 declareClasses
 	"Private - Predefine global variables for each of the classes in the package prior to those classes

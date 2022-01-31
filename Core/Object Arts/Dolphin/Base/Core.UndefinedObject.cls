@@ -208,7 +208,7 @@ ifNil:ifNotNil:!control flow!public! !
 ifNotNil:!control flow!public! !
 ifNotNil:ifNil:!control flow!public! !
 importsFromPoolsString:!class hierarchy-adding!private! !
-includesEnvironment:!private!testing! !
+includesEnvironment:!public!testing! !
 isAtomic!public!testing! !
 isLiteral!public!testing! !
 isNil!public!testing! !

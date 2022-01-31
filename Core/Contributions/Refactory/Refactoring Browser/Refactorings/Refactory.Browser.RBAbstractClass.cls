@@ -275,8 +275,9 @@ existingMethodPackageAndEnvironment: aSymbol
 			| package |
 			package := method owningPackage.
 			Pair first: package
-				second: (self model modelClassFor: (method customEnvironment
-								ifNil: [package environment ifNil: [method methodClass basicEnvironment]]))]!
+				second: ((method customEnvironment ifNil: [package environment])
+						ifNotNil: [:namespace | self model modelClassFor: namespace]
+						ifNil: [self basicEnvironment])]!
 
 existingMethodsReferencingExternals
 	| class excluded |

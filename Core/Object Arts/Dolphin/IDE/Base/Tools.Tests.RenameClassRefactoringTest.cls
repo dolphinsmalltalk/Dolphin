@@ -171,7 +171,7 @@ testNoRename
 testRenameAmbiguousClassName
 	| class refactoring |
 	model := RBModel onEnvironment: (BrowserEnvironment new
-						forClasses: {Bitmap. Gdiplus.Bitmap. Graphics.Tests.BitmapTest. Graphics.Gdiplus.Tests.BitmapTest}).
+						forClasses: {GraphicsTool. Image. Bitmap. Gdiplus.Bitmap. Graphics.Tests.BitmapTest. Graphics.Gdiplus.Tests.BitmapTest}).
 	class := model classNamed: #'Graphics.Bitmap'.
 	refactoring := RenameClassRefactoring
 				model: model
@@ -184,7 +184,7 @@ testRenameAmbiguousClassName
 testRenameChangeNamespace
 	"Tests a rename that changes a class' namespace (i.e. moves it to a new namespace), but not it's unqualified name"
 
-	| refactoring subclass oldName newClass classToRename foo smalltalk |
+	| refactoring subclass oldName newClass classToRename foo smalltalk change |
 	oldName := 'Refactory.Browser.Tests.ClassToRename'.
 	#('Foo' 'Kernel.Bar' 'Refactory.Browser.Tests.FooBar') do: 
 			[:each |
@@ -217,6 +217,10 @@ testRenameChangeNamespace
 		verifyMethod: #testFailure
 		of: newClass
 		equals: '<1s> ^XProgramming.SUnit.TestFailure'.
+	change := model changes changeForClass: newClass name selector: #testFailure.
+	"Check that a change to a method of the renamed class has the correct (new) namespace, and that the package is preserved"
+	self assert: change environment equals: Smalltalk.
+	self assert: change package equals: RefactoryTestDataApp owningPackage.
 	"Model class Foo was defined in Smalltalk, so it can now reference Smalltalk.ClassToRename using just its unqualified name"
 	self
 		verifyMethod: #foo

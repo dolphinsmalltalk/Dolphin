@@ -54,6 +54,9 @@ environment
 fullNameFor: aString 
 	^aString!
 
+includesEnvironment: anImportableNamespace
+	^self == anImportableNamespace!
+
 name
 	"Answer the receiver's name."
 
@@ -83,6 +86,7 @@ convertToSharedPool!development!private! !
 displayOn:!public! !
 environment!accessing!public! !
 fullNameFor:!public! !
+includesEnvironment:!public!testing! !
 name!accessing!public! !
 name:!accessing!private! !
 newAssociation:value:!helpers!private! !
@@ -90,7 +94,7 @@ resolvePublicBinding:!private! !
 unqualifiedName!accessing!private! !
 !
 
-Kernel.PoolDictionary methodProtocol: #importableNamespace attributes: #(#readOnly) selectors: #(#asQualifiedReference #resolvePublicBinding:)!
+Kernel.PoolDictionary methodProtocol: #importableNamespace attributes: #(#readOnly) selectors: #(#asQualifiedReference #includesEnvironment: #resolvePublicBinding:)!
 
 !Kernel.PoolDictionary class methodsFor!
 
