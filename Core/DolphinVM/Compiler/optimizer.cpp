@@ -699,6 +699,17 @@ size_t Compiler::OptimizePairs()
 						}
 					}
 				}
+				else if (byte2 == OpCode::LongJumpIfNil && m_bytecodes[next + 3].IsReturnStackTop && !m_bytecodes[next+3].IsJumpTarget)
+				{
+					// e.g. code of the form: `@expr ifNotNil: [:x | ^x]
+					_ASSERTE(m_bytecodes[next].target == next + 4);
+					m_bytecodes[next + 3].Opcode = OpCode::ReturnIfNotNil;
+					// Remove the jump (will update jumpsTo of the target)
+					VoidTextMapEntry(next);
+					RemoveInstruction(next);
+					count++;
+					continue;
+				}
 				else if (byte2 == OpCode::ReturnIfNotNil)
 				{
 					BYTECODE& bytecode3 = m_bytecodes[next+1];
@@ -707,8 +718,17 @@ size_t Compiler::OptimizePairs()
 						// We can remove the Dup and the Pop
 						RemoveInstruction(next + 1);
 						RemoveInstruction(i);
+						count++;
 						continue;
 					}
+				}
+				else if (byte2 == OpCode::PopStackTop)
+				{
+					// Redundant Dup/Pop pair
+					RemoveInstruction(next);
+					RemoveInstruction(i);
+					count++;
+					continue;
 				}
 			}
 			else if ((bytecode1.IsShortPopStoreTemp && bytecode2.IsShortPushTemp)
