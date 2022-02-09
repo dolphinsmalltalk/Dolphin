@@ -74,8 +74,9 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class, the emoji 🧪"
 
-	^##((Graphics.TextTileIcon text: $\x1F9EA fontName: 'Segoe UI Emoji')
-		textcolor: Graphics.Color lightSeaGreen;
+	<namespace: Graphics>
+	^##((TextTileIcon text: $\x1F9EA fontName: 'Segoe UI Emoji')
+		textcolor: Color lightSeaGreen;
 		yourself)! !
 !XProgramming.SUnit.TestCase class categoriesForMethods!
 icon!constants!public! !

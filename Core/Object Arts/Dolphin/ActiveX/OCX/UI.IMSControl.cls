@@ -114,7 +114,7 @@ foreColor
 	| answer |
 	answer := DWORD new.
 	self get_ForeColor: answer.
-	^Graphics.Color fromCOLORREF: answer value!
+	^Color fromCOLORREF: answer value!
 
 foreColor: aColor
 	"Set the 'ForeColor' property of the receiver to the <ColorRef> value of the argument.

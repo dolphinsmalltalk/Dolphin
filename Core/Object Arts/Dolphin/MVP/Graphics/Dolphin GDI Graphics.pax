@@ -248,7 +248,7 @@ Graphics.GraphicsTool subclass: #'Graphics.Font'
 Graphics.GraphicsTool subclass: #'Graphics.Image'
 	instanceVariableNames: 'initializer'
 	classVariableNames: ''
-	imports: #(#{OS.Win32Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Graphics.GraphicsTool subclass: #'Graphics.ImageList'

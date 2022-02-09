@@ -349,10 +349,11 @@ gdipCopyOfImageIndex:extent:backcolor:!instance creation!public! !
 
 testAsColorKeyedBitmap
 	| subject colorKeyed result canvas |
-	subject := Bitmap fromFile: 'Resources\Beach Ball.bmp' usingLocator: FileLocator installRelative.
+	subject := self subjectClass fromFile: 'Resources\Beach Ball.bmp'
+				usingLocator: FileLocator installRelative.
 	self assert: subject handle notNull.
 	colorKeyed := subject asColorKeyedBitmap.
-	result := Bitmap displayCompatibleWithExtent: subject extent.
+	result := self subjectClass displayCompatibleWithExtent: subject extent.
 	canvas := result canvas.
 	canvas backcolor: Color red.
 	canvas erase.

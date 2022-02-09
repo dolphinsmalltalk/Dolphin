@@ -1,7 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Basic Geometry'.
 package paxVersion: 2.1;
-	environmentName: #{Graphics};
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Basic Geometry.
 Copyright (c) Object Arts Ltd. 1997-2018. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
@@ -133,7 +132,7 @@ asPoint!converting!public! !
 	performed a few thousand times when opening a complex window (for example).
 	The primitive is simply a VM level implementation of #x:y:, and does not fail."
 
-	^Point x: self y: yCoord!
+	^Graphics.Point x: self y: yCoord!
 
 asPoint
 	"Answer a Point with the receiver as both co-ordinates."

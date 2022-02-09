@@ -1,7 +1,6 @@
 ﻿| package |
 package := Package name: 'Dolphin Base Icons'.
 package paxVersion: 2.1;
-	environmentName: #{Graphics};
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Base Icons
 Copyright (c) Object Arts Ltd, 2018.
@@ -169,6 +168,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class: ↂ"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: $\x2182 fontName: 'Arial')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -181,6 +181,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '#()' fontName: 'Arial')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -193,6 +194,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class: 🡪"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: $\x1F86A)
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -205,6 +207,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '⟅ ⟆' fontName: 'Cambria')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -227,6 +230,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class: ❑"
 
+	<namespace: Graphics>
 	^##(TextTileIcon text: $\x2751 fontName: 'Cambria')! !
 !Core.Boolean class categoriesForMethods!
 icon!constants!public! !
@@ -237,6 +241,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '#[]' fontName: 'Arial')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -249,6 +254,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '$b' fontName: 'Arial')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -326,7 +332,7 @@ icon!constants!public! !
 icon
 	"Answer the default icon for the receiver and its instances."
 	
-	^Icon error! !
+	^Graphics.Icon error! !
 !Core.Error class categoriesForMethods!
 icon!constants!public! !
 !
@@ -351,6 +357,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class: ✖"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: $\x2716)
 		textcolor: Color red;
 		yourself)! !
@@ -373,6 +380,7 @@ icon!constants!development!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '0.8' fontName: 'Arial Narrow')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -385,6 +393,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '⅞' fontName: 'Arial')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -407,6 +416,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '42' fontName: 'Arial Narrow')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -419,6 +429,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '1..5' fontName: 'Cambria')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -431,6 +442,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: $\x221E fontName: 'Cambria')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -443,6 +455,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class: 🔗"
 
+	<namespace: Graphics>
 	^##(TextTileIcon text: $\x1F517)! !
 !Core.Link class categoriesForMethods!
 icon!public! !
@@ -453,6 +466,7 @@ icon!public! !
 icon
 	"Answers an Icon that can be used to represent this class: ⛓"
 
+	<namespace: Graphics>
 	^##(TextTileIcon text: $\x26D3 fontName: 'Arial')! !
 !Core.LinkedList class categoriesForMethods!
 icon!public! !
@@ -473,6 +487,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '|x|' fontName: 'Arial')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -550,7 +565,7 @@ icon!constants!public! !
 icon
 	"Answer the default icon for the receiver and its instances."
 
-	^Icon information! !
+	^Graphics.Icon information! !
 !Core.Notification class categoriesForMethods!
 icon!constants!public! !
 !
@@ -570,6 +585,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class: №"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: $\x2116 fontName: 'Arial')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -582,7 +598,7 @@ icon!constants!public! !
 icon
 	"Answer the default icon for the receiver and its instances."
 
-	^Icon warning! !
+	^Graphics.Icon warning! !
 !Core.OperationAborted class categoriesForMethods!
 icon!constants!public! !
 !
@@ -602,6 +618,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '5⁹⁹' fontName: 'Arial Narrow')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -614,6 +631,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class: ≾"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: $\x227E fontName: 'Cambria')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -626,6 +644,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class: 🛑"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: $\x1F6D1 fontName: 'Segoe UI Emoji')
 		textcolor: Color red;
 		yourself)! !
@@ -636,6 +655,7 @@ icon!public! !
 !Core.SemVer class methodsFor!
 
 icon
+	<namespace: Graphics>
 	^##((TextTileIcon text: $\x1F522 fontName: 'Segoe UI Emoji')
 		textcolor: Color navy;
 		yourself)! !
@@ -648,6 +668,7 @@ icon!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '{ }' fontName: 'Cambria')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -700,6 +721,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '‘ab’' fontName: 'Arial Narrow') textcolor: Color darkBlue)! !
 !Core.String class categoriesForMethods!
 icon!constants!public! !
@@ -710,6 +732,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '#ab' fontName: 'Arial Narrow')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -734,6 +757,7 @@ icon
 
 	"Another potential choice here is ☑'"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: $\x2714 fontName: 'Segoe UI Emoji')
 		textcolor: Color darkGreen;
 		yourself)! !
@@ -746,6 +770,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class: ☢"
 
+	<namespace: Graphics>
 	^##(TextTileIcon text: $\x2622 fontName: 'Segoe UI Emoji')! !
 !Core.UndefinedObject class categoriesForMethods!
 icon!constants!public! !
@@ -756,6 +781,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class."
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '‘U+’' fontName: 'Arial Narrow')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -788,6 +814,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '#()' fontName: 'Arial')
 		textcolor: Color skyBlue;
 		yourself)! !
@@ -968,6 +995,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class: 📢"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: $\x1F4E2)
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -980,6 +1008,7 @@ icon!constants!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '#{․}' fontName: 'Arial Narrow')
 		textcolor: Color darkBlue;
 		fontStyle: #italic;
@@ -1074,6 +1103,7 @@ icon!constants!development!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '#{․}' fontName: 'Arial Narrow')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -1106,6 +1136,7 @@ icon!constants!development!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
+	<namespace: Graphics>
 	^##((TextTileIcon text: '#{․}′' fontName: 'Arial Narrow')
 		textcolor: Color darkBlue;
 		yourself)! !
@@ -1243,6 +1274,7 @@ icon
 
 	"The commonly accepted symbol for the Universal Set is 'U', but it's too boring and so we use the alternate script ℰ."
 
+	<namespace: Graphics>
 	^##(TextTileIcon text: $\x2130 fontName: 'Georgia')! !
 !Root class categoriesForMethods!
 icon!constants!public! !
