@@ -55,13 +55,15 @@ testRefersToLiteral
 	"But the browser's search for references to VariableBindings, which means we don't want to see these"
 	self deny: (method refersToLiteral: Core.Association environment binding).
 
-	"Neither do we want a ref to a class variable that is 'local' (i.e. defined in the class hierarchy) to be recorded as a reference to itself."
+	"We need even a ref to a class variable that is 'local' (i.e. defined in the class hierarchy) to be recorded as a reference to itself."
 	TestClassVar ifNil: [TestClassConst] ifNotNil: [OS.Win32Constants.GENERIC_READ].
 	self deny: (method refersToLiteral: (self class fullBindingFor: 'OS')).
 	self assert: (method refersToLiteral: (self class bindingFor: 'TestClassVar')).
 	self assert: (method refersToLiteral: (self class bindingFor: 'TestClassConst')).
-	self deny: (method refersToLiteral: self class).
-	"But we do want a ref to a class variable not defined in the same class hierarchy to be recorded as a reference to the environment of the class var as well as the class var itself."
+	self assert: (method refersToLiteral: self class).
+	self assert: (method refersToLiteral: self class environment).
+
+	"And we need a ref to a class variable not defined in the same class hierarchy to be recorded as a reference to the environment of the class var as well as the class var itself."
 	subject := self class fullBindingFor: 'OS.Win32Constants.GENERIC_READ'.
 	self assert: (method refersToLiteral: subject).
 	self assert: (method refersToLiteral: subject environment).

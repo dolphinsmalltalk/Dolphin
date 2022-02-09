@@ -29,16 +29,16 @@ testPullUpClassConstant
 	self assert: bar value equals: 123.
 	self assert: bar environment identicalTo: modelClass.
 	self assert: bar isImmutable.
-	modelSubclass := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData'.
+	modelSubclass := refactoring model classFor: TransformationRuleTestData.
 	self assertIsNil: (modelSubclass localBindingFor: 'Bar')!
 
 testPullUpClassVariable
 	| refactoring |
 	refactoring := PullUpClassVariableRefactoring variable: #RecursiveSelfRule class: LintRuleTestData.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData')
+	self assert: ((refactoring model classFor: LintRuleTestData)
 				directlyDefinesClassVariable: #RecursiveSelfRule).
-	self deny: ((refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData')
+	self deny: ((refactoring model classFor: TransformationRuleTestData)
 				directlyDefinesClassVariable: #RecursiveSelfRule)! !
 !Refactory.Browser.Tests.PullUpClassVariableTest categoriesForMethods!
 testMetaClassFailure!failure tests!public! !

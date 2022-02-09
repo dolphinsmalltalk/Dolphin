@@ -207,6 +207,7 @@ testExternalCalls
 	self assert: ffiCall returnType indirections equals: 0.
 	self assertIsNil: ffiCall returnType structClass.
 	self assert: ffiCall selector identicalTo: #stdcall:.
+	self assert: (ffiCall defines: '_failureCode').
 
 	"One simple arg"
 	tree := self parseMethod: 'blah: x <cdecl: dword blah sdword>'.
@@ -317,7 +318,7 @@ testNodesDoAll
 	concreteNodeTypes := StProgramNode withAllSubclasses
 				select: [:each | each isAbstract not and: [each owningPackage == StProgramNode owningPackage]].
 	self assert: (concreteNodeTypes difference: nodeTypes) asArray equals: #().
-	self assert: size equals: 41!
+	self assert: size equals: 42!
 
 testPrimitiveTagChildren
 	| parseTree tag errorTempDecl |
@@ -327,11 +328,13 @@ testPrimitiveTagChildren
 	self assert: tag isKindOf: StPrimitiveNode.
 	self assert: tag selector identicalTo: #primitive:.
 	self assert: tag children size equals: 0.
+	self assert: (tag defines: '_failureCode').
 	parseTree := self parseMethod: 'test <primitive: 123 error: ec>'.
 	tag := parseTree tags first.
 	self assert: tag isKindOf: StPrimitiveNode.
 	self assert: tag selector identicalTo: #primitive:error:.
 	self assert: tag children size equals: 1.
+	self assert: (tag defines: 'ec').
 	errorTempDecl := tag children first.
 	self assert: errorTempDecl parent identicalTo: tag.
 	self assert: errorTempDecl isKindOf: StTempDeclNode.
@@ -350,7 +353,7 @@ treeWithAllNodeTypes
 	^self
 		parseMethod: 'method: arg1 
 	<namespace: Core> 
-	<primitive: 123>
+	<primitive: 123 error: ec>
 	<stdcall: UIntPtr blah POINTL* > 
 	| temps | 
 	super method: arg1. 

@@ -15,13 +15,11 @@ testInlineMethodWithMultipleSendersInMethod
 	| refactoring |
 	refactoring := InlineAllSendersRefactoring sendersOf: #caller2 in: RefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
-				parseTreeFor: #inlineLast)
+	self assert: ((refactoring model classFor: RefactoryTestDataApp) parseTreeFor: #inlineLast)
 		equals: (self
 				parseMethod: 'inlineLast
 	5 = 3 ifTrue: [^self caller] ifFalse: [^(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)]] ').
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
-				parseTreeFor: #multipleCalls)
+	self assert: ((refactoring model classFor: RefactoryTestDataApp) parseTreeFor: #multipleCalls)
 		equals: (self
 				parseMethod: 'multipleCalls
 	(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)].

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Refactory.Browser.RBModel'
-	instanceVariableNames: 'changes environment newClasses removedClasses modelClasses rootClasses implementorsCache sendersCache enumerating'
+	instanceVariableNames: 'changes environment rootClasses implementorsCache sendersCache rootNamespace smalltalkNamespace'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -23,28 +23,32 @@ addImport: aBindingReference to: aRBClass
 addInstanceVariable: aString to: aRBClass 
 	^changes addInstanceVariable: aString to: aRBClass!
 
-allClassesDo: aBlock
-	| seen |
-	seen := Set new: 128.
-	newClasses do: 
+allBehaviorsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the behaviours (instance classes and metaclasses) included in the model."
+
+	self rootNamespace allClassesDo: 
 			[:each |
-			seen add: each fullName.
-			aBlock
-				value: each;
-				value: each metaclass].
-	seen addAll: removedClasses.
-	environment classesDo: 
+			each realClass
+				ifNil: 
+					["Model-only class"
+					aMonadicValuable
+						value: each;
+						value: each metaclass]
+				ifNotNil: 
+					[:realClass |
+					(environment includesClass: realClass) ifTrue: [aMonadicValuable value: each].
+					(environment includesClass: realClass class) ifTrue: [aMonadicValuable value: each metaclass]]]!
+
+allClassesDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the instance classes included in the model."
+
+	self rootNamespace allClassesDo: 
 			[:each |
-			| class fullName |
-			(seen includes: (fullName := (class := each instanceClass) fullName))
-				ifFalse: 
-					[| rbClass |
-					seen add: fullName.
-					rbClass := (modelClasses lookup: fullName)
-								ifNil: [modelClasses at: fullName put: (class rbClass model: self existing: class)].
-					aBlock
-						value: rbClass;
-						value: rbClass metaclass]]!
+			each realClass
+				ifNil: 
+					["Model-only class"
+					aMonadicValuable value: each]
+				ifNotNil: [:realClass | (environment includesClass: realClass) ifTrue: [aMonadicValuable value: each]]]!
 
 allImplementorsOf: aSelector
 	^(implementorsCache ifNil: [implementorsCache := IdentityDictionary new]) at: aSelector
@@ -55,7 +59,7 @@ allReferencesTo: aSymbol
 		ifAbsentPutClean: 
 			[| refs |
 			refs := OrderedCollection new.
-			self allClassesDo: 
+			self allBehaviorsDo: 
 					[:each |
 					#rbFix.	"Don't include any selectors which should not be visible in the model's environment"
 					refs addAll: ((each whichMethodsReferToSymbol: aSymbol)
@@ -75,7 +79,7 @@ allReferencesToClass: aRBClass
 	^methods!
 
 allReferencesToClass: aRBClass do: aBlock
-	self allClassesDo: [:each | (each whichMethodsReferToClass: aRBClass) do: aBlock]!
+	self allBehaviorsDo: [:each | (each whichMethodsReferToClass: aRBClass) do: aBlock]!
 
 changes
 	^changes!
@@ -85,6 +89,7 @@ changes: aCompositeRefactoryChange
 
 classFor: aBehavior
 	aBehavior ifNil: [^nil].
+	(aBehavior isKindOf: RBAbstractClass) ifTrue: [^aBehavior].
 	^aBehavior isMeta
 		ifTrue: [(self instanceClassFor: aBehavior instanceClass) ifNotNil: [:class | class metaclass]]
 		ifFalse: [self instanceClassFor: aBehavior]!
@@ -131,9 +136,7 @@ defineClass: aString
 	newClass := self instanceClassNamed: newClassName.
 	newClass
 		ifNil: 
-			[removedClasses remove: newClassName ifAbsent: nil.
-			newClass := RBClass model: self named: newClassName.
-			newClasses at: newClassName put: newClass.
+			[newClass := RBClass model: self named: newClassName.
 			newClass environment addClass: newClass].
 	newClass superclass: (self instanceClassNamed: change superclassName).
 	newClass superclass ifNil: [self rootClasses add: newClass].
@@ -148,14 +151,13 @@ definesStaticVariable: aString
 	"Is the argument the name of a variable defined in this model? See also #includesStaticVariable:"
 
 	| binding |
-	(self hasRemoved: aString) ifTrue: [^false].
-	(newClasses lookup: aString) ifNotNil: [^true].
-	binding := environment associationAt: aString.
+	#namespaceToDo. "Why do we have this and #includesStaticVariable:"
+	binding := self smalltalkNamespace fullBindingFor: aString.
 	^binding notNil and: 
 			[binding fullName = aString or: 
 					[| ref |
 					ref := aString asQualifiedReference.
-					ref unqualifiedName = binding key and: [ref environment == binding environment]]]!
+					ref unqualifiedName = binding key and: [(RBBindingReference model: self reference: ref) environment == binding environment]]]!
 
 environment
 	^environment!
@@ -163,8 +165,8 @@ environment
 flushCaches
 	implementorsCache := sendersCache := nil!
 
-hasRemoved: aString
-	^removedClasses includes: aString!
+fullBindingFor: aString
+	^smalltalkNamespace fullBindingFor: aString!
 
 includesClassNamed: aString
 	^(self classNamed: aString) notNil!
@@ -172,42 +174,35 @@ includesClassNamed: aString
 includesStaticVariable: aString
 	"Does the argument resolve to a static variable in the receiver? See also #definesStaticVariable:"
 
-	(self hasRemoved: aString) ifTrue: [^false].
-	(newClasses lookup: aString) ifNotNil: [^true].
-	^(environment associationAt: aString) notNil!
+	| binding |
+	binding := self smalltalkNamespace fullBindingFor: aString.
+	^binding notNil and: 
+			[binding isClassBinding
+				ifTrue: [environment includesClass: binding value]
+				ifFalse: [environment includesClass: binding environment]]!
 
 instanceClassFor: aClass
-	| fullName |
-	fullName := aClass fullName.
-	(removedClasses includes: fullName) ifTrue: [^nil].
-	(newClasses lookup: fullName) ifNotNil: [:class | ^class].
-	"modelClasses may contain classes that are not in the environment (e.g. namespaces), so we check that first"
-	((environment includesClass: aClass) or: [environment includesClass: aClass class]) ifFalse: [^nil].
-	^(modelClasses lookup: fullName)
-		ifNil: [modelClasses at: fullName put: (aClass rbClass model: self existing: aClass)]!
+	^(aClass classInModel: self)
+		ifNotNil: 
+			[:modelClass |
+			modelClass realClass
+				ifNotNil: [:realClass | (environment includesClassOrMetaclass: realClass) ifFalse: [^nil]].
+			modelClass]!
 
 instanceClassNamed: aString
-	| binding class |
-	(removedClasses includes: aString) ifTrue: [^nil].
-	(newClasses lookup: aString) ifNotNil: [:newClass | ^newClass].
-	binding := environment associationAt: aString.
-	(binding isNil or: [binding isClassBinding not]) ifTrue: [^nil].
-	(class := binding value) fullName = aString ifFalse: [^nil].
-	^(modelClasses lookup: aString)
-		ifNil: [modelClasses at: aString put: (class rbClass model: self existing: class)]!
+	aString isNil ifTrue: [^nil].
+	^(self fullBindingFor: aString)
+		ifNotNil: 
+			[:binding |
+			binding isClassBinding
+				ifTrue: 
+					[| modelClass realClass |
+					modelClass := binding value.
+					realClass := modelClass realClass.
+					(realClass isNil or: [environment includesClassOrMetaclass: realClass]) ifTrue: [modelClass]]]!
 
 metaclassNamed: aString
 	^(self instanceClassNamed: aString) ifNotNil: [:class | class metaclass]!
-
-modelClassFor: aClass
-	"Private - Answer an RBClass for the real <Class> argument, whether or not it is in the receiver's environment."
-
-	| fullName |
-	fullName := aClass fullName.
-	(removedClasses includes: fullName) ifTrue: [^nil].
-	(newClasses lookup: fullName) ifNotNil: [:newClass | ^newClass].
-	^(modelClasses lookup: fullName)
-		ifNil: [modelClasses at: fullName put: (aClass rbClass model: self existing: aClass)]!
 
 name
 	^changes name!
@@ -226,7 +221,7 @@ performChange: aCompositeRefactoryChange around: aBlock
 privateImplementorsOf: aSelector
 	| classes |
 	classes := Set new.
-	self allClassesDo: 
+	self allBehaviorsDo: 
 			[:each |
 			#rbFix.	"Ignore defining classes where the class/selector pair is not part of the environment"
 			((each directlyDefinesMethod: aSelector) and: [environment includesSelector: aSelector in: each])
@@ -243,15 +238,15 @@ removeClassNamed: aString
 	| removedClass |
 	removedClass := self instanceClassNamed: aString.
 	removedClass subclasses do: [:each | self removeClassNamed: each fullName].
-	removedClasses add: aString.
-	newClasses removeKey: aString ifAbsent: nil.
-	modelClasses removeKey: aString ifAbsent: nil.
 	removedClass environment ifNotNil: [:env | env removeClass: removedClass].
 	self flushCaches.
 	^changes removeClassNamed: aString!
 
 removeClassVariable: aString from: aRBClass 
 	^changes removeClassVariable: aString from: aRBClass!
+
+removeImport: aBindingReference from: aRBClass
+	^changes removeImport: aBindingReference from: aRBClass!
 
 removeInstanceVariable: aString from: aRBClass 
 	^changes removeInstanceVariable: aString from: aRBClass!
@@ -271,7 +266,7 @@ renameClass: aRBClass to: aString around: aDyadicValuable
 	methods addAll: inbound.
 	block := [:method | (outbound addLast: (methods addIfAbsent: method)) boundParseTree].
 	#namespaceToDo.	"A subclass may refer to external variables that it can only bind via an import that it inherits via the namespace of its superclass (if different to its own). There is therefore (rare) potential for external references in subclasses to be affected by a class rename when that rename moves a class to a new namespace. Enumerating all subclasses could be prohibitively expensive with the current search, however, as it is too broad in scope. If we were to rename Object, for example, then a significant proportion of the methods in the entire system would be in scope."
-	#namespaceToDo.	"References to class variables may be fully qualified, and so may require renaming. We could either eliminate these from consideration by reducing them first (a refactoring to do that would be useful anyway), or just include all methods containing static variable references in the search, rather than trying to be clever and exclude the 'internal' references."
+	"References to class variables may be fully qualified, and so may require renaming. We could either eliminate these from consideration by reducing them first (a refactoring to do that would be useful anyway), or just include all methods containing static variable references in the search, rather than trying to be clever and exclude the 'internal' references. At the moment we include the class variables as potential references to externals."
 	aRBClass methodsReferencingExternals do: block.
 	aRBClass metaclass methodsReferencingExternals do: block.
 	oldUnqualified := aRBClass unqualifiedName.
@@ -283,10 +278,6 @@ renameClass: aRBClass to: aString around: aDyadicValuable
 	self assert: [binding value == aRBClass].
 	binding setKey: aRBClass unqualifiedName.
 	aRBClass environment addBinding: binding.
-	removedClasses add: oldName.
-	((newClasses includesKey: oldName) ifTrue: [newClasses] ifFalse: [modelClasses]) removeKey: oldName.
-	newClasses at: aString put: aRBClass.
-	aRBClass subclasses do: [:each | each superclass: aRBClass].
 	self performChange: change around: [aDyadicValuable value: inbound value: outbound].
 	self flushCaches.
 	^change!
@@ -317,35 +308,41 @@ replaceClassNameIn: definitionString to: aSymbol
 	parseTree receiver: (StVariableNode named: aSymbol).
 	^parseTree formattedCode!
 
+replaceImport: oldBindingReference with: newBindingReference in: aRBClass
+	^changes replaceImport: oldBindingReference with: newBindingReference in: aRBClass!
+
 rootClasses
-	rootClasses isNil
-		ifTrue: 
+	^rootClasses
+		ifNil: 
 			[rootClasses := OrderedCollection new.
 			Class rootsOfTheWorld do: 
 					[:each |
 					| class |
 					class := self instanceClassFor: each.
-					(class notNil and: [class superclass isNil]) ifTrue: [rootClasses add: class]]].
-	^rootClasses!
+					(class notNil and: [class superclass isNil]) ifTrue: [rootClasses add: class]].
+			rootClasses]!
+
+rootNamespace
+	^rootNamespace!
 
 setEnvironment: aBrowserEnvironment
 	changes := CompositeRefactoryChange new.
 	environment := aBrowserEnvironment.
-	newClasses := LookupTable new.
-	modelClasses := LookupTable new.
-	removedClasses := Set new.
+	rootNamespace := Root rbClass model: self existing: Root.
+	smalltalkNamespace := rootNamespace classPool at: #Smalltalk.
 	self flushCaches!
 
 smalltalkNamespace
-	^self modelClassFor: Smalltalk!
+	^smalltalkNamespace!
 
 whichCategoryIncludes: aSymbol
 	^self environment whichCategoryIncludes: aSymbol! !
 !Refactory.Browser.RBModel categoriesForMethods!
 addClassConstant:to:!changes!private! !
 addClassVariable:to:!changes!private! !
-addImport:to:!changes!private! !
+addImport:to:!changes!public! !
 addInstanceVariable:to:!changes!private! !
+allBehaviorsDo:!accessing!public! !
 allClassesDo:!accessing!public! !
 allImplementorsOf:!accessing!public! !
 allReferencesTo:!accessing!public! !
@@ -362,21 +359,21 @@ defineClass:!changes!public! !
 definesStaticVariable:!public!testing! !
 environment!accessing!public! !
 flushCaches!changes!private! !
-hasRemoved:!public!testing! !
+fullBindingFor:!binding!public! !
 includesClassNamed:!public!testing! !
 includesStaticVariable:!public!testing! !
 instanceClassFor:!accessing/classes!public! !
 instanceClassNamed:!accessing/classes!public! !
 metaclassNamed:!accessing/classes!public! !
-modelClassFor:!accessing/classes!private! !
 name!accessing!public! !
 name:!accessing!public! !
 performChange:around:!changes!private! !
 privateImplementorsOf:!helpers!private! !
 removeClass:!changes!public! !
 removeClassConstant:from:!changes!private! !
-removeClassNamed:!changes!public! !
+removeClassNamed:!changes!private! !
 removeClassVariable:from:!changes!private! !
+removeImport:from:!changes!public! !
 removeInstanceVariable:from:!changes!private! !
 removeMethod:from:!changes!private! !
 renameClass:to:around:!changes!public! !
@@ -384,7 +381,9 @@ renameClassVariable:to:in:around:!changes!private! !
 renameInstanceVariable:to:in:around:!changes!private! !
 reparentClasses:to:!changes!public! !
 replaceClassNameIn:to:!changes!private! !
+replaceImport:with:in:!changes!public! !
 rootClasses!accessing!public! !
+rootNamespace!public! !
 setEnvironment:!initialize/release!private! !
 smalltalkNamespace!accessing!public! !
 whichCategoryIncludes:!accessing/classes!public! !

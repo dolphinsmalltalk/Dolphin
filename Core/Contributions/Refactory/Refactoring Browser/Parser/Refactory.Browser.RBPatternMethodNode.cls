@@ -17,18 +17,21 @@ Instance Variables:
 !Refactory.Browser.RBPatternMethodNode methodsFor!
 
 copyInContext: aDictionary
-	| selectors |
-	selectors := self isSelectorList
+	| keywords |
+	keywords := self isSelectorList
 				ifTrue: [(aDictionary at: selectorParts first value) keywords]
 				ifFalse: [selectorParts collect: [:each | aDictionary at: each value]].
 	^StMethodNode new
-		selectorParts: (selectors collect: 
+		selectorParts: (keywords collect: 
 						[:each |
 						(each lastCodeUnit == $: ifTrue: [StKeywordToken] ifFalse: [StIdentifierToken])
 							start: nil
 							comments: nil
 							value: each]);
 		arguments: (self copyList: arguments inContext: aDictionary);
+		tags: (self tags isEmpty
+					ifTrue: [aDictionary at: '-tags-' ifAbsent: #()]
+					ifFalse: [self copyList: tags inContext: aDictionary]);
 		body: (body copyInContext: aDictionary);
 		source: (aDictionary at: '-source-');
 		yourself!
@@ -49,51 +52,51 @@ match: aNode inContext: aDictionary
 			^(aDictionary at: selectorParts first value ifAbsentPut: msg) = msg and: 
 					[| args |
 					args := aNode arguments.
-					(aDictionary at: arguments first ifAbsentPut: args) = args
-						and: [body match: aNode body inContext: aDictionary]]].
-	^(self matchArgumentsAgainst: aNode inContext: aDictionary)
-		and: [body match: aNode body inContext: aDictionary]!
+					(aDictionary at: arguments first ifAbsentPut: args) = args and: 
+							[(self matchTagsAgainst: aNode inContext: aDictionary)
+								and: [body match: aNode body inContext: aDictionary]]]].
+	^(self matchArgumentsAgainst: aNode inContext: aDictionary) and: 
+			[(self matchTagsAgainst: aNode inContext: aDictionary)
+				and: [body match: aNode body inContext: aDictionary]]!
 
-matchArgumentsAgainst: aNode inContext: aDictionary 
-	self arguments size == aNode arguments size ifFalse: [^false].
-	(self matchSelectorAgainst: aNode inContext: aDictionary) 
-		ifFalse: [^false].
+matchArgumentsAgainst: aStMethodNode inContext: aDictionary
+	| count otherArgs |
+	count := arguments size.
+	otherArgs := aStMethodNode arguments.
+	count == otherArgs size ifFalse: [^false].
+	(self matchSelectorAgainst: aStMethodNode inContext: aDictionary) ifFalse: [^false].
 	1 to: arguments size
-		do: 
-			[:i | 
-			((arguments at: i) match: (aNode arguments at: i) inContext: aDictionary) 
-				ifFalse: [^false]].
+		do: [:i | ((arguments at: i) match: (otherArgs at: i) inContext: aDictionary) ifFalse: [^false]].
 	^true!
 
 matchingClass
 	^StMethodNode!
 
-matchSelectorAgainst: aNode inContext: aDictionary 
+matchSelectorAgainst: aNode inContext: aDictionary
+	| otherParts |
+	otherParts := aNode selectorParts.
 	1 to: selectorParts size
 		do: 
-			[:i | 
+			[:i |
 			| keyword |
 			keyword := selectorParts at: i.
 			(aDictionary at: keyword value
-				ifAbsentPut: 
-					[keyword isPatternVariable 
-						ifTrue: [(aNode selectorParts at: i) value]
-						ifFalse: [keyword value]]) 
-					= (aNode selectorParts at: i) value ifFalse: [^false]].
+				ifAbsentPut: [keyword isPatternVariable ifTrue: [(otherParts at: i) value] ifFalse: [keyword value]])
+					= (otherParts at: i) value ifFalse: [^false]].
 	^true!
 
 selectorParts: tokenCollection arguments: variableNodes 
 	super selectorParts: tokenCollection arguments: variableNodes.
-	isList := (tokenCollection first value at: 2) == self listCharacter! !
+	isList := (tokenCollection first value at: 2) == RBPatternScanner.ListCharacter! !
 !Refactory.Browser.RBPatternMethodNode categoriesForMethods!
 copyInContext:!matching!public! !
 isPatternNode!public!testing/matching! !
 isSelectorList!public!testing! !
 match:inContext:!matching!public! !
-matchArgumentsAgainst:inContext:!matching!public! !
-matchingClass!constants!public! !
-matchSelectorAgainst:inContext:!matching!public! !
-selectorParts:arguments:!initialize/release!public! !
+matchArgumentsAgainst:inContext:!matching!private! !
+matchingClass!constants!matching!private! !
+matchSelectorAgainst:inContext:!matching!private! !
+selectorParts:arguments:!initialize/release!private! !
 !
 
 !Refactory.Browser.RBPatternMethodNode class methodsFor!

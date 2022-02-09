@@ -26,6 +26,18 @@ setUp
 	classConstants: { ''ClassConstant1'' -> 1.23 }'.
 	newClass := model classNamed: #SomeClassName!
 
+testAllBehaviorsDo
+	"RBClass>>allBehaviorsDo: enumerates through the namespace hierarchy, so if we start from the model class for Root it will include all potential classes in the universe, not just those in the model environment. This will include model mirrors of real classes, and model only classes."
+
+	| environmentClasses modelClasses |
+	modelClasses := Set new.
+	model rootNamespace allBehaviorsDo: [:each | modelClasses add: each fullName].
+	environmentClasses := Set new.
+	Class allBehaviorsDo: [:each | environmentClasses add: each fullName].
+	self assert: (environmentClasses difference: modelClasses) asSortedArray equals: #().
+	self assert: (modelClasses difference: environmentClasses) asSortedArray
+		equals: #('SomeClassName' 'SomeClassName class')!
+
 testBindings
 	| bindings |
 	bindings := objectClass bindings.
@@ -101,9 +113,9 @@ testEnvironment
 	self assert: newClass basicEnvironment identicalTo: smalltalk.
 	self assert: newClass baseEnvironmentName equals: #Smalltalk.
 	root := model classNamed: #Root.
+	self assert: root identicalTo: model rootNamespace.
 	self assert: smalltalk environment identicalTo: root.
 	self assert: smalltalk basicEnvironment identicalTo: root.
-	
 	refactory := model classNamed: #Refactory.
 	self assert: rbTests environment environment identicalTo: refactory.
 	self assert: refactory environment identicalTo: root.
@@ -112,26 +124,25 @@ testEnvironment
 	"As in the real class hierarchy, the public environment of Root is nil (in order to terminate tree traversal at the root), even though its actual environment is itself."
 	self assertIsNil: root environment.
 	self assert: root basicEnvironment identicalTo: root.
-	self assert: root baseEnvironmentName equals: #Root.
-!
+	self assert: root baseEnvironmentName equals: #Root!
 
 testExistingMethodPackageAndEnvironment
 	| class packageAndEnv |
-	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
 	packageAndEnv := class existingMethodPackageAndEnvironment: #refersToClassFullyQualified.
 	self assert: packageAndEnv
-		equals: (Pair first: class realClass owningPackage second: (model classFor: self class environment))!
+		equals: (Pair first: class realClass owningPackage second: (model classFor: Refactory.Browser.TestData))!
 
 testExistingMethodPackageAndEnvironmentLoose
 	| class packageAndEnv |
-	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
 	packageAndEnv := class existingMethodPackageAndEnvironment: #sendInlineParameterMethod.
 	self assert: packageAndEnv
-		equals: (Pair first: self class owningPackage second: (model classFor: self class environment))!
+		equals: (Pair first: self class owningPackage second: (model classFor: TestData))!
 
 testExistingMethodPackageAndEnvironmentLooseCustom
 	| class packageAndEnv |
-	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
 	packageAndEnv := class existingMethodPackageAndEnvironment: #inlineParameterMethod:.
 	self assert: packageAndEnv
 		equals: (Pair first: self class owningPackage second: (model classFor: Tools))!
@@ -162,20 +173,19 @@ testLocalBindingFor
 	self assertNotNil: binding.
 	self assert: binding environment identicalTo: objectClass.
 	self assertIsNil: binding value.
-	self assert: binding targetVariable identicalTo: binding.
+	self assert: binding identicalTo: binding.
+	self assertIsNil: binding realBinding.
 	binding := objectClass localBindingFor: '_DependentsRegister'.
 	self assertNotNil: binding.
 	self assert: binding environment identicalTo: objectClass.
 	self assert: binding value identicalTo: Object._DependentsRegister.
-	self assert: binding targetVariable identicalTo: (Object localBindingFor: '_DependentsRegister').
+	self assert: binding realBinding identicalTo: (Object localBindingFor: '_DependentsRegister').
 	binding := (model classFor: TransformationRuleTestData) localBindingFor: 'Bar'.
 	self assertNotNil: binding.
 	self assert: binding isImmutable.
 	self assert: binding environment realClass identicalTo: TransformationRuleTestData.
 	self assert: binding value identicalTo: TransformationRuleTestData.Bar.
-	self assert: binding targetVariable identicalTo: (TransformationRuleTestData localBindingFor: 'Bar').
-	
-!
+	self assert: binding realBinding identicalTo: (TransformationRuleTestData localBindingFor: 'Bar')!
 
 testMethodsReferencingExternals1
 	| class referers expectedSelectors subclass |
@@ -197,7 +207,7 @@ testMethodsReferencingExternals1
 
 testMethodsReferencingExternals2
 	| class referers |
-	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
 	referers := class methodsReferencingExternals asSet collect: [:each | each selector].
 	#(#refersToClassBindingNotFound #refersToClassConstantFullyQualified #refersToClassConstantUnqualified #refersToClassFullyQualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassPartiallyQualifiedBindingInArray #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToClassUnqualifiedBindingInArray #refersToClassUnqualifiedInArray #refersToClassVariableFullyQualified #refersToClassVariablePartiallyQualified #refersToClassVariablePartiallyQualifiedBinding #refersToOtherClassPartiallyQualifiedBinding)
 		do: [:each | self assert: (referers includes: each)].
@@ -293,7 +303,7 @@ testUnqualifiedName
 
 testWhichMethodsReferToClass
 	| class method targetClass referers |
-	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
 	method := class methodFor: #atIfAbsent.
 	self assert: (method refersToClass: (model classNamed: #Smalltalk)).
 	targetClass := model classNamed: 'Refactory.Browser.Tests.ClassToRename'.
@@ -301,11 +311,11 @@ testWhichMethodsReferToClass
 				sort.
 	"Note that we don't expect to see any of the symbolic references any more as these are deliberately not matched. Symbolic name references are superseded by BindingReferences as we know these are intended to refer to static variables, which is not necessarily true of symbols."
 	self assert: referers
-		equals: #(#refersToClassConstantFullyQualified #refersToClassConstantUnqualified #refersToClassFullyQualified #refersToClassFullyQualifiedBinding #refersToClassFullyQualifiedBindingInArray #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassPartiallyQualifiedBindingInArray #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToClassUnqualifiedBindingInArray #refersToClassUnqualifiedInArray #refersToClassVariableFullyQualified #refersToClassVariablePartiallyQualified #refersToClassVariablePartiallyQualifiedBinding)!
+		equals: #(#refersToClassConstantFullyQualified #refersToClassConstantPartiallyQualified1 #refersToClassConstantPartiallyQualified2 #refersToClassConstantUnqualified #refersToClassFullyQualified #refersToClassFullyQualifiedBinding #refersToClassFullyQualifiedBindingInArray #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassPartiallyQualifiedBindingInArray #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToClassUnqualifiedBindingInArray #refersToClassUnqualifiedInArray #refersToClassVariableFullyQualified #refersToClassVariablePartiallyQualified #refersToClassVariablePartiallyQualifiedBinding)!
 
 testWhichMethodsReferToClassViaMethodNamespace
 	| class targetClass referers |
-	class := model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
 	targetClass := model classFor: Core.Tests.DolphinTest.
 	referers := ((class whichMethodsReferToClass: targetClass) asArray collect: [:each | each selector])
 				sort.
@@ -323,6 +333,7 @@ testWithAllSubclasses
 	self assert: all asArray equals: {newClass metaclass}! !
 !Refactory.Browser.Tests.RBClassTest categoriesForMethods!
 setUp!public!set up! !
+testAllBehaviorsDo!public!unit tests! !
 testBindings!public!unit tests! !
 testClassSubclasses!public!unit tests! !
 testDefinesClassVariable!public!unit tests! !

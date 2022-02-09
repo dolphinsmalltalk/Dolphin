@@ -85,8 +85,7 @@ testRenameTemporary
 				in: LintRuleTestData
 				selector: #openEditor.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData')
-				parseTreeFor: #openEditor)
+	self assert: ((refactoring model classFor: LintRuleTestData) parseTreeFor: #openEditor)
 		equals: (self
 				parseMethod: 'openEditor
 								<namespace: Tools>

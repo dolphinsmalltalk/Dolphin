@@ -15,6 +15,11 @@ Refactory.Browser.Refactoring comment: ''!
 associationForClassVariable: aName in: aClass ifAbsent: aBlock
 	^aClass realClass classPool associationAt: aName ifAbsent: aBlock!
 
+baseEnvironment
+	"Private - Answer the default environment for new subclasses of the receiver that the ClassBuilder should use when the provided subclass name is unqualified."
+
+	^Smalltalk!
+
 browseEnvironments: aCollectionOfBrowserEnvironments
 	^(self lookupOption: #browseEnvironments) cull: self cull: aCollectionOfBrowserEnvironments!
 
@@ -268,8 +273,7 @@ poolVariableNamesFor: aClass
 	pools := Set new.
 	aClass withAllSuperclassesDo: 
 			[:each |
-			each allImports
-				do: [:pool | pool asQualifiedReference value keys do: [:name | pools add: name asString]]].
+			each allImports do: [:pool | pool value keys do: [:name | pools add: name asString]]].
 	^pools!
 
 preconditions
@@ -371,6 +375,7 @@ whichVariableNode: aParseTree inInterval: anInterval name: aName
 	^matcher executeTree: aParseTree initialAnswer: nil! !
 !Refactory.Browser.Refactoring categoriesForMethods!
 associationForClassVariable:in:ifAbsent:!public!utilities! !
+baseEnvironment!constants!private! !
 browseEnvironments:!public!requests! !
 canReferenceVariable:in:!public!testing! !
 changes!accessing!public! !

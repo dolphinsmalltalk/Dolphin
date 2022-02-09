@@ -14,11 +14,14 @@ Kernel.StExternalCallNode comment: ''!
 !Kernel.StExternalCallNode categoriesForClass!System-Compiler! !
 !Kernel.StExternalCallNode methodsFor!
 
-= anObject 
+= anObject
 	self == anObject ifTrue: [^true].
-	self class = anObject class ifFalse: [^false].
-	#todo "Implement more efficiently".
-	^self formattedCode = anObject formattedCode!
+	self class == anObject class ifFalse: [^false].
+	flags = anObject flags ifFalse: [^false].
+	nameOrOrdinal = anObject nameOrOrdinal ifFalse: [^false].
+	callingConvention == anObject callingConvention ifFalse: [^false].
+	returnType = anObject returnType ifFalse: [^false].
+	^argumentTypes = anObject argumentTypes!
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitExternalCallNode: self!
@@ -39,6 +42,19 @@ callingConvention: anInteger
 childrenDo: aMonadicValuable
 	aMonadicValuable value: returnType.
 	argumentTypes do: aMonadicValuable!
+
+defines: aName
+	^'_failureCode' = aName!
+
+flags
+	^flags!
+
+flags: anInteger
+	flags := anInteger!
+
+hash
+	^((nameOrOrdinal hash + callingConvention) hashMultiply + returnType hash) hashMultiply
+		+ (self hashForCollection: argumentTypes)!
 
 initialize
 	flags := 0.
@@ -91,6 +107,10 @@ argumentTypes:!accessing!public! !
 callingConvention!accessing!public! !
 callingConvention:!accessing!public! !
 childrenDo:!accessing!public! !
+defines:!public!testing! !
+flags!accessing!private! !
+flags:!initializing!private! !
+hash!comparing!public! !
 initialize!initializing!public! !
 isExternalCall!public!testing! !
 isOverlapped!public!testing! !

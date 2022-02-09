@@ -25,7 +25,7 @@ testInlineLiteralArray
 				in: RefactoryTestDataApp
 				selector: ('inline' , 'ParameterMethod:') asSymbol.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	class := refactoring model classFor: RefactoryTestDataApp.
 	self assert: (class parseTreeFor: #inlineParameterMethod)
 		equals: (self
 				parseMethod: 'inlineParameterMethod <namespace: Tools> | aSymbol | aSymbol := #(asdf). ^aSymbol isSymbol').

@@ -41,10 +41,8 @@ testMultipleSelectors
 			[:ref :classes :selector |
 			optionCalled := true.
 			self assert: selector identicalTo: #checkClass:.
-			{Refactory.Browser.Tests.BasicLintRuleTestData.
-				Refactory.Browser.Tests.CompositeLintRuleTestData.
-				Refactory.Browser.Tests.LintRuleTestData}
-					do: [:each | self assert: (classes includes: (subject model classFor: each))].
+			{BasicLintRuleTestData. CompositeLintRuleTestData. LintRuleTestData}
+				do: [:each | self assert: (classes includes: (subject model classFor: each))].
 			false].
 	self shouldAbort: subject.
 	self assert: optionCalled!
@@ -98,7 +96,7 @@ testRenameTestMethod
 				to: #renameThisMethod2:
 				permutation: (1 to: 1).
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	class := refactoring model classFor: RefactoryTestDataApp.
 	self assert: (class parseTreeFor: #renameThisMethod2:)
 		equals: (self parseMethod: 'renameThisMethod2: anArg
 	^self').
@@ -118,12 +116,12 @@ testRenameTestMethod1
 				to: #testMethod2
 				permutation: (1 to: 0).
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	class := refactoring model classFor: RefactoryTestDataApp.
 	self assert: (class parseTreeFor: #testMethod2)
 		equals: (self
 				parseMethod: 'testMethod2 <namespace: Tools>
 	^self testMethod2 , ([:each | each testMethod2] value: #(#(#testMethod2) 2 #testMethod2))').
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.BasicLintRuleTestData')
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.TestData.BasicLintRuleTestData')
 				parseTreeFor: #classBlock:)
 		equals: (self parseMethod: 'classBlock: aBlock
 	classBlock := aBlock testMethod2').

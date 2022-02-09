@@ -37,26 +37,26 @@ preconditions
 	#rbFix.	"Bodge to allow for nil superclass"
 	superNotMeta := superclass isNil
 				ifTrue: [RBCondition empty]
-				ifFalse: [((RBCondition isMetaclass: superclass) errorMacro: 'Superclass must not be a metaclass') not].
+				ifFalse: [((RBCondition isMetaclass: superclass) errorMacro: 'Superclass must <1?not :>be a metaclass') not].
 	cond := subclasses inject: superNotMeta
 				into: 
 					[:sub :each |
 					sub & ((RBCondition isMetaclass: each) errorMacro: 'Subclass must <1?not :>be a metaclass') not
 						& (RBCondition isImmediateSubclass: each of: superclass)].
 	#rbFix.	"Dolphin's categories are Strings, not Symbols"
-	^cond & (RBCondition isValidClassName: className)
-		& (RBCondition isStatic: className in: self model) not & (RBCondition isString: category)
+	^cond & (RBCondition isValidClassName: self className)
+		& (RBCondition isStatic: self className in: self model) not & (RBCondition isString: category)
 		& ((RBCondition withBlock: 
 					["*** & (RBCondition isSymbol: category) "
 					category notEmpty])
 				errorMacro: 'Invalid category name')!
 
-storeOn: aStream 
+storeOn: aStream
 	aStream nextPut: $(.
 	self class storeOn: aStream.
 	aStream
 		nextPutAll: ' addClass: ';
-		print: className;
+		print: self className;
 		nextPutAll: ' superclass: '.
 	superclass storeOn: aStream.
 	aStream nextPutAll: ' subclasses: '.
@@ -69,7 +69,7 @@ transform
 	#rbFix.	"Factor out #definitionMessage in order to permit override in subclass"
 	self model
 		defineClass: self definitionMessage;
-		reparentClasses: subclasses to: (self model classNamed: className)! !
+		reparentClasses: subclasses to: (model instanceClassNamed: self className)! !
 !Refactory.Browser.AddClassRefactoring categoriesForMethods!
 addClass:superclass:subclasses:category:!initialize/release!public! !
 definitionMessage!public!transforming! !

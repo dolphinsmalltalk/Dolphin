@@ -34,17 +34,13 @@ realBinding: aVariableBinding environment: aRBClass
 	realBinding := aVariableBinding.
 	flags := aVariableBinding flags.
 	self isImmutable: aVariableBinding isImmutable.
-	^self!
-
-targetVariable
-	^realBinding ?? self! !
+	^self! !
 !Refactory.Browser.RBVariableBinding categoriesForMethods!
 isClassBinding!public!testing! !
 model!accessing!public! !
 name:environment:!initializing!private! !
 realBinding!accessing!public! !
 realBinding:environment:!initializing!private! !
-targetVariable!accessing!public! !
 !
 
 !Refactory.Browser.RBVariableBinding class methodsFor!

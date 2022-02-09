@@ -577,7 +577,7 @@ moveAllTempsToInnerScope: aBrowserEnvironment
 	errorCount := 0.
 	
 	[model
-		allClassesDo: [:eachClass | errorCount := errorCount + (self moveAllTempsToInnerScopeIn: eachClass)]]
+		allBehaviorsDo: [:eachClass | errorCount := errorCount + (self moveAllTempsToInnerScopeIn: eachClass)]]
 			on: self abortSignal
 			do: [:ex | ^self].
 	model name: 'Move All Temps To Inner Scope'.

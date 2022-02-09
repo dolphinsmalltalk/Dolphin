@@ -19,7 +19,7 @@ testAddClassVariable
 	| refactoring |
 	refactoring := AddClassVariableRefactoring variable: 'Asdf' class: TransformationRuleTestData.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData')
+	self assert: ((refactoring model classNamed: #'Refactory.Browser.TestData.TransformationRuleTestData')
 				directlyDefinesClassVariable: #Asdf)!
 
 testAlreadyExistingName

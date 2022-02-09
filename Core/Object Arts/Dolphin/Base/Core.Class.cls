@@ -639,6 +639,12 @@ printString
 
 	^self shortName!
 
+refersTo: anObject asLiteralOf: aCompiledCode
+	"Private - Answer whether the receiver, a literal of the <CompiledCode> 2nd argument, is a reference to the <Object> first argument."
+
+	^(self class == anObject class and: [self = anObject])
+		or: [(anObject isKindOf: VariableBinding) and: [anObject value == self and: [anObject isClassBinding]]]!
+
 removeBindingFor: aString
 	^(self localBindingFor: aString)
 		ifNotNil: 
@@ -706,6 +712,14 @@ rename: aString
 				space;
 				print: aString;
 				contents)!
+
+replaceImport: oldBindingReference with: newBindingReference
+	| existing index |
+	existing := self imports.
+	index := existing indexOf: oldBindingReference.
+	index = 0
+		ifTrue: [self addImport: newBindingReference]
+		ifFalse: [existing at: index put: newBindingReference]!
 
 requiresInstallation
 	"Answer whether the receiver requires 'installing' into its environment."
@@ -1144,6 +1158,7 @@ printFullNameOn:!helpers!private! !
 printNameOn:relativeTo:!printing!private! !
 printOn:!printing!public! !
 printString!printing!public! !
+refersTo:asLiteralOf:!private!testing! !
 removeBindingFor:!bindings!public! !
 removeClassConstant:!class variables!development!public! !
 removeClassVarName:!class hierarchy-mutating!class variables!public! !
@@ -1153,6 +1168,7 @@ removeFromSystem!class hierarchy-removing!private! !
 removeImport:!namespaces!public! !
 removeSubclass:!helpers!private! !
 rename:!class hierarchy-mutating!private! !
+replaceImport:with:!applying!private! !
 requiresInstallation!public!testing! !
 resolveBindingPath:!bindings!private! !
 resolveBindingPath:environment:!bindings!private! !

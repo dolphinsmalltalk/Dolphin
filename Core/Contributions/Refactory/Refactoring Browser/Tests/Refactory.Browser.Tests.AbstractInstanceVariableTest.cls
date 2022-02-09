@@ -20,7 +20,7 @@ testAbstractInstanceVariable
 	refactoring := AbstractInstanceVariableRefactoring variable: 'class'
 				class: TransformationRuleTestData.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData'.
+	class := refactoring model classNamed: #'Refactory.Browser.TestData.TransformationRuleTestData'.
 	self assert: (class parseTreeFor: #class1) equals: (self parseMethod: 'class1 ^class').
 	self assert: (class parseTreeFor: #class:)
 		equals: (self parseMethod: 'class: anObject

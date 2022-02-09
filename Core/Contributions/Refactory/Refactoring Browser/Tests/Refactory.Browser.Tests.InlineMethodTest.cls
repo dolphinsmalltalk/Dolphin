@@ -42,7 +42,7 @@ testInlineMethod
 				inMethod: #sentNotImplementedInApplication
 				forClass: BasicLintRuleTestData class.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model metaclassNamed: #'Refactory.Browser.Tests.BasicLintRuleTestData')
+	self assert: ((refactoring model metaclassNamed: #'Refactory.Browser.TestData.BasicLintRuleTestData')
 				parseTreeFor: #sentNotImplementedInApplication)
 		equals: (self
 				parseMethod: 'sentNotImplementedInApplication
@@ -92,8 +92,7 @@ testInlineMethod1
 				forClass: RefactoryTestDataApp.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
-				parseTreeFor: #caller)
+	self assert: ((refactoring model classFor: RefactoryTestDataApp) parseTreeFor: #caller)
 		equals: (self
 				parseMethod: 'caller 
 									| anObject anObject1 | 
@@ -112,8 +111,7 @@ testInlineMethod2
 				forClass: RefactoryTestDataApp.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
-				parseTreeFor: #caller1)
+	self assert: ((refactoring model classFor: RefactoryTestDataApp) parseTreeFor: #caller1)
 		equals: (self
 				parseMethod: 'caller1 
 								| anObject each1 anObject1 | 
@@ -133,8 +131,7 @@ testInlineMethod3
 				forClass: RefactoryTestDataApp.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
-				parseTreeFor: #caller2)
+	self assert: ((refactoring model classFor: RefactoryTestDataApp) parseTreeFor: #caller2)
 		equals: (self
 				parseMethod: 'caller2
 								^(1 to: 10) inject: 1 into: [:sum :each | sum * ((1 to: 10) inject: each into: [:sum1 :each1 | sum1 + each1])]	')!
@@ -147,8 +144,7 @@ testInlineMethod4
 				forClass: RefactoryTestDataApp.
 	self setupInlineExpressionFor: refactoring toReturn: false.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
-				parseTreeFor: #inlineJunk)
+	self assert: ((refactoring model classFor: RefactoryTestDataApp) parseTreeFor: #inlineJunk)
 		equals: (self
 				parseMethod: 'inlineJunk
 										| asdf bar1 baz1 asdf1 |
@@ -173,8 +169,7 @@ testInlineMethod5
 				inMethod: #inlineLast
 				forClass: RefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
-				parseTreeFor: #inlineLast)
+	self assert: ((refactoring model classFor: RefactoryTestDataApp) parseTreeFor: #inlineLast)
 		equals: (self
 				parseMethod: 'inlineLast
 									5 = 3 ifTrue: [^self caller] ifFalse: [^	(1 to: 10) inject: 1 into: [:sum :each | sum * (self foo: each)]]')!
@@ -220,8 +215,7 @@ testInlineRecursiveCascadedMethod
 				inMethod: #inlineMethod
 				forClass: RefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
-				parseTreeFor: #inlineMethod)
+	self assert: ((refactoring model classFor: RefactoryTestDataApp) parseTreeFor: #inlineMethod)
 		equals: (self
 				parseMethod: 'inlineMethod
 									| temp temp1 |

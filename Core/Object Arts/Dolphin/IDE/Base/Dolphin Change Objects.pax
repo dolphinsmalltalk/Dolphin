@@ -9,12 +9,13 @@ package paxVersion: 2.1;
 
 package setClassNames: #(
 	#{Tools.AddClassConstantChange}
-	#{Tools.AddNamespaceImportChange}
+	#{Tools.AddImportChange}
 	#{Tools.AddSharedVariableChange}
 	#{Tools.MoveClassChange}
 	#{Tools.RemoveClassConstantChange}
-	#{Tools.RemoveNamespaceImportChange}
+	#{Tools.RemoveImportChange}
 	#{Tools.RemoveSharedVariableChange}
+	#{Tools.ReplaceImportChange}
 	#{Tools.SharedVariableChange}
 ).
 
@@ -24,6 +25,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.CompositeRefactoryChange} #addImport:to:)
 	#(#{Refactory.Browser.CompositeRefactoryChange} #removeClassConstant:from:)
 	#(#{Refactory.Browser.CompositeRefactoryChange} #removeImport:from:)
+	#(#{Refactory.Browser.CompositeRefactoryChange} #replaceImport:with:in:)
 ).
 
 package setPrerequisites: #(
@@ -47,13 +49,19 @@ Refactory.Browser.RefactoryClassChange subclass: #'Tools.MoveClassChange'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Refactory.Browser.RefactoryClassChange subclass: #'Tools.ReplaceImportChange'
+	instanceVariableNames: 'oldImport newImport'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Refactory.Browser.RefactoryVariableChange subclass: #'Tools.AddClassConstantChange'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RefactoryVariableChange subclass: #'Tools.AddNamespaceImportChange'
+Refactory.Browser.RefactoryVariableChange subclass: #'Tools.AddImportChange'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -65,7 +73,7 @@ Refactory.Browser.RefactoryVariableChange subclass: #'Tools.RemoveClassConstantC
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RefactoryVariableChange subclass: #'Tools.RemoveNamespaceImportChange'
+Refactory.Browser.RefactoryVariableChange subclass: #'Tools.RemoveImportChange'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -100,18 +108,25 @@ addClassConstant: aVariableBinding to: aRBClass
 	^self addChange: (AddClassConstantChange add: aVariableBinding to: aRBClass)!
 
 addImport: aBindingReference to: aClass
-	^self addChange: (AddNamespaceImportChange add: aBindingReference to: aClass)!
+	^self addChange: (AddImportChange add: aBindingReference to: aClass)!
 
 removeClassConstant: aVariableBinding from: aClass
 	^self addChange: (RemoveClassConstantChange remove: aVariableBinding from: aClass)!
 
 removeImport: aBindingReference from: aRBClass
-	^self addChange: (RemoveNamespaceImportChange remove: aBindingReference from: aRBClass)! !
+	^self addChange: (RemoveImportChange remove: aBindingReference from: aRBClass)!
+
+replaceImport: oldBindingReference with: newBindingReference in: aRBClass
+	^self addChange: (ReplaceImportChange
+				replaceImport: oldBindingReference
+				with: newBindingReference
+				in: aRBClass)! !
 !Refactory.Browser.CompositeRefactoryChange categoriesForMethods!
 addClassConstant:to:!adding!private! !
 addImport:to:!adding!public! !
 removeClassConstant:from:!adding!public! !
 removeImport:from:!adding!public! !
+replaceImport:with:in:!adding!public! !
 !
 
 "End of package definition"!

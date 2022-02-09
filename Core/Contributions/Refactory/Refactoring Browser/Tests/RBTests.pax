@@ -28,6 +28,8 @@ package setClassNames: #(
 	#{Refactory.Browser.Tests.MoveMethodTest}
 	#{Refactory.Browser.Tests.MoveVariableDefinitionTest}
 	#{Refactory.Browser.Tests.ParserTest}
+	#{Refactory.Browser.Tests.ParseTreeRewriterTest}
+	#{Refactory.Browser.Tests.ParseTreeSearcherTest}
 	#{Refactory.Browser.Tests.PluggableEnvironmentTest}
 	#{Refactory.Browser.Tests.ProtectInstanceVariableTest}
 	#{Refactory.Browser.Tests.PullUpClassVariableTest}
@@ -40,6 +42,7 @@ package setClassNames: #(
 	#{Refactory.Browser.Tests.RBConditionTest}
 	#{Refactory.Browser.Tests.RBMethodTest}
 	#{Refactory.Browser.Tests.RBModelTest}
+	#{Refactory.Browser.Tests.RBVariableAnalyserTest}
 	#{Refactory.Browser.Tests.RefactoringBrowserTest}
 	#{Refactory.Browser.Tests.RefactoringManagerTest}
 	#{Refactory.Browser.Tests.RefactoringTest}
@@ -102,9 +105,9 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.RenameMethodRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.RenameTemporaryRefactoring class} #correspondingTestCase)
 	#(#{Refactory.Browser.TemporaryToInstanceVariableRefactoring class} #correspondingTestCase)
-	#(#{Refactory.Browser.Tests.RefactoryTestDataApp} #inlineParameterMethod:)
-	#(#{Refactory.Browser.Tests.RefactoryTestDataApp} #sendInlineParameterMethod)
-	#(#{Refactory.Browser.Tests.RefactoryTestDataApp} #testMethod1)
+	#(#{Refactory.Browser.TestData.RefactoryTestDataApp} #inlineParameterMethod:)
+	#(#{Refactory.Browser.TestData.RefactoryTestDataApp} #sendInlineParameterMethod)
+	#(#{Refactory.Browser.TestData.RefactoryTestDataApp} #testMethod1)
 	#(#{Smalltalk class} #isEqualTo:)
 ).
 
@@ -126,6 +129,7 @@ package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\IDE\Professional\Dolphin Refactoring Browser'
 	'..\Environments\RBEnvironments'
 	'..\Formatters\RBFormatters'
+	'..\..\RBNamespaces'
 	'..\Parser\RBParser'
 	'..\Refactorings\RBRefactorings'
 	'..\Refactorings\RBReferenceFinder'
@@ -142,7 +146,7 @@ package!
 XProgramming.SUnit.TestCase subclass: #'Refactory.Browser.Tests.RefactoringBrowserTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Refactory.Browser.TestData private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.BrowserEnvironmentTest'
@@ -163,6 +167,18 @@ Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tes
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.ParseTreeRewriterTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.ParseTreeSearcherTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RBClassTest'
 	instanceVariableNames: 'model objectClass newClass messageNodeClass'
 	classVariableNames: ''
@@ -176,6 +192,12 @@ Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tes
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RBModelTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.RefactoringBrowserTest subclass: #'Refactory.Browser.Tests.RBVariableAnalyserTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -813,7 +835,7 @@ correspondingTestCase
 correspondingTestCase!public! !
 !
 
-!Refactory.Browser.Tests.RefactoryTestDataApp methodsFor!
+!Refactory.Browser.TestData.RefactoryTestDataApp methodsFor!
 
 inlineParameterMethod: aSymbol
 	<namespace: Tools>
@@ -826,7 +848,7 @@ testMethod1
 	<namespace: Tools>
 	^self testMethod1 
 		, ([:each | each testMethod1] value: #(#(#testMethod1) 2 #testMethod1))! !
-!Refactory.Browser.Tests.RefactoryTestDataApp categoriesForMethods!
+!Refactory.Browser.TestData.RefactoryTestDataApp categoriesForMethods!
 inlineParameterMethod:!public!test! !
 sendInlineParameterMethod!public!test! !
 testMethod1!public!test! !

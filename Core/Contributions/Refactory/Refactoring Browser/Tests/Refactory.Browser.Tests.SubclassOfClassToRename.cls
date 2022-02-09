@@ -27,7 +27,7 @@ refersToClassFullyQualified
 	^Refactory.Browser.Tests.ClassToRename!
 
 refersToClassFullyQualifiedBinding
-	^#{Refactory.Browser.Tests.ClassToRename private}!
+	^#{Refactory.Browser.Tests.ClassToRename}!
 
 refersToClassFullyQualifiedName
 	^#'Refactory.Browser.Tests.ClassToRename'!
@@ -53,7 +53,7 @@ refersToClassUnqualified
 	^ClassToRename!
 
 refersToClassUnqualifiedBinding
-	^#{ClassToRename private}!
+	^#{ClassToRename}!
 
 refersToClassUnqualifiedName
 	^#ClassToRename!
@@ -63,6 +63,9 @@ refersToInheritedClassConstant
 
 refersToInheritedClassVariable
 	^ClassVar1!
+
+refersToInheritedClassVariableFullyQualified
+	^Refactory.Browser.Tests.ClassToRename.ClassVar1!
 
 refersToOtherClassPartiallyQualifiedBinding
 	"Not a valid relative reference to the superclass (does not bind - try sending it #value)"
@@ -107,6 +110,7 @@ refersToClassUnqualifiedBinding!performing!public! !
 refersToClassUnqualifiedName!performing!public! !
 refersToInheritedClassConstant!public! !
 refersToInheritedClassVariable!public! !
+refersToInheritedClassVariableFullyQualified!public! !
 refersToOtherClassPartiallyQualifiedBinding!performing!public! !
 refersToOtherClassPartiallyQualifiedName!performing!public! !
 rewriteRule1!accessing!public! !

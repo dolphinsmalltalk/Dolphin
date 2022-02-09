@@ -18,8 +18,7 @@ testInlineTemporary
 				from: #inlineMethod
 				in: RefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
-				parseTreeFor: #inlineMethod)
+	self assert: ((refactoring model classFor: RefactoryTestDataApp) parseTreeFor: #inlineMethod)
 		equals: (self
 				parseMethod: 'inlineMethod
 										^self

@@ -516,7 +516,7 @@ environment: aNamespace
 							['The namespace for extension methods of ''<1d>'' will be changed from <2p> to <3p>, requiring that the methods be recompiled.']].
 	Warning
 		signal: (preamble
-				, '<n><n>Methods may fail to recompile if they contain static variable references that are not resolvable in their new scope.<n><n>Press Abort to cancel the change, Retry to open a debugger, or Ignore to continue with the change.'
+				, '<n><n>Methods may fail to recompile if they contain static variable references that are not resolvable in their new scope. This may render the system unstable if the methods that fail to compile are critical to system operation.<n><n>Press Abort to cancel the change, Retry to open a debugger, or Ignore to continue with the change.'
 					expandMacrosWith: self
 					with: currentEnvironment
 					with: aNamespace).

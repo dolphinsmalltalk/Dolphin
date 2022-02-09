@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Tests.FooLintRuleTestData subclass: #'Refactory.Browser.Tests.TransformationRuleTestData'
+Refactory.Browser.TestData.FooLintRuleTestData subclass: #'Refactory.Browser.TestData.TransformationRuleTestData'
 	instanceVariableNames: 'rewriteRule builder class'
 	classVariableNames: 'RecursiveSelfRule'
 	imports: #()
@@ -8,10 +8,10 @@ Refactory.Browser.Tests.FooLintRuleTestData subclass: #'Refactory.Browser.Tests.
 	classConstants: {
 		'Bar' -> 16r7B
 	}!
-Refactory.Browser.Tests.TransformationRuleTestData guid: (Core.GUID fromString: '{f92d7547-3000-44f7-94ae-0c8b01fc5f2d}')!
-Refactory.Browser.Tests.TransformationRuleTestData comment: ''!
-!Refactory.Browser.Tests.TransformationRuleTestData categoriesForClass!Refactory-Test data! !
-!Refactory.Browser.Tests.TransformationRuleTestData methodsFor!
+Refactory.Browser.TestData.TransformationRuleTestData guid: (Core.GUID fromString: '{f92d7547-3000-44f7-94ae-0c8b01fc5f2d}')!
+Refactory.Browser.TestData.TransformationRuleTestData comment: ''!
+!Refactory.Browser.TestData.TransformationRuleTestData categoriesForClass!Refactory-Test data! !
+!Refactory.Browser.TestData.TransformationRuleTestData methodsFor!
 
 checkMethod: aSmalllintContext 
 	class := aSmalllintContext selectedClass.
@@ -55,7 +55,7 @@ viewResults
 
 	builder inspect.
 	self resetResult! !
-!Refactory.Browser.Tests.TransformationRuleTestData categoriesForMethods!
+!Refactory.Browser.TestData.TransformationRuleTestData categoriesForMethods!
 checkMethod:!accessing!public! !
 hasConflicts!public!testing! !
 isEmpty!public!testing! !
@@ -66,7 +66,7 @@ superSends!public!rules! !
 viewResults!private! !
 !
 
-!Refactory.Browser.Tests.TransformationRuleTestData class methodsFor!
+!Refactory.Browser.TestData.TransformationRuleTestData class methodsFor!
 
 assignmentInIfTrue
 	^self rewrite: #(
@@ -292,7 +292,7 @@ unwindBlocks
 				"->"	'^[| `@temps | ``@.Statements. ``@object] valueOnUnwindDo: ``@block'))
 		methods: false
 		name: 'Move assignment out of valueNowOrUnwindDo: blocks'! !
-!Refactory.Browser.Tests.TransformationRuleTestData class categoriesForMethods!
+!Refactory.Browser.TestData.TransformationRuleTestData class categoriesForMethods!
 assignmentInIfTrue!public!transformations! !
 atIfAbsent!public!transformations! !
 betweenAnd!public!transformations! !

@@ -136,7 +136,7 @@ keywords
 		ifTrue: 
 			["All well-formed multi-keyword selectors must end with a colon"
 			^{self}].
-	keywords := Array writeStream: 3.
+	keywords := WriteStream on: (Array new: 3).
 	end := self
 				nextIndexOf: $:
 				from: 1

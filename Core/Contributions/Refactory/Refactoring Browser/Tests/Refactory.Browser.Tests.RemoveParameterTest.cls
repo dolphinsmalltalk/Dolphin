@@ -42,7 +42,7 @@ testRemoveParameter
 				in: RefactoryTestDataApp
 				selector: ('rename' , 'ThisMethod:') asSymbol.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	class := refactoring model classFor: RefactoryTestDataApp.
 	self assert: (class parseTreeFor: #renameThisMethod)
 		equals: (self parseMethod: 'renameThisMethod
 								^self').

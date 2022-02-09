@@ -1400,20 +1400,13 @@ isFixedLayout: aClass
 				or: [FixedInitialLayout anySatisfy: [:cls | cls inheritsFrom: aClass]]]!
 
 isValidClassName: aString
-	"Private - Answer whether aString is a valid class name."
+	"Private - Answer whether the <readableString> argument is a valid unqualified class name."
 
-	| parts |
-	parts := BindingReference.PathSeparator split: aString.
-	^(parts allSatisfy: 
-			[:each |
-			each notEmpty
-				and: [(self isValidIdentifier: each) and: [each first == $_ or: [each first isUppercase]]]])
-		and: 
-			[| ns |
-			ns := (BindingReference path: parts allButLast) valueOrNil.
-			ns notNil and: [ns class isMeta]]!
+	^(self isValidIdentifier: aString) and: [aString first == $_ or: [aString first isUppercase]]!
 
 isValidIdentifier: aString
+	"Would be nice to use the Scanner here, but for boot order dependency reasons we cannot rely on the parser package being available to the ClassBuilder."
+
 	(aString isEmpty or: [self isValidInitialIdentifierChar: aString first]) ifFalse: [^false].
 	2 to: aString size do: [:i | (self isValidIdentifierChar: (aString at: i)) ifFalse: [^false]].
 	^(##(Set withAll: #('self' 'super' 'nil' 'true' 'false' 'thisContext' '_'))

@@ -60,6 +60,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Gdiplus\Tests\Gdiplus Tests'
 	'..\..\Lagoon\Lagoon Image Stripper'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
+	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters'
 	'..\..\..\..\Contributions\Refactory\RBNamespaces'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint'
@@ -324,17 +325,18 @@ testWarnUnimplementedAbstractMethod!public!unit tests! !
 
 !Refactory.Browser.Tests.RefactoringTest methodsFor!
 
-verifyMethod: aSymbol of: aRBClass equals: aString
-	| source parseTree |
-	source := aRBClass sourceCodeFor: aSymbol.
+verifyMethod: aSymbol of: aClass equals: aString
+	| source parseTree modelClass |
+	modelClass := aClass classInModel: model.
+	source := modelClass sourceCodeFor: aSymbol.
 	self assertNotNil: source.
 	parseTree := Parser
 				parseMethod: source
-				in: aRBClass
+				in: modelClass
 				onError: [:str :pos | self fail: str].
 	[RBVariableAnalyser analyseParseTree: parseTree] on: Parser notificationClass
 		do: [:ex | self fail: ex displayString].
-	self assert: parseTree equals: (self parseMethod: aString << aSymbol in: aRBClass)! !
+	self assert: parseTree equals: (self parseMethod: aString in: modelClass)! !
 !Refactory.Browser.Tests.RefactoringTest categoriesForMethods!
 verifyMethod:of:equals:!helpers!private! !
 !

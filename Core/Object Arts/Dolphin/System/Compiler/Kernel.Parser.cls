@@ -34,6 +34,9 @@ addCommentsTo: aNode
 	aNode addComments: comments.
 	comments := nil!
 
+annotationNodeClass
+	^StAnnotationNode!
+
 assignmentNodeClass
 	^StAssignmentNode!
 
@@ -382,7 +385,7 @@ parseExternalCall: callConvId startingAt: startInteger
 
 parseExternalCallArgList
 	| args |
-	args := OrderedCollection new.
+	args := WriteStream on: (Array new: methodNode argumentCount).
 	[self atEnd or: [currentToken isBinary: #>]] whileFalse: 
 			[| arg |
 			arg := self parseExternalArgType.
@@ -390,8 +393,8 @@ parseExternalCallArgList
 				ifTrue: 
 					[self parserError: CErrArgTypeCannotBeVoid range: arg sourceInterval
 					"Error ignored, no recovery required since this is a semantic rather than syntax error"].
-			args addLast: arg].
-	^args!
+			args nextPut: arg].
+	^args grabContents!
 
 parseExternalCallArgs: anStExternalCallNode 
 	| types got expected start |
@@ -453,7 +456,7 @@ parseKeywordAnnotation: anInteger
 	args nextPut: self parseAnnotationArgument.
 	currentToken isKeyword]
 			whileTrue.
-	^(StAnnotationNode selector: selector contents asSymbol arguments: args grabContents)
+	^(self annotationNodeClass selector: selector contents asSymbol arguments: args grabContents)
 		start: anInteger;
 		yourself!
 
@@ -1188,6 +1191,7 @@ variableNodeClass
 	^StVariableNode! !
 !Kernel.Parser categoriesForMethods!
 addCommentsTo:!helpers!private! !
+annotationNodeClass!constants!private! !
 assignmentNodeClass!constants!private! !
 atEnd!public!testing! !
 blockNodeClass!constants!private! !

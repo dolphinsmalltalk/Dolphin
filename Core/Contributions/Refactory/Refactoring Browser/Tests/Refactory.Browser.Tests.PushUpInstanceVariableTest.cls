@@ -20,9 +20,9 @@ testPullUpInstVar
 			self assert: var equals: 'result'.
 			true].
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData')
-				directlyDefinesInstanceVariable: 'result').
-	self deny: ((refactoring model classNamed: #'Refactory.Browser.Tests.BasicLintRuleTestData')
+	self
+		assert: ((refactoring model classFor: LintRuleTestData) directlyDefinesInstanceVariable: 'result').
+	self deny: ((refactoring model classNamed: #'Refactory.Browser.TestData.BasicLintRuleTestData')
 				directlyDefinesInstanceVariable: 'result')!
 
 testPullUpVariableNotDefined

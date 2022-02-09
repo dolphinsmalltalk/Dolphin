@@ -122,14 +122,21 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.PushUpMethodRefactoring} #getOptionPushUpRemoveDuplicates:in:)
 	#(#{Refactory.Browser.RBAbstractClass} #instVarNames)
 	#(#{Refactory.Browser.RBAbstractClass} #owningPackage)
+	#(#{Refactory.Browser.RBAbstractClass class} #icon)
 	#(#{Refactory.Browser.RBAbstractCondition} #validate)
 	#(#{Refactory.Browser.RBAbstractCondition} #validate:)
+	#(#{Refactory.Browser.RBAbstractCondition class} #icon)
 	#(#{Refactory.Browser.RBClass} #addClassConstant:)
+	#(#{Refactory.Browser.RBClass} #icon)
 	#(#{Refactory.Browser.RBClass} #removeClassConstant:)
 	#(#{Refactory.Browser.RBClass} #removeImport:)
+	#(#{Refactory.Browser.RBMetaclass class} #icon)
 	#(#{Refactory.Browser.RBMethod} #owningPackage)
+	#(#{Refactory.Browser.RBMethod class} #icon)
 	#(#{Refactory.Browser.RBModel} #browseChanges)
-	#(#{Refactory.Browser.RBModel} #removeImport:from:)
+	#(#{Refactory.Browser.RBModel class} #icon)
+	#(#{Refactory.Browser.RBNamespaceClass class} #icon)
+	#(#{Refactory.Browser.RBRootNamespace class} #icon)
 	#(#{Refactory.Browser.Refactoring} #chooseFrom:caption:)
 	#(#{Refactory.Browser.Refactoring} #confirm:)
 	#(#{Refactory.Browser.Refactoring} #maxDetails)
@@ -254,7 +261,7 @@ package setMethodNames: #(
 	#(#{Tools.PackageSelector} #queryRefactoringCommand:)
 	#(#{Tools.PackageSelector} #removeDuplicateMethods)
 	#(#{Tools.RemoveClassConstantChange class} #icon)
-	#(#{Tools.RemoveNamespaceImportChange class} #icon)
+	#(#{Tools.RemoveImportChange class} #icon)
 	#(#{Tools.RemoveSharedVariableChange class} #icon)
 	#(#{Tools.SmalltalkToolShell} #chooseMethodForRefactoring:)
 	#(#{Tools.SmalltalkToolShell} #queryRefactoringCommand:)
@@ -499,7 +506,7 @@ directlyDefinesClassVariable:!public!testing! !
 isBindingChanged
 	"Private - Assuming that this node has been bound by the RBVariableAnalyser, would it bind differently now?"
 
-	^binding notNil and: [self isRelative and: [self resolveBinding ~~ binding]]! !
+	^binding notNil and: [self resolveBinding ~~ binding]! !
 !Kernel.StQualifiedReferenceNode categoriesForMethods!
 isBindingChanged!accessing!private! !
 !
@@ -1346,6 +1353,14 @@ instVarNames!instance variables!public! !
 owningPackage!accessing!public! !
 !
 
+!Refactory.Browser.RBAbstractClass class methodsFor!
+
+icon
+	^Class icon! !
+!Refactory.Browser.RBAbstractClass class categoriesForMethods!
+icon!public! !
+!
+
 !Refactory.Browser.RBAbstractCondition methodsFor!
 
 validate
@@ -1363,11 +1378,24 @@ validate!public! !
 validate:!helpers!public! !
 !
 
+!Refactory.Browser.RBAbstractCondition class methodsFor!
+
+icon
+	^##((TextTileIcon text: '?' fontName: 'Georgia')
+		textcolor: Color darkBlue;
+		yourself)! !
+!Refactory.Browser.RBAbstractCondition class categoriesForMethods!
+icon!public! !
+!
+
 !Refactory.Browser.RBClass methodsFor!
 
 addClassConstant: aRBVariableBinding
 	self addBinding: aRBVariableBinding.
 	model addClassConstant: aRBVariableBinding to: self!
+
+icon
+	^realClass ifNil: [super icon] ifNotNil: [realClass icon]!
 
 removeClassConstant: anAssociation
 	| binding |
@@ -1381,8 +1409,17 @@ removeImport: aString
 	model removeImport: ref from: self! !
 !Refactory.Browser.RBClass categoriesForMethods!
 addClassConstant:!public!variable accessing! !
+icon!public! !
 removeClassConstant:!public!variable accessing! !
 removeImport:!public!variable accessing! !
+!
+
+!Refactory.Browser.RBMetaclass class methodsFor!
+
+icon
+	^Metaclass icon! !
+!Refactory.Browser.RBMetaclass class categoriesForMethods!
+icon!public! !
 !
 
 !Refactory.Browser.RBMethod methodsFor!
@@ -1395,16 +1432,44 @@ owningPackage
 owningPackage!accessing!public! !
 !
 
+!Refactory.Browser.RBMethod class methodsFor!
+
+icon
+	^CompiledMethod icon! !
+!Refactory.Browser.RBMethod class categoriesForMethods!
+icon!public! !
+!
+
 !Refactory.Browser.RBModel methodsFor!
 
 browseChanges
-	Tools.RewriteChangesBrowser showOn: self changes!
-
-removeImport: aBindingReference from: aRBClass
-	^changes removeImport: aBindingReference from: aRBClass! !
+	Tools.RewriteChangesBrowser showOn: self changes! !
 !Refactory.Browser.RBModel categoriesForMethods!
 browseChanges!helpers!public! !
-removeImport:from:!changes!private! !
+!
+
+!Refactory.Browser.RBModel class methodsFor!
+
+icon
+	^Smalltalk icon! !
+!Refactory.Browser.RBModel class categoriesForMethods!
+icon!public! !
+!
+
+!Refactory.Browser.RBNamespaceClass class methodsFor!
+
+icon
+	^Namespace icon! !
+!Refactory.Browser.RBNamespaceClass class categoriesForMethods!
+icon!public! !
+!
+
+!Refactory.Browser.RBRootNamespace class methodsFor!
+
+icon
+	^Root icon! !
+!Refactory.Browser.RBRootNamespace class categoriesForMethods!
+icon!public! !
 !
 
 !Refactory.Browser.Refactoring methodsFor!
@@ -3036,13 +3101,13 @@ icon
 icon!constants!public! !
 !
 
-!Tools.RemoveNamespaceImportChange class methodsFor!
+!Tools.RemoveImportChange class methodsFor!
 
 icon
 	"Answers an Icon that can be used to represent this class"
 
 	^Icon fromId: 'EditClear.ico'! !
-!Tools.RemoveNamespaceImportChange class categoriesForMethods!
+!Tools.RemoveImportChange class categoriesForMethods!
 icon!constants!public! !
 !
 

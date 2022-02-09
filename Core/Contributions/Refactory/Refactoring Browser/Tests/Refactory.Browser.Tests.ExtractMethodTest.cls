@@ -87,7 +87,7 @@ testExtractMethodAtEndOfMethodThatNeedsReturn
 				in: LintRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
+	class := refactoring model classFor: LintRuleTestData.
 	self assert: (class parseTreeFor: #openEditor)
 		equals: (self
 				parseMethod: 'openEditor
@@ -112,7 +112,7 @@ testExtractMethodThatMovesTemporaryVariable
 				in: TransformationRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData'.
+	class := refactoring model classFor: TransformationRuleTestData.
 	self assert: (class parseTreeFor: #superSends)
 		equals: (self parseMethod: 'superSends
 	| rule |
@@ -139,7 +139,7 @@ testExtractMethodThatNeedsArgument
 				in: TransformationRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData'.
+	class := refactoring model classFor: TransformationRuleTestData.
 	self assert: (class parseTreeFor: #checkMethod:)
 		equals: (self
 				parseMethod: 'checkMethod: aSmalllintContext 
@@ -162,7 +162,7 @@ testExtractMethodThatNeedsTemporaryVariable
 				in: LintRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
+	class := refactoring model classFor: LintRuleTestData.
 	self assert: (class parseTreeFor: #displayName)
 		equals: (self
 				parseMethod: 'displayName

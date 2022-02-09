@@ -20,7 +20,7 @@ testAbstractClassVariable
 	refactoring := AbstractClassVariableRefactoring variable: 'RecursiveSelfRule'
 				class: TransformationRuleTestData.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData'.
+	class := refactoring model classNamed: #'Refactory.Browser.TestData.TransformationRuleTestData'.
 	meta := class metaclass.
 	self assert: (meta parseTreeFor: #recursiveSelfRule)
 		equals: (self parseMethod: 'recursiveSelfRule ^RecursiveSelfRule').

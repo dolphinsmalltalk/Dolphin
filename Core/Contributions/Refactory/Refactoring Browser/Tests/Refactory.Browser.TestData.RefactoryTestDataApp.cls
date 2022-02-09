@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Core.Object subclass: #'Refactory.Browser.Tests.RefactoryTestDataApp'
+Core.Object subclass: #'Refactory.Browser.TestData.RefactoryTestDataApp'
 	instanceVariableNames: 'temporaryVariable'
 	classVariableNames: 'ClassVar1'
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.Tests.RefactoryTestDataApp guid: (Core.GUID fromString: '{dd22adf0-7b3f-4465-aa71-377108619c45}')!
-Refactory.Browser.Tests.RefactoryTestDataApp comment: 'Test class for Smalllint. Contains lots of smelly code'!
-!Refactory.Browser.Tests.RefactoryTestDataApp categoriesForClass!Refactory-Test data! !
-!Refactory.Browser.Tests.RefactoryTestDataApp methodsFor!
+Refactory.Browser.TestData.RefactoryTestDataApp guid: (Core.GUID fromString: '{dd22adf0-7b3f-4465-aa71-377108619c45}')!
+Refactory.Browser.TestData.RefactoryTestDataApp comment: 'Test class for Smalllint. Contains lots of smelly code'!
+!Refactory.Browser.TestData.RefactoryTestDataApp categoriesForClass!Refactory-Test data! !
+!Refactory.Browser.TestData.RefactoryTestDataApp methodsFor!
 
 == comparand 
 	<primitive: 110>
@@ -301,14 +301,22 @@ refersToClassBindingNotFound
 refersToClassConstantFullyQualified
 	^Refactory.Browser.Tests.ClassToRename.ClassConst1!
 
-refersToClassConstantUnqualified
+refersToClassConstantPartiallyQualified1
+	^Tests.ClassToRename.ClassConst1!
+
+refersToClassConstantPartiallyQualified2
+	<namespace: Refactory.Browser.Tests>
 	^ClassToRename.ClassConst1!
+
+refersToClassConstantUnqualified
+	<namespace: Refactory.Browser.Tests.ClassToRename>
+	^ClassConst1!
 
 refersToClassFullyQualified
 	^Refactory.Browser.Tests.ClassToRename!
 
 refersToClassFullyQualifiedBinding
-	^#{Refactory.Browser.Tests.ClassToRename private}!
+	^#{Refactory.Browser.Tests.ClassToRename}!
 
 refersToClassFullyQualifiedBindingInArray
 	^#(#{Refactory.Browser.Tests.ClassToRename})!
@@ -342,33 +350,39 @@ refersToClassPartiallyQualifiedName
 	^#'Tests.ClassToRename'!
 
 refersToClassUnqualified
+	<namespace: Refactory.Browser.Tests>
 	^ClassToRename!
 
 refersToClassUnqualifiedBinding
+	<namespace: Refactory.Browser.Tests>
 	^#{ClassToRename private}!
 
 refersToClassUnqualifiedBindingInArray
+	<namespace: Refactory.Browser.Tests>
 	^#(#{ClassToRename class})!
 
 refersToClassUnqualifiedInArray
+	<namespace: Refactory.Browser.Tests>
 	^{ClassToRename}!
 
 refersToClassUnqualifiedName
 	"Symbols are no longer renamed and are not considered to be class references"
 
+	<namespace: Refactory.Browser.Tests>
 	^#ClassToRename!
 
 refersToClassUnqualifiedNameInArray
+	<namespace: Refactory.Browser.Tests>
 	^#(#ClassToRename)!
 
 refersToClassVariableFullyQualified
 	^Refactory.Browser.Tests.ClassToRename.ClassVar1!
 
 refersToClassVariablePartiallyQualified
-	^ClassToRename.ClassVar1!
+	^Tests.ClassToRename.ClassVar1!
 
 refersToClassVariablePartiallyQualifiedBinding
-	^#{_.ClassToRename.ClassVar1} binding!
+	^#{_.Tests.ClassToRename.ClassVar1} binding!
 
 refersToDolphinTestBindingFullyQualified
 	^#{Core.Tests.DolphinTest}!
@@ -530,7 +544,7 @@ yourselfNotUsed
 		printString;
 		printString;
 		yourself! !
-!Refactory.Browser.Tests.RefactoryTestDataApp categoriesForMethods!
+!Refactory.Browser.TestData.RefactoryTestDataApp categoriesForMethods!
 ==!comparing!public! !
 anySatisfy!lint!public! !
 asOrderedCollectionNotNeeded!lint!public! !
@@ -586,6 +600,8 @@ precedence!lint!public! !
 referencesConditionFor:!accessing!public! !
 refersToClassBindingNotFound!lint!public! !
 refersToClassConstantFullyQualified!lint!public! !
+refersToClassConstantPartiallyQualified1!lint!public! !
+refersToClassConstantPartiallyQualified2!lint!public! !
 refersToClassConstantUnqualified!lint!public! !
 refersToClassFullyQualified!lint!public! !
 refersToClassFullyQualifiedBinding!lint!public! !
@@ -651,7 +667,7 @@ whileTrue!lint!public! !
 yourselfNotUsed!lint!public! !
 !
 
-!Refactory.Browser.Tests.RefactoryTestDataApp class methodsFor!
+!Refactory.Browser.TestData.RefactoryTestDataApp class methodsFor!
 
 comment
 	#rbFix.	"Added to test #overridesSpecialMessage"
@@ -659,7 +675,7 @@ comment
 
 initialize
 	ClassVar1 := 'ClassVar1 of RefactoryTestDataApp'! !
-!Refactory.Browser.Tests.RefactoryTestDataApp class categoriesForMethods!
+!Refactory.Browser.TestData.RefactoryTestDataApp class categoriesForMethods!
 comment!accessing!public! !
 initialize!class initialization!public! !
 !

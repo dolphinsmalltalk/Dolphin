@@ -18,6 +18,11 @@ allClassVariableNames
 allImports
 	^nonMetaclass allImports!
 
+baseEnvironment
+	"Private - Answer the default environment for new subclasses of the receiver that the ClassBuilder should use when the provided subclass name is unqualified."
+
+	^nonMetaclass baseEnvironment!
+
 basicEnvironment
 	^nonMetaclass basicEnvironment!
 
@@ -109,6 +114,7 @@ unqualifiedName
 !Refactory.Browser.RBMetaclass categoriesForMethods!
 allClassVariableNames!accessing!public! !
 allImports!accessing!public! !
+baseEnvironment!constants!private! !
 basicEnvironment!accessing!public! !
 bindingOrNil!bindings!public! !
 classBindingNames!accessing!public! !

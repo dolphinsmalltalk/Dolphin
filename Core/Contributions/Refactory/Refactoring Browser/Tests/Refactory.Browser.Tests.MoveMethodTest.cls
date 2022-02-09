@@ -23,7 +23,7 @@ testMoveMethodIntoArgument
 	self setupMethodNameFor: refactoring toReturn: #foo:.
 	refactoring setOption: #abstractVariables toUse: [true].
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData'.
+	class := refactoring model classFor: TransformationRuleTestData.
 	self assert: (class parseTreeFor: #checkMethod:)
 		equals: (self parseMethod: 'checkMethod: aSmalllintContext aSmalllintContext foo: self').
 	self
@@ -67,7 +67,7 @@ testMoveMethodIntoClassVariable
 		withArguments: #('transformationRule' 'aSmalllintContext').
 	refactoring setOption: #abstractVariables toUse: [true].
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData'.
+	class := refactoring model classFor: TransformationRuleTestData.
 	self assert: (class parseTreeFor: #checkMethod:)
 		equals: (self
 				parseMethod: 'checkMethod: aSmalllintContext RecursiveSelfRule foo: self foo: aSmalllintContext').
@@ -108,7 +108,7 @@ testMoveMethodIntoInstanceVariable
 		withArguments: #('transformationRule' 'aSmalllintContext').
 	refactoring setOption: #abstractVariables toUse: [true].
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.TransformationRuleTestData'.
+	class := refactoring model classFor: TransformationRuleTestData.
 	self assert: (class parseTreeFor: #checkMethod:)
 		equals: (self
 				parseMethod: 'checkMethod: aSmalllintContext rewriteRule foo: self foo: aSmalllintContext').

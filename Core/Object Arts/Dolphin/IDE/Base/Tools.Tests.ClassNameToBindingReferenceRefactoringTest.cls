@@ -18,58 +18,58 @@ testConvertAlias
 				unqualifiedName: #ExternalHandle;
 				yourself.
 	self executeRefactoring: refactoring.
-	testClass := model classFor: Refactory.Browser.Tests.RefactoryTestDataApp.
+	testClass := model classFor: RefactoryTestDataApp.
 	self
 		verifyMethod: #smalltalkAtAlias
 		of: testClass
-		equals: '<1s> ^#{External.Handle} value'!
+		equals: 'smalltalkAtAlias ^#{External.Handle} value'!
 
 testConvertSymbolsToBindingReferences
 	| refactoring testClass |
 	refactoring := (Tools.ClassNameToBindingReferenceRefactoring model: model
 				replaceSymbolicReferencesTo: Smalltalk.PoolConstantsDictionary) yourself.
 	self executeRefactoring: refactoring.
-	testClass := model classFor: Refactory.Browser.Tests.RefactoryTestDataApp.
+	testClass := model classFor: RefactoryTestDataApp.
 	self
 		verifyMethod: #smalltalkAtIfAbsent
 		of: testClass
-		equals: '<1s> ^#{Smalltalk.PoolConstantsDictionary} ifNotDefined: [self error: ''absent'']'.
+		equals: 'smalltalkAtIfAbsent ^#{Smalltalk.PoolConstantsDictionary} ifNotDefined: [self error: ''absent'']'.
 	self
 		verifyMethod: #smalltalkAtIfPresent
 		of: testClass
-		equals: '<1s> ^#{Smalltalk.PoolConstantsDictionary} ifDefined: [:pc | pc name, '' is present'']'.
+		equals: 'smalltalkAtIfPresent ^#{Smalltalk.PoolConstantsDictionary} ifDefined: [:pc | pc name, '' is present'']'.
 	self
 		verifyMethod: #smalltalkLookup
 		of: testClass
-		equals: '<1s> ^#{Smalltalk.PoolConstantsDictionary} valueOrNil'.
+		equals: 'smalltalkLookup ^#{Smalltalk.PoolConstantsDictionary} valueOrNil'.
 	self
 		verifyMethod: #smalltalkAssociationAt
 		of: testClass
-		equals: '<1s> ^#{Smalltalk.PoolConstantsDictionary} binding'.
+		equals: 'smalltalkAssociationAt ^#{Smalltalk.PoolConstantsDictionary} binding'.
 	self
 		verifyMethod: #smalltalkAssociationAtIfAbsent
 		of: testClass
-		equals: '<1s> ^#{Smalltalk.PoolConstantsDictionary} bindingOrNil ifNil: [self error: ''absent'']'.
+		equals: 'smalltalkAssociationAtIfAbsent ^#{Smalltalk.PoolConstantsDictionary} bindingOrNil ifNil: [self error: ''absent'']'.
 	self
 		verifyMethod: #smalltalkAssociationAtIfPresent
 		of: testClass
-		equals: '<1s> ^#{Smalltalk.PoolConstantsDictionary} bindingOrNil ifNotNil: [:pc | pc value name, '' is present'']'.
+		equals: 'smalltalkAssociationAtIfPresent ^#{Smalltalk.PoolConstantsDictionary} bindingOrNil ifNotNil: [:pc | pc value name, '' is present'']'.
 	self
 		verifyMethod: #smalltalkIncludesKey
 		of: testClass
-		equals: '<1s> ^#{Smalltalk.PoolConstantsDictionary} isDefined'.
+		equals: 'smalltalkIncludesKey ^#{Smalltalk.PoolConstantsDictionary} isDefined'.
 	self
 		verifyMethod: #smalltalkRemoveKey
 		of: testClass
-		equals: '<1s> ^#{Smalltalk.PoolConstantsDictionary} undeclare'.
+		equals: 'smalltalkRemoveKey ^#{Smalltalk.PoolConstantsDictionary} undeclare'.
 	self
 		verifyMethod: #smalltalkRemoveKeyIfAbsent
 		of: testClass
-		equals: '<1s> ^#{Smalltalk.PoolConstantsDictionary} undeclare ifNil: [self error: ''absent'']'.
+		equals: 'smalltalkRemoveKeyIfAbsent ^#{Smalltalk.PoolConstantsDictionary} undeclare ifNil: [self error: ''absent'']'.
 	self
 		verifyMethod: #smalltalkAtPut
 		of: testClass
-		equals: '<1s> ^#{Smalltalk.PoolConstantsDictionary} declare: nil'! !
+		equals: 'smalltalkAtPut ^#{Smalltalk.PoolConstantsDictionary} declare: nil'! !
 !Tools.Tests.ClassNameToBindingReferenceRefactoringTest categoriesForMethods!
 testConvertAlias!public! !
 testConvertSymbolsToBindingReferences!public! !

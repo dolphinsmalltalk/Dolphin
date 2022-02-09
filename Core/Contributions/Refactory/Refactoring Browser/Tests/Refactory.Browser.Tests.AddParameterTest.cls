@@ -23,7 +23,7 @@ testAddParameterForTwoArgumentMessage
 				newSelector: #called:bar:on:
 				initializer: '#(1.0)'.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	class := refactoring model classFor: RefactoryTestDataApp.
 	self assert: (class parseTreeFor: #called:bar:on:)
 		equals: (self
 				parseMethod: 'called: anObject bar: aBlock on: anArrayOfFloat
@@ -49,7 +49,7 @@ testAddParameterThatReferencesGlobalAndLiteral
 				newSelector: #testFoo:bar:
 				initializer: 'OrderedCollection new: 5'.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	class := refactoring model classFor: RefactoryTestDataApp.
 	self assert: (class parseTreeFor: #testFoo:bar:)
 		equals: (self
 				parseMethod: 'testFoo: anObject bar: anOrderedCollection
@@ -86,7 +86,7 @@ testAddParameterThatReferencesModelGlobal
 				newSelector: #testFoo:bar:
 				initializer: 'Bar new'.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	class := refactoring model classFor: RefactoryTestDataApp.
 	self assert: (class parseTreeFor: #testFoo:bar:)
 		equals: (self parseMethod: 'testFoo: anObject bar: anObject1
 								^self class + anObject').
@@ -102,7 +102,7 @@ testAddParameterThatReferencesSelf
 				newSelector: #testFoo:bar:
 				initializer: 'self printString'.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp'.
+	class := refactoring model classFor: RefactoryTestDataApp.
 	self assert: (class parseTreeFor: #testFoo:bar:)
 		equals: (self parseMethod: 'testFoo: anObject bar: aString
 
@@ -141,15 +141,14 @@ testModelBadInitializationCode
 
 testModelNonExistantName
 	| refactoring |
-	(model classNamed: #'Refactory.Browser.Tests.LintRuleTestData') removeMethod: #name.
+	(model classFor: LintRuleTestData) removeMethod: #name.
 	refactoring := AddParameterRefactoring
 				model: model
 				addParameterToMethod: #name
 				in: LintRuleTestData
 				newSelector: #nameNew:
 				initializer: 'nil'.
-	self shouldFail: refactoring
-		withMessage: 'LintRuleTestData does not define #name'!
+	self shouldFail: refactoring withMessage: 'LintRuleTestData does not define #name'!
 
 testNonExistantName
 	self shouldFail: (AddParameterRefactoring

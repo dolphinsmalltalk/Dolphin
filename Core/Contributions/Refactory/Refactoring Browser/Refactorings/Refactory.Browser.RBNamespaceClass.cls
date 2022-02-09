@@ -17,10 +17,20 @@ addClass: aRBClass
 				value: aRBClass;
 				yourself)!
 
-baseEnvironmentName
-	"See Class>>baseEnvironment"
-	
-	^#Root!
+baseEnvironment
+	"Answer the default environment for new subclasses of the receiver that the ClassBuilder should use when the provided subclass name is unqualified."
+
+	"Namespaces created with unqualified names should be dropped into Root, not Smalltalk."
+
+	^model rootNamespace!
+
+fullName: aString
+	name = aString ifTrue: [^self].
+	super fullName: aString.
+	self bindings do: 
+			[:each |
+			each isClassBinding
+				ifTrue: [each value fullName: name , BindingReference.PathSeparatorString , each value unqualifiedName]]!
 
 hierarchyBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class, i.e. one of its own class variables or those of its superclasses."
@@ -37,7 +47,8 @@ resolveImportedBinding: aBindingContext
 	^self environment ifNotNil: [:env | env resolveImportedBinding: aBindingContext]! !
 !Refactory.Browser.RBNamespaceClass categoriesForMethods!
 addClass:!public! !
-baseEnvironmentName!accessing!public! !
+baseEnvironment!constants!public! !
+fullName:!accessing!private! !
 hierarchyBindingFor:!bindings!public! !
 removeClass:!public! !
 resolveImportedBinding:!binding!private! !

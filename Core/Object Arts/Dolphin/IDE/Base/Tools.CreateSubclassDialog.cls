@@ -202,7 +202,7 @@ updatePackage
 			packagesPresenter selection: package]!
 
 validateModel
-	| result candidateName |
+	| result candidateName unqualifiedName |
 	(self isPackaged and: [self package isNil])
 		ifTrue: 
 			[^(ValidationResult errorMessage: 'No package selected')
@@ -211,22 +211,23 @@ validateModel
 	result := ValidationResult new
 				presenter: namePresenter;
 				yourself.
-	(BindingReference isQualifiedName: namePresenter value)
-		ifTrue: 
-			[^result
-				errorMessage: 'New class name cannot be qualified';
-				yourself].
-	candidateName := self subclassName.
-	candidateName isEmpty
+	unqualifiedName := namePresenter value.
+	unqualifiedName isEmpty
 		ifTrue: 
 			[^result
 				errorMessage: 'Please specify a new class name';
 				yourself].
-	(ClassBuilder isValidClassName: candidateName)
+	(BindingReference isQualifiedName: unqualifiedName)
+		ifTrue: 
+			[^result
+				errorMessage: 'New class name cannot be qualified';
+				yourself].
+	(ClassBuilder isValidClassName: unqualifiedName)
 		ifFalse: 
 			[^result
-				errorMessage: 'Invalid class name <1p>' << candidateName;
+				errorMessage: 'Invalid class name <1p>' << unqualifiedName;
 				yourself].
+	candidateName := self subclassName.
 	(self namespace localBindingFor: namePresenter value)
 		ifNotNil: 
 			[^result

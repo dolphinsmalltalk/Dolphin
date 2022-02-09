@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Tests.LintRuleTestData subclass: #'Refactory.Browser.Tests.CompositeLintRuleTestData'
+Refactory.Browser.TestData.LintRuleTestData subclass: #'Refactory.Browser.TestData.CompositeLintRuleTestData'
 	instanceVariableNames: 'rules'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.Tests.CompositeLintRuleTestData guid: (Core.GUID fromString: '{e17dd387-d4f7-4713-878e-41a7c57e54dd}')!
-Refactory.Browser.Tests.CompositeLintRuleTestData comment: ''!
-!Refactory.Browser.Tests.CompositeLintRuleTestData categoriesForClass!Refactory-Test data! !
-!Refactory.Browser.Tests.CompositeLintRuleTestData methodsFor!
+Refactory.Browser.TestData.CompositeLintRuleTestData guid: (Core.GUID fromString: '{e17dd387-d4f7-4713-878e-41a7c57e54dd}')!
+Refactory.Browser.TestData.CompositeLintRuleTestData comment: ''!
+!Refactory.Browser.TestData.CompositeLintRuleTestData categoriesForClass!Refactory-Test data! !
+!Refactory.Browser.TestData.CompositeLintRuleTestData methodsFor!
 
 checkClass: aSmalllintContext 
 	rules do: 
@@ -49,7 +49,7 @@ rules: aCollection
 
 viewResults
 	rules do: [:each | each viewResults]! !
-!Refactory.Browser.Tests.CompositeLintRuleTestData categoriesForMethods!
+!Refactory.Browser.TestData.CompositeLintRuleTestData categoriesForMethods!
 checkClass:!accessing!public! !
 checkMethod:!accessing!public! !
 failedRules!accessing!public! !
@@ -63,7 +63,7 @@ rules:!initialize/release!public! !
 viewResults!private! !
 !
 
-!Refactory.Browser.Tests.CompositeLintRuleTestData class methodsFor!
+!Refactory.Browser.TestData.CompositeLintRuleTestData class methodsFor!
 
 allRules
 	^self ruleFor: self protocol: 'all checks'!
@@ -91,7 +91,7 @@ rules: aCollection name: aString
 
 transformations
 	^self ruleFor: TransformationRuleTestData protocol: 'transformations'! !
-!Refactory.Browser.Tests.CompositeLintRuleTestData class categoriesForMethods!
+!Refactory.Browser.TestData.CompositeLintRuleTestData class categoriesForMethods!
 allRules!instance creation!public! !
 lintChecks!all checks!public! !
 ruleFor:protocol:!instance creation!public! !

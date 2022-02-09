@@ -2106,10 +2106,10 @@ keywordsAndArgsForSelector: aSymbol
 	args := (1 to: argc) collect: [:each | 'arg' , each displayString].
 	^aSymbol keywords -> args!
 
-keywordsAndArgsOfMethod: aCompiledMethod 
-	^aCompiledMethod parseTreeNoError 
+keywordsAndArgsOfMethod: aCompiledMethod
+	^aCompiledMethod parseTreeNoError
 		ifNil: [self keywordsAndArgsForSelector: aCompiledMethod selector]
-		ifNotNil: [:ast | (ast selectorParts collect: [:each | each value]) -> ast argumentNames]!
+		ifNotNil: [:ast | ast keywords -> ast argumentNames]!
 
 loadViewResource: aResourceArray inContext: contextView
 	ShellView

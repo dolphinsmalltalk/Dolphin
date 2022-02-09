@@ -15,13 +15,9 @@ acceptVisitor: aTokenVisitor
 	^aTokenVisitor visitIdentifierToken: self!
 
 isIdentifier
-	^true!
-
-isPatternVariable
-	^value first == self scannerClass patternVariableCharacter! !
+	^true! !
 !Kernel.StIdentifierToken categoriesForMethods!
 acceptVisitor:!public!visitor! !
 isIdentifier!public!testing! !
-isPatternVariable!public!testing! !
 !
 

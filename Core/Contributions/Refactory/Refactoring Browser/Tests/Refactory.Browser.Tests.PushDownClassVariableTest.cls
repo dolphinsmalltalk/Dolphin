@@ -107,10 +107,9 @@ testNonExistantName
 testPushDownClassVariable
 	| refactoring |
 	refactoring := PushDownClassVariableRefactoring variable: #Foo1 class: LintRuleTestData.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData')
-				directlyDefinesClassVariable: #Foo1).
+	self assert: ((refactoring model classFor: LintRuleTestData) directlyDefinesClassVariable: #Foo1).
 	self executeRefactoring: refactoring.
-	(refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData') withAllSubclasses
+	(refactoring model classFor: LintRuleTestData) withAllSubclasses
 		do: [:each | self deny: (each directlyDefinesClassVariable: #Foo1)]! !
 !Refactory.Browser.Tests.PushDownClassVariableTest categoriesForMethods!
 testModelNonExistantName!failure tests!public! !

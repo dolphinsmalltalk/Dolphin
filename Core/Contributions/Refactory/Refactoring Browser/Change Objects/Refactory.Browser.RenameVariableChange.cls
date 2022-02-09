@@ -21,7 +21,7 @@ changeClass
 	^classReference valueOrNil!
 
 changeClass: aBehavior
-	classReference := aBehavior fullyQualifiedReference!
+	classReference := aBehavior fullName asQualifiedReference!
 
 changeClassName
 	^classReference asString!

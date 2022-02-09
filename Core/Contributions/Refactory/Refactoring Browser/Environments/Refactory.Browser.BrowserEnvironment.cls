@@ -58,7 +58,7 @@ associationAt: aKey
 						ifFalse: 
 							["We want to include non-class bindings if the Namespace is included"
 							binding environment].
-			((self includesClass: class) or: [self includesClass: class class]) ifTrue: [binding]]!
+			(self includesClassOrMetaclass: class) ifTrue: [binding]]!
 
 at: aKey
 	#rbFix.	"Replace #keyNotFoundError: with #errorNotFound"
@@ -112,7 +112,7 @@ classNames
 classNamesFor: aCategoryName
 	#rbFix.	"Dolphin class category system not compatible"
 	^((ClassCategory name: aCategoryName) classes
-		select: [:class | class notNil and: [(self includesClass: class) or: [self includesClass: class class]]])
+		select: [:class | class notNil and: [self includesClassOrMetaclass: class]])
 			collect: [:e | e fullName]!
 
 classVariablesFor: aClass
@@ -208,6 +208,11 @@ includesClass: aClass
 	#rbFix.	"By default an environment should include only those classes that it defines."
 	^self definesClass: aClass!
 
+includesClassOrMetaclass: aClass
+	"Answer whether this environment includes any part of the class, even a single method."
+
+	^(self includesClass: aClass) or: [self includesClass: aClass class]!
+
 includesProtocol: aProtocol in: aClass
 	^true!
 
@@ -258,7 +263,7 @@ keys
 	Smalltalk keysAndValuesDo: 
 			[:key :value |
 			value isBehavior
-				ifTrue: [((self includesClass: value) or: [self includesClass: value class]) ifTrue: [keys add: key]]
+				ifTrue: [(self includesClassOrMetaclass: value) ifTrue: [keys add: key]]
 				ifFalse: [(self includesClass: value class) ifTrue: [keys add: key]]].
 	^keys!
 
@@ -417,6 +422,7 @@ implementorsMatching:!environments!public! !
 implementorsOf:!environments!public! !
 includesCategory:!public!testing! !
 includesClass:!public!testing! !
+includesClassOrMetaclass:!public!testing! !
 includesProtocol:in:!public!testing! !
 includesResource:!public!testing! !
 includesSelector:in:!public!testing! !

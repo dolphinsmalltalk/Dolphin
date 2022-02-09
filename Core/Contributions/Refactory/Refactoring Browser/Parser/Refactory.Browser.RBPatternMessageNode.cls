@@ -67,23 +67,22 @@ matchArgumentsAgainst: aNode inContext: aDictionary
 matchingClass
 	^StMessageNode!
 
-matchSelectorAgainst: aNode inContext: aDictionary 
+matchSelectorAgainst: aNode inContext: aDictionary
+	| otherParts |
+	otherParts := aNode selectorParts.
 	1 to: selectorParts size
 		do: 
-			[:i | 
+			[:i |
 			| keyword |
 			keyword := selectorParts at: i.
 			(aDictionary at: keyword value
-				ifAbsentPut: 
-					[keyword isPatternVariable 
-						ifTrue: [(aNode selectorParts at: i) value]
-						ifFalse: [keyword value]]) 
-					= (aNode selectorParts at: i) value ifFalse: [^false]].
+				ifAbsentPut: [keyword isPatternVariable ifTrue: [(otherParts at: i) value] ifFalse: [keyword value]])
+					= (otherParts at: i) value ifFalse: [^false]].
 	^true!
 
-receiver: aValueNode selectorParts: keywordTokens arguments: valueNodes 
+receiver: aValueNode selectorParts: keywordTokens arguments: valueNodes
 	| message |
-	super 
+	super
 		receiver: aValueNode
 		selectorParts: keywordTokens
 		arguments: valueNodes.
@@ -91,15 +90,13 @@ receiver: aValueNode selectorParts: keywordTokens arguments: valueNodes
 	message := keywordTokens first value.
 	2 to: message size
 		do: 
-			[:i | 
+			[:i |
 			| character |
 			character := message at: i.
-			character == self listCharacter 
+			character == RBPatternScanner.ListCharacter
 				ifTrue: [isList := true]
 				ifFalse: 
-					[character == self cascadeListCharacter 
-						ifTrue: [isCascadeList := true]
-						ifFalse: [^self]]]!
+					[character == RBPatternScanner.CascadeCharacter ifTrue: [isCascadeList := true] ifFalse: [^self]]]!
 
 sentMessages
 	^super sentMessages
@@ -112,8 +109,8 @@ isPatternNode!public!testing/matching! !
 isSelectorList!public!testing/matching! !
 match:inContext:!matching!public! !
 matchArgumentsAgainst:inContext:!matching!public! !
-matchingClass!constants!public! !
-matchSelectorAgainst:inContext:!matching!public! !
+matchingClass!constants!matching!private! !
+matchSelectorAgainst:inContext:!matching!private! !
 receiver:selectorParts:arguments:!initialize/release!public! !
 sentMessages!accessing!public! !
 !

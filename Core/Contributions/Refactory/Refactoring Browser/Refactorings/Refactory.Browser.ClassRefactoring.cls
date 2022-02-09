@@ -13,13 +13,13 @@ Refactory.Browser.ClassRefactoring comment: ''!
 !Refactory.Browser.ClassRefactoring methodsFor!
 
 className
-	^className!
+	^className pathString!
 
-className: aString 
-	className := aString!
+className: aString
+	className := FullBindingReference fullPathString: aString!
 
 environment
-	^self className asQualifiedReference environment!
+	^className environment!
 
 environment: aNamespace
 	self className: (aNamespace fullNameFor: self unqualifiedClassName)!
@@ -42,7 +42,7 @@ nameForReferenceToClass: aRBClass fromNode: aStProgramNode
 				ifFalse: [aRBClass fullName]]!
 
 unqualifiedClassName
-	^className asQualifiedReference unqualifiedName!
+	^className unqualifiedName!
 
 unqualifiedClassName: aSymbol
 	self className: (self environment fullNameFor: aSymbol)! !

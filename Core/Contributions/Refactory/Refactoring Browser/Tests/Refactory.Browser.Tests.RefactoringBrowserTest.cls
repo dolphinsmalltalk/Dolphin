@@ -3,7 +3,7 @@
 XProgramming.SUnit.TestCase subclass: #'Refactory.Browser.Tests.RefactoringBrowserTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Refactory.Browser.TestData private})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.Tests.RefactoringBrowserTest guid: (Core.GUID fromString: '{89b8c31b-39f7-49c7-bd85-3b0c202ccf98}')!

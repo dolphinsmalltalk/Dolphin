@@ -19,8 +19,7 @@ testMoveDefinition
 				in: RefactoryTestDataApp
 				selector: #moveDefinition.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
-				parseTreeFor: #moveDefinition)
+	self assert: ((refactoring model classFor: RefactoryTestDataApp) parseTreeFor: #moveDefinition)
 		equals: (self
 				parseMethod: 'moveDefinition
 								^(self collect: 
@@ -42,8 +41,8 @@ testMoveDefinitionIntoBlockThatIsAReceiverOfACascadedMessage
 				in: RefactoryTestDataApp
 				selector: #referencesConditionFor:.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
-				parseTreeFor: #referencesConditionFor:)
+	self
+		assert: ((refactoring model classFor: RefactoryTestDataApp) parseTreeFor: #referencesConditionFor:)
 		equals: (self
 				parseMethod: 'referencesConditionFor: aClass 
 								| environment  |

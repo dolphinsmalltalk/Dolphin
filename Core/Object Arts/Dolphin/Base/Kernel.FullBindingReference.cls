@@ -48,7 +48,8 @@ bind: aBindingScope
 	self
 		setGeneration: Generation;
 		setBinding: (aBindingScope localScope resolveBindingPath: self path
-					environment: aBindingScope environment) ?? Undeclared!
+					environment: aBindingScope environment) ?? Undeclared.
+	^binding!
 
 bindingOrNil
 	"Answer the <VariableBinding> referenced by the receiver (i.e. resolve the variable), or nil if there is no such variable."
@@ -126,7 +127,9 @@ path
 
 	^path
 		ifNil: 
-			[self setPath: (PathSeparator split: pathString).
+			[self setPath: ((PathSeparator split: pathString)
+						isImmutable: true;
+						yourself).
 			path]!
 
 pathString
@@ -212,14 +215,14 @@ instance!converting!public! !
 isPrivate!public!testing! !
 isPrivate:!initializing!private! !
 isRelative!public!testing! !
-meta!converting!displaying!public! !
+meta!converting!public! !
 path!accessing!public! !
 pathString!accessing!public! !
 private!converting!public! !
 scope!accessing!private! !
-scope:!constants!public! !
-setBinding:!accessing!private! !
-setGeneration:!accessing!private! !
+scope:!converting!public! !
+setBinding:!initializing!private! !
+setGeneration:!initializing!private! !
 setPath:!initializing!private! !
 setPathString:!initializing!private! !
 setScope:!initializing!private! !

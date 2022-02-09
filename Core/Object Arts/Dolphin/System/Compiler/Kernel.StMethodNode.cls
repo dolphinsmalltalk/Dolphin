@@ -124,6 +124,9 @@ isMethod
 isPrimitive
 	^tags notNil and: [tags anySatisfy: [:each | each isAnnotation not]]!
 
+keywords
+	^selectorParts collect: [:each | each value]!
+
 lastIsReturn
 	^body lastIsReturn!
 
@@ -248,6 +251,7 @@ isInlined!public!testing! !
 isLast:!public!testing! !
 isMethod!public!testing! !
 isPrimitive!public!testing! !
+keywords!accessing!public! !
 lastIsReturn!public!testing! !
 methodClass!accessing!public! !
 methodClass:environment:!initializing!private! !

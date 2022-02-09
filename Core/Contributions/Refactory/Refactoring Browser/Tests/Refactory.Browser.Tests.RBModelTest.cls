@@ -11,27 +11,23 @@ Refactory.Browser.Tests.RBModelTest comment: ''!
 !Refactory.Browser.Tests.RBModelTest categoriesForClass!Refactory-Testing! !
 !Refactory.Browser.Tests.RBModelTest methodsFor!
 
-testAllClassesDo
+testAllBehaviorsDo
 	| model classes |
 	classes := 0.
 	model := RBModel new.
-	model allClassesDo: [:each | classes := classes + 1].
+	model allBehaviorsDo: [:each | classes := classes + 1].
 	self assert: classes equals: Smalltalk allClasses size * 2.
 	BrowserEnvironment new classesDo: [:each | classes := classes - 1].
 	self assert: classes equals: 0!
 
-testAllClassesDoOnSelectorEnvironment
+testAllBehaviorsDoOnSelectorEnvironment
 	| env model classes |
 	classes := Set new.
 	env := BrowserEnvironment new
 				forMethods: {Smalltalk class >> #allClassesDo:. self class >> self selector}.
 	model := RBModel onEnvironment: env.
-	model allClassesDo: [:each | classes add: each].
-	self assert: classes
-		equals: {model classFor: Smalltalk.
-				model classFor: Smalltalk class.
-				model classFor: self class.
-				model classFor: self class class} asSet!
+	model allBehaviorsDo: [:each | classes add: each].
+	self assert: classes equals: {model classFor: Smalltalk class. model classFor: self class} asSet!
 
 testCommentChange
 	| st cl |
@@ -92,7 +88,23 @@ testDefineClassChangeD8
 	self assert: (classConsts allSatisfy: [:each | each isVariableBinding]).
 	self assert: (classConsts allSatisfy: [:each | each isClassVariable and: [each isImmutable]]).
 	self assert: (classConsts allSatisfy: [:each | each environment == class]).
-	self assert: class imports equals: {Tools fullyQualifiedReference}!
+	self assert: class imports equals: {(subject classFor: Tools) fullyQualifiedReference}!
+
+testExistingMethodsThatReferToClass
+	| subject references |
+	subject := RBModel new.
+	references := (subject classFor: RefactoryTestDataApp) existingMethodsThatReferTo: ClassToRename.
+	self assert: (references collect: [:each | each selector]) asSortedArray
+		equals: #(#refersToClassConstantFullyQualified #refersToClassConstantPartiallyQualified1 refersToClassConstantPartiallyQualified2 #refersToClassConstantUnqualified #refersToClassFullyQualified #refersToClassFullyQualifiedBinding #refersToClassFullyQualifiedBindingInArray #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassPartiallyQualifiedBindingInArray #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToClassUnqualifiedBindingInArray #refersToClassUnqualifiedInArray #refersToClassVariableFullyQualified #refersToClassVariablePartiallyQualified #refersToClassVariablePartiallyQualifiedBinding)!
+
+testExistingMethodsThatReferToClassAndItsNamespaces
+	"We are explicitly referencing RBModel, but then Refactory.Browser as the environment of RBModel, and so on up through Refactory, and Root"
+	self verifyMethodRefersToNamespaceHierarchy: self class >> self selector in: RBModel new!
+
+testExistingMethodsThatReferToClassViaBindingReference
+	"We are explicitly referencing RBModel, but then Refactory.Browser as the environment of RBModel, and Refactory, and Root"
+	self verifyMethodRefersToNamespaceHierarchy: self class >> self selector
+		in: #{Refactory.Browser.RBModel} value new!
 
 testImplementors
 	| st |
@@ -218,37 +230,77 @@ testReparentSuperclassChange
 	st reparentClasses: subclasses to: superclass.
 	subclasses do: [:each | self assert: each superclass equals: superclass]!
 
+testResolveBindingPathOfClassConstant
+	| subject var |
+	subject := RBModel new.
+	var := subject fullBindingFor: 'OS.Win32Constants.BS_PATTERN'.
+	self assert: var isKindOf: RBVariableBinding.
+	self assert: var realBinding identicalTo: (OS.Win32Constants bindingFor: 'BS_PATTERN')!
+
+testResolveBindingPathOfClassVar
+	| subject var |
+	subject := RBModel new.
+	var := subject fullBindingFor: 'Object._EventsRegister'.
+	self assert: var isKindOf: RBVariableBinding.
+	self assert: var
+		identicalTo: ((subject classFor: Object) classPool associationAt: '_EventsRegister').
+	self assert: var realBinding identicalTo: (Object bindingFor: '_EventsRegister')!
+
 testRoot
 	| model root |
 	model := RBModel new.
 	root := model classFor: Root.
 	self assert: root isKindOf: RBRootNamespace.
-	self assertIsNil: root environment!
+	self assertIsNil: root environment.
+	self assert: root identicalTo: model rootNamespace.
+	self assert: (model rootNamespace classPool at: #Root) identicalTo: root!
 
-testRoots
+testRootClasses
 	| model |
 	model := RBModel new.
-	self assert: (model rootClasses asSortedCollection: [:a :b | a name < b name]) asArray
+	self assert: (model rootClasses asSortedArray: [:a :b | a name < b name])
 		equals: ((Class rootsOfTheWorld collect: [:each | model classFor: each])
-				asSortedCollection: [:a :b | a name < b name]) asArray! !
+				asSortedArray: [:a :b | a name < b name])!
+
+verifyMethodRefersToNamespaceHierarchy: aCompiledMethod in: aRBModel
+	| myModelClass path env |
+	myModelClass := aRBModel classFor: aCompiledMethod methodClass.
+	"We are explicitly referencing RBModel, but then Refactory.Browser as the environment of RBModel, and Refactory, and Root"
+	env := aRBModel class.
+	path := OrderedCollection new.
+	
+	[| references |
+	path addLast: env.
+	references := myModelClass existingMethodsThatReferTo: env.
+	self assert: (references includes: aCompiledMethod).
+	(env := env environment) isNil]
+			whileFalse.
+	self assert: (path collect: [:each | each name]) asArray
+		equals: #('RBModel' 'Browser' 'Refactory' 'Root')! !
 !Refactory.Browser.Tests.RBModelTest categoriesForMethods!
-testAllClassesDo!class tests!public! !
-testAllClassesDoOnSelectorEnvironment!class tests!public! !
-testCommentChange!class tests!public! !
-testDefineClassAfterDeletedChange!class tests!public! !
-testDefineClassChange!class tests!public! !
-testDefineClassChangeD8!class tests!public! !
-testImplementors!class tests!public! !
-testIncludesClass!class tests!public! !
-testMetaclassNamed!public! !
-testModelImplementorsSenders!class tests!public! !
-testRedefineClassChange!class tests!public! !
-testReferencesPrintOn!class tests!public! !
-testReferencesPrintOnAfterAddition!class tests!public! !
-testReferencesPrintOnAfterRemove!class tests!public! !
-testRemoveClassChange!class tests!public! !
-testReparentSuperclassChange!class tests!public! !
-testRoot!class tests!public! !
-testRoots!class tests!public! !
+testAllBehaviorsDo!public!unit tests! !
+testAllBehaviorsDoOnSelectorEnvironment!public!unit tests! !
+testCommentChange!public!unit tests! !
+testDefineClassAfterDeletedChange!public!unit tests! !
+testDefineClassChange!public!unit tests! !
+testDefineClassChangeD8!public!unit tests! !
+testExistingMethodsThatReferToClass!public!unit tests! !
+testExistingMethodsThatReferToClassAndItsNamespaces!public!unit tests! !
+testExistingMethodsThatReferToClassViaBindingReference!public!unit tests! !
+testImplementors!public!unit tests! !
+testIncludesClass!public!unit tests! !
+testMetaclassNamed!public!unit tests! !
+testModelImplementorsSenders!public!unit tests! !
+testRedefineClassChange!public!unit tests! !
+testReferencesPrintOn!public!unit tests! !
+testReferencesPrintOnAfterAddition!public!unit tests! !
+testReferencesPrintOnAfterRemove!public!unit tests! !
+testRemoveClassChange!public!unit tests! !
+testReparentSuperclassChange!public!unit tests! !
+testResolveBindingPathOfClassConstant!public!unit tests! !
+testResolveBindingPathOfClassVar!public!unit tests! !
+testRoot!public!unit tests! !
+testRootClasses!public!unit tests! !
+verifyMethodRefersToNamespaceHierarchy:in:!helpers!private! !
 !
 

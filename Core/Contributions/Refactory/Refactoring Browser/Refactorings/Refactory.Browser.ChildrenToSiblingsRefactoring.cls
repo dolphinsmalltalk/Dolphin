@@ -12,12 +12,12 @@ Refactory.Browser.ChildrenToSiblingsRefactoring comment: ''!
 !Refactory.Browser.ChildrenToSiblingsRefactoring methodsFor!
 
 abstractSuperclass
-	^self model classNamed: className!
+	^self model classNamed: self className!
 
 addSuperclass
 	self performComponentRefactoring: (AddClassRefactoring
 				model: self model
-				addClass: className
+				addClass: self className
 				superclass: parent superclass
 				subclasses: {parent}
 				category: parent category)!
@@ -25,7 +25,7 @@ addSuperclass
 changeIsKindOfReferences
 	| replacer superclass |
 	replacer := ParseTreeRewriter new.
-	superclass := model classNamed: className.
+	superclass := model classNamed: self className.
 	"A qualified name can be expressed in a number of ways; unqualified, fully-qualified, or partially-qualified. Rather than attempt to match each of these, we use a block rewrite"
 	replacer
 		replace: '``@object isKindOf: `variable'
@@ -66,8 +66,9 @@ name: aClassName class: aClass subclasses: subclassCollection
 
 preconditions
 	^subclasses
-		inject: ((RBCondition isMetaclass: parent) errorMacro: 'Superclass must not be a metaclass') not
-				& (RBCondition isValidClassName: className) & (RBCondition isStatic: className in: self model) not
+		inject: ((RBCondition isMetaclass: parent) errorMacro: 'Superclass must <1?not :>be a metaclass') not
+				& (RBCondition isValidClassName: self className)
+					& (RBCondition isStatic: self className in: self model) not
 		into: 
 			[:sub :each |
 			sub & ((RBCondition isMetaclass: each) errorMacro: 'Subclass must <1?not :>be a metaclass') not
@@ -158,7 +159,7 @@ storeOn: aStream
 	self class storeOn: aStream.
 	aStream
 		nextPutAll: ' name: ';
-		print: className;
+		print: self className;
 		nextPutAll: ' class: '.
 	parent storeOn: aStream.
 	aStream nextPutAll: ' subclasses: '.

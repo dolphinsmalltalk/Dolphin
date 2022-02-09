@@ -12,9 +12,6 @@ Kernel.StTagNode comment: ''!
 !Kernel.StTagNode categoriesForClass!System-Compiler! !
 !Kernel.StTagNode methodsFor!
 
-isAnnotation
-	^false!
-
 isExternalCall
 	^false!
 
@@ -36,7 +33,6 @@ stop
 stop: anInteger
 	stop := anInteger! !
 !Kernel.StTagNode categoriesForMethods!
-isAnnotation!public!testing! !
 isExternalCall!public!testing! !
 isTag!public!testing! !
 selector!accessing!public! !

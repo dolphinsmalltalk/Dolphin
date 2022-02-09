@@ -36,7 +36,7 @@ Browse references?'!
 testRemoveInstVar
 	| refactoring class |
 	refactoring := RemoveInstanceVariableRefactoring variable: 'foo1' class: LintRuleTestData.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
+	class := refactoring model classFor: LintRuleTestData.
 	self assert: (class definesInstanceVariable: 'foo1').
 	self executeRefactoring: refactoring.
 	self deny: (class definesInstanceVariable: 'foo1')! !

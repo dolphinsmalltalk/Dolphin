@@ -29,7 +29,7 @@ testNewClassVariableAccessors
 				class: LintRuleTestData
 				classVariable: true.
 	self executeRefactoring: ref.
-	class := ref model metaclassNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
+	class := ref model metaclassNamed: #'Refactory.Browser.TestData.LintRuleTestData'.
 	self deny: ref changes changes isEmpty.
 	self assert: ref setterMethod identicalTo: #foo1:.
 	self assert: ref getterMethod identicalTo: #foo1.
@@ -44,7 +44,7 @@ testNewInstanceVariableAccessors
 				class: LintRuleTestData
 				classVariable: false.
 	self executeRefactoring: ref.
-	class := ref model classNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
+	class := ref model classFor: LintRuleTestData.
 	self deny: ref changes changes isEmpty.
 	self assert: ref setterMethod identicalTo: #foo1:.
 	self assert: ref getterMethod identicalTo: #foo1.

@@ -25,6 +25,19 @@ testAsQualifiedReference
 	self assert: 'Object._EventsRegister' asQualifiedReference
 		equals: (self newSubjectWithPath: #(#Object #_EventsRegister))!
 
+testEnvironment
+	| subject |
+	subject := self newSubjectWithPathString: 'Core.Object'.
+	self assert: subject environment identicalTo: Core.
+	subject := self newSubjectWithPathString: 'Core'.
+	self assert: subject environment identicalTo: Root.
+	"A variable that does not exist is assumed to be in Smalltalk (we cannot tell if the target is intended to be a class or namespace)"
+	subject := self newSubjectWithPathString: 'NothingToSeeHere'.
+	self assert: subject environment identicalTo: Smalltalk.
+	"A namespace that does not exist, well doesn't exist"
+	subject := self newSubjectWithPathString: 'NothingToSeeHere.Really'.
+	self assertIsNil: subject environment!
+
 testEnvironmentName
 	| subject |
 	#('Core.Object' 'Core' 'Smalltalk' nil 'Root' nil 'Root.Smalltalk' 'Root' 'Smalltalk.Animal' 'Smalltalk' 'Animal' nil 'XProgramming.SUnit' 'XProgramming' 'XProgramming.SUnit.TestRunConsoleLogger' 'XProgramming.SUnit')
@@ -235,6 +248,7 @@ testStlConvertRelativeFromVersion1
 !Kernel.Tests.FullBindingReferenceTest categoriesForMethods!
 subjectClass!constants!private! !
 testAsQualifiedReference!public!unit tests! !
+testEnvironment!public!unit tests! !
 testEnvironmentName!public!unit tests! !
 testEnvironmentNameRelative!public!unit tests! !
 testEqualityOfRelativeAndAbsolute!public!unit tests! !

@@ -2819,14 +2819,20 @@ Core.ClassDescription subclass: #'Core.Metaclass'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Kernel.BindingReference subclass: #'Kernel.BindingReferenceWrapper'
+	instanceVariableNames: 'reference'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Kernel.BindingReference subclass: #'Kernel.FullBindingReference'
 	instanceVariableNames: 'pathString path private binding generation'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Kernel.BindingReference subclass: #'Kernel.MetaBindingReference'
-	instanceVariableNames: 'instance'
+Kernel.BindingReferenceWrapper subclass: #'Kernel.MetaBindingReference'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

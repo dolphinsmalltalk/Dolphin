@@ -85,7 +85,7 @@ associationClass!constants!private! !
 convertToSharedPool!development!private! !
 displayOn:!public! !
 environment!accessing!public! !
-fullNameFor:!public! !
+fullNameFor:!helpers!private! !
 includesEnvironment:!public!testing! !
 name!accessing!public! !
 name:!accessing!private! !

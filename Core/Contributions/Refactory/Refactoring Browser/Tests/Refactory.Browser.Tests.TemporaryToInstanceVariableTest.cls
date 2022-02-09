@@ -66,7 +66,7 @@ testTemporaryToInstanceVariable
 				selector: #displayName
 				variable: 'nameStream'.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
+	class := refactoring model classFor: LintRuleTestData.
 	self assert: (class parseTreeFor: #displayName)
 		equals: (self
 				parseMethod: 'displayName

@@ -15,7 +15,7 @@ testPushDownMethod
 	| refactoring class |
 	refactoring := PushDownMethodRefactoring pushDown: #(#name:) from: LintRuleTestData.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
+	class := refactoring model classFor: LintRuleTestData.
 	self deny: (class directlyDefinesMethod: #name:).
 	class subclasses do: 
 			[:each |
@@ -31,7 +31,7 @@ testPushDownMethodThatReferencesPoolDictionary
 	parseTree := LintRuleTestData parseTreeFor: #junk.
 	refactoring := PushDownMethodRefactoring pushDown: #(#junk) from: LintRuleTestData.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
+	class := refactoring model classFor: LintRuleTestData.
 	self deny: (class directlyDefinesMethod: #junk).
 	class subclasses do: 
 			[:each |

@@ -794,7 +794,7 @@ icon!constants!public! !
 icon
 	"Answer the default icon for the receiver and its instances."
 
-	^Icon warning! !
+	^Graphics.Icon warning! !
 !Core.Warning class categoriesForMethods!
 icon!constants!public! !
 !

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.BindingReference subclass: #'Kernel.MetaBindingReference'
-	instanceVariableNames: 'instance'
+Kernel.BindingReferenceWrapper subclass: #'Kernel.MetaBindingReference'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -18,116 +18,33 @@ Kernel.MetaBindingReference comment: '`MetaBindingReference` are `BindingReferen
 !Kernel.MetaBindingReference categoriesForClass!System-Namespaces! !
 !Kernel.MetaBindingReference methodsFor!
 
-= anObject
-	"Answer whether the receiver and the <Object> argument should be considered equivalent. Binding references are considered equivalent if they have the same path and starting point.
-	Note that two binding references that would resolve to the same actual variable binding may not be considered equivalent as the binding resolution is a dynamic quality determined 
-	at the time of resolution, and is not necessarily temporally stable. Equality of binding references is a static property based and is such that two equal references will always bind
-	to the same variable if bound at the same time."
-
-	^self == anObject or: [self class == anObject class and: [instance = anObject instance]]!
-
 asString
 	"Answer a <readableString> that is the receiver's qualified name expression."
- 
-	^instance asString, ' class'!
 
-baseClass
-	"Answer the 'class' context of the receiver, if a relative reference defined within the context of a class or method, or nil if absolute.
-	When non-nil, this is the starting point for resolution of the binding path, and that 'class' context is asked to resolve the binding."
-
-	^instance baseClass
-	!
-
-bindingOrNil
-	"Answer the <VariableBinding> referenced by the receiver (i.e. resolve the variable), or nil if there is no such variable."
-
-	^instance bindingOrNil!
-
-bindingScope
-	"Answer the <bindingScope> in which the receiver's binding path is traversed to locate the target binding.
-	This will be a <Class> or a <CompiledCode>. If a class, it may be a <Namespace>. If the receiver is an absolute binding reference it will be the <Smalltalk> namespace class."
-
-	^instance bindingScope!
+	^reference asString , ' class'!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
 	aPuttableStream
-		display: instance;
+		display: reference;
 		space;
 		nextPutAll: #class!
-
-environmentName
-	"Answer the <String> qualified name of the receiver's full namespace qualifier. This includes the path for the binding scope."
-
-	^instance environmentName!
-
-hash
-	"Answer the <integer> hash value for the receiver."
-
-	^instance hash bitXor: 1!
-
-home
-	"Answer the 'namespace context' for this binding reference."
-
-	^instance home!
 
 instance
 	"Answer a `BindingReference` that resolves to the value of the binding with the receiver's path."
 
-	^instance!
+	^reference!
 
 isMeta
 	"Is this a meta binding reference?"
 
 	^true!
 
-isPrivate
-	"Answer whether the receiver represents a private binding reference that should not be used outside its immediate scope."
-
-	^instance isPrivate!
-
-isPrivate: aBoolean
-	instance isPrivate: aBoolean!
-
-isRelative
-	"Answer whether the receiver specifies a binding path relative to its home binding context, or alternatively is an absolute (or fully-qualified) binding reference."
-
-	^instance isRelative!
-
 meta
 	"Answer a <BindingReference> that resolves to the class of the value of the binding to which the receiver resolves."
 
 	^self!
-
-path
-	"Answer a <sequencedReadableCollection> of <String>, being the component parts of the qualified name in order from the home namespace."
-
-	^instance path!
-
-pathString
-	"Answer a <readableString> that expresses the receiver as a qualified name in the context of the home namespace."
-
-	^instance pathString!
-
-private
-	^self isPrivate ifTrue: [self] ifFalse: [instance private meta]!
-
-scope
-	"Private - The <bindingScope> in which resolution of the binding should be initiated if relative, else nil."
-
-	^instance scope!
-
-scope: anObject
-	"Answer a <RelativeBindingReference> with the receiver's path, but with the specified <bindingScope>."
-
-	^self instance: (instance scope: anObject)!
-
-setInstance: aBindingReference
-	instance := aBindingReference!
-
-setScope: anObject
-	^instance setScope: anObject!
 
 shortName
 	"Answer the shortest <String> name equivalent to the receiver's pathString that is bindable from Smalltalk. i.e. for variables defined directly in Smalltalk, or in any of its imports, this will be an unqualified name. Otherwise it is the fully qualified name relative to Smalltalk."
@@ -142,28 +59,11 @@ unqualifiedName
 valueOfBinding: aVariableBinding
 	^aVariableBinding value class! !
 !Kernel.MetaBindingReference categoriesForMethods!
-=!comparing!public! !
 asString!converting!public! !
-baseClass!accessing!public! !
-bindingOrNil!accessing!public! !
-bindingScope!accessing!public! !
-displayOn:!converting!displaying!public! !
-environmentName!accessing!public! !
-hash!comparing!public! !
-home!accessing!public! !
-instance!converting!public! !
+displayOn:!displaying!public! !
+instance!accessing!public! !
 isMeta!public!testing! !
-isPrivate!public!testing! !
-isPrivate:!accessing!private! !
-isRelative!public!testing! !
-meta!converting!displaying!public! !
-path!accessing!public! !
-pathString!accessing!public! !
-private!converting!public! !
-scope!constants!private! !
-scope:!constants!public! !
-setInstance:!converting!private! !
-setScope:!initializing!private! !
+meta!converting!public! !
 shortName!accessing!public! !
 unqualifiedName!accessing!public! !
 valueOfBinding:!accessing!private! !
@@ -172,8 +72,7 @@ valueOfBinding:!accessing!private! !
 !Kernel.MetaBindingReference class methodsFor!
 
 instance: aBindingReference
-	^self basicNew
-		setInstance: aBindingReference;
+	^(self wrapping: aBindingReference)
 		isImmutable: true;
 		yourself!
 

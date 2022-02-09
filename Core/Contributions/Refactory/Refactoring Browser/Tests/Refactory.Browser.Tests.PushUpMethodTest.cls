@@ -63,7 +63,7 @@ testPushUpMethodWithCopyOverriddenMethodsDown
 	self
 		assert: ((refactoring model classNamed: BasicLintRuleTestData fullName) parseTreeFor: #isComposite)
 		equals: (self parseMethod: 'isComposite ^false').
-	self assert: ((refactoring model classNamed: 'Refactory.Browser.Tests.Foo' , 'LintRuleTestData')
+	self assert: ((refactoring model classNamed: 'Refactory.Browser.TestData.Foo' , 'LintRuleTestData')
 				parseTreeFor: #isComposite)
 		equals: (self parseMethod: 'isComposite ^false').
 	self assert: ((refactoring model classNamed: LintRuleTestData fullName) parseTreeFor: #isComposite)
@@ -73,7 +73,7 @@ testPushUpMethodWithCopyOverriddenMethodsDown
 
 testPushUpReferencesInstVar
 	self shouldFail: (PushUpMethodRefactoring pushUp: #(#checkClass:) from: BasicLintRuleTestData)
-		withMessage: '#checkClass: refers to classBlock which is defined in Refactory.Browser.Tests.BasicLintRuleTestData'!
+		withMessage: '#checkClass: refers to classBlock which is defined in Refactory.Browser.TestData.BasicLintRuleTestData'!
 
 testPushUpWithInvalidSuperSend
 	| class |
@@ -102,7 +102,7 @@ testPushUpWithMethodThatCannotBePushedDown
 				model: model
 				pushUp: #(#yourself)
 				from: (model classNamed: #SomeClass))
-		withMessage: 'SomeClass has no superclass'!
+		withMessage: 'Non-abstract class Core.Object or one of its superclasses already define #yourself'!
 
 testPushUpWithSuperSendThatCannotBeCopiedDown
 	| class |

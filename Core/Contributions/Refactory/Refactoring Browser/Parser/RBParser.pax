@@ -16,6 +16,7 @@ package setClassNames: #(
 	#{Refactory.Browser.PatternBlockToken}
 	#{Refactory.Browser.RBBlockReplaceRule}
 	#{Refactory.Browser.RBParseTreeRule}
+	#{Refactory.Browser.RBPatternAnnotationNode}
 	#{Refactory.Browser.RBPatternBlockNode}
 	#{Refactory.Browser.RBPatternMessageNode}
 	#{Refactory.Browser.RBPatternMethodNode}
@@ -31,6 +32,8 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Kernel.AbstractLiteralArrayNode} #match:inContext:)
+	#(#{Kernel.AbstractLiteralArrayNode} #replaceNode:withNode:)
 	#(#{Kernel.CompileFailedMethod} #refersToVariable:)
 	#(#{Kernel.ParseNodeVisitor} #visitPatternBlockNode:)
 	#(#{Kernel.ParseNodeVisitor} #visitPatternWrapperBlockNode:)
@@ -40,6 +43,11 @@ package setMethodNames: #(
 	#(#{Kernel.StAbstractVariableNode} #references:)
 	#(#{Kernel.StAbstractVariableNode} #replaceSourceFrom:)
 	#(#{Kernel.StAbstractVariableNode} #replaceSourceWith:)
+	#(#{Kernel.StAnnotationNode} #copyInContext:)
+	#(#{Kernel.StAnnotationNode} #equalTo:withMapping:)
+	#(#{Kernel.StAnnotationNode} #match:inContext:)
+	#(#{Kernel.StAnnotationNode} #matchArgumentsAgainst:inContext:)
+	#(#{Kernel.StAnnotationNode} #replaceNode:withNode:)
 	#(#{Kernel.StAssignmentNode} #copyInContext:)
 	#(#{Kernel.StAssignmentNode} #equalTo:withMapping:)
 	#(#{Kernel.StAssignmentNode} #match:inContext:)
@@ -66,6 +74,10 @@ package setMethodNames: #(
 	#(#{Kernel.StCascadeNode} #equalTo:withMapping:)
 	#(#{Kernel.StCascadeNode} #match:inContext:)
 	#(#{Kernel.StCascadeNode} #replaceNode:withNode:)
+	#(#{Kernel.StExternalCallNode} #copyInContext:)
+	#(#{Kernel.StExternalCallNode} #replaceNode:withNode:)
+	#(#{Kernel.StIdentifierToken} #isPatternVariable)
+	#(#{Kernel.StKeywordToken} #isPatternVariable)
 	#(#{Kernel.StLiteralNode} #replaceSourceFrom:)
 	#(#{Kernel.StLiteralNode} #replaceSourceWith:)
 	#(#{Kernel.StLiteralValueNode} #copyInContext:)
@@ -89,6 +101,7 @@ package setMethodNames: #(
 	#(#{Kernel.StMethodNode} #map:to:)
 	#(#{Kernel.StMethodNode} #mappingFor:)
 	#(#{Kernel.StMethodNode} #match:inContext:)
+	#(#{Kernel.StMethodNode} #matchTagsAgainst:inContext:)
 	#(#{Kernel.StMethodNode} #newSource)
 	#(#{Kernel.StMethodNode} #references:)
 	#(#{Kernel.StMethodNode} #reformatSource)
@@ -98,12 +111,16 @@ package setMethodNames: #(
 	#(#{Kernel.StOptimizedNode} #equalTo:withMapping:)
 	#(#{Kernel.StOptimizedNode} #match:inContext:)
 	#(#{Kernel.StOptimizedNode} #replaceNode:withNode:)
+	#(#{Kernel.StPrimitiveNode} #copyInContext:)
+	#(#{Kernel.StPrimitiveNode} #equalTo:withMapping:)
+	#(#{Kernel.StPrimitiveNode} #replaceNode:withNode:)
 	#(#{Kernel.StProgramNode} #addReplacement:)
 	#(#{Kernel.StProgramNode} #asReturn)
 	#(#{Kernel.StProgramNode} #clearReplacements)
 	#(#{Kernel.StProgramNode} #copyInContext:)
 	#(#{Kernel.StProgramNode} #copyList:inContext:)
 	#(#{Kernel.StProgramNode} #equalTo:withMapping:)
+	#(#{Kernel.StProgramNode} #isPatternNode)
 	#(#{Kernel.StProgramNode} #mappingFor:)
 	#(#{Kernel.StProgramNode} #match:inContext:)
 	#(#{Kernel.StProgramNode} #matchList:against:inContext:)
@@ -141,6 +158,7 @@ package setMethodNames: #(
 	#(#{Kernel.StSequenceNode} #removeTemporaryNamed:)
 	#(#{Kernel.StSequenceNode} #replaceNode:withNode:)
 	#(#{Kernel.StSequenceNode} #replaceNode:withNodes:)
+	#(#{Kernel.StToken} #isPatternVariable)
 	#(#{Refactory.Browser.RBConfigurableFormatter} #visitPatternWrapperBlockNode:)
 	#(#{Refactory.Browser.RBFormatter} #visitPatternWrapperBlockNode:)
 ).
@@ -225,8 +243,18 @@ Kernel.Scanner subclass: #'Refactory.Browser.RBPatternScanner'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'CascadeCharacter' -> $;.
+		'ListCharacter' -> $@.
+		'VariableCharacter' -> $`
+	}!
 Kernel.StMethodNode subclass: #'Refactory.Browser.RBPatternMethodNode'
+	instanceVariableNames: 'isList'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StAnnotationNode subclass: #'Refactory.Browser.RBPatternAnnotationNode'
 	instanceVariableNames: 'isList'
 	classVariableNames: ''
 	imports: #()
@@ -264,6 +292,23 @@ Kernel.StValueToken subclass: #'Refactory.Browser.PatternBlockToken'
 	classConstants: {}!
 
 "Loose Methods"!
+
+!Kernel.AbstractLiteralArrayNode methodsFor!
+
+match: aNode inContext: aDictionary 
+	aNode class == self class ifFalse: [^false].
+	^self 
+		matchList: contents
+		against: aNode contents
+		inContext: aDictionary!
+
+replaceNode: aNode withNode: anotherNode 
+	self contents: (contents 
+				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+!Kernel.AbstractLiteralArrayNode categoriesForMethods!
+match:inContext:!matching!public! !
+replaceNode:withNode:!public!replacing! !
+!
 
 !Kernel.CompileFailedMethod methodsFor!
 
@@ -349,6 +394,45 @@ equalTo:withMapping:!comparing!public! !
 references:!public!testing! !
 replaceSourceFrom:!public!replacing! !
 replaceSourceWith:!public!replacing! !
+!
+
+!Kernel.StAnnotationNode methodsFor!
+
+copyInContext: aDictionary
+	^self class selector: selector
+		arguments: (arguments collect: [:each | each copyInContext: aDictionary])!
+
+equalTo: anObject withMapping: aDictionary
+	| otherArgs count |
+	self class == anObject class ifFalse: [^false].
+	selector == anObject selector ifFalse: [^false].
+	count := arguments size.
+	count == anObject arguments size ifFalse: [^false].
+	otherArgs := anObject arguments.
+	1 to: count
+		do: [:i | ((arguments at: i) equalTo: (otherArgs at: i) withMapping: aDictionary) ifFalse: [^false]].
+	^true!
+
+match: aNode inContext: aDictionary
+	aNode class == self class ifFalse: [^false].
+	selector == aNode selector ifFalse: [^false].
+	^self matchArgumentsAgainst: aNode inContext: aDictionary!
+
+matchArgumentsAgainst: aNode inContext: aDictionary
+	| otherArgs count |
+	(count := arguments size) == (otherArgs := aNode arguments) size ifFalse: [^false].
+	1 to: count
+		do: [:i | ((arguments at: i) match: (otherArgs at: i) inContext: aDictionary) ifFalse: [^false]].
+	^true!
+
+replaceNode: aNode withNode: anotherNode
+	self arguments: (arguments collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+!Kernel.StAnnotationNode categoriesForMethods!
+copyInContext:!matching!public! !
+equalTo:withMapping:!public! !
+match:inContext:!matching!public! !
+matchArgumentsAgainst:inContext:!matching!public! !
+replaceNode:withNode:!public!replacing! !
 !
 
 !Kernel.StAssignmentNode methodsFor!
@@ -571,6 +655,45 @@ match:inContext:!matching!public! !
 replaceNode:withNode:!public!replacing! !
 !
 
+!Kernel.StExternalCallNode methodsFor!
+
+copyInContext: aDictionary
+	^self class new
+		nameOrOrdinal: nameOrOrdinal;
+		returnType: (returnType copyInContext: aDictionary);
+		argumentTypes: (argumentTypes collect: [:each | each copyInContext: aDictionary]);
+		flags: flags;
+		callingConvention: callingConvention;
+		yourself!
+
+replaceNode: aNode withNode: anotherNode
+	returnType == aNode
+		ifTrue: 
+			[self returnType: anotherNode.
+			^self].
+	self
+		argumentTypes: (argumentTypes collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+!Kernel.StExternalCallNode categoriesForMethods!
+copyInContext:!matching!public! !
+replaceNode:withNode:!public!replacing! !
+!
+
+!Kernel.StIdentifierToken methodsFor!
+
+isPatternVariable
+	^(value at: 1) == Refactory.Browser.RBPatternScanner.VariableCharacter! !
+!Kernel.StIdentifierToken categoriesForMethods!
+isPatternVariable!public!testing! !
+!
+
+!Kernel.StKeywordToken methodsFor!
+
+isPatternVariable
+	^(value at: 1) == Refactory.Browser.RBPatternScanner.VariableCharacter! !
+!Kernel.StKeywordToken categoriesForMethods!
+isPatternVariable!public!testing! !
+!
+
 !Kernel.StLiteralNode methodsFor!
 
 replaceSourceFrom: aNode
@@ -621,15 +744,16 @@ isContainmentReplacement: aNode
 	^(self mappingFor: self receiver) = aNode 
 		or: [self arguments anySatisfy: [:each | (self mappingFor: each) = aNode]]!
 
-match: aNode inContext: aDictionary 
+match: aNode inContext: aDictionary
+	| count otherArgs |
 	aNode class == self class ifFalse: [^false].
 	self selector == aNode selector ifFalse: [^false].
 	(receiver match: aNode receiver inContext: aDictionary) ifFalse: [^false].
-	1 to: arguments size
-		do: 
-			[:i | 
-			((arguments at: i) match: (aNode arguments at: i) inContext: aDictionary)
-				ifFalse: [^false]].
+	otherArgs := aNode arguments.
+	count := arguments size.
+	count == otherArgs size ifFalse: [^false].
+	1 to: count
+		do: [:i | ((arguments at: i) match: (aNode arguments at: i) inContext: aDictionary) ifFalse: [^false]].
 	^true!
 
 replaceContainmentSourceWith: aNode
@@ -745,10 +869,13 @@ changeSourceSelectors: oldSelectorParts arguments: oldArguments
 clearReplacements
 	replacements := nil!
 
-copyInContext: aDictionary 
-	^(self class new)
+copyInContext: aDictionary
+	^self class new
 		selectorParts: (selectorParts collect: [:each | each removePositions]);
 		arguments: (arguments collect: [:each | each copyInContext: aDictionary]);
+		tags: (self tags isEmpty
+					ifTrue: [aDictionary at: '-tags-' ifAbsent: #()]
+					ifFalse: [self copyList: tags inContext: aDictionary]);
 		body: (body copyInContext: aDictionary);
 		source: (aDictionary at: '-source-');
 		yourself!
@@ -778,15 +905,26 @@ map: oldNode to: newNode
 mappingFor: oldNode
 	^nodeReplacements ifNil: [oldNode] ifNotNil: [nodeReplacements at: oldNode ifAbsent: [oldNode]]!
 
-match: aNode inContext: aDictionary 
+match: aNode inContext: aDictionary
 	self class == aNode class ifFalse: [^false].
 	aDictionary at: '-source-' put: aNode source.
 	self selector == aNode selector ifFalse: [^false].
-	^(self 
+	^(self
 		matchList: arguments
 		against: aNode arguments
-		inContext: aDictionary) 
-			and: [body match: aNode body inContext: aDictionary]!
+		inContext: aDictionary) and: 
+				[(self matchTagsAgainst: aNode inContext: aDictionary)
+					and: [body match: aNode body inContext: aDictionary]]!
+
+matchTagsAgainst: aStMethodNode inContext: aDictionary
+	| otherTags |
+	otherTags := aStMethodNode tags.
+	self tags isEmpty
+		ifTrue: 
+			[aDictionary at: '-tags-' put: otherTags.
+			^true].
+	^tags
+		allSatisfy: [:matchNode | otherTags anySatisfy: [:tagNode | matchNode match: tagNode inContext: aDictionary]]!
 
 newSource
 	replacements isNil ifTrue: [^self formattedCode].
@@ -821,10 +959,12 @@ renameSelector: newSelector andArguments: varNodeCollection
 		selector: newSelector.
 	self changeSourceSelectors: oldSelectorParts arguments: oldArguments!
 
-replaceNode: aNode withNode: anotherNode 
-	aNode == body ifTrue: [self body: anotherNode].
-	self arguments: (arguments 
-				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
+replaceNode: aNode withNode: anotherNode
+	aNode == body
+		ifTrue: 
+			[self body: anotherNode.
+			^self].
+	self arguments: (arguments collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])! !
 !Kernel.StMethodNode categoriesForMethods!
 addNode:!accessing!public! !
 addReplacement:!public!replacing! !
@@ -838,6 +978,7 @@ initialize!initializing!public! !
 map:to:!public!replacing! !
 mappingFor:!public!replacing! !
 match:inContext:!matching!public! !
+matchTagsAgainst:inContext:!matching!private! !
 newSource!accessing!public! !
 references:!public!testing! !
 reformatSource!operations!private! !
@@ -864,6 +1005,29 @@ replaceNode: aNode withNode: anotherNode
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
 match:inContext:!matching!public! !
+replaceNode:withNode:!public!replacing! !
+!
+
+!Kernel.StPrimitiveNode methodsFor!
+
+copyInContext: aDictionary
+	| copy |
+	copy := self class primitiveIndex: primitiveIndex.
+	errorTemp ifNotNil: [copy errorTemp: (errorTemp copyInContext: aDictionary)].
+	^copy!
+
+equalTo: anObject withMapping: aDictionary
+	self class == anObject class ifFalse: [^false].
+	primitiveIndex == anObject primitiveIndex ifFalse: [^false].
+	^(errorTemp isNil
+		ifTrue: [anObject errorTemp isNil]
+		ifFalse: [errorTemp equalTo: anObject errorTemp withMapping: aDictionary]) ifFalse: [^false]!
+
+replaceNode: aNode withNode: anotherNode
+	errorTemp == aNode ifTrue: [self errorTemp: anotherNode]! !
+!Kernel.StPrimitiveNode categoriesForMethods!
+copyInContext:!matching!public! !
+equalTo:withMapping:!public! !
 replaceNode:withNode:!public!replacing! !
 !
 
@@ -902,6 +1066,9 @@ copyList: matchNodes inContext: aDictionary
 
 equalTo: aNode withMapping: aDictionary 
 	^self = aNode!
+
+isPatternNode
+	^false!
 
 mappingFor: aNode
 	| method |
@@ -1025,6 +1192,7 @@ clearReplacements!public!replacing! !
 copyInContext:!matching!public! !
 copyList:inContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
+isPatternNode!public!testing/matching! !
 mappingFor:!accessing!public! !
 match:inContext:!matching!public! !
 matchList:against:inContext:!matching!public! !
@@ -1230,6 +1398,14 @@ removeNode:!public!replacing! !
 removeTemporaryNamed:!accessing!public! !
 replaceNode:withNode:!public!replacing! !
 replaceNode:withNodes:!public!replacing! !
+!
+
+!Kernel.StToken methodsFor!
+
+isPatternVariable
+	^false! !
+!Kernel.StToken categoriesForMethods!
+isPatternVariable!public!testing! !
 !
 
 !Refactory.Browser.RBConfigurableFormatter methodsFor!

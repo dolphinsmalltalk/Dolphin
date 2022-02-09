@@ -131,7 +131,10 @@ environment
 		ifTrue: 
 			[(scope localScope resolveBindingPath: (parts copyFrom: 1 to: length - 1)
 				environment: scope environment) value]
-		ifFalse: [scope localScope]!
+		ifFalse: 
+			[(scope localScope resolveUnqualifiedName: self pathString environment: scope environment)
+				ifNil: [scope localScope]
+				ifNotNil: [:binding | binding environment]]!
 
 environmentName
 	"Answer the <String> qualified name of the receiver's full namespace qualifier. This includes the path for the binding scope."
@@ -260,7 +263,12 @@ printOn: aStream
 	aStream nextPut: $}!
 
 private
+	"Answer a `BindingReference` that is the resolves to the same binding as the receiver, but which is flagged as private."
+
 	^self subclassResponsibility!
+
+realReference
+	"Answer the receiver's non-model reference."!
 
 refersTo: anObject asLiteralOf: aCompiledCode
 	"Private - Answer whether the receiver, a literal of the <CompiledCode> 2nd argument, is a reference to the <Object> first argument."
@@ -338,7 +346,7 @@ bindingScope!accessing!public! !
 declare!operations!public! !
 declare:!operations!public! !
 displayOn:!displaying!public! !
-environment!operations!public! !
+environment!accessing!public! !
 environmentName!accessing!public! !
 hash!comparing!public! !
 home!accessing!public! !
@@ -347,12 +355,12 @@ ifDefined:ifNotDefined:!evaluating!public! !
 ifDefinedDo:!evaluating!public! !
 ifDefinedDo:elseDo:!evaluating!public! !
 ifNotDefined:!evaluating!public! !
-instance!converting!public! !
+instance!accessing!public! !
 isDefined!public!testing! !
 isLiteral!public!testing! !
 isMeta!public!testing! !
 isPrivate!public!testing! !
-isPrivate:!accessing!private! !
+isPrivate:!initializing!private! !
 isQualifiedName!public!testing! !
 isRelative!public!testing! !
 literalTextStyle!constants!public! !
@@ -363,9 +371,10 @@ path!accessing!public! !
 pathString!accessing!public! !
 printOn:!printing!public! !
 private!converting!public! !
+realReference!accessing!public! !
 refersTo:asLiteralOf:!private!testing! !
 scope!constants!private! !
-scope:!constants!private! !
+scope:!converting!private! !
 shortName!accessing!public! !
 simpleName!accessing!public! !
 storeOn:!public!storing! !

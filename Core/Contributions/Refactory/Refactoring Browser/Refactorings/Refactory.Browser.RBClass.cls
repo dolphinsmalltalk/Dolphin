@@ -36,16 +36,39 @@ addClassVariable: aString
 addImport: aString
 	| ref |
 	ref := aString asQualifiedReference.
-	imports := self imports copyWith: ref.
+	imports := self imports copyWith: (ref referenceInModel: model).
 	model addImport: ref to: self!
 
 addSubclass: aRBClass
 	subclasses := self subclasses copyWith: aRBClass!
 
+allBehaviorsDo: operation
+	self allClassesDo: 
+			[:class |
+			operation value: class.
+			operation value: class metaclass]!
+
+allBindingsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the bindings in the receiver, including aliases, and recursively in any of the nested namespaces."
+
+	self bindingsDo: 
+			[:each |
+			aMonadicValuable value: each.
+			each isClassBinding ifTrue: [each value bindingsDo: aMonadicValuable]]!
+
 allClassBindingNames
 	^self superclass
 		ifNil: [self classBindingNames]
 		ifNotNil: [:sprClass | sprClass allClassBindingNames , self classBindingNames]!
+
+allClassesDo: aMonadicValuable
+	self bindingsDo: 
+			[:each |
+			each isClassBinding
+				ifTrue: 
+					[| class |
+					aMonadicValuable value: (class := each value).
+					class allClassesDo: aMonadicValuable]]!
 
 allClassVariableNames
 	^self superclass
@@ -58,6 +81,11 @@ allClassVariableNames
 
 allImports
 	^self superclass ifNil: [self imports] ifNotNil: [:sprClass | sprClass allImports , self imports]!
+
+baseEnvironment
+	"Private - Answer the default environment for new subclasses of the receiver that the ClassBuilder should use when the provided subclass name is unqualified."
+
+	^model smalltalkNamespace!
 
 basicEnvironment
 	"Rather confusingly, this is environment in the sense of being a namespace (i.e. an instance of RBNamespaceClass) and is compatible with the use of the term in the Behavior/ClassDescription/Class/Metaclass hierarchy.
@@ -75,6 +103,11 @@ bindingOrNil
 
 bindings
 	^self classPool associations!
+
+bindingsDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the receiver's localled defined <VariableBinding>s."
+
+	self classPool associationsDo: aMonadicValuable!
 
 category
 	^category isNil
@@ -104,6 +137,10 @@ classConstants: aCollectionOfAssociations
 						isImmutable: true;
 						yourself)]!
 
+classInModel: aRBModel
+	self assert: aRBModel == model.
+	^self!
+
 classPool
 	^classPool
 		ifNil: 
@@ -114,7 +151,7 @@ classPool
 					[:each |
 					| var |
 					var := RBVariableBinding new realBinding: each environment: self.
-					each isClassBinding ifTrue: [var setValue: (model modelClassFor: each value)].
+					each isClassBinding ifTrue: [var setValue: (each value rbClass model: model existing: each value)].
 					classPool add: var].
 			classPool]!
 
@@ -139,6 +176,9 @@ comment: aString
 	model comment: (comment := aString) in: self!
 
 definedBindings
+	"Private - Answer a <collection> of the receiver's <RBVariableBinding>s that are defined as part of the receiver's class definition (as opposed to externally).
+	For most classes this is all the class variables, including constants. For namespaces, this does not include any of the classes in the namespace as these are added to the namespace implicitly as part of their own definition."
+
 	^self bindings select: [:each | each isClassVariable]!
 
 definitionString
@@ -171,6 +211,12 @@ fullName
 
 	^name!
 
+fullName: aString
+	name = aString ifTrue: [^self].
+	name := aString.
+	"Any change to the fullName means that this class becomes 'new' in the model, and can't be looked up by its real class' name any more"
+	self subclasses do: [:each | each setSuperclass: self]!
+
 fullNameFor: aString 
 	| stream |
 	stream := String writeStream: 32.
@@ -181,12 +227,15 @@ fullNameFor: aString
 	^stream contents!
 
 fullyQualifiedReference
-	^FullBindingReference fullPathString: name!
+	^(FullBindingReference fullPathString: name) referenceInModel: model!
 
 getEnvironment
-	^model modelClassFor: ((realClass notNil and: [realClass fullName = name])
-				ifTrue: [realClass basicEnvironment]
-				ifFalse: [self fullyQualifiedReference environment])!
+	^(realClass notNil and: [realClass fullName = name])
+		ifTrue: [realClass basicEnvironment classInModel: model]
+		ifFalse: 
+			[| ref |
+			ref := self fullyQualifiedReference.
+			ref isQualifiedName ifTrue: [ref environment] ifFalse: [self baseEnvironment]]!
 
 getImports
 	#rbFix.	"Dolphin stores the pool names in its classes, rather than the pools themselves."
@@ -198,8 +247,9 @@ imports
 	^imports!
 
 imports: aCollection
-	imports := (aCollection collect: [:each | each asQualifiedReference asFullyQualifiedReference])
-				asArray!
+	imports := (aCollection
+				collect: [:each | each asQualifiedReference asFullyQualifiedReference referenceInModel: model])
+					asArray!
 
 includesEnvironment: aClass
 	"Answer whether the receiver includes the namespace argument (i.e. is it nested within it somewhere in its environment chain)."
@@ -253,7 +303,7 @@ name
 	^name!
 
 name: aString
-	name := aString.
+	self fullName: aString.
 	unqualifiedName := environment := scope := nil!
 
 nearestRealClass
@@ -324,9 +374,6 @@ realClass: aClass
 	realClass := aClass.
 	superclass isNil ifTrue: [superclass := LookupSuperclass]!
 
-realName: aSymbol 
-	self realClass: aSymbol asQualifiedReference value!
-
 removeBindingFor: aString
 	^self classPool removeAssociationAt: aString!
 
@@ -346,6 +393,14 @@ renameClassVariable: oldName to: newName around: aBlock
 		in: self
 		around: aBlock.
 	variables changeKey: oldName to: newName!
+
+replaceImport: oldBindingReference with: newBindingReference
+	imports := self imports copyReplacing: oldBindingReference
+				withObject: (newBindingReference referenceInModel: model).
+	model
+		replaceImport: oldBindingReference
+		with: newBindingReference
+		in: self!
 
 resolveBindingPath: anArray
 	"Private - Attempt to resolve a <VariableBinding> by walking the names in the argument through nested namespaces."
@@ -390,7 +445,8 @@ resolveLocallyImportedBinding: aBindingContext
 			(aBindingContext visitImport: (imports at: i) from: self)
 				ifNotNil: 
 					[:namespace |
-					((model modelClassFor: namespace) resolvePublicBinding: aBindingContext) ifNotNil: [:var | ^var]]].
+					((namespace classInModel: model) ifNotNil: [:ns | ns resolvePublicBinding: aBindingContext])
+						ifNotNil: [:var | ^var]]].
 	^nil!
 
 resolvePathString: aString environment: aRBNamespaceClass
@@ -428,6 +484,9 @@ setModel: aRBModel name: anObject
 	(metaclass := RBMetaclass basicNew) nonMetaclass: self.
 	comment := LookupComment!
 
+setSuperclass: aRBClass
+	superclass := aRBClass!
+
 subclasses
 	^subclasses
 		ifNil: 
@@ -460,17 +519,23 @@ addBinding:!public! !
 addClassVariable:!public!variable accessing! !
 addImport:!namespaces!public! !
 addSubclass:!class hierarchy-adding!private! !
+allBehaviorsDo:!enumerating!public! !
+allBindingsDo:!enumerating!public! !
 allClassBindingNames!accessing!public! !
+allClassesDo:!enumerating!public! !
 allClassVariableNames!accessing!public! !
 allImports!namespaces!public! !
+baseEnvironment!constants!private! !
 basicEnvironment!accessing!public! !
 bindingOrNil!bindings!public! !
 bindings!accessing!public! !
+bindingsDo:!enumerating!public! !
 category!accessing!public! !
 category:!accessing!public! !
 classBindingNames!public! !
 classConstants!accessing!public! !
 classConstants:!accessing!public! !
+classInModel:!public! !
 classPool!accessing!public! !
 classVariableNames!accessing!public! !
 classVariableNames:!accessing!public! !
@@ -483,7 +548,8 @@ directlyDefinesClassVariable:!public!testing! !
 directlyImportsNamespace:!public!testing! !
 environment!accessing!public! !
 fullName!accessing!public! !
-fullNameFor:!public! !
+fullName:!accessing!private! !
+fullNameFor:!helpers!private! !
 fullyQualifiedReference!accessing!namespaces!public! !
 getEnvironment!accessing!public! !
 getImports!helpers!private! !
@@ -508,11 +574,11 @@ nonMetaclass!accessing!public! !
 printDefinitionOn:!accessing!public! !
 realClass!accessing!public! !
 realClass:!accessing!public! !
-realName:!initialize/release!public! !
 removeBindingFor:!public! !
 removeClassVariable:!public!variable accessing! !
 removeSubclass:!accessing!public! !
 renameClassVariable:to:around:!public!variable accessing! !
+replaceImport:with:!namespaces!public! !
 resolveBindingPath:!bindings!private! !
 resolveBindingPath:environment:!bindings!private! !
 resolveImportedBinding:!bindings!private! !
@@ -521,6 +587,7 @@ resolvePathString:environment:!bindings!private! !
 resolvePublicBinding:!bindings!private! !
 resolveUnqualifiedName:environment:!bindings!private! !
 setModel:name:!accessing!initializing!private! !
+setSuperclass:!initializing!private! !
 subclasses!accessing!public! !
 superclass!accessing!public! !
 superclass:!accessing!private! !

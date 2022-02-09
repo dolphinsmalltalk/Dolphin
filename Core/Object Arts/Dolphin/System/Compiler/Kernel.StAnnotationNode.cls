@@ -32,8 +32,14 @@ arguments: aSequencedReadableCollection
 childrenDo: aMonadicValuable
 	arguments do: aMonadicValuable!
 
+hash
+	^selector hash bitXor: (self hashForCollection: arguments)!
+
 isAnnotation
 	^true!
+
+keywords
+	^selector keywords!
 
 postCopy
 	super postCopy.
@@ -54,7 +60,9 @@ argumentCount!accessing!public! !
 arguments!accessing!public! !
 arguments:!accessing!public! !
 childrenDo:!accessing!public! !
+hash!comparing!public! !
 isAnnotation!public!testing! !
+keywords!accessing!public! !
 postCopy!copying!public! !
 selector!accessing!public! !
 setSelector:arguments:!initializing!private! !

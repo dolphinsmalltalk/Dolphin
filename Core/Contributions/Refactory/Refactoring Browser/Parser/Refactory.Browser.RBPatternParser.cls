@@ -12,6 +12,9 @@ Refactory.Browser.RBPatternParser comment: 'RBPatternParser is an extended <Smal
 !Refactory.Browser.RBPatternParser categoriesForClass!Refactory-Parser! !
 !Refactory.Browser.RBPatternParser methodsFor!
 
+annotationNodeClass
+	^RBPatternAnnotationNode!
+
 evaluateStatements: anStSequenceNode 
 	^nil!
 
@@ -98,6 +101,7 @@ tempDeclClass
 variableNodeClass
 	^RBPatternVariableNode! !
 !Refactory.Browser.RBPatternParser categoriesForMethods!
+annotationNodeClass!constants!private! !
 evaluateStatements:!parsing!private! !
 messageNodeClass!constants!private! !
 methodNodeClass!constants!private! !

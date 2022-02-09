@@ -100,6 +100,9 @@ replaceTree: searchTree withValueFrom: replaceBlock
 tree
 	^tree!
 
+visitAnnotationNode: anStAnnotationNode
+	anStAnnotationNode arguments: (anStAnnotationNode arguments collect: [:arg | self visitNode: arg])!
+
 visitArgumentNodes: aNodeCollection
 	^aNodeCollection collect: [:each | self visitArgumentNode: each]!
 
@@ -196,8 +199,9 @@ replaceTree:withTree:!public!replacing! !
 replaceTree:withTree:when:!public!replacing! !
 replaceTree:withValueFrom:!public!replacing! !
 tree!accessing!public! !
+visitAnnotationNode:!public!visiting! !
 visitArgumentNodes:!public!visiting! !
-visitArrayNode:!public!visiting! !
+visitArrayNode:!public!visitor/double dispatching! !
 visitAssignmentNode:!public!visitor/double dispatching! !
 visitBlockNode:!public!visitor/double dispatching! !
 visitCascadeNode:!public!visitor/double dispatching! !

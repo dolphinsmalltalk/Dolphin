@@ -13,11 +13,11 @@ Tools.ClassNameToBindingReferenceRefactoring comment: 'Component refactoring to 
 
 className: aString
 	super className: aString.
-	class := self model classNamed: className!
+	class := self model classNamed: aString!
 
 preconditions
 	^RBCondition withBlock: [class notNil and: [class isMeta not]]
-		errorString: className , ' is <1?'':not> a valid class name'!
+		errorString: self className , ' is <1?:not >a valid class name'!
 
 rewriteReferences
 	| replacer symbol reference |

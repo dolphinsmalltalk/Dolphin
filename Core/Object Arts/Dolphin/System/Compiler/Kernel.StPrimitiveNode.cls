@@ -22,12 +22,23 @@ acceptVisitor: aProgramNodeVisitor
 childrenDo: aMonadicValuable
 	errorTemp ifNotNil: [aMonadicValuable value: errorTemp]!
 
+defines: aName
+	^(errorTemp ifNil: ['_failureCode'] ifNotNil: [errorTemp name]) = aName!
+
 errorTemp
 	^errorTemp!
 
 errorTemp: aStTempDeclNode
 	errorTemp := aStTempDeclNode.
 	aStTempDeclNode parent: self!
+
+hash
+	^primitiveIndex hash!
+
+postCopy
+	super postCopy.
+	errorTemp ifNotNil: [self errorTemp: errorTemp copy].
+	^self!
 
 primitiveIndex
 	^primitiveIndex!
@@ -41,8 +52,11 @@ selector
 =!comparing!public! !
 acceptVisitor:!public!visitor! !
 childrenDo:!accessing!public! !
+defines:!public!testing! !
 errorTemp!accessing!public! !
 errorTemp:!accessing!private! !
+hash!comparing!public! !
+postCopy!copying!public! !
 primitiveIndex!accessing!public! !
 primitiveIndex:!accessing!private! !
 selector!accessing!public! !

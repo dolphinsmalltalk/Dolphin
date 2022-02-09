@@ -70,8 +70,7 @@ testInlineComponentMethodMax
 			self assert: inlineClass equals: class.
 			true].
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
-				parseTreeFor: #inlineMax)
+	self assert: ((refactoring model classFor: RefactoryTestDataApp) parseTreeFor: #inlineMax)
 		equals: (self
 				parseMethod: 'inlineMax
 								| x y q |
@@ -120,8 +119,7 @@ testInlineEmptyComponentMethod
 		ifFalse: [optionCalled := true].
 	self executeRefactoring: refactoring.
 	self assert: optionCalled.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
-				parseTreeFor: #inlineComponent)
+	self assert: ((refactoring model classFor: RefactoryTestDataApp) parseTreeFor: #inlineComponent)
 		equals: (self
 				parseMethod: 'inlineComponent
 	| a anObject |

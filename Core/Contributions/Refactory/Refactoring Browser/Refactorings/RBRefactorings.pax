@@ -44,6 +44,7 @@ package setClassNames: #(
 	#{Refactory.Browser.PushUpMethodRefactoring}
 	#{Refactory.Browser.RBAbstractClass}
 	#{Refactory.Browser.RBAbstractCondition}
+	#{Refactory.Browser.RBBindingReference}
 	#{Refactory.Browser.RBClass}
 	#{Refactory.Browser.RBCondition}
 	#{Refactory.Browser.RBConjunctiveCondition}
@@ -79,8 +80,12 @@ package setClassNames: #(
 
 package setMethodNames: #(
 	#(#{Core.Array} #hasLiteralMatching:)
+	#(#{Core.Class} #classInModel:)
 	#(#{Core.Class} #rbClass)
 	#(#{Core.Class class} #rootsOfTheWorld)
+	#(#{Core.ClassDescription} #classInModel:)
+	#(#{Core.Metaclass} #classInModel:)
+	#(#{Kernel.BindingReference} #referenceInModel:)
 	#(#{Kernel.CompiledCode} #hasLiteralMatching:)
 	#(#{Kernel.Namespace class} #rbClass)
 	#(#{Kernel.StAbstractVariableNode} #refersToClass:)
@@ -91,6 +96,7 @@ package setMethodNames: #(
 	#(#{Kernel.StVariable} #refersToClass:)
 	#(#{Kernel.StVariableNode} #refersToClass:)
 	#(#{Kernel.VariableBinding} #refersToClass:)
+	#(#{Root class} #classInModel:)
 	#(#{Root class} #rbClass)
 ).
 
@@ -133,7 +139,7 @@ Core.Object subclass: #'Refactory.Browser.RBMethodName'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'Refactory.Browser.RBModel'
-	instanceVariableNames: 'changes environment newClasses removedClasses modelClasses rootClasses implementorsCache sendersCache enumerating'
+	instanceVariableNames: 'changes environment rootClasses implementorsCache sendersCache rootNamespace smalltalkNamespace'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -152,6 +158,12 @@ Core.Object subclass: #'Refactory.Browser.RefactoringManager'
 	classConstants: {}!
 Core.Object subclass: #'Refactory.Browser.RefactoryTyper'
 	instanceVariableNames: 'model class variableTypes bestGuesses variableMessages backpointers methodName selectorLookup'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.BindingReferenceWrapper subclass: #'Refactory.Browser.RBBindingReference'
+	instanceVariableNames: 'model'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -512,9 +524,13 @@ hasLiteralMatching:!private!testing! !
 
 !Core.Class methodsFor!
 
+classInModel: aRBModel
+	^((self environment classInModel: aRBModel) localBindingFor: name) value!
+
 rbClass
 	^Refactory.Browser.RBClass! !
 !Core.Class categoriesForMethods!
+classInModel:!public! !
 rbClass!constants!public! !
 !
 
@@ -525,6 +541,30 @@ rootsOfTheWorld
 	^Smalltalk allRoots! !
 !Core.Class class categoriesForMethods!
 rootsOfTheWorld!class hierarchy-accessing!private! !
+!
+
+!Core.ClassDescription methodsFor!
+
+classInModel: aRBModel
+	^self subclassResponsibility! !
+!Core.ClassDescription categoriesForMethods!
+classInModel:!public! !
+!
+
+!Core.Metaclass methodsFor!
+
+classInModel: aRBModel
+	^(instanceClass classInModel: aRBModel) metaclass! !
+!Core.Metaclass categoriesForMethods!
+classInModel:!public! !
+!
+
+!Kernel.BindingReference methodsFor!
+
+referenceInModel: aRBModel 
+	^Refactory.Browser.RBBindingReference model: aRBModel reference: self! !
+!Kernel.BindingReference categoriesForMethods!
+referenceInModel:!public! !
 !
 
 !Kernel.CompiledCode methodsFor!
@@ -619,9 +659,13 @@ refersToClass:!public!testing! !
 
 !Root class methodsFor!
 
+classInModel: aRBModel
+	^aRBModel rootNamespace!
+
 rbClass
 	^Refactory.Browser.RBRootNamespace! !
 !Root class categoriesForMethods!
+classInModel:!public! !
 rbClass!constants!public! !
 !
 

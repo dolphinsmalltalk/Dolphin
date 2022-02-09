@@ -62,7 +62,7 @@ testPushDownInstanceVariable
 	| refactoring |
 	refactoring := PushDownInstanceVariableRefactoring variable: 'foo1' class: LintRuleTestData.
 	self executeRefactoring: refactoring.
-	(refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData') withAllSubclasses
+	(refactoring model classFor: LintRuleTestData) withAllSubclasses
 		do: [:each | self deny: (each directlyDefinesInstanceVariable: 'foo1')]! !
 !Refactory.Browser.Tests.PushDownInstanceVariableTest categoriesForMethods!
 testModelPushDownToMetaclass!public!tests! !

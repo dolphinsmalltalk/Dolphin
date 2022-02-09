@@ -49,7 +49,7 @@ testExtractToTemporaryForLastStatementInBlock
 				from: #caller2
 				in: RefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
+	self assert: ((refactoring model classFor: RefactoryTestDataApp)
 				parseTreeFor: #caller2)
 		equals: (self
 				parseMethod: 'caller2
@@ -64,8 +64,7 @@ testExtractToTemporaryInsideBlock
 				from: #noMoveDefinition
 				in: RefactoryTestDataApp.
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
-				parseTreeFor: #noMoveDefinition)
+	self assert: ((refactoring model classFor: RefactoryTestDataApp) parseTreeFor: #noMoveDefinition)
 		equals: (self
 				parseMethod: 'noMoveDefinition
 	| temp |

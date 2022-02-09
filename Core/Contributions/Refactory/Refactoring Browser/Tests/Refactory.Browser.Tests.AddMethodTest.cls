@@ -22,8 +22,7 @@ testAddMethod
 				toClass: BasicLintRuleTestData
 				inProtocols: #(#accessing).
 	self executeRefactoring: refactoring.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.BasicLintRuleTestData')
-				parseTreeFor: #printString1)
+	self assert: ((refactoring model classFor: BasicLintRuleTestData) parseTreeFor: #printString1)
 		equals: (self parseMethod: 'printString1 ^super printString')!
 
 testBadMethod

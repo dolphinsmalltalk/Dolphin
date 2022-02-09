@@ -49,21 +49,10 @@ equalTo: anObject withMapping: aDictionary
 				ifFalse: [^false]].
 	^true!
 
-match: aNode inContext: aDictionary 
-	aNode class == self class ifFalse: [^false].
-	^self 
-		matchList: contents
-		against: aNode contents
-		inContext: aDictionary!
-
 postCopy
 	super postCopy.
 	self contents: (contents collect: [:each | each copy]).
 	^self!
-
-replaceNode: aNode withNode: anotherNode 
-	self contents: (contents 
-				collect: [:each | each == aNode ifTrue: [anotherNode] ifFalse: [each]])!
 
 startPosition: startInteger contents: anArray stopPosition: stopInteger
 	start := startInteger.
@@ -89,9 +78,7 @@ contents!accessing!public! !
 contents:!accessing!public! !
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
-match:inContext:!matching!public! !
 postCopy!copying!public! !
-replaceNode:withNode:!public!replacing! !
 startPosition:contents:stopPosition:!initializing!public! !
 startWithoutParentheses!accessing!public! !
 stopWithoutParentheses!accessing!public! !

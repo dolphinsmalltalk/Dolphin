@@ -32,7 +32,7 @@ testRenameInstVar
 				to: 'asdf'
 				in: BasicLintRuleTestData.
 	self executeRefactoring: refactoring.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.BasicLintRuleTestData'.
+	class := refactoring model classNamed: #'Refactory.Browser.TestData.BasicLintRuleTestData'.
 	self assert: (class directlyDefinesInstanceVariable: 'asdf').
 	self deny: (class directlyDefinesInstanceVariable: 'classBlock').
 	self assert: (class parseTreeFor: #checkClass:)

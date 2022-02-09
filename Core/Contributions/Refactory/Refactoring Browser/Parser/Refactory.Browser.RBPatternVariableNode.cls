@@ -25,34 +25,33 @@ Instance Variables:
 !Refactory.Browser.RBPatternVariableNode categoriesForClass!Refactory-Parser! !
 !Refactory.Browser.RBPatternVariableNode methodsFor!
 
-copyInContext: aDictionary 
-	^(aDictionary at: self) copy!
+copyInContext: aDictionary
+	^(isList and: [isStatement])
+		ifTrue: [self copyList: (aDictionary at: self) inContext: aDictionary]
+		ifFalse: [(aDictionary at: self) copy]!
 
 identifierToken: anIdentifierToken 
 	super identifierToken: anIdentifierToken.
 	self initializePatternVariables!
 
 initializePatternVariables
-	| name |
-	name := self name.
+	| pattern |
+	pattern := self name.
 	isAnything := isList := isLiteral := isStatement := recurseInto := false.
-	2 to: name size
+	2 to: pattern size
 		do: 
-			[:i | 
+			[:i |
 			| character |
-			character := name at: i.
-			character == self listCharacter 
+			character := pattern at: i.
+			character == RBPatternScanner.ListCharacter
 				ifTrue: [isAnything := isList := true]
 				ifFalse: 
-					[character == self literalCharacter 
+					[character == self literalCharacter
 						ifTrue: [isLiteral := true]
 						ifFalse: 
-							[character == self statementCharacter 
+							[character == self statementCharacter
 								ifTrue: [isStatement := true]
-								ifFalse: 
-									[character == self recurseIntoCharacter 
-										ifTrue: [recurseInto := true]
-										ifFalse: [^self]]]]]!
+								ifFalse: [character == self recurseIntoCharacter ifTrue: [recurseInto := true] ifFalse: [^self]]]]]!
 
 isAnything
 	^isAnything!
@@ -113,9 +112,9 @@ isLiteralNode!public!testing! !
 isPatternNode!public!testing/matching! !
 isStatement!public!testing/matching! !
 match:inContext:!matching!public! !
-matchingClass!constants!public! !
-matchLiteral:inContext:!matching!public! !
-matchStatement:inContext:!matching!public! !
+matchingClass!constants!matching!private! !
+matchLiteral:inContext:!matching!private! !
+matchStatement:inContext:!matching!private! !
 parent:!accessing!public! !
 recurseInto!public!testing/matching! !
 setName:start:!initializing!private! !

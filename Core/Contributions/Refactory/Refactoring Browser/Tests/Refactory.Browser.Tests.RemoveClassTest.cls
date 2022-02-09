@@ -12,7 +12,7 @@ Refactory.Browser.Tests.RemoveClassTest comment: ''!
 !Refactory.Browser.Tests.RemoveClassTest methodsFor!
 
 removableClassWithSubclasses
-	^'Refactory.Browser.Tests.Foo' , 'LintRuleTestData'!
+	^'Refactory.Browser.TestData.Foo' , 'LintRuleTestData'!
 
 setRemoveReferencedClassOption: refactoring toAnswer: aBoolean
 	refactoring setOption: #removeReferencedClass toUse: [aBoolean]!
@@ -39,16 +39,16 @@ testRemoveClassModelReferenced
 	self assert: (refactoring hasReferencesTo: (refactoring model classNamed: className)).
 	self setRemoveReferencedClassOption: refactoring toAnswer: false.
 	self shouldAbort: refactoring.
-	self deny: (refactoring model hasRemoved: className).
+	self assertNotNil: (refactoring model classNamed: className).
 
 	"Now allow it to be removed"
 	self setRemoveReferencedClassOption: refactoring toAnswer: true.
 	self executeRefactoring: refactoring.
-	self assert: (refactoring model hasRemoved: className)!
+	self assertIsNil: (refactoring model classNamed: className)!
 
 testRemoveClassModelReferencedByFullName
 	| refactoring className |
-	className := 'Refactory.Browser.Tests.Foo' , 'LintRuleTestData'.
+	className := 'Refactory.Browser.TestData.Foo' , 'LintRuleTestData'.
 	refactoring := RemoveClassRefactoring classNames: {className}.
 	"Create a reference only in the model"
 	(refactoring model classFor: self class) compile: 'fooLintRuleTest ^' , className
@@ -56,25 +56,25 @@ testRemoveClassModelReferencedByFullName
 	self assert: (refactoring hasReferencesTo: (refactoring model classNamed: className)).
 	self setRemoveReferencedClassOption: refactoring toAnswer: false.
 	self shouldAbort: refactoring.
-	self deny: (refactoring model hasRemoved: className).
+	self assertNotNil: (refactoring model classNamed: className).
 	"Now allow it to be removed"
 	self setRemoveReferencedClassOption: refactoring toAnswer: true.
 	self executeRefactoring: refactoring.
-	self assert: (refactoring model hasRemoved: className)!
+	self assertIsNil: (refactoring model classNamed: className)!
 
 testRemoveReferenced
 	| refactoring className |
-	className := 'Refactory.Browser.Tests.BasicLintRuleTestData'.
+	className := 'Refactory.Browser.TestData.BasicLintRuleTestData'.
 	refactoring := RemoveClassRefactoring classNames: {className}.
 	self setRemoveReferencedClassOption: refactoring toAnswer: false.
 	self shouldAbort: refactoring.
-	self deny: (refactoring model hasRemoved: className).
+	self assertNotNil: (refactoring model classNamed: className).
 
 	"The option can allow it go ahead and be removed regardless of the fact that this is no longer a refactoring"
 	self setRemoveReferencedClassOption: refactoring toAnswer: true.
 	model := refactoring model.
 	self executeRefactoring: refactoring.
-	self assert: (model hasRemoved: className)!
+	self assertIsNil: (model classNamed: className)!
 
 testRemoveSelfReferenced
 	| refactoring classNames env refs |

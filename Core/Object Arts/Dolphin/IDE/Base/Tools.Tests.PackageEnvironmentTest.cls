@@ -30,24 +30,23 @@ classNamesFor: aPackageEnvironment
 
 testPackageEnvironment
 	| env selectors |
-	env := universalEnvironment
-				forPackages: {Package manager packageNamed: 'Dolphin Common Dialogs'}.
+	env := universalEnvironment forPackages: {Package manager packageNamed: 'Dolphin Common Dialogs'}.
 	self universalTestFor: env.
-	self assert: (env includesClass: Graphics.Font).
-	self deny: (env definesClass: Graphics.Font).
+	self assert: (env includesClass: Font).
+	self deny: (env definesClass: Font).
 	selectors := OrderedCollection new.
-	env selectorsForClass: Graphics.Font do: [:each | selectors add: each].
+	env selectorsForClass: Font do: [:each | selectors add: each].
 	self assert: selectors size equals: 0.
-	self assert: (env includesClass: Graphics.Font class).
-	self deny: (env definesClass: Graphics.Font class).
-	env selectorsForClass: Graphics.Font class do: [:each | selectors add: each].
+	self assert: (env includesClass: Font class).
+	self deny: (env definesClass: Font class).
+	env selectorsForClass: Font class do: [:each | selectors add: each].
 	self assert: selectors size equals: 1.
 	{UI.FontDialog. UI.FontDialog class} do: 
 			[:each |
 			self assert: (env includesClass: each).
 			self assert: (env definesClass: each)].
-	self assert: (env includesSelector: #choose in: Graphics.Font class).
-	self deny: (env includesSelector: #icon in: Graphics.Font class)! !
+	self assert: (env includesSelector: #choose in: Font class).
+	self deny: (env includesSelector: #icon in: Font class)! !
 !Tools.Tests.PackageEnvironmentTest categoriesForMethods!
 classNamesFor:!BrowserEnvironment tests!public! !
 testPackageEnvironment!public!unit tests! !

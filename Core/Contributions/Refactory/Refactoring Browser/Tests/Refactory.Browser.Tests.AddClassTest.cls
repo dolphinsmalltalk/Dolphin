@@ -149,7 +149,7 @@ testNonImmediateSubclass
 				superclass: CompositeLintRuleTestData
 				subclasses: {BasicLintRuleTestData}
 				category: #'Refactory-Tesing')
-		withMessage: 'Refactory.Browser.Tests.BasicLintRuleTestData is not an immediate subclass of Refactory.Browser.Tests.CompositeLintRuleTestData'!
+		withMessage: 'Refactory.Browser.TestData.BasicLintRuleTestData is not an immediate subclass of Refactory.Browser.TestData.CompositeLintRuleTestData'!
 
 testSubclassIsMetaclass
 	self shouldFail: (AddClassRefactoring

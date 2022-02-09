@@ -57,7 +57,7 @@ testExtractMethodAtEndOfMethodThatNeedsReturn
 	self setupVariableToMoveToFor: refactoring toReturn: 'rules'.
 	self setupVariableTypesFor: refactoring
 		toReturn: {refactoring model classNamed: Collection fullName}.
-	class := refactoring model classNamed: #'Refactory.Browser.Tests.LintRuleTestData'.
+	class := refactoring model classFor: LintRuleTestData.
 	selectorsSize := class selectors size.
 	self executeRefactoring: refactoring.
 	self assert: (class parseTreeFor: #openEditor)

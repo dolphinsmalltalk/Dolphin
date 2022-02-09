@@ -86,7 +86,7 @@ environment
 	^environment value!
 
 environment: aNamespace
-	environment := aNamespace ifNotNil: [aNamespace asQualifiedReference]!
+	environment := aNamespace ifNotNil: [aNamespace asQualifiedReference realReference]!
 
 hash
 	^self parseTree hash!

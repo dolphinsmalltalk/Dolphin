@@ -30,11 +30,11 @@ testRemoveMethod
 	| refactoring selectors |
 	selectors := {('selectorNot' , 'Referenced') asSymbol}.
 	refactoring := RemoveMethodRefactoring removeMethods: selectors from: RefactoryTestDataApp.
-	self assert: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
-				directlyDefinesMethod: selectors first).
+	self
+		assert: ((refactoring model classFor: RefactoryTestDataApp) directlyDefinesMethod: selectors first).
 	self executeRefactoring: refactoring.
-	self deny: ((refactoring model classNamed: #'Refactory.Browser.Tests.RefactoryTestDataApp')
-				directlyDefinesMethod: selectors first)!
+	self
+		deny: ((refactoring model classFor: RefactoryTestDataApp) directlyDefinesMethod: selectors first)!
 
 testRemoveReferenced
 	| subject |

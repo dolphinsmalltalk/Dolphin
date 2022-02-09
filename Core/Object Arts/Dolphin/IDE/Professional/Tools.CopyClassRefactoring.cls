@@ -18,11 +18,11 @@ className: aName newName: aNewName superclass: aClass
 				ifTrue: [aNewName]
 				ifFalse: 
 					[| parts |
-					parts := BindingReference.PathSeparator split: aName.
+					parts := className path copy.
 					parts at: parts size put: aNewName.
 					BindingReference.PathSeparator join: parts])
 					asSymbol.
-	class := self model classNamed: className.
+	class := self model classNamed: aName.
 	superclass := self classObjectFor: aClass.
 	^self!
 
@@ -73,9 +73,10 @@ displayOn: aPuttableStream
 
 preconditions
 	^(RBCondition withBlock: [class notNil and: [class isMeta not]]
-		errorString: className , ' is not a valid class name') & (superclass isNil
+		errorString: self className , ' is <1?:not >a valid class name') & (superclass isNil
 					ifTrue: [RBCondition empty]
-					ifFalse: [((RBCondition isMetaclass: superclass) errorMacro: 'Superclass must not be a metaclass') not])
+					ifFalse: 
+						[((RBCondition isMetaclass: superclass) errorMacro: 'Superclass must <1?:not >be a metaclass') not])
 		& (RBCondition isValidClassName: newName) & (RBCondition isStatic: newName in: self model) not!
 
 storeOn: aStream 

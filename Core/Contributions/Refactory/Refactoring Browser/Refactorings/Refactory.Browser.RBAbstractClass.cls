@@ -113,10 +113,15 @@ allSuperclassesDo: aMonadicValuable
 asQualifiedReference
 	^self fullyQualifiedReference!
 
+baseEnvironment
+	"Private - Answer the default environment for new subclasses of the receiver that the ClassBuilder should use when the provided subclass name is unqualified."
+
+	^self subclassResponsibility!
+
 baseEnvironmentName
 	"See Class>>baseEnvironment"
 	
-	^#Smalltalk!
+	^self baseEnvironment name!
 
 basicEnvironment
 	^self subclassResponsibility!
@@ -134,6 +139,9 @@ bindingOrNil
 	"Resolve the binding for the receiver's real class, if any. The name is always a fully qualified name"
 
 	^self subclassResponsibility!
+
+classInModel: aRBModel
+	^self!
 
 compile: aString 
 	#rbFix. "Support multiple method categories for Dolphin"
@@ -275,8 +283,8 @@ existingMethodPackageAndEnvironment: aSymbol
 			| package |
 			package := method owningPackage.
 			Pair first: package
-				second: ((method customEnvironment ifNil: [package environment])
-						ifNotNil: [:namespace | self model modelClassFor: namespace]
+				second: ((method customEnvironment ifNil: [package ifNotNil: [package environment]])
+						ifNotNil: [:namespace | namespace classInModel: self model]
 						ifNil: [self basicEnvironment])]!
 
 existingMethodsReferencingExternals
@@ -691,11 +699,13 @@ allSubclassesBreadthFirstDo:!accessing!public! !
 allSuperclasses!accessing!public! !
 allSuperclassesDo:!accessing!public! !
 asQualifiedReference!converting!public! !
+baseEnvironment!constants!private! !
 baseEnvironmentName!accessing!public! !
 basicEnvironment!accessing!public! !
 binding!accessing!public! !
 bindingFor:!bindings!public! !
 bindingOrNil!bindings!public! !
+classInModel:!public! !
 compile:!compiling!public! !
 compile:categories:!compiling!public! !
 compile:classified:!compiling!public! !

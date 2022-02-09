@@ -66,9 +66,6 @@ isOptimized
 isPatternBlock
 	^false!
 
-isPatternVariable
-	^false!
-
 isQualifiedReference
 	^false!
 
@@ -121,7 +118,6 @@ isLiteralToken!public!testing! !
 isNumberLiteralToken!public!testing! !
 isOptimized!public!testing! !
 isPatternBlock!public!testing! !
-isPatternVariable!public!testing! !
 isQualifiedReference!public!testing! !
 isSpecial!public!testing! !
 isSpecial:!public!testing! !

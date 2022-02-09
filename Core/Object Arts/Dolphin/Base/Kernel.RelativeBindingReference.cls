@@ -137,7 +137,7 @@ home!accessing!public! !
 isRelative!public!testing! !
 private!converting!public! !
 scope!accessing!private! !
-setScope:!accessing!private! !
+setScope:!initializing!private! !
 !
 
 !Kernel.RelativeBindingReference class methodsFor!

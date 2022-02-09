@@ -105,9 +105,6 @@ bestNodeFor: anInterval
 blockVariables
 	^parent isNil ifTrue: [#()] ifFalse: [parent blockVariables]!
 
-cascadeListCharacter
-	^$;!
-
 children
 	| answer |
 	answer := OrderedCollection new.
@@ -192,6 +189,9 @@ intersectsInterval: anInterval
 	^(anInterval first between: self start and: self stop) 
 		or: [self start between: anInterval first and: anInterval last]!
 
+isAnnotation
+	^false!
+
 isAssignment
 	^false!
 
@@ -240,9 +240,6 @@ isMessage
 isMethod
 	^false!
 
-isPatternNode
-	^false!
-
 isQualifiedReference
 	^false!
 
@@ -289,9 +286,6 @@ isVariable
 
 lastIsReturn
 	^self isReturn!
-
-listCharacter
-	^$@!
 
 literalCharacter
 	^$#!
@@ -444,7 +438,6 @@ assigns:!public!testing! !
 basicMethodNode!accessing!private! !
 bestNodeFor:!public!querying! !
 blockVariables!accessing!public! !
-cascadeListCharacter!meta variable/accessing!public! !
 children!accessing!public! !
 childrenDo:!accessing!public! !
 collect:!enumerating!public! !
@@ -464,6 +457,7 @@ formattedCode!accessing!public! !
 formatterClass!accessing!public! !
 hashForCollection:!comparing!private! !
 intersectsInterval:!public!testing! !
+isAnnotation!public!testing! !
 isAssignment!public!testing! !
 isBlock!public!testing! !
 isCascade!public!testing! !
@@ -478,7 +472,6 @@ isLiteralArray!public!testing! !
 isLiteralNode!public!testing! !
 isMessage!public!testing! !
 isMethod!public!testing! !
-isPatternNode!public!testing/matching! !
 isQualifiedReference!public!testing! !
 isReturn!public!testing! !
 isSelfVariable!public!testing! !
@@ -491,7 +484,6 @@ isUsed!public!testing! !
 isValue!public!testing! !
 isVariable!public!testing! !
 lastIsReturn!public!testing! !
-listCharacter!meta variable/accessing!public! !
 literalCharacter!meta variable/accessing!public! !
 methodClass!accessing!public! !
 methodComments!accessing!public! !

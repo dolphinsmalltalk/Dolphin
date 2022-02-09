@@ -15,13 +15,9 @@ acceptVisitor: aTokenVisitor
 	^aTokenVisitor visitKeywordToken: self!
 
 isKeyword
-	^true!
-
-isPatternVariable
-	^value first == Scanner patternVariableCharacter! !
+	^true! !
 !Kernel.StKeywordToken categoriesForMethods!
 acceptVisitor:!public!visitor! !
 isKeyword!public!testing! !
-isPatternVariable!public!testing! !
 !
 

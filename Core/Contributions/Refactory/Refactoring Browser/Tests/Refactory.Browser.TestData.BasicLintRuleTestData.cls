@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Tests.LintRuleTestData subclass: #'Refactory.Browser.Tests.BasicLintRuleTestData'
+Refactory.Browser.TestData.LintRuleTestData subclass: #'Refactory.Browser.TestData.BasicLintRuleTestData'
 	instanceVariableNames: 'classBlock methodBlock result'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.Tests.BasicLintRuleTestData guid: (Core.GUID fromString: '{0c2676b4-1e69-400c-8d24-80f8510c0996}')!
-Refactory.Browser.Tests.BasicLintRuleTestData comment: ''!
-!Refactory.Browser.Tests.BasicLintRuleTestData categoriesForClass!Refactory-Test data! !
-!Refactory.Browser.Tests.BasicLintRuleTestData methodsFor!
+Refactory.Browser.TestData.BasicLintRuleTestData guid: (Core.GUID fromString: '{0c2676b4-1e69-400c-8d24-80f8510c0996}')!
+Refactory.Browser.TestData.BasicLintRuleTestData comment: ''!
+!Refactory.Browser.TestData.BasicLintRuleTestData categoriesForClass!Refactory-Test data! !
+!Refactory.Browser.TestData.BasicLintRuleTestData methodsFor!
 
 checkClass: aSmalllintContext 
 	^classBlock value: aSmalllintContext value: result!
@@ -50,7 +50,7 @@ resultClass: aClass
 
 viewResults
 	result openEditor! !
-!Refactory.Browser.Tests.BasicLintRuleTestData categoriesForMethods!
+!Refactory.Browser.TestData.BasicLintRuleTestData categoriesForMethods!
 checkClass:!accessing!public! !
 checkMethod:!accessing!public! !
 classBlock:!initialize/release!public! !
@@ -65,7 +65,7 @@ resultClass:!initialize/release!public! !
 viewResults!private! !
 !
 
-!Refactory.Browser.Tests.BasicLintRuleTestData class methodsFor!
+!Refactory.Browser.TestData.BasicLintRuleTestData class methodsFor!
 
 abstractClass
 	| detector subclassResponsibilitySymbol |
@@ -1133,7 +1133,7 @@ yourselfNotUsed
 			(addSearcher executeTree: context parseTree initialAnswer: false)
 				ifTrue: [result addClass: context selectedClass selector: context selector]].
 	^detector! !
-!Refactory.Browser.Tests.BasicLintRuleTestData class categoriesForMethods!
+!Refactory.Browser.TestData.BasicLintRuleTestData class categoriesForMethods!
 abstractClass!possible bugs!public! !
 addRemoveDependents!possible bugs!public! !
 anySatisfy!intention revealing!public! !

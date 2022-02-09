@@ -19,6 +19,12 @@ method1
 method2
 	^self method1!
 
+refersToOwnClassVariable
+	^ClassVar1!
+
+refersToOwnClassVariableFullyQualified
+	^Refactory.Browser.Tests.ClassToRename.ClassVar1!
+
 selfReference
 	^ClassToRename new!
 
@@ -29,6 +35,8 @@ testFailure
 !Refactory.Browser.Tests.ClassToRename categoriesForMethods!
 method1!performing!public! !
 method2!performing!public! !
+refersToOwnClassVariable!lint!public! !
+refersToOwnClassVariableFullyQualified!lint!public! !
 selfReference!performing!public! !
 testFailure!performing!public! !
 !

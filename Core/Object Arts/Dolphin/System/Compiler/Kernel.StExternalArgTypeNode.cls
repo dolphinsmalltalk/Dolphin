@@ -13,9 +13,9 @@ Kernel.StExternalArgTypeNode comment: ''!
 
 = anObject
 	self == anObject ifTrue: [^true].
-	self class = anObject class ifFalse: [^false].
-	^typeOrdinal = anObject typeOrdinal
-		and: [structClass = anObject structClass and: [indirections = anObject indirections]]!
+	self class == anObject class ifFalse: [^false].
+	^typeOrdinal == anObject typeOrdinal
+		and: [structClass = anObject structClass and: [indirections == anObject indirections]]!
 
 acceptVisitor: aProgramNodeVisitor
 	aProgramNodeVisitor visitExternalArgTypeNode: self!
