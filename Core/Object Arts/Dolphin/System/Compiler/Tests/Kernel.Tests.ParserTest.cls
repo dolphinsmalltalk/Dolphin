@@ -21,6 +21,40 @@ assertTree: anObject equals: anotherObject
 	self assert: anObject hash equals: anotherObject hash.
 	self assert: anObject equals: anotherObject!
 
+parseAll
+	"
+	self new parseAll
+	"
+
+	| progress errorsPresenter errors |
+	errorsPresenter := UI.ListPresenter show.
+	errors := errorsPresenter model.
+	progress := UI.ProgressDialog create.
+	progress operation: 
+			[:progressIndicator |
+			| count i |
+			i := 0.
+			count := Smalltalk allClasses size * 2.
+			Smalltalk allBehaviorsDo: 
+					[:each |
+					i := i + 1.
+					each compilerClass = Compiler
+						ifTrue: 
+							[progress text: each name.
+							progressIndicator value: i / count * 100.
+							each selectors do: 
+									[:sel |
+									| tree method |
+									method := each compiledMethodAt: sel.
+									[tree := method parseTree] on: Kernel.Parser errorClass do: [:ex | errors add: method -> ex].
+									tree isNil
+										ifFalse: 
+											[((Compiler compile: tree formattedCode in: each)
+												isEqualTo: (Compiler compile: method getSource in: each))
+													ifFalse: [errors add: method -> 'Mismatched parse trees']]]]].
+			errors].
+	^progress showModal!
+
 parseExpression: aString
 	^self parserClass parseExpression: aString!
 
@@ -384,6 +418,7 @@ verifyTree: copiedNode isDeepCopyOf: originalNode
 !Kernel.Tests.ParserTest categoriesForMethods!
 assertToken:isChar:!helpers!private! !
 assertTree:equals:!helpers!private! !
+parseAll!long running!public! !
 parseExpression:!helpers!private! !
 parseMethod:!helpers!private! !
 parserClass!constants!private! !

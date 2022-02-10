@@ -120,40 +120,6 @@ errorSignal
 	#rbFix. "Dolphin does not implement this VW message on Object"
 	^Error!
 
-parseAll
-	"
-	self new parseAll
-	"
-
-	| progress errorsPresenter errors |
-	errorsPresenter := UI.ListPresenter show.
-	errors := errorsPresenter model.
-	progress := UI.ProgressDialog create: UI.ProgressDialog defaultView
-				operation: 
-					[:progressIndicator |
-					| count i |
-					i := 0.
-					count := Smalltalk allClasses size * 2.
-					Smalltalk allBehaviorsDo: 
-							[:each |
-							i := i + 1.
-							each compilerClass = Compiler
-								ifTrue: 
-									[progress text: each name.
-									progressIndicator value: i / count * 100.
-									each selectors do: 
-											[:sel |
-											| tree method |
-											method := each compiledMethodAt: sel.
-											[tree := method parseTree] on: Kernel.Parser errorClass do: [:ex | errors add: method -> ex].
-											tree isNil
-												ifFalse: 
-													[((Compiler compile: tree formattedCode in: each)
-														isEqualTo: (Compiler compile: method getSource in: each))
-															ifFalse: [errors add: method -> 'Mismatched parse trees']]]]].
-					errors].
-	^progress showModal!
-
 parseError: each
 	Parser parseExpression: each first onError: [:string :pos | ^self assert: pos equals: each last].
 	self error: 'Parser didn''t fail'!
@@ -715,7 +681,6 @@ createMethodSearchWith:selectors:inClass:!accessing!public! !
 createSearchWith:selectors:inClass:!accessing!public! !
 currentSelector!accessing!public! !
 errorSignal!public! !
-parseAll!long running!public! !
 parseError:!private! !
 setUp!accessing!public! !
 testAllSearches!public!unit tests! !

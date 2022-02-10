@@ -47,8 +47,9 @@ testExtractFailure
 			withMessage: 'Cannot extract assignment without all references: #(detector subclassResponsibilitySymbol)'!
 
 testExtractFromMethodInCustomNamespace
-	| method source refactoring class start stop |
-	method := Graphics.Rectangle class compiledMethodAt: #publishedAspectsOfInstances.
+	| method source refactoring class start stop rectangleMetaclass |
+	rectangleMetaclass := #{Graphics.Rectangle class} value.
+	method := rectangleMetaclass compiledMethodAt: #publishedAspectsOfInstances.
 	self assert: method environment equals: Tools.
 	source := method getSource.
 	start := source indexOf: $(.
@@ -59,10 +60,10 @@ testExtractFromMethodInCustomNamespace
 	refactoring := ExtractMethodRefactoring
 				extract: (start to: stop)
 				from: #publishedAspectsOfInstances
-				in: Graphics.Rectangle class.
+				in: rectangleMetaclass.
 	self setupMethodNameFor: refactoring toReturn: #topAspect.
 	self executeRefactoring: refactoring.
-	class := refactoring model classFor: Graphics.Rectangle.
+	class := refactoring model classNamed: #'Graphics.Rectangle'.
 	self assert: (class metaclass parseTreeFor: #publishedAspectsOfInstances)
 		equals: (self
 				parseMethod: 'publishedAspectsOfInstances
@@ -82,7 +83,7 @@ testExtractFromMethodInCustomNamespace
 testExtractMethodAtEndOfMethodThatNeedsReturn
 	| refactoring class |
 	refactoring := ExtractMethodRefactoring
-				extract: (73 to: 216)
+				extract: (73 to: 184)
 				from: #openEditor
 				in: LintRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
@@ -101,7 +102,7 @@ testExtractMethodAtEndOfMethodThatNeedsReturn
 	<namespace: Tools>
 	rules isEmpty ifTrue: [^self].
 	rules size == 1 ifTrue: [^rules first viewResults].
-	SmalltalkSystem current browseEnvironment: self result')!
+	self result openEditor')!
 
 testExtractMethodThatMovesTemporaryVariable
 	| refactoring class |

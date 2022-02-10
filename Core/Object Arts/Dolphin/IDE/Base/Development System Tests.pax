@@ -19,7 +19,6 @@ package setClassNames: #(
 	#{Tools.Tests.MockScintillaView}
 	#{Tools.Tests.PackageEnvironmentTest}
 	#{Tools.Tests.ProductReleaseTest}
-	#{Tools.Tests.RenameClassRefactoringTest}
 	#{Tools.Tests.SmalltalkSystemTest}
 	#{Tools.Tests.SmalltalkWorkspaceTest}
 	#{Tools.Tests.StStyler}
@@ -48,20 +47,14 @@ package setPrerequisites: #(
 	'..\..\Base\Tests\Dolphin Base Tests'
 	'..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\MVP\Graphics\Dolphin GDI Graphics'
-	'..\..\MVP\Graphics\Tests\Dolphin GDI Graphics Tests'
 	'..\..\Base\Deprecated\Dolphin Legacy Package Support'
 	'..\..\MVP\Base\Dolphin MVP Base'
 	'..\..\MVP\Dolphin MVP Tests'
 	'..\Professional\Dolphin Professional Tools'
-	'..\Professional\Dolphin Refactoring Browser'
 	'..\..\MVP\Views\Scintilla\Dolphin Scintilla View'
 	'..\..\MVP\Views\Scintilla\Tests\Dolphin Scintilla View Tests'
-	'..\..\MVP\Gdiplus\Gdiplus'
-	'..\..\MVP\Gdiplus\Tests\Gdiplus Tests'
 	'..\..\Lagoon\Lagoon Image Stripper'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
-	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Formatters\RBFormatters'
-	'..\..\..\..\Contributions\Refactory\RBNamespaces'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Tests\RBTestMethods'
@@ -170,12 +163,6 @@ Refactory.Browser.Tests.RefactoringTest subclass: #'Tools.Tests.ClassNameToBindi
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.Tests.RefactoringTest subclass: #'Tools.Tests.RenameClassRefactoringTest'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #(#{Refactory.Browser} #{Refactory.Browser.Tests})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 

@@ -26,7 +26,6 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
-	#{Tools.ClassNameToBindingReferenceRefactoring}
 	#{Tools.CodeMentorPlugin}
 	#{Tools.CodeRefactoringTool}
 	#{Tools.CodeRewriterPlugin}
@@ -38,7 +37,6 @@ package setClassNames: #(
 	#{Tools.RefactoringSmalltalkSystem}
 	#{Tools.RefactoringTool}
 	#{Tools.RenameAccessorsDialog}
-	#{Tools.RenameClassRefactoring}
 	#{Tools.RenameMethodDialog}
 	#{Tools.RenameMethodReferencesRefactoring}
 	#{Tools.RewriteChangesBrowser}
@@ -161,6 +159,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.RenameAccessorsForVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.RenameAccessorsForVariableRefactoring class} #icon)
 	#(#{Refactory.Browser.RenameClassChange class} #icon)
+	#(#{Refactory.Browser.RenameClassRefactoring} #getOptionIgnoreSymbolicClassReferences:)
 	#(#{Refactory.Browser.RenameClassVariableRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RenameClassVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.RenameClassVariableRefactoring class} #icon)
@@ -392,20 +391,8 @@ Refactory.Browser.RBMethodName subclass: #'Tools.ScopedMethodName'
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.ClassRefactoring subclass: #'Tools.ClassNameToBindingReferenceRefactoring'
-	instanceVariableNames: 'class unqualifiedName'
-	classVariableNames: ''
-	imports: #(#{Refactory.Browser})
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Refactory.Browser.ClassRefactoring subclass: #'Tools.CopyClassRefactoring'
 	instanceVariableNames: 'newName class superclass'
-	classVariableNames: ''
-	imports: #(#{Refactory.Browser})
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.ClassRefactoring subclass: #'Tools.RenameClassRefactoring'
-	instanceVariableNames: 'newName class newClassReference oldUnqualified classBinding'
 	classVariableNames: ''
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
@@ -1754,6 +1741,42 @@ icon
 	^Icon fromId: 'Rename.ico'! !
 !Refactory.Browser.RenameClassChange class categoriesForMethods!
 icon!constants!public! !
+!
+
+!Refactory.Browser.RenameClassRefactoring methodsFor!
+
+getOptionIgnoreSymbolicClassReferences: aCollection
+	| details response |
+	details := String writeStream.
+	details
+		nextPutAll: 'The following methods still reference the original unqualified class name symbol ';
+		print: oldUnqualified;
+		nextPut: $:;
+		cr.
+	self
+		printNameList: (aCollection asArray collect: [:each | each printString]) sort
+		on: details
+		limit: self maxDetails // 2
+		type: 'methods'.
+	response := UI.MessageBox new
+				caption: self displayString;
+				headline: 'Class may have symbolic references.';
+				text: 'The original class name ''<1s>'' may still be referenced symbolically in <2d> methods. If you proceed with the class rename these Symbols will not be renamed as it cannot be guaranteed that these are intended as references to the class being renamed.<n><n>It is recommended that you first browse all references to understand the use, and replace any real references to the class with literal BindingReferences.'
+							<< {oldUnqualified. aCollection size};
+				customButtons: #(#(#yes '&Rename Class') #(#no '&Browse Methods'));
+				defaultButton: 2;
+				detailsText: details contents;
+				iconStyle: #warning;
+				confirmOrCancel.
+	response == #yes ifTrue: [^true].
+	response == #no
+		ifTrue: 
+			[self openBrowserOn: ((self model environment forMethods: aCollection)
+						label: 'Remaining references to class being renamed from <1p>' << oldUnqualified;
+						yourself)].
+	^false! !
+!Refactory.Browser.RenameClassRefactoring categoriesForMethods!
+getOptionIgnoreSymbolicClassReferences:!options!public! !
 !
 
 !Refactory.Browser.RenameClassVariableRefactoring methodsFor!

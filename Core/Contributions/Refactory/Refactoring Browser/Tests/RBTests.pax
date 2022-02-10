@@ -52,6 +52,7 @@ package setClassNames: #(
 	#{Refactory.Browser.Tests.RemoveInstanceVariableTest}
 	#{Refactory.Browser.Tests.RemoveMethodTest}
 	#{Refactory.Browser.Tests.RemoveParameterTest}
+	#{Refactory.Browser.Tests.RenameClassRefactoringTest}
 	#{Refactory.Browser.Tests.RenameClassVariableTest}
 	#{Refactory.Browser.Tests.RenameInstanceVariableTest}
 	#{Refactory.Browser.Tests.RenameMethodTest}
@@ -121,12 +122,6 @@ package setAliasVariableNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
-	'..\..\..\..\Object Arts\Dolphin\Base\Tests\Dolphin Base Tests'
-	'..\..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
-	'..\..\..\..\Object Arts\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
-	'..\..\..\..\Object Arts\Dolphin\MVP\Base\Dolphin MVP Base'
-	'..\..\..\..\Object Arts\Dolphin\MVP\Dialogs\Progress\Dolphin Progress Dialog'
-	'..\..\..\..\Object Arts\Dolphin\IDE\Professional\Dolphin Refactoring Browser'
 	'..\Environments\RBEnvironments'
 	'..\Formatters\RBFormatters'
 	'..\..\RBNamespaces'
@@ -432,6 +427,12 @@ Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.Remo
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RemoveParameterTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RenameClassRefactoringTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

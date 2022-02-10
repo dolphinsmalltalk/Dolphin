@@ -1,26 +1,21 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Tests.RefactoringTest subclass: #'Tools.Tests.RenameClassRefactoringTest'
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.RenameClassRefactoringTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Refactory.Browser} #{Refactory.Browser.Tests})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.Tests.RenameClassRefactoringTest guid: (Core.GUID fromString: '{1c8b1cc4-4d25-46fc-9e56-b959e7a8e2f1}')!
-Tools.Tests.RenameClassRefactoringTest comment: ''!
-!Tools.Tests.RenameClassRefactoringTest categoriesForClass!Refactory-Testing! !
-!Tools.Tests.RenameClassRefactoringTest methodsFor!
+Refactory.Browser.Tests.RenameClassRefactoringTest guid: (Core.GUID fromString: '{1c8b1cc4-4d25-46fc-9e56-b959e7a8e2f1}')!
+Refactory.Browser.Tests.RenameClassRefactoringTest comment: ''!
+!Refactory.Browser.Tests.RenameClassRefactoringTest categoriesForClass!Refactory-Testing! !
+!Refactory.Browser.Tests.RenameClassRefactoringTest methodsFor!
 
 compile: aString in: class
 	^class compile: (Parser parseMethod: aString in: class) formattedCode classified: #'test model methods'!
 
 defineClass: aString
 	model defineClass: (Parser parseExpression: aString) formattedCode!
-
-showChanges
-	"Private - Diagnostic aid"
-
-	##(UI.Keyboard) default isShiftDown ifTrue: [model browseChanges]!
 
 testBadName
 	#namespaceToDo.	"First case bodged to pass by forcing to a full name for the target; if passed an unqualified name RenameClassRefactoring has been modified to assume the namespace is not being changed, so it prepends the existing class namespace."
@@ -172,13 +167,9 @@ testNoRename
 
 testRenameAmbiguousClassName
 	| class refactoring |
-	model := RBModel
-				onEnvironment: (BrowserEnvironment new forClasses: {GraphicsTool.
-								Image.
-								Bitmap.
-								Gdiplus.Bitmap.
-								Graphics.Tests.BitmapTest.
-								Graphics.Gdiplus.Tests.BitmapTest}).
+	model := RBModel onEnvironment: (BrowserEnvironment new
+						forClasses: (#(#{Graphics.GraphicsTool} #{Graphics.Image} #{Graphics.Bitmap} #{Graphics.Gdiplus.Bitmap} #{Graphics.Tests.BitmapTest} #{Graphics.Gdiplus.Tests.BitmapTest})
+								collect: [:each | each value])).
 	class := model classNamed: #'Graphics.Bitmap'.
 	refactoring := RenameClassRefactoring
 				model: model
@@ -187,11 +178,11 @@ testRenameAmbiguousClassName
 	self executeRefactoring: refactoring.
 	self
 		verifyMethod: #subjectClass
-		of: Graphics.Gdiplus.Tests.BitmapTest
+		of: #{Graphics.Gdiplus.Tests.BitmapTest} value
 		equals: 'subjectClass ^Bitmap'.
 	self
 		verifyMethod: #gdiBitmapClass
-		of: Graphics.Gdiplus.Tests.BitmapTest
+		of: #{Graphics.Gdiplus.Tests.BitmapTest} value
 		equals: 'gdiBitmapClass ^UI.Bitmap'!
 
 testRenameChangeNamespace
@@ -251,8 +242,7 @@ testRenameChangeNamespace
 		equals: 'foo ^Smalltalk.ClassToRename'.
 
 	"The subclass is now in a different namespace, so all the references from it should have become fully qualified"
-	self assert: (model classNamed: SubclassOfClassToRename fullName) superclass
-		equals: newClass.
+	self assert: (model classNamed: SubclassOfClassToRename fullName) superclass equals: newClass.
 	self
 		verifyRenames: newClass
 		unqualified: newClass fullName
@@ -302,7 +292,6 @@ testRenameClass
 			symbolicRefs := refs collect: [:each | each method].
 			true].
 	self executeRefactoring: refactoring.
-	self showChanges.
 	newFullName := oldName asQualifiedReference environment fullNameFor: 'NewClassName'.
 	self assert: newFullName equals: 'Refactory.Browser.Tests.NewClassName'.
 	newClass := model classNamed: newFullName.
@@ -401,7 +390,7 @@ testRenameClassShadowingImported
 
 	| fooClass refactoring myClass |
 	self
-		defineClass: 'Core.Object subclass: #''Core.Foo'' instanceVariableNames: '''' classVariableNames: '''' imports: #(#{Tools.Tests}) classInstanceVariableNames: '''' classConstants: {}'.
+		defineClass: 'Core.Object subclass: #''Core.Foo'' instanceVariableNames: '''' classVariableNames: '''' imports: #(#{Refactory.Browser.Tests}) classInstanceVariableNames: '''' classConstants: {}'.
 	fooClass := model classNamed: #'Core.Foo'.
 	self
 		compile: 'referencesToImportedClass ^{RenameClassRefactoringTest. #{RenameClassRefactoringTest}. #RenameClassRefactoringTest. #{Foo}}'
@@ -418,12 +407,11 @@ testRenameClassShadowingImported
 				to: #'Core.RenameClassRefactoringTest'.
 	refactoring setOption: #ignoreSymbolicClassReferences toUse: [:rename :refs | true].
 	self executeRefactoring: refactoring.
-	self showChanges.
 	"Note that symbolic names are no longer changed"
 	self
 		verifyMethod: #referencesToImportedClass
 		of: fooClass
-		equals: 'referencesToImportedClass ^{Tools.Tests.RenameClassRefactoringTest. #{Tools.Tests.RenameClassRefactoringTest}. #RenameClassRefactoringTest. #{RenameClassRefactoringTest}}'!
+		equals: 'referencesToImportedClass ^{Refactory.Browser.Tests.RenameClassRefactoringTest. #{Refactory.Browser.Tests.RenameClassRefactoringTest}. #RenameClassRefactoringTest. #{RenameClassRefactoringTest}}'!
 
 testRenameNamespace
 	"Renaming a Namespace is like a normal Class rename for direct references, but there could also be indirect references. In fact all the classes in the Namespace are effectively being renamed. This means we need to consider all references to all classes in the namespace, including any sub-namespace classes, and any classes in those sub-namespaces, and so on."
@@ -538,7 +526,8 @@ verifyRenames: aRBClass unqualified: unqualified full: fullyQualified partial: p
 		of: classInOtherNamespace
 		equals: 'refersToClassUnqualified %<namespace: Refactory.Browser.Tests> ^<1s>' << unqualified.
 	"The fully and partially qualified names will be as minimal as possible"
-	#(#refersToClassFullyQualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2) do: 
+	#(#refersToClassFullyQualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2)
+		do: 
 			[:each |
 			self
 				verifyMethod: each
@@ -587,10 +576,9 @@ verifyRenames: aRBClass unqualified: unqualified full: fullyQualified partial: p
 		should: [ast analyze]
 		raise: Parser notificationClass
 		matching: [:ex | ex displayString = ('Error: invalid structure class type ''<1s>*''' << unqualified)]! !
-!Tools.Tests.RenameClassRefactoringTest categoriesForMethods!
+!Refactory.Browser.Tests.RenameClassRefactoringTest categoriesForMethods!
 compile:in:!helpers!private! !
 defineClass:!helpers!private! !
-showChanges!helpers!private! !
 testBadName!public!unit tests! !
 testExistingName!public!unit tests! !
 testMetaClassFailure!public!unit tests! !

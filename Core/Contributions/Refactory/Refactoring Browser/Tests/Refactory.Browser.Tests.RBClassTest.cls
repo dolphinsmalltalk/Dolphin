@@ -316,7 +316,7 @@ testWhichMethodsReferToClass
 testWhichMethodsReferToClassViaMethodNamespace
 	| class targetClass referers |
 	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
-	targetClass := model classFor: Core.Tests.DolphinTest.
+	targetClass := model classNamed: #'Core.Tests.DolphinTest'.
 	referers := ((class whichMethodsReferToClass: targetClass) asArray collect: [:each | each selector])
 				sort.
 	self assert: referers

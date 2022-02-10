@@ -93,7 +93,7 @@ testRenameTemporary
 								asdf := self failedRules.
 								asdf isEmpty ifTrue: [^self].
 								asdf size == 1 ifTrue: [^asdf first viewResults].
-								SmalltalkSystem current browseEnvironment: self result')! !
+								self result openEditor')! !
 !Refactory.Browser.Tests.RenameTemporaryTest categoriesForMethods!
 testBadInterval!failure tests!public! !
 testBadName!failure tests!public! !

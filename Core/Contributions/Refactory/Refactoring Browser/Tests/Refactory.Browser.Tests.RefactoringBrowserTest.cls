@@ -29,8 +29,11 @@ convertInterval: anInterval for: aString
 
 executeRefactoring: aRefactoring
 	aRefactoring primitiveExecute.
-	UI.Keyboard default isShiftDown
-		ifTrue: [Tools.RewriteChangesBrowser showOn: aRefactoring model changes].
+	#{UI.Keyboard} valueOrNil
+		ifNotNil: 
+			[:keyboard |
+			keyboard default isShiftDown
+				ifTrue: [#{Tools.RewriteChangesBrowser} value showOn: aRefactoring model changes]].
 	[self parseExpression: aRefactoring storeString] on: Parser notificationClass
 		do: [:ex | self fail: ex displayString]!
 

@@ -56,7 +56,7 @@ openEditor
 	rules := self failedRules.
 	rules isEmpty ifTrue: [^self].
 	rules size == 1 ifTrue: [^rules first viewResults].
-	SmalltalkSystem current browseEnvironment: self result!
+	self result openEditor!
 
 printOn: aStream 
 	name isNil

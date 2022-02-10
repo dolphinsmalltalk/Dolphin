@@ -158,7 +158,7 @@ testModelInlineMethodWithSameVariableNames
 testModelInlineMethodWithSameVariableNames1
 	| class refactoring |
 	model := RBModel new.
-	class := model classNamed: Graphics.Rectangle fullName.
+	class := model classNamed: #'Graphics.Rectangle'.
 	class compile: 'rectangleRelativeTo: aRectangle ^self origin extent: aRectangle extent'
 		classified: #accessing.
 	(model classNamed: Object fullName)

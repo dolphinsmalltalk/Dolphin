@@ -28,7 +28,6 @@ package setBinaryVariableNames: #(
 ).
 
 package setPrerequisites: #(
-	'..\..\..\..\Object Arts\Dolphin\IDE\Base\Development System'
 	'..\..\..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\Change Objects\RBChangeObjects'
 	'..\Environments\RBEnvironments'

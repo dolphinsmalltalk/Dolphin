@@ -49,7 +49,7 @@ testExtractFailure
 testExtractMethodAtEndOfMethodThatNeedsReturn
 	| refactoring class selectorsSize |
 	refactoring := ExtractMethodToComponentRefactoring
-				extract: (73 to: 216)
+				extract: (73 to: 184)
 				from: #openEditor
 				in: LintRuleTestData.
 	self setupMethodNameFor: refactoring toReturn: #foo:.
@@ -73,7 +73,7 @@ testExtractMethodAtEndOfMethodThatNeedsReturn
 								<namespace: Tools>
 								self isEmpty ifTrue: [^asdf].
 								self size == 1 ifTrue: [^self first viewResults].
-								SmalltalkSystem current browseEnvironment: asdf result.
+								asdf result openEditor.
 								^asdf').
 	self assert: class selectors size equals: selectorsSize!
 
