@@ -187,9 +187,12 @@ onDropDown: aToolbarButton
 	popup showIn: self position: aToolbarButton screenRectangle bottomLeft.
 	^0!
 
+onViewCreated
+	self view acceptDroppedFiles: true.
+	^super onViewCreated!
+
 onViewOpened
 	super onViewOpened.
-	self view acceptDroppedFiles: true.
 	fontSizePresenter model: (ValueAspectAdaptor subject: self aspect: #fontSize).
 	self class defaultSlideyPinsMap ifNotNil: [:map | self slideyPinMap: map].
 
@@ -388,6 +391,7 @@ inspectSystemOptions!commands!public! !
 isIdeaSpaceCard!public! !
 methodBrowserClass!constants!private! !
 onDropDown:!private! !
+onViewCreated!event handling!public! !
 onViewOpened!private! !
 packageManager!constants!private! !
 performCommand:!commands!public! !

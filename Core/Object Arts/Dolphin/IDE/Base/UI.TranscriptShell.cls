@@ -214,17 +214,6 @@ onViewOpened
 	outputWindow := self view viewNamed: 'workspace'
 !
 
-onViewRestored: aSizeEvent 
-	"#149: In order to workaround the problem of a restored Transcript not displaying any output
-	sent when it was closed, we have to perturb it a bit. This seems to be a bug in the RichEdit
-	control , since this workaround is not necessary when using a multi-line text edit. Thanks
-	to Mikael Svane for this fix."
-
-	outputWindow
-		scrollUp;
-		scrollDown.
-	^super onViewRestored: aSizeEvent!
-
 position
 	"Answer the receiver's current position reference for accessing the collection"
 
@@ -356,7 +345,6 @@ nextPutAll:!adding!public! !
 notEmpty!public!testing! !
 onCloseRequested:!event handling!public! !
 onViewOpened!event handling!private! !
-onViewRestored:!event handling!public! !
 position!accessing!public! !
 position:!accessing!public! !
 print:!printing!public! !
