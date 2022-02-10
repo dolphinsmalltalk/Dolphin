@@ -37,12 +37,18 @@ tearDown
 	super tearDown!
 
 testBasicWait
-	| endTime |
-	delay := Delay forDuration: (5 milliseconds max: timerResolution).
+	| duration endTime retries |
+	duration := 5 milliseconds max: timerResolution.
+	retries := 0.
+	
+	[delay := Delay forDuration: duration.
 	startTime := Time microsecondClockValue.
 	delay wait.
 	endTime := Time microsecondClockValue.
-	self expectDelay: delay duration for: endTime!
+	((endTime - startTime) microseconds - duration between: timerResolution negated
+		and: timerResolution * 5) or: [retries > 3]]
+			whileFalse: [retries := retries + 1].
+	self expectDelay: duration for: endTime!
 
 testCancel
 	| proc endTime |
