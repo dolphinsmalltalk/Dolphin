@@ -7797,7 +7797,6 @@ publishedAspectsOfInstances
 		add: (Aspect symbol: #wrapIndentMode from: self wrapIndentModes);
 		add: (Aspect symbol: #fontQuality from: self fontQualities);
 		add: (Aspect symbol: #multiPasteMode from: self multiPasteModes);
-		add: (Aspect integer: #whitespaceMarkerSize);
 		add: (Aspect symbol: #tabDrawMode from: self tabDrawModes);
 		add: (Aspect symbol: #endOfLineMode from: self lineEndings);
 		add: (Aspect duration: #mouseDwellTime);
@@ -7811,7 +7810,8 @@ publishedAspectsOfInstances
 				yourself).
 	#(#autoCompletionAcceptChars #autoCompletionCancelChars)
 		do: [:each | answer add: (Aspect string: each)].
-	#(#tabWidth #currentLineFrameWidth) do: [:each | answer add: (Aspect integer: each)].
+	#(#tabWidth #currentLineFrameWidth #whitespaceMarkerSize)
+		do: [:each | answer add: (Aspect integer: each)].
 	#(#caretForecolor #callTipHighlightColor #whitespaceBackcolor #whitespaceForecolor #foldLineColor #foldMarginColor #foldMarginHiColor #hiddenLineColor #currentLineBackcolor #selectionBackcolor #inactiveSelectionBackcolor)
 		do: [:each | answer add: (Aspect color: each)].
 	#(#canScrollPastEnd #isAutoCompletionCancelledAtStart #isAutoCompletionCaseInsensitive #isAutoCompletionCancelledWhenNoMatch #isAutoCompletionSingleMatchChosen #isAutoCompletionTruncating #isBraceHighlightingEnabled #isFoldingEnabled #hasVisibleLineEndings #isAccessibilityEnabled)
