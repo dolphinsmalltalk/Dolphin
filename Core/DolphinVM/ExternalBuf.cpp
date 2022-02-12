@@ -14,13 +14,13 @@
 #include "Interprt.h"
 #include "ExternalBuf.h"
 
-Oop * __fastcall Interpreter::primitiveAddressOf(Oop * const sp, primargcount_t argCount)
+Oop* PRIMCALL Interpreter::primitiveAddressOf(Oop * const sp, primargcount_t argCount)
 {
 	StoreUIntPtr()(sp, reinterpret_cast<uintptr_t>(reinterpret_cast<OTE*>(*sp)->m_location));
 	return sp;
 }
 
-Oop * __fastcall Interpreter::primitiveBytesIsNull(Oop * const sp, primargcount_t argCount)
+Oop* PRIMCALL Interpreter::primitiveBytesIsNull(Oop * const sp, primargcount_t argCount)
 {
 	AddressOTE* oteBytes = reinterpret_cast<AddressOTE*>(*sp);
 	size_t size = oteBytes->bytesSize();
@@ -33,7 +33,7 @@ Oop * __fastcall Interpreter::primitiveBytesIsNull(Oop * const sp, primargcount_
 		return primitiveFailure(_PrimitiveFailureCode::ObjectTypeMismatch);
 }
 
-Oop * __fastcall Interpreter::primitiveStructureIsNull(Oop * const sp, primargcount_t argCount)
+Oop* PRIMCALL Interpreter::primitiveStructureIsNull(Oop * const sp, primargcount_t argCount)
 {
 	StructureOTE* oteStruct = reinterpret_cast<StructureOTE*>(*sp);
 
@@ -80,7 +80,7 @@ Oop * __fastcall Interpreter::primitiveStructureIsNull(Oop * const sp, primargco
 	}
 }
 
-Oop * __fastcall Interpreter::primitiveUint32AtPut(Oop * const sp, primargcount_t argCount)
+Oop* PRIMCALL Interpreter::primitiveUint32AtPut(Oop * const sp, primargcount_t argCount)
 {
 	BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*(sp - 2));
 	Oop oopOffset = *(sp - 1);
@@ -138,7 +138,7 @@ Oop * __fastcall Interpreter::primitiveUint32AtPut(Oop * const sp, primargcount_
 	}
 }
 
-Oop * __fastcall Interpreter::primitiveIndirectUint32AtPut(Oop * const sp, primargcount_t argCount)
+Oop* PRIMCALL Interpreter::primitiveIndirectUint32AtPut(Oop * const sp, primargcount_t argCount)
 {
 	AddressOTE* oteReceiver = reinterpret_cast<AddressOTE*>(*(sp - 2));
 	Oop oopOffset = *(sp - 1);
@@ -190,7 +190,7 @@ Oop * __fastcall Interpreter::primitiveIndirectUint32AtPut(Oop * const sp, prima
 	}
 }
 
-Oop * __fastcall Interpreter::primitiveInt32AtPut(Oop * const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveInt32AtPut(Oop * const sp, primargcount_t)
 {
 	BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*(sp - 2));
 	Oop oopOffset = *(sp - 1);
@@ -246,7 +246,7 @@ Oop * __fastcall Interpreter::primitiveInt32AtPut(Oop * const sp, primargcount_t
 	}
 }
 
-Oop * __fastcall Interpreter::primitiveIndirectInt32AtPut(Oop * const sp, primargcount_t argCount)
+Oop* PRIMCALL Interpreter::primitiveIndirectInt32AtPut(Oop * const sp, primargcount_t argCount)
 {
 	AddressOTE* oteReceiver = reinterpret_cast<AddressOTE*>(*(sp - 2));
 	Oop oopOffset = *(sp - 1);

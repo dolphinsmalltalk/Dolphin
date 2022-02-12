@@ -118,7 +118,7 @@ void __fastcall ObjectMemory::oneWayBecome(OTE* ote1, OTE* ote2)
 	CHECKREFERENCES
 }
 
-Oop* __fastcall Interpreter::primitiveOneWayBecome(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveOneWayBecome(Oop* const sp, primargcount_t)
 {
 	Oop receiver = *(sp - 1);
 	Oop arg = *sp;
@@ -224,7 +224,7 @@ ArrayOTE* __stdcall ObjectMemory::instancesOf(const BehaviorOTE* classPointer)
 	return selectObjects(simple_partitioner(max(range, 16384)), [&](const OTE* ote) { return ote->m_oteClass == classPointer; });
 }
 
-Oop* __fastcall Interpreter::primitiveAllInstances(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveAllInstances(Oop* const sp, primargcount_t)
 {
 	BehaviorOTE* receiver = reinterpret_cast<BehaviorOTE*>(*sp);
 
@@ -320,7 +320,7 @@ ArrayOTE* __stdcall ObjectMemory::subinstancesOf(const BehaviorOTE* classPointer
 		});
 }
 
-Oop* __fastcall Interpreter::primitiveAllSubinstances(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveAllSubinstances(Oop* const sp, primargcount_t)
 {
 	BehaviorOTE* receiver = reinterpret_cast<BehaviorOTE*>(*sp);
 	ArrayOTE* instances = ObjectMemory::subinstancesOf(receiver);
@@ -424,7 +424,7 @@ ArrayOTE* __fastcall ObjectMemory::instanceCounts(ArrayOTE* oteClasses)
 	return oteClassStats;
 }
 
-Oop* __fastcall Interpreter::primitiveInstanceCounts(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveInstanceCounts(Oop* const sp, primargcount_t)
 {
 	Oop arg = *sp;
 	if (!ObjectMemoryIsIntegerObject(arg))
@@ -444,7 +444,7 @@ Oop* __fastcall Interpreter::primitiveInstanceCounts(Oop* const sp, primargcount
 
 #pragma code_seg(GC_SEG)
 
-Oop* __fastcall Interpreter::primitiveAllReferences(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveAllReferences(Oop* const sp, primargcount_t)
 {
 	// Make sure we don't include refs above TOS as these are invalid - also don't include the ref to the receiver on the stack
 	bool includeWeakRefs = *sp == reinterpret_cast<Oop>(Pointers.True);
@@ -709,7 +709,7 @@ size_t ObjectMemory::OopsUsed()
 	return m_nOTSize - nFreeOTEs;
 }
 
-Oop* __fastcall Interpreter::primitiveObjectCount(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveObjectCount(Oop* const sp, primargcount_t)
 {
 	*sp = ObjectMemoryIntegerObjectOf(ObjectMemory::OopsUsed());
 	return sp;

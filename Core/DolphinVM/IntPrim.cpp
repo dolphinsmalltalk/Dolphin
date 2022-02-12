@@ -9,7 +9,7 @@
 #include "Interprt.h"
 #include "InterprtPrim.inl"
 
-Oop* __fastcall Interpreter::primitiveEqual(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveEqual(Oop* const sp, primargcount_t)
 {
 	Oop arg = *sp;
 	if (!ObjectMemoryIsIntegerObject(arg))
@@ -33,7 +33,7 @@ Oop* __fastcall Interpreter::primitiveEqual(Oop* const sp, primargcount_t)
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveHashMultiply(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveHashMultiply(Oop* const sp, primargcount_t)
 {
 	Oop arg = *sp;
 	if (ObjectMemoryIsIntegerObject(arg))
@@ -56,7 +56,7 @@ Oop* __fastcall Interpreter::primitiveHashMultiply(Oop* const sp, primargcount_t
 //////////////////////////////////////////////////////////////////////////////;
 // SmallInteger Bit Manipulation Primitives
 
-Oop* __fastcall Interpreter::primitiveAnyMask(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveAnyMask(Oop* const sp, primargcount_t)
 {
 	Oop receiver = *(sp - 1);
 	Oop arg = *sp;
@@ -104,7 +104,7 @@ Oop* __fastcall Interpreter::primitiveAnyMask(Oop* const sp, primargcount_t)
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveAllMask(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveAllMask(Oop* const sp, primargcount_t)
 {
 	Oop receiver = *(sp - 1);
 	Oop arg = *sp;
@@ -131,7 +131,7 @@ Oop* __fastcall Interpreter::primitiveAllMask(Oop* const sp, primargcount_t)
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveLowBit(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveLowBit(Oop* const sp, primargcount_t)
 {
 	SmallInteger value = *(sp) ^ 1;
 	unsigned long index;
@@ -140,7 +140,7 @@ Oop* __fastcall Interpreter::primitiveLowBit(Oop* const sp, primargcount_t)
 	return sp;
 }
 
-Oop* __fastcall Interpreter::primitiveHighBit(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveHighBit(Oop* const sp, primargcount_t)
 {
 	Oop oopInteger = *sp;
 	SmallInteger value = static_cast<SmallInteger>(oopInteger);
@@ -159,7 +159,7 @@ Oop* __fastcall Interpreter::primitiveHighBit(Oop* const sp, primargcount_t)
 
 #ifdef _M_IX86
 
-__declspec(naked) Oop* __fastcall Interpreter::primitiveBitShift(Oop* const sp, primargcount_t)
+__declspec(naked) Oop* PRIMCALL Interpreter::primitiveBitShift(Oop* const sp, primargcount_t)
 {
 	_asm
 	{
@@ -232,7 +232,7 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveBitShift(Oop* const sp, 
 //////////////////////////////////////////////////////////////////////////////;
 // SmallInteger Arithmetic Primitives
 
-Oop* __fastcall Interpreter::primitiveAdd(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveAdd(Oop* const sp, primargcount_t)
 {
 	Oop receiver = *(sp - 1);
 	Oop arg = *sp;
@@ -283,7 +283,7 @@ Oop* __fastcall Interpreter::primitiveAdd(Oop* const sp, primargcount_t)
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveSubtract(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveSubtract(Oop* const sp, primargcount_t)
 {
 	Oop receiver = *(sp - 1);
 	Oop arg = *sp;
@@ -361,7 +361,7 @@ Oop* __fastcall Interpreter::primitiveSubtract(Oop* const sp, primargcount_t)
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveMultiply(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveMultiply(Oop* const sp, primargcount_t)
 {
 	Oop receiver = *(sp - 1);
 	Oop arg = *sp;
@@ -414,7 +414,7 @@ Oop* __fastcall Interpreter::primitiveMultiply(Oop* const sp, primargcount_t)
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveDivide(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveDivide(Oop* const sp, primargcount_t)
 {
 	Oop receiver = *(sp - 1);
 	Oop arg = *sp;
@@ -484,7 +484,7 @@ Oop* __fastcall Interpreter::primitiveDivide(Oop* const sp, primargcount_t)
 // primitiveMod implements #\\ for SmallIntegers - it is a remainder with truncation towards negative infinity
 // Normally performed in the byteasm.asm; should only get here if performed or for failure cases
 
-__declspec(naked) Oop* __fastcall Interpreter::primitiveMod(Oop* const sp, primargcount_t)
+__declspec(naked) Oop* PRIMCALL Interpreter::primitiveMod(Oop* const sp, primargcount_t)
 {
 	_asm
 	{
@@ -523,7 +523,7 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveMod(Oop* const sp, prima
 
 // The C++ compiler generates pretty tight code for the C++ version below, so the assembler
 // version above is not really needed any more, but may as well be kept for 32-bit.
-Oop* __fastcall Interpreter::primitiveMod(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveMod(Oop* const sp, primargcount_t)
 {
 	Oop receiver = *(sp - 1);
 	Oop arg = *sp;
@@ -559,7 +559,7 @@ Oop* __fastcall Interpreter::primitiveMod(Oop* const sp, primargcount_t)
 // for exact division). Note that in Smalltalk integer divide truncates towards
 // negative infinity, not zero.
 //
-Oop* __fastcall Interpreter::primitiveDiv(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveDiv(Oop* const sp, primargcount_t)
 {
 	Oop receiver = *(sp - 1);
 	Oop arg = *sp;
@@ -603,7 +603,7 @@ Oop* __fastcall Interpreter::primitiveDiv(Oop* const sp, primargcount_t)
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveQuo(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveQuo(Oop* const sp, primargcount_t)
 {
 	Oop receiver = *(sp - 1);
 	Oop arg = *sp;
@@ -638,7 +638,7 @@ Oop* __fastcall Interpreter::primitiveQuo(Oop* const sp, primargcount_t)
 }
 
 
-Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveSmallIntegerPrintString(Oop* const sp, primargcount_t)
 {
 	Oop integerPointer = *sp;
 
@@ -660,7 +660,7 @@ Oop* __fastcall Interpreter::primitiveSmallIntegerPrintString(Oop* const sp, pri
 		return primitiveFailure(_PrimitiveFailureCode::Failed);
 }
 
-Oop* __fastcall Interpreter::primitiveSmallIntegerAt(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveSmallIntegerAt(Oop* const sp, primargcount_t)
 {
 	Oop oopIndex = *sp;
 	if (ObjectMemoryIsIntegerObject(oopIndex))

@@ -28,7 +28,7 @@
 
 #if defined(CANSAVEIMAGE)
 
-Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveSnapshot(Oop* const sp, primargcount_t)
 {
 	Oop arg = *(sp-3);
 	if (ObjectMemoryIsIntegerObject(arg))
@@ -106,7 +106,7 @@ Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const sp, primargcount_t)
 
 #elif defined(TO_GO)
 
-Oop* __fastcall Interpreter::primitiveSnapshot(Oop* const, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveSnapshot(Oop* const, primargcount_t)
 {
 	return primitiveFailure(_PrimitiveFailureCode::NotSupported);
 }

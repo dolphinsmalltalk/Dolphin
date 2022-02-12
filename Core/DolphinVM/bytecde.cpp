@@ -38,7 +38,7 @@
 // the carefully ordered C++ versions are not too bad. They sometimes push/pop some registers when
 // that is not strictly necessary, partly because the compiler doesn't realise that sp is also in ESI
 #ifdef _M_IX86
-__declspec(naked) Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, primargcount_t argCount)
+__declspec(naked) Oop* PRIMCALL Interpreter::primitiveReturnSelf(Oop* const sp, primargcount_t argCount)
 {
 	_asm
 	{
@@ -53,7 +53,7 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp
 
 using namespace ST;
 
-__declspec(naked) Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* const sp, primargcount_t argCount)
+__declspec(naked) Oop* PRIMCALL Interpreter::primitiveReturnLiteralZero(Oop* const sp, primargcount_t argCount)
 {
 	_asm
 	{
@@ -73,7 +73,7 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* c
 	}
 }
 
-__declspec(naked) Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* const sp, primargcount_t argCount)
+__declspec(naked) Oop* PRIMCALL Interpreter::primitiveReturnStaticZero(Oop* const sp, primargcount_t argCount)
 {
 	_asm
 	{
@@ -95,7 +95,7 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* co
 	}
 }
 
-__declspec(naked) Oop* __fastcall Interpreter::primitiveReturnInstVar(Oop* const sp, primargcount_t)
+__declspec(naked) Oop* PRIMCALL Interpreter::primitiveReturnInstVar(Oop* const sp, primargcount_t)
 {
 	_asm
 	{
@@ -123,7 +123,7 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveReturnInstVar(Oop* const
 	}
 }
 
-__declspec(naked) Oop* __fastcall Interpreter::primitiveSetInstVar(Oop* const sp, primargcount_t)
+__declspec(naked) Oop* PRIMCALL Interpreter::primitiveSetInstVar(Oop* const sp, primargcount_t)
 {
 	_asm
 	{
@@ -164,7 +164,7 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveSetInstVar(Oop* const sp
 	}
 }
 
-__declspec(naked) Oop* __fastcall Interpreter::primitiveSetMutableInstVar(Oop* const sp, primargcount_t)
+__declspec(naked) Oop* PRIMCALL Interpreter::primitiveSetMutableInstVar(Oop* const sp, primargcount_t)
 {
 	_asm
 	{
@@ -195,7 +195,7 @@ __declspec(naked) Oop* __fastcall Interpreter::primitiveSetMutableInstVar(Oop* c
 
 #else
 
-Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, primargcount_t argCount)
+Oop* PRIMCALL Interpreter::primitiveReturnSelf(Oop* const sp, primargcount_t argCount)
 {
 	// This arrangement should avoid conditional jumps (can use cmov), but although it has worked
 	// on some versions of the VC++ compiler, it is now generate conditional jumps again
@@ -205,7 +205,7 @@ Oop* __fastcall Interpreter::primitiveReturnSelf(Oop* const sp, primargcount_t a
 	return !m_bStepping ? newSp : primitiveFailure(_PrimitiveFailureCode::DebugStep);
 }
 
-Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* const sp, primargcount_t argCount)
+Oop* PRIMCALL Interpreter::primitiveReturnLiteralZero(Oop* const sp, primargcount_t argCount)
 {
 	Oop literalZero = m_registers.m_oopNewMethod->m_location->m_aLiterals[0];
 	Oop* newSp = sp - argCount;
@@ -220,7 +220,7 @@ Oop* __fastcall Interpreter::primitiveReturnLiteralZero(Oop* const sp, primargco
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* const sp, primargcount_t argCount)
+Oop* PRIMCALL Interpreter::primitiveReturnStaticZero(Oop* const sp, primargcount_t argCount)
 {
 	auto staticZero = reinterpret_cast<VariableBindingOTE*>(m_registers.m_oopNewMethod->m_location->m_aLiterals[0]);
 	if (!m_bStepping)
@@ -235,7 +235,7 @@ Oop* __fastcall Interpreter::primitiveReturnStaticZero(Oop* const sp, primargcou
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveReturnInstVar(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveReturnInstVar(Oop* const sp, primargcount_t)
 {
 	auto byteCodes = m_registers.m_oopNewMethod->m_location->m_packedByteCodes;
 	PointersOTE* oteReceiver = reinterpret_cast<PointersOTE*>(*sp);
@@ -253,7 +253,7 @@ Oop* __fastcall Interpreter::primitiveReturnInstVar(Oop* const sp, primargcount_
 }
 
 // Around 8% slower than the assembler version, probably due to extra stack ops to save/restore registers
-Oop* __fastcall Interpreter::primitiveSetInstVar(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveSetInstVar(Oop* const sp, primargcount_t)
 {
 	MethodOTE* oteSetter = m_registers.m_oopNewMethod;
 	if (!m_bStepping)
@@ -276,7 +276,7 @@ Oop* __fastcall Interpreter::primitiveSetInstVar(Oop* const sp, primargcount_t)
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveSetMutableInstVar(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveSetMutableInstVar(Oop* const sp, primargcount_t)
 {
 	MethodOTE* oteSetter = m_registers.m_oopNewMethod;
 	auto pMethod = oteSetter->m_location;
@@ -969,7 +969,7 @@ MethodOTE* __fastcall Interpreter::lookupMethod(BehaviorOTE* classPointer, Symbo
 
 //	Primitive to duplicate the VM's method lookup. Useful for fast #respondsTo:/
 //	#canUnderstand:.Uses, but does not update, the method cache.
-Oop* __fastcall Interpreter::primitiveLookupMethod(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveLookupMethod(Oop* const sp, primargcount_t)
 {
 	Oop arg = *sp;
 	BehaviorOTE* receiver = reinterpret_cast<BehaviorOTE*>(*(sp - 1));

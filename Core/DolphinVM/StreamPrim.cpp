@@ -30,7 +30,7 @@
 
 // This primitive handles PositionableStream>>next, but only for Arrays, Strings and ByteArrays
 // Unary message, so does not modify stack pointer
-Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 {
 	PosStreamOTE* streamPointer = reinterpret_cast<PosStreamOTE*>(*sp);		// Access receiver
 	
@@ -189,7 +189,7 @@ Oop* __fastcall Interpreter::primitiveNext(Oop* const sp, primargcount_t)
 
 // This primitive handles WriteStream>>nextPut:, but only for Arrays, Strings & ByteArrays
 // It is fairly long complex because of the new support for String encodings, for which there are quite a lot of cases.
-Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveNextPut(Oop* const sp, primargcount_t)
 {
 	Oop* newSp = sp - 1;
 	WriteStreamOTE* streamPointer = reinterpret_cast<WriteStreamOTE*>(*newSp);		// Access receiver under argument
@@ -597,7 +597,7 @@ Oop* __fastcall Interpreter::primitiveNextPut(Oop* const sp, primargcount_t)
 
 // Read basic elements from a stream. In the case of character streams, will read individual integer code units (unlike primitiveNext, which reads whole characters 
 // potentially assembling them from more than one code unit)
-Oop* __fastcall Interpreter::primitiveBasicNext(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveBasicNext(Oop* const sp, primargcount_t)
 {
 	PosStreamOTE* streamPointer = reinterpret_cast<PosStreamOTE*>(*sp);		// Access receiver
 
@@ -684,7 +684,7 @@ Oop* __fastcall Interpreter::primitiveBasicNext(Oop* const sp, primargcount_t)
 }
 
 // Like primitiveNextPut, but always writes an integer element. For a ByteArray, this will be a byte. For a string, it will be a code unit.
-Oop* __fastcall Interpreter::primitiveBasicNextPut(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveBasicNextPut(Oop* const sp, primargcount_t)
 {
 	uintptr_t value = *sp;
 	if (ObjectMemoryIsIntegerObject(value))
@@ -782,7 +782,7 @@ Oop* __fastcall Interpreter::primitiveBasicNextPut(Oop* const sp, primargcount_t
 }
 
 // Non-standard, but has very beneficial effect on performance
-Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 {
 	auto streamPointer = reinterpret_cast<WriteStreamOTE*>(*(sp-1));		// Access receiver under argument
 	auto writeStream = streamPointer->m_location;
@@ -1040,7 +1040,7 @@ Oop* __fastcall Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 }
 
 // The primitive handles PositionableStream>>atEnd, but only for arrays/strings
-Oop* __fastcall Interpreter::primitiveAtEnd(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveAtEnd(Oop* const sp, primargcount_t)
 {
 	PosStreamOTE* streamPointer = reinterpret_cast<PosStreamOTE*>(*sp);		// Access receiver
 	PositionableStream* readStream = streamPointer->m_location;
@@ -1074,7 +1074,7 @@ Oop* __fastcall Interpreter::primitiveAtEnd(Oop* const sp, primargcount_t)
 
 // This primitive handles PositionableStream>>nextSDWORD, but only for byte-arrays
 // Unary message, so does not modify stack pointer
-Oop* __fastcall Interpreter::primitiveNextInt32(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveNextInt32(Oop* const sp, primargcount_t)
 {
 	PosStreamOTE* streamPointer = reinterpret_cast<PosStreamOTE*>(*sp);		// Access receiver
 	PositionableStream* readStream = streamPointer->m_location;

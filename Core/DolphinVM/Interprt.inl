@@ -246,7 +246,7 @@ inline HandleOTE* ST::ExternalHandle::New(HANDLE hValue)
 ///////////////////////////////////////////////////////////////////////////////
 // Primitive templates
 
-template <int Index> Oop* __fastcall Interpreter::primitiveReturnConst(Oop* const sp, primargcount_t argCount)
+template <int Index> Oop* PRIMCALL Interpreter::primitiveReturnConst(Oop* const sp, primargcount_t argCount)
 {
 	Oop* newSp = sp - argCount;
 	if (!m_bStepping)

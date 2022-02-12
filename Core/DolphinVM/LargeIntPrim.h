@@ -2,7 +2,7 @@
 #pragma once
 
 // Template for operations where the result is zero if the argument is SmallInteger zero
-template <class Op, class OpSingle> static Oop* __fastcall Interpreter::primitiveLargeIntegerOpZ(Oop* const sp, primargcount_t argc)
+template <class Op, class OpSingle> static Oop* PRIMCALL Interpreter::primitiveLargeIntegerOpZ(Oop* const sp, primargcount_t argc)
 {
 	Oop oopArg = *sp;
 	const LargeIntegerOTE* oteReceiver = reinterpret_cast<const LargeIntegerOTE*>(*(sp - 1));
@@ -42,7 +42,7 @@ template <class Op, class OpSingle> static Oop* __fastcall Interpreter::primitiv
 }
 
 //	Template for operations for which the result is the receiver if the operand is SmallInteger zero
-template <class Op, class OpSingle> static Oop* __fastcall Interpreter::primitiveLargeIntegerOpR(Oop* const sp, primargcount_t)
+template <class Op, class OpSingle> static Oop* PRIMCALL Interpreter::primitiveLargeIntegerOpR(Oop* const sp, primargcount_t)
 {
 	Oop oopArg = *sp;
 	const LargeIntegerOTE* oteReceiver = reinterpret_cast<const LargeIntegerOTE*>(*(sp - 1));
@@ -133,7 +133,7 @@ template <bool Lt, bool Eq> static bool liCmp(const LargeIntegerOTE* oteA, const
 	}
 }
 
-template <bool Lt, bool Eq> static Oop* __fastcall Interpreter::primitiveLargeIntegerCmp(Oop* const sp, primargcount_t)
+template <bool Lt, bool Eq> static Oop* PRIMCALL Interpreter::primitiveLargeIntegerCmp(Oop* const sp, primargcount_t)
 {
 	Oop argPointer = *sp;
 	LargeIntegerOTE* oteReceiver = reinterpret_cast<LargeIntegerOTE*>(*(sp - 1));
@@ -162,7 +162,7 @@ template <bool Lt, bool Eq> static Oop* __fastcall Interpreter::primitiveLargeIn
 	}
 }
 
-template <typename Op> static Oop* __fastcall Interpreter::primitiveLargeIntegerUnaryOp(Oop* const sp, primargcount_t)
+template <typename Op> static Oop* PRIMCALL Interpreter::primitiveLargeIntegerUnaryOp(Oop* const sp, primargcount_t)
 {
 	Oop oopResult = Op()(reinterpret_cast<LargeIntegerOTE*>(*sp));
 	*sp = oopResult;

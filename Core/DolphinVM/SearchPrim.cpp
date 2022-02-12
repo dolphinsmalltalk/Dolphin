@@ -20,7 +20,7 @@
 
 // Uses object identity to locate the next occurrence of the argument in the receiver from
 // the specified index to the specified index
-Oop* __fastcall Interpreter::primitiveNextIndexOfFromTo(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveNextIndexOfFromTo(Oop* const sp, primargcount_t)
 {
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
@@ -169,7 +169,7 @@ template<typename T> int __stdcall stringSearch(const T* a, const int N, const T
 
 // Uses object identity to locate the next occurrence of the argument in the receiver from
 // the specified index to the specified index
-Oop* __fastcall Interpreter::primitiveStringSearch(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveStringSearch(Oop* const sp, primargcount_t)
 {
 	Oop integerPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(integerPointer))

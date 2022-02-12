@@ -69,7 +69,7 @@ struct StoreSigned64
 ///////////////////////////////////////////////////////////////////////////////
 // Primitive templates
 
-template <typename T, typename P> static Oop* __fastcall Interpreter::primitiveIndirectIntegerAtOffset(Oop* const sp, primargcount_t)
+template <typename T, typename P> static Oop* PRIMCALL Interpreter::primitiveIndirectIntegerAtOffset(Oop* const sp, primargcount_t)
 {
 	Oop oopOffset = *sp;
 	if (ObjectMemoryIsIntegerObject(oopOffset))
@@ -90,7 +90,7 @@ template <typename T, typename P> static Oop* __fastcall Interpreter::primitiveI
 	}
 }
 
-template <typename T, typename Store> Oop* __fastcall Interpreter::primitiveIntegerAtOffset(Oop* const sp, primargcount_t)
+template <typename T, typename Store> Oop* PRIMCALL Interpreter::primitiveIntegerAtOffset(Oop* const sp, primargcount_t)
 {
 	Oop oopOffset = *sp;
 	if (ObjectMemoryIsIntegerObject(oopOffset))
@@ -118,7 +118,7 @@ template <typename T, typename Store> Oop* __fastcall Interpreter::primitiveInte
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 	}
 }
-template <typename T, SmallInteger MinVal, SmallInteger MaxVal> Oop* __fastcall Interpreter::primitiveAtOffsetPutInteger(Oop* const sp, primargcount_t)
+template <typename T, SmallInteger MinVal, SmallInteger MaxVal> Oop* PRIMCALL Interpreter::primitiveAtOffsetPutInteger(Oop* const sp, primargcount_t)
 {
 	BytesOTE* oteReceiver = reinterpret_cast<BytesOTE*>(*(sp - 2));
 	Oop oopOffset = *(sp - 1);
@@ -165,7 +165,7 @@ template <typename T, SmallInteger MinVal, SmallInteger MaxVal> Oop* __fastcall 
 	}
 }
 
-template <typename T, SmallInteger MinVal, SmallInteger MaxVal> Oop* __fastcall Interpreter::primitiveIndirectAtOffsetPutInteger(Oop* const sp, primargcount_t)
+template <typename T, SmallInteger MinVal, SmallInteger MaxVal> Oop* PRIMCALL Interpreter::primitiveIndirectAtOffsetPutInteger(Oop* const sp, primargcount_t)
 {
 	AddressOTE* oteReceiver = reinterpret_cast<AddressOTE*>(*(sp - 2));
 	Oop oopOffset = *(sp - 1);
@@ -219,7 +219,7 @@ template <typename T, SmallInteger MinVal, SmallInteger MaxVal> Oop* __fastcall 
 // (e.g. ExternalAddress).
 //
 
-template <typename T> Oop* __fastcall Interpreter::primitiveFloatAtOffsetPut(Oop* const sp, primargcount_t)
+template <typename T> Oop* PRIMCALL Interpreter::primitiveFloatAtOffsetPut(Oop* const sp, primargcount_t)
 {
 	Oop integerPointer = *(sp - 1);
 	if (ObjectMemoryIsIntegerObject(integerPointer))
@@ -281,7 +281,7 @@ template <typename T> Oop* __fastcall Interpreter::primitiveFloatAtOffsetPut(Oop
 	}
 }
 
-template <typename T> Oop* __fastcall Interpreter::primitiveFloatAtOffset(Oop* const sp, primargcount_t)
+template <typename T> Oop* PRIMCALL Interpreter::primitiveFloatAtOffset(Oop* const sp, primargcount_t)
 {
 	Oop integerPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(integerPointer))

@@ -35,7 +35,7 @@ int __stdcall DolphinMessage(UINT flags, const wchar_t* msg)
 	return 0;
 }
 
-Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveHookWindowCreate(Oop* const sp, primargcount_t)
 {
 	return primitiveFailure(_PrimitiveFailureCode::NotSupported);
 }
@@ -56,7 +56,7 @@ void Interpreter::GuiShutdown()
 
 static HHOOK hHookOldCbtFilter;
 
-Oop* __fastcall Interpreter::primitiveHookWindowCreate(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveHookWindowCreate(Oop* const sp, primargcount_t)
 {
 	Oop argPointer = *sp;
 	OTE* underConstruction = m_oteUnderConstruction;

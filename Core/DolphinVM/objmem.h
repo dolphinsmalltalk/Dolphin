@@ -105,7 +105,7 @@ public:
 	static PointersOTE* __fastcall newPointerObject(BehaviorOTE* classPointer, size_t instanceSize);
 	static PointersOTE* __fastcall newUninitializedPointerObject(BehaviorOTE* classPointer, size_t instanceSize);
 	template <bool MaybeZ, bool Initialize> static BytesOTE* newByteObject(BehaviorOTE* classPointer, size_t instanceByteSize);
-	template <class T> static TOTE<T>* newUninitializedNullTermObject(size_t instanceByteSize);
+	template <class T> static TOTE<T>* __fastcall newUninitializedNullTermObject(size_t instanceByteSize);
 	static BytesOTE* __fastcall newByteObject(BehaviorOTE* classPointer, size_t instanceByteSize, const void* pBytes);
 	static OTE* CopyElements(OTE* oteObj, size_t startingAt, size_t countfrom);
 

@@ -220,7 +220,7 @@ BytesOTE* __fastcall NewGUID(GUID* rguid)
 	return ObjectMemory::newByteObject(Pointers.ClassGUID, sizeof(GUID), rguid);
 }
 
-FARPROC Interpreter::GetDllCallProcAddress(DolphinX::ExternalMethodDescriptor* descriptor, LibraryOTE* oteReceiver)
+FARPROC PRIMCALL Interpreter::GetDllCallProcAddress(DolphinX::ExternalMethodDescriptor* descriptor, LibraryOTE* oteReceiver)
 {
 	HMODULE hModule = static_cast<HMODULE>(oteReceiver->m_location->m_handle->m_location->m_handle);
 	LPCSTR procName = reinterpret_cast<LPCSTR>(descriptor->m_descriptor.m_args + descriptor->m_descriptor.m_argsLen);
@@ -455,7 +455,7 @@ argcount_t Interpreter::pushArgsAt(const ExternalDescriptor* descriptor, uint8_t
 
 ///////////////////////////////////////////////////////////////////////////////
 //
-Oop* __fastcall Interpreter::primitivePerformWithArgsAt(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitivePerformWithArgsAt(Oop* const sp, primargcount_t)
 {
 	Oop oopDescriptor = *sp;
 	if (ObjectMemoryIsIntegerObject(oopDescriptor))
@@ -502,7 +502,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgsAt(Oop* const sp, primargco
 
 ///////////////////////////////////////////////////////////////////////////////
 // N.B. THIS IS VERY SIMILAR TO primitiveValueWithArgs()!
-Oop* __fastcall Interpreter::primitiveValueWithArgsAt(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveValueWithArgsAt(Oop* const sp, primargcount_t)
 {
 	Oop oopDescriptor = *sp;
 	if (ObjectMemoryIsIntegerObject(oopDescriptor))
@@ -687,7 +687,7 @@ void doBlah()
 #ifndef _M_IX86
 	extern "C" BOOL __stdcall callExternalFunction(FARPROC pProc, argcount_t argCount, uint8_t* argTypes, BOOL isVirtual);
 
-	BOOL __fastcall Interpreter::primitiveVirtualCall(Oop* const sp, primargcount_t argCount)
+	BOOL PRIMCALL Interpreter::primitiveVirtualCall(Oop* const sp, primargcount_t argCount)
 	{
 		// Calling out may initiate a callback to Smalltalk
 		// We need to ensure that this primitive is reentrant so we
@@ -750,7 +750,7 @@ void doBlah()
 	// This primitive does not check that enough types are specified, because it
 	// assumes that the compiler does this.
 	//
-	BOOL __fastcall Interpreter::primitiveDLL32Call(Oop* const sp, primargcount_t argCount)
+	BOOL PRIMCALL Interpreter::primitiveDLL32Call(Oop* const sp, primargcount_t argCount)
 	{
 		CompiledMethod& method = *m_registers.m_oopNewMethod->m_location;
 

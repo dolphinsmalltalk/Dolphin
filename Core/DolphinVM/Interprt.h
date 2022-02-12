@@ -29,6 +29,8 @@ using namespace ST;
 #define PRIMTABLEDECL __declspec(align(16)) const
 #endif
 
+#define PRIMCALL __fastcall
+
 ///////////////////////////////////
 
 #ifdef _DEBUG
@@ -497,279 +499,279 @@ private:
 public:
 	typedef argcount_t primargcount_t;
 
-	typedef Oop* (__fastcall *PrimitiveFp)(Oop* const sp, primargcount_t argCount);
+	typedef Oop* (PRIMCALL *PrimitiveFp)(Oop* const sp, primargcount_t argCount);
 
-	static Oop* __fastcall unusedPrimitive(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveActivateMethod(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL unusedPrimitive(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveActivateMethod(Oop* const sp, primargcount_t argCount);
 
 	template<int Index> static Oop * __fastcall primitiveReturnConst(Oop * const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveReturnSelf(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveReturnLiteralZero(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveReturnInstVar(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveLazyReturnInstVar(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveSetInstVar(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveReturnStaticZero(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveSetMutableInstVar(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveReturnSelf(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveReturnLiteralZero(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveReturnInstVar(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveLazyReturnInstVar(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveSetInstVar(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveReturnStaticZero(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveSetMutableInstVar(Oop* const sp, primargcount_t argCount);
 
 	// SmallInteger Arithmetic
-	static Oop* __fastcall primitiveAdd(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveSubtract(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveMultiply(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveDivide(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveDiv(Oop* const sp, primargcount_t argCount);		// Still in SmallIntPrim.asm
-	static Oop* __fastcall primitiveMod(Oop* const sp, primargcount_t argCount);		// Still in SmallIntPrim.asm
-	static Oop* __fastcall primitiveQuo(Oop* const sp, primargcount_t argCount);		// Still in SmallIntPrim.asm
+	static Oop* PRIMCALL primitiveAdd(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveSubtract(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveMultiply(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveDivide(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveDiv(Oop* const sp, primargcount_t argCount);		// Still in SmallIntPrim.asm
+	static Oop* PRIMCALL primitiveMod(Oop* const sp, primargcount_t argCount);		// Still in SmallIntPrim.asm
+	static Oop* PRIMCALL primitiveQuo(Oop* const sp, primargcount_t argCount);		// Still in SmallIntPrim.asm
 
 	// SmallInteger relational ops
-	template <typename Cmp, bool Lt> static Oop* __fastcall primitiveIntegerCmp(Oop* const sp, primargcount_t);
-	static Oop* __fastcall primitiveEqual(Oop* const sp, primargcount_t argCount);
+	template <typename Cmp, bool Lt> static Oop* PRIMCALL primitiveIntegerCmp(Oop* const sp, primargcount_t);
+	static Oop* PRIMCALL primitiveEqual(Oop* const sp, primargcount_t argCount);
 
 	// SmallInteger bit manipulation
 	
-	template <typename Op> static Oop* __fastcall primitiveIntegerOp(Oop* const sp, primargcount_t);
+	template <typename Op> static Oop* PRIMCALL primitiveIntegerOp(Oop* const sp, primargcount_t);
 
-	static Oop* __fastcall primitiveBitShift(Oop* const sp, primargcount_t argCount);		// Still in SmallIntPrim.asm
-	static Oop* __fastcall primitiveHighBit(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveLowBit(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveAnyMask(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveAllMask(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveBitShift(Oop* const sp, primargcount_t argCount);		// Still in SmallIntPrim.asm
+	static Oop* PRIMCALL primitiveHighBit(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveLowBit(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveAnyMask(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveAllMask(Oop* const sp, primargcount_t argCount);
 	
-	static Oop* __fastcall primitiveSmallIntegerAt(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveSmallIntegerPrintString(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveSmallIntegerAt(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveSmallIntegerPrintString(Oop* const sp, primargcount_t argCount);
 
 	// LargeInteger Arithmetic - mostly templated
 	template<class Op, class OpSingle> static Oop * __fastcall primitiveLargeIntegerOpZ(Oop * const sp, primargcount_t);
 	template<class Op, class OpSingle> static Oop * __fastcall primitiveLargeIntegerOpR(Oop * const sp, primargcount_t);
-	static Oop* __fastcall primitiveLargeIntegerDivide(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveLargeIntegerQuo(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveLargeIntegerDivide(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveLargeIntegerQuo(Oop* const sp, primargcount_t argCount);
 
 	// LargeInteger relational ops - mostly templated
 	template<bool Lt, bool Eq> static Oop * __fastcall primitiveLargeIntegerCmp(Oop * const sp, primargcount_t);
-	static Oop* __fastcall primitiveLargeIntegerEqual(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveLargeIntegerEqual(Oop* const sp, primargcount_t argCount);
 
 	// LargeInteger bit manipulation
-	static Oop* __fastcall primitiveLargeIntegerBitInvert(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveLargeIntegerBitShift(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveLargeIntegerBitInvert(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveLargeIntegerBitShift(Oop* const sp, primargcount_t argCount);
 	static Oop * __fastcall primitiveLargeIntegerHighBit(Oop * const sp, primargcount_t);
 
 	// LargeInteger miscellaneous
 	template<typename Op> static Oop * __fastcall primitiveLargeIntegerUnaryOp(Oop * const sp, primargcount_t);
-	static Oop* __fastcall primitiveLargeIntegerAsFloat(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveLargeIntegerAsFloat(Oop* const sp, primargcount_t argCount);
 
 	// Float primitives
-	static Oop* __fastcall primitiveAsFloat(Oop* const sp, primargcount_t argCount);
-	template <typename Pred> static Oop* __fastcall primitiveFloatCompare(Oop* const sp, primargcount_t);
-	template <typename Op> static Oop* __fastcall primitiveFloatBinaryOp(Oop* const sp, primargcount_t);
-	template <typename Op> static Oop* __fastcall primitiveFloatUnaryOp(Oop* const sp, primargcount_t);
+	static Oop* PRIMCALL primitiveAsFloat(Oop* const sp, primargcount_t argCount);
+	template <typename Pred> static Oop* PRIMCALL primitiveFloatCompare(Oop* const sp, primargcount_t);
+	template <typename Op> static Oop* PRIMCALL primitiveFloatBinaryOp(Oop* const sp, primargcount_t);
+	template <typename Op> static Oop* PRIMCALL primitiveFloatUnaryOp(Oop* const sp, primargcount_t);
 
-	static Oop* __fastcall primitiveFloatTimesTwoPower(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveFloatExponent(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveFloatClassify(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveFloatTimesTwoPower(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveFloatExponent(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveFloatClassify(Oop* const sp, primargcount_t argCount);
 
-	template <typename Op> static Oop* __fastcall primitiveFloatTruncationOp(Oop* const sp, primargcount_t);
+	template <typename Op> static Oop* PRIMCALL primitiveFloatTruncationOp(Oop* const sp, primargcount_t);
 	
-	static Oop* __fastcall primitiveSize(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveSize(Oop* const sp, primargcount_t argCount);
    	
 	// Object Indexing Primitives
-	static Oop* __fastcall primitiveBasicAt(Oop* const sp, const primargcount_t argCount);
-	static Oop* __fastcall primitiveBasicAtPut(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveInstVarAt(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveInstVarAtPut(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveNextIndexOfFromTo(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveBasicAt(Oop* const sp, const primargcount_t argCount);
+	static Oop* PRIMCALL primitiveBasicAtPut(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveInstVarAt(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveInstVarAtPut(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveNextIndexOfFromTo(Oop* const sp, primargcount_t argCount);
 
 	///////////////////////////////////////////////////////////////////////////
 	// External Buffer access primitives
 	
-	static Oop* __fastcall primitiveStructureIsNull(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveBytesIsNull(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveStructureIsNull(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveBytesIsNull(Oop* const sp, primargcount_t argCount);
 
-	template<typename T, typename P> static Oop * __fastcall primitiveIndirectIntegerAtOffset(Oop * const sp, primargcount_t);
-	template<typename T, typename P> static Oop * __fastcall primitiveIntegerAtOffset(Oop * const sp, primargcount_t);
-	template<typename T, SmallInteger MinVal, SmallInteger MaxVal> static Oop * __fastcall primitiveAtOffsetPutInteger(Oop * const sp, primargcount_t);
-	template<typename T, SmallInteger MinVal, SmallInteger MaxVal> static Oop * __fastcall primitiveIndirectAtOffsetPutInteger(Oop * const sp, primargcount_t);
+	template<typename T, typename P> static Oop* PRIMCALL primitiveIndirectIntegerAtOffset(Oop * const sp, primargcount_t);
+	template<typename T, typename P> static Oop* PRIMCALL primitiveIntegerAtOffset(Oop * const sp, primargcount_t);
+	template<typename T, SmallInteger MinVal, SmallInteger MaxVal> static Oop* PRIMCALL primitiveAtOffsetPutInteger(Oop * const sp, primargcount_t);
+	template<typename T, SmallInteger MinVal, SmallInteger MaxVal> static Oop* PRIMCALL primitiveIndirectAtOffsetPutInteger(Oop * const sp, primargcount_t);
 
 	// These have specialised implementations as they accept other than just SmallInteger values to 'put'
-	static Oop* __fastcall primitiveUint32AtPut(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveIndirectUint32AtPut(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveInt32AtPut(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveIndirectInt32AtPut(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveUint32AtPut(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveIndirectUint32AtPut(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveInt32AtPut(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveIndirectInt32AtPut(Oop* const sp, primargcount_t argCount);
 
 	// Floating point number accessors
-	template<typename T> static Oop * __fastcall primitiveFloatAtOffset(Oop * const sp, primargcount_t);
-	template<typename T> static Oop * __fastcall primitiveFloatAtOffsetPut(Oop * const sp, primargcount_t);
+	template<typename T> static Oop* PRIMCALL primitiveFloatAtOffset(Oop * const sp, primargcount_t);
+	template<typename T> static Oop* PRIMCALL primitiveFloatAtOffsetPut(Oop * const sp, primargcount_t);
 
-	static Oop* __fastcall primitiveLongDoubleAt(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveLongDoubleAt(Oop* const sp, primargcount_t argCount);
 
 	// Get address of contents of a byte object
-	static Oop* __fastcall primitiveAddressOf(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveAddressOf(Oop* const sp, primargcount_t argCount);
 
 	static void PushCharacter(Oop* const sp, char32_t codePoint);
 
-	static Oop* primitiveNewCharacter(Oop * const sp, primargcount_t);
-	static Oop* primitiveCharacterClassify(Oop* const sp, primargcount_t);
+	static Oop* PRIMCALL primitiveNewCharacter(Oop * const sp, primargcount_t);
+	static Oop* PRIMCALL primitiveCharacterClassify(Oop* const sp, primargcount_t);
 
 	///////////////////////////////////////////////////////////////////////////
 	// String Class Primitives
-	static Oop* __fastcall primitiveStringAt(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveStringAtPut(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveStringAt(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveStringAtPut(Oop* const sp, primargcount_t argCount);
 
 	// Helper for memory moves
 	static void memmove(uint8_t* dst, const uint8_t* src, size_t count);
-	static Oop* __fastcall primitiveReplaceBytes(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveIndirectReplaceBytes(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveReplacePointers(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveStringConcatenate(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveCopyFromTo(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveReplaceBytes(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveIndirectReplaceBytes(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveReplacePointers(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveStringConcatenate(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveCopyFromTo(Oop* const sp, primargcount_t argCount);
 
-	static Oop* __fastcall primitiveHashBytes(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveStringSearch(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveStringNextIndexOfFromTo(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveHashBytes(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveStringSearch(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveStringNextIndexOfFromTo(Oop* const sp, primargcount_t argCount);
 
 	// String comparisons - mostly templated
 	template<class OpA, class OpW> static Oop * __fastcall primitiveStringComparison(Oop * const sp, primargcount_t);
-	template<class OpA, class OpW, bool> static Oop* __fastcall primitiveStringEqual(Oop* const sp, primargcount_t);
-	static Oop* __fastcall primitiveStringCompareOrdinal(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveStringLessOrEqual(Oop* sp, primargcount_t);
-	static Oop* __fastcall primitiveHashIgnoreCase(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveBytesEqual(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveBeginsWith(Oop* const sp, primargcount_t);
+	template<class OpA, class OpW, bool> static Oop* PRIMCALL primitiveStringEqual(Oop* const sp, primargcount_t);
+	static Oop* PRIMCALL primitiveStringCompareOrdinal(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveStringLessOrEqual(Oop* sp, primargcount_t);
+	static Oop* PRIMCALL primitiveHashIgnoreCase(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveBytesEqual(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveBeginsWith(Oop* const sp, primargcount_t);
 
 	// String conversions
-	static Oop* __fastcall primitiveStringAsUtf32String(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveStringAsUtf16String(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveStringAsUtf8String(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveStringAsByteString(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveStringAsUtf32String(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveStringAsUtf16String(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveStringAsUtf8String(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveStringAsByteString(Oop* const sp, primargcount_t argCount);
 
 	// Stream Primitives
-	static Oop* __fastcall primitiveNext(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveBasicNext(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveNextInt32(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveNextPut(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveBasicNextPut(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveNextPutAll(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveAtEnd(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveNext(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveBasicNext(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveNextInt32(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveNextPut(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveBasicNextPut(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveNextPutAll(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveAtEnd(Oop* const sp, primargcount_t argCount);
 
 	// Storage Management Primitives
-	static Oop* __fastcall primitiveObjectCount(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveNew(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveNewWithArg(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveNewPinned(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveNewInitializedObject(Oop* sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveNewFromStack(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveNewVirtual(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveObjectCount(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveNew(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveNewWithArg(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveNewPinned(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveNewInitializedObject(Oop* sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveNewFromStack(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveNewVirtual(Oop* const sp, primargcount_t argCount);
 
 	// Object mutation
-	static Oop* __fastcall primitiveChangeBehavior(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveChangeBehavior(Oop* const sp, primargcount_t argCount);
 	static boolean hasCompatibleShape(OTE* oteReceiver, ST::Behavior* argClass);
 
-	static Oop* __fastcall primitiveResize(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveBecome(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveOneWayBecome(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveGetImmutable(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveSetImmutable(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveResize(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveBecome(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveOneWayBecome(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveGetImmutable(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveSetImmutable(Oop* const sp, primargcount_t argCount);
 
 	// Object Memory primitives
-	static Oop* __fastcall primitiveBasicIdentityHash(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveIdentityHash(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveHashMultiply(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveAllReferences(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveAllInstances(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveAllSubinstances(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveInstanceCounts(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveBasicIdentityHash(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveIdentityHash(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveHashMultiply(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveAllReferences(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveAllInstances(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveAllSubinstances(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveInstanceCounts(Oop* const sp, primargcount_t argCount);
 	
 	// Control Primitives
-	static Oop* __fastcall primitiveValue(Oop* const sp, primargcount_t argumentCount);
-	static Oop* __fastcall primitiveValueWithArgs(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveValueWithArgsThunk(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitivePerform(Oop* const sp, primargcount_t argumentCount);
-	static Oop* __fastcall primitivePerformThunk(Oop* const sp, primargcount_t argumentCount);
-	static Oop* __fastcall primitivePerformWithArgs(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitivePerformWithArgsThunk(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitivePerformMethod(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitivePerformMethodThunk(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveReturn(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveReturnFromCallback(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveReturnFromInterrupt(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveValueOnUnwind(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveUnwindCallback(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveValue(Oop* const sp, primargcount_t argumentCount);
+	static Oop* PRIMCALL primitiveValueWithArgs(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveValueWithArgsThunk(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitivePerform(Oop* const sp, primargcount_t argumentCount);
+	static Oop* PRIMCALL primitivePerformThunk(Oop* const sp, primargcount_t argumentCount);
+	static Oop* PRIMCALL primitivePerformWithArgs(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitivePerformWithArgsThunk(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitivePerformMethod(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitivePerformMethodThunk(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveReturn(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveReturnFromCallback(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveReturnFromInterrupt(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveValueOnUnwind(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveUnwindCallback(Oop* const sp, primargcount_t argCount);
 
 	// Process primitives
-	static Oop* __fastcall primitiveSignal(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveSignalThunk(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveWait(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveWaitThunk(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveResume(Oop* const sp, primargcount_t argumentCount);
-	static Oop* __fastcall primitiveResumeThunk(Oop* const sp, primargcount_t argumentCount);
-	static Oop* __fastcall primitiveYield(Oop* const sp, primargcount_t argumentCount);
-	static Oop* __fastcall primitiveYieldThunk(Oop* const sp, primargcount_t argumentCount);
-	static Oop* __fastcall primitiveSingleStep(Oop* const sp, primargcount_t argumentCount);
-	static Oop* __fastcall primitiveSingleStepThunk(Oop* const sp, primargcount_t argumentCount);
-	static Oop* __fastcall primitiveSuspend(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveSuspendThunk(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveSetSignals(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveSetSignalsThunk(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveInputSemaphore(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveSampleInterval(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveProcessPriority(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveProcessPriorityThunk(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveTerminateProcess(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveTerminateProcessThunk(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveEnableInterrupts(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveSignal(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveSignalThunk(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveWait(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveWaitThunk(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveResume(Oop* const sp, primargcount_t argumentCount);
+	static Oop* PRIMCALL primitiveResumeThunk(Oop* const sp, primargcount_t argumentCount);
+	static Oop* PRIMCALL primitiveYield(Oop* const sp, primargcount_t argumentCount);
+	static Oop* PRIMCALL primitiveYieldThunk(Oop* const sp, primargcount_t argumentCount);
+	static Oop* PRIMCALL primitiveSingleStep(Oop* const sp, primargcount_t argumentCount);
+	static Oop* PRIMCALL primitiveSingleStepThunk(Oop* const sp, primargcount_t argumentCount);
+	static Oop* PRIMCALL primitiveSuspend(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveSuspendThunk(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveSetSignals(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveSetSignalsThunk(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveInputSemaphore(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveSampleInterval(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveProcessPriority(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveProcessPriorityThunk(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveTerminateProcess(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveTerminateProcessThunk(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveEnableInterrupts(Oop* const sp, primargcount_t argCount);
 	// Specialized primitive for storing into process stacks. Allows for Zct
-	static Oop* __fastcall primitiveStackAtPut(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveIndexOfSP(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveStackAtPut(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveIndexOfSP(Oop* const sp, primargcount_t argCount);
 
 	// Timer primitives
-	static Oop* __fastcall primitiveSignalAtTick(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveSignalAtTickThunk(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveMicrosecondClockValue(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveMillisecondClockValue(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveSignalAtTick(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveSignalAtTickThunk(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveMicrosecondClockValue(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveMillisecondClockValue(Oop* const sp, primargcount_t argCount);
 
 	// Input/Out Primitives
-	static Oop* __fastcall primitiveSnapshot(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveSnapshot(Oop* const sp, primargcount_t argCount);
 
 	// Dispatcher Primitives
-	static Oop* __fastcall primitiveHookWindowCreate(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveHookWindowCreate(Oop* const sp, primargcount_t argCount);
 
 	// System Primitives
-	static Oop* __fastcall primitiveIdentical(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveClass(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveIsKindOf(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveIsSuperclassOf(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveCoreLeft(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveCoreLeftThunk(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveIdentical(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveClass(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveIsKindOf(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveIsSuperclassOf(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveCoreLeft(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveCoreLeftThunk(Oop* const sp, primargcount_t argCount);
 	static void __fastcall primitiveQuit(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveOopsLeft(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveOopsLeftThunk(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveInheritsFrom(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveShallowCopy(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveSetSpecialBehavior(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveQueueInterrupt(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveExtraInstanceSpec(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveDeQBereavement(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveDeQForFinalize(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveLookupMethod(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveFlushCache(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveOopsLeft(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveOopsLeftThunk(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveInheritsFrom(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveShallowCopy(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveSetSpecialBehavior(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveQueueInterrupt(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveExtraInstanceSpec(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveDeQBereavement(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveDeQForFinalize(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveLookupMethod(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveFlushCache(Oop* const sp, primargcount_t argCount);
 
 	// Extension system primitives
-	static Oop* __fastcall primitiveDLL32Call(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveVirtualCall(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveAsyncDLL32Call(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveAsyncDLL32CallThunk(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveDLL32Call(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveVirtualCall(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveAsyncDLL32Call(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveAsyncDLL32CallThunk(Oop* const sp, primargcount_t argCount);
 
-	static Oop* __fastcall primitivePerformWithArgsAt(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitivePerformWithArgsAtThunk(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveValueWithArgsAt(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveValueWithArgsAtThunk(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitivePerformWithArgsAt(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitivePerformWithArgsAtThunk(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveValueWithArgsAt(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveValueWithArgsAtThunk(Oop* const sp, primargcount_t argCount);
 
-	static Oop* __fastcall primitiveUnwindInterrupt(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveUnwindInterruptThunk(Oop* const sp, primargcount_t argCount);
-	static Oop* __fastcall primitiveVariantValue(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveUnwindInterrupt(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveUnwindInterruptThunk(Oop* const sp, primargcount_t argCount);
+	static Oop* PRIMCALL primitiveVariantValue(Oop* const sp, primargcount_t argCount);
 
 private:
 
 	static BOOL __stdcall callExternalFunction(FARPROC pProc, argcount_t argCount, DolphinX::CallDescriptor* argTypes, BOOL isVirtual);
-	static FARPROC GetDllCallProcAddress(DolphinX::ExternalMethodDescriptor* descriptor, LibraryOTE* oteReceiver);
+	static FARPROC PRIMCALL GetDllCallProcAddress(DolphinX::ExternalMethodDescriptor* descriptor, LibraryOTE* oteReceiver);
 
 	// Pushs object on stack instantiated from address, and returns size of object pushed
 	static void pushArgsAt(CallbackDescriptor* descriptor, argcount_t argCount, uint8_t* lpParms);

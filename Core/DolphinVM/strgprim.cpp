@@ -111,7 +111,7 @@ void Interpreter::memmove(uint8_t* dst, const uint8_t* src, size_t count)
 //
 //		aByteObject replaceBytesOf: anOtherByteObject from: start to: stop startingAt: startAt
 //
-Oop* __fastcall Interpreter::primitiveReplaceBytes(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveReplaceBytes(Oop* const sp, primargcount_t)
 {
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
@@ -200,7 +200,7 @@ Oop* __fastcall Interpreter::primitiveReplaceBytes(Oop* const sp, primargcount_t
 //
 //		anExternalAddress replaceBytesOf: anOtherByteObject from: start to: stop startingAt: startAt
 //
-Oop* __fastcall Interpreter::primitiveIndirectReplaceBytes(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveIndirectReplaceBytes(Oop* const sp, primargcount_t)
 {
 	Oop integerPointer = *sp;
 	if (!ObjectMemoryIsIntegerObject(integerPointer))
@@ -278,7 +278,7 @@ Oop* __fastcall Interpreter::primitiveIndirectReplaceBytes(Oop* const sp, primar
 #pragma runtime_checks("c", off)
 
 // Locate the next occurrence of the given character in the receiver between the specified indices.
-Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, primargcount_t)
 {
 	Oop integerPointer = *sp;
 	if (ObjectMemoryIsIntegerObject(integerPointer))
@@ -522,7 +522,7 @@ Oop* __fastcall Interpreter::primitiveStringNextIndexOfFromTo(Oop* const sp, pri
 #pragma runtime_checks("c", restore)
 
 
-Oop* __fastcall Interpreter::primitiveStringAt(Oop* const sp, const primargcount_t argCount)
+Oop* PRIMCALL Interpreter::primitiveStringAt(Oop* const sp, const primargcount_t argCount)
 {
 	Oop* newSp = sp - argCount;
 	SmallInteger oopIndex = *(newSp + 1);
@@ -651,7 +651,7 @@ Oop* __fastcall Interpreter::primitiveStringAt(Oop* const sp, const primargcount
 	return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 }
 
-Oop* __fastcall Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveStringAtPut(Oop* const sp, primargcount_t)
 {
 	Oop* const newSp = sp - 2;
 	OTE* __restrict oteReceiver = reinterpret_cast<OTE*>(*newSp);
@@ -907,7 +907,7 @@ void Interpreter::PushCharacter(Oop* const sp, char32_t codePoint)
 }
 
 
-Oop* __fastcall Interpreter::primitiveNewCharacter(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveNewCharacter(Oop* const sp, primargcount_t)
 {
 	Oop* newSp = sp - 1;
 	Oop oopArg = *newSp;
@@ -929,7 +929,7 @@ Oop* __fastcall Interpreter::primitiveNewCharacter(Oop* const sp, primargcount_t
 }
 
 
-Oop* __fastcall Interpreter::primitiveCharacterClassify(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveCharacterClassify(Oop* const sp, primargcount_t)
 {
 	CharOTE* oteChar = reinterpret_cast<CharOTE*>(*(sp - 1));
 	Oop oopArg = *sp;
@@ -1205,7 +1205,7 @@ inline uint32_t __fastcall hashBytes(const uint8_t* bytes, size_t len)
 	return foldHash(hash);
 }
 
-Oop* __fastcall Interpreter::primitiveHashBytes(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveHashBytes(Oop* const sp, primargcount_t)
 {
 	BytesOTE* receiver = reinterpret_cast<BytesOTE*>(*sp);
 
@@ -1266,7 +1266,7 @@ extern "C" SmallInteger __cdecl HashBytes(const uint8_t* bytes, size_t size)
 	return bytes != nullptr ? hashBytes(bytes, size) : 0;
 }
 
-Oop* __fastcall Interpreter::primitiveHashIgnoreCase(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveHashIgnoreCase(Oop* const sp, primargcount_t)
 {
 	BytesOTE* receiver = reinterpret_cast<BytesOTE*>(*sp);
 
@@ -1392,9 +1392,19 @@ template <typename T, class OpA, class OpW, bool Utf8_OpA> static T __stdcall An
 			reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize() / sizeof(Utf16String::CU),
 			reinterpret_cast<const Utf16StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize() / sizeof(Utf16String::CU));
 	}
-	default:
+
+	// Utf32 isn't supported currently
+	case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Utf32):
+	case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Utf32):
+	case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Utf32):
+	case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Utf32):
+	case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Ansi):
+	case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Utf8):
+	case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Utf16):
 		return OpA()(reinterpret_cast<const AnsiStringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize(),
 			reinterpret_cast<const AnsiStringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
+	default:
+		__assume(false);
 	}
 }
 
@@ -1417,7 +1427,7 @@ struct CmpOrdinalW
 	}
 };
 
-Oop* __fastcall Interpreter::primitiveStringCompareOrdinal(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveStringCompareOrdinal(Oop* const sp, primargcount_t)
 {
 	Oop oopComparand = *(sp - 1);
 	const OTE* oteReceiver = reinterpret_cast<const OTE*>(*(sp - 2));
@@ -1466,7 +1476,7 @@ Oop* __fastcall Interpreter::primitiveStringCompareOrdinal(Oop* const sp, primar
 	}
 }
 
-template <class OpA, class OpW> static Oop* __fastcall Interpreter::primitiveStringComparison(Oop* const sp, primargcount_t)
+template <class OpA, class OpW> static Oop* PRIMCALL Interpreter::primitiveStringComparison(Oop* const sp, primargcount_t)
 {
 	Oop oopArg = *sp;
 	const OTE* oteReceiver = reinterpret_cast<const OTE*>(*(sp - 1));
@@ -1509,7 +1519,7 @@ template <class OpA, class OpW> static Oop* __fastcall Interpreter::primitiveStr
 template Oop* Interpreter::primitiveStringComparison<CmpA, CmpW>(Oop* const, primargcount_t);
 template Oop* Interpreter::primitiveStringComparison<CmpIA, CmpIW>(Oop* const, primargcount_t);
 
-Oop* __fastcall Interpreter::primitiveStringLessOrEqual(Oop* sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveStringLessOrEqual(Oop* sp, primargcount_t)
 {
 	Oop oopArg = *sp;
 	const OTE* oteReceiver = reinterpret_cast<const OTE*>(*(sp - 1));
@@ -1521,7 +1531,7 @@ Oop* __fastcall Interpreter::primitiveStringLessOrEqual(Oop* sp, primargcount_t)
 			if (oteArg->isNullTerminated())
 			{
 				int cmp = AnyStringCompare<int, CmpIA, CmpIW, false>(oteReceiver, oteArg);
-				*(sp - 1) = reinterpret_cast<Oop>(cmp > 0 ? Pointers.False : Pointers.True);
+				*(sp - 1) = reinterpret_cast<Oop>(cmp <= 0 ? Pointers.True : Pointers.False);
 				return sp - 1;
 			}
 			else
@@ -1544,7 +1554,7 @@ Oop* __fastcall Interpreter::primitiveStringLessOrEqual(Oop* sp, primargcount_t)
 	}
 }
 
-template <class OpA, class OpW, bool Utf8_OpA> static Oop* __fastcall Interpreter::primitiveStringEqual(Oop* sp, primargcount_t argc)
+template <class OpA, class OpW, bool Utf8_OpA> static Oop* PRIMCALL Interpreter::primitiveStringEqual(Oop* sp, primargcount_t argc)
 {
 	Oop oopArg = *sp;
 	const OTE* oteReceiver = reinterpret_cast<const OTE*>(*(sp - 1));
@@ -1582,7 +1592,7 @@ template <class OpA, class OpW, bool Utf8_OpA> static Oop* __fastcall Interprete
 template Oop* Interpreter::primitiveStringEqual<EqualA, EqualW, true>(Oop* const, primargcount_t);
 template Oop* Interpreter::primitiveStringEqual<EqualIA, EqualIW, false>(Oop* const, primargcount_t);
 
-Oop* __fastcall Interpreter::primitiveBeginsWith(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveBeginsWith(Oop* const sp, primargcount_t)
 {
 	Oop oopArg = *sp;
 	const Utf8StringOTE* oteReceiver = reinterpret_cast<const Utf8StringOTE*>(*(sp - 1));
@@ -1747,7 +1757,7 @@ Oop* __fastcall Interpreter::primitiveBeginsWith(Oop* const sp, primargcount_t)
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveStringAsUtf16String(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveStringAsUtf16String(Oop* const sp, primargcount_t)
 {
 	const OTE* receiver = reinterpret_cast<const OTE*>(*sp);
 	switch (receiver->m_oteClass->m_location->m_instanceSpec.m_encoding)
@@ -1826,7 +1836,7 @@ Oop * Interpreter::primitiveStringAsUtf8String(Oop * const sp, primargcount_t)
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveStringAsByteString(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveStringAsByteString(Oop* const sp, primargcount_t)
 {
 	const OTE* receiver = reinterpret_cast<const OTE*>(*sp);
 	BehaviorOTE* oteClass = receiver->m_oteClass;
@@ -2110,7 +2120,7 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, primargcount_t)
 	}
 }
 
-Oop* __fastcall Interpreter::primitiveStringAsUtf32String(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveStringAsUtf32String(Oop* const sp, primargcount_t)
 {
 	const OTE* receiver = reinterpret_cast<const OTE*>(*sp);
 	switch (receiver->m_oteClass->m_location->m_instanceSpec.m_encoding)

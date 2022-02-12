@@ -1197,7 +1197,7 @@ void OverlappedCall::ReincrementProcessReferences()
 ///////////////////////////////////////////////////////////////////////////////
 // Interpreter primitive 
 
-Oop* __fastcall Interpreter::primitiveUnwindInterrupt(Oop* const, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveUnwindInterrupt(Oop* const, primargcount_t)
 {
 	// Terminate any overlapped call outstanding for the process, this may need to suspend the process
 	// and so this may cause a context switch
@@ -1219,7 +1219,7 @@ Oop* __fastcall Interpreter::primitiveUnwindInterrupt(Oop* const, primargcount_t
 	return primitiveSuccess(0);
 }
 
-Oop* __fastcall Interpreter::primitiveAsyncDLL32Call(Oop* const, primargcount_t argCount)
+Oop* PRIMCALL Interpreter::primitiveAsyncDLL32Call(Oop* const, primargcount_t argCount)
 {
 	CompiledMethod* method = m_registers.m_oopNewMethod->m_location;
 

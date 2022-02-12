@@ -91,7 +91,7 @@ void Interpreter::asyncGC(uintptr_t gcFlags)
 
 
 // This has been usurped for GC primitive
-Oop* __fastcall Interpreter::primitiveCoreLeft(Oop* const sp , primargcount_t argCount)
+Oop* PRIMCALL Interpreter::primitiveCoreLeft(Oop* const sp , primargcount_t argCount)
 {
 	CHECKREFERENCESSP(sp);
 
@@ -165,7 +165,7 @@ void Interpreter::freePools()
 	#endif
 }
 
-Oop* __fastcall Interpreter::primitiveOopsLeft(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveOopsLeft(Oop* const sp, primargcount_t)
 {
 	// Ensure active process has the correct size and that the Zct is empty
 	// and all ref counts are correct

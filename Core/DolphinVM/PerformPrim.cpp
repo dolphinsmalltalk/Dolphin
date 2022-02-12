@@ -23,7 +23,7 @@
 #include "STBlockClosure.h"
 
 // Value with args takes an array of arguments
-Oop* __fastcall Interpreter::primitiveValueWithArgs(Oop* const bp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitiveValueWithArgs(Oop* const bp, primargcount_t)
 {
 	ArrayOTE* argumentArray = reinterpret_cast<ArrayOTE*>(*(bp));
 	BlockOTE* oteBlock = reinterpret_cast<BlockOTE*>(*(bp-1));
@@ -126,7 +126,7 @@ Oop* __fastcall Interpreter::primitiveValueWithArgs(Oop* const bp, primargcount_
 	return primitiveSuccess(0);
 }
 
-Oop* __fastcall Interpreter::primitivePerform(Oop* const sp, primargcount_t argCount)
+Oop* PRIMCALL Interpreter::primitivePerform(Oop* const sp, primargcount_t argCount)
 {
 	SymbolOTE* performSelector = m_oopMessageSelector;	// Save in case we need to restore
 
@@ -184,7 +184,7 @@ Oop* __fastcall Interpreter::primitivePerform(Oop* const sp, primargcount_t argC
 	}
 }
 
-Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitivePerformWithArgs(Oop* const sp, primargcount_t)
 {
 	ArrayOTE* argumentArray = reinterpret_cast<ArrayOTE*>(*(sp));
 	BehaviorOTE* arrayClass = ObjectMemory::fetchClassOf(Oop(argumentArray));
@@ -263,7 +263,7 @@ Oop* __fastcall Interpreter::primitivePerformWithArgs(Oop* const sp, primargcoun
 }
 
 
-Oop* __fastcall Interpreter::primitivePerformMethod(Oop* const sp, primargcount_t)
+Oop* PRIMCALL Interpreter::primitivePerformMethod(Oop* const sp, primargcount_t)
 {
 	ArrayOTE* oteArg = reinterpret_cast<ArrayOTE*>(*(sp));
 	if (ObjectMemory::fetchClassOf(Oop(oteArg)) != Pointers.ClassArray)
