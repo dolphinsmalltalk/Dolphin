@@ -287,6 +287,27 @@ Oop* PRIMCALL Interpreter::primitiveSetMutableInstVar(Oop* const sp, primargcoun
 
 #endif
 
+///////////////////////////////////////////////////////////////////////////////
+// Primitive templates
+
+template <int Index> Oop* PRIMCALL Interpreter::primitiveReturnConst(Oop* const sp, primargcount_t argCount)
+{
+	Oop* newSp = sp - argCount;
+	if (!m_bStepping)
+	{
+		*newSp = Pointers.pointers[Index - 1];
+		return newSp;
+	}
+	else
+	{
+		return primitiveFailure(_PrimitiveFailureCode::StepInto);
+	}
+}
+
+template Oop* PRIMCALL Interpreter::primitiveReturnConst<2>(Oop* const, primargcount_t); // ^false
+template Oop* PRIMCALL Interpreter::primitiveReturnConst<3>(Oop* const, primargcount_t); // ^true
+template Oop* PRIMCALL Interpreter::primitiveReturnConst<1>(Oop* const, primargcount_t); // ^nil
+
 // In order to keep the message lookup routines 'tight' we ensure that the infrequently executed code
 // is in separate routines that will not get inlined. This can make a significant difference to the
 // performance of the system (as we've discovered).

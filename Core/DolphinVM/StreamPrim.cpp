@@ -968,8 +968,18 @@ Oop* PRIMCALL Interpreter::primitiveNextPutAll(Oop* const sp, primargcount_t)
 						memcpy(pwsz + index, str->m_characters, valueSize*sizeof(Utf16String::CU));
 					}
 					break;
+
+					case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Utf32):
+					case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Utf32):
+					case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Utf32):
+					case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Ansi):
+					case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Utf8):
+					case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Utf16):
+						return primitiveFailure(_PrimitiveFailureCode::NotImplemented);
+
 					default:
 						// Unrecognised encoding pair - fail the primitive
+						__assume(false);
 						return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);
 					}
 				}

@@ -1739,6 +1739,7 @@ Oop* PRIMCALL Interpreter::primitiveBeginsWith(Oop* const sp, primargcount_t)
 
 			default:
 				// Unrecognised encoding pair - fail the primitive
+				__assume(false);
 				return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);
 			}
 
@@ -2091,17 +2092,32 @@ Oop* Interpreter::primitiveStringConcatenate(Oop* const sp, primargcount_t)
 			}
 			break;
 
+			case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Utf32):
+			//{
+			//	// UTF-32, UTF-32 => UTF-32
+			//	size_t cbPrefix = oteReceiver->getSize();
+			//	size_t cbSuffix = oteArg->getSize();
+			//	Utf32StringOTE* oteAnswer = reinterpret_cast<Utf32StringOTE*>(ObjectMemory::newUninitializedNullTermObject<Utf32String>(cbPrefix + cbSuffix));
+			//	auto pbAnswer = reinterpret_cast<uint8_t*>(oteAnswer->m_location->m_characters);
+			//	memcpy(pbAnswer, reinterpret_cast<const Utf32StringOTE*>(oteReceiver)->m_location->m_characters, cbPrefix);
+			//	memcpy(pbAnswer + cbPrefix, reinterpret_cast<const Utf32StringOTE*>(oteArg)->m_location->m_characters, cbSuffix + sizeof(Utf32String::CU));
+			//	*(sp - 1) = reinterpret_cast<Oop>(oteAnswer);
+			//	ObjectMemory::AddToZct(reinterpret_cast<OTE*>(oteAnswer));
+			//}
+			//break;
+
 			case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Utf32):
 			case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Utf32):
 			case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Utf32):
-			case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Utf32):
 			case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Ansi):
 			case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Utf8):
 			case ENCODINGPAIR(StringEncoding::Utf32, StringEncoding::Utf16):
+				// UTF-32 support is largely unimplemented.
 				return primitiveFailure(_PrimitiveFailureCode::NotImplemented);
 
 			default:
 				// Unrecognised encoding pair - fail the primitive
+				__assume(false);
 				return primitiveFailure(_PrimitiveFailureCode::AssertionFailure);
 			}
 

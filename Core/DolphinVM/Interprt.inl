@@ -242,20 +242,3 @@ inline HandleOTE* ST::ExternalHandle::New(HANDLE hValue)
 {
 	return reinterpret_cast<HandleOTE*>(Interpreter::NewUint32(reinterpret_cast<uint32_t>(hValue), Pointers.ClassExternalHandle));
 }
-
-///////////////////////////////////////////////////////////////////////////////
-// Primitive templates
-
-template <int Index> Oop* PRIMCALL Interpreter::primitiveReturnConst(Oop* const sp, primargcount_t argCount)
-{
-	Oop* newSp = sp - argCount;
-	if (!m_bStepping)
-	{
-		*newSp = Pointers.pointers[Index - 1];
-		return newSp;
-	}
-	else
-	{
-		return primitiveFailure(_PrimitiveFailureCode::StepInto);
-	}
-}
