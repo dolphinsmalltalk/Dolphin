@@ -307,7 +307,7 @@ testRenameClass
 		unqualified: newClass unqualifiedName
 		full: newClass fullName
 		partial: 'Tests.' , newClass unqualifiedName.
-	self assert: symbolicRefs asArray sort
+	self assert: symbolicRefs asSortedArray
 		equals: {RefactoryTestDataApp >> #refersToClassUnqualifiedName.
 				RefactoryTestDataApp >> #refersToClassUnqualifiedNameInArray.
 				SubclassOfClassToRename >> #refersToClassUnqualifiedName}!

@@ -42,7 +42,7 @@ testCompileDefinition
 		defineField: #c type: WORDField new;
 		defineField: #d type: BYTEField filler'.
 	subject compileDefinition.
-	self assert: subject selectors asArray sort equals: #(#a #b: #c #c:).
+	self assert: subject selectors asSortedArray equals: #(#a #b: #c #c:).
 	self assert: subject byteSize equals: 12!
 
 testDynamicSelectors
@@ -55,7 +55,7 @@ testDynamicSelectors
 		defineField: #readWrite type: DWORDField new;
 		defineField: #fillter type: INT_PTRField filler.
 	expected := #(#readOnly #readWrite #readWrite: #writeOnly:).
-	self assert: subject dynamicSelectors asArray sort equals: expected!
+	self assert: subject dynamicSelectors asSortedArray equals: expected!
 
 testEquals
 	| s1 s2 s3 s4 |

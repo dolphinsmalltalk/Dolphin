@@ -282,8 +282,7 @@ testReferencesToVariable
 	methods := subject allMethods.
 	self
 		assert: ((methods select: [:each | each methodClass == RefactoryTestDataApp])
-				collect: [:each | each selector]) asArray
-				sort
+				collect: [:each | each selector]) asSortedArray
 		equals: #(#refersToClassConstantUnqualified #refersToClassFullyQualified #refersToClassFullyQualifiedBinding #refersToClassFullyQualifiedBindingInArray #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassPartiallyQualifiedBindingInArray #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToClassUnqualifiedBindingInArray #refersToClassUnqualifiedInArray)!
 
 testRemoveSelectorByAndAndNot

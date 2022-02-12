@@ -1310,7 +1310,7 @@ generateCommandMap
 		nextPutAll: 'Commands := (IdentityDictionary withAll: {';
 		cr.
 	commands at: 'SCI_NULL' put: #yourself.
-	(self sciCommands asSortedCollection asArray copyWith: 'SCI_NULL') do: 
+	(self sciCommands asSortedArray copyWith: 'SCI_NULL') do: 
 			[:each |
 			stream
 				display: each;
@@ -1346,7 +1346,7 @@ generateConstantsPool
 	classInstanceVariableNames: ''''
 	classConstants: {';
 		cr.
-	self constantsPool associations asSortedCollection do: 
+	self constantsPool associations sort do: 
 			[:each |
 			stream
 				print: each key;
@@ -1461,7 +1461,7 @@ generateNullLibraryDefaults
 		cr;
 		nextPutAll: '^##((IdentityDictionary withAll: {';
 		cr.
-	defaultReturnValues associations asSortedCollection do: 
+	defaultReturnValues associations sort do: 
 			[:each |
 			stream
 				display: each key;

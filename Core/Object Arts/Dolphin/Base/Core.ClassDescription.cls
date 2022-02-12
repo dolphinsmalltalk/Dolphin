@@ -293,7 +293,7 @@ classVariables
 classVariableString
 	"Answer a space separated string of the names of the receiver's class variables. Note for legacy reasons this will include class constant names too."
 
-	^$\x20 join: self classPool keys asArray sort!
+	^$\x20 join: self classPool keys asSortedArray!
 
 comment
 	"Answer the class comment for the receiver"
@@ -896,8 +896,10 @@ resourceIdentifiers
 	^identifiers!
 
 resourceIdentifiersDo: aMonadicValuable
-	self
-		resourceSelectorsDo: [:each | aMonadicValuable value: (UI.ResourceIdentifier newClass: self selector: each)]!
+	self metaclass selectorsDo: 
+			[:each |
+			(each beginsWith: UI.ResourceIdentifier.SelectorPrefix)
+				ifTrue: [aMonadicValuable value: (UI.ResourceIdentifier newClass: self selector: each)]]!
 
 resourceNames
 	| names |

@@ -491,7 +491,7 @@ publishedAspectsOfInstances
 		do: [:each | aspects removeKey: each].
 	#(#isHiddenOnUnpin #isTrayResizable #isCardChangeAnimated)
 		do: [:each | aspects add: (Aspect boolean: each)].
-	aspects add: (Aspect symbol: #animation from: ##(Animations keys asArray sort)).
+	aspects add: (Aspect symbol: #animation from: ##(Animations keys asSortedArray)).
 	^aspects! !
 !UI.SlideyInneyOuteyThing class categoriesForMethods!
 example1!examples!public! !

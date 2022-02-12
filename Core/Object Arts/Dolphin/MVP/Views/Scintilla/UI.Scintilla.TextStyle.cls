@@ -434,7 +434,7 @@ buildPropertyDescriptors
 			defaultValue: nil
 			setMessage: SCI_STYLESETFONT)
 			type: String;
-			values: [(Canvas forDesktop fontNames reject: [:each | (each at: 1) = $@]) asArray sort];
+			values: [(Canvas forDesktop fontNames reject: [:each | (each at: 1) = $@]) asSortedArray];
 			nilChoice: '<Inherited>';
 			yourself.
 		(BoolPropertyDescriptor

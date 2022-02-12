@@ -2324,7 +2324,7 @@ updateCategories
 			[| last allCategory |
 			last := self category.
 			"Set up the category tree for the class"
-			categoriesPresenter model list: self actualClassChainCategories asOrderedCollection.
+			categoriesPresenter model list: self actualClassChainCategories.
 			allCategory := self allCategory.
 			categoriesPresenter expand: allCategory.
 			(last isNil or: [(categoriesPresenter selection: last ifAbsent: []) ~= last])

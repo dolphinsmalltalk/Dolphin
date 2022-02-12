@@ -376,7 +376,7 @@ availablePools
 		SmalltalkSystem current availablePools
 	The system pools (identified by a name that starts with an underscore) are specifically excluded."
 
-	^(SharedPool allSubclasses reject: [:each | each name first == $_]) asArray sort!
+	^(SharedPool allSubclasses reject: [:each | each name first == $_]) asSortedArray!
 
 backupOnImageSave
 	"Answer whether the image should be backed up (i.e. the old .img file is renamed to .bak when the new .img

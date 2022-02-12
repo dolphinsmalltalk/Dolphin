@@ -2197,6 +2197,7 @@ defaultUnaryReturnTypes
 		at: #asOrderedCollection put: OrderedCollection;
 		at: #asQualifiedReference put: BindingReference;
 		at: #asSet put: Set;
+		at: #asSortedArray put: Array;
 		at: #asSortedCollection put: SortedCollection;
 		at: #asSymbol put: Symbol;
 		at: #asUtf8String put: Utf8String;

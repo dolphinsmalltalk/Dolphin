@@ -230,7 +230,11 @@ testODBCTIMEConversion
 
 testPackagesCorrectlySetUp
 	"The base package should not be dependent upon the development system."
-	self assert: ((Kernel.Package manager packageNamed: 'Database Connection Base') prerequisites collect: [:each | each name]) asArray sort equals: #('Dolphin' 'Dolphin Legacy Date & Time')!
+
+	self
+		assert: ((Kernel.Package manager packageNamed: 'Database Connection Base') prerequisites
+				collect: [:each | each name]) asSortedArray
+		equals: #('Dolphin' 'Dolphin Legacy Date & Time')!
 
 testPreparedQuery
 	| statement results |

@@ -16,7 +16,7 @@ testClassAndBindingReference
 	subject := STLClassCollector
 				on: #(#'!!STL' 5 34 1 1049094 #{Core.Association} 8 #{Core.Object} #{Core.Object}) readStream.
 	classes := subject contents.
-	self assert: classes asArray sort
+	self assert: classes asSortedArray
 		equals: {Array. Association. FullBindingReference. Object. SmallInteger. Symbol}!
 
 testEmptyArray
@@ -24,7 +24,7 @@ testEmptyArray
 	subject := STLClassCollector on: #() literalStoreArray readStream.
 	classes := subject contents.
 	expected := {Array. SmallInteger. Symbol}.
-	self assert: classes asArray sort equals: expected!
+	self assert: classes asSortedArray equals: expected!
 
 testLiterals
 	| subject classes expected |
@@ -33,27 +33,28 @@ testLiterals
 	classes := subject contents.
 	expected := #(#{Core.Array} #{Core.Character} #{Core.False} #{Core.Float} #{Core.LargeInteger} #{Core.ScaledDecimal} #{Core.SmallInteger} #{Core.Symbol} #{Core.True} #{Core.UndefinedObject})
 				collect: [:each | each value].
-	self assert: classes asArray sort equals: expected!
+	self assert: classes asSortedArray equals: expected!
 
 testMetaclass
 	| subject classes expected |
-	subject := STLClassCollector on: #(#'!!STL' 5 1049094 #{Core.Association} 8 #{Core.Object class} #{Core.Object class}) readStream.
+	subject := STLClassCollector
+				on: #(#'!!STL' 5 1049094 #{Core.Association} 8 #{Core.Object class} #{Core.Object class}) readStream.
 	classes := subject contents.
 	expected := {Array. Association. MetaBindingReference. Object. SmallInteger. Symbol}.
-	self assert: classes asArray sort equals: expected!
+	self assert: classes asSortedArray equals: expected!
 
 testNil
 	| subject classes expected |
 	subject := STLClassCollector on: nil literalStoreArray readStream.
 	classes := subject contents.
 	expected := {Array. SmallInteger. Symbol. UndefinedObject}.
-	self assert: classes asArray sort equals: expected!
+	self assert: classes asSortedArray equals: expected!
 
 testVersion3ViewResource
 	| subject classes |
 	subject := STLClassCollector on: self version3ViewResource readStream.
 	classes := subject contents.
-	self assert: classes asArray sort
+	self assert: classes asSortedArray
 		equals: (#(#{Core.Array} #{UI.BorderLayout} #{Core.ByteArray} #{UI.ContainerView} #{Core.IdentityDictionary} #{Core.LargeInteger} #{UI.ListModel} #{Core.MessageSend} #{Core.MessageSequence} #{Core.OrderedCollection} #{Graphics.Point} #{Graphics.Rectangle} #{Graphics.RGB} #{Smalltalk.ScribbleView} #{Core.SearchPolicy} #{Core.SmallInteger} #{Kernel.STBCollectionProxy} #{Kernel.STBIdentityDictionaryProxy} #{Kernel.STBSingletonProxy} #{UI.STBViewProxy} #{Core.Symbol} #{Core.UndefinedObject} #{Core.Utf8String} #{OS.WINDOWPLACEMENT})
 				collect: [:each | each value])!
 
@@ -61,7 +62,7 @@ testVersion4ViewResource
 	| subject classes |
 	subject := STLClassCollector on: self version4ViewResource readStream.
 	classes := subject contents.
-	self assert: classes asArray sort
+	self assert: classes asSortedArray
 		equals: (#(#{Core.Array} #{UI.BorderLayout} #{Core.ByteArray} #{Graphics.Color} #{UI.CommandDescription} #{UI.CommandMenuItem} #{Graphics.Icon} #{Core.IdentityDictionary} #{Kernel.ImageRelativeFileLocator} #{Core.LargeInteger} #{UI.Menu} #{UI.MenuBar} #{Core.MessageSend} #{Core.MessageSequence} #{Core.OrderedCollection} #{Graphics.Point} #{UI.ReferenceView} #{UI.ResourceIdentifier} #{Smalltalk.Scribble} #{UI.ShellView} #{Core.SmallInteger} #{Kernel.STBCollectionProxy} #{Kernel.STBExternalResourceLibraryProxy} #{Kernel.STBIdentityDictionaryProxy} #{UI.STBViewProxy} #{Core.Symbol} #{Core.True} #{Core.UndefinedObject} #{Core.Utf8String} #{OS.WINDOWPLACEMENT})
 				collect: [:each | each value])!
 
@@ -69,7 +70,7 @@ testVersion5ViewResource
 	| subject classes |
 	subject := STLClassCollector on: self version5ViewResource readStream.
 	classes := subject contents.
-	self assert: classes asArray sort
+	self assert: classes asSortedArray
 		equals: (#(#{Core.Array} #{UI.BorderLayout} #{Core.ByteArray} #{Graphics.Color} #{UI.CommandDescription} #{UI.CommandMenuItem} #{Graphics.Icon} #{Core.IdentityDictionary} #{Graphics.ImageFromStringResourceInitializer} #{Core.LargeInteger} #{UI.Menu} #{UI.MenuBar} #{Core.MessageSend} #{Core.MessageSequence} #{Graphics.Point} #{UI.ReferenceView} #{UI.ResourceIdentifier} #{Smalltalk.Scribble} #{UI.ShellView} #{Core.SmallInteger} #{Kernel.STBExternalResourceLibraryProxy} #{Kernel.STBIdentityDictionaryProxy} #{UI.STBViewProxy} #{Core.Symbol} #{Core.True} #{Core.UndefinedObject} #{Core.Utf8String} #{OS.WINDOWPLACEMENT})
 				collect: [:each | each value])!
 

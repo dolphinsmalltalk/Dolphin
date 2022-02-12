@@ -383,7 +383,7 @@ update: anObject
 		ifFalse: [super update: anObject]!
 
 updateDefects
-	self displayDefects: (result defects asArray sort , result skipped asArray sort
+	self displayDefects: (result defects asSortedArray , result skipped asSortedArray
 				collect: [:each | result resultFor: each])!
 
 updateWindow

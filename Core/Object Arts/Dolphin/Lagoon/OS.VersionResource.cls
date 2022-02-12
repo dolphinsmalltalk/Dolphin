@@ -294,19 +294,21 @@ writeStrings: aLookupTable to: target
 	"Private - Append String blocks containing the receiver's version info strings to
 	the <puttableStream>, target (which must be a byte stream)."
 
-	aLookupTable keys asArray sort do: [:key |
-		self writeTextHeaderTo: target key: key value: (aLookupTable at: key)].
+	aLookupTable keys asSortedArray do: 
+			[:key |
+			self
+				writeTextHeaderTo: target
+				key: key
+				value: (aLookupTable at: key)]!
 
-!
-
-writeStringTablesTo: target 
+writeStringTablesTo: target
 	"Private - Append StringTable blocks containing the receiver's string tables to
 	the <puttableStream>, target (which must be a byte stream)."
 
-	self stringTables keys asArray sort do: 
-			[:languageId | 
+	self stringTables keys asSortedArray do: 
+			[:languageId |
 			| blockStart |
-			blockStart := self 
+			blockStart := self
 						writeTextHeaderTo: target
 						key: languageId
 						value: ''.

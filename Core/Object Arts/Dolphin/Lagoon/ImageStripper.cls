@@ -766,7 +766,7 @@ logPreservedClasses
 	classes := deploymentContext rootClasses.
 	self startElement: 'RootClasses' attributes: #().
 	developmentRoots := OrderedCollection new.
-	classes asArray sort do: 
+	classes asSortedArray do: 
 			[:each |
 			| attributes |
 			attributes := (self developmentClasses includes: each)
@@ -785,7 +785,7 @@ logPreservedMessages
 	"Private - Logs a list of the classes that form the root set for the application."
 
 	self startElement: 'RequiredMethodCategories' attributes: #().
-	self requiredMethodCategories asArray sort do: 
+	self requiredMethodCategories asSortedArray do: 
 			[:each |
 			self
 				logElement: 'MethodCategory'
@@ -794,7 +794,7 @@ logPreservedMessages
 	self
 		endElement: true;
 		startElement: 'PreservedMessages' attributes: #().
-	deploymentContext preservedMessages asArray sort do: 
+	deploymentContext preservedMessages asSortedArray do: 
 			[:each |
 			self
 				logElement: 'Selector'
@@ -861,7 +861,7 @@ logRemainingClasses
 	self startElement: 'Classes' attributes: {'count' -> stats size}.
 	classes := Array writeStream: stats size.
 	stats associationsDo: [:each | classes nextPut: each].
-	stats := classes contents asArray sort.
+	stats := classes contents asSortedArray.
 	(flags allMask: LogReferencesMask) ifTrue: [self collectGarbage: 2].
 	devClasses := self developmentClasses.
 	1 to: stats size
@@ -931,7 +931,7 @@ logRemainingPackages
 	"Private - Write a list of the remaining packages to the stripping log."
 
 	self startElement: 'RetainedPackages' attributes: #().
-	(self systemPackageManager packages collect: [:each | each name]) asArray sort do: 
+	(self systemPackageManager packages collect: [:each | each name]) asSortedArray do: 
 			[:each |
 			self
 				logElement: 'Package'
@@ -986,7 +986,7 @@ logRequiredMethodCategories
 	"Private - Logs a list of the classes that form the root set for the application."
 
 	self startElement: 'RequiredMethodCategories' attributes: #().
-	self requiredMethodCategories asArray sort do: 
+	self requiredMethodCategories asSortedArray do: 
 			[:each |
 			self
 				logElement: 'MethodCategory'
@@ -1005,7 +1005,7 @@ logSentMessages: aWeakIdentityDictionary
 	allRefs := self messagesSentByClasses: remainingClasses.
 	self finishedWithAll: #(#messagesSentByClasses:).
 	sent := allRefs intersection: originallySent.
-	sent asArray sort do: 
+	sent asSortedArray do: 
 			[:each |
 			self
 				logElement: 'Selector'
@@ -1017,7 +1017,7 @@ logSentMessages: aWeakIdentityDictionary
 	implemented := Set new: remainingClasses size * 10.
 	self allMethodsInClasses: remainingClasses do: [:each | implemented add: each selector].
 	diff := sent difference: implemented.
-	diff asArray sort do: 
+	diff asSortedArray do: 
 			[:each |
 			self
 				logElement: 'Selector'
@@ -1026,7 +1026,7 @@ logSentMessages: aWeakIdentityDictionary
 	self endElement: true.
 	deploymentContext aspectSetters isEmpty ifTrue: [^self].
 	self startElement: 'PreservedAspectSetters' attributes: #().
-	deploymentContext aspectSetters asArray sort
+	deploymentContext aspectSetters asSortedArray
 		do: [:each | (sent identityIncludes: each selector) ifFalse: [self logMethod: each]].
 	self endElement: true.
 	deploymentContext aspectSetters: nil.
@@ -1817,7 +1817,7 @@ uncheckedDeleteClass: aClass
 			preserved := deploymentContext preservedMessages.
 			resourceMessages := preserved select: [:each | each beginsWith: 'resource_'].
 			self
-				logComment: 'Discarding preserved resource messages: ' , resourceMessages asArray sort printString.
+				logComment: 'Discarding preserved resource messages: ' , resourceMessages asSortedArray printString.
 			deploymentContext preservedMessages: (preserved difference: resourceMessages).
 			##(self) removeSelector: #uncheckedDeleteClass: ifAbsent: nil].
 	^super uncheckedDeleteClass: aClass!

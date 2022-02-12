@@ -533,7 +533,7 @@ getOptionAbstractVariables
 				nextPutAll: 'The following instance variables are directly accessed:';
 				cr.
 			self
-				printNameList: instVars asArray sort
+				printNameList: instVars asSortedArray
 				on: details
 				limit: self maxDetails // 2
 				type: 'instance variables'].
@@ -549,7 +549,7 @@ getOptionAbstractVariables
 				nextPutAll: 'The following class variables are directly accessed:';
 				cr.
 			self
-				printNameList: classVars asArray sort
+				printNameList: classVars asSortedArray
 				on: details
 				limit: self maxDetails // 2
 				type: 'class variables'].

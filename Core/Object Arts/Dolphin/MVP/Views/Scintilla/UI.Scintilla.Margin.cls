@@ -261,7 +261,7 @@ buildPropertyDescriptors
 				getSelector: #basicCursorType;
 				setSelector: #basicCursorType:;
 				getMessage: SCI_GETMARGINCURSORN;
-				values: CursorTypes values asArray sort;
+				values: CursorTypes values asSortedArray;
 				yourself.
 	BackcolorProperty := (ColourPropertyDescriptor
 				key: #backcolor

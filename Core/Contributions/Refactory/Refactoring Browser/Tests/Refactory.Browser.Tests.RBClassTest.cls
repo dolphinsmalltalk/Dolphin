@@ -202,7 +202,7 @@ testMethodsReferencingExternals1
 	self assert: class metaclass methodsReferencingExternals single
 		equals: (class metaclass methodFor: #testSkip).
 	subclass := class subclasses first.
-	self assert: (subclass methodsReferencingExternals collect: [:each | each selector]) asArray sort
+	self assert: (subclass methodsReferencingExternals collect: [:each | each selector]) asSortedArray
 		equals: #(#refersToClassFullyQualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToOtherClassPartiallyQualifiedBinding #testSkip #unqualifiedBindingReference)!
 
 testMethodsReferencingExternals2

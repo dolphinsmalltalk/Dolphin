@@ -48,8 +48,7 @@ list: list
 
 	"Add a title node if there is one"
 	title notNil ifTrue: [self addRoot: title].
-	(list asSortedCollection: [:a :b | a name < b name]) 
-		do: [:each | self addCategory: each]!
+	(list asSortedArray: [:a :b | a name < b name]) do: [:each | self addCategory: each]!
 
 title
 	"Answer the top most node in the tree."

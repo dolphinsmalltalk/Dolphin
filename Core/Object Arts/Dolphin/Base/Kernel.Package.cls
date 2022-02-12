@@ -968,12 +968,12 @@ manualPrerequisites
 		ifTrue: [OrderedCollection new]
 		ifFalse: [manualPrerequisites asOrderedCollection]!
 
-manualPrerequisites: aCollectionOfStrings 
+manualPrerequisites: aCollectionOfStrings
 	"Set the <collection> of manually specified pre-requisite package names for the receiver."
 
 	| newPrereqs |
-	newPrereqs := aCollectionOfStrings notEmpty 
-				ifTrue: [aCollectionOfStrings asArray sort copyWithout: self name].
+	newPrereqs := aCollectionOfStrings notEmpty
+				ifTrue: [aCollectionOfStrings asSortedArray copyWithout: self name].
 	newPrereqs = manualPrerequisites ifTrue: [^self].
 	manualPrerequisites := newPrereqs.
 	self isChanged: true.
@@ -1100,14 +1100,14 @@ onClassRemoved: aClass
 	no longer tied into the system class tree we have to use the method
 	names."
 
-	| className ownedChanged |
-	className := aClass fullyQualifiedReference.
+	| ownedChanged |
 	ownedChanged := false.
 
 	"remove any directly owned methods from aClass"
 	methodNames
 		ifNotNil: 
-			[| removed |
+			[| className removed |
+			className := aClass fullyQualifiedReference.
 			removed := methodNames select: [:methodName | methodName className instance = className].
 			removed notEmpty
 				ifTrue: 

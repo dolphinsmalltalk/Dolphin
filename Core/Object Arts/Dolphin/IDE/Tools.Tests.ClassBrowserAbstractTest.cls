@@ -43,7 +43,8 @@ inheritedMethodAddRemoveTests
 
 	"Add a new method to Object never seen before, to a non-immediate superclass, to an immediate superclass, and finally to the class itself"
 
-	| myMethod method |
+	| myMethod method categories |
+	categories := {'private' asMethodCategory}.
 	{Object -> 'blah'.
 		TestCase -> 'blah2'.
 		Core.Tests.DolphinTest -> 'blah3'.
@@ -51,7 +52,7 @@ inheritedMethodAddRemoveTests
 				[:each |
 				method := each key
 							compile: each value
-							categories: #()
+							categories: categories
 							package: packageA.
 				self assertIsOnlyMethodVisible: method].
 
@@ -60,7 +61,7 @@ inheritedMethodAddRemoveTests
 			[:each |
 			method := each key
 						compile: each value
-						categories: #()
+						categories: categories
 						package: packageA.
 			self assertIsOnlyMethodVisible: (Object compiledMethodAt: method selector)].
 
@@ -71,7 +72,7 @@ inheritedMethodAddRemoveTests
 			[:each |
 			method := each
 						compile: 'visibilityTestPlaceHolder'
-						categories: #()
+						categories: categories
 						package: packageA.
 			self deny: (browser isMethodVisible: method).
 			self assertIsOnlyMethodVisible: myMethod].
@@ -81,35 +82,35 @@ inheritedMethodAddRemoveTests
 			[:each |
 			method := ClassBrowserAbstractTest
 						compile: each
-						categories: #()
+						categories: categories
 						package: packageA.
 			self assertIsOnlyMethodVisible: method].
 
 	"Add a method to super that is already overridden in class (from Object)"
 	method := Core.Tests.DolphinTest
 				compile: 'blah'
-				categories: #()
+				categories: categories
 				package: packageA.
 	self assertIsOnlyMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: method selector).
 
 	"Add a method to super that is already overridden in class (from super super)"
 	method := Core.Tests.DolphinTest
 				compile: 'blah2'
-				categories: #()
+				categories: categories
 				package: packageA.
 	self assertIsOnlyMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: method selector).
 
 	"Add a method to super-super that is already overridden in class (from Object)"
 	method := TestCase
 				compile: 'blah'
-				categories: #()
+				categories: categories
 				package: packageA.
 	self assertIsOnlyMethodVisible: (ClassBrowserAbstractTest compiledMethodAt: method selector).
 
 	"Now overriding a superclass once removed but adding to our superclass"
 	method := Core.Tests.DolphinTest
 				compile: 'addDependentToHierachy: anObject'
-				categories: #()
+				categories: categories
 				package: packageA.
 	self assertIsOnlyMethodVisible: method.
 

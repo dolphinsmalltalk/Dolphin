@@ -179,7 +179,7 @@ testIdentityDictionaryWithSymbolKeys
 	testKey objectAt: self selector put: subject.
 	key := testKey at: self selector.
 	self assert: (key keys asArray , key subValues keys asArray) sort
-		equals: #('') , subject keys asArray sort.
+		equals: #('') , subject keys asSortedArray.
 	key free.
 	restored := testKey objectAt: self selector.
 	self assert: restored class identicalTo: IdentityDictionary.
@@ -347,8 +347,8 @@ verifyDictionarySerializationStringKeys: aClass
 	testKey objectAt: self selector put: subject.
 	key := testKey at: self selector.
 	self assert: (key keys asArray , key subValues keys asArray) sort
-		equals: #('') , subject keys asArray sort.
-	restored := (RegistryDeserializer readFrom: key).
+		equals: #('') , subject keys asSortedArray.
+	restored := RegistryDeserializer readFrom: key.
 	key free.
 	self assert: restored class identicalTo: aClass.
 	self assert: (restored at: 'myself') identicalTo: restored.
@@ -370,7 +370,7 @@ verifyDictionarySerializationWithNonStringKeys: aClass
 	testKey objectAt: self selector put: subject.
 	key := testKey at: self selector.
 	"The keys names should be integers"
-	self assert: key keys asArray sort equals: ((1 to: subject size) collect: [:i | i printString]).
+	self assert: key keys asSortedArray equals: ((1 to: subject size) collect: [:i | i printString]).
 	"Only the default value should be present"
 	self assert: key subValues keys single equals: ''.
 	"And it's value should be the class and tally"

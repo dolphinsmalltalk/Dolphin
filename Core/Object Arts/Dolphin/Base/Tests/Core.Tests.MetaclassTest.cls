@@ -18,7 +18,8 @@ canonicalInstance
 	^super canonicalInstance!
 
 testClassBindingNames
-	self assert: Object class classBindingNames asArray sort equals: #('_AssertionFailureSignal' '_DependentsRegister' '_EventsRegister' '_PropertyRegister')!
+	self assert: Object class classBindingNames asSortedArray
+		equals: #('_AssertionFailureSignal' '_DependentsRegister' '_EventsRegister' '_PropertyRegister')!
 
 testEnvironment
 	self assertIsNil: Root class environment.

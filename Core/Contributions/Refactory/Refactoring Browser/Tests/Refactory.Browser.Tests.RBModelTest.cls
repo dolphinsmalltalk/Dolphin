@@ -78,7 +78,7 @@ testDefineClassChangeD8
 	class := subject classNamed: 'Refactory.Browser.Tests.SmalltalkTestXXX'.
 	self denyIsNil: class.
 	classVars := class classVariables.
-	self assert: (classVars collect: [:each | each key]) asArray sort equals: #('Cv1' 'Cv2').
+	self assert: (classVars collect: [:each | each key]) asSortedArray equals: #('Cv1' 'Cv2').
 	self assert: (classVars allSatisfy: [:each | each isVariableBinding]).
 	self assert: (classVars allSatisfy: [:each | each isClassVariable and: [each isImmutable not]]).
 	self assert: (classVars allSatisfy: [:each | each environment == class]).

@@ -21,7 +21,8 @@ testAllRoots
 	roots do: [:each | self assertIsNil: each superclass]!
 
 testClassBindingNames
-	self assert: Object classBindingNames asArray sort equals: #('_AssertionFailureSignal' '_DependentsRegister' '_EventsRegister' '_PropertyRegister')!
+	self assert: Object classBindingNames asSortedArray
+		equals: #('_AssertionFailureSignal' '_DependentsRegister' '_EventsRegister' '_PropertyRegister')!
 
 testClassPoolsWellFormed
 	"https://github.com/dolphinsmalltalk/Dolphin/issues/562"

@@ -88,7 +88,7 @@ forPackagesDeployment: aCollectionOfPackages
 	deployed := deployed & devMethods not.
 	"As before, reify the environment to speed things up as we will enumerate it more than once."
 	deployed := self forMethodsIn: deployed.
-	names := (aCollectionOfPackages collect: [:each | each name]) asArray sort.
+	names := (aCollectionOfPackages collect: [:each | each name]) asSortedArray.
 	deployed
 		label: 'App deployed from ' , (names size = 1 ifTrue: [names first] ifFalse: [names]) printString.
 	^deployed! !

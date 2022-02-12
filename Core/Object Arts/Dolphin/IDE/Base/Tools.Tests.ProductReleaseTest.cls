@@ -43,7 +43,7 @@ testSubclassResponsibilityNotDefined
 	failures := rule failedMethods reject: 
 					[:each |
 					each selector == #testWarnUnimplementedAbstractMethod or: [each methodClass subclasses isEmpty]].
-	self assert: failures asArray sort equals: #()
+	self assert: failures asSortedArray equals: #()
 	"
 	(BrowserEnvironment new forMethods: failures) openEditor.
 	Or to see all failures, including those grandfathered-in

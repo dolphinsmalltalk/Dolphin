@@ -337,7 +337,7 @@ printDefinitionOn: puttableStream
 		nextPutAll: 'classVariableNames: '''.
 	classConstants := OrderedCollection new.
 	classVariables := OrderedCollection new.
-	self definedBindings asArray sort do: 
+	self definedBindings asSortedArray do: 
 			[:each |
 			((each isImmutable and: [each value isSelfEvaluating])
 				ifTrue: [classConstants]
