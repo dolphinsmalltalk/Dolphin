@@ -11,9 +11,6 @@ Kernel.SourceManager comment: ''!
 !Kernel.SourceManager categoriesForClass!Development!System-Support! !
 !Kernel.SourceManager methodsFor!
 
-basicChangesFiler
-	^SourceFiles at: ChangesIndex!
-
 basicOpenSources: filePath
 	"Private - Open the source streams"
 
@@ -21,12 +18,12 @@ basicOpenSources: filePath
 		openSourcesFile: filePath;
 		openChangesFile: filePath!
 
-changePositionFromDescriptor: anInteger 
+changePositionFromDescriptor: anInteger
 	"Private - Answer the offset from the start of the source file at which the chunk containing
 	the source code whose location is described by, sourceDescriptor, can be found.
 	If sourceObject is not an Integer, then an error will result."
 
-	^self basicChangesFiler sourcePositionFromDescriptor: anInteger!
+	^self changesFiler sourcePositionFromDescriptor: anInteger!
 
 changePositionOf: aSourceObject 
 	"Private - Answer the offset from the start of the source file at which the chunk containing
@@ -53,15 +50,7 @@ changesFileNameFromPath: filePath
 	^File path: filePath extension: self changesExtension!
 
 changesFiler
-	"Private - Answer a <SourceFiler> open on the changes log file, or nil 
-	if there is no change log. The <SourceFiler> is position to the end of 
-	the log ready to log new source, etc."
-
-	^self basicChangesFiler ifNotNil: 
-			[:changes | 
-			changes
-				setToEnd;
-				yourself]!
+	^SourceFiles at: ChangesIndex!
 
 changesFileSize
 	"Answer the current size of the change log."
@@ -71,7 +60,7 @@ changesFileSize
 changesStream
 	"Private - Answer the FileStream open on the changes log file."
 
-	^self basicChangesFiler ifNotNil: [:changes | changes stream]!
+	^self changesFiler ifNotNil: [:changes | changes stream]!
 
 chunkFilerOn: aStream
 	"Answer a <ChunkSourceFiler> on the specified stream. The filer leaves existing line endings alone."
@@ -257,9 +246,12 @@ isMethodChanged: aCompiledMethod
 logEvaluate: aString
 	"Record aString to the change log as an expression which has been evaluated."
 
-	self changesFiler 
-		ifNotNil: [:logger | mutex critical: 
+	self changesFiler
+		ifNotNil: 
+			[:logger |
+			mutex critical: 
 					[logger
+						setToEnd;
 						fileOutExpression: aString;
 						flush]]!
 
@@ -361,40 +353,45 @@ sourcesFileStream
 
 	^(SourceFiles at: SourcesIndex) ifNotNil: [:sourceFile | sourceFile stream]!
 
-storeCommentString: aString forClass: aClass 
+storeCommentString: aString forClass: aClass
 	"Private - Append the <readableString> comment, aString, for the <Class>, aClass, to the
 	change log, saving the position and index so that it may be retrieved later. If a valid
 	source file is not available then just store aString directly in the class."
 
-	self changesFiler 
+	self changesFiler
 		ifNil: [aClass sourceDescriptor: aString]
 		ifNotNil: 
-			[:filer | 
+			[:filer |
 			mutex critical: 
 					[filer
+						setToEnd;
 						storeCommentString: aString forClass: aClass;
 						flush]]!
 
-storeCommentString: aString forPackage: aPackage 
+storeCommentString: aString forPackage: aPackage
 	"Private - Append the <readableString> comment, aString, for the <Package>, aPackage, to the
 	change log, saving the position and index so that it may be retrieved later. If a valid
 	source file is not available then just store aString directly in the package."
 
-	self changesFiler 
+	self changesFiler
 		ifNil: [aPackage sourceDescriptor: aString]
 		ifNotNil: 
-			[:filer | 
+			[:filer |
 			mutex critical: 
 					[filer
+						setToEnd;
 						storeCommentString: aString forPackage: aPackage;
 						flush]]!
 
 storeGUIDForClass: class
 	"Private - Append the GUID of the <Class>, class, to the change log in a evaluable chunk."
 
-	self changesFiler 
-		ifNotNil: [:logger | mutex critical: 
+	self changesFiler
+		ifNotNil: 
+			[:logger |
+			mutex critical: 
 					[logger
+						setToEnd;
 						emitGUIDOfClass: class;
 						flush]]!
 
@@ -405,10 +402,14 @@ storeSourceString: aString forMethod: aCompiledMethod
 	If a valid source file is not available then just store aString
 	directly in the method."
 
-	| logger |
-	(logger := self changesFiler) isNil 
-		ifTrue: [aCompiledMethod sourceDescriptor: aString]
-		ifFalse: [mutex critical: [logger storeSourceString: aString forMethod: aCompiledMethod]]!
+	self changesFiler
+		ifNil: [aCompiledMethod sourceDescriptor: aString]
+		ifNotNil: 
+			[:logger |
+			mutex critical: 
+					[logger
+						setToEnd;
+						storeSourceString: aString forMethod: aCompiledMethod]]!
 
 truncateChanges
 	"Private - Truncate the change log.
@@ -422,14 +423,13 @@ truncateChanges
 			(FileStream write: chgFile) close.	"truncate it"
 			self openChangesFile: chgFile]! !
 !Kernel.SourceManager categoriesForMethods!
-basicChangesFiler!accessing!private! !
 basicOpenSources:!operations-source files!private! !
 changePositionFromDescriptor:!private!source filing! !
 changePositionOf:!development!private!testing! !
 changesExtension!constants!private! !
 changesFileName!accessing!public! !
 changesFileNameFromPath:!public!source filing! !
-changesFiler!accessing!private! !
+changesFiler!accessing!public! !
 changesFileSize!accessing!public! !
 changesStream!accessing!private! !
 chunkFilerOn:!accessing!public! !

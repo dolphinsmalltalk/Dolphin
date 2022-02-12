@@ -331,7 +331,7 @@ printBasicDefinitionOfClass: aClass
 		nextPutAll: 'classVariableNames: '''.
 	classConstants := OrderedCollection new.
 	classVariables := OrderedCollection new.
-	aClass definedBindings asArray sort do: 
+	aClass definedBindings asSortedArray do: 
 			[:each |
 			((each isImmutable and: [each value isSelfEvaluating])
 				ifTrue: [classConstants]
@@ -825,9 +825,12 @@ fileOut: anObject to: aFileName
 logChanged: aSourceObject
 	"File out the changed <sourceObject>, aSourceObject, to the change log."
 
-	self changesFiler 
-		ifNotNil: [:logger | mutex critical: 
-					[aSourceObject fileOutOn: logger.
+	self changesFiler
+		ifNotNil: 
+			[:logger |
+			mutex critical: 
+					[logger setToEnd.
+					aSourceObject fileOutOn: logger.
 					logger flush]]!
 
 logComment: aString
@@ -835,8 +838,11 @@ logComment: aString
 	logged are prefixed with a timestamp.
 	N.B. Logging requests should be directed through the SessionManager."
 
-	self changesFiler 
-		ifNotNil: [:logger | self logComment: aString to: logger]!
+	self changesFiler
+		ifNotNil: 
+			[:logger |
+			logger setToEnd.
+			self logComment: aString to: logger]!
 
 logComment: aString to: aSourceFiler
 	"Private - Record aString to the specified source file as a comment. All comments
@@ -861,21 +867,24 @@ storeCategoriesForClass: class
 	"Private - Store the categories of the <ClassDescription>, class, to
 	the change log so that they may be reloaded later."
 
-	self changesFiler 
-		ifNotNil: [:logger | mutex critical: 
+	self changesFiler
+		ifNotNil: 
+			[:logger |
+			mutex critical: 
 					[logger
+						setToEnd;
 						emitCategoriesOfClass: class;
 						flush]]!
 
 storeCategoriesForMethod: aCompiledMethod
-	"Private - Store the categories of the <CompiledMethod>, method, to the change
-	log so that they may be reloaded later."
+	"Private - Store the categories of the <CompiledMethod> argument to the change log so that they may be reloaded later."
 
 	self changesFiler
 		ifNotNil: 
 			[:logger |
 			mutex critical: 
 					[logger
+						setToEnd;
 						emitCategoriesOfMethod: aCompiledMethod;
 						cr;
 						flush]]! !
