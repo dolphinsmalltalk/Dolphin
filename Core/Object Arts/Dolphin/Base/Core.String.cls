@@ -97,6 +97,7 @@ _sameAsString: aString
 		'self < comparand or: [self = comparand]
 	since String>>= is case sensitive."
 
+	<primitive: 228>
 	^self <=> aString <= 0!
 
 <==> aString

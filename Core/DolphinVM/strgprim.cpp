@@ -1310,6 +1310,93 @@ Oop* __fastcall Interpreter::primitiveHashIgnoreCase(Oop* const sp, primargcount
 	}
 }
 
+///////////////////////////////////////////////////////////////////////////////
+// Primitive templates
+
+// Could double-dispatch this rather than handling all this in one set of primitives in the VM
+// or at least define one primitive for each string class, but it would mean adding quite a lot of methods, 
+// so this keeps the ST side cleaner by hiding the switch in the VM.
+// This should also be faster as the intermediate conversions can usually be performed on the stack
+// and so do not require any allocations.
+template <typename T, class OpA, class OpW, bool Utf8_OpA> static T __stdcall AnyStringCompare(const OTE* oteReceiver, const OTE* oteArg)
+{
+	switch (ENCODINGPAIR(oteReceiver->m_oteClass->m_location->m_instanceSpec.m_encoding, oteArg->m_oteClass->m_location->m_instanceSpec.m_encoding))
+	{
+	case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Ansi):
+		// This is the one case where we can use an Ansi comparison. It can't (generally) be used for CP_UTF8.
+		return OpA()(reinterpret_cast<const AnsiStringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize(),
+			reinterpret_cast<const AnsiStringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
+
+	case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Utf8):
+	{
+		Utf16StringBuf receiverW(Interpreter::m_ansiCodePage, reinterpret_cast<const AnsiStringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize());
+		Utf16StringBuf argW(CP_UTF8, (LPCCH)reinterpret_cast<const Utf8StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
+		return OpW()(receiverW, receiverW.Count, argW, argW.Count);
+	}
+
+	case ENCODINGPAIR(StringEncoding::Ansi, StringEncoding::Utf16):
+	{
+		Utf16StringBuf receiverW(Interpreter::m_ansiCodePage, reinterpret_cast<const AnsiStringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize());
+		return OpW()(receiverW, receiverW.Count,
+			reinterpret_cast<const Utf16StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize() / sizeof(Utf16String::CU));
+	}
+
+	case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Ansi):
+	{
+		Utf16StringBuf receiverW(CP_UTF8, (LPCCH)reinterpret_cast<const Utf8StringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize());
+		Utf16StringBuf argW(Interpreter::m_ansiCodePage, reinterpret_cast<const AnsiStringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
+		return OpW()(receiverW, receiverW.Count, argW, argW.Count);
+	}
+
+	case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Utf8):
+	{
+		if (Utf8_OpA)
+		{
+			return OpA()(
+				reinterpret_cast<LPCSTR>(reinterpret_cast<const Utf8StringOTE*>(oteReceiver)->m_location->m_characters),
+				oteReceiver->getSize(),
+				reinterpret_cast<LPCSTR>(reinterpret_cast<const Utf8StringOTE*>(oteArg)->m_location->m_characters),
+				oteArg->getSize());
+		}
+		else
+		{
+			Utf16StringBuf receiverW(CP_UTF8, (LPCCH)reinterpret_cast<const Utf8StringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize());
+			Utf16StringBuf argW(CP_UTF8, (LPCCH)reinterpret_cast<const Utf8StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
+			return OpW()(receiverW, receiverW.Count, argW, argW.Count);
+		}
+	}
+
+	case ENCODINGPAIR(StringEncoding::Utf8, StringEncoding::Utf16):
+	{
+		Utf16StringBuf receiverW(CP_UTF8, (LPCCH)reinterpret_cast<const Utf8StringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize());
+		return OpW()(receiverW, receiverW.Count,
+			reinterpret_cast<const Utf16StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize() / sizeof(Utf16String::CU));
+	}
+
+	case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Ansi):
+	{
+		Utf16StringBuf argW(Interpreter::m_ansiCodePage, reinterpret_cast<const AnsiStringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
+		return OpW()(reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters,
+			oteReceiver->getSize() / sizeof(Utf16String::CU), argW, argW.Count);
+	}
+
+	case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Utf8):
+	{
+		Utf16StringBuf argW(CP_UTF8, (LPCCH)reinterpret_cast<const Utf8StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
+		return OpW()(reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize() / sizeof(Utf16String::CU), argW, argW.Count);
+	}
+
+	case ENCODINGPAIR(StringEncoding::Utf16, StringEncoding::Utf16):
+	{
+		return OpW()(
+			reinterpret_cast<const Utf16StringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize() / sizeof(Utf16String::CU),
+			reinterpret_cast<const Utf16StringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize() / sizeof(Utf16String::CU));
+	}
+	default:
+		return OpA()(reinterpret_cast<const AnsiStringOTE*>(oteReceiver)->m_location->m_characters, oteReceiver->getSize(),
+			reinterpret_cast<const AnsiStringOTE*>(oteArg)->m_location->m_characters, oteArg->getSize());
+	}
+}
 
 struct CmpOrdinalA
 {
@@ -1378,6 +1465,123 @@ Oop* __fastcall Interpreter::primitiveStringCompareOrdinal(Oop* const sp, primar
 		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
 	}
 }
+
+template <class OpA, class OpW> static Oop* __fastcall Interpreter::primitiveStringComparison(Oop* const sp, primargcount_t)
+{
+	Oop oopArg = *sp;
+	const OTE* oteReceiver = reinterpret_cast<const OTE*>(*(sp - 1));
+	if (!ObjectMemoryIsIntegerObject(oopArg))
+	{
+		const OTE* oteArg = reinterpret_cast<const OTE*>(oopArg);
+		if (oteArg != oteReceiver)
+		{
+			if (oteArg->isNullTerminated())
+			{
+				// Could double-dispatch this rather than handling all this in one
+				// primitive, or at least define one primitive for each string class, but it would mean
+				// adding quite a lot of methods, so this keeps the ST side cleaner by hiding the switch in the VM.
+				// This should also be faster as the intermediate conversions can usually be performed on the stack
+				// and so do not require any allocations.
+				int cmp = AnyStringCompare<int, OpA, OpW, false>(oteReceiver, oteArg);
+				*(sp - 1) = integerObjectOf(cmp);
+				return sp - 1;
+			}
+			else
+			{
+				// Arg not a null terminated byte object
+				return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
+			}
+		}
+		else
+		{
+			// Identical
+			*(sp - 1) = ZeroPointer;
+			return sp - 1;
+		}
+	}
+	else
+	{
+		// Arg is a SmallInteger
+		return primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
+	}
+}
+
+template Oop* Interpreter::primitiveStringComparison<CmpA, CmpW>(Oop* const, primargcount_t);
+template Oop* Interpreter::primitiveStringComparison<CmpIA, CmpIW>(Oop* const, primargcount_t);
+
+Oop* __fastcall Interpreter::primitiveStringLessOrEqual(Oop* sp, primargcount_t)
+{
+	Oop oopArg = *sp;
+	const OTE* oteReceiver = reinterpret_cast<const OTE*>(*(sp - 1));
+	if (!ObjectMemoryIsIntegerObject(oopArg))
+	{
+		const OTE* oteArg = reinterpret_cast<const OTE*>(oopArg);
+		if (oteArg != oteReceiver)
+		{
+			if (oteArg->isNullTerminated())
+			{
+				int cmp = AnyStringCompare<int, CmpIA, CmpIW, false>(oteReceiver, oteArg);
+				*(sp - 1) = reinterpret_cast<Oop>(cmp > 0 ? Pointers.False : Pointers.True);
+				return sp - 1;
+			}
+			else
+			{
+				// Arg not a null terminated byte object
+				return Interpreter::primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
+			}
+		}
+		else
+		{
+			// Identical, therefore equal
+			*(sp - 1) = reinterpret_cast<Oop>(Pointers.True);
+			return sp - 1;
+		}
+	}
+	else
+	{
+		// Arg is a SmallInteger
+		return Interpreter::primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
+	}
+}
+
+template <class OpA, class OpW, bool Utf8_OpA> static Oop* __fastcall Interpreter::primitiveStringEqual(Oop* sp, primargcount_t argc)
+{
+	Oop oopArg = *sp;
+	const OTE* oteReceiver = reinterpret_cast<const OTE*>(*(sp - 1));
+	if (!ObjectMemoryIsIntegerObject(oopArg))
+	{
+		const OTE* oteArg = reinterpret_cast<const OTE*>(oopArg);
+		if (oteArg != oteReceiver)
+		{
+			if (oteArg->isNullTerminated())
+			{
+				bool equal = AnyStringCompare<bool, OpA, OpW, Utf8_OpA>(oteReceiver, oteArg);
+				*(sp - 1) = reinterpret_cast<Oop>(equal ? Pointers.True : Pointers.False);
+				return sp - 1;
+			}
+			else
+			{
+				// Arg not a null terminated byte object
+				return Interpreter::primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
+			}
+		}
+		else
+		{
+			// Identical, therefore equal
+			*(sp - 1) = reinterpret_cast<Oop>(Pointers.True);
+			return sp - 1;
+		}
+	}
+	else
+	{
+		// Arg is a SmallInteger
+		return Interpreter::primitiveFailure(_PrimitiveFailureCode::InvalidParameter1);
+	}
+}
+
+template Oop* Interpreter::primitiveStringEqual<EqualA, EqualW, true>(Oop* const, primargcount_t);
+template Oop* Interpreter::primitiveStringEqual<EqualIA, EqualIW, false>(Oop* const, primargcount_t);
+
 Oop* __fastcall Interpreter::primitiveBeginsWith(Oop* const sp, primargcount_t)
 {
 	Oop oopArg = *sp;
