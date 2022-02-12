@@ -67,7 +67,7 @@ pos
 	co-ordinate space. Instead the current trackbar position is queried using GetScrollInfo()."
 
 	| struct |
-	struct := SCROLLINFO new
+	struct := SCROLLINFO newBuffer
 				maskIn: SIF_TRACKPOS;
 				yourself.
 	^(User32

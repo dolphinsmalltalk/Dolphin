@@ -7,7 +7,8 @@ External.POINT subclass: #'OS.POINTL'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_x' -> 16r0.
-		'_OffsetOf_y' -> 16r4
+		'_OffsetOf_y' -> 16r4.
+		'_POINTL_Size' -> 16r8
 	}!
 OS.POINTL guid: (Core.GUID fromString: '{dbeaf6a6-d2f7-4153-a02e-a389955a892f}')!
 OS.POINTL comment: '`POINTL` is an `ExternalStructure` class to wrap the Win32 POINTL structure. Instances of `POINTL` represent a cartesian coordinate with 32-bit signed integer x and y values.
@@ -59,6 +60,9 @@ y:!**compiled accessors**!public! !
 
 !OS.POINTL class methodsFor!
 
+byteSize
+	^_POINTL_Size!
+
 defineFields
 	"Define the fields of the POINTL structure.
 		POINTL compileDefinition
@@ -79,11 +83,12 @@ x: x y: y
 	Implementation Note: For performance reasons avoid going through
 	all the <ExternalStructure> framework methods."
 
-	^self basicNew bytes: ((ByteArray newFixed: 8)
+	^self basicNew bytes: ((ByteArray newFixed: _POINTL_Size)
 				sdwordAtOffset: _OffsetOf_x put: x;
 				sdwordAtOffset: _OffsetOf_y put: y;
 				yourself)! !
 !OS.POINTL class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 x:y:!instance creation!public! !
 !

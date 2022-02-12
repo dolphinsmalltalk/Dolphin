@@ -11,7 +11,8 @@ OS.Win32Structure subclass: #'OS.TBBUTTON'
 		'_OffsetOf_fsStyle' -> 16r9.
 		'_OffsetOf_iBitmap' -> 16r0.
 		'_OffsetOf_idCommand' -> 16r4.
-		'_OffsetOf_iString' -> 16r10
+		'_OffsetOf_iString' -> 16r10.
+		'_TBBUTTON_Size' -> 16r14
 	}!
 OS.TBBUTTON guid: (Core.GUID fromString: '{87b4c614-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.TBBUTTON comment: ''!
@@ -94,6 +95,9 @@ iString:!**compiled accessors**!public! !
 
 !OS.TBBUTTON class methodsFor!
 
+byteSize
+	^_TBBUTTON_Size!
+
 defineFields
 	"Define the fields of the Win32 TBBUTTON structure.
 
@@ -121,6 +125,7 @@ defineFields
 getFieldNames
 	^#(#iBitmap #idCommand #fsState #fsStyle #dwData #iString)! !
 !OS.TBBUTTON class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

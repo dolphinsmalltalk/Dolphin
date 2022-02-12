@@ -11,7 +11,8 @@ OS.Win32Structure subclass: #'OS.TRIVERTEX'
 		'_OffsetOf_green' -> 16rA.
 		'_OffsetOf_red' -> 16r8.
 		'_OffsetOf_x' -> 16r0.
-		'_OffsetOf_y' -> 16r4
+		'_OffsetOf_y' -> 16r4.
+		'_TRIVERTEX_Size' -> 16r10
 	}!
 OS.TRIVERTEX guid: (Core.GUID fromString: '{c7529ab7-4488-494b-a3f0-8549402a5f57}')!
 OS.TRIVERTEX comment: '<TRIVERTEX> is an <ExternalStructure> class to wrap the struct ''Win32.TRIVERTEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
@@ -126,6 +127,9 @@ y:!**compiled accessors**!public! !
 
 !OS.TRIVERTEX class methodsFor!
 
+byteSize
+	^_TRIVERTEX_Size!
+
 defineFields
 	"Define the fields of the TRIVERTEX structure.
 
@@ -153,6 +157,7 @@ defineFields
 getFieldNames
 	^#(#x #y #red #green #blue #alpha)! !
 !OS.TRIVERTEX class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

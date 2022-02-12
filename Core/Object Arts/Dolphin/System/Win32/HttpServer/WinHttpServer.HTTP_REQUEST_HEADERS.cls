@@ -6,6 +6,7 @@ WinHttpServer.HTTP_HEADERS subclass: #'WinHttpServer.HTTP_REQUEST_HEADERS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_REQUEST_HEADERS_Size' -> 16r158.
 		'_OffsetOf_KnownHeaders' -> 16r10
 	}!
 WinHttpServer.HTTP_REQUEST_HEADERS guid: (Core.GUID fromString: '{f762b6ac-f56f-4aeb-aca3-d6b628473c2c}')!
@@ -40,7 +41,8 @@ KnownHeaders: aStructureArrayOfHTTP_KNOWN_HEADER
 	"Set the receiver's 'KnownHeaders' field to the value of the argument, aStructureArrayOfHTTP_KNOWN_HEADER"
 
 	| size |
-	size := aStructureArrayOfHTTP_KNOWN_HEADER byteSize min: ##(41 * HTTP_KNOWN_HEADER basicByteSize).
+	size := aStructureArrayOfHTTP_KNOWN_HEADER byteSize
+				min: ##(41 * HTTP_KNOWN_HEADER._HTTP_KNOWN_HEADER_Size).
 	aStructureArrayOfHTTP_KNOWN_HEADER
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_KnownHeaders + 1)
@@ -52,6 +54,9 @@ KnownHeaders:!**compiled accessors**!public! !
 !
 
 !WinHttpServer.HTTP_REQUEST_HEADERS class methodsFor!
+
+byteSize
+	^_HTTP_REQUEST_HEADERS_Size!
 
 defineFields
 	"Define the fields of the HTTP_REQUEST_HEADERS structure.
@@ -118,6 +123,7 @@ indexToHeaderMap
 		at: HttpHeaderUserAgent put: 'User-Agent';
 		yourself)! !
 !WinHttpServer.HTTP_REQUEST_HEADERS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 indexToHeaderMap!public! !

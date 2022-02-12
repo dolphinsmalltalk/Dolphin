@@ -870,6 +870,7 @@ External.Structure subclass: #'OS.IP_ADAPTER_INDEX_MAP'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IP_ADAPTER_INDEX_MAP_Size' -> 16r104.
 		'_OffsetOf_index' -> 16r0.
 		'_OffsetOf_Name' -> 16r4
 	}!
@@ -879,6 +880,7 @@ External.Structure subclass: #'OS.IP_ADAPTER_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IP_ADAPTER_INFO_Size' -> 16r280.
 		'_OffsetOf_AdapterName' -> 16r8.
 		'_OffsetOf_Address' -> 16r194.
 		'_OffsetOf_AddressLength' -> 16r190.
@@ -904,6 +906,7 @@ External.Structure subclass: #'OS.IP_ADDR_STRING'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IP_ADDR_STRING_Size' -> 16r28.
 		'_OffsetOf_Context' -> 16r24.
 		'_OffsetOf_IpAddress' -> 16r4.
 		'_OffsetOf_IpMask' -> 16r14.
@@ -915,6 +918,7 @@ External.Structure subclass: #'OS.IP_PER_ADAPTER_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IP_PER_ADAPTER_INFO_Size' -> 16r34.
 		'_OffsetOf_AutoconfigActive' -> 16r4.
 		'_OffsetOf_AutoconfigEnabled' -> 16r0.
 		'_OffsetOf_CurrentDnsServer' -> 16r8.
@@ -926,6 +930,7 @@ External.Structure subclass: #'OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IP_UNIDIRECTIONAL_ADAPTER_ADDRESS_Size' -> 16r8.
 		'_OffsetOf_Address' -> 16r4.
 		'_OffsetOf_NumAdapters' -> 16r0
 	}!
@@ -935,6 +940,7 @@ External.Structure subclass: #'OS.IpHlpApiTableStruct'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IpHlpApiTableStruct_Size' -> 16r4.
 		'_OffsetOf_dwNumEntries' -> 16r0
 	}!
 External.Structure subclass: #'OS.MIB_ICMP'
@@ -943,6 +949,7 @@ External.Structure subclass: #'OS.MIB_ICMP'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_ICMP_Size' -> 16r68.
 		'_OffsetOf_stats' -> 16r0
 	}!
 External.Structure subclass: #'OS.MIB_ICMP_EX'
@@ -951,6 +958,7 @@ External.Structure subclass: #'OS.MIB_ICMP_EX'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_ICMP_EX_Size' -> 16r810.
 		'_OffsetOf_icmpInStats' -> 16r0.
 		'_OffsetOf_icmpOutStats' -> 16r408
 	}!
@@ -960,6 +968,7 @@ External.Structure subclass: #'OS.MIB_IFNUMBER'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_IFNUMBER_Size' -> 16r4.
 		'_OffsetOf_dwValue' -> 16r0
 	}!
 External.Structure subclass: #'OS.MIB_IFROW'
@@ -968,6 +977,7 @@ External.Structure subclass: #'OS.MIB_IFROW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_IFROW_Size' -> 16r35C.
 		'_OffsetOf_bDescr' -> 16r25C.
 		'_OffsetOf_bPhysAddr' -> 16r214.
 		'_OffsetOf_dwAdminStatus' -> 16r21C.
@@ -999,6 +1009,7 @@ External.Structure subclass: #'OS.MIB_IPADDRROW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_IPADDRROW_Size' -> 16r18.
 		'_OffsetOf_dwAddr' -> 16r0.
 		'_OffsetOf_dwBCastAddr' -> 16rC.
 		'_OffsetOf_dwIndex' -> 16r4.
@@ -1013,6 +1024,7 @@ External.Structure subclass: #'OS.MIB_IPFORWARDROW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_IPFORWARDROW_Size' -> 16r38.
 		'_OffsetOf_dwForwardAge' -> 16r1C.
 		'_OffsetOf_dwForwardDest' -> 16r0.
 		'_OffsetOf_dwForwardIfIndex' -> 16r10.
@@ -1034,6 +1046,7 @@ External.Structure subclass: #'OS.MIB_IPNETROW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_IPNETROW_Size' -> 16r18.
 		'_OffsetOf_bPhysAddr' -> 16r8.
 		'_OffsetOf_dwAddr' -> 16r10.
 		'_OffsetOf_dwIndex' -> 16r0.
@@ -1046,6 +1059,7 @@ External.Structure subclass: #'OS.MIB_IPSTATS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_IPSTATS_Size' -> 16r5C.
 		'_OffsetOf_dwDefaultTTL' -> 16r4.
 		'_OffsetOf_dwForwarding' -> 16r0.
 		'_OffsetOf_dwForwDatagrams' -> 16r14.
@@ -1076,6 +1090,7 @@ External.Structure subclass: #'OS.MIB_TCPROW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_TCPROW_Size' -> 16r14.
 		'_OffsetOf_dwLocalAddr' -> 16r4.
 		'_OffsetOf_dwLocalPort' -> 16r8.
 		'_OffsetOf_dwRemoteAddr' -> 16rC.
@@ -1088,6 +1103,7 @@ External.Structure subclass: #'OS.MIB_TCPSTATS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_TCPSTATS_Size' -> 16r3C.
 		'_OffsetOf_dwActiveOpens' -> 16r10.
 		'_OffsetOf_dwAttemptFails' -> 16r18.
 		'_OffsetOf_dwCurrEstab' -> 16r20.
@@ -1110,6 +1126,7 @@ External.Structure subclass: #'OS.MIB_UDPROW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_UDPROW_Size' -> 16r8.
 		'_OffsetOf_dwLocalAddr' -> 16r0.
 		'_OffsetOf_dwLocalPort' -> 16r4
 	}!
@@ -1119,6 +1136,7 @@ External.Structure subclass: #'OS.MIB_UDPSTATS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_UDPSTATS_Size' -> 16r14.
 		'_OffsetOf_dwInDatagrams' -> 16r0.
 		'_OffsetOf_dwInErrors' -> 16r8.
 		'_OffsetOf_dwNoPorts' -> 16r4.
@@ -1131,6 +1149,7 @@ External.Structure subclass: #'OS.MIBICMPINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIBICMPINFO_Size' -> 16r68.
 		'_OffsetOf_icmpInStats' -> 16r0.
 		'_OffsetOf_icmpOutStats' -> 16r34
 	}!
@@ -1140,6 +1159,7 @@ External.Structure subclass: #'OS.MIBICMPSTATS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIBICMPSTATS_Size' -> 16r34.
 		'_OffsetOf_dwAddrMaskReps' -> 16r30.
 		'_OffsetOf_dwAddrMasks' -> 16r2C.
 		'_OffsetOf_dwDestUnreachs' -> 16r8.
@@ -1160,6 +1180,7 @@ External.Structure subclass: #'OS.MIBICMPSTATS_EX'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIBICMPSTATS_EX_Size' -> 16r408.
 		'_OffsetOf_dwErrors' -> 16r4.
 		'_OffsetOf_dwMsgs' -> 16r0.
 		'_OffsetOf_rgdwTypeCount' -> 16r8
@@ -1170,6 +1191,7 @@ OS.IpHlpApiTableStruct subclass: #'OS.IP_ADAPTER_ORDER_MAP'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IP_ADAPTER_ORDER_MAP_Size' -> 16r8.
 		'_OffsetOf_table' -> 16r4
 	}!
 OS.IpHlpApiTableStruct subclass: #'OS.IP_INTERFACE_INFO'
@@ -1178,6 +1200,7 @@ OS.IpHlpApiTableStruct subclass: #'OS.IP_INTERFACE_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IP_INTERFACE_INFO_Size' -> 16r108.
 		'_OffsetOf_table' -> 16r4
 	}!
 OS.IpHlpApiTableStruct subclass: #'OS.MIB_IFTABLE'
@@ -1186,6 +1209,7 @@ OS.IpHlpApiTableStruct subclass: #'OS.MIB_IFTABLE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_IFTABLE_Size' -> 16r360.
 		'_OffsetOf_table' -> 16r4
 	}!
 OS.IpHlpApiTableStruct subclass: #'OS.MIB_IPADDRTABLE'
@@ -1194,6 +1218,7 @@ OS.IpHlpApiTableStruct subclass: #'OS.MIB_IPADDRTABLE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_IPADDRTABLE_Size' -> 16r1C.
 		'_OffsetOf_table' -> 16r4
 	}!
 OS.IpHlpApiTableStruct subclass: #'OS.MIB_IPFORWARDTABLE'
@@ -1202,6 +1227,7 @@ OS.IpHlpApiTableStruct subclass: #'OS.MIB_IPFORWARDTABLE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_IPFORWARDTABLE_Size' -> 16r3C.
 		'_OffsetOf_table' -> 16r4
 	}!
 OS.IpHlpApiTableStruct subclass: #'OS.MIB_IPNETTABLE'
@@ -1210,6 +1236,7 @@ OS.IpHlpApiTableStruct subclass: #'OS.MIB_IPNETTABLE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_IPNETTABLE_Size' -> 16r1C.
 		'_OffsetOf_table' -> 16r4
 	}!
 OS.IpHlpApiTableStruct subclass: #'OS.MIB_TCPTABLE'
@@ -1218,6 +1245,7 @@ OS.IpHlpApiTableStruct subclass: #'OS.MIB_TCPTABLE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_TCPTABLE_Size' -> 16r18.
 		'_OffsetOf_table' -> 16r4
 	}!
 OS.IpHlpApiTableStruct subclass: #'OS.MIB_UDPTABLE'
@@ -1226,6 +1254,7 @@ OS.IpHlpApiTableStruct subclass: #'OS.MIB_UDPTABLE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_UDPTABLE_Size' -> 16rC.
 		'_OffsetOf_table' -> 16r4
 	}!
 OS.MIB_TCPTABLE subclass: #'OS.MIB_TCPEXTABLE'
@@ -1233,19 +1262,24 @@ OS.MIB_TCPTABLE subclass: #'OS.MIB_TCPEXTABLE'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_MIB_TCPEXTABLE_Size' -> 16r1C
+	}!
 OS.MIB_UDPTABLE subclass: #'OS.MIB_UDPEXTABLE'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_MIB_UDPEXTABLE_Size' -> 16r10
+	}!
 OS.MIB_TCPROW subclass: #'OS.MIB_TCPEXROW'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_TCPEXROW_Size' -> 16r18.
 		'_OffsetOf_dwProcessId' -> 16r14
 	}!
 OS.MIB_UDPROW subclass: #'OS.MIB_UDPEXROW'
@@ -1254,6 +1288,7 @@ OS.MIB_UDPROW subclass: #'OS.MIB_UDPEXROW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_UDPEXROW_Size' -> 16rC.
 		'_OffsetOf_dwProcessId' -> 16r8
 	}!
 

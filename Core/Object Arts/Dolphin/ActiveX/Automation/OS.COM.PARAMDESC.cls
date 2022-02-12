@@ -7,7 +7,8 @@ OS.COM.OLEStructure subclass: #'OS.COM.PARAMDESC'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_pparamdescex' -> 16r0.
-		'_OffsetOf_wParamFlags' -> 16r4
+		'_OffsetOf_wParamFlags' -> 16r4.
+		'_PARAMDESC_Size' -> 16r8
 	}!
 OS.COM.PARAMDESC guid: (Core.GUID fromString: '{c06f3b73-0868-11d3-93af-00a024ca708a}')!
 OS.COM.PARAMDESC comment: 'PARAMDESC is an <ExternalStructure> to represent the AX Automation structure of the same name.
@@ -86,6 +87,9 @@ wParamFlags!**compiled accessors**!public! !
 
 !OS.COM.PARAMDESC class methodsFor!
 
+byteSize
+	^_PARAMDESC_Size!
+
 defineFields
 	"Define the fields of the PARAMDESC structure.
 
@@ -105,6 +109,7 @@ defineFields
 getFieldNames
 	^#(#pparamdescex #wParamFlags)! !
 !OS.COM.PARAMDESC class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

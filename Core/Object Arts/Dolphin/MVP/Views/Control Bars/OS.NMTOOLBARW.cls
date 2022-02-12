@@ -6,6 +6,7 @@ OS.NMHDR subclass: #'OS.NMTOOLBARW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMTOOLBARW_Size' -> 16r2C.
 		'_OffsetOf_cchText' -> 16r24.
 		'_OffsetOf_iItem' -> 16rC.
 		'_OffsetOf_pszText' -> 16r28.
@@ -47,6 +48,9 @@ tbButton!**compiled accessors**!public! !
 
 !OS.NMTOOLBARW class methodsFor!
 
+byteSize
+	^_NMTOOLBARW_Size!
+
 defineFields
 	"Define the structure template for Win32 NMTOOLBARW structure.
 
@@ -70,6 +74,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #tbButton #cchText #pszText)! !
 !OS.NMTOOLBARW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

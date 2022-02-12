@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRLINETO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRLINETO_Size' -> 16r10.
 		'_OffsetOf_ptl' -> 16r8
 	}!
 OS.EMRLINETO guid: (Core.GUID fromString: '{fff03eec-0fdc-4448-ac60-d19e59624d01}')!
@@ -37,7 +38,7 @@ ptl: aPOINTL
 	aPOINTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_ptl + 1)
-		to: ##(_OffsetOf_ptl + POINTL basicByteSize)
+		to: ##(_OffsetOf_ptl + POINTL._POINTL_Size)
 		startingAt: 1! !
 !OS.EMRLINETO categoriesForMethods!
 ptl!**compiled accessors**!public! !
@@ -45,6 +46,9 @@ ptl:!**compiled accessors**!public! !
 !
 
 !OS.EMRLINETO class methodsFor!
+
+byteSize
+	^_EMRLINETO_Size!
 
 defineFields
 	"Define the fields of the EMRLINETO structure.
@@ -73,6 +77,7 @@ iTypes
 
 	^{EMR_LINETO. EMR_MOVETOEX}! !
 !OS.EMRLINETO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

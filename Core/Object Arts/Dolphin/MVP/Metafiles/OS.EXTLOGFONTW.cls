@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.EXTLOGFONTW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EXTLOGFONTW_Size' -> 16r140.
 		'_OffsetOf_elfCulture' -> 16r130.
 		'_OffsetOf_elfFullName' -> 16r5C.
 		'_OffsetOf_elfLogFont' -> 16r0.
@@ -71,7 +72,7 @@ elfLogFont: aLOGFONTW
 	aLOGFONTW
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_elfLogFont + 1)
-		to: ##(_OffsetOf_elfLogFont + LOGFONTW basicByteSize)
+		to: ##(_OffsetOf_elfLogFont + LOGFONTW._LOGFONTW_Size)
 		startingAt: 1!
 
 elfMatch
@@ -95,7 +96,7 @@ elfPanose: aPANOSE
 	aPANOSE
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_elfPanose + 1)
-		to: ##(_OffsetOf_elfPanose + PANOSE basicByteSize)
+		to: ##(_OffsetOf_elfPanose + PANOSE._PANOSE_Size)
 		startingAt: 1!
 
 elfStyle
@@ -159,6 +160,9 @@ elfVendorId:!**compiled accessors**!public! !
 
 !OS.EXTLOGFONTW class methodsFor!
 
+byteSize
+	^_EXTLOGFONTW_Size!
+
 defineFields
 	"Define the fields of the EXTLOGFONTW structure.
 
@@ -215,6 +219,7 @@ defineFields
 getFieldNames
 	^#(#elfLogFont #elfFullName #elfStyle #elfStyleSize #elfMatch #elfVendorId #elfPanose)! !
 !OS.EXTLOGFONTW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

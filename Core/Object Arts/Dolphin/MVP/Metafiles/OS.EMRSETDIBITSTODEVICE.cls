@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSETDIBITSTODEVICE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSETDIBITSTODEVICE_Size' -> 16r4C.
 		'_OffsetOf_cbBitsSrc' -> 16r3C.
 		'_OffsetOf_cbBmiSrc' -> 16r34.
 		'_OffsetOf_cScans' -> 16r48.
@@ -147,13 +148,13 @@ rclBounds
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: aRECT
-	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
+rclBounds: aRECTL
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1!
 
 xDest
@@ -227,6 +228,9 @@ ySrc:!**compiled accessors**!public! !
 !
 
 !OS.EMRSETDIBITSTODEVICE class methodsFor!
+
+byteSize
+	^_EMRSETDIBITSTODEVICE_Size!
 
 defineFields
 	"Define the fields of the EMRSETDIBITSTODEVICE structure.
@@ -307,6 +311,7 @@ iTypes
 
 	^{EMR_SETDIBITSTODEVICE}! !
 !OS.EMRSETDIBITSTODEVICE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

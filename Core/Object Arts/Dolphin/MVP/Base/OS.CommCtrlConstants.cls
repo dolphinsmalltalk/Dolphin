@@ -65,7 +65,6 @@ Kernel.SharedPool subclass: #'OS.CommCtrlConstants'
 		'GDT_VALID' -> 16r0.
 		'GDTR_MAX' -> 16r2.
 		'GDTR_MIN' -> 16r1.
-		'I_CHILDRENCALLBACK' -> -16r1.
 		'I_IMAGECALLBACK' -> -16r1.
 		'ICC_ANIMATE_CLASS' -> 16r80.
 		'ICC_BAR_CLASSES' -> 16r4.

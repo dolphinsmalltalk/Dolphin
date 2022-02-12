@@ -11,7 +11,8 @@ OS.CCITEM subclass: #'OS.TCITEMW'
 		'_OffsetOf_iImage' -> 16r14.
 		'_OffsetOf_lParam' -> 16r18.
 		'_OffsetOf_pszText' -> 16rC.
-		'_OffsetOf_stateMask' -> 16r8
+		'_OffsetOf_stateMask' -> 16r8.
+		'_TCITEMW_Size' -> 16r1C
 	}!
 OS.TCITEMW guid: (Core.GUID fromString: '{87b4c621-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.TCITEMW comment: 'TCITEM is an <ExternalStructure> class which represents the Windows common control structure of the same name.
@@ -115,7 +116,7 @@ stateValidMask
 text
 	"Answer the text of the receiver"
 
-	^text trimNulls!
+	^text copyFrom: 1 to: (Kernel32 lstrlenW: text)!
 
 textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
@@ -143,6 +144,9 @@ textPointerOffset!constants!private! !
 !
 
 !OS.TCITEMW class methodsFor!
+
+byteSize
+	^_TCITEMW_Size!
 
 defineFields
 	"Define the fields of the Win32 TCITEM structure.
@@ -184,6 +188,7 @@ defineFields
 getFieldNames
 	^#(#mask #dwState #stateMask #pszText #cchTextMax #iImage #lParam)! !
 !OS.TCITEMW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

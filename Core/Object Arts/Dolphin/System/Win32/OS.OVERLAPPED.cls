@@ -11,7 +11,8 @@ External.Structure subclass: #'OS.OVERLAPPED'
 		'_OffsetOf_InternalHigh' -> 16r4.
 		'_OffsetOf_Offset' -> 16r8.
 		'_OffsetOf_OffsetHigh' -> 16rC.
-		'_OffsetOf_Pointer' -> 16r8
+		'_OffsetOf_Pointer' -> 16r8.
+		'_OVERLAPPED_Size' -> 16r14
 	}!
 OS.OVERLAPPED guid: (Core.GUID fromString: '{301c9a7a-d4b4-42d5-895d-e658d212df5b}')!
 OS.OVERLAPPED comment: '<OVERLAPPED> is an <ExternalStructure> class to wrap the struct ''Win32.OVERLAPPED'' from type information in the ''Win32 API'' library.
@@ -92,6 +93,9 @@ OffsetHigh:!**compiled accessors**!public! !
 
 !OS.OVERLAPPED class methodsFor!
 
+byteSize
+	^_OVERLAPPED_Size!
+
 defineFields
 	"Define the fields of the OVERLAPPED structure.
 
@@ -136,6 +140,7 @@ defineFields
 getFieldNames
 	^#(#Internal #InternalHigh #Offset #OffsetHigh #hEvent)! !
 !OS.OVERLAPPED class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

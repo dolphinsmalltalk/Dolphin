@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.MSG'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MSG_Size' -> 16r1C.
 		'_OffsetOf_hwnd' -> 16r0.
 		'_OffsetOf_lParam' -> 16rC.
 		'_OffsetOf_message' -> 16r4.
@@ -104,6 +105,9 @@ y!**compiled accessors**!public! !
 
 !OS.MSG class methodsFor!
 
+byteSize
+	^_MSG_Size!
+
 defineFields
 	"Define the fields of the Win32 MSG structure.
 
@@ -132,6 +136,7 @@ defineFields
 getFieldNames
 	^#(#hwnd #message #wParam #lParam #time #x #y)! !
 !OS.MSG class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

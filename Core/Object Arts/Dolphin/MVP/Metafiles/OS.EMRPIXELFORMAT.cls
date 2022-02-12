@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRPIXELFORMAT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRPIXELFORMAT_Size' -> 16r30.
 		'_OffsetOf_pfd' -> 16r8
 	}!
 OS.EMRPIXELFORMAT guid: (Core.GUID fromString: '{d3d01d9c-95db-40f4-9304-d212a548def1}')!
@@ -37,7 +38,7 @@ pfd: aPIXELFORMATDESCRIPTOR
 	aPIXELFORMATDESCRIPTOR
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_pfd + 1)
-		to: ##(_OffsetOf_pfd + PIXELFORMATDESCRIPTOR basicByteSize)
+		to: ##(_OffsetOf_pfd + PIXELFORMATDESCRIPTOR._PIXELFORMATDESCRIPTOR_Size)
 		startingAt: 1! !
 !OS.EMRPIXELFORMAT categoriesForMethods!
 pfd!**compiled accessors**!public! !
@@ -45,6 +46,9 @@ pfd:!**compiled accessors**!public! !
 !
 
 !OS.EMRPIXELFORMAT class methodsFor!
+
+byteSize
+	^_EMRPIXELFORMAT_Size!
 
 defineFields
 	"Define the fields of the EMRPIXELFORMAT structure.
@@ -73,6 +77,7 @@ iTypes
 
 	^{EMR_PIXELFORMAT}! !
 !OS.EMRPIXELFORMAT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

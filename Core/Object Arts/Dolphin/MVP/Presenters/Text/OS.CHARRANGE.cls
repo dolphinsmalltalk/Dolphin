@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.CHARRANGE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CHARRANGE_Size' -> 16r8.
 		'_OffsetOf_cpMax' -> 16r4.
 		'_OffsetOf_cpMin' -> 16r0
 	}!
@@ -61,6 +62,9 @@ cpMin:!**compiled accessors**!public! !
 
 !OS.CHARRANGE class methodsFor!
 
+byteSize
+	^_CHARRANGE_Size!
+
 defineFields
 	"Define the fields of the CHARRANGE structure.
 		CHARRANGE compileDefinition
@@ -79,6 +83,7 @@ defineFields
 getFieldNames
 	^#(#cpMin #cpMax)! !
 !OS.CHARRANGE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

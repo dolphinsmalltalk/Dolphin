@@ -110,7 +110,7 @@ getBounds: aGdiplusMatrix pen: aGdiplusPen
 	large enough to enclose the receiver even if the path is drawn with a wide pen."
 
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	Gdip
 		gdipGetPathWorldBoundsI: self asParameter
 		bounds: rect

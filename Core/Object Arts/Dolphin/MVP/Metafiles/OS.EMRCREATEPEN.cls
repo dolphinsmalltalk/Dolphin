@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRCREATEPEN'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRCREATEPEN_Size' -> 16r1C.
 		'_OffsetOf_ihPen' -> 16r8.
 		'_OffsetOf_lopn' -> 16rC
 	}!
@@ -49,7 +50,7 @@ lopn: aLOGPEN
 	aLOGPEN
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_lopn + 1)
-		to: ##(_OffsetOf_lopn + LOGPEN basicByteSize)
+		to: ##(_OffsetOf_lopn + LOGPEN._LOGPEN_Size)
 		startingAt: 1! !
 !OS.EMRCREATEPEN categoriesForMethods!
 ihPen!**compiled accessors**!public! !
@@ -59,6 +60,9 @@ lopn:!**compiled accessors**!public! !
 !
 
 !OS.EMRCREATEPEN class methodsFor!
+
+byteSize
+	^_EMRCREATEPEN_Size!
 
 defineFields
 	"Define the fields of the EMRCREATEPEN structure.
@@ -91,6 +95,7 @@ iTypes
 
 	^{EMR_CREATEPEN}! !
 !OS.EMRCREATEPEN class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

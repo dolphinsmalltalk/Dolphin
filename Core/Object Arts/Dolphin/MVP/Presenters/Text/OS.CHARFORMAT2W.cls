@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.CHARFORMAT2W'
 	imports: #(#{OS.CommonDialogConstants} #{OS.RichEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CHARFORMAT2W_Size' -> 16r74.
 		'_OffsetOf_bAnimation' -> 16r71.
 		'_OffsetOf_bCharSet' -> 16r18.
 		'_OffsetOf_bPitchAndFamily' -> 16r19.
@@ -292,7 +293,7 @@ logFont
 	"Answer a <LOGFONTW> configured with the font settings from the receiver. The display resolution is assumed in converting from the point size to font height."
 
 	| answer |
-	answer := LOGFONTW new.
+	answer := LOGFONTW newBuffer.
 	answer faceName: self szFaceName.
 	answer lfHeight: (self pointSize * Graphics.Canvas desktopResolution y / 72) rounded negated.
 	answer lfWeight: (self isBold ifTrue: [FW_BOLD] ifFalse: [FW_NORMAL]).
@@ -524,6 +525,9 @@ yHeight:!**compiled accessors**!public! !
 
 !OS.CHARFORMAT2W class methodsFor!
 
+byteSize
+	^_CHARFORMAT2W_Size!
+
 defineFields
 	"Define the layout of the CHARFORMAT2 structure
 		self compileDefinition
@@ -559,6 +563,7 @@ fromChooseFont: aCHOOSEFRONT
 getFieldNames
 	^#(#dwSize #dwMask #dwEffects #yHeight #yOffset #crTextColor #bCharSet #bPitchAndFamily #szFaceName #wWeight #sSpacing #crBackColor #lcid #sStyle #wKerning #bUnderlineType #bAnimation #bRevAuthor #bUnderlineColor)! !
 !OS.CHARFORMAT2W class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 fromChooseFont:!public! !
 getFieldNames!**compiled accessors**!constants!private! !

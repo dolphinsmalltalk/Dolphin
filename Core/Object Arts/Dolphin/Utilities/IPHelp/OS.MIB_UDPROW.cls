@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.MIB_UDPROW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_UDPROW_Size' -> 16r8.
 		'_OffsetOf_dwLocalAddr' -> 16r0.
 		'_OffsetOf_dwLocalPort' -> 16r4
 	}!
@@ -43,6 +44,9 @@ dwLocalPort!**compiled accessors**!public! !
 
 !OS.MIB_UDPROW class methodsFor!
 
+byteSize
+	^_MIB_UDPROW_Size!
+
 defineFields
 	"Define the fields of the MIB_UDPROW structure.
 		MIB_UDPROW compileDefinition
@@ -66,6 +70,7 @@ defineFields
 getFieldNames
 	^#(#dwLocalAddr #dwLocalPort)! !
 !OS.MIB_UDPROW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

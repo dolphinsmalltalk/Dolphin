@@ -226,12 +226,6 @@ enumsPenAlignment
 
 	^self enumsWithPrefix: 'PenAlignment'!
 
-enumsPixelFormat
-	"Answer a key-value collection of Win32 PixelFormat enumerated types.
-	These specify various pixel formats used in bitmaps."
-
-	^self enumsWithPrefix: 'PixelFormat'!
-
 enumsPropertyTag
 	"Answer a key-value collection of Win32 PropertyTag enumerated types.
 	These specify a particular property item (e.g., camera model, title, extent) stored in an image."
@@ -383,7 +377,6 @@ enumsLineJoin!constants!public! !
 enumsMatrixOrder!constants!public! !
 enumsPathPointType!constants!public! !
 enumsPenAlignment!constants!public! !
-enumsPixelFormat!constants!public! !
 enumsPropertyTag!constants!public! !
 enumsRotate!constants!public! !
 enumsSmoothingMode!constants!public! !

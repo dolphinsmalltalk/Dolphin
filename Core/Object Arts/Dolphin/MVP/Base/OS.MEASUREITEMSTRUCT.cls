@@ -6,6 +6,7 @@ OS.OwnerDrawStruct subclass: #'OS.MEASUREITEMSTRUCT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MEASUREITEMSTRUCT_Size' -> 16r18.
 		'_OffsetOf_itemData' -> 16r14.
 		'_OffsetOf_itemHeight' -> 16r10.
 		'_OffsetOf_itemWidth' -> 16rC
@@ -45,6 +46,9 @@ itemWidth:!**compiled accessors**!public! !
 
 !OS.MEASUREITEMSTRUCT class methodsFor!
 
+byteSize
+	^_MEASUREITEMSTRUCT_Size!
+
 defineFields
 	"Define the fields of the MEASUREITEMSTRUCT structure.
 		MEASUREITEMSTRUCT compileDefinition
@@ -69,6 +73,7 @@ defineFields
 getFieldNames
 	^#(#CtlType #CtlID #itemID #itemWidth #itemHeight)! !
 !OS.MEASUREITEMSTRUCT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

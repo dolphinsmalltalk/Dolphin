@@ -6,6 +6,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpPathData'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpPathData_Size' -> 16rC.
 		'_OffsetOf_Count' -> 16r0.
 		'_OffsetOf_Points' -> 16r4.
 		'_OffsetOf_Types' -> 16r8
@@ -69,6 +70,9 @@ Types:!**compiled accessors**!public! !
 
 !Graphics.Gdiplus.GpPathData class methodsFor!
 
+byteSize
+	^_GpPathData_Size!
+
 defineFields
 	"Define the fields of the GpPathData structure.
 		GpPathData compileDefinition
@@ -96,6 +100,7 @@ defineFields
 getFieldNames
 	^#(#Count #Points #Types)! !
 !Graphics.Gdiplus.GpPathData class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

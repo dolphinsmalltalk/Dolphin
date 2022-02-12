@@ -9,7 +9,8 @@ OS.SOCKADDR subclass: #'OS.SOCKADDR_IN'
 		'_OffsetOf_sin_addr' -> 16r4.
 		'_OffsetOf_sin_family' -> 16r0.
 		'_OffsetOf_sin_port' -> 16r2.
-		'_OffsetOf_sin_zero' -> 16r8
+		'_OffsetOf_sin_zero' -> 16r8.
+		'_SOCKADDR_IN_Size' -> 16r10
 	}!
 OS.SOCKADDR_IN guid: (Core.GUID fromString: '{87b4c611-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.SOCKADDR_IN comment: '<SOCKADDR_IN> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_IN'' from type information in the ''Win32 API'' library.
@@ -53,7 +54,7 @@ sin_addr: anIN_ADDR
 	anIN_ADDR
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_sin_addr + 1)
-		to: ##(_OffsetOf_sin_addr + IN_ADDR basicByteSize)
+		to: ##(_OffsetOf_sin_addr + IN_ADDR._IN_ADDR_Size)
 		startingAt: 1!
 
 sin_family
@@ -88,6 +89,9 @@ sin_port:!**compiled accessors**!public! !
 
 !OS.SOCKADDR_IN class methodsFor!
 
+byteSize
+	^_SOCKADDR_IN_Size!
+
 defineFields
 	"Define the fields of the SOCKADDR_IN structure.
 
@@ -112,6 +116,7 @@ defineFields
 getFieldNames
 	^#(#sin_family #sin_port #sin_addr)! !
 !OS.SOCKADDR_IN class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

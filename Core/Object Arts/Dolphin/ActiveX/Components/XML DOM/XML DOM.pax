@@ -402,7 +402,8 @@ External.Structure subclass: #'MSXML.XHR_COOKIE'
 		'_OffsetOf_pwszName' -> 16r4.
 		'_OffsetOf_pwszP3PPolicy' -> 16rC.
 		'_OffsetOf_pwszUrl' -> 16r0.
-		'_OffsetOf_pwszValue' -> 16r8
+		'_OffsetOf_pwszValue' -> 16r8.
+		'_XHR_COOKIE_Size' -> 16r1C
 	}!
 OS.COM.IUnknown subclass: #'MSXML.IMXNamespaceManager'
 	instanceVariableNames: ''

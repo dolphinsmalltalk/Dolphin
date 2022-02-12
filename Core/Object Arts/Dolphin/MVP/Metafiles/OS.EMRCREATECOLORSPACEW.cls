@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRCREATECOLORSPACEW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRCREATECOLORSPACEW_Size' -> 16r160.
 		'_OffsetOf_cbData' -> 16r158.
 		'_OffsetOf_Data' -> 16r15C.
 		'_OffsetOf_dwFlags' -> 16r154.
@@ -92,7 +93,7 @@ lcs: aLOGCOLORSPACEW
 	aLOGCOLORSPACEW
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_lcs + 1)
-		to: ##(_OffsetOf_lcs + LOGCOLORSPACEW basicByteSize)
+		to: ##(_OffsetOf_lcs + LOGCOLORSPACEW._LOGCOLORSPACEW_Size)
 		startingAt: 1! !
 !OS.EMRCREATECOLORSPACEW categoriesForMethods!
 cbData!**compiled accessors**!public! !
@@ -108,6 +109,9 @@ lcs:!**compiled accessors**!public! !
 !
 
 !OS.EMRCREATECOLORSPACEW class methodsFor!
+
+byteSize
+	^_EMRCREATECOLORSPACEW_Size!
 
 defineFields
 	"Define the fields of the EMRCREATECOLORSPACEW structure.
@@ -151,6 +155,7 @@ iTypes
 
 	^{EMR_CREATECOLORSPACEW}! !
 !OS.EMRCREATECOLORSPACEW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

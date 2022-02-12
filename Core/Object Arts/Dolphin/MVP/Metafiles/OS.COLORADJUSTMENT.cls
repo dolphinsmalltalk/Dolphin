@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.COLORADJUSTMENT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_COLORADJUSTMENT_Size' -> 16r18.
 		'_OffsetOf_caBlueGamma' -> 16rA.
 		'_OffsetOf_caBrightness' -> 16r12.
 		'_OffsetOf_caColorfulness' -> 16r14.
@@ -195,6 +196,9 @@ caSize:!**compiled accessors**!public! !
 
 !OS.COLORADJUSTMENT class methodsFor!
 
+byteSize
+	^_COLORADJUSTMENT_Size!
+
 defineFields
 	"Define the fields of the COLORADJUSTMENT structure.
 
@@ -259,6 +263,7 @@ defineFields
 getFieldNames
 	^#(#caSize #caFlags #caIlluminantIndex #caRedGamma #caGreenGamma #caBlueGamma #caReferenceBlack #caReferenceWhite #caContrast #caBrightness #caColorfulness #caRedGreenTint)! !
 !OS.COLORADJUSTMENT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

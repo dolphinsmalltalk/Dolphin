@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.MIB_IFROW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_IFROW_Size' -> 16r35C.
 		'_OffsetOf_bDescr' -> 16r25C.
 		'_OffsetOf_bPhysAddr' -> 16r214.
 		'_OffsetOf_dwAdminStatus' -> 16r21C.
@@ -219,6 +220,9 @@ wszName!**compiled accessors**!public! !
 
 !OS.MIB_IFROW class methodsFor!
 
+byteSize
+	^_MIB_IFROW_Size!
+
 defineFields
 	"Define the fields of the MIB_IFROW structure.
 		MIB_IFROW compileDefinition
@@ -336,6 +340,7 @@ defineFields
 getFieldNames
 	^#(#wszName #dwIndex #dwType #dwMtu #dwSpeed #dwPhysAddrLen #bPhysAddr #dwAdminStatus #dwOperStatus #dwLastChange #dwInOctets #dwInUcastPkts #dwInNUcastPkts #dwInDiscards #dwInErrors #dwInUnknownProtos #dwOutOctets #dwOutUcastPkts #dwOutNUcastPkts #dwOutDiscards #dwOutErrors #dwOutQLen #dwDescrLen #bDescr)! !
 !OS.MIB_IFROW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

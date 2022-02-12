@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.MENUINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MENUINFO_Size' -> 16r1C.
 		'_OffsetOf_cyMax' -> 16rC.
 		'_OffsetOf_dwContextHelpID' -> 16r14.
 		'_OffsetOf_dwMenuData' -> 16r18.
@@ -64,11 +65,11 @@ fMask: anInteger
 
 	bytes dwordAtOffset: _OffsetOf_fMask put: anInteger!
 
-maskIn: anInteger 
-	self fMask: (self fMask bitOr: anInteger)!
+maskIn: anInteger
+	bytes dwordAtOffset: _OffsetOf_fMask put: ((bytes dwordAtOffset: _OffsetOf_fMask) bitOr: anInteger)!
 
-style: anInteger 
-	self dwStyle: anInteger.
+style: anInteger
+	bytes dwordAtOffset: _OffsetOf_dwStyle put: anInteger.
 	self maskIn: MIM_STYLE! !
 !OS.MENUINFO categoriesForMethods!
 cyMax!**compiled accessors**!public! !
@@ -85,6 +86,9 @@ style:!accessing!public! !
 !
 
 !OS.MENUINFO class methodsFor!
+
+byteSize
+	^_MENUINFO_Size!
 
 defineFields
 	"Define the fields of the MENUINFO structure.
@@ -115,6 +119,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #fMask #dwStyle #cyMax #dwContextHelpID)! !
 !OS.MENUINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

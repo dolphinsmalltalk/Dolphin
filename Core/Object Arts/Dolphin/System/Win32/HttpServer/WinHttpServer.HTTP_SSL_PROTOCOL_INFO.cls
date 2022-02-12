@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SSL_PROTOCOL_IN
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SSL_PROTOCOL_INFO_Size' -> 16r1C.
 		'_OffsetOf_CipherStrength' -> 16r8.
 		'_OffsetOf_CipherType' -> 16r4.
 		'_OffsetOf_HashStrength' -> 16r10.
@@ -85,6 +86,9 @@ Protocol!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_SSL_PROTOCOL_INFO class methodsFor!
 
+byteSize
+	^_HTTP_SSL_PROTOCOL_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_SSL_PROTOCOL_INFO structure.
 
@@ -115,6 +119,7 @@ defineFields
 getFieldNames
 	^#(#Protocol #CipherType #CipherStrength #HashType #HashStrength #KeyExchangeType #KeyExchangeStrength)! !
 !WinHttpServer.HTTP_SSL_PROTOCOL_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

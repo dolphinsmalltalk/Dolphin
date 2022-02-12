@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTI
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS_Size' -> 16r10.
 		'_OffsetOf_DomainName' -> 16r4.
 		'_OffsetOf_DomainNameLength' -> 16r0.
 		'_OffsetOf_Realm' -> 16rC.
@@ -84,6 +85,9 @@ RealmLength:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class methodsFor!
 
+byteSize
+	^_HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS_Size!
+
 defineFields
 	"Define the fields of the HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS structure.
 
@@ -108,6 +112,7 @@ defineFields
 getFieldNames
 	^#(#DomainNameLength #DomainName #RealmLength #Realm)! !
 !WinHttpServer.HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

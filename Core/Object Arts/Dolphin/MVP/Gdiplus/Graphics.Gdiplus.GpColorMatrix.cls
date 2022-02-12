@@ -6,6 +6,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpColorMatrix'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpColorMatrix_Size' -> 16r64.
 		'_OffsetOf_m' -> 16r0
 	}!
 Graphics.Gdiplus.GpColorMatrix guid: (Core.GUID fromString: '{6b5ab37e-5cc3-447e-99ef-9135f516ccc0}')!
@@ -66,6 +67,9 @@ row:col:put:!accessing!public! !
 
 !Graphics.Gdiplus.GpColorMatrix class methodsFor!
 
+byteSize
+	^_GpColorMatrix_Size!
+
 defineFields
 	"Define the fields of the GpColorMatrix structure.
 		GpColorMatrix compileDefinition
@@ -102,6 +106,7 @@ withAll: anArray
 
 	^self new m: (FLOATArray withAll: anArray)! !
 !Graphics.Gdiplus.GpColorMatrix class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 identity!instance creation!public! !

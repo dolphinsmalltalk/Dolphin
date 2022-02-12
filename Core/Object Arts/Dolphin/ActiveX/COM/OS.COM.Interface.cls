@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.COM.Interface'
 	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{OS.COM.OLEConstants})
 	classInstanceVariableNames: 'argSizes functions typeLib'
 	classConstants: {
+		'_Interface_Size' -> 16r10.
 		'_OffsetOf_argSizes' -> 16r4.
 		'_OffsetOf_interfaceCookie' -> 16rC.
 		'_OffsetOf_objectCookie' -> 16r8.
@@ -397,6 +398,9 @@ attachInterface: interface
 	interface, which is detached. If interface is instead nil, then answer nil."
 
 	^interface isNil ifFalse: [self attach: interface detach]!
+
+byteSize
+	^_Interface_Size!
 
 calcArgSizes
 	"Private - Work through the callback array, building an table of argument sizes
@@ -1059,6 +1063,7 @@ argSizes!initializing!private! !
 atAddress:!instance creation!public! !
 attach:!instance creation!public! !
 attachInterface:!instance creation!public! !
+byteSize!**compiled accessors**!constants!public! !
 calcArgSizes!initializing!private! !
 classForIID:!enquiries!public! !
 classForIID:ifNone:!enquiries!public! !

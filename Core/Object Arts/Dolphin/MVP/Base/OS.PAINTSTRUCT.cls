@@ -11,7 +11,8 @@ OS.Win32Structure subclass: #'OS.PAINTSTRUCT'
 		'_OffsetOf_fRestore' -> 16r18.
 		'_OffsetOf_hdc' -> 16r0.
 		'_OffsetOf_rcPaint' -> 16r8.
-		'_OffsetOf_rgbReserved' -> 16r20
+		'_OffsetOf_rgbReserved' -> 16r20.
+		'_PAINTSTRUCT_Size' -> 16r40
 	}!
 OS.PAINTSTRUCT guid: (Core.GUID fromString: '{87b4c605-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.PAINTSTRUCT comment: ''!
@@ -34,6 +35,9 @@ rcPaint!**compiled accessors**!public! !
 
 !OS.PAINTSTRUCT class methodsFor!
 
+byteSize
+	^_PAINTSTRUCT_Size!
+
 defineFields
 	"Define the Win32 PAINTSTRUCT structure.
 		PAINTSTRUCT compileDefinition
@@ -51,6 +55,7 @@ defineFields
 getFieldNames
 	^#(#hdc #fErase #rcPaint)! !
 !OS.PAINTSTRUCT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

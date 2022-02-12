@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.EXTLOGPEN'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EXTLOGPEN_Size' -> 16r1C.
 		'_OffsetOf_elpBrushStyle' -> 16r8.
 		'_OffsetOf_elpColor' -> 16rC.
 		'_OffsetOf_elpHatch' -> 16r10.
@@ -132,6 +133,9 @@ elpWidth:!**compiled accessors**!public! !
 
 !OS.EXTLOGPEN class methodsFor!
 
+byteSize
+	^_EXTLOGPEN_Size!
+
 defineFields
 	"Define the fields of the EXTLOGPEN structure.
 
@@ -176,6 +180,7 @@ defineFields
 getFieldNames
 	^#(#elpPenStyle #elpWidth #elpBrushStyle #elpColor #elpHatch #elpNumEntries #elpStyleEntry)! !
 !OS.EXTLOGPEN class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

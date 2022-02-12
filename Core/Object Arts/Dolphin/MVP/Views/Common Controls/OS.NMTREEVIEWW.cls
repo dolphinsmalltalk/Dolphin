@@ -6,6 +6,7 @@ OS.NMHDR subclass: #'OS.NMTREEVIEWW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMTREEVIEWW_Size' -> 16r68.
 		'_OffsetOf_action' -> 16rC.
 		'_OffsetOf_itemNew' -> 16r38.
 		'_OffsetOf_itemOld' -> 16r10.
@@ -50,6 +51,9 @@ ptDrag!**compiled accessors**!public! !
 
 !OS.NMTREEVIEWW class methodsFor!
 
+byteSize
+	^_NMTREEVIEWW_Size!
+
 defineFields
 	"Define the structure template for Win32 NMTREEVIEW structure.
 		self compileDefinition
@@ -73,6 +77,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #action #itemOld #itemNew #ptDrag)! !
 !OS.NMTREEVIEWW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

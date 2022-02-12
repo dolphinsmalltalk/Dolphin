@@ -147,6 +147,7 @@ OS.Win32Structure subclass: #'OS.CHARRANGE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CHARRANGE_Size' -> 16r8.
 		'_OffsetOf_cpMax' -> 16r4.
 		'_OffsetOf_cpMin' -> 16r0
 	}!
@@ -157,7 +158,8 @@ OS.Win32Structure subclass: #'OS.TEXTRANGE'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_chrg' -> 16r0.
-		'_OffsetOf_lpstrText' -> 16r8
+		'_OffsetOf_lpstrText' -> 16r8.
+		'_TEXTRANGE_Size' -> 16rC
 	}!
 OS.TEXTRANGE subclass: #'OS.FINDTEXTEX'
 	instanceVariableNames: ''
@@ -165,6 +167,7 @@ OS.TEXTRANGE subclass: #'OS.FINDTEXTEX'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_FINDTEXTEX_Size' -> 16r14.
 		'_OffsetOf_chrgText' -> 16rC
 	}!
 UI.ValueConvertingControlView subclass: #'UI.TextEdit'

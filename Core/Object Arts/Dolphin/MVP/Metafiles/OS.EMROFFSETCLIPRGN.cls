@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMROFFSETCLIPRGN'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMROFFSETCLIPRGN_Size' -> 16r10.
 		'_OffsetOf_ptlOffset' -> 16r8
 	}!
 OS.EMROFFSETCLIPRGN guid: (Core.GUID fromString: '{a0baa6e7-981f-4e05-8c52-19525eb0e92e}')!
@@ -37,7 +38,7 @@ ptlOffset: aPOINTL
 	aPOINTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_ptlOffset + 1)
-		to: ##(_OffsetOf_ptlOffset + POINTL basicByteSize)
+		to: ##(_OffsetOf_ptlOffset + POINTL._POINTL_Size)
 		startingAt: 1! !
 !OS.EMROFFSETCLIPRGN categoriesForMethods!
 ptlOffset!**compiled accessors**!public! !
@@ -45,6 +46,9 @@ ptlOffset:!**compiled accessors**!public! !
 !
 
 !OS.EMROFFSETCLIPRGN class methodsFor!
+
+byteSize
+	^_EMROFFSETCLIPRGN_Size!
 
 defineFields
 	"Define the fields of the EMROFFSETCLIPRGN structure.
@@ -73,6 +77,7 @@ iTypes
 
 	^{EMR_OFFSETCLIPRGN}! !
 !OS.EMROFFSETCLIPRGN class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

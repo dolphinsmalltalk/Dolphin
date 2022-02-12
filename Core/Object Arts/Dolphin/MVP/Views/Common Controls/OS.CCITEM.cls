@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.CCITEM'
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CCITEM_Size' -> 16r4.
 		'_OffsetOf_mask' -> 16r0
 	}!
 OS.CCITEM guid: (Core.GUID fromString: '{87b4c5ce-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -89,7 +90,7 @@ mask: anInteger
 maskIn: anInteger
 	"OR in to receiver's mask field the bit flags represented by anInteger"
 
-	self mask: (self mask bitOr: anInteger)!
+	bytes dwordAtOffset: _OffsetOf_mask put: ((bytes dwordAtOffset: _OffsetOf_mask) bitOr: anInteger)!
 
 newTextBuffer: anInteger
 	"Allocate a new text buffer for the receiver of the specified size."
@@ -244,6 +245,9 @@ textValidMask!constants!private! !
 
 !OS.CCITEM class methodsFor!
 
+byteSize
+	^_CCITEM_Size!
+
 defineFields
 	"
 		CCITEM compileDefinition
@@ -254,6 +258,7 @@ defineFields
 		type: DWORDField new
 		offset: 0! !
 !OS.CCITEM class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !
 

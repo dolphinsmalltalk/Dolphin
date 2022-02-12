@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSETMAPPERFLAGS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSETMAPPERFLAGS_Size' -> 16rC.
 		'_OffsetOf_dwFlags' -> 16r8
 	}!
 OS.EMRSETMAPPERFLAGS guid: (Core.GUID fromString: '{161d7d16-953a-489a-a7f8-b02ce12b0021}')!
@@ -42,6 +43,9 @@ dwFlags:!**compiled accessors**!public! !
 
 !OS.EMRSETMAPPERFLAGS class methodsFor!
 
+byteSize
+	^_EMRSETMAPPERFLAGS_Size!
+
 defineFields
 	"Define the fields of the EMRSETMAPPERFLAGS structure.
 
@@ -69,6 +73,7 @@ iTypes
 
 	^{EMR_SETMAPPERFLAGS}! !
 !OS.EMRSETMAPPERFLAGS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

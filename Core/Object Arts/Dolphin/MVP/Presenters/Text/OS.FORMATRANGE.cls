@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.FORMATRANGE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_FORMATRANGE_Size' -> 16r30.
 		'_OffsetOf_cpMax' -> 16r2C.
 		'_OffsetOf_cpMin' -> 16r28.
 		'_OffsetOf_hdc' -> 16r0.
@@ -51,7 +52,7 @@ rc: aRECTL
 	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rc + 1)
-		to: ##(_OffsetOf_rc + RECTL basicByteSize)
+		to: ##(_OffsetOf_rc + RECTL._RECTL_Size)
 		startingAt: 1!
 
 rcPage
@@ -65,7 +66,7 @@ rcPage: aRECTL
 	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rcPage + 1)
-		to: ##(_OffsetOf_rcPage + RECTL basicByteSize)
+		to: ##(_OffsetOf_rcPage + RECTL._RECTL_Size)
 		startingAt: 1! !
 !OS.FORMATRANGE categoriesForMethods!
 cpMax:!**compiled accessors**!public! !
@@ -79,6 +80,9 @@ rcPage:!**compiled accessors**!public! !
 !
 
 !OS.FORMATRANGE class methodsFor!
+
+byteSize
+	^_FORMATRANGE_Size!
 
 defineFields
 	"Define the fields of the Win32 FORMATRANGE structure.
@@ -99,6 +103,7 @@ defineFields
 getFieldNames
 	^#(#hdc #hdcTarget #rc #rcPage #cpMin #cpMax)! !
 !OS.FORMATRANGE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

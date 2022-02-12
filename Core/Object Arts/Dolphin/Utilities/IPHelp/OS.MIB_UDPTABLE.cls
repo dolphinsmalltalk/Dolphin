@@ -6,6 +6,7 @@ OS.IpHlpApiTableStruct subclass: #'OS.MIB_UDPTABLE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_UDPTABLE_Size' -> 16rC.
 		'_OffsetOf_table' -> 16r4
 	}!
 OS.MIB_UDPTABLE guid: (Core.GUID fromString: '{49fa1814-6ebf-49d7-8eaf-86aa73efed72}')!
@@ -39,6 +40,9 @@ table!**compiled accessors**!public! !
 
 !OS.MIB_UDPTABLE class methodsFor!
 
+byteSize
+	^_MIB_UDPTABLE_Size!
+
 defineFields
 	"Define the fields of the MIB_UDPTABLE structure.
 		MIB_UDPTABLE compileDefinition
@@ -62,6 +66,7 @@ defineFields
 getFieldNames
 	^#(#dwNumEntries #table)! !
 !OS.MIB_UDPTABLE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

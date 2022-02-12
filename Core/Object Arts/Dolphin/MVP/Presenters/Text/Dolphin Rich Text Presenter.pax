@@ -343,6 +343,7 @@ OS.Win32Structure subclass: #'OS.CHARFORMAT2W'
 	imports: #(#{OS.CommonDialogConstants} #{OS.RichEditConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CHARFORMAT2W_Size' -> 16r74.
 		'_OffsetOf_bAnimation' -> 16r71.
 		'_OffsetOf_bCharSet' -> 16r18.
 		'_OffsetOf_bPitchAndFamily' -> 16r19.
@@ -370,6 +371,7 @@ OS.Win32Structure subclass: #'OS.EDITSTREAM'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EDITSTREAM_Size' -> 16rC.
 		'_OffsetOf_dwCookie' -> 16r0.
 		'_OffsetOf_dwError' -> 16r4.
 		'_OffsetOf_pfnCallback' -> 16r8
@@ -380,6 +382,7 @@ OS.Win32Structure subclass: #'OS.FORMATRANGE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_FORMATRANGE_Size' -> 16r30.
 		'_OffsetOf_cpMax' -> 16r2C.
 		'_OffsetOf_cpMin' -> 16r28.
 		'_OffsetOf_hdc' -> 16r0.
@@ -393,6 +396,7 @@ OS.Win32Structure subclass: #'OS.GETTEXTEX'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GETTEXTEX_Size' -> 16r14.
 		'_OffsetOf_cb' -> 16r0.
 		'_OffsetOf_codepage' -> 16r8.
 		'_OffsetOf_flags' -> 16r4.
@@ -414,7 +418,8 @@ OS.Win32Structure subclass: #'OS.PARAFORMAT'
 		'_OffsetOf_rgxTabs' -> 16r1C.
 		'_OffsetOf_wAlignment' -> 16r18.
 		'_OffsetOf_wEffects' -> 16rA.
-		'_OffsetOf_wNumbering' -> 16r8
+		'_OffsetOf_wNumbering' -> 16r8.
+		'_PARAFORMAT_Size' -> 16r9C
 	}!
 OS.NMHDR subclass: #'OS.ENLINK'
 	instanceVariableNames: ''
@@ -422,6 +427,7 @@ OS.NMHDR subclass: #'OS.ENLINK'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_ENLINK_Size' -> 16r20.
 		'_OffsetOf_chrg' -> 16r18.
 		'_OffsetOf_lParam' -> 16r14.
 		'_OffsetOf_msg' -> 16rC.

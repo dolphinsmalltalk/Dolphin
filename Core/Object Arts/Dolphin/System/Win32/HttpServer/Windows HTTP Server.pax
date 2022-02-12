@@ -363,6 +363,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_BYTE_RANGE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_BYTE_RANGE_Size' -> 16r10.
 		'_OffsetOf_Length' -> 16r8.
 		'_OffsetOf_StartingOffset' -> 16r0
 	}!
@@ -372,6 +373,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_CACHE_POLICY'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_CACHE_POLICY_Size' -> 16r8.
 		'_OffsetOf_Policy' -> 16r0.
 		'_OffsetOf_SecondsToLive' -> 16r4
 	}!
@@ -381,6 +383,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_CHANNEL_BIND_IN
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_CHANNEL_BIND_INFO_Size' -> 16r10.
 		'_OffsetOf_Flags' -> 16r4.
 		'_OffsetOf_Hardening' -> 16r0.
 		'_OffsetOf_NumberOfServiceNames' -> 16rC.
@@ -392,6 +395,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_COOKED_URL'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_COOKED_URL_Size' -> 16r18.
 		'_OffsetOf_AbsPathLength' -> 16r4.
 		'_OffsetOf_FullUrlLength' -> 16r0.
 		'_OffsetOf_HostLength' -> 16r2.
@@ -407,6 +411,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_DATA_CHUNK'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_DATA_CHUNK_Size' -> 16r20.
 		'_OffsetOf_DataChunkType' -> 16r0.
 		'_OffsetOf_FromFileHandle_ByteRange' -> 16r8.
 		'_OffsetOf_FromFileHandle_FileHandle' -> 16r18.
@@ -423,6 +428,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_HEADERS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_HEADERS_Size' -> 16r10.
 		'_OffsetOf_pTrailers' -> 16rC.
 		'_OffsetOf_pUnknownHeaders' -> 16r4.
 		'_OffsetOf_TrailerCount' -> 16r8.
@@ -434,6 +440,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_KNOWN_HEADER'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_KNOWN_HEADER_Size' -> 16r8.
 		'_OffsetOf_pRawValue' -> 16r4.
 		'_OffsetOf_RawValueLength' -> 16r0
 	}!
@@ -443,6 +450,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_LOG_FIELDS_DATA
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_LOG_FIELDS_DATA_Size' -> 16r5C.
 		'_OffsetOf_ClientIp' -> 16r24.
 		'_OffsetOf_ClientIpLength' -> 16r8.
 		'_OffsetOf_Cookie' -> 16r44.
@@ -480,6 +488,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_MULTIPLE_KNOWN_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_MULTIPLE_KNOWN_HEADERS_Size' -> 16r10.
 		'_OffsetOf_Flags' -> 16r4.
 		'_OffsetOf_HeaderId' -> 16r0.
 		'_OffsetOf_KnownHeaderCount' -> 16r8.
@@ -491,6 +500,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_PROPERTY_FLAGS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_PROPERTY_FLAGS_Size' -> 16r4.
 		'_OffsetOf_Present' -> 16r0
 	}!
 WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_QOS_SETTING_INFO'
@@ -499,6 +509,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_QOS_SETTING_INF
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_QOS_SETTING_INFO_Size' -> 16r8.
 		'_OffsetOf_QosSetting' -> 16r4.
 		'_OffsetOf_QosType' -> 16r0
 	}!
@@ -508,6 +519,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_AUTH_IN
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_REQUEST_AUTH_INFO_Size' -> 16r34.
 		'_OffsetOf_AccessToken' -> 16r10.
 		'_OffsetOf_AuthStatus' -> 16r0.
 		'_OffsetOf_AuthType' -> 16rC.
@@ -528,6 +540,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_CHANNEL
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_REQUEST_CHANNEL_BIND_STATUS_Size' -> 16r10.
 		'_OffsetOf_ChannelToken' -> 16r4.
 		'_OffsetOf_ChannelTokenSize' -> 16r8.
 		'_OffsetOf_Flags' -> 16rC.
@@ -539,6 +552,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_REQUEST_INFO_Size' -> 16rC.
 		'_OffsetOf_InfoLength' -> 16r4.
 		'_OffsetOf_InfoType' -> 16r0.
 		'_OffsetOf_pInfo' -> 16r8
@@ -549,6 +563,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_TOKEN_B
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_REQUEST_TOKEN_BINDING_INFO_Size' -> 16r14.
 		'_OffsetOf_KeyType' -> 16r10.
 		'_OffsetOf_TlsUnique' -> 16r8.
 		'_OffsetOf_TlsUniqueSize' -> 16rC.
@@ -561,6 +576,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_V1'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_REQUEST_V1_Size' -> 16r1D0.
 		'_OffsetOf_Address' -> 16r4C.
 		'_OffsetOf_BytesReceived' -> 16r1B0.
 		'_OffsetOf_ConnectionId' -> 16r8.
@@ -586,6 +602,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_RESPONSE_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_RESPONSE_INFO_Size' -> 16rC.
 		'_OffsetOf_Length' -> 16r4.
 		'_OffsetOf_pInfo' -> 16r8.
 		'_OffsetOf_Type' -> 16r0
@@ -596,6 +613,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_RESPONSE_V1'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_RESPONSE_V1_Size' -> 16r118.
 		'_OffsetOf_EntityChunkCount' -> 16r110.
 		'_OffsetOf_Flags' -> 16r0.
 		'_OffsetOf_Headers' -> 16r10.
@@ -611,6 +629,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTI
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS_Size' -> 16r8.
 		'_OffsetOf_Realm' -> 16r4.
 		'_OffsetOf_RealmLength' -> 16r0
 	}!
@@ -620,6 +639,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTI
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS_Size' -> 16r10.
 		'_OffsetOf_DomainName' -> 16r4.
 		'_OffsetOf_DomainNameLength' -> 16r0.
 		'_OffsetOf_Realm' -> 16rC.
@@ -631,6 +651,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_BINDING
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_BINDING_BASE_Size' -> 16r4.
 		'_OffsetOf_Type' -> 16r0
 	}!
 WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_CACHE_SET'
@@ -639,6 +660,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_CACHE_SET_Size' -> 16r8.
 		'_OffsetOf_KeyDesc' -> 16r0.
 		'_OffsetOf_ParamDesc' -> 16r4
 	}!
@@ -648,6 +670,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM_Size' -> 16r8.
 		'_OffsetOf_AddrLength' -> 16r0.
 		'_OffsetOf_pAddress' -> 16r4
 	}!
@@ -657,6 +680,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY_Size' -> 16r88.
 		'_OffsetOf_AddrCount' -> 16r0.
 		'_OffsetOf_AddrList' -> 16r8
 	}!
@@ -666,6 +690,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_SSL_CCS_SET_Size' -> 16rB8.
 		'_OffsetOf_KeyDesc' -> 16r0.
 		'_OffsetOf_ParamDesc' -> 16r80
 	}!
@@ -675,6 +700,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_SSL_PARAM_Size' -> 16r34.
 		'_OffsetOf_AppId' -> 16r8.
 		'_OffsetOf_DefaultCertCheckMode' -> 16r1C.
 		'_OffsetOf_DefaultFlags' -> 16r30.
@@ -692,6 +718,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_SSL_SET_Size' -> 16r38.
 		'_OffsetOf_KeyDesc' -> 16r0.
 		'_OffsetOf_ParamDesc' -> 16r4
 	}!
@@ -701,6 +728,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_SSL_SNI_KEY_Size' -> 16r88.
 		'_OffsetOf_Host' -> 16r80.
 		'_OffsetOf_IpPort' -> 16r0
 	}!
@@ -710,6 +738,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_SSL_SNI_SET_Size' -> 16rC0.
 		'_OffsetOf_KeyDesc' -> 16r0.
 		'_OffsetOf_ParamDesc' -> 16r88
 	}!
@@ -719,6 +748,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_TIMEOUT_SET_Size' -> 16r8.
 		'_OffsetOf_KeyDesc' -> 16r0.
 		'_OffsetOf_ParamDesc' -> 16r4
 	}!
@@ -728,6 +758,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_URLACL_SET_Size' -> 16r8.
 		'_OffsetOf_KeyDesc' -> 16r0.
 		'_OffsetOf_ParamDesc' -> 16r4
 	}!
@@ -737,6 +768,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SSL_CLIENT_CERT
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SSL_CLIENT_CERT_INFO_Size' -> 16r14.
 		'_OffsetOf_CertDeniedByMapper' -> 16r10.
 		'_OffsetOf_CertEncodedSize' -> 16r4.
 		'_OffsetOf_CertFlags' -> 16r0.
@@ -749,6 +781,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SSL_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SSL_INFO_Size' -> 16r1C.
 		'_OffsetOf_ConnectionKeySize' -> 16r2.
 		'_OffsetOf_pClientCertInfo' -> 16r14.
 		'_OffsetOf_pServerCertIssuer' -> 16rC.
@@ -764,6 +797,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SSL_PROTOCOL_IN
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SSL_PROTOCOL_INFO_Size' -> 16r1C.
 		'_OffsetOf_CipherStrength' -> 16r8.
 		'_OffsetOf_CipherType' -> 16r4.
 		'_OffsetOf_HashStrength' -> 16r10.
@@ -778,6 +812,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_UNKNOWN_HEADER'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_UNKNOWN_HEADER_Size' -> 16rC.
 		'_OffsetOf_NameLength' -> 16r0.
 		'_OffsetOf_pName' -> 16r4.
 		'_OffsetOf_pRawValue' -> 16r8.
@@ -789,6 +824,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_VERSION'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_VERSION_Size' -> 16r4.
 		'_OffsetOf_MajorVersion' -> 16r0.
 		'_OffsetOf_MinorVersion' -> 16r2
 	}!
@@ -798,6 +834,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HttpServiceConfigQue
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HttpServiceConfigQuery_Size' -> 16r4.
 		'_OffsetOf_QueryDesc' -> 16r0
 	}!
 WinHttpServer.HTTP_HEADERS subclass: #'WinHttpServer.HTTP_REQUEST_HEADERS'
@@ -806,6 +843,7 @@ WinHttpServer.HTTP_HEADERS subclass: #'WinHttpServer.HTTP_REQUEST_HEADERS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_REQUEST_HEADERS_Size' -> 16r158.
 		'_OffsetOf_KnownHeaders' -> 16r10
 	}!
 WinHttpServer.HTTP_HEADERS subclass: #'WinHttpServer.HTTP_RESPONSE_HEADERS'
@@ -814,6 +852,7 @@ WinHttpServer.HTTP_HEADERS subclass: #'WinHttpServer.HTTP_RESPONSE_HEADERS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_RESPONSE_HEADERS_Size' -> 16r100.
 		'_OffsetOf_KnownHeaders' -> 16r10
 	}!
 WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_BINDING_INFO'
@@ -822,6 +861,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_BINDING_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_BINDING_INFO_Size' -> 16r8.
 		'_OffsetOf_RequestQueueHandle' -> 16r4
 	}!
 WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO'
@@ -830,6 +870,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_LISTEN_ENDPOINT
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_LISTEN_ENDPOINT_INFO_Size' -> 16r8.
 		'_OffsetOf_EnableSharing' -> 16r4
 	}!
 WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_LOGGING_INFO'
@@ -838,6 +879,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_LOGGING_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_LOGGING_INFO_Size' -> 16r30.
 		'_OffsetOf_DirectoryName' -> 16r10.
 		'_OffsetOf_DirectoryNameLength' -> 16rE.
 		'_OffsetOf_Fields' -> 16r18.
@@ -858,6 +900,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_PROTECTION_LEVE
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_PROTECTION_LEVEL_INFO_Size' -> 16r8.
 		'_OffsetOf_Level' -> 16r4
 	}!
 WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO'
@@ -866,6 +909,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTI
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVER_AUTHENTICATION_INFO_Size' -> 16r24.
 		'_OffsetOf_AuthSchemes' -> 16r4.
 		'_OffsetOf_BasicParams' -> 16r1C.
 		'_OffsetOf_DigestParams' -> 16rC.
@@ -880,6 +924,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_STATE_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_STATE_INFO_Size' -> 16r8.
 		'_OffsetOf_State' -> 16r4
 	}!
 WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO'
@@ -888,6 +933,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_TIMEOUT_LIMIT_I
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_TIMEOUT_LIMIT_INFO_Size' -> 16r14.
 		'_OffsetOf_DrainEntityBody' -> 16r6.
 		'_OffsetOf_EntityBody' -> 16r4.
 		'_OffsetOf_HeaderWait' -> 16rC.
@@ -907,6 +953,7 @@ WinHttpServer.HttpQosSetting subclass: #'WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_BANDWIDTH_LIMIT_INFO_Size' -> 16r8.
 		'_OffsetOf_MaxBandwidth' -> 16r4
 	}!
 WinHttpServer.HttpQosSetting subclass: #'WinHttpServer.HTTP_CONNECTION_LIMIT_INFO'
@@ -915,6 +962,7 @@ WinHttpServer.HttpQosSetting subclass: #'WinHttpServer.HTTP_CONNECTION_LIMIT_INF
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_CONNECTION_LIMIT_INFO_Size' -> 16r8.
 		'_OffsetOf_MaxConnections' -> 16r4
 	}!
 WinHttpServer.HttpQosSetting subclass: #'WinHttpServer.HTTP_FLOWRATE_INFO'
@@ -923,6 +971,7 @@ WinHttpServer.HttpQosSetting subclass: #'WinHttpServer.HTTP_FLOWRATE_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_FLOWRATE_INFO_Size' -> 16r10.
 		'_OffsetOf_BurstSize' -> 16rC.
 		'_OffsetOf_MaxBandwidth' -> 16r4.
 		'_OffsetOf_MaxPeakBandwidth' -> 16r8
@@ -933,6 +982,7 @@ WinHttpServer.HTTP_REQUEST_V1 subclass: #'WinHttpServer.HTTP_REQUEST_V2'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_REQUEST_V2_Size' -> 16r1D8.
 		'_OffsetOf_pRequestInfo' -> 16r1D4.
 		'_OffsetOf_RequestInfoCount' -> 16r1D0
 	}!
@@ -942,6 +992,7 @@ WinHttpServer.HTTP_RESPONSE_V1 subclass: #'WinHttpServer.HTTP_RESPONSE_V2'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_RESPONSE_V2_Size' -> 16r120.
 		'_OffsetOf_pResponseInfo' -> 16r11C.
 		'_OffsetOf_ResponseInfoCount' -> 16r118
 	}!
@@ -951,6 +1002,7 @@ WinHttpServer.HTTP_SERVICE_BINDING_BASE subclass: #'WinHttpServer.HTTP_SERVICE_B
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_BINDING_A_Size' -> 16rC.
 		'_OffsetOf_Buffer' -> 16r4.
 		'_OffsetOf_BufferSize' -> 16r8
 	}!
@@ -960,6 +1012,7 @@ WinHttpServer.HTTP_SERVICE_BINDING_BASE subclass: #'WinHttpServer.HTTP_SERVICE_B
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_BINDING_W_Size' -> 16rC.
 		'_OffsetOf_Buffer' -> 16r4.
 		'_OffsetOf_BufferSize' -> 16r8
 	}!
@@ -969,6 +1022,7 @@ WinHttpServer.HttpServiceConfigQuery subclass: #'WinHttpServer.HTTP_SERVICE_CONF
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_SSL_CCS_QUERY_Size' -> 16r90.
 		'_OffsetOf_dwToken' -> 16r88.
 		'_OffsetOf_KeyDesc' -> 16r8
 	}!
@@ -978,6 +1032,7 @@ WinHttpServer.HttpServiceConfigQuery subclass: #'WinHttpServer.HTTP_SERVICE_CONF
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_SSL_QUERY_Size' -> 16rC.
 		'_OffsetOf_dwToken' -> 16r8.
 		'_OffsetOf_KeyDesc' -> 16r4
 	}!
@@ -987,6 +1042,7 @@ WinHttpServer.HttpServiceConfigQuery subclass: #'WinHttpServer.HTTP_SERVICE_CONF
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_SSL_SNI_QUERY_Size' -> 16r98.
 		'_OffsetOf_dwToken' -> 16r90.
 		'_OffsetOf_KeyDesc' -> 16r8
 	}!
@@ -996,6 +1052,7 @@ WinHttpServer.HttpServiceConfigQuery subclass: #'WinHttpServer.HTTP_SERVICE_CONF
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_URLACL_QUERY_Size' -> 16rC.
 		'_OffsetOf_dwToken' -> 16r8.
 		'_OffsetOf_KeyDesc' -> 16r4
 	}!

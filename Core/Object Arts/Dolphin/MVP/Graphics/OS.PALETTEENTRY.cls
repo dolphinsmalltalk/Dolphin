@@ -9,7 +9,8 @@ OS.Win32Structure subclass: #'OS.PALETTEENTRY'
 		'_OffsetOf_peBlue' -> 16r2.
 		'_OffsetOf_peFlags' -> 16r3.
 		'_OffsetOf_peGreen' -> 16r1.
-		'_OffsetOf_peRed' -> 16r0
+		'_OffsetOf_peRed' -> 16r0.
+		'_PALETTEENTRY_Size' -> 16r4
 	}!
 OS.PALETTEENTRY guid: (Core.GUID fromString: '{87b4c606-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.PALETTEENTRY comment: '<PALETTEENTRY> is an <ExternalStructure> class to wrap the struct ''Win32.PALETTEENTRY'' from type information in the ''Win32 API'' library.
@@ -94,6 +95,9 @@ rgbCode!accessing!public! !
 
 !OS.PALETTEENTRY class methodsFor!
 
+byteSize
+	^_PALETTEENTRY_Size!
+
 defineFields
 	"Define the fields of the PALETTEENTRY structure.
 
@@ -142,6 +146,7 @@ threeThreeTwo
 					pe peBlue: (i bitAnd: 2r11) * 255 // 3].
 	^palette! !
 !OS.PALETTEENTRY class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 threeThreeTwo!instance creation!public! !

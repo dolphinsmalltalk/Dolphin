@@ -11,6 +11,7 @@ OS.COM.FinalizableStructure subclass: #'OS.COM.VARIANT'
 		'_OffsetOf_wReserved1' -> 16r2.
 		'_OffsetOf_wReserved2' -> 16r4.
 		'_OffsetOf_wReserved3' -> 16r6.
+		'_VARIANT_Size' -> 16r10.
 		'VTClasses' -> #(#{Core.UndefinedObject} #{Core.UndefinedObject} #{External.SWORD} #{External.SDWORD} #{External.FLOAT} #{External.DOUBLE} #{OS.COM.CURRENCY} #{OS.COM.DATE} #{OS.COM.BSTR} #{OS.COM.IDispatch} #{OS.HRESULT} #{OS.COM.VARIANT_BOOL} #{OS.COM.VARIANT} #{OS.COM.IUnknown} #{OS.COM.DECIMAL} nil #{External.SBYTE} #{External.BYTE} #{External.WORD} #{External.DWORD} #{OS.LARGE_INTEGER} #{OS.ULARGE_INTEGER} #{External.SDWORD} #{External.DWORD} #{External.VOID} #{OS.HRESULT} #{External.Address} #{OS.COM.SAFEARRAY} #{External.Array} #{OS.COM.Record} #{Core.AnsiString} #{Core.Utf16String} nil nil nil nil #{External.Structure} nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil nil #{OS.FILETIME} #{Core.ByteArray} #{OS.COM.IStream} #{OS.COM.IStorage} #{OS.COM.IStream} #{OS.COM.IStorage} #{Core.ByteArray} #{External.DWORD} #{OS.COM.CLSID}).
 		'VTNames' -> #(#nil #null #sword #sdword #float #double #cy #date #bstr #dispatch #hresult #varbool #variant #unknown #decimal #badVarType #sbyte #byte #word #dword #sqword #qword #sdword #dword #void #hresult #lpvoid #safearray #carray #typedef #lpstr #lpwstr #badVarType #badVarType #badVarType #badVarType #struct #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #badVarType #filetime #blob #stream #storage #streamed_object #stored_object #blob_object #cf #clsid)
 	}!
@@ -836,6 +837,9 @@ OS.COM.VARIANT methodProtocol: #variantCompatible attributes: #(#readOnly) selec
 
 !OS.COM.VARIANT class methodsFor!
 
+byteSize
+	^_VARIANT_Size!
+
 classForVT: anInteger
 	"Answer a class of object suitable for representing values of the specified Variant type (i.e. a value from the VT_XXX enumeration which describes a scalar type)."
 
@@ -1195,6 +1199,7 @@ vt
 
 	^VT_VARIANT! !
 !OS.COM.VARIANT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 classForVT:!enquiries!public! !
 clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !

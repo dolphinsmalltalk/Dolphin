@@ -37,7 +37,8 @@ OS.Win32Structure subclass: #'OS.OUTLINETEXTMETRICW'
 		'_OffsetOf_otmsUnderscoreSize' -> 16rC0.
 		'_OffsetOf_otmsXHeight' -> 16r74.
 		'_OffsetOf_otmTextMetrics' -> 16r4.
-		'_OffsetOf_otmusMinimumPPEM' -> 16r94
+		'_OffsetOf_otmusMinimumPPEM' -> 16r94.
+		'_OUTLINETEXTMETRICW_Size' -> 16rD8
 	}!
 OS.OUTLINETEXTMETRICW guid: (Core.GUID fromString: '{52831a87-901f-4a84-894b-ab539352b71f}')!
 OS.OUTLINETEXTMETRICW comment: '<OUTLINETEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.OUTLINETEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.'!
@@ -260,6 +261,9 @@ styleName!accessing!public! !
 
 !OS.OUTLINETEXTMETRICW class methodsFor!
 
+byteSize
+	^_OUTLINETEXTMETRICW_Size!
+
 defineFields
 	"Define the fields of the OUTLINETEXTMETRICW structure.
 		self compileDefinition
@@ -339,6 +343,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #otmTextMetrics #otmPanoseNumber #otmfsSelection #otmfsType #otmsCharSlopeRise #otmsCharSlopeRun #otmItalicAngle #otmEMSquare #otmAscent #otmDescent #otmLineGap #otmsCapEmHeight #otmsXHeight #otmrcFontBox #otmMacAscent #otmMacDescent #otmMacLineGap #otmusMinimumPPEM #otmptSubscriptSize #otmptSubscriptOffset #otmptSuperscriptSize #otmptSuperscriptOffset #otmsStrikeoutSize #otmsStrikeoutPosition #otmsUnderscoreSize #otmsUnderscorePosition #otmpFamilyName #otmpFaceName #otmpStyleName #otmpFullName)! !
 !OS.OUTLINETEXTMETRICW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

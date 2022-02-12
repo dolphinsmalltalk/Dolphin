@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSCALEVIEWPORTEXTEX'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSCALEVIEWPORTEXTEX_Size' -> 16r18.
 		'_OffsetOf_xDenom' -> 16rC.
 		'_OffsetOf_xNum' -> 16r8.
 		'_OffsetOf_yDenom' -> 16r14.
@@ -84,6 +85,9 @@ yNum:!**compiled accessors**!public! !
 
 !OS.EMRSCALEVIEWPORTEXTEX class methodsFor!
 
+byteSize
+	^_EMRSCALEVIEWPORTEXTEX_Size!
+
 defineFields
 	"Define the fields of the EMRSCALEVIEWPORTEXTEX structure.
 
@@ -123,6 +127,7 @@ iTypes
 
 	^{EMR_SCALEVIEWPORTEXTEX. EMR_SCALEWINDOWEXTEX}! !
 !OS.EMRSCALEVIEWPORTEXTEX class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

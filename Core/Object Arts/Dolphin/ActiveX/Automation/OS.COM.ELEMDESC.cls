@@ -6,6 +6,7 @@ OS.COM.AbstractELEMDESC subclass: #'OS.COM.ELEMDESC'
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_ELEMDESC_Size' -> 16r10.
 		'_OffsetOf_paramdesc' -> 16r8
 	}!
 OS.COM.ELEMDESC guid: (Core.GUID fromString: '{c06f3b77-0868-11d3-93af-00a024ca708a}')!
@@ -81,6 +82,9 @@ paramdesc!**compiled accessors**!public! !
 
 !OS.COM.ELEMDESC class methodsFor!
 
+byteSize
+	^_ELEMDESC_Size!
+
 defineFields
 	"Define the fields of the ELEMDESC structure.
 
@@ -99,6 +103,7 @@ defineFields
 getFieldNames
 	^#(#tdescElem #paramdesc)! !
 !OS.COM.ELEMDESC class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

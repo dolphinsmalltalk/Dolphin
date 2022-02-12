@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_KNOWN_HEADER'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_KNOWN_HEADER_Size' -> 16r8.
 		'_OffsetOf_pRawValue' -> 16r4.
 		'_OffsetOf_RawValueLength' -> 16r0
 	}!
@@ -58,6 +59,9 @@ RawValueLength:!**compiled accessors**!private! !
 
 !WinHttpServer.HTTP_KNOWN_HEADER class methodsFor!
 
+byteSize
+	^_HTTP_KNOWN_HEADER_Size!
+
 defineFields
 	"Define the fields of the HTTP_KNOWN_HEADER structure.
 
@@ -78,6 +82,7 @@ defineFields
 getFieldNames
 	^#(#RawValueLength #pRawValue)! !
 !WinHttpServer.HTTP_KNOWN_HEADER class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

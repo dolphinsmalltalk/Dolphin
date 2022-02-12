@@ -186,6 +186,7 @@ External.Structure subclass: #'OS.ENHMETARECORD'
 	imports: #(#{OS.EnhancedMetafileRecordTypes})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_ENHMETARECORD_Size' -> 16r8.
 		'_OffsetOf_iType' -> 16r0.
 		'_OffsetOf_nSize' -> 16r4
 	}!
@@ -195,6 +196,7 @@ OS.ENHMETARECORD subclass: #'OS.ENHMETAHEADER'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_ENHMETAHEADER_Size' -> 16r6C.
 		'_OffsetOf_bOpenGL' -> 16r60.
 		'_OffsetOf_cbPixelFormat' -> 16r58.
 		'_OffsetOf_dSignature' -> 16r28.

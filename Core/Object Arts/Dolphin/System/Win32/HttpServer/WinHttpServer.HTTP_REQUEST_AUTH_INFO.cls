@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_AUTH_IN
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_REQUEST_AUTH_INFO_Size' -> 16r34.
 		'_OffsetOf_AccessToken' -> 16r10.
 		'_OffsetOf_AuthStatus' -> 16r0.
 		'_OffsetOf_AuthType' -> 16rC.
@@ -217,6 +218,9 @@ SecStatus:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_REQUEST_AUTH_INFO class methodsFor!
 
+byteSize
+	^_HTTP_REQUEST_AUTH_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_REQUEST_AUTH_INFO structure.
 
@@ -259,6 +263,7 @@ defineFields
 getFieldNames
 	^#(#AuthStatus #SecStatus #Flags #AuthType #AccessToken #ContextAttributes #PackedContextLength #PackedContextType #PackedContext #MutualAuthDataLength #pMutualAuthData #PackageNameLength #pPackageName)! !
 !WinHttpServer.HTTP_REQUEST_AUTH_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

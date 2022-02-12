@@ -6,6 +6,7 @@ WinHttpServer.HTTP_HEADERS subclass: #'WinHttpServer.HTTP_RESPONSE_HEADERS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_RESPONSE_HEADERS_Size' -> 16r100.
 		'_OffsetOf_KnownHeaders' -> 16r10
 	}!
 WinHttpServer.HTTP_RESPONSE_HEADERS guid: (Core.GUID fromString: '{487fd2e3-1549-4dcf-8703-d45a2cbbcd85}')!
@@ -40,7 +41,8 @@ KnownHeaders: aStructureArrayOfHTTP_KNOWN_HEADER
 	"Set the receiver's 'KnownHeaders' field to the value of the argument, aStructureArrayOfHTTP_KNOWN_HEADER"
 
 	| size |
-	size := aStructureArrayOfHTTP_KNOWN_HEADER byteSize min: ##(30 * HTTP_KNOWN_HEADER basicByteSize).
+	size := aStructureArrayOfHTTP_KNOWN_HEADER byteSize
+				min: ##(30 * HTTP_KNOWN_HEADER._HTTP_KNOWN_HEADER_Size).
 	aStructureArrayOfHTTP_KNOWN_HEADER
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_KnownHeaders + 1)
@@ -52,6 +54,9 @@ KnownHeaders:!**compiled accessors**!public! !
 !
 
 !WinHttpServer.HTTP_RESPONSE_HEADERS class methodsFor!
+
+byteSize
+	^_HTTP_RESPONSE_HEADERS_Size!
 
 defineFields
 	"Define the fields of the HTTP_RESPONSE_HEADERS structure.
@@ -87,6 +92,7 @@ indexToHeaderMap
 		at: HttpHeaderWwwAuthenticate put: 'WWW-Authenticate';
 		yourself)! !
 !WinHttpServer.HTTP_RESPONSE_HEADERS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 indexToHeaderMap!public! !

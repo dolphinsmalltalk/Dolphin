@@ -14,7 +14,8 @@ OS.CCITEM subclass: #'OS.TVITEMW'
 		'_OffsetOf_iSelectedImage' -> 16r1C.
 		'_OffsetOf_lParam' -> 16r24.
 		'_OffsetOf_pszText' -> 16r10.
-		'_OffsetOf_stateMask' -> 16rC
+		'_OffsetOf_stateMask' -> 16rC.
+		'_TVITEMW_Size' -> 16r28
 	}!
 OS.TVITEMW guid: (Core.GUID fromString: '{87b4c622-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.TVITEMW comment: 'TVITEM is an <ExternalStructure> class which represents the Windows common control structure of the same name.
@@ -74,10 +75,11 @@ cchTextMaxOffset
 	^_OffsetOf_cchTextMax!
 
 children: anInteger
-	"Set receiver's cChildren field from anInteger"
+	"Set receiver's child count to anInteger."
 
-	self cChildren: anInteger.
-	self maskIn: TVIF_CHILDREN!
+	bytes
+		sdwordAtOffset: _OffsetOf_cChildren put: anInteger;
+		dwordAtOffset: _OffsetOf_mask put: ((bytes dwordAtOffset: _OffsetOf_mask) bitOr: TVIF_CHILDREN)!
 
 childrenCallback
 	"Sets the receiver into children callback mode."
@@ -135,6 +137,15 @@ iImage: anInteger
 
 	bytes sdwordAtOffset: _OffsetOf_iImage put: anInteger!
 
+images: anInteger
+	"Set the receiver's images (including that if selected) to that in the image list with the specified index."
+
+	bytes
+		sdwordAtOffset: _OffsetOf_iImage put: anInteger;
+		sdwordAtOffset: _OffsetOf_iSelectedImage put: anInteger;
+		dwordAtOffset: _OffsetOf_mask
+			put: ((bytes dwordAtOffset: _OffsetOf_mask) bitOr: ##(TVIF_IMAGE | TVIF_SELECTEDIMAGE))!
+
 iSelectedImage
 	"Answer the <Integer> value of the receiver's 'iSelectedImage' field."
 
@@ -146,9 +157,9 @@ iSelectedImage: anInteger
 	bytes sdwordAtOffset: _OffsetOf_iSelectedImage put: anInteger!
 
 isStateExpandedOnce
-	"Answer whether the receiver has already been expanded"
+	"Answer whether the receiver describes a node that has already been expanded"
 
-	^self dwState allMask: TVIS_EXPANDEDONCE.!
+	^(bytes dwordAtOffset: _OffsetOf_dwState) allMask: TVIS_EXPANDEDONCE!
 
 lParam
 	"Answer the <Integer> value of the receiver's 'lParam' field."
@@ -173,7 +184,7 @@ pszText: anUtf16String
 selectedImage: anInteger
 	"Set content's iSelectedImage member to anInteger"
 
-	self iSelectedImage: anInteger.
+	bytes sdwordAtOffset: _OffsetOf_iSelectedImage put: anInteger.
 	self maskIn: TVIF_SELECTEDIMAGE!
 
 stateMask
@@ -208,6 +219,7 @@ hItem!**compiled accessors**!public! !
 hItem:!**compiled accessors**!public! !
 iImage!**compiled accessors**!public! !
 iImage:!**compiled accessors**!public! !
+images:!accessing!public! !
 iSelectedImage!**compiled accessors**!public! !
 iSelectedImage:!**compiled accessors**!public! !
 isStateExpandedOnce!public!testing! !
@@ -222,6 +234,9 @@ textPointerOffset!constants!private! !
 !
 
 !OS.TVITEMW class methodsFor!
+
+byteSize
+	^_TVITEMW_Size!
 
 defineFields
 	"Define the fields of the Win32 TVITEMW structure
@@ -258,11 +273,12 @@ defineFields
 		defineField: #lParam
 			type: UINT_PTRField new
 			offset: 36.
-	self assert: [self byteSize = 40]!
+	self assert: [self basicByteSize = 40]!
 
 getFieldNames
 	^#(#mask #hItem #dwState #stateMask #pszText #cchTextMax #iImage #iSelectedImage #cChildren #lParam)! !
 !OS.TVITEMW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

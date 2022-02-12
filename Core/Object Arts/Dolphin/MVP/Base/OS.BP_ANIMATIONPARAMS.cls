@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.BP_ANIMATIONPARAMS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_BP_ANIMATIONPARAMS_Size' -> 16r10.
 		'_OffsetOf_dwDuration' -> 16rC.
 		'_OffsetOf_dwFlags' -> 16r4.
 		'_OffsetOf_dwSize' -> 16r0.
@@ -77,6 +78,9 @@ style:!**compiled accessors**!public! !
 
 !OS.BP_ANIMATIONPARAMS class methodsFor!
 
+byteSize
+	^_BP_ANIMATIONPARAMS_Size!
+
 defineFields
 	"Define the fields of the BP_ANIMATIONPARAMS structure.
 
@@ -100,6 +104,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #dwFlags #style #dwDuration)! !
 !OS.BP_ANIMATIONPARAMS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

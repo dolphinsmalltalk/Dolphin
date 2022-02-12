@@ -110,7 +110,8 @@ OS.Win32Structure subclass: #'OS.VS_VERSION_INFO_HEADER'
 	classConstants: {
 		'_OffsetOf_wLength' -> 16r0.
 		'_OffsetOf_wType' -> 16r4.
-		'_OffsetOf_wValueLength' -> 16r2
+		'_OffsetOf_wValueLength' -> 16r2.
+		'_VS_VERSION_INFO_HEADER_Size' -> 16r6
 	}!
 
 "Loose Methods"!

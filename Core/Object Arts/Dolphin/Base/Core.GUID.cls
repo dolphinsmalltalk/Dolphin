@@ -6,7 +6,7 @@ Core.Object variableByteSubclass: #'Core.GUID'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'ByteSize' -> 16r10.
+		'_GUID_Size' -> 16r10.
 		'StringSize' -> 16r26
 	}!
 Core.GUID guid: (Core.GUID fromString: '{87b4c48f-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -47,9 +47,9 @@ asByteArray
 	"Answer the raw contents of the receiver as a ByteArray."
 
 	^self
-		replaceBytesOf: (ByteArray new: ByteSize)
+		replaceBytesOf: (ByteArray new: _GUID_Size)
 		from: 1
-		to: ByteSize
+		to: _GUID_Size
 		startingAt: 1!
 
 asInteger
@@ -82,7 +82,7 @@ asString
 	^string!
 
 byteSize
-	^ByteSize!
+	^_GUID_Size!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see.
@@ -185,7 +185,11 @@ stringSize
 value: guidBytes
 	"Set the raw binary value of the receiver from those of the argument."
 
-	guidBytes replaceBytesOf: self from: 1 to: self class byteSize startingAt: 1! !
+	guidBytes
+		replaceBytesOf: self
+		from: 1
+		to: _GUID_Size
+		startingAt: 1! !
 !Core.GUID categoriesForMethods!
 <=>!comparing!public! !
 =!comparing!public! !
@@ -237,12 +241,12 @@ atAddress: anAddress
 	^self fromAddress: anAddress!
 
 basicByteSize
-	^ByteSize!
+	^_GUID_Size!
 
 byteSize
 	"Answer the size in bytes of this structure"
 
-	^ByteSize!
+	^_GUID_Size!
 
 clear: addressOrBytes
 	"Finalize an instance of the structure which instances of the receiver wrap
@@ -278,7 +282,7 @@ elementSize
 	"Private - Answer the size (in bytes) of the structure the receiver represents
 	when used as an array element."
 
-	^ByteSize!
+	^_GUID_Size!
 
 fromAddress: ptr
 	"Answer a new instance of the receiver with contents copied from
@@ -286,13 +290,18 @@ fromAddress: ptr
 
 	^ptr asExternalAddress
 		replaceBytesOf: self newNull
-		from: 1 to: ByteSize startingAt: 1!
+		from: 1
+		to: _GUID_Size
+		startingAt: 1!
 
 fromBytes: guidBytes
 	"Answer a new instance of the receiver which is a copy of the specified bytes."
 
-	^guidBytes replaceBytesOf: self newNull from: 1 to: ByteSize startingAt: 1
-!
+	^guidBytes
+		replaceBytesOf: self newNull
+		from: 1
+		to: _GUID_Size
+		startingAt: 1!
 
 fromIdlString: aString
 	"Answer a new instance of the receiver instantiated from the argument, aString, which is in IDL format, e.g. '87b4c48f-026e-11d3-9fd7-00a0cc3e4a32'"
@@ -319,13 +328,13 @@ initialize
 		GUID initialize
 	"
 
-	self extraInstanceSpec: ByteSize.
+	self extraInstanceSpec: _GUID_Size.
 	VM registryAt: self name put: self!
 
 new
 	"Answer a new, null, instance of the receiver."
 
-	^self new: ByteSize!
+	^self new: _GUID_Size!
 
 newBuffer
 	"Answer a new instance containing its own buffer."
@@ -336,14 +345,14 @@ newBuffer
 newNull
 	"Answer a new, null, instance of the receiver."
 
-	^self new: ByteSize!
+	^self new: _GUID_Size!
 
 newUnique
 	"Answer a new instance of the receiver generated using the standard
 	algorithm (i.e. the answer should be unique)."
 
 	| answer |
-	answer := self new: ByteSize.
+	answer := self new: _GUID_Size.
 	OS.Rpcrt4 uuidCreate: answer.
 	^answer!
 

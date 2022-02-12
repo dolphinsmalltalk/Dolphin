@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRCREATECOLORSPACE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRCREATECOLORSPACE_Size' -> 16r154.
 		'_OffsetOf_ihCS' -> 16r8.
 		'_OffsetOf_lcs' -> 16rC
 	}!
@@ -49,7 +50,7 @@ lcs: aLOGCOLORSPACE
 	aLOGCOLORSPACE
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_lcs + 1)
-		to: ##(_OffsetOf_lcs + LOGCOLORSPACE basicByteSize)
+		to: ##(_OffsetOf_lcs + LOGCOLORSPACE._LOGCOLORSPACE_Size)
 		startingAt: 1! !
 !OS.EMRCREATECOLORSPACE categoriesForMethods!
 ihCS!**compiled accessors**!public! !
@@ -59,6 +60,9 @@ lcs:!**compiled accessors**!public! !
 !
 
 !OS.EMRCREATECOLORSPACE class methodsFor!
+
+byteSize
+	^_EMRCREATECOLORSPACE_Size!
 
 defineFields
 	"Define the fields of the EMRCREATECOLORSPACE structure.
@@ -91,6 +95,7 @@ iTypes
 
 	^{EMR_CREATECOLORSPACE}! !
 !OS.EMRCREATECOLORSPACE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

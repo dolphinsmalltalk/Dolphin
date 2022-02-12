@@ -11,7 +11,8 @@ OS.SOCKADDR subclass: #'OS.SOCKADDR_IN6'
 		'_OffsetOf_sin6_flowinfo' -> 16r4.
 		'_OffsetOf_sin6_port' -> 16r2.
 		'_OffsetOf_sin6_scope_id' -> 16r18.
-		'_OffsetOf_sin6_scope_struct' -> 16r18
+		'_OffsetOf_sin6_scope_struct' -> 16r18.
+		'_SOCKADDR_IN6_Size' -> 16r1C
 	}!
 OS.SOCKADDR_IN6 guid: (Core.GUID fromString: '{a989cfcf-96f5-40b8-9904-cb33f7c78940}')!
 OS.SOCKADDR_IN6 comment: '<SOCKADDR_IN6> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_IN6'' from type information in the ''Win32 API'' library.
@@ -69,7 +70,7 @@ sin6_addr: anIN6_ADDR
 	anIN6_ADDR
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_sin6_addr + 1)
-		to: ##(_OffsetOf_sin6_addr + IN6_ADDR basicByteSize)
+		to: ##(_OffsetOf_sin6_addr + IN6_ADDR._IN6_ADDR_Size)
 		startingAt: 1!
 
 sin6_family
@@ -133,6 +134,9 @@ sin6_scope_id:!**compiled accessors**!public! !
 addressFamily
 	^WinSocketConstants.AF_INET6!
 
+byteSize
+	^_SOCKADDR_IN6_Size!
+
 defineFields
 	"Define the fields of the SOCKADDR_IN6 structure.
 
@@ -164,6 +168,7 @@ getFieldNames
 	^#(#sin6_family #sin6_port #sin6_flowinfo #sin6_addr #sin6_scope_id)! !
 !OS.SOCKADDR_IN6 class categoriesForMethods!
 addressFamily!constants!public! !
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

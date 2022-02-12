@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.NCCALCSIZE_PARAMS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NCCALCSIZE_PARAMS_Size' -> 16r34.
 		'_OffsetOf_lppos' -> 16r30.
 		'_OffsetOf_rgrc' -> 16r0
 	}!
@@ -45,12 +46,12 @@ rgrc
 		length: 3
 		elementClass: RECTL!
 
-rgrc: aStructureArrayOfRECT
-	"Set the receiver's 'rgrc' field to the value of the argument, aStructureArrayOfRECT"
+rgrc: aStructureArrayOfRECTL
+	"Set the receiver's 'rgrc' field to the value of the argument, aStructureArrayOfRECTL"
 
 	| size |
-	size := aStructureArrayOfRECT byteSize min: ##(3 * RECTL basicByteSize).
-	aStructureArrayOfRECT
+	size := aStructureArrayOfRECTL byteSize min: ##(3 * RECTL._RECTL_Size).
+	aStructureArrayOfRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rgrc + 1)
 		to: size
@@ -63,6 +64,9 @@ rgrc:!**compiled accessors**!public! !
 !
 
 !OS.NCCALCSIZE_PARAMS class methodsFor!
+
+byteSize
+	^_NCCALCSIZE_PARAMS_Size!
 
 defineFields
 	"Define the fields of the NCCALCSIZE_PARAMS structure.
@@ -83,6 +87,7 @@ defineFields
 getFieldNames
 	^#(#rgrc #lppos)! !
 !OS.NCCALCSIZE_PARAMS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

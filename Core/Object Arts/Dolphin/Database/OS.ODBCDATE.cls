@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.ODBCDATE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_ODBCDATE_Size' -> 16r6.
 		'_OffsetOf_day' -> 16r4.
 		'_OffsetOf_month' -> 16r2.
 		'_OffsetOf_year' -> 16r0
@@ -75,6 +76,9 @@ year:!**compiled accessors**!public! !
 
 !OS.ODBCDATE class methodsFor!
 
+byteSize
+	^_ODBCDATE_Size!
+
 defineFields
 	"typedef struct tagDATE_STRUCT
 	{
@@ -99,6 +103,7 @@ fromDate: aDate
 getFieldNames
 	^#(#year #month #day)! !
 !OS.ODBCDATE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 fromDate:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRPOLYPOLYLINE16'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRPOLYPOLYLINE16_Size' -> 16r28.
 		'_OffsetOf_aPolyCounts' -> 16r20.
 		'_OffsetOf_apts' -> 16r24.
 		'_OffsetOf_cpts' -> 16r1C.
@@ -50,7 +51,8 @@ aPolyCounts: aDWORDArray
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_aPolyCounts + 1)
 		to: _OffsetOf_aPolyCounts + size
-		startingAt: 1!
+		startingAt: 1.
+	self nPolys: aDWORDArray size!
 
 apts
 	"Answer the receiver's apts field as a Smalltalk object."
@@ -110,7 +112,7 @@ rclBounds: aRECTL
 	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1! !
 !OS.EMRPOLYPOLYLINE16 categoriesForMethods!
 aPolyCounts!public! !
@@ -127,6 +129,9 @@ rclBounds:!**compiled accessors**!public! !
 !
 
 !OS.EMRPOLYPOLYLINE16 class methodsFor!
+
+byteSize
+	^_EMRPOLYPOLYLINE16_Size!
 
 defineFields
 	"Define the fields of the EMRPOLYPOLYLINE16 structure.
@@ -168,6 +173,7 @@ iTypes
 
 	^{EMR_POLYPOLYLINE16. EMR_POLYPOLYGON16}! !
 !OS.EMRPOLYPOLYLINE16 class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

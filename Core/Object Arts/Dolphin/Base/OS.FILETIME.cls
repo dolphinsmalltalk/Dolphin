@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.FILETIME'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_FILETIME_Size' -> 16r8.
 		'_OffsetOf_dwHighDateTime' -> 16r4.
 		'_OffsetOf_dwLowDateTime' -> 16r0.
 		'SmalltalkEpoch' -> 16r150560D76A70000.
@@ -93,6 +94,9 @@ integerValue:!accessing!public! !
 
 !OS.FILETIME class methodsFor!
 
+byteSize
+	^_FILETIME_Size!
+
 defineFields
 	"Define the fields of the Win32 FILETIME structure.
 
@@ -166,6 +170,7 @@ now
 	Kernel32 getSystemTimeAsFileTime: answer.
 	^answer! !
 !OS.FILETIME class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 fromDateAndTime:!instance creation!public! !
 fromInteger:!instance creation!public! !

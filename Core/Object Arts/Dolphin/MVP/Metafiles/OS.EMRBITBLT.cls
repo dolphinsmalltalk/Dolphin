@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRBITBLT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRBITBLT_Size' -> 16r64.
 		'_OffsetOf_cbBitsSrc' -> 16r60.
 		'_OffsetOf_cbBmiSrc' -> 16r58.
 		'_OffsetOf_crBkColorSrc' -> 16r4C.
@@ -149,13 +150,13 @@ rclBounds
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: aRECT
-	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
+rclBounds: aRECTL
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1!
 
 xDest
@@ -179,7 +180,7 @@ xformSrc: aXFORM
 	aXFORM
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_xformSrc + 1)
-		to: ##(_OffsetOf_xformSrc + XFORM basicByteSize)
+		to: ##(_OffsetOf_xformSrc + XFORM._XFORM_Size)
 		startingAt: 1!
 
 xSrc
@@ -245,6 +246,9 @@ ySrc:!**compiled accessors**!public! !
 !
 
 !OS.EMRBITBLT class methodsFor!
+
+byteSize
+	^_EMRBITBLT_Size!
 
 defineFields
 	"Define the fields of the EMRBITBLT structure.
@@ -329,6 +333,7 @@ iTypes
 
 	^{EMR_BITBLT}! !
 !OS.EMRBITBLT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

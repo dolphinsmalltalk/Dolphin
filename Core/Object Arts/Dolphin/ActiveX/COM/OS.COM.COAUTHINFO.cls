@@ -6,6 +6,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.COAUTHINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_COAUTHINFO_Size' -> 16r1C.
 		'_OffsetOf_dwAuthnLevel' -> 16rC.
 		'_OffsetOf_dwAuthnSvc' -> 16r0.
 		'_OffsetOf_dwAuthzSvc' -> 16r4.
@@ -109,6 +110,9 @@ pwszServerPrincName:!**compiled accessors**!public! !
 
 !OS.COM.COAUTHINFO class methodsFor!
 
+byteSize
+	^_COAUTHINFO_Size!
+
 defineFields
 	"Define the fields of the COAUTHINFO structure.
 		COAUTHINFO compileDefinition
@@ -137,6 +141,7 @@ defineFields
 getFieldNames
 	^#(#dwAuthnSvc #dwAuthzSvc #pwszServerPrincName #dwAuthnLevel #dwImpersonationLevel #pAuthIdentityData #dwCapabilities)! !
 !OS.COM.COAUTHINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

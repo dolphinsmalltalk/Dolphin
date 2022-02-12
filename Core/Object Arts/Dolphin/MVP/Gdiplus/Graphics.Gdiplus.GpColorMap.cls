@@ -6,6 +6,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpColorMap'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpColorMap_Size' -> 16r8.
 		'_OffsetOf_newColor' -> 16r4.
 		'_OffsetOf_oldColor' -> 16r0
 	}!
@@ -55,6 +56,9 @@ oldColor:!**compiled accessors**!public! !
 
 !Graphics.Gdiplus.GpColorMap class methodsFor!
 
+byteSize
+	^_GpColorMap_Size!
+
 defineFields
 	"Define the fields of the GpColorMap structure.
 		GpColorMap compileDefinition
@@ -78,6 +82,7 @@ defineFields
 getFieldNames
 	^#(#oldColor #newColor)! !
 !Graphics.Gdiplus.GpColorMap class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

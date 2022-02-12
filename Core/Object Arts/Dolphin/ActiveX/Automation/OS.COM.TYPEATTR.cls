@@ -23,7 +23,8 @@ OS.COM.TypeInfoStructure subclass: #'OS.COM.TYPEATTR'
 		'_OffsetOf_typekind' -> 16r28.
 		'_OffsetOf_wMajorVerNum' -> 16r38.
 		'_OffsetOf_wMinorVerNum' -> 16r3A.
-		'_OffsetOf_wTypeFlags' -> 16r36
+		'_OffsetOf_wTypeFlags' -> 16r36.
+		'_TYPEATTR_Size' -> 16r4C
 	}!
 OS.COM.TYPEATTR guid: (Core.GUID fromString: '{c06f3b69-0868-11d3-93af-00a024ca708a}')!
 OS.COM.TYPEATTR comment: 'TYPEATTR is an <ExternalStructure> class to represent the Active-X Automation TYPEATTR structure.
@@ -252,6 +253,9 @@ wTypeFlags!**compiled accessors**!public! !
 
 !OS.COM.TYPEATTR class methodsFor!
 
+byteSize
+	^_TYPEATTR_Size!
+
 defineFields
 	"Define the fields of the TYPEATTR structure.
 
@@ -303,6 +307,7 @@ defineFields
 getFieldNames
 	^#(#guid #lcid #memidConstructor #memidDestructor #cbSizeInstance #typekind #cFuncs #cVars #cImplTypes #cbSizeVft #cbAlignment #wTypeFlags #wMajorVerNum #wMinorVerNum #tdescAlias #idldescType)! !
 !OS.COM.TYPEATTR class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

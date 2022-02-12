@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRCREATEPALETTE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRCREATEPALETTE_Size' -> 16r14.
 		'_OffsetOf_ihPal' -> 16r8.
 		'_OffsetOf_lgpl' -> 16rC
 	}!
@@ -49,7 +50,7 @@ lgpl: aLOGPALETTE
 	aLOGPALETTE
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_lgpl + 1)
-		to: ##(_OffsetOf_lgpl + LOGPALETTE basicByteSize)
+		to: ##(_OffsetOf_lgpl + LOGPALETTE._LOGPALETTE_Size)
 		startingAt: 1! !
 !OS.EMRCREATEPALETTE categoriesForMethods!
 ihPal!**compiled accessors**!public! !
@@ -59,6 +60,9 @@ lgpl:!**compiled accessors**!public! !
 !
 
 !OS.EMRCREATEPALETTE class methodsFor!
+
+byteSize
+	^_EMRCREATEPALETTE_Size!
 
 defineFields
 	"Define the fields of the EMRCREATEPALETTE structure.
@@ -91,6 +95,7 @@ iTypes
 
 	^{EMR_CREATEPALETTE}! !
 !OS.EMRCREATEPALETTE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

@@ -6,6 +6,7 @@ OS.TEXTMETRICW subclass: #'OS.NEWTEXTMETRICW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NEWTEXTMETRICW_Size' -> 16r4C.
 		'_OffsetOf_ntmAvgWidth' -> 16r48.
 		'_OffsetOf_ntmCellHeight' -> 16r44.
 		'_OffsetOf_ntmFlags' -> 16r3C.
@@ -56,6 +57,9 @@ ntmSizeEM!**compiled accessors**!public! !
 
 !OS.NEWTEXTMETRICW class methodsFor!
 
+byteSize
+	^_NEWTEXTMETRICW_Size!
+
 defineFields
 	"Define the fields of the NEWTEXTMETRIC structure.
 		self compileDefinition
@@ -80,6 +84,7 @@ defineFields
 getFieldNames
 	^#(#tmHeight #tmAscent #tmDescent #tmInternalLeading #tmExternalLeading #tmAveCharWidth #tmMaxCharWidth #tmWeight #tmOverhang #tmDigitizedAspectX #tmDigitizedAspectY #tmFirstChar #tmLastChar #tmDefaultChar #tmBreakChar #tmItalic #tmUnderlined #tmStruckOut #tmPitchAndFamily #tmCharSet #ntmFlags #ntmSizeEM #ntmCellHeight #ntmAvgWidth)! !
 !OS.NEWTEXTMETRICW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

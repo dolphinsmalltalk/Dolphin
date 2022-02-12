@@ -6,6 +6,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.COSERVERINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_COSERVERINFO_Size' -> 16r10.
 		'_OffsetOf_dwReserved1' -> 16r0.
 		'_OffsetOf_dwReserved2' -> 16rC.
 		'_OffsetOf_pAuthInfo' -> 16r8.
@@ -63,6 +64,9 @@ pwszName:!**compiled accessors**!public! !
 
 !OS.COM.COSERVERINFO class methodsFor!
 
+byteSize
+	^_COSERVERINFO_Size!
+
 defineFields
 	"Define the fields of the COSERVERINFO structure.
 		COSERVERINFO compileDefinition
@@ -85,6 +89,7 @@ defineFields
 getFieldNames
 	^#(#pwszName #pAuthInfo)! !
 !OS.COM.COSERVERINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

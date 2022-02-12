@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.MIBICMPINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIBICMPINFO_Size' -> 16r68.
 		'_OffsetOf_icmpInStats' -> 16r0.
 		'_OffsetOf_icmpOutStats' -> 16r34
 	}!
@@ -43,6 +44,9 @@ icmpOutStats!**compiled accessors**!public! !
 
 !OS.MIBICMPINFO class methodsFor!
 
+byteSize
+	^_MIBICMPINFO_Size!
+
 defineFields
 	"Define the fields of the MIBICMPINFO structure.
 		MIBICMPINFO compileDefinition
@@ -70,6 +74,7 @@ defineFields
 getFieldNames
 	^#(#icmpInStats #icmpOutStats)! !
 !OS.MIBICMPINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

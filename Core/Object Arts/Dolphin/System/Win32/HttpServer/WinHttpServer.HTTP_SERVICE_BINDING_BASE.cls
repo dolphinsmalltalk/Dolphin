@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_BINDING
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_BINDING_BASE_Size' -> 16r4.
 		'_OffsetOf_Type' -> 16r0
 	}!
 WinHttpServer.HTTP_SERVICE_BINDING_BASE guid: (Core.GUID fromString: '{80f84f87-9667-42d4-ace4-1004dfe14475}')!
@@ -43,6 +44,9 @@ Type:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_SERVICE_BINDING_BASE class methodsFor!
 
+byteSize
+	^_HTTP_SERVICE_BINDING_BASE_Size!
+
 defineFields
 	"Define the fields of the HTTP_SERVICE_BINDING_BASE structure.
 
@@ -68,6 +72,7 @@ fromAddress: anAddress
 getFieldNames
 	^#(#Type)! !
 !WinHttpServer.HTTP_SERVICE_BINDING_BASE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 fromAddress:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !

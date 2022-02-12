@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.LOGBRUSH'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LOGBRUSH_Size' -> 16rC.
 		'_OffsetOf_lbColor' -> 16r4.
 		'_OffsetOf_lbHatch' -> 16r8.
 		'_OffsetOf_lbStyle' -> 16r0
@@ -94,6 +95,9 @@ lbStyle:!**compiled accessors**!public! !
 
 !OS.LOGBRUSH class methodsFor!
 
+byteSize
+	^_LOGBRUSH_Size!
+
 defineFields
 	"Define the fields of the LOGBRUSH structure.
 
@@ -128,6 +132,7 @@ stbConvertFrom: anSTBClassFormat
 stbVersion
 	^1! !
 !OS.LOGBRUSH class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 stbConvertFrom:!binary filing!public! !

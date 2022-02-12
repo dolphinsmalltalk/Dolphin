@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRPOLYTEXTOUTA'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRPOLYTEXTOUTA_Size' -> 16r50.
 		'_OffsetOf_aemrtext' -> 16r28.
 		'_OffsetOf_cStrings' -> 16r24.
 		'_OffsetOf_exScale' -> 16r1C.
@@ -101,13 +102,13 @@ rclBounds
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: aRECT
-	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
+rclBounds: aRECTL
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1! !
 !OS.EMRPOLYTEXTOUTA categoriesForMethods!
 aemrtext!**compiled accessors**!public! !
@@ -125,6 +126,9 @@ rclBounds:!**compiled accessors**!public! !
 !
 
 !OS.EMRPOLYTEXTOUTA class methodsFor!
+
+byteSize
+	^_EMRPOLYTEXTOUTA_Size!
 
 defineFields
 	"Define the fields of the EMRPOLYTEXTOUTA structure.
@@ -172,6 +176,7 @@ iTypes
 
 	^{EMR_POLYTEXTOUTA. EMR_POLYTEXTOUTW}! !
 !OS.EMRPOLYTEXTOUTA class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

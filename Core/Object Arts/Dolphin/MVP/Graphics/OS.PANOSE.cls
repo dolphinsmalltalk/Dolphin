@@ -15,7 +15,8 @@ OS.Win32Structure subclass: #'OS.PANOSE'
 		'_OffsetOf_bSerifStyle' -> 16r1.
 		'_OffsetOf_bStrokeVariation' -> 16r5.
 		'_OffsetOf_bWeight' -> 16r2.
-		'_OffsetOf_bXHeight' -> 16r9
+		'_OffsetOf_bXHeight' -> 16r9.
+		'_PANOSE_Size' -> 16rA
 	}!
 OS.PANOSE guid: (Core.GUID fromString: '{fd0c19a2-34cf-4a99-a522-d4fd0cc0f003}')!
 OS.PANOSE comment: ''!
@@ -86,6 +87,9 @@ bXHeight!**compiled accessors**!public! !
 
 !OS.PANOSE class methodsFor!
 
+byteSize
+	^_PANOSE_Size!
+
 defineFields
 	"Define the fields of the PANOSE structure.
 		PANOSE compileDefinition
@@ -120,6 +124,7 @@ defineFields
 getFieldNames
 	^#(#bFamilyType #bSerifStyle #bWeight #bProportion #bContrast #bStrokeVariation #bArmStyle #bLetterform #bMidline #bXHeight)! !
 !OS.PANOSE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

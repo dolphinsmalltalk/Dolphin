@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.LOGCOLORSPACE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LOGCOLORSPACE_Size' -> 16r148.
 		'_OffsetOf_lcsCSType' -> 16rC.
 		'_OffsetOf_lcsEndpoints' -> 16r14.
 		'_OffsetOf_lcsFilename' -> 16r44.
@@ -64,7 +65,7 @@ lcsEndpoints: aCIEXYZTRIPLE
 	aCIEXYZTRIPLE
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_lcsEndpoints + 1)
-		to: ##(_OffsetOf_lcsEndpoints + CIEXYZTRIPLE basicByteSize)
+		to: ##(_OffsetOf_lcsEndpoints + CIEXYZTRIPLE._CIEXYZTRIPLE_Size)
 		startingAt: 1!
 
 lcsFilename
@@ -177,6 +178,9 @@ lcsVersion:!**compiled accessors**!public! !
 
 !OS.LOGCOLORSPACE class methodsFor!
 
+byteSize
+	^_LOGCOLORSPACE_Size!
+
 defineFields
 	"Define the fields of the LOGCOLORSPACE structure.
 
@@ -233,6 +237,7 @@ defineFields
 getFieldNames
 	^#(#lcsSignature #lcsVersion #lcsSize #lcsCSType #lcsIntent #lcsEndpoints #lcsGammaRed #lcsGammaGreen #lcsGammaBlue #lcsFilename)! !
 !OS.LOGCOLORSPACE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

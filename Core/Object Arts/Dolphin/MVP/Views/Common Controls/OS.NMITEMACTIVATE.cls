@@ -6,6 +6,7 @@ OS.NMHDR subclass: #'OS.NMITEMACTIVATE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMITEMACTIVATE_Size' -> 16r30.
 		'_OffsetOf_iItem' -> 16rC.
 		'_OffsetOf_iSubItem' -> 16r10.
 		'_OffsetOf_lParam' -> 16r28.
@@ -70,6 +71,9 @@ uOldState!**compiled accessors**!public! !
 
 !OS.NMITEMACTIVATE class methodsFor!
 
+byteSize
+	^_NMITEMACTIVATE_Size!
+
 defineFields
 	"
 		self compileDefinition
@@ -100,6 +104,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #iSubItem #uNewState #uOldState #uChanged #ptAction #uKeyFlags)! !
 !OS.NMITEMACTIVATE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

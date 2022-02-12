@@ -6,6 +6,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_LOGGING_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_LOGGING_INFO_Size' -> 16r30.
 		'_OffsetOf_DirectoryName' -> 16r10.
 		'_OffsetOf_DirectoryNameLength' -> 16rE.
 		'_OffsetOf_Fields' -> 16r18.
@@ -180,6 +181,9 @@ SoftwareNameLength:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_LOGGING_INFO class methodsFor!
 
+byteSize
+	^_HTTP_LOGGING_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_LOGGING_INFO structure.
 
@@ -227,6 +231,7 @@ getFieldNames
 propertyId
 	^HttpServerLoggingProperty! !
 !WinHttpServer.HTTP_LOGGING_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 propertyId!public! !

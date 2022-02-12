@@ -6,6 +6,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpColorPalette'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpColorPalette_Size' -> 16rC.
 		'_OffsetOf_Count' -> 16r4.
 		'_OffsetOf_Entries' -> 16r8.
 		'_OffsetOf_Flags' -> 16r0
@@ -81,6 +82,9 @@ Flags:!**compiled accessors**!public! !
 
 !Graphics.Gdiplus.GpColorPalette class methodsFor!
 
+byteSize
+	^_GpColorPalette_Size!
+
 defineFields
 	"Define the fields of the GpColorPalette structure.
 		GpColorPalette compileDefinition
@@ -108,6 +112,7 @@ defineFields
 getFieldNames
 	^#(#Flags #Count #Entries)! !
 !Graphics.Gdiplus.GpColorPalette class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

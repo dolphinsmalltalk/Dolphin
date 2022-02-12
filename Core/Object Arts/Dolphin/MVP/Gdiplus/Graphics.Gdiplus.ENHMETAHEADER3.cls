@@ -6,6 +6,7 @@ External.Structure subclass: #'Graphics.Gdiplus.ENHMETAHEADER3'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_ENHMETAHEADER3_Size' -> 16r58.
 		'_OffsetOf_dSignature' -> 16r28.
 		'_OffsetOf_iType' -> 16r0.
 		'_OffsetOf_nBytes' -> 16r30.
@@ -158,13 +159,13 @@ rclBounds
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: aRECT
-	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
+rclBounds: aRECTL
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1!
 
 rclFrame
@@ -172,13 +173,13 @@ rclFrame
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclFrame!
 
-rclFrame: aRECT
-	"Set the receiver's 'rclFrame' field to the value of the argument, aRECT"
+rclFrame: aRECTL
+	"Set the receiver's 'rclFrame' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclFrame + 1)
-		to: ##(_OffsetOf_rclFrame + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclFrame + RECTL._RECTL_Size)
 		startingAt: 1!
 
 sReserved
@@ -192,31 +193,31 @@ sReserved: anInteger
 	bytes wordAtOffset: _OffsetOf_sReserved put: anInteger!
 
 szlDevice
-	"Answer the <SIZE> value of the receiver's 'szlDevice' field."
+	"Answer the <SIZEL> value of the receiver's 'szlDevice' field."
 
 	^SIZEL fromAddress: bytes yourAddress + _OffsetOf_szlDevice!
 
-szlDevice: aSIZE
-	"Set the receiver's 'szlDevice' field to the value of the argument, aSIZE"
+szlDevice: aSIZEL
+	"Set the receiver's 'szlDevice' field to the value of the argument, aSIZEL"
 
-	aSIZE
+	aSIZEL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_szlDevice + 1)
-		to: ##(_OffsetOf_szlDevice + SIZEL basicByteSize)
+		to: ##(_OffsetOf_szlDevice + SIZEL._SIZEL_Size)
 		startingAt: 1!
 
 szlMillimeters
-	"Answer the <SIZE> value of the receiver's 'szlMillimeters' field."
+	"Answer the <SIZEL> value of the receiver's 'szlMillimeters' field."
 
 	^SIZEL fromAddress: bytes yourAddress + _OffsetOf_szlMillimeters!
 
-szlMillimeters: aSIZE
-	"Set the receiver's 'szlMillimeters' field to the value of the argument, aSIZE"
+szlMillimeters: aSIZEL
+	"Set the receiver's 'szlMillimeters' field to the value of the argument, aSIZEL"
 
-	aSIZE
+	aSIZEL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_szlMillimeters + 1)
-		to: ##(_OffsetOf_szlMillimeters + SIZEL basicByteSize)
+		to: ##(_OffsetOf_szlMillimeters + SIZEL._SIZEL_Size)
 		startingAt: 1! !
 !Graphics.Gdiplus.ENHMETAHEADER3 categoriesForMethods!
 dSignature!**compiled accessors**!public! !
@@ -252,6 +253,9 @@ szlMillimeters:!**compiled accessors**!public! !
 !
 
 !Graphics.Gdiplus.ENHMETAHEADER3 class methodsFor!
+
+byteSize
+	^_ENHMETAHEADER3_Size!
 
 defineFields
 	"Define the fields of the ENHMETAHEADER3 structure.
@@ -328,6 +332,7 @@ defineFields
 getFieldNames
 	^#(#iType #nSize #rclBounds #rclFrame #dSignature #nVersion #nBytes #nRecords #nHandles #sReserved #nDescription #offDescription #nPalEntries #szlDevice #szlMillimeters)! !
 !Graphics.Gdiplus.ENHMETAHEADER3 class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

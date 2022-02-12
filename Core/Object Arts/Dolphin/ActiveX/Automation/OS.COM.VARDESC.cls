@@ -12,7 +12,8 @@ OS.COM.MemberDesc subclass: #'OS.COM.VARDESC'
 		'_OffsetOf_memid' -> 16r0.
 		'_OffsetOf_oInst' -> 16r8.
 		'_OffsetOf_varkind' -> 16r20.
-		'_OffsetOf_wVarFlags' -> 16r1C
+		'_OffsetOf_wVarFlags' -> 16r1C.
+		'_VARDESC_Size' -> 16r24
 	}!
 OS.COM.VARDESC guid: (Core.GUID fromString: '{c06f3b6b-0868-11d3-93af-00a024ca708a}')!
 OS.COM.VARDESC comment: 'VARDESC is an <ExternalStructure> class to represent the OLE Automation structure of the same name.
@@ -191,6 +192,9 @@ wVarFlags!**compiled accessors**!public! !
 
 !OS.COM.VARDESC class methodsFor!
 
+byteSize
+	^_VARDESC_Size!
+
 defineFields
 	"Define the fields of the VARDESC structure.
 
@@ -232,6 +236,7 @@ defineFields
 getFieldNames
 	^#(#memid #lpvarValue #oInst #elemdesc #wVarFlags #varkind)! !
 !OS.COM.VARDESC class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -75,6 +75,7 @@ OS.Win32Structure subclass: #'OS.LHITTESTINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LHITTESTINFO_Size' -> 16r10C0.
 		'_OffsetOf_item' -> 16r8.
 		'_OffsetOf_pt' -> 16r0
 	}!
@@ -84,6 +85,7 @@ OS.Win32Structure subclass: #'OS.LITEM'
 	imports: #(#{OS.SysLinkConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LITEM_Size' -> 16r10B8.
 		'_OffsetOf_iLink' -> 16r4.
 		'_OffsetOf_mask' -> 16r0.
 		'_OffsetOf_state' -> 16r8.
@@ -97,6 +99,7 @@ OS.NMHDR subclass: #'OS.NMLINK'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMLINK_Size' -> 16r10C4.
 		'_OffsetOf_item' -> 16rC
 	}!
 UI.CommandButton subclass: #'UI.LinkButton'

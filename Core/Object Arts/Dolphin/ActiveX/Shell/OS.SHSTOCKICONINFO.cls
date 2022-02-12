@@ -11,6 +11,7 @@ OS.Win32Structure subclass: #'OS.SHSTOCKICONINFO'
 		'_OffsetOf_iIcon' -> 16rC.
 		'_OffsetOf_iSysImageIndex' -> 16r8.
 		'_OffsetOf_szPath' -> 16r10.
+		'_SHSTOCKICONINFO_Size' -> 16r218.
 		'SHGSI_ICON' -> 16r100.
 		'SHGSI_ICONLOCATION' -> 16r0.
 		'SHGSI_LARGEICON' -> 16r0.
@@ -73,6 +74,9 @@ szPath!**compiled accessors**!public! !
 
 !OS.SHSTOCKICONINFO class methodsFor!
 
+byteSize
+	^_SHSTOCKICONINFO_Size!
+
 defineFields
 	"Define the fields of the SHSTOCKICONINFO structure.
 
@@ -99,6 +103,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #hIcon #iSysImageIndex #iIcon #szPath)! !
 !OS.SHSTOCKICONINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

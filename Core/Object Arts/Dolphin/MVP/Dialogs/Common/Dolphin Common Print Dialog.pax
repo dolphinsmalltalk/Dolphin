@@ -79,7 +79,8 @@ OS.Win32Structure subclass: #'OS.PRINTPAGERANGE'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_nFromPage' -> 16r0.
-		'_OffsetOf_nToPage' -> 16r4
+		'_OffsetOf_nToPage' -> 16r4.
+		'_PRINTPAGERANGE_Size' -> 16r8
 	}!
 OS.CommonDialogStructure subclass: #'OS.PRINTDLGEXW'
 	instanceVariableNames: ''
@@ -107,7 +108,8 @@ OS.CommonDialogStructure subclass: #'OS.PRINTDLGEXW'
 		'_OffsetOf_nMinPage' -> 16r2C.
 		'_OffsetOf_nPageRanges' -> 16r20.
 		'_OffsetOf_nPropertyPages' -> 16r44.
-		'_OffsetOf_nStartPage' -> 16r4C
+		'_OffsetOf_nStartPage' -> 16r4C.
+		'_PRINTDLGEXW_Size' -> 16r54
 	}!
 OS.CommonDialogStructure subclass: #'OS.PRINTDLGW'
 	instanceVariableNames: ''
@@ -133,7 +135,8 @@ OS.CommonDialogStructure subclass: #'OS.PRINTDLGW'
 		'_OffsetOf_nFromPage' -> 16r18.
 		'_OffsetOf_nMaxPage' -> 16r1E.
 		'_OffsetOf_nMinPage' -> 16r1C.
-		'_OffsetOf_nToPage' -> 16r1A
+		'_OffsetOf_nToPage' -> 16r1A.
+		'_PRINTDLGW_Size' -> 16r42
 	}!
 
 "Loose Methods"!

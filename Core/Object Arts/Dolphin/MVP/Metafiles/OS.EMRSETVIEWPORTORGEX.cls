@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSETVIEWPORTORGEX'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSETVIEWPORTORGEX_Size' -> 16r10.
 		'_OffsetOf_ptlOrigin' -> 16r8
 	}!
 OS.EMRSETVIEWPORTORGEX guid: (Core.GUID fromString: '{69136774-602e-4324-aff6-a261d792e0ff}')!
@@ -37,7 +38,7 @@ ptlOrigin: aPOINTL
 	aPOINTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_ptlOrigin + 1)
-		to: ##(_OffsetOf_ptlOrigin + POINTL basicByteSize)
+		to: ##(_OffsetOf_ptlOrigin + POINTL._POINTL_Size)
 		startingAt: 1! !
 !OS.EMRSETVIEWPORTORGEX categoriesForMethods!
 ptlOrigin!**compiled accessors**!public! !
@@ -45,6 +46,9 @@ ptlOrigin:!**compiled accessors**!public! !
 !
 
 !OS.EMRSETVIEWPORTORGEX class methodsFor!
+
+byteSize
+	^_EMRSETVIEWPORTORGEX_Size!
 
 defineFields
 	"Define the fields of the EMRSETVIEWPORTORGEX structure.
@@ -73,6 +77,7 @@ iTypes
 
 	^{EMR_SETVIEWPORTORGEX. EMR_SETWINDOWORGEX. EMR_SETBRUSHORGEX}! !
 !OS.EMRSETVIEWPORTORGEX class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

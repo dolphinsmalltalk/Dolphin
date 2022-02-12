@@ -6,6 +6,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_TIMEOUT_LIMIT_I
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_TIMEOUT_LIMIT_INFO_Size' -> 16r14.
 		'_OffsetOf_DrainEntityBody' -> 16r6.
 		'_OffsetOf_EntityBody' -> 16r4.
 		'_OffsetOf_HeaderWait' -> 16rC.
@@ -114,6 +115,9 @@ RequestQueue:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO class methodsFor!
 
+byteSize
+	^_HTTP_TIMEOUT_LIMIT_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_TIMEOUT_LIMIT_INFO structure.
 
@@ -147,6 +151,7 @@ getFieldNames
 propertyId
 	^HttpServerTimeoutsProperty! !
 !WinHttpServer.HTTP_TIMEOUT_LIMIT_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 propertyId!constants!public! !

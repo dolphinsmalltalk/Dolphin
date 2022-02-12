@@ -6,6 +6,7 @@ OS.CCHITTESTINFO subclass: #'OS.LVHITTESTINFO'
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LVHITTESTINFO_Size' -> 16r14.
 		'_OffsetOf_iItem' -> 16rC.
 		'_OffsetOf_iSubItem' -> 16r10
 	}!
@@ -41,6 +42,9 @@ iSubItem!**compiled accessors**!public! !
 
 !OS.LVHITTESTINFO class methodsFor!
 
+byteSize
+	^_LVHITTESTINFO_Size!
+
 defineFields
 	"Define the fields of the Win32 LVHITTESTINFO structure.
 
@@ -61,6 +65,7 @@ defineFields
 getFieldNames
 	^#(#pt #flags #iItem #iSubItem)! !
 !OS.LVHITTESTINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!development!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

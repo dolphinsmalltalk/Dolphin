@@ -489,7 +489,6 @@ Kernel.SharedPool subclass: #'OS.CommCtrlConstants'
 		'GDT_VALID' -> 16r0.
 		'GDTR_MAX' -> 16r2.
 		'GDTR_MIN' -> 16r1.
-		'I_CHILDRENCALLBACK' -> -16r1.
 		'I_IMAGECALLBACK' -> -16r1.
 		'ICC_ANIMATE_CLASS' -> 16r80.
 		'ICC_BAR_CLASSES' -> 16r4.
@@ -1796,6 +1795,7 @@ External.Structure subclass: #'OS.NCCALCSIZE_PARAMS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NCCALCSIZE_PARAMS_Size' -> 16r34.
 		'_OffsetOf_lppos' -> 16r30.
 		'_OffsetOf_rgrc' -> 16r0
 	}!
@@ -1805,6 +1805,7 @@ OS.Win32Structure subclass: #'OS.ACCEL'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_ACCEL_Size' -> 16r6.
 		'_OffsetOf_cmd' -> 16r4.
 		'_OffsetOf_fVirt' -> 16r0.
 		'_OffsetOf_key' -> 16r2
@@ -1815,6 +1816,7 @@ OS.Win32Structure subclass: #'OS.BP_ANIMATIONPARAMS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_BP_ANIMATIONPARAMS_Size' -> 16r10.
 		'_OffsetOf_dwDuration' -> 16rC.
 		'_OffsetOf_dwFlags' -> 16r4.
 		'_OffsetOf_dwSize' -> 16r0.
@@ -1826,6 +1828,7 @@ OS.Win32Structure subclass: #'OS.BP_PAINTPARAMS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_BP_PAINTPARAMS_Size' -> 16r10.
 		'_OffsetOf_dwFlags' -> 16r4.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_pBlendFunction' -> 16rC.
@@ -1837,6 +1840,7 @@ OS.Win32Structure subclass: #'OS.DISPLAY_DEVICEW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_DISPLAY_DEVICEW_Size' -> 16r348.
 		'_OffsetOf_DeviceID' -> 16r148.
 		'_OffsetOf_DeviceKey' -> 16r248.
 		'_OffsetOf_DeviceName' -> 16r4.
@@ -1855,6 +1859,7 @@ OS.Win32Structure subclass: #'OS.DTBGOPTS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_DTBGOPTS_Size' -> 16r18.
 		'_OffsetOf_dwFlags' -> 16r4.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_rcClip' -> 16r8
@@ -1865,6 +1870,7 @@ OS.Win32Structure subclass: #'OS.FLASHWINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_FLASHWINFO_Size' -> 16r14.
 		'_OffsetOf_dwFlags' -> 16r8.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_dwTimeout' -> 16r10.
@@ -1877,6 +1883,7 @@ OS.Win32Structure subclass: #'OS.LASTINPUTINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LASTINPUTINFO_Size' -> 16r8.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_dwTime' -> 16r4
 	}!
@@ -1886,6 +1893,7 @@ OS.Win32Structure subclass: #'OS.MARGINS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MARGINS_Size' -> 16r10.
 		'_OffsetOf_cxLeftWidth' -> 16r0.
 		'_OffsetOf_cxRightWidth' -> 16r4.
 		'_OffsetOf_cyBottomHeight' -> 16rC.
@@ -1897,6 +1905,7 @@ OS.Win32Structure subclass: #'OS.MENUINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MENUINFO_Size' -> 16r1C.
 		'_OffsetOf_cyMax' -> 16rC.
 		'_OffsetOf_dwContextHelpID' -> 16r14.
 		'_OffsetOf_dwMenuData' -> 16r18.
@@ -1911,6 +1920,7 @@ OS.Win32Structure subclass: #'OS.MENUITEMINFOW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MENUITEMINFOW_Size' -> 16r30.
 		'_OffsetOf_cch' -> 16r28.
 		'_OffsetOf_dwItemData' -> 16r20.
 		'_OffsetOf_dwSize' -> 16r0.
@@ -1930,6 +1940,7 @@ OS.Win32Structure subclass: #'OS.MINMAXINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MINMAXINFO_Size' -> 16r28.
 		'_OffsetOf_ptMaxPosition' -> 16r10.
 		'_OffsetOf_ptMaxSize' -> 16r8.
 		'_OffsetOf_ptMaxTrackSize' -> 16r20.
@@ -1942,6 +1953,7 @@ OS.Win32Structure subclass: #'OS.MONITORINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MONITORINFO_Size' -> 16r28.
 		'_OffsetOf_dwFlags' -> 16r24.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_rcMonitor' -> 16r4.
@@ -1954,6 +1966,7 @@ OS.Win32Structure subclass: #'OS.NMHDR'
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMHDR_Size' -> 16rC.
 		'_OffsetOf_code' -> 16r8.
 		'_OffsetOf_hwndFrom' -> 16r0.
 		'_OffsetOf_idFrom' -> 16r4
@@ -1964,6 +1977,7 @@ OS.Win32Structure subclass: #'OS.NOTIFYICONDATAW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NOTIFYICONDATAW_Size' -> 16r98.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_hIcon' -> 16r14.
 		'_OffsetOf_hWnd' -> 16r4.
@@ -1980,7 +1994,8 @@ OS.Win32Structure subclass: #'OS.OwnerDrawStruct'
 	classConstants: {
 		'_OffsetOf_CtlID' -> 16r4.
 		'_OffsetOf_CtlType' -> 16r0.
-		'_OffsetOf_itemID' -> 16r8
+		'_OffsetOf_itemID' -> 16r8.
+		'_OwnerDrawStruct_Size' -> 16rC
 	}!
 OS.Win32Structure subclass: #'OS.PAINTSTRUCT'
 	instanceVariableNames: ''
@@ -1993,7 +2008,8 @@ OS.Win32Structure subclass: #'OS.PAINTSTRUCT'
 		'_OffsetOf_fRestore' -> 16r18.
 		'_OffsetOf_hdc' -> 16r0.
 		'_OffsetOf_rcPaint' -> 16r8.
-		'_OffsetOf_rgbReserved' -> 16r20
+		'_OffsetOf_rgbReserved' -> 16r20.
+		'_PAINTSTRUCT_Size' -> 16r40
 	}!
 OS.Win32Structure subclass: #'OS.RGNDATA'
 	instanceVariableNames: ''
@@ -2005,7 +2021,8 @@ OS.Win32Structure subclass: #'OS.RGNDATA'
 		'_OffsetOf_iType' -> 16r4.
 		'_OffsetOf_nCount' -> 16r8.
 		'_OffsetOf_nRgnSize' -> 16rC.
-		'_OffsetOf_rcBound' -> 16r10
+		'_OffsetOf_rcBound' -> 16r10.
+		'_RGNDATA_Size' -> 16r20
 	}!
 OS.Win32Structure subclass: #'OS.SCROLLINFO'
 	instanceVariableNames: ''
@@ -2019,7 +2036,8 @@ OS.Win32Structure subclass: #'OS.SCROLLINFO'
 		'_OffsetOf_nMin' -> 16r8.
 		'_OffsetOf_nPage' -> 16r10.
 		'_OffsetOf_nPos' -> 16r14.
-		'_OffsetOf_nTrackPos' -> 16r18
+		'_OffsetOf_nTrackPos' -> 16r18.
+		'_SCROLLINFO_Size' -> 16r1C
 	}!
 OS.Win32Structure subclass: #'OS.TRACKMOUSEEVENT'
 	instanceVariableNames: ''
@@ -2030,7 +2048,8 @@ OS.Win32Structure subclass: #'OS.TRACKMOUSEEVENT'
 		'_OffsetOf_dwFlags' -> 16r4.
 		'_OffsetOf_dwHoverTime' -> 16rC.
 		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_hwndTrack' -> 16r8
+		'_OffsetOf_hwndTrack' -> 16r8.
+		'_TRACKMOUSEEVENT_Size' -> 16r10
 	}!
 OS.Win32Structure subclass: #'OS.WINDOWPLACEMENT'
 	instanceVariableNames: ''
@@ -2043,7 +2062,8 @@ OS.Win32Structure subclass: #'OS.WINDOWPLACEMENT'
 		'_OffsetOf_ptMaxPosition' -> 16r14.
 		'_OffsetOf_ptMinPosition' -> 16rC.
 		'_OffsetOf_rcNormalPosition' -> 16r1C.
-		'_OffsetOf_showCmd' -> 16r8
+		'_OffsetOf_showCmd' -> 16r8.
+		'_WINDOWPLACEMENT_Size' -> 16r2C
 	}!
 OS.Win32Structure subclass: #'OS.WINDOWPOS'
 	instanceVariableNames: ''
@@ -2057,7 +2077,8 @@ OS.Win32Structure subclass: #'OS.WINDOWPOS'
 		'_OffsetOf_hwnd' -> 16r0.
 		'_OffsetOf_hwndInsertAfter' -> 16r4.
 		'_OffsetOf_x' -> 16r8.
-		'_OffsetOf_y' -> 16rC
+		'_OffsetOf_y' -> 16rC.
+		'_WINDOWPOS_Size' -> 16r1C
 	}!
 OS.Win32Structure subclass: #'OS.WNDCLASS'
 	instanceVariableNames: 'menuName className'
@@ -2074,7 +2095,8 @@ OS.Win32Structure subclass: #'OS.WNDCLASS'
 		'_OffsetOf_lpfnWndProc' -> 16r4.
 		'_OffsetOf_lpszClassName' -> 16r24.
 		'_OffsetOf_lpszMenuName' -> 16r20.
-		'_OffsetOf_style' -> 16r0
+		'_OffsetOf_style' -> 16r0.
+		'_WNDCLASS_Size' -> 16r28
 	}!
 OS.MONITORINFO subclass: #'OS.MONITORINFOEXW'
 	instanceVariableNames: ''
@@ -2082,6 +2104,7 @@ OS.MONITORINFO subclass: #'OS.MONITORINFOEXW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MONITORINFOEXW_Size' -> 16r68.
 		'_OffsetOf_szDevice' -> 16r28
 	}!
 OS.NMHDR subclass: #'OS.NMTTDISPINFOW'
@@ -2090,6 +2113,7 @@ OS.NMHDR subclass: #'OS.NMTTDISPINFOW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMTTDISPINFOW_Size' -> 16rBC.
 		'_OffsetOf_hinst' -> 16rB0.
 		'_OffsetOf_lParam' -> 16rB8.
 		'_OffsetOf_lpszText' -> 16rC.
@@ -2102,6 +2126,7 @@ OS.OwnerDrawStruct subclass: #'OS.DRAWITEMSTRUCT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_DRAWITEMSTRUCT_Size' -> 16r30.
 		'_OffsetOf_hDC' -> 16r18.
 		'_OffsetOf_hwndItem' -> 16r14.
 		'_OffsetOf_itemAction' -> 16rC.
@@ -2115,6 +2140,7 @@ OS.OwnerDrawStruct subclass: #'OS.MEASUREITEMSTRUCT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MEASUREITEMSTRUCT_Size' -> 16r18.
 		'_OffsetOf_itemData' -> 16r14.
 		'_OffsetOf_itemHeight' -> 16r10.
 		'_OffsetOf_itemWidth' -> 16rC

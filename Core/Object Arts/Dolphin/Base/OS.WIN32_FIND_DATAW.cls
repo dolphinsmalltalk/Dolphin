@@ -15,7 +15,8 @@ OS.Win32Structure subclass: #'OS.WIN32_FIND_DATAW'
 		'_OffsetOf_ftLastAccessTime' -> 16rC.
 		'_OffsetOf_ftLastWriteTime' -> 16r14.
 		'_OffsetOf_nFileSizeHigh' -> 16r1C.
-		'_OffsetOf_nFileSizeLow' -> 16r20
+		'_OffsetOf_nFileSizeLow' -> 16r20.
+		'_WIN32_FIND_DATAW_Size' -> 16r250
 	}!
 OS.WIN32_FIND_DATAW guid: (Core.GUID fromString: '{87b4c61a-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.WIN32_FIND_DATAW comment: 'WIN32_FIND_DATA is an <ExternalStructure> to wrap the Win32 structure of the same name. WIN32_FIND_DATA is used in conjunction with the kernel library API functions FindFirstFile() and FindNextFile().
@@ -132,6 +133,9 @@ stem!accessing!public! !
 
 !OS.WIN32_FIND_DATAW class methodsFor!
 
+byteSize
+	^_WIN32_FIND_DATAW_Size!
+
 defineFields
 	"Define the layout of the Win32 WIN32_FIND_DATAW structure. 
 	Currently to avoid wasting space, the structure is defined as mostly filler 
@@ -167,6 +171,7 @@ defineFields
 getFieldNames
 	^#(#dwFileAttributes #ftCreationTime #ftLastAccessTime #ftLastWriteTime #nFileSizeHigh #nFileSizeLow #cFileName #cAlternateFileName)! !
 !OS.WIN32_FIND_DATAW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

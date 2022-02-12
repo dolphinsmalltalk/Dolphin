@@ -131,7 +131,7 @@ layoutContainer: aCompositeView context: aLayoutContext
 					x + extent x + horizontalGap].
 			y + lineHeight+ verticalGap]!
 
-preferredLayoutExtentOf: aCompositeView context: aLayoutContext 
+preferredLayoutExtentOf: aCompositeView context: aLayoutContext
 	"Answer a <Point> specifying the preferred extent for the <CompositeView> argument when
 	laying out in the context of the specified <LayoutContext>."
 
@@ -145,11 +145,12 @@ preferredLayoutExtentOf: aCompositeView context: aLayoutContext
 	heights, allowing for any gap between them, and the maximum of the line widths"
 	totalExtent := 0 @ 0.
 	lines do: 
-			[:each | 
+			[:each |
 			| lineExtent |
 			lineExtent := each at: 1.
-			totalExtent y: totalExtent y + lineExtent y + verticalGap.
-			totalExtent x: (totalExtent x max: lineExtent x)].
+			totalExtent
+				y: totalExtent y + lineExtent y + verticalGap;
+				x: (totalExtent x max: lineExtent x)].
 	insets := aCompositeView actualInsets: aLayoutContext.
 	^totalExtent + insets origin + insets corner!
 

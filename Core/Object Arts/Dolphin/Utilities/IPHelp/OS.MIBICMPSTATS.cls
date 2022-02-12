@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.MIBICMPSTATS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIBICMPSTATS_Size' -> 16r34.
 		'_OffsetOf_dwAddrMaskReps' -> 16r30.
 		'_OffsetOf_dwAddrMasks' -> 16r2C.
 		'_OffsetOf_dwDestUnreachs' -> 16r8.
@@ -131,6 +132,9 @@ dwTimestamps!**compiled accessors**!public! !
 
 !OS.MIBICMPSTATS class methodsFor!
 
+byteSize
+	^_MIBICMPSTATS_Size!
+
 defineFields
 	"Define the fields of the MIBICMPSTATS structure.
 		MIBICMPSTATS compileDefinition
@@ -198,6 +202,7 @@ defineFields
 getFieldNames
 	^#(#dwMsgs #dwErrors #dwDestUnreachs #dwTimeExcds #dwParmProbs #dwSrcQuenchs #dwRedirects #dwEchos #dwEchoReps #dwTimestamps #dwTimestampReps #dwAddrMasks #dwAddrMaskReps)! !
 !OS.MIBICMPSTATS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -141,7 +141,7 @@ getEditControl
 
 getItem: anInteger
 	| tcItem |
-	tcItem := TCITEMW new.
+	tcItem := TCITEMW newBuffer.
 	tcItem
 		newTextBuffer: 256;
 		maskIn: tcItem imageValidMask.
@@ -278,18 +278,18 @@ itemCount
 
 	^self sendMessage: TCM_GETITEMCOUNT!
 
-itemFromNMHDRW: pNMHDR
-	^self shouldNotImplement!
-
 itemRect: anInteger textOnly: aBoolean 
 	"Answers the rectangle surrounding the item with anIntegerIndex within
 	the receiver, optionally for the text label only."
 
 	^(self tcmGetItemRect: anInteger-1) asObject!
 
+itemStructure
+	^TCITEMW!
+
 makeTcItemStruct: anObject
 	| tcItem |
-	tcItem := TCITEMW new.
+	tcItem := TCITEMW newBuffer.
 	tcItem text: (self getTextBlock value: anObject).
 	self hasIcons
 		ifTrue: 
@@ -518,7 +518,7 @@ tcmGetItemRect: anInteger
 	that the item occupies in the tree-view control."
 
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	self
 		sendMessage: TCM_GETITEMRECT
 		wParam: anInteger
@@ -639,8 +639,8 @@ isMultiline:!accessing!public! !
 isVertical!accessing-styles!public! !
 isVertical:!accessing-styles!public! !
 itemCount!accessing!public! !
-itemFromNMHDRW:!event handling-win32!private! !
 itemRect:textOnly:!public! !
+itemStructure!constants!private! !
 makeTcItemStruct:!adding!private! !
 nmNotify:!event handling-win32!private! !
 onItem:removedAtIndex:!event handling!public! !

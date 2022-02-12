@@ -78,7 +78,7 @@ margins
 	Each margin is the distance in pixels between the relevant edge and the tip text."
 
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	self
 		sendMessage: TTM_GETMARGIN
 		wParam: 0
@@ -261,7 +261,7 @@ ttmGetDelayTime: anInteger
 
 ttmGetMargin
 	| answer |
-	answer := RECTL new.
+	answer := RECTL newBuffer.
 	(self
 		sendMessage: TTM_GETMARGIN
 		wParam: 0

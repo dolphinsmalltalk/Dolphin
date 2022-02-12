@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.MINMAXINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MINMAXINFO_Size' -> 16r28.
 		'_OffsetOf_ptMaxPosition' -> 16r10.
 		'_OffsetOf_ptMaxSize' -> 16r8.
 		'_OffsetOf_ptMaxTrackSize' -> 16r20.
@@ -43,7 +44,7 @@ ptMaxTrackSize: aPOINTL
 	aPOINTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_ptMaxTrackSize + 1)
-		to: ##(_OffsetOf_ptMaxTrackSize + POINTL basicByteSize)
+		to: ##(_OffsetOf_ptMaxTrackSize + POINTL._POINTL_Size)
 		startingAt: 1!
 
 ptMinTrackSize
@@ -57,7 +58,7 @@ ptMinTrackSize: aPOINTL
 	aPOINTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_ptMinTrackSize + 1)
-		to: ##(_OffsetOf_ptMinTrackSize + POINTL basicByteSize)
+		to: ##(_OffsetOf_ptMinTrackSize + POINTL._POINTL_Size)
 		startingAt: 1! !
 !OS.MINMAXINFO categoriesForMethods!
 ptMaxTrackSize!**compiled accessors**!public! !
@@ -67,6 +68,9 @@ ptMinTrackSize:!**compiled accessors**!public! !
 !
 
 !OS.MINMAXINFO class methodsFor!
+
+byteSize
+	^_MINMAXINFO_Size!
 
 defineFields
 	"Define the fields of the MINMAXINFO structure.
@@ -91,6 +95,7 @@ defineFields
 getFieldNames
 	^#(#ptMaxSize #ptMaxPosition #ptMinTrackSize #ptMaxTrackSize)! !
 !OS.MINMAXINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

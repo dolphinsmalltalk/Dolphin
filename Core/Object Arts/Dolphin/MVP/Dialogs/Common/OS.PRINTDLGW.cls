@@ -24,7 +24,8 @@ OS.CommonDialogStructure subclass: #'OS.PRINTDLGW'
 		'_OffsetOf_nFromPage' -> 16r18.
 		'_OffsetOf_nMaxPage' -> 16r1E.
 		'_OffsetOf_nMinPage' -> 16r1C.
-		'_OffsetOf_nToPage' -> 16r1A
+		'_OffsetOf_nToPage' -> 16r1A.
+		'_PRINTDLGW_Size' -> 16r42
 	}!
 OS.PRINTDLGW guid: (Core.GUID fromString: '{87b4c609-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.PRINTDLGW comment: ''!
@@ -137,6 +138,9 @@ ownerView:!accessing!public! !
 
 !OS.PRINTDLGW class methodsFor!
 
+byteSize
+	^_PRINTDLGW_Size!
+
 defineFields
 	"Define the fields of the Win32 PRINTDLGW structure.
 
@@ -199,6 +203,7 @@ packing
 
 	^1! !
 !OS.PRINTDLGW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 packing!constants!public! !

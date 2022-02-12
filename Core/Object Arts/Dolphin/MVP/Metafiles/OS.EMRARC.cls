@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRARC'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRARC_Size' -> 16r28.
 		'_OffsetOf_ptlEnd' -> 16r20.
 		'_OffsetOf_ptlStart' -> 16r18.
 		'_OffsetOf_rclBox' -> 16r8
@@ -41,7 +42,7 @@ ptlEnd: aPOINTL
 	aPOINTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_ptlEnd + 1)
-		to: ##(_OffsetOf_ptlEnd + POINTL basicByteSize)
+		to: ##(_OffsetOf_ptlEnd + POINTL._POINTL_Size)
 		startingAt: 1!
 
 ptlStart
@@ -55,7 +56,7 @@ ptlStart: aPOINTL
 	aPOINTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_ptlStart + 1)
-		to: ##(_OffsetOf_ptlStart + POINTL basicByteSize)
+		to: ##(_OffsetOf_ptlStart + POINTL._POINTL_Size)
 		startingAt: 1!
 
 rclBox
@@ -63,13 +64,13 @@ rclBox
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBox!
 
-rclBox: aRECT
-	"Set the receiver's 'rclBox' field to the value of the argument, aRECT"
+rclBox: aRECTL
+	"Set the receiver's 'rclBox' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBox + 1)
-		to: ##(_OffsetOf_rclBox + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBox + RECTL._RECTL_Size)
 		startingAt: 1! !
 !OS.EMRARC categoriesForMethods!
 ptlEnd!**compiled accessors**!public! !
@@ -81,6 +82,9 @@ rclBox:!**compiled accessors**!public! !
 !
 
 !OS.EMRARC class methodsFor!
+
+byteSize
+	^_EMRARC_Size!
 
 defineFields
 	"Define the fields of the EMRARC structure.
@@ -117,6 +121,7 @@ iTypes
 
 	^{EMR_ARC. EMR_ARCTO. EMR_CHORD. EMR_PIE}! !
 !OS.EMRARC class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

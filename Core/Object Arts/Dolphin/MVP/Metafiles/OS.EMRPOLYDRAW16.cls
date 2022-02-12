@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRPOLYDRAW16'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRPOLYDRAW16_Size' -> 16r24.
 		'_OffsetOf_abTypes' -> 16r20.
 		'_OffsetOf_apts' -> 16r1C.
 		'_OffsetOf_cpts' -> 16r18.
@@ -87,13 +88,13 @@ rclBounds
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: aRECT
-	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
+rclBounds: aRECTL
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1! !
 !OS.EMRPOLYDRAW16 categoriesForMethods!
 abTypes!public! !
@@ -108,6 +109,9 @@ rclBounds:!**compiled accessors**!public! !
 !
 
 !OS.EMRPOLYDRAW16 class methodsFor!
+
+byteSize
+	^_EMRPOLYDRAW16_Size!
 
 defineFields
 	"Define the fields of the EMRPOLYDRAW16 structure.
@@ -148,6 +152,7 @@ iTypes
 
 	^{EMR_POLYDRAW16}! !
 !OS.EMRPOLYDRAW16 class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

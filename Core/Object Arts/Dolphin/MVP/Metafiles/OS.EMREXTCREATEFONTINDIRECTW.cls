@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMREXTCREATEFONTINDIRECTW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMREXTCREATEFONTINDIRECTW_Size' -> 16r14C.
 		'_OffsetOf_elfw' -> 16rC.
 		'_OffsetOf_ihFont' -> 16r8
 	}!
@@ -39,7 +40,7 @@ elfw: anEXTLOGFONTW
 	anEXTLOGFONTW
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_elfw + 1)
-		to: ##(_OffsetOf_elfw + EXTLOGFONTW basicByteSize)
+		to: ##(_OffsetOf_elfw + EXTLOGFONTW._EXTLOGFONTW_Size)
 		startingAt: 1!
 
 ihFont
@@ -59,6 +60,9 @@ ihFont:!**compiled accessors**!public! !
 !
 
 !OS.EMREXTCREATEFONTINDIRECTW class methodsFor!
+
+byteSize
+	^_EMREXTCREATEFONTINDIRECTW_Size!
 
 defineFields
 	"Define the fields of the EMREXTCREATEFONTINDIRECTW structure.
@@ -91,6 +95,7 @@ iTypes
 
 	^{EMR_EXTCREATEFONTINDIRECTW}! !
 !OS.EMREXTCREATEFONTINDIRECTW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

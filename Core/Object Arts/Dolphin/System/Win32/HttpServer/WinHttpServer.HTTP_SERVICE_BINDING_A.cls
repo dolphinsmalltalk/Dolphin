@@ -6,6 +6,7 @@ WinHttpServer.HTTP_SERVICE_BINDING_BASE subclass: #'WinHttpServer.HTTP_SERVICE_B
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_BINDING_A_Size' -> 16rC.
 		'_OffsetOf_Buffer' -> 16r4.
 		'_OffsetOf_BufferSize' -> 16r8
 	}!
@@ -59,6 +60,9 @@ BufferSize:!**compiled accessors**!private! !
 
 !WinHttpServer.HTTP_SERVICE_BINDING_A class methodsFor!
 
+byteSize
+	^_HTTP_SERVICE_BINDING_A_Size!
+
 defineFields
 	"Define the fields of the HTTP_SERVICE_BINDING_A structure.
 
@@ -81,6 +85,7 @@ defineFields
 getFieldNames
 	^#(#Type #Buffer #BufferSize)! !
 !WinHttpServer.HTTP_SERVICE_BINDING_A class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

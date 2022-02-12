@@ -6,6 +6,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.LICINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LICINFO_Size' -> 16rC.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_fLicVerified' -> 16r8.
 		'_OffsetOf_fRuntimeKeyAvail' -> 16r4
@@ -46,6 +47,9 @@ fRuntimeKeyAvail!**compiled accessors**!public! !
 
 !OS.COM.LICINFO class methodsFor!
 
+byteSize
+	^_LICINFO_Size!
+
 defineFields
 	"Define the fields of the LICINFO structure.
 
@@ -66,6 +70,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #fRuntimeKeyAvail #fLicVerified)! !
 !OS.COM.LICINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

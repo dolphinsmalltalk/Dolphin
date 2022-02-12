@@ -5,7 +5,9 @@ OS.COM.CountedArray subclass: #'OS.COM.CADWORD'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_CADWORD_Size' -> 16r8
+	}!
 OS.COM.CADWORD guid: (Core.GUID fromString: '{60f684dc-b3e2-4700-8e9c-d1a18764ed84}')!
 OS.COM.CADWORD comment: '<CADWORD> is an <ExternalStructure> class to wrap the struct ''OCIDL.CADWORD'' from type information in the ''OCIDL Library'' library.
 
@@ -20,6 +22,9 @@ getElements!accessing!private! !
 !
 
 !OS.COM.CADWORD class methodsFor!
+
+byteSize
+	^_CADWORD_Size!
 
 defineFields
 	"Define the fields of the CADWORD structure.
@@ -43,6 +48,7 @@ elementClass
 	^DWORD
 ! !
 !OS.COM.CADWORD class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 elementClass!constants!public! !
 !

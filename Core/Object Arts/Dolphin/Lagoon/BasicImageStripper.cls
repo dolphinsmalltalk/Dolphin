@@ -104,7 +104,7 @@ defineExternalStructures: aCollection
 		logElement: 'DefineExternalStructures'
 		attributes: #()
 		value: nil.
-	self systemPackageManager noEventsDo: [aCollection do: [:each | each byteSize]]!
+	self systemPackageManager noEventsDo: [aCollection do: [:each | each ensureDefined]]!
 
 deleteClass: aClass
 	"Private - Removes aClass from the image. Answer the number of classes that
@@ -135,7 +135,7 @@ deleteMethod: aCompiledMethod
 	Object flushMethodCache!
 
 deleteMethods: aCollection
-	aCollection asArray sort do: [:each | self basicDeleteMethod: each].
+	aCollection asSortedArray do: [:each | self basicDeleteMethod: each].
 	Object flushMethodCache!
 
 deleteMethodSoft: aCompiledMethod
@@ -335,10 +335,6 @@ prepareExternalStructures
 	self startElement: 'PrepareExternalStructures' attributes: #().
 	self compileExternalStructures ifTrue: [self compileExternalStructuresNow: structs].
 	"Having defined all the templates, we can now remove the methods used to define them"
-	structs do: 
-			[:each |
-			"Access the byteSize to ensure set (important if not compiling external structures)"
-			each byteSize].
 	"Remove the structure template definition and compiling mechanisms"
 	#('compiling' 'template definition') do: 
 			[:each |

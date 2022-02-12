@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.MIB_IPNETROW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_IPNETROW_Size' -> 16r18.
 		'_OffsetOf_bPhysAddr' -> 16r8.
 		'_OffsetOf_dwAddr' -> 16r10.
 		'_OffsetOf_dwIndex' -> 16r0.
@@ -67,6 +68,9 @@ dwType!**compiled accessors**!public! !
 
 !OS.MIB_IPNETROW class methodsFor!
 
+byteSize
+	^_MIB_IPNETROW_Size!
+
 defineFields
 	"Define the fields of the MIB_IPNETROW structure.
 		MIB_IPNETROW compileDefinition
@@ -104,6 +108,7 @@ defineFields
 getFieldNames
 	^#(#dwIndex #dwPhysAddrLen #bPhysAddr #dwAddr #dwType)! !
 !OS.MIB_IPNETROW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSETPIXELV'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSETPIXELV_Size' -> 16r14.
 		'_OffsetOf_crColor' -> 16r10.
 		'_OffsetOf_ptlPixel' -> 16r8
 	}!
@@ -49,7 +50,7 @@ ptlPixel: aPOINTL
 	aPOINTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_ptlPixel + 1)
-		to: ##(_OffsetOf_ptlPixel + POINTL basicByteSize)
+		to: ##(_OffsetOf_ptlPixel + POINTL._POINTL_Size)
 		startingAt: 1! !
 !OS.EMRSETPIXELV categoriesForMethods!
 crColor!**compiled accessors**!public! !
@@ -59,6 +60,9 @@ ptlPixel:!**compiled accessors**!public! !
 !
 
 !OS.EMRSETPIXELV class methodsFor!
+
+byteSize
+	^_EMRSETPIXELV_Size!
 
 defineFields
 	"Define the fields of the EMRSETPIXELV structure.
@@ -91,6 +95,7 @@ iTypes
 
 	^{EMR_SETPIXELV}! !
 !OS.EMRSETPIXELV class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

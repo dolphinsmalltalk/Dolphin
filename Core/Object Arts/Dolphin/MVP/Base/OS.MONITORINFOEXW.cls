@@ -6,6 +6,7 @@ OS.MONITORINFO subclass: #'OS.MONITORINFOEXW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MONITORINFOEXW_Size' -> 16r68.
 		'_OffsetOf_szDevice' -> 16r28
 	}!
 OS.MONITORINFOEXW guid: (Core.GUID fromString: '{b51d5aa0-7d88-48dc-8c48-36240b05b9ad}')!
@@ -40,6 +41,9 @@ szDevice!**compiled accessors**!public! !
 
 !OS.MONITORINFOEXW class methodsFor!
 
+byteSize
+	^_MONITORINFOEXW_Size!
+
 defineFields
 	"Define the fields of the MONITORINFOEXW structure.
 
@@ -65,6 +69,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #rcMonitor #rcWork #dwFlags #szDevice)! !
 !OS.MONITORINFOEXW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -6,6 +6,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpEncoderParameters'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpEncoderParameters_Size' -> 16r20.
 		'_OffsetOf_Count' -> 16r0.
 		'_OffsetOf_Parameter' -> 16r4
 	}!
@@ -30,7 +31,7 @@ struct tagGpEncoderParameters {
 byteSize
 	"Same approach as BITMAPINFO>>byteSize."
 
-	^super byteSize + ((self Count - 1) * GpEncoderParameter byteSize)!
+	^super byteSize + ((self Count - 1) * GpEncoderParameter._GpEncoderParameter_Size)!
 
 Count
 	"Answer the <Integer> value of the receiver's 'Count' field."
@@ -75,6 +76,9 @@ valueBuffer:!public! !
 
 !Graphics.Gdiplus.GpEncoderParameters class methodsFor!
 
+byteSize
+	^_GpEncoderParameters_Size!
+
 defineFields
 	"Define the fields of the GpEncoderParameters structure.
 		GpEncoderParameters compileDefinition
@@ -104,10 +108,11 @@ length: anInteger
 	"Answer a new instance of the receiver with sufficient capacity to contain the specified
 	number of parameters."
 
-	^(self new: self byteSize + ((anInteger - 1) * GpEncoderParameter byteSize))
+	^(self new: _GpEncoderParameters_Size + ((anInteger - 1) * GpEncoderParameter._GpEncoderParameter_Size))
 		Count: anInteger;
 		yourself! !
 !Graphics.Gdiplus.GpEncoderParameters class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 length:!public! !

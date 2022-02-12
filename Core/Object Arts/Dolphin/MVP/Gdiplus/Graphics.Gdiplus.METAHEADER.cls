@@ -6,6 +6,7 @@ External.Structure subclass: #'Graphics.Gdiplus.METAHEADER'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_METAHEADER_Size' -> 16r18.
 		'_OffsetOf_mtHeaderSize' -> 16r2.
 		'_OffsetOf_mtMaxRecord' -> 16r10.
 		'_OffsetOf_mtNoObjects' -> 16rC.
@@ -125,6 +126,9 @@ mtVersion:!**compiled accessors**!public! !
 
 !Graphics.Gdiplus.METAHEADER class methodsFor!
 
+byteSize
+	^_METAHEADER_Size!
+
 defineFields
 	"Define the fields of the METAHEADER structure.
 		METAHEADER compileDefinition
@@ -168,6 +172,7 @@ defineFields
 getFieldNames
 	^#(#mtType #mtHeaderSize #mtVersion #mtSize #mtNoObjects #mtMaxRecord #mtNoParameters)! !
 !Graphics.Gdiplus.METAHEADER class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

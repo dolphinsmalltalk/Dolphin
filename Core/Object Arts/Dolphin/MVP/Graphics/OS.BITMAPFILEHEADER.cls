@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.BITMAPFILEHEADER'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_BITMAPFILEHEADER_Size' -> 16rE.
 		'_OffsetOf_bfOffBits' -> 16rA.
 		'_OffsetOf_bfReserved1' -> 16r6.
 		'_OffsetOf_bfReserved2' -> 16r8.
@@ -74,6 +75,9 @@ bfType:!**compiled accessors**!public! !
 
 !OS.BITMAPFILEHEADER class methodsFor!
 
+byteSize
+	^_BITMAPFILEHEADER_Size!
+
 defineFields
 	"Define the fields of the BITMAPFILEHEADER structure.
 
@@ -107,6 +111,7 @@ packing
 
 	^2! !
 !OS.BITMAPFILEHEADER class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 packing!constants!public! !

@@ -5,7 +5,9 @@ External.INTEGER subclass: #'External.DWORD'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_DWORD_Size' -> 16r4
+	}!
 External.DWORD guid: (Core.GUID fromString: '{87b4c5aa-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.DWORD comment: '<DWORD> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
@@ -100,6 +102,9 @@ value:!**compiled accessors**!public! !
 
 !External.DWORD class methodsFor!
 
+byteSize
+	^_DWORD_Size!
+
 defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
 	have a single value."
@@ -118,6 +123,7 @@ uninitialize
 
 	VM registryAt: self name put: nil! !
 !External.DWORD class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 initialize!development!initializing!private! !
 uninitialize!class hierarchy-removing!private! !

@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_SSL_SNI_KEY_Size' -> 16r88.
 		'_OffsetOf_Host' -> 16r80.
 		'_OffsetOf_IpPort' -> 16r0
 	}!
@@ -49,7 +50,7 @@ IpPort: aSOCKADDR_STORAGE
 	aSOCKADDR_STORAGE
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_IpPort + 1)
-		to: ##(_OffsetOf_IpPort + SOCKADDR_STORAGE basicByteSize)
+		to: ##(_OffsetOf_IpPort + SOCKADDR_STORAGE._SOCKADDR_STORAGE_Size)
 		startingAt: 1! !
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY categoriesForMethods!
 Host!**compiled accessors**!public! !
@@ -59,6 +60,9 @@ IpPort:!**compiled accessors**!public! !
 !
 
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY class methodsFor!
+
+byteSize
+	^_HTTP_SERVICE_CONFIG_SSL_SNI_KEY_Size!
 
 defineFields
 	"Define the fields of the HTTP_SERVICE_CONFIG_SSL_SNI_KEY structure.
@@ -80,6 +84,7 @@ defineFields
 getFieldNames
 	^#(#IpPort #Host)! !
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_KEY class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

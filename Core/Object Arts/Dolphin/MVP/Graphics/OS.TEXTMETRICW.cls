@@ -25,7 +25,8 @@ OS.Win32Structure subclass: #'OS.TEXTMETRICW'
 		'_OffsetOf_tmPitchAndFamily' -> 16r37.
 		'_OffsetOf_tmStruckOut' -> 16r36.
 		'_OffsetOf_tmUnderlined' -> 16r35.
-		'_OffsetOf_tmWeight' -> 16r1C
+		'_OffsetOf_tmWeight' -> 16r1C.
+		'_TEXTMETRICW_Size' -> 16r3C
 	}!
 OS.TEXTMETRICW guid: (Core.GUID fromString: '{ea0d6df4-3794-11d3-979e-0080c8d59432}')!
 OS.TEXTMETRICW comment: '<TEXTMETRIC> is an <ExternalStructure> class to wrap the struct ''Win.TEXTMETRIC'' from type information in the ''Windows API (ANSI)'' library.
@@ -187,6 +188,9 @@ tmWeight!**compiled accessors**!public! !
 
 !OS.TEXTMETRICW class methodsFor!
 
+byteSize
+	^_TEXTMETRICW_Size!
+
 defineFields
 	"Define the fields of the TEXTMETRICW structure.
 		self compileDefinition
@@ -246,6 +250,7 @@ packing
 
 	^4! !
 !OS.TEXTMETRICW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 packing!constants!public! !

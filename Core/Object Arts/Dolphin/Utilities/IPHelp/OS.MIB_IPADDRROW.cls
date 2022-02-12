@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.MIB_IPADDRROW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_IPADDRROW_Size' -> 16r18.
 		'_OffsetOf_dwAddr' -> 16r0.
 		'_OffsetOf_dwBCastAddr' -> 16rC.
 		'_OffsetOf_dwIndex' -> 16r4.
@@ -77,6 +78,9 @@ wType!**compiled accessors**!public! !
 
 !OS.MIB_IPADDRROW class methodsFor!
 
+byteSize
+	^_MIB_IPADDRROW_Size!
+
 defineFields
 	"Define the fields of the MIB_IPADDRROW structure.
 		MIB_IPADDRROW compileDefinition
@@ -120,6 +124,7 @@ defineFields
 getFieldNames
 	^#(#dwAddr #dwIndex #dwMask #dwBCastAddr #dwReasmSize #wType)! !
 !OS.MIB_IPADDRROW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

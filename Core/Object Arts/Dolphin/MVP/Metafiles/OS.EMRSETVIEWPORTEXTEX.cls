@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSETVIEWPORTEXTEX'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSETVIEWPORTEXTEX_Size' -> 16r10.
 		'_OffsetOf_szlExtent' -> 16r8
 	}!
 OS.EMRSETVIEWPORTEXTEX guid: (Core.GUID fromString: '{4f4dcf23-8e3c-4b18-8546-b833b55d3305}')!
@@ -27,17 +28,17 @@ struct tagEMRSETVIEWPORTEXTEX {
 !OS.EMRSETVIEWPORTEXTEX methodsFor!
 
 szlExtent
-	"Answer the <SIZE> value of the receiver's 'szlExtent' field."
+	"Answer the <SIZEL> value of the receiver's 'szlExtent' field."
 
 	^SIZEL fromAddress: bytes yourAddress + _OffsetOf_szlExtent!
 
-szlExtent: aSIZE
-	"Set the receiver's 'szlExtent' field to the value of the argument, aSIZE"
+szlExtent: aSIZEL
+	"Set the receiver's 'szlExtent' field to the value of the argument, aSIZEL"
 
-	aSIZE
+	aSIZEL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_szlExtent + 1)
-		to: ##(_OffsetOf_szlExtent + SIZEL basicByteSize)
+		to: ##(_OffsetOf_szlExtent + SIZEL._SIZEL_Size)
 		startingAt: 1! !
 !OS.EMRSETVIEWPORTEXTEX categoriesForMethods!
 szlExtent!**compiled accessors**!public! !
@@ -45,6 +46,9 @@ szlExtent:!**compiled accessors**!public! !
 !
 
 !OS.EMRSETVIEWPORTEXTEX class methodsFor!
+
+byteSize
+	^_EMRSETVIEWPORTEXTEX_Size!
 
 defineFields
 	"Define the fields of the EMRSETVIEWPORTEXTEX structure.
@@ -73,6 +77,7 @@ iTypes
 
 	^{EMR_SETVIEWPORTEXTEX. EMR_SETWINDOWEXTEX}! !
 !OS.EMRSETVIEWPORTEXTEX class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

@@ -6,6 +6,7 @@ OS.IpHlpApiTableStruct subclass: #'OS.IP_ADAPTER_ORDER_MAP'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IP_ADAPTER_ORDER_MAP_Size' -> 16r8.
 		'_OffsetOf_table' -> 16r4
 	}!
 OS.IP_ADAPTER_ORDER_MAP guid: (Core.GUID fromString: '{975761ac-0340-468d-bae7-f24198e8f83a}')!
@@ -39,6 +40,9 @@ table!**compiled accessors**!public! !
 
 !OS.IP_ADAPTER_ORDER_MAP class methodsFor!
 
+byteSize
+	^_IP_ADAPTER_ORDER_MAP_Size!
+
 defineFields
 	"Define the fields of the IP_ADAPTER_ORDER_MAP structure.
 		IP_ADAPTER_ORDER_MAP compileDefinition
@@ -62,6 +66,7 @@ defineFields
 getFieldNames
 	^#(#dwNumEntries #table)! !
 !OS.IP_ADAPTER_ORDER_MAP class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

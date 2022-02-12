@@ -9,7 +9,8 @@ OS.TVITEMW subclass: #'OS.TVITEMEXW'
 		'_OffsetOf_hwnd' -> 16r30.
 		'_OffsetOf_iExpandedImage' -> 16r34.
 		'_OffsetOf_iIntegral' -> 16r28.
-		'_OffsetOf_uStateEx' -> 16r2C
+		'_OffsetOf_uStateEx' -> 16r2C.
+		'_TVITEMEXW_Size' -> 16r38
 	}!
 OS.TVITEMEXW guid: (Core.GUID fromString: '{f1c35f1c-58a2-4d7f-9fd9-3184f8aa1c31}')!
 OS.TVITEMEXW comment: ''!
@@ -44,6 +45,9 @@ uStateEx:!**compiled accessors**!public! !
 
 !OS.TVITEMEXW class methodsFor!
 
+byteSize
+	^_TVITEMEXW_Size!
+
 defineFields
 	"Define the fields of the Win32 TVITEMEXW structure
 
@@ -68,6 +72,7 @@ defineFields
 getFieldNames
 	^#(#mask #hItem #dwState #stateMask #pszText #cchTextMax #iImage #iSelectedImage #cChildren #lParam #iIntegral #uStateEx #hwnd #iExpandedImage)! !
 !OS.TVITEMEXW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

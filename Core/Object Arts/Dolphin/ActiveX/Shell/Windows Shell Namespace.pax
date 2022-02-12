@@ -68,7 +68,9 @@ OS.COM.OLEStructure subclass: #'OS.ITEMIDLIST'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_ITEMIDLIST_Size' -> 16r4
+	}!
 OS.Win32Structure subclass: #'OS.SHITEMID'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -76,7 +78,8 @@ OS.Win32Structure subclass: #'OS.SHITEMID'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_abID' -> 16r2.
-		'_OffsetOf_cb' -> 16r0
+		'_OffsetOf_cb' -> 16r0.
+		'_SHITEMID_Size' -> 16r4
 	}!
 OS.CommonDialogStructure subclass: #'OS.BROWSEINFOW'
 	instanceVariableNames: 'title displayName'
@@ -84,6 +87,7 @@ OS.CommonDialogStructure subclass: #'OS.BROWSEINFOW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_BROWSEINFOW_Size' -> 16r20.
 		'_OffsetOf_flags' -> 16r10.
 		'_OffsetOf_hwndOwner' -> 16r0.
 		'_OffsetOf_iImage' -> 16r1C.

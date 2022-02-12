@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_VERSION'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_VERSION_Size' -> 16r4.
 		'_OffsetOf_MajorVersion' -> 16r0.
 		'_OffsetOf_MinorVersion' -> 16r2
 	}!
@@ -52,6 +53,9 @@ printFields:on:!development!printing!private! !
 
 !WinHttpServer.HTTP_VERSION class methodsFor!
 
+byteSize
+	^_HTTP_VERSION_Size!
+
 defineFields
 	"Define the fields of the HTTP_VERSION structure.
 
@@ -72,6 +76,7 @@ defineFields
 getFieldNames
 	^#(#MajorVersion #MinorVersion)! !
 !WinHttpServer.HTTP_VERSION class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

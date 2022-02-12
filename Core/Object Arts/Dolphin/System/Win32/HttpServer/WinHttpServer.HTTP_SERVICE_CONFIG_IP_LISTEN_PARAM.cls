@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM_Size' -> 16r8.
 		'_OffsetOf_AddrLength' -> 16r0.
 		'_OffsetOf_pAddress' -> 16r4
 	}!
@@ -68,6 +69,9 @@ pAddress:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class methodsFor!
 
+byteSize
+	^_HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM_Size!
+
 defineFields
 	"Define the fields of the HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM structure.
 
@@ -88,6 +92,7 @@ defineFields
 getFieldNames
 	^#(#AddrLength #pAddress)! !
 !WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_PARAM class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

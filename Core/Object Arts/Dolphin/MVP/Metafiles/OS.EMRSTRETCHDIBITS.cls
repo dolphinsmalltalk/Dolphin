@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSTRETCHDIBITS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSTRETCHDIBITS_Size' -> 16r50.
 		'_OffsetOf_cbBitsSrc' -> 16r3C.
 		'_OffsetOf_cbBmiSrc' -> 16r34.
 		'_OffsetOf_cxDest' -> 16r48.
@@ -159,13 +160,13 @@ rclBounds
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: aRECT
-	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
+rclBounds: aRECTL
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1!
 
 xDest
@@ -241,6 +242,9 @@ ySrc:!**compiled accessors**!public! !
 !
 
 !OS.EMRSTRETCHDIBITS class methodsFor!
+
+byteSize
+	^_EMRSTRETCHDIBITS_Size!
 
 defineFields
 	"Define the fields of the EMRSTRETCHDIBITS structure.
@@ -325,6 +329,7 @@ iTypes
 
 	^{EMR_STRETCHDIBITS}! !
 !OS.EMRSTRETCHDIBITS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

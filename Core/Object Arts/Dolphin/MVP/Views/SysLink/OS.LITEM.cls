@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.LITEM'
 	imports: #(#{OS.SysLinkConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LITEM_Size' -> 16r10B8.
 		'_OffsetOf_iLink' -> 16r4.
 		'_OffsetOf_mask' -> 16r0.
 		'_OffsetOf_state' -> 16r8.
@@ -194,6 +195,9 @@ url:!accessing!public! !
 
 !OS.LITEM class methodsFor!
 
+byteSize
+	^_LITEM_Size!
+
 defineFields
 	"Define the fields of the Win32 LITEM structure
 
@@ -211,6 +215,7 @@ defineFields
 getFieldNames
 	^#(#mask #iLink #state #stateMask #szID #szURL)! !
 !OS.LITEM class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

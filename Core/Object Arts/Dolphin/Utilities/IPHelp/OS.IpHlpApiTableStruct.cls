@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.IpHlpApiTableStruct'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IpHlpApiTableStruct_Size' -> 16r4.
 		'_OffsetOf_dwNumEntries' -> 16r0
 	}!
 OS.IpHlpApiTableStruct guid: (Core.GUID fromString: '{4571e3b9-bbac-4c7c-a961-a048818d482b}')!
@@ -27,6 +28,9 @@ table!accessing!public! !
 
 !OS.IpHlpApiTableStruct class methodsFor!
 
+byteSize
+	^_IpHlpApiTableStruct_Size!
+
 defineFields
 	"
 	self compileDefinition
@@ -37,6 +41,7 @@ defineFields
 getFieldNames
 	^#(#dwNumEntries)! !
 !OS.IpHlpApiTableStruct class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

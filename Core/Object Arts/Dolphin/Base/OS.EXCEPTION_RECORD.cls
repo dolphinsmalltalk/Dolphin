@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.EXCEPTION_RECORD'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EXCEPTION_RECORD_Size' -> 16r50.
 		'_OffsetOf_ExceptionAddress' -> 16rC.
 		'_OffsetOf_ExceptionCode' -> 16r0.
 		'_OffsetOf_ExceptionFlags' -> 16r4.
@@ -101,6 +102,9 @@ NumberParameters!**compiled accessors**!public! !
 
 !OS.EXCEPTION_RECORD class methodsFor!
 
+byteSize
+	^_EXCEPTION_RECORD_Size!
+
 defineFields
 	"Define the fields of the EXCEPTION_RECORD structure.
 
@@ -141,6 +145,7 @@ defineFields
 getFieldNames
 	^#(#ExceptionCode #ExceptionFlags #ExceptionRecord #ExceptionAddress #NumberParameters)! !
 !OS.EXCEPTION_RECORD class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

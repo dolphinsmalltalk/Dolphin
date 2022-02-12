@@ -6,6 +6,7 @@ OS.NMGETINFOTIP subclass: #'OS.NMTVGETINFOTIPW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMTVGETINFOTIPW_Size' -> 16r1C.
 		'_OffsetOf_cchTextMax' -> 16r10.
 		'_OffsetOf_hItem' -> 16r14.
 		'_OffsetOf_lParam' -> 16r18.
@@ -50,6 +51,9 @@ pszText!**compiled accessors**!public! !
 
 !OS.NMTVGETINFOTIPW class methodsFor!
 
+byteSize
+	^_NMTVGETINFOTIPW_Size!
+
 defineFields
 	"Define the fields of the Win32 NMTVGETINFOTIPW structure.
 		self compileDefinition
@@ -65,6 +69,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #pszText #cchTextMax #hItem #lParam)! !
 !OS.NMTVGETINFOTIPW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

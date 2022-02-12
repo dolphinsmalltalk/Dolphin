@@ -6,6 +6,7 @@ External.Structure subclass: #'OS._FPIEEE_RECORD'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'__FPIEEE_RECORD_Size' -> 16r58.
 		'_OffsetOf_cause' -> 16r4.
 		'_OffsetOf_enable' -> 16r8.
 		'_OffsetOf_flags' -> 16r0.
@@ -142,6 +143,9 @@ roundingModeName!accessing!public! !
 
 !OS._FPIEEE_RECORD class methodsFor!
 
+byteSize
+	^__FPIEEE_RECORD_Size!
+
 defineFields
 	"Define the fields of the _FPIEEE_RECORD 'structure'. The _FPIEEE_RECORD is a
 	rather complex structure containing details of a floating point exception.
@@ -202,6 +206,7 @@ printFlags: anInteger on: aStream
 roundingModes
 	^#(#Nearest #MinusInfinity #PlusInfinity #Chopped)! !
 !OS._FPIEEE_RECORD class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 exceptionFlags!constants!public! !
 exceptionFlags:do:!helpers!private! !

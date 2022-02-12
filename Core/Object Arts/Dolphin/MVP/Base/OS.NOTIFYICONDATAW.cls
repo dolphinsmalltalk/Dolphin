@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.NOTIFYICONDATAW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NOTIFYICONDATAW_Size' -> 16r98.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_hIcon' -> 16r14.
 		'_OffsetOf_hWnd' -> 16r4.
@@ -106,6 +107,9 @@ uID:!**compiled accessors**!public! !
 
 !OS.NOTIFYICONDATAW class methodsFor!
 
+byteSize
+	^_NOTIFYICONDATAW_Size!
+
 defineFields
 	"Define the fields of the NOTIFYICONDATA 'structure'.
 		self compileDefinition
@@ -133,6 +137,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #hWnd #uID #uFlags #uCallbackMessage #hIcon #szTip)! !
 !OS.NOTIFYICONDATAW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

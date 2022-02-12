@@ -24,7 +24,7 @@ logBrush
 
 	logBrush isNil
 		ifTrue: 
-			[logBrush := LOGBRUSH new.
+			[logBrush := LOGBRUSH newBuffer.
 			self getData: logBrush].
 	^logBrush!
 

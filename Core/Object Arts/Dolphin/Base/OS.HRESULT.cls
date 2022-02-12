@@ -6,6 +6,7 @@ External.INTEGER subclass: #'OS.HRESULT'
 	imports: #(#{OS.Win32Constants} #{OS.Win32Errors} #{OS.FacilityCodes})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HRESULT_Size' -> 16r4.
 		'FACILITY_NT_BIT' -> 16r10000000
 	}!
 OS.HRESULT guid: (Core.GUID fromString: '{87b4c5ae-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -173,6 +174,9 @@ value:!**compiled accessors**!public! !
 
 !OS.HRESULT class methodsFor!
 
+byteSize
+	^_HRESULT_Size!
+
 decodePrimitiveFailureCode: anInteger
 	"Private - Answer an <integer> instantiated from the NTSTATUS/HRESULT code packed into a primitive failure code.
 	The VM packs such codes into a SmallInteger primitive failure code by stripping out bit 27, which is not used."
@@ -255,6 +259,7 @@ win32Error: anInteger
 		facility: FACILITY_WIN32
 		code: anInteger! !
 !OS.HRESULT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 decodePrimitiveFailureCode:!private!utilities! !
 defineFields!public!template definition! !
 fail!constants!instance creation!public! !

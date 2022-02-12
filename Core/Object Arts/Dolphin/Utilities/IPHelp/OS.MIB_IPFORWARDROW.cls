@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.MIB_IPFORWARDROW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_IPFORWARDROW_Size' -> 16r38.
 		'_OffsetOf_dwForwardAge' -> 16r1C.
 		'_OffsetOf_dwForwardDest' -> 16r0.
 		'_OffsetOf_dwForwardIfIndex' -> 16r10.
@@ -139,6 +140,9 @@ dwForwardType!**compiled accessors**!public! !
 
 !OS.MIB_IPFORWARDROW class methodsFor!
 
+byteSize
+	^_MIB_IPFORWARDROW_Size!
+
 defineFields
 	"Define the fields of the MIB_IPFORWARDROW structure.
 		MIB_IPFORWARDROW compileDefinition
@@ -210,6 +214,7 @@ defineFields
 getFieldNames
 	^#(#dwForwardDest #dwForwardMask #dwForwardPolicy #dwForwardNextHop #dwForwardIfIndex #dwForwardType #dwForwardProto #dwForwardAge #dwForwardNextHopAS #dwForwardMetric1 #dwForwardMetric2 #dwForwardMetric3 #dwForwardMetric4 #dwForwardMetric5)! !
 !OS.MIB_IPFORWARDROW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -6,6 +6,7 @@ OS.OwnerDrawStruct subclass: #'OS.DRAWITEMSTRUCT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_DRAWITEMSTRUCT_Size' -> 16r30.
 		'_OffsetOf_hDC' -> 16r18.
 		'_OffsetOf_hwndItem' -> 16r14.
 		'_OffsetOf_itemAction' -> 16rC.
@@ -67,6 +68,9 @@ rcItem!**compiled accessors**!public! !
 
 !OS.DRAWITEMSTRUCT class methodsFor!
 
+byteSize
+	^_DRAWITEMSTRUCT_Size!
+
 defineFields
 	"Define the fields of the DRAWITEMSTRUCT structure.
 		DRAWITEMSTRUCT compileDefinition
@@ -97,6 +101,7 @@ defineFields
 getFieldNames
 	^#(#CtlType #CtlID #itemID #itemAction #itemState #hwndItem #hDC #rcItem)! !
 !OS.DRAWITEMSTRUCT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

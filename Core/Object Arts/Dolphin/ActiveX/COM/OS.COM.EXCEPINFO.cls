@@ -6,6 +6,7 @@ OS.COM.FinalizableStructure subclass: #'OS.COM.EXCEPINFO'
 	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EXCEPINFO_Size' -> 16r20.
 		'_OffsetOf_dwHelpContext' -> 16r10.
 		'_OffsetOf_pfnDeferredFillIn' -> 16r18.
 		'_OffsetOf_pvReserved' -> 16r14.
@@ -244,6 +245,9 @@ wstrSource!accessing!public! !
 
 !OS.COM.EXCEPINFO class methodsFor!
 
+byteSize
+	^_EXCEPINFO_Size!
+
 clear: addressOrBytes
 	"Free external resources referenced by the structure
 	of the receiver's element type at the specified address."
@@ -285,6 +289,7 @@ defineFields
 getFieldNames
 	^#(#wCode #pwszSource #pwszDescription #pwszHelpFile #dwHelpContext #pfnDeferredFillIn #scode)! !
 !OS.COM.EXCEPINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

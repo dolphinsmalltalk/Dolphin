@@ -27,7 +27,8 @@ OS.NMHDR subclass: #'UI.Scintilla.SCNotification'
 		'_OffsetOf_updated' -> 16r58.
 		'_OffsetOf_wParam' -> 16r2C.
 		'_OffsetOf_x' -> 16r48.
-		'_OffsetOf_y' -> 16r4C
+		'_OffsetOf_y' -> 16r4C.
+		'_SCNotification_Size' -> 16r64
 	}!
 UI.Scintilla.SCNotification guid: (Core.GUID fromString: '{b4e498b9-ad7b-4519-86f5-1e6232fbd0bd}')!
 UI.Scintilla.SCNotification comment: '<SCNotification> is an <ExternalStructure> class to wrap the struct ''ScintillaLib.SCNotification'' from type information in the ''Scintiall 1.46 Type Library'' library.
@@ -310,6 +311,9 @@ y!**compiled accessors**!public! !
 
 !UI.Scintilla.SCNotification class methodsFor!
 
+byteSize
+	^_SCNotification_Size!
+
 defineFields
 	"Define the fields of the SCNotification structure.
 		SCNotification compileDefinition
@@ -343,6 +347,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #scPosition #ch #modifiers #modificationType #text #length #linesAdded #message #wParam #lParam #scLine #foldLevelNow #foldLevelPrev #margin #listType #x #y #token #annotationLinesAdded #updated #listCompletionMethod #characterSource)! !
 !UI.Scintilla.SCNotification class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

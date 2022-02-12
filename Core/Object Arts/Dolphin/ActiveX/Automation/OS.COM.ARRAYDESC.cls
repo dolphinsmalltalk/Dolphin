@@ -6,6 +6,7 @@ OS.COM.AbstractELEMDESC subclass: #'OS.COM.ARRAYDESC'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_ARRAYDESC_Size' -> 16r14.
 		'_OffsetOf_cDims' -> 16r8.
 		'_OffsetOf_rgbounds' -> 16rC
 	}!
@@ -47,6 +48,9 @@ rgbounds!**compiled accessors**!public! !
 
 !OS.COM.ARRAYDESC class methodsFor!
 
+byteSize
+	^_ARRAYDESC_Size!
+
 defineFields
 	"Define the fields of the ARRAYDESC structure.
 	N.B. This is a variable length structure, and the type library does not describe it properly.
@@ -72,6 +76,7 @@ defineFields
 getFieldNames
 	^#(#tdescElem #cDims #rgbounds)! !
 !OS.COM.ARRAYDESC class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

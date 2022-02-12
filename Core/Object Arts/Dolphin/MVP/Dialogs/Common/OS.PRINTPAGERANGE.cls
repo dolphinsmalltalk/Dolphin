@@ -7,7 +7,8 @@ OS.Win32Structure subclass: #'OS.PRINTPAGERANGE'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_nFromPage' -> 16r0.
-		'_OffsetOf_nToPage' -> 16r4
+		'_OffsetOf_nToPage' -> 16r4.
+		'_PRINTPAGERANGE_Size' -> 16r8
 	}!
 OS.PRINTPAGERANGE guid: (Core.GUID fromString: '{7842b7d1-890a-4558-b36e-ebf17614a05b}')!
 OS.PRINTPAGERANGE comment: '<PRINTPAGERANGE> is an <ExternalStructure> class to wrap the struct ''Win32.PRINTPAGERANGE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
@@ -55,6 +56,9 @@ nToPage:!**compiled accessors**!public! !
 
 !OS.PRINTPAGERANGE class methodsFor!
 
+byteSize
+	^_PRINTPAGERANGE_Size!
+
 defineFields
 	"Define the fields of the PRINTPAGERANGE structure.
 
@@ -74,6 +78,7 @@ defineFields
 getFieldNames
 	^#(#nFromPage #nToPage)! !
 !OS.PRINTPAGERANGE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

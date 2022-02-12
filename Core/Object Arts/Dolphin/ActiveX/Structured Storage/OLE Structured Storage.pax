@@ -199,7 +199,8 @@ OS.COM.FinalizableStructure subclass: #'OS.COM.STATSTG'
 		'_OffsetOf_grfStateBits' -> 16r40.
 		'_OffsetOf_mtime' -> 16r10.
 		'_OffsetOf_pwcsName' -> 16r0.
-		'_OffsetOf_type' -> 16r4
+		'_OffsetOf_type' -> 16r4.
+		'_STATSTG_Size' -> 16r48
 	}!
 
 "Loose Methods"!

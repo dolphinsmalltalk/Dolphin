@@ -6,6 +6,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.DECIMAL'
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_DECIMAL_Size' -> 16r10.
 		'_OffsetOf_hi32' -> 16r4.
 		'_OffsetOf_lo64' -> 16r8.
 		'_OffsetOf_scale' -> 16r2.
@@ -102,6 +103,9 @@ value:!accessing!public! !
 
 !OS.COM.DECIMAL class methodsFor!
 
+byteSize
+	^_DECIMAL_Size!
+
 defineFields
 	"Define the fields of the DECIMAL 'structure'.
 
@@ -136,6 +140,7 @@ vt
 
 	^VT_DECIMAL! !
 !OS.COM.DECIMAL class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 initialize!development!initializing!private! !

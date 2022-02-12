@@ -84,7 +84,8 @@ OS.Win32Structure subclass: #'OS.UDACCEL'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_nInc' -> 16r4.
-		'_OffsetOf_nSec' -> 16r0
+		'_OffsetOf_nSec' -> 16r0.
+		'_UDACCEL_Size' -> 16r8
 	}!
 OS.NMHDR subclass: #'OS.NMUPDOWN'
 	instanceVariableNames: 'allow'
@@ -92,6 +93,7 @@ OS.NMHDR subclass: #'OS.NMUPDOWN'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMUPDOWN_Size' -> 16r14.
 		'_OffsetOf_iDelta' -> 16r10.
 		'_OffsetOf_iPos' -> 16rC
 	}!

@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.EMRTEXT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRTEXT_Size' -> 16r28.
 		'_OffsetOf_fOptions' -> 16r10.
 		'_OffsetOf_nChars' -> 16r8.
 		'_OffsetOf_offDx' -> 16r24.
@@ -86,7 +87,7 @@ ptlReference: aPOINTL
 	aPOINTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_ptlReference + 1)
-		to: ##(_OffsetOf_ptlReference + POINTL basicByteSize)
+		to: ##(_OffsetOf_ptlReference + POINTL._POINTL_Size)
 		startingAt: 1!
 
 rcl
@@ -94,13 +95,13 @@ rcl
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcl!
 
-rcl: aRECT
-	"Set the receiver's 'rcl' field to the value of the argument, aRECT"
+rcl: aRECTL
+	"Set the receiver's 'rcl' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rcl + 1)
-		to: ##(_OffsetOf_rcl + RECTL basicByteSize)
+		to: ##(_OffsetOf_rcl + RECTL._RECTL_Size)
 		startingAt: 1! !
 !OS.EMRTEXT categoriesForMethods!
 fOptions!**compiled accessors**!public! !
@@ -118,6 +119,9 @@ rcl:!**compiled accessors**!public! !
 !
 
 !OS.EMRTEXT class methodsFor!
+
+byteSize
+	^_EMRTEXT_Size!
 
 defineFields
 	"Define the fields of the EMRTEXT structure.
@@ -159,6 +163,7 @@ defineFields
 getFieldNames
 	^#(#ptlReference #nChars #offString #fOptions #rcl #offDx)! !
 !OS.EMRTEXT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

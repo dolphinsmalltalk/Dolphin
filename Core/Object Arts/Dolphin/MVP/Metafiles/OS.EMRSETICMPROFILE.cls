@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSETICMPROFILE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSETICMPROFILE_Size' -> 16r18.
 		'_OffsetOf_cbData' -> 16r10.
 		'_OffsetOf_cbName' -> 16rC.
 		'_OffsetOf_Data' -> 16r14.
@@ -94,6 +95,9 @@ dwFlags:!**compiled accessors**!public! !
 
 !OS.EMRSETICMPROFILE class methodsFor!
 
+byteSize
+	^_EMRSETICMPROFILE_Size!
+
 defineFields
 	"Define the fields of the EMRSETICMPROFILE structure.
 
@@ -133,6 +137,7 @@ iTypes
 
 	^{EMR_SETICMPROFILEA. EMR_SETICMPROFILEW}! !
 !OS.EMRSETICMPROFILE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

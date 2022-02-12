@@ -6,6 +6,7 @@ OS.NMHDR subclass: #'OS.NMCUSTOMDRAW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMCUSTOMDRAW_Size' -> 16r30.
 		'_OffsetOf_dwDrawStage' -> 16rC.
 		'_OffsetOf_dwItemSpec' -> 16r24.
 		'_OffsetOf_hdc' -> 16r10.
@@ -302,6 +303,9 @@ OS.NMCUSTOMDRAW methodProtocol: #customDrawContext attributes: #(#readOnly) sele
 
 !OS.NMCUSTOMDRAW class methodsFor!
 
+byteSize
+	^_NMCUSTOMDRAW_Size!
+
 defineFields
 	"Define the structure template for Win32 NMCUSTOMDRAW structure.
 		self compileDefinition
@@ -319,6 +323,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam)! !
 !OS.NMCUSTOMDRAW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

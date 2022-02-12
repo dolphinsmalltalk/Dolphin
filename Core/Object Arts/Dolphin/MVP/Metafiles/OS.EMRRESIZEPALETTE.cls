@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRRESIZEPALETTE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRRESIZEPALETTE_Size' -> 16r10.
 		'_OffsetOf_cEntries' -> 16rC.
 		'_OffsetOf_ihPal' -> 16r8
 	}!
@@ -56,6 +57,9 @@ ihPal:!**compiled accessors**!public! !
 
 !OS.EMRRESIZEPALETTE class methodsFor!
 
+byteSize
+	^_EMRRESIZEPALETTE_Size!
+
 defineFields
 	"Define the fields of the EMRRESIZEPALETTE structure.
 
@@ -87,6 +91,7 @@ iTypes
 
 	^{EMR_RESIZEPALETTE}! !
 !OS.EMRRESIZEPALETTE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_RESPONSE_V1'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_RESPONSE_V1_Size' -> 16r118.
 		'_OffsetOf_EntityChunkCount' -> 16r110.
 		'_OffsetOf_Flags' -> 16r0.
 		'_OffsetOf_Headers' -> 16r10.
@@ -81,7 +82,7 @@ Headers: aHTTP_RESPONSE_HEADERS
 	aHTTP_RESPONSE_HEADERS
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_Headers + 1)
-		to: ##(_OffsetOf_Headers + HTTP_RESPONSE_HEADERS basicByteSize)
+		to: ##(_OffsetOf_Headers + HTTP_RESPONSE_HEADERS._HTTP_RESPONSE_HEADERS_Size)
 		startingAt: 1!
 
 initialize
@@ -143,7 +144,7 @@ Version: aHTTP_VERSION
 	aHTTP_VERSION
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_Version + 1)
-		to: ##(_OffsetOf_Version + HTTP_VERSION basicByteSize)
+		to: ##(_OffsetOf_Version + HTTP_VERSION._HTTP_VERSION_Size)
 		startingAt: 1! !
 !WinHttpServer.HTTP_RESPONSE_V1 categoriesForMethods!
 content:!accessing!public! !
@@ -168,6 +169,9 @@ Version:!**compiled accessors**!public! !
 !
 
 !WinHttpServer.HTTP_RESPONSE_V1 class methodsFor!
+
+byteSize
+	^_HTTP_RESPONSE_V1_Size!
 
 defineFields
 	"Define the fields of the HTTP_RESPONSE_V1 structure.
@@ -201,6 +205,7 @@ defineFields
 getFieldNames
 	^#(#Flags #Version #StatusCode #ReasonLength #pReason #Headers #EntityChunkCount #pEntityChunks)! !
 !WinHttpServer.HTTP_RESPONSE_V1 class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

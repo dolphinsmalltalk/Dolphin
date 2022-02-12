@@ -5,7 +5,9 @@ External.BYTE subclass: #'External.SBYTE'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_SBYTE_Size' -> 16r1
+	}!
 External.SBYTE guid: (Core.GUID fromString: '{8f5bcc94-0245-4d91-a473-acc6bdb8f294}')!
 External.SBYTE comment: '<SBYTE> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
@@ -39,6 +41,9 @@ value:!**compiled accessors**!public! !
 
 !External.SBYTE class methodsFor!
 
+byteSize
+	^_SBYTE_Size!
+
 defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
 	have a single value."
@@ -57,6 +62,7 @@ uninitialize
 
 	VM registryAt: self name put: nil! !
 !External.SBYTE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 initialize!development!initializing!private! !
 uninitialize!class hierarchy-removing!private! !

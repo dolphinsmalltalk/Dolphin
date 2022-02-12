@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.CCHITTESTINFO'
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CCHITTESTINFO_Size' -> 16rC.
 		'_OffsetOf_flags' -> 16r8.
 		'_OffsetOf_pt' -> 16r0
 	}!
@@ -36,7 +37,7 @@ pt: aPOINTL
 	aPOINTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_pt + 1)
-		to: ##(_OffsetOf_pt + POINTL basicByteSize)
+		to: ##(_OffsetOf_pt + POINTL._POINTL_Size)
 		startingAt: 1! !
 !OS.CCHITTESTINFO categoriesForMethods!
 flags!**compiled accessors**!public! !
@@ -46,6 +47,9 @@ pt:!**compiled accessors**!public! !
 !
 
 !OS.CCHITTESTINFO class methodsFor!
+
+byteSize
+	^_CCHITTESTINFO_Size!
 
 defineFields
 	"Define the common fields of the common control hit test structures.
@@ -60,6 +64,7 @@ defineFields
 getFieldNames
 	^#(#pt #flags)! !
 !OS.CCHITTESTINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!development!public!template definition! !
 getFieldNames!constants!private! !
 !

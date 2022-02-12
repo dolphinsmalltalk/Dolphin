@@ -6,6 +6,7 @@ OS.AbstractIN_ADDR subclass: #'OS.IN6_ADDR'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IN6_ADDR_Size' -> 16r10.
 		'_OffsetOf_Bytes' -> 16r0.
 		'_OffsetOf_Words' -> 16r0
 	}!
@@ -54,6 +55,9 @@ Bytes:!**compiled accessors**!public! !
 addressFamily
 	^WinSocketConstants.AF_INET6!
 
+byteSize
+	^_IN6_ADDR_Size!
+
 defineFields
 	"Define the fields of the IN6_ADDR structure.
 
@@ -77,6 +81,7 @@ getFieldNames
 	^#(#Bytes)! !
 !OS.IN6_ADDR class categoriesForMethods!
 addressFamily!constants!public! !
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

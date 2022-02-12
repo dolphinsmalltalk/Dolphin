@@ -6,6 +6,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.IDLDESC'
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IDLDESC_Size' -> 16r8.
 		'_OffsetOf_dwReserved' -> 16r0.
 		'_OffsetOf_wIDLFlags' -> 16r4
 	}!
@@ -50,6 +51,9 @@ wIDLFlags!**compiled accessors**!public! !
 
 !OS.COM.IDLDESC class methodsFor!
 
+byteSize
+	^_IDLDESC_Size!
+
 defineFields
 	"Define the fields of the IDLDESC structure.
 
@@ -70,6 +74,7 @@ defineFields
 getFieldNames
 	^#(#wIDLFlags)! !
 !OS.COM.IDLDESC class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

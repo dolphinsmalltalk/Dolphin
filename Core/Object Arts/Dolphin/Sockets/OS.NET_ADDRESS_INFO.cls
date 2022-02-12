@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.NET_ADDRESS_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NET_ADDRESS_INFO_Size' -> 16r210.
 		'_OffsetOf_Format' -> 16r0.
 		'_OffsetOf_IpAddress' -> 16r4.
 		'_OffsetOf_Ipv4Address' -> 16r4.
@@ -65,7 +66,7 @@ IpAddress: aSOCKADDR
 	aSOCKADDR
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_IpAddress + 1)
-		to: ##(_OffsetOf_IpAddress + SOCKADDR basicByteSize)
+		to: ##(_OffsetOf_IpAddress + SOCKADDR._SOCKADDR_Size)
 		startingAt: 1!
 
 Ipv4Address
@@ -79,7 +80,7 @@ Ipv4Address: aSOCKADDR_IN
 	aSOCKADDR_IN
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_Ipv4Address + 1)
-		to: ##(_OffsetOf_Ipv4Address + SOCKADDR_IN basicByteSize)
+		to: ##(_OffsetOf_Ipv4Address + SOCKADDR_IN._SOCKADDR_IN_Size)
 		startingAt: 1!
 
 Ipv6Address
@@ -93,7 +94,7 @@ Ipv6Address: aSOCKADDR_IN6
 	aSOCKADDR_IN6
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_Ipv6Address + 1)
-		to: ##(_OffsetOf_Ipv6Address + SOCKADDR_IN6 basicByteSize)
+		to: ##(_OffsetOf_Ipv6Address + SOCKADDR_IN6._SOCKADDR_IN6_Size)
 		startingAt: 1!
 
 NamedAddress_Address
@@ -145,6 +146,9 @@ NamedAddress_Port:!**compiled accessors**!public! !
 
 !OS.NET_ADDRESS_INFO class methodsFor!
 
+byteSize
+	^_NET_ADDRESS_INFO_Size!
+
 defineFields
 	"Define the fields of the NET_ADDRESS_INFO structure.
 
@@ -177,6 +181,7 @@ defineFields
 getFieldNames
 	^#(#Format)! !
 !OS.NET_ADDRESS_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!accessing!private! !
 !

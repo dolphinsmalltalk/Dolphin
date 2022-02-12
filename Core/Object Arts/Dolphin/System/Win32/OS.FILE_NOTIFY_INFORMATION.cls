@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.FILE_NOTIFY_INFORMATION'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_FILE_NOTIFY_INFORMATION_Size' -> 16r10.
 		'_OffsetOf_Action' -> 16r4.
 		'_OffsetOf_FileName' -> 16rC.
 		'_OffsetOf_FileNameLength' -> 16r8.
@@ -60,6 +61,9 @@ NextEntryOffset!**compiled accessors**!public! !
 
 !OS.FILE_NOTIFY_INFORMATION class methodsFor!
 
+byteSize
+	^_FILE_NOTIFY_INFORMATION_Size!
+
 defineFields
 	"Define the fields of the FILE_NOTIFY_INFORMATION structure.
 
@@ -96,6 +100,7 @@ getFieldNames
 new
 	^self new: ##(_OffsetOf_FileName + ((CRTConstants._MAX_PATH + 1) * 2))! !
 !OS.FILE_NOTIFY_INFORMATION class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 new!public! !

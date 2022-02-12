@@ -6,6 +6,7 @@ OS.NMHDR subclass: #'OS.NMTBDISPINFOW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMTBDISPINFOW_Size' -> 16r24.
 		'_OffsetOf_cchText' -> 16r20.
 		'_OffsetOf_dwMask' -> 16rC.
 		'_OffsetOf_idCommand' -> 16r10.
@@ -128,6 +129,9 @@ text:!accessing!public! !
 
 !OS.NMTBDISPINFOW class methodsFor!
 
+byteSize
+	^_NMTBDISPINFOW_Size!
+
 defineFields
 	"Define the fields of the NMTBDISPINFOW structure.
 
@@ -158,6 +162,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwMask #idCommand #lParam #iImage #pszText #cchText)! !
 !OS.NMTBDISPINFOW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

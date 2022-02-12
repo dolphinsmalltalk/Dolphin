@@ -369,6 +369,7 @@ Kernel.SharedPool subclass: #'OS.TreeViewConstants'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'I_CHILDRENCALLBACK' -> -16r1.
 		'TV_FIRST' -> 16r1100.
 		'TVC_BYKEYBOARD' -> 16r2.
 		'TVC_UNKNOWN' -> 16r0.
@@ -504,6 +505,7 @@ OS.Win32Structure subclass: #'OS.CCHITTESTINFO'
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CCHITTESTINFO_Size' -> 16rC.
 		'_OffsetOf_flags' -> 16r8.
 		'_OffsetOf_pt' -> 16r0
 	}!
@@ -513,6 +515,7 @@ OS.Win32Structure subclass: #'OS.CCITEM'
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CCITEM_Size' -> 16r4.
 		'_OffsetOf_mask' -> 16r0
 	}!
 OS.Win32Structure subclass: #'OS.LVBKIMAGEW'
@@ -521,6 +524,7 @@ OS.Win32Structure subclass: #'OS.LVBKIMAGEW'
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LVBKIMAGEW_Size' -> 16r18.
 		'_OffsetOf_cchImageMax' -> 16rC.
 		'_OffsetOf_hbm' -> 16r4.
 		'_OffsetOf_pszImage' -> 16r8.
@@ -534,6 +538,7 @@ OS.Win32Structure subclass: #'OS.LVCOLUMNW'
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LVCOLUMNW_Size' -> 16r2C.
 		'_OffsetOf_cchTextMax' -> 16r10.
 		'_OffsetOf_cx' -> 16r8.
 		'_OffsetOf_cxDefault' -> 16r24.
@@ -552,6 +557,7 @@ OS.Win32Structure subclass: #'OS.LVFINDINFOW'
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LVFINDINFOW_Size' -> 16r18.
 		'_OffsetOf_flags' -> 16r0.
 		'_OffsetOf_lParam' -> 16r8.
 		'_OffsetOf_psz' -> 16r4.
@@ -561,12 +567,13 @@ OS.Win32Structure subclass: #'OS.LVFINDINFOW'
 OS.Win32Structure subclass: #'OS.TVINSERTSTRUCTW'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.TreeViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hInsertAfter' -> 16r4.
 		'_OffsetOf_hParent' -> 16r0.
-		'_OffsetOf_item' -> 16r8
+		'_OffsetOf_item' -> 16r8.
+		'_TVINSERTSTRUCTW_Size' -> 16r40
 	}!
 OS.CCHITTESTINFO subclass: #'OS.LVHITTESTINFO'
 	instanceVariableNames: ''
@@ -574,6 +581,7 @@ OS.CCHITTESTINFO subclass: #'OS.LVHITTESTINFO'
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LVHITTESTINFO_Size' -> 16r14.
 		'_OffsetOf_iItem' -> 16rC.
 		'_OffsetOf_iSubItem' -> 16r10
 	}!
@@ -589,14 +597,16 @@ OS.CCHITTESTINFO subclass: #'OS.TVHITTESTINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
-		'_OffsetOf_hItem' -> 16rC
+		'_OffsetOf_hItem' -> 16rC.
+		'_TVHITTESTINFO_Size' -> 16r10
 	}!
 OS.CCITEM subclass: #'OS.LVITEMW'
 	instanceVariableNames: ''
-	classVariableNames: 'CallbackPrototype'
+	classVariableNames: ''
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LVITEMW_Size' -> 16r3C.
 		'_OffsetOf_cchTextMax' -> 16r18.
 		'_OffsetOf_cColumns' -> 16r2C.
 		'_OffsetOf_dwState' -> 16rC.
@@ -610,7 +620,8 @@ OS.CCITEM subclass: #'OS.LVITEMW'
 		'_OffsetOf_piColFmt' -> 16r34.
 		'_OffsetOf_pszText' -> 16r14.
 		'_OffsetOf_puColumns' -> 16r30.
-		'_OffsetOf_stateMask' -> 16r10
+		'_OffsetOf_stateMask' -> 16r10.
+		'CallbackPrototype' -> #[3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 0 0 0 0 255 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
 	}!
 OS.CCITEM subclass: #'OS.TCITEMW'
 	instanceVariableNames: ''
@@ -623,7 +634,8 @@ OS.CCITEM subclass: #'OS.TCITEMW'
 		'_OffsetOf_iImage' -> 16r14.
 		'_OffsetOf_lParam' -> 16r18.
 		'_OffsetOf_pszText' -> 16rC.
-		'_OffsetOf_stateMask' -> 16r8
+		'_OffsetOf_stateMask' -> 16r8.
+		'_TCITEMW_Size' -> 16r1C
 	}!
 OS.CCITEM subclass: #'OS.TVITEMW'
 	instanceVariableNames: ''
@@ -639,7 +651,8 @@ OS.CCITEM subclass: #'OS.TVITEMW'
 		'_OffsetOf_iSelectedImage' -> 16r1C.
 		'_OffsetOf_lParam' -> 16r24.
 		'_OffsetOf_pszText' -> 16r10.
-		'_OffsetOf_stateMask' -> 16rC
+		'_OffsetOf_stateMask' -> 16rC.
+		'_TVITEMW_Size' -> 16r28
 	}!
 OS.TVITEMW subclass: #'OS.TVITEMEXW'
 	instanceVariableNames: ''
@@ -650,7 +663,8 @@ OS.TVITEMW subclass: #'OS.TVITEMEXW'
 		'_OffsetOf_hwnd' -> 16r30.
 		'_OffsetOf_iExpandedImage' -> 16r34.
 		'_OffsetOf_iIntegral' -> 16r28.
-		'_OffsetOf_uStateEx' -> 16r2C
+		'_OffsetOf_uStateEx' -> 16r2C.
+		'_TVITEMEXW_Size' -> 16r38
 	}!
 OS.NMHDR subclass: #'OS.NMCUSTOMDRAW'
 	instanceVariableNames: 'item view canvas font'
@@ -658,6 +672,7 @@ OS.NMHDR subclass: #'OS.NMCUSTOMDRAW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMCUSTOMDRAW_Size' -> 16r30.
 		'_OffsetOf_dwDrawStage' -> 16rC.
 		'_OffsetOf_dwItemSpec' -> 16r24.
 		'_OffsetOf_hdc' -> 16r10.
@@ -677,6 +692,7 @@ OS.NMHDR subclass: #'OS.NMITEMACTIVATE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMITEMACTIVATE_Size' -> 16r30.
 		'_OffsetOf_iItem' -> 16rC.
 		'_OffsetOf_iSubItem' -> 16r10.
 		'_OffsetOf_lParam' -> 16r28.
@@ -692,6 +708,7 @@ OS.NMHDR subclass: #'OS.NMKEYDOWN'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMKEYDOWN_Size' -> 16r14.
 		'_OffsetOf_flags' -> 16r10.
 		'_OffsetOf_wVKey' -> 16rC
 	}!
@@ -701,6 +718,7 @@ OS.NMHDR subclass: #'OS.NMLISTVIEW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMLISTVIEW_Size' -> 16r2C.
 		'_OffsetOf_iItem' -> 16rC.
 		'_OffsetOf_iSubItem' -> 16r10.
 		'_OffsetOf_lParam' -> 16r28.
@@ -715,6 +733,7 @@ OS.NMHDR subclass: #'OS.NMLVFINDITEMW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMLVFINDITEMW_Size' -> 16r28.
 		'_OffsetOf_iStart' -> 16rC.
 		'_OffsetOf_lvfi' -> 16r10
 	}!
@@ -724,6 +743,7 @@ OS.NMHDR subclass: #'OS.NMLVODSTATECHANGE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMLVODSTATECHANGE_Size' -> 16r1C.
 		'_OffsetOf_iFrom' -> 16rC.
 		'_OffsetOf_iTo' -> 16r10.
 		'_OffsetOf_uNewState' -> 16r14.
@@ -735,6 +755,7 @@ OS.NMHDR subclass: #'OS.NMTREEVIEWW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMTREEVIEWW_Size' -> 16r68.
 		'_OffsetOf_action' -> 16rC.
 		'_OffsetOf_itemNew' -> 16r38.
 		'_OffsetOf_itemOld' -> 16r10.
@@ -746,6 +767,7 @@ OS.NMCUSTOMDRAW subclass: #'OS.NMLVCUSTOMDRAW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMLVCUSTOMDRAW_Size' -> 16r3C.
 		'_OffsetOf_clrText' -> 16r30.
 		'_OffsetOf_clrTextBk' -> 16r34.
 		'_OffsetOf_iSubItem' -> 16r38
@@ -756,6 +778,7 @@ OS.NMCUSTOMDRAW subclass: #'OS.NMTVCUSTOMDRAW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMTVCUSTOMDRAW_Size' -> 16r3C.
 		'_OffsetOf_clrText' -> 16r30.
 		'_OffsetOf_clrTextBk' -> 16r34.
 		'_OffsetOf_iLevel' -> 16r38
@@ -766,6 +789,7 @@ OS.NMGETINFOTIP subclass: #'OS.NMLVGETINFOTIPW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMLVGETINFOTIPW_Size' -> 16r24.
 		'_OffsetOf_cchTextMax' -> 16r14.
 		'_OffsetOf_dwFlags' -> 16rC.
 		'_OffsetOf_iItem' -> 16r18.
@@ -779,6 +803,7 @@ OS.NMGETINFOTIP subclass: #'OS.NMTVGETINFOTIPW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMTVGETINFOTIPW_Size' -> 16r1C.
 		'_OffsetOf_cchTextMax' -> 16r10.
 		'_OffsetOf_hItem' -> 16r14.
 		'_OffsetOf_lParam' -> 16r18.
@@ -791,7 +816,7 @@ UI.ListControlView subclass: #'UI.IconicListAbstract'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.IconicListAbstract subclass: #'UI.ListView'
-	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices _unused35 _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
+	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices noRedrawCount _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
 	classVariableNames: 'LvModes SelectionStateMask UnknownItem'
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''

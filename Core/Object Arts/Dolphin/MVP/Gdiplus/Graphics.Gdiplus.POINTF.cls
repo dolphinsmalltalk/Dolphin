@@ -7,7 +7,8 @@ External.POINT subclass: #'Graphics.Gdiplus.POINTF'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_x' -> 16r0.
-		'_OffsetOf_y' -> 16r4
+		'_OffsetOf_y' -> 16r4.
+		'_POINTF_Size' -> 16r8
 	}!
 Graphics.Gdiplus.POINTF guid: (Core.GUID fromString: '{c6f719de-eec5-45f6-bd44-71200f76bd34}')!
 Graphics.Gdiplus.POINTF comment: '`POINTF` is an `ExternalStructure` class to wrap the struct of the same name.
@@ -50,6 +51,9 @@ y:!**compiled accessors**!public! !
 
 !Graphics.Gdiplus.POINTF class methodsFor!
 
+byteSize
+	^_POINTF_Size!
+
 defineFields
 	"Define the fields of the POINTF structure.
 		POINTF compileDefinition
@@ -71,11 +75,12 @@ x: x y: y
 	Implementation Note: For performance reasons avoid going through
 	all the <ExternalStructure> framework methods."
 
-	^self basicNew bytes: ((ByteArray newFixed: 8)
-				floatAtOffset: 0 put: x;
-				floatAtOffset: 4 put: y;
+	^self basicNew bytes: ((ByteArray newFixed: _POINTF_Size)
+				floatAtOffset: _OffsetOf_x put: x;
+				floatAtOffset: _OffsetOf_y put: y;
 				yourself)! !
 !Graphics.Gdiplus.POINTF class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 x:y:!instance creation!public! !
 !

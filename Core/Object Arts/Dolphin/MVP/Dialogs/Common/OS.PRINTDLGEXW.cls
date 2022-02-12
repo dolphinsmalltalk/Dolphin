@@ -26,7 +26,8 @@ OS.CommonDialogStructure subclass: #'OS.PRINTDLGEXW'
 		'_OffsetOf_nMinPage' -> 16r2C.
 		'_OffsetOf_nPageRanges' -> 16r20.
 		'_OffsetOf_nPropertyPages' -> 16r44.
-		'_OffsetOf_nStartPage' -> 16r4C
+		'_OffsetOf_nStartPage' -> 16r4C.
+		'_PRINTDLGEXW_Size' -> 16r54
 	}!
 OS.PRINTDLGEXW guid: (Core.GUID fromString: '{46f06e70-1bb5-4b02-98ee-6ab442f3b43f}')!
 OS.PRINTDLGEXW comment: '<PRINTDLGEX> is an <ExternalStructure> class to wrap the struct ''Win32.PRINTDLGEX'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
@@ -325,6 +326,9 @@ nStartPage:!**compiled accessors**!public! !
 
 !OS.PRINTDLGEXW class methodsFor!
 
+byteSize
+	^_PRINTDLGEXW_Size!
+
 defineFields
 	"Define the fields of the PRINTDLGEX structure.
 
@@ -382,6 +386,7 @@ defineFields
 getFieldNames
 	^#(#lStructSize #hwndOwner #hDevMode #hDevNames #hDC #flags #Flags2 #ExclusionFlags #nPageRanges #nMaxPageRanges #lpPageRanges #nMinPage #nMaxPage #nCopies #hInstance #lpPrintTemplateName #lpCallback #nPropertyPages #lphPropertyPages #nStartPage #dwResultAction)! !
 !OS.PRINTDLGEXW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

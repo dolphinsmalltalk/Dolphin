@@ -12,7 +12,8 @@ OS.Win32Structure subclass: #'OS.SCROLLINFO'
 		'_OffsetOf_nMin' -> 16r8.
 		'_OffsetOf_nPage' -> 16r10.
 		'_OffsetOf_nPos' -> 16r14.
-		'_OffsetOf_nTrackPos' -> 16r18
+		'_OffsetOf_nTrackPos' -> 16r18.
+		'_SCROLLINFO_Size' -> 16r1C
 	}!
 OS.SCROLLINFO guid: (Core.GUID fromString: '{87b4c60f-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.SCROLLINFO comment: ''!
@@ -145,6 +146,9 @@ range:!accessing!public! !
 
 !OS.SCROLLINFO class methodsFor!
 
+byteSize
+	^_SCROLLINFO_Size!
+
 defineFields
 	"Define the layout of the Win32 SCROLLINFO structure
   
@@ -173,6 +177,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #fMask #nMin #nMax #nPage #nPos #nTrackPos)! !
 !OS.SCROLLINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

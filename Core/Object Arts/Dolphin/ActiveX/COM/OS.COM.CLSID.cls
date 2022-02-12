@@ -57,7 +57,7 @@ initialize
 		CLSID initialize
 	"
 
-	self extraInstanceSpec: ByteSize! !
+	self extraInstanceSpec: _GUID_Size! !
 !OS.COM.CLSID class categoriesForMethods!
 fromProgID:!instance creation!public! !
 fromString:!instance creation!public! !

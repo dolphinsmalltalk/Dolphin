@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY_Size' -> 16r88.
 		'_OffsetOf_AddrCount' -> 16r0.
 		'_OffsetOf_AddrList' -> 16r8
 	}!
@@ -67,6 +68,9 @@ AddrList:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class methodsFor!
 
+byteSize
+	^_HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY_Size!
+
 defineFields
 	"Define the fields of the HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY structure.
 
@@ -87,6 +91,7 @@ defineFields
 getFieldNames
 	^#(#AddrCount #AddrList)! !
 !WinHttpServer.HTTP_SERVICE_CONFIG_IP_LISTEN_QUERY class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

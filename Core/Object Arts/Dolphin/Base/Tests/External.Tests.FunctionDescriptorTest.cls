@@ -132,6 +132,7 @@ testSmokeTest
 testStruct4
 	| valueTypes |
 	self assert: DWORD byteSize equals: 4.
+	self assert: DWORD basicByteSize equals: 4.
 	valueTypes := self externalTypes.
 	
 	[FunctionDescriptor.ValueTypes := LookupTable with: 'void' -> 0.
@@ -143,6 +144,7 @@ testStruct4
 
 testStruct8
 	self assert: FILETIME byteSize equals: 8.
+	self assert: FILETIME basicByteSize equals: 8.
 	self
 		parseStructArg: FILETIME
 		valueType: ExtCallArgSTRUCT8

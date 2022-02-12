@@ -181,13 +181,13 @@ drawThemeParentBackground: hwnd hdc: hDC prc: prc
 
 	| offset parent oldOrg |
 	parent := User32 getParent: hwnd.
-	offset := POINTL new.
+	offset := POINTL newBuffer.
 	User32
 		mapWindowPoints: hwnd
 		hWndTo: parent
 		lpPoints: offset
 		cPoints: 1.
-	oldOrg := POINTL new.
+	oldOrg := POINTL newBuffer.
 	(Gdi32
 		offsetWindowOrgEx: hDC
 		nXOrg: offset x

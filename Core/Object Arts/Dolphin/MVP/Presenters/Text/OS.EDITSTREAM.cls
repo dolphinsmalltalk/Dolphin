@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.EDITSTREAM'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EDITSTREAM_Size' -> 16rC.
 		'_OffsetOf_dwCookie' -> 16r0.
 		'_OffsetOf_dwError' -> 16r4.
 		'_OffsetOf_pfnCallback' -> 16r8
@@ -24,6 +25,9 @@ pfnCallback:!**compiled accessors**!public! !
 !
 
 !OS.EDITSTREAM class methodsFor!
+
+byteSize
+	^_EDITSTREAM_Size!
 
 defineFields
 	"Define the fields of the Win32 EDITSTREAM structure.
@@ -44,6 +48,7 @@ defineFields
 getFieldNames
 	^#(#pfnCallback)! !
 !OS.EDITSTREAM class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

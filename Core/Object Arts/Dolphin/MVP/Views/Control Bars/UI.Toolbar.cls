@@ -575,7 +575,7 @@ onViewCreated
 	Finish the job and install the known ToolbarItems"
 
 	super onViewCreated.
-	self tbButtonStructSize: TBBUTTON byteSize.
+	self tbButtonStructSize: TBBUTTON._TBBUTTON_Size.
 	bitmapsStart := LookupTable new.
 	self changeButtonSize: [self tbSetBitmapSize: self actualBitmapSize].
 	#todo.	"Store extended style in an inst. var (appear to be some unused?) and provide accessors/mode settings"
@@ -689,7 +689,7 @@ tbGetButton: anInteger
 	"Private - Answer a TBBUTTON describing the button with anInteger index in the receiver."
 
 	| tbButton |
-	tbButton := TBBUTTON new.
+	tbButton := TBBUTTON newBuffer.
 	^(self
 		sendMessage: TB_GETBUTTON
 		wParam: anInteger - 1
@@ -718,7 +718,7 @@ tbGetIdealHeight
 	"Private - Answer the ideal height for the receiver."
 
 	| size |
-	size := SIZEL new.
+	size := SIZEL newBuffer.
 	self
 		sendMessage: TB_GETIDEALSIZE
 		wParam: true asParameter
@@ -729,7 +729,7 @@ tbGetIdealWidth
 	"Private - Answer the ideal width for the receiver."
 
 	| size |
-	size := SIZEL new.
+	size := SIZEL newBuffer.
 	self
 		sendMessage: TB_GETIDEALSIZE
 		wParam: false asParameter
@@ -741,7 +741,7 @@ tbGetItemRect: anInteger
 	<Integer> index."
 
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	(self
 		sendMessage: TB_GETITEMRECT
 		wParam: anInteger
@@ -753,7 +753,7 @@ tbGetMaxSize
 	"Private - Answer the maximum extent for the receiver."
 
 	| size |
-	size := POINTL new.
+	size := POINTL newBuffer.
 	self
 		sendMessage: TB_GETMAXSIZE
 		wParam: 0
@@ -773,7 +773,7 @@ tbGetRect: id
 	<Integer> command id."
 
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	(self
 		sendMessage: TB_GETRECT
 		wParam: id
@@ -971,7 +971,7 @@ tbSetRows: anIntegerRows large: largerBoolean
 	Answer a Rectangle marking the new boundary of the receiver."
 
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	self
 		sendMessage: TB_SETROWS
 		wParam: (anIntegerRows bitOr: largerBoolean asParameter << 16)
@@ -1029,7 +1029,7 @@ wmCreate: message wParam: wParam lParam: lParam
 	"Private - As we create the receiver with the standard CreateWindowEx call we have to inform
 	Windows of the size of TBBUTTON struct that we are using before we can add any buttons."
 
-	self sendMessage: TB_BUTTONSTRUCTSIZE wParam: TBBUTTON byteSize.
+	self sendMessage: TB_BUTTONSTRUCTSIZE wParam: TBBUTTON._TBBUTTON_Size.
 	^super
 		wmCreate: message
 		wParam: wParam

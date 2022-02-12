@@ -6,6 +6,7 @@ WinHttpServer.HttpQosSetting subclass: #'WinHttpServer.HTTP_CONNECTION_LIMIT_INF
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_CONNECTION_LIMIT_INFO_Size' -> 16r8.
 		'_OffsetOf_MaxConnections' -> 16r4
 	}!
 WinHttpServer.HTTP_CONNECTION_LIMIT_INFO guid: (Core.GUID fromString: '{6fca5840-1e00-4065-ad55-203bd079a117}')!
@@ -60,6 +61,9 @@ value:!accessing!public! !
 
 !WinHttpServer.HTTP_CONNECTION_LIMIT_INFO class methodsFor!
 
+byteSize
+	^_HTTP_CONNECTION_LIMIT_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_CONNECTION_LIMIT_INFO structure.
 
@@ -88,6 +92,7 @@ maxConnections: anInteger
 qosType
 	^HttpQosSettingTypeConnectionLimit! !
 !WinHttpServer.HTTP_CONNECTION_LIMIT_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 maxConnections:!public! !

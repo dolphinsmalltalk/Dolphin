@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.IP_PER_ADAPTER_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IP_PER_ADAPTER_INFO_Size' -> 16r34.
 		'_OffsetOf_AutoconfigActive' -> 16r4.
 		'_OffsetOf_AutoconfigEnabled' -> 16r0.
 		'_OffsetOf_CurrentDnsServer' -> 16r8.
@@ -59,6 +60,9 @@ DnsServerList!**compiled accessors**!public! !
 
 !OS.IP_PER_ADAPTER_INFO class methodsFor!
 
+byteSize
+	^_IP_PER_ADAPTER_INFO_Size!
+
 defineFields
 	"Define the fields of the IP_PER_ADAPTER_INFO structure.
 		IP_PER_ADAPTER_INFO compileDefinition
@@ -94,6 +98,7 @@ defineFields
 getFieldNames
 	^#(#AutoconfigEnabled #AutoconfigActive #CurrentDnsServer #DnsServerList)! !
 !OS.IP_PER_ADAPTER_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

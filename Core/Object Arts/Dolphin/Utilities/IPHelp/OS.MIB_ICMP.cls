@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.MIB_ICMP'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_ICMP_Size' -> 16r68.
 		'_OffsetOf_stats' -> 16r0
 	}!
 OS.MIB_ICMP guid: (Core.GUID fromString: '{2ca8ee35-4b8c-48a7-bc4f-1bcbf2db2be2}')!
@@ -35,6 +36,9 @@ stats!**compiled accessors**!public! !
 
 !OS.MIB_ICMP class methodsFor!
 
+byteSize
+	^_MIB_ICMP_Size!
+
 defineFields
 	"Define the fields of the MIB_ICMP structure.
 		MIB_ICMP compileDefinition
@@ -56,6 +60,7 @@ defineFields
 getFieldNames
 	^#(#stats)! !
 !OS.MIB_ICMP class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

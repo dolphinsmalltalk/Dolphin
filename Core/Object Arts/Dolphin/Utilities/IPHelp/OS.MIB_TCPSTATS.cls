@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.MIB_TCPSTATS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_TCPSTATS_Size' -> 16r3C.
 		'_OffsetOf_dwActiveOpens' -> 16r10.
 		'_OffsetOf_dwAttemptFails' -> 16r18.
 		'_OffsetOf_dwCurrEstab' -> 16r20.
@@ -147,6 +148,9 @@ dwRtoMin!**compiled accessors**!public! !
 
 !OS.MIB_TCPSTATS class methodsFor!
 
+byteSize
+	^_MIB_TCPSTATS_Size!
+
 defineFields
 	"Define the fields of the MIB_TCPSTATS structure.
 		MIB_TCPSTATS compileDefinition
@@ -222,6 +226,7 @@ defineFields
 getFieldNames
 	^#(#dwRtoAlgorithm #dwRtoMin #dwRtoMax #dwMaxConn #dwActiveOpens #dwPassiveOpens #dwAttemptFails #dwEstabResets #dwCurrEstab #dwInSegs #dwOutSegs #dwRetransSegs #dwInErrs #dwOutRsts #dwNumConns)! !
 !OS.MIB_TCPSTATS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

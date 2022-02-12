@@ -6,6 +6,7 @@ WinHttpServer.HTTP_RESPONSE_V1 subclass: #'WinHttpServer.HTTP_RESPONSE_V2'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_RESPONSE_V2_Size' -> 16r120.
 		'_OffsetOf_pResponseInfo' -> 16r11C.
 		'_OffsetOf_ResponseInfoCount' -> 16r118
 	}!
@@ -62,6 +63,9 @@ ResponseInfoCount:!**compiled accessors**!private! !
 
 !WinHttpServer.HTTP_RESPONSE_V2 class methodsFor!
 
+byteSize
+	^_HTTP_RESPONSE_V2_Size!
+
 defineFields
 	"Define the fields of the HTTP_RESPONSE_V2 structure.
 
@@ -84,6 +88,7 @@ defineFields
 getFieldNames
 	^#(#Flags #Version #StatusCode #ReasonLength #pReason #Headers #EntityChunkCount #pEntityChunks #ResponseInfoCount #pResponseInfo)! !
 !WinHttpServer.HTTP_RESPONSE_V2 class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -27,7 +27,7 @@ asObject
 asPoint
 	"Answer a Point created that matches the receiver"
 
-	^self x @ self y!
+	^Graphics.Point x: self x y: self y!
 
 asUIntPtr
 	"Answer the receiver in a form suitable for passing or returning 

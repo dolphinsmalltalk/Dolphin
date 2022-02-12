@@ -283,7 +283,8 @@ OS.Win32Structure subclass: #'OS.TBADDBITMAP'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_hInst' -> 16r0.
-		'_OffsetOf_nID' -> 16r4
+		'_OffsetOf_nID' -> 16r4.
+		'_TBADDBITMAP_Size' -> 16r8
 	}!
 OS.Win32Structure subclass: #'OS.TBBUTTON'
 	instanceVariableNames: ''
@@ -296,7 +297,8 @@ OS.Win32Structure subclass: #'OS.TBBUTTON'
 		'_OffsetOf_fsStyle' -> 16r9.
 		'_OffsetOf_iBitmap' -> 16r0.
 		'_OffsetOf_idCommand' -> 16r4.
-		'_OffsetOf_iString' -> 16r10
+		'_OffsetOf_iString' -> 16r10.
+		'_TBBUTTON_Size' -> 16r14
 	}!
 OS.Win32Structure subclass: #'OS.TBBUTTONINFOW'
 	instanceVariableNames: ''
@@ -313,7 +315,8 @@ OS.Win32Structure subclass: #'OS.TBBUTTONINFOW'
 		'_OffsetOf_idCommand' -> 16r8.
 		'_OffsetOf_iImage' -> 16rC.
 		'_OffsetOf_lParam' -> 16r14.
-		'_OffsetOf_pszText' -> 16r18
+		'_OffsetOf_pszText' -> 16r18.
+		'_TBBUTTONINFOW_Size' -> 16r20
 	}!
 OS.NMHDR subclass: #'OS.NMMOUSE'
 	instanceVariableNames: ''
@@ -321,6 +324,7 @@ OS.NMHDR subclass: #'OS.NMMOUSE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMMOUSE_Size' -> 16r20.
 		'_OffsetOf_dwHitInfo' -> 16r1C.
 		'_OffsetOf_dwItemData' -> 16r10.
 		'_OffsetOf_dwItemSpec' -> 16rC.
@@ -332,6 +336,7 @@ OS.NMHDR subclass: #'OS.NMTBDISPINFOW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMTBDISPINFOW_Size' -> 16r24.
 		'_OffsetOf_cchText' -> 16r20.
 		'_OffsetOf_dwMask' -> 16rC.
 		'_OffsetOf_idCommand' -> 16r10.
@@ -345,6 +350,7 @@ OS.NMHDR subclass: #'OS.NMTOOLBARW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMTOOLBARW_Size' -> 16r2C.
 		'_OffsetOf_cchText' -> 16r24.
 		'_OffsetOf_iItem' -> 16rC.
 		'_OffsetOf_pszText' -> 16r28.

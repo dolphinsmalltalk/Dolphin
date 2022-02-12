@@ -7,7 +7,8 @@ OS.COM.OLEStructure subclass: #'OS.COM.PARAMDESCEX'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_cBytes' -> 16r0.
-		'_OffsetOf_varDefaultValue' -> 16r8
+		'_OffsetOf_varDefaultValue' -> 16r8.
+		'_PARAMDESCEX_Size' -> 16r18
 	}!
 OS.COM.PARAMDESCEX guid: (Core.GUID fromString: '{c06f3b61-0868-11d3-93af-00a024ca708a}')!
 OS.COM.PARAMDESCEX comment: 'PARAMDESCEX is an <ExternalStructure> to represent the AX Automation PARAMDESCEX structure.
@@ -31,6 +32,9 @@ varDefaultValue!**compiled accessors**!public! !
 
 !OS.COM.PARAMDESCEX class methodsFor!
 
+byteSize
+	^_PARAMDESCEX_Size!
+
 defineFields
 	"Define the fields of the PARAMDESCEX structure.
 	Note that due to Zp8 packing this is actually a 24 byte structure!!
@@ -51,6 +55,7 @@ defineFields
 getFieldNames
 	^#(#varDefaultValue)! !
 !OS.COM.PARAMDESCEX class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

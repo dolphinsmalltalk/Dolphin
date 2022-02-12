@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IP_UNIDIRECTIONAL_ADAPTER_ADDRESS_Size' -> 16r8.
 		'_OffsetOf_Address' -> 16r4.
 		'_OffsetOf_NumAdapters' -> 16r0
 	}!
@@ -55,6 +56,9 @@ NumAdapters!**compiled accessors**!public! !
 
 !OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class methodsFor!
 
+byteSize
+	^_IP_UNIDIRECTIONAL_ADAPTER_ADDRESS_Size!
+
 defineFields
 	"Define the fields of the IP_UNIDIRECTIONAL_ADAPTER_ADDRESS structure.
 		IP_UNIDIRECTIONAL_ADAPTER_ADDRESS compileDefinition
@@ -74,6 +78,7 @@ defineFields
 getFieldNames
 	^#(#NumAdapters #Address)! !
 !OS.IP_UNIDIRECTIONAL_ADAPTER_ADDRESS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

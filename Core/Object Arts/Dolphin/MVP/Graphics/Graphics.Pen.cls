@@ -34,7 +34,7 @@ handle: anExternalHandle
 	"Private - Set the handle for the receiver and query its logical info."
 
 	super handle: anExternalHandle.
-	logPen := LOGPEN new.
+	logPen := LOGPEN newBuffer.
 	self getData: logPen!
 
 logPen: aLOGPEN 

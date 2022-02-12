@@ -1625,7 +1625,7 @@ setItem: anObject indentation: anInteger
 	(self handleFromObject: anObject)
 		ifNotNil: 
 			[:objectIndex |
-			anLvItem := LVITEMW new
+			anLvItem := LVITEMW newBuffer
 						iItem: objectIndex - 1;
 						indent: anInteger;
 						yourself.

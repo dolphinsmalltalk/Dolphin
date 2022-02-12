@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRELLIPSE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRELLIPSE_Size' -> 16r18.
 		'_OffsetOf_rclBox' -> 16r8
 	}!
 OS.EMRELLIPSE guid: (Core.GUID fromString: '{23d57ddc-4a1e-4927-ae53-094c3485ebb1}')!
@@ -31,13 +32,13 @@ rclBox
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBox!
 
-rclBox: aRECT
-	"Set the receiver's 'rclBox' field to the value of the argument, aRECT"
+rclBox: aRECTL
+	"Set the receiver's 'rclBox' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBox + 1)
-		to: ##(_OffsetOf_rclBox + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBox + RECTL._RECTL_Size)
 		startingAt: 1! !
 !OS.EMRELLIPSE categoriesForMethods!
 rclBox!**compiled accessors**!public! !
@@ -45,6 +46,9 @@ rclBox:!**compiled accessors**!public! !
 !
 
 !OS.EMRELLIPSE class methodsFor!
+
+byteSize
+	^_EMRELLIPSE_Size!
 
 defineFields
 	"Define the fields of the EMRELLIPSE structure.
@@ -73,6 +77,7 @@ iTypes
 
 	^{EMR_ELLIPSE. EMR_RECTANGLE}! !
 !OS.EMRELLIPSE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

@@ -6,6 +6,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.CONNECTDATA'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CONNECTDATA_Size' -> 16r8.
 		'_OffsetOf_dwCookie' -> 16r4.
 		'_OffsetOf_punk' -> 16r0
 	}!
@@ -46,6 +47,9 @@ punk:!**compiled accessors**!public! !
 
 !OS.COM.CONNECTDATA class methodsFor!
 
+byteSize
+	^_CONNECTDATA_Size!
+
 defineFields
 	"Define the fields of the CONNECTDATA structure.
 		CONNECTDATA compileDefinition
@@ -64,6 +68,7 @@ defineFields
 getFieldNames
 	^#(#punk #dwCookie)! !
 !OS.COM.CONNECTDATA class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

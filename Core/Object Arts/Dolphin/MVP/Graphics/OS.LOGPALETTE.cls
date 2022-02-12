@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.LOGPALETTE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LOGPALETTE_Size' -> 16r404.
 		'_OffsetOf_palNumEntries' -> 16r2.
 		'_OffsetOf_palPalEntry' -> 16r4.
 		'_OffsetOf_palVersion' -> 16r0
@@ -67,6 +68,9 @@ palVersion:!**compiled accessors**!public! !
 
 !OS.LOGPALETTE class methodsFor!
 
+byteSize
+	^_LOGPALETTE_Size!
+
 defineFields
 	"Define the fields of the LOGPALETTE structure.
 
@@ -103,6 +107,7 @@ new
 		palNumEntries: 256;
 		yourself! !
 !OS.LOGPALETTE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 new!instance creation!public! !

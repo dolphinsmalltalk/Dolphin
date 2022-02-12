@@ -6,6 +6,7 @@ OS.NMHDR subclass: #'OS.ENLINK'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_ENLINK_Size' -> 16r20.
 		'_OffsetOf_chrg' -> 16r18.
 		'_OffsetOf_lParam' -> 16r14.
 		'_OffsetOf_msg' -> 16rC.
@@ -60,6 +61,9 @@ wParam!**compiled accessors**!public! !
 
 !OS.ENLINK class methodsFor!
 
+byteSize
+	^_ENLINK_Size!
+
 defineFields
 	"Define the fields of the ENLINK structure.
 
@@ -85,6 +89,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #msg #wParam #lParam #chrg)! !
 !OS.ENLINK class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

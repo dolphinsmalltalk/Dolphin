@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_V1'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_REQUEST_V1_Size' -> 16r1D0.
 		'_OffsetOf_Address' -> 16r4C.
 		'_OffsetOf_BytesReceived' -> 16r1B0.
 		'_OffsetOf_ConnectionId' -> 16r8.
@@ -73,7 +74,7 @@ Address: aStructureArrayOfSOCKADDR
 	"Set the receiver's 'Address' field to the value of the argument, aStructureArrayOfSOCKADDR"
 
 	| size |
-	size := aStructureArrayOfSOCKADDR byteSize min: ##(2 * SOCKADDR basicByteSize).
+	size := aStructureArrayOfSOCKADDR byteSize min: ##(2 * SOCKADDR._SOCKADDR_Size).
 	aStructureArrayOfSOCKADDR
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_Address + 1)
@@ -111,7 +112,7 @@ CookedUrl: aHTTP_COOKED_URL
 	aHTTP_COOKED_URL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_CookedUrl + 1)
-		to: ##(_OffsetOf_CookedUrl + HTTP_COOKED_URL basicByteSize)
+		to: ##(_OffsetOf_CookedUrl + HTTP_COOKED_URL._HTTP_COOKED_URL_Size)
 		startingAt: 1!
 
 EntityChunkCount
@@ -145,7 +146,7 @@ Headers: aHTTP_REQUEST_HEADERS
 	aHTTP_REQUEST_HEADERS
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_Headers + 1)
-		to: ##(_OffsetOf_Headers + HTTP_REQUEST_HEADERS basicByteSize)
+		to: ##(_OffsetOf_Headers + HTTP_REQUEST_HEADERS._HTTP_REQUEST_HEADERS_Size)
 		startingAt: 1!
 
 maxPrint
@@ -313,7 +314,7 @@ Version: aHTTP_VERSION
 	aHTTP_VERSION
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_Version + 1)
-		to: ##(_OffsetOf_Version + HTTP_VERSION basicByteSize)
+		to: ##(_OffsetOf_Version + HTTP_VERSION._HTTP_VERSION_Size)
 		startingAt: 1! !
 !WinHttpServer.HTTP_REQUEST_V1 categoriesForMethods!
 Address!**compiled accessors**!public! !
@@ -360,6 +361,9 @@ Version:!**compiled accessors**!public! !
 !
 
 !WinHttpServer.HTTP_REQUEST_V1 class methodsFor!
+
+byteSize
+	^_HTTP_REQUEST_V1_Size!
 
 defineFields
 	"Define the fields of the HTTP_REQUEST_V1 structure.
@@ -413,6 +417,7 @@ defineFields
 getFieldNames
 	^#(#Flags #ConnectionId #RequestId #UrlContext #Version #Verb #UnknownVerbLength #RawUrlLength #pUnknownVerb #pRawUrl #CookedUrl #Address #Headers #BytesReceived #EntityChunkCount #pEntityChunks #RawConnectionId #pSslInfo)! !
 !WinHttpServer.HTTP_REQUEST_V1 class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -6,6 +6,7 @@ OS.CommonDialogStructure subclass: #'OS.CHOOSEFONTW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CHOOSEFONTW_Size' -> 16r3C.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_flags' -> 16r14.
 		'_OffsetOf_hDC' -> 16r8.
@@ -129,6 +130,9 @@ rgbColors:!**compiled accessors**!public! !
 
 !OS.CHOOSEFONTW class methodsFor!
 
+byteSize
+	^_CHOOSEFONTW_Size!
+
 defineFields
 	"Define the fields of the Win32 CHOOSEFONTW structure.
 
@@ -172,6 +176,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #hwndOwner #hDC #lpLogFont #iPointSize #flags #rgbColors #lpfnHook #lpszStyle #nFontType #nSizeMin #nSizeMax)! !
 !OS.CHOOSEFONTW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

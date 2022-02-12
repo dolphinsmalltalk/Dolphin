@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.LVBKIMAGEW'
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LVBKIMAGEW_Size' -> 16r18.
 		'_OffsetOf_cchImageMax' -> 16rC.
 		'_OffsetOf_hbm' -> 16r4.
 		'_OffsetOf_pszImage' -> 16r8.
@@ -157,6 +158,9 @@ yOffsetPercent:!**compiled accessors**!public! !
 
 !OS.LVBKIMAGEW class methodsFor!
 
+byteSize
+	^_LVBKIMAGEW_Size!
+
 defineFields
 	"Define the fields of the Win32 LVBKIMAGE structure
 		self compileDefinition
@@ -173,6 +177,7 @@ defineFields
 getFieldNames
 	^#(#ulFlags #hbm #pszImage #cchImageMax #xOffsetPercent #yOffsetPercent)! !
 !OS.LVBKIMAGEW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -512,8 +512,7 @@ byteSize: anInteger
 canUnderstand: aSymbol
 	^(super canUnderstand: aSymbol) or: 
 			[| size field |
-			size := aSymbol size.
-			(aSymbol at: size) == $:
+			(aSymbol at: (size := aSymbol size)) == $:
 				ifTrue: 
 					[field := self template lookup: (aSymbol copyFrom: 1 to: size - 1).
 					field notNil and: [field isWriteable]]
@@ -521,10 +520,12 @@ canUnderstand: aSymbol
 					[field := self template lookup: aSymbol.
 					field notNil and: [field isReadable]]]!
 
-changedByteSizeFrom: oldByteSize
+changedByteSizeFrom: anInteger
 	"Private - If the size of the receiver changes such that it fits into a different type for passing/returning structures by value, then we must recompile all existing referencing methods that might have a static literal snapshot of the byte size of the receiver."
 
-	oldByteSize ~= self byteSize ifFalse: [^self].
+	| newByteSize |
+	newByteSize := self basicByteSize.
+	anInteger ~= newByteSize ifFalse: [^self].
 	self recompileReferences!
 
 clear: addressOrBytes
@@ -580,7 +581,7 @@ defineTemplate
 	Implementation Note: We try and share a superclass template if we don't directly implement #defineFields in a particular class. This is a space saving measure, and is necessary because 'template' is a class instance variable."
 
 	| oldByteSize |
-	oldByteSize := self extraInstanceSpec.
+	oldByteSize := self basicByteSize.
 	self definesNewFields
 		ifTrue: 
 			[self
@@ -663,8 +664,8 @@ getFieldNames
 inheritTemplate
 	| ancestor |
 	ancestor := self superclass.
-	self byteSize: ancestor byteSize.
 	template := ancestor template.
+	self byteSize: ancestor byteSize.
 	alignment := ancestor alignment!
 
 init: buffer

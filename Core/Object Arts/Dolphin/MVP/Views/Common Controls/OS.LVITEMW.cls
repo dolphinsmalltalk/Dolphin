@@ -2,10 +2,11 @@
 
 OS.CCITEM subclass: #'OS.LVITEMW'
 	instanceVariableNames: ''
-	classVariableNames: 'CallbackPrototype'
+	classVariableNames: ''
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LVITEMW_Size' -> 16r3C.
 		'_OffsetOf_cchTextMax' -> 16r18.
 		'_OffsetOf_cColumns' -> 16r2C.
 		'_OffsetOf_dwState' -> 16rC.
@@ -19,7 +20,8 @@ OS.CCITEM subclass: #'OS.LVITEMW'
 		'_OffsetOf_piColFmt' -> 16r34.
 		'_OffsetOf_pszText' -> 16r14.
 		'_OffsetOf_puColumns' -> 16r30.
-		'_OffsetOf_stateMask' -> 16r10
+		'_OffsetOf_stateMask' -> 16r10.
+		'CallbackPrototype' -> #[3 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 0 0 0 0 255 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
 	}!
 OS.LVITEMW guid: (Core.GUID fromString: '{87b4c620-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.LVITEMW comment: 'LVITEMW is an <ExternalStructure> class which represents the Windows common control structure of the same name.
@@ -152,9 +154,9 @@ iStateImage
 iStateImage: anInteger
 	"Set receiver's state image field to anInteger. Any other state is discarded."
 
-	self
-		dwState: (anInteger bitShift: 12);
-		stateMask: LVIS_STATEIMAGEMASK!
+	bytes
+		dwordAtOffset: _OffsetOf_dwState put: (anInteger bitShift: 12);
+		dwordAtOffset: _OffsetOf_stateMask put: LVIS_STATEIMAGEMASK!
 
 iSubItem
 	"Answer the <Integer> value of the receiver's 'iSubItem' field."
@@ -313,6 +315,9 @@ allCallbacks
 		bytes: CallbackPrototype shallowCopy;
 		yourself!
 
+byteSize
+	^_LVITEMW_Size!
+
 defineFields
 	"Define the fields of the LVITEMW structure.
 
@@ -390,9 +395,13 @@ getFieldNames
 	^#(#mask #iItem #iSubItem #dwState #stateMask #pszText #cchTextMax #iImage #lParam #iIndent #iGroupId #cColumns #puColumns #piColFmt #iGroup)!
 
 initialize
-	CallbackPrototype := self new allCallbacks; bytes! !
+	self addClassConstant: 'CallbackPrototype'
+		value: (self new
+				allCallbacks;
+				bytes)! !
 !OS.LVITEMW class categoriesForMethods!
 allCallbacks!public! !
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 initialize!development!public! !

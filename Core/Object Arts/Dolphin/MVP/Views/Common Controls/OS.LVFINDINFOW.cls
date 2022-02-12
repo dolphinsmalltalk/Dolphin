@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.LVFINDINFOW'
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LVFINDINFOW_Size' -> 16r18.
 		'_OffsetOf_flags' -> 16r0.
 		'_OffsetOf_lParam' -> 16r8.
 		'_OffsetOf_psz' -> 16r4.
@@ -56,6 +57,9 @@ vkDirection!**compiled accessors**!public! !
 
 !OS.LVFINDINFOW class methodsFor!
 
+byteSize
+	^_LVFINDINFOW_Size!
+
 defineFields
 	"Define the fields of the Win32 LVFINDINFO structure.
 		self compileDefinition
@@ -71,6 +75,7 @@ defineFields
 getFieldNames
 	^#(#flags #psz #lParam #pt #vkDirection)! !
 !OS.LVFINDINFOW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

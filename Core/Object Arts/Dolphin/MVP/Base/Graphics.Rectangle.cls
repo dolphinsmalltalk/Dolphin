@@ -444,7 +444,7 @@ scaleBy: delta
 subtract: aRectangle
 	| rect |
 	#todo.	"Implememt in Smalltalk"
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	User32
 		subtractRect: rect
 		lprcSrc1: self asParameter

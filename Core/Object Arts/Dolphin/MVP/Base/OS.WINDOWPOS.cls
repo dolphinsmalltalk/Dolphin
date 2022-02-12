@@ -12,7 +12,8 @@ OS.Win32Structure subclass: #'OS.WINDOWPOS'
 		'_OffsetOf_hwnd' -> 16r0.
 		'_OffsetOf_hwndInsertAfter' -> 16r4.
 		'_OffsetOf_x' -> 16r8.
-		'_OffsetOf_y' -> 16rC
+		'_OffsetOf_y' -> 16rC.
+		'_WINDOWPOS_Size' -> 16r1C
 	}!
 OS.WINDOWPOS guid: (Core.GUID fromString: '{cd69a071-3606-11d3-93bd-00a024ca708a}')!
 OS.WINDOWPOS comment: ''!
@@ -87,6 +88,9 @@ y!**compiled accessors**!public! !
 
 !OS.WINDOWPOS class methodsFor!
 
+byteSize
+	^_WINDOWPOS_Size!
+
 defineFields
 	"Define the layout of the Win32 WINDOWPOS structure.
 
@@ -114,6 +118,7 @@ defineFields
 getFieldNames
 	^#(#hwndInsertAfter #x #y #cx #cy #flags)! !
 !OS.WINDOWPOS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_CACHE_POLICY'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_CACHE_POLICY_Size' -> 16r8.
 		'_OffsetOf_Policy' -> 16r0.
 		'_OffsetOf_SecondsToLive' -> 16r4
 	}!
@@ -72,6 +73,9 @@ SecondsToLive:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_CACHE_POLICY class methodsFor!
 
+byteSize
+	^_HTTP_CACHE_POLICY_Size!
+
 defineFields
 	"Define the fields of the HTTP_CACHE_POLICY structure.
 
@@ -115,6 +119,7 @@ timeToLive: anInteger
 userInvalidates
 	^UserInvalidates! !
 !WinHttpServer.HTTP_CACHE_POLICY class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 initialize!public! !

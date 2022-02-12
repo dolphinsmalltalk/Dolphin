@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.CIEXYZTRIPLE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CIEXYZTRIPLE_Size' -> 16r24.
 		'_OffsetOf_ciexyzBlue' -> 16r18.
 		'_OffsetOf_ciexyzGreen' -> 16rC.
 		'_OffsetOf_ciexyzRed' -> 16r0
@@ -40,7 +41,7 @@ ciexyzBlue: aCIEXYZ
 	aCIEXYZ
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_ciexyzBlue + 1)
-		to: ##(_OffsetOf_ciexyzBlue + CIEXYZ basicByteSize)
+		to: ##(_OffsetOf_ciexyzBlue + CIEXYZ._CIEXYZ_Size)
 		startingAt: 1!
 
 ciexyzGreen
@@ -54,7 +55,7 @@ ciexyzGreen: aCIEXYZ
 	aCIEXYZ
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_ciexyzGreen + 1)
-		to: ##(_OffsetOf_ciexyzGreen + CIEXYZ basicByteSize)
+		to: ##(_OffsetOf_ciexyzGreen + CIEXYZ._CIEXYZ_Size)
 		startingAt: 1!
 
 ciexyzRed
@@ -68,7 +69,7 @@ ciexyzRed: aCIEXYZ
 	aCIEXYZ
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_ciexyzRed + 1)
-		to: ##(_OffsetOf_ciexyzRed + CIEXYZ basicByteSize)
+		to: ##(_OffsetOf_ciexyzRed + CIEXYZ._CIEXYZ_Size)
 		startingAt: 1! !
 !OS.CIEXYZTRIPLE categoriesForMethods!
 ciexyzBlue!**compiled accessors**!public! !
@@ -80,6 +81,9 @@ ciexyzRed:!**compiled accessors**!public! !
 !
 
 !OS.CIEXYZTRIPLE class methodsFor!
+
+byteSize
+	^_CIEXYZTRIPLE_Size!
 
 defineFields
 	"Define the fields of the CIEXYZTRIPLE structure.
@@ -109,6 +113,7 @@ defineFields
 getFieldNames
 	^#(#ciexyzRed #ciexyzGreen #ciexyzBlue)! !
 !OS.CIEXYZTRIPLE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

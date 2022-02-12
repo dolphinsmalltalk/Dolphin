@@ -125,7 +125,7 @@ pageSize
 	"Answer the page size of the receiver."
 
 	| struct |
-	struct := SCROLLINFO new
+	struct := SCROLLINFO newBuffer
 				maskIn: SIF_PAGE;
 				yourself.
 	self getScrollInfo: struct.
@@ -134,7 +134,7 @@ pageSize
 pageSize: page
 	"Set the page size of the receiver."
 
-	self setScrollInfo: (SCROLLINFO new
+	self setScrollInfo: (SCROLLINFO newBuffer
 				page: page;
 				yourself)!
 
@@ -142,7 +142,7 @@ range
 	"Answer the Interval range of the receiver."
 
 	| struct |
-	struct := SCROLLINFO new
+	struct := SCROLLINFO newBuffer
 				maskIn: SIF_RANGE;
 				yourself.
 	self getScrollInfo: struct.
@@ -151,7 +151,7 @@ range
 range: rangeInterval
 	"Set the range of the receiver to rangeInterval."
 
-	self setScrollInfo: (SCROLLINFO new
+	self setScrollInfo: (SCROLLINFO newBuffer
 				range: rangeInterval;
 				yourself).
 	self refreshContents!
@@ -161,7 +161,7 @@ scrollPosition
 	to its range rather than spatial position."
 
 	| struct |
-	struct := SCROLLINFO new
+	struct := SCROLLINFO newBuffer
 				maskIn: SIF_POS;
 				yourself.
 	self getScrollInfo: struct.
@@ -171,7 +171,7 @@ scrollPosition: positionInteger
 	"Private - Set the scroll position of the receiver. This is an Integer within
 	the scrollRange of the receiver."
 
-	self setScrollInfo: (SCROLLINFO new
+	self setScrollInfo: (SCROLLINFO newBuffer
 				pos: positionInteger;
 				yourself)!
 

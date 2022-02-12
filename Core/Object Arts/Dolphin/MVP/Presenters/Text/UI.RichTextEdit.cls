@@ -55,7 +55,7 @@ basicSelectionRange
 	this characteristic means that the range should NEVER be empty."
 
 	| charRange |
-	charRange := POINTL new.
+	charRange := POINTL newBuffer.
 	self
 		sendMessage: EM_EXGETSEL
 		wParam: 0
@@ -529,7 +529,7 @@ positionOfChar: anInteger
 	within the receiver."
 
 	| pt |
-	pt := POINTL new.
+	pt := POINTL newBuffer.
 	self
 		sendMessage: EM_POSFROMCHAR
 		wParam: pt yourAddress

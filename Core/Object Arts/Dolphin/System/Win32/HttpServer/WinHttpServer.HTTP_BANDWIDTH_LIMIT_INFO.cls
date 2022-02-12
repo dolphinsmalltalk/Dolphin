@@ -6,6 +6,7 @@ WinHttpServer.HttpQosSetting subclass: #'WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_BANDWIDTH_LIMIT_INFO_Size' -> 16r8.
 		'_OffsetOf_MaxBandwidth' -> 16r4
 	}!
 WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO guid: (Core.GUID fromString: '{197b6874-68bb-4a22-b2fa-9e02210f4cd9}')!
@@ -60,6 +61,9 @@ value:!accessing!public! !
 
 !WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO class methodsFor!
 
+byteSize
+	^_HTTP_BANDWIDTH_LIMIT_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_BANDWIDTH_LIMIT_INFO structure.
 
@@ -86,6 +90,7 @@ maxBandwidth: anInteger
 qosType
 	^HttpQosSettingTypeBandwidth! !
 !WinHttpServer.HTTP_BANDWIDTH_LIMIT_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 maxBandwidth:!public! !

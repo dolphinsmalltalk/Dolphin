@@ -6,6 +6,7 @@ OS.MIB_TCPROW subclass: #'OS.MIB_TCPEXROW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_TCPEXROW_Size' -> 16r18.
 		'_OffsetOf_dwProcessId' -> 16r14
 	}!
 OS.MIB_TCPEXROW guid: (Core.GUID fromString: '{f2b03657-a3d2-486f-9d24-d597de178487}')!
@@ -40,6 +41,9 @@ dwProcessId!**compiled accessors**!public! !
 
 !OS.MIB_TCPEXROW class methodsFor!
 
+byteSize
+	^_MIB_TCPEXROW_Size!
+
 defineFields
 	"Define the fields of the MIB_TCPEXROW structure.
 		MIB_TCPEXROW compileDefinition
@@ -65,6 +69,7 @@ defineFields
 getFieldNames
 	^#(#dwState #dwLocalAddr #dwLocalPort #dwRemoteAddr #dwRemotePort #dwProcessId)! !
 !OS.MIB_TCPEXROW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

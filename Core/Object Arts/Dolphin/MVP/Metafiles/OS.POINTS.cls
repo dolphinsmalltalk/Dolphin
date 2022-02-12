@@ -7,7 +7,8 @@ External.POINT subclass: #'OS.POINTS'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_x' -> 16r0.
-		'_OffsetOf_y' -> 16r2
+		'_OffsetOf_y' -> 16r2.
+		'_POINTS_Size' -> 16r4
 	}!
 OS.POINTS guid: (Core.GUID fromString: '{3278b910-3376-47e3-be99-02afe78a6230}')!
 OS.POINTS comment: '<POINTS> is an <ExternalStructure> class to wrap the struct ''Win32.POINTS'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
@@ -71,6 +72,9 @@ y:!**compiled accessors**!public! !
 
 !OS.POINTS class methodsFor!
 
+byteSize
+	^_POINTS_Size!
+
 defineFields
 	"Define the fields of the POINTS structure.
 
@@ -88,11 +92,12 @@ defineFields
 		defineField: #y type: SWORDField new beOverride!
 
 x: x y: y
-	^self basicNew bytes: ((ByteArray newFixed: 4)
+	^self basicNew bytes: ((ByteArray newFixed: _POINTS_Size)
 				swordAtOffset: _OffsetOf_x put: x;
 				swordAtOffset: _OffsetOf_y put: y;
 				yourself)! !
 !OS.POINTS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 x:y:!instance creation!public! !
 !

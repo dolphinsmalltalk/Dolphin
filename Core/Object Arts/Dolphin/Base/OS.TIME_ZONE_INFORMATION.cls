@@ -13,6 +13,7 @@ OS.Win32Structure subclass: #'OS.TIME_ZONE_INFORMATION'
 		'_OffsetOf_standardBias' -> 16r54.
 		'_OffsetOf_standardDate' -> 16r44.
 		'_OffsetOf_standardName' -> 16r4.
+		'_TIME_ZONE_INFORMATION_Size' -> 16rAC.
 		'TIME_ZONE_ID_DAYLIGHT' -> 16r2.
 		'TIME_ZONE_ID_STANDARD' -> 16r1.
 		'TIME_ZONE_ID_UNKNOWN' -> 16r0
@@ -123,6 +124,9 @@ zoneId:!accessing!private! !
 
 !OS.TIME_ZONE_INFORMATION class methodsFor!
 
+byteSize
+	^_TIME_ZONE_INFORMATION_Size!
+
 defineFields
 	"Define the fields of the TIME_ZONE_INFORMATION structure.
 
@@ -167,6 +171,7 @@ defineFields
 getFieldNames
 	^#(#bias #standardName #standardDate #standardBias #daylightName #daylightDate #daylightBias)! !
 !OS.TIME_ZONE_INFORMATION class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

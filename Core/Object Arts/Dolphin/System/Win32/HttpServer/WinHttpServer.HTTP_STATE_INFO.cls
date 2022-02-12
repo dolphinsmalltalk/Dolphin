@@ -6,6 +6,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_STATE_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_STATE_INFO_Size' -> 16r8.
 		'_OffsetOf_State' -> 16r4
 	}!
 WinHttpServer.HTTP_STATE_INFO guid: (Core.GUID fromString: '{5dc84435-3eb8-42fe-94bf-25f253e612fd}')!
@@ -80,6 +81,9 @@ active
 		value: HttpEnabledStateActive;
 		yourself!
 
+byteSize
+	^_HTTP_STATE_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_STATE_INFO structure.
 
@@ -109,6 +113,7 @@ propertyId
 	^HttpServerStateProperty! !
 !WinHttpServer.HTTP_STATE_INFO class categoriesForMethods!
 active!instance creation!public! !
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 inactive!instance creation!public! !

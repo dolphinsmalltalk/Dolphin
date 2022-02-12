@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.MENUITEMINFOW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MENUITEMINFOW_Size' -> 16r30.
 		'_OffsetOf_cch' -> 16r28.
 		'_OffsetOf_dwItemData' -> 16r20.
 		'_OffsetOf_dwSize' -> 16r0.
@@ -30,7 +31,7 @@ basicText: aString
 	"Private - Set the menu item text to be the <readableString> argument, aString."
 
 	text := aString asUtf16String.
-	self dwTypeData: text
+	bytes uintPtrAtOffset: _OffsetOf_dwTypeData put: text yourAddress.
 	"It has never been necessary to set the text size - the documentation is explicit about this, stating 'cch is ignored when the content of a menu item is set by calling SetMenuItemInfo.'"
 	"self cch: text size"!
 
@@ -41,7 +42,7 @@ bitmap: anImage
 	"Note that the menu doesn't take ownership of the bitmap. We are responsible for making sure it stays around long enough, and is freed when no longer needed. The menu bitmaps are cached in the IconImageManager."
 
 	bitmap := anImage asMenuBitmap.
-	self hbmpItem: bitmap handle!
+	bytes uintPtrAtOffset: _OffsetOf_hbmpItem put: bitmap handle!
 
 cch: anInteger
 	"Set the receiver's 'cch' field to the value of the argument, anInteger"
@@ -118,13 +119,6 @@ hSubMenu: anExternalHandle
 
 	bytes uintPtrAtOffset: _OffsetOf_hSubMenu put: anExternalHandle!
 
-maskOut: anInteger
-	"Private - Reset the specified contents mask flags. This specifies to Windows which
-	information should be retrieved or set (i.e. which members of the structure are
-	to be populated or are valid)."
-
-	self fMask: (self fMask maskClear: anInteger)!
-
 menuItem: aMenuItem text: aStringOrNil state: stateInteger
 	"Private - Update the details for a normal menu item (i.e. the text, type flags, and state).
 	This message is used when dynamically updating menu items."
@@ -148,9 +142,9 @@ menuItem: aMenuItem text: aStringOrNil state: stateInteger
 type: anInteger
 	"Private - Set the fType field only. Used when creating menu items."
 
-	self 
-		fType: anInteger;
-		fMask: MIIM_FTYPE!
+	bytes
+		dwordAtOffset: _OffsetOf_fType put: anInteger;
+		dwordAtOffset: _OffsetOf_fMask put: MIIM_FTYPE!
 
 wID
 	"Answer the <Integer> value of the receiver's 'wID' field."
@@ -179,7 +173,6 @@ hbmpChecked:!**compiled accessors**!public! !
 hbmpItem:!**compiled accessors**!public! !
 hbmpUnchecked:!**compiled accessors**!public! !
 hSubMenu:!**compiled accessors**!public! !
-maskOut:!accessing!private! !
 menuItem:text:state:!accessing!private! !
 type:!accessing!private! !
 wID!**compiled accessors**!public! !
@@ -187,6 +180,9 @@ wID:!**compiled accessors**!public! !
 !
 
 !OS.MENUITEMINFOW class methodsFor!
+
+byteSize
+	^_MENUITEMINFOW_Size!
 
 defineFields
 	"Define the fields of the MENUITEMINFOW structure.
@@ -224,6 +220,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #fMask #fType #fState #wID #hSubMenu #hbmpChecked #hbmpUnchecked #dwItemData #dwTypeData #cch #hbmpItem)! !
 !OS.MENUITEMINFOW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

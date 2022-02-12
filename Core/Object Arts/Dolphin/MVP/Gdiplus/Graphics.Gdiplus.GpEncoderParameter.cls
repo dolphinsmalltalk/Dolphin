@@ -6,6 +6,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpEncoderParameter'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpEncoderParameter_Size' -> 16r1C.
 		'_OffsetOf_Guid' -> 16r0.
 		'_OffsetOf_NumberOfValues' -> 16r10.
 		'_OffsetOf_Type' -> 16r14.
@@ -42,7 +43,7 @@ Guid: aGUID
 	aGUID
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_Guid + 1)
-		to: ##(_OffsetOf_Guid + GUID basicByteSize)
+		to: ##(_OffsetOf_Guid + GUID._GUID_Size)
 		startingAt: 1!
 
 NumberOfValues
@@ -66,14 +67,14 @@ Type: anInteger
 	bytes dwordAtOffset: _OffsetOf_Type put: anInteger!
 
 Value
-	"Answer the <ExternalAddress> value of the receiver's 'Value' field."
+	"Answer the <Address> value of the receiver's 'Value' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_Value) asExternalAddress!
 
-Value: anExternalAddress
-	"Set the receiver's 'Value' field to the value of the argument, anExternalAddress"
+Value: anAddress
+	"Set the receiver's 'Value' field to the value of the argument, anAddress"
 
-	bytes uintPtrAtOffset: _OffsetOf_Value put: anExternalAddress! !
+	bytes uintPtrAtOffset: _OffsetOf_Value put: anAddress! !
 !Graphics.Gdiplus.GpEncoderParameter categoriesForMethods!
 Guid!**compiled accessors**!public! !
 Guid:!**compiled accessors**!public! !
@@ -86,6 +87,9 @@ Value:!**compiled accessors**!public! !
 !
 
 !Graphics.Gdiplus.GpEncoderParameter class methodsFor!
+
+byteSize
+	^_GpEncoderParameter_Size!
 
 defineFields
 	"Define the fields of the GpEncoderParameter structure.
@@ -118,6 +122,7 @@ defineFields
 getFieldNames
 	^#(#Guid #NumberOfValues #Type #Value)! !
 !Graphics.Gdiplus.GpEncoderParameter class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

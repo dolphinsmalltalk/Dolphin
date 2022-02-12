@@ -308,7 +308,7 @@ loopWhile: aBlock
 	system."
 
 	| msg activity |
-	msg := MSG new.
+	msg := MSG newBuffer.
 	activity := false.
 	
 	[
@@ -449,7 +449,7 @@ pumpMessages
 	Processor isActiveMain
 		ifTrue: 
 			[| msg |
-			msg := MSG new.
+			msg := MSG newBuffer.
 			self loopWhile: [self isInputReady: msg]]
 		ifFalse: [self prod]!
 

@@ -18,7 +18,7 @@ basicFree
 
 bounds: graphics
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	Gdip
 		gdipGetRegionBoundsI: self asParameter
 		graphics: graphics asParameter

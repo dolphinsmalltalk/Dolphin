@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.DOCINFOW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_DOCINFOW_Size' -> 16r14.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_fwType' -> 16r10.
 		'_OffsetOf_lpszDatatype' -> 16rC.
@@ -58,6 +59,9 @@ lpszOutput:!**compiled accessors**!public! !
 
 !OS.DOCINFOW class methodsFor!
 
+byteSize
+	^_DOCINFOW_Size!
+
 defineFields
 	"Define the fields of the Win32 DOCINFOW structure.
 
@@ -81,6 +85,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #lpszDocName #lpszOutput #lpszDatatype #fwType)! !
 !OS.DOCINFOW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

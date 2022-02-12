@@ -9,7 +9,8 @@ OS.Win32Structure subclass: #'OS.RGBQUAD'
 		'_OffsetOf_rgbBlue' -> 16r0.
 		'_OffsetOf_rgbGreen' -> 16r1.
 		'_OffsetOf_rgbRed' -> 16r2.
-		'_OffsetOf_rgbReserved' -> 16r3
+		'_OffsetOf_rgbReserved' -> 16r3.
+		'_RGBQUAD_Size' -> 16r4
 	}!
 OS.RGBQUAD guid: (Core.GUID fromString: '{87b4c60d-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.RGBQUAD comment: '<RGBQUAD> is an <ExternalStructure> class to wrap the struct ''Win.RGBQUAD'' from type information in the ''Windows API (ANSI)'' library.
@@ -77,6 +78,9 @@ rgbRed:!**compiled accessors**!public! !
 
 !OS.RGBQUAD class methodsFor!
 
+byteSize
+	^_RGBQUAD_Size!
+
 defineFields
 	"Define the fields of the RGBQUAD structure.
 		RGBQUAD compileDefinition
@@ -106,6 +110,7 @@ fromColor: aColor
 getFieldNames
 	^#(#rgbBlue #rgbGreen #rgbRed)! !
 !OS.RGBQUAD class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 fromColor:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !

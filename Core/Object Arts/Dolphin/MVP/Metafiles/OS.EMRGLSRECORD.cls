@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRGLSRECORD'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRGLSRECORD_Size' -> 16r10.
 		'_OffsetOf_cbData' -> 16r8.
 		'_OffsetOf_Data' -> 16rC
 	}!
@@ -63,6 +64,9 @@ Data:!**compiled accessors**!public! !
 
 !OS.EMRGLSRECORD class methodsFor!
 
+byteSize
+	^_EMRGLSRECORD_Size!
+
 defineFields
 	"Define the fields of the EMRGLSRECORD structure.
 
@@ -94,6 +98,7 @@ iTypes
 
 	^{EMR_GLSRECORD}! !
 !OS.EMRGLSRECORD class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

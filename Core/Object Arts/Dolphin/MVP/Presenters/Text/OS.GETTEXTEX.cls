@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.GETTEXTEX'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GETTEXTEX_Size' -> 16r14.
 		'_OffsetOf_cb' -> 16r0.
 		'_OffsetOf_codepage' -> 16r8.
 		'_OffsetOf_flags' -> 16r4.
@@ -45,6 +46,9 @@ flags:!**compiled accessors**!public! !
 
 !OS.GETTEXTEX class methodsFor!
 
+byteSize
+	^_GETTEXTEX_Size!
+
 defineFields
 	"Define the fields of the GETTEXTEX structure.
 		self compileDefinition
@@ -60,6 +64,7 @@ defineFields
 getFieldNames
 	^#(#cb #flags #codepage)! !
 !OS.GETTEXTEX class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

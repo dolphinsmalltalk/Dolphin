@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.MIB_IFNUMBER'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_IFNUMBER_Size' -> 16r4.
 		'_OffsetOf_dwValue' -> 16r0
 	}!
 OS.MIB_IFNUMBER guid: (Core.GUID fromString: '{9f523fa1-99d3-4b73-83a1-fbf779a77e02}')!
@@ -35,6 +36,9 @@ dwValue!**compiled accessors**!public! !
 
 !OS.MIB_IFNUMBER class methodsFor!
 
+byteSize
+	^_MIB_IFNUMBER_Size!
+
 defineFields
 	"Define the fields of the MIB_IFNUMBER structure.
 		MIB_IFNUMBER compileDefinition
@@ -52,6 +56,7 @@ defineFields
 getFieldNames
 	^#(#dwValue)! !
 !OS.MIB_IFNUMBER class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

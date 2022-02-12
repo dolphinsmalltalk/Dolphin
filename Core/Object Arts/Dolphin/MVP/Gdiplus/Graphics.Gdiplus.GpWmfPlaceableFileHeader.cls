@@ -6,6 +6,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpWmfPlaceableFileHeader'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpWmfPlaceableFileHeader_Size' -> 16r18.
 		'_OffsetOf_BoundingBox' -> 16r6.
 		'_OffsetOf_Checksum' -> 16r14.
 		'_OffsetOf_Hmf' -> 16r4.
@@ -46,7 +47,7 @@ BoundingBox: aGpWMFRect16
 	aGpWMFRect16
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_BoundingBox + 1)
-		to: ##(_OffsetOf_BoundingBox + GpWMFRect16 basicByteSize)
+		to: ##(_OffsetOf_BoundingBox + GpWMFRect16._GpWMFRect16_Size)
 		startingAt: 1!
 
 Checksum
@@ -115,6 +116,9 @@ Reserved:!**compiled accessors**!public! !
 
 !Graphics.Gdiplus.GpWmfPlaceableFileHeader class methodsFor!
 
+byteSize
+	^_GpWmfPlaceableFileHeader_Size!
+
 defineFields
 	"Define the fields of the GpWmfPlaceableFileHeader structure.
 		GpWmfPlaceableFileHeader compileDefinition
@@ -154,6 +158,7 @@ defineFields
 getFieldNames
 	^#(#Key #Hmf #BoundingBox #Inch #Reserved #Checksum)! !
 !Graphics.Gdiplus.GpWmfPlaceableFileHeader class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

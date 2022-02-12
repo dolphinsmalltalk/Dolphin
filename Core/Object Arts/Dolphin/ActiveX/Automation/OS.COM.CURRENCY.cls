@@ -6,6 +6,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.CURRENCY'
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CURRENCY_Size' -> 16r8.
 		'_OffsetOf_cy' -> 16r0
 	}!
 OS.COM.CURRENCY guid: (Core.GUID fromString: '{bbe7e662-de98-4ae2-b820-bae3e3c6127a}')!
@@ -57,6 +58,9 @@ OS.COM.CURRENCY methodProtocol: #variantCompatible attributes: #(#readOnly) sele
 
 !OS.COM.CURRENCY class methodsFor!
 
+byteSize
+	^_CURRENCY_Size!
+
 defineFields
 	"Define the fields of the CURRENCY 'structure'.
 
@@ -100,6 +104,7 @@ vt
 
 	^VT_CY! !
 !OS.COM.CURRENCY class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 epsilon!constants!public! !
 getFieldNames!**compiled accessors**!constants!private! !

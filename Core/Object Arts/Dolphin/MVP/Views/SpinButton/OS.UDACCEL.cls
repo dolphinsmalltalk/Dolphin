@@ -7,7 +7,8 @@ OS.Win32Structure subclass: #'OS.UDACCEL'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_nInc' -> 16r4.
-		'_OffsetOf_nSec' -> 16r0
+		'_OffsetOf_nSec' -> 16r0.
+		'_UDACCEL_Size' -> 16r8
 	}!
 OS.UDACCEL guid: (Core.GUID fromString: '{425d0ea4-542e-11d3-998b-d5ca2c3c1d61}')!
 OS.UDACCEL comment: '<UDACCEL> is an <ExternalStructure> class to wrap the struct ''UpDownLib.UDACCEL'' from type information in the ''Microsoft Windows Up-Down Control'' library.'!
@@ -42,6 +43,9 @@ nSec:!**compiled accessors**!public! !
 
 !OS.UDACCEL class methodsFor!
 
+byteSize
+	^_UDACCEL_Size!
+
 defineFields
 	"Define the fields of the UDACCEL structure.
 		UDACCEL compileDefinition
@@ -59,6 +63,7 @@ defineFields
 getFieldNames
 	^#(#nSec #nInc)! !
 !OS.UDACCEL class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

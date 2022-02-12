@@ -53,7 +53,7 @@ ensureSubView: aView rectangleVisible: aRectangle
 
 getScrollPage: anInteger
 	| struct |
-	struct := SCROLLINFO new
+	struct := SCROLLINFO newBuffer
 				maskIn: SIF_PAGE;
 				yourself.
 	User32
@@ -64,7 +64,7 @@ getScrollPage: anInteger
 
 getScrollRange: anInteger
 	| struct |
-	struct := SCROLLINFO new
+	struct := SCROLLINFO newBuffer
 				maskIn: SIF_RANGE;
 				yourself.
 	User32
@@ -283,7 +283,7 @@ setScrollInfo: barInteger position: positionInteger range: rangeInterval page: p
 	"Private - Set the position, range and page size of bar in one operation."
 
 	| scrollinfo |
-	scrollinfo := SCROLLINFO new
+	scrollinfo := SCROLLINFO newBuffer
 				range: rangeInterval;
 				pos: positionInteger;
 				page: pageInteger;

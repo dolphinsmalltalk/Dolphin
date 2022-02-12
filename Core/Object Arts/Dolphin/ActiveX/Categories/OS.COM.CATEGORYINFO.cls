@@ -6,6 +6,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.CATEGORYINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CATEGORYINFO_Size' -> 16r114.
 		'_OffsetOf_catid' -> 16r0.
 		'_OffsetOf_lcid' -> 16r10.
 		'_OffsetOf_szDescription' -> 16r14
@@ -28,7 +29,7 @@ catid: aGUID
 	aGUID
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_catid + 1)
-		to: ##(_OffsetOf_catid + GUID basicByteSize)
+		to: ##(_OffsetOf_catid + GUID._GUID_Size)
 		startingAt: 1!
 
 description
@@ -88,6 +89,9 @@ szDescription:!**compiled accessors**!public! !
 
 !OS.COM.CATEGORYINFO class methodsFor!
 
+byteSize
+	^_CATEGORYINFO_Size!
+
 defineFields
 	"Define the fields of the CATEGORYINFO structure.
 		CATEGORYINFO compileDefinition
@@ -111,6 +115,7 @@ defineFields
 getFieldNames
 	^#(#catid #lcid #szDescription)! !
 !OS.COM.CATEGORYINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

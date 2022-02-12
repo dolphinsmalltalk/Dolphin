@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRCREATEDIBPATTERNBRUSHPT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRCREATEDIBPATTERNBRUSHPT_Size' -> 16r20.
 		'_OffsetOf_cbBits' -> 16r1C.
 		'_OffsetOf_cbBmi' -> 16r14.
 		'_OffsetOf_ihBrush' -> 16r8.
@@ -112,6 +113,9 @@ offBmi:!**compiled accessors**!public! !
 
 !OS.EMRCREATEDIBPATTERNBRUSHPT class methodsFor!
 
+byteSize
+	^_EMRCREATEDIBPATTERNBRUSHPT_Size!
+
 defineFields
 	"Define the fields of the EMRCREATEDIBPATTERNBRUSHPT structure.
 
@@ -159,6 +163,7 @@ iTypes
 
 	^{EMR_CREATEDIBPATTERNBRUSHPT}! !
 !OS.EMRCREATEDIBPATTERNBRUSHPT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

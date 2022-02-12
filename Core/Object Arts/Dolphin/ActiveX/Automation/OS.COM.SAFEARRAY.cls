@@ -11,7 +11,8 @@ External.GenericExternalArray subclass: #'OS.COM.SAFEARRAY'
 		'_OffsetOf_cLocks' -> 16r8.
 		'_OffsetOf_fFeatures' -> 16r2.
 		'_OffsetOf_pvData' -> 16rC.
-		'_OffsetOf_rgsabound' -> 16r10
+		'_OffsetOf_rgsabound' -> 16r10.
+		'_SAFEARRAY_Size' -> 16r18
 	}!
 OS.COM.SAFEARRAY guid: (Core.GUID fromString: '{c06f3b6a-0868-11d3-93af-00a024ca708a}')!
 OS.COM.SAFEARRAY comment: 'SAFEARRAY is an <ExternalArray> class to represent the OLE Automation arrays.
@@ -455,6 +456,9 @@ OS.COM.SAFEARRAY methodProtocol: #variantCompatible attributes: #(#readOnly) sel
 
 !OS.COM.SAFEARRAY class methodsFor!
 
+byteSize
+	^_SAFEARRAY_Size!
+
 clear: addressOrBytes
 	"Free an instance of the structure which instances of the receiver wrap
 	which resides at the specified address."
@@ -521,7 +525,7 @@ elementSize
 	"Answer the size (in bytes) of the structure the receiver represents
 	when used as an array element."
 
-	^self byteSize!
+	^_SAFEARRAY_Size!
 
 fromAddress: anAddress
 	"Answer a new SAFEARRAY object referencing and owning the native SAFEARRAY at the specified address.
@@ -661,6 +665,7 @@ vt
 
 	^VT_ARRAY! !
 !OS.COM.SAFEARRAY class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 clear:!public!realizing/unrealizing! !
 createVector:vt:extra:!helpers!private! !
 defineFields!public!template definition! !

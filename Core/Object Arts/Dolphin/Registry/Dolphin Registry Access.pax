@@ -88,7 +88,8 @@ External.Structure subclass: #'OS.REGKEYINFO'
 		'_OffsetOf_maxValueNameLen' -> 16r10.
 		'_OffsetOf_securityDescriptorLen' -> 16r18.
 		'_OffsetOf_subKeyCount' -> 16r0.
-		'_OffsetOf_valueCount' -> 16rC
+		'_OffsetOf_valueCount' -> 16rC.
+		'_REGKEYINFO_Size' -> 16r24
 	}!
 
 "Loose Methods"!

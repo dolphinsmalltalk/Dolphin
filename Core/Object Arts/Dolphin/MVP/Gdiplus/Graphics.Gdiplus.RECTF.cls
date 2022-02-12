@@ -9,7 +9,8 @@ External.RECT subclass: #'Graphics.Gdiplus.RECTF'
 		'_OffsetOf_height' -> 16rC.
 		'_OffsetOf_width' -> 16r8.
 		'_OffsetOf_x' -> 16r0.
-		'_OffsetOf_y' -> 16r4
+		'_OffsetOf_y' -> 16r4.
+		'_RECTF_Size' -> 16r10
 	}!
 Graphics.Gdiplus.RECTF guid: (Core.GUID fromString: '{9a449c4a-8ae9-45d9-b94d-1e1d91fedcd5}')!
 Graphics.Gdiplus.RECTF comment: '<RECTF> is an <ExternalStructure> class to wrap the struct ''Gdiplus.RECTF'' from type information in the ''GDI+ Library 1.0'' library.
@@ -121,6 +122,9 @@ y:!**compiled accessors**!public! !
 
 !Graphics.Gdiplus.RECTF class methodsFor!
 
+byteSize
+	^_RECTF_Size!
+
 defineFields
 	"Define the fields of the RECTF structure.
 		RECTF compileDefinition
@@ -164,16 +168,17 @@ left: left top: top right: right bottom: bottom
 left: left top: top width: width height: height
 	"Answer a new instance of the receiver with the specified origin and extent."
 
-	^self basicNew bytes: ((ByteArray newFixed: 16)
-				floatAtOffset: 0 put: left;
-				floatAtOffset: 4 put: top;
-				floatAtOffset: 8 put: width;
-				floatAtOffset: 12 put: height;
+	^self basicNew bytes: ((ByteArray newFixed: _RECTF_Size)
+				floatAtOffset: _OffsetOf_x put: left;
+				floatAtOffset: _OffsetOf_y put: top;
+				floatAtOffset: _OffsetOf_width put: width;
+				floatAtOffset: _OffsetOf_height put: height;
 				yourself)!
 
 newBuffer
-	^self basicNew bytes: (ByteArray newFixed: 16)! !
+	^self basicNew bytes: (ByteArray newFixed: _RECTF_Size)! !
 !Graphics.Gdiplus.RECTF class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 fromRectangle:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !

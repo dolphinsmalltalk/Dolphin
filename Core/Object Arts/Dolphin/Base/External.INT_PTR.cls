@@ -5,7 +5,9 @@ External.UINT_PTR subclass: #'External.INT_PTR'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_INT_PTR_Size' -> 16r4
+	}!
 External.INT_PTR guid: (Core.GUID fromString: '{7454f675-5169-482b-9a37-5fe37154d567}')!
 External.INT_PTR comment: ''!
 !External.INT_PTR categoriesForClass!External-Data-Structured! !
@@ -40,12 +42,16 @@ value:!**compiled accessors**!public! !
 
 !External.INT_PTR class methodsFor!
 
+byteSize
+	^_INT_PTR_Size!
+
 defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
 	have a single value."
 
 	self defineField: #value type: INT_PTRField new beOverride! !
 !External.INT_PTR class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !
 

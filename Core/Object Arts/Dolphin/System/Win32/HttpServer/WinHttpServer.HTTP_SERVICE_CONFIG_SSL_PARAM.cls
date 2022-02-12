@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_SSL_PARAM_Size' -> 16r34.
 		'_OffsetOf_AppId' -> 16r8.
 		'_OffsetOf_DefaultCertCheckMode' -> 16r1C.
 		'_OffsetOf_DefaultFlags' -> 16r30.
@@ -56,7 +57,7 @@ AppId: aGUID
 	aGUID
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_AppId + 1)
-		to: ##(_OffsetOf_AppId + GUID basicByteSize)
+		to: ##(_OffsetOf_AppId + GUID._GUID_Size)
 		startingAt: 1!
 
 DefaultCertCheckMode
@@ -174,6 +175,9 @@ SslHashLength:!**compiled accessors**!private! !
 
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM class methodsFor!
 
+byteSize
+	^_HTTP_SERVICE_CONFIG_SSL_PARAM_Size!
+
 defineFields
 	"Define the fields of the HTTP_SERVICE_CONFIG_SSL_PARAM structure.
 
@@ -210,6 +214,7 @@ defineFields
 getFieldNames
 	^#(#SslHashLength #pSslHash #AppId #pSslCertStoreName #DefaultCertCheckMode #DefaultRevocationFreshnessTime #DefaultRevocationUrlRetrievalTimeout #pDefaultSslCtlIdentifier #pDefaultSslCtlStoreName #DefaultFlags)! !
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_PARAM class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

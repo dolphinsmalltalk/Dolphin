@@ -18,7 +18,8 @@ OS.Win32Structure subclass: #'OS.VS_FIXEDFILEINFO'
 		'_OffsetOf_dwProductVersionLS' -> 16r14.
 		'_OffsetOf_dwProductVersionMS' -> 16r10.
 		'_OffsetOf_dwSignature' -> 16r0.
-		'_OffsetOf_dwStrucVersion' -> 16r4
+		'_OffsetOf_dwStrucVersion' -> 16r4.
+		'_VS_FIXEDFILEINFO_Size' -> 16r34
 	}!
 OS.VS_FIXEDFILEINFO guid: (Core.GUID fromString: '{87b4c619-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.VS_FIXEDFILEINFO comment: 'VS_FIXEDFILEINFO is an ExternalStructure class to represent the Win32 structure of the same name.
@@ -110,6 +111,9 @@ versionAtOffset:put:!accessing!private! !
 
 !OS.VS_FIXEDFILEINFO class methodsFor!
 
+byteSize
+	^_VS_FIXEDFILEINFO_Size!
+
 defineFields
 	"Private - Define the layout of the Win32 VS_FIXEDFILEINFO structure.
 	
@@ -150,6 +154,7 @@ defineFields
 getFieldNames
 	^#(#dwStrucVersion #dwFileVersionMS #dwFileVersionLS #dwProductVersionMS #dwProductVersionLS #dwFileFlagsMask #dwFileFlags #dwFileOS #dwFileType #dwFileSubtype #dwFileDateMS #dwFileDateLS)! !
 !OS.VS_FIXEDFILEINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

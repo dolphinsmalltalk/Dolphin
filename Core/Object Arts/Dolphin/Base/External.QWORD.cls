@@ -7,7 +7,8 @@ External.INTEGER subclass: #'External.QWORD'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_highPart' -> 16r4.
-		'_OffsetOf_lowPart' -> 16r0
+		'_OffsetOf_lowPart' -> 16r0.
+		'_QWORD_Size' -> 16r8
 	}!
 External.QWORD guid: (Core.GUID fromString: '{87b4c60b-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.QWORD comment: '<QWORD> is an abstract superclass for the two Win32 64-bit integer structures, LARGE_INTEGER (signed), and ULARGE_INTEGER (unsigned).
@@ -75,6 +76,9 @@ value:!**compiled accessors**!public! !
 
 !External.QWORD class methodsFor!
 
+byteSize
+	^_QWORD_Size!
+
 defineFields
 	"Define the fields of the QWORD/ULARGE_INTEGER 'structure'.
 
@@ -97,6 +101,7 @@ defineFields
 			type: DWORDField new
 			offset: 4! !
 !External.QWORD class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !
 

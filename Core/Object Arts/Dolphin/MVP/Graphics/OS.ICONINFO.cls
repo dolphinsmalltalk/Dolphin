@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.ICONINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_ICONINFO_Size' -> 16r14.
 		'_OffsetOf_fIcon' -> 16r0.
 		'_OffsetOf_hbmColor' -> 16r10.
 		'_OffsetOf_hbmMask' -> 16rC.
@@ -105,6 +106,9 @@ yHotspot!**compiled accessors**!public! !
 
 !OS.ICONINFO class methodsFor!
 
+byteSize
+	^_ICONINFO_Size!
+
 defineFields
 	"Define the fields of the Win32 ICONINFO structure.
 
@@ -128,6 +132,7 @@ defineFields
 getFieldNames
 	^#(#fIcon #xHotspot #yHotspot #hbmMask #hbmColor)! !
 !OS.ICONINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!development!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -333,27 +333,25 @@ insertIntoMenu: aMenuItem at: anInteger
 			[aMenuItem
 				insertIntoMenu: self
 				at: anInteger - 1
-				info: MENUITEMINFOW new]!
+				info: MENUITEMINFOW newBuffer]!
 
 insertIntoMenu: parentMenu at: position info: aMENUITEMINFO
 	"Append the receiver to the <Menu>, parentMenu, which can be nil if this is to be a 
 	top-level menu."
 
-	| hParent mask |
+	| hParent |
 	hParent := parentMenu asParameter.
 	self realize.
 	hParent isNull ifTrue: [^self].
-	mask := ##(MIIM_SUBMENU | MIIM_STRING | MIIM_ID).
-	self image
-		ifNotNil: 
-			[:img |
-			aMENUITEMINFO bitmap: img.
-			mask := mask bitOr: MIIM_BITMAP].
 	aMENUITEMINFO
 		basicText: self text;
 		wID: self id;
 		hSubMenu: self asParameter;
-		fMask: mask.
+		fMask: (image
+					ifNil: [##(MIIM_SUBMENU | MIIM_STRING | MIIM_ID)]
+					ifNotNil: 
+						[aMENUITEMINFO bitmap: image.
+						##(MIIM_SUBMENU | MIIM_STRING | MIIM_ID | MIIM_BITMAP)]).
 	(User32
 		insertMenuItem: hParent
 		uItem: position
@@ -542,7 +540,7 @@ queryAllAlong: aCommandPolicy
 	| query itemInfo |
 	query := self queryAlong: aCommandPolicy.
 	query isEnabled ifTrue: [query receiver onAboutToDisplayMenu: self].
-	itemInfo := MENUITEMINFOW new.
+	itemInfo := MENUITEMINFOW newBuffer.
 	items keysAndValuesDo: 
 			[:i :menuItem |
 			| itemQuery |

@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.FLASHWINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_FLASHWINFO_Size' -> 16r14.
 		'_OffsetOf_dwFlags' -> 16r8.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_dwTimeout' -> 16r10.
@@ -62,6 +63,9 @@ uCount:!**compiled accessors**!public! !
 
 !OS.FLASHWINFO class methodsFor!
 
+byteSize
+	^_FLASHWINFO_Size!
+
 defineFields
 	"Define the fields of the Win32 FLASHWINFO structure.
 
@@ -86,6 +90,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #hwnd #dwFlags #uCount #dwTimeout)! !
 !OS.FLASHWINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

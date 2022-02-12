@@ -6,6 +6,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpBitmapData'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpBitmapData_Size' -> 16r18.
 		'_OffsetOf_Height' -> 16r4.
 		'_OffsetOf_PixelFormat' -> 16rC.
 		'_OffsetOf_Reserved' -> 16r14.
@@ -99,6 +100,9 @@ Width:!**compiled accessors**!public! !
 
 !Graphics.Gdiplus.GpBitmapData class methodsFor!
 
+byteSize
+	^_GpBitmapData_Size!
+
 defineFields
 	"Define the fields of the GpBitmapData structure.
 		GpBitmapData compileDefinition
@@ -138,6 +142,7 @@ defineFields
 getFieldNames
 	^#(#Width #Height #Stride #PixelFormat #Scan0)! !
 !Graphics.Gdiplus.GpBitmapData class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

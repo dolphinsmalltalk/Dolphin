@@ -10,6 +10,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.TYPEDESC'
 		'_OffsetOf_lpadesc' -> 16r0.
 		'_OffsetOf_lptdesc' -> 16r0.
 		'_OffsetOf_vt' -> 16r4.
+		'_TYPEDESC_Size' -> 16r8.
 		'VTIndirections' -> #[0 0 0 0 0 0 0 0 0 1 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0]
 	}!
 OS.COM.TYPEDESC guid: (Core.GUID fromString: '{c06f3b7a-0868-11d3-93af-00a024ca708a}')!
@@ -218,6 +219,9 @@ vtName!accessing!private! !
 
 !OS.COM.TYPEDESC class methodsFor!
 
+byteSize
+	^_TYPEDESC_Size!
+
 defineFields
 	"Define the fields of the TYPEDESC structure.
 		TYPEDESC compileDefinition
@@ -263,6 +267,7 @@ initialize
 				at: VT_SAFEARRAY + 1 put: 1;
 				yourself)! !
 !OS.COM.TYPEDESC class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 initialize!class initialization!development!public! !

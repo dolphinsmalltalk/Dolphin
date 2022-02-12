@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.ACCEL'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_ACCEL_Size' -> 16r6.
 		'_OffsetOf_cmd' -> 16r4.
 		'_OffsetOf_fVirt' -> 16r0.
 		'_OffsetOf_key' -> 16r2
@@ -39,6 +40,9 @@ key:!**compiled accessors**!public! !
 
 !OS.ACCEL class methodsFor!
 
+byteSize
+	^_ACCEL_Size!
+
 defineFields
 	"Define the Win32 ACCEL structure. Note that this structure requires packing to achieve natural field alignment.
 
@@ -60,6 +64,7 @@ defineFields
 getFieldNames
 	^#(#fVirt #key #cmd)! !
 !OS.ACCEL class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

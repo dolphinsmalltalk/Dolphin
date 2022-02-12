@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRMASKBLT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRMASKBLT_Size' -> 16r80.
 		'_OffsetOf_cbBitsMask' -> 16r7C.
 		'_OffsetOf_cbBitsSrc' -> 16r60.
 		'_OffsetOf_cbBmiMask' -> 16r74.
@@ -213,13 +214,13 @@ rclBounds
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: aRECT
-	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
+rclBounds: aRECTL
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1!
 
 xDest
@@ -243,7 +244,7 @@ xformSrc: aXFORM
 	aXFORM
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_xformSrc + 1)
-		to: ##(_OffsetOf_xformSrc + XFORM basicByteSize)
+		to: ##(_OffsetOf_xformSrc + XFORM._XFORM_Size)
 		startingAt: 1!
 
 xMask
@@ -343,6 +344,9 @@ ySrc:!**compiled accessors**!public! !
 !
 
 !OS.EMRMASKBLT class methodsFor!
+
+byteSize
+	^_EMRMASKBLT_Size!
 
 defineFields
 	"Define the fields of the EMRMASKBLT structure.
@@ -455,6 +459,7 @@ iTypes
 
 	^{EMR_MASKBLT}! !
 !OS.EMRMASKBLT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

@@ -6,6 +6,7 @@ OS.CommonDialogStructure subclass: #'OS.CHOOSECOLORW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CHOOSECOLORW_Size' -> 16r24.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_flags' -> 16r14.
 		'_OffsetOf_hInstance' -> 16r8.
@@ -124,6 +125,9 @@ rgbResult:!**compiled accessors**!public! !
 
 !OS.CHOOSECOLORW class methodsFor!
 
+byteSize
+	^_CHOOSECOLORW_Size!
+
 defineFields
 	"Define the fields of the CHOOSECOLOR structure.
 
@@ -176,6 +180,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #hwndOwner #hInstance #rgbResult #lpCustColors #flags #lpfnHook)! !
 !OS.CHOOSECOLORW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

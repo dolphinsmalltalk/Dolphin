@@ -11,7 +11,8 @@ External.Structure subclass: #'MSXML.XHR_COOKIE'
 		'_OffsetOf_pwszName' -> 16r4.
 		'_OffsetOf_pwszP3PPolicy' -> 16rC.
 		'_OffsetOf_pwszUrl' -> 16r0.
-		'_OffsetOf_pwszValue' -> 16r8
+		'_OffsetOf_pwszValue' -> 16r8.
+		'_XHR_COOKIE_Size' -> 16r1C
 	}!
 MSXML.XHR_COOKIE guid: (Core.GUID fromString: '{55d440a1-79a9-4f7b-9828-7efa635f6579}')!
 MSXML.XHR_COOKIE comment: '`XHR_COOKIE` is an `ExternalStructure` class to wrap the struct ''MSXML2.XHR_COOKIE'' from type information in the ''Microsoft XML, v6.0'' library.
@@ -57,7 +58,7 @@ ftExpires: aFILETIME
 	aFILETIME
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_ftExpires + 1)
-		to: ##(_OffsetOf_ftExpires + FILETIME basicByteSize)
+		to: ##(_OffsetOf_ftExpires + FILETIME._FILETIME_Size)
 		startingAt: 1!
 
 pwszName
@@ -116,6 +117,9 @@ pwszValue:!**compiled accessors**!public! !
 
 !MSXML.XHR_COOKIE class methodsFor!
 
+byteSize
+	^_XHR_COOKIE_Size!
+
 defineFields
 	"Define the fields of the XHR_COOKIE structure.
 
@@ -144,6 +148,7 @@ defineFields
 getFieldNames
 	^#(#pwszUrl #pwszName #pwszValue #pwszP3PPolicy #ftExpires #dwFlags)! !
 !MSXML.XHR_COOKIE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

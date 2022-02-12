@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.ODBCTIMESTAMP'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_ODBCTIMESTAMP_Size' -> 16r10.
 		'_OffsetOf_day' -> 16r4.
 		'_OffsetOf_fraction' -> 16rC.
 		'_OffsetOf_hour' -> 16r6.
@@ -137,6 +138,9 @@ year:!**compiled accessors**!public! !
 
 !OS.ODBCTIMESTAMP class methodsFor!
 
+byteSize
+	^_ODBCTIMESTAMP_Size!
+
 defineFields
 	"Define the fields of the ODBC TIMESTAMP structure
 		self compileDefinition
@@ -171,6 +175,7 @@ fromDateAndTime: aDateAndTime
 getFieldNames
 	^#(#year #month #day #hour #minute #second #fraction)! !
 !OS.ODBCTIMESTAMP class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 fromDateAndTime:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !

@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.HOSTENT'
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HOSTENT_Size' -> 16r10.
 		'_OffsetOf_h_addr_list' -> 16rC.
 		'_OffsetOf_h_addrtype' -> 16r8.
 		'_OffsetOf_h_aliases' -> 16r4.
@@ -117,6 +118,9 @@ reifyNullTerminatedArray:!helpers!private! !
 
 !OS.HOSTENT class methodsFor!
 
+byteSize
+	^_HOSTENT_Size!
+
 defineFields
 	"Define the fields of the HOSTENT structure.
 
@@ -155,6 +159,7 @@ host: aStringHostName
 		ifTrue: [Net.SocketError signalWith: Processor activeProcess lastError]
 		ifFalse: [answer]! !
 !OS.HOSTENT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 host:!instance creation!public! !

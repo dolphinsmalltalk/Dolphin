@@ -6,6 +6,7 @@ OS.NMHDR subclass: #'OS.NMLVFINDITEMW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMLVFINDITEMW_Size' -> 16r28.
 		'_OffsetOf_iStart' -> 16rC.
 		'_OffsetOf_lvfi' -> 16r10
 	}!
@@ -30,6 +31,9 @@ lvfi!**compiled accessors**!public! !
 
 !OS.NMLVFINDITEMW class methodsFor!
 
+byteSize
+	^_NMLVFINDITEMW_Size!
+
 defineFields
 	"Define the fields of the Win32 NMLVFINDITEM structure.
 		self compileDefinition
@@ -43,6 +47,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iStart #lvfi)! !
 !OS.NMLVFINDITEMW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

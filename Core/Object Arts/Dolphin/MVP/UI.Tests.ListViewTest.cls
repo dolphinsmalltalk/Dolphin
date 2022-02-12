@@ -44,7 +44,7 @@ getColumns
 
 getItem: anInteger
 	| item |
-	item := LVITEMW new
+	item := LVITEMW newBuffer
 				iItem: anInteger - 1;
 				image: 0;
 				newTextBuffer: 128;

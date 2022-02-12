@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.CIEXYZ'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CIEXYZ_Size' -> 16rC.
 		'_OffsetOf_ciexyzX' -> 16r0.
 		'_OffsetOf_ciexyzY' -> 16r4.
 		'_OffsetOf_ciexyzZ' -> 16r8
@@ -69,6 +70,9 @@ ciexyzZ:!**compiled accessors**!public! !
 
 !OS.CIEXYZ class methodsFor!
 
+byteSize
+	^_CIEXYZ_Size!
+
 defineFields
 	"Define the fields of the CIEXYZ structure.
 
@@ -97,6 +101,7 @@ defineFields
 getFieldNames
 	^#(#ciexyzX #ciexyzY #ciexyzZ)! !
 !OS.CIEXYZ class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

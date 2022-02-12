@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_CACHE_SET_Size' -> 16r8.
 		'_OffsetOf_KeyDesc' -> 16r0.
 		'_OffsetOf_ParamDesc' -> 16r4
 	}!
@@ -57,6 +58,9 @@ ParamDesc:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_SERVICE_CONFIG_CACHE_SET class methodsFor!
 
+byteSize
+	^_HTTP_SERVICE_CONFIG_CACHE_SET_Size!
+
 defineFields
 	"Define the fields of the HTTP_SERVICE_CONFIG_CACHE_SET structure.
 
@@ -77,6 +81,7 @@ defineFields
 getFieldNames
 	^#(#KeyDesc #ParamDesc)! !
 !WinHttpServer.HTTP_SERVICE_CONFIG_CACHE_SET class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -6,6 +6,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.FONTDESC'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_FONTDESC_Size' -> 16r20.
 		'_OffsetOf_cySize' -> 16r8.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_fItalic' -> 16r14.
@@ -141,6 +142,9 @@ sWeight:!**compiled accessors**!public! !
 
 !OS.COM.FONTDESC class methodsFor!
 
+byteSize
+	^_FONTDESC_Size!
+
 defineFields
 	"Define the fields of the FONTDESC structure.
 
@@ -188,6 +192,7 @@ fromFont: font
 getFieldNames
 	^#(#dwSize #lpstrName #cySize #sWeight #sCharset #fItalic #fUnderline #fStrikethrough)! !
 !OS.COM.FONTDESC class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 fromFont:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !

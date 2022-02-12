@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMREXTTEXTOUT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMREXTTEXTOUT_Size' -> 16r4C.
 		'_OffsetOf_EMRTEXT' -> 16r24.
 		'_OffsetOf_exScale' -> 16r1C.
 		'_OffsetOf_eyScale' -> 16r20.
@@ -29,7 +30,7 @@ EMRTEXT: anEMRTEXT
 	anEMRTEXT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_EMRTEXT + 1)
-		to: ##(_OffsetOf_EMRTEXT + EMRTEXT basicByteSize)
+		to: ##(_OffsetOf_EMRTEXT + EMRTEXT._EMRTEXT_Size)
 		startingAt: 1!
 
 exScale
@@ -67,13 +68,13 @@ rclBounds
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: aRECT
-	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
+rclBounds: aRECTL
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1! !
 !OS.EMREXTTEXTOUT categoriesForMethods!
 EMRTEXT!**compiled accessors**!public! !
@@ -89,6 +90,9 @@ rclBounds:!**compiled accessors**!public! !
 !
 
 !OS.EMREXTTEXTOUT class methodsFor!
+
+byteSize
+	^_EMREXTTEXTOUT_Size!
 
 defineFields
 	"Define the fields of the EMREXTTEXTOUT structure.
@@ -130,6 +134,7 @@ iTypes
 
 	^#()! !
 !OS.EMREXTTEXTOUT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 iTypes!constants!public! !
 !

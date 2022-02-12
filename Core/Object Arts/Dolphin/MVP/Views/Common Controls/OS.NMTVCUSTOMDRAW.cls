@@ -6,6 +6,7 @@ OS.NMCUSTOMDRAW subclass: #'OS.NMTVCUSTOMDRAW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMTVCUSTOMDRAW_Size' -> 16r3C.
 		'_OffsetOf_clrText' -> 16r30.
 		'_OffsetOf_clrTextBk' -> 16r34.
 		'_OffsetOf_iLevel' -> 16r38
@@ -79,6 +80,9 @@ iLevel!**compiled accessors**!public! !
 
 !OS.NMTVCUSTOMDRAW class methodsFor!
 
+byteSize
+	^_NMTVCUSTOMDRAW_Size!
+
 defineFields
 	"Define the structure template for Win32 NMTVCUSTOMDRAW structure.
 		self compileDefinition
@@ -93,6 +97,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam #clrText #clrTextBk #iLevel)! !
 !OS.NMTVCUSTOMDRAW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

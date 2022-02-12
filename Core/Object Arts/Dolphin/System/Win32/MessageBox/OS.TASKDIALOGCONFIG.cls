@@ -31,7 +31,8 @@ OS.Win32Structure subclass: #'OS.TASKDIALOGCONFIG'
 		'_OffsetOf_pszMainIcon' -> 16r18.
 		'_OffsetOf_pszMainInstruction' -> 16r1C.
 		'_OffsetOf_pszVerificationText' -> 16r3C.
-		'_OffsetOf_pszWindowTitle' -> 16r14
+		'_OffsetOf_pszWindowTitle' -> 16r14.
+		'_TASKDIALOGCONFIG_Size' -> 16r60
 	}!
 OS.TASKDIALOGCONFIG guid: (Core.GUID fromString: '{948de028-015b-4a2a-818e-db8b5f40aa75}')!
 OS.TASKDIALOGCONFIG comment: '`TASKDIALOGCONFIG` is an `External.Structure` class to wrap the Windows common controls [TASKDIALOGCONFIG structure](https://docs.microsoft.com/en-us/windows/win32/api/Commctrl/ns-commctrl-taskdialogconfig) structure.
@@ -426,6 +427,9 @@ windowTitle:!accessing!public! !
 
 !OS.TASKDIALOGCONFIG class methodsFor!
 
+byteSize
+	^_TASKDIALOGCONFIG_Size!
+
 defineFields
 	"Define the fields of the TASKDIALOGCONFIG structure.
 
@@ -550,6 +554,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #hwndParent #hInstance #dwFlags #dwCommonButtons #pszWindowTitle #hMainIcon #pszMainInstruction #pszContent #cButtons #pButtons #nDefaultButton #cRadioButtons #pRadioButtons #nDefaultRadioButton #pszVerificationText #pszExpandedInformation #pszExpandedControlText #pszCollapsedControlText #hFooterIcon #pszFooter #pfCallback #cxWidth)! !
 !OS.TASKDIALOGCONFIG class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

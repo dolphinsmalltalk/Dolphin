@@ -16,7 +16,8 @@ OS.Win32Structure subclass: #'OS.OSVERSIONINFOEXW'
 		'_OffsetOf_wReserved' -> 16r11B.
 		'_OffsetOf_wServicePackMajor' -> 16r114.
 		'_OffsetOf_wServicePackMinor' -> 16r116.
-		'_OffsetOf_wSuiteMask' -> 16r118
+		'_OffsetOf_wSuiteMask' -> 16r118.
+		'_OSVERSIONINFOEXW_Size' -> 16r11C
 	}!
 OS.OSVERSIONINFOEXW guid: (Core.GUID fromString: '{1c5e8929-8791-4aa9-b7ea-152ef36b23dd}')!
 OS.OSVERSIONINFOEXW comment: '<OSVERSIONINFOEX> is an <ExternalStructure> class to wrap the struct ''Win32.OSVERSIONINFOEXW'' from type information in the ''Win32 API'' library.
@@ -157,6 +158,9 @@ wSuiteMask:!**compiled accessors**!public! !
 
 !OS.OSVERSIONINFOEXW class methodsFor!
 
+byteSize
+	^_OSVERSIONINFOEXW_Size!
+
 defineFields
 	"Define the fields of the OSVERSIONINFOEXW structure.
 
@@ -217,6 +221,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #dwMajorVersion #dwMinorVersion #dwBuildNumber #dwPlatformId #szCSDVersion #wServicePackMajor #wServicePackMinor #wSuiteMask #wProductType)! !
 !OS.OSVERSIONINFOEXW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

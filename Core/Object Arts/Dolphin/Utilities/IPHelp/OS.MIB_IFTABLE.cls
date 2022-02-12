@@ -6,6 +6,7 @@ OS.IpHlpApiTableStruct subclass: #'OS.MIB_IFTABLE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_IFTABLE_Size' -> 16r360.
 		'_OffsetOf_table' -> 16r4
 	}!
 OS.MIB_IFTABLE guid: (Core.GUID fromString: '{2ba815fb-13d2-4ab7-a138-15332adeb3bf}')!
@@ -39,6 +40,9 @@ table!**compiled accessors**!public! !
 
 !OS.MIB_IFTABLE class methodsFor!
 
+byteSize
+	^_MIB_IFTABLE_Size!
+
 defineFields
 	"Define the fields of the MIB_IFTABLE structure.
 		MIB_IFTABLE compileDefinition
@@ -62,6 +66,7 @@ defineFields
 getFieldNames
 	^#(#dwNumEntries #table)! !
 !OS.MIB_IFTABLE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

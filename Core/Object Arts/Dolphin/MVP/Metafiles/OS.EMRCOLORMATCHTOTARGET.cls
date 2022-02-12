@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRCOLORMATCHTOTARGET'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRCOLORMATCHTOTARGET_Size' -> 16r1C.
 		'_OffsetOf_cbData' -> 16r14.
 		'_OffsetOf_cbName' -> 16r10.
 		'_OffsetOf_Data' -> 16r18.
@@ -110,6 +111,9 @@ dwFlags:!**compiled accessors**!public! !
 
 !OS.EMRCOLORMATCHTOTARGET class methodsFor!
 
+byteSize
+	^_EMRCOLORMATCHTOTARGET_Size!
+
 defineFields
 	"Define the fields of the EMRCOLORMATCHTOTARGET structure.
 
@@ -153,6 +157,7 @@ iTypes
 
 	^{EMR_COLORMATCHTOTARGETW}! !
 !OS.EMRCOLORMATCHTOTARGET class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

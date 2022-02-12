@@ -6,6 +6,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_PROTECTION_LEVE
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_PROTECTION_LEVEL_INFO_Size' -> 16r8.
 		'_OffsetOf_Level' -> 16r4
 	}!
 WinHttpServer.HTTP_PROTECTION_LEVEL_INFO guid: (Core.GUID fromString: '{e1881388-d03e-4ea0-8e39-8f1439753299}')!
@@ -44,6 +45,9 @@ Level:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_PROTECTION_LEVEL_INFO class methodsFor!
 
+byteSize
+	^_HTTP_PROTECTION_LEVEL_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_PROTECTION_LEVEL_INFO structure.
 
@@ -67,6 +71,7 @@ getFieldNames
 propertyId
 	^HttpServerProtectionLevelProperty! !
 !WinHttpServer.HTTP_PROTECTION_LEVEL_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 propertyId!public! !

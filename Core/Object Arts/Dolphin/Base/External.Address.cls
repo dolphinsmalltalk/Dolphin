@@ -320,7 +320,7 @@ yourAddress
 	"Answer the address at which the receiver points, rather than the address of 
 	the receiver's bytes"
 
-	^self asInteger! !
+	^self basicUIntPtrAtOffset: 0! !
 !External.Address categoriesForMethods!
 approxSize!accessing!private! !
 asExternalAddress!converting!public! !

@@ -6,6 +6,7 @@ OS.TEXTRANGE subclass: #'OS.FINDTEXTEX'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_FINDTEXTEX_Size' -> 16r14.
 		'_OffsetOf_chrgText' -> 16rC
 	}!
 OS.FINDTEXTEX guid: (Core.GUID fromString: '{be0e52c5-c59b-4277-ac2a-cb775eac3904}')!
@@ -35,6 +36,9 @@ chrgText!**compiled accessors**!public! !
 
 !OS.FINDTEXTEX class methodsFor!
 
+byteSize
+	^_FINDTEXTEX_Size!
+
 defineFields
 	"Define the fields of the FINDTEXTEX structure.
 		FINDTEXTEX compileDefinition
@@ -52,6 +56,7 @@ defineFields
 getFieldNames
 	^#(#chrg #lpstrText #chrgText)! !
 !OS.FINDTEXTEX class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

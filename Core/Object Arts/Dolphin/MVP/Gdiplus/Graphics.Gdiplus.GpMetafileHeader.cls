@@ -6,6 +6,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpMetafileHeader'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpMetafileHeader_Size' -> 16r8C.
 		'_OffsetOf_DpiX' -> 16r10.
 		'_OffsetOf_DpiY' -> 16r14.
 		'_OffsetOf_EmfHeader' -> 16r28.
@@ -83,7 +84,7 @@ EmfHeader: anENHMETAHEADER3
 	anENHMETAHEADER3
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_EmfHeader + 1)
-		to: ##(_OffsetOf_EmfHeader + ENHMETAHEADER3 basicByteSize)
+		to: ##(_OffsetOf_EmfHeader + ENHMETAHEADER3._ENHMETAHEADER3_Size)
 		startingAt: 1!
 
 EmfPlusFlags
@@ -187,7 +188,7 @@ WmfHeader: aMETAHEADER
 	aMETAHEADER
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_WmfHeader + 1)
-		to: ##(_OffsetOf_WmfHeader + METAHEADER basicByteSize)
+		to: ##(_OffsetOf_WmfHeader + METAHEADER._METAHEADER_Size)
 		startingAt: 1!
 
 x
@@ -243,6 +244,9 @@ y:!**compiled accessors**!public! !
 !
 
 !Graphics.Gdiplus.GpMetafileHeader class methodsFor!
+
+byteSize
+	^_GpMetafileHeader_Size!
 
 defineFields
 	"Define the fields of the GpMetafileHeader structure.
@@ -321,6 +325,7 @@ defineFields
 getFieldNames
 	^#(#type #size #Version #EmfPlusFlags #DpiX #DpiY #x #y #width #height #EmfHeader #WmfHeader #EmfPlusHeaderSize #LogicalDpiX #LogicalDpiY)! !
 !Graphics.Gdiplus.GpMetafileHeader class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -6,6 +6,7 @@ OS.NMHDR subclass: #'OS.NMLINK'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMLINK_Size' -> 16r10C4.
 		'_OffsetOf_item' -> 16rC
 	}!
 OS.NMLINK guid: (Core.GUID fromString: '{7caa2dd6-a6d4-493f-bdd4-39ef71f66221}')!
@@ -31,6 +32,9 @@ item!**compiled accessors**!public! !
 
 !OS.NMLINK class methodsFor!
 
+byteSize
+	^_NMLINK_Size!
+
 defineFields
 	"Define the fields of the Win32 NMLINK structure
 		NMLINK compileDefinition
@@ -45,6 +49,7 @@ getFieldNames
 itemFromNMHDR: anExternalAddress
 	^LITEM fromAddress: anExternalAddress yourAddress + _OffsetOf_item! !
 !OS.NMLINK class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 itemFromNMHDR:!public! !

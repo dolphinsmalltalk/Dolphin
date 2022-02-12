@@ -5,7 +5,9 @@ External.DWORD subclass: #'External.SDWORD'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_SDWORD_Size' -> 16r4
+	}!
 External.SDWORD guid: (Core.GUID fromString: '{87b4c5ab-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.SDWORD comment: '<SDWORD> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
@@ -46,6 +48,9 @@ value:!**compiled accessors**!public! !
 
 !External.SDWORD class methodsFor!
 
+byteSize
+	^_SDWORD_Size!
+
 defineFields
 	"Define the fields of the SDWORD external type.
 		SDWORD compileDefinition
@@ -73,6 +78,7 @@ uninitialize
 
 	VM registryAt: self name put: nil! !
 !External.SDWORD class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 fromUnsignedInteger:!instance creation!public! !
 initialize!development!initializing!private! !

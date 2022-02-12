@@ -5,7 +5,9 @@ External.SDWORD subclass: #'External.BOOL'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_BOOL_Size' -> 16r4
+	}!
 External.BOOL guid: (Core.GUID fromString: '{73888634-0c5b-4d09-83dc-c52101c10ba3}')!
 External.BOOL comment: '<BOOL> is an <ExternalStructure> class to represent the Win32 BOOL (integer boolean) type.
 
@@ -31,6 +33,9 @@ value:!**compiled accessors**!public! !
 
 !External.BOOL class methodsFor!
 
+byteSize
+	^_BOOL_Size!
+
 defineFields
 	"Define the fields of the BOOL structure.
 		BOOL compileDefinition
@@ -47,6 +52,7 @@ defineFields
 				beOverride;
 				yourself)! !
 !External.BOOL class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !
 

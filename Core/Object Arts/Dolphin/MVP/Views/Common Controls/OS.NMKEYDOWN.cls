@@ -6,6 +6,7 @@ OS.NMHDR subclass: #'OS.NMKEYDOWN'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMKEYDOWN_Size' -> 16r14.
 		'_OffsetOf_flags' -> 16r10.
 		'_OffsetOf_wVKey' -> 16rC
 	}!
@@ -31,6 +32,9 @@ wVKey!**compiled accessors**!public! !
 
 !OS.NMKEYDOWN class methodsFor!
 
+byteSize
+	^_NMKEYDOWN_Size!
+
 defineFields
 	"Define the fields of the Win32 NMKEYDOWN structure
 		NMKEYDOWN compileDefinition
@@ -44,6 +48,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #wVKey #flags)! !
 !OS.NMKEYDOWN class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -13,7 +13,8 @@ OS.Win32Structure subclass: #'OS.SYSTEMTIME'
 		'_OffsetOf_wMinute' -> 16rA.
 		'_OffsetOf_wMonth' -> 16r2.
 		'_OffsetOf_wSecond' -> 16rC.
-		'_OffsetOf_wYear' -> 16r0
+		'_OffsetOf_wYear' -> 16r0.
+		'_SYSTEMTIME_Size' -> 16r10
 	}!
 OS.SYSTEMTIME guid: (Core.GUID fromString: '{87b4c612-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.SYSTEMTIME comment: ''!
@@ -180,6 +181,9 @@ year!accessing!public! !
 
 !OS.SYSTEMTIME class methodsFor!
 
+byteSize
+	^_SYSTEMTIME_Size!
+
 day: day month: month year: year
 	"Private - Answer a new instance of the receiver for the specified day, month, and year."
 
@@ -228,6 +232,7 @@ nowUTC
 	Kernel32 getSystemTime: answer.
 	^answer! !
 !OS.SYSTEMTIME class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 day:month:year:!instance creation!private! !
 defineFields!public!template definition! !
 fromFILETIME:!instance creation!public! !

@@ -6,6 +6,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpCharacterRange'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpCharacterRange_Size' -> 16r8.
 		'_OffsetOf_First' -> 16r0.
 		'_OffsetOf_length' -> 16r4
 	}!
@@ -55,6 +56,9 @@ length:!**compiled accessors**!public! !
 
 !Graphics.Gdiplus.GpCharacterRange class methodsFor!
 
+byteSize
+	^_GpCharacterRange_Size!
+
 defineFields
 	"Define the fields of the GpCharacterRange structure.
 		GpCharacterRange compileDefinition
@@ -78,6 +82,7 @@ defineFields
 getFieldNames
 	^#(#First #length)! !
 !Graphics.Gdiplus.GpCharacterRange class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_REQUEST_INFO_Size' -> 16rC.
 		'_OffsetOf_InfoLength' -> 16r4.
 		'_OffsetOf_InfoType' -> 16r0.
 		'_OffsetOf_pInfo' -> 16r8
@@ -87,6 +88,9 @@ printFields:on:!development!printing!private! !
 
 !WinHttpServer.HTTP_REQUEST_INFO class methodsFor!
 
+byteSize
+	^_HTTP_REQUEST_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_REQUEST_INFO structure.
 
@@ -109,6 +113,7 @@ defineFields
 getFieldNames
 	^#(#InfoType #InfoLength #pInfo)! !
 !WinHttpServer.HTTP_REQUEST_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

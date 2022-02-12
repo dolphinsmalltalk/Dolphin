@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.DISPLAY_DEVICEW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_DISPLAY_DEVICEW_Size' -> 16r348.
 		'_OffsetOf_DeviceID' -> 16r148.
 		'_OffsetOf_DeviceKey' -> 16r248.
 		'_OffsetOf_DeviceName' -> 16r4.
@@ -85,6 +86,9 @@ StateFlags!**compiled accessors**!public! !
 
 !OS.DISPLAY_DEVICEW class methodsFor!
 
+byteSize
+	^_DISPLAY_DEVICEW_Size!
+
 defineFields
 	"Define the fields of the DISPLAY_DEVICEW structure.
 
@@ -113,6 +117,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #DeviceName #DeviceString #StateFlags #DeviceID)! !
 !OS.DISPLAY_DEVICEW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

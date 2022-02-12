@@ -234,7 +234,7 @@ calculateNodeExtents: aMoenTreeNode forCanvas: aCanvas
 	| getImage dtf rect lead2 getText hasIcons |
 	getText := self getTextBlock.
 	getImage := self getImageBlock ?? [:each | nil].
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	dtf := (dtFlags maskSet: DT_CALCRECT) maskClear: DT_VCENTER.
 	lead2 := (self leadingForCanvas: aCanvas) * 2.
 	hasIcons := self hasIcons.

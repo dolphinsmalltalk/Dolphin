@@ -11,7 +11,8 @@ OS.COM.OLEStructure subclass: #'OS.COM.PROPBAG2'
 		'_OffsetOf_dwHint' -> 16r8.
 		'_OffsetOf_dwType' -> 16r0.
 		'_OffsetOf_pstrName' -> 16rC.
-		'_OffsetOf_vt' -> 16r4
+		'_OffsetOf_vt' -> 16r4.
+		'_PROPBAG2_Size' -> 16r20
 	}!
 OS.COM.PROPBAG2 guid: (Core.GUID fromString: '{b5ebe54f-d5b4-4606-9447-90b11844193f}')!
 OS.COM.PROPBAG2 comment: '`OS.COM.PROPBAG2` is an `External.Structure` class to wrap the struct ''OCIDL.PROPBAG2'' from type information in the ''OCIDL Library'' library.
@@ -40,7 +41,7 @@ clsid: aGUID
 	aGUID
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_clsid + 1)
-		to: ##(_OffsetOf_clsid + GUID basicByteSize)
+		to: ##(_OffsetOf_clsid + GUID._GUID_Size)
 		startingAt: 1!
 
 dwHint
@@ -99,6 +100,9 @@ vt:!**compiled accessors**!public! !
 
 !OS.COM.PROPBAG2 class methodsFor!
 
+byteSize
+	^_PROPBAG2_Size!
+
 defineFields
 	"Define the fields of the PROPBAG2 structure.
 		PROPBAG2 compileDefinition
@@ -125,6 +129,7 @@ defineFields
 getFieldNames
 	^#(#dwType #vt #cfType #dwHint #pstrName #clsid)! !
 !OS.COM.PROPBAG2 class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

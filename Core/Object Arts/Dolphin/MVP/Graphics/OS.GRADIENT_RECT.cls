@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.GRADIENT_RECT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GRADIENT_RECT_Size' -> 16r8.
 		'_OffsetOf_lowerRight' -> 16r4.
 		'_OffsetOf_upperLeft' -> 16r0
 	}!
@@ -56,6 +57,9 @@ upperLeft:!**compiled accessors**!public! !
 
 !OS.GRADIENT_RECT class methodsFor!
 
+byteSize
+	^_GRADIENT_RECT_Size!
+
 defineFields
 	"Define the fields of the GRADIENT_RECT structure.
 
@@ -75,6 +79,7 @@ defineFields
 getFieldNames
 	^#(#upperLeft #lowerRight)! !
 !OS.GRADIENT_RECT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

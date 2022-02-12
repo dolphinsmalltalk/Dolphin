@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.BLENDFUNCTION'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_BLENDFUNCTION_Size' -> 16r4.
 		'_OffsetOf_AlphaFormat' -> 16r3.
 		'_OffsetOf_BlendFlags' -> 16r1.
 		'_OffsetOf_BlendOp' -> 16r0.
@@ -112,6 +113,9 @@ blend: aNumber
 		blend: aNumber;
 		yourself!
 
+byteSize
+	^_BLENDFUNCTION_Size!
+
 defineFields
 	"Define the fields of the BLENDFUNCTION structure.
 
@@ -136,6 +140,7 @@ getFieldNames
 	^#(#BlendOp #BlendFlags #SourceConstantAlpha #AlphaFormat)! !
 !OS.BLENDFUNCTION class categoriesForMethods!
 blend:!instance creation!public! !
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

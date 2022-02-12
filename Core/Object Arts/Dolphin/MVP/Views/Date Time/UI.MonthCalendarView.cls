@@ -95,7 +95,7 @@ mcmGetFirstDayOfWeek
 
 mcmGetMinReqRect
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	self
 		sendMessage: MCM_GETMINREQRECT
 		wParam: 0

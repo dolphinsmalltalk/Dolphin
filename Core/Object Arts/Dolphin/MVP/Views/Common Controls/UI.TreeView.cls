@@ -50,7 +50,7 @@ addNonVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
 					| hItem |
 					tvItem
 						text: (getText value: each) displayString;
-						children: (self model hasChildren: each) asParameter.
+						children: (model hasChildren: each) asParameter.
 					getImage notNil
 						ifTrue: 
 							[(getImage value: each)
@@ -74,7 +74,7 @@ addRoot: anObject
 	self hasLinesAtRoot ifFalse: [self expand: anObject]!
 
 addVirtualItems: aCollection insertStruct: aTVINSERTSTRUCT
-	aTVINSERTSTRUCT item allCallbacks.
+	aTVINSERTSTRUCT allCallbacks.
 	self withOldWndProc: 
 			["Add items with subclassing removed so don't receive TVM_INSERTITEMs"
 			aCollection do: 
@@ -119,7 +119,7 @@ basicAddAll: objects inHandle: aParentHandle afterHandle: aSiblingHandle
 
 	| tvis |
 	objects isEmpty ifTrue: [^objects].
-	tvis := TVINSERTSTRUCTW new.
+	tvis := TVINSERTSTRUCTW newBuffer.
 	tvis
 		hParent: aParentHandle;
 		hInsertAfter: aSiblingHandle.
@@ -171,7 +171,7 @@ basicRefresh: anObject handle: hItem
 	"Private - Update the text, image, and children flag of the specified element of the tree."
 
 	| tvItem |
-	tvItem := TVITEMW new.
+	tvItem := TVITEMW newBuffer.
 	tvItem hItem: hItem.
 	self isVirtual
 		ifTrue: [tvItem allCallbacks]
@@ -362,7 +362,7 @@ getIndent
 
 getItemState: itemHandle
 	| tvItem |
-	(tvItem := TVITEMW new)
+	(tvItem := TVITEMW newBuffer)
 		hItem: itemHandle;
 		mask: ##(TVIF_CHILDREN | TVIF_STATE).
 	self tvmGetItem: tvItem.
@@ -370,7 +370,7 @@ getItemState: itemHandle
 
 getItemText: itemHandle
 	| tvItem |
-	tvItem := TVITEMW new.
+	tvItem := TVITEMW newBuffer.
 	tvItem hItem: itemHandle.
 	tvItem newTextBuffer: 128.
 	self tvmGetItem: tvItem.
@@ -567,14 +567,14 @@ itemCount
 
 	^self sendMessage: TVM_GETCOUNT!
 
-itemFromNMHDRW: pNMHDR
-	^TVITEMW fromAddress: pNMHDR yourAddress + ##(NMHDR byteSize)!
-
 itemRect: itemHandle textOnly: aBoolean
 	"Answers the rectangle surrounding the item with anIntegerIndex within
 	the receiver, optionally for the text label only."
 
 	^(self tvmGetItemRect: itemHandle textOnly: aBoolean) asObject!
+
+itemStructure
+	^TVITEMW!
 
 minimumIndent
 	"Private - Answer the minimum indent separation. This includes the width of any images."
@@ -594,12 +594,11 @@ nmDeleteItem: pNMHDR
 	Remove the itemOld object from our map if it is present.
 	Answer nil to accept the default processing (which we must do or the TreeView leaks)."
 
-	handleObjectMap notEmpty
-		ifTrue: 
-			[| nmtv |
-			nmtv := self notificationClass fromAddress: pNMHDR.
-			(handleObjectMap removeKey: nmtv itemOld hItem ifAbsent: nil)
-				ifNotNil: [:object | objectHandleMap removeKey: object]].
+	handleObjectMap isEmpty
+		ifFalse: 
+			[(handleObjectMap
+				removeKey: (pNMHDR dwordAtOffset: ##(NMTREEVIEWW._OffsetOf_itemOld + TVITEMW._OffsetOf_hItem))
+				ifAbsent: nil) ifNotNil: [:object | objectHandleMap removeKey: object]].
 	^nil!
 
 nmNotify: pNMHDR
@@ -698,17 +697,10 @@ onDisplayDetailsRequired: aTVITEM
 	((requestMask allMask: TVIF_IMAGE) and: [self hasIcons])
 		ifTrue: 
 			[self getImageBlock
-				ifNotNil: 
-					[:getImage |
-					(getImage value: object)
-						ifNotNil: 
-							[:index |
-							aTVITEM
-								image: index - 1;
-								selectedImage: index - 1]]].
+				ifNotNil: [:getImage | (getImage value: object) ifNotNil: [:index | aTVITEM images: index - 1]]].
 	(requestMask allMask: TVIF_CHILDREN)
 		ifTrue: 
-			[aTVITEM children: (self model hasChildren: object) asParameter.
+			[aTVITEM children: (model hasChildren: object) asParameter.
 			"If only requesting children details, tell it to not ask again, regardless of updateMode"
 			requestMask == TVIF_CHILDREN ifTrue: [saveDetails := true]].
 	(requestMask allMask: TVIF_TEXT)
@@ -915,7 +907,7 @@ refreshHasChildren: hItem
 	expansion button or not."
 
 	| tvItem |
-	tvItem := TVITEMW new.
+	tvItem := TVITEMW newBuffer.
 	tvItem
 		hItem: hItem;
 		childrenCallback.
@@ -952,7 +944,7 @@ selection: anObject ifAbsent: exceptionHandler
 	| nodeHandle |
 	anObject isNil ifTrue: [^self resetSelection].
 	nodeHandle := (self findNode: anObject) ifNil: [^exceptionHandler cull: anObject].
-	^(self selectionByIndex: nodeHandle ifAbsent: [])
+	^(self selectionByIndex: nodeHandle ifAbsent: nil)
 		ifNil: [exceptionHandler cull: anObject]
 		ifNotNil: [anObject]!
 
@@ -1073,7 +1065,7 @@ tvmGetItemRect: aHandle textOnly: aBoolean
 	that the item occupies in the tree-view control."
 
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	rect bytes dwordAtOffset: 0 put: aHandle asInteger.
 	self
 		sendMessage: TVM_GETITEMRECT
@@ -1101,12 +1093,11 @@ tvmSetImageList: aWinImageList type: anIntegerImageType
 	"Private - Set the receiver's normal/state image list depending on anIntegerImageType.
 	 Answer the receiver's previous <Imagelist>."
 
-	^ImageList
-		fromHandle: (User32
+	^ImageList fromHandle: (User32
 				sendMessageU: handle
 				msg: TVM_SETIMAGELIST
 				wParam: anIntegerImageType
-				lParam: aWinImageList asParameter) asParameter!
+				lParam: aWinImageList asParameter)!
 
 tvmSetItem: aTvItem
 	"Private - Answer the boolean result of sending the receiver a TVM_SETITEM message."
@@ -1143,20 +1134,22 @@ tvnItemExpanded: pNMHDR
 tvnItemExpanding: pNMHDR
 	"Private - Default handler for the TVN_ITEMEXPANDINGW notification message."
 
-	| tviParent nmtv |
-	nmtv := self notificationClass fromAddress: pNMHDR.
-	nmtv action = TVE_EXPAND ifFalse: [^nil].	"See if we have been expanded before"
-	tviParent := nmtv itemNew.
-	tviParent isStateExpandedOnce ifTrue: [^nil].	"If not, add the children"
-	(self objectFromHandle: tviParent hItem ifAbsent: nil)
+	| tviParent hParent |
+	(pNMHDR dwordAtOffset: NMTREEVIEWW._OffsetOf_action) == TVE_EXPAND ifFalse: [^nil].
+	tviParent := TVITEMW fromAddress: pNMHDR asInteger + NMTREEVIEWW._OffsetOf_itemNew.
+	"See if we have been expanded before"
+	tviParent isStateExpandedOnce ifTrue: [^nil].
+	"If not, add the children"
+	hParent := tviParent hItem.
+	(self objectFromHandle: hParent ifAbsent: nil)
 		ifNotNil: 
 			[:parentObject |
 			Cursor wait showWhile: 
 					[self
 						basicAddAll: (self model childrenOf: parentObject)
-						inHandle: tviParent hItem
-						afterHandle: TVI_LAST].	"Inform the parent item that we don't want to be informed when we 
-			are expanded again"
+						inHandle: hParent
+						afterHandle: TVI_LAST].
+			"Inform the parent item that we don't want to be informed when we are expanded again"
 			tviParent beStateExpandedOnce].
 	^nil	"accept the default processing"!
 
@@ -1317,8 +1310,8 @@ isSelected:!public!testing! !
 isSmallIcons!public!testing! !
 isVirtual!accessing-styles!private! !
 itemCount!accessing!public! !
-itemFromNMHDRW:!event handling-win32!private! !
 itemRect:textOnly:!enquiries!public! !
+itemStructure!constants!private! !
 minimumIndent!constants!public! !
 newMaps!helpers!private! !
 nmDeleteItem:!event handling-win32!private! !

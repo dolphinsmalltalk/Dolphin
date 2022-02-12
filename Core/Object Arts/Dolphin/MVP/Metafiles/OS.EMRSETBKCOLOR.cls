@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSETBKCOLOR'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSETBKCOLOR_Size' -> 16rC.
 		'_OffsetOf_crColor' -> 16r8
 	}!
 OS.EMRSETBKCOLOR guid: (Core.GUID fromString: '{22221f37-ae5e-4040-aa50-03d7ca9f82cb}')!
@@ -42,6 +43,9 @@ crColor:!**compiled accessors**!public! !
 
 !OS.EMRSETBKCOLOR class methodsFor!
 
+byteSize
+	^_EMRSETBKCOLOR_Size!
+
 defineFields
 	"Define the fields of the EMRSETBKCOLOR structure.
 
@@ -69,6 +73,7 @@ iTypes
 
 	^{EMR_SETBKCOLOR. EMR_SETTEXTCOLOR}! !
 !OS.EMRSETBKCOLOR class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

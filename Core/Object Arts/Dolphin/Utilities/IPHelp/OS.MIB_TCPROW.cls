@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.MIB_TCPROW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_TCPROW_Size' -> 16r14.
 		'_OffsetOf_dwLocalAddr' -> 16r4.
 		'_OffsetOf_dwLocalPort' -> 16r8.
 		'_OffsetOf_dwRemoteAddr' -> 16rC.
@@ -86,6 +87,9 @@ portName!accessing!public! !
 
 !OS.MIB_TCPROW class methodsFor!
 
+byteSize
+	^_MIB_TCPROW_Size!
+
 defineFields
 	"Define the fields of the MIB_TCPROW structure.
 		MIB_TCPROW compileDefinition
@@ -121,6 +125,7 @@ defineFields
 getFieldNames
 	^#(#dwState #dwLocalAddr #dwLocalPort #dwRemoteAddr #dwRemotePort)! !
 !OS.MIB_TCPROW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRPLGBLT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRPLGBLT_Size' -> 16r8C.
 		'_OffsetOf_aptlDest' -> 16r18.
 		'_OffsetOf_cbBitsMask' -> 16r88.
 		'_OffsetOf_cbBitsSrc' -> 16r6C.
@@ -76,7 +77,7 @@ aptlDest: aStructureArrayOfPOINTL
 	"Set the receiver's 'aptlDest' field to the value of the argument, aStructureArrayOfPOINTL"
 
 	| size |
-	size := aStructureArrayOfPOINTL byteSize min: ##(3 * POINTL basicByteSize).
+	size := aStructureArrayOfPOINTL byteSize min: ##(3 * POINTL._POINTL_Size).
 	aStructureArrayOfPOINTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_aptlDest + 1)
@@ -218,13 +219,13 @@ rclBounds
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: aRECT
-	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
+rclBounds: aRECTL
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1!
 
 xformSrc
@@ -238,7 +239,7 @@ xformSrc: aXFORM
 	aXFORM
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_xformSrc + 1)
-		to: ##(_OffsetOf_xformSrc + XFORM basicByteSize)
+		to: ##(_OffsetOf_xformSrc + XFORM._XFORM_Size)
 		startingAt: 1!
 
 xMask
@@ -324,6 +325,9 @@ ySrc:!**compiled accessors**!public! !
 !
 
 !OS.EMRPLGBLT class methodsFor!
+
+byteSize
+	^_EMRPLGBLT_Size!
 
 defineFields
 	"Define the fields of the EMRPLGBLT structure.
@@ -428,6 +432,7 @@ iTypes
 
 	^{EMR_PLGBLT}! !
 !OS.EMRPLGBLT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

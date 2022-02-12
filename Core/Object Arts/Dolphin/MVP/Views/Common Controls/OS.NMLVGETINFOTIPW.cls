@@ -6,6 +6,7 @@ OS.NMGETINFOTIP subclass: #'OS.NMLVGETINFOTIPW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMLVGETINFOTIPW_Size' -> 16r24.
 		'_OffsetOf_cchTextMax' -> 16r14.
 		'_OffsetOf_dwFlags' -> 16rC.
 		'_OffsetOf_iItem' -> 16r18.
@@ -58,6 +59,9 @@ pszText!**compiled accessors**!public! !
 
 !OS.NMLVGETINFOTIPW class methodsFor!
 
+byteSize
+	^_NMLVGETINFOTIPW_Size!
+
 defineFields
 	"Define the structure template for Win32 NMLVGETINFOTIPW structure.
 	Implementation Note: We define the text field as an address because we
@@ -89,6 +93,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwFlags #pszText #cchTextMax #iItem #iSubItem)! !
 !OS.NMLVGETINFOTIPW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

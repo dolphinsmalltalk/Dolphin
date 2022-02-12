@@ -6,6 +6,7 @@ External.ExternalArray subclass: #'OS.COM.CountedArray'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CountedArray_Size' -> 16r8.
 		'_OffsetOf_cElems' -> 16r0.
 		'_OffsetOf_pElems' -> 16r4
 	}!
@@ -114,6 +115,9 @@ uncheckedAt:put:!accessing!private! !
 
 !OS.COM.CountedArray class methodsFor!
 
+byteSize
+	^_CountedArray_Size!
+
 clear: addressOrBytes
 	"Free an instance of the structure which instances of the receiver wrap
 	which resides at the specified address."
@@ -158,6 +162,7 @@ onStartup
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
 !OS.COM.CountedArray class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !
 initialize!development!initializing!private! !

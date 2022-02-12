@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMREXTSELECTCLIPRGN'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMREXTSELECTCLIPRGN_Size' -> 16r14.
 		'_OffsetOf_cbRgnData' -> 16r8.
 		'_OffsetOf_iMode' -> 16rC.
 		'_OffsetOf_RGNDATA' -> 16r10
@@ -77,6 +78,9 @@ RGNDATA:!**compiled accessors**!public! !
 
 !OS.EMREXTSELECTCLIPRGN class methodsFor!
 
+byteSize
+	^_EMREXTSELECTCLIPRGN_Size!
+
 defineFields
 	"Define the fields of the EMREXTSELECTCLIPRGN structure.
 
@@ -111,6 +115,7 @@ iTypes
 
 	^{EMR_EXTSELECTCLIPRGN}! !
 !OS.EMREXTSELECTCLIPRGN class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

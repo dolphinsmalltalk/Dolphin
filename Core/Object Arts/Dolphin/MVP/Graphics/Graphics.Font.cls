@@ -77,7 +77,7 @@ initialize
 	"Initialise the receiver."
 
 	super initialize.
-	(logfont := LOGFONTW new) lfWeight: FW_NORMAL.
+	(logfont := LOGFONTW newBuffer) lfWeight: FW_NORMAL.
 	resolution := self desktopResolution!
 
 isBold

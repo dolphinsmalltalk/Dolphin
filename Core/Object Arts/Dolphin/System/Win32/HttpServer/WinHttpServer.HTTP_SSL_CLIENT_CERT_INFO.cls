@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SSL_CLIENT_CERT
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SSL_CLIENT_CERT_INFO_Size' -> 16r14.
 		'_OffsetOf_CertDeniedByMapper' -> 16r10.
 		'_OffsetOf_CertEncodedSize' -> 16r4.
 		'_OffsetOf_CertFlags' -> 16r0.
@@ -89,6 +90,9 @@ Token:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO class methodsFor!
 
+byteSize
+	^_HTTP_SSL_CLIENT_CERT_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_SSL_CLIENT_CERT_INFO structure.
 
@@ -115,6 +119,7 @@ defineFields
 getFieldNames
 	^#(#CertFlags #CertEncodedSize #pCertEncoded #Token)! !
 !WinHttpServer.HTTP_SSL_CLIENT_CERT_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

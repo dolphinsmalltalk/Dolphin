@@ -6,6 +6,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GdiplusStartupOutput'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GdiplusStartupOutput_Size' -> 16r8.
 		'_OffsetOf_NotificationHook' -> 16r0.
 		'_OffsetOf_NotificationUnhook' -> 16r4
 	}!
@@ -54,6 +55,9 @@ NotificationUnhook:!**compiled accessors**!public! !
 
 !Graphics.Gdiplus.GdiplusStartupOutput class methodsFor!
 
+byteSize
+	^_GdiplusStartupOutput_Size!
+
 defineFields
 	"Define the fields of the GdiplusStartupOutput structure.
 		GdiplusStartupOutput compileDefinition
@@ -77,6 +81,7 @@ defineFields
 getFieldNames
 	^#(#NotificationHook #NotificationUnhook)! !
 !Graphics.Gdiplus.GdiplusStartupOutput class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

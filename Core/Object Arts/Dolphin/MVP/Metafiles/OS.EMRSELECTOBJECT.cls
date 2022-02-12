@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSELECTOBJECT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSELECTOBJECT_Size' -> 16rC.
 		'_OffsetOf_ihObject' -> 16r8
 	}!
 OS.EMRSELECTOBJECT guid: (Core.GUID fromString: '{7a1bcb22-ae68-4f89-8318-06efd07dfcdb}')!
@@ -42,6 +43,9 @@ ihObject:!**compiled accessors**!public! !
 
 !OS.EMRSELECTOBJECT class methodsFor!
 
+byteSize
+	^_EMRSELECTOBJECT_Size!
+
 defineFields
 	"Define the fields of the EMRSELECTOBJECT structure.
 
@@ -69,6 +73,7 @@ iTypes
 
 	^{EMR_SELECTOBJECT. EMR_DELETEOBJECT}! !
 !OS.EMRSELECTOBJECT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

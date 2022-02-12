@@ -272,6 +272,7 @@ External.Structure subclass: #'OS.COM.Interface'
 	imports: #(#{OS.Win32Constants private} #{OS.Win32Errors private} #{OS.COM.OLEConstants})
 	classInstanceVariableNames: 'argSizes functions typeLib'
 	classConstants: {
+		'_Interface_Size' -> 16r10.
 		'_OffsetOf_argSizes' -> 16r4.
 		'_OffsetOf_interfaceCookie' -> 16rC.
 		'_OffsetOf_objectCookie' -> 16r8.
@@ -289,6 +290,7 @@ External.ExternalArray subclass: #'OS.COM.CountedArray'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CountedArray_Size' -> 16r8.
 		'_OffsetOf_cElems' -> 16r0.
 		'_OffsetOf_pElems' -> 16r4
 	}!
@@ -297,13 +299,17 @@ OS.COM.CountedArray subclass: #'OS.COM.CADWORD'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_CADWORD_Size' -> 16r8
+	}!
 OS.COM.CountedArray subclass: #'OS.COM.CALPOLESTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_CALPOLESTR_Size' -> 16r8
+	}!
 OS.COM.Interface subclass: #'OS.COM.IUnknown'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -376,6 +382,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.COAUTHIDENTITY'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_COAUTHIDENTITY_Size' -> 16r1C.
 		'_OffsetOf_Domain' -> 16r8.
 		'_OffsetOf_DomainLength' -> 16rC.
 		'_OffsetOf_Flags' -> 16r18.
@@ -390,6 +397,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.COAUTHINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_COAUTHINFO_Size' -> 16r1C.
 		'_OffsetOf_dwAuthnLevel' -> 16rC.
 		'_OffsetOf_dwAuthnSvc' -> 16r0.
 		'_OffsetOf_dwAuthzSvc' -> 16r4.
@@ -404,6 +412,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.COSERVERINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_COSERVERINFO_Size' -> 16r10.
 		'_OffsetOf_dwReserved1' -> 16r0.
 		'_OffsetOf_dwReserved2' -> 16rC.
 		'_OffsetOf_pAuthInfo' -> 16r8.
@@ -421,6 +430,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.LICINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LICINFO_Size' -> 16rC.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_fLicVerified' -> 16r8.
 		'_OffsetOf_fRuntimeKeyAvail' -> 16r4
@@ -431,6 +441,7 @@ OS.COM.FinalizableStructure subclass: #'OS.COM.EXCEPINFO'
 	imports: #(#{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EXCEPINFO_Size' -> 16r20.
 		'_OffsetOf_dwHelpContext' -> 16r10.
 		'_OffsetOf_pfnDeferredFillIn' -> 16r18.
 		'_OffsetOf_pvReserved' -> 16r14.
@@ -447,6 +458,7 @@ OS.COM.FinalizableStructure subclass: #'OS.COM.MULTI_QI'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MULTI_QI_Size' -> 16rC.
 		'_OffsetOf_hr' -> 16r8.
 		'_OffsetOf_pIID' -> 16r0.
 		'_OffsetOf_pItf' -> 16r4

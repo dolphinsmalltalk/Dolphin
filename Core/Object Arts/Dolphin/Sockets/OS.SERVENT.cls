@@ -9,7 +9,8 @@ OS.Win32Structure subclass: #'OS.SERVENT'
 		'_OffsetOf_s_aliases' -> 16r4.
 		'_OffsetOf_s_name' -> 16r0.
 		'_OffsetOf_s_port' -> 16r8.
-		'_OffsetOf_s_proto' -> 16rC
+		'_OffsetOf_s_proto' -> 16rC.
+		'_SERVENT_Size' -> 16r10
 	}!
 OS.SERVENT guid: (Core.GUID fromString: '{87b4c610-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.SERVENT comment: '<SERVENT> is an <ExternalStructure> class to wrap the struct ''Win32.SERVENT'' from type information in the ''Win32 API'' library.
@@ -82,6 +83,9 @@ s_proto!**compiled accessors**!public! !
 
 !OS.SERVENT class methodsFor!
 
+byteSize
+	^_SERVENT_Size!
+
 defineFields
 	"Define the fields of the SERVENT structure.
 
@@ -125,6 +129,7 @@ fromString: aString
 getFieldNames
 	^#(#s_name #s_port #s_proto)! !
 !OS.SERVENT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 fromInteger:!public! !
 fromString:!public! !

@@ -53,7 +53,7 @@ position
 	"Answer a <Point> representing the position at which the files were dropped."
 
 	| struct |
-	struct := POINTL new.
+	struct := POINTL newBuffer.
 	Shell32 dragQueryPoint: handle lppt: struct.
 	^struct asPoint!
 

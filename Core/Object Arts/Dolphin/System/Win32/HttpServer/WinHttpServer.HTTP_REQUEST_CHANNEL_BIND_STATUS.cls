@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_CHANNEL
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_REQUEST_CHANNEL_BIND_STATUS_Size' -> 16r10.
 		'_OffsetOf_ChannelToken' -> 16r4.
 		'_OffsetOf_ChannelTokenSize' -> 16r8.
 		'_OffsetOf_Flags' -> 16rC.
@@ -74,6 +75,9 @@ ServiceName:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS class methodsFor!
 
+byteSize
+	^_HTTP_REQUEST_CHANNEL_BIND_STATUS_Size!
+
 defineFields
 	"Define the fields of the HTTP_REQUEST_CHANNEL_BIND_STATUS structure.
 
@@ -98,6 +102,7 @@ defineFields
 getFieldNames
 	^#(#ServiceName #ChannelToken #ChannelTokenSize)! !
 !WinHttpServer.HTTP_REQUEST_CHANNEL_BIND_STATUS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

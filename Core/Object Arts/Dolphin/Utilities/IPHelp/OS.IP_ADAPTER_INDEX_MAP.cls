@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.IP_ADAPTER_INDEX_MAP'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IP_ADAPTER_INDEX_MAP_Size' -> 16r104.
 		'_OffsetOf_index' -> 16r0.
 		'_OffsetOf_Name' -> 16r4
 	}!
@@ -43,6 +44,9 @@ Name!**compiled accessors**!public! !
 
 !OS.IP_ADAPTER_INDEX_MAP class methodsFor!
 
+byteSize
+	^_IP_ADAPTER_INDEX_MAP_Size!
+
 defineFields
 	"Define the fields of the IP_ADAPTER_INDEX_MAP structure.
 		IP_ADAPTER_INDEX_MAP compileDefinition
@@ -68,6 +72,7 @@ defineFields
 getFieldNames
 	^#(#index #Name)! !
 !OS.IP_ADAPTER_INDEX_MAP class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -6,6 +6,7 @@ OS.EMREXTTEXTOUT subclass: #'OS.EMREXTTEXTOUTA'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMREXTTEXTOUTA_Size' -> 16r50.
 		'_OffsetOf_text' -> 16r4C
 	}!
 OS.EMREXTTEXTOUTA guid: (Core.GUID fromString: '{897dbf3a-44ad-4594-ae7e-957cb1e28374}')!
@@ -53,6 +54,9 @@ text:!accessing!public! !
 
 !OS.EMREXTTEXTOUTA class methodsFor!
 
+byteSize
+	^_EMREXTTEXTOUTA_Size!
+
 defineFields
 	"Define the fields of the EMREXTTEXTOUTA structure.
 
@@ -70,6 +74,7 @@ iTypes
 
 	^{EMR_EXTTEXTOUTA}! !
 !OS.EMREXTTEXTOUTA class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

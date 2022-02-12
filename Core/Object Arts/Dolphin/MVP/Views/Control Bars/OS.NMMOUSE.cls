@@ -6,6 +6,7 @@ OS.NMHDR subclass: #'OS.NMMOUSE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMMOUSE_Size' -> 16r20.
 		'_OffsetOf_dwHitInfo' -> 16r1C.
 		'_OffsetOf_dwItemData' -> 16r10.
 		'_OffsetOf_dwItemSpec' -> 16rC.
@@ -58,6 +59,9 @@ pt!**compiled accessors**!public! !
 
 !OS.NMMOUSE class methodsFor!
 
+byteSize
+	^_NMMOUSE_Size!
+
 defineFields
 	"Define the structure template for Win32 NMMOUSE structure.
 		self compileDefinition
@@ -73,6 +77,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwItemSpec #dwItemData #pt #dwHitInfo)! !
 !OS.NMMOUSE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

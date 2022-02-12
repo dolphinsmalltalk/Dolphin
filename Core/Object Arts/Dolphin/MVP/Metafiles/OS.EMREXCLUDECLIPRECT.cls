@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMREXCLUDECLIPRECT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMREXCLUDECLIPRECT_Size' -> 16r18.
 		'_OffsetOf_rclClip' -> 16r8
 	}!
 OS.EMREXCLUDECLIPRECT guid: (Core.GUID fromString: '{8747d7ee-6f40-4b1b-a573-4097e175337d}')!
@@ -31,13 +32,13 @@ rclClip
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclClip!
 
-rclClip: aRECT
-	"Set the receiver's 'rclClip' field to the value of the argument, aRECT"
+rclClip: aRECTL
+	"Set the receiver's 'rclClip' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclClip + 1)
-		to: ##(_OffsetOf_rclClip + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclClip + RECTL._RECTL_Size)
 		startingAt: 1! !
 !OS.EMREXCLUDECLIPRECT categoriesForMethods!
 rclClip!**compiled accessors**!public! !
@@ -45,6 +46,9 @@ rclClip:!**compiled accessors**!public! !
 !
 
 !OS.EMREXCLUDECLIPRECT class methodsFor!
+
+byteSize
+	^_EMREXCLUDECLIPRECT_Size!
 
 defineFields
 	"Define the fields of the EMREXCLUDECLIPRECT structure.
@@ -73,6 +77,7 @@ iTypes
 
 	^{EMR_EXCLUDECLIPRECT. EMR_INTERSECTCLIPRECT}! !
 !OS.EMREXCLUDECLIPRECT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

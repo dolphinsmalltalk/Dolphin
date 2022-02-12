@@ -5,7 +5,9 @@ OS.COM.CountedArray subclass: #'OS.COM.CALPOLESTR'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_CALPOLESTR_Size' -> 16r8
+	}!
 OS.COM.CALPOLESTR guid: (Core.GUID fromString: '{b4cb3d32-bc0e-4c28-8f52-10f224f37e2f}')!
 OS.COM.CALPOLESTR comment: '<CALPOLESTR> is an <ExternalStructure> class to wrap the struct ''OCIDL.CALPOLESTR'' from type information in the ''OCIDL Library'' library.
 
@@ -38,6 +40,9 @@ getElements!accessing!private! !
 
 !OS.COM.CALPOLESTR class methodsFor!
 
+byteSize
+	^_CALPOLESTR_Size!
+
 defineFields
 	"Define the fields of the CALPOLESTR structure.
 		CALPOLESTR compileDefinition
@@ -58,6 +63,7 @@ elementClass
 	^LPWSTR
 ! !
 !OS.COM.CALPOLESTR class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 elementClass!constants!public! !
 !

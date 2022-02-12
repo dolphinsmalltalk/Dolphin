@@ -199,7 +199,7 @@ position
 	"Answer a Point containing the current cursor position in screen co-ordinates."
 
 	| pos |
-	pos := POINTL new.
+	pos := POINTL newBuffer.
 	User32 getCursorPos: pos.
 	^pos asPoint!
 

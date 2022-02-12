@@ -134,7 +134,8 @@ OS.Win32Structure subclass: #'OS.TOOLINFOW'
 		'_OffsetOf_lpszText' -> 16r24.
 		'_OffsetOf_rect' -> 16r10.
 		'_OffsetOf_uFlags' -> 16r4.
-		'_OffsetOf_uId' -> 16rC
+		'_OffsetOf_uId' -> 16rC.
+		'_TOOLINFOW_Size' -> 16r30
 	}!
 UI.ControlView subclass: #'UI.Tooltip'
 	instanceVariableNames: ''

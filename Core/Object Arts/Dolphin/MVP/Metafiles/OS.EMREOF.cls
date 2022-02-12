@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMREOF'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMREOF_Size' -> 16r14.
 		'_OffsetOf_nPalEntries' -> 16r8.
 		'_OffsetOf_nSizeLast' -> 16r10.
 		'_OffsetOf_offPalEntries' -> 16rC
@@ -70,6 +71,9 @@ offPalEntries:!**compiled accessors**!public! !
 
 !OS.EMREOF class methodsFor!
 
+byteSize
+	^_EMREOF_Size!
+
 defineFields
 	"Define the fields of the EMREOF structure.
 
@@ -105,6 +109,7 @@ iTypes
 
 	^{EMR_EOF}! !
 !OS.EMREOF class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

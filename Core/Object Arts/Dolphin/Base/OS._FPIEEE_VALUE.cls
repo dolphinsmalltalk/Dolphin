@@ -6,6 +6,7 @@ External.Structure subclass: #'OS._FPIEEE_VALUE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'__FPIEEE_VALUE_Size' -> 16r18.
 		'_OffsetOf_filler' -> 16r14.
 		'_OffsetOf_flags' -> 16r10.
 		'_OffsetOf_value' -> 16r0
@@ -66,6 +67,9 @@ value!accessing!public! !
 
 !OS._FPIEEE_VALUE class methodsFor!
 
+byteSize
+	^__FPIEEE_VALUE_Size!
+
 defineFields
 	"Define the fields of the _FPIEEE_VALUE 'structure'.
 
@@ -83,6 +87,7 @@ formatCodes
 getFieldNames
 	^#(#flags)! !
 !OS._FPIEEE_VALUE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 formatCodes!constants!public! !
 getFieldNames!**compiled accessors**!constants!private! !

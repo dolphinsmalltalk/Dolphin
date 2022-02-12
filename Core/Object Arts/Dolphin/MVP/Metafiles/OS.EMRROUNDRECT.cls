@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRROUNDRECT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRROUNDRECT_Size' -> 16r20.
 		'_OffsetOf_rclBox' -> 16r8.
 		'_OffsetOf_szlCorner' -> 16r18
 	}!
@@ -33,27 +34,27 @@ rclBox
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBox!
 
-rclBox: aRECT
-	"Set the receiver's 'rclBox' field to the value of the argument, aRECT"
+rclBox: aRECTL
+	"Set the receiver's 'rclBox' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBox + 1)
-		to: ##(_OffsetOf_rclBox + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBox + RECTL._RECTL_Size)
 		startingAt: 1!
 
 szlCorner
-	"Answer the <SIZE> value of the receiver's 'szlCorner' field."
+	"Answer the <SIZEL> value of the receiver's 'szlCorner' field."
 
 	^SIZEL fromAddress: bytes yourAddress + _OffsetOf_szlCorner!
 
-szlCorner: aSIZE
-	"Set the receiver's 'szlCorner' field to the value of the argument, aSIZE"
+szlCorner: aSIZEL
+	"Set the receiver's 'szlCorner' field to the value of the argument, aSIZEL"
 
-	aSIZE
+	aSIZEL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_szlCorner + 1)
-		to: ##(_OffsetOf_szlCorner + SIZEL basicByteSize)
+		to: ##(_OffsetOf_szlCorner + SIZEL._SIZEL_Size)
 		startingAt: 1! !
 !OS.EMRROUNDRECT categoriesForMethods!
 rclBox!**compiled accessors**!public! !
@@ -63,6 +64,9 @@ szlCorner:!**compiled accessors**!public! !
 !
 
 !OS.EMRROUNDRECT class methodsFor!
+
+byteSize
+	^_EMRROUNDRECT_Size!
 
 defineFields
 	"Define the fields of the EMRROUNDRECT structure.
@@ -95,6 +99,7 @@ iTypes
 
 	^{EMR_ROUNDRECT}! !
 !OS.EMRROUNDRECT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

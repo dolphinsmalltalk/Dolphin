@@ -338,7 +338,7 @@ itemRect: anIntegerIndex
 	the receiver"
 
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	self
 		sendMessage: LB_GETITEMRECT
 		wParam: anIntegerIndex - 1
@@ -467,9 +467,7 @@ newToggleSelectionsFromEvent: aMouseEvent
 	aMouseEvent button == #left
 		ifTrue: [newSelections remove: itemClicked ifAbsent: [newSelections add: itemClicked]]
 		ifFalse: [aMouseEvent isModifierDown ifFalse: [newSelections add: itemClicked]].
-	^newSelections asArray
-		sort;
-		yourself!
+	^newSelections asSortedArray!
 
 onLeftButtonPressed: aMouseEvent
 	"Handle a left button down mouse event. We intercede here in order to detect selection change events, and, if the view/presenter don't want the selection changed, then the message is absorbed without passing it to the control. Otherwise accept the default window processing."

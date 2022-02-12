@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRMODIFYWORLDTRANSFORM'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRMODIFYWORLDTRANSFORM_Size' -> 16r24.
 		'_OffsetOf_iMode' -> 16r20.
 		'_OffsetOf_XFORM' -> 16r8
 	}!
@@ -49,7 +50,7 @@ XFORM: aXFORM
 	aXFORM
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_XFORM + 1)
-		to: ##(_OffsetOf_XFORM + XFORM basicByteSize)
+		to: ##(_OffsetOf_XFORM + XFORM._XFORM_Size)
 		startingAt: 1! !
 !OS.EMRMODIFYWORLDTRANSFORM categoriesForMethods!
 iMode!**compiled accessors**!public! !
@@ -59,6 +60,9 @@ XFORM:!**compiled accessors**!public! !
 !
 
 !OS.EMRMODIFYWORLDTRANSFORM class methodsFor!
+
+byteSize
+	^_EMRMODIFYWORLDTRANSFORM_Size!
 
 defineFields
 	"Define the fields of the EMRMODIFYWORLDTRANSFORM structure.
@@ -91,6 +95,7 @@ iTypes
 
 	^{EMR_MODIFYWORLDTRANSFORM}! !
 !OS.EMRMODIFYWORLDTRANSFORM class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

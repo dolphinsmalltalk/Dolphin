@@ -96,7 +96,7 @@ bounds
 	"Answer a bounding Rectangle for the receiver."
 
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	Gdip gdipGetPathGradientRectI: self asParameter rect: rect.
 	^rect asRectangle!
 
@@ -117,7 +117,7 @@ centerPoint
 	"Answer the center point of the receiver."
 
 	| point |
-	point := POINTL new.
+	point := POINTL newBuffer.
 	Gdip gdipGetPathGradientCenterPointI: self asParameter points: point.
 	^point asPoint!
 

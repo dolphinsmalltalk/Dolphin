@@ -6,6 +6,7 @@ OS.IpHlpApiTableStruct subclass: #'OS.MIB_TCPTABLE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_TCPTABLE_Size' -> 16r18.
 		'_OffsetOf_table' -> 16r4
 	}!
 OS.MIB_TCPTABLE guid: (Core.GUID fromString: '{1308bd96-edb7-4030-85b1-a6651a737122}')!
@@ -39,6 +40,9 @@ table!**compiled accessors**!public! !
 
 !OS.MIB_TCPTABLE class methodsFor!
 
+byteSize
+	^_MIB_TCPTABLE_Size!
+
 defineFields
 	"Define the fields of the MIB_TCPTABLE structure.
 		MIB_TCPTABLE compileDefinition
@@ -62,6 +66,7 @@ defineFields
 getFieldNames
 	^#(#dwNumEntries #table)! !
 !OS.MIB_TCPTABLE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

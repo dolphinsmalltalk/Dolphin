@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.IP_ADAPTER_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IP_ADAPTER_INFO_Size' -> 16r280.
 		'_OffsetOf_AdapterName' -> 16r8.
 		'_OffsetOf_Address' -> 16r194.
 		'_OffsetOf_AddressLength' -> 16r190.
@@ -171,6 +172,9 @@ type!**compiled accessors**!public! !
 
 !OS.IP_ADAPTER_INFO class methodsFor!
 
+byteSize
+	^_IP_ADAPTER_INFO_Size!
+
 defineFields
 	"Define the fields of the IP_ADAPTER_INFO structure.
 		IP_ADAPTER_INFO compileDefinition
@@ -278,6 +282,7 @@ defineFields
 getFieldNames
 	^#(#Next #ComboIndex #AdapterName #Description #AddressLength #Address #index #type #DhcpEnabled #CurrentIpAddress #IpAddressList #GatewayList #DhcpServer #HaveWins #PrimaryWinsServer #SecondaryWinsServer #LeaseObtained #LeaseExpires)! !
 !OS.IP_ADAPTER_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

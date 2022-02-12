@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSETCOLORSPACE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSETCOLORSPACE_Size' -> 16rC.
 		'_OffsetOf_ihCS' -> 16r8
 	}!
 OS.EMRSETCOLORSPACE guid: (Core.GUID fromString: '{619bf7a2-5722-4d4b-843e-a482ed1e1b39}')!
@@ -42,6 +43,9 @@ ihCS:!**compiled accessors**!public! !
 
 !OS.EMRSETCOLORSPACE class methodsFor!
 
+byteSize
+	^_EMRSETCOLORSPACE_Size!
+
 defineFields
 	"Define the fields of the EMRSETCOLORSPACE structure.
 
@@ -69,6 +73,7 @@ iTypes
 
 	^{EMR_SETCOLORSPACE. EMR_DELETECOLORSPACE}! !
 !OS.EMRSETCOLORSPACE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

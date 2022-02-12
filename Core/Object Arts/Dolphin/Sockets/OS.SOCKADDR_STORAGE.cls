@@ -9,7 +9,8 @@ OS.SOCKADDR subclass: #'OS.SOCKADDR_STORAGE'
 		'_OffsetOf___ss_align' -> 16r8.
 		'_OffsetOf___ss_pad1' -> 16r2.
 		'_OffsetOf___ss_pad2' -> 16r10.
-		'_OffsetOf_ss_family' -> 16r0
+		'_OffsetOf_ss_family' -> 16r0.
+		'_SOCKADDR_STORAGE_Size' -> 16r80
 	}!
 OS.SOCKADDR_STORAGE guid: (Core.GUID fromString: '{ff1980c9-d114-4e61-8569-e2ed5321209b}')!
 OS.SOCKADDR_STORAGE comment: '<SOCKADDR_STORAGE> is an <ExternalStructure> class to wrap the struct ''Win32.SOCKADDR_STORAGE'' from type information in the ''Win32 API'' library.
@@ -31,6 +32,9 @@ struct tagSOCKADDR_STORAGE {
 '!
 !OS.SOCKADDR_STORAGE categoriesForClass!Win32-Structs! !
 !OS.SOCKADDR_STORAGE class methodsFor!
+
+byteSize
+	^_SOCKADDR_STORAGE_Size!
 
 defineFields
 	"Define the fields of the SOCKADDR_STORAGE structure.
@@ -56,6 +60,7 @@ defineFields
 getFieldNames
 	^#()! !
 !OS.SOCKADDR_STORAGE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

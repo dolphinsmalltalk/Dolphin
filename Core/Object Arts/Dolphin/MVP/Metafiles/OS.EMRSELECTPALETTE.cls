@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSELECTPALETTE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSELECTPALETTE_Size' -> 16rC.
 		'_OffsetOf_ihPal' -> 16r8
 	}!
 OS.EMRSELECTPALETTE guid: (Core.GUID fromString: '{2bd77a04-2b0c-4d93-b7b6-a55fbb1003ab}')!
@@ -42,6 +43,9 @@ ihPal:!**compiled accessors**!public! !
 
 !OS.EMRSELECTPALETTE class methodsFor!
 
+byteSize
+	^_EMRSELECTPALETTE_Size!
+
 defineFields
 	"Define the fields of the EMRSELECTPALETTE structure.
 
@@ -69,6 +73,7 @@ iTypes
 
 	^{EMR_SELECTPALETTE}! !
 !OS.EMRSELECTPALETTE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

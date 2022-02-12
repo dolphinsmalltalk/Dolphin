@@ -6,6 +6,7 @@ Kernel.SharedPool subclass: #'OS.TreeViewConstants'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'I_CHILDRENCALLBACK' -> -16r1.
 		'TV_FIRST' -> 16r1100.
 		'TVC_BYKEYBOARD' -> 16r2.
 		'TVC_UNKNOWN' -> 16r0.

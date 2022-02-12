@@ -6,6 +6,7 @@ OS.AbstractIN_ADDR subclass: #'OS.IN_ADDR'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IN_ADDR_Size' -> 16r4.
 		'_OffsetOf_s_addr' -> 16r0.
 		'_OffsetOf_s_b1' -> 16r0.
 		'_OffsetOf_s_b2' -> 16r1.
@@ -80,6 +81,9 @@ address: anInternetAddress
 addressFamily
 	^WinSocketConstants.AF_INET!
 
+byteSize
+	^_IN_ADDR_Size!
+
 defineFields
 	"Define the fields of the IN_ADDR structure.
 
@@ -118,6 +122,7 @@ getFieldNames
 !OS.IN_ADDR class categoriesForMethods!
 address:!instance creation!public! !
 addressFamily!constants!public! !
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

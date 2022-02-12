@@ -66,6 +66,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.CONNECTDATA'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CONNECTDATA_Size' -> 16r8.
 		'_OffsetOf_dwCookie' -> 16r4.
 		'_OffsetOf_punk' -> 16r0
 	}!

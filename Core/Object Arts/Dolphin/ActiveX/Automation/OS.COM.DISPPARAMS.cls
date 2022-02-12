@@ -6,6 +6,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.DISPPARAMS'
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_DISPPARAMS_Size' -> 16r10.
 		'_OffsetOf_cArgs' -> 16r8.
 		'_OffsetOf_cNamedArgs' -> 16rC.
 		'_OffsetOf_rgdispidNamedArgs' -> 16r4.
@@ -182,6 +183,9 @@ singleArg!accessing!public! !
 
 !OS.COM.DISPPARAMS class methodsFor!
 
+byteSize
+	^_DISPPARAMS_Size!
+
 defineFields
 	"Define the fields of the DISPPARAMSstructure.
 
@@ -244,6 +248,7 @@ zeroArgs
 
 	^ZeroArgs! !
 !OS.COM.DISPPARAMS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 initialize!development!initializing!private! !

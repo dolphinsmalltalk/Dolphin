@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.AbstractLOGFONT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_AbstractLOGFONT_Size' -> 16r1C.
 		'_OffsetOf_lfCharSet' -> 16r17.
 		'_OffsetOf_lfClipPrecision' -> 16r19.
 		'_OffsetOf_lfEscapement' -> 16r8.
@@ -186,6 +187,9 @@ lfWidth:!**compiled accessors**!public! !
 
 !OS.AbstractLOGFONT class methodsFor!
 
+byteSize
+	^_AbstractLOGFONT_Size!
+
 defineFields
 	"Define the Win32 LOGFONT structure.
 		AbstractLOGFONT compileDefinition.
@@ -209,6 +213,7 @@ defineFields
 getFieldNames
 	^#(#lfHeight #lfWidth #lfEscapement #lfOrientation #lfWeight #lfItalic #lfUnderline #lfStrikeOut #lfCharSet #lfOutPrecision #lfClipPrecision #lfQuality #lfPitchAndFamily #lfFaceName)! !
 !OS.AbstractLOGFONT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!constants!private! !
 !

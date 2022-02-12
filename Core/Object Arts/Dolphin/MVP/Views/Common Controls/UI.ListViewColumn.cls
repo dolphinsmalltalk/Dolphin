@@ -431,7 +431,7 @@ getInfoTipBlock:!accessing!public! !
 getTextBlock!adapters!public! !
 getTextBlock:!adapters!public! !
 headerIcon:!helpers!private! !
-imageFromRow:!adapters!private!wine fix! !
+imageFromRow:!adapters!private! !
 index!accessing!public! !
 infoTipFromRow:withPrefix:!adapters!private! !
 initialize!initializing!private! !

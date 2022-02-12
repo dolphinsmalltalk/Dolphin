@@ -15,7 +15,8 @@ OS.Win32Structure subclass: #'OS.TBBUTTONINFOW'
 		'_OffsetOf_idCommand' -> 16r8.
 		'_OffsetOf_iImage' -> 16rC.
 		'_OffsetOf_lParam' -> 16r14.
-		'_OffsetOf_pszText' -> 16r18
+		'_OffsetOf_pszText' -> 16r18.
+		'_TBBUTTONINFOW_Size' -> 16r20
 	}!
 OS.TBBUTTONINFOW guid: (Core.GUID fromString: '{7fe067e4-441c-11d3-97ac-0080c8d59432}')!
 OS.TBBUTTONINFOW comment: ''!
@@ -104,6 +105,9 @@ iImage:!**compiled accessors**!public! !
 
 !OS.TBBUTTONINFOW class methodsFor!
 
+byteSize
+	^_TBBUTTONINFOW_Size!
+
 defineFields
 	"Define the fields of the Win32 TBBUTTONINFO structure.
 
@@ -136,6 +140,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #dwMask #idCommand #iImage #fsState #fsStyle #cx)! !
 !OS.TBBUTTONINFOW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

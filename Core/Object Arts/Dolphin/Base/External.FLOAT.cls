@@ -5,7 +5,9 @@ External.SCALAR subclass: #'External.FLOAT'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_FLOAT_Size' -> 16r4
+	}!
 External.FLOAT guid: (Core.GUID fromString: '{87b4c595-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.FLOAT comment: 'FLOAT is an <ExternalStructure> class to represent single precision (32-bit) floating point numbers in native format.
 
@@ -35,6 +37,9 @@ value:!**compiled accessors**!public! !
 
 !External.FLOAT class methodsFor!
 
+byteSize
+	^_FLOAT_Size!
+
 defineFields
 	"Define the fields of the FLOAT 'structure'.
 
@@ -62,6 +67,7 @@ uninitialize
 
 	VM registryAt: self name put: nil! !
 !External.FLOAT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 initialize!development!initializing!private! !
 maximum!constants!public! !

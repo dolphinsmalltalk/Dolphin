@@ -28,7 +28,8 @@ OS.CommonDialogStructure subclass: #'OS.OPENFILENAMEW'
 		'_OffsetOf_nMaxCustFilter' -> 16r14.
 		'_OffsetOf_nMaxFile' -> 16r20.
 		'_OffsetOf_nMaxFileTitle' -> 16r28.
-		'_OffsetOf_pvReserved' -> 16r4C
+		'_OffsetOf_pvReserved' -> 16r4C.
+		'_OPENFILENAMEW_Size' -> 16r58
 	}!
 OS.OPENFILENAMEW guid: (Core.GUID fromString: '{87b4c603-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.OPENFILENAMEW comment: 'OPENFILENAME is a <Win32Structure> which represents the Windows Common Dialog structure of the same name. It is used in conjunction with the GetOpenFileName() and GetSaveFileName() APIs which pop a common file dialog to browser for a file to load or save respectively. See the <FileDialog> and the Win32 documentation for further details.
@@ -229,6 +230,9 @@ title:!accessing!public! !
 
 !OS.OPENFILENAMEW class methodsFor!
 
+byteSize
+	^_OPENFILENAMEW_Size!
+
 defineFields
 	"Define the fields of the OPENFILENAME structure.
 
@@ -290,6 +294,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #hwndOwner #lpstrFilter #nFilterIndex #lpstrFile #nMaxFile #lpstrFileTitle #nMaxFileTitle #lpstrInitialDir #lpstrTitle #flags #nFileOffset #nFileExtension #lpstrDefExt #lpfnHook #flagsEx)! !
 !OS.OPENFILENAMEW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

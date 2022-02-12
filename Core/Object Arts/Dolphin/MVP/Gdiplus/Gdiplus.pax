@@ -1585,6 +1585,7 @@ External.Structure subclass: #'Graphics.Gdiplus.ENHMETAHEADER3'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_ENHMETAHEADER3_Size' -> 16r58.
 		'_OffsetOf_dSignature' -> 16r28.
 		'_OffsetOf_iType' -> 16r0.
 		'_OffsetOf_nBytes' -> 16r30.
@@ -1607,6 +1608,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GdiplusStartupInput'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GdiplusStartupInput_Size' -> 16r10.
 		'_OffsetOf_DebugEventCallback' -> 16r4.
 		'_OffsetOf_GdiplusVersion' -> 16r0.
 		'_OffsetOf_SuppressBackgroundThread' -> 16r8.
@@ -1618,6 +1620,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GdiplusStartupOutput'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GdiplusStartupOutput_Size' -> 16r8.
 		'_OffsetOf_NotificationHook' -> 16r0.
 		'_OffsetOf_NotificationUnhook' -> 16r4
 	}!
@@ -1627,6 +1630,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpBitmapData'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpBitmapData_Size' -> 16r18.
 		'_OffsetOf_Height' -> 16r4.
 		'_OffsetOf_PixelFormat' -> 16rC.
 		'_OffsetOf_Reserved' -> 16r14.
@@ -1640,6 +1644,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpCharacterRange'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpCharacterRange_Size' -> 16r8.
 		'_OffsetOf_First' -> 16r0.
 		'_OffsetOf_length' -> 16r4
 	}!
@@ -1649,6 +1654,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpColorMap'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpColorMap_Size' -> 16r8.
 		'_OffsetOf_newColor' -> 16r4.
 		'_OffsetOf_oldColor' -> 16r0
 	}!
@@ -1658,6 +1664,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpColorMatrix'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpColorMatrix_Size' -> 16r64.
 		'_OffsetOf_m' -> 16r0
 	}!
 External.Structure subclass: #'Graphics.Gdiplus.GpColorPalette'
@@ -1666,6 +1673,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpColorPalette'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpColorPalette_Size' -> 16rC.
 		'_OffsetOf_Count' -> 16r4.
 		'_OffsetOf_Entries' -> 16r8.
 		'_OffsetOf_Flags' -> 16r0
@@ -1676,6 +1684,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpEncoderParameter'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpEncoderParameter_Size' -> 16r1C.
 		'_OffsetOf_Guid' -> 16r0.
 		'_OffsetOf_NumberOfValues' -> 16r10.
 		'_OffsetOf_Type' -> 16r14.
@@ -1687,6 +1696,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpEncoderParameters'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpEncoderParameters_Size' -> 16r20.
 		'_OffsetOf_Count' -> 16r0.
 		'_OffsetOf_Parameter' -> 16r4
 	}!
@@ -1696,6 +1706,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpImageCodecInfo'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpImageCodecInfo_Size' -> 16r4C.
 		'_OffsetOf_Clsid' -> 16r0.
 		'_OffsetOf_CodecName' -> 16r20.
 		'_OffsetOf_DllName' -> 16r24.
@@ -1716,6 +1727,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpMetafileHeader'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpMetafileHeader_Size' -> 16r8C.
 		'_OffsetOf_DpiX' -> 16r10.
 		'_OffsetOf_DpiY' -> 16r14.
 		'_OffsetOf_EmfHeader' -> 16r28.
@@ -1738,6 +1750,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpPathData'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpPathData_Size' -> 16rC.
 		'_OffsetOf_Count' -> 16r0.
 		'_OffsetOf_Points' -> 16r4.
 		'_OffsetOf_Types' -> 16r8
@@ -1748,6 +1761,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpPropertyItem'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpPropertyItem_Size' -> 16r10.
 		'_OffsetOf_id' -> 16r0.
 		'_OffsetOf_length' -> 16r4.
 		'_OffsetOf_Type' -> 16r8.
@@ -1759,6 +1773,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpWmfPlaceableFileHeader'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpWmfPlaceableFileHeader_Size' -> 16r18.
 		'_OffsetOf_BoundingBox' -> 16r6.
 		'_OffsetOf_Checksum' -> 16r14.
 		'_OffsetOf_Hmf' -> 16r4.
@@ -1772,6 +1787,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpWMFRect16'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpWMFRect16_Size' -> 16r8.
 		'_OffsetOf_bottom' -> 16r6.
 		'_OffsetOf_left' -> 16r0.
 		'_OffsetOf_right' -> 16r4.
@@ -1783,6 +1799,7 @@ External.Structure subclass: #'Graphics.Gdiplus.METAHEADER'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_METAHEADER_Size' -> 16r18.
 		'_OffsetOf_mtHeaderSize' -> 16r2.
 		'_OffsetOf_mtMaxRecord' -> 16r10.
 		'_OffsetOf_mtNoObjects' -> 16rC.
@@ -1798,7 +1815,8 @@ External.POINT subclass: #'Graphics.Gdiplus.POINTF'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_x' -> 16r0.
-		'_OffsetOf_y' -> 16r4
+		'_OffsetOf_y' -> 16r4.
+		'_POINTF_Size' -> 16r8
 	}!
 External.RECT subclass: #'Graphics.Gdiplus.RECTF'
 	instanceVariableNames: ''
@@ -1809,7 +1827,8 @@ External.RECT subclass: #'Graphics.Gdiplus.RECTF'
 		'_OffsetOf_height' -> 16rC.
 		'_OffsetOf_width' -> 16r8.
 		'_OffsetOf_x' -> 16r0.
-		'_OffsetOf_y' -> 16r4
+		'_OffsetOf_y' -> 16r4.
+		'_RECTF_Size' -> 16r10
 	}!
 UI.View subclass: #'Graphics.Gdiplus.DoubleBufferedView'
 	instanceVariableNames: 'backSurface requiresRender'

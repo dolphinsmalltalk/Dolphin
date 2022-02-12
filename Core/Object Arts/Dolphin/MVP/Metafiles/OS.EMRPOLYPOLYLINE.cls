@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRPOLYPOLYLINE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRPOLYPOLYLINE_Size' -> 16r28.
 		'_OffsetOf_aPolyCounts' -> 16r20.
 		'_OffsetOf_aptl' -> 16r24.
 		'_OffsetOf_cptl' -> 16r1C.
@@ -48,7 +49,8 @@ aPolyCounts: aDWORDArray
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_aPolyCounts + 1)
 		to: _OffsetOf_aPolyCounts + size
-		startingAt: 1!
+		startingAt: 1.
+	self nPolys: aDWORDArray size!
 
 aptl
 	"Answer the receiver's aptl field as a Smalltalk object."
@@ -66,7 +68,7 @@ aptl: anObject
 	"Implementation Note: Custom accessor needed because the offset will vary depending on the number of elements in aPolyCounts"
 
 	| size offset |
-	size := anObject byteSize min: self cptl * ##(POINTL basicByteSize).
+	size := anObject byteSize min: self cptl * POINTL._POINTL_Size.
 	offset := self aptlOffset.
 	anObject
 		replaceBytesOf: bytes
@@ -108,7 +110,7 @@ rclBounds: aRECTL
 	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1! !
 !OS.EMRPOLYPOLYLINE categoriesForMethods!
 aPolyCounts!**compiled accessors**!public! !
@@ -125,6 +127,9 @@ rclBounds:!**compiled accessors**!public! !
 !
 
 !OS.EMRPOLYPOLYLINE class methodsFor!
+
+byteSize
+	^_EMRPOLYPOLYLINE_Size!
 
 defineFields
 	"Define the fields of the EMRPOLYPOLYLINE structure.
@@ -167,6 +172,7 @@ iTypes
 
 	^{EMR_POLYPOLYLINE. EMR_POLYPOLYGON}! !
 !OS.EMRPOLYPOLYLINE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

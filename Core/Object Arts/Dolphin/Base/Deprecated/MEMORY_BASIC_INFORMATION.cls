@@ -2,10 +2,11 @@
 
 Win32Structure subclass: #MEMORY_BASIC_INFORMATION
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_AllocationBase _OffsetOf_AllocationProtect _OffsetOf_BaseAddress _OffsetOf_Protect _OffsetOf_RegionSize _OffsetOf_State _OffsetOf_Type'
+	classVariableNames: '_MEMORY_BASIC_INFORMATION_Size _OffsetOf_AllocationBase _OffsetOf_AllocationProtect _OffsetOf_BaseAddress _OffsetOf_Protect _OffsetOf_RegionSize _OffsetOf_State _OffsetOf_Type'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 MEMORY_BASIC_INFORMATION guid: (GUID fromString: '{87b4c5fe-026e-11d3-9fd7-00a0cc3e4a32}')!
+MEMORY_BASIC_INFORMATION addClassConstant: '_MEMORY_BASIC_INFORMATION_Size' value: 16r1C!
 MEMORY_BASIC_INFORMATION addClassConstant: '_OffsetOf_AllocationBase' value: 16r4!
 MEMORY_BASIC_INFORMATION addClassConstant: '_OffsetOf_AllocationProtect' value: 16r8!
 MEMORY_BASIC_INFORMATION addClassConstant: '_OffsetOf_BaseAddress' value: 16r0!
@@ -39,6 +40,9 @@ moduleFileName!accessing!public! !
 !
 
 !MEMORY_BASIC_INFORMATION class methodsFor!
+
+byteSize
+	^_MEMORY_BASIC_INFORMATION_Size!
 
 defineFields
 	"Define the fields of the Win32 MEMORY_BASIC_INFORMATION structure.
@@ -80,6 +84,7 @@ forAddress: anAddress
 getFieldNames
 	^#(#BaseAddress #AllocationBase #AllocationProtect #RegionSize #State #Protect #Type)! !
 !MEMORY_BASIC_INFORMATION class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 forAddress:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !

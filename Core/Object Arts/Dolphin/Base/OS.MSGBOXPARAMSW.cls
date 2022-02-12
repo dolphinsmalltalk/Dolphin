@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.MSGBOXPARAMSW'
 	imports: #(#{OS.MessageBoxConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MSGBOXPARAMSW_Size' -> 16r28.
 		'_OffsetOf_dwContextHelpId' -> 16r1C.
 		'_OffsetOf_dwLanguageId' -> 16r24.
 		'_OffsetOf_dwSize' -> 16r0.
@@ -96,6 +97,9 @@ text:!accessing!public! !
 
 !OS.MSGBOXPARAMSW class methodsFor!
 
+byteSize
+	^_MSGBOXPARAMSW_Size!
+
 defineFields
 	"Define the fields of the Win32 MSGBOXPARAMSW structure.
 
@@ -132,6 +136,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #hwndOwner #hInstance #lpszText #lpszCaption #dwStyle #lpszIcon #dwLanguageId)! !
 !OS.MSGBOXPARAMSW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

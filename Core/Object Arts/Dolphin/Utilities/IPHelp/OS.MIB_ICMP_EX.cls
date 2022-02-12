@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.MIB_ICMP_EX'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_ICMP_EX_Size' -> 16r810.
 		'_OffsetOf_icmpInStats' -> 16r0.
 		'_OffsetOf_icmpOutStats' -> 16r408
 	}!
@@ -43,6 +44,9 @@ icmpOutStats!**compiled accessors**!public! !
 
 !OS.MIB_ICMP_EX class methodsFor!
 
+byteSize
+	^_MIB_ICMP_EX_Size!
+
 defineFields
 	"Define the fields of the MIB_ICMP_EX structure.
 		MIB_ICMP_EX compileDefinition
@@ -70,6 +74,7 @@ defineFields
 getFieldNames
 	^#(#icmpInStats #icmpOutStats)! !
 !OS.MIB_ICMP_EX class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

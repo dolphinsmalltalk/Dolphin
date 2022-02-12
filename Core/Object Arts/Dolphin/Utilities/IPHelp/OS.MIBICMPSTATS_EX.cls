@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.MIBICMPSTATS_EX'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIBICMPSTATS_EX_Size' -> 16r408.
 		'_OffsetOf_dwErrors' -> 16r4.
 		'_OffsetOf_dwMsgs' -> 16r0.
 		'_OffsetOf_rgdwTypeCount' -> 16r8
@@ -51,6 +52,9 @@ rgdwTypeCount!**compiled accessors**!public! !
 
 !OS.MIBICMPSTATS_EX class methodsFor!
 
+byteSize
+	^_MIBICMPSTATS_EX_Size!
+
 defineFields
 	"Define the fields of the MIBICMPSTATS_EX structure.
 		MIBICMPSTATS_EX compileDefinition
@@ -80,6 +84,7 @@ defineFields
 getFieldNames
 	^#(#dwMsgs #dwErrors #rgdwTypeCount)! !
 !OS.MIBICMPSTATS_EX class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

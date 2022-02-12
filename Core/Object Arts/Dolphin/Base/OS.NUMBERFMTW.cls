@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.NUMBERFMTW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NUMBERFMTW_Size' -> 16r18.
 		'_OffsetOf_Grouping' -> 16r8.
 		'_OffsetOf_LeadingZero' -> 16r4.
 		'_OffsetOf_lpDecimalSep' -> 16rC.
@@ -204,6 +205,9 @@ thousandSeparator:!accessing!public! !
 
 !OS.NUMBERFMTW class methodsFor!
 
+byteSize
+	^_NUMBERFMTW_Size!
+
 defineFields
 	"Define the fields of the NUMBERFMTW structure.
 
@@ -232,6 +236,7 @@ defineFields
 getFieldNames
 	^#(#NumDigits #LeadingZero #Grouping #lpDecimalSep #lpThousandSep #NegativeOrder)! !
 !OS.NUMBERFMTW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

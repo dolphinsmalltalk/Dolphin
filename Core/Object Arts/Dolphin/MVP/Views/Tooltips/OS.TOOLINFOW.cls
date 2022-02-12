@@ -14,7 +14,8 @@ OS.Win32Structure subclass: #'OS.TOOLINFOW'
 		'_OffsetOf_lpszText' -> 16r24.
 		'_OffsetOf_rect' -> 16r10.
 		'_OffsetOf_uFlags' -> 16r4.
-		'_OffsetOf_uId' -> 16rC
+		'_OffsetOf_uId' -> 16rC.
+		'_TOOLINFOW_Size' -> 16r30
 	}!
 OS.TOOLINFOW guid: (Core.GUID fromString: '{87b4c617-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.TOOLINFOW comment: 'TOOLINFOW is an <ExternalStructure> class to represent the Win32 structure of the same name.
@@ -34,19 +35,19 @@ dwSize: anInteger
 	bytes dwordAtOffset: _OffsetOf_dwSize put: anInteger!
 
 hinst
-	"Answer the <ExternalHandle> value of the receiver's 'hinst' field."
+	"Answer the <Handle> value of the receiver's 'hinst' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_hinst) asExternalHandle!
 
 hwnd
-	"Answer the <ExternalHandle> value of the receiver's 'hwnd' field."
+	"Answer the <Handle> value of the receiver's 'hwnd' field."
 
 	^(bytes uintPtrAtOffset: _OffsetOf_hwnd) asExternalHandle!
 
-hwnd: anExternalHandle
-	"Set the receiver's 'hwnd' field to the value of the argument, anExternalHandle"
+hwnd: aHandle
+	"Set the receiver's 'hwnd' field to the value of the argument, aHandle"
 
-	bytes uintPtrAtOffset: _OffsetOf_hwnd put: anExternalHandle!
+	bytes uintPtrAtOffset: _OffsetOf_hwnd put: aHandle!
 
 lParam
 	"Answer the <Integer> value of the receiver's 'lParam' field."
@@ -88,13 +89,13 @@ rect
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rect!
 
-rect: aRECT
-	"Set the receiver's 'rect' field to the value of the argument, aRECT"
+rect: aRECTL
+	"Set the receiver's 'rect' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rect + 1)
-		to: ##(_OffsetOf_rect + RECTL basicByteSize)
+		to: ##(_OffsetOf_rect + RECTL._RECTL_Size)
 		startingAt: 1!
 
 text: aString
@@ -151,6 +152,9 @@ uId:!**compiled accessors**!public! !
 
 !OS.TOOLINFOW class methodsFor!
 
+byteSize
+	^_TOOLINFOW_Size!
+
 defineFields
 	"Define the fields of the TOOLINFOW structure.
 		self compileDefinition
@@ -182,6 +186,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #uFlags #hwnd #uId #rect #hinst #lpszText #lParam)! !
 !OS.TOOLINFOW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

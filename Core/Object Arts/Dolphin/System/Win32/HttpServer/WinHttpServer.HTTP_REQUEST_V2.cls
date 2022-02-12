@@ -6,6 +6,7 @@ WinHttpServer.HTTP_REQUEST_V1 subclass: #'WinHttpServer.HTTP_REQUEST_V2'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_REQUEST_V2_Size' -> 16r1D8.
 		'_OffsetOf_pRequestInfo' -> 16r1D4.
 		'_OffsetOf_RequestInfoCount' -> 16r1D0
 	}!
@@ -69,6 +70,9 @@ RequestInfoCount:!**compiled accessors**!private! !
 
 !WinHttpServer.HTTP_REQUEST_V2 class methodsFor!
 
+byteSize
+	^_HTTP_REQUEST_V2_Size!
+
 defineFields
 	"Define the fields of the HTTP_REQUEST_V2 structure.
 
@@ -91,6 +95,7 @@ defineFields
 getFieldNames
 	^#(#Flags #ConnectionId #RequestId #UrlContext #Version #Verb #UnknownVerbLength #RawUrlLength #pUnknownVerb #pRawUrl #CookedUrl #Address #Headers #BytesReceived #EntityChunkCount #pEntityChunks #RawConnectionId #pSslInfo #RequestInfoCount #pRequestInfo)! !
 !WinHttpServer.HTTP_REQUEST_V2 class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

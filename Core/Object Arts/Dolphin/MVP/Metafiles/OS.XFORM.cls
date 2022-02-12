@@ -11,7 +11,8 @@ External.Structure subclass: #'OS.XFORM'
 		'_OffsetOf_eM11' -> 16r0.
 		'_OffsetOf_eM12' -> 16r4.
 		'_OffsetOf_eM21' -> 16r8.
-		'_OffsetOf_eM22' -> 16rC
+		'_OffsetOf_eM22' -> 16rC.
+		'_XFORM_Size' -> 16r18
 	}!
 OS.XFORM guid: (Core.GUID fromString: '{94b29afb-539e-4f6e-81d0-ed7aeb51f4ff}')!
 OS.XFORM comment: '<XFORM> is an <ExternalStructure> class to wrap the struct ''Win32.XFORM'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
@@ -111,6 +112,9 @@ eM22:!**compiled accessors**!public! !
 
 !OS.XFORM class methodsFor!
 
+byteSize
+	^_XFORM_Size!
+
 defineFields
 	"Define the fields of the XFORM structure.
 
@@ -138,6 +142,7 @@ defineFields
 getFieldNames
 	^#(#eM11 #eM12 #eM21 #eM22 #eDx #eDy)! !
 !OS.XFORM class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

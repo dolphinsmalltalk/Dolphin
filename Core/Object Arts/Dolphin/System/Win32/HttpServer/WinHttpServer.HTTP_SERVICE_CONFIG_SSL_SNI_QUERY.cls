@@ -6,6 +6,7 @@ WinHttpServer.HttpServiceConfigQuery subclass: #'WinHttpServer.HTTP_SERVICE_CONF
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_SSL_SNI_QUERY_Size' -> 16r98.
 		'_OffsetOf_dwToken' -> 16r90.
 		'_OffsetOf_KeyDesc' -> 16r8
 	}!
@@ -51,7 +52,7 @@ KeyDesc: aHTTP_SERVICE_CONFIG_SSL_SNI_KEY
 	aHTTP_SERVICE_CONFIG_SSL_SNI_KEY
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_KeyDesc + 1)
-		to: ##(_OffsetOf_KeyDesc + HTTP_SERVICE_CONFIG_SSL_SNI_KEY basicByteSize)
+		to: ##(_OffsetOf_KeyDesc + HTTP_SERVICE_CONFIG_SSL_SNI_KEY._HTTP_SERVICE_CONFIG_SSL_SNI_KEY_Size)
 		startingAt: 1! !
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY categoriesForMethods!
 dwToken!**compiled accessors**!public! !
@@ -61,6 +62,9 @@ KeyDesc:!**compiled accessors**!public! !
 !
 
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY class methodsFor!
+
+byteSize
+	^_HTTP_SERVICE_CONFIG_SSL_SNI_QUERY_Size!
 
 defineFields
 	"Define the fields of the HTTP_SERVICE_CONFIG_SSL_SNI_QUERY structure.
@@ -84,6 +88,7 @@ defineFields
 getFieldNames
 	^#(#QueryDesc #KeyDesc #dwToken)! !
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_QUERY class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

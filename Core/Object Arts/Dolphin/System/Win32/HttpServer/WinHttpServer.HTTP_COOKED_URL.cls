@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_COOKED_URL'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_COOKED_URL_Size' -> 16r18.
 		'_OffsetOf_AbsPathLength' -> 16r4.
 		'_OffsetOf_FullUrlLength' -> 16r0.
 		'_OffsetOf_HostLength' -> 16r2.
@@ -94,6 +95,9 @@ QueryStringLength!**compiled accessors**!private! !
 
 !WinHttpServer.HTTP_COOKED_URL class methodsFor!
 
+byteSize
+	^_HTTP_COOKED_URL_Size!
+
 defineFields
 	"Define the fields of the HTTP_COOKED_URL structure.
 
@@ -126,6 +130,7 @@ defineFields
 getFieldNames
 	^#(#FullUrlLength #HostLength #AbsPathLength #QueryStringLength #pFullUrl #pHost #pAbsPath #pQueryString)! !
 !WinHttpServer.HTTP_COOKED_URL class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

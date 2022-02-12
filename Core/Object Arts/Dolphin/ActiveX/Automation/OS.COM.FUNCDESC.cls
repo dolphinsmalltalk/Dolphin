@@ -6,6 +6,7 @@ OS.COM.MemberDesc subclass: #'OS.COM.FUNCDESC'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_FUNCDESC_Size' -> 16r34.
 		'_OffsetOf_callconv' -> 16r14.
 		'_OffsetOf_cParams' -> 16r18.
 		'_OffsetOf_cParamsOpt' -> 16r1A.
@@ -416,6 +417,9 @@ wFuncFlags!**compiled accessors**!public! !
 
 !OS.COM.FUNCDESC class methodsFor!
 
+byteSize
+	^_FUNCDESC_Size!
+
 defineFields
 	"Define the fields of the FUNCDESC structure.
 
@@ -474,6 +478,7 @@ stbConvertFrom: anSTBClassFormat
 stbVersion
 	^1! !
 !OS.COM.FUNCDESC class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 stbConvertFrom:!binary filing!development!public! !

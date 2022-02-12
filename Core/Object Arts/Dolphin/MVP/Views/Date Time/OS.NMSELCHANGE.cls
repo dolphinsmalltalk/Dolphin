@@ -6,6 +6,7 @@ OS.NMHDR subclass: #'OS.NMSELCHANGE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMSELCHANGE_Size' -> 16r2C.
 		'_OffsetOf_stSelEnd' -> 16r1C.
 		'_OffsetOf_stSelStart' -> 16rC
 	}!
@@ -30,6 +31,9 @@ stSelStart!**compiled accessors**!public! !
 
 !OS.NMSELCHANGE class methodsFor!
 
+byteSize
+	^_NMSELCHANGE_Size!
+
 defineFields
 	"Define the fields of the Win32 NMSELCHANGE structure.
 		NMSELCHANGE compileDefinition
@@ -43,6 +47,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #stSelStart #stSelEnd)! !
 !OS.NMSELCHANGE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

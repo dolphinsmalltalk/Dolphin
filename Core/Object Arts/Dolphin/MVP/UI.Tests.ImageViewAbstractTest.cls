@@ -27,7 +27,7 @@ testInvalidateOnResize
 	| rect extent retries |
 	presenter topView layoutManager: ProportionalLayout new.
 	presenter layout: #center.
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	retries := 0.
 	
 	[presenter validate.

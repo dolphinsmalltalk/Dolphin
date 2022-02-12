@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.DEVMODE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_DEVMODE_Size' -> 16r94.
 		'_OffsetOf_dmBitsPerPel' -> 16r68.
 		'_OffsetOf_dmCollate' -> 16r44.
 		'_OffsetOf_dmColor' -> 16r3C.
@@ -87,6 +88,9 @@ struct tagDEVMODE {
 !OS.DEVMODE categoriesForClass!Win32-Structs! !
 !OS.DEVMODE class methodsFor!
 
+byteSize
+	^_DEVMODE_Size!
+
 defineFields
 	"Define the fields of the DEVMODE structure.
 
@@ -167,6 +171,7 @@ defineFields
 getFieldNames
 	^#(#dmDeviceName #dmSpecVersion #dmDriverVersion #dmSize #dmDriverExtra #dmFields #dmOrientation #dmPaperSize #dmPaperLength #dmPaperWidth #dmScale #dmCopies #dmDefaultSource #dmPrintQuality #dmColor #dmDuplex #dmYResolution #dmTTOption #dmCollate #dmFormName #dmLogPixels #dmBitsPerPel #dmPelsWidth #dmPelsHeight #dmDisplayFlags #dmDisplayFrequency #dmICMMethod #dmICMIntent #dmMediaType #dmDitherType)! !
 !OS.DEVMODE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

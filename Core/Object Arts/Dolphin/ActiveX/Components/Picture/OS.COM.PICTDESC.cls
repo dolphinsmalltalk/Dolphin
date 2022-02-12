@@ -10,7 +10,8 @@ OS.COM.OLEStructure subclass: #'OS.COM.PICTDESC'
 		'_OffsetOf_dw2' -> 16r10.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_handle' -> 16r8.
-		'_OffsetOf_picType' -> 16r4
+		'_OffsetOf_picType' -> 16r4.
+		'_PICTDESC_Size' -> 16r14
 	}!
 OS.COM.PICTDESC guid: (Core.GUID fromString: '{a1a65a80-aef9-11d3-b376-080046056106}')!
 OS.COM.PICTDESC comment: ''!
@@ -75,6 +76,9 @@ picType:!**compiled accessors**!public! !
 
 !OS.COM.PICTDESC class methodsFor!
 
+byteSize
+	^_PICTDESC_Size!
+
 defineFields
 	"Define the fields of the PICTDESC structure.
 
@@ -138,6 +142,7 @@ icon
 
 	^Picture icon! !
 !OS.COM.PICTDESC class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 icon!constants!public! !

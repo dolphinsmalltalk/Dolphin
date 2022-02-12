@@ -6,6 +6,7 @@ OS.NMHDR subclass: #'OS.NMUPDOWN'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMUPDOWN_Size' -> 16r14.
 		'_OffsetOf_iDelta' -> 16r10.
 		'_OffsetOf_iPos' -> 16rC
 	}!
@@ -60,6 +61,9 @@ newPosition!accessing!public! !
 
 !OS.NMUPDOWN class methodsFor!
 
+byteSize
+	^_NMUPDOWN_Size!
+
 defineFields
 	"Define the fields of the NMUPDOWN structure.
 		NMUPDOWN compileDefinition
@@ -79,6 +83,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iPos #iDelta)! !
 !OS.NMUPDOWN class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

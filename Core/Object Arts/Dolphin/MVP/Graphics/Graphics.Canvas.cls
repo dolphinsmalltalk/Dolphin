@@ -122,7 +122,8 @@ bitBlt: aCanvasOrHandle rectangle: aRectangle to: dstOrigin rop: rop
 brush
 	"Answer the current brush."
 
-	brush isNil ifTrue: [brush := Brush fromHandle: (self getCurrentObject: OBJ_BRUSH)].
+	brush isNil
+		ifTrue: [brush := Brush fromHandle: (Gdi32 getCurrentObject: self asParameter uObjectType: OBJ_BRUSH)].
 	^brush!
 
 brush: aBrush
@@ -145,7 +146,7 @@ brushOrigin: aPoint
 	be aPoint. Answers the previous origin"
 
 	| previous |
-	previous := POINTL new.
+	previous := POINTL newBuffer.
 	Gdi32
 		setBrushOrgEx: self asParameter
 		nXOrg: aPoint x
@@ -157,7 +158,7 @@ clipBox
 	"Answers the smallest <Rectangle> the completely bounds the receiver's current clipping region."
 
 	| answer |
-	answer := RECTL new.
+	answer := RECTL newBuffer.
 	Gdi32 getClipBox: self asParameter lprc: answer.
 	^answer asRectangle!
 
@@ -341,7 +342,7 @@ fontFamilies: aString do: aValuable
 	^answer!
 
 fontHandle
-	^self getCurrentObject: OBJ_FONT!
+	^Gdi32 getCurrentObject: self asParameter uObjectType: OBJ_FONT!
 
 fontNames
 	"Answer a <collection> containing the face names of all the Fonts supported by the receiver."
@@ -405,12 +406,6 @@ free
 	handle notNull ifTrue: [self basicFree].
 	handle := source := font := pen := brush := nil.
 	owned := false!
-
-getCurrentObject: aTypeInteger
-	"Answers a handle to the current selected object of aTypeInteger.
-	This should be one of OBJ_PEN, OBJ_BRUSH, OBJ_FONT etc"
-
-	^Gdi32 getCurrentObject: self asParameter uObjectType: aTypeInteger!
 
 getDeviceCaps: anInteger
 	"Private - Answer the specified device capability."
@@ -531,7 +526,7 @@ offsetWindowOrigin: aPoint
 	Answers the old window origin"
 
 	| previous |
-	previous := POINTL new.
+	previous := POINTL newBuffer.
 	(Gdi32
 		offsetWindowOrgEx: self asParameter
 		nXOrg: aPoint x
@@ -618,7 +613,7 @@ pelsToHiMetric: pels
 pen
 	"Answer the current pen."
 
-	^pen ifNil: [Pen fromHandle: (self getCurrentObject: OBJ_PEN)]!
+	^pen ifNil: [Pen fromHandle: (Gdi32 getCurrentObject: self asParameter uObjectType: OBJ_PEN)]!
 
 pen: aPen
 	"Select aPen into the receiver, and answer the old pen."
@@ -845,7 +840,7 @@ textExtent: aString
 	"Answer the extent of aString using the receiver's currently selected font. Note this will only provide an accurate result for a single line of text, and when paired with the GDI ExtTextOut function for painting the text, which will only be the case if the Canvas>>text:at: method is used. For calculating the extent of text drawn with the User32 DrawText API (e.g. by Canvas>>formatText:&c) one of the textExtent:width:&c family of methods must be used."
 
 	| size text |
-	size := POINTL new.
+	size := POINTL newBuffer.
 	"We need to do an explicit conversion to UTF16 here, because we have to pass the correct number of code units."
 	text := aString asUtf16String.
 	(Gdi32
@@ -867,7 +862,7 @@ textExtent: aString width: anIntegerWidth alignment: anAlignSymbol
 				at: #right put: DT_RIGHT;
 				shrink;
 				yourself) at: anAlignSymbol ifAbsent: [DT_LEFT].
-	rect := RECTL extent: anIntegerWidth @ 0.
+	rect := RECTL width: anIntegerWidth.
 	height := self
 				formatText: aString
 				in: rect
@@ -879,7 +874,7 @@ textExtent: aString width: widthInteger flags: flagsInteger
 	There are a large number of DT_XXX flags that can be used to draw the text in different ways - see https://docs.microsoft.com/en-us/windows/win32/api/winuser/nf-winuser-drawtextexw for details."
 
 	| rect |
-	rect := RECTL extent: widthInteger @ 0.
+	rect := RECTL width: widthInteger.
 	self
 		formatText: aString
 		in: rect
@@ -892,7 +887,7 @@ textMetrics
 	"
 
 	| answer |
-	answer := TEXTMETRICW new.
+	answer := TEXTMETRICW newBuffer.
 	(Gdi32 getTextMetrics: self asParameter lptm: answer) ifFalse: [Gdi32 systemError].
 	^answer!
 
@@ -900,7 +895,7 @@ viewportExtent
 	"Answers the extent of the receiver's viewport mapping."
 
 	| extent |
-	extent := POINTL new.
+	extent := POINTL newBuffer.
 	(Gdi32 getViewportExtEx: self asParameter lpSize: extent) ifFalse: [^Gdi32 systemError].
 	^extent asPoint!
 
@@ -909,7 +904,7 @@ viewportExtent: aPoint
 	Answers the old viewport extent"
 
 	| previous |
-	previous := POINTL new.
+	previous := POINTL newBuffer.
 	(Gdi32
 		setViewportExtEx: self asParameter
 		nXExtent: aPoint x
@@ -921,7 +916,7 @@ viewportOrigin
 	"Answers the origin of the receiver's viewport mapping."
 
 	| origin |
-	origin := POINTL new.
+	origin := POINTL newBuffer.
 	(Gdi32 getViewportOrgEx: self asParameter lppt: origin) ifFalse: [^Gdi32 systemError].
 	^origin asPoint!
 
@@ -930,7 +925,7 @@ viewportOrigin: aPoint
 	answer the old viewport origin."
 
 	| previous |
-	previous := POINTL new.
+	previous := POINTL newBuffer.
 	(Gdi32
 		setViewportOrgEx: self asParameter
 		nXOrg: aPoint x
@@ -954,7 +949,7 @@ windowExtent
 	"Answers the extent of the receiver's window mapping."
 
 	| extent |
-	extent := SIZEL new.
+	extent := SIZEL newBuffer.
 	(Gdi32 getWindowExtEx: self asParameter lpSize: extent) ifFalse: [^Gdi32 systemError].
 	^extent asPoint!
 
@@ -963,7 +958,7 @@ windowExtent: aPoint
 	Answers the old window extent"
 
 	| previous |
-	previous := SIZEL new.
+	previous := SIZEL newBuffer.
 	(Gdi32
 		setWindowExtEx: self asParameter
 		nXExtent: aPoint x
@@ -975,7 +970,7 @@ windowOrigin
 	"Answers the origin of the receiver's window mapping."
 
 	| origin |
-	origin := POINTL new.
+	origin := POINTL newBuffer.
 	(Gdi32 getWindowOrgEx: self asParameter lppt: origin) ifFalse: [^Gdi32 systemError].
 	^origin asPoint!
 
@@ -984,7 +979,7 @@ windowOrigin: aPoint
 	Answers the old window origin"
 
 	| previous |
-	previous := POINTL new.
+	previous := POINTL newBuffer.
 	(Gdi32
 		setWindowOrgEx: self asParameter
 		nXOrg: aPoint x
@@ -1044,7 +1039,6 @@ formatText:in:!drawing!public! !
 formatText:in:flags:!drawing!public! !
 frameRectangle:brush:!drawing!public! !
 free!public!realizing/unrealizing! !
-getCurrentObject:!accessing!public! !
 getDeviceCaps:!accessing!private! !
 getFont!accessing!public!tools! !
 getPixel:!drawing!private! !

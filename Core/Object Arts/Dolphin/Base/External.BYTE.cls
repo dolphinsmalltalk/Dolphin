@@ -5,7 +5,9 @@ External.INTEGER subclass: #'External.BYTE'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_BYTE_Size' -> 16r1
+	}!
 External.BYTE guid: (Core.GUID fromString: '{87b4c5a9-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.BYTE comment: '<BYTE> is an <ExternalStructure> class to wrap the Win32 type of the same name.
 
@@ -50,6 +52,9 @@ value:!**compiled accessors**!public! !
 
 !External.BYTE class methodsFor!
 
+byteSize
+	^_BYTE_Size!
+
 defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
 	have a single value."
@@ -68,6 +73,7 @@ uninitialize
 
 	VM registryAt: self name put: nil! !
 !External.BYTE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 initialize!development!initializing!private! !
 uninitialize!class hierarchy-removing!private! !

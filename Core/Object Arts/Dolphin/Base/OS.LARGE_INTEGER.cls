@@ -5,7 +5,9 @@ External.QWORD subclass: #'OS.LARGE_INTEGER'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_LARGE_INTEGER_Size' -> 16r8
+	}!
 OS.LARGE_INTEGER guid: (Core.GUID fromString: '{87b4c630-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.LARGE_INTEGER comment: '<LARGE_INTEGER> is an <ExternalStructure> class to wrap the Win32 structure of the same name.
 
@@ -52,6 +54,9 @@ value:!**compiled accessors**!public! !
 
 !OS.LARGE_INTEGER class methodsFor!
 
+byteSize
+	^_LARGE_INTEGER_Size!
+
 defineFields
 	"Define the fields of the LARGE_INTEGER 'structure'.
 
@@ -72,6 +77,7 @@ defineFields
 			type: SDWORDField new beOverride
 			offset: 4! !
 !OS.LARGE_INTEGER class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !
 

@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.CRYPTPROTECT_PROMPTSTRUCT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CRYPTPROTECT_PROMPTSTRUCT_Size' -> 16r10.
 		'_OffsetOf_dwPromptFlags' -> 16r4.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_hwndApp' -> 16r8.
@@ -73,6 +74,9 @@ szPrompt:!**compiled accessors**!public! !
 
 !OS.CRYPTPROTECT_PROMPTSTRUCT class methodsFor!
 
+byteSize
+	^_CRYPTPROTECT_PROMPTSTRUCT_Size!
+
 defineFields
 	"Define the fields of the CRYPTPROTECT_PROMPTSTRUCT structure.
 
@@ -105,6 +109,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #dwPromptFlags #hwndApp #szPrompt)! !
 !OS.CRYPTPROTECT_PROMPTSTRUCT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -6,6 +6,7 @@ OS.IpHlpApiTableStruct subclass: #'OS.IP_INTERFACE_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IP_INTERFACE_INFO_Size' -> 16r108.
 		'_OffsetOf_table' -> 16r4
 	}!
 OS.IP_INTERFACE_INFO guid: (Core.GUID fromString: '{e886246a-162e-4654-8719-d4c0477f0bf3}')!
@@ -39,6 +40,9 @@ table!**compiled accessors**!public! !
 
 !OS.IP_INTERFACE_INFO class methodsFor!
 
+byteSize
+	^_IP_INTERFACE_INFO_Size!
+
 defineFields
 	"Define the fields of the IP_INTERFACE_INFO structure.
 		IP_INTERFACE_INFO compileDefinition
@@ -62,6 +66,7 @@ defineFields
 getFieldNames
 	^#(#dwNumEntries #table)! !
 !OS.IP_INTERFACE_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

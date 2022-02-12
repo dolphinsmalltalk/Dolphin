@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSETARCDIRECTION'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSETARCDIRECTION_Size' -> 16rC.
 		'_OffsetOf_iArcDirection' -> 16r8
 	}!
 OS.EMRSETARCDIRECTION guid: (Core.GUID fromString: '{41d545c1-ed58-46f1-9b90-34ef56bd4213}')!
@@ -42,6 +43,9 @@ iArcDirection:!**compiled accessors**!public! !
 
 !OS.EMRSETARCDIRECTION class methodsFor!
 
+byteSize
+	^_EMRSETARCDIRECTION_Size!
+
 defineFields
 	"Define the fields of the EMRSETARCDIRECTION structure.
 
@@ -69,6 +73,7 @@ iTypes
 
 	^{EMR_SETARCDIRECTION}! !
 !OS.EMRSETARCDIRECTION class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSELECTCLIPPATH'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSELECTCLIPPATH_Size' -> 16rC.
 		'_OffsetOf_iMode' -> 16r8
 	}!
 OS.EMRSELECTCLIPPATH guid: (Core.GUID fromString: '{c8b98c6c-58b3-4b3c-a5c6-a65f676491c6}')!
@@ -42,6 +43,9 @@ iMode:!**compiled accessors**!public! !
 
 !OS.EMRSELECTCLIPPATH class methodsFor!
 
+byteSize
+	^_EMRSELECTCLIPPATH_Size!
+
 defineFields
 	"Define the fields of the EMRSELECTCLIPPATH structure.
 
@@ -70,6 +74,7 @@ iTypes
 	^{EMR_SELECTCLIPPATH. EMR_SETBKMODE. EMR_SETMAPMODE. EMR_SETLAYOUT. EMR_SETPOLYFILLMODE}
 		, {EMR_SETROP2. EMR_SETSTRETCHBLTMODE. EMR_SETICMMODE. EMR_SETTEXTALIGN}! !
 !OS.EMRSELECTCLIPPATH class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

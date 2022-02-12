@@ -1576,7 +1576,8 @@ OS.NMHDR subclass: #'UI.Scintilla.SCNotification'
 		'_OffsetOf_updated' -> 16r58.
 		'_OffsetOf_wParam' -> 16r2C.
 		'_OffsetOf_x' -> 16r48.
-		'_OffsetOf_y' -> 16r4C
+		'_OffsetOf_y' -> 16r4C.
+		'_SCNotification_Size' -> 16r64
 	}!
 UI.Scintilla.Styler subclass: #'UI.Scintilla.NullStyler'
 	instanceVariableNames: 'normalStyleName'

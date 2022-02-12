@@ -6,6 +6,7 @@ OS.AbstractLOGFONT subclass: #'OS.LOGFONTW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LOGFONTW_Size' -> 16r5C.
 		'_OffsetOf_lfFaceName' -> 16r1C
 	}!
 OS.LOGFONTW guid: (Core.GUID fromString: '{37140088-772d-4f72-aac2-27311f7805d8}')!
@@ -55,7 +56,7 @@ faceName: aString
 getData: hFont
 	Gdi32
 		getObjectW: hFont
-		cbBuffer: self byteSize
+		cbBuffer: _LOGFONTW_Size
 		lpvObject: self!
 
 lfFaceName
@@ -85,6 +86,9 @@ lfFaceName:!**compiled accessors**!public! !
 
 !OS.LOGFONTW class methodsFor!
 
+byteSize
+	^_LOGFONTW_Size!
+
 defineFields
 	"Define the Win32 LOGFONTW structure.
 		LOGFONTW compileDefinition.
@@ -93,6 +97,7 @@ defineFields
 	super defineFields.
 	self defineField: #lfFaceName type: (StringField type: Utf16String length: LF_FACESIZE)! !
 !OS.LOGFONTW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !
 

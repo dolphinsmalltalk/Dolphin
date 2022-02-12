@@ -7,7 +7,8 @@ OS.Win32Structure subclass: #'OS.TASKDIALOG_BUTTON'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_nButtonID' -> 16r0.
-		'_OffsetOf_pszButtonText' -> 16r4
+		'_OffsetOf_pszButtonText' -> 16r4.
+		'_TASKDIALOG_BUTTON_Size' -> 16r8
 	}!
 OS.TASKDIALOG_BUTTON guid: (Core.GUID fromString: '{19c44fa3-bf97-499c-a411-0252c8b78b31}')!
 OS.TASKDIALOG_BUTTON comment: '`TASKDIALOG_BUTTON` is an `External.Structure` class to wrap the struct ''Win32.TASKDIALOG_BUTTON'' from type information in the ''Win32 API'' library.
@@ -56,6 +57,9 @@ pszButtonText:!**compiled accessors**!public! !
 
 !OS.TASKDIALOG_BUTTON class methodsFor!
 
+byteSize
+	^_TASKDIALOG_BUTTON_Size!
+
 defineFields
 	"Define the fields of the TASKDIALOG_BUTTON structure.
 
@@ -76,6 +80,7 @@ defineFields
 getFieldNames
 	^#(#nButtonID #pszButtonText)! !
 !OS.TASKDIALOG_BUTTON class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

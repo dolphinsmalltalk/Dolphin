@@ -5,7 +5,9 @@ OS.MIB_UDPTABLE subclass: #'OS.MIB_UDPEXTABLE'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_MIB_UDPEXTABLE_Size' -> 16r10
+	}!
 OS.MIB_UDPEXTABLE guid: (Core.GUID fromString: '{dde2b010-360d-4715-9804-4e3d4982296f}')!
 OS.MIB_UDPEXTABLE comment: '<MIB_UDPEXTABLE> is an <ExternalStructure> class to wrap the struct ''Win32.MIB_UDPEXTABLE'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
 
@@ -37,6 +39,9 @@ table!**compiled accessors**!public! !
 
 !OS.MIB_UDPEXTABLE class methodsFor!
 
+byteSize
+	^_MIB_UDPEXTABLE_Size!
+
 defineFields
 	"Define the fields of the MIB_UDPEXTABLE structure.
 		MIB_UDPEXTABLE compileDefinition
@@ -60,6 +65,7 @@ defineFields
 			offset: 4.
 	self byteSize: 16! !
 !OS.MIB_UDPEXTABLE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 !
 

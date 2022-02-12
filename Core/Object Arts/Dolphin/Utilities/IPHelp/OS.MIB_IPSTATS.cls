@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.MIB_IPSTATS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_IPSTATS_Size' -> 16r5C.
 		'_OffsetOf_dwDefaultTTL' -> 16r4.
 		'_OffsetOf_dwForwarding' -> 16r0.
 		'_OffsetOf_dwForwDatagrams' -> 16r14.
@@ -211,6 +212,9 @@ dwRoutingDiscards!**compiled accessors**!public! !
 
 !OS.MIB_IPSTATS class methodsFor!
 
+byteSize
+	^_MIB_IPSTATS_Size!
+
 defineFields
 	"Define the fields of the MIB_IPSTATS structure.
 		MIB_IPSTATS compileDefinition
@@ -272,6 +276,7 @@ defineFields
 getFieldNames
 	^#(#dwForwarding #dwDefaultTTL #dwInReceives #dwInHdrErrors #dwInAddrErrors #dwForwDatagrams #dwInUnknownProtos #dwInDiscards #dwInDelivers #dwOutRequests #dwRoutingDiscards #dwOutDiscards #dwOutNoRoutes #dwReasmTimeout #dwReasmReqds #dwReasmOks #dwReasmFails #dwFragOks #dwFragFails #dwFragCreates #dwNumIf #dwNumAddr #dwNumRoutes)! !
 !OS.MIB_IPSTATS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

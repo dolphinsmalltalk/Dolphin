@@ -6,6 +6,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GdiplusStartupInput'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GdiplusStartupInput_Size' -> 16r10.
 		'_OffsetOf_DebugEventCallback' -> 16r4.
 		'_OffsetOf_GdiplusVersion' -> 16r0.
 		'_OffsetOf_SuppressBackgroundThread' -> 16r8.
@@ -41,6 +42,9 @@ GdiplusVersion:!**compiled accessors**!public! !
 
 !Graphics.Gdiplus.GdiplusStartupInput class methodsFor!
 
+byteSize
+	^_GdiplusStartupInput_Size!
+
 defineFields
 	"Define the fields of the GdiplusStartupInput structure.
 		GdiplusStartupInput compileDefinition
@@ -72,6 +76,7 @@ defineFields
 getFieldNames
 	^#(#GdiplusVersion)! !
 !Graphics.Gdiplus.GdiplusStartupInput class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

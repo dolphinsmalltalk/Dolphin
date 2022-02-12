@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_DATA_CHUNK'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_DATA_CHUNK_Size' -> 16r20.
 		'_OffsetOf_DataChunkType' -> 16r0.
 		'_OffsetOf_FromFileHandle_ByteRange' -> 16r8.
 		'_OffsetOf_FromFileHandle_FileHandle' -> 16r18.
@@ -81,7 +82,7 @@ FromFileHandle_ByteRange: aHTTP_BYTE_RANGE
 	aHTTP_BYTE_RANGE
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_FromFileHandle_ByteRange + 1)
-		to: ##(_OffsetOf_FromFileHandle_ByteRange + HTTP_BYTE_RANGE basicByteSize)
+		to: ##(_OffsetOf_FromFileHandle_ByteRange + HTTP_BYTE_RANGE._HTTP_BYTE_RANGE_Size)
 		startingAt: 1!
 
 FromFileHandle_FileHandle
@@ -125,7 +126,7 @@ FromFragmentCacheEx_ByteRange: aHTTP_BYTE_RANGE
 	aHTTP_BYTE_RANGE
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_FromFragmentCacheEx_ByteRange + 1)
-		to: ##(_OffsetOf_FromFragmentCacheEx_ByteRange + HTTP_BYTE_RANGE basicByteSize)
+		to: ##(_OffsetOf_FromFragmentCacheEx_ByteRange + HTTP_BYTE_RANGE._HTTP_BYTE_RANGE_Size)
 		startingAt: 1!
 
 FromFragmentCacheEx_pFragmentName
@@ -186,6 +187,9 @@ printableFields!development!printing!private! !
 
 !WinHttpServer.HTTP_DATA_CHUNK class methodsFor!
 
+byteSize
+	^_HTTP_DATA_CHUNK_Size!
+
 data: aByteObject
 	^(self new)
 		data: aByteObject;
@@ -235,6 +239,7 @@ defineFields
 getFieldNames
 	^#(#DataChunkType #FromFileHandle_ByteRange #FromFragmentCache_FragmentNameLength #FromFragmentCacheEx_ByteRange #FromMemory_pBuffer #FromFragmentCache_pFragmentName #FromMemory_BufferLength #FromFileHandle_FileHandle #FromFragmentCacheEx_pFragmentName)! !
 !WinHttpServer.HTTP_DATA_CHUNK class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 data:!instance creation!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

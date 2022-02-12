@@ -40,7 +40,7 @@ initialize
 		IID initialize
 	"
 
-	self extraInstanceSpec: ByteSize! !
+	self extraInstanceSpec: _GUID_Size! !
 !OS.COM.IID class categoriesForMethods!
 initialize!development!initializing!private! !
 !

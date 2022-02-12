@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.ENHMETAHEADER'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_ENHMETAHEADER_Size' -> 16r6C.
 		'_OffsetOf_bOpenGL' -> 16r60.
 		'_OffsetOf_cbPixelFormat' -> 16r58.
 		'_OffsetOf_dSignature' -> 16r28.
@@ -174,13 +175,13 @@ rclBounds
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: aRECT
-	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
+rclBounds: aRECTL
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1!
 
 rclFrame
@@ -188,55 +189,55 @@ rclFrame
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclFrame!
 
-rclFrame: aRECT
-	"Set the receiver's 'rclFrame' field to the value of the argument, aRECT"
+rclFrame: aRECTL
+	"Set the receiver's 'rclFrame' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclFrame + 1)
-		to: ##(_OffsetOf_rclFrame + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclFrame + RECTL._RECTL_Size)
 		startingAt: 1!
 
 szlDevice
-	"Answer the <SIZE> value of the receiver's 'szlDevice' field."
+	"Answer the <SIZEL> value of the receiver's 'szlDevice' field."
 
 	^SIZEL fromAddress: bytes yourAddress + _OffsetOf_szlDevice!
 
-szlDevice: aSIZE
-	"Set the receiver's 'szlDevice' field to the value of the argument, aSIZE"
+szlDevice: aSIZEL
+	"Set the receiver's 'szlDevice' field to the value of the argument, aSIZEL"
 
-	aSIZE
+	aSIZEL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_szlDevice + 1)
-		to: ##(_OffsetOf_szlDevice + SIZEL basicByteSize)
+		to: ##(_OffsetOf_szlDevice + SIZEL._SIZEL_Size)
 		startingAt: 1!
 
 szlMicrometers
-	"Answer the <SIZE> value of the receiver's 'szlMicrometers' field."
+	"Answer the <SIZEL> value of the receiver's 'szlMicrometers' field."
 
 	^SIZEL fromAddress: bytes yourAddress + _OffsetOf_szlMicrometers!
 
-szlMicrometers: aSIZE
-	"Set the receiver's 'szlMicrometers' field to the value of the argument, aSIZE"
+szlMicrometers: aSIZEL
+	"Set the receiver's 'szlMicrometers' field to the value of the argument, aSIZEL"
 
-	aSIZE
+	aSIZEL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_szlMicrometers + 1)
-		to: ##(_OffsetOf_szlMicrometers + SIZEL basicByteSize)
+		to: ##(_OffsetOf_szlMicrometers + SIZEL._SIZEL_Size)
 		startingAt: 1!
 
 szlMillimeters
-	"Answer the <SIZE> value of the receiver's 'szlMillimeters' field."
+	"Answer the <SIZEL> value of the receiver's 'szlMillimeters' field."
 
 	^SIZEL fromAddress: bytes yourAddress + _OffsetOf_szlMillimeters!
 
-szlMillimeters: aSIZE
-	"Set the receiver's 'szlMillimeters' field to the value of the argument, aSIZE"
+szlMillimeters: aSIZEL
+	"Set the receiver's 'szlMillimeters' field to the value of the argument, aSIZEL"
 
-	aSIZE
+	aSIZEL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_szlMillimeters + 1)
-		to: ##(_OffsetOf_szlMillimeters + SIZEL basicByteSize)
+		to: ##(_OffsetOf_szlMillimeters + SIZEL._SIZEL_Size)
 		startingAt: 1! !
 !OS.ENHMETAHEADER categoriesForMethods!
 bOpenGL!**compiled accessors**!public! !
@@ -274,6 +275,9 @@ szlMillimeters:!**compiled accessors**!public! !
 !
 
 !OS.ENHMETAHEADER class methodsFor!
+
+byteSize
+	^_ENHMETAHEADER_Size!
 
 defineFields
 	"Define the fields of the ENHMETAHEADER structure.
@@ -367,6 +371,7 @@ iTypes
 
 	^{EMR_HEADER}! !
 !OS.ENHMETAHEADER class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

@@ -13,7 +13,8 @@ External.Structure subclass: #'OS.REGKEYINFO'
 		'_OffsetOf_maxValueNameLen' -> 16r10.
 		'_OffsetOf_securityDescriptorLen' -> 16r18.
 		'_OffsetOf_subKeyCount' -> 16r0.
-		'_OffsetOf_valueCount' -> 16rC
+		'_OffsetOf_valueCount' -> 16rC.
+		'_REGKEYINFO_Size' -> 16r24
 	}!
 OS.REGKEYINFO guid: (Core.GUID fromString: '{15e72644-f20b-4040-964a-adfe90d8eb1e}')!
 OS.REGKEYINFO comment: 'Not a real Windows structure, but the one that should have been defined as the buffer to receiver values from the RegQueryInfoKey function, if it had been designed to return data through a single structure rather than a large number (11) of pointer parameters.'!
@@ -78,6 +79,9 @@ valueCount!**compiled accessors**!public! !
 
 !OS.REGKEYINFO class methodsFor!
 
+byteSize
+	^_REGKEYINFO_Size!
+
 defineFields
 	"
 	self compileDefinition
@@ -96,6 +100,7 @@ defineFields
 getFieldNames
 	^#(#subKeyCount #maxSubKeyLen #maxClassLen #valueCount #maxValueNameLen #maxValueLen #securityDescriptorLen #ftLastWriteTime)! !
 !OS.REGKEYINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

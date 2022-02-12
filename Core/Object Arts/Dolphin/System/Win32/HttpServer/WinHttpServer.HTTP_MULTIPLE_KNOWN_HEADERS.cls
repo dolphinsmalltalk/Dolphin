@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_MULTIPLE_KNOWN_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_MULTIPLE_KNOWN_HEADERS_Size' -> 16r10.
 		'_OffsetOf_Flags' -> 16r4.
 		'_OffsetOf_HeaderId' -> 16r0.
 		'_OffsetOf_KnownHeaderCount' -> 16r8.
@@ -89,6 +90,9 @@ KnownHeaders:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS class methodsFor!
 
+byteSize
+	^_HTTP_MULTIPLE_KNOWN_HEADERS_Size!
+
 defineFields
 	"Define the fields of the HTTP_MULTIPLE_KNOWN_HEADERS structure.
 
@@ -113,6 +117,7 @@ defineFields
 getFieldNames
 	^#(#HeaderId #Flags #KnownHeaderCount #KnownHeaders)! !
 !WinHttpServer.HTTP_MULTIPLE_KNOWN_HEADERS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

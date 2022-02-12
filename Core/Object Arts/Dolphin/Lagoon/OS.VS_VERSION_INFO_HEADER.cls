@@ -8,7 +8,8 @@ OS.Win32Structure subclass: #'OS.VS_VERSION_INFO_HEADER'
 	classConstants: {
 		'_OffsetOf_wLength' -> 16r0.
 		'_OffsetOf_wType' -> 16r4.
-		'_OffsetOf_wValueLength' -> 16r2
+		'_OffsetOf_wValueLength' -> 16r2.
+		'_VS_VERSION_INFO_HEADER_Size' -> 16r6
 	}!
 OS.VS_VERSION_INFO_HEADER guid: (Core.GUID fromString: '{efc64c05-aa07-41b8-ba73-60f7974c6e3f}')!
 OS.VS_VERSION_INFO_HEADER comment: 'VS_VERSION_INFO_HEADER is an ExternalStructure class to represent the headers for version resource blocks. It is not a real Win32 structure.
@@ -49,8 +50,8 @@ valueOffset
 	"Answer the offset into the resource block pointed at by the receiver at which the value
 	starts."
 
-	valueOffset isNil ifTrue: [
-		valueOffset := (self class byteSize + ((self key size+1)*2)) roundUpTo: 4].
+	valueOffset isNil
+		ifTrue: [valueOffset := _VS_VERSION_INFO_HEADER_Size + ((self key size + 1) * 2) roundUpTo: 4].
 	^valueOffset!
 
 valueString
@@ -93,6 +94,9 @@ wValueLength!**compiled accessors**!public! !
 
 !OS.VS_VERSION_INFO_HEADER class methodsFor!
 
+byteSize
+	^_VS_VERSION_INFO_HEADER_Size!
+
 defineFields
 	"Private - Define the layout of the Win32 VS_VERSION_INFO_HEADER structure.
 	
@@ -108,6 +112,7 @@ defineFields
 getFieldNames
 	^#(#wLength #wValueLength #wType)! !
 !OS.VS_VERSION_INFO_HEADER class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

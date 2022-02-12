@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSETCOLORADJUSTMENT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSETCOLORADJUSTMENT_Size' -> 16r20.
 		'_OffsetOf_COLORADJUSTMENT' -> 16r8
 	}!
 OS.EMRSETCOLORADJUSTMENT guid: (Core.GUID fromString: '{bc512904-3af5-4a18-a28b-bf413de2cf50}')!
@@ -37,7 +38,7 @@ COLORADJUSTMENT: aCOLORADJUSTMENT
 	aCOLORADJUSTMENT
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_COLORADJUSTMENT + 1)
-		to: ##(_OffsetOf_COLORADJUSTMENT + COLORADJUSTMENT basicByteSize)
+		to: ##(_OffsetOf_COLORADJUSTMENT + COLORADJUSTMENT._COLORADJUSTMENT_Size)
 		startingAt: 1! !
 !OS.EMRSETCOLORADJUSTMENT categoriesForMethods!
 COLORADJUSTMENT!**compiled accessors**!public! !
@@ -45,6 +46,9 @@ COLORADJUSTMENT:!**compiled accessors**!public! !
 !
 
 !OS.EMRSETCOLORADJUSTMENT class methodsFor!
+
+byteSize
+	^_EMRSETCOLORADJUSTMENT_Size!
 
 defineFields
 	"Define the fields of the EMRSETCOLORADJUSTMENT structure.
@@ -73,6 +77,7 @@ iTypes
 
 	^{EMR_SETCOLORADJUSTMENT}! !
 !OS.EMRSETCOLORADJUSTMENT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

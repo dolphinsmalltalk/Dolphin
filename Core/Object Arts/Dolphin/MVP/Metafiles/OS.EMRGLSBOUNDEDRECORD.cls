@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRGLSBOUNDEDRECORD'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRGLSBOUNDEDRECORD_Size' -> 16r20.
 		'_OffsetOf_cbData' -> 16r18.
 		'_OffsetOf_Data' -> 16r1C.
 		'_OffsetOf_rclBounds' -> 16r8
@@ -62,13 +63,13 @@ rclBounds
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: aRECT
-	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
+rclBounds: aRECTL
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1! !
 !OS.EMRGLSBOUNDEDRECORD categoriesForMethods!
 cbData!**compiled accessors**!public! !
@@ -80,6 +81,9 @@ rclBounds:!**compiled accessors**!public! !
 !
 
 !OS.EMRGLSBOUNDEDRECORD class methodsFor!
+
+byteSize
+	^_EMRGLSBOUNDEDRECORD_Size!
 
 defineFields
 	"Define the fields of the EMRGLSBOUNDEDRECORD structure.
@@ -116,6 +120,7 @@ iTypes
 
 	^{EMR_GLSBOUNDEDRECORD}! !
 !OS.EMRGLSBOUNDEDRECORD class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

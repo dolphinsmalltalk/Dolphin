@@ -6,6 +6,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_LISTEN_ENDPOINT
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_LISTEN_ENDPOINT_INFO_Size' -> 16r8.
 		'_OffsetOf_EnableSharing' -> 16r4
 	}!
 WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO guid: (Core.GUID fromString: '{c96f66fd-b678-4046-9100-ed4b4bc7c9fe}')!
@@ -44,6 +45,9 @@ EnableSharing:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO class methodsFor!
 
+byteSize
+	^_HTTP_LISTEN_ENDPOINT_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_LISTEN_ENDPOINT_INFO structure.
 
@@ -67,6 +71,7 @@ getFieldNames
 propertyId
 	^HttpServerListenEndpointProperty! !
 !WinHttpServer.HTTP_LISTEN_ENDPOINT_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 propertyId!public! !

@@ -9,7 +9,8 @@ OS.COM.OLEStructure subclass: #'OS.COM.OLEVERB'
 		'_OffsetOf_fuFlags' -> 16r8.
 		'_OffsetOf_grfAttribs' -> 16rC.
 		'_OffsetOf_lpszVerbName' -> 16r4.
-		'_OffsetOf_lVerb' -> 16r0
+		'_OffsetOf_lVerb' -> 16r0.
+		'_OLEVERB_Size' -> 16r10
 	}!
 OS.COM.OLEVERB guid: (Core.GUID fromString: '{33eb8491-3919-4df6-8dbe-d88c4be8d413}')!
 OS.COM.OLEVERB comment: '<OLEVERB> is an <ExternalStructure> class to wrap the struct ''Win32.OLEVERB'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
@@ -95,6 +96,9 @@ printOn:!development!printing!public! !
 
 !OS.COM.OLEVERB class methodsFor!
 
+byteSize
+	^_OLEVERB_Size!
+
 defineFields
 	"Define the fields of the OLEVERB structure.
 
@@ -118,6 +122,7 @@ defineFields
 getFieldNames
 	^#(#lVerb #lpszVerbName #fuFlags #grfAttribs)! !
 !OS.COM.OLEVERB class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -41,7 +41,8 @@ External.Structure subclass: #'OS.OVERLAPPED'
 		'_OffsetOf_InternalHigh' -> 16r4.
 		'_OffsetOf_Offset' -> 16r8.
 		'_OffsetOf_OffsetHigh' -> 16rC.
-		'_OffsetOf_Pointer' -> 16r8
+		'_OffsetOf_Pointer' -> 16r8.
+		'_OVERLAPPED_Size' -> 16r14
 	}!
 
 "Loose Methods"!

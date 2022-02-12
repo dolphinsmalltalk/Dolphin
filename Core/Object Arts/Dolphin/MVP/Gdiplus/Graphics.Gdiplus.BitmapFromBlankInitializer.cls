@@ -38,6 +38,25 @@ createHandle
 		bitmap: gpHandle.
 	^gpHandle!
 
+pixelFormatName
+	"This wont be fast..."
+
+	Graphics.Gdiplus keysAndValuesDo: [:eachKey :eachValue | 
+		(eachValue = format and: [eachKey beginsWith: 'PixelFormat']) ifTrue: [^eachKey]].
+	^'PixelFormatDontCare'!
+
+printImage: aBitmap on: aWriteStream
+	"Private - Print an expression on the <WriteStream> argument that will create a copy of the <Image> initialized by the receiver."
+
+	aWriteStream
+		print: aBitmap class;
+		nextPutAll: ' width: ';
+		print: width;
+		nextPutAll: ' height: ';
+		print: height;
+		nextPutAll: ' format: ';
+		nextPutAll: (Graphics.Gdiplus fullNameFor: self pixelFormatName)!
+
 width: widthInteger height: heightInteger format: aPixelFormat
 	width := widthInteger.
 	height := heightInteger.
@@ -45,6 +64,8 @@ width: widthInteger height: heightInteger format: aPixelFormat
 	^self! !
 !Graphics.Gdiplus.BitmapFromBlankInitializer categoriesForMethods!
 createHandle!private!realizing/unrealizing! !
+pixelFormatName!private!realizing/unrealizing! !
+printImage:on:!printing!private! !
 width:height:format:!initializing!private! !
 !
 

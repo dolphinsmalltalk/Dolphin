@@ -15,7 +15,8 @@ OS.Win32Structure subclass: #'OS.PARAFORMAT'
 		'_OffsetOf_rgxTabs' -> 16r1C.
 		'_OffsetOf_wAlignment' -> 16r18.
 		'_OffsetOf_wEffects' -> 16rA.
-		'_OffsetOf_wNumbering' -> 16r8
+		'_OffsetOf_wNumbering' -> 16r8.
+		'_PARAFORMAT_Size' -> 16r9C
 	}!
 OS.PARAFORMAT guid: (Core.GUID fromString: '{87b4c607-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.PARAFORMAT comment: ''!
@@ -192,6 +193,9 @@ wNumbering:!**compiled accessors**!public! !
 
 !OS.PARAFORMAT class methodsFor!
 
+byteSize
+	^_PARAFORMAT_Size!
+
 defineFields
 	"Define the Win32 PARAFORMAT Structure (used for paragraph formatting
 	in the RichEdit control)
@@ -217,6 +221,7 @@ getFieldNames
 packing
 	^VMConstants.IntPtrSize! !
 !OS.PARAFORMAT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 packing!constants!public! !

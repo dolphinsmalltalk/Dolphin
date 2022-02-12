@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_REQUEST_TOKEN_B
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_REQUEST_TOKEN_BINDING_INFO_Size' -> 16r14.
 		'_OffsetOf_KeyType' -> 16r10.
 		'_OffsetOf_TlsUnique' -> 16r8.
 		'_OffsetOf_TlsUniqueSize' -> 16rC.
@@ -98,6 +99,9 @@ TokenBindingSize:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO class methodsFor!
 
+byteSize
+	^_HTTP_REQUEST_TOKEN_BINDING_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_REQUEST_TOKEN_BINDING_INFO structure.
 
@@ -124,6 +128,7 @@ defineFields
 getFieldNames
 	^#(#TokenBinding #TokenBindingSize #TlsUnique #TlsUniqueSize #KeyType)! !
 !WinHttpServer.HTTP_REQUEST_TOKEN_BINDING_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

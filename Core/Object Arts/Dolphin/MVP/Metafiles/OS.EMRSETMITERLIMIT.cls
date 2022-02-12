@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSETMITERLIMIT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSETMITERLIMIT_Size' -> 16rC.
 		'_OffsetOf_eMiterLimit' -> 16r8
 	}!
 OS.EMRSETMITERLIMIT guid: (Core.GUID fromString: '{bc8dabd4-f8b4-4f42-895c-1b712c75fc43}')!
@@ -42,6 +43,9 @@ eMiterLimit:!**compiled accessors**!public! !
 
 !OS.EMRSETMITERLIMIT class methodsFor!
 
+byteSize
+	^_EMRSETMITERLIMIT_Size!
+
 defineFields
 	"Define the fields of the EMRSETMITERLIMIT structure.
 
@@ -69,6 +73,7 @@ iTypes
 
 	^{EMR_SETMITERLIMIT}! !
 !OS.EMRSETMITERLIMIT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

@@ -6,6 +6,7 @@ WinHttpServer.HttpQosSetting subclass: #'WinHttpServer.HTTP_FLOWRATE_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_FLOWRATE_INFO_Size' -> 16r10.
 		'_OffsetOf_BurstSize' -> 16rC.
 		'_OffsetOf_MaxBandwidth' -> 16r4.
 		'_OffsetOf_MaxPeakBandwidth' -> 16r8
@@ -72,6 +73,9 @@ MaxPeakBandwidth:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_FLOWRATE_INFO class methodsFor!
 
+byteSize
+	^_HTTP_FLOWRATE_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_FLOWRATE_INFO structure.
 
@@ -107,6 +111,7 @@ maxBandwidth: maxInteger maxPeakBandwidth: peakInteger burstSize: burstInteger
 qosType
 	^HttpQosSettingTypeFlowRate! !
 !WinHttpServer.HTTP_FLOWRATE_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 maxBandwidth:maxPeakBandwidth:burstSize:!constants!instance creation!public! !

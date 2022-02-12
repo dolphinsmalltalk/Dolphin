@@ -6,6 +6,7 @@ OS.NMCUSTOMDRAW subclass: #'OS.NMLVCUSTOMDRAW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMLVCUSTOMDRAW_Size' -> 16r3C.
 		'_OffsetOf_clrText' -> 16r30.
 		'_OffsetOf_clrTextBk' -> 16r34.
 		'_OffsetOf_iSubItem' -> 16r38
@@ -126,6 +127,9 @@ subItem!accessing!public! !
 
 !OS.NMLVCUSTOMDRAW class methodsFor!
 
+byteSize
+	^_NMLVCUSTOMDRAW_Size!
+
 defineFields
 	"Define the structure template for Win32 NMLVCUSTOMDRAW structure.
 		self compileDefinition
@@ -140,6 +144,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #dwDrawStage #hdc #rc #dwItemSpec #uItemState #lParam #clrText #clrTextBk #iSubItem)! !
 !OS.NMLVCUSTOMDRAW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

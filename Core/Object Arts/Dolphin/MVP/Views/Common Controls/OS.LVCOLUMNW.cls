@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.LVCOLUMNW'
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LVCOLUMNW_Size' -> 16r2C.
 		'_OffsetOf_cchTextMax' -> 16r10.
 		'_OffsetOf_cx' -> 16r8.
 		'_OffsetOf_cxDefault' -> 16r24.
@@ -141,7 +142,7 @@ mask: anInteger
 maskIn: anInteger
 	"OR in to receiver's mask field the bit flags represented by anInteger"
 
-	self mask: (self mask bitOr: anInteger)!
+	bytes dwordAtOffset: _OffsetOf_mask put: ((bytes dwordAtOffset: _OffsetOf_mask) bitOr: anInteger)!
 
 newTextBuffer: anInteger
 	"Allocate a new text buffer for the receiver of the specified size."
@@ -166,6 +167,16 @@ pszText: anUtf16String
 	"Set the receiver's 'pszText' field to the value of the argument, anUtf16String"
 
 	bytes uintPtrAtOffset: _OffsetOf_pszText put: anUtf16String yourAddress!
+
+setColumn: aListViewColumn
+	text := aListViewColumn text displayString asUtf16String.
+	self
+		pszText: text;
+		cchTextMax: text size;
+		cx: aListViewColumn basicWidth;
+		fmt: (AlignmentMap at: aListViewColumn alignment);
+		mask: ##(LVCF_TEXT | LVCF_WIDTH | LVCF_FMT).
+	^self!
 
 text
 	"Answer the text of the receiver"
@@ -215,12 +226,16 @@ newTextBuffer:!helpers!public! !
 order:!accessing!public! !
 pszText!**compiled accessors**!public! !
 pszText:!**compiled accessors**!public! !
+setColumn:!initializing!private! !
 text!accessing!public! !
 text:!accessing!public! !
 width:!accessing!public! !
 !
 
 !OS.LVCOLUMNW class methodsFor!
+
+byteSize
+	^_LVCOLUMNW_Size!
 
 defineFields
 	"Define the fields of the Win32 LVCOLUMNW structure
@@ -262,16 +277,8 @@ defineFields
 			type: SDWORDField new
 			offset: 40!
 
-fromColumn: aListViewColumn in: aListView
-	"Answer an LVCOLUMN generated from aListViewColumn using the
-	attributes of aListView to generate the width of the column
-	if necessary."
-
-	^self new
-		text: aListViewColumn text;
-		width: aListViewColumn basicWidth;
-		alignment: aListViewColumn alignment;
-		yourself!
+fromColumn: aListViewColumn
+	^self newBuffer setColumn: aListViewColumn!
 
 getFieldNames
 	^#(#mask #fmt #cx #pszText #cchTextMax #iSubItem #iImage #iOrder #cxMin #cxDefault #cxIdeal)!
@@ -286,8 +293,9 @@ initialize
 				shrink;
 				yourself)! !
 !OS.LVCOLUMNW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
-fromColumn:in:!instance creation!public! !
+fromColumn:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 initialize!development!initializing!private! !
 !

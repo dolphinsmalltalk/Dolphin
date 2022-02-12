@@ -6,6 +6,7 @@ OS.NMHDR subclass: #'OS.NMLVODSTATECHANGE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMLVODSTATECHANGE_Size' -> 16r1C.
 		'_OffsetOf_iFrom' -> 16rC.
 		'_OffsetOf_iTo' -> 16r10.
 		'_OffsetOf_uNewState' -> 16r14.
@@ -44,6 +45,9 @@ uOldState!**compiled accessors**!public! !
 
 !OS.NMLVODSTATECHANGE class methodsFor!
 
+byteSize
+	^_NMLVODSTATECHANGE_Size!
+
 defineFields
 	"Define the structure template for Win32 NMLVODSTATECHANGE structure.
 		NMLVODSTATECHANGE compileDefinition
@@ -59,6 +63,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iFrom #iTo #uNewState #uOldState)! !
 !OS.NMLVODSTATECHANGE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

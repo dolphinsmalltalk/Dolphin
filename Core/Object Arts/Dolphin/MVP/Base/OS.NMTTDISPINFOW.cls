@@ -6,6 +6,7 @@ OS.NMHDR subclass: #'OS.NMTTDISPINFOW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMTTDISPINFOW_Size' -> 16rBC.
 		'_OffsetOf_hinst' -> 16rB0.
 		'_OffsetOf_lParam' -> 16rB8.
 		'_OffsetOf_lpszText' -> 16rC.
@@ -62,6 +63,9 @@ uFlags!**compiled accessors**!public! !
 
 !OS.NMTTDISPINFOW class methodsFor!
 
+byteSize
+	^_NMTTDISPINFOW_Size!
+
 defineFields
 	"Define the fields of the NMTTDISPINFOW structure.
 		self compileDefinition
@@ -87,6 +91,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #lpszText #uFlags)! !
 !OS.NMTTDISPINFOW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

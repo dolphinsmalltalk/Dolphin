@@ -6,6 +6,7 @@ OS.MIB_UDPROW subclass: #'OS.MIB_UDPEXROW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_UDPEXROW_Size' -> 16rC.
 		'_OffsetOf_dwProcessId' -> 16r8
 	}!
 OS.MIB_UDPEXROW guid: (Core.GUID fromString: '{fda0765b-395f-447b-881b-26155c88393a}')!
@@ -37,6 +38,9 @@ dwProcessId!**compiled accessors**!public! !
 
 !OS.MIB_UDPEXROW class methodsFor!
 
+byteSize
+	^_MIB_UDPEXROW_Size!
+
 defineFields
 	"Define the fields of the MIB_UDPEXROW structure.
 		MIB_UDPEXROW compileDefinition
@@ -59,6 +63,7 @@ defineFields
 getFieldNames
 	^#(#dwLocalAddr #dwLocalPort #dwProcessId)! !
 !OS.MIB_UDPEXROW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

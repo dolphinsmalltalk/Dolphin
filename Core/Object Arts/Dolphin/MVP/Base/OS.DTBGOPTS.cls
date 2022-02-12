@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.DTBGOPTS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_DTBGOPTS_Size' -> 16r18.
 		'_OffsetOf_dwFlags' -> 16r4.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_rcClip' -> 16r8
@@ -55,13 +56,13 @@ rcClip
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcClip!
 
-rcClip: aRECT
-	"Set the receiver's 'rcClip' field to the value of the argument, aRECT"
+rcClip: aRECTL
+	"Set the receiver's 'rcClip' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rcClip + 1)
-		to: ##(_OffsetOf_rcClip + RECTL basicByteSize)
+		to: ##(_OffsetOf_rcClip + RECTL._RECTL_Size)
 		startingAt: 1! !
 !OS.DTBGOPTS categoriesForMethods!
 dwFlags!**compiled accessors**!public! !
@@ -73,6 +74,9 @@ rcClip:!**compiled accessors**!public! !
 !
 
 !OS.DTBGOPTS class methodsFor!
+
+byteSize
+	^_DTBGOPTS_Size!
 
 defineFields
 	"Define the fields of the DTBGOPTS structure.
@@ -94,6 +98,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #dwFlags #rcClip)! !
 !OS.DTBGOPTS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

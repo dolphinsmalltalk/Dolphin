@@ -6,6 +6,7 @@ WinHttpServer.HttpServiceConfigQuery subclass: #'WinHttpServer.HTTP_SERVICE_CONF
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_SSL_QUERY_Size' -> 16rC.
 		'_OffsetOf_dwToken' -> 16r8.
 		'_OffsetOf_KeyDesc' -> 16r4
 	}!
@@ -58,6 +59,9 @@ KeyDesc:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY class methodsFor!
 
+byteSize
+	^_HTTP_SERVICE_CONFIG_SSL_QUERY_Size!
+
 defineFields
 	"Define the fields of the HTTP_SERVICE_CONFIG_SSL_QUERY structure.
 
@@ -80,6 +84,7 @@ defineFields
 getFieldNames
 	^#(#QueryDesc #KeyDesc #dwToken)! !
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_QUERY class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

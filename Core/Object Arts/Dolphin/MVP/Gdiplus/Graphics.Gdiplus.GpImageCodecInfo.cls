@@ -6,6 +6,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpImageCodecInfo'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpImageCodecInfo_Size' -> 16r4C.
 		'_OffsetOf_Clsid' -> 16r0.
 		'_OffsetOf_CodecName' -> 16r20.
 		'_OffsetOf_DllName' -> 16r24.
@@ -60,7 +61,7 @@ Clsid: aGUID
 	aGUID
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_Clsid + 1)
-		to: ##(_OffsetOf_Clsid + GUID basicByteSize)
+		to: ##(_OffsetOf_Clsid + GUID._GUID_Size)
 		startingAt: 1!
 
 CodecName
@@ -124,7 +125,7 @@ FormatID: aGUID
 	aGUID
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_FormatID + 1)
-		to: ##(_OffsetOf_FormatID + GUID basicByteSize)
+		to: ##(_OffsetOf_FormatID + GUID._GUID_Size)
 		startingAt: 1!
 
 MimeType
@@ -217,6 +218,9 @@ Version:!**compiled accessors**!public! !
 
 !Graphics.Gdiplus.GpImageCodecInfo class methodsFor!
 
+byteSize
+	^_GpImageCodecInfo_Size!
+
 defineFields
 	"Define the fields of the GpImageCodecInfo structure.
 		GpImageCodecInfo compileDefinition
@@ -284,6 +288,7 @@ defineFields
 getFieldNames
 	^#(#Clsid #FormatID #CodecName #DllName #FormatDescription #FilenameExtension #MimeType #Flags #Version #SigCount #SigSize #SigPattern #SigMask)! !
 !Graphics.Gdiplus.GpImageCodecInfo class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

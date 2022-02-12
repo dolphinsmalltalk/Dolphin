@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRCOLORCORRECTPALETTE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRCOLORCORRECTPALETTE_Size' -> 16r18.
 		'_OffsetOf_ihPalette' -> 16r8.
 		'_OffsetOf_nFirstEntry' -> 16rC.
 		'_OffsetOf_nPalEntries' -> 16r10.
@@ -84,6 +85,9 @@ nReserved:!**compiled accessors**!public! !
 
 !OS.EMRCOLORCORRECTPALETTE class methodsFor!
 
+byteSize
+	^_EMRCOLORCORRECTPALETTE_Size!
+
 defineFields
 	"Define the fields of the COLORCORRECTPALETTE structure.
 
@@ -123,6 +127,7 @@ iTypes
 
 	^{EMR_COLORCORRECTPALETTE}! !
 !OS.EMRCOLORCORRECTPALETTE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

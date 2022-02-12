@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.LOGPEN'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LOGPEN_Size' -> 16r10.
 		'_OffsetOf_lopnColor' -> 16rC.
 		'_OffsetOf_lopnStyle' -> 16r0.
 		'_OffsetOf_lopnWidth' -> 16r4
@@ -80,6 +81,9 @@ width:!accessing!public! !
 
 !OS.LOGPEN class methodsFor!
 
+byteSize
+	^_LOGPEN_Size!
+
 defineFields
 	"Define the fields of the LOGPEN structure.
 		LOGPEN compileDefinition
@@ -100,6 +104,7 @@ defineFields
 getFieldNames
 	^#(#lopnStyle #lopnColor)! !
 !OS.LOGPEN class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

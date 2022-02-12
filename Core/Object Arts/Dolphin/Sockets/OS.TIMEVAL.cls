@@ -7,7 +7,8 @@ External.Structure subclass: #'OS.TIMEVAL'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_tv_sec' -> 16r0.
-		'_OffsetOf_tv_usec' -> 16r4
+		'_OffsetOf_tv_usec' -> 16r4.
+		'_TIMEVAL_Size' -> 16r8
 	}!
 OS.TIMEVAL guid: (Core.GUID fromString: '{c4066d09-c93b-488e-b9b9-585ddddb41ea}')!
 OS.TIMEVAL comment: '<Timeval> is an <ExternalStructure> class to wrap the struct ''WINSOCK2Lib.timeval'' from type information in the ''Windows Sockets 2 Type Library'' library.
@@ -54,6 +55,9 @@ tv_usec:!**compiled accessors**!public! !
 
 !OS.TIMEVAL class methodsFor!
 
+byteSize
+	^_TIMEVAL_Size!
+
 defineFields
 	"Define the fields of the timeval structure.
 
@@ -74,6 +78,7 @@ defineFields
 getFieldNames
 	^#(#tv_sec #tv_usec)! !
 !OS.TIMEVAL class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

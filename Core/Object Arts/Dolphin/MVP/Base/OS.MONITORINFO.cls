@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.MONITORINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MONITORINFO_Size' -> 16r28.
 		'_OffsetOf_dwFlags' -> 16r24.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_rcMonitor' -> 16r4.
@@ -67,6 +68,9 @@ rcWork!**compiled accessors**!public! !
 
 !OS.MONITORINFO class methodsFor!
 
+byteSize
+	^_MONITORINFO_Size!
+
 defineFields
 	"Define the fields of the MONITORINFO structure.
 
@@ -91,6 +95,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #rcMonitor #rcWork #dwFlags)! !
 !OS.MONITORINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

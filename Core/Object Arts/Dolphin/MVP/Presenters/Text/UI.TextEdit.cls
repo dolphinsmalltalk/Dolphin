@@ -471,7 +471,7 @@ formatRectangle
 	"Answers the Rectangle used to format the text"
 
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	self
 		sendMessage: EM_GETRECT
 		wParam: 0

@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_RESPONSE_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_RESPONSE_INFO_Size' -> 16rC.
 		'_OffsetOf_Length' -> 16r4.
 		'_OffsetOf_pInfo' -> 16r8.
 		'_OffsetOf_Type' -> 16r0
@@ -86,6 +87,9 @@ Type:!**compiled accessors**!private! !
 
 !WinHttpServer.HTTP_RESPONSE_INFO class methodsFor!
 
+byteSize
+	^_HTTP_RESPONSE_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_RESPONSE_INFO structure.
 
@@ -108,6 +112,7 @@ defineFields
 getFieldNames
 	^#(#Type #Length #pInfo)! !
 !WinHttpServer.HTTP_RESPONSE_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -111,7 +111,7 @@ postMouseEvents: aSequencedReadableCollection
 sendClickEvent: aMouseEvent
 	| pos |
 	"The mouse needs to be outside any Dolphin window in order to cause the control's WM_?BUTTONDOWN handler to block in the way described in #898"
-	pos := POINTL new.
+	pos := POINTL newBuffer.
 	User32
 		getCursorPos: pos;
 		setCursorPosX: 0 y: 0.

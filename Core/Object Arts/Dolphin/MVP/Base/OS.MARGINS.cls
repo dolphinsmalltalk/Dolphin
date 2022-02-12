@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.MARGINS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MARGINS_Size' -> 16r10.
 		'_OffsetOf_cxLeftWidth' -> 16r0.
 		'_OffsetOf_cxRightWidth' -> 16r4.
 		'_OffsetOf_cyBottomHeight' -> 16rC.
@@ -84,6 +85,9 @@ cyTopHeight:!**compiled accessors**!public! !
 
 !OS.MARGINS class methodsFor!
 
+byteSize
+	^_MARGINS_Size!
+
 defineFields
 	"Define the fields of the MARGINS structure.
 		MARGINS compileDefinition
@@ -106,6 +110,7 @@ defineFields
 getFieldNames
 	^#(#cxLeftWidth #cxRightWidth #cyTopHeight #cyBottomHeight)! !
 !OS.MARGINS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

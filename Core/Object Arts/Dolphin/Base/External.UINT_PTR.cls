@@ -5,7 +5,9 @@ External.INTEGER subclass: #'External.UINT_PTR'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_UINT_PTR_Size' -> 16r4
+	}!
 External.UINT_PTR guid: (Core.GUID fromString: '{5b2efc4b-7560-43b0-930f-70dc94f37d05}')!
 External.UINT_PTR comment: ''!
 !External.UINT_PTR categoriesForClass!External-Data-Structured-Win32! !
@@ -80,12 +82,16 @@ value:!**compiled accessors**!public! !
 
 !External.UINT_PTR class methodsFor!
 
+byteSize
+	^_UINT_PTR_Size!
+
 defineFields
 	"Define the fields of the ExternalInteger 'structure'. ExternalInteger subclasses
 	have a single value."
 
 	self defineField: #value type: UINT_PTRField new beOverride! !
 !External.UINT_PTR class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 !
 

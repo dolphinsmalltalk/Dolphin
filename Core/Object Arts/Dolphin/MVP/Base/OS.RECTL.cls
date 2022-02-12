@@ -9,7 +9,8 @@ External.RECT subclass: #'OS.RECTL'
 		'_OffsetOf_bottom' -> 16rC.
 		'_OffsetOf_left' -> 16r0.
 		'_OffsetOf_right' -> 16r8.
-		'_OffsetOf_top' -> 16r4
+		'_OffsetOf_top' -> 16r4.
+		'_RECTL_Size' -> 16r10
 	}!
 OS.RECTL guid: (Core.GUID fromString: '{0a6e055d-001b-4817-b07d-fe982ca46330}')!
 OS.RECTL comment: '`RECT` is an `ExternalStructure` class to wrap the standard Win32 structure of the same name.
@@ -95,6 +96,9 @@ top:!**compiled accessors**!public! !
 
 !OS.RECTL class methodsFor!
 
+byteSize
+	^_RECTL_Size!
+
 defineFields
 	"Define the fields of the RECTL structure.
 		RECTL compileDefinition
@@ -117,9 +121,9 @@ defineFields
 extent: newExtent
 	"Answer a new instance of the receiver with zero origin and the specified extent."
 
-	^self basicNew bytes: ((ByteArray newFixed: 16)
-				sdwordAtOffset: 8 put: newExtent x;
-				sdwordAtOffset: 12 put: newExtent y;
+	^self basicNew bytes: ((ByteArray newFixed: _RECTL_Size)
+				sdwordAtOffset: _OffsetOf_right put: newExtent x;
+				sdwordAtOffset: _OffsetOf_bottom put: newExtent y;
 				yourself)!
 
 getFieldNames
@@ -132,25 +136,34 @@ left: leftInteger top: topInteger right: rightInteger bottom: bottomInteger
 	"Implementation Note: For performance reasons do this all with low-level
 	inline code."
 
-	^self basicNew bytes: ((ByteArray newFixed: 16)
-				sdwordAtOffset: 0 put: leftInteger;
-				sdwordAtOffset: 4 put: topInteger;
-				sdwordAtOffset: 8 put: rightInteger;
-				sdwordAtOffset: 12 put: bottomInteger;
+	^self basicNew bytes: ((ByteArray newFixed: _RECTL_Size)
+				sdwordAtOffset: _OffsetOf_left put: leftInteger;
+				sdwordAtOffset: _OffsetOf_top put: topInteger;
+				sdwordAtOffset: _OffsetOf_right put: rightInteger;
+				sdwordAtOffset: _OffsetOf_bottom put: bottomInteger;
+				yourself)!
+
+width: widthInteger
+	"Answer a new instance of the receiver with zero origin and height, and the specified width."
+
+	^self basicNew bytes: ((ByteArray newFixed: _RECTL_Size)
+				sdwordAtOffset: _OffsetOf_right put: widthInteger;
 				yourself)!
 
 width: widthInteger height: heightInteger
 	"Answer a new instance of the receiver with zero origin and the specified width and height."
 
-	^self basicNew bytes: ((ByteArray newFixed: 16)
-				sdwordAtOffset: 8 put: widthInteger;
-				sdwordAtOffset: 12 put: heightInteger;
+	^self basicNew bytes: ((ByteArray newFixed: _RECTL_Size)
+				sdwordAtOffset: _OffsetOf_right put: widthInteger;
+				sdwordAtOffset: _OffsetOf_bottom put: heightInteger;
 				yourself)! !
 !OS.RECTL class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 extent:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 left:top:right:bottom:!instance creation!public! !
+width:!instance creation!public! !
 width:height:!instance creation!public! !
 !
 

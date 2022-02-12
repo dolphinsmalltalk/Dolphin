@@ -6,6 +6,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.CUSTDATAITEM'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CUSTDATAITEM_Size' -> 16r20.
 		'_OffsetOf_guid' -> 16r0.
 		'_OffsetOf_varValue' -> 16r10
 	}!
@@ -32,6 +33,9 @@ varValue!**compiled accessors**!public! !
 
 !OS.COM.CUSTDATAITEM class methodsFor!
 
+byteSize
+	^_CUSTDATAITEM_Size!
+
 defineFields
 	"Define the fields of the CUSTDATAITEM structure.
 		CUSTDATAITEM compileDefinition
@@ -50,6 +54,7 @@ defineFields
 getFieldNames
 	^#(#guid #varValue)! !
 !OS.COM.CUSTDATAITEM class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

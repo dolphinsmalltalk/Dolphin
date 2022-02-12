@@ -134,7 +134,7 @@ getExtent: dwDrawAspect
 	"Answer the <SIZE> result of invoking the COM Object's GetExtent() method."
 
 	| answer |
-	answer := SIZEL new.
+	answer := SIZEL newBuffer.
 	self GetExtent: dwDrawAspect psizel: answer.
 	^answer asObject!
 

@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.BP_PAINTPARAMS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_BP_PAINTPARAMS_Size' -> 16r10.
 		'_OffsetOf_dwFlags' -> 16r4.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_pBlendFunction' -> 16rC.
@@ -71,6 +72,9 @@ prcExclude:!**compiled accessors**!public! !
 
 !OS.BP_PAINTPARAMS class methodsFor!
 
+byteSize
+	^_BP_PAINTPARAMS_Size!
+
 defineFields
 	"Define the fields of the BP_PAINTPARAMS structure.
 
@@ -94,6 +98,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #dwFlags #prcExclude #pBlendFunction)! !
 !OS.BP_PAINTPARAMS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -6,6 +6,7 @@ OS.CommonDialogStructure subclass: #'OS.FINDREPLACEW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_FINDREPLACEW_Size' -> 16r28.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_flags' -> 16rC.
 		'_OffsetOf_hInstance' -> 16r8.
@@ -169,6 +170,9 @@ wReplaceWithLen:!**compiled accessors**!public! !
 
 !OS.FINDREPLACEW class methodsFor!
 
+byteSize
+	^_FINDREPLACEW_Size!
+
 defineFields
 	"Define the fields of the Win32 FINDREPLACE structure.
 
@@ -204,6 +208,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #hwndOwner #flags #lpstrFindWhat #lpstrReplaceWith #wFindWhatLen #wReplaceWithLen #lpfnHook)! !
 !OS.FINDREPLACEW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.LHITTESTINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LHITTESTINFO_Size' -> 16r10C0.
 		'_OffsetOf_item' -> 16r8.
 		'_OffsetOf_pt' -> 16r0
 	}!
@@ -30,7 +31,7 @@ pt: aPOINTL
 	aPOINTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_pt + 1)
-		to: ##(_OffsetOf_pt + POINTL basicByteSize)
+		to: ##(_OffsetOf_pt + POINTL._POINTL_Size)
 		startingAt: 1! !
 !OS.LHITTESTINFO categoriesForMethods!
 item!**compiled accessors**!public! !
@@ -39,6 +40,9 @@ pt:!**compiled accessors**!public! !
 !
 
 !OS.LHITTESTINFO class methodsFor!
+
+byteSize
+	^_LHITTESTINFO_Size!
 
 defineFields
 	"Define the fields of the Win32 LITEM structure
@@ -53,6 +57,7 @@ defineFields
 getFieldNames
 	^#(#pt #item)! !
 !OS.LHITTESTINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

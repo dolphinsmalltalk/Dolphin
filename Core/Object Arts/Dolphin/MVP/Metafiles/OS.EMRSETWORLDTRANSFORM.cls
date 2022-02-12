@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSETWORLDTRANSFORM'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSETWORLDTRANSFORM_Size' -> 16r20.
 		'_OffsetOf_XFORM' -> 16r8
 	}!
 OS.EMRSETWORLDTRANSFORM guid: (Core.GUID fromString: '{025ef1a8-7714-4e3c-bcf0-755137290843}')!
@@ -37,7 +38,7 @@ XFORM: aXFORM
 	aXFORM
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_XFORM + 1)
-		to: ##(_OffsetOf_XFORM + XFORM basicByteSize)
+		to: ##(_OffsetOf_XFORM + XFORM._XFORM_Size)
 		startingAt: 1! !
 !OS.EMRSETWORLDTRANSFORM categoriesForMethods!
 XFORM!**compiled accessors**!public! !
@@ -45,6 +46,9 @@ XFORM:!**compiled accessors**!public! !
 !
 
 !OS.EMRSETWORLDTRANSFORM class methodsFor!
+
+byteSize
+	^_EMRSETWORLDTRANSFORM_Size!
 
 defineFields
 	"Define the fields of the EMRSETWORLDTRANSFORM structure.
@@ -73,6 +77,7 @@ iTypes
 
 	^{EMR_SETWORLDTRANSFORM}! !
 !OS.EMRSETWORLDTRANSFORM class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

@@ -60,7 +60,7 @@ displayValue: anInteger
 
 getRect: msgInteger
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	self
 		sendMessage: msgInteger
 		wParam: 0

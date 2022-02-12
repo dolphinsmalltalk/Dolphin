@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HttpServiceConfigQue
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HttpServiceConfigQuery_Size' -> 16r4.
 		'_OffsetOf_QueryDesc' -> 16r0
 	}!
 WinHttpServer.HttpServiceConfigQuery guid: (Core.GUID fromString: '{38f6548e-ee39-4262-9f31-96ce0e8c6cb7}')!
@@ -42,6 +43,9 @@ QueryDesc:!**compiled accessors**!public! !
 
 !WinHttpServer.HttpServiceConfigQuery class methodsFor!
 
+byteSize
+	^_HttpServiceConfigQuery_Size!
+
 defineFields
 	"Define the fields of the HttpServiceConfigQuery structure.
 
@@ -60,6 +64,7 @@ defineFields
 getFieldNames
 	^#(#QueryDesc)! !
 !WinHttpServer.HttpServiceConfigQuery class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

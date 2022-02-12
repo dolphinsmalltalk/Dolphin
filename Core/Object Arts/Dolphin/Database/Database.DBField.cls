@@ -273,7 +273,7 @@ setDate: aDate
 	(self shouldTranslate: aDate class: Date)
 		ifTrue: 
 			[(OS.ODBCDATE withBytes: buffer) date: aDate.
-			lengthBuf value: OS.ODBCDATE byteSize]!
+			lengthBuf value: OS.ODBCDATE._ODBCDATE_Size]!
 
 setDateAndTime: aDateAndTime
 	"Private - Set the receiver's buffer with an ODBCTIMESTAMP object instantiated from aDateAndTime."
@@ -281,7 +281,7 @@ setDateAndTime: aDateAndTime
 	(self shouldTranslate: aDateAndTime class: DateAndTime)
 		ifTrue: 
 			[(OS.ODBCTIMESTAMP withBytes: buffer) dateAndTime: aDateAndTime.
-			lengthBuf value: OS.ODBCTIMESTAMP byteSize]!
+			lengthBuf value: OS.ODBCTIMESTAMP._ODBCTIMESTAMP_Size]!
 
 setDouble: aNumber
 	"Private - Set the receiver's double buffer with <Float> value of the 
@@ -343,7 +343,7 @@ setTime: aTime
 	(self shouldTranslate: aTime class: Time)
 		ifTrue: 
 			[(OS.ODBCTIME withBytes: buffer) time: aTime.
-			lengthBuf value: OS.ODBCTIME byteSize]!
+			lengthBuf value: OS.ODBCTIME._ODBCTIME_Size]!
 
 setUtf16String: aString
 	"Private - Set the receiver's buffer from aString."

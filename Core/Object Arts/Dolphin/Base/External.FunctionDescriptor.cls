@@ -467,10 +467,12 @@ initializeExternalTypes
 initializeTypeSizes
 	| typeSizes |
 	"Remember that bytes and words are still pushed as 32-bit values"
-	typeSizes := #[0 4 4 4 4 4 4 4 4 4 4 8 4 4 4 4 4 4 8 8 4 4 16 8 4 16 0 0 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 8 4 4 4 0 0 0 0 0 0 0 0] copy.
-	typeSizes at: ExtCallArgINTPTR + 1 put: VMConstants.IntPtrSize;
-				at: ExtCallArgUINTPTR + 1 put: VMConstants.IntPtrSize.
-	self assert: [ValueTypes asArray sort last < typeSizes size].
+	typeSizes := #[0 4 4 4 4 4 4 4 4 4 4 8 4 4 4 4 4 4 8 8 4 4 16 8 4 16 0 0 4 4 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 4 8 4 4 4 0 0 0 0 0 0 0 0]
+				copy.
+	typeSizes
+		at: ExtCallArgINTPTR + 1 put: VMConstants.IntPtrSize;
+		at: ExtCallArgUINTPTR + 1 put: VMConstants.IntPtrSize.
+	self assert: [ValueTypes asSortedArray last < typeSizes size].
 	self addClassConstant: 'TypeSizes' value: typeSizes!
 
 isPointerToStruct: anInteger 

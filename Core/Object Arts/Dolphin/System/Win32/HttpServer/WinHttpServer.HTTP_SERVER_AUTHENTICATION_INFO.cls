@@ -6,6 +6,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_SERVER_AUTHENTI
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVER_AUTHENTICATION_INFO_Size' -> 16r24.
 		'_OffsetOf_AuthSchemes' -> 16r4.
 		'_OffsetOf_BasicParams' -> 16r1C.
 		'_OffsetOf_DigestParams' -> 16rC.
@@ -60,7 +61,8 @@ BasicParams: aHTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
 	aHTTP_SERVER_AUTHENTICATION_BASIC_PARAMS
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_BasicParams + 1)
-		to: ##(_OffsetOf_BasicParams + HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS basicByteSize)
+		to: ##(_OffsetOf_BasicParams
+				+ HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS._HTTP_SERVER_AUTHENTICATION_BASIC_PARAMS_Size)
 		startingAt: 1!
 
 DigestParams
@@ -74,7 +76,8 @@ DigestParams: aHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 	aHTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_DigestParams + 1)
-		to: ##(_OffsetOf_DigestParams + HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS basicByteSize)
+		to: ##(_OffsetOf_DigestParams
+				+ HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS._HTTP_SERVER_AUTHENTICATION_DIGEST_PARAMS_Size)
 		startingAt: 1!
 
 DisableNTLMCredentialCaching
@@ -135,6 +138,9 @@ ReceiveMutualAuth:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO class methodsFor!
 
+byteSize
+	^_HTTP_SERVER_AUTHENTICATION_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_SERVER_AUTHENTICATION_INFO structure.
 
@@ -170,6 +176,7 @@ getFieldNames
 propertyId
 	^HttpServerAuthenticationProperty! !
 !WinHttpServer.HTTP_SERVER_AUTHENTICATION_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 propertyId!public! !

@@ -31,7 +31,7 @@ testAsByteArray
 	"The problem is that the API doesn't store down the biSizeImage value into the BITMAPINFOHEADER - we patch it up here, but probably this should be done in #asByteArray:"
 	fileHeader := BITMAPFILEHEADER fromBytes: b1.
 	self assert: fileHeader bfSize equals: b1 size.
-	self assert: (b1 dwordAtOffset: fileHeader byteSize) equals: BITMAPINFOHEADER byteSize.
+	self assert: (b1 dwordAtOffset: fileHeader byteSize) equals: BITMAPINFOHEADER._BITMAPINFOHEADER_Size.
 	infoHeader := BITMAPINFOHEADER fromAddress: b1 yourAddress + fileHeader byteSize.
 	infoHeader biSizeImage: b1 size - fileHeader byteSize - infoHeader size.
 	self assert: b1 equals: b2!

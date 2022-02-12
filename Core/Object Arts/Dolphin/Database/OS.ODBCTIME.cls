@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.ODBCTIME'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_ODBCTIME_Size' -> 16r6.
 		'_OffsetOf_hour' -> 16r0.
 		'_OffsetOf_minute' -> 16r2.
 		'_OffsetOf_second' -> 16r4
@@ -70,6 +71,9 @@ time:!accessing!public! !
 
 !OS.ODBCTIME class methodsFor!
 
+byteSize
+	^_ODBCTIME_Size!
+
 defineFields
 	"typedef struct tagTIME_STRUCT
 	{
@@ -94,6 +98,7 @@ fromTime: aTime
 getFieldNames
 	^#(#hour #minute #second)! !
 !OS.ODBCTIME class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 fromTime:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !

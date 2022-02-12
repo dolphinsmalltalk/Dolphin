@@ -6,6 +6,7 @@ WinHttpServer.HTTP_PROPERTY_FLAGS subclass: #'WinHttpServer.HTTP_BINDING_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_BINDING_INFO_Size' -> 16r8.
 		'_OffsetOf_RequestQueueHandle' -> 16r4
 	}!
 WinHttpServer.HTTP_BINDING_INFO guid: (Core.GUID fromString: '{b253697c-f239-4fb6-b474-b35db2c4848f}')!
@@ -60,6 +61,9 @@ RequestQueueHandle:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_BINDING_INFO class methodsFor!
 
+byteSize
+	^_HTTP_BINDING_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_BINDING_INFO structure.
 
@@ -83,6 +87,7 @@ getFieldNames
 propertyId
 	^HttpServerBindingProperty! !
 !WinHttpServer.HTTP_BINDING_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 propertyId!public! !

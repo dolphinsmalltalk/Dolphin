@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.CRYPTOAPI_BLOB'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CRYPTOAPI_BLOB_Size' -> 16r8.
 		'_OffsetOf_cbData' -> 16r0.
 		'_OffsetOf_pbData' -> 16r4
 	}!
@@ -96,6 +97,9 @@ pbData:!**compiled accessors**!public! !
 
 !OS.CRYPTOAPI_BLOB class methodsFor!
 
+byteSize
+	^_CRYPTOAPI_BLOB_Size!
+
 defineFields
 	"Define the fields of the CRYPTOAPI_BLOB structure.
 
@@ -124,6 +128,7 @@ fromBytes: aByteObject
 getFieldNames
 	^#(#cbData #pbData)! !
 !OS.CRYPTOAPI_BLOB class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 fromBytes:!public! !
 getFieldNames!**compiled accessors**!constants!private! !

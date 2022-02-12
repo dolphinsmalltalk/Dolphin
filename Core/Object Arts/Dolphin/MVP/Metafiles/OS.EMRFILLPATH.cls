@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRFILLPATH'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRFILLPATH_Size' -> 16r18.
 		'_OffsetOf_rclBounds' -> 16r8
 	}!
 OS.EMRFILLPATH guid: (Core.GUID fromString: '{2fe2f5ac-b812-4a5e-88b9-1b90a426c138}')!
@@ -37,7 +38,7 @@ rclBounds: aRECTL
 	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1! !
 !OS.EMRFILLPATH categoriesForMethods!
 rclBounds!**compiled accessors**!public! !
@@ -45,6 +46,9 @@ rclBounds:!**compiled accessors**!public! !
 !
 
 !OS.EMRFILLPATH class methodsFor!
+
+byteSize
+	^_EMRFILLPATH_Size!
 
 defineFields
 	"Define the fields of the EMRFILLPATH structure.
@@ -73,6 +77,7 @@ iTypes
 
 	^{EMR_FILLPATH. EMR_STROKEANDFILLPATH. EMR_STROKEPATH}! !
 !OS.EMRFILLPATH class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

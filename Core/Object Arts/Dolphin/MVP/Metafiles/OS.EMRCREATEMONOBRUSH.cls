@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRCREATEMONOBRUSH'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRCREATEMONOBRUSH_Size' -> 16r20.
 		'_OffsetOf_cbBits' -> 16r1C.
 		'_OffsetOf_cbBmi' -> 16r14.
 		'_OffsetOf_ihBrush' -> 16r8.
@@ -112,6 +113,9 @@ offBmi:!**compiled accessors**!public! !
 
 !OS.EMRCREATEMONOBRUSH class methodsFor!
 
+byteSize
+	^_EMRCREATEMONOBRUSH_Size!
+
 defineFields
 	"Define the fields of the EMRCREATEMONOBRUSH structure.
 
@@ -159,6 +163,7 @@ iTypes
 
 	^{EMR_CREATEMONOBRUSH}! !
 !OS.EMRCREATEMONOBRUSH class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

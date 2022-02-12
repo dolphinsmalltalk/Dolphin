@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRANGLEARC'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRANGLEARC_Size' -> 16r1C.
 		'_OffsetOf_eStartAngle' -> 16r14.
 		'_OffsetOf_eSweepAngle' -> 16r18.
 		'_OffsetOf_nRadius' -> 16r10.
@@ -73,7 +74,7 @@ ptlCenter: aPOINTL
 	aPOINTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_ptlCenter + 1)
-		to: ##(_OffsetOf_ptlCenter + POINTL basicByteSize)
+		to: ##(_OffsetOf_ptlCenter + POINTL._POINTL_Size)
 		startingAt: 1! !
 !OS.EMRANGLEARC categoriesForMethods!
 eStartAngle!**compiled accessors**!public! !
@@ -87,6 +88,9 @@ ptlCenter:!**compiled accessors**!public! !
 !
 
 !OS.EMRANGLEARC class methodsFor!
+
+byteSize
+	^_EMRANGLEARC_Size!
 
 defineFields
 	"Define the fields of the EMRANGLEARC structure.
@@ -127,6 +131,7 @@ iTypes
 
 	^{EMR_ANGLEARC}! !
 !OS.EMRANGLEARC class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

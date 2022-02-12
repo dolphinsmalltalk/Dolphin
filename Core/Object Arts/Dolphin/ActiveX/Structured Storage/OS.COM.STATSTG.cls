@@ -16,7 +16,8 @@ OS.COM.FinalizableStructure subclass: #'OS.COM.STATSTG'
 		'_OffsetOf_grfStateBits' -> 16r40.
 		'_OffsetOf_mtime' -> 16r10.
 		'_OffsetOf_pwcsName' -> 16r0.
-		'_OffsetOf_type' -> 16r4
+		'_OffsetOf_type' -> 16r4.
+		'_STATSTG_Size' -> 16r48
 	}!
 OS.COM.STATSTG guid: (Core.GUID fromString: '{87b4c5c3-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.COM.STATSTG comment: 'STATSTG is an <ExternalStructure> class to represent the OLE Structured Storage structure of the same name.
@@ -51,7 +52,7 @@ atime: aFILETIME
 	aFILETIME
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_atime + 1)
-		to: ##(_OffsetOf_atime + FILETIME basicByteSize)
+		to: ##(_OffsetOf_atime + FILETIME._FILETIME_Size)
 		startingAt: 1!
 
 cbSize
@@ -176,6 +177,9 @@ type:!**compiled accessors**!public! !
 
 !OS.COM.STATSTG class methodsFor!
 
+byteSize
+	^_STATSTG_Size!
+
 clear: addressOrBytes
 	"Free external resources referenced by STATSTG
 	structure at the specified address. 	
@@ -222,6 +226,7 @@ defineFields
 getFieldNames
 	^#(#pwcsName #type #cbSize #mtime #ctime #atime #grfMode #grfLocksSupported #clsid #grfStateBits #dwStgFmt)! !
 !OS.COM.STATSTG class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

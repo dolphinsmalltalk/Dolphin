@@ -7,7 +7,8 @@ OS.Win32Structure subclass: #'OS.TEXTRANGE'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_chrg' -> 16r0.
-		'_OffsetOf_lpstrText' -> 16r8
+		'_OffsetOf_lpstrText' -> 16r8.
+		'_TEXTRANGE_Size' -> 16rC
 	}!
 OS.TEXTRANGE guid: (Core.GUID fromString: '{87b4c615-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.TEXTRANGE comment: 'TEXTRANGE is the class of <ExternalStructure> which represents the Windows TEXTRANGE and TEXTRANGEW structures.
@@ -93,6 +94,9 @@ text:!accessing!public! !
 
 !OS.TEXTRANGE class methodsFor!
 
+byteSize
+	^_TEXTRANGE_Size!
+
 defineFields
 	"Define the fields of the TEXTRANGE structure.
 		TEXTRANGE compileDefinition
@@ -131,6 +135,7 @@ from: startInteger to: stopInteger type: aStringClass
 getFieldNames
 	^#(#chrg #lpstrText)! !
 !OS.TEXTRANGE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 from:to:text:!instance creation!public! !
 from:to:type:!instance creation!public! !

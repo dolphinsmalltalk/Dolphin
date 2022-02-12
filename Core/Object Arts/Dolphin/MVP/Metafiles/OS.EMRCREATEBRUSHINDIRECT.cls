@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRCREATEBRUSHINDIRECT'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRCREATEBRUSHINDIRECT_Size' -> 16r18.
 		'_OffsetOf_ihBrush' -> 16r8.
 		'_OffsetOf_lb' -> 16rC
 	}!
@@ -49,7 +50,7 @@ lb: aLOGBRUSH
 	aLOGBRUSH
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_lb + 1)
-		to: ##(_OffsetOf_lb + LOGBRUSH basicByteSize)
+		to: ##(_OffsetOf_lb + LOGBRUSH._LOGBRUSH_Size)
 		startingAt: 1! !
 !OS.EMRCREATEBRUSHINDIRECT categoriesForMethods!
 ihBrush!**compiled accessors**!public! !
@@ -59,6 +60,9 @@ lb:!**compiled accessors**!public! !
 !
 
 !OS.EMRCREATEBRUSHINDIRECT class methodsFor!
+
+byteSize
+	^_EMRCREATEBRUSHINDIRECT_Size!
 
 defineFields
 	"Define the fields of the EMRCREATEBRUSHINDIRECT structure.
@@ -91,6 +95,7 @@ iTypes
 
 	^{EMR_CREATEBRUSHINDIRECT}! !
 !OS.EMRCREATEBRUSHINDIRECT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

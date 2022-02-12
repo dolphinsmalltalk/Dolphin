@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.NONCLIENTMETRICSW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NONCLIENTMETRICSW_Size' -> 16r1F8.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_iBorderWidth' -> 16r4.
 		'_OffsetOf_iCaptionHeight' -> 16r14.
@@ -82,6 +83,9 @@ lfMenuFont!**compiled accessors**!public! !
 
 !OS.NONCLIENTMETRICSW class methodsFor!
 
+byteSize
+	^_NONCLIENTMETRICSW_Size!
+
 defineFields
 	"Define the fields of the Win32 NONCLIENTMETRICSW structure.
 
@@ -127,6 +131,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #iBorderWidth #iScrollWidth #iScrollHeight #iCaptionWidth #iCaptionHeight #lfCationFont #iSmCaptionWidth #iSmCaptionHeight #lfSmCaptionFont #iMenuWidth #iMenuHeight #lfMenuFont #lfStatusFont #lfMessageFont #iPaddedBorderWidth)! !
 !OS.NONCLIENTMETRICSW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

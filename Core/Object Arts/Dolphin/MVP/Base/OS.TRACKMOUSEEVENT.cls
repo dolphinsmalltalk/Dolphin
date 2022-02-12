@@ -9,7 +9,8 @@ OS.Win32Structure subclass: #'OS.TRACKMOUSEEVENT'
 		'_OffsetOf_dwFlags' -> 16r4.
 		'_OffsetOf_dwHoverTime' -> 16rC.
 		'_OffsetOf_dwSize' -> 16r0.
-		'_OffsetOf_hwndTrack' -> 16r8
+		'_OffsetOf_hwndTrack' -> 16r8.
+		'_TRACKMOUSEEVENT_Size' -> 16r10
 	}!
 OS.TRACKMOUSEEVENT guid: (Core.GUID fromString: '{f8a7c94e-cff5-4d76-be3c-2de4f4f6a4ef}')!
 OS.TRACKMOUSEEVENT comment: '<TRACKMOUSEEVENT> is an <ExternalStructure> class to wrap the struct ''Win32.TRACKMOUSEEVENT'' from type information in the ''Win32 API (ANSI). Derived from Bruce McKinney´s Hardcore Visual Basic Type Library'' library.
@@ -76,6 +77,9 @@ hwndTrack:!**compiled accessors**!public! !
 
 !OS.TRACKMOUSEEVENT class methodsFor!
 
+byteSize
+	^_TRACKMOUSEEVENT_Size!
+
 defineFields
 	"Define the fields of the TRACKMOUSEEVENT structure.
 		TRACKMOUSEEVENT compileDefinition
@@ -98,6 +102,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #dwFlags #hwndTrack #dwHoverTime)! !
 !OS.TRACKMOUSEEVENT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

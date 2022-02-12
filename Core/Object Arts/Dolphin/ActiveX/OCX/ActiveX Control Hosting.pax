@@ -156,7 +156,8 @@ OS.COM.OLEStructure subclass: #'OS.COM.OLEVERB'
 		'_OffsetOf_fuFlags' -> 16r8.
 		'_OffsetOf_grfAttribs' -> 16rC.
 		'_OffsetOf_lpszVerbName' -> 16r4.
-		'_OffsetOf_lVerb' -> 16r0
+		'_OffsetOf_lVerb' -> 16r0.
+		'_OLEVERB_Size' -> 16r10
 	}!
 UI.ControlView subclass: #'UI.AXControlSite'
 	instanceVariableNames: 'progId dispControl host sink hostFlags propertyMap ambientDispatch unkControl licenseKey _reserved1 _reserved2'

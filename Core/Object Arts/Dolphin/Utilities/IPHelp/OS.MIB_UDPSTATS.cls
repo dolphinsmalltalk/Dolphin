@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.MIB_UDPSTATS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MIB_UDPSTATS_Size' -> 16r14.
 		'_OffsetOf_dwInDatagrams' -> 16r0.
 		'_OffsetOf_dwInErrors' -> 16r8.
 		'_OffsetOf_dwNoPorts' -> 16r4.
@@ -67,6 +68,9 @@ dwOutDatagrams!**compiled accessors**!public! !
 
 !OS.MIB_UDPSTATS class methodsFor!
 
+byteSize
+	^_MIB_UDPSTATS_Size!
+
 defineFields
 	"Define the fields of the MIB_UDPSTATS structure.
 		MIB_UDPSTATS compileDefinition
@@ -92,6 +96,7 @@ defineFields
 getFieldNames
 	^#(#dwInDatagrams #dwNoPorts #dwInErrors #dwOutDatagrams #dwNumAddrs)! !
 !OS.MIB_UDPSTATS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

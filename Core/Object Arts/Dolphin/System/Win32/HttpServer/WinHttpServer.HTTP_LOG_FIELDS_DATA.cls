@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_LOG_FIELDS_DATA
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_LOG_FIELDS_DATA_Size' -> 16r5C.
 		'_OffsetOf_ClientIp' -> 16r24.
 		'_OffsetOf_ClientIpLength' -> 16r8.
 		'_OffsetOf_Cookie' -> 16r44.
@@ -462,6 +463,9 @@ Win32Status:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_LOG_FIELDS_DATA class methodsFor!
 
+byteSize
+	^_HTTP_LOG_FIELDS_DATA_Size!
+
 defineFields
 	"Define the fields of the HTTP_LOG_FIELDS_DATA structure.
 
@@ -538,6 +542,7 @@ defineFields
 getFieldNames
 	^#(#Type #UserNameLength #UriStemLength #ClientIpLength #ServerNameLength #ServiceNameLength #ServerIpLength #MethodLength #UriQueryLength #HostLength #UserAgentLength #CookieLength #ReferrerLength #UserName #UriStem #ClientIp #ServerName #ServiceName #ServerIp #Method #UriQuery #Host #UserAgent #Cookie #Referrer #ServerPort #ProtocolStatus #Win32Status #MethodNum #SubStatus)! !
 !WinHttpServer.HTTP_LOG_FIELDS_DATA class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

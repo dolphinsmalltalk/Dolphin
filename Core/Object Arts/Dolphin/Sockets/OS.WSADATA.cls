@@ -12,7 +12,8 @@ OS.Win32Structure subclass: #'OS.WSADATA'
 		'_OffsetOf_szDescription' -> 16r4.
 		'_OffsetOf_szSystemStatus' -> 16r105.
 		'_OffsetOf_wHighVersion' -> 16r2.
-		'_OffsetOf_wVersion' -> 16r0
+		'_OffsetOf_wVersion' -> 16r0.
+		'_WSADATA_Size' -> 16r190
 	}!
 OS.WSADATA guid: (Core.GUID fromString: '{ef5075d3-312c-49e0-b590-98987a18d0d2}')!
 OS.WSADATA comment: '<WSADATA> is an <ExternalStructure> class to wrap the struct ''Win32.WSADATA'' from type information in the ''Win32 API'' library.
@@ -83,6 +84,9 @@ wVersion!**compiled accessors**!public! !
 
 !OS.WSADATA class methodsFor!
 
+byteSize
+	^_WSADATA_Size!
+
 defineFields
 	"Define the fields of the WSADATA structure.
 
@@ -113,6 +117,7 @@ defineFields
 getFieldNames
 	^#(#wVersion #wHighVersion #szDescription #szSystemStatus #iMaxSockets #iMaxUdpDg #lpVendorInfo)! !
 !OS.WSADATA class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

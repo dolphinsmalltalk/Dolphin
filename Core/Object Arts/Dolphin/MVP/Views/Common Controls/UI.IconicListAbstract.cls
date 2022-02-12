@@ -349,9 +349,6 @@ initialize
 	getImageBlock := self class defaultGetImageBlock.
 	imageManager := self defaultImageManager!
 
-itemFromNMHDRW: pNMHDR
-	^self subclassResponsibility!
-
 itemFromPoint: aPoint 
 	"Private - Answer the handle of the object in the control under the <Point> argument,
 	or nil if none."
@@ -369,6 +366,9 @@ itemRect: itemHandle textOnly: aBoolean
 	"Answers the rectangle surrounding the item with anIntegerIndex within
 	the receiver, optionally for the text label only."
 
+	^self subclassResponsibility!
+
+itemStructure
 	^self subclassResponsibility!
 
 largeIconExtent
@@ -458,7 +458,7 @@ nmBeginLabelEdit: pNMHDR
 	N.B. This notification is not necessarily sent by all subclasses."
 
 	| item event |
-	item := self itemFromNMHDRW: pNMHDR.
+	item := self itemStructure fromAddress: pNMHDR asInteger + NMHDR._NMHDR_Size.
 	event := LabelEditingEvent forSource: self.
 	event
 		item: item;
@@ -527,7 +527,7 @@ nmEndLabelEdit: pNMHDR
 
 	| item object text |
 	SessionManager.Current inputState removeWindowAt: self getEditControl.
-	item := self itemFromNMHDRW: pNMHDR.
+	item := self itemStructure fromAddress: pNMHDR asInteger + NMHDR._NMHDR_Size.
 	text := item pszText.
 	self canEditLabels ifFalse: [self disableLabelEdit].
 	text isNil
@@ -543,7 +543,8 @@ nmGetDispInfoW: pNMHDR
 	"Private - Handler for a ?VN_GETDISPINFO notification message.
 	N.B. This notification is not necessarily sent by all subclasses."
 
-	^self onDisplayDetailsRequired: (self itemFromNMHDRW: pNMHDR)!
+	^self
+		onDisplayDetailsRequired: (self itemStructure fromAddress: pNMHDR asInteger + NMHDR._NMHDR_Size)!
 
 nmSelChanged: anExternalAddress 
 	"Private - Default handler for the ??N_SELCHANGED notification message.
@@ -555,7 +556,8 @@ nmSetDispInfoW: pNMHDR
 	"Private - Default handler for the ?VN_SETDISPINFO notification message.
 	Forward as an onDisplayDetailsChanged: event."
 
-	^self onDisplayDetailsChanged: (self itemFromNMHDRW: pNMHDR)!
+	^self
+		onDisplayDetailsChanged: (self itemStructure fromAddress: pNMHDR asInteger + NMHDR._NMHDR_Size)!
 
 notificationClass
 	"Private - Answer the class of NMHDR associated with certain notifications sent
@@ -822,10 +824,10 @@ imageExtent!accessing!private! !
 imageManager!image management!private! !
 imageManager:!image management!public! !
 initialize!initializing!private! !
-itemFromNMHDRW:!event handling-win32!private! !
 itemFromPoint:!enquiries!private! !
 itemRect:!accessing!public! !
 itemRect:textOnly:!enquiries!public! !
+itemStructure!constants!private! !
 largeIconExtent!constants!public! !
 largeIconExtent:!constants!public! !
 newSelectionsFromEvent:!event handling!private! !
@@ -834,10 +836,10 @@ nmBeginLabelEdit:!event handling-win32!private! !
 nmBeginRDrag:!event handling-win32!private! !
 nmCustomDraw:!event handling-win32!private! !
 nmDeleteItem:!event handling-win32!private! !
-nmEndLabelEdit:!public! !
+nmEndLabelEdit:!event handling-win32!private! !
 nmGetDispInfoW:!event handling-win32!private! !
 nmSelChanged:!event handling-win32!private! !
-nmSetDispInfoW:!event handling!event handling-win32!private! !
+nmSetDispInfoW:!event handling-win32!private! !
 notificationClass!constants!private! !
 onAboutToEditLabel:!event handling!public! !
 onDisplayDetailsChanged:!event handling!private! !

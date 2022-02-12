@@ -6,6 +6,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpPropertyItem'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpPropertyItem_Size' -> 16r10.
 		'_OffsetOf_id' -> 16r0.
 		'_OffsetOf_length' -> 16r4.
 		'_OffsetOf_Type' -> 16r8.
@@ -121,6 +122,9 @@ valueArray!accessing!public! !
 
 !Graphics.Gdiplus.GpPropertyItem class methodsFor!
 
+byteSize
+	^_GpPropertyItem_Size!
+
 defineFields
 	"Define the fields of the GpPropertyItem structure.
 		GpPropertyItem compileDefinition
@@ -152,6 +156,7 @@ defineFields
 getFieldNames
 	^#(#id #length #Type #Value)! !
 !Graphics.Gdiplus.GpPropertyItem class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

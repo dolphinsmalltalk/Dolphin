@@ -330,6 +330,7 @@ External.Structure subclass: #'OS.FD_SET'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_FD_SET_Size' -> 16r104.
 		'_OffsetOf_fd_array' -> 16r4.
 		'_OffsetOf_fd_count' -> 16r0
 	}!
@@ -339,6 +340,7 @@ External.Structure subclass: #'OS.NET_ADDRESS_INFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NET_ADDRESS_INFO_Size' -> 16r210.
 		'_OffsetOf_Format' -> 16r0.
 		'_OffsetOf_IpAddress' -> 16r4.
 		'_OffsetOf_Ipv4Address' -> 16r4.
@@ -353,7 +355,8 @@ External.Structure subclass: #'OS.SOCKADDR'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_sa_data' -> 16r2.
-		'_OffsetOf_sa_family' -> 16r0
+		'_OffsetOf_sa_family' -> 16r0.
+		'_SOCKADDR_Size' -> 16r10
 	}!
 External.Structure subclass: #'OS.TIMEVAL'
 	instanceVariableNames: ''
@@ -362,7 +365,8 @@ External.Structure subclass: #'OS.TIMEVAL'
 	classInstanceVariableNames: ''
 	classConstants: {
 		'_OffsetOf_tv_sec' -> 16r0.
-		'_OffsetOf_tv_usec' -> 16r4
+		'_OffsetOf_tv_usec' -> 16r4.
+		'_TIMEVAL_Size' -> 16r8
 	}!
 OS.AbstractIN_ADDR subclass: #'OS.IN_ADDR'
 	instanceVariableNames: ''
@@ -370,6 +374,7 @@ OS.AbstractIN_ADDR subclass: #'OS.IN_ADDR'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IN_ADDR_Size' -> 16r4.
 		'_OffsetOf_s_addr' -> 16r0.
 		'_OffsetOf_s_b1' -> 16r0.
 		'_OffsetOf_s_b2' -> 16r1.
@@ -384,6 +389,7 @@ OS.AbstractIN_ADDR subclass: #'OS.IN6_ADDR'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IN6_ADDR_Size' -> 16r10.
 		'_OffsetOf_Bytes' -> 16r0.
 		'_OffsetOf_Words' -> 16r0
 	}!
@@ -396,7 +402,8 @@ OS.SOCKADDR subclass: #'OS.SOCKADDR_IN'
 		'_OffsetOf_sin_addr' -> 16r4.
 		'_OffsetOf_sin_family' -> 16r0.
 		'_OffsetOf_sin_port' -> 16r2.
-		'_OffsetOf_sin_zero' -> 16r8
+		'_OffsetOf_sin_zero' -> 16r8.
+		'_SOCKADDR_IN_Size' -> 16r10
 	}!
 OS.SOCKADDR subclass: #'OS.SOCKADDR_IN6'
 	instanceVariableNames: ''
@@ -409,7 +416,8 @@ OS.SOCKADDR subclass: #'OS.SOCKADDR_IN6'
 		'_OffsetOf_sin6_flowinfo' -> 16r4.
 		'_OffsetOf_sin6_port' -> 16r2.
 		'_OffsetOf_sin6_scope_id' -> 16r18.
-		'_OffsetOf_sin6_scope_struct' -> 16r18
+		'_OffsetOf_sin6_scope_struct' -> 16r18.
+		'_SOCKADDR_IN6_Size' -> 16r1C
 	}!
 OS.SOCKADDR subclass: #'OS.SOCKADDR_STORAGE'
 	instanceVariableNames: ''
@@ -420,7 +428,8 @@ OS.SOCKADDR subclass: #'OS.SOCKADDR_STORAGE'
 		'_OffsetOf___ss_align' -> 16r8.
 		'_OffsetOf___ss_pad1' -> 16r2.
 		'_OffsetOf___ss_pad2' -> 16r10.
-		'_OffsetOf_ss_family' -> 16r0
+		'_OffsetOf_ss_family' -> 16r0.
+		'_SOCKADDR_STORAGE_Size' -> 16r80
 	}!
 OS.Win32Structure subclass: #'OS.HOSTENT'
 	instanceVariableNames: ''
@@ -428,6 +437,7 @@ OS.Win32Structure subclass: #'OS.HOSTENT'
 	imports: #(#{OS.WinSocketConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HOSTENT_Size' -> 16r10.
 		'_OffsetOf_h_addr_list' -> 16rC.
 		'_OffsetOf_h_addrtype' -> 16r8.
 		'_OffsetOf_h_aliases' -> 16r4.
@@ -442,7 +452,8 @@ OS.Win32Structure subclass: #'OS.PROTOENT'
 	classConstants: {
 		'_OffsetOf_p_aliases' -> 16r4.
 		'_OffsetOf_p_name' -> 16r0.
-		'_OffsetOf_p_proto' -> 16r8
+		'_OffsetOf_p_proto' -> 16r8.
+		'_PROTOENT_Size' -> 16rC
 	}!
 OS.Win32Structure subclass: #'OS.SERVENT'
 	instanceVariableNames: ''
@@ -453,7 +464,8 @@ OS.Win32Structure subclass: #'OS.SERVENT'
 		'_OffsetOf_s_aliases' -> 16r4.
 		'_OffsetOf_s_name' -> 16r0.
 		'_OffsetOf_s_port' -> 16r8.
-		'_OffsetOf_s_proto' -> 16rC
+		'_OffsetOf_s_proto' -> 16rC.
+		'_SERVENT_Size' -> 16r10
 	}!
 OS.Win32Structure subclass: #'OS.WSADATA'
 	instanceVariableNames: ''
@@ -467,7 +479,8 @@ OS.Win32Structure subclass: #'OS.WSADATA'
 		'_OffsetOf_szDescription' -> 16r4.
 		'_OffsetOf_szSystemStatus' -> 16r105.
 		'_OffsetOf_wHighVersion' -> 16r2.
-		'_OffsetOf_wVersion' -> 16r0
+		'_OffsetOf_wVersion' -> 16r0.
+		'_WSADATA_Size' -> 16r190
 	}!
 
 "End of package definition"!

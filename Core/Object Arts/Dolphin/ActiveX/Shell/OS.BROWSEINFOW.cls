@@ -6,6 +6,7 @@ OS.CommonDialogStructure subclass: #'OS.BROWSEINFOW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_BROWSEINFOW_Size' -> 16r20.
 		'_OffsetOf_flags' -> 16r10.
 		'_OffsetOf_hwndOwner' -> 16r0.
 		'_OffsetOf_iImage' -> 16r1C.
@@ -103,6 +104,9 @@ title:!accessing!public! !
 
 !OS.BROWSEINFOW class methodsFor!
 
+byteSize
+	^_BROWSEINFOW_Size!
+
 defineFields
 	"Define the fields of the Win32 BROWSEINFOW structure
 
@@ -132,6 +136,7 @@ defineFields
 getFieldNames
 	^#(#hwndOwner #pidlRoot #pszDisplayName #lpszTitle #flags #lpfnHook)! !
 !OS.BROWSEINFOW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

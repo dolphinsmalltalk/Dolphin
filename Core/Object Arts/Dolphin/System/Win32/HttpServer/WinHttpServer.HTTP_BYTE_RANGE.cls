@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_BYTE_RANGE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_BYTE_RANGE_Size' -> 16r10.
 		'_OffsetOf_Length' -> 16r8.
 		'_OffsetOf_StartingOffset' -> 16r0
 	}!
@@ -57,6 +58,9 @@ StartingOffset:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_BYTE_RANGE class methodsFor!
 
+byteSize
+	^_HTTP_BYTE_RANGE_Size!
+
 defineFields
 	"Define the fields of the HTTP_BYTE_RANGE structure.
 
@@ -77,6 +81,7 @@ defineFields
 getFieldNames
 	^#(#StartingOffset #Length)! !
 !WinHttpServer.HTTP_BYTE_RANGE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

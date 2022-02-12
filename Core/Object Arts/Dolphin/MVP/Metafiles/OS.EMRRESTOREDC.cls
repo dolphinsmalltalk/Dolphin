@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRRESTOREDC'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRRESTOREDC_Size' -> 16rC.
 		'_OffsetOf_iRelative' -> 16r8
 	}!
 OS.EMRRESTOREDC guid: (Core.GUID fromString: '{77f6595f-287e-4df2-be4c-dfd546be3718}')!
@@ -42,6 +43,9 @@ iRelative:!**compiled accessors**!public! !
 
 !OS.EMRRESTOREDC class methodsFor!
 
+byteSize
+	^_EMRRESTOREDC_Size!
+
 defineFields
 	"Define the fields of the EMRRESTOREDC structure.
 
@@ -69,6 +73,7 @@ iTypes
 
 	^{EMR_RESTOREDC}! !
 !OS.EMRRESTOREDC class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

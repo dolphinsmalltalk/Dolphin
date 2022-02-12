@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.BITMAP'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_BITMAP_Size' -> 16r18.
 		'_OffsetOf_bmBits' -> 16r14.
 		'_OffsetOf_bmBitsPixel' -> 16r12.
 		'_OffsetOf_bmHeight' -> 16r8.
@@ -80,6 +81,9 @@ extent!accessing!public! !
 
 !OS.BITMAP class methodsFor!
 
+byteSize
+	^_BITMAP_Size!
+
 defineFields
 	"Define the Win32 BITMAP structure
 		BITMAP compileDefinition
@@ -106,6 +110,7 @@ defineFields
 getFieldNames
 	^#(#bmType #bmWidth #bmHeight #bmWidthBytes #bmPlanes #bmBitsPixel #bmBits)! !
 !OS.BITMAP class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_SERVICE_CONFIG_
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_SERVICE_CONFIG_SSL_SNI_SET_Size' -> 16rC0.
 		'_OffsetOf_KeyDesc' -> 16r0.
 		'_OffsetOf_ParamDesc' -> 16r88
 	}!
@@ -40,7 +41,7 @@ KeyDesc: aHTTP_SERVICE_CONFIG_SSL_SNI_KEY
 	aHTTP_SERVICE_CONFIG_SSL_SNI_KEY
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_KeyDesc + 1)
-		to: ##(_OffsetOf_KeyDesc + HTTP_SERVICE_CONFIG_SSL_SNI_KEY basicByteSize)
+		to: ##(_OffsetOf_KeyDesc + HTTP_SERVICE_CONFIG_SSL_SNI_KEY._HTTP_SERVICE_CONFIG_SSL_SNI_KEY_Size)
 		startingAt: 1!
 
 ParamDesc
@@ -54,7 +55,7 @@ ParamDesc: aHTTP_SERVICE_CONFIG_SSL_PARAM
 	aHTTP_SERVICE_CONFIG_SSL_PARAM
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_ParamDesc + 1)
-		to: ##(_OffsetOf_ParamDesc + HTTP_SERVICE_CONFIG_SSL_PARAM basicByteSize)
+		to: ##(_OffsetOf_ParamDesc + HTTP_SERVICE_CONFIG_SSL_PARAM._HTTP_SERVICE_CONFIG_SSL_PARAM_Size)
 		startingAt: 1! !
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET categoriesForMethods!
 KeyDesc!**compiled accessors**!public! !
@@ -64,6 +65,9 @@ ParamDesc:!**compiled accessors**!public! !
 !
 
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET class methodsFor!
+
+byteSize
+	^_HTTP_SERVICE_CONFIG_SSL_SNI_SET_Size!
 
 defineFields
 	"Define the fields of the HTTP_SERVICE_CONFIG_SSL_SNI_SET structure.
@@ -85,6 +89,7 @@ defineFields
 getFieldNames
 	^#(#KeyDesc #ParamDesc)! !
 !WinHttpServer.HTTP_SERVICE_CONFIG_SSL_SNI_SET class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

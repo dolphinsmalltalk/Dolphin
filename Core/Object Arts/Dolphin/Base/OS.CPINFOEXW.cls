@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.CPINFOEXW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CPINFOEXW_Size' -> 16r220.
 		'_OffsetOf_codepage' -> 16r14.
 		'_OffsetOf_CodePageName' -> 16r18.
 		'_OffsetOf_DefaultChar' -> 16r4.
@@ -98,6 +99,9 @@ UnicodeDefaultChar!**compiled accessors**!public! !
 
 !OS.CPINFOEXW class methodsFor!
 
+byteSize
+	^_CPINFOEXW_Size!
+
 codePage: anInteger
 	| cpinfo |
 	cpinfo := self newBuffer.
@@ -147,6 +151,7 @@ defineFields
 getFieldNames
 	^#(#MaxCharSize #DefaultChar #LeadByte #UnicodeDefaultChar #codepage #CodePageName)! !
 !OS.CPINFOEXW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 codePage:!instance creation!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

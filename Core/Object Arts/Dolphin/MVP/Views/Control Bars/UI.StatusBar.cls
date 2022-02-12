@@ -268,7 +268,7 @@ sbGetBorders
 
 sbGetRect: anInteger
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	(self
 		sendMessage: SB_GETRECT
 		wParam: anInteger

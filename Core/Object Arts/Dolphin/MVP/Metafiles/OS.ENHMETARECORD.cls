@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.ENHMETARECORD'
 	imports: #(#{OS.EnhancedMetafileRecordTypes})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_ENHMETARECORD_Size' -> 16r8.
 		'_OffsetOf_iType' -> 16r0.
 		'_OffsetOf_nSize' -> 16r4
 	}!
@@ -52,6 +53,9 @@ nSize:!**compiled accessors**!public! !
 !
 
 !OS.ENHMETARECORD class methodsFor!
+
+byteSize
+	^_ENHMETARECORD_Size!
 
 defineFields
 	"Define the fields of the EMR structure.
@@ -107,6 +111,7 @@ uninitializeBeforeRemove
 unregisterRecordTypes
 	self iTypes do: [:each | RecordTypes at: each put: nil]! !
 !OS.ENHMETARECORD class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 initialize!public! !

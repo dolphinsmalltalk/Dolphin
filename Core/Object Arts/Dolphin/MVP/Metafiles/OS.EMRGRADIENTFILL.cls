@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRGRADIENTFILL'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRGRADIENTFILL_Size' -> 16r34.
 		'_OffsetOf_nTri' -> 16r1C.
 		'_OffsetOf_nVer' -> 16r18.
 		'_OffsetOf_rclBounds' -> 16r8.
@@ -65,7 +66,7 @@ rclBounds: aRECTL
 	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1!
 
 ulMode
@@ -84,7 +85,7 @@ Ver
 	^StructureArray
 		fromAddress: bytes yourAddress + _OffsetOf_Ver
 		length: self nVer
-		elementClass: OS.TRIVERTEX!
+		elementClass: TRIVERTEX!
 
 Ver: aStructureArrayOfTRIVERTEX
 	"Set the receiver's 'Ver' field to the value of the argument, aStructureArrayOfTRIVERTEX"
@@ -95,7 +96,8 @@ Ver: aStructureArrayOfTRIVERTEX
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_Ver + 1)
 		to: _OffsetOf_Ver + size
-		startingAt: 1! !
+		startingAt: 1.
+	self nVer: aStructureArrayOfTRIVERTEX size! !
 !OS.EMRGRADIENTFILL categoriesForMethods!
 nTri!**compiled accessors**!public! !
 nTri:!**compiled accessors**!public! !
@@ -110,6 +112,9 @@ Ver:!**compiled accessors**!public! !
 !
 
 !OS.EMRGRADIENTFILL class methodsFor!
+
+byteSize
+	^_EMRGRADIENTFILL_Size!
 
 defineFields
 	"Define the fields of the EMRGRADIENTFILL structure.
@@ -153,6 +158,7 @@ iTypes
 
 	^{EMR_GRADIENTFILL}! !
 !OS.EMRGRADIENTFILL class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

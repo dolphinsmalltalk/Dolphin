@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_CHANNEL_BIND_IN
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_CHANNEL_BIND_INFO_Size' -> 16r10.
 		'_OffsetOf_Flags' -> 16r4.
 		'_OffsetOf_Hardening' -> 16r0.
 		'_OffsetOf_NumberOfServiceNames' -> 16rC.
@@ -89,6 +90,9 @@ ServiceNames:!**compiled accessors**!public! !
 
 !WinHttpServer.HTTP_CHANNEL_BIND_INFO class methodsFor!
 
+byteSize
+	^_HTTP_CHANNEL_BIND_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_CHANNEL_BIND_INFO structure.
 
@@ -113,6 +117,7 @@ defineFields
 getFieldNames
 	^#(#Hardening #Flags #ServiceNames #NumberOfServiceNames)! !
 !WinHttpServer.HTTP_CHANNEL_BIND_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

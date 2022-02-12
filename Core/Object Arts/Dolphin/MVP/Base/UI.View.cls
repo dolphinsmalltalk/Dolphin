@@ -594,7 +594,7 @@ clientRectangle
 	"Answer a Rectangle containing the bounding rectangle of the receiver's client area."
 
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	User32 getClientRect: handle lpRect: rect.
 	^rect asRectangle!
 
@@ -2746,7 +2746,7 @@ placement
 	View>>placement:"
 
 	| placement |
-	placement := WINDOWPLACEMENT new.
+	placement := WINDOWPLACEMENT newBuffer.
 	(User32 getWindowPlacement: handle lpwndpl: placement) ifFalse: [User32 systemError].
 
 	"If the receiver is invisible, we have to clear the SW_SHOWNORMAL flag which

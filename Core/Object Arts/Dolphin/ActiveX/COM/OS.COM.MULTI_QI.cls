@@ -6,6 +6,7 @@ OS.COM.FinalizableStructure subclass: #'OS.COM.MULTI_QI'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_MULTI_QI_Size' -> 16rC.
 		'_OffsetOf_hr' -> 16r8.
 		'_OffsetOf_pIID' -> 16r0.
 		'_OffsetOf_pItf' -> 16r4
@@ -57,6 +58,9 @@ pItf:!**compiled accessors**!public! !
 
 !OS.COM.MULTI_QI class methodsFor!
 
+byteSize
+	^_MULTI_QI_Size!
+
 clear: addressOrBytes
 	"Free external resources referenced by the structure
 	of the receiver's element type at the specified address."
@@ -87,6 +91,7 @@ defineFields
 getFieldNames
 	^#(#pIID #pItf #hr)! !
 !OS.COM.MULTI_QI class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

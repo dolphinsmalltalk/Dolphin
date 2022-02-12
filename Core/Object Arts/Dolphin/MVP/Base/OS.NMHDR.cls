@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.NMHDR'
 	imports: #(#{OS.CommCtrlConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMHDR_Size' -> 16rC.
 		'_OffsetOf_code' -> 16r8.
 		'_OffsetOf_hwndFrom' -> 16r0.
 		'_OffsetOf_idFrom' -> 16r4
@@ -41,6 +42,9 @@ itemHandle!accessing!public! !
 
 !OS.NMHDR class methodsFor!
 
+byteSize
+	^_NMHDR_Size!
+
 defineFields
 	"Define the fields of the Win32 NMHDR structure
 
@@ -65,6 +69,7 @@ new
 	^self shouldNotImplement
 ! !
 !OS.NMHDR class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 itemFromNMHDR:!public! !

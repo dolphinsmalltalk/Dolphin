@@ -6,6 +6,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.COAUTHIDENTITY'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_COAUTHIDENTITY_Size' -> 16r1C.
 		'_OffsetOf_Domain' -> 16r8.
 		'_OffsetOf_DomainLength' -> 16rC.
 		'_OffsetOf_Flags' -> 16r18.
@@ -109,6 +110,9 @@ UserLength:!**compiled accessors**!public! !
 
 !OS.COM.COAUTHIDENTITY class methodsFor!
 
+byteSize
+	^_COAUTHIDENTITY_Size!
+
 defineFields
 	"Define the fields of the COAUTHIDENTITY structure.
 		COAUTHIDENTITY compileDefinition
@@ -137,6 +141,7 @@ defineFields
 getFieldNames
 	^#(#User #UserLength #Domain #DomainLength #Password #PasswordLength #Flags)! !
 !OS.COM.COAUTHIDENTITY class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

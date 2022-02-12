@@ -6,6 +6,7 @@ OS.BITMAP subclass: #'OS.DIBSECTION'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_DIBSECTION_Size' -> 16r54.
 		'_OffsetOf_dsBitfields' -> 16r40.
 		'_OffsetOf_dsBmih' -> 16r18.
 		'_OffsetOf_dshSection' -> 16r4C.
@@ -53,7 +54,7 @@ dsBmih: aBITMAPINFOHEADER
 	aBITMAPINFOHEADER
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_dsBmih + 1)
-		to: ##(_OffsetOf_dsBmih + BITMAPINFOHEADER basicByteSize)
+		to: ##(_OffsetOf_dsBmih + BITMAPINFOHEADER._BITMAPINFOHEADER_Size)
 		startingAt: 1!
 
 dshSection
@@ -88,6 +89,9 @@ dsOffset:!**compiled accessors**!public! !
 
 !OS.DIBSECTION class methodsFor!
 
+byteSize
+	^_DIBSECTION_Size!
+
 defineFields
 	"Define the fields of the DIBSECTION structure.
 		DIBSECTION compileDefinition
@@ -112,6 +116,7 @@ defineFields
 getFieldNames
 	^#(#bmType #bmWidth #bmHeight #bmWidthBytes #bmPlanes #bmBitsPixel #bmBits #dsBmih #dsBitfields #dshSection #dsOffset)! !
 !OS.DIBSECTION class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

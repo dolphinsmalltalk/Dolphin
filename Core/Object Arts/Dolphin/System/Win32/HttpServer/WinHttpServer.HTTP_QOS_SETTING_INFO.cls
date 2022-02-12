@@ -6,6 +6,7 @@ WinHttpServer.HttpServerStructure subclass: #'WinHttpServer.HTTP_QOS_SETTING_INF
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_HTTP_QOS_SETTING_INFO_Size' -> 16r8.
 		'_OffsetOf_QosSetting' -> 16r4.
 		'_OffsetOf_QosType' -> 16r0
 	}!
@@ -79,6 +80,9 @@ value:!accessing!public! !
 
 !WinHttpServer.HTTP_QOS_SETTING_INFO class methodsFor!
 
+byteSize
+	^_HTTP_QOS_SETTING_INFO_Size!
+
 defineFields
 	"Define the fields of the HTTP_QOS_SETTING_INFO structure.
 
@@ -113,6 +117,7 @@ qosSetting: anHttpQosSetting
 		value: anHttpQosSetting;
 		yourself! !
 !WinHttpServer.HTTP_QOS_SETTING_INFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 maxBandwidth:!instance creation!public! !

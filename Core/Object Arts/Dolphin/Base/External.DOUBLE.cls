@@ -5,7 +5,9 @@ External.SCALAR subclass: #'External.DOUBLE'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_DOUBLE_Size' -> 16r8
+	}!
 External.DOUBLE guid: (Core.GUID fromString: '{87b4c592-026e-11d3-9fd7-00a0cc3e4a32}')!
 External.DOUBLE comment: 'DOUBLE is an <ExternalStructure> class to represent double precision (64-bit) floating point numbers in native format'!
 !External.DOUBLE categoriesForClass!External-Data-Structured! !
@@ -33,6 +35,9 @@ value:!**compiled accessors**!public! !
 
 !External.DOUBLE class methodsFor!
 
+byteSize
+	^_DOUBLE_Size!
+
 defineFields
 	"Define the fields of the DOUBLE 'structure'.
 
@@ -53,6 +58,7 @@ uninitialize
 
 	VM registryAt: self name put: nil! !
 !External.DOUBLE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 initialize!development!initializing!private! !
 uninitialize!class hierarchy-removing!private! !

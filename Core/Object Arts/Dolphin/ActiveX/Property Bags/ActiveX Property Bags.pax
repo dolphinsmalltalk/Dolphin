@@ -98,7 +98,8 @@ OS.COM.OLEStructure subclass: #'OS.COM.PROPBAG2'
 		'_OffsetOf_dwHint' -> 16r8.
 		'_OffsetOf_dwType' -> 16r0.
 		'_OffsetOf_pstrName' -> 16rC.
-		'_OffsetOf_vt' -> 16r4
+		'_OffsetOf_vt' -> 16r4.
+		'_PROPBAG2_Size' -> 16r20
 	}!
 
 "End of package definition"!

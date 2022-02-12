@@ -8,7 +8,8 @@ OS.Win32Structure subclass: #'OS.PROTOENT'
 	classConstants: {
 		'_OffsetOf_p_aliases' -> 16r4.
 		'_OffsetOf_p_name' -> 16r0.
-		'_OffsetOf_p_proto' -> 16r8
+		'_OffsetOf_p_proto' -> 16r8.
+		'_PROTOENT_Size' -> 16rC
 	}!
 OS.PROTOENT guid: (Core.GUID fromString: '{87b4c60a-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.PROTOENT comment: '<PROTOENT> is an <ExternalStructure> class to wrap the struct ''Win32.PROTOENT'' from type information in the ''Win32 API'' library.
@@ -76,6 +77,9 @@ protocol!public! !
 
 !OS.PROTOENT class methodsFor!
 
+byteSize
+	^_PROTOENT_Size!
+
 defineFields
 	"Define the fields of the PROTOENT structure.
 
@@ -116,6 +120,7 @@ fromString: aString
 getFieldNames
 	^#(#p_name #p_proto)! !
 !OS.PROTOENT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 fromInteger:!instance creation!public! !
 fromString:!instance creation!public! !

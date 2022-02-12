@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRFILLRGN'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRFILLRGN_Size' -> 16r24.
 		'_OffsetOf_cbRgnData' -> 16r18.
 		'_OffsetOf_ihBrush' -> 16r1C.
 		'_OffsetOf_rclBounds' -> 16r8.
@@ -57,13 +58,13 @@ rclBounds
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rclBounds!
 
-rclBounds: aRECT
-	"Set the receiver's 'rclBounds' field to the value of the argument, aRECT"
+rclBounds: aRECTL
+	"Set the receiver's 'rclBounds' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rclBounds + 1)
-		to: ##(_OffsetOf_rclBounds + RECTL basicByteSize)
+		to: ##(_OffsetOf_rclBounds + RECTL._RECTL_Size)
 		startingAt: 1!
 
 RGNDATA
@@ -94,6 +95,9 @@ RGNDATA:!**compiled accessors**!public! !
 !
 
 !OS.EMRFILLRGN class methodsFor!
+
+byteSize
+	^_EMRFILLRGN_Size!
 
 defineFields
 	"Define the fields of the EMRFILLRGN structure.
@@ -133,6 +137,7 @@ iTypes
 
 	^{EMR_FILLRGN}! !
 !OS.EMRFILLRGN class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

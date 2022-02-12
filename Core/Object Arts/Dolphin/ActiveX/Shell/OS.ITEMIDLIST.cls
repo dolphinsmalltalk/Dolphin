@@ -5,7 +5,9 @@ OS.COM.OLEStructure subclass: #'OS.ITEMIDLIST'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_ITEMIDLIST_Size' -> 16r4
+	}!
 OS.ITEMIDLIST guid: (Core.GUID fromString: '{928070c1-45d5-4739-b2b1-01e8c27361dc}')!
 OS.ITEMIDLIST comment: 'ITEMIDLIST is an <ExternalStructure> that wraps the Windows ITEMIDLIST struct.  ITEMIDLIST serves the same purpose as a file system path, i.e., to identify objects (be they files, folders, virtual or part of the filesystem) in the Windows Shell namespace.  An ITEMIDLIST contains one or more item IDs (a Windows SHITEMID structure), terminated by a two-byte null.
 
@@ -161,6 +163,9 @@ pointerClass!constants!private! !
 
 !OS.ITEMIDLIST class methodsFor!
 
+byteSize
+	^_ITEMIDLIST_Size!
+
 defineFields
 	"Define the fields of the ITEMIDLIST structure.
 		ITEMIDLIST compileDefinition
@@ -251,6 +256,7 @@ pointerClass
 uninitialize
 	SessionManager current removeEventsTriggeredFor: self! !
 !OS.ITEMIDLIST class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 exampleCopying!examples!public! !
 exampleWalkID:!examples!public! !

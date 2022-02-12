@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMREXTCREATEPEN'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMREXTCREATEPEN_Size' -> 16r38.
 		'_OffsetOf_cbBits' -> 16r18.
 		'_OffsetOf_cbBmi' -> 16r10.
 		'_OffsetOf_elp' -> 16r1C.
@@ -67,7 +68,7 @@ elp: anEXTLOGPEN
 	anEXTLOGPEN
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_elp + 1)
-		to: ##(_OffsetOf_elp + EXTLOGPEN basicByteSize)
+		to: ##(_OffsetOf_elp + EXTLOGPEN._EXTLOGPEN_Size)
 		startingAt: 1!
 
 ihPen
@@ -116,6 +117,9 @@ offBmi:!**compiled accessors**!public! !
 
 !OS.EMREXTCREATEPEN class methodsFor!
 
+byteSize
+	^_EMREXTCREATEPEN_Size!
+
 defineFields
 	"Define the fields of the EMREXTCREATEPEN structure.
 
@@ -163,6 +167,7 @@ iTypes
 
 	^{EMR_EXTCREATEPEN}! !
 !OS.EMREXTCREATEPEN class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

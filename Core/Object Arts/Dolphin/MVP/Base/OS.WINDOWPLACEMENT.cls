@@ -11,7 +11,8 @@ OS.Win32Structure subclass: #'OS.WINDOWPLACEMENT'
 		'_OffsetOf_ptMaxPosition' -> 16r14.
 		'_OffsetOf_ptMinPosition' -> 16rC.
 		'_OffsetOf_rcNormalPosition' -> 16r1C.
-		'_OffsetOf_showCmd' -> 16r8
+		'_OffsetOf_showCmd' -> 16r8.
+		'_WINDOWPLACEMENT_Size' -> 16r2C
 	}!
 OS.WINDOWPLACEMENT guid: (Core.GUID fromString: '{87b4c61b-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.WINDOWPLACEMENT comment: ''!
@@ -28,13 +29,13 @@ rcNormalPosition
 
 	^RECTL fromAddress: bytes yourAddress + _OffsetOf_rcNormalPosition!
 
-rcNormalPosition: aRECT
-	"Set the receiver's 'rcNormalPosition' field to the value of the argument, aRECT"
+rcNormalPosition: aRECTL
+	"Set the receiver's 'rcNormalPosition' field to the value of the argument, aRECTL"
 
-	aRECT
+	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rcNormalPosition + 1)
-		to: ##(_OffsetOf_rcNormalPosition + RECTL basicByteSize)
+		to: ##(_OffsetOf_rcNormalPosition + RECTL._RECTL_Size)
 		startingAt: 1!
 
 showCmd
@@ -55,6 +56,9 @@ showCmd:!**compiled accessors**!public! !
 !
 
 !OS.WINDOWPLACEMENT class methodsFor!
+
+byteSize
+	^_WINDOWPLACEMENT_Size!
 
 defineFields
 	"Define the layout of the Win32 WINDOWPLACEMENT structure. 
@@ -83,6 +87,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #showCmd #rcNormalPosition)! !
 !OS.WINDOWPLACEMENT class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

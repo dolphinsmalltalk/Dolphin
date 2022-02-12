@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMRSETPALETTEENTRIES'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMRSETPALETTEENTRIES_Size' -> 16r18.
 		'_OffsetOf_aPalEntries' -> 16r14.
 		'_OffsetOf_cEntries' -> 16r10.
 		'_OffsetOf_ihPal' -> 16r8.
@@ -94,6 +95,9 @@ iStart:!**compiled accessors**!public! !
 
 !OS.EMRSETPALETTEENTRIES class methodsFor!
 
+byteSize
+	^_EMRSETPALETTEENTRIES_Size!
+
 defineFields
 	"Define the fields of the EMRSETPALETTEENTRIES structure.
 
@@ -132,6 +136,7 @@ iTypes
 
 	^{EMR_SETPALETTEENTRIES}! !
 !OS.EMRSETPALETTEENTRIES class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

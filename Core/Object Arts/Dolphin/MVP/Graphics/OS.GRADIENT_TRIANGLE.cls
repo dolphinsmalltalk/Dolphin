@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.GRADIENT_TRIANGLE'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GRADIENT_TRIANGLE_Size' -> 16rC.
 		'_OffsetOf_Vertex1' -> 16r0.
 		'_OffsetOf_Vertex2' -> 16r4.
 		'_OffsetOf_Vertex3' -> 16r8
@@ -70,6 +71,9 @@ Vertex3:!**compiled accessors**!public! !
 
 !OS.GRADIENT_TRIANGLE class methodsFor!
 
+byteSize
+	^_GRADIENT_TRIANGLE_Size!
+
 defineFields
 	"Define the fields of the GRADIENT_TRIANGLE structure.
 
@@ -91,6 +95,7 @@ defineFields
 getFieldNames
 	^#(#Vertex1 #Vertex2 #Vertex3)! !
 !OS.GRADIENT_TRIANGLE class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

@@ -10,7 +10,8 @@ OS.Win32Structure subclass: #'OS.RGNDATA'
 		'_OffsetOf_iType' -> 16r4.
 		'_OffsetOf_nCount' -> 16r8.
 		'_OffsetOf_nRgnSize' -> 16rC.
-		'_OffsetOf_rcBound' -> 16r10
+		'_OffsetOf_rcBound' -> 16r10.
+		'_RGNDATA_Size' -> 16r20
 	}!
 OS.RGNDATA guid: (Core.GUID fromString: '{87b4c60e-026e-11d3-9fd7-00a0cc3e4a32}')!
 OS.RGNDATA comment: ''!
@@ -63,7 +64,7 @@ rcBound: aRECTL
 	aRECTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_rcBound + 1)
-		to: ##(_OffsetOf_rcBound + RECTL basicByteSize)
+		to: ##(_OffsetOf_rcBound + RECTL._RECTL_Size)
 		startingAt: 1! !
 !OS.RGNDATA categoriesForMethods!
 dwSize:!**compiled accessors**!public! !
@@ -78,6 +79,9 @@ rcBound:!**compiled accessors**!public! !
 !
 
 !OS.RGNDATA class methodsFor!
+
+byteSize
+	^_RGNDATA_Size!
 
 defineFields
 	"Define the fields of the RGNDATA 'structure'.
@@ -112,6 +116,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #iType #nCount #nRgnSize #rcBound)! !
 !OS.RGNDATA class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

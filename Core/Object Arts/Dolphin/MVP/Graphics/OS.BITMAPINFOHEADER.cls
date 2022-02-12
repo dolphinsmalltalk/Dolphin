@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.BITMAPINFOHEADER'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_BITMAPINFOHEADER_Size' -> 16r28.
 		'_OffsetOf_biBitCount' -> 16rE.
 		'_OffsetOf_biClrImportant' -> 16r24.
 		'_OffsetOf_biClrUsed' -> 16r20.
@@ -184,6 +185,9 @@ numQuads!initializing!public! !
 
 !OS.BITMAPINFOHEADER class methodsFor!
 
+byteSize
+	^_BITMAPINFOHEADER_Size!
+
 defineFields
 	"Define the Win32 BITMAPINFOHEADER structure
 		BITMAPINFOHEADER compileDefinition
@@ -205,6 +209,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #biWidth #biHeight #biPlanes #biBitCount #biCompression #biSizeImage #biXPelsPerMeter #biYPelsPerMeter #biClrUsed #biClrImportant)! !
 !OS.BITMAPINFOHEADER class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

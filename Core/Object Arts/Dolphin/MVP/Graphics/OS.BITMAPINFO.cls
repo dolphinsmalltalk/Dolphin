@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.BITMAPINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_BITMAPINFO_Size' -> 16r2C.
 		'_OffsetOf_bmiColors' -> 16r28.
 		'_OffsetOf_bmiHeader' -> 16r0
 	}!
@@ -46,7 +47,7 @@ bmiHeader: aBITMAPINFOHEADER
 	aBITMAPINFOHEADER
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_bmiHeader + 1)
-		to: ##(_OffsetOf_bmiHeader + BITMAPINFOHEADER basicByteSize)
+		to: ##(_OffsetOf_bmiHeader + BITMAPINFOHEADER._BITMAPINFOHEADER_Size)
 		startingAt: 1!
 
 byteSize
@@ -56,7 +57,7 @@ byteSize
 	"Implementation Note: The static size reported by the superclass implementation
 	includes one RGBQUAD."
 
-	^super byteSize + ((self numQuads - 1) * ##(RGBQUAD basicByteSize))!
+	^super byteSize + ((self numQuads - 1) * RGBQUAD._RGBQUAD_Size)!
 
 colors
 	"Answer a <StructureArray> of <RGBQUAD>, representing the receiver's colour table."
@@ -65,7 +66,7 @@ colors
 
 initialize: anInteger
 	super initialize: anInteger.
-	self bmiHeader dwSize: BITMAPINFOHEADER byteSize!
+	self bmiHeader dwSize: BITMAPINFOHEADER._BITMAPINFOHEADER_Size!
 
 numQuads
 	"Private - Answer the number of <RGBQUAD>s in the receiver's colour table."
@@ -84,6 +85,9 @@ numQuads!accessing!private! !
 
 !OS.BITMAPINFO class methodsFor!
 
+byteSize
+	^_BITMAPINFO_Size!
+
 colorDepth: colorDepth
 	"Answer a new instance of the receiver capable of representing information about an RGB
 	bitmap (that is a bitmap with biCompression = BI_RGB) with the specified colour depth (e.g.
@@ -91,7 +95,7 @@ colorDepth: colorDepth
 
 	| quads |
 	quads := colorDepth < 16 ifTrue: [2 raisedToInteger: colorDepth] ifFalse: [0].
-	^self new: self byteSize + ((quads - 1) * RGBQUAD byteSize)!
+	^self new: _BITMAPINFO_Size + ((quads - 1) * RGBQUAD._RGBQUAD_Size)!
 
 defineFields
 	"Define the Win32 BITMAPINFO structure
@@ -111,6 +115,7 @@ defineFields
 getFieldNames
 	^#(#bmiHeader #bmiColors)! !
 !OS.BITMAPINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 colorDepth:!instance creation!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

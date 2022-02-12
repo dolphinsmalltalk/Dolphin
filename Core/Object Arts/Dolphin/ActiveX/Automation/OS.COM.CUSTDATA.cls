@@ -6,6 +6,7 @@ OS.COM.FinalizableStructure subclass: #'OS.COM.CUSTDATA'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CUSTDATA_Size' -> 16r8.
 		'_OffsetOf_cCustData' -> 16r0.
 		'_OffsetOf_prgCustData' -> 16r4
 	}!
@@ -56,6 +57,9 @@ prgCustData!**compiled accessors**!public! !
 
 !OS.COM.CUSTDATA class methodsFor!
 
+byteSize
+	^_CUSTDATA_Size!
+
 clear: addressOrBytes
 	OleAut32 clearCustData: addressOrBytes!
 
@@ -92,6 +96,7 @@ initialize
 		at: (GUID fromString: '{be29f9d9-7844-49e1-aacb-8e19386529df}') put: #size_is;
 		shrink! !
 !OS.COM.CUSTDATA class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 clear:!public!realizing/unrealizing! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !

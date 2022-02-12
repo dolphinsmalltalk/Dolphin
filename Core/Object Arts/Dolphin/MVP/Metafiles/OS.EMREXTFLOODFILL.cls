@@ -6,6 +6,7 @@ OS.ENHMETARECORD subclass: #'OS.EMREXTFLOODFILL'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_EMREXTFLOODFILL_Size' -> 16r18.
 		'_OffsetOf_crColor' -> 16r10.
 		'_OffsetOf_iMode' -> 16r14.
 		'_OffsetOf_ptlStart' -> 16r8
@@ -61,7 +62,7 @@ ptlStart: aPOINTL
 	aPOINTL
 		replaceBytesOf: bytes
 		from: ##(_OffsetOf_ptlStart + 1)
-		to: ##(_OffsetOf_ptlStart + POINTL basicByteSize)
+		to: ##(_OffsetOf_ptlStart + POINTL._POINTL_Size)
 		startingAt: 1! !
 !OS.EMREXTFLOODFILL categoriesForMethods!
 crColor!**compiled accessors**!public! !
@@ -73,6 +74,9 @@ ptlStart:!**compiled accessors**!public! !
 !
 
 !OS.EMREXTFLOODFILL class methodsFor!
+
+byteSize
+	^_EMREXTFLOODFILL_Size!
 
 defineFields
 	"Define the fields of the EMREXTFLOODFILL structure.
@@ -109,6 +113,7 @@ iTypes
 
 	^{EMR_EXTFLOODFILL}! !
 !OS.EMREXTFLOODFILL class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 iTypes!constants!public! !

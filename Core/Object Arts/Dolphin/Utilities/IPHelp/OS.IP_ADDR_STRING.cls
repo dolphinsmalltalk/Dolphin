@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.IP_ADDR_STRING'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_IP_ADDR_STRING_Size' -> 16r28.
 		'_OffsetOf_Context' -> 16r24.
 		'_OffsetOf_IpAddress' -> 16r4.
 		'_OffsetOf_IpMask' -> 16r14.
@@ -59,6 +60,9 @@ Next!**compiled accessors**!public! !
 
 !OS.IP_ADDR_STRING class methodsFor!
 
+byteSize
+	^_IP_ADDR_STRING_Size!
+
 defineFields
 	"Define the fields of the IP_ADDR_STRING structure.
 		IP_ADDR_STRING compileDefinition
@@ -96,6 +100,7 @@ defineFields
 getFieldNames
 	^#(#Next #IpAddress #IpMask #Context)! !
 !OS.IP_ADDR_STRING class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!initializing!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

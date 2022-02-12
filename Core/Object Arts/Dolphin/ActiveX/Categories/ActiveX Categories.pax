@@ -64,6 +64,7 @@ OS.COM.OLEStructure subclass: #'OS.COM.CATEGORYINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_CATEGORYINFO_Size' -> 16r114.
 		'_OffsetOf_catid' -> 16r0.
 		'_OffsetOf_lcid' -> 16r10.
 		'_OffsetOf_szDescription' -> 16r14

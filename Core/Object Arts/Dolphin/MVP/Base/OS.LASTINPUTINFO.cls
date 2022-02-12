@@ -6,6 +6,7 @@ OS.Win32Structure subclass: #'OS.LASTINPUTINFO'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_LASTINPUTINFO_Size' -> 16r8.
 		'_OffsetOf_dwSize' -> 16r0.
 		'_OffsetOf_dwTime' -> 16r4
 	}!
@@ -45,6 +46,9 @@ dwTime:!**compiled accessors**!public! !
 
 !OS.LASTINPUTINFO class methodsFor!
 
+byteSize
+	^_LASTINPUTINFO_Size!
+
 defineFields
 	"
 		self compileDefinition.
@@ -63,6 +67,7 @@ defineFields
 getFieldNames
 	^#(#dwSize #dwTime)! !
 !OS.LASTINPUTINFO class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

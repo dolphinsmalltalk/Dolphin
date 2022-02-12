@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 UI.IconicListAbstract subclass: #'UI.ListView'
-	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices _unused35 _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
+	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices noRedrawCount _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'
 	classVariableNames: 'LvModes SelectionStateMask UnknownItem'
 	imports: #(#{OS.ListViewConstants})
 	classInstanceVariableNames: ''
@@ -95,7 +95,7 @@ addOrUpdate: aBoolean nonVirtualItems: aSequenceableCollection afterIndex: anInt
 				ifTrue: 
 					[colImageBlock := [:eachRow :eachCol | eachCol imageFromRow: eachRow].
 					primaryImageSupplier := primaryTextSupplier]].
-	lvItem := LVITEMW new.
+	lvItem := LVITEMW newBuffer.
 	msg := aBoolean
 				ifTrue: [ListViewConstants.LVM_SETITEMW]
 				ifFalse: [ListViewConstants.LVM_INSERTITEMW].
@@ -277,11 +277,9 @@ basicAdd: anObject atIndex: anInteger
 	"Private - Adds an item to the list view at the index given by anInteger"
 
 	self isVirtual
-		ifTrue: 
-			[| lvItem |
-			lvItem := LVITEMW allCallbacks.
-			lvItem iItem: anInteger - 1.
-			self lvmInsertItem: lvItem]
+		ifTrue: [self lvmInsertItem: (LVITEMW allCallbacks
+						iItem: anInteger - 1;
+						yourself)]
 		ifFalse: 
 			[self
 				addOrUpdate: false
@@ -293,9 +291,7 @@ basicAddColumn: aListViewColumn atIndex: anInteger
 	columnIndex. N.B. Does not modify the receiver's column collection.
 	Answers aListViewColumn."
 
-	| lvColumn |
-	lvColumn := LVCOLUMNW fromColumn: aListViewColumn in: self.
-	self lvmInsertAt: anInteger - 1 column: lvColumn.
+	self lvmInsertAt: anInteger - 1 column: (LVCOLUMNW fromColumn: aListViewColumn).
 	aListViewColumn parent: self.
 	^aListViewColumn!
 
@@ -350,7 +346,7 @@ basicResetSelection
 	notification."
 
 	| anLvItem |
-	anLvItem := LVITEMW new.
+	anLvItem := LVITEMW newBuffer.
 	anLvItem stateMask: ##(LVIS_SELECTED | LVNI_FOCUSED).
 	self lvmSetItem: -1 state: anLvItem!
 
@@ -358,7 +354,7 @@ basicUpdateColumnAtIndex: anInteger
 	| column |
 	column := self columnAtIndex: anInteger.
 	anInteger == 1 ifTrue: [column text setTextInto: self].
-	self lvmSetColumn: (LVCOLUMNW fromColumn: column in: self) at: anInteger - 1!
+	self lvmSetColumn: (LVCOLUMNW fromColumn: column) at: anInteger - 1!
 
 beSorted: aBlockClosure 
 	self list: (self list asSortedCollection: aBlockClosure)!
@@ -394,7 +390,7 @@ caretIndex: anInteger
 	or clear the focus if <anInteger> is 0."
 
 	| lvItem |
-	lvItem := LVITEMW new.
+	lvItem := LVITEMW newBuffer.
 	lvItem stateMask: LVIS_FOCUSED.
 	"If we pass -1 to LVM_SETITEMSTATE, the change applies to *all* items in the list,
 	but we must also tell the control to clear the focus state rather than set it."
@@ -641,12 +637,15 @@ getItemChecked: anInteger
 
 getItemText: anInteger
 	| item |
-	item := LVITEMW new
+	item := LVITEMW newBuffer
 				iItem: anInteger - 1;
 				newTextBuffer: 128;
 				yourself.
 	self lvmGetItem: item.
 	^item pszText!
+
+getNoRedrawCount
+	^noRedrawCount!
 
 getSelectedCount
 	"Private - Query the total number of items selected from the control."
@@ -860,7 +859,7 @@ hideDropHighlight
 	item notNil
 		ifTrue: 
 			[| anLvItem |
-			anLvItem := LVITEMW new.
+			anLvItem := LVITEMW newBuffer.
 			anLvItem
 				stateMask: LVIS_DROPHILITED;
 				dwState: 0.
@@ -1005,7 +1004,7 @@ isMultiSelect: aBoolean
 		recreateIfChanged: false!
 
 isReportMode
-	^self viewMode == #report!
+	^viewMode == #report!
 
 isVirtual
 	"Answer whether the receiver has the owner data style.
@@ -1037,9 +1036,6 @@ itemCount
 
 	^self sendMessage: LVM_GETITEMCOUNT!
 
-itemFromNMHDRW: pNMHDR
-	^LVITEMW fromAddress: pNMHDR yourAddress + ##(NMHDR byteSize)!
-
 itemFromPoint:  coord
 	"Private - Answer the one-based index of the item in the control under the <Point>, coord,
 	or nil if none."
@@ -1057,6 +1053,9 @@ itemRect: itemHandle textOnly: aBoolean
 
 itemsPerPage
 	^self sendMessage: LVM_GETCOUNTPERPAGE!
+
+itemStructure
+	^LVITEMW!
 
 largeIconExtent: aPointOrNil
 	iconSpacing notNil
@@ -1204,7 +1203,7 @@ lvmGetItemPosition: index
 	"Private - Answer the Point of the index item on the view."
 
 	| pt |
-	pt := POINTL new.
+	pt := POINTL newBuffer.
 	(self
 		sendMessage: LVM_GETITEMPOSITION
 		wParam: index
@@ -1216,7 +1215,7 @@ lvmGetItemRect: index bounding: boundingValue
 	"Private - Answer a bounding Rectangle for all or part of an item."
 
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	rect left: boundingValue.
 	(self
 		sendMessage: LVM_GETITEMRECT
@@ -1244,7 +1243,7 @@ lvmGetOrigin
 	"Private - Answer the current view origin. This will fail if the receiver is in list or report mode."
 
 	| pt |
-	pt := POINTL new.
+	pt := POINTL newBuffer.
 	(self
 		sendMessage: LVM_GETORIGIN
 		wParam: 0
@@ -1265,7 +1264,7 @@ lvmGetSubItemRect: rowInteger subitem: colInteger bounding: flagInteger
 	"Private - Answer a bounding Rectangle for all or part of a subitem."
 
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	rect
 		top: colInteger;
 		left: flagInteger.
@@ -1286,7 +1285,7 @@ lvmGetViewRect
 	fail if not in one of the icon modes."
 
 	| rect |
-	rect := RECTL new.
+	rect := RECTL newBuffer.
 	(self
 		sendMessage: LVM_GETVIEWRECT
 		wParam: 0
@@ -1679,7 +1678,7 @@ onDisplayDetailsRequired: anLVITEM
 	"List sometimes asks for lvitem we no longer have, answer nil to accept default processing"
 	rowObject == UnknownItem ifTrue: [^nil].
 	subItem := anLVITEM iSubItem.
-	self isReportMode ifTrue: [column := self columnAtIndex: subItem + 1].
+	self isReportMode ifTrue: [column := columns at: subItem + 1].
 	mask := anLVITEM mask.
 
 	"Image Request?"
@@ -1705,7 +1704,7 @@ onDisplayDetailsRequired: anLVITEM
 			["Indenting is only supported for the whole row, not on a per-column basis"
 			anLVITEM iIndent: (self indentFromRow: rowObject)].
 	"State image"
-	((mask allMask: LVIF_STATE) and: [subItem == 0])
+	(subItem == 0 and: [mask allMask: LVIF_STATE])
 		ifTrue: 
 			[(self stateImageFromRow: rowObject) ifNotNil: [:stateImage | anLVITEM iStateImage: stateImage]].
 	^0	"suppress default processing"!
@@ -1750,12 +1749,11 @@ onItems: aSequenceableCollection addedAtIndex: anInteger
 				ifFalse: 
 					[| lvItem |
 					lvItem := LVITEMW allCallbacks.
-					aSequenceableCollection inject: anInteger
-						into: 
-							[:index :each |
-							lvItem iItem: anInteger - 1.
-							self lvmInsertItem: lvItem.
-							anInteger + 1]]]
+					anInteger - 1 to: anInteger + count - 2
+						do: 
+							[:index |
+							lvItem iItem: index.
+							self lvmInsertItem: lvItem]]]
 		ifFalse: 
 			[self
 				addOrUpdate: false
@@ -1873,6 +1871,7 @@ onViewCreated
 	"The receiver window has been created. Copy the info held in instance variables across to it, and perform any other state initialization that is required on attachment of the receiver's associated native window."
 
 	super onViewCreated.
+	noRedrawCount := 0.
 	approvedSelIndices := nil.
 	self setControlBackcolor.
 	self forecolor ifNotNil: [:fore | self forecolor: fore].
@@ -1884,12 +1883,13 @@ onViewCreated
 	self applyImageLists.
 	self basicSelectionsByIndex: lastSelIndices.
 	self iconSpacing ifNotNil: [:spacing | self lvmSetIconSpacing: spacing].
-	(self isVirtual and: [self stateImageManager notNil]) ifTrue: [self lvmSetCallbackMask: LVIS_STATEIMAGEMASK]!
+	(self isVirtual and: [self stateImageManager notNil])
+		ifTrue: [self lvmSetCallbackMask: LVIS_STATEIMAGEMASK]!
 
 primaryColumn
 	"Private - Answer the primary column for the report view mode"
 
-	^self allColumns first!
+	^columns first!
 
 queryCommand: aCommandQuery
 	"Update aCommandQuery to indicate how a command would be processed.
@@ -2041,7 +2041,7 @@ selectionsByIndex: aCollection ifAbsent: exceptionHandler
 
 setColumnIcon: anImage atIndex: anInteger
 	| lvcol |
-	lvcol := LVCOLUMNW new.
+	lvcol := LVCOLUMNW newBuffer.
 	lvcol alignment: (self columnAtIndex: anInteger) alignment.
 	anImage isNil
 		ifFalse: 
@@ -2068,10 +2068,13 @@ setItem: anInteger checked: aBoolean
 	"Set whether the item with the specified index is 'checked' or not. This will have unpredictable effects if the list is not in `hasCheckBoxes` mode."
 
 	| item |
-	item := LVITEMW new
+	item := LVITEMW newBuffer
 				iStateImage: aBoolean asParameter + 1;
 				yourself.
 	self lvmSetItem: anInteger - 1 state: item!
+
+setNoRedrawCount: anInteger
+	noRedrawCount := anInteger max: 0!
 
 setSelectionsByIndex: indices
 	| selections |
@@ -2102,7 +2105,7 @@ showDropHighlight: item
 	index within the receiver."
 
 	| anLvItem |
-	anLvItem := LVITEMW new.
+	anLvItem := LVITEMW newBuffer.
 	anLvItem
 		stateMask: LVIS_DROPHILITED;
 		dwState: LVIS_DROPHILITED.
@@ -2384,6 +2387,7 @@ forgetLastClickedColumn!helpers!private! !
 getEditControl!accessing!private! !
 getItemChecked:!accessing!public! !
 getItemText:!accessing!private! !
+getNoRedrawCount!private! !
 getSelectedCount!private!selection! !
 getSelectionsByIndex!private!selection! !
 getSingleSelection!private!selection! !
@@ -2433,10 +2437,10 @@ isReportMode!private!updating! !
 isVirtual!accessing-styles!public! !
 isVirtual:!accessing-styles!public! !
 itemCount!accessing!public! !
-itemFromNMHDRW:!helpers!private! !
 itemFromPoint:!enquiries!private! !
 itemRect:textOnly:!enquiries!public! !
 itemsPerPage!geometry!public! !
+itemStructure!constants!private! !
 largeIconExtent:!constants!public! !
 largeIconMode!commands!public! !
 lastSelIndices!accessing!private! !
@@ -2553,6 +2557,7 @@ setColumnIcon:atIndex:!helpers!private! !
 setControlBackcolor:!helpers!private! !
 setIconSpacing:!helpers!private! !
 setItem:checked:!accessing!public! !
+setNoRedrawCount:!private! !
 setSelectionsByIndex:!private!selection! !
 setSingleSelection:!private!selection! !
 setViewMode:!accessing!private! !

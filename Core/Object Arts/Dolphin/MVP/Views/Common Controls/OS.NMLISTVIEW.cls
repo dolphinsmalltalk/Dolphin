@@ -6,6 +6,7 @@ OS.NMHDR subclass: #'OS.NMLISTVIEW'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_NMLISTVIEW_Size' -> 16r2C.
 		'_OffsetOf_iItem' -> 16rC.
 		'_OffsetOf_iSubItem' -> 16r10.
 		'_OffsetOf_lParam' -> 16r28.
@@ -71,6 +72,9 @@ uOldState!**compiled accessors**!public! !
 
 !OS.NMLISTVIEW class methodsFor!
 
+byteSize
+	^_NMLISTVIEW_Size!
+
 defineFields
 	"Define the structure template for Win32 NMLISTVIEW structure.
 		NMLISTVIEW compileDefinition
@@ -89,6 +93,7 @@ defineFields
 getFieldNames
 	^#(#hwndFrom #idFrom #code #iItem #iSubItem #uNewState #uOldState #uChanged #ptAction #lParam)! !
 !OS.NMLISTVIEW class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

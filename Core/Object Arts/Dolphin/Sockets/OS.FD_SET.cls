@@ -6,6 +6,7 @@ External.Structure subclass: #'OS.FD_SET'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_FD_SET_Size' -> 16r104.
 		'_OffsetOf_fd_array' -> 16r4.
 		'_OffsetOf_fd_count' -> 16r0
 	}!
@@ -44,6 +45,9 @@ fd_count:!**compiled accessors**!public! !
 
 !OS.FD_SET class methodsFor!
 
+byteSize
+	^_FD_SET_Size!
+
 defineFields
 	"Define the fields of the fd_set structure.
 
@@ -64,6 +68,7 @@ defineFields
 getFieldNames
 	^#(#fd_count #fd_array)! !
 !OS.FD_SET class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!private!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

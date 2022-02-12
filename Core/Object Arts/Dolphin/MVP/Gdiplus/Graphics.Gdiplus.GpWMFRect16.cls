@@ -6,6 +6,7 @@ External.Structure subclass: #'Graphics.Gdiplus.GpWMFRect16'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_GpWMFRect16_Size' -> 16r8.
 		'_OffsetOf_bottom' -> 16r6.
 		'_OffsetOf_left' -> 16r0.
 		'_OffsetOf_right' -> 16r4.
@@ -83,6 +84,9 @@ top:!**compiled accessors**!public! !
 
 !Graphics.Gdiplus.GpWMFRect16 class methodsFor!
 
+byteSize
+	^_GpWMFRect16_Size!
+
 defineFields
 	"Define the fields of the GpWMFRect16 structure.
 		GpWMFRect16 compileDefinition
@@ -114,6 +118,7 @@ defineFields
 getFieldNames
 	^#(#left #top #right #bottom)! !
 !Graphics.Gdiplus.GpWMFRect16 class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !
