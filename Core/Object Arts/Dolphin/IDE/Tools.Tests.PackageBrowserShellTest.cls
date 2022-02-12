@@ -162,7 +162,7 @@ removeClass: aClass
 	self assertCurrentCardInSync!
 
 removeClasses
-	{dolphinTestA. dolphinTestB. dolphinTestC} do: [:each | each notNil ifTrue: [each removeFromSystem]].
+	{dolphinTestC. dolphinTestB. dolphinTestA} do: [:each | each notNil ifTrue: [each removeFromSystem]].
 	dolphinTestA := dolphinTestB := dolphinTestC := nil!
 
 removeGlobals

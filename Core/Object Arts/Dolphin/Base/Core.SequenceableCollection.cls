@@ -885,6 +885,11 @@ keysAndValuesDo: operation
 		to: self size
 		keysAndValuesDo: operation!
 
+keysDo: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the receiver's keys."
+
+	1 to: self size do: [:i | aMonadicValuable value: i]!
+
 last
 	"Answer the <Object> which is the last element of the receiver. 
 	Raise an exception if the receiver contains no elements."
@@ -1357,6 +1362,7 @@ keyAtValue:!accessing!public! !
 keyAtValue:ifAbsent:!accessing!public! !
 keys!accessing!public! !
 keysAndValuesDo:!debugger-step through!enumerating!public! !
+keysDo:!accessing!public! !
 last!accessing!public! !
 last:!copying!public! !
 lastIndexOf:!public!searching! !

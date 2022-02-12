@@ -408,10 +408,10 @@ new: anInteger
 		setSortAlgorithm: self defaultSortAlgorithm;
 		yourself!
 
-sortAlgorithm: aSortAlgorithm 
+sortAlgorithm: aSortAlgorithm
 	"Answer a new instance of the receiver which uses the specified <SortAlgorithm>."
 
-	^(super new)
+	^(super new: 5)
 		setSortAlgorithm: aSortAlgorithm;
 		yourself!
 

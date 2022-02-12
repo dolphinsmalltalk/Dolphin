@@ -41,16 +41,23 @@ addClass: aClass to: aPackageOrNil
 	source := self packageOfClass: aClass.
 	destination := aPackageOrNil == Package uncommitted ifFalse: [aPackageOrNil].
 	source == destination ifTrue: [^self].
-	"Could be more discriminating and remove any selectors in the cache that currently map to the new package (as these must no longer be loose), but rebuild is pretty quick"
-	self forgetLooseMethods.
+	(destination notNil and: [looseMethods notNil]) ifTrue: [
+		"Remove any selectors in the loose method cache that currently map to the new package (as these must no longer be loose)"
+		(looseMethods lookup: aClass)
+			ifNotNil: [:selectors | 
+				| toRemove |
+				toRemove := IdentitySet new.
+				selectors keysAndValuesDo: [:eachSelector :eachPackage |
+					eachPackage == destination ifTrue: [toRemove add: eachSelector]].
+				selectors removeAllKeys: toRemove]].
 	source
 		ifNotNil: 
 			[packagedVariables removeKey: aClass fullyQualifiedReference.
 			source basicRemoveClass: aClass].
 	destination
 		ifNotNil: 
-			[destination basicAddClass: aClass.
-			packagedVariables at: aClass fullyQualifiedReference put: aPackageOrNil].
+			[packagedVariables at: aClass fullyQualifiedReference put: aPackageOrNil.
+			destination basicAddClass: aClass].
 	self
 		classRepackaged: aClass
 		from: source
@@ -120,6 +127,17 @@ addMethod: aCompiledMethod to: aPackageOrNil
 		methodRepackaged: aCompiledMethod
 		from: source
 		to: destination!
+
+addNewClass: aClass to: aPackage
+	"Private - Add the newly created <Class>, aClass, to the <Package>, aPackage. If aPackage is nil, then the class remains uncommitted (i.e. not owned by any package)."
+
+	(aPackage == Package._Uncommitted ifFalse: [aPackage]) ifNil: [^self].
+	packagedVariables at: aClass fullyQualifiedReference put: aPackage.
+	aPackage basicAddClass: aClass.
+	self
+		classRepackaged: aClass
+		from: nil
+		to: aPackage!
 
 addPackage: aPackage
 	"Private - Add the <Package> argument to the collection of packages held by the receiver. 
@@ -739,7 +757,7 @@ onClassAdded: aClass
 	it with the default package, if set."
 
 	#todo.	"This event needs an additional parameter which should be the desired package, or nil for default"
-	self isProcessingEvents ifTrue: [self addClass: aClass to: self defaultPackage]!
+	self isProcessingEvents ifTrue: [self addNewClass: aClass to: self defaultPackage]!
 
 onClassDirtied: aClass
 	"Sent by a class when it detects that it has been made dirty."
@@ -802,7 +820,6 @@ onMethodAdded: aCompilationResult
 	self isProcessingEvents ifFalse: [^self].
 	method := aCompilationResult method.
 	package := aCompilationResult package.
-	self assert: [method isLoose not].
 	default := self defaultPackage ?? package.
 	owner := self packageOfClass: method methodClass.
 	(default isNil or: [default == owner]) 
@@ -1182,6 +1199,7 @@ addClass:to:!adding!public! !
 addLooseMethod:to:!helpers!private! !
 addManagedPackage:!adding!private! !
 addMethod:to:!adding!public! !
+addNewClass:to:!adding!private! !
 addPackage:!adding!private! !
 addPackagedMethod:to:!helpers!private! !
 addResourceIdentifier:to:!adding!public! !

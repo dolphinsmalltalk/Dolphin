@@ -25,7 +25,7 @@ insertionSort: anObject from: startInteger to: stopInteger
 	startInteger + 1 to: stopInteger
 		do: 
 			[:j | 
-			| a t i |
+			| i t a |
 			a := anObject basicAt: j.
 			i := j.
 			[i <= startInteger or: [(t := anObject basicAt: i - 1) <= a]] whileFalse: 

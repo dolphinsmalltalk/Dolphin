@@ -2292,6 +2292,7 @@ Core.Object subclass: #'Core.File'
 	classConstants: {
 		'AccessFlagsMask' -> -16r8.
 		'OpenFlagsMask' -> 16r7.
+		'PathDelimiters' -> '/\'.
 		'SniffSize' -> 16r400
 	}!
 Core.Object subclass: #'Core.FileLocator'

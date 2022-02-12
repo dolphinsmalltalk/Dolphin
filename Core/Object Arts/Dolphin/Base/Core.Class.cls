@@ -1239,7 +1239,7 @@ allClasses
 
 	| answer roots |
 	roots := self allRoots.
-	answer := Array writeStream: 2500.
+	answer := Array writeStream: 3000.
 	roots do: [:each | answer nextPut: each].
 	roots do: [:root | root allSubclassesBreadthFirstDo: [:each | answer nextPut: each]].
 	^answer contents!

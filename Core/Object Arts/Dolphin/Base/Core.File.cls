@@ -8,6 +8,7 @@ Core.Object subclass: #'Core.File'
 	classConstants: {
 		'AccessFlagsMask' -> -16r8.
 		'OpenFlagsMask' -> 16r7.
+		'PathDelimiters' -> '/\'.
 		'SniffSize' -> 16r400
 	}!
 Core.File guid: (Core.GUID fromString: '{87b4c48a-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -1164,7 +1165,7 @@ pathDelimiters
 	Windows tends to accept the Unix delimiter, a forward slash, as well as its own
 	back slash."
 
-	^'/\'!
+	^PathDelimiters!
 
 readAllBytes: aString
 	"Open the file at the specified path, read and answer all of the binary data it contains.
@@ -1255,7 +1256,10 @@ removePathDelimiter: aString
 	| count |
 	count := aString size.
 	"In this case we know that the path delimiters only ever require one code unit (they are all ascii characters), so it is safe to work with code units"
-	^(count ~~ 0 and: [self pathDelimiters identityIncludes: (aString at: count)])
+	^(count ~~ 0 and: 
+			[| ch |
+			ch := aString at: count.
+			ch == $\ or: [ch == $/]])
 		ifTrue: [aString copyFrom: 1 to: count - 1]
 		ifFalse: [aString]!
 
@@ -1455,7 +1459,7 @@ splitPathFrom: aPathnameString
 		strcat_s: drive
 			bufferSize: len + 1
 			strSource: dir.
-	^drive trimNulls!
+	^drive copyFrom: 1 to: (Ucrt strlen: drive)!
 
 splitStemFrom: aString
 	"Answers the file stem component of the path <String> argument, or an empty string if there

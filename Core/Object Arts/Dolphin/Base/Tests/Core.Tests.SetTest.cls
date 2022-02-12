@@ -81,7 +81,7 @@ testAllHealthy
 	"Test whether all subinstances are correctly hashed."
 
 	| unhealthy |
-	unhealthy := Set allSubinstances reject: [:each | each isHealthy].
+	unhealthy := Set primAllSubinstances reject: [:each | each isHealthy].
 	self assert: unhealthy equals: #()!
 
 testAllInstancesValid
