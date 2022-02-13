@@ -3,7 +3,7 @@
 Kernel.Tests.AbstractNamespaceTest subclass: #'Kernel.Tests.NamespaceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Kernel.VariableBinding})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.Tests.NamespaceTest guid: (Core.GUID fromString: '{1528fd18-37cc-469b-bd8e-ea26ea522759}')!
@@ -219,6 +219,21 @@ testPrivateImportIntoParentNamespace
 	self assert: (External.Tests fullBindingFor: 'CompiledMethod') value equals: CompiledMethod.
 	self deny: #{External.Tests.CompiledMethod} isDefined!
 
+testResolveClassVarViaClassImport
+	"Tests using a class in the role of a namespace, which should make its class variables/constants visible, used e.g. when a Class is imported into another."
+
+	self assert: (self class fullBindingFor: 'ClassMask')
+		identicalTo: (VariableBinding bindingFor: 'ClassMask').
+	self assertIsNil: (self class fullBindingFor: 'NothingToSeeHere')!
+
+testResolveImportedVarViaClassEnvironment
+	"Test fullBindingFor:environment: using a normal Class as the 2nd argument rather than a Namespace. This may happen if, e.g., a class is specified as the argument to a method namespace annotation."
+
+	self assertIsNil: (self class fullBindingFor: 'BlockCopy').
+	self assert: (self class fullBindingFor: 'BlockCopy' environment: CompiledCode)
+		identicalTo: (OpcodePool bindingFor: 'BlockCopy').
+	self assertIsNil: (self class fullBindingFor: 'NothingToSeeHere' environment: CompiledCode)!
+
 testResolveImportIntoCustomEnvironment
 	"Test the case of resolving an unqualified name in a method that is in a different namespace than its class, where the unqualified name has a match in a namespace imported into the method namespace, but is not bindable in the class' namespace."
 
@@ -227,13 +242,13 @@ testResolveImportIntoCustomEnvironment
 	direct := Tools fullBindingFor: 'ConfirmationRequiredWarning'.
 	self assertNotNil: direct.
 	"As Tools imports UI, we should be able to find it"
-	self assert: (SharedPool class fullBindingFor: 'UI' environment: Tools) sameAs: UI binding.
+	self assert: (SharedPool class fullBindingFor: 'UI' environment: Tools) identicalTo: UI binding.
 	"Resolve an unqualified name in the context of a class that cannot resolve the identifier, but with a custom namespace that does import the target namespace."
 	indirect := SharedPool class fullBindingFor: 'ConfirmationRequiredWarning' environment: Tools.
 	"Fails currently due to bug imported namespace binding resolution bug."
 	self skip.
 	self assertNotNil: indirect.
-	self assert: direct sameAs: indirect
+	self assert: direct identicalTo: indirect
 	
 	!
 
@@ -281,6 +296,8 @@ testName!public!unit tests! !
 testNonInstantiable!public!unit tests! !
 testPrintOn!public!unit tests! !
 testPrivateImportIntoParentNamespace!public!unit tests! !
+testResolveClassVarViaClassImport!public! !
+testResolveImportedVarViaClassEnvironment!public! !
 testResolveImportIntoCustomEnvironment!public! !
 testShortName!public!unit tests! !
 testSimpleName!public!unit tests! !

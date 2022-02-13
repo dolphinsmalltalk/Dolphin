@@ -2,7 +2,7 @@
 
 Refactory.Browser.Tests.ClassToRename subclass: #'Refactory.Browser.Tests.SubclassOfClassToRename'
 	instanceVariableNames: 'rewriteRule1'
-	classVariableNames: ''
+	classVariableNames: 'SubclassVar1'
 	imports: #(#{Refactory.Browser.Tests.ClassToRename private})
 	classInstanceVariableNames: ''
 	classConstants: {}!

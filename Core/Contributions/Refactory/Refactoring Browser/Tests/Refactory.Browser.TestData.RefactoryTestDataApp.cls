@@ -2,7 +2,7 @@
 
 Core.Object subclass: #'Refactory.Browser.TestData.RefactoryTestDataApp'
 	instanceVariableNames: 'temporaryVariable'
-	classVariableNames: 'ClassVar1'
+	classVariableNames: 'ClassVar1 ClassVar2'
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -375,6 +375,10 @@ refersToClassUnqualifiedNameInArray
 	<namespace: Refactory.Browser.Tests>
 	^#(#ClassToRename)!
 
+refersToClassUnqualifiedWithPartiallyQualifiedNamespaceAnnotation
+	<namespace: Browser.Tests>
+	^ClassToRename!
+
 refersToClassVariableFullyQualified
 	^Refactory.Browser.Tests.ClassToRename.ClassVar1!
 
@@ -620,6 +624,7 @@ refersToClassUnqualifiedBindingInArray!lint!public! !
 refersToClassUnqualifiedInArray!lint!public! !
 refersToClassUnqualifiedName!lint!public! !
 refersToClassUnqualifiedNameInArray!lint!public! !
+refersToClassUnqualifiedWithPartiallyQualifiedNamespaceAnnotation!lint!public! !
 refersToClassVariableFullyQualified!lint!public! !
 refersToClassVariablePartiallyQualified!lint!public! !
 refersToClassVariablePartiallyQualifiedBinding!lint!public! !
@@ -674,7 +679,8 @@ comment
 	^'Test class for Smalllint. Contains lots of smelly code'!
 
 initialize
-	ClassVar1 := 'ClassVar1 of RefactoryTestDataApp'! !
+	ClassVar1 := 'ClassVar1 of RefactoryTestDataApp'.
+	ClassVar2 := 'ClassVar2 of RefactoryTestDataApp'.! !
 !Refactory.Browser.TestData.RefactoryTestDataApp class categoriesForMethods!
 comment!accessing!public! !
 initialize!class initialization!public! !

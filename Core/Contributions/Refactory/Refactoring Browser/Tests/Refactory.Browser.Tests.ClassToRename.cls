@@ -19,6 +19,17 @@ method1
 method2
 	^self method1!
 
+refersToClassInCustomNamespace
+	<namespace: TestData>
+	^RefactoryTestDataApp!
+
+refersToClassVariableInCustomNamespace
+	<namespace: TestData.RefactoryTestDataApp>
+	^ClassVar2!
+
+refersToClassVariablePartiallyQualified
+	^TestData.RefactoryTestDataApp.ClassVar1!
+
 refersToOwnClassVariable
 	^ClassVar1!
 
@@ -35,6 +46,9 @@ testFailure
 !Refactory.Browser.Tests.ClassToRename categoriesForMethods!
 method1!performing!public! !
 method2!performing!public! !
+refersToClassInCustomNamespace!lint!public! !
+refersToClassVariableInCustomNamespace!lint!public! !
+refersToClassVariablePartiallyQualified!lint!public! !
 refersToOwnClassVariable!lint!public! !
 refersToOwnClassVariableFullyQualified!lint!public! !
 selfReference!performing!public! !

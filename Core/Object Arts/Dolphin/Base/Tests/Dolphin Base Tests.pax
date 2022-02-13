@@ -650,7 +650,7 @@ Core.Tests.DolphinTest subclass: #'Kernel.Tests.VMTest'
 Kernel.Tests.AbstractNamespaceTest subclass: #'Kernel.Tests.NamespaceTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{Kernel.VariableBinding})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.Tests.AbstractNamespaceTest subclass: #'Kernel.Tests.SystemNamespaceTest'

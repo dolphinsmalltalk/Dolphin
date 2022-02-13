@@ -135,7 +135,9 @@ renameImports
 							eachClass replaceImport: each with: newImport]]]!
 
 renameInboundReferences: aCollectionOfRBMethods
-	"Private - Note that renaming a class will no longer rename any Symbols that happen to be the name of the class, whether directly held literals or embedded in literal arrays. This was never strictly a refactoring as Symbols are not necessarily the names of program objects, so one cannot be certain that an arbitrary Symbol in a method that happens to be the same as a class name in scope in the method is actually intended for use as the name of that class. This is one good reason to use qualified references (aka BindingReferences) instead, since these are intended as references to classes so if they bind using the original class name before the refactoring, we can be certain that they should also be renamed. "
+	"Private - Rename references to the classes/namespaces with names being changed by the refactoring. When renaming a namespace, this will include any references to any of the classes nested directly or indirectly within the namespace. Any imports of any of the affected classes/namespaces will also be updated."
+
+	"Note that renaming a class will no longer rename any Symbols that happen to be the name of the class, whether directly held literals or embedded in literal arrays. This was never strictly a refactoring as Symbols are not necessarily the names of program objects, so one cannot be certain that an arbitrary Symbol in a method that happens to be the same as a class name in scope in the method is actually intended for use as the name of that class. This is one good reason to use qualified references (aka BindingReferences) instead, since these are intended as references to classes so if they bind using the original class name before the refactoring, we can be certain that they should also be renamed. "
 
 	| rewriter |
 	rewriter := self buildInboundReferenceRewriter.
@@ -143,16 +145,19 @@ renameInboundReferences: aCollectionOfRBMethods
 	aCollectionOfRBMethods do: [:method | self convertMethod: method using: rewriter]!
 
 renameOutboundReferences: aCollectionOfRBMethods
+	"Private - Rename any static variables/binding references in the methods of the classes/namespaces with names being changed by the refactoring, as necessary to maintain the same bindings as before the refactoring. Typically this will involve changing the qualification of a reference to a class; for example a reference may need to be made fully qualified because the rename is moving a class to a new namespace where the referenced class is not visible using just its unqualified name. It may also be possible to shorten references by removing qualification that is no longer required. A corner case that is also accounted for is where the rename causes ambiguity, for example by shadowing another static variable that was previously visible using an unqualified or partially qualified name, but which now requires more qualification."
+
 	| rewriter |
 	rewriter := self buildOutboundReferenceRewriter.
 	aCollectionOfRBMethods do: [:method | self convertMethod: method using: rewriter]!
 
 rewriteInboundVariable: aStVariableNode
-	aStVariableNode methodNode selector == #horizontal: ifTrue: [self halt].
+	"Private - Rewrite a variable reference that refers to one of the renamed classes."
+
 	^aStVariableNode copy
 		name: ((aStVariableNode parent isAnnotation and: [aStVariableNode parent selector == #namespace:])
 					ifTrue: 
-						["If a namespace annotation, always use the full name"
+						["If a namespace annotation, the full name should always be used"
 						aStVariableNode binding fullName]
 					ifFalse: [self shortestNameForVariable: aStVariableNode]);
 		yourself!
@@ -167,6 +172,8 @@ rewriteLiteralArray: aStLiteralArrayNode
 		contents: (aStLiteralArrayNode contents collect: [:each | self rewriteLiteral: each])!
 
 rewriteOutboundVariable: aStVariableNode
+	"Private - Rewrite a variable reference in a method of one of the renamed classes."
+
 	^aStVariableNode copy
 		name: (self shortestNameForVariable: aStVariableNode);
 		yourself!
@@ -221,17 +228,21 @@ rewriteSymbolicReferencesToClass
 			[(self shouldIgnoreRemainingSymbolicReferences: symbolicRefs) ifFalse: [self refactoringAborted]]!
 
 shortestNameForVariable: aStVariableNode
-	| pathString current binding methodNode root |
-	binding := aStVariableNode binding.
-	pathString := binding unqualifiedName.
-	current := binding.
+	"Private - Determine and answer the least qualified name for the specified variable reference that will still bind to the original variable with the current state of the refactoring model. This relies on the node in question having been passed through a semantic analyser before the model's state was updated for the rename, i.e. the AST needs to have been 'bound'."
+
+	| pathString current originalBinding methodNode root |
+	originalBinding := aStVariableNode binding.
+	pathString := originalBinding unqualifiedName.
+	current := originalBinding.
 	root := model rootNamespace.
 	methodNode := aStVariableNode methodNode.
+	"Keep adding qualification until the name can be bound to the original binding"
 	
-	[(methodNode fullBindingFor: pathString) == binding ifTrue: [^pathString].
+	[(methodNode fullBindingFor: pathString) == originalBinding ifTrue: [^pathString].
 	(current := current environment) == root]
 			whileFalse: [pathString := current unqualifiedName , BindingReference.PathSeparatorString , pathString].
-	^binding fullName!
+	"Nothing but the fully-qualified name will do"
+	^originalBinding fullName!
 
 shouldIgnoreRemainingSymbolicReferences: aCollection
 	^(self lookupOption: #ignoreSymbolicClassReferences) cull: self cull: aCollection!

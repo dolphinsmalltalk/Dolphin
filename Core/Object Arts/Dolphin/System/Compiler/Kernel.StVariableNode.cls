@@ -25,9 +25,9 @@ hasQualifiedName
 isBindingChanged
 	"Private - Assuming that this node has been bound by a semantic analyser, would it bind differently now?"
 
-	| binding |
-	binding := self binding.
-	^binding notNil and: [binding ~~ self resolveBinding]!
+	| originalBinding |
+	originalBinding := self binding.
+	^originalBinding notNil and: [originalBinding ~~ self resolveBinding]!
 
 isStaticVariable
 	"Answer whether the receiver is a reference to a static variable - this is only valid after binding variables in a parse tree using a semantic analyser."

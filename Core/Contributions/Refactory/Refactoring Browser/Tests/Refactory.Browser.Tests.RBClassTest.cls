@@ -191,7 +191,7 @@ testMethodsReferencingExternals1
 	| class referers expectedSelectors subclass |
 	class := model classNamed: #'Refactory.Browser.Tests.ClassToRename'.
 	referers := (class methodsReferencingExternals asArray collect: [:each | each selector]) sort.
-	expectedSelectors := #(#selfReference #testFailure).
+	expectedSelectors := #(#refersToClassInCustomNamespace #refersToClassVariableInCustomNamespace #refersToClassVariablePartiallyQualified #selfReference #testFailure).
 	self assert: referers equals: expectedSelectors.
 	expectedSelectors do: [:each | class removeMethod: each].
 	self assert: class methodsReferencingExternals isEmpty.
@@ -311,7 +311,7 @@ testWhichMethodsReferToClass
 				sort.
 	"Note that we don't expect to see any of the symbolic references any more as these are deliberately not matched. Symbolic name references are superseded by BindingReferences as we know these are intended to refer to static variables, which is not necessarily true of symbols."
 	self assert: referers
-		equals: #(#refersToClassConstantFullyQualified #refersToClassConstantPartiallyQualified1 #refersToClassConstantPartiallyQualified2 #refersToClassConstantUnqualified #refersToClassFullyQualified #refersToClassFullyQualifiedBinding #refersToClassFullyQualifiedBindingInArray #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassPartiallyQualifiedBindingInArray #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToClassUnqualifiedBindingInArray #refersToClassUnqualifiedInArray #refersToClassVariableFullyQualified #refersToClassVariablePartiallyQualified #refersToClassVariablePartiallyQualifiedBinding)!
+		equals: #(#refersToClassConstantFullyQualified #refersToClassConstantPartiallyQualified1 #refersToClassConstantPartiallyQualified2 #refersToClassConstantUnqualified #refersToClassFullyQualified #refersToClassFullyQualifiedBinding #refersToClassFullyQualifiedBindingInArray #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassPartiallyQualifiedBindingInArray #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToClassUnqualifiedBindingInArray #refersToClassUnqualifiedWithPartiallyQualifiedNamespaceAnnotation #refersToClassUnqualifiedInArray #refersToClassVariableFullyQualified #refersToClassVariablePartiallyQualified #refersToClassVariablePartiallyQualifiedBinding)!
 
 testWhichMethodsReferToClassViaMethodNamespace
 	| class targetClass referers |

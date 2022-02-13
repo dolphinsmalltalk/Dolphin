@@ -714,6 +714,8 @@ rename: aString
 				contents)!
 
 replaceImport: oldBindingReference with: newBindingReference
+	"Private - Replace an existing import with a new one, maintaining the existing order."
+
 	| existing index |
 	existing := self imports.
 	index := existing indexOf: oldBindingReference.
@@ -767,7 +769,13 @@ resolveImportedBinding: aBindingContext
 	current isNil]
 			whileFalse.
 	^aBindingContext environment
-		ifNotNil: [:env | env resolveImportedBinding: aBindingContext]!
+		ifNotNil: [:env | env resolveImportedEnvironmentBinding: aBindingContext]!
+
+resolveImportedEnvironmentBinding: aBindingContext
+	"Private - Search imported namespaces for a binding that matches the identifier in the <BindingContext> supplied searching the localling imported namespaces, and then recursively up through the enclosing environments."
+
+	(self resolveLocallyImportedBinding: aBindingContext) ifNotNil: [:var | ^var].
+	^self environment ifNotNil: [:env | env resolveImportedEnvironmentBinding: aBindingContext]!
 
 resolveLocallyImportedBinding: aBindingContext
 	"Private - Search the directly imported namespaces for a binding that matches the identifier in the <BindingContext> argument."
@@ -1173,6 +1181,7 @@ requiresInstallation!public!testing! !
 resolveBindingPath:!bindings!private! !
 resolveBindingPath:environment:!bindings!private! !
 resolveImportedBinding:!bindings!private! !
+resolveImportedEnvironmentBinding:!binding!private! !
 resolveLocallyImportedBinding:!bindings!private! !
 resolvePathString:environment:!bindings!private! !
 resolvePublicBinding:!bindings!private! !

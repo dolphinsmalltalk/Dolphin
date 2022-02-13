@@ -57,7 +57,7 @@ Core.Object subclass: #'Refactory.Browser.TestData.LintRuleTestData'
 	classConstants: {}!
 Core.Object subclass: #'Refactory.Browser.TestData.RefactoryTestDataApp'
 	instanceVariableNames: 'temporaryVariable'
-	classVariableNames: 'ClassVar1'
+	classVariableNames: 'ClassVar1 ClassVar2'
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {}!
@@ -97,7 +97,7 @@ Core.Model subclass: #'Refactory.Browser.Tests.ClassToRename'
 	}!
 Refactory.Browser.Tests.ClassToRename subclass: #'Refactory.Browser.Tests.SubclassOfClassToRename'
 	instanceVariableNames: 'rewriteRule1'
-	classVariableNames: ''
+	classVariableNames: 'SubclassVar1'
 	imports: #(#{Refactory.Browser.Tests.ClassToRename private})
 	classInstanceVariableNames: ''
 	classConstants: {}!

@@ -482,10 +482,16 @@ testRenameNamespace
 				verifyMethod: each
 				of: testDataApp
 				equals: '<1s> ^Tests2.ClassToRename' << each].
+	#(#refersToClassUnqualifiedBindingInArray) do: 
+			[:each |
+			self
+				verifyMethod: each
+				of: testDataApp
+				equals: '<1s> %<namespace: Refactory.Browser.Tests2>^#(#{ClassToRename class})' << each].
 	self
-		verifyMethod: #refersToClassUnqualifiedBindingInArray
+		verifyMethod: #refersToClassUnqualifiedWithPartiallyQualifiedNamespaceAnnotation
 		of: testDataApp
-		equals: 'refersToClassUnqualifiedBindingInArray <namespace: Refactory.Browser.Tests2>^#(#{ClassToRename class})'.
+		equals: 'refersToClassUnqualifiedWithPartiallyQualifiedNamespaceAnnotation <namespace: Refactory.Browser.Tests2>^ClassToRename'.
 	self
 		verifyMethod: #refersToClassVariablePartiallyQualifiedBinding
 		of: testDataApp

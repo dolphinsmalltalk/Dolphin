@@ -395,6 +395,8 @@ renameClassVariable: oldName to: newName around: aBlock
 	variables changeKey: oldName to: newName!
 
 replaceImport: oldBindingReference with: newBindingReference
+	"Replace an existing import with a new one, maintaining the existing order. This is typically used when renaming classes/namespaces that might be imported elsewhere."
+
 	imports := self imports copyReplacing: oldBindingReference
 				withObject: (newBindingReference referenceInModel: model).
 	model
@@ -427,6 +429,8 @@ resolveBindingPath: anArray environment: aNamespace
 resolveImportedBinding: aBindingContext
 	"Private - Search imported namespaces for a binding that matches the identifier in the <BindingContext> supplied. The search proceeds up through the class hierarchy (i.e. imports in the class hierarchy are inherited), and then out to the imports of the enclosing namespace. Imports into the enclosing namespaces of superclasses are not searched."
 
+	"Identical to Class>>resolveImportedBinding:"
+
 	| current |
 	current := self.
 	
@@ -434,7 +438,14 @@ resolveImportedBinding: aBindingContext
 	current := current superclass.
 	current isNil]
 			whileFalse.
-	^aBindingContext environment ifNotNil: [:env | env resolveImportedBinding: aBindingContext]!
+	^aBindingContext environment
+		ifNotNil: [:env | env resolveImportedEnvironmentBinding: aBindingContext]!
+
+resolveImportedEnvironmentBinding: aBindingContext
+	"Private - Search imported namespaces for a binding that matches the identifier in the <BindingContext> supplied searching the localling imported namespaces, and then recursively up through the enclosing environments."
+
+	(self resolveLocallyImportedBinding: aBindingContext) ifNotNil: [:var | ^var].
+	^self environment ifNotNil: [:env | env resolveImportedEnvironmentBinding: aBindingContext]!
 
 resolveLocallyImportedBinding: aBindingContext
 	"Private - Search the directly imported namespaces for a binding that matches the identifier in the <BindingContext> argument."
@@ -582,6 +593,7 @@ replaceImport:with:!namespaces!public! !
 resolveBindingPath:!bindings!private! !
 resolveBindingPath:environment:!bindings!private! !
 resolveImportedBinding:!bindings!private! !
+resolveImportedEnvironmentBinding:!bindings!private! !
 resolveLocallyImportedBinding:!bindings!private! !
 resolvePathString:environment:!bindings!private! !
 resolvePublicBinding:!bindings!private! !
