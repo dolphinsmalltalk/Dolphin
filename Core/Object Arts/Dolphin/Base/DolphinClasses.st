@@ -2199,6 +2199,7 @@ Core.Object subclass: #'Kernel.ClassBuilder'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'FixedName' -> #(#Smalltalk #Root).
 		'IgnoreInstsMask' -> 16r2.
 		'RecompileMask' -> 16r1
 	}!

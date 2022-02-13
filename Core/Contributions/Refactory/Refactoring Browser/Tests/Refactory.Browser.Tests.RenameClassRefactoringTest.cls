@@ -33,6 +33,18 @@ testExistingName
 				to: 'Core.Object')
 		existingVariable: 'Core.Object'!
 
+testFixedName
+	self shouldFail: (RenameClassRefactoring
+				model: model
+				rename: Smalltalk
+				to: #Foo)
+		withMessage: 'The Smalltalk namespace cannot be renamed'.
+	self shouldFail: (RenameClassRefactoring
+				model: model
+				rename: (Root classInModel: model)
+				to: #Foo)
+		withMessage: 'The Root namespace cannot be renamed'!
+
 testMetaClassFailure
 	self shouldFail: (RenameClassRefactoring
 				model: model
@@ -603,6 +615,7 @@ compile:in:!helpers!private! !
 defineClass:!helpers!private! !
 testBadName!public!unit tests! !
 testExistingName!public!unit tests! !
+testFixedName!public!unit tests! !
 testMetaClassFailure!public!unit tests! !
 testModelRenameClass!public!unit tests! !
 testModelRenameSequenceClass!public!unit tests! !

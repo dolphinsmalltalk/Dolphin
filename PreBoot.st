@@ -1,0 +1,1 @@
+ClassBuilder addClassConstant: 'FixedName' value: #(#Smalltalk #Root)!

@@ -1125,6 +1125,9 @@ canRefactor
 
 	^false!
 
+canRenameClass: aClass
+	^(aClass isNil or: [ClassBuilder isFixedName: aClass]) not!
+
 changedIcon
 	"Private - Answer the icon to mark source objects that have been changed: ✨"
 
@@ -4356,6 +4359,7 @@ buildMessageMenu:forMethods:browseSelector:extraArgs:browseOtherSelector:!helper
 buildSimpleSignatureFor:!autocompletion!helpers!private! !
 buildSystemFolder!accessing!private! !
 canRefactor!public!testing! !
+canRenameClass:!enquiries!public! !
 changedIcon!constants!private! !
 changedMethodCategory!constants!private! !
 changedMethodsIn:!public!searching! !

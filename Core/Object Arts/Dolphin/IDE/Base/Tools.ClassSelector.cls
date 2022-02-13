@@ -467,6 +467,7 @@ onAboutToDisplayMenu: aMenu
 onAboutToRenameClass: aLabelEditingEvent
 	| class env |
 	class := aLabelEditingEvent object.
+	(self systemModel canRenameClass: class) ifFalse: [aLabelEditingEvent cancel: true].
 	aLabelEditingEvent text: class fullName.
 	class isVisiblyAbstract
 		ifTrue: [aLabelEditingEvent font: (self view actualFont copy
@@ -742,11 +743,15 @@ queryCommand: aCommandQuery
 			aCommandQuery text: (aCommandQuery commandDescription menuText expandMacrosWithArguments: {name}
 						locale: Locale smalltalk).
 			^true].
-	(#(#browseClass #fileInClass #fileOutClass #checkInClass #checkOutClass #categorizeClass #clearSelection #removeClass #renameClass #inspectIt #browseMenu #browseHierarchy #browseReferences #browseClassReferences #browseClassVariables #browseInstanceVariables #browseAllMethods #browsePackages #classPackage #browseChangedMethods #browseVariablesMenu)
+	(#(#browseClass #fileInClass #fileOutClass #checkInClass #checkOutClass #categorizeClass #clearSelection #removeClass #inspectIt #browseMenu #browseHierarchy #browseReferences #browseClassReferences #browseClassVariables #browseInstanceVariables #browseAllMethods #browsePackages #classPackage #browseChangedMethods #browseVariablesMenu)
 		identityIncludes: selector)
 			ifTrue: 
 				[aCommandQuery isEnabled: class notNil.
 				^true].
+	#renameClass == selector
+		ifTrue: 
+			[aCommandQuery isEnabled: (self systemModel canRenameClass: class).
+			^true].
 	#browsePublishedEvents == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: (class notNil and: [class respondsTo: #publishedEventsOfInstances]).

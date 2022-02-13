@@ -6,6 +6,7 @@ Core.Object subclass: #'Kernel.ClassBuilder'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'FixedName' -> #(#Smalltalk #Root).
 		'IgnoreInstsMask' -> 16r2.
 		'RecompileMask' -> 16r1
 	}!
@@ -1380,7 +1381,8 @@ initialize
 				ProcessorScheduler.
 				VariableBinding} asSet
 				isImmutable: true;
-				yourself)!
+				yourself).
+	self addClassConstant: 'FixedName' value: #(#Smalltalk #Root)!
 
 invalidRemoveError
 	"Answer the <exceptionSelector> that can be used to catch <Exception>s raised by the receiver
@@ -1398,6 +1400,11 @@ isFixedLayout: aClass
 	^aClass isBytes or: 
 			[(FixedLayout anySatisfy: [:cls | cls includesBehavior: aClass]) 
 				or: [FixedInitialLayout anySatisfy: [:cls | cls inheritsFrom: aClass]]]!
+
+isFixedName: aClass
+	"Answer whether the <Class> argument has a name that cannot be changed."
+
+	^FixedName includes: aClass unqualifiedName!
 
 isValidClassName: aString
 	"Private - Answer whether the <readableString> argument is a valid unqualified class name."
@@ -1454,6 +1461,7 @@ forModifying:!instance creation!public! !
 initialize!development!initializing!public! !
 invalidRemoveError!constants!private! !
 isFixedLayout:!enquiries!public! !
+isFixedName:!enquiries!public! !
 isValidClassName:!private!testing! !
 isValidIdentifier:!private!testing! !
 isValidIdentifierChar:!private!testing! !

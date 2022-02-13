@@ -112,7 +112,9 @@ preconditions
 	^(RBCondition withBlock: [class notNil and: [class isMeta not]]
 		errorString: self className , ' is <1?:not >an existing class')
 			& (RBCondition isValidClassName: newName) & (RBCondition hasNamespace: newName)
-		& (RBCondition isStatic: newName in: self model) not!
+		& (RBCondition isStatic: newName in: self model) not
+			& (RBCondition withBlock: [(ClassBuilder isFixedName: class) not]
+					errorString: 'The <1s> namespace can%<1?:not> be renamed' << self className)!
 
 renameImports
 	"Private - Update any imports of the class. Imports should always be fully-qualified, non-meta references, but they can be private."
