@@ -38,21 +38,13 @@ hierarchyBindingFor: aString
 	^self localBindingFor: aString!
 
 removeClass: aRBClass
-	self removeBindingFor: aRBClass unqualifiedName!
-
-resolveImportedBinding: aBindingContext
-	"Private - Search imported namespaces for a binding that matches the identifier in the <BindingContext> supplied. The search proceeds up through the class hierarchy (i.e. imports in the class hierarchy are inherited), and then out to the imports of the enclosing namespace. Imports into the enclosing namespaces of superclasses are not searched."
-
-	"Identical to Namespace>>resolveImportedBinding:. The same todo applies."
-
-	^self resolveImportedEnvironmentBinding: aBindingContext! !
+	self removeBindingFor: aRBClass unqualifiedName! !
 !Refactory.Browser.RBNamespaceClass categoriesForMethods!
 addClass:!public! !
 baseEnvironment!constants!public! !
 fullName:!accessing!private! !
 hierarchyBindingFor:!bindings!public! !
 removeClass:!public! !
-resolveImportedBinding:!binding!private! !
 !
 
 Refactory.Browser.RBNamespaceClass methodProtocol: #bindingScope attributes: #(#readOnly) selectors: #(#environment #fullBindingFor: #localScope)!

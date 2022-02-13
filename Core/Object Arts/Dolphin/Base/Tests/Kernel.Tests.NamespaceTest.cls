@@ -103,15 +103,13 @@ testBindingFromNamespaceWithCustomEnvironment
 	| direct indirect |
 	direct := UI bindingFor: 'ConfirmationRequiredWarning'.
 	"Resolve an unqualified name in the context of a namespace that has a direct import of the namespace in which the identifier resides."
-	self assert: (Tools fullBindingFor: 'ConfirmationRequiredWarning') sameAs: direct.
+	self assert: (Tools fullBindingFor: 'ConfirmationRequiredWarning') identicalTo: direct.
 	"Resolve an unqualified name in the context of a class that cannot resolve the identifier, but with a custom namespace that does import the target namespace."
 	self assertIsNil: (SharedPool class fullBindingFor: 'ConfirmationRequiredWarning').
 	"If we specify a custom environment in which the identifier is bindable, we should be able to find it"
 	indirect := SharedPool class fullBindingFor: 'ConfirmationRequiredWarning' environment: Tools.
-	"Fails currently due to bug imported namespace binding resolution bug."
-	self skip.
 	self assertNotNil: indirect.
-	self assert: direct sameAs: indirect!
+	self assert: direct identicalTo: indirect!
 
 testBindingInParentNamespace
 	"We should be able to resolve bindings in enclosing namespaces from nested namespaces"
@@ -245,8 +243,6 @@ testResolveImportIntoCustomEnvironment
 	self assert: (SharedPool class fullBindingFor: 'UI' environment: Tools) identicalTo: UI binding.
 	"Resolve an unqualified name in the context of a class that cannot resolve the identifier, but with a custom namespace that does import the target namespace."
 	indirect := SharedPool class fullBindingFor: 'ConfirmationRequiredWarning' environment: Tools.
-	"Fails currently due to bug imported namespace binding resolution bug."
-	self skip.
 	self assertNotNil: indirect.
 	self assert: direct identicalTo: indirect
 	

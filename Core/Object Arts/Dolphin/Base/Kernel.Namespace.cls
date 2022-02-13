@@ -286,13 +286,6 @@ removeKey: aString ifAbsent: aNiladicValuable
 		ifNil: [aNiladicValuable value]
 		ifNotNil: [:binding | binding value]!
 
-resolveImportedBinding: aBindingContext
-	"Private - Search imported namespaces for a binding that matches the identifier in the <BindingContext> supplied. Unlike normal classes, imports into superclasses (super-namespaces) are not searched, but the enclosing environments are searched."
-
-	"This override is not correct anymore now that we specify the class and environment for the search separately. Need to consider whether it can just be removed so the inherited implementation in Class is also used for Namespaces (which means that the environment chain may be visited via the superclass chain), or whether it requires further refinement. Don't forget RBNamespaceClass either."
-	#namespaceToDo.
-	^self resolveImportedEnvironmentBinding: aBindingContext!
-
 select: aMonadicValuable
 	^classPool select: aMonadicValuable!
 
@@ -367,7 +360,6 @@ removeAllKeys:!dictionary-removing!public! !
 removeAllKeys:ifAbsent:!dictionary-removing!public! !
 removeKey:!dictionary-removing!public! !
 removeKey:ifAbsent:!dictionary-removing!public! !
-resolveImportedBinding:!binding!private! !
 select:!dictionary-enumerating!public! !
 size!accessing!dictionary-accessing!public! !
 values!dictionary-accessing!public! !

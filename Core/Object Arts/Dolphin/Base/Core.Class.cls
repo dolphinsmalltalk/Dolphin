@@ -149,7 +149,6 @@ addSubclass: aClass
 	aClass class isMeta ifFalse: [^self error: '<1p> is not a Class' << aClass].
 	aClass superclass == self
 		ifFalse: [^self error: ('I am not <1p>''s superclass' expandMacrosWith: aClass)].
-	#namespaceToDo.	"Can we use a Set instead? Probably yes as the VM never accesses the subclasses inst var."
 	"With the advent of namespaces there may be multiple subclasses with the same unqualified name, so we no longer maintain the array in sorted order."
 	(subclasses identityIndexOf: aClass) == 0 ifTrue: [subclasses := subclasses copyWith: aClass]!
 

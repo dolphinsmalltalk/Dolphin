@@ -4958,9 +4958,7 @@ publishedAspectsOfInstances!constants!public! !
 !Kernel.SharedPool class methodsFor!
 
 canModifyBinding: aVariableBinding newValue: anObject
-	#namespaceToDo. "Due to an oddity of Namespace redefining Class>>resolveImportedBinding:, variables of UI will not be found here by unqualified name even though imported into the Tools namespace in which this method is compiled."
-
-	^UI.ConfirmationRequiredWarning
+	^ConfirmationRequiredWarning
 		signal: ('Would you like to recompile references to <1p>.<2s> to reflect the new value <3p> (currently <4p>)?'
 				expandMacrosWith: self
 				with: aVariableBinding key

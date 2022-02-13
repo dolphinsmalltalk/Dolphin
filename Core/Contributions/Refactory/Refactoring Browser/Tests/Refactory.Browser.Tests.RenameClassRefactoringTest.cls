@@ -18,10 +18,11 @@ defineClass: aString
 	model defineClass: (Parser parseExpression: aString) formattedCode!
 
 testBadName
-	#namespaceToDo.	"First case bodged to pass by forcing to a full name for the target; if passed an unqualified name RenameClassRefactoring has been modified to assume the namespace is not being changed, so it prepends the existing class namespace."
+	| existing |
+	existing := 'Object.' , self objectClassVariable.
 	self
-		shouldFail: (RenameClassRefactoring rename: LintRuleTestData to: 'Object.' , self objectClassVariable)
-			existingVariable: 'Object._EventsRegister';
+		shouldFail: (RenameClassRefactoring rename: LintRuleTestData to: existing)
+			existingVariable: existing;
 		shouldFail: (RenameClassRefactoring rename: LintRuleTestData to: #'Ob ject')
 			withMessage: '''Refactory.Browser.TestData.Ob ject'' is not a valid class name'!
 
