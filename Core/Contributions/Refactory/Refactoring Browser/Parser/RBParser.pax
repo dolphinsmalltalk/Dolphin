@@ -14,7 +14,9 @@ package setClassNames: #(
 	#{Refactory.Browser.ParseTreeRewriter}
 	#{Refactory.Browser.ParseTreeSearcher}
 	#{Refactory.Browser.PatternBlockToken}
+	#{Refactory.Browser.RBBindingReference}
 	#{Refactory.Browser.RBBlockReplaceRule}
+	#{Refactory.Browser.RBParser}
 	#{Refactory.Browser.RBParseTreeRule}
 	#{Refactory.Browser.RBPatternAnnotationNode}
 	#{Refactory.Browser.RBPatternBlockNode}
@@ -24,6 +26,7 @@ package setClassNames: #(
 	#{Refactory.Browser.RBPatternScanner}
 	#{Refactory.Browser.RBPatternVariableNode}
 	#{Refactory.Browser.RBPatternWrapperBlockNode}
+	#{Refactory.Browser.RBQualifiedReferenceNode}
 	#{Refactory.Browser.RBReplaceRule}
 	#{Refactory.Browser.RBSearchRule}
 	#{Refactory.Browser.RBSmallDictionary}
@@ -190,6 +193,12 @@ Core.Object subclass: #'Refactory.Browser.RBStringReplacement'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
+Kernel.BindingReferenceWrapper subclass: #'Refactory.Browser.RBBindingReference'
+	instanceVariableNames: 'model'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
 Core.Collection subclass: #'Refactory.Browser.RBSmallDictionary'
 	instanceVariableNames: 'keys values size'
 	classVariableNames: ''
@@ -204,6 +213,12 @@ Kernel.ParseNodeVisitor subclass: #'Refactory.Browser.ParseTreeSearcher'
 	classConstants: {}!
 Refactory.Browser.ParseTreeSearcher subclass: #'Refactory.Browser.ParseTreeRewriter'
 	instanceVariableNames: 'tree'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.Parser subclass: #'Refactory.Browser.RBParser'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -274,6 +289,12 @@ Kernel.StBlockNode subclass: #'Refactory.Browser.RBPatternBlockNode'
 	classConstants: {}!
 Refactory.Browser.RBPatternBlockNode subclass: #'Refactory.Browser.RBPatternWrapperBlockNode'
 	instanceVariableNames: 'wrappedNode'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Kernel.StQualifiedReferenceNode subclass: #'Refactory.Browser.RBQualifiedReferenceNode'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

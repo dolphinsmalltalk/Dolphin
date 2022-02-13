@@ -22,7 +22,9 @@ Refactory.Browser.RBBindingReference comment: ''!
 bindingOrNil
 	"Answer the <VariableBinding> referenced by the receiver (i.e. resolve the variable), or nil if there is no such variable."
 
-	^(reference bind: self bindingScope) targetVariable!
+	| scope |
+	scope := self bindingScope.
+	^scope localScope resolveBindingPath: self path environment: scope environment!
 
 bindingScope
 	"Answer the <bindingScope> in which the receiver's binding path is traversed to locate the target binding.
@@ -59,8 +61,16 @@ model: aRBModel reference: aBindingReference
 	^(self wrapping: aBindingReference)
 		model: aRBModel;
 		isImmutable: true;
-		yourself! !
+		yourself!
+
+pathString: aString scope: aBindingScope flags: anInteger
+	^self model: aBindingScope model
+		reference: (super
+				pathString: aString
+				scope: aBindingScope
+				flags: anInteger)! !
 !Refactory.Browser.RBBindingReference class categoriesForMethods!
 model:reference:!public! !
+pathString:scope:flags:!instance creation!private! !
 !
 

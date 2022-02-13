@@ -294,8 +294,9 @@ isDigit
 isEnglishLetter
 	"Answer whether the receiver is a letter from the English alphabet, i.e. [a-zA-Z]."
 
-	^code <= ##($z asciiValue)
-		and: [code >= ##($A asciiValue) and: [code >= ##($a asciiValue) or: [code <= ##($Z asciiValue)]]]!
+	^code >= ##($a asciiValue)
+		ifTrue: [code <= ##($z asciiValue)]
+		ifFalse: [code >= ##($A asciiValue) and: [code <= ##($Z asciiValue)]]!
 
 isGraph
 	"Answer whether the receiver is a printable character, other than blanks. See also #isPrintable"

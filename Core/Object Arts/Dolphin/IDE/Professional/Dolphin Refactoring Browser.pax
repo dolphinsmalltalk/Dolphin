@@ -1464,7 +1464,7 @@ icon!public! !
 chooseFrom: aCollection caption: aString
 	"Dolphin specific choice prompt"
 
-	^UI.ChoicePrompter choices: aCollection asOrderedCollection caption: aString!
+	^ChoicePrompter choices: aCollection asOrderedCollection caption: aString!
 
 confirm: aString
 	"Dolphin specific confirmation prompt"
@@ -1500,7 +1500,7 @@ printNameList: aCollection on: aPuttableStream limit: maxInteger type: aString
 prompt: aString
 	"Dolphin specific prompt for text input"
 
-	^UI.Prompter prompt: aString caption: self displayString! !
+	^Prompter prompt: aString caption: self displayString! !
 !Refactory.Browser.Refactoring categoriesForMethods!
 chooseFrom:caption:!helpers!private! !
 confirm:!helpers!public! !

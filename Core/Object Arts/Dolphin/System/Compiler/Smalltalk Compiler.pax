@@ -30,11 +30,16 @@ package setClassNames: #(
 ).
 
 package setMethodNames: #(
+	#(#{Kernel.StAbstractVariableNode} #lookupInScope:)
 	#(#{Kernel.StMethodNode} #analyze)
 	#(#{Kernel.StMethodNode} #newClassScope)
 	#(#{Kernel.StQualifiedReferenceNode} #binding)
 	#(#{Kernel.StQualifiedReferenceNode} #binding:)
 	#(#{Kernel.StQualifiedReferenceNode} #resolveBinding)
+	#(#{Kernel.StRealVariableNode} #lookupInScope:)
+	#(#{Kernel.StSelfVariableNode} #lookupInScope:)
+	#(#{Kernel.StSuperVariableNode} #lookupInScope:)
+	#(#{Kernel.StThisContextVariableNode} #lookupInScope:)
 ).
 
 package setPrerequisites: #(
@@ -181,6 +186,14 @@ Kernel.StStaticVariable subclass: #'Kernel.StWorkspaceVariable'
 
 "Loose Methods"!
 
+!Kernel.StAbstractVariableNode methodsFor!
+
+lookupInScope: anStSemanticScope
+	^self subclassResponsibility! !
+!Kernel.StAbstractVariableNode categoriesForMethods!
+lookupInScope:!operations!public! !
+!
+
 !Kernel.StMethodNode methodsFor!
 
 analyze
@@ -217,6 +230,38 @@ resolveBinding
 binding!accessing!private! !
 binding:!accessing!private! !
 resolveBinding!accessing!private! !
+!
+
+!Kernel.StRealVariableNode methodsFor!
+
+lookupInScope: aStSemanticScope
+	^aStSemanticScope resolveVariable: self! !
+!Kernel.StRealVariableNode categoriesForMethods!
+lookupInScope:!operations!public! !
+!
+
+!Kernel.StSelfVariableNode methodsFor!
+
+lookupInScope: anStSemanticScope
+	^anStSemanticScope selfVariable! !
+!Kernel.StSelfVariableNode categoriesForMethods!
+lookupInScope:!operations!public! !
+!
+
+!Kernel.StSuperVariableNode methodsFor!
+
+lookupInScope: anStSemanticScope
+	^anStSemanticScope superVariable! !
+!Kernel.StSuperVariableNode categoriesForMethods!
+lookupInScope:!operations!public! !
+!
+
+!Kernel.StThisContextVariableNode methodsFor!
+
+lookupInScope: anStSemanticScope
+	^anStSemanticScope thisContextVariable! !
+!Kernel.StThisContextVariableNode categoriesForMethods!
+lookupInScope:!operations!public! !
 !
 
 "End of package definition"!

@@ -94,7 +94,7 @@ messageNodeClass
 
 methodClass: aClass environment: aNamespace
 	methodClass := aClass.
-	aNamespace == methodClass environment ifFalse: [environment := aNamespace]!
+	environment := aNamespace!
 
 methodNodeClass
 	^StMethodNode!

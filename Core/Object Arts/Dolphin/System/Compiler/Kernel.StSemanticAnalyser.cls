@@ -46,7 +46,7 @@ bindVariable: anStVariableNode
 	"Private - Find the correct variable definition for the identifier of aVariableNode, and
 	associate the StVariable describing that definition with the node."
 
-	^(currentScope lookupVariable: anStVariableNode)
+	^(anStVariableNode lookupInScope: currentScope)
 		ifNil: 
 			[self signalError: CErrUndeclared forNode: anStVariableNode.
 			nil]
@@ -200,7 +200,7 @@ checkMutatorMethod: aStMethodNode
 							rhs isVariable not or: 
 									[rhs name ~= aStMethodNode arguments first name or: 
 											[| lhs |
-											lhs := currentScope lookupVariable: statement variable.
+											lhs := statement variable lookupInScope: currentScope.
 											lhs isNil or: [lhs isInstanceVariable not]]]]]])
 		ifTrue: [self signalError: CWarnMutableIgnored forNode: aStMethodNode]!
 
@@ -288,7 +288,7 @@ checkOptimizedUnaryMessages: aMessageNode
 
 checkRedefines: anStVariableNode
 	| var |
-	var := currentScope lookupVariable: anStVariableNode.
+	var := anStVariableNode lookupInScope: currentScope.
 	var isNil ifTrue: [^self].
 	var isStaticVariable
 		ifTrue: 

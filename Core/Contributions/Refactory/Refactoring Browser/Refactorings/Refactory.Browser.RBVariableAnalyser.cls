@@ -22,7 +22,7 @@ visitSpecialVariableNode: anStSpecialVariableNode
 	"Do nothing as we don't care about special variable references."!
 
 visitVariableNode: aStVariableNode
-	(currentScope lookupVariable: aStVariableNode) ifNotNil: [:var | aStVariableNode variable: var]! !
+	(aStVariableNode lookupInScope: currentScope) ifNotNil: [:var | aStVariableNode variable: var]! !
 !Refactory.Browser.RBVariableAnalyser categoriesForMethods!
 visitQualifiedReferenceNode:!public!visiting! !
 visitSelfVariableNode:!public!visiting! !

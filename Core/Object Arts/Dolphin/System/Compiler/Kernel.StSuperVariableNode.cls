@@ -21,14 +21,10 @@ isSuperVariable
 	^true!
 
 name
-	^'super'!
-
-specialVariableInScope: anStSemanticScope
-	^anStSemanticScope superVariable! !
+	^'super'! !
 !Kernel.StSuperVariableNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 isSuperVariable!public!testing! !
 name!constants!public! !
-specialVariableInScope:!double dispatch!public! !
 !
 

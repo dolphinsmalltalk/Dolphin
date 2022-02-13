@@ -197,6 +197,7 @@ package setPrerequisites: #(
 	'..\..\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\System\Random\Dolphin Random Stream'
 	'..\..\Registry\Dolphin Registry Access'
+	'..\Dolphin SizeIs Fields'
 	'..\Dolphin Source Fileout'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\OA SUnit Extensions'
 	'..\..\ActiveX\COM\OLE COM'

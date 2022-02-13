@@ -243,7 +243,11 @@ getImports
 	"sharedPools collect: [:each | Smalltalk keyAtValue: each]"!
 
 imports
-	imports ifNil: [imports := realClass ifNotNil: [realClass imports] ifNil: [#()]].
+	imports
+		ifNil: 
+			[imports := realClass
+						ifNotNil: [realClass imports collect: [:each | each referenceInModel: model]]
+						ifNil: [#()]].
 	^imports!
 
 imports: aCollection
@@ -310,10 +314,10 @@ nearestRealClass
 	#rbFix.	"Added"
 	^realClass ifNil: [superclass ifNotNil: [superclass nearestRealClass]]!
 
-newBindingContextForIdentifier: aString environment: anObject
-	^Kernel.BindingContext
+newBindingContextForIdentifier: aString environment: aRBClass
+	^BindingContext
 		methodClass: self
-		environment: self environment
+		environment: aRBClass
 		identifier: aString!
 
 nonMetaclass
@@ -454,10 +458,7 @@ resolveLocallyImportedBinding: aBindingContext
 		do: 
 			[:i |
 			(aBindingContext visitImport: (imports at: i) from: self)
-				ifNotNil: 
-					[:namespace |
-					((namespace classInModel: model) ifNotNil: [:ns | ns resolvePublicBinding: aBindingContext])
-						ifNotNil: [:var | ^var]]].
+				ifNotNil: [:namespace | (namespace resolvePublicBinding: aBindingContext) ifNotNil: [:var | ^var]]].
 	^nil!
 
 resolvePathString: aString environment: aRBNamespaceClass

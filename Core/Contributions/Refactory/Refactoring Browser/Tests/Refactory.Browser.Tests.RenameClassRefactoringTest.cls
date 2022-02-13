@@ -504,6 +504,21 @@ testRenameNamespace
 				of: testDataApp
 				equals: '<1s> ^#{_.Tests2.ClassToRename}' << each]!
 
+testRenameOfClassWithMethodInPackageNamespace
+	| refactoring class ref |
+	ref := #{Tools.AddSharedVariableChange}.
+	refactoring := RenameClassRefactoring
+				model: model
+				rename: ref value
+				to: 'Refactory.Browser.AddSharedVariableChange'.
+	class := model classNamed: ref pathString.
+	refactoring setOption: #ignoreSymbolicClassReferences toUse: [:rename :refs | true].
+	self executeRefactoring: refactoring.
+	self
+		verifyMethod: #icon
+		of: class metaclass
+		equals: (ref value class >> #icon) getSource!
+
 verifyRenames: aRBClass unqualified: unqualified full: fullyQualified partial: partial
 	| subclassInNamespace classInOtherNamespace ast |
 	subclassInNamespace := model classFor: SubclassOfClassToRename.
@@ -600,6 +615,7 @@ testRenameClass!public!unit tests! !
 testRenameClassShadowedByClassVariable!public!unit tests! !
 testRenameClassShadowingImported!public!unit tests! !
 testRenameNamespace!public!unit tests! !
+testRenameOfClassWithMethodInPackageNamespace!public!unit tests! !
 verifyRenames:unqualified:full:partial:!helpers!private! !
 !
 

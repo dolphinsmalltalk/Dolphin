@@ -783,7 +783,7 @@ resolveLocallyImportedBinding: aBindingContext
 		do: 
 			[:i |
 			(aBindingContext visitImport: (imports at: i) from: self)
-				ifNotNil: [:namespace | (namespace resolvePublicBinding: aBindingContext) ifNotNil: [:binding | ^binding]]].
+				ifNotNil: [:namespace | (namespace resolvePublicBinding: aBindingContext) ifNotNil: [:var | ^var]]].
 	^nil!
 
 resolvePathString: aString environment: aNamespace

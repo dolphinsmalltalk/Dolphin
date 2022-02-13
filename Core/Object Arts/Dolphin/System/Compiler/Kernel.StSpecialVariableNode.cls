@@ -25,15 +25,11 @@ isConstantNode
 isSpecialVariable
 	"Answer whether the variable described by the receiver is one of the special (aka pseudo) variables 'self', 'super' or 'thisContext'."
 
-	^true!
-
-specialVariableInScope: anStSemanticScope
-	^self subclassResponsibility! !
+	^true! !
 !Kernel.StSpecialVariableNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 isConstantNode!public!testing! !
 isSpecialVariable!public!testing! !
-specialVariableInScope:!double dispatch!public! !
 !
 
 !Kernel.StSpecialVariableNode class methodsFor!

@@ -21,14 +21,10 @@ isSelfVariable
 	^true!
 
 name
-	^'self'!
-
-specialVariableInScope: anStSemanticScope
-	^anStSemanticScope selfVariable! !
+	^'self'! !
 !Kernel.StSelfVariableNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 isSelfVariable!public!testing! !
 name!constants!public! !
-specialVariableInScope:!double dispatch!public! !
 !
 

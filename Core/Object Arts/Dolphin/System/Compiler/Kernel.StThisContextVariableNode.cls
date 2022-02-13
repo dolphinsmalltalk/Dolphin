@@ -15,13 +15,9 @@ acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitThisContextVariableNode: self!
 
 name
-	^'thisContext'!
-
-specialVariableInScope: anStSemanticScope
-	^anStSemanticScope thisContextVariable! !
+	^'thisContext'! !
 !Kernel.StThisContextVariableNode categoriesForMethods!
 acceptVisitor:!public!visitor! !
 name!constants!public! !
-specialVariableInScope:!double dispatch!public! !
 !
 

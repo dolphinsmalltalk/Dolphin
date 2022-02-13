@@ -51,8 +51,8 @@ visitPrimitiveNode: anStPrimitiveNode
 visitReturnNode: aReturnNode
 	^self errorInvalidArithmeticExpression: aReturnNode!
 
-visitStatements: aNodeCollection
-	^self errorInvalidArithmeticExpression: aNodeCollection!
+visitSequenceNode: aSequenceNode
+	^self errorInvalidArithmeticExpression: aSequenceNode!
 
 visitVariableNode: aVariableNode
 	^self subclassResponsibility! !
@@ -70,7 +70,7 @@ visitMethodNode:!public!visiting! !
 visitOptimizedNode:!public!visiting! !
 visitPrimitiveNode:!public!visiting! !
 visitReturnNode:!public!visiting! !
-visitStatements:!helpers!private! !
+visitSequenceNode:!public!visiting! !
 visitVariableNode:!public!visiting! !
 !
 

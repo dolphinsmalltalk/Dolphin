@@ -51,6 +51,9 @@ method: aCompiledMethod
 methodClass
 	^class!
 
+model
+	^class model!
+
 modelClass
 	^class!
 
@@ -58,14 +61,14 @@ modelClass: aRBClass
 	class := aRBClass!
 
 parseEnvironment
-	compiledMethod notNil
-		and: [compiledMethod customEnvironment ifNotNil: [:env | ^class model classFor: env]].
-	^class environment!
+	compiledMethod ifNil: [^nil].
+	compiledMethod customEnvironment ifNotNil: [:env | ^env classInModel: self model].
+	^compiledMethod owningPackageIfLoose ifNotNil: [:package | package environment]!
 
 parseTree
 	^parseTree
 		ifNil: 
-			[parseTree := Parser
+			[parseTree := RBParser
 						parseMethod: self source
 						in: class
 						environment: self parseEnvironment
@@ -88,8 +91,7 @@ refersToClass: aRBClass
 refersToSymbol: aSymbol
 	| searcher |
 	searcher := ParseTreeSearcher new.
-	searcher matches: '`#literal'
-		do: [:node :answer | answer or: [node value refersTo: aSymbol asLiteralOf: self]].
+	searcher matches: '`#literal' do: [:node :answer | answer or: [node refersToSymbol: aSymbol]].
 	(Scanner isSelector: aSymbol)
 		ifTrue: 
 			[searcher matches: '`@object ' , (ParseTreeSearcher buildSelectorString: aSymbol)
@@ -130,6 +132,7 @@ hash!comparing!public! !
 method!accessing!public! !
 method:!accessing!public! !
 methodClass!accessing!public! !
+model!accessing!public! !
 modelClass!accessing!public! !
 modelClass:!accessing!public! !
 parseEnvironment!accessing!private! !

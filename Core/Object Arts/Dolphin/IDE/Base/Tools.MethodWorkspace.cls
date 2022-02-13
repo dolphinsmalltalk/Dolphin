@@ -393,7 +393,7 @@ resolveVariable: anStIdentifierToken
 			[| node |
 			node := self nodeForRange: anStIdentifierToken sourceInterval.
 			(node notNil and: [node isVariable and: [node scope notNil]])
-				ifTrue: [^node scope lookupVariable: node]].
+				ifTrue: [^node lookupInScope: node scope]].
 	^super resolveVariable: anStIdentifierToken!
 
 selectedErrorRange

@@ -44,7 +44,6 @@ package setClassNames: #(
 	#{Refactory.Browser.PushUpMethodRefactoring}
 	#{Refactory.Browser.RBAbstractClass}
 	#{Refactory.Browser.RBAbstractCondition}
-	#{Refactory.Browser.RBBindingReference}
 	#{Refactory.Browser.RBClass}
 	#{Refactory.Browser.RBCondition}
 	#{Refactory.Browser.RBConjunctiveCondition}
@@ -92,7 +91,10 @@ package setMethodNames: #(
 	#(#{Kernel.Namespace class} #rbClass)
 	#(#{Kernel.StAbstractVariableNode} #refersToClass:)
 	#(#{Kernel.StLiteralArrayNode} #refersToClass:)
+	#(#{Kernel.StLiteralArrayNode} #refersToSymbol:)
 	#(#{Kernel.StLiteralNode} #refersToClass:)
+	#(#{Kernel.StLiteralNode} #refersToSymbol:)
+	#(#{Kernel.StLiteralValueNode} #refersToSymbol:)
 	#(#{Kernel.StQualifiedReferenceNode} #refersToClass:)
 	#(#{Kernel.StStaticVariable} #refersToClass:)
 	#(#{Kernel.StVariable} #refersToClass:)
@@ -160,12 +162,6 @@ Core.Object subclass: #'Refactory.Browser.RefactoringManager'
 	classConstants: {}!
 Core.Object subclass: #'Refactory.Browser.RefactoryTyper'
 	instanceVariableNames: 'model class variableTypes bestGuesses variableMessages backpointers methodName selectorLookup'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Kernel.BindingReferenceWrapper subclass: #'Refactory.Browser.RBBindingReference'
-	instanceVariableNames: 'model'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -615,17 +611,33 @@ refersToClass:!public!testing! !
 !Kernel.StLiteralArrayNode methodsFor!
 
 refersToClass: aClass
-	^self contents anySatisfy: [:each | each refersToClass: aClass]! !
+	^self contents anySatisfy: [:each | each refersToClass: aClass]!
+
+refersToSymbol: aSymbol
+	^self contents anySatisfy: [:each | each refersToSymbol: aSymbol]! !
 !Kernel.StLiteralArrayNode categoriesForMethods!
 refersToClass:!public!testing! !
+refersToSymbol:!public!testing! !
 !
 
 !Kernel.StLiteralNode methodsFor!
 
 refersToClass: aClass
+	^false!
+
+refersToSymbol: aSymbol
 	^false! !
 !Kernel.StLiteralNode categoriesForMethods!
 refersToClass:!public!testing! !
+refersToSymbol:!public!testing! !
+!
+
+!Kernel.StLiteralValueNode methodsFor!
+
+refersToSymbol: aSymbol
+	^self value refersTo: aSymbol asLiteralOf: nil! !
+!Kernel.StLiteralValueNode categoriesForMethods!
+refersToSymbol:!public!testing! !
 !
 
 !Kernel.StQualifiedReferenceNode methodsFor!

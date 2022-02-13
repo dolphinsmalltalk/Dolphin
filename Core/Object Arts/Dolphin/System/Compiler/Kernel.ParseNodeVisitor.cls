@@ -91,13 +91,10 @@ visitSelfVariableNode: anStSelfVariableNode
 
 visitSequenceNode: aSequenceNode
 	self visitTemporaryNodes: aSequenceNode temporaries.
-	self visitStatements: aSequenceNode statements!
+	aSequenceNode statements do: [:each | self visitNode: each]!
 
 visitSpecialVariableNode: anStSpecialVariableNode
 	^self visitVariableNode: anStSpecialVariableNode!
-
-visitStatements: aNodeCollection
-	aNodeCollection do: [:each | self visitNode: each]!
 
 visitSuperVariableNode: anStSelfVariableNode
 	^self visitSpecialVariableNode: anStSelfVariableNode!
@@ -140,7 +137,6 @@ visitReturnNode:!public!visiting! !
 visitSelfVariableNode:!public!visiting! !
 visitSequenceNode:!public!visiting! !
 visitSpecialVariableNode:!public!visiting! !
-visitStatements:!helpers!private! !
 visitSuperVariableNode:!public!visiting! !
 visitTempDeclNode:!public!visiting! !
 visitTemporaryNodes:!public!visiting! !

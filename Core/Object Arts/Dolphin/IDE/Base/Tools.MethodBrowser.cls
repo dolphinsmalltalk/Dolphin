@@ -810,13 +810,12 @@ parseContext
 		ifNil: [parentPresenter ifNotNil: [parentPresenter parseContext]]
 		ifNotNil: 
 			[:method |
-			| package |
-			(method customEnvironment notNil or: [(package := method owningPackage) isNil])
+			| package class |
+			package := method owningPackageIfLoose.
+			class := method methodClass.
+			(method customEnvironment notNil or: [package isNil and: [class owningPackage isNil]])
 				ifTrue: [method]
-				ifFalse: 
-					[| class |
-					class := method methodClass.
-					ParseContext methodClass: class environment: (package environment ifNil: [class environment])]]!
+				ifFalse: [ParseContext methodClass: class environment: (package ?? class) environment]]!
 
 parseTree
 	^sourcePresenter parseTree!

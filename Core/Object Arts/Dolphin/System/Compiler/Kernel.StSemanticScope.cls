@@ -21,12 +21,6 @@ environment: aNamespace
 isInlined
 	^false!
 
-lookupVariable: anStVariableNode
-	"Lookup and return an <StVariable> describing the variable definition in this scope matching the variable reference specified by the <StVariableNode> argument."
-
-	anStVariableNode isSpecialVariable ifTrue: [^anStVariableNode specialVariableInScope: self].
-	^self resolveVariable: anStVariableNode!
-
 methodScope
 	^self outer methodScope!
 
@@ -50,7 +44,6 @@ thisContextVariable
 classScope!accessing!public! !
 environment:!accessing!public! !
 isInlined!accessing!public! !
-lookupVariable:!operations!public! !
 methodScope!accessing!public! !
 outer!accessing!public! !
 resolveVariable:!operations!private! !

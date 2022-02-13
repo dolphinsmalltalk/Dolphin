@@ -17,11 +17,12 @@ testGenerateAccessorsForSizedString
 	structClass class
 		basicCompile: 'defineFields
 		self defineField: #Test
-			type: (ArrayPointerField type: String lengthField: #Size)
+			type: (<1d> type: <2d> lengthField: #Size)
 			offset: 0;
 		defineField: #Size
-			type: DWORDField new
-			offset: 4'.
+			type: <3d> new
+			offset: 4'
+				<< {ArrayPointerField. String. DWORDField}.
 	structClass recompileDefinition.
 	actual := (structClass compiledMethodAt: #Test:) parseTree.
 	expected := Parser
@@ -50,11 +51,12 @@ testGenerateAccessorsForSizeIsExpression
 	structClass class
 		basicCompile: 'defineFields
 		self defineField: #Test
-			type: (ArrayPointerField type: Utf16String arrayLength: (SizeIsArrayFieldLength sizeIs: ''Size >> 1''))
+			type: (<1d> type: <3d> arrayLength: (<2d> sizeIs: ''Size >> 1''))
 			offset: 4;
 		defineField: #Size
-			type: DWORDField new
-			offset: 0'.
+			type: <4d> new
+			offset: 0'
+				<< {ArrayPointerField. SizeIsArrayFieldLength. Utf16String. DWORDField}.
 	structClass recompileDefinition.
 	actual := (structClass compiledMethodAt: #Test:) parseTree.
 	expected := Parser

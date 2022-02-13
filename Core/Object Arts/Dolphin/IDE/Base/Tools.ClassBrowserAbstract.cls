@@ -2226,7 +2226,7 @@ selectionEnvironment
 			[| methods |
 			methods := self selectedMethods.
 			env := methods isEmpty
-						ifFalse: [(env forMethods: methods) label: 'Some methods of <1p>' << classesPresenter selection]
+						ifFalse: [(env forMethods: methods) label: 'Some methods of ' , classesPresenter selection printString]
 						ifTrue: [classesPresenter selectionEnvironment]].
 	^env!
 
