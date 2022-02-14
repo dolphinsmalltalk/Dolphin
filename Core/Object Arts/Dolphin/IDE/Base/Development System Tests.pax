@@ -315,7 +315,7 @@ testWarnUnimplementedAbstractMethod!public!unit tests! !
 verifyMethod: aSymbol of: aClass equals: aString
 	| source parseTree modelClass |
 	modelClass := aClass classInModel: model.
-	source := modelClass sourceCodeFor: aSymbol.
+	source := (modelClass methodFor: aSymbol) source.
 	self assertNotNil: source.
 	parseTree := Parser
 				parseMethod: source

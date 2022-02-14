@@ -429,7 +429,7 @@ testRenameClassShadowingImported
 testRenameNamespace
 	"Renaming a Namespace is like a normal Class rename for direct references, but there could also be indirect references. In fact all the classes in the Namespace are effectively being renamed. This means we need to consider all references to all classes in the namespace, including any sub-namespace classes, and any classes in those sub-namespaces, and so on."
 
-	| namespaceToRename refactoring subclassOfClassToRename testDataApp classToRename |
+	| namespaceToRename refactoring subclassOfClassToRename testDataApp classToRename subjectClass |
 	namespaceToRename := 'Refactory.Browser.Tests' asQualifiedReference value.
 	subclassOfClassToRename := model classFor: SubclassOfClassToRename.
 	testDataApp := model classFor: RefactoryTestDataApp.
@@ -438,16 +438,18 @@ testRenameNamespace
 				rename: namespaceToRename
 				to: 'Refactory.Browser.Tests2'.
 	classToRename := model classFor: ClassToRename.
+	subjectClass := model classFor: RenameClassRefactoring.
+	subjectClass compile: 'correspondingTestCase ^Tests.RenameClassRefactoringTest'.
 	refactoring setOption: #ignoreSymbolicClassReferences toUse: [:rename :refs | true].
 	self executeRefactoring: refactoring.
 	"The classes in the renamed namespace won't be locatable from the real class now, so if any of the subclasses are still using the 'lookup superclass' mode, then the superclass will come back nil."
 	self assert: subclassOfClassToRename superclass identicalTo: classToRename.
 	self assert: classToRename subclasses equals: {subclassOfClassToRename}.
-	"Partially qualified reference from a class in Refactory.Browser, gets expanded to partiallly qualified"
+	"Partially qualified reference from a model method of the tested class in Refactory.Browser to this test class, gets renamed"
 	self
 		verifyMethod: #correspondingTestCase
-		of: RBSourceFormatter class
-		equals: 'correspondingTestCase ^Tests2.FormatterTest'.
+		of: subjectClass
+		equals: 'correspondingTestCase ^Tests2.RenameClassRefactoringTest'.
 	"The unecessary fully/partially-qualified references to a class in the same (renamed) namespace get shortened"
 	#(#refersToClassFullyQualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2)
 		do: 
