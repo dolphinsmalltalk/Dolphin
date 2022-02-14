@@ -80,7 +80,14 @@ allClassVariableNames
 				yourself]!
 
 allImports
-	^self superclass ifNil: [self imports] ifNotNil: [:sprClass | sprClass allImports , self imports]!
+	"Answer a <sequencedReadableCollection> of <BindingReference> being the imports that are specified in the receiver and each of its superclasses."
+
+	| all seen |
+	all := Array writeStream: 5.
+	seen := Set new.
+	self
+		withAllSuperclassesDo: [:c | c imports do: [:each | (seen addNewElement: each) ifTrue: [all nextPut: each]]].
+	^all contents!
 
 baseEnvironment
 	"Private - Answer the default environment for new subclasses of the receiver that the ClassBuilder should use when the provided subclass name is unqualified."

@@ -63,8 +63,9 @@ poolsToMove
 					(nonMetaClass importsNamespace: eachPoolName) not]]!
 
 poolVariableNamesIn: poolName
-	^(poolName asQualifiedReference valueOrNil ifNil: [Dictionary new]) keys
-		collect: [:name | name asString]!
+	^poolName asQualifiedReference valueOrNil
+		ifNil: [#()]
+		ifNotNil: [:sharedPool | sharedPool definedBindings collect: [:each | each key]]!
 
 preconditions
 	^RBCondition empty!
@@ -83,8 +84,10 @@ whichPoolDefines: varName
 	| currentClass |
 	currentClass := fromClass.
 	[currentClass isNil] whileFalse: 
-			[currentClass allImports
-				do: [:each | ((self poolVariableNamesIn: each) includes: varName) ifTrue: [^each]].
+			[currentClass allImports do: 
+					[:each |
+					each valueOrNil
+						ifNotNil: [:pool | (pool localBindingFor: varName) ifNotNil: [:var | var isClassVariable ifTrue: [^each]]]].
 			currentClass := currentClass superclass].
 	^nil! !
 !Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesForMethods!

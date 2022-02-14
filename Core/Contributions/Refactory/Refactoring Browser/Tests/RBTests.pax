@@ -16,6 +16,7 @@ package setClassNames: #(
 	#{Refactory.Browser.Tests.BrowserEnvironmentTest}
 	#{Refactory.Browser.Tests.ChildrenToSiblingsTest}
 	#{Refactory.Browser.Tests.CreateAccessorsForVariableTest}
+	#{Refactory.Browser.Tests.ExpandReferencedPoolsRefactoringTest}
 	#{Refactory.Browser.Tests.ExtractMethodTest}
 	#{Refactory.Browser.Tests.ExtractMethodToComponentTest}
 	#{Refactory.Browser.Tests.ExtractToTemporaryTest}
@@ -289,6 +290,12 @@ Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.Chil
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.CreateAccessorsForVariableTest'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.Tests.RefactoringTest subclass: #'Refactory.Browser.Tests.ExpandReferencedPoolsRefactoringTest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()

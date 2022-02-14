@@ -38,6 +38,23 @@ testAllBehaviorsDo
 	self assert: (modelClasses difference: environmentClasses) asSortedArray
 		equals: #('SomeClassName' 'SomeClassName class')!
 
+testAllImports
+	| opcodePool |
+	opcodePool := (model classFor: Kernel.OpcodePool) asQualifiedReference.
+	self assert: newClass allImports equals: {opcodePool}.
+	model
+		defineClass: 'SomeClassName subclass: #''Core.Foo'' instanceVariableNames: '''' classVariableNames: '''' imports: #(#{Core} #{Kernel.OpcodePool} #{UI}) classInstanceVariableNames: '''' classConstants: {}'.
+	self assert: (model classNamed: 'Core.Foo') allImports
+		equals: {(model classFor: Core) asQualifiedReference.
+				opcodePool.
+				(model classFor: UI) asQualifiedReference}.
+	model
+		defineClass: 'SomeClassName subclass: #''Core.Bar'' instanceVariableNames: '''' classVariableNames: '''' imports: #(#{Core} #{UI}) classInstanceVariableNames: '''' classConstants: {}'.
+	self assert: (model classNamed: 'Core.Bar') allImports
+		equals: {(model classFor: Core) asQualifiedReference.
+				(model classFor: UI) asQualifiedReference.
+				opcodePool}!
+
 testBindings
 	| bindings |
 	bindings := objectClass bindings.
@@ -334,6 +351,7 @@ testWithAllSubclasses
 !Refactory.Browser.Tests.RBClassTest categoriesForMethods!
 setUp!public!set up! !
 testAllBehaviorsDo!public!unit tests! !
+testAllImports!public!unit tests! !
 testBindings!public!unit tests! !
 testClassSubclasses!public!unit tests! !
 testDefinesClassVariable!public!unit tests! !

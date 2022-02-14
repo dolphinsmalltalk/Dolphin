@@ -269,12 +269,11 @@ performComponentRefactoring: aRefactoring
 	aRefactoring primitiveExecute!
 
 poolVariableNamesFor: aClass
-	| pools |
-	pools := Set new.
-	aClass withAllSuperclassesDo: 
-			[:each |
-			each allImports do: [:pool | pool value keys do: [:name | pools add: name asString]]].
-	^pools!
+	| names |
+	names := Set new.
+	aClass allImports
+		do: [:import | import valueOrNil ifNotNil: [:pool | pool definedBindings do: [:var | names add: var key]]].
+	^names!
 
 preconditions
 	self subclassResponsibility!
