@@ -3494,11 +3494,14 @@ isTextModified
 		wParam: 0
 		lParam: 0!
 
-isTextModified: aBoolean 
+isTextModified: aBoolean
 	"Private - Set/reset the receiver's text modification flag."
 
-	#todo.	"Supersend here sends EM_SETMODIFY which is deprecated from Scintilla's point of view"
-	aBoolean ifTrue: [super isTextModified: aBoolean] ifFalse: [self sciSetSavePoint]!
+	aBoolean
+		ifTrue: 
+			["Scintilla no longer responds to EM_SETMODIFY, and in fact it only considers the text modified if there is undo state since the last save point, so this is a no-op"
+			]
+		ifFalse: [self sciSetSavePoint]!
 
 isUndoEnabled
 	"Is undo history being collected?"
