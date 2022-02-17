@@ -1,0 +1,90 @@
+﻿"Filed out from Dolphin Smallalk"!
+
+IUnknown subclass: #ICoreWebView2FrameInfo
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2FrameInfo guid: (IID fromString: '{da86b8a1-bdf3-4f11-9955-528cefa59727}')!
+ICoreWebView2FrameInfo comment: '`ICoreWebView2FrameInfo` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameInfo'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+
+The type library contains no documentation for this interface
+
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
+
+IDL definition follows:
+```
+[
+	object, 
+	uuid(da86b8a1-bdf3-4f11-9955-528cefa59727)
+]
+interface ICoreWebView2FrameInfo : IUnknown
+ {
+	[id(0x60010000), propget]
+	HRESULT __stdcall name(
+		[out, retval]LPWSTR* name);
+	[id(0x60010001), propget]
+	HRESULT __stdcall Source(
+		[out, retval]LPWSTR* Source);
+};
+```
+'!
+!ICoreWebView2FrameInfo categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!ICoreWebView2FrameInfo methodsFor!
+
+get_name: name
+	"Private - Get the value of the 'name' property of the receiver.
+
+		HRESULT __stdcall name(
+			[out, retval]LPWSTR* name);"
+
+	<virtual stdcall: hresult 4 lpwstr*>
+	^self invalidCall: _failureCode!
+
+get_Source: source
+	"Private - Get the value of the 'Source' property of the receiver.
+
+		HRESULT __stdcall Source(
+			[out, retval]LPWSTR* Source);"
+
+	<virtual stdcall: hresult 5 lpwstr*>
+	^self invalidCall: _failureCode!
+
+name
+	"Answer the <lpwstr> value of the 'name' property of the receiver."
+
+	| answer |
+	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
+	self get_name: answer.
+	^answer asObject!
+
+source
+	"Answer the <lpwstr> value of the 'Source' property of the receiver."
+
+	| answer |
+	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
+	self get_Source: answer.
+	^answer asObject! !
+!ICoreWebView2FrameInfo categoriesForMethods!
+get_name:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfo!private! !
+get_Source:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfo!private! !
+name!**auto generated**!properties!public! !
+source!**auto generated**!properties!public! !
+!
+
+!ICoreWebView2FrameInfo class methodsFor!
+
+defineFunctions
+	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2FrameInfo'
+		ICoreWebView2FrameInfo defineTemplate"
+
+	self
+		defineFunction: #get_name:
+			argumentTypes: 'lpwstr*';
+		defineFunction: #get_Source:
+			argumentTypes: 'lpwstr*'
+! !
+!ICoreWebView2FrameInfo class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
+

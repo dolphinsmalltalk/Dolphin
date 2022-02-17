@@ -1,0 +1,66 @@
+﻿"Filed out from Dolphin Smallalk"!
+
+IUnknown subclass: #ICoreWebView2ProcessFailedEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2ProcessFailedEventArgs guid: (IID fromString: '{8155a9a4-1474-4a86-8cae-151b0fa6b8ca}')!
+ICoreWebView2ProcessFailedEventArgs comment: '`ICoreWebView2ProcessFailedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessFailedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+
+The type library contains no documentation for this interface
+
+** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
+
+IDL definition follows:
+```
+[
+	object, 
+	uuid(8155a9a4-1474-4a86-8cae-151b0fa6b8ca)
+]
+interface ICoreWebView2ProcessFailedEventArgs : IUnknown
+ {
+	[id(0x60010000), propget]
+	HRESULT __stdcall ProcessFailedKind(
+		[out, retval]COREWEBVIEW2_PROCESS_FAILED_KIND* ProcessFailedKind);
+};
+```
+'!
+!ICoreWebView2ProcessFailedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!ICoreWebView2ProcessFailedEventArgs methodsFor!
+
+get_ProcessFailedKind: processFailedKind
+	"Private - Get the value of the 'ProcessFailedKind' property of the receiver.
+
+		HRESULT __stdcall ProcessFailedKind(
+			[out, retval]COREWEBVIEW2_PROCESS_FAILED_KIND* ProcessFailedKind);"
+
+	<virtual stdcall: hresult 4 sdword*>
+	^self invalidCall: _failureCode!
+
+processFailedKind
+	"Answer the <sdword> value of the 'ProcessFailedKind' property of the receiver."
+
+	| answer |
+	answer := SDWORD new.
+	self get_ProcessFailedKind: answer.
+	^answer asObject! !
+!ICoreWebView2ProcessFailedEventArgs categoriesForMethods!
+get_ProcessFailedKind:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs!private! !
+processFailedKind!**auto generated**!properties!public! !
+!
+
+!ICoreWebView2ProcessFailedEventArgs class methodsFor!
+
+defineFunctions
+	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ProcessFailedEventArgs'
+		ICoreWebView2ProcessFailedEventArgs defineTemplate"
+
+	self
+		defineFunction: #get_ProcessFailedKind:
+			argumentTypes: 'sdword*'
+! !
+!ICoreWebView2ProcessFailedEventArgs class categoriesForMethods!
+defineFunctions!**auto generated**!initializing!public! !
+!
+
