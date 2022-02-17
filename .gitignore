@@ -48,4 +48,7 @@ UpgradeLog.htm
 *.VC.opendb
 *.VC.db
 DolphinBoot
+hooks
+lfs
+*.exe.WebView2
 backup/

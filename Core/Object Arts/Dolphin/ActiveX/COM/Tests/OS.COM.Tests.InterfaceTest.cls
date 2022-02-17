@@ -25,14 +25,20 @@ testAllRegistered
 				ifNotNil: 
 					[:found |
 					iids add: iid.
-					found == each ifFalse: [different add: each]]].
+					(each isNonInstantiable or: [found == each])
+						ifFalse: 
+							[| base |
+							base := found superclass.
+							(base isNonInstantiable and: [each superclass == base and: [base iid = iid]])
+								ifFalse: [different add: each]]]].
 	self assert: different asArray equals: #().
 	self assert: (missing allSatisfy: [:each | each isNonInstantiable]).
 	"Check that only IUnknown and subclasses are registered, and only registered undo one IID"
 	registered := Interface.InterfaceClasses copy.
 	registered removeAllKeys: iids.
 	"The collection will not be empty if any interface class has duplicate registrations, although IDispatch can have multiple registrations for dispinterfaces"
-	self assert: (registered associations reject: [:each | each value name == #IDispatch]) asArray equals: #()!
+	self assert: (registered associations reject: [:each | each value name == #IDispatch]) asArray
+		equals: #()!
 
 testGetObject
 	| factory font |
