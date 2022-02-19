@@ -35,9 +35,7 @@ package setPrerequisites: #(
 	'..\..\Dolphin\MVP\Presenters\Prompters\Dolphin Choice Prompter'
 	'..\..\Dolphin\Base\Dolphin Message Box'
 	'..\..\Dolphin\MVP\Base\Dolphin MVP Base'
-	'..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer'
-	'..\..\Dolphin\ActiveX\Persist\OLE Persistence Base'
-	'..\..\Dolphin\ActiveX\Structured Storage\OLE Structured Storage').
+	'..\..\Dolphin\ActiveX\Components\WebView2\WebView2').
 
 package!
 
@@ -46,7 +44,7 @@ package!
 Object subclass: #OAIDEExtensions
 	instanceVariableNames: 'flags'
 	classVariableNames: 'ClassCommentTemplateMask Current KeyHelpMask'
-	poolDictionaries: 'SHDocVwConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
 "Global Aliases"!

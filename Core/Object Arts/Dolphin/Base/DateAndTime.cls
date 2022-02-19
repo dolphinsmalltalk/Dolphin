@@ -2,7 +2,7 @@
 
 Magnitude subclass: #DateAndTime
 	instanceVariableNames: 'rataDie seconds offset'
-	classVariableNames: 'FiletimeEpochSeconds JulianDateOffset LilianDayOffset SmalltalkEpochRD'
+	classVariableNames: 'FiletimeEpochSeconds JulianDateOffset LilianDayOffset SmalltalkEpochRD UnixEpochSeconds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 DateAndTime guid: (GUID fromString: '{87b4c653-026e-11d3-9fd7-00a0cc3e4a32}')!
@@ -10,6 +10,7 @@ DateAndTime addClassConstant: 'FiletimeEpochSeconds' value: -16r234474600!
 DateAndTime addClassConstant: 'JulianDateOffset' value: 16r22A11020C0!
 DateAndTime addClassConstant: 'LilianDayOffset' value: -16r8D0C7!
 DateAndTime addClassConstant: 'SmalltalkEpochRD' value: 16rA96C9!
+DateAndTime addClassConstant: 'UnixEpochSeconds' value: 16r81C94B00!
 DateAndTime comment: '`DateAndTime` is an implementation of the ANSI Smalltalk protocols `<DateAndTime>` (instance side) and `<DateAndTime factory>` (class side).
 
 *Derived from original work copyright © 2005 Ian Bartholomew, with additions by Richard Harmon, however the internal representation has been changed.*
@@ -92,7 +93,7 @@ asSYSTEMTIME
 asUnixTime
 	"Answer the a <rational> representing the number of seconds past 00:00h, 01-Jan-1970 (the Unix epoch)."
 
-	^self asSeconds - 2177452800!
+	^self asSeconds - UnixEpochSeconds!
 
 asUTC
 	"Answer a <DateAndTime> that represents the same absolute time as the receiver but in Co-ordinated Universal Time (UTC)."
@@ -538,6 +539,11 @@ fromSYSTEMTIME: aSYSTEMTIME offset: offset
 		second: aSYSTEMTIME wSecond + (aSYSTEMTIME wMilliseconds / 1000)
 		offset: offset!
 
+fromUnixTime: time_t_Integer
+	"Answer a <DateAndTime> which is the specified number of seconds past the Unix epoch, assumed to be in UTC."
+
+	^self utcSeconds: time_t_Integer + UnixEpochSeconds offset: 0!
+
 initialize
 	self addClassConstant: 'SmalltalkEpochRD'
 		value: (DateAndTime
@@ -559,7 +565,15 @@ initialize
 				month: 10
 				day: 15
 				offset: 0 hours) rataDie - 1)
-				* -1!
+				* -1.
+	self addClassConstant: 'UnixEpochSeconds'
+		value: (DateAndTime
+				year: 1970
+				day: 1
+				hour: 0
+				minute: 0
+				second: 0
+				offset: 0 hours) asSeconds!
 
 isLeapYear: anInteger
 	"Answer true if the specified <integer> year is a leap year."
@@ -885,6 +899,7 @@ fromDate:time:!instance creation!public! !
 fromString:!instance creation!public! !
 fromSYSTEMTIME:!instance creation!public! !
 fromSYSTEMTIME:offset:!instance creation!public! !
+fromUnixTime:!instance creation!public! !
 initialize!class initialization!public! !
 isLeapYear:!public!testing! !
 midnight!instance creation!public! !

@@ -49,25 +49,10 @@ put_UserAgent: userAgent
 			[in]LPWSTR UserAgent);"
 
 	<virtual stdcall: hresult 23 lpwstr>
-	^self invalidCall: _failureCode!
-
-userAgent
-	"Answer the <lpwstr> value of the 'UserAgent' property of the receiver."
-
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_UserAgent: answer.
-	^answer asObject!
-
-userAgent: userAgent
-	"Set the 'UserAgent' property of the receiver to the <lpwstr> value of the argument."
-
-	self put_UserAgent: userAgent asUtf16String! !
+	^self invalidCall: _failureCode! !
 !ICoreWebView2Settings2 categoriesForMethods!
 get_UserAgent:!**auto generated**!COM Interfaces-ICoreWebView2Settings2!private! !
 put_UserAgent:!**auto generated**!COM Interfaces-ICoreWebView2Settings2!private! !
-userAgent!**auto generated**!properties!public! !
-userAgent:!**auto generated**!properties!public! !
 !
 
 !ICoreWebView2Settings2 class methodsFor!

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2WebMessageReceivedEventArgs
+ICoreWebView2EventArgs subclass: #ICoreWebView2WebMessageReceivedEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2WebMessageReceivedEventArgs guid: (IID fromString: '{0f99a40c-e962-4207-9e92-e3d542eff849}')!
 ICoreWebView2WebMessageReceivedEventArgs comment: '`ICoreWebView2WebMessageReceivedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebMessageReceivedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -56,18 +56,22 @@ get_webMessageAsJson: webMessageAsJson
 source
 	"Answer the <lpwstr> value of the 'Source' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_Source: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_Source: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 tryGetWebMessageAsString
 	"Answer the <Utf16String> result of invoking the TryGetWebMessageAsString() method of the COM object."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self TryGetWebMessageAsString: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self TryGetWebMessageAsString: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 TryGetWebMessageAsString: webMessageAsString
 	"Private - Invoke the TryGetWebMessageAsString() method of the COM object.
@@ -81,17 +85,19 @@ TryGetWebMessageAsString: webMessageAsString
 webMessageAsJson
 	"Answer the <lpwstr> value of the 'webMessageAsJson' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_webMessageAsJson: answer.
-	^answer asObject! !
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_webMessageAsJson: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer! !
 !ICoreWebView2WebMessageReceivedEventArgs categoriesForMethods!
 get_Source:!**auto generated**!COM Interfaces-ICoreWebView2WebMessageReceivedEventArgs!private! !
 get_webMessageAsJson:!**auto generated**!COM Interfaces-ICoreWebView2WebMessageReceivedEventArgs!private! !
-source!**auto generated**!properties!public! !
-tryGetWebMessageAsString!**auto generated**!methods!public! !
+source!properties!public! !
+tryGetWebMessageAsString!methods!public! !
 TryGetWebMessageAsString:!**auto generated**!COM Interfaces-ICoreWebView2WebMessageReceivedEventArgs!private! !
-webMessageAsJson!**auto generated**!properties!public! !
+webMessageAsJson!properties!public! !
 !
 
 !ICoreWebView2WebMessageReceivedEventArgs class methodsFor!

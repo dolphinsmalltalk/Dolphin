@@ -32,26 +32,13 @@ interface ICoreWebView2Controller2 : ICoreWebView2Controller
 !ICoreWebView2Controller2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2Controller2 methodsFor!
 
-defaultBackgroundColor
-	"Answer the <COREWEBVIEW2_COLOR> value of the 'DefaultBackgroundColor' property of the receiver."
-
-	| answer |
-	answer := COREWEBVIEW2_COLOR new.
-	self get_DefaultBackgroundColor: answer.
-	^answer asObject!
-
-defaultBackgroundColor: backgroundColor
-	"Set the 'DefaultBackgroundColor' property of the receiver to the <COREWEBVIEW2_COLOR> value of the argument."
-
-	self put_DefaultBackgroundColor: backgroundColor!
-
 get_DefaultBackgroundColor: backgroundColor
 	"Private - Get the value of the 'DefaultBackgroundColor' property of the receiver.
 
 		HRESULT __stdcall DefaultBackgroundColor(
 			[out, retval]COREWEBVIEW2_COLOR* backgroundColor);"
 
-	<virtual stdcall: hresult 27 COREWEBVIEW2_COLOR*>
+	<virtual stdcall: hresult 27 qword*>
 	^self invalidCall: _failureCode!
 
 put_DefaultBackgroundColor: backgroundColor
@@ -61,13 +48,11 @@ put_DefaultBackgroundColor: backgroundColor
 		HRESULT __stdcall DefaultBackgroundColor(
 			[in]COREWEBVIEW2_COLOR backgroundColor);"
 
-	<virtual stdcall: hresult 28 COREWEBVIEW2_COLOR>
+	<virtual stdcall: hresult 28 qword>
 	^self invalidCall: _failureCode! !
 !ICoreWebView2Controller2 categoriesForMethods!
-defaultBackgroundColor!**auto generated**!properties!public! !
-defaultBackgroundColor:!**auto generated**!properties!public! !
-get_DefaultBackgroundColor:!**auto generated**!COM Interfaces-ICoreWebView2Controller2!private! !
-put_DefaultBackgroundColor:!**auto generated**!COM Interfaces-ICoreWebView2Controller2!private! !
+get_DefaultBackgroundColor:!COM Interfaces-ICoreWebView2Controller2!private! !
+put_DefaultBackgroundColor:!COM Interfaces-ICoreWebView2Controller2!private! !
 !
 
 !ICoreWebView2Controller2 class methodsFor!
@@ -78,11 +63,11 @@ defineFunctions
 
 	self
 		defineFunction: #get_DefaultBackgroundColor:
-			argumentTypes: 'COREWEBVIEW2_COLOR*';
+			argumentTypes: 'qword*';
 		defineFunction: #put_DefaultBackgroundColor:
-			argumentTypes: 'COREWEBVIEW2_COLOR'
+			argumentTypes: 'qword'
 ! !
 !ICoreWebView2Controller2 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!initializing!public! !
 !
 

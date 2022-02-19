@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2CookieList
+ICoreWebView2Sequence subclass: #ICoreWebView2CookieList
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2CookieList guid: (IID fromString: '{f7f6f714-5d2a-43c6-9503-346ece02d186}')!
 ICoreWebView2CookieList comment: '`ICoreWebView2CookieList` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CookieList'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -33,32 +33,10 @@ interface ICoreWebView2CookieList : IUnknown
 !ICoreWebView2CookieList categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2CookieList methodsFor!
 
-count
-	"Answer the <dword> value of the 'Count' property of the receiver."
+elementClass
+	^ICoreWebView2Cookie!
 
-	| answer |
-	answer := DWORD new.
-	self get_Count: answer.
-	^answer asObject!
-
-get_Count: count
-	"Private - Get the value of the 'Count' property of the receiver.
-
-		HRESULT __stdcall Count(
-			[out, retval]unsigned int* Count);"
-
-	<virtual stdcall: hresult 4 dword*>
-	^self invalidCall: _failureCode!
-
-getValueAtIndex: index
-	"Answer the <ICoreWebView2Cookie> result of invoking the GetValueAtIndex() method of the COM object."
-
-	| answer |
-	answer := ICoreWebView2Cookie newPointer.
-	self GetValueAtIndex: index cookie: answer.
-	^answer asObject!
-
-GetValueAtIndex: index cookie: cookie
+GetValueAtIndex: index value: cookie
 	"Private - Invoke the GetValueAtIndex() method of the COM object.
 
 		HRESULT __stdcall GetValueAtIndex(
@@ -68,10 +46,8 @@ GetValueAtIndex: index cookie: cookie
 	<virtual stdcall: hresult 5 dword ICoreWebView2Cookie**>
 	^self invalidCall: _failureCode! !
 !ICoreWebView2CookieList categoriesForMethods!
-count!**auto generated**!properties!public! !
-get_Count:!**auto generated**!COM Interfaces-ICoreWebView2CookieList!private! !
-getValueAtIndex:!**auto generated**!methods!public! !
-GetValueAtIndex:cookie:!**auto generated**!COM Interfaces-ICoreWebView2CookieList!private! !
+elementClass!constants!private! !
+GetValueAtIndex:value:!**auto generated**!COM Interfaces-ICoreWebView2CookieList!private! !
 !
 
 !ICoreWebView2CookieList class methodsFor!
@@ -83,10 +59,10 @@ defineFunctions
 	self
 		defineFunction: #get_Count:
 			argumentTypes: 'dword*';
-		defineFunction: #GetValueAtIndex:cookie:
+		defineFunction: #GetValueAtIndex:value:
 			argumentTypes: 'dword ICoreWebView2Cookie**'
 ! !
 !ICoreWebView2CookieList class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!initializing!public! !
 !
 

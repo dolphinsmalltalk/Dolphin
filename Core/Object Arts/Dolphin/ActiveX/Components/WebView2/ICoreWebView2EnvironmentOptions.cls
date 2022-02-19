@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2EnvironmentOptions
+ICoreWebView2Interface subclass: #ICoreWebView2EnvironmentOptions
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2EnvironmentOptions guid: (IID fromString: '{2fde08a8-1e9a-4766-8c05-95a9ceb9d1c5}')!
 ICoreWebView2EnvironmentOptions comment: '`ICoreWebView2EnvironmentOptions` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EnvironmentOptions'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -53,10 +53,12 @@ interface ICoreWebView2EnvironmentOptions : IUnknown
 additionalBrowserArguments
 	"Answer the <lpwstr> value of the 'AdditionalBrowserArguments' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_AdditionalBrowserArguments: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_AdditionalBrowserArguments: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 additionalBrowserArguments: value
 	"Set the 'AdditionalBrowserArguments' property of the receiver to the <lpwstr> value of the argument."
@@ -64,17 +66,17 @@ additionalBrowserArguments: value
 	self put_AdditionalBrowserArguments: value asUtf16String!
 
 allowSingleSignOnUsingOSPrimaryAccount
-	"Answer the <sdword> value of the 'AllowSingleSignOnUsingOSPrimaryAccount' property of the receiver."
+	"Answer the <Boolean> value of the 'AllowSingleSignOnUsingOSPrimaryAccount' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_AllowSingleSignOnUsingOSPrimaryAccount: answer.
 	^answer asObject!
 
 allowSingleSignOnUsingOSPrimaryAccount: allow
 	"Set the 'AllowSingleSignOnUsingOSPrimaryAccount' property of the receiver to the <sdword> value of the argument."
 
-	self put_AllowSingleSignOnUsingOSPrimaryAccount: allow!
+	self put_AllowSingleSignOnUsingOSPrimaryAccount: allow asParameter!
 
 get_AdditionalBrowserArguments: value
 	"Private - Get the value of the 'AdditionalBrowserArguments' property of the receiver.
@@ -115,10 +117,12 @@ get_TargetCompatibleBrowserVersion: value
 language
 	"Answer the <lpwstr> value of the 'Language' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_Language: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_Language: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 language: value
 	"Set the 'Language' property of the receiver to the <lpwstr> value of the argument."
@@ -168,31 +172,33 @@ put_TargetCompatibleBrowserVersion: value
 targetCompatibleBrowserVersion
 	"Answer the <lpwstr> value of the 'TargetCompatibleBrowserVersion' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_TargetCompatibleBrowserVersion: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_TargetCompatibleBrowserVersion: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 targetCompatibleBrowserVersion: value
 	"Set the 'TargetCompatibleBrowserVersion' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_TargetCompatibleBrowserVersion: value asUtf16String! !
 !ICoreWebView2EnvironmentOptions categoriesForMethods!
-additionalBrowserArguments!**auto generated**!properties!public! !
+additionalBrowserArguments!properties!public! !
 additionalBrowserArguments:!**auto generated**!properties!public! !
-allowSingleSignOnUsingOSPrimaryAccount!**auto generated**!properties!public! !
-allowSingleSignOnUsingOSPrimaryAccount:!**auto generated**!properties!public! !
+allowSingleSignOnUsingOSPrimaryAccount!properties!public! !
+allowSingleSignOnUsingOSPrimaryAccount:!properties!public! !
 get_AdditionalBrowserArguments:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 get_AllowSingleSignOnUsingOSPrimaryAccount:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 get_Language:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 get_TargetCompatibleBrowserVersion:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
-language!**auto generated**!properties!public! !
+language!properties!public! !
 language:!**auto generated**!properties!public! !
 put_AdditionalBrowserArguments:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 put_AllowSingleSignOnUsingOSPrimaryAccount:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 put_Language:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
 put_TargetCompatibleBrowserVersion:!**auto generated**!COM Interfaces-ICoreWebView2EnvironmentOptions!private! !
-targetCompatibleBrowserVersion!**auto generated**!properties!public! !
+targetCompatibleBrowserVersion!properties!public! !
 targetCompatibleBrowserVersion:!**auto generated**!properties!public! !
 !
 

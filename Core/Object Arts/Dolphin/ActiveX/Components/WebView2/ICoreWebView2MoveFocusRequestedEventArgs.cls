@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2MoveFocusRequestedEventArgs
+ICoreWebView2EventArgs subclass: #ICoreWebView2MoveFocusRequestedEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2MoveFocusRequestedEventArgs guid: (IID fromString: '{2d6aa13b-3839-4a15-92fc-d88b3c0d9c9d}')!
 ICoreWebView2MoveFocusRequestedEventArgs comment: '`ICoreWebView2MoveFocusRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2MoveFocusRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -54,17 +54,17 @@ get_reason: reason
 	^self invalidCall: _failureCode!
 
 handled
-	"Answer the <sdword> value of the 'Handled' property of the receiver."
+	"Answer the <Boolean> value of the 'Handled' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_Handled: answer.
 	^answer asObject!
 
 handled: value
 	"Set the 'Handled' property of the receiver to the <sdword> value of the argument."
 
-	self put_Handled: value!
+	self put_Handled: value asParameter!
 
 put_Handled: value
 	"Private - Set the value of the 'Handled' property of the object wrapped by the 
@@ -86,8 +86,8 @@ reason
 !ICoreWebView2MoveFocusRequestedEventArgs categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2MoveFocusRequestedEventArgs!private! !
 get_reason:!**auto generated**!COM Interfaces-ICoreWebView2MoveFocusRequestedEventArgs!private! !
-handled!**auto generated**!properties!public! !
-handled:!**auto generated**!properties!public! !
+handled!properties!public! !
+handled:!properties!public! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2MoveFocusRequestedEventArgs!private! !
 reason!**auto generated**!properties!public! !
 !

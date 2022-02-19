@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2WebResourceResponseReceivedEventArgs
+ICoreWebView2EventArgs subclass: #ICoreWebView2WebResourceResponseReceivedEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2WebResourceResponseReceivedEventArgs guid: (IID fromString: '{d1db483d-6796-4b8b-80fc-13712bb716f4}')!
 ICoreWebView2WebResourceResponseReceivedEventArgs comment: '`ICoreWebView2WebResourceResponseReceivedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -50,6 +50,13 @@ get_Response: response
 	<virtual stdcall: hresult 5 ICoreWebView2WebResourceResponseView**>
 	^self invalidCall: _failureCode!
 
+printPropertiesOn: aStream
+	"Print any properties of the receiver that might be useful for debugging, and which are not too verbose. Emit nothing by default."
+
+	self request printPropertiesOn: aStream.
+	aStream nextPutAll: ', '.
+	self response printPropertiesOn: aStream!
+
 request
 	"Answer the <ICoreWebView2WebResourceRequest> value of the 'Request' property of the receiver."
 
@@ -68,6 +75,7 @@ response
 !ICoreWebView2WebResourceResponseReceivedEventArgs categoriesForMethods!
 get_Request:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponseReceivedEventArgs!private! !
 get_Response:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponseReceivedEventArgs!private! !
+printPropertiesOn:!development!printing!private! !
 request!**auto generated**!properties!public! !
 response!**auto generated**!properties!public! !
 !

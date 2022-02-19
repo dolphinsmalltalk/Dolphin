@@ -1412,7 +1412,7 @@ Magnitude subclass: #Character
 	classInstanceVariableNames: ''!
 Magnitude subclass: #DateAndTime
 	instanceVariableNames: 'rataDie seconds offset'
-	classVariableNames: 'FiletimeEpochSeconds JulianDateOffset LilianDayOffset SmalltalkEpochRD'
+	classVariableNames: 'FiletimeEpochSeconds JulianDateOffset LilianDayOffset SmalltalkEpochRD UnixEpochSeconds'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 Magnitude subclass: #Duration

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2DownloadOperation
+ICoreWebView2Interface subclass: #ICoreWebView2DownloadOperation
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2DownloadOperation guid: (IID fromString: '{3d6b6cf2-afe1-44c7-a995-c65117714336}')!
 ICoreWebView2DownloadOperation comment: '`ICoreWebView2DownloadOperation` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DownloadOperation'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -83,14 +83,6 @@ interface ICoreWebView2DownloadOperation : IUnknown
 !ICoreWebView2DownloadOperation categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2DownloadOperation methodsFor!
 
-add_BytesReceivedChanged: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_BytesReceivedChanged() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_BytesReceivedChanged: eventHandler token: answer.
-	^answer asObject!
-
 Add_BytesReceivedChanged: eventHandler token: token
 	"Private - Invoke the add_BytesReceivedChanged() method of the COM object.
 
@@ -98,16 +90,8 @@ Add_BytesReceivedChanged: eventHandler token: token
 			[in]ICoreWebView2BytesReceivedChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 4 ICoreWebView2BytesReceivedChangedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 4 ICoreWebView2BytesReceivedChangedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-add_EstimatedEndTimeChanged: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_EstimatedEndTimeChanged() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_EstimatedEndTimeChanged: eventHandler token: answer.
-	^answer asObject!
 
 Add_EstimatedEndTimeChanged: eventHandler token: token
 	"Private - Invoke the add_EstimatedEndTimeChanged() method of the COM object.
@@ -116,16 +100,8 @@ Add_EstimatedEndTimeChanged: eventHandler token: token
 			[in]ICoreWebView2EstimatedEndTimeChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 6 ICoreWebView2EstimatedEndTimeChangedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 6 ICoreWebView2EstimatedEndTimeChangedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-add_StateChanged: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_StateChanged() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_StateChanged: eventHandler token: answer.
-	^answer asObject!
 
 Add_StateChanged: eventHandler token: token
 	"Private - Invoke the add_StateChanged() method of the COM object.
@@ -134,7 +110,7 @@ Add_StateChanged: eventHandler token: token
 			[in]ICoreWebView2StateChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 8 ICoreWebView2StateChangedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 8 ICoreWebView2StateChangedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
 
 bytesReceived
@@ -159,28 +135,32 @@ Cancel
 	^self invalidCall: _failureCode!
 
 canResume
-	"Answer the <sdword> value of the 'CanResume' property of the receiver."
+	"Answer the <Boolean> value of the 'CanResume' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_CanResume: answer.
 	^answer asObject!
 
 contentDisposition
 	"Answer the <lpwstr> value of the 'ContentDisposition' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_ContentDisposition: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_ContentDisposition: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 estimatedEndTime
 	"Answer the <lpwstr> value of the 'EstimatedEndTime' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_EstimatedEndTime: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_EstimatedEndTime: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 get_BytesReceived: bytesReceived
 	"Private - Get the value of the 'BytesReceived' property of the receiver.
@@ -283,10 +263,12 @@ interruptReason
 mimeType
 	"Answer the <lpwstr> value of the 'MimeType' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_MimeType: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_MimeType: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 pause
 	"Invoke the Pause() method of the COM object."
@@ -301,24 +283,14 @@ Pause
 	<virtual stdcall: hresult 20>
 	^self invalidCall: _failureCode!
 
-remove_BytesReceivedChanged: token
-	"Invoke the remove_BytesReceivedChanged() method of the COM object."
-
-	^self Remove_BytesReceivedChanged: token!
-
 Remove_BytesReceivedChanged: token
 	"Private - Invoke the remove_BytesReceivedChanged() method of the COM object.
 
 		HRESULT __stdcall remove_BytesReceivedChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 5 EventRegistrationToken>
+	<virtual stdcall: hresult 5 sqword>
 	^self invalidCall: _failureCode!
-
-remove_EstimatedEndTimeChanged: token
-	"Invoke the remove_EstimatedEndTimeChanged() method of the COM object."
-
-	^self Remove_EstimatedEndTimeChanged: token!
 
 Remove_EstimatedEndTimeChanged: token
 	"Private - Invoke the remove_EstimatedEndTimeChanged() method of the COM object.
@@ -326,13 +298,8 @@ Remove_EstimatedEndTimeChanged: token
 		HRESULT __stdcall remove_EstimatedEndTimeChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 7 EventRegistrationToken>
+	<virtual stdcall: hresult 7 sqword>
 	^self invalidCall: _failureCode!
-
-remove_StateChanged: token
-	"Invoke the remove_StateChanged() method of the COM object."
-
-	^self Remove_StateChanged: token!
 
 Remove_StateChanged: token
 	"Private - Invoke the remove_StateChanged() method of the COM object.
@@ -340,16 +307,18 @@ Remove_StateChanged: token
 		HRESULT __stdcall remove_StateChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 9 EventRegistrationToken>
+	<virtual stdcall: hresult 9 sqword>
 	^self invalidCall: _failureCode!
 
 resultFilePath
 	"Answer the <lpwstr> value of the 'ResultFilePath' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_ResultFilePath: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_ResultFilePath: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 resume
 	"Invoke the Resume() method of the COM object."
@@ -383,23 +352,22 @@ totalBytesToReceive
 uri
 	"Answer the <lpwstr> value of the 'uri' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_uri: answer.
-	^answer asObject! !
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_uri: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer! !
 !ICoreWebView2DownloadOperation categoriesForMethods!
-add_BytesReceivedChanged:!**auto generated**!methods!public! !
 Add_BytesReceivedChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
-add_EstimatedEndTimeChanged:!**auto generated**!methods!public! !
 Add_EstimatedEndTimeChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
-add_StateChanged:!**auto generated**!methods!public! !
 Add_StateChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 bytesReceived!**auto generated**!properties!public! !
 cancel!**auto generated**!methods!public! !
 Cancel!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
-canResume!**auto generated**!properties!public! !
-contentDisposition!**auto generated**!properties!public! !
-estimatedEndTime!**auto generated**!properties!public! !
+canResume!properties!public! !
+contentDisposition!properties!public! !
+estimatedEndTime!properties!public! !
 get_BytesReceived:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 get_CanResume:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 get_ContentDisposition:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
@@ -411,21 +379,18 @@ get_State:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!priv
 get_TotalBytesToReceive:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 interruptReason!**auto generated**!properties!public! !
-mimeType!**auto generated**!properties!public! !
+mimeType!properties!public! !
 pause!**auto generated**!methods!public! !
 Pause!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
-remove_BytesReceivedChanged:!**auto generated**!methods!public! !
 Remove_BytesReceivedChanged:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
-remove_EstimatedEndTimeChanged:!**auto generated**!methods!public! !
 Remove_EstimatedEndTimeChanged:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
-remove_StateChanged:!**auto generated**!methods!public! !
 Remove_StateChanged:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
-resultFilePath!**auto generated**!properties!public! !
+resultFilePath!properties!public! !
 resume!**auto generated**!methods!public! !
 Resume!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 state!**auto generated**!properties!public! !
 totalBytesToReceive!**auto generated**!properties!public! !
-uri!**auto generated**!properties!public! !
+uri!properties!public! !
 !
 
 !ICoreWebView2DownloadOperation class methodsFor!
@@ -436,17 +401,17 @@ defineFunctions
 
 	self
 		defineFunction: #Add_BytesReceivedChanged:token:
-			argumentTypes: 'ICoreWebView2BytesReceivedChangedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2BytesReceivedChangedEventHandler* sqword*';
 		defineFunction: #Remove_BytesReceivedChanged:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #Add_EstimatedEndTimeChanged:token:
-			argumentTypes: 'ICoreWebView2EstimatedEndTimeChangedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2EstimatedEndTimeChangedEventHandler* sqword*';
 		defineFunction: #Remove_EstimatedEndTimeChanged:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #Add_StateChanged:token:
-			argumentTypes: 'ICoreWebView2StateChangedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2StateChangedEventHandler* sqword*';
 		defineFunction: #Remove_StateChanged:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #get_uri:
 			argumentTypes: 'lpwstr*';
 		defineFunction: #get_ContentDisposition:

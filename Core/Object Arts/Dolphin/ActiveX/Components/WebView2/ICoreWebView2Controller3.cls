@@ -51,14 +51,6 @@ interface ICoreWebView2Controller3 : ICoreWebView2Controller2
 !ICoreWebView2Controller3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2Controller3 methodsFor!
 
-add_RasterizationScaleChanged: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_RasterizationScaleChanged() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_RasterizationScaleChanged: eventHandler token: answer.
-	^answer asObject!
-
 Add_RasterizationScaleChanged: eventHandler token: token
 	"Private - Invoke the add_RasterizationScaleChanged() method of the COM object.
 
@@ -66,21 +58,8 @@ Add_RasterizationScaleChanged: eventHandler token: token
 			[in]ICoreWebView2RasterizationScaleChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 33 ICoreWebView2RasterizationScaleChangedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 33 ICoreWebView2RasterizationScaleChangedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-boundsMode
-	"Answer the <sdword> value of the 'BoundsMode' property of the receiver."
-
-	| answer |
-	answer := SDWORD new.
-	self get_BoundsMode: answer.
-	^answer asObject!
-
-boundsMode: boundsMode
-	"Set the 'BoundsMode' property of the receiver to the <sdword> value of the argument."
-
-	self put_BoundsMode: boundsMode!
 
 get_BoundsMode: boundsMode
 	"Private - Get the value of the 'BoundsMode' property of the receiver.
@@ -139,62 +118,23 @@ put_ShouldDetectMonitorScaleChanges: value
 	<virtual stdcall: hresult 32 sdword>
 	^self invalidCall: _failureCode!
 
-rasterizationScale
-	"Answer the <double> value of the 'RasterizationScale' property of the receiver."
-
-	| answer |
-	answer := DOUBLE new.
-	self get_RasterizationScale: answer.
-	^answer asObject!
-
-rasterizationScale: scale
-	"Set the 'RasterizationScale' property of the receiver to the <double> value of the argument."
-
-	self put_RasterizationScale: scale!
-
-remove_RasterizationScaleChanged: token
-	"Invoke the remove_RasterizationScaleChanged() method of the COM object."
-
-	^self Remove_RasterizationScaleChanged: token!
-
 Remove_RasterizationScaleChanged: token
 	"Private - Invoke the remove_RasterizationScaleChanged() method of the COM object.
 
 		HRESULT __stdcall remove_RasterizationScaleChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 34 EventRegistrationToken>
-	^self invalidCall: _failureCode!
-
-shouldDetectMonitorScaleChanges
-	"Answer the <sdword> value of the 'ShouldDetectMonitorScaleChanges' property of the receiver."
-
-	| answer |
-	answer := SDWORD new.
-	self get_ShouldDetectMonitorScaleChanges: answer.
-	^answer asObject!
-
-shouldDetectMonitorScaleChanges: value
-	"Set the 'ShouldDetectMonitorScaleChanges' property of the receiver to the <sdword> value of the argument."
-
-	self put_ShouldDetectMonitorScaleChanges: value! !
+	<virtual stdcall: hresult 34 sqword>
+	^self invalidCall: _failureCode! !
 !ICoreWebView2Controller3 categoriesForMethods!
-add_RasterizationScaleChanged:!**auto generated**!methods!public! !
 Add_RasterizationScaleChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2Controller3!private! !
-boundsMode!**auto generated**!properties!public! !
-boundsMode:!**auto generated**!properties!public! !
 get_BoundsMode:!**auto generated**!COM Interfaces-ICoreWebView2Controller3!private! !
 get_RasterizationScale:!**auto generated**!COM Interfaces-ICoreWebView2Controller3!private! !
 get_ShouldDetectMonitorScaleChanges:!**auto generated**!COM Interfaces-ICoreWebView2Controller3!private! !
 put_BoundsMode:!**auto generated**!COM Interfaces-ICoreWebView2Controller3!private! !
 put_RasterizationScale:!**auto generated**!COM Interfaces-ICoreWebView2Controller3!private! !
 put_ShouldDetectMonitorScaleChanges:!**auto generated**!COM Interfaces-ICoreWebView2Controller3!private! !
-rasterizationScale!**auto generated**!properties!public! !
-rasterizationScale:!**auto generated**!properties!public! !
-remove_RasterizationScaleChanged:!**auto generated**!methods!public! !
 Remove_RasterizationScaleChanged:!**auto generated**!COM Interfaces-ICoreWebView2Controller3!private! !
-shouldDetectMonitorScaleChanges!**auto generated**!properties!public! !
-shouldDetectMonitorScaleChanges:!**auto generated**!properties!public! !
 !
 
 !ICoreWebView2Controller3 class methodsFor!
@@ -213,9 +153,9 @@ defineFunctions
 		defineFunction: #put_ShouldDetectMonitorScaleChanges:
 			argumentTypes: 'sdword';
 		defineFunction: #Add_RasterizationScaleChanged:token:
-			argumentTypes: 'ICoreWebView2RasterizationScaleChangedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2RasterizationScaleChangedEventHandler* sqword*';
 		defineFunction: #Remove_RasterizationScaleChanged:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #get_BoundsMode:
 			argumentTypes: 'sdword*';
 		defineFunction: #put_BoundsMode:

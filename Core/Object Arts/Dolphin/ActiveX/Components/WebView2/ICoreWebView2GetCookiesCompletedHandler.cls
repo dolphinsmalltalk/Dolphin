@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2GetCookiesCompletedHandler
+ICoreWebViewCompletedHandler subclass: #ICoreWebView2GetCookiesCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2GetCookiesCompletedHandler guid: (IID fromString: '{5a4f5069-5c15-47c3-8646-f4de1c116670}')!
 ICoreWebView2GetCookiesCompletedHandler comment: '`ICoreWebView2GetCookiesCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2GetCookiesCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -28,38 +28,15 @@ interface ICoreWebView2GetCookiesCompletedHandler : IUnknown
 ```
 '!
 !ICoreWebView2GetCookiesCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2GetCookiesCompletedHandler methodsFor!
-
-invoke: result cookieList: cookieList
-	"Invoke the Invoke() method of the COM object."
-
-	^self Invoke: result cookieList: cookieList!
-
-Invoke: result cookieList: cookieList
-	"Private - Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			HRESULT result,
-			ICoreWebView2CookieList* cookieList);"
-
-	<virtual stdcall: hresult 4 hresult ICoreWebView2CookieList*>
-	^self invalidCall: _failureCode! !
-!ICoreWebView2GetCookiesCompletedHandler categoriesForMethods!
-invoke:cookieList:!**auto generated**!methods!public! !
-Invoke:cookieList:!**auto generated**!COM Interfaces-ICoreWebView2GetCookiesCompletedHandler!private! !
-!
-
 !ICoreWebView2GetCookiesCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2GetCookiesCompletedHandler'
-		ICoreWebView2GetCookiesCompletedHandler defineTemplate"
+		ICoreWebView2GetCookiesCompletedHandler defineTemplate
+	"
 
-	self
-		defineFunction: #Invoke:cookieList:
-			argumentTypes: 'hresult ICoreWebView2CookieList*'
-! !
+	self defineFunction: #value:value: argumentTypes: 'hresult ICoreWebView2CookieList*'! !
 !ICoreWebView2GetCookiesCompletedHandler class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!initializing!public! !
 !
 

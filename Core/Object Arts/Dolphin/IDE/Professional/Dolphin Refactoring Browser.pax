@@ -247,13 +247,13 @@ package setPrerequisites: #(
 	'..\..\MVP\Presenters\Tree\Dolphin Tree Presenter'
 	'..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\MVP\Models\Value\Dolphin Value Models'
-	'..\..\ActiveX\Components\SHDocVw\Internet Explorer'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Change Objects\RBChangeObjects'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Parser\RBParser'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\Refactorings\RBRefactorings'
 	'..\..\..\..\Contributions\Refactory\Refactoring Browser\SmallLint\RBSmallLint'
 	'..\..\System\Compiler\Smalltalk Parser'
+	'..\..\ActiveX\Components\WebView2\WebView2'
 	'..\..\ActiveX\Shell\Windows Shell'
 	'..\..\ActiveX\Components\XML DOM\XML DOM').
 
@@ -279,7 +279,7 @@ ClassBrowserPlugin subclass: #SmalllintPlugin
 SmalllintPlugin subclass: #CodeMentorPlugin
 	instanceVariableNames: 'failuresPresenter infoSitePresenter infoBrowserPresenter progressPresenter checkerProcess rulesTreeModel isRefreshPending refreshMode'
 	classVariableNames: 'DefaultRefreshMode LintIconMap LintRulesDoc'
-	poolDictionaries: 'SHDocVwConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 SmalllintPlugin subclass: #CodeRewriterPlugin
 	instanceVariableNames: 'searchTextPresenter replaceTextPresenter isMethodPresenter'

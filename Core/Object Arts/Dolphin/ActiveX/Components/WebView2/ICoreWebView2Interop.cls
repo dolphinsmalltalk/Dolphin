@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2Interop
+ICoreWebView2Interface subclass: #ICoreWebView2Interop
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Interop guid: (IID fromString: '{912b34a7-d10b-49c4-af18-7cb7e604e01a}')!
 ICoreWebView2Interop comment: '`ICoreWebView2Interop` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Interop'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.

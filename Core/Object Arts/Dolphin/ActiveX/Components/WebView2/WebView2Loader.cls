@@ -15,7 +15,7 @@ compareBrowserVersions: version1 version2: version2 result: result
 	^self invalidCall: _failureCode!
 
 createCoreWebView2Environment: environmentCreatedHandler
-	<stdcall: hresult CreateCoreWebView2EnvironmentWithOptions ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler*>
+	<stdcall: hresult CreateCoreWebView2Environment ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler*>
 	^self invalidCall: _failureCode!
 
 createCoreWebView2EnvironmentWithOptions: browserExecutableFolder userDataFolder: userDataFolder environmentOptions: environmentOptions environmentCreatedHandler: environmentCreatedHandler

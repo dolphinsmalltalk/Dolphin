@@ -3,7 +3,7 @@
 SmalllintPlugin subclass: #CodeMentorPlugin
 	instanceVariableNames: 'failuresPresenter infoSitePresenter infoBrowserPresenter progressPresenter checkerProcess rulesTreeModel isRefreshPending refreshMode'
 	classVariableNames: 'DefaultRefreshMode LintIconMap LintRulesDoc'
-	poolDictionaries: 'SHDocVwConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 CodeMentorPlugin guid: (GUID fromString: '{b1e97c3c-3c35-43e0-99aa-97d69135e2ea}')!
 CodeMentorPlugin comment: 'CodeMentorPlugin is a <classBrowserPlugin> that tests the quality of code currently seen by a browser using Refactory Inc''s SmallLint package.  Since the time taken to perform the SmallLint analysis can be lengthy, the evaluation is performed in a background thread.
@@ -308,23 +308,21 @@ indicateSuccess
 		selection: failuresPresenter model roots first.
 !
 
-infoBrowser
-	^self infoBrowserPresenter view controlDispatch!
-
 infoBrowserPresenter
 	"Private - Answer an HTML browser than can be used to display LintRule descriptions. We create this lazily
 	to avoid slowing down the opening of browsers that make use of the Code Mentor"
 
-	infoBrowserPresenter isNil 
+	infoBrowserPresenter isNil
 		ifTrue: 
-			[infoBrowserPresenter := URLPresenter createIn: infoSitePresenter.
-			[self infoBrowser readyState == READYSTATE_COMPLETE] 
-				whileFalse: [SessionManager inputState pumpMessages].
-			"Suppress the standard IE context menu"
-			infoBrowserPresenter view allowContextMenu: false.
-			infoBrowserPresenter 
-				when: #BeforeNavigate2:URL:Flags:TargetFrameName:PostData:Headers:Cancel:
-				send: #onBeforeNavigate2:URL:Flags:TargetFrameName:PostData:Headers:Cancel:
+			[infoBrowserPresenter := URLPresenter create: 'WebView2' in: infoSitePresenter.
+			"Attempt to suppress the standard context menu"
+			infoBrowserPresenter view
+				canNavigateToStrings: true;
+				allowContextMenu: false;
+				areBrowserAcceleratorKeysEnabled: false.
+			infoBrowserPresenter
+				when: #navigationStarting:
+				send: #onNavigationStarting:
 				to: self].
 	^infoBrowserPresenter!
 
@@ -355,20 +353,6 @@ lintRules
 
 	^CompositeLintRule lintChecks!
 
-onBeforeNavigate2: anIDispatch URL: urlVARIANT Flags: flagsVARIANT TargetFrameName: targetVARIANT PostData: postDataVARIANT Headers: headersVARIANT Cancel: aBooleanValue
-	| url |
-	url := urlVARIANT value.
-	(url beginsWith: self smalltalkUrlTag)
-		ifTrue: 
-			[| expression |
-			expression := (url allButFirst: self smalltalkUrlTag size) urlDecoded.
-			Compiler
-				evaluate: expression
-				for: self
-				evaluationPools: nil
-				logged: false].
-	aBooleanValue value: true!
-
 onBrowserEnvironmentSelected
 	"Event handler for a method or class being selected within the receiver's associated browser. "
 
@@ -394,6 +378,18 @@ onLintRuleFilterChanged: aLintRule
 onMethodUpdated: aCompilationResult 
 	(self browserEnvironment includesMethod: aCompilationResult method) 
 		ifTrue: [self autoRefresh]!
+
+onNavigationStarting: anICoreWebView2NavigationStartingEventArgs
+	| url expression |
+	url := anICoreWebView2NavigationStartingEventArgs uri.
+	(url beginsWith: self smalltalkUrlTag) ifFalse: [^self].
+	expression := (url allButFirst: self smalltalkUrlTag size) urlDecoded.
+	Compiler
+		evaluate: expression
+		for: self
+		evaluationPools: nil
+		logged: false.
+	anICoreWebView2NavigationStartingEventArgs cancel: true!
 
 onShownInBrowser
 	"Event handler indicating that the receiver has been displayed within it's browser. "
@@ -627,7 +623,7 @@ selectFilteredRules
 	self autoRefresh!
 
 showDescriptionFor: aLintRule
-	self infoBrowser document body setProperty: 'InnerHTML' value: (self htmlDescriptionFor: aLintRule)!
+	self infoBrowserPresenter model value: (self htmlDescriptionFor: aLintRule)!
 
 smalltalkUrlTag
 	^'smalltalk:'!
@@ -698,20 +694,19 @@ importIgnoredRules!commands!public! !
 indicateFailures:!operations!private! !
 indicateStatus!operations!private! !
 indicateSuccess!operations!private! !
-infoBrowser!accessing!private! !
 infoBrowserPresenter!accessing!private! !
 initialize!initializing!private! !
 isBusy!accessing!public! !
 isFilterActive!commands!private! !
 lintRuleFailuresBrowserClass!constants!private! !
 lintRules!accessing!private! !
-onBeforeNavigate2:URL:Flags:TargetFrameName:PostData:Headers:Cancel:!event handling!private! !
 onBrowserEnvironmentSelected!event handling!private! !
 onClassUpdated:!event handling!public! !
 onFailureSelected!event handling!private! !
 onGetCursor:!event handling!public! !
 onLintRuleFilterChanged:!event handling!public! !
 onMethodUpdated:!event handling!public! !
+onNavigationStarting:!event handling!private! !
 onShownInBrowser!event handling!public! !
 onStartup!event handling!private! !
 onStartup2!event handling!private! !

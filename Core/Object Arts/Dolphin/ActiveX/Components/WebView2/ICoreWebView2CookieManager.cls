@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2CookieManager
+ICoreWebView2Interface subclass: #ICoreWebView2CookieManager
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2CookieManager guid: (IID fromString: '{177cd9e7-b6f5-451a-94a0-5d7a3a4c4141}')!
 ICoreWebView2CookieManager comment: '`ICoreWebView2CookieManager` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CookieManager'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -177,11 +177,6 @@ DeleteCookiesWithDomainAndPath: name domain: domain path: path
 	<virtual stdcall: hresult 10 lpwstr lpwstr lpwstr>
 	^self invalidCall: _failureCode!
 
-getCookies: uri handler: handler
-	"Invoke the GetCookies() method of the COM object."
-
-	^self GetCookies: uri asUtf16String handler: handler!
-
 GetCookies: uri handler: handler
 	"Private - Invoke the GetCookies() method of the COM object.
 
@@ -190,7 +185,16 @@ GetCookies: uri handler: handler
 			[in]ICoreWebView2GetCookiesCompletedHandler* handler);"
 
 	<virtual stdcall: hresult 6 lpwstr ICoreWebView2GetCookiesCompletedHandler*>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+getCookies: uriString thenDo: aDyadicValuable
+	"Asynchronously request the cookie list for the specified URI, invoking the <dyadicValuable> second argument when the request completes. The valuable is passed an HRESULT status code and an ICoreWebView2CookieList if successful."
+
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
+				queryInterface: ICoreWebView2GetCookiesCompletedHandler.
+	self GetCookies: uriString asUtf16String handler: handler.
+	handler free! !
 !ICoreWebView2CookieManager categoriesForMethods!
 addOrUpdateCookie:!**auto generated**!methods!public! !
 AddOrUpdateCookie:!**auto generated**!COM Interfaces-ICoreWebView2CookieManager!private! !
@@ -206,8 +210,8 @@ deleteCookies:uri:!**auto generated**!methods!public! !
 DeleteCookies:uri:!**auto generated**!COM Interfaces-ICoreWebView2CookieManager!private! !
 deleteCookiesWithDomainAndPath:domain:path:!**auto generated**!methods!public! !
 DeleteCookiesWithDomainAndPath:domain:path:!**auto generated**!COM Interfaces-ICoreWebView2CookieManager!private! !
-getCookies:handler:!**auto generated**!methods!public! !
 GetCookies:handler:!**auto generated**!COM Interfaces-ICoreWebView2CookieManager!private! !
+getCookies:thenDo:!methods!public! !
 !
 
 !ICoreWebView2CookieManager class methodsFor!
