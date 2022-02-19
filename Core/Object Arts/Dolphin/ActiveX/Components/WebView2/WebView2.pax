@@ -4,39 +4,59 @@ package paxVersion: 1;
 	basicComment: '# Dolphin Smalltalk WebView2 Integration
 Copyright © Object Arts Ltd et al, 2022
 
-A nascent integration of the Edge browser into Dolphin using the [WebView2 SDK](https://docs.microsoft.com/en-us/microsoft-edge/webview2). 
+This package contains an integration of the Edge browser into Dolphin using the [WebView2 SDK](https://docs.microsoft.com/en-us/microsoft-edge/webview2). It replaces the obsolete `Internet Explorer` package, which is now deprecated and will no longer be loaded by default in Dolphin 8.
 
-It requires that the WebView2 runtime is installed. See the above page - it''s complicated, and not clear to what extent one can rely on it being pre-installed. Judging from the number of instances of WebView2Loader.dll I have on my machine, it''s a messy problem. To run, you will need the x86 (32-Bit) version of WebView2Loader.dll on the path. For experimentation, just downloading the runtime and copying the DLL into the Dolphin folder appears to work.
+It requires that the WebView2 runtime is installed. See the above page for the (complicated) distribution options.
+If the runtime is not installed, then the view will display a link to the Microsoft page so the user can download and install if they wish.
+
+The interface classes were initially generated from a type library supplied with version 1.0.1108.44 of the WebView2 nuget package, although they have been extensively modified and restructured subsequently in order to improve and simplify the abstraction. Regeneration will need to be done with care to avoid losing or clashing with any of the customisation.
+
+A simple example use is shown below, but the view is also used in the class browser Code Mentor plugin, in the IDE extension that builds and display a table of key bindings for each tool, and in the `Simple Web Browser` and `Autoplay` samples.
 
 ## Example
 
 ```
 wv := URLPresenter show: ''WebView2''.
 wv value: ''https://github.com/DolphinSmalltalk/Dolphin''.
+
+"Can also display HTML loaded from a string"
+wv model value: ''<html><body>Hello World!!</body></html>''
+
+wv topShell destroy.
+
 "By way of contrast..."
-ie := URLPresenter show.
+ie := URLPresenter show: ''Internet Explorer''.
 ie value: ''https://github.com/DolphinSmalltalk/Dolphin''.
 ```
 '.
 
 
 package classNames
-	add: #COREWEBVIEW2_COLOR;
 	add: #COREWEBVIEW2_PHYSICAL_KEY_STATUS;
-	add: #EventRegistrationToken;
 	add: #ICoreWebView2;
 	add: #ICoreWebView2_2;
 	add: #ICoreWebView2_3;
 	add: #ICoreWebView2_4;
+	add: #ICoreWebView2_5;
+	add: #ICoreWebView2_6;
+	add: #ICoreWebView2_7;
+	add: #ICoreWebView2_8;
+	add: #ICoreWebView2_9;
 	add: #ICoreWebView2AcceleratorKeyPressedEventArgs;
 	add: #ICoreWebView2AcceleratorKeyPressedEventHandler;
 	add: #ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler;
+	add: #ICoreWebView2BrowserProcessExitedEventArgs;
+	add: #ICoreWebView2BrowserProcessExitedEventHandler;
 	add: #ICoreWebView2BytesReceivedChangedEventHandler;
 	add: #ICoreWebView2CallDevToolsProtocolMethodCompletedHandler;
 	add: #ICoreWebView2CapturePreviewCompletedHandler;
+	add: #ICoreWebView2ClientCertificate;
+	add: #ICoreWebView2ClientCertificateCollection;
+	add: #ICoreWebView2ClientCertificateRequestedEventArgs;
+	add: #ICoreWebView2ClientCertificateRequestedEventHandler;
+	add: #ICoreWebView2Collection;
 	add: #ICoreWebView2CompositionController;
 	add: #ICoreWebView2CompositionController2;
-	add: #ICoreWebView2CompositionControllerInterop;
 	add: #ICoreWebView2ContainsFullScreenElementChangedEventHandler;
 	add: #ICoreWebView2ContentLoadingEventArgs;
 	add: #ICoreWebView2ContentLoadingEventHandler;
@@ -64,51 +84,79 @@ package classNames
 	add: #ICoreWebView2Environment2;
 	add: #ICoreWebView2Environment3;
 	add: #ICoreWebView2Environment4;
-	add: #ICoreWebView2EnvironmentInterop;
+	add: #ICoreWebView2Environment5;
+	add: #ICoreWebView2Environment6;
+	add: #ICoreWebView2Environment7;
+	add: #ICoreWebView2Environment8;
 	add: #ICoreWebView2EnvironmentOptions;
 	add: #ICoreWebView2EstimatedEndTimeChangedEventHandler;
+	add: #ICoreWebView2EventArgs;
+	add: #ICoreWebView2EventHandler;
 	add: #ICoreWebView2ExecuteScriptCompletedHandler;
 	add: #ICoreWebView2FocusChangedEventHandler;
+	add: #ICoreWebView2FocusGainedEventHandler;
+	add: #ICoreWebView2FocusLostEventHandler;
 	add: #ICoreWebView2Frame;
+	add: #ICoreWebView2Frame2;
+	add: #ICoreWebView2FrameContentLoadingEventHandler;
 	add: #ICoreWebView2FrameCreatedEventArgs;
 	add: #ICoreWebView2FrameCreatedEventHandler;
 	add: #ICoreWebView2FrameDestroyedEventHandler;
+	add: #ICoreWebView2FrameDOMContentLoadedEventHandler;
 	add: #ICoreWebView2FrameInfo;
 	add: #ICoreWebView2FrameInfoCollection;
 	add: #ICoreWebView2FrameInfoCollectionIterator;
 	add: #ICoreWebView2FrameNameChangedEventHandler;
+	add: #ICoreWebView2FrameNavigationCompletedEventHandler;
+	add: #ICoreWebView2FrameNavigationStartingEventHandler;
+	add: #ICoreWebView2FrameWebMessageReceivedEventHandler;
 	add: #ICoreWebView2GetCookiesCompletedHandler;
 	add: #ICoreWebView2HistoryChangedEventHandler;
+	add: #ICoreWebView2HttpHeadersCollection;
 	add: #ICoreWebView2HttpHeadersCollectionIterator;
 	add: #ICoreWebView2HttpRequestHeaders;
 	add: #ICoreWebView2HttpResponseHeaders;
-	add: #ICoreWebView2Interop;
+	add: #ICoreWebView2Interface;
+	add: #ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler;
+	add: #ICoreWebView2IsDocumentPlayingAudioChangedEventHandler;
+	add: #ICoreWebView2IsMutedChangedEventHandler;
+	add: #ICoreWebView2IterableCollection;
 	add: #ICoreWebView2MoveFocusRequestedEventArgs;
 	add: #ICoreWebView2MoveFocusRequestedEventHandler;
 	add: #ICoreWebView2NavigationCompletedEventArgs;
 	add: #ICoreWebView2NavigationCompletedEventHandler;
 	add: #ICoreWebView2NavigationStartingEventArgs;
+	add: #ICoreWebView2NavigationStartingEventArgs2;
 	add: #ICoreWebView2NavigationStartingEventHandler;
 	add: #ICoreWebView2NewBrowserVersionAvailableEventHandler;
 	add: #ICoreWebView2NewWindowRequestedEventArgs;
+	add: #ICoreWebView2NewWindowRequestedEventArgs2;
 	add: #ICoreWebView2NewWindowRequestedEventHandler;
 	add: #ICoreWebView2PermissionRequestedEventArgs;
 	add: #ICoreWebView2PermissionRequestedEventHandler;
 	add: #ICoreWebView2PointerInfo;
+	add: #ICoreWebView2PrintSettings;
+	add: #ICoreWebView2PrintToPdfCompletedHandler;
 	add: #ICoreWebView2ProcessFailedEventArgs;
 	add: #ICoreWebView2ProcessFailedEventArgs2;
 	add: #ICoreWebView2ProcessFailedEventHandler;
+	add: #ICoreWebView2ProcessInfo;
+	add: #ICoreWebView2ProcessInfoCollection;
+	add: #ICoreWebView2ProcessInfosChangedEventHandler;
 	add: #ICoreWebView2RasterizationScaleChangedEventHandler;
 	add: #ICoreWebView2ScriptDialogOpeningEventArgs;
 	add: #ICoreWebView2ScriptDialogOpeningEventHandler;
+	add: #ICoreWebView2Sequence;
 	add: #ICoreWebView2Settings;
 	add: #ICoreWebView2Settings2;
 	add: #ICoreWebView2Settings3;
 	add: #ICoreWebView2Settings4;
 	add: #ICoreWebView2Settings5;
+	add: #ICoreWebView2Settings6;
 	add: #ICoreWebView2SourceChangedEventArgs;
 	add: #ICoreWebView2SourceChangedEventHandler;
 	add: #ICoreWebView2StateChangedEventHandler;
+	add: #ICoreWebView2StringCollection;
 	add: #ICoreWebView2TrySuspendCompletedHandler;
 	add: #ICoreWebView2WebMessageReceivedEventArgs;
 	add: #ICoreWebView2WebMessageReceivedEventHandler;
@@ -123,12 +171,12 @@ package classNames
 	add: #ICoreWebView2WindowCloseRequestedEventHandler;
 	add: #ICoreWebView2WindowFeatures;
 	add: #ICoreWebView2ZoomFactorChangedEventHandler;
+	add: #ICoreWebViewCompletedHandler;
+	add: #URLPresenter;
+	add: #WebView2CompletionHandler;
+	add: #WebView2EventSink;
 	add: #WebView2Loader;
 	add: #WebView2View;
-	yourself.
-
-package methodNames
-	add: 'URLPresenter class' -> #resource_WebView2;
 	yourself.
 
 package globalNames
@@ -146,24 +194,31 @@ package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\MVP\Base\Dolphin MVP Base'
+	'..\..\..\Registry\Dolphin Registry Access'
+	'..\..\..\MVP\Views\SysLink\Dolphin SysLink Control'
 	'..\..\..\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\MVP\Models\Value\Dolphin Value Models'
-	'..\SHDocVw\Internet Explorer'
 	'..\..\COM\OLE COM'
-	'..\..\Structured Storage\OLE Structured Storage').
+	'..\..\Structured Storage\OLE Structured Storage'
+	'..\..\Shell\Windows Shell').
 
 package!
 
 "Class Definitions"!
 
-ExternalLibrary subclass: #WebView2Loader
-	instanceVariableNames: ''
+COMInterfaceImp subclass: #WebView2CompletionHandler
+	instanceVariableNames: 'completionBlock'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #COREWEBVIEW2_COLOR
+COMInterfaceImp subclass: #WebView2EventSink
+	instanceVariableNames: 'source interfaceClass interface handler'
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ExternalLibrary subclass: #WebView2Loader
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_A _OffsetOf_B _OffsetOf_G _OffsetOf_R'
+	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ExternalStructure subclass: #COREWEBVIEW2_PHYSICAL_KEY_STATUS
@@ -171,435 +226,145 @@ ExternalStructure subclass: #COREWEBVIEW2_PHYSICAL_KEY_STATUS
 	classVariableNames: '_OffsetOf_IsExtendedKey _OffsetOf_IsKeyReleased _OffsetOf_IsMenuKeyDown _OffsetOf_RepeatCount _OffsetOf_ScanCode _OffsetOf_WasKeyDown'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ExternalStructure subclass: #EventRegistrationToken
+IUnknown subclass: #ICoreWebView2Interface
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_value'
+	classVariableNames: 'ResourceLib'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2
+ICoreWebView2Interface subclass: #ICoreWebView2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2AcceleratorKeyPressedEventArgs
+ICoreWebView2Interface subclass: #ICoreWebView2ClientCertificate
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2AcceleratorKeyPressedEventHandler
+ICoreWebView2Interface subclass: #ICoreWebView2Collection
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler
+ICoreWebView2Interface subclass: #ICoreWebView2CompositionController
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2BytesReceivedChangedEventHandler
+ICoreWebView2Interface subclass: #ICoreWebView2Controller
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2CallDevToolsProtocolMethodCompletedHandler
+ICoreWebView2Interface subclass: #ICoreWebView2Cookie
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2CapturePreviewCompletedHandler
+ICoreWebView2Interface subclass: #ICoreWebView2CookieManager
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2CompositionController
+ICoreWebView2Interface subclass: #ICoreWebView2Deferral
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2CompositionControllerInterop
+ICoreWebView2Interface subclass: #ICoreWebView2DevToolsProtocolEventReceiver
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2ContainsFullScreenElementChangedEventHandler
+ICoreWebView2Interface subclass: #ICoreWebView2DownloadOperation
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2ContentLoadingEventArgs
+ICoreWebView2Interface subclass: #ICoreWebView2Environment
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2ContentLoadingEventHandler
+ICoreWebView2Interface subclass: #ICoreWebView2EnvironmentOptions
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2Controller
+ICoreWebView2Interface subclass: #ICoreWebView2EventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2Cookie
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2CookieList
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2CookieManager
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2CreateCoreWebView2ControllerCompletedHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2CursorChangedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2Deferral
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2DevToolsProtocolEventReceivedEventArgs
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2DevToolsProtocolEventReceivedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2DevToolsProtocolEventReceiver
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2DocumentTitleChangedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2DOMContentLoadedEventArgs
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2DOMContentLoadedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2DownloadOperation
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2DownloadStartingEventArgs
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2DownloadStartingEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2Environment
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2EnvironmentInterop
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2EnvironmentOptions
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2EstimatedEndTimeChangedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2ExecuteScriptCompletedHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2FocusChangedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2Frame
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2FrameCreatedEventArgs
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2FrameCreatedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2FrameDestroyedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2FrameInfo
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2FrameInfoCollection
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2FrameInfoCollectionIterator
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2FrameNameChangedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2GetCookiesCompletedHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2HistoryChangedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2HttpHeadersCollectionIterator
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2HttpRequestHeaders
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2HttpResponseHeaders
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2Interop
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2MoveFocusRequestedEventArgs
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2MoveFocusRequestedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2NavigationCompletedEventArgs
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2NavigationCompletedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2NavigationStartingEventArgs
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2NavigationStartingEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2NewBrowserVersionAvailableEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2NewWindowRequestedEventArgs
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2NewWindowRequestedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2PermissionRequestedEventArgs
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2PermissionRequestedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2PointerInfo
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2ProcessFailedEventArgs
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2ProcessFailedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2RasterizationScaleChangedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2ScriptDialogOpeningEventArgs
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2ScriptDialogOpeningEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2Settings
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2SourceChangedEventArgs
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2SourceChangedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2StateChangedEventHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2TrySuspendCompletedHandler
-	instanceVariableNames: ''
+ICoreWebView2Interface subclass: #ICoreWebView2EventHandler
+	instanceVariableNames: 'source token'
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2WebMessageReceivedEventArgs
+ICoreWebView2Interface subclass: #ICoreWebView2Frame
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2WebMessageReceivedEventHandler
+ICoreWebView2Interface subclass: #ICoreWebView2FrameInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2WebResourceRequest
+ICoreWebView2Interface subclass: #ICoreWebView2FrameInfoCollectionIterator
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2WebResourceRequestedEventArgs
+ICoreWebView2Interface subclass: #ICoreWebView2HttpHeadersCollectionIterator
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2WebResourceRequestedEventHandler
+ICoreWebView2Interface subclass: #ICoreWebView2PointerInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2WebResourceResponse
+ICoreWebView2Interface subclass: #ICoreWebView2PrintSettings
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2WebResourceResponseReceivedEventArgs
+ICoreWebView2Interface subclass: #ICoreWebView2ProcessInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2WebResourceResponseReceivedEventHandler
+ICoreWebView2Interface subclass: #ICoreWebView2Settings
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2WebResourceResponseView
+ICoreWebView2Interface subclass: #ICoreWebView2WebResourceRequest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2WebResourceResponseViewGetContentCompletedHandler
+ICoreWebView2Interface subclass: #ICoreWebView2WebResourceResponse
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2WindowCloseRequestedEventHandler
+ICoreWebView2Interface subclass: #ICoreWebView2WebResourceResponseView
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2WindowFeatures
+ICoreWebView2Interface subclass: #ICoreWebView2WindowFeatures
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-IUnknown subclass: #ICoreWebView2ZoomFactorChangedEventHandler
+ICoreWebView2Interface subclass: #ICoreWebViewCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2 subclass: #ICoreWebView2_2
 	instanceVariableNames: ''
@@ -615,6 +380,81 @@ ICoreWebView2_3 subclass: #ICoreWebView2_4
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2_4 subclass: #ICoreWebView2_5
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2_5 subclass: #ICoreWebView2_6
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2_6 subclass: #ICoreWebView2_7
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2_7 subclass: #ICoreWebView2_8
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2_8 subclass: #ICoreWebView2_9
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2Collection subclass: #ICoreWebView2IterableCollection
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2Collection subclass: #ICoreWebView2Sequence
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2IterableCollection subclass: #ICoreWebView2FrameInfoCollection
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2IterableCollection subclass: #ICoreWebView2HttpHeadersCollection
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2HttpHeadersCollection subclass: #ICoreWebView2HttpRequestHeaders
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2HttpHeadersCollection subclass: #ICoreWebView2HttpResponseHeaders
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2Sequence subclass: #ICoreWebView2ClientCertificateCollection
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2Sequence subclass: #ICoreWebView2CookieList
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2Sequence subclass: #ICoreWebView2ProcessInfoCollection
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2Sequence subclass: #ICoreWebView2StringCollection
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2CompositionController subclass: #ICoreWebView2CompositionController2
 	instanceVariableNames: ''
@@ -646,7 +486,357 @@ ICoreWebView2Environment3 subclass: #ICoreWebView2Environment4
 	classVariableNames: ''
 	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
-ICoreWebView2ProcessFailedEventArgs subclass: #ICoreWebView2ProcessFailedEventArgs2
+ICoreWebView2Environment4 subclass: #ICoreWebView2Environment5
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2Environment5 subclass: #ICoreWebView2Environment6
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2Environment6 subclass: #ICoreWebView2Environment7
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2Environment7 subclass: #ICoreWebView2Environment8
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2AcceleratorKeyPressedEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2BrowserProcessExitedEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2ClientCertificateRequestedEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2ContentLoadingEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2DevToolsProtocolEventReceivedEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2DOMContentLoadedEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2DownloadStartingEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2FrameCreatedEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2MoveFocusRequestedEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2NavigationCompletedEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2NavigationStartingEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2NewWindowRequestedEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2PermissionRequestedEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2ProcessFailedEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2ProcessFailedEventArgs2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2ScriptDialogOpeningEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2SourceChangedEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2WebMessageReceivedEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2WebResourceRequestedEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventArgs subclass: #ICoreWebView2WebResourceResponseReceivedEventArgs
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2NavigationStartingEventArgs subclass: #ICoreWebView2NavigationStartingEventArgs2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2NewWindowRequestedEventArgs subclass: #ICoreWebView2NewWindowRequestedEventArgs2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2AcceleratorKeyPressedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2BrowserProcessExitedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2BytesReceivedChangedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2ClientCertificateRequestedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2ContainsFullScreenElementChangedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2ContentLoadingEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2CursorChangedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2DevToolsProtocolEventReceivedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2DocumentTitleChangedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2DOMContentLoadedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2DownloadStartingEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2EstimatedEndTimeChangedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2FocusChangedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2FrameContentLoadingEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2FrameCreatedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2FrameDOMContentLoadedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2FrameNameChangedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2FrameNavigationCompletedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2FrameNavigationStartingEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2FrameWebMessageReceivedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2HistoryChangedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2IsDocumentPlayingAudioChangedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2IsMutedChangedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2MoveFocusRequestedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2NavigationCompletedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2NavigationStartingEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2NewBrowserVersionAvailableEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2NewWindowRequestedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2PermissionRequestedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2ProcessFailedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2ProcessInfosChangedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2RasterizationScaleChangedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2ScriptDialogOpeningEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2SourceChangedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2StateChangedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2WebMessageReceivedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2WebResourceRequestedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2WebResourceResponseReceivedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2WindowCloseRequestedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2EventHandler subclass: #ICoreWebView2ZoomFactorChangedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2AcceleratorKeyPressedEventHandler subclass: #ICoreWebView2FrameDestroyedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2FocusChangedEventHandler subclass: #ICoreWebView2FocusGainedEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2FocusChangedEventHandler subclass: #ICoreWebView2FocusLostEventHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2Frame subclass: #ICoreWebView2Frame2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'WebView2Constants'
@@ -671,9 +861,74 @@ ICoreWebView2Settings4 subclass: #ICoreWebView2Settings5
 	classVariableNames: ''
 	poolDictionaries: 'WebView2Constants'
 	classInstanceVariableNames: ''!
-ValueConvertingControlView subclass: #WebView2View
-	instanceVariableNames: 'webviewController webviewWindow'
+ICoreWebView2Settings5 subclass: #ICoreWebView2Settings6
+	instanceVariableNames: ''
 	classVariableNames: ''
+	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebViewCompletedHandler subclass: #ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebViewCompletedHandler subclass: #ICoreWebView2CallDevToolsProtocolMethodCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebViewCompletedHandler subclass: #ICoreWebView2CapturePreviewCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebViewCompletedHandler subclass: #ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebViewCompletedHandler subclass: #ICoreWebView2CreateCoreWebView2ControllerCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebViewCompletedHandler subclass: #ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebViewCompletedHandler subclass: #ICoreWebView2ExecuteScriptCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebViewCompletedHandler subclass: #ICoreWebView2GetCookiesCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebViewCompletedHandler subclass: #ICoreWebView2PrintToPdfCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebViewCompletedHandler subclass: #ICoreWebView2TrySuspendCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebViewCompletedHandler subclass: #ICoreWebView2WebResourceResponseViewGetContentCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ValuePresenter subclass: #URLPresenter
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ValueConvertingControlView subclass: #WebView2View
+	instanceVariableNames: 'settingsFlags unavailableLink webviewEnvironment webviewController webview webviewSettings eventHandlers'
+	classVariableNames: 'CanNavigateToStrings DisableBrowserAcceleratorKeysMask DisableBuiltInErrorPageMask DisableDefaultContextMenuMask DisableDefaultScriptDialogsMask DisableDevToolsMask DisableGeneralAutofillMask DisableHostObjectsMask DisablePasswordAutosaveMask DisablePinchZoomMask DisableScriptMask DisableStatusBarMask DisableWebmessageMask DisableZoomControlMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 
@@ -681,21 +936,6 @@ ValueConvertingControlView subclass: #WebView2View
 
 
 "Loose Methods"!
-
-!URLPresenter class methodsFor!
-
-resource_WebView2
-	"Answer the literal data from which the 'WebView2' resource can be reconstituted.
-	DO NOT EDIT OR RECATEGORIZE THIS METHOD.
-
-	If you wish to modify this resource evaluate:
-	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_WebView2)
-	"
-
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.WebView2View) 34 17 nil nil 34 2 8 1140916224 1 416 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 7 nil nil nil 416 nil nil 852486 ##(Smalltalk.NullConverter) nil nil 1507846 ##(Smalltalk.ICoreWebView2Controller) nil nil 852486 ##(Smalltalk.ICoreWebView2) nil nil 983302 ##(Smalltalk.MessageSequence) 138 144 34 1 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 12287 21 754 1179 289 416 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 76 26 0 0 154 0 0 0] 8 #() 754 193 193 nil 27 )! !
-!URLPresenter class categoriesForMethods!
-resource_WebView2!public!resources-views! !
-!
 
 "End of package definition"!
 

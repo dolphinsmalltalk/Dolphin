@@ -3,7 +3,7 @@
 Core.Object subclass: #'Tools.Examples.OAIDEExtensions'
 	instanceVariableNames: 'flags'
 	classVariableNames: 'Current'
-	imports: #(#{SHDocVw private})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
 		'ClassCommentTemplateMask' -> 16r1.
@@ -69,9 +69,9 @@ browseKeyBindingsOfShell: aShellView
 		largeIcon: (Icon fromId: 'HotKey.ico');
 		isPersistentView: false.
 	shell caption: ('<1d> Key Bindings' expandMacrosWith: aShellView presenter class).
-	presenter := URLPresenter createIn: shell.
+	presenter := Smalltalk.URLPresenter createIn: shell.
 	shell show.
-	browser := presenter view controlDispatch.
+	browser := presenter view.
 	stream reset.
 	self streamHtml: stream intoBrowser: browser!
 
@@ -163,7 +163,7 @@ observeToolEvents
 	self nonClassBrowserTools do: [:each | self observeToolClass: each]!
 
 onBrowserOpened: aClassBrowserAbstract 
-	self enableClassCommentTemplate 
+	self enableClassCommentTemplate
 		ifTrue: [[self extendClassCommentMenu: aClassBrowserAbstract] postToMessageQueue].
 	self onToolOpened: aClassBrowserAbstract!
 
@@ -282,11 +282,8 @@ release
 	self unextendMenus!
 
 streamHtml: aStream intoBrowser: browser
-	| doc docStream |
-	doc := browser document.
-	docStream := doc queryInterface: OS.COM.IPersistStreamInit.
-	docStream initNew.
-	docStream readFrom: (aStream queryInterface: OS.COM.IStream)!
+	browser canNavigateToStrings: true.
+	browser model value: aStream contents!
 
 unextendMenus
 	| openTools toolClasses |
@@ -424,8 +421,8 @@ printHtmlTableOfKeyBindingsForView:on:inUse:!helpers!private! !
 printInlineStyleSheetOn:!private! !
 release!dependency!private! !
 streamHtml:intoBrowser:!operations!private! !
-unextendMenus!dependency!private! !
-unobserveToolEvents!initializing!private! !
+unextendMenus!dependency!public! !
+unobserveToolEvents!initializing!public! !
 variableDescriptionsFor:!development!private! !
 !
 

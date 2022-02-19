@@ -167,7 +167,8 @@ testAsTime
 testAsUnixTime
 	| subject |
 	subject := DateAndTime fromString: '2019-04-12T18:49:17+00:00'.
-	self assert: subject asUnixTime truncated equals: 1555094957!
+	self assert: subject asUnixTime truncated equals: 1555094957.
+	self assert: (DateAndTime fromUnixTime: 1555094957) equals: subject!
 
 testAsUTC
 	| subject |
@@ -266,6 +267,23 @@ testFromSYSTEMTIME
 	self assert: ts minute equals: sysTime wMinute.
 	self assert: ts second truncated equals: sysTime wSecond.
 	self assert: ts second fractionPart * 1000 equals: sysTime wMilliseconds!
+
+testFromUnixTime
+	"see https://en.wikipedia.org/wiki/Lilian_date."
+
+	| subject |
+	subject := DateAndTime fromUnixTime: 0.
+	self assert: subject equals: (DateAndTime year: 1970 day: 1 offset: 0 seconds).
+	self assert: subject asUnixTime equals: 0.
+	subject := DateAndTime fromUnixTime: 1485498912.
+	self assert: subject
+		equals: (DateAndTime
+				year: 2017
+				day: 27
+				hour: 06
+				minute: 35
+				second: 12
+				offset: 0 seconds)!
 
 testHour
 	0 to: 23
@@ -615,7 +633,7 @@ testStbConvertFrom0
 	bytes := #[33 83 84 66 32 52 32 6 3 11 0 68 97 116 101 65 110 100 84 105 109 101 131 127 22 0 6 2 8 0 70 114 97 99 116 105 111 110 183 217 116 4 209 7 0 0 33 59 255 255].	"Obtained from the code above"
 	dat := DateAndTime fromBinaryStoreBytes: bytes.
 	string := dat printString.
-	self assert: string = ' 2019-06-07T10:23:03.387-07:00'	"What is with the leading space?"!
+	self assert: string equals: ' 2019-06-07T10:23:03.387-07:00'	"What is with the leading space?"!
 
 testStoreOn
 	| now stored collection |
@@ -766,6 +784,7 @@ testDayOfYear!public!unit tests! !
 testFromFILETIME!public! !
 testFromString!public!unit tests! !
 testFromSYSTEMTIME!public! !
+testFromUnixTime!public!unit tests! !
 testHour!public!unit tests! !
 testHour12!public!unit tests! !
 testHour24!public!unit tests! !

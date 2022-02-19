@@ -31,9 +31,6 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: #(
-	'..\..\Object Arts\Dolphin\ActiveX\Automation\ActiveX Automation'
-	'..\..\Object Arts\Dolphin\ActiveX\Connection Points\ActiveX Connection Points'
-	'..\..\Object Arts\Dolphin\ActiveX\OCX\ActiveX Control Hosting'
 	'..\..\Object Arts\Dolphin\IDE\Base\Development System'
 	'..\..\Object Arts\Dolphin\Base\Dolphin'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
@@ -54,8 +51,7 @@ package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models'
 	'IDB Common'
-	'..\..\Object Arts\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer'
-	'..\..\Object Arts\Dolphin\ActiveX\COM\OLE COM'
+	'..\..\Object Arts\Dolphin\ActiveX\Components\WebView2\WebView2'
 	'..\..\Object Arts\Dolphin\ActiveX\Shell\Windows Shell Namespace').
 
 package!

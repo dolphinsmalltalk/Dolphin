@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2NewWindowRequestedEventArgs
+ICoreWebView2EventArgs subclass: #ICoreWebView2NewWindowRequestedEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2NewWindowRequestedEventArgs guid: (IID fromString: '{34acb11c-fc37-4418-9132-f9c21d1eafb9}')!
 ICoreWebView2NewWindowRequestedEventArgs comment: '`ICoreWebView2NewWindowRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NewWindowRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -113,23 +113,23 @@ GetDeferral: deferral
 	^self invalidCall: _failureCode!
 
 handled
-	"Answer the <sdword> value of the 'Handled' property of the receiver."
+	"Answer the <Boolean> value of the 'Handled' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_Handled: answer.
 	^answer asObject!
 
 handled: handled
 	"Set the 'Handled' property of the receiver to the <sdword> value of the argument."
 
-	self put_Handled: handled!
+	self put_Handled: handled asParameter!
 
 isUserInitiated
-	"Answer the <sdword> value of the 'IsUserInitiated' property of the receiver."
+	"Answer the <Boolean> value of the 'IsUserInitiated' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_IsUserInitiated: answer.
 	^answer asObject!
 
@@ -145,6 +145,9 @@ newWindow: newWindow
 	"Set the 'NewWindow' property of the receiver to the <ICoreWebView2*> value of the argument."
 
 	self put_NewWindow: newWindow!
+
+printableProperties
+	^#(#uri #isUserInitiated #windowFeatures)!
 
 put_Handled: handled
 	"Private - Set the value of the 'Handled' property of the object wrapped by the 
@@ -169,10 +172,12 @@ put_NewWindow: newWindow
 uri
 	"Answer the <lpwstr> value of the 'uri' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_uri: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_uri: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 windowFeatures
 	"Answer the <ICoreWebView2WindowFeatures> value of the 'WindowFeatures' property of the receiver."
@@ -189,14 +194,15 @@ get_uri:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventA
 get_WindowFeatures:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 getDeferral!**auto generated**!methods!public! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
-handled!**auto generated**!properties!public! !
-handled:!**auto generated**!properties!public! !
-isUserInitiated!**auto generated**!properties!public! !
+handled!properties!public! !
+handled:!properties!public! !
+isUserInitiated!properties!public! !
 newWindow!**auto generated**!properties!public! !
 newWindow:!**auto generated**!properties!public! !
+printableProperties!development!printing!private! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 put_NewWindow:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
-uri!**auto generated**!properties!public! !
+uri!properties!public! !
 windowFeatures!**auto generated**!properties!public! !
 !
 

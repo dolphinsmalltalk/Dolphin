@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2DevToolsProtocolEventReceivedEventHandler
+ICoreWebView2EventHandler subclass: #ICoreWebView2DevToolsProtocolEventReceivedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2DevToolsProtocolEventReceivedEventHandler guid: (IID fromString: '{e2fda4be-5456-406c-a261-3d452138362c}')!
 ICoreWebView2DevToolsProtocolEventReceivedEventHandler comment: '`ICoreWebView2DevToolsProtocolEventReceivedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -30,23 +30,14 @@ interface ICoreWebView2DevToolsProtocolEventReceivedEventHandler : IUnknown
 !ICoreWebView2DevToolsProtocolEventReceivedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2DevToolsProtocolEventReceivedEventHandler methodsFor!
 
-invoke: sender args: args
-	"Invoke the Invoke() method of the COM object."
+basicRegister: tokenBuffer
+	source Add_DevToolsProtocolEventReceived: self token: tokenBuffer!
 
-	^self Invoke: sender args: args!
-
-Invoke: sender args: args
-	"Private - Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2* sender,
-			[in]ICoreWebView2DevToolsProtocolEventReceivedEventArgs* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2* ICoreWebView2DevToolsProtocolEventReceivedEventArgs*>
-	^self invalidCall: _failureCode! !
+basicUnregister
+	source Remove_DevToolsProtocolEventReceived: token! !
 !ICoreWebView2DevToolsProtocolEventReceivedEventHandler categoriesForMethods!
-invoke:args:!**auto generated**!methods!public! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2DevToolsProtocolEventReceivedEventHandler!private! !
+basicRegister:!private!realizing/unrealizing! !
+basicUnregister!private!realizing/unrealizing! !
 !
 
 !ICoreWebView2DevToolsProtocolEventReceivedEventHandler class methodsFor!
@@ -58,8 +49,14 @@ defineFunctions
 	self
 		defineFunction: #Invoke:args:
 			argumentTypes: 'ICoreWebView2* ICoreWebView2DevToolsProtocolEventReceivedEventArgs*'
-! !
+!
+
+eventName
+	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
+
+	^#devToolsProtocolEvent:! !
 !ICoreWebView2DevToolsProtocolEventReceivedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
+eventName!constants!public! !
 !
 

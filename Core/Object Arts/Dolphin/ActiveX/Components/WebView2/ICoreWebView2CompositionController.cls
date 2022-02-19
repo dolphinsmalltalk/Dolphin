@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2CompositionController
+ICoreWebView2Interface subclass: #ICoreWebView2CompositionController
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2CompositionController guid: (IID fromString: '{3df9b733-b9ae-4a15-86b4-eb9ee9826469}')!
 ICoreWebView2CompositionController comment: '`ICoreWebView2CompositionController` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CompositionController'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -55,14 +55,6 @@ interface ICoreWebView2CompositionController : IUnknown
 !ICoreWebView2CompositionController categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2CompositionController methodsFor!
 
-add_CursorChanged: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_CursorChanged() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_CursorChanged: eventHandler token: answer.
-	^answer asObject!
-
 Add_CursorChanged: eventHandler token: token
 	"Private - Invoke the add_CursorChanged() method of the COM object.
 
@@ -70,8 +62,15 @@ Add_CursorChanged: eventHandler token: token
 			[in]ICoreWebView2CursorChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 10 ICoreWebView2CursorChangedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 10 ICoreWebView2CursorChangedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
+
+currentCursor
+	"Answer the current <Cursor>."
+
+	| hCursor |
+	hCursor := self cursor.
+	^hCursor == 0 ifFalse: [Cursor fromHandle: hCursor]!
 
 cursor
 	"Answer the <handle> value of the 'Cursor' property of the receiver."
@@ -108,6 +107,21 @@ get_SystemCursorId: systemCursorId
 	<virtual stdcall: hresult 9 dword*>
 	^self invalidCall: _failureCode!
 
+get_UIAProvider: provider
+	"Private - Get the value of the 'UIAProvider' property of the receiver.
+
+		HRESULT __stdcall UIAProvider(
+			[out, retval]IUnknown** provider);"
+
+	"Not implemented in this version"
+	^E_NOTIMPL!
+
+printableProperties
+	| propertyNames |
+	propertyNames := #(rootVisualTarget #systemCursorId).
+	self cursor == 0 ifFalse: [propertyNames := propertyNames copyWith: #currentCursor].
+	^propertyNames!
+
 put_RootVisualTarget: target
 	"Private - Set the value of the 'RootVisualTarget' property of the object wrapped by the 
 	 receiver to the <IUnknown*> argument, target.
@@ -118,18 +132,13 @@ put_RootVisualTarget: target
 	<virtual stdcall: hresult 5 IUnknown*>
 	^self invalidCall: _failureCode!
 
-remove_CursorChanged: token
-	"Invoke the remove_CursorChanged() method of the COM object."
-
-	^self Remove_CursorChanged: token!
-
 Remove_CursorChanged: token
 	"Private - Invoke the remove_CursorChanged() method of the COM object.
 
 		HRESULT __stdcall remove_CursorChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 11 EventRegistrationToken>
+	<virtual stdcall: hresult 11 sqword>
 	^self invalidCall: _failureCode!
 
 rootVisualTarget
@@ -145,15 +154,6 @@ rootVisualTarget: target
 
 	self put_RootVisualTarget: target!
 
-sendMouseInput: eventKind virtualKeys: virtualKeys mouseData: mouseData point: point
-	"Invoke the SendMouseInput() method of the COM object."
-
-	^self
-		SendMouseInput: eventKind
-		virtualKeys: virtualKeys
-		mouseData: mouseData
-		point: point!
-
 SendMouseInput: eventKind virtualKeys: virtualKeys mouseData: mouseData point: point
 	"Private - Invoke the SendMouseInput() method of the COM object.
 
@@ -165,11 +165,6 @@ SendMouseInput: eventKind virtualKeys: virtualKeys mouseData: mouseData point: p
 
 	<virtual stdcall: hresult 6 sdword sdword dword POINTL>
 	^self invalidCall: _failureCode!
-
-sendPointerInput: eventKind pointerInfo: pointerInfo
-	"Invoke the SendPointerInput() method of the COM object."
-
-	^self SendPointerInput: eventKind pointerInfo: pointerInfo!
 
 SendPointerInput: eventKind pointerInfo: pointerInfo
 	"Private - Invoke the SendPointerInput() method of the COM object.
@@ -187,25 +182,36 @@ systemCursorId
 	| answer |
 	answer := DWORD new.
 	self get_SystemCursorId: answer.
+	^answer asObject!
+
+uiaProvider
+	"Answer the <IUnknown> value of the 'UIAProvider' property of the receiver."
+
+	| answer |
+	answer := IUnknown newPointer.
+	self get_UIAProvider: answer.
 	^answer asObject! !
 !ICoreWebView2CompositionController categoriesForMethods!
-add_CursorChanged:!**auto generated**!methods!public! !
-Add_CursorChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private! !
+Add_CursorChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!events!private! !
+currentCursor!properties!public! !
 cursor!**auto generated**!properties!public! !
-get_Cursor:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private! !
-get_RootVisualTarget:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private! !
-get_SystemCursorId:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private! !
-put_RootVisualTarget:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private! !
-remove_CursorChanged:!**auto generated**!methods!public! !
-Remove_CursorChanged:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private! !
+get_Cursor:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private!properties! !
+get_RootVisualTarget:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private!properties! !
+get_SystemCursorId:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private!properties! !
+get_UIAProvider:!COM Interfaces-ICoreWebView2CompositionController2!private! !
+printableProperties!development!printing!private! !
+put_RootVisualTarget:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private!properties! !
+Remove_CursorChanged:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!events!private! !
 rootVisualTarget!**auto generated**!properties!public! !
 rootVisualTarget:!**auto generated**!properties!public! !
-sendMouseInput:virtualKeys:mouseData:point:!**auto generated**!methods!public! !
-SendMouseInput:virtualKeys:mouseData:point:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private! !
-sendPointerInput:pointerInfo:!**auto generated**!methods!public! !
-SendPointerInput:pointerInfo:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private! !
+SendMouseInput:virtualKeys:mouseData:point:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!methods!private! !
+SendPointerInput:pointerInfo:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!methods!private! !
 systemCursorId!**auto generated**!properties!public! !
+uiaProvider!properties!public! !
 !
+
+ICoreWebView2CompositionController methodProtocol: #ICoreWebView2CompositionController attributes: #(#readOnly) selectors: #(#Add_CursorChanged:token: #get_Cursor: #get_RootVisualTarget: #get_SystemCursorId: #put_RootVisualTarget: #Remove_CursorChanged: #SendMouseInput:virtualKeys:mouseData:point: #SendPointerInput:pointerInfo:)!
+ICoreWebView2CompositionController methodProtocol: #ICoreWebView2CompositionController2 attributes: #(#readOnly) selectors: #(#Add_CursorChanged:token: #get_Cursor: #get_RootVisualTarget: #get_SystemCursorId: #get_UIAProvider: #put_RootVisualTarget: #Remove_CursorChanged: #SendMouseInput:virtualKeys:mouseData:point: #SendPointerInput:pointerInfo:)!
 
 !ICoreWebView2CompositionController class methodsFor!
 
@@ -227,9 +233,9 @@ defineFunctions
 		defineFunction: #get_SystemCursorId:
 			argumentTypes: 'dword*';
 		defineFunction: #Add_CursorChanged:token:
-			argumentTypes: 'ICoreWebView2CursorChangedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2CursorChangedEventHandler* sqword*';
 		defineFunction: #Remove_CursorChanged:
-			argumentTypes: 'EventRegistrationToken'
+			argumentTypes: 'sqword'
 ! !
 !ICoreWebView2CompositionController class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !

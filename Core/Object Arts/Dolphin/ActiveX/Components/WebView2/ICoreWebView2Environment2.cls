@@ -33,19 +33,6 @@ interface ICoreWebView2Environment2 : ICoreWebView2Environment
 !ICoreWebView2Environment2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2Environment2 methodsFor!
 
-createWebResourceRequest: uri method: method postData: postData headers: headers
-	"Answer the <ICoreWebView2WebResourceRequest> result of invoking the CreateWebResourceRequest() method of the COM object."
-
-	| answer |
-	answer := ICoreWebView2WebResourceRequest newPointer.
-	self
-		CreateWebResourceRequest: uri asUtf16String
-		method: method asUtf16String
-		postData: postData
-		headers: headers asUtf16String
-		request: answer.
-	^answer asObject!
-
 CreateWebResourceRequest: uri method: method postData: postData headers: headers request: request
 	"Private - Invoke the CreateWebResourceRequest() method of the COM object.
 
@@ -59,7 +46,6 @@ CreateWebResourceRequest: uri method: method postData: postData headers: headers
 	<virtual stdcall: hresult 9 lpwstr lpwstr IStream* lpwstr ICoreWebView2WebResourceRequest**>
 	^self invalidCall: _failureCode! !
 !ICoreWebView2Environment2 categoriesForMethods!
-createWebResourceRequest:method:postData:headers:!**auto generated**!methods!public! !
 CreateWebResourceRequest:method:postData:headers:request:!**auto generated**!COM Interfaces-ICoreWebView2Environment2!private! !
 !
 

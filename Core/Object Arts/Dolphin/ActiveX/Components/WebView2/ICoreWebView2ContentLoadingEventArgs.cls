@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2ContentLoadingEventArgs
+ICoreWebView2EventArgs subclass: #ICoreWebView2ContentLoadingEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2ContentLoadingEventArgs guid: (IID fromString: '{0c8a1275-9b6b-4901-87ad-70df25bafa6e}')!
 ICoreWebView2ContentLoadingEventArgs comment: '`ICoreWebView2ContentLoadingEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ContentLoadingEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -51,10 +51,10 @@ get_NavigationId: navigationId
 	^self invalidCall: _failureCode!
 
 isErrorPage
-	"Answer the <sdword> value of the 'IsErrorPage' property of the receiver."
+	"Answer the <Boolean> value of the 'IsErrorPage' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_IsErrorPage: answer.
 	^answer asObject!
 
@@ -64,12 +64,16 @@ navigationId
 	| answer |
 	answer := ULARGE_INTEGER new.
 	self get_NavigationId: answer.
-	^answer asObject! !
+	^answer asObject!
+
+printableProperties
+	^#(#navigationId #isErrorPage)! !
 !ICoreWebView2ContentLoadingEventArgs categoriesForMethods!
 get_IsErrorPage:!**auto generated**!COM Interfaces-ICoreWebView2ContentLoadingEventArgs!private! !
 get_NavigationId:!**auto generated**!COM Interfaces-ICoreWebView2ContentLoadingEventArgs!private! !
-isErrorPage!**auto generated**!properties!public! !
+isErrorPage!properties!public! !
 navigationId!**auto generated**!properties!public! !
+printableProperties!development!printing!private! !
 !
 
 !ICoreWebView2ContentLoadingEventArgs class methodsFor!

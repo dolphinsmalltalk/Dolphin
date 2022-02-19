@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2AcceleratorKeyPressedEventHandler
+ICoreWebView2EventHandler subclass: #ICoreWebView2AcceleratorKeyPressedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'WebView2Constants'
@@ -30,23 +30,14 @@ interface ICoreWebView2AcceleratorKeyPressedEventHandler : IUnknown
 !ICoreWebView2AcceleratorKeyPressedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2AcceleratorKeyPressedEventHandler methodsFor!
 
-invoke: sender args: args
-	"Invoke the Invoke() method of the COM object."
+basicRegister: tokenBuffer
+	source Add_AcceleratorKeyPressed: self token: tokenBuffer!
 
-	^self Invoke: sender args: args!
-
-Invoke: sender args: args
-	"Private - Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2Controller* sender,
-			[in]ICoreWebView2AcceleratorKeyPressedEventArgs* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2Controller* ICoreWebView2AcceleratorKeyPressedEventArgs*>
-	^self invalidCall: _failureCode! !
+basicUnregister
+	source Remove_AcceleratorKeyPressed: token! !
 !ICoreWebView2AcceleratorKeyPressedEventHandler categoriesForMethods!
-invoke:args:!**auto generated**!methods!public! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventHandler!private! !
+basicRegister:!private!realizing/unrealizing! !
+basicUnregister!private!realizing/unrealizing! !
 !
 
 !ICoreWebView2AcceleratorKeyPressedEventHandler class methodsFor!
@@ -58,8 +49,14 @@ defineFunctions
 	self
 		defineFunction: #Invoke:args:
 			argumentTypes: 'ICoreWebView2Controller* ICoreWebView2AcceleratorKeyPressedEventArgs*'
-! !
+!
+
+eventName
+	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
+
+	^#acceleratorKeyPressed:! !
 !ICoreWebView2AcceleratorKeyPressedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
+eventName!constants!public! !
 !
 

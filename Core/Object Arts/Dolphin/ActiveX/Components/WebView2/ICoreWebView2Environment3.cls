@@ -33,11 +33,6 @@ interface ICoreWebView2Environment3 : ICoreWebView2Environment2
 !ICoreWebView2Environment3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2Environment3 methodsFor!
 
-createCoreWebView2CompositionController: parentWindow handler: handler
-	"Invoke the CreateCoreWebView2CompositionController() method of the COM object."
-
-	^self CreateCoreWebView2CompositionController: parentWindow handler: handler!
-
 CreateCoreWebView2CompositionController: parentWindow handler: handler
 	"Private - Invoke the CreateCoreWebView2CompositionController() method of the COM object.
 
@@ -48,14 +43,6 @@ CreateCoreWebView2CompositionController: parentWindow handler: handler
 	<virtual stdcall: hresult 10 handle ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler*>
 	^self invalidCall: _failureCode!
 
-createCoreWebView2PointerInfo
-	"Answer the <ICoreWebView2PointerInfo> result of invoking the CreateCoreWebView2PointerInfo() method of the COM object."
-
-	| answer |
-	answer := ICoreWebView2PointerInfo newPointer.
-	self CreateCoreWebView2PointerInfo: answer.
-	^answer asObject!
-
 CreateCoreWebView2PointerInfo: pointerInfo
 	"Private - Invoke the CreateCoreWebView2PointerInfo() method of the COM object.
 
@@ -65,9 +52,7 @@ CreateCoreWebView2PointerInfo: pointerInfo
 	<virtual stdcall: hresult 11 ICoreWebView2PointerInfo**>
 	^self invalidCall: _failureCode! !
 !ICoreWebView2Environment3 categoriesForMethods!
-createCoreWebView2CompositionController:handler:!**auto generated**!methods!public! !
 CreateCoreWebView2CompositionController:handler:!**auto generated**!COM Interfaces-ICoreWebView2Environment3!private! !
-createCoreWebView2PointerInfo!**auto generated**!methods!public! !
 CreateCoreWebView2PointerInfo:!**auto generated**!COM Interfaces-ICoreWebView2Environment3!private! !
 !
 

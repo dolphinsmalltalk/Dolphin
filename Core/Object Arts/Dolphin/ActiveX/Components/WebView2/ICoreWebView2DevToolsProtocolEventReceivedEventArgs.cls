@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2DevToolsProtocolEventReceivedEventArgs
+ICoreWebView2EventArgs subclass: #ICoreWebView2DevToolsProtocolEventReceivedEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2DevToolsProtocolEventReceivedEventArgs guid: (IID fromString: '{653c2959-bb3a-4377-8632-b58ada4e66c4}')!
 ICoreWebView2DevToolsProtocolEventReceivedEventArgs comment: '`ICoreWebView2DevToolsProtocolEventReceivedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -41,13 +41,15 @@ get_ParameterObjectAsJson: parameterObjectAsJson
 parameterObjectAsJson
 	"Answer the <lpwstr> value of the 'ParameterObjectAsJson' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_ParameterObjectAsJson: answer.
-	^answer asObject! !
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_ParameterObjectAsJson: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer! !
 !ICoreWebView2DevToolsProtocolEventReceivedEventArgs categoriesForMethods!
 get_ParameterObjectAsJson:!**auto generated**!COM Interfaces-ICoreWebView2DevToolsProtocolEventReceivedEventArgs!private! !
-parameterObjectAsJson!**auto generated**!properties!public! !
+parameterObjectAsJson!properties!public! !
 !
 
 !ICoreWebView2DevToolsProtocolEventReceivedEventArgs class methodsFor!

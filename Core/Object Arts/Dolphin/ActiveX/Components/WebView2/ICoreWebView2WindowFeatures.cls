@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2WindowFeatures
+ICoreWebView2Interface subclass: #ICoreWebView2WindowFeatures
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2WindowFeatures guid: (IID fromString: '{5eaf559f-b46e-4397-8860-e422f287ff1e}')!
 ICoreWebView2WindowFeatures comment: '`ICoreWebView2WindowFeatures` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WindowFeatures'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -55,6 +55,9 @@ interface ICoreWebView2WindowFeatures : IUnknown
 '!
 !ICoreWebView2WindowFeatures categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2WindowFeatures methodsFor!
+
+extent
+	^self width @ self height!
 
 get_HasPosition: value
 	"Private - Get the value of the 'HasPosition' property of the receiver.
@@ -147,18 +150,18 @@ get_Width: value
 	^self invalidCall: _failureCode!
 
 hasPosition
-	"Answer the <sdword> value of the 'HasPosition' property of the receiver."
+	"Answer the <Boolean> value of the 'HasPosition' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_HasPosition: answer.
 	^answer asObject!
 
 hasSize
-	"Answer the <sdword> value of the 'HasSize' property of the receiver."
+	"Answer the <Boolean> value of the 'HasSize' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_HasSize: answer.
 	^answer asObject!
 
@@ -178,35 +181,47 @@ left
 	self get_left: answer.
 	^answer asObject!
 
+position
+	^self left @ self top!
+
+printableProperties
+	| propertyNames |
+	propertyNames := OrderedCollection new: 6.
+	self hasPosition ifTrue: [propertyNames add: #position].
+	self hasSize ifTrue: [propertyNames add: #extent].
+	propertyNames
+		addAll: #(#shouldDisplayMenuBar #shouldDisplayScrollBars #shouldDisplayStatus #shouldDisplayToolbar).
+	^propertyNames!
+
 shouldDisplayMenuBar
-	"Answer the <sdword> value of the 'ShouldDisplayMenuBar' property of the receiver."
+	"Answer the <Boolean> value of the 'ShouldDisplayMenuBar' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_ShouldDisplayMenuBar: answer.
 	^answer asObject!
 
 shouldDisplayScrollBars
-	"Answer the <sdword> value of the 'ShouldDisplayScrollBars' property of the receiver."
+	"Answer the <Boolean> value of the 'ShouldDisplayScrollBars' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer .
 	self get_ShouldDisplayScrollBars: answer.
 	^answer asObject!
 
 shouldDisplayStatus
-	"Answer the <sdword> value of the 'ShouldDisplayStatus' property of the receiver."
+	"Answer the <Boolean> value of the 'ShouldDisplayStatus' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_ShouldDisplayStatus: answer.
 	^answer asObject!
 
 shouldDisplayToolbar
-	"Answer the <sdword> value of the 'ShouldDisplayToolbar' property of the receiver."
+	"Answer the <Boolean> value of the 'ShouldDisplayToolbar' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_ShouldDisplayToolbar: answer.
 	^answer asObject!
 
@@ -226,6 +241,7 @@ width
 	self get_Width: answer.
 	^answer asObject! !
 !ICoreWebView2WindowFeatures categoriesForMethods!
+extent!properties!public! !
 get_HasPosition:!**auto generated**!COM Interfaces-ICoreWebView2WindowFeatures!private! !
 get_HasSize:!**auto generated**!COM Interfaces-ICoreWebView2WindowFeatures!private! !
 get_Height:!**auto generated**!COM Interfaces-ICoreWebView2WindowFeatures!private! !
@@ -236,14 +252,16 @@ get_ShouldDisplayStatus:!**auto generated**!COM Interfaces-ICoreWebView2WindowFe
 get_ShouldDisplayToolbar:!**auto generated**!COM Interfaces-ICoreWebView2WindowFeatures!private! !
 get_top:!**auto generated**!COM Interfaces-ICoreWebView2WindowFeatures!private! !
 get_Width:!**auto generated**!COM Interfaces-ICoreWebView2WindowFeatures!private! !
-hasPosition!**auto generated**!properties!public! !
-hasSize!**auto generated**!properties!public! !
+hasPosition!properties!public! !
+hasSize!properties!public! !
 height!**auto generated**!properties!public! !
 left!**auto generated**!properties!public! !
-shouldDisplayMenuBar!**auto generated**!properties!public! !
-shouldDisplayScrollBars!**auto generated**!properties!public! !
-shouldDisplayStatus!**auto generated**!properties!public! !
-shouldDisplayToolbar!**auto generated**!properties!public! !
+position!properties!public! !
+printableProperties!development!printing!private! !
+shouldDisplayMenuBar!properties!public! !
+shouldDisplayScrollBars!properties!public! !
+shouldDisplayStatus!properties!public! !
+shouldDisplayToolbar!properties!public! !
 top!**auto generated**!properties!public! !
 width!**auto generated**!properties!public! !
 !

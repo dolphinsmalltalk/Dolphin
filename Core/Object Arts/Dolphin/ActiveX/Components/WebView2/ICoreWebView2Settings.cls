@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2Settings
+ICoreWebView2Interface subclass: #ICoreWebView2Settings
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Settings guid: (IID fromString: '{e562e4f0-d7fa-43ac-8d71-c05150499f00}')!
 ICoreWebView2Settings comment: '`ICoreWebView2Settings` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Settings'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
+At the time of writing there are five later versions of this interface. In order to reduce the burden of degrading gracefully to older versions, default implementations of the additional methods and properties are added.
 
 IDL definition follows:
 ```
@@ -80,57 +80,79 @@ interface ICoreWebView2Settings : IUnknown
 !ICoreWebView2Settings categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2Settings methodsFor!
 
+areBrowserAcceleratorKeysEnabled
+	"Answer the <Boolean> value of the 'AreBrowserAcceleratorKeysEnabled' property of the receiver."
+
+	| answer |
+	answer := BOOL newBuffer.
+	self get_AreBrowserAcceleratorKeysEnabled: answer.
+	^answer asObject!
+
+areBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
+	"Set the 'AreBrowserAcceleratorKeysEnabled' property of the receiver to the <sdword> value of the argument."
+
+	self put_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled asParameter!
+
 areDefaultContextMenusEnabled
 	"Answer the <sdword> value of the 'AreDefaultContextMenusEnabled' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_AreDefaultContextMenusEnabled: answer.
 	^answer asObject!
 
 areDefaultContextMenusEnabled: enabled
 	"Set the 'AreDefaultContextMenusEnabled' property of the receiver to the <sdword> value of the argument."
 
-	self put_AreDefaultContextMenusEnabled: enabled!
+	self put_AreDefaultContextMenusEnabled: enabled asParameter!
 
 areDefaultScriptDialogsEnabled
-	"Answer the <sdword> value of the 'AreDefaultScriptDialogsEnabled' property of the receiver."
+	"Answer the <Boolean> value of the 'AreDefaultScriptDialogsEnabled' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_AreDefaultScriptDialogsEnabled: answer.
 	^answer asObject!
 
 areDefaultScriptDialogsEnabled: areDefaultScriptDialogsEnabled
 	"Set the 'AreDefaultScriptDialogsEnabled' property of the receiver to the <sdword> value of the argument."
 
-	self put_AreDefaultScriptDialogsEnabled: areDefaultScriptDialogsEnabled!
+	self put_AreDefaultScriptDialogsEnabled: areDefaultScriptDialogsEnabled asParameter!
 
 areDevToolsEnabled
-	"Answer the <sdword> value of the 'AreDevToolsEnabled' property of the receiver."
+	"Answer the <Boolean> value of the 'AreDevToolsEnabled' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_AreDevToolsEnabled: answer.
 	^answer asObject!
 
 areDevToolsEnabled: areDevToolsEnabled
 	"Set the 'AreDevToolsEnabled' property of the receiver to the <sdword> value of the argument."
 
-	self put_AreDevToolsEnabled: areDevToolsEnabled!
+	self put_AreDevToolsEnabled: areDevToolsEnabled asParameter!
 
 areHostObjectsAllowed
-	"Answer the <sdword> value of the 'AreHostObjectsAllowed' property of the receiver."
+	"Answer the <Boolean> value of the 'AreHostObjectsAllowed' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_AreHostObjectsAllowed: answer.
 	^answer asObject!
 
 areHostObjectsAllowed: allowed
 	"Set the 'AreHostObjectsAllowed' property of the receiver to the <sdword> value of the argument."
 
-	self put_AreHostObjectsAllowed: allowed!
+	self put_AreHostObjectsAllowed: allowed asParameter!
+
+get_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
+	"Private - Get the value of the 'AreBrowserAcceleratorKeysEnabled' property of the receiver.
+
+		HRESULT __stdcall AreBrowserAcceleratorKeysEnabled(
+			[out, retval]long* AreBrowserAcceleratorKeysEnabled);"
+
+	areBrowserAcceleratorKeysEnabled value: 1.
+	^S_OK!
 
 get_AreDefaultContextMenusEnabled: enabled
 	"Private - Get the value of the 'AreDefaultContextMenusEnabled' property of the receiver.
@@ -177,6 +199,33 @@ get_IsBuiltInErrorPageEnabled: enabled
 	<virtual stdcall: hresult 20 sdword*>
 	^self invalidCall: _failureCode!
 
+get_IsGeneralAutofillEnabled: value
+	"Private - Get the value of the 'IsGeneralAutofillEnabled' property of the receiver.
+
+		HRESULT __stdcall IsGeneralAutofillEnabled(
+			[out, retval]long* value);"
+
+	value value: 1.
+	^S_OK!
+
+get_IsPasswordAutosaveEnabled: value
+	"Private - Get the value of the 'IsPasswordAutosaveEnabled' property of the receiver.
+
+		HRESULT __stdcall IsPasswordAutosaveEnabled(
+			[out, retval]long* value);"
+
+	value value: 1.
+	^S_OK!
+
+get_IsPinchZoomEnabled: enabled
+	"Private - Get the value of the 'IsPinchZoomEnabled' property of the receiver.
+
+		HRESULT __stdcall IsPinchZoomEnabled(
+			[out, retval]long* enabled);"
+
+	enabled value: 0.
+	^S_OK!
+
 get_IsScriptEnabled: isScriptEnabled
 	"Private - Get the value of the 'IsScriptEnabled' property of the receiver.
 
@@ -194,6 +243,15 @@ get_IsStatusBarEnabled: isStatusBarEnabled
 
 	<virtual stdcall: hresult 10 sdword*>
 	^self invalidCall: _failureCode!
+
+get_IsSwipeNavigationEnabled: enabled
+	"Private - Get the value of the 'IsSwipeNavigationEnabled' property of the receiver.
+
+		HRESULT __stdcall IsSwipeNavigationEnabled(
+			[out, retval]long* enabled);"
+
+	enabled value: 0.
+	^S_OK!
 
 get_IsWebMessageEnabled: isWebMessageEnabled
 	"Private - Get the value of the 'IsWebMessageEnabled' property of the receiver.
@@ -213,70 +271,147 @@ get_IsZoomControlEnabled: enabled
 	<virtual stdcall: hresult 18 sdword*>
 	^self invalidCall: _failureCode!
 
+get_UserAgent: userAgent
+	"Private - Get the value of the 'UserAgent' property of the receiver.
+
+		HRESULT __stdcall UserAgent(
+			[out, retval]LPWSTR* UserAgent);"
+
+	| taskMem |
+	taskMem := 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.85 Safari/537.36 Edg/90.0.818.46'
+				asUtf16String copyToCOMTaskMemory.
+	userAgent value: taskMem.
+	taskMem beUnfinalizable.
+	^S_OK!
+
 isBuiltInErrorPageEnabled
-	"Answer the <sdword> value of the 'IsBuiltInErrorPageEnabled' property of the receiver."
+	"Answer the <Boolean> value of the 'IsBuiltInErrorPageEnabled' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_IsBuiltInErrorPageEnabled: answer.
 	^answer asObject!
 
 isBuiltInErrorPageEnabled: enabled
 	"Set the 'IsBuiltInErrorPageEnabled' property of the receiver to the <sdword> value of the argument."
 
-	self put_IsBuiltInErrorPageEnabled: enabled!
+	self put_IsBuiltInErrorPageEnabled: enabled asParameter!
 
-isScriptEnabled
-	"Answer the <sdword> value of the 'IsScriptEnabled' property of the receiver."
+isGeneralAutofillEnabled
+	"Answer the <Boolean> value of the 'IsGeneralAutofillEnabled' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
+	self get_IsGeneralAutofillEnabled: answer.
+	^answer asObject!
+
+isGeneralAutofillEnabled: value
+	"Set the 'IsGeneralAutofillEnabled' property of the receiver to the <sdword> value of the argument."
+
+	self put_IsGeneralAutofillEnabled: value asParameter!
+
+isPasswordAutosaveEnabled
+	"Answer the <Boolean> value of the 'IsPasswordAutosaveEnabled' property of the receiver."
+
+	| answer |
+	answer := BOOL newBuffer.
+	self get_IsPasswordAutosaveEnabled: answer.
+	^answer asObject!
+
+isPasswordAutosaveEnabled: value
+	"Set the 'IsPasswordAutosaveEnabled' property of the receiver to the <sdword> value of the argument."
+
+	self put_IsPasswordAutosaveEnabled: value asParameter!
+
+isPinchZoomEnabled
+	"Answer the <Boolean> value of the 'IsPinchZoomEnabled' property of the receiver."
+
+	| answer |
+	answer := BOOL newBuffer.
+	self get_IsPinchZoomEnabled: answer.
+	^answer asObject!
+
+isPinchZoomEnabled: enabled
+	"Set the 'IsPinchZoomEnabled' property of the receiver to the <sdword> value of the argument."
+
+	self put_IsPinchZoomEnabled: enabled asParameter!
+
+isScriptEnabled
+	"Answer the <Boolean> value of the 'IsScriptEnabled' property of the receiver."
+
+	| answer |
+	answer := BOOL newBuffer.
 	self get_IsScriptEnabled: answer.
 	^answer asObject!
 
 isScriptEnabled: isScriptEnabled
 	"Set the 'IsScriptEnabled' property of the receiver to the <sdword> value of the argument."
 
-	self put_IsScriptEnabled: isScriptEnabled!
+	self put_IsScriptEnabled: isScriptEnabled asParameter!
 
 isStatusBarEnabled
-	"Answer the <sdword> value of the 'IsStatusBarEnabled' property of the receiver."
+	"Answer the <Boolean> value of the 'IsStatusBarEnabled' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_IsStatusBarEnabled: answer.
 	^answer asObject!
 
 isStatusBarEnabled: isStatusBarEnabled
 	"Set the 'IsStatusBarEnabled' property of the receiver to the <sdword> value of the argument."
 
-	self put_IsStatusBarEnabled: isStatusBarEnabled!
+	self put_IsStatusBarEnabled: isStatusBarEnabled asParameter!
 
-isWebMessageEnabled
-	"Answer the <sdword> value of the 'IsWebMessageEnabled' property of the receiver."
+isSwipeNavigationEnabled
+	"Answer the <sdword> value of the 'IsSwipeNavigationEnabled' property of the receiver."
 
 	| answer |
 	answer := SDWORD new.
+	self get_IsSwipeNavigationEnabled: answer.
+	^answer asObject!
+
+isSwipeNavigationEnabled: enabled
+	"Set the 'IsSwipeNavigationEnabled' property of the receiver to the <sdword> value of the argument."
+
+	self put_IsSwipeNavigationEnabled: enabled!
+
+isWebMessageEnabled
+	"Answer the <Boolean> value of the 'IsWebMessageEnabled' property of the receiver."
+
+	| answer |
+	answer := BOOL newBuffer.
 	self get_IsWebMessageEnabled: answer.
 	^answer asObject!
 
 isWebMessageEnabled: isWebMessageEnabled
 	"Set the 'IsWebMessageEnabled' property of the receiver to the <sdword> value of the argument."
 
-	self put_IsWebMessageEnabled: isWebMessageEnabled!
+	self put_IsWebMessageEnabled: isWebMessageEnabled asParameter!
 
 isZoomControlEnabled
-	"Answer the <sdword> value of the 'IsZoomControlEnabled' property of the receiver."
+	"Answer the <Boolean> value of the 'IsZoomControlEnabled' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_IsZoomControlEnabled: answer.
 	^answer asObject!
 
 isZoomControlEnabled: enabled
 	"Set the 'IsZoomControlEnabled' property of the receiver to the <sdword> value of the argument."
 
-	self put_IsZoomControlEnabled: enabled!
+	self put_IsZoomControlEnabled: enabled asParameter!
+
+printableProperties
+	^#(#areDefaultContextMenusEnabled #areDefaultScriptDialogsEnabled #areDevToolsEnabled #areHostObjectsAllowed #isBuiltInErrorPageEnabled #isScriptEnabled #isStatusBarEnabled #isWebMessageEnabled #isZoomControlEnabled #areBrowserAcceleratorKeysEnabled #isGeneralAutofillEnabled #isPasswordAutosaveEnabled #isPinchZoomEnabled)!
+
+put_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
+	"Private - Set the value of the 'AreBrowserAcceleratorKeysEnabled' property of the object wrapped by the 
+	 receiver to the <sdword> argument, areBrowserAcceleratorKeysEnabled.
+
+		HRESULT __stdcall AreBrowserAcceleratorKeysEnabled(
+			[in]long AreBrowserAcceleratorKeysEnabled);"
+
+	^E_NOTIMPL!
 
 put_AreDefaultContextMenusEnabled: enabled
 	"Private - Set the value of the 'AreDefaultContextMenusEnabled' property of the object wrapped by the 
@@ -328,6 +463,33 @@ put_IsBuiltInErrorPageEnabled: enabled
 	<virtual stdcall: hresult 21 sdword>
 	^self invalidCall: _failureCode!
 
+put_IsGeneralAutofillEnabled: value
+	"Private - Set the value of the 'IsGeneralAutofillEnabled' property of the object wrapped by the 
+	 receiver to the <sdword> argument, value.
+
+		HRESULT __stdcall IsGeneralAutofillEnabled(
+			[in]long value);"
+
+	^E_NOTIMPL!
+
+put_IsPasswordAutosaveEnabled: value
+	"Private - Set the value of the 'IsPasswordAutosaveEnabled' property of the object wrapped by the 
+	 receiver to the <sdword> argument, value.
+
+		HRESULT __stdcall IsPasswordAutosaveEnabled(
+			[in]long value);"
+
+	^E_NOTIMPL!
+
+put_IsPinchZoomEnabled: enabled
+	"Private - Set the value of the 'IsPinchZoomEnabled' property of the object wrapped by the 
+	 receiver to the <sdword> argument, enabled.
+
+		HRESULT __stdcall IsPinchZoomEnabled(
+			[in]long enabled);"
+
+	^E_NOTIMPL!
+
 put_IsScriptEnabled: isScriptEnabled
 	"Private - Set the value of the 'IsScriptEnabled' property of the object wrapped by the 
 	 receiver to the <sdword> argument, isScriptEnabled.
@@ -348,6 +510,15 @@ put_IsStatusBarEnabled: isStatusBarEnabled
 	<virtual stdcall: hresult 11 sdword>
 	^self invalidCall: _failureCode!
 
+put_IsSwipeNavigationEnabled: enabled
+	"Private - Set the value of the 'IsSwipeNavigationEnabled' property of the object wrapped by the 
+	 receiver to the <sdword> argument, enabled.
+
+		HRESULT __stdcall IsSwipeNavigationEnabled(
+			[in]long enabled);"
+
+	^E_NOTIMPL!
+
 put_IsWebMessageEnabled: isWebMessageEnabled
 	"Private - Set the value of the 'IsWebMessageEnabled' property of the object wrapped by the 
 	 receiver to the <sdword> argument, isWebMessageEnabled.
@@ -366,45 +537,101 @@ put_IsZoomControlEnabled: enabled
 			[in]long enabled);"
 
 	<virtual stdcall: hresult 19 sdword>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+put_UserAgent: userAgent
+	"Private - Set the value of the 'UserAgent' property of the object wrapped by the 
+	 receiver to the <lpwstr> argument, userAgent.
+
+		HRESULT __stdcall UserAgent(
+			[in]LPWSTR UserAgent);"
+
+	^E_NOTIMPL!
+
+userAgent
+	"Answer the <lpwstr> value of the 'UserAgent' property of the receiver."
+
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_UserAgent: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
+
+userAgent: userAgent
+	"Set the 'UserAgent' property of the receiver to the <lpwstr> value of the argument."
+
+	self put_UserAgent: userAgent asUtf16String! !
 !ICoreWebView2Settings categoriesForMethods!
-areDefaultContextMenusEnabled!**auto generated**!properties!public! !
-areDefaultContextMenusEnabled:!**auto generated**!properties!public! !
-areDefaultScriptDialogsEnabled!**auto generated**!properties!public! !
-areDefaultScriptDialogsEnabled:!**auto generated**!properties!public! !
-areDevToolsEnabled!**auto generated**!properties!public! !
-areDevToolsEnabled:!**auto generated**!properties!public! !
-areHostObjectsAllowed!**auto generated**!properties!public! !
-areHostObjectsAllowed:!**auto generated**!properties!public! !
+areBrowserAcceleratorKeysEnabled!properties!public! !
+areBrowserAcceleratorKeysEnabled:!properties!public! !
+areDefaultContextMenusEnabled!properties!public! !
+areDefaultContextMenusEnabled:!properties!public! !
+areDefaultScriptDialogsEnabled!properties!public! !
+areDefaultScriptDialogsEnabled:!properties!public! !
+areDevToolsEnabled!properties!public! !
+areDevToolsEnabled:!properties!public! !
+areHostObjectsAllowed!properties!public! !
+areHostObjectsAllowed:!properties!public! !
+get_AreBrowserAcceleratorKeysEnabled:!COM Interfaces-ICoreWebView2Settings3!private! !
 get_AreDefaultContextMenusEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_AreDefaultScriptDialogsEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_AreDevToolsEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_AreHostObjectsAllowed:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_IsBuiltInErrorPageEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
+get_IsGeneralAutofillEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
+get_IsPasswordAutosaveEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
+get_IsPinchZoomEnabled:!COM Interfaces-ICoreWebView2Settings5!private! !
 get_IsScriptEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_IsStatusBarEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
+get_IsSwipeNavigationEnabled:!COM Interfaces-ICoreWebView2Settings6!private! !
 get_IsWebMessageEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 get_IsZoomControlEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
-isBuiltInErrorPageEnabled!**auto generated**!properties!public! !
-isBuiltInErrorPageEnabled:!**auto generated**!properties!public! !
-isScriptEnabled!**auto generated**!properties!public! !
-isScriptEnabled:!**auto generated**!properties!public! !
-isStatusBarEnabled!**auto generated**!properties!public! !
-isStatusBarEnabled:!**auto generated**!properties!public! !
-isWebMessageEnabled!**auto generated**!properties!public! !
-isWebMessageEnabled:!**auto generated**!properties!public! !
-isZoomControlEnabled!**auto generated**!properties!public! !
-isZoomControlEnabled:!**auto generated**!properties!public! !
+get_UserAgent:!COM Interfaces-ICoreWebView2Settings2!private! !
+isBuiltInErrorPageEnabled!properties!public! !
+isBuiltInErrorPageEnabled:!properties!public! !
+isGeneralAutofillEnabled!properties!public! !
+isGeneralAutofillEnabled:!properties!public! !
+isPasswordAutosaveEnabled!properties!public! !
+isPasswordAutosaveEnabled:!properties!public! !
+isPinchZoomEnabled!properties!public! !
+isPinchZoomEnabled:!properties!public! !
+isScriptEnabled!properties!public! !
+isScriptEnabled:!properties!public! !
+isStatusBarEnabled!properties!public! !
+isStatusBarEnabled:!properties!public! !
+isSwipeNavigationEnabled!properties!public! !
+isSwipeNavigationEnabled:!properties!public! !
+isWebMessageEnabled!properties!public! !
+isWebMessageEnabled:!properties!public! !
+isZoomControlEnabled!properties!public! !
+isZoomControlEnabled:!properties!public! !
+printableProperties!development!printing!private! !
+put_AreBrowserAcceleratorKeysEnabled:!COM Interfaces-ICoreWebView2Settings3!private! !
 put_AreDefaultContextMenusEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_AreDefaultScriptDialogsEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_AreDevToolsEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_AreHostObjectsAllowed:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_IsBuiltInErrorPageEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
+put_IsGeneralAutofillEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
+put_IsPasswordAutosaveEnabled:!COM Interfaces-ICoreWebView2Settings4!private! !
+put_IsPinchZoomEnabled:!COM Interfaces-ICoreWebView2Settings5!private! !
 put_IsScriptEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_IsStatusBarEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
+put_IsSwipeNavigationEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings6!private! !
 put_IsWebMessageEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_IsZoomControlEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
+put_UserAgent:!COM Interfaces-ICoreWebView2Settings2!private! !
+userAgent!**auto generated**!properties!public! !
+userAgent:!**auto generated**!properties!public! !
 !
+
+ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings attributes: #(#readOnly) selectors: #(#get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled:)!
+ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings2 attributes: #(#readOnly) selectors: #(#get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
+ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings3 attributes: #(#readOnly) selectors: #(#get_AreBrowserAcceleratorKeysEnabled: #get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreBrowserAcceleratorKeysEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
+ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings4 attributes: #(#readOnly) selectors: #(#get_AreBrowserAcceleratorKeysEnabled: #get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsGeneralAutofillEnabled: #get_IsPasswordAutosaveEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreBrowserAcceleratorKeysEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsGeneralAutofillEnabled: #put_IsPasswordAutosaveEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
+ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings5 attributes: #(#readOnly) selectors: #(#get_AreBrowserAcceleratorKeysEnabled: #get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsGeneralAutofillEnabled: #get_IsPasswordAutosaveEnabled: #get_IsPinchZoomEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreBrowserAcceleratorKeysEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsGeneralAutofillEnabled: #put_IsPasswordAutosaveEnabled: #put_IsPinchZoomEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
+ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings6 attributes: #(#readOnly) selectors: #(#get_AreBrowserAcceleratorKeysEnabled: #get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsGeneralAutofillEnabled: #get_IsPasswordAutosaveEnabled: #get_IsPinchZoomEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsSwipeNavigationEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreBrowserAcceleratorKeysEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsGeneralAutofillEnabled: #put_IsPasswordAutosaveEnabled: #put_IsPinchZoomEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsSwipeNavigationEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
 
 !ICoreWebView2Settings class methodsFor!
 

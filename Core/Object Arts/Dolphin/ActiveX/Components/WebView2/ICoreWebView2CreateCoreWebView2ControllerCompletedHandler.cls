@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2CreateCoreWebView2ControllerCompletedHandler
+ICoreWebViewCompletedHandler subclass: #ICoreWebView2CreateCoreWebView2ControllerCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2CreateCoreWebView2ControllerCompletedHandler guid: (IID fromString: '{6c4819f3-c9b7-4260-8127-c9f5bde7f68c}')!
 ICoreWebView2CreateCoreWebView2ControllerCompletedHandler comment: '`ICoreWebView2CreateCoreWebView2ControllerCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CreateCoreWebView2ControllerCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -28,32 +28,15 @@ interface ICoreWebView2CreateCoreWebView2ControllerCompletedHandler : IUnknown
 ```
 '!
 !ICoreWebView2CreateCoreWebView2ControllerCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2CreateCoreWebView2ControllerCompletedHandler methodsFor!
-
-Invoke: errorCode createdController: createdController
-	"Private - Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			HRESULT errorCode,
-			ICoreWebView2Controller* createdController);"
-
-	<virtual stdcall: hresult 4 hresult ICoreWebView2Controller*>
-	^self invalidCall: _failureCode! !
-!ICoreWebView2CreateCoreWebView2ControllerCompletedHandler categoriesForMethods!
-Invoke:createdController:!**auto generated**!COM Interfaces-ICoreWebView2CreateCoreWebView2ControllerCompletedHandler!private! !
-!
-
 !ICoreWebView2CreateCoreWebView2ControllerCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2CreateCoreWebView2ControllerCompletedHandler'
-		ICoreWebView2CreateCoreWebView2ControllerCompletedHandler defineTemplate"
+		ICoreWebView2CreateCoreWebView2ControllerCompletedHandler defineTemplate
+	"
 
-	self
-		defineFunction: #Invoke:createdController:
-			argumentTypes: 'hresult ICoreWebView2Controller*'
-! !
+	self defineFunction: #value:value: argumentTypes: 'hresult ICoreWebView2Controller*'! !
 !ICoreWebView2CreateCoreWebView2ControllerCompletedHandler class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!initializing!public! !
 !
 

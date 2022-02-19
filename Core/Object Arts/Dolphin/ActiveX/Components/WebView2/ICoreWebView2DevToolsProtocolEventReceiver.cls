@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2DevToolsProtocolEventReceiver
+ICoreWebView2Interface subclass: #ICoreWebView2DevToolsProtocolEventReceiver
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2DevToolsProtocolEventReceiver guid: (IID fromString: '{b32ca51a-8371-45e9-9317-af021d080367}')!
 ICoreWebView2DevToolsProtocolEventReceiver comment: '`ICoreWebView2DevToolsProtocolEventReceiver` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DevToolsProtocolEventReceiver'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -33,14 +33,6 @@ interface ICoreWebView2DevToolsProtocolEventReceiver : IUnknown
 !ICoreWebView2DevToolsProtocolEventReceiver categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2DevToolsProtocolEventReceiver methodsFor!
 
-add_DevToolsProtocolEventReceived: handler
-	"Answer the <EventRegistrationToken> result of invoking the add_DevToolsProtocolEventReceived() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_DevToolsProtocolEventReceived: handler token: answer.
-	^answer asObject!
-
 Add_DevToolsProtocolEventReceived: handler token: token
 	"Private - Invoke the add_DevToolsProtocolEventReceived() method of the COM object.
 
@@ -48,13 +40,8 @@ Add_DevToolsProtocolEventReceived: handler token: token
 			[in]ICoreWebView2DevToolsProtocolEventReceivedEventHandler* handler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 4 ICoreWebView2DevToolsProtocolEventReceivedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 4 ICoreWebView2DevToolsProtocolEventReceivedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-remove_DevToolsProtocolEventReceived: token
-	"Invoke the remove_DevToolsProtocolEventReceived() method of the COM object."
-
-	^self Remove_DevToolsProtocolEventReceived: token!
 
 Remove_DevToolsProtocolEventReceived: token
 	"Private - Invoke the remove_DevToolsProtocolEventReceived() method of the COM object.
@@ -62,12 +49,10 @@ Remove_DevToolsProtocolEventReceived: token
 		HRESULT __stdcall remove_DevToolsProtocolEventReceived(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 5 EventRegistrationToken>
+	<virtual stdcall: hresult 5 sqword>
 	^self invalidCall: _failureCode! !
 !ICoreWebView2DevToolsProtocolEventReceiver categoriesForMethods!
-add_DevToolsProtocolEventReceived:!**auto generated**!methods!public! !
 Add_DevToolsProtocolEventReceived:token:!**auto generated**!COM Interfaces-ICoreWebView2DevToolsProtocolEventReceiver!private! !
-remove_DevToolsProtocolEventReceived:!**auto generated**!methods!public! !
 Remove_DevToolsProtocolEventReceived:!**auto generated**!COM Interfaces-ICoreWebView2DevToolsProtocolEventReceiver!private! !
 !
 
@@ -79,9 +64,9 @@ defineFunctions
 
 	self
 		defineFunction: #Add_DevToolsProtocolEventReceived:token:
-			argumentTypes: 'ICoreWebView2DevToolsProtocolEventReceivedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2DevToolsProtocolEventReceivedEventHandler* sqword*';
 		defineFunction: #Remove_DevToolsProtocolEventReceived:
-			argumentTypes: 'EventRegistrationToken'
+			argumentTypes: 'sqword'
 ! !
 !ICoreWebView2DevToolsProtocolEventReceiver class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !

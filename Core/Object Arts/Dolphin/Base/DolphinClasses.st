@@ -3649,7 +3649,8 @@ Core.Magnitude subclass: #'Core.DateAndTime'
 		'FiletimeEpochSeconds' -> -16r234474600.
 		'JulianDateOffset' -> 16r22A11020C0.
 		'LilianDayOffset' -> -16r8D0C7.
-		'SmalltalkEpochRD' -> 16rA96C9
+		'SmalltalkEpochRD' -> 16rA96C9.
+		'UnixEpochSeconds' -> 16r81C94B00
 	}!
 Core.Magnitude subclass: #'Core.Duration'
 	instanceVariableNames: 'seconds'

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler
+ICoreWebViewCompletedHandler subclass: #ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler guid: (IID fromString: '{02fab84b-1428-4fb7-ad45-1b2e64736184}')!
 ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler comment: '`ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -28,32 +28,15 @@ interface ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler :
 ```
 '!
 !ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler methodsFor!
-
-Invoke: errorCode webView: webView
-	"Private - Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			HRESULT errorCode,
-			ICoreWebView2CompositionController* webView);"
-
-	<virtual stdcall: hresult 4 hresult ICoreWebView2CompositionController*>
-	^self invalidCall: _failureCode! !
-!ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler categoriesForMethods!
-Invoke:webView:!**auto generated**!COM Interfaces-ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler!private! !
-!
-
 !ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler'
-		ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler defineTemplate"
+		ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler defineTemplate
+	"
 
-	self
-		defineFunction: #Invoke:webView:
-			argumentTypes: 'hresult ICoreWebView2CompositionController*'
-! !
+	self defineFunction: #value:value: argumentTypes: 'hresult ICoreWebView2CompositionController*'! !
 !ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!initializing!public! !
 !
 

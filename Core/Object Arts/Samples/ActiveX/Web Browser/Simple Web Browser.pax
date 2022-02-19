@@ -3,15 +3,13 @@ package := Package name: 'Simple Web Browser'.
 package paxVersion: 2.1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Simple Web Browser Sample.
-Copyright (c) Object Arts Ltd, 2000.
+Copyright (c) Object Arts Ltd, 2000-2022.
 
-This is a minimalist browser based on the Internet Explorer Web Browser control (ShDocVw, which of course is not minimalist in itself).
+This is a minimalist browser based on the WebView2 Edge Browser control, which of course is not minimalist in itself.
 
 	OS.COM.Examples.WebBrowserShell show
 
-The sample demonstrates the use of Active-X control hosting in Dolphin, including sinking events from the explorer control. 
-
-NOTE: Please don''t try to display a page containing Dolphin Web Applets within this browser; you will get an exception and probably a system crash. This is caused by a threading issue within the Dolphin VM and cannot easily be resolved at present.
+The sample demonstrates WebView2 integration, including sinking events.
 
 '.
 
@@ -22,22 +20,21 @@ package setClassNames: #(
 ).
 
 package setPrerequisites: #(
-	'..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation'
-	'..\..\..\Dolphin\ActiveX\Connection Points\ActiveX Connection Points'
-	'..\..\..\Dolphin\ActiveX\OCX\ActiveX Control Hosting'
 	'..\COM Examples'
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
+	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
+	'..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
+	'..\..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Views\Buttons\Dolphin Push Buttons'
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Icons\Dolphin Text Tile Icons'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
-	'..\..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer'
-	'..\..\..\Dolphin\ActiveX\COM\OLE COM'
+	'..\..\..\Dolphin\ActiveX\Components\WebView2\WebView2'
 	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell'
 ).
 
@@ -50,9 +47,9 @@ package!
 "Class Definitions"!
 
 UI.Shell subclass: #'OS.COM.Examples.WebBrowserShell'
-	instanceVariableNames: 'address browser statusModel commandStates'
+	instanceVariableNames: 'address browser statusModel logEvents zoomModel'
 	classVariableNames: ''
-	imports: #(#{SHDocVw private} #{UI})
+	imports: #(#{UI})
 	classInstanceVariableNames: ''
 	classConstants: {}!
 UI.RuntimeSessionManager subclass: #'OS.COM.Examples.WebBrowserSessionManager'

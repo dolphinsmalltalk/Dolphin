@@ -559,6 +559,7 @@ package setMethodNames: #(
 	#(#{Smalltalk class} #renameVariable:to:)
 	#(#{Smalltalk.StyledGradientBrush class} #publishedAspectsOfInstances)
 	#(#{Smalltalk.StyledPen class} #publishedAspectsOfInstances)
+	#(#{Smalltalk.WebView2View class} #publishedEventsOfInstances)
 	#(#{UI.AbstractCardContainer class} #publishedAspectsOfInstances)
 	#(#{UI.AbstractCardContainer class} #publishedEventsOfInstances)
 	#(#{UI.AbstractDocumentShell} #saveStateOn:)
@@ -817,6 +818,7 @@ package setPrerequisites: #(
 	'..\..\System\Compiler\Smalltalk Parser'
 	'..\..\..\..\Contributions\Camp Smalltalk\SUnit\SUnitPreload'
 	'..\..\ActiveX\Components\VBScript\VBScript Regular Expressions'
+	'..\..\ActiveX\Components\WebView2\WebView2'
 	'..\..\ActiveX\Shell\Windows Shell'
 ).
 
@@ -8889,6 +8891,19 @@ editNewDefaultView!operations!public! !
 makeDefaultResource!operations!private! !
 makeResource:inClass:!operations!private! !
 publishedAspectsOfInstances!constants!public! !
+publishedEventsOfInstances!events!public! !
+!
+
+!WebView2View class methodsFor!
+
+publishedEventsOfInstances
+	"Answer a Set of Symbols that describe the published events triggered
+    	by instances of the receiver."
+
+	^super publishedEventsOfInstances
+		addAll: self webview2Events;
+		yourself! !
+!WebView2View class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 !
 

@@ -173,7 +173,7 @@ fromString: aString
 	| answer size |
 	size := aString byteSize.
 	answer := self new: size.
-	answer replaceFrom: 1 to: aString basicSize with: aString startingAt: 1.
+	answer replaceFrom: 1 to: size - aString class elementSize with: aString startingAt: 1.
 	^answer!
 
 GetSize: anAddress
@@ -193,8 +193,8 @@ HeapMinimize
 new
 	"Answer a new instance of the receiver of the initially holding a null pointer."
 
-	^(self basicNew: 4)
-		beFinalizable; 
+	^(self basicNew: VMConstants.IntPtrSize)
+		beFinalizable;
 		yourself!
 
 new: anInteger

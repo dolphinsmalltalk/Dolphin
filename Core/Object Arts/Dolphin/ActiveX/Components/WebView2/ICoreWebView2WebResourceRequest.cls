@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2WebResourceRequest
+ICoreWebView2Interface subclass: #ICoreWebView2WebResourceRequest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2WebResourceRequest guid: (IID fromString: '{97055cd4-512c-4264-8b5f-e3f446cea6a5}')!
 ICoreWebView2WebResourceRequest comment: '`ICoreWebView2WebResourceRequest` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceRequest'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -107,15 +107,20 @@ headers
 method
 	"Answer the <lpwstr> value of the 'Method' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_Method: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_Method: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 method: method
 	"Set the 'Method' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_Method: method asUtf16String!
+
+printableProperties
+	^#(method uri)!
 
 put_Content: content
 	"Private - Set the value of the 'Content' property of the object wrapped by the 
@@ -150,10 +155,12 @@ put_uri: uri
 uri
 	"Answer the <lpwstr> value of the 'uri' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_uri: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_uri: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 uri: uri
 	"Set the 'uri' property of the receiver to the <lpwstr> value of the argument."
@@ -167,12 +174,13 @@ get_Headers:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequest!p
 get_Method:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequest!private! !
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequest!private! !
 headers!**auto generated**!properties!public! !
-method!**auto generated**!properties!public! !
+method!properties!public! !
 method:!**auto generated**!properties!public! !
+printableProperties!development!printing!private! !
 put_Content:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequest!private! !
 put_Method:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequest!private! !
 put_uri:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequest!private! !
-uri!**auto generated**!properties!public! !
+uri!properties!public! !
 uri:!**auto generated**!properties!public! !
 !
 

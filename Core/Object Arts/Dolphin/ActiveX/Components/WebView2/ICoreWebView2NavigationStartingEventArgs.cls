@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2NavigationStartingEventArgs
+ICoreWebView2EventArgs subclass: #ICoreWebView2NavigationStartingEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2NavigationStartingEventArgs guid: (IID fromString: '{5b495469-e119-438a-9b18-7604f25f2e49}')!
 ICoreWebView2NavigationStartingEventArgs comment: '`ICoreWebView2NavigationStartingEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationStartingEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -48,17 +48,17 @@ interface ICoreWebView2NavigationStartingEventArgs : IUnknown
 !ICoreWebView2NavigationStartingEventArgs methodsFor!
 
 cancel
-	"Answer the <sdword> value of the 'Cancel' property of the receiver."
+	"Answer whether the navigation is to be cancelled."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_Cancel: answer.
 	^answer asObject!
 
-cancel: cancel
-	"Set the 'Cancel' property of the receiver to the <sdword> value of the argument."
+cancel: aBoolean
+	"Set whether the navigation should be cancelled."
 
-	self put_Cancel: cancel!
+	self put_Cancel: aBoolean asParameter!
 
 get_Cancel: cancel
 	"Private - Get the value of the 'Cancel' property of the receiver.
@@ -115,18 +115,18 @@ get_uri: uri
 	^self invalidCall: _failureCode!
 
 isRedirected
-	"Answer the <sdword> value of the 'IsRedirected' property of the receiver."
+	"Answer whether the navigation is a redirection."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_IsRedirected: answer.
 	^answer asObject!
 
 isUserInitiated
-	"Answer the <sdword> value of the 'IsUserInitiated' property of the receiver."
+	"Answer whether the navigation is user initiated, which includes programmatic navigations."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_IsUserInitiated: answer.
 	^answer asObject!
 
@@ -137,6 +137,9 @@ navigationId
 	answer := ULARGE_INTEGER new.
 	self get_NavigationId: answer.
 	^answer asObject!
+
+printableProperties
+	^#(#navigationId #uri)!
 
 put_Cancel: cancel
 	"Private - Set the value of the 'Cancel' property of the object wrapped by the 
@@ -159,25 +162,28 @@ requestHeaders
 uri
 	"Answer the <lpwstr> value of the 'uri' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_uri: answer.
-	^answer asObject! !
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_uri: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer! !
 !ICoreWebView2NavigationStartingEventArgs categoriesForMethods!
-cancel!**auto generated**!properties!public! !
-cancel:!**auto generated**!properties!public! !
+cancel!properties!public! !
+cancel:!properties!public! !
 get_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
 get_IsRedirected:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
 get_IsUserInitiated:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
 get_NavigationId:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
 get_RequestHeaders:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
-isRedirected!**auto generated**!properties!public! !
-isUserInitiated!**auto generated**!properties!public! !
+isRedirected!properties!public! !
+isUserInitiated!properties!public! !
 navigationId!**auto generated**!properties!public! !
+printableProperties!development!printing!private! !
 put_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
 requestHeaders!**auto generated**!properties!public! !
-uri!**auto generated**!properties!public! !
+uri!properties!public! !
 !
 
 !ICoreWebView2NavigationStartingEventArgs class methodsFor!

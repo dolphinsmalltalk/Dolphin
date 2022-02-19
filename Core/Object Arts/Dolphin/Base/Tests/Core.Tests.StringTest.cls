@@ -290,6 +290,16 @@ testCompareIgnoreCase
 			self assert: (subject compare: upper ignoreCase: true) equals: 0.
 			self assert: (upper compare: subject ignoreCase: true) equals: 0]!
 
+testCopyToComTaskMemory
+	| subject |
+	self lengthTestCases do: 
+			[:each |
+			| subject heapBlock copy |
+			subject := self assimilateString: each first.
+			heapBlock := subject copyToCOMTaskMemory.
+			copy := self collectionClass fromAddress: heapBlock.
+			self assert: copy equals: subject]!
+
 testCopyWithout
 	| string |
 	string := self assimilateString: 'abcba'.
@@ -1190,7 +1200,8 @@ testCaseConversions!public!unit tests! !
 testClassFromAddress!public!unit tests! !
 testClassReadFrom!public!unit tests! !
 testCompareIgnoreCase!public!unit tests! !
-testCopyWithout!public!unit tests! !
+testCopyToComTaskMemory!public!unit tests! !
+testCopyWithout!public! !
 testEmpty!public!unit tests! !
 testEquals!public!unit tests! !
 testEqualsIgnoreCase!public!unit tests! !

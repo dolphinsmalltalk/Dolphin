@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2DOMContentLoadedEventArgs
+ICoreWebView2EventArgs subclass: #ICoreWebView2DOMContentLoadedEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2DOMContentLoadedEventArgs guid: (IID fromString: '{16b1e21a-c503-44f2-84c9-70aba5031283}')!
 ICoreWebView2DOMContentLoadedEventArgs comment: '`ICoreWebView2DOMContentLoadedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DOMContentLoadedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -44,10 +44,14 @@ navigationId
 	| answer |
 	answer := ULARGE_INTEGER new.
 	self get_NavigationId: answer.
-	^answer asObject! !
+	^answer asObject!
+
+printableProperties
+	^#(#navigationId)! !
 !ICoreWebView2DOMContentLoadedEventArgs categoriesForMethods!
 get_NavigationId:!**auto generated**!COM Interfaces-ICoreWebView2DOMContentLoadedEventArgs!private! !
 navigationId!**auto generated**!properties!public! !
+printableProperties!development!printing!private! !
 !
 
 !ICoreWebView2DOMContentLoadedEventArgs class methodsFor!

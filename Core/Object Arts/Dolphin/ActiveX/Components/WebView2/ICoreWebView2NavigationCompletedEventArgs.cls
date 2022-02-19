@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2NavigationCompletedEventArgs
+ICoreWebView2EventArgs subclass: #ICoreWebView2NavigationCompletedEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2NavigationCompletedEventArgs guid: (IID fromString: '{30d68b7d-20d9-4752-a9ca-ec8448fbb5c1}')!
 ICoreWebView2NavigationCompletedEventArgs comment: '`ICoreWebView2NavigationCompletedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationCompletedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -63,10 +63,10 @@ get_WebErrorStatus: webErrorStatus
 	^self invalidCall: _failureCode!
 
 isSuccess
-	"Answer the <sdword> value of the 'IsSuccess' property of the receiver."
+	"Answer the <Boolean> value of the 'IsSuccess' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_IsSuccess: answer.
 	^answer asObject!
 
@@ -77,6 +77,9 @@ navigationId
 	answer := ULARGE_INTEGER new.
 	self get_NavigationId: answer.
 	^answer asObject!
+
+printableProperties
+	^#(#navigationId #isSuccess #webErrorStatus)!
 
 webErrorStatus
 	"Answer the <sdword> value of the 'WebErrorStatus' property of the receiver."
@@ -89,8 +92,9 @@ webErrorStatus
 get_IsSuccess:!**auto generated**!COM Interfaces-ICoreWebView2NavigationCompletedEventArgs!private! !
 get_NavigationId:!**auto generated**!COM Interfaces-ICoreWebView2NavigationCompletedEventArgs!private! !
 get_WebErrorStatus:!**auto generated**!COM Interfaces-ICoreWebView2NavigationCompletedEventArgs!private! !
-isSuccess!**auto generated**!properties!public! !
+isSuccess!properties!public! !
 navigationId!**auto generated**!properties!public! !
+printableProperties!development!printing!private! !
 webErrorStatus!**auto generated**!properties!public! !
 !
 

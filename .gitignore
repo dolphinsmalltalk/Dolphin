@@ -10,6 +10,7 @@
 *.pdb
 !Scintilla.dll
 !Lexilla.dll
+!WebView2Loader.dll
 !DBOOT.img8
 !DBOOT.sml
 Repository/

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2Cookie
+ICoreWebView2Interface subclass: #ICoreWebView2Cookie
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Cookie guid: (IID fromString: '{ad26d6be-1486-43e6-bf87-a2034006ca21}')!
 ICoreWebView2Cookie comment: '`ICoreWebView2Cookie` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Cookie'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -71,10 +71,12 @@ interface ICoreWebView2Cookie : IUnknown
 domain
 	"Answer the <lpwstr> value of the 'Domain' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_Domain: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_Domain: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 expires
 	"Answer the <double> value of the 'Expires' property of the receiver."
@@ -82,12 +84,12 @@ expires
 	| answer |
 	answer := DOUBLE new.
 	self get_Expires: answer.
-	^answer asObject!
+	^DateAndTime fromUnixTime: answer value asInteger!
 
-expires: expires
+expires: aDateAndTime
 	"Set the 'Expires' property of the receiver to the <double> value of the argument."
 
-	self put_Expires: expires!
+	self put_Expires: aDateAndTime asUnixTime!
 
 get_Domain: domain
 	"Private - Get the value of the 'Domain' property of the receiver.
@@ -171,54 +173,68 @@ get_value: value
 	^self invalidCall: _failureCode!
 
 isHttpOnly
-	"Answer the <sdword> value of the 'IsHttpOnly' property of the receiver."
+	"Answer the <Boolean> value of the 'IsHttpOnly' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_IsHttpOnly: answer.
 	^answer asObject!
 
 isHttpOnly: isHttpOnly
 	"Set the 'IsHttpOnly' property of the receiver to the <sdword> value of the argument."
 
-	self put_IsHttpOnly: isHttpOnly!
+	self put_IsHttpOnly: isHttpOnly asParameter!
 
 isSecure
-	"Answer the <sdword> value of the 'IsSecure' property of the receiver."
+	"Answer the <Boolean> value of the 'IsSecure' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_IsSecure: answer.
 	^answer asObject!
 
 isSecure: isSecure
 	"Set the 'IsSecure' property of the receiver to the <sdword> value of the argument."
 
-	self put_IsSecure: isSecure!
+	self put_IsSecure: isSecure asParameter!
 
 isSession
-	"Answer the <sdword> value of the 'IsSession' property of the receiver."
+	"Answer the <Boolean> value of the 'IsSession' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_IsSession: answer.
 	^answer asObject!
 
 name
 	"Answer the <lpwstr> value of the 'name' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_name: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_name: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 path
 	"Answer the <lpwstr> value of the 'Path' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_Path: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_Path: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
+
+printableProperties
+	| propertyNames |
+	propertyNames := OrderedCollection withAll: #(#domain #name).
+	self isSession ifFalse: [propertyNames add: #expires].
+	self isHttpOnly ifTrue: [propertyNames add: #isHttpOnly].
+	self isSecure ifTrue: [propertyNames add: #isSecure].
+	self sameSite ifFalse: [propertyNames add: #sameSite].
+	self path = '/' ifFalse: [propertyNames add: #path].
+	^propertyNames!
 
 put_Expires: expires
 	"Private - Set the value of the 'Expires' property of the object wrapped by the 
@@ -271,34 +287,36 @@ put_value: value
 	^self invalidCall: _failureCode!
 
 sameSite
-	"Answer the <sdword> value of the 'SameSite' property of the receiver."
+	"Answer the <Boolean> value of the 'SameSite' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_SameSite: answer.
 	^answer asObject!
 
 sameSite: sameSite
 	"Set the 'SameSite' property of the receiver to the <sdword> value of the argument."
 
-	self put_SameSite: sameSite!
+	self put_SameSite: sameSite asParameter!
 
 value
 	"Answer the <lpwstr> value of the 'value' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_value: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_value: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 value: value
 	"Set the 'value' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_value: value asUtf16String! !
 !ICoreWebView2Cookie categoriesForMethods!
-domain!**auto generated**!properties!public! !
-expires!**auto generated**!properties!public! !
-expires:!**auto generated**!properties!public! !
+domain!properties!public! !
+expires!properties!public! !
+expires:!properties!public! !
 get_Domain:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
 get_Expires:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
 get_IsHttpOnly:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
@@ -308,21 +326,22 @@ get_name:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
 get_Path:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
 get_SameSite:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
 get_value:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
-isHttpOnly!**auto generated**!properties!public! !
-isHttpOnly:!**auto generated**!properties!public! !
-isSecure!**auto generated**!properties!public! !
-isSecure:!**auto generated**!properties!public! !
-isSession!**auto generated**!properties!public! !
-name!**auto generated**!properties!public! !
-path!**auto generated**!properties!public! !
+isHttpOnly!properties!public! !
+isHttpOnly:!properties!public! !
+isSecure!properties!public! !
+isSecure:!properties!public! !
+isSession!properties!public! !
+name!properties!public! !
+path!properties!public! !
+printableProperties!development!printing!private! !
 put_Expires:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
 put_IsHttpOnly:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
 put_IsSecure:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
 put_SameSite:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
 put_value:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
-sameSite!**auto generated**!properties!public! !
-sameSite:!**auto generated**!properties!public! !
-value!**auto generated**!properties!public! !
+sameSite!properties!public! !
+sameSite:!properties!public! !
+value!properties!public! !
 value:!**auto generated**!properties!public! !
 !
 

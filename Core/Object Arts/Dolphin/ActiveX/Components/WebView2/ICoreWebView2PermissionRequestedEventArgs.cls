@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2PermissionRequestedEventArgs
+ICoreWebView2EventArgs subclass: #ICoreWebView2PermissionRequestedEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2PermissionRequestedEventArgs guid: (IID fromString: '{973ae2ef-ff18-4894-8fb2-3c758f046810}')!
 ICoreWebView2PermissionRequestedEventArgs comment: '`ICoreWebView2PermissionRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PermissionRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -98,10 +98,10 @@ GetDeferral: deferral
 	^self invalidCall: _failureCode!
 
 isUserInitiated
-	"Answer the <sdword> value of the 'IsUserInitiated' property of the receiver."
+	"Answer the <Boolean> value of the 'IsUserInitiated' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_IsUserInitiated: answer.
 	^answer asObject!
 
@@ -139,10 +139,12 @@ state: state
 uri
 	"Answer the <lpwstr> value of the 'uri' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_uri: answer.
-	^answer asObject! !
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_uri: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer! !
 !ICoreWebView2PermissionRequestedEventArgs categoriesForMethods!
 get_IsUserInitiated:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 get_PermissionKind:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
@@ -150,12 +152,12 @@ get_State:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEve
 get_uri:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 getDeferral!**auto generated**!methods!public! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
-isUserInitiated!**auto generated**!properties!public! !
+isUserInitiated!properties!public! !
 permissionKind!**auto generated**!properties!public! !
 put_State:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventArgs!private! !
 state!**auto generated**!properties!public! !
 state:!**auto generated**!properties!public! !
-uri!**auto generated**!properties!public! !
+uri!properties!public! !
 !
 
 !ICoreWebView2PermissionRequestedEventArgs class methodsFor!

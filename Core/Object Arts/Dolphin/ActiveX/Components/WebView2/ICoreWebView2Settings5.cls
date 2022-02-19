@@ -41,19 +41,6 @@ get_IsPinchZoomEnabled: enabled
 	<virtual stdcall: hresult 30 sdword*>
 	^self invalidCall: _failureCode!
 
-isPinchZoomEnabled
-	"Answer the <sdword> value of the 'IsPinchZoomEnabled' property of the receiver."
-
-	| answer |
-	answer := SDWORD new.
-	self get_IsPinchZoomEnabled: answer.
-	^answer asObject!
-
-isPinchZoomEnabled: enabled
-	"Set the 'IsPinchZoomEnabled' property of the receiver to the <sdword> value of the argument."
-
-	self put_IsPinchZoomEnabled: enabled!
-
 put_IsPinchZoomEnabled: enabled
 	"Private - Set the value of the 'IsPinchZoomEnabled' property of the object wrapped by the 
 	 receiver to the <sdword> argument, enabled.
@@ -65,8 +52,6 @@ put_IsPinchZoomEnabled: enabled
 	^self invalidCall: _failureCode! !
 !ICoreWebView2Settings5 categoriesForMethods!
 get_IsPinchZoomEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings5!private! !
-isPinchZoomEnabled!**auto generated**!properties!public! !
-isPinchZoomEnabled:!**auto generated**!properties!public! !
 put_IsPinchZoomEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings5!private! !
 !
 
