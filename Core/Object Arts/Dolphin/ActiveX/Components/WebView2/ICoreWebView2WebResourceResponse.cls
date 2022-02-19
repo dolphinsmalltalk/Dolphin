@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2WebResourceResponse
+ICoreWebView2Interface subclass: #ICoreWebView2WebResourceResponse
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2WebResourceResponse guid: (IID fromString: '{aafcc94f-fa27-48fd-97df-830ef75aaec9}')!
 ICoreWebView2WebResourceResponse comment: '`ICoreWebView2WebResourceResponse` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceResponse'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -104,6 +104,9 @@ headers
 	self get_Headers: answer.
 	^answer asObject!
 
+printableProperties
+	^#(#statusCode #reasonPhrase)!
+
 put_Content: content
 	"Private - Set the value of the 'Content' property of the object wrapped by the 
 	 receiver to the <IStream*> argument, content.
@@ -137,10 +140,12 @@ put_StatusCode: statusCode
 reasonPhrase
 	"Answer the <lpwstr> value of the 'ReasonPhrase' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_ReasonPhrase: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_ReasonPhrase: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 reasonPhrase: reasonPhrase
 	"Set the 'ReasonPhrase' property of the receiver to the <lpwstr> value of the argument."
@@ -167,10 +172,11 @@ get_Headers:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!
 get_ReasonPhrase:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
 get_StatusCode:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
 headers!**auto generated**!properties!public! !
+printableProperties!development!printing!private! !
 put_Content:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
 put_ReasonPhrase:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
 put_StatusCode:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
-reasonPhrase!**auto generated**!properties!public! !
+reasonPhrase!properties!public! !
 reasonPhrase:!**auto generated**!properties!public! !
 statusCode!**auto generated**!properties!public! !
 statusCode:!**auto generated**!properties!public! !

@@ -143,7 +143,8 @@ testAsTime
 testAsUnixTime
 	| subject |
 	subject := DateAndTime fromString: '2019-04-12T18:49:17+00:00'.
-	self assert: subject asUnixTime truncated equals: 1555094957
+	self assert: subject asUnixTime truncated equals: 1555094957.
+	self assert: (DateAndTime fromUnixTime: 1555094957) equals: subject
 
 !
 
@@ -232,6 +233,23 @@ testFromSYSTEMTIME
 	self assert: ts minute equals: sysTime wMinute.
 	self assert: ts second truncated equals: sysTime wSecond.
 	self assert: ts second fractionPart * 1000 equals: sysTime wMilliseconds!
+
+testFromUnixTime
+	"see https://en.wikipedia.org/wiki/Lilian_date."
+
+	| subject |
+	subject := DateAndTime fromUnixTime: 0.
+	self assert: subject equals: (DateAndTime year: 1970 day: 1 offset: 0 seconds).
+	self assert: subject asUnixTime equals: 0.
+	subject := DateAndTime fromUnixTime: 1485498912.
+	self assert: subject
+		equals: (DateAndTime
+				year: 2017
+				day: 27
+				hour: 06
+				minute: 35
+				second: 12
+				offset: 0 seconds)!
 
 testHour
 	0 to: 23
@@ -677,6 +695,7 @@ testDayOfWeekName!public!unit tests! !
 testDayOfYear!public!unit tests! !
 testFromString!public!unit tests! !
 testFromSYSTEMTIME!public! !
+testFromUnixTime!public!unit tests! !
 testHour!public!unit tests! !
 testHour12!public!unit tests! !
 testHour24!public!unit tests! !

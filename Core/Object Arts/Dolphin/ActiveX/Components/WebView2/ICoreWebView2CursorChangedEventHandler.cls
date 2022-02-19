@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2CursorChangedEventHandler
+ICoreWebView2EventHandler subclass: #ICoreWebView2CursorChangedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2CursorChangedEventHandler guid: (IID fromString: '{9da43ccc-26e1-4dad-b56c-d8961c94c571}')!
 ICoreWebView2CursorChangedEventHandler comment: '`ICoreWebView2CursorChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CursorChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -30,23 +30,14 @@ interface ICoreWebView2CursorChangedEventHandler : IUnknown
 !ICoreWebView2CursorChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2CursorChangedEventHandler methodsFor!
 
-invoke: sender args: args
-	"Invoke the Invoke() method of the COM object."
+basicRegister: tokenBuffer
+	source Add_CursorChanged: self token: tokenBuffer!
 
-	^self Invoke: sender args: args!
-
-Invoke: sender args: args
-	"Private - Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2CompositionController* sender,
-			[in]IUnknown* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2CompositionController* IUnknown*>
-	^self invalidCall: _failureCode! !
+basicUnregister
+	source Remove_CursorChanged: token! !
 !ICoreWebView2CursorChangedEventHandler categoriesForMethods!
-invoke:args:!**auto generated**!methods!public! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2CursorChangedEventHandler!private! !
+basicRegister:!private!realizing/unrealizing! !
+basicUnregister!private!realizing/unrealizing! !
 !
 
 !ICoreWebView2CursorChangedEventHandler class methodsFor!
@@ -58,8 +49,14 @@ defineFunctions
 	self
 		defineFunction: #Invoke:args:
 			argumentTypes: 'ICoreWebView2CompositionController* IUnknown*'
-! !
+!
+
+eventName
+	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
+
+	^#cursorChanged! !
 !ICoreWebView2CursorChangedEventHandler class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!initializing!public! !
+eventName!constants!public! !
 !
 

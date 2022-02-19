@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2AcceleratorKeyPressedEventArgs
+ICoreWebView2EventArgs subclass: #ICoreWebView2AcceleratorKeyPressedEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2AcceleratorKeyPressedEventArgs guid: (IID fromString: '{9f760f8a-fb79-42be-9990-7b56900fa9c7}')!
 ICoreWebView2AcceleratorKeyPressedEventArgs comment: '`ICoreWebView2AcceleratorKeyPressedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -90,17 +90,17 @@ get_VirtualKey: virtualKey
 	^self invalidCall: _failureCode!
 
 handled
-	"Answer the <sdword> value of the 'Handled' property of the receiver."
+	"Answer the <Boolean> value of the 'Handled' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_Handled: answer.
 	^answer asObject!
 
 handled: handled
 	"Set the 'Handled' property of the receiver to the <sdword> value of the argument."
 
-	self put_Handled: handled!
+	self put_Handled: handled asParameter!
 
 keyEventKind
 	"Answer the <sdword> value of the 'KeyEventKind' property of the receiver."
@@ -118,6 +118,9 @@ keyEventLParam
 	self get_KeyEventLParam: answer.
 	^answer asObject!
 
+keyName
+	^Keyboard default keyNameFromLParam: self keyEventLParam!
+
 physicalKeyStatus
 	"Answer the <COREWEBVIEW2_PHYSICAL_KEY_STATUS> value of the 'PhysicalKeyStatus' property of the receiver."
 
@@ -125,6 +128,14 @@ physicalKeyStatus
 	answer := COREWEBVIEW2_PHYSICAL_KEY_STATUS new.
 	self get_PhysicalKeyStatus: answer.
 	^answer asObject!
+
+printPropertiesOn: aStream
+	aStream
+		nextPutAll: self windowsKeyEvent;
+		nextPutAll: ': ';
+		nextPutAll: self keyName;
+		nextPutAll: ', handled: ';
+		print: self handled!
 
 put_Handled: handled
 	"Private - Set the value of the 'Handled' property of the object wrapped by the 
@@ -142,20 +153,26 @@ virtualKey
 	| answer |
 	answer := DWORD new.
 	self get_VirtualKey: answer.
-	^answer asObject! !
+	^answer asObject!
+
+windowsKeyEvent
+	^#('WM_KEYDOWN' 'WM_KEYUP' 'WM_SYSKEYDOWN' 'WM_SYSKEYUP') at: self keyEventKind + 1! !
 !ICoreWebView2AcceleratorKeyPressedEventArgs categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
 get_KeyEventKind:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
 get_KeyEventLParam:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
 get_PhysicalKeyStatus:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
 get_VirtualKey:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
-handled!**auto generated**!properties!public! !
-handled:!**auto generated**!properties!public! !
+handled!properties!public! !
+handled:!properties!public! !
 keyEventKind!**auto generated**!properties!public! !
 keyEventLParam!**auto generated**!properties!public! !
+keyName!accessing!public! !
 physicalKeyStatus!**auto generated**!properties!public! !
+printPropertiesOn:!development!printing!private! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
 virtualKey!**auto generated**!properties!public! !
+windowsKeyEvent!printing!public! !
 !
 
 !ICoreWebView2AcceleratorKeyPressedEventArgs class methodsFor!

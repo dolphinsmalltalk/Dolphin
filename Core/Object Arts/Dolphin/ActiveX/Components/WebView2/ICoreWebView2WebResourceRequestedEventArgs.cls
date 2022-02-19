@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2WebResourceRequestedEventArgs
+ICoreWebView2EventArgs subclass: #ICoreWebView2WebResourceRequestedEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2WebResourceRequestedEventArgs guid: (IID fromString: '{453e667f-12c7-49d4-be6d-ddbe7956f57a}')!
 ICoreWebView2WebResourceRequestedEventArgs comment: '`ICoreWebView2WebResourceRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.

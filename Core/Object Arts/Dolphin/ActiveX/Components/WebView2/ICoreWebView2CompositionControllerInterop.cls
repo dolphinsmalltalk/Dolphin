@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2CompositionControllerInterop
+ICoreWebView2Interface subclass: #ICoreWebView2CompositionControllerInterop
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2CompositionControllerInterop guid: (IID fromString: '{8e9922ce-9c80-42e6-bad7-fcebf291a495}')!
 ICoreWebView2CompositionControllerInterop comment: '`ICoreWebView2CompositionControllerInterop` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CompositionControllerInterop'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.

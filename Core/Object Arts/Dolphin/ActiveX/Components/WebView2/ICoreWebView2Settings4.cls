@@ -56,32 +56,6 @@ get_IsPasswordAutosaveEnabled: value
 	<virtual stdcall: hresult 26 sdword*>
 	^self invalidCall: _failureCode!
 
-isGeneralAutofillEnabled
-	"Answer the <sdword> value of the 'IsGeneralAutofillEnabled' property of the receiver."
-
-	| answer |
-	answer := SDWORD new.
-	self get_IsGeneralAutofillEnabled: answer.
-	^answer asObject!
-
-isGeneralAutofillEnabled: value
-	"Set the 'IsGeneralAutofillEnabled' property of the receiver to the <sdword> value of the argument."
-
-	self put_IsGeneralAutofillEnabled: value!
-
-isPasswordAutosaveEnabled
-	"Answer the <sdword> value of the 'IsPasswordAutosaveEnabled' property of the receiver."
-
-	| answer |
-	answer := SDWORD new.
-	self get_IsPasswordAutosaveEnabled: answer.
-	^answer asObject!
-
-isPasswordAutosaveEnabled: value
-	"Set the 'IsPasswordAutosaveEnabled' property of the receiver to the <sdword> value of the argument."
-
-	self put_IsPasswordAutosaveEnabled: value!
-
 put_IsGeneralAutofillEnabled: value
 	"Private - Set the value of the 'IsGeneralAutofillEnabled' property of the object wrapped by the 
 	 receiver to the <sdword> argument, value.
@@ -104,10 +78,6 @@ put_IsPasswordAutosaveEnabled: value
 !ICoreWebView2Settings4 categoriesForMethods!
 get_IsGeneralAutofillEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings4!private! !
 get_IsPasswordAutosaveEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings4!private! !
-isGeneralAutofillEnabled!**auto generated**!properties!public! !
-isGeneralAutofillEnabled:!**auto generated**!properties!public! !
-isPasswordAutosaveEnabled!**auto generated**!properties!public! !
-isPasswordAutosaveEnabled:!**auto generated**!properties!public! !
 put_IsGeneralAutofillEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings4!private! !
 put_IsPasswordAutosaveEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings4!private! !
 !

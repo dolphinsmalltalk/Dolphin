@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2Deferral
+ICoreWebView2Interface subclass: #ICoreWebView2Deferral
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Deferral guid: (IID fromString: '{c10e7f7b-b585-46f0-a623-8befbf3e4ee0}')!
 ICoreWebView2Deferral comment: '`ICoreWebView2Deferral` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Deferral'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.

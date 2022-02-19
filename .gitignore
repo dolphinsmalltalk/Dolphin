@@ -8,6 +8,7 @@
 *.dll
 *.pdb
 !SciLexer.dll
+!WebView2Loader.dll
 !DBOOT.img7
 !DBOOT.sml
 Repository/

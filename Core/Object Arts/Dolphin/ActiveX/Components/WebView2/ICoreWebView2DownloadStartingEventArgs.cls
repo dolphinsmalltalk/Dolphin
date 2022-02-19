@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2DownloadStartingEventArgs
+ICoreWebView2EventArgs subclass: #ICoreWebView2DownloadStartingEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2DownloadStartingEventArgs guid: (IID fromString: '{e99bbe21-43e9-4544-a732-282764eafa60}')!
 ICoreWebView2DownloadStartingEventArgs comment: '`ICoreWebView2DownloadStartingEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DownloadStartingEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -51,17 +51,17 @@ interface ICoreWebView2DownloadStartingEventArgs : IUnknown
 !ICoreWebView2DownloadStartingEventArgs methodsFor!
 
 cancel
-	"Answer the <sdword> value of the 'Cancel' property of the receiver."
+	"Answer the <Boolean> value of the 'Cancel' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_Cancel: answer.
 	^answer asObject!
 
 cancel: cancel
 	"Set the 'Cancel' property of the receiver to the <sdword> value of the argument."
 
-	self put_Cancel: cancel!
+	self put_Cancel: cancel asParameter!
 
 downloadOperation
 	"Answer the <ICoreWebView2DownloadOperation> value of the 'DownloadOperation' property of the receiver."
@@ -125,17 +125,17 @@ GetDeferral: deferral
 	^self invalidCall: _failureCode!
 
 handled
-	"Answer the <sdword> value of the 'Handled' property of the receiver."
+	"Answer the <Boolean> value of the 'Handled' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_Handled: answer.
 	^answer asObject!
 
 handled: handled
 	"Set the 'Handled' property of the receiver to the <sdword> value of the argument."
 
-	self put_Handled: handled!
+	self put_Handled: handled asParameter!
 
 put_Cancel: cancel
 	"Private - Set the value of the 'Cancel' property of the object wrapped by the 
@@ -170,18 +170,20 @@ put_ResultFilePath: resultFilePath
 resultFilePath
 	"Answer the <lpwstr> value of the 'ResultFilePath' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_ResultFilePath: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_ResultFilePath: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 resultFilePath: resultFilePath
 	"Set the 'ResultFilePath' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_ResultFilePath: resultFilePath asUtf16String! !
 !ICoreWebView2DownloadStartingEventArgs categoriesForMethods!
-cancel!**auto generated**!properties!public! !
-cancel:!**auto generated**!properties!public! !
+cancel!properties!public! !
+cancel:!properties!public! !
 downloadOperation!**auto generated**!properties!public! !
 get_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
 get_DownloadOperation:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
@@ -189,12 +191,12 @@ get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEven
 get_ResultFilePath:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
 getDeferral!**auto generated**!methods!public! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
-handled!**auto generated**!properties!public! !
-handled:!**auto generated**!properties!public! !
+handled!properties!public! !
+handled:!properties!public! !
 put_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
 put_ResultFilePath:!**auto generated**!COM Interfaces-ICoreWebView2DownloadStartingEventArgs!private! !
-resultFilePath!**auto generated**!properties!public! !
+resultFilePath!properties!public! !
 resultFilePath:!**auto generated**!properties!public! !
 !
 

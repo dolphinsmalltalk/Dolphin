@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2WebResourceResponseView
+ICoreWebView2Interface subclass: #ICoreWebView2WebResourceResponseView
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2WebResourceResponseView guid: (IID fromString: '{79701053-7759-4162-8f7d-f1b3f084928d}')!
 ICoreWebView2WebResourceResponseView comment: '`ICoreWebView2WebResourceResponseView` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceResponseView'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -65,10 +65,14 @@ get_StatusCode: statusCode
 	<virtual stdcall: hresult 5 sdword*>
 	^self invalidCall: _failureCode!
 
-getContent: handler
+getContent: aDyadicValuable
 	"Invoke the GetContent() method of the COM object."
 
-	^self GetContent: handler!
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
+				queryInterface: ICoreWebView2WebResourceResponseViewGetContentCompletedHandler.
+	self GetContent: handler.
+	handler free!
 
 GetContent: handler
 	"Private - Invoke the GetContent() method of the COM object.
@@ -87,13 +91,18 @@ headers
 	self get_Headers: answer.
 	^answer asObject!
 
+printableProperties
+	^#(#statusCode #reasonPhrase)!
+
 reasonPhrase
 	"Answer the <lpwstr> value of the 'ReasonPhrase' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_ReasonPhrase: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_ReasonPhrase: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 statusCode
 	"Answer the <sdword> value of the 'StatusCode' property of the receiver."
@@ -109,7 +118,8 @@ get_StatusCode:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRespon
 getContent:!**auto generated**!methods!public! !
 GetContent:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponseView!private! !
 headers!**auto generated**!properties!public! !
-reasonPhrase!**auto generated**!properties!public! !
+printableProperties!development!printing!private! !
+reasonPhrase!properties!public! !
 statusCode!**auto generated**!properties!public! !
 !
 

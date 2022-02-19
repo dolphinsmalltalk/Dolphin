@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2ScriptDialogOpeningEventArgs
+ICoreWebView2EventArgs subclass: #ICoreWebView2ScriptDialogOpeningEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2ScriptDialogOpeningEventArgs guid: (IID fromString: '{7390bb70-abe0-4843-9529-f143b31b03d6}')!
 ICoreWebView2ScriptDialogOpeningEventArgs comment: '`ICoreWebView2ScriptDialogOpeningEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ScriptDialogOpeningEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -65,10 +65,12 @@ Accept
 defaultText
 	"Answer the <lpwstr> value of the 'DefaultText' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_DefaultText: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_DefaultText: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 get_DefaultText: defaultText
 	"Private - Get the value of the 'DefaultText' property of the receiver.
@@ -143,10 +145,12 @@ kind
 message
 	"Answer the <lpwstr> value of the 'Message' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_Message: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_Message: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 put_ResultText: resultText
 	"Private - Set the value of the 'ResultText' property of the object wrapped by the 
@@ -161,10 +165,12 @@ put_ResultText: resultText
 resultText
 	"Answer the <lpwstr> value of the 'ResultText' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_ResultText: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_ResultText: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 resultText: resultText
 	"Set the 'ResultText' property of the receiver to the <lpwstr> value of the argument."
@@ -174,14 +180,16 @@ resultText: resultText
 uri
 	"Answer the <lpwstr> value of the 'uri' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_uri: answer.
-	^answer asObject! !
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_uri: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer! !
 !ICoreWebView2ScriptDialogOpeningEventArgs categoriesForMethods!
 accept!**auto generated**!methods!public! !
 Accept!**auto generated**!COM Interfaces-ICoreWebView2ScriptDialogOpeningEventArgs!private! !
-defaultText!**auto generated**!properties!public! !
+defaultText!properties!public! !
 get_DefaultText:!**auto generated**!COM Interfaces-ICoreWebView2ScriptDialogOpeningEventArgs!private! !
 get_Kind:!**auto generated**!COM Interfaces-ICoreWebView2ScriptDialogOpeningEventArgs!private! !
 get_Message:!**auto generated**!COM Interfaces-ICoreWebView2ScriptDialogOpeningEventArgs!private! !
@@ -190,11 +198,11 @@ get_uri:!**auto generated**!COM Interfaces-ICoreWebView2ScriptDialogOpeningEvent
 getDeferral!**auto generated**!methods!public! !
 GetDeferral:!**auto generated**!COM Interfaces-ICoreWebView2ScriptDialogOpeningEventArgs!private! !
 kind!**auto generated**!properties!public! !
-message!**auto generated**!properties!public! !
+message!properties!public! !
 put_ResultText:!**auto generated**!COM Interfaces-ICoreWebView2ScriptDialogOpeningEventArgs!private! !
-resultText!**auto generated**!properties!public! !
+resultText!properties!public! !
 resultText:!**auto generated**!properties!public! !
-uri!**auto generated**!properties!public! !
+uri!properties!public! !
 !
 
 !ICoreWebView2ScriptDialogOpeningEventArgs class methodsFor!

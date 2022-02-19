@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2HttpResponseHeaders
+ICoreWebView2HttpHeadersCollection subclass: #ICoreWebView2HttpResponseHeaders
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2HttpResponseHeaders guid: (IID fromString: '{03c5ff5a-9b45-4a88-881c-89a9f328619c}')!
 ICoreWebView2HttpResponseHeaders comment: '`ICoreWebView2HttpResponseHeaders` is a wrapper class for the COM interface ''WebView2.ICoreWebView2HttpResponseHeaders'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -45,11 +45,6 @@ interface ICoreWebView2HttpResponseHeaders : IUnknown
 !ICoreWebView2HttpResponseHeaders categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2HttpResponseHeaders methodsFor!
 
-appendHeader: name value: value
-	"Invoke the AppendHeader() method of the COM object."
-
-	^self AppendHeader: name asUtf16String value: value asUtf16String!
-
 AppendHeader: name value: value
 	"Private - Invoke the AppendHeader() method of the COM object.
 
@@ -60,13 +55,11 @@ AppendHeader: name value: value
 	<virtual stdcall: hresult 4 lpwstr lpwstr>
 	^self invalidCall: _failureCode!
 
-contains: name
-	"Answer the <SDWORD> result of invoking the Contains() method of the COM object."
+at: nameString put: headerString
+	"Add a new named header. Note attempting to modify an existing header will just add a new header line with the same name."
 
-	| answer |
-	answer := SDWORD new.
-	self Contains: name asUtf16String contains: answer.
-	^answer asObject!
+	self AppendHeader: nameString asUtf16String value: headerString asUtf16String.
+	^headerString!
 
 Contains: name contains: contains
 	"Private - Invoke the Contains() method of the COM object.
@@ -78,14 +71,6 @@ Contains: name contains: contains
 	<virtual stdcall: hresult 5 lpwstr sdword*>
 	^self invalidCall: _failureCode!
 
-getHeader: name
-	"Answer the <Utf16String> result of invoking the GetHeader() method of the COM object."
-
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self GetHeader: name asUtf16String value: answer.
-	^answer asObject!
-
 GetHeader: name value: value
 	"Private - Invoke the GetHeader() method of the COM object.
 
@@ -95,14 +80,6 @@ GetHeader: name value: value
 
 	<virtual stdcall: hresult 6 lpwstr lpwstr*>
 	^self invalidCall: _failureCode!
-
-getHeaders: name
-	"Answer the <ICoreWebView2HttpHeadersCollectionIterator> result of invoking the GetHeaders() method of the COM object."
-
-	| answer |
-	answer := ICoreWebView2HttpHeadersCollectionIterator newPointer.
-	self GetHeaders: name asUtf16String iterator: answer.
-	^answer asObject!
 
 GetHeaders: name iterator: iterator
 	"Private - Invoke the GetHeaders() method of the COM object.
@@ -114,14 +91,6 @@ GetHeaders: name iterator: iterator
 	<virtual stdcall: hresult 7 lpwstr ICoreWebView2HttpHeadersCollectionIterator**>
 	^self invalidCall: _failureCode!
 
-getIterator
-	"Answer the <ICoreWebView2HttpHeadersCollectionIterator> result of invoking the GetIterator() method of the COM object."
-
-	| answer |
-	answer := ICoreWebView2HttpHeadersCollectionIterator newPointer.
-	self GetIterator: answer.
-	^answer asObject!
-
 GetIterator: iterator
 	"Private - Invoke the GetIterator() method of the COM object.
 
@@ -129,18 +98,20 @@ GetIterator: iterator
 			[out, retval]ICoreWebView2HttpHeadersCollectionIterator** iterator);"
 
 	<virtual stdcall: hresult 8 ICoreWebView2HttpHeadersCollectionIterator**>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+RemoveHeader: name
+	"Headers cannot be removed."
+
+	self shouldNotImplement! !
 !ICoreWebView2HttpResponseHeaders categoriesForMethods!
-appendHeader:value:!**auto generated**!methods!public! !
 AppendHeader:value:!**auto generated**!COM Interfaces-ICoreWebView2HttpResponseHeaders!private! !
-contains:!**auto generated**!methods!public! !
+at:put:!accessing!public! !
 Contains:contains:!**auto generated**!COM Interfaces-ICoreWebView2HttpResponseHeaders!private! !
-getHeader:!**auto generated**!methods!public! !
 GetHeader:value:!**auto generated**!COM Interfaces-ICoreWebView2HttpResponseHeaders!private! !
-getHeaders:!**auto generated**!methods!public! !
 GetHeaders:iterator:!**auto generated**!COM Interfaces-ICoreWebView2HttpResponseHeaders!private! !
-getIterator!**auto generated**!methods!public! !
 GetIterator:!**auto generated**!COM Interfaces-ICoreWebView2HttpResponseHeaders!private! !
+RemoveHeader:!**auto generated**!COM Interfaces-ICoreWebView2HttpRequestHeaders!private! !
 !
 
 !ICoreWebView2HttpResponseHeaders class methodsFor!

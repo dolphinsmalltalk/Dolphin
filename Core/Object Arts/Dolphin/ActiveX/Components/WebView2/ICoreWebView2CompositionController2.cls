@@ -36,18 +36,9 @@ get_UIAProvider: provider
 			[out, retval]IUnknown** provider);"
 
 	<virtual stdcall: hresult 12 IUnknown**>
-	^self invalidCall: _failureCode!
-
-uiaProvider
-	"Answer the <IUnknown> value of the 'UIAProvider' property of the receiver."
-
-	| answer |
-	answer := IUnknown newPointer.
-	self get_UIAProvider: answer.
-	^answer asObject! !
+	^self invalidCall: _failureCode! !
 !ICoreWebView2CompositionController2 categoriesForMethods!
 get_UIAProvider:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController2!private! !
-uiaProvider!**auto generated**!properties!public! !
 !
 
 !ICoreWebView2CompositionController2 class methodsFor!

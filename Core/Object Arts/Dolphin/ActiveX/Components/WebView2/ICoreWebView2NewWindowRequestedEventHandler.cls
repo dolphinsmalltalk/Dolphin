@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2NewWindowRequestedEventHandler
+ICoreWebView2EventHandler subclass: #ICoreWebView2NewWindowRequestedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2NewWindowRequestedEventHandler guid: (IID fromString: '{d4c185fe-c81c-4989-97af-2d3fa7ab5651}')!
 ICoreWebView2NewWindowRequestedEventHandler comment: '`ICoreWebView2NewWindowRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NewWindowRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -30,23 +30,14 @@ interface ICoreWebView2NewWindowRequestedEventHandler : IUnknown
 !ICoreWebView2NewWindowRequestedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2NewWindowRequestedEventHandler methodsFor!
 
-invoke: sender args: args
-	"Invoke the Invoke() method of the COM object."
+basicRegister: tokenBuffer
+	source Add_NewWindowRequested: self token: tokenBuffer!
 
-	^self Invoke: sender args: args!
-
-Invoke: sender args: args
-	"Private - Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2* sender,
-			[in]ICoreWebView2NewWindowRequestedEventArgs* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2* ICoreWebView2NewWindowRequestedEventArgs*>
-	^self invalidCall: _failureCode! !
+basicUnregister
+	source Remove_NewWindowRequested: token! !
 !ICoreWebView2NewWindowRequestedEventHandler categoriesForMethods!
-invoke:args:!**auto generated**!methods!public! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventHandler!private! !
+basicRegister:!private!realizing/unrealizing! !
+basicUnregister!private!realizing/unrealizing! !
 !
 
 !ICoreWebView2NewWindowRequestedEventHandler class methodsFor!
@@ -58,8 +49,14 @@ defineFunctions
 	self
 		defineFunction: #Invoke:args:
 			argumentTypes: 'ICoreWebView2* ICoreWebView2NewWindowRequestedEventArgs*'
-! !
+!
+
+eventName
+	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
+
+	^#newWindowRequested:! !
 !ICoreWebView2NewWindowRequestedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
+eventName!constants!public! !
 !
 

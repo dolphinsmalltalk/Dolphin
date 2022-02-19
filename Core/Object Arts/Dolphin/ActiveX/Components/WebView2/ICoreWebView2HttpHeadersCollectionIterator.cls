@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2HttpHeadersCollectionIterator
+ICoreWebView2Interface subclass: #ICoreWebView2HttpHeadersCollectionIterator
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2HttpHeadersCollectionIterator guid: (IID fromString: '{0702fc30-f43b-47bb-ab52-a42cb552ad9f}')!
 ICoreWebView2HttpHeadersCollectionIterator comment: '`ICoreWebView2HttpHeadersCollectionIterator` is a wrapper class for the COM interface ''WebView2.ICoreWebView2HttpHeadersCollectionIterator'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -36,6 +36,9 @@ interface ICoreWebView2HttpHeadersCollectionIterator : IUnknown
 !ICoreWebView2HttpHeadersCollectionIterator categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2HttpHeadersCollectionIterator methodsFor!
 
+do: aMonadicValuable
+	self keysAndValuesDo: [:eachKey :eachValue | aMonadicValuable value: eachValue]!
+
 get_HasCurrentHeader: hasCurrent
 	"Private - Get the value of the 'HasCurrentHeader' property of the receiver.
 
@@ -44,15 +47,6 @@ get_HasCurrentHeader: hasCurrent
 
 	<virtual stdcall: hresult 5 sdword*>
 	^self invalidCall: _failureCode!
-
-getCurrentHeader
-	"Invoke the GetCurrentHeader() method of the COM object."
-
-	| outputs |
-	outputs := {StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-				StructurePointer newNull: COMTaskMemory elementClass: Utf16String}.
-	self GetCurrentHeader: (outputs basicAt: 1) value: (outputs basicAt: 2).
-	^outputs collect: [:each | each asObject]!
 
 GetCurrentHeader: name value: value
 	"Private - Invoke the GetCurrentHeader() method of the COM object.
@@ -64,21 +58,36 @@ GetCurrentHeader: name value: value
 	<virtual stdcall: hresult 4 lpwstr* lpwstr*>
 	^self invalidCall: _failureCode!
 
-hasCurrentHeader
-	"Answer the <sdword> value of the 'HasCurrentHeader' property of the receiver."
+hasCurrent
+	"Answer whether there are any remaining elements in the collection to iterate over."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_HasCurrentHeader: answer.
 	^answer asObject!
 
-moveNext
-	"Answer the <SDWORD> result of invoking the MoveNext() method of the COM object."
+keysAndValuesDo: aDyadicValuable
+	"Evaluate the <dyadicValuable> argument for each of the remaining key/valube pairsr in the receiver (i.e. from the current position to the end).
+	Note that as the iterator cannot be reset, it can only be enumerated once."
 
-	| answer |
-	answer := SDWORD new.
-	self MoveNext: answer.
-	^answer asObject!
+	| namePtr valuePtr notAtEnd |
+	namePtr := COMTaskMemory new
+				beUnfinalizable;
+				yourself.
+	valuePtr := COMTaskMemory new
+				beUnfinalizable;
+				yourself.
+	notAtEnd := ByteArray new: 4.
+	self get_HasCurrentHeader: notAtEnd.
+	[(notAtEnd sdwordAtOffset: 0) == 0] whileFalse: 
+			[| name value |
+			self GetCurrentHeader: namePtr value: valuePtr.
+			name := Utf16String fromAddress: namePtr.
+			namePtr basicFree.
+			value := Utf16String fromAddress: valuePtr.
+			valuePtr basicFree.
+			aDyadicValuable value: name value: value.
+			self MoveNext: notAtEnd]!
 
 MoveNext: hasNext
 	"Private - Invoke the MoveNext() method of the COM object.
@@ -89,11 +98,11 @@ MoveNext: hasNext
 	<virtual stdcall: hresult 6 sdword*>
 	^self invalidCall: _failureCode! !
 !ICoreWebView2HttpHeadersCollectionIterator categoriesForMethods!
+do:!enumerating!public! !
 get_HasCurrentHeader:!**auto generated**!COM Interfaces-ICoreWebView2HttpHeadersCollectionIterator!private! !
-getCurrentHeader!**auto generated**!methods!public! !
 GetCurrentHeader:value:!**auto generated**!COM Interfaces-ICoreWebView2HttpHeadersCollectionIterator!private! !
-hasCurrentHeader!**auto generated**!properties!public! !
-moveNext!**auto generated**!methods!public! !
+hasCurrent!properties!public! !
+keysAndValuesDo:!enumerating!public! !
 MoveNext:!**auto generated**!COM Interfaces-ICoreWebView2HttpHeadersCollectionIterator!private! !
 !
 

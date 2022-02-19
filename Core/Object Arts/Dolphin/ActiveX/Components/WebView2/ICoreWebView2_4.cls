@@ -40,14 +40,6 @@ interface ICoreWebView2_4 : ICoreWebView2_3
 !ICoreWebView2_4 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2_4 methodsFor!
 
-add_DownloadStarting: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_DownloadStarting() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_DownloadStarting: eventHandler token: answer.
-	^answer asObject!
-
 Add_DownloadStarting: eventHandler token: token
 	"Private - Invoke the add_DownloadStarting() method of the COM object.
 
@@ -55,31 +47,13 @@ Add_DownloadStarting: eventHandler token: token
 			[in]ICoreWebView2DownloadStartingEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 76 ICoreWebView2DownloadStartingEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 76 ICoreWebView2DownloadStartingEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-add_FrameCreated: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_FrameCreated() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_FrameCreated: eventHandler token: answer.
-	^answer asObject!
 
 Add_FrameCreated: eventHandler token: token
-	"Private - Invoke the add_FrameCreated() method of the COM object.
+	"Not supported by this version"
 
-		HRESULT __stdcall add_FrameCreated(
-			[in]ICoreWebView2FrameCreatedEventHandler* eventHandler,
-			[out]EventRegistrationToken* token);"
-
-	<virtual stdcall: hresult 74 ICoreWebView2FrameCreatedEventHandler* EventRegistrationToken*>
-	^self invalidCall: _failureCode!
-
-remove_DownloadStarting: token
-	"Invoke the remove_DownloadStarting() method of the COM object."
-
-	^self Remove_DownloadStarting: token!
+	^E_NOTIMPL!
 
 Remove_DownloadStarting: token
 	"Private - Invoke the remove_DownloadStarting() method of the COM object.
@@ -87,13 +61,8 @@ Remove_DownloadStarting: token
 		HRESULT __stdcall remove_DownloadStarting(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 77 EventRegistrationToken>
+	<virtual stdcall: hresult 77 sqword>
 	^self invalidCall: _failureCode!
-
-remove_FrameCreated: token
-	"Invoke the remove_FrameCreated() method of the COM object."
-
-	^self Remove_FrameCreated: token!
 
 Remove_FrameCreated: token
 	"Private - Invoke the remove_FrameCreated() method of the COM object.
@@ -101,16 +70,12 @@ Remove_FrameCreated: token
 		HRESULT __stdcall remove_FrameCreated(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 75 EventRegistrationToken>
+	<virtual stdcall: hresult 75 sqword>
 	^self invalidCall: _failureCode! !
 !ICoreWebView2_4 categoriesForMethods!
-add_DownloadStarting:!**auto generated**!methods!public! !
 Add_DownloadStarting:token:!**auto generated**!COM Interfaces-ICoreWebView2_4!private! !
-add_FrameCreated:!**auto generated**!methods!public! !
 Add_FrameCreated:token:!**auto generated**!COM Interfaces-ICoreWebView2_4!private! !
-remove_DownloadStarting:!**auto generated**!methods!public! !
 Remove_DownloadStarting:!**auto generated**!COM Interfaces-ICoreWebView2_4!private! !
-remove_FrameCreated:!**auto generated**!methods!public! !
 Remove_FrameCreated:!**auto generated**!COM Interfaces-ICoreWebView2_4!private! !
 !
 
@@ -122,13 +87,13 @@ defineFunctions
 
 	self
 		defineFunction: #Add_FrameCreated:token:
-			argumentTypes: 'ICoreWebView2FrameCreatedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2FrameCreatedEventHandler* sqword*';
 		defineFunction: #Remove_FrameCreated:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #Add_DownloadStarting:token:
-			argumentTypes: 'ICoreWebView2DownloadStartingEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2DownloadStartingEventHandler* sqword*';
 		defineFunction: #Remove_DownloadStarting:
-			argumentTypes: 'EventRegistrationToken'
+			argumentTypes: 'sqword'
 ! !
 !ICoreWebView2_4 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !

@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2PermissionRequestedEventHandler
+ICoreWebView2EventHandler subclass: #ICoreWebView2PermissionRequestedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2PermissionRequestedEventHandler guid: (IID fromString: '{15e1c6a3-c72a-4df3-91d7-d097fbec6bfd}')!
 ICoreWebView2PermissionRequestedEventHandler comment: '`ICoreWebView2PermissionRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PermissionRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -30,23 +30,14 @@ interface ICoreWebView2PermissionRequestedEventHandler : IUnknown
 !ICoreWebView2PermissionRequestedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2PermissionRequestedEventHandler methodsFor!
 
-invoke: sender args: args
-	"Invoke the Invoke() method of the COM object."
+basicRegister: tokenBuffer
+	source Add_PermissionRequested: self token: tokenBuffer!
 
-	^self Invoke: sender args: args!
-
-Invoke: sender args: args
-	"Private - Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2* sender,
-			[in]ICoreWebView2PermissionRequestedEventArgs* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2* ICoreWebView2PermissionRequestedEventArgs*>
-	^self invalidCall: _failureCode! !
+basicUnregister
+	source Remove_PermissionRequested: token! !
 !ICoreWebView2PermissionRequestedEventHandler categoriesForMethods!
-invoke:args:!**auto generated**!methods!public! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2PermissionRequestedEventHandler!private! !
+basicRegister:!private!realizing/unrealizing! !
+basicUnregister!private!realizing/unrealizing! !
 !
 
 !ICoreWebView2PermissionRequestedEventHandler class methodsFor!
@@ -58,8 +49,14 @@ defineFunctions
 	self
 		defineFunction: #Invoke:args:
 			argumentTypes: 'ICoreWebView2* ICoreWebView2PermissionRequestedEventArgs*'
-! !
+!
+
+eventName
+	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
+
+	^#permissionRequested:! !
 !ICoreWebView2PermissionRequestedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
+eventName!constants!public! !
 !
 

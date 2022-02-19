@@ -3,7 +3,7 @@
 Object subclass: #OAIDEExtensions
 	instanceVariableNames: 'flags'
 	classVariableNames: 'ClassCommentTemplateMask Current KeyHelpMask'
-	poolDictionaries: 'SHDocVwConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 OAIDEExtensions guid: (GUID fromString: '{7803cf6a-7f63-44a5-80a6-feb5e0af07a2}')!
 OAIDEExtensions comment: 'Class to host Object Arts extensions to the standard Dolphin IDE tools.
@@ -66,7 +66,7 @@ browseKeyBindingsOfShell: aShellView
 	shell caption: ('<1d> Key Bindings' expandMacrosWith: aShellView presenter class).
 	presenter := URLPresenter createIn: shell.
 	shell show.
-	browser := presenter view controlDispatch.
+	browser := presenter view.
 	stream reset.
 	self streamHtml: stream intoBrowser: browser!
 
@@ -273,12 +273,9 @@ release
 	Smalltalk developmentSystem unregisterTool: self.
 	self allToolClasses do: [:each | each removeEventsTriggeredFor: self]!
 
-streamHtml: aStream intoBrowser: browser 
-	| doc docStream |
-	doc := browser document.
-	docStream := doc queryInterface: IPersistStreamInit.
-	docStream initNew.
-	docStream readFrom: (aStream queryInterface: IStream)!
+streamHtml: aStream intoBrowser: browser
+	browser canNavigateToStrings: true.
+	browser model value: aStream contents!
 
 variableDescriptionsFor: aClass
 	"Private - Answers a <readableString> that describes the instance variables and

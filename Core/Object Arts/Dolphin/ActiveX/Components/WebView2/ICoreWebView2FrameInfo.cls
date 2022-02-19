@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2FrameInfo
+ICoreWebView2Interface subclass: #ICoreWebView2FrameInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2FrameInfo guid: (IID fromString: '{da86b8a1-bdf3-4f11-9955-528cefa59727}')!
 ICoreWebView2FrameInfo comment: '`ICoreWebView2FrameInfo` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameInfo'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -53,23 +53,31 @@ get_Source: source
 name
 	"Answer the <lpwstr> value of the 'name' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_name: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_name: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
+
+printableProperties
+	^#(#name #source)!
 
 source
 	"Answer the <lpwstr> value of the 'Source' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_Source: answer.
-	^answer asObject! !
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_Source: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer! !
 !ICoreWebView2FrameInfo categoriesForMethods!
 get_name:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfo!private! !
 get_Source:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfo!private! !
-name!**auto generated**!properties!public! !
-source!**auto generated**!properties!public! !
+name!properties!public! !
+printableProperties!printing!public! !
+source!properties!public! !
 !
 
 !ICoreWebView2FrameInfo class methodsFor!

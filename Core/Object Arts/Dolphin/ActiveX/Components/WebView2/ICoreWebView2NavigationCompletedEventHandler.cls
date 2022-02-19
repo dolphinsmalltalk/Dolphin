@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2NavigationCompletedEventHandler
+ICoreWebView2EventHandler subclass: #ICoreWebView2NavigationCompletedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'WebView2Constants'
@@ -30,23 +30,14 @@ interface ICoreWebView2NavigationCompletedEventHandler : IUnknown
 !ICoreWebView2NavigationCompletedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2NavigationCompletedEventHandler methodsFor!
 
-invoke: sender args: args
-	"Invoke the Invoke() method of the COM object."
+basicRegister: tokenBuffer
+	source Add_NavigationCompleted: self token: tokenBuffer!
 
-	^self Invoke: sender args: args!
-
-Invoke: sender args: args
-	"Private - Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2* sender,
-			[in]ICoreWebView2NavigationCompletedEventArgs* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2* ICoreWebView2NavigationCompletedEventArgs*>
-	^self invalidCall: _failureCode! !
+basicUnregister
+	source Remove_NavigationCompleted: token! !
 !ICoreWebView2NavigationCompletedEventHandler categoriesForMethods!
-invoke:args:!**auto generated**!methods!public! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2NavigationCompletedEventHandler!private! !
+basicRegister:!private!realizing/unrealizing! !
+basicUnregister!private!realizing/unrealizing! !
 !
 
 !ICoreWebView2NavigationCompletedEventHandler class methodsFor!
@@ -58,8 +49,14 @@ defineFunctions
 	self
 		defineFunction: #Invoke:args:
 			argumentTypes: 'ICoreWebView2* ICoreWebView2NavigationCompletedEventArgs*'
-! !
+!
+
+eventName
+	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
+
+	^#navigationCompleted:! !
 !ICoreWebView2NavigationCompletedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
+eventName!constants!public! !
 !
 

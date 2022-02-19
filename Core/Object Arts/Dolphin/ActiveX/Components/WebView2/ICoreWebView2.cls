@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2
+ICoreWebView2Interface subclass: #ICoreWebView2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2 guid: (IID fromString: '{76eceacb-0462-4d94-ac83-423a6793775e}')!
 ICoreWebView2 comment: '`ICoreWebView2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
-** This comment was automatically generated from a type library. Delete this line to prevent any manual edits from being overwritten if the wrapper class is regenerated.
+At the time of writing there are eight (!!) later versions of this interface. In order to reduce the burden of degrading gracefully to older versions, default implementations of the additional methods and properties are added.
 
 IDL definition follows:
 ```
@@ -221,13 +221,10 @@ interface ICoreWebView2 : IUnknown
 !ICoreWebView2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2 methodsFor!
 
-add_ContainsFullScreenElementChanged: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_ContainsFullScreenElementChanged() method of the COM object."
+Add_ClientCertificateRequested: eventHandler token: token
+	"Not supported at this level"
 
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_ContainsFullScreenElementChanged: eventHandler token: answer.
-	^answer asObject!
+	^E_NOTIMPL!
 
 Add_ContainsFullScreenElementChanged: eventHandler token: token
 	"Private - Invoke the add_ContainsFullScreenElementChanged() method of the COM object.
@@ -236,16 +233,8 @@ Add_ContainsFullScreenElementChanged: eventHandler token: token
 			[in]ICoreWebView2ContainsFullScreenElementChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 53 ICoreWebView2ContainsFullScreenElementChangedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 53 ICoreWebView2ContainsFullScreenElementChangedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-add_ContentLoading: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_ContentLoading() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_ContentLoading: eventHandler token: answer.
-	^answer asObject!
 
 Add_ContentLoading: eventHandler token: token
 	"Private - Invoke the add_ContentLoading() method of the COM object.
@@ -254,16 +243,8 @@ Add_ContentLoading: eventHandler token: token
 			[in]ICoreWebView2ContentLoadingEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 10 ICoreWebView2ContentLoadingEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 10 ICoreWebView2ContentLoadingEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-add_DocumentTitleChanged: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_DocumentTitleChanged() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_DocumentTitleChanged: eventHandler token: answer.
-	^answer asObject!
 
 Add_DocumentTitleChanged: eventHandler token: token
 	"Private - Invoke the add_DocumentTitleChanged() method of the COM object.
@@ -272,16 +253,23 @@ Add_DocumentTitleChanged: eventHandler token: token
 			[in]ICoreWebView2DocumentTitleChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 47 ICoreWebView2DocumentTitleChangedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 47 ICoreWebView2DocumentTitleChangedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
 
-add_FrameNavigationCompleted: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_FrameNavigationCompleted() method of the COM object."
+Add_DOMContentLoaded: eventHandler token: token
+	"Not supported at this level"
 
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_FrameNavigationCompleted: eventHandler token: answer.
-	^answer asObject!
+	^E_NOTIMPL!
+
+Add_DownloadStarting: eventHandler token: token
+	"Not supported by this version"
+
+	^E_NOTIMPL!
+
+Add_FrameCreated: eventHandler token: token
+	"Not supported by this version"
+
+	^E_NOTIMPL!
 
 Add_FrameNavigationCompleted: eventHandler token: token
 	"Private - Invoke the add_FrameNavigationCompleted() method of the COM object.
@@ -290,16 +278,8 @@ Add_FrameNavigationCompleted: eventHandler token: token
 			[in]ICoreWebView2NavigationCompletedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 20 ICoreWebView2NavigationCompletedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 20 ICoreWebView2NavigationCompletedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-add_FrameNavigationStarting: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_FrameNavigationStarting() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_FrameNavigationStarting: eventHandler token: answer.
-	^answer asObject!
 
 Add_FrameNavigationStarting: eventHandler token: token
 	"Private - Invoke the add_FrameNavigationStarting() method of the COM object.
@@ -308,16 +288,8 @@ Add_FrameNavigationStarting: eventHandler token: token
 			[in]ICoreWebView2NavigationStartingEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 18 ICoreWebView2NavigationStartingEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 18 ICoreWebView2NavigationStartingEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-add_HistoryChanged: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_HistoryChanged() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_HistoryChanged: eventHandler token: answer.
-	^answer asObject!
 
 Add_HistoryChanged: eventHandler token: token
 	"Private - Invoke the add_HistoryChanged() method of the COM object.
@@ -326,16 +298,23 @@ Add_HistoryChanged: eventHandler token: token
 			[in]ICoreWebView2HistoryChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 14 ICoreWebView2HistoryChangedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 14 ICoreWebView2HistoryChangedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
 
-add_NavigationCompleted: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_NavigationCompleted() method of the COM object."
+Add_IsDefaultDownloadDialogOpenChanged: handler token: token
+	"Not supported at this level"
 
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_NavigationCompleted: eventHandler token: answer.
-	^answer asObject!
+	^E_NOTIMPL!
+
+Add_IsDocumentPlayingAudioChanged: eventHandler token: token
+	"Not supported at this level"
+
+	^E_NOTIMPL!
+
+Add_IsMutedChanged: eventHandler token: token
+	"Not supported at this level"
+
+	^E_NOTIMPL!
 
 Add_NavigationCompleted: eventHandler token: token
 	"Private - Invoke the add_NavigationCompleted() method of the COM object.
@@ -344,16 +323,8 @@ Add_NavigationCompleted: eventHandler token: token
 			[in]ICoreWebView2NavigationCompletedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 16 ICoreWebView2NavigationCompletedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 16 ICoreWebView2NavigationCompletedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-add_NavigationStarting: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_NavigationStarting() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_NavigationStarting: eventHandler token: answer.
-	^answer asObject!
 
 Add_NavigationStarting: eventHandler token: token
 	"Private - Invoke the add_NavigationStarting() method of the COM object.
@@ -362,16 +333,8 @@ Add_NavigationStarting: eventHandler token: token
 			[in]ICoreWebView2NavigationStartingEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 8 ICoreWebView2NavigationStartingEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 8 ICoreWebView2NavigationStartingEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-add_NewWindowRequested: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_NewWindowRequested() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_NewWindowRequested: eventHandler token: answer.
-	^answer asObject!
 
 Add_NewWindowRequested: eventHandler token: token
 	"Private - Invoke the add_NewWindowRequested() method of the COM object.
@@ -380,16 +343,8 @@ Add_NewWindowRequested: eventHandler token: token
 			[in]ICoreWebView2NewWindowRequestedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 45 ICoreWebView2NewWindowRequestedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 45 ICoreWebView2NewWindowRequestedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-add_PermissionRequested: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_PermissionRequested() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_PermissionRequested: eventHandler token: answer.
-	^answer asObject!
 
 Add_PermissionRequested: eventHandler token: token
 	"Private - Invoke the add_PermissionRequested() method of the COM object.
@@ -398,16 +353,8 @@ Add_PermissionRequested: eventHandler token: token
 			[in]ICoreWebView2PermissionRequestedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 24 ICoreWebView2PermissionRequestedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 24 ICoreWebView2PermissionRequestedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-add_ProcessFailed: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_ProcessFailed() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_ProcessFailed: eventHandler token: answer.
-	^answer asObject!
 
 Add_ProcessFailed: eventHandler token: token
 	"Private - Invoke the add_ProcessFailed() method of the COM object.
@@ -416,16 +363,8 @@ Add_ProcessFailed: eventHandler token: token
 			[in]ICoreWebView2ProcessFailedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 26 ICoreWebView2ProcessFailedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 26 ICoreWebView2ProcessFailedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-add_ScriptDialogOpening: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_ScriptDialogOpening() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_ScriptDialogOpening: eventHandler token: answer.
-	^answer asObject!
 
 Add_ScriptDialogOpening: eventHandler token: token
 	"Private - Invoke the add_ScriptDialogOpening() method of the COM object.
@@ -434,16 +373,8 @@ Add_ScriptDialogOpening: eventHandler token: token
 			[in]ICoreWebView2ScriptDialogOpeningEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 22 ICoreWebView2ScriptDialogOpeningEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 22 ICoreWebView2ScriptDialogOpeningEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-add_SourceChanged: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_SourceChanged() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_SourceChanged: eventHandler token: answer.
-	^answer asObject!
 
 Add_SourceChanged: eventHandler token: token
 	"Private - Invoke the add_SourceChanged() method of the COM object.
@@ -452,16 +383,8 @@ Add_SourceChanged: eventHandler token: token
 			[in]ICoreWebView2SourceChangedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 12 ICoreWebView2SourceChangedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 12 ICoreWebView2SourceChangedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-add_WebMessageReceived: handler
-	"Answer the <EventRegistrationToken> result of invoking the add_WebMessageReceived() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_WebMessageReceived: handler token: answer.
-	^answer asObject!
 
 Add_WebMessageReceived: handler token: token
 	"Private - Invoke the add_WebMessageReceived() method of the COM object.
@@ -470,16 +393,8 @@ Add_WebMessageReceived: handler token: token
 			[in]ICoreWebView2WebMessageReceivedEventHandler* handler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 35 ICoreWebView2WebMessageReceivedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 35 ICoreWebView2WebMessageReceivedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-add_WebResourceRequested: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_WebResourceRequested() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_WebResourceRequested: eventHandler token: answer.
-	^answer asObject!
 
 Add_WebResourceRequested: eventHandler token: token
 	"Private - Invoke the add_WebResourceRequested() method of the COM object.
@@ -488,16 +403,13 @@ Add_WebResourceRequested: eventHandler token: token
 			[in]ICoreWebView2WebResourceRequestedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 56 ICoreWebView2WebResourceRequestedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 56 ICoreWebView2WebResourceRequestedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
 
-add_WindowCloseRequested: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_WindowCloseRequested() method of the COM object."
+Add_WebResourceResponseReceived: eventHandler token: token
+	"Not supported by this version"
 
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_WindowCloseRequested: eventHandler token: answer.
-	^answer asObject!
+	^E_NOTIMPL!
 
 Add_WindowCloseRequested: eventHandler token: token
 	"Private - Invoke the add_WindowCloseRequested() method of the COM object.
@@ -506,7 +418,7 @@ Add_WindowCloseRequested: eventHandler token: token
 			[in]ICoreWebView2WindowCloseRequestedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 60 ICoreWebView2WindowCloseRequestedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 60 ICoreWebView2WindowCloseRequestedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
 
 addHostObjectToScript: name object: object
@@ -524,11 +436,6 @@ AddHostObjectToScript: name object: object
 	<virtual stdcall: hresult 50 lpwstr variant*>
 	^self invalidCall: _failureCode!
 
-addScriptToExecuteOnDocumentCreated: javaScript handler: handler
-	"Invoke the AddScriptToExecuteOnDocumentCreated() method of the COM object."
-
-	^self AddScriptToExecuteOnDocumentCreated: javaScript asUtf16String handler: handler!
-
 AddScriptToExecuteOnDocumentCreated: javaScript handler: handler
 	"Private - Invoke the AddScriptToExecuteOnDocumentCreated() method of the COM object.
 
@@ -538,6 +445,15 @@ AddScriptToExecuteOnDocumentCreated: javaScript handler: handler
 
 	<virtual stdcall: hresult 28 lpwstr ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler*>
 	^self invalidCall: _failureCode!
+
+addScriptToExecuteOnDocumentCreated: javaScript thenDo: aDyadicValuable
+	"Invoke the AddScriptToExecuteOnDocumentCreated() method of the COM object."
+
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
+				queryInterface: ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler.
+	self AddScriptToExecuteOnDocumentCreated: javaScript asUtf16String handler: handler.
+	handler free!
 
 addWebResourceRequestedFilter: uri resourceContext: resourceContext
 	"Invoke the AddWebResourceRequestedFilter() method of the COM object."
@@ -562,14 +478,6 @@ browserProcessId
 	self get_BrowserProcessId: answer.
 	^answer asObject!
 
-callDevToolsProtocolMethod: methodName parametersAsJson: parametersAsJson handler: handler
-	"Invoke the CallDevToolsProtocolMethod() method of the COM object."
-
-	^self
-		CallDevToolsProtocolMethod: methodName asUtf16String
-		parametersAsJson: parametersAsJson asUtf16String
-		handler: handler!
-
 CallDevToolsProtocolMethod: methodName parametersAsJson: parametersAsJson handler: handler
 	"Private - Invoke the CallDevToolsProtocolMethod() method of the COM object.
 
@@ -581,29 +489,36 @@ CallDevToolsProtocolMethod: methodName parametersAsJson: parametersAsJson handle
 	<virtual stdcall: hresult 37 lpwstr lpwstr ICoreWebView2CallDevToolsProtocolMethodCompletedHandler*>
 	^self invalidCall: _failureCode!
 
+callDevToolsProtocolMethod: nameString parametersAsJson: jsonString thenDo: aDyadicValuable
+	"Invoke the CallDevToolsProtocolMethod() method of the COM object."
+
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
+				queryInterface: ICoreWebView2CallDevToolsProtocolMethodCompletedHandler.
+	self
+		CallDevToolsProtocolMethod: nameString asUtf16String
+		parametersAsJson: jsonString asUtf16String
+		handler: handler.
+	handler free!
+
 canGoBack
-	"Answer the <sdword> value of the 'CanGoBack' property of the receiver."
+	"Answer the <Boolean> value of the 'CanGoBack' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_CanGoBack: answer.
 	^answer asObject!
 
 canGoForward
-	"Answer the <sdword> value of the 'CanGoForward' property of the receiver."
+	"Answer the <Boolean> value of the 'CanGoForward' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_CanGoForward: answer.
 	^answer asObject!
 
-capturePreview: imageFormat imageStream: imageStream handler: handler
-	"Invoke the CapturePreview() method of the COM object."
-
-	^self
-		CapturePreview: imageFormat
-		imageStream: imageStream
-		handler: handler!
+canPrintToPdf
+	^false!
 
 CapturePreview: imageFormat imageStream: imageStream handler: handler
 	"Private - Invoke the CapturePreview() method of the COM object.
@@ -616,26 +531,121 @@ CapturePreview: imageFormat imageStream: imageStream handler: handler
 	<virtual stdcall: hresult 31 sdword IStream* ICoreWebView2CapturePreviewCompletedHandler*>
 	^self invalidCall: _failureCode!
 
+capturePreview: anInteger imageStream: anIStream thenDo: aMonadicValuable
+	"Request a screenshot of the webview content captured into a byte stream. The operation is asynchronous, and the results an HRESULT code indicating completion status is passed to the <monadicValuable> final argument when complete. Assuming success, the image can then be retrieved from the byte stream passed as the 2nd argument."
+
+	"For example, given an ICoreWebView2 variable, `webview`:
+
+		stream := ByteArray writeStream.
+		webview capturePreview: WebView2Constants.COREWEBVIEW2_CAPTURE_PREVIEW_IMAGE_FORMAT_PNG
+			imageStream: (stream queryInterface: IStream)
+			thenDo: [:hr | 
+				| pngBytes |
+				pngBytes := stream contents.
+				(GdiplusBitmap fromByteArray: pngBytes) inspect]
+	"
+
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aMonadicValuable)
+				queryInterface: ICoreWebView2CapturePreviewCompletedHandler.
+	self
+		CapturePreview: anInteger
+		imageStream: anIStream
+		handler: handler.
+	handler free!
+
+clearVirtualHostNameToFolderMapping: hostName
+	"Invoke the ClearVirtualHostNameToFolderMapping() method of the COM object."
+
+	^self ClearVirtualHostNameToFolderMapping: hostName asUtf16String!
+
+ClearVirtualHostNameToFolderMapping: hostName
+	"Private - Invoke the ClearVirtualHostNameToFolderMapping() method of the COM object.
+
+		HRESULT __stdcall ClearVirtualHostNameToFolderMapping(
+			[in]LPWSTR hostName);"
+
+	"Not implemented by this version of WebView2"
+	^E_NOTIMPL!
+
+closeDefaultDownloadDialog
+	"Invoke the CloseDefaultDownloadDialog() method of the COM object."
+
+	^self CloseDefaultDownloadDialog!
+
+CloseDefaultDownloadDialog
+	"Private - Invoke the CloseDefaultDownloadDialog() method of the COM object.
+
+		HRESULT __stdcall CloseDefaultDownloadDialog();"
+
+	"Not supported at this level"
+
+	^E_NOTIMPL!
+
 containsFullScreenElement
-	"Answer the <sdword> value of the 'ContainsFullScreenElement' property of the receiver."
+	"Answer the <Boolean> value of the 'ContainsFullScreenElement' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_ContainsFullScreenElement: answer.
 	^answer asObject!
 
-documentTitle
-	"Answer the <lpwstr> value of the 'DocumentTitle' property of the receiver."
+cookieManager
+	"Answer the <ICoreWebView2CookieManager> value of the 'CookieManager' property of the receiver."
 
 	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_DocumentTitle: answer.
+	answer := ICoreWebView2CookieManager newPointer.
+	self get_CookieManager: answer.
 	^answer asObject!
 
-executeScript: javaScript handler: handler
-	"Invoke the ExecuteScript() method of the COM object."
+defaultDownloadDialogCornerAlignment
+	"Answer the <sdword> value of the 'DefaultDownloadDialogCornerAlignment' property of the receiver."
 
-	^self ExecuteScript: javaScript asUtf16String handler: handler!
+	| answer |
+	answer := SDWORD new.
+	self get_DefaultDownloadDialogCornerAlignment: answer.
+	^answer asObject!
+
+defaultDownloadDialogCornerAlignment: value
+	"Set the 'DefaultDownloadDialogCornerAlignment' property of the receiver to the <sdword> value of the argument."
+
+	self put_DefaultDownloadDialogCornerAlignment: value!
+
+defaultDownloadDialogMargin
+	"Answer the <POINTL> value of the 'DefaultDownloadDialogMargin' property of the receiver."
+
+	| answer |
+	answer := POINTL new.
+	self get_DefaultDownloadDialogMargin: answer.
+	^answer asObject!
+
+defaultDownloadDialogMargin: value
+	"Set the 'DefaultDownloadDialogMargin' property of the receiver to the <POINTL> value of the argument."
+
+	self put_DefaultDownloadDialogMargin: value asParameter!
+
+displayOn: aWriteStream
+	aWriteStream nextPutAll: self documentTitle!
+
+documentTitle
+	"Answer the <readableString> title of the current document."
+
+	"The auto-generated code is functionally correct, but this property may be accessed a lot and this code is slightly more efficient; in particular it avoids generating finalizable garbage."
+
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_DocumentTitle: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
+
+environment
+	"Answer the <ICoreWebView2Environment> value of the 'Environment' property of the receiver."
+
+	| answer |
+	answer := ICoreWebView2Environment newPointer.
+	self get_Environment: answer.
+	^answer asObject!
 
 ExecuteScript: javaScript handler: handler
 	"Private - Invoke the ExecuteScript() method of the COM object.
@@ -646,6 +656,21 @@ ExecuteScript: javaScript handler: handler
 
 	<virtual stdcall: hresult 30 lpwstr ICoreWebView2ExecuteScriptCompletedHandler*>
 	^self invalidCall: _failureCode!
+
+executeScript: javaScript thenDo: aDyadicValuable
+	"Request the execution of some javascript in the browser, evaluating the <dyadicValuable> second argument when the script has finished running, passing it an HRESULT status code and the the JSON result string."
+
+	"For example:
+
+		webview executeScript: 'window.document.URL;'
+			thenDo: [:hr :json | MessageBox notify: 'Document url is: ', json].
+	"
+
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
+				queryInterface: ICoreWebView2ExecuteScriptCompletedHandler.
+	self ExecuteScript: javaScript asUtf16String handler: handler.
+	handler free!
 
 get_BrowserProcessId: value
 	"Private - Get the value of the 'BrowserProcessId' property of the receiver.
@@ -662,7 +687,7 @@ get_CanGoBack: canGoBack
 		HRESULT __stdcall CanGoBack(
 			[out, retval]long* CanGoBack);"
 
-	<virtual stdcall: hresult 39 sdword*>
+	<virtual stdcall: hresult 39 bool*>
 	^self invalidCall: _failureCode!
 
 get_CanGoForward: canGoForward
@@ -671,7 +696,7 @@ get_CanGoForward: canGoForward
 		HRESULT __stdcall CanGoForward(
 			[out, retval]long* CanGoForward);"
 
-	<virtual stdcall: hresult 40 sdword*>
+	<virtual stdcall: hresult 40 bool*>
 	^self invalidCall: _failureCode!
 
 get_ContainsFullScreenElement: containsFullScreenElement
@@ -683,6 +708,35 @@ get_ContainsFullScreenElement: containsFullScreenElement
 	<virtual stdcall: hresult 55 sdword*>
 	^self invalidCall: _failureCode!
 
+get_CookieManager: cookieManager
+	"Private - Get the value of the 'CookieManager' property of the receiver.
+
+		HRESULT __stdcall CookieManager(
+			[out, retval]ICoreWebView2CookieManager** CookieManager);"
+
+	"Not implemented in this version of WebView2"
+	^E_NOTIMPL!
+
+get_DefaultDownloadDialogCornerAlignment: value
+	"Private - Get the value of the 'DefaultDownloadDialogCornerAlignment' property of the receiver.
+
+		HRESULT __stdcall DefaultDownloadDialogCornerAlignment(
+			[out, retval]COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT* value);"
+
+	"Not supported at this level"
+
+	^E_NOTIMPL!
+
+get_DefaultDownloadDialogMargin: value
+	"Private - Get the value of the 'DefaultDownloadDialogMargin' property of the receiver.
+
+		HRESULT __stdcall DefaultDownloadDialogMargin(
+			[out, retval]POINT* value);"
+
+	"Not supported at this level"
+
+	^E_NOTIMPL!
+
 get_DocumentTitle: title
 	"Private - Get the value of the 'DocumentTitle' property of the receiver.
 
@@ -691,6 +745,53 @@ get_DocumentTitle: title
 
 	<virtual stdcall: hresult 49 lpwstr*>
 	^self invalidCall: _failureCode!
+
+get_Environment: environment
+	"Private - Get the value of the 'Environment' property of the receiver.
+
+		HRESULT __stdcall Environment(
+			[out, retval]ICoreWebView2Environment** Environment);"
+
+	"Not implemented in this version of WebView2"
+	^E_NOTIMPL
+
+!
+
+get_IsDefaultDownloadDialogOpen: value
+	"Private - Get the value of the 'IsDefaultDownloadDialogOpen' property of the receiver.
+
+		HRESULT __stdcall IsDefaultDownloadDialogOpen(
+			[out, retval]long* value);"
+
+	"Not supported at this level"
+
+	^E_NOTIMPL!
+
+get_IsDocumentPlayingAudio: value
+	"Private - Get the value of the 'IsDocumentPlayingAudio' property of the receiver.
+
+		HRESULT __stdcall IsDocumentPlayingAudio(
+			[out, retval]long* value);"
+
+	^E_NOTIMPL!
+
+get_IsMuted: value
+	"Private - Get the value of the 'IsMuted' property of the receiver.
+
+		HRESULT __stdcall IsMuted(
+			[out, retval]long* value);"
+
+	value value: 0.
+	^S_OK!
+
+get_IsSuspended: isSuspended
+	"Private - Get the value of the 'IsSuspended' property of the receiver.
+
+		HRESULT __stdcall IsSuspended(
+			[out, retval]long* IsSuspended);"
+
+	isSuspended value: 0.
+	^S_OK!
 
 get_Settings: settings
 	"Private - Get the value of the 'Settings' property of the receiver.
@@ -754,6 +855,38 @@ GoForward
 	<virtual stdcall: hresult 42>
 	^self invalidCall: _failureCode!
 
+isDefaultDownloadDialogOpen
+	"Answer the <Boolean> value of the 'IsDefaultDownloadDialogOpen' property of the receiver."
+
+	| answer |
+	answer := BOOL newBuffer.
+	self get_IsDefaultDownloadDialogOpen: answer.
+	^answer asObject!
+
+isDocumentPlayingAudio
+	"Answer the <Boolean> value of the 'IsDocumentPlayingAudio' property of the receiver."
+
+	| answer |
+	answer := BOOL newBuffer.
+	self get_IsDocumentPlayingAudio: answer.
+	^answer asObject!
+
+isMuted
+	"Answer the <Boolean> value of the 'IsMuted' property of the receiver."
+
+	| answer |
+	answer := BOOL newBuffer.
+	self get_IsMuted: answer.
+	^answer asObject!
+
+isSuspended
+	"Answer the <Boolean> value of the 'IsSuspended' property of the receiver."
+
+	| answer |
+	answer := BOOL newBuffer.
+	self get_IsSuspended: answer.
+	^answer asObject!
+
 navigate: uri
 	"Invoke the Navigate() method of the COM object."
 
@@ -782,6 +915,30 @@ NavigateToString: htmlContent
 	<virtual stdcall: hresult 7 lpwstr>
 	^self invalidCall: _failureCode!
 
+NavigateWithWebResourceRequest: request
+	"Private - Invoke the NavigateWithWebResourceRequest() method of the COM object.
+
+		HRESULT __stdcall NavigateWithWebResourceRequest(
+			[in]ICoreWebView2WebResourceRequest* Request);"
+
+	"Not implemented in this version of WebView2"
+
+	^E_NOTIMPL!
+
+openDefaultDownloadDialog
+	"Invoke the OpenDefaultDownloadDialog() method of the COM object."
+
+	^self OpenDefaultDownloadDialog!
+
+OpenDefaultDownloadDialog
+	"Private - Invoke the OpenDefaultDownloadDialog() method of the COM object.
+
+		HRESULT __stdcall OpenDefaultDownloadDialog();"
+
+	"Not supported at this level"
+
+	^E_NOTIMPL!
+
 openDevToolsWindow
 	"Invoke the OpenDevToolsWindow() method of the COM object."
 
@@ -794,6 +951,19 @@ OpenDevToolsWindow
 
 	<virtual stdcall: hresult 52>
 	^self invalidCall: _failureCode!
+
+openTaskManagerWindow
+	"Invoke the OpenTaskManagerWindow() method of the COM object."
+
+	^self OpenTaskManagerWindow!
+
+OpenTaskManagerWindow
+	"Private - Invoke the OpenTaskManagerWindow() method of the COM object.
+
+		HRESULT __stdcall OpenTaskManagerWindow();"
+
+	"Not implemented by this version of WebView2"
+	^E_NOTIMPL!
 
 postWebMessageAsJson: webMessageAsJson
 	"Invoke the PostWebMessageAsJson() method of the COM object."
@@ -823,6 +993,59 @@ PostWebMessageAsString: webMessageAsString
 	<virtual stdcall: hresult 34 lpwstr>
 	^self invalidCall: _failureCode!
 
+printableProperties
+	^#(#source)!
+
+PrintToPdf: resultFilePath printSettings: printSettings handler: anICoreWebView2PrintToPdfCompletedHandler
+	"Private - Invoke the PrintToPdf() method of the COM object.
+
+		HRESULT __stdcall PrintToPdf(
+			[in]LPWSTR ResultFilePath,
+			[in]ICoreWebView2PrintSettings* printSettings,
+			[in]ICoreWebView2PrintToPdfCompletedHandler* handler);"
+
+	anICoreWebView2PrintToPdfCompletedHandler Invoke: E_NOTIMPL arg: 0.
+	^E_NOTIMPL!
+
+printToPdf: resultFilePath settings: printSettings thenDo: aDyadicValuable
+	"Request asynchronous print to PDF. On completion invoke the <dyadicValuable> argument passing an HRESULT code and boolean success flag."
+
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
+				queryInterface: ICoreWebView2PrintToPdfCompletedHandler.
+	self
+		PrintToPdf: resultFilePath asUtf16String
+		printSettings: printSettings
+		handler: handler.
+	handler free!
+
+put_DefaultDownloadDialogCornerAlignment: value
+	"Private - Set the value of the 'DefaultDownloadDialogCornerAlignment' property of the object wrapped by the 
+	 receiver to the <sdword> argument, value.
+
+		HRESULT __stdcall DefaultDownloadDialogCornerAlignment(
+			[in]COREWEBVIEW2_DEFAULT_DOWNLOAD_DIALOG_CORNER_ALIGNMENT value);"
+
+	"Not supported at this level"
+
+	^E_NOTIMPL!
+
+put_DefaultDownloadDialogMargin: value
+	"Private - Set the value of the 'DefaultDownloadDialogMargin' property of the object wrapped by the 
+	 receiver to the <POINTL> argument, value.
+
+		HRESULT __stdcall DefaultDownloadDialogMargin(
+			[in]POINT value);"
+
+	"Not supported at this level"
+
+	^E_NOTIMPL!
+
+put_IsMuted: value
+	"Not implemented in this version of WebView2"
+
+	^E_NOTIMPL!
+
 reload
 	"Invoke the Reload() method of the COM object."
 
@@ -836,10 +1059,10 @@ Reload
 	<virtual stdcall: hresult 32>
 	^self invalidCall: _failureCode!
 
-remove_ContainsFullScreenElementChanged: token
-	"Invoke the remove_ContainsFullScreenElementChanged() method of the COM object."
+Remove_ClientCertificateRequested: token
+	"Not supported at this level"
 
-	^self Remove_ContainsFullScreenElementChanged: token!
+	^E_NOTIMPL!
 
 Remove_ContainsFullScreenElementChanged: token
 	"Private - Invoke the remove_ContainsFullScreenElementChanged() method of the COM object.
@@ -847,13 +1070,8 @@ Remove_ContainsFullScreenElementChanged: token
 		HRESULT __stdcall remove_ContainsFullScreenElementChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 54 EventRegistrationToken>
+	<virtual stdcall: hresult 54 sqword>
 	^self invalidCall: _failureCode!
-
-remove_ContentLoading: token
-	"Invoke the remove_ContentLoading() method of the COM object."
-
-	^self Remove_ContentLoading: token!
 
 Remove_ContentLoading: token
 	"Private - Invoke the remove_ContentLoading() method of the COM object.
@@ -861,13 +1079,8 @@ Remove_ContentLoading: token
 		HRESULT __stdcall remove_ContentLoading(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 11 EventRegistrationToken>
+	<virtual stdcall: hresult 11 sqword>
 	^self invalidCall: _failureCode!
-
-remove_DocumentTitleChanged: token
-	"Invoke the remove_DocumentTitleChanged() method of the COM object."
-
-	^self Remove_DocumentTitleChanged: token!
 
 Remove_DocumentTitleChanged: token
 	"Private - Invoke the remove_DocumentTitleChanged() method of the COM object.
@@ -875,13 +1088,23 @@ Remove_DocumentTitleChanged: token
 		HRESULT __stdcall remove_DocumentTitleChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 48 EventRegistrationToken>
+	<virtual stdcall: hresult 48 sqword>
 	^self invalidCall: _failureCode!
 
-remove_FrameNavigationCompleted: token
-	"Invoke the remove_FrameNavigationCompleted() method of the COM object."
+Remove_DOMContentLoaded: token
+	"Not supported by this version"
 
-	^self Remove_FrameNavigationCompleted: token!
+	^E_NOTIMPL!
+
+Remove_DownloadStarting: token
+	"Not supported by this version"
+
+	^E_NOTIMPL!
+
+Remove_FrameCreated: token
+	"Not supported by this version"
+
+	^E_NOTIMPL!
 
 Remove_FrameNavigationCompleted: token
 	"Private - Invoke the remove_FrameNavigationCompleted() method of the COM object.
@@ -889,13 +1112,8 @@ Remove_FrameNavigationCompleted: token
 		HRESULT __stdcall remove_FrameNavigationCompleted(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 21 EventRegistrationToken>
+	<virtual stdcall: hresult 21 sqword>
 	^self invalidCall: _failureCode!
-
-remove_FrameNavigationStarting: token
-	"Invoke the remove_FrameNavigationStarting() method of the COM object."
-
-	^self Remove_FrameNavigationStarting: token!
 
 Remove_FrameNavigationStarting: token
 	"Private - Invoke the remove_FrameNavigationStarting() method of the COM object.
@@ -903,13 +1121,8 @@ Remove_FrameNavigationStarting: token
 		HRESULT __stdcall remove_FrameNavigationStarting(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 19 EventRegistrationToken>
+	<virtual stdcall: hresult 19 sqword>
 	^self invalidCall: _failureCode!
-
-remove_HistoryChanged: token
-	"Invoke the remove_HistoryChanged() method of the COM object."
-
-	^self Remove_HistoryChanged: token!
 
 Remove_HistoryChanged: token
 	"Private - Invoke the remove_HistoryChanged() method of the COM object.
@@ -917,13 +1130,23 @@ Remove_HistoryChanged: token
 		HRESULT __stdcall remove_HistoryChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 15 EventRegistrationToken>
+	<virtual stdcall: hresult 15 sqword>
 	^self invalidCall: _failureCode!
 
-remove_NavigationCompleted: token
-	"Invoke the remove_NavigationCompleted() method of the COM object."
+Remove_IsDefaultDownloadDialogOpenChanged: token
+	"Not supported at this level"
 
-	^self Remove_NavigationCompleted: token!
+	^E_NOTIMPL!
+
+Remove_IsDocumentPlayingAudioChanged: token
+	"Not supported at this level"
+
+	^E_NOTIMPL!
+
+Remove_IsMutedChanged: token
+	"Not supported at this level"
+
+	^E_NOTIMPL!
 
 Remove_NavigationCompleted: token
 	"Private - Invoke the remove_NavigationCompleted() method of the COM object.
@@ -931,13 +1154,8 @@ Remove_NavigationCompleted: token
 		HRESULT __stdcall remove_NavigationCompleted(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 17 EventRegistrationToken>
+	<virtual stdcall: hresult 17 sqword>
 	^self invalidCall: _failureCode!
-
-remove_NavigationStarting: token
-	"Invoke the remove_NavigationStarting() method of the COM object."
-
-	^self Remove_NavigationStarting: token!
 
 Remove_NavigationStarting: token
 	"Private - Invoke the remove_NavigationStarting() method of the COM object.
@@ -945,13 +1163,8 @@ Remove_NavigationStarting: token
 		HRESULT __stdcall remove_NavigationStarting(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 9 EventRegistrationToken>
+	<virtual stdcall: hresult 9 sqword>
 	^self invalidCall: _failureCode!
-
-remove_NewWindowRequested: token
-	"Invoke the remove_NewWindowRequested() method of the COM object."
-
-	^self Remove_NewWindowRequested: token!
 
 Remove_NewWindowRequested: token
 	"Private - Invoke the remove_NewWindowRequested() method of the COM object.
@@ -959,13 +1172,8 @@ Remove_NewWindowRequested: token
 		HRESULT __stdcall remove_NewWindowRequested(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 46 EventRegistrationToken>
+	<virtual stdcall: hresult 46 sqword>
 	^self invalidCall: _failureCode!
-
-remove_PermissionRequested: token
-	"Invoke the remove_PermissionRequested() method of the COM object."
-
-	^self Remove_PermissionRequested: token!
 
 Remove_PermissionRequested: token
 	"Private - Invoke the remove_PermissionRequested() method of the COM object.
@@ -973,13 +1181,8 @@ Remove_PermissionRequested: token
 		HRESULT __stdcall remove_PermissionRequested(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 25 EventRegistrationToken>
+	<virtual stdcall: hresult 25 sqword>
 	^self invalidCall: _failureCode!
-
-remove_ProcessFailed: token
-	"Invoke the remove_ProcessFailed() method of the COM object."
-
-	^self Remove_ProcessFailed: token!
 
 Remove_ProcessFailed: token
 	"Private - Invoke the remove_ProcessFailed() method of the COM object.
@@ -987,13 +1190,8 @@ Remove_ProcessFailed: token
 		HRESULT __stdcall remove_ProcessFailed(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 27 EventRegistrationToken>
+	<virtual stdcall: hresult 27 sqword>
 	^self invalidCall: _failureCode!
-
-remove_ScriptDialogOpening: token
-	"Invoke the remove_ScriptDialogOpening() method of the COM object."
-
-	^self Remove_ScriptDialogOpening: token!
 
 Remove_ScriptDialogOpening: token
 	"Private - Invoke the remove_ScriptDialogOpening() method of the COM object.
@@ -1001,13 +1199,8 @@ Remove_ScriptDialogOpening: token
 		HRESULT __stdcall remove_ScriptDialogOpening(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 23 EventRegistrationToken>
+	<virtual stdcall: hresult 23 sqword>
 	^self invalidCall: _failureCode!
-
-remove_SourceChanged: token
-	"Invoke the remove_SourceChanged() method of the COM object."
-
-	^self Remove_SourceChanged: token!
 
 Remove_SourceChanged: token
 	"Private - Invoke the remove_SourceChanged() method of the COM object.
@@ -1015,13 +1208,8 @@ Remove_SourceChanged: token
 		HRESULT __stdcall remove_SourceChanged(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 13 EventRegistrationToken>
+	<virtual stdcall: hresult 13 sqword>
 	^self invalidCall: _failureCode!
-
-remove_WebMessageReceived: token
-	"Invoke the remove_WebMessageReceived() method of the COM object."
-
-	^self Remove_WebMessageReceived: token!
 
 Remove_WebMessageReceived: token
 	"Private - Invoke the remove_WebMessageReceived() method of the COM object.
@@ -1029,13 +1217,8 @@ Remove_WebMessageReceived: token
 		HRESULT __stdcall remove_WebMessageReceived(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 36 EventRegistrationToken>
+	<virtual stdcall: hresult 36 sqword>
 	^self invalidCall: _failureCode!
-
-remove_WebResourceRequested: token
-	"Invoke the remove_WebResourceRequested() method of the COM object."
-
-	^self Remove_WebResourceRequested: token!
 
 Remove_WebResourceRequested: token
 	"Private - Invoke the remove_WebResourceRequested() method of the COM object.
@@ -1043,13 +1226,13 @@ Remove_WebResourceRequested: token
 		HRESULT __stdcall remove_WebResourceRequested(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 57 EventRegistrationToken>
+	<virtual stdcall: hresult 57 sqword>
 	^self invalidCall: _failureCode!
 
-remove_WindowCloseRequested: token
-	"Invoke the remove_WindowCloseRequested() method of the COM object."
+Remove_WebResourceResponseReceived: token
+	"Not supported by this version"
 
-	^self Remove_WindowCloseRequested: token!
+	^E_NOTIMPL!
 
 Remove_WindowCloseRequested: token
 	"Private - Invoke the remove_WindowCloseRequested() method of the COM object.
@@ -1057,7 +1240,7 @@ Remove_WindowCloseRequested: token
 		HRESULT __stdcall remove_WindowCloseRequested(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 61 EventRegistrationToken>
+	<virtual stdcall: hresult 61 sqword>
 	^self invalidCall: _failureCode!
 
 removeHostObjectFromScript: name
@@ -1103,6 +1286,19 @@ RemoveWebResourceRequestedFilter: uri resourceContext: resourceContext
 	<virtual stdcall: hresult 59 lpwstr sdword>
 	^self invalidCall: _failureCode!
 
+resume
+	"Invoke the Resume() method of the COM object."
+
+	^self Resume!
+
+Resume
+	"Private - Invoke the Resume() method of the COM object.
+
+		HRESULT __stdcall Resume();"
+
+	<virtual stdcall: hresult 70>
+	^self invalidCall: _failureCode!
+
 settings
 	"Answer the <ICoreWebView2Settings> value of the 'Settings' property of the receiver."
 
@@ -1111,13 +1307,36 @@ settings
 	self get_Settings: answer.
 	^answer asObject!
 
-source
-	"Answer the <lpwstr> value of the 'Source' property of the receiver."
+setVirtualHostNameToFolderMapping: hostName folderPath: folderPath accessKind: accessKind
+	"Invoke the SetVirtualHostNameToFolderMapping() method of the COM object."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_Source: answer.
-	^answer asObject!
+	^self
+		SetVirtualHostNameToFolderMapping: hostName asUtf16String
+		folderPath: folderPath asUtf16String
+		accessKind: accessKind!
+
+SetVirtualHostNameToFolderMapping: hostName folderPath: folderPath accessKind: accessKind
+	"Private - Invoke the SetVirtualHostNameToFolderMapping() method of the COM object.
+
+		HRESULT __stdcall SetVirtualHostNameToFolderMapping(
+			[in]LPWSTR hostName,
+			[in]LPWSTR folderPath,
+			[in]COREWEBVIEW2_HOST_RESOURCE_ACCESS_KIND accessKind);"
+
+	"Not implemented by this version of WebView2"
+	^E_NOTIMPL!
+
+source
+	"Answer the <readableString> 'Source' uri."
+
+	"The auto-generated code is functionally correct, but this property may be accessed a lot and this code is slightly more efficient; in particular it avoids generating finalizable garbage."
+
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_Source: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 stop
 	"Invoke the Stop() method of the COM object."
@@ -1130,62 +1349,91 @@ Stop
 		HRESULT __stdcall Stop();"
 
 	<virtual stdcall: hresult 44>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+trySuspend: aDyadicValuable
+	"Request asynchronous suspend. On completion invoke the <dyadicValuable> argument passing an HRESULT code and boolean success flag."
+
+	| handler |
+	handler := (WebView2CompletionHandler completionBlock: aDyadicValuable)
+				queryInterface: ICoreWebView2TrySuspendCompletedHandler.
+	self TrySuspend: handler.
+	handler free!
+
+TrySuspend: handler
+	"Private - Invoke the TrySuspend() method of the COM object.
+
+		HRESULT __stdcall TrySuspend(
+			[in]ICoreWebView2TrySuspendCompletedHandler* handler);"
+
+	handler Invoke: E_NOTIMPL arg: 0! !
 !ICoreWebView2 categoriesForMethods!
-add_ContainsFullScreenElementChanged:!**auto generated**!methods!public! !
-Add_ContainsFullScreenElementChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-add_ContentLoading:!**auto generated**!methods!public! !
-Add_ContentLoading:token:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-add_DocumentTitleChanged:!**auto generated**!methods!public! !
-Add_DocumentTitleChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-add_FrameNavigationCompleted:!**auto generated**!methods!public! !
-Add_FrameNavigationCompleted:token:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-add_FrameNavigationStarting:!**auto generated**!methods!public! !
-Add_FrameNavigationStarting:token:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-add_HistoryChanged:!**auto generated**!methods!public! !
-Add_HistoryChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-add_NavigationCompleted:!**auto generated**!methods!public! !
-Add_NavigationCompleted:token:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-add_NavigationStarting:!**auto generated**!methods!public! !
-Add_NavigationStarting:token:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-add_NewWindowRequested:!**auto generated**!methods!public! !
-Add_NewWindowRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-add_PermissionRequested:!**auto generated**!methods!public! !
-Add_PermissionRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-add_ProcessFailed:!**auto generated**!methods!public! !
-Add_ProcessFailed:token:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-add_ScriptDialogOpening:!**auto generated**!methods!public! !
-Add_ScriptDialogOpening:token:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-add_SourceChanged:!**auto generated**!methods!public! !
-Add_SourceChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-add_WebMessageReceived:!**auto generated**!methods!public! !
-Add_WebMessageReceived:token:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-add_WebResourceRequested:!**auto generated**!methods!public! !
-Add_WebResourceRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-add_WindowCloseRequested:!**auto generated**!methods!public! !
-Add_WindowCloseRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+Add_ClientCertificateRequested:token:!COM Interfaces-ICoreWebView2_5!private! !
+Add_ContainsFullScreenElementChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
+Add_ContentLoading:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
+Add_DocumentTitleChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
+Add_DOMContentLoaded:token:!COM Interfaces-ICoreWebView2_2!events!private! !
+Add_DownloadStarting:token:!COM Interfaces-ICoreWebView2_4!private! !
+Add_FrameCreated:token:!COM Interfaces-ICoreWebView2_4!private! !
+Add_FrameNavigationCompleted:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
+Add_FrameNavigationStarting:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
+Add_HistoryChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
+Add_IsDefaultDownloadDialogOpenChanged:token:!COM Interfaces-ICoreWebView2_9!private! !
+Add_IsDocumentPlayingAudioChanged:token:!COM Interfaces-ICoreWebView2_8!private! !
+Add_IsMutedChanged:token:!COM Interfaces-ICoreWebView2_8!private! !
+Add_NavigationCompleted:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
+Add_NavigationStarting:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
+Add_NewWindowRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
+Add_PermissionRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
+Add_ProcessFailed:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
+Add_ScriptDialogOpening:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
+Add_SourceChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
+Add_WebMessageReceived:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
+Add_WebResourceRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
+Add_WebResourceResponseReceived:token:!COM Interfaces-ICoreWebView2_2!events!private! !
+Add_WindowCloseRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2!events!private! !
 addHostObjectToScript:object:!**auto generated**!methods!public! !
-AddHostObjectToScript:object:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-addScriptToExecuteOnDocumentCreated:handler:!**auto generated**!methods!public! !
+AddHostObjectToScript:object:!**auto generated**!COM Interfaces-ICoreWebView2!methods!private! !
 AddScriptToExecuteOnDocumentCreated:handler:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+addScriptToExecuteOnDocumentCreated:thenDo:!methods!public! !
 addWebResourceRequestedFilter:resourceContext:!**auto generated**!methods!public! !
 AddWebResourceRequestedFilter:resourceContext:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 browserProcessId!**auto generated**!properties!public! !
-callDevToolsProtocolMethod:parametersAsJson:handler:!**auto generated**!methods!public! !
 CallDevToolsProtocolMethod:parametersAsJson:handler:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-canGoBack!**auto generated**!properties!public! !
-canGoForward!**auto generated**!properties!public! !
-capturePreview:imageStream:handler:!**auto generated**!methods!public! !
+callDevToolsProtocolMethod:parametersAsJson:thenDo:!methods!public! !
+canGoBack!properties!public! !
+canGoForward!properties!public! !
+canPrintToPdf!public!testing! !
 CapturePreview:imageStream:handler:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-containsFullScreenElement!**auto generated**!properties!public! !
-documentTitle!**auto generated**!properties!public! !
-executeScript:handler:!**auto generated**!methods!public! !
+capturePreview:imageStream:thenDo:!methods!public! !
+clearVirtualHostNameToFolderMapping:!methods!public! !
+ClearVirtualHostNameToFolderMapping:!COM Interfaces-ICoreWebView2_3!private! !
+closeDefaultDownloadDialog!methods!public! !
+CloseDefaultDownloadDialog!COM Interfaces-ICoreWebView2_9!private! !
+containsFullScreenElement!properties!public! !
+cookieManager!properties!public! !
+defaultDownloadDialogCornerAlignment!properties!public! !
+defaultDownloadDialogCornerAlignment:!properties!public! !
+defaultDownloadDialogMargin!properties!public! !
+defaultDownloadDialogMargin:!properties!public! !
+displayOn:!displaying!public! !
+documentTitle!properties!public! !
+environment!properties!public! !
 ExecuteScript:handler:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+executeScript:thenDo:!methods!public! !
 get_BrowserProcessId:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_CanGoBack:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_CanGoForward:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_ContainsFullScreenElement:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+get_CookieManager:!COM Interfaces-ICoreWebView2_2!private!properties! !
+get_DefaultDownloadDialogCornerAlignment:!COM Interfaces-ICoreWebView2_9!private! !
+get_DefaultDownloadDialogMargin:!COM Interfaces-ICoreWebView2_9!private! !
 get_DocumentTitle:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+get_Environment:!COM Interfaces-ICoreWebView2_2!private!properties! !
+get_IsDefaultDownloadDialogOpen:!COM Interfaces-ICoreWebView2_9!private! !
+get_IsDocumentPlayingAudio:!COM Interfaces-ICoreWebView2_8!private! !
+get_IsMuted:!COM Interfaces-ICoreWebView2_8!private! !
+get_IsSuspended:!COM Interfaces-ICoreWebView2_3!private! !
 get_Settings:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 get_Source:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 getDevToolsProtocolEventReceiver:!**auto generated**!methods!public! !
@@ -1194,49 +1442,56 @@ goBack!**auto generated**!methods!public! !
 GoBack!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 goForward!**auto generated**!methods!public! !
 GoForward!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+isDefaultDownloadDialogOpen!properties!public! !
+isDocumentPlayingAudio!properties!public! !
+isMuted!properties!public! !
+isSuspended!properties!public! !
 navigate:!**auto generated**!methods!public! !
 Navigate:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 navigateToString:!**auto generated**!methods!public! !
 NavigateToString:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+NavigateWithWebResourceRequest:!COM Interfaces-ICoreWebView2_2!methods!private! !
+openDefaultDownloadDialog!methods!public! !
+OpenDefaultDownloadDialog!COM Interfaces-ICoreWebView2_9!private! !
 openDevToolsWindow!**auto generated**!methods!public! !
 OpenDevToolsWindow!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+openTaskManagerWindow!methods!public! !
+OpenTaskManagerWindow!COM Interfaces-ICoreWebView2_6!private! !
 postWebMessageAsJson:!**auto generated**!methods!public! !
 PostWebMessageAsJson:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 postWebMessageAsString:!**auto generated**!methods!public! !
 PostWebMessageAsString:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+printableProperties!development!printing!private! !
+PrintToPdf:printSettings:handler:!COM Interfaces-ICoreWebView2_7!private! !
+printToPdf:settings:thenDo:!methods!public! !
+put_DefaultDownloadDialogCornerAlignment:!COM Interfaces-ICoreWebView2_9!private! !
+put_DefaultDownloadDialogMargin:!COM Interfaces-ICoreWebView2_9!private! !
+put_IsMuted:!COM Interfaces-ICoreWebView2_8!private! !
 reload!**auto generated**!methods!public! !
 Reload!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-remove_ContainsFullScreenElementChanged:!**auto generated**!methods!public! !
+Remove_ClientCertificateRequested:!COM Interfaces-ICoreWebView2_5!private! !
 Remove_ContainsFullScreenElementChanged:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-remove_ContentLoading:!**auto generated**!methods!public! !
 Remove_ContentLoading:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-remove_DocumentTitleChanged:!**auto generated**!methods!public! !
 Remove_DocumentTitleChanged:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-remove_FrameNavigationCompleted:!**auto generated**!methods!public! !
+Remove_DOMContentLoaded:!COM Interfaces-ICoreWebView2_2!events!private! !
+Remove_DownloadStarting:!COM Interfaces-ICoreWebView2_4!private! !
+Remove_FrameCreated:!COM Interfaces-ICoreWebView2_4!private! !
 Remove_FrameNavigationCompleted:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-remove_FrameNavigationStarting:!**auto generated**!methods!public! !
 Remove_FrameNavigationStarting:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-remove_HistoryChanged:!**auto generated**!methods!public! !
 Remove_HistoryChanged:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-remove_NavigationCompleted:!**auto generated**!methods!public! !
+Remove_IsDefaultDownloadDialogOpenChanged:!COM Interfaces-ICoreWebView2_9!private! !
+Remove_IsDocumentPlayingAudioChanged:!COM Interfaces-ICoreWebView2_8!private! !
+Remove_IsMutedChanged:!COM Interfaces-ICoreWebView2_8!private! !
 Remove_NavigationCompleted:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-remove_NavigationStarting:!**auto generated**!methods!public! !
 Remove_NavigationStarting:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-remove_NewWindowRequested:!**auto generated**!methods!public! !
 Remove_NewWindowRequested:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-remove_PermissionRequested:!**auto generated**!methods!public! !
 Remove_PermissionRequested:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-remove_ProcessFailed:!**auto generated**!methods!public! !
 Remove_ProcessFailed:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-remove_ScriptDialogOpening:!**auto generated**!methods!public! !
 Remove_ScriptDialogOpening:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-remove_SourceChanged:!**auto generated**!methods!public! !
 Remove_SourceChanged:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-remove_WebMessageReceived:!**auto generated**!methods!public! !
 Remove_WebMessageReceived:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-remove_WebResourceRequested:!**auto generated**!methods!public! !
 Remove_WebResourceRequested:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-remove_WindowCloseRequested:!**auto generated**!methods!public! !
+Remove_WebResourceResponseReceived:!COM Interfaces-ICoreWebView2_2!events!private! !
 Remove_WindowCloseRequested:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 removeHostObjectFromScript:!**auto generated**!methods!public! !
 RemoveHostObjectFromScript:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
@@ -1244,11 +1499,27 @@ removeScriptToExecuteOnDocumentCreated:!**auto generated**!methods!public! !
 RemoveScriptToExecuteOnDocumentCreated:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 removeWebResourceRequestedFilter:resourceContext:!**auto generated**!methods!public! !
 RemoveWebResourceRequestedFilter:resourceContext:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+resume!methods!public! !
+Resume!COM Interfaces-ICoreWebView2_3!private! !
 settings!**auto generated**!properties!public! !
-source!**auto generated**!properties!public! !
+setVirtualHostNameToFolderMapping:folderPath:accessKind:!methods!public! !
+SetVirtualHostNameToFolderMapping:folderPath:accessKind:!COM Interfaces-ICoreWebView2_3!private! !
+source!properties!public! !
 stop!**auto generated**!methods!public! !
 Stop!**auto generated**!COM Interfaces-ICoreWebView2!private! !
+trySuspend:!methods!public! !
+TrySuspend:!COM Interfaces-ICoreWebView2_3!private! !
 !
+
+ICoreWebView2 methodProtocol: #ICoreWebView2 attributes: #(#readOnly) selectors: #(#Add_ContainsFullScreenElementChanged:token: #Add_ContentLoading:token: #Add_DocumentTitleChanged:token: #Add_FrameNavigationCompleted:token: #Add_FrameNavigationStarting:token: #Add_HistoryChanged:token: #Add_NavigationCompleted:token: #Add_NavigationStarting:token: #Add_NewWindowRequested:token: #Add_PermissionRequested:token: #Add_ProcessFailed:token: #Add_ScriptDialogOpening:token: #Add_SourceChanged:token: #Add_WebMessageReceived:token: #Add_WebResourceRequested:token: #Add_WindowCloseRequested:token: #AddHostObjectToScript:object: #AddScriptToExecuteOnDocumentCreated:handler: #AddWebResourceRequestedFilter:resourceContext: #CallDevToolsProtocolMethod:parametersAsJson:handler: #CapturePreview:imageStream:handler: #ExecuteScript:handler: #get_BrowserProcessId: #get_CanGoBack: #get_CanGoForward: #get_ContainsFullScreenElement: #get_DocumentTitle: #get_Settings: #get_Source: #GetDevToolsProtocolEventReceiver:receiver: #GoBack #GoForward #Navigate: #NavigateToString: #OpenDevToolsWindow #PostWebMessageAsJson: #PostWebMessageAsString: #Reload #Remove_ContainsFullScreenElementChanged: #Remove_ContentLoading: #Remove_DocumentTitleChanged: #Remove_FrameNavigationCompleted: #Remove_FrameNavigationStarting: #Remove_HistoryChanged: #Remove_NavigationCompleted: #Remove_NavigationStarting: #Remove_NewWindowRequested: #Remove_PermissionRequested: #Remove_ProcessFailed: #Remove_ScriptDialogOpening: #Remove_SourceChanged: #Remove_WebMessageReceived: #Remove_WebResourceRequested: #Remove_WindowCloseRequested: #RemoveHostObjectFromScript: #RemoveScriptToExecuteOnDocumentCreated: #RemoveWebResourceRequestedFilter:resourceContext: #Stop)!
+ICoreWebView2 methodProtocol: #ICoreWebView2_2 attributes: #(#readOnly) selectors: #(#Add_ContainsFullScreenElementChanged:token: #Add_ContentLoading:token: #Add_DocumentTitleChanged:token: #Add_DOMContentLoaded:token: #Add_FrameNavigationCompleted:token: #Add_FrameNavigationStarting:token: #Add_HistoryChanged:token: #Add_NavigationCompleted:token: #Add_NavigationStarting:token: #Add_NewWindowRequested:token: #Add_PermissionRequested:token: #Add_ProcessFailed:token: #Add_ScriptDialogOpening:token: #Add_SourceChanged:token: #Add_WebMessageReceived:token: #Add_WebResourceRequested:token: #Add_WebResourceResponseReceived:token: #Add_WindowCloseRequested:token: #AddHostObjectToScript:object: #AddScriptToExecuteOnDocumentCreated:handler: #AddWebResourceRequestedFilter:resourceContext: #CallDevToolsProtocolMethod:parametersAsJson:handler: #CapturePreview:imageStream:handler: #ExecuteScript:handler: #get_BrowserProcessId: #get_CanGoBack: #get_CanGoForward: #get_ContainsFullScreenElement: #get_CookieManager: #get_DocumentTitle: #get_Environment: #get_Settings: #get_Source: #GetDevToolsProtocolEventReceiver:receiver: #GoBack #GoForward #Navigate: #NavigateToString: #NavigateWithWebResourceRequest: #OpenDevToolsWindow #PostWebMessageAsJson: #PostWebMessageAsString: #Reload #Remove_ContainsFullScreenElementChanged: #Remove_ContentLoading: #Remove_DocumentTitleChanged: #Remove_DOMContentLoaded: #Remove_FrameNavigationCompleted: #Remove_FrameNavigationStarting: #Remove_HistoryChanged: #Remove_NavigationCompleted: #Remove_NavigationStarting: #Remove_NewWindowRequested: #Remove_PermissionRequested: #Remove_ProcessFailed: #Remove_ScriptDialogOpening: #Remove_SourceChanged: #Remove_WebMessageReceived: #Remove_WebResourceRequested: #Remove_WebResourceResponseReceived: #Remove_WindowCloseRequested: #RemoveHostObjectFromScript: #RemoveScriptToExecuteOnDocumentCreated: #RemoveWebResourceRequestedFilter:resourceContext: #Stop)!
+ICoreWebView2 methodProtocol: #ICoreWebView2_3 attributes: #(#readOnly) selectors: #(#Add_ContainsFullScreenElementChanged:token: #Add_ContentLoading:token: #Add_DocumentTitleChanged:token: #Add_DOMContentLoaded:token: #Add_FrameNavigationCompleted:token: #Add_FrameNavigationStarting:token: #Add_HistoryChanged:token: #Add_NavigationCompleted:token: #Add_NavigationStarting:token: #Add_NewWindowRequested:token: #Add_PermissionRequested:token: #Add_ProcessFailed:token: #Add_ScriptDialogOpening:token: #Add_SourceChanged:token: #Add_WebMessageReceived:token: #Add_WebResourceRequested:token: #Add_WebResourceResponseReceived:token: #Add_WindowCloseRequested:token: #AddHostObjectToScript:object: #AddScriptToExecuteOnDocumentCreated:handler: #AddWebResourceRequestedFilter:resourceContext: #CallDevToolsProtocolMethod:parametersAsJson:handler: #CapturePreview:imageStream:handler: #ClearVirtualHostNameToFolderMapping: #ExecuteScript:handler: #get_BrowserProcessId: #get_CanGoBack: #get_CanGoForward: #get_ContainsFullScreenElement: #get_CookieManager: #get_DocumentTitle: #get_Environment: #get_IsSuspended: #get_Settings: #get_Source: #GetDevToolsProtocolEventReceiver:receiver: #GoBack #GoForward #Navigate: #NavigateToString: #NavigateWithWebResourceRequest: #OpenDevToolsWindow #PostWebMessageAsJson: #PostWebMessageAsString: #Reload #Remove_ContainsFullScreenElementChanged: #Remove_ContentLoading: #Remove_DocumentTitleChanged: #Remove_DOMContentLoaded: #Remove_FrameNavigationCompleted: #Remove_FrameNavigationStarting: #Remove_HistoryChanged: #Remove_NavigationCompleted: #Remove_NavigationStarting: #Remove_NewWindowRequested: #Remove_PermissionRequested: #Remove_ProcessFailed: #Remove_ScriptDialogOpening: #Remove_SourceChanged: #Remove_WebMessageReceived: #Remove_WebResourceRequested: #Remove_WebResourceResponseReceived: #Remove_WindowCloseRequested: #RemoveHostObjectFromScript: #RemoveScriptToExecuteOnDocumentCreated: #RemoveWebResourceRequestedFilter:resourceContext: #Resume #SetVirtualHostNameToFolderMapping:folderPath:accessKind: #Stop #TrySuspend:)!
+ICoreWebView2 methodProtocol: #ICoreWebView2_4 attributes: #(#readOnly) selectors: #(#Add_ContainsFullScreenElementChanged:token: #Add_ContentLoading:token: #Add_DocumentTitleChanged:token: #Add_DOMContentLoaded:token: #Add_DownloadStarting:token: #Add_FrameCreated:token: #Add_FrameNavigationCompleted:token: #Add_FrameNavigationStarting:token: #Add_HistoryChanged:token: #Add_NavigationCompleted:token: #Add_NavigationStarting:token: #Add_NewWindowRequested:token: #Add_PermissionRequested:token: #Add_ProcessFailed:token: #Add_ScriptDialogOpening:token: #Add_SourceChanged:token: #Add_WebMessageReceived:token: #Add_WebResourceRequested:token: #Add_WebResourceResponseReceived:token: #Add_WindowCloseRequested:token: #AddHostObjectToScript:object: #AddScriptToExecuteOnDocumentCreated:handler: #AddWebResourceRequestedFilter:resourceContext: #CallDevToolsProtocolMethod:parametersAsJson:handler: #CapturePreview:imageStream:handler: #ClearVirtualHostNameToFolderMapping: #ExecuteScript:handler: #get_BrowserProcessId: #get_CanGoBack: #get_CanGoForward: #get_ContainsFullScreenElement: #get_CookieManager: #get_DocumentTitle: #get_Environment: #get_IsSuspended: #get_Settings: #get_Source: #GetDevToolsProtocolEventReceiver:receiver: #GoBack #GoForward #Navigate: #NavigateToString: #NavigateWithWebResourceRequest: #OpenDevToolsWindow #PostWebMessageAsJson: #PostWebMessageAsString: #Reload #Remove_ContainsFullScreenElementChanged: #Remove_ContentLoading: #Remove_DocumentTitleChanged: #Remove_DOMContentLoaded: #Remove_DownloadStarting: #Remove_FrameCreated: #Remove_FrameNavigationCompleted: #Remove_FrameNavigationStarting: #Remove_HistoryChanged: #Remove_NavigationCompleted: #Remove_NavigationStarting: #Remove_NewWindowRequested: #Remove_PermissionRequested: #Remove_ProcessFailed: #Remove_ScriptDialogOpening: #Remove_SourceChanged: #Remove_WebMessageReceived: #Remove_WebResourceRequested: #Remove_WebResourceResponseReceived: #Remove_WindowCloseRequested: #RemoveHostObjectFromScript: #RemoveScriptToExecuteOnDocumentCreated: #RemoveWebResourceRequestedFilter:resourceContext: #Resume #SetVirtualHostNameToFolderMapping:folderPath:accessKind: #Stop #TrySuspend:)!
+ICoreWebView2 methodProtocol: #ICoreWebView2_5 attributes: #(#readOnly) selectors: #(#Add_ClientCertificateRequested:token: #Add_ContainsFullScreenElementChanged:token: #Add_ContentLoading:token: #Add_DocumentTitleChanged:token: #Add_DOMContentLoaded:token: #Add_DownloadStarting:token: #Add_FrameCreated:token: #Add_FrameNavigationCompleted:token: #Add_FrameNavigationStarting:token: #Add_HistoryChanged:token: #Add_NavigationCompleted:token: #Add_NavigationStarting:token: #Add_NewWindowRequested:token: #Add_PermissionRequested:token: #Add_ProcessFailed:token: #Add_ScriptDialogOpening:token: #Add_SourceChanged:token: #Add_WebMessageReceived:token: #Add_WebResourceRequested:token: #Add_WebResourceResponseReceived:token: #Add_WindowCloseRequested:token: #AddHostObjectToScript:object: #AddScriptToExecuteOnDocumentCreated:handler: #AddWebResourceRequestedFilter:resourceContext: #CallDevToolsProtocolMethod:parametersAsJson:handler: #CapturePreview:imageStream:handler: #ClearVirtualHostNameToFolderMapping: #ExecuteScript:handler: #get_BrowserProcessId: #get_CanGoBack: #get_CanGoForward: #get_ContainsFullScreenElement: #get_CookieManager: #get_DocumentTitle: #get_Environment: #get_IsSuspended: #get_Settings: #get_Source: #GetDevToolsProtocolEventReceiver:receiver: #GoBack #GoForward #Navigate: #NavigateToString: #NavigateWithWebResourceRequest: #OpenDevToolsWindow #PostWebMessageAsJson: #PostWebMessageAsString: #Reload #Remove_ClientCertificateRequested: #Remove_ContainsFullScreenElementChanged: #Remove_ContentLoading: #Remove_DocumentTitleChanged: #Remove_DOMContentLoaded: #Remove_DownloadStarting: #Remove_FrameCreated: #Remove_FrameNavigationCompleted: #Remove_FrameNavigationStarting: #Remove_HistoryChanged: #Remove_NavigationCompleted: #Remove_NavigationStarting: #Remove_NewWindowRequested: #Remove_PermissionRequested: #Remove_ProcessFailed: #Remove_ScriptDialogOpening: #Remove_SourceChanged: #Remove_WebMessageReceived: #Remove_WebResourceRequested: #Remove_WebResourceResponseReceived: #Remove_WindowCloseRequested: #RemoveHostObjectFromScript: #RemoveScriptToExecuteOnDocumentCreated: #RemoveWebResourceRequestedFilter:resourceContext: #Resume #SetVirtualHostNameToFolderMapping:folderPath:accessKind: #Stop #TrySuspend:)!
+ICoreWebView2 methodProtocol: #ICoreWebView2_6 attributes: #(#readOnly) selectors: #(#Add_ClientCertificateRequested:token: #Add_ContainsFullScreenElementChanged:token: #Add_ContentLoading:token: #Add_DocumentTitleChanged:token: #Add_DOMContentLoaded:token: #Add_DownloadStarting:token: #Add_FrameCreated:token: #Add_FrameNavigationCompleted:token: #Add_FrameNavigationStarting:token: #Add_HistoryChanged:token: #Add_NavigationCompleted:token: #Add_NavigationStarting:token: #Add_NewWindowRequested:token: #Add_PermissionRequested:token: #Add_ProcessFailed:token: #Add_ScriptDialogOpening:token: #Add_SourceChanged:token: #Add_WebMessageReceived:token: #Add_WebResourceRequested:token: #Add_WebResourceResponseReceived:token: #Add_WindowCloseRequested:token: #AddHostObjectToScript:object: #AddScriptToExecuteOnDocumentCreated:handler: #AddWebResourceRequestedFilter:resourceContext: #CallDevToolsProtocolMethod:parametersAsJson:handler: #CapturePreview:imageStream:handler: #ClearVirtualHostNameToFolderMapping: #ExecuteScript:handler: #get_BrowserProcessId: #get_CanGoBack: #get_CanGoForward: #get_ContainsFullScreenElement: #get_CookieManager: #get_DocumentTitle: #get_Environment: #get_IsSuspended: #get_Settings: #get_Source: #GetDevToolsProtocolEventReceiver:receiver: #GoBack #GoForward #Navigate: #NavigateToString: #NavigateWithWebResourceRequest: #OpenDevToolsWindow #OpenTaskManagerWindow #PostWebMessageAsJson: #PostWebMessageAsString: #Reload #Remove_ClientCertificateRequested: #Remove_ContainsFullScreenElementChanged: #Remove_ContentLoading: #Remove_DocumentTitleChanged: #Remove_DOMContentLoaded: #Remove_DownloadStarting: #Remove_FrameCreated: #Remove_FrameNavigationCompleted: #Remove_FrameNavigationStarting: #Remove_HistoryChanged: #Remove_NavigationCompleted: #Remove_NavigationStarting: #Remove_NewWindowRequested: #Remove_PermissionRequested: #Remove_ProcessFailed: #Remove_ScriptDialogOpening: #Remove_SourceChanged: #Remove_WebMessageReceived: #Remove_WebResourceRequested: #Remove_WebResourceResponseReceived: #Remove_WindowCloseRequested: #RemoveHostObjectFromScript: #RemoveScriptToExecuteOnDocumentCreated: #RemoveWebResourceRequestedFilter:resourceContext: #Resume #SetVirtualHostNameToFolderMapping:folderPath:accessKind: #Stop #TrySuspend:)!
+ICoreWebView2 methodProtocol: #ICoreWebView2_7 attributes: #(#readOnly) selectors: #(#Add_ClientCertificateRequested:token: #Add_ContainsFullScreenElementChanged:token: #Add_ContentLoading:token: #Add_DocumentTitleChanged:token: #Add_DOMContentLoaded:token: #Add_DownloadStarting:token: #Add_FrameCreated:token: #Add_FrameNavigationCompleted:token: #Add_FrameNavigationStarting:token: #Add_HistoryChanged:token: #Add_NavigationCompleted:token: #Add_NavigationStarting:token: #Add_NewWindowRequested:token: #Add_PermissionRequested:token: #Add_ProcessFailed:token: #Add_ScriptDialogOpening:token: #Add_SourceChanged:token: #Add_WebMessageReceived:token: #Add_WebResourceRequested:token: #Add_WebResourceResponseReceived:token: #Add_WindowCloseRequested:token: #AddHostObjectToScript:object: #AddScriptToExecuteOnDocumentCreated:handler: #AddWebResourceRequestedFilter:resourceContext: #CallDevToolsProtocolMethod:parametersAsJson:handler: #CapturePreview:imageStream:handler: #ClearVirtualHostNameToFolderMapping: #ExecuteScript:handler: #get_BrowserProcessId: #get_CanGoBack: #get_CanGoForward: #get_ContainsFullScreenElement: #get_CookieManager: #get_DocumentTitle: #get_Environment: #get_IsSuspended: #get_Settings: #get_Source: #GetDevToolsProtocolEventReceiver:receiver: #GoBack #GoForward #Navigate: #NavigateToString: #NavigateWithWebResourceRequest: #OpenDevToolsWindow #OpenTaskManagerWindow #PostWebMessageAsJson: #PostWebMessageAsString: #PrintToPdf:printSettings:handler: #Reload #Remove_ClientCertificateRequested: #Remove_ContainsFullScreenElementChanged: #Remove_ContentLoading: #Remove_DocumentTitleChanged: #Remove_DOMContentLoaded: #Remove_DownloadStarting: #Remove_FrameCreated: #Remove_FrameNavigationCompleted: #Remove_FrameNavigationStarting: #Remove_HistoryChanged: #Remove_NavigationCompleted: #Remove_NavigationStarting: #Remove_NewWindowRequested: #Remove_PermissionRequested: #Remove_ProcessFailed: #Remove_ScriptDialogOpening: #Remove_SourceChanged: #Remove_WebMessageReceived: #Remove_WebResourceRequested: #Remove_WebResourceResponseReceived: #Remove_WindowCloseRequested: #RemoveHostObjectFromScript: #RemoveScriptToExecuteOnDocumentCreated: #RemoveWebResourceRequestedFilter:resourceContext: #Resume #SetVirtualHostNameToFolderMapping:folderPath:accessKind: #Stop #TrySuspend:)!
+ICoreWebView2 methodProtocol: #ICoreWebView2_8 attributes: #(#readOnly) selectors: #(#Add_ClientCertificateRequested:token: #Add_ContainsFullScreenElementChanged:token: #Add_ContentLoading:token: #Add_DocumentTitleChanged:token: #Add_DOMContentLoaded:token: #Add_DownloadStarting:token: #Add_FrameCreated:token: #Add_FrameNavigationCompleted:token: #Add_FrameNavigationStarting:token: #Add_HistoryChanged:token: #Add_IsDocumentPlayingAudioChanged:token: #Add_IsMutedChanged:token: #Add_NavigationCompleted:token: #Add_NavigationStarting:token: #Add_NewWindowRequested:token: #Add_PermissionRequested:token: #Add_ProcessFailed:token: #Add_ScriptDialogOpening:token: #Add_SourceChanged:token: #Add_WebMessageReceived:token: #Add_WebResourceRequested:token: #Add_WebResourceResponseReceived:token: #Add_WindowCloseRequested:token: #AddHostObjectToScript:object: #AddScriptToExecuteOnDocumentCreated:handler: #AddWebResourceRequestedFilter:resourceContext: #CallDevToolsProtocolMethod:parametersAsJson:handler: #CapturePreview:imageStream:handler: #ClearVirtualHostNameToFolderMapping: #ExecuteScript:handler: #get_BrowserProcessId: #get_CanGoBack: #get_CanGoForward: #get_ContainsFullScreenElement: #get_CookieManager: #get_DocumentTitle: #get_Environment: #get_IsDocumentPlayingAudio: #get_IsMuted: #get_IsSuspended: #get_Settings: #get_Source: #GetDevToolsProtocolEventReceiver:receiver: #GoBack #GoForward #Navigate: #NavigateToString: #NavigateWithWebResourceRequest: #OpenDevToolsWindow #OpenTaskManagerWindow #PostWebMessageAsJson: #PostWebMessageAsString: #PrintToPdf:printSettings:handler: #put_IsMuted: #Reload #Remove_ClientCertificateRequested: #Remove_ContainsFullScreenElementChanged: #Remove_ContentLoading: #Remove_DocumentTitleChanged: #Remove_DOMContentLoaded: #Remove_DownloadStarting: #Remove_FrameCreated: #Remove_FrameNavigationCompleted: #Remove_FrameNavigationStarting: #Remove_HistoryChanged: #Remove_IsDocumentPlayingAudioChanged: #Remove_IsMutedChanged: #Remove_NavigationCompleted: #Remove_NavigationStarting: #Remove_NewWindowRequested: #Remove_PermissionRequested: #Remove_ProcessFailed: #Remove_ScriptDialogOpening: #Remove_SourceChanged: #Remove_WebMessageReceived: #Remove_WebResourceRequested: #Remove_WebResourceResponseReceived: #Remove_WindowCloseRequested: #RemoveHostObjectFromScript: #RemoveScriptToExecuteOnDocumentCreated: #RemoveWebResourceRequestedFilter:resourceContext: #Resume #SetVirtualHostNameToFolderMapping:folderPath:accessKind: #Stop #TrySuspend:)!
+ICoreWebView2 methodProtocol: #ICoreWebView2_9 attributes: #(#readOnly) selectors: #(#Add_ClientCertificateRequested:token: #Add_ContainsFullScreenElementChanged:token: #Add_ContentLoading:token: #Add_DocumentTitleChanged:token: #Add_DOMContentLoaded:token: #Add_DownloadStarting:token: #Add_FrameCreated:token: #Add_FrameNavigationCompleted:token: #Add_FrameNavigationStarting:token: #Add_HistoryChanged:token: #Add_IsDefaultDownloadDialogOpenChanged:token: #Add_IsDocumentPlayingAudioChanged:token: #Add_IsMutedChanged:token: #Add_NavigationCompleted:token: #Add_NavigationStarting:token: #Add_NewWindowRequested:token: #Add_PermissionRequested:token: #Add_ProcessFailed:token: #Add_ScriptDialogOpening:token: #Add_SourceChanged:token: #Add_WebMessageReceived:token: #Add_WebResourceRequested:token: #Add_WebResourceResponseReceived:token: #Add_WindowCloseRequested:token: #AddHostObjectToScript:object: #AddScriptToExecuteOnDocumentCreated:handler: #AddWebResourceRequestedFilter:resourceContext: #CallDevToolsProtocolMethod:parametersAsJson:handler: #CapturePreview:imageStream:handler: #ClearVirtualHostNameToFolderMapping: #CloseDefaultDownloadDialog #ExecuteScript:handler: #get_BrowserProcessId: #get_CanGoBack: #get_CanGoForward: #get_ContainsFullScreenElement: #get_CookieManager: #get_DefaultDownloadDialogCornerAlignment: #get_DefaultDownloadDialogMargin: #get_DocumentTitle: #get_Environment: #get_IsDefaultDownloadDialogOpen: #get_IsDocumentPlayingAudio: #get_IsMuted: #get_IsSuspended: #get_Settings: #get_Source: #GetDevToolsProtocolEventReceiver:receiver: #GoBack #GoForward #Navigate: #NavigateToString: #NavigateWithWebResourceRequest: #OpenDefaultDownloadDialog #OpenDevToolsWindow #OpenTaskManagerWindow #PostWebMessageAsJson: #PostWebMessageAsString: #PrintToPdf:printSettings:handler: #put_DefaultDownloadDialogCornerAlignment: #put_DefaultDownloadDialogMargin: #put_IsMuted: #Reload #Remove_ClientCertificateRequested: #Remove_ContainsFullScreenElementChanged: #Remove_ContentLoading: #Remove_DocumentTitleChanged: #Remove_DOMContentLoaded: #Remove_DownloadStarting: #Remove_FrameCreated: #Remove_FrameNavigationCompleted: #Remove_FrameNavigationStarting: #Remove_HistoryChanged: #Remove_IsDefaultDownloadDialogOpenChanged: #Remove_IsDocumentPlayingAudioChanged: #Remove_IsMutedChanged: #Remove_NavigationCompleted: #Remove_NavigationStarting: #Remove_NewWindowRequested: #Remove_PermissionRequested: #Remove_ProcessFailed: #Remove_ScriptDialogOpening: #Remove_SourceChanged: #Remove_WebMessageReceived: #Remove_WebResourceRequested: #Remove_WebResourceResponseReceived: #Remove_WindowCloseRequested: #RemoveHostObjectFromScript: #RemoveScriptToExecuteOnDocumentCreated: #RemoveWebResourceRequestedFilter:resourceContext: #Resume #SetVirtualHostNameToFolderMapping:folderPath:accessKind: #Stop #TrySuspend:)!
 
 !ICoreWebView2 class methodsFor!
 
@@ -1266,45 +1537,45 @@ defineFunctions
 		defineFunction: #NavigateToString:
 			argumentTypes: 'lpwstr';
 		defineFunction: #Add_NavigationStarting:token:
-			argumentTypes: 'ICoreWebView2NavigationStartingEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2NavigationStartingEventHandler* sqword*';
 		defineFunction: #Remove_NavigationStarting:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #Add_ContentLoading:token:
-			argumentTypes: 'ICoreWebView2ContentLoadingEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2ContentLoadingEventHandler* sqword*';
 		defineFunction: #Remove_ContentLoading:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #Add_SourceChanged:token:
-			argumentTypes: 'ICoreWebView2SourceChangedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2SourceChangedEventHandler* sqword*';
 		defineFunction: #Remove_SourceChanged:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #Add_HistoryChanged:token:
-			argumentTypes: 'ICoreWebView2HistoryChangedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2HistoryChangedEventHandler* sqword*';
 		defineFunction: #Remove_HistoryChanged:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #Add_NavigationCompleted:token:
-			argumentTypes: 'ICoreWebView2NavigationCompletedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2NavigationCompletedEventHandler* sqword*';
 		defineFunction: #Remove_NavigationCompleted:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #Add_FrameNavigationStarting:token:
-			argumentTypes: 'ICoreWebView2NavigationStartingEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2NavigationStartingEventHandler* sqword*';
 		defineFunction: #Remove_FrameNavigationStarting:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #Add_FrameNavigationCompleted:token:
-			argumentTypes: 'ICoreWebView2NavigationCompletedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2NavigationCompletedEventHandler* sqword*';
 		defineFunction: #Remove_FrameNavigationCompleted:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #Add_ScriptDialogOpening:token:
-			argumentTypes: 'ICoreWebView2ScriptDialogOpeningEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2ScriptDialogOpeningEventHandler* sqword*';
 		defineFunction: #Remove_ScriptDialogOpening:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #Add_PermissionRequested:token:
-			argumentTypes: 'ICoreWebView2PermissionRequestedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2PermissionRequestedEventHandler* sqword*';
 		defineFunction: #Remove_PermissionRequested:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #Add_ProcessFailed:token:
-			argumentTypes: 'ICoreWebView2ProcessFailedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2ProcessFailedEventHandler* sqword*';
 		defineFunction: #Remove_ProcessFailed:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #AddScriptToExecuteOnDocumentCreated:handler:
 			argumentTypes: 'lpwstr ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler*';
 		defineFunction: #RemoveScriptToExecuteOnDocumentCreated:
@@ -1319,30 +1590,30 @@ defineFunctions
 		defineFunction: #PostWebMessageAsString:
 			argumentTypes: 'lpwstr';
 		defineFunction: #Add_WebMessageReceived:token:
-			argumentTypes: 'ICoreWebView2WebMessageReceivedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2WebMessageReceivedEventHandler* sqword*';
 		defineFunction: #Remove_WebMessageReceived:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #CallDevToolsProtocolMethod:parametersAsJson:handler:
 			argumentTypes: 'lpwstr lpwstr ICoreWebView2CallDevToolsProtocolMethodCompletedHandler*';
 		defineFunction: #get_BrowserProcessId:
 			argumentTypes: 'dword*';
 		defineFunction: #get_CanGoBack:
-			argumentTypes: 'sdword*';
+			argumentTypes: 'bool*';
 		defineFunction: #get_CanGoForward:
-			argumentTypes: 'sdword*';
+			argumentTypes: 'bool*';
 		defineFunction: #GoBack;
 		defineFunction: #GoForward;
 		defineFunction: #GetDevToolsProtocolEventReceiver:receiver:
 			argumentTypes: 'lpwstr ICoreWebView2DevToolsProtocolEventReceiver**';
 		defineFunction: #Stop;
 		defineFunction: #Add_NewWindowRequested:token:
-			argumentTypes: 'ICoreWebView2NewWindowRequestedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2NewWindowRequestedEventHandler* sqword*';
 		defineFunction: #Remove_NewWindowRequested:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #Add_DocumentTitleChanged:token:
-			argumentTypes: 'ICoreWebView2DocumentTitleChangedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2DocumentTitleChangedEventHandler* sqword*';
 		defineFunction: #Remove_DocumentTitleChanged:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #get_DocumentTitle:
 			argumentTypes: 'lpwstr*';
 		defineFunction: #AddHostObjectToScript:object:
@@ -1351,25 +1622,25 @@ defineFunctions
 			argumentTypes: 'lpwstr';
 		defineFunction: #OpenDevToolsWindow;
 		defineFunction: #Add_ContainsFullScreenElementChanged:token:
-			argumentTypes: 'ICoreWebView2ContainsFullScreenElementChangedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2ContainsFullScreenElementChangedEventHandler* sqword*';
 		defineFunction: #Remove_ContainsFullScreenElementChanged:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #get_ContainsFullScreenElement:
 			argumentTypes: 'sdword*';
 		defineFunction: #Add_WebResourceRequested:token:
-			argumentTypes: 'ICoreWebView2WebResourceRequestedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2WebResourceRequestedEventHandler* sqword*';
 		defineFunction: #Remove_WebResourceRequested:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #AddWebResourceRequestedFilter:resourceContext:
 			argumentTypes: 'lpwstr sdword';
 		defineFunction: #RemoveWebResourceRequestedFilter:resourceContext:
 			argumentTypes: 'lpwstr sdword';
 		defineFunction: #Add_WindowCloseRequested:token:
-			argumentTypes: 'ICoreWebView2WindowCloseRequestedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2WindowCloseRequestedEventHandler* sqword*';
 		defineFunction: #Remove_WindowCloseRequested:
-			argumentTypes: 'EventRegistrationToken'
+			argumentTypes: 'sqword'
 ! !
 !ICoreWebView2 class categoriesForMethods!
-defineFunctions!**auto generated**!initializing!public! !
+defineFunctions!initializing!public! !
 !
 

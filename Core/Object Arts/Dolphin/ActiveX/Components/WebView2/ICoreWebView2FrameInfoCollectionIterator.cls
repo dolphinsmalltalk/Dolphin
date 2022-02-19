@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2FrameInfoCollectionIterator
+ICoreWebView2Interface subclass: #ICoreWebView2FrameInfoCollectionIterator
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2FrameInfoCollectionIterator guid: (IID fromString: '{1bf89e2d-1b2b-4629-b28f-05099b41bb03}')!
 ICoreWebView2FrameInfoCollectionIterator comment: '`ICoreWebView2FrameInfoCollectionIterator` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameInfoCollectionIterator'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -35,6 +35,17 @@ interface ICoreWebView2FrameInfoCollectionIterator : IUnknown
 !ICoreWebView2FrameInfoCollectionIterator categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2FrameInfoCollectionIterator methodsFor!
 
+do: aMonadicValuable
+	"Evaluate the <monadicValuable> argument for each of the remaining ICoreWebView2FrameInfo objects in the receiver (i.e. from the current position to the end).
+	Note that as the iterator cannot be reset, it can only be enumerated once."
+
+	| notAtEnd |
+	notAtEnd := ByteArray new: 4.
+	self get_hasCurrent: notAtEnd.
+	[(notAtEnd sdwordAtOffset: 0) == 0] whileFalse: 
+			[aMonadicValuable value: self getCurrent.
+			self MoveNext: notAtEnd]!
+
 get_hasCurrent: hasCurrent
 	"Private - Get the value of the 'hasCurrent' property of the receiver.
 
@@ -62,19 +73,11 @@ GetCurrent: frameInfo
 	^self invalidCall: _failureCode!
 
 hasCurrent
-	"Answer the <sdword> value of the 'hasCurrent' property of the receiver."
+	"Answer the <Boolean> value of the 'hasCurrent' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_hasCurrent: answer.
-	^answer asObject!
-
-moveNext
-	"Answer the <SDWORD> result of invoking the MoveNext() method of the COM object."
-
-	| answer |
-	answer := SDWORD new.
-	self MoveNext: answer.
 	^answer asObject!
 
 MoveNext: hasNext
@@ -86,11 +89,11 @@ MoveNext: hasNext
 	<virtual stdcall: hresult 6 sdword*>
 	^self invalidCall: _failureCode! !
 !ICoreWebView2FrameInfoCollectionIterator categoriesForMethods!
+do:!enumerating!public! !
 get_hasCurrent:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfoCollectionIterator!private! !
 getCurrent!**auto generated**!methods!public! !
 GetCurrent:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfoCollectionIterator!private! !
-hasCurrent!**auto generated**!properties!public! !
-moveNext!**auto generated**!methods!public! !
+hasCurrent!properties!public! !
 MoveNext:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfoCollectionIterator!private! !
 !
 

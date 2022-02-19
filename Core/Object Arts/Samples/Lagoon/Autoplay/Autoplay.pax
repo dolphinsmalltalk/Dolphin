@@ -3,19 +3,19 @@ package := Package name: 'Autoplay'.
 package paxVersion: 1;
 	preDeclareClassesOnLoad: false;
 	basicComment: 'Dolphin Smalltalk Autoplay Sample. 
-Copyright (c) Object Arts Ltd, 2001-2002.
+Copyright (c) Object Arts Ltd, 2001-2022
 
 Autoplay is an application for use as a CD-ROM autoplay setup menu. As a sample Autoplay demonstrates:
-- Embedding the Microsoft Web Browser control in a Dolphin application (see also the Simple Web Browser sample)
+- Embedding the Microsoft WebView2 (Edge) Browser control in a Dolphin application (see also the Simple Web Browser sample)
 - How to prevent multiple instances of an application being started (see AutoPlaySessionManager>>allowDuplicates)
 - Simple command line processing (see AutoplaySessionManager>>main)
 - Sizing a shell to precisely the right dimensions to fit a given client area.
 
-Although simple, Autoplay is capable of practical use, indeed Object Arts used it for the Dolphin Pro Trial distributed at Smalltalk Solutions 2001, and we will certainly use it again. Autoplay is now (as of Dolphin 5) deployed in "ToGo" mode, and so does not require the Dolphin VM to run. However to be sure that it will run on all machines, it is a good idea to place the C runtime libraries (MSVCRT.DLL and MSVCP60.DLL) in the root directory of the CD along with Autoplay.exe.
+Autoplay should be deployed in "ToGo" mode, so it does not require the Dolphin VM to run. However to be sure that it will run on all machines, it is a good idea to place the C runtime libraries required by the VM in the root directory of the CD along with Autoplay.exe.
 
 Autoplay can display a single page of HTML (specified by the first command line argument, but defaulting to ''autorun.htm'') at a specified fixed size (specified by the second command line argument but defaulting to 480x480). Normally this HTML file would contain little but an IMG tag and a map to specify the location of links in the map. When the user clicks on the links the HREF associated with the link is passed to the ShellExecute() API, the result of which is to spawn off the appropriate application in another window to open that particular type of file. This means that a separate explorer window is opened to browse the CD (should that option be present) and avoids the user being prompted to save/open the setup executable/MSI.
 
-For example:
+## Examples
 
 	<HTML>
 	  <HEAD>
@@ -41,7 +41,13 @@ CD-ROM Autoplay also requires an Autorun.inf file to be located in the root dire
 
 This specifies to run the autoplay executable (deployable from this package) to display ''autorun.htm'' in the root directory with area for a 480x480 image/page. The ''command line'' arguments are parsed by <AutoplaySessionManager> and passed to <Autoplay> before it is shown. The separator between the width and height is not important as long as it is not whitespace.
 
-'.
+The following expression will show an actual example used for a Dolphin trial CD that was distributed at a conference in the distant past when Windows 95 was still around (so obviously it wasn''t using the Edge browser in those days):
+
+```
+Autoplay create
+	homePage: (Autoplay owningPackage fileLocator localFileSpecFor: ''autorun.htm'');
+	show
+```'.
 
 
 package classNames
@@ -56,16 +62,12 @@ package globalAliases: (Set new
 	yourself).
 
 package setPrerequisites: #(
-	'..\..\..\Dolphin\ActiveX\Automation\ActiveX Automation'
-	'..\..\..\Dolphin\ActiveX\Connection Points\ActiveX Connection Points'
-	'..\..\..\Dolphin\ActiveX\OCX\ActiveX Control Hosting'
 	'..\..\..\Dolphin\Base\Dolphin'
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'
 	'..\..\..\Dolphin\MVP\Models\Value\Dolphin Value Models'
-	'..\..\..\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer'
-	'..\..\..\Dolphin\ActiveX\COM\OLE COM'
+	'..\..\..\Dolphin\ActiveX\Components\WebView2\WebView2'
 	'..\..\..\Dolphin\ActiveX\Shell\Windows Shell').
 
 package!
@@ -75,7 +77,7 @@ package!
 Shell subclass: #Autoplay
 	instanceVariableNames: 'browser navigating pageExtent homePage'
 	classVariableNames: ''
-	poolDictionaries: 'SHDocVwConstants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 RuntimeSessionManager subclass: #AutoplaySessionManager
 	instanceVariableNames: ''

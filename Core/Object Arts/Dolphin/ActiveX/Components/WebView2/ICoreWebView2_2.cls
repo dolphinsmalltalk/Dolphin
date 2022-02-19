@@ -49,14 +49,6 @@ interface ICoreWebView2_2 : ICoreWebView2
 !ICoreWebView2_2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2_2 methodsFor!
 
-add_DOMContentLoaded: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_DOMContentLoaded() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_DOMContentLoaded: eventHandler token: answer.
-	^answer asObject!
-
 Add_DOMContentLoaded: eventHandler token: token
 	"Private - Invoke the add_DOMContentLoaded() method of the COM object.
 
@@ -64,16 +56,8 @@ Add_DOMContentLoaded: eventHandler token: token
 			[in]ICoreWebView2DOMContentLoadedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 65 ICoreWebView2DOMContentLoadedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 65 ICoreWebView2DOMContentLoadedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-add_WebResourceResponseReceived: eventHandler
-	"Answer the <EventRegistrationToken> result of invoking the add_WebResourceResponseReceived() method of the COM object."
-
-	| answer |
-	answer := EventRegistrationToken new.
-	self Add_WebResourceResponseReceived: eventHandler token: answer.
-	^answer asObject!
 
 Add_WebResourceResponseReceived: eventHandler token: token
 	"Private - Invoke the add_WebResourceResponseReceived() method of the COM object.
@@ -82,24 +66,8 @@ Add_WebResourceResponseReceived: eventHandler token: token
 			[in]ICoreWebView2WebResourceResponseReceivedEventHandler* eventHandler,
 			[out]EventRegistrationToken* token);"
 
-	<virtual stdcall: hresult 62 ICoreWebView2WebResourceResponseReceivedEventHandler* EventRegistrationToken*>
+	<virtual stdcall: hresult 62 ICoreWebView2WebResourceResponseReceivedEventHandler* sqword*>
 	^self invalidCall: _failureCode!
-
-cookieManager
-	"Answer the <ICoreWebView2CookieManager> value of the 'CookieManager' property of the receiver."
-
-	| answer |
-	answer := ICoreWebView2CookieManager newPointer.
-	self get_CookieManager: answer.
-	^answer asObject!
-
-environment
-	"Answer the <ICoreWebView2Environment> value of the 'Environment' property of the receiver."
-
-	| answer |
-	answer := ICoreWebView2Environment newPointer.
-	self get_Environment: answer.
-	^answer asObject!
 
 get_CookieManager: cookieManager
 	"Private - Get the value of the 'CookieManager' property of the receiver.
@@ -119,11 +87,6 @@ get_Environment: environment
 	<virtual stdcall: hresult 68 ICoreWebView2Environment**>
 	^self invalidCall: _failureCode!
 
-navigateWithWebResourceRequest: request
-	"Invoke the NavigateWithWebResourceRequest() method of the COM object."
-
-	^self NavigateWithWebResourceRequest: request!
-
 NavigateWithWebResourceRequest: request
 	"Private - Invoke the NavigateWithWebResourceRequest() method of the COM object.
 
@@ -133,24 +96,14 @@ NavigateWithWebResourceRequest: request
 	<virtual stdcall: hresult 64 ICoreWebView2WebResourceRequest*>
 	^self invalidCall: _failureCode!
 
-remove_DOMContentLoaded: token
-	"Invoke the remove_DOMContentLoaded() method of the COM object."
-
-	^self Remove_DOMContentLoaded: token!
-
 Remove_DOMContentLoaded: token
 	"Private - Invoke the remove_DOMContentLoaded() method of the COM object.
 
 		HRESULT __stdcall remove_DOMContentLoaded(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 66 EventRegistrationToken>
+	<virtual stdcall: hresult 66 sqword>
 	^self invalidCall: _failureCode!
-
-remove_WebResourceResponseReceived: token
-	"Invoke the remove_WebResourceResponseReceived() method of the COM object."
-
-	^self Remove_WebResourceResponseReceived: token!
 
 Remove_WebResourceResponseReceived: token
 	"Private - Invoke the remove_WebResourceResponseReceived() method of the COM object.
@@ -158,22 +111,15 @@ Remove_WebResourceResponseReceived: token
 		HRESULT __stdcall remove_WebResourceResponseReceived(
 			[in]EventRegistrationToken token);"
 
-	<virtual stdcall: hresult 63 EventRegistrationToken>
+	<virtual stdcall: hresult 63 sqword>
 	^self invalidCall: _failureCode! !
 !ICoreWebView2_2 categoriesForMethods!
-add_DOMContentLoaded:!**auto generated**!methods!public! !
 Add_DOMContentLoaded:token:!**auto generated**!COM Interfaces-ICoreWebView2_2!private! !
-add_WebResourceResponseReceived:!**auto generated**!methods!public! !
 Add_WebResourceResponseReceived:token:!**auto generated**!COM Interfaces-ICoreWebView2_2!private! !
-cookieManager!**auto generated**!properties!public! !
-environment!**auto generated**!properties!public! !
 get_CookieManager:!**auto generated**!COM Interfaces-ICoreWebView2_2!private! !
 get_Environment:!**auto generated**!COM Interfaces-ICoreWebView2_2!private! !
-navigateWithWebResourceRequest:!**auto generated**!methods!public! !
 NavigateWithWebResourceRequest:!**auto generated**!COM Interfaces-ICoreWebView2_2!private! !
-remove_DOMContentLoaded:!**auto generated**!methods!public! !
 Remove_DOMContentLoaded:!**auto generated**!COM Interfaces-ICoreWebView2_2!private! !
-remove_WebResourceResponseReceived:!**auto generated**!methods!public! !
 Remove_WebResourceResponseReceived:!**auto generated**!COM Interfaces-ICoreWebView2_2!private! !
 !
 
@@ -185,15 +131,15 @@ defineFunctions
 
 	self
 		defineFunction: #Add_WebResourceResponseReceived:token:
-			argumentTypes: 'ICoreWebView2WebResourceResponseReceivedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2WebResourceResponseReceivedEventHandler* sqword*';
 		defineFunction: #Remove_WebResourceResponseReceived:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #NavigateWithWebResourceRequest:
 			argumentTypes: 'ICoreWebView2WebResourceRequest*';
 		defineFunction: #Add_DOMContentLoaded:token:
-			argumentTypes: 'ICoreWebView2DOMContentLoadedEventHandler* EventRegistrationToken*';
+			argumentTypes: 'ICoreWebView2DOMContentLoadedEventHandler* sqword*';
 		defineFunction: #Remove_DOMContentLoaded:
-			argumentTypes: 'EventRegistrationToken';
+			argumentTypes: 'sqword';
 		defineFunction: #get_CookieManager:
 			argumentTypes: 'ICoreWebView2CookieManager**';
 		defineFunction: #get_Environment:

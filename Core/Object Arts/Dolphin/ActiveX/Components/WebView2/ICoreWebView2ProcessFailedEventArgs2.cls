@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-ICoreWebView2ProcessFailedEventArgs subclass: #ICoreWebView2ProcessFailedEventArgs2
+ICoreWebView2EventArgs subclass: #ICoreWebView2ProcessFailedEventArgs2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2ProcessFailedEventArgs2 guid: (IID fromString: '{4dab9422-46fa-4c3e-a5d2-41d2071d3680}')!
 ICoreWebView2ProcessFailedEventArgs2 comment: '`ICoreWebView2ProcessFailedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessFailedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -93,10 +93,12 @@ get_reason: reason
 processDescription
 	"Answer the <lpwstr> value of the 'ProcessDescription' property of the receiver."
 
-	| answer |
-	answer := StructurePointer newNull: COMTaskMemory elementClass: Utf16String.
-	self get_ProcessDescription: answer.
-	^answer asObject!
+	| ptr answer |
+	ptr := COMTaskMemory new.
+	self get_ProcessDescription: ptr.
+	answer := Utf16String fromAddress: ptr.
+	ptr free.
+	^answer!
 
 reason
 	"Answer the <sdword> value of the 'reason' property of the receiver."
@@ -112,7 +114,7 @@ get_ExitCode:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventA
 get_FrameInfosForFailedProcess:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 get_ProcessDescription:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 get_reason:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
-processDescription!**auto generated**!properties!public! !
+processDescription!properties!public! !
 reason!**auto generated**!properties!public! !
 !
 

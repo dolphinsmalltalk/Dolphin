@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2WebMessageReceivedEventHandler
+ICoreWebView2EventHandler subclass: #ICoreWebView2WebMessageReceivedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2WebMessageReceivedEventHandler guid: (IID fromString: '{57213f19-00e6-49fa-8e07-898ea01ecbd2}')!
 ICoreWebView2WebMessageReceivedEventHandler comment: '`ICoreWebView2WebMessageReceivedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebMessageReceivedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -30,23 +30,14 @@ interface ICoreWebView2WebMessageReceivedEventHandler : IUnknown
 !ICoreWebView2WebMessageReceivedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2WebMessageReceivedEventHandler methodsFor!
 
-invoke: sender args: args
-	"Invoke the Invoke() method of the COM object."
+basicRegister: tokenBuffer
+	source Add_WebMessageReceived: self token: tokenBuffer!
 
-	^self Invoke: sender args: args!
-
-Invoke: sender args: args
-	"Private - Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2* sender,
-			[in]ICoreWebView2WebMessageReceivedEventArgs* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2* ICoreWebView2WebMessageReceivedEventArgs*>
-	^self invalidCall: _failureCode! !
+basicUnregister
+	source Remove_WebMessageReceived: token! !
 !ICoreWebView2WebMessageReceivedEventHandler categoriesForMethods!
-invoke:args:!**auto generated**!methods!public! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2WebMessageReceivedEventHandler!private! !
+basicRegister:!private!realizing/unrealizing! !
+basicUnregister!private!realizing/unrealizing! !
 !
 
 !ICoreWebView2WebMessageReceivedEventHandler class methodsFor!
@@ -58,8 +49,14 @@ defineFunctions
 	self
 		defineFunction: #Invoke:args:
 			argumentTypes: 'ICoreWebView2* ICoreWebView2WebMessageReceivedEventArgs*'
-! !
+!
+
+eventName
+	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
+
+	^#webMessageReceived:! !
 !ICoreWebView2WebMessageReceivedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
+eventName!constants!public! !
 !
 

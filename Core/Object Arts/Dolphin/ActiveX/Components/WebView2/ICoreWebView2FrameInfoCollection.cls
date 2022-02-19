@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2FrameInfoCollection
+ICoreWebView2IterableCollection subclass: #ICoreWebView2FrameInfoCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2FrameInfoCollection guid: (IID fromString: '{8f834154-d38e-4d90-affb-6800a7272839}')!
 ICoreWebView2FrameInfoCollection comment: '`ICoreWebView2FrameInfoCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameInfoCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -29,14 +29,6 @@ interface ICoreWebView2FrameInfoCollection : IUnknown
 !ICoreWebView2FrameInfoCollection categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2FrameInfoCollection methodsFor!
 
-getIterator
-	"Answer the <ICoreWebView2FrameInfoCollectionIterator> result of invoking the GetIterator() method of the COM object."
-
-	| answer |
-	answer := ICoreWebView2FrameInfoCollectionIterator newPointer.
-	self GetIterator: answer.
-	^answer asObject!
-
 GetIterator: iterator
 	"Private - Invoke the GetIterator() method of the COM object.
 
@@ -44,10 +36,13 @@ GetIterator: iterator
 			[out, retval]ICoreWebView2FrameInfoCollectionIterator** iterator);"
 
 	<virtual stdcall: hresult 4 ICoreWebView2FrameInfoCollectionIterator**>
-	^self invalidCall: _failureCode! !
+	^self invalidCall: _failureCode!
+
+iteratorClass
+	^ICoreWebView2FrameInfoCollectionIterator! !
 !ICoreWebView2FrameInfoCollection categoriesForMethods!
-getIterator!**auto generated**!methods!public! !
 GetIterator:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfoCollection!private! !
+iteratorClass!constants!private! !
 !
 
 !ICoreWebView2FrameInfoCollection class methodsFor!

@@ -252,6 +252,16 @@ testClassReadFrom
 				remainder := stream upToEnd.
 				self assert: remainder equals: each last]!
 
+testCopyToComTaskMemory
+	| subject |
+	self lengthTestCases do: 
+			[:each |
+			| subject heapBlock copy |
+			subject := self assimilateString: each first.
+			heapBlock := subject copyToCOMTaskMemory.
+			copy := self collectionClass fromAddress: heapBlock.
+			self assert: copy equals: subject]!
+
 testCopyWithout
 	| string |
 	string := self assimilateString: 'abcba'.
@@ -1085,6 +1095,7 @@ testCapitalized!public!unit tests! !
 testCaseConversions!public!unit tests! !
 testClassFromAddress!public!unit tests! !
 testClassReadFrom!public!unit tests! !
+testCopyToComTaskMemory!public!unit tests! !
 testCopyWithout!public! !
 testEmpty!public!testing / accessing! !
 testEquals!public!unit tests! !

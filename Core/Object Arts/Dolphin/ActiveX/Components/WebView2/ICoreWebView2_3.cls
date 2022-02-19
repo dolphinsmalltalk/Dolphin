@@ -42,11 +42,6 @@ interface ICoreWebView2_3 : ICoreWebView2_2
 !ICoreWebView2_3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2_3 methodsFor!
 
-clearVirtualHostNameToFolderMapping: hostName
-	"Invoke the ClearVirtualHostNameToFolderMapping() method of the COM object."
-
-	^self ClearVirtualHostNameToFolderMapping: hostName asUtf16String!
-
 ClearVirtualHostNameToFolderMapping: hostName
 	"Private - Invoke the ClearVirtualHostNameToFolderMapping() method of the COM object.
 
@@ -65,19 +60,6 @@ get_IsSuspended: isSuspended
 	<virtual stdcall: hresult 71 sdword*>
 	^self invalidCall: _failureCode!
 
-isSuspended
-	"Answer the <sdword> value of the 'IsSuspended' property of the receiver."
-
-	| answer |
-	answer := SDWORD new.
-	self get_IsSuspended: answer.
-	^answer asObject!
-
-resume
-	"Invoke the Resume() method of the COM object."
-
-	^self Resume!
-
 Resume
 	"Private - Invoke the Resume() method of the COM object.
 
@@ -85,14 +67,6 @@ Resume
 
 	<virtual stdcall: hresult 70>
 	^self invalidCall: _failureCode!
-
-setVirtualHostNameToFolderMapping: hostName folderPath: folderPath accessKind: accessKind
-	"Invoke the SetVirtualHostNameToFolderMapping() method of the COM object."
-
-	^self
-		SetVirtualHostNameToFolderMapping: hostName asUtf16String
-		folderPath: folderPath asUtf16String
-		accessKind: accessKind!
 
 SetVirtualHostNameToFolderMapping: hostName folderPath: folderPath accessKind: accessKind
 	"Private - Invoke the SetVirtualHostNameToFolderMapping() method of the COM object.
@@ -105,11 +79,6 @@ SetVirtualHostNameToFolderMapping: hostName folderPath: folderPath accessKind: a
 	<virtual stdcall: hresult 72 lpwstr lpwstr sdword>
 	^self invalidCall: _failureCode!
 
-trySuspend: handler
-	"Invoke the TrySuspend() method of the COM object."
-
-	^self TrySuspend: handler!
-
 TrySuspend: handler
 	"Private - Invoke the TrySuspend() method of the COM object.
 
@@ -119,15 +88,10 @@ TrySuspend: handler
 	<virtual stdcall: hresult 69 ICoreWebView2TrySuspendCompletedHandler*>
 	^self invalidCall: _failureCode! !
 !ICoreWebView2_3 categoriesForMethods!
-clearVirtualHostNameToFolderMapping:!**auto generated**!methods!public! !
 ClearVirtualHostNameToFolderMapping:!**auto generated**!COM Interfaces-ICoreWebView2_3!private! !
 get_IsSuspended:!**auto generated**!COM Interfaces-ICoreWebView2_3!private! !
-isSuspended!**auto generated**!properties!public! !
-resume!**auto generated**!methods!public! !
 Resume!**auto generated**!COM Interfaces-ICoreWebView2_3!private! !
-setVirtualHostNameToFolderMapping:folderPath:accessKind:!**auto generated**!methods!public! !
 SetVirtualHostNameToFolderMapping:folderPath:accessKind:!**auto generated**!COM Interfaces-ICoreWebView2_3!private! !
-trySuspend:!**auto generated**!methods!public! !
 TrySuspend:!**auto generated**!COM Interfaces-ICoreWebView2_3!private! !
 !
 

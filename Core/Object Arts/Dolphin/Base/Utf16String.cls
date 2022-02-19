@@ -432,9 +432,7 @@ elementSize
 fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."
 
-	| len |
-	len := KernelLibrary default lstrlenW: anAddress.
-	^self fromAddress: anAddress length: len!
+	^self fromAddress: anAddress length: (KernelLibrary default lstrlenW: anAddress)!
 
 fromAddress: anAddress length: anInteger
 	"Answer a new <Utf16String>, of length anInteger, copied from the first anInteger

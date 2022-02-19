@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2ScriptDialogOpeningEventHandler
+ICoreWebView2EventHandler subclass: #ICoreWebView2ScriptDialogOpeningEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2ScriptDialogOpeningEventHandler guid: (IID fromString: '{ef381bf9-afa8-4e37-91c4-8ac48524bdfb}')!
 ICoreWebView2ScriptDialogOpeningEventHandler comment: '`ICoreWebView2ScriptDialogOpeningEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ScriptDialogOpeningEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -30,23 +30,14 @@ interface ICoreWebView2ScriptDialogOpeningEventHandler : IUnknown
 !ICoreWebView2ScriptDialogOpeningEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2ScriptDialogOpeningEventHandler methodsFor!
 
-invoke: sender args: args
-	"Invoke the Invoke() method of the COM object."
+basicRegister: tokenBuffer
+	source Add_ScriptDialogOpening: self token: tokenBuffer!
 
-	^self Invoke: sender args: args!
-
-Invoke: sender args: args
-	"Private - Invoke the Invoke() method of the COM object.
-
-		HRESULT __stdcall Invoke(
-			[in]ICoreWebView2* sender,
-			[in]ICoreWebView2ScriptDialogOpeningEventArgs* args);"
-
-	<virtual stdcall: hresult 4 ICoreWebView2* ICoreWebView2ScriptDialogOpeningEventArgs*>
-	^self invalidCall: _failureCode! !
+basicUnregister
+	source Remove_ScriptDialogOpening: token! !
 !ICoreWebView2ScriptDialogOpeningEventHandler categoriesForMethods!
-invoke:args:!**auto generated**!methods!public! !
-Invoke:args:!**auto generated**!COM Interfaces-ICoreWebView2ScriptDialogOpeningEventHandler!private! !
+basicRegister:!private!realizing/unrealizing! !
+basicUnregister!private!realizing/unrealizing! !
 !
 
 !ICoreWebView2ScriptDialogOpeningEventHandler class methodsFor!
@@ -58,8 +49,14 @@ defineFunctions
 	self
 		defineFunction: #Invoke:args:
 			argumentTypes: 'ICoreWebView2* ICoreWebView2ScriptDialogOpeningEventArgs*'
-! !
+!
+
+eventName
+	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
+
+	^#scriptDialogOpening:! !
 !ICoreWebView2ScriptDialogOpeningEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
+eventName!constants!public! !
 !
 

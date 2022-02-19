@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2SourceChangedEventArgs
+ICoreWebView2EventArgs subclass: #ICoreWebView2SourceChangedEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2SourceChangedEventArgs guid: (IID fromString: '{31e0e545-1dba-4266-8914-f63848a1f7d7}')!
 ICoreWebView2SourceChangedEventArgs comment: '`ICoreWebView2SourceChangedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2SourceChangedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -39,15 +39,19 @@ get_IsNewDocument: isNewDocument
 	^self invalidCall: _failureCode!
 
 isNewDocument
-	"Answer the <sdword> value of the 'IsNewDocument' property of the receiver."
+	"Answer the <Boolean> value of the 'IsNewDocument' property of the receiver."
 
 	| answer |
-	answer := SDWORD new.
+	answer := BOOL newBuffer.
 	self get_IsNewDocument: answer.
-	^answer asObject! !
+	^answer asObject!
+
+printableProperties
+	^#(#isNewDocument)! !
 !ICoreWebView2SourceChangedEventArgs categoriesForMethods!
 get_IsNewDocument:!**auto generated**!COM Interfaces-ICoreWebView2SourceChangedEventArgs!private! !
-isNewDocument!**auto generated**!properties!public! !
+isNewDocument!properties!public! !
+printableProperties!development!printing!private! !
 !
 
 !ICoreWebView2SourceChangedEventArgs class methodsFor!

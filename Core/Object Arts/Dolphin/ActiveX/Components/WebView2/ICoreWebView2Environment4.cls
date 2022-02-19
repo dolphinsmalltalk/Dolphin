@@ -30,14 +30,6 @@ interface ICoreWebView2Environment4 : ICoreWebView2Environment3
 !ICoreWebView2Environment4 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2Environment4 methodsFor!
 
-getProviderForHwnd: hwnd
-	"Answer the <IUnknown> result of invoking the GetProviderForHwnd() method of the COM object."
-
-	| answer |
-	answer := IUnknown newPointer.
-	self GetProviderForHwnd: hwnd provider: answer.
-	^answer asObject!
-
 GetProviderForHwnd: hwnd provider: provider
 	"Private - Invoke the GetProviderForHwnd() method of the COM object.
 
@@ -48,7 +40,6 @@ GetProviderForHwnd: hwnd provider: provider
 	<virtual stdcall: hresult 12 handle IUnknown**>
 	^self invalidCall: _failureCode! !
 !ICoreWebView2Environment4 categoriesForMethods!
-getProviderForHwnd:!**auto generated**!methods!public! !
 GetProviderForHwnd:provider:!**auto generated**!COM Interfaces-ICoreWebView2Environment4!private! !
 !
 

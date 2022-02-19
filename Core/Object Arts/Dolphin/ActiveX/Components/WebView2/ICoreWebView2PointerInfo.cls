@@ -1,9 +1,9 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-IUnknown subclass: #ICoreWebView2PointerInfo
+ICoreWebView2Interface subclass: #ICoreWebView2PointerInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2PointerInfo guid: (IID fromString: '{e6995887-d10d-4f5d-9359-4ce46e4f96b9}')!
 ICoreWebView2PointerInfo comment: '`ICoreWebView2PointerInfo` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PointerInfo'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
@@ -218,7 +218,7 @@ displayRect
 displayRect: displayRect
 	"Set the 'DisplayRect' property of the receiver to the <RECT> value of the argument."
 
-	self put_DisplayRect: displayRect!
+	self put_DisplayRect: displayRect asParameter!
 
 frameId
 	"Answer the <dword> value of the 'FrameId' property of the receiver."
@@ -496,7 +496,7 @@ himetricLocation
 himetricLocation: himetricLocation
 	"Set the 'HimetricLocation' property of the receiver to the <POINTL> value of the argument."
 
-	self put_HimetricLocation: himetricLocation!
+	self put_HimetricLocation: himetricLocation asParameter!
 
 himetricLocationRaw
 	"Answer the <POINTL> value of the 'HimetricLocationRaw' property of the receiver."
@@ -509,7 +509,7 @@ himetricLocationRaw
 himetricLocationRaw: himetricLocationRaw
 	"Set the 'HimetricLocationRaw' property of the receiver to the <POINTL> value of the argument."
 
-	self put_HimetricLocationRaw: himetricLocationRaw!
+	self put_HimetricLocationRaw: himetricLocationRaw asParameter!
 
 historyCount
 	"Answer the <dword> value of the 'HistoryCount' property of the receiver."
@@ -602,6 +602,9 @@ penRotation: penRotation
 
 	self put_PenRotation: penRotation!
 
+penTilt
+	^self penTiltX @ self penTiltY!
+
 penTiltX
 	"Answer the <sdword> value of the 'PenTiltX' property of the receiver."
 
@@ -652,7 +655,7 @@ pixelLocation
 pixelLocation: pixelLocation
 	"Set the 'PixelLocation' property of the receiver to the <POINTL> value of the argument."
 
-	self put_PixelLocation: pixelLocation!
+	self put_PixelLocation: pixelLocation asParameter!
 
 pixelLocationRaw
 	"Answer the <POINTL> value of the 'PixelLocationRaw' property of the receiver."
@@ -665,7 +668,7 @@ pixelLocationRaw
 pixelLocationRaw: pixelLocationRaw
 	"Set the 'PixelLocationRaw' property of the receiver to the <POINTL> value of the argument."
 
-	self put_PixelLocationRaw: pixelLocationRaw!
+	self put_PixelLocationRaw: pixelLocationRaw asParameter!
 
 pointerDeviceRect
 	"Answer the <RECT> value of the 'PointerDeviceRect' property of the receiver."
@@ -678,7 +681,7 @@ pointerDeviceRect
 pointerDeviceRect: pointerDeviceRect
 	"Set the 'PointerDeviceRect' property of the receiver to the <RECT> value of the argument."
 
-	self put_PointerDeviceRect: pointerDeviceRect!
+	self put_PointerDeviceRect: pointerDeviceRect asParameter!
 
 pointerFlags
 	"Answer the <dword> value of the 'PointerFlags' property of the receiver."
@@ -718,6 +721,9 @@ pointerKind: pointerKind
 	"Set the 'PointerKind' property of the receiver to the <dword> value of the argument."
 
 	self put_PointerKind: pointerKind!
+
+printableProperties
+	^#(#buttonChangeKind #displayRect #frameId #himetricLocation #himetricLocationRaw #historyCount #inputData #keyStates #penFlags #penMask #penPressure #penRotation #penTilt #performanceCount #pixelLocation #pointerDeviceRect #pointerFlags #pointerId #pointerKind #time #touchContact #touchFlags #touchMask #touchOrientation #touchPressure)!
 
 put_ButtonChangeKind: buttonChangeKind
 	"Private - Set the value of the 'ButtonChangeKind' property of the object wrapped by the 
@@ -1093,7 +1099,7 @@ touchPressure: touchPressure
 buttonChangeKind!**auto generated**!properties!public! !
 buttonChangeKind:!**auto generated**!properties!public! !
 displayRect!**auto generated**!properties!public! !
-displayRect:!**auto generated**!properties!public! !
+displayRect:!properties!public! !
 frameId!**auto generated**!properties!public! !
 frameId:!**auto generated**!properties!public! !
 get_ButtonChangeKind:!**auto generated**!COM Interfaces-ICoreWebView2PointerInfo!private! !
@@ -1125,9 +1131,9 @@ get_TouchMask:!**auto generated**!COM Interfaces-ICoreWebView2PointerInfo!privat
 get_TouchOrientation:!**auto generated**!COM Interfaces-ICoreWebView2PointerInfo!private! !
 get_TouchPressure:!**auto generated**!COM Interfaces-ICoreWebView2PointerInfo!private! !
 himetricLocation!**auto generated**!properties!public! !
-himetricLocation:!**auto generated**!properties!public! !
+himetricLocation:!properties!public! !
 himetricLocationRaw!**auto generated**!properties!public! !
-himetricLocationRaw:!**auto generated**!properties!public! !
+himetricLocationRaw:!properties!public! !
 historyCount!**auto generated**!properties!public! !
 historyCount:!**auto generated**!properties!public! !
 inputData!**auto generated**!properties!public! !
@@ -1142,6 +1148,7 @@ penPressure!**auto generated**!properties!public! !
 penPressure:!**auto generated**!properties!public! !
 penRotation!**auto generated**!properties!public! !
 penRotation:!**auto generated**!properties!public! !
+penTilt!properties!public! !
 penTiltX!**auto generated**!properties!public! !
 penTiltX:!**auto generated**!properties!public! !
 penTiltY!**auto generated**!properties!public! !
@@ -1149,17 +1156,18 @@ penTiltY:!**auto generated**!properties!public! !
 performanceCount!**auto generated**!properties!public! !
 performanceCount:!**auto generated**!properties!public! !
 pixelLocation!**auto generated**!properties!public! !
-pixelLocation:!**auto generated**!properties!public! !
+pixelLocation:!properties!public! !
 pixelLocationRaw!**auto generated**!properties!public! !
-pixelLocationRaw:!**auto generated**!properties!public! !
+pixelLocationRaw:!properties!public! !
 pointerDeviceRect!**auto generated**!properties!public! !
-pointerDeviceRect:!**auto generated**!properties!public! !
+pointerDeviceRect:!properties!public! !
 pointerFlags!**auto generated**!properties!public! !
 pointerFlags:!**auto generated**!properties!public! !
 pointerId!**auto generated**!properties!public! !
 pointerId:!**auto generated**!properties!public! !
 pointerKind!**auto generated**!properties!public! !
 pointerKind:!**auto generated**!properties!public! !
+printableProperties!printing!public! !
 put_ButtonChangeKind:!**auto generated**!COM Interfaces-ICoreWebView2PointerInfo!private! !
 put_DisplayRect:!**auto generated**!COM Interfaces-ICoreWebView2PointerInfo!private! !
 put_FrameId:!**auto generated**!COM Interfaces-ICoreWebView2PointerInfo!private! !

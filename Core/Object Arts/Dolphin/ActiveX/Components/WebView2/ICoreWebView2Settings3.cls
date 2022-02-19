@@ -32,19 +32,6 @@ interface ICoreWebView2Settings3 : ICoreWebView2Settings2
 !ICoreWebView2Settings3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
 !ICoreWebView2Settings3 methodsFor!
 
-areBrowserAcceleratorKeysEnabled
-	"Answer the <sdword> value of the 'AreBrowserAcceleratorKeysEnabled' property of the receiver."
-
-	| answer |
-	answer := SDWORD new.
-	self get_AreBrowserAcceleratorKeysEnabled: answer.
-	^answer asObject!
-
-areBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
-	"Set the 'AreBrowserAcceleratorKeysEnabled' property of the receiver to the <sdword> value of the argument."
-
-	self put_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled!
-
 get_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
 	"Private - Get the value of the 'AreBrowserAcceleratorKeysEnabled' property of the receiver.
 
@@ -64,8 +51,6 @@ put_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
 	<virtual stdcall: hresult 25 sdword>
 	^self invalidCall: _failureCode! !
 !ICoreWebView2Settings3 categoriesForMethods!
-areBrowserAcceleratorKeysEnabled!**auto generated**!properties!public! !
-areBrowserAcceleratorKeysEnabled:!**auto generated**!properties!public! !
 get_AreBrowserAcceleratorKeysEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings3!private! !
 put_AreBrowserAcceleratorKeysEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings3!private! !
 !
