@@ -10,8 +10,15 @@ WebView2EventSink comment: ''!
 !WebView2EventSink categoriesForClass!COM-Implementations! !
 !WebView2EventSink methodsFor!
 
+destroy
+	"Private - Free the interface (i.e. reduce it's reference count) without unregistering. This should only be done when the browser process has exited on failure."
+
+	interface ifNil: [^self].
+	interface free.
+	interface := nil!
+
 free
-	interface ifNotNil: [self unregister]!
+	self unregister!
 
 Invoke: sender args: args
 	"Private - Invoke the Invoke() method of the COM object.
@@ -38,6 +45,9 @@ register
 		source: source;
 		register!
 
+source
+	^source!
+
 source: anICoreWebView2EventSource interfaceClass: anICoreWebView2EventHandlerClass handler: aDyadicValuable
 	source := anICoreWebView2EventSource.
 	interfaceClass := anICoreWebView2EventHandlerClass.
@@ -48,10 +58,12 @@ unregister
 	interface unregister.
 	interface := nil! !
 !WebView2EventSink categoriesForMethods!
+destroy!private!realizing/unrealizing! !
 free!public!realizing/unrealizing! !
 Invoke:args:!COM Interfaces-ICoreWebView2EventHandler!private! !
 queryInterface:ifNone:!accessing!accessing-interfaces!public! !
 register!initializing!public! !
+source!accessing!private! !
 source:interfaceClass:handler:!initializing!private! !
 unregister!public!realizing/unrealizing! !
 !
