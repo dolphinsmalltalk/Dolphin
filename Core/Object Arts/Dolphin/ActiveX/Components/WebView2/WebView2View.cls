@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
 ValueConvertingControlView subclass: #WebView2View
-	instanceVariableNames: 'settingsFlags unavailableLink webviewEnvironment webviewController webview webviewSettings eventHandlers'
+	instanceVariableNames: 'settingsFlags unavailableLink webviewEnvironment webviewController webview eventHandlers'
 	classVariableNames: 'CanNavigateToStrings DisableBrowserAcceleratorKeysMask DisableBuiltInErrorPageMask DisableDefaultContextMenuMask DisableDefaultScriptDialogsMask DisableDevToolsMask DisableGeneralAutofillMask DisableHostObjectsMask DisablePasswordAutosaveMask DisablePinchZoomMask DisableScriptMask DisableStatusBarMask DisableWebmessageMask DisableZoomControlMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -20,7 +20,7 @@ WebView2View addClassConstant: 'DisableScriptMask' value: 16r40!
 WebView2View addClassConstant: 'DisableStatusBarMask' value: 16r80!
 WebView2View addClassConstant: 'DisableWebmessageMask' value: 16r100!
 WebView2View addClassConstant: 'DisableZoomControlMask' value: 16r200!
-WebView2View comment: ''!
+WebView2View comment: '`WebView2View` is a `<valueView>` that wraps the Microsoft Edge WebView2 embeddable browser to display content downloaded from a URL, or provided as a string.'!
 !WebView2View categoriesForClass!MVP-Resources-Misc! !
 !WebView2View methodsFor!
 
@@ -34,7 +34,7 @@ allowContextMenu: aBoolean
 	Note that this (like any other settings changes) will only take effect after a navigation."
 
 	settingsFlags := settingsFlags mask: DisableDefaultContextMenuMask set: aBoolean not.
-	webviewSettings areDefaultContextMenusEnabled: aBoolean!
+	self webviewSettings areDefaultContextMenusEnabled: aBoolean!
 
 areBrowserAcceleratorKeysEnabled
 	"Answer whether the Edge default accelerator keys should be enabled."
@@ -45,28 +45,28 @@ areBrowserAcceleratorKeysEnabled: aBoolean
 	"Set whether the Edge default accelerator keys should be enabled."
 
 	settingsFlags := settingsFlags mask: DisableBrowserAcceleratorKeysMask set: aBoolean not.
-	webviewSettings areBrowserAcceleratorKeysEnabled: aBoolean!
+	self webviewSettings areBrowserAcceleratorKeysEnabled: aBoolean!
 
 areDefaultScriptDialogsEnabled
 	^settingsFlags noMask: DisableDefaultScriptDialogsMask!
 
 areDefaultScriptDialogsEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableDefaultScriptDialogsMask set: aBoolean not.
-	webviewSettings areDefaultScriptDialogsEnabled: aBoolean!
+	self webviewSettings areDefaultScriptDialogsEnabled: aBoolean!
 
 areDevToolsEnabled
 	^settingsFlags noMask: DisableDevToolsMask!
 
 areDevToolsEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableDevToolsMask set: aBoolean not.
-	webviewSettings areDevToolsEnabled: aBoolean!
+	self webviewSettings areDevToolsEnabled: aBoolean!
 
 areHostObjectsAllowed
 	^settingsFlags noMask: DisableHostObjectsMask!
 
 areHostObjectsAllowed: aBoolean
 	settingsFlags := settingsFlags mask: DisableHostObjectsMask set: aBoolean not.
-	webviewSettings areHostObjectsAllowed: aBoolean!
+	self webviewSettings areHostObjectsAllowed: aBoolean!
 
 browserVersion
 	^self webviewEnvironment browserVersionString!
@@ -104,6 +104,10 @@ createUnavailableLink
 		send: #onUnavailableLinkClicked:
 		to: self!
 
+createWebView
+	webviewEnvironment createCoreWebView2Controller: handle
+		thenDo: [:hr :controller | hr < 0 ifFalse: [self onControllerCreated: controller]]	"We could create a composition controller here, but there is no point as we don't have any integration with Direct Composition"!
+
 createWebViewEnvironment
 	| completed |
 	completed := (WebView2CompletionHandler
@@ -111,7 +115,11 @@ createWebViewEnvironment
 					queryInterface: ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler.
 	[WebView2Loader default createCoreWebView2Environment: completed] on: Win32Error
 		do: [:ex | self createUnavailableLink].
-	completed free!
+	completed free.
+	self topShell
+		when: #positionChanged:
+		send: #onShellPositionChanged:
+		to: self!
 
 defaultWindowProcessing: message wParam: wParam lParam: lParam
 	"Private - Pass an event to the 'default' window procedure of the receiver."
@@ -123,6 +131,15 @@ defaultWindowProcessing: message wParam: wParam lParam: lParam
 		msg: message
 		wParam: wParam
 		lParam: lParam!
+
+destroyDeadWebView
+	"Private - Tear down the remnants of a dead web view after browser process exit. This involves destroying the event sink objects, without unregistering them as that will fail, and freeing up the existing controller and view. The environment is retained in case a new view is to be created."
+
+	eventHandlers := eventHandlers
+				select: [:each | each source == webviewEnvironment or: 
+							[each destroy.
+							false]].
+	self releaseWebView!
 
 displayValue
 	"Private - Answer the displayed contents of the receiver.
@@ -147,7 +164,6 @@ filerProxy
 	saved := {webviewEnvironment.
 				webviewController.
 				webview.
-				webviewSettings.
 				unavailableLink.
 				eventHandlers}.
 	webviewEnvironment := webviewController := webview := unavailableLink := eventHandlers := nil.
@@ -155,13 +171,8 @@ filerProxy
 			[webviewEnvironment := saved at: 1.
 			webviewController := saved at: 2.
 			webview := saved at: 3.
-			webviewSettings := saved at: 4.
-			unavailableLink := saved at: 5.
-			eventHandlers := saved at: 6]!
-
-finalRelease
-	"The last reference to the receiver (as a COM object) has been released."
-!
+			unavailableLink := saved at: 4.
+			eventHandlers := saved at: 5]!
 
 goBack
 	webview goBack!
@@ -172,20 +183,13 @@ goForward
 initialize
 	super initialize.
 	settingsFlags := 0.
-	webview := webviewSettings := DeafObject.Current!
+	webview := self webviewSettings: DeafObject.Current!
 
 initializeControl
 	"Settings must be established before navigating, or they will not take effect"
 
+	self observeWindowEvents.
 	self updateSettings.
-	self registerEvents.
-
-	"We need to know if the shell is moved so that we can notify the WebView2 as it may need to move dialogs"
-	self topShell
-		when: #positionChanged:
-		send: #onShellPositionChanged:
-		to: self.
-
 	self presenter trigger: #webviewAvailable.
 
 	"Refresh will cause a navigation"
@@ -196,94 +200,103 @@ isBuiltInErrorPageEnabled
 
 isBuiltInErrorPageEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableBuiltInErrorPageMask set: aBoolean not.
-	webviewSettings isBuiltInErrorPageEnabled: aBoolean!
+	self webviewSettings isBuiltInErrorPageEnabled: aBoolean!
 
 isGeneralAutofillEnabled
 	^settingsFlags noMask: DisableGeneralAutofillMask!
 
 isGeneralAutofillEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableGeneralAutofillMask set: aBoolean not.
-	webviewSettings isGeneralAutofillEnabled: aBoolean!
+	self webviewSettings isGeneralAutofillEnabled: aBoolean!
 
 isPasswordAutosaveEnabled
 	^settingsFlags noMask: DisablePasswordAutosaveMask!
 
 isPasswordAutosaveEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisablePasswordAutosaveMask set: aBoolean not.
-	webviewSettings isPasswordAutosaveEnabled: aBoolean!
+	self webviewSettings isPasswordAutosaveEnabled: aBoolean!
 
 isPinchZoomEnabled
 	^settingsFlags noMask: DisablePinchZoomMask!
 
 isPinchZoomEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisablePinchZoomMask set: aBoolean not.
-	webviewSettings isPinchZoomEnabled: aBoolean!
+	self webviewSettings isPinchZoomEnabled: aBoolean!
 
 isScriptEnabled
 	^settingsFlags noMask: DisableScriptMask!
 
 isScriptEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableScriptMask set: aBoolean not.
-	webviewSettings isScriptEnabled: aBoolean!
+	self webviewSettings isScriptEnabled: aBoolean!
 
 isStatusBarEnabled
 	^settingsFlags noMask: DisableStatusBarMask!
 
 isStatusBarEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableStatusBarMask set: aBoolean not.
-	webviewSettings isStatusBarEnabled: aBoolean!
+	self webviewSettings isStatusBarEnabled: aBoolean!
 
 isWebMessageEnabled
 	^settingsFlags noMask: DisableWebmessageMask!
 
 isWebMessageEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableWebmessageMask set: aBoolean not.
-	webviewSettings isWebMessageEnabled: aBoolean!
+	self webviewSettings isWebMessageEnabled: aBoolean!
 
 isZoomControlEnabled
 	^settingsFlags noMask: DisableZoomControlMask!
 
 isZoomControlEnabled: aBoolean
 	settingsFlags := settingsFlags mask: DisableZoomControlMask set: aBoolean not.
-	webviewSettings isZoomControlEnabled: aBoolean!
+	self webviewSettings isZoomControlEnabled: aBoolean!
 
 notifyMove
 	webviewController ifNil: [^self].
 	webviewController NotifyParentWindowPositionChanged!
 
 observeControllerEvents
-	{ICoreWebView2AcceleratorKeyPressedEventHandler.
+	##({ICoreWebView2AcceleratorKeyPressedEventHandler.
 		ICoreWebView2FocusLostEventHandler.
 		ICoreWebView2FocusGainedEventHandler.
 		ICoreWebView2RasterizationScaleChangedEventHandler.
 		ICoreWebView2ZoomFactorChangedEventHandler.
-		ICoreWebView2MoveFocusRequestedEventHandler}
+		ICoreWebView2MoveFocusRequestedEventHandler})
 			do: [:each | self observeEvent: each from: webviewController].
 	(webviewController queryInterface: ICoreWebView2CompositionController ifNone: [])
 		ifNotNil: 
 			[:webviewComposition |
-			eventHandlers add: (WebView2EventSink
+			self registerEventSink: (WebView2EventSink
 						source: webviewComposition
 						interfaceClass: ICoreWebView2CursorChangedEventHandler
-						handler: 
-							[:source :args |
-							self halt.
-							self presenter trigger: ICoreWebView2CursorChangedEventHandler eventName with: args])]!
+						handler: [:source :args | self presenter trigger: ICoreWebView2CursorChangedEventHandler eventName with: args])]!
 
 observeEnvironmentEvents
-	{ICoreWebView2NewBrowserVersionAvailableEventHandler.
+	##({ICoreWebView2NewBrowserVersionAvailableEventHandler.
 		ICoreWebView2BrowserProcessExitedEventHandler.
-		ICoreWebView2ProcessInfosChangedEventHandler}
+		ICoreWebView2ProcessInfosChangedEventHandler})
 			do: [:each | self observeEvent: each from: webviewEnvironment]!
 
 observeEvent: anICoreWebView2EventHandlerClass from: anICoreWebView2EventSource
-	^eventHandlers add: (WebView2EventSink
+	^self registerEventSink: (WebView2EventSink
 				source: anICoreWebView2EventSource
 				interfaceClass: anICoreWebView2EventHandlerClass
 				handler: [:source :args | self presenter trigger: anICoreWebView2EventHandlerClass eventName with: args])!
 
 observeWindowEvents
-	{ICoreWebView2ClientCertificateRequestedEventHandler.
+	self registerEventSink: (WebView2EventSink
+				source: webview
+				interfaceClass: ICoreWebView2ProcessFailedEventHandler
+				handler: [:source :args | self onProcessFailed: args]).
+	self registerEventSink: (WebView2EventSink
+				source: webview
+				interfaceClass: ICoreWebView2SourceChangedEventHandler
+				handler: [:source :args | self onSourceChanged: args]).
+	self registerEventSink: (WebView2EventSink
+				source: webview
+				interfaceClass: ICoreWebView2HistoryChangedEventHandler
+				handler: [:source :args | self onHistoryChanged]).
+	##({ICoreWebView2ClientCertificateRequestedEventHandler.
 		ICoreWebView2ContainsFullScreenElementChangedEventHandler.
 		ICoreWebView2ContentLoadingEventHandler.
 		ICoreWebView2DocumentTitleChangedEventHandler.
@@ -299,39 +312,33 @@ observeWindowEvents
 		ICoreWebView2NavigationStartingEventHandler.
 		ICoreWebView2NewWindowRequestedEventHandler.
 		ICoreWebView2PermissionRequestedEventHandler.
-		ICoreWebView2ProcessFailedEventHandler.
 		ICoreWebView2ScriptDialogOpeningEventHandler.
 		ICoreWebView2WebMessageReceivedEventHandler.
 		ICoreWebView2WebResourceRequestedEventHandler.
 		ICoreWebView2WebResourceResponseReceivedEventHandler.
-		ICoreWebView2WindowCloseRequestedEventHandler} do: [:each | self observeEvent: each from: webview].
-	eventHandlers add: (WebView2EventSink
-				source: webview
-				interfaceClass: ICoreWebView2SourceChangedEventHandler
-				handler: [:source :args | self onSourceChanged: args]).
-	eventHandlers add: (WebView2EventSink
-				source: webview
-				interfaceClass: ICoreWebView2HistoryChangedEventHandler
-				handler: [:source :args | self onHistoryChanged])!
+		ICoreWebView2WindowCloseRequestedEventHandler}) do: [:each | self observeEvent: each from: webview]!
 
 onControllerCreated: anICoreWebView2Controller
 	webviewController := self queryControllerInterface: anICoreWebView2Controller.
+	self observeControllerEvents.
 	self resizeContentToFit.
 	webview := self queryWindowInterface.
-	webviewSettings := self querySettingsInterface.
 	self initializeControl!
 
 onDestroyed
 	self unregisterEvents.
 	self content close.
-	webviewController := webview := webviewSettings := nil.
+	self releaseWebView.
+	webviewEnvironment
+		ifNotNil: 
+			[webviewEnvironment free.
+			webviewEnvironment := nil].
 	^super onDestroyed!
 
 onEnvironmentCreated: anICoreWebView2Environment
 	webviewEnvironment := self queryEnvironmentInterface: anICoreWebView2Environment.
-	"We could create a composition controller here, but there is no point as we don't have any integration with Direct Composition"
-	anICoreWebView2Environment createCoreWebView2Controller: handle
-		thenDo: [:hr :controller | hr < 0 ifFalse: [self onControllerCreated: controller]]!
+	self observeEnvironmentEvents.
+	self createWebView!
 
 onHistoryChanged
 	self invalidateUserInterface.
@@ -341,6 +348,23 @@ onPositionChanged: aPositionEvent
 	aPositionEvent isResize ifTrue: [self resizeContentToFit].
 	aPositionEvent isMove ifTrue: [self notifyMove].
 	^super onPositionChanged: aPositionEvent!
+
+onProcessFailed: anICoreWebView2ProcessFailedEventArgs
+	"Private - There has been some kind of browser process crash, with varying degress of severity. In most cases Edge will recover or indicate failure in place (for crashed frames). If, however, the browser process has completely failed and exited, we need to clean up before passing on the event. In the case of browser process exit, the existing browser view is unrecoverable, and must be completely recreated."
+
+	| failedArgs isDead |
+	failedArgs := anICoreWebView2ProcessFailedEventArgs
+				queryInterface: ICoreWebView2ProcessFailedEventArgs2
+				ifNone: [anICoreWebView2ProcessFailedEventArgs].
+	failedArgs handled: false.
+	isDead := failedArgs isBrowserProcessExit.
+	isDead ifTrue: [self destroyDeadWebView].
+	"Give observers a chance to handle the failure and recover appropriately. If an observer does attempt recovery, it should set the If the `handled` flag in the event args to suppress default recover. If the flag is not set, then the default recovery is to proceed and create a new browser view and navigate to the crash page (to avoid going into a death spiral by reopening the page that caused the crash)."
+	self presenter trigger: #processFailed: with: failedArgs.
+	(isDead and: [failedArgs handled not])
+		ifTrue: 
+			[self model value: 'edge://crashes'.
+			self createWebView]!
 
 onShellPositionChanged: aPositionEvent
 	aPositionEvent isMove ifTrue: [self notifyMove]!
@@ -363,7 +387,7 @@ onViewCreated
 			[unavailableLink destroy.
 			unavailableLink := nil].
 	webviewController := nil.
-	webview := webviewSettings := DeafObject.Current.
+	webview := DeafObject.Current.
 	eventHandlers := OrderedCollection new.
 	self createWebViewEnvironment!
 
@@ -405,12 +429,13 @@ queryEnvironmentInterface: anICoreWebView2Environment
 querySettingsInterface
 	| settings |
 	settings := webview settings.
-	^settings queryInterface: ICoreWebView2Settings5
-		ifNone: 
-			[settings queryInterface: ICoreWebView2Settings4
-				ifNone: 
-					[settings queryInterface: ICoreWebView2Settings3
-						ifNone: [settings queryInterface: ICoreWebView2Settings2 ifNone: [settings]]]]!
+	##({ICoreWebView2Settings6.
+		ICoreWebView2Settings5.
+		ICoreWebView2Settings4.
+		ICoreWebView2Settings3.
+		ICoreWebView2Settings2})
+			do: [:each | (settings queryInterface: each ifNone: []) ifNotNil: [:itf | ^itf]].
+	^settings!
 
 queryWindowInterface
 	| webview2 |
@@ -426,11 +451,20 @@ queryWindowInterface
 			do: [:each | (webview2 queryInterface: each ifNone: []) ifNotNil: [:interface | ^interface]].
 	^webview2!
 
-registerEvents
-	self observeEnvironmentEvents.
-	self observeControllerEvents.
-	self observeWindowEvents.
-	eventHandlers do: [:each | each register]!
+registerEventSink: aWebView2EventSink
+	aWebView2EventSink register.
+	^eventHandlers add: aWebView2EventSink!
+
+releaseWebView
+	webview
+		ifNotNil: 
+			[webview free.
+			webview := nil.
+			self presenter trigger: #webviewClosed].
+	webviewController
+		ifNotNil: 
+			[webviewController free.
+			webviewController := nil]!
 
 resizeContentToFit
 	self content rectangle: self clientRectangle!
@@ -454,25 +488,25 @@ subViews
 
 unregisterEvents
 	eventHandlers ifNil: [^self].
-	eventHandlers do: [:each | each unregister].
+	eventHandlers do: [:each | each free].
 	eventHandlers := nil!
 
 updateSettings
-	self allowContextMenu ifFalse: [webviewSettings areDefaultContextMenusEnabled: false].
-	self areBrowserAcceleratorKeysEnabled
-		ifFalse: [webviewSettings areBrowserAcceleratorKeysEnabled: false].
-	self areDefaultScriptDialogsEnabled
-		ifFalse: [webviewSettings areDefaultScriptDialogsEnabled: false].
-	self areDevToolsEnabled ifFalse: [webviewSettings areDevToolsEnabled: false].
-	self areHostObjectsAllowed ifFalse: [webviewSettings areHostObjectsAllowed: false].
-	self isBuiltInErrorPageEnabled ifFalse: [webviewSettings isBuiltInErrorPageEnabled: false].
-	self isScriptEnabled ifFalse: [webviewSettings isScriptEnabled: false].
-	self isStatusBarEnabled ifFalse: [webviewSettings isStatusBarEnabled: false].
-	self isWebMessageEnabled ifFalse: [webviewSettings isWebMessageEnabled: false].
-	self isZoomControlEnabled ifFalse: [webviewSettings isZoomControlEnabled: false].
-	self isGeneralAutofillEnabled ifFalse: [webviewSettings isGeneralAutofillEnabled: false].
-	self isPasswordAutosaveEnabled ifFalse: [webviewSettings isPasswordAutosaveEnabled: false].
-	self isPinchZoomEnabled ifFalse: [webviewSettings isPinchZoomEnabled: false]!
+	| settings |
+	settings := self webviewSettings.
+	self allowContextMenu ifFalse: [settings areDefaultContextMenusEnabled: false].
+	self areBrowserAcceleratorKeysEnabled ifFalse: [settings areBrowserAcceleratorKeysEnabled: false].
+	self areDefaultScriptDialogsEnabled ifFalse: [settings areDefaultScriptDialogsEnabled: false].
+	self areDevToolsEnabled ifFalse: [settings areDevToolsEnabled: false].
+	self areHostObjectsAllowed ifFalse: [settings areHostObjectsAllowed: false].
+	self isBuiltInErrorPageEnabled ifFalse: [settings isBuiltInErrorPageEnabled: false].
+	self isScriptEnabled ifFalse: [settings isScriptEnabled: false].
+	self isStatusBarEnabled ifFalse: [settings isStatusBarEnabled: false].
+	self isWebMessageEnabled ifFalse: [settings isWebMessageEnabled: false].
+	self isZoomControlEnabled ifFalse: [settings isZoomControlEnabled: false].
+	self isGeneralAutofillEnabled ifFalse: [settings isGeneralAutofillEnabled: false].
+	self isPasswordAutosaveEnabled ifFalse: [settings isPasswordAutosaveEnabled: false].
+	self isPinchZoomEnabled ifFalse: [settings isPinchZoomEnabled: false]!
 
 webview
 	^webview!
@@ -484,7 +518,7 @@ webviewEnvironment
 	^webviewEnvironment!
 
 webviewSettings
-	^webviewSettings! !
+	^self querySettingsInterface! !
 !WebView2View categoriesForMethods!
 allowContextMenu!public!settings! !
 allowContextMenu:!public!settings! !
@@ -502,14 +536,15 @@ canGoForward!commands!public! !
 canNavigateToStrings!public!settings! !
 canNavigateToStrings:!public!settings! !
 content!accessing!private! !
-createUnavailableLink!helpers!private! !
-createWebViewEnvironment!event handling!private! !
+createUnavailableLink!private!realizing/unrealizing! !
+createWebView!private!realizing/unrealizing! !
+createWebViewEnvironment!private!realizing/unrealizing! !
 defaultWindowProcessing:wParam:lParam:!dispatching!private! !
+destroyDeadWebView!private!realizing/unrealizing! !
 displayValue!private!updating! !
 displayValue:!private!updating! !
 documentTitle!accessing!public! !
 filerProxy!binary filing!private! !
-finalRelease!public!realizing/unrealizing! !
 goBack!commands!public! !
 goForward!commands!public! !
 initialize!initializing!private! !
@@ -530,16 +565,17 @@ isWebMessageEnabled!public!settings! !
 isWebMessageEnabled:!public!settings! !
 isZoomControlEnabled!public!settings! !
 isZoomControlEnabled:!public!settings! !
-notifyMove!private!realizing/unrealizing! !
-observeControllerEvents!helpers!private! !
-observeEnvironmentEvents!helpers!private! !
+notifyMove!event handling!private! !
+observeControllerEvents!private!realizing/unrealizing! !
+observeEnvironmentEvents!private!realizing/unrealizing! !
 observeEvent:from:!helpers!private! !
-observeWindowEvents!helpers!private! !
+observeWindowEvents!private!realizing/unrealizing! !
 onControllerCreated:!event handling!private! !
 onDestroyed!event handling!private! !
 onEnvironmentCreated:!event handling!private! !
 onHistoryChanged!event handling!private! !
 onPositionChanged:!event handling!public! !
+onProcessFailed:!event handling!private! !
 onShellPositionChanged:!event handling!public! !
 onSourceChanged:!event handling!private! !
 onUnavailableLinkClicked:!event handling!private! !
@@ -549,8 +585,9 @@ queryControllerInterface:!helpers!private! !
 queryEnvironmentInterface:!helpers!private! !
 querySettingsInterface!helpers!private! !
 queryWindowInterface!helpers!private! !
-registerEvents!private!realizing/unrealizing! !
-resizeContentToFit!private!realizing/unrealizing! !
+registerEventSink:!helpers!private! !
+releaseWebView!operations!private!realizing/unrealizing! !
+resizeContentToFit!helpers!private! !
 showWithStyle:!operations!private! !
 stop!commands!public! !
 subclassWindow:!operations!private! !

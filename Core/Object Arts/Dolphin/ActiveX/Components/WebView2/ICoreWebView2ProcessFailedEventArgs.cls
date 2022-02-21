@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
 ICoreWebView2EventArgs subclass: #ICoreWebView2ProcessFailedEventArgs
-	instanceVariableNames: ''
+	instanceVariableNames: 'handled'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -38,6 +38,18 @@ get_ProcessFailedKind: processFailedKind
 	<virtual stdcall: hresult 4 sdword*>
 	^self invalidCall: _failureCode!
 
+handled
+	^handled!
+
+handled: anObject
+	handled := anObject!
+
+isBrowserProcessExit
+	^self processFailedKind = WebView2Constants.COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED!
+
+printableProperties
+	^#(#processFailedKind)!
+
 processFailedKind
 	"Answer the <sdword> value of the 'ProcessFailedKind' property of the receiver."
 
@@ -47,6 +59,10 @@ processFailedKind
 	^answer asObject! !
 !ICoreWebView2ProcessFailedEventArgs categoriesForMethods!
 get_ProcessFailedKind:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs!private! !
+handled!accessing!public! !
+handled:!accessing!public! !
+isBrowserProcessExit!public!testing! !
+printableProperties!development!printing!private! !
 processFailedKind!**auto generated**!properties!public! !
 !
 
