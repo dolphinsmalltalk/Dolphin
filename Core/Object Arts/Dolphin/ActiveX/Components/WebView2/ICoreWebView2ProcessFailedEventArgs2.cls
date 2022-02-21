@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-ICoreWebView2EventArgs subclass: #ICoreWebView2ProcessFailedEventArgs2
+ICoreWebView2ProcessFailedEventArgs subclass: #ICoreWebView2ProcessFailedEventArgs2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -90,6 +90,18 @@ get_reason: reason
 	<virtual stdcall: hresult 5 sdword*>
 	^self invalidCall: _failureCode!
 
+printableProperties
+	| propertyNames failureKind |
+	propertyNames := OrderedCollection withAll: super printableProperties.
+	propertyNames addLast: #exitCode.
+	self processDescription isEmpty ifFalse: [propertyNames add: #processDescription].
+	failureKind := self processFailedKind.
+	failureKind = WebView2Constants.COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED
+		ifFalse: [propertyNames add: #reason].
+	failureKind = WebView2Constants.COREWEBVIEW2_PROCESS_FAILED_KIND_FRAME_RENDER_PROCESS_EXITED
+		ifTrue: [propertyNames addLast: #frameInfosForFailedProcess].
+	^propertyNames!
+
 processDescription
 	"Answer the <lpwstr> value of the 'ProcessDescription' property of the receiver."
 
@@ -114,6 +126,7 @@ get_ExitCode:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventA
 get_FrameInfosForFailedProcess:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 get_ProcessDescription:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 get_reason:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
+printableProperties!development!printing!private! !
 processDescription!properties!public! !
 reason!**auto generated**!properties!public! !
 !

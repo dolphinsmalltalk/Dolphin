@@ -49,8 +49,10 @@ createSchematicWiring
 			to: self;
 		when: #zoomFactorChanged
 			send: #onZoomFactorChanged
+			to: self;
+		when: #processFailed:
+			send: #onProcessFailed:
 			to: self.
-
 	"We don't really need all these other events, but observe them for illustrative purposes"
 	WebView2View webview2Events do: 
 			[:each |
@@ -79,12 +81,30 @@ navigate
 	[browser model notifyChanged] on: Error do: [:ex | statusModel  value: ex. Sound errorBeep]!
 
 onDocumentTitleChanged
-	"Event fired by Edge WebView2 when the document title has changed, so update the browser caption."
+	"Private - Event fired by Edge WebView2 when the document title has changed, so update the browser caption."
 
 	self caption: browser view documentTitle!
 
+onProcessFailed: anICoreWebView2ProcessFailedEventArgs
+	| stream |
+	stream := String writeStream.
+	stream
+		nextPutAll: 'The browser process has crashed.';
+		cr;
+		nextPutAll: 'Failure details:';
+		cr.
+	anICoreWebView2ProcessFailedEventArgs printableProperties do: 
+			[:each |
+			stream
+				nextPutAll: '    ';
+				nextPutAll: each;
+				nextPutAll: ': ';
+				print: (anICoreWebView2ProcessFailedEventArgs perform: each)]
+		separatedBy: [stream cr].
+	MessageBox errorMsg: stream contents caption: 'Oops!!'!
+
 onSourceChanged: anICoreWebView2NavigationCompletedEventArgs
-	"Event fired by Edge WebView2 when a the 'source' has changed - this may include in-page navigation, in which case the document will not have changed, but the source URI will."
+	"Private - Event fired by Edge WebView2 when a the 'source' has changed - this may include in-page navigation, in which case the document will not have changed, but the source URI will."
 
 	"Keep the address bar in sync"
 	address model value: browser view model value!
@@ -115,7 +135,8 @@ onWebViewAvailable
 	"Display the Edge browser version in the status bar field on the right"
 
 	(self view viewNamed: 'browserVersion') model: browser view webviewEnvironment asValue.
-	self onZoomFactorChanged!
+	self onZoomFactorChanged.
+	"self openUrl: 'edge://about'"!
 
 onZoomFactorChanged
 	zoomModel value: '<1p>%%' << (browser view webviewController zoomFactor * 100) rounded!
@@ -157,12 +178,13 @@ createSchematicWiring!initializing!public! !
 home!commands!public! !
 homePage!commands!private! !
 navigate!commands!public! !
-onDocumentTitleChanged!event handling!public! !
-onSourceChanged:!event handling!public! !
+onDocumentTitleChanged!event handling!private! !
+onProcessFailed:!event handling!private! !
+onSourceChanged:!event handling!private! !
 onViewOpened!event handling!public! !
-onWebView2Event:name:!public! !
-onWebViewAvailable!event handling!public! !
-onZoomFactorChanged!public! !
+onWebView2Event:name:!event handling!private! !
+onWebViewAvailable!event handling!private! !
+onZoomFactorChanged!event handling!private! !
 openUrl:!operations!public! !
 printToPdf!commands!public! !
 queryCommand:!commands!private! !
@@ -202,7 +224,7 @@ resource_Default_view
 	ViewComposer openOn: (ResourceIdentifier class: self selector: #resource_Default_view)
 	"
 
-	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default nil 549 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 410 ##(Smalltalk.Toolbar) 34 25 nil 416 34 2 8 1140853516 131137 528 nil 480 nil 7 nil nil nil 528 480 8 1808128240 170 192 34 4 410 ##(Smalltalk.TextEdit) 34 16 nil 528 34 2 8 1140916352 1025 640 nil 480 nil 7 265030 4 ##(Smalltalk.Menu) nil true 34 2 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #navigate 8 '&Go' 1 1 nil nil nil 754 2097153 786 #accept 8 '&Accept' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 640 nil 8 1808146176 852486 ##(Smalltalk.NullConverter) nil nil 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 331 15 1058 1891 41 640 1010 #contextMenu: 34 1 720 640 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 165 0 0 0 7 0 0 0 86 4 0 0 27 0 0 0] 8 #() 1058 193 193 nil 27 8 'address' 410 ##(Smalltalk.PushButton) 34 20 nil 528 34 2 8 1140924416 1 1232 nil nil 1058 97 41 519 nil nil nil 1232 nil 8 1808150656 786 #navigate 8 '&Go' 1 1 nil nil true nil nil nil 946 138 144 34 3 1010 #createAt:extent: 34 2 1058 2237 11 1058 121 49 1232 1010 #isEnabled: 8 #(false) 1232 1010 #text: 34 1 8 '&Go' 1232 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 94 4 0 0 5 0 0 0 154 4 0 0 29 0 0 0] 8 #() 1200 nil 29 8 'go' 170 192 8 #() 8 #() nil 590342 ##(Smalltalk.Rectangle) 1058 5 3 1058 5 5 1 nil 1058 33 31 1058 45 45 nil 852230 ##(Smalltalk.FramingLayout) 170 176 34 10 640 1181766 2 ##(Smalltalk.FramingConstraints) 1180678 ##(Smalltalk.FramingCalculation) #fixedPreviousRight 1 1858 #fixedParentRight -143 1858 #fixedPreviousTop -3 1858 #fixedViewTop 41 1232 1826 1858 #fixedViewRight -119 1888 -7 1904 -3 1920 49 410 ##(Smalltalk.StaticText) 34 16 nil 528 34 2 8 1140850944 1 1968 nil nil nil 7 nil nil nil 1968 nil 8 1808190368 914 nil nil nil 946 138 144 34 2 1010 #createAt:extent: 34 2 1058 221 19 1058 111 41 1968 1010 #text: 34 1 8 'Address:' 1968 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 110 0 0 0 9 0 0 0 165 0 0 0 29 0 0 0] 8 #() 1200 nil 27 1826 1872 17 1858 #fixedViewLeft 111 1904 5 1920 41 410 ##(Smalltalk.StaticRectangle) 34 14 nil 528 34 2 8 1140916498 1 2304 nil 480 nil 7 nil nil nil 2304 nil 8 1808190368 946 138 144 34 1 1010 #createAt:extent: 34 2 1058 1 63 1058 2365 5 2304 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 31 0 0 0 158 4 0 0 33 0 0 0] 8 #() 1200 nil 27 1826 1858 #fixedParentLeft -3 1888 1 1858 #fixedViewBottom -3 1858 #fixedParentBottom 1 410 ##(Smalltalk.Toolbar) 34 25 nil 528 34 2 8 1140853580 131137 2608 nil 480 nil 519 nil nil nil 2608 480 8 1808128240 170 192 1632 170 192 34 8 10411 1246790 1 ##(Smalltalk.ToolbarSystemButton) 2608 1 786 #printToPdf 8 'Print to PDF' 1 1 nil 10411 1 29 10409 2738 2608 1 786 459270 ##(Smalltalk.Message) #goForward 8 #() 8 'Forward' 1 1 nil 10409 17 3 10407 2738 2608 1 786 2834 #goBack 2864 8 'Back' 1 1 nil 10407 17 1 10405 1246790 1 ##(Smalltalk.ToolbarBitmapButton) 2608 1 786 #home 8 'Home page' 1 1 nil 10405 395334 3 ##(Smalltalk.Bitmap) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Tools.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil 71 1058 1857 33 73 34 5 2976 2896 2800 2752 1049158 1 ##(Smalltalk.ToolbarSeparator) 2608 1 nil nil 1 nil 1058 33 33 1058 45 45 nil nil 946 138 144 34 1 1010 #createAt:extent: 34 2 1058 15 15 1058 191 51 2608 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 7 0 0 0 7 0 0 0 102 0 0 0 32 0 0 0] 8 #() 1200 nil 27 1826 2560 11 2288 191 1858 #fixedParentTop 13 1920 51 946 138 144 34 1 1010 #createAt:extent: 34 2 1058 1 1 1058 2369 71 528 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 160 4 0 0 35 0 0 0] 34 5 2608 1968 640 1232 2304 1200 nil 27 410 ##(Smalltalk.StatusBar) 34 18 nil 416 34 2 8 1140850956 1 3600 nil 480 nil 7 nil 263174 ##(Smalltalk.Font) nil true 459014 ##(Smalltalk.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 18 84 105 109 101 115 32 78 101 119 32 82 111 109 97 110 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 1058 193 193 nil 3600 nil 8 1807681552 170 192 34 6 853766 ##(Smalltalk.StatusBarItem) 1 -1 3600 nil ##(Smalltalk.BasicListAbstract) nil nil 8 'status' 3810 1 301 3600 nil 2834 #displayString 8 #() 787814 3 ##(Smalltalk.BlockClosure) 0 nil 918822 ##(Smalltalk.CompiledMethod) 2 3 3808 #defaultGetImageBlock 417549187 8 #[30 105 226 0 106] #iconImageIndex 3920 7 257 nil nil 8 'browserVersion' 3810 1 101 3600 nil 2834 #displayString 8 #() nil nil 8 'zoom' 34 3 3824 4000 3856 1115142 ##(Smalltalk.StatusBarNullItem) 513 1 3600 nil nil 946 138 144 34 1 1010 #createAt:extent: 34 2 1058 1 1533 1058 2369 43 3600 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 254 2 0 0 160 4 0 0 19 3 0 0] 8 #() 1200 nil 27 nil nil 410 ##(Smalltalk.WebView2View) 34 22 nil 416 34 2 8 1140850688 1 4272 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 7 nil nil nil 4272 nil nil 914 nil nil 1 nil nil nil nil 1442310 ##(Smalltalk.ICoreWebView2Settings5) nil nil nil 946 138 144 34 1 1010 #createAt:extent: 34 2 1058 1 71 1058 2369 1463 4272 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 35 0 0 0 160 4 0 0 254 2 0 0] 1632 1200 nil 27 170 192 34 4 4272 8 'browser' 3600 8 'progress' nil nil nil nil nil 39881 nil nil nil nil 1 nil nil 946 138 144 34 2 1010 #createAt:extent: 34 2 1058 12287 21 1058 2401 1653 416 1010 #text: 34 1 8 'Simple Web Browser' 416 1138 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 175 28 0 0 68 3 0 0] 34 3 3600 528 4272 1200 nil 27 )!
+	^#(#'!!STL' 4 788558 10 ##(Smalltalk.STBViewProxy) ##(Smalltalk.ShellView) 34 27 nil nil 8 #(13565952 65536) 416 nil 327686 ##(Smalltalk.Color) #default nil 549 nil nil nil 416 788230 ##(Smalltalk.BorderLayout) 1 1 410 ##(Smalltalk.Toolbar) 34 25 nil 416 34 2 8 1140853516 131137 528 nil 480 nil 7 nil nil nil 528 480 8 1808128240 170 192 34 4 410 ##(Smalltalk.TextEdit) 34 16 nil 528 34 2 8 1140916352 1025 640 nil 480 nil 7 265030 4 ##(Smalltalk.Menu) nil true 34 2 984134 2 ##(Smalltalk.CommandMenuItem) 1 1180998 4 ##(Smalltalk.CommandDescription) #navigate 8 '&Go' 1 1 nil nil nil 754 2097153 786 #accept 8 '&Accept' 1 1 nil nil nil 8 '' nil 1 nil nil nil nil nil nil nil 640 nil 8 1808146176 852486 ##(Smalltalk.NullConverter) nil nil 1 983302 ##(Smalltalk.MessageSequence) 138 144 34 2 721670 ##(Smalltalk.MessageSend) #createAt:extent: 34 2 328198 ##(Smalltalk.Point) 331 15 1058 1891 41 640 1010 #contextMenu: 34 1 720 640 983302 ##(Smalltalk.WINDOWPLACEMENT) 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 165 0 0 0 7 0 0 0 86 4 0 0 27 0 0 0] 8 #() 1058 193 193 nil 27 8 'address' 410 ##(Smalltalk.PushButton) 34 20 nil 528 34 2 8 1140924416 1 1232 nil nil 1058 97 41 519 nil nil nil 1232 nil 8 1808150656 786 #navigate 8 '&Go' 1 1 nil nil true nil nil nil 946 138 144 34 3 1010 #createAt:extent: 34 2 1058 2237 11 1058 121 49 1232 1010 #isEnabled: 8 #(false) 1232 1010 #text: 34 1 8 '&Go' 1232 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 94 4 0 0 5 0 0 0 154 4 0 0 29 0 0 0] 8 #() 1200 nil 29 8 'go' 170 192 8 #() 8 #() nil 590342 ##(Smalltalk.Rectangle) 1058 5 3 1058 5 5 1 nil 1058 33 31 1058 45 45 nil 852230 ##(Smalltalk.FramingLayout) 170 176 34 10 410 ##(Smalltalk.StaticText) 34 16 nil 528 34 2 8 1140850944 1 1824 nil nil nil 7 nil nil nil 1824 nil 8 1808190368 914 nil nil nil 946 138 144 34 2 1010 #createAt:extent: 34 2 1058 221 19 1058 111 41 1824 1010 #text: 34 1 8 'Address:' 1824 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 110 0 0 0 9 0 0 0 165 0 0 0 29 0 0 0] 8 #() 1200 nil 27 1181766 2 ##(Smalltalk.FramingConstraints) 1180678 ##(Smalltalk.FramingCalculation) #fixedPreviousRight 17 2162 #fixedViewLeft 111 2162 #fixedPreviousTop 5 2162 #fixedViewTop 41 640 2130 2176 1 2162 #fixedParentRight -143 2208 -3 2224 41 410 ##(Smalltalk.Toolbar) 34 25 nil 528 34 2 8 1140853580 131137 2272 nil 480 nil 519 nil nil nil 2272 480 8 1808128240 170 192 1632 170 192 34 8 9185 1246790 1 ##(Smalltalk.ToolbarBitmapButton) 2272 1 786 #home 8 'Home page' 1 1 nil 9185 395334 3 ##(Smalltalk.Bitmap) nil true 1572870 ##(Smalltalk.ImageRelativeFileLocator) 8 'Tools.bmp' 2032142 ##(Smalltalk.STBExternalResourceLibraryProxy) 8 'dolphindr7.dll' nil nil 71 1058 1857 33 73 9191 1246790 1 ##(Smalltalk.ToolbarSystemButton) 2272 1 786 #printToPdf 8 'Print to PDF' 1 1 nil 9191 1 29 9189 2610 2272 1 786 459270 ##(Smalltalk.Message) #goForward 8 #() 8 'Forward' 1 1 nil 9189 17 3 9187 2610 2272 1 786 2706 #goBack 2736 8 'Back' 1 1 nil 9187 17 1 34 5 2416 2768 2672 2624 1049158 1 ##(Smalltalk.ToolbarSeparator) 2272 1 nil nil 1 nil 1058 33 33 1058 45 45 nil nil 946 138 144 34 1 1010 #createAt:extent: 34 2 1058 15 15 1058 191 51 2272 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 7 0 0 0 7 0 0 0 102 0 0 0 32 0 0 0] 8 #() 1200 nil 27 2130 2162 #fixedParentLeft 11 2192 191 2162 #fixedParentTop 13 2224 51 410 ##(Smalltalk.StaticRectangle) 34 14 nil 528 34 2 8 1140916498 1 3120 nil 480 nil 7 nil nil nil 3120 nil 8 1808190368 946 138 144 34 1 1010 #createAt:extent: 34 2 1058 1 63 1058 2365 5 3120 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 31 0 0 0 158 4 0 0 33 0 0 0] 8 #() 1200 nil 27 2130 3088 -3 2256 1 2162 #fixedViewBottom -3 2162 #fixedParentBottom 1 1232 2130 2162 #fixedViewRight -119 2256 -7 2208 -3 2224 49 946 138 144 34 1 1010 #createAt:extent: 34 2 1058 1 1 1058 2369 71 528 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 0 0 0 0 160 4 0 0 35 0 0 0] 34 5 2272 1824 640 1232 3120 1200 nil 27 410 ##(Smalltalk.StatusBar) 34 18 nil 416 34 2 8 1140850956 1 3600 nil 480 nil 7 nil 263174 ##(Smalltalk.Font) nil true 459014 ##(Smalltalk.LOGFONT) 8 #[243 255 255 255 0 0 0 0 0 0 0 0 0 0 0 0 144 1 0 0 0 0 0 0 3 2 1 18 84 105 109 101 115 32 78 101 119 32 82 111 109 97 110 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0] 1058 193 193 nil 3600 nil 8 1807681552 170 192 34 6 853766 ##(Smalltalk.StatusBarItem) 1 -1 3600 nil ##(Smalltalk.BasicListAbstract) nil nil 8 'status' 3810 1 301 3600 nil 2706 #displayString 8 #() 787814 3 ##(Smalltalk.BlockClosure) 0 nil 918822 ##(Smalltalk.CompiledMethod) 2 3 3808 #defaultGetImageBlock 417549187 8 #[30 105 226 0 106] #iconImageIndex 3920 7 257 nil nil 8 'browserVersion' 3810 1 101 3600 nil 2706 #displayString 8 #() nil nil 8 'zoom' 34 3 3824 4000 3856 1115142 ##(Smalltalk.StatusBarNullItem) 513 1 3600 nil nil 946 138 144 34 1 1010 #createAt:extent: 34 2 1058 1 1533 1058 2369 43 3600 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 254 2 0 0 160 4 0 0 19 3 0 0] 8 #() 1200 nil 27 nil nil 410 ##(Smalltalk.WebView2View) 34 21 nil 416 34 2 8 1140850688 1 4272 721990 2 ##(Smalltalk.ValueHolder) nil false 1310726 ##(Smalltalk.EqualitySearchPolicy) nil nil nil 7 nil nil nil 4272 nil nil 914 nil nil 1 nil nil nil nil nil 946 138 144 34 1 1010 #createAt:extent: 34 2 1058 1 71 1058 2369 1463 4272 1138 8 #[44 0 0 0 0 0 0 0 1 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 0 0 0 0 35 0 0 0 160 4 0 0 254 2 0 0] 1632 1200 nil 27 170 192 34 4 4272 8 'browser' 3600 8 'progress' nil nil nil nil nil 16151 nil nil nil nil 1 nil nil 946 138 144 34 2 1010 #createAt:extent: 34 2 1058 12287 21 1058 2401 1653 416 1010 #text: 34 1 8 'Simple Web Browser' 416 1138 8 #[44 0 0 0 0 0 0 0 0 0 0 0 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 255 23 0 0 10 0 0 0 175 28 0 0 68 3 0 0] 34 3 3600 528 4272 1200 nil 27 )!
 
 shutdownOnExit
 	"Answer whether a runtime session should be shutdown when an instance of the receiver is closed."

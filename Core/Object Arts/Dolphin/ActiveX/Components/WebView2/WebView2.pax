@@ -572,12 +572,7 @@ ICoreWebView2EventArgs subclass: #ICoreWebView2PermissionRequestedEventArgs
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2EventArgs subclass: #ICoreWebView2ProcessFailedEventArgs
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2EventArgs subclass: #ICoreWebView2ProcessFailedEventArgs2
-	instanceVariableNames: ''
+	instanceVariableNames: 'handled'
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
@@ -615,6 +610,11 @@ ICoreWebView2NewWindowRequestedEventArgs subclass: #ICoreWebView2NewWindowReques
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'WebView2Constants'
+	classInstanceVariableNames: ''!
+ICoreWebView2ProcessFailedEventArgs subclass: #ICoreWebView2ProcessFailedEventArgs2
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2EventHandler subclass: #ICoreWebView2AcceleratorKeyPressedEventHandler
 	instanceVariableNames: ''
@@ -927,7 +927,7 @@ ValuePresenter subclass: #URLPresenter
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ValueConvertingControlView subclass: #WebView2View
-	instanceVariableNames: 'settingsFlags unavailableLink webviewEnvironment webviewController webview webviewSettings eventHandlers'
+	instanceVariableNames: 'settingsFlags unavailableLink webviewEnvironment webviewController webview eventHandlers'
 	classVariableNames: 'CanNavigateToStrings DisableBrowserAcceleratorKeysMask DisableBuiltInErrorPageMask DisableDefaultContextMenuMask DisableDefaultScriptDialogsMask DisableDevToolsMask DisableGeneralAutofillMask DisableHostObjectsMask DisablePasswordAutosaveMask DisablePinchZoomMask DisableScriptMask DisableStatusBarMask DisableWebmessageMask DisableZoomControlMask'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
