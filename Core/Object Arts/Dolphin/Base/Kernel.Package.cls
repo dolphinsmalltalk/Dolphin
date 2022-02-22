@@ -409,12 +409,12 @@ convertOldNamesProperty: aSymbol
 			self propertyAt: aSymbol put: aCollectionOfBindingReferences]!
 
 convertPoolDictionariesToSharedPools
-	(self variableNames select: [:each | each valueOrNil isKindOf: PoolDictionary]) do: 
+	^(self variableNames select: [:each | each valueOrNil isKindOf: PoolDictionary]) collect: 
 			[:each |
 			| poolClass |
 			poolClass := each value convertToSharedPool.
 			self basicRemoveVariableNamed: each.
-			classNames add: poolClass fullyQualifiedReference]!
+			poolClass fullyQualifiedReference]!
 
 declareClasses
 	"Private - Predefine global variables for each of the classes in the package prior to those classes
@@ -902,7 +902,7 @@ loadPAX
 	"Private - Load all the objects owned by the receiver. This assumes that all prerequisite
 	packages are currently loaded in."
 
-	| filename filer stream |
+	| filename filer stream oldPools |
 	filename := self packageFileName.
 	Notification
 		signal: ('Loading source package <1p> from: <2s>' expandMacrosWith: self name with: filename).
@@ -926,11 +926,15 @@ loadPAX
 	self variableNames - (self propertyAt: #binaryVariables ifAbsent: #())
 		- (self propertyAt: #aliasVariables ifAbsent: #())
 			do: [:each | self sourceManager fileIn: (self fileNameForSourceVariable: each)].
+	"We need the pool variables to be available in case there are references in the code we are about to file in"
+	oldPools := self convertPoolDictionariesToSharedPools.
 
 	"Load class definitions, aliases, and loose methods from the remainder of the PAX file"
 	filer fileIn.
 	self ensureNamesFullyQualified.
 	self fileInClasses.
+	"Now that we have loaded the classes, we can associate any newly created SharedPools (converted from PoolConstantsDictionary variables) with the package"
+	oldPools do: [:each | classNames add: each].
 	self loadBinaryVariables.
 	self postLoadInitialization: [self initializeOldSourcePackage]]
 			ensure: [filer close]!
