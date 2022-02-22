@@ -1067,7 +1067,7 @@ renameMethodReferences: aCompiledMethod to: anRBMethodName
 	^self performRefactoring: 
 			[| model refactoring |
 			model := RBModel onEnvironment: anRBMethodName scope.
-			refactoring := RenameMethodReferencesRefactoring
+			refactoring := RenameMethodReferencesTransformation
 						model: model
 						renameMethod: aCompiledMethod selector
 						in: aCompiledMethod methodClass

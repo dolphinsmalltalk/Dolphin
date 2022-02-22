@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.ClassRefactoring subclass: #'Tools.CopyClassRefactoring'
+Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.CopyClassRefactoring'
 	instanceVariableNames: 'newName class superclass'
 	classVariableNames: ''
-	imports: #(#{Refactory.Browser})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Tools.CopyClassRefactoring guid: (Core.GUID fromString: '{c6843969-c4d4-4f0f-8de1-ceae5725b831}')!
-Tools.CopyClassRefactoring comment: ''!
-!Tools.CopyClassRefactoring categoriesForClass!Refactory-Refactorings! !
-!Tools.CopyClassRefactoring methodsFor!
+Refactory.Browser.CopyClassRefactoring guid: (Core.GUID fromString: '{c6843969-c4d4-4f0f-8de1-ceae5725b831}')!
+Refactory.Browser.CopyClassRefactoring comment: ''!
+!Refactory.Browser.CopyClassRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.CopyClassRefactoring methodsFor!
 
 className: aName newName: aNewName superclass: aClass
 	self className: aName.
@@ -105,7 +105,7 @@ transform
 	self copyImportsTo: clone.
 	self copyMethodsFrom: class to: clone.
 	self copyMethodsFrom: class metaclass to: clone metaclass! !
-!Tools.CopyClassRefactoring categoriesForMethods!
+!Refactory.Browser.CopyClassRefactoring categoriesForMethods!
 className:newName:superclass:!initializing!private! !
 copyClass!private!transforming! !
 copyClassVarsTo:!private!transforming! !
@@ -120,7 +120,7 @@ superclass:!accessing!private! !
 transform!public!transforming! !
 !
 
-!Tools.CopyClassRefactoring class methodsFor!
+!Refactory.Browser.CopyClassRefactoring class methodsFor!
 
 clone: aClass as: aNewName superclass: superClass
 	^self new className: aClass fullName newName: aNewName superclass: superClass!
@@ -131,7 +131,7 @@ model: aRBModel clone: aClass as: aNewName superclass: superClass
 		className: aClass fullName
 			newName: aNewName
 			superclass: superClass! !
-!Tools.CopyClassRefactoring class categoriesForMethods!
+!Refactory.Browser.CopyClassRefactoring class categoriesForMethods!
 clone:as:superclass:!instance creation!public! !
 model:clone:as:superclass:!instance creation!public! !
 !

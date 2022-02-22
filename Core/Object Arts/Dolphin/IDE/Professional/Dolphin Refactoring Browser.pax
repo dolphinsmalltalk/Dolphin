@@ -26,11 +26,12 @@ package basicPackageVersion: '6.1'.
 
 
 package setClassNames: #(
+	#{Refactory.Browser.CopyClassRefactoring}
+	#{Refactory.Browser.RenameMethodReferencesTransformation}
 	#{Tools.CodeMentorPlugin}
 	#{Tools.CodeRefactoringTool}
 	#{Tools.CodeRewriterPlugin}
 	#{Tools.ConvertToSiblingDialog}
-	#{Tools.CopyClassRefactoring}
 	#{Tools.LintRuleFailuresBrowserShell}
 	#{Tools.MethodNameDialog}
 	#{Tools.MethodRefactoringTool}
@@ -38,7 +39,6 @@ package setClassNames: #(
 	#{Tools.RefactoringTool}
 	#{Tools.RenameAccessorsDialog}
 	#{Tools.RenameMethodDialog}
-	#{Tools.RenameMethodReferencesRefactoring}
 	#{Tools.RewriteChangesBrowser}
 	#{Tools.ScopedMethodName}
 	#{Tools.SmalllintCachingContext}
@@ -391,16 +391,16 @@ Refactory.Browser.RBMethodName subclass: #'Tools.ScopedMethodName'
 	imports: #(#{Refactory.Browser})
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.ClassRefactoring subclass: #'Tools.CopyClassRefactoring'
+Refactory.Browser.ClassRefactoring subclass: #'Refactory.Browser.CopyClassRefactoring'
 	instanceVariableNames: 'newName class superclass'
 	classVariableNames: ''
-	imports: #(#{Refactory.Browser})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.RenameMethodRefactoring subclass: #'Tools.RenameMethodReferencesRefactoring'
+Refactory.Browser.RenameMethodRefactoring subclass: #'Refactory.Browser.RenameMethodReferencesTransformation'
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Refactory.Browser})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Tools.RefactoringTool subclass: #'Tools.CodeRefactoringTool'
