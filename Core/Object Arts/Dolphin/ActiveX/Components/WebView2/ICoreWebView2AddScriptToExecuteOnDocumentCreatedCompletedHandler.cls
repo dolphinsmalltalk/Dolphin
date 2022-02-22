@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebViewCompletedHandler subclass: #ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler guid: (IID fromString: '{b99369f3-9b11-47b5-bc6f-8e7895fcea17}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler guid: (OS.COM.IID fromString: '{b99369f3-9b11-47b5-bc6f-8e7895fcea17}')!
 ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler comment: '`ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

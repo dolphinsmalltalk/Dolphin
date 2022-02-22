@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2EventHandler subclass: #ICoreWebView2WebResourceRequestedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2WebResourceRequestedEventHandler guid: (IID fromString: '{ab00b74c-15f1-4646-80e8-e76341d25d71}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2WebResourceRequestedEventHandler guid: (OS.COM.IID fromString: '{ab00b74c-15f1-4646-80e8-e76341d25d71}')!
 ICoreWebView2WebResourceRequestedEventHandler comment: '`ICoreWebView2WebResourceRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

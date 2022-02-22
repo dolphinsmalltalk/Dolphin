@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2Interface subclass: #ICoreWebView2WebResourceRequest
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2WebResourceRequest guid: (IID fromString: '{97055cd4-512c-4264-8b5f-e3f446cea6a5}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2WebResourceRequest guid: (OS.COM.IID fromString: '{97055cd4-512c-4264-8b5f-e3f446cea6a5}')!
 ICoreWebView2WebResourceRequest comment: '`ICoreWebView2WebResourceRequest` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceRequest'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

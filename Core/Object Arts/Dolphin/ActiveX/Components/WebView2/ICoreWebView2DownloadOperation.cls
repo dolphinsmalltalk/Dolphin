@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2Interface subclass: #ICoreWebView2DownloadOperation
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2DownloadOperation guid: (IID fromString: '{3d6b6cf2-afe1-44c7-a995-c65117714336}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2DownloadOperation guid: (OS.COM.IID fromString: '{3d6b6cf2-afe1-44c7-a995-c65117714336}')!
 ICoreWebView2DownloadOperation comment: '`ICoreWebView2DownloadOperation` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DownloadOperation'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

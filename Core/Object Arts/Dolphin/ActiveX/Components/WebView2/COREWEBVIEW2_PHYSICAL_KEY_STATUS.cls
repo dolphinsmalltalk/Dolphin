@@ -1,17 +1,19 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
-ExternalStructure subclass: #COREWEBVIEW2_PHYSICAL_KEY_STATUS
+External.Structure subclass: #COREWEBVIEW2_PHYSICAL_KEY_STATUS
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_IsExtendedKey _OffsetOf_IsKeyReleased _OffsetOf_IsMenuKeyDown _OffsetOf_RepeatCount _OffsetOf_ScanCode _OffsetOf_WasKeyDown'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-COREWEBVIEW2_PHYSICAL_KEY_STATUS guid: (GUID fromString: '{192b5d12-5eb1-4a47-8648-a87c55e672a2}')!
-COREWEBVIEW2_PHYSICAL_KEY_STATUS addClassConstant: '_OffsetOf_IsExtendedKey' value: 16r8!
-COREWEBVIEW2_PHYSICAL_KEY_STATUS addClassConstant: '_OffsetOf_IsKeyReleased' value: 16r14!
-COREWEBVIEW2_PHYSICAL_KEY_STATUS addClassConstant: '_OffsetOf_IsMenuKeyDown' value: 16rC!
-COREWEBVIEW2_PHYSICAL_KEY_STATUS addClassConstant: '_OffsetOf_RepeatCount' value: 16r0!
-COREWEBVIEW2_PHYSICAL_KEY_STATUS addClassConstant: '_OffsetOf_ScanCode' value: 16r4!
-COREWEBVIEW2_PHYSICAL_KEY_STATUS addClassConstant: '_OffsetOf_WasKeyDown' value: 16r10!
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'_OffsetOf_IsExtendedKey' -> 16r8.
+		'_OffsetOf_IsKeyReleased' -> 16r14.
+		'_OffsetOf_IsMenuKeyDown' -> 16rC.
+		'_OffsetOf_RepeatCount' -> 16r0.
+		'_OffsetOf_ScanCode' -> 16r4.
+		'_OffsetOf_WasKeyDown' -> 16r10
+	}!
+COREWEBVIEW2_PHYSICAL_KEY_STATUS guid: (Core.GUID fromString: '{192b5d12-5eb1-4a47-8648-a87c55e672a2}')!
 COREWEBVIEW2_PHYSICAL_KEY_STATUS comment: '`COREWEBVIEW2_PHYSICAL_KEY_STATUS` is an `ExternalStructure` class to wrap the struct ''WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS'' from type information in the '''' library.
 
 The type library contains no documentation for this struct

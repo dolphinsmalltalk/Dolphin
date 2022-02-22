@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2EventArgs subclass: #ICoreWebView2AcceleratorKeyPressedEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2AcceleratorKeyPressedEventArgs guid: (IID fromString: '{9f760f8a-fb79-42be-9990-7b56900fa9c7}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2AcceleratorKeyPressedEventArgs guid: (OS.COM.IID fromString: '{9f760f8a-fb79-42be-9990-7b56900fa9c7}')!
 ICoreWebView2AcceleratorKeyPressedEventArgs comment: '`ICoreWebView2AcceleratorKeyPressedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

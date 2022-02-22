@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2EventArgs subclass: #ICoreWebView2NavigationCompletedEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2NavigationCompletedEventArgs guid: (IID fromString: '{30d68b7d-20d9-4752-a9ca-ec8448fbb5c1}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2NavigationCompletedEventArgs guid: (OS.COM.IID fromString: '{30d68b7d-20d9-4752-a9ca-ec8448fbb5c1}')!
 ICoreWebView2NavigationCompletedEventArgs comment: '`ICoreWebView2NavigationCompletedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationCompletedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

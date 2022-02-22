@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2Interface subclass: #ICoreWebView2ProcessInfo
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2ProcessInfo guid: (IID fromString: '{84fa7612-3f3d-4fbf-889d-fad000492d72}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2ProcessInfo guid: (OS.COM.IID fromString: '{84fa7612-3f3d-4fbf-889d-fad000492d72}')!
 ICoreWebView2ProcessInfo comment: '`ICoreWebView2ProcessInfo` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessInfo'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

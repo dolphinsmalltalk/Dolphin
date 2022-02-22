@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2EventHandler subclass: #ICoreWebView2IsDocumentPlayingAudioChangedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2IsDocumentPlayingAudioChangedEventHandler guid: (IID fromString: '{5def109a-2f4b-49fa-b7f6-11c39e513328}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2IsDocumentPlayingAudioChangedEventHandler guid: (OS.COM.IID fromString: '{5def109a-2f4b-49fa-b7f6-11c39e513328}')!
 ICoreWebView2IsDocumentPlayingAudioChangedEventHandler comment: '`ICoreWebView2IsDocumentPlayingAudioChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2IsDocumentPlayingAudioChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

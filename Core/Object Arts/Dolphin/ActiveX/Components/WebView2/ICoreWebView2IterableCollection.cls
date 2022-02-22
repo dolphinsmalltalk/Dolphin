@@ -1,12 +1,13 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2Collection subclass: #ICoreWebView2IterableCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2IterableCollection guid: (IID fromString: '{0d1a3c69-2d9b-461b-98a3-5d7f04e3383d}')!
-ICoreWebView2IterableCollection isAbstract: true!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2IterableCollection guid: (OS.COM.IID fromString: '{0d1a3c69-2d9b-461b-98a3-5d7f04e3383d}')!
+ICoreWebView2IterableCollection isNonInstantiable: true!
 ICoreWebView2IterableCollection comment: '`ICoreWebView2IterableCollection` is not defined in the WebView2 IDL, but is defined here for economy of mechanism, providing some functionality common to all the the WebView2 collections that have iterators (as opposed to being randomly indexable).
 
 Subclasses must provide at least `GetIterator:` and `iteratorClass` to complete the implementation.'!

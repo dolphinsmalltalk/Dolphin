@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2FocusChangedEventHandler subclass: #ICoreWebView2FocusLostEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2FocusLostEventHandler guid: (IID fromString: '{75135371-3cd0-49b8-8f44-6d65838c5eb1}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2FocusLostEventHandler guid: (OS.COM.IID fromString: '{75135371-3cd0-49b8-8f44-6d65838c5eb1}')!
 ICoreWebView2FocusLostEventHandler comment: ''!
 !ICoreWebView2FocusLostEventHandler categoriesForClass!COM-Interfaces! !
 !ICoreWebView2FocusLostEventHandler methodsFor!

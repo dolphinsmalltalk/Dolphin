@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2EventHandler subclass: #ICoreWebView2FrameDOMContentLoadedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2FrameDOMContentLoadedEventHandler guid: (IID fromString: '{38d9520d-340f-4d1e-a775-43fce9753683}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2FrameDOMContentLoadedEventHandler guid: (OS.COM.IID fromString: '{38d9520d-340f-4d1e-a775-43fce9753683}')!
 ICoreWebView2FrameDOMContentLoadedEventHandler comment: '`ICoreWebView2FrameDOMContentLoadedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameDOMContentLoadedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2EventHandler subclass: #ICoreWebView2BrowserProcessExitedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2BrowserProcessExitedEventHandler guid: (IID fromString: '{fa504257-a216-4911-a860-fe8825712861}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2BrowserProcessExitedEventHandler guid: (OS.COM.IID fromString: '{fa504257-a216-4911-a860-fe8825712861}')!
 ICoreWebView2BrowserProcessExitedEventHandler comment: '`ICoreWebView2BrowserProcessExitedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BrowserProcessExitedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2EventHandler subclass: #ICoreWebView2FrameNavigationCompletedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-ICoreWebView2FrameNavigationCompletedEventHandler guid: (IID fromString: '{609302ad-0e36-4f9a-a210-6a45272842a9}')!
+	imports: #(#{Smalltalk.WebView2Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2FrameNavigationCompletedEventHandler guid: (OS.COM.IID fromString: '{609302ad-0e36-4f9a-a210-6a45272842a9}')!
 ICoreWebView2FrameNavigationCompletedEventHandler comment: '`ICoreWebView2FrameNavigationCompletedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameNavigationCompletedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

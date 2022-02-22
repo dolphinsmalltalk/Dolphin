@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2Sequence subclass: #ICoreWebView2ClientCertificateCollection
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2ClientCertificateCollection guid: (IID fromString: '{ef5674d2-bcc3-11eb-8529-0242ac130003}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2ClientCertificateCollection guid: (OS.COM.IID fromString: '{ef5674d2-bcc3-11eb-8529-0242ac130003}')!
 ICoreWebView2ClientCertificateCollection comment: '`ICoreWebView2ClientCertificateCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClientCertificateCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

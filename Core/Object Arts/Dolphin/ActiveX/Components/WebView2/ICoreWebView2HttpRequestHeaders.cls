@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2HttpHeadersCollection subclass: #ICoreWebView2HttpRequestHeaders
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2HttpRequestHeaders guid: (IID fromString: '{e86cac0e-5523-465c-b536-8fb9fc8c8c60}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2HttpRequestHeaders guid: (OS.COM.IID fromString: '{e86cac0e-5523-465c-b536-8fb9fc8c8c60}')!
 ICoreWebView2HttpRequestHeaders comment: '`ICoreWebView2HttpRequestHeaders` is a wrapper class for the COM interface ''WebView2.ICoreWebView2HttpRequestHeaders'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

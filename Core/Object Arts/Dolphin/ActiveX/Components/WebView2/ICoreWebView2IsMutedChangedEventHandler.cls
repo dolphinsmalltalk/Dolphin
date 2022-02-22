@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2EventHandler subclass: #ICoreWebView2IsMutedChangedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2IsMutedChangedEventHandler guid: (IID fromString: '{57d90347-cd0e-4952-a4a2-7483a2756f08}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2IsMutedChangedEventHandler guid: (OS.COM.IID fromString: '{57d90347-cd0e-4952-a4a2-7483a2756f08}')!
 ICoreWebView2IsMutedChangedEventHandler comment: '`ICoreWebView2IsMutedChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2IsMutedChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

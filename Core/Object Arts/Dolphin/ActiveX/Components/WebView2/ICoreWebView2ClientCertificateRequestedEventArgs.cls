@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2EventArgs subclass: #ICoreWebView2ClientCertificateRequestedEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2ClientCertificateRequestedEventArgs guid: (IID fromString: '{bc59db28-bcc3-11eb-8529-0242ac130003}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2ClientCertificateRequestedEventArgs guid: (OS.COM.IID fromString: '{bc59db28-bcc3-11eb-8529-0242ac130003}')!
 ICoreWebView2ClientCertificateRequestedEventArgs comment: '`ICoreWebView2ClientCertificateRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClientCertificateRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

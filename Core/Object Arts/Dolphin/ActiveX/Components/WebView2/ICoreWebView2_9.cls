@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2_8 subclass: #ICoreWebView2_9
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-ICoreWebView2_9 guid: (IID fromString: '{4d7b2eab-9fdc-468d-b998-a9260b5ed651}')!
+	imports: #(#{Smalltalk.WebView2Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2_9 guid: (OS.COM.IID fromString: '{4d7b2eab-9fdc-468d-b998-a9260b5ed651}')!
 ICoreWebView2_9 comment: '`ICoreWebView2_9` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_9'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

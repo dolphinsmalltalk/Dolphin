@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
-COMInterfaceImp subclass: #WebView2EventSink
+OS.COM.InterfaceImplementation subclass: #WebView2EventSink
 	instanceVariableNames: 'source interfaceClass interface handler'
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-WebView2EventSink guid: (GUID fromString: '{91d2998a-6d4d-4c2a-93b6-fda07f00d325}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2EventSink guid: (Core.GUID fromString: '{91d2998a-6d4d-4c2a-93b6-fda07f00d325}')!
 WebView2EventSink comment: ''!
 !WebView2EventSink categoriesForClass!COM-Implementations! !
 !WebView2EventSink methodsFor!

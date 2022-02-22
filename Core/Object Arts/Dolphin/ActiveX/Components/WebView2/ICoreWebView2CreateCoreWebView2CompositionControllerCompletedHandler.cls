@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebViewCompletedHandler subclass: #ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler guid: (IID fromString: '{02fab84b-1428-4fb7-ad45-1b2e64736184}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler guid: (OS.COM.IID fromString: '{02fab84b-1428-4fb7-ad45-1b2e64736184}')!
 ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler comment: '`ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

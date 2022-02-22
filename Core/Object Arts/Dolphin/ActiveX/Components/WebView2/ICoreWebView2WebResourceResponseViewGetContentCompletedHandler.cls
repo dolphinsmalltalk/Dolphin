@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebViewCompletedHandler subclass: #ICoreWebView2WebResourceResponseViewGetContentCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2WebResourceResponseViewGetContentCompletedHandler guid: (IID fromString: '{875738e1-9fa2-40e3-8b74-2e8972dd6fe7}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2WebResourceResponseViewGetContentCompletedHandler guid: (OS.COM.IID fromString: '{875738e1-9fa2-40e3-8b74-2e8972dd6fe7}')!
 ICoreWebView2WebResourceResponseViewGetContentCompletedHandler comment: '`ICoreWebView2WebResourceResponseViewGetContentCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceResponseViewGetContentCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

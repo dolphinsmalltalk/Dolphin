@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2EventHandler subclass: #ICoreWebView2RasterizationScaleChangedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2RasterizationScaleChangedEventHandler guid: (IID fromString: '{9c98c8b1-ac53-427e-a345-3049b5524bbe}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2RasterizationScaleChangedEventHandler guid: (OS.COM.IID fromString: '{9c98c8b1-ac53-427e-a345-3049b5524bbe}')!
 ICoreWebView2RasterizationScaleChangedEventHandler comment: '`ICoreWebView2RasterizationScaleChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2RasterizationScaleChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

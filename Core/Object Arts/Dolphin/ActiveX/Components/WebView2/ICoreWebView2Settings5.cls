@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2Settings4 subclass: #ICoreWebView2Settings5
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-ICoreWebView2Settings5 guid: (IID fromString: '{183e7052-1d03-43a0-ab99-98e043b66b39}')!
+	imports: #(#{Smalltalk.WebView2Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2Settings5 guid: (OS.COM.IID fromString: '{183e7052-1d03-43a0-ab99-98e043b66b39}')!
 ICoreWebView2Settings5 comment: '`ICoreWebView2Settings5` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Settings5'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

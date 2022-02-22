@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
-ExternalLibrary subclass: #WebView2Loader
+External.DynamicLinkLibrary subclass: #WebView2Loader
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-WebView2Loader guid: (GUID fromString: '{b4b18867-230d-4b18-8048-0f12821bf5e0}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2Loader guid: (Core.GUID fromString: '{b4b18867-230d-4b18-8048-0f12821bf5e0}')!
 WebView2Loader comment: ''!
 !WebView2Loader categoriesForClass!External-Libraries! !
 !WebView2Loader methodsFor!

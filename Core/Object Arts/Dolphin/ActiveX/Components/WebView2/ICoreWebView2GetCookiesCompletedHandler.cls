@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebViewCompletedHandler subclass: #ICoreWebView2GetCookiesCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2GetCookiesCompletedHandler guid: (IID fromString: '{5a4f5069-5c15-47c3-8646-f4de1c116670}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2GetCookiesCompletedHandler guid: (OS.COM.IID fromString: '{5a4f5069-5c15-47c3-8646-f4de1c116670}')!
 ICoreWebView2GetCookiesCompletedHandler comment: '`ICoreWebView2GetCookiesCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2GetCookiesCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

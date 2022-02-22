@@ -1,12 +1,13 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2Collection subclass: #ICoreWebView2Sequence
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2Sequence guid: (IID fromString: '{9033689d-5414-4ef0-8f8c-b74e4f485261}')!
-ICoreWebView2Sequence isAbstract: true!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2Sequence guid: (OS.COM.IID fromString: '{9033689d-5414-4ef0-8f8c-b74e4f485261}')!
+ICoreWebView2Sequence isNonInstantiable: true!
 ICoreWebView2Sequence comment: '`ICoreWebView2Sequence` is not defined in the WebView2 IDL, but is defined here for economy of mechanism, providing a common implementation of most of the Smalltalk `<sequencedReadableCollection>` protocol for the WebView2 collections that support random access by integer index.
 
 Subclasses must provide at least `elementClass` and `GetValueAtIndex:value:` to complete the implementation.'!

@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2Environment subclass: #ICoreWebView2Environment2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-ICoreWebView2Environment2 guid: (IID fromString: '{41f3632b-5ef4-404f-ad82-2d606c5a9a21}')!
+	imports: #(#{Smalltalk.WebView2Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2Environment2 guid: (OS.COM.IID fromString: '{41f3632b-5ef4-404f-ad82-2d606c5a9a21}')!
 ICoreWebView2Environment2 comment: '`ICoreWebView2Environment2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2NewWindowRequestedEventArgs subclass: #ICoreWebView2NewWindowRequestedEventArgs2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-ICoreWebView2NewWindowRequestedEventArgs2 guid: (IID fromString: '{bbc7baed-74c6-4c92-b63a-7f5aeae03de3}')!
+	imports: #(#{Smalltalk.WebView2Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2NewWindowRequestedEventArgs2 guid: (OS.COM.IID fromString: '{bbc7baed-74c6-4c92-b63a-7f5aeae03de3}')!
 ICoreWebView2NewWindowRequestedEventArgs2 comment: '`ICoreWebView2NewWindowRequestedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NewWindowRequestedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

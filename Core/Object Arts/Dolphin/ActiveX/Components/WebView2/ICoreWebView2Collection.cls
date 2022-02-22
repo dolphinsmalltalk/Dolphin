@@ -1,12 +1,13 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2Interface subclass: #ICoreWebView2Collection
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2Collection guid: (IID fromString: '{d7f78fbc-5e73-4009-9f6b-5a822b0a6313}')!
-ICoreWebView2Collection isAbstract: true!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2Collection guid: (OS.COM.IID fromString: '{d7f78fbc-5e73-4009-9f6b-5a822b0a6313}')!
+ICoreWebView2Collection isNonInstantiable: true!
 ICoreWebView2Collection comment: '`ICoreWebView2Collection` is not defined in the WebView2 IDL, but is defined here for economy of mechanism, providing a common implmentaton of most of the Smalltalk `<collection>` protocol.
 
 Subclasses must implement `do:` only.

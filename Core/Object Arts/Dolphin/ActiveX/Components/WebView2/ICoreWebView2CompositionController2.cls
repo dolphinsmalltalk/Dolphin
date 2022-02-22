@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2CompositionController subclass: #ICoreWebView2CompositionController2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-ICoreWebView2CompositionController2 guid: (IID fromString: '{0b6a3d24-49cb-4806-ba20-b5e0734a7b26}')!
+	imports: #(#{Smalltalk.WebView2Constants})
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2CompositionController2 guid: (OS.COM.IID fromString: '{0b6a3d24-49cb-4806-ba20-b5e0734a7b26}')!
 ICoreWebView2CompositionController2 comment: '`ICoreWebView2CompositionController2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CompositionController2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

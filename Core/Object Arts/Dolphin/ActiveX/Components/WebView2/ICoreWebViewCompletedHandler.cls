@@ -1,12 +1,13 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2Interface subclass: #ICoreWebViewCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebViewCompletedHandler guid: (IID fromString: '{27d65498-b891-4319-88fb-fcd3c81271f3}')!
-ICoreWebViewCompletedHandler isAbstract: true!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebViewCompletedHandler guid: (OS.COM.IID fromString: '{27d65498-b891-4319-88fb-fcd3c81271f3}')!
+ICoreWebViewCompletedHandler isNonInstantiable: true!
 ICoreWebViewCompletedHandler comment: '`ICoreWebView2EventHandler` is not defined in the WebView2 IDL, but is defined here for economy of mechanism.
 
 The concrete subclasses represent COM interfaces used to provide the callback object that is notified when an asynchronous request completes.

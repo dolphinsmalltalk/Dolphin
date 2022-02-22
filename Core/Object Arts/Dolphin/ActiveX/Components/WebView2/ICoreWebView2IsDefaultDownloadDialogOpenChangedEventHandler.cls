@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2EventHandler subclass: #ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler guid: (IID fromString: '{3117da26-ae13-438d-bd46-edbeb2c4ce81}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler guid: (OS.COM.IID fromString: '{3117da26-ae13-438d-bd46-edbeb2c4ce81}')!
 ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler comment: '`ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

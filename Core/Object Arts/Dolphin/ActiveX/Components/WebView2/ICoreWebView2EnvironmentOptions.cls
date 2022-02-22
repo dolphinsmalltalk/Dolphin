@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2Interface subclass: #ICoreWebView2EnvironmentOptions
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2EnvironmentOptions guid: (IID fromString: '{2fde08a8-1e9a-4766-8c05-95a9ceb9d1c5}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2EnvironmentOptions guid: (OS.COM.IID fromString: '{2fde08a8-1e9a-4766-8c05-95a9ceb9d1c5}')!
 ICoreWebView2EnvironmentOptions comment: '`ICoreWebView2EnvironmentOptions` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EnvironmentOptions'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

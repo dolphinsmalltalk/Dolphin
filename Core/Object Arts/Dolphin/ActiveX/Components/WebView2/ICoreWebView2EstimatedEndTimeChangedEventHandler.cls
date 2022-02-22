@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2EventHandler subclass: #ICoreWebView2EstimatedEndTimeChangedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2EstimatedEndTimeChangedEventHandler guid: (IID fromString: '{28f0d425-93fe-4e63-9f8d-2aeec6d3ba1e}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2EstimatedEndTimeChangedEventHandler guid: (OS.COM.IID fromString: '{28f0d425-93fe-4e63-9f8d-2aeec6d3ba1e}')!
 ICoreWebView2EstimatedEndTimeChangedEventHandler comment: '`ICoreWebView2EstimatedEndTimeChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

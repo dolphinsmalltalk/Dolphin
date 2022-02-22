@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2Interface subclass: #ICoreWebView2CookieManager
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2CookieManager guid: (IID fromString: '{177cd9e7-b6f5-451a-94a0-5d7a3a4c4141}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2CookieManager guid: (OS.COM.IID fromString: '{177cd9e7-b6f5-451a-94a0-5d7a3a4c4141}')!
 ICoreWebView2CookieManager comment: '`ICoreWebView2CookieManager` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CookieManager'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

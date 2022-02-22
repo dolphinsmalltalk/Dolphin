@@ -1,25 +1,27 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
-ValueConvertingControlView subclass: #WebView2View
+UI.ValueConvertingControlView subclass: #WebView2View
 	instanceVariableNames: 'settingsFlags unavailableLink webviewEnvironment webviewController webview eventHandlers'
-	classVariableNames: 'CanNavigateToStrings DisableBrowserAcceleratorKeysMask DisableBuiltInErrorPageMask DisableDefaultContextMenuMask DisableDefaultScriptDialogsMask DisableDevToolsMask DisableGeneralAutofillMask DisableHostObjectsMask DisablePasswordAutosaveMask DisablePinchZoomMask DisableScriptMask DisableStatusBarMask DisableWebmessageMask DisableZoomControlMask'
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-WebView2View guid: (GUID fromString: '{3a9f720c-51f6-49f2-8267-f2b3b878129c}')!
-WebView2View addClassConstant: 'CanNavigateToStrings' value: 16r2000!
-WebView2View addClassConstant: 'DisableBrowserAcceleratorKeysMask' value: 16r2!
-WebView2View addClassConstant: 'DisableBuiltInErrorPageMask' value: 16r20!
-WebView2View addClassConstant: 'DisableDefaultContextMenuMask' value: 16r1!
-WebView2View addClassConstant: 'DisableDefaultScriptDialogsMask' value: 16r4!
-WebView2View addClassConstant: 'DisableDevToolsMask' value: 16r8!
-WebView2View addClassConstant: 'DisableGeneralAutofillMask' value: 16r400!
-WebView2View addClassConstant: 'DisableHostObjectsMask' value: 16r10!
-WebView2View addClassConstant: 'DisablePasswordAutosaveMask' value: 16r800!
-WebView2View addClassConstant: 'DisablePinchZoomMask' value: 16r1000!
-WebView2View addClassConstant: 'DisableScriptMask' value: 16r40!
-WebView2View addClassConstant: 'DisableStatusBarMask' value: 16r80!
-WebView2View addClassConstant: 'DisableWebmessageMask' value: 16r100!
-WebView2View addClassConstant: 'DisableZoomControlMask' value: 16r200!
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'CanNavigateToStrings' -> 16r2000.
+		'DisableBrowserAcceleratorKeysMask' -> 16r2.
+		'DisableBuiltInErrorPageMask' -> 16r20.
+		'DisableDefaultContextMenuMask' -> 16r1.
+		'DisableDefaultScriptDialogsMask' -> 16r4.
+		'DisableDevToolsMask' -> 16r8.
+		'DisableGeneralAutofillMask' -> 16r400.
+		'DisableHostObjectsMask' -> 16r10.
+		'DisablePasswordAutosaveMask' -> 16r800.
+		'DisablePinchZoomMask' -> 16r1000.
+		'DisableScriptMask' -> 16r40.
+		'DisableStatusBarMask' -> 16r80.
+		'DisableWebmessageMask' -> 16r100.
+		'DisableZoomControlMask' -> 16r200
+	}!
+WebView2View guid: (Core.GUID fromString: '{3a9f720c-51f6-49f2-8267-f2b3b878129c}')!
 WebView2View comment: '`WebView2View` is a `<valueView>` that wraps the Microsoft Edge WebView2 embeddable browser to display content downloaded from a URL, or provided as a string.'!
 !WebView2View categoriesForClass!MVP-Resources-Misc! !
 !WebView2View methodsFor!

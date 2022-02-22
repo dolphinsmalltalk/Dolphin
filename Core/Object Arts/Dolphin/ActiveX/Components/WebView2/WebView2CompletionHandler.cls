@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
-COMInterfaceImp subclass: #WebView2CompletionHandler
+OS.COM.InterfaceImplementation subclass: #WebView2CompletionHandler
 	instanceVariableNames: 'completionBlock'
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-WebView2CompletionHandler guid: (GUID fromString: '{bc802953-baa6-43ff-94e2-d9e70d14522b}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+WebView2CompletionHandler guid: (Core.GUID fromString: '{bc802953-baa6-43ff-94e2-d9e70d14522b}')!
 WebView2CompletionHandler comment: ''!
 !WebView2CompletionHandler categoriesForClass!COM-Implementations! !
 !WebView2CompletionHandler methodsFor!

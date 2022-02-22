@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2EventArgs subclass: #ICoreWebView2FrameCreatedEventArgs
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2FrameCreatedEventArgs guid: (IID fromString: '{4d6e7b5e-9baa-11eb-a8b3-0242ac130003}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2FrameCreatedEventArgs guid: (OS.COM.IID fromString: '{4d6e7b5e-9baa-11eb-a8b3-0242ac130003}')!
 ICoreWebView2FrameCreatedEventArgs comment: '`ICoreWebView2FrameCreatedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameCreatedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface

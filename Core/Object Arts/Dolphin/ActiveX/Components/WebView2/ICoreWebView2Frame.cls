@@ -1,11 +1,12 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2Interface subclass: #ICoreWebView2Frame
 	instanceVariableNames: ''
 	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebView2Frame guid: (IID fromString: '{f1131a5e-9ba9-11eb-a8b3-0242ac130003}')!
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+ICoreWebView2Frame guid: (OS.COM.IID fromString: '{f1131a5e-9ba9-11eb-a8b3-0242ac130003}')!
 ICoreWebView2Frame comment: '`ICoreWebView2Frame` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Frame'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
