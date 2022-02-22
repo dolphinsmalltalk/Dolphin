@@ -153,7 +153,8 @@ Oop* PRIMCALL Interpreter::primitivePerform(Oop* const sp, primargcount_t argCou
 	// the Message gets shuffled over the selector, and doesNotUnderstand is
 	// sent
 
-	MethodCacheEntry* pEntry = findNewMethodInClass(ObjectMemory::fetchClassOf(newReceiver), (argCount - 1));
+	auto oteClass = ObjectMemory::fetchClassOf(newReceiver);
+	MethodCacheEntry* pEntry = findNewMethodInClass(oteClass, (argCount - 1));
 	MethodOTE* methodPointer = pEntry->method;
 	CompiledMethod* method = methodPointer->m_location;
 	const auto methodArgCount = method->m_header.argumentCount;
@@ -162,15 +163,16 @@ Oop* PRIMCALL Interpreter::primitivePerform(Oop* const sp, primargcount_t argCou
 		// Shuffle arguments down over the selector (use argumentCount of
 		// method found which may not equal argCount)
 		// #pragma message("primitivePerform: Instead of shuffling args down 1, why not just deduct 1 from calling frames suspended SP after exec?")
-		Oop* const sp = m_registers.m_stackPointer - methodArgCount;
+		Oop* const tos = m_registers.m_stackPointer;
+		Oop* sp = tos - methodArgCount;
 
 		// We don't need to count down the overwritten oop anymore, since we don't ref. count stack ops
 
 		// Not worth overhead of calling memmove here since argumentCount
 		// normally small
-		for (auto i=0;i<methodArgCount;i++)
-			sp[i] = sp[i+1];
-		popStack();
+		for (;sp < tos;sp++)
+			*sp = *(sp+1);
+		m_registers.m_stackPointer = sp - 1;
 		executeNewMethod(methodPointer, methodArgCount);
 		return primitiveSuccess(0);
 	}

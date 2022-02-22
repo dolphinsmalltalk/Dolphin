@@ -464,51 +464,6 @@ BOOL __stdcall Interpreter::MsgSendPoll()
 	return CheckProcessSwitch();
 }
 
-
-// N.B. cacheHash must match that used in byteasm.asm
-// Use following for 8-byte OTEs
-//#define cacheHash(classPointer, messageSelector) (((Oop(messageSelector) ^ Oop(classPointer)) >> 3) & (MethodCacheSize-1))
-// Use following for 12-byte OTEs
-//#define cacheHash(classPointer, messageSelector) (((Oop(messageSelector) ^ Oop(classPointer)) >> 2) & (MethodCacheSize-1))
-// Use following for 16-byte OTEs
-#define cacheHash(classPointer, messageSelector) (((Oop(messageSelector) ^ Oop(classPointer)) >> 4) & (MethodCacheSize-1))
-#define GetCacheEntry(classPointer, messageSelector) reinterpret_cast<Interpreter::MethodCacheEntry*>(reinterpret_cast<intptr_t>(methodCache) + ((Oop(messageSelector) ^ Oop(classPointer)) & ((MethodCacheSize-1) << 4)))
-
-#pragma code_seg(INTERP_SEG)
-
-Interpreter::MethodCacheEntry* __fastcall Interpreter::findNewMethodInClass(BehaviorOTE* classPointer, const argcount_t argCount)
-{
-	ASSERT(ObjectMemory::isBehavior(Oop(classPointer)));
-
-	SymbolOTE* oteSelector = m_oopMessageSelector;
-
-	// This hashForCache 'function' relies on the OTEntry size being 12 bytes, meaning
-	// that the bottom 2 bits of the Oops (which are pointers to the OTEntries)
-	// are always the same.
-	MethodCacheEntry* pEntry = GetCacheEntry(classPointer, oteSelector);
-	if (pEntry->classPointer == classPointer && pEntry->selector == oteSelector)
-	{
-		#ifdef _DEBUG
-		cacheHits++;
-		{
-			if (executionTrace)
-			{
-				MethodOTE* oteMethod = pEntry->method;
-				tracelock lock(TRACESTREAM);
-				TRACESTREAM<< L"Found method " << classPointer<< L">>" << oteSelector << 
-						" (" << oteMethod<< L") in cache\n";
-			}
-		}
-		#endif
-
-		return pEntry;
-	}
-
-	return findNewMethodInClassNoCache(classPointer, argCount);
-}
-
-#pragma code_seg(INTERP_SEG)
-
 Interpreter::MethodCacheEntry* __stdcall Interpreter::findNewMethodInClassNoCache(BehaviorOTE* classPointer, const argcount_t argCount)
 {
 	HARDASSERT(argCount < 256);

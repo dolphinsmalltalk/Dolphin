@@ -41,7 +41,8 @@ static size_t nTotalBlocksAllocated = 0;
 
 InterpreterRegisters16 Interpreter::m_registers = { 0, 0, 0, 0, 0, 0, 0, 0 };
 
-SymbolOTE*		Interpreter::m_oopMessageSelector;
+SymbolOTE* Interpreter::m_oopMessageSelector = nullptr;
+BOOL Interpreter::m_bStepping = FALSE;
 
 // The only Oops ref'd by the Interpreter which are not stored in the global pointers registry (VMPointers)
 ProcessOTE* Interpreter::m_oteNewProcess;
@@ -76,13 +77,8 @@ POTE* Interpreter::m_roots[] = {
 	0
 };
 
-__declspec(align(16))
-Interpreter::MethodCacheEntry Interpreter::methodCache[MethodCacheSize];
-
 DWORD Interpreter::m_dwThreadId;
 HANDLE Interpreter::m_hThread;
-
-BOOL Interpreter::m_bStepping;
 
 bool Interpreter::m_bInterruptsDisabled;
 bool Interpreter::m_bAsyncGCDisabled;
@@ -94,6 +90,11 @@ HWND Interpreter::m_hWndVM;
 DWORD Interpreter::m_dwQueueStatusMask;
 
 unsigned Interpreter::m_numberOfProcessors;
+
+__declspec(align(16))
+Interpreter::MethodCacheEntry Interpreter::methodCache[MethodCacheSize];
+
+
 
 //==========
 //Initialise
