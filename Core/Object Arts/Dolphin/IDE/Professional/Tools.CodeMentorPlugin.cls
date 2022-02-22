@@ -62,18 +62,13 @@ browseFailedClass: aString
 	aString asQualifiedReference valueOrNil
 		ifNotNil: [:failedClass | (SmalltalkSystem current browseClass: failedClass) caption: self failedRule name]!
 
-browseFailedMethodName: aString
-	"Private - Browser the method identified by aString"
-
-	(CompiledMethod fromString: aString)
-		ifNotNil: 
-			[:failedMethod |
-			| env |
-			env := BrowserEnvironment new forMethods: {failedMethod}.
-			env
-				label: aString;
-				filter: (self methodFilterForRule: self failedRule inEnvironment: self browserEnvironment).
-			self browseFailedMethods: env]!
+browseFailedMethod: aCompiledMethod
+	| env |
+	env := BrowserEnvironment new forMethods: {aCompiledMethod}.
+	env
+		label: '<1p>: <2p>' << {self failedRule. aCompiledMethod printString};
+		filter: (self methodFilterForRule: self failedRule inEnvironment: self browserEnvironment).
+	self browseFailedMethods: env!
 
 browseFailedMethods: aBrowserEnvironment 
 	| failuresBrowser failedRule |
@@ -386,7 +381,7 @@ onNavigationStarting: anICoreWebView2NavigationStartingEventArgs
 	Compiler
 		evaluate: expression
 		for: self
-		evaluationPools: nil
+		environment: nil
 		logged: false.
 	anICoreWebView2NavigationStartingEventArgs cancel: true!
 
@@ -434,7 +429,7 @@ parentRuleOf: rule
 		ifFalse: [self error: 'Should have found parent'].
 	^nil!
 
-printClassFailuresHtmlFor: aLintRule on: aStream 
+printClassFailuresHtmlFor: aLintRule on: aStream
 	| failuresList |
 	failuresList := self failedClassesFor: aLintRule.
 	failuresList isEmpty ifTrue: [^self].
@@ -443,14 +438,17 @@ printClassFailuresHtmlFor: aLintRule on: aStream
 		nextPutAll: '<BLOCKQUOTE><I>';
 		cr.
 	failuresList do: 
-			[:each | 
+			[:each |
 			aStream
 				nextPutAll: '<a href="';
 				nextPutAll: self smalltalkUrlTag;
-				nextPutAll: 'self%20';
-				display: #browseFailedClass:;
-				nextPutAll: '%20';
-				print: each printString;
+				nextPutAll: (String writeStream
+							nextPutAll: 'self';
+							space;
+							display: #browseFailedClass:;
+							space;
+							print: each;
+							contents) urlEncoded;
 				nextPutAll: '">';
 				print: each;
 				nextPutAll: '</a><BR>';
@@ -459,7 +457,7 @@ printClassFailuresHtmlFor: aLintRule on: aStream
 		nextPutAll: '</BLOCKQUOTE></I>';
 		cr!
 
-printMethodFailuresHtmlFor: aLintRule on: aStream 
+printMethodFailuresHtmlFor: aLintRule on: aStream
 	| failuresList |
 	failuresList := aLintRule failedMethodsSorted.
 	failuresList isEmpty ifTrue: [^self].
@@ -468,14 +466,16 @@ printMethodFailuresHtmlFor: aLintRule on: aStream
 		nextPutAll: '<BLOCKQUOTE><I>';
 		cr.
 	failuresList do: 
-			[:each | 
+			[:each |
 			aStream
 				nextPutAll: '<a href="';
 				nextPutAll: self smalltalkUrlTag;
-				nextPutAll: 'self%20';
-				display: #browseFailedMethodName:;
-				nextPutAll: '%20';
-				print: each displayString;
+				nextPutAll: (String writeStream
+							nextPutAll: 'self ';
+							display: #browseFailedMethod:;
+							space;
+							print: each;
+							contents) urlEncoded;
 				nextPutAll: '">';
 				display: each;
 				nextPutAll: '</a><BR>';
@@ -668,7 +668,7 @@ applyTransform:!helpers!private! !
 autoRefresh!operations!private! !
 browseAllFailedMethods!commands!private! !
 browseFailedClass:!commands!private! !
-browseFailedMethodName:!commands!private! !
+browseFailedMethod:!commands!public! !
 browseFailedMethods:!commands!private! !
 clearFailures!operations!private! !
 clearIgnoredRules!commands!public! !
