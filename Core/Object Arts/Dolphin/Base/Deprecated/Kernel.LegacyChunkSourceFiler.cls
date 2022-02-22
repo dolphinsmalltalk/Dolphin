@@ -68,6 +68,13 @@ emitDeclarationForClass: aClass variable: anAssociation
 		nextChunkPut: (value isInteger ifTrue: [value printStringRadix: 16] ifFalse: [value storeString]).
 	stream cr!
 
+emitFileOutHeader
+	"Note the typo. This needs to be fixed in Dolphin 7.1"
+
+	self
+		emitComment: 'Filed out from Dolphin Smalltalk';
+		cr!
+
 emitPackageBinaryVariables: aPackage
 	"Private - Emit the definitions for variables of the specified <Package> that are not aliases and which refer to non-source objects onto the receiver's stream."
 
@@ -297,13 +304,6 @@ fileOutAttributesOfClass: aClass
 fileOutBasicDefinitionOfClass: aClass
 	"Print a definition of the <Class>, aClass, onto the receiver's stream."
 
-	| superclass |
-	superclass := aClass superclass.
-	(BindingReference isQualifiedName: superclass shortName)
-		ifTrue: 
-			[^SourceFormatNotSupportedError
-				signal: 'The superclass <1p> is not bindable by unqualified name from Smalltalk.' << superclass
-				with: aClass].
 	self printBasicDefinitionOfClass: aClass.
 	stream
 		nextPut: $!!;
@@ -451,10 +451,11 @@ packageClassesInFileoutOrder: aPackage
 	^aPackage classesInHierarchyOrder reject: [:each | each inheritsFrom: SharedPool]!
 
 printBasicDefinitionOfClass: aClass
-	| superclass |
-	superclass := aClass superclass.
+	| superclassShortName |
+	"We may not be able to file out the class in legacy format if it's superclass requires a qualified name - if not, an error will be raised here when we try to resolve the short name. It is usually possible to workaround this problem by adding an alias for the superclass into the Smalltalk namespace. The alias variable should be added to an 'Old Names' package."
+	superclassShortName := self shortNameForClass: aClass superclass.
 	stream
-		nextPutAll: ((Smalltalk oldNames lookup: superclass) ifNil: [superclass shortName]);
+		nextPutAll: superclassShortName;
 		space;
 		nextPutAll: aClass kindOfSubclass;
 		space;
@@ -474,13 +475,20 @@ printBasicDefinitionOfClass: aClass
 		print: aClass sharedVariableString;
 		crtab;
 		nextPutAll: 'classInstanceVariableNames: ';
-		print: aClass class instanceVariableString! !
+		print: aClass class instanceVariableString!
+
+shortNameForClass: aClass
+	^(Smalltalk oldNames lookup: aClass) ifNil: [self getShortName: aClass]!
+
+specialBehaviorAttributes
+	^#(#(#isIndirection) #(#isNullTerminated) #(#isNonInstantiable #isAbstract))! !
 !Kernel.LegacyChunkSourceFiler categoriesForMethods!
 collateClass:against:!private!source filing! !
 emitBinaryVariableDefinition:!public!source filing-file out! !
 emitClassName:!private!source filing-file out! !
 emitClassPoolOfClass:!private!source filing-file out! !
 emitDeclarationForClass:variable:!private!source filing-file out! !
+emitFileOutHeader!private!source filing! !
 emitPackageBinaryVariables:!private!source filing! !
 emitPackageClassNames:!accessing!private!source filing-pax! !
 emitPackageManualPrerequisites:!private!source filing-pax! !
@@ -510,6 +518,8 @@ legacyPackagePaths!constants!private! !
 makePoolConstsFromSharedPool:!helpers!private! !
 packageClassesInFileoutOrder:!helpers!private! !
 printBasicDefinitionOfClass:!public!source filing-file out! !
+shortNameForClass:!public!source filing-file out! !
+specialBehaviorAttributes!constants!public! !
 !
 
 !Kernel.LegacyChunkSourceFiler class methodsFor!

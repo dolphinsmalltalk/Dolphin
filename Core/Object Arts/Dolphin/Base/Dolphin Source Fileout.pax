@@ -21,6 +21,7 @@ package setMethodNames: #(
 	#(#{Kernel.AbstractChunkSourceFiler} #emitCategoriesOfMethod:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitComment:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitCommentOfClass:)
+	#(#{Kernel.AbstractChunkSourceFiler} #emitFileOutHeader)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitMethod:)
 	#(#{Kernel.AbstractChunkSourceFiler} #emitSpecialBehaviorAttributesOfClass:)
 	#(#{Kernel.AbstractChunkSourceFiler} #fileOutAttributesOfClass:)
@@ -29,6 +30,7 @@ package setMethodNames: #(
 	#(#{Kernel.AbstractChunkSourceFiler} #fileOutProtocols:ofBehavior:)
 	#(#{Kernel.AbstractChunkSourceFiler} #logEvaluation:)
 	#(#{Kernel.AbstractChunkSourceFiler} #printBasicDefinitionOfClass:)
+	#(#{Kernel.AbstractChunkSourceFiler} #specialBehaviorAttributes)
 	#(#{Kernel.AbstractChunkSourceFiler} #storeCommentString:forClass:)
 	#(#{Kernel.AbstractChunkSourceFiler} #storeCommentString:forPackage:)
 	#(#{Kernel.AbstractChunkSourceFiler} #storeSource:for:)
@@ -39,6 +41,7 @@ package setMethodNames: #(
 	#(#{Kernel.SourceFiler} #emitCategoriesOfClass:)
 	#(#{Kernel.SourceFiler} #emitCategoriesOfMethod:)
 	#(#{Kernel.SourceFiler} #emitComment:)
+	#(#{Kernel.SourceFiler} #emitFileOutHeader)
 	#(#{Kernel.SourceFiler} #emitMessages:ofBehavior:)
 	#(#{Kernel.SourceFiler} #emitMethod:)
 	#(#{Kernel.SourceFiler} #fileOutAllMethodsOfBehavior:)
@@ -237,6 +240,11 @@ emitCommentOfClass: aClass
 		nextChunkPut: aClass comment fullPrintString;
 		cr!
 
+emitFileOutHeader
+	self
+		emitComment: 'Filed out from ' , VM productName;
+		cr!
+
 emitMethod: aCompiledMethod 
 	"Private - File out the source of the single <CompiledMethod>, aCompiledMethod, 
 	to the source stream, updating the method's source descriptor if configured with a 
@@ -245,14 +253,14 @@ emitMethod: aCompiledMethod
 	self storeSource: aCompiledMethod getSource for: aCompiledMethod!
 
 emitSpecialBehaviorAttributesOfClass: aClass
-	#(#isIndirection #isNullTerminated #isNonInstantiable) do: 
-			[:flagName |
-			(aClass perform: flagName)
+	self specialBehaviorAttributes do: 
+			[:each |
+			(aClass perform: each first)
 				ifTrue: 
 					[self emitClassName: aClass.
 					stream
 						space;
-						nextPutAll: flagName;
+						nextPutAll: each last;
 						nextPutAll: ': true!!';
 						cr]]!
 
@@ -358,6 +366,9 @@ printBasicDefinitionOfClass: aClass
 			stream crtab].
 	stream nextPut: $}!
 
+specialBehaviorAttributes
+	^#(#(#isIndirection) #(#isNullTerminated) #(#isNonInstantiable))!
+
 storeCommentString: aString forClass: aClass
 	"Save the <readableString>, aString, as the comment text for the 
 	<Class>, aClass, to the receiver's source stream encoding the position and 
@@ -398,6 +409,7 @@ emitCategoriesOfClass:!private!source filing-file out! !
 emitCategoriesOfMethod:!private!source filing-file out! !
 emitComment:!private!source filing-file out! !
 emitCommentOfClass:!public!source filing! !
+emitFileOutHeader!private!source filing! !
 emitMethod:!private!source filing-file out! !
 emitSpecialBehaviorAttributesOfClass:!public!source filing! !
 fileOutAttributesOfClass:!public!source filing! !
@@ -406,6 +418,7 @@ fileOutMessages:ofBehavior:!public!source filing! !
 fileOutProtocols:ofBehavior:!public!source filing-file out! !
 logEvaluation:!private!source filing-file out! !
 printBasicDefinitionOfClass:!public!source filing-file out! !
+specialBehaviorAttributes!constants!public!source filing! !
 storeCommentString:forClass:!public!source filing-file out! !
 storeCommentString:forPackage:!public!source filing-file out! !
 storeSource:for:!private!source filing-file out! !
@@ -509,6 +522,9 @@ emitComment: aString
 	N.B. Logging requests should be directed through the SessionManager."
 
 	^self subclassResponsibility!
+
+emitFileOutHeader
+	self subclassResponsibility!
 
 emitMessages: aCollection ofBehavior: aClass
 	| methods sortedSelectors |
@@ -614,6 +630,7 @@ collateClass:against:!private!source filing! !
 emitCategoriesOfClass:!private!source filing-file out! !
 emitCategoriesOfMethod:!private!source filing-file out! !
 emitComment:!operations-logging!private! !
+emitFileOutHeader!private!source filing! !
 emitMessages:ofBehavior:!private!source filing! !
 emitMethod:!private!source filing! !
 fileOutAllMethodsOfBehavior:!public!source filing! !
@@ -801,9 +818,7 @@ emitFileOutHeaderOn: aSourceFiler
 	"Private - Append the standard Dolphin file out header to the
 	<puttableStream>, aWriteStream."
 
-	aSourceFiler
-		emitComment: 'Filed out from ' , VM productName;
-		cr!
+	aSourceFiler emitFileOutHeader!
 
 fileOut: anObject
 	"File out anObject to its default file. If an error occurs during file out, the file
