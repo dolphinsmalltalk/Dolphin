@@ -713,6 +713,7 @@ newLocalsTreeWithRoots: anOrderedCollection
 nilVariable
 	"Private - Nil the currently selected variable or stack slot."
 
+	variablesPresenter model collapse: localAccessor.
 	localAccessor value: nil!
 
 onAboutToDisplayMenu: aMenu
