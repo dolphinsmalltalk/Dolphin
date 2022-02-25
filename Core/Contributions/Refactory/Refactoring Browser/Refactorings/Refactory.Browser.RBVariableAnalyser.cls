@@ -15,14 +15,19 @@ visitQualifiedReferenceNode: aQualifiedReferenceNode
 	aQualifiedReferenceNode binding.
 	^aQualifiedReferenceNode!
 
-visitSelfVariableNode: anStSelfVariableNode
-	"Do nothing as we don't care about self references."!
+visitSelfVariableNode: aSelfVariableNode
+	"Do nothing as we don't care about self references."
 
-visitSpecialVariableNode: anStSpecialVariableNode
-	"Do nothing as we don't care about special variable references."!
+	!
 
-visitVariableNode: aStVariableNode
-	(aStVariableNode lookupInScope: currentScope) ifNotNil: [:var | aStVariableNode variable: var]! !
+visitSpecialVariableNode: aSpecialVariableNode
+	"Do nothing as we don't care about special variable references."
+
+	!
+
+visitVariableNode: aVariableNode
+	(self bindVariable: aVariableNode)
+		ifNil: [RefactoringError signal: 'Variable not bindable: ' , aVariableNode name]! !
 !Refactory.Browser.RBVariableAnalyser categoriesForMethods!
 visitQualifiedReferenceNode:!public!visiting! !
 visitSelfVariableNode:!public!visiting! !

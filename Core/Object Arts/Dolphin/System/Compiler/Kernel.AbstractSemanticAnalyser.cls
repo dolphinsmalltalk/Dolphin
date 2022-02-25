@@ -12,6 +12,22 @@ Kernel.AbstractSemanticAnalyser comment: ''!
 !Kernel.AbstractSemanticAnalyser categoriesForClass!Refactory-ParseTree Matching! !
 !Kernel.AbstractSemanticAnalyser methodsFor!
 
+bindVariable: aStVariableNode
+	"Private - Find the correct variable definition for the identifier of aVariableNode, and associate the StVariable describing that definition with the node.
+	Answer the variable definition found, or nil if not found."
+
+	^(aStVariableNode lookupInScope: currentScope)
+		ifNil: 
+			[self signalError: CErrUndeclared forNode: aStVariableNode.
+			nil]
+		ifNotNil: 
+			[:var |
+			aStVariableNode variable: var.
+			var]!
+
+compilationErrorClass
+	^Parser notificationClass!
+
 currentScope
 	^currentScope!
 
@@ -79,10 +95,10 @@ signalError: anInteger forNode: aNode extras: anArray
 		range: aNode sourceInterval
 		extras: anArray!
 
-signalError: codeInteger forNode: anStProgramNode range: anInterval extras: anArray
+signalError: codeInteger forNode: aStProgramNode range: anInterval extras: anArray
 	| source position err |
 	source := methodNode source.
-	position := anStProgramNode startWithoutParentheses.
+	position := aStProgramNode startWithoutParentheses.
 	err := self compilationErrorClass
 				code: codeInteger
 				in: source
@@ -97,15 +113,15 @@ signalError: codeInteger forNode: anStProgramNode range: anInterval extras: anAr
 	"If the error block returns, then the exception is signalled"
 	^err signal!
 
-visitAnnotationNode: anStAnnotationNode
+visitAnnotationNode: aStAnnotationNode
 	"Visiting the args will detect any undeclared variables."
 
 	inTag := true.
-	[super visitAnnotationNode: anStAnnotationNode] ensure: [inTag := false].
-	anStAnnotationNode selector == #namespace:
+	[super visitAnnotationNode: aStAnnotationNode] ensure: [inTag := false].
+	aStAnnotationNode selector == #namespace:
 		ifTrue: 
 			[| arg var binding |
-			arg := anStAnnotationNode arguments first.
+			arg := aStAnnotationNode arguments first.
 			(arg isVariable and: 
 					[var := arg variable.
 					var notNil and: 
@@ -114,9 +130,9 @@ visitAnnotationNode: anStAnnotationNode
 				ifTrue: [currentScope environment: binding value]
 				ifFalse: [self signalError: CErrExpectNamespace forNode: arg]]!
 
-visitAssignmentNode: anStAssignmentNode
-	self visitNode: anStAssignmentNode value.
-	self visitNode: anStAssignmentNode variable!
+visitAssignmentNode: aStAssignmentNode
+	self visitNode: aStAssignmentNode value.
+	self visitNode: aStAssignmentNode variable!
 
 visitBlockNode: aBlockNode
 	currentScope := scopes addLast: (StBlockScope forScopeNode: aBlockNode outer: currentScope).
@@ -124,13 +140,13 @@ visitBlockNode: aBlockNode
 	self processBlock: aBlockNode.
 	self removeScope!
 
-visitExternalArgTypeNode: anStExternalArgTypeNode
-	anStExternalArgTypeNode structClass ifNotNil: [:structVar | self visitNode: structVar]!
+visitExternalArgTypeNode: aStExternalArgTypeNode
+	aStExternalArgTypeNode structClass ifNotNil: [:structVar | self visitNode: structVar]!
 
-visitExternalCallNode: anStExternalCallNode
+visitExternalCallNode: aStExternalCallNode
 	currentScope
 		declareLocalVariable: (StGeneratedTempVariable node: (StTempDeclNode named: '_failureCode')).
-	super visitExternalCallNode: anStExternalCallNode!
+	super visitExternalCallNode: aStExternalCallNode!
 
 visitLiteralByteArrayNode: aLiteralByteArrayNode
 	"We don't need to visit the individual elements (i.e. the value nodes for the bytes)"
@@ -163,19 +179,21 @@ visitOptimizedNode: anOptimizedNode
 			currentScope := outerCurrentScope.
 			scopes := outerScopes]!
 
-visitParameterNode: anStParameterNode
-	currentScope declareArgument: anStParameterNode!
+visitParameterNode: aStParameterNode
+	currentScope declareArgument: aStParameterNode!
 
-visitPrimitiveNode: anStPrimitiveNode
+visitPrimitiveNode: aStPrimitiveNode
 	currentScope declareLocalVariable: (StGeneratedTempVariable
-				node: (anStPrimitiveNode errorTemp ifNil: [StTempDeclNode named: '_failureCode']))!
+				node: (aStPrimitiveNode errorTemp ifNil: [StTempDeclNode named: '_failureCode']))!
 
-visitTempDeclNode: anStTempDeclNode
-	currentScope declareTemp: anStTempDeclNode!
+visitTempDeclNode: aStTempDeclNode
+	currentScope declareTemp: aStTempDeclNode!
 
-visitVariableNode: aStVariableNode
-	self subclassResponsibility! !
+visitVariableNode: aVariableNode
+	^self subclassResponsibility! !
 !Kernel.AbstractSemanticAnalyser categoriesForMethods!
+bindVariable:!helpers!private! !
+compilationErrorClass!constants!private! !
 currentScope!accessing!private! !
 enterMethodNode:!helpers!private! !
 errorBlock:!accessing!private! !
