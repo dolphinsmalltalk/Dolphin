@@ -11,9 +11,9 @@ External.SizeIsExpressionFormatter comment: 'Simple and very limited formatter f
 !External.SizeIsExpressionFormatter categoriesForClass!Refactory-ParseTree Matching! !
 !External.SizeIsExpressionFormatter methodsFor!
 
-format: anStProgramNode on: aPuttableStream
+format: aStProgramNode on: aPuttableStream
 	codeStream := aPuttableStream.
-	self visitNode: anStProgramNode!
+	self visitNode: aStProgramNode!
 
 structClass: aClass variable: aString
 	structClass := aClass.

@@ -21,13 +21,14 @@ Instance Variables:
 !Kernel.StBlockNode categoriesForClass!System-Compiler! !
 !Kernel.StBlockNode methodsFor!
 
-= anObject 
+= anObject
+	| otherArgs |
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
-	self body = anObject body ifFalse: [^false].
-	self arguments size = anObject arguments size ifFalse: [^false].
-	1 to: self arguments size
-		do: [:i | (self arguments at: i) = (anObject arguments at: i) ifFalse: [^false]].
+	body = anObject body ifFalse: [^false].
+	otherArgs := anObject arguments.
+	arguments size = otherArgs size ifFalse: [^false].
+	1 to: arguments size do: [:i | (arguments at: i) = (otherArgs at: i) ifFalse: [^false]].
 	^true!
 
 acceptVisitor: aProgramNodeVisitor

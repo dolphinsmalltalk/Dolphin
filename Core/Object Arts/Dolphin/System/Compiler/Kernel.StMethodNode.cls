@@ -22,14 +22,15 @@ Instance Variables:
 !Kernel.StMethodNode methodsFor!
 
 = anObject
-	| myArgs count hisArgs |
+	| count his |
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
 	(self selector = anObject selector and: [body = anObject body]) ifFalse: [^false].
-	count := (myArgs := self arguments) size.
-	count == (hisArgs := anObject arguments) size ifFalse: [^false].
-	1 to: count do: [:i | (myArgs at: i) = (hisArgs at: i) ifFalse: [^false]].
-	^self tags = anObject tags!
+	(count := arguments size) == (his := anObject arguments) size ifFalse: [^false].
+	1 to: count do: [:i | (arguments at: i) = (his at: i) ifFalse: [^false]].
+	(count := tags size) == (his := anObject tags) size ifFalse: [^false].
+	1 to: count do: [:i | (tags at: i) = (his at: i) ifFalse: [^false]].
+	^true!
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitMethodNode: self!
@@ -71,10 +72,12 @@ body: stmtsNode
 	body parent: self!
 
 buildSelector
-	| selectorStream |
+	| selectorStream symbol |
 	selectorStream := WriteStream on: (Utf8String new: 50).
 	selectorParts do: [:each | selectorStream nextPutAll: each value].
-	^selectorStream contents asSymbol!
+	symbol := selectorStream contents asSymbol.
+	self setSelector: symbol.
+	^symbol!
 
 childrenDo: aMonadicValuable
 	arguments do: aMonadicValuable.
@@ -165,7 +168,7 @@ printOn: aStream
 	aStream nextPutAll: self formattedCode!
 
 selector
-	^selector ifNil: [selector := self buildSelector]!
+	^selector ifNil: [self buildSelector]!
 
 selector: aSelector
 	| keywords numArgs |
@@ -203,6 +206,10 @@ selectorParts: tokenCollection
 selectorParts: tokenCollection arguments: variableNodes 
 	selectorParts := tokenCollection.
 	self arguments: variableNodes!
+
+setSelector: aSymbol
+	<mutable>
+	selector := aSymbol!
 
 source
 	^source!
@@ -266,6 +273,7 @@ selector:!accessing!public! !
 selectorParts!accessing!private! !
 selectorParts:!accessing!private! !
 selectorParts:arguments:!initializing!public! !
+setSelector:!initializing!private! !
 source!accessing!public! !
 source:!accessing!public! !
 start!accessing!public! !

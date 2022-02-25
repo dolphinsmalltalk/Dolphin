@@ -21,7 +21,7 @@ Instance Variables:
 = anObject 
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
-	^self body = anObject body!
+	^body = anObject body!
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitOptimizedNode: self!
@@ -84,6 +84,10 @@ postCopy
 precedence
 	^0!
 
+setValue: anObject
+	<mutable>
+	value := anObject!
+
 source
 	^source ifNil: [super source]!
 
@@ -99,7 +103,7 @@ stopWithoutParentheses
 value
 	"Lazily evaluate the expression if the value is required"
 
-	value == UnevaluatedCookie ifTrue: [value := self evaluateStatements].
+	value == UnevaluatedCookie ifTrue: [self setValue: self evaluateStatements].
 	^value!
 
 value: anObject
@@ -124,6 +128,7 @@ methodClass:!accessing!private! !
 needsParenthesis!public!testing! !
 postCopy!copying!public! !
 precedence!accessing!public! !
+setValue:!public! !
 source!accessing!public! !
 source:!accessing!private! !
 startWithoutParentheses!accessing!public! !

@@ -69,14 +69,14 @@ newLine
 space
 	codeStream space!
 
-visitAnnotationNode: anStAnnotationNode
+visitAnnotationNode: aStAnnotationNode
 	codeStream nextPut: $<.
-	anStAnnotationNode argumentCount == 0
-		ifTrue: [codeStream display: anStAnnotationNode selector]
+	aStAnnotationNode argumentCount == 0
+		ifTrue: [codeStream display: aStAnnotationNode selector]
 		ifFalse: 
 			[| keywords args |
-			keywords := anStAnnotationNode selector keywords.
-			args := anStAnnotationNode arguments.
+			keywords := aStAnnotationNode selector keywords.
+			args := aStAnnotationNode arguments.
 			1 to: keywords size
 				do: 
 					[:i |
@@ -85,21 +85,21 @@ visitAnnotationNode: anStAnnotationNode
 						nextPutAll: (keywords at: i);
 						space.
 					self visitNode: (args at: i)]].
-	codeStream nextPut: $>.!
+	codeStream nextPut: $>!
 
 visitArrayNode: anArrayNode
 	codeStream nextPut: ${.
 	self formatArray: anArrayNode.
 	codeStream nextPut: $}!
 
-visitExternalArgTypeNode: anStExternalArgTypeNode
-	anStExternalArgTypeNode structClass
+visitExternalArgTypeNode: aStExternalArgTypeNode
+	aStExternalArgTypeNode structClass
 		ifNil: 
 			[| typeOrdinal |
-			typeOrdinal := anStExternalArgTypeNode typeOrdinal.
+			typeOrdinal := aStExternalArgTypeNode typeOrdinal.
 			codeStream nextPutAll: (External.FunctionDescriptor nameOf: typeOrdinal type: nil)]
 		ifNotNil: [:varNode | self visitNode: varNode].
-	anStExternalArgTypeNode indirections timesRepeat: [codeStream nextPut: $*]!
+	aStExternalArgTypeNode indirections timesRepeat: [codeStream nextPut: $*]!
 
 visitExternalCallNode: aStExternalCallNode
 	codeStream nextPut: $<.
@@ -131,16 +131,16 @@ visitMethodNode: aMethodNode
 	self formatMethodPatternFor: aMethodNode.
 	self formatMethodBodyFor: aMethodNode!
 
-visitPrimitiveNode: anStPrimitiveNode
+visitPrimitiveNode: aStPrimitiveNode
 	codeStream
 		nextPutAll: '<primitive: ';
-		print: anStPrimitiveNode primitiveIndex.
-	anStPrimitiveNode errorTemp
+		print: aStPrimitiveNode primitiveIndex.
+	aStPrimitiveNode errorTemp
 		ifNotNil: 
 			[:errorTemp |
 			codeStream nextPutAll: ' error: '.
 			self visitNode: errorTemp].
-	codeStream nextPut: $>.!
+	codeStream nextPut: $>!
 
 visitQualifiedReferenceNode: aQualifiedReferenceNode
 	codeStream
@@ -151,7 +151,8 @@ visitQualifiedReferenceNode: aQualifiedReferenceNode
 	codeStream nextPut: $}!
 
 visitVariableNode: aVariableNode
-	codeStream nextPutAll: aVariableNode name! !
+	codeStream nextPutAll: aVariableNode name.
+	^aVariableNode! !
 !Refactory.Browser.RBSourceFormatter categoriesForMethods!
 currentLineLength!accessing!private! !
 format:!operations!public! !

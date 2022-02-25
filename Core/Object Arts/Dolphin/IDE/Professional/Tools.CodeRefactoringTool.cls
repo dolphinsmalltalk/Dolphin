@@ -296,21 +296,21 @@ inlineTemporary
 
 	presenter performCodeRefactoring: [:method :node | self inlineTemporary: method in: node]!
 
-inlineTemporary: aCompiledMethod in: anStProgramNode
+inlineTemporary: aCompiledMethod in: aStProgramNode
 	| assignment line result |
-	assignment := anStProgramNode isAssignment
-				ifTrue: [anStProgramNode]
+	assignment := aStProgramNode isAssignment
+				ifTrue: [aStProgramNode]
 				ifFalse: 
 					[| assignments |
-					assignments := self findAssignmentsToTemp: anStProgramNode.
+					assignments := self findAssignmentsToTemp: aStProgramNode.
 					assignments isEmpty ifFalse: [assignments first]].
 	assignment isNil
 		ifTrue: 
 			[Sound warningBeep.
 			Notification
-				signal: ('There are no assignments to <1p> to inline' expandMacrosWith: anStProgramNode name).
+				signal: ('There are no assignments to <1p> to inline' expandMacrosWith: aStProgramNode name).
 			^nil].
-	line := presenter lineFromPosition: anStProgramNode sourceInterval start.
+	line := presenter lineFromPosition: aStProgramNode sourceInterval start.
 	result := self systemModel
 				inlineTemporary: assignment sourceInterval
 				from: aCompiledMethod selector
@@ -318,11 +318,11 @@ inlineTemporary: aCompiledMethod in: anStProgramNode
 	presenter repositionAtSourceLine: line.
 	^result!
 
-isLocalVariable: anStVariableNode 
+isLocalVariable: aStVariableNode
 	"Private - Answer whether the specified variable node represents one of the temporaries in the current
 	method (note that parameters are excluded)."
 
-	^self parseTree allTemporaryVariableNodes includes: anStVariableNode!
+	^self parseTree allTemporaryVariableNodes includes: aStVariableNode!
 
 moveTempToInnerScope
 	"Move the temporary with focus (i.e. that selected or under the cursor) to the innermost
@@ -743,14 +743,14 @@ renameVariable
 	command := self renameVariableCommand: self selectedNode.
 	[command value: self] postToMessageQueue!
 
-renameVariableCommand: anStVariableNode
+renameVariableCommand: aStVariableNode
 	^(##(IdentityDictionary new
 		at: #temporary put: #renameTemporary:;
 		at: #instance put: #renameInstanceVariable:;
 		at: #class put: #renameClassVariable:;
 		at: #classGlobal put: #renameClass:;
-		yourself) lookup: (presenter variableClassification: anStVariableNode))
-		ifNotNil: [:selector | Message selector: selector argument: anStVariableNode]!
+		yourself) lookup: (presenter variableClassification: aStVariableNode))
+		ifNotNil: [:selector | Message selector: selector argument: aStVariableNode]!
 
 selectedErrorRange
 	^presenter selectedErrorRange!

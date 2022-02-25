@@ -42,9 +42,9 @@ needsOuter!accessing!public! !
 
 !Kernel.StBlockScope class methodsFor!
 
-forScopeNode: anStBlockNode outer: anStLexicalScope
-	^(anStBlockNode isInlined ifTrue: [StOptimizedBlockScope] ifFalse: [self]) new
-		node: anStBlockNode outer: anStLexicalScope;
+forScopeNode: aStBlockNode outer: aStLexicalScope
+	^(aStBlockNode isInlined ifTrue: [StOptimizedBlockScope] ifFalse: [self]) new
+		node: aStBlockNode outer: aStLexicalScope;
 		yourself! !
 !Kernel.StBlockScope class categoriesForMethods!
 forScopeNode:outer:!instance creation!public! !

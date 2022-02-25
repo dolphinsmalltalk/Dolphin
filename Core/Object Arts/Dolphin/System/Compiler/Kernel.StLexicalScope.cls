@@ -21,9 +21,9 @@ argumentCount
 declareArgument: aString
 	self declareLocalVariable: (StArgumentVariable node: aString)!
 
-declareLocalVariable: anStLocalVariable
-	locals at: anStLocalVariable name
-		put: (anStLocalVariable
+declareLocalVariable: aStLocalVariable
+	locals at: aStLocalVariable name
+		put: (aStLocalVariable
 				scope: self;
 				yourself)!
 
@@ -90,9 +90,9 @@ needsSelf
 node
 	^node!
 
-node: aBlockOrMethodNode outer: anStLexicalScope
+node: aBlockOrMethodNode outer: aStLexicalScope
 	node := aBlockOrMethodNode.
-	outer := anStLexicalScope.
+	outer := aStLexicalScope.
 	self initialize.
 	^self!
 
@@ -113,9 +113,9 @@ realScope
 
 	^self!
 
-resolveVariable: anStVariableNode
-	^(locals lookup: anStVariableNode name)
-		ifNil: [outer ifNotNil: [outer resolveVariable: anStVariableNode]]!
+resolveVariable: aStVariableNode
+	^(locals lookup: aStVariableNode name)
+		ifNil: [outer ifNotNil: [outer resolveVariable: aStVariableNode]]!
 
 temporaries
 	^locals select: [:each | each isTempVariable]!

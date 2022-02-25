@@ -132,8 +132,8 @@ styleTemporaries: anArray
 			view applyStyle: #tempDecl toNext: each name size.
 			self colorComments: each postComments]!
 
-visitAnnotationNode: anStAnnotationNode
-	(view plainTextRange: anStAnnotationNode sourceInterval)
+visitAnnotationNode: aStAnnotationNode
+	(view plainTextRange: aStAnnotationNode sourceInterval)
 		do: [:each | view applyStyle: (each isSeparator ifTrue: [#whitespace] ifFalse: [#tag]) toNext: 1]!
 
 visitAssignmentNode: anAssignmentNode
@@ -169,8 +169,8 @@ visitCascadeNode: aCascadeNode
 			self styleSelectorAndArguments: eachNode.
 			self colorComments: eachNode postComments]!
 
-visitExternalCallNode: anStExternalCallNode
-	self visitPrimitiveNode: anStExternalCallNode!
+visitExternalCallNode: aStExternalCallNode
+	self visitPrimitiveNode: aStExternalCallNode!
 
 visitLiteralArrayNode: aRBLiteralArrayNode
 	arrayDepth := arrayDepth + 1.
@@ -231,8 +231,8 @@ visitOptimizedNode: anOptimizedNode
 	view applyStyle: #specialCharacter toNext: 2.
 	self visitNode: anOptimizedNode body!
 
-visitPrimitiveNode: anStPrimitiveNode
-	(view plainTextRange: anStPrimitiveNode sourceInterval)
+visitPrimitiveNode: aStPrimitiveNode
+	(view plainTextRange: aStPrimitiveNode sourceInterval)
 		do: [:each | view applyStyle: (each isSeparator ifTrue: [#whitespace] ifFalse: [#tag]) toNext: 1]!
 
 visitReturnNode: aReturnNode

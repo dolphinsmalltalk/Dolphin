@@ -27,7 +27,7 @@ methodScope
 outer
 	^self subclassResponsibility!
 
-resolveVariable: anStVariableNode
+resolveVariable: aStVariableNode
 	"Private - Lookup and return an <StVariable> describing the variable definition in this scope matching the variable reference specified by the <StVariableNode> argument. The argument is assumed to be a real variable, as opposed to one of the special variables self, super, or thisContext."
 
 	^self subclassResponsibility!

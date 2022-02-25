@@ -396,18 +396,18 @@ parseExternalCallArgList
 			args nextPut: arg].
 	^args grabContents!
 
-parseExternalCallArgs: anStExternalCallNode 
+parseExternalCallArgs: aStExternalCallNode
 	| types got expected start |
 	start := currentToken start.
 	types := self parseExternalCallArgList.
-	anStExternalCallNode argumentTypes: types.
+	aStExternalCallNode argumentTypes: types.
 	got := types size.
 	expected := methodNode argumentCount.
-	got < expected 
+	got < expected
 		ifTrue: 
 			[self parserError: CErrInsufficientArgTypes range: (start to: self errorPosition - 1)
 			"Error ignored, but no recovery needed as the decl is syntactically correct, it just defines too few types."].
-	got > expected 
+	got > expected
 		ifTrue: 
 			[self parserError: CErrTooManyArgTypes range: (start to: types last sourceInterval stop)
 			"Error ignored, but no recovery needed as the decl is syntactically correct, it just defines too many types."].
@@ -706,11 +706,11 @@ parsePrimitive: startInteger
 			primitiveNode errorTemp: self parseTempDecl].
 	^primitiveNode!
 
-parsePrimitiveIdentifier: anStVariableNodeClass
+parsePrimitiveIdentifier: aStVariableNodeClass
 	| token node |
 	token := currentToken.
 	self step.
-	node := anStVariableNodeClass identifierToken: token.
+	node := aStVariableNodeClass identifierToken: token.
 	self addCommentsTo: node.
 	^node!
 
@@ -778,7 +778,7 @@ parseQualifiedReference
 	node stop: stop.
 	^node!
 
-parseQualifiedRefModifiers: anStQualifiedReferenceNode
+parseQualifiedRefModifiers: aStQualifiedReferenceNode
 	| stop |
 	stop := currentToken stop.
 	self step.
@@ -787,13 +787,13 @@ parseQualifiedRefModifiers: anStQualifiedReferenceNode
 			qualifier := currentToken value.
 			qualifier = 'class'
 				ifTrue: 
-					[anStQualifiedReferenceNode isMeta: true.
+					[aStQualifiedReferenceNode isMeta: true.
 					stop := currentToken stop.
 					self step]
 				ifFalse: 
 					[qualifier = 'private'
 						ifTrue: 
-							[anStQualifiedReferenceNode isPrivate: true.
+							[aStQualifiedReferenceNode isPrivate: true.
 							stop := currentToken stop.
 							self step]
 						ifFalse: [^stop]]].
@@ -1001,9 +1001,9 @@ parseUnaryTag: startInteger
 		start: startInteger;
 		yourself!
 
-parseVariableNode: anStVariableNodeClass
+parseVariableNode: aStVariableNodeClass
 	| token node |
-	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier: anStVariableNodeClass].
+	currentToken isIdentifier ifTrue: [^self parsePrimitiveIdentifier: aStVariableNodeClass].
 	self parserError: CErrExpectVariable.
 	"Error ignored, attempt to recover..."
 	token := StIdentifierToken
@@ -1011,7 +1011,7 @@ parseVariableNode: anStVariableNodeClass
 				comments: nil
 				value: (source copyFrom: currentToken start to: currentToken stop).
 	self step.
-	node := anStVariableNodeClass identifierToken: token.
+	node := aStVariableNodeClass identifierToken: token.
 	self addCommentsTo: node.
 	^node!
 
@@ -1081,7 +1081,7 @@ patchLiteralMessage
 						start: currentToken start
 						comments: nil
 						value: 'false'].
-	value == nil
+	value isNil
 		ifTrue: 
 			[^currentToken := StIdentifierToken
 						start: currentToken start

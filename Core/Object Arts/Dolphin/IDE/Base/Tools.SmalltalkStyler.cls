@@ -330,7 +330,7 @@ visitIdentifierToken: aStIdentifierToken
 		shrink;
 		yourself) at: lastStyle ifAbsent: #identifier!
 
-visitIllegalCharacterToken: anStIllegalCharacterToken
+visitIllegalCharacterToken: aStIllegalCharacterToken
 	^#illegal!
 
 visitKeywordToken: aStKeywordToken

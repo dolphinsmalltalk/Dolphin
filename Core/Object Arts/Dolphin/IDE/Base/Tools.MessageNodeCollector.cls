@@ -28,9 +28,9 @@ visitMessageNode:!public!visitor/double dispatching! !
 
 !Tools.MessageNodeCollector class methodsFor!
 
-messagesSentBy: anStProgramNode 
-	^(self new)
-		visitNode: anStProgramNode;
+messagesSentBy: aStProgramNode
+	^self new
+		visitNode: aStProgramNode;
 		messages! !
 !Tools.MessageNodeCollector class categoriesForMethods!
 messagesSentBy:!enquiries!public! !

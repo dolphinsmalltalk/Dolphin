@@ -15,11 +15,11 @@ Kernel.ArithmeticExpressionVisitor comment: ''!
 errorInvalidArithmeticExpression: aStProgramNode
 	^self error: 'Unexpected node type in expression: ' , aStProgramNode printString!
 
-visitArgumentNode: anStParameterNode
-	^self errorInvalidArithmeticExpression: anStParameterNode!
+visitArgumentNode: aStParameterNode
+	^self errorInvalidArithmeticExpression: aStParameterNode!
 
-visitAssignmentNode: anStAssignmentNode
-	^self errorInvalidArithmeticExpression: anStAssignmentNode!
+visitAssignmentNode: aStAssignmentNode
+	^self errorInvalidArithmeticExpression: aStAssignmentNode!
 
 visitCascadeNode: aCascadeNode
 	^self errorInvalidArithmeticExpression: aCascadeNode!
@@ -27,8 +27,8 @@ visitCascadeNode: aCascadeNode
 visitExternalArgTypeNode: anAssignmentNode
 	^self errorInvalidArithmeticExpression: anAssignmentNode!
 
-visitExternalCallNode: anStExternalCallNode
-	^self errorInvalidArithmeticExpression: anStExternalCallNode!
+visitExternalCallNode: aStExternalCallNode
+	^self errorInvalidArithmeticExpression: aStExternalCallNode!
 
 visitLiteralArrayNode: aLiteralArrayNode
 	^self errorInvalidArithmeticExpression: aLiteralArrayNode!
@@ -45,7 +45,7 @@ visitMethodNode: aMethodNode
 visitOptimizedNode: anOptimizedNode
 	^self errorInvalidArithmeticExpression: anOptimizedNode!
 
-visitPrimitiveNode: anStPrimitiveNode
+visitPrimitiveNode: aStPrimitiveNode
 	^self errorInvalidArithmeticExpression: self!
 
 visitReturnNode: aReturnNode

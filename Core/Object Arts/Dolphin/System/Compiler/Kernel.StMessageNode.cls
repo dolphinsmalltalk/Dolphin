@@ -62,10 +62,12 @@ bestNodeFor: anInterval
 			node notNil ifTrue: [^node]]!
 
 buildSelector
-	| selectorStream |
+	| selectorStream symbol |
 	selectorStream := WriteStream on: (Utf8String new: selectorParts size * 10).
 	selectorParts do: [:each | selectorStream nextPutAll: each value].
-	^selectorStream contents asSymbol!
+	symbol := selectorStream contents asSymbol.
+	self setSelector: symbol.
+	^symbol!
 
 childrenDo: aMonadicValuable
 	aMonadicValuable value: self receiver.
@@ -149,7 +151,7 @@ renameSelector: newSelector andArguments: varNodeCollection
 		selector: newSelector!
 
 selector
-	^selector ifNil: [selector := self buildSelector]!
+	^selector ifNil: [self buildSelector]!
 
 selector: aSelector
 	| keywords numArgs |
@@ -188,6 +190,10 @@ sentMessages
 	^(super sentMessages)
 		add: self selector;
 		yourself!
+
+setSelector: aSymbol
+	<mutable>
+	selector := aSymbol!
 
 startWithoutParentheses
 	^receiver start!
@@ -232,6 +238,7 @@ selector:!accessing!public! !
 selectorParts!accessing!private! !
 selectorParts:!accessing!private! !
 sentMessages!accessing!public! !
+setSelector:!initializing!private! !
 startWithoutParentheses!accessing!public! !
 stopWithoutParentheses!accessing!public! !
 value!accessing!public! !

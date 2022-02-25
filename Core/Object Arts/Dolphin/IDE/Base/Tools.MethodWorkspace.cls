@@ -187,8 +187,8 @@ evaluationContext
 	^evaluationContext
 		ifNil: [self parseContext ifNotNil: [:context | context methodClass instanceClass]]!
 
-formattedCode: anStProgramNode
-	^anStProgramNode formattedCode!
+formattedCode: aStProgramNode
+	^aStProgramNode formattedCode!
 
 hasErrors
 	"Answer whether there are any errors in the source code (not warnings)"
@@ -214,11 +214,11 @@ isSelectionMatched
 isSelectionMatched: aBoolean
 	flags := flags mask: NoSelectionMatching set: aBoolean not!
 
-isTempVariable: anStVariableNode 
+isTempVariable: aStVariableNode
 	"Private - Answer whether the specified variable node represents one of the temporaries in
 	the current method (note that parameters are included)."
 
-	self parseTree allDefinedVariableNodesDo: [:each | each = anStVariableNode ifTrue: [^true]].
+	self parseTree allDefinedVariableNodesDo: [:each | each = aStVariableNode ifTrue: [^true]].
 	^false!
 
 killParseTimer
@@ -385,16 +385,16 @@ resolveIdentifier: aString ifDefined: aMonadicValuable
 		ifNotNil: [:binding | binding value ifNotNil: [:value | ^aMonadicValuable value: value]].
 	^nil!
 
-resolveVariable: anStIdentifierToken
+resolveVariable: aStIdentifierToken
 	"Private - Attempt to resolve the correct variable for the specified identifier using the parse tree.  If the parseTree has not been built, then just rely on the simpler analysis done in the superclass. This will still be able to resolve non-local variables."
 
 	parseTree ~~ DeafObject.Current
 		ifTrue: 
 			[| node |
-			node := self nodeForRange: anStIdentifierToken sourceInterval.
+			node := self nodeForRange: aStIdentifierToken sourceInterval.
 			(node notNil and: [node isVariable and: [node scope notNil]])
 				ifTrue: [^node lookupInScope: node scope]].
-	^super resolveVariable: anStIdentifierToken!
+	^super resolveVariable: aStIdentifierToken!
 
 selectedErrorRange
 	^self selectedNode sourceInterval!
@@ -462,20 +462,16 @@ targetOfMessage: aStMessageNode
 		ifFalse: [receiver isLiteralNode ifTrue: [^aStMessageNode receiver value basicClass]].
 	^nil!
 
-variableClassification: anStVariableNode
+variableClassification: aStVariableNode
 	| context methodClass |
-	(anStVariableNode notNil and: [anStVariableNode isVariable]) ifFalse: [^nil].
-	(self isTempVariable: anStVariableNode) ifTrue: [^#temporary].
+	(aStVariableNode notNil and: [aStVariableNode isVariable]) ifFalse: [^nil].
+	(self isTempVariable: aStVariableNode) ifTrue: [^#temporary].
 	context := self parseContext.
 	methodClass := context methodClass.
-	(methodClass allInstVarNames includes: anStVariableNode name) ifTrue: [^#instance].
-	(methodClass hierarchyBindingFor: anStVariableNode name) ifNotNil: [^#class].
-	(context environment fullBindingFor: anStVariableNode name)
-		ifNotNil: 
-			[:var |
-			^var isClassBinding
-				ifTrue: [#classGlobal]
-				ifFalse: [#global]].
+	(methodClass allInstVarNames includes: aStVariableNode name) ifTrue: [^#instance].
+	(methodClass hierarchyBindingFor: aStVariableNode name) ifNotNil: [^#class].
+	(context environment fullBindingFor: aStVariableNode name)
+		ifNotNil: [:var | ^var isClassBinding ifTrue: [#classGlobal] ifFalse: [#global]].
 	"Variable name not found in this context"
 	^nil!
 

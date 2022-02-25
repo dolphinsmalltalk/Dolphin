@@ -20,7 +20,9 @@ Kernel.StQualifiedReferenceNode comment: '`StQualifiedReferenceNode` is a kind o
 
 = anObject
 	self == anObject ifTrue: [^true].
-	^self class == anObject class and: [self value = anObject value]!
+	^(anObject isKindOf: self class) and: 
+			[pathString = anObject pathString
+				and: [flags = anObject flags and: [self methodClass = anObject methodClass]]]!
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitQualifiedReferenceNode: self!
@@ -48,6 +50,9 @@ isQualifiedReference
 
 isRelative
 	^flags allMask: BindingReference.RelativeMask!
+
+isRelative: aBoolean
+	flags := flags mask: BindingReference.RelativeMask set: aBoolean!
 
 path
 	^BindingReference.PathSeparator split: pathString!
@@ -95,6 +100,7 @@ isPrivate!public!testing! !
 isPrivate:!accessing!public!testing! !
 isQualifiedReference!public!testing! !
 isRelative!public!testing! !
+isRelative:!accessing!public!testing! !
 path!accessing!public! !
 pathString!accessing!public! !
 pathString:!accessing!private! !

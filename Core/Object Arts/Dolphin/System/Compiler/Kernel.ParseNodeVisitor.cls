@@ -17,98 +17,113 @@ processBlock: aBlockNode
 	self visitArgumentNodes: aBlockNode arguments.
 	self visitNode: aBlockNode body!
 
-visitAnnotationNode: anStAnnotationNode
-	anStAnnotationNode arguments do: [:arg | self visitNode: arg]!
+visitAnnotationNode: anAnnotationNode
+	anAnnotationNode arguments do: [:arg | self visitNode: arg].
+	^anAnnotationNode!
 
-visitArgumentNode: anStParameterNode
+visitArgumentNode: aParameterNode
 	"Here to allow subclasses to detect arguments or temporaries."
 
-	^self visitVariableNode: anStParameterNode!
+	^self visitVariableNode: aParameterNode!
 
 visitArgumentNodes: aNodeCollection
 	^aNodeCollection do: [:each | self visitNode: each]!
 
-visitArrayNode: anStBraceArrayNode
-	anStBraceArrayNode statements do: [:each | self visitNode: each]!
+visitArrayNode: aBraceArrayNode
+	aBraceArrayNode statements do: [:each | self visitNode: each].
+	^aBraceArrayNode!
 
 visitAssignmentNode: anAssignmentNode
 	self visitNode: anAssignmentNode variable.
-	self visitNode: anAssignmentNode value!
+	self visitNode: anAssignmentNode value.
+	^anAssignmentNode!
 
 visitBlockNode: aBlockNode
-	self processBlock: aBlockNode!
+	self processBlock: aBlockNode.
+	^aBlockNode!
 
 visitCascadeNode: aCascadeNode
-	aCascadeNode messages do: [:each | self visitNode: each]!
+	aCascadeNode messages do: [:each | self visitNode: each].
+	^aCascadeNode!
 
-visitExternalArgTypeNode: anStExternalArgTypeNode
-	anStExternalArgTypeNode structClass ifNotNil: [:structVar | self visitNode: structVar]!
+visitExternalArgTypeNode: anExternalArgTypeNode
+	anExternalArgTypeNode structClass ifNotNil: [:structVar | self visitNode: structVar].
+	^anExternalArgTypeNode!
 
-visitExternalCallNode: anStExternalCallNode
+visitExternalCallNode: anExternalCallNode
 	"Dolphin specific extension"
 
-	self visitNode: anStExternalCallNode returnType.
-	anStExternalCallNode argumentTypes do: [:each | self visitNode: each]!
+	self visitNode: anExternalCallNode returnType.
+	anExternalCallNode argumentTypes do: [:each | self visitNode: each].
+	^anExternalCallNode!
 
 visitLiteralArrayNode: aLiteralArrayNode
-	aLiteralArrayNode contents do: [:each | self visitNode: each]!
+	aLiteralArrayNode contents do: [:each | self visitNode: each].
+	^aLiteralArrayNode!
 
 visitLiteralByteArrayNode: aLiteralByteArrayNode
 	self visitLiteralArrayNode: aLiteralByteArrayNode!
 
 visitLiteralNode: aLiteralNode
+	^aLiteralNode
 	!
 
 visitMessageNode: aMessageNode
 	aMessageNode isFirstSendToReceiver ifTrue: [self visitNode: aMessageNode receiver].
-	aMessageNode arguments do: [:each | self visitNode: each]!
+	aMessageNode arguments do: [:each | self visitNode: each].
+	^aMessageNode!
 
 visitMethodNode: aMethodNode
 	self visitArgumentNodes: aMethodNode arguments.
 	aMethodNode tags do: [:each | self visitNode: each].
-	self visitNode: aMethodNode body!
+	self visitNode: aMethodNode body.
+	^aMethodNode!
 
 visitNode: aNode 
 	^aNode acceptVisitor: self!
 
 visitOptimizedNode: anOptimizedNode
-	self visitNode: anOptimizedNode body!
+	self visitNode: anOptimizedNode body.
+	^anOptimizedNode!
 
-visitParameterNode: anStParameterNode
-	^self visitVariableNode: anStParameterNode!
+visitParameterNode: aStParameterNode
+	^self visitVariableNode: aStParameterNode!
 
-visitPrimitiveNode: anStPrimitiveNode
-	anStPrimitiveNode errorTemp ifNotNil: [:temp | self visitNode: temp]!
+visitPrimitiveNode: aPrimitiveNode
+	aPrimitiveNode errorTemp ifNotNil: [:temp | self visitNode: temp].
+	^aPrimitiveNode!
 
 visitQualifiedReferenceNode: aQualifiedReferenceNode
 	^aQualifiedReferenceNode!
 
 visitReturnNode: aReturnNode
-	self visitNode: aReturnNode value!
+	self visitNode: aReturnNode value.
+	^aReturnNode!
 
-visitSelfVariableNode: anStSelfVariableNode
-	^self visitVariableNode: anStSelfVariableNode!
+visitSelfVariableNode: aSelfVariableNode
+	^self visitVariableNode: aSelfVariableNode!
 
 visitSequenceNode: aSequenceNode
 	self visitTemporaryNodes: aSequenceNode temporaries.
-	aSequenceNode statements do: [:each | self visitNode: each]!
+	aSequenceNode statements do: [:each | self visitNode: each].
+	^aSequenceNode!
 
-visitSpecialVariableNode: anStSpecialVariableNode
-	^self visitVariableNode: anStSpecialVariableNode!
+visitSpecialVariableNode: aSpecialVariableNode
+	^self visitVariableNode: aSpecialVariableNode!
 
-visitSuperVariableNode: anStSelfVariableNode
-	^self visitSpecialVariableNode: anStSelfVariableNode!
+visitSuperVariableNode: aSuperVariableNode
+	^self visitSpecialVariableNode: aSuperVariableNode!
 
-visitTempDeclNode: anStTempDeclNode
-	^self visitVariableNode: anStTempDeclNode!
+visitTempDeclNode: aTempDeclNode
+	^self visitVariableNode: aTempDeclNode!
 
 visitTemporaryNodes: aNodeCollection
 	"Visit temporary declarations in a method or block body"
 
 	^self visitArgumentNodes: aNodeCollection!
 
-visitThisContextVariableNode: anStSelfVariableNode
-	^self visitSpecialVariableNode: anStSelfVariableNode!
+visitThisContextVariableNode: aStSelfVariableNode
+	^self visitSpecialVariableNode: aStSelfVariableNode!
 
 visitVariableNode: aVariableNode
 	^aVariableNode! !

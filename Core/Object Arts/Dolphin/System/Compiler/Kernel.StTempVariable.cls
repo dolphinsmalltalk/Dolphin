@@ -11,9 +11,9 @@ Kernel.StTempVariable comment: '<StTempVariable> is a specialised class of <StLo
 !Kernel.StTempVariable categoriesForClass!Kernel-Objects! !
 !Kernel.StTempVariable methodsFor!
 
-addAssignment: anStVariableNode fromScope: anStSemanticScope
-	writes addLast: anStVariableNode.
-	anStSemanticScope realScope == self scope realScope
+addAssignment: aStVariableNode fromScope: aStSemanticScope
+	writes addLast: aStVariableNode.
+	aStSemanticScope realScope == self scope realScope
 		ifTrue: 
 			["Write to the temp from within its defining scope"
 			storage isNil
@@ -41,8 +41,8 @@ isWritten
 
 	^writes notEmpty!
 
-setNode: anStVariableNode
-	super setNode: anStVariableNode.
+setNode: aStVariableNode
+	super setNode: aStVariableNode.
 	writes := OrderedCollection new!
 
 writes

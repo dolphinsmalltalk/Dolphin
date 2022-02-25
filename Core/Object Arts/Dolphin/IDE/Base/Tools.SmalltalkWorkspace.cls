@@ -199,8 +199,8 @@ chooseEvaluationPools
 chunkFilerClass
 	^ChunkSourceFiler!
 
-classForIdentifier: anStIdentifierToken
-	^(self resolveVariable: anStIdentifierToken)
+classForIdentifier: aStIdentifierToken
+	^(self resolveVariable: aStIdentifierToken)
 		ifNotNil: [:variable | self suggestClassForVariable: variable]!
 
 classForToken: anAssociation
@@ -1057,9 +1057,13 @@ onViewOpened
 !
 
 parseContext
-	| methodClass |
-	methodClass := self evaluationContext basicClass.
-	^ParseContext methodClass: methodClass environment: methodClass environment!
+	^self evaluationContext
+		ifNil: [ParseContext methodClass: UndefinedObject environment: Smalltalk]
+		ifNotNil: 
+			[:receiverObj |
+			| class |
+			class := receiverObj basicClass.
+			ParseContext methodClass: class environment: class environment]!
 
 plainText
 	"Answer the receiver's unformatted source text as a String."
@@ -1234,11 +1238,11 @@ replaceSelection: aString
 resolveIdentifier: aString ifDefined: aMonadicValuable
 	^(self resolveVariable: aString) ifNotNil: [:variable | aMonadicValuable value: variable]!
 
-resolveVariable: anStIdentifierToken
+resolveVariable: aStIdentifierToken
 	| nameContext classScope name |
 	nameContext := self nameBindingContext.
 	classScope := StClassScope methodClass: nameContext methodClass environment: nameContext environment.
-	name := anStIdentifierToken value.
+	name := aStIdentifierToken value.
 	name = 'self' ifTrue: [^classScope selfVariable].
 	name = 'super' ifTrue: [^classScope superVariable].
 	name = 'thisContext' ifTrue: [^classScope thisContextVariable].
@@ -1531,12 +1535,12 @@ showTipForCharacter: anInterval
 					ifFalse: ['Character: ' , representation].
 	self view showCallTip: tip at: anInterval stop!
 
-showTipForIdentifier: anStIdentifierToken
-	(self resolveVariable: anStIdentifierToken)
+showTipForIdentifier: aStIdentifierToken
+	(self resolveVariable: aStIdentifierToken)
 		ifNotNil: 
 			[:variable |
 			| tip identifier |
-			identifier := anStIdentifierToken value.
+			identifier := aStIdentifierToken value.
 			tip := [variableMetadataProvider tipForVariable: variable] on: Error
 						do: 
 							[:ex |
@@ -1547,7 +1551,7 @@ showTipForIdentifier: anStIdentifierToken
 								nextPut: $>;
 								contents].
 			"Don't display the tip if it contains no useful information"
-			tip = identifier ifFalse: [self view showCallTip: tip at: anStIdentifierToken stop]]!
+			tip = identifier ifFalse: [self view showCallTip: tip at: aStIdentifierToken stop]]!
 
 showTipForIndicators: aCollectionOfScintillaIndicators
 	| tip last |

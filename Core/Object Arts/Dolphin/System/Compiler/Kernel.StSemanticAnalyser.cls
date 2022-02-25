@@ -25,34 +25,21 @@ addMessageToFrame: aMessageNode
 	(SpecialSelectors identityIncludes: selector) ifTrue: [^self].
 	self addLiteral: aMessageNode value: selector!
 
-assignStaticVariable: anStVariableNode
-	self accessStaticVariable: anStVariableNode!
+assignStaticVariable: aStVariableNode
+	self accessStaticVariable: aStVariableNode!
 
-assignVariable: anStVariableNode
-	^(self bindVariable: anStVariableNode)
+assignVariable: aStVariableNode
+	^(self bindVariable: aStVariableNode)
 		ifNotNil: 
 			[:var |
 			var isConstant
 				ifTrue: 
-					[self errorAssignConstant: anStVariableNode.
+					[self errorAssignConstant: aStVariableNode.
 					"If an argument, record the illegal assignment as a read to suppress unreferenced argument warning"
-					var isArgument ifTrue: [var addRead: anStVariableNode fromScope: currentScope]]
+					var isArgument ifTrue: [var addRead: aStVariableNode fromScope: currentScope]]
 				ifFalse: 
-					[var addAssignment: anStVariableNode fromScope: currentScope.
-					var isStaticVariable ifTrue: [self assignStaticVariable: anStVariableNode]].
-			var]!
-
-bindVariable: anStVariableNode
-	"Private - Find the correct variable definition for the identifier of aVariableNode, and
-	associate the StVariable describing that definition with the node."
-
-	^(anStVariableNode lookupInScope: currentScope)
-		ifNil: 
-			[self signalError: CErrUndeclared forNode: anStVariableNode.
-			nil]
-		ifNotNil: 
-			[:var |
-			anStVariableNode variable: var.
+					[var addAssignment: aStVariableNode fromScope: currentScope.
+					var isStaticVariable ifTrue: [self assignStaticVariable: aStVariableNode]].
 			var]!
 
 blockDepth
@@ -89,9 +76,9 @@ checkIsLiteralBlockHandler: aStProgramNode forMessage: aStMessageNode
 		forNode: aStProgramNode
 		extra: aStMessageNode selector!
 
-checkLiteralFrameSize: anStProgramNode
+checkLiteralFrameSize: aStProgramNode
 	literals size > VMConstants.MaxLiterals
-		ifTrue: [self signalError: CErrTooManyLiterals forNode: anStProgramNode]!
+		ifTrue: [self signalError: CErrTooManyLiterals forNode: aStProgramNode]!
 
 checkMessage: aStMessageNode hasMonadicBlockArg: aStProgramNode 
 	aStProgramNode isBlock 
@@ -286,25 +273,25 @@ checkOptimizedUnaryMessages: aMessageNode
 		ifTrue: [self checkMessageHasNonEmptyNiladicBlockReceiver: aMessageNode]
 		ifFalse: [selector == #repeat and: [self checkMessageHasNiladicBlockReceiver: aMessageNode]]!
 
-checkRedefines: anStVariableNode
+checkRedefines: aStVariableNode
 	| var |
-	var := anStVariableNode lookupInScope: currentScope.
+	var := aStVariableNode lookupInScope: currentScope.
 	var isNil ifTrue: [^self].
 	var isStaticVariable
 		ifTrue: 
-			[var scope == evalScope ifFalse: [self signalError: CWarnRedefiningStatic forNode: anStVariableNode].
+			[var scope == evalScope ifFalse: [self signalError: CWarnRedefiningStatic forNode: aStVariableNode].
 			^self].
 	var isInstanceVariable
 		ifTrue: 
-			[self signalError: CWarnRedefiningInstVar forNode: anStVariableNode.
+			[self signalError: CWarnRedefiningInstVar forNode: aStVariableNode.
 			^self].
 	"Note that we interpret the ANSI standard as stating that duplicate temporary/argument names
 	at the same scope are not permitted (which is certainly true), but that duplicate names in
 	nested scopes (i.e. temps/args that shadow outer temps) are permitted (which seems
 	appropriate), but for which we issue a warning."
 	var isArgument
-		ifTrue: [self signalError: CWarnRedefiningArg forNode: anStVariableNode]
-		ifFalse: [self signalError: CWarnRedefiningTemp forNode: anStVariableNode]!
+		ifTrue: [self signalError: CWarnRedefiningArg forNode: aStVariableNode]
+		ifFalse: [self signalError: CWarnRedefiningTemp forNode: aStVariableNode]!
 
 checkRestrictedSelectors: aMethodNode
 	| last first |
@@ -347,9 +334,6 @@ checkTryBlock: aMessageNode
 		by: 2
 		do: [:i | self checkIsLiteralBlockHandler: (args at: i) forMessage: aMessageNode]!
 
-compilationErrorClass
-	^Parser notificationClass!
-
 countOuterTemps
 	| scope count |
 	scope := currentScope.
@@ -363,18 +347,18 @@ enterMethodNode: aMethodNode
 	self checkRestrictedSelectors: aMethodNode.
 	super enterMethodNode: aMethodNode!
 
-errorAssignConstant: anStVariableNode
-	anStVariableNode variable isArgument
+errorAssignConstant: aStVariableNode
+	aStVariableNode variable isArgument
 		ifTrue: 
 			[self
 				signalError: CErrAssignmentToArgument
-				forNode: anStVariableNode parent
-				extra: anStVariableNode name]
+				forNode: aStVariableNode parent
+				extra: aStVariableNode name]
 		ifFalse: 
 			[self
 				signalError: CErrAssignConstant
-				forNode: anStVariableNode parent
-				extra: anStVariableNode name].
+				forNode: aStVariableNode parent
+				extra: aStVariableNode name].
 	^nil!
 
 exitMethodNode: aMethodNode
@@ -395,11 +379,11 @@ isReceiverOfNilTest: aVariableNode
 					[#(#notNil #isNil #ifNil: #ifNotNil: #ifNil:ifNotNil: #ifNotNil:ifNil:) 
 						identityIncludes: parentNode selector]]!
 
-isTempVariable: anStVariableNode
+isTempVariable: aStVariableNode
 	"Private - Answer whether the specified variable node represents one of the temporaries in
 	the parse tree (note that parameters are included)."
 
-	^self tempDecls includes: anStVariableNode!
+	^self tempDecls includes: aStVariableNode!
 
 newLiteralsCollection
 	^IdentityDictionary new!
@@ -415,9 +399,9 @@ readStaticVariable: aStVariableNode
 tempDecls
 	^tempDecls ifNil: [tempDecls := methodNode allDefinedVariableNodes]!
 
-visitAnnotationNode: anStAnnotationNode
-	super visitAnnotationNode: anStAnnotationNode.
-	anStAnnotationNode selector == #mutable ifTrue: [isMutator := true]!
+visitAnnotationNode: aStAnnotationNode
+	super visitAnnotationNode: aStAnnotationNode.
+	aStAnnotationNode selector == #mutable ifTrue: [isMutator := true]!
 
 visitArgumentNodes: aNodeCollection
 	aNodeCollection isEmpty ifTrue: [^self].
@@ -433,16 +417,16 @@ visitArgumentNodes: aNodeCollection
 						extra: each name].
 			count + 1]!
 
-visitAssignmentNode: anStAssignmentNode
+visitAssignmentNode: aStAssignmentNode
 	| variableNode |
-	self visitNode: anStAssignmentNode value.
-	variableNode := anStAssignmentNode variable.
+	self visitNode: aStAssignmentNode value.
+	variableNode := aStAssignmentNode variable.
 	variableNode scope: currentScope.
 	variableNode isConstantNode ifTrue: [^self].
 	self assignVariable: variableNode!
 
-visitExternalArgTypeNode: anStExternalArgTypeNode
-	anStExternalArgTypeNode structClass
+visitExternalArgTypeNode: aStExternalArgTypeNode
+	aStExternalArgTypeNode structClass
 		ifNotNil: 
 			[:structVar |
 			(self bindVariable: structVar)
@@ -454,26 +438,26 @@ visitExternalArgTypeNode: anStExternalArgTypeNode
 							structClass class isMeta and: [structClass isBytes or: [structClass instSize >= 1]]])
 						ifTrue: 
 							[| indirections |
-							indirections := anStExternalArgTypeNode indirections.
+							indirections := aStExternalArgTypeNode indirections.
 							indirections == 0
 								ifTrue: 
 									[structClass isNonInstantiable
 										ifTrue: 
 											[self
 												signalError: CErrInvalidStructArg
-												forNode: anStExternalArgTypeNode
+												forNode: aStExternalArgTypeNode
 												extra: structClass]]
 								ifFalse: 
 									[(structClass isIndirection and: [indirections > 1])
 										ifTrue: 
 											[self
 												signalError: CErrNotIndirectable
-												forNode: anStExternalArgTypeNode
+												forNode: aStExternalArgTypeNode
 												extra: structClass]]]
 						ifFalse: 
 							[self
 								signalError: CErrInvalidStructArg
-								forNode: anStExternalArgTypeNode
+								forNode: aStExternalArgTypeNode
 								extra: structVar]].
 			self visitNode: structVar]!
 
@@ -508,16 +492,16 @@ visitMessageNode: aMessageNode
 	receiver isSuperVariable ifTrue: [self checkSupersend: aMessageNode].
 	self checkTryBlock: aMessageNode!
 
-visitParameterNode: anStParameterNode
-	self checkRedefines: anStParameterNode.
-	super visitParameterNode: anStParameterNode!
+visitParameterNode: aStParameterNode
+	self checkRedefines: aStParameterNode.
+	super visitParameterNode: aStParameterNode!
 
 visitReturnNode: aReturnNode
 	currentScope markFarReturn.
 	^super visitReturnNode: aReturnNode!
 
-visitSelfVariableNode: anStSelfVariableNode
-	self visitVariableNode: anStSelfVariableNode.
+visitSelfVariableNode: aSelfVariableNode
+	self visitVariableNode: aSelfVariableNode.
 	currentScope markNeedsSelf!
 
 visitSequenceNode: aSequenceNode
@@ -539,13 +523,13 @@ visitSequenceNode: aSequenceNode
 					reads isEmpty ifTrue: [self signalError: CWarnWrittenNotRead forNode: writes first]]].
 	^answer!
 
-visitSuperVariableNode: anStSuperVariableNode
-	self visitVariableNode: anStSuperVariableNode.
+visitSuperVariableNode: aSuperVariableNode
+	self visitVariableNode: aSuperVariableNode.
 	currentScope markNeedsSelf!
 
-visitTempDeclNode: anStTempDeclNode
-	self checkRedefines: anStTempDeclNode.
-	super visitTempDeclNode: anStTempDeclNode!
+visitTempDeclNode: aStTempDeclNode
+	self checkRedefines: aStTempDeclNode.
+	super visitTempDeclNode: aStTempDeclNode!
 
 visitTemporaryNodes: aNodeCollection
 	aNodeCollection isEmpty ifTrue: [^self].
@@ -561,26 +545,25 @@ visitTemporaryNodes: aNodeCollection
 						extra: each name].
 			count + 1]!
 
-visitVariableNode: aStVariableNode
-	(self bindVariable: aStVariableNode)
+visitVariableNode: aVariableNode
+	(self bindVariable: aVariableNode)
 		ifNotNil: 
 			[:var |
 			(inTag and: [var isStaticVariable not])
-				ifTrue: [self signalError: CErrExpectAnnotationArg forNode: aStVariableNode].
-			var addRead: aStVariableNode fromScope: currentScope.
+				ifTrue: [self signalError: CErrExpectAnnotationArg forNode: aVariableNode].
+			var addRead: aVariableNode fromScope: currentScope.
 			var isTempVariable
 				ifTrue: 
 					[#todo.	"Report read-before-written after visiting entire AST and only if the temp is written somewhere, i.e. if read-not-written, should not get read-before-written warning."
-					(var writes isEmpty and: [(self isReceiverOfNilTest: aStVariableNode) not])
-						ifTrue: [self signalError: CWarnReadBeforeWritten forNode: aStVariableNode]]
-				ifFalse: [var isStaticVariable ifTrue: [self readStaticVariable: aStVariableNode]]]! !
+					(var writes isEmpty and: [(self isReceiverOfNilTest: aVariableNode) not])
+						ifTrue: [self signalError: CWarnReadBeforeWritten forNode: aVariableNode]]
+				ifFalse: [var isStaticVariable ifTrue: [self readStaticVariable: aVariableNode]]]! !
 !Kernel.StSemanticAnalyser categoriesForMethods!
 accessStaticVariable:!helpers!private! !
 addLiteral:value:!helpers!private! !
 addMessageToFrame:!helpers!private! !
 assignStaticVariable:!helpers!private! !
 assignVariable:!helpers!private! !
-bindVariable:!helpers!private! !
 blockDepth!helpers!private! !
 checkIsLiteralBlockHandler:forMessage:!helpers!private! !
 checkLiteralFrameSize:!helpers!private! !
@@ -599,7 +582,6 @@ checkRedefines:!helpers!private! !
 checkRestrictedSelectors:!helpers!private! !
 checkSupersend:!helpers!private! !
 checkTryBlock:!helpers!private! !
-compilationErrorClass!constants!private! !
 countOuterTemps!helpers!private! !
 enterMethodNode:!helpers!private! !
 errorAssignConstant:!error handling!private! !

@@ -20,7 +20,7 @@ Instance Variables:
 = anObject 
 	self == anObject ifTrue: [^true].
 	self class = anObject class ifFalse: [^false].
-	^self value = anObject value!
+	^value = anObject value!
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitReturnNode: self!

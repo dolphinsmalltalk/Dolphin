@@ -73,8 +73,8 @@ stopWithoutParentheses
 variable
 	^variable!
 
-variable: anStVariable
-	variable := anStVariable! !
+variable: aStVariable
+	variable := aStVariable! !
 !Kernel.StAbstractVariableNode categoriesForMethods!
 =!comparing!public! !
 hash!comparing!public! !

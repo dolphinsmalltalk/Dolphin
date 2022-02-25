@@ -72,8 +72,8 @@ checkUnimplementedSubclassResponsibility: aStMessageNode
 						forNode: aStMessageNode
 						extras: {methodClass. selector. class}]]!
 
-contextBindingFor: anStVariableNode
-	^evalScope ifNotNil: [(anStVariableNode lookupInScope: evalScope) ifNotNil: [:var | var binding]]!
+contextBindingFor: aStVariableNode
+	^evalScope ifNotNil: [(aStVariableNode lookupInScope: evalScope) ifNotNil: [:var | var binding]]!
 
 initialize
 	isStub := false.

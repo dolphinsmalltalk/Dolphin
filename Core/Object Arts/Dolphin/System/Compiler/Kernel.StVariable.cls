@@ -19,11 +19,15 @@ Instance Variables:
 !Kernel.StVariable categoriesForClass!Kernel-Objects! !
 !Kernel.StVariable methodsFor!
 
-addAssignment: anStVariableNode fromScope: anStSemanticScope
-	"We don't need to track variable accesses for all variable types, only locals."!
+addAssignment: aStVariableNode fromScope: aStSemanticScope
+	"We don't need to track variable accesses for all variable types, only locals."
 
-addRead: anStVariableNode fromScope: anStSemanticScope
-	"We don't need to track variable accesses for all variable types, only locals."!
+	!
+
+addRead: aStVariableNode fromScope: aStSemanticScope
+	"We don't need to track variable accesses for all variable types, only locals."
+
+	!
 
 binding
 	"Answer the <VariableBinding> which is the underlying representation of the static variable described by the receiver."
@@ -93,10 +97,10 @@ scope
 
 	^scope!
 
-scope: anStSemanticScope
+scope: aStSemanticScope
 	"Set the <StSemanticScope> in which the variable described by the receiver is defined."
 
-	scope := anStSemanticScope!
+	scope := aStSemanticScope!
 
 writes
 	"Answer the <sequencedReadableCollection> of <StVariableNode>'s that describe writes into the variable described by the receiver."

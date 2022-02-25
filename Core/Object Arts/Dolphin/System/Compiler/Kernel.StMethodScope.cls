@@ -24,9 +24,9 @@ methodScope!accessing!public! !
 
 !Kernel.StMethodScope class methodsFor!
 
-forScopeNode: anStMethodNode outer: anStLexicalScope
+forScopeNode: aStMethodNode outer: aStLexicalScope
 	^self new
-		node: anStMethodNode outer: anStLexicalScope;
+		node: aStMethodNode outer: aStLexicalScope;
 		yourself! !
 !Kernel.StMethodScope class categoriesForMethods!
 forScopeNode:outer:!instance creation!public! !

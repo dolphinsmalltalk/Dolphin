@@ -53,9 +53,9 @@ methodClass: aClassDescription environment: aNamespace
 outer
 	^nil!
 
-resolveVariable: anStVariableNode
+resolveVariable: aStVariableNode
 	| identifier |
-	^(self instanceVariables lookup: (identifier := anStVariableNode name))
+	^(self instanceVariables lookup: (identifier := aStVariableNode name))
 		ifNil: 
 			[staticVariables at: identifier
 				ifAbsentPutClean: 

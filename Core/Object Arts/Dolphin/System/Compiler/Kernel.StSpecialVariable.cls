@@ -11,11 +11,11 @@ Kernel.StSpecialVariable comment: '<StSpecialVariable> is an abstract class of <
 !Kernel.StSpecialVariable categoriesForClass!Kernel-Objects! !
 !Kernel.StSpecialVariable methodsFor!
 
-addAssignment: anStVariableNode fromScope: anStSemanticScope
+addAssignment: aStVariableNode fromScope: aStSemanticScope
 	self error: 'Illegal assignment to constant.'!
 
-addRead: anStVariableNode fromScope: anStSemanticScope
-	(reads ifNil: [reads := OrderedCollection new]) addLast: anStVariableNode!
+addRead: aStVariableNode fromScope: aStSemanticScope
+	(reads ifNil: [reads := OrderedCollection new]) addLast: aStVariableNode!
 
 isConstant
 	"Answer whether the receiver describes a variable that has a constant value. The special

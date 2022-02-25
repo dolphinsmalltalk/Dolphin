@@ -89,9 +89,9 @@ printSetSizeFor: anExternalField on: aCodeGenerationContext
 		variable: 'self'
 		on: aCodeGenerationContext!
 
-printSetSizeIsExpression: anStProgramNode for: anExternalField variable: aString on: aCodeGenerationContext
+printSetSizeIsExpression: aStProgramNode for: anExternalField variable: aString on: aCodeGenerationContext
 	| expr setter structClass sizeFieldName |
-	expr := self invertSizeIsExpression: anStProgramNode paramName: anExternalField valueParameterName.
+	expr := self invertSizeIsExpression: aStProgramNode paramName: anExternalField valueParameterName.
 	sizeFieldName := expr variable name.
 	setter := (sizeFieldName copyWith: $:) asSymbol.
 	structClass := anExternalField structClass.

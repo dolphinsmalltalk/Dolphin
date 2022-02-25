@@ -24,8 +24,8 @@ Instance Variables
 	self statements with: anObject statements do: [:first :second | first = second ifFalse: [^false]].
 	^true!
 
-acceptVisitor: anStParseNodeVisitor
-	^anStParseNodeVisitor visitArrayNode: self!
+acceptVisitor: aStParseNodeVisitor
+	^aStParseNodeVisitor visitArrayNode: self!
 
 children
 	^statements!

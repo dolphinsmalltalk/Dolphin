@@ -71,6 +71,12 @@ allDefinedVariables
 	self allDefinedVariableNodesDo: [:each | answer add: each name].
 	^answer!
 
+allSubNodes
+	| all |
+	all := OrderedCollection new.
+	self nodesDo: [:each | all add: each].
+	^all!
+
 allTemporaryVariableNodes
 	| answer |
 	answer := OrderedCollection new.
@@ -290,6 +296,9 @@ lastIsReturn
 literalCharacter
 	^$#!
 
+makeTreeImmutable
+	self nodesDo: [:each | each isImmutable: true]!
+
 methodClass
 	^self methodNode methodClass!
 
@@ -322,8 +331,8 @@ outer
 parent
 	^parent!
 
-parent: anStProgramNode 
-	parent := anStProgramNode!
+parent: aStProgramNode
+	parent := aStProgramNode!
 
 postCopy
 	"Apply any final flourish to the copy that may be required. In the case of a program node,
@@ -431,6 +440,7 @@ allArgumentVariables!accessing!public! !
 allDefinedVariableNodes!accessing!public! !
 allDefinedVariableNodesDo:!enumerating!public! !
 allDefinedVariables!accessing!public! !
+allSubNodes!iterating!public! !
 allTemporaryVariableNodes!accessing!public! !
 allTemporaryVariableNodesDo:!enumerating!public! !
 allTemporaryVariables!accessing!public! !
@@ -485,6 +495,7 @@ isValue!public!testing! !
 isVariable!public!testing! !
 lastIsReturn!public!testing! !
 literalCharacter!meta variable/accessing!public! !
+makeTreeImmutable!operations!public! !
 methodClass!accessing!public! !
 methodComments!accessing!public! !
 methodNode!accessing!public! !

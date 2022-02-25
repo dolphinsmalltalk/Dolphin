@@ -188,7 +188,7 @@ Kernel.StStaticVariable subclass: #'Kernel.StWorkspaceVariable'
 
 !Kernel.StAbstractVariableNode methodsFor!
 
-lookupInScope: anStSemanticScope
+lookupInScope: aStSemanticScope
 	^self subclassResponsibility! !
 !Kernel.StAbstractVariableNode categoriesForMethods!
 lookupInScope:!operations!public! !
@@ -242,24 +242,24 @@ lookupInScope:!operations!public! !
 
 !Kernel.StSelfVariableNode methodsFor!
 
-lookupInScope: anStSemanticScope
-	^anStSemanticScope selfVariable! !
+lookupInScope: aStSemanticScope
+	^aStSemanticScope selfVariable! !
 !Kernel.StSelfVariableNode categoriesForMethods!
 lookupInScope:!operations!public! !
 !
 
 !Kernel.StSuperVariableNode methodsFor!
 
-lookupInScope: anStSemanticScope
-	^anStSemanticScope superVariable! !
+lookupInScope: aStSemanticScope
+	^aStSemanticScope superVariable! !
 !Kernel.StSuperVariableNode categoriesForMethods!
 lookupInScope:!operations!public! !
 !
 
 !Kernel.StThisContextVariableNode methodsFor!
 
-lookupInScope: anStSemanticScope
-	^anStSemanticScope thisContextVariable! !
+lookupInScope: aStSemanticScope
+	^aStSemanticScope thisContextVariable! !
 !Kernel.StThisContextVariableNode categoriesForMethods!
 lookupInScope:!operations!public! !
 !

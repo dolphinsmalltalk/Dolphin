@@ -171,10 +171,19 @@ testCharacterScanning
 testCopy
 	| tree copy |
 	tree := self treeWithAllNodeTypes.
+	self verifyParentLinksInTree: tree.
 	copy := tree copy.
 	self assertTree: tree equals: copy.
 	"This does rely on the implementation of #childrenDo: on each node being correct. It is easy to define a new node type with chilren and forget to ensure it enumerates its children."
-	self verifyTree: copy isDeepCopyOf: tree!
+	self verifyTree: copy isDeepCopyOf: tree.
+	{Parser. Scanner. StProgramNode} do: 
+			[:class |
+			class selectors do: 
+					[:each |
+					| copy |
+					tree := class parseTreeFor: each.
+					copy := tree copy.
+					self verifyTree: copy isDeepCopyOf: tree]]!
 
 testExpressionSolver
 	#(#('y := 3' nil) #('x := 3' 'x := 3') #('y := x' 'x := y') #('y := x + 1' 'x := y - 1') #('y := x >> 2 - 1' 'x := y + 1 << 2') #('y := 1+z/x' 'x := (1 + z) / y') #('y := a - ((b / x) * c)' 'x := b / ((a - y) / c)') #('y := (m*x)+b' 'x := (y - b) / m') #('y := (m/x)-b' 'x := m / (y + b)' #('y:=a-c*x/(d-e)-f')))
@@ -384,17 +393,22 @@ testUnaryAnnotationChildren
 	self assert: annotation children size equals: 0!
 
 treeWithAllNodeTypes
-	^self
-		parseMethod: 'method: arg1 
-	<namespace: Core> 
-	<primitive: 123 error: ec>
-	<stdcall: UIntPtr blah POINTL* > 
-	| temps | 
-	super method: arg1. 
-	thisContext. 
-	temps := #(10 ##(#sequence -> true. #{Core.Object})). 
-	self foo; foo. 
-	^(temps collect: [:e | {e. #[127]} ])'!
+	^self parseMethod: self class methodWithAllNodeTypes!
+
+verifyParentLinksInTree: aProgramNode
+	| grandParent |
+	grandParent := aProgramNode parent.
+	(grandParent notNil and: [grandParent isCascade])
+		ifTrue: 
+			[aProgramNode childrenDo: 
+					[:each |
+					self assert: each parent parent identicalTo: grandParent.
+					self verifyParentLinksInTree: each]]
+		ifFalse: 
+			[aProgramNode childrenDo: 
+					[:each |
+					self assert: each parent identicalTo: aProgramNode.
+					self verifyParentLinksInTree: each]]!
 
 verifyTree: copiedNode isDeepCopyOf: originalNode
 	self assert: originalNode class identicalTo: copiedNode class.
@@ -403,17 +417,7 @@ verifyTree: copiedNode isDeepCopyOf: originalNode
 	originalNode children with: copiedNode children
 		do: 
 			[:originalChild :copiedChild |
-			"Messages in a cascade share their receiver coming out of the parser, but #copy gives them each a separate copy."
-			(originalNode parent notNil and: [originalNode parent isCascade])
-				ifTrue: 
-					[| isLastMessage |
-					isLastMessage := originalNode == originalNode parent messages last.
-					self assert: isLastMessage identicalTo: originalChild parent == originalNode]
-				ifFalse: [self assert: originalChild parent identicalTo: originalNode].
 			self assert: copiedChild parent identicalTo: copiedNode.
-			"
-			(Array with: originalNode with: originalChild parent with: copiedNode with: copiedChild parent) collect: #identityHash.
-			"
 			self verifyTree: copiedChild isDeepCopyOf: originalChild]! !
 !Kernel.Tests.ParserTest categoriesForMethods!
 assertToken:isChar:!helpers!private! !
@@ -439,6 +443,24 @@ testNodesDoAll!public!unit tests! !
 testPrimitiveTagChildren!public!unit tests! !
 testUnaryAnnotationChildren!public!unit tests! !
 treeWithAllNodeTypes!constants!private! !
+verifyParentLinksInTree:!helpers!private! !
 verifyTree:isDeepCopyOf:!helpers!private! !
+!
+
+!Kernel.Tests.ParserTest class methodsFor!
+
+methodWithAllNodeTypes
+	^'method: arg1 
+	<namespace: Core> 
+	<primitive: 123 error: ec>
+	<stdcall: UIntPtr blah POINTL* > 
+	| temps | 
+	super method: arg1. 
+	thisContext. 
+	temps := #(10 ##(#sequence -> true. #{Core.Object})). 
+	self foo; foo. 
+	^(temps collect: [:e | {e. #[127]} ])'! !
+!Kernel.Tests.ParserTest class categoriesForMethods!
+methodWithAllNodeTypes!constants!private! !
 !
 

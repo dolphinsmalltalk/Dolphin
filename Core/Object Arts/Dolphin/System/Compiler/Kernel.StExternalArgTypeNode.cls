@@ -57,8 +57,8 @@ stop: anObject
 structClass
 	^structClass!
 
-structClass: anStVariableNode
-	(structClass := anStVariableNode) ifNotNil: [anStVariableNode parent: self]!
+structClass: aStVariableNode
+	(structClass := aStVariableNode) ifNotNil: [aStVariableNode parent: self]!
 
 typeOrdinal
 	^typeOrdinal!

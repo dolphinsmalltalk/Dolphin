@@ -11,9 +11,9 @@ Kernel.StLocalVariable comment: '<StlocalVariable> is an abstract class of <StVa
 !Kernel.StLocalVariable categoriesForClass!Kernel-Objects! !
 !Kernel.StLocalVariable methodsFor!
 
-addRead: anStVariableNode fromScope: anStSemanticScope
-	reads addLast: anStVariableNode.
-	anStSemanticScope realScope == self scope realScope
+addRead: aStVariableNode fromScope: aStSemanticScope
+	reads addLast: aStVariableNode.
+	aStSemanticScope realScope == self scope realScope
 		ifTrue: 
 			["Temp is read in its defining scope"
 			storage isNil
@@ -58,8 +58,8 @@ reads
 
 	^reads!
 
-setNode: anStVariableNode
-	node := anStVariableNode.
+setNode: aStVariableNode
+	node := aStVariableNode.
 	reads := OrderedCollection new!
 
 storage
@@ -78,8 +78,8 @@ storage!accessing!private! !
 
 !Kernel.StLocalVariable class methodsFor!
 
-node: anStTempDecl
-	^self new setNode: anStTempDecl! !
+node: aStTempDecl
+	^self new setNode: aStTempDecl! !
 !Kernel.StLocalVariable class categoriesForMethods!
 node:!public! !
 !

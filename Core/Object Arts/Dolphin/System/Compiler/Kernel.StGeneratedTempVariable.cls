@@ -11,7 +11,7 @@ Kernel.StGeneratedTempVariable comment: '<StGeneratedTempVariable> is a speciali
 !Kernel.StGeneratedTempVariable categoriesForClass!Kernel-Objects! !
 !Kernel.StGeneratedTempVariable methodsFor!
 
-addAssignment: anStVariableNode fromScope: anStSemanticScope
+addAssignment: aStVariableNode fromScope: aStSemanticScope
 	self error: 'Illegal assignment to constant.'!
 
 isConstant
