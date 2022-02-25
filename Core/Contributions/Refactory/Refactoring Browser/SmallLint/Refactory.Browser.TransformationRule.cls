@@ -340,22 +340,22 @@ showWhileBlocks
 		name: 'Move assignment out of showWhile: blocks'!
 
 streamLiterals
-	^self rewrite: #(
-			#('`#l `{:node | 
+	^self rewrite: {
+			{'`#l `{:node | 
 				node parent isMessage and: 
 						[node parent selector = #writeStream or: 
 								[node parent selector = #on: and: 
-										[node parent receiver = (RBVariableNode named: ''WriteStream'') 
-											or: [node parent receiver = (RBVariableNode named: ''ReadWriteStream'')]]]]}'
+										[node parent receiver = (<1p> named: ''WriteStream'') 
+											or: [node parent receiver = (<1p> named: ''ReadWriteStream'')]]]]}' << StVariableNode.
 			"->"
 			'`{`#l value isEmpty 
 					ifTrue: 
-						[RBMessageNode 
-							receiver: (RBVariableNode named: (`#l value = '''' 
+						[<2p> 
+							receiver: (<1p> named: (`#l value = '''' 
 											ifTrue: [''String'']
 											ifFalse: [`#l value class name asString]))
 							selector: #new]
-					ifFalse: [RBMessageNode receiver: `#l copy selector: #copy]}'))
+					ifFalse: [<2p> receiver: `#l copy selector: #copy]}' << {StVariableNode. StMessageNode}}}
 		methods: false
 		name: 'Convert write streams on literals to be write streams on non-literals'!
 
