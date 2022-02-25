@@ -508,6 +508,17 @@ testEmptyIfInLoop
 				withArguments: #())
 		equals: 1!
 
+testExtCallStructLiterals
+	| method result |
+	result := self
+				compileMethod: 'x: a1 _: a2 _: a3 _: a4 <stdcall: FILETIME blah _FPIEEE_VALUE** MSG* DWORD* QWORD**>'
+				in: KernelLibrary.
+	method := result method.
+	self assertNotNil: method.
+	{FILETIME. _FPIEEE_VALUE. MSG} do: [:each | self assert: (method literals includes: each)].
+	"Some classes have special type codes so are not added to the frame"
+	{DWORD. QWORD} do: [:each | self deny: (method literals includes: each)]!
+
 testFarReturnFromBlock
 	| method block |
 	method := (self compileExpression: '[^1]') method.
@@ -1697,6 +1708,7 @@ testDecrementPushTempOptimisation!public!unit tests! !
 testDecrementTempOptimisation!public!unit tests! !
 testEmpty!public!unit tests! !
 testEmptyIfInLoop!public!unit tests! !
+testExtCallStructLiterals!public!unit tests! !
 testFarReturnFromBlock!public!unit tests! !
 testFloatScanning!public!unit tests! !
 testIfNil!public!unit tests! !

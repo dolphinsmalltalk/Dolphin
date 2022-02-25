@@ -2845,7 +2845,8 @@ POTE Compiler::FindExternalClass(const u8string& strClass, const TEXTRANGE& rang
 
 void Compiler::ParseExternalClass(const u8string& strClass, TypeDescriptor& descriptor)
 {
-	POTE structClass = FindExternalClass(strClass, descriptor.range);
+	TEXTRANGE structRange = descriptor.range;
+	POTE structClass = FindExternalClass(strClass, structRange);
 	if (m_ok)
 	{
 		STBehavior& behavior = *(STBehavior*)GetObj(structClass);
@@ -2865,6 +2866,7 @@ void Compiler::ParseExternalClass(const u8string& strClass, TypeDescriptor& desc
 					// Double indirections always use LPPVOID type
 					descriptor.type = DolphinX::ExtCallArgType::LPPVoid;
 					descriptor.parm = 0;
+					AddToFrame(reinterpret_cast<Oop>(structClass), structRange, LiteralType::ReferenceOnly);
 				}
 			}
 			else
@@ -2874,6 +2876,7 @@ void Compiler::ParseExternalClass(const u8string& strClass, TypeDescriptor& desc
 					// One level of indirection already implied, totalling two
 					descriptor.type = DolphinX::ExtCallArgType::LPPVoid;
 					descriptor.parm = 0;
+					AddToFrame(reinterpret_cast<Oop>(structClass), structRange, LiteralType::ReferenceOnly);
 				}
 				else
 				{
@@ -3033,6 +3036,7 @@ void Compiler::ParseExtCallArgument(TypeDescriptor& answer)
 								{
 									answer.type = DolphinX::ExtCallArgType::LPPVoid;
 									answer.parm = 0;
+									AddToFrame(reinterpret_cast<Oop>(structClass), answer.range, LiteralType::ReferenceOnly);
 								}
 								else
 								{
