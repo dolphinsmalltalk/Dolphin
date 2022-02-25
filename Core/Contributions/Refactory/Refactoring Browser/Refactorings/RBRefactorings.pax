@@ -119,7 +119,7 @@ package!
 "Class Definitions"!
 
 Core.Object subclass: #'Refactory.Browser.RBAbstractClass'
-	instanceVariableNames: 'newMethods instanceVariableNames removedMethods scope'
+	instanceVariableNames: 'newMethods instanceVariableNames removedSelectors scope'
 	classVariableNames: 'LookupSuperclass'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -131,7 +131,7 @@ Core.Object subclass: #'Refactory.Browser.RBAbstractCondition'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Core.Object subclass: #'Refactory.Browser.RBMethod'
-	instanceVariableNames: 'class compiledMethod source selector parseTree'
+	instanceVariableNames: 'class compiledMethod source selector parseTree hasSourceIntervals'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -335,7 +335,7 @@ Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.ExtractMethodT
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.ExtractToTemporaryRefactoring'
-	instanceVariableNames: 'sourceInterval selector newVariableName parseTree'
+	instanceVariableNames: 'sourceInterval selector newVariableName method'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -347,13 +347,13 @@ Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.InlineAllSende
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.InlineMethodRefactoring'
-	instanceVariableNames: 'sourceInterval inlineParseTree sourceParseTree sourceSelector sourceMessage inlineClass'
+	instanceVariableNames: 'sourceInterval inlineParseTree sourceParseTree sourceSelector sourceMessage inlineClass method'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.InlineTemporaryRefactoring'
-	instanceVariableNames: 'sourceInterval selector sourceTree assignmentNode definingNode'
+	instanceVariableNames: 'sourceInterval selector assignmentNode definingNode sourceTree method'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -365,7 +365,7 @@ Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.MoveMethodRefa
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.MoveVariableDefinitionRefactoring'
-	instanceVariableNames: 'selector interval name parseTree blockNodes definingNode'
+	instanceVariableNames: 'selector interval name parseTree blockNodes definingNode method'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -535,7 +535,7 @@ hasLiteralMatching:!private!testing! !
 !Core.Class methodsFor!
 
 classInModel: aRBModel
-	^((self environment classInModel: aRBModel) localBindingFor: name) value!
+	^((environment classInModel: aRBModel) localBindingFor: name) value!
 
 rbClass
 	^Refactory.Browser.RBClass! !

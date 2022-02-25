@@ -107,8 +107,10 @@ value
 	resulted in an <Error>, then that exception is re-raised now in the context
 	of the calling process."
 
-	valueAvailable wait; signal.
-	exception == nil ifFalse: [exception copy signal].
+	valueAvailable
+		wait;
+		signal.
+	exception isNil ifFalse: [exception copy signal].
 	^value! !
 !Core.DeferredValue categoriesForMethods!
 _evaluate:withArguments:!evaluating!private! !

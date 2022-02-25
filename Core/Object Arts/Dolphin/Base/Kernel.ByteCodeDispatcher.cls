@@ -140,8 +140,12 @@ dispatchNext
 fetch
 	^instructions at: self next + 1!
 
-indexOfInstVarAccess: aSymbol 
-	^(self indexOfInstVarRead: aSymbol) ifNil: [self indexOfInstVarWrite: aSymbol]!
+indexOfInstVarAccess: aSymbol
+	aSymbol == #shortPushInstVar: ifTrue: [^byteCode - ShortPushInstVar].
+	aSymbol == #shortPopInstVar: ifTrue: [^byteCode - ShortPopInstVar].
+	(aSymbol == #pushInstVar: or: [aSymbol == #storeInstVar: or: [aSymbol == #popInstVar:]])
+		ifTrue: [^byteCodes at: ip - 1].
+	^nil!
 
 indexOfInstVarRead: aSymbol 
 	aSymbol == #shortPushInstVar: ifTrue: [^byteCode - ShortPushInstVar].

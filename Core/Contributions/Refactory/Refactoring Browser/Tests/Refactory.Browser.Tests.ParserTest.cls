@@ -120,6 +120,9 @@ errorSignal
 	#rbFix. "Dolphin does not implement this VW message on Object"
 	^Error!
 
+exampleClasses
+	^{Parser. Scanner. StProgramNode}!
+
 parseError: each
 	Parser parseExpression: each first onError: [:string :pos | ^self assert: pos equals: each last].
 	self error: 'Parser didn''t fail'!
@@ -179,7 +182,8 @@ testBlockRewrites
 		withValueFrom: [:aNode | StVariableNode named: 'xxx']
 		when: [:aNode | false].
 	rewriter executeTree: tree.
-	self compare: tree to: (self parseMethod: 'method: asdf
+	self compare: rewriter tree
+		to: (self parseMethod: 'method: asdf
 	<primitive: 1>
 	^asdf +  foo + fdsa')!
 
@@ -194,6 +198,32 @@ testComparingTrees
 	class := BasicLintRuleTestData class.
 	class selectors
 		do: [:each | self compare: (class parseTreeFor: each) to: (class parseTreeFor: each)]!
+
+testCopyInContext
+	| tree copy |
+	tree := self treeWithEverything.
+	self verifyParentLinksInTree: tree.
+	tree makeTreeImmutable.
+	copy := tree copyInContext: LookupTable new.
+	self compare: copy to: tree.
+	self verifyTree: copy isDeepCopyOf: tree.
+	tree := self treeWithAllNodeTypes.
+	self verifyParentLinksInTree: tree.
+	tree makeTreeImmutable.
+	copy := tree copyInContext: LookupTable new.
+	self compare: copy to: tree.
+	self verifyTree: copy isDeepCopyOf: tree.
+	self exampleClasses do: 
+			[:class |
+			class selectors do: 
+					[:each |
+					| copy |
+					tree := class parseTreeFor: each.
+					self verifyParentLinksInTree: tree.
+					tree makeTreeImmutable.
+					copy := tree copyInContext: LookupTable new.
+					self compare: tree to: copy.
+					self verifyTree: copy isDeepCopyOf: tree]]!
 
 testCreationProtocol
 	| messageNode |
@@ -624,9 +654,37 @@ testTokens
 	tokens printString.
 	tokens with: #(4 4 3 2 1 3 1 11) do: [:token :length | self assert: token length equals: length]!
 
+treeWithAllNodeTypes
+	^self
+		parseMethod: 'method: arg1 
+	<namespace: Core> 
+	<primitive: 123 error: ec>
+	<stdcall: UIntPtr blah POINTL* > 
+	| temps | 
+	super method: arg1. 
+	thisContext. 
+	temps := #(10 ##(#sequence -> true. #{Core.Object})). 
+	self foo; foo. 
+	^(temps collect: [:e | {e. #[127]} ])'!
+
 treeWithEverything
 	^self
 		parseMethod: 'method: arg1 | temps | temps := #(10 ##(#sequence -> true. #optimized -> true)). temps foo; foo. ^(temps collect: [:e | ])'!
+
+verifyParentLinksInTree: aProgramNode
+	| grandParent |
+	grandParent := aProgramNode parent.
+	(grandParent notNil and: [grandParent isCascade])
+		ifTrue: 
+			[aProgramNode childrenDo: 
+					[:each |
+					self assert: each parent parent identicalTo: grandParent.
+					self verifyParentLinksInTree: each]]
+		ifFalse: 
+			[aProgramNode childrenDo: 
+					[:each |
+					self assert: each parent identicalTo: aProgramNode.
+					self verifyParentLinksInTree: each]]!
 
 verifyParser
 	Smalltalk allBehaviorsDo: 
@@ -654,17 +712,7 @@ verifyTree: copiedNode isDeepCopyOf: originalNode
 	originalNode children with: copiedNode children
 		do: 
 			[:originalChild :copiedChild |
-			"Messages in a cascade share their receiver coming out of the parser, but #copy gives them each a separate copy."
-			(originalNode parent notNil and: [originalNode parent isCascade])
-				ifTrue: 
-					[| isLastMessage |
-					isLastMessage := originalNode == originalNode parent messages last.
-					self assert: isLastMessage identicalTo: originalChild parent == originalNode]
-				ifFalse: [self assert: originalChild parent identicalTo: originalNode].
 			self assert: copiedChild parent identicalTo: copiedNode.
-			"
-			(Array with: originalNode with: originalChild parent with: copiedNode with: copiedChild parent) collect: #identityHash.
-			"
 			self verifyTree: copiedChild isDeepCopyOf: originalChild]! !
 !Refactory.Browser.Tests.ParserTest categoriesForMethods!
 buildArgumentSearch!accessing!public! !
@@ -681,6 +729,7 @@ createMethodSearchWith:selectors:inClass:!accessing!public! !
 createSearchWith:selectors:inClass:!accessing!public! !
 currentSelector!accessing!public! !
 errorSignal!public! !
+exampleClasses!private! !
 parseError:!private! !
 setUp!accessing!public! !
 testAllSearches!public!unit tests! !
@@ -688,6 +737,7 @@ testArray!public!unit tests! !
 testBlockRewrites!public!unit tests! !
 testCascadeReplacement!public!unit tests! !
 testComparingTrees!public!unit tests! !
+testCopyInContext!public!unit tests! !
 testCreationProtocol!public!unit tests! !
 testEquality!public!unit tests! !
 testEqualToWithMappingAfterRewrite!public!unit tests! !
@@ -719,7 +769,9 @@ testRewrites!public!unit tests! !
 testSearching!public!unit tests! !
 testSmallDictionary!public!unit tests! !
 testTokens!public!unit tests! !
+treeWithAllNodeTypes!private! !
 treeWithEverything!private! !
+verifyParentLinksInTree:!helpers!private! !
 verifyParser!long running!public! !
 verifySelector:inClass:!private! !
 verifyTree:isDeepCopyOf:!helpers!private! !

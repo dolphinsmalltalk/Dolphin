@@ -30,6 +30,7 @@ package setClassNames: #(
 	#{Refactory.Browser.RenameInstanceVariableChange}
 	#{Refactory.Browser.RenameVariableChange}
 	#{Tools.BasicRenameClassChange}
+	#{Tools.ReplaceImportChange}
 ).
 
 package setPrerequisites: #(
@@ -135,6 +136,12 @@ Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.RemoveClass
 	classConstants: {}!
 Refactory.Browser.RefactoryClassChange subclass: #'Refactory.Browser.RemoveMethodChange'
 	instanceVariableNames: 'selector'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Refactory.Browser.RefactoryClassChange subclass: #'Tools.ReplaceImportChange'
+	instanceVariableNames: 'oldImport newImport'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

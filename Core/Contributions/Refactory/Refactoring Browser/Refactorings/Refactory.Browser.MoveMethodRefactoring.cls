@@ -65,7 +65,7 @@ checkTemporaryVariableNames
 								refactoringError: ('<1p> already defines a variable called <2s>' expandMacrosWith: each with: name)]]]!
 
 compileDelegatorMethod
-	| statementNode delegatorNode tree |
+	| statementNode delegatorNode method |
 	delegatorNode := StMessageNode
 				receiver: (StVariableNode named: variable)
 				selectorParts: parseTree selectorParts
@@ -74,12 +74,16 @@ compileDelegatorMethod
 							each = selfVariableName ifTrue: [StSelfVariableNode start: 0] ifFalse: [StVariableNode named: each]]).
 	self hasOnlySelfReturns ifFalse: [delegatorNode := StReturnNode value: delegatorNode].
 	statementNode := StSequenceNode temporaries: #() statements: {delegatorNode}.
-	(tree := class parseTreeFor: selector) body: statementNode.
-	class compileTree: tree!
+	method := (class whoDefinesMethod: selector) methodFor: selector.
+	model compileTree: (method parseTree
+				body: statementNode;
+				yourself)
+		forMethod: method!
 
 compileNewMethods
-	moveToClasses 
-		do: [:each | each compile: parseTree newSource categories: (class protocolsFor: selector)]!
+	| categories |
+	categories := class protocolsFor: selector.
+	moveToClasses do: [:each | each compile: parseTree newSource categories: categories]!
 
 getAllClassesForGlobalOrClassVariable
 	"rbDmm added for MoveMethodRefactoring>>getClassForGlobalOrClassVariable"

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.MoveVariableDefinitionRefactoring'
-	instanceVariableNames: 'selector interval name parseTree blockNodes definingNode'
+	instanceVariableNames: 'selector interval name parseTree blockNodes definingNode method'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -64,7 +64,8 @@ preconditions
 						ifFalse: 
 							[self 
 								refactoringError: name , ' does not seem to be a valid variable name.'].
-					parseTree := class parseTreeFor: selector.
+					method := class methodFor: selector.
+					parseTree := method parseTreeWithSourceIntervals.
 					self checkParseTree.
 					true])!
 
@@ -93,7 +94,7 @@ subblocksIn: aParseTree
 transform
 	definingNode removeTemporaryNamed: name.
 	blockNodes do: [:each | each body addTemporaryNamed: name].
-	class compileTree: parseTree!
+	model compileTree: parseTree forMethod: method!
 
 usesDirectly: aParseTree
 	| searcher |

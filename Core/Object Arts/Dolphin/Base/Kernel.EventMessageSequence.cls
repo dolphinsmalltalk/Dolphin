@@ -42,8 +42,7 @@ elementsExpired: count of: aWeakArray
 forwardTo: anObject
 	"Forwards all the messages in this sequence to anObject. Answers the result of the last message in the sequence."
 
-	| corpse last |
-	corpse := DeadObject.Current.
+	| last |
 	last := nil.
 	1 to: receivers basicSize
 		do: 
@@ -51,7 +50,7 @@ forwardTo: anObject
 			| receiver |
 			"Assign the receiver into a temp to prevent it being GC'd before the message can be sent."
 			receiver := receivers at: index.
-			receiver == corpse
+			receiver == DeadObject.Current
 				ifFalse: [(messages at: index) ifNotNil: [:msg | last := msg forwardTo: anObject]]].
 	^last!
 

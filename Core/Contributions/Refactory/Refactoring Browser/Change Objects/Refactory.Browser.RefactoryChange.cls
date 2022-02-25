@@ -61,6 +61,9 @@ execute
 executeNotifying: aBlock 
 	self subclassResponsibility!
 
+lastChangeMatching: aMonadicValuable
+	^(aMonadicValuable value: self) ifTrue: [self]!
+
 name
 	^name isNil ifTrue: [self changeString] ifFalse: [name]!
 
@@ -98,6 +101,7 @@ displayClassName!printing!public! !
 displayString!printing!public! !
 execute!applying!public! !
 executeNotifying:!applying!private! !
+lastChangeMatching:!public!searching! !
 name!accessing!public! !
 name:!initializing!public! !
 package!accessing!public! !

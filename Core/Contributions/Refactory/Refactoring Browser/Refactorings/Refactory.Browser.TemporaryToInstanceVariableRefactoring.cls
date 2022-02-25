@@ -55,15 +55,15 @@ storeOn: aStream
 	aStream nextPut: $)!
 
 transform
-	| parseTree matcher |
-	parseTree := class parseTreeFor: selector.
+	| method parseTree matcher |
+	method := class methodFor: selector.
+	parseTree := method parseTree.
 	parseTree isNil ifTrue: [self refactoringError: 'Could not parse method'].
-	#rbFix.	"Not necessary to remove the method first - it is not an error to shadow and inst var with a temp"
-	"class removeMethod: selector."
+	"Note that it is not necessary to remove the method first - it is not an error to shadow an inst var with a temp"
 	class addInstanceVariable: temporaryVariableName.
 	(matcher := ParseTreeRewriter removeTemporaryNamed: temporaryVariableName) executeTree: parseTree.
 	"We must maintain any custom packaging or namespace of the original method, or the new method may not compile"
-	class compileTree: matcher tree! !
+	model compileTree: matcher tree forMethod: method! !
 !Refactory.Browser.TemporaryToInstanceVariableRefactoring categoriesForMethods!
 checkForValidTemporaryVariable!preconditions!public! !
 class:selector:variable:!initialize/release!public! !

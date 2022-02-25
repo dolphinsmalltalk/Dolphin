@@ -11,9 +11,9 @@ Refactory.Browser.Tests.ParseTreeRewriterTest comment: ''!
 !Refactory.Browser.Tests.ParseTreeRewriterTest categoriesForClass!Refactory-Testing! !
 !Refactory.Browser.Tests.ParseTreeRewriterTest methodsFor!
 
-compare: anObject to: anotherObject
-	self assert: anObject hash equals: anotherObject hash.
-	self assert: anObject equals: anotherObject!
+compare: aParseTree to: anotherParseTree
+	self assert: aParseTree hash equals: anotherParseTree hash.
+	self assert: aParseTree equals: anotherParseTree!
 
 parseRewriteExpression: aString
 	^RBPatternParser parseExpression: aString!
@@ -40,7 +40,7 @@ testBlockRewrites
 		withValueFrom: [:aNode | StVariableNode named: 'xxx']
 		when: [:aNode | true].
 	rewriter executeTree: tree.
-	self compare: tree
+	self compare: rewriter tree
 		to: (self parseMethod: 'method: xxx
 	<primitive: 1>
 	<primitive: 2>
@@ -62,7 +62,7 @@ testBlockRewritesAreNotChained
 		with: 'grgrgrgrgr'
 		when: [:aNode | true].
 	rewriter executeTree: tree.
-	self compare: tree
+	self compare: rewriter tree
 		to: (self parseMethod: 'method: asdf
 	<primitive: 1>
 	<primitive: 2>
@@ -87,7 +87,7 @@ testBlockRewritesArguments
 		withValueFrom: [:aNode | StVariableNode named: 'yyy']
 		when: [:aNode | true].
 	rewriter executeTree: tree.
-	self compare: tree
+	self compare: rewriter tree
 		to: (self
 				parseMethod: 'method: xxx bar: yyy
 	<primitive: 1>
@@ -113,7 +113,7 @@ testBlockRewritesArgumentsTakeIntoAccountConditions
 		withValueFrom: [:aNode | StVariableNode named: 'yyy']
 		when: [:aNode | false].
 	rewriter executeTree: tree.
-	self compare: tree
+	self compare: rewriter tree
 		to: (self
 				parseMethod: 'method: xxx bar: bar
 	<primitive: 1>
@@ -134,7 +134,7 @@ testBlockRewritesFirstRuleTakePrecedence
 		with: 'grgrgrgrgr'
 		when: [:aNode | true].
 	rewriter executeTree: tree.
-	self compare: tree
+	self compare: rewriter tree
 		to: (self parseMethod: 'method: asdf
 	<primitive: 1>
 	<primitive: 2>
@@ -152,7 +152,7 @@ testBlockRewritesWithTrueConditionIsNotExecutedWhenNotMatchingCorrectNode
 		withValueFrom: [:aNode | StVariableNode named: 'xxx']
 		when: [:aNode | true].
 	rewriter executeTree: tree.
-	self compare: tree
+	self compare: rewriter tree
 		to: (self parseMethod: 'method: xxx
 	<primitive: 1>
 	<primitive: 2>
@@ -182,6 +182,9 @@ testPatternCascade
 		to: (self parseExpression: 'self bar; bar: 4; foo; printString. self foo:4')!
 
 testRewriteDoesNotReuseOriginalNodes
+	"This test suggest that the ParseTreeRewriter never updates the original parse tree, whereas in fact it does and many of the refactorings rely on this behaviour.
+	I've tried to modify it to make it answer a copy, but it is just too much work for little apparent value."
+
 	"Due to a bug in RBPatternVariableNode>>#copyInContext method, creating a new astTree from the rewriter reused some nodes
 	 of the original tree, this results in two trees sharing the identical nodes. The original AST now contained statement nodes
 	that don't refer to the same parent (the method node) and that is wrong."
@@ -237,22 +240,27 @@ testRewriteMethods
 			'a <`sel1: `#arg1 `sel2: `#arg2>' -> 'a <`sel2: `#arg2 `sel1: `#arg1>'}.
 		{'a <foo> self foo' -> 'b <foo> self foo'. 'a `@.stmts' -> 'b `@.stmts'}} do: 
 				[:each |
-				| rewrite |
+				| rewrite originalTree rewritten |
 				rewrite := ParseTreeRewriter new.
 				rewrite replaceMethod: each second key with: each second value.
-				self compare: (self
-							parseMethod: (rewrite
-									executeTree: (self parseMethod: each first key);
-									tree) formattedCode)
-					to: (self parseMethod: (each first value)).
+				originalTree := self parseMethod: each first key.
+				self verifyParentLinksInTree: originalTree.
+				"Note that the tree will be updated in place. This is relied on by users of the rewriter such as the refactorings. If you make it immutable, you can see this happening"
+				"originalTree makeTreeImmutable."
+				rewritten := rewrite
+							executeTree: originalTree;
+							tree.
+				self compare: (self parseMethod: rewritten formattedCode) to: (self parseMethod: each first value).
+				self verifyParentLinksInTree: originalTree.
+				self verifyParentLinksInTree: rewritten.
 				rewrite := ParseTreeRewriter new.
-				rewrite replaceTree: (self parseRewriteMethod: (each second key))
+				rewrite replaceTree: (self parseRewriteMethod: each second key)
 					withTree: (self parseRewriteMethod: each second value).
 				self compare: (self
 							parseMethod: (rewrite
 									executeTree: (self parseMethod: each first key);
 									tree) formattedCode)
-					to: (self parseMethod: (each first value))]!
+					to: (self parseMethod: each first value)]!
 
 testRewriteNamespaceAnnotation
 	| rewriter |
@@ -306,7 +314,30 @@ treeToBeRewritten
 	^self parseMethod: 'method: asdf
 	<primitive: 1>
 	<primitive: 2>
-	^asdf + self foo + asdf'! !
+	^asdf + self foo + asdf'!
+
+verifyParentLinksInTree: aProgramNode
+	| grandParent |
+	grandParent := aProgramNode parent.
+	(grandParent notNil and: [grandParent isCascade])
+		ifTrue: 
+			[aProgramNode childrenDo: 
+					[:each |
+					self assert: each parent parent identicalTo: grandParent.
+					self verifyParentLinksInTree: each]]
+		ifFalse: 
+			[aProgramNode childrenDo: 
+					[:each |
+					self assert: each parent identicalTo: aProgramNode.
+					self verifyParentLinksInTree: each]]!
+
+verifyTree: copiedNode sharesNoNodesWith: originalNode
+	| originalNodes shared copiedNodes |
+	self deny: copiedNode identicalTo: originalNode.
+	originalNodes := originalNode allSubNodes asIdentitySet.
+	copiedNodes := copiedNode allSubNodes.
+	shared := copiedNodes select: [:each | originalNodes includes: each].
+	self assert: shared asArray equals: #()! !
 !Refactory.Browser.Tests.ParseTreeRewriterTest categoriesForMethods!
 compare:to:!helpers!private! !
 parseRewriteExpression:!helpers!private! !
@@ -325,5 +356,7 @@ testRewriteMethods!public!unit tests! !
 testRewriteNamespaceAnnotation!public!unit tests! !
 testRewrites!public!unit tests! !
 treeToBeRewritten!constants!private! !
+verifyParentLinksInTree:!helpers!private! !
+verifyTree:sharesNoNodesWith:!helpers!private! !
 !
 

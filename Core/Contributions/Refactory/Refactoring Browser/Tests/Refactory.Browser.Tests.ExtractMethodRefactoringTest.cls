@@ -47,21 +47,22 @@ testExtractFailure
 			withMessage: 'Cannot extract assignment without all references: #(detector subclassResponsibilitySymbol)'!
 
 testExtractFromMethodInCustomNamespace
-	| method source refactoring class start stop rectangleMetaclass |
+	| method source refactoring class start stop rectangleMetaclass selector |
 	rectangleMetaclass := #{Graphics.Rectangle class} value.
 	method := rectangleMetaclass compiledMethodAt: #publishedAspectsOfInstances.
 	self assert: method environment equals: Tools.
 	source := method getSource.
 	start := source indexOf: $(.
 	stop := source
-				nextIndexOf: $)
+				nextIndexOf: $;
 				from: start
 				to: source size.
 	refactoring := ExtractMethodRefactoring
-				extract: (start to: stop)
+				extract: (method parseTree bestNodeFor: (start to: stop)) parent sourceInterval
 				from: #publishedAspectsOfInstances
 				in: rectangleMetaclass.
-	self setupMethodNameFor: refactoring toReturn: #topAspect.
+	selector := 'topAspect' asSymbol.
+	self setupMethodNameFor: refactoring toReturn: selector.
 	self executeRefactoring: refactoring.
 	class := refactoring model classNamed: #'Graphics.Rectangle'.
 	self assert: (class metaclass parseTreeFor: #publishedAspectsOfInstances)
@@ -71,13 +72,19 @@ testExtractFromMethodInCustomNamespace
 
 	^super publishedAspectsOfInstances
 		add: self topAspect;
-		add: (Aspect integer: #left);
-		add: (Aspect integer: #bottom);
-		add: (Aspect integer: #right);
+		add: ((Aspect integer: #left)
+					defaultValue: 0;
+					yourself);
+		add: ((Aspect integer: #bottom)
+					defaultValue: 0;
+					yourself);
+		add: ((Aspect integer: #right)
+					defaultValue: 0;
+					yourself);
 		yourself').
-	self assert: (class metaclass parseTreeFor: #topAspect)
+	self assert: (class metaclass parseTreeFor: selector)
 		equals: (self parseMethod: 'topAspect
-	^Aspect integer: #top').
+	^(Aspect integer: #top) defaultValue: 0; yourself').
 	self assert: refactoring model changes changes first environment identicalTo: Tools!
 
 testExtractMethodAtEndOfMethodThatNeedsReturn

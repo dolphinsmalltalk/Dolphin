@@ -205,22 +205,23 @@ testLocalBindingFor
 	self assert: binding realBinding identicalTo: (TransformationRuleTestData localBindingFor: 'Bar')!
 
 testMethodsReferencingExternals1
-	| class referers expectedSelectors subclass |
+	| class referers expectedSelectors subclass newMethod |
 	class := model classNamed: #'Refactory.Browser.Tests.ClassToRename'.
 	referers := (class methodsReferencingExternals asArray collect: [:each | each selector]) sort.
 	expectedSelectors := #(#refersToClassInCustomNamespace #refersToClassVariableInCustomNamespace #refersToClassVariablePartiallyQualified #selfReference #testFailure).
 	self assert: referers equals: expectedSelectors.
 	expectedSelectors do: [:each | class removeMethod: each].
 	self assert: class methodsReferencingExternals isEmpty.
+	"Modify an existing method (should no longer see the real method)."
 	class compile: 'selfReference ^Core.Object'.
-	self assert: (class methodsReferencingExternals collect: [:each | each selector]) asArray
-		equals: #(#selfReference).
+	newMethod := class newMethods at: #selfReference.
+	self assert: class methodsReferencingExternals asArray equals: {newMethod}.
 	"initialize method references class var ClassVar1, but that is locally defined and so should not be considered an external reference"
 	self assert: class metaclass methodsReferencingExternals single
 		equals: (class metaclass methodFor: #testSkip).
 	subclass := class subclasses first.
 	self assert: (subclass methodsReferencingExternals collect: [:each | each selector]) asSortedArray
-		equals: #(#refersToClassFullyQualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToOtherClassPartiallyQualifiedBinding #testSkip #unqualifiedBindingReference)!
+		equals: #(#externalReference:_: #refersToClassFullyQualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToOtherClassPartiallyQualifiedBinding #testSkip #unqualifiedBindingReference)!
 
 testMethodsReferencingExternals2
 	| class referers |
@@ -244,6 +245,13 @@ testMethodsReferencingExternals2
 	"References to the symbolic name are not considered to be references to the named variable as they may not be"
 	#(#refersToClassFullyQualifiedName #refersToClassFullyQualifiedNameInArray #refersToDolphinTestBindingFullyQualified)
 		do: [:each | self deny: (referers includes: each)]!
+
+testMethodsReferencingExternals3
+	| class referers |
+	class := model classFor: SubclassOfClassToRename.
+	referers := (class methodsReferencingExternals asArray collect: [:each | each selector]) sort.
+	self assert: referers
+		equals: #(#externalReference:_: #refersToClassFullyQualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassPartiallyQualifiedBinding1 #refersToClassPartiallyQualifiedBinding2 #refersToClassUnqualified #refersToClassUnqualifiedBinding #refersToOtherClassPartiallyQualifiedBinding #testSkip #unqualifiedBindingReference)!
 
 testModel
 	| myClass |
@@ -369,6 +377,7 @@ testHierarchy!public!unit tests! !
 testLocalBindingFor!public!unit tests! !
 testMethodsReferencingExternals1!public! !
 testMethodsReferencingExternals2!public! !
+testMethodsReferencingExternals3!public! !
 testModel!public!unit tests! !
 testName!public!unit tests! !
 testRealClass!public!unit tests! !

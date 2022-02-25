@@ -25,7 +25,7 @@ foundMatch
 lookForMoreMatchesInContext: oldContext
 	oldContext keysAndValuesDo: 
 			[:key :value |
-			((key isKindOf: String) not and: [key recurseInto])
+			(key isString not and: [key recurseInto])
 				ifTrue: [oldContext at: key put: (value collect: [:each | self visitNode: each])]]!
 
 replace: searchString with: replaceString
@@ -100,22 +100,26 @@ replaceTree: searchTree withValueFrom: replaceBlock
 tree
 	^tree!
 
-visitAnnotationNode: anStAnnotationNode
-	anStAnnotationNode arguments: (anStAnnotationNode arguments collect: [:arg | self visitNode: arg])!
+visitAnnotationNode: aStAnnotationNode
+	aStAnnotationNode arguments: (aStAnnotationNode arguments collect: [:arg | self visitNode: arg]).
+	^aStAnnotationNode!
 
 visitArgumentNodes: aNodeCollection
 	^aNodeCollection collect: [:each | self visitArgumentNode: each]!
 
 visitArrayNode: anArrayNode
-	anArrayNode statements: (anArrayNode statements collect: [:each | self visitNode: each])!
+	anArrayNode statements: (anArrayNode statements collect: [:each | self visitNode: each]).
+	^anArrayNode!
 
 visitAssignmentNode: anAssignmentNode
 	anAssignmentNode variable: (self visitNode: anAssignmentNode variable).
-	anAssignmentNode value: (self visitNode: anAssignmentNode value)!
+	anAssignmentNode value: (self visitNode: anAssignmentNode value).
+	^anAssignmentNode!
 
 visitBlockNode: aBlockNode
 	aBlockNode arguments: (self visitArgumentNodes: aBlockNode arguments).
-	aBlockNode body: (self visitNode: aBlockNode body)!
+	aBlockNode body: (self visitNode: aBlockNode body).
+	^aBlockNode!
 
 visitCascadeNode: aCascadeNode
 	| newMessages notFound count |
@@ -150,34 +154,42 @@ visitCascadeNode: aCascadeNode
 
 visitExternalArgTypeNode: aStExternalArgTypeNode
 	aStExternalArgTypeNode structClass
-		ifNotNil: [:structVar | aStExternalArgTypeNode structClass: (self visitNode: structVar)]!
+		ifNotNil: [:structVar | aStExternalArgTypeNode structClass: (self visitNode: structVar)].
+	^aStExternalArgTypeNode!
 
 visitExternalCallNode: aStExternalCallNode
 	aStExternalCallNode returnType: (self visitNode: aStExternalCallNode returnType).
 	aStExternalCallNode
-		argumentTypes: (aStExternalCallNode argumentTypes collect: [:each | self visitNode: each])!
+		argumentTypes: (aStExternalCallNode argumentTypes collect: [:each | self visitNode: each]).
+	^aStExternalCallNode!
 
-visitLiteralArrayNode: aRBArrayLiteralNode
-	aRBArrayLiteralNode contents: (aRBArrayLiteralNode contents collect: [:each | self visitNode: each])!
+visitLiteralArrayNode: aLiteralArrayNode
+	aLiteralArrayNode contents: (aLiteralArrayNode contents collect: [:each | self visitNode: each]).
+	^aLiteralArrayNode!
 
 visitMessageNode: aMessageNode
 	aMessageNode receiver: (self visitNode: aMessageNode receiver).
-	aMessageNode arguments: (aMessageNode arguments collect: [:each | self visitNode: each])!
+	aMessageNode arguments: (aMessageNode arguments collect: [:each | self visitNode: each]).
+	^aMessageNode!
 
 visitMethodNode: aMethodNode
 	aMethodNode arguments: (self visitArgumentNodes: aMethodNode arguments).
 	aMethodNode tags: (aMethodNode tags collect: [:each | self visitNode: each]).
-	aMethodNode body: (self visitNode: aMethodNode body)!
+	aMethodNode body: (self visitNode: aMethodNode body).
+	^aMethodNode!
 
 visitOptimizedNode: anOptimizedNode
-	anOptimizedNode body: (self visitNode: anOptimizedNode body)!
+	anOptimizedNode body: (self visitNode: anOptimizedNode body).
+	^anOptimizedNode!
 
 visitReturnNode: aReturnNode
-	aReturnNode value: (self visitNode: aReturnNode value)!
+	aReturnNode value: (self visitNode: aReturnNode value).
+	^aReturnNode!
 
 visitSequenceNode: aSequenceNode
 	aSequenceNode temporaries: (self visitArgumentNodes: aSequenceNode temporaries).
-	aSequenceNode statements: (aSequenceNode statements collect: [:each | self visitNode: each])! !
+	aSequenceNode statements: (aSequenceNode statements collect: [:each | self visitNode: each]).
+	^aSequenceNode! !
 !Refactory.Browser.ParseTreeRewriter categoriesForMethods!
 executeTree:!accessing!public! !
 foundMatch!helpers!private! !

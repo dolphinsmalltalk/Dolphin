@@ -15,7 +15,6 @@ package setClassNames: #(
 	#{Tools.RemoveClassConstantChange}
 	#{Tools.RemoveImportChange}
 	#{Tools.RemoveSharedVariableChange}
-	#{Tools.ReplaceImportChange}
 	#{Tools.SharedVariableChange}
 ).
 
@@ -45,12 +44,6 @@ Refactory.Browser.RefactoryChange subclass: #'Tools.SharedVariableChange'
 	classConstants: {}!
 Refactory.Browser.RefactoryClassChange subclass: #'Tools.MoveClassChange'
 	instanceVariableNames: 'superclassName'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
-Refactory.Browser.RefactoryClassChange subclass: #'Tools.ReplaceImportChange'
-	instanceVariableNames: 'oldImport newImport'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

@@ -74,9 +74,12 @@ onViewOpened
 	super onViewOpened.
 	"Unfortunately the selection is not represented as a value model, so we must sync. it manually"
 	classesPresenter selectionOrNil: self model value.
-	(self view viewNamed: 'none') 
-		isWindowVisible: self allowNil;
-		text: self nilButtonCaption!
+	(self view viewNamed: 'none' ifNone: [])
+		ifNotNil: 
+			[:noneButton |
+			noneButton
+				isWindowVisible: self allowNil;
+				text: self nilButtonCaption]!
 
 packages: aCollection 
 	"Set the packages selected in the receiver. Ignored at this level."

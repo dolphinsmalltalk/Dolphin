@@ -356,7 +356,7 @@ testLegacyFormatErrorQualifiedSuperclassName
 	self
 		should: [package fileOutOn: filer]
 		raise: SourceFormatNotSupportedError
-		matching: [:ex | ex tag == testClass]]
+		matching: [:ex | ex tag == self class]]
 			ensure: [testClass removeFromSystem]!
 
 testLegacyFormatErrorQualifiedUntracedVariable

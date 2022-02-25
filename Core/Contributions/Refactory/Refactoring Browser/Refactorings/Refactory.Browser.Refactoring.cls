@@ -83,8 +83,8 @@ convertMethod: aRBMethod using: aParseTreeRewriter
 	| parseTree |
 	parseTree := aRBMethod parseTree.
 	parseTree isNil ifTrue: [^self].
-	(aParseTreeRewriter executeTree: parseTree)
-		ifTrue: [aRBMethod modelClass compileTree: aParseTreeRewriter tree]!
+	(aParseTreeRewriter executeTree: parseTree) ifFalse: [^self].
+	model compileTree: aParseTreeRewriter tree forMethod: aRBMethod!
 
 copyOptionsFrom: aDictionary
 	aDictionary ifNil: [^self].
@@ -153,10 +153,10 @@ getOptionMovePools: aCollection
 	^self
 		confirm: 'This method contains references to shared variables from namespaces that may need to be imported into the target.'!
 
-getOptionNewMethodName: anRBMethodName classes: aCollection
+getOptionNewMethodName: aRBMethodName classes: aCollection
 	| mname |
 	mname := self prompt: 'Enter the new method name (without the ''#'')'.
-	^mname ifNotNil: [anRBMethodName selector: mname]!
+	^mname ifNotNil: [aRBMethodName selector: mname]!
 
 getOptionOpenBrowser: anRBEnvironment
 	^anRBEnvironment openEditor!
@@ -451,6 +451,9 @@ whichVariableNode:inInterval:name:!public!utilities! !
 abortSignal
 	^OperationAborted!
 
+errorSignal
+	^RefactoringError!
+
 initialize
 	self initializeRefactoringOptions!
 
@@ -519,7 +522,7 @@ onPreStripImage
 	self uninitialize!
 
 preconditionSignal
-	^RefactoringError , RefactoringWarning!
+	^self errorSignal , RefactoringWarning!
 
 refactoringOptions
 	^RefactoringOptions!
@@ -531,7 +534,8 @@ uninitialize
 	#rbFix. "Assist uninstallation of Dolphin package."
 	RefactoringOptions := nil! !
 !Refactory.Browser.Refactoring class categoriesForMethods!
-abortSignal!accessing!public! !
+abortSignal!constants!public! !
+errorSignal!constants!public! !
 initialize!initializing!public! !
 initializeRefactoringOptions!accessing!public! !
 new!instance creation!public! !

@@ -973,7 +973,7 @@ logRemainingSharedVariables
 	| sharedVars |
 	self startElement: 'RemainingSharedVariables' attributes: #().
 	sharedVars := OrderedCollection new.
-	Root allBindingsDo: [:each | each isClassBinding not ifTrue: [sharedVars add: each]].
+	Root allBindingsDo: [:each | each isClassBinding ifFalse: [sharedVars add: each]].
 	sharedVars do: 
 			[:each |
 			self

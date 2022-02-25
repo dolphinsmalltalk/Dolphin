@@ -752,6 +752,10 @@ queryCommand: aCommandQuery
 		ifTrue: 
 			[aCommandQuery isEnabled: (self systemModel canRenameClass: class).
 			^true].
+	#changeClassNamespace == selector
+		ifTrue: 
+			[aCommandQuery isEnabled: (self systemModel canChangeClassNamespaces: self selections).
+			^true].
 	#browsePublishedEvents == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: (class notNil and: [class respondsTo: #publishedEventsOfInstances]).

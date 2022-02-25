@@ -39,11 +39,15 @@ preconditions
 						true])!
 
 renameNode: aParseTree
+	| rewriter |
 	(aParseTree whoDefines: newName) notNil
 		ifTrue: [self refactoringError: newName , ' is already defined'].
 	(aParseTree allDefinedVariables includes: newName)
 		ifTrue: [self refactoringError: newName , ' is already defined'].
-	(ParseTreeRewriter rename: oldName to: newName) executeTree: aParseTree!
+	rewriter := ParseTreeRewriter rename: oldName to: newName.
+	^(rewriter executeTree: aParseTree)
+		ifTrue: [rewriter tree]
+		ifFalse: [self refactoringError: 'Expected renames did not take place']!
 
 storeOn: aStream
 	aStream nextPut: $(.
@@ -61,21 +65,21 @@ storeOn: aStream
 	aStream nextPut: $)!
 
 transform
-	| definingNode variableNode |
-	parseTree := class parseTreeFor: selector.
-	variableNode := self 
+	| definingNode variableNode method newTree |
+	method := class methodFor: selector.
+	parseTree := method parseTreeWithSourceIntervals copy.
+	variableNode := self
 				whichVariableNode: parseTree
 				inInterval: interval
 				name: oldName.
-	(variableNode isNil or: [variableNode isVariable not]) 
+	(variableNode isNil or: [variableNode isVariable not])
 		ifTrue: [self refactoringError: oldName , ' isn''t a valid variable'].
-	variableNode name = oldName 
-		ifFalse: [self refactoringError: 'Invalid selection'].
+	variableNode name = oldName ifFalse: [self refactoringError: 'Invalid selection'].
 	definingNode := variableNode whoDefines: oldName.
-	definingNode isNil 
-		ifTrue: [self refactoringError: oldName , ' isn''t defined by the method'].
+	definingNode ifNil: [self refactoringError: oldName , ' isn''t defined by the method'].
+	"The ParseTreeRewriter actually updates in place, otherwise we'd have to update the body of the defining node at this point."
 	self renameNode: definingNode.
-	class compileTree: parseTree! !
+	model compileTree: parseTree forMethod: method! !
 !Refactory.Browser.RenameTemporaryRefactoring categoriesForMethods!
 class:selector:interval:newName:!initialize/release!public! !
 oldName:!accessing!private! !

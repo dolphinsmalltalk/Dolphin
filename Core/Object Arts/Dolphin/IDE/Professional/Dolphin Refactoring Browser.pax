@@ -205,6 +205,7 @@ package setMethodNames: #(
 	#(#{Tools.ClassSelector} #buildInstVarMenu:selectors:)
 	#(#{Tools.ClassSelector} #buildPullUpVariablesMenu:)
 	#(#{Tools.ClassSelector} #buildVariablesMenu:instVarSelectors:classVarSelectors:)
+	#(#{Tools.ClassSelector} #changeClassNamespace)
 	#(#{Tools.ClassSelector} #cloneClass:under:changes:)
 	#(#{Tools.ClassSelector} #convertToSibling)
 	#(#{Tools.ClassSelector} #createClassVariableAccessors)
@@ -242,6 +243,7 @@ package setMethodNames: #(
 	#(#{Tools.PackageBrowserShell} #addParameter)
 	#(#{Tools.PackageBrowserShell} #addParameterTo:)
 	#(#{Tools.PackageBrowserShell} #addParameterToMethod)
+	#(#{Tools.PackageBrowserShell} #changeClassNamespace)
 	#(#{Tools.PackageBrowserShell} #chooseMethodsForRefactoring:)
 	#(#{Tools.PackageBrowserShell} #hasRefactorableMethodSelected)
 	#(#{Tools.PackageBrowserShell} #parseTree)
@@ -1003,23 +1005,23 @@ icon!constants!public! !
 
 !Refactory.Browser.MethodRefactoring methodsFor!
 
-generateDefaultSelector: anRBMethodName
-	anRBMethodName selector isNil
+generateDefaultSelector: aRBMethodName
+	aRBMethodName selector isNil
 		ifTrue: 
 			[| args mname |
-			args := anRBMethodName arguments.
+			args := aRBMethodName arguments.
 			mname := args isEmpty
 						ifTrue: ['method']
 						ifFalse: 
 							[| stream |
 							stream := String writeStream.
-							anRBMethodName arguments do: 
+							aRBMethodName arguments do: 
 									[:arg |
 									stream
 										nextPutAll: arg;
 										nextPut: $:].
 							stream contents].
-			anRBMethodName selector: mname asSymbol]!
+			aRBMethodName selector: mname asSymbol]!
 
 getOptionAlreadyDefined: aClass selector: aSymbol
 	| response |
@@ -1061,10 +1063,10 @@ getOptionInlineExpression: aString
 		collapseLabel: 'Hide help';
 		confirm!
 
-getOptionNewMethodName: anRBMethodName classes: anArray
+getOptionNewMethodName: aRBMethodName classes: anArray
 	| dialog |
-	self generateDefaultSelector: anRBMethodName.
-	dialog := MethodNameDialog createOn: anRBMethodName.
+	self generateDefaultSelector: aRBMethodName.
+	dialog := MethodNameDialog createOn: aRBMethodName.
 	dialog validater: 
 			[:methodName |
 			| sel |
@@ -1072,7 +1074,7 @@ getOptionNewMethodName: anRBMethodName classes: anArray
 			(anArray inject: methodName conditions
 				into: [:conditions :each | conditions & (Refactory.Browser.RBCondition definesSelector: sel in: each) not])
 					validate].
-	^dialog showModal ifNotNil: [anRBMethodName]!
+	^dialog showModal ifNotNil: [aRBMethodName]!
 
 getOptionRemoveMethod: aSymbol referencedIn: aCollection
 	| details response |
@@ -2364,6 +2366,9 @@ buildVariablesMenu: aMenu instVarSelectors: instVarSelectors classVarSelectors: 
 	(aMenu notEmpty and: [self selection classPool notEmpty]) ifTrue: [aMenu addSeparator].
 	self populateClassVarMenu: aMenu selectors: classVarSelectors!
 
+changeClassNamespace
+	self systemModel changeNamespaceOfClasses: self selections!
+
 cloneClass: aClass under: superClass changes: aCompositeRefactoryChange
 	| namespace newName |
 	namespace := RBModel new
@@ -2699,6 +2704,7 @@ addInstanceVariable!commands!private!refactoring! !
 buildInstVarMenu:selectors:!menus!private!refactoring! !
 buildPullUpVariablesMenu:!menus!private!refactoring! !
 buildVariablesMenu:instVarSelectors:classVarSelectors:!menus!private!refactoring! !
+changeClassNamespace!commands!public!refactoring! !
 cloneClass:under:changes:!private! !
 convertToSibling!commands!public!refactoring! !
 createClassVariableAccessors!commands!public!refactoring! !
@@ -2899,6 +2905,9 @@ addParameterToMethod
 
 	self addParameterTo: self selectedMethod!
 
+changeClassNamespace
+	self systemModel changeNamespaceOfClasses: self selectedClasses!
+
 chooseMethodsForRefactoring: aString
 	| selector methods definitions searchEnv |
 	searchEnv := self searchEnvironment.
@@ -2944,25 +2953,30 @@ promptForMethodName: aCompiledMethod caption: aString allowExisting: aBoolean
 		caption: aString
 		allowExisting: aBoolean!
 
-queryRefactoringCommand: aCommandQuery 
+queryRefactoringCommand: aCommandQuery
 	"Private - Enters details about a potential refactoring command for the receiver into the 
 	<CommandQuery> argument."
 
 	| selector |
 	selector := aCommandQuery commandSymbol.
-	(#(#methodRefactoringsMenu #renameMethod #addParameter #removeParameter) identityIncludes: selector) 
+	(#(#classRefactoringsMenu #methodRefactoringsMenu #renameMethod #addParameter #removeParameter)
+		identityIncludes: selector)
+			ifTrue: 
+				[aCommandQuery isEnabled: self hasPackages.
+				^true].
+	#changeClassNamespace == selector
 		ifTrue: 
-			[aCommandQuery isEnabled: self hasPackages.
+			[aCommandQuery isEnabled: self selectedClasses notEmpty.
 			^true].
-	(#(#removeMethods) identityIncludes: selector) 
+	(#(#removeMethods) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: (self hasPackages and: [self selectedMethods notEmpty]).
 			^true].
-	(#(#addParameterToMethod) identityIncludes: selector) 
+	(#(#addParameterToMethod) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: (self hasPackages and: [self selectedMethod notNil]).
 			^true].
-	(#(#removeParameterMenu) identityIncludes: selector) 
+	(#(#removeParameterMenu) identityIncludes: selector)
 		ifTrue: 
 			[| method |
 			method := self selectedMethod.
@@ -3049,6 +3063,7 @@ renameMethodReferences: aCompiledMethod
 addParameter!commands!private!refactoring! !
 addParameterTo:!private!refactoring! !
 addParameterToMethod!commands!public!refactoring! !
+changeClassNamespace!commands!public!refactoring! !
 chooseMethodsForRefactoring:!private!refactoring! !
 hasRefactorableMethodSelected!private!refactoring!testing! !
 parseTree!commands!private! !

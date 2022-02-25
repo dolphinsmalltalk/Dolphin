@@ -70,20 +70,26 @@ checkForSymbolicReferences
 		self shouldIgnoreRemainingSymbolicReferences: symbolicRefs]!
 
 className: oldString newName: newString
-	"If the new name is unqualified, preserve the original namespace of the class."
-
 	self className: oldString.
-	newClassReference := (BindingReference isQualifiedName: newString)
-				ifTrue: [BindingReference pathString: newString]
-				ifFalse: 
-					[| parts |
-					parts := className path shallowCopy.
-					parts at: parts size put: newString.
-					BindingReference path: parts].
-	newName := newClassReference pathString.
+	newName := newString.
 	class := self model classNamed: oldString.
 	oldUnqualified := class unqualifiedName.
-	classBinding := class globalScope fullBindingFor: oldString environment: class environment!
+	classBinding := class globalScope fullBindingFor: oldString environment: class environment.
+	newName := (BindingReference isQualifiedName: newString)
+				ifTrue: [newString]
+				ifFalse: 
+					["The new name is unqualified, so the class should be moved to its base environment."
+					class baseEnvironment fullNameFor: newString].
+	newClassReference := BindingReference pathString: newName!
+
+convertMethod: aRBMethod using: aParseTreeRewriter
+	"Convert the parse tree for the specified method using the specified rewriter. If a change is made then compile it into the changeBuilder."
+
+	| parseTree |
+	parseTree := aRBMethod boundParseTree.
+	parseTree isNil ifTrue: [^self].
+	(aParseTreeRewriter executeTree: parseTree) ifFalse: [^self].
+	model compileTree: aParseTreeRewriter tree forMethod: aRBMethod!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -153,15 +159,16 @@ renameOutboundReferences: aCollectionOfRBMethods
 	rewriter := self buildOutboundReferenceRewriter.
 	aCollectionOfRBMethods do: [:method | self convertMethod: method using: rewriter]!
 
-rewriteInboundVariable: aStVariableNode
+rewriteInboundVariable: aVariableNode
 	"Private - Rewrite a variable reference that refers to one of the renamed classes."
 
-	^aStVariableNode copy
-		name: ((aStVariableNode parent isAnnotation and: [aStVariableNode parent selector == #namespace:])
+	^aVariableNode copy
+		name: ((aVariableNode parent isAnnotation and: [aVariableNode parent selector == #namespace:])
 					ifTrue: 
 						["If a namespace annotation, the full name should always be used"
-						aStVariableNode binding fullName]
-					ifFalse: [self shortestNameForVariable: aStVariableNode]);
+						aVariableNode binding fullName]
+					ifFalse: [self shortestNameForVariable: aVariableNode]);
+		clearPositions;
 		yourself!
 
 rewriteLiteral: aStLiteralNode
@@ -178,22 +185,24 @@ rewriteOutboundVariable: aStVariableNode
 
 	^aStVariableNode copy
 		name: (self shortestNameForVariable: aStVariableNode);
+		clearPositions;
 		yourself!
 
-rewriteQualifiedReference: aStQualifiedReferenceNode
+rewriteQualifiedReference: aQualifiedReferenceNode
 	| binding pathString path i methodNode fullName |
-	aStQualifiedReferenceNode isRelative
+	aQualifiedReferenceNode isRelative
 		ifFalse: 
 			["Previous fully qualified reference, just answer the new fully-qualifed reference"
-			^aStQualifiedReferenceNode copy
-				pathString: aStQualifiedReferenceNode binding fullName;
+			^aQualifiedReferenceNode copy
+				pathString: aQualifiedReferenceNode binding fullName;
+				clearPositions;
 				yourself].
 
 	"A relative binding, but it may not actually need to be changed (we might only be here because this ref is inside a literal array with other refs that have changed)"
-	aStQualifiedReferenceNode isBindingChanged ifFalse: [^aStQualifiedReferenceNode copy].
+	aQualifiedReferenceNode isBindingChanged ifFalse: [^aQualifiedReferenceNode copy].
 	"We have a changed relative binding reference, so need to find the shortest new relative path that will bind to the same variable"
-	binding := aStQualifiedReferenceNode binding.
-	methodNode := aStQualifiedReferenceNode methodNode.
+	binding := aQualifiedReferenceNode binding.
+	methodNode := aQualifiedReferenceNode methodNode.
 	fullName := binding fullName.
 	path := BindingReference.PathSeparator split: fullName.
 	i := path size.
@@ -202,15 +211,18 @@ rewriteQualifiedReference: aStQualifiedReferenceNode
 	[pathString := (path at: i) , pathString.
 	(methodNode fullBindingFor: pathString) == binding
 		ifTrue: 
-			[^aStQualifiedReferenceNode copy
+			[^aQualifiedReferenceNode copy
 				pathString: (i == path size ifTrue: [pathString] ifFalse: ['_.' , pathString]);
+				clearPositions;
 				yourself].
 	i > 2]
 			whileTrue: 
 				[i := i - 1.
 				pathString := BindingReference.PathSeparatorString , pathString].
-	^aStQualifiedReferenceNode copy
+	^aQualifiedReferenceNode copy
 		pathString: fullName;
+		isRelative: false;
+		clearPositions;
 		yourself!
 
 rewriteSymbolicReferencesToClass
@@ -223,7 +235,6 @@ rewriteSymbolicReferencesToClass
 				[rewriteClassNames := Tools.ClassNameToBindingReferenceRefactoring model: model
 							replaceSymbolicReferencesTo: class.
 				self performComponentRefactoring: rewriteClassNames].
-	"self halt."
 	symbolicRefs := model allReferencesTo: oldUnqualified.
 	symbolicRefs isEmpty
 		ifFalse: 
@@ -273,6 +284,7 @@ buildInboundReferenceRewriter!private!transforming! !
 buildOutboundReferenceRewriter!private!transforming! !
 checkForSymbolicReferences!private!transforming! !
 className:newName:!initializing!private! !
+convertMethod:using:!public!support! !
 displayOn:!displaying!public! !
 isImpactedLiteral:!helpers!private! !
 preconditions!accessing!public! !

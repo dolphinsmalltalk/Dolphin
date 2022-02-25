@@ -240,10 +240,33 @@ browseSelectors: aCollection caption: aString environment: aBrowserEnvironment
 		show;
 		yourself!
 
+canChangeClassNamespaces: aCollectionOfClasses
+	aCollectionOfClasses isEmpty ifTrue: [^false].
+	^aCollectionOfClasses allSatisfy: [:each | (ClassBuilder isFixedName: each) not]!
+
 canRefactor
 	"Answer whether the receiver is capable of performing refactorings."
 
 	^true!
+
+changeNamespaceOfClasses: aCollectionOfClasses
+	| namespace chooser default prompt |
+	aCollectionOfClasses size = 1
+		ifTrue: 
+			[| class |
+			class := aCollectionOfClasses first.
+			default := class environment.
+			prompt := 'Choose new namespace for <1p>…' << class]
+		ifFalse: [prompt := 'Choose new namespace for <1d> classes…' << aCollectionOfClasses size].
+	chooser := (ChooseNamespaceDialog create: 'Refactoring view' on: default asValue)
+				caption: prompt;
+				yourself.
+	namespace := chooser showModal.
+	namespace ifNil: [^self].
+	self
+		moveClasses: aCollectionOfClasses
+		toNamespace: namespace
+		showChanges: chooser showChanges!
 
 chooseMethodFromEnvironment: aBrowserEnvironment caption: aString
 	^ChoicePrompter
@@ -517,7 +540,7 @@ inlineAllSelfSendsOf: aCollectionOfMethods within: aBrowserEnvironment
 			self changeManager performChange: namespace changes.
 			namespace]!
 
-inlineMessage: anStMessageNode inMethod: aSelector of: aBehavior
+inlineMessage: aStMessageNode inMethod: aSelector of: aBehavior
 	"Inline the message send whose source text is in the <Interval>, anInterval, of the method
 	of the <Behavior>, aBehavior, with <Symbol> selector, aSymbol.
 
@@ -525,13 +548,13 @@ inlineMessage: anStMessageNode inMethod: aSelector of: aBehavior
 	of the message, it will prompt for the implementation that should be inlined.'"
 
 	self performRefactoring: 
-			[(((anStMessageNode isMessage and: 
+			[(((aStMessageNode isMessage and: 
 					[| receiver |
-					receiver := anStMessageNode receiver.
+					receiver := aStMessageNode receiver.
 					receiver isSelfVariable or: [receiver isSuperVariable]])
 				ifTrue: [InlineMethodRefactoring]
 				ifFalse: [InlineMethodFromComponentRefactoring])
-					inline: anStMessageNode sourceInterval
+					inline: aStMessageNode sourceInterval
 					inMethod: aSelector
 					forClass: aBehavior) execute]!
 
@@ -656,6 +679,40 @@ moveAllTempsToInnerScopeIn: anRBClass selector: aSelector
 				i := i + 1]]
 			repeat!
 
+moveClasses: aCollectionOfClasses toNamespace: aNamespace showChanges: aBoolean
+	| refactorings rbModel count |
+	rbModel := RBModel new.
+	refactorings := aCollectionOfClasses asArray
+				select: [:each | each ~~ aNamespace and: [each environment ~~ aNamespace]]
+				thenCollect: 
+					[:each |
+					RenameClassRefactoring
+						model: rbModel
+						rename: each
+						to: (aNamespace fullNameFor: each unqualifiedName)].
+	count := refactorings size.
+	count < 1
+		ifTrue: 
+			["Nothing to do"
+			^self].
+	rbModel name: (count = 1
+				ifTrue: [refactorings first displayString]
+				ifFalse: ['Move <2d> classes to <1p>' << {aNamespace. count}]).
+	(ProgressDialog operation: 
+			[:progress |
+			self performRefactoring: 
+					["Enhance RenameClassRefactoring to support multiple renames. In the meantime perform as a sequence"
+					refactorings keysAndValuesDo: 
+							[:index :each |
+							progress text: 'Renaming ' , each className.
+							each primitiveExecute.
+							progress value: index * 100 / count].
+					aBoolean
+						ifTrue: [[rbModel browseChanges] postToInputQueue]
+						ifFalse: [RefactoringManager instance addRefactoring: refactorings last]]])
+		caption: 'Moving classes to <1p>, please wait…' << aNamespace;
+		showModal!
+
 moveTempToInnerScope: anInterval in: aClass selector: aSelector
 	"Implement the 'Move to Inner Scope' code refactoring: 'Moves a temporary variable definition 
 	into the tightest scope that contains both the variable assignment and references.'"
@@ -718,8 +775,8 @@ promptForInitializationExpression: anAddParameterRefactoring
 				result];
 		showModal!
 
-promptForMethodName: anRBMethodName caption: aString allowExisting: aBoolean
-	^(RenameMethodDialog createOn: anRBMethodName)
+promptForMethodName: aRBMethodName caption: aString allowExisting: aBoolean
+	^(RenameMethodDialog createOn: aRBMethodName)
 		allowParameterRename: false;
 		allowExistingSelector: aBoolean;
 		caption: aString;
@@ -1035,16 +1092,16 @@ renameMethod: aCompiledMethod
 				allowExisting: false.
 	^newName isNil ifFalse: [self renameMethod: aCompiledMethod to: newName]!
 
-renameMethod: aCompiledMethod to: anRBMethodName
+renameMethod: aCompiledMethod to: aRBMethodName
 	^self performRefactoring: 
 			[| model refactoring |
-			model := RBModel onEnvironment: anRBMethodName scope.
+			model := RBModel onEnvironment: aRBMethodName scope.
 			refactoring := RenameMethodRefactoring
 						model: model
 						renameMethod: aCompiledMethod selector
 						in: aCompiledMethod methodClass
-						to: anRBMethodName selector
-						permutation: anRBMethodName permutation.
+						to: aRBMethodName selector
+						permutation: aRBMethodName permutation.
 			model name: refactoring displayString.
 			refactoring
 				execute;
@@ -1063,16 +1120,16 @@ renameMethodReferences: aCompiledMethod
 				allowExisting: true.
 	^newName notNil ifTrue: [self renameMethodReferences: aCompiledMethod to: newName]!
 
-renameMethodReferences: aCompiledMethod to: anRBMethodName
+renameMethodReferences: aCompiledMethod to: aRBMethodName
 	^self performRefactoring: 
 			[| model refactoring |
-			model := RBModel onEnvironment: anRBMethodName scope.
+			model := RBModel onEnvironment: aRBMethodName scope.
 			refactoring := RenameMethodReferencesTransformation
 						model: model
 						renameMethod: aCompiledMethod selector
 						in: aCompiledMethod methodClass
-						to: anRBMethodName selector
-						permutation: anRBMethodName permutation.
+						to: aRBMethodName selector
+						permutation: aRBMethodName permutation.
 			model name: refactoring displayString.
 			refactoring
 				execute;
@@ -1320,7 +1377,9 @@ basicRemoveMethodsIn:within:!private!refactoring! !
 browseMethodsIn:!browsing!public! !
 browseMethodsInEnvironments:!browsing!public! !
 browseSelectors:caption:environment:!browsing!private! !
+canChangeClassNamespaces:!enquiries!public! !
 canRefactor!public!testing! !
+changeNamespaceOfClasses:!operations!public! !
 chooseMethodFromEnvironment:caption:!public! !
 chooseSelectorInEnvironment:caption:!public! !
 cloneClass:as:under:in:!private!refactoring! !
@@ -1345,6 +1404,7 @@ isOAD:!accessing!private!product! !
 moveAllTempsToInnerScope:!public!refactoring! !
 moveAllTempsToInnerScopeIn:!helpers!private!refactoring! !
 moveAllTempsToInnerScopeIn:selector:!private!refactoring! !
+moveClasses:toNamespace:showChanges:!commands!private!refactoring! !
 moveTempToInnerScope:in:selector:!public!refactoring! !
 moveToComponent:in:variable:!public!refactoring! !
 newCodeRefactoringToolFor:!helpers!private!refactoring! !

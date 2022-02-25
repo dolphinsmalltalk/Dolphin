@@ -715,12 +715,7 @@ rename: aString
 replaceImport: oldBindingReference with: newBindingReference
 	"Private - Replace an existing import with a new one, maintaining the existing order."
 
-	| existing index |
-	existing := self imports.
-	index := existing indexOf: oldBindingReference.
-	index = 0
-		ifTrue: [self addImport: newBindingReference]
-		ifFalse: [existing at: index put: newBindingReference]!
+	imports := self imports copyReplacing: oldBindingReference withObject: newBindingReference!
 
 requiresInstallation
 	"Answer whether the receiver requires 'installing' into its environment."

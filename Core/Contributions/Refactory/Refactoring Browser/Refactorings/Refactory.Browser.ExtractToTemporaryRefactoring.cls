@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.ExtractToTemporaryRefactoring'
-	instanceVariableNames: 'sourceInterval selector newVariableName parseTree'
+	instanceVariableNames: 'sourceInterval selector newVariableName method'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -26,7 +26,7 @@ checkVariableName
 				refactoringError: ('<1s> is already a temporary variable name' expandMacrosWith: newVariableName)]!
 
 compileNewMethod
-	class compileTree: self parseTree!
+	model compileTree: self parseTree forMethod: self method!
 
 constructAssignmentFrom: aNode 
 	| valueNode |
@@ -55,12 +55,11 @@ insertTemporary
 					ifFalse: [statementNode]);
 		addTemporaryNamed: newVariableName!
 
+method
+	^method ifNil: [method := class methodFor: selector]!
+
 parseTree
-	parseTree isNil 
-		ifTrue: 
-			[parseTree := class parseTreeFor: selector.
-			parseTree isNil ifTrue: [self refactoringError: 'Could not parse method']].
-	^parseTree!
+	^self method parseTreeWithSourceIntervals ifNil: [self refactoringError: 'Could not parse method']!
 
 preconditions
 	^(RBCondition definesSelector: selector in: class) 
@@ -109,8 +108,9 @@ verifySelectedInterval
 checkVariableName!preconditions!public! !
 compileNewMethod!public!transforming! !
 constructAssignmentFrom:!public!transforming! !
-extract:to:from:in:!initialize/release!public! !
+extract:to:from:in:!initialize/release!private! !
 insertTemporary!public!transforming! !
+method!accessing!public! !
 parseTree!accessing!private! !
 preconditions!preconditions!public! !
 selectedSource!accessing!private! !

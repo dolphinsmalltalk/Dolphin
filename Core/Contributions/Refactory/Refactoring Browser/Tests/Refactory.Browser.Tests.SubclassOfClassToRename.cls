@@ -18,7 +18,7 @@ calls1
 	^self rewriteRule1: (self rewriteRule1: self calls)!
 
 externalReference: aClassToRename _: aClassToRename2
-	<stdcall: ClassToRename* dummy Refactory.Browser.Tests.ClassToRename Tests.ClassToRename*>!
+	<stdcall: ClassToRename* dummy Refactory.Browser.Tests.ClassToRename Tests.ClassToRename**>!
 
 name
 	^rewriteRule1!

@@ -25,13 +25,7 @@ canApply
 	^self validateModel value!
 
 chooseNamespace
-	| choice namespaces |
-	namespaces := ClassHierarchyModel withRoots: (Namespace subclasses copyWithout: SharedPool).
-	choice := namespacePresenter model.
-	(ChooseClassDialog
-		on: choice
-		choices: namespaces
-		caption: 'Select Namespace…') showModal.
+	(ChooseNamespaceDialog createOn: namespacePresenter model) showModal.
 	self validate!
 
 chooseSuperclass

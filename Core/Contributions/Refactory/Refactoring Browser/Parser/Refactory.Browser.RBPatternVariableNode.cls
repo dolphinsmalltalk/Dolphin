@@ -28,7 +28,7 @@ Instance Variables:
 copyInContext: aDictionary
 	^(isList and: [isStatement])
 		ifTrue: [self copyList: (aDictionary at: self) inContext: aDictionary]
-		ifFalse: [(aDictionary at: self) copy]!
+		ifFalse: [(aDictionary at: self) collect: [:each | each copy]]!
 
 identifierToken: anIdentifierToken 
 	super identifierToken: anIdentifierToken.

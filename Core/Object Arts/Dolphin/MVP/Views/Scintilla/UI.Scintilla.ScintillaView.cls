@@ -2638,7 +2638,7 @@ hasFoldMargin: aBoolean
 hasIndentationGuides
 	"Are the indentation guides visible?"
 
-	^self indentationGuides ~= nil!
+	^self indentationGuides notNil!
 
 hasIndentationGuides: aBoolean 
 	"Show or hide indentation guides."

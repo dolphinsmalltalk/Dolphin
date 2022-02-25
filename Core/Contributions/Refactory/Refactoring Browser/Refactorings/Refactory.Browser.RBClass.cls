@@ -145,7 +145,6 @@ classConstants: aCollectionOfAssociations
 						yourself)]!
 
 classInModel: aRBModel
-	self assert: aRBModel == model.
 	^self!
 
 classPool
@@ -158,7 +157,10 @@ classPool
 					[:each |
 					| var |
 					var := RBVariableBinding new realBinding: each environment: self.
-					each isClassBinding ifTrue: [var setValue: (each value rbClass model: model existing: each value)].
+					each isClassBinding
+						ifTrue: 
+							[| class |
+							var setValue: ((class := each value) rbClass model: model existing: class)].
 					classPool add: var].
 			classPool]!
 
@@ -497,11 +499,16 @@ resolveUnqualifiedName: aString environment: aRBNamespaceClass
 				[self
 					resolveImportedBinding: (self newBindingContextForIdentifier: aString environment: aRBNamespaceClass)]!
 
-setModel: aRBModel name: anObject
+setModel: aRBModel name: anObject realClass: aClassDescription
 	model := aRBModel.
 	name := anObject.
 	(metaclass := RBMetaclass basicNew) nonMetaclass: self.
-	comment := LookupComment!
+	comment := LookupComment.
+	aClassDescription
+		ifNotNil: 
+			[realClass := aClassDescription.
+			unqualifiedName := aClassDescription unqualifiedName.
+			superclass := LookupSuperclass]!
 
 setSuperclass: aRBClass
 	superclass := aRBClass!
@@ -606,7 +613,7 @@ resolveLocallyImportedBinding:!bindings!private! !
 resolvePathString:environment:!bindings!private! !
 resolvePublicBinding:!bindings!private! !
 resolveUnqualifiedName:environment:!bindings!private! !
-setModel:name:!accessing!initializing!private! !
+setModel:name:realClass:!accessing!initializing!private! !
 setSuperclass:!initializing!private! !
 subclasses!accessing!public! !
 superclass!accessing!public! !
@@ -621,13 +628,14 @@ initialize
 
 model: aRBModel existing: aClass
 	^self basicNew
-		setModel: aRBModel name: aClass fullName;
-		realClass: aClass;
+		setModel: aRBModel
+			name: aClass fullName
+			realClass: aClass;
 		yourself!
 
 model: aRBModel named: aSymbol
 	^self basicNew
-		setModel: aRBModel name: aSymbol;
+		setModel: aRBModel name: aSymbol realClass: nil;
 		yourself! !
 !Refactory.Browser.RBClass class categoriesForMethods!
 initialize!class initialization!public! !

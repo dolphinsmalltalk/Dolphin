@@ -326,9 +326,16 @@ referencesTo: aLiteral in: aClass
 	#rbFix.	"Extract construction of hierarchy environment."
 	^(self forClassHierarchyOf: aClass) referencesTo: aLiteral!
 
+referencesToClass: aClass
+	^(self filterMethods: [:method | method refersToLiteral: aClass])
+		label: ('References to class <1s>, or its variables, in <2p>' expandMacrosWith: aClass shortName
+					with: self);
+		addSearchString: aClass unqualifiedName;
+		yourself!
+
 referencesToVariable: aVariableBinding
 	^(self filterMethods: [:method | method refersToLiteral: aVariableBinding])
-		label: ('Direct and indirect references to <1s> in <2p>' expandMacrosWith: aVariableBinding key
+		label: ('Direct references to <1s> in <2p>' expandMacrosWith: aVariableBinding key
 					with: self);
 		addSearchString: aVariableBinding key;
 		yourself
@@ -449,6 +456,7 @@ problemCount!accessing!public! !
 protocolsFor:!accessing!public! !
 referencesTo:!environments!public! !
 referencesTo:in:!environments!public! !
+referencesToClass:!enquiries!private! !
 referencesToVariable:!enquiries!private! !
 searchStrings!accessing!public! !
 searchStrings:!accessing!public! !

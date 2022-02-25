@@ -24,7 +24,7 @@ testBadName
 		shouldFail: (RenameClassRefactoring rename: LintRuleTestData to: existing)
 			existingVariable: existing;
 		shouldFail: (RenameClassRefactoring rename: LintRuleTestData to: #'Ob ject')
-			withMessage: '''Refactory.Browser.TestData.Ob ject'' is not a valid class name'!
+			withMessage: '''Smalltalk.Ob ject'' is not a valid class name'!
 
 testExistingName
 	self shouldFail: (RenameClassRefactoring
@@ -53,7 +53,7 @@ testMetaClassFailure
 		withMessage: '<1s> class is not an existing class' << self class fullName!
 
 testModelRenameClass
-	| refactoring fooClass |
+	| refactoring fooClass change |
 	model
 		defineClass: 'Core.Object subclass: #''Core.Foo'' instanceVariableNames: ''a'' classVariableNames: '''' poolDictionaries: ''Core.Object'''.
 	fooClass := model classNamed: #'Core.Foo'.
@@ -67,7 +67,7 @@ testModelRenameClass
 	refactoring := RenameClassRefactoring
 				model: model
 				rename: Object
-				to: #Thing.
+				to: 'Core.Thing'.
 	refactoring setOption: #ignoreSymbolicClassReferences toUse: [:rename :refs | true].
 	self executeRefactoring: refactoring.
 	"Object should be renamed in the model"
@@ -75,6 +75,13 @@ testModelRenameClass
 	self deny: (model includesClassNamed: Object fullName).
 	self assert: fooClass superclass name equals: #'Core.Thing'.
 	self assert: (fooClass imports includes: #{Core.Thing}).
+	change := model changes lastChangeMatching: 
+					[:each |
+					(each isKindOf: Tools.ReplaceImportChange)
+						and: [each oldImport = #{Core.Object} and: [each newImport = #{Core.Thing}]]].
+	self assertNotNil: change.
+	self assert: change oldImport isKindOf: FullBindingReference.
+	self assert: change newImport isKindOf: FullBindingReference.
 	"References to the class in methods should be renamed - note that the redundant qualification is removed as the names are minimised"
 	self
 		verifyMethod: #refersToClass
@@ -298,7 +305,7 @@ testRenameClass
 	refactoring := RenameClassRefactoring
 				model: model
 				rename: classToRename
-				to: 'NewClassName'.
+				to: 'Refactory.Browser.Tests.NewClassName'.
 	refactoring setOption: #ignoreSymbolicClassReferences
 		toUse: 
 			[:rename :refs |
@@ -328,18 +335,20 @@ testRenameClass
 testRenameClassShadowedByClassVariable
 	"Test renaming a class to have the same unqualified name as a class variable in one of the referencing classes, requiring that any references to the class become fully qualified or they will be shadowed."
 
-	| refactoring oldName newFullName newClass classToRename refactoryTestDataApp partiallyQualifiedBinding newUnqualified newPartial |
+	| refactoring oldName newFullName newClass classToRename refactoryTestDataApp partiallyQualifiedBinding newUnqualified newPartial newName |
 	oldName := 'Refactory.Browser.Tests.ClassToRename'.
-	classToRename := oldName asQualifiedReference value.
 	newUnqualified := 'ClassVar1'.
+	newName := 'Refactory.Browser.Tests.' , newUnqualified.
+	classToRename := oldName asQualifiedReference value.
 	refactoring := RenameClassRefactoring
 				model: model
 				rename: classToRename
-				to: newUnqualified.
+				to: newName.
 	refactoring setOption: #ignoreSymbolicClassReferences toUse: [:rename :refs | true].
 	self executeRefactoring: refactoring.
 	newFullName := oldName asQualifiedReference environment fullNameFor: newUnqualified.
-	self assert: newFullName equals: 'Refactory.Browser.Tests.' , newUnqualified.
+	
+	self assert: newFullName equals: newName.
 	newClass := model classNamed: newFullName.
 	self denyIsNil: newClass.
 	self deny: (model includesClassNamed: oldName).
@@ -534,7 +543,7 @@ testRenameOfClassWithMethodInPackageNamespace
 		equals: (ref value class >> #icon) getSource!
 
 verifyRenames: aRBClass unqualified: unqualified full: fullyQualified partial: partial
-	| subclassInNamespace classInOtherNamespace ast |
+	| subclassInNamespace classInOtherNamespace ast expectedSource |
 	subclassInNamespace := model classFor: SubclassOfClassToRename.
 	self assert: subclassInNamespace superclass equals: aRBClass.
 	classInOtherNamespace := model classFor: RefactoryTestDataApp.
@@ -602,16 +611,17 @@ verifyRenames: aRBClass unqualified: unqualified full: fullyQualified partial: p
 		of: classInOtherNamespace
 		equals: (classInOtherNamespace realClass >> #refersToOtherClassPartiallyQualifiedBinding) getSource.
 	"Refs in FFI calls should be renamed too"
+	expectedSource := 'externalReference: aClassToRename _: aClassToRename2
+	%<stdcall: <1s>* dummy <1s> <1s>**>'
+				<< unqualified.
+	self assert: (subclassInNamespace methodFor: #externalReference:_:) source trimBlanks
+		equals: expectedSource.
 	ast := subclassInNamespace parseTreeFor: #externalReference:_:.
-	self assert: ast
-		equals: (self
-				parseMethod: 'externalReference: aClassToRename _: aClassToRename2 %<stdcall: <1s>* dummy <1s> <1s>*>'
-						<< unqualified).
-	"Check that the name does bind, but of course it isn't a structure type so we expect another type of semantic error"
-	self
-		should: [ast analyze]
-		raise: Parser notificationClass
-		matching: [:ex | ex displayString = ('Error: invalid structure class type ''<1s>*''' << unqualified)]! !
+	self assert: ast newSource trimBlanks equals: expectedSource.
+	self assert: ast formattedCode trimBlanks equals: expectedSource.
+	self assert: ast equals: (self parseMethod: expectedSource).
+	"Check that the name does bind"
+	self shouldnt: [RBVariableAnalyser analyseParseTree: ast] raise: Parser notificationClass! !
 !Refactory.Browser.Tests.RenameClassRefactoringTest categoriesForMethods!
 compile:in:!helpers!private! !
 defineClass:!helpers!private! !

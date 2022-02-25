@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Refactory.Browser.RBAbstractClass'
-	instanceVariableNames: 'newMethods instanceVariableNames removedMethods scope'
+	instanceVariableNames: 'newMethods instanceVariableNames removedSelectors scope'
 	classVariableNames: 'LookupSuperclass'
 	imports: #()
 	classInstanceVariableNames: ''
@@ -46,8 +46,27 @@ addInstanceVariable: aString
 	self model addInstanceVariable: aString to: self!
 
 addMethod: aRBMethod
-	(newMethods ifNil: [newMethods := IdentityDictionary new]) at: aRBMethod selector put: aRBMethod.
-	removedMethods notNil ifTrue: [removedMethods remove: aRBMethod selector ifAbsent: nil]!
+	| selector |
+	selector := aRBMethod selector.
+	newMethods
+		ifNil: [newMethods := IdentityDictionary new]
+		ifNotNil: [(newMethods lookup: selector) ifNotNil: [:method | ^method]].
+	removedSelectors ifNotNil: [removedSelectors remove: selector ifAbsent: nil].
+	newMethods at: selector put: aRBMethod!
+
+addMethodChange: anAddMethodChange
+	| selector |
+	selector := anAddMethodChange selector.
+	((newMethods ifNil: [newMethods := IdentityDictionary new]) lookup: selector)
+		ifNil: 
+			[newMethods at: selector
+				put: (RBMethod
+						for: self
+						source: anAddMethodChange source
+						selector: selector)]
+		ifNotNil: [:method | method source: anAddMethodChange source].
+	removedSelectors notNil ifTrue: [removedSelectors remove: selector ifAbsent: nil].
+	^anAddMethodChange!
 
 allClassVariableNames
 	^self subclassResponsibility!
@@ -149,61 +168,22 @@ compile: aString
 		categories: (self protocolsFor: (Parser parseMethodPattern: aString))!
 
 compile: aString categories: aCollection
-	| change method |
-	change := self model
+	^self addMethodChange: (self model
 				compile: aString
 				in: self
-				categories: aCollection.
-	method := RBMethod
-				for: self
-				source: aString
-				selector: change selector.
-	self addMethod: method.
-	^change!
+				categories: aCollection)!
 
 compile: aString classified: aSymbol
 	#deprecated.
 	^self compile: aString categories: {aSymbol}!
 
 compile: aString environment: aNamespace categories: aSymbolCollection package: aPackage
-	| change method |
-	change := self model
+	^self addMethodChange: (self model
 				compile: aString
 				in: self
 				environment: aNamespace
 				categories: aSymbolCollection
-				package: aPackage.
-	method := RBMethod
-				for: self
-				source: aString
-				selector: change selector.
-	self addMethod: method.
-	#rbFix.	"Return the AddMethodChange object"
-	^change!
-
-compileTree: aBRMethodNode
-	| selector packageAndEnvironment |
-	selector := aBRMethodNode selector.
-	packageAndEnvironment := self existingMethodPackageAndEnvironment: selector.
-	^self
-		compileTree: aBRMethodNode
-		environment: packageAndEnvironment second
-		categories: (self protocolsFor: selector)
-		package: packageAndEnvironment first!
-
-compileTree: aBRMethodNode categories: aCollection
-	| packageAndEnv  |
-	Notification deprecated.
-	packageAndEnv := (self existingMethodPackageAndEnvironment: aBRMethodNode selector).
-	^self
-		compileTree: aBRMethodNode
-		environment: packageAndEnv second
-		categories: aCollection
-		package: packageAndEnv first!
-
-compileTree: aBRMethodNode classified: aSymbol
-	Notification deprecated.
-	^self compile: aBRMethodNode formattedCode classified: aSymbol!
+				package: aPackage)!
 
 compileTree: aBRMethodNode environment: aRBNamespaceClass categories: aSymbolCollection package: aPackage
 	^self
@@ -240,13 +220,13 @@ directlyDefinesClassVariable: aString
 directlyDefinesInstanceVariable: aString 
 	^self instanceVariableNames includes: aString!
 
-directlyDefinesMethod: aSelector
+directlyDefinesMethod: aSymbol
 	self realClass
 		ifNotNil: 
 			[:realClass |
-			(self hasRemoved: aSelector) ifTrue: [^false].
-			(realClass includesSelector: aSelector) ifTrue: [^true]].
-	^newMethods notNil and: [newMethods includesKey: aSelector]!
+			(removedSelectors notNil and: [removedSelectors includes: aSymbol]) ifTrue: [^false].
+			(realClass includesSelector: aSymbol) ifTrue: [^true]].
+	^newMethods notNil and: [newMethods includesKey: aSymbol]!
 
 directlyDefinesVariable: aVariableName 
 	^(self directlyDefinesClassVariable: aVariableName) 
@@ -288,33 +268,36 @@ existingMethodPackageAndEnvironment: aSymbol
 						ifNil: [self basicEnvironment])]!
 
 existingMethodsReferencingExternals
-	| class excluded |
+	| class rejects |
 	class := self realClass.
 	class ifNil: [^#()].
-	excluded := self newMethods keys addAll: self removedMethods.
+	"The answer must not include methods updated or removed in the model."
+	rejects := self newMethods keys
+				addAll: self removedSelectors;
+				yourself.
 	^class selectMethods: 
 			[:each |
-			(excluded includes: each selector) not and: 
-					[each hasLiteralMatching: 
-							[:literal |
-							(literal isKindOf: VariableBinding)
-								ifTrue: 
-									["We want to exlude any class variables defined in the local hierarchy"
-									(literal isClassVariable and: [each methodClass instanceClass includesBehavior: literal environment])
-										not]
-								ifFalse: 
-									[(literal isKindOf: BindingReference) and: 
-											["Fully qualified references should be unaffected by renames if they are not to the renamed class"
-											literal isRelative]]]]]!
+			(rejects includes: each selector) not
+				and: [each hasLiteralMatching: [:literal | self isExternalReference: literal in: each]]]!
 
 existingMethodsThatReferTo: anObject
-	| existingMethods rejects |
+	| existingMethods |
 	existingMethods := self realClass whichMethodsReferTo: anObject.
-	(newMethods isNil and: [removedMethods isNil]) ifTrue: [^existingMethods].
-	rejects := self newMethods keys
-				addAll: self removedMethods;
-				yourself.
-	^existingMethods reject: [:each | rejects includes: each selector]!
+	"Convoluted, but this can be called an awful lot"
+	^newMethods
+		ifNil: 
+			[removedSelectors
+				ifNil: [existingMethods]
+				ifNotNil: [existingMethods reject: [:each | removedSelectors includes: each selector]]]
+		ifNotNil: 
+			[removedSelectors
+				ifNil: [existingMethods reject: [:each | newMethods includesKey: each selector]]
+				ifNotNil: 
+					[| rejects |
+					rejects := newMethods keys
+								addAll: removedSelectors;
+								yourself.
+					existingMethods reject: [:each | rejects includes: each selector]]]!
 
 fullBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class, and failing that in the receiver's environment. If there is no such variable, then answer nil."
@@ -343,8 +326,8 @@ globalScope
 hash
 	^self name hash bitXor: self class hash!
 
-hasRemoved: aSelector 
-	^removedMethods notNil and: [removedMethods includes: aSelector]!
+hasRemoved: aSelector
+	^removedSelectors notNil and: [removedSelectors includes: aSelector]!
 
 hierarchyBindingFor: aString
 	"Answer a variable binding for the named variable in the scope of this class, i.e. one of its own class variables or those of its superclasses. The imported namespaces and enclosing environment are not searched. If there is no such variable defined in the hierarchy answer nil."
@@ -439,6 +422,19 @@ isBytes
 isDefined
 	^self subclassResponsibility!
 
+isExternalReference: literalObject in: aCompiledMethod
+	(literalObject isKindOf: VariableBinding)
+		ifTrue: 
+			["We want to exlude any class variables defined in the local hierarchy"
+			^(literalObject isClassVariable
+				and: [aCompiledMethod methodClass instanceClass includesBehavior: literalObject environment]) not].
+	(literalObject isKindOf: BindingReference)
+		ifTrue: 
+			["Fully qualified references should be unaffected by renames if they are not to the renamed class"
+			^literalObject isRelative].
+	"In some cases, e.g. FFI functions, methods may contain direct references to classes as literals, not the binding"
+	^literalObject isBehavior!
+
 isMeta
 	self subclassResponsibility!
 
@@ -466,20 +462,17 @@ methodFor: aSelector
 		ifAbsent: 
 			[(self hasRemoved: aSelector)
 				ifFalse: 
-					[(self existingMethodAt: aSelector)
-						ifNotNil: 
-							[:method |
-							RBMethod
-								for: self
-								fromMethod: method
-								andSelector: aSelector]]]!
+					[(self existingMethodAt: aSelector) ifNotNil: [:method | RBMethod for: self fromMethod: method]]]!
 
 methodsReferencingExternals
 	| methods |
-	methods := IdentitySet new.
 	#namespaceToDo.	"Filter the newMethods by a parse tree match to find external variable references"
-	methods addAll: self newMethods.
-	self existingMethodsReferencingExternals do: [:each | methods add: (self newMethodFor: each)].
+	methods := self newMethods copy.
+	self existingMethodsReferencingExternals do: 
+			[:each |
+			| selector |
+			selector := each selector.
+			methods at: selector put: (self newMethodFor: each)].
 	^methods!
 
 model
@@ -494,10 +487,7 @@ nearestRealClass
 	^self subclassResponsibility!
 
 newMethodFor: each
-	^RBMethod
-		for: self
-		fromMethod: each
-		andSelector: each selector!
+	^RBMethod for: self fromMethod: each!
 
 newMethods
 	^newMethods ?? ##(IdentityDictionary new
@@ -535,8 +525,8 @@ protocolsFor: aSelector
 realClass
 	^self subclassResponsibility!
 
-removedMethods
-	^removedMethods ?? ##(IdentitySet new
+removedSelectors
+	^removedSelectors ?? ##(IdentitySet new
 				isImmutable: true;
 				yourself)!
 
@@ -547,7 +537,7 @@ removeInstanceVariable: aString
 removeMethod: aSelector
 	self newMethods removeKey: aSelector ifAbsent: nil.
 	self model removeMethod: aSelector from: self.
-	(removedMethods ifNil: [removedMethods := Set new]) add: aSelector!
+	(removedSelectors ifNil: [removedSelectors := Set new]) add: aSelector!
 
 renameInstanceVariable: oldName to: newName around: aBlock
 	self instanceVariableNames isImmutable
@@ -569,8 +559,11 @@ selectors
 	self realClass
 		ifNotNil: 
 			[:realClass |
-			selectors addAll: realClass selectors.
-			removedMethods ifNotNil: [removedMethods do: [:each | selectors remove: each ifAbsent: nil]]].
+			| removed |
+			removed := self removedSelectors.
+			removed isEmpty
+				ifTrue: [selectors addAll: realClass selectors]
+				ifFalse: [realClass selectorsDo: [:each | (removed includes: each) ifFalse: [selectors add: each]]]].
 	^selectors!
 
 soleInstance
@@ -607,12 +600,18 @@ unqualifiedName
 
 whichMethodsReferToClass: aRBClass
 	| methods class |
-	methods := IdentitySet new.
-	newMethods ifNotNil: [newMethods do: [:each | (each refersToClass: aRBClass) ifTrue: [methods add: each]]].
+	methods := IdentityDictionary new.
+	newMethods
+		ifNotNil: 
+			[newMethods
+				do: [:each | (each refersToClass: aRBClass) ifTrue: [methods at: each selector put: each]]].
 	(self isDefined and: [(class := aRBClass realClass) notNil])
 		ifTrue: 
-			[(self existingMethodsThatReferTo: class instanceClass)
-				do: [:each | methods add: (self newMethodFor: each)]].
+			[(self existingMethodsThatReferTo: class instanceClass) do: 
+					[:each |
+					| selector |
+					selector := each selector.
+					(methods includesKey: selector) ifFalse: [methods at: selector put: (self newMethodFor: each)]]].
 	^methods!
 
 whichMethodsReferToSymbol: aSymbol
@@ -688,7 +687,8 @@ withAllSuperclassesDo: aMonadicValuable
 !Refactory.Browser.RBAbstractClass categoriesForMethods!
 =!comparing!public! !
 addInstanceVariable:!public!variable accessing! !
-addMethod:!method accessing!public! !
+addMethod:!compiling!public! !
+addMethodChange:!compiling!public! !
 allClassVariableNames!accessing!public! !
 allImports!accessing!public! !
 allInstanceVariableNames!accessing!public! !
@@ -710,9 +710,6 @@ compile:!compiling!public! !
 compile:categories:!compiling!public! !
 compile:classified:!compiling!public! !
 compile:environment:categories:package:!compiling!public! !
-compileTree:!compiling!public! !
-compileTree:categories:!compiling!public! !
-compileTree:classified:!compiling!public! !
 compileTree:environment:categories:package:!compiling!public! !
 definesClassVariable:!public!testing! !
 definesInstanceVariable:!public!testing! !
@@ -752,6 +749,7 @@ instanceVariableNames:!accessing!public! !
 isAbstract!public!testing! !
 isBytes!instance specification-testing!public! !
 isDefined!public!testing! !
+isExternalReference:in:!method accessing!private! !
 isMeta!public!testing! !
 isPointers!public!testing! !
 isVariable!public!testing! !
@@ -771,7 +769,7 @@ primaryInstance!accessing!public! !
 printOn:!printing!public! !
 protocolsFor:!accessing!public! !
 realClass!accessing!public! !
-removedMethods!accessing!public! !
+removedSelectors!accessing!public! !
 removeInstanceVariable:!public!variable accessing! !
 removeMethod:!method accessing!public! !
 renameInstanceVariable:to:around:!public!variable accessing! !

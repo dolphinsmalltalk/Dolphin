@@ -16,18 +16,17 @@ checkInlinedMethods
 		ifTrue: [self refactoringError: 'Could not inline any senders']!
 
 inlineMessagesInClass: aClass andSelector: aSelector
-	| messagesToInline previousCountOfMessages |
+	| messagesToInline previousCountOfMessages method |
 	previousCountOfMessages := SmallInteger maximum.	"Some really large
 number > # of initial self sends."
 	
-	[| tree |
-	tree := aClass parseTreeFor: aSelector.
-	messagesToInline := tree isNil ifTrue: [0] ifFalse: [self numberOfSelfSendsIn: tree].
+	[method := aClass methodFor: aSelector.
+	messagesToInline := self numberOfSelfSendsIn: method parseTree.
 	messagesToInline > 0 and: [previousCountOfMessages > messagesToInline]]
 			whileTrue: 
 				[| node |
 				previousCountOfMessages := messagesToInline.
-				node := self selfSendIn: (aClass parseTreeFor: aSelector).
+				node := self selfSendIn: method parseTreeWithSourceIntervals.
 				self onError: 
 						[self performComponentRefactoring: (InlineMethodRefactoring
 									model: self model

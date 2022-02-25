@@ -31,6 +31,7 @@ package setClassNames: #(
 	#{Tools.CategoryTreeModel}
 	#{Tools.ChangedMethodsCategory}
 	#{Tools.ChooseClassDialog}
+	#{Tools.ChooseNamespaceDialog}
 	#{Tools.ClassAspectPlugin}
 	#{Tools.ClassBrowserAbstract}
 	#{Tools.ClassBrowserPlugin}
@@ -549,6 +550,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.OrEnvironment} #includesResource:)
 	#(#{Refactory.Browser.RBConfigurableFormatter class} #publishedAspects)
 	#(#{Refactory.Browser.RBFormatter class} #publishedAspects)
+	#(#{Refactory.Browser.RBMethod class} #publishedAspectsOfInstances)
 	#(#{Refactory.Browser.RBSourceFormatter class} #publishedAspects)
 	#(#{Refactory.Browser.RefactoryChange} #displayOn:)
 	#(#{Refactory.Browser.SelectorEnvironment} #addMethods:)
@@ -1334,6 +1336,12 @@ UI.ValueDialog subclass: #'Tools.MenuComposer'
 	classConstants: {}!
 UI.ValueDialog subclass: #'Tools.PackagePrompter'
 	instanceVariableNames: 'packagesPresenter notPackagedPresenter defaultPackage validationBlock'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+Tools.ChooseClassDialog subclass: #'Tools.ChooseNamespaceDialog'
+	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -4239,10 +4247,18 @@ publishedAspectsOfInstances
 	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
 
 	^super publishedAspectsOfInstances
-		add: (Aspect integer: #top);
-		add: (Aspect integer: #left);
-		add: (Aspect integer: #bottom);
-		add: (Aspect integer: #right);
+		add: ((Aspect integer: #top)
+					defaultValue: 0;
+					yourself);
+		add: ((Aspect integer: #left)
+					defaultValue: 0;
+					yourself);
+		add: ((Aspect integer: #bottom)
+					defaultValue: 0;
+					yourself);
+		add: ((Aspect integer: #right)
+					defaultValue: 0;
+					yourself);
 		yourself! !
 !Graphics.Rectangle class categoriesForMethods!
 publishedAspectsOfInstances!constants!public! !
@@ -6196,6 +6212,21 @@ publishedAspects
 publishedAspects!constants!public! !
 !
 
+!Refactory.Browser.RBMethod class methodsFor!
+
+publishedAspectsOfInstances
+	"Answer a <LookupTable> of the <Aspect>s published by instances of the receiver."
+
+	^super publishedAspectsOfInstances
+		add: (Aspect name: #selector) beReadOnly;
+		add: (Aspect name: #modelClass) beReadOnly;
+		add: (Aspect multilineString: #source) beReadOnly;
+		add: (Aspect name: #method) beReadOnly;
+		yourself! !
+!Refactory.Browser.RBMethod class categoriesForMethods!
+publishedAspectsOfInstances!constants!public! !
+!
+
 !Refactory.Browser.RBSourceFormatter class methodsFor!
 
 publishedAspects
@@ -6318,6 +6349,19 @@ publishedAspectsOfInstances
 		yourself	"For now we don't allow the width to be adjusted in the VC because there are problems"! !
 !StyledPen class categoriesForMethods!
 publishedAspectsOfInstances!public! !
+!
+
+!WebView2View class methodsFor!
+
+publishedEventsOfInstances
+	"Answer a Set of Symbols that describe the published events triggered
+    	by instances of the receiver."
+
+	^super publishedEventsOfInstances
+		addAll: self webview2Events;
+		yourself! !
+!WebView2View class categoriesForMethods!
+publishedEventsOfInstances!events!public! !
 !
 
 !UI.AbstractCardContainer class methodsFor!
@@ -8891,19 +8935,6 @@ editNewDefaultView!operations!public! !
 makeDefaultResource!operations!private! !
 makeResource:inClass:!operations!private! !
 publishedAspectsOfInstances!constants!public! !
-publishedEventsOfInstances!events!public! !
-!
-
-!WebView2View class methodsFor!
-
-publishedEventsOfInstances
-	"Answer a Set of Symbols that describe the published events triggered
-    	by instances of the receiver."
-
-	^super publishedEventsOfInstances
-		addAll: self webview2Events;
-		yourself! !
-!WebView2View class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 !
 

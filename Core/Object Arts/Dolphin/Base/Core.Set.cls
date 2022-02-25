@@ -372,7 +372,7 @@ at:put:!accessing!public! !
 copyElementsInto:!mutating!private! !
 copyWithoutDuplicates!copying!public! !
 distinct!public!set operations! !
-do:!enumerating!public! !
+do:!debugger-step through!enumerating!public! !
 elements!accessing!private! !
 elements:!initializing!private! !
 equals:!comparing!public! !

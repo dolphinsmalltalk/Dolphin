@@ -87,7 +87,7 @@ verifyPackageClosure: aBrowserEnvironment missing: aCollectionOfSymbols
 	self assert: (missing symmetricDifference: aCollectionOfSymbols) asSortedArray equals: #()
 
 	"To debug this, open an env browser on the deployment scope as follows:
-		aBrowserEnvironment openEditor.
+		EnvironmentBrowserShell onEnvironment: aBrowserEnvironment.
 	The call graph to unimplemented messages can then be investigated starting with the Method/Browse other/All unimplemented command"! !
 !Tools.Tests.PackageClosureTests categoriesForMethods!
 consoleAppUnimplemented!constants!private! !

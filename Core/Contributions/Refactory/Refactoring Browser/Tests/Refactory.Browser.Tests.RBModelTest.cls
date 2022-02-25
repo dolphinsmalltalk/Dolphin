@@ -43,6 +43,24 @@ testCommentChange
 	self assert: st changes changes size = 2.
 	self assert: st changes changes last comment isNil!
 
+testCompileTreeForMethod
+	"When we compile a tree for a method that is not yet a new method in the model it is important that it's identity is preserved in order that methods collected before the refactoring was started are updated as the refactoring proceeds. Without this the RenameClassRefactoring (for example) may fail if there are methods with both inbound and outbound references."
+
+	| subject thisClass method rewriter ref originalTree |
+	subject := RBModel new.
+	thisClass := subject classFor: self class.
+	method := thisClass methodFor: self selector.
+	self deny: (thisClass newMethods includesKey: self selector).
+	rewriter := ParseTreeRewriter new.
+	rewriter replace: 'RBModel' with: 'Refactory.Browser.RBModel'.
+	originalTree := method parseTree.
+	self assert: (rewriter executeTree: originalTree).
+	subject compileTree: rewriter tree forMethod: method.
+	"Should not have rewritten in place"
+	self deny: method source equals: method method getSource.
+	self assert: method source equals: rewriter tree formattedCode.
+	self assert: (thisClass newMethods at: self selector) identicalTo: method!
+
 testDefineClassAfterDeletedChange
 	| st className |
 	st := RBModel new.
@@ -281,6 +299,7 @@ verifyMethodRefersToNamespaceHierarchy: aCompiledMethod in: aRBModel
 testAllBehaviorsDo!public!unit tests! !
 testAllBehaviorsDoOnSelectorEnvironment!public!unit tests! !
 testCommentChange!public!unit tests! !
+testCompileTreeForMethod!public!unit tests! !
 testDefineClassAfterDeletedChange!public!unit tests! !
 testDefineClassChange!public!unit tests! !
 testDefineClassChangeD8!public!unit tests! !

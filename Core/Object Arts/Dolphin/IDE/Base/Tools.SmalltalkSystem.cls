@@ -513,7 +513,8 @@ browseClassReferences: aClass in: aBrowserEnvironment
 	"Opens a new MethodBrowser on all the methods defined in the specified <BrowserEnvironment>
 	which refer to the <Class>, aClass."
 
-	self browseVariableReferences: aClass binding in: aBrowserEnvironment!
+	self browseMethodsInEnvironments: {aBrowserEnvironment referencesToVariable: aClass binding.
+				aBrowserEnvironment referencesToClass: aClass}!
 
 browseClassVariables: aClass
 	"Opens a selection dialog to choose one of the class variables of browseClass to browse.
@@ -868,9 +869,8 @@ browseReferencesToClassVar: aString of: browseClass within: aBrowserEnvironment
 	"Private - Open a MethodBrowser on all the methods that reference the class variable named,
 	aString, in the hierarchy of the <Behavior>, browseClass."
 
-	| binding refs definingClass |
-	definingClass := browseClass whichClassDefinesClassVar: aString.
-	binding := definingClass classPool associationAt: aString.
+	| binding refs |
+	binding := browseClass hierarchyBindingFor: aString.
 	refs := self directReferencesToVariable: binding in: aBrowserEnvironment.
 	binding isImmutable
 		ifTrue: [self browseMethodsIn: refs]
@@ -878,12 +878,12 @@ browseReferencesToClassVar: aString of: browseClass within: aBrowserEnvironment
 			[| writers readers |
 			writers := refs filterMethods: [:method | method byteCodeDispatcher writesStatic: binding].
 			writers label: ('All methods that assign to <1p>.<2s> in <3p>'
-						expandMacrosWith: definingClass
+						expandMacrosWith: binding environment
 						with: aString
 						with: aBrowserEnvironment).
 			readers := refs filterMethods: [:method | method byteCodeDispatcher readsStatic: binding].
 			readers label: ('All methods that read <1p>.<2s> in <3p>'
-						expandMacrosWith: definingClass
+						expandMacrosWith: binding environment
 						with: aString
 						with: aBrowserEnvironment).
 			self browseMethodsInEnvironments: {refs. readers. writers}]!
@@ -1119,6 +1119,9 @@ buildSystemFolder
 		when: #classRemoved:
 		send: #removeSystemFolderIconsForClass:
 		to: self!
+
+canChangeClassNamespaces: aCollectionOfClasses
+	^false!
 
 canRefactor
 	"Answer whether the receiver is capable of performing refactorings."
@@ -1846,10 +1849,10 @@ formatterClass
 	formatterClass isNil ifTrue: [formatterClass := RBFormatter].
 	^formatterClass!
 
-formatterClass: anStParseNodeVisitor
+formatterClass: aStParseNodeVisitor
 	"Set the <stParseNodeVisitor> that should be used for auto-formatting code in the system."
 
-	formatterClass := anStParseNodeVisitor!
+	formatterClass := aStParseNodeVisitor!
 
 hardResetGUI
 	"Forcibly close all views to clean up if necessary"
@@ -3488,10 +3491,10 @@ removeClass: aClass
 				, '<n><n>The change is undoable, but beware of deleting essential classes.' expandMacros)
 		ifFalse: [^false].
 	removedGlobals := OrderedCollection new.
-	references := scope referencesToVariable: aClass binding.
+	references := scope referencesToClass: aClass.
 	aClass allSubclassesEndOrderDo: 
 			[:each |
-			removedGlobals add: each binding.
+			removedGlobals add: each.
 			changes removeClass: each].
 	changes removeClass: aClass.
 	[self changeManager performChange: changes] on: ClassBuilder invalidRemoveError
@@ -3499,7 +3502,7 @@ removeClass: aClass
 			[:e |
 			MessageBox errorMsg: e description.
 			^false].
-	removedGlobals do: [:g | references addMethods: (scope referencesToVariable: g) allMethods].
+	removedGlobals do: [:g | references addMethods: (scope referencesToClass: g) allMethods].
 	references notEmpty
 		ifTrue: 
 			[references
@@ -3695,10 +3698,9 @@ renameClass: aClass to: newClassName
 	"Rename aClass to newClassName. Also list all of the methods which reference
 	the class. Their source must be modified to include the newClassName."
 
-	| oldClassName references global |
+	| oldClassName references |
 	oldClassName := aClass name asString.
-	global := aClass binding.
-	references := self systemEnvironment referencesToVariable: global.
+	references := self systemEnvironment referencesToClass: aClass.
 	ClassBuilder renameClass: aClass to: newClassName.
 	references isEmpty
 		ifTrue: [MessageBox notify: 'No methods referenced ' , oldClassName]
@@ -4080,9 +4082,8 @@ unregisterTool: aToolClass
 upgradeAllResourcesReferencingClassNamed: aSymbol
 	"Load and resave all view resources referencing the named class. This will apply any pending STB version upgrade."
 
-	| var refs |
-	var := aSymbol asQualifiedReference binding.
-	refs := self systemEnvironment referencesToVariable: var.
+	| refs |
+	refs := self systemEnvironment referencesToClass: aSymbol asQualifiedReference value.
 	refs allMethods do: [:each | (ResourceIdentifier forMethod: each) ifNotNil: [:ri | ri reassign]]!
 
 userPreferencesIcon
@@ -4358,6 +4359,7 @@ buildAllSelectors!helpers!private! !
 buildMessageMenu:forMethods:browseSelector:extraArgs:browseOtherSelector:!helpers!menus!private! !
 buildSimpleSignatureFor:!autocompletion!helpers!private! !
 buildSystemFolder!accessing!private! !
+canChangeClassNamespaces:!enquiries!public! !
 canRefactor!public!testing! !
 canRenameClass:!enquiries!public! !
 changedIcon!constants!private! !

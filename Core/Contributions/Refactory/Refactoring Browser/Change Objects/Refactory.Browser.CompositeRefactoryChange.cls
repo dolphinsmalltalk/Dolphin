@@ -124,6 +124,14 @@ initialize
 	super initialize.
 	changes := OrderedCollection new!
 
+lastChangeMatching: aMonadicValuable
+	changes reverseDo: 
+			[:each |
+			| change |
+			change := each lastChangeMatching: aMonadicValuable.
+			change notNil ifTrue: [^change]].
+	^nil!
+
 postCopy
 	super postCopy.
 	changes := changes collect: [:each | each copy].
@@ -188,6 +196,7 @@ defineClass:!adding!public! !
 executeNotifying:!applying!private! !
 hash!comparing!public! !
 initialize!initializing!private! !
+lastChangeMatching:!public!searching! !
 postCopy!copying!private! !
 printOn:!printing!public! !
 problemCount!accessing!public! !

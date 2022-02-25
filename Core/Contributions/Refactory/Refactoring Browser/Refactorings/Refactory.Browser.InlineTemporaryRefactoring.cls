@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.InlineTemporaryRefactoring'
-	instanceVariableNames: 'sourceInterval selector sourceTree assignmentNode definingNode'
+	instanceVariableNames: 'sourceInterval selector assignmentNode definingNode sourceTree method'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -21,10 +21,13 @@ checkReadBeforeWritten
 			ifFalse: [self refactoringError: 'The variable is possibly read before it is assigned']!
 
 compileMethod
-	class compileTree: sourceTree!
+	model compileTree: sourceTree forMethod: method!
+
+compileMethod: aMethodNode
+	model compileTree: aMethodNode forMethod: method!
 
 determineAssignmentNode
-	assignmentNode := sourceTree whichNodeIsContainedBy: sourceInterval.
+	assignmentNode := self sourceTree whichNodeIsContainedBy: sourceInterval.
 	(assignmentNode isNil or: [assignmentNode isAssignment not]) 
 		ifTrue: [self refactoringError: 'The selection does not appear to be an assignment']!
 
@@ -47,10 +50,6 @@ inline: anInterval from: aSelector in: aClass
 	class := self classObjectFor: aClass.
 !
 
-parseMethod
-	sourceTree := class parseTreeFor: selector.
-	sourceTree isNil ifTrue: [self refactoringError: 'Could not parse source']!
-
 preconditions
 	^(RBCondition definesSelector: selector in: class) 
 		& (RBCondition withBlock: 
@@ -67,7 +66,17 @@ replaceReferences
 	rewriter := ParseTreeRewriter new.
 	rewriter replaceTree: assignmentNode variable withTree: assignmentNode value.
 	definingNode removeTemporaryNamed: assignmentNode variable name.
-	rewriter executeTree: definingNode!
+	rewriter executeTree: definingNode.
+	"The tree is updated in place - otherwise we'd need to replace the body here.
+	definingNode parent body: rewriter tree."
+	^sourceTree!
+
+sourceTree
+	^sourceTree
+		ifNil: 
+			[method := class methodFor: selector.
+			sourceTree := method parseTreeWithSourceIntervals
+						ifNil: [self refactoringError: 'Could not parse source']]!
 
 storeOn: aStream 
 	aStream nextPut: $(.
@@ -82,13 +91,10 @@ storeOn: aStream
 	aStream nextPut: $)!
 
 transform
-	self
-		replaceAssignment;
-		replaceReferences;
-		compileMethod!
+	self replaceAssignment.
+	self compileMethod: self replaceReferences!
 
 verifySelectedInterval
-	self parseMethod.
 	self determineAssignmentNode.
 	self determineVariableDefinition.
 	self checkMultipleAssignments.
@@ -97,14 +103,15 @@ verifySelectedInterval
 checkMultipleAssignments!preconditions!private! !
 checkReadBeforeWritten!preconditions!private! !
 compileMethod!public!transforming! !
+compileMethod:!public!transforming! !
 determineAssignmentNode!preconditions!private! !
 determineVariableDefinition!preconditions!private! !
 hasOnlyOneAssignment!public!testing! !
 inline:from:in:!initialize/release!public! !
-parseMethod!helpers!private! !
 preconditions!preconditions!public! !
 replaceAssignment!public!transforming! !
 replaceReferences!public!transforming! !
+sourceTree!helpers!private! !
 storeOn:!printing!public! !
 transform!public!transforming! !
 verifySelectedInterval!preconditions!public! !

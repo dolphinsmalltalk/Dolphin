@@ -16,18 +16,22 @@ checkAssignments: variableNames
 	removeAssigned := variableNames copy.
 	node := self placeholderNode.
 	outsideVars := variableNames select: [:each | (node whoDefines: each) references: each].
-	outsideVars size == 1 ifTrue: [self checkSingleAssignment: outsideVars asArray first].
+	outsideVars size == 1
+		ifTrue: 
+			[self checkSingleAssignment: outsideVars asArray first
+			"If the tree were not updated in place, we'd have to search for the placeholder node again here
+			node := self placeholderNode"].
 	outsideVars size > 1
 		ifTrue: 
 			[self refactoringError: 'Cannot extract assignment without all references: '
-						, outsideVars asSortedCollection asArray displayString].
+						, outsideVars asSortedArray displayString].
 	removeAssigned removeAll: outsideVars.
 	readBeforeWritten := RBReadBeforeWrittenTester readBeforeWritten: removeAssigned
 				in: extractedParseTree.
 	readBeforeWritten notEmpty
 		ifTrue: 
 			[self refactoringError: 'Cannot extract assignment if read before written: '
-						, readBeforeWritten asSortedCollection asArray displayString].
+						, readBeforeWritten asSortedArray displayString].
 	removeAssigned do: [:each | (node whoDefines: each) removeTemporaryNamed: each].
 	self createTemporariesInExtractedMethodFor: variableNames!
 
@@ -234,7 +238,7 @@ nameNewMethod: aSymbol
 placeholderNode
 	| node |
 	node := ParseTreeSearcher treeMatching: self methodDelimiter in: modifiedParseTree.
-	node isNil ifTrue: [self refactoringError: 'Cannot extract code'].
+	node ifNil: [self refactoringError: 'Cannot extract code'].
 	^node!
 
 preconditions
@@ -279,24 +283,21 @@ storeOn: aStream
 	aStream nextPut: $)!
 
 transform
-	| existingSelector packageAndEnv categories |
+	| existingSelector sourceMethod |
 	existingSelector := self existingSelector.
 	self nameNewMethod: (existingSelector ifNil: [self getNewMethodName]).
-	"We want the new method to be in the same package and namespace as the source method"
-	packageAndEnv := class existingMethodPackageAndEnvironment: selector.
-	categories := class protocolsFor: selector.
+	sourceMethod := class methodFor: selector.
 	existingSelector
 		ifNil: 
-			[class
+			[| packageAndEnv |
+			"Creating a new method, as opposed to an extract where there was an existing match to use. We want the new method to be in the same package and namespace as the source method"
+			packageAndEnv := sourceMethod existingPackageAndEnvironment.
+			class
 				compile: extractedParseTree newSource
 				environment: packageAndEnv second
-				categories: categories
+				categories: sourceMethod categories
 				package: packageAndEnv first].
-	class
-		compileTree: modifiedParseTree
-		environment: packageAndEnv second
-		categories: categories
-		package: packageAndEnv first! !
+	model compileTree: modifiedParseTree forMethod: sourceMethod! !
 !Refactory.Browser.ExtractMethodRefactoring categoriesForMethods!
 checkAssignments:!public!transforming! !
 checkReturn!public!transforming! !

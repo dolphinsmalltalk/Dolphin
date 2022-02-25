@@ -15,7 +15,7 @@ Refactory.Browser.RBPatternParser comment: 'RBPatternParser is an extended <Smal
 annotationNodeClass
 	^RBPatternAnnotationNode!
 
-evaluateStatements: anStSequenceNode 
+evaluateStatements: aStSequenceNode
 	^nil!
 
 messageNodeClass

@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Refactory.Browser.MethodRefactoring subclass: #'Refactory.Browser.InlineMethodRefactoring'
-	instanceVariableNames: 'sourceInterval inlineParseTree sourceParseTree sourceSelector sourceMessage inlineClass'
+	instanceVariableNames: 'sourceInterval inlineParseTree sourceParseTree sourceSelector sourceMessage inlineClass method'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -40,7 +40,7 @@ chosenInlineClass
 	^class!
 
 compileMethod
-	class compileTree: sourceParseTree!
+	model compileTree: sourceParseTree forMethod: method!
 
 findSelectedMessage
 	self findSelectedMessageCommon.
@@ -50,10 +50,11 @@ findSelectedMessage
 findSelectedMessageCommon
 	"Private - "
 
-	"Because we may be inlining a method into itself, we have to work with a copy of the source parse tree"
-
-	sourceParseTree := (class parseTreeFor: sourceSelector) copy.
+	method := class methodFor: sourceSelector.
+	sourceParseTree := method parseTreeWithSourceIntervals.
 	sourceParseTree ifNil: [^self refactoringError: 'Could not parse sources'].
+	"Because we may be inlining a method into itself, we have to work with a copy of the source parse tree"
+	sourceParseTree := sourceParseTree copy.
 	sourceMessage := sourceParseTree whichNodeIsContainedBy: sourceInterval.
 	(sourceMessage isNil or: 
 			[sourceMessage isCascade ifTrue: [sourceMessage := sourceMessage messages last].
@@ -374,7 +375,7 @@ compileMethod!public!transforming! !
 findSelectedMessage!public!transforming! !
 findSelectedMessageCommon!private!transforming! !
 hasMultipleReturns!public!testing! !
-inline:inMethod:forClass:!initialize/release!public! !
+inline:inMethod:forClass:!initialize/release!private! !
 inlineClass!public!transforming! !
 inlineSelector!public!transforming! !
 inlineSourceReplacing:!public!transforming! !

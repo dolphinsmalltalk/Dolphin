@@ -50,7 +50,7 @@ disconnect
 
 	"Transcript nextPutAll: 'Disconnecting '; print: self; cr."
 
-	connector notNull ifFalse: [^self].
+	connector isNull ifTrue: [^self].
 	connector Unadvise: cookie.
 	connector free.
 	connector := nil!

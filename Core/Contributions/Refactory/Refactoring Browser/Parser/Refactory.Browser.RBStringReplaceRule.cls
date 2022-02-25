@@ -86,8 +86,8 @@ searchForMethod: searchString replaceWith: replaceString when: aBlock
 		replaceWith: replaceString
 		when: aBlock!
 
-searchForTree: anStProgramNode replaceWith: replaceString 
-	^self new searchForTree: anStProgramNode replaceWith: replaceString!
+searchForTree: aStProgramNode replaceWith: replaceString
+	^self new searchForTree: aStProgramNode replaceWith: replaceString!
 
 searchForTree: aRBProgramNode replaceWith: replaceString when: aBlock 
 	^self new 

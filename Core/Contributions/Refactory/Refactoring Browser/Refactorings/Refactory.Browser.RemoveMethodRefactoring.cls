@@ -15,7 +15,6 @@ checkReferencesToAnyOf: aSelectorCollection
 	aSelectorCollection do: 
 			[:each |
 			| refs |
-			refs := OrderedCollection new.
 			refs := (self model allReferencesTo: each)
 						reject: [:aRBMethod | aSelectorCollection includes: aRBMethod selector].
 			refs notEmpty

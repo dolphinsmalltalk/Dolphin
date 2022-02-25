@@ -41,6 +41,7 @@ package setMethodNames: #(
 	#(#{Kernel.ParseNodeVisitor} #visitPatternBlockNode:)
 	#(#{Kernel.ParseNodeVisitor} #visitPatternWrapperBlockNode:)
 	#(#{Kernel.Scanner} #scanPatternVariable)
+	#(#{Kernel.StAbstractVariableNode} #clearPositions)
 	#(#{Kernel.StAbstractVariableNode} #copyInContext:)
 	#(#{Kernel.StAbstractVariableNode} #equalTo:withMapping:)
 	#(#{Kernel.StAbstractVariableNode} #references:)
@@ -137,6 +138,7 @@ package setMethodNames: #(
 	#(#{Kernel.StProgramNode} #replaceWith:)
 	#(#{Kernel.StProgramNode} #selfMessages)
 	#(#{Kernel.StProgramNode} #superMessages)
+	#(#{Kernel.StQualifiedReferenceNode} #clearPositions)
 	#(#{Kernel.StReturnNode} #copyInContext:)
 	#(#{Kernel.StReturnNode} #equalTo:withMapping:)
 	#(#{Kernel.StReturnNode} #match:inContext:)
@@ -162,6 +164,7 @@ package setMethodNames: #(
 	#(#{Kernel.StSequenceNode} #replaceNode:withNode:)
 	#(#{Kernel.StSequenceNode} #replaceNode:withNodes:)
 	#(#{Kernel.StToken} #isPatternVariable)
+	#(#{Kernel.StValueNode} #clearPositions)
 	#(#{Refactory.Browser.RBConfigurableFormatter} #visitPatternWrapperBlockNode:)
 	#(#{Refactory.Browser.RBFormatter} #visitPatternWrapperBlockNode:)
 ).
@@ -355,12 +358,14 @@ refersToVariable:!development!private!testing! !
 
 visitPatternBlockNode: aRBPatternBlockNode
 	self visitArgumentNodes: aRBPatternBlockNode arguments.
-	self visitNode: aRBPatternBlockNode body!
+	self visitNode: aRBPatternBlockNode body.
+	^aRBPatternBlockNode!
 
 visitPatternWrapperBlockNode: aRBPatternWrapperBlockNode
 	self visitNode: aRBPatternWrapperBlockNode wrappedNode.
 	self visitArgumentNodes: aRBPatternWrapperBlockNode arguments.
-	self visitNode: aRBPatternWrapperBlockNode body! !
+	self visitNode: aRBPatternWrapperBlockNode body.
+	^aRBPatternWrapperBlockNode! !
 !Kernel.ParseNodeVisitor categoriesForMethods!
 visitPatternBlockNode:!public!visiting! !
 visitPatternWrapperBlockNode:!public!visiting! !
@@ -389,6 +394,10 @@ scanPatternVariable!private!scanning! !
 
 !Kernel.StAbstractVariableNode methodsFor!
 
+clearPositions
+	start := 0.
+	parentheses := nil!
+
 copyInContext: aDictionary
 	^self class named: self name!
 
@@ -410,6 +419,7 @@ replaceSourceWith: aNode
 				to: self stop
 				with: aNode formattedCode)! !
 !Kernel.StAbstractVariableNode categoriesForMethods!
+clearPositions!public!replacing! !
 copyInContext:!matching!public! !
 equalTo:withMapping:!comparing!public! !
 references:!public!testing! !
@@ -895,10 +905,11 @@ copyInContext: aDictionary
 		selectorParts: (selectorParts collect: [:each | each removePositions]);
 		arguments: (arguments collect: [:each | each copyInContext: aDictionary]);
 		tags: (self tags isEmpty
-					ifTrue: [aDictionary at: '-tags-' ifAbsent: #()]
+					ifTrue: [(aDictionary at: '-tags-' ifAbsent: #()) collect: [:each | each copy]]
 					ifFalse: [self copyList: tags inContext: aDictionary]);
 		body: (body copyInContext: aDictionary);
-		source: (aDictionary at: '-source-');
+		source: (aDictionary at: '-source-' ifAbsentPut: [self source]);
+		methodClass: methodClass environment: environment;
 		yourself!
 
 equalTo: anObject withMapping: aDictionary 
@@ -921,7 +932,11 @@ initialize
 						or: [a startPosition = b startPosition and: [a stopPosition < b stopPosition]]]!
 
 map: oldNode to: newNode
-	(nodeReplacements ifNil: [nodeReplacements := IdentityDictionary new]) at: oldNode put: newNode!
+	(nodeReplacements
+		ifNil: 
+			[nodeReplacements := IdentityDictionary new.
+			nodeReplacements]) at: oldNode
+			put: newNode!
 
 mappingFor: oldNode
 	^nodeReplacements ifNil: [oldNode] ifNotNil: [nodeReplacements at: oldNode ifAbsent: [oldNode]]!
@@ -1229,6 +1244,16 @@ selfMessages!public!querying! !
 superMessages!public!querying! !
 !
 
+!Kernel.StQualifiedReferenceNode methodsFor!
+
+clearPositions
+	start := 0.
+	stop := -1.
+	parentheses := nil! !
+!Kernel.StQualifiedReferenceNode categoriesForMethods!
+clearPositions!public!replacing! !
+!
+
 !Kernel.StReturnNode methodsFor!
 
 copyInContext: aDictionary 
@@ -1427,6 +1452,14 @@ isPatternVariable
 	^false! !
 !Kernel.StToken categoriesForMethods!
 isPatternVariable!public!testing! !
+!
+
+!Kernel.StValueNode methodsFor!
+
+clearPositions
+	parentheses := nil! !
+!Kernel.StValueNode categoriesForMethods!
+clearPositions!public!replacing! !
 !
 
 !Refactory.Browser.RBConfigurableFormatter methodsFor!

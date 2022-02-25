@@ -313,16 +313,9 @@ testWarnUnimplementedAbstractMethod!public!unit tests! !
 !Refactory.Browser.Tests.RefactoringTest methodsFor!
 
 verifyMethod: aSymbol of: aClass equals: aString
-	| source parseTree modelClass |
+	| parseTree modelClass |
 	modelClass := aClass classInModel: model.
-	source := (modelClass methodFor: aSymbol) source.
-	self assertNotNil: source.
-	parseTree := Parser
-				parseMethod: source
-				in: modelClass
-				onError: [:str :pos | self fail: str].
-	[RBVariableAnalyser analyseParseTree: parseTree] on: Parser notificationClass
-		do: [:ex | self fail: ex displayString].
+	parseTree := (modelClass methodFor: aSymbol) boundParseTree.
 	self assert: parseTree equals: (self parseMethod: aString in: modelClass)! !
 !Refactory.Browser.Tests.RefactoringTest categoriesForMethods!
 verifyMethod:of:equals:!helpers!private! !

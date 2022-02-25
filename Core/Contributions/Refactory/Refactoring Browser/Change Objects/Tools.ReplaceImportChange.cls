@@ -27,8 +27,8 @@ afterText
 
 asUndoOperation
 	^self class
-		rename: newImport
-		to: oldImport
+		replaceImport: newImport
+		with: oldImport
 		in: self changeClass!
 
 beforeText
@@ -48,13 +48,13 @@ newImport
 	^newImport!
 
 newImport: aBindingReference
-	newImport := aBindingReference asQualifiedReference asFullyQualifiedReference!
+	newImport := aBindingReference realReference asFullyQualifiedReference!
 
 oldImport
 	^oldImport!
 
 oldImport: aBindingReference
-	oldImport := aBindingReference asQualifiedReference asFullyQualifiedReference!
+	oldImport := aBindingReference realReference asFullyQualifiedReference!
 
 primitiveExecute
 	self changeClass replaceImport: oldImport with: newImport!

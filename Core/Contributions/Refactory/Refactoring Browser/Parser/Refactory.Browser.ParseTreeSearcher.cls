@@ -156,12 +156,7 @@ recusivelySearchInContext
 	context := oldContext!
 
 visitArgumentNode: aNode
-	| value |
-	value := self performSearches: argumentSearches on: aNode.
-	^value
-		ifNil: 
-			[super visitArgumentNode: aNode.
-			aNode]!
+	^(self performSearches: argumentSearches on: aNode) ifNil: [super visitArgumentNode: aNode]!
 
 visitArgumentNodes: aNodeCollection
 	^aNodeCollection do: [:each | self visitArgumentNode: each]!

@@ -12,14 +12,7 @@ Tools.ConvertToSiblingDialog comment: ''!
 !Tools.ConvertToSiblingDialog methodsFor!
 
 chooseNamespace
-	| choice namespaces |
-	namespaces := ClassHierarchyModel withRoots: (Namespace subclasses copyWithout: SharedPool).
-	choice := namespacePresenter model.
-	(ChooseClassDialog
-		on: choice
-		choices: namespaces
-		caption: 'Select Namespace…')
-		showModal!
+	(ChooseNamespaceDialog createOn: namespacePresenter model) showModal!
 
 createComponents
 	"Create the presenters contained by the receiver"

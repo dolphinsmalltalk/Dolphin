@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Core.Object subclass: #'Refactory.Browser.RBMethod'
-	instanceVariableNames: 'class compiledMethod source selector parseTree'
+	instanceVariableNames: 'class compiledMethod source selector parseTree hasSourceIntervals'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -34,8 +34,31 @@ boundParseTree
 	ast scope ifNil: [RBVariableAnalyser analyseParseTree: ast].
 	^ast!
 
+buildParseTree
+	hasSourceIntervals := true.
+	^RBParser
+		parseMethod: self source
+		in: class
+		environment: self parseEnvironment
+		onError: [:str :pos | ^nil]!
+
+categories
+	^class protocolsFor: selector!
+
 environment
 	^self boundParseTree environment!
+
+existingPackageAndEnvironment
+	^self method
+		ifNil: [Pair first: nil second: class environment]
+		ifNotNil: 
+			[:method |
+			| package |
+			package := method owningPackage.
+			Pair first: package
+				second: ((method customEnvironment ifNil: [package ifNotNil: [package environment]])
+						ifNotNil: [:namespace | namespace classInModel: self model]
+						ifNil: [class basicEnvironment])]!
 
 hash
 	"Answer the <SmallInteger> hash value for the receiver."
@@ -44,9 +67,6 @@ hash
 
 method
 	^compiledMethod!
-
-method: aCompiledMethod 
-	compiledMethod := aCompiledMethod!
 
 methodClass
 	^class!
@@ -57,8 +77,19 @@ model
 modelClass
 	^class!
 
-modelClass: aRBClass
-	class := aRBClass!
+modelClass: anRBClass method: aCompiledMethod
+	class := anRBClass.
+	compiledMethod := aCompiledMethod.
+	selector := aCompiledMethod selector.
+	hasSourceIntervals := true.
+	^self!
+
+modelClass: aRBClass selector: aSymbol source: aString
+	class := aRBClass.
+	selector := aSymbol.
+	source := aString.
+	hasSourceIntervals := true.
+	^self!
 
 parseEnvironment
 	compiledMethod ifNil: [^nil].
@@ -67,12 +98,23 @@ parseEnvironment
 
 parseTree
 	^parseTree
-		ifNil: 
-			[parseTree := RBParser
-						parseMethod: self source
-						in: class
-						environment: self parseEnvironment
-						onError: [:str :pos | ^nil]]!
+		ifNil: [parseTree := self buildParseTree.
+"parseTree makeTreeImmutable."
+parseTree]
+		ifNotNil: 
+			[:ast |
+			"self assert: [ast = self buildParseTree]."
+			ast]!
+
+parseTree: aStMethodNode 
+	parseTree := aStMethodNode.
+	source := aStMethodNode newSource.
+	"Assume that the parse tree has been rewritten and does not have valid source positions - reparsing will be needed if those are required"
+	hasSourceIntervals := false!
+
+parseTreeWithSourceIntervals
+	hasSourceIntervals ifFalse: [parseTree := nil].
+	^self parseTree!
 
 printOn: aStream
 	aStream
@@ -116,54 +158,55 @@ refersToVariable: aString
 selector
 	^selector!
 
-selector: aSymbol 
-	selector := aSymbol!
-
 source
 	^source ifNil: [source := compiledMethod getSource]!
 
 source: aString 
-	source := aString! !
+	source = aString ifTrue: [^self].
+	"Transcript print: self; nextPutAll: ' source changed'; cr.
+	parseTree newSource = aString ifTrue: [self halt]."
+	source := aString.
+	"We must clear the cached parse tree"
+	parseTree := nil! !
 !Refactory.Browser.RBMethod categoriesForMethods!
 =!comparing!public! !
 boundParseTree!accessing!public! !
+buildParseTree!accessing!private! !
+categories!public! !
 environment!accessing!public! !
+existingPackageAndEnvironment!public! !
 hash!comparing!public! !
 method!accessing!public! !
-method:!accessing!public! !
 methodClass!accessing!public! !
 model!accessing!public! !
 modelClass!accessing!public! !
-modelClass:!accessing!public! !
+modelClass:method:!accessing!initializing!private! !
+modelClass:selector:source:!initializing!private! !
 parseEnvironment!accessing!private! !
 parseTree!accessing!public! !
+parseTree:!public! !
+parseTreeWithSourceIntervals!accessing!public! !
 printOn:!printing!public! !
 refersToClass:!public!testing! !
 refersToSymbol:!public!testing! !
 refersToVariable:!public!testing! !
 selector!accessing!public! !
-selector:!accessing!public! !
 source!accessing!public! !
 source:!accessing!public! !
 !
 
 !Refactory.Browser.RBMethod class methodsFor!
 
-for: aRBClass fromMethod: aCompiledMethod andSelector: aSymbol 
-	^(self new)
-		modelClass: aRBClass;
-		method: aCompiledMethod;
-		selector: aSymbol;
-		yourself!
+for: aRBClass fromMethod: aCompiledMethod
+	^self new modelClass: aRBClass method: aCompiledMethod!
 
-for: aRBClass source: aString selector: aSelector 
-	^(self new)
-		modelClass: aRBClass;
-		selector: aSelector;
-		source: aString;
-		yourself! !
+for: aRBClass source: aString selector: aSelector
+	^self new
+		modelClass: aRBClass
+		selector: aSelector
+		source: aString! !
 !Refactory.Browser.RBMethod class categoriesForMethods!
-for:fromMethod:andSelector:!instance creation!public! !
+for:fromMethod:!instance creation!public! !
 for:source:selector:!instance creation!public! !
 !
 

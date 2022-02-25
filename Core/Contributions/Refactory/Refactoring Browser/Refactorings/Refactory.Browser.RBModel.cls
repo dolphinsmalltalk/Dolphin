@@ -50,21 +50,28 @@ allClassesDo: aMonadicValuable
 					aMonadicValuable value: each]
 				ifNotNil: [:realClass | (environment includesClass: realClass) ifTrue: [aMonadicValuable value: each]]]!
 
-allImplementorsOf: aSelector
-	^(implementorsCache ifNil: [implementorsCache := IdentityDictionary new]) at: aSelector
-		ifAbsentPutClean: [self privateImplementorsOf: aSelector]!
+allImplementorsOf: aSymbol
+	^((implementorsCache ifNil: [implementorsCache := IdentityDictionary new]) lookup: aSymbol)
+		ifNil: 
+			[| classes |
+			classes := Set new.
+			self allBehaviorsDo: 
+					[:each |
+					((each directlyDefinesMethod: aSymbol) and: [environment includesSelector: aSymbol in: each])
+						ifTrue: [classes add: each]].
+			implementorsCache at: aSymbol put: classes]!
 
 allReferencesTo: aSymbol
-	^(sendersCache ifNil: [sendersCache := IdentityDictionary new]) at: aSymbol
-		ifAbsentPutClean: 
+	^((sendersCache ifNil: [sendersCache := IdentityDictionary new]) lookup: aSymbol)
+		ifNil:
 			[| refs |
-			refs := OrderedCollection new.
+			refs := Array writeStream.
 			self allBehaviorsDo: 
 					[:each |
 					#rbFix.	"Don't include any selectors which should not be visible in the model's environment"
-					refs addAll: ((each whichMethodsReferToSymbol: aSymbol)
-								select: [:eachMethod | environment includesSelector: eachMethod selector in: each])].
-			refs]!
+					(each whichMethodsReferToSymbol: aSymbol)
+						do: [:eachMethod | (environment includesSelector: eachMethod selector in: each) ifTrue: [refs nextPut: eachMethod]]].
+			sendersCache at: aSymbol put: refs contents]!
 
 allReferencesToClass: aRBClass
 	| methods |
@@ -128,6 +135,20 @@ compile: aString in: aRBClass environment: aRBNamespaceClass categories: aCollec
 				package: aPackage.
 	self flushCaches.
 	^change!
+
+compileTree: aMethodNode forMethod: aRBMethod
+	| selector class packageAndEnvironment |
+	aRBMethod parseTree: aMethodNode.
+	selector := aRBMethod selector.
+	class := aRBMethod modelClass.
+	self assert: aMethodNode selector == aRBMethod selector.
+	class addMethod: aRBMethod.
+	packageAndEnvironment := class existingMethodPackageAndEnvironment: selector.
+	class
+		compile: aMethodNode newSource
+		environment: packageAndEnvironment second
+		categories: (class protocolsFor: selector)
+		package: packageAndEnvironment first!
 
 defineClass: aString
 	| change newClass newClassName |
@@ -217,16 +238,6 @@ performChange: aCompositeRefactoryChange around: aBlock
 	changes := aCompositeRefactoryChange.
 	aBlock ensure: [changes := oldChanges].
 	^aCompositeRefactoryChange!
-
-privateImplementorsOf: aSelector
-	| classes |
-	classes := Set new.
-	self allBehaviorsDo: 
-			[:each |
-			#rbFix.	"Ignore defining classes where the class/selector pair is not part of the environment"
-			((each directlyDefinesMethod: aSelector) and: [environment includesSelector: aSelector in: each])
-				ifTrue: [classes add: each]].
-	^classes!
 
 removeClass: aRBClass 
 	self removeClassNamed: aRBClass name!
@@ -355,6 +366,7 @@ classNamed:!accessing/classes!public! !
 comment:in:!changes!private! !
 compile:in:categories:!changes!private! !
 compile:in:environment:categories:package:!public! !
+compileTree:forMethod:!public!support! !
 defineClass:!changes!public! !
 definesStaticVariable:!public!testing! !
 environment!accessing!public! !
@@ -368,7 +380,6 @@ metaclassNamed:!accessing/classes!public! !
 name!accessing!public! !
 name:!accessing!public! !
 performChange:around:!changes!private! !
-privateImplementorsOf:!helpers!private! !
 removeClass:!changes!public! !
 removeClassConstant:from:!changes!private! !
 removeClassNamed:!changes!private! !

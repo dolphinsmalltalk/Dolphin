@@ -82,6 +82,18 @@ testRecompileMaintainsEnvironmentAndPackage
 				[OS.KernelLibrary methodDictionary at: subject selector put: subject.
 				OS.KernelLibrary flushMethodCache]!
 
+testReferenceToOwnClassVar
+	"Even a class' references to its own class variables are implicitly a reference to itself. This is required in order that tooling is able to find all references when needed, for example for the Rename Class refactoring, which will need to see references to a class via its own class variables in case those variable references are for some reason fully or partially qualified and so need to be renamed."
+
+	| subject |
+	subject := Object >> #getEvents.
+	self assert: (subject refersToLiteral: Object)!
+
+testRefersToClassViaClassVar
+	| subject |
+	subject := EventMessageSequence >> #value.
+	self assert: (subject refersToLiteral: DeadObject)!
+
 testValueWithReceiverArguments
 	| method value |
 	method := self class compiledMethodAt: #returnTrue.
@@ -100,6 +112,8 @@ testIsSimpleSelfSend!public!unit tests! !
 testLocalEnvironment!public!unit tests! !
 testLocalScope!public!unit tests! !
 testRecompileMaintainsEnvironmentAndPackage!public!unit tests! !
+testReferenceToOwnClassVar!public! !
+testRefersToClassViaClassVar!public! !
 testValueWithReceiverArguments!public!unit tests! !
 !
 

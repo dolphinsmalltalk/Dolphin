@@ -359,6 +359,10 @@ recurseInto
 recurseIntoCharacter
 	^$`!
 
+refersToSymbol: aSymbol
+	self childrenDo: [:each | (each refersToSymbol: aSymbol) ifTrue: [^true]].
+	^false!
+
 scope
 	^scope!
 
@@ -509,6 +513,7 @@ precedence!accessing!public! !
 printOn:!printing!public! !
 recurseInto!public!testing/matching! !
 recurseIntoCharacter!meta variable/accessing!public! !
+refersToSymbol:!public! !
 scope!accessing!public! !
 scope:!accessing!public! !
 sentMessages!accessing!public! !
