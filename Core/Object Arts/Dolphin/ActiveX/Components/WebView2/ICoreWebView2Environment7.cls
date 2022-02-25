@@ -3,7 +3,7 @@
 ICoreWebView2Environment6 subclass: #ICoreWebView2Environment7
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2Environment7 guid: (OS.COM.IID fromString: '{43c22296-3bbd-43a4-9c00-5c0df6dd29a2}')!

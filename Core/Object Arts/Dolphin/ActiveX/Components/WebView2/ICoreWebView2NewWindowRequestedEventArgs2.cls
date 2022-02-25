@@ -3,7 +3,7 @@
 ICoreWebView2NewWindowRequestedEventArgs subclass: #ICoreWebView2NewWindowRequestedEventArgs2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2NewWindowRequestedEventArgs2 guid: (OS.COM.IID fromString: '{bbc7baed-74c6-4c92-b63a-7f5aeae03de3}')!

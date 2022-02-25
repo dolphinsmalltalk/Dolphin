@@ -46,7 +46,7 @@ handled: anObject
 	handled := anObject!
 
 isBrowserProcessExit
-	^self processFailedKind = WebView2Constants.COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED!
+	^self processFailedKind = WebView2.COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED!
 
 printableProperties
 	^#(#processFailedKind)!

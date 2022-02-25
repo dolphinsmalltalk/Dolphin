@@ -3,7 +3,7 @@
 ICoreWebView2NavigationStartingEventArgs subclass: #ICoreWebView2NavigationStartingEventArgs2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2NavigationStartingEventArgs2 guid: (OS.COM.IID fromString: '{9086be93-91aa-472d-a7e0-579f2ba006ad}')!

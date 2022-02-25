@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Kernel.SharedPool subclass: #WebView2Constants
+Kernel.Namespace subclass: #WebView2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM} #{OS})
@@ -151,7 +151,7 @@ Kernel.SharedPool subclass: #WebView2Constants
 		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_WEBSOCKET' -> 16rB.
 		'COREWEBVIEW2_WEB_RESOURCE_CONTEXT_XML_HTTP_REQUEST' -> 16r7
 	}!
-WebView2Constants guid: (Core.GUID fromString: '{014d57e9-7c7c-4e57-97f2-854b126080af}')!
-WebView2Constants isNonInstantiable: true!
-WebView2Constants comment: ''!
-!WebView2Constants categoriesForClass!Unclassified! !
+WebView2 guid: (Core.GUID fromString: '{014d57e9-7c7c-4e57-97f2-854b126080af}')!
+WebView2 isNonInstantiable: true!
+WebView2 comment: ''!
+!WebView2 categoriesForClass!Unclassified! !

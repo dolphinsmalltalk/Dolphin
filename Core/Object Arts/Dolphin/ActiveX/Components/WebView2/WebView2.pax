@@ -174,10 +174,10 @@ package setClassNames: #(
 	#{Smalltalk.ICoreWebViewCompletedHandler}
 	#{Smalltalk.URLPresenter}
 	#{Smalltalk.WebView2CompletionHandler}
-	#{Smalltalk.WebView2Constants}
 	#{Smalltalk.WebView2EventSink}
 	#{Smalltalk.WebView2Loader}
 	#{Smalltalk.WebView2View}
+	#{WebView2}
 ).
 
 package setPrerequisites: #(
@@ -200,7 +200,7 @@ package!
 
 "Class Definitions"!
 
-Kernel.SharedPool subclass: #WebView2Constants
+Kernel.Namespace subclass: #WebView2
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #(#{OS.COM} #{OS})
@@ -559,49 +559,49 @@ ICoreWebView2Interface subclass: #ICoreWebViewCompletedHandler
 ICoreWebView2 subclass: #ICoreWebView2_2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2_2 subclass: #ICoreWebView2_3
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2_3 subclass: #ICoreWebView2_4
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2_4 subclass: #ICoreWebView2_5
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2_5 subclass: #ICoreWebView2_6
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2_6 subclass: #ICoreWebView2_7
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2_7 subclass: #ICoreWebView2_8
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2_8 subclass: #ICoreWebView2_9
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2Collection subclass: #ICoreWebView2IterableCollection
@@ -667,61 +667,61 @@ ICoreWebView2Sequence subclass: #ICoreWebView2StringCollection
 ICoreWebView2CompositionController subclass: #ICoreWebView2CompositionController2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2Controller subclass: #ICoreWebView2Controller2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2Controller2 subclass: #ICoreWebView2Controller3
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2Environment subclass: #ICoreWebView2Environment2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2Environment2 subclass: #ICoreWebView2Environment3
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2Environment3 subclass: #ICoreWebView2Environment4
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2Environment4 subclass: #ICoreWebView2Environment5
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2Environment5 subclass: #ICoreWebView2Environment6
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2Environment6 subclass: #ICoreWebView2Environment7
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2Environment7 subclass: #ICoreWebView2Environment8
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2EventArgs subclass: #ICoreWebView2AcceleratorKeyPressedEventArgs
@@ -841,13 +841,13 @@ ICoreWebView2EventArgs subclass: #ICoreWebView2WebResourceResponseReceivedEventA
 ICoreWebView2NavigationStartingEventArgs subclass: #ICoreWebView2NavigationStartingEventArgs2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2NewWindowRequestedEventArgs subclass: #ICoreWebView2NewWindowRequestedEventArgs2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2ProcessFailedEventArgs subclass: #ICoreWebView2ProcessFailedEventArgs2
@@ -859,7 +859,7 @@ ICoreWebView2ProcessFailedEventArgs subclass: #ICoreWebView2ProcessFailedEventAr
 ICoreWebView2EventHandler subclass: #ICoreWebView2AcceleratorKeyPressedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2EventHandler subclass: #ICoreWebView2BrowserProcessExitedEventHandler
@@ -943,7 +943,7 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2FrameContentLoadingEventHandle
 ICoreWebView2EventHandler subclass: #ICoreWebView2FrameCreatedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2EventHandler subclass: #ICoreWebView2FrameDOMContentLoadedEventHandler
@@ -961,13 +961,13 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2FrameNameChangedEventHandler
 ICoreWebView2EventHandler subclass: #ICoreWebView2FrameNavigationCompletedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2EventHandler subclass: #ICoreWebView2FrameNavigationStartingEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2EventHandler subclass: #ICoreWebView2FrameWebMessageReceivedEventHandler
@@ -1009,13 +1009,13 @@ ICoreWebView2EventHandler subclass: #ICoreWebView2MoveFocusRequestedEventHandler
 ICoreWebView2EventHandler subclass: #ICoreWebView2NavigationCompletedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2EventHandler subclass: #ICoreWebView2NavigationStartingEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2EventHandler subclass: #ICoreWebView2NewBrowserVersionAvailableEventHandler
@@ -1123,37 +1123,37 @@ ICoreWebView2FocusChangedEventHandler subclass: #ICoreWebView2FocusLostEventHand
 ICoreWebView2Frame subclass: #ICoreWebView2Frame2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2Settings subclass: #ICoreWebView2Settings2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2Settings2 subclass: #ICoreWebView2Settings3
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2Settings3 subclass: #ICoreWebView2Settings4
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2Settings4 subclass: #ICoreWebView2Settings5
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2Settings5 subclass: #ICoreWebView2Settings6
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebViewCompletedHandler subclass: #ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler

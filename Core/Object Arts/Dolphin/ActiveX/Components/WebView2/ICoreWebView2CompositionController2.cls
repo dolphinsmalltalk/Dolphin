@@ -3,7 +3,7 @@
 ICoreWebView2CompositionController subclass: #ICoreWebView2CompositionController2
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2CompositionController2 guid: (OS.COM.IID fromString: '{0b6a3d24-49cb-4806-ba20-b5e0734a7b26}')!

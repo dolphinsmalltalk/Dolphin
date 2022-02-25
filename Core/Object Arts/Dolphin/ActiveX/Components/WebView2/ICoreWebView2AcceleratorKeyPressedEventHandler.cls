@@ -3,7 +3,7 @@
 ICoreWebView2EventHandler subclass: #ICoreWebView2AcceleratorKeyPressedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2AcceleratorKeyPressedEventHandler guid: (OS.COM.IID fromString: '{b29c7e28-fa79-41a8-8e44-65811c76dcb2}')!

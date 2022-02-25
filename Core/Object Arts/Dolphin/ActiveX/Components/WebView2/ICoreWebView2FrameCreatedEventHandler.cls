@@ -3,7 +3,7 @@
 ICoreWebView2EventHandler subclass: #ICoreWebView2FrameCreatedEventHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #(#{Smalltalk.WebView2Constants})
+	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
 ICoreWebView2FrameCreatedEventHandler guid: (OS.COM.IID fromString: '{38059770-9baa-11eb-a8b3-0242ac130003}')!

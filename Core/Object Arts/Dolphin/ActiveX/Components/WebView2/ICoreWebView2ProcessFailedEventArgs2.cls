@@ -97,9 +97,9 @@ printableProperties
 	propertyNames addLast: #exitCode.
 	self processDescription isEmpty ifFalse: [propertyNames add: #processDescription].
 	failureKind := self processFailedKind.
-	failureKind = WebView2Constants.COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED
+	failureKind = WebView2.COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED
 		ifFalse: [propertyNames add: #reason].
-	failureKind = WebView2Constants.COREWEBVIEW2_PROCESS_FAILED_KIND_FRAME_RENDER_PROCESS_EXITED
+	failureKind = WebView2.COREWEBVIEW2_PROCESS_FAILED_KIND_FRAME_RENDER_PROCESS_EXITED
 		ifTrue: [propertyNames addLast: #frameInfosForFailedProcess].
 	^propertyNames!
 
