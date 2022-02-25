@@ -172,11 +172,11 @@ package setClassNames: #(
 	#{Smalltalk.ICoreWebView2WindowFeatures}
 	#{Smalltalk.ICoreWebView2ZoomFactorChangedEventHandler}
 	#{Smalltalk.ICoreWebViewCompletedHandler}
-	#{Smalltalk.URLPresenter}
 	#{Smalltalk.WebView2CompletionHandler}
 	#{Smalltalk.WebView2EventSink}
 	#{Smalltalk.WebView2Loader}
-	#{Smalltalk.WebView2View}
+	#{UI.URLPresenter}
+	#{UI.WebView2View}
 	#{WebView2}
 ).
 
@@ -369,7 +369,7 @@ OS.COM.InterfaceImplementation subclass: #WebView2EventSink
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValuePresenter subclass: #URLPresenter
+UI.ValuePresenter subclass: #'UI.URLPresenter'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -1222,10 +1222,10 @@ ICoreWebViewCompletedHandler subclass: #ICoreWebView2WebResourceResponseViewGetC
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.ValueConvertingControlView subclass: #WebView2View
+UI.ValueConvertingControlView subclass: #'UI.WebView2View'
 	instanceVariableNames: 'settingsFlags unavailableLink webviewEnvironment webviewController webview eventHandlers'
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{WebView2})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'CanNavigateToStrings' -> 16r2000.

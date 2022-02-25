@@ -561,7 +561,6 @@ package setMethodNames: #(
 	#(#{Smalltalk class} #renameVariable:to:)
 	#(#{Smalltalk.StyledGradientBrush class} #publishedAspectsOfInstances)
 	#(#{Smalltalk.StyledPen class} #publishedAspectsOfInstances)
-	#(#{Smalltalk.WebView2View class} #publishedEventsOfInstances)
 	#(#{UI.AbstractCardContainer class} #publishedAspectsOfInstances)
 	#(#{UI.AbstractCardContainer class} #publishedEventsOfInstances)
 	#(#{UI.AbstractDocumentShell} #saveStateOn:)
@@ -741,6 +740,7 @@ package setMethodNames: #(
 	#(#{UI.View class} #makeResource:inClass:)
 	#(#{UI.View class} #publishedAspectsOfInstances)
 	#(#{UI.View class} #publishedEventsOfInstances)
+	#(#{UI.WebView2View class} #publishedEventsOfInstances)
 ).
 
 package setPrerequisites: #(
@@ -6351,19 +6351,6 @@ publishedAspectsOfInstances
 publishedAspectsOfInstances!public! !
 !
 
-!WebView2View class methodsFor!
-
-publishedEventsOfInstances
-	"Answer a Set of Symbols that describe the published events triggered
-    	by instances of the receiver."
-
-	^super publishedEventsOfInstances
-		addAll: self webview2Events;
-		yourself! !
-!WebView2View class categoriesForMethods!
-publishedEventsOfInstances!events!public! !
-!
-
 !UI.AbstractCardContainer class methodsFor!
 
 publishedAspectsOfInstances
@@ -8935,6 +8922,19 @@ editNewDefaultView!operations!public! !
 makeDefaultResource!operations!private! !
 makeResource:inClass:!operations!private! !
 publishedAspectsOfInstances!constants!public! !
+publishedEventsOfInstances!events!public! !
+!
+
+!UI.WebView2View class methodsFor!
+
+publishedEventsOfInstances
+	"Answer a Set of Symbols that describe the published events triggered
+    	by instances of the receiver."
+
+	^super publishedEventsOfInstances
+		addAll: self webview2Events;
+		yourself! !
+!UI.WebView2View class categoriesForMethods!
 publishedEventsOfInstances!events!public! !
 !
 
