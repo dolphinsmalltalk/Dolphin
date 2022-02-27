@@ -77,7 +77,7 @@ cursor
 	"Answer the <handle> value of the 'Cursor' property of the receiver."
 
 	| answer |
-	answer := ExternalHandle new.
+	answer := Handle new.
 	self get_Cursor: answer.
 	^answer asObject!
 

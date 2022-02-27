@@ -3,7 +3,7 @@
 Kernel.SharedPool subclass: #WebView2Constants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM} #{OS})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'COREWEBVIEW2_BOUNDS_MODE_USE_RASTERIZATION_SCALE' -> 16r1.

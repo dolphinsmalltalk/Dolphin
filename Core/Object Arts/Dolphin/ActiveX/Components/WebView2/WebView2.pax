@@ -184,7 +184,6 @@ package setPrerequisites: #(
 	'..\..\Deprecated\ActiveX (Old Names)'
 	'..\..\Automation\ActiveX Automation'
 	'..\..\..\Base\Dolphin'
-	'..\..\..\Base\Deprecated\Dolphin Base (Old Names)'
 	'..\..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\MVP\Graphics\Dolphin GDI Graphics'
 	'..\..\..\MVP\Base\Dolphin MVP Base'
@@ -204,7 +203,7 @@ package!
 Kernel.SharedPool subclass: #WebView2Constants
 	instanceVariableNames: ''
 	classVariableNames: ''
-	imports: #()
+	imports: #(#{OS.COM} #{OS})
 	classInstanceVariableNames: ''
 	classConstants: {
 		'COREWEBVIEW2_BOUNDS_MODE_USE_RASTERIZATION_SCALE' -> 16r1.

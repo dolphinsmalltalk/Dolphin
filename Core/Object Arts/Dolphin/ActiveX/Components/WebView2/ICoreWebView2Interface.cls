@@ -60,7 +60,7 @@ resourceLib
 					[:appIcon |
 					| splits |
 					splits := $, split: appIcon.
-					ResourceLib := ExternalResourceLibrary open: splits first]].
+					ResourceLib := ResourceLibrary open: splits first]].
 	^ResourceLib! !
 !ICoreWebView2Interface class categoriesForMethods!
 icon!constants!public! !

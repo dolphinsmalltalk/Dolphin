@@ -343,7 +343,7 @@ parentWindow
 	"Answer the <handle> value of the 'ParentWindow' property of the receiver."
 
 	| answer |
-	answer := ExternalHandle new.
+	answer := Handle new.
 	self get_ParentWindow: answer.
 	^answer asObject!
 
