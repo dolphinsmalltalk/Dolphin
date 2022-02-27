@@ -212,7 +212,7 @@ displayRect
 	"Answer the <RECT> value of the 'DisplayRect' property of the receiver."
 
 	| answer |
-	answer := RECT new.
+	answer := RECTL new.
 	self get_DisplayRect: answer.
 	^answer asObject!
 
@@ -249,7 +249,7 @@ get_DisplayRect: displayRect
 		HRESULT __stdcall DisplayRect(
 			[out, retval]RECT* DisplayRect);"
 
-	<virtual stdcall: hresult 14 RECT*>
+	<virtual stdcall: hresult 14 RECTL*>
 	^self invalidCall: _failureCode!
 
 get_FrameId: frameId
@@ -393,7 +393,7 @@ get_PointerDeviceRect: pointerDeviceRect
 		HRESULT __stdcall PointerDeviceRect(
 			[out, retval]RECT* PointerDeviceRect);"
 
-	<virtual stdcall: hresult 12 RECT*>
+	<virtual stdcall: hresult 12 RECTL*>
 	^self invalidCall: _failureCode!
 
 get_PointerFlags: pointerFlags
@@ -438,7 +438,7 @@ get_TouchContact: touchContact
 		HRESULT __stdcall TouchContact(
 			[out, retval]RECT* TouchContact);"
 
-	<virtual stdcall: hresult 52 RECT*>
+	<virtual stdcall: hresult 52 RECTL*>
 	^self invalidCall: _failureCode!
 
 get_TouchContactRaw: touchContactRaw
@@ -447,7 +447,7 @@ get_TouchContactRaw: touchContactRaw
 		HRESULT __stdcall TouchContactRaw(
 			[out, retval]RECT* TouchContactRaw);"
 
-	<virtual stdcall: hresult 54 RECT*>
+	<virtual stdcall: hresult 54 RECTL*>
 	^self invalidCall: _failureCode!
 
 get_TouchFlags: touchFlags
@@ -675,7 +675,7 @@ pointerDeviceRect
 	"Answer the <RECT> value of the 'PointerDeviceRect' property of the receiver."
 
 	| answer |
-	answer := RECT new.
+	answer := RECTL new.
 	self get_PointerDeviceRect: answer.
 	^answer asObject!
 
@@ -743,7 +743,7 @@ put_DisplayRect: displayRect
 		HRESULT __stdcall DisplayRect(
 			[in]RECT DisplayRect);"
 
-	<virtual stdcall: hresult 15 RECT>
+	<virtual stdcall: hresult 15 RECTL>
 	^self invalidCall: _failureCode!
 
 put_FrameId: frameId
@@ -903,7 +903,7 @@ put_PointerDeviceRect: pointerDeviceRect
 		HRESULT __stdcall PointerDeviceRect(
 			[in]RECT PointerDeviceRect);"
 
-	<virtual stdcall: hresult 13 RECT>
+	<virtual stdcall: hresult 13 RECTL>
 	^self invalidCall: _failureCode!
 
 put_PointerFlags: pointerFlags
@@ -953,7 +953,7 @@ put_TouchContact: touchContact
 		HRESULT __stdcall TouchContact(
 			[in]RECT TouchContact);"
 
-	<virtual stdcall: hresult 53 RECT>
+	<virtual stdcall: hresult 53 RECTL>
 	^self invalidCall: _failureCode!
 
 put_TouchContactRaw: touchContactRaw
@@ -963,7 +963,7 @@ put_TouchContactRaw: touchContactRaw
 		HRESULT __stdcall TouchContactRaw(
 			[in]RECT TouchContactRaw);"
 
-	<virtual stdcall: hresult 55 RECT>
+	<virtual stdcall: hresult 55 RECTL>
 	^self invalidCall: _failureCode!
 
 put_TouchFlags: touchFlags
@@ -1023,7 +1023,7 @@ touchContact
 	"Answer the <RECT> value of the 'TouchContact' property of the receiver."
 
 	| answer |
-	answer := RECT new.
+	answer := RECTL new.
 	self get_TouchContact: answer.
 	^answer asObject!
 
@@ -1036,7 +1036,7 @@ touchContactRaw
 	"Answer the <RECT> value of the 'TouchContactRaw' property of the receiver."
 
 	| answer |
-	answer := RECT new.
+	answer := RECTL new.
 	self get_TouchContactRaw: answer.
 	^answer asObject!
 
@@ -1237,13 +1237,13 @@ defineFunctions
 		defineFunction: #put_PointerFlags:
 			argumentTypes: 'dword';
 		defineFunction: #get_PointerDeviceRect:
-			argumentTypes: 'RECT*';
+			argumentTypes: 'RECTL*';
 		defineFunction: #put_PointerDeviceRect:
-			argumentTypes: 'RECT';
+			argumentTypes: 'RECTL';
 		defineFunction: #get_DisplayRect:
-			argumentTypes: 'RECT*';
+			argumentTypes: 'RECTL*';
 		defineFunction: #put_DisplayRect:
-			argumentTypes: 'RECT';
+			argumentTypes: 'RECTL';
 		defineFunction: #get_PixelLocation:
 			argumentTypes: 'POINTL*';
 		defineFunction: #put_PixelLocation:
@@ -1317,13 +1317,13 @@ defineFunctions
 		defineFunction: #put_TouchMask:
 			argumentTypes: 'dword';
 		defineFunction: #get_TouchContact:
-			argumentTypes: 'RECT*';
+			argumentTypes: 'RECTL*';
 		defineFunction: #put_TouchContact:
-			argumentTypes: 'RECT';
+			argumentTypes: 'RECTL';
 		defineFunction: #get_TouchContactRaw:
-			argumentTypes: 'RECT*';
+			argumentTypes: 'RECTL*';
 		defineFunction: #put_TouchContactRaw:
-			argumentTypes: 'RECT';
+			argumentTypes: 'RECTL';
 		defineFunction: #get_TouchOrientation:
 			argumentTypes: 'dword*';
 		defineFunction: #put_TouchOrientation:

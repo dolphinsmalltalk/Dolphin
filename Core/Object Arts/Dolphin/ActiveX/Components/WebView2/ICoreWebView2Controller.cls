@@ -159,7 +159,7 @@ bounds
 	"Answer the <RECT> value of the 'Bounds' property of the receiver."
 
 	| answer |
-	answer := RECT new.
+	answer := RECTL new.
 	self get_Bounds: answer.
 	^answer asObject!
 
@@ -221,7 +221,7 @@ get_Bounds: bounds
 		HRESULT __stdcall Bounds(
 			[out, retval]RECT* Bounds);"
 
-	<virtual stdcall: hresult 6 RECT*>
+	<virtual stdcall: hresult 6 RECTL*>
 	^self invalidCall: _failureCode!
 
 get_BoundsMode: boundsMode
@@ -362,7 +362,7 @@ put_Bounds: bounds
 		HRESULT __stdcall Bounds(
 			[in]RECT Bounds);"
 
-	<virtual stdcall: hresult 7 RECT>
+	<virtual stdcall: hresult 7 RECTL>
 	^self invalidCall: _failureCode!
 
 put_BoundsMode: boundsMode
@@ -518,7 +518,7 @@ SetBoundsAndZoomFactor: bounds zoomFactor: zoomFactor
 			[in]RECT Bounds,
 			[in]double ZoomFactor);"
 
-	<virtual stdcall: hresult 12 RECT double>
+	<virtual stdcall: hresult 12 RECTL double>
 	^self invalidCall: _failureCode!
 
 shouldDetectMonitorScaleChanges
@@ -622,9 +622,9 @@ defineFunctions
 		defineFunction: #put_IsVisible:
 			argumentTypes: 'sdword';
 		defineFunction: #get_Bounds:
-			argumentTypes: 'RECT*';
+			argumentTypes: 'RECTL*';
 		defineFunction: #put_Bounds:
-			argumentTypes: 'RECT';
+			argumentTypes: 'RECTL';
 		defineFunction: #get_ZoomFactor:
 			argumentTypes: 'double*';
 		defineFunction: #put_ZoomFactor:
@@ -634,7 +634,7 @@ defineFunctions
 		defineFunction: #Remove_ZoomFactorChanged:
 			argumentTypes: 'sqword';
 		defineFunction: #SetBoundsAndZoomFactor:zoomFactor:
-			argumentTypes: 'RECT double';
+			argumentTypes: 'RECTL double';
 		defineFunction: #MoveFocus:
 			argumentTypes: 'sdword';
 		defineFunction: #Add_MoveFocusRequested:token:

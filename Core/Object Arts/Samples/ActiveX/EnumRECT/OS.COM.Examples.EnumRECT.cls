@@ -33,7 +33,7 @@ initialize
 	m_iCur := 0.
 	m_rgrc := StructureArray
 				length: CRECTS
-				elementClass: RECT
+				elementClass: RECTL
 				initializer: 
 					[:rect :index |
 					| i |
@@ -61,7 +61,7 @@ Next: next rgelt: rgelt pceltFetched: pdwRects
 	(rgelt isNull or: [m_iCur >= CRECTS])
 		ifTrue: [^S_FALSE].
 
-	prc := StructureArray fromAddress: rgelt length: cRect elementClass: RECT.
+	prc := StructureArray fromAddress: rgelt length: cRect elementClass: RECTL.
 
 	[m_iCur < CRECTS and: [cRect > 0]] whileTrue: [
 		cRectReturn := cRectReturn + 1.

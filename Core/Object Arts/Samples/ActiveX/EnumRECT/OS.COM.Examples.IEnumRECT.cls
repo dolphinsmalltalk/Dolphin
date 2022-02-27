@@ -19,7 +19,7 @@ In Dolphin each COM interface is represented as a class, derived from the IUnkno
 elementClass
 	"Answer the class of element enumerated by the receiver."
 
-	^RECT! !
+	^RECTL! !
 !OS.COM.Examples.IEnumRECT class categoriesForMethods!
 elementClass!constants!public! !
 !
