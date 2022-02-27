@@ -948,7 +948,7 @@ looseResourceIdentifiers
 looseResourceIdentifiersDo: aMonadicValuable
 	self methodNames do: 
 			[:each |
-			(each selector beginsWith: UI.ResourceIdentifier.SelectorPrefix)
+			each isResourceMethod
 				ifTrue: 
 					[each className valueOrNil
 						ifNotNil: 
@@ -1689,17 +1689,20 @@ tracePrerequisitesOfLiterals: anIdentityDictionary packagedVariables: aLookupTab
 
 	self allMethodsDo: 
 			[:eachMethod |
-			eachMethod literalReferencesDo: 
-					[:eachLiteral |
-					(self bindingRefToLiteral: eachLiteral)
-						ifNotNil: 
-							[:ref |
-							self
-								trace: anIdentityDictionary
-								prerequisite: (aLookupTable lookup: ref)
-								from: eachMethod
-								to: ref
-								dependency: 'references variable']]]!
+			"Resource methods are processed separately"
+			eachMethod isResourceMethod
+				ifFalse: 
+					[eachMethod literalReferencesDo: 
+							[:eachLiteral |
+							(self bindingRefToLiteral: eachLiteral)
+								ifNotNil: 
+									[:ref |
+									self
+										trace: anIdentityDictionary
+										prerequisite: (aLookupTable lookup: ref)
+										from: eachMethod
+										to: ref
+										dependency: 'references variable']]]]!
 
 tracePrerequisitesOfMethods: anIdentityDictionary
 	"Private - Trace the prerequisite method classes of the receiver's loose methods (i.e. the extended classes)."

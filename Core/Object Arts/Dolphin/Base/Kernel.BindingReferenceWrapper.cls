@@ -74,6 +74,11 @@ instance
 
 	^reference instance!
 
+isMeta
+	"Is this a meta binding reference?"
+
+	^reference isMeta!
+
 isPrivate
 	"Answer whether the receiver represents a private binding reference that should not be used outside its immediate scope."
 
@@ -140,6 +145,7 @@ environmentName!accessing!public! !
 hash!comparing!public! !
 home!accessing!public! !
 instance!accessing!public! !
+isMeta!public!testing! !
 isPrivate!public!testing! !
 isPrivate:!initializing!private! !
 isRelative!public!testing! !

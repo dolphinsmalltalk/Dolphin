@@ -145,12 +145,11 @@ onDropOverCategory: session
 			self refreshResourceList]!
 
 onMethodAdded: aCompilationResult
-	(aCompilationResult method selector beginsWith: ResourceIdentifier.SelectorPrefix)
+	aCompilationResult method isResourceMethod
 		ifTrue: [self addResourceIdentifierFor: aCompilationResult method]!
 
 onMethodRemoved: aCompiledMethod
-	(aCompiledMethod selector beginsWith: ResourceIdentifier.SelectorPrefix)
-		ifTrue: [self removeResourceIdentifierFor: aCompiledMethod]!
+	aCompiledMethod isResourceMethod ifTrue: [self removeResourceIdentifierFor: aCompiledMethod]!
 
 onViewOpened
 	super onViewOpened.

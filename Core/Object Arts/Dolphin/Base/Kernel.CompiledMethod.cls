@@ -127,6 +127,9 @@ isOverride
 	^methodSuper notNil and: [methodSuper canUnderstand: self selector]
 !
 
+isResourceMethod
+	^methodClass isMeta and: [selector beginsWith: UI.ResourceIdentifier.SelectorPrefix]!
+
 isSelfEvaluating
 	"Answer whether or not the receiver has a printString representation that evaluates back to an equivalent object."
 
@@ -211,6 +214,7 @@ isGetter!public!testing! !
 isLoose!development!public!testing! !
 isOverridden!public!testing! !
 isOverride!public!testing! !
+isResourceMethod!public!testing! !
 isSelfEvaluating!public!testing! !
 isUnbound!public!testing! !
 loseSource!private!source filing-methods! !

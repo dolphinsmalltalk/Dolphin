@@ -29,6 +29,9 @@ className: aBindingReference selector: aSymbol
 hash
 	^(className hash + selector hash) hashMultiply!
 
+isResourceMethod
+	^className isMeta and: [selector beginsWith: UI.ResourceIdentifier.SelectorPrefix]!
+
 methodClass
 	^className valueOrNil!
 
@@ -55,6 +58,7 @@ className!accessing!public! !
 className:!initializing!public! !
 className:selector:!initializing!private! !
 hash!comparing!public! !
+isResourceMethod!public!testing! !
 methodClass!accessing!public! !
 printOn:!printing!public! !
 selector!accessing!public! !
