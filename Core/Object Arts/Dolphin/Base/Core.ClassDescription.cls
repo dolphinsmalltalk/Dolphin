@@ -1129,7 +1129,7 @@ instVarNames!instance variables!public! !
 isAnonymous!public!testing! !
 isAtomic!public!testing! !
 isChanged!public!source filing!testing! !
-isChanged:!public!source filing! !
+isChanged:!accessing!public! !
 localBindingFor:!binding!public! !
 localEnvironment!accessing!private! !
 localScope!accessing!public! !

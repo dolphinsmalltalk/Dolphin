@@ -141,7 +141,8 @@ addClassVarNamed: aString
 	^newVar!
 
 addImport: aBindingReference
-	(imports includes: aBindingReference) ifFalse: [imports := imports copyWith: aBindingReference]!
+	(imports includes: aBindingReference)
+		ifFalse: [self imports: (imports copyWith: aBindingReference)]!
 
 addSubclass: aClass
 	"Private - Include the argument, aClass, as a subclass of the receiver."
@@ -467,8 +468,11 @@ imports
 	^imports!
 
 imports: anArray
-	imports := anArray asArray.
-	anArray isImmutable: true!
+	| newImports |
+	newImports := anArray asArray.
+	newImports = imports ifTrue: [^self].
+	(imports := newImports) isImmutable: true.
+	self isChanged: true!
 
 importsFromPoolsString: poolDictString
 	^poolDictString subStrings distinct collect: [:each | each asQualifiedReference]!
@@ -686,7 +690,7 @@ removeFromSystem
 	ClassBuilder removeClass: self!
 
 removeImport: aBindingReference
-	imports := imports copyWithout: aBindingReference!
+	self imports: (imports copyWithout: aBindingReference)!
 
 removeSubclass: aClass
 	"Private - Remove the argument, aClass, from the subclasses of the receiver.
@@ -715,7 +719,7 @@ rename: aString
 replaceImport: oldBindingReference with: newBindingReference
 	"Private - Replace an existing import with a new one, maintaining the existing order."
 
-	imports := self imports copyReplacing: oldBindingReference withObject: newBindingReference!
+	self imports: (self imports copyReplacing: oldBindingReference withObject: newBindingReference)!
 
 requiresInstallation
 	"Answer whether the receiver requires 'installing' into its environment."
@@ -1134,7 +1138,7 @@ guid!constants!public! !
 guid:!class hierarchy-adding!private! !
 importedNamespacesDo:!namespaces!public! !
 imports!namespaces!public! !
-imports:!pool variables!public! !
+imports:!accessing!public! !
 importsFromPoolsString:!class hierarchy-adding!private! !
 includeInCategory:!categories-adding!public! !
 includesEnvironment:!public!testing! !

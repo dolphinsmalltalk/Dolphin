@@ -28,12 +28,16 @@ fullNameFor: aString
 
 	^aString!
 
+imports: anArray
+	anArray isEmpty ifFalse: [self error: 'Root must not have imports']!
+
 nestedClasses
 	^super nestedClasses copyWithout: self! !
 !Root class categoriesForMethods!
 bindingFor:!bindings!public! !
 environment!public! !
 fullNameFor:!helpers!private! !
+imports:!pool variables!public! !
 nestedClasses!accessing!public! !
 !
 
