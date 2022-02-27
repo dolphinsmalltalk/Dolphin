@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2Frame
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2Frame'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2Frame guid: (OS.COM.IID fromString: '{f1131a5e-9ba9-11eb-a8b3-0242ac130003}')!
-ICoreWebView2Frame comment: '`ICoreWebView2Frame` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Frame'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2Frame guid: (OS.COM.IID fromString: '{f1131a5e-9ba9-11eb-a8b3-0242ac130003}')!
+WebView2.ICoreWebView2Frame comment: '`ICoreWebView2Frame` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Frame'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -53,8 +53,8 @@ interface ICoreWebView2Frame : IUnknown
 };
 ```
 '!
-!ICoreWebView2Frame categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Frame methodsFor!
+!WebView2.ICoreWebView2Frame categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Frame methodsFor!
 
 Add_ContentLoading: eventHandler token: token
 	"Private - Invoke the add_ContentLoading() method of the COM object.
@@ -190,7 +190,7 @@ name
 	"Answer the <lpwstr> value of the 'name' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_name: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -296,7 +296,7 @@ RemoveHostObjectFromScript: name
 
 	<virtual stdcall: hresult 8 lpwstr>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2Frame categoriesForMethods!
+!WebView2.ICoreWebView2Frame categoriesForMethods!
 Add_ContentLoading:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Add_Destroyed:token:!**auto generated**!COM Interfaces-ICoreWebView2Frame!events!private! !
 Add_DOMContentLoaded:token:!COM Interfaces-ICoreWebView2Frame2!events!private! !
@@ -328,10 +328,10 @@ removeHostObjectFromScript:!**auto generated**!methods!public! !
 RemoveHostObjectFromScript:!**auto generated**!COM Interfaces-ICoreWebView2Frame!private! !
 !
 
-ICoreWebView2Frame methodProtocol: #ICoreWebView2Frame attributes: #(#readOnly) selectors: #(#Add_Destroyed:token: #Add_NameChanged:token: #AddHostObjectToScriptWithOrigins:object:originsCount:origins: #get_name: #IsDestroyed: #Remove_Destroyed: #Remove_NameChanged: #RemoveHostObjectFromScript:)!
-ICoreWebView2Frame methodProtocol: #ICoreWebView2Frame2 attributes: #(#readOnly) selectors: #(#Add_ContentLoading:token: #Add_Destroyed:token: #Add_DOMContentLoaded:token: #Add_NameChanged:token: #Add_NavigationCompleted:token: #Add_NavigationStarting:token: #Add_WebMessageReceived:token: #AddHostObjectToScriptWithOrigins:object:originsCount:origins: #ExecuteScript:handler: #get_name: #IsDestroyed: #PostWebMessageAsJson: #PostWebMessageAsString: #Remove_ContentLoading: #Remove_Destroyed: #Remove_DOMContentLoaded: #Remove_NameChanged: #Remove_NavigationCompleted: #Remove_NavigationStarting: #Remove_WebMessageReceived: #RemoveHostObjectFromScript:)!
+WebView2.ICoreWebView2Frame methodProtocol: #ICoreWebView2Frame attributes: #(#readOnly) selectors: #(#Add_Destroyed:token: #Add_NameChanged:token: #AddHostObjectToScriptWithOrigins:object:originsCount:origins: #get_name: #IsDestroyed: #Remove_Destroyed: #Remove_NameChanged: #RemoveHostObjectFromScript:)!
+WebView2.ICoreWebView2Frame methodProtocol: #ICoreWebView2Frame2 attributes: #(#readOnly) selectors: #(#Add_ContentLoading:token: #Add_Destroyed:token: #Add_DOMContentLoaded:token: #Add_NameChanged:token: #Add_NavigationCompleted:token: #Add_NavigationStarting:token: #Add_WebMessageReceived:token: #AddHostObjectToScriptWithOrigins:object:originsCount:origins: #ExecuteScript:handler: #get_name: #IsDestroyed: #PostWebMessageAsJson: #PostWebMessageAsString: #Remove_ContentLoading: #Remove_Destroyed: #Remove_DOMContentLoaded: #Remove_NameChanged: #Remove_NavigationCompleted: #Remove_NavigationStarting: #Remove_WebMessageReceived: #RemoveHostObjectFromScript:)!
 
-!ICoreWebView2Frame class methodsFor!
+!WebView2.ICoreWebView2Frame class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Frame'
@@ -355,7 +355,7 @@ defineFunctions
 		defineFunction: #IsDestroyed:
 			argumentTypes: 'bool*'
 ! !
-!ICoreWebView2Frame class categoriesForMethods!
+!WebView2.ICoreWebView2Frame class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
 

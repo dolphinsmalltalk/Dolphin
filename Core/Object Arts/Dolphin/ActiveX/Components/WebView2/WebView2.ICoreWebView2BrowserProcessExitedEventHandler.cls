@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2BrowserProcessExitedEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2BrowserProcessExitedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2BrowserProcessExitedEventHandler guid: (OS.COM.IID fromString: '{fa504257-a216-4911-a860-fe8825712861}')!
-ICoreWebView2BrowserProcessExitedEventHandler comment: '`ICoreWebView2BrowserProcessExitedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BrowserProcessExitedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2BrowserProcessExitedEventHandler guid: (OS.COM.IID fromString: '{fa504257-a216-4911-a860-fe8825712861}')!
+WebView2.ICoreWebView2BrowserProcessExitedEventHandler comment: '`ICoreWebView2BrowserProcessExitedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BrowserProcessExitedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,20 +28,20 @@ interface ICoreWebView2BrowserProcessExitedEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2BrowserProcessExitedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2BrowserProcessExitedEventHandler methodsFor!
+!WebView2.ICoreWebView2BrowserProcessExitedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2BrowserProcessExitedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
 	source Add_BrowserProcessExited: self token: tokenBuffer!
 
 basicUnregister
 	source Remove_BrowserProcessExited: token! !
-!ICoreWebView2BrowserProcessExitedEventHandler categoriesForMethods!
+!WebView2.ICoreWebView2BrowserProcessExitedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
 !
 
-!ICoreWebView2BrowserProcessExitedEventHandler class methodsFor!
+!WebView2.ICoreWebView2BrowserProcessExitedEventHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2BrowserProcessExitedEventHandler'
@@ -56,7 +56,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#browseProcessExited:! !
-!ICoreWebView2BrowserProcessExitedEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2BrowserProcessExitedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

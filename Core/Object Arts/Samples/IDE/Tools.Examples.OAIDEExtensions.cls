@@ -69,7 +69,7 @@ browseKeyBindingsOfShell: aShellView
 		largeIcon: (Icon fromId: 'HotKey.ico');
 		isPersistentView: false.
 	shell caption: ('<1d> Key Bindings' expandMacrosWith: aShellView presenter class).
-	presenter := Smalltalk.URLPresenter createIn: shell.
+	presenter := URLPresenter createIn: shell.
 	shell show.
 	browser := presenter view.
 	stream reset.

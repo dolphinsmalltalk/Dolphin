@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventArgs subclass: #ICoreWebView2MoveFocusRequestedEventArgs
+WebView2.ICoreWebView2EventArgs subclass: #'WebView2.ICoreWebView2MoveFocusRequestedEventArgs'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2MoveFocusRequestedEventArgs guid: (OS.COM.IID fromString: '{2d6aa13b-3839-4a15-92fc-d88b3c0d9c9d}')!
-ICoreWebView2MoveFocusRequestedEventArgs comment: '`ICoreWebView2MoveFocusRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2MoveFocusRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2MoveFocusRequestedEventArgs guid: (OS.COM.IID fromString: '{2d6aa13b-3839-4a15-92fc-d88b3c0d9c9d}')!
+WebView2.ICoreWebView2MoveFocusRequestedEventArgs comment: '`ICoreWebView2MoveFocusRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2MoveFocusRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -33,8 +33,8 @@ interface ICoreWebView2MoveFocusRequestedEventArgs : IUnknown
 };
 ```
 '!
-!ICoreWebView2MoveFocusRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2MoveFocusRequestedEventArgs methodsFor!
+!WebView2.ICoreWebView2MoveFocusRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2MoveFocusRequestedEventArgs methodsFor!
 
 get_Handled: value
 	"Private - Get the value of the 'Handled' property of the receiver.
@@ -84,7 +84,7 @@ reason
 	answer := SDWORD new.
 	self get_reason: answer.
 	^answer asObject! !
-!ICoreWebView2MoveFocusRequestedEventArgs categoriesForMethods!
+!WebView2.ICoreWebView2MoveFocusRequestedEventArgs categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2MoveFocusRequestedEventArgs!private! !
 get_reason:!**auto generated**!COM Interfaces-ICoreWebView2MoveFocusRequestedEventArgs!private! !
 handled!properties!public! !
@@ -93,7 +93,7 @@ put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2MoveFocusRequestedEv
 reason!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2MoveFocusRequestedEventArgs class methodsFor!
+!WebView2.ICoreWebView2MoveFocusRequestedEventArgs class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2MoveFocusRequestedEventArgs'
@@ -107,7 +107,7 @@ defineFunctions
 		defineFunction: #put_Handled:
 			argumentTypes: 'sdword'
 ! !
-!ICoreWebView2MoveFocusRequestedEventArgs class categoriesForMethods!
+!WebView2.ICoreWebView2MoveFocusRequestedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

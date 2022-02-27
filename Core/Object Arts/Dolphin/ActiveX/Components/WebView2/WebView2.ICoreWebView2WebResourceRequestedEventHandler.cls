@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2WebResourceRequestedEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2WebResourceRequestedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2WebResourceRequestedEventHandler guid: (OS.COM.IID fromString: '{ab00b74c-15f1-4646-80e8-e76341d25d71}')!
-ICoreWebView2WebResourceRequestedEventHandler comment: '`ICoreWebView2WebResourceRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2WebResourceRequestedEventHandler guid: (OS.COM.IID fromString: '{ab00b74c-15f1-4646-80e8-e76341d25d71}')!
+WebView2.ICoreWebView2WebResourceRequestedEventHandler comment: '`ICoreWebView2WebResourceRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,20 +28,20 @@ interface ICoreWebView2WebResourceRequestedEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2WebResourceRequestedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2WebResourceRequestedEventHandler methodsFor!
+!WebView2.ICoreWebView2WebResourceRequestedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2WebResourceRequestedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
 	source Add_WebResourceRequested: self token: tokenBuffer!
 
 basicUnregister
 	source Remove_WebResourceRequested: token! !
-!ICoreWebView2WebResourceRequestedEventHandler categoriesForMethods!
+!WebView2.ICoreWebView2WebResourceRequestedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
 !
 
-!ICoreWebView2WebResourceRequestedEventHandler class methodsFor!
+!WebView2.ICoreWebView2WebResourceRequestedEventHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2WebResourceRequestedEventHandler'
@@ -56,7 +56,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#webResourceRequested:! !
-!ICoreWebView2WebResourceRequestedEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2WebResourceRequestedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

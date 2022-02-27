@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.DynamicLinkLibrary subclass: #WebView2Loader
+External.DynamicLinkLibrary subclass: #'WebView2.WebView2Loader'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WebView2Loader guid: (Core.GUID fromString: '{b4b18867-230d-4b18-8048-0f12821bf5e0}')!
-WebView2Loader comment: ''!
-!WebView2Loader categoriesForClass!External-Libraries! !
-!WebView2Loader methodsFor!
+WebView2.WebView2Loader guid: (Core.GUID fromString: '{b4b18867-230d-4b18-8048-0f12821bf5e0}')!
+WebView2.WebView2Loader comment: ''!
+!WebView2.WebView2Loader categoriesForClass!External-Libraries! !
+!WebView2.WebView2Loader methodsFor!
 
 compareBrowserVersions: version1 version2: version2 result: result
 	<stdcall: hresult CompareBrowserVersions lpwstr lpwstr sdword*>
@@ -26,21 +26,21 @@ createCoreWebView2EnvironmentWithOptions: browserExecutableFolder userDataFolder
 getAvailableCoreWebView2BrowserVersionString: browserExecutableFolder versionInfo: versionInfo
 	<stdcall: hresult GetAvailableCoreWebView2BrowserVersionString lpwstr lpwstr*>
 	^self invalidCall: _failureCode! !
-!WebView2Loader categoriesForMethods!
+!WebView2.WebView2Loader categoriesForMethods!
 compareBrowserVersions:version2:result:!public! !
 createCoreWebView2Environment:!public! !
 createCoreWebView2EnvironmentWithOptions:userDataFolder:environmentOptions:environmentCreatedHandler:!public! !
 getAvailableCoreWebView2BrowserVersionString:versionInfo:!public! !
 !
 
-!WebView2Loader class methodsFor!
+!WebView2.WebView2Loader class methodsFor!
 
 fileName
 	"Answer the file name of the external library which the receiver represents."
 
 	^'WebView2Loader'
 ! !
-!WebView2Loader class categoriesForMethods!
+!WebView2.WebView2Loader class categoriesForMethods!
 fileName!constants!public! !
 !
 

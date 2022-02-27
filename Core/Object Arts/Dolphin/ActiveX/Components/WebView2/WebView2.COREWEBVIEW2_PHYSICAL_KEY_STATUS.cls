@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-External.Structure subclass: #COREWEBVIEW2_PHYSICAL_KEY_STATUS
+External.Structure subclass: #'WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
@@ -13,8 +13,8 @@ External.Structure subclass: #COREWEBVIEW2_PHYSICAL_KEY_STATUS
 		'_OffsetOf_ScanCode' -> 16r4.
 		'_OffsetOf_WasKeyDown' -> 16r10
 	}!
-COREWEBVIEW2_PHYSICAL_KEY_STATUS guid: (Core.GUID fromString: '{192b5d12-5eb1-4a47-8648-a87c55e672a2}')!
-COREWEBVIEW2_PHYSICAL_KEY_STATUS comment: '`COREWEBVIEW2_PHYSICAL_KEY_STATUS` is an `ExternalStructure` class to wrap the struct ''WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS'' from type information in the '''' library.
+WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS guid: (Core.GUID fromString: '{192b5d12-5eb1-4a47-8648-a87c55e672a2}')!
+WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS comment: '`COREWEBVIEW2_PHYSICAL_KEY_STATUS` is an `ExternalStructure` class to wrap the struct ''WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS'' from type information in the '''' library.
 
 The type library contains no documentation for this struct
 
@@ -33,8 +33,8 @@ struct tagCOREWEBVIEW2_PHYSICAL_KEY_STATUS {
 } COREWEBVIEW2_PHYSICAL_KEY_STATUS;
 ```
 '!
-!COREWEBVIEW2_PHYSICAL_KEY_STATUS categoriesForClass!WebView2-Structs! !
-!COREWEBVIEW2_PHYSICAL_KEY_STATUS methodsFor!
+!WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS categoriesForClass!WebView2-Structs! !
+!WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS methodsFor!
 
 IsExtendedKey
 	"Answer the <Integer> value of the receiver's 'IsExtendedKey' field."
@@ -95,7 +95,7 @@ WasKeyDown: anInteger
 	"Set the receiver's 'WasKeyDown' field to the value of the argument, anInteger"
 
 	bytes sdwordAtOffset: _OffsetOf_WasKeyDown put: anInteger! !
-!COREWEBVIEW2_PHYSICAL_KEY_STATUS categoriesForMethods!
+!WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS categoriesForMethods!
 IsExtendedKey!**compiled accessors**!public! !
 IsExtendedKey:!**compiled accessors**!public! !
 IsKeyReleased!**compiled accessors**!public! !
@@ -110,7 +110,7 @@ WasKeyDown!**compiled accessors**!public! !
 WasKeyDown:!**compiled accessors**!public! !
 !
 
-!COREWEBVIEW2_PHYSICAL_KEY_STATUS class methodsFor!
+!WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS class methodsFor!
 
 defineFields
 	"Define the fields of the COREWEBVIEW2_PHYSICAL_KEY_STATUS structure.
@@ -139,7 +139,7 @@ defineFields
 
 getFieldNames
 	^#(#RepeatCount #ScanCode #IsExtendedKey #IsMenuKeyDown #WasKeyDown #IsKeyReleased)! !
-!COREWEBVIEW2_PHYSICAL_KEY_STATUS class categoriesForMethods!
+!WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS class categoriesForMethods!
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

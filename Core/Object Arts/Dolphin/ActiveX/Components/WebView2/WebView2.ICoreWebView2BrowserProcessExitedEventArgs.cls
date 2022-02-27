@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventArgs subclass: #ICoreWebView2BrowserProcessExitedEventArgs
+WebView2.ICoreWebView2EventArgs subclass: #'WebView2.ICoreWebView2BrowserProcessExitedEventArgs'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2BrowserProcessExitedEventArgs guid: (OS.COM.IID fromString: '{1f00663f-af8c-4782-9cdd-dd01c52e34cb}')!
-ICoreWebView2BrowserProcessExitedEventArgs comment: '`ICoreWebView2BrowserProcessExitedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BrowserProcessExitedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2BrowserProcessExitedEventArgs guid: (OS.COM.IID fromString: '{1f00663f-af8c-4782-9cdd-dd01c52e34cb}')!
+WebView2.ICoreWebView2BrowserProcessExitedEventArgs comment: '`ICoreWebView2BrowserProcessExitedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BrowserProcessExitedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -30,8 +30,8 @@ interface ICoreWebView2BrowserProcessExitedEventArgs : IUnknown
 };
 ```
 '!
-!ICoreWebView2BrowserProcessExitedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2BrowserProcessExitedEventArgs methodsFor!
+!WebView2.ICoreWebView2BrowserProcessExitedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2BrowserProcessExitedEventArgs methodsFor!
 
 browserProcessExitKind
 	"Answer the <sdword> value of the 'BrowserProcessExitKind' property of the receiver."
@@ -69,7 +69,7 @@ get_BrowserProcessId: value
 
 printableProperties
 	^#(#browserProcessExitKind #browserProcessId)! !
-!ICoreWebView2BrowserProcessExitedEventArgs categoriesForMethods!
+!WebView2.ICoreWebView2BrowserProcessExitedEventArgs categoriesForMethods!
 browserProcessExitKind!**auto generated**!properties!public! !
 browserProcessId!**auto generated**!properties!public! !
 get_BrowserProcessExitKind:!**auto generated**!COM Interfaces-ICoreWebView2BrowserProcessExitedEventArgs!private! !
@@ -77,7 +77,7 @@ get_BrowserProcessId:!**auto generated**!COM Interfaces-ICoreWebView2BrowserProc
 printableProperties!development!printing!private! !
 !
 
-!ICoreWebView2BrowserProcessExitedEventArgs class methodsFor!
+!WebView2.ICoreWebView2BrowserProcessExitedEventArgs class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2BrowserProcessExitedEventArgs'
@@ -89,7 +89,7 @@ defineFunctions
 		defineFunction: #get_BrowserProcessId:
 			argumentTypes: 'dword*'
 ! !
-!ICoreWebView2BrowserProcessExitedEventArgs class categoriesForMethods!
+!WebView2.ICoreWebView2BrowserProcessExitedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Environment subclass: #ICoreWebView2Environment2
+WebView2.ICoreWebView2Environment subclass: #'WebView2.ICoreWebView2Environment2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2Environment2 guid: (OS.COM.IID fromString: '{41f3632b-5ef4-404f-ad82-2d606c5a9a21}')!
-ICoreWebView2Environment2 comment: '`ICoreWebView2Environment2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2Environment2 guid: (OS.COM.IID fromString: '{41f3632b-5ef4-404f-ad82-2d606c5a9a21}')!
+WebView2.ICoreWebView2Environment2 comment: '`ICoreWebView2Environment2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -31,8 +31,8 @@ interface ICoreWebView2Environment2 : ICoreWebView2Environment
 };
 ```
 '!
-!ICoreWebView2Environment2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Environment2 methodsFor!
+!WebView2.ICoreWebView2Environment2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Environment2 methodsFor!
 
 CreateWebResourceRequest: uri method: method postData: postData headers: headers request: request
 	"Private - Invoke the CreateWebResourceRequest() method of the COM object.
@@ -46,11 +46,11 @@ CreateWebResourceRequest: uri method: method postData: postData headers: headers
 
 	<virtual stdcall: hresult 9 lpwstr lpwstr IStream* lpwstr ICoreWebView2WebResourceRequest**>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2Environment2 categoriesForMethods!
+!WebView2.ICoreWebView2Environment2 categoriesForMethods!
 CreateWebResourceRequest:method:postData:headers:request:!**auto generated**!COM Interfaces-ICoreWebView2Environment2!private! !
 !
 
-!ICoreWebView2Environment2 class methodsFor!
+!WebView2.ICoreWebView2Environment2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Environment2'
@@ -60,7 +60,7 @@ defineFunctions
 		defineFunction: #CreateWebResourceRequest:method:postData:headers:request:
 			argumentTypes: 'lpwstr lpwstr IStream* lpwstr ICoreWebView2WebResourceRequest**'
 ! !
-!ICoreWebView2Environment2 class categoriesForMethods!
+!WebView2.ICoreWebView2Environment2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventArgs subclass: #ICoreWebView2NewWindowRequestedEventArgs
+WebView2.ICoreWebView2EventArgs subclass: #'WebView2.ICoreWebView2NewWindowRequestedEventArgs'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2NewWindowRequestedEventArgs guid: (OS.COM.IID fromString: '{34acb11c-fc37-4418-9132-f9c21d1eafb9}')!
-ICoreWebView2NewWindowRequestedEventArgs comment: '`ICoreWebView2NewWindowRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NewWindowRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2NewWindowRequestedEventArgs guid: (OS.COM.IID fromString: '{34acb11c-fc37-4418-9132-f9c21d1eafb9}')!
+WebView2.ICoreWebView2NewWindowRequestedEventArgs comment: '`ICoreWebView2NewWindowRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NewWindowRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -48,8 +48,8 @@ interface ICoreWebView2NewWindowRequestedEventArgs : IUnknown
 };
 ```
 '!
-!ICoreWebView2NewWindowRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2NewWindowRequestedEventArgs methodsFor!
+!WebView2.ICoreWebView2NewWindowRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2NewWindowRequestedEventArgs methodsFor!
 
 get_Handled: handled
 	"Private - Get the value of the 'Handled' property of the receiver.
@@ -174,7 +174,7 @@ uri
 	"Answer the <lpwstr> value of the 'uri' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_uri: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -187,7 +187,7 @@ windowFeatures
 	answer := ICoreWebView2WindowFeatures newPointer.
 	self get_WindowFeatures: answer.
 	^answer asObject! !
-!ICoreWebView2NewWindowRequestedEventArgs categoriesForMethods!
+!WebView2.ICoreWebView2NewWindowRequestedEventArgs categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 get_IsUserInitiated:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 get_NewWindow:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
@@ -207,7 +207,7 @@ uri!properties!public! !
 windowFeatures!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2NewWindowRequestedEventArgs class methodsFor!
+!WebView2.ICoreWebView2NewWindowRequestedEventArgs class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2NewWindowRequestedEventArgs'
@@ -231,7 +231,7 @@ defineFunctions
 		defineFunction: #get_WindowFeatures:
 			argumentTypes: 'ICoreWebView2WindowFeatures**'
 ! !
-!ICoreWebView2NewWindowRequestedEventArgs class categoriesForMethods!
+!WebView2.ICoreWebView2NewWindowRequestedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

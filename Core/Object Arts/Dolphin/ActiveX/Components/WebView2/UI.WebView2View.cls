@@ -112,10 +112,10 @@ createWebView
 
 createWebViewEnvironment
 	| completed |
-	completed := (Smalltalk.WebView2CompletionHandler
+	completed := (WebView2CompletionHandler
 				completionBlock: [:hr :env | hr < 0 ifFalse: [self onEnvironmentCreated: env]])
-					queryInterface: Smalltalk.ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler.
-	[Smalltalk.WebView2Loader default createCoreWebView2Environment: completed] on: Win32Error
+					queryInterface: ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler.
+	[WebView2Loader default createCoreWebView2Environment: completed] on: Win32Error
 		do: [:ex | self createUnavailableLink].
 	completed free.
 	self topShell
@@ -258,67 +258,67 @@ notifyMove
 	webviewController NotifyParentWindowPositionChanged!
 
 observeControllerEvents
-	##({Smalltalk.ICoreWebView2AcceleratorKeyPressedEventHandler.
-		Smalltalk.ICoreWebView2FocusLostEventHandler.
-		Smalltalk.ICoreWebView2FocusGainedEventHandler.
-		Smalltalk.ICoreWebView2RasterizationScaleChangedEventHandler.
-		Smalltalk.ICoreWebView2ZoomFactorChangedEventHandler.
-		Smalltalk.ICoreWebView2MoveFocusRequestedEventHandler})
+	##({ICoreWebView2AcceleratorKeyPressedEventHandler.
+		ICoreWebView2FocusLostEventHandler.
+		ICoreWebView2FocusGainedEventHandler.
+		ICoreWebView2RasterizationScaleChangedEventHandler.
+		ICoreWebView2ZoomFactorChangedEventHandler.
+		ICoreWebView2MoveFocusRequestedEventHandler})
 			do: [:each | self observeEvent: each from: webviewController].
-	(webviewController queryInterface: Smalltalk.ICoreWebView2CompositionController ifNone: [])
+	(webviewController queryInterface: ICoreWebView2CompositionController ifNone: [])
 		ifNotNil: 
 			[:webviewComposition |
-			self registerEventSink: (Smalltalk.WebView2EventSink
+			self registerEventSink: (WebView2EventSink
 						source: webviewComposition
-						interfaceClass: Smalltalk.ICoreWebView2CursorChangedEventHandler
-						handler: [:source :args | self presenter trigger: Smalltalk.ICoreWebView2CursorChangedEventHandler eventName with: args])]!
+						interfaceClass: ICoreWebView2CursorChangedEventHandler
+						handler: [:source :args | self presenter trigger: ICoreWebView2CursorChangedEventHandler eventName with: args])]!
 
 observeEnvironmentEvents
-	##({Smalltalk.ICoreWebView2NewBrowserVersionAvailableEventHandler.
-		Smalltalk.ICoreWebView2BrowserProcessExitedEventHandler.
-		Smalltalk.ICoreWebView2ProcessInfosChangedEventHandler})
+	##({ICoreWebView2NewBrowserVersionAvailableEventHandler.
+		ICoreWebView2BrowserProcessExitedEventHandler.
+		ICoreWebView2ProcessInfosChangedEventHandler})
 			do: [:each | self observeEvent: each from: webviewEnvironment]!
 
 observeEvent: anICoreWebView2EventHandlerClass from: anICoreWebView2EventSource
-	^self registerEventSink: (Smalltalk.WebView2EventSink
+	^self registerEventSink: (WebView2EventSink
 				source: anICoreWebView2EventSource
 				interfaceClass: anICoreWebView2EventHandlerClass
 				handler: [:source :args | self presenter trigger: anICoreWebView2EventHandlerClass eventName with: args])!
 
 observeWindowEvents
-	self registerEventSink: (Smalltalk.WebView2EventSink
+	self registerEventSink: (WebView2EventSink
 				source: webview
-				interfaceClass: Smalltalk.ICoreWebView2ProcessFailedEventHandler
+				interfaceClass: ICoreWebView2ProcessFailedEventHandler
 				handler: [:source :args | self onProcessFailed: args]).
-	self registerEventSink: (Smalltalk.WebView2EventSink
+	self registerEventSink: (WebView2EventSink
 				source: webview
-				interfaceClass: Smalltalk.ICoreWebView2SourceChangedEventHandler
+				interfaceClass: ICoreWebView2SourceChangedEventHandler
 				handler: [:source :args | self onSourceChanged: args]).
-	self registerEventSink: (Smalltalk.WebView2EventSink
+	self registerEventSink: (WebView2EventSink
 				source: webview
-				interfaceClass: Smalltalk.ICoreWebView2HistoryChangedEventHandler
+				interfaceClass: ICoreWebView2HistoryChangedEventHandler
 				handler: [:source :args | self onHistoryChanged]).
-	##({Smalltalk.ICoreWebView2ClientCertificateRequestedEventHandler.
-		Smalltalk.ICoreWebView2ContainsFullScreenElementChangedEventHandler.
-		Smalltalk.ICoreWebView2ContentLoadingEventHandler.
-		Smalltalk.ICoreWebView2DocumentTitleChangedEventHandler.
-		Smalltalk.ICoreWebView2DOMContentLoadedEventHandler.
-		Smalltalk.ICoreWebView2DownloadStartingEventHandler.
-		Smalltalk.ICoreWebView2FrameCreatedEventHandler.
-		Smalltalk.ICoreWebView2FrameNavigationCompletedEventHandler.
-		Smalltalk.ICoreWebView2FrameNavigationStartingEventHandler.
-		Smalltalk.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler.
-		Smalltalk.ICoreWebView2IsDocumentPlayingAudioChangedEventHandler.
-		Smalltalk.ICoreWebView2IsMutedChangedEventHandler.
-		Smalltalk.ICoreWebView2NavigationCompletedEventHandler.
-		Smalltalk.ICoreWebView2NavigationStartingEventHandler.
-		Smalltalk.ICoreWebView2NewWindowRequestedEventHandler.
-		Smalltalk.ICoreWebView2PermissionRequestedEventHandler.
-		Smalltalk.ICoreWebView2ScriptDialogOpeningEventHandler.
-		Smalltalk.ICoreWebView2WebMessageReceivedEventHandler.
-		Smalltalk.ICoreWebView2WebResourceRequestedEventHandler.
-		Smalltalk.ICoreWebView2WebResourceResponseReceivedEventHandler.
-		Smalltalk.ICoreWebView2WindowCloseRequestedEventHandler}) do: [:each | self observeEvent: each from: webview]!
+	##({ICoreWebView2ClientCertificateRequestedEventHandler.
+		ICoreWebView2ContainsFullScreenElementChangedEventHandler.
+		ICoreWebView2ContentLoadingEventHandler.
+		ICoreWebView2DocumentTitleChangedEventHandler.
+		ICoreWebView2DOMContentLoadedEventHandler.
+		ICoreWebView2DownloadStartingEventHandler.
+		ICoreWebView2FrameCreatedEventHandler.
+		ICoreWebView2FrameNavigationCompletedEventHandler.
+		ICoreWebView2FrameNavigationStartingEventHandler.
+		ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler.
+		ICoreWebView2IsDocumentPlayingAudioChangedEventHandler.
+		ICoreWebView2IsMutedChangedEventHandler.
+		ICoreWebView2NavigationCompletedEventHandler.
+		ICoreWebView2NavigationStartingEventHandler.
+		ICoreWebView2NewWindowRequestedEventHandler.
+		ICoreWebView2PermissionRequestedEventHandler.
+		ICoreWebView2ScriptDialogOpeningEventHandler.
+		ICoreWebView2WebMessageReceivedEventHandler.
+		ICoreWebView2WebResourceRequestedEventHandler.
+		ICoreWebView2WebResourceResponseReceivedEventHandler.
+		ICoreWebView2WindowCloseRequestedEventHandler}) do: [:each | self observeEvent: each from: webview]!
 
 onControllerCreated: anICoreWebView2Controller
 	webviewController := self queryControllerInterface: anICoreWebView2Controller.
@@ -356,7 +356,7 @@ onProcessFailed: anICoreWebView2ProcessFailedEventArgs
 
 	| failedArgs isDead |
 	failedArgs := anICoreWebView2ProcessFailedEventArgs
-				queryInterface: Smalltalk.ICoreWebView2ProcessFailedEventArgs2
+				queryInterface: ICoreWebView2ProcessFailedEventArgs2
 				ifNone: [anICoreWebView2ProcessFailedEventArgs].
 	failedArgs handled: false.
 	isDead := failedArgs isBrowserProcessExit.
@@ -410,46 +410,46 @@ queryCommand: query
 	^super queryCommand: query!
 
 queryControllerInterface: anIUnknown
-	^anIUnknown queryInterface: Smalltalk.ICoreWebView2Controller3
+	^anIUnknown queryInterface: ICoreWebView2Controller3
 		ifNone: 
-			[anIUnknown queryInterface: Smalltalk.ICoreWebView2Controller2
-				ifNone: [anIUnknown queryInterface: Smalltalk.ICoreWebView2Controller]]!
+			[anIUnknown queryInterface: ICoreWebView2Controller2
+				ifNone: [anIUnknown queryInterface: ICoreWebView2Controller]]!
 
 queryEnvironmentInterface: anICoreWebView2Environment
 	"Private - There are already 8 versions of the ICoreWebView2Environment; answer the latest available. A little more forethought in the design so as to not have to define 8 versions of a public interface in a year or two might be nice!!"
 
-	##({Smalltalk.ICoreWebView2Environment8.
-		Smalltalk.ICoreWebView2Environment7.
-		Smalltalk.ICoreWebView2Environment6.
-		Smalltalk.ICoreWebView2Environment5.
-		Smalltalk.ICoreWebView2Environment4.
-		Smalltalk.ICoreWebView2Environment3.
-		Smalltalk.ICoreWebView2Environment2})
+	##({ICoreWebView2Environment8.
+		ICoreWebView2Environment7.
+		ICoreWebView2Environment6.
+		ICoreWebView2Environment5.
+		ICoreWebView2Environment4.
+		ICoreWebView2Environment3.
+		ICoreWebView2Environment2})
 			do: [:each | (anICoreWebView2Environment queryInterface: each ifNone: []) ifNotNil: [:interface | ^interface]].
 	^anICoreWebView2Environment!
 
 querySettingsInterface
 	| settings |
 	settings := webview settings.
-	##({Smalltalk.ICoreWebView2Settings6.
-		Smalltalk.ICoreWebView2Settings5.
-		Smalltalk.ICoreWebView2Settings4.
-		Smalltalk.ICoreWebView2Settings3.
-		Smalltalk.ICoreWebView2Settings2})
+	##({ICoreWebView2Settings6.
+		ICoreWebView2Settings5.
+		ICoreWebView2Settings4.
+		ICoreWebView2Settings3.
+		ICoreWebView2Settings2})
 			do: [:each | (settings queryInterface: each ifNone: []) ifNotNil: [:itf | ^itf]].
 	^settings!
 
 queryWindowInterface
 	| webview2 |
 	webview2 := webviewController coreWebView2.
-	##({Smalltalk.ICoreWebView2_9.
-		Smalltalk.ICoreWebView2_8.
-		Smalltalk.ICoreWebView2_7.
-		Smalltalk.ICoreWebView2_6.
-		Smalltalk.ICoreWebView2_5.
-		Smalltalk.ICoreWebView2_4.
-		Smalltalk.ICoreWebView2_3.
-		Smalltalk.ICoreWebView2_2})
+	##({ICoreWebView2_9.
+		ICoreWebView2_8.
+		ICoreWebView2_7.
+		ICoreWebView2_6.
+		ICoreWebView2_5.
+		ICoreWebView2_4.
+		ICoreWebView2_3.
+		ICoreWebView2_2})
 			do: [:each | (webview2 queryInterface: each ifNone: []) ifNotNil: [:interface | ^interface]].
 	^webview2!
 
@@ -607,7 +607,7 @@ webviewSettings!accessing!public! !
 icon
 	"Answers an Icon that can be used to represent this class"
 
-	^Smalltalk.ICoreWebView2 icon!
+	^ICoreWebView2 icon!
 
 initialize
 	"self initialize"

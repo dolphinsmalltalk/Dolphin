@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2ScriptDialogOpeningEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2ScriptDialogOpeningEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2ScriptDialogOpeningEventHandler guid: (OS.COM.IID fromString: '{ef381bf9-afa8-4e37-91c4-8ac48524bdfb}')!
-ICoreWebView2ScriptDialogOpeningEventHandler comment: '`ICoreWebView2ScriptDialogOpeningEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ScriptDialogOpeningEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2ScriptDialogOpeningEventHandler guid: (OS.COM.IID fromString: '{ef381bf9-afa8-4e37-91c4-8ac48524bdfb}')!
+WebView2.ICoreWebView2ScriptDialogOpeningEventHandler comment: '`ICoreWebView2ScriptDialogOpeningEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ScriptDialogOpeningEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,20 +28,20 @@ interface ICoreWebView2ScriptDialogOpeningEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2ScriptDialogOpeningEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ScriptDialogOpeningEventHandler methodsFor!
+!WebView2.ICoreWebView2ScriptDialogOpeningEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ScriptDialogOpeningEventHandler methodsFor!
 
 basicRegister: tokenBuffer
 	source Add_ScriptDialogOpening: self token: tokenBuffer!
 
 basicUnregister
 	source Remove_ScriptDialogOpening: token! !
-!ICoreWebView2ScriptDialogOpeningEventHandler categoriesForMethods!
+!WebView2.ICoreWebView2ScriptDialogOpeningEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
 !
 
-!ICoreWebView2ScriptDialogOpeningEventHandler class methodsFor!
+!WebView2.ICoreWebView2ScriptDialogOpeningEventHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ScriptDialogOpeningEventHandler'
@@ -56,7 +56,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#scriptDialogOpening:! !
-!ICoreWebView2ScriptDialogOpeningEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2ScriptDialogOpeningEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

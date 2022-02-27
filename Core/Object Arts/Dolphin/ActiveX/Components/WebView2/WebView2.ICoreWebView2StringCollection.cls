@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Sequence subclass: #ICoreWebView2StringCollection
+WebView2.ICoreWebView2Sequence subclass: #'WebView2.ICoreWebView2StringCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2StringCollection guid: (OS.COM.IID fromString: '{f41f3f8a-bcc3-11eb-8529-0242ac130003}')!
-ICoreWebView2StringCollection comment: '`ICoreWebView2StringCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2StringCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2StringCollection guid: (OS.COM.IID fromString: '{f41f3f8a-bcc3-11eb-8529-0242ac130003}')!
+WebView2.ICoreWebView2StringCollection comment: '`ICoreWebView2StringCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2StringCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -31,14 +31,14 @@ interface ICoreWebView2StringCollection : IUnknown
 };
 ```
 '!
-!ICoreWebView2StringCollection categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2StringCollection methodsFor!
+!WebView2.ICoreWebView2StringCollection categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2StringCollection methodsFor!
 
 at: index
 	"Answer the <Utf16String> result of invoking the GetValueAtIndex() method of the COM object."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self GetValueAtIndex: index - 1 value: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -56,13 +56,13 @@ GetValueAtIndex: index value: value
 
 	<virtual stdcall: hresult 5 dword lpwstr*>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2StringCollection categoriesForMethods!
+!WebView2.ICoreWebView2StringCollection categoriesForMethods!
 at:!methods!public! !
 elementClass!constants!private! !
 GetValueAtIndex:value:!**auto generated**!COM Interfaces-ICoreWebView2StringCollection!private! !
 !
 
-!ICoreWebView2StringCollection class methodsFor!
+!WebView2.ICoreWebView2StringCollection class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2StringCollection'
@@ -74,7 +74,7 @@ defineFunctions
 		defineFunction: #GetValueAtIndex:value:
 			argumentTypes: 'dword lpwstr*'
 ! !
-!ICoreWebView2StringCollection class categoriesForMethods!
+!WebView2.ICoreWebView2StringCollection class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

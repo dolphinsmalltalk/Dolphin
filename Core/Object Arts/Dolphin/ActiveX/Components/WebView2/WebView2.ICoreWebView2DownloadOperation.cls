@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2DownloadOperation
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2DownloadOperation'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2DownloadOperation guid: (OS.COM.IID fromString: '{3d6b6cf2-afe1-44c7-a995-c65117714336}')!
-ICoreWebView2DownloadOperation comment: '`ICoreWebView2DownloadOperation` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DownloadOperation'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2DownloadOperation guid: (OS.COM.IID fromString: '{3d6b6cf2-afe1-44c7-a995-c65117714336}')!
+WebView2.ICoreWebView2DownloadOperation comment: '`ICoreWebView2DownloadOperation` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DownloadOperation'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -81,8 +81,8 @@ interface ICoreWebView2DownloadOperation : IUnknown
 };
 ```
 '!
-!ICoreWebView2DownloadOperation categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2DownloadOperation methodsFor!
+!WebView2.ICoreWebView2DownloadOperation categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2DownloadOperation methodsFor!
 
 Add_BytesReceivedChanged: eventHandler token: token
 	"Private - Invoke the add_BytesReceivedChanged() method of the COM object.
@@ -147,7 +147,7 @@ contentDisposition
 	"Answer the <lpwstr> value of the 'ContentDisposition' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_ContentDisposition: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -157,7 +157,7 @@ estimatedEndTime
 	"Answer the <lpwstr> value of the 'EstimatedEndTime' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_EstimatedEndTime: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -265,7 +265,7 @@ mimeType
 	"Answer the <lpwstr> value of the 'MimeType' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_MimeType: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -315,7 +315,7 @@ resultFilePath
 	"Answer the <lpwstr> value of the 'ResultFilePath' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_ResultFilePath: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -354,12 +354,12 @@ uri
 	"Answer the <lpwstr> value of the 'uri' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_uri: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
-!ICoreWebView2DownloadOperation categoriesForMethods!
+!WebView2.ICoreWebView2DownloadOperation categoriesForMethods!
 Add_BytesReceivedChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 Add_EstimatedEndTimeChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
 Add_StateChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2DownloadOperation!private! !
@@ -394,7 +394,7 @@ totalBytesToReceive!**auto generated**!properties!public! !
 uri!properties!public! !
 !
 
-!ICoreWebView2DownloadOperation class methodsFor!
+!WebView2.ICoreWebView2DownloadOperation class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2DownloadOperation'
@@ -437,7 +437,7 @@ defineFunctions
 		defineFunction: #get_CanResume:
 			argumentTypes: 'sdword*'
 ! !
-!ICoreWebView2DownloadOperation class categoriesForMethods!
+!WebView2.ICoreWebView2DownloadOperation class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

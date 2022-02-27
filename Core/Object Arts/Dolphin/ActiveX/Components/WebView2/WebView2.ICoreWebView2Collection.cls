@@ -1,19 +1,19 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2Collection
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2Collection'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2Collection guid: (OS.COM.IID fromString: '{d7f78fbc-5e73-4009-9f6b-5a822b0a6313}')!
-ICoreWebView2Collection isNonInstantiable: true!
-ICoreWebView2Collection comment: '`ICoreWebView2Collection` is not defined in the WebView2 IDL, but is defined here for economy of mechanism, providing a common implmentaton of most of the Smalltalk `<collection>` protocol.
+WebView2.ICoreWebView2Collection guid: (OS.COM.IID fromString: '{d7f78fbc-5e73-4009-9f6b-5a822b0a6313}')!
+WebView2.ICoreWebView2Collection isNonInstantiable: true!
+WebView2.ICoreWebView2Collection comment: '`ICoreWebView2Collection` is not defined in the WebView2 IDL, but is defined here for economy of mechanism, providing a common implmentaton of most of the Smalltalk `<collection>` protocol.
 
 Subclasses must implement `do:` only.
 '!
-!ICoreWebView2Collection categoriesForClass!COM-Interfaces! !
-!ICoreWebView2Collection methodsFor!
+!WebView2.ICoreWebView2Collection categoriesForClass!COM-Interfaces! !
+!WebView2.ICoreWebView2Collection methodsFor!
 
 allSatisfy: discriminator
 	"Answer whether the <monadicValuable>, discriminator, evaluates to true for every element of the receiver.
@@ -156,7 +156,7 @@ size
 	and subclasses will probably want to override it."
 
 	^self countElements! !
-!ICoreWebView2Collection categoriesForMethods!
+!WebView2.ICoreWebView2Collection categoriesForMethods!
 allSatisfy:!enumerating!public! !
 anySatisfy:!enumerating!public! !
 asArray!converting!public! !
@@ -181,5 +181,5 @@ select:!enumerating!public! !
 size!accessing!public! !
 !
 
-ICoreWebView2Collection methodProtocol: #collection attributes: #(#ansi #readOnly) selectors: #(#allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #inject:into: #isEmpty #notEmpty #occurrencesOf: #rehash #reject: #select: #size)!
+WebView2.ICoreWebView2Collection methodProtocol: #collection attributes: #(#ansi #readOnly) selectors: #(#allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #inject:into: #isEmpty #notEmpty #occurrencesOf: #rehash #reject: #select: #size)!
 

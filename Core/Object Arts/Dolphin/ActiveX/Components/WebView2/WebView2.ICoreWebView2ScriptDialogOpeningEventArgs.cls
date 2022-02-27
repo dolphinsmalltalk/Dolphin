@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventArgs subclass: #ICoreWebView2ScriptDialogOpeningEventArgs
+WebView2.ICoreWebView2EventArgs subclass: #'WebView2.ICoreWebView2ScriptDialogOpeningEventArgs'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2ScriptDialogOpeningEventArgs guid: (OS.COM.IID fromString: '{7390bb70-abe0-4843-9529-f143b31b03d6}')!
-ICoreWebView2ScriptDialogOpeningEventArgs comment: '`ICoreWebView2ScriptDialogOpeningEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ScriptDialogOpeningEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2ScriptDialogOpeningEventArgs guid: (OS.COM.IID fromString: '{7390bb70-abe0-4843-9529-f143b31b03d6}')!
+WebView2.ICoreWebView2ScriptDialogOpeningEventArgs comment: '`ICoreWebView2ScriptDialogOpeningEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ScriptDialogOpeningEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -47,8 +47,8 @@ interface ICoreWebView2ScriptDialogOpeningEventArgs : IUnknown
 };
 ```
 '!
-!ICoreWebView2ScriptDialogOpeningEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ScriptDialogOpeningEventArgs methodsFor!
+!WebView2.ICoreWebView2ScriptDialogOpeningEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ScriptDialogOpeningEventArgs methodsFor!
 
 accept
 	"Invoke the Accept() method of the COM object."
@@ -67,7 +67,7 @@ defaultText
 	"Answer the <lpwstr> value of the 'DefaultText' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_DefaultText: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -147,7 +147,7 @@ message
 	"Answer the <lpwstr> value of the 'Message' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_Message: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -167,7 +167,7 @@ resultText
 	"Answer the <lpwstr> value of the 'ResultText' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_ResultText: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -182,12 +182,12 @@ uri
 	"Answer the <lpwstr> value of the 'uri' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_uri: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
-!ICoreWebView2ScriptDialogOpeningEventArgs categoriesForMethods!
+!WebView2.ICoreWebView2ScriptDialogOpeningEventArgs categoriesForMethods!
 accept!**auto generated**!methods!public! !
 Accept!**auto generated**!COM Interfaces-ICoreWebView2ScriptDialogOpeningEventArgs!private! !
 defaultText!properties!public! !
@@ -206,7 +206,7 @@ resultText:!**auto generated**!properties!public! !
 uri!properties!public! !
 !
 
-!ICoreWebView2ScriptDialogOpeningEventArgs class methodsFor!
+!WebView2.ICoreWebView2ScriptDialogOpeningEventArgs class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ScriptDialogOpeningEventArgs'
@@ -229,7 +229,7 @@ defineFunctions
 		defineFunction: #GetDeferral:
 			argumentTypes: 'ICoreWebView2Deferral**'
 ! !
-!ICoreWebView2ScriptDialogOpeningEventArgs class categoriesForMethods!
+!WebView2.ICoreWebView2ScriptDialogOpeningEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

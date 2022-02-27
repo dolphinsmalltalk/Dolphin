@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2Controller
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2Controller'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2Controller guid: (OS.COM.IID fromString: '{4d00c0d1-9434-4eb6-8078-8697a560334f}')!
-ICoreWebView2Controller comment: '`ICoreWebView2Controller` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Controller'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2Controller guid: (OS.COM.IID fromString: '{4d00c0d1-9434-4eb6-8078-8697a560334f}')!
+WebView2.ICoreWebView2Controller comment: '`ICoreWebView2Controller` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Controller'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -97,8 +97,8 @@ interface ICoreWebView2Controller : IUnknown
 };
 ```
 '!
-!ICoreWebView2Controller categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Controller methodsFor!
+!WebView2.ICoreWebView2Controller categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Controller methodsFor!
 
 Add_AcceleratorKeyPressed: eventHandler token: token
 	"Private - Invoke the add_AcceleratorKeyPressed() method of the COM object.
@@ -208,7 +208,7 @@ defaultBackgroundColor
 	| answer |
 	answer := QWORD newBuffer.
 	self get_DefaultBackgroundColor: answer.
-	^Color fromArgbCode: answer value!
+	^Graphics.Color fromArgbCode: answer value!
 
 defaultBackgroundColor: backgroundColor
 	"Set the 'DefaultBackgroundColor' property of the receiver to the <COREWEBVIEW2_COLOR> value of the argument."
@@ -249,7 +249,7 @@ get_DefaultBackgroundColor: backgroundColor
 		HRESULT __stdcall DefaultBackgroundColor(
 			[out, retval]COREWEBVIEW2_COLOR* backgroundColor);"
 
-	backgroundColor value: Color white argbCode.
+	backgroundColor value: Graphics.Color white argbCode.
 	^S_OK!
 
 get_IsVisible: isVisible
@@ -546,7 +546,7 @@ zoomFactor: zoomFactor
 	"Set the 'ZoomFactor' property of the receiver to the <double> value of the argument."
 
 	self put_ZoomFactor: zoomFactor! !
-!ICoreWebView2Controller categoriesForMethods!
+!WebView2.ICoreWebView2Controller categoriesForMethods!
 Add_AcceleratorKeyPressed:token:!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
 Add_GotFocus:token:!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
 Add_LostFocus:token:!**auto generated**!COM Interfaces-ICoreWebView2Controller!private! !
@@ -606,11 +606,11 @@ zoomFactor!**auto generated**!properties!public! !
 zoomFactor:!**auto generated**!properties!public! !
 !
 
-ICoreWebView2Controller methodProtocol: #ICoreWebView2Controller attributes: #(#readOnly) selectors: #(#Add_AcceleratorKeyPressed:token: #Add_GotFocus:token: #Add_LostFocus:token: #Add_MoveFocusRequested:token: #Add_ZoomFactorChanged:token: #Close #get_Bounds: #get_CoreWebView2: #get_IsVisible: #get_ParentWindow: #get_ZoomFactor: #MoveFocus: #NotifyParentWindowPositionChanged #put_Bounds: #put_IsVisible: #put_ParentWindow: #put_ZoomFactor: #Remove_AcceleratorKeyPressed: #Remove_GotFocus: #Remove_LostFocus: #Remove_MoveFocusRequested: #Remove_ZoomFactorChanged: #SetBoundsAndZoomFactor:zoomFactor:)!
-ICoreWebView2Controller methodProtocol: #ICoreWebView2Controller2 attributes: #(#readOnly) selectors: #(#Add_AcceleratorKeyPressed:token: #Add_GotFocus:token: #Add_LostFocus:token: #Add_MoveFocusRequested:token: #Add_ZoomFactorChanged:token: #Close #get_Bounds: #get_CoreWebView2: #get_DefaultBackgroundColor: #get_IsVisible: #get_ParentWindow: #get_ZoomFactor: #MoveFocus: #NotifyParentWindowPositionChanged #put_Bounds: #put_DefaultBackgroundColor: #put_IsVisible: #put_ParentWindow: #put_ZoomFactor: #Remove_AcceleratorKeyPressed: #Remove_GotFocus: #Remove_LostFocus: #Remove_MoveFocusRequested: #Remove_ZoomFactorChanged: #SetBoundsAndZoomFactor:zoomFactor:)!
-ICoreWebView2Controller methodProtocol: #ICoreWebView2Controller3 attributes: #(#readOnly) selectors: #(#Add_AcceleratorKeyPressed:token: #Add_GotFocus:token: #Add_LostFocus:token: #Add_MoveFocusRequested:token: #Add_RasterizationScaleChanged:token: #Add_ZoomFactorChanged:token: #Close #get_Bounds: #get_BoundsMode: #get_CoreWebView2: #get_DefaultBackgroundColor: #get_IsVisible: #get_ParentWindow: #get_RasterizationScale: #get_ShouldDetectMonitorScaleChanges: #get_ZoomFactor: #MoveFocus: #NotifyParentWindowPositionChanged #put_Bounds: #put_BoundsMode: #put_DefaultBackgroundColor: #put_IsVisible: #put_ParentWindow: #put_RasterizationScale: #put_ShouldDetectMonitorScaleChanges: #put_ZoomFactor: #Remove_AcceleratorKeyPressed: #Remove_GotFocus: #Remove_LostFocus: #Remove_MoveFocusRequested: #Remove_RasterizationScaleChanged: #Remove_ZoomFactorChanged: #SetBoundsAndZoomFactor:zoomFactor:)!
+WebView2.ICoreWebView2Controller methodProtocol: #ICoreWebView2Controller attributes: #(#readOnly) selectors: #(#Add_AcceleratorKeyPressed:token: #Add_GotFocus:token: #Add_LostFocus:token: #Add_MoveFocusRequested:token: #Add_ZoomFactorChanged:token: #Close #get_Bounds: #get_CoreWebView2: #get_IsVisible: #get_ParentWindow: #get_ZoomFactor: #MoveFocus: #NotifyParentWindowPositionChanged #put_Bounds: #put_IsVisible: #put_ParentWindow: #put_ZoomFactor: #Remove_AcceleratorKeyPressed: #Remove_GotFocus: #Remove_LostFocus: #Remove_MoveFocusRequested: #Remove_ZoomFactorChanged: #SetBoundsAndZoomFactor:zoomFactor:)!
+WebView2.ICoreWebView2Controller methodProtocol: #ICoreWebView2Controller2 attributes: #(#readOnly) selectors: #(#Add_AcceleratorKeyPressed:token: #Add_GotFocus:token: #Add_LostFocus:token: #Add_MoveFocusRequested:token: #Add_ZoomFactorChanged:token: #Close #get_Bounds: #get_CoreWebView2: #get_DefaultBackgroundColor: #get_IsVisible: #get_ParentWindow: #get_ZoomFactor: #MoveFocus: #NotifyParentWindowPositionChanged #put_Bounds: #put_DefaultBackgroundColor: #put_IsVisible: #put_ParentWindow: #put_ZoomFactor: #Remove_AcceleratorKeyPressed: #Remove_GotFocus: #Remove_LostFocus: #Remove_MoveFocusRequested: #Remove_ZoomFactorChanged: #SetBoundsAndZoomFactor:zoomFactor:)!
+WebView2.ICoreWebView2Controller methodProtocol: #ICoreWebView2Controller3 attributes: #(#readOnly) selectors: #(#Add_AcceleratorKeyPressed:token: #Add_GotFocus:token: #Add_LostFocus:token: #Add_MoveFocusRequested:token: #Add_RasterizationScaleChanged:token: #Add_ZoomFactorChanged:token: #Close #get_Bounds: #get_BoundsMode: #get_CoreWebView2: #get_DefaultBackgroundColor: #get_IsVisible: #get_ParentWindow: #get_RasterizationScale: #get_ShouldDetectMonitorScaleChanges: #get_ZoomFactor: #MoveFocus: #NotifyParentWindowPositionChanged #put_Bounds: #put_BoundsMode: #put_DefaultBackgroundColor: #put_IsVisible: #put_ParentWindow: #put_RasterizationScale: #put_ShouldDetectMonitorScaleChanges: #put_ZoomFactor: #Remove_AcceleratorKeyPressed: #Remove_GotFocus: #Remove_LostFocus: #Remove_MoveFocusRequested: #Remove_RasterizationScaleChanged: #Remove_ZoomFactorChanged: #SetBoundsAndZoomFactor:zoomFactor:)!
 
-!ICoreWebView2Controller class methodsFor!
+!WebView2.ICoreWebView2Controller class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Controller'
@@ -662,7 +662,7 @@ defineFunctions
 		defineFunction: #get_CoreWebView2:
 			argumentTypes: 'ICoreWebView2**'
 ! !
-!ICoreWebView2Controller class categoriesForMethods!
+!WebView2.ICoreWebView2Controller class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

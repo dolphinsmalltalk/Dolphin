@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler
+WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler guid: (OS.COM.IID fromString: '{b99369f3-9b11-47b5-bc6f-8e7895fcea17}')!
-ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler comment: '`ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler guid: (OS.COM.IID fromString: '{b99369f3-9b11-47b5-bc6f-8e7895fcea17}')!
+WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler comment: '`ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,8 +28,8 @@ interface ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler : IUn
 };
 ```
 '!
-!ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler class methodsFor!
+!WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler'
@@ -37,7 +37,7 @@ defineFunctions
 	"
 
 	self defineFunction: #value:value: argumentTypes: 'hresult lpwstr'! !
-!ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler class categoriesForMethods!
+!WebView2.ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
 

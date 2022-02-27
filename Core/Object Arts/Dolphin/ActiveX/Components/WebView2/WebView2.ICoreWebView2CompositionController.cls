@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2CompositionController
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2CompositionController'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2CompositionController guid: (OS.COM.IID fromString: '{3df9b733-b9ae-4a15-86b4-eb9ee9826469}')!
-ICoreWebView2CompositionController comment: '`ICoreWebView2CompositionController` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CompositionController'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2CompositionController guid: (OS.COM.IID fromString: '{3df9b733-b9ae-4a15-86b4-eb9ee9826469}')!
+WebView2.ICoreWebView2CompositionController comment: '`ICoreWebView2CompositionController` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CompositionController'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -53,8 +53,8 @@ interface ICoreWebView2CompositionController : IUnknown
 };
 ```
 '!
-!ICoreWebView2CompositionController categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2CompositionController methodsFor!
+!WebView2.ICoreWebView2CompositionController categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2CompositionController methodsFor!
 
 Add_CursorChanged: eventHandler token: token
 	"Private - Invoke the add_CursorChanged() method of the COM object.
@@ -71,7 +71,7 @@ currentCursor
 
 	| hCursor |
 	hCursor := self cursor.
-	^hCursor == 0 ifFalse: [Cursor fromHandle: hCursor]!
+	^hCursor == 0 ifFalse: [Graphics.Cursor fromHandle: hCursor]!
 
 cursor
 	"Answer the <handle> value of the 'Cursor' property of the receiver."
@@ -192,7 +192,7 @@ uiaProvider
 	answer := IUnknown newPointer.
 	self get_UIAProvider: answer.
 	^answer asObject! !
-!ICoreWebView2CompositionController categoriesForMethods!
+!WebView2.ICoreWebView2CompositionController categoriesForMethods!
 Add_CursorChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!events!private! !
 currentCursor!properties!public! !
 cursor!**auto generated**!properties!public! !
@@ -211,10 +211,10 @@ systemCursorId!**auto generated**!properties!public! !
 uiaProvider!properties!public! !
 !
 
-ICoreWebView2CompositionController methodProtocol: #ICoreWebView2CompositionController attributes: #(#readOnly) selectors: #(#Add_CursorChanged:token: #get_Cursor: #get_RootVisualTarget: #get_SystemCursorId: #put_RootVisualTarget: #Remove_CursorChanged: #SendMouseInput:virtualKeys:mouseData:point: #SendPointerInput:pointerInfo:)!
-ICoreWebView2CompositionController methodProtocol: #ICoreWebView2CompositionController2 attributes: #(#readOnly) selectors: #(#Add_CursorChanged:token: #get_Cursor: #get_RootVisualTarget: #get_SystemCursorId: #get_UIAProvider: #put_RootVisualTarget: #Remove_CursorChanged: #SendMouseInput:virtualKeys:mouseData:point: #SendPointerInput:pointerInfo:)!
+WebView2.ICoreWebView2CompositionController methodProtocol: #ICoreWebView2CompositionController attributes: #(#readOnly) selectors: #(#Add_CursorChanged:token: #get_Cursor: #get_RootVisualTarget: #get_SystemCursorId: #put_RootVisualTarget: #Remove_CursorChanged: #SendMouseInput:virtualKeys:mouseData:point: #SendPointerInput:pointerInfo:)!
+WebView2.ICoreWebView2CompositionController methodProtocol: #ICoreWebView2CompositionController2 attributes: #(#readOnly) selectors: #(#Add_CursorChanged:token: #get_Cursor: #get_RootVisualTarget: #get_SystemCursorId: #get_UIAProvider: #put_RootVisualTarget: #Remove_CursorChanged: #SendMouseInput:virtualKeys:mouseData:point: #SendPointerInput:pointerInfo:)!
 
-!ICoreWebView2CompositionController class methodsFor!
+!WebView2.ICoreWebView2CompositionController class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2CompositionController'
@@ -238,7 +238,7 @@ defineFunctions
 		defineFunction: #Remove_CursorChanged:
 			argumentTypes: 'sqword'
 ! !
-!ICoreWebView2CompositionController class categoriesForMethods!
+!WebView2.ICoreWebView2CompositionController class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

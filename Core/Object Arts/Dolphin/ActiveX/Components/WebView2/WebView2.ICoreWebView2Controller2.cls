@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Controller subclass: #ICoreWebView2Controller2
+WebView2.ICoreWebView2Controller subclass: #'WebView2.ICoreWebView2Controller2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2Controller2 guid: (OS.COM.IID fromString: '{c979903e-d4ca-4228-92eb-47ee3fa96eab}')!
-ICoreWebView2Controller2 comment: '`ICoreWebView2Controller2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Controller2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2Controller2 guid: (OS.COM.IID fromString: '{c979903e-d4ca-4228-92eb-47ee3fa96eab}')!
+WebView2.ICoreWebView2Controller2 comment: '`ICoreWebView2Controller2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Controller2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -30,8 +30,8 @@ interface ICoreWebView2Controller2 : ICoreWebView2Controller
 };
 ```
 '!
-!ICoreWebView2Controller2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Controller2 methodsFor!
+!WebView2.ICoreWebView2Controller2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Controller2 methodsFor!
 
 get_DefaultBackgroundColor: backgroundColor
 	"Private - Get the value of the 'DefaultBackgroundColor' property of the receiver.
@@ -51,12 +51,12 @@ put_DefaultBackgroundColor: backgroundColor
 
 	<virtual stdcall: hresult 28 qword>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2Controller2 categoriesForMethods!
+!WebView2.ICoreWebView2Controller2 categoriesForMethods!
 get_DefaultBackgroundColor:!COM Interfaces-ICoreWebView2Controller2!private! !
 put_DefaultBackgroundColor:!COM Interfaces-ICoreWebView2Controller2!private! !
 !
 
-!ICoreWebView2Controller2 class methodsFor!
+!WebView2.ICoreWebView2Controller2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Controller2'
@@ -68,7 +68,7 @@ defineFunctions
 		defineFunction: #put_DefaultBackgroundColor:
 			argumentTypes: 'qword'
 ! !
-!ICoreWebView2Controller2 class categoriesForMethods!
+!WebView2.ICoreWebView2Controller2 class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
 

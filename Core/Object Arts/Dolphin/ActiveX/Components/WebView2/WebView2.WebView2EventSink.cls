@@ -1,15 +1,15 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-OS.COM.InterfaceImplementation subclass: #WebView2EventSink
+OS.COM.InterfaceImplementation subclass: #'WebView2.WebView2EventSink'
 	instanceVariableNames: 'source interfaceClass interface handler'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-WebView2EventSink guid: (Core.GUID fromString: '{91d2998a-6d4d-4c2a-93b6-fda07f00d325}')!
-WebView2EventSink comment: ''!
-!WebView2EventSink categoriesForClass!COM-Implementations! !
-!WebView2EventSink methodsFor!
+WebView2.WebView2EventSink guid: (Core.GUID fromString: '{91d2998a-6d4d-4c2a-93b6-fda07f00d325}')!
+WebView2.WebView2EventSink comment: ''!
+!WebView2.WebView2EventSink categoriesForClass!COM-Implementations! !
+!WebView2.WebView2EventSink methodsFor!
 
 destroy
 	"Private - Free the interface (i.e. reduce it's reference count) without unregistering. This should only be done when the browser process has exited on failure."
@@ -58,7 +58,7 @@ unregister
 	interface ifNil: [^self].
 	interface unregister.
 	interface := nil! !
-!WebView2EventSink categoriesForMethods!
+!WebView2.WebView2EventSink categoriesForMethods!
 destroy!private!realizing/unrealizing! !
 free!public!realizing/unrealizing! !
 Invoke:args:!COM Interfaces-ICoreWebView2EventHandler!private! !
@@ -69,7 +69,7 @@ source:interfaceClass:handler:!initializing!private! !
 unregister!public!realizing/unrealizing! !
 !
 
-!WebView2EventSink class methodsFor!
+!WebView2.WebView2EventSink class methodsFor!
 
 icon
 	^ICoreWebView2 icon!
@@ -79,7 +79,7 @@ source: anICoreWebView2EventSource interfaceClass: anICoreWebView2EventHandlerCl
 		source: anICoreWebView2EventSource
 		interfaceClass: anICoreWebView2EventHandlerClass
 		handler: aPresenter! !
-!WebView2EventSink class categoriesForMethods!
+!WebView2.WebView2EventSink class categoriesForMethods!
 icon!constants!development!public! !
 source:interfaceClass:handler:!instance creation!public! !
 !

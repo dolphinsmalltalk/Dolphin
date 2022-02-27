@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2ClientCertificate
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2ClientCertificate'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2ClientCertificate guid: (OS.COM.IID fromString: '{e7188076-bcc3-11eb-8529-0242ac130003}')!
-ICoreWebView2ClientCertificate comment: '`ICoreWebView2ClientCertificate` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClientCertificate'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2ClientCertificate guid: (OS.COM.IID fromString: '{e7188076-bcc3-11eb-8529-0242ac130003}')!
+WebView2.ICoreWebView2ClientCertificate comment: '`ICoreWebView2ClientCertificate` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClientCertificate'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -51,14 +51,14 @@ interface ICoreWebView2ClientCertificate : IUnknown
 };
 ```
 '!
-!ICoreWebView2ClientCertificate categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ClientCertificate methodsFor!
+!WebView2.ICoreWebView2ClientCertificate categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ClientCertificate methodsFor!
 
 derEncodedSerialNumber
 	"Answer the <lpwstr> value of the 'DerEncodedSerialNumber' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_DerEncodedSerialNumber: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -68,7 +68,7 @@ displayName
 	"Answer the <lpwstr> value of the 'DisplayName' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_DisplayName: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -153,7 +153,7 @@ issuer
 	"Answer the <lpwstr> value of the 'Issuer' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_Issuer: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -182,7 +182,7 @@ subject
 	"Answer the <lpwstr> value of the 'Subject' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_Subject: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -192,12 +192,11 @@ toPemEncoding
 	"Answer the <Utf16String> result of invoking the ToPemEncoding() method of the COM object."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self ToPemEncoding: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
-	^answer
-!
+	^answer!
 
 ToPemEncoding: pemEncodedData
 	"Private - Invoke the ToPemEncoding() method of the COM object.
@@ -223,7 +222,7 @@ validTo
 	answer := DOUBLE new.
 	self get_ValidTo: answer.
 	^answer asObject! !
-!ICoreWebView2ClientCertificate categoriesForMethods!
+!WebView2.ICoreWebView2ClientCertificate categoriesForMethods!
 derEncodedSerialNumber!properties!public! !
 displayName!properties!public! !
 displayOn:!displaying!public! !
@@ -246,7 +245,7 @@ validFrom!**auto generated**!properties!public! !
 validTo!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2ClientCertificate class methodsFor!
+!WebView2.ICoreWebView2ClientCertificate class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ClientCertificate'
@@ -272,7 +271,7 @@ defineFunctions
 		defineFunction: #get_Kind:
 			argumentTypes: 'sdword*'
 ! !
-!ICoreWebView2ClientCertificate class categoriesForMethods!
+!WebView2.ICoreWebView2ClientCertificate class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

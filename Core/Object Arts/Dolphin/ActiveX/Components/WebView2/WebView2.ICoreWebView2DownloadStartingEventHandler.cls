@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2DownloadStartingEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2DownloadStartingEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2DownloadStartingEventHandler guid: (OS.COM.IID fromString: '{efedc989-c396-41ca-83f7-07f845a55724}')!
-ICoreWebView2DownloadStartingEventHandler comment: '`ICoreWebView2DownloadStartingEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DownloadStartingEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2DownloadStartingEventHandler guid: (OS.COM.IID fromString: '{efedc989-c396-41ca-83f7-07f845a55724}')!
+WebView2.ICoreWebView2DownloadStartingEventHandler comment: '`ICoreWebView2DownloadStartingEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DownloadStartingEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,20 +28,20 @@ interface ICoreWebView2DownloadStartingEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2DownloadStartingEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2DownloadStartingEventHandler methodsFor!
+!WebView2.ICoreWebView2DownloadStartingEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2DownloadStartingEventHandler methodsFor!
 
 basicRegister: tokenBuffer
 	source Add_DownloadStarting: self token: tokenBuffer!
 
 basicUnregister
 	source Remove_DownloadStarting: token! !
-!ICoreWebView2DownloadStartingEventHandler categoriesForMethods!
+!WebView2.ICoreWebView2DownloadStartingEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
 !
 
-!ICoreWebView2DownloadStartingEventHandler class methodsFor!
+!WebView2.ICoreWebView2DownloadStartingEventHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2DownloadStartingEventHandler'
@@ -56,7 +56,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#downloadStarting:! !
-!ICoreWebView2DownloadStartingEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2DownloadStartingEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

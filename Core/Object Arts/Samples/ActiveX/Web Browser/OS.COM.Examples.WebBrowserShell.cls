@@ -29,7 +29,7 @@ createComponents
 	super createComponents.
 	statusModel := ValueHolder new.
 	zoomModel := ValueHolder new.
-	browser := self add: Smalltalk.URLPresenter new name: 'browser'.
+	browser := self add: URLPresenter new name: 'browser'.
 	address := self add: TextPresenter new name: 'address'!
 
 createSchematicWiring

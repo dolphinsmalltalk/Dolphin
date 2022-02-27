@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Environment2 subclass: #ICoreWebView2Environment3
+WebView2.ICoreWebView2Environment2 subclass: #'WebView2.ICoreWebView2Environment3'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2Environment3 guid: (OS.COM.IID fromString: '{80a22ae3-be7c-4ce2-afe1-5a50056cdeeb}')!
-ICoreWebView2Environment3 comment: '`ICoreWebView2Environment3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2Environment3 guid: (OS.COM.IID fromString: '{80a22ae3-be7c-4ce2-afe1-5a50056cdeeb}')!
+WebView2.ICoreWebView2Environment3 comment: '`ICoreWebView2Environment3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -31,8 +31,8 @@ interface ICoreWebView2Environment3 : ICoreWebView2Environment2
 };
 ```
 '!
-!ICoreWebView2Environment3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Environment3 methodsFor!
+!WebView2.ICoreWebView2Environment3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Environment3 methodsFor!
 
 CreateCoreWebView2CompositionController: parentWindow handler: handler
 	"Private - Invoke the CreateCoreWebView2CompositionController() method of the COM object.
@@ -52,12 +52,12 @@ CreateCoreWebView2PointerInfo: pointerInfo
 
 	<virtual stdcall: hresult 11 ICoreWebView2PointerInfo**>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2Environment3 categoriesForMethods!
+!WebView2.ICoreWebView2Environment3 categoriesForMethods!
 CreateCoreWebView2CompositionController:handler:!**auto generated**!COM Interfaces-ICoreWebView2Environment3!private! !
 CreateCoreWebView2PointerInfo:!**auto generated**!COM Interfaces-ICoreWebView2Environment3!private! !
 !
 
-!ICoreWebView2Environment3 class methodsFor!
+!WebView2.ICoreWebView2Environment3 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Environment3'
@@ -69,7 +69,7 @@ defineFunctions
 		defineFunction: #CreateCoreWebView2PointerInfo:
 			argumentTypes: 'ICoreWebView2PointerInfo**'
 ! !
-!ICoreWebView2Environment3 class categoriesForMethods!
+!WebView2.ICoreWebView2Environment3 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

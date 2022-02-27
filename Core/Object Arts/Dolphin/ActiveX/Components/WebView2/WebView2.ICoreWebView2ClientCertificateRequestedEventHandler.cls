@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2ClientCertificateRequestedEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2ClientCertificateRequestedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2ClientCertificateRequestedEventHandler guid: (OS.COM.IID fromString: '{d7175ba2-bcc3-11eb-8529-0242ac130003}')!
-ICoreWebView2ClientCertificateRequestedEventHandler comment: '`ICoreWebView2ClientCertificateRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClientCertificateRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2ClientCertificateRequestedEventHandler guid: (OS.COM.IID fromString: '{d7175ba2-bcc3-11eb-8529-0242ac130003}')!
+WebView2.ICoreWebView2ClientCertificateRequestedEventHandler comment: '`ICoreWebView2ClientCertificateRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClientCertificateRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,20 +28,20 @@ interface ICoreWebView2ClientCertificateRequestedEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2ClientCertificateRequestedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ClientCertificateRequestedEventHandler methodsFor!
+!WebView2.ICoreWebView2ClientCertificateRequestedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ClientCertificateRequestedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
 	source Add_ClientCertificateRequested: self token: tokenBuffer!
 
 basicUnregister
 	source Remove_ClientCertificateRequested: token! !
-!ICoreWebView2ClientCertificateRequestedEventHandler categoriesForMethods!
+!WebView2.ICoreWebView2ClientCertificateRequestedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
 !
 
-!ICoreWebView2ClientCertificateRequestedEventHandler class methodsFor!
+!WebView2.ICoreWebView2ClientCertificateRequestedEventHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ClientCertificateRequestedEventHandler'
@@ -56,7 +56,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#clientCertificateRequested:! !
-!ICoreWebView2ClientCertificateRequestedEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2ClientCertificateRequestedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

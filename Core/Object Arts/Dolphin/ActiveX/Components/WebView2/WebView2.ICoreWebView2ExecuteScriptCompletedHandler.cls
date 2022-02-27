@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2ExecuteScriptCompletedHandler
+WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2ExecuteScriptCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2ExecuteScriptCompletedHandler guid: (OS.COM.IID fromString: '{49511172-cc67-4bca-9923-137112f4c4cc}')!
-ICoreWebView2ExecuteScriptCompletedHandler comment: '`ICoreWebView2ExecuteScriptCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ExecuteScriptCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2ExecuteScriptCompletedHandler guid: (OS.COM.IID fromString: '{49511172-cc67-4bca-9923-137112f4c4cc}')!
+WebView2.ICoreWebView2ExecuteScriptCompletedHandler comment: '`ICoreWebView2ExecuteScriptCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ExecuteScriptCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,8 +28,8 @@ interface ICoreWebView2ExecuteScriptCompletedHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2ExecuteScriptCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ExecuteScriptCompletedHandler class methodsFor!
+!WebView2.ICoreWebView2ExecuteScriptCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ExecuteScriptCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ExecuteScriptCompletedHandler'
@@ -37,7 +37,7 @@ defineFunctions
 	"
 
 	self defineFunction: #value:value: argumentTypes: 'hresult lpwstr'! !
-!ICoreWebView2ExecuteScriptCompletedHandler class categoriesForMethods!
+!WebView2.ICoreWebView2ExecuteScriptCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
 

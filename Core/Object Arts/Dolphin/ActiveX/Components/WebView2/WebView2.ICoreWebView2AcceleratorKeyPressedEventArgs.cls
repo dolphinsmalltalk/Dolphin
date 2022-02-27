@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventArgs subclass: #ICoreWebView2AcceleratorKeyPressedEventArgs
+WebView2.ICoreWebView2EventArgs subclass: #'WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2AcceleratorKeyPressedEventArgs guid: (OS.COM.IID fromString: '{9f760f8a-fb79-42be-9990-7b56900fa9c7}')!
-ICoreWebView2AcceleratorKeyPressedEventArgs comment: '`ICoreWebView2AcceleratorKeyPressedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs guid: (OS.COM.IID fromString: '{9f760f8a-fb79-42be-9990-7b56900fa9c7}')!
+WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs comment: '`ICoreWebView2AcceleratorKeyPressedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -42,8 +42,8 @@ interface ICoreWebView2AcceleratorKeyPressedEventArgs : IUnknown
 };
 ```
 '!
-!ICoreWebView2AcceleratorKeyPressedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2AcceleratorKeyPressedEventArgs methodsFor!
+!WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs methodsFor!
 
 get_Handled: handled
 	"Private - Get the value of the 'Handled' property of the receiver.
@@ -120,7 +120,7 @@ keyEventLParam
 	^answer asObject!
 
 keyName
-	^Keyboard default keyNameFromLParam: self keyEventLParam!
+	^UI.Keyboard default keyNameFromLParam: self keyEventLParam!
 
 physicalKeyStatus
 	"Answer the <COREWEBVIEW2_PHYSICAL_KEY_STATUS> value of the 'PhysicalKeyStatus' property of the receiver."
@@ -158,7 +158,7 @@ virtualKey
 
 windowsKeyEvent
 	^#('WM_KEYDOWN' 'WM_KEYUP' 'WM_SYSKEYDOWN' 'WM_SYSKEYUP') at: self keyEventKind + 1! !
-!ICoreWebView2AcceleratorKeyPressedEventArgs categoriesForMethods!
+!WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs categoriesForMethods!
 get_Handled:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
 get_KeyEventKind:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
 get_KeyEventLParam:!**auto generated**!COM Interfaces-ICoreWebView2AcceleratorKeyPressedEventArgs!private! !
@@ -176,7 +176,7 @@ virtualKey!**auto generated**!properties!public! !
 windowsKeyEvent!printing!public! !
 !
 
-!ICoreWebView2AcceleratorKeyPressedEventArgs class methodsFor!
+!WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs'
@@ -196,7 +196,7 @@ defineFunctions
 		defineFunction: #put_Handled:
 			argumentTypes: 'sdword'
 ! !
-!ICoreWebView2AcceleratorKeyPressedEventArgs class categoriesForMethods!
+!WebView2.ICoreWebView2AcceleratorKeyPressedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

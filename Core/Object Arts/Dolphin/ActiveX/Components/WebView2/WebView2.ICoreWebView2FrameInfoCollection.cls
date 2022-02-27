@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2IterableCollection subclass: #ICoreWebView2FrameInfoCollection
+WebView2.ICoreWebView2IterableCollection subclass: #'WebView2.ICoreWebView2FrameInfoCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2FrameInfoCollection guid: (OS.COM.IID fromString: '{8f834154-d38e-4d90-affb-6800a7272839}')!
-ICoreWebView2FrameInfoCollection comment: '`ICoreWebView2FrameInfoCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameInfoCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2FrameInfoCollection guid: (OS.COM.IID fromString: '{8f834154-d38e-4d90-affb-6800a7272839}')!
+WebView2.ICoreWebView2FrameInfoCollection comment: '`ICoreWebView2FrameInfoCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameInfoCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -27,8 +27,8 @@ interface ICoreWebView2FrameInfoCollection : IUnknown
 };
 ```
 '!
-!ICoreWebView2FrameInfoCollection categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2FrameInfoCollection methodsFor!
+!WebView2.ICoreWebView2FrameInfoCollection categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2FrameInfoCollection methodsFor!
 
 GetIterator: iterator
 	"Private - Invoke the GetIterator() method of the COM object.
@@ -41,12 +41,12 @@ GetIterator: iterator
 
 iteratorClass
 	^ICoreWebView2FrameInfoCollectionIterator! !
-!ICoreWebView2FrameInfoCollection categoriesForMethods!
+!WebView2.ICoreWebView2FrameInfoCollection categoriesForMethods!
 GetIterator:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfoCollection!private! !
 iteratorClass!constants!private! !
 !
 
-!ICoreWebView2FrameInfoCollection class methodsFor!
+!WebView2.ICoreWebView2FrameInfoCollection class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2FrameInfoCollection'
@@ -56,7 +56,7 @@ defineFunctions
 		defineFunction: #GetIterator:
 			argumentTypes: 'ICoreWebView2FrameInfoCollectionIterator**'
 ! !
-!ICoreWebView2FrameInfoCollection class categoriesForMethods!
+!WebView2.ICoreWebView2FrameInfoCollection class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

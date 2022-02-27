@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2FocusChangedEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2FocusChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2FocusChangedEventHandler guid: (OS.COM.IID fromString: '{05ea24bd-6452-4926-9014-4b82b498135d}')!
-ICoreWebView2FocusChangedEventHandler isNonInstantiable: true!
-ICoreWebView2FocusChangedEventHandler comment: '`ICoreWebView2FocusChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FocusChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2FocusChangedEventHandler guid: (OS.COM.IID fromString: '{05ea24bd-6452-4926-9014-4b82b498135d}')!
+WebView2.ICoreWebView2FocusChangedEventHandler isNonInstantiable: true!
+WebView2.ICoreWebView2FocusChangedEventHandler comment: '`ICoreWebView2FocusChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FocusChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -29,8 +29,8 @@ interface ICoreWebView2FocusChangedEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2FocusChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2FocusChangedEventHandler class methodsFor!
+!WebView2.ICoreWebView2FocusChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2FocusChangedEventHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2FocusChangedEventHandler'
@@ -43,7 +43,7 @@ defineFunctions
 
 iid
 	^##(self) guid! !
-!ICoreWebView2FocusChangedEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2FocusChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 iid!constants!public! !
 !

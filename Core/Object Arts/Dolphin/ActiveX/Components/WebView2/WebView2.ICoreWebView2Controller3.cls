@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Controller2 subclass: #ICoreWebView2Controller3
+WebView2.ICoreWebView2Controller2 subclass: #'WebView2.ICoreWebView2Controller3'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2Controller3 guid: (OS.COM.IID fromString: '{f9614724-5d2b-41dc-aef7-73d62b51543b}')!
-ICoreWebView2Controller3 comment: '`ICoreWebView2Controller3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Controller3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2Controller3 guid: (OS.COM.IID fromString: '{f9614724-5d2b-41dc-aef7-73d62b51543b}')!
+WebView2.ICoreWebView2Controller3 comment: '`ICoreWebView2Controller3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Controller3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -49,8 +49,8 @@ interface ICoreWebView2Controller3 : ICoreWebView2Controller2
 };
 ```
 '!
-!ICoreWebView2Controller3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Controller3 methodsFor!
+!WebView2.ICoreWebView2Controller3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Controller3 methodsFor!
 
 Add_RasterizationScaleChanged: eventHandler token: token
 	"Private - Invoke the add_RasterizationScaleChanged() method of the COM object.
@@ -127,7 +127,7 @@ Remove_RasterizationScaleChanged: token
 
 	<virtual stdcall: hresult 34 sqword>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2Controller3 categoriesForMethods!
+!WebView2.ICoreWebView2Controller3 categoriesForMethods!
 Add_RasterizationScaleChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2Controller3!private! !
 get_BoundsMode:!**auto generated**!COM Interfaces-ICoreWebView2Controller3!private! !
 get_RasterizationScale:!**auto generated**!COM Interfaces-ICoreWebView2Controller3!private! !
@@ -138,7 +138,7 @@ put_ShouldDetectMonitorScaleChanges:!**auto generated**!COM Interfaces-ICoreWebV
 Remove_RasterizationScaleChanged:!**auto generated**!COM Interfaces-ICoreWebView2Controller3!private! !
 !
 
-!ICoreWebView2Controller3 class methodsFor!
+!WebView2.ICoreWebView2Controller3 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Controller3'
@@ -162,7 +162,7 @@ defineFunctions
 		defineFunction: #put_BoundsMode:
 			argumentTypes: 'sdword'
 ! !
-!ICoreWebView2Controller3 class categoriesForMethods!
+!WebView2.ICoreWebView2Controller3 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

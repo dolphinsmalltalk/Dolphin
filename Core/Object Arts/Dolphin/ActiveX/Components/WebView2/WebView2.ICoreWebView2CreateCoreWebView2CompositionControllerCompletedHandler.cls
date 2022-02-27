@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler
+WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler guid: (OS.COM.IID fromString: '{02fab84b-1428-4fb7-ad45-1b2e64736184}')!
-ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler comment: '`ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler guid: (OS.COM.IID fromString: '{02fab84b-1428-4fb7-ad45-1b2e64736184}')!
+WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler comment: '`ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,8 +28,8 @@ interface ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler :
 };
 ```
 '!
-!ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler class methodsFor!
+!WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler'
@@ -37,7 +37,7 @@ defineFunctions
 	"
 
 	self defineFunction: #value:value: argumentTypes: 'hresult ICoreWebView2CompositionController*'! !
-!ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler class categoriesForMethods!
+!WebView2.ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
 

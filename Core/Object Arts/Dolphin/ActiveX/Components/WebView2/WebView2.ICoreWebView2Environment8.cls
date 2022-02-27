@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Environment7 subclass: #ICoreWebView2Environment8
+WebView2.ICoreWebView2Environment7 subclass: #'WebView2.ICoreWebView2Environment8'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2Environment8 guid: (OS.COM.IID fromString: '{d6eb91dd-c3d2-45e5-bd29-6dc2bc4de9cf}')!
-ICoreWebView2Environment8 comment: '`ICoreWebView2Environment8` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment8'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2Environment8 guid: (OS.COM.IID fromString: '{d6eb91dd-c3d2-45e5-bd29-6dc2bc4de9cf}')!
+WebView2.ICoreWebView2Environment8 comment: '`ICoreWebView2Environment8` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment8'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -34,8 +34,8 @@ interface ICoreWebView2Environment8 : ICoreWebView2Environment7
 };
 ```
 '!
-!ICoreWebView2Environment8 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Environment8 methodsFor!
+!WebView2.ICoreWebView2Environment8 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Environment8 methodsFor!
 
 Add_ProcessInfosChanged: eventHandler token: token
 	"Private - Invoke the add_ProcessInfosChanged() method of the COM object.
@@ -64,13 +64,13 @@ Remove_ProcessInfosChanged: token
 
 	<virtual stdcall: hresult 18 sqword>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2Environment8 categoriesForMethods!
+!WebView2.ICoreWebView2Environment8 categoriesForMethods!
 Add_ProcessInfosChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2Environment8!private! !
 GetProcessInfos:!**auto generated**!COM Interfaces-ICoreWebView2Environment8!private! !
 Remove_ProcessInfosChanged:!**auto generated**!COM Interfaces-ICoreWebView2Environment8!private! !
 !
 
-!ICoreWebView2Environment8 class methodsFor!
+!WebView2.ICoreWebView2Environment8 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Environment8'
@@ -84,7 +84,7 @@ defineFunctions
 		defineFunction: #GetProcessInfos:
 			argumentTypes: 'ICoreWebView2ProcessInfoCollection**'
 ! !
-!ICoreWebView2Environment8 class categoriesForMethods!
+!WebView2.ICoreWebView2Environment8 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

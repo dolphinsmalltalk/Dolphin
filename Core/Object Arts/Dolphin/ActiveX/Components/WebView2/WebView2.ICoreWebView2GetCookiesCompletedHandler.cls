@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2GetCookiesCompletedHandler
+WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2GetCookiesCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2GetCookiesCompletedHandler guid: (OS.COM.IID fromString: '{5a4f5069-5c15-47c3-8646-f4de1c116670}')!
-ICoreWebView2GetCookiesCompletedHandler comment: '`ICoreWebView2GetCookiesCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2GetCookiesCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2GetCookiesCompletedHandler guid: (OS.COM.IID fromString: '{5a4f5069-5c15-47c3-8646-f4de1c116670}')!
+WebView2.ICoreWebView2GetCookiesCompletedHandler comment: '`ICoreWebView2GetCookiesCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2GetCookiesCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,8 +28,8 @@ interface ICoreWebView2GetCookiesCompletedHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2GetCookiesCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2GetCookiesCompletedHandler class methodsFor!
+!WebView2.ICoreWebView2GetCookiesCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2GetCookiesCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2GetCookiesCompletedHandler'
@@ -37,7 +37,7 @@ defineFunctions
 	"
 
 	self defineFunction: #value:value: argumentTypes: 'hresult ICoreWebView2CookieList*'! !
-!ICoreWebView2GetCookiesCompletedHandler class categoriesForMethods!
+!WebView2.ICoreWebView2GetCookiesCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
 

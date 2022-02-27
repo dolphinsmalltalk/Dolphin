@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventArgs subclass: #ICoreWebView2WebMessageReceivedEventArgs
+WebView2.ICoreWebView2EventArgs subclass: #'WebView2.ICoreWebView2WebMessageReceivedEventArgs'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2WebMessageReceivedEventArgs guid: (OS.COM.IID fromString: '{0f99a40c-e962-4207-9e92-e3d542eff849}')!
-ICoreWebView2WebMessageReceivedEventArgs comment: '`ICoreWebView2WebMessageReceivedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebMessageReceivedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2WebMessageReceivedEventArgs guid: (OS.COM.IID fromString: '{0f99a40c-e962-4207-9e92-e3d542eff849}')!
+WebView2.ICoreWebView2WebMessageReceivedEventArgs comment: '`ICoreWebView2WebMessageReceivedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebMessageReceivedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -33,8 +33,8 @@ interface ICoreWebView2WebMessageReceivedEventArgs : IUnknown
 };
 ```
 '!
-!ICoreWebView2WebMessageReceivedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2WebMessageReceivedEventArgs methodsFor!
+!WebView2.ICoreWebView2WebMessageReceivedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2WebMessageReceivedEventArgs methodsFor!
 
 get_Source: source
 	"Private - Get the value of the 'Source' property of the receiver.
@@ -58,7 +58,7 @@ source
 	"Answer the <lpwstr> value of the 'Source' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_Source: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -68,7 +68,7 @@ tryGetWebMessageAsString
 	"Answer the <Utf16String> result of invoking the TryGetWebMessageAsString() method of the COM object."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self TryGetWebMessageAsString: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -87,12 +87,12 @@ webMessageAsJson
 	"Answer the <lpwstr> value of the 'webMessageAsJson' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_webMessageAsJson: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
-!ICoreWebView2WebMessageReceivedEventArgs categoriesForMethods!
+!WebView2.ICoreWebView2WebMessageReceivedEventArgs categoriesForMethods!
 get_Source:!**auto generated**!COM Interfaces-ICoreWebView2WebMessageReceivedEventArgs!private! !
 get_webMessageAsJson:!**auto generated**!COM Interfaces-ICoreWebView2WebMessageReceivedEventArgs!private! !
 source!properties!public! !
@@ -101,7 +101,7 @@ TryGetWebMessageAsString:!**auto generated**!COM Interfaces-ICoreWebView2WebMess
 webMessageAsJson!properties!public! !
 !
 
-!ICoreWebView2WebMessageReceivedEventArgs class methodsFor!
+!WebView2.ICoreWebView2WebMessageReceivedEventArgs class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2WebMessageReceivedEventArgs'
@@ -115,7 +115,7 @@ defineFunctions
 		defineFunction: #TryGetWebMessageAsString:
 			argumentTypes: 'lpwstr*'
 ! !
-!ICoreWebView2WebMessageReceivedEventArgs class categoriesForMethods!
+!WebView2.ICoreWebView2WebMessageReceivedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

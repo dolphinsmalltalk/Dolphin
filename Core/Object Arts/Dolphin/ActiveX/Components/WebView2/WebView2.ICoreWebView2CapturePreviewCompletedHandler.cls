@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2CapturePreviewCompletedHandler
+WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2CapturePreviewCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2CapturePreviewCompletedHandler guid: (OS.COM.IID fromString: '{697e05e9-3d8f-45fa-96f4-8ffe1ededaf5}')!
-ICoreWebView2CapturePreviewCompletedHandler comment: '`ICoreWebView2CapturePreviewCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CapturePreviewCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2CapturePreviewCompletedHandler guid: (OS.COM.IID fromString: '{697e05e9-3d8f-45fa-96f4-8ffe1ededaf5}')!
+WebView2.ICoreWebView2CapturePreviewCompletedHandler comment: '`ICoreWebView2CapturePreviewCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CapturePreviewCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -27,8 +27,8 @@ interface ICoreWebView2CapturePreviewCompletedHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2CapturePreviewCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2CapturePreviewCompletedHandler class methodsFor!
+!WebView2.ICoreWebView2CapturePreviewCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2CapturePreviewCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2CapturePreviewCompletedHandler'
@@ -36,7 +36,7 @@ defineFunctions
 	"
 
 	self defineFunction: #value: argumentTypes: 'hresult'! !
-!ICoreWebView2CapturePreviewCompletedHandler class categoriesForMethods!
+!WebView2.ICoreWebView2CapturePreviewCompletedHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

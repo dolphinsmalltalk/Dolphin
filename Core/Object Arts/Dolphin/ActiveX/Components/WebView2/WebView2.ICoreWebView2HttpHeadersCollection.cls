@@ -1,16 +1,16 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2IterableCollection subclass: #ICoreWebView2HttpHeadersCollection
+WebView2.ICoreWebView2IterableCollection subclass: #'WebView2.ICoreWebView2HttpHeadersCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2HttpHeadersCollection guid: (OS.COM.IID fromString: '{5b5d8e75-be21-4d21-9843-509bd2c0a429}')!
-ICoreWebView2HttpHeadersCollection isNonInstantiable: true!
-ICoreWebView2HttpHeadersCollection comment: '`ICoreWebView2HttpHeadersCollection` is not defined in the WebView2 IDL, but is defined here for economy of mechanism, providing a common implmentaton of most of the Smalltalk `<abstractDictionary>` protocol.'!
-!ICoreWebView2HttpHeadersCollection categoriesForClass!COM-Interfaces! !
-!ICoreWebView2HttpHeadersCollection methodsFor!
+WebView2.ICoreWebView2HttpHeadersCollection guid: (OS.COM.IID fromString: '{5b5d8e75-be21-4d21-9843-509bd2c0a429}')!
+WebView2.ICoreWebView2HttpHeadersCollection isNonInstantiable: true!
+WebView2.ICoreWebView2HttpHeadersCollection comment: '`ICoreWebView2HttpHeadersCollection` is not defined in the WebView2 IDL, but is defined here for economy of mechanism, providing a common implmentaton of most of the Smalltalk `<abstractDictionary>` protocol.'!
+!WebView2.ICoreWebView2HttpHeadersCollection categoriesForClass!COM-Interfaces! !
+!WebView2.ICoreWebView2HttpHeadersCollection methodsFor!
 
 add: anAssociation
 	self at: anAssociation key put: anAssociation value.
@@ -80,7 +80,7 @@ getHeader: name
 	"Answer the <Utf16String> result of invoking the GetHeader() method of the COM object."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self GetHeader: name asUtf16String value: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -188,7 +188,7 @@ values
 	names := Array writeStream: 2.
 	self keysAndValuesDo: [:eachKey :eachValue | names nextPut: eachValue].
 	^names grabContents! !
-!ICoreWebView2HttpHeadersCollection categoriesForMethods!
+!WebView2.ICoreWebView2HttpHeadersCollection categoriesForMethods!
 add:!adding!public! !
 addAll:!adding!public! !
 asDictionary!converting!public! !
@@ -223,5 +223,5 @@ select:!enumerating!public! !
 values!accessing!public! !
 !
 
-ICoreWebView2HttpHeadersCollection methodProtocol: #abstractDictionary attributes: #(#ansi #readOnly) selectors: #(#addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:ifAbsentPut: #at:put: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #includesKey: #inject:into: #isEmpty #keyAtValue: #keyAtValue:ifAbsent: #keys #keysAndValuesDo: #keysDo: #notEmpty #occurrencesOf: #rehash #reject: #removeAllKeys: #removeAllKeys:ifAbsent: #removeKey: #removeKey:ifAbsent: #select: #size #values)!
+WebView2.ICoreWebView2HttpHeadersCollection methodProtocol: #abstractDictionary attributes: #(#ansi #readOnly) selectors: #(#addAll: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #at:ifAbsentPut: #at:put: #collect: #detect: #detect:ifNone: #do: #do:separatedBy: #includes: #includesKey: #inject:into: #isEmpty #keyAtValue: #keyAtValue:ifAbsent: #keys #keysAndValuesDo: #keysDo: #notEmpty #occurrencesOf: #rehash #reject: #removeAllKeys: #removeAllKeys:ifAbsent: #removeKey: #removeKey:ifAbsent: #select: #size #values)!
 

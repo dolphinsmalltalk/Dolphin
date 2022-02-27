@@ -1,14 +1,14 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebViewCompletedHandler
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2CompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebViewCompletedHandler guid: (OS.COM.IID fromString: '{27d65498-b891-4319-88fb-fcd3c81271f3}')!
-ICoreWebViewCompletedHandler isNonInstantiable: true!
-ICoreWebViewCompletedHandler comment: '`ICoreWebView2EventHandler` is not defined in the WebView2 IDL, but is defined here for economy of mechanism.
+WebView2.ICoreWebView2CompletedHandler guid: (OS.COM.IID fromString: '{27d65498-b891-4319-88fb-fcd3c81271f3}')!
+WebView2.ICoreWebView2CompletedHandler isNonInstantiable: true!
+WebView2.ICoreWebView2CompletedHandler comment: '`ICoreWebView2EventHandler` is not defined in the WebView2 IDL, but is defined here for economy of mechanism.
 
 The concrete subclasses represent COM interfaces used to provide the callback object that is notified when an asynchronous request completes.
 
@@ -16,4 +16,4 @@ There are 10 or more completion handler interfaces defined that are all similar 
 
 
 '!
-!ICoreWebViewCompletedHandler categoriesForClass!COM-Interfaces! !
+!WebView2.ICoreWebView2CompletedHandler categoriesForClass!COM-Interfaces! !

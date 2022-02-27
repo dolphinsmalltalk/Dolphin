@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2EnvironmentOptions
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2EnvironmentOptions'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2EnvironmentOptions guid: (OS.COM.IID fromString: '{2fde08a8-1e9a-4766-8c05-95a9ceb9d1c5}')!
-ICoreWebView2EnvironmentOptions comment: '`ICoreWebView2EnvironmentOptions` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EnvironmentOptions'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2EnvironmentOptions guid: (OS.COM.IID fromString: '{2fde08a8-1e9a-4766-8c05-95a9ceb9d1c5}')!
+WebView2.ICoreWebView2EnvironmentOptions comment: '`ICoreWebView2EnvironmentOptions` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EnvironmentOptions'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -48,14 +48,14 @@ interface ICoreWebView2EnvironmentOptions : IUnknown
 };
 ```
 '!
-!ICoreWebView2EnvironmentOptions categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2EnvironmentOptions methodsFor!
+!WebView2.ICoreWebView2EnvironmentOptions categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2EnvironmentOptions methodsFor!
 
 additionalBrowserArguments
 	"Answer the <lpwstr> value of the 'AdditionalBrowserArguments' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_AdditionalBrowserArguments: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -119,7 +119,7 @@ language
 	"Answer the <lpwstr> value of the 'Language' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_Language: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -174,7 +174,7 @@ targetCompatibleBrowserVersion
 	"Answer the <lpwstr> value of the 'TargetCompatibleBrowserVersion' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_TargetCompatibleBrowserVersion: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -184,7 +184,7 @@ targetCompatibleBrowserVersion: value
 	"Set the 'TargetCompatibleBrowserVersion' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_TargetCompatibleBrowserVersion: value asUtf16String! !
-!ICoreWebView2EnvironmentOptions categoriesForMethods!
+!WebView2.ICoreWebView2EnvironmentOptions categoriesForMethods!
 additionalBrowserArguments!properties!public! !
 additionalBrowserArguments:!**auto generated**!properties!public! !
 allowSingleSignOnUsingOSPrimaryAccount!properties!public! !
@@ -203,7 +203,7 @@ targetCompatibleBrowserVersion!properties!public! !
 targetCompatibleBrowserVersion:!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2EnvironmentOptions class methodsFor!
+!WebView2.ICoreWebView2EnvironmentOptions class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2EnvironmentOptions'
@@ -227,7 +227,7 @@ defineFunctions
 		defineFunction: #put_AllowSingleSignOnUsingOSPrimaryAccount:
 			argumentTypes: 'sdword'
 ! !
-!ICoreWebView2EnvironmentOptions class categoriesForMethods!
+!WebView2.ICoreWebView2EnvironmentOptions class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2Settings
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2Settings'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2Settings guid: (OS.COM.IID fromString: '{e562e4f0-d7fa-43ac-8d71-c05150499f00}')!
-ICoreWebView2Settings comment: '`ICoreWebView2Settings` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Settings'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2Settings guid: (OS.COM.IID fromString: '{e562e4f0-d7fa-43ac-8d71-c05150499f00}')!
+WebView2.ICoreWebView2Settings comment: '`ICoreWebView2Settings` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Settings'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -78,8 +78,8 @@ interface ICoreWebView2Settings : IUnknown
 };
 ```
 '!
-!ICoreWebView2Settings categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Settings methodsFor!
+!WebView2.ICoreWebView2Settings categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Settings methodsFor!
 
 areBrowserAcceleratorKeysEnabled
 	"Answer the <Boolean> value of the 'AreBrowserAcceleratorKeysEnabled' property of the receiver."
@@ -553,7 +553,7 @@ userAgent
 	"Answer the <lpwstr> value of the 'UserAgent' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_UserAgent: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -563,7 +563,7 @@ userAgent: userAgent
 	"Set the 'UserAgent' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_UserAgent: userAgent asUtf16String! !
-!ICoreWebView2Settings categoriesForMethods!
+!WebView2.ICoreWebView2Settings categoriesForMethods!
 areBrowserAcceleratorKeysEnabled!properties!public! !
 areBrowserAcceleratorKeysEnabled:!properties!public! !
 areDefaultContextMenusEnabled!properties!public! !
@@ -627,14 +627,14 @@ userAgent!**auto generated**!properties!public! !
 userAgent:!**auto generated**!properties!public! !
 !
 
-ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings attributes: #(#readOnly) selectors: #(#get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled:)!
-ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings2 attributes: #(#readOnly) selectors: #(#get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
-ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings3 attributes: #(#readOnly) selectors: #(#get_AreBrowserAcceleratorKeysEnabled: #get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreBrowserAcceleratorKeysEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
-ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings4 attributes: #(#readOnly) selectors: #(#get_AreBrowserAcceleratorKeysEnabled: #get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsGeneralAutofillEnabled: #get_IsPasswordAutosaveEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreBrowserAcceleratorKeysEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsGeneralAutofillEnabled: #put_IsPasswordAutosaveEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
-ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings5 attributes: #(#readOnly) selectors: #(#get_AreBrowserAcceleratorKeysEnabled: #get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsGeneralAutofillEnabled: #get_IsPasswordAutosaveEnabled: #get_IsPinchZoomEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreBrowserAcceleratorKeysEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsGeneralAutofillEnabled: #put_IsPasswordAutosaveEnabled: #put_IsPinchZoomEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
-ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings6 attributes: #(#readOnly) selectors: #(#get_AreBrowserAcceleratorKeysEnabled: #get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsGeneralAutofillEnabled: #get_IsPasswordAutosaveEnabled: #get_IsPinchZoomEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsSwipeNavigationEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreBrowserAcceleratorKeysEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsGeneralAutofillEnabled: #put_IsPasswordAutosaveEnabled: #put_IsPinchZoomEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsSwipeNavigationEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
+WebView2.ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings attributes: #(#readOnly) selectors: #(#get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled:)!
+WebView2.ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings2 attributes: #(#readOnly) selectors: #(#get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
+WebView2.ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings3 attributes: #(#readOnly) selectors: #(#get_AreBrowserAcceleratorKeysEnabled: #get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreBrowserAcceleratorKeysEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
+WebView2.ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings4 attributes: #(#readOnly) selectors: #(#get_AreBrowserAcceleratorKeysEnabled: #get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsGeneralAutofillEnabled: #get_IsPasswordAutosaveEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreBrowserAcceleratorKeysEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsGeneralAutofillEnabled: #put_IsPasswordAutosaveEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
+WebView2.ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings5 attributes: #(#readOnly) selectors: #(#get_AreBrowserAcceleratorKeysEnabled: #get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsGeneralAutofillEnabled: #get_IsPasswordAutosaveEnabled: #get_IsPinchZoomEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreBrowserAcceleratorKeysEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsGeneralAutofillEnabled: #put_IsPasswordAutosaveEnabled: #put_IsPinchZoomEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
+WebView2.ICoreWebView2Settings methodProtocol: #ICoreWebView2Settings6 attributes: #(#readOnly) selectors: #(#get_AreBrowserAcceleratorKeysEnabled: #get_AreDefaultContextMenusEnabled: #get_AreDefaultScriptDialogsEnabled: #get_AreDevToolsEnabled: #get_AreHostObjectsAllowed: #get_IsBuiltInErrorPageEnabled: #get_IsGeneralAutofillEnabled: #get_IsPasswordAutosaveEnabled: #get_IsPinchZoomEnabled: #get_IsScriptEnabled: #get_IsStatusBarEnabled: #get_IsSwipeNavigationEnabled: #get_IsWebMessageEnabled: #get_IsZoomControlEnabled: #get_UserAgent: #put_AreBrowserAcceleratorKeysEnabled: #put_AreDefaultContextMenusEnabled: #put_AreDefaultScriptDialogsEnabled: #put_AreDevToolsEnabled: #put_AreHostObjectsAllowed: #put_IsBuiltInErrorPageEnabled: #put_IsGeneralAutofillEnabled: #put_IsPasswordAutosaveEnabled: #put_IsPinchZoomEnabled: #put_IsScriptEnabled: #put_IsStatusBarEnabled: #put_IsSwipeNavigationEnabled: #put_IsWebMessageEnabled: #put_IsZoomControlEnabled: #put_UserAgent:)!
 
-!ICoreWebView2Settings class methodsFor!
+!WebView2.ICoreWebView2Settings class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Settings'
@@ -678,7 +678,7 @@ defineFunctions
 		defineFunction: #put_IsBuiltInErrorPageEnabled:
 			argumentTypes: 'sdword'
 ! !
-!ICoreWebView2Settings class categoriesForMethods!
+!WebView2.ICoreWebView2Settings class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

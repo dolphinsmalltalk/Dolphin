@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2BytesReceivedChangedEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2BytesReceivedChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2BytesReceivedChangedEventHandler guid: (OS.COM.IID fromString: '{828e8ab6-d94c-4264-9cef-5217170d6251}')!
-ICoreWebView2BytesReceivedChangedEventHandler comment: '`ICoreWebView2BytesReceivedChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BytesReceivedChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2BytesReceivedChangedEventHandler guid: (OS.COM.IID fromString: '{828e8ab6-d94c-4264-9cef-5217170d6251}')!
+WebView2.ICoreWebView2BytesReceivedChangedEventHandler comment: '`ICoreWebView2BytesReceivedChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2BytesReceivedChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,20 +28,20 @@ interface ICoreWebView2BytesReceivedChangedEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2BytesReceivedChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2BytesReceivedChangedEventHandler methodsFor!
+!WebView2.ICoreWebView2BytesReceivedChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2BytesReceivedChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
 	source Add_BytesReceivedChanged: self token: tokenBuffer!
 
 basicUnregister
 	source Remove_BytesReceivedChanged: token! !
-!ICoreWebView2BytesReceivedChangedEventHandler categoriesForMethods!
+!WebView2.ICoreWebView2BytesReceivedChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
 !
 
-!ICoreWebView2BytesReceivedChangedEventHandler class methodsFor!
+!WebView2.ICoreWebView2BytesReceivedChangedEventHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2BytesReceivedChangedEventHandler'
@@ -56,7 +56,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#bytesReceivedChanged! !
-!ICoreWebView2BytesReceivedChangedEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2BytesReceivedChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

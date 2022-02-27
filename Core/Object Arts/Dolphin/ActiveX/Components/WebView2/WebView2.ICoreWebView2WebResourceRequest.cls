@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2WebResourceRequest
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2WebResourceRequest'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2WebResourceRequest guid: (OS.COM.IID fromString: '{97055cd4-512c-4264-8b5f-e3f446cea6a5}')!
-ICoreWebView2WebResourceRequest comment: '`ICoreWebView2WebResourceRequest` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceRequest'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2WebResourceRequest guid: (OS.COM.IID fromString: '{97055cd4-512c-4264-8b5f-e3f446cea6a5}')!
+WebView2.ICoreWebView2WebResourceRequest comment: '`ICoreWebView2WebResourceRequest` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceRequest'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -45,8 +45,8 @@ interface ICoreWebView2WebResourceRequest : IUnknown
 };
 ```
 '!
-!ICoreWebView2WebResourceRequest categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2WebResourceRequest methodsFor!
+!WebView2.ICoreWebView2WebResourceRequest categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2WebResourceRequest methodsFor!
 
 content
 	"Answer the <IStream> value of the 'Content' property of the receiver."
@@ -109,7 +109,7 @@ method
 	"Answer the <lpwstr> value of the 'Method' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_Method: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -157,7 +157,7 @@ uri
 	"Answer the <lpwstr> value of the 'uri' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_uri: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -167,7 +167,7 @@ uri: uri
 	"Set the 'uri' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_uri: uri asUtf16String! !
-!ICoreWebView2WebResourceRequest categoriesForMethods!
+!WebView2.ICoreWebView2WebResourceRequest categoriesForMethods!
 content!**auto generated**!properties!public! !
 content:!**auto generated**!properties!public! !
 get_Content:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequest!private! !
@@ -185,7 +185,7 @@ uri!properties!public! !
 uri:!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2WebResourceRequest class methodsFor!
+!WebView2.ICoreWebView2WebResourceRequest class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2WebResourceRequest'
@@ -207,7 +207,7 @@ defineFunctions
 		defineFunction: #get_Headers:
 			argumentTypes: 'ICoreWebView2HttpRequestHeaders**'
 ! !
-!ICoreWebView2WebResourceRequest class categoriesForMethods!
+!WebView2.ICoreWebView2WebResourceRequest class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

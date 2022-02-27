@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2PrintSettings
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2PrintSettings'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2PrintSettings guid: (OS.COM.IID fromString: '{377f3721-c74e-48ca-8db1-df68e51d60e2}')!
-ICoreWebView2PrintSettings comment: '`ICoreWebView2PrintSettings` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PrintSettings'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2PrintSettings guid: (OS.COM.IID fromString: '{377f3721-c74e-48ca-8db1-df68e51d60e2}')!
+WebView2.ICoreWebView2PrintSettings comment: '`ICoreWebView2PrintSettings` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PrintSettings'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -102,14 +102,14 @@ interface ICoreWebView2PrintSettings : IUnknown
 };
 ```
 '!
-!ICoreWebView2PrintSettings categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2PrintSettings methodsFor!
+!WebView2.ICoreWebView2PrintSettings categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2PrintSettings methodsFor!
 
 footerUri
 	"Answer the <lpwstr> value of the 'FooterUri' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_FooterUri: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -241,7 +241,7 @@ headerTitle
 	"Answer the <lpwstr> value of the 'HeaderTitle' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_HeaderTitle: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -533,7 +533,7 @@ shouldPrintSelectionOnly: shouldPrintSelectionOnly
 	"Set the 'ShouldPrintSelectionOnly' property of the receiver to the <sdword> value of the argument."
 
 	self put_ShouldPrintSelectionOnly: shouldPrintSelectionOnly asParameter! !
-!ICoreWebView2PrintSettings categoriesForMethods!
+!WebView2.ICoreWebView2PrintSettings categoriesForMethods!
 footerUri!properties!public! !
 footerUri:!**auto generated**!properties!public! !
 get_FooterUri:!**auto generated**!COM Interfaces-ICoreWebView2PrintSettings!private! !
@@ -591,7 +591,7 @@ shouldPrintSelectionOnly!properties!public! !
 shouldPrintSelectionOnly:!properties!public! !
 !
 
-!ICoreWebView2PrintSettings class methodsFor!
+!WebView2.ICoreWebView2PrintSettings class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2PrintSettings'
@@ -651,7 +651,7 @@ defineFunctions
 		defineFunction: #put_FooterUri:
 			argumentTypes: 'lpwstr'
 ! !
-!ICoreWebView2PrintSettings class categoriesForMethods!
+!WebView2.ICoreWebView2PrintSettings class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

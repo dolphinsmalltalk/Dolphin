@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2ProcessInfo
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2ProcessInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2ProcessInfo guid: (OS.COM.IID fromString: '{84fa7612-3f3d-4fbf-889d-fad000492d72}')!
-ICoreWebView2ProcessInfo comment: '`ICoreWebView2ProcessInfo` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessInfo'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2ProcessInfo guid: (OS.COM.IID fromString: '{84fa7612-3f3d-4fbf-889d-fad000492d72}')!
+WebView2.ICoreWebView2ProcessInfo comment: '`ICoreWebView2ProcessInfo` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessInfo'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -30,8 +30,8 @@ interface ICoreWebView2ProcessInfo : IUnknown
 };
 ```
 '!
-!ICoreWebView2ProcessInfo categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ProcessInfo methodsFor!
+!WebView2.ICoreWebView2ProcessInfo categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ProcessInfo methodsFor!
 
 get_Kind: kind
 	"Private - Get the value of the 'Kind' property of the receiver.
@@ -69,7 +69,7 @@ processId
 	answer := SDWORD new.
 	self get_ProcessId: answer.
 	^answer asObject! !
-!ICoreWebView2ProcessInfo categoriesForMethods!
+!WebView2.ICoreWebView2ProcessInfo categoriesForMethods!
 get_Kind:!**auto generated**!COM Interfaces-ICoreWebView2ProcessInfo!private! !
 get_ProcessId:!**auto generated**!COM Interfaces-ICoreWebView2ProcessInfo!private! !
 kind!**auto generated**!properties!public! !
@@ -77,7 +77,7 @@ printableProperties!development!printing!private! !
 processId!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2ProcessInfo class methodsFor!
+!WebView2.ICoreWebView2ProcessInfo class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ProcessInfo'
@@ -89,7 +89,7 @@ defineFunctions
 		defineFunction: #get_Kind:
 			argumentTypes: 'sdword*'
 ! !
-!ICoreWebView2ProcessInfo class categoriesForMethods!
+!WebView2.ICoreWebView2ProcessInfo class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

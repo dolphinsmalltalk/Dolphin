@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2WindowFeatures
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2WindowFeatures'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2WindowFeatures guid: (OS.COM.IID fromString: '{5eaf559f-b46e-4397-8860-e422f287ff1e}')!
-ICoreWebView2WindowFeatures comment: '`ICoreWebView2WindowFeatures` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WindowFeatures'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2WindowFeatures guid: (OS.COM.IID fromString: '{5eaf559f-b46e-4397-8860-e422f287ff1e}')!
+WebView2.ICoreWebView2WindowFeatures comment: '`ICoreWebView2WindowFeatures` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WindowFeatures'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -54,8 +54,8 @@ interface ICoreWebView2WindowFeatures : IUnknown
 };
 ```
 '!
-!ICoreWebView2WindowFeatures categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2WindowFeatures methodsFor!
+!WebView2.ICoreWebView2WindowFeatures categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2WindowFeatures methodsFor!
 
 extent
 	^self width @ self height!
@@ -241,7 +241,7 @@ width
 	answer := DWORD new.
 	self get_Width: answer.
 	^answer asObject! !
-!ICoreWebView2WindowFeatures categoriesForMethods!
+!WebView2.ICoreWebView2WindowFeatures categoriesForMethods!
 extent!properties!public! !
 get_HasPosition:!**auto generated**!COM Interfaces-ICoreWebView2WindowFeatures!private! !
 get_HasSize:!**auto generated**!COM Interfaces-ICoreWebView2WindowFeatures!private! !
@@ -267,7 +267,7 @@ top!**auto generated**!properties!public! !
 width!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2WindowFeatures class methodsFor!
+!WebView2.ICoreWebView2WindowFeatures class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2WindowFeatures'
@@ -295,7 +295,7 @@ defineFunctions
 		defineFunction: #get_ShouldDisplayScrollBars:
 			argumentTypes: 'sdword*'
 ! !
-!ICoreWebView2WindowFeatures class categoriesForMethods!
+!WebView2.ICoreWebView2WindowFeatures class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

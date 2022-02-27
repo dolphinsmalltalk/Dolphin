@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventArgs subclass: #ICoreWebView2WebResourceRequestedEventArgs
+WebView2.ICoreWebView2EventArgs subclass: #'WebView2.ICoreWebView2WebResourceRequestedEventArgs'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2WebResourceRequestedEventArgs guid: (OS.COM.IID fromString: '{453e667f-12c7-49d4-be6d-ddbe7956f57a}')!
-ICoreWebView2WebResourceRequestedEventArgs comment: '`ICoreWebView2WebResourceRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2WebResourceRequestedEventArgs guid: (OS.COM.IID fromString: '{453e667f-12c7-49d4-be6d-ddbe7956f57a}')!
+WebView2.ICoreWebView2WebResourceRequestedEventArgs comment: '`ICoreWebView2WebResourceRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -39,8 +39,8 @@ interface ICoreWebView2WebResourceRequestedEventArgs : IUnknown
 };
 ```
 '!
-!ICoreWebView2WebResourceRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2WebResourceRequestedEventArgs methodsFor!
+!WebView2.ICoreWebView2WebResourceRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2WebResourceRequestedEventArgs methodsFor!
 
 get_Request: request
 	"Private - Get the value of the 'Request' property of the receiver.
@@ -124,7 +124,7 @@ response: response
 	"Set the 'Response' property of the receiver to the <ICoreWebView2WebResourceResponse*> value of the argument."
 
 	self put_Response: response! !
-!ICoreWebView2WebResourceRequestedEventArgs categoriesForMethods!
+!WebView2.ICoreWebView2WebResourceRequestedEventArgs categoriesForMethods!
 get_Request:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
 get_ResourceContext:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
 get_Response:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequestedEventArgs!private! !
@@ -137,7 +137,7 @@ response!**auto generated**!properties!public! !
 response:!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2WebResourceRequestedEventArgs class methodsFor!
+!WebView2.ICoreWebView2WebResourceRequestedEventArgs class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2WebResourceRequestedEventArgs'
@@ -155,7 +155,7 @@ defineFunctions
 		defineFunction: #get_ResourceContext:
 			argumentTypes: 'sdword*'
 ! !
-!ICoreWebView2WebResourceRequestedEventArgs class categoriesForMethods!
+!WebView2.ICoreWebView2WebResourceRequestedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

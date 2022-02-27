@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventArgs subclass: #ICoreWebView2NavigationStartingEventArgs
+WebView2.ICoreWebView2EventArgs subclass: #'WebView2.ICoreWebView2NavigationStartingEventArgs'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2NavigationStartingEventArgs guid: (OS.COM.IID fromString: '{5b495469-e119-438a-9b18-7604f25f2e49}')!
-ICoreWebView2NavigationStartingEventArgs comment: '`ICoreWebView2NavigationStartingEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationStartingEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2NavigationStartingEventArgs guid: (OS.COM.IID fromString: '{5b495469-e119-438a-9b18-7604f25f2e49}')!
+WebView2.ICoreWebView2NavigationStartingEventArgs comment: '`ICoreWebView2NavigationStartingEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationStartingEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -45,8 +45,8 @@ interface ICoreWebView2NavigationStartingEventArgs : IUnknown
 };
 ```
 '!
-!ICoreWebView2NavigationStartingEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2NavigationStartingEventArgs methodsFor!
+!WebView2.ICoreWebView2NavigationStartingEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2NavigationStartingEventArgs methodsFor!
 
 cancel
 	"Answer whether the navigation is to be cancelled."
@@ -164,12 +164,12 @@ uri
 	"Answer the <lpwstr> value of the 'uri' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_uri: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
-!ICoreWebView2NavigationStartingEventArgs categoriesForMethods!
+!WebView2.ICoreWebView2NavigationStartingEventArgs categoriesForMethods!
 cancel!properties!public! !
 cancel:!properties!public! !
 get_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
@@ -187,7 +187,7 @@ requestHeaders!**auto generated**!properties!public! !
 uri!properties!public! !
 !
 
-!ICoreWebView2NavigationStartingEventArgs class methodsFor!
+!WebView2.ICoreWebView2NavigationStartingEventArgs class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2NavigationStartingEventArgs'
@@ -209,7 +209,7 @@ defineFunctions
 		defineFunction: #get_NavigationId:
 			argumentTypes: 'qword*'
 ! !
-!ICoreWebView2NavigationStartingEventArgs class categoriesForMethods!
+!WebView2.ICoreWebView2NavigationStartingEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

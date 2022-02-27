@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2_4 subclass: #ICoreWebView2_5
+WebView2.ICoreWebView2_4 subclass: #'WebView2.ICoreWebView2_5'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2_5 guid: (OS.COM.IID fromString: '{bedb11b8-d63c-11eb-b8bc-0242ac130003}')!
-ICoreWebView2_5 comment: '`ICoreWebView2_5` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_5'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2_5 guid: (OS.COM.IID fromString: '{bedb11b8-d63c-11eb-b8bc-0242ac130003}')!
+WebView2.ICoreWebView2_5 comment: '`ICoreWebView2_5` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_5'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -31,8 +31,8 @@ interface ICoreWebView2_5 : ICoreWebView2_4
 };
 ```
 '!
-!ICoreWebView2_5 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2_5 methodsFor!
+!WebView2.ICoreWebView2_5 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2_5 methodsFor!
 
 Add_ClientCertificateRequested: eventHandler token: token
 	"Private - Invoke the add_ClientCertificateRequested() method of the COM object.
@@ -52,12 +52,12 @@ Remove_ClientCertificateRequested: token
 
 	<virtual stdcall: hresult 79 sqword>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2_5 categoriesForMethods!
+!WebView2.ICoreWebView2_5 categoriesForMethods!
 Add_ClientCertificateRequested:token:!**auto generated**!COM Interfaces-ICoreWebView2_5!private! !
 Remove_ClientCertificateRequested:!**auto generated**!COM Interfaces-ICoreWebView2_5!private! !
 !
 
-!ICoreWebView2_5 class methodsFor!
+!WebView2.ICoreWebView2_5 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2_5'
@@ -69,7 +69,7 @@ defineFunctions
 		defineFunction: #Remove_ClientCertificateRequested:
 			argumentTypes: 'sqword'
 ! !
-!ICoreWebView2_5 class categoriesForMethods!
+!WebView2.ICoreWebView2_5 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

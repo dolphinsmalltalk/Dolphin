@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2_5 subclass: #ICoreWebView2_6
+WebView2.ICoreWebView2_5 subclass: #'WebView2.ICoreWebView2_6'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2_6 guid: (OS.COM.IID fromString: '{499aadac-d92c-4589-8a75-111bfc167795}')!
-ICoreWebView2_6 comment: '`ICoreWebView2_6` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_6'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2_6 guid: (OS.COM.IID fromString: '{499aadac-d92c-4589-8a75-111bfc167795}')!
+WebView2.ICoreWebView2_6 comment: '`ICoreWebView2_6` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_6'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -26,8 +26,8 @@ interface ICoreWebView2_6 : ICoreWebView2_5
 };
 ```
 '!
-!ICoreWebView2_6 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2_6 methodsFor!
+!WebView2.ICoreWebView2_6 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2_6 methodsFor!
 
 OpenTaskManagerWindow
 	"Private - Invoke the OpenTaskManagerWindow() method of the COM object.
@@ -36,11 +36,11 @@ OpenTaskManagerWindow
 
 	<virtual stdcall: hresult 80>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2_6 categoriesForMethods!
+!WebView2.ICoreWebView2_6 categoriesForMethods!
 OpenTaskManagerWindow!**auto generated**!COM Interfaces-ICoreWebView2_6!private! !
 !
 
-!ICoreWebView2_6 class methodsFor!
+!WebView2.ICoreWebView2_6 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2_6'
@@ -49,7 +49,7 @@ defineFunctions
 	self
 		defineFunction: #OpenTaskManagerWindow
 ! !
-!ICoreWebView2_6 class categoriesForMethods!
+!WebView2.ICoreWebView2_6 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

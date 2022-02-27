@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2DevToolsProtocolEventReceivedEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2DevToolsProtocolEventReceivedEventHandler guid: (OS.COM.IID fromString: '{e2fda4be-5456-406c-a261-3d452138362c}')!
-ICoreWebView2DevToolsProtocolEventReceivedEventHandler comment: '`ICoreWebView2DevToolsProtocolEventReceivedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventHandler guid: (OS.COM.IID fromString: '{e2fda4be-5456-406c-a261-3d452138362c}')!
+WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventHandler comment: '`ICoreWebView2DevToolsProtocolEventReceivedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,20 +28,20 @@ interface ICoreWebView2DevToolsProtocolEventReceivedEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2DevToolsProtocolEventReceivedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2DevToolsProtocolEventReceivedEventHandler methodsFor!
+!WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
 	source Add_DevToolsProtocolEventReceived: self token: tokenBuffer!
 
 basicUnregister
 	source Remove_DevToolsProtocolEventReceived: token! !
-!ICoreWebView2DevToolsProtocolEventReceivedEventHandler categoriesForMethods!
+!WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
 !
 
-!ICoreWebView2DevToolsProtocolEventReceivedEventHandler class methodsFor!
+!WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventHandler'
@@ -56,7 +56,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#devToolsProtocolEvent:! !
-!ICoreWebView2DevToolsProtocolEventReceivedEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2DevToolsProtocolEventReceivedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

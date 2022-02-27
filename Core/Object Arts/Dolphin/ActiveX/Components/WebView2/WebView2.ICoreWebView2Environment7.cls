@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Environment6 subclass: #ICoreWebView2Environment7
+WebView2.ICoreWebView2Environment6 subclass: #'WebView2.ICoreWebView2Environment7'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2Environment7 guid: (OS.COM.IID fromString: '{43c22296-3bbd-43a4-9c00-5c0df6dd29a2}')!
-ICoreWebView2Environment7 comment: '`ICoreWebView2Environment7` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment7'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2Environment7 guid: (OS.COM.IID fromString: '{43c22296-3bbd-43a4-9c00-5c0df6dd29a2}')!
+WebView2.ICoreWebView2Environment7 comment: '`ICoreWebView2Environment7` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment7'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -27,8 +27,8 @@ interface ICoreWebView2Environment7 : ICoreWebView2Environment6
 };
 ```
 '!
-!ICoreWebView2Environment7 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Environment7 methodsFor!
+!WebView2.ICoreWebView2Environment7 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Environment7 methodsFor!
 
 get_UserDataFolder: value
 	"Private - Get the value of the 'UserDataFolder' property of the receiver.
@@ -38,11 +38,11 @@ get_UserDataFolder: value
 
 	<virtual stdcall: hresult 16 lpwstr*>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2Environment7 categoriesForMethods!
+!WebView2.ICoreWebView2Environment7 categoriesForMethods!
 get_UserDataFolder:!**auto generated**!COM Interfaces-ICoreWebView2Environment7!private! !
 !
 
-!ICoreWebView2Environment7 class methodsFor!
+!WebView2.ICoreWebView2Environment7 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Environment7'
@@ -52,7 +52,7 @@ defineFunctions
 		defineFunction: #get_UserDataFolder:
 			argumentTypes: 'lpwstr*'
 ! !
-!ICoreWebView2Environment7 class categoriesForMethods!
+!WebView2.ICoreWebView2Environment7 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

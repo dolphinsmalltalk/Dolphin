@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Environment4 subclass: #ICoreWebView2Environment5
+WebView2.ICoreWebView2Environment4 subclass: #'WebView2.ICoreWebView2Environment5'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2Environment5 guid: (OS.COM.IID fromString: '{319e423d-e0d7-4b8d-9254-ae9475de9b17}')!
-ICoreWebView2Environment5 comment: '`ICoreWebView2Environment5` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment5'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2Environment5 guid: (OS.COM.IID fromString: '{319e423d-e0d7-4b8d-9254-ae9475de9b17}')!
+WebView2.ICoreWebView2Environment5 comment: '`ICoreWebView2Environment5` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment5'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -31,8 +31,8 @@ interface ICoreWebView2Environment5 : ICoreWebView2Environment4
 };
 ```
 '!
-!ICoreWebView2Environment5 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Environment5 methodsFor!
+!WebView2.ICoreWebView2Environment5 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Environment5 methodsFor!
 
 Add_BrowserProcessExited: eventHandler token: token
 	"Private - Invoke the add_BrowserProcessExited() method of the COM object.
@@ -52,12 +52,12 @@ Remove_BrowserProcessExited: token
 
 	<virtual stdcall: hresult 14 sqword>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2Environment5 categoriesForMethods!
+!WebView2.ICoreWebView2Environment5 categoriesForMethods!
 Add_BrowserProcessExited:token:!**auto generated**!COM Interfaces-ICoreWebView2Environment5!private! !
 Remove_BrowserProcessExited:!**auto generated**!COM Interfaces-ICoreWebView2Environment5!private! !
 !
 
-!ICoreWebView2Environment5 class methodsFor!
+!WebView2.ICoreWebView2Environment5 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Environment5'
@@ -69,7 +69,7 @@ defineFunctions
 		defineFunction: #Remove_BrowserProcessExited:
 			argumentTypes: 'sqword'
 ! !
-!ICoreWebView2Environment5 class categoriesForMethods!
+!WebView2.ICoreWebView2Environment5 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

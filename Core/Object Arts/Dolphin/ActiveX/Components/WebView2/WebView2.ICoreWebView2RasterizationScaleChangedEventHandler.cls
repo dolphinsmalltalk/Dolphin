@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2RasterizationScaleChangedEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2RasterizationScaleChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2RasterizationScaleChangedEventHandler guid: (OS.COM.IID fromString: '{9c98c8b1-ac53-427e-a345-3049b5524bbe}')!
-ICoreWebView2RasterizationScaleChangedEventHandler comment: '`ICoreWebView2RasterizationScaleChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2RasterizationScaleChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2RasterizationScaleChangedEventHandler guid: (OS.COM.IID fromString: '{9c98c8b1-ac53-427e-a345-3049b5524bbe}')!
+WebView2.ICoreWebView2RasterizationScaleChangedEventHandler comment: '`ICoreWebView2RasterizationScaleChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2RasterizationScaleChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,20 +28,20 @@ interface ICoreWebView2RasterizationScaleChangedEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2RasterizationScaleChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2RasterizationScaleChangedEventHandler methodsFor!
+!WebView2.ICoreWebView2RasterizationScaleChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2RasterizationScaleChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
 	source Add_RasterizationScaleChanged: self token: tokenBuffer!
 
 basicUnregister
 	source Remove_RasterizationScaleChanged: token! !
-!ICoreWebView2RasterizationScaleChangedEventHandler categoriesForMethods!
+!WebView2.ICoreWebView2RasterizationScaleChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
 !
 
-!ICoreWebView2RasterizationScaleChangedEventHandler class methodsFor!
+!WebView2.ICoreWebView2RasterizationScaleChangedEventHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2RasterizationScaleChangedEventHandler'
@@ -56,7 +56,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#rasterizationScaleChanged! !
-!ICoreWebView2RasterizationScaleChangedEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2RasterizationScaleChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

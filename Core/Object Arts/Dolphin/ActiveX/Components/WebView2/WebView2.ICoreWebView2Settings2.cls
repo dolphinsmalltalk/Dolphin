@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Settings subclass: #ICoreWebView2Settings2
+WebView2.ICoreWebView2Settings subclass: #'WebView2.ICoreWebView2Settings2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2Settings2 guid: (OS.COM.IID fromString: '{ee9a0f68-f46c-4e32-ac23-ef8cac224d2a}')!
-ICoreWebView2Settings2 comment: '`ICoreWebView2Settings2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Settings2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2Settings2 guid: (OS.COM.IID fromString: '{ee9a0f68-f46c-4e32-ac23-ef8cac224d2a}')!
+WebView2.ICoreWebView2Settings2 comment: '`ICoreWebView2Settings2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Settings2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -30,8 +30,8 @@ interface ICoreWebView2Settings2 : ICoreWebView2Settings
 };
 ```
 '!
-!ICoreWebView2Settings2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Settings2 methodsFor!
+!WebView2.ICoreWebView2Settings2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Settings2 methodsFor!
 
 get_UserAgent: userAgent
 	"Private - Get the value of the 'UserAgent' property of the receiver.
@@ -51,12 +51,12 @@ put_UserAgent: userAgent
 
 	<virtual stdcall: hresult 23 lpwstr>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2Settings2 categoriesForMethods!
+!WebView2.ICoreWebView2Settings2 categoriesForMethods!
 get_UserAgent:!**auto generated**!COM Interfaces-ICoreWebView2Settings2!private! !
 put_UserAgent:!**auto generated**!COM Interfaces-ICoreWebView2Settings2!private! !
 !
 
-!ICoreWebView2Settings2 class methodsFor!
+!WebView2.ICoreWebView2Settings2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Settings2'
@@ -68,7 +68,7 @@ defineFunctions
 		defineFunction: #put_UserAgent:
 			argumentTypes: 'lpwstr'
 ! !
-!ICoreWebView2Settings2 class categoriesForMethods!
+!WebView2.ICoreWebView2Settings2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

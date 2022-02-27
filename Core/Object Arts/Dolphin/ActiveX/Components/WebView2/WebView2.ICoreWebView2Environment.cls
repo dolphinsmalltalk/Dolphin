@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2Environment
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2Environment'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2Environment guid: (OS.COM.IID fromString: '{b96d755e-0319-4e92-a296-23436f46a1fc}')!
-ICoreWebView2Environment comment: '`ICoreWebView2Environment` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2Environment guid: (OS.COM.IID fromString: '{b96d755e-0319-4e92-a296-23436f46a1fc}')!
+WebView2.ICoreWebView2Environment comment: '`ICoreWebView2Environment` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Environment'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -45,8 +45,8 @@ interface ICoreWebView2Environment : IUnknown
 };
 ```
 '!
-!ICoreWebView2Environment categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Environment methodsFor!
+!WebView2.ICoreWebView2Environment categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Environment methodsFor!
 
 Add_BrowserProcessExited: eventHandler token: token
 	"Not supported at this level"
@@ -72,7 +72,7 @@ browserVersionString
 	"Answer the <lpwstr> value of the 'BrowserVersionString' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_BrowserVersionString: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -286,12 +286,12 @@ userDataFolder
 	"Answer the <lpwstr> value of the 'UserDataFolder' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_UserDataFolder: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
-!ICoreWebView2Environment categoriesForMethods!
+!WebView2.ICoreWebView2Environment categoriesForMethods!
 Add_BrowserProcessExited:token:!COM Interfaces-ICoreWebView2Environment5!events!private! !
 Add_NewBrowserVersionAvailable:token:!**auto generated**!COM Interfaces-ICoreWebView2Environment!events!private! !
 Add_ProcessInfosChanged:token:!COM Interfaces-ICoreWebView2Environment8!events!private! !
@@ -321,16 +321,16 @@ Remove_ProcessInfosChanged:!COM Interfaces-ICoreWebView2Environment8!events!priv
 userDataFolder!properties!public! !
 !
 
-ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment attributes: #(#readOnly) selectors: #(#Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2Controller:handler: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #Remove_NewBrowserVersionAvailable:)!
-ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment2 attributes: #(#readOnly) selectors: #(#Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2Controller:handler: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #Remove_NewBrowserVersionAvailable:)!
-ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment3 attributes: #(#readOnly) selectors: #(#Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #Remove_NewBrowserVersionAvailable:)!
-ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment4 attributes: #(#readOnly) selectors: #(#Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #GetProviderForHwnd:provider: #Remove_NewBrowserVersionAvailable:)!
-ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment5 attributes: #(#readOnly) selectors: #(#Add_BrowserProcessExited:token: #Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #GetProviderForHwnd:provider: #Remove_BrowserProcessExited: #Remove_NewBrowserVersionAvailable:)!
-ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment6 attributes: #(#readOnly) selectors: #(#Add_BrowserProcessExited:token: #Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreatePrintSettings: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #GetProviderForHwnd:provider: #Remove_BrowserProcessExited: #Remove_NewBrowserVersionAvailable:)!
-ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment7 attributes: #(#readOnly) selectors: #(#Add_BrowserProcessExited:token: #Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreatePrintSettings: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #get_UserDataFolder: #GetProviderForHwnd:provider: #Remove_BrowserProcessExited: #Remove_NewBrowserVersionAvailable:)!
-ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment8 attributes: #(#readOnly) selectors: #(#Add_BrowserProcessExited:token: #Add_NewBrowserVersionAvailable:token: #Add_ProcessInfosChanged:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreatePrintSettings: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #get_UserDataFolder: #GetProcessInfos: #GetProviderForHwnd:provider: #Remove_BrowserProcessExited: #Remove_NewBrowserVersionAvailable: #Remove_ProcessInfosChanged:)!
+WebView2.ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment attributes: #(#readOnly) selectors: #(#Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2Controller:handler: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #Remove_NewBrowserVersionAvailable:)!
+WebView2.ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment2 attributes: #(#readOnly) selectors: #(#Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2Controller:handler: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #Remove_NewBrowserVersionAvailable:)!
+WebView2.ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment3 attributes: #(#readOnly) selectors: #(#Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #Remove_NewBrowserVersionAvailable:)!
+WebView2.ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment4 attributes: #(#readOnly) selectors: #(#Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #GetProviderForHwnd:provider: #Remove_NewBrowserVersionAvailable:)!
+WebView2.ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment5 attributes: #(#readOnly) selectors: #(#Add_BrowserProcessExited:token: #Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #GetProviderForHwnd:provider: #Remove_BrowserProcessExited: #Remove_NewBrowserVersionAvailable:)!
+WebView2.ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment6 attributes: #(#readOnly) selectors: #(#Add_BrowserProcessExited:token: #Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreatePrintSettings: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #GetProviderForHwnd:provider: #Remove_BrowserProcessExited: #Remove_NewBrowserVersionAvailable:)!
+WebView2.ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment7 attributes: #(#readOnly) selectors: #(#Add_BrowserProcessExited:token: #Add_NewBrowserVersionAvailable:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreatePrintSettings: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #get_UserDataFolder: #GetProviderForHwnd:provider: #Remove_BrowserProcessExited: #Remove_NewBrowserVersionAvailable:)!
+WebView2.ICoreWebView2Environment methodProtocol: #ICoreWebView2Environment8 attributes: #(#readOnly) selectors: #(#Add_BrowserProcessExited:token: #Add_NewBrowserVersionAvailable:token: #Add_ProcessInfosChanged:token: #CreateCoreWebView2CompositionController:handler: #CreateCoreWebView2Controller:handler: #CreateCoreWebView2PointerInfo: #CreatePrintSettings: #CreateWebResourceRequest:method:postData:headers:request: #CreateWebResourceResponse:statusCode:reasonPhrase:headers:response: #get_BrowserVersionString: #get_UserDataFolder: #GetProcessInfos: #GetProviderForHwnd:provider: #Remove_BrowserProcessExited: #Remove_NewBrowserVersionAvailable: #Remove_ProcessInfosChanged:)!
 
-!ICoreWebView2Environment class methodsFor!
+!WebView2.ICoreWebView2Environment class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Environment'
@@ -348,7 +348,7 @@ defineFunctions
 		defineFunction: #Remove_NewBrowserVersionAvailable:
 			argumentTypes: 'sqword'
 ! !
-!ICoreWebView2Environment class categoriesForMethods!
+!WebView2.ICoreWebView2Environment class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

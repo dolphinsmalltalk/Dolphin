@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventArgs subclass: #ICoreWebView2NavigationCompletedEventArgs
+WebView2.ICoreWebView2EventArgs subclass: #'WebView2.ICoreWebView2NavigationCompletedEventArgs'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2NavigationCompletedEventArgs guid: (OS.COM.IID fromString: '{30d68b7d-20d9-4752-a9ca-ec8448fbb5c1}')!
-ICoreWebView2NavigationCompletedEventArgs comment: '`ICoreWebView2NavigationCompletedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationCompletedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2NavigationCompletedEventArgs guid: (OS.COM.IID fromString: '{30d68b7d-20d9-4752-a9ca-ec8448fbb5c1}')!
+WebView2.ICoreWebView2NavigationCompletedEventArgs comment: '`ICoreWebView2NavigationCompletedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationCompletedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -33,8 +33,8 @@ interface ICoreWebView2NavigationCompletedEventArgs : IUnknown
 };
 ```
 '!
-!ICoreWebView2NavigationCompletedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2NavigationCompletedEventArgs methodsFor!
+!WebView2.ICoreWebView2NavigationCompletedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2NavigationCompletedEventArgs methodsFor!
 
 get_IsSuccess: isSuccess
 	"Private - Get the value of the 'IsSuccess' property of the receiver.
@@ -89,7 +89,7 @@ webErrorStatus
 	answer := SDWORD new.
 	self get_WebErrorStatus: answer.
 	^answer asObject! !
-!ICoreWebView2NavigationCompletedEventArgs categoriesForMethods!
+!WebView2.ICoreWebView2NavigationCompletedEventArgs categoriesForMethods!
 get_IsSuccess:!**auto generated**!COM Interfaces-ICoreWebView2NavigationCompletedEventArgs!private! !
 get_NavigationId:!**auto generated**!COM Interfaces-ICoreWebView2NavigationCompletedEventArgs!private! !
 get_WebErrorStatus:!**auto generated**!COM Interfaces-ICoreWebView2NavigationCompletedEventArgs!private! !
@@ -99,7 +99,7 @@ printableProperties!development!printing!private! !
 webErrorStatus!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2NavigationCompletedEventArgs class methodsFor!
+!WebView2.ICoreWebView2NavigationCompletedEventArgs class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2NavigationCompletedEventArgs'
@@ -113,7 +113,7 @@ defineFunctions
 		defineFunction: #get_NavigationId:
 			argumentTypes: 'qword*'
 ! !
-!ICoreWebView2NavigationCompletedEventArgs class categoriesForMethods!
+!WebView2.ICoreWebView2NavigationCompletedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

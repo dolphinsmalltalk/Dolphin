@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2PointerInfo
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2PointerInfo'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2PointerInfo guid: (OS.COM.IID fromString: '{e6995887-d10d-4f5d-9359-4ce46e4f96b9}')!
-ICoreWebView2PointerInfo comment: '`ICoreWebView2PointerInfo` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PointerInfo'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2PointerInfo guid: (OS.COM.IID fromString: '{e6995887-d10d-4f5d-9359-4ce46e4f96b9}')!
+WebView2.ICoreWebView2PointerInfo comment: '`ICoreWebView2PointerInfo` is a wrapper class for the COM interface ''WebView2.ICoreWebView2PointerInfo'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -192,8 +192,8 @@ interface ICoreWebView2PointerInfo : IUnknown
 };
 ```
 '!
-!ICoreWebView2PointerInfo categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2PointerInfo methodsFor!
+!WebView2.ICoreWebView2PointerInfo categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2PointerInfo methodsFor!
 
 buttonChangeKind
 	"Answer the <sdword> value of the 'ButtonChangeKind' property of the receiver."
@@ -1096,7 +1096,7 @@ touchPressure: touchPressure
 	"Set the 'TouchPressure' property of the receiver to the <dword> value of the argument."
 
 	self put_TouchPressure: touchPressure! !
-!ICoreWebView2PointerInfo categoriesForMethods!
+!WebView2.ICoreWebView2PointerInfo categoriesForMethods!
 buttonChangeKind!**auto generated**!properties!public! !
 buttonChangeKind:!**auto generated**!properties!public! !
 displayRect!**auto generated**!properties!public! !
@@ -1213,7 +1213,7 @@ touchPressure!**auto generated**!properties!public! !
 touchPressure:!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2PointerInfo class methodsFor!
+!WebView2.ICoreWebView2PointerInfo class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2PointerInfo'
@@ -1333,7 +1333,7 @@ defineFunctions
 		defineFunction: #put_TouchPressure:
 			argumentTypes: 'dword'
 ! !
-!ICoreWebView2PointerInfo class categoriesForMethods!
+!WebView2.ICoreWebView2PointerInfo class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

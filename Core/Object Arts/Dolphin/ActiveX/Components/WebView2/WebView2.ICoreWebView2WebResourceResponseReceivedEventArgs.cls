@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventArgs subclass: #ICoreWebView2WebResourceResponseReceivedEventArgs
+WebView2.ICoreWebView2EventArgs subclass: #'WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2WebResourceResponseReceivedEventArgs guid: (OS.COM.IID fromString: '{d1db483d-6796-4b8b-80fc-13712bb716f4}')!
-ICoreWebView2WebResourceResponseReceivedEventArgs comment: '`ICoreWebView2WebResourceResponseReceivedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs guid: (OS.COM.IID fromString: '{d1db483d-6796-4b8b-80fc-13712bb716f4}')!
+WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs comment: '`ICoreWebView2WebResourceResponseReceivedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -30,8 +30,8 @@ interface ICoreWebView2WebResourceResponseReceivedEventArgs : IUnknown
 };
 ```
 '!
-!ICoreWebView2WebResourceResponseReceivedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2WebResourceResponseReceivedEventArgs methodsFor!
+!WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs methodsFor!
 
 get_Request: request
 	"Private - Get the value of the 'Request' property of the receiver.
@@ -73,7 +73,7 @@ response
 	answer := ICoreWebView2WebResourceResponseView newPointer.
 	self get_Response: answer.
 	^answer asObject! !
-!ICoreWebView2WebResourceResponseReceivedEventArgs categoriesForMethods!
+!WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs categoriesForMethods!
 get_Request:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponseReceivedEventArgs!private! !
 get_Response:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponseReceivedEventArgs!private! !
 printPropertiesOn:!development!printing!private! !
@@ -81,7 +81,7 @@ request!**auto generated**!properties!public! !
 response!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2WebResourceResponseReceivedEventArgs class methodsFor!
+!WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs'
@@ -93,7 +93,7 @@ defineFunctions
 		defineFunction: #get_Response:
 			argumentTypes: 'ICoreWebView2WebResourceResponseView**'
 ! !
-!ICoreWebView2WebResourceResponseReceivedEventArgs class categoriesForMethods!
+!WebView2.ICoreWebView2WebResourceResponseReceivedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

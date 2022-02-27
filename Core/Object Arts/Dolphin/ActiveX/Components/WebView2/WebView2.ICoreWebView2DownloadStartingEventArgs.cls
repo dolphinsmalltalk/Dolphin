@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventArgs subclass: #ICoreWebView2DownloadStartingEventArgs
+WebView2.ICoreWebView2EventArgs subclass: #'WebView2.ICoreWebView2DownloadStartingEventArgs'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2DownloadStartingEventArgs guid: (OS.COM.IID fromString: '{e99bbe21-43e9-4544-a732-282764eafa60}')!
-ICoreWebView2DownloadStartingEventArgs comment: '`ICoreWebView2DownloadStartingEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DownloadStartingEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2DownloadStartingEventArgs guid: (OS.COM.IID fromString: '{e99bbe21-43e9-4544-a732-282764eafa60}')!
+WebView2.ICoreWebView2DownloadStartingEventArgs comment: '`ICoreWebView2DownloadStartingEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DownloadStartingEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -48,8 +48,8 @@ interface ICoreWebView2DownloadStartingEventArgs : IUnknown
 };
 ```
 '!
-!ICoreWebView2DownloadStartingEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2DownloadStartingEventArgs methodsFor!
+!WebView2.ICoreWebView2DownloadStartingEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2DownloadStartingEventArgs methodsFor!
 
 cancel
 	"Answer the <Boolean> value of the 'Cancel' property of the receiver."
@@ -172,7 +172,7 @@ resultFilePath
 	"Answer the <lpwstr> value of the 'ResultFilePath' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_ResultFilePath: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -182,7 +182,7 @@ resultFilePath: resultFilePath
 	"Set the 'ResultFilePath' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_ResultFilePath: resultFilePath asUtf16String! !
-!ICoreWebView2DownloadStartingEventArgs categoriesForMethods!
+!WebView2.ICoreWebView2DownloadStartingEventArgs categoriesForMethods!
 cancel!properties!public! !
 cancel:!properties!public! !
 downloadOperation!**auto generated**!properties!public! !
@@ -201,7 +201,7 @@ resultFilePath!properties!public! !
 resultFilePath:!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2DownloadStartingEventArgs class methodsFor!
+!WebView2.ICoreWebView2DownloadStartingEventArgs class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2DownloadStartingEventArgs'
@@ -225,7 +225,7 @@ defineFunctions
 		defineFunction: #GetDeferral:
 			argumentTypes: 'ICoreWebView2Deferral**'
 ! !
-!ICoreWebView2DownloadStartingEventArgs class categoriesForMethods!
+!WebView2.ICoreWebView2DownloadStartingEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

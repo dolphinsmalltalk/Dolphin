@@ -28,7 +28,7 @@ createComponents
 	"Create the presenters contained by the receiver."
 
 	super createComponents.
-	browser := self add: Smalltalk.URLPresenter new name: 'browser'
+	browser := self add: URLPresenter new name: 'browser'
 !
 
 createSchematicWiring

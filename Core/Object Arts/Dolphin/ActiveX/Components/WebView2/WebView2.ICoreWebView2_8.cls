@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2_7 subclass: #ICoreWebView2_8
+WebView2.ICoreWebView2_7 subclass: #'WebView2.ICoreWebView2_8'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2_8 guid: (OS.COM.IID fromString: '{e9632730-6e1e-43ab-b7b8-7b2c9e62e094}')!
-ICoreWebView2_8 comment: '`ICoreWebView2_8` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_8'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2_8 guid: (OS.COM.IID fromString: '{e9632730-6e1e-43ab-b7b8-7b2c9e62e094}')!
+WebView2.ICoreWebView2_8 comment: '`ICoreWebView2_8` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_8'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -47,8 +47,8 @@ interface ICoreWebView2_8 : ICoreWebView2_7
 };
 ```
 '!
-!ICoreWebView2_8 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2_8 methodsFor!
+!WebView2.ICoreWebView2_8 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2_8 methodsFor!
 
 Add_IsDocumentPlayingAudioChanged: eventHandler token: token
 	"Private - Invoke the add_IsDocumentPlayingAudioChanged() method of the COM object.
@@ -115,7 +115,7 @@ Remove_IsMutedChanged: token
 
 	<virtual stdcall: hresult 83 sqword>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2_8 categoriesForMethods!
+!WebView2.ICoreWebView2_8 categoriesForMethods!
 Add_IsDocumentPlayingAudioChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2_8!private! !
 Add_IsMutedChanged:token:!**auto generated**!COM Interfaces-ICoreWebView2_8!private! !
 get_IsDocumentPlayingAudio:!**auto generated**!COM Interfaces-ICoreWebView2_8!private! !
@@ -125,7 +125,7 @@ Remove_IsDocumentPlayingAudioChanged:!**auto generated**!COM Interfaces-ICoreWeb
 Remove_IsMutedChanged:!**auto generated**!COM Interfaces-ICoreWebView2_8!private! !
 !
 
-!ICoreWebView2_8 class methodsFor!
+!WebView2.ICoreWebView2_8 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2_8'
@@ -147,7 +147,7 @@ defineFunctions
 		defineFunction: #get_IsDocumentPlayingAudio:
 			argumentTypes: 'sdword*'
 ! !
-!ICoreWebView2_8 class categoriesForMethods!
+!WebView2.ICoreWebView2_8 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

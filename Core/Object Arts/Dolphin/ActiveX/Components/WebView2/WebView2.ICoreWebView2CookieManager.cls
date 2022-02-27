@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2CookieManager
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2CookieManager'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2CookieManager guid: (OS.COM.IID fromString: '{177cd9e7-b6f5-451a-94a0-5d7a3a4c4141}')!
-ICoreWebView2CookieManager comment: '`ICoreWebView2CookieManager` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CookieManager'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2CookieManager guid: (OS.COM.IID fromString: '{177cd9e7-b6f5-451a-94a0-5d7a3a4c4141}')!
+WebView2.ICoreWebView2CookieManager comment: '`ICoreWebView2CookieManager` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CookieManager'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -56,8 +56,8 @@ interface ICoreWebView2CookieManager : IUnknown
 };
 ```
 '!
-!ICoreWebView2CookieManager categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2CookieManager methodsFor!
+!WebView2.ICoreWebView2CookieManager categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2CookieManager methodsFor!
 
 addOrUpdateCookie: cookie
 	"Invoke the AddOrUpdateCookie() method of the COM object."
@@ -196,7 +196,7 @@ getCookies: uriString thenDo: aDyadicValuable
 				queryInterface: ICoreWebView2GetCookiesCompletedHandler.
 	self GetCookies: uriString asUtf16String handler: handler.
 	handler free! !
-!ICoreWebView2CookieManager categoriesForMethods!
+!WebView2.ICoreWebView2CookieManager categoriesForMethods!
 addOrUpdateCookie:!**auto generated**!methods!public! !
 AddOrUpdateCookie:!**auto generated**!COM Interfaces-ICoreWebView2CookieManager!private! !
 copyCookie:!**auto generated**!methods!public! !
@@ -215,7 +215,7 @@ GetCookies:handler:!**auto generated**!COM Interfaces-ICoreWebView2CookieManager
 getCookies:thenDo:!methods!public! !
 !
 
-!ICoreWebView2CookieManager class methodsFor!
+!WebView2.ICoreWebView2CookieManager class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2CookieManager'
@@ -238,7 +238,7 @@ defineFunctions
 			argumentTypes: 'lpwstr lpwstr lpwstr';
 		defineFunction: #DeleteAllCookies
 ! !
-!ICoreWebView2CookieManager class categoriesForMethods!
+!WebView2.ICoreWebView2CookieManager class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

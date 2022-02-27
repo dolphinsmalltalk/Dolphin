@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventArgs subclass: #ICoreWebView2ClientCertificateRequestedEventArgs
+WebView2.ICoreWebView2EventArgs subclass: #'WebView2.ICoreWebView2ClientCertificateRequestedEventArgs'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2ClientCertificateRequestedEventArgs guid: (OS.COM.IID fromString: '{bc59db28-bcc3-11eb-8529-0242ac130003}')!
-ICoreWebView2ClientCertificateRequestedEventArgs comment: '`ICoreWebView2ClientCertificateRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClientCertificateRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2ClientCertificateRequestedEventArgs guid: (OS.COM.IID fromString: '{bc59db28-bcc3-11eb-8529-0242ac130003}')!
+WebView2.ICoreWebView2ClientCertificateRequestedEventArgs comment: '`ICoreWebView2ClientCertificateRequestedEventArgs` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClientCertificateRequestedEventArgs'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -60,8 +60,8 @@ interface ICoreWebView2ClientCertificateRequestedEventArgs : IUnknown
 };
 ```
 '!
-!ICoreWebView2ClientCertificateRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ClientCertificateRequestedEventArgs methodsFor!
+!WebView2.ICoreWebView2ClientCertificateRequestedEventArgs categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ClientCertificateRequestedEventArgs methodsFor!
 
 allowedCertificateAuthorities
 	"Answer the <ICoreWebView2StringCollection> value of the 'AllowedCertificateAuthorities' property of the receiver."
@@ -190,7 +190,7 @@ host
 	"Answer the <lpwstr> value of the 'Host' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_Host: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -265,7 +265,7 @@ selectedCertificate: value
 	"Set the 'SelectedCertificate' property of the receiver to the <ICoreWebView2ClientCertificate*> value of the argument."
 
 	self put_SelectedCertificate: value! !
-!ICoreWebView2ClientCertificateRequestedEventArgs categoriesForMethods!
+!WebView2.ICoreWebView2ClientCertificateRequestedEventArgs categoriesForMethods!
 allowedCertificateAuthorities!**auto generated**!properties!public! !
 cancel!properties!public! !
 cancel:!properties!public! !
@@ -293,7 +293,7 @@ selectedCertificate!**auto generated**!properties!public! !
 selectedCertificate:!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2ClientCertificateRequestedEventArgs class methodsFor!
+!WebView2.ICoreWebView2ClientCertificateRequestedEventArgs class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ClientCertificateRequestedEventArgs'
@@ -325,7 +325,7 @@ defineFunctions
 		defineFunction: #GetDeferral:
 			argumentTypes: 'ICoreWebView2Deferral**'
 ! !
-!ICoreWebView2ClientCertificateRequestedEventArgs class categoriesForMethods!
+!WebView2.ICoreWebView2ClientCertificateRequestedEventArgs class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

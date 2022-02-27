@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2Cookie
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2Cookie'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2Cookie guid: (OS.COM.IID fromString: '{ad26d6be-1486-43e6-bf87-a2034006ca21}')!
-ICoreWebView2Cookie comment: '`ICoreWebView2Cookie` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Cookie'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2Cookie guid: (OS.COM.IID fromString: '{ad26d6be-1486-43e6-bf87-a2034006ca21}')!
+WebView2.ICoreWebView2Cookie comment: '`ICoreWebView2Cookie` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Cookie'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -66,14 +66,14 @@ interface ICoreWebView2Cookie : IUnknown
 };
 ```
 '!
-!ICoreWebView2Cookie categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Cookie methodsFor!
+!WebView2.ICoreWebView2Cookie categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Cookie methodsFor!
 
 domain
 	"Answer the <lpwstr> value of the 'Domain' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_Domain: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -211,7 +211,7 @@ name
 	"Answer the <lpwstr> value of the 'name' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_name: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -221,7 +221,7 @@ path
 	"Answer the <lpwstr> value of the 'Path' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_Path: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -304,7 +304,7 @@ value
 	"Answer the <lpwstr> value of the 'value' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_value: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -314,7 +314,7 @@ value: value
 	"Set the 'value' property of the receiver to the <lpwstr> value of the argument."
 
 	self put_value: value asUtf16String! !
-!ICoreWebView2Cookie categoriesForMethods!
+!WebView2.ICoreWebView2Cookie categoriesForMethods!
 domain!properties!public! !
 expires!properties!public! !
 expires:!properties!public! !
@@ -346,7 +346,7 @@ value!properties!public! !
 value:!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2Cookie class methodsFor!
+!WebView2.ICoreWebView2Cookie class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Cookie'
@@ -382,7 +382,7 @@ defineFunctions
 		defineFunction: #get_IsSession:
 			argumentTypes: 'sdword*'
 ! !
-!ICoreWebView2Cookie class categoriesForMethods!
+!WebView2.ICoreWebView2Cookie class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

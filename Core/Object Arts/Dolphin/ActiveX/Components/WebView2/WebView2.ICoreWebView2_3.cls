@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2_2 subclass: #ICoreWebView2_3
+WebView2.ICoreWebView2_2 subclass: #'WebView2.ICoreWebView2_3'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2_3 guid: (OS.COM.IID fromString: '{a0d6df20-3b92-416d-aa0c-437a9c727857}')!
-ICoreWebView2_3 comment: '`ICoreWebView2_3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2_3 guid: (OS.COM.IID fromString: '{a0d6df20-3b92-416d-aa0c-437a9c727857}')!
+WebView2.ICoreWebView2_3 comment: '`ICoreWebView2_3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2_3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -40,8 +40,8 @@ interface ICoreWebView2_3 : ICoreWebView2_2
 };
 ```
 '!
-!ICoreWebView2_3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2_3 methodsFor!
+!WebView2.ICoreWebView2_3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2_3 methodsFor!
 
 ClearVirtualHostNameToFolderMapping: hostName
 	"Private - Invoke the ClearVirtualHostNameToFolderMapping() method of the COM object.
@@ -88,7 +88,7 @@ TrySuspend: handler
 
 	<virtual stdcall: hresult 69 ICoreWebView2TrySuspendCompletedHandler*>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2_3 categoriesForMethods!
+!WebView2.ICoreWebView2_3 categoriesForMethods!
 ClearVirtualHostNameToFolderMapping:!**auto generated**!COM Interfaces-ICoreWebView2_3!private! !
 get_IsSuspended:!**auto generated**!COM Interfaces-ICoreWebView2_3!private! !
 Resume!**auto generated**!COM Interfaces-ICoreWebView2_3!private! !
@@ -96,7 +96,7 @@ SetVirtualHostNameToFolderMapping:folderPath:accessKind:!**auto generated**!COM 
 TrySuspend:!**auto generated**!COM Interfaces-ICoreWebView2_3!private! !
 !
 
-!ICoreWebView2_3 class methodsFor!
+!WebView2.ICoreWebView2_3 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2_3'
@@ -113,7 +113,7 @@ defineFunctions
 		defineFunction: #ClearVirtualHostNameToFolderMapping:
 			argumentTypes: 'lpwstr'
 ! !
-!ICoreWebView2_3 class categoriesForMethods!
+!WebView2.ICoreWebView2_3 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

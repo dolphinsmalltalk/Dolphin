@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Sequence subclass: #ICoreWebView2ClientCertificateCollection
+WebView2.ICoreWebView2Sequence subclass: #'WebView2.ICoreWebView2ClientCertificateCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2ClientCertificateCollection guid: (OS.COM.IID fromString: '{ef5674d2-bcc3-11eb-8529-0242ac130003}')!
-ICoreWebView2ClientCertificateCollection comment: '`ICoreWebView2ClientCertificateCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClientCertificateCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2ClientCertificateCollection guid: (OS.COM.IID fromString: '{ef5674d2-bcc3-11eb-8529-0242ac130003}')!
+WebView2.ICoreWebView2ClientCertificateCollection comment: '`ICoreWebView2ClientCertificateCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ClientCertificateCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -31,8 +31,8 @@ interface ICoreWebView2ClientCertificateCollection : IUnknown
 };
 ```
 '!
-!ICoreWebView2ClientCertificateCollection categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ClientCertificateCollection methodsFor!
+!WebView2.ICoreWebView2ClientCertificateCollection categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ClientCertificateCollection methodsFor!
 
 elementClass
 	^ICoreWebView2ClientCertificate!
@@ -46,12 +46,12 @@ GetValueAtIndex: index value: certificate
 
 	<virtual stdcall: hresult 5 dword ICoreWebView2ClientCertificate**>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2ClientCertificateCollection categoriesForMethods!
+!WebView2.ICoreWebView2ClientCertificateCollection categoriesForMethods!
 elementClass!constants!private! !
 GetValueAtIndex:value:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificateCollection!private! !
 !
 
-!ICoreWebView2ClientCertificateCollection class methodsFor!
+!WebView2.ICoreWebView2ClientCertificateCollection class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ClientCertificateCollection'
@@ -63,7 +63,7 @@ defineFunctions
 		defineFunction: #GetValueAtIndex:value:
 			argumentTypes: 'dword ICoreWebView2ClientCertificate**'
 ! !
-!ICoreWebView2ClientCertificateCollection class categoriesForMethods!
+!WebView2.ICoreWebView2ClientCertificateCollection class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
 

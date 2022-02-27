@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2DevToolsProtocolEventReceiver
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2DevToolsProtocolEventReceiver'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2DevToolsProtocolEventReceiver guid: (OS.COM.IID fromString: '{b32ca51a-8371-45e9-9317-af021d080367}')!
-ICoreWebView2DevToolsProtocolEventReceiver comment: '`ICoreWebView2DevToolsProtocolEventReceiver` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DevToolsProtocolEventReceiver'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2DevToolsProtocolEventReceiver guid: (OS.COM.IID fromString: '{b32ca51a-8371-45e9-9317-af021d080367}')!
+WebView2.ICoreWebView2DevToolsProtocolEventReceiver comment: '`ICoreWebView2DevToolsProtocolEventReceiver` is a wrapper class for the COM interface ''WebView2.ICoreWebView2DevToolsProtocolEventReceiver'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -31,8 +31,8 @@ interface ICoreWebView2DevToolsProtocolEventReceiver : IUnknown
 };
 ```
 '!
-!ICoreWebView2DevToolsProtocolEventReceiver categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2DevToolsProtocolEventReceiver methodsFor!
+!WebView2.ICoreWebView2DevToolsProtocolEventReceiver categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2DevToolsProtocolEventReceiver methodsFor!
 
 Add_DevToolsProtocolEventReceived: handler token: token
 	"Private - Invoke the add_DevToolsProtocolEventReceived() method of the COM object.
@@ -52,12 +52,12 @@ Remove_DevToolsProtocolEventReceived: token
 
 	<virtual stdcall: hresult 5 sqword>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2DevToolsProtocolEventReceiver categoriesForMethods!
+!WebView2.ICoreWebView2DevToolsProtocolEventReceiver categoriesForMethods!
 Add_DevToolsProtocolEventReceived:token:!**auto generated**!COM Interfaces-ICoreWebView2DevToolsProtocolEventReceiver!private! !
 Remove_DevToolsProtocolEventReceived:!**auto generated**!COM Interfaces-ICoreWebView2DevToolsProtocolEventReceiver!private! !
 !
 
-!ICoreWebView2DevToolsProtocolEventReceiver class methodsFor!
+!WebView2.ICoreWebView2DevToolsProtocolEventReceiver class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2DevToolsProtocolEventReceiver'
@@ -69,7 +69,7 @@ defineFunctions
 		defineFunction: #Remove_DevToolsProtocolEventReceived:
 			argumentTypes: 'sqword'
 ! !
-!ICoreWebView2DevToolsProtocolEventReceiver class categoriesForMethods!
+!WebView2.ICoreWebView2DevToolsProtocolEventReceiver class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

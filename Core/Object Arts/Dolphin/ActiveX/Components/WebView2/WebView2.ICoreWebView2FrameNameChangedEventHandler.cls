@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2FrameNameChangedEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2FrameNameChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2FrameNameChangedEventHandler guid: (OS.COM.IID fromString: '{435c7dc8-9baa-11eb-a8b3-0242ac130003}')!
-ICoreWebView2FrameNameChangedEventHandler comment: '`ICoreWebView2FrameNameChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameNameChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2FrameNameChangedEventHandler guid: (OS.COM.IID fromString: '{435c7dc8-9baa-11eb-a8b3-0242ac130003}')!
+WebView2.ICoreWebView2FrameNameChangedEventHandler comment: '`ICoreWebView2FrameNameChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameNameChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,20 +28,20 @@ interface ICoreWebView2FrameNameChangedEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2FrameNameChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2FrameNameChangedEventHandler methodsFor!
+!WebView2.ICoreWebView2FrameNameChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2FrameNameChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
 	source Add_NameChanged: self token: tokenBuffer!
 
 basicUnregister
 	source Remove_NameChanged: token! !
-!ICoreWebView2FrameNameChangedEventHandler categoriesForMethods!
+!WebView2.ICoreWebView2FrameNameChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
 !
 
-!ICoreWebView2FrameNameChangedEventHandler class methodsFor!
+!WebView2.ICoreWebView2FrameNameChangedEventHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2FrameNameChangedEventHandler'
@@ -56,7 +56,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#frameNameChanged! !
-!ICoreWebView2FrameNameChangedEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2FrameNameChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

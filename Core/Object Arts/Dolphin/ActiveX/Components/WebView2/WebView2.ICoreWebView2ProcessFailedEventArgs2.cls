@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2ProcessFailedEventArgs subclass: #ICoreWebView2ProcessFailedEventArgs2
+WebView2.ICoreWebView2ProcessFailedEventArgs subclass: #'WebView2.ICoreWebView2ProcessFailedEventArgs2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2ProcessFailedEventArgs2 guid: (OS.COM.IID fromString: '{4dab9422-46fa-4c3e-a5d2-41d2071d3680}')!
-ICoreWebView2ProcessFailedEventArgs2 comment: '`ICoreWebView2ProcessFailedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessFailedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2ProcessFailedEventArgs2 guid: (OS.COM.IID fromString: '{4dab9422-46fa-4c3e-a5d2-41d2071d3680}')!
+WebView2.ICoreWebView2ProcessFailedEventArgs2 comment: '`ICoreWebView2ProcessFailedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessFailedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -36,8 +36,8 @@ interface ICoreWebView2ProcessFailedEventArgs2 : ICoreWebView2ProcessFailedEvent
 };
 ```
 '!
-!ICoreWebView2ProcessFailedEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ProcessFailedEventArgs2 methodsFor!
+!WebView2.ICoreWebView2ProcessFailedEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ProcessFailedEventArgs2 methodsFor!
 
 exitCode
 	"Answer the <sdword> value of the 'ExitCode' property of the receiver."
@@ -97,9 +97,9 @@ printableProperties
 	propertyNames addLast: #exitCode.
 	self processDescription isEmpty ifFalse: [propertyNames add: #processDescription].
 	failureKind := self processFailedKind.
-	failureKind = WebView2.COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED
+	failureKind = COREWEBVIEW2_PROCESS_FAILED_KIND_BROWSER_PROCESS_EXITED
 		ifFalse: [propertyNames add: #reason].
-	failureKind = WebView2.COREWEBVIEW2_PROCESS_FAILED_KIND_FRAME_RENDER_PROCESS_EXITED
+	failureKind = COREWEBVIEW2_PROCESS_FAILED_KIND_FRAME_RENDER_PROCESS_EXITED
 		ifTrue: [propertyNames addLast: #frameInfosForFailedProcess].
 	^propertyNames!
 
@@ -107,7 +107,7 @@ processDescription
 	"Answer the <lpwstr> value of the 'ProcessDescription' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_ProcessDescription: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -120,7 +120,7 @@ reason
 	answer := SDWORD new.
 	self get_reason: answer.
 	^answer asObject! !
-!ICoreWebView2ProcessFailedEventArgs2 categoriesForMethods!
+!WebView2.ICoreWebView2ProcessFailedEventArgs2 categoriesForMethods!
 exitCode!**auto generated**!properties!public! !
 frameInfosForFailedProcess!**auto generated**!properties!public! !
 get_ExitCode:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
@@ -132,7 +132,7 @@ processDescription!properties!public! !
 reason!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2ProcessFailedEventArgs2 class methodsFor!
+!WebView2.ICoreWebView2ProcessFailedEventArgs2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ProcessFailedEventArgs2'
@@ -148,7 +148,7 @@ defineFunctions
 		defineFunction: #get_FrameInfosForFailedProcess:
 			argumentTypes: 'ICoreWebView2FrameInfoCollection**'
 ! !
-!ICoreWebView2ProcessFailedEventArgs2 class categoriesForMethods!
+!WebView2.ICoreWebView2ProcessFailedEventArgs2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

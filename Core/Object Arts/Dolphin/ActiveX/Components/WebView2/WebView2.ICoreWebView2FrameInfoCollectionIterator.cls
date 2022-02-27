@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2FrameInfoCollectionIterator
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2FrameInfoCollectionIterator'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2FrameInfoCollectionIterator guid: (OS.COM.IID fromString: '{1bf89e2d-1b2b-4629-b28f-05099b41bb03}')!
-ICoreWebView2FrameInfoCollectionIterator comment: '`ICoreWebView2FrameInfoCollectionIterator` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameInfoCollectionIterator'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2FrameInfoCollectionIterator guid: (OS.COM.IID fromString: '{1bf89e2d-1b2b-4629-b28f-05099b41bb03}')!
+WebView2.ICoreWebView2FrameInfoCollectionIterator comment: '`ICoreWebView2FrameInfoCollectionIterator` is a wrapper class for the COM interface ''WebView2.ICoreWebView2FrameInfoCollectionIterator'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -33,8 +33,8 @@ interface ICoreWebView2FrameInfoCollectionIterator : IUnknown
 };
 ```
 '!
-!ICoreWebView2FrameInfoCollectionIterator categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2FrameInfoCollectionIterator methodsFor!
+!WebView2.ICoreWebView2FrameInfoCollectionIterator categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2FrameInfoCollectionIterator methodsFor!
 
 do: aMonadicValuable
 	"Evaluate the <monadicValuable> argument for each of the remaining ICoreWebView2FrameInfo objects in the receiver (i.e. from the current position to the end).
@@ -89,7 +89,7 @@ MoveNext: hasNext
 
 	<virtual stdcall: hresult 6 sdword*>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2FrameInfoCollectionIterator categoriesForMethods!
+!WebView2.ICoreWebView2FrameInfoCollectionIterator categoriesForMethods!
 do:!enumerating!public! !
 get_hasCurrent:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfoCollectionIterator!private! !
 getCurrent!**auto generated**!methods!public! !
@@ -98,7 +98,7 @@ hasCurrent!properties!public! !
 MoveNext:!**auto generated**!COM Interfaces-ICoreWebView2FrameInfoCollectionIterator!private! !
 !
 
-!ICoreWebView2FrameInfoCollectionIterator class methodsFor!
+!WebView2.ICoreWebView2FrameInfoCollectionIterator class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2FrameInfoCollectionIterator'
@@ -112,7 +112,7 @@ defineFunctions
 		defineFunction: #MoveNext:
 			argumentTypes: 'sdword*'
 ! !
-!ICoreWebView2FrameInfoCollectionIterator class categoriesForMethods!
+!WebView2.ICoreWebView2FrameInfoCollectionIterator class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

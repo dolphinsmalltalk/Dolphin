@@ -308,7 +308,7 @@ infoBrowserPresenter
 
 	infoBrowserPresenter isNil
 		ifTrue: 
-			[infoBrowserPresenter := Smalltalk.URLPresenter createIn: infoSitePresenter.
+			[infoBrowserPresenter := URLPresenter createIn: infoSitePresenter.
 			"Attempt to suppress the standard context menu"
 			infoBrowserPresenter view
 				canNavigateToStrings: true;

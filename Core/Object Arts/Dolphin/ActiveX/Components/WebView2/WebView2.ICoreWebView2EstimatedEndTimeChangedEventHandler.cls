@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2EstimatedEndTimeChangedEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2EstimatedEndTimeChangedEventHandler guid: (OS.COM.IID fromString: '{28f0d425-93fe-4e63-9f8d-2aeec6d3ba1e}')!
-ICoreWebView2EstimatedEndTimeChangedEventHandler comment: '`ICoreWebView2EstimatedEndTimeChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler guid: (OS.COM.IID fromString: '{28f0d425-93fe-4e63-9f8d-2aeec6d3ba1e}')!
+WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler comment: '`ICoreWebView2EstimatedEndTimeChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,20 +28,20 @@ interface ICoreWebView2EstimatedEndTimeChangedEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2EstimatedEndTimeChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2EstimatedEndTimeChangedEventHandler methodsFor!
+!WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
 	source Add_EstimatedEndTimeChanged: self token: tokenBuffer!
 
 basicUnregister
 	source Remove_EstimatedEndTimeChanged: token! !
-!ICoreWebView2EstimatedEndTimeChangedEventHandler categoriesForMethods!
+!WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
 !
 
-!ICoreWebView2EstimatedEndTimeChangedEventHandler class methodsFor!
+!WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler'
@@ -56,7 +56,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#estimatedEndTimeChanged! !
-!ICoreWebView2EstimatedEndTimeChangedEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2EstimatedEndTimeChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

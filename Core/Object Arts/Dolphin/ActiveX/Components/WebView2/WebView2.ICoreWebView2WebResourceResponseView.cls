@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2WebResourceResponseView
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2WebResourceResponseView'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2WebResourceResponseView guid: (OS.COM.IID fromString: '{79701053-7759-4162-8f7d-f1b3f084928d}')!
-ICoreWebView2WebResourceResponseView comment: '`ICoreWebView2WebResourceResponseView` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceResponseView'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2WebResourceResponseView guid: (OS.COM.IID fromString: '{79701053-7759-4162-8f7d-f1b3f084928d}')!
+WebView2.ICoreWebView2WebResourceResponseView comment: '`ICoreWebView2WebResourceResponseView` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceResponseView'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -36,8 +36,8 @@ interface ICoreWebView2WebResourceResponseView : IUnknown
 };
 ```
 '!
-!ICoreWebView2WebResourceResponseView categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2WebResourceResponseView methodsFor!
+!WebView2.ICoreWebView2WebResourceResponseView categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2WebResourceResponseView methodsFor!
 
 get_Headers: headers
 	"Private - Get the value of the 'Headers' property of the receiver.
@@ -99,7 +99,7 @@ reasonPhrase
 	"Answer the <lpwstr> value of the 'ReasonPhrase' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_ReasonPhrase: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -112,7 +112,7 @@ statusCode
 	answer := SDWORD new.
 	self get_StatusCode: answer.
 	^answer asObject! !
-!ICoreWebView2WebResourceResponseView categoriesForMethods!
+!WebView2.ICoreWebView2WebResourceResponseView categoriesForMethods!
 get_Headers:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponseView!private! !
 get_ReasonPhrase:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponseView!private! !
 get_StatusCode:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponseView!private! !
@@ -124,7 +124,7 @@ reasonPhrase!properties!public! !
 statusCode!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2WebResourceResponseView class methodsFor!
+!WebView2.ICoreWebView2WebResourceResponseView class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2WebResourceResponseView'
@@ -140,7 +140,7 @@ defineFunctions
 		defineFunction: #GetContent:
 			argumentTypes: 'ICoreWebView2WebResourceResponseViewGetContentCompletedHandler*'
 ! !
-!ICoreWebView2WebResourceResponseView class categoriesForMethods!
+!WebView2.ICoreWebView2WebResourceResponseView class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

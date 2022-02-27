@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2MoveFocusRequestedEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2MoveFocusRequestedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2MoveFocusRequestedEventHandler guid: (OS.COM.IID fromString: '{69035451-6dc7-4cb8-9bce-b2bd70ad289f}')!
-ICoreWebView2MoveFocusRequestedEventHandler comment: '`ICoreWebView2MoveFocusRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2MoveFocusRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2MoveFocusRequestedEventHandler guid: (OS.COM.IID fromString: '{69035451-6dc7-4cb8-9bce-b2bd70ad289f}')!
+WebView2.ICoreWebView2MoveFocusRequestedEventHandler comment: '`ICoreWebView2MoveFocusRequestedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2MoveFocusRequestedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,20 +28,20 @@ interface ICoreWebView2MoveFocusRequestedEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2MoveFocusRequestedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2MoveFocusRequestedEventHandler methodsFor!
+!WebView2.ICoreWebView2MoveFocusRequestedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2MoveFocusRequestedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
 	source Add_MoveFocusRequested: self token: tokenBuffer!
 
 basicUnregister
 	source Remove_MoveFocusRequested: token! !
-!ICoreWebView2MoveFocusRequestedEventHandler categoriesForMethods!
+!WebView2.ICoreWebView2MoveFocusRequestedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
 !
 
-!ICoreWebView2MoveFocusRequestedEventHandler class methodsFor!
+!WebView2.ICoreWebView2MoveFocusRequestedEventHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2MoveFocusRequestedEventHandler'
@@ -56,7 +56,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#moveFocusRequested:! !
-!ICoreWebView2MoveFocusRequestedEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2MoveFocusRequestedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

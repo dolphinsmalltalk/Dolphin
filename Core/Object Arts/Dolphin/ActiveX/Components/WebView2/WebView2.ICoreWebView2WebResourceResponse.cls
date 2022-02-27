@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2WebResourceResponse
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2WebResourceResponse'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2WebResourceResponse guid: (OS.COM.IID fromString: '{aafcc94f-fa27-48fd-97df-830ef75aaec9}')!
-ICoreWebView2WebResourceResponse comment: '`ICoreWebView2WebResourceResponse` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceResponse'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2WebResourceResponse guid: (OS.COM.IID fromString: '{aafcc94f-fa27-48fd-97df-830ef75aaec9}')!
+WebView2.ICoreWebView2WebResourceResponse comment: '`ICoreWebView2WebResourceResponse` is a wrapper class for the COM interface ''WebView2.ICoreWebView2WebResourceResponse'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -45,8 +45,8 @@ interface ICoreWebView2WebResourceResponse : IUnknown
 };
 ```
 '!
-!ICoreWebView2WebResourceResponse categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2WebResourceResponse methodsFor!
+!WebView2.ICoreWebView2WebResourceResponse categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2WebResourceResponse methodsFor!
 
 content
 	"Answer the <IStream> value of the 'Content' property of the receiver."
@@ -142,7 +142,7 @@ reasonPhrase
 	"Answer the <lpwstr> value of the 'ReasonPhrase' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_ReasonPhrase: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -165,7 +165,7 @@ statusCode: statusCode
 	"Set the 'StatusCode' property of the receiver to the <sdword> value of the argument."
 
 	self put_StatusCode: statusCode! !
-!ICoreWebView2WebResourceResponse categoriesForMethods!
+!WebView2.ICoreWebView2WebResourceResponse categoriesForMethods!
 content!**auto generated**!properties!public! !
 content:!**auto generated**!properties!public! !
 get_Content:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
@@ -183,7 +183,7 @@ statusCode!**auto generated**!properties!public! !
 statusCode:!**auto generated**!properties!public! !
 !
 
-!ICoreWebView2WebResourceResponse class methodsFor!
+!WebView2.ICoreWebView2WebResourceResponse class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2WebResourceResponse'
@@ -205,7 +205,7 @@ defineFunctions
 		defineFunction: #put_ReasonPhrase:
 			argumentTypes: 'lpwstr'
 ! !
-!ICoreWebView2WebResourceResponse class categoriesForMethods!
+!WebView2.ICoreWebView2WebResourceResponse class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

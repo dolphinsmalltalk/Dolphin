@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Collection subclass: #ICoreWebView2Sequence
+WebView2.ICoreWebView2Collection subclass: #'WebView2.ICoreWebView2Sequence'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2Sequence guid: (OS.COM.IID fromString: '{9033689d-5414-4ef0-8f8c-b74e4f485261}')!
-ICoreWebView2Sequence isNonInstantiable: true!
-ICoreWebView2Sequence comment: '`ICoreWebView2Sequence` is not defined in the WebView2 IDL, but is defined here for economy of mechanism, providing a common implementation of most of the Smalltalk `<sequencedReadableCollection>` protocol for the WebView2 collections that support random access by integer index.
+WebView2.ICoreWebView2Sequence guid: (OS.COM.IID fromString: '{9033689d-5414-4ef0-8f8c-b74e4f485261}')!
+WebView2.ICoreWebView2Sequence isNonInstantiable: true!
+WebView2.ICoreWebView2Sequence comment: '`ICoreWebView2Sequence` is not defined in the WebView2 IDL, but is defined here for economy of mechanism, providing a common implementation of most of the Smalltalk `<sequencedReadableCollection>` protocol for the WebView2 collections that support random access by integer index.
 
 Subclasses must provide at least `elementClass` and `GetValueAtIndex:value:` to complete the implementation.'!
-!ICoreWebView2Sequence categoriesForClass!COM-Interfaces! !
-!ICoreWebView2Sequence methodsFor!
+!WebView2.ICoreWebView2Sequence categoriesForClass!COM-Interfaces! !
+!WebView2.ICoreWebView2Sequence methodsFor!
 
 , aSequencedReadableCollection
 	^self asArray , aSequencedReadableCollection!
@@ -290,7 +290,7 @@ with: otherCollection do: operation
 
 	self size = otherCollection size ifFalse: [^self error: 'collections are of different sizes'].
 	self keysAndValuesDo: [:i :elem | operation value: elem value: (otherCollection at: i)]! !
-!ICoreWebView2Sequence categoriesForMethods!
+!WebView2.ICoreWebView2Sequence categoriesForMethods!
 ,!copying!public! !
 after:!public!searching! !
 after:ifAbsent:!public!searching! !
@@ -331,5 +331,5 @@ size!accessing!public! !
 with:do:!enumerating!public! !
 !
 
-ICoreWebView2Sequence methodProtocol: #sequencedReadableCollection attributes: #(#ansi #readOnly) selectors: #(#, #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #reverse #reverseDo: #select: #size #with:do:)!
+WebView2.ICoreWebView2Sequence methodProtocol: #sequencedReadableCollection attributes: #(#ansi #readOnly) selectors: #(#, #after: #allSatisfy: #anySatisfy: #asArray #asBag #asByteArray #asOrderedCollection #asSet #asSortedCollection #asSortedCollection: #at: #at:ifAbsent: #before: #collect: #copyFrom:to: #copyReplaceAll:with: #copyReplaceFrom:to:with: #copyReplaceFrom:to:withObject: #copyReplacing:withObject: #copyWith: #copyWithout: #detect: #detect:ifNone: #do: #do:separatedBy: #findFirst: #findLast: #first #from:to:do: #from:to:keysAndValuesDo: #includes: #indexOf: #indexOf:ifAbsent: #indexOfSubCollection:startingAt: #indexOfSubCollection:startingAt:ifAbsent: #inject:into: #isEmpty #keysAndValuesDo: #last #notEmpty #occurrencesOf: #rehash #reject: #reverse #reverseDo: #select: #size #with:do:)!
 

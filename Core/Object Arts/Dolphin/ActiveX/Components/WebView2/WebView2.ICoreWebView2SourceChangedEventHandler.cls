@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2SourceChangedEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2SourceChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2SourceChangedEventHandler guid: (OS.COM.IID fromString: '{3c067f9f-5388-4772-8b48-79f7ef1ab37c}')!
-ICoreWebView2SourceChangedEventHandler comment: '`ICoreWebView2SourceChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2SourceChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2SourceChangedEventHandler guid: (OS.COM.IID fromString: '{3c067f9f-5388-4772-8b48-79f7ef1ab37c}')!
+WebView2.ICoreWebView2SourceChangedEventHandler comment: '`ICoreWebView2SourceChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2SourceChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,20 +28,20 @@ interface ICoreWebView2SourceChangedEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2SourceChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2SourceChangedEventHandler methodsFor!
+!WebView2.ICoreWebView2SourceChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2SourceChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
 	source Add_SourceChanged: self token: tokenBuffer!
 
 basicUnregister
 	source Remove_SourceChanged: token! !
-!ICoreWebView2SourceChangedEventHandler categoriesForMethods!
+!WebView2.ICoreWebView2SourceChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
 !
 
-!ICoreWebView2SourceChangedEventHandler class methodsFor!
+!WebView2.ICoreWebView2SourceChangedEventHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2SourceChangedEventHandler'
@@ -56,7 +56,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#sourceChanged:! !
-!ICoreWebView2SourceChangedEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2SourceChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

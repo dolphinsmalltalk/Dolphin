@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2NavigationStartingEventArgs subclass: #ICoreWebView2NavigationStartingEventArgs2
+WebView2.ICoreWebView2NavigationStartingEventArgs subclass: #'WebView2.ICoreWebView2NavigationStartingEventArgs2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2NavigationStartingEventArgs2 guid: (OS.COM.IID fromString: '{9086be93-91aa-472d-a7e0-579f2ba006ad}')!
-ICoreWebView2NavigationStartingEventArgs2 comment: '`ICoreWebView2NavigationStartingEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationStartingEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2NavigationStartingEventArgs2 guid: (OS.COM.IID fromString: '{9086be93-91aa-472d-a7e0-579f2ba006ad}')!
+WebView2.ICoreWebView2NavigationStartingEventArgs2 comment: '`ICoreWebView2NavigationStartingEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NavigationStartingEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -30,14 +30,14 @@ interface ICoreWebView2NavigationStartingEventArgs2 : ICoreWebView2NavigationSta
 };
 ```
 '!
-!ICoreWebView2NavigationStartingEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2NavigationStartingEventArgs2 methodsFor!
+!WebView2.ICoreWebView2NavigationStartingEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2NavigationStartingEventArgs2 methodsFor!
 
 additionalAllowedFrameAncestors
 	"Answer the <lpwstr> value of the 'AdditionalAllowedFrameAncestors' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_AdditionalAllowedFrameAncestors: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
@@ -66,14 +66,14 @@ put_AdditionalAllowedFrameAncestors: value
 
 	<virtual stdcall: hresult 12 lpwstr>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2NavigationStartingEventArgs2 categoriesForMethods!
+!WebView2.ICoreWebView2NavigationStartingEventArgs2 categoriesForMethods!
 additionalAllowedFrameAncestors!properties!public! !
 additionalAllowedFrameAncestors:!**auto generated**!properties!public! !
 get_AdditionalAllowedFrameAncestors:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs2!private! !
 put_AdditionalAllowedFrameAncestors:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs2!private! !
 !
 
-!ICoreWebView2NavigationStartingEventArgs2 class methodsFor!
+!WebView2.ICoreWebView2NavigationStartingEventArgs2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2NavigationStartingEventArgs2'
@@ -85,7 +85,7 @@ defineFunctions
 		defineFunction: #put_AdditionalAllowedFrameAncestors:
 			argumentTypes: 'lpwstr'
 ! !
-!ICoreWebView2NavigationStartingEventArgs2 class categoriesForMethods!
+!WebView2.ICoreWebView2NavigationStartingEventArgs2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

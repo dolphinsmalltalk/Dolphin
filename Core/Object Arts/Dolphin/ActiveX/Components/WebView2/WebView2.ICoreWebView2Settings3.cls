@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Settings2 subclass: #ICoreWebView2Settings3
+WebView2.ICoreWebView2Settings2 subclass: #'WebView2.ICoreWebView2Settings3'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2Settings3 guid: (OS.COM.IID fromString: '{fdb5ab74-af33-4854-84f0-0a631deb5eba}')!
-ICoreWebView2Settings3 comment: '`ICoreWebView2Settings3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Settings3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2Settings3 guid: (OS.COM.IID fromString: '{fdb5ab74-af33-4854-84f0-0a631deb5eba}')!
+WebView2.ICoreWebView2Settings3 comment: '`ICoreWebView2Settings3` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Settings3'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -30,8 +30,8 @@ interface ICoreWebView2Settings3 : ICoreWebView2Settings2
 };
 ```
 '!
-!ICoreWebView2Settings3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Settings3 methodsFor!
+!WebView2.ICoreWebView2Settings3 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Settings3 methodsFor!
 
 get_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
 	"Private - Get the value of the 'AreBrowserAcceleratorKeysEnabled' property of the receiver.
@@ -51,12 +51,12 @@ put_AreBrowserAcceleratorKeysEnabled: areBrowserAcceleratorKeysEnabled
 
 	<virtual stdcall: hresult 25 sdword>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2Settings3 categoriesForMethods!
+!WebView2.ICoreWebView2Settings3 categoriesForMethods!
 get_AreBrowserAcceleratorKeysEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings3!private! !
 put_AreBrowserAcceleratorKeysEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings3!private! !
 !
 
-!ICoreWebView2Settings3 class methodsFor!
+!WebView2.ICoreWebView2Settings3 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Settings3'
@@ -68,7 +68,7 @@ defineFunctions
 		defineFunction: #put_AreBrowserAcceleratorKeysEnabled:
 			argumentTypes: 'sdword'
 ! !
-!ICoreWebView2Settings3 class categoriesForMethods!
+!WebView2.ICoreWebView2Settings3 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

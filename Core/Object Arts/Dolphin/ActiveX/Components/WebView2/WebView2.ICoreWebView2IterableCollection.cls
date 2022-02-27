@@ -1,18 +1,18 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Collection subclass: #ICoreWebView2IterableCollection
+WebView2.ICoreWebView2Collection subclass: #'WebView2.ICoreWebView2IterableCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2IterableCollection guid: (OS.COM.IID fromString: '{0d1a3c69-2d9b-461b-98a3-5d7f04e3383d}')!
-ICoreWebView2IterableCollection isNonInstantiable: true!
-ICoreWebView2IterableCollection comment: '`ICoreWebView2IterableCollection` is not defined in the WebView2 IDL, but is defined here for economy of mechanism, providing some functionality common to all the the WebView2 collections that have iterators (as opposed to being randomly indexable).
+WebView2.ICoreWebView2IterableCollection guid: (OS.COM.IID fromString: '{0d1a3c69-2d9b-461b-98a3-5d7f04e3383d}')!
+WebView2.ICoreWebView2IterableCollection isNonInstantiable: true!
+WebView2.ICoreWebView2IterableCollection comment: '`ICoreWebView2IterableCollection` is not defined in the WebView2 IDL, but is defined here for economy of mechanism, providing some functionality common to all the the WebView2 collections that have iterators (as opposed to being randomly indexable).
 
 Subclasses must provide at least `GetIterator:` and `iteratorClass` to complete the implementation.'!
-!ICoreWebView2IterableCollection categoriesForClass!COM-Interfaces! !
-!ICoreWebView2IterableCollection methodsFor!
+!WebView2.ICoreWebView2IterableCollection categoriesForClass!COM-Interfaces! !
+!WebView2.ICoreWebView2IterableCollection methodsFor!
 
 do: aMonadicValuable
 	| iterator |
@@ -40,7 +40,7 @@ isEmpty
 
 iteratorClass
 	^self subclassResponsibility! !
-!ICoreWebView2IterableCollection categoriesForMethods!
+!WebView2.ICoreWebView2IterableCollection categoriesForMethods!
 do:!enumerating!public! !
 getIterator!methods!public! !
 GetIterator:!COM Interfaces-ICoreWebView2FrameInfoCollection!COM Interfaces-ICoreWebView2HttpRequestHeaders!COM Interfaces-ICoreWebView2HttpResponseHeaders!methods!private! !

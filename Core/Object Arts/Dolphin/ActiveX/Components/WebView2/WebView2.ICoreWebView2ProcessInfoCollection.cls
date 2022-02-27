@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Sequence subclass: #ICoreWebView2ProcessInfoCollection
+WebView2.ICoreWebView2Sequence subclass: #'WebView2.ICoreWebView2ProcessInfoCollection'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2ProcessInfoCollection guid: (OS.COM.IID fromString: '{402b99cd-a0cc-4fa5-b7a5-51d86a1d2339}')!
-ICoreWebView2ProcessInfoCollection comment: '`ICoreWebView2ProcessInfoCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessInfoCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2ProcessInfoCollection guid: (OS.COM.IID fromString: '{402b99cd-a0cc-4fa5-b7a5-51d86a1d2339}')!
+WebView2.ICoreWebView2ProcessInfoCollection comment: '`ICoreWebView2ProcessInfoCollection` is a wrapper class for the COM interface ''WebView2.ICoreWebView2ProcessInfoCollection'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -31,8 +31,8 @@ interface ICoreWebView2ProcessInfoCollection : IUnknown
 };
 ```
 '!
-!ICoreWebView2ProcessInfoCollection categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2ProcessInfoCollection methodsFor!
+!WebView2.ICoreWebView2ProcessInfoCollection categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2ProcessInfoCollection methodsFor!
 
 elementClass
 	^ICoreWebView2ProcessInfo!
@@ -46,12 +46,12 @@ GetValueAtIndex: index value: processInfo
 
 	<virtual stdcall: hresult 5 dword ICoreWebView2ProcessInfo**>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2ProcessInfoCollection categoriesForMethods!
+!WebView2.ICoreWebView2ProcessInfoCollection categoriesForMethods!
 elementClass!constants!public! !
 GetValueAtIndex:value:!COM Interfaces-ICoreWebView2ProcessInfoCollection!private! !
 !
 
-!ICoreWebView2ProcessInfoCollection class methodsFor!
+!WebView2.ICoreWebView2ProcessInfoCollection class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2ProcessInfoCollection'
@@ -63,7 +63,7 @@ defineFunctions
 		defineFunction: #GetValueAtIndex:value:
 			argumentTypes: 'dword ICoreWebView2ProcessInfo**'
 ! !
-!ICoreWebView2ProcessInfoCollection class categoriesForMethods!
+!WebView2.ICoreWebView2ProcessInfoCollection class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
 

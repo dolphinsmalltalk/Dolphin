@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2EventHandler subclass: #ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler
+WebView2.ICoreWebView2EventHandler subclass: #'WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler guid: (OS.COM.IID fromString: '{3117da26-ae13-438d-bd46-edbeb2c4ce81}')!
-ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler comment: '`ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler guid: (OS.COM.IID fromString: '{3117da26-ae13-438d-bd46-edbeb2c4ce81}')!
+WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler comment: '`ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,20 +28,20 @@ interface ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler methodsFor!
+!WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler methodsFor!
 
 basicRegister: tokenBuffer
 	source Add_IsDefaultDownloadDialogOpenChanged: self token: tokenBuffer!
 
 basicUnregister
 	source Remove_IsDefaultDownloadDialogOpenChanged: token! !
-!ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler categoriesForMethods!
+!WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler categoriesForMethods!
 basicRegister:!private!realizing/unrealizing! !
 basicUnregister!private!realizing/unrealizing! !
 !
 
-!ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler class methodsFor!
+!WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler'
@@ -56,7 +56,7 @@ eventName
 	"Answer the symbolic name for this event (i.e. the SASE event trigger name)"
 
 	^#isDefaultDownloadDialogOpenChanged! !
-!ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler class categoriesForMethods!
+!WebView2.ICoreWebView2IsDefaultDownloadDialogOpenChangedEventHandler class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 eventName!constants!public! !
 !

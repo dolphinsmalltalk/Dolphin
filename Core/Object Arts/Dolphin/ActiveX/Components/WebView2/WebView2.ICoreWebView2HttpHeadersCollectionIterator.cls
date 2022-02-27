@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Interface subclass: #ICoreWebView2HttpHeadersCollectionIterator
+WebView2.ICoreWebView2Interface subclass: #'WebView2.ICoreWebView2HttpHeadersCollectionIterator'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2HttpHeadersCollectionIterator guid: (OS.COM.IID fromString: '{0702fc30-f43b-47bb-ab52-a42cb552ad9f}')!
-ICoreWebView2HttpHeadersCollectionIterator comment: '`ICoreWebView2HttpHeadersCollectionIterator` is a wrapper class for the COM interface ''WebView2.ICoreWebView2HttpHeadersCollectionIterator'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2HttpHeadersCollectionIterator guid: (OS.COM.IID fromString: '{0702fc30-f43b-47bb-ab52-a42cb552ad9f}')!
+WebView2.ICoreWebView2HttpHeadersCollectionIterator comment: '`ICoreWebView2HttpHeadersCollectionIterator` is a wrapper class for the COM interface ''WebView2.ICoreWebView2HttpHeadersCollectionIterator'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -34,8 +34,8 @@ interface ICoreWebView2HttpHeadersCollectionIterator : IUnknown
 };
 ```
 '!
-!ICoreWebView2HttpHeadersCollectionIterator categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2HttpHeadersCollectionIterator methodsFor!
+!WebView2.ICoreWebView2HttpHeadersCollectionIterator categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2HttpHeadersCollectionIterator methodsFor!
 
 do: aMonadicValuable
 	self keysAndValuesDo: [:eachKey :eachValue | aMonadicValuable value: eachValue]!
@@ -72,10 +72,10 @@ keysAndValuesDo: aDyadicValuable
 	Note that as the iterator cannot be reset, it can only be enumerated once."
 
 	| namePtr valuePtr notAtEnd |
-	namePtr := COMTaskMemory new
+	namePtr := TaskMemory new
 				beUnfinalizable;
 				yourself.
-	valuePtr := COMTaskMemory new
+	valuePtr := TaskMemory new
 				beUnfinalizable;
 				yourself.
 	notAtEnd := ByteArray new: 4.
@@ -98,7 +98,7 @@ MoveNext: hasNext
 
 	<virtual stdcall: hresult 6 sdword*>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2HttpHeadersCollectionIterator categoriesForMethods!
+!WebView2.ICoreWebView2HttpHeadersCollectionIterator categoriesForMethods!
 do:!enumerating!public! !
 get_HasCurrentHeader:!**auto generated**!COM Interfaces-ICoreWebView2HttpHeadersCollectionIterator!private! !
 GetCurrentHeader:value:!**auto generated**!COM Interfaces-ICoreWebView2HttpHeadersCollectionIterator!private! !
@@ -107,7 +107,7 @@ keysAndValuesDo:!enumerating!public! !
 MoveNext:!**auto generated**!COM Interfaces-ICoreWebView2HttpHeadersCollectionIterator!private! !
 !
 
-!ICoreWebView2HttpHeadersCollectionIterator class methodsFor!
+!WebView2.ICoreWebView2HttpHeadersCollectionIterator class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2HttpHeadersCollectionIterator'
@@ -121,7 +121,7 @@ defineFunctions
 		defineFunction: #MoveNext:
 			argumentTypes: 'sdword*'
 ! !
-!ICoreWebView2HttpHeadersCollectionIterator class categoriesForMethods!
+!WebView2.ICoreWebView2HttpHeadersCollectionIterator class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

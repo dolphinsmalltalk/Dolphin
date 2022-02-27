@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2NewWindowRequestedEventArgs subclass: #ICoreWebView2NewWindowRequestedEventArgs2
+WebView2.ICoreWebView2NewWindowRequestedEventArgs subclass: #'WebView2.ICoreWebView2NewWindowRequestedEventArgs2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2NewWindowRequestedEventArgs2 guid: (OS.COM.IID fromString: '{bbc7baed-74c6-4c92-b63a-7f5aeae03de3}')!
-ICoreWebView2NewWindowRequestedEventArgs2 comment: '`ICoreWebView2NewWindowRequestedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NewWindowRequestedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2NewWindowRequestedEventArgs2 guid: (OS.COM.IID fromString: '{bbc7baed-74c6-4c92-b63a-7f5aeae03de3}')!
+WebView2.ICoreWebView2NewWindowRequestedEventArgs2 comment: '`ICoreWebView2NewWindowRequestedEventArgs2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2NewWindowRequestedEventArgs2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -27,8 +27,8 @@ interface ICoreWebView2NewWindowRequestedEventArgs2 : ICoreWebView2NewWindowRequ
 };
 ```
 '!
-!ICoreWebView2NewWindowRequestedEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2NewWindowRequestedEventArgs2 methodsFor!
+!WebView2.ICoreWebView2NewWindowRequestedEventArgs2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2NewWindowRequestedEventArgs2 methodsFor!
 
 get_name: value
 	"Private - Get the value of the 'name' property of the receiver.
@@ -43,17 +43,17 @@ name
 	"Answer the <lpwstr> value of the 'name' property of the receiver."
 
 	| ptr answer |
-	ptr := COMTaskMemory new.
+	ptr := TaskMemory new.
 	self get_name: ptr.
 	answer := Utf16String fromAddress: ptr.
 	ptr free.
 	^answer! !
-!ICoreWebView2NewWindowRequestedEventArgs2 categoriesForMethods!
+!WebView2.ICoreWebView2NewWindowRequestedEventArgs2 categoriesForMethods!
 get_name:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs2!private! !
 name!properties!public! !
 !
 
-!ICoreWebView2NewWindowRequestedEventArgs2 class methodsFor!
+!WebView2.ICoreWebView2NewWindowRequestedEventArgs2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2NewWindowRequestedEventArgs2'
@@ -63,7 +63,7 @@ defineFunctions
 		defineFunction: #get_name:
 			argumentTypes: 'lpwstr*'
 ! !
-!ICoreWebView2NewWindowRequestedEventArgs2 class categoriesForMethods!
+!WebView2.ICoreWebView2NewWindowRequestedEventArgs2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

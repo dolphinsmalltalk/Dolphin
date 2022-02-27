@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2CallDevToolsProtocolMethodCompletedHandler
+WebView2.ICoreWebView2CompletedHandler subclass: #'WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2CallDevToolsProtocolMethodCompletedHandler guid: (OS.COM.IID fromString: '{5c4889f0-5ef6-4c5a-952c-d8f1b92d0574}')!
-ICoreWebView2CallDevToolsProtocolMethodCompletedHandler comment: '`ICoreWebView2CallDevToolsProtocolMethodCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler guid: (OS.COM.IID fromString: '{5c4889f0-5ef6-4c5a-952c-d8f1b92d0574}')!
+WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler comment: '`ICoreWebView2CallDevToolsProtocolMethodCompletedHandler` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -28,8 +28,8 @@ interface ICoreWebView2CallDevToolsProtocolMethodCompletedHandler : IUnknown
 };
 ```
 '!
-!ICoreWebView2CallDevToolsProtocolMethodCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2CallDevToolsProtocolMethodCompletedHandler class methodsFor!
+!WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler'
@@ -37,7 +37,7 @@ defineFunctions
 	"
 
 	self defineFunction: #value:value: argumentTypes: 'hresult lpwstr'! !
-!ICoreWebView2CallDevToolsProtocolMethodCompletedHandler class categoriesForMethods!
+!WebView2.ICoreWebView2CallDevToolsProtocolMethodCompletedHandler class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
 

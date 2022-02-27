@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Frame subclass: #ICoreWebView2Frame2
+WebView2.ICoreWebView2Frame subclass: #'WebView2.ICoreWebView2Frame2'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2Frame2 guid: (OS.COM.IID fromString: '{7a6a5834-d185-4dbf-b63f-4a9bc43107d4}')!
-ICoreWebView2Frame2 comment: '`ICoreWebView2Frame2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Frame2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2Frame2 guid: (OS.COM.IID fromString: '{7a6a5834-d185-4dbf-b63f-4a9bc43107d4}')!
+WebView2.ICoreWebView2Frame2 comment: '`ICoreWebView2Frame2` is a wrapper class for the COM interface ''WebView2.ICoreWebView2Frame2'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -69,8 +69,8 @@ interface ICoreWebView2Frame2 : ICoreWebView2Frame
 };
 ```
 '!
-!ICoreWebView2Frame2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2Frame2 methodsFor!
+!WebView2.ICoreWebView2Frame2 categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2Frame2 methodsFor!
 
 Add_ContentLoading: eventHandler token: token
 	"Private - Invoke the add_ContentLoading() method of the COM object.
@@ -194,7 +194,7 @@ Remove_WebMessageReceived: token
 
 	<virtual stdcall: hresult 24 sqword>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2Frame2 categoriesForMethods!
+!WebView2.ICoreWebView2Frame2 categoriesForMethods!
 Add_ContentLoading:token:!**auto generated**!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Add_DOMContentLoaded:token:!**auto generated**!COM Interfaces-ICoreWebView2Frame2!events!private! !
 Add_NavigationCompleted:token:!**auto generated**!COM Interfaces-ICoreWebView2Frame2!events!private! !
@@ -210,7 +210,7 @@ Remove_NavigationStarting:!**auto generated**!COM Interfaces-ICoreWebView2Frame2
 Remove_WebMessageReceived:!**auto generated**!COM Interfaces-ICoreWebView2Frame2!events!private! !
 !
 
-!ICoreWebView2Frame2 class methodsFor!
+!WebView2.ICoreWebView2Frame2 class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2Frame2'
@@ -244,7 +244,7 @@ defineFunctions
 		defineFunction: #Remove_WebMessageReceived:
 			argumentTypes: 'sqword'
 ! !
-!ICoreWebView2Frame2 class categoriesForMethods!
+!WebView2.ICoreWebView2Frame2 class categoriesForMethods!
 defineFunctions!**auto generated**!initializing!public! !
 !
 

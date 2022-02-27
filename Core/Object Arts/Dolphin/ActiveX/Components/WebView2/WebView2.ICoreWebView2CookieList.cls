@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-ICoreWebView2Sequence subclass: #ICoreWebView2CookieList
+WebView2.ICoreWebView2Sequence subclass: #'WebView2.ICoreWebView2CookieList'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-ICoreWebView2CookieList guid: (OS.COM.IID fromString: '{f7f6f714-5d2a-43c6-9503-346ece02d186}')!
-ICoreWebView2CookieList comment: '`ICoreWebView2CookieList` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CookieList'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
+WebView2.ICoreWebView2CookieList guid: (OS.COM.IID fromString: '{f7f6f714-5d2a-43c6-9503-346ece02d186}')!
+WebView2.ICoreWebView2CookieList comment: '`ICoreWebView2CookieList` is a wrapper class for the COM interface ''WebView2.ICoreWebView2CookieList'' generated from type information in the '''' library. It contains methods to invoke the member functions exposed by that interface.
 
 The type library contains no documentation for this interface
 
@@ -31,8 +31,8 @@ interface ICoreWebView2CookieList : IUnknown
 };
 ```
 '!
-!ICoreWebView2CookieList categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
-!ICoreWebView2CookieList methodsFor!
+!WebView2.ICoreWebView2CookieList categoriesForClass!COM-Interfaces!WebView2-Interfaces! !
+!WebView2.ICoreWebView2CookieList methodsFor!
 
 elementClass
 	^ICoreWebView2Cookie!
@@ -46,12 +46,12 @@ GetValueAtIndex: index value: cookie
 
 	<virtual stdcall: hresult 5 dword ICoreWebView2Cookie**>
 	^self invalidCall: _failureCode! !
-!ICoreWebView2CookieList categoriesForMethods!
+!WebView2.ICoreWebView2CookieList categoriesForMethods!
 elementClass!constants!private! !
 GetValueAtIndex:value:!**auto generated**!COM Interfaces-ICoreWebView2CookieList!private! !
 !
 
-!ICoreWebView2CookieList class methodsFor!
+!WebView2.ICoreWebView2CookieList class methodsFor!
 
 defineFunctions
 	"Declare the virtual function table for the COM interface 'WebView2.ICoreWebView2CookieList'
@@ -63,7 +63,7 @@ defineFunctions
 		defineFunction: #GetValueAtIndex:value:
 			argumentTypes: 'dword ICoreWebView2Cookie**'
 ! !
-!ICoreWebView2CookieList class categoriesForMethods!
+!WebView2.ICoreWebView2CookieList class categoriesForMethods!
 defineFunctions!initializing!public! !
 !
 
