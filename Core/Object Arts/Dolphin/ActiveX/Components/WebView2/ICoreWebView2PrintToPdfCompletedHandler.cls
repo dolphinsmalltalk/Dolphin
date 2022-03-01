@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2PrintToPdfCompletedHandler
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2PrintToPdfCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

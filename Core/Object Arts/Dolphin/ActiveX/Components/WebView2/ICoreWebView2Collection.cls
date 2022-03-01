@@ -101,6 +101,20 @@ detect: aMonadicValuable ifNone: aNiladicValuable
 do: aMonadicValuable
 	self subclassResponsibility!
 
+do: operation separatedBy: separator 
+	"Evaluate the <monadicValuable> argument, operation, for each of the 
+	receiver's elements, interspersed with evaluations of the <niladicValuable>
+	argument, separator. The separator is first evaluated after the first
+	element, and is not evaluated after the last element (i.e. it is not evaluated
+	at all if there are less than two elements)."
+
+	| sep |
+	sep := [sep := separator].	"Switch to the real separator after first eval."
+	self do: 
+			[:each | 
+			sep value.
+			operation value: each]!
+
 includes: target
 	"Answer whether the <Object> argument, target, is one of the elements of the receiver.
 	Implementation Note: The default is to use equality for comparison."
@@ -169,6 +183,7 @@ countElements!accessing!private! !
 detect:!public!searching! !
 detect:ifNone:!public!searching! !
 do:!enumerating!public! !
+do:separatedBy:!public! !
 includes:!public!searching! !
 inject:into:!enumerating!public! !
 isEmpty!public!testing! !

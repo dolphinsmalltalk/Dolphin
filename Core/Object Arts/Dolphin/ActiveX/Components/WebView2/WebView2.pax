@@ -55,6 +55,7 @@ package classNames
 	add: #ICoreWebView2ClientCertificateRequestedEventArgs;
 	add: #ICoreWebView2ClientCertificateRequestedEventHandler;
 	add: #ICoreWebView2Collection;
+	add: #ICoreWebView2CompletedHandler;
 	add: #ICoreWebView2CompositionController;
 	add: #ICoreWebView2CompositionController2;
 	add: #ICoreWebView2ContainsFullScreenElementChangedEventHandler;
@@ -171,7 +172,6 @@ package classNames
 	add: #ICoreWebView2WindowCloseRequestedEventHandler;
 	add: #ICoreWebView2WindowFeatures;
 	add: #ICoreWebView2ZoomFactorChangedEventHandler;
-	add: #ICoreWebViewCompletedHandler;
 	add: #URLPresenter;
 	add: #WebView2CompletionHandler;
 	add: #WebView2EventSink;
@@ -242,6 +242,11 @@ ICoreWebView2Interface subclass: #ICoreWebView2ClientCertificate
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Interface subclass: #ICoreWebView2Collection
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2Interface subclass: #ICoreWebView2CompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -361,11 +366,6 @@ ICoreWebView2Interface subclass: #ICoreWebView2WindowFeatures
 	classVariableNames: ''
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
-ICoreWebView2Interface subclass: #ICoreWebViewCompletedHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
 ICoreWebView2 subclass: #ICoreWebView2_2
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -452,6 +452,61 @@ ICoreWebView2Sequence subclass: #ICoreWebView2ProcessInfoCollection
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICoreWebView2Sequence subclass: #ICoreWebView2StringCollection
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2CallDevToolsProtocolMethodCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2CapturePreviewCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2CreateCoreWebView2ControllerCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2ExecuteScriptCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2GetCookiesCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2PrintToPdfCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2TrySuspendCompletedHandler
+	instanceVariableNames: ''
+	classVariableNames: ''
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2WebResourceResponseViewGetContentCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
@@ -865,61 +920,6 @@ ICoreWebView2Settings5 subclass: #ICoreWebView2Settings6
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: 'WebView2Constants'
-	classInstanceVariableNames: ''!
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2CallDevToolsProtocolMethodCompletedHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2CapturePreviewCompletedHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2CreateCoreWebView2CompositionControllerCompletedHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2CreateCoreWebView2ControllerCompletedHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2CreateCoreWebView2EnvironmentCompletedHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2ExecuteScriptCompletedHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2GetCookiesCompletedHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2PrintToPdfCompletedHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2TrySuspendCompletedHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
-	classInstanceVariableNames: ''!
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2WebResourceResponseViewGetContentCompletedHandler
-	instanceVariableNames: ''
-	classVariableNames: ''
-	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ValuePresenter subclass: #URLPresenter
 	instanceVariableNames: ''
