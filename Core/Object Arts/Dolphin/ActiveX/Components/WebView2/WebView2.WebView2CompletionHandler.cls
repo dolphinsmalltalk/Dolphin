@@ -14,6 +14,10 @@ WebView2.WebView2CompletionHandler comment: ''!
 completionBlock: aValuable
 	completionBlock := aValuable!
 
+Invoke: sender arg: args
+	completionBlock value: sender value: args.
+	^S_OK!
+
 queryInterface: anInterfaceClass ifNone: exceptionHandler
 	"Answer a new interface pointer which supports the specified interface protocol
 	(usually a class). If the receiver does not support the interface, answer the
@@ -29,6 +33,7 @@ supportedInterfaces
 	^ICoreWebView2CompletedHandler allSubclasses! !
 !WebView2.WebView2CompletionHandler categoriesForMethods!
 completionBlock:!initializing!private! !
+Invoke:arg:!COM Interfaces-ICoreWebView2CompletedHandler!public! !
 queryInterface:ifNone:!accessing!accessing-interfaces!public! !
 supportedInterfaces!constants!public! !
 !

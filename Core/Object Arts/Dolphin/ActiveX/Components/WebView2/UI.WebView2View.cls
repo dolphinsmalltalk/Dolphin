@@ -128,7 +128,7 @@ defaultWindowProcessing: message wParam: wParam lParam: lParam
 
 	"Override back to the base implementation because the receiver is not actually a control, rather just a straight DolphinWindow."
 
-	^UserLibrary default
+	^User32
 		defWindowProc: handle
 		msg: message
 		wParam: wParam
@@ -185,7 +185,7 @@ goForward
 initialize
 	super initialize.
 	settingsFlags := 0.
-	webview := self webviewSettings: DeafObject.Current!
+	webview := DeafObject.Current!
 
 initializeControl
 	"Settings must be established before navigating, or they will not take effect"
