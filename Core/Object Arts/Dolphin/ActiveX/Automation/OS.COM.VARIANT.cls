@@ -1045,22 +1045,54 @@ initialize
 				hresult: DISP_E_PARAMNOTFOUND;
 				beUnfinalizable;
 				yourself.
-	self
-		initializeVTNames;
-		initializeVTClasses.
+	self addClassConstant: 'VTNames' value: self vtNames.
+	self addClassConstant: 'VTClasses' value: self vtClasses.
 	self externalTypeNames do: [:each | VM registryAt: each asSymbol put: each value].
 	VM registryAt: self name put: self!
 
-initializeVTClasses
-	"Private - Initialize the map of VARENUM type codes to suitable buffer classes.
-		VARIANT initializeVTClasses
-	N.B. Not all VT_XXX members of the VARENUM enumeration are valid as types in a VARIANT
-	used for Automation purposes (see wtypes.h) so a number have no mapping."
+nameOfVT: vartype
+	"Answer the symbolic name of the specified variant type code."
 
-	"The BindingReferences must all be full if the resulting Array is to be a literal constant"
+	| vtName |
+	vtName := VTNames at: vartype + 1.
+	^vtName == #badVarType ifTrue: [VTNames errorNotFound: vartype] ifFalse: [vtName]!
 
-	| vtClasses |
-	vtClasses := (Array new: VT_CLSID + 1)
+null
+	"Answer a null (VT_NULL) instance of the receiver. This is not the same
+	as a nil, (VT_EMPTY) instance."
+
+	^self new
+		vt: VT_NULL;
+		yourself!
+
+typeName
+	"Private - Answer the Dolphin external type name for the receiver.
+	There is an appropriate built-in type which we can substitute."
+
+	^#variant!
+
+uninitialize
+	"Private - Uninitialize the receiver prior to its removal from the image."
+
+	Unspecified := nil.
+	"The VM only needs a ref to certain classes to implement the VARIANT>>value primitive, so these can be
+	 cleared out if this class is removed."
+	self externalTypeNames do: [:each | VM registryAt: each asSymbol put: nil].
+	VM registryAt: self name put: nil!
+
+unspecified
+	"Answer an instance of the receiver appropriate to use as an unspecified optional argument."
+
+	^Unspecified!
+
+vt
+	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
+	type when represented in a <VARIANT>."
+
+	^VT_VARIANT!
+
+vtClasses 
+	^(Array new: VT_CLSID + 1)
 		at: VT_BLOB+1			put: #{Core.ByteArray};			"Blob - OLE Property sets only"
 		at: VT_BLOB_OBJECT+1		put: #{Core.ByteArray};			"Blob containing an object - OLE Property sets only"
 		at: VT_BOOL+1			put: #{OS.COM.VARIANT_BOOL};	"Automation (Basic) boolean"
@@ -1102,19 +1134,10 @@ initializeVTClasses
 		at: VT_VARIANT+1			put: #{OS.COM.VARIANT};		"Reference to another VARIANT"
 		at: VT_VOID+1			put: #{External.VOID};			"C void - TYPEDESC only, for generic pointer outputs"
 		at: VT_HRESULT+1			put: #{OS.HRESULT}; 			"HRESULT return code - TYPEDESC only"
-		yourself.
-	self addClassConstant: 'VTClasses' value: vtClasses!
+		yourself!
 
-initializeVTNames
-	"Private - Initialize the map of VARENUM type codes ot symbolic type names.
-		VARIANT initializeVTNames
-	N.B. Not all VT_XXX members of the VARENUM enumeration are valid as types in a VARIANT
-	used for Automation purposes (see wtypes.h) so a number are currently not supported for
-	accessing as objects by Dolphin."
-
-	| vtNames |
-	vtNames := Array new: VT_CLSID+1 withAll: #badVarType.
-	vtNames
+vtNames 
+	^(Array new: VT_CLSID+1 withAll: #badVarType)
 		at: VT_BLOB+1			put: #blob;			"Blob - OLE Property sets only"
 		at: VT_BLOB_OBJECT+1	put: #blob_object;"Blob containing an object - OLE Property sets only"
 		at: VT_BOOL+1			put: #varbool;			"VARIANT_BOOL - i.e. True=-1, False=0"
@@ -1155,49 +1178,8 @@ initializeVTNames
 		at: VT_USERDEFINED+1	put: #typedef;		"user defined type - TYPEDESC only"
 		at: VT_RECORD+1		put: #struct;
 		at: VT_VARIANT+1		put: #variant;		"Reference to another VARIANT"
-		at: VT_VOID+1			put: #void.			"C void - TYPEDESC only"
-	self addClassConstant: 'VTNames' value: vtNames!
-
-nameOfVT: vartype
-	"Answer the symbolic name of the specified variant type code."
-
-	| vtName |
-	vtName := VTNames at: vartype + 1.
-	^vtName == #badVarType ifTrue: [VTNames errorNotFound: vartype] ifFalse: [vtName]!
-
-null
-	"Answer a null (VT_NULL) instance of the receiver. This is not the same
-	as a nil, (VT_EMPTY) instance."
-
-	^self new
-		vt: VT_NULL;
-		yourself!
-
-typeName
-	"Private - Answer the Dolphin external type name for the receiver.
-	There is an appropriate built-in type which we can substitute."
-
-	^#variant!
-
-uninitialize
-	"Private - Uninitialize the receiver prior to its removal from the image."
-
-	Unspecified := nil.
-	"The VM only needs a ref to certain classes to implement the VARIANT>>value primitive, so these can be
-	 cleared out if this class is removed."
-	self externalTypeNames do: [:each | VM registryAt: each asSymbol put: nil].
-	VM registryAt: self name put: nil!
-
-unspecified
-	"Answer an instance of the receiver appropriate to use as an unspecified optional argument."
-
-	^Unspecified!
-
-vt
-	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
-	type when represented in a <VARIANT>."
-
-	^VT_VARIANT! !
+		at: VT_VOID+1			put: #void;			"C void - TYPEDESC only"
+		yourself! !
 !OS.COM.VARIANT class categoriesForMethods!
 byteSize!**compiled accessors**!constants!public! !
 classForVT:!enquiries!public! !
@@ -1217,13 +1199,13 @@ fromUnknown:!instance creation!public! !
 getFieldNames!**compiled accessors**!constants!private! !
 init:!initializing!public! !
 initialize!development!initializing!private! !
-initializeVTClasses!initializing!must not strip!private! !
-initializeVTNames!initializing!must not strip!private! !
 nameOfVT:!enquiries!public! !
 null!instance creation!public! !
 typeName!constants!private! !
 uninitialize!class hierarchy-removing!private! !
 unspecified!instance creation!public! !
 vt!constants!public! !
+vtClasses!constants!private! !
+vtNames!constants!must not strip!private! !
 !
 

@@ -30,6 +30,7 @@ package setPrerequisites: #(
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
 	'..\..\..\Contributions\Refactory\RBNamespaces'
 	'..\..\Samples\MVP\RegEdit\RegEdit'
+	'..\..\Samples\ActiveX\Web Browser\Simple Web Browser'
 ).
 
 package!

@@ -38,13 +38,10 @@ package setMethodNames: #(
 	#(#{Core.ByteArray class} #fieldType:indirections:)
 	#(#{Core.ByteArray class} #pointerFieldType)
 	#(#{Core.ByteArray class} #printStructField:indirections:on:)
-	#(#{Core.GUID class} #arrayType:)
 	#(#{Core.GUID class} #elementType:)
 	#(#{Core.GUID class} #newToClipboard)
 	#(#{Core.GUID class} #printMethodArgument:elemdesc:indirections:on:for:)
 	#(#{Core.GUID class} #printStructField:indirections:on:)
-	#(#{Core.String class} #arrayType)
-	#(#{Core.String class} #arrayType:)
 	#(#{Core.String class} #elementType:)
 	#(#{Core.String class} #printMethodArgument:elemdesc:indirections:on:for:)
 	#(#{Core.String class} #printStructField:indirections:on:)
@@ -54,14 +51,10 @@ package setMethodNames: #(
 	#(#{External.ArrayPointerField class} #printVariable:type:indirections:on:)
 	#(#{External.BOOL class} #fieldType)
 	#(#{External.BOOLEAN class} #fieldType)
-	#(#{External.BYTE class} #arrayType)
 	#(#{External.BYTE class} #fieldType)
-	#(#{External.DOUBLE class} #arrayType)
 	#(#{External.DOUBLE class} #fieldType)
-	#(#{External.DWORD class} #arrayType)
 	#(#{External.DWORD class} #fieldType)
 	#(#{External.DynamicLinkLibrary} #DllRegisterServer)
-	#(#{External.ExternalArray class} #arrayType)
 	#(#{External.ExternalArray class} #fieldType)
 	#(#{External.ExternalArray class} #fieldType:indirections:)
 	#(#{External.ExternalArray class} #pointerFieldType)
@@ -72,13 +65,10 @@ package setMethodNames: #(
 	#(#{External.Field class} #printTypedField:on:)
 	#(#{External.Field class} #printVariable:type:indirections:on:)
 	#(#{External.Field class} #warningMultiDimensionArray:)
-	#(#{External.FLOAT class} #arrayType)
 	#(#{External.FLOAT class} #fieldType)
 	#(#{External.FLOAT class} #printDefaultValue:on:)
-	#(#{External.Handle class} #arrayType:)
 	#(#{External.Handle class} #fieldType)
 	#(#{External.Handle class} #printMethodArgument:elemdesc:indirections:on:for:)
-	#(#{External.INT_PTR class} #arrayType)
 	#(#{External.INT_PTR class} #fieldType)
 	#(#{External.IntegerBytes class} #fieldType)
 	#(#{External.POINT} #printOn:)
@@ -87,12 +77,8 @@ package setMethodNames: #(
 	#(#{External.PointerArrayField class} #printVariable:type:indirections:on:)
 	#(#{External.PointerField class} #printVariable:type:indirections:on:)
 	#(#{External.QWORD class} #fieldType)
-	#(#{External.SBYTE class} #arrayType)
 	#(#{External.SBYTE class} #fieldType)
-	#(#{External.SDWORD class} #arrayType)
 	#(#{External.SDWORD class} #fieldType)
-	#(#{External.Structure class} #arrayType)
-	#(#{External.Structure class} #arrayType:)
 	#(#{External.Structure class} #elementType:)
 	#(#{External.Structure class} #fieldType)
 	#(#{External.Structure class} #fieldType:indirections:)
@@ -108,17 +94,13 @@ package setMethodNames: #(
 	#(#{External.StructureArrayField class} #printVariable:type:indirections:on:)
 	#(#{External.StructureArrayPointerField class} #printVariable:type:indirections:on:)
 	#(#{External.StructureField class} #printVariable:type:indirections:on:)
-	#(#{External.SWORD class} #arrayType)
 	#(#{External.SWORD class} #fieldType)
-	#(#{External.UINT_PTR class} #arrayType)
 	#(#{External.UINT_PTR class} #fieldType)
 	#(#{External.UInt32Bytes class} #fieldType)
 	#(#{External.UInt64Bytes class} #fieldType)
 	#(#{External.UIntPtrBytes class} #fieldType)
-	#(#{External.VOID class} #arrayType)
 	#(#{External.VOID class} #fieldType)
 	#(#{External.VOID class} #pointerFieldType)
-	#(#{External.WORD class} #arrayType)
 	#(#{External.WORD class} #fieldType)
 	#(#{OS.COM class} #icon)
 	#(#{OS.COM.AbstractDispatchImplementation class} #icon)
@@ -298,14 +280,12 @@ package setMethodNames: #(
 	#(#{OS.COM.StructureTypeAnalyzer} #printNamedFieldDefinition:offset:prefix:hidden:on:)
 	#(#{OS.COM.StructureTypeAnalyzer class} #icon)
 	#(#{OS.COM.StructureTypeAnalyzer class} #publishedAspectsOfInstances)
-	#(#{OS.COM.TKindAliasAnalyzer} #generateVariableDefinition:)
 	#(#{OS.COM.TKindAliasAnalyzer} #generateWrapper)
 	#(#{OS.COM.TKindAliasAnalyzer} #idlAttributes)
 	#(#{OS.COM.TKindAliasAnalyzer} #idlKeyword)
 	#(#{OS.COM.TKindAliasAnalyzer} #printClassCommentPreambleOn:)
 	#(#{OS.COM.TKindAliasAnalyzer} #printIDLBodyOn:indent:)
 	#(#{OS.COM.TKindAliasAnalyzer} #printIDLOn:indent:)
-	#(#{OS.COM.TKindCoclassAnalyzer} #generateVariableDefinition:)
 	#(#{OS.COM.TKindCoclassAnalyzer} #generateWrapper)
 	#(#{OS.COM.TKindCoclassAnalyzer} #idlAttributes)
 	#(#{OS.COM.TKindCoclassAnalyzer} #idlKeyword)
@@ -418,7 +398,6 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeInfoAnalyzer} #generateConstantsIntoPool:)
 	#(#{OS.COM.TypeInfoAnalyzer} #generateInstanceSide:)
 	#(#{OS.COM.TypeInfoAnalyzer} #generateVariableDefinition)
-	#(#{OS.COM.TypeInfoAnalyzer} #generateVariableDefinition:)
 	#(#{OS.COM.TypeInfoAnalyzer} #generateWrapper)
 	#(#{OS.COM.TypeInfoAnalyzer} #generationFlags)
 	#(#{OS.COM.TypeInfoAnalyzer} #guidCheck:)
@@ -499,12 +478,9 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeLibraryAnalyzer} #aliasFor:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #binding)
 	#(#{OS.COM.TypeLibraryAnalyzer} #checkConformanceOfExistingPool:)
-	#(#{OS.COM.TypeLibraryAnalyzer} #constantsPoolBinding)
-	#(#{OS.COM.TypeLibraryAnalyzer} #constantsPoolName)
 	#(#{OS.COM.TypeLibraryAnalyzer} #constantsPoolName:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #defaultNamespaceImports)
 	#(#{OS.COM.TypeLibraryAnalyzer} #defaultPackageFolder)
-	#(#{OS.COM.TypeLibraryAnalyzer} #definesSymbolicConstants)
 	#(#{OS.COM.TypeLibraryAnalyzer} #environment)
 	#(#{OS.COM.TypeLibraryAnalyzer} #fullyQualifiedName)
 	#(#{OS.COM.TypeLibraryAnalyzer} #generatableInterfaces)
@@ -530,6 +506,7 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeLibraryAnalyzer} #moveClassToPackage:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #namespaceBinding)
 	#(#{OS.COM.TypeLibraryAnalyzer} #namespaceImports)
+	#(#{OS.COM.TypeLibraryAnalyzer} #newPool:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #package)
 	#(#{OS.COM.TypeLibraryAnalyzer} #package:)
 	#(#{OS.COM.TypeLibraryAnalyzer} #packageCheck:)
@@ -545,6 +522,7 @@ package setMethodNames: #(
 	#(#{OS.COM.TypeLibraryAnalyzer class} #example2)
 	#(#{OS.COM.TypeLibraryAnalyzer class} #example3)
 	#(#{OS.COM.TypeLibraryAnalyzer class} #fileTypes)
+	#(#{OS.COM.TypeLibraryAnalyzer class} #fromRegistration:)
 	#(#{OS.COM.TypeLibraryAnalyzer class} #icon)
 	#(#{OS.COM.TypeLibraryAnalyzer class} #open)
 	#(#{OS.COM.TypeLibraryAnalyzer class} #publishedAspectsOfInstances)
@@ -687,12 +665,6 @@ printStructField:indirections:on:!private! !
 
 !Core.GUID class methodsFor!
 
-arrayType: indirs
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type with the specified number of indirections."
-
-	^indirs == 0 ifTrue: [External.StructureArray] ifFalse: [External.PointerArray]!
-
 elementType: indirs
 	"Private - Answer the <ExternalStructure> class to represent array elements of this 
 	external type with the <integer> indirections, indirs."
@@ -758,7 +730,6 @@ printStructField: aVARDESC indirections: anInteger on: aCodeGenerationContext
 		indirections: anInteger
 		on: aCodeGenerationContext! !
 !Core.GUID class categoriesForMethods!
-arrayType:!constants!private! !
 elementType:!constants!private! !
 newToClipboard!public! !
 printMethodArgument:elemdesc:indirections:on:for:!private! !
@@ -766,17 +737,6 @@ printStructField:indirections:on:!private! !
 !
 
 !Core.String class methodsFor!
-
-arrayType
-	^self!
-
-arrayType: indirs
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type with the specified number of indirections.
-	Note that in the case of a String, one level of indirection is implied, and therefore we
-	always use the PointerArray type."
-
-	^External.PointerArray!
 
 elementType: indirs
 	"Private - Answer the <ExternalStructure> class to represent array elements of this 
@@ -867,8 +827,6 @@ printStructField: aVARDESC indirections: anInteger on: aCodeGenerationContext
 				type: self
 				on: aCodeGenerationContext]! !
 !Core.String class categoriesForMethods!
-arrayType!constants!private! !
-arrayType:!constants!private! !
 elementType:!constants!private! !
 printMethodArgument:elemdesc:indirections:on:for:!private! !
 printStructField:indirections:on:!private! !
@@ -963,29 +921,16 @@ fieldType!constants!private! !
 
 !External.BYTE class methodsFor!
 
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^ExternalArray!
-
 fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in other
 	structures."
 
 	^BYTEField! !
 !External.BYTE class categoriesForMethods!
-arrayType!constants!private! !
 fieldType!constants!private! !
 !
 
 !External.DOUBLE class methodsFor!
-
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^DOUBLEArray!
 
 fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
@@ -993,17 +938,10 @@ fieldType
 
 	^DOUBLEField! !
 !External.DOUBLE class categoriesForMethods!
-arrayType!constants!private! !
 fieldType!constants!private! !
 !
 
 !External.DWORD class methodsFor!
-
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^DWORDArray!
 
 fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
@@ -1011,7 +949,6 @@ fieldType
 
 	^DWORDField! !
 !External.DWORD class categoriesForMethods!
-arrayType!constants!private! !
 fieldType!constants!private! !
 !
 
@@ -1025,9 +962,6 @@ DllRegisterServer!operations!private! !
 !
 
 !External.ExternalArray class methodsFor!
-
-arrayType
-	^self!
 
 fieldType
 	^ArrayField!
@@ -1046,7 +980,6 @@ fieldType: aVARDESC indirections: anInteger
 pointerFieldType
 	^ArrayPointerField! !
 !External.ExternalArray class categoriesForMethods!
-arrayType!constants!private! !
 fieldType!constants!private! !
 fieldType:indirections:!private! !
 pointerFieldType!constants!private! !
@@ -1148,12 +1081,6 @@ warningMultiDimensionArray:!generating!private! !
 
 !External.FLOAT class methodsFor!
 
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^FLOATArray!
-
 fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
 	other structures."
@@ -1164,18 +1091,11 @@ printDefaultValue: aVARIANT on: aPuttableStream
 	self assert: [aVARIANT vt == self vt].
 	aVARIANT value printOn: aPuttableStream significantFigures: 8! !
 !External.FLOAT class categoriesForMethods!
-arrayType!constants!private! !
 fieldType!constants!private! !
 printDefaultValue:on:!helpers!private! !
 !
 
 !External.Handle class methodsFor!
-
-arrayType: indirs
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type with the specified number of indirections."
-
-	^indirs == 0 ifTrue: [HandleArray] ifFalse: [PointerArray]!
 
 fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
@@ -1202,18 +1122,11 @@ printMethodArgument: aString elemdesc: anELEMDESC indirections: anInteger on: aP
 				space;
 				display: #new]! !
 !External.Handle class categoriesForMethods!
-arrayType:!constants!private! !
 fieldType!constants!development!private! !
 printMethodArgument:elemdesc:indirections:on:for:!private! !
 !
 
 !External.INT_PTR class methodsFor!
-
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^INT_PTRArray!
 
 fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
@@ -1221,7 +1134,6 @@ fieldType
 
 	^INT_PTRField! !
 !External.INT_PTR class categoriesForMethods!
-arrayType!constants!private! !
 fieldType!constants!private! !
 !
 
@@ -1310,29 +1222,16 @@ fieldType!constants!private! !
 
 !External.SBYTE class methodsFor!
 
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^SBYTEArray!
-
 fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
 	other structures."
 
 	^SBYTEField! !
 !External.SBYTE class categoriesForMethods!
-arrayType!constants!private! !
 fieldType!constants!private! !
 !
 
 !External.SDWORD class methodsFor!
-
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^SDWORDArray!
 
 fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
@@ -1340,24 +1239,10 @@ fieldType
 
 	^SDWORDField! !
 !External.SDWORD class categoriesForMethods!
-arrayType!constants!private! !
 fieldType!constants!private! !
 !
 
 !External.Structure class methodsFor!
-
-arrayType
-	"Private - Answer the <ExternalArray> class to be used to represent C arrays of the receiver's type.
-	The generic <StructureArray> can actually handle most types, but this may be overridden
-	for increased efficiency."
-
-	^StructureArray!
-
-arrayType: indirs
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type with the specified number of indirections."
-
-	^indirs == 0 ifTrue: [self arrayType] ifFalse: [PointerArray]!
 
 elementType: indirs
 	"Private - Answer the <ExternalStructure> class to represent array elements of this 
@@ -1482,8 +1367,6 @@ unspecifiedParameterValue
 		vt: self vt;
 		yourself! !
 !External.Structure class categoriesForMethods!
-arrayType!constants!private! !
-arrayType:!constants!private! !
 elementType:!constants!private! !
 fieldType!constants!private! !
 fieldType:indirections:!private! !
@@ -1559,29 +1442,16 @@ printVariable:type:indirections:on:!private! !
 
 !External.SWORD class methodsFor!
 
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^SWORDArray!
-
 fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
 	other structures."
 
 	^SWORDField! !
 !External.SWORD class categoriesForMethods!
-arrayType!constants!private! !
 fieldType!constants!private! !
 !
 
 !External.UINT_PTR class methodsFor!
-
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^UINT_PTRArray!
 
 fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
@@ -1589,7 +1459,6 @@ fieldType
 
 	^UINT_PTRField! !
 !External.UINT_PTR class categoriesForMethods!
-arrayType!constants!private! !
 fieldType!constants!private! !
 !
 
@@ -1628,15 +1497,6 @@ fieldType!constants!development!private! !
 
 !External.VOID class methodsFor!
 
-arrayType
-	"Private - Answer the <ExternalArray> class to be used to represent C arrays of the receiver's type."
-
-	"Implementation Note: Embedded arrays of <VOID> are not valid, since no size is known,
-	however where a field is a void* pointer to a conformant array, we assume it is pointing at
-	bytes."
-
-	^ExternalArray!
-
 fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
 	other structures. VOID is of course only valid when indirected."
@@ -1649,18 +1509,11 @@ pointerFieldType
 
 	^LPVOIDField! !
 !External.VOID class categoriesForMethods!
-arrayType!constants!private! !
 fieldType!constants!private! !
 pointerFieldType!constants!private! !
 !
 
 !External.WORD class methodsFor!
-
-arrayType
-	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
-	represent arrays of the receiver's field type in other structures."
-
-	^WORDArray!
 
 fieldType
 	"Private - Answer the <ExternalField> type to be used to represent the receiver's field type in 
@@ -1668,7 +1521,6 @@ fieldType
 
 	^WORDField! !
 !External.WORD class categoriesForMethods!
-arrayType!constants!private! !
 fieldType!constants!private! !
 !
 
@@ -3970,12 +3822,6 @@ publishedAspectsOfInstances!constants!public! !
 
 !OS.COM.TKindAliasAnalyzer methodsFor!
 
-generateVariableDefinition: aVariableBinding
-	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
-	if not heard, in the development environment."
-
-	^self shouldNotImplement!
-
 generateWrapper
 	"Private - Generate appropriate Dolphin objects to wrap the type described
 	by the receiver. There is no wrapper for alias types in Dolphin, but we can
@@ -4025,7 +3871,6 @@ printIDLOn: target indent: tabs
 		ifTrue: [tabs > 0 ifTrue: [target crtab: tabs] ifFalse: [target space]].
 	self printIDLBodyOn: target indent: tabs! !
 !OS.COM.TKindAliasAnalyzer categoriesForMethods!
-generateVariableDefinition:!private! !
 generateWrapper!private! !
 idlAttributes!printing-IDL!private! !
 idlKeyword!constants!private! !
@@ -4035,12 +3880,6 @@ printIDLOn:indent:!printing-IDL!public! !
 !
 
 !OS.COM.TKindCoclassAnalyzer methodsFor!
-
-generateVariableDefinition: aVariableBinding
-	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
-	if not heard, in the development environment."
-
-	^self shouldNotImplement!
 
 generateWrapper
 	"Private - Generate appropriate Dolphin objects to wrap the type described
@@ -4102,7 +3941,6 @@ printIDLBodyOn: target indent: tabs
 		nextPutAll: '};';
 		cr! !
 !OS.COM.TKindCoclassAnalyzer categoriesForMethods!
-generateVariableDefinition:!private! !
 generateWrapper!private! !
 idlAttributes!printing-IDL!private! !
 idlKeyword!constants!private! !
@@ -5706,12 +5544,6 @@ generateVariableDefinition
 
 	^self generateVariableDefinition: self binding!
 
-generateVariableDefinition: aVariableBinding
-	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
-	if not heard, in the development environment."
-
-	^self subclassResponsibility!
-
 generateWrapper
 	"Private - Generate a new subclass of IDispatch that wraps the properties and methods 
 	of the dispinterface described by the receiver's ITypeInfo.
@@ -6151,7 +5983,6 @@ generateClassSide:!private! !
 generateConstantsIntoPool:!private! !
 generateInstanceSide:!private! !
 generateVariableDefinition!private! !
-generateVariableDefinition:!private! !
 generateWrapper!private! !
 generationFlags!accessing!public! !
 guidCheck:!private! !
@@ -6648,25 +6479,6 @@ checkConformanceOfExistingPool: aVariableBinding
 
 	^(self isPoolCheck: aVariableBinding) and: [self packageCheck: aVariableBinding]!
 
-constantsPoolBinding
-	| customPoolName poolBinding |
-	customPoolName := self constantsPoolName.
-	(customPoolName isNil or: [customPoolName isEmpty]) ifTrue: [^self namespaceBinding].
-	self definesSymbolicConstants ifFalse: [^nil].
-	poolBinding := self resolveExistingPool: customPoolName.
-	poolBinding value isNil
-		ifTrue: 
-			[poolBinding := (SharedPool subclass: poolBinding fullName asSymbol) binding.
-			self addVariableToPackage: poolBinding].
-	constantsPoolName := poolBinding key.
-	^poolBinding!
-
-constantsPoolName
-	"Answer the name of the <SharedPool> into which all all of the constants and enumerated type values defined in this type library are to be placed. 
-	If nil or empty then any constants/enums are generated into the Namespace for the type library, which should generally be the preferred option."
-
-	^constantsPoolName!
-
 constantsPoolName: aString
 	"Set the name of the <SharedPool> into which all of the constants and enumerated type values defined in this type library are to be placed."
 
@@ -6679,10 +6491,6 @@ defaultNamespaceImports
 
 defaultPackageFolder
 	^Tools.PackageFolder dolphinRootPathname , 'Object Arts\Dolphin\ActiveX\Components'!
-
-definesSymbolicConstants
-	^self enums notEmpty 
-		or: [self modules anySatisfy: [:eachModule | eachModule constants notEmpty]]!
 
 environment
 	^self namespaceBinding value!
@@ -6925,6 +6733,12 @@ namespaceImports
 
 	^self defaultNamespaceImports!
 
+newPool: aSymbol
+	| newBinding |
+	newBinding := (SharedPool subclass: aSymbol) binding.
+	self addVariableToPackage: newBinding.
+	^newBinding!
+
 package
 	"Answer the package into which wrapper classes for the receiver should be generated.
 	The default behaviour is to answer a package with the same name as the type library, 
@@ -7131,12 +6945,9 @@ addVariableToPackage:!must strip!private! !
 aliasFor:!helpers!private! !
 binding!accessing!private! !
 checkConformanceOfExistingPool:!public!testing! !
-constantsPoolBinding!private! !
-constantsPoolName!accessing!public! !
 constantsPoolName:!accessing!public! !
 defaultNamespaceImports!accessing!private! !
 defaultPackageFolder!accessing!public! !
-definesSymbolicConstants!private!updating! !
 environment!accessing!public! !
 fullyQualifiedName!accessing!public! !
 generatableInterfaces!enumerating!public! !
@@ -7162,6 +6973,7 @@ maybeChangeNamespaceOf:!generating!private! !
 moveClassToPackage:!helpers!private! !
 namespaceBinding!accessing!public! !
 namespaceImports!accessing!private! !
+newPool:!accessing!private! !
 package!accessing!public! !
 package:!accessing!public! !
 packageCheck:!helpers!private! !
@@ -7335,6 +7147,15 @@ fileTypes
 		('Type Libraries (*.tlb,*.olb)' '*.tlb;*.olb')
 		('All Files (*.*)' '*.*'))!
 
+fromRegistration: registration
+	"Answer an instance of the receiver loaded from the <TypeLibRegistration>  argument."
+
+	^self
+		load: registration libid
+		major: registration majorVersion
+		minor: registration minorVersion
+		locale: NlsConstants.LOCALE_SYSTEM_DEFAULT!
+
 icon
 	"Answers an <Icon> that can be used to represent this class"
 
@@ -7435,6 +7256,7 @@ example1!examples!must strip!public! !
 example2!examples!public! !
 example3!examples!must strip!public! !
 fileTypes!constants!public! !
+fromRegistration:!instance creation!public! !
 icon!constants!public! !
 open!instance creation!public! !
 publishedAspectsOfInstances!constants!public! !

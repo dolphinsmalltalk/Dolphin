@@ -104,10 +104,27 @@ name
 
 	^self basicName!
 
+namespaceBinding
+	^self binding environment binding!
+
+newPool: aSymbol
+	^self shouldNotImplement!
+
 realize
 	"Private - Load the receiver's COM interface from its owning type library."
 
 	^self subclassResponsibility!
+
+resolveExistingPool: aString
+	"Private - Attempt to locate an existing constants pool which belongs to the receiver with the <readableString> name argument."
+
+	| env |
+	env := self environment.
+	^(env localBindingFor: aString)
+		ifNil: 
+			[(VariableBinding key: aString value: nil)
+				environment: env;
+				yourself]!
 
 suggestedGlobalName
 	"Private - Answer a <readableString> name suggested as the (unprefixed) for a global
@@ -144,7 +161,10 @@ isHidden!public!testing! !
 isNull!public!testing! !
 isRestricted!public!testing! !
 name!accessing!public! !
+namespaceBinding!accessing!public! !
+newPool:!accessing!private! !
 realize!private!realizing/unrealizing! !
+resolveExistingPool:!private! !
 suggestedGlobalName!accessing!private! !
 tlbInterface!accessing!private! !
 variableName!accessing!public! !

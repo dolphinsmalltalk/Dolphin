@@ -94,6 +94,7 @@ package setMethodNames: #(
 	#(#{Core.DateAndTime} #asVariant)
 	#(#{Core.Float} #asVariant)
 	#(#{Core.Fraction} #asVariant)
+	#(#{Core.GUID class} #arrayType:)
 	#(#{Core.GUID class} #typeName)
 	#(#{Core.Integer} #asVariant)
 	#(#{Core.LargeInteger} #asVariant)
@@ -102,6 +103,8 @@ package setMethodNames: #(
 	#(#{Core.ScaledDecimal} #asVariant)
 	#(#{Core.SmallInteger} #asVariant)
 	#(#{Core.String} #asVariant)
+	#(#{Core.String class} #arrayType)
+	#(#{Core.String class} #arrayType:)
 	#(#{Core.String class} #pointerType)
 	#(#{Core.String class} #typeName)
 	#(#{Core.String class} #vt)
@@ -115,18 +118,25 @@ package setMethodNames: #(
 	#(#{External.Address class} #vt)
 	#(#{External.BOOL class} #typeName)
 	#(#{External.BOOLEAN class} #typeName)
+	#(#{External.BYTE class} #arrayType)
 	#(#{External.BYTE class} #typeName)
 	#(#{External.BYTE class} #vt)
+	#(#{External.DOUBLE class} #arrayType)
 	#(#{External.DOUBLE class} #typeName)
 	#(#{External.DOUBLE class} #vt)
+	#(#{External.DWORD class} #arrayType)
 	#(#{External.DWORD class} #typeName)
 	#(#{External.DWORD class} #vt)
 	#(#{External.ExternalArray} #asSAFEARRAY)
 	#(#{External.ExternalArray} #asVariant)
+	#(#{External.ExternalArray class} #arrayType)
 	#(#{External.ExternalArray class} #vt)
+	#(#{External.FLOAT class} #arrayType)
 	#(#{External.FLOAT class} #typeName)
 	#(#{External.FLOAT class} #vt)
+	#(#{External.Handle class} #arrayType:)
 	#(#{External.Handle class} #typeName)
+	#(#{External.INT_PTR class} #arrayType)
 	#(#{External.INT_PTR class} #typeName)
 	#(#{External.INT_PTR class} #vt)
 	#(#{External.INTEGER class} #typeName)
@@ -134,14 +144,18 @@ package setMethodNames: #(
 	#(#{External.LPVOID class} #typeName)
 	#(#{External.LPVOID class} #vt)
 	#(#{External.QWORD class} #vt)
+	#(#{External.SBYTE class} #arrayType)
 	#(#{External.SBYTE class} #typeName)
 	#(#{External.SBYTE class} #vt)
 	#(#{External.SCALAR} #asVariant)
+	#(#{External.SDWORD class} #arrayType)
 	#(#{External.SDWORD class} #typeName)
 	#(#{External.SDWORD class} #vt)
 	#(#{External.Structure} #asVariant)
 	#(#{External.Structure} #recordInfo)
 	#(#{External.Structure} #vt)
+	#(#{External.Structure class} #arrayType)
+	#(#{External.Structure class} #arrayType:)
 	#(#{External.Structure class} #classForGUID:ifNone:)
 	#(#{External.Structure class} #clearGuid)
 	#(#{External.Structure class} #finalRelease)
@@ -176,12 +190,16 @@ package setMethodNames: #(
 	#(#{External.Structure class} #typeLib)
 	#(#{External.Structure class} #typeName)
 	#(#{External.Structure class} #vt)
+	#(#{External.SWORD class} #arrayType)
 	#(#{External.SWORD class} #typeName)
 	#(#{External.SWORD class} #vt)
+	#(#{External.UINT_PTR class} #arrayType)
 	#(#{External.UINT_PTR class} #typeName)
 	#(#{External.UINT_PTR class} #vt)
+	#(#{External.VOID class} #arrayType)
 	#(#{External.VOID class} #typeName)
 	#(#{External.VOID class} #vt)
+	#(#{External.WORD class} #arrayType)
 	#(#{External.WORD class} #typeName)
 	#(#{External.WORD class} #vt)
 	#(#{Kernel.SmalltalkLocale} #variantBool:)
@@ -1101,11 +1119,18 @@ asVariant!converting!public! !
 
 !Core.GUID class methodsFor!
 
+arrayType: indirs
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type with the specified number of indirections."
+
+	^indirs == 0 ifTrue: [External.StructureArray] ifFalse: [External.PointerArray]!
+
 typeName
 	"Private - Answer the Dolphin external type name associated with the receiver."
 
 	^self fullName! !
 !Core.GUID class categoriesForMethods!
+arrayType:!constants!private! !
 typeName!constants!private! !
 !
 
@@ -1187,6 +1212,17 @@ asVariant!converting!public! !
 
 !Core.String class methodsFor!
 
+arrayType
+	^self!
+
+arrayType: indirs
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type with the specified number of indirections.
+	Note that in the case of a String, one level of indirection is implied, and therefore we
+	always use the PointerArray type."
+
+	^External.PointerArray!
+
 pointerType
 	"Answer the <ExternalStructure> class to represent pointers to this external type with the
 	another indirection."
@@ -1205,6 +1241,8 @@ vt
 
 	^OS.COM.AutomationConstants.VT_LPSTR! !
 !Core.String class categoriesForMethods!
+arrayType!constants!private! !
+arrayType:!constants!private! !
 pointerType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
@@ -1307,6 +1345,12 @@ typeName!constants!private! !
 
 !External.BYTE class methodsFor!
 
+arrayType
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type in other structures."
+
+	^ExternalArray!
+
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
@@ -1319,11 +1363,18 @@ vt
 
 	^COM.AutomationConstants.VT_UI1! !
 !External.BYTE class categoriesForMethods!
+arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
 
 !External.DOUBLE class methodsFor!
+
+arrayType
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type in other structures."
+
+	^DOUBLEArray!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -1337,11 +1388,18 @@ vt
 
 	^COM.AutomationConstants.VT_R8! !
 !External.DOUBLE class categoriesForMethods!
+arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
 
 !External.DWORD class methodsFor!
+
+arrayType
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type in other structures."
+
+	^DWORDArray!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -1355,6 +1413,7 @@ vt
 
 	^COM.AutomationConstants.VT_UI4! !
 !External.DWORD class categoriesForMethods!
+arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
@@ -1377,16 +1436,26 @@ asVariant!converting!public! !
 
 !External.ExternalArray class methodsFor!
 
+arrayType
+	^self!
+
 vt
 	"Answer the VARTYPE (one of the VT_XXX constants) used to describe the receiver's 
 	type when represented in a <VARIANT>."
 
 	^COM.AutomationConstants.VT_CARRAY! !
 !External.ExternalArray class categoriesForMethods!
+arrayType!constants!private! !
 vt!constants!public! !
 !
 
 !External.FLOAT class methodsFor!
+
+arrayType
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type in other structures."
+
+	^FLOATArray!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -1400,11 +1469,18 @@ vt
 
 	^COM.AutomationConstants.VT_R4! !
 !External.FLOAT class categoriesForMethods!
+arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
 
 !External.Handle class methodsFor!
+
+arrayType: indirs
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type with the specified number of indirections."
+
+	^indirs == 0 ifTrue: [HandleArray] ifFalse: [PointerArray]!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -1412,10 +1488,17 @@ typeName
 
 	^#handle! !
 !External.Handle class categoriesForMethods!
+arrayType:!constants!private! !
 typeName!constants!private! !
 !
 
 !External.INT_PTR class methodsFor!
+
+arrayType
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type in other structures."
+
+	^INT_PTRArray!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -1431,6 +1514,7 @@ vt
 
 	^VMConstants.IsWin64 ifTrue: [COM.AutomationConstants.VT_I8] ifFalse: [COM.AutomationConstants.VT_I4]! !
 !External.INT_PTR class categoriesForMethods!
+arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
@@ -1485,6 +1569,12 @@ vt!constants!public! !
 
 !External.SBYTE class methodsFor!
 
+arrayType
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type in other structures."
+
+	^SBYTEArray!
+
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
@@ -1497,6 +1587,7 @@ vt
 
 	^COM.AutomationConstants.VT_I1! !
 !External.SBYTE class categoriesForMethods!
+arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
@@ -1515,6 +1606,12 @@ asVariant!converting!public! !
 
 !External.SDWORD class methodsFor!
 
+arrayType
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type in other structures."
+
+	^SDWORDArray!
+
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
@@ -1527,6 +1624,7 @@ vt
 
 	^COM.AutomationConstants.VT_I4! !
 !External.SDWORD class categoriesForMethods!
+arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
@@ -1557,6 +1655,19 @@ vt!constants!private! !
 !
 
 !External.Structure class methodsFor!
+
+arrayType
+	"Private - Answer the <ExternalArray> class to be used to represent C arrays of the receiver's type.
+	The generic <StructureArray> can actually handle most types, but this may be overridden
+	for increased efficiency."
+
+	^StructureArray!
+
+arrayType: indirs
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type with the specified number of indirections."
+
+	^indirs == 0 ifTrue: [self arrayType] ifFalse: [PointerArray]!
 
 classForGUID: aGUID ifNone: exceptionHandler
 	"Private - Answer the <External.Structure> class (a subclass of the receiver) which
@@ -1955,6 +2066,8 @@ vt
 
 	^COM.AutomationConstants.VT_RECORD! !
 !External.Structure class categoriesForMethods!
+arrayType!constants!private! !
+arrayType:!constants!private! !
 classForGUID:ifNone:!enquiries!private! !
 clearGuid!accessing!private! !
 finalRelease!public!realizing/unrealizing! !
@@ -1993,6 +2106,12 @@ vt!constants!public! !
 
 !External.SWORD class methodsFor!
 
+arrayType
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type in other structures."
+
+	^SWORDArray!
+
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
 	There is an appropriate built-in type which we can substitute."
@@ -2005,11 +2124,18 @@ vt
 
 	^COM.AutomationConstants.VT_I2! !
 !External.SWORD class categoriesForMethods!
+arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
 
 !External.UINT_PTR class methodsFor!
+
+arrayType
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type in other structures."
+
+	^UINT_PTRArray!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -2025,11 +2151,21 @@ vt
 
 	^VMConstants.IsWin64 ifTrue: [COM.AutomationConstants.VT_UI8] ifFalse: [COM.AutomationConstants.VT_UI4]! !
 !External.UINT_PTR class categoriesForMethods!
+arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
 
 !External.VOID class methodsFor!
+
+arrayType
+	"Private - Answer the <ExternalArray> class to be used to represent C arrays of the receiver's type."
+
+	"Implementation Note: Embedded arrays of <VOID> are not valid, since no size is known,
+	however where a field is a void* pointer to a conformant array, we assume it is pointing at
+	bytes."
+
+	^ExternalArray!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -2043,11 +2179,18 @@ vt
 
 	^COM.AutomationConstants.VT_VOID! !
 !External.VOID class categoriesForMethods!
+arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !
 
 !External.WORD class methodsFor!
+
+arrayType
+	"Private - Answer the class of object (typically an <ExternalArray> subclass) to be used to 
+	represent arrays of the receiver's field type in other structures."
+
+	^WORDArray!
 
 typeName
 	"Private - Answer the Dolphin external type name for the receiver.
@@ -2061,6 +2204,7 @@ vt
 
 	^COM.AutomationConstants.VT_UI2! !
 !External.WORD class categoriesForMethods!
+arrayType!constants!private! !
 typeName!constants!private! !
 vt!constants!public! !
 !

@@ -72,6 +72,13 @@ testRegEdit
 	env := BrowserEnvironment new forPackagesDeployment: {UI.Examples.RegEdit owningPackage}.
 	self verifyPackageClosure: env missing: self simpleGuiAppUnimplementedMessages!
 
+testSimpleWebBrowser
+	"Uses WebView2 (and therefore COM)"
+
+	| env |
+	env := BrowserEnvironment new forPackagesDeployment: {OS.COM.Examples.WebBrowserShell owningPackage}.
+	self verifyPackageClosure: env missing: #(#ttmRelayEvent: #defineTemplate #evaluate:)!
+
 testSystemPackage
 	| aPackage |
 	aPackage := Object owningPackage.
@@ -97,6 +104,7 @@ testEtchASketch!public!unit tests! !
 testHelloWorld!public!unit tests! !
 testNotepad!public!unit tests! !
 testRegEdit!public!unit tests! !
+testSimpleWebBrowser!public!unit tests! !
 testSystemPackage!public!unit tests! !
 verifyPackageClosure:missing:!helpers!private! !
 !

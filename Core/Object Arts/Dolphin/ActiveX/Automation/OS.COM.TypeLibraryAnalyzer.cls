@@ -107,6 +107,22 @@ coclasses
 
 	^self selectTypeKind: TKIND_COCLASS!
 
+constantsPoolBinding
+	| customPoolName poolBinding |
+	customPoolName := self constantsPoolName.
+	(customPoolName isNil or: [customPoolName isEmpty]) ifTrue: [^self namespaceBinding].
+	self definesSymbolicConstants ifFalse: [^nil].
+	poolBinding := self resolveExistingPool: customPoolName.
+	poolBinding value isNil ifTrue: [poolBinding := self newPool: poolBinding fullName asSymbol].
+	constantsPoolName := poolBinding key.
+	^poolBinding!
+
+constantsPoolName
+	"Answer the name of the <SharedPool> into which all all of the constants and enumerated type values defined in this type library are to be placed. 
+	If nil or empty then any constants/enums are generated into the Namespace for the type library, which should generally be the preferred option."
+
+	^constantsPoolName!
+
 customInterfaces
 	"Answer a <collection> of all the custom interfaces in the receiver.
 	These are vtbl only interfaces."
@@ -119,6 +135,10 @@ defaultGenerationFlags
 	We also turn off the generation of a typelib variable and libraryAndIndex methods to refer back to the typelib object. These are not normally needed."
 
 	^LowercaseIdentifiers | NoTypeLib!
+
+definesSymbolicConstants
+	^self enums notEmpty 
+		or: [self modules anySatisfy: [:eachModule | eachModule constants notEmpty]]!
 
 dispatchableInterfaces
 	"Answer a <collection> of all the interfaces in the receiver 
@@ -594,8 +614,11 @@ buildTypeAnalyzers!accessing!private! !
 classBindingForGuid:!helpers!private! !
 clearCachedAnalyzers!initializing!public! !
 coclasses!enumerating!public! !
+constantsPoolBinding!accessing!private! !
+constantsPoolName!accessing!public! !
 customInterfaces!enumerating!public! !
 defaultGenerationFlags!constants!public! !
+definesSymbolicConstants!private!updating! !
 dispatchableInterfaces!enumerating!public! !
 dispinterfaces!enumerating!public! !
 displayOn:!displaying!public! !
@@ -662,15 +685,6 @@ allTypeLibs
 	currently registered in this image."
 
 	^TypeLibs asArray!
-
-fromRegistration: registration
-	"Answer an instance of the receiver loaded from the <TypeLibRegistration>  argument."
-
-	^self
-		load: registration libid
-		major: registration majorVersion
-		minor: registration minorVersion
-		locale: NlsConstants.LOCALE_SYSTEM_DEFAULT!
 
 initialize
 	"Private - Initialise the receiver's class variables.
@@ -801,7 +815,6 @@ uninitialize
 !OS.COM.TypeLibraryAnalyzer class categoriesForMethods!
 allOpenableTypeLibs!accessing!public! !
 allTypeLibs!accessing!public! !
-fromRegistration:!instance creation!public! !
 initialize!development!initializing!private! !
 load:major:minor:locale:!instance creation!public! !
 new!instance creation!public! !

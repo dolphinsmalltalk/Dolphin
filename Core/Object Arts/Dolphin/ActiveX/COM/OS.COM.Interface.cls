@@ -1094,7 +1094,7 @@ iid!accessing!public! !
 implementor:!instance creation!private! !
 initialize!development!initializing!private! !
 initializeAfterLoad!initializing!public! !
-initializeInterface!initializing!private! !
+initializeInterface!class initialization!private! !
 initializeRegister!initializing!private! !
 initializeTypeLib!initializing!private! !
 interfaceClasses!accessing!private! !

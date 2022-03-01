@@ -188,6 +188,12 @@ functionsByName
 	self functions do: [:each | answer add: each name -> each].
 	^answer!
 
+generateVariableDefinition: aVariableBinding
+	"Private - Generate a minimal definition of the receiver which will enable it to be seen,
+	if not heard, in the development environment."
+
+	^self shouldNotImplement!
+
 getImplTypeInfoAt: subscript 
 	"Answer an <AXInterfaceTypeInfo> describing the interface with the one-based <integer> 
 	index, subscript, in the receiver - this will be an implemented interface in the case of a 
@@ -443,6 +449,7 @@ fullyQualifiedName!constants!private! !
 funcDescAt:!accessing!private! !
 functions!enumerating!public! !
 functionsByName!enumerating!public! !
+generateVariableDefinition:!private! !
 getImplTypeInfoAt:!accessing!public! !
 getNamesOfMember:count:!accessing!private! !
 getRefType:!accessing!private! !
@@ -490,47 +497,7 @@ initialize
 		self initialize
 	"
 
-	self initializeVTtoIDLTypeMap!
-
-initializeVTtoIDLTypeMap
-	"Private - Initialize the map between VTs and the corresponding IDL type.
-		self initializeVTtoIDLTypeMap
-	Note that this dictionary only includes variant types which are documented as valid 
-	in a TYPEDESC."
-
-	| vtToIDLTypeMap |
-	vtToIDLTypeMap := Array new: VT_LPWSTR.
-	vtToIDLTypeMap
-				at: VT_BOOL put: 'VARIANT_BOOL';
-				at: VT_BSTR put: 'BSTR';
-				at: VT_CARRAY put: '[]';
-				at: VT_CY put: 'CURRENCY';
-				at: VT_DATE put: 'DATE';
-				at: VT_DECIMAL put: 'DECIMAL';
-				at: VT_DISPATCH put: 'IDispatch*';
-				at: VT_ERROR put: 'SCODE';
-				at: VT_HRESULT put: 'HRESULT';
-				at: VT_I1 put: 'char';
-				at: VT_I2 put: 'short';
-				at: VT_I4 put: 'long';
-				at: VT_I8 put: '__int64';
-				at: VT_INT put: 'int';
-				at: VT_LPSTR put: 'LPSTR';
-				at: VT_LPWSTR put: 'LPWSTR';
-				at: VT_PTR put: '*';
-				at: VT_R4 put: 'float';
-				at: VT_R8 put: 'double';
-				at: VT_SAFEARRAY put: 'SAFEARRAY*';
-				at: VT_UINT put: 'unsigned int';
-				at: VT_UI1 put: 'BYTE';
-				at: VT_UI2 put: 'unsigned short';
-				at: VT_UI4 put: 'unsigned long';
-				at: VT_UI8 put: 'unsigned __int64';
-				at: VT_UNKNOWN put: 'IUnknown*';
-				at: VT_USERDEFINED put: 'typedef';
-				at: VT_VARIANT put: 'VARIANT';
-				at: VT_VOID put: 'void'.
-	self addClassConstant: 'VTtoIDLTypeMap' value: vtToIDLTypeMap!
+	self addClassConstant: 'VTtoIDLTypeMap' value: self vtToIDLTypeMap!
 
 onTypeInfo: piTypeInfo
 	"Answer a sub-instance of the receiver of an appropriate class to wrap
@@ -616,10 +583,42 @@ typeKindToClassMap
 		at: TKIND_COCLASS + 1 put: TKindCoclassAnalyzer;
 		at: TKIND_ALIAS + 1 put: TKindAliasAnalyzer;
 		at: TKIND_UNION + 1 put: TKindUnionAnalyzer;
-		yourself)! !
+		yourself)!
+
+vtToIDLTypeMap
+	^(Array new: VT_LPWSTR)
+		at: VT_BOOL put: 'VARIANT_BOOL';
+		at: VT_BSTR put: 'BSTR';
+		at: VT_CARRAY put: '[]';
+		at: VT_CY put: 'CURRENCY';
+		at: VT_DATE put: 'DATE';
+		at: VT_DECIMAL put: 'DECIMAL';
+		at: VT_DISPATCH put: 'IDispatch*';
+		at: VT_ERROR put: 'SCODE';
+		at: VT_HRESULT put: 'HRESULT';
+		at: VT_I1 put: 'char';
+		at: VT_I2 put: 'short';
+		at: VT_I4 put: 'long';
+		at: VT_I8 put: '__int64';
+		at: VT_INT put: 'int';
+		at: VT_LPSTR put: 'LPSTR';
+		at: VT_LPWSTR put: 'LPWSTR';
+		at: VT_PTR put: '*';
+		at: VT_R4 put: 'float';
+		at: VT_R8 put: 'double';
+		at: VT_SAFEARRAY put: 'SAFEARRAY*';
+		at: VT_UINT put: 'unsigned int';
+		at: VT_UI1 put: 'BYTE';
+		at: VT_UI2 put: 'unsigned short';
+		at: VT_UI4 put: 'unsigned long';
+		at: VT_UI8 put: 'unsigned __int64';
+		at: VT_UNKNOWN put: 'IUnknown*';
+		at: VT_USERDEFINED put: 'typedef';
+		at: VT_VARIANT put: 'VARIANT';
+		at: VT_VOID put: 'void';
+		yourself! !
 !OS.COM.TypeInfoAnalyzer class categoriesForMethods!
 initialize!initializing!private! !
-initializeVTtoIDLTypeMap!initializing!private! !
 onTypeInfo:!instance creation!public! !
 onTypeInfo:typeLib:!instance creation!private! !
 onTypeInfo:typeLib:index:!instance creation!private! !
@@ -628,5 +627,6 @@ stbConvertToVersion1:!binary filing!public! !
 stbVersion!binary filing!constants!public! !
 typekind!constants!public! !
 typeKindToClassMap!constants!private! !
+vtToIDLTypeMap!initializing!private! !
 !
 
