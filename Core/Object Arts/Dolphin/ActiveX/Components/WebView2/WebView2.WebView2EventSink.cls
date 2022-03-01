@@ -54,6 +54,11 @@ source: anICoreWebView2EventSource interfaceClass: anICoreWebView2EventHandlerCl
 	interfaceClass := anICoreWebView2EventHandlerClass.
 	handler := aDyadicValuable!
 
+supportedInterfaces
+	"Answer the set of interface classes supported by the receiver."
+
+	^ICoreWebView2EventHandler allSubclasses reject: [:each | each isNonInstantiable]!
+
 unregister
 	interface ifNil: [^self].
 	interface unregister.
@@ -66,6 +71,7 @@ queryInterface:ifNone:!accessing!accessing-interfaces!public! !
 register!initializing!public! !
 source!accessing!private! !
 source:interfaceClass:handler:!initializing!private! !
+supportedInterfaces!constants!public! !
 unregister!public!realizing/unrealizing! !
 !
 

@@ -19,12 +19,18 @@ queryInterface: anInterfaceClass ifNone: exceptionHandler
 	(usually a class). If the receiver does not support the interface, answer the
 	result of evaluating the niladic valuable, exceptionHandler."
 
-	^(anInterfaceClass inheritsFrom: ICoreWebViewCompletedHandler)
+	^(anInterfaceClass inheritsFrom: ICoreWebView2CompletedHandler)
 		ifTrue: [anInterfaceClass on: self implementor: completionBlock]
-		ifFalse: [exceptionHandler value]! !
+		ifFalse: [exceptionHandler value]!
+
+supportedInterfaces
+	"Answer the set of interface classes supported by the receiver."
+
+	^ICoreWebView2CompletedHandler allSubclasses! !
 !WebView2.WebView2CompletionHandler categoriesForMethods!
 completionBlock:!initializing!private! !
 queryInterface:ifNone:!accessing!accessing-interfaces!public! !
+supportedInterfaces!constants!public! !
 !
 
 !WebView2.WebView2CompletionHandler class methodsFor!
