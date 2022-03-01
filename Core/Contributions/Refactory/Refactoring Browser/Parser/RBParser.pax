@@ -784,7 +784,7 @@ match: aNode inContext: aDictionary
 	count := arguments size.
 	count == otherArgs size ifFalse: [^false].
 	1 to: count
-		do: [:i | ((arguments at: i) match: (aNode arguments at: i) inContext: aDictionary) ifFalse: [^false]].
+		do: [:i | ((arguments at: i) match: (otherArgs at: i) inContext: aDictionary) ifFalse: [^false]].
 	^true!
 
 replaceContainmentSourceWith: aNode

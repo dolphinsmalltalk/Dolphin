@@ -25,6 +25,27 @@ testBadInterval
 					in: BasicLintRuleTestData class)
 			withMessage: 'Invalid source to extract'!
 
+testExtractBindingReference
+	| method source refactoring class start stop |
+	method := RefactoryTestDataApp compiledMethodAt: #refersToClassVariablePartiallyQualifiedBinding.
+	source := method getSource.
+	start := source indexOf: $#.
+	stop := source
+				nextIndexOf: $}
+				from: start
+				to: source size.
+	refactoring := ExtractMethodRefactoring
+				extract: (start to: stop)
+				from: method selector
+				in: method methodClass.
+	self setupMethodNameFor: refactoring toReturn: #foo.
+	self executeRefactoring: refactoring.
+	class := refactoring model classFor: method methodClass.
+	self assert: (class parseTreeFor: #foo)
+		equals: (self parseMethod: 'foo ^#{_.Tests.ClassToRename.ClassVar1} ').
+	self assert: (class parseTreeFor: method selector)
+		equals: (self parseMethod: '<1s> ^self foo binding' << method selector)!
+
 testExtractFailure
 	self
 		shouldFail: (ExtractMethodRefactoring
@@ -230,6 +251,7 @@ testNonExistantSelector
 		withMessage: 'BasicLintRuleTestData does not define #checkClass1:'! !
 !Refactory.Browser.Tests.ExtractMethodRefactoringTest categoriesForMethods!
 testBadInterval!failure tests!public! !
+testExtractBindingReference!failure tests!public! !
 testExtractFailure!failure tests!public! !
 testExtractFromMethodInCustomNamespace!failure tests!public! !
 testExtractMethodAtEndOfMethodThatNeedsReturn!public!tests! !

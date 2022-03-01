@@ -20,9 +20,8 @@ Kernel.StQualifiedReferenceNode comment: '`StQualifiedReferenceNode` is a kind o
 
 = anObject
 	self == anObject ifTrue: [^true].
-	^(anObject isKindOf: self class) and: 
-			[pathString = anObject pathString
-				and: [flags = anObject flags and: [self methodClass = anObject methodClass]]]!
+	^(anObject isKindOf: self class)
+		and: [pathString = anObject pathString and: [flags = anObject flags]]!
 
 acceptVisitor: aProgramNodeVisitor
 	^aProgramNodeVisitor visitQualifiedReferenceNode: self!
