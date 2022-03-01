@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2WebResourceResponseViewGetContentCompletedHandler
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2WebResourceResponseViewGetContentCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

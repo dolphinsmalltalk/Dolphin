@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2TrySuspendCompletedHandler
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2TrySuspendCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''

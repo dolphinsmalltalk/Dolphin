@@ -1,6 +1,6 @@
 ﻿"Filed out from Dolphin Smallalk"!
 
-ICoreWebViewCompletedHandler subclass: #ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler
+ICoreWebView2CompletedHandler subclass: #ICoreWebView2AddScriptToExecuteOnDocumentCreatedCompletedHandler
 	instanceVariableNames: ''
 	classVariableNames: ''
 	poolDictionaries: ''
