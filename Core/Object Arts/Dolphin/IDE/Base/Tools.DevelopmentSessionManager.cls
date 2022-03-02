@@ -421,11 +421,16 @@ preStart
 	This allows us to user-defined actions after the system source is available,
 	but before the windowing and process systems, etc, have been started."
 
-	| mb |
 	(File exists: PreStartFile) ifFalse: [^self].
-	mb := MessageBox new.
-	mb beTaskModal.
-	(mb confirm: 'File in "' , PreStartFile , '"?') 
+	"We can't use the TaskDialog here, so use the raw MessageBox API"
+	(User32
+		messageBox: nil
+		text: 'File in "' , PreStartFile , '"?'
+		caption: self applicationName
+		style: ##(MessageBoxConstants.MB_TASKMODAL | MessageBoxConstants.MB_SETFOREGROUND
+				| MessageBoxConstants.MB_YESNO)
+		icon: nil
+		instance: nil) == IDYES
 		ifTrue: [self class sourceManager fileIn: PreStartFile]!
 
 primaryStartup
