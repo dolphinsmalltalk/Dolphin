@@ -43,6 +43,7 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
+	'..\..\..\Dolphin\MVP\Base\Dolphin Base Dialogs'
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Dolphin\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'..\..\..\Dolphin\MVP\Views\Buttons\Dolphin Check Buttons'

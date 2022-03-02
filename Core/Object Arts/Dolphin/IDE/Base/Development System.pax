@@ -748,6 +748,7 @@ package setPrerequisites: #(
 	'..\..\System\Trace\Debug Trace Stream'
 	'..\..\Base\Dolphin'
 	'..\..\MVP\Presenters\Accelerator\Dolphin Accelerator Presenter'
+	'..\..\MVP\Base\Dolphin Base Dialogs'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'Dolphin Browser Environments'

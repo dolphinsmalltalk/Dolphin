@@ -273,6 +273,7 @@ package setPrerequisites: #(
 	'..\..\..\..\Contributions\Camp Smalltalk\Refactoring Browser\Refactorings\CSRefactorings'
 	'..\Base\Development System'
 	'..\..\Base\Dolphin'
+	'..\..\MVP\Base\Dolphin Base Dialogs'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'..\Base\Dolphin Change Objects'

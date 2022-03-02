@@ -1,7 +1,7 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
 Kernel.STLInFiler subclass: #'Kernel.STLClassCollector'
-	instanceVariableNames: 'classes'
+	instanceVariableNames: 'classes resourceIdentifiers'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
@@ -20,15 +20,26 @@ basicNext
 	^self readLiteralData!
 
 classes
-	^classes!
+	^self contents!
 
 collectClassOf: anObject
 	classes add: (anObject isBehavior ifTrue: [anObject instanceClass] ifFalse: [anObject basicClass]).
 	^anObject!
 
 contents
-	self basicNext.
+	[self atEnd] whileFalse: [self basicNext].
 	^classes!
+
+findResourceIdentifiers
+	| rids mapStream |
+	self contents.
+	rids := Set new.
+	mapStream := readMap asArray readStream.
+	[mapStream atEnd] whileFalse: 
+			[| next |
+			next := mapStream next.
+			next == UI.ResourceIdentifier ifTrue: [rids add: mapStream nextAvailable]].
+	^rids!
 
 initialize
 	"Private - Initialize the receiver."
@@ -64,16 +75,21 @@ register: anObject
 	"Private - Add anObject to the readMap, answering the index of the object in the map. This is important for some classes that might want to fixup the reference later."
 
 	self collectClassOf: anObject.
-	^readMap addAnsweringIndex: anObject! !
+	^readMap addAnsweringIndex: anObject!
+
+resourceIdentifiers
+	^resourceIdentifiers ifNil: [resourceIdentifiers := self findResourceIdentifiers]! !
 !Kernel.STLClassCollector categoriesForMethods!
 basicNext!accessing!private! !
-classes!accessing!private! !
+classes!accessing!public! !
 collectClassOf:!helpers!private! !
 contents!public! !
+findResourceIdentifiers!helpers!private! !
 initialize!initializing!private! !
 objectAt:!accessing!private! !
 readLiteralData!helpers!private! !
 register:!helpers!private! !
+resourceIdentifiers!accessing!public! !
 !
 
 !Kernel.STLClassCollector class methodsFor!

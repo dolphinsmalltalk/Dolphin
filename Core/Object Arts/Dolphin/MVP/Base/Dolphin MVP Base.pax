@@ -86,8 +86,6 @@ package setClassNames: #(
 	#{UI.DefaultShellSessionManager}
 	#{UI.DelegatingCommandPolicy}
 	#{UI.DesktopView}
-	#{UI.Dialog}
-	#{UI.DialogView}
 	#{UI.DisplayMonitor}
 	#{UI.DividerMenuItem}
 	#{UI.DoubleBufferedView}
@@ -143,7 +141,6 @@ package setClassNames: #(
 	#{UI.StaticView}
 	#{UI.STBViewProxy}
 	#{UI.ValueConvertingControlView}
-	#{UI.ValueDialog}
 	#{UI.ValuePresenter}
 	#{UI.View}
 	#{UI.ViewState}
@@ -1743,20 +1740,6 @@ UI.Presenter subclass: #'UI.ValuePresenter'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-UI.Shell subclass: #'UI.Dialog'
-	instanceVariableNames: 'confirmed ownerView'
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {
-		'ValidationTimerId' -> 16r101
-	}!
-UI.Dialog subclass: #'UI.ValueDialog'
-	instanceVariableNames: ''
-	classVariableNames: ''
-	imports: #()
-	classInstanceVariableNames: ''
-	classConstants: {}!
 Core.SessionManager subclass: #'UI.GUISessionManager'
 	instanceVariableNames: 'savedWindows'
 	classVariableNames: ''
@@ -2195,14 +2178,6 @@ UI.ContainerView subclass: #'UI.ShellView'
 	classConstants: {
 		'DefaultButtonIndex' -> 16r14.
 		'TransientMask' -> 16r1
-	}!
-UI.ShellView subclass: #'UI.DialogView'
-	instanceVariableNames: 'endModal isModal oldWndProc'
-	classVariableNames: ''
-	imports: #(#{OS.ThemeConstants})
-	classInstanceVariableNames: ''
-	classConstants: {
-		'InProcLoopMask' -> 16r100000
 	}!
 UI.ShellView subclass: #'UI.Splash'
 	instanceVariableNames: 'splashDelay bitmap overlayWith'

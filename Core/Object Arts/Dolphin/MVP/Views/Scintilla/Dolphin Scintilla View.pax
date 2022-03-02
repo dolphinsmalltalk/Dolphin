@@ -86,6 +86,7 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'..\..\..\Base\Dolphin'
 	'..\..\..\Base\Dolphin Additional Sort Algorithms'
+	'..\..\Base\Dolphin Base Dialogs'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Presenters\Boolean\Dolphin Boolean Presenter'
 	'..\Buttons\Dolphin Check Buttons'

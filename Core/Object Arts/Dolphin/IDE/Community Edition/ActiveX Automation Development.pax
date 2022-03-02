@@ -548,6 +548,7 @@ package setPrerequisites: #(
 	'..\..\ActiveX\Automation\ActiveX Automation'
 	'..\Base\Development System'
 	'..\..\Base\Dolphin'
+	'..\..\MVP\Base\Dolphin Base Dialogs'
 	'..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'..\..\MVP\Views\Cards\Dolphin Card Containers'

@@ -64,6 +64,7 @@ package globalAliases: (Set new
 
 package setPrerequisites: #(
 	'..\..\Object Arts\Dolphin\Base\Dolphin'
+	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Base Dialogs'
 	'..\..\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\Object Arts\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\Object Arts\Dolphin\Base\Dolphin Conformant Array Fields'

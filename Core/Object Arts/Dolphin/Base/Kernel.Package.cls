@@ -1723,21 +1723,37 @@ tracePrerequisitesOfMethods: anIdentityDictionary
 tracePrerequisitesOfResources: anIdentityDictionary packagedVariables: aLookupTable
 	"Private - Trace the prerequisite method classes of the receiver's loose methods (i.e. the extended classes)."
 
+	| collectorClass |
+	collectorClass := #{Kernel.STLClassCollector} valueOrNil.
+	collectorClass ifNil: [^self].
 	self allResourceIdentifiers do: 
 			[:each |
 			| method |
-			method := each compiledMethod.
-			each hiddenClasses do: 
-					[:eachLiteral |
-					(self bindingRefToLiteral: eachLiteral)
-						ifNotNil: 
-							[:ref |
+			each resource
+				ifNotNil: 
+					[:array |
+					| collector |
+					method := each compiledMethod.
+					collector := collectorClass on: array readStream.
+					collector classes do: 
+							[:eachLiteral |
+							(self bindingRefToLiteral: eachLiteral)
+								ifNotNil: 
+									[:ref |
+									self
+										trace: anIdentityDictionary
+										prerequisite: (aLookupTable lookup: ref)
+										from: method
+										to: ref
+										dependency: 'references variable']].
+					collector resourceIdentifiers do: 
+							[:rid |
 							self
 								trace: anIdentityDictionary
-								prerequisite: (aLookupTable lookup: ref)
+								prerequisite: rid owningPackage
 								from: method
-								to: ref
-								dependency: 'references variable']]]!
+								to: rid
+								dependency: 'references resource']]]!
 
 tracePrerequisitesOfVariables: anIdentityDictionary packagedVariables: aLookupTable
 	"Private - Trace the prerequisites of the receiver's shared variables."

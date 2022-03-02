@@ -25,6 +25,7 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
+	'..\MVP\Base\Dolphin Base Dialogs'
 	'..\MVP\Base\Dolphin Basic Geometry'
 	'..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'
 	'..\MVP\Views\Buttons\Dolphin Check Buttons'

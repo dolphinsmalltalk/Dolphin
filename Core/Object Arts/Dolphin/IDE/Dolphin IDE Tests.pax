@@ -34,6 +34,7 @@ package setPrerequisites: #(
 	'Base\Development System'
 	'Base\Development System Tests'
 	'..\Base\Dolphin'
+	'..\MVP\Base\Dolphin Base Dialogs'
 	'..\Base\Tests\Dolphin Base Tests'
 	'..\MVP\Base\Dolphin Basic Geometry'
 	'..\MVP\Presenters\Boolean\Dolphin Boolean Presenter'

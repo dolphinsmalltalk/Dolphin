@@ -59,7 +59,7 @@ Kernel.AbstractSTBInFiler subclass: #'Kernel.STLInFiler'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 Kernel.STLInFiler subclass: #'Kernel.STLClassCollector'
-	instanceVariableNames: 'classes'
+	instanceVariableNames: 'classes resourceIdentifiers'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''

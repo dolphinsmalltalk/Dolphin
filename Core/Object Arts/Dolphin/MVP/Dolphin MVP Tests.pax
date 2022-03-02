@@ -97,6 +97,7 @@ package setPrerequisites: #(
 	'..\IDE\Base\Development System'
 	'..\Base\Dolphin'
 	'..\Base\Dolphin Anonymous Classes'
+	'Base\Dolphin Base Dialogs'
 	'..\Base\Tests\Dolphin Base Tests'
 	'Base\Dolphin Basic Geometry'
 	'Presenters\Boolean\Dolphin Boolean Presenter'

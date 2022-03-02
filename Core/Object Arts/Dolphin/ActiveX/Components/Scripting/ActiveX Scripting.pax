@@ -38,6 +38,7 @@ package setBinaryVariableNames: #(
 package setPrerequisites: #(
 	'..\..\Automation\ActiveX Automation'
 	'..\..\..\Base\Dolphin'
+	'..\..\..\MVP\Base\Dolphin Base Dialogs'
 	'..\..\..\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\MVP\Presenters\Choice\Dolphin Choice Presenter'
 	'..\..\..\MVP\Dialogs\Common\Dolphin Common Dialogs'

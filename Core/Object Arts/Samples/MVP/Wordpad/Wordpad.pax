@@ -49,6 +49,7 @@ package setClassNames: #(
 
 package setPrerequisites: #(
 	'..\..\..\Dolphin\Base\Dolphin'
+	'..\..\..\Dolphin\MVP\Base\Dolphin Base Dialogs'
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Dolphin\MVP\Presenters\Choice\Dolphin Choice Presenter'
 	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
@@ -60,6 +61,7 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Presenters\Number\Dolphin Number Presenter'
+	'..\..\..\Dolphin\MVP\Views\Buttons\Dolphin Push Buttons'
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Rich Text Presenter'
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'
 	'..\..\..\Dolphin\MVP\Type Converters\Dolphin Type Converters'

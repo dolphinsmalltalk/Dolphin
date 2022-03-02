@@ -1,0 +1,52 @@
+﻿| package |
+package := Package name: 'Dolphin Base Dialogs'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk MVP Framework, Base Dialog classes
+Copyright (c) Object Arts Ltd. 1997-2022. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+'.
+
+
+package setClassNames: #(
+	#{UI.Dialog}
+	#{UI.DialogView}
+	#{UI.ValueDialog}
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'Dolphin Basic Geometry'
+	'..\Graphics\Dolphin GDI Graphics'
+	'Dolphin MVP Base'
+	'..\Views\Buttons\Dolphin Push Buttons'
+	'..\Models\Value\Dolphin Value Models'
+).
+
+package!
+
+"Class Definitions"!
+
+UI.Shell subclass: #'UI.Dialog'
+	instanceVariableNames: 'confirmed ownerView'
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {
+		'ValidationTimerId' -> 16r101
+	}!
+UI.Dialog subclass: #'UI.ValueDialog'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+UI.ShellView subclass: #'UI.DialogView'
+	instanceVariableNames: 'endModal isModal oldWndProc'
+	classVariableNames: ''
+	imports: #(#{OS.ThemeConstants})
+	classInstanceVariableNames: ''
+	classConstants: {
+		'InProcLoopMask' -> 16r100000
+	}!
+
+"End of package definition"!
+

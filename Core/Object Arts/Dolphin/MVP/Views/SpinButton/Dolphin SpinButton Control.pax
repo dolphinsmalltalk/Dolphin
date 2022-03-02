@@ -28,11 +28,13 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'..\..\..\System\Win32\CommCtrl\Common Controls Library'
 	'..\..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Base Dialogs'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Presenters\Prompters\Dolphin Integer Prompter'
 	'..\..\Base\Dolphin MVP Base'
 	'..\..\Presenters\Number\Dolphin Number Presenter'
+	'..\Buttons\Dolphin Push Buttons'
 	'..\..\Presenters\Text\Dolphin Text Presenter'
 	'..\..\Type Converters\Dolphin Type Converters'
 	'..\..\Models\Value\Dolphin Value Models'

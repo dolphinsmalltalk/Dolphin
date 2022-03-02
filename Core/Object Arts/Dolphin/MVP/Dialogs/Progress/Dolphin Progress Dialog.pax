@@ -21,6 +21,7 @@ package setMethodNames: #(
 package setPrerequisites: #(
 	'..\..\..\System\Win32\CommCtrl\Common Controls Library'
 	'..\..\..\Base\Dolphin'
+	'..\..\Base\Dolphin Base Dialogs'
 	'..\..\Base\Dolphin Basic Geometry'
 	'..\..\Graphics\Dolphin GDI Graphics'
 	'..\..\Base\Dolphin MVP Base'
