@@ -669,6 +669,14 @@ removeRedundantPackages
 	self endElement: true.
 	self notify: 'Removing unwanted packages'.
 	self startElement: 'StripPackages' attributes: #().
+	"Add the Legacy Source Filer last as a prereq of any legacy package with an uninstall script as it will need it to uninstall successfully"
+	redundantPackages do: 
+			[:each |
+			(each scriptAt: #preuninstall) isEmpty
+				ifFalse: 
+					[each manualPrerequisites: (each manualPrerequisites
+								addLast: 'Dolphin Legacy Package Support';
+								yourself)]].
 	[redundantPackages do: 
 			[:each |
 			pacman uninstall: each.
