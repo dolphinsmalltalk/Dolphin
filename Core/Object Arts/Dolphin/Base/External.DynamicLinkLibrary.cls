@@ -378,6 +378,9 @@ clear
 	Similary function addresses will be lazily requeried as required."
 
 	default notNil ifTrue: [default handle: nil].
+	self clearProcAddresses!
+
+clearProcAddresses
 	self methodsDo: [:m | m clear]!
 
 closeAllDefaults
@@ -533,7 +536,9 @@ uninitialize
 	"Private - Uninitialize the receiver as it is about to be removed from the system."
 
 	self closeDefault.
-	self sharedVariableName ifNotNil: [:ref | ref undeclare]!
+	self sharedVariableName ifNotNil: [:ref | 
+		Notification signal: 'Undeclaring ', ref printString.
+		ref undeclare]!
 
 uninitializeBeforeRemove
 	"Perform any pre-removal uninitialisation for the class. This includes any specific #uninitialize
@@ -551,6 +556,7 @@ versionInfo
 	^VersionInfo forPath: self fileName! !
 !External.DynamicLinkLibrary class categoriesForMethods!
 clear!initializing!private! !
+clearProcAddresses!helpers!private! !
 closeAllDefaults!finalizing!private! !
 closeDefault!private!realizing/unrealizing! !
 default!accessing!instance creation!public! !

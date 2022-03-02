@@ -32,7 +32,7 @@ isSelfEvaluating!public!testing! !
 clear
 	"Private - Clear down cached external function addresses from previous runs."
 
-	self methodsDo: [:m | m clear]!
+	self clearProcAddresses!
 
 closeDefault
 	"Private - Close the default instance of the receiver (if there is one).

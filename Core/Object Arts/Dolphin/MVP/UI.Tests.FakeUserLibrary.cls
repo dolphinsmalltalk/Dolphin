@@ -70,8 +70,15 @@ open!private!realizing/unrealizing! !
 !UI.Tests.FakeUserLibrary class methodsFor!
 
 openDefault
-	"Do nothing - we don't want to overwrite the real UserLibrary on startup"! !
+	"Do nothing - we don't want to overwrite the real UserLibrary on startup"!
+
+uninitialize
+	"Private - Uninitialize the receiver as it is about to be removed from the system."
+
+	"Override so that we don't close the default user library and undeclare User32"
+! !
 !UI.Tests.FakeUserLibrary class categoriesForMethods!
 openDefault!instance creation!private!realizing/unrealizing! !
+uninitialize!class hierarchy-removing!private! !
 !
 
