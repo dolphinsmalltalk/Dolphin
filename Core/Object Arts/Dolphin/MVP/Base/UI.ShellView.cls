@@ -1369,12 +1369,12 @@ icon
 	^##(self defaultIcon)!
 
 initialize
-	View registerMessageMappings: self messsageMappings!
+	View registerMessageMappings: self messageMappings!
 
 installNew
 	^(self asSessionManagerClass basicNew mainShellClass: self) install!
 
-messsageMappings
+messageMappings
 	^{WM_ACTIVATE -> #wmActivate:wParam:lParam:.
 		WM_ACTIVATEAPP -> #wmActivateApp:wParam:lParam:.
 		WM_NCACTIVATE -> #wmNcActivate:wParam:lParam:.
@@ -1465,7 +1465,7 @@ defaultExtentBlock:!accessing!geometry!private! !
 icon!constants!public! !
 initialize!development!initializing!private! !
 installNew!public! !
-messsageMappings!constants!must not strip!private! !
+messageMappings!constants!must not strip!private! !
 shutdownOnExit!public!testing! !
 stbConvertFromVersion0:!binary filing!private! !
 stbConvertFromVersion4:!binary filing!private! !
