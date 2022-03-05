@@ -1620,7 +1620,7 @@ emitFileOutHeaderOn: aSourceFiler
 	<puttableStream>, aWriteStream."
 
 	aSourceFiler
-		emitComment: 'Filed out from Dolphin Smallalk';
+		emitComment: 'Filed out from Dolphin Smalltalk';
 		cr!
 
 fileOut: anObject
