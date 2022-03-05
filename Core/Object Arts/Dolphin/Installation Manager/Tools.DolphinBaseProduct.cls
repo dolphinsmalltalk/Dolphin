@@ -57,7 +57,6 @@ contents
 	contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Shell\Windows Shell Namespace.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\IDE\Community Edition\Dolphin Community Edition Tools.pax' #encrypted #imageBased);
-		add: #('Core\Object Arts\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\WebView2\WebView2.pax' #plain #imageBased);
 		yourself.
 
@@ -106,7 +105,6 @@ contents
 	"Deprecated pieces"
 	contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Deprecated\ActiveX (Deprecated).pax' #plain #imageBased);
-		add: #('Core\Object Arts\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer (Old Names).pax' #plain #imageBased);
 		yourself.
 
 	"Add-ons"

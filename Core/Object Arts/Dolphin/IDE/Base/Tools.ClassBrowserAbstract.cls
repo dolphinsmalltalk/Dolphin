@@ -2833,10 +2833,10 @@ plugins
 	"Answer the plugins installed by instances of the receiver"
 
 	self ensureOptionsLoaded.
-	^OS.SystemMetrics current hasInternetExplorerControl
+	^OS.SystemMetrics current hasWebView
 		ifTrue: [plugins]
 		ifFalse: 
-			["The CodeMentor plugin relies on the Internet Explorer control>"
+			["The CodeMentor plugin relies on the WebView2 Edge browser control>"
 			plugins reject: [:each | each name == #CodeMentorPlugin]]!
 
 plugins: anOrderedCollection 

@@ -154,12 +154,6 @@ hasImageListDragCursors
 	#wineFix.
 	^isNotWine!
 
-hasInternetExplorerControl
-	"Answer whether the host provides an Internet Explorer control."
-
-	#wineFix.
-	^isNotWine!
-
 hasSmoothScrollingLists
 	"Answer whether the host supports smooth (as opposed to jump) scrolling of lists."
 
@@ -186,6 +180,12 @@ hasThemes
 	"Answer whether the host support desktop themes (XP and later)."
 
 	"Wine currently errors on theme APIs, so bypass"
+
+	#wineFix.
+	^isNotWine!
+
+hasWebView
+	"Answer whether the host provides a WebView2 Edge Browser control."
 
 	#wineFix.
 	^isNotWine!
@@ -384,10 +384,10 @@ hasFlatMenus!capability enquiries!public! !
 hasGdiPalettes!capability enquiries!public! !
 hasIconScaleDown!capability enquiries!public! !
 hasImageListDragCursors!capability enquiries!public! !
-hasInternetExplorerControl!capability enquiries!public! !
 hasSmoothScrollingLists!capability enquiries!public! !
 hasTextBoxMargins!capability enquiries!public! !
 hasThemes!capability enquiries!public! !
+hasWebView!capability enquiries!public! !
 iconTitleFont!geometry!public! !
 initialize!initializing!private! !
 isSlowMachine!public!testing! !
