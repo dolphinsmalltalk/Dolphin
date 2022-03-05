@@ -275,11 +275,11 @@ absPrintExactlyOn: aStream base: base decimalPlaces: placesDesired showTrailingF
 						ifTrue: 
 							[aStream
 								nextPut: $.;
-								nextPutAll: (String new: placesDesired withAll: $0)].
+								next: placesDesired put: $0].
 					^self].
 			aStream
 				nextPutAll: '0.';
-				nextPutAll: (String new: 0 - baseExpEstimate withAll: $0)].
+				next: 0 - baseExpEstimate put: $0].
 	slowbit := 1 - s lowBit.
 	shead := s bitShift: slowbit.
 	
@@ -302,10 +302,10 @@ absPrintExactlyOn: aStream base: base decimalPlaces: placesDesired showTrailingF
 				ifTrue: 
 					[aStream
 						nextPut: $.;
-						nextPutAll: (String new: placesDesired withAll: $0)]]
+						next: placesDesired put: $0]]
 		ifFalse: 
 			[(showtrailingZeros and: [placesDesired + decPointCount > 1])
-				ifTrue: [aStream nextPutAll: (String new: placesDesired + decPointCount - 1 withAll: $0)]]!
+				ifTrue: [aStream next: placesDesired + decPointCount - 1 put: $0]]!
 
 absPrintOn: aStream base: base digitCount: digitCount decimalExponents: anInterval
 	"Private - Print me in the given base, using digitCount significant figures. Scientific notation is used if the exponent falls outside the specified <Interval>.

@@ -108,19 +108,19 @@ printOn: aPuttableStream
 								nextPutAll: ' arguments: ';
 								print: args]]]
 		ifFalse: 
-			[| first |
+			[| keywords |
 			aPuttableStream
 				basicPrint: self;
 				nextPut: $(.
-			first := true.
-			selector keywords with: args
+			keywords := selector keywords.
+			1 to: keywords size
 				do: 
-					[:eachKeyword :eachArg |
-					first ifTrue: [first := false] ifFalse: [aPuttableStream space].
+					[:i |
+					i == 1 ifFalse: [aPuttableStream space].
 					aPuttableStream
-						nextPutAll: eachKeyword;
+						nextPutAll: (keywords at: i);
 						space;
-						print: eachArg].
+						print: (args at: i)].
 			aPuttableStream nextPut: $)]!
 
 selector

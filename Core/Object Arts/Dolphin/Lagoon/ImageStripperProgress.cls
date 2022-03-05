@@ -25,6 +25,12 @@ Instance Variables:
 !ImageStripperProgress categoriesForClass!Unclassified! !
 !ImageStripperProgress methodsFor!
 
+_notify: aString
+	"Report aString as the current status"
+
+	User32 setWindowText: status lpString: aString.
+	SessionManager inputState pumpMessages!
+
 addToCommandRoute: route
 	"Update the <OrderedCollection>, path, with the receiver's contribution to the command path
 	held by the <CommandPolicy>, route. Answer the next <Presenter> to visit.
@@ -173,12 +179,6 @@ monitorProgressPeriod
 
 	^1000
 !
-
-notify: aString
-	"Report aString as the current status"
-
-	User32 setWindowText: status lpString: aString.
-	SessionManager inputState pumpMessages!
 
 onStartup
 	"Ensure that the handle of the receiver is set to nil at startup."
@@ -378,6 +378,7 @@ wmSetCursor: message wParam: wParam lParam: lParam
 	User32 setCursor: cursor.
 	^0! !
 !ImageStripperProgress categoriesForMethods!
+_notify:!accessing!public! !
 addToCommandRoute:!commands!public! !
 ambientFontChanged!private!updating! !
 asParameter!converting!public! !
@@ -398,7 +399,6 @@ isPersistentView!public!testing! !
 isView!public!testing! !
 isWindowVisible!public!testing! !
 monitorProgressPeriod!constants!private! !
-notify:!accessing!public! !
 onStartup!event handling!public! !
 parentPresenter!presenter!public! !
 presenter!accessing!public! !

@@ -1044,7 +1044,7 @@ fromSton:!public!ston! !
 stonOn: stonWriter
 	self name
 		ifNil: [stonWriter writeObject: self]
-		ifNotNil: [:name | stonWriter writeObject: self listSingleton: name]! !
+		ifNotNil: [:name | stonWriter writeObject: self listSingleton: name asSymbol]! !
 !Kernel.SingletonSearchPolicy categoriesForMethods!
 stonOn:!public!ston! !
 !

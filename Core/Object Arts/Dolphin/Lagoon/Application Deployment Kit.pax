@@ -420,7 +420,7 @@ stripSubclassResponsibility: aBoolean
 stubFilePath: aString
 	"Set the path of a custom stub file."
 
-	stubFilePath := (aString isNil or: [aString sameAs: self defaultStubFilePath]) 
+	stubFilePath := (aString isNil or: [aString sameAs: self _defaultStubFilePath]) 
 				ifFalse: [FileLocator imageRelative relativePathTo: aString]!
 
 versionResource: aVersionResource
@@ -467,7 +467,7 @@ stripRedundantResources:!accessing!public! !
 stripShouldNotImplement:!accessing!public! !
 stripSubclassResponsibility:!accessing!public! !
 stubFilePath:!accessing!public! !
-versionResource:!accessing!private! !
+versionResource:!accessing!public! !
 writeLogFile:!accessing!public! !
 !
 

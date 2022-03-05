@@ -434,7 +434,7 @@ isValidUnqualifiedName: aString
 						allSatisfy: [:each | 'ABCDEFGHIJKLMNOPQRSTUVWXYZ_abcdefghijklmnopqrstuvwxyz0123456789' includes: each]]]!
 
 new
-	^self pathString: ''!
+	^self shouldNotImplement!
 
 newPath: anArray private: aBoolean scope: aBindingScope
 	anArray size <= 1

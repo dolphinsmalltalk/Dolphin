@@ -30,6 +30,7 @@ package setMethodNames: #(
 
 package setPrerequisites: #(
 	'..\Base\Dolphin'
+	'..\System\Filer\Dolphin Literal Filer'
 ).
 
 package!
@@ -66,7 +67,7 @@ Core.Object subclass: #'OS.VersionResource'
 	classInstanceVariableNames: ''
 	classConstants: {}!
 BasicImageStripper subclass: #ImageStripper
-	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource _unused8 stubFilePath deploymentContext _unused11 _unused12 _unused13 snapshotType _unused15 _unused16 _unused17 _unused18 _unused19 _unused20 _unused21 _unused22'
+	instanceVariableNames: 'rootPackageName executableName runtimeSessionManagerClass flags preStripScript versionResource exePath stubFilePath deploymentContext _unused11 _unused12 _unused13 snapshotType _unused15 _unused16 _unused17 _unused18 _unused19 _unused20 _unused21 _unused22'
 	classVariableNames: ''
 	imports: #(#{OS.MessageBoxConstants} #{OS.Win32Constants})
 	classInstanceVariableNames: ''

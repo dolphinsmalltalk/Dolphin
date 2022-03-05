@@ -907,7 +907,11 @@ primesUpTo: aNumber
 
 	| limit flags prime primes |
 	limit := aNumber asInteger - 1.
-	flags := ByteArray new: limit withAll: 1.
+	flags := (ByteArray new: limit)
+				from: 1
+					to: limit
+					put: 1;
+				yourself.
 	primes := Array writeStream.
 	1 to: limit
 		do: 

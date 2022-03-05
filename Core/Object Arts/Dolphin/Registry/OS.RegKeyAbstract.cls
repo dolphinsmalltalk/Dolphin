@@ -2,7 +2,7 @@
 
 Core.Dictionary variableSubclass: #'OS.RegKeyAbstract'
 	instanceVariableNames: 'name parentPath rootKey sam handle keyInfo'
-	classVariableNames: 'AccessModes ValueTypes ValueUnmarshallers'
+	classVariableNames: 'AccessModes ValueTypes'
 	imports: #(#{OS.WinRegConstants} #{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -286,7 +286,39 @@ noneAtPut: aString
 objectFromValue: aByteArray type: typeInteger size: sizeInteger
 	"Private - Instantiate an appropriate object to represent the registry value with the specified type, bytes, and size."
 
-	^(ValueUnmarshallers at: typeInteger + 1) cull: aByteArray cull: sizeInteger!
+	^(##(| notImplemented |
+		notImplemented := [:bytes :size | Error notYetImplemented].
+		{
+			"REG_NONE: 0"
+			[:bytes :size | nil].
+			"REG_SZ: 1"
+			[:bytes :size |
+			size == 0
+				ifTrue: [Utf16String empty]
+				ifFalse: [Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1]].
+			"REG_EXPAND_SZ: 2"
+			[:bytes :size |
+			Kernel32
+				expandEnvironmentStrings: (Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1)].
+			"REG_BINARY: 3"
+			[:bytes :size| bytes copyFrom: 1 to: size].
+			"REG_DWORD: 4"
+			[:bytes :size | bytes sdwordAtOffset: 0].
+			"REG_DWORD_BIG_ENDIAN: 5"
+			notImplemented.
+			"REG_LINK: 6"
+			notImplemented.
+			"REG_MULTI_SZ: 7"
+			[:bytes :size | RegKeyAbstract decodeMultiSz: bytes size: size].
+			"REG_RESOURCE_LIST:8"
+			notImplemented.
+			"REG_FULL_RESOURCE_DESCRIPTOR: 9"
+			notImplemented.
+			"REG_RESOURCE_REQUIREMENTS_LIST: 10"
+			notImplemented.
+			"REG_QWORD: 11"
+			[:bytes :size | bytes sqwordAtOffset: 0]})
+		at: typeInteger + 1) cull: aByteArray cull: sizeInteger!
 
 parentKey
 	"Answer the parent key of the receiver, or nil if at a root."
@@ -832,18 +864,26 @@ OS.RegKeyAbstract methodProtocol: #association attributes: #(#ansi #readOnly) se
 classesRoot
 	"Answer a new instance of the receiver, rooted in HKEY_CLASSES_ROOT."
 
-	^self classesRoot: #read!
+	^self
+		hive: 'HKEY_CLASSES_ROOT'
+		handle: HKEY_CLASSES_ROOT
+		sam: KEY_READ!
 
-classesRoot: mode
-	"Answer a new instance of the receiver, rooted in HKEY_CLASSES_ROOT,
-	with the access rights specified by the <Symbol>, mode."
+classesRoot: aSymbol
+	"Answer a new instance of the receiver, rooted in HKEY_CLASSES_ROOT, with the access rights specified by the <Symbol>, mode."
 
-	^self fromPredefinedKey: 'HKEY_CLASSES_ROOT' mode: mode!
+	^self
+		hive: 'HKEY_CLASSES_ROOT'
+		handle: HKEY_CLASSES_ROOT
+		mode: aSymbol!
 
 configRoot
 	"Answer a new instance of the receiver, rooted in HKEY_CURRENT_CONFIG"
 
-	^self fromPredefinedKey: 'HKEY_CURRENT_CONFIG' mode: #read!
+	^self
+		hive: 'HKEY_CURRENT_CONFIG'
+		handle: HKEY_CURRENT_CONFIG
+		sam: KEY_READ!
 
 decodeMultiSz: aByteArray size: anInteger
 	"Private - Decode a REG_MULTISZ format registry value to an <Array> of <String> from a contiguous sequence of null-terminated UTF-16 strings that are terminated by two null characters.
@@ -865,6 +905,7 @@ decodeMultiSz: aByteArray size: anInteger
 defaultMode
 	"Answer the default security access rights requested on registry keys."
 
+	#deprecated.
 	^#readWrite!
 
 encodeMultiSz: aCollection
@@ -881,24 +922,32 @@ encodeMultiSz: aCollection
 fromPredefinedKey: aString
 	"Answer a new instance of the receiver, rooted in the specified root (predefined) key, one of HKEY_CLASSES_ROOT, HKEY_CURRENT_CONFIG, HKEY_CURRENT_USER, HKEY_LOCAL_MACHINE, HKEY_PERFORMANCE_DATA, or HKEY_USERS."
 
+	#deprecated.
 	^self fromPredefinedKey: aString mode: self defaultMode!
 
-fromPredefinedKey: key mode: mode
+fromPredefinedKey: aString mode: aSymbol
 	"Answer a new instance of the receiver, rooted in the specified root, predefined key."
 
-	^self fromPredefinedKey: key 
-		sam: (AccessModes at: mode)!
+	#deprecated.
+	^self
+		hive: aString
+		handle: (WinRegConstants at: aString)
+		sam: (AccessModes at: aSymbol)!
 
-fromPredefinedKey: key sam: samDesired
-	"Private - Answer a new instance of the receiver, rooted in the specified root, predefined key."
+hive: aString handle: hiveInteger mode: aSymbol
+	^self
+		hive: aString
+		handle: hiveInteger
+		sam: (AccessModes at: aSymbol)!
 
+hive: aString handle: hiveInteger sam: samInteger
 	| rootKey |
 	rootKey := RegKey new.
 	^rootKey
-		name: key;
+		name: aString;
 		rootKey: rootKey;
-		setSam: samDesired;
-		handle: (WinRegConstants at: key);
+		setSam: samInteger;
+		handle: hiveInteger;
 		yourself!
 
 icon
@@ -927,56 +976,23 @@ initialize
 						#none -> REG_NONE})
 				isImmutable: true;
 				yourself).
-	self addClassConstant: 'PathSeparator' value: '\' asUtf16String.
-	self initializeValueUnmarshallers!
-
-initializeValueUnmarshallers
-	"Private - Instantiate an appropriate object to represent the registry value with the specified type, bytes, and size."
-
-	| notImplemented |
-	notImplemented := [:bytes :size | Error notYetImplemented].
-	ValueUnmarshallers := {
-				"REG_NONE: 0"
-				[:bytes :size | nil].
-				"REG_SZ: 1"
-				[:bytes :size |
-				size == 0
-					ifTrue: [Utf16String empty]
-					ifFalse: [Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1]].
-				"REG_EXPAND_SZ: 2"
-				[:bytes :size |
-				Kernel32
-					expandEnvironmentStrings: (Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1)].
-				"REG_BINARY: 3"
-				[:bytes :size| bytes copyFrom: 1 to: size].
-				"REG_DWORD: 4"
-				[:bytes :size | bytes sdwordAtOffset: 0].
-				"REG_DWORD_BIG_ENDIAN: 5"
-				notImplemented.
-				"REG_LINK: 6"
-				notImplemented.
-				"REG_MULTI_SZ: 7"
-				[:bytes :size | RegKeyAbstract decodeMultiSz: bytes size: size].
-				"REG_RESOURCE_LIST:8"
-				notImplemented.
-				"REG_FULL_RESOURCE_DESCRIPTOR: 9"
-				notImplemented.
-				"REG_RESOURCE_REQUIREMENTS_LIST: 10"
-				notImplemented.
-				"REG_QWORD: 11"
-				[:bytes :size | bytes sqwordAtOffset: 0]}	
-
-!
+	self addClassConstant: 'PathSeparator' value: '\' asUtf16String!
 
 localMachineRoot
 	"Answer a new instance of the receiver, rooted in HKEY_LOCAL_MACHINE, opened in #read mode (admin priviledges are required to open this key so #readWrite does not make sense as as default)."
 
-	^self localMachineRoot: #read!
+	^self
+		hive: 'HKEY_LOCAL_MACHINE'
+		handle: HKEY_LOCAL_MACHINE
+		sam: KEY_READ!
 
-localMachineRoot: mode
+localMachineRoot: aSymbol
 	"Answer a new instance of the receiver, rooted in HKEY_LOCAL_MACHINE"
 
-	^self fromPredefinedKey: 'HKEY_LOCAL_MACHINE' mode: mode!
+	^self
+		hive: 'HKEY_LOCAL_MACHINE'
+		handle: HKEY_LOCAL_MACHINE
+		mode: aSymbol!
 
 myComputer
 	"Answer a new instance of the receiver, rooted in this computers
@@ -1006,20 +1022,66 @@ tally: anInteger name: keyString parentPath: rootKeyString rootKey: aRegKey sam:
 		yourself!
 
 userRoot
-	"Answer a new instance of the receiver, rooted in HKEY_CURRENT_USER.
-	Should almost always have write access to this key."
+	"Answer a new instance of the receiver, rooted in HKEY_CURRENT_USER. Should almost always have write access to this key."
 
-	^self fromPredefinedKey: 'HKEY_CURRENT_USER' mode: self defaultMode!
+	^self
+		hive: 'HKEY_CURRENT_USER'
+		handle: HKEY_CURRENT_USER
+		sam: ##(KEY_READ | KEY_WRITE)!
 
 usersRoot
 	"Answer a new instance of the receiver, rooted in HKEY_USERS"
 
-	^self usersRoot: #read!
+	^self
+		hive: 'HKEY_USERS'
+		handle: HKEY_USERS
+		sam: KEY_READ!
 
-usersRoot: mode
+usersRoot: aSymbol
 	"Answer a new instance of the receiver, rooted in HKEY_USERS"
 
-	^self fromPredefinedKey: 'HKEY_USERS' mode: mode! !
+	^self
+		hive: 'HKEY_USERS'
+		handle: HKEY_USERS
+		mode: aSymbol!
+
+valueUnmarshallers
+	"Private - Answer an <Array> of <dyadicValuable>s, one for each of the registry value types, that can be used to instantiate an appropriate Smalltalk object from bytes read from the registry."
+
+	| notImplemented |
+	notImplemented := [:bytes :size | Error notYetImplemented].
+	^{
+		"REG_NONE: 0"
+		[:bytes :size | nil].
+		"REG_SZ: 1"
+		[:bytes :size |
+		size == 0
+			ifTrue: [Utf16String empty]
+			ifFalse: [Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1]].
+		"REG_EXPAND_SZ: 2"
+		[:bytes :size |
+		Kernel32
+			expandEnvironmentStrings: (Utf16String fromByteArray: bytes length: (size bitShift: -1) - 1)].
+		"REG_BINARY: 3"
+		[:bytes :size| bytes copyFrom: 1 to: size].
+		"REG_DWORD: 4"
+		[:bytes :size | bytes sdwordAtOffset: 0].
+		"REG_DWORD_BIG_ENDIAN: 5"
+		notImplemented.
+		"REG_LINK: 6"
+		notImplemented.
+		"REG_MULTI_SZ: 7"
+		[:bytes :size | RegKeyAbstract decodeMultiSz: bytes size: size].
+		"REG_RESOURCE_LIST:8"
+		notImplemented.
+		"REG_FULL_RESOURCE_DESCRIPTOR: 9"
+		notImplemented.
+		"REG_RESOURCE_REQUIREMENTS_LIST: 10"
+		notImplemented.
+		"REG_QWORD: 11"
+		[:bytes :size | bytes sqwordAtOffset: 0]}	
+
+! !
 !OS.RegKeyAbstract class categoriesForMethods!
 classesRoot!instance creation!public! !
 classesRoot:!instance creation!public! !
@@ -1029,10 +1091,10 @@ defaultMode!constants!public! !
 encodeMultiSz:!helpers!private! !
 fromPredefinedKey:!instance creation!public! !
 fromPredefinedKey:mode:!instance creation!public! !
-fromPredefinedKey:sam:!instance creation!private! !
+hive:handle:mode:!instance creation!public! !
+hive:handle:sam:!instance creation!private! !
 icon!constants!public! !
 initialize!development!initializing!private! !
-initializeValueUnmarshallers!development!initializing!private! !
 localMachineRoot!instance creation!public! !
 localMachineRoot:!instance creation!public! !
 myComputer!instance creation!public! !
@@ -1042,5 +1104,6 @@ tally:name:parentPath:rootKey:sam:!instance creation!private! !
 userRoot!instance creation!public! !
 usersRoot!instance creation!public! !
 usersRoot:!instance creation!public! !
+valueUnmarshallers!constants!private! !
 !
 

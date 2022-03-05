@@ -51,6 +51,8 @@ package methodNames
 	add: #Integer -> #digitSize;
 	add: #KernelLibrary -> #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:;
 	add: #Locale -> #isMonthBeforeDay;
+	add: #NUMBERFMTW -> #thousandSeparator;
+	add: #NUMBERFMTW -> #thousandSeparator:;
 	add: #Package -> #addGlobalNamed:;
 	add: #Package -> #includesGlobalNamed:;
 	add: #Package -> #isBaseImagePackage;
@@ -589,6 +591,22 @@ isWine
 	^self default isWine! !
 !NTLibrary class categoriesForMethods!
 isWine!public!testing! !
+!
+
+!NUMBERFMTW methodsFor!
+
+thousandSeparator
+	"This should really be called groupSeparator, and will be deprecated in the next release."
+
+	Notification deprecated.
+	^self groupSeparator!
+
+thousandSeparator: aString
+	Notification deprecated.
+	self groupSeparator: aString! !
+!NUMBERFMTW categoriesForMethods!
+thousandSeparator!accessing!public! !
+thousandSeparator:!accessing!public! !
 !
 
 !Package methodsFor!

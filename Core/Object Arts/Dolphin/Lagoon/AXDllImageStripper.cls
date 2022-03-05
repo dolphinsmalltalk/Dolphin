@@ -13,6 +13,29 @@ See the ''ActiveX In-Process Server Kit'' package comment for further details.'!
 !AXDllImageStripper categoriesForClass!Unclassified! !
 !AXDllImageStripper methodsFor!
 
+_updateStubResources: anExternalHandle
+	"Private - Update the resources of the exe/dll stub through the supplied resource update
+	handle."
+
+	super _updateStubResources: anExternalHandle.
+	self _updateTypelibResource: anExternalHandle!
+
+_updateTypelibResource: anExternalHandle
+	"Private - Add a typelib resource to the dll stub through the supplied resource update
+	handle. This typelib will be self-registered by the deployed DLL when it is registered."
+
+	| tlbPath resourceBytes |
+	tlbPath := self typeLibPath.
+	tlbPath isNil ifTrue: [^self].
+	resourceBytes := (FileStream read: tlbPath text: false) contents.
+	(OS.Kernel32
+		updateResource: anExternalHandle
+		lpType: 'TYPELIB' asUtf16String
+		lpName: 1
+		wLanguage: 0
+		lpData: resourceBytes
+		cbData: resourceBytes size) ifFalse: [OS.Kernel32 systemError]!
+
 defaultSessionManagerClass
 	"Answer the default class of SessionManager to be installed into the 
 	deployed image."
@@ -63,39 +86,16 @@ typeLibPath: aString
 	"Set the path of the typelib that is to be bound into the application
 	deployed by the receiver."
 
-	typeLibPath := FileLocator imageRelative relativePathTo: aString.!
-
-updateStubResources: anExternalHandle
-	"Private - Update the resources of the exe/dll stub through the supplied resource update
-	handle."
-
-	super updateStubResources: anExternalHandle.
-	self updateTypelibResource: anExternalHandle!
-
-updateTypelibResource: anExternalHandle
-	"Private - Add a typelib resource to the dll stub through the supplied resource update
-	handle. This typelib will be self-registered by the deployed DLL when it is registered."
-
-	| tlbPath resourceBytes |
-	tlbPath := self typeLibPath.
-	tlbPath isNil ifTrue: [^self].
-	resourceBytes := (FileStream read: tlbPath text: false) contents.
-	(OS.Kernel32
-		updateResource: anExternalHandle
-		lpType: 'TYPELIB' asUtf16String
-		lpName: 1
-		wLanguage: 0
-		lpData: resourceBytes
-		cbData: resourceBytes size) ifFalse: [OS.Kernel32 systemError]! !
+	typeLibPath := FileLocator imageRelative relativePathTo: aString.! !
 !AXDllImageStripper categoriesForMethods!
+_updateStubResources:!operations!private! !
+_updateTypelibResource:!operations!private! !
 defaultSessionManagerClass!constants!public! !
 prepareToStrip!operations!public! !
 requiredPackageNames!accessing!public! !
 stubFile!accessing!public! !
 typeLibPath!accessing!public! !
 typeLibPath:!accessing!public! !
-updateStubResources:!operations!private! !
-updateTypelibResource:!operations!private! !
 !
 
 !AXDllImageStripper class methodsFor!

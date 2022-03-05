@@ -100,7 +100,7 @@ associationAt: aString ifAbsent: aNiladicValuable
 	^classPool associationAt: aString ifAbsent: aNiladicValuable!
 
 associationAt: aString ifPresent: aMonadicValuable
-	^(self associationAt: aString ifAbsent: nil) ifNotNil: [:assoc | aMonadicValuable value: assoc]!
+	^classPool associationAt: aString ifPresent: aMonadicValuable!
 
 associations
 	^classPool associations!
@@ -117,20 +117,20 @@ asSortedCollection: aDyadicValuable
 at: anObject
 	"Answer the value at the specified <Object> key in the receiver, or if the key	is not found raise a <NotFoundError>."
 
-	^(self associationAt: anObject ifAbsent: nil)
-		ifNil: [self errorNotFound: anObject]
-		ifNotNil: [:binding | binding value]!
+	| answer |
+	answer := self at: anObject ifAbsent: Collection.AbsentCookie.
+	^answer == Collection.AbsentCookie ifTrue: [self errorNotFound: anObject] ifFalse: [answer]!
 
 at: aString ifAbsent: aNiladicValuable
 	"Answer the value of the receiver's binding named by the <String> 1st argument.  If the identifier is not found, answer the result of evaluating the <niladicValuable> 2nd argument."
 
-	^(self associationAt: aString ifAbsent: nil)
-		ifNil: [aNiladicValuable value]
-		ifNotNil: [:binding | binding value]!
+	^classPool at: aString ifAbsent: aNiladicValuable!
 
 at: aString ifAbsentPut: aNiladicValuable
 	"Answer the value of the binding in the receiver's scope identified by the <String> 1st argument.
 	If the identifier is not one found in this scope, then add the result of evaluating the <niladicValuable> as a new <VariableBinding> with that identifier."
+
+	"Implementation Note: We can't just delegate this to the classPool, as we need to ensure that a VariableBinding is added if the key is not already present."
 
 	| value |
 	value := self at: aString ifAbsent: Collection.AbsentCookie.
@@ -141,7 +141,7 @@ at: aString ifAbsentPut: aNiladicValuable
 at: aString ifPresent: aMonadicValuable
 	"Answer the result of evaluating the <moadicValuable> 2nd argument with the value of the binding in the receiver's scope identified by the <String> 1st argument, of nil if there is no variable with that identifier in this scope."
 
-	^(self associationAt: aString ifAbsent: nil) ifNotNil: [:binding | aMonadicValuable value: binding value]!
+	^classPool at: aString ifPresent: aMonadicValuable!
 
 at: aString put: anObject
 	"Store the <Object> 2nd argument as the value of the <VariableBinding> in the receiver with the identifier which is the <String> 1st argument. 
@@ -158,7 +158,7 @@ baseEnvironment
 	^Root!
 
 basicClassPool: aPoolDictionary
-	"Private - Store the dictionary of variables that are defined in the receiver. Namespaces always have a classPool even if empty - it should never be nil."
+	"Private - Store the dictionary of variables that are defined in the receiver. Namespaces always have a classPool even if empty - it must never be nil."
 
 	classPool := aPoolDictionary ?? Dictionary new!
 
@@ -206,14 +206,14 @@ hierarchyBindingFor: aString
 	^classPool bindingFor: aString!
 
 includes: anObject
-	^self classPool includes: anObject!
+	^classPool includes: anObject!
 
 includesKey: aString
 	"Answer whether the receiver has a key equal to the <String> argument."
 
 	"In the context of a Namespace, this will only be true if the argument is a <String> identifier with an associated binding in this namespace."
 
-	^(self associationAt: aString ifAbsent: nil) notNil!
+	^classPool includesKey: aString!
 
 inject: anObject into: aDyadicValuable
 	^classPool inject: anObject into: aDyadicValuable!
@@ -249,7 +249,7 @@ lookup: keyObject
 	very common pattern of passing an empty block as absent handler to #at:ifAbsent:, e.g.
 		(dict at: key ifAbsent: []) ifNotNil: [:value | value ...]"
 
-	^(self associationAt: keyObject ifAbsent: nil) ifNotNil: [:binding | binding value]!
+	^classPool lookup: keyObject!
 
 newClassBuilder: aClassSymbol instanceVariableNames: instVarString classVariableNames: classVarString imports: anArrayOfBindingReferences
 	^(super
@@ -273,7 +273,7 @@ reject: aMonadicValuable
 	^classPool reject: aMonadicValuable!
 
 removeAllKeys: aCollection
-	aCollection do: [:k | self removeKey: k]!
+	aCollection do: [:each | self removeKey: each]!
 
 removeAllKeys: aCollection ifAbsent: aValuable
 	aCollection do: [:each | self removeKey: each ifAbsent: [aValuable cull: each]]!

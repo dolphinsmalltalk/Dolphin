@@ -27,9 +27,10 @@ testExternalStructureAfterTemplateRemoval
 		methodDictionary: externalStructureClassMethodDict copy;
 		flushMethodCache.
 	testSubjectClass := Smalltalk.ImageStripper newAnonymousSubclass.
-	testSubjectClass compile: 'deleteFieldClasses'.
-	testSubjectClass compile: 'initialize super initialize. deploymentContext := DeploymentContext new initialize'.
-	testSubjectClass new compileExternalStructuresNow: {External.Structure}.
+	testSubjectClass compile: '_deleteFieldClasses'.
+	testSubjectClass
+		compile: 'initialize super initialize. deploymentContext := DeploymentContext new initialize'.
+	testSubjectClass new _compileExternalStructuresNow: {External.Structure}.
 	self assert: External.Structure template isNil.
 	self shouldnt: [External.Structure canUnderstand: #anything] raise: MessageNotUnderstood.
 	self assert: (External.Structure canUnderstand: #value).

@@ -42,7 +42,7 @@ searchPolicy
 	^SearchPolicy identity!
 
 species
-	"Answer the preferred class of the receiver - not always the same as the answer to #class (although this implementation uses the class primitive, which should not fail). Normally used when comparing two objects to determine if they are of the comparable types."
+	"Answer the preferred class of the receiver - not always the same as the answer to #class. Normally used when comparing two objects to determine if they are of the comparable types."
 
 	^IdentityDictionary! !
 !Core.IdentityDictionary categoriesForMethods!

@@ -3975,7 +3975,7 @@ Core.SequencedStream subclass: #'Core.PositionableStream'
 	classConstants: {}!
 Core.SequencedStream subclass: #'OS.StdioFileStream'
 	instanceVariableNames: 'stream flags name oldFd fd crtlib locale'
-	classVariableNames: 'ClassForEncoding'
+	classVariableNames: ''
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {

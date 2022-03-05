@@ -1455,7 +1455,7 @@ themePartName
 uninitialize
 	View unregisterMessageMappings: (self messageMappings collect: [:each | each key]).
 	"No point maintaining registrations for the settingChanged: event, as it will not be triggered when there are no ShellViews."
-	SessionManager current removeActionsForEvent: #settingChanged:! !
+	SessionManager current events removeActionsForEvent: #settingChanged:! !
 !UI.ShellView class categoriesForMethods!
 asSessionManagerClass!converting!public!VM and session managerment! !
 createHookBlock!accessing!private!realizing/unrealizing! !

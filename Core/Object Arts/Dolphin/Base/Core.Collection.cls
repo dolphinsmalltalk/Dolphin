@@ -280,13 +280,10 @@ detect: discriminator ifNone: exceptionHandler
 	self do: [:each | (discriminator value: each) ifTrue: [^each]].
 	^exceptionHandler value!
 
-difference: comperand
-	"Answer a <collection> like the receiver containing the Set theroetic 
-	difference between the receiver and the <collection>, comperand. 
-	i.e. Answer the set of all objects that are elements of the receiver 
-	but not the argument."
+difference: aCollection
+	"Answer a <collection> like the receiver containing the set theroetic difference between the receiver and the <collection> argument.  i.e. Answer the set of all objects that are elements of the receiver but not the argument."
 
-	^self reject: [:e | comperand includes: e]!
+	^self reject: [:each | aCollection includes: each]!
 
 distinct
 	"Answer a <collection> like the receiver containing only one occurrence of each element."

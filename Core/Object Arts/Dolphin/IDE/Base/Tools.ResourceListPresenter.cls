@@ -20,12 +20,6 @@ Instance Variables:
 !Tools.ResourceListPresenter categoriesForClass!MVP-Presenters!MVP-Resources-IDE Tools!MVP-Resources-Misc! !
 !Tools.ResourceListPresenter methodsFor!
 
-a0z: method
-	^method isResourceMethod!
-
-a1z: method
-	^method isResourceMethod!
-
 browseClass
 	"Open a new class browser, of the users preferred type, on the owning class of the selected
 	resource."
@@ -304,8 +298,6 @@ systemModel
 
 	^SmalltalkSystem current! !
 !Tools.ResourceListPresenter categoriesForMethods!
-a0z:!event handling!private! !
-a1z:!event handling!private! !
 browseClass!commands!public! !
 browseHierarchy!commands!public! !
 browseIt!commands!public! !

@@ -37,7 +37,7 @@ displayOn: aPuttableStream
 				ifTrue: 
 					[flags := flags bitOr: FORMAT_MESSAGE_FROM_HMODULE.
 					code := code bitAnd: ##(FACILITY_NT_BIT bitInvert).
-					NtDll asParameter asInteger].
+					(Kernel32 getModuleHandle: 'ntdll') asInteger].
 	lcid := aPuttableStream locale primary lcid.
 	
 	[len := Kernel32

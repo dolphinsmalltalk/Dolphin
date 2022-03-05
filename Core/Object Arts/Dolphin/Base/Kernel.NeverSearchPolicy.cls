@@ -20,7 +20,7 @@ compare: operand1 with: operand2
 name
 	"Answer the name of the `SearchPolicy`. This is nil apart from the named singletons."
 
-	^#never! !
+	^'never'! !
 !Kernel.NeverSearchPolicy categoriesForMethods!
 compare:with:!comparing!public! !
 name!accessing!public! !

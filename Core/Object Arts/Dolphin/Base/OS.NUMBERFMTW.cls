@@ -137,7 +137,7 @@ numberGrouping
 	^numberGrouping
 		ifNil: 
 			[| stream digits |
-			stream := AnsiString writeStream.
+			stream := String writeStream.
 			digits := self Grouping printString.
 			digits do: [:each | stream nextPut: each] separatedBy: [stream nextPut: $;].
 			(digits size > 1 and: [digits last = $0]) ifTrue: [stream nextPutAll: ';0'].
@@ -163,15 +163,7 @@ NumDigits
 NumDigits: anInteger
 	"Private - Set the receiver's 'NumDigits' field to the value of the argument, anInteger"
 
-	bytes dwordAtOffset: _OffsetOf_NumDigits put: anInteger!
-
-thousandSeparator
-	"This should really be called groupSeparator, and will be deprecated in the next release."
-
-	^self groupSeparator!
-
-thousandSeparator: aString
-	self groupSeparator: aString! !
+	bytes dwordAtOffset: _OffsetOf_NumDigits put: anInteger! !
 !OS.NUMBERFMTW categoriesForMethods!
 decimalPlaces!accessing!public! !
 decimalPlaces:!accessing!public! !
@@ -199,8 +191,6 @@ numberGrouping!accessing!public! !
 numberGrouping:!accessing!public! !
 NumDigits!**compiled accessors**!private! !
 NumDigits:!**compiled accessors**!private! !
-thousandSeparator!accessing!public! !
-thousandSeparator:!accessing!public! !
 !
 
 !OS.NUMBERFMTW class methodsFor!

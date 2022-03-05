@@ -300,7 +300,7 @@ getNumberFormat
 		hasLeadingZero: self hasLeadingZero;
 		numberGrouping: self numberGrouping;
 		decimalSeparator: self decimalSeparator;
-		thousandSeparator: self thousandSeparator;
+		groupSeparator: self thousandSeparator;
 		negativeNumberMode: self negativeNumberMode;
 		yourself!
 

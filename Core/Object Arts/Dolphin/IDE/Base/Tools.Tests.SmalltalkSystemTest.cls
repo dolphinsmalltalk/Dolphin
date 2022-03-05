@@ -24,7 +24,7 @@ testAllSelectorsImplementedIn
 		description: 'Test inconclusive; package does not own expected class'.
 	self assert: (OS.MSG dynamicSelectors includes: #x)
 		description: 'Test inconclusive; MSG does not have expected dynamic selector'.
-	self assert: (Smalltalk.ImageStripper >> #addReferencedViews:to: sendsSelector: #viewClass)
+	self assert: (Smalltalk.ImageStripper >> #_addReferencedViews:to: sendsSelector: #viewClass)
 		description: 'Test inconclusive; example unimplemented selector not sent'.
 	all := SmalltalkSystem current unimplementedSelectorsIn: env.
 	self assert: (all includes: #viewClass).

@@ -57,7 +57,7 @@ package!
 
 Core.Dictionary variableSubclass: #'OS.RegKeyAbstract'
 	instanceVariableNames: 'name parentPath rootKey sam handle keyInfo'
-	classVariableNames: 'AccessModes ValueTypes ValueUnmarshallers'
+	classVariableNames: 'AccessModes ValueTypes'
 	imports: #(#{OS.WinRegConstants} #{OS.Win32Errors})
 	classInstanceVariableNames: ''
 	classConstants: {

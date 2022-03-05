@@ -11,65 +11,55 @@ DeploymentContext comment: ''!
 !DeploymentContext categoriesForClass!Kernel-Objects! !
 !DeploymentContext methodsFor!
 
-aspectGetters
+_aspectGetters
 	^aspectGetters!
 
-aspectGetters: aCollection
+_aspectGetters: aCollection
 	aspectGetters := aCollection!
 
-aspectSetters
+_aspectSetters
 	^aspectSetters!
 
-aspectSetters: aCollection
+_aspectSetters: aCollection
 	aspectSetters := aCollection!
 
-basicDevelopmentClasses
+_basicDevelopmentClasses
 	^developmentClasses!
 
-closeLog
-	[elementStack isEmpty] whileFalse: [self endElement: true].
-	logFilename isNil
-		ifFalse: 
-			[(File
+_closeLog
+	[elementStack isEmpty] whileFalse: [self _endElement: true].
+	logFilename
+		ifNotNil: 
+			[| log |
+			log := logStream contents.
+			(File
 				open: logFilename
 				mode: #truncate
 				check: false
 				share: #exclusive)
-				write: logStream contents;
+				write: log count: log size;
 				close].
 	logStream := nil!
 
-destroyNotifier
+_destroyNotifier
 	notifier destroy.
 	notifier := DeafObject.Current!
 
-developmentClasses
-	"Answers a weak <collection> of all the classes that are in the basic development system.
-	These are marked by being in the 'Development' category"
-
-	^developmentClasses select: [:each | each ~~ DeadObject.Current]!
-
-endElement: aBoolean
+_endElement: aBoolean
 	aBoolean ifTrue: [logStream crtab: elementStack size - 1].
-	self endTag!
+	self _endTag!
 
-endTag
+_endTag
 	logStream
 		nextPutAll: '</';
-		nextPutAll: elementStack removeLast;
+		nextPutAll: (elementStack removeAtIndex: elementStack size);
 		nextPut: $>;
 		flush!
 
-finishedWithStripping
+_finishedWithStripping
 	rootClasses := aspectGetters := aspectSetters := preservedMessages := supersentMethods := nil!
 
-initialize
-	elementStack := OrderedCollection new.
-	aspectGetters := rootClasses := #().
-	logStream := notifier := DeafObject current.
-	runFlags := 0!
-
-logComment: aString
+_logComment: aString
 	logStream
 		crtab: elementStack size;
 		nextPutAll: '<!!-- ';
@@ -77,86 +67,83 @@ logComment: aString
 		nextPutAll: ' -->';
 		flush!
 
-logElement: aString attributes: aCollection value: anObject
-	self startTag: aString attributes: aCollection.
-	anObject notNil ifTrue: [self logValue: anObject].
-	self endTag!
+_logElement: aString attributes: aCollection value: anObject
+	self _startElement: aString attributes: aCollection.
+	anObject notNil ifTrue: [self _logValue: anObject].
+	self _endTag!
 
-logStrippingError: anError
+_logStrippingError: anError
 	logStream isNil ifTrue: [^self].
 	self
-		logElement: 'Error'
+		_logElement: 'Error'
 		attributes: {'class' -> anError class fullName}
 		value: anError description.
 	logStream flush!
 
-logValue: anObject
-	| string |
-	string := anObject displayString.
-	(string includesAnyOf: '<>
-	&')
-		ifTrue: 
-			[string do: 
-					[:each |
-					(##(LookupTable new
-						at: $& put: '&amp;';
-						at: $< put: '&lt;';
-						at: $> put: '&gt;';
-						at: $" put: '&quot;';
-						shrink
-					"						at: Character tab put: '&#9';
+_logValue: anObject
+	| stream ch |
+	stream := anObject displayString readStream.
+	[(ch := stream nextAvailable) isNil] whileFalse: 
+			[(##(LookupTable new
+				at: $& put: '&amp;';
+				at: $< put: '&lt;';
+				at: $> put: '&gt;';
+				at: $" put: '&quot;';
+				shrink
+			"			at: Character tab put: '&#9';
 						at: Character lf put: '&#10';
 						at: Character cr put: '&#13';")
-							at: each
-							ifAbsent: nil) ifNil: [logStream nextPut: each] ifNotNil: [:quoted | logStream nextPutAll: quoted]
-					"						at: Character tab put: '&#9';
+					lookup: ch) ifNil: [logStream nextPut: ch] ifNotNil: [:quoted | logStream nextPutAll: quoted]
+			"			at: Character tab put: '&#9';
 						at: Character lf put: '&#10';
 						at: Character cr put: '&#13';"
-					"						at: Character tab put: '&#9';
+			"			at: Character tab put: '&#9';
 						at: Character lf put: '&#10';
-						at: Character cr put: '&#13';"]]
-		ifFalse: [logStream nextPutAll: string]!
+						at: Character cr put: '&#13';"
+			"			at: Character tab put: '&#9';
+						at: Character lf put: '&#10';
+						at: Character cr put: '&#13';"
+			"			at: Character tab put: '&#9';
+						at: Character lf put: '&#10';
+						at: Character cr put: '&#13';"]!
 
-notifier
-	^notifier!
-
-notifier: anObject
+_notifier: anObject
 	notifier := anObject!
 
-notify: aStringMessage
-	notifier notify: aStringMessage!
+_notify: aStringMessage
+	notifier _notify: aStringMessage!
 
-openLogFile: aString
+_openLogFile: aString
 	logFilename := aString.
 	"We can avoid a dependency on FileStream by building the log in memory, and then writing it directly to a File when done."
 	logStream := aString ifNil: [DeafObject current] ifNotNil: [Utf8String writeStream].
 	logStream nextPutAll: '<?xml version="1.0" encoding="UTF-8"?>'.
-	self startElement: 'Lagoon'
+	self _startElement: 'Lagoon'
 		attributes: {'xmlns:xsi' -> 'http://www.w3.org/2001/XMLSchema-instance'.
 				'xsi:noNamespaceSchemaLocation' -> 'Lagoon.xsd'}!
 
-preservedMessages
+_preservedMessages
 	^preservedMessages!
 
-preservedMessages: aSet
+_preservedMessages: aSet
 	preservedMessages := aSet!
 
-rootClasses
+_rootClasses
 	^rootClasses!
 
-rootClasses: anObject
+_rootClasses: anObject
 	rootClasses := anObject!
 
-runFlags
+_runFlags
 	^runFlags!
 
-setRunFlag: anInteger
+_setRunFlag: anInteger
 	runFlags := runFlags bitOr: anInteger!
 
-snapshotDevelopmentClasses
+_snapshotDevelopmentClasses
 	developmentClasses := WeakArray withAll: (Object classCategoryClass name: 'Development') classes!
 
-startElement: aString attributes: aCollection
+_startElement: aString attributes: aCollection
 	logStream
 		crtab: elementStack size;
 		nextPut: $<;
@@ -174,59 +161,52 @@ startElement: aString attributes: aCollection
 	elementStack addLast: aString.
 	logStream flush!
 
-startTag: aString attributes: aCollection
-	logStream
-		crtab: elementStack size;
-		nextPut: $<;
-		nextPutAll: aString.
-	aCollection do: 
-			[:each |
-			logStream
-				space;
-				display: each key;
-				nextPut: $=;
-				nextPut: $";
-				display: each value;
-				nextPut: $"].
-	logStream nextPut: $>.
-	elementStack addLast: aString!
-
-supersentMethods
+_supersentMethods
 	^supersentMethods!
 
-supersentMethods: anObject
-	supersentMethods := anObject! !
+_supersentMethods: anObject
+	supersentMethods := anObject!
+
+developmentClasses
+	"Private - Answers a weak <collection> of all the classes that are in the basic development system.
+	These are marked by being in the 'Development' category"
+
+	^developmentClasses select: [:each | each ~~ DeadObject.Current]!
+
+initialize
+	elementStack := OrderedCollection new.
+	aspectGetters := rootClasses := Set new.
+	logStream := notifier := DeafObject current.
+	runFlags := 0! !
 !DeploymentContext categoriesForMethods!
-aspectGetters!accessing!public! !
-aspectGetters:!accessing!public! !
-aspectSetters!accessing!public! !
-aspectSetters:!accessing!public! !
-basicDevelopmentClasses!accessing!public! !
-closeLog!operations!public! !
-destroyNotifier!operations!private! !
-developmentClasses!accessing!public! !
-endElement:!logging!public! !
-endTag!logging!public! !
-finishedWithStripping!public!state! !
+_aspectGetters!accessing!private! !
+_aspectGetters:!accessing!private! !
+_aspectSetters!accessing!private! !
+_aspectSetters:!accessing!private! !
+_basicDevelopmentClasses!accessing!private! !
+_closeLog!operations!private! !
+_destroyNotifier!operations!private! !
+_endElement:!logging!private! !
+_endTag!logging!private! !
+_finishedWithStripping!private!state! !
+_logComment:!logging!private! !
+_logElement:attributes:value:!logging!private! !
+_logStrippingError:!logging!private! !
+_logValue:!logging!private! !
+_notifier:!accessing!private! !
+_notify:!logging!private! !
+_openLogFile:!logging!private! !
+_preservedMessages!accessing!private! !
+_preservedMessages:!accessing!private! !
+_rootClasses!accessing!private! !
+_rootClasses:!accessing!private! !
+_runFlags!accessing!private! !
+_setRunFlag:!accessing!private! !
+_snapshotDevelopmentClasses!configuration!private! !
+_startElement:attributes:!logging!private! !
+_supersentMethods!accessing!private! !
+_supersentMethods:!accessing!private! !
+developmentClasses!accessing!private! !
 initialize!initializing!private! !
-logComment:!logging!private! !
-logElement:attributes:value:!logging!private! !
-logStrippingError:!logging!private! !
-logValue:!logging!private! !
-notifier!accessing!public! !
-notifier:!accessing!public! !
-notify:!logging!public! !
-openLogFile:!logging!public! !
-preservedMessages!accessing!public! !
-preservedMessages:!accessing!public! !
-rootClasses!accessing!public! !
-rootClasses:!accessing!public! !
-runFlags!accessing!public! !
-setRunFlag:!accessing!public! !
-snapshotDevelopmentClasses!configuration!public! !
-startElement:attributes:!logging!private! !
-startTag:attributes:!logging!public! !
-supersentMethods!accessing!public! !
-supersentMethods:!accessing!public! !
 !
 

@@ -383,7 +383,7 @@ negativeInfinity
 	^self getStringInfo: LOCALE_SNEGINFINITY!
 
 negativeNumberMode
-	"Answer a <String> which is the symbol used to denote negative numbers in this locale."
+	"Answer an <Integer> describing the way in which negative numbers should be displayed in this locale."
 
 	^self getIntegerInfo: LOCALE_INEGNUMBER!
 

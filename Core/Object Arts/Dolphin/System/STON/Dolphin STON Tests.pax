@@ -319,7 +319,7 @@ testProcessor
 
 testSearchPolicy
 	| objects |
-	objects := {SearchPolicy always. SearchPolicy identity. SearchPolicy method}.
+	objects := {SearchPolicy always. SearchPolicy identity. SearchPolicy method. SearchPolicy caseInsensitive}.
 	self serializeAndMaterialize: objects!
 
 testSystemDictionary

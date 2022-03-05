@@ -336,7 +336,7 @@ negativeInfinity
 	^'Float.NegativeInfinity'!
 
 negativeNumberMode
-	"Answer a <Symbol> represent the mode for displaying negative numbers. For Smalltalk we want a leading minus without space, which is mode 1."
+	"Answer an <Integer> describing the way in which negative numbers should be displayed in this locale. For Smalltalk we want a leading minus without space, which is mode 1."
 
 	^1!
 

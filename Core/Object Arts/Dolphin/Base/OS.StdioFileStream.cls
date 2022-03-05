@@ -2,7 +2,7 @@
 
 Core.SequencedStream subclass: #'OS.StdioFileStream'
 	instanceVariableNames: 'stream flags name oldFd fd crtlib locale'
-	classVariableNames: 'ClassForEncoding'
+	classVariableNames: ''
 	imports: #(#{OS.CRTConstants})
 	classInstanceVariableNames: ''
 	classConstants: {
@@ -510,7 +510,16 @@ attachMode: modeSymbol
 	^String with: (modeSymbol == #read ifTrue: [$r] ifFalse: [$w]) with: self encodingMode!
 
 classForEncoding: aSymbol
-	^(ClassForEncoding lookup: aSymbol) ifNil: [self error: 'Unsupported encoding ' , aSymbol]!
+	^(self encodingClasses lookup: aSymbol) ifNil: [self error: 'Unsupported encoding ' , aSymbol]!
+
+encodingClasses
+	^##(IdentityDictionary new
+		at: #binary put: StdioBinaryFileStream;
+		at: #ansi put: StdioAnsiFileStream;
+		at: #text put: StdioAnsiFileStream;
+		at: #utf8 put: StdioUtf8FileStream;
+		at: #utf16le put: StdioUtf16FileStream;
+		yourself)!
 
 encodingMode
 	^self subclassResponsibility!
@@ -530,16 +539,6 @@ fromHandle: aFILE
 		setStream: aFILE
 		name: nil
 		flags: 0!
-
-initialize
-	self addClassConstant: 'ClassForEncoding'
-		value: (IdentityDictionary new
-				at: #binary put: StdioBinaryFileStream;
-				at: #ansi put: StdioAnsiFileStream;
-				at: #text put: StdioAnsiFileStream;
-				at: #utf8 put: StdioUtf8FileStream;
-				at: #utf16le put: StdioUtf16FileStream;
-				yourself)!
 
 newForEncoding: aSymbol
 	^(self classForEncoding: aSymbol) basicNew!
@@ -591,7 +590,7 @@ on: aFile type: aSymbol
 open: fileId mode: modeSymbol check: aBoolean type: typeSymbol
 	| stream concreteClass path exists mode |
 	path := fileId asUtf16String.
-	exists := File exists: fileId.
+	exists := (Kernel32 getFileAttributes: fileId) ~= -1.
 	modeSymbol == #create
 		ifTrue: 
 			["open an existing file, or create a new file, for read/write, positioned at the beginning. 
@@ -733,10 +732,10 @@ attach:toFd:mode:!instance creation!public! !
 attach:toFd:mode:type:!instance creation!public! !
 attachMode:!helpers!private! !
 classForEncoding:!helpers!private! !
+encodingClasses!constants!private! !
 encodingMode!constants!private! !
 encodingType!constants!public! !
 fromHandle:!instance creation!public! !
-initialize!development!initializing!public! !
 newForEncoding:!instance creation!private! !
 on:!instance creation!public! !
 on:text:!instance creation!public! !
