@@ -12,6 +12,12 @@ package setClassNames: #(
 	#{UI.ValueDialog}
 ).
 
+package setMethodNames: #(
+	#(#{OS.UserLibrary} #endDialog:nResult:)
+	#(#{OS.UserLibrary} #sendDlgItemMessage:nIDDlgItem:msg:wParam:lParam:)
+	#(#{OS.UserLibrary} #setDlgItemInt:nIDDlgItem:uValue:bSigned:)
+).
+
 package setPrerequisites: #(
 	'..\..\Base\Dolphin'
 	'Dolphin Basic Geometry'
@@ -47,6 +53,50 @@ UI.ShellView subclass: #'UI.DialogView'
 	classConstants: {
 		'InProcLoopMask' -> 16r100000
 	}!
+
+"Loose Methods"!
+
+!OS.UserLibrary methodsFor!
+
+endDialog: dialogHandle nResult: anInteger
+	"Destroy a modal dialog box, causing the system to end any processing for the dialog box. 
+		BOOL EndDialog(
+			HWND hDlg,	// handle to dialog box
+			INT_PTR nResult 	// value to return
+		);"
+
+	<stdcall: bool EndDialog handle intptr>
+	^self invalidCall: _failureCode!
+
+sendDlgItemMessage: aWindowHandle nIDDlgItem: anIntegerId msg: aString wParam: wParam lParam: lParam
+	"Send a message to the specified control in a dialog box. 
+		LRESULT SendDlgItemMessage(
+			HWND  hDlg,		// handle of dialog box
+			int  nIDDlgItem,	// identifier of control
+			UINT  Msg,		// message to send
+			WPARAM  wParam,	// first message parameter
+			LPARAM  lParam 	// second message parameter
+		   );"
+
+	<stdcall: uintptr SendDlgItemMessageW handle sdword dword uintptr intptr>
+	^self invalidCall: _failureCode!
+
+setDlgItemInt: hDlg nIDDlgItem: anIntegerId uValue: uValue bSigned: bSigned
+	"Sets the title or text of a control in a dialog box. 
+		BOOL SetDlgItemInt(
+			HWND hDlg, // handle to dialog box
+			int nIDDlgItem, // control identifier 
+			UINT uValue, // value to set 
+			BOOL bSigned // signed or unsigned indicator 
+		);"
+
+	<stdcall: bool SetDlgItemInt handle sdword dword bool>
+	^self invalidCall: _failureCode! !
+!OS.UserLibrary categoriesForMethods!
+endDialog:nResult:!public!win32 functions-dialog box! !
+sendDlgItemMessage:nIDDlgItem:msg:wParam:lParam:!public!win32 functions-dialog box! !
+setDlgItemInt:nIDDlgItem:uValue:bSigned:!public!win32 functions-dialog box! !
+!
 
 "End of package definition"!
 

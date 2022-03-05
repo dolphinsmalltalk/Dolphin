@@ -150,7 +150,6 @@ package setClassNames: #(
 package setMethodNames: #(
 	#(#{Core.AnsiString} #copyToClipboard)
 	#(#{Core.MessageSend} #queryCommand:)
-	#(#{Core.Object} #addToImageList:mask:)
 	#(#{Core.Object} #icon)
 	#(#{Core.Object} #iconImageIndex)
 	#(#{Core.Object class} #icon)
@@ -159,29 +158,6 @@ package setMethodNames: #(
 	#(#{Core.Symbol} #copyToClipboard)
 	#(#{Core.UndefinedObject} #asResourceId)
 	#(#{Graphics.Bitmap} #copyToClipboard)
-	#(#{OS.CommCtrlLibrary} #imageList_AddMasked:hbmImage:crMask:)
-	#(#{OS.CommCtrlLibrary} #imageList_BeginDrag:iTrack:dxHotspot:dyHotspot:)
-	#(#{OS.CommCtrlLibrary} #imageList_Create:cy:flags:cInitial:cGrow:)
-	#(#{OS.CommCtrlLibrary} #imageList_Destroy:)
-	#(#{OS.CommCtrlLibrary} #imageList_DragEnter:x:y:)
-	#(#{OS.CommCtrlLibrary} #imageList_DragLeave:)
-	#(#{OS.CommCtrlLibrary} #imageList_DragMove:y:)
-	#(#{OS.CommCtrlLibrary} #imageList_DragShowNolock:)
-	#(#{OS.CommCtrlLibrary} #imageList_Draw:i:hdcDst:x:y:fStyle:)
-	#(#{OS.CommCtrlLibrary} #imageList_DrawEx:i:hdcDst:x:y:dx:dy:rgbBk:rgbFg:fStyle:)
-	#(#{OS.CommCtrlLibrary} #imageList_Duplicate:)
-	#(#{OS.CommCtrlLibrary} #imageList_EndDrag)
-	#(#{OS.CommCtrlLibrary} #imageList_GetBkColor:)
-	#(#{OS.CommCtrlLibrary} #imageList_GetIcon:i:flags:)
-	#(#{OS.CommCtrlLibrary} #imageList_GetIconSize:cx:cy:)
-	#(#{OS.CommCtrlLibrary} #imageList_GetImageCount:)
-	#(#{OS.CommCtrlLibrary} #imageList_LoadImage:lpbmp:cx:cGrow:crMask:uType:uFlags:)
-	#(#{OS.CommCtrlLibrary} #imageList_ReplaceIcon:i:hicon:)
-	#(#{OS.CommCtrlLibrary} #imageList_SetBkColor:clrBk:)
-	#(#{OS.CommCtrlLibrary} #imageList_SetDragCursorImage:iDrag:dxHotspot:dyHotspot:)
-	#(#{OS.CommCtrlLibrary} #imageList_SetIconSize:cx:cy:)
-	#(#{OS.CommCtrlLibrary} #loadIconMetric:pszName:lims:phico:)
-	#(#{OS.CommCtrlLibrary} #loadIconWithScaleDown:pszName:cx:cy:phico:)
 	#(#{OS.CommCtrlLibrary class} #sharedVariableName)
 	#(#{OS.KernelLibrary} #getConsoleWindow)
 	#(#{OS.SystemMetrics} #menuBarColor)
@@ -195,7 +171,6 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #childWindowFromPointEx:pt:uFlags:)
 	#(#{OS.UserLibrary} #clientToScreen:lpPoint:)
 	#(#{OS.UserLibrary} #closeClipboard)
-	#(#{OS.UserLibrary} #copyImage:uType:cxDesired:cyDesired:fuFlags:)
 	#(#{OS.UserLibrary} #countClipboardFormats)
 	#(#{OS.UserLibrary} #createAcceleratorTable:cEntries:)
 	#(#{OS.UserLibrary} #createMenu)
@@ -204,19 +179,12 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:)
 	#(#{OS.UserLibrary} #deleteMenu:uPosition:uFlags:)
 	#(#{OS.UserLibrary} #destroyAcceleratorTable:)
-	#(#{OS.UserLibrary} #destroyCursor:)
-	#(#{OS.UserLibrary} #destroyIcon:)
 	#(#{OS.UserLibrary} #destroyMenu:)
-	#(#{OS.UserLibrary} #drawEdge:qrc:edge:grfFlags:)
 	#(#{OS.UserLibrary} #drawFocusRect:lprc:)
 	#(#{OS.UserLibrary} #drawFrameControl:lprc:uType:uState:)
-	#(#{OS.UserLibrary} #drawIconEx:xLeft:yTop:hIcon:cxWidth:cyHeight:istepIfAniCur:hbrFlickerFreeDraw:diFlags:)
 	#(#{OS.UserLibrary} #drawMenuBar:)
-	#(#{OS.UserLibrary} #drawState:hbr:lpOutputFunc:lData:wData:x:y:cx:cy:fuFlags:)
-	#(#{OS.UserLibrary} #drawTextEx:lpchText:cchText:lprc:dwDTFormat:lpDTParams:)
 	#(#{OS.UserLibrary} #emptyClipboard)
 	#(#{OS.UserLibrary} #endDeferWindowPos:)
-	#(#{OS.UserLibrary} #endDialog:nResult:)
 	#(#{OS.UserLibrary} #endPaint:lpPaint:)
 	#(#{OS.UserLibrary} #enumChildWindows:lpEnumFunction:lParam:)
 	#(#{OS.UserLibrary} #enumClipboardFormats:)
@@ -224,11 +192,8 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #enumDisplayMonitors:lprcClip:lpfnEnum:dwData:)
 	#(#{OS.UserLibrary} #enumThreadWindows:lpfn:lParam:)
 	#(#{OS.UserLibrary} #enumWindows:lParam:)
-	#(#{OS.UserLibrary} #fillRect:lprc:hbr:)
 	#(#{OS.UserLibrary} #findWindow:lpWindowName:)
-	#(#{OS.UserLibrary} #flashWindow:bInvert:)
 	#(#{OS.UserLibrary} #flashWindowEx:)
-	#(#{OS.UserLibrary} #frameRect:lprc:hbr:)
 	#(#{OS.UserLibrary} #getAncestor:gaFlags:)
 	#(#{OS.UserLibrary} #getCapture)
 	#(#{OS.UserLibrary} #getClassLongPtr:nIndex:)
@@ -236,15 +201,9 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #getClientRect:lpRect:)
 	#(#{OS.UserLibrary} #getClipboardData:)
 	#(#{OS.UserLibrary} #getClipboardFormatName:lpszFormatName:cchMaxCount:)
-	#(#{OS.UserLibrary} #getCursor)
-	#(#{OS.UserLibrary} #getCursorPos:)
-	#(#{OS.UserLibrary} #getDC)
-	#(#{OS.UserLibrary} #getDC:)
-	#(#{OS.UserLibrary} #getDCEx:hrgnClip:flags:)
 	#(#{OS.UserLibrary} #getDlgCtrlID:)
 	#(#{OS.UserLibrary} #getFocus)
 	#(#{OS.UserLibrary} #getForegroundWindow)
-	#(#{OS.UserLibrary} #getIconInfo:piconinfo:)
 	#(#{OS.UserLibrary} #getLastActivePopup:)
 	#(#{OS.UserLibrary} #getLastInputInfo:)
 	#(#{OS.UserLibrary} #getMenuInfo:lpcmi:)
@@ -270,7 +229,6 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #insertMenuItem:uItem:fByPosition:lpmii:)
 	#(#{OS.UserLibrary} #invalidate:lpRect:bErase:)
 	#(#{OS.UserLibrary} #invalidateRgn:hRgn:bErase:)
-	#(#{OS.UserLibrary} #invertRect:lprc:)
 	#(#{OS.UserLibrary} #isChild:hWnd:)
 	#(#{OS.UserLibrary} #isClipboardFormatAvailable:)
 	#(#{OS.UserLibrary} #isDialogMessage:lpMsg:)
@@ -278,9 +236,6 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #isWindowUnicode:)
 	#(#{OS.UserLibrary} #isZoomed:)
 	#(#{OS.UserLibrary} #loadAccelerators:lpTableName:)
-	#(#{OS.UserLibrary} #loadCursorFromFile:)
-	#(#{OS.UserLibrary} #loadIcon:lpIconName:)
-	#(#{OS.UserLibrary} #loadImage:lpszName:uType:cxDesired:cyDesired:fuLoad:)
 	#(#{OS.UserLibrary} #loadMenu:lpMenuName:)
 	#(#{OS.UserLibrary} #lockWindowUpdate:)
 	#(#{OS.UserLibrary} #makeDragList:)
@@ -297,13 +252,10 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #registerHotKey:id:fsModifiers:vk:)
 	#(#{OS.UserLibrary} #registerWindowMessage:)
 	#(#{OS.UserLibrary} #releaseCapture)
-	#(#{OS.UserLibrary} #releaseDC:)
-	#(#{OS.UserLibrary} #releaseDC:hDC:)
 	#(#{OS.UserLibrary} #removeMenu:uPosition:uFlags:)
 	#(#{OS.UserLibrary} #removeProp:lpString:)
 	#(#{OS.UserLibrary} #screenToClient:lpPoint:)
 	#(#{OS.UserLibrary} #scrollWindowEx:dx:dy:prcScroll:prcClip:hrgnUpdate:prcUpdate:flags:)
-	#(#{OS.UserLibrary} #sendDlgItemMessage:nIDDlgItem:msg:wParam:lParam:)
 	#(#{OS.UserLibrary} #sendMessage:msg:wParam:lpParam:)
 	#(#{OS.UserLibrary} #sendMessage:msg:wpParam:lpParam:)
 	#(#{OS.UserLibrary} #sendMessageU:msg:wParam:lParam:)
@@ -311,8 +263,6 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #setCapture:)
 	#(#{OS.UserLibrary} #setClassLong:nIndex:dwNewLong:)
 	#(#{OS.UserLibrary} #setClipboardData:hMem:)
-	#(#{OS.UserLibrary} #setCursorPosX:y:)
-	#(#{OS.UserLibrary} #setDlgItemInt:nIDDlgItem:uValue:bSigned:)
 	#(#{OS.UserLibrary} #setFocus:)
 	#(#{OS.UserLibrary} #setForegroundWindow:)
 	#(#{OS.UserLibrary} #setLayeredWindowAttributes:lcrKey:bAlpha:dwFlags:)
@@ -323,14 +273,12 @@ package setMethodNames: #(
 	#(#{OS.UserLibrary} #setParent:hWndNewParent:)
 	#(#{OS.UserLibrary} #setProp:lpString:hData:)
 	#(#{OS.UserLibrary} #setScrollInfo:fnBar:lpsi:fRedraw:)
-	#(#{OS.UserLibrary} #setSysColors:lpaElements:lpaRgbValues:)
 	#(#{OS.UserLibrary} #setWindowLong:nIndex:dwNewLong:)
 	#(#{OS.UserLibrary} #setWindowLongPtr:nIndex:dwNewLong:)
 	#(#{OS.UserLibrary} #setWindowPlacement:lpwndpl:)
 	#(#{OS.UserLibrary} #setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:)
 	#(#{OS.UserLibrary} #setWindowULong:nIndex:dwNewLong:)
 	#(#{OS.UserLibrary} #setWindowULongPtr:nIndex:dwNewLong:)
-	#(#{OS.UserLibrary} #showCursor:)
 	#(#{OS.UserLibrary} #systemParametersInfo:uiParam:pvParam:fWinIni:)
 	#(#{OS.UserLibrary} #trackMouseEvent:)
 	#(#{OS.UserLibrary} #trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:)
@@ -2247,11 +2195,6 @@ queryCommand:!commands!private! !
 
 !Core.Object methodsFor!
 
-addToImageList: aWinImageList mask: aColorOrNil 
-	"Private - Add a pictorial representation of the receiver to aWinImageList."
-
-	^self icon addToImageList: aWinImageList mask: aColorOrNil!
-
 icon
 	"Answer an Icon representing the receiver."
 
@@ -2260,7 +2203,6 @@ icon
 iconImageIndex
 	^self icon imageIndex! !
 !Core.Object categoriesForMethods!
-addToImageList:mask:!double dispatch!private! !
 icon!constants!public! !
 iconImageIndex!accessing!public! !
 !
@@ -2324,313 +2266,6 @@ copyToClipboard
 	UI.Clipboard current setBitmap: self! !
 !Graphics.Bitmap categoriesForMethods!
 copyToClipboard!copying!public! !
-!
-
-!OS.CommCtrlLibrary methodsFor!
-
-imageList_AddMasked: himl hbmImage: hbmImage crMask: crMask
-	"Invoke the ImageList_AddMasked() function of the module wrapped by the receiver.
-	Helpstring: Adds an image or images to an image list, generating a mask from the specified bitmap
-
-		int __stdcall ImageList_AddMasked(
-			HIMAGELIST himl,
-			HBITMAP hbmImage,
-			COLORREF crMask);"
-
-	<stdcall: sdword ImageList_AddMasked handle handle dword>
-	^self invalidCall: _failureCode!
-
-imageList_BeginDrag: himlTrack iTrack: iTrack dxHotspot: dxHotspot dyHotspot: dyHotspot
-	"Invoke the ImageList_BeginDrag() function of the module wrapped by the receiver.
-	Helpstring: Begins dragging an image
-
-		BOOL __stdcall ImageList_BeginDrag(
-			HIMAGELIST himlTrack,
-			int iTrack,
-			int dxHotspot,
-			int dyHotspot);"
-
-	<stdcall: bool ImageList_BeginDrag handle sdword sdword sdword>
-	^self invalidCall: _failureCode!
-
-imageList_Create: cx cy: cy flags: flags cInitial: cInitial cGrow: cGrow
-	"Invoke the ImageList_Create() function of the module wrapped by the receiver.
-	Helpstring: Creates a new image list
-
-		HIMAGELIST __stdcall ImageList_Create(
-			int cx,
-			int cy,
-			UINT flags,
-			int cInitial,
-			int cGrow);"
-
-	<stdcall: handle ImageList_Create sdword sdword dword sdword sdword>
-	^self invalidCall: _failureCode!
-
-imageList_Destroy: himl
-	"Invoke the ImageList_Destroy() function of the module wrapped by the receiver.
-	Helpstring: Destroys an image list
-
-		BOOL __stdcall ImageList_Destroy(
-			HIMAGELIST himl);"
-
-	<stdcall: bool ImageList_Destroy handle>
-	^self invalidCall: _failureCode!
-
-imageList_DragEnter: hwndLock x: x y: y
-	"Invoke the ImageList_DragEnter() function of the module wrapped by the receiver.
-	Helpstring: Updates the specified window during a drag operation and displays the drag image at the specified position
-
-		BOOL __stdcall ImageList_DragEnter(
-			HWND hwndLock,
-			int x,
-			int y);"
-
-	<stdcall: bool ImageList_DragEnter handle sdword sdword>
-	^self invalidCall: _failureCode!
-
-imageList_DragLeave: hwndLock
-	"Invoke the ImageList_DragLeave() function of the module wrapped by the receiver.
-	Helpstring: Unlocks the specified window and hides the drag image, allowing the window to be updated
-
-		BOOL __stdcall ImageList_DragLeave(
-			HWND hwndLock);"
-
-	<stdcall: bool ImageList_DragLeave handle>
-	^self invalidCall: _failureCode!
-
-imageList_DragMove: x y: y
-	"Invoke the ImageList_DragMove() function of the module wrapped by the receiver.
-	Helpstring: Moves the image that is being dragged during a drag-and-drop operation
-
-		BOOL __stdcall ImageList_DragMove(
-			int x,
-			int y);"
-
-	<stdcall: bool ImageList_DragMove sdword sdword>
-	^self invalidCall: _failureCode!
-
-imageList_DragShowNolock: fShow
-	"Invoke the ImageList_DragShowNolock() function of the module wrapped by the receiver.
-	Helpstring: Shows or hides the image being dragged
-
-		BOOL __stdcall ImageList_DragShowNolock(
-			BOOL fShow);"
-
-	<stdcall: bool ImageList_DragShowNolock bool>
-	^self invalidCall: _failureCode!
-
-imageList_Draw: hImageList i: index hdcDst: hdc x: x y: y fStyle: style
-	"The ImageList_Draw function draws an image list item in the specified
-	device context.
-
-	BOOL WINAPI ImageList_Draw(
-		HIMAGELIST himl, 	
-		int i, 	
-		HDC hdcDst, 	
-		int x, 	
-		int y, 	
-		UINT fStyle);	"
-
-	<stdcall: bool ImageList_Draw handle sdword handle sdword sdword dword>
-	^self invalidCall: _failureCode!
-
-imageList_DrawEx: himl i: i hdcDst: hdcDst x: x y: y dx: dx dy: dy rgbBk: rgbBk rgbFg: rgbFg fStyle: fStyle
-	"Invoke the ImageList_DrawEx() function of the module wrapped by the receiver.
-	Helpstring: Draws an image list item in the specified device context using the given drawing style and color
-
-		long __stdcall ImageList_DrawEx(
-			long himl,
-			int i,
-			long hdcDst,
-			int x,
-			int y,
-			int dx,
-			int dy,
-			unsigned long rgbBk,
-			unsigned long rgbFg,
-			unsigned int fStyle);"
-
-	<stdcall: bool ImageList_DrawEx handle sdword handle sdword sdword sdword sdword dword dword dword>
-	^self invalidCall: _failureCode!
-
-imageList_Duplicate: himl
-	"Invoke the ImageList_Duplicate() function of the module wrapped by the receiver.
-	Helpstring: Creates a duplicate of an existing image list
-
-		HIMAGELIST __stdcall ImageList_Duplicate(
-			HIMAGELIST himl);"
-
-	<stdcall: handle ImageList_Duplicate handle>
-	^self invalidCall: _failureCode!
-
-imageList_EndDrag
-	"Invoke the ImageList_EndDrag() function of the module wrapped by the receiver.
-	Helpstring: Ends a drag operation
-
-		void __stdcall ImageList_EndDrag();"
-
-	<stdcall: void ImageList_EndDrag>
-	^self invalidCall: _failureCode!
-
-imageList_GetBkColor: himl
-	"Invoke the ImageList_GetBkColor() function of the module wrapped by the receiver.
-	Helpstring: Gets the image list background color
-
-		COLORREF __stdcall ImageList_GetBkColor(
-			HIMAGELIST himl);"
-
-	<stdcall: dword ImageList_GetBkColor handle>
-	^self invalidCall: _failureCode!
-
-imageList_GetIcon: himl i: i flags: flags
-	"Invoke the ImageList_GetIcon() function of the module wrapped by the receiver.
-	Helpstring: Creates an icon or cursor based on an image and mask in an image list
-
-		HICON __stdcall ImageList_GetIcon(
-			HIMAGELIST himl,
-			int i,
-			UINT flags);"
-
-	<stdcall: handle ImageList_GetIcon handle sdword dword>
-	^self invalidCall: _failureCode!
-
-imageList_GetIconSize: himl cx: cx cy: cy
-	"Invoke the ImageList_GetIconSize() function of the module wrapped by the receiver.
-	Helpstring: Retrieves the dimensions of images in the image list.
-
-		BOOL __stdcall ImageList_GetIconSize(
-			HIMAGELIST himl,
-			int* cx,
-			int* cy);"
-
-	<stdcall: bool ImageList_GetIconSize handle sdword sdword>
-	^self invalidCall: _failureCode!
-
-imageList_GetImageCount: himl
-	"Invoke the ImageList_GetImageCount() function of the module wrapped by the receiver.
-	Helpstring: Gets the number of images in an image list
-
-		int __stdcall ImageList_GetImageCount(
-			HIMAGELIST himl);"
-
-	<stdcall: sdword ImageList_GetImageCount handle>
-	^self invalidCall: _failureCode!
-
-imageList_LoadImage: hi lpbmp: lpbmp cx: cx cGrow: cGrow crMask: crMask uType: uType uFlags: uFlags
-	"Invoke the ImageList_LoadImage() function of the module wrapped by the receiver.
-	Helpstring: Creates an image list from the specified bitmap, cursor, or icon resource
-
-		HIMAGELIST __stdcall ImageList_LoadImage(
-			HINSTANCE hi,
-			LPCWSTR lpbmp,
-			int cx,
-			int cGrow,
-			COLORREF crMask,
-			UINT uType,
-			UINT uFlags);"
-
-	<stdcall: handle ImageList_LoadImageW handle lpwstr sdword sdword dword dword dword>
-	^self invalidCall: _failureCode!
-
-imageList_ReplaceIcon: himl i: i hicon: hicon
-	"Invoke the ImageList_ReplaceIcon() function of the module wrapped by the receiver.
-	Helpstring: Replaces an image with an icon or cursor
-
-		int __stdcall ImageList_ReplaceIcon(
-			HIMAGELIST himl,
-			int i,
-			HICON HICON);"
-
-	<stdcall: sdword ImageList_ReplaceIcon handle sdword handle>
-	^self invalidCall: _failureCode!
-
-imageList_SetBkColor: himl clrBk: clrBk
-	"Invoke the ImageList_SetBkColor() function of the module wrapped by the receiver.
-	Helpstring: Sets the image list background color
-
-		COLORREF __stdcall ImageList_SetBkColor(
-			HIMAGELIST himl,
-			COLORREF clrBk);"
-
-	<stdcall: dword ImageList_SetBkColor handle dword>
-	^self invalidCall: _failureCode!
-
-imageList_SetDragCursorImage: himlDrag iDrag: iDrag dxHotspot: dxHotspot dyHotspot: dyHotspot
-	"Invoke the ImageList_SetDragCursorImage() function of the module wrapped by the receiver.
-	Helpstring: Creates a new drag image by combining the specified image (typically a cursor) with the current drag image
-
-		BOOL __stdcall ImageList_SetDragCursorImage(
-			HIMAGELIST himlDrag,
-			int iDrag,
-			int dxHotspot,
-			int dyHotspot);"
-
-	<stdcall: bool ImageList_SetDragCursorImage handle sdword sdword sdword>
-	^self invalidCall: _failureCode!
-
-imageList_SetIconSize: himl cx: cx cy: cy
-	"Invoke the ImageList_SetIconSize() function of the module wrapped by the receiver.
-	Helpstring: Sets the dimensions of images in an image list
-
-		BOOL __stdcall ImageList_SetIconSize(
-			HIMAGELIST himl,
-			int cx,
-			int cy);"
-
-	<stdcall: bool ImageList_SetIconSize handle sdword sdword>
-	^self invalidCall: _failureCode!
-
-loadIconMetric: hInst pszName: pszName lims: lims phico: phico
-	"Invoke the LoadIconMetric() function of the module wrapped by the receiver.
-	Helpstring: Loads a specified icon resource with a client-specified system metric
-
-		HRESULT_NOTHROW __stdcall LoadIconMetric(
-			HINSTANCE hInst,
-			RESOURCEID pszName,
-			int lims,
-			[out, retval]HICON* phico);"
-
-	<stdcall: sdword LoadIconMetric handle void* sdword handle*>
-	^self invalidCall: _failureCode!
-
-loadIconWithScaleDown: hInst pszName: pszName cx: cx cy: cy phico: phico
-	"Invoke the LoadIconWithScaleDown() function of the module wrapped by the receiver.
-	Helpstring: Loads an icon. If the icon is not a standard size, this function scales down a larger image instead of scaling up a smaller image.
-
-		HRESULT __stdcall LoadIconWithScaleDown(
-			HINSTANCE hInst,
-			LPCWSTR pszName,
-			int cx,
-			int cy,
-			[out, retval]HICON* phico);"
-
-	<stdcall: sdword LoadIconWithScaleDown handle lpvoid sdword sdword handle*>
-	^self invalidCall: _failureCode! !
-!OS.CommCtrlLibrary categoriesForMethods!
-imageList_AddMasked:hbmImage:crMask:!**auto generated**!public!win32 functions-image list! !
-imageList_BeginDrag:iTrack:dxHotspot:dyHotspot:!**auto generated**!public!win32 functions-image list! !
-imageList_Create:cy:flags:cInitial:cGrow:!**auto generated**!public!win32 functions-image list! !
-imageList_Destroy:!**auto generated**!public!win32 functions-image list! !
-imageList_DragEnter:x:y:!**auto generated**!public!win32 functions-image list! !
-imageList_DragLeave:!**auto generated**!public!win32 functions-image list! !
-imageList_DragMove:y:!**auto generated**!public!win32 functions-image list! !
-imageList_DragShowNolock:!**auto generated**!public!win32 functions-image list! !
-imageList_Draw:i:hdcDst:x:y:fStyle:!primitives!public!win32 functions-image list! !
-imageList_DrawEx:i:hdcDst:x:y:dx:dy:rgbBk:rgbFg:fStyle:!**auto generated**!public!win32 functions-image list! !
-imageList_Duplicate:!**auto generated**!public!win32 functions-image list! !
-imageList_EndDrag!**auto generated**!public!win32 functions-image list! !
-imageList_GetBkColor:!**auto generated**!public!win32 functions-image list! !
-imageList_GetIcon:i:flags:!**auto generated**!public!win32 functions-image list! !
-imageList_GetIconSize:cx:cy:!**auto generated**!public!win32 functions-image list! !
-imageList_GetImageCount:!**auto generated**!public!win32 functions-image list! !
-imageList_LoadImage:lpbmp:cx:cGrow:crMask:uType:uFlags:!**auto generated**!public!win32 functions-image list! !
-imageList_ReplaceIcon:i:hicon:!**auto generated**!public!win32 functions-image list! !
-imageList_SetBkColor:clrBk:!**auto generated**!public!win32 functions-image list! !
-imageList_SetDragCursorImage:iDrag:dxHotspot:dyHotspot:!**auto generated**!public!win32 functions-image list! !
-imageList_SetIconSize:cx:cy:!**auto generated**!public!win32 functions-image list! !
-loadIconMetric:pszName:lims:phico:!**auto generated**!public! !
-loadIconWithScaleDown:pszName:cx:cy:phico:!**auto generated**!public! !
 !
 
 !OS.CommCtrlLibrary class methodsFor!
@@ -2780,22 +2415,6 @@ closeClipboard
 	<stdcall: bool CloseClipboard>
 	^self invalidCall: _failureCode!
 
-copyImage: hImage uType: uType cxDesired: cxDesired cyDesired: cyDesired fuFlags: fuFlags
-	"The CopyImage function creates a new image (icon, cursor, or bitmap) and copies the attributes of
-	the specified image to the new one. If necessary, the function stretches the bits to fit the desired size
-	of the new image.
-	
-	HANDLE CopyImage(      
-		HANDLE hImage,
-		UINT uType,
-		int cxDesired,
-		int cyDesired,
-		UINT fuFlags
-		);"
-
-	<stdcall: handle CopyImage handle dword sdword sdword dword>
-	^self invalidCall: _failureCode!
-
 countClipboardFormats
 	"Answer the number of registered clipboard formats.
 		int CountClipboardFormats(VOID)"
@@ -2888,24 +2507,6 @@ destroyAcceleratorTable: hAcceleratorTable
 	<stdcall: bool DestroyAcceleratorTable handle>
 	^self invalidCall: _failureCode!
 
-destroyCursor: hCursor
-	"Destroy the specified cursor.
-		BOOL DestroyCursor(
-  			HCURSOR hCursor	// handle to cursor to destroy
-		);"
-
-	<stdcall: bool DestroyCursor handle>
-	^self invalidCall: _failureCode!
-
-destroyIcon: hIcon
-	"Destroy the specified icon.
-		BOOL DestroyIcon(
-  			HICON hIcon 	// handle to icon to destroy
-		);"
-
-	<stdcall: bool DestroyIcon handle>
-	^self invalidCall: _failureCode!
-
 destroyMenu: hMenu
 	"Destroy the specified menu.
 		BOOL DestroyMenu(
@@ -2913,19 +2514,6 @@ destroyMenu: hMenu
 			);"
 
 	<stdcall: bool DestroyMenu handle>
-	^self invalidCall: _failureCode!
-
-drawEdge: hdc qrc: qrc edge: edge grfFlags: grfFlags
-	"Invoke the DrawEdge() function of the module wrapped by the receiver.
-	Helpstring: Draws a 3-D edge on a rectangle according to the given edge and border flags
-
-		BOOL __stdcall DrawEdge(
-			[in]HDC HDC,
-			[in, out]RECTL* qrc,
-			[in]UINT edge,
-			[in]UINT grfFlags);"
-
-	<stdcall: bool DrawEdge handle RECTL* dword dword>
 	^self invalidCall: _failureCode!
 
 drawFocusRect: hdc lprc: aRECT
@@ -2951,25 +2539,6 @@ drawFrameControl: hdc lprc: lprc uType: uType uState: uState
 	<stdcall: bool DrawFrameControl handle RECTL* dword dword>
 	^self invalidCall: _failureCode!
 
-drawIconEx: hDC xLeft: x yTop: y hIcon: hIcon cxWidth: w cyHeight: h istepIfAniCur: anInteger hbrFlickerFreeDraw: brush diFlags: flags
-	"Draws an icon or cursor on the specified device context as specified by the flags
-	argument, and and stretching or compressing the icon or cursor as specified by the extent.
-
-		BOOL DrawIconEx(
-			HDC hdc,					// handle to device context
-			int xLeft,					// x-coordinate of upper left corner
-			int yTop,					// y-coordinate of upper left corner
-			HICON hIcon,				// handle to icon to draw
-			int cxWidth,				// width of the icon
-			int cyWidth,				// height of the icon
-			UINT istepIfAniCur,			// index of frame in animated cursor
-			HBRUSH hbrFlickerFreeDraw,	// handle to background brush (or nil)
-			UINT diFlags				// icon-drawing flags
-		);"
-
-	<stdcall: bool DrawIconEx handle sdword sdword handle sdword sdword dword handle dword>
-	^self invalidCall: _failureCode!
-
 drawMenuBar: aWindowHandle
 	"Draw the menu bar of the specified window (e.g. when the bars contents
 	are altered).
@@ -2978,41 +2547,6 @@ drawMenuBar: aWindowHandle
 		);"
 
 	<stdcall: bool DrawMenuBar handle>
-	^self invalidCall: _failureCode!
-
-drawState: hdc hbr: hbr lpOutputFunc: lpOutputFunc lData: lData wData: wData x: x y: y cx: cx cy: cy fuFlags: fuFlags
-	"Invoke the DrawState() function of the module wrapped by the receiver.
-	Helpstring: Displays an image and applies a visual effect to indicate a state, such as a disabled or default state
-
-		BOOL __stdcall DrawState(
-			[in]HDC HDC,
-			[in]HBRUSH hbr,
-			[in]DRAWSTATEPROC lpOutputFunc,
-			[in]LPARAM lData,
-			[in]WPARAM wData,
-			[in]int x,
-			[in]int y,
-			[in]int cx,
-			[in]int cy,
-			[in]unsigned int fuFlags);"
-
-	<stdcall: bool DrawStateW handle handle void* intptr uintptr sdword sdword sdword sdword dword>
-	^self invalidCall: _failureCode!
-
-drawTextEx: hdc lpchText: lpchText cchText: cchText lprc: lprc dwDTFormat: dwDTFormat lpDTParams: lpdtParams
-	"Draw text in the specified rectange with the specified options (see Win32 docs)
-
-		int DrawTextEx(
-			HDC hdc,			 						// handle to device context
-			LPWSTR lpchText,							// pointer to string to draw 
-			int cchText,								// length of string to draw 
-			LPRECT lprc,								// pointer to rectangle coordinates 
-			UINT dwDTFormat,						// formatting options 
-			LPDRAWTEXTPARAMS lpDTParams	// pointer to struct with options 
-		);
-	"
-
-	<stdcall: sdword DrawTextExW handle lpwstr sdword RECTL* dword lpvoid>
 	^self invalidCall: _failureCode!
 
 emptyClipboard
@@ -3031,16 +2565,6 @@ endDeferWindowPos: hWinPosInfo
 			HDWP hWinPosInfo);"
 
 	<stdcall: bool EndDeferWindowPos handle>
-	^self invalidCall: _failureCode!
-
-endDialog: dialogHandle nResult: anInteger
-	"Destroy a modal dialog box, causing the system to end any processing for the dialog box. 
-		BOOL EndDialog(
-			HWND hDlg,	// handle to dialog box
-			INT_PTR nResult 	// value to return
-		);"
-
-	<stdcall: bool EndDialog handle intptr>
 	^self invalidCall: _failureCode!
 
 endPaint: hWindow lpPaint: aPAINTSTRUCT
@@ -3118,46 +2642,16 @@ enumWindows: lpEnumFunction lParam: lParam
 	<stdcall: bool EnumWindows void* intptr>
 	^self invalidCall: _failureCode!
 
-fillRect: hdc lprc: aRECT hbr: hBrush
-	"Fill a rectangle using the specified brush. Left and top borders are inclusive, 
-	right and bottom exclusive.
-			int FillRect(
-			HDC hDC,			// handle to device context 
-			CONST RECTL *lprc,	// pointer to structure with rectangle  
-			HBRUSH hbr 		// handle to brush
-		);"
-
-	<stdcall: bool FillRect handle RECTL* handle>
-	^self invalidCall: _failureCode!
-
 findWindow: lpClassName lpWindowName: lpWindowName
 	"Find and answer the handle of the top-level window with matching class name and caption."
 
 	<stdcall: handle FindWindowW lpwstr lpwstr>
 	^self invalidCall: _failureCode!
 
-flashWindow: hWnd bInvert: bInvert
-	"Flash the window with handle, hWnd."
-
-	<stdcall: bool FlashWindow handle bool>
-	^self invalidCall: _failureCode!
-
 flashWindowEx: pfwi
 	"BOOL FlashWindowEx( PFLASHWINFO pfwi // flash status information );"
 
 	<stdcall: bool FlashWindowEx FLASHWINFO*>
-	^self invalidCall: _failureCode!
-
-frameRect: hdc lprc: aRECT hbr: hBrush
-	"Draw a border around the specified rectangle using the specified brush.
-	The borders are one logical unit wide and high.
-		int FrameRect(
-			HDC hDC,			// handle to device context 
-			CONST RECT *lprc,	// pointer to rectangle coordinates  
-			HBRUSH hbr 		// handle to brush 
-		);"
-
-	<stdcall: bool FrameRect handle RECTL* handle>
 	^self invalidCall: _failureCode!
 
 getAncestor: hwnd gaFlags: gaFlags
@@ -3227,49 +2721,6 @@ getClipboardFormatName: format lpszFormatName: lpszFormatName cchMaxCount: cchMa
 	<stdcall: sdword GetClipboardFormatNameW dword lpwstr sdword>
 	^self invalidCall: _failureCode!
 
-getCursor
-	"Retrieve the handle of the current system cursor.
-		HCURSOR GetCursor(VOID)."
-
-	<stdcall: handle GetCursor>
-	^self invalidCall: _failureCode!
-
-getCursorPos: aPOINT
-	"Retrieve the cursor's position, in screen coordinates. Answer whether the request succeeds.
-		BOOL GetCursorPos(
-			LPPOINT  lpPoint
-		   );"
-
-	<stdcall: bool GetCursorPos POINTL*>
-	^self invalidCall: _failureCode!
-
-getDC
-	"Answer a DC for drawing on the desktop.
-	N.B. This is one half of the <dcSource> protocol, and must be matched with 
-	a call to #releaseDC: to delete the DC.
-		dc := self getDC.
-		self releaseDC: dc.
-	"
-
-	^self getWindowDC: self getDesktopWindow!
-
-getDC: aWindowHandle
-	"Answer the handle of a display device context (DC) which can be used to draw
-	in the client area of the specified window.
-	The DC may be a common, class, or private device context depending on the class 
-	style specified for the window. Common DCs are reinitialized with default 
-	attributes each time, but class and private device contexts are answered
-	in their current state.
-
-		HDC GetDC(HWND hWnd);"
-
-	<stdcall: handle GetDC handle>
-	^self invalidCall: _failureCode!
-
-getDCEx: aWindowHandle hrgnClip: rgnExternalHandle flags: flagsInteger
-	<stdcall: handle GetDCEx handle handle dword>
-	^self invalidCall: _failureCode!
-
 getDlgCtrlID: hWnd
 	<stdcall: sdword GetDlgCtrlID handle>
 	^self invalidCall: _failureCode!
@@ -3288,17 +2739,6 @@ getForegroundWindow
 		HWND GetForegroundWindow(VOID)"
 
 	<stdcall: handle GetForegroundWindow>
-	^self invalidCall: _failureCode!
-
-getIconInfo: hIcon piconinfo: anICONINFO
-	"Populate the argument, anICONINFO, with information about the  icon or cursor
-	whose handle is hIcon.
-		BOOL GetIconInfo( 
-			HICON hIcon,			// icon handle	
-			PICONINFO piconinfo 	// address of icon structure	
-		);"
-
-	<stdcall: bool GetIconInfo handle ICONINFO*>
 	^self invalidCall: _failureCode!
 
 getLastActivePopup: aHandle
@@ -3591,18 +3031,6 @@ invalidateRgn: hWnd hRgn: aRegion bErase: aBoolean
 	<stdcall: bool InvalidateRgn handle handle bool>
 	^self invalidCall: _failureCode!
 
-invertRect: hdc lprc: aRECT
-	"The InvertRect function inverts a rectangle in a window by performing a logical 
-	NOT operation on the color values for each pixel in the rectangle's interior.
-
-	BOOL InvertRect( 
-		HDC hDC,	// handle of device context	
-		CONST RECT *lprc	// address of structure with rectangle	
-		); "
-
-	<stdcall: bool InvertRect handle RECTL*>
-	^self invalidCall: _failureCode!
-
 isChild: hWndParent hWnd: hWnd
 	"Answer whether the window identified by the handle, hWnd, is 
 	a child of the window identified by the handle, hWndParent."
@@ -3663,41 +3091,6 @@ loadAccelerators: anExternalHandle lpTableName: anIntegerOrString
 			);"
 
 	<stdcall: handle LoadAcceleratorsW handle lpvoid>
-	^self invalidCall: _failureCode!
-
-loadCursorFromFile: aFilename
-	"Creates a cursor based on data contained in the specified file, and answer the handle, 
-	or NULL if it fails. Can load standard (.CUR) or animated (.ANI) cursors.
-
-		HCURSOR LoadCursorFromFile (
-  			LPCTSTR  lpFileName	// pointer to name of cursor file, or system cursor identifier
-	   );"
-
-	<stdcall: handle LoadCursorFromFileW lpvoid>
-	^self invalidCall: _failureCode!
-
-loadIcon: anInstanceHandle lpIconName: anIntegerID
-	"Loads the specified icon resource from the specified module.
-		HICON LoadIcon(
-			HINSTANCE hInstance,	// handle of application instance
-			LPCTSTR lpIconName 	// icon-name string or icon resource identifier
-		);"
-
-	<stdcall: handle LoadIconW handle lpvoid>
-	^self invalidCall: _failureCode!
-
-loadImage: hInst lpszName: filename uType: type cxDesired: w cyDesired: h fuLoad: flags
-	"Load an icon, cursor, or bitmap.
-		HANDLE LoadImage(
-			HINSTANCE hinst, 	// handle of the instance that contains the image
-			LPCTSTR lpszName,	// name or identifier of image
-			UINT uType,		// type of image
-			int cxDesired,		// desired width
-			int cyDesired,		// desired height
-			UINT fuLoad		// load flags
-		);"
-
-	<stdcall: handle LoadImageW handle lpvoid dword sdword sdword dword>
 	^self invalidCall: _failureCode!
 
 loadMenu: anExternalHandle lpMenuName: anIntegerOrString
@@ -3864,27 +3257,6 @@ releaseCapture
 	<stdcall: bool ReleaseCapture>
 	^self invalidCall: _failureCode!
 
-releaseDC: hDC
-	"Release the specified device context. This is the second half of the 'DC source' protocol,
-	and is intended to release the desktop DCs created by the receiver's implementation of #getDC.
-	Answer whether the DC was indeed released."
-
-	^(self 
-		releaseDC: self getDesktopWindow
-		hDC: hDC asParameter) == 1!
-
-releaseDC: hWnd hDC: hDC
-	"Releases a device context (DC) (if a common or window device context -
-	class and private DCs are unaffected).
-
-		int ReleaseDC(
-			HWND hWnd,	// handle of window 
-			HDC hDC 		// handle of device context  
-		);"
-
-	<stdcall: sdword ReleaseDC handle handle>
-	^self invalidCall: _failureCode!
-
 removeMenu: aMenu uPosition: idOrPos uFlags: flags
 	"Delete a menu item from the specified menu. If the menu item activates a pop-up menu, 
 	RemoveMenu does not destroy the pop-up menu or its handle, allowing the menu to be reused. 
@@ -3935,19 +3307,6 @@ scrollWindowEx: aWindowHandle dx: horizontalScrolling dy: verticalScrolling prcS
 	);"
 
 	<stdcall: sdword ScrollWindowEx handle sdword sdword RECTL* RECTL* handle lpvoid dword>
-	^self invalidCall: _failureCode!
-
-sendDlgItemMessage: aWindowHandle nIDDlgItem: anIntegerId msg: aString wParam: wParam lParam: lParam
-	"Send a message to the specified control in a dialog box. 
-		LRESULT SendDlgItemMessage(
-			HWND  hDlg,		// handle of dialog box
-			int  nIDDlgItem,	// identifier of control
-			UINT  Msg,		// message to send
-			WPARAM  wParam,	// first message parameter
-			LPARAM  lParam 	// second message parameter
-		   );"
-
-	<stdcall: uintptr SendDlgItemMessageW handle sdword dword uintptr intptr>
 	^self invalidCall: _failureCode!
 
 sendMessage: aWindowHandle msg: msg wParam: wParam lpParam: lParam
@@ -4012,30 +3371,6 @@ setClipboardData: uFormat hMem: hMem
 		);"
 
 	<stdcall: handle SetClipboardData dword handle>
-	^self invalidCall: _failureCode!
-
-setCursorPosX: x y: y
-	"Move the cursor to the specified screen coordinates. The coordinates are clipped to 
-	the rectangle set by the most recent invocation of the ClipCursor function.
-
-		BOOL SetCursorPos(
-  			int  X,	// horizontal position  
-			int  Y 	// vertical position
-		);"
-
-	<stdcall: bool SetCursorPos sdword sdword>
-	^self invalidCall: _failureCode!
-
-setDlgItemInt: hDlg nIDDlgItem: anIntegerId uValue: uValue bSigned: bSigned
-	"Sets the title or text of a control in a dialog box. 
-		BOOL SetDlgItemInt(
-			HWND hDlg, // handle to dialog box
-			int nIDDlgItem, // control identifier 
-			UINT uValue, // value to set 
-			BOOL bSigned // signed or unsigned indicator 
-		);"
-
-	<stdcall: bool SetDlgItemInt handle sdword dword bool>
 	^self invalidCall: _failureCode!
 
 setFocus: aWindowHandle
@@ -4157,20 +3492,6 @@ setScrollInfo: aWindowHandle fnBar: flag lpsi: struct fRedraw: redraw
 	<stdcall: sdword SetScrollInfo handle sdword SCROLLINFO* bool>
 	^self invalidCall: _failureCode!
 
-setSysColors: count lpaElements: elements lpaRgbValues: values
-	"
-		Sets the colors for the specified display elements. Display elements are the various parts of a window and the display that appear on the system display screen.hasCaption: true;
-		hasCaption: false;
-
-		BOOL WINAPI SetSysColors(
-			__in  int cElements,
-			__in  const INT* lpaElements,
-			__in  const COLORREF* lpaRgbValues
-			);"
-
-	<stdcall: bool SetSysColors sdword sdword* dword*>
-	^self invalidCall: _failureCode!
-
 setWindowLong: hWnd nIndex: nIndex dwNewLong: dwNewLong
 	"Change an attribute of the specified window, setting 
 	a signed 32-bit (long) value at the specified offset into 
@@ -4222,17 +3543,6 @@ setWindowULong: hWnd nIndex: nIndex dwNewLong: dwNewLong
 
 setWindowULongPtr: hWnd nIndex: nIndex dwNewLong: dwNewLong
 	<stdcall: uintptr SetWindowLongPtrW handle sdword uintptr>
-	^self invalidCall: _failureCode!
-
-showCursor: aBoolean
-	"Show or hide the cursor. N.B. A count is maintained of the number of times 
-	the cursor has been hidden/shown (which is answered), so there may be no visual effect.
-
-		int ShowCursor(
-  			BOOL  bShow 	// cursor visibility flag  
-		);"
-
-	<stdcall: sdword ShowCursor bool>
 	^self invalidCall: _failureCode!
 
 systemParametersInfo: uiAction uiParam: param1 pvParam: param2 fWinIni: update
@@ -4345,7 +3655,6 @@ callWindowProc:hWnd:msg:wParam:lParam:!public!win32 functions-window procedure! 
 childWindowFromPointEx:pt:uFlags:!public!win32 functions-window! !
 clientToScreen:lpPoint:!public!win32 functions-coordinate space and transformation! !
 closeClipboard!public!win32 functions-clipboard! !
-copyImage:uType:cxDesired:cyDesired:fuFlags:!public!win32 functions-resources! !
 countClipboardFormats!public!win32 functions-clipboard! !
 createAcceleratorTable:cEntries:!public!win32 functions-keyboard accelerator! !
 createMenu!public!win32 functions-menu! !
@@ -4354,19 +3663,12 @@ createWindowEx:lpClassName:lpWindowName:dwStyle:x:y:nWidth:nHeight:hWndParent:hM
 deferWindowPos:hwnd:hwndInsertAfter:x:y:cx:cy:uFlags:!**auto generated**!public! !
 deleteMenu:uPosition:uFlags:!public!win32 functions-menu! !
 destroyAcceleratorTable:!public!win32 functions-keyboard accelerator! !
-destroyCursor:!public!win32 functions-icon! !
-destroyIcon:!public!win32 functions-icon! !
 destroyMenu:!public!win32 functions-menu! !
-drawEdge:qrc:edge:grfFlags:!**auto generated**!public!win32 functions-painting and drawing! !
 drawFocusRect:lprc:!public!win32 functions-painting and drawing! !
 drawFrameControl:lprc:uType:uState:!**auto generated**!public!win32 functions-painting and drawing! !
-drawIconEx:xLeft:yTop:hIcon:cxWidth:cyHeight:istepIfAniCur:hbrFlickerFreeDraw:diFlags:!public!win32 functions-icon! !
 drawMenuBar:!public!win32 functions-menu! !
-drawState:hbr:lpOutputFunc:lData:wData:x:y:cx:cy:fuFlags:!**auto generated**!public! !
-drawTextEx:lpchText:cchText:lprc:dwDTFormat:lpDTParams:!public!win32 functions-font and text! !
 emptyClipboard!public!win32 functions-clipboard! !
 endDeferWindowPos:!**auto generated**!public! !
-endDialog:nResult:!public!win32 functions-dialog box! !
 endPaint:lpPaint:!public!win32 functions-painting and drawing! !
 enumChildWindows:lpEnumFunction:lParam:!**auto generated**!public! !
 enumClipboardFormats:!public!win32 functions-clipboard! !
@@ -4374,11 +3676,8 @@ enumDisplayDevices:iDevNum:lpDisplayDevice:dwFlags:!**auto generated**!public! !
 enumDisplayMonitors:lprcClip:lpfnEnum:dwData:!**auto generated**!public!win32 functions-multiple display monitors! !
 enumThreadWindows:lpfn:lParam:!public!win32 functions-window! !
 enumWindows:lParam:!**auto generated**!public! !
-fillRect:lprc:hbr:!public!win32 functions-filled shape! !
 findWindow:lpWindowName:!public!win32 functions-filled shape! !
-flashWindow:bInvert:!public!win32 functions-error handling! !
 flashWindowEx:!public!win32 functions-error handling! !
-frameRect:lprc:hbr:!public!win32 functions-filled shape! !
 getAncestor:gaFlags:!**auto generated**!public! !
 getCapture!public!win32 functions-mouse input! !
 getClassLongPtr:nIndex:!public!win32 functions-window class! !
@@ -4386,15 +3685,9 @@ getClassName:lpClassName:nMaxCount:!public!win32 functions-window class! !
 getClientRect:lpRect:!public!win32 functions-window! !
 getClipboardData:!public!win32 functions-clipboard! !
 getClipboardFormatName:lpszFormatName:cchMaxCount:!public!win32 functions-clipboard! !
-getCursor!public!win32 functions-cursor! !
-getCursorPos:!public!win32 functions-cursor! !
-getDC!operations!public! !
-getDC:!not an aspect!public!win32 functions-device context! !
-getDCEx:hrgnClip:flags:!public!win32 functions-device context! !
 getDlgCtrlID:!public!win32 functions-dialog box! !
 getFocus!public!win32 functions-keyboard input! !
 getForegroundWindow!public!win32 functions-keyboard input! !
-getIconInfo:piconinfo:!public!win32 functions-icon! !
 getLastActivePopup:!public!win32 functions-window! !
 getLastInputInfo:!public!win32 functions-keyboard input!win32 functions-mouse input!win32 functions-timer!win32 functions-window! !
 getMenuInfo:lpcmi:!public!win32 functions-menu! !
@@ -4420,7 +3713,6 @@ getWindowULongPtr:nIndex:!public!win32 functions-window class! !
 insertMenuItem:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
 invalidate:lpRect:bErase:!public!win32 functions-painting and drawing! !
 invalidateRgn:hRgn:bErase:!public!win32 functions-painting and drawing! !
-invertRect:lprc:!public!win32 functions-filled shape! !
 isChild:hWnd:!public!win32 functions-window! !
 isClipboardFormatAvailable:!public!win32 functions-clipboard! !
 isDialogMessage:lpMsg:!public!win32 functions-dialog box! !
@@ -4428,9 +3720,6 @@ isIconic:!public!win32 functions-icon! !
 isWindowUnicode:!public!win32 functions-window!win32 functions-window procedure! !
 isZoomed:!public!win32 functions-window! !
 loadAccelerators:lpTableName:!public!win32 functions-keyboard accelerator! !
-loadCursorFromFile:!public!win32 functions-cursor! !
-loadIcon:lpIconName:!public!win32 functions-icon! !
-loadImage:lpszName:uType:cxDesired:cyDesired:fuLoad:!public!win32 functions-resources! !
 loadMenu:lpMenuName:!public!win32 functions-menu! !
 lockWindowUpdate:!public!win32 functions-painting and drawing! !
 makeDragList:!public!win32 functions-list box! !
@@ -4447,13 +3736,10 @@ registerClipboardFormat:!public!win32 functions-clipboard! !
 registerHotKey:id:fsModifiers:vk:!public!win32 functions-keyboard input! !
 registerWindowMessage:!public!win32 functions-message and message queue! !
 releaseCapture!public!win32 functions-mouse input! !
-releaseDC:!operations!public! !
-releaseDC:hDC:!public!win32 functions-device context! !
 removeMenu:uPosition:uFlags:!public!win32 functions-menu! !
 removeProp:lpString:!public!win32 functions-window property! !
 screenToClient:lpPoint:!public!win32 functions-coordinate space and transformation! !
 scrollWindowEx:dx:dy:prcScroll:prcClip:hrgnUpdate:prcUpdate:flags:!public!win32 functions-window! !
-sendDlgItemMessage:nIDDlgItem:msg:wParam:lParam:!public!win32 functions-dialog box! !
 sendMessage:msg:wParam:lpParam:!public!win32 functions-message and message queue! !
 sendMessage:msg:wpParam:lpParam:!public!win32 functions-message and message queue! !
 sendMessageU:msg:wParam:lParam:!public!win32 functions-message and message queue! !
@@ -4461,8 +3747,6 @@ sendMessageU:msg:wParam:lpParam:!public!win32 functions-message and message queu
 setCapture:!public!win32 functions-mouse input! !
 setClassLong:nIndex:dwNewLong:!public!win32 functions-window class! !
 setClipboardData:hMem:!public!win32 functions-clipboard! !
-setCursorPosX:y:!public!win32 functions-cursor! !
-setDlgItemInt:nIDDlgItem:uValue:bSigned:!public!win32 functions-dialog box! !
 setFocus:!public!win32 functions-keyboard input! !
 setForegroundWindow:!public!win32 functions-keyboard input! !
 setLayeredWindowAttributes:lcrKey:bAlpha:dwFlags:!public!win32 functions-window! !
@@ -4473,14 +3757,12 @@ setMenuItemInfo:uItem:fByPosition:lpmii:!public!win32 functions-menu! !
 setParent:hWndNewParent:!public!win32 functions-window! !
 setProp:lpString:hData:!public!win32 functions-window property! !
 setScrollInfo:fnBar:lpsi:fRedraw:!public!win32 functions-scroll bar! !
-setSysColors:lpaElements:lpaRgbValues:!public! !
 setWindowLong:nIndex:dwNewLong:!public!win32 functions-window class! !
 setWindowLongPtr:nIndex:dwNewLong:!public!win32 functions-window class! !
 setWindowPlacement:lpwndpl:!public!win32 functions-window! !
 setWindowPos:hWndInsertAfter:x:y:cx:cy:uFlags:!public!win32 functions-window! !
 setWindowULong:nIndex:dwNewLong:!public!win32 functions-window class! !
 setWindowULongPtr:nIndex:dwNewLong:!public!win32 functions-window class! !
-showCursor:!public!win32 functions-cursor! !
 systemParametersInfo:uiParam:pvParam:fWinIni:!public!win32 functions-string manipulation! !
 trackMouseEvent:!public!win32 functions-mouse input! !
 trackPopupMenu:uFlags:x:y:nReserved:hWnd:prcRect:!public!win32 functions-menu! !
