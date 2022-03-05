@@ -51,7 +51,7 @@ printableProperties
 !ICoreWebView2DOMContentLoadedEventArgs categoriesForMethods!
 get_NavigationId:!**auto generated**!COM Interfaces-ICoreWebView2DOMContentLoadedEventArgs!private! !
 navigationId!**auto generated**!properties!public! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 !
 
 !ICoreWebView2DOMContentLoadedEventArgs class methodsFor!

@@ -51,7 +51,7 @@ printableProperties
 !ICoreWebView2SourceChangedEventArgs categoriesForMethods!
 get_IsNewDocument:!**auto generated**!COM Interfaces-ICoreWebView2SourceChangedEventArgs!private! !
 isNewDocument!properties!public! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 !
 
 !ICoreWebView2SourceChangedEventArgs class methodsFor!

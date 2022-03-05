@@ -118,7 +118,7 @@ get_StatusCode:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRespon
 getContent:!**auto generated**!methods!public! !
 GetContent:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponseView!private! !
 headers!**auto generated**!properties!public! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 reasonPhrase!properties!public! !
 statusCode!**auto generated**!properties!public! !
 !

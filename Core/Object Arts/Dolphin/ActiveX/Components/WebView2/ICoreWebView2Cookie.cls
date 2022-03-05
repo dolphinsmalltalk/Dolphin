@@ -333,7 +333,7 @@ isSecure:!properties!public! !
 isSession!properties!public! !
 name!properties!public! !
 path!properties!public! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 put_Expires:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
 put_IsHttpOnly:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
 put_IsSecure:!**auto generated**!COM Interfaces-ICoreWebView2Cookie!private! !
