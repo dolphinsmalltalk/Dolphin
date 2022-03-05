@@ -5,7 +5,9 @@ OS.NMHDR subclass: #'OS.NMGETINFOTIP'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_NMGETINFOTIP_Size' -> 16rC
+	}!
 OS.NMGETINFOTIP guid: (Core.GUID fromString: '{c10cd176-4f7d-4640-b3ce-5368bfcbfbbc}')!
 OS.NMGETINFOTIP isNonInstantiable: true!
 OS.NMGETINFOTIP comment: ''!

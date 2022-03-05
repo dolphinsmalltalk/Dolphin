@@ -17,6 +17,9 @@ contents
 environment
 	^targetClass environment!
 
+nextPut: aCharacter 
+	^writeStream nextPut: aCharacter!
+
 printClass: aClass
 	self writeStream
 		nextPutAll: ((aClass environment == self environment or: 
@@ -38,6 +41,7 @@ writeStream
 !Tools.CodeGenerationContext categoriesForMethods!
 contents!private! !
 environment!accessing!public! !
+nextPut:!public! !
 printClass:!operations!public! !
 setTargetClass:!accessing!initializing!private! !
 targetClass!accessing!public! !

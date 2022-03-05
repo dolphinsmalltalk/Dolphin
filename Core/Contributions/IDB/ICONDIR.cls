@@ -2,10 +2,11 @@
 
 Win32Structure subclass: #ICONDIR
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_idCount _OffsetOf_idEntries _OffsetOf_idReserved _OffsetOf_idType'
+	classVariableNames: '_ICONDIR_Size _OffsetOf_idCount _OffsetOf_idEntries _OffsetOf_idReserved _OffsetOf_idType'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICONDIR guid: (GUID fromString: '{b5be1f5b-e245-4cdf-b274-b6609ab85b23}')!
+ICONDIR addClassConstant: '_ICONDIR_Size' value: 16r16!
 ICONDIR addClassConstant: '_OffsetOf_idCount' value: 16r4!
 ICONDIR addClassConstant: '_OffsetOf_idEntries' value: 16r6!
 ICONDIR addClassConstant: '_OffsetOf_idReserved' value: 16r0!

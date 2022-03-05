@@ -666,6 +666,9 @@ defineFunctions
 
 	^self subclassResponsibility!
 
+defineSizeConstant: newByteSize
+	"Do nothing - we don't want a size constant defined for subclasses"!
+
 defineTemplate
 	"Initialize the receiver class' structure template and VTable."
 
@@ -1083,6 +1086,7 @@ defineFunction:returnType:!automatic generation!public! !
 defineFunction:returnType:argumentTypes:!automatic generation!public! !
 defineFunction:type:returnType:argumentTypes:!automatic generation!public! !
 defineFunctions!initializing!public! !
+defineSizeConstant:!private!template definition! !
 defineTemplate!public!template definition! !
 defineVTable!automatic generation!public! !
 elementSize!accessing!public! !

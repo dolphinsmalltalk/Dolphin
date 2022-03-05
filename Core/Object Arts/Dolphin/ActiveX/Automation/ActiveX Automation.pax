@@ -922,19 +922,25 @@ External.DOUBLE subclass: #'OS.COM.DATE'
 	classVariableNames: ''
 	imports: #(#{OS.COM.AutomationConstants})
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_DATE_Size' -> 16r8
+	}!
 External.SWORD subclass: #'OS.COM.VARIANT_BOOL'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_VARIANT_BOOL_Size' -> 16r2
+	}!
 External.LPVOID subclass: #'OS.COM.LPBSTR'
 	instanceVariableNames: ''
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_LPBSTR_Size' -> 16r4
+	}!
 OS.COM.TypeInfoObject subclass: #'OS.COM.TypeInfoAnalyzer'
 	instanceVariableNames: 'typeLib guid index documentation'
 	classVariableNames: ''

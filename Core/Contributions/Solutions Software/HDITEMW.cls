@@ -2,10 +2,11 @@
 
 CCITEM subclass: #HDITEMW
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_cchTextMax _OffsetOf_cxy _OffsetOf_fmt _OffsetOf_hbm _OffsetOf_iImage _OffsetOf_iOrder _OffsetOf_lParam _OffsetOf_pszText _OffsetOf_pvFilter _OffsetOf_state _OffsetOf_type'
+	classVariableNames: '_HDITEMW_Size _OffsetOf_cchTextMax _OffsetOf_cxy _OffsetOf_fmt _OffsetOf_hbm _OffsetOf_iImage _OffsetOf_iOrder _OffsetOf_lParam _OffsetOf_pszText _OffsetOf_pvFilter _OffsetOf_state _OffsetOf_type'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 HDITEMW guid: (GUID fromString: '{cff5da39-bb38-4499-9527-66449b212b87}')!
+HDITEMW addClassConstant: '_HDITEMW_Size' value: 16r30!
 HDITEMW addClassConstant: '_OffsetOf_cchTextMax' value: 16r10!
 HDITEMW addClassConstant: '_OffsetOf_cxy' value: 16r4!
 HDITEMW addClassConstant: '_OffsetOf_fmt' value: 16r14!

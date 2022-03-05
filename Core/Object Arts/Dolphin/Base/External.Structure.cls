@@ -526,6 +526,7 @@ changedByteSizeFrom: anInteger
 	| newByteSize |
 	newByteSize := self basicByteSize.
 	anInteger ~= newByteSize ifFalse: [^self].
+	self defineSizeConstant: newByteSize.
 	self recompileReferences!
 
 clear: addressOrBytes
@@ -569,6 +570,9 @@ defineFields
 	support"
 
 !
+
+defineSizeConstant: newByteSize
+	self addClassConstant: '_<1s>_Size' << (self unqualifiedName ?? '') value: newByteSize!
 
 definesNewFields
 	"Private - Answer whether the receiver defines any new fields, as opposed to
@@ -961,6 +965,7 @@ clear:!public!realizing/unrealizing! !
 defineField:type:!public!template definition! !
 defineField:type:offset:!public!template definition! !
 defineFields!public!template definition! !
+defineSizeConstant:!private!template definition! !
 definesNewFields!private!template definition!testing! !
 defineTemplate!public!template definition! !
 descriptorClass!constants!private! !

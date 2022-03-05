@@ -5,7 +5,9 @@ External.SWORD subclass: #'OS.COM.VARIANT_BOOL'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_VARIANT_BOOL_Size' -> 16r2
+	}!
 OS.COM.VARIANT_BOOL guid: (Core.GUID fromString: '{c06f3b75-0868-11d3-93af-00a024ca708a}')!
 OS.COM.VARIANT_BOOL comment: 'VARIANT_BOOL is an <ExternalStructure> class to represent the Automation type, VARIANT_BOOL, which is VB''s boolean type.
 

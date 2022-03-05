@@ -590,7 +590,9 @@ OS.CCHITTESTINFO subclass: #'OS.TCHITTESTINFO'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_TCHITTESTINFO_Size' -> 16rC
+	}!
 OS.CCHITTESTINFO subclass: #'OS.TVHITTESTINFO'
 	instanceVariableNames: ''
 	classVariableNames: ''
@@ -685,7 +687,9 @@ OS.NMHDR subclass: #'OS.NMGETINFOTIP'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
-	classConstants: {}!
+	classConstants: {
+		'_NMGETINFOTIP_Size' -> 16rC
+	}!
 OS.NMHDR subclass: #'OS.NMITEMACTIVATE'
 	instanceVariableNames: ''
 	classVariableNames: ''

@@ -2,7 +2,7 @@
 
 Win32Structure subclass: #STARTUPINFOW
 	instanceVariableNames: 'title desktop stdin stdout stderr'
-	classVariableNames: '_OffsetOf_cbReserved2 _OffsetOf_dwFillAttribute _OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_dwX _OffsetOf_dwXCountChars _OffsetOf_dwXSize _OffsetOf_dwY _OffsetOf_dwYCountChars _OffsetOf_dwYSize _OffsetOf_hStdError _OffsetOf_hStdInput _OffsetOf_hStdOutput _OffsetOf_lpDesktop _OffsetOf_lpReserved _OffsetOf_lpReserved2 _OffsetOf_lpTitle _OffsetOf_wShowWindow'
+	classVariableNames: '_OffsetOf_cbReserved2 _OffsetOf_dwFillAttribute _OffsetOf_dwFlags _OffsetOf_dwSize _OffsetOf_dwX _OffsetOf_dwXCountChars _OffsetOf_dwXSize _OffsetOf_dwY _OffsetOf_dwYCountChars _OffsetOf_dwYSize _OffsetOf_hStdError _OffsetOf_hStdInput _OffsetOf_hStdOutput _OffsetOf_lpDesktop _OffsetOf_lpReserved _OffsetOf_lpReserved2 _OffsetOf_lpTitle _OffsetOf_wShowWindow _STARTUPINFOW_Size'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 STARTUPINFOW guid: (GUID fromString: '{f44c9146-2b3f-11d3-8368-7a8b5a000000}')!
@@ -24,6 +24,7 @@ STARTUPINFOW addClassConstant: '_OffsetOf_lpReserved' value: 16r4!
 STARTUPINFOW addClassConstant: '_OffsetOf_lpReserved2' value: 16r34!
 STARTUPINFOW addClassConstant: '_OffsetOf_lpTitle' value: 16rC!
 STARTUPINFOW addClassConstant: '_OffsetOf_wShowWindow' value: 16r30!
+STARTUPINFOW addClassConstant: '_STARTUPINFOW_Size' value: 16r44!
 STARTUPINFOW comment: ''!
 !STARTUPINFOW categoriesForClass!External-Data-Structured-Win32! !
 !STARTUPINFOW methodsFor!

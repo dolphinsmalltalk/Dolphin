@@ -2,10 +2,11 @@
 
 Win32Structure subclass: #ICONDIRENTRY
 	instanceVariableNames: ''
-	classVariableNames: '_OffsetOf_bColorCount _OffsetOf_bHeight _OffsetOf_bReserved _OffsetOf_bWidth _OffsetOf_dwBytesInRes _OffsetOf_dwImageOffset _OffsetOf_wBitCount _OffsetOf_wPlanes'
+	classVariableNames: '_ICONDIRENTRY_Size _OffsetOf_bColorCount _OffsetOf_bHeight _OffsetOf_bReserved _OffsetOf_bWidth _OffsetOf_dwBytesInRes _OffsetOf_dwImageOffset _OffsetOf_wBitCount _OffsetOf_wPlanes'
 	poolDictionaries: ''
 	classInstanceVariableNames: ''!
 ICONDIRENTRY guid: (GUID fromString: '{c37d878b-52cb-41c6-a356-cc780f4eac95}')!
+ICONDIRENTRY addClassConstant: '_ICONDIRENTRY_Size' value: 16r10!
 ICONDIRENTRY addClassConstant: '_OffsetOf_bColorCount' value: 16r2!
 ICONDIRENTRY addClassConstant: '_OffsetOf_bHeight' value: 16r1!
 ICONDIRENTRY addClassConstant: '_OffsetOf_bReserved' value: 16r3!

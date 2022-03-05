@@ -87,8 +87,7 @@ addClassConstant: aString value: anObject
 		- the binding was not constant, and the new constant value is inlineable
 		- the binding was constant, but the value has changed, and either the previous or new value are inlineable"
 	requiresRecompile := classPool size = count and: 
-					[self isChanged: true.
-					binding isImmutable
+					[binding isImmutable
 						ifFalse: 
 							["Wasn't constant, recompile if it can be inlined"
 							VMLibrary hasBytecodeRepresentation: anObject]
@@ -96,16 +95,20 @@ addClassConstant: aString value: anObject
 							[| oldValue |
 							"Was constant, recompile if changed and was inlined, or can be inlined"
 							oldValue := binding value.
-							oldValue ~~ anObject and: 
-									[(VMLibrary hasBytecodeRepresentation: oldValue) or: [VMLibrary hasBytecodeRepresentation: anObject]]]].
+							oldValue == anObject
+								ifTrue: 
+									["Unchanged constant - no change"
+									^binding].
+							(VMLibrary hasBytecodeRepresentation: oldValue) or: [VMLibrary hasBytecodeRepresentation: anObject]]].
 	requiresRecompile
 		ifTrue: 
 			[requiresRecompile := self canModifyBinding: binding newValue: anObject.
 			"If aborted by user, don't set the value."
-			requiresRecompile isNil ifTrue: [^binding]].
+			requiresRecompile ifNil: [^binding]].
 	binding
 		setValue: anObject;
 		isImmutable: true.
+	self isChanged: true.
 	requiresRecompile ifTrue: [Object recompileAllReferencesToLiteral: binding].
 	^binding!
 
