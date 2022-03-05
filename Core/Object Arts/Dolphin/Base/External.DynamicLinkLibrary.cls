@@ -449,7 +449,8 @@ moduleFileName: aLibOrHandle
 	"Private - Answer the `Utf16String` file name of the receiver's loaded module."
 
 	| buf size |
-	buf := File pathBuffer.
+	#todo. "Fix for long filenames - the API does not make this easy"
+	buf := Utf16String newFixed: CRTConstants._MAX_PATH.
 	size := Kernel32
 				getModuleFileName: aLibOrHandle asParameter
 				lpFilename: buf

@@ -906,23 +906,27 @@ fromHandle: aHandle
 fullPathOf: aPathnameString
 	"Answers the full path of aPathnameString"
 
-	| fullpath len path |
+	| buffer size path |
+	buffer := self pathBuffer.
 	path := aPathnameString asUtf16String.
-	(len := Kernel32
+	(size := Kernel32
 				getFullPathName: path
-				nBufferLength: 0
-				lpBuffer: nil
+				nBufferLength: buffer size + 1
+				lpBuffer: buffer
 				lpFilePart: nil) == 0
 		ifTrue: [Kernel32 systemError].
-	"Note: Returns the length including the terminating null"
-	fullpath := Utf16String newFixed: len - 1.
-	(Kernel32
-		getFullPathName: path
-		nBufferLength: len
-		lpBuffer: fullpath
-		lpFilePart: nil) == 0
-		ifTrue: [Kernel32 systemError].
-	^fullpath!
+	"The API is a bit asymmetric. If the buffer is large enough, it returns the number of characters copied to the buffer. If the buffer is too small, it returns the required size of buffer required, including null terminator (i.e. characters + 1). However it does have a bug that if the path to be expanded starts with .\, then the buffer size returned is too large and there will be two extra nulls at the end of the string."
+	size > buffer size
+		ifTrue: 
+			["Long path - a relatively rare boundary case"
+			buffer := Utf16String newFixed: size - 1.
+			(size := Kernel32
+						getFullPathName: path
+						nBufferLength: size
+						lpBuffer: buffer
+						lpFilePart: nil) == 0
+				ifTrue: [Kernel32 systemError]].
+	^buffer copyFrom: 1 to: size!
 
 fullPathOf: aPathnameString relativeTo: aBasePathString
 	"Answers the full path of aPathnameString. If this is a truly relative
@@ -1229,26 +1233,20 @@ removeDirectory: aString
 removeExtension: aString
 	"Answer a <readableString> which is the path argument with the extension component removed."
 
-	| drive dir fname max path unextended |
-	path := aString asUtf8String.
-	max := path size.
-	Ucrt
-		_splitpath_s: path
-			drive: (drive := Utf8String new: CRTConstants._MAX_DRIVE)
-			driveLen: ##(CRTConstants._MAX_DRIVE + 1)
-			dir: (dir := Utf8String new: max)
-			dirLen: max + 1
-			fname: (fname := Utf8String new: max)
-			fnameLen: max + 1
-			ext: nil
-			extLen: 0;
-		_makepath_s: (unextended := Utf8String new: max)
-			bufferSize: max + 1
-			drive: drive
-			dir: dir
-			fname: fname
-			ext: nil.
-	^unextended trimNulls!
+	| i |
+	i := aString size.
+	
+	[i == 0 or: 
+			[| ch |
+			ch := aString at: i.
+			ch == $.
+				ifTrue: 
+					["We've found the start of the extension"
+					^aString copyFrom: 1 to: i - 1].
+			"If we find another path separator while searching backward, then there is no extension"
+			ch == $\ or: [ch == $/ or: [ch == $:]]]]
+			whileFalse: [i := i - 1].
+	^aString!
 
 removePathDelimiter: aString
 	"Answer a <readableString> that is the argument with a path separator at its end, if any, removed."
@@ -1367,43 +1365,33 @@ splitExtensionFrom: aString
 	"Splits aPathname string and answers the extension portion.
 	Answers the empty string if there is no extension."
 
-	| ext path len |
-	path := aString asUtf8String.
-	(len := path size) == 0 ifTrue: [^''].
-	Ucrt
-		_splitpath_s: path
-		drive: nil
-		driveLen: 0
-		dir: nil
-		dirLen: 0
-		fname: nil
-		fnameLen: 0
-		ext: (ext := Utf8String new: len)
-		extLen: len + 1.
-	"CRT function includes leading period on extension, which we don't"
-	^ext copyFrom: ((ext at: 1) == $. ifTrue: [2] ifFalse: [1]) to: ext strlen!
+	| i size |
+	i := size := aString size.
+	
+	[i == 0 or: 
+			[| ch |
+			ch := aString at: i.
+			ch == $.
+				ifTrue: 
+					["We've found the start of the extension"
+					^aString copyFrom: i + 1 to: size].
+			"If we find another path separator while searching backward, then there is no extension"
+			ch == $\ or: [ch == $/ or: [ch == $:]]]]
+			whileFalse: [i := i - 1].
+	^''!
 
 splitFilenameFrom: aString
 	"Splits the pathname, aString, and answers the file name portion (including extension).
 	Answers an empty string if there is no filename component in the path."
 
-	| fname ext max path |
-	path := aString asUtf8String.
-	max := path size.
-	Ucrt
-		_splitpath_s: path
-			drive: nil
-			driveLen: 0
-			dir: nil
-			dirLen: 0
-			fname: (fname := Utf8String new: max)
-			fnameLen: max + 1
-			ext: (ext := Utf8String new: max)
-			extLen: max + 1;
-		strcat_s: fname
-			bufferSize: max + 1
-			strSource: ext.
-	^fname trimNulls!
+	| i size |
+	i := size := aString size.
+	[i == 0 or: 
+			[| ch |
+			ch := aString at: i.
+			ch == $\ or: [ch == $/ or: [ch == $:]]]]
+		whileFalse: [i := i - 1].
+	^aString copyFrom: i + 1 to: size!
 
 splitPath: aString
 	"Splits the pathname, aString, into its path, stem and extension components and answers 
@@ -1434,51 +1422,43 @@ splitPath: aString
 		fname trimNulls.
 		ext copyFrom: (ext first == $. ifTrue: [2] ifFalse: [1]) to: ext strlen}!
 
-splitPathFrom: aPathnameString
-	"Splits aPathname string and answers the path portion (including the drive letter, if any).
+splitPathFrom: aString
+	"Splits the <String> argument, assumed to be a file path, and answers the path portion (including the drive letter, if any, and the terminating path separator).
 	Answers an  empty <String> if there is no path."
 
-	"Implementation Note: We use the CRT library _splitpath() function because the Win32
-	API call, PathRemoveFileSpec() does not treat $/ as a path delimiter (only backslash).
-	Also this is carefully implemented to minimise allocations and maximise speed."
-
-	| drive dir path len |
-	path := aPathnameString asUtf8String.
-	len := path size.
-	"Deliberately allocate extra space for the drive letter buffer so we can strcat to it later."
-	Ucrt
-		_splitpath_s: path
-			drive: (drive := Utf8String new: len)
-			driveLen: ##(CRTConstants._MAX_DRIVE + 1)
-			dir: (dir := Utf8String new: len)
-			dirLen: len + 1
-			fname: nil
-			fnameLen: 0
-			ext: nil
-			extLen: 0;
-		strcat_s: drive
-			bufferSize: len + 1
-			strSource: dir.
-	^drive copyFrom: 1 to: (Ucrt strlen: drive)!
+	| i |
+	i := aString size.
+	[i == 0 or: 
+			[| ch |
+			ch := aString at: i.
+			ch == $\ or: [ch == $/ or: [ch == $:]]]]
+		whileFalse: [i := i - 1].
+	^aString copyFrom: 1 to: i !
 
 splitStemFrom: aString
 	"Answers the file stem component of the path <String> argument, or an empty string if there
 	is none."
 
-	| path len fname |
-	path := aString asUtf8String.
-	len := path size.
-	Ucrt
-		_splitpath_s: path
-		drive: nil
-		driveLen: 0
-		dir: nil
-		dirLen: 0
-		fname: (fname := Utf8String new: len)
-		fnameLen: len + 1
-		ext: nil
-		extLen: 0.
-	^fname trimNulls!
+	| i size |
+	i := size := aString size.
+	
+	[i == 0 or: 
+			[| ch |
+			ch := aString at: i.
+			ch == $.
+				ifTrue: 
+					[| end |
+					"There is a file extension - stem must precede that"
+					end := i := i - 1.
+					[i == 0 or: 
+							[ch := aString at: i.
+							ch == $\ or: [ch == $/ or: [ch == $:]]]]
+						whileFalse: [i := i - 1].
+					^aString copyFrom: i + 1 to: end].
+			ch == $\ or: [ch == $/ or: [ch == $:]]]]
+			whileFalse: [i := i - 1].
+	"No extension"
+	^aString copyFrom: i + 1 to: size!
 
 temporary
 	"Open a temporary file with a unique name generated by the system, for

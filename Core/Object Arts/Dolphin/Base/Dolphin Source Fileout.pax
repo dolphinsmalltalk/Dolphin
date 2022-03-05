@@ -677,9 +677,8 @@ basicCompressSources: progress
 
 	"Copy temporary file over to dolphin.sml"
 	self closeSourcesFile.
-	File
-		delete: smlFile;
-		rename: tmpPath to: smlFile.
+	(File exists: smlFile) ifTrue: [File delete: smlFile].
+	File rename: tmpPath to: smlFile.
 	self openSourcesFile: smlFile.
 
 	"Save image"

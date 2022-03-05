@@ -329,6 +329,18 @@ testForDirectoriesIn
 			dirPath := File composePath: windir subPath: each.
 			self assert: (File isDirectory: dirPath)]!
 
+testFullPathOf
+	| longPath |
+	self assert: (File fullPathOf: 'Dolphin') equals: File workingDirectory , 'Dolphin'.
+	"An odd case where the first call to GetFullPath (to request the buffer size) returns space for two extra chars, presumably the '.\', but returns the correct size when actually invoked with a buffer."
+	self assert: (File fullPathOf: '.\Dolphin') equals: File workingDirectory , 'Dolphin'.
+	longPath := String writeStream.
+	longPath nextPutAll: '\\?'.
+	20 timesRepeat: [longPath nextPutAll: '\abcdefghijklmnopqrstuvwxyz'].
+	longPath := longPath contents.
+	self assert: longPath size > File maxPath.
+	self assert: (File fullPathOf: longPath) equals: longPath!
+
 testMakePath
 	| filename split |
 	self assert: (File makePath: #('c:' 'a/b 2/c/' 'a file' '.anextension'))
@@ -373,7 +385,6 @@ testRemoveDirectory
 
 testRemoveExtension
 	| path |
-	self should: [File removeExtension: nil] raise: Error.
 	self assert: (File removeExtension: 'a.') equals: 'a'.
 	self assert: (File removeExtension: '.exe') equals: ''.
 	self assert: (File removeExtension: '.') equals: ''.
@@ -486,7 +497,6 @@ testSplitDriveFrom
 
 testSplitExtensionFrom
 	| path ext unicode |
-	self should: [File splitExtensionFrom: nil] raise: Error.
 	unicode := $\x1F595 asUtf16String , '2'.
 	self assert: (File splitExtensionFrom: 'c:\a\a2/b.' , unicode) equals: unicode.
 	self assert: (File splitExtensionFrom: 'a\b.txt') equals: 'txt'.
@@ -542,16 +552,50 @@ testSplitFilenameFrom
 	path := path contents.
 	self assert: (File splitFilenameFrom: path) equals: (path copyFrom: 4)!
 
+testSplitPathFrom
+	| path unicode |
+	self should: [File splitPathFrom: nil] raise: Error.
+	self assert: (File splitPathFrom: '.') equals: ''.
+	self assert: (File splitPathFrom: 'c:\a\a2/b.txt') equals: 'c:\a\a2/'.
+	self assert: (File splitPathFrom: 'c:\a\b.txt') equals: 'c:\a\'.
+	self assert: (File splitPathFrom: 'c:\a\b\') equals: 'c:\a\b\'.
+	self assert: (File splitPathFrom: 'c:\b.txt') equals: 'c:\'.
+	self assert: (File splitPathFrom: 'c:\') equals: 'c:\'.
+	self assert: (File splitPathFrom: 'c:') equals: 'c:'.
+	self assert: (File splitPathFrom: 'a\b.txt') equals: 'a\'.
+	self assert: (File splitPathFrom: 'b.txt') equals: ''.
+	self assert: (File splitPathFrom: 'b.') equals: ''.
+	self assert: (File splitPathFrom: '.txt') equals: ''.
+	self assert: (File splitPathFrom: '') equals: ''.
+	self assert: (File splitPathFrom: 'c:\a\b\') equals: 'c:\a\b\'.
+	unicode := 'c ' , $\x1F595 asUtf16String , ' d.txt'.
+	self assert: (File splitPathFrom: 'c:/a b\' , unicode) equals: 'c:/a b\'.
+	self assert: (File splitPathFrom: '1234.1234.exe') equals: ''.
+	self assert: (File splitPathFrom: 'a.b\c') equals: 'a.b\'.
+	self assert: (File splitPathFrom: 'a.b\') equals: 'a.b\'.
+	path := self buildTestPathOfLength: self maxPath.
+	self assert: (File splitPathFrom: path) equals: ($\ join: (path subStrings: $\) allButLast), '\'.
+	"Try a very long filename (> max length), this will still work."
+	path := String writeStream.
+	path nextPutAll: 'c:\'.
+	self printFilenameOfLength: self maxFname * 2 on: path.
+	path nextPutAll: '/a.txt'.
+	path := path contents.
+	self assert: (File splitPathFrom: path) equals: (path upTo: $/), '/'!
+
 testSplitStemFrom
 	| path |
-	self should: [File splitStemFrom: nil] raise: Error.
 	self assert: (File splitStemFrom: '.') equals: ''.
 	self assert: (File splitStemFrom: 'c:\a\a2/b.txt') equals: 'b'.
 	self assert: (File splitStemFrom: 'a\b.txt') equals: 'b'.
 	self assert: (File splitStemFrom: 'b.txt') equals: 'b'.
+	self assert: (File splitStemFrom: 'ab.txt') equals: 'ab'.
 	self assert: (File splitStemFrom: 'b.') equals: 'b'.
 	self assert: (File splitStemFrom: '.txt') equals: ''.
 	self assert: (File splitStemFrom: '') equals: ''.
+	self assert: (File splitStemFrom: '\') equals: ''.
+	self assert: (File splitStemFrom: 'c:\') equals: ''.
+	self assert: (File splitStemFrom: 'c:\.txt') equals: ''.
 	self assert: (File splitStemFrom: 'c:\a\b\') equals: ''.
 	self assert: (File splitStemFrom: 'c:/a b\c d.txt') equals: 'c d'.
 	self assert: (File splitStemFrom: '1234.1234.exe') equals: '1234.1234'.
@@ -584,6 +628,7 @@ testClassRelativePathOfTo!public!unit tests! !
 testCommonPrefixOfAnd!public!unit tests! !
 testDeleteDirectory!public!unit tests! !
 testForDirectoriesIn!public!unit tests! !
+testFullPathOf!public!unit tests! !
 testMakePath!public!unit tests! !
 testPathName!public!unit tests! !
 testRemoveDirectory!public!unit tests! !
@@ -595,6 +640,7 @@ testSniffEncoding!public!unit tests! !
 testSplitDriveFrom!public!unit tests! !
 testSplitExtensionFrom!public!unit tests! !
 testSplitFilenameFrom!public!unit tests! !
+testSplitPathFrom!public!unit tests! !
 testSplitStemFrom!public!unit tests! !
 !
 

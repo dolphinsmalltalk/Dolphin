@@ -116,7 +116,7 @@ stateValidMask
 text
 	"Answer the text of the receiver"
 
-	^text copyFrom: 1 to: (Kernel32 lstrlenW: text)!
+	^text copyFrom: 1 to: (Ucrt wcslen: text)!
 
 textPointerOffset
 	"Private - Answer the offset of the text pointer in the receiver. "
