@@ -2862,10 +2862,10 @@ plugins
 	"Answer the plugins installed by instances of the receiver"
 
 	plugins isNil ifTrue: [self plugins: self defaultPluginsCollection].
-	^SystemMetrics current hasInternetExplorerControl 
+	^SystemMetrics current hasWebView
 		ifTrue: [plugins]
 		ifFalse: 
-			["The CodeMentor plugin relies on the Internet Explorer control>"
+			["The CodeMentor plugin relies on the WebView2 Edge browser control>"
 			plugins reject: [:each | each name == #CodeMentorPlugin]]!
 
 plugins: anOrderedCollection 

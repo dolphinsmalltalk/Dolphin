@@ -172,12 +172,6 @@ hasImageListDragCursors
 	#wineFix.
 	^isNotWine!
 
-hasInternetExplorerControl
-	"Answer whether the host provides an Internet Explorer control."
-
-	#wineFix.
-	^isNotWine!
-
 hasLinkButtons
 	"Answer whether the host supports link buttons (i.e. push buttons with the BS_COMMANDLINK
 	style)."
@@ -224,6 +218,12 @@ hasTreeViewHotTracking
 	"Does the host support hot tracking in tree views?"
 
 	^isVistaOrLater!
+
+hasWebView
+	"Answer whether the host provides a WebView2 Edge Browser control."
+
+	#wineFix.
+	^isNotWine!
 
 iconTitleFont
 	"Answer a <Font> which is that used for icon titles on the desktop."
@@ -435,13 +435,13 @@ hasFlatMenus!capability enquiries!public! !
 hasGdiPalettes!capability enquiries!public! !
 hasIconScaleDown!capability enquiries!public! !
 hasImageListDragCursors!capability enquiries!public! !
-hasInternetExplorerControl!capability enquiries!public! !
 hasLinkButtons!capability enquiries!public! !
 hasMenuBitmaps!capability enquiries!public! !
 hasSmoothScrollingLists!capability enquiries!public! !
 hasTextBoxMargins!capability enquiries!public! !
 hasThemes!capability enquiries!public! !
 hasTreeViewHotTracking!capability enquiries!public! !
+hasWebView!capability enquiries!public! !
 iconTitleFont!geometry!public! !
 initialize!initializing!private! !
 isSlowMachine!public!testing! !

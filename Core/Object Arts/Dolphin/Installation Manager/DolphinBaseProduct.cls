@@ -54,7 +54,6 @@ contents
 	contents
 		add: #('Core\Object Arts\Dolphin\ActiveX\Shell\Windows Shell Namespace.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\IDE\Community Edition\Dolphin Community Edition Tools.pax' #encrypted #imageBased);
-		add: #('Core\Object Arts\Dolphin\ActiveX\Components\SHDocVw\Internet Explorer.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\ActiveX\Components\WebView2\WebView2.pax' #plain #imageBased);
 		yourself.
 
