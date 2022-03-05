@@ -200,7 +200,7 @@ handled:!properties!public! !
 isUserInitiated!properties!public! !
 newWindow!**auto generated**!properties!public! !
 newWindow:!**auto generated**!properties!public! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 put_NewWindow:!**auto generated**!COM Interfaces-ICoreWebView2NewWindowRequestedEventArgs!private! !
 uri!properties!public! !

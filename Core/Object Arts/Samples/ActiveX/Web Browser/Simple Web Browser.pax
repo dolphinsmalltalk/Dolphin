@@ -7,11 +7,30 @@ Copyright (c) Object Arts Ltd, 2000-2022.
 
 This is a minimalist browser based on the WebView2 Edge Browser control, which of course is not minimalist in itself.
 
+```
 	OS.COM.Examples.WebBrowserShell show
+```
 
 The sample demonstrates WebView2 integration, including sinking events.
 
-'.
+## Deployment:
+
+```
+Smalltalk developmentSystem saveImage.	"Save the image if you don''t want to lose changes"
+(ImageStripper new)
+	rootPackage: OS.COM.Examples.WebBrowserShell owningPackage;
+	executableName: ''WebBrowser.exe'';
+	stripDeprecatedMethods: true;
+	deploy
+```
+
+And to examine the content: 
+
+```
+Smalltalk developmentSystem browseDeploymentLog: ''WebBrowser.xml''.
+"Or view the log"
+UI.Examples.XmlPad openOn: ''WebBrowser.xml''
+```'.
 
 
 package setClassNames: #(
@@ -26,7 +45,6 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
 	'..\..\..\Dolphin\MVP\Graphics\Dolphin GDI Graphics'
-	'..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\..\Dolphin\System\Win32\MessageBox\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Views\Buttons\Dolphin Push Buttons'

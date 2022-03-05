@@ -1462,7 +1462,7 @@ postWebMessageAsJson:!**auto generated**!methods!public! !
 PostWebMessageAsJson:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
 postWebMessageAsString:!**auto generated**!methods!public! !
 PostWebMessageAsString:!**auto generated**!COM Interfaces-ICoreWebView2!private! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 PrintToPdf:printSettings:handler:!COM Interfaces-ICoreWebView2_7!private! !
 printToPdf:settings:thenDo:!methods!public! !
 put_DefaultDownloadDialogCornerAlignment:!COM Interfaces-ICoreWebView2_9!private! !

@@ -285,7 +285,7 @@ host!properties!public! !
 isProxy!**auto generated**!properties!public! !
 mutuallyTrustedCertificates!**auto generated**!properties!public! !
 port!**auto generated**!properties!public! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 put_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificateRequestedEventArgs!private! !
 put_Handled:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificateRequestedEventArgs!private! !
 put_SelectedCertificate:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificateRequestedEventArgs!private! !

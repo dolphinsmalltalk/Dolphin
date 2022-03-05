@@ -488,7 +488,7 @@ gdipBitmapGetPixel: bitmap x: x y: y color: color
 			[in]int y,
 			[out, retval]ARGB* Color);"
 
-	<stdcall: errno GdipBitmapGetPixel handle sdword sdword dword*>
+	<stdcall: sdword GdipBitmapGetPixel handle sdword sdword dword*>
 	^self invalidCall: _failureCode!
 
 gdipBitmapLockBits: bitmap rect: rect flags: flags format: format lockedBitmapData: lockedBitmapData

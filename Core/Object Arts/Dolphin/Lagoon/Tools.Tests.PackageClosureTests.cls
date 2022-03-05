@@ -19,12 +19,11 @@ consoleAppUnimplemented
 
 simpleGuiAppUnimplementedMessages
 	"Private - Answer the collection of selectors of methods expected to be missing in a simple GUI app with the image stripper:
-		- createThumbnailExtent:mask: - send by View>>addToImageList:extent: when GDI+ is loaded, but only if understood. This will show up in the UnimplementedMessages section of the actual deployment log for GUI apps.
+		- createThumbnailExtent:mask: - send by View>>addToImageList:extent: when GDI+ is loaded, but only if understood. This may show up in the UnimplementedMessages section of the actual deployment log for GUI apps.
 		- defineTemplate- sent from ExternalStructure>>ensureDefined, which is replaced with a no-op stub in deployed apps. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps.
-		- ttmRelayEvent: - only sent (from MVP base) if the Dolphin ToolTips package is loaded. This will show up in the UnimplementedMessages section of the actual deployment log for GUI apps.
-		- evaluate: Compiler deliberately removed from the scope of the test to reduce noise. Should not be in the UnimplementedMessages section of the actual deployment log for GUI apps."
+		- ttmRelayEvent: - only sent (from MVP base) if the Dolphin ToolTips package is loaded. This may show up in the UnimplementedMessages section of the actual deployment log for GUI apps."
 
-	^#(#createThumbnailExtent:mask: #ttmRelayEvent: #defineTemplate #evaluate:)!
+	^#(#createThumbnailExtent:mask: #ttmRelayEvent: #defineTemplate)!
 
 testCommandLineHelloWorld
 	"Tests predicted unimplemented messages of a minimal console application. Note that the actual set will be less and can be determined by deploying the application with deployment logging enabled, and looking at the UnimplementedMesages element in the resulting log. In the case of 'Hello World' the unimplemented message set should actually be empty when deploying."
@@ -38,7 +37,7 @@ testEtchASketch
 
 	| env |
 	env := BrowserEnvironment new forPackagesDeployment: {UI.Examples.EtchASketch owningPackage}.
-	self verifyPackageClosure: env missing: #(#ttmRelayEvent: #defineTemplate #evaluate:).
+	self verifyPackageClosure: env missing: #(#ttmRelayEvent: #defineTemplate).
 	"This isn't necessarily sufficient for InternalIcon, etc, to survive into the deployed app, but is necessary for that to be so."
 	self assert: (env includesClass: InternalIcon).
 	self assert: (env includesClass: STBOutFiler).
@@ -46,20 +45,14 @@ testEtchASketch
 	self deny: (env includesSelector: #owningPackage in: Class)!
 
 testHelloWorld
-	"Tests predicted unimplemented messages of a minimal GUI application.
-
-	Some of the missing methods contributed by the base package will still be missing, but others are present because Hello World is a GUI app and pulls in the base MVP packages that define those methods.In addition to the base package missing methods, the following methods are missing:
-		- #createThumbnailExtent:mask: - sent only when GDI+ is loaded (guarded by a respondsTo: check)
-		- defaultSessionManagerClass - required at development time only, when creating a new ImageStripper instance
-		- recompileDefinition - sent from base package, but before the development package which defines it is unloaded
-		- ttmRelayEvent: - only sent (from MVP base) if the Dolphin ToolTips package is loaded"
+	"Tests predicted unimplemented messages of a minimal GUI application."
 
 	self verifyPackageClosure: (BrowserEnvironment new
 				forPackagesDeployment: {UI.Examples.HelloWorld owningPackage})
 		missing: self simpleGuiAppUnimplementedMessages!
 
 testNotepad
-	"Notepad has an Integer Prompter, and Prompter now depens on Tooltips, so ttmRelayEvent: will be present."
+	"Notepad has an Integer Prompter, and Prompter now depens on Tooltips, so ttmRelayEvent: will be present in the deployed app."
 
 	self verifyPackageClosure: (BrowserEnvironment new
 				forPackagesDeployment: {UI.Examples.Notepad owningPackage})
@@ -77,7 +70,7 @@ testSimpleWebBrowser
 
 	| env |
 	env := BrowserEnvironment new forPackagesDeployment: {OS.COM.Examples.WebBrowserShell owningPackage}.
-	self verifyPackageClosure: env missing: #(#ttmRelayEvent: #defineTemplate #evaluate:)!
+	self verifyPackageClosure: env missing: #(#ttmRelayEvent: #defineTemplate)!
 
 testSystemPackage
 	| aPackage |

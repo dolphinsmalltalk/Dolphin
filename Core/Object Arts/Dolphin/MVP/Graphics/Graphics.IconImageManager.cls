@@ -14,7 +14,7 @@ Graphics.IconImageManager comment: ''!
 bitmapForIcon: anIcon extent: aPoint
 	| forExtent |
 	forExtent := bitmaps at: aPoint ifAbsentPutClean: [LookupTable new].
-	^forExtent at: anIcon ifAbsentPutClean: [anIcon asAlphaBitmap: aPoint]!
+	^(forExtent lookup: anIcon) ifNil: [forExtent at: anIcon put: (anIcon asAlphaBitmap: aPoint)]!
 
 initialize
 	"Private - Initialize the receiver."

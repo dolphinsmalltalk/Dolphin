@@ -34,13 +34,6 @@ elementSize
 
 	^self fieldClass elementSize!
 
-printStructClassSize: aStructureClass on: aCodeGenerationContext
-	aCodeGenerationContext printClass: aStructureClass.
-	aCodeGenerationContext writeStream
-		nextPutAll: '._';
-		nextPutAll: aStructureClass unqualifiedName;
-		nextPutAll: '_Size'!
-
 readFrom: aStructure
 	"Private - Answer a <StructureArray> of the receiver's field class which references the array of structures embedded in the <External.Structure> argument at the receiver's offset."
 
@@ -62,7 +55,6 @@ alignment!constants!public! !
 arrayClass!constants!private! !
 elementClass!accessing!private! !
 elementSize!accessing!private! !
-printStructClassSize:on:!automatic generation!private! !
 readFrom:!indirect accessing!private! !
 valueParameterName!automatic generation!constants!development!private! !
 valueType!accessing!private! !

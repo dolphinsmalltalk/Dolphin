@@ -73,7 +73,7 @@ processId
 get_Kind:!**auto generated**!COM Interfaces-ICoreWebView2ProcessInfo!private! !
 get_ProcessId:!**auto generated**!COM Interfaces-ICoreWebView2ProcessInfo!private! !
 kind!**auto generated**!properties!public! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 processId!**auto generated**!properties!public! !
 !
 

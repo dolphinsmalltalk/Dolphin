@@ -237,7 +237,7 @@ get_ValidTo:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificate!pr
 issuer!properties!public! !
 kind!**auto generated**!properties!public! !
 pemEncodedIssuerCertificateChain!**auto generated**!properties!public! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 subject!properties!public! !
 toPemEncoding!methods!public! !
 ToPemEncoding:!**auto generated**!COM Interfaces-ICoreWebView2ClientCertificate!private! !

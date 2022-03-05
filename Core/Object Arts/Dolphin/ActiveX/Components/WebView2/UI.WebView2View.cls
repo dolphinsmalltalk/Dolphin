@@ -254,7 +254,7 @@ isZoomControlEnabled: aBoolean
 	self webviewSettings isZoomControlEnabled: aBoolean!
 
 notifyMove
-	webviewController ifNil: [^self].
+	webviewController isNull ifTrue: [^self].
 	webviewController NotifyParentWindowPositionChanged!
 
 observeControllerEvents
@@ -520,7 +520,15 @@ webviewEnvironment
 	^webviewEnvironment!
 
 webviewSettings
-	^self querySettingsInterface! !
+	^self querySettingsInterface!
+
+zoomFactor
+	^self webviewController zoomFactor!
+
+zoomFactor: aNumber
+	self webviewController zoomFactor = aNumber ifTrue: [^self].
+	self webviewController zoomFactor: aNumber.
+	self presenter trigger: #zoomFactorChanged! !
 !UI.WebView2View categoriesForMethods!
 allowContextMenu!public!settings! !
 allowContextMenu:!public!settings! !
@@ -600,6 +608,8 @@ webview!accessing!public! !
 webviewController!accessing!public! !
 webviewEnvironment!accessing!public! !
 webviewSettings!accessing!public! !
+zoomFactor!public!zooming! !
+zoomFactor:!public!zooming! !
 !
 
 !UI.WebView2View class methodsFor!

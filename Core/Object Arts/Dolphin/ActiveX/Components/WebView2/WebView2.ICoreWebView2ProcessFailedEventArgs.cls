@@ -63,7 +63,7 @@ get_ProcessFailedKind:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFai
 handled!accessing!public! !
 handled:!accessing!public! !
 isBrowserProcessExit!public!testing! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 processFailedKind!**auto generated**!properties!public! !
 !
 

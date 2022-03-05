@@ -74,7 +74,7 @@ get_IsErrorPage:!**auto generated**!COM Interfaces-ICoreWebView2ContentLoadingEv
 get_NavigationId:!**auto generated**!COM Interfaces-ICoreWebView2ContentLoadingEventArgs!private! !
 isErrorPage!properties!public! !
 navigationId!**auto generated**!properties!public! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 !
 
 !WebView2.ICoreWebView2ContentLoadingEventArgs class methodsFor!

@@ -46,7 +46,6 @@ package setMethodNames: #(
 	#(#{Core.ClassDescription} #createIconMethod:fromIcon:)
 	#(#{Core.ClassDescription} #createIconMethod:OfSize:)
 	#(#{Core.ClassDescription} #createIconMethod:ofSize:fromFile:)
-	#(#{Graphics.Gdiplus.Image} #addToImageList:mask:)
 	#(#{Graphics.Gdiplus.Image} #internalize)
 ).
 
@@ -153,31 +152,12 @@ createIconMethod:ofSize:fromFile:!development!public! !
 
 !Graphics.Gdiplus.Image methodsFor!
 
-addToImageList: aWinImageList mask: aColorOrNil
-	"Private - Add a pictorial representation of the receiver to aWinImageList scaled to the
-	extent of the image list."
-
-	| bitmap index extent |
-	extent := aWinImageList extent.
-	"The change to use a display compatible bitmap is for #2280"
-	bitmap := (extent = self extent ifTrue: [self] ifFalse: [self class fromImage: self extent: extent])
-				asBitmap.
-	"We assume that the receiver contains transparency information so the mask color is ignored. Reference it to suppress warning of unref'd arg - the compiler will optimise this out."
-	aColorOrNil.
-	index := ComCtl32
-				imageList_AddMasked: aWinImageList asParameter
-				hbmImage: bitmap asParameter
-				crMask: CLR_NONE.
-	bitmap free.
-	^index!
-
 internalize
 	"Answer a copy of the receiver created from the PNG bytes. This can be held in the image and
 	removes the need for an external file reference"
 
 	^self class fromByteArray: (self asByteArray: 'image/png')! !
 !Graphics.Gdiplus.Image categoriesForMethods!
-addToImageList:mask:!private! !
 internalize!public! !
 !
 

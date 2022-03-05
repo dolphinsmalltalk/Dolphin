@@ -6,6 +6,7 @@ External.Structure subclass: #'WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {
+		'_COREWEBVIEW2_PHYSICAL_KEY_STATUS_Size' -> 16r18.
 		'_OffsetOf_IsExtendedKey' -> 16r8.
 		'_OffsetOf_IsKeyReleased' -> 16r14.
 		'_OffsetOf_IsMenuKeyDown' -> 16rC.
@@ -112,6 +113,9 @@ WasKeyDown:!**compiled accessors**!public! !
 
 !WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS class methodsFor!
 
+byteSize
+	^_COREWEBVIEW2_PHYSICAL_KEY_STATUS_Size!
+
 defineFields
 	"Define the fields of the COREWEBVIEW2_PHYSICAL_KEY_STATUS structure.
 
@@ -140,6 +144,7 @@ defineFields
 getFieldNames
 	^#(#RepeatCount #ScanCode #IsExtendedKey #IsMenuKeyDown #WasKeyDown #IsKeyReleased)! !
 !WebView2.COREWEBVIEW2_PHYSICAL_KEY_STATUS class categoriesForMethods!
+byteSize!**compiled accessors**!constants!public! !
 defineFields!**auto generated**!public!template definition! !
 getFieldNames!**compiled accessors**!constants!private! !
 !

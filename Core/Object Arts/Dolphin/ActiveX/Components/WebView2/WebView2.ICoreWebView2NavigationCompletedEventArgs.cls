@@ -95,7 +95,7 @@ get_NavigationId:!**auto generated**!COM Interfaces-ICoreWebView2NavigationCompl
 get_WebErrorStatus:!**auto generated**!COM Interfaces-ICoreWebView2NavigationCompletedEventArgs!private! !
 isSuccess!properties!public! !
 navigationId!**auto generated**!properties!public! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 webErrorStatus!**auto generated**!properties!public! !
 !
 
