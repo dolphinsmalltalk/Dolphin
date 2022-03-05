@@ -148,6 +148,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.RemoveClassRefactoring} #displayOn:)
 	#(#{Refactory.Browser.RemoveClassRefactoring} #getOptionRemoveClass:referencedIn:)
 	#(#{Refactory.Browser.RemoveClassVariableChange class} #icon)
+	#(#{Refactory.Browser.RemoveClassVariableRefactoring} #getOptionRemoveVariable:referencedIn:)
 	#(#{Refactory.Browser.RemoveClassVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.RemoveInstanceVariableChange class} #icon)
 	#(#{Refactory.Browser.RemoveInstanceVariableRefactoring class} #displayPrefix)
@@ -1623,6 +1624,43 @@ icon
 icon!constants!public! !
 !
 
+!Refactory.Browser.RemoveClassVariableRefactoring methodsFor!
+
+getOptionRemoveVariable: aVariableBinding referencedIn: aCollection
+	| args details response |
+	args := {aVariableBinding environment.
+				aVariableBinding key.
+				aCollection size.
+				aCollection size == 1}.
+	details := String writeStream
+				nextPutAll: 'Removing the class variable will leave <4?a dangling reference in this method:dangling references in these methods> and is potentially unsafe. It is recommended that you first browse <4?the reference:these references> and remove <4?it:them> before attempting to remove the variable again:'
+							<< args;
+				cr.
+	self
+		printNameList: (aCollection asArray collect: [:each | each printString]) sort
+		on: details
+		limit: self maxDetails
+		type: 'methods'.
+	response := MessageBox new
+				caption: self displayString;
+				headline: 'Remove referenced class variable?' << args;
+				text: 'The class variable <1p>.<2s> is referenced from <3d> method<4?:s>.' << args;
+				customButtons: #(#(#yes '&Remove Anyway') #(#no '&Browse References') #(#cancel 'Cancel'));
+				defaultButton: 2;
+				detailsText: details contents;
+				iconStyle: #warning;
+				confirmOrCancel.
+	response == #yes ifTrue: [^true].
+	response == #no
+		ifTrue: 
+			[self openBrowserOn: ((self model environment forMethods: aCollection)
+						label: 'References to <1p>.<2s>' << args;
+						yourself)].
+	^false! !
+!Refactory.Browser.RemoveClassVariableRefactoring categoriesForMethods!
+getOptionRemoveVariable:referencedIn:!options!public! !
+!
+
 !Refactory.Browser.RemoveClassVariableRefactoring class methodsFor!
 
 displayPrefix
@@ -2410,21 +2448,23 @@ populateClassVarMenu: aMenu selectors: selectors
 				class: class
 				command: selectors first
 				variables: (varNames asSortedCollection collect: [:each | class -> each])
-				format: '<2s>']!
+				format: '<2s>'
+				abortable: true]!
 
-populateInstVarMenu: aMenu selectors: selectors 
+populateInstVarMenu: aMenu selectors: selectors
 	| class varNames |
 	class := self actualClass.
 	varNames := class instVarNames.
-	varNames size > self maximumVariableMenuEntries 
+	varNames size > self maximumVariableMenuEntries
 		ifTrue: [(aMenu addCommand: selectors last description: '&Instance Variable…') isModalCommand: true]
 		ifFalse: 
-			[self 
+			[self
 				populateVarMenu: aMenu
 				class: class
 				command: selectors first
 				variables: (varNames asSortedCollection collect: [:each | class -> each])
-				format: '<2s>']!
+				format: '<2s>'
+				abortable: true]!
 
 populatePullUpVariableMenu: aMenu forClass: aClass command: commandSymbol classVariables: aBoolean ifTooMany: tooManyCommand
 	| pairs |

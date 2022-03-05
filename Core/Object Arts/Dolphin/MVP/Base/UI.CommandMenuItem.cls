@@ -101,6 +101,9 @@ image: anImageOrNil
 	image := nil.
 	^self commandDescription image: anImageOrNil!
 
+isAbortable: aBoolean
+	self commandDescription isAbortable: aBoolean!
+
 isDefault
 	"Answer whether the receiver is expecting to be the default item on a menu.
 	Note that if other items on the same menu are also set up with the default
@@ -207,6 +210,7 @@ displayOn:!displaying!public! !
 id!accessing!public! !
 image!accessing!public! !
 image:!accessing!public! !
+isAbortable:!accessing!public! !
 isDefault!accessing!public! !
 isDefault:!accessing!public! !
 isModalCommand!public!testing! !

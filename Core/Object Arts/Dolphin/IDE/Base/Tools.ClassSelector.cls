@@ -175,7 +175,8 @@ buildAllVariablesMenu: aMenu
 				class: class
 				command: #browseReferencesToInstVar:inHierarchyOf:within:
 				variables: instVars
-				format: '<1s>.<2s>'].
+				format: '<1s>.<2s>'
+				abortable: false].
 	class := class instanceClass.
 	classVars := OrderedCollection new.
 	class
@@ -189,7 +190,8 @@ buildAllVariablesMenu: aMenu
 				class: class
 				command: #browseReferencesToClassVar:of:within:
 				variables: classVars
-				format: '<1s>.<2s>']!
+				format: '<1s>.<2s>'
+				abortable: false]!
 
 buildViewsMenu: aMenu command: selector
 	"Private - Build a dynamic pull-out menu with all views of the current selection
@@ -673,7 +675,7 @@ permitSelectionChange
 	self onSelectionChanging: proceed.
 	^proceed value!
 
-populateVarMenu: aMenu class: class command: cmdSelector variables: aCollection format: aString
+populateVarMenu: aMenu class: class command: cmdSelector variables: aCollection format: aString abortable: aBoolean
 	"Private - Populate a dynamic menu with commands which send
 	the selector, cmdSelector, to the development system model with
 	each of the items and the <ClassDescription>, class, as its 
@@ -688,7 +690,8 @@ populateVarMenu: aMenu class: class command: cmdSelector variables: aCollection 
 						arguments: {each value. class. self searchEnvironment}.
 			(aMenu addCommand: msg
 				description: (aString expandMacrosWithArguments: {each key name. each value} locale: Locale smalltalk))
-					isModalCommand: true]!
+				isModalCommand: true;
+				isAbortable: aBoolean]!
 
 queryCommand: aCommandQuery
 	"Private - Enter details about a potential command for the receiver 
@@ -973,7 +976,7 @@ onTipTextRequired:!event handling!private! !
 packages:!accessing!public! !
 performDropChanges:target:!helpers!private! !
 permitSelectionChange!helpers!private! !
-populateVarMenu:class:command:variables:format:!menus!private! !
+populateVarMenu:class:command:variables:format:abortable:!menus!private! !
 queryCommand:!commands!private! !
 queryMoveClass:toPackage:!operations!private! !
 removeClass!commands!public! !

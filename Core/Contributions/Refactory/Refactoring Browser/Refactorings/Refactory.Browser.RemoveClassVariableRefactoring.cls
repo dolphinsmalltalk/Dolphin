@@ -11,29 +11,33 @@ Refactory.Browser.RemoveClassVariableRefactoring comment: ''!
 !Refactory.Browser.RemoveClassVariableRefactoring categoriesForClass!Refactory-Refactorings! !
 !Refactory.Browser.RemoveClassVariableRefactoring methodsFor!
 
+checkReferences
+	| block methods binding |
+	methods := Set new.
+	binding := class bindingFor: variableName.
+	block := [:each | methods addAll: (each whichMethodsReferToVariable: binding)].
+	class withAllSubclasses do: block.
+	class metaclass withAllSubclasses do: block.
+	(methods isEmpty or: [self shouldRemoveVariable: binding referencedIn: methods])
+		ifFalse: [self refactoringAborted].
+	^true!
+
 preconditions
 	^(RBCondition isMetaclass: class) not & (RBCondition definesClassVariable: variableName in: class)
-		& (RBCondition withBlock: 
-					[| block |
-					block := 
-							[:each |
-							(each whichSelectorsReferToClassVariable: variableName) notEmpty
-								ifTrue: 
-									[class realClass isNil
-										ifTrue: [self refactoringError: ('<1s> is referenced.' expandMacrosWith: variableName)]
-										ifFalse: 
-											[self refactoringError: ('<1s> is referenced.<n>Browse references?' expandMacrosWith: variableName)
-												with: 
-													[#rbFix.	"Should open browser on refs from the refactoring's environment, not necessarily the global environment"
-													self openBrowserOn: (self model environment classVarRefsTo: variableName in: class realClass)]]]].
-					class withAllSubclasses do: block.
-					class metaclass withAllSubclasses do: block.
-					true])!
+		& (RBCondition withBlock: [self checkReferences])!
+
+shouldRemoveVariable: aVariableBinding referencedIn: aCollectionOfMethods
+	^(self lookupOption: #removeReferencedVariable)
+		cull: self
+		cull: aVariableBinding
+		cull: aCollectionOfMethods!
 
 transform
 	class removeClassVariable: variableName! !
 !Refactory.Browser.RemoveClassVariableRefactoring categoriesForMethods!
+checkReferences!preconditions!private! !
 preconditions!preconditions!public! !
+shouldRemoveVariable:referencedIn:!private!requests! !
 transform!public!transforming! !
 !
 

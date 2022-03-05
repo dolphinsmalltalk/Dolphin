@@ -623,6 +623,17 @@ whichMethodsReferToSymbol: aSymbol
 			[(self existingMethodsThatReferTo: aSymbol) do: [:each | methods add: (self newMethodFor: each)]].
 	^methods!
 
+whichMethodsReferToVariable: aRBVariableBinding
+	| methods variableName binding |
+	methods := Set new.
+	variableName := aRBVariableBinding key.
+	self newMethods do: [:each | (each refersToVariable: variableName) ifTrue: [methods add: each]].
+	(binding := aRBVariableBinding realBinding) ifNil: [^methods].
+	methods
+		addAll: (((self realClass whichMethodsReferTo: binding)
+				reject: [:each | self hasRemoved: each selector]) collect: [:each | self methodFor: each selector]).
+	^methods!
+
 whichSelectorsReferToClassVariable: aString
 	| selectors class binding |
 	#rbFix.	"From John Brant, 2001-08-03, supercedes wiki patch"
@@ -785,6 +796,7 @@ typeOfClassVariable:!public!variable accessing! !
 unqualifiedName!accessing!public! !
 whichMethodsReferToClass:!method accessing!public! !
 whichMethodsReferToSymbol:!method accessing!public! !
+whichMethodsReferToVariable:!method accessing!public! !
 whichSelectorsReferToClassVariable:!method accessing!public! !
 whichSelectorsReferToInstanceVariable:!method accessing!public! !
 whoDefinesClassVariable:!public!variable accessing! !

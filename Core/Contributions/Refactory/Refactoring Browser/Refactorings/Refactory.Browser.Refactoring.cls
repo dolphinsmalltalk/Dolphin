@@ -191,6 +191,18 @@ getOptionRemoveMethod: aSymbol referencedIn: aCollection
 			ifTrue: [self openBrowserOn: (self model environment referencesTo: aSymbol)].
 	^false!
 
+getOptionRemoveVariable: aVariableBinding referencedIn: aCollection
+	| args |
+	args := {aVariableBinding environment. aVariableBinding key. aCollection size}.
+	(self
+		confirm: 'The class variable <1p>.<2s> is referenced from <3d> methods.<n><n>Would you like to browse references?'
+				<< args)
+			ifTrue: 
+				[self openBrowserOn: ((self model environment forMethods: aCollection)
+							label: 'References to <1p>.<2s>' << args;
+							yourself)].
+	^false!
+
 getOptionRenameAllDefinitions: aCollection of: aSymbol
 	^aCollection size <= 1 or: 
 			[self confirm: ('This will modify all <1p> implementors. Proceed anyway?'
@@ -410,6 +422,7 @@ getOptionPushUpRemoveDuplicates:in:!options!public! !
 getOptionRemoveClass:referencedIn:!options!public! !
 getOptionRemoveDuplicatesWithSupersends:!options!public! !
 getOptionRemoveMethod:referencedIn:!options!public! !
+getOptionRemoveVariable:referencedIn:!options!public! !
 getOptionRenameAllDefinitions:of:!options!public! !
 getOptionRenameReferencesTo:!options!public! !
 getOptionReplaceReferencesTo:with:!options!public! !
@@ -498,6 +511,8 @@ initializeRefactoringOptions
 							-> [:refactoring :class :references | refactoring getOptionRemoveClass: class referencedIn: references].
 						#removeReferencedSelector
 							-> [:refactoring :selector :references | refactoring getOptionRemoveMethod: selector referencedIn: references].
+						#removeReferencedVariable
+							-> [:refactoring :var :references | refactoring getOptionRemoveVariable: var referencedIn: references].
 						#renameAllDefinitions
 							-> [:refactoring :definitions :selector | refactoring getOptionRenameAllDefinitions: definitions of: selector].
 						#replaceReferences
