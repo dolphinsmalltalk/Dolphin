@@ -172,7 +172,7 @@ get_Headers:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!
 get_ReasonPhrase:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
 get_StatusCode:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
 headers!**auto generated**!properties!public! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 put_Content:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
 put_ReasonPhrase:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !
 put_StatusCode:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceResponse!private! !

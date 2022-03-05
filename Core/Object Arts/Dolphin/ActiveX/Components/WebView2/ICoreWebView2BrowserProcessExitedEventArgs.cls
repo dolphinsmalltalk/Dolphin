@@ -73,7 +73,7 @@ browserProcessExitKind!**auto generated**!properties!public! !
 browserProcessId!**auto generated**!properties!public! !
 get_BrowserProcessExitKind:!**auto generated**!COM Interfaces-ICoreWebView2BrowserProcessExitedEventArgs!private! !
 get_BrowserProcessId:!**auto generated**!COM Interfaces-ICoreWebView2BrowserProcessExitedEventArgs!private! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 !
 
 !ICoreWebView2BrowserProcessExitedEventArgs class methodsFor!

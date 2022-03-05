@@ -30,7 +30,6 @@ package setPrerequisites: #(
 	'..\..\..\Dolphin\MVP\Base\Dolphin Basic Geometry'
 	'..\..\..\Dolphin\MVP\Dialogs\Common\Dolphin Common Dialogs'
 	'..\..\..\Dolphin\MVP\Views\Control Bars\Dolphin Control Bars'
-	'..\..\..\Dolphin\MVP\Presenters\List\Dolphin List Presenter'
 	'..\..\..\Dolphin\Base\Dolphin Message Box'
 	'..\..\..\Dolphin\MVP\Base\Dolphin MVP Base'
 	'..\..\..\Dolphin\MVP\Presenters\Text\Dolphin Text Presenter'

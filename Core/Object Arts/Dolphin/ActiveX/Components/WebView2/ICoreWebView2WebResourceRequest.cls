@@ -176,7 +176,7 @@ get_uri:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequest!priva
 headers!**auto generated**!properties!public! !
 method!properties!public! !
 method:!**auto generated**!properties!public! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 put_Content:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequest!private! !
 put_Method:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequest!private! !
 put_uri:!**auto generated**!COM Interfaces-ICoreWebView2WebResourceRequest!private! !

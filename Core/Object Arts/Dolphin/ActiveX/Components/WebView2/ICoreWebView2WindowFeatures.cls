@@ -257,7 +257,7 @@ hasSize!properties!public! !
 height!**auto generated**!properties!public! !
 left!**auto generated**!properties!public! !
 position!properties!public! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 shouldDisplayMenuBar!properties!public! !
 shouldDisplayScrollBars!properties!public! !
 shouldDisplayStatus!properties!public! !

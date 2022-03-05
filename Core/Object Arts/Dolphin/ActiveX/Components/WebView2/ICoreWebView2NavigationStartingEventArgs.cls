@@ -180,7 +180,7 @@ get_uri:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventA
 isRedirected!properties!public! !
 isUserInitiated!properties!public! !
 navigationId!**auto generated**!properties!public! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 put_Cancel:!**auto generated**!COM Interfaces-ICoreWebView2NavigationStartingEventArgs!private! !
 requestHeaders!**auto generated**!properties!public! !
 uri!properties!public! !

@@ -126,7 +126,7 @@ get_ExitCode:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventA
 get_FrameInfosForFailedProcess:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 get_ProcessDescription:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
 get_reason:!**auto generated**!COM Interfaces-ICoreWebView2ProcessFailedEventArgs2!private! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 processDescription!properties!public! !
 reason!**auto generated**!properties!public! !
 !

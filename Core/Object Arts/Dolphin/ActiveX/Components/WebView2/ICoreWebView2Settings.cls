@@ -606,7 +606,7 @@ isWebMessageEnabled!properties!public! !
 isWebMessageEnabled:!properties!public! !
 isZoomControlEnabled!properties!public! !
 isZoomControlEnabled:!properties!public! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 put_AreBrowserAcceleratorKeysEnabled:!COM Interfaces-ICoreWebView2Settings3!private! !
 put_AreDefaultContextMenusEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !
 put_AreDefaultScriptDialogsEnabled:!**auto generated**!COM Interfaces-ICoreWebView2Settings!private! !

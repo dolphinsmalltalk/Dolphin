@@ -199,7 +199,7 @@ get_Cursor:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController
 get_RootVisualTarget:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private!properties! !
 get_SystemCursorId:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private!properties! !
 get_UIAProvider:!COM Interfaces-ICoreWebView2CompositionController2!private! !
-printableProperties!development!printing!private! !
+printableProperties!printing!private! !
 put_RootVisualTarget:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!private!properties! !
 Remove_CursorChanged:!**auto generated**!COM Interfaces-ICoreWebView2CompositionController!events!private! !
 rootVisualTarget!**auto generated**!properties!public! !
