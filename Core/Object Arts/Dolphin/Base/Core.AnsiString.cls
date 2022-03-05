@@ -140,14 +140,6 @@ coerceString: aString
 
 	^aString asAnsiString!
 
-fromAddress: anAddress
-	"Answer a new String instantiated from the null terminated string at anAddress.
-	Implementation note: We can use the external library call primitive to do the 
-	job for us by performing a simple nop which returns the original pointer (_strninc()
-	has the useful property that it returns NULL for NULL argument too)."
-
-	^VM stringFromAddress: anAddress!
-
 initialize
 	empty := self new
 				isImmutable: true;
@@ -192,7 +184,6 @@ with: firstCharacter with: secondCharacter with: thirdCharacter with: fourthChar
 !Core.AnsiString class categoriesForMethods!
 characterForCodeUnit:!enquiries!public! !
 coerceString:!instance creation!public! !
-fromAddress:!instance creation!public! !
 initialize!class initialization!development!public! !
 with:!instance creation!public! !
 with:with:!instance creation!public! !

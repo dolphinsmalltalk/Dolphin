@@ -443,7 +443,7 @@ testBSTRArg
 	In an unpatched VM this typically crashes the whole system."
 
 	| method |
-	method := Compiler compile: 'test: aString <stdcall: bstr AnswerDWORD bstr>' in: VMLibrary.
+	method := Compiler compile: 'test: aString <stdcall: bstr AnswerIntPtr bstr>' in: VMLibrary.
 	1000 timesRepeat: 
 			[| bstr |
 			bstr := method value: VM withArguments: #('Some 🐬 data').
@@ -3320,7 +3320,7 @@ verifyExtCallArgLppvoid: aBoolean
 	| method string result address |
 	method := Compiler
 				compile: ('x: aString
-	%<<1?overlap :>stdcall: uintptr AnswerDWORD lppvoid>
+	%<<1?overlap :>stdcall: uintptr AnswerIntPtr lppvoid>
 	^_failureCode'
 						expandMacrosWith: aBoolean)
 				in: VMLibrary.
@@ -3344,7 +3344,7 @@ verifyExtCallArgLpwstr: aBoolean
 	| method expected actual |
 	method := Compiler
 				compile: ('x: aString
-	%<<1?overlap :>stdcall: lpwstr AnswerDWORD lpwstr>
+	%<<1?overlap :>stdcall: lpwstr AnswerIntPtr lpwstr>
 	^_failureCode'
 						expandMacrosWith: aBoolean)
 				in: VMLibrary.
@@ -3394,7 +3394,7 @@ verifyExtCallFpFault: aBoolean
 verifyExtCallGpf: aBoolean
 	| method |
 	method := self
-				compile: ('test: anInteger %<<1?overlap :>stdcall: lpstr AnswerDWORD lpvoid> ^self invalidCall: _failureCode'
+				compile: ('test: anInteger %<<1?overlap :>stdcall: lpstr AnswerIntPtr lpvoid> ^self invalidCall: _failureCode'
 						expandMacrosWith: aBoolean)
 				in: VMLibrary.
 	"The call is repeated to verify that the threaded call is reset properly when the exception is handled. If it isn't then this will fail with i = 2"
@@ -3462,7 +3462,7 @@ verifyExtCallRetLpwstr: aBoolean
 	| method expected actual |
 	method := Compiler
 				compile: ('w: anInteger
-	%<<1?overlap :>stdcall: lpwstr AnswerDWORD lpvoid>
+	%<<1?overlap :>stdcall: lpwstr AnswerIntPtr lpvoid>
 	^self _failureCode'
 						expandMacrosWith: aBoolean)
 				in: VMLibrary.

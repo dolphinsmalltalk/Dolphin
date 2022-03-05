@@ -11,6 +11,7 @@ DlgProc=?DolphinDlgProc@Interpreter@@SGJPAUHWND__@@IIJ@Z
 GenericCallback
 VTable DATA
 AnswerDWORD
+AnswerIntPtr=AnswerDWORD
 AnswerQWORD
 AnswerDQWORD
 Dump

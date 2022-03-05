@@ -286,6 +286,10 @@ wcscspn: aWideString strCharSet: strCharSet
 	<cdecl: dword wcscspn lpvoid lpwstr>
 	^self invalidCall: _failureCode!
 
+wcslen: aString
+	<cdecl: sdword wcslen lpvoid>
+	^self invalidCall: _failureCode!
+
 wcsncpy_s: strDestination bufferSize: numberOfElements strSource: strSource count: count
 	<cdecl: errno wcsncpy_s lpvoid uintptr lpwstr uintptr>
 	^self invalidCall: _failureCode! !
@@ -342,6 +346,7 @@ synchronizeLocale!CRT functions-localization!private! !
 ungetc:stream:!CRT functions-stream I/O!public! !
 ungetwc:stream:!CRT functions-stream I/O!public! !
 wcscspn:strCharSet:!CRT functions-string manipulation!public! !
+wcslen:!CRT functions-string manipulation!public! !
 wcsncpy_s:bufferSize:strSource:count:!CRT functions-string manipulation!public! !
 !
 

@@ -614,6 +614,10 @@ testFindStringStartingAtIgnoreCase
 				ignoreCase: true)
 		equals: 7!
 
+testFromAddress
+	self assertIsNil: (self collectionClass fromAddress: 0).
+	self assertIsNil: (self collectionClass fromAddress: 0 length: 0)!
+
 testHash
 	| abc |
 	"Might fail if the hash algorithm is changed."
@@ -1209,6 +1213,7 @@ testExpandMacrosWith!public!unit tests! !
 testExpandMacrosWithArguments!public!unit tests! !
 testFindStringStartingAt!public!unit tests! !
 testFindStringStartingAtIgnoreCase!public!unit tests! !
+testFromAddress!public!unit tests! !
 testHash!public!unit tests! !
 testIndexOfStartingAt!public!unit tests! !
 testInvalidComparisons!public!unit tests! !

@@ -12,6 +12,7 @@ DlgProc=?DolphinDlgProc@Interpreter@@SGJPAUHWND__@@IIJ@Z
 GenericCallback
 VTable
 AnswerDWORD
+AnswerIntPtr=AnswerDWORD
 AnswerQWORD
 AnswerDQWORD
 Dump
@@ -85,6 +86,7 @@ uncompress
 	strncpy_s
 	ungetc
 	ungetwc
+	wcslen
 	wcscspn
 	wcsncpy_s
 

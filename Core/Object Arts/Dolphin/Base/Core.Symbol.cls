@@ -283,8 +283,12 @@ findInterned: aString
 					each = aString ifTrue: [^each]]].
 	^nil!
 
+fromAddress: anInteger
+	^(String fromAddress: anInteger) ifNotNil: [:string | self intern: string]!
+
 fromAddress: anInteger length: anInteger2
-	^self intern: (String fromAddress: anInteger length: anInteger2)!
+	^(String fromAddress: anInteger length: anInteger2)
+		ifNotNil: [:string | self intern: string]!
 
 initialize
 	"Initialize class variables of the receiver.
@@ -469,6 +473,7 @@ addUnique:!accessing!private! !
 allInstancesDo:!enumerating!public! !
 coerceString:!instance creation!public! !
 findInterned:!accessing!public! !
+fromAddress:!instance creation!public! !
 fromAddress:length:!instance creation!public! !
 initialize!development!initializing!public! !
 intern:!instance creation!public! !

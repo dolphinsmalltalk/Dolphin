@@ -294,13 +294,17 @@ asUtf16String
 	"Answer a UTF16-encoded equivalent of the receiver."
 
 	<primitive: 215>
-	^Utf16String withAll: self!
+	^Utf16String writeStream
+		nextPutAll: self;
+		contents!
 
 asUtf16StringCopy
 	"Answer a UTF16-encoded copy of the receiver."
 
 	<primitive: 215>
-	^Utf16String withAll: self!
+	^Utf16String writeStream
+		nextPutAll: self;
+		contents!
 
 asUtf8String
 	"Answer a UTF-8 encoded string representation of the receiver."
@@ -1513,18 +1517,24 @@ formatSystemMessage: anIntegerId withArguments: arguments
 fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."
 
-	^self subclassResponsibility!
+	| cch |
+	anAddress isNull ifTrue: [^nil].
+	cch := OS.Ucrt strlen: anAddress.
+	^anAddress asExternalAddress
+		replaceBytesOf: (self new: cch)
+		from: 1
+		to: cch
+		startingAt: 1!
 
 fromAddress: anAddress length: anInteger
-	"Answer a new String, of length anInteger, copied from the first anInteger
-	bytes of aString."
+	"Answer a new String of length, anInteger, copied from the first anInteger bytes of, aString."
 
-	^anAddress isNull 
-		ifFalse: [
-			anAddress asExternalAddress
-				replaceBytesOf: (self new: anInteger)
-				from: 1 to: anInteger startingAt: 1 ]
-!
+	anAddress isNull ifTrue: [^nil].
+	^anAddress asExternalAddress
+		replaceBytesOf: (self new: anInteger)
+		from: 1
+		to: anInteger
+		startingAt: 1!
 
 fromAtomId: anInteger
 	"Answer a new string which is a copy of the atom with id anInteger."

@@ -1311,14 +1311,6 @@ lockResource: anExternalHandle
 	<stdcall: dword LockResource handle>
 	^self invalidCall: _failureCode!
 
-lstrlenW: aUtf16String
-	"Answer the length in 16-bit code units of the parameter (assumed to point at a
-	null-terminated wide string). Note that this may be more than the number of actual
-	characters should the string contain any code points that require two code units."
-
-	<stdcall: sdword lstrlenW lpvoid>
-	^self invalidCall: _failureCode!
-
 moveFile: aStringOldFileName lpNewFileName: aStringnewFileName
 	"The MoveFile function will move (rename) either a file or a directory (including all its children)
 	either in the same directory or across directories. The one caveat is that the MoveFile function will
@@ -1948,7 +1940,6 @@ localeNameToLCID:dwFlags:!public!win32 functions-national language support! !
 localFileTimeToFileTime:lpFileTime:!public!win32 functions-date and time! !
 localFree:!**auto generated**!public!win32 functions-memory management! !
 lockResource:!public!win32 functions-resource! !
-lstrlenW:!public!win32 functions-string manipulation! !
 moveFile:lpNewFileName:!public!win32 functions-file management! !
 moveFileEx:lpNewFileName:dwFlags:!public!win32 functions-file management! !
 multiByteToWideChar:dwFlags:lpMultiByteStr:cchMultiByte:lpWideCharStr:cchWideChar:!public!win32 functions-string manipulation! !

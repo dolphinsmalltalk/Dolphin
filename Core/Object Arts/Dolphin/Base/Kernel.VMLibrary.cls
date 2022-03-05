@@ -39,13 +39,11 @@ _snprintf_s: buffer bufferSize: sizeInteger count: countInteger format: format w
 	^self invalidCall: _failureCode!
 
 addressFromInteger: anInteger
-	"Private - Answer a new ExternalAddress instantiated from the argument.
-	Implementation Note: AnswerDWORD() is a simple function which returns its 32-bit argument.
-	By appropriately specifying the argument and return types, we can use external call
-	primitive's argument coercion and return object instantiation, to perform useful type
-	conversions very quickly."
+	"Private - Answer a new ExternalAddress instantiated from the argument."
 
-	<stdcall: lpvoid AnswerDWORD dword>
+	"Implementation Note: AnswerIntPtr() is a simple function which returns its pointer-sized argument. By appropriately specifying the argument and return types, we can use external call primitive's argument coercion and return object instantiation, to perform useful type conversions very quickly."
+
+	<stdcall: lpvoid AnswerIntPtr dword>
 	^self invalidCall: _failureCode!
 
 applicationHandle
@@ -220,13 +218,11 @@ getWndProc
 	^wndProc!
 
 handleFromInteger: anInteger
-	"Private - Answer a new ExternalHandle instantiated from the argument.
-	Implementation Note: AnswerDWORD() is a simple function which returns its 32-bit argument.
-	By appropriately specifying the argument and return types, we can use external call
-	primitive's argument coercion and return object instantiation, to perform useful type
-	conversions very quickly."
+	"Private - Answer a new ExternalHandle instantiated from the argument."
 
-	<stdcall: handle AnswerDWORD dword>
+	"Implementation Note: AnswerIntPtr() is a simple function which returns its pointer-sized argument. By appropriately specifying the argument and return types, we can use external call primitive's argument coercion and return object instantiation, to perform useful type conversions very quickly."
+
+	<stdcall: handle AnswerIntPtr uintptr>
 	^External.Handle new value: anInteger asInteger!
 
 hashBytes: aByteObject count: anInteger
@@ -422,20 +418,6 @@ stdout
 	<cdecl: handle StdOut>
 	^self invalidCall: _failureCode!
 
-stringFromAddress: pointer
-	"Private - Answer a new String instantiated from the null-terminated String pointed 
-	at by the argument.
-	Implementation Note: AnswerDWORD() is a simple function which returns its 32-bit argument.
-	By appropriately specifying the argument and return types, we can use external call
-	primitive's argument coercion and return object instantiation, to perform useful type
-	conversions very quickly."
-
-	<stdcall: lpstr AnswerDWORD lpvoid>
-	| addr len |
-	addr := pointer isInteger ifTrue: [pointer asExternalAddress] ifFalse: [pointer].
-	len := addr indexOf: 0.
-	^addr copyStringFrom: 1 to: len - 1!
-
 unregisterObject: anObject
 	| i |
 	i := self registry identityIndexOf: anObject.
@@ -459,10 +441,8 @@ unsignedFromSigned: anInteger
 utf16StringFromAddress: pointer
 	"Private - Answer a new <Utf16String> instantiated from the null-terminated string pointed at by the argument."
 
-	<stdcall: lpwstr AnswerDWORD lpvoid>
-	| len |
-	len := Kernel32 lstrlenW: pointer.
-	^Utf16String fromAddress: pointer length: len!
+	<stdcall: lpwstr AnswerIntPtr lpvoid>
+	^Utf16String fromAddress: pointer length: (Ucrt wcslen: pointer)!
 
 versionFormatString
 	"Private - Answer a String containing the version format used by the receiver."
@@ -517,7 +497,6 @@ specialSelectors!accessing-registry!private! !
 stderr!accessing-handles!private! !
 stdin!accessing-handles!private! !
 stdout!accessing-handles!private! !
-stringFromAddress:!helpers!private! !
 unregisterObject:!accessing-registry!private! !
 unsignedFromSigned:!helpers!private! !
 utf16StringFromAddress:!helpers!private! !

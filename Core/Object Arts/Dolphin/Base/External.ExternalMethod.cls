@@ -29,7 +29,7 @@ clear
 	"Private - Clear down temporary information cached in the receiver.
 	Here we clear down the proc. address cache."
 
-	self descriptorLiteral replaceFrom: 1 to: 4 withObject: 0!
+	self descriptorLiteral uintPtrAtOffset: 0 put: 0!
 
 descriptor
 	"Private - Answer a <FunctionDescriptor> generated from the receiver's descriptor literal (which has

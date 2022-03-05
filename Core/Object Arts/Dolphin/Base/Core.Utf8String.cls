@@ -477,11 +477,6 @@ codePage
 
 	^CP_UTF8!
 
-fromAddress: anAddress
-	"Answer a new String instantiated from the null terminated string at anAddress."
-
-	^anAddress isNull ifFalse: [self fromAddress: anAddress length: (OS.Ucrt strlen: anAddress)]!
-
 initialize
 	self extraInstanceSpec: EncodingUtf8.
 	empty := ''.
@@ -489,7 +484,6 @@ initialize
 !Core.Utf8String class categoriesForMethods!
 characterForCodeUnit:!enquiries!public! !
 codePage!instance creation!public! !
-fromAddress:!instance creation!public! !
 initialize!development!initializing!public! !
 !
 

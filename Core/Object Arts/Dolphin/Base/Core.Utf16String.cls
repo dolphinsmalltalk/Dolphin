@@ -325,7 +325,7 @@ strcspn: aString start: anInteger
 strlen
 	"Answer the length of the receiver (in code units) up to the first null terminator. This may be less than its size if it contains embedded nulls. It can never be greater than the receiver's size."
 
-	^OS.Kernel32 lstrlenW: self!
+	^OS.Ucrt wcslen: self!
 
 wordAtOffset: anInteger
 	"Private - Answer the unsigned 2 byte integer at offset (i.e. zero relative) anInteger in the receiver. 
@@ -415,22 +415,17 @@ elementSize
 fromAddress: anAddress
 	"Answer a new String instantiated from the null terminated string at anAddress."
 
-	^self fromAddress: anAddress length: (OS.Kernel32 lstrlenW: anAddress)!
+	^VM utf16StringFromAddress: anAddress!
 
 fromAddress: anAddress length: anInteger
-	"Answer a new <Utf16String>, of length anInteger, copied from the first anInteger
-	code units pointed at by anAddress."
+	"Answer a new <Utf16String>, of length anInteger, copied from the first anInteger code units pointed at by anAddress."
 
-	^anAddress isNull
-		ifFalse: 
-			[| answer |
-			answer := self new: anInteger.
-			anAddress asExternalAddress
-				replaceBytesOf: answer
-				from: 1
-				to: anInteger * 2
-				startingAt: 1.
-			answer]!
+	anAddress isNull ifTrue: [^nil].
+	^anAddress asExternalAddress
+		replaceBytesOf: (self new: anInteger)
+		from: 1
+		to: anInteger * 2
+		startingAt: 1!
 
 fromAtomId: anInteger
 	"Answer a new string which is a copy of the atom with id anInteger."
