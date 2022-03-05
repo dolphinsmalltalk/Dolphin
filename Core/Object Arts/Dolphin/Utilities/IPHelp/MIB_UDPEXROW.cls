@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MIB_UDPROW subclass: #MIB_UDPEXROW
 	instanceVariableNames: ''

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ExternalStructure subclass: #FILE_NOTIFY_INFORMATION
 	instanceVariableNames: ''

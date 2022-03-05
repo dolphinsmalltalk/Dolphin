@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 PlayShape subclass: #RegularPolygon
 	instanceVariableNames: 'color sides position rotation radius'

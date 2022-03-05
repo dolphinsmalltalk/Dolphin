@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 STBFiler subclass: #STBOutFiler
 	instanceVariableNames: 'writeMap globals globalNils proxyOverrides refOffset'

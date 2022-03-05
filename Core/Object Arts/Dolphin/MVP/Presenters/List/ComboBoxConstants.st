@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #ComboBoxConstants put: (PoolConstantsDictionary named: #ComboBoxConstants)!
 ComboBoxConstants at: 'CB_ADDSTRING' put: 16r143!

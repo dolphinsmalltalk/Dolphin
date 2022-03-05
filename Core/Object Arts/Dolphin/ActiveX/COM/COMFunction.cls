@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 COMFunctionAbstract subclass: #COMFunction
 	instanceVariableNames: 'selector descriptor'

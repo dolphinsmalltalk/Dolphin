@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 DolphinTest subclass: #SortAlgorithmTest
 	instanceVariableNames: ''
@@ -55,7 +55,7 @@ assertSorted: sorted by: block
 
 bigStringSort
 	| sorted |
-	sorted := self sort: Symbol allSubinstances sortBlock: SortedCollection defaultSortBlock.
+	sorted := self sort: Symbol primAllSubinstances sortBlock: SortedCollection defaultSortBlock.
 	"Now invert it"
 	sorted := self sort: sorted sortBlock: [:a :b | a >= b]!
 

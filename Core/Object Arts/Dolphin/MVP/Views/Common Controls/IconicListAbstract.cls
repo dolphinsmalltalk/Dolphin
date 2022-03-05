@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ListControlView subclass: #IconicListAbstract
 	instanceVariableNames: 'getImageBlock imageManager stateImageManager getInfoTipBlock customDrawBlock largeIconExtent thumbnailsImageManager'

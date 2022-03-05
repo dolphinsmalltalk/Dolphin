@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ValueConvertingControlView subclass: #Slider
 	instanceVariableNames: 'autoTickFrequency _reserved1 _reserved2'

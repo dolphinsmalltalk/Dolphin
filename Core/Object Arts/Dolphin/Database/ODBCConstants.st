@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #ODBCConstants put: (PoolConstantsDictionary named: #ODBCConstants)!
 ODBCConstants at: 'ODBC_VS_FLAG_RETCODE' put: 16r4!

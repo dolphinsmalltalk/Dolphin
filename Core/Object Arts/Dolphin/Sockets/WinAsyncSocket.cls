@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 View subclass: #WinAsyncSocket
 	instanceVariableNames: '_reserved1 _reserved2'

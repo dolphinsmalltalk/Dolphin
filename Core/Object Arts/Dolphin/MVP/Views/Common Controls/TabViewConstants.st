@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #TabViewConstants put: (PoolConstantsDictionary named: #TabViewConstants)!
 TabViewConstants at: 'ODT_TAB' put: 16r65!

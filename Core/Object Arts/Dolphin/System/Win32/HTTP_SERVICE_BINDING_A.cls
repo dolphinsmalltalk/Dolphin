@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 HTTP_SERVICE_BINDING_BASE subclass: #HTTP_SERVICE_BINDING_A
 	instanceVariableNames: ''

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactoring subclass: #AbstractVariablesRefactoring
 	instanceVariableNames: 'tree fromClass instVarReaders instVarWriters classVarReaders classVarWriters toClasses ignore'

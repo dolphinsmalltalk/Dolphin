@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 View subclass: #ILColorSelector
 	instanceVariableNames: 'colorTable dum2 dum3 dum4 dum5'

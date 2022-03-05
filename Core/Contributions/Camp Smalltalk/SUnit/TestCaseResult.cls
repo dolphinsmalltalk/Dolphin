@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #TestCaseResult
 	instanceVariableNames: 'case outcome duration signal stacktrace ip testMethod'

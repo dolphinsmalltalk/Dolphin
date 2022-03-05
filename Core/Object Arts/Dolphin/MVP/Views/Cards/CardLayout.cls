@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 LayoutManager subclass: #CardLayout
 	instanceVariableNames: 'names currentCard events _unused4 _unused5'

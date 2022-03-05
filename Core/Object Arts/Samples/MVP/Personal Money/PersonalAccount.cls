@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Model subclass: #PersonalAccount
 	instanceVariableNames: 'name accountNumber initialBalance transactions currentBalance'

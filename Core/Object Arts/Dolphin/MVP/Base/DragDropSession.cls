@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #DragDropSession
 	instanceVariableNames: 'dragSource dragPoint suggestedSource dragObjects defaultOperation dropTarget suggestedTarget operationsSupportedByDropTarget operation inDropTargetScrollZone dragImages scrollProcess'

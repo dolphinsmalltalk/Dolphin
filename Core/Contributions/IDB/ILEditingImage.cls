@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ILImage subclass: #ILEditingImage
 	instanceVariableNames: 'modified undoStack redoStack undoCollector brushCache'

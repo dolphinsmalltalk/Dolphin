@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Event subclass: #WindowsEvent
 	instanceVariableNames: 'message wParam lParam lResult'

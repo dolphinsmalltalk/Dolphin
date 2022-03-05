@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 StParseNodeVisitor subclass: #ParseTreeSearcher
 	instanceVariableNames: 'searches answer argumentSearches context messages'

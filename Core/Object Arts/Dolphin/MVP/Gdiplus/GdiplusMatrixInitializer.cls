@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 GdiplusInitializer subclass: #GdiplusMatrixInitializer
 	instanceVariableNames: 'm11 m12 m21 m22 m31 m32'

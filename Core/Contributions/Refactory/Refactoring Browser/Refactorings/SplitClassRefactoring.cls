@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Refactoring subclass: #SplitClassRefactoring
 	instanceVariableNames: 'class instanceVariables newClassName referenceVariableName newClass'

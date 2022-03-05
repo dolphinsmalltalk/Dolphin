@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 CapturingInteractor subclass: #ButtonInteractor
 	instanceVariableNames: 'buttonRect _unused5 commandDescription'

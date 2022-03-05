@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #ButtonConstants put: (PoolConstantsDictionary named: #ButtonConstants)!
 ButtonConstants at: 'BCM_GETNOTE' put: 16r160A!

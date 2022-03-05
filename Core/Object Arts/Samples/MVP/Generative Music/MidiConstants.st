@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #MidiConstants put: (PoolConstantsDictionary named: #MidiConstants)!
 MidiConstants at: 'MidiChannelNoteOff' put: 16r8!

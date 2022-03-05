@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MIB_UDPTABLE subclass: #MIB_UDPEXTABLE
 	instanceVariableNames: ''

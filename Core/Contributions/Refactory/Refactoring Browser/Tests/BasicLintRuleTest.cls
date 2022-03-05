@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 LintRuleTest subclass: #BasicLintRuleTest
 	instanceVariableNames: 'classBlock methodBlock result'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ValueHolder subclass: #ValueBuffer
 	instanceVariableNames: 'subject modified gate'

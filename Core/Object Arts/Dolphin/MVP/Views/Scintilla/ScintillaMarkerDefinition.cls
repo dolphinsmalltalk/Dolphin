@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ScintillaAttribute subclass: #ScintillaMarkerDefinition
 	instanceVariableNames: 'code forecolor backcolor view name alpha selectionBackcolor _reserved9 _reserved10 _reserved11 _reserved12'

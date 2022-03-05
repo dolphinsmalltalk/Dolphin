@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Notification subclass: #CompilerNotification
 	instanceVariableNames: 'position ranges line extras methodClass source selector offset'

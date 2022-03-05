@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 SequenceableCollection subclass: #Interval
 	instanceVariableNames: 'start stop step'

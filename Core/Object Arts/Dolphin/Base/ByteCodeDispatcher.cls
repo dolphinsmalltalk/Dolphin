@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #ByteCodeDispatcher
 	instanceVariableNames: 'byteCodes method ip interpreter instructionLength byteCode instructions'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #CommandLineTestRunner
 	instanceVariableNames: 'results lastCase loggers verbose'

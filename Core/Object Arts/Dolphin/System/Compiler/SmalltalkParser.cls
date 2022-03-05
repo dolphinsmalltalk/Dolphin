@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #SmalltalkParser
 	instanceVariableNames: 'scanner currentToken nextToken errorBlock methodNode st80Syntax comments methodClass source'

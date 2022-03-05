@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 XMLNode subclass: #XMLStringNode
 	instanceVariableNames: 'string'

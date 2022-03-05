@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #IPHlpApiConstants put: (PoolConstantsDictionary named: #IPHlpApiConstants)!
 IPHlpApiConstants at: 'AD_APPLY_ALL' put: 16r7!

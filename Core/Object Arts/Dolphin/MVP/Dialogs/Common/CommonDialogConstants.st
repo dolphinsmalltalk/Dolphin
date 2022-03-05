@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #CommonDialogConstants put: (PoolConstantsDictionary named: #CommonDialogConstants)!
 CommonDialogConstants at: 'CC_ANYCOLOR' put: 16r100!

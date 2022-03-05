@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 VariableRefactoring subclass: #CreateAccessorsForVariableRefactoring
 	instanceVariableNames: 'getterMethod setterMethod classVariable needsReturn'

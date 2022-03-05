@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #SHDocVwConstants put: (PoolConstantsDictionary named: #SHDocVwConstants)!
 SHDocVwConstants at: 'CSC_NAVIGATEBACK' put: 16r2!

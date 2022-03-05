@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #ListViewColumn
 	instanceVariableNames: 'text width alignment getTextBlock getSortValueBlock getContentsBlock name parent getImageBlock flags getInfoTipBlock customDrawBlock'

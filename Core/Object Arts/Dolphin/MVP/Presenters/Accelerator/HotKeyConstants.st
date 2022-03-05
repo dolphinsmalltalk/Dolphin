@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #HotKeyConstants put: (PoolConstantsDictionary named: #HotKeyConstants)!
 HotKeyConstants at: 'HKCOMB_A' put: 16r8!

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 AXMemberDesc subclass: #FUNCDESC
 	instanceVariableNames: 'names arguments outputIndices retvalIndex methodName'

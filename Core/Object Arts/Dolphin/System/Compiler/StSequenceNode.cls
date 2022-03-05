@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 StProgramNode subclass: #StSequenceNode
 	instanceVariableNames: 'leftBar rightBar statements periods temporaries'

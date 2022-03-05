@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 DolphinTest subclass: #ResourceBrowserTest
 	instanceVariableNames: 'resourceBrowser testClass'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #_PrimitiveFailureCode put: (PoolConstantsDictionary named: #_PrimitiveFailureCode)!
 _PrimitiveFailureCode at: 'AccessViolation' put: -16r3FF8FC1A!

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #STONTestDomainObject
 	instanceVariableNames: 'created modified integer float description color tags bytes boolean'

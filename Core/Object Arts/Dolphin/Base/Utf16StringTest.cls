@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UtfEncodedStringTest subclass: #Utf16StringTest
 	instanceVariableNames: ''

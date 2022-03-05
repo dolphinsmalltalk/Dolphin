@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ArithmeticValue subclass: #Point3D
 	instanceVariableNames: 'x y z'

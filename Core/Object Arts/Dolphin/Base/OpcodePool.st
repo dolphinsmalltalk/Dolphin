@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #OpcodePool put: (PoolConstantsDictionary named: #OpcodePool)!
 OpcodePool at: 'BlockCopy' put: 16rFC!

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 IpHlpApiTableStruct subclass: #IP_ADAPTER_ORDER_MAP
 	instanceVariableNames: ''

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ClassDescription subclass: #Class
 	instanceVariableNames: 'name classPool sharedPools comment classCategories _guid'

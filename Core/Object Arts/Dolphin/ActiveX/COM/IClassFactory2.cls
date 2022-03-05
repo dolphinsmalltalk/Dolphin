@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 IClassFactory subclass: #IClassFactory2
 	instanceVariableNames: ''

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ValueDialog subclass: #ChoicePrompter
 	instanceVariableNames: 'choicePresenter newBlock newCaption newPrompt'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 DolphinTest subclass: #ValueConverterTest
 	instanceVariableNames: 'converter value startTime newTime changed'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 DolphinTest subclass: #MoenTreeViewTest
 	instanceVariableNames: 'treeModel treeView nodeA nodeB nodeC nodeD nodeE nodeF shell scroller useShell'

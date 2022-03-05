@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 SequencedStream subclass: #PositionableStream
 	instanceVariableNames: 'collection position readLimit'

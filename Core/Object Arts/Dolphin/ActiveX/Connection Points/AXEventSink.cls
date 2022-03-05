@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 AXDispatchImpAbstract subclass: #AXEventSink
 	instanceVariableNames: 'idMap target connector cookie tiSource flags'

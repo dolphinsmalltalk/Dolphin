@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Dictionary variableSubclass: #RegKeyAbstract
 	instanceVariableNames: 'handle name rootKey parentPath keyInfo sam'

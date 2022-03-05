@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #FramingCalculation
 	instanceVariableNames: 'name framingBlock offsetBlock flags'

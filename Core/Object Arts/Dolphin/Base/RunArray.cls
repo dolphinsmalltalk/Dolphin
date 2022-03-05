@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ArrayedCollection subclass: #RunArray
 	instanceVariableNames: 'values runs'

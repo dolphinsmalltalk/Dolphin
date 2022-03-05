@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 STBFiler subclass: #STBInFiler
 	instanceVariableNames: 'readMap converters classLocator deferredActions flags'

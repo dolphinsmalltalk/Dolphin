@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Shell subclass: #TutorialPlayer
 	instanceVariableNames: 'tutorialPosition tutorial title workspace'

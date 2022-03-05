@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #BytecodeRewriter
 	instanceVariableNames: 'blockStack instructions ip ipMap bytecodes bytecode newIP blockMap needsContext'

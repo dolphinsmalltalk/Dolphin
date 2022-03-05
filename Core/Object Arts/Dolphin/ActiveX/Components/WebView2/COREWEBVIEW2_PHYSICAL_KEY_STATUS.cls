@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ExternalStructure subclass: #COREWEBVIEW2_PHYSICAL_KEY_STATUS
 	instanceVariableNames: ''

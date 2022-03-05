@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 AbstractIN_ADDR subclass: #IN_ADDR
 	instanceVariableNames: ''

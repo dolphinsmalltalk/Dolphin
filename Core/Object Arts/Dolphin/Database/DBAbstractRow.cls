@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #DBAbstractRow
 	instanceVariableNames: 'columns contents selectors status'

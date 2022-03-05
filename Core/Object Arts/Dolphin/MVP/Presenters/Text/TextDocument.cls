@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 AbstractDocumentShell subclass: #TextDocument
 	instanceVariableNames: 'documentPresenter statusModel modifiedModel'

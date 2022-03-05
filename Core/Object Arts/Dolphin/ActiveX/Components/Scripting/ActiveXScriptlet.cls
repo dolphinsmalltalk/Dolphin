@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #ActiveXScriptlet
 	instanceVariableNames: 'language expression procedures description globalBindings'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Image subclass: #Bitmap
 	instanceVariableNames: 'hdc flags extent'

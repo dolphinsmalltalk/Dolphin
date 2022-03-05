@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 DBAbstractStatement subclass: #DBSchemaStatement
 	instanceVariableNames: 'catalogName schemaName tableName'

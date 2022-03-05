@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 GenericExternalArray subclass: #SAFEARRAY
 	instanceVariableNames: 'data start recordInfo'

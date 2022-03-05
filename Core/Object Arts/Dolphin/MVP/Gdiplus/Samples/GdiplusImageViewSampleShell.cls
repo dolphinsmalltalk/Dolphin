@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Shell subclass: #GdiplusImageViewSampleShell
 	instanceVariableNames: 'image edgeChoice viewChoice padding interpolationChoice classChoice useImageClass filename'

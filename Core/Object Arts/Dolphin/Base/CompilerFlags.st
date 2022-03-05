@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #CompilerFlags put: (PoolConstantsDictionary named: #CompilerFlags)!
 CompilerFlags at: 'DebugMethod' put: 16r40!

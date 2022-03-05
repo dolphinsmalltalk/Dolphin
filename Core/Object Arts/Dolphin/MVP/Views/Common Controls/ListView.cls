@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 IconicListAbstract subclass: #ListView
 	instanceVariableNames: 'lastClickedColIndex columns viewMode lastSelIndices iconSpacing lvStyle thumbnailExtent lvFlags backImage backImageOffset backImageAlpha approvedSelIndices _unused35 _unused36 _unused37 _unused38 _unused39 _unused40 _unused41 _unused42 _unused43 _unused44 _unused45'

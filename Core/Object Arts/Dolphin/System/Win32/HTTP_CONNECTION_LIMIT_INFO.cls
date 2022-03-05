@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 HttpQosSetting subclass: #HTTP_CONNECTION_LIMIT_INFO
 	instanceVariableNames: ''

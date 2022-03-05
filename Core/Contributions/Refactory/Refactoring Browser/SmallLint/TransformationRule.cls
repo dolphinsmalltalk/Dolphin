@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 LintRule subclass: #TransformationRule
 	instanceVariableNames: 'rewriteRule changes class'

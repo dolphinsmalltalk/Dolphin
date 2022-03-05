@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 SequencedStream subclass: #StdioFileStream
 	instanceVariableNames: 'stream flags name oldFd fd crtlib'

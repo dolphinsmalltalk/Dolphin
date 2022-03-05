@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 AXTypeInfoObject subclass: #AXTypeLibraryAnalyzer
 	instanceVariableNames: 'attributes prefix packageName globalName constantsPoolName aliasMap typeAnalyzers'

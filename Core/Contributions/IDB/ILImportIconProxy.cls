@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ILImportBitmapProxy subclass: #ILImportIconProxy
 	instanceVariableNames: 'useMaskBytes maskBytes colorBytes'

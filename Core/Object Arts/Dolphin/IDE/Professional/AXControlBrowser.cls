@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 SmalltalkToolShell subclass: #AXControlBrowser
 	instanceVariableNames: 'site windowStatus inspector eventsPresenter flags traceWindow progId'

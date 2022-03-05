@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #TextTileIcon
 	instanceVariableNames: 'text fontName tilecolor textcolor icon fontStyle flags _reserved8 _reserved9'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 StTagNode subclass: #StExternalCallNode
 	instanceVariableNames: 'nameOrOrdinal returnType argumentTypes flags callingConvention'

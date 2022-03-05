@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #STBClassConversion
 	instanceVariableNames: 'version instSize dataClass isVariable converterBlock filer'

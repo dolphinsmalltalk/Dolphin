@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 StLiteralNode subclass: #StLiteralArrayNode
 	instanceVariableNames: 'isByteArray stop contents start'

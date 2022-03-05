@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2Settings5 subclass: #ICoreWebView2Settings6
 	instanceVariableNames: ''

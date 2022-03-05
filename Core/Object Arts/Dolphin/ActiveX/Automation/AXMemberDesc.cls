@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 AXTypeInfoStructure subclass: #AXMemberDesc
 	instanceVariableNames: 'index customAttributes documentation'

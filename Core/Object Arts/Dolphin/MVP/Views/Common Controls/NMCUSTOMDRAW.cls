@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 NMHDR subclass: #NMCUSTOMDRAW
 	instanceVariableNames: 'item view canvas font'

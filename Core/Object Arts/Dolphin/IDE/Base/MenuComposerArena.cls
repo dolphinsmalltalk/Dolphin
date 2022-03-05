@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ContainerView subclass: #MenuComposerArena
 	instanceVariableNames: 'dragImageList dragPoint dragMenuIndex dragSource _unused'

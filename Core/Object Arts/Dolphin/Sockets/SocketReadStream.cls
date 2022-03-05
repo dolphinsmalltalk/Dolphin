@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ReadStream subclass: #SocketReadStream
 	instanceVariableNames: 'socket'

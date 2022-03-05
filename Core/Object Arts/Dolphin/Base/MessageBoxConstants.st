@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #MessageBoxConstants put: (PoolConstantsDictionary named: #MessageBoxConstants)!
 MessageBoxConstants at: 'IDTIMEOUT' put: 16r7D00!

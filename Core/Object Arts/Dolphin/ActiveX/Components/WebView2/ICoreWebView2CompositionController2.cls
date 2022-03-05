@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2CompositionController subclass: #ICoreWebView2CompositionController2
 	instanceVariableNames: ''

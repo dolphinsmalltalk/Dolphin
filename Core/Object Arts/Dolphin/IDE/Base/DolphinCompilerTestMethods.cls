@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #DolphinCompilerTestMethods
 	instanceVariableNames: 'iv1 iv2'

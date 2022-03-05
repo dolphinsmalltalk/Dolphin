@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ControlBarAbstract subclass: #Toolbar
 	instanceVariableNames: 'idMap items bitmapsStart insets tbFlags indent bitmapSize buttonSize tipText layoutManager'

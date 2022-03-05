@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #WinHttpServerConsts put: (PoolConstantsDictionary named: #WinHttpServerConsts)!
 WinHttpServerConsts at: 'HTTP_AUTH_ENABLE_ALL' put: 16r1F!

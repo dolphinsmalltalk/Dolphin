@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 AXTypeInfoObject subclass: #AXTypeInfoAnalyzer
 	instanceVariableNames: 'typeLib globalBinding guid index documentation'

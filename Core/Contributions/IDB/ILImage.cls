@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #ILImage
 	instanceVariableNames: 'extent colorsUsed colorsUsedCount image bitmapCache hotSpot'

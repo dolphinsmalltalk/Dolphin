@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ReadWriteStream subclass: #FileStream
 	instanceVariableNames: 'file flags pageBase logicalFileSize offset'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #ScintillaPropertyDescriptor
 	instanceVariableNames: 'getSelector defaultValue setMessage setSelector getMessage flags'

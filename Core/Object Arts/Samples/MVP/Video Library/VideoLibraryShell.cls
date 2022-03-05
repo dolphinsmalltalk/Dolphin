@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Shell subclass: #VideoLibraryShell
 	instanceVariableNames: 'ownerPresenter tapesPresenter recordingsPresenter'

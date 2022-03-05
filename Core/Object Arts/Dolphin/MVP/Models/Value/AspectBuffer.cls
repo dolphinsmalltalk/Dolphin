@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Model subclass: #AspectBuffer
 	instanceVariableNames: 'subject subjectCopy aspects gate isValidBlock'

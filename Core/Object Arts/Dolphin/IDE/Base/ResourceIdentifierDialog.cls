@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Dialog subclass: #ResourceIdentifierDialog
 	instanceVariableNames: 'classesPresenter resourceNamePresenter classValue'

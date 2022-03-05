@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 HistoryBrowser subclass: #MethodHistoryBrowser
 	instanceVariableNames: 'history class selector debugger selection slider source'

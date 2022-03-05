@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #CDOConstants put: (PoolConstantsDictionary named: #CDOConstants)!
 CDOConstants at: 'cdoAbuDhabi' put: 16r18!

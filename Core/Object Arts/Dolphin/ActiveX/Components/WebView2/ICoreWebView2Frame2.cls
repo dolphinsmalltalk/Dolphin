@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2Frame subclass: #ICoreWebView2Frame2
 	instanceVariableNames: ''

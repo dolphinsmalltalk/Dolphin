@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 SocketAbstract2 subclass: #Socket2
 	instanceVariableNames: 'address readStream writeStream isText'

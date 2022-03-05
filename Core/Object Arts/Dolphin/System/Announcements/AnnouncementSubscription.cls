@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #AnnouncementSubscription
 	instanceVariableNames: 'announcer announcementClass subscriber action'

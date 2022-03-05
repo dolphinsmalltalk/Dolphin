@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2CompletedHandler subclass: #ICoreWebView2CreateCoreWebView2ControllerCompletedHandler
 	instanceVariableNames: ''

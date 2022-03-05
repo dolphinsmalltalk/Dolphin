@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #XMLTokenizer
 	instanceVariableNames: 'stream nestedStreams entities externalEntities parameterEntities parsingMarkup peekChar validating buffer contentBuffer'

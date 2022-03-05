@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ExternalStructure subclass: #IP_ADAPTER_INDEX_MAP
 	instanceVariableNames: ''

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 CompositeRefactoryChange subclass: #RenameVariableChange
 	instanceVariableNames: 'className isMeta oldName newName'

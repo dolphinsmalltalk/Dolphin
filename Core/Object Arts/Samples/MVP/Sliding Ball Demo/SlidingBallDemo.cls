@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 DoubleBufferedView subclass: #SlidingBallDemo
 	instanceVariableNames: 'start end circle stepProcess'

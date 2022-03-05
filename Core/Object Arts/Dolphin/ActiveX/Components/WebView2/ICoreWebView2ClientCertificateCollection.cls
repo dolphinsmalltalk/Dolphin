@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2Sequence subclass: #ICoreWebView2ClientCertificateCollection
 	instanceVariableNames: ''

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #DBColFlags put: (PoolConstantsDictionary named: #DBColFlags)!
 DBColFlags at: 'DeleteCascade' put: 16r10!

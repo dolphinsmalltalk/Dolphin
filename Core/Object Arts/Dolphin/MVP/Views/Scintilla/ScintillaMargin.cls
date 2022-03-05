@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 QueryableScintillaAttribute subclass: #ScintillaMargin
 	instanceVariableNames: 'width type isSensitive mask cursorType backcolor'

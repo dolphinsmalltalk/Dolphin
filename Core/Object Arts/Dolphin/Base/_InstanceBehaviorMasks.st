@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #_InstanceBehaviorMasks put: (PoolConstantsDictionary named: #_InstanceBehaviorMasks)!
 _InstanceBehaviorMasks at: '_FinalizeMask' put: 16r8!

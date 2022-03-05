@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 STONWriter subclass: #DolphinSTONWriter
 	instanceVariableNames: 'classInstVarMaps stringQuote'

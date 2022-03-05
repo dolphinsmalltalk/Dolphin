@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Model subclass: #ChunkBrowserFilter
 	instanceVariableNames: 'selectedChunkTypes selectedComparisonTypes restrictionRange restrictionClass restrictingMostRecent restrictingPicked'

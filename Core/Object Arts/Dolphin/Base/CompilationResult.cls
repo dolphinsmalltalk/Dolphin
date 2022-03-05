@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #CompilationResult
 	instanceVariableNames: 'method rawTextMap rawTempsMap textMap tempsMap oldMethod package'

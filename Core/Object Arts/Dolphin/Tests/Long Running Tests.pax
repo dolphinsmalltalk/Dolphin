@@ -84,7 +84,9 @@ testErrorsBlockNestingTooDeep
 		range: (mark to: nil)
 		line: 1
 		code: CErrBlockNestingTooDeep! !
-!AbstractParserErrorTest categoriesFor: #testErrorsBlockNestingTooDeep!public!unit tests! !
+!AbstractParserErrorTest categoriesForMethods!
+testErrorsBlockNestingTooDeep!public!unit tests! !
+!
 
 !CompilerErrorTest methodsFor!
 
@@ -143,8 +145,10 @@ testErrorsTooManyLiterals
 		range: (len - (max - 1) printString size - 1 to: len)
 		line: max
 		code: CErrTooManyLiterals! !
-!CompilerErrorTest categoriesFor: #testErrorsTooManyBytecodes!public!unit tests! !
-!CompilerErrorTest categoriesFor: #testErrorsTooManyLiterals!public!unit tests! !
+!CompilerErrorTest categoriesForMethods!
+testErrorsTooManyBytecodes!public!unit tests! !
+testErrorsTooManyLiterals!public!unit tests! !
+!
 
 !CompilerTest methodsFor!
 
@@ -183,41 +187,53 @@ testTextMapsExhaustive
 	couple of exceptions... ahem"
 
 	self knownTextMapIssues not methodsDo: [:each | self verifyTextMapsOf: each]! !
-!CompilerTest categoriesFor: #knownTempsMapIssues!public!unit tests-long running! !
-!CompilerTest categoriesFor: #knownTextMapIssues!private! !
-!CompilerTest categoriesFor: #testTempMapOuterDepthExhaustive!public!unit tests-long running! !
-!CompilerTest categoriesFor: #testTextMapsExhaustive!public!unit tests-long running! !
+!CompilerTest categoriesForMethods!
+knownTempsMapIssues!public!unit tests-long running! !
+knownTextMapIssues!private! !
+testTempMapOuterDepthExhaustive!public!unit tests-long running! !
+testTextMapsExhaustive!public!unit tests-long running! !
+!
 
 !DefaultSortAlgorithmTest methodsFor!
 
 testBigStringSort
 	self bigStringSort! !
-!DefaultSortAlgorithmTest categoriesFor: #testBigStringSort!public!unit tests! !
+!DefaultSortAlgorithmTest categoriesForMethods!
+testBigStringSort!public!unit tests! !
+!
 
 !FormatterTest methodsFor!
 
 testSmokeTestAll
 	self smokeTestAllMethodsOfHierarchy: Object.
 	self smokeTestAllMethodsOfHierarchy: Object class! !
-!FormatterTest categoriesFor: #testSmokeTestAll!public!tests! !
+!FormatterTest categoriesForMethods!
+testSmokeTestAll!public!tests! !
+!
 
 !HeapsortAlgorithmTest methodsFor!
 
 testBigStringSort
 	self bigStringSort! !
-!HeapsortAlgorithmTest categoriesFor: #testBigStringSort!public!unit tests! !
+!HeapsortAlgorithmTest categoriesForMethods!
+testBigStringSort!public!unit tests! !
+!
 
 !IntrosortAlgorithmTest methodsFor!
 
 testBigStringSort
 	self bigStringSort! !
-!IntrosortAlgorithmTest categoriesFor: #testBigStringSort!public!unit tests! !
+!IntrosortAlgorithmTest categoriesForMethods!
+testBigStringSort!public!unit tests! !
+!
 
 !MergesortAlgorithmTest methodsFor!
 
 testBigStringSort
 	self bigStringSort! !
-!MergesortAlgorithmTest categoriesFor: #testBigStringSort!public!unit tests! !
+!MergesortAlgorithmTest categoriesForMethods!
+testBigStringSort!public!unit tests! !
+!
 
 !VMTest methodsFor!
 
@@ -323,10 +339,12 @@ testQuiesceWhenUIBlocked
 	self assert: (sleepTime between: wait * 0.9 and: wait * 1.1).
 	"The VM should quiesce properly, even if events are waiting to be processed, so very little CPU time should have been consumed"
 	self assert: cpuWhileSleeping < (wait * 0.03)! !
-!VMTest categoriesFor: #assertLoopInterruptible:!private!unit tests! !
-!VMTest categoriesFor: #getCPUTime!public!unit tests! !
-!VMTest categoriesFor: #testLoopsInterruptible!public!unit tests! !
-!VMTest categoriesFor: #testQuiesceWhenUIBlocked!public!unit tests! !
+!VMTest categoriesForMethods!
+assertLoopInterruptible:!private!unit tests! !
+getCPUTime!public!unit tests! !
+testLoopsInterruptible!public!unit tests! !
+testQuiesceWhenUIBlocked!public!unit tests! !
+!
 
 "End of package definition"!
 

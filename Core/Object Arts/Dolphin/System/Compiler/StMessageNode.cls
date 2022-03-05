@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 StValueNode subclass: #StMessageNode
 	instanceVariableNames: 'receiver selector selectorParts arguments'

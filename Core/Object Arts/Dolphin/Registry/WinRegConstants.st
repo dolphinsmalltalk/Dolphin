@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #WinRegConstants put: (PoolConstantsDictionary named: #WinRegConstants)!
 WinRegConstants at: 'HKEY_CLASSES_ROOT' put: 16r80000000!

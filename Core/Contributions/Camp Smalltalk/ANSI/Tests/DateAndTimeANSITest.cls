@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #DateAndTimeANSITest
 	instanceVariableNames: 'd19970426t8 savedLocale'

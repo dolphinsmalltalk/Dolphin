@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #STONCStyleCommentsSkipStream
 	instanceVariableNames: 'stream peekedCharacter delimiter escape'

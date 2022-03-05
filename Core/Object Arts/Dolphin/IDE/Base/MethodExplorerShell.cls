@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MethodBrowserShell subclass: #MethodExplorerShell
 	instanceVariableNames: 'historyTree historyList'

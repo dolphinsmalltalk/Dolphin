@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #TrackBarConstants put: (PoolConstantsDictionary named: #TrackBarConstants)!
 TrackBarConstants at: 'TBM_CLEARSEL' put: 16r413!

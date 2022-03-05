@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #DBConnection
 	instanceVariableNames: 'handle dsn uid pwd statements transaction connectString flags'

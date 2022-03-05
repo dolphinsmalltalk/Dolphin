@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 HTTP_PROPERTY_FLAGS subclass: #HTTP_PROTECTION_LEVEL_INFO
 	instanceVariableNames: ''

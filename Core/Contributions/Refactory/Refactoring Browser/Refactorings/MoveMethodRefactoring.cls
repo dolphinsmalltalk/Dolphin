@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MethodRefactoring subclass: #MoveMethodRefactoring
 	instanceVariableNames: 'selector variable moveToClasses parseTree hasOnlySelfReturns selfVariableName'

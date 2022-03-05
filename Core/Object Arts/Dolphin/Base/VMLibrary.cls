@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 PermanentLibrary subclass: #VMLibrary
 	instanceVariableNames: 'wndProc dlgProc genericCallback vtable specialSelectorStart'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 DialogView subclass: #WalkbackDialog
 	instanceVariableNames: 'callStack resumable caption debuggable'

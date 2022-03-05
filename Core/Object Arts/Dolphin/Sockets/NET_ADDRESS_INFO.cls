@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ExternalStructure subclass: #NET_ADDRESS_INFO
 	instanceVariableNames: ''

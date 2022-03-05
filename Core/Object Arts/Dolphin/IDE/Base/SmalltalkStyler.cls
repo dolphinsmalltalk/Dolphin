@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ScintillaStyler subclass: #SmalltalkStyler
 	instanceVariableNames: 'arrayDepth view last inTag stack'

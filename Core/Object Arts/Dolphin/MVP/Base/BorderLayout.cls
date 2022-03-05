@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 LayoutManager subclass: #BorderLayout
 	instanceVariableNames: 'horizontalGap verticalGap north south east west center'

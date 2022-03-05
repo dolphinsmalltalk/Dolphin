@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #EnhancedMetafileRecordTypes put: (PoolConstantsDictionary named: #EnhancedMetafileRecordTypes)!
 EnhancedMetafileRecordTypes at: 'EMR_ABORTPATH' put: 16r44!

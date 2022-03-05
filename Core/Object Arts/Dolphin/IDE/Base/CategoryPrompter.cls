@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ValueDialog subclass: #CategoryPrompter
 	instanceVariableNames: 'treePresenter flags categoryClass'

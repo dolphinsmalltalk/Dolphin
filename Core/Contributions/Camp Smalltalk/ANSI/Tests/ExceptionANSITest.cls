@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MainTestCase subclass: #ExceptionANSITest
 	instanceVariableNames: 'unchanged changed value exceptionClass'

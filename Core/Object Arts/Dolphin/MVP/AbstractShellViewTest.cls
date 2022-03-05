@@ -3,10 +3,10 @@
 DolphinTest subclass: #AbstractShellViewTest
 	instanceVariableNames: 'fakeUser32 cursorPos shells'
 	classVariableNames: ''
- 	poolDictionaries: ''
- 	classInstanceVariableNames: ''!
+	poolDictionaries: ''
+	classInstanceVariableNames: ''!
 AbstractShellViewTest guid: (GUID fromString: '{be6c197d-5333-4ba6-aef4-6b93d2970718}')!
-AbstractShellViewTest isNonInstantiable: true!
+AbstractShellViewTest isAbstract: true!
 AbstractShellViewTest comment: ''!
 !AbstractShellViewTest categoriesForClass!Unclassified! !
 !AbstractShellViewTest methodsFor!
@@ -61,3 +61,4 @@ setUpFakeUserLibrary!helpers!private! !
 tearDown!public!running! !
 workAreaNearest:!helpers!private! !
 !
+

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 VideoRecording subclass: #PVRRecording
 	instanceVariableNames: 'episodeTitle description channel isViewed rating'

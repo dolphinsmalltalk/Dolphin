@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Presenter subclass: #ILColorSelectorPresenter
 	instanceVariableNames: 'selectedRGB colorSelectorView selectedColorView selectedColorText dum5'

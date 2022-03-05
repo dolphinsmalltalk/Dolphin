@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 DolphinTestClassResource subclass: #BehaviorTestClasses
 	instanceVariableNames: 'classWithAbstractMethod1 classWithAbstractMethod2'

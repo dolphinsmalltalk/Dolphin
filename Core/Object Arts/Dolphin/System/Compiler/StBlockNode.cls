@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 StValueNode subclass: #StBlockNode
 	instanceVariableNames: 'left right colons body arguments bar'

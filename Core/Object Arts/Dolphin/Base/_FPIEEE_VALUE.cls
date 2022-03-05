@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ExternalStructure subclass: #_FPIEEE_VALUE
 	instanceVariableNames: ''

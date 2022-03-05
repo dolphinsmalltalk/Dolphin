@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #SmalltalkScanner
 	instanceVariableNames: 'stream buffer tokenStart currentCharacter characterType comments line errorHandler environment'

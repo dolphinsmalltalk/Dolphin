@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #TreeViewConstants put: (PoolConstantsDictionary named: #TreeViewConstants)!
 TreeViewConstants at: 'TV_FIRST' put: 16r1100!

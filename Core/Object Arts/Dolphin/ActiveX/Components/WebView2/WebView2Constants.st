@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #WebView2Constants put: (PoolConstantsDictionary named: #WebView2Constants)!
 WebView2Constants at: 'COREWEBVIEW2_BOUNDS_MODE_USE_RASTERIZATION_SCALE' put: 16r1!

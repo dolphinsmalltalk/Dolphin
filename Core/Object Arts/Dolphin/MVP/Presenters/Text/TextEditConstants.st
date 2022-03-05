@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #TextEditConstants put: (PoolConstantsDictionary named: #TextEditConstants)!
 TextEditConstants at: 'EC_LEFTMARGIN' put: 16r1!

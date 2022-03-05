@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 COMInterfaceImp subclass: #WebView2EventSink
 	instanceVariableNames: 'source interfaceClass interface handler'

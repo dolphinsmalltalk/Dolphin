@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 RefactoryClassChange subclass: #AddClassChange
 	instanceVariableNames: 'definition superclassName instanceVariableNames classVariableNames poolDictionaryNames category'

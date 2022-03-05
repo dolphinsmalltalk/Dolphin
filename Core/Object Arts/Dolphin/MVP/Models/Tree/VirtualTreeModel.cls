@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 TreeModelAbstract subclass: #VirtualTreeModel
 	instanceVariableNames: 'roots getChildrenBlock getParentBlock hasChildrenBlock filter'

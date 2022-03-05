@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #MSScriptControlConstants put: (PoolConstantsDictionary named: #MSScriptControlConstants)!
 MSScriptControlConstants at: 'Connected' put: 16r1!

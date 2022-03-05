@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 UINT_PTR subclass: #INT_PTR
 	instanceVariableNames: ''

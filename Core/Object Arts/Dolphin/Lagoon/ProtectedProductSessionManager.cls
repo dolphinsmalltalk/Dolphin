@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 RuntimeSessionManager subclass: #ProtectedProductSessionManager
 	instanceVariableNames: 'encryptedClasses'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 AbstractRecentMenu subclass: #RegistryRecentMenu
 	instanceVariableNames: 'productRegistryKey recentRegistryKey'

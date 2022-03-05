@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 SmalltalkToolShell subclass: #Debugger
 	instanceVariableNames: 'process topFrame temp tempCount depth flags breakWhen stackPresenter sourcePresenter tempsPresenter inspectorPresenter breakAction suspendingList _method refactoringTool'

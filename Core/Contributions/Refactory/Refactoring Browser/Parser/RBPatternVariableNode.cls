@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 StVariableNode subclass: #RBPatternVariableNode
 	instanceVariableNames: 'recurseInto isList isLiteral isStatement isAnything'

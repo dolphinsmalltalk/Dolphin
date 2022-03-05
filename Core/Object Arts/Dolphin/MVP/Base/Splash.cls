@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ShellView subclass: #Splash
 	instanceVariableNames: 'splashDelay bitmap overlayWith'

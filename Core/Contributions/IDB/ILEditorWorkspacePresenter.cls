@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Presenter subclass: #ILEditorWorkspacePresenter
 	instanceVariableNames: 'dum1 dum2 dum3 dum4 dum5'

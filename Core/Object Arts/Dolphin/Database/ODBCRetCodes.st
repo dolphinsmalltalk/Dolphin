@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #ODBCRetCodes put: (PoolConstantsDictionary named: #ODBCRetCodes)!
 ODBCRetCodes at: 'SQL_ERROR' put: -16r1!

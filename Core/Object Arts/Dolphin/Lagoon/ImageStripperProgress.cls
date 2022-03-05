@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #ImageStripperProgress
 	instanceVariableNames: 'handle oldWndProc progressProcess progressRange progress status cursor'

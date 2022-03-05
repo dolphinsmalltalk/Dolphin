@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ICoreWebView2FocusChangedEventHandler subclass: #ICoreWebView2FocusGainedEventHandler
 	instanceVariableNames: ''

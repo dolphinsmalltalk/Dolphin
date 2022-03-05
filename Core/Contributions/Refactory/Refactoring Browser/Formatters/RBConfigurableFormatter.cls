@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 RBSourceFormatter subclass: #RBConfigurableFormatter
 	instanceVariableNames: 'lookaheadCode originalSource'

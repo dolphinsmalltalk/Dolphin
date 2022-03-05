@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ProtocolANYSpec subclass: #ProtocolSpec
 	instanceVariableNames: 'name conformsTo description messageSpecifications'

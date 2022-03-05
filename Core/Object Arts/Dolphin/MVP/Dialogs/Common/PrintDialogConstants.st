@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #PrintDialogConstants put: (PoolConstantsDictionary named: #PrintDialogConstants)!
 PrintDialogConstants at: 'PD_ALLPAGES' put: 16r0!

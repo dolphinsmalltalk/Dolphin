@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #Win32Constants put: (PoolConstantsDictionary named: #Win32Constants)!
 Win32Constants at: 'ABOVE_NORMAL_PRIORITY_CLASS' put: 16r8000!

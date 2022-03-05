@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #MidiOutChannel
 	instanceVariableNames: 'midiout noteProcess octaveShift'

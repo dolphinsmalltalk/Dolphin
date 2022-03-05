@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 IXMLDOMDocument2 subclass: #IXMLDOMDocument3
 	instanceVariableNames: ''

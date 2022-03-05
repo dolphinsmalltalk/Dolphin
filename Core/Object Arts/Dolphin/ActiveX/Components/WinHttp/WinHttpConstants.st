@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #WinHttpConstants put: (PoolConstantsDictionary named: #WinHttpConstants)!
 WinHttpConstants at: 'AutoLogonPolicy_Always' put: 16r0!

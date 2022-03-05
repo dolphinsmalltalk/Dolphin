@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #DateTimeCommCtrlConstants put: (PoolConstantsDictionary named: #DateTimeCommCtrlConstants)!
 DateTimeCommCtrlConstants at: 'DTM_GETMCCOLOR' put: 16r1007!

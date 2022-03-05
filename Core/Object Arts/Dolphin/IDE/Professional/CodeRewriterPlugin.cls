@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 SmalllintPlugin subclass: #CodeRewriterPlugin
 	instanceVariableNames: 'searchTextPresenter replaceTextPresenter isMethodPresenter'

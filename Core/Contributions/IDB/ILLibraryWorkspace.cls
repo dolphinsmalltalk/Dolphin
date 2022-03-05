@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 View subclass: #ILLibraryWorkspace
 	instanceVariableNames: 'imageLayout imageLayoutRect lastSelection lastImage dum5'

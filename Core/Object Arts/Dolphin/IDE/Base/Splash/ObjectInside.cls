@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #ObjectInside
 	instanceVariableNames: 'image edgePoints position scale rotation alpha color baseColor matrix'

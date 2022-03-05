@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 HttpServiceConfigQuery subclass: #HTTP_SERVICE_CONFIG_SSL_QUERY
 	instanceVariableNames: ''

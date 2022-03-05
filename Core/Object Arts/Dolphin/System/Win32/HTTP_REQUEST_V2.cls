@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 HTTP_REQUEST_V1 subclass: #HTTP_REQUEST_V2
 	instanceVariableNames: ''

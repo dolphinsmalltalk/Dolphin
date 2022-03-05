@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Win32Error subclass: #Win32Fault
 	instanceVariableNames: 'exceptionRecord'

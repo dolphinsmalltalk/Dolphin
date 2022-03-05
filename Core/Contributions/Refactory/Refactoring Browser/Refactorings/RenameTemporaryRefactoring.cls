@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 MethodRefactoring subclass: #RenameTemporaryRefactoring
 	instanceVariableNames: 'selector interval oldName newName parseTree'

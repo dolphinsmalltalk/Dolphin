@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #RBAbstractClass
 	instanceVariableNames: 'name newMethods instanceVariableNames model superclass subclasses removedMethods realClass'

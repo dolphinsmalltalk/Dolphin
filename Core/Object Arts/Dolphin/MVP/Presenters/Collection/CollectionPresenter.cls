@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ValuePresenter subclass: #CollectionPresenter
 	instanceVariableNames: 'addItemBlock listPresenter changing flags'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 AspectInspector subclass: #InstVarInspector
 	instanceVariableNames: 'sourcePresenter'

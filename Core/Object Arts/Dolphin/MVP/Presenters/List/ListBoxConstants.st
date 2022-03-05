@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #ListBoxConstants put: (PoolConstantsDictionary named: #ListBoxConstants)!
 ListBoxConstants at: 'LB_ADDFILE' put: 16r196!

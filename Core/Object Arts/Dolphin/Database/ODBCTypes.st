@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #ODBCTypes put: (PoolConstantsDictionary named: #ODBCTypes)!
 ODBCTypes at: 'SQL_BIGINT' put: -16r5!

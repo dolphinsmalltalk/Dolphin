@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ListView subclass: #EditableListView
 	instanceVariableNames: 'activeEditorCoords originalColumns _spare0 rowForecolor rowBackcolor rowHeight smallImageExtent headerControl hotItemAndColumn tipText'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #CommandQuery
 	instanceVariableNames: 'commandDescription receiver source text flags image'

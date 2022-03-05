@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 GdiplusInitializer subclass: #GdiplusBitmapFromBlankInitializer
 	instanceVariableNames: 'width height format'

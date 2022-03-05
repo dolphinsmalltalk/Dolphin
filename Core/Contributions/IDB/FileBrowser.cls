@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 IdbToolShell subclass: #FileBrowser
 	instanceVariableNames: 'folders files text hex image html hexEnabled removeCr currentRootFolder showImageAs'

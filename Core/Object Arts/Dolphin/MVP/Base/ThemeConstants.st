@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #ThemeConstants put: (PoolConstantsDictionary named: #ThemeConstants)!
 ThemeConstants at: 'ABS_DOWNDISABLED' put: 16r8!

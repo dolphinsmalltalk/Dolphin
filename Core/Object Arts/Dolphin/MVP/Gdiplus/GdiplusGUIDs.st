@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #GdiplusGUIDs put: (PoolConstantsDictionary named: #GdiplusGUIDs)!
 GdiplusGUIDs at: 'EncoderChrominanceTable' put: (Object fromBinaryStoreBytes: 

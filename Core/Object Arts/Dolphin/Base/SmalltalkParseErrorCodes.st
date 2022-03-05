@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #SmalltalkParseErrorCodes put: (PoolConstantsDictionary named: #SmalltalkParseErrorCodes)!
 SmalltalkParseErrorCodes at: 'CErrArgTypeCannotBeVoid' put: 16r33!

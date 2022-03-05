@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 RBMethodName subclass: #RBScopedMethodName
 	instanceVariableNames: 'methodClass originalArguments originalSelector scope scopes'

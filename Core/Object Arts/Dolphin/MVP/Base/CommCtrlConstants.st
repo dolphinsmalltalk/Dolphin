@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #CommCtrlConstants put: (PoolConstantsDictionary named: #CommCtrlConstants)!
 CommCtrlConstants at: 'ACM_OPEN' put: 16r464!

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 StProgramNode subclass: #StExternalArgTypeNode
 	instanceVariableNames: 'typeOrdinal structClass indirections start stop'

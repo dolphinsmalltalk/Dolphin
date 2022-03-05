@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #DolphinSureCertificateInfo
 	instanceVariableNames: 'serial owner details issued expiry publicKey'

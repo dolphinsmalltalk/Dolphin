@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 EmulatedPushButton subclass: #EmbeddedPushButton
 	instanceVariableNames: 'isDisplayingEmbedded embeddedRectangle embeddedDisplayState embeddedText text'

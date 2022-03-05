@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #RichEditConstants put: (PoolConstantsDictionary named: #RichEditConstants)!
 RichEditConstants at: 'cchTextLimitDefault' put: 16r7FFF!

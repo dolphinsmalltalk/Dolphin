@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #ProfilerSampleSet
 	instanceVariableNames: 'name root isActive samples samplingCount samplingTimeStamp samplesElapsedTime samplesClasses samplesSelectors'

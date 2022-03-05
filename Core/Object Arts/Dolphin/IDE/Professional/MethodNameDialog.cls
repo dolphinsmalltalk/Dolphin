@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Dialog subclass: #MethodNameDialog
 	instanceVariableNames: 'selectorPresenter parametersPresenter parameterNamesPresenter'

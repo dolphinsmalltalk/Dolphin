@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 HttpServerStructure subclass: #HTTP_REQUEST_AUTH_INFO
 	instanceVariableNames: ''

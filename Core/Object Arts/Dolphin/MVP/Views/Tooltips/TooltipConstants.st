@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #TooltipConstants put: (PoolConstantsDictionary named: #TooltipConstants)!
 TooltipConstants at: 'TTDT_AUTOMATIC' put: 16r0!

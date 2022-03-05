@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #ShellConstants put: (PoolConstantsDictionary named: #ShellConstants)!
 ShellConstants at: 'BFFM_ENABLEOK' put: 16r465!

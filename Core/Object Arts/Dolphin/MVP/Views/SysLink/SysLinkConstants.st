@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #SysLinkConstants put: (PoolConstantsDictionary named: #SysLinkConstants)!
 SysLinkConstants at: 'ICC_LINK_CLASS' put: 16r8000!

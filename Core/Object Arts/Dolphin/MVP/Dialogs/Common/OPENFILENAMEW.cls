@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 CommonDialogStructure subclass: #OPENFILENAMEW
 	instanceVariableNames: 'fileName title filter defExt initialDir'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #Win32Errors put: (PoolConstantsDictionary named: #Win32Errors)!
 Win32Errors at: 'CLASS_E_CLASSNOTAVAILABLE' put: -16r7FFBFEEF!

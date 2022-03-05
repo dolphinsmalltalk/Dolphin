@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 NotificationSignal subclass: #WarningSignal
 	instanceVariableNames: ''

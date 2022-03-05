@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 View subclass: #DesktopView
 	instanceVariableNames: 'resolution defaultExtentBlock dvReserved1 dvReserved2'

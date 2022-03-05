@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 QueryableScintillaAttribute subclass: #ScintillaIndicatorStyle
 	instanceVariableNames: 'forecolor style under name alpha hoverStyle hoverForecolor flags foreAlpha _reserved12'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ADODBConnection15 subclass: #ADODB_Connection
 	instanceVariableNames: ''

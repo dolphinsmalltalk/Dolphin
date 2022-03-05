@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ListBoxTest subclass: #SingleSelectListBoxTest
 	instanceVariableNames: ''

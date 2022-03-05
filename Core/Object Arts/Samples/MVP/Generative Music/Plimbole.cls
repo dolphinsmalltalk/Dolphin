@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Model subclass: #Plimbole
 	instanceVariableNames: 'cells recurse tenorVoice altoVoice tenorChannel altoChannel scaleIndex noteDuration gridExtent'

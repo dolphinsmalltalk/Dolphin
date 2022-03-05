@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ImageStripper subclass: #AXDllImageStripper
 	instanceVariableNames: 'typeLibPath'

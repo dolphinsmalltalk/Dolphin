@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #CRTConstants put: (PoolConstantsDictionary named: #CRTConstants)!
 CRTConstants at: '_DN_FLUSH' put: 16r1000000!

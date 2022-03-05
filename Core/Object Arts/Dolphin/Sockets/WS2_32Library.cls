@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 ExternalLibrary subclass: #WS2_32Library
 	instanceVariableNames: 'wsaData'

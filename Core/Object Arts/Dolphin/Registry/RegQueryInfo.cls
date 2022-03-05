@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #RegQueryInfo
 	instanceVariableNames: 'keyClass subKeyCount maxSubKeyLen maxClassNameLen valueCount maxValueNameLen maxValueLen securityDescriptorLen lastWriteTime'

@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 DBStatement subclass: #DBParameterizedStatement
 	instanceVariableNames: 'values parameters paramCols isPrepared'

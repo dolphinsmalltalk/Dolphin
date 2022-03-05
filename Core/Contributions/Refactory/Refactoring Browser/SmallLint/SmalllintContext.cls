@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Object subclass: #SmalllintContext
 	instanceVariableNames: 'class selector parseTree literals literalSemaphore literalProcess selectors compiledMethod selfMessages superMessages messages'

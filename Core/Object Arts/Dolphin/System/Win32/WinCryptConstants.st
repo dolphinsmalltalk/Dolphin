@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 Smalltalk at: #WinCryptConstants put: (PoolConstantsDictionary named: #WinCryptConstants)!
 WinCryptConstants at: 'CRYPTPROTECT_AUDIT' put: 16r10!

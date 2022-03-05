@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 COMInterfaceImp subclass: #EnumRECT
 	instanceVariableNames: 'm_iCur m_rgrc'

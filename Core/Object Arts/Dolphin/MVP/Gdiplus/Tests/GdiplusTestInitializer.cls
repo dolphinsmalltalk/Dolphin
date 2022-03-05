@@ -1,4 +1,4 @@
-﻿"Filed out from Dolphin Smallalk"!
+﻿"Filed out from Dolphin Smalltalk"!
 
 GdiplusInitializer subclass: #GdiplusTestInitializer
 	instanceVariableNames: 'mockHandle arg1'
