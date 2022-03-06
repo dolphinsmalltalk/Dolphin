@@ -110,6 +110,15 @@ testRegEdit
 	env := self environmentForAppDeployment: {RegEdit owningPackage}.
 	self verifyPackageClosure: env missing: self simpleGuiAppUnimplementedMessages!
 
+testSimpleWebBrowser
+	"Uses WebView2 (and therefore COM). Also has TextTileIcons on toolbar, so Gdiplus."
+
+	| env |
+	env := self environmentForAppDeployment: {WebBrowserShell owningPackage}.
+	"This list is shorter in D8 - the last 4 are development-only methods of the type-library analyzer. Active-X Automation gets pulled in because there are a couple of methods in ICoreWebView2 with VARIANT parameters."
+	self verifyPackageClosure: env
+		missing: #(#ttmRelayEvent: #defineTemplate #evaluate: #arrayType: #generateGlobalDefinition: #majorVersion #minorVersion)!
+
 testSystemPackage
 	| aPackage |
 	aPackage := Object owningPackage.
@@ -137,6 +146,7 @@ testEtchASketch!public!unit tests! !
 testHelloWorld!public!unit tests! !
 testNotepad!public!unit tests! !
 testRegEdit!public!unit tests! !
+testSimpleWebBrowser!public!unit tests! !
 testSystemPackage!public!unit tests! !
 verifyPackageClosure:missing:!helpers!private! !
 !

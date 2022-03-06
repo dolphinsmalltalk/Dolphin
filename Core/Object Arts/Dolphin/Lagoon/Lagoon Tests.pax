@@ -32,7 +32,8 @@ package setPrerequisites: #(
 	'Lagoon Image Stripper'
 	'..\..\Samples\MVP\Notepad\Notepad'
 	'..\..\..\Contributions\Refactory\Refactoring Browser\Environments\RBEnvironments'
-	'..\..\Samples\MVP\RegEdit\RegEdit').
+	'..\..\Samples\MVP\RegEdit\RegEdit'
+	'..\..\Samples\ActiveX\Web Browser\Simple Web Browser').
 
 package!
 
