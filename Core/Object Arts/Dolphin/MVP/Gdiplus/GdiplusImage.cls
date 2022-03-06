@@ -10,6 +10,24 @@ GdiplusImage comment: 'GdiplusImage provides methods for loading and saving rast
 !GdiplusImage categoriesForClass!Unclassified! !
 !GdiplusImage methodsFor!
 
+addToImageList: aWinImageList mask: aColorOrNil
+	"Private - Add a pictorial representation of the receiver to aWinImageList scaled to the
+	extent of the image list."
+
+	| bitmap index extent |
+	extent := aWinImageList extent.
+	"The change to use a display compatible bitmap is for #2280"
+	bitmap := (extent = self extent ifTrue: [self] ifFalse: [self class fromImage: self extent: extent])
+				asBitmap.
+	"We assume that the receiver contains transparency information so the mask color is ignored. Reference it to suppress warning of unref'd arg - the compiler will optimise this out."
+	aColorOrNil.
+	index := CommCtrlLibrary default
+				imageList_AddMasked: aWinImageList asParameter
+				hbmImage: bitmap asParameter
+				crMask: CLR_NONE.
+	bitmap free.
+	^index!
+
 asBitmap
 	"Answer a display-compatible <Bitmap> with the receiver's image."
 
@@ -719,6 +737,7 @@ width
 		ifFalse: [GdiplusError signal: 'GdipGetImageWidth failed' with: status].
 	^buf asInteger! !
 !GdiplusImage categoriesForMethods!
+addToImageList:mask:!private! !
 asBitmap!public! !
 asByteArray:!converting!public! !
 asByteArray:compression:!converting!public! !
