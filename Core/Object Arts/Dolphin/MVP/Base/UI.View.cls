@@ -1004,14 +1004,19 @@ displayMonitor
 displayOn: aPuttableStream
 	"Append to the <puttableStream> first argument a String whose characters are a representation of the receiver that an end-user might want to see."
 
-	| description |
 	self displayOnFormats detect: 
 			[:each |
-			description := String streamContents: [:strm | (self perform: each) displayOn: strm].
-			description notNil and: [description notEmpty]].
-	description size > self displayOnMaxCharacters
-		ifTrue: [description := (description leftString: self displayOnMaxCharacters) , '…'].
-	aPuttableStream nextPutAll: description!
+			| value |
+			value := self perform: each.
+			value notNil and: 
+					[| description |
+					description := value displayString.
+					description notEmpty and: 
+							[description ~= View wndClassName and: 
+									[description size > self displayOnMaxCharacters
+										ifTrue: [description := (description leftString: self displayOnMaxCharacters) , '…'].
+									aPuttableStream nextPutAll: description.
+									true]]]]!
 
 displayOnFormats
 	"Private - Answers an array of selectors that can be used to determine how the receiver is
@@ -4546,6 +4551,7 @@ wndClassName
 	"Answer the `String` name of the receiver's Window class."
 
 	| buf |
+	self isOpen ifFalse: [^self class wndClassName].
 	"Per https://docs.microsoft.com/en-us/windows/win32/api/winuser/ns-winuser-wndclassexw, the maximum length of a window class name is 256,
 	although it not specified whether this includes the null terminator."
 	buf := Utf16String newFixed: 256.
