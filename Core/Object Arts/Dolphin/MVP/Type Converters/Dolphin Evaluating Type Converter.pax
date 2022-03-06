@@ -1,0 +1,31 @@
+﻿| package |
+package := Package name: 'Dolphin Evaluating Type Converter'.
+package paxVersion: 2.1;
+	basicComment: 'Dolphin Smalltalk MVP Evaluation Type Converter.
+Copyright © Object Arts Ltd. 1997-2001. Portions Copyright (c) CGI Group (Europe) Ltd. 1997.
+
+This package contains the `EvaluationConverter`. This converter should not be used in applications as it passes user input through the compiler, making it highly vulnerable to code injection attacks, plus it requires that the compiler be shipped with the application. The type converter is used in the IDE, but obviously the compiler is fundamental to development so there is no additional risk.'.
+
+
+package setClassNames: #(
+	#{UI.EvaluationConverter}
+).
+
+package setPrerequisites: #(
+	'..\..\Base\Dolphin'
+	'Dolphin Type Converters'
+).
+
+package!
+
+"Class Definitions"!
+
+UI.TypeConverter subclass: #'UI.EvaluationConverter'
+	instanceVariableNames: ''
+	classVariableNames: ''
+	imports: #()
+	classInstanceVariableNames: ''
+	classConstants: {}!
+
+"End of package definition"!
+

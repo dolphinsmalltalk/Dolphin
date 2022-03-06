@@ -93,6 +93,7 @@ contents
 		add: #('Core\Object Arts\Dolphin\System\Recent\Dolphin Recent Menu.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Models\Value\Dolphin Value Models.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Type Converters\Dolphin Type Converters.pax' #plain #imageBased);
+		add: #('Core\Object Arts\Dolphin\MVP\Type Converters\Dolphin Evaluating Type Converter.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\System\Random\Dolphin Random Stream.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Base\Dolphin Basic Geometry.pax' #plain #imageBased);
 		add: #('Core\Object Arts\Dolphin\MVP\Graphics\Dolphin GDI Graphics.pax' #plain #imageBased);
