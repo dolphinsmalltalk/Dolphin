@@ -95,10 +95,17 @@ package setMethodNames: #(
 	#(#{Kernel.StLiteralNode} #refersToClass:)
 	#(#{Kernel.StLiteralNode} #refersToSymbol:)
 	#(#{Kernel.StLiteralValueNode} #refersToSymbol:)
+	#(#{Kernel.StProgramNode} #refersToBinding:)
+	#(#{Kernel.StProgramNode} #refersToClass:)
+	#(#{Kernel.StQualifiedReferenceNode} #refersToBinding:)
 	#(#{Kernel.StQualifiedReferenceNode} #refersToClass:)
+	#(#{Kernel.StStaticVariable} #refersToBinding:)
 	#(#{Kernel.StStaticVariable} #refersToClass:)
+	#(#{Kernel.StVariable} #refersToBinding:)
 	#(#{Kernel.StVariable} #refersToClass:)
+	#(#{Kernel.StVariableNode} #refersToBinding:)
 	#(#{Kernel.StVariableNode} #refersToClass:)
+	#(#{Kernel.VariableBinding} #refersToBinding:)
 	#(#{Kernel.VariableBinding} #refersToClass:)
 	#(#{Root class} #classInModel:)
 	#(#{Root class} #rbClass)
@@ -640,7 +647,30 @@ refersToSymbol: aSymbol
 refersToSymbol:!public!testing! !
 !
 
+!Kernel.StProgramNode methodsFor!
+
+refersToBinding: aVariableBinding
+	"Answer whether this parse tree refers to the specified variable. N.B. The tree must have been 'bound' (i.e. have been semantically analysed to resolve variables)."
+
+	self childrenDo: [:each | (each refersToBinding: aVariableBinding) ifTrue: [^true]].
+	^false!
+
+refersToClass: aClass
+	"Answer whether this parse tree refers to the named class. N.B. The tree must be 'bound' (i.e. have been semantically analysed to resolve variables)."
+
+	self childrenDo: [:each | (each refersToClass: aClass) ifTrue: [^true]].
+	^false! !
+!Kernel.StProgramNode categoriesForMethods!
+refersToBinding:!public!testing! !
+refersToClass:!public!testing! !
+!
+
 !Kernel.StQualifiedReferenceNode methodsFor!
+
+refersToBinding: aVariableBinding
+	| var |
+	var := self binding.
+	^var notNil and: [var refersToBinding: aVariableBinding]!
 
 refersToClass: aClass
 	| var |
@@ -648,38 +678,56 @@ refersToClass: aClass
 	#namespaceToDo.	"What about the reference a VariableBinding has to it's environment?"
 	^var notNil and: [var refersToClass: aClass]! !
 !Kernel.StQualifiedReferenceNode categoriesForMethods!
+refersToBinding:!public!testing! !
 refersToClass:!public!testing! !
 !
 
 !Kernel.StStaticVariable methodsFor!
 
+refersToBinding: aVariableBinding
+	^binding refersToBinding: aVariableBinding!
+
 refersToClass: aClass
 	^binding notNil and: [binding refersToClass: aClass]! !
 !Kernel.StStaticVariable categoriesForMethods!
+refersToBinding:!public!testing! !
 refersToClass:!public!testing! !
 !
 
 !Kernel.StVariable methodsFor!
 
+refersToBinding: aVariableBinding
+	^false!
+
 refersToClass: aClass
 	^false! !
 !Kernel.StVariable categoriesForMethods!
+refersToBinding:!public!testing! !
 refersToClass:!public!testing! !
 !
 
 !Kernel.StVariableNode methodsFor!
 
+refersToBinding: aVariableBinding
+	^variable notNil and: [variable refersToBinding: aVariableBinding]!
+
 refersToClass: aClass
 	^variable notNil and: [variable refersToClass: aClass]! !
 !Kernel.StVariableNode categoriesForMethods!
+refersToBinding:!public!testing! !
 refersToClass:!public!testing! !
 !
 
 !Kernel.VariableBinding methodsFor!
 
+refersToBinding: aVariableBinding
+	^self == aVariableBinding or: 
+			[aVariableBinding isClassBinding and: [self environment includesEnvironment: aVariableBinding value]]!
+
 refersToClass: aClass
 	^(self isClassBinding and: [value == aClass]) or: [self environment includesEnvironment: aClass]! !
 !Kernel.VariableBinding categoriesForMethods!
+refersToBinding:!public!testing! !
 refersToClass:!public!testing! !
 !
 

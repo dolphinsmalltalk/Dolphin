@@ -25,7 +25,7 @@ allInstVarNamesOf: aClass
 	"Private - Answer an array of the inst var names of aClass.
 	The Array will be empty if aClass is nil."
 
-	^aClass isNil ifTrue: [{}] ifFalse: [aClass allInstVarNames]!
+	^aClass isNil ifTrue: [{}] ifFalse: [aClass allInstanceVariableNames]!
 
 baseEnvironment
 	^(superclass ifNil: [(currentClass ?? Class) superclass]) baseEnvironment!
@@ -62,9 +62,9 @@ canMutateInSitu
 	self superclassIsBeingChanged ifFalse: [^self instanceVariablesAreBeingChanged not].
 
 	"The class is being moved."
-	((self allInstVarNamesOf: superclass) , self instanceVariables) = currentClass allInstVarNames
+	((self allInstVarNamesOf: superclass) , self instanceVariables) = currentClass allInstanceVariableNames
 		ifFalse: [^false].
-	(self classOf: superclass) allInstVarNames = currentClass class superclass allInstVarNames
+	(self classOf: superclass) allInstanceVariableNames = currentClass class superclass allInstanceVariableNames
 		ifFalse: [^false].
 	^true!
 
@@ -297,7 +297,7 @@ generateInstanceSpecFor: aClass superclass: aSuperclass
 		ifFalse: 
 			[self
 				validateInstanceSpec: aClass instanceSpec
-				size: aClass instVarNames size
+				size: aClass instanceVariableNames size
 				superclass: aSuperclass]!
 
 generateMapFrom: oldClass to: newClass
@@ -307,8 +307,8 @@ generateMapFrom: oldClass to: newClass
 	name in newClass. If there is no match the element will be zero."
 
 	| oldInstVarNamesArray |
-	oldInstVarNamesArray := oldClass allInstVarNames.
-	^newClass allInstVarNames collect: [:name | oldInstVarNamesArray indexOf: name]!
+	oldInstVarNamesArray := oldClass allInstanceVariableNames.
+	^newClass allInstanceVariableNames collect: [:name | oldInstVarNamesArray indexOf: name]!
 
 ignoreInstances
 	"Private - Answer whether extant instances of a class should be ignored when validating it
@@ -405,7 +405,7 @@ instanceSpecIsBytes: anInstanceSpec
 instanceVariables
 	"Private - Answer an Array of proposed instance variable names."
 
-	^instanceVariables ifNil: [currentClass ifNil: [{}] ifNotNil: [currentClass instVarNames]]!
+	^instanceVariables ifNil: [currentClass ifNil: [{}] ifNotNil: [currentClass instanceVariableNames]]!
 
 instanceVariables: anInstVarNamesArray
 	"Set the receiver's instanceVariables inst var to anInstVarNamesArray."
@@ -415,7 +415,7 @@ instanceVariables: anInstVarNamesArray
 instanceVariablesAreBeingChanged
 	"Private - Answer whether the instance variable layout is changing."
 
-	^instanceVariables notNil and: [instanceVariables ~= currentClass instVarNames]!
+	^instanceVariables notNil and: [instanceVariables ~= currentClass instanceVariableNames]!
 
 instanceVariableString: anInstVarNamesString
 	"Set the receiver's proposed instance variable list from aString."
@@ -867,10 +867,10 @@ validateClassInstanceVars
 	anywhere in the meta-superclass or meta-subclass chain."
 
 	| instVarSet |
-	instVarSet := self validateInstanceVars: currentClass class instVarNames
+	instVarSet := self validateInstanceVars: currentClass class instanceVariableNames
 				againstSuperclass: (self classOf: superclass).
 	currentClass class allSubclasses
-		do: [:cls | cls instVarNames do: [:name | self validateInstVarName: name using: instVarSet]]!
+		do: [:cls | cls instanceVariableNames do: [:name | self validateInstVarName: name using: instVarSet]]!
 
 validateClassName
 	"Private - Ensure that the proposed class name is valid."
@@ -1076,15 +1076,15 @@ validateInstanceVarsForModify
 	instVarSet := self validateInstanceVars: proposedInstVarArray againstSuperclass: superclass.
 	currentClass isMeta
 		ifFalse: 
-			[(self isFixedLayout and: [currentClass instVarNames ~= proposedInstVarArray])
+			[(self isFixedLayout and: [currentClass instanceVariableNames ~= proposedInstVarArray])
 				ifTrue: [self error: 'You must not change the instance variable layout of ' , currentClass name].
 			(self isFixedInitialLayout and: 
 					[| existing |
-					existing := currentClass instVarNames.
-					existing notEmpty and: [(proposedInstVarArray indexOfSubCollection: currentClass instVarNames) ~~ 1]])
+					existing := currentClass instanceVariableNames.
+					existing notEmpty and: [(proposedInstVarArray indexOfSubCollection: currentClass instanceVariableNames) ~~ 1]])
 				ifTrue: [self error: 'New inst vars must come after those already in ' , currentClass name]].
 	currentClass allSubclasses
-		do: [:cls | cls instVarNames do: [:name | self validateInstVarName: name using: instVarSet]]!
+		do: [:cls | cls instanceVariableNames do: [:name | self validateInstVarName: name using: instVarSet]]!
 
 validateInstVarName: aString using: aCollection
 	"Private - Ensure that the proposed instance variable name is not a
@@ -1159,7 +1159,7 @@ validateSubclassesOf: aClass againstInstanceSpec: instSpec
 			| validatedInstSpec |
 			validatedInstSpec := self
 						validateInstanceSpec: cls instanceSpec
-						size: cls instVarNames size
+						size: cls instanceVariableNames size
 						superclass: dummyClass.
 			(self fundamentalTypeOf: validatedInstSpec) = (self fundamentalTypeOf: cls instanceSpec)
 				ifFalse: [self validateSubclassesOf: cls againstInstanceSpec: validatedInstSpec]]!
@@ -1335,7 +1335,7 @@ forModifying: aClass
 	builder := self new
 				class: aClass;
 				superclass: aClass superclass;
-				instanceVariables: aClass instVarNames;
+				instanceVariables: aClass instanceVariableNames;
 				environment: aClass environment;
 				yourself.
 	aClass isMeta

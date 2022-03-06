@@ -18,7 +18,9 @@ Kernel.VariableBinding comment: ''!
 = anObject
 	"Answer whether the receiver is equal to the argument."
 
-	^super = anObject and: [environment == anObject environment]!
+	^self == anObject or: 
+			[self species == anObject species
+				and: [environment == anObject environment and: [key = anObject key and: [value = anObject value]]]]!
 
 absoluteName
 	"Answer the <String> absolute qualified name of this binding, inclusive of 'Root'. This is guaranteed to be unambiguous."

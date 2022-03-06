@@ -98,7 +98,7 @@ stonName!public!ston! !
 stonAllInstVarNames
 	"Override to exclude the handle and ownsHandle instance variable as we never want to serialize these."
 
-	^self == ##(self) ifTrue: [#()] ifFalse: [superclass stonAllInstVarNames , self instVarNames]! !
+	^self == ##(self) ifTrue: [#()] ifFalse: [superclass stonAllInstVarNames , self instanceVariableNames]! !
 !Graphics.GraphicsTool class categoriesForMethods!
 stonAllInstVarNames!public!ston! !
 !
@@ -172,7 +172,7 @@ stonAllInstVarNames
 	"Override to exclude the number of instance variables we never want to serialize."
 
 	^superclass stonAllInstVarNames
-		, ##(self instVarNames reject: [:each | each = 'events' or: [each beginsWith: '_unused']])! !
+		, ##(self instanceVariableNames reject: [:each | each = 'events' or: [each beginsWith: '_unused']])! !
 !UI.CardLayout class categoriesForMethods!
 stonAllInstVarNames!public! !
 !
@@ -272,7 +272,7 @@ stonAllInstVarNames
 	^self == ##(self)
 		ifTrue: 
 			[#('creationStyle' 'model' 'backcolor' 'preferredExtent' 'flags' 'contextMenu' 'font' 'interactor')	"'presenter'"]
-		ifFalse: [superclass stonAllInstVarNames , self instVarNames]! !
+		ifFalse: [superclass stonAllInstVarNames , self instanceVariableNames]! !
 !UI.View class categoriesForMethods!
 stonAllInstVarNames!public!ston! !
 !

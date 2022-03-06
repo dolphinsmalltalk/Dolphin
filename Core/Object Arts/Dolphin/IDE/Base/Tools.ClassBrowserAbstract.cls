@@ -690,7 +690,7 @@ dropMethods: aDragDropSession onto: aClass
 						changes: changes) and: 
 								[count := count + 1.
 								isMove])
-						ifTrue: [changes removeMethod: method selector from: method methodClass]]].
+						ifTrue: [changes removeSelector: method selector from: method methodClass]]].
 	changes name: ('<1s> <2p> methods' expandMacrosWith: aDragDropSession operation with: count).
 	"Prevent cut operation in the source"
 	aDragDropSession resetOperation.
@@ -2420,7 +2420,7 @@ updateVariables
 			| vars |
 			vars := OrderedCollection new: 20.
 			class withAllSuperclasses 
-				reverseDo: [:eachClass | eachClass instVarNames do: [:eachInstVar | vars addLast: eachClass -> eachInstVar]].
+				reverseDo: [:eachClass | eachClass instanceVariableNames do: [:eachInstVar | vars addLast: eachClass -> eachInstVar]].
 			variablesPresenter model list = vars 
 				ifFalse: 
 					[| selectedVars |
@@ -2504,7 +2504,7 @@ variablesIndices
 	"Private - Answer an <Array> of indices of the selected instance variable"
 
 	| varNames |
-	varNames := self actualClass allInstVarNames.
+	varNames := self actualClass allInstanceVariableNames.
 	^self variables collect: [:iv | varNames indexOf: iv value].
 !
 
@@ -2836,7 +2836,7 @@ plugins
 	^OS.SystemMetrics current hasWebView
 		ifTrue: [plugins]
 		ifFalse: 
-			["The CodeMentor plugin relies on the WebView2 Edge browser control>"
+			["The CodeMentor plugin relies on the Internet Explorer control>"
 			plugins reject: [:each | each name == #CodeMentorPlugin]]!
 
 plugins: anOrderedCollection 

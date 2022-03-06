@@ -420,7 +420,7 @@ uninitialize
 		pathString:context:meta:		Sent to instantiate BindingReference objects for literal binding references
 		namespace:				For implicit namespace: annotations when compiling methods with a specific environment (usually Smalltalk)"
 
-	#(#notificationCallback: #allInstVarNames #evaluate:for:evaluationPools: #bindingFor: #fullBindingFor:environment: #asNumber #understandsArithmetic #negative #pathString:scope:flags: #namespace: #setScope:)
+	#(#notificationCallback: #allInstanceVariableNames #evaluate:for:evaluationPools: #bindingFor: #fullBindingFor:environment: #asNumber #understandsArithmetic #negative #pathString:scope:flags: #namespace: #setScope:)
 		, {BindingReference. Smalltalk} do: [:each | VM unregisterObject: each].
 	CompilerLibrary closeDefault!
 

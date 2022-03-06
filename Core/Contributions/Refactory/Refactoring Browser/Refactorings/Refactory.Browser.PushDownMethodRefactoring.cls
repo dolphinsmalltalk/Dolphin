@@ -66,7 +66,7 @@ storeOn: aStream
 
 transform
 	selectors do: [:each | self pushDown: each].
-	selectors do: [:each | class removeMethod: each]! !
+	selectors do: [:each | class removeSelector: each]! !
 !Refactory.Browser.PushDownMethodRefactoring categoriesForMethods!
 preconditions!preconditions!public! !
 pushDown:!public!transforming! !

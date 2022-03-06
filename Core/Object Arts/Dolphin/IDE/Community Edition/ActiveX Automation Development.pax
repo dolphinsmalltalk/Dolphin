@@ -2172,7 +2172,7 @@ reinventBadVarNames: anOrderedCollection
 	argument, wordsAndArgs. Answer the squeaky clean result."
 
 	| badNames |
-	badNames := (Set withAll: self analyzer programObject allInstVarNames)
+	badNames := (Set withAll: self analyzer programObject allInstanceVariableNames)
 				addAll: #('self' 'super' 'nil' 'true' 'false' 'thisContext');
 				addAll: #('answer' '_' 'outputs');
 				yourself.

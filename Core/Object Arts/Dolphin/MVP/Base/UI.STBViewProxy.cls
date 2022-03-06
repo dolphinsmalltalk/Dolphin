@@ -261,7 +261,7 @@ initialize
 	"
 
 	| allInstVarNames |
-	allInstVarNames := View allInstVarNames.
+	allInstVarNames := View allInstanceVariableNames.
 	self
 		addClassConstant: 'HandleIndex' value: (allInstVarNames indexOf: 'handle');
 		addClassConstant: 'CreationParentIndex' value: (allInstVarNames indexOf: 'creationParent');

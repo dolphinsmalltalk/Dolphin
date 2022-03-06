@@ -55,7 +55,7 @@ testErrorsBadContext
 
 	| anon source |
 	anon := self class newAnonymousSubclass.
-	anon class basicCompile: 'allInstVarNames ^#bad'.
+	anon class basicCompile: 'allInstanceVariableNames ^#bad'.
 	source := 'wibble: arg'.
 	self
 		parseMethodError: source

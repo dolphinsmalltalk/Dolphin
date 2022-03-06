@@ -94,7 +94,8 @@ modelClass: aRBClass selector: aSymbol source: aString
 parseEnvironment
 	compiledMethod ifNil: [^nil].
 	compiledMethod customEnvironment ifNotNil: [:env | ^env classInModel: self model].
-	^compiledMethod owningPackageIfLoose ifNotNil: [:package | package environment]!
+	^compiledMethod owningPackageIfLoose
+		ifNotNil: [:package | package environment ifNotNil: [:env | env classInModel: self model]]!
 
 parseTree
 	^parseTree
@@ -121,6 +122,17 @@ printOn: aStream
 		print: class;
 		nextPutAll: '>>';
 		print: self selector!
+
+refersToBinding: aVariableBinding
+	^self boundParseTree refersToBinding: aVariableBinding!
+
+refersToBinding1: aVariableBinding
+	| matchBlock |
+	matchBlock := [:node :answer | answer or: [node refersToBinding: aVariableBinding]].
+	^ParseTreeSearcher new
+		matches: '`identifier' do: matchBlock;
+		matches: '`#literal' do: matchBlock;
+		executeTree: self boundParseTree initialAnswer: false!
 
 refersToClass: aRBClass
 	| matchBlock |
@@ -187,6 +199,8 @@ parseTree!accessing!public! !
 parseTree:!public! !
 parseTreeWithSourceIntervals!accessing!public! !
 printOn:!printing!public! !
+refersToBinding:!public!testing! !
+refersToBinding1:!public!testing! !
 refersToClass:!public!testing! !
 refersToSymbol:!public!testing! !
 refersToVariable:!public!testing! !

@@ -118,7 +118,6 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.PushUpMethodRefactoring} #displayOn:)
 	#(#{Refactory.Browser.PushUpMethodRefactoring} #getOptionCopyDownSuperclassMethod:)
 	#(#{Refactory.Browser.PushUpMethodRefactoring} #getOptionPushUpRemoveDuplicates:in:)
-	#(#{Refactory.Browser.RBAbstractClass} #instVarNames)
 	#(#{Refactory.Browser.RBAbstractClass} #owningPackage)
 	#(#{Refactory.Browser.RBAbstractClass class} #icon)
 	#(#{Refactory.Browser.RBAbstractCondition} #validate)
@@ -464,7 +463,7 @@ directlyDefinesClassVariable: aString
 	^self subclassResponsibility!
 
 directlyDefinesInstanceVariable: aString 
-	^self instVarNames includes: aString!
+	^self instanceVariableNames includes: aString!
 
 directlyDefinesVariable: aVariableName 
 	^(self directlyDefinesClassVariable: aVariableName) 
@@ -1334,13 +1333,9 @@ getOptionPushUpRemoveDuplicates:in:!options!public! !
 
 !Refactory.Browser.RBAbstractClass methodsFor!
 
-instVarNames
-	^self instanceVariableNames!
-
 owningPackage
 	^self realClass ifNotNil: [:class | class owningPackage]! !
 !Refactory.Browser.RBAbstractClass categoriesForMethods!
-instVarNames!instance variables!public! !
 owningPackage!accessing!public! !
 !
 
@@ -2454,7 +2449,7 @@ populateClassVarMenu: aMenu selectors: selectors
 populateInstVarMenu: aMenu selectors: selectors
 	| class varNames |
 	class := self actualClass.
-	varNames := class instVarNames.
+	varNames := class instanceVariableNames.
 	varNames size > self maximumVariableMenuEntries
 		ifTrue: [(aMenu addCommand: selectors last description: '&Instance Variable…') isModalCommand: true]
 		ifFalse: 
@@ -2604,7 +2599,7 @@ pullUpVariableNamePairs: aBoolean for: class maximum: anInteger
 	pairs := OrderedCollection new.
 	class allSubclassesDo: 
 			[:subclass |
-			(aBoolean ifTrue: [subclass classBindingNames] ifFalse: [subclass instVarNames]) do: 
+			(aBoolean ifTrue: [subclass classBindingNames] ifFalse: [subclass instanceVariableNames]) do: 
 					[:each |
 					(varNames includes: each)
 						ifFalse: 
@@ -2654,22 +2649,22 @@ queryRefactoringCommand: aCommandQuery
 	(#(#removeInstanceVariables #protectInstanceVariables #abstractInstanceVariables #renameInstanceVariable)
 		identityIncludes: selector)
 			ifTrue: 
-				[aCommandQuery isEnabled: (class notNil and: [class instVarNames notEmpty]).
+				[aCommandQuery isEnabled: (class notNil and: [class instanceVariableNames notEmpty]).
 				^true].
 	#pushDownInstanceVariables == selector
 		ifTrue: 
 			[aCommandQuery
-				isEnabled: (class notNil and: [class subclasses notEmpty and: [class instVarNames notEmpty]]).
+				isEnabled: (class notNil and: [class subclasses notEmpty and: [class instanceVariableNames notEmpty]]).
 			^true].
 	#pushDownVariables == selector
 		ifTrue: 
 			[aCommandQuery isEnabled: (class notNil
-						and: [class subclasses notEmpty and: [class instVarNames notEmpty or: [class classPool notEmpty]]]).
+						and: [class subclasses notEmpty and: [class instanceVariableNames notEmpty or: [class classPool notEmpty]]]).
 			^true].
 	#pullUpInstanceVariables == selector
 		ifTrue: 
 			[aCommandQuery
-				isEnabled: (class notNil and: [class allSubclasses anySatisfy: [:each | each instVarNames notEmpty]]).
+				isEnabled: (class notNil and: [class allSubclasses anySatisfy: [:each | each instanceVariableNames notEmpty]]).
 			^true].
 	#pullUpClassVariables == selector
 		ifTrue: 
@@ -2685,14 +2680,14 @@ queryRefactoringCommand: aCommandQuery
 		identityIncludes: selector)
 			ifTrue: 
 				[aCommandQuery isEnabled: (class notNil
-							and: [class instVarNames notEmpty or: [class instanceClass classBindingNames notEmpty]]).
+							and: [class instanceVariableNames notEmpty or: [class instanceClass classBindingNames notEmpty]]).
 				^true].
 	#pushDownVariables == selector
 		ifTrue: 
 			[aCommandQuery
 				isEnabled: (class notNil and: 
 							[class subclasses notEmpty
-								and: [class instVarNames notEmpty or: [class instanceClass classBindingNames notEmpty]]]).
+								and: [class instanceVariableNames notEmpty or: [class instanceClass classBindingNames notEmpty]]]).
 			^true].
 	#pullUpVariables == selector
 		ifTrue: 
@@ -2702,7 +2697,7 @@ queryRefactoringCommand: aCommandQuery
 							isFixed := ClassBuilder isFixedLayout: class.
 							class allSubclasses anySatisfy: 
 									[:each |
-									(isFixed not and: [each instVarNames notEmpty]) or: [each instanceClass classBindingNames notEmpty]]]).
+									(isFixed not and: [each instanceVariableNames notEmpty]) or: [each instanceClass classBindingNames notEmpty]]]).
 			^true].
 
 	"Not a recognised refactoring command"

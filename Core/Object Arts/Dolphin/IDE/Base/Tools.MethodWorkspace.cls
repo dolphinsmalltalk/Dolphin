@@ -468,7 +468,7 @@ variableClassification: aStVariableNode
 	(self isTempVariable: aStVariableNode) ifTrue: [^#temporary].
 	context := self parseContext.
 	methodClass := context methodClass.
-	(methodClass allInstVarNames includes: aStVariableNode name) ifTrue: [^#instance].
+	(methodClass allInstanceVariableNames includes: aStVariableNode name) ifTrue: [^#instance].
 	(methodClass hierarchyBindingFor: aStVariableNode name) ifNotNil: [^#class].
 	(context environment fullBindingFor: aStVariableNode name)
 		ifNotNil: [:var | ^var isClassBinding ifTrue: [#classGlobal] ifFalse: [#global]].

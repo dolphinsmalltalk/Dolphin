@@ -89,7 +89,7 @@ addToSuper
 
 	"Nothing to do at this level"!
 
-allInstVarNames
+allInstanceVariableNames
 	"Answer an <Array> of the <readableString> names of the receiver's instance variables, 
 	those specified in the receiver and in all of its superclasses. The array ordering is the order 
 	in which the variables are stored and accessed by the interpreter."
@@ -98,8 +98,8 @@ allInstVarNames
 		ifTrue: [#()]
 		ifFalse: 
 			[superclass isNil
-				ifTrue: [self instVarNames]
-				ifFalse: [superclass allInstVarNames , self instVarNames]]!
+				ifTrue: [self instanceVariableNames]
+				ifFalse: [superclass allInstanceVariableNames , self instanceVariableNames]]!
 
 allSuperclasses
 	"Answer a <collection> of the receiver's superclass and the receiver's ancestor's 
@@ -417,16 +417,16 @@ instanceSpec: anInteger
 
 	instanceSpec := anInteger!
 
-instSize
-	"Answer the number of fixed fields (named instance variables) in instances of the receiver."
-
-	^instanceSpec bitAnd: _SizeMask!
-
-instVarNames
+instanceVariableNames
 	"Answer a <sequencedReadableCollection> of the receiver's instance variable 
 	names."
 
 	^#()!
+
+instSize
+	"Answer the number of fixed fields (named instance variables) in instances of the receiver."
+
+	^instanceSpec bitAnd: _SizeMask!
 
 isBehavior
 	"Answer whether the receiver is a <Behavior>."
@@ -922,7 +922,7 @@ whichMethodsAccess: aString
 	the instance variable of the receiver named by the argument."
 
 	^self whichMethodsAccess: aString
-		at: (self allInstVarNames indexOf: aString)!
+		at: (self allInstanceVariableNames indexOf: aString)!
 
 whichMethodsAccess: aString at: anInteger
 	"Private - Answer a <Set> of selectors from the receiver's local method dictionary whose 
@@ -936,7 +936,7 @@ whichMethodsAssign: aString
 	named by the <readableString> argument."
 
 	^self whichMethodsAssign: aString
-		at: (self allInstVarNames indexOf: aString)!
+		at: (self allInstanceVariableNames indexOf: aString)!
 
 whichMethodsAssign: aString at: anInteger
 	^self 
@@ -946,7 +946,7 @@ whichMethodsRead: aString
 	"Answer a <collection> of <CompiledMethod>s that read the instance variable
 	named by the <readableString> argument."
 
-	^self whichMethodsRead: aString at: (self allInstVarNames indexOf: aString)!
+	^self whichMethodsRead: aString at: (self allInstanceVariableNames indexOf: aString)!
 
 whichMethodsRead: aString at: anInteger
 	^self 
@@ -976,7 +976,7 @@ whichSelectorsWrite: aString
 	named by the <readableString> argument."
 
 	| index |
-	index := self allInstVarNames indexOf: aString.
+	index := self allInstanceVariableNames indexOf: aString.
 	^(self selectMethods: [:each | each writesInstVar: aString at: index]) 
 		collect: [:each | each selector]!
 
@@ -997,7 +997,7 @@ withAllSuperclassesDo: aMonadicValuable
 !Core.Behavior categoriesForMethods!
 addSelector:withMethod:!methods-accessing!private! !
 addToSuper!class hierarchy-adding!private! !
-allInstVarNames!instance variables!public! !
+allInstanceVariableNames!instance variables!public! !
 allSuperclasses!class hierarchy-accessing!public! !
 allSuperclassesDo:!class hierarchy-accessing!enumerating!private! !
 annotationsUpdated:!public! !
@@ -1036,8 +1036,8 @@ inheritsFrom:!class hierarchy-testing!public! !
 instanceCount!accessing!public! !
 instanceSpec!instance specification-accessing!private! !
 instanceSpec:!instance specification-accessing!private! !
+instanceVariableNames!instance variables!public! !
 instSize!instance specification-accessing!public! !
-instVarNames!instance variables!public! !
 isBehavior!public!testing! !
 isBits!instance specification-testing!public! !
 isBytes!instance specification-testing!public! !

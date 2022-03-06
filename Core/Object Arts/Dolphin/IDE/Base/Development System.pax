@@ -1678,7 +1678,7 @@ searchForInTool: aSmalltalkToolShell
 	aSmalltalkToolShell searchForClass: self!
 
 whichClassDefinesInstVar: aString 
-	^self whichClassSatisfies: [:aClass | aClass instVarNames includes: aString]!
+	^self whichClassSatisfies: [:aClass | aClass instanceVariableNames includes: aString]!
 
 whichMethodsContainSource: aString
 	"Answer a <Set> of methods from the receiver's local method dictionary whose methods contain
@@ -2022,7 +2022,7 @@ renameInstVar: oldString to: newString
 	access instance variables by index they will remain valid until recompiled. It is the caller's responsibility
 	to rewrite and recompile methods that reference the instance variable."
 
-	self setInstanceVariables: (self instVarNames copyReplacing: oldString withObject: newString).
+	self setInstanceVariables: (self instanceVariableNames copyReplacing: oldString withObject: newString).
 	self logDefinition.
 	Smalltalk classUpdated: self! !
 !Core.ClassDescription categoriesForMethods!

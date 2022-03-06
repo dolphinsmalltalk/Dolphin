@@ -257,7 +257,7 @@ stbConvertFrom: anSTBClassFormat
 		newInstance := self basicNew.
 		1 to: data size do: [:i | newInstance instVarAt: i put: (data at: i)].
 		"#1030 lastSelIndices needs initializing"
-		newInstance instVarAt: ##(self allInstVarNames indexOf: 'lastSelIndices') put: #().
+		newInstance instVarAt: ##(self allInstanceVariableNames indexOf: 'lastSelIndices') put: #().
 		newInstance]].
 
 	^super stbConvertFrom: anSTBClassFormat!

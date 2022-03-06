@@ -27,7 +27,7 @@ getFieldList
 
 	| size |
 	size := [self selfField size] on: Error do: [:e | 0].
-	^self selfField class allInstVarNames , (1 to: size)!
+	^self selfField class allInstanceVariableNames , (1 to: size)!
 
 setField: anInteger to: anObject
 	"Private - Determine the field of the receiver's object which has the key at index

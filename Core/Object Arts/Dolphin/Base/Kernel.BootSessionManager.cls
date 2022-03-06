@@ -228,7 +228,7 @@ reloadBootPackages
 	obsoleteMethodFilter := [:each | each hasChanged not].
 	(baseClasses difference: missingClasses) do: 
 			[:each |
-			each setInstanceVariables: each instVarNames.
+			each setInstanceVariables: each instanceVariableNames.
 			(((each selectMethods: obsoleteMethodFilter)
 				asSortedCollection: [:a :b | a printString <= b printString])
 				addAll: (each class selectMethods: obsoleteMethodFilter);

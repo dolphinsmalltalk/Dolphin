@@ -177,7 +177,7 @@ testInlineMethod5
 testInlineMethodForSuperSend
 	| refactoring |
 	model := self inlineMethodTestData.
-	(model classNamed: #RenameVariableChange) removeMethod: #executeNotifying:.
+	(model classNamed: #RenameVariableChange) removeSelector: #executeNotifying:.
 	refactoring := InlineMethodRefactoring
 				model: model
 				inline: (self convertInterval: (102 to: 131)

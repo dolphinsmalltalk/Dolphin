@@ -12,12 +12,10 @@ Refactory.Browser.RemoveClassVariableRefactoring comment: ''!
 !Refactory.Browser.RemoveClassVariableRefactoring methodsFor!
 
 checkReferences
-	| block methods binding |
+	| methods binding |
 	methods := Set new.
 	binding := class bindingFor: variableName.
-	block := [:each | methods addAll: (each whichMethodsReferToVariable: binding)].
-	class withAllSubclasses do: block.
-	class metaclass withAllSubclasses do: block.
+	methods := model allReferencesToBinding: binding.
 	(methods isEmpty or: [self shouldRemoveVariable: binding referencedIn: methods])
 		ifFalse: [self refactoringAborted].
 	^true!

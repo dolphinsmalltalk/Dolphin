@@ -70,7 +70,7 @@ buildSelector
 	^symbol!
 
 childrenDo: aMonadicValuable
-	aMonadicValuable value: self receiver.
+	aMonadicValuable value: receiver.
 	arguments do: aMonadicValuable!
 
 hash

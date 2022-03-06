@@ -654,7 +654,7 @@ browseInstanceVariables: browseClass action: selector in: aBrowserEnvironment
 	| instVars varName |
 	instVars := OrderedCollection new.
 	browseClass
-		withAllSuperclassesDo: [:each | instVars addAllFirst: each instVarNames asSortedCollection].
+		withAllSuperclassesDo: [:each | instVars addAllFirst: each instanceVariableNames asSortedCollection].
 	instVars isEmpty
 		ifFalse: [varName := ChoicePrompter choices: instVars caption: 'Instance Variables']
 		ifTrue: [MessageBox notify: browseClass name , ' has no instance variables.'].
@@ -1311,8 +1311,8 @@ cloneClass: aClass as: newClassName under: superclass in: package
 		print: newClassName;
 		crtab;
 		display: 'instanceVariableNames: '.
-	buildVarString value: (aClass allInstVarNames
-				difference: (superclass ifNil: [#()] ifNotNil: [superclass allInstVarNames])).
+	buildVarString value: (aClass allInstanceVariableNames
+				difference: (superclass ifNil: [#()] ifNotNil: [superclass allInstanceVariableNames])).
 	definition
 		crtab;
 		display: 'classVariableNames: '.
@@ -1325,8 +1325,8 @@ cloneClass: aClass as: newClassName under: superclass in: package
 	definition
 		crtab;
 		display: 'classInstanceVariableNames: '.
-	buildVarString value: (aClass class allInstVarNames
-				difference: (superclass ifNil: [#()] ifNotNil: [superclass class allInstVarNames])).
+	buildVarString value: (aClass class allInstanceVariableNames
+				difference: (superclass ifNil: [#()] ifNotNil: [superclass class allInstanceVariableNames])).
 	changes defineClass: definition contents.
 	self
 		copyAllMethodsOf: aClass
@@ -1537,7 +1537,7 @@ createVariableAccessors: variableNamePairs classVariables: aBoolean within: aBro
 				print: aClass;
 				nextPut: $.;
 				nextPutAll: variable.
-			instVarNames := aClass instVarNames.
+			instVarNames := aClass instanceVariableNames.
 			(instVarNames includes: variable) ifFalse: [^aClass errorNotFound: variable].
 			selector := variable asSymbol.
 			(aClass includesSelector: selector)
@@ -3576,7 +3576,7 @@ It is recommended that you press Cancel to abort deletion unless you are absolut
 			response == #cancel ifTrue: [^OperationAborted signal].
 			response == #yes ifTrue: [prots do: [:p | p removeSelector: sel]]
 			"Removing the selector from the class will remove protocols from the class and subclasses"].
-	aCompositeRefactoryChange removeMethod: aCompiledMethod selector from: aCompiledMethod methodClass!
+	aCompositeRefactoryChange removeSelector: aCompiledMethod selector from: aCompiledMethod methodClass!
 
 removeMethods: aCollectionOfMethods
 	"Remove a collection of methods as a single-undoable action. The user is first prompted to
@@ -4096,7 +4096,7 @@ validateNewClassVarName: aString for: aClass
 
 validateNewInstanceVariableName: name for: aClass
 	^ValidationResult
-		value: ((Compiler isAValidLocalIdentifier: name) and: [(aClass allInstVarNames includes: name) not])!
+		value: ((Compiler isAValidLocalIdentifier: name) and: [(aClass allInstanceVariableNames includes: name) not])!
 
 validateRenameInstVar: oldString to: newString in: aClass
 	| result |

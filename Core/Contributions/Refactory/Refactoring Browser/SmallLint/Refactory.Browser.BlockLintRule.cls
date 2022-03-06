@@ -110,7 +110,7 @@ classInstVarNotInitialized
 			[:context :result |
 			context selectedClass isMeta
 				ifTrue: 
-					[(context selectedClass instVarNames notEmpty
+					[(context selectedClass instanceVariableNames notEmpty
 						and: [(context selectedClass includesSelector: #initialize) not])
 							ifTrue: [result addClass: context selectedClass]]].
 	^detector!
@@ -157,7 +157,7 @@ collectionCopyEmpty
 			[:context :result |
 			(context selectedClass isVariable and: 
 					[(context selectedClass includesSelector: #copyEmpty:) not and: 
-							[context selectedClass instVarNames notEmpty and: [context selectedClass inheritsFrom: Collection]]])
+							[context selectedClass instanceVariableNames notEmpty and: [context selectedClass inheritsFrom: Collection]]])
 				ifTrue: [result addClass: context selectedClass]].
 	^detector!
 
@@ -259,7 +259,7 @@ instVarInSubclasses
 				ifTrue: 
 					[| sels |
 					sels := Bag new.
-					subs do: [:each | sels addAll: each instVarNames].
+					subs do: [:each | sels addAll: each instanceVariableNames].
 					sels asSet do: 
 							[:val |
 							| count |
@@ -354,7 +354,7 @@ onlyReadOrWritten
 			| allSubclasses |
 			allSubclasses := context selectedClass withAllSubclasses.
 			#rbFix.	"Ignore system/reserved inst. vars with underscore prefix"
-			(context selectedClass instVarNames reject: [:each | each first = $_]) do: 
+			(context selectedClass instanceVariableNames reject: [:each | each first = $_]) do: 
 					[:each | 
 					| isRead isWritten |
 					isRead := false.
@@ -544,7 +544,7 @@ tempVarOverridesInstVar
 				yourself.
 	detector methodBlock: 
 			[:context :result |
-			vars := context instVarNames.
+			vars := context instanceVariableNames.
 			(matcher executeTree: context parseTree initialAnswer: false)
 				ifTrue: 
 					[result addClass: context selectedClass selector: context selector.
@@ -569,7 +569,7 @@ unreferencedVariables
 			| allSubclasses |
 			allSubclasses := context selectedClass withAllSubclasses.
 			#rbFix.	"Ignore inst vars with names that start with an underscore"
-			(context selectedClass instVarNames reject: [:each | each first = $_]) do: 
+			(context selectedClass instanceVariableNames reject: [:each | each first = $_]) do: 
 					[:each | 
 					allSubclasses detect: [:class | (class whichMethodsAccess: each) notEmpty]
 						ifNone: [result addClass: context selectedClass instanceVariable: each]]].
@@ -609,7 +609,7 @@ utilityMethods
 							[(context superMessages isEmpty and: [context selfMessages isEmpty]) 
 								ifTrue: 
 									[(context parseTree isPrimitive or: 
-											[context selectedClass allInstVarNames , context selectedClass allClassVarNames asArray 
+											[context selectedClass allInstanceVariableNames , context selectedClass allClassVarNames asArray 
 												, #('self') anySatisfy: [:each | context parseTree references: each]]) 
 										ifFalse: [result addClass: context selectedClass selector: context selector]]]]].
 	^detector!
@@ -632,7 +632,7 @@ variableAssignedLiteral
 			[:context :result |
 			| allSubclasses |
 			allSubclasses := context selectedClass withAllSubclasses.
-			context selectedClass instVarNames do: 
+			context selectedClass instanceVariableNames do: 
 					[:each |
 					| defClass selector |
 					(allSubclasses inject: 0
@@ -686,7 +686,7 @@ variableReferencedOnce
 			[:context :result |
 			| allSubclasses |
 			allSubclasses := context selectedClass withAllSubclasses.
-			context selectedClass instVarNames do: 
+			context selectedClass instanceVariableNames do: 
 					[:each |
 					| defClass selector |
 					(allSubclasses inject: 0

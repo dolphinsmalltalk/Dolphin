@@ -159,7 +159,7 @@ instVarMapFor: aClass
 			[| names |
 			names := aClass stonAllInstVarNames asSet.
 			"The 'map' is actually an array of all named inst vars, with nils in the slots of those not to be stored"
-			aClass allInstVarNames collect: [:each | (names includes: each) ifTrue: [each]]]!
+			aClass allInstanceVariableNames collect: [:each | (names includes: each) ifTrue: [each]]]!
 
 isSimpleSymbol: aSymbol
 	"In Dolphin Symbols are always potentially 'wide strings' in that they are Utf8Strings, and may or may not contain extended characters."

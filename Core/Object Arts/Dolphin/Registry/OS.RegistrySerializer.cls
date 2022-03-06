@@ -129,7 +129,7 @@ dwordAt: aString put: anInteger
 	^currentKey dwordAt: aString put: anInteger!
 
 instVarsOfClass: aClass
-	^(instVarsCache lookup: aClass) ifNil: [instVarsCache at: aClass put: aClass allInstVarNames]!
+	^(instVarsCache lookup: aClass) ifNil: [instVarsCache at: aClass put: aClass allInstanceVariableNames]!
 
 nameForClass: aClassDescription
 	^(classNames lookup: aClassDescription)

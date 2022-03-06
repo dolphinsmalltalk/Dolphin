@@ -30,7 +30,7 @@ getFieldList
 	of the InspectorShell. Numeric indices for the elements of the 
 	OrderedCollection are answered"
 
-	^self selfField class allInstVarNames , self selfField getFieldNames!
+	^self selfField class allInstanceVariableNames , self selfField getFieldNames!
 
 setField: anInteger to: anObject
 	"Private - Determine the field of the receiver's object which has the key at index

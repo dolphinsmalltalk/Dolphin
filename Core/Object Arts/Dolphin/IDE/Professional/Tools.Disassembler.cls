@@ -253,7 +253,7 @@ printInstVarSuffix: offset
 	"Private - Append the instance variable access suffix to the stream."
 
 	| instVarName |
-	instVarName := self method methodClass allInstVarNames at: offset + 1 ifAbsent: '**Invalid**'.
+	instVarName := self method methodClass allInstanceVariableNames at: offset + 1 ifAbsent: '**Invalid**'.
 	stream
 		nextPutAll: 'Inst Var[';
 		print: offset;

@@ -225,7 +225,7 @@ includesSelector: aSelector in: aClass
 	^true!
 
 instanceVariablesFor: aClass 
-	^aClass instVarNames!
+	^aClass instanceVariableNames!
 
 instVarReadersTo: instVarName in: aClass 
 	^VariableEnvironment 

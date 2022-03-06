@@ -42,7 +42,7 @@ getFieldList
 	| ti |
 	self selfField isNil ifTrue: [^#()].
 	ti := self selfField typeInfoIfNone: [].
-	^self selfField class allInstVarNames 
+	^self selfField class allInstanceVariableNames 
 		, ((self selfField isNull or: [ti isNil]) 
 				ifTrue: [#()]
 				ifFalse: [ti inspectableProperties collect: [:i | i name]]) 

@@ -1552,7 +1552,7 @@ testWriteAccessor
 	| class inst |
 	class := CompilerTestClasses current testClass.
 	inst := class new.
-	class instVarNames do: 
+	class instanceVariableNames do: 
 			[:each |
 			| accessor selector |
 			selector := (each , ':') asSymbol.

@@ -325,7 +325,7 @@ variableDescriptionsFor: aClass
 	instances := aClass allSubinstances.
 	instance := instances isEmpty ifTrue: [aClass new] ifFalse: [instances first].
 	stream := WriteStream on: String new.
-	names := aClass instVarNames.
+	names := aClass instanceVariableNames.
 	names notEmpty
 		ifTrue: 
 			[stream
@@ -370,7 +370,7 @@ variableDescriptionsFor: aClass
 						nextPut: $`;
 						cr].
 			stream cr].
-	names := aClass class instVarNames.
+	names := aClass class instanceVariableNames.
 	names notEmpty
 		ifTrue: 
 			[stream

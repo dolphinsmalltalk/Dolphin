@@ -24,7 +24,7 @@ instanceVariables
 	^instanceVariables
 		ifNil: 
 			[| names |
-			names := methodClass allInstVarNames.
+			names := methodClass allInstanceVariableNames.
 			instanceVariables := LookupTable new: names size.
 			names keysAndValuesDo: 
 					[:i :v |

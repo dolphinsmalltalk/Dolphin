@@ -620,7 +620,7 @@ fromSton:!public!ston! !
 stonAllInstVarNames
 	"Override to exclude the events instance variable as we never want to serialize these."
 
-	^superclass == Object ifTrue: [#()] ifFalse: [superclass stonAllInstVarNames , self instVarNames]! !
+	^superclass == Object ifTrue: [#()] ifFalse: [superclass stonAllInstVarNames , self instanceVariableNames]! !
 !Core.Model class categoriesForMethods!
 stonAllInstVarNames!public!ston! !
 !
@@ -700,7 +700,7 @@ fromSton: stonReader
 stonAllInstVarNames
 	"Override to encode my instances using a custom set of instance variables or to define their order."
 	
-	^ self allInstVarNames !
+	^ self allInstanceVariableNames !
 
 stonName
 	"Override to encode my instances using a different class name.
@@ -980,7 +980,7 @@ stonOn: stonWriter
 		streamMap: 
 			[:dictionary |
 			"BlockClosures have a fixed set of inst vars that cannot be changed"
-			BlockClosure instVarNames
+			BlockClosure instanceVariableNames
 				keysAndValuesDo: [:i :each | (self instVarAt: i) ifNotNil: [:value | dictionary at: each asSymbol put: value]].
 			dictionary at: #copiedValues put: self copiedValues]! !
 !Kernel.BlockClosure categoriesForMethods!
@@ -1012,7 +1012,7 @@ stonOn: stonWriter
 		streamMap: 
 			[:dictionary |
 			"CompiledMethods have a fixed set of inst vars that cannot be changed"
-			CompiledCode instVarNames
+			CompiledCode instanceVariableNames
 				keysAndValuesDo: [:i :each | (self instVarAt: i) ifNotNil: [:value | dictionary at: each asSymbol put: value]].
 			"Store the indexable fields as a literals list"
 			dictionary at: #literals put: self literals]! !

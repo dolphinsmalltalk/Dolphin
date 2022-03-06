@@ -162,7 +162,7 @@ removeClassVariable: aString from: aClass
 removeInstanceVariable: aString from: aClass
 	^self addChange: (RemoveInstanceVariableChange remove: aString from: aClass)!
 
-removeMethod: aSymbol from: aClass
+removeSelector: aSymbol from: aClass
 	^self addChange: (RemoveMethodChange remove: aSymbol from: aClass)!
 
 renameChangesForClass: aClassName to: newClassName 
@@ -205,7 +205,7 @@ removeClass:!adding!public! !
 removeClassNamed:!adding!public! !
 removeClassVariable:from:!adding!public! !
 removeInstanceVariable:from:!adding!public! !
-removeMethod:from:!adding!public! !
+removeSelector:from:!adding!public! !
 renameChangesForClass:to:!helpers!private! !
 renameClass:to:!adding!public! !
 !

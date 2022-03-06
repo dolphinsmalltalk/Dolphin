@@ -82,7 +82,7 @@ instVarMapFor: aClass
 		ifAbsentPut: 
 			[| map |
 			map := LookupTable new.
-			aClass allInstVarNames keysAndValuesDo: [:eachKey :eachValue | map at: eachValue put: eachKey].
+			aClass allInstanceVariableNames keysAndValuesDo: [:eachKey :eachValue | map at: eachValue put: eachKey].
 			map]!
 
 isClassChar: aCharacter

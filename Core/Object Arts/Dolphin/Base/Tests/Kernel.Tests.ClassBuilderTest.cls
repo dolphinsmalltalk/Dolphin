@@ -231,7 +231,7 @@ testMoveClassToSuperclassWithInstVars
 	ClassBuilder moveClass: oldClass toSuperclass: Object.
 	newClass := self classBuilderTestSubclass1.
 	self assert: newClass superclass identicalTo: Object.
-	self assert: newClass instVarNames equals: #('var3' 'var4').
+	self assert: newClass instanceVariableNames equals: #('var3' 'var4').
 	self assert: newClass instSize equals: 2.
 	self assert: newClass environment identicalTo: namespace.
 	dirtiedClasses := true!
@@ -246,24 +246,24 @@ testMoveClassToSuperclassWithNoInstVars
 	ClassBuilder moveClass: self classBuilderTestSubclass1 toSuperclass: Object.
 	newClass := self classBuilderTestSubclass1.
 	self assert: newClass superclass identicalTo: Object.
-	self assert: newClass instVarNames equals: #().
+	self assert: newClass instanceVariableNames equals: #().
 	self assert: newClass instSize equals: 0.
 	dirtiedClasses := true!
 
 testMoveVariable
 	"test moving an iVar up, sideways and down"
 
-	self assert: self classBuilderTestClass instVarNames equals: #('var1' 'var2').
-	self assert: self classBuilderTestSubclass1 instVarNames equals: #('var3' 'var4').
-	self assert: self classBuilderTestSubclass2 instVarNames equals: #('var3' 'var4').
+	self assert: self classBuilderTestClass instanceVariableNames equals: #('var1' 'var2').
+	self assert: self classBuilderTestSubclass1 instanceVariableNames equals: #('var3' 'var4').
+	self assert: self classBuilderTestSubclass2 instanceVariableNames equals: #('var3' 'var4').
 	Object
 		subclass: #ClassBuilderTestClass
 		instanceVariableNames: 'var1 testVar var2'
 		classVariableNames: ''
 		imports: #().
-	self assert: self classBuilderTestClass instVarNames equals: #('var1' 'testVar' 'var2').
-	self assert: self classBuilderTestSubclass1 instVarNames equals: #('var3' 'var4').
-	self assert: self classBuilderTestSubclass2 instVarNames equals: #('var3' 'var4').
+	self assert: self classBuilderTestClass instanceVariableNames equals: #('var1' 'testVar' 'var2').
+	self assert: self classBuilderTestSubclass1 instanceVariableNames equals: #('var3' 'var4').
+	self assert: self classBuilderTestSubclass2 instanceVariableNames equals: #('var3' 'var4').
 	dirtiedClasses := true!
 
 testPoolVariablePrecedence
@@ -324,8 +324,8 @@ testReparentSubClassWithSameAllInstVars
 
 	"test state of new class"
 	self assert: testClass instSize equals: 4.
-	self assert: testClass instVarNames equals: #('var1' 'var2' 'var3' 'var4').
-	self assert: testClass allInstVarNames equals: #('var1' 'var2' 'var3' 'var4').
+	self assert: testClass instanceVariableNames equals: #('var1' 'var2' 'var3' 'var4').
+	self assert: testClass allInstanceVariableNames equals: #('var1' 'var2' 'var3' 'var4').
 
 	"test transparency of mapping. Accessors for var1 and var2 were inherited, so are no longer available."
 	self assert: testInstance var3 equals: 'foo'.

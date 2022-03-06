@@ -166,7 +166,7 @@ buildAllVariablesMenu: aMenu
 	class := self actualClass.
 	instVars := OrderedCollection new.
 	class
-		withAllSuperclassesDo: [:eachClass | eachClass instVarNames do: [:each | instVars add: eachClass -> each]].
+		withAllSuperclassesDo: [:eachClass | eachClass instanceVariableNames do: [:each | instVars add: eachClass -> each]].
 	instVars size > self maximumVariableMenuEntries
 		ifTrue: [aMenu addCommand: #browseInstanceVariables description: '&Instance Variable…']
 		ifFalse: 
@@ -240,7 +240,7 @@ chooseVariables: aBoolean caption: aString
 					class classBindingNames]
 				ifFalse: 
 					[class := self actualClass.
-					class instVarNames]) asSortedCollection.
+					class instanceVariableNames]) asSortedCollection.
 	varNames := ChoicePrompter multipleChoices: varNames caption: aString.
 	^varNames isNil ifFalse: [varNames collect: [:each | class -> each]]!
 
@@ -593,7 +593,7 @@ onDropOver: aDragDropSession
 						onto: (method isClassMethod ifTrue: [dropClass class] ifFalse: [dropClass])
 						isMove: isMove
 						changes: changes) and: [isMove])
-						ifTrue: [changes removeMethod: method selector from: method methodClass]].
+						ifTrue: [changes removeSelector: method selector from: method methodClass]].
 			(each isFormatAvailable: #Class)
 				ifTrue: 
 					[| class |
@@ -779,7 +779,7 @@ queryCommand: aCommandQuery
 			^true].
 	(#(#browseInstanceVariables #createInstanceVariableAccessors) identityIncludes: selector)
 		ifTrue: 
-			[aCommandQuery isEnabled: (class notNil and: [self actualClass instVarNames notEmpty]).
+			[aCommandQuery isEnabled: (class notNil and: [self actualClass instanceVariableNames notEmpty]).
 			^true].
 	#browseTests == selector
 		ifTrue: 
@@ -864,7 +864,7 @@ renameInstanceVariable
 
 	| instVar class |
 	class := self actualClass.
-	instVar := ChoicePrompter choices: class instVarNames asSortedCollection
+	instVar := ChoicePrompter choices: class instanceVariableNames asSortedCollection
 				caption: 'Rename Instance Variable…'.
 	instVar isNil ifFalse: [self systemModel renameInstanceVariable: instVar in: class]!
 

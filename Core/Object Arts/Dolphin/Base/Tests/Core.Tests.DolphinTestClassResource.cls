@@ -13,7 +13,7 @@ Core.Tests.DolphinTestClassResource comment: ''!
 !Core.Tests.DolphinTestClassResource methodsFor!
 
 compileAccessorsFor: aClass 
-	aClass instVarNames do: 
+	aClass instanceVariableNames do: 
 			[:each | 
 			aClass compile: each , ' ^' , each.
 			aClass compile: each , ': x ' , each , ' := x']!

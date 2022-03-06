@@ -58,7 +58,7 @@ buildSourceForSelector: aSymbol class: aBehavior
 						nextPutAll: ' operand']
 				ifFalse: 
 					[| inUse |
-					inUse := Set withAll: aBehavior allInstVarNames.
+					inUse := Set withAll: aBehavior allInstanceVariableNames.
 					aSymbol keywords do: 
 							[:keyword |
 							| x argName |

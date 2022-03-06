@@ -29,6 +29,8 @@ package methodNames
 	add: #AbstractWindowsLocale -> #dateOrder;
 	add: #AbstractWindowsLocale -> #dateSeparator;
 	add: #ArithmeticValue -> #quoAndRem:;
+	add: #Behavior -> #allInstVarNames;
+	add: #Behavior -> #instVarNames;
 	add: #Behavior -> #makeIndirect;
 	add: #Behavior -> #makeNullTerminated;
 	add: #ByteCodeDispatcher -> #byteCodeSegments;
@@ -51,6 +53,7 @@ package methodNames
 	add: #Integer -> #digitSize;
 	add: #KernelLibrary -> #getTimeFormat:dwFlags:lpTime:lpFormat:lpTimeStr:cchBuf:;
 	add: #Locale -> #isMonthBeforeDay;
+	add: #Metaclass -> #instVarNames:;
 	add: #NUMBERFMTW -> #thousandSeparator;
 	add: #NUMBERFMTW -> #thousandSeparator:;
 	add: #Package -> #addGlobalNamed:;
@@ -230,6 +233,18 @@ quoAndRem:!arithmetic!public! !
 
 !Behavior methodsFor!
 
+allInstVarNames
+	"Answer an <Array> of the <readableString> names of the receiver's instance variables, 
+	those specified in the receiver and in all of its superclasses. The array ordering is the order 
+	in which the variables are stored and accessed by the interpreter."
+
+	#deprecated.
+	^self allInstanceVariableNames!
+
+instVarNames
+	#deprecated.
+	^self instanceVariableNames!
+
 makeIndirect
 	Notification deprecated.
 	self isIndirection: true!
@@ -238,6 +253,8 @@ makeNullTerminated
 	Notification deprecated.
 	self isNullTerminated: true! !
 !Behavior categoriesForMethods!
+allInstVarNames!instance variables!public! !
+instVarNames!instance variables!public! !
 makeIndirect!instance specification-accessing!private! !
 makeNullTerminated!instance specification-accessing!private! !
 !
@@ -582,6 +599,15 @@ isMonthBeforeDay
 	^self dateOrder ~= 1! !
 !Locale categoriesForMethods!
 isMonthBeforeDay!helpers!public! !
+!
+
+!Metaclass methodsFor!
+
+instVarNames: aString
+	#deprecated.
+	self instanceVariableNames: aString! !
+!Metaclass categoriesForMethods!
+instVarNames:!class hierarchy-mutating!instance variables!public! !
 !
 
 !NTLibrary class methodsFor!

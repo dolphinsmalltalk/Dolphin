@@ -98,7 +98,7 @@ instVarMapFor: aClass
 				ifTrue: [map := ##(LookupTable new)]
 				ifFalse: 
 					[map := LookupTable new: size.
-					aClass allInstVarNames keysAndValuesDo: [:eachKey :eachValue | map at: eachValue put: eachKey]].
+					aClass allInstanceVariableNames keysAndValuesDo: [:eachKey :eachValue | map at: eachValue put: eachKey]].
 			instVarMaps at: aClass put: map]!
 
 lookupReferencedObject: aString

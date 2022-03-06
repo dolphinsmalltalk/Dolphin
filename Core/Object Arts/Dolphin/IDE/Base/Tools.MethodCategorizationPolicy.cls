@@ -38,7 +38,7 @@ couldBeAccessor: aCompiledMethod
 	^selector argumentCount <= 1 and: 
 			[| name |
 			name := selector last = $: ifTrue: [selector allButLast] ifFalse: [selector asString].
-			(aCompiledMethod methodClass instVarNames detect: [:each | each = name] ifNone: nil) notNil]!
+			(aCompiledMethod methodClass instanceVariableNames detect: [:each | each = name] ifNone: nil) notNil]!
 
 couldBeInitializer: aCompiledMethod 
 	"Private - Answer whether the argument might possibly be an initialization method."

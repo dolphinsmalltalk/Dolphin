@@ -65,7 +65,7 @@ preconditions
 
 removeRenamedImplementors
 	oldSelector == newSelector ifTrue: [^self].
-	self implementors do: [:each | each removeMethod: oldSelector]!
+	self implementors do: [:each | each removeSelector: oldSelector]!
 
 renameImplementors
 	self implementors do: 

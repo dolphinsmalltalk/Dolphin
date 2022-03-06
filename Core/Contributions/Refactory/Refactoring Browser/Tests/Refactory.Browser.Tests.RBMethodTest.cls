@@ -35,9 +35,66 @@ testParseTreeEnvironment
 	self assert: methodWithCustomNamespace environment identicalTo: (model classFor: Core).
 	methodInClassNamespace := class methodFor: #refersToClassFullyQualified.
 	self assert: methodInClassNamespace environment identicalTo: class environment.
-	self assert: class environment identicalTo: (model classFor: Refactory.Browser)!
+	self assert: class environment identicalTo: (model classFor: Refactory.Browser).
+	"Test a method with a custom namespace from it's package - the main IDE package has Tools as its custom namespace, as it has very many loose methods."
+	self assert: ((model classFor: Object) methodFor: #halt) parseTree environment
+		identicalTo: (model classFor: Tools)!
 
-testRefersToClassBinding
+testRefersToClassDirectly
+	| model class method targetClass |
+	model := RBModel new.
+	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
+	targetClass := model classNamed: 'Refactory.Browser.Tests.ClassToRename'.
+	#(#refersToClassUnqualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassFullyQualified)
+		do: 
+			[:each |
+			method := class methodFor: each.
+			self assert: (method refersToClass: targetClass)].
+	self assert: ((class methodFor: #atIfAbsent) refersToClass: (model classNamed: #Smalltalk))!
+
+testRefersToClassVariable
+	| model class method targetVar |
+	model := RBModel new.
+	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
+	targetVar := class bindingFor: 'ClassVar1'.
+	#(#refersToOwnClassVariable #refersToOwnClassVariableUnqualifiedBinding) do: 
+			[:each |
+			method := class methodFor: each.
+			self assert: (method refersToBinding: targetVar)].
+	"Class method"
+	self assert: ((class metaclass methodFor: #initialize) refersToBinding: targetVar).
+	"From another class"
+	class := model classNamed: 'Refactory.Browser.Tests.ClassToRename'.
+	self assert: ((class methodFor: #refersToClassVariablePartiallyQualified)
+				refersToBinding: targetVar)!
+
+testRefersToClassVariableIndirectly
+	| model class1 class2 method binding |
+	model := RBModel new.
+	class1 := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
+	"ClassToRename refers to a class variable of RefactoryTestDataApp, and therefore refers indirectly to the variable binding for RefactoryTestDataApp itself, and also for its enclosing environments"
+	class2 := model classNamed: 'Refactory.Browser.Tests.ClassToRename'.
+	method := class2 methodFor: #refersToClassVariablePartiallyQualified.
+	binding := class1 binding.
+	
+	[self assert: (method refersToBinding: binding).
+	binding value == model rootNamespace]
+			whileFalse: [binding := binding environment binding]!
+
+testRefersToClassVariableOfAnotherClass
+	| model class1 class2 method targetVar |
+	model := RBModel new.
+	class1 := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
+	class2 := model classNamed: 'Refactory.Browser.Tests.ClassToRename'.
+	targetVar := class2 bindingFor: 'ClassVar1'.
+	#(#refersToClassVariableFullyQualified #refersToClassVariablePartiallyQualified #refersToClassVariablePartiallyQualifiedBinding)
+		do: 
+			[:each |
+			method := class1 methodFor: each.
+			self assert: (method refersToBinding: targetVar)].
+	self deny: ((class1 methodFor: #refersToOwnClassVariable) refersToBinding: targetVar)!
+
+testRefersToClassViaBindingReference
 	| model class targetClass |
 	model := RBModel new.
 	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
@@ -49,7 +106,7 @@ testRefersToClassBinding
 			method := class methodFor: each.
 			self assert: (method refersToClass: targetClass)]!
 
-testRefersToClassBindingFromCustomNamespace
+testRefersToClassViaBindingReferenceFromMethodNamespace
 	| model class method |
 	model := RBModel new.
 	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
@@ -58,19 +115,6 @@ testRefersToClassBindingFromCustomNamespace
 	class := model classFor: Object class.
 	method := class methodFor: #publishedAspectsOfInstances.
 	self assert: (method refersToClass: (model classNamed: 'Tools.Aspect'))!
-
-testRefersToClassVariable
-	| model class method targetClass |
-	model := RBModel new.
-	class := model classNamed: #'Refactory.Browser.TestData.RefactoryTestDataApp'.
-	method := class methodFor: #atIfAbsent.
-	self assert: (method refersToClass: (model classNamed: #Smalltalk)).
-	targetClass := model classNamed: 'Refactory.Browser.Tests.ClassToRename'.
-	#(#refersToClassUnqualified #refersToClassPartiallyQualified1 #refersToClassPartiallyQualified2 #refersToClassFullyQualified)
-		do: 
-			[:each |
-			method := class methodFor: each.
-			self assert: (method refersToClass: targetClass)]!
 
 testRefersToSymbol
 	| model class method |
@@ -84,9 +128,12 @@ testRefersToSymbol
 !Refactory.Browser.Tests.RBMethodTest categoriesForMethods!
 testLiteralStringsDoNotMatchSymbols!public! !
 testParseTreeEnvironment!public! !
-testRefersToClassBinding!public! !
-testRefersToClassBindingFromCustomNamespace!public! !
+testRefersToClassDirectly!public! !
 testRefersToClassVariable!public! !
+testRefersToClassVariableIndirectly!public! !
+testRefersToClassVariableOfAnotherClass!public! !
+testRefersToClassViaBindingReference!public! !
+testRefersToClassViaBindingReferenceFromMethodNamespace!public! !
 testRefersToSymbol!public! !
 !
 

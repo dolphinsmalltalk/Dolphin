@@ -38,7 +38,7 @@ addInstVarName: aString
 
 	| newClass |
 	newClass := (ClassBuilder forModifying: self)
-				instanceVariables: (self instVarNames copyWith: aString asUtf8String);
+				instanceVariables: (self instanceVariableNames copyWith: aString asUtf8String);
 				modifyExistingClass.
 	newClass notNil ifTrue: [newClass logDefinition].
 	^newClass!
@@ -545,7 +545,7 @@ indexOfInstVar: aString ifAbsent: aNiladicValuable
 	evaluating the <niladicValuable>, aNiladicValuable."
 
 	| index |
-	index := self instVarNames indexOf: aString asString.
+	index := self instanceVariableNames indexOf: aString asString.
 	^index == 0
 		ifTrue: 
 			[superclass
@@ -557,6 +557,14 @@ instanceClass
 	"Answer the receiver's singleton instance (the actual class object)."
 
 	^self subclassResponsibility!
+
+instanceVariableNames
+	"Answer a <sequencedReadableCollection> of the receiver's instance variable names."
+
+	instanceVariables ifNil: [^#()].
+	^instanceVariables isString
+		ifTrue: [($\x20 split: instanceVariables) reject: [:each | each isEmpty]]
+		ifFalse: [instanceVariables]!
 
 instanceVariableString
 	"Answer a string containing the names of the instance variables in instances of the
@@ -580,15 +588,7 @@ instVarName: anInteger
 	[ancestor := current superclass.
 	ancestor isNil or: [anInteger > ancestor instSize]]
 			whileFalse: [current := ancestor].
-	^current instVarNames at: anInteger - ancestor instSize!
-
-instVarNames
-	"Answer a <sequencedReadableCollection> of the receiver's instance variable names."
-
-	instanceVariables ifNil: [^#()].
-	^instanceVariables isString
-		ifTrue: [($\x20 split: instanceVariables) reject: [:each | each isEmpty]]
-		ifFalse: [instanceVariables]!
+	^current instanceVariableNames at: anInteger - ancestor instSize!
 
 isAnonymous
 	"Answer whether this is an anonymous (unbound) class."
@@ -808,7 +808,7 @@ removeInstVarName: aString
 
 	| newClass |
 	newClass := (ClassBuilder forModifying: self)
-				instanceVariables: (self instVarNames copyWithout: aString);
+				instanceVariables: (self instanceVariableNames copyWithout: aString);
 				modifyExistingClass.
 	newClass notNil ifTrue: [newClass logDefinition].
 	^newClass!
@@ -994,7 +994,7 @@ subclassInstVarNames
 
 	| answer |
 	answer := Set new.
-	self allSubclassesDo: [:each | answer addAll: each instVarNames].
+	self allSubclassesDo: [:each | answer addAll: each instanceVariableNames].
 	^answer!
 
 suggestedPrivacyFor: aCompiledMethod
@@ -1122,10 +1122,10 @@ includeSelector:inCategory:!categories-testing!public! !
 indexOfInstVar:!instance variables!public! !
 indexOfInstVar:ifAbsent:!instance variables!public! !
 instanceClass!accessing!public! !
+instanceVariableNames!instance variables!public! !
 instanceVariableString!accessing!public! !
 instanceVariableString:!accessing!private! !
 instVarName:!accessing!public! !
-instVarNames!instance variables!public! !
 isAnonymous!public!testing! !
 isAtomic!public!testing! !
 isChanged!public!source filing!testing! !

@@ -210,7 +210,7 @@ testMethodsReferencingExternals1
 	referers := (class methodsReferencingExternals asArray collect: [:each | each selector]) sort.
 	expectedSelectors := #(#refersToClassInCustomNamespace #refersToClassVariableInCustomNamespace #refersToClassVariablePartiallyQualified #selfReference #testFailure).
 	self assert: referers equals: expectedSelectors.
-	expectedSelectors do: [:each | class removeMethod: each].
+	expectedSelectors do: [:each | class removeSelector: each].
 	self assert: class methodsReferencingExternals isEmpty.
 	"Modify an existing method (should no longer see the real method)."
 	class compile: 'selfReference ^Core.Object'.

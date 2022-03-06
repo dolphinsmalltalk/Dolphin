@@ -1287,7 +1287,7 @@ selectTargetVariableOf: aClass parseTree: aStMethodNode
 	classes := aClass withAllSuperclasses.
 	"Instance variables"
 	classes
-		do: [:eachClass | eachClass instVarNames do: [:eachVar | variables addLast: eachClass -> eachVar]].
+		do: [:eachClass | eachClass instanceVariableNames do: [:eachVar | variables addLast: eachClass -> eachVar]].
 	"Class variables - excluding system defined"
 	classes do: 
 			[:eachClass |

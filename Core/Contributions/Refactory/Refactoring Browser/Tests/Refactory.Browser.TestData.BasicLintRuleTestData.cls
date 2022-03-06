@@ -224,7 +224,7 @@ collectionCopyEmpty
 			[:context :result |
 			(context selectedClass isVariable and: 
 					[(context selectedClass includesSelector: #copyEmpty:) not and: 
-							[context selectedClass instVarNames isEmpty not and: [context selectedClass inheritsFrom: Collection]]])
+							[context selectedClass instanceVariableNames isEmpty not and: [context selectedClass inheritsFrom: Collection]]])
 				ifTrue: [result addClass: context selectedClass]].
 	^detector!
 
@@ -499,7 +499,7 @@ instVarInSubclasses
 				ifTrue: 
 					[| sels |
 					sels := Bag new.
-					subs do: [:each | sels addAll: each instVarNames].
+					subs do: [:each | sels addAll: each instanceVariableNames].
 					sels asSet do: 
 							[:val |
 							(sels occurrencesOf: val) == subs size ifTrue: [result addInstVar: val for: context selectedClass]]]].
@@ -624,7 +624,7 @@ onlyReadOrWritten
 			[:context :result | 
 			| allSubclasses |
 			allSubclasses := context selectedClass withAllSubclasses.
-			context selectedClass instVarNames do: 
+			context selectedClass instanceVariableNames do: 
 					[:each | 
 					| reads writes |
 					reads := false.
@@ -893,7 +893,7 @@ tempVarOverridesInstVar
 				yourself.
 	detector methodBlock: 
 			[:context :result |
-			vars := context instVarNames.
+			vars := context instanceVariableNames.
 			(matcher executeTree: context parseTree initialAnswer: false)
 				ifTrue: 
 					[result addClass: context selectedClass selector: context selector.
@@ -952,7 +952,7 @@ unreferencedVariables
 			[:context :result | 
 			| allSubclasses |
 			allSubclasses := context selectedClass withAllSubclasses.
-			context selectedClass instVarNames do: 
+			context selectedClass instanceVariableNames do: 
 					[:each | 
 					allSubclasses
 						detect: [:class | (class whichSelectorsAccess: each) isEmpty not]
@@ -1007,7 +1007,7 @@ utilityMethods
 							[(context superMessages isEmpty and: [context selfMessages isEmpty])
 								ifTrue: 
 									[(ParseTreeSearcher
-										references: context selectedClass allInstVarNames , context selectedClass allClassVarNames asArray
+										references: context selectedClass allInstanceVariableNames , context selectedClass allClassVarNames asArray
 												, #('self')
 										in: context parseTree) isEmpty
 										ifTrue: [result addClass: context selectedClass selector: context selector]]]]].
@@ -1027,7 +1027,7 @@ variableAssignedLiteral
 			[:context :result |
 			| allSubclasses |
 			allSubclasses := context selectedClass withAllSubclasses.
-			context selectedClass instVarNames do: 
+			context selectedClass instanceVariableNames do: 
 					[:each |
 					| defClass selector |
 					(allSubclasses inject: 0
@@ -1061,7 +1061,7 @@ variableReferencedOnce
 			[:context :result |
 			| allSubclasses |
 			allSubclasses := context selectedClass withAllSubclasses.
-			context selectedClass instVarNames do: 
+			context selectedClass instanceVariableNames do: 
 					[:each |
 					| defClass selector |
 					(allSubclasses inject: 0

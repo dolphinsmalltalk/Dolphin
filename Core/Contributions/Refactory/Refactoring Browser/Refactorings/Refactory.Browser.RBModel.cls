@@ -73,6 +73,15 @@ allReferencesTo: aSymbol
 						do: [:eachMethod | (environment includesSelector: eachMethod selector in: each) ifTrue: [refs nextPut: eachMethod]]].
 			sendersCache at: aSymbol put: refs contents]!
 
+allReferencesToBinding: aRBVariableBinding
+	| methods |
+	methods := Array writeStream: 8.
+	self allReferencesToBinding: aRBVariableBinding do: [:each | methods nextPut: each].
+	^methods contents!
+
+allReferencesToBinding: aRBVariableBinding do: aBlock
+	self allBehaviorsDo: [:each | (each whichMethodsReferToBinding: aRBVariableBinding) do: aBlock]!
+
 allReferencesToClass: aRBClass
 	| methods |
 	methods := OrderedCollection new: 8.
@@ -262,9 +271,9 @@ removeImport: aBindingReference from: aRBClass
 removeInstanceVariable: aString from: aRBClass 
 	^changes removeInstanceVariable: aString from: aRBClass!
 
-removeMethod: aSelector from: aRBClass 
+removeSelector: aSelector from: aRBClass
 	self flushCaches.
-	^changes removeMethod: aSelector from: aRBClass!
+	^changes removeSelector: aSelector from: aRBClass!
 
 renameClass: aRBClass to: aString around: aDyadicValuable
 	| change oldName methods oldUnqualified originalEnvironment binding inbound outbound block |
@@ -357,6 +366,8 @@ allBehaviorsDo:!accessing!public! !
 allClassesDo:!accessing!public! !
 allImplementorsOf:!accessing!public! !
 allReferencesTo:!accessing!public! !
+allReferencesToBinding:!helpers!private! !
+allReferencesToBinding:do:!accessing!public! !
 allReferencesToClass:!helpers!private! !
 allReferencesToClass:do:!accessing!public! !
 changes!accessing!public! !
@@ -386,7 +397,7 @@ removeClassNamed:!changes!private! !
 removeClassVariable:from:!changes!private! !
 removeImport:from:!changes!public! !
 removeInstanceVariable:from:!changes!private! !
-removeMethod:from:!changes!private! !
+removeSelector:from:!changes!private! !
 renameClass:to:around:!changes!public! !
 renameClassVariable:to:in:around:!changes!private! !
 renameInstanceVariable:to:in:around:!changes!private! !

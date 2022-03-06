@@ -141,7 +141,7 @@ testModelBadInitializationCode
 
 testModelNonExistantName
 	| refactoring |
-	(model classFor: LintRuleTestData) removeMethod: #name.
+	(model classFor: LintRuleTestData) removeSelector: #name.
 	refactoring := AddParameterRefactoring
 				model: model
 				addParameterToMethod: #name

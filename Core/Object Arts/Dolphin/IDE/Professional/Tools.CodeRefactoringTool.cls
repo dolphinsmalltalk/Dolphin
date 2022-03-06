@@ -155,7 +155,7 @@ declareTemporary: aStVariableNode
 emitKeywordSignatureFor: aStMessageNode in: aClass on: aPuttableStream 
 	| argNames instVars |
 	argNames := OrderedCollection new.
-	instVars := aClass allInstVarNames.
+	instVars := aClass allInstanceVariableNames.
 	argNames addAll: instVars.
 	aStMessageNode selector keywords with: aStMessageNode arguments
 		do: 
@@ -769,7 +769,7 @@ stubTextFor: aStMessageNode inClass: aClass
 	argc == 0
 		ifTrue: 
 			[source nextPutAll: aStMessageNode selector.
-			(aClass allInstVarNames includes: aStMessageNode selector asString)
+			(aClass allInstanceVariableNames includes: aStMessageNode selector asString)
 				ifTrue: [body := '^<1s>' expandMacrosWith: aStMessageNode selector]]
 		ifFalse: 
 			[argc == 1
@@ -787,7 +787,7 @@ stubTextFor: aStMessageNode inClass: aClass
 										in: aClass
 										on: source.
 							name := aStMessageNode selector allButLast.
-							(aClass allInstVarNames includes: name)
+							(aClass allInstanceVariableNames includes: name)
 								ifTrue: [body := '<1s> := <2s>' expandMacrosWith: name with: argNames first]]]
 				ifFalse: 
 					[self

@@ -25,7 +25,7 @@ testInstVarName
 	Smalltalk allClasses do: 
 			[:each |
 			| expected actual |
-			expected := each allInstVarNames.
+			expected := each allInstanceVariableNames.
 			actual := (1 to: expected size) collect: [:i | each instVarName: i].
 			self assert: actual equals: expected]!
 

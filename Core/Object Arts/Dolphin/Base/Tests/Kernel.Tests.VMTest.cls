@@ -859,7 +859,7 @@ testImmutableWriteAccessors
 	class := (ClassBuilder forAnonymousSubclassOf: Object)
 				instanceVariables: ((1 to: max) collect: [:i | 'iv' , i printString]);
 				createNewClass.
-	vars := class instVarNames.
+	vars := class instanceVariableNames.
 	vars do: [:each | class basicCompile: each , ': arg ' , each , ' := arg'].
 	inst := class new.
 	vars keysAndValuesDo: [:i :each | inst perform: (each copyWith: $:) asSymbol with: i].

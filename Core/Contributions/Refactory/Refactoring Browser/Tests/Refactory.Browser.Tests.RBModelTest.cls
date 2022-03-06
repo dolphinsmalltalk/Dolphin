@@ -29,6 +29,18 @@ testAllBehaviorsDoOnSelectorEnvironment
 	model allBehaviorsDo: [:each | classes add: each].
 	self assert: classes equals: {model classFor: Smalltalk class. model classFor: self class} asSet!
 
+testAllMethodsThatReferToBinding
+	| subject class1 references class2 |
+	subject := RBModel new.
+	class1 := subject classFor: ClassToRename.
+	references := subject allReferencesToBinding: (class1 bindingFor: 'ClassVar1').
+	self assert: (references includes: class1 >> #refersToOwnClassVariable).
+	self assert: (references
+				includes: (subject classFor: SubclassOfClassToRename) >> #refersToInheritedClassVariable).
+	class2 := subject classFor: RefactoryTestDataApp.
+	self assert: (references includes: class2 >> #refersToClassVariablePartiallyQualified).
+	self assert: (references includes: class2 >> #refersToClassVariablePartiallyQualifiedBinding)!
+
 testCommentChange
 	| st cl |
 	st := RBModel new.
@@ -128,7 +140,7 @@ testImplementors
 	| st |
 	st := RBModel new.
 	self assert: ((st allImplementorsOf: #printString) includes: (st classNamed: #'Core.Object')).
-	(st classNamed: #'Core.Object') removeMethod: #printString.
+	(st classNamed: #'Core.Object') removeSelector: #printString.
 	self deny: ((st allImplementorsOf: #printString) includes: (st classNamed: #'Core.Object'))!
 
 testIncludesClass
@@ -221,7 +233,7 @@ testReferencesPrintOnAfterRemove
 	hasFoundObject := false.
 	hasFoundSelf := false.
 	st := RBModel new.
-	(st classNamed: #'Core.Object') removeMethod: #printString.
+	(st classNamed: #'Core.Object') removeSelector: #printString.
 	(st allReferencesTo: #printOn:) do: 
 			[:each |
 			hasFoundObject := hasFoundObject
@@ -298,6 +310,7 @@ verifyMethodRefersToNamespaceHierarchy: aCompiledMethod in: aRBModel
 !Refactory.Browser.Tests.RBModelTest categoriesForMethods!
 testAllBehaviorsDo!public!unit tests! !
 testAllBehaviorsDoOnSelectorEnvironment!public!unit tests! !
+testAllMethodsThatReferToBinding!public! !
 testCommentChange!public!unit tests! !
 testCompileTreeForMethod!public!unit tests! !
 testDefineClassAfterDeletedChange!public!unit tests! !

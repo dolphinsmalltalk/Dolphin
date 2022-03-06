@@ -131,7 +131,7 @@ pushUpMethodsFrom: aClass
 			(selectorsToPushUp includes: each) 
 				ifTrue: [self pushUp: each in: aClass]
 				ifFalse: [self createSubclassResponsibilityFor: each in: aClass]].
-	selectorsToPushUp do: [:each | aClass removeMethod: each]!
+	selectorsToPushUp do: [:each | aClass removeSelector: each]!
 
 pushUpVariables
 	self pullUpInstanceVariables.

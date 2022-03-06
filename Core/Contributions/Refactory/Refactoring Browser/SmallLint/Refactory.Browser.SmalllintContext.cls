@@ -68,8 +68,8 @@ implements: aSelector
 initialize
 	self computeLiterals!
 
-instVarNames
-	^self selectedClass allInstVarNames!
+instanceVariableNames
+	^self selectedClass allInstanceVariableNames!
 
 isAbstract: aClass 
 	^(aClass isMeta 
@@ -177,7 +177,7 @@ computeLiteralsForClass:!helpers!private! !
 computeMessages!helpers!private! !
 implements:!public!testing! !
 initialize!initialize/release!public! !
-instVarNames!accessing!public! !
+instanceVariableNames!accessing!public! !
 isAbstract:!public!testing! !
 lintProtocols!accessing!public! !
 literals!accessing!public! !

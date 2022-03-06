@@ -773,7 +773,7 @@ identifiersStartingWith: aString maxItems: anInteger
 				do: [:each | accum value: (ListItem text: each printString icon: each icon)].
 			(#('thisContext' 'super' 'self') select: filter) do: accum.
 			self allDefinedVariablesDo: selectVars.
-			self selfClass allInstVarNames do: selectVars].
+			self selfClass allInstanceVariableNames do: selectVars].
 	(ignoreCase or: [aString isEmpty or: [aString first isUppercase]])
 		ifTrue: 
 			[| class |

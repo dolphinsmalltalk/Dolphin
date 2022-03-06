@@ -41,6 +41,9 @@ Class Variables:
 	^self class == aRBClass class 
 		and: [self name = aRBClass name and: [self model = aRBClass model]]!
 
+>> aSymbol
+	^self methodFor: aSymbol!
+
 addInstanceVariable: aString
 	instanceVariableNames := self instanceVariableNames copyWith: aString.
 	self model addInstanceVariable: aString to: self!
@@ -78,11 +81,6 @@ allInstanceVariableNames
 	^self superclass
 		ifNil: [self instanceVariableNames]
 		ifNotNil: [:sprClass | sprClass allInstanceVariableNames , self instanceVariableNames]!
-
-allInstVarNames
-	"Required for StSemanticAnalyzer"
-
-	^self allInstanceVariableNames!
 
 allSelectors
 	| class selectors |
@@ -401,7 +399,7 @@ instanceVariableNames
 	instanceVariableNames
 		ifNil: 
 			[self realClass
-				ifNotNil: [:realClass | self instanceVariableNames: realClass instVarNames]
+				ifNotNil: [:realClass | self instanceVariableNames: realClass instanceVariableNames]
 				ifNil: [instanceVariableNames := #()]].
 	^instanceVariableNames!
 
@@ -463,6 +461,24 @@ methodFor: aSelector
 			[(self hasRemoved: aSelector)
 				ifFalse: 
 					[(self existingMethodAt: aSelector) ifNotNil: [:method | RBMethod for: self fromMethod: method]]]!
+
+methodsDo: aMonadicValuable
+	self newMethods do: aMonadicValuable.
+	self realClass
+		ifNotNil: 
+			[:class |
+			| removed |
+			removed := self removedSelectors.
+			removed isEmpty
+				ifTrue: 
+					[self model environment selectorsForClass: class
+						do: [:each | aMonadicValuable value: (self newMethodFor: (class compiledMethodAt: each))]]
+				ifFalse: 
+					[self model environment selectorsForClass: class
+						do: 
+							[:each |
+							(removed includes: each)
+								ifFalse: [aMonadicValuable value: (self newMethodFor: (class compiledMethodAt: each))]]]]!
 
 methodsReferencingExternals
 	| methods |
@@ -534,9 +550,9 @@ removeInstanceVariable: aString
 	instanceVariableNames := instanceVariableNames copyWithout: aString.
 	self model removeInstanceVariable: aString from: self!
 
-removeMethod: aSelector
+removeSelector: aSelector
 	self newMethods removeKey: aSelector ifAbsent: nil.
-	self model removeMethod: aSelector from: self.
+	self model removeSelector: aSelector from: self.
 	(removedSelectors ifNil: [removedSelectors := Set new]) add: aSelector!
 
 renameInstanceVariable: oldName to: newName around: aBlock
@@ -597,6 +613,22 @@ unqualifiedName
 	"Answer the unqualified name of the class."
 
 	^self subclassResponsibility!
+
+whichMethodsReferToBinding: aRBVariableBinding
+	| methods binding |
+	methods := IdentityDictionary new.
+	newMethods
+		ifNotNil: 
+			[newMethods
+				do: [:each | (each refersToBinding: aRBVariableBinding) ifTrue: [methods at: each selector put: each]]].
+	(self isDefined and: [(binding := aRBVariableBinding realBinding) notNil])
+		ifTrue: 
+			[(self existingMethodsThatReferTo: binding) do: 
+					[:each |
+					| selector |
+					selector := each selector.
+					(methods includesKey: selector) ifFalse: [methods at: selector put: (self newMethodFor: each)]]].
+	^methods!
 
 whichMethodsReferToClass: aRBClass
 	| methods class |
@@ -697,13 +729,13 @@ withAllSuperclassesDo: aMonadicValuable
 	self allSuperclassesDo: aMonadicValuable! !
 !Refactory.Browser.RBAbstractClass categoriesForMethods!
 =!comparing!public! !
+>>!public! !
 addInstanceVariable:!public!variable accessing! !
 addMethod:!compiling!public! !
 addMethodChange:!compiling!public! !
 allClassVariableNames!accessing!public! !
 allImports!accessing!public! !
 allInstanceVariableNames!accessing!public! !
-allInstVarNames!accessing!public! !
 allSelectors!method accessing!public! !
 allSubclasses!accessing!public! !
 allSubclassesBreadthFirstDo:!accessing!public! !
@@ -768,6 +800,7 @@ localBindingFor:!binding!public! !
 localScope!accessing!public! !
 metaclass!accessing!public! !
 methodFor:!method accessing!public! !
+methodsDo:!method accessing!public! !
 methodsReferencingExternals!method accessing!public! !
 model!accessing!public! !
 name!accessing!public! !
@@ -782,7 +815,7 @@ protocolsFor:!accessing!public! !
 realClass!accessing!public! !
 removedSelectors!accessing!public! !
 removeInstanceVariable:!public!variable accessing! !
-removeMethod:!method accessing!public! !
+removeSelector:!method accessing!public! !
 renameInstanceVariable:to:around:!public!variable accessing! !
 scope!accessing!public! !
 selectors!method accessing!public! !
@@ -794,6 +827,7 @@ subclassRedefines:!public!testing! !
 superclass!accessing!public! !
 typeOfClassVariable:!public!variable accessing! !
 unqualifiedName!accessing!public! !
+whichMethodsReferToBinding:!method accessing!public! !
 whichMethodsReferToClass:!method accessing!public! !
 whichMethodsReferToSymbol:!method accessing!public! !
 whichMethodsReferToVariable:!method accessing!public! !

@@ -204,10 +204,10 @@ removeDuplicatesOf: aSelector
 								and: [(each superclass whoDefinesMethod: aSelector) == class superclass]]].
 	(removeDuplicates or: [duplicatedIn isEmpty])
 		ifFalse: [removeDuplicates := self shouldRemoveDuplicatesOf: aSelector in: duplicatedIn].
-	removeDuplicates ifTrue: [duplicatedIn do: [:each | each removeMethod: aSelector]]!
+	removeDuplicates ifTrue: [duplicatedIn do: [:each | each removeSelector: aSelector]]!
 
 removePushedUpMethods
-	selectors do: [:each | class removeMethod: each]!
+	selectors do: [:each | class removeSelector: each]!
 
 shouldCopyDownSuperclassMethod: aSelector
 	^(self lookupOption: #copyDownSuperclassMethod) cull: self cull: aSelector!

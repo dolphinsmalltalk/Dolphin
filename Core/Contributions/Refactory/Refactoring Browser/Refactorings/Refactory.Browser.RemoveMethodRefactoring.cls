@@ -101,7 +101,7 @@ superclassEquivalentlyDefines: aSelector
 	^superTree equalTo: myTree exceptForVariables: #()!
 
 transform
-	selectors do: [:each | class removeMethod: each]! !
+	selectors do: [:each | class removeSelector: each]! !
 !Refactory.Browser.RemoveMethodRefactoring categoriesForMethods!
 checkReferencesToAnyOf:!preconditions!public! !
 checkReferencesToSuperSendsToAnyOf:!preconditions!public! !
