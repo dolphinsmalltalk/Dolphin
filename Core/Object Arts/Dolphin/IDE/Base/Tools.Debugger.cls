@@ -490,26 +490,27 @@ displayLocal: anAspectAccessor
 displaySource
 	"Private - Refresh the receiver's source display to reflect a newly selected frame."
 
-	| method text styler |
-	sourcePresenter evaluationContext: self frame receiver.
-	method := self selectedMethod.
-	self isDisassembled
-		ifTrue: 
-			[styler := SmalltalkSystem current disassemblyStylerClass.
-			text := method disassembly]
-		ifFalse: 
-			[styler := method stylerClass.
-			text := method getSource].
-	sourcePresenter
-		text: text;
-		stylerClass: styler;
-		isModified: false.
-	self setSourceSelection!
+	self selectedMethod
+		ifNil: [sourcePresenter text: '']
+		ifNotNil: 
+			[:method |
+			sourcePresenter evaluationContext: self frame receiver.
+			self isDisassembled
+				ifTrue: 
+					[sourcePresenter
+						stylerClass: SmalltalkSystem current disassemblyStylerClass;
+						text: method disassembly]
+				ifFalse: 
+					[sourcePresenter
+						stylerClass: method stylerClass;
+						text: method getSource].
+			self setSourceSelection].
+	sourcePresenter isModified: false!
 
 emitKeywordSignatureFor: aMessage in: aClass on: aPuttableStream 
 	| argNames instVars |
 	argNames := OrderedCollection new.
-	instVars := aClass allInstVarNames.
+	instVars := aClass allInstanceVariableNames.
 	argNames addAll: instVars.
 	aMessage selector keywords with: aMessage arguments
 		do: 
@@ -684,10 +685,11 @@ markMethodAsUnbound: oldMethod
 	selector := oldMethod selector.
 	methodClass := oldMethod methodClass.
 	list keysAndValuesDo: 
-			[:eachIndex :eachFrame | 
-			| eachMethod |
-			eachMethod := eachFrame method.
-			(eachMethod selector == selector and: [eachMethod methodClass == methodClass]) 
+			[:eachIndex :eachFrame |
+			(eachFrame isDead not and: 
+					[| eachMethod |
+					(eachMethod := eachFrame method) notNil
+						and: [eachMethod selector == selector and: [eachMethod methodClass == methodClass]]])
 				ifTrue: [list refreshAtIndex: eachIndex]]!
 
 moreFrames
@@ -1091,53 +1093,55 @@ queryCommand: aCommandQuery
 			^true].
 	^(self queryFrameCommand: aCommandQuery) or: [super queryCommand: aCommandQuery]!
 
-queryFrameCommand: aCommandQuery 
+queryFrameCommand: aCommandQuery
 	"Private - All of these commands required that a stack frame be selected"
+
 	| selector running runnable animating frame |
 	selector := aCommandQuery commandSymbol.
 	animating := self isAnimating.
 	running := self isRunning or: [animating].
 	runnable := running not and: [self isResumable].
 	frame := self frame.
+	frame isDead ifTrue: [^false].
 	"Note that the implement menu is not just for DNUs any more, but any message which is not directly
 	 implemented by its receiver."
-	selector == #implementDNUMenu 
+	selector == #implementDNUMenu
 		ifTrue: 
-			[aCommandQuery 
+			[aCommandQuery
 				isEnabled: (running not and: [self class enableDynamicMenus and: [self canImplementMessage]]).
 			^true].
-	#browseMethodInheritanceChain == selector 
+	#browseMethodInheritanceChain == selector
 		ifTrue: 
-			[aCommandQuery 
+			[aCommandQuery
 				isEnabled: (self selectedMethod ifNil: [false] ifNotNil: [:method | method isOverride]).
 			^true].
-	#messagesMenu == selector 
-			ifTrue: 
-				[aCommandQuery isEnabled: (self class enableDynamicMenus and: [self selectedMethod notNil]).
-				^true].
-	(#(#stepOver #stepOut) identityIncludes: selector) 
+	#messagesMenu == selector
+		ifTrue: 
+			[aCommandQuery isEnabled: (self class enableDynamicMenus and: [self selectedMethod notNil]).
+			^true].
+	(#(#stepOver #stepOut) identityIncludes: selector)
 		ifTrue: 
 			[aCommandQuery isEnabled: (runnable and: [frame notNil]).
 			^true].
-	selector == #returnFromMessage 
+	selector == #returnFromMessage
 		ifTrue: 
 			[aCommandQuery isEnabled: (running not and: [frame notNil and: [frame sender notNil]]).
 			^true].
-	selector == #restartFrame 
+	selector == #restartFrame
 		ifTrue: 
 			[aCommandQuery isEnabled: (running not and: [frame notNil and: [frame isRestartable]]).
 			^true].
-	selector == #stepInto 
+	selector == #stepInto
 		ifTrue: 
 			["Can only step-into in the top stack frame"
 			aCommandQuery isEnabled: (runnable and: [frame = topFrame]).
 			^true].
-	selector == #runToCursor 
+	selector == #runToCursor
 		ifTrue: 
 			["Can run to cursor if not in disassembly view"
 			aCommandQuery isEnabled: (runnable and: [frame notNil and: [self isDisassembled not]]).
 			^true].
-	selector == #acceptNoRestart 
+	selector == #acceptNoRestart
 		ifTrue: 
 			[aCommandQuery isEnabled: self canSaveMethod.
 			^true].
@@ -1674,7 +1678,7 @@ stubTextFor: aMessage inClass: aClass
 	aMessage argumentCount == 0
 		ifTrue: 
 			[source nextPutAll: aMessage selector.
-			(aClass allInstVarNames includes: aMessage selector asString)
+			(aClass allInstanceVariableNames includes: aMessage selector asString)
 				ifTrue: [body := '^<1s>' << aMessage selector]]
 		ifFalse: 
 			[aMessage argumentCount == 1
@@ -1692,7 +1696,7 @@ stubTextFor: aMessage inClass: aClass
 										in: aClass
 										on: source.
 							name := aMessage selector allButLast.
-							(aClass allInstVarNames includes: name) ifTrue: [body := '<1s> := <2s>' << {name. argNames first}]]]
+							(aClass allInstanceVariableNames includes: name) ifTrue: [body := '<1s> := <2s>' << {name. argNames first}]]]
 				ifFalse: 
 					[self
 						emitKeywordSignatureFor: aMessage
@@ -1809,6 +1813,14 @@ updateTemporaries
 
 	| temps tempCount pool frame varList receiver base extra class |
 	frame := self frame.
+	frame isDead
+		ifTrue: 
+			[sourcePresenter
+				workspacePool: PoolDictionary new;
+				evaluationPools: #();
+				evaluationContext: nil.
+			self setVariablesList: #().
+			^self].
 	temps := frame temps.
 	tempCount := temps size.
 	receiver := frame receiver.

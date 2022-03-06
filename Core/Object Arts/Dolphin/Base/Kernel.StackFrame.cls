@@ -62,7 +62,7 @@ argumentCount
 	"Private - Answer the number of arguments to the receiver's stack frame, this will
 	vary depending on whether the receiver is a frame for a block or method activation."
 	
-	^self method argumentCount!
+	^self basicMethod argumentCount!
 
 arguments
 	"Private - Answer a SequenceableCollection of the receiver's arguments."
@@ -115,6 +115,11 @@ basicIP: anInteger
 
 	process at: index + IPOffset put: anInteger!
 
+basicMethod
+	"Private - Answer a compiled code object for which the receiver represents a stack frame."
+
+	^process at: index + MethodOffset!
+
 basicSender
 	"Private - Answer the context which caused the activation that the receiver represents"
 
@@ -156,7 +161,7 @@ callstackDo: aMonadicValuable depth: anInteger
 	| frame i |
 	frame := self.
 	i := anInteger.
-	[i ~~ 0 and: [frame notNil and: [frame method selector notNil]]] whileTrue: 
+	[i ~~ 0 and: [frame notNil and: [frame basicMethod selector notNil]]] whileTrue: 
 			[aMonadicValuable value: frame.
 			frame := frame sender.
 			i := i - 1]!
@@ -209,6 +214,9 @@ environment: anObject
 
 frameAddress
 	^process spOfIndex: index!
+
+frameAt: anInteger
+	^process at: index + anInteger!
 
 frameSize
 	"Private - Answer the size of a real stack frame (in Oops)."
@@ -283,7 +291,7 @@ ip
 
 	| ip |
 	ip := self basicIP.
-	^self method isPacked 
+	^self basicMethod isPacked 
 		ifTrue: [ip + 1]
 		ifFalse: [ip - self ipBias]
 !
@@ -292,7 +300,7 @@ ip: anInteger
 	"Private - Set the IP of the process stack frame the receiver represents to
 	anInteger (which is an index into the byte codes of the method)."
 
-	self basicIP: (self method isPacked ifTrue: [anInteger - 1] ifFalse: [anInteger + self ipBias])!
+	self basicIP: (self basicMethod isPacked ifTrue: [anInteger - 1] ifFalse: [anInteger + self ipBias])!
 
 ipBias
 	"Private - Answer the bias of an IP index to the true IP offset in
@@ -307,17 +315,17 @@ isDead
 	"Private - Answer whether this is a dead stack frame (i.e. one which has returned).
 	Note that this is only an indication."
 
-	^self index + BPOffset > process size!
+	^self method isNil!
 
 isRestartable
 	"Private - Answer whether this frame is restartable. Some methods, such as
 	callback entry points, cannot be restarted at all, others not reliably."
 
-	^self sender notNil and: 
-			[| method |
-			method := self method.
-			method notNil
-				and: [method isExpression or: [('not restartable' asMethodCategory includesMethod: method) not]]]!
+	^self isDead not and: 
+			[self sender notNil and: 
+					[| method |
+					method := self basicMethod.
+					method isExpression or: [('not restartable' asMethodCategory includesMethod: method) not]]]!
 
 localAt: anInteger
 	"Private - Answer the argument indexed, anInteger, from the receiver's stack frame."
@@ -331,9 +339,11 @@ localCount
 	^index - self bp!
 
 method
-	"Private - Answer a compiled code object for which the receiver represents a stack frame."
+	"Private - Answer a compiled code object for which the receiver represents a stack frame, or nil if the frame appears dead."
 
-	^process at: index + MethodOffset!
+	| method |
+	index + BPOffset > process size ifTrue: [^nil].
+	^((method := self basicMethod) isKindOf: CompiledCode) ifTrue: [method]!
 
 method: aCompiledMethod
 	"Private - Set the method of the stack frame."
@@ -442,12 +452,12 @@ temps
 tempsBeforeIp: anInteger
 	"Private - Answer a list of temporaries for the instruction before the specified ip."
 
-	^anInteger isNil ifTrue: [{}] ifFalse: [self method debugInfo tempsAtIp: anInteger - 1]!
+	^anInteger isNil ifTrue: [{}] ifFalse: [self basicMethod debugInfo tempsAtIp: anInteger - 1]!
 
 textMap
 	"Private - Answer the map between source text and ip values for the receiver's method."
 
-	^self method textMap! !
+	^self basicMethod textMap! !
 !Kernel.StackFrame categoriesForMethods!
 =!comparing!public! !
 argAt:!accessing!private! !
@@ -461,6 +471,7 @@ basicBP!accessing!private! !
 basicBP:!accessing!private! !
 basicIP!accessing!private! !
 basicIP:!accessing!private! !
+basicMethod!accessing!private! !
 basicSender!accessing!private! !
 basicSender:!accessing!private! !
 basicSP!accessing!private! !
@@ -472,6 +483,7 @@ displayOn:!printing!public! !
 environment!accessing!private! !
 environment:!accessing!private! !
 frameAddress!accessing!private! !
+frameAt:!accessing!private! !
 frameSize!constants!private! !
 getFrames:!public! !
 getOuter:!accessing!private! !
@@ -484,7 +496,7 @@ ip!accessing!private! !
 ip:!accessing!private! !
 ipBias!constants!private! !
 isBlockFrame!private!testing! !
-isDead!printing!private! !
+isDead!private!testing! !
 isRestartable!development!private!testing! !
 localAt:!accessing!private! !
 localCount!accessing!private! !

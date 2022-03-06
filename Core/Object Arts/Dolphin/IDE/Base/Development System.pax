@@ -358,6 +358,7 @@ package setMethodNames: #(
 	#(#{External.Structure class} #shouldOverrideGetFieldNames)
 	#(#{External.StructureArrayField} #printAccessorExpressionSuffixOn:)
 	#(#{External.StructureArrayField} #printElementSizeExpressionBodyOn:)
+	#(#{External.StructureArrayField} #printStructClassSize:on:)
 	#(#{External.StructureArrayPointerField} #printAccessorExpressionSuffixOn:)
 	#(#{External.StructureField} #printMutatorBody:on:)
 	#(#{External.StructurePointer} #printOn:)
@@ -765,6 +766,7 @@ package setPrerequisites: #(
 	'..\..\MVP\Views\Date Time\Dolphin Date Time Controls'
 	'..\..\MVP\Presenters\Date Time\Dolphin Date Time Presenters'
 	'..\..\MVP\Presenters\Shell\Dolphin Document Presenter'
+	'..\..\MVP\Type Converters\Dolphin Evaluating Type Converter'
 	'..\..\MVP\Dialogs\Find\Dolphin Find Dialog'
 	'..\..\MVP\Presenters\Folder\Dolphin Folder Presenter'
 	'..\..\MVP\Models\Tree\Dolphin Folder Tree Model'
@@ -3968,10 +3970,18 @@ printAccessorExpressionSuffixOn: aCodeGenerationContext
 	aCodeGenerationContext printClass: self fieldClass!
 
 printElementSizeExpressionBodyOn: aCodeGenerationContext
-	self printStructClassSize: self elementClass on: aCodeGenerationContext! !
+	self printStructClassSize: self elementClass on: aCodeGenerationContext!
+
+printStructClassSize: aStructureClass on: aCodeGenerationContext
+	aCodeGenerationContext printClass: aStructureClass.
+	aCodeGenerationContext writeStream
+		nextPutAll: '._';
+		nextPutAll: aStructureClass unqualifiedName;
+		nextPutAll: '_Size'! !
 !External.StructureArrayField categoriesForMethods!
 printAccessorExpressionSuffixOn:!automatic generation!private! !
 printElementSizeExpressionBodyOn:!automatic generation!private! !
+printStructClassSize:on:!automatic generation!private! !
 !
 
 !External.StructureArrayPointerField methodsFor!
@@ -4319,7 +4329,7 @@ publishedAspectsOfInstances!constants!public! !
 
 debugIpFor: debugMethod 
 	^self ip = self block initialIP 
-		ifTrue: [self mapInitialIpFrom: self method to: debugMethod]
+		ifTrue: [self mapInitialIpFrom: self basicMethod to: debugMethod]
 		ifFalse: [super debugIpFor: debugMethod]!
 
 isRestartable
@@ -4331,22 +4341,22 @@ makeDebug
 	"Private - Convert the receiver to a debug frame. "
 
 	| method debugMethod block |
-	method := self method.
-	method isDebugMethod 
+	method := self basicMethod.
+	method isDebugMethod
 		ifTrue: 
 			["Already a debug frame"
 			^self].
 	super makeDebug.
-	debugMethod := self method.
+	debugMethod := self basicMethod.
 	block := self block.
 	"Debug version of method will have different initialIP for the block, so we must remap"
 	block initialIP: (self mapInitialIpFrom: method to: debugMethod).
 	"If the block has an outer ref, then assume it may contain a ^-return and
 	mutate the home frame and its sender into debug frames so that any ^-return
 	would break if stepped into."
-	self homeFrame 
+	self homeFrame
 		ifNotNil: 
-			[:home | 
+			[:home |
 			home makeDebug.
 			home sender ifNotNil: [:sender | sender makeDebug]]!
 
@@ -5063,7 +5073,7 @@ debugIpFor: debugMethod
 	| interp debugPrev method prev i offset map debugMap ip |
 	ip := self ip.
 	ip = 1 ifTrue: [^1].
-	method := self method.
+	method := self basicMethod.
 	map := method debugInfo textMap.
 	debugMap := debugMethod debugInfo textMap.
 	self assert: [map size == debugMap size].
@@ -5108,7 +5118,7 @@ makeDebug
 	"Private - Convert the receiver to a debug frame. This is for the use of the debugger."
 
 	| method debugMethod ip |
-	method := self method.
+	method := self basicMethod.
 	(method isDebugMethod or: [method sourceDescriptor isNil]) ifTrue: [^self].	"nothing to do"
 	debugMethod := method asDebugMethod.
 	ip := self debugIpFor: debugMethod.
