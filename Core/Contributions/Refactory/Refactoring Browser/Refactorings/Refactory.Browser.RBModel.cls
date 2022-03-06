@@ -276,15 +276,13 @@ removeSelector: aSelector from: aRBClass
 	^changes removeSelector: aSelector from: aRBClass!
 
 renameClass: aRBClass to: aString around: aDyadicValuable
-	| change oldName methods oldUnqualified originalEnvironment binding inbound outbound block |
+	| change oldName methods oldUnqualified originalEnvironment binding block |
 	oldName := aRBClass fullName.
 	change := RenameClassChange rename: oldName to: aString.
 	"The ordering is important here. We need the RB model namespaces to reflect the change so that any attempt to look up the old class name in its old environment will fail, but we also need method searches to find references to the old class name. Therefore we have to capture the references in advance of making any model changes, and build the parse trees now so that we can bind any variables/qualified refs to their original target. This will allow us to detect if the bindings change after the rename. Note that the bindings may change because they refer to the original name, directly or indirectly, or because the rename is changing the class' namespace, or because of shadowing."
-	inbound := self allReferencesToClass: aRBClass.
-	outbound := OrderedCollection new.
 	methods := SearchPolicy method newSet.
-	methods addAll: inbound.
-	block := [:method | (outbound addLast: (methods addIfAbsent: method)) boundParseTree].
+	methods addAll: (self allReferencesToClass: aRBClass).
+	block := [:method | (methods addIfAbsent: method) boundParseTree].
 	#namespaceToDo.	"A subclass may refer to external variables that it can only bind via an import that it inherits via the namespace of its superclass (if different to its own). There is therefore (rare) potential for external references in subclasses to be affected by a class rename when that rename moves a class to a new namespace. Enumerating all subclasses could be prohibitively expensive with the current search, however, as it is too broad in scope. If we were to rename Object, for example, then a significant proportion of the methods in the entire system would be in scope."
 	"References to class variables may be fully qualified, and so may require renaming. We could either eliminate these from consideration by reducing them first (a refactoring to do that would be useful anyway), or just include all methods containing static variable references in the search, rather than trying to be clever and exclude the 'internal' references. At the moment we include the class variables as potential references to externals."
 	aRBClass methodsReferencingExternals do: block.
@@ -298,7 +296,7 @@ renameClass: aRBClass to: aString around: aDyadicValuable
 	self assert: [binding value == aRBClass].
 	binding setKey: aRBClass unqualifiedName.
 	aRBClass environment addBinding: binding.
-	self performChange: change around: [aDyadicValuable value: inbound value: outbound].
+	self performChange: change around: [aDyadicValuable value: methods].
 	self flushCaches.
 	^change!
 

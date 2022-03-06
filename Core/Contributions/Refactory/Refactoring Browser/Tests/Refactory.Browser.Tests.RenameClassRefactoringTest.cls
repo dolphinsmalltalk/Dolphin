@@ -26,6 +26,39 @@ testBadName
 		shouldFail: (RenameClassRefactoring rename: LintRuleTestData to: #'Ob ject')
 			withMessage: '''Smalltalk.Ob ject'' is not a valid class name'!
 
+testExistingClassVariableName
+	| refactoring subclass |
+	refactoring := RenameClassRefactoring
+				model: model
+				rename: ClassToRename
+				to: (ClassToRename environment fullNameFor: 'ClassVar1').
+	refactoring setOption: #ignoreSymbolicClassReferences toUse: [:rename :refs | true].
+	self executeRefactoring: refactoring.
+	"The renamed class now has the same name as a class variable that is referred to in a subclass - the subclass references will now need to be qualified to avoid binding to the class variable instead."
+	subclass := model classFor: SubclassOfClassToRename.
+	self
+		verifyMethod: #refersToClassUnqualified
+		of: subclass
+		equals: 'refersToClassUnqualified ^Tests.ClassVar1'.
+	self
+		verifyMethod: #refersToClassUnqualifiedBinding
+		of: subclass
+		equals: 'refersToClassUnqualifiedBinding ^#{_.Tests.ClassVar1}'.
+	"But the class variable reference doesn't need qualification, even though the name is ambiguous, because the class vars bind more tightly."
+	self
+		verifyMethod: #refersToInheritedClassVariableFullyQualified
+		of: subclass
+		equals: 'refersToInheritedClassVariableFullyQualified ^ClassVar1'.
+	self
+		verifyMethod: #refersToInheritedClassVariableUnqualifiedBinding
+		of: subclass
+		equals: 'refersToInheritedClassVariableUnqualifiedBinding ^#{ClassVar1}'.
+	"Fully-qualified binding references, are left fully-qualified though"
+	self
+		verifyMethod: #refersToInheritedClassVariableFullyQualifiedBinding
+		of: subclass
+		equals: 'refersToInheritedClassVariableFullyQualifiedBinding ^#{Refactory.Browser.Tests.ClassVar1.ClassVar1}'!
+
 testExistingName
 	self shouldFail: (RenameClassRefactoring
 				model: model
@@ -626,6 +659,7 @@ verifyRenames: aRBClass unqualified: unqualified full: fullyQualified partial: p
 compile:in:!helpers!private! !
 defineClass:!helpers!private! !
 testBadName!public!unit tests! !
+testExistingClassVariableName!public!unit tests! !
 testExistingName!public!unit tests! !
 testFixedName!public!unit tests! !
 testMetaClassFailure!public!unit tests! !
