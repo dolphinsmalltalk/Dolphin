@@ -34,13 +34,13 @@ buildVariableReferenceRewriter
 			"We rewrite any variable reference that needs change (or more qualification), or which is currently qualified but could be shortened."
 			variableNode isBindingChanged or: 
 					[variableNode hasQualifiedName
-						and: [(self shortestNameForVariable: variableNode) ~= variableNode name]]].
+						and: [(self shortestNameForStaticVariable: variableNode) ~= variableNode name]]].
 	"We rewrite any BindingReferences that bind to class before it is renamed, even if embedded in literal arrays. Symbols are not renamed."
 	rewriter
 		replace: '`#literal'
 		withValueFrom: [:literalNode | self rewriteLiteral: literalNode]
 		when: [:literalNode | self isImpactedLiteral: literalNode].
-	^rewriter	"Private - Rewrite a variable reference in a method of one of the renamed classes."!
+	^rewriter!
 
 checkForSymbolicReferences
 	| symbolicRefs |
@@ -60,15 +60,6 @@ className: oldString newName: newString
 					["The new name is unqualified, so the class should be moved to its base environment."
 					class baseEnvironment fullNameFor: newString].
 	newClassReference := BindingReference pathString: newName!
-
-convertMethod: aRBMethod using: aParseTreeRewriter
-	"Convert the parse tree for the specified method using the specified rewriter. If a change is made then compile it into the changeBuilder."
-
-	| parseTree |
-	parseTree := aRBMethod boundParseTree.
-	parseTree isNil ifTrue: [^self].
-	(aParseTreeRewriter executeTree: parseTree) ifFalse: [^self].
-	model compileTree: aParseTreeRewriter tree forMethod: aRBMethod!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -190,26 +181,9 @@ rewriteVariable: aVariableNode
 					ifTrue: 
 						["If a namespace annotation, the full name should always be used"
 						aVariableNode binding fullName]
-					ifFalse: [self shortestNameForVariable: aVariableNode]);
+					ifFalse: [self shortestNameForStaticVariable: aVariableNode]);
 		clearPositions;
 		yourself!
-
-shortestNameForVariable: aStVariableNode
-	"Private - Determine and answer the least qualified name for the specified variable reference that will still bind to the original variable with the current state of the refactoring model. This relies on the node in question having been passed through a semantic analyser before the model's state was updated for the rename, i.e. the AST needs to have been 'bound'."
-
-	| pathString current originalBinding methodNode root |
-	originalBinding := aStVariableNode binding.
-	pathString := originalBinding unqualifiedName.
-	current := originalBinding.
-	root := model rootNamespace.
-	methodNode := aStVariableNode methodNode.
-	"Keep adding qualification until the name can be bound to the original binding"
-	
-	[(methodNode fullBindingFor: pathString) == originalBinding ifTrue: [^pathString].
-	(current := current environment) == root]
-			whileFalse: [pathString := current unqualifiedName , BindingReference.PathSeparatorString , pathString].
-	"Nothing but the fully-qualified name will do"
-	^originalBinding fullName!
 
 shouldIgnoreRemainingSymbolicReferences: aCollection
 	^(self lookupOption: #ignoreSymbolicClassReferences) cull: self cull: aCollection!
@@ -234,12 +208,14 @@ transform
 			| rewriter |
 			self renameImports.
 			rewriter := self buildVariableReferenceRewriter.
-			methods do: [:method | self convertMethod: method using: rewriter]]! !
+			methods do: 
+					[:method |
+					method parseTree classScope clearVariableCache.
+					self convertMethod: method using: rewriter]]! !
 !Refactory.Browser.RenameClassRefactoring categoriesForMethods!
 buildVariableReferenceRewriter!private!transforming! !
 checkForSymbolicReferences!private!transforming! !
 className:newName:!initializing!private! !
-convertMethod:using:!public!support! !
 displayOn:!displaying!public! !
 isImpactedLiteral:!helpers!private! !
 preconditions!accessing!public! !
@@ -249,7 +225,6 @@ rewriteLiteralArray:!private!transforming! !
 rewriteQualifiedReference:!private!transforming! !
 rewriteSymbolicReferencesToClass!private!transforming! !
 rewriteVariable:!private!transforming! !
-shortestNameForVariable:!helpers!private! !
 shouldIgnoreRemainingSymbolicReferences:!options!private! !
 storeOn:!printing!public! !
 transform!public!transforming! !

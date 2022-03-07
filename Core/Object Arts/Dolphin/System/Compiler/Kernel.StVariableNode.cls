@@ -37,7 +37,7 @@ isStaticVariable
 resolveBinding
 	| initial |
 	initial := name at: 1.
-	^(initial isUppercase or: [initial == $_]) ifTrue: [self methodNode fullBindingFor: name]! !
+	^(initial isUppercase or: [initial == $_]) ifTrue: [self lookupInScope: scope]! !
 !Kernel.StVariableNode categoriesForMethods!
 binding!accessing!private! !
 hasQualifiedName!public!testing! !

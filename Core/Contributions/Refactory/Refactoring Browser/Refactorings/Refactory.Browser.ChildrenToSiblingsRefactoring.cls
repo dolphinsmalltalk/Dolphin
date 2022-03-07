@@ -31,9 +31,11 @@ changeIsKindOfReferences
 		replace: '``@object isKindOf: `variable'
 		withValueFrom: 
 			[:msg |
+			| variable |
+			variable := msg arguments first.
 			msg
-				arguments: {(StVariableNode named: (self nameForReferenceToClass: superclass fromNode: msg))
-							comments: msg arguments first comments;
+				arguments: {(StVariableNode named: (self shortestNameToBind: superclass binding from: variable))
+							comments: variable comments;
 							yourself}.
 			msg]
 		when: 

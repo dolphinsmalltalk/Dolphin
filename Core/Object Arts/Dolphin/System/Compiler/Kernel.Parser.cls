@@ -1316,7 +1316,7 @@ parseExistingMethodNoError: aCompiledMethod
 	^self
 		parseMethod: aCompiledMethod getSource
 		in: aCompiledMethod methodClass
-		environment: aCompiledMethod environment
+		environment: aCompiledMethod customEnvironment
 		onError: 
 			[:err |
 			Notification signal: ('Error <1p> on line <2p> of <3p> -> <4s>'
@@ -1377,7 +1377,7 @@ parseMethod: aString in: aClass
 	^self
 		parseMethod: aString
 		in: aClass
-		environment: aClass environment!
+		environment: nil!
 
 parseMethod: aString in: aClass environment: aNamespace
 	^self
@@ -1397,7 +1397,7 @@ parseMethod: aString in: aClass onError: aMonadicValuable
 	^self
 		parseMethod: aString
 		in: aClass
-		environment: aClass environment
+		environment: nil
 		onError: aMonadicValuable!
 
 parseMethod: aString onError: aBlock
@@ -1414,7 +1414,7 @@ parseMethodNoError: aString in: methodClass
 	^self
 		parseMethod: aString
 		in: methodClass
-		environment: methodClass environment
+		environment: nil
 		onError: [:err | ^nil]!
 
 parseMethodPattern: aString

@@ -33,6 +33,7 @@ package setMethodNames: #(
 	#(#{Kernel.StAbstractVariableNode} #lookupInScope:)
 	#(#{Kernel.StMethodNode} #analyze)
 	#(#{Kernel.StMethodNode} #newClassScope)
+	#(#{Kernel.StProgramNode} #classScope)
 	#(#{Kernel.StQualifiedReferenceNode} #binding)
 	#(#{Kernel.StQualifiedReferenceNode} #binding:)
 	#(#{Kernel.StQualifiedReferenceNode} #resolveBinding)
@@ -200,10 +201,18 @@ analyze
 	StSemanticAnalyser analyseParseTree: self!
 
 newClassScope
-	^StClassScope methodClass: methodClass environment: self environment! !
+	^StClassScope methodClass: methodClass environment: environment! !
 !Kernel.StMethodNode categoriesForMethods!
 analyze!operations!public! !
 newClassScope!accessing!private! !
+!
+
+!Kernel.StProgramNode methodsFor!
+
+classScope
+	^scope classScope! !
+!Kernel.StProgramNode categoriesForMethods!
+classScope!accessing!public! !
 !
 
 !Kernel.StQualifiedReferenceNode methodsFor!
@@ -217,11 +226,10 @@ binding: aVariableBinding
 resolveBinding
 	^self isRelative
 		ifTrue: 
-			[| classScope |
-			classScope := scope classScope.
-			classScope methodClass
-				fullBindingFor: ((pathString beginsWith: '_.') ifTrue: [pathString copyFrom: 3] ifFalse: [pathString])
-				environment: classScope environment]
+			[(scope classScope resolveIdentifier: ((pathString beginsWith: '_.')
+						ifTrue: [pathString copyFrom: 3]
+						ifFalse: [pathString]))
+				ifNotNil: [:var | var binding]]
 		ifFalse: 
 			[| globalScope |
 			globalScope := scope classScope methodClass globalScope.

@@ -113,9 +113,8 @@ realScope
 
 	^self!
 
-resolveVariable: aStVariableNode
-	^(locals lookup: aStVariableNode name)
-		ifNil: [outer ifNotNil: [outer resolveVariable: aStVariableNode]]!
+resolveIdentifier: aString
+	^(locals lookup: aString) ifNil: [outer ifNotNil: [outer resolveIdentifier: aString]]!
 
 temporaries
 	^locals select: [:each | each isTempVariable]!
@@ -156,7 +155,7 @@ node:outer:!initializing!private! !
 outer!accessing!public! !
 printOn:!printing!public! !
 realScope!accessing!public! !
-resolveVariable:!operations!private! !
+resolveIdentifier:!operations!private! !
 temporaries!accessing!private! !
 thisContextVariable!accessing!public! !
 unreferencedArguments!accessing!public! !

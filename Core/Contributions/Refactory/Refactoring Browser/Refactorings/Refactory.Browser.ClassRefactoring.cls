@@ -24,23 +24,6 @@ environment
 environment: aNamespace
 	self className: (aNamespace fullNameFor: self unqualifiedClassName)!
 
-nameForReferenceToClass: aRBClass fromNode: aStProgramNode
-	"Private - Answer the shortest name for the RBClass first argument that will bind to that class from the method of which the StProgramNode 2nd argument is part. The RBClass already has its target name."
-
-	| methodNode |
-	methodNode := aStProgramNode methodNode.
-	^methodNode environment == aRBClass environment
-		ifTrue: 
-			["The method's environment is the same, we can definitely use the unqualified name"
-			aRBClass unqualifiedName]
-		ifFalse: 
-			[| unqualified binding |
-			"We can also use the unqualified name if it can be bound using the unqualified name from the method."
-			binding := methodNode fullBindingFor: (unqualified := aRBClass unqualifiedName).
-			(binding notNil and: [binding refersToClass: aRBClass])
-				ifTrue: [unqualified]
-				ifFalse: [aRBClass fullName]]!
-
 unqualifiedClassName
 	^className unqualifiedName!
 
@@ -51,7 +34,6 @@ className!accessing!public! !
 className:!accessing!public! !
 environment!accessing!public! !
 environment:!accessing!public! !
-nameForReferenceToClass:fromNode:!private!transforming! !
 unqualifiedClassName!accessing!public! !
 unqualifiedClassName:!accessing!public! !
 !

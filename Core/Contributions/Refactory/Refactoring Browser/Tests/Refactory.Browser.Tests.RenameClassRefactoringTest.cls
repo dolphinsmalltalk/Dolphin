@@ -45,10 +45,21 @@ testExistingClassVariableName
 		of: subclass
 		equals: 'refersToClassUnqualifiedBinding ^#{_.Tests.ClassVar1}'.
 	"But the class variable reference doesn't need qualification, even though the name is ambiguous, because the class vars bind more tightly."
+	#(#refersToInheritedClassVariableFullyQualified #refersToInheritedClassVariableQualifiedByOwnName)
+		do: 
+			[:each |
+			self
+				verifyMethod: each
+				of: subclass
+				equals: '<1s> ^ClassVar1' << each].
+	"Except in the case where we have deliberately contrived to shadow the class variable with a local temp"
 	self
-		verifyMethod: #refersToInheritedClassVariableFullyQualified
+		verifyMethod: #refersToInheritedClassVariableWithShadowing
 		of: subclass
-		equals: 'refersToInheritedClassVariableFullyQualified ^ClassVar1'.
+		equals: 'refersToInheritedClassVariableWithShadowing
+	| ClassVar1 |
+	ClassVar1 := Tests.ClassVar1.ClassVar1, Tests.ClassVar1.ClassVar1.
+	^ClassVar1'.
 	self
 		verifyMethod: #refersToInheritedClassVariableUnqualifiedBinding
 		of: subclass

@@ -14,8 +14,11 @@ Kernel.StClassScope comment: ''!
 classScope
 	^self!
 
+clearVariableCache
+	staticVariables := LookupTable new!
+
 environment
-	^environment!
+	^environment ifNil: [methodClass environment]!
 
 environment: aNamespace
 	environment := aNamespace!
@@ -44,22 +47,23 @@ metaScope
 methodClass
 	^methodClass!
 
-methodClass: aClassDescription environment: aNamespace
+methodClass: aClassDescription environment: aNamespaceOrNil
+	"Private - Initialize the receiver. The environment (namespace) argument should be nil if the class' environment is to be used."
+
 	methodClass := aClassDescription.
-	environment := aNamespace.
-	staticVariables := LookupTable new.
+	environment := aNamespaceOrNil.
+	self clearVariableCache.
 	^self!
 
 outer
 	^nil!
 
-resolveVariable: aStVariableNode
-	| identifier |
-	^(self instanceVariables lookup: (identifier := aStVariableNode name))
+resolveIdentifier: aString
+	^(self instanceVariables lookup: aString)
 		ifNil: 
-			[staticVariables at: identifier
+			[staticVariables at: aString
 				ifAbsentPutClean: 
-					[(methodClass fullBindingFor: identifier environment: environment)
+					[(methodClass fullBindingFor: aString environment: self environment)
 						ifNotNil: [:b | StStaticVariable scope: self binding: b]]]!
 
 selfVariable
@@ -77,6 +81,7 @@ superVariable
 						yourself]! !
 !Kernel.StClassScope categoriesForMethods!
 classScope!accessing!public! !
+clearVariableCache!initializing!public! !
 environment!accessing!public! !
 environment:!accessing!public! !
 instanceVariables!accessing!public! !
@@ -84,7 +89,7 @@ metaScope!accessing!public! !
 methodClass!accessing!public! !
 methodClass:environment:!initializing!private! !
 outer!accessing!public! !
-resolveVariable:!operations!private! !
+resolveIdentifier:!operations!private! !
 selfVariable!operations!public! !
 superVariable!operations!public! !
 !

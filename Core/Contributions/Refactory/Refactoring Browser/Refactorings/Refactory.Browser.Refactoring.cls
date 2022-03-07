@@ -355,6 +355,28 @@ selectVariableTypesFrom: initialTypeCollection selected: selectedTypeCollection
 setOption: aSymbol toUse: aBlock
 	(options ifNil: [options := IdentityDictionary new]) at: aSymbol put: aBlock!
 
+shortestNameForStaticVariable: aStVariableNode
+	"Private - Determine and answer the least qualified name for the specified variable reference that will still bind to the original variable with the current state of the refactoring model. This relies on the node in question having been passed through a semantic analyser before the model's state was updated for (e.g.) a rename, i.e. the AST needs to have been 'bound'."
+
+	^self shortestNameToBind: aStVariableNode binding from: aStVariableNode!
+
+shortestNameToBind: aRBVariableBinding from: aVariableNode
+	"Private - Answer the least qualified name that will bind to the model static variable represented by the first argument, from the context of the parse node passed as the 2nd argument, against the current state of the refactoring model."
+
+	| current pathString root scope |
+	pathString := aRBVariableBinding unqualifiedName.
+	current := aRBVariableBinding.
+	root := model rootNamespace.
+	scope := aVariableNode scope.
+	
+	[| var |
+	var := scope resolveIdentifier: pathString.
+	(var notNil and: [var binding == aRBVariableBinding]) ifTrue: [^pathString].
+	(current := current environment) == root]
+			whileFalse: [pathString := current unqualifiedName , BindingReference.PathSeparatorString , pathString].
+	"Nothing but the fully-qualified name will do"
+	^aRBVariableBinding fullName!
+
 shouldExtractAssignmentTo: aString
 	^(self lookupOption: #extractAssignment) cull: self cull: aString!
 
@@ -452,6 +474,8 @@ safeMethodNameFor:basedOn:!public!utilities! !
 selectVariableToMoveMethodTo:class:!public!requests! !
 selectVariableTypesFrom:selected:!public!requests! !
 setOption:toUse:!accessing!options!public! !
+shortestNameForStaticVariable:!private!utilities! !
+shortestNameToBind:from:!private!utilities! !
 shouldExtractAssignmentTo:!public!requests! !
 shouldPullUpNonSharedInstanceVariable:!preconditions!public! !
 transform!public!transforming! !
