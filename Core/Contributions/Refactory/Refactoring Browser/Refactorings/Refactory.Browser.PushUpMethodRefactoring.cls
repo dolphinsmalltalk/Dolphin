@@ -140,7 +140,7 @@ copyDownMethod: aSelector
 					refactoringError: 'The <2p> method in superclass <3d> must be copied down to its other subclasses, but sends a super message that will be overridden.'
 							<< {class. aSelector. superclassDefiner unqualifiedName}].
 	(self shouldCopyDownSuperclassMethod: aSelector) ifFalse: [self refactoringAborted].
-	refactoring := ExpandReferencedPoolsRefactoring
+	refactoring := ExpandImportsRefactoring
 				model: self model
 				forMethod: (superclassDefiner parseTreeFor: aSelector)
 				fromClass: superclassDefiner
@@ -166,7 +166,7 @@ pushUp: aSelector
 	source := class sourceCodeFor: aSelector.
 	source isNil ifTrue: [self refactoringError: 'Source for method not available'].
 	superclass := class superclass.
-	refactoring := ExpandReferencedPoolsRefactoring
+	refactoring := ExpandImportsRefactoring
 				model: self model
 				forMethod: (class parseTreeFor: aSelector)
 				fromClass: class

@@ -1,13 +1,13 @@
 ﻿"Filed out from Dolphin Smalltalk"!
 
-Refactory.Browser.Refactoring subclass: #'Refactory.Browser.ExpandReferencedPoolsRefactoring'
+Refactory.Browser.Refactoring subclass: #'Refactory.Browser.ExpandImportsRefactoring'
 	instanceVariableNames: 'pools fromClass parseTree toClasses'
 	classVariableNames: ''
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.ExpandReferencedPoolsRefactoring guid: (Core.GUID fromString: '{5567e549-3f11-4042-99cd-794dab099550}')!
-Refactory.Browser.ExpandReferencedPoolsRefactoring comment: 'ExpandReferencedPoolsRefactoring is a refactoring that expands a PoolDictionary''s scope for a method that is being moved from one class to another. This refactoring is primarily used to support other, more complicated refactorings such as MoveMethod.
+Refactory.Browser.ExpandImportsRefactoring guid: (Core.GUID fromString: '{5567e549-3f11-4042-99cd-794dab099550}')!
+Refactory.Browser.ExpandImportsRefactoring comment: 'ExpandReferencedPoolsRefactoring is a refactoring that expands a PoolDictionary''s scope for a method that is being moved from one class to another. This refactoring is primarily used to support other, more complicated refactorings such as MoveMethod.
 
 Instance Variables:
 	fromClass	<RBClass>			The class that the method is being moved from.
@@ -16,8 +16,8 @@ Instance Variables:
 	toClasses	<Collection of: RBClass>	The classes into which the pools must be expanded.
 
 '!
-!Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesForClass!Refactory-Refactorings! !
-!Refactory.Browser.ExpandReferencedPoolsRefactoring methodsFor!
+!Refactory.Browser.ExpandImportsRefactoring categoriesForClass!Refactory-Refactorings! !
+!Refactory.Browser.ExpandImportsRefactoring methodsFor!
 
 computeReferencedPools
 	| poolVariables searcher |
@@ -90,7 +90,7 @@ whichPoolDefines: varName
 						ifNotNil: [:pool | (pool localBindingFor: varName) ifNotNil: [:var | var isClassVariable ifTrue: [^each]]]].
 			currentClass := currentClass superclass].
 	^nil! !
-!Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesForMethods!
+!Refactory.Browser.ExpandImportsRefactoring categoriesForMethods!
 computeReferencedPools!public!transforming! !
 forMethod:fromClass:toClasses:!initialize/release!public! !
 movePool:toClass:!public!transforming! !
@@ -103,7 +103,7 @@ transform!public!transforming! !
 whichPoolDefines:!public!transforming! !
 !
 
-!Refactory.Browser.ExpandReferencedPoolsRefactoring class methodsFor!
+!Refactory.Browser.ExpandImportsRefactoring class methodsFor!
 
 forMethod: aParseTree fromClass: aClass toClasses: classCollection 
 	^(self new)
@@ -119,7 +119,7 @@ model: aRBModel forMethod: aParseTree fromClass: aClass toClasses: classCollecti
 			fromClass: aClass
 			toClasses: classCollection;
 		yourself! !
-!Refactory.Browser.ExpandReferencedPoolsRefactoring class categoriesForMethods!
+!Refactory.Browser.ExpandImportsRefactoring class categoriesForMethods!
 forMethod:fromClass:toClasses:!instance creation!public! !
 model:forMethod:fromClass:toClasses:!instance creation!public! !
 !

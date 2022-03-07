@@ -31,7 +31,7 @@ pushDown: aSelector
 	| code protocols refactoring packageAndEnv |
 	code := class sourceCodeFor: aSelector.
 	protocols := class protocolsFor: aSelector.
-	refactoring := ExpandReferencedPoolsRefactoring
+	refactoring := ExpandImportsRefactoring
 				model: self model
 				forMethod: (class parseTreeFor: aSelector)
 				fromClass: class

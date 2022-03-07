@@ -23,7 +23,7 @@ package setClassNames: #(
 	#{Refactory.Browser.ChildrenToSiblingsRefactoring}
 	#{Refactory.Browser.ClassRefactoring}
 	#{Refactory.Browser.CreateAccessorsForVariableRefactoring}
-	#{Refactory.Browser.ExpandReferencedPoolsRefactoring}
+	#{Refactory.Browser.ExpandImportsRefactoring}
 	#{Refactory.Browser.ExtractMethodRefactoring}
 	#{Refactory.Browser.ExtractMethodToComponentRefactoring}
 	#{Refactory.Browser.ExtractToTemporaryRefactoring}
@@ -263,7 +263,7 @@ Refactory.Browser.Refactoring subclass: #'Refactory.Browser.ClassRefactoring'
 	imports: #()
 	classInstanceVariableNames: ''
 	classConstants: {}!
-Refactory.Browser.Refactoring subclass: #'Refactory.Browser.ExpandReferencedPoolsRefactoring'
+Refactory.Browser.Refactoring subclass: #'Refactory.Browser.ExpandImportsRefactoring'
 	instanceVariableNames: 'pools fromClass parseTree toClasses'
 	classVariableNames: ''
 	imports: #()

@@ -73,7 +73,7 @@ abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection
 	fromClass := self classObjectFor: fromBehavior.
 	toClasses := behaviorCollection collect: [:each | self classObjectFor: each].
 	ignore := aVariableName.
-	poolRefactoring := ExpandReferencedPoolsRefactoring
+	poolRefactoring := ExpandImportsRefactoring
 				model: self model
 				forMethod: tree
 				fromClass: fromClass

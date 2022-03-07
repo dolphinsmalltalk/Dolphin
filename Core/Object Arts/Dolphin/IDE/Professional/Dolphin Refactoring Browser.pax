@@ -78,8 +78,8 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.ClassCommentChange class} #icon)
 	#(#{Refactory.Browser.CompositeRefactoryChange class} #icon)
 	#(#{Refactory.Browser.CreateAccessorsForVariableRefactoring class} #displayPrefix)
-	#(#{Refactory.Browser.ExpandReferencedPoolsRefactoring} #displayOn:)
-	#(#{Refactory.Browser.ExpandReferencedPoolsRefactoring} #getOptionMovePools:)
+	#(#{Refactory.Browser.ExpandImportsRefactoring} #displayOn:)
+	#(#{Refactory.Browser.ExpandImportsRefactoring} #getOptionMovePools:)
 	#(#{Refactory.Browser.ExtractMethodRefactoring} #displayOn:)
 	#(#{Refactory.Browser.ExtractMethodRefactoring} #getOptionUseExistingMethod:)
 	#(#{Refactory.Browser.ExtractMethodToComponentRefactoring} #displayOn:)
@@ -769,7 +769,7 @@ displayPrefix
 displayPrefix!displaying!public! !
 !
 
-!Refactory.Browser.ExpandReferencedPoolsRefactoring methodsFor!
+!Refactory.Browser.ExpandImportsRefactoring methodsFor!
 
 displayOn: aPuttableStream
 	"Append to the <puttableStream> argument a String whose characters are a representation of the receiver that an end-user might want to see."
@@ -812,7 +812,7 @@ getOptionMovePools: aCollection
 		customButtons: #(#(#yes '&Add Imports') #(#no '&Cancel'));
 		detailsText: details contents;
 		confirm! !
-!Refactory.Browser.ExpandReferencedPoolsRefactoring categoriesForMethods!
+!Refactory.Browser.ExpandImportsRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
 getOptionMovePools:!options!public! !
 !
