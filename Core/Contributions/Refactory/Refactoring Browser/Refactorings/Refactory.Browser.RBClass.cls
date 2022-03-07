@@ -398,14 +398,12 @@ removeSubclass: aRBClass
 	subclasses := self subclasses copyWithout: aRBClass!
 
 renameClassVariable: oldName to: newName around: aBlock
-	| variables |
-	variables := self classPool.
+	self classPool changeKey: oldName to: newName.
 	model
 		renameClassVariable: oldName
 		to: newName
 		in: self
-		around: aBlock.
-	variables changeKey: oldName to: newName!
+		around: aBlock!
 
 replaceImport: oldBindingReference with: newBindingReference
 	"Replace an existing import with a new one, maintaining the existing order. This is typically used when renaming classes/namespaces that might be imported elsewhere."

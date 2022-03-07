@@ -22,26 +22,6 @@ Renaming a class in such a way as to change its `Namespace` can result in ambigu
 !Refactory.Browser.RenameClassRefactoring categoriesForClass!Refactory-Refactorings! !
 !Refactory.Browser.RenameClassRefactoring methodsFor!
 
-buildVariableReferenceRewriter
-	| rewriter |
-	rewriter := ParseTreeRewriter new.
-	"Any real references to the variable will need to be rewritten using a form that still binds to the same (renamed) variable."
-	rewriter
-		replace: '`identifier'
-		withValueFrom: [:variableNode | self rewriteVariable: variableNode]
-		when: 
-			[:variableNode |
-			"We rewrite any variable reference that needs change (or more qualification), or which is currently qualified but could be shortened."
-			variableNode isBindingChanged or: 
-					[variableNode hasQualifiedName
-						and: [(self shortestNameForStaticVariable: variableNode) ~= variableNode name]]].
-	"We rewrite any BindingReferences that bind to class before it is renamed, even if embedded in literal arrays. Symbols are not renamed."
-	rewriter
-		replace: '`#literal'
-		withValueFrom: [:literalNode | self rewriteLiteral: literalNode]
-		when: [:literalNode | self isImpactedLiteral: literalNode].
-	^rewriter!
-
 checkForSymbolicReferences
 	| symbolicRefs |
 	symbolicRefs := model allReferencesTo: oldUnqualified.
@@ -69,20 +49,6 @@ displayOn: aPuttableStream
 		display: className;
 		nextPutAll: ' to ';
 		nextPutAll: newName!
-
-isImpactedLiteral: aStLiteralNode
-	aStLiteralNode isLiteralArray
-		ifTrue: 
-			[^aStLiteralNode contents
-				anySatisfy: [:each | each isLiteralNode and: [self isImpactedLiteral: each]]].
-	aStLiteralNode isQualifiedReference
-		ifTrue: 
-			[| binding |
-			binding := aStLiteralNode binding.
-			^binding == classBinding or: 
-					["Any qualified reference that now binds differently is impacted and needs rewriting. This "
-					aStLiteralNode resolveBinding ~~ binding]].
-	^false!
 
 preconditions
 	^(RBCondition withBlock: [class notNil and: [class isMeta not]]
@@ -112,52 +78,6 @@ renameImports
 										private: each isPrivate.
 							eachClass replaceImport: each with: newImport]]]!
 
-rewriteLiteral: aStLiteralNode
-	aStLiteralNode isLiteralArray ifTrue: [^self rewriteLiteralArray: aStLiteralNode].
-	aStLiteralNode isQualifiedReference ifTrue: [^self rewriteQualifiedReference: aStLiteralNode].
-	^aStLiteralNode copy!
-
-rewriteLiteralArray: aStLiteralArrayNode
-	^StLiteralArrayNode
-		contents: (aStLiteralArrayNode contents collect: [:each | self rewriteLiteral: each])!
-
-rewriteQualifiedReference: aQualifiedReferenceNode
-	| binding pathString path i methodNode fullName |
-	aQualifiedReferenceNode isRelative
-		ifFalse: 
-			["Previous fully qualified reference, just answer the new fully-qualifed reference"
-			^aQualifiedReferenceNode copy
-				pathString: aQualifiedReferenceNode binding fullName;
-				clearPositions;
-				yourself].
-
-	"A relative binding, but it may not actually need to be changed (we might only be here because this ref is inside a literal array with other refs that have changed)"
-	aQualifiedReferenceNode isBindingChanged ifFalse: [^aQualifiedReferenceNode copy].
-	"We have a changed relative binding reference, so need to find the shortest new relative path that will bind to the same variable"
-	binding := aQualifiedReferenceNode binding.
-	methodNode := aQualifiedReferenceNode methodNode.
-	fullName := binding fullName.
-	path := BindingReference.PathSeparator split: fullName.
-	i := path size.
-	pathString := ''.
-	
-	[pathString := (path at: i) , pathString.
-	(methodNode fullBindingFor: pathString) == binding
-		ifTrue: 
-			[^aQualifiedReferenceNode copy
-				pathString: (i == path size ifTrue: [pathString] ifFalse: ['_.' , pathString]);
-				clearPositions;
-				yourself].
-	i > 2]
-			whileTrue: 
-				[i := i - 1.
-				pathString := BindingReference.PathSeparatorString , pathString].
-	^aQualifiedReferenceNode copy
-		pathString: fullName;
-		isRelative: false;
-		clearPositions;
-		yourself!
-
 rewriteSymbolicReferencesToClass
 	"Private - If renaming a class that is currently in Smalltalk into another Namespace, we first rewrite any definite symbolic references to the class into literal binding references."
 
@@ -172,18 +92,6 @@ rewriteSymbolicReferencesToClass
 	symbolicRefs isEmpty
 		ifFalse: 
 			[(self shouldIgnoreRemainingSymbolicReferences: symbolicRefs) ifFalse: [self refactoringAborted]]!
-
-rewriteVariable: aVariableNode
-	"Private - Rewrite a variable reference that refers to one of the renamed classes."
-
-	^aVariableNode copy
-		name: ((aVariableNode parent isAnnotation and: [aVariableNode parent selector == #namespace:])
-					ifTrue: 
-						["If a namespace annotation, the full name should always be used"
-						aVariableNode binding fullName]
-					ifFalse: [self shortestNameForStaticVariable: aVariableNode]);
-		clearPositions;
-		yourself!
 
 shouldIgnoreRemainingSymbolicReferences: aCollection
 	^(self lookupOption: #ignoreSymbolicClassReferences) cull: self cull: aCollection!
@@ -205,26 +113,16 @@ transform
 		to: newName
 		around: 
 			[:methods |
-			| rewriter |
-			self renameImports.
-			rewriter := self buildVariableReferenceRewriter.
-			methods do: 
-					[:method |
-					method parseTree classScope clearVariableCache.
-					self convertMethod: method using: rewriter]]! !
+			self
+				renameImports;
+				rewriteStaleVariableReferences: methods]! !
 !Refactory.Browser.RenameClassRefactoring categoriesForMethods!
-buildVariableReferenceRewriter!private!transforming! !
 checkForSymbolicReferences!private!transforming! !
 className:newName:!initializing!private! !
 displayOn:!displaying!public! !
-isImpactedLiteral:!helpers!private! !
 preconditions!accessing!public! !
 renameImports!private!transforming! !
-rewriteLiteral:!private!transforming! !
-rewriteLiteralArray:!private!transforming! !
-rewriteQualifiedReference:!private!transforming! !
 rewriteSymbolicReferencesToClass!private!transforming! !
-rewriteVariable:!private!transforming! !
 shouldIgnoreRemainingSymbolicReferences:!options!private! !
 storeOn:!printing!public! !
 transform!public!transforming! !

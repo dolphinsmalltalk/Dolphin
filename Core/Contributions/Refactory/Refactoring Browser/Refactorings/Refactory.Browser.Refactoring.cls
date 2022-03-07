@@ -23,6 +23,26 @@ baseEnvironment
 browseEnvironments: aCollectionOfBrowserEnvironments
 	^(self lookupOption: #browseEnvironments) cull: self cull: aCollectionOfBrowserEnvironments!
 
+buildVariableReferenceRewriter
+	| rewriter |
+	rewriter := ParseTreeRewriter new.
+	"Any real references to the variable will need to be rewritten using a form that still binds to the same (renamed) variable."
+	rewriter
+		replace: '`identifier'
+		withValueFrom: [:variableNode | self rewriteStaleStaticVariable: variableNode]
+		when: 
+			[:variableNode |
+			"We rewrite any variable reference that needs change (or more qualification), or which is currently qualified but could be shortened."
+			variableNode isBindingChanged or: 
+					[variableNode hasQualifiedName
+						and: [(self shortestNameForStaticVariable: variableNode) ~= variableNode name]]].
+	"We rewrite any BindingReferences that bind to class before it is renamed, even if embedded in literal arrays. Symbols are not renamed."
+	rewriter
+		replace: '`#literal'
+		withValueFrom: [:literalNode | self rewriteStaleLiteralReference: literalNode]
+		when: [:literalNode | self isStaleLiteralReference: literalNode].
+	^rewriter!
+
 canReferenceVariable: aString in: aClass
 	(aClass definesVariable: aString) ifTrue: [^true].
 	(self model includesStaticVariable: aString) ifTrue: [^true].
@@ -243,6 +263,17 @@ getOptionVariableTypes: choicesCollection selected: suggestionsCollection
 	classSelected := self chooseFrom: choicesCollection caption: 'Select class of new method…'.
 	^classSelected notNil ifTrue: [{classSelected}] ifFalse: [nil]!
 
+isStaleLiteralReference: aStLiteralNode
+	aStLiteralNode isLiteralArray
+		ifTrue: 
+			[^aStLiteralNode contents
+				anySatisfy: [:each | each isLiteralNode and: [self isStaleLiteralReference: each]]].
+	aStLiteralNode isQualifiedReference
+		ifTrue: 
+			["Any qualified reference that now binds differently against the current state of the model needs rewriting."
+			^aStLiteralNode binding ~~ aStLiteralNode resolveBinding].
+	^false!
+
 lookupOption: aSymbol
 	options ifNotNil: [(options lookup: aSymbol) ifNotNil: [:option | ^option]].
 	^RefactoringOptions at: aSymbol!
@@ -322,6 +353,73 @@ requestNewMethodName: aMethodName forClasses: aCollection
 
 requestSelfArgumentName
 	^(self lookupOption: #selfArgumentName) cull: self!
+
+rewriteStaleLiteralReference: aLiteralNode
+	aLiteralNode isLiteralArray
+		ifTrue: [^self rewriteStaleReferencesInLiteralArray: aLiteralNode].
+	aLiteralNode isQualifiedReference ifTrue: [^self rewriteStaleQualifiedReference: aLiteralNode].
+	^aLiteralNode copy!
+
+rewriteStaleQualifiedReference: aQualifiedReferenceNode
+	| binding pathString path i methodNode fullName |
+	aQualifiedReferenceNode isRelative
+		ifFalse: 
+			["Previous fully qualified reference, just answer the new fully-qualifed reference"
+			^aQualifiedReferenceNode copy
+				pathString: aQualifiedReferenceNode binding fullName;
+				clearPositions;
+				yourself].
+
+	"A relative binding, but it may not actually need to be changed (we might only be here because this ref is inside a literal array with other refs that have changed)"
+	aQualifiedReferenceNode isBindingChanged ifFalse: [^aQualifiedReferenceNode copy].
+	"We have a changed relative binding reference, so need to find the shortest new relative path that will bind to the same variable"
+	binding := aQualifiedReferenceNode binding.
+	methodNode := aQualifiedReferenceNode methodNode.
+	fullName := binding fullName.
+	path := BindingReference.PathSeparator split: fullName.
+	i := path size.
+	pathString := ''.
+	
+	[pathString := (path at: i) , pathString.
+	(methodNode fullBindingFor: pathString) == binding
+		ifTrue: 
+			[^aQualifiedReferenceNode copy
+				pathString: (i == path size ifTrue: [pathString] ifFalse: ['_.' , pathString]);
+				clearPositions;
+				yourself].
+	i > 2]
+			whileTrue: 
+				[i := i - 1.
+				pathString := BindingReference.PathSeparatorString , pathString].
+	^aQualifiedReferenceNode copy
+		pathString: fullName;
+		isRelative: false;
+		clearPositions;
+		yourself!
+
+rewriteStaleReferencesInLiteralArray: aLiteralArrayNode
+	^StLiteralArrayNode
+		contents: (aLiteralArrayNode contents collect: [:each | self rewriteStaleLiteralReference: each])!
+
+rewriteStaleStaticVariable: aVariableNode
+	"Private - Rewrite a variable reference so that it still binds correctly given the current state of the model."
+
+	^aVariableNode copy
+		name: ((aVariableNode parent isAnnotation and: [aVariableNode parent selector == #namespace:])
+					ifTrue: 
+						["If a namespace annotation, the full name should always be used"
+						aVariableNode binding fullName]
+					ifFalse: [self shortestNameForStaticVariable: aVariableNode]);
+		clearPositions;
+		yourself!
+
+rewriteStaleVariableReferences: aCollectionOfMethods
+	| rewriter |
+	rewriter := self buildVariableReferenceRewriter.
+	aCollectionOfMethods do: 
+			[:each |
+			each parseTree classScope clearVariableCache.
+			self convertMethod: each using: rewriter]!
 
 safeMethodNameFor: aClass basedOn: aString 
 	"Creates an unused method name containing aString"
@@ -410,6 +508,7 @@ whichVariableNode: aParseTree inInterval: anInterval name: aName
 associationForClassVariable:in:ifAbsent:!public!utilities! !
 baseEnvironment!constants!private! !
 browseEnvironments:!public!requests! !
+buildVariableReferenceRewriter!private!transforming! !
 canReferenceVariable:in:!public!testing! !
 changes!accessing!public! !
 checkClass:selector:using:!public!support! !
@@ -452,6 +551,7 @@ getOptionSelfArgumentName!options!public! !
 getOptionUseExistingMethod:!options!public! !
 getOptionVariableToMoveToOf:in:!options!public! !
 getOptionVariableTypes:selected:!options!public! !
+isStaleLiteralReference:!helpers!private! !
 lookupOption:!accessing!options!private! !
 model!public!transforming! !
 model:!initialize/release!public! !
@@ -470,6 +570,11 @@ refactoringError:with:!exceptions!private! !
 refactoringWarning:!public!requests! !
 requestNewMethodName:forClasses:!public!requests! !
 requestSelfArgumentName!public!requests! !
+rewriteStaleLiteralReference:!private!transforming! !
+rewriteStaleQualifiedReference:!private!transforming! !
+rewriteStaleReferencesInLiteralArray:!private!transforming! !
+rewriteStaleStaticVariable:!private!transforming! !
+rewriteStaleVariableReferences:!private!transforming! !
 safeMethodNameFor:basedOn:!public!utilities! !
 selectVariableToMoveMethodTo:class:!public!requests! !
 selectVariableTypesFrom:selected:!public!requests! !

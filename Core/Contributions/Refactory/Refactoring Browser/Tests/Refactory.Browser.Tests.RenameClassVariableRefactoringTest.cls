@@ -61,11 +61,68 @@ testRenameClassVar
 											ifFalse: 
 												[builder compile: rewriteRule tree printString
 													in: class
-													categories: aSmalllintContext protocols]]')! !
+													categories: aSmalllintContext protocols]]')!
+
+testRenameClassVarWithExternalReferences
+	"Class variables/constants can be referenced from classes outside the defined hierarchy (external classes) by using qualified names. These references must also be updated."
+
+	| refactoring class externalClass subclass |
+	refactoring := RenameClassVariableRefactoring
+				rename: 'ClassVar1'
+				to: 'CV1'
+				in: ClassToRename.
+	subclass := refactoring model classFor: SubclassOfClassToRename.
+	subclass
+		compile: 'refersToInheritedClassVariableWithShadowing 
+	| CV1 |
+	CV1 :=  ClassToRename.ClassVar1, SubclassOfClassToRename.ClassVar1.
+	^CV1'.
+	self executeRefactoring: refactoring.
+	class := refactoring model classFor: ClassToRename.
+	self assert: (class directlyDefinesClassVariable: 'CV1').
+	self deny: (class directlyDefinesClassVariable: 'ClassVar1').
+	self
+		verifyMethod: #refersToOwnClassVariable
+		of: class
+		equals: 'refersToOwnClassVariable ^CV1'.
+	self
+		verifyMethod: #initialize
+		of: class metaclass
+		equals: 'initialize CV1 := ''ClassVar1 of ClassToRename'''.
+	#(#refersToInheritedClassVariable #refersToInheritedClassVariableQualifiedByOwnName #refersToInheritedClassVariableFullyQualified)
+		do: 
+			[:each |
+			self
+				verifyMethod: each
+				of: subclass
+				equals: '<1s> ^CV1' << each].
+	self
+		verifyMethod: #refersToInheritedClassVariableFullyQualifiedBinding
+		of: subclass
+		equals: 'refersToInheritedClassVariableFullyQualifiedBinding ^#{Refactory.Browser.Tests.ClassToRename.CV1}'.
+	self
+		verifyMethod: #refersToInheritedClassVariableWithShadowing
+		of: subclass
+		equals: 'refersToInheritedClassVariableWithShadowing 
+	| CV1 |
+	CV1 :=  ClassToRename.CV1, ClassToRename.CV1.
+	^CV1'.
+	externalClass := refactoring model classFor: RefactoryTestDataApp.
+	#(#refersToClassVariablePartiallyQualified #refersToClassVariableFullyQualified) do: 
+			[:each |
+			self
+				verifyMethod: each
+				of: externalClass
+				equals: '<1s> ^Tests.ClassToRename.CV1' << each].
+	self
+		verifyMethod: #refersToClassVariablePartiallyQualifiedBinding
+		of: externalClass
+		equals: 'refersToClassVariablePartiallyQualifiedBinding ^#{_.Tests.ClassToRename.CV1} binding'! !
 !Refactory.Browser.Tests.RenameClassVariableRefactoringTest categoriesForMethods!
 testAlreadyExistingName!failure tests!public! !
 testMetaClassFailure!failure tests!public! !
 testNonExistantName!failure tests!public! !
 testRenameClassVar!public!tests! !
+testRenameClassVarWithExternalReferences!public!tests! !
 !
 

@@ -24,22 +24,6 @@ rename: aVarName to: aName in: aClass
 	self variable: aVarName class: aClass.
 !
 
-renameReferences
-	| replacer subclasses |
-	replacer := ParseTreeRewriter
-				rename: variableName
-				to: newName
-				handler: 
-					[self
-						refactoringError: ('<1s> is already defined as a method or block temporary <n> variable in this class or one of its subclasses'
-								expandMacrosWith: newName)].
-	subclasses := class withAllSubclasses asSet.
-	subclasses addAll: class metaclass withAllSubclasses.
-	self
-		convertClasses: subclasses
-		select: [:aClass | aClass whichSelectorsReferToClassVariable: variableName]
-		using: replacer!
-
 storeOn: aStream 
 	aStream nextPut: $(.
 	self class storeOn: aStream.
@@ -53,14 +37,17 @@ storeOn: aStream
 	aStream nextPut: $)!
 
 transform
-	class 
+	| methods binding |
+	binding := class bindingFor: variableName.
+	methods := model allReferencesToBinding: binding.
+	methods do: [:each | each boundParseTree].
+	class
 		renameClassVariable: variableName
 		to: newName
-		around: [self renameReferences]! !
+		around: [self rewriteStaleVariableReferences: methods]! !
 !Refactory.Browser.RenameClassVariableRefactoring categoriesForMethods!
 preconditions!preconditions!public! !
 rename:to:in:!initialize/release!public! !
-renameReferences!public!transforming! !
 storeOn:!printing!public! !
 transform!public!transforming! !
 !
