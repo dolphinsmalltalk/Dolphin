@@ -19,9 +19,23 @@ Instance Variables:
 !Refactory.Browser.ExpandImportsRefactoring categoriesForClass!Refactory-Refactorings! !
 !Refactory.Browser.ExpandImportsRefactoring methodsFor!
 
-computeReferencedPools
+addImport: aBindingReference toClass: aClass
+	| nonMetaClass |
+	nonMetaClass := aClass nonMetaclass.
+	(nonMetaClass importsNamespace: aBindingReference)
+		ifFalse: [nonMetaClass addImport: aBindingReference]!
+
+addImports
+	pools do: [:poolDict | toClasses do: [:each | self addImport: poolDict toClass: each]]!
+
+classVariableNamesIn: aClassName
+	^aClassName asQualifiedReference valueOrNil
+		ifNil: [#()]
+		ifNotNil: [:class | class definedBindings collect: [:each | each key]]!
+
+computeReferencedNamespaces
 	| poolVariables searcher |
-	poolVariables := self poolVariableNamesFor: fromClass.
+	poolVariables := self importedVariableNamesFor: fromClass.
 	pools := Set new.
 	searcher := ParseTreeSearcher new.
 	searcher matches: '`var'
@@ -34,7 +48,7 @@ computeReferencedPools
 					[(poolVariables includes: varName)
 						ifTrue: 
 							[| pool |
-							pool := self whichPoolDefines: varName.
+							pool := self whichNamespaceDefines: varName.
 							pool notNil ifTrue: [pools add: pool]]]].
 	searcher executeTree: parseTree!
 
@@ -43,17 +57,7 @@ forMethod: aParseTree fromClass: aClass toClasses: classCollection
 	parseTree := aParseTree.
 	toClasses := classCollection collect: [:each | self model classFor: each]!
 
-movePool: aBindingReference toClass: aClass
-	| nonMetaClass |
-	nonMetaClass := aClass nonMetaclass.
-	(nonMetaClass importsNamespace: aBindingReference)
-		ifFalse: [nonMetaClass addImport: aBindingReference]!
-
-movePoolVariables
-	pools 
-		do: [:poolDict | toClasses do: [:each | self movePool: poolDict toClass: each]]!
-
-poolsToMove
+importsToAdd
 	^pools select: 
 			[:eachPoolName |
 			toClasses anySatisfy: 
@@ -62,45 +66,40 @@ poolsToMove
 					nonMetaClass := eachClass nonMetaclass.
 					(nonMetaClass importsNamespace: eachPoolName) not]]!
 
-poolVariableNamesIn: poolName
-	^poolName asQualifiedReference valueOrNil
-		ifNil: [#()]
-		ifNotNil: [:sharedPool | sharedPool definedBindings collect: [:each | each key]]!
-
 preconditions
 	^RBCondition empty!
 
-shouldMovePools: aCollection
-	^(self lookupOption: #movePools) cull: self cull: aCollection!
+shouldAddImports: aCollection
+	^(self lookupOption: #addImports) cull: self cull: aCollection!
 
 transform
 	| toMove |
-	self computeReferencedPools.
-	toMove := self poolsToMove.
-	toMove notEmpty ifTrue: [(self shouldMovePools: toMove) ifFalse: [self refactoringAborted]].
-	self movePoolVariables!
+	self computeReferencedNamespaces.
+	toMove := self importsToAdd.
+	toMove notEmpty ifTrue: [(self shouldAddImports: toMove) ifFalse: [self refactoringAborted]].
+	self addImports!
 
-whichPoolDefines: varName
+whichNamespaceDefines: aString
 	| currentClass |
 	currentClass := fromClass.
 	[currentClass isNil] whileFalse: 
 			[currentClass allImports do: 
 					[:each |
 					each valueOrNil
-						ifNotNil: [:pool | (pool localBindingFor: varName) ifNotNil: [:var | var isClassVariable ifTrue: [^each]]]].
+						ifNotNil: [:namespace | (namespace localBindingFor: aString) ifNotNil: [:var | var isClassVariable ifTrue: [^each]]]].
 			currentClass := currentClass superclass].
 	^nil! !
 !Refactory.Browser.ExpandImportsRefactoring categoriesForMethods!
-computeReferencedPools!public!transforming! !
+addImport:toClass:!private!transforming! !
+addImports!private!transforming! !
+classVariableNamesIn:!private!transforming! !
+computeReferencedNamespaces!private!transforming! !
 forMethod:fromClass:toClasses:!initialize/release!public! !
-movePool:toClass:!public!transforming! !
-movePoolVariables!public!transforming! !
-poolsToMove!public! !
-poolVariableNamesIn:!public!transforming! !
+importsToAdd!helpers!private! !
 preconditions!preconditions!public! !
-shouldMovePools:!private!requests! !
+shouldAddImports:!private!requests! !
 transform!public!transforming! !
-whichPoolDefines:!public!transforming! !
+whichNamespaceDefines:!public!transforming! !
 !
 
 !Refactory.Browser.ExpandImportsRefactoring class methodsFor!

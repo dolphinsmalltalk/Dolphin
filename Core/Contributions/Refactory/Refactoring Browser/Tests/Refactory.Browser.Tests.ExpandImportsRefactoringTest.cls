@@ -22,7 +22,11 @@ testExpandImports
 				forMethod: (bytecodeDispatcher metaclass parseTreeFor: #initialize)
 				fromClass: ByteCodeDispatcher
 				toClasses: {thisClass}.
-	subject setOption: #movePools toUse: [:rename :pools | true].
+	subject setOption: #addImports
+		toUse: 
+			[:rename :imports |
+			self assert: imports asArray equals: {opcodes fullyQualifiedReference}.
+			true].
 	self executeRefactoring: subject.
 	self assert: (thisClass imports includes: opcodes asQualifiedReference)! !
 !Refactory.Browser.Tests.ExpandImportsRefactoringTest categoriesForMethods!

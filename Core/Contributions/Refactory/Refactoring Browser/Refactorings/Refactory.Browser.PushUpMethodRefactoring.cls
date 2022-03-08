@@ -124,7 +124,7 @@ checkSuperSendsFromSiblings
 	siblings do: [:aRBClass | self checkSiblingSuperSendsFrom: aRBClass]!
 
 copyDownMethod: aSelector
-	| oldProtocols oldSource superclassDefiner subclasses refactoring |
+	| oldProtocols oldSource superclassDefiner subclasses importsRefactoring |
 	superclassDefiner := class superclass whoDefinesMethod: aSelector.
 	superclassDefiner isNil ifTrue: [^self].
 	oldSource := superclassDefiner sourceCodeFor: aSelector.
@@ -140,12 +140,12 @@ copyDownMethod: aSelector
 					refactoringError: 'The <2p> method in superclass <3d> must be copied down to its other subclasses, but sends a super message that will be overridden.'
 							<< {class. aSelector. superclassDefiner unqualifiedName}].
 	(self shouldCopyDownSuperclassMethod: aSelector) ifFalse: [self refactoringAborted].
-	refactoring := ExpandImportsRefactoring
+	importsRefactoring := ExpandImportsRefactoring
 				model: self model
 				forMethod: (superclassDefiner parseTreeFor: aSelector)
 				fromClass: superclassDefiner
 				toClasses: subclasses.
-	self performComponentRefactoring: refactoring.
+	self performComponentRefactoring: importsRefactoring.
 	subclasses do: [:each | each compile: oldSource categories: oldProtocols]!
 
 copyDownMethods
@@ -162,17 +162,17 @@ preconditions
 						true])!
 
 pushUp: aSelector
-	| source refactoring packageAndEnv superclass |
-	source := class sourceCodeFor: aSelector.
-	source isNil ifTrue: [self refactoringError: 'Source for method not available'].
+	| source importsRefactoring packageAndEnv superclass method |
+	method := class methodFor: aSelector.
 	superclass := class superclass.
-	refactoring := ExpandImportsRefactoring
+	importsRefactoring := ExpandImportsRefactoring
 				model: self model
-				forMethod: (class parseTreeFor: aSelector)
+				forMethod: method parseTree
 				fromClass: class
 				toClasses: {superclass}.
-	self performComponentRefactoring: refactoring.
+	self performComponentRefactoring: importsRefactoring.
 	"Maintain package and any custom namespace"
+	source := method source.
 	packageAndEnv := class existingMethodPackageAndEnvironment: aSelector.
 	superclass
 		compile: source

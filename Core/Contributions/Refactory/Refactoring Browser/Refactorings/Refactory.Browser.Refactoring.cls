@@ -46,7 +46,7 @@ buildVariableReferenceRewriter
 canReferenceVariable: aString in: aClass
 	(aClass definesVariable: aString) ifTrue: [^true].
 	(self model includesStaticVariable: aString) ifTrue: [^true].
-	^(self poolVariableNamesFor: aClass) includes: aString!
+	^(self importedVariableNamesFor: aClass) includes: aString!
 
 changes
 	^self model changes!
@@ -124,6 +124,10 @@ getOptionAbstractVariables
 	^self
 		confirm: 'This method has direct variable references which will need to be converted to getter/setters.'!
 
+getOptionAddImports: aCollection
+	^self
+		confirm: 'This method contains references to shared variables from namespaces that may need to be imported into the target.'!
+
 getOptionAlreadyDefined: aClass selector: aSelection
 	^self
 		confirm: ('<1p> is already defined in the <2p> hierarchy.<n>Extracting to an existing selector may change behavior.<n><n>Do you wish to use <1p> anyway?'
@@ -168,10 +172,6 @@ getOptionInlineReordered: inlineRBMethod into: intoRBMethod
 		confirm: ('To inline <1p> into <2p> we need to move some of its statements before the original message send.<n>This could change the order of execution, which can change the behavior.<n>Do you want to proceed?'
 				expandMacrosWith: inlineRBMethod
 				with: intoRBMethod)!
-
-getOptionMovePools: aCollection
-	^self
-		confirm: 'This method contains references to shared variables from namespaces that may need to be imported into the target.'!
 
 getOptionNewMethodName: aRBMethodName classes: aCollection
 	| mname |
@@ -263,6 +263,13 @@ getOptionVariableTypes: choicesCollection selected: suggestionsCollection
 	classSelected := self chooseFrom: choicesCollection caption: 'Select class of new method…'.
 	^classSelected notNil ifTrue: [{classSelected}] ifFalse: [nil]!
 
+importedVariableNamesFor: aClass
+	| names |
+	names := Set new.
+	aClass allImports
+		do: [:import | import valueOrNil ifNotNil: [:pool | pool definedBindings do: [:var | names add: var key]]].
+	^names!
+
 isStaleLiteralReference: aStLiteralNode
 	aStLiteralNode isLiteralArray
 		ifTrue: 
@@ -310,13 +317,6 @@ options: aDictionary
 performComponentRefactoring: aRefactoring 
 	aRefactoring copyOptionsFrom: options.
 	aRefactoring primitiveExecute!
-
-poolVariableNamesFor: aClass
-	| names |
-	names := Set new.
-	aClass allImports
-		do: [:import | import valueOrNil ifNotNil: [:pool | pool definedBindings do: [:var | names add: var key]]].
-	^names!
 
 preconditions
 	self subclassResponsibility!
@@ -525,6 +525,7 @@ copyOptionsFrom:!operations!public! !
 defaultEnvironment!public!transforming! !
 execute!public!transforming! !
 getOptionAbstractVariables!options!public! !
+getOptionAddImports:!options!public! !
 getOptionAlreadyDefined:selector:!options!public! !
 getOptionBrowseEnvironments:!options!public! !
 getOptionConvertReadBeforeWritten:!options!public! !
@@ -535,7 +536,6 @@ getOptionImplementorToInline:!options!public! !
 getOptionInlineExpression:!options!public! !
 getOptionInlineOverridden:of:!options!public! !
 getOptionInlineReordered:into:!options!public! !
-getOptionMovePools:!options!public! !
 getOptionNewMethodName:classes:!options!public! !
 getOptionOpenBrowser:!options!public! !
 getOptionPullUpNonSharedInstVar:!options!public! !
@@ -551,6 +551,7 @@ getOptionSelfArgumentName!options!public! !
 getOptionUseExistingMethod:!options!public! !
 getOptionVariableToMoveToOf:in:!options!public! !
 getOptionVariableTypes:selected:!options!public! !
+importedVariableNamesFor:!public!utilities! !
 isStaleLiteralReference:!helpers!private! !
 lookupOption:!accessing!options!private! !
 model!public!transforming! !
@@ -560,7 +561,6 @@ openBrowserOn:!public!requests! !
 options!accessing!options!public! !
 options:!accessing!options!public! !
 performComponentRefactoring:!public!transforming! !
-poolVariableNamesFor:!public!utilities! !
 preconditions!preconditions!public! !
 primitiveExecute!operations!private! !
 refactoringAborted!exceptions!private! !
@@ -624,7 +624,7 @@ initializeRefactoringOptions
 							-> [:refactoring :selector :class | refactoring getOptionInlineOverridden: selector of: class].
 						#inlineReordered
 							-> [:refactoring :from :into | refactoring getOptionInlineReordered: from into: into].
-						#movePools -> [:refactoring :pools | refactoring getOptionMovePools: pools].
+						#addImports -> [:refactoring :pools | refactoring getOptionAddImports: pools].
 						#methodName
 							-> [:refactoring :methodName :classes | refactoring getOptionNewMethodName: methodName classes: classes].
 						#openBrowser -> [:refactoring :env | refactoring getOptionOpenBrowser: env].

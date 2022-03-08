@@ -79,7 +79,7 @@ package setMethodNames: #(
 	#(#{Refactory.Browser.CompositeRefactoryChange class} #icon)
 	#(#{Refactory.Browser.CreateAccessorsForVariableRefactoring class} #displayPrefix)
 	#(#{Refactory.Browser.ExpandImportsRefactoring} #displayOn:)
-	#(#{Refactory.Browser.ExpandImportsRefactoring} #getOptionMovePools:)
+	#(#{Refactory.Browser.ExpandImportsRefactoring} #getOptionAddImports:)
 	#(#{Refactory.Browser.ExtractMethodRefactoring} #displayOn:)
 	#(#{Refactory.Browser.ExtractMethodRefactoring} #getOptionUseExistingMethod:)
 	#(#{Refactory.Browser.ExtractMethodToComponentRefactoring} #displayOn:)
@@ -789,7 +789,7 @@ displayOn: aPuttableStream
 			[toClasses do: [:each | each name displayOn: aPuttableStream]
 				separatedBy: [aPuttableStream nextPutAll: ', ']]!
 
-getOptionMovePools: aCollection
+getOptionAddImports: aCollection
 	| details |
 	details := String writeStream.
 	details nextPutAll: 'The following namespaces will need to be imported'.
@@ -814,7 +814,7 @@ getOptionMovePools: aCollection
 		confirm! !
 !Refactory.Browser.ExpandImportsRefactoring categoriesForMethods!
 displayOn:!displaying!public! !
-getOptionMovePools:!options!public! !
+getOptionAddImports:!options!public! !
 !
 
 !Refactory.Browser.ExtractMethodRefactoring methodsFor!

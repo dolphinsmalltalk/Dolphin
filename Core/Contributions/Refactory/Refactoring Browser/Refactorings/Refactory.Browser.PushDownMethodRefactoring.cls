@@ -28,17 +28,18 @@ preconditions
 	^condition & (RBCondition isAbstractClass: class)!
 
 pushDown: aSelector
-	| code protocols refactoring packageAndEnv |
-	code := class sourceCodeFor: aSelector.
+	| code protocols importsRefactoring packageAndEnv method |
+	method := class methodFor: aSelector.
 	protocols := class protocolsFor: aSelector.
-	refactoring := ExpandImportsRefactoring
+	importsRefactoring := ExpandImportsRefactoring
 				model: self model
-				forMethod: (class parseTreeFor: aSelector)
+				forMethod: method parseTree
 				fromClass: class
 				toClasses: class subclasses.
-	self performComponentRefactoring: refactoring.
+	self performComponentRefactoring: importsRefactoring.
 	"Maintain package and any custom namespace of the method being pushed down"
-	packageAndEnv := (class existingMethodPackageAndEnvironment: aSelector).
+	code := method source.
+	packageAndEnv := class existingMethodPackageAndEnvironment: aSelector.
 	class subclasses do: 
 			[:each |
 			(each directlyDefinesMethod: aSelector)

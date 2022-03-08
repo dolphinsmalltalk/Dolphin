@@ -68,17 +68,17 @@ abstractInstanceVariables
 	variables do: [:each | self abstractInstanceVariable: each]!
 
 abstractVariablesIn: aBRProgramNode from: fromBehavior toAll: behaviorCollection ignoring: aVariableName
-	| poolRefactoring |
+	| importsRefactoring |
 	tree := aBRProgramNode.
 	fromClass := self classObjectFor: fromBehavior.
 	toClasses := behaviorCollection collect: [:each | self classObjectFor: each].
 	ignore := aVariableName.
-	poolRefactoring := ExpandImportsRefactoring
+	importsRefactoring := ExpandImportsRefactoring
 				model: self model
 				forMethod: tree
 				fromClass: fromClass
 				toClasses: toClasses.
-	self performComponentRefactoring: poolRefactoring.
+	self performComponentRefactoring: importsRefactoring.
 	self computeVariablesToAbstract!
 
 classBindingNames

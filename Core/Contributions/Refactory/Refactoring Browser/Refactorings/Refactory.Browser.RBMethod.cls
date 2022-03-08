@@ -98,14 +98,7 @@ parseEnvironment
 		ifNotNil: [:package | package environment ifNotNil: [:env | env classInModel: self model]]!
 
 parseTree
-	^parseTree
-		ifNil: [parseTree := self buildParseTree.
-"parseTree makeTreeImmutable."
-parseTree]
-		ifNotNil: 
-			[:ast |
-			"self assert: [ast = self buildParseTree]."
-			ast]!
+	^parseTree ifNil: [parseTree := self buildParseTree]!
 
 parseTree: aStMethodNode 
 	parseTree := aStMethodNode.
